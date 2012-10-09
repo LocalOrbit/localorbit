@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+ <title>flickrRSS Readme</title>
+ 
+ <style type="text/css"> 
+  body { 
+  	font: 13px/19px "Myriad Pro", "Helvetica Neue", "Trebuchet MS", Arial, sans-serif; 
+  	margin: 30px 65px;
+  	}
+  h2 { margin-top: 36px; }
+  h3 { margin-top: 18px; }
+  a { text-decoration: none; }
+  a:hover { border-bottom: 1px solid;
+  	
+ </style>
+</head>
+
+<body>
+
+<h1>flickrRSS Readme</h1>
+
+<p>This plugin allows you to easily display Flickr photos on your site. It supports user, set, favorite, group and community photostreams. The plugin is relatively easy to setup and configure via an options panel. It also has support for an image cache located on your server.</p>
+
+<h2>Installation</h2>
+<ol>
+ <li>Put the flickrRSS files in your plugins directory</li>
+ <li>If you want to cache images, create a directory and make it writable</li>
+ <li>Activate the plugin</li> 
+ <li>Configure your settings via the panel in Options</li>
+ <li>Add <code>&lt;?php get_flickrRSS(); ?&gt;</code> somewhere in your templates</li>
+</ol>
+
+<h2>FAQ</h2>
+
+<ol>
+ <li><strong>Can I get random images from my stream?</strong><br />
+No, it's a limitation of using the RSS feed (it only contains the most recent photos)	</li>
+<li><strong>How do I refresh the photos manually?</strong><br />
+Good question. The plugin uses built-in WordPress functions to update the feed, I haven't figured out how to force an update.</li>
+<li><strong>When I use multiple tags, why does nothing shows up?</strong><br />
+The feed will only pull in photos that have both tags, not one or the other.</li>
+<li><strong>When I enable cache, why do just a bunch of random characters show up?</strong><br />
+You've probably specified the full path wrong. Double check with your host to make sure you've got it right. If you're still having troubles, check with your host.</li>
+<li><strong>How do a I get borders between photos?</strong><br />
+You need to edit your CSS file. There are plenty of tutorials online, you may find some help in the forum.</li>
+<li><strong>Why aren't any photos showing up?</strong><br />
+Sometimes it can take a little while to kick in, have patience. Flickr may possibly have been down. Also, make sure it works without the cache first.</li>
+<li><strong>Will it work with video?</strong><br />
+Yes, videos will be displayed as a thumbnail image. You'll need to click through to flickr to play it though.</li>
+<li><strong>Can I get older versions of the plugin?</strong><br />
+Yes, they are available <a href="http://wordpress.org/extend/plugins/flickr-rss/download/">here</a></li>
+</ol>
+
+<h2>Feedback and Support</h2>
+
+<p>Visit the <a href="http://groups.google.com/group/flickrrss/">flickrRSS forum</a> for help with issues relating to the plugin. I'll do my best to respond, but sometimes I'm slow.</p>
+
+
+<h2>Advanced</h2>
+
+<p>The plugin also supports a number of parameters, allowing you to have multiple instances across your site.</p>
+
+<h3>Parameters</h3>
+
+<ul>
+<li><code>'type' => 'user'</code> &mdash; The type of Flickr images that you want to show. Possible values: 'user', 'favorite', 'set', 'group', 'public'</li>
+<li><code>'tags' => ''</code> &mdash; Optional: Can be used with type = 'user' or 'public', comma separated</li>
+<li><code>'set' => ''</code> &mdash; Optional: To be used with type = 'set'</li>
+<li><code>'id' => ''</code> &mdash; Optional: Your Group or User ID. To be used with type = 'user' or 'group'</li>
+<li><code>'do_cache' => false</code> &mdash; Enable the image cache</li>
+<li><code>'cache_sizes' => array('square')</code> &mdash; What are the image sizes we want to cache locally? Possible values: 'square', 'thumbnail', 'small', 'medium' or 'large'</li>
+<li><code>'cache_path' => ''</code> &mdash; Where the images are saved (server path)</li>
+<li><code>'cache_uri' => ''</code> &mdash; The URI associated to the cache path (web address)</li>
+<li><code>'num_items' => 4</code> &mdash; The number of images that you want to display</li>
+<li><code>'before_list' => ''</code> &mdash; The HTML to print before the list of images</li>
+<li><code>'html' => '&lt;a href="%flickr_page%" title="%title%"&gt;&lt;img src="%image_square%" alt="%title%"/&gt;&lt;/a&gt;'</code> &mdash; the code to print out for each image.<br/>
+	Meta tags available: %flickr_page%, %title%, %image_small%, %image_square%, %image_thumbnail%, %image_medium%, %image_large%
+<li><code>'default_title' => "Untitled Flickr photo"</code> &mdash; the default title</li>
+<li><code>'after_list' => ''</code> &mdash; the HTML to print after the list of images</li>
+</ul>
+
+<h3>Example 1</h3>
+
+<p><code>&lt;?php get_flickrRSS(array('num_items' =&gt; 10, 'type' =&gt; 'public', 'tags' =&gt; 'london,people')); ?&gt;</code></p>
+<p>This would show the 10 most recent public photos tagged with london and people.</p>
+
+
+<h3>Example 2</h3>
+
+<p><code>&lt;?php get_flickrRSS(array('set' =&gt; '72157601681097311', 'num_items' =&gt; 20, 'type' =&gt; 'set', 'id' =&gt; '44124462494@N01')); ?&gt;</code></p>
+<p>This would show the 20 most recent thumbnail sized photos from the specified user's set.</p>
+
+<hr style="margin-top:50px;" />
+
+<h3>Plugin History</h3>
+
+<p><strong>Latest Release:</strong> April 29, 2009</p>
+
+<ul>
+ <li>5.1 - Minor interface tweaks to avoid confusion</li>
+ <li>5.0 - Added more customization of presentation logic, separated core code from display, improved paramater system, many other changes</li>
+ <li>4.0 - New interface for WP 2.5, support for sets and favorites, a few widget tweaks, some cleanup in the source</li>
+ <li>3.5 - Co-released with 4.0, bringing support for sets and favorites to WP 2.3</li>
+ <li>3.2.1 - Minor interface tweaks to avoid confusion</li>
+ <li>3.2 - Updated for WordPress 2.1</li>
+ <li>3.1.2 - Flickr altered the address of static photo urls, affected people using cache</li>
+ <li>3.1.1 - Minor update to add support for Flickr servers with three digits</li>
+ <li>3.1 - Flickr changed the RSS url, support for 20 images in admin panel, a few minor tweaks to display text</li>
+ <li>3.0.3 - added basic support for the WordPress Widgets plugin</li>
+ <li>3.0.2 - fixed before/after image bug, config panel back to options instead of presentation, put group option back in panel</li>
+ <li>3.0.1 - attempt to fix cache bug (wasn't working), fix for command parameter $type error</li>
+ <li>3.0 - Rewrote large parts of the plugin, proper flickr image size, parameters make more sense</li>
+ <li>2.3 - Flickr changed rss feed structure (permanent location of picture)</li>
+ <li>2.2 - should no longer display an error message if flickr times out.</li>
+ <li>2.1 - cURL (uses fopen if not found), empty cache no longer hardcoded, should work for multiple ids/tags, can now use quotes in the before/after tags, bugfixes</li>
+ <li>2.0.2 - bug fixes</li>
+ <li>2.0.1 - fixed new cache bug, flickr added a 10th photo server, breaking the script</li>
+ <li>2.0a - cURL instead of fopen, uses built in rss-functions instead of MagpieRSS, cleaned up options panel</li>
+ <li>1.2 - added thumbnail size</li>
+ <li>1.1 - bug fixes</li>
+ <li>1.0 - Options panel implemented</li>
+ <li>0.7 - Initial release</li>
+</ul>
+
+</body>
+</html>

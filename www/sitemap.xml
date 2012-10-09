@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url><loc>http://www.localorb.it/</loc><priority>1.0</priority></url>
+	<url><loc>http://www.localorb.it/homepage/work_with_us.php</loc><priority>0.8</priority></url>
+	<url><loc>http://www.localorb.it/homepage/features.php</loc><priority>0.8</priority></url>
+	<url><loc>http://www.localorb.it/homepage/about.php</loc><priority>0.8</priority></url>
+	<url><loc>http://www.localorb.it/homepage/faq.php</loc><priority>0.8</priority></url>
+	<url><loc>http://www.localorb.it/homepage/team.php</loc><priority>0.7</priority></url>
+	<url><loc>http://www.localorb.it/app.php#!auth-form</loc><priority>0.8</priority></url>
+</urlset>

@@ -1,0 +1,17 @@
+#applesearch .sbox_l  {
+	/*default styling*/
+}
+
+#applesearch .sbox_r  {
+	/*default styling*/
+}
+
+#applesearch .sbox input {
+	/*default styling*/
+	width: 125px;
+	float:left;
+}
+
+#content {
+	clear: both;
+}

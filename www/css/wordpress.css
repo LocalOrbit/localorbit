@@ -1,0 +1,264 @@
+
+/* =----------------------------------- meta lead for each post */
+.postMeta {
+	border-top: 1px solid #cdac53;
+	text-align: right;
+	margin-bottom: 14px;
+	position: relative;
+}
+.postMeta .container {
+	position: absolute;
+	top: -9px;
+	right: 0;
+}
+.postMeta span.date {
+	background: #fff;
+	padding: 0 4px;
+}
+.postMeta span.comments {
+	background: #fff url(images/chat_grey.gif) no-repeat 2px -1px;
+	padding-left: 18px;
+}
+
+/* =----------------------------------- general post */
+.post {
+	margin: 0 0 21px 0;
+}
+.post h2 {
+	margin-bottom: 10px;
+	padding: 0 3px;
+}
+.post h2 a {
+	display:block;
+}
+
+/* =----------------------------------- entry body */
+.entry {
+	padding: 0 3px;
+	overflow: hidden;
+}
+.entry p {
+	line-height: 1.6em;
+	margin: 10px 0;
+}
+.entry ul,
+.entry ol,
+.entry blockquote {
+	margin: 0 14px;
+}
+.entry ol {
+	list-style: decimal;
+}
+.entry ul li,
+.entry ol li {
+	margin: 0 0 7px 18px;
+}
+.entry ul li {
+	list-style: circle;
+}
+.entry blockquote {
+	border-left: 1px solid #cdac53;
+	font-size: 1.1em;
+	line-height: 1.4em;
+	margin-left: 21px;
+	padding-left: 10px;
+}
+.entry img,
+.entry a img {
+	background: #fff;
+	border: 1px solid #bbb;
+	padding: 2px;
+}
+.entry a:hover img {
+	border-color: #cd9d1a;
+}
+
+.entry.meta {
+	background: #eee;
+	border: 1px solid #cdac53;
+	border-width: 1px 0;
+}
+.entry.meta p {
+	margin: 5px 7px;
+}
+.entry.meta .highlight {
+	text-transform: uppercase;
+	font-size: 10px;
+}
+.entry.meta a {
+	color: #333;
+	border-color: #cdac53;
+}
+.entry.meta a:hover {
+	color: #000;
+	border-color: #000;
+}
+
+/* =----------------------------------- main index pagination */
+#paginateIndex { 
+	margin-bottom: 25px;
+}
+#paginateIndex a,
+.commentlist li .reply a {
+	color: #777;
+	font-size: 0.9em;
+	text-transform: uppercase;
+	display: block;
+	padding: 4px 7px 3px;
+	background: #fff;
+	border: 1px solid #cdac53;
+}
+.commentlist li .reply a {
+	color: #aaa;
+}
+#paginateIndex a:hover,
+.commentlist li .reply a:hover {
+	color: #cd9d1a;
+	border-color: #cd9d1a;
+	background: #eee;
+}
+
+/* =----------------------------------- widget enabled sidebar */
+.secondaryColumn h3 {
+	border-top: 1px solid #cdac53;
+	border-bottom: 1px solid #cdac53;
+	margin: 0 0 10px 0;
+	padding: 7px 4px;
+}
+.widgetContainer {
+	margin: 0 0 20px 0;
+}
+.widgetContainer ul li {
+	margin: 0 3px 7px 21px;
+	list-style: circle;
+}
+.widgetContainer ul li ul {
+	margin-top: 5px;
+}
+.widgetContainer .textwidget {
+	margin: 0 3px;
+	line-height: 1.5em;
+}
+.widgetContainer #wp-calendar {
+	border-collapse: collapse;
+	width: 100%;
+}
+#wp-calendar caption {
+	font-weight: bold;
+	margin-bottom: 7px;
+}
+#wp-calendar thead {}
+#wp-calendar thead th {
+	padding: 4px 0 4px 3px;
+	border: 1px solid #cdac53;
+	border-width: 1px 0;
+}
+#wp-calendar td {
+	padding: 3px 0 4px 3px;
+	color: #777;
+}
+#wp-calendar td a {
+	font-weight: bold;
+}
+
+/* =----------------------------------- style some comments */
+#commentsContainer {
+	margin-bottom: 30px;
+}
+#commentsContainer span.hook {
+	position: relative;
+	display: block;
+}
+#commentsContainer h3 {
+	display: block;
+	margin: 10px 0;
+	padding: 7px 4px 0;
+	border-top: 1px solid #cdac53;
+}
+.cancel-comment-reply {
+	position: absolute;
+	top: -1px;
+	right: 4px;
+}
+.commentlist {
+	list-style: none;
+	margin: 0 0 20px;
+}
+.commentlist .comment-author {
+	border-top: 1px solid #cdac53;
+	padding-top: 7px;
+	margin-top: 10px;
+	overflow: hidden;
+}
+.commentlist .comment-author img.avatar {
+	display: block;
+	float: left;
+	height: 16px;
+	width: 16px;
+	margin: 0 4px 0 0;
+}
+.commentlist .comment-meta {
+	margin: 0 0 0 20px;
+}
+.commentlist li .reply {
+	text-align: right;
+	padding-bottom: 10px;
+}
+.commentlist li .reply a {
+	display:inline;
+}
+.commentlist li p {
+	margin: 1em 0;
+	padding: 0 3px;
+}
+.commentlist li ul,
+.commentlist li ol,
+.commentlist li blockquote {
+	margin: 0 20px;
+}
+.commentlist .children {
+	margin: 0 0 0 40px;
+}
+.commentlist .children li {
+	list-style: none;
+}
+#commentform .contain {
+	margin: 0 0 10px 0 !important;
+}
+#commentform #author,
+#commentform #email,
+#commentform #url,
+#commentform textarea {
+	padding: 4px 3px;
+	border: 1px solid #cdac53;
+	border-left-color: #cdac53;
+	border-bottom-color: #cdac53;
+	background: #fff;
+	margin-right: 4px;
+}
+#commentform #author,
+#commentform #email,
+#commentform #url,
+#commentform textarea {
+	border: 1px solid #cdac53;
+	outline: none;
+	padding: 4px 3px;
+	width: 160px;
+}
+#commentform p label {
+	margin: 4px 0 0 0;
+}
+#commentform textarea {
+	float: none;
+	width: 98%;
+	overflow: auto;
+}
+
+body{
+	background-color: #fff !important;
+}
+
+#main_layout{
+	box-shadow: none !Important;
+}
+

@@ -1,0 +1,372 @@
+# German translation for flickr-manager
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the flickr-manager package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: flickr-manager\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-01-07 02:22+0000\n"
+"PO-Revision-Date: 2009-01-12 22:55+0000\n"
+"Last-Translator: eco <Unknown>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-01-12 23:16+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: FlickrManager.php:168
+msgid "Options Saved!"
+msgstr "Einstellungen gespeichert!"
+
+#: FlickrManager.php:173
+msgid "Flickr Manager Settings"
+msgstr "Flickr Manager Einstellungen"
+
+#: FlickrManager.php:186 FlickrManager.php:191
+msgid "Step"
+msgstr "Schritt"
+
+#: FlickrManager.php:188
+msgid "Authenticate"
+msgstr "Authentifizieren"
+
+#: FlickrManager.php:194
+msgid "Finish &raquo;"
+msgstr "Abschliessen &raquo;"
+
+#: FlickrManager.php:205
+msgid "Logout &raquo;"
+msgstr "Ausloggen &raquo;"
+
+#: FlickrManager.php:223
+msgid "User Information"
+msgstr "Benutzerinformationen"
+
+#: FlickrManager.php:234
+msgid "Username"
+msgstr "Benutzername"
+
+#: FlickrManager.php:238
+msgid "User ID"
+msgstr "Benutzer ID"
+
+#: FlickrManager.php:242
+msgid "Real Name"
+msgstr "Wirklicher Name"
+
+#: FlickrManager.php:246
+msgid "Photo URL"
+msgstr "Foto URL"
+
+#: FlickrManager.php:254
+msgid "Profile URL"
+msgstr "Profil URL"
+
+#: FlickrManager.php:262
+msgid "# Photos"
+msgstr "# Fotos"
+
+#: FlickrManager.php:297
+msgid "Miscellaneous"
+msgstr "Verschiedenes"
+
+#: FlickrManager.php:304
+msgid "Enable legacy panel"
+msgstr "Legacy Kontrolle einschalten"
+
+#: FlickrManager.php:309
+msgid ""
+"Note: Wordpress &gt;=2.5 users can leave this option disabled and use the "
+"added media button."
+msgstr ""
+"Wordpress &gt;=2.5 Benutzer können diese Option abgeschaltet lassen und den "
+"Mediathek Button benutzen"
+
+#: FlickrManager.php:315
+msgid "Images per page"
+msgstr "Bilder pro Seite"
+
+#: FlickrManager.php:325
+msgid "Open Flickr pages in a new window"
+msgstr "Flickr Seiten in neuem Fenster öffnen"
+
+#: FlickrManager.php:335
+msgid "Limit browse image size to"
+msgstr "Grösse der Vorschaubilder beschränken auf"
+
+#: FlickrManager.php:341
+msgid "Square"
+msgstr "Quadratisch"
+
+#: FlickrManager.php:342 FlickrManager.php:630
+msgid "Thumbnail"
+msgstr "Vorschaubild"
+
+#: FlickrManager.php:349
+msgid "User upload level"
+msgstr "Benutzer Upload Level"
+
+#: FlickrManager.php:354
+msgid "Administrator"
+msgstr "Administrator"
+
+#: FlickrManager.php:355
+msgid "Editor"
+msgstr "Bearbeiter"
+
+#: FlickrManager.php:356
+msgid "Author"
+msgstr "Autor"
+
+#: FlickrManager.php:357
+msgid "Contributer"
+msgstr "Beitragender"
+
+#: FlickrManager.php:364
+msgid "Javascript Image Viewer"
+msgstr "Javascript Image Viewer"
+
+#: FlickrManager.php:371
+msgid "Image Viewer"
+msgstr "Image Viewer"
+
+#: FlickrManager.php:383
+msgid "Enable image viewer by default"
+msgstr "Image Viewer standardmässig aktivieren"
+
+#: FlickrManager.php:391
+msgid "Default image viewer size"
+msgstr "Standardgröße des Image Viewers"
+
+#: FlickrManager.php:396 MediaPanel.php:187
+msgid "Small"
+msgstr "Klein"
+
+#: FlickrManager.php:397 MediaPanel.php:188
+msgid "Medium"
+msgstr "Mittel"
+
+#: FlickrManager.php:398 MediaPanel.php:189
+msgid "Large"
+msgstr "Groß"
+
+#: FlickrManager.php:401 MediaPanel.php:193
+msgid "Original"
+msgstr "Original"
+
+#: FlickrManager.php:414
+msgid "Include Flickr link in caption"
+msgstr "Flickr Link in der Bildunterschrift anzeigen"
+
+#: FlickrManager.php:423
+msgid "Custom Wrappings"
+msgstr "Individuelle Vorgabe"
+
+#: FlickrManager.php:429
+msgid "Before Image"
+msgstr "Vor dem Foto"
+
+#: FlickrManager.php:435
+msgid "After Image"
+msgstr "Hinter dem Foto"
+
+#: FlickrManager.php:446
+msgid "Submit"
+msgstr "Absenden"
+
+#: FlickrManager.php:465 FlickrManager.php:470 MediaPanel.php:38
+#: MediaPanel.php:42
+msgid "Error: Please authenticate through "
+msgstr "Fehler: Bitte authentifizieren durch "
+
+#: FlickrManager.php:544
+msgid "Image Management"
+msgstr "Bildverwaltung"
+
+#: FlickrManager.php:547 FlickrManager.php:550 FlickrManager.php:840
+#: upload.php:66 upload.php:71
+msgid "Upload Photo"
+msgstr "Foto hochladen"
+
+#: FlickrManager.php:553 upload.php:89
+msgid "Upload &raquo;"
+msgstr "Upload &raquo;"
+
+#: FlickrManager.php:567
+msgid "Modify Photo"
+msgstr "Foto bearbeiten"
+
+#: FlickrManager.php:568
+msgid "&laquo; Back"
+msgstr "&laquo; Zurück"
+
+#: FlickrManager.php:578 FlickrManager.php:631 upload.php:75
+msgid "Title"
+msgstr "Titel"
+
+#: FlickrManager.php:582
+msgid "Permissions"
+msgstr "Berechtigungen"
+
+#: FlickrManager.php:584 MediaPanel.php:154
+msgid "Public"
+msgstr "Öffentlich"
+
+#: FlickrManager.php:585
+msgid "Friends"
+msgstr "Freunde"
+
+#: FlickrManager.php:586
+msgid "Family"
+msgstr "Familie"
+
+#: FlickrManager.php:590 upload.php:79
+msgid "Tags"
+msgstr "Tags"
+
+#: FlickrManager.php:598 upload.php:83
+msgid "Description"
+msgstr "Beschreibung"
+
+#: FlickrManager.php:621
+msgid "Manage Photos"
+msgstr "Fotos verwalten"
+
+#: FlickrManager.php:622
+msgid "Add images to your posts with"
+msgstr "Bilder zu deinen Beiträgen hinzufügen mit"
+
+#: FlickrManager.php:632
+msgid "Action"
+msgstr "Aktion"
+
+#: FlickrManager.php:648
+msgid "View"
+msgstr "Ansehen"
+
+#: FlickrManager.php:649
+msgid "Modify"
+msgstr "Ändern"
+
+#: FlickrManager.php:650
+msgid "Are you sure you want to delete this?"
+msgstr "Löschen? Bist du sicher?"
+
+#: FlickrManager.php:650
+msgid "Delete"
+msgstr "Löschen"
+
+#: FlickrManager.php:662
+msgid "&laquo; Previous"
+msgstr "&laquo; Zurück"
+
+#: FlickrManager.php:681
+msgid "Next &raquo;"
+msgstr "Weiter &raquo;"
+
+#: FlickrManager.php:841
+msgid "Browse Photos"
+msgstr "Fotos durchsuchen"
+
+#: FlickrManager.php:870
+msgid "Add Flickr Photo"
+msgstr "Flickr Foto hinzufügen"
+
+#: FlickrManager.php:884
+msgid "Flickr Photos"
+msgstr "Flickr Fotos"
+
+#: MediaPanel.php:48
+msgid "Close on insert"
+msgstr "Nach Einfügen schließen"
+
+#: MediaPanel.php:51
+msgid "Browse Flickr"
+msgstr "Auf Flickr suchen"
+
+#: MediaPanel.php:144
+msgid "No photos found"
+msgstr "Keine Fotos gefunden"
+
+#: MediaPanel.php:153
+msgid "Personal"
+msgstr "Privat"
+
+#: MediaPanel.php:161
+msgid "First Page"
+msgstr "Erste Seite"
+
+#: MediaPanel.php:162
+msgid "Previous Page"
+msgstr "Vorherige Seite"
+
+#: MediaPanel.php:171
+msgid "Search"
+msgstr "Suchen"
+
+#: MediaPanel.php:175
+msgid "Next Page"
+msgstr "Nächste Seite"
+
+#: MediaPanel.php:176
+msgid "Last Page"
+msgstr "Letzte Seite"
+
+#: MediaPanel.php:183
+msgid "Javascript Viewer"
+msgstr "Javascript Viewer"
+
+#: MediaPanel.php:184
+msgid "Enable"
+msgstr "Einschalten"
+
+#: MediaPanel.php:185
+msgid "Size"
+msgstr "Größe"
+
+#: MediaPanel.php:204
+msgid "Set"
+msgstr "Galerie"
+
+#: MediaPanel.php:205
+msgid "Name"
+msgstr "Name"
+
+#: MediaPanel.php:210
+msgid "Image Set"
+msgstr "Flickr Galerie"
+
+#: MediaPanel.php:228
+msgid "Insert Set"
+msgstr "Galerie einfügen"
+
+#: js/media-panel.php:99 js/media-panel.php:201
+msgid "Loading..."
+msgstr "Ladevorgang ..."
+
+#: js/media-panel.php:119
+msgid "Flickr Upload"
+msgstr "Flickr Upload"
+
+#: js/wfm-hs.php:50 js/wfm-lightbox.php:59
+msgid "View on Flickr"
+msgstr "Auf Flickr ansehen"
+
+#: upload.php:10
+msgid ""
+"You do not have permission to upload photos to this stream, you may adjust "
+"this in the settings page!"
+msgstr ""
+"Sie haben nicht die notwendige Berechtigung um in diesem Stream Fotos "
+"hochzuladen. Bearbeiten Sie die Rechte eventuell unter Einstellungen!"
+
+#: upload.php:62
+msgid "Image successfully uploaded"
+msgstr "Bild erfolgreich hochgeladen"
+
+#: upload.php:80
+msgid "Space separated list"
+msgstr "Tags durch Leerzeichen getrennt"

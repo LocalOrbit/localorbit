@@ -1,0 +1,1 @@
+w3m changelog.html -dump -cols 65 > changelog.txt

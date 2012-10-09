@@ -1,0 +1,3 @@
+
+update domains set hostname = concat('testing',hostname);
+update customer_entity set password='SRVI5jqkxdG1099AxS5l4Hd44VKqXj6tR-993b65a0e5f0f10e093bc9662009388a096ff3d113a2b71ec466d4c2b49069fc5bb274f39978db5efeab5f67591e89a0a04a2a71c4ace3022441d059fa42c7da' where entity_id=219;

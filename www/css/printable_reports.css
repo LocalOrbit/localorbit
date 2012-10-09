@@ -1,0 +1,71 @@
+body{
+	background-color: #fff !important;
+	background-image: none !important;
+	height: auto !important;
+	width: auto !important;
+	
+}
+
+table.pr{
+	border: #aaa 1px solid;
+	border-collapse: collapse;
+}
+
+th{
+	padding: 8px 10px;
+	font-weight: bold;
+	background-color: #ddd;
+	text-align: left;
+	border: #ccc 1px solid;
+}
+td.pr{
+	padding: 8px 10px;
+	text-align: left;
+	border: #ccc 1px solid;
+}
+tr.pr{
+	background-color: #fff;
+}
+tr.pr1{
+	background-color: #f2f2f2;
+}
+
+
+
+@media screen {
+	html{
+		padding: 0px 20px 0px 20px;
+	}
+	body,html{
+		background-color: #fff !important;
+		height: auto !important;
+		width: auto !important;
+	}
+	.page_break{
+		height: 15px;
+		border: #ccc 1px dashed;
+		border-width: 0px 0px 1px 0px;
+		margin-bottom: 15px;
+	}
+}
+@media all {
+	.page_break {display:none;}
+}
+@media print {
+	input[type=button]{
+		display:none;
+	}
+	body,html{
+		background-color: #fff !important;
+		height: auto !important;
+		width: auto !important;
+	}
+	/*	Old code below JM 5/14/12
+		.page_break{
+		page-break-after:always; */
+		
+	.page_break {
+		display:block;
+		page-break-after:always;
+	}
+}

@@ -1,0 +1,15 @@
+STRUCTURE RSS
+
+[title] => Handicap International se glamourise pour ses 25 ans
+[description] => L'ONG, active contre les mines antipersonnels depuis 1982, lance une campagne qui rompt avec les codes classiques de la communication humanitaire.
+[link] => http://www.liberation.fr/actualite/economie_terre/266959.FR.php?rss=true
+[guid] => http://www.liberation.fr/actualite/economie_terre/266959.FR.php?rss=true
+[pubdate] => Fri, 13 Jul 2007 15:53:00 +0200
+[summary] => L'ONG, active contre les mines antipersonnels depuis 1982, lance une campagne qui rompt avec les codes classiques de la communication humanitaire. )
+
+
+
+Format date :
+Fri, 13 Jul 2007 15:53:00 +0200
+
+$date = date("Y/m/d/G:i",strtotime($item["pubdate"]));

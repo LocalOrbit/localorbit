@@ -1,0 +1,212 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ozh' Admin Drop Down Menu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-12 21:24+0100\n"
+"PO-Revision-Date: 2009-05-22 12:53+0300\n"
+"Last-Translator: Илья <mrilyuha@gmail.com>\n"
+"Language-Team: Fat Cow <zhr@tut.by>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: wp_ozh_adminmenu__\n"
+"X-Poedit-Basepath: E:\\home\\ozh\\planetozh.com\\blog\\wp-content\\plugins\\ozh-admin-drop-down-menu\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: E:\\home\\ozh\\planetozh.com\\blog\\wp-content\\plugins\\ozh-admin-drop-down-menu\n"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/core.php:408
+msgid "updated"
+msgstr "обновлено"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/core.php:413
+msgid "deleted"
+msgstr "удалено"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/core.php:418
+#, php-format
+msgid "Admin Drop Down Menu settings <strong>%s</strong>"
+msgstr "Настройки Admin Drop Down Menu <strong>%s</strong>"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:51
+msgid "Top Level Icons"
+msgstr "Иконки верхнего уровня"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:52
+msgid "Display original menu icons in top level links"
+msgstr "Отображать оригинальное меню в верхних ссылках"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:53
+msgid "Checking this enables Compact Mode &darr;"
+msgstr "Проверять доступность Compact Mode &darr;"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:56
+msgid "Compact Mode"
+msgstr "Компактный режим"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:57
+msgid "Shrink top level links down to their icons"
+msgstr "Термоусадка верхнего уровня ссылок вплоть до их значков "
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:58
+msgid "That was a cool WordPress feature, so I stole it :)"
+msgstr "Это было классной функцией WordPress, так что я украл ее:) "
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:61
+msgid "Sublevel Icons"
+msgstr "Подуровневые иконки"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:62
+msgid "Display icons in drop down menus"
+msgstr "Показывать иконки в выпадающем меню"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:63
+#, php-format
+msgid "They're so cute (and they're from %s)"
+msgstr "Это так мило (и они с% s) "
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:66
+msgid "Color Scheme"
+msgstr "Цветовая схема"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:67
+msgid "Pick a color for your menu bar, using the color wheel or one of the presets"
+msgstr "Выберите цвет в панели меню, используя цветовой круг или пресет"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:68
+msgid "No subtle gradient, just plain color."
+msgstr "Нет градиентов, только сплошной цвет. "
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:113
+msgid "Minimal Mode"
+msgstr "Минималистский режим"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:114
+msgid "Hide header"
+msgstr "Убрать шапку"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:115
+msgid "Remove the whole header bar for maximum screen real estate. Note: The quick link to your blog will be added to the menu, the Logout link in the Users sub-menu."
+msgstr "Удаление всей строки заголовка для максимальной недвижимости экрана. Примечание: быстрая ссылка на ваш блог будет добавлена в меню Выход на связь в субменю Пользователи. "
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:118
+msgid "Favorite Actions"
+msgstr "Предпочтительные действия"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:119
+msgid "Display Favorite Actions"
+msgstr "Отобразить предпочтительные действия"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:120
+msgid "Just in case you realize you don't need this anymore with such a fast and usable menu."
+msgstr "Только в случае, если вы поняли, что вам не нужно этого больше с таким быстрым и юзабельным меню. "
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:123
+msgid "Break Long Lists"
+msgstr "Разделять длинные списки"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:124
+#, php-format
+msgid "Break if more than %s menu entries"
+msgstr "Разделять, если в меню содержится больше, чем %s элементов"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:125
+msgid "If a dropdown gets longer than this value, it will switch to horizontal mode so that it will hopefully fit in your screen (requires javascript)"
+msgstr "Если выпадающем меню данное число элементов, перейти в горизонтальный режим, поскольку он более компактен (требуется javascript)"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:128
+msgid "Top Links"
+msgstr "Верхние ссылки"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:129
+msgid "Make top links clickable"
+msgstr "Сделать верхние ссылки кликабельными"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:130
+msgid "Uncheck this option to improve compatibility with browsers that cannot handle the \"hover\" event (<em>ie</em> most handheld devices)"
+msgstr "Снимите эту опцию для улучшения совместимости с браузерами, которые не могут справиться с \"hover\" событиями (<em>ie</ em> на большинстве портативных устройств) "
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:133
+msgid "Hide \"0\" Bubbles"
+msgstr "Убрать \"0\" пузыри"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:134
+msgid "Hide speech bubbles when no awaiting comments or outdated plugins"
+msgstr "Убрать говорящие подсказки если нет комментариев или просроченные плагины"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:135
+msgid "Check if those tiny \"0\" speech bubble are too distracting for your taste"
+msgstr "Отметьте, если эти крошечные  подсказки слишком отвлекают, на ваш вкус"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:138
+msgid "Give Some &hearts;"
+msgstr "Дайте несколько &сердечек;"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:139
+#, php-format
+msgid "Do you like this plugin? Then <a href=\"%s\">rate it 5 Stars</a> on the official Plugin Directory!"
+msgstr "Вам нравится этот плагин? Тогда <a href=\"%s\">оцените его в 5 звезд</a> на официальном сайте плагинов!"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:140
+#, php-format
+msgid "Do you <em>love</em> this plugin? Please <a href=\"%s\">blog about it</a>! Tell your readers you like it so they will discover, try and hopefully like it too&nbsp;:)"
+msgstr "Вам <em>нравится</em> этот плагин? Пожалуйста <a href=\"%s\">напишите об этом</a>! :)"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:141
+#, php-format
+msgid "Are you <span id=\"totallycrazy\">crazy</span> about this plugin? <a href=\"%s\">Paypal me a beer</a>! Every donation warms my heart and motivates me to release free stuff!"
+msgstr "Вы <span id=\"totallycrazy\">без ума</span> от плагина? <a href=\"%s\">Дайте мне денег</a>!"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:248
+msgid "Save Changes"
+msgstr "Сохранить настройки"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:254
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:268
+msgid "Reset Settings"
+msgstr "Сбить настройки"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:263
+msgid "Clicking the following button will remove all the settings for this plugin from your database. You might want to do so in the following cases:"
+msgstr "Нажмите следующую кнопку, чтобы удалить все настройки плагина из базы данных. Вы должны сделать следующее:"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:265
+msgid "you want to uninstall the plugin and leave no unnecessary entries in your database."
+msgstr "вы хотите деинсталлировать плагин и оставить несуществующие значения в БД."
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:266
+msgid "you want all settings to be reverted to their default values"
+msgstr "вы хотите возвратить первоначальные значения настроек."
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:268
+msgid "Really do?"
+msgstr "Действительно сделать это?"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:269
+msgid "There is no undo, so be very sure you want to click the button!"
+msgstr "Это нельзя отменить, будьте осторожны при нажатии на эту кнопку!"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:46
+msgid "Icons and Colors"
+msgstr "Иконки и цвета"
+
+#: E:\home\planetozh\wordpress\wp-content\plugins\ozh-admin-drop-down-menu/inc/options.php:110
+msgid "Advanced Settings"
+msgstr "Расширенные настройки"
+
+#~ msgid "Icons"
+#~ msgstr "Iconos"
+#~ msgid "Submenus"
+#~ msgstr "Submenús"
+#~ msgid "Display sub menus the regular way"
+#~ msgstr "Mostrar submenús de la forma normal"
+#~ msgid ""
+#~ "Some like it better when sub menus don't even need you to hover the top "
+#~ "menu link"
+#~ msgstr ""
+#~ "Algunos prefieren cuando los submenús no requiren que te posiciones sobre "
+#~ "la opción principal del menú para desplegarse"
+#~ msgid "(might need a page refresh here)"
+#~ msgstr "(puede necesitar volver a cargar la página aquí)"
+

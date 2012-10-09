@@ -1,0 +1,253 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: umapper\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-05 10:59+0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Victor Farazdagi <victor@afcomponents.com>\n"
+"Language-Team: CrabDish <support@afcomponents.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ../..\n"
+
+#: ../../Umapper.php:327
+#: ../../Umapper/Pages/GeneralConfig.php:94
+msgid "UMapper Configuration"
+msgstr "Конфигурация UMapper"
+
+#: ../../Umapper/Messages.php:45
+msgid "Umapper requires API key."
+msgstr ""
+
+#: ../../Umapper/Messages.php:46
+#, php-format
+msgid "You must <a href=\"%1$s\">enter your umapper.com API key</a> for plugin to work."
+msgstr ""
+
+#: ../../Umapper/Messages.php:51
+msgid "Umapper located WordPressMU installation - integrator's API key required."
+msgstr ""
+
+#: ../../Umapper/Messages.php:52
+#, php-format
+msgid "You must <a href=\"%1$s\">enter your API key</a> for plugin to work.<br>If you do not configure the key, your users would have to do so on per blog basis."
+msgstr ""
+
+#: ../../Umapper/Messages.php:57
+msgid "Umapper was NOT able to locate primary blog."
+msgstr ""
+
+#: ../../Umapper/Messages.php:58
+#, php-format
+msgid "Please <a href=\"%1$s\">contact our support</a>!"
+msgstr ""
+
+#: ../../Umapper/Messages.php:63
+msgid "Umapper Requirements Failed."
+msgstr ""
+
+#: ../../Umapper/Messages.php:64
+#, php-format
+msgid "Plugin requires PHP %1$s+ and WordPress %2$s+ to work correctly!"
+msgstr ""
+
+#: ../../Umapper/Messages.php:68
+msgid "Your key has been cleared."
+msgstr ""
+
+#: ../../Umapper/Messages.php:72
+msgid "Your connection details have been cleared."
+msgstr ""
+
+#: ../../Umapper/Messages.php:76
+msgid "Your key has been saved. Make sure that it is valid!"
+msgstr ""
+
+#: ../../Umapper/Messages.php:80
+msgid "Your connection details have been saved. Make sure that they are valid!"
+msgstr ""
+
+#: ../../Umapper/Messages.php:84
+msgid "API key valid. Happy blogging!"
+msgstr ""
+
+#: ../../Umapper/Messages.php:88
+msgid "Connection details are valid. Happy blogging!"
+msgstr ""
+
+#: ../../Umapper/Messages.php:92
+msgid "API key invalid. Make sure you entered correct key!"
+msgstr ""
+
+#: ../../Umapper/Messages.php:96
+msgid "Connection details are invalid. Make sure you entered correct values!"
+msgstr ""
+
+#: ../../Umapper/Messages.php:100
+msgid "Map data updated.."
+msgstr ""
+
+#: ../../Umapper/Messages.php:104
+msgid "Map data can NOT be saved..Please try again!"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:161
+msgid "Add UMapper Map"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:209
+msgid "Map Details"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:210
+msgid "Map Editor"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:211
+msgid "My Maps"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:284
+msgid "Map Title"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:289
+msgid "Map Description"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:294
+msgid "Map Provider"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:307
+msgid "Update Map"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:309
+msgid "Create Map"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:314
+#: ../../Umapper/Shortcode.php:377
+msgid "Insert Map"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:318
+msgid "Proceed to Map Editor"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:400
+msgid "Select map size"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:403
+msgid "Square"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:404
+msgid "Thumbnail"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:405
+msgid "Small"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:406
+msgid "Medium"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:407
+msgid "Large"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:411
+msgid "Select map alignment"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:414
+msgid "Default"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:415
+msgid "Left"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:416
+msgid "Center"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:417
+msgid "Right"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:421
+msgid "Cancel"
+msgstr ""
+
+#: ../../Umapper/Shortcode.php:422
+msgid "Insert"
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfig.php:58
+#: ../../Umapper/Pages/GeneralConfigMu.php:88
+msgid "Cheatin&#8217; uh?"
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfig.php:91
+#: ../../Umapper/Pages/GeneralConfigMu.php:111
+msgid "Options saved."
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfig.php:97
+#, php-format
+msgid "In order to get access to UMapper API you need to <a href=\"%1$s\">obtain API-key</a>. This procedure is done only once. (<a href=\"%2$s\">More info</a>)"
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfig.php:98
+msgid "UMapper.com API Key"
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfig.php:102
+msgid "Validate key"
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfig.php:104
+#: ../../Umapper/Pages/GeneralConfigMu.php:129
+msgid "Save Changes"
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:60
+#: ../../Umapper/Pages/GeneralConfigMu.php:61
+msgid "UMapper"
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:114
+msgid "UMapperMU Integrator Configuration"
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:117
+#, php-format
+msgid "In order to allow all hosted blogs to use UMapper Plugin without entering API key each time, <a href=\"%1$s\">obtain and use Integrator's API Key</a>."
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:121
+msgid "Username"
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:123
+msgid "Password"
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:125
+msgid "API Key"
+msgstr ""
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:127
+msgid "Test Connection"
+msgstr ""
+

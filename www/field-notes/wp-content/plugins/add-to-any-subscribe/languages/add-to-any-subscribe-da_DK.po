@@ -1,0 +1,207 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Add-to-any-subscribe in Danish\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-25 00:55-0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: MicroPat\n"
+"Language-Team: Team Blogos <wordpress@blogos.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: plural=2; plural=n != 1;\n"
+"X-Poedit-Language: Danish\n"
+"X-Poedit-Country: DENMARK\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_c;__ngettext_noop:1,2\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: add-to-any-subscribe.php:155
+msgid "Share"
+msgstr "Del"
+
+#: add-to-any-subscribe.php:156
+msgid "Save"
+msgstr "Gem"
+
+#: add-to-any-subscribe.php:157
+#: add-to-any-subscribe.php:465
+msgid "Subscribe"
+msgstr "Subskribér"
+
+#: add-to-any-subscribe.php:158
+msgid "E-mail"
+msgstr "E-mail"
+
+#: add-to-any-subscribe.php:159
+msgid "Bookmark"
+msgstr "Bogmærk"
+
+#: add-to-any-subscribe.php:160
+msgid "Show all"
+msgstr "Vis alle"
+
+#: add-to-any-subscribe.php:161
+msgid "Show less"
+msgstr "Vis mindre"
+
+#: add-to-any-subscribe.php:162
+msgid "Find service(s)"
+msgstr "Find service(s)"
+
+#: add-to-any-subscribe.php:163
+msgid "Instantly find any service to add to"
+msgstr "Find øjeblikkeligt alle services der skal tilføjes"
+
+#: add-to-any-subscribe.php:164
+msgid "Powered by"
+msgstr "Kører på"
+
+#: add-to-any-subscribe.php:165
+msgid "Share via e-mail"
+msgstr "Del via e-mail"
+
+#: add-to-any-subscribe.php:166
+msgid "Subscribe via e-mail"
+msgstr "Subskribér via e-mail"
+
+#: add-to-any-subscribe.php:167
+msgid "Bookmark in your browser"
+msgstr "Bogmærk i din browswer"
+
+#: add-to-any-subscribe.php:168
+msgid "Press Ctrl+D or Cmd+D to bookmark this page"
+msgstr "Tryk Ctrl+D eller Cmd+D for at bogmærke denne side"
+
+#: add-to-any-subscribe.php:169
+msgid "Add to your favorites"
+msgstr "Tilføj til dine favoritter"
+
+#: add-to-any-subscribe.php:170
+msgid "Send from any e-mail address or e-mail program"
+msgstr "Send fra enhver e-mail-adresse eller e-mail program"
+
+#: add-to-any-subscribe.php:171
+msgid "E-mail program"
+msgstr "E-mail program"
+
+#: add-to-any-subscribe.php:196
+msgid "Your theme needs to be fixed. To fix your theme, use the <a href=\"theme-editor.php\">Theme Editor</a> to insert <code>&lt;?php wp_footer(); ?&gt;</code> just before the <code>&lt;/body&gt;</code> line of your theme's <code>footer.php</code> file."
+msgstr "Dit tema skal repareres. For at gøre det skal du bruge <a href=\"theme-editor.php\">temaeditoren</a> til at indsætte koden <code>&lt;?php wp_footer(); ?&gt;</code> lige før <code>&lt;/body&gt;</code>-linjen i dit temas <code>footer.php</code>-fil."
+
+#: add-to-any-subscribe.php:243
+msgid "Title (optional)"
+msgstr "Titel (valgfri)"
+
+#: add-to-any-subscribe.php:274
+#: add-to-any-subscribe.php:368
+msgid "Image URL"
+msgstr "Billed-URL"
+
+#: add-to-any-subscribe.php:282
+#: add-to-any-subscribe.php:375
+msgid "Text only"
+msgstr "Kun tekst"
+
+#: add-to-any-subscribe.php:288
+msgid "More Settings"
+msgstr "Flere indstillinger"
+
+#: add-to-any-subscribe.php:318
+msgid "Settings saved."
+msgstr "Indstillinger gemt"
+
+#: add-to-any-subscribe.php:329
+msgid "Add to Any: Subscribe "
+msgstr "Tilføj til ethvert program: Subskribér"
+
+#: add-to-any-subscribe.php:329
+#: add-to-any-subscribe.php:465
+msgid "Settings"
+msgstr "Indstillinger"
+
+#: add-to-any-subscribe.php:339
+msgid "Button"
+msgstr "Knap"
+
+#: add-to-any-subscribe.php:382
+msgid "Button Placement"
+msgstr "Placering af knap"
+
+#: add-to-any-subscribe.php:384
+msgid "If you are using a widget-ready theme, you can use the <a href=\"widgets.php\">widgets page</a> to place the button where you want in your sidebar."
+msgstr "Hvis du bruger et tema forberedt for widgets, kan du bruge <a href=\"widgets.php\">widgets-siden</a> til at placere knappen i dit sidepanel, hvor det passer dig."
+
+#: add-to-any-subscribe.php:385
+msgid "Open Widgets Panel"
+msgstr "Åbn Widgets-panelet"
+
+#: add-to-any-subscribe.php:386
+msgid "Alternatively, you can place the following code in <a href=\"theme-editor.php\">your template pages</a> (within <code>sidebar.php</code>, <code>index.php</code>, <code>single.php</code>, and/or <code>page.php</code>)"
+msgstr "Du kan også placere den følgende kode i <a href=\"theme-editor.php\">dine skabelonsider</a> (i en af filerne <code>sidebar.php</code>, <code>index.php</code>, <code>single.php</code>, og/eller <code>page.php</code>)"
+
+#: add-to-any-subscribe.php:391
+msgid "Menu Style"
+msgstr "Menu-typografi"
+
+#: add-to-any-subscribe.php:393
+msgid "Using Add to Any's Menu Styler, you can customize the colors of your Subscribe menu! When you're done, be sure to paste the generated code in the <a href=\"#\" onclick=\"document.getElementById('A2A_SUBSCRIBE_additional_js_variables').focus();return false\">Additional Options</a> box below."
+msgstr "Ved at bruge Add to Any's menutypograf kan du tilpasse farverne på din Subskribér-menu! Når du har gjort det, skal du sørge for at indsætte den genererede kode i <a href=\"#\" onclick=\"document.getElementById('A2A_SUBSCRIBE_additional_js_variables').focus();return false\">Yderligere indstillinger</a>-boksen nedenfor."
+
+#: add-to-any-subscribe.php:395
+msgid "Open the Add to Any Menu Styler in a new window"
+msgstr "Åben Add to Any-menutypografen i et nyt vindue"
+
+#: add-to-any-subscribe.php:397
+msgid "Open Menu Styler"
+msgstr "Åben menutypografen"
+
+#: add-to-any-subscribe.php:402
+msgid "Menu Options"
+msgstr "Menuvalgmuligheder"
+
+#: add-to-any-subscribe.php:407
+msgid "Hide embedded objects (Flash, video, etc.) that intersect with the menu when displayed"
+msgstr "Skjul indlejrede objekter (flash, video, osv.) som kan påvirke menuen, når den vises"
+
+#: add-to-any-subscribe.php:412
+msgid "Show the title of this blog within the menu"
+msgstr "Vis titlen på bloggen i menuen"
+
+#: add-to-any-subscribe.php:419
+msgid "Only show the menu when the user clicks the Subscribe button"
+msgstr "Vis kun menuen når bruger klikker på Subskribér-knappen"
+
+#: add-to-any-subscribe.php:425
+msgid "Open the addtoany.com menu page in a new tab or window if the user clicks the Subscribe button"
+msgstr "Åben menusiden på addtoany.com i en ny fane eller vindue hvis brugeren klikker på Subscribér-knappen"
+
+#: add-to-any-subscribe.php:430
+msgid "Additional Options"
+msgstr "Yderligere indstillinger"
+
+#: add-to-any-subscribe.php:434
+msgid "Paste the code from Add to Any's Menu Styler in the box below!"
+msgstr "Indsæt koden fra Add to Any's menutypograf i boksen nedenfor!"
+
+#: add-to-any-subscribe.php:438
+msgid "Below you can set special JavaScript variables to apply to your Subscribe menu."
+msgstr "Nedenfor kan du angive specielle JavaScript-variabler, som skal bruges på din Subskribér-menu."
+
+#: add-to-any-subscribe.php:439
+msgid "Advanced users might want to explore Add to Any's <a href=\"http://www.addtoany.com/buttons/api/\" target=\"_blank\">JavaScript API</a>."
+msgstr "Avancerede brugere kan se nærmere på Add to Any's <a href=\"http://www.addtoany.com/buttons/api/\" target=\"_blank\">JavaScript API</a>."
+
+#: add-to-any-subscribe.php:445
+msgid "<strong>Note</strong>: If you're adding new code, be careful not to accidentally overwrite any previous code."
+msgstr "<strong>Bemærk</strong>: Hvis du tilføjer ny kode, så vær forsigtig, så du ikke ved et uheld overskriver eksisterende kode."
+
+#: add-to-any-subscribe.php:452
+msgid "Save Changes"
+msgstr "Gem ændringer"
+
+#: add-to-any-subscribe.php:466
+msgid "Subscribe Buttons"
+msgstr "Subskribér-knapper"
+

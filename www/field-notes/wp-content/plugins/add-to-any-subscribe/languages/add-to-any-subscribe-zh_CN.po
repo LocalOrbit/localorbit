@@ -1,0 +1,207 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: add-to-any-subscribe\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-25 00:55-0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: MicroPat\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Chinese\n"
+"X-Poedit-Country: CHINA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: add-to-any-subscribe.php:155
+msgid "Share"
+msgstr "分享"
+
+#: add-to-any-subscribe.php:156
+msgid "Save"
+msgstr "收藏"
+
+#: add-to-any-subscribe.php:157
+#: add-to-any-subscribe.php:465
+msgid "Subscribe"
+msgstr "订阅"
+
+#: add-to-any-subscribe.php:158
+msgid "E-mail"
+msgstr "电子邮件"
+
+#: add-to-any-subscribe.php:159
+msgid "Bookmark"
+msgstr "书签"
+
+#: add-to-any-subscribe.php:160
+msgid "Show all"
+msgstr "显示全部服务"
+
+#: add-to-any-subscribe.php:161
+msgid "Show less"
+msgstr "显示部分服务"
+
+#: add-to-any-subscribe.php:162
+msgid "Find service(s)"
+msgstr "查找服务"
+
+#: add-to-any-subscribe.php:163
+msgid "Instantly find any service to add to"
+msgstr "动态查找任何用以添加的服务"
+
+#: add-to-any-subscribe.php:164
+msgid "Powered by"
+msgstr "Powered by"
+
+#: add-to-any-subscribe.php:165
+msgid "Share via e-mail"
+msgstr "通过电子邮件分享"
+
+#: add-to-any-subscribe.php:166
+msgid "Subscribe via e-mail"
+msgstr "通过电子邮件订阅"
+
+#: add-to-any-subscribe.php:167
+msgid "Bookmark in your browser"
+msgstr "添加为浏览器书签"
+
+#: add-to-any-subscribe.php:168
+msgid "Press Ctrl+D or Cmd+D to bookmark this page"
+msgstr "按下 [Ctrl+D] 或 [Cmd+D] 将本页加为书签"
+
+#: add-to-any-subscribe.php:169
+msgid "Add to your favorites"
+msgstr "添加至收藏夹"
+
+#: add-to-any-subscribe.php:170
+msgid "Send from any e-mail address or e-mail program"
+msgstr "从任何电子邮件地址或电子邮件程序发送"
+
+#: add-to-any-subscribe.php:171
+msgid "E-mail program"
+msgstr "电子邮件程序"
+
+#: add-to-any-subscribe.php:196
+msgid "Your theme needs to be fixed. To fix your theme, use the <a href=\"theme-editor.php\">Theme Editor</a> to insert <code>&lt;?php wp_footer(); ?&gt;</code> just before the <code>&lt;/body&gt;</code> line of your theme's <code>footer.php</code> file."
+msgstr ""
+
+#: add-to-any-subscribe.php:243
+msgid "Title (optional)"
+msgstr ""
+
+#: add-to-any-subscribe.php:274
+#: add-to-any-subscribe.php:368
+msgid "Image URL"
+msgstr "图片 URL"
+
+#: add-to-any-subscribe.php:282
+#: add-to-any-subscribe.php:375
+msgid "Text only"
+msgstr "仅用文字"
+
+#: add-to-any-subscribe.php:288
+msgid "More Settings"
+msgstr "更多设置"
+
+#: add-to-any-subscribe.php:318
+msgid "Settings saved."
+msgstr "设置已保存"
+
+#: add-to-any-subscribe.php:329
+msgid "Add to Any: Subscribe "
+msgstr "Add to Any: 订阅"
+
+#: add-to-any-subscribe.php:329
+#: add-to-any-subscribe.php:465
+msgid "Settings"
+msgstr "设置"
+
+#: add-to-any-subscribe.php:339
+msgid "Button"
+msgstr "按钮"
+
+#: add-to-any-subscribe.php:382
+msgid "Button Placement"
+msgstr "按钮位置"
+
+#: add-to-any-subscribe.php:384
+msgid "If you are using a widget-ready theme, you can use the <a href=\"widgets.php\">widgets page</a> to place the button where you want in your sidebar."
+msgstr "如果您正在使用带有 Widget 的主题，您可以通过 <a href=\"widgets.php\">Widgets 页面</a> 将按钮摆放在侧边栏中您所希望的位置。"
+
+#: add-to-any-subscribe.php:385
+msgid "Open Widgets Panel"
+msgstr "打开 Widgets 面板"
+
+#: add-to-any-subscribe.php:386
+msgid "Alternatively, you can place the following code in <a href=\"theme-editor.php\">your template pages</a> (within <code>sidebar.php</code>, <code>index.php</code>, <code>single.php</code>, and/or <code>page.php</code>)"
+msgstr "或者，您可以将以下代码至于 <a href=\"theme-editor.php\">您的模板页面</a> 中 (包括 <code>sidebar.php</code>，<code>index.php</code>，<code>single.php</code>，与/或 <code>page.php</code>)"
+
+#: add-to-any-subscribe.php:391
+msgid "Menu Style"
+msgstr "菜单风格"
+
+#: add-to-any-subscribe.php:393
+msgid "Using Add to Any's Menu Styler, you can customize the colors of your Subscribe menu! When you're done, be sure to paste the generated code in the <a href=\"#\" onclick=\"document.getElementById('A2A_SUBSCRIBE_additional_js_variables').focus();return false\">Additional Options</a> box below."
+msgstr "使用 Add to Any 的菜单风格设置器，您可以自定义您的 订阅 菜单的颜色！完成后，请将生成的代码粘贴于下方 <a href=\"#\" onclick=\"document.getElementById('A2A_SUBSCRIBE_additional_js_variables').focus();return false\">附加选项</a> 框内。"
+
+#: add-to-any-subscribe.php:395
+msgid "Open the Add to Any Menu Styler in a new window"
+msgstr "在新窗口中打开 Add to Any 菜单风格设置器"
+
+#: add-to-any-subscribe.php:397
+msgid "Open Menu Styler"
+msgstr "打开菜单风格设置器"
+
+#: add-to-any-subscribe.php:402
+msgid "Menu Options"
+msgstr "菜单选项"
+
+#: add-to-any-subscribe.php:407
+msgid "Hide embedded objects (Flash, video, etc.) that intersect with the menu when displayed"
+msgstr "菜单显示时隐藏与菜单相交的嵌入式对象(Flash，视频，等)"
+
+#: add-to-any-subscribe.php:412
+msgid "Show the title of this blog within the menu"
+msgstr "菜单中显示Blog的标题"
+
+#: add-to-any-subscribe.php:419
+msgid "Only show the menu when the user clicks the Subscribe button"
+msgstr "仅当用户点击 订阅 按钮时显示菜单"
+
+#: add-to-any-subscribe.php:425
+msgid "Open the addtoany.com menu page in a new tab or window if the user clicks the Subscribe button"
+msgstr "如用户点击 订阅 按钮，在新标签页或新窗口中打开 addtoany.com 菜单页面"
+
+#: add-to-any-subscribe.php:430
+msgid "Additional Options"
+msgstr "附加选项"
+
+#: add-to-any-subscribe.php:434
+msgid "Paste the code from Add to Any's Menu Styler in the box below!"
+msgstr "粘贴 Add to Any 菜单风格设置器生成的代码于下方框内！"
+
+#: add-to-any-subscribe.php:438
+msgid "Below you can set special JavaScript variables to apply to your Subscribe menu."
+msgstr "您可以设置特殊 JavaScript 变量以应用于全部 订阅 菜单。"
+
+#: add-to-any-subscribe.php:439
+#, fuzzy
+msgid "Advanced users might want to explore Add to Any's <a href=\"http://www.addtoany.com/buttons/api/\" target=\"_blank\">JavaScript API</a>."
+msgstr "高级用户可能希望尝试 Add to Any 的 <a href=\"http://www.addtoany.com/buttons/api/\">JavaScript API</a> 所生成的代码。"
+
+#: add-to-any-subscribe.php:445
+msgid "<strong>Note</strong>: If you're adding new code, be careful not to accidentally overwrite any previous code."
+msgstr "<strong>注意</strong>: 如果您打算添加新代码，请小心不要意外覆盖任何先前代码。"
+
+#: add-to-any-subscribe.php:452
+msgid "Save Changes"
+msgstr "保存更改"
+
+#: add-to-any-subscribe.php:466
+msgid "Subscribe Buttons"
+msgstr "订阅 按钮"
+

@@ -1,0 +1,364 @@
+div.buttonset{
+	margin-top: 10px;
+	text-align:left;
+	border: #ddd 3px solid;
+	border-width: 2px 0px 0px 0px;
+	margin-top: 10px;
+	padding-top: 10px; 
+	text-align: right;
+}
+
+div.error{
+	color: <?=$options['p2b']?>;
+	font-weight: bold;
+	padding-bottom: 4px;
+}
+
+table.form{
+	border-collapse: separate;
+	border-spacing: 2px;
+}
+
+.info_toggle{
+	margin-left: 6px;
+	margin-top: -2px;
+	display: inline-block;
+	width: 20px;
+	height: 27px;
+	background-position: top left;
+	background-image:url(../img/default/icons/info.gif);
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.info_toggle:hover{
+	background-image:url(../img/default/icons/info_o.gif);
+}
+
+.info_area{
+	display: none;
+	border: <?=$options['p4b']?> 1px solid;
+	padding: 3px 7px 3px 42px;
+	border-radius: 3px;
+	margin: 3px 0px 8px 0px;
+	background-color: <?=$options['p4a']?>;
+	background-repeat: no-repeat;
+	background-position: 6px 7px;
+	min-height: 40px;
+	
+}
+.info_area_speech{
+	background-image:url(../img/default/icons/ellipsis_bubble.png);
+}
+.info_area_paperclip{
+	background-image:url(../img/default/icons/paperclip.png);
+}
+.info_area_edit{
+	background-image:url(../img/default/icons/edit.png);
+}
+
+td.label{
+	text-align: right;
+	vertical-align: top;
+	padding: 3px 6px 0px 0px;
+	width: 150px;
+	color: <?=$options['p4c']?>;
+	margin-bottom: 2px;
+}
+td.value{
+	text-align: left;
+	vertical-align: top;
+	color: <?=$options['p4e']?>;
+	padding: 3px 3px 0px 0px;
+/*
+	margin-bottom: 2px;
+*/
+}
+
+div.sublabel{
+	color: <?=$options['p4c']?>;
+	font-size: 85%;
+}
+
+input[type=text],input[type=password],input[type=file],textarea{
+	border-radius: 3px;
+	border: <?=$options['p4c']?> 1px solid;
+	padding: 1px 3px 1px 3px;
+	margin: 0px;
+}
+
+input[type=text],input[type=password],input[type=file]{
+	width: 250px;
+	height: 20px;
+}
+
+input[type=file]{
+	font-size:70%;
+}
+
+input[type=text].invalid,input[type=password].invalid,input[type=text].invalid:focus,input[type=password].invalid:focus,textarea.invalid:focus{
+	border: <?=$options['p2b']?> 1px solid;
+	background-color: <?=$options['p2a']?>;
+}
+
+select.invalid{
+	background-color: <?=$options['p2a']?>;
+}
+
+select{
+	width: 205px;
+	height: 28px;
+	vertical-align: top;
+	font-size: 90%;
+}
+option{
+	vertical-align: top;
+}
+
+input[type=text]:focus,input[type=password]:focus,input[type=file]:focus,textarea:focus{
+	background-color: <?=$options['p3a']?>;
+}
+
+input.datepicker{
+	background-image: url(../img/default/calendar.png);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+
+.button_primary,.button_secondary,.button_disabled{
+	border: #660000 1px double;
+	background-color: #964040;
+	/*#EcA8Af;*/
+	color: #fff;
+	padding: 7px 12px;
+	font-size: 110%;
+	text-transform: lowercase;
+	background-repeat: no-repeat;
+/*
+	box-shadow: 0px 0px 2px <?=$options['p2a']?>;
+*/
+	border-radius: 6px;
+	margin-bottom: 5px;
+}
+.button_primary:hover,.button_secondary:hover,.button_disabled:hover{
+	opacity: 0.9;
+	cursor: pointer;
+}
+
+.button_alternate{
+	opacity: 0.65;
+}
+
+
+.button_secondary{
+	border: <?=$options['p1d']?> 1px double;
+	background-color: <?=$options['p1a']?>;
+	color: <?=$options['p1f']?>;
+/*
+	box-shadow: 0px 0px 2px <?=$options['p1d']?>;
+*/
+}
+
+.button_disabled{
+}
+
+.tabset{
+	margin-top:3px;
+}
+
+.tabswitch{
+	cursor: pointer;
+	color: <?=$options['p1e']?>;
+	padding: 2px 6px;
+	display: inline-block;
+	margin-right: 2px;
+	background-color: <?=$options['p1b']?>;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border: <?=$options['p1c']?> 1px solid;
+	border-bottom-color: <?=$options['p1b']?>;
+	zoom: 1;
+	*display: inline;
+}
+
+.tabswitch_on{
+	color: <?=$options['p4f']?>;
+	background-color: <?=$options['p1e']?>;
+	border: <?=$options['p1c']?> 1px solid;
+	border-bottom-color: <?=$options['p1e']?>;
+}
+
+.tabarea{
+	display: none;
+	border: <?=$options['p1e']?> 4px solid;
+	padding: 10px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+#datePicker{
+	background-color: <?=$options['p4f']?>;
+	border: <?=$options['p1f']?> 1px solid;
+}
+table.datePicker{
+	border: <?=$options['p4f']?> 1px solid;
+	border-collapse:separate;
+}
+td.datePicker{
+	cursor: pointer;
+	border: <?=$options['p4f']?> 1px solid;
+	margin: 1px;
+	font-size: 90%;
+	
+}
+td.datePicker:hover{
+	cursor: pointer;
+	border: <?=$options['p1c']?> 1px solid;
+	background-color: <?=$options['p4b']?>;
+
+}
+
+.checkdiv,.radiodiv{
+	margin: 3px 0px;
+	padding: 2px 6px 2px 22px;
+	cursor: pointer;
+	border-radius: 3px;
+	background-image: url(../img/default/checkdiv_unchecked.png);
+	background-repeat: no-repeat;
+	text-align: left;
+	color: <?=$options['p4c']?>;
+	display: inline;
+}
+.checkdiv:hover,.radiodiv:hover{
+	opacity: 0.8;
+}
+
+.checkdiv_checked,.radiodiv_checked{
+	background-image: url(../img/default/checkdiv_checked.png);
+	color: <?=$options['p4e']?>;
+}
+
+.radiodiv{
+	background-image: url(../img/default/radiodiv_unchecked.png);
+}
+
+.radiodiv_checked{
+	background-image: url(../img/default/radiodiv_checked.png);
+}
+
+.tagset_hide{
+	display: none;
+}
+
+div.tagset{
+	padding: 3px 0px;
+}
+.tagset_link{
+	opacity: 0.6;
+	margin-right: 3px;
+
+	padding: 3px 5px 3px 24px;
+	background-image: url(../img/default/tag.png);
+	background-repeat: no-repeat;
+	border: <?=$options['p4b']?> 1px solid;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.tagset_link_on{
+	opacity: 1;
+	border-color: <?=$options['p4c']?>;
+}
+
+.google_map{
+	border:  <?=$options['p4c']?> 1px solid;
+	box-shadow: 0px 0px 5px <?=$options['p4a']?>;
+}
+
+.image_button{
+	background-repeat: no-repeat;
+	background-position: 137px 5px;
+	width: 170px;	
+}
+
+.required{
+	color: <?=$options['p2a']?>;
+}
+
+select.col_selector,select.col_selector:active,select.col_selector:focus{
+	border: #ccc 3px solid;
+	border-radius: 3px;
+	height: inherit;
+	width: 260px;
+	font-size: 95%;
+}
+
+
+td.col_selector{
+	text-align:left;
+	vertical-align: top;
+	display:none;
+}
+
+
+div.form_divider{
+	margin: 10px 0px;
+	background-image: url(../img/default/catalog_dash.png);
+	background-position: 5px 5px;
+	background-repeat: repeat-x;
+	height: 15px;
+	overflow:hidden;
+}
+
+
+
+
+.ac_results {
+	padding: 0px;
+	border: 1px solid <?=$options['p4c']?>;
+	background-color: white;
+	overflow: hidden;
+	z-index: 99999;
+}
+
+.ac_results ul {
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ac_results li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: default;
+	display: block;
+	text-align: left;
+	/* 
+	if width will be 100% horizontal scrollbar will apear 
+	when scroll mode will be used
+	*/
+	/*width: 100%;*/
+	font: menu;
+	font-size: 12px;
+	/* 
+	it is very important, if line-height not setted or setted 
+	in relative units scroll will be broken in firefox
+	*/
+	line-height: 16px;
+	overflow: hidden;
+}
+
+.ac_loading {
+	background: white url('../img/default/loading-progress.gif') right center no-repeat;
+}
+
+.ac_odd {
+	background-color: <?=$options['p4a']?>;
+}
+
+.ac_over {
+	background-color: <?=$options['p4g']?>;
+}

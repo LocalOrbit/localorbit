@@ -1,0 +1,1282 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-02-08 20:39+0100\n"
+"Last-Translator: alakhnor <alakhnor@wanadoo.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: ..\\sourceadmin\n"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb.php:877
+#: ..\sourceadmin/post-thumb-options.php:139
+msgid "Posts: "
+msgstr "Articles : "
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:185
+#: ..\sourceadmin/post-thumb-options.php:139
+msgid "updated"
+msgstr "mis à jour"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:185
+#: ..\sourceadmin/post-thumb-options.php:437
+msgid "Update error:"
+msgstr "Erreur de mise à jour"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:78
+#: ..\sourceadmin/post-thumb-options.php:440
+msgid "Settings saved"
+msgstr "Configuration sauvegardée"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:63
+#: ..\sourceadmin/post-thumb-options.php:482
+msgid "Post Thumb Revisited Options"
+msgstr "Options Post Thumb Revisited"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:486
+msgid "New Version available: "
+msgstr "Nouvelle version disponible :"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:487
+msgid "The server reports that a new Post-Thumb Revisited Version is now available. Please visit the plugin homepage for more information."
+msgstr "Le serveur indique qu'une nouvelle version de Post-thumb revisited est disponible. Visitez le site du plugin pour plus d'informations."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:488
+msgid "Version number: "
+msgstr "Numéro de version : "
+
+#: ..\sourceadmin/post-thumb-options.php:494
+#: ..\sourceadmin/post-thumb-options.php:505
+#: ..\sourceadmin/post-thumb-options.php:1021
+#: ..\sourceadmin/post-thumb-options.php:1068
+msgid "Overview"
+msgstr "Informations"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-options.php:412
+#: ..\sourceadmin/post-thumb-options.php:495
+#: ..\sourceadmin/post-thumb-options.php:570
+#: ..\sourceadmin/post-thumb-options.php:1071
+msgid "Basic options"
+msgstr "Options de base"
+
+#: ..\sourceadmin/post-thumb-options.php:496
+#: ..\sourceadmin/post-thumb-options.php:653
+#: ..\sourceadmin/post-thumb-options.php:1081
+msgid "Thumbnail options"
+msgstr "Options des miniatures"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-options.php:414
+#: ..\sourceadmin/post-thumb-options.php:497
+#: ..\sourceadmin/post-thumb-options.php:731
+#: ..\sourceadmin/post-thumb-options.php:1084
+msgid "Additional options"
+msgstr "Options Supplémentaires"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-options.php:412
+#: ..\sourceadmin/post-thumb-options.php:498
+#: ..\sourceadmin/post-thumb-options.php:808
+#: ..\sourceadmin/post-thumb-options.php:1087
+msgid "Javascript options"
+msgstr "Options Javascript"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-options.php:412
+#: ..\sourceadmin/post-thumb-options.php:499
+#: ..\sourceadmin/post-thumb-options.php:900
+#: ..\sourceadmin/post-thumb-options.php:1090
+msgid "Post options"
+msgstr "Options des articles"
+
+#: ..\sourceadmin/post-thumb-options.php:500
+msgid "Help"
+msgstr "Aide"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:97
+#: ..\sourceadmin/post-thumb-options.php:507
+msgid "Post Table settings"
+msgstr "Options de la table"
+
+#: ..\sourceadmin/post-thumb-options.php:510
+msgid "Posts viewed by Post-Thumb: "
+msgstr "Articles vus par Post-Thumb : "
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb.php:877
+#: ..\sourceadmin/post-thumb-options.php:511
+msgid "Posts in database: "
+msgstr "Articles dans la base : "
+
+#: ..\sourceadmin/post-thumb-options.php:522
+msgid "Check this to refresh Post database. Cases when you need to refresh it: "
+msgstr "Cochez pour rafraîchir la base des articles. Voici les cas dans lesquels vous serez amené à le faire : "
+
+#: ..\sourceadmin/post-thumb-options.php:524
+msgid "You've changed one of the following options: 'Use metadata', 'Detect wordTube media', 'Detect Youtube'."
+msgstr "Vous avez modifié une des options suivantes :  'Utiliser les metadata', 'Détection des media wordTube', 'Détection vidéos Youtube'."
+
+#: ..\sourceadmin/post-thumb-options.php:525
+msgid "You've deleted a category."
+msgstr "Vous avez supprimé une catégorie."
+
+#: ..\sourceadmin/post-thumb-options.php:526
+msgid "You have a large post base and activation process was not completed."
+msgstr "Vous avez un grand nombre d'articles, et le processus d'activation n'a pu être mené à son terme."
+
+#: ..\sourceadmin/post-thumb-options.php:527
+msgid "You've changed the permalinks."
+msgstr "Vous avez modifié les permaliens."
+
+#: ..\sourceadmin/post-thumb-options.php:528
+msgid "You have the feeling that recent_thumbs and random_thumb do not work properly."
+msgstr "Vous avez l'impression que recent_thumbs et random_thumb ne fonctionnent pas correctement."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:534
+msgid "System check"
+msgstr "Vérification de la configuration du système"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:216
+#: ..\sourceadmin/post-thumb-options.php:537
+msgid "PHP version"
+msgstr "PHP version"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:540
+msgid "Remote files"
+msgstr "Fichiers distants"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:541
+msgid "Retrieve remote file is OK"
+msgstr "Récupération de fichier distants OK"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:541
+msgid "Retrieve remote file is OK using cURL"
+msgstr "Récupération de fichier distants avec cURL OK"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:541
+msgid "Retrieve remote file not allowed on this server."
+msgstr "Récupération de fichier distants non-autorisée sur ce serveur"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:218
+#: ..\sourceadmin/post-thumb-options.php:542
+msgid "Dealing with remote file also requires php 4.3.0 or later"
+msgstr "L'utilisation de fichiers distants requiert également php 4.3.0 ou supérieur"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:221
+#: ..\sourceadmin/post-thumb-options.php:544
+msgid "GD version"
+msgstr "GD version"
+
+#: ..\sourceadmin/post-thumb-options.php:547
+msgid "Safe mode"
+msgstr "Safe mode"
+
+#: ..\sourceadmin/post-thumb-options.php:548
+msgid "Safe mode on"
+msgstr "Safe mode actif"
+
+#: ..\sourceadmin/post-thumb-options.php:548
+msgid "Safe mode off"
+msgstr "Safe mode inactif"
+
+#: ..\sourceadmin/post-thumb-options.php:550
+msgid "Memory limit"
+msgstr "Limite mémoire"
+
+#: ..\sourceadmin/post-thumb-options.php:551
+msgid "Cannot Retrieve memory limit"
+msgstr "Impossible de récupérer la limite mémoire"
+
+#: ..\sourceadmin/post-thumb-options.php:553
+msgid "Memory usage"
+msgstr "Utilisation de la mémoire"
+
+#: ..\sourceadmin/post-thumb-options.php:554
+msgid "Function memory_get_usage available"
+msgstr "Fonction memory_get_usage disponible"
+
+#: ..\sourceadmin/post-thumb-options.php:554
+msgid "Function memory_get_usage not available"
+msgstr "Fonction memory_get_usage non disponible"
+
+#: ..\sourceadmin/post-thumb-options.php:556
+msgid "Set Memory limit"
+msgstr "Set Memory limit"
+
+#: ..\sourceadmin/post-thumb-options.php:557
+msgid "Memory cannot be set"
+msgstr "La mémoire ne peut être gérée"
+
+#: ..\sourceadmin/post-thumb-options.php:557
+msgid "Memory can be set"
+msgstr "La mémoire peut être gérée"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:559
+#: ..\sourceadmin/post-thumb-options.php:1150
+msgid "wordTube"
+msgstr "wordTube"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:185
+#: ..\sourceadmin/post-thumb-options.php:564
+#: ..\sourceadmin/post-thumb-options.php:647
+#: ..\sourceadmin/post-thumb-options.php:726
+#: ..\sourceadmin/post-thumb-options.php:803
+#: ..\sourceadmin/post-thumb-options.php:895
+#: ..\sourceadmin/post-thumb-options.php:1002
+msgid "Update"
+msgstr "Mise à jour"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:572
+msgid "Leave default settings if you're unsure of what to set."
+msgstr "Laissez les paramètres par défaut si vous hésitez."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:68
+#: ..\sourceadmin/post-thumb-options.php:575
+msgid "Location settings"
+msgstr "Options d'emplacement"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:88
+#: ..\sourceadmin/post-thumb-options.php:579
+msgid "Base path"
+msgstr "Chemin du domaine sur le serveur"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:110
+#: ..\sourceadmin/post-thumb-options.php:581
+#: ..\sourceadmin/post-thumb-options.php:587
+msgid "Initial default value: "
+msgstr "Valeur initiale par défaut :"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:88
+#: ..\sourceadmin/post-thumb-options.php:582
+msgid "Absolute path to website. For example, /httpdocs or /yourdomain.com. Used to find location of thumbnails on server. http://yourdomain.com/images/pth/thumb_picture.jpg would actually be /httpdocs/images/pth/thumb_picture.jpg."
+msgstr "Chemin absolu du site. Par exemple, /httpdocs ou /yourdomain.com. Utilisé pour retrouver l'emplacement des thumbnails sur le serveur. L'adresse http://yourdomain.com/images/pth/thumb_picture.jpg se traduirait en /httpdocs/images/pth/thumb_picture.jpg."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:582
+#: ..\sourceadmin/post-thumb-options.php:588
+#: ..\sourceadmin/post-thumb-options.php:593
+msgid "No trailing '/'"
+msgstr "Pas de '/' final."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:84
+#: ..\sourceadmin/post-thumb-options.php:585
+msgid "Full domain name"
+msgstr "Nom de domaine complet"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:74
+#: ..\sourceadmin/post-thumb-options.php:588
+msgid "Full domain name. Includes the http://."
+msgstr "Nom de domaine complet, incluant le http://."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:92
+#: ..\sourceadmin/post-thumb-options.php:591
+msgid "Folder name"
+msgstr "Répertoire qui contiendra les thumbnails"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:76
+#: ..\sourceadmin/post-thumb-options.php:593
+msgid "Set the relative path to thumbs. Make sure directory exists and is writable."
+msgstr "Définit le chemin relatif vers les thumbnails. Assurez-vous que le répertoire existe et peut être modifié."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:80
+#: ..\sourceadmin/post-thumb-options.php:596
+msgid "Default image"
+msgstr "Image par défaut"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:115
+#: ..\sourceadmin/post-thumb-options.php:598
+msgid "The location of the default image to use if no picture can be found. Enter in the relative url, eg. images/default.jpg"
+msgstr "L'emplacement de l'image par défaut à utiliser si aucune référence d'image n'est trouvée. Entrez l'adresse relative depuis le site, par exemple, images/default.jpg"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:132
+#: ..\sourceadmin/post-thumb-options.php:599
+msgid "If category names are used, this will override Default Image and Default Image for Videos"
+msgstr "Si les noms de catégories sont utilisés, le nouveau nom constitué remplacera l'image par défaut des images et l'image par défaut des vidéos."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:602
+msgid "Use meta data"
+msgstr "Utiliser les meta-data"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:252
+#: ..\sourceadmin/post-thumb-options.php:605
+msgid "Use Category Names"
+msgstr "Utiliser les noms de catégories"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:129
+#: ..\sourceadmin/post-thumb-options.php:610
+msgid "Filename settings"
+msgstr "Options des noms de fichiers"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:143
+#: ..\sourceadmin/post-thumb-options.php:613
+#: ..\sourceadmin/post-thumb-options.php:920
+msgid "Append / Prepend text"
+msgstr "Texte à ajouter"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:160
+#: ..\sourceadmin/post-thumb-options.php:615
+#: ..\sourceadmin/post-thumb-options.php:924
+msgid "Choose text to append or prepend image with."
+msgstr "Choix du texte à ajouter au nom de l'image pour constituer le nom du thumbnail."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:139
+#: ..\sourceadmin/post-thumb-options.php:617
+#: ..\sourceadmin/post-thumb-options.php:776
+msgid "Append"
+msgstr "Ajoute après"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:159
+#: ..\sourceadmin/post-thumb-options.php:619
+#: ..\sourceadmin/post-thumb-options.php:778
+msgid "Choose to put text before image name or after. Uncheck will put text before."
+msgstr "Sélectionner pour ajouter le texte après le nom de l'image pour constituer le nom du thumbnail. Désélectionner pour le mettre avant."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:621
+#: ..\sourceadmin/post-thumb-options.php:925
+msgid " Example: "
+msgstr " Exemple : "
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:97
+#: ..\sourceadmin/post-thumb-options.php:625
+msgid "Video image settings"
+msgstr "Options des Vidéos"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:106
+#: ..\sourceadmin/post-thumb-options.php:628
+msgid "Video regex:"
+msgstr "RegEx pour les vidéos :"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:125
+#: ..\sourceadmin/post-thumb-options.php:630
+msgid "If you want to scan a post for a video and use a default image. Uses regex to scan for video."
+msgstr "Cochez si vous souhaitez rechercher les vidéos dans les articles et afficher une image par défaut. La recherche utilisera le RegEx comme masque."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:110
+#: ..\sourceadmin/post-thumb-options.php:632
+msgid "Video default image:"
+msgstr "Image par défaut des vidéos :"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:115
+#: ..\sourceadmin/post-thumb-options.php:637
+msgid "Stream Video image settings"
+msgstr "Options des flux Vidéo"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:124
+#: ..\sourceadmin/post-thumb-options.php:640
+msgid "Stream Check:"
+msgstr "Vérification des flux vidéo :"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:144
+#: ..\sourceadmin/post-thumb-options.php:643
+msgid "If you want to scan a post for a stream video. Supports Youtube, Gvideo and Dailymotion. Will display a thumb for each specific source."
+msgstr "Sélection si vous souhaitez scanner les flux vidéos dans les articles et afficher une image par défaut. Accepte : Youtube, Gvideo and Dailymotion. Le thumbnail sera affiché en fonction de la source."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:161
+#: ..\sourceadmin/post-thumb-options.php:657
+#: ..\sourceadmin/post-thumb-options.php:914
+msgid "Resize width x height"
+msgstr "Taille de redimensionnement"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:298
+#: ..\sourceadmin/post-thumb-options.php:662
+msgid "Quality for jpeg"
+msgstr "Qualité des jpeg"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:300
+#: ..\sourceadmin/post-thumb-options.php:664
+msgid "From 0 to 100 (best quality, highest size). Default: 75"
+msgstr "De 0 à 100 (qualité la meilleure, taille maximum). Défaut: 75"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:305
+#: ..\sourceadmin/post-thumb-options.php:672
+msgid "Compression for png"
+msgstr "Compression pour png"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:307
+#: ..\sourceadmin/post-thumb-options.php:674
+msgid "From 0 (no compression, best quality) to 9. Default: 6"
+msgstr "De 0 (pas de compression, meilleure qualité) à 9. Défaut: 6"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:165
+#: ..\sourceadmin/post-thumb-options.php:681
+#: ..\sourceadmin/post-thumb-options.php:939
+msgid "Keep ratio"
+msgstr "Conserver les proportions"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:683
+#: ..\sourceadmin/post-thumb-options.php:941
+msgid "Check this option if you want to apply original picture ratio to thumbnails."
+msgstr "cochez cette option si vous voulez conserver l'aspect de l'image d'origine."
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:179
+#: ..\sourceadmin/post-thumb-options.php:684
+msgid "Choose your resize width and height. Will resize in proportion to original width and height. If you do not care about proportions, uncheck keep ratio."
+msgstr "Choisissez vos valeur de redimensionnement, largeur et hauteur. Elles seront utilisées pour redimensionner les images en proportion de l'original. Si vous ne souhaitez pas conserver les proportions, désélectionnez l'option 'Conserver les proportions'."
+
+#: ..\sourceadmin/post-thumb-options.php:687
+#: ..\sourceadmin/post-thumb-options.php:944
+msgid "Max size"
+msgstr "Taille maxi"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:689
+msgid "Check this option if you want resize to apply only if original image is smaller than target size."
+msgstr "Cochez cette option pour n'appliquer le redimensionnement qu'au cas où l'image do'rigine est plus pe."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:692
+#: ..\sourceadmin/post-thumb-options.php:949
+msgid "Use rounded corner"
+msgstr "Utiliser les arrondis d'angle"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:165
+#: ..\sourceadmin/post-thumb-options.php:695
+msgid "Corner ratio"
+msgstr "Angle des arrondis"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:696
+msgid "From 0 to 1. Typical: 0.15"
+msgstr "De 0 à 1. Typique : 0.15"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:697
+msgid "Check this option will apply rounded corner to thumbnail. It will also force use of png format for thumbnails."
+msgstr "Cocher cette option appliquera des angles arrondis aux miniatures. Cela forcera aussi l'utilisation du format png pour les miniatures."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:700
+#: ..\sourceadmin/post-thumb-options.php:953
+msgid "Use png"
+msgstr "Utiliser les png"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:702
+#: ..\sourceadmin/post-thumb-options.php:955
+msgid "Check this option if you want to save thumbnails in .png format."
+msgstr "Cochez cette option si vous voulez sauvegarder les miniatures au format png."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:703
+msgid "Check this option will increase thumbnail size (used with rounded corner checked)."
+msgstr "Cocher cette option va augmenter la taille des miniatures (utilisée si les arrondis d'angle sont sélectionnés)."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:706
+msgid "Use unsharp mask"
+msgstr "Utiliser le masque unsharp"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:708
+msgid "Check this option if you want to apply a sharpness mask to thumbnails."
+msgstr "Cochez cette option si vous voulez appliquer un masque de sharpness aux miniatures."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:709
+msgid "WARNING: check this option slows down the thumbnail creation."
+msgstr "AVERTISSEMENT : cocher cette option ralentira la création des miniatures."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:712
+msgid "Unsharp amount"
+msgstr "Niveau d'unsharp"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:714
+msgid "From 0 to 100. Typical: 80"
+msgstr "De 0 à 100. Typique : 80"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:716
+msgid "Unsharp radius"
+msgstr "Rayon d'unsharp"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:718
+msgid "From 0 to 1. Typical: 0.5"
+msgstr "De 0 à 1. Typique : 0.5"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:720
+msgid "Unsharp threshold"
+msgstr "Unsharp threshold"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:722
+msgid "From 0 to 5. Typical: 3"
+msgstr "De 0 à 5. Typique : 3"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:735
+msgid "Detect wordTube medias"
+msgstr "Détection des medias wordTube"
+
+#: ..\sourceadmin/post-thumb-options.php:737
+msgid "Scan post content for wordTube media and use them to generate thumbnails."
+msgstr "Recherche des media wordTube dans le contenu des articles et les utilise pour générer les miniatures."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:739
+msgid "Detect Youtube video"
+msgstr "Détection vidéos Youtube"
+
+#: ..\sourceadmin/post-thumb-options.php:741
+msgid "Scan post content for Youtube video and use them to generate thumbnails."
+msgstr "Recherche des vidéos Youtube dans le contenu des articles et les utilise pour générer les miniatures."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:97
+#: ..\sourceadmin/post-thumb-options.php:745
+msgid "WordTube settings"
+msgstr "Options WordTube"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:748
+msgid "wordTube display size"
+msgstr "Taille miniature wordTube"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:752
+msgid "Wordtube thumbnail size."
+msgstr "Taille de la miniature wordTube."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:753
+#: ..\sourceadmin/post-thumb-options.php:761
+#: ..\sourceadmin/post-thumb-options.php:790
+#: ..\sourceadmin/post-thumb-options.php:798
+msgid " (width x height)"
+msgstr " (largeur x hauteur)"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:756
+msgid "wordTube play size"
+msgstr "Taille d'affichage wordTube"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:760
+msgid "Size of the frame to play wordTube video."
+msgstr "Taille de la fenêtre d'affichage des vidéos wordTube."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-options.php:585
+#: ..\sourceadmin/post-thumb-options.php:764
+msgid "video display text"
+msgstr "Texte miniatures vidéo"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:766
+msgid "Text shown in wordTube video thumbnails."
+msgstr "Texte affiché dans les miniatures des vidéos wordTube."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-options.php:589
+#: ..\sourceadmin/post-thumb-options.php:768
+msgid "mp3 display text"
+msgstr "Texte miniatures mp3"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:770
+msgid "Text shown in wordTube mp3 thumbnails."
+msgstr "Texte affiché dans les miniatures des mp3 wordTube."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:772
+msgid "wordTube thumbnail text"
+msgstr "Taille de la miniature wordTube."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:774
+msgid "Text to append/prepend to wordtube thumbnail name."
+msgstr "Texte à préfixer aux noms des miniatures wordTube."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:97
+#: ..\sourceadmin/post-thumb-options.php:782
+msgid "Youtube settings"
+msgstr "Options Youtube"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:785
+msgid "Youtube display size"
+msgstr "Taille affichage Youtube"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:789
+msgid "Youtube thumbnail size."
+msgstr "Taille de la miniature Youtube"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:793
+msgid "Youtube play size"
+msgstr "Taille de lecture Youtube"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:797
+msgid "Size of the frame to play Youtube video."
+msgstr "Taille de la fenêtre d'affichage des vidéos Youtube."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:68
+#: ..\sourceadmin/post-thumb-options.php:810
+msgid "Library settings"
+msgstr "Choix de la bibliothèque"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:217
+#: ..\sourceadmin/post-thumb-options.php:813
+msgid "Use Highslide"
+msgstr "Utiliser Highslide"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:390
+#: ..\sourceadmin/post-thumb-options.php:815
+msgid "Uncheck this will disable all Highslide effects"
+msgstr "Désélectionner cette option désactivera les effets Highslide"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:596
+#: ..\sourceadmin/post-thumb-options.php:817
+msgid "Use Thickbox"
+msgstr "Utiliser Thickbox"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:390
+#: ..\sourceadmin/post-thumb-options.php:821
+msgid "Uncheck this will disable all Thickbox effects"
+msgstr "Désélectionner cette option désactivera les effets Thickbox"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:596
+#: ..\sourceadmin/post-thumb-options.php:823
+msgid "Use Smoothbox"
+msgstr "Utiliser Smoothbox"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:390
+#: ..\sourceadmin/post-thumb-options.php:827
+msgid "Uncheck this will disable all Smoothbox effects"
+msgstr "Désélectionner cette option désactivera les effets smoothbox"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:148
+#: ..\sourceadmin/post-thumb-options.php:831
+#: ..\sourceadmin/post-thumb-options.php:980
+msgid "Highslide settings"
+msgstr "Options Highslide"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:632
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:774
+#: ..\sourceadmin/post-thumb-options.php:834
+#: ..\sourceadmin/post-thumb-options.php:983
+msgid "Add caption to images"
+msgstr "Ajouter un caption aux images"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:836
+msgid "Check this option if you want to add a caption to each image (available with Highslide)."
+msgstr "Cochez cette option si vous voulez ajouter un caption (texte en bas de la fenêtre) à chaque image (disponible avec highslide)."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:600
+#: ..\sourceadmin/post-thumb-options.php:839
+msgid "WARNING: it is not recommanded to use more than one library at a time."
+msgstr "AVERTISSEMENT : il est fortement déconseillé d'activer plus d'une bibliothèque javascript en même temps."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:395
+#: ..\sourceadmin/post-thumb-options.php:841
+msgid "Picture frame border style"
+msgstr "Style de bordure des images"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:405
+#: ..\sourceadmin/post-thumb-options.php:853
+msgid "Other frame border style"
+msgstr "Style de bordure des autres cadres"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:405
+#: ..\sourceadmin/post-thumb-options.php:865
+msgid "Frame top style"
+msgstr "Style du haut des cadres"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:161
+#: ..\sourceadmin/post-thumb-options.php:872
+msgid "Frames width x height"
+msgstr "Cadres largeur x hauteur"
+
+#: ..\sourceadmin/post-thumb-options.php:877
+msgid "Inside margin"
+msgstr "Marge intérieure"
+
+#: ..\sourceadmin/post-thumb-options.php:879
+msgid "Inside margin for frames (in pixels)."
+msgstr "Marge intérieure des cadres (en pixels)."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:419
+#: ..\sourceadmin/post-thumb-options.php:881
+msgid "Frame content color"
+msgstr "Couleur du contenu des cadres"
+
+#: ..\sourceadmin/post-thumb-options.php:883
+#: ..\sourceadmin/post-thumb-options.php:887
+#: ..\sourceadmin/post-thumb-options.php:891
+msgid "Use html hex color numbers, or transparent, or none (no style)."
+msgstr "Couleur html hexadécimale, ou transparent, ou none (pas de style)."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:419
+#: ..\sourceadmin/post-thumb-options.php:885
+msgid "Frame top color"
+msgstr "Couleur du haut des cadres"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:419
+#: ..\sourceadmin/post-thumb-options.php:889
+msgid "Frame footer color"
+msgstr "Couleur du bas des cadres"
+
+#: ..\sourceadmin/post-thumb-options.php:904
+msgid "Activate formatting inside posts"
+msgstr "Activer le formatage à l'intérieur des articles"
+
+#: ..\sourceadmin/post-thumb-options.php:906
+msgid "If checked, Post-Thumb will thumbnail images inside posts."
+msgstr "Si coché, Post-Thumb transformera les images à l'intérieur des articles en miniatures."
+
+#: ..\sourceadmin/post-thumb-options.php:911
+msgid "Thumbnail settings"
+msgstr "Options des miniatures"
+
+#: ..\sourceadmin/post-thumb-options.php:928
+msgid "Save sub-directory"
+msgstr "Sous-répertoire de sauvegarde"
+
+#: ..\sourceadmin/post-thumb-options.php:932
+msgid "Choose sub-directory to save generated thumbnails to."
+msgstr "Sélection du sous-répertoire de sauvegarde des miniatures générées."
+
+#: ..\sourceadmin/post-thumb-options.php:935
+msgid "Level of directory to include in names"
+msgstr "Niveau de sous-répertoire à inclure"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:946
+msgid "Check this option if you want resize to apply only if original image is larger than target size."
+msgstr "Cochez cette option pour n'appliquer le redimensionnement qu'au cas où l'image d'origine est plus grande que la taille cible."
+
+#: ..\sourceadmin/post-thumb-options.php:958
+msgid "Auto replace"
+msgstr "Remplacement Auto"
+
+#: ..\sourceadmin/post-thumb-options.php:960
+msgid "If option is checked, use rel=\"nothumb\" to not thumbnail an image. If it is not checked, use rel=\"thumb\" to thumbnail images."
+msgstr "Si l'option est cochée, utilisez rel=\"nothumb\" pour empêcher la mise ne miniature d'une image. Sinon, utilisez rel=\"thumb\" pour mettre les images en miniatures."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-options.php:412
+#: ..\sourceadmin/post-thumb-options.php:965
+msgid "Javascript settings"
+msgstr "Options Javascript"
+
+#: ..\sourceadmin/post-thumb-options.php:968
+msgid "Lightbox compatibility"
+msgstr "Compatibilité Lightbox"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:970
+msgid "Check this option if you want Post-Thumb to add rel=\"lightbox\" to every generated thumbnail."
+msgstr "Cochez pour ajouer rel=\"lightbox\" à toutes les miniatures générées."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:515
+#: ..\sourceadmin/post-thumb-options.php:973
+msgid "Add Highslide effect to existing thumbnails in posts"
+msgstr "Ajouter l'effet popup sur les miniatures des articles"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:975
+msgid "Check this option if you want Post-Thumb to add Highslide expand effect to existing thumbnails in posts."
+msgstr "Cochez cette option si vous souhaitez que Post-thumb ajoute un popup sur les miniatures existantes dans les articles."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:985
+msgid "Check this option if you want to add a caption to each image."
+msgstr "Cochez cette option si vous voulez ajouter un caption (texte en bas de la fenêtre) à chaque image."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:988
+msgid "Replace wordTube media in posts"
+msgstr "Remplacer wordTube dans les articles"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:990
+msgid "Check this option if you want to replace wordTube media by thumbnail and popup frame."
+msgstr "Cochez cette option si vous voulez remplacer les media wordTube par une miniature et un lecteur en popup."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:675
+#: ..\sourceadmin/post-thumb-options.php:992
+msgid "Use PTPLAYLIST"
+msgstr "Utiliser PTPLAYLIST"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:994
+msgid "Check this option if you want to use PTPLAYLIST tag."
+msgstr "Cochez cette option si vous voulez utiliser PTPLAYLIST."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-options.php:515
+#: ..\sourceadmin/post-thumb-options.php:996
+msgid "Replace Youtube in posts"
+msgstr "Remplacer Youtube par les miniatures dans les articles"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:998
+msgid "Check this option if you want to replace Youtube by thumbnail and popup frame."
+msgstr "Cochez cette option si vous voulez remplacer Youtube par une miniature et un lecteur en popup."
+
+#: ..\sourceadmin/post-thumb-options.php:1022
+#: ..\sourceadmin/post-thumb-options.php:1040
+msgid "Theme integration"
+msgstr "Intégration au thème"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:78
+#: ..\sourceadmin/post-thumb-options.php:1023
+#: ..\sourceadmin/post-thumb-options.php:1066
+msgid "Settings"
+msgstr "Configuration"
+
+#: ..\sourceadmin/post-thumb-options.php:1024
+msgid "Parameters"
+msgstr "Paramètres"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-options.php:414
+#: ..\sourceadmin/post-thumb-options.php:1025
+#: ..\sourceadmin/post-thumb-options.php:1146
+msgid "Additional features"
+msgstr "Fonctionnalités supplémentaires"
+
+#: ..\sourceadmin/post-thumb-options.php:1026
+#: ..\sourceadmin/post-thumb-options.php:1167
+msgid "Formatting"
+msgstr "Formatage"
+
+#: ..\sourceadmin/post-thumb-options.php:1030
+msgid "How Post-Thumb works"
+msgstr "Comment Post-Thumb fonctionne"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb.php:877
+#: ..\sourceadmin/post-thumb-options.php:1031
+msgid "Post scan"
+msgstr "Scan des articles"
+
+#: ..\sourceadmin/post-thumb-options.php:1032
+msgid "When a post is edited, Post-Thumb will scan through and look for a picture. If it finds one, it saves it and some post informations in a special table: pt_posts."
+msgstr "When a post is edited, Post-Thumb will scan through and look for a picture. If it finds one, it saves it and some post informations in a special table: pt_posts."
+
+#: ..\sourceadmin/post-thumb-options.php:1033
+msgid "The scan will retrieve only one element per post. If 'Use metadata' options is checked, it will retrieve it and stop the scan. If 'youtube' or 'wordTube' are used, it will stick to this order: metadata, youtube video, wordtube media, image."
+msgstr "The scan will retrieve only one element per post. If 'Use metadata' options is checked, it will retrieve it and stop the scan. If 'youtube' or 'wordTube' are used, it will stick to this order: metadata, youtube video, wordtube media, image."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:1034
+msgid "Using metadata"
+msgstr "Utiliser les meta-data"
+
+#: ..\sourceadmin/post-thumb-options.php:1035
+msgid "If an image (http://....) or any valid reference to a youtube video (youtube=<youtubeor id>) a wordtube media (media=<mediais id>) input in metadata, it will be used to display the thumbnail."
+msgstr "If an image (http://....) or any valid reference to a youtube video (youtube=<youtubeor id>) a wordtube media (media=<mediais id>) input in metadata, it will be used to display the thumbnail."
+
+#: ..\sourceadmin/post-thumb-options.php:1036
+msgid "Metadata name to use is: <i>pt_meta_thumb</i>."
+msgstr "Metadata name to use is: <i>pt_meta_thumb</i>."
+
+#: ..\sourceadmin/post-thumb-options.php:1042
+msgid "Display thumbnails in the Loop"
+msgstr "Affichage des miniatures dans la Boucle"
+
+#: ..\sourceadmin/post-thumb-options.php:1043
+msgid "To display thumbnail in your loops, you need to insert the following line in your template file:"
+msgstr "To display thumbnail in your loops, you need to insert the following line in your template file:"
+
+#: ..\sourceadmin/post-thumb-options.php:1044
+msgid "&lt;?php the_thumb(); ?&gt;"
+msgstr "&lt;?php the_thumb(); ?&gt;"
+
+#: ..\sourceadmin/post-thumb-options.php:1046
+msgid "Display thumbnails in Sidebar"
+msgstr "Affichage des miniatures dans la Sidebar"
+
+#: ..\sourceadmin/post-thumb-options.php:1047
+msgid "To display most recent posts with their thumbnail in the sidebar, you need to insert the following line in your template file:"
+msgstr "To display most recent posts with their thumbnail in the sidebar, you need to insert the following line in your template file:"
+
+#: ..\sourceadmin/post-thumb-options.php:1048
+msgid "&lt;?php the_recent_thumbs(); ?&gt;"
+msgstr "&lt;?php the_recent_thumbs(); ?&gt;"
+
+#: ..\sourceadmin/post-thumb-options.php:1049
+msgid "To display most random posts with their thumbnail in the sidebar, you need to insert the following line in your template file:"
+msgstr "To display most random posts with their thumbnail in the sidebar, you need to insert the following line in your template file:"
+
+#: ..\sourceadmin/post-thumb-options.php:1050
+msgid "&lt;?php the_random_thumb(); ?&gt;"
+msgstr "&lt;?php the_random_thumb(); ?&gt;"
+
+#: ..\sourceadmin/post-thumb-options.php:1052
+msgid "Manage thumbnail aspect, name and more"
+msgstr "Gestion de l'aspect des miniatures, des noms et plus"
+
+#: ..\sourceadmin/post-thumb-options.php:1053
+msgid "In option panels, many informations about aspect, save name, save directory and template link can be set."
+msgstr "In option panels, many informations about aspect, save name, save directory and template link can be set."
+
+#: ..\sourceadmin/post-thumb-options.php:1054
+msgid "These are default values which will be used all through the site."
+msgstr "These are default values which will be used all through the site."
+
+#: ..\sourceadmin/post-thumb-options.php:1055
+msgid "However, it's often convenient to be able to display the same image with different formats. For this, Post-Thumb can pass almost any option as a parameter to set up a new value."
+msgstr "However, it's often convenient to be able to display the same image with different formats. For this, Post-Thumb can pass almost any option as a parameter to set up a new value."
+
+#: ..\sourceadmin/post-thumb-options.php:1057
+msgid "Using functions parameters"
+msgstr "Utiliser les paramètres des fonctions"
+
+#: ..\sourceadmin/post-thumb-options.php:1058
+msgid "Each function can be used with numerous parameters to manage display or how or where thumbnails are saved. You do not have to use them unless you want different settings from the default options you have choosen in the option screen."
+msgstr "Each function can be used with numerous parameters to manage display or how or where thumbnails are saved. You do not have to use them unless you want different settings from the default options you have choosen in the option screen."
+
+#: ..\sourceadmin/post-thumb-options.php:1059
+msgid "Each parameter should be input with its value separated with '=' and separated from the other parameters with '&'."
+msgstr "Each parameter should be input with its value separated with '=' and separated from the other parameters with '&'."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:1060
+msgid "Example:"
+msgstr "Exemple :"
+
+#: ..\sourceadmin/post-thumb-options.php:1061
+msgid "&lt;?php get_recent_thumbs('WIDTH=100&HEIGHT=80&ROUNDED=1&LIMIT=12'); ?&gt;"
+msgstr "&lt;?php get_recent_thumbs('WIDTH=100&HEIGHT=80&ROUNDED=1&LIMIT=12'); ?&gt;"
+
+#: ..\sourceadmin/post-thumb-options.php:1062
+msgid "See the list of available parameters"
+msgstr "Voir la liste des paramètres disponibles"
+
+#: ..\sourceadmin/post-thumb-options.php:1069
+msgid "There is an important feature there: the post-thumb table."
+msgstr "There is an important feature there: the post-thumb table."
+
+#: ..\sourceadmin/post-thumb-options.php:1072
+msgid "These options need to be set properly in order for Post-Thumb to work. Most of the time, default values will be ok."
+msgstr "These options need to be set properly in order for Post-Thumb to work. Most of the time, default values will be ok."
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:88
+#: ..\sourceadmin/post-thumb-options.php:1073
+msgid "<u>Base path</u>: Absolute path to website. For example, /httpdocs or /yourdomain.com. Used to find location of thumbnails on server. http://yourdomain.com/images/pth/thumb_picture.jpg would actually be /httpdocs/images/pth/thumb_picture.jpg. No trailing '/'"
+msgstr "<u>Base path</u>: Absolute path to website. For example, /httpdocs or /yourdomain.com. Used to find location of thumbnails on server. http://yourdomain.com/images/pth/thumb_picture.jpg would actually be /httpdocs/images/pth/thumb_picture.jpg. No trailing '/'"
+
+#: ..\sourceadmin/post-thumb-options.php:1074
+msgid "<u>Full domain name</u>: This is the actual domain that contains your blog. Includes the http://. No trailing '/'"
+msgstr "<u>Full domain name</u>: This is the actual domain that contains your blog. Includes the http://. No trailing '/'"
+
+#: ..\sourceadmin/post-thumb-options.php:1075
+msgid "<u>Initial default value</u>: These are values of 'Base path' and 'Domain name' calculated by Post-Thumb from informations retrieved from your blog installation."
+msgstr "<u>Initial default value</u>: These are values of 'Base path' and 'Domain name' calculated by Post-Thumb from informations retrieved from your blog installation."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:76
+#: ..\sourceadmin/post-thumb-options.php:1076
+msgid "<u>Folder name</u>: Set the relative path to thumbs. Make sure directory exists and is writable. No trailing '/'"
+msgstr "<u>Folder name</u>: Set the relative path to thumbs. Make sure directory exists and is writable. No trailing '/'"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:115
+#: ..\sourceadmin/post-thumb-options.php:1077
+msgid "<u>Default image</u>: The location of the default image to use if no picture can be found. Enter in the relative url, eg. images/default.jpg"
+msgstr "<u>Default image</u>: The location of the default image to use if no picture can be found. Enter in the relative url, eg. images/default.jpg"
+
+#: ..\sourceadmin/post-thumb-options.php:1078
+msgid "<u>Use meta data</u>: Will tell Post-thumb to use metadata or not in its post scan."
+msgstr "<u>Use meta data</u>: Will tell Post-thumb to use metadata or not in its post scan."
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:132
+#: ..\sourceadmin/post-thumb-options.php:1079
+msgid "<u>Use Category Names</u>: if category names are used, this will override 'Default Image' and 'Default Image for Videos' and use a category specific image instead."
+msgstr "<u>Use Category Names</u>: if category names are used, this will override 'Default Image' and 'Default Image for Videos' and use a category specific image instead."
+
+#: ..\sourceadmin/post-thumb-options.php:1082
+msgid "These options set the size, aspect and quality of the thumbnails."
+msgstr "These options set the size, aspect and quality of the thumbnails."
+
+#: ..\sourceadmin/post-thumb-options.php:1085
+msgid "There, you can include wordTube media and Youtube video in the thumbnail scan."
+msgstr "There, you can include wordTube media and Youtube video in the thumbnail scan."
+
+#: ..\sourceadmin/post-thumb-options.php:1088
+msgid "Highslide javascript library can be activated."
+msgstr "Highslide javascript library can be activated."
+
+#: ..\sourceadmin/post-thumb-options.php:1091
+msgid "With these options, Post-Thumb can also work on post content."
+msgstr "With these options, Post-Thumb can also work on post content."
+
+#: ..\sourceadmin/post-thumb-options.php:1095
+msgid "Available parameters"
+msgstr "Paramètres disponibles"
+
+#: ..\sourceadmin/post-thumb-options.php:1097
+msgid "Display parameters"
+msgstr "Paramètres d'affichage"
+
+#: ..\sourceadmin/post-thumb-options.php:1098
+msgid "WIDTH: resize width. Overrides default if greater than 0."
+msgstr "WIDTH : largeur de redimensionnement. Remplace la valeur par défaut si supérieure à 0."
+
+#: ..\sourceadmin/post-thumb-options.php:1099
+msgid "HEIGHT: resize height. Overrides default if greater than 0."
+msgstr "HEIGHT : hauteur de redimensionnement. Remplace la valeur par défaut si supérieure à 0."
+
+#: ..\sourceadmin/post-thumb-options.php:1100
+msgid "HCROP: horizontal crop. Crops if greater than 0."
+msgstr "HCROP : crop horizontal. Crop si supérieur à 0."
+
+#: ..\sourceadmin/post-thumb-options.php:1101
+msgid "VCROP: vertical crop. Crops if greater than 0."
+msgstr "VCROP : crop vertical. Crop si supérieur à 0."
+
+#: ..\sourceadmin/post-thumb-options.php:1102
+msgid "KEEPRATIO (0/1): if set to 1, image ratio is kept. Overrides default if it exists."
+msgstr "KEEPRATIO (0/1) : si mis à 1, les proportions de l'image d\"origine sont conservées. Remplace la valeur par défaut si défini."
+
+#: ..\sourceadmin/post-thumb-options.php:1103
+msgid "ROUNDED (0/1): creates thumbnails with rounded corners. Overrides default if it exists."
+msgstr "ROUNDED (0/1) : crée les miniatures avec des angles arrondis.  Remplace la valeur par défaut si défini."
+
+#: ..\sourceadmin/post-thumb-options.php:1104
+msgid "OBJECT (0/1): return an object or an array of objects instead of a display string."
+msgstr "OBJECT (0/1) : return an object or an array of objects instead of a display string."
+
+#: ..\sourceadmin/post-thumb-options.php:1105
+msgid "MAX (0/1): will not resize if image is smaller than target size. Does not work with keepratio set to true. Overrides default if it exists."
+msgstr "MAX (0/1) : ne redimensionnera pas les images plus petites que l'original. N'est pas appliqué si keepratio est mis à true. Remplace la valeur par défaut si défini."
+
+#: ..\sourceadmin/post-thumb-options.php:1107
+msgid "Addtitional display parameters"
+msgstr "Paramètres d'affichage supplémentaires"
+
+#: ..\sourceadmin/post-thumb-options.php:1108
+msgid "TEXTBOX (0/1):  write a text in the bottom. Default is 0 (no text)."
+msgstr "TEXTBOX (0/1):  write a text in the bottom. Default is 0 (no text)."
+
+#: ..\sourceadmin/post-thumb-options.php:1109
+msgid "TEXT: text to write if TEXTBOX is set to 1."
+msgstr "TEXT: text to write if TEXTBOX is set to 1."
+
+#: ..\sourceadmin/post-thumb-options.php:1110
+msgid "SHOWTITLE: display title, author or date below the thumbnail. Parameters: T, A, D."
+msgstr "SHOWTITLE: display title, author or date below the thumbnail. Parameters: T, A, D."
+
+#: ..\sourceadmin/post-thumb-options.php:1111
+msgid "TITLE (C/E/D): choose wether content (C), excerpt (E) or title (T) is used in title tag of the thumbnail. Default is T."
+msgstr "TITLE (C/E/D): choose wether content (C), excerpt (E) or title (T) is used in title tag of the thumbnail. Default is T."
+
+#: ..\sourceadmin/post-thumb-options.php:1112
+msgid "MYCLASSHREF: output class name in html &lt;a class=\"myclasshref\" href=...>"
+msgstr "MYCLASSHREF: output class name in html &lt;a class=\"myclasshref\" href=...>"
+
+#: ..\sourceadmin/post-thumb-options.php:1113
+msgid "MYCLASSIMG: output class name in html &lt;img class=\"myclassimg\" href=...>"
+msgstr "MYCLASSIMG: output class name in html &lt;img class=\"myclassimg\" href=...>"
+
+#: ..\sourceadmin/post-thumb-options.php:1114
+msgid "LB_EFFECT (0/1): use highslide to display image or link. This parameter must be set to add the effect and is only available if highslide is activated in option panel."
+msgstr "LB_EFFECT (0/1): use highslide to display image or link. This parameter must be set to add the effect and is only available if highslide is activated in option panel."
+
+#: ..\sourceadmin/post-thumb-options.php:1115
+msgid "CAPTION (0/1): display or not the caption for pictures."
+msgstr "CAPTION (0/1): display or not the caption for pictures."
+
+#: ..\sourceadmin/post-thumb-options.php:1117
+msgid "Saving parameters"
+msgstr "Paramètres de sauvegarde"
+
+#: ..\sourceadmin/post-thumb-options.php:1118
+msgid "ALTAPPEND: text to append to create thumbnail name. Override default if exists."
+msgstr "ALTAPPEND: text to append to create thumbnail name. Override default if exists."
+
+#: ..\sourceadmin/post-thumb-options.php:1119
+msgid "APPEND (0/1): forces append or prepend of thumbnail prefix."
+msgstr "APPEND (0/1): forces append or prepend of thumbnail prefix."
+
+#: ..\sourceadmin/post-thumb-options.php:1120
+msgid "MIME (jpg/png): force type of thumbnail."
+msgstr "MIME (jpg/png): force type of thumbnail."
+
+#: ..\sourceadmin/post-thumb-options.php:1121
+msgid "BASENAME (0/1): force generation of thumbnail and use generic name. Default is 0. Used in the random function."
+msgstr "BASENAME (0/1): force generation of thumbnail and use generic name. Default is 0. Used in the random function."
+
+#: ..\sourceadmin/post-thumb-options.php:1122
+msgid "SUBFOLDER: name of the subfolder to save thumbnails in. Only one level, no wrapping '/'."
+msgstr "SUBFOLDER: name of the subfolder to save thumbnails in. Only one level, no wrapping '/'."
+
+#: ..\sourceadmin/post-thumb-options.php:1123
+msgid "DIRNAME (integer): includes image directories in thumbnail name (convenient for digital camera images). Specify the level of subdirectory to include."
+msgstr "DIRNAME (integer): includes image directories in thumbnail name (convenient for digital camera images). Specify the level of subdirectory to include."
+
+#: ..\sourceadmin/post-thumb-options.php:1125
+msgid "Template parameters"
+msgstr "Paramètres de template"
+
+#: ..\sourceadmin/post-thumb-options.php:1126
+msgid "USECATNAME (0/1): choose if category default image should be used or not. Override default if exists."
+msgstr "USECATNAME (0/1): choose if category default image should be used or not. Override default if exists."
+
+#: ..\sourceadmin/post-thumb-options.php:1127
+msgid "SHOWPOST (0/1): force Highslide to expand on post if set to 1. Default is 0 (expand on image or post)"
+msgstr "SHOWPOST (0/1): force Highslide to expand on post if set to 1. Default is 0 (expand on image or post)"
+
+#: ..\sourceadmin/post-thumb-options.php:1128
+msgid "LINK (i/p/u): force Highslide to expand on post if set to p, on url if set to u. Default is i, image (expand on image or post)"
+msgstr "LINK (i/p/u): force Highslide to expand on post if set to p, on url if set to u. Default is i, image (expand on image or post)"
+
+#: ..\sourceadmin/post-thumb-options.php:1129
+msgid "NODEF (no value or 1): doesn't display thumbnail if not image in post."
+msgstr "NODEF (no value or 1): doesn't display thumbnail if not image in post."
+
+#: ..\sourceadmin/post-thumb-options.php:1131
+msgid "get_recent_thumbs specific parameters"
+msgstr "Paramètres spécifiques de get_recent_thumbs"
+
+#: ..\sourceadmin/post-thumb-options.php:1132
+#: ..\sourceadmin/post-thumb-options.php:1137
+msgid "LIMIT: number of posts to display."
+msgstr "LIMIT: nombre d'articles à afficher."
+
+#: ..\sourceadmin/post-thumb-options.php:1133
+msgid "OFFSET: skip posts by the given number. Default is 0."
+msgstr "OFFSET: skip posts by the given number. Default is 0."
+
+#: ..\sourceadmin/post-thumb-options.php:1134
+msgid "CATEGORY: categories to get posts from, or categories to exclude from search."
+msgstr "CATEGORY: categories to get posts from, or categories to exclude from search."
+
+#: ..\sourceadmin/post-thumb-options.php:1136
+msgid "get_random_thumb specific parameters"
+msgstr "Paramètres spécifiques de get_random_thumb"
+
+#: ..\sourceadmin/post-thumb-options.php:1138
+msgid "CATEGORY: categories to get random posts from."
+msgstr "CATEGORY: categories to get random posts from."
+
+#: ..\sourceadmin/post-thumb-options.php:1141
+msgid "Parameters in blue do not have equivalency in option panel."
+msgstr "Parameters in blue do not have equivalency in option panel."
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:217
+#: ..\sourceadmin/post-thumb-options.php:1147
+msgid "Using Highslide"
+msgstr "Utiliser Highslide"
+
+#: ..\sourceadmin/post-thumb-options.php:1148
+msgid "Highslide can be used to add a popup effect to the thumbnails."
+msgstr "Highslide can be used to add a popup effect to the thumbnails."
+
+#: ..\sourceadmin/post-thumb-options.php:1151
+msgid "If option is selected, Post-Thumb will parse the posts and look for wordTube media (format: [MEDIA=xx])."
+msgstr "If option is selected, Post-Thumb will parse the posts and look for wordTube media (format: [MEDIA=xx])."
+
+#: ..\sourceadmin/post-thumb-options.php:1152
+msgid "When a media is found, its image will be used to create the thumbnail."
+msgstr "When a media is found, its image will be used to create the thumbnail."
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:97
+#: ..\sourceadmin/post-thumb-options.php:1154
+msgid "Youtube"
+msgstr "Youtube"
+
+#: ..\sourceadmin/post-thumb-options.php:1155
+msgid "If option is selected, Post-Thumb will parse the posts and look for Youtube video (format: [YOUTUBE=xxxxxxxx], or the link to the video page, or the Youtube object code.)."
+msgstr "If option is selected, Post-Thumb will parse the posts and look for Youtube video (format: [YOUTUBE=xxxxxxxx], or the link to the video page, or the Youtube object code.)."
+
+#: ..\sourceadmin/post-thumb-options.php:1156
+msgid "When a video is found, its image will be used to create the thumbnail."
+msgstr "When a video is found, its image will be used to create the thumbnail."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-options.php:412
+#: ..\sourceadmin/post-thumb-options.php:1158
+msgid "Post formatting"
+msgstr "Formatage des articles"
+
+#: ..\sourceadmin/post-thumb-options.php:1159
+msgid "As an additional feature, Post-Thumb can parse the whole post content and thumbnail all the images in it."
+msgstr "As an additional feature, Post-Thumb can parse the whole post content and thumbnail all the images in it."
+
+#: ..\sourceadmin/post-thumb-options.php:1160
+msgid "This is espacially convenient if you want to format all your content with a fixed size."
+msgstr "This is espacially convenient if you want to format all your content with a fixed size."
+
+#: ..\sourceadmin/post-thumb-options.php:1161
+msgid "If highslide is activated, wordTube media and Youtube video can also be thumbnailed. They will then play in a popup windows."
+msgstr "If highslide is activated, wordTube media and Youtube video can also be thumbnailed. They will then play in a popup windows."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\sourceadmin/post-thumb-options.php:1168
+msgid "Formatting thumbnails"
+msgstr "Formatage des miniatures."
+
+#: ..\sourceadmin/post-thumb-options.php:1169
+msgid "As Post-Thumb returns pure html strings, you can use your style.css to format thumbnails."
+msgstr "As Post-Thumb returns pure html strings, you can use your style.css to format thumbnails."
+
+#: ..\sourceadmin/post-thumb-options.php:1170
+msgid "There are several parameters which impact thumbnail formatting: MYCLASSIMG, MYCLASSHREF and ALIGN."
+msgstr "There are several parameters which impact thumbnail formatting: MYCLASSIMG, MYCLASSHREF and ALIGN."
+
+#: ..\sourceadmin/post-thumb-options.php:1172
+msgid "Formatting Highslide popup windows"
+msgstr "Formatage des fenêtres Highslide"
+
+#: ..\sourceadmin/post-thumb-options.php:1173
+msgid "Frame aspect can be customized at two levels: options and css. Sizes, color, frame border, top bar and inside margin can be choosen in option. There is also a css file which can give more control over frame aspect: 'js/style_hs.css'"
+msgstr "Frame aspect can be customized at two levels: options and css. Sizes, color, frame border, top bar and inside margin can be choosen in option. There is also a css file which can give more control over frame aspect: 'js/style_hs.css'"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-options.php:60
+#: ..\sourceadmin/post-thumb-options.php:1231
+#: ..\sourceadmin/post-thumb-options.php:1236
+msgid "Resize width must be a number"
+msgstr "La largeur de redimensionnement doit être un nombre"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:110
+#: ..\sourceadmin/post-thumb-options.php:1242
+msgid "Video default image not found on server."
+msgstr "Image par défaut des vidéos :"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-functions.php:698
+#: ..\sourceadmin/post-thumb-options.php:1246
+msgid "Default image not found on server."
+msgstr "L'image par défaut n'a pas été trouvée sur le serveur."
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-functions.php:629
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-functions.php:641
+#: ..\sourceadmin/post-thumb-options.php:1288
+#: ..\sourceadmin/post-thumb-options.php:1293
+msgid "Directory: "
+msgstr "Répertoire : "
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-functions.php:629
+#: ..\sourceadmin/post-thumb-options.php:1288
+msgid "may not be writeable."
+msgstr "n'est peut être pas accessible en écriture."
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-functions.php:641
+#: ..\sourceadmin/post-thumb-options.php:1293
+msgid "does not exist!"
+msgstr "n'existe pas !"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb.php:877
+#: ..\sourceadmin/post-thumb-options.php:1357
+msgid "Posts from: "
+msgstr "Articles de : "
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-options.php:414
+#: ..\sourceadmin/post-thumb-options.php:1490
+msgid "Click to hide and show"
+msgstr "Cliquez pour voir les options avancées."
+

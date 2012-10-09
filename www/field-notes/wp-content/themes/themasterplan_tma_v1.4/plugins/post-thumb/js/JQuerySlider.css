@@ -1,0 +1,32 @@
+/*
+	Styles to make ordinary <INPUT type="text"/> look like a slider control.
+	Use with JQuerySlider.js to provide the slide functionality by reacting to mouse etc.
+	(Requires a reference to the JQuery library found at http://jquery.com/src/latest/)
+	(Hats-off to John Resig for creating the excellent JQuery library. It is fab.)
+
+	This control is achieved with no extra html markup whatsoever and uses unobtrusive javascript.
+
+	Written by George Adamson, Software Unity, 2006 (george.jquery@softwareunity.com).
+
+	Do contact me with comments and suggestions but please don't ask for support.
+	As much as I'd love to help with specific problems I have plenty to get on with already!
+
+	Go ahead and use it in your own projects. This code is provided 'as is'.
+	Sure I've tested in heaps of ways. Its good for me, but you use it at your own risk.
+	SoftwareUnity and I are certainly not responsible if your computer sets fire to the sofa,
+	hacks into the pentagon, hijacks a plane or gives you any kind of hassle whatsoever.
+
+	Apologies for the blatent use of company initials on class names etc, but I find them
+	very helpful in preventing conflicts with other class names in other stylesheets.
+*/
+
+INPUT.suSlider {
+	background-repeat:no-repeat;		/* Warning: Img may disappear in Firefox if you use 'background-attachment:fixed' ! */
+	background-position:100% -1px;
+	background-image:url(slider_horiz.gif);
+}
+
+INPUT.suSlider.suHilite {				/* Change button img when mouse is over slider button */
+	cursor:w-resize;
+	background-position:100% -21px;		/* 21px matches height of button. (Depends on your chosen image) */
+}

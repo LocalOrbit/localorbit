@@ -1,0 +1,56 @@
+--- ../tags/2.0.1/get-recent-comments.php	2007-09-25 21:57:50.000000000 +0200
++++ get-recent-comments.php	2007-09-25 22:18:38.000000000 +0200
+@@ -1,7 +1,7 @@
+ <?php
+ /*
+ Plugin Name: Get Recent Comments
+-Version: 2.0.1
++Version: 2.0.2
+ Plugin URI: http://blog.jodies.de/archiv/2004/11/13/recent-comments/
+ Author: Krischan Jodies
+ Author URI: http://blog.jodies.de
+@@ -127,8 +127,12 @@
+ function kjgrc_subpage_exclude_cat() 
+ {
+ 	global $wpdb;
+-	// $categories = $wpdb->get_results("SELECT * FROM $wpdb->categories ORDER BY cat_name");
+-	$categories = get_categories('&hide_empty=0');
++	if (function_exists("get_categories")) {
++		$categories = get_categories('&hide_empty=0');
++	} else {
++		// be still compatible to 2.0.11
++		$categories = $wpdb->get_results("SELECT * FROM $wpdb->categories ORDER BY cat_name");
++	}
+ 	$exclude_cat = kjgrc_get_exclude_cat();
+ ?>
+ <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=get-recent-comments.php&amp;subpage=4&amp;updated=true">
+@@ -997,12 +1001,28 @@
+ 	return array($comment_author,$trackback_title);
+ }
+ 
++// original function from wordpress 2.3 for backwards compatibility to wordpress 2.0.11
++function kjgrc_get_users_of_blog( $id = '' ) {
++        global $wpdb, $blog_id;
++        if ( empty($id) )
++                $id = (int) $blog_id;
++        $users = $wpdb->get_results( "SELECT user_id, user_login, display_name, user_email, meta_value FROM $wpdb->users, $wpdb->usermeta WHERE " . $wpdb->users . 
++".ID = " . $wpdb->usermeta . ".user_id AND meta_key = '" . $wpdb->prefix . "capabilities' ORDER BY {$wpdb->usermeta}.user_id" );
++        return $users;
++}
++
++
+ /* This function is dedicated to Mike */
+ function kjgrc_is_wordpress_user($comment)
+ {
+ 	global $kjgrc_wordpress_users;
+ 	if ($kjgrc_wordpress_users == NULL) {
+-		$kjgrc_wordpress_users = get_users_of_blog();
++		// be still compatible to wordpress 2.0.11
++		if (function_exists("get_users_of_blog")) {
++			$kjgrc_wordpress_users = get_users_of_blog();
++		} else {
++			$kjgrc_wordpress_users = kjgrc_get_users_of_blog();
++		}
+ 	}
+ 	foreach ($kjgrc_wordpress_users as $user) {
+ 		if (strcasecmp($comment->comment_author_email,$user->user_email) == 0 ) {

@@ -1,0 +1,16 @@
+STRUCTURE youtube.videos.list_by_user
+
+Array ( [lujl7sZUDy4] =>
+	Array ( [author] => ysabellabrave
+		[id] => lujl7sZUDy4 
+                [title] => Do, Do, Do! (1926) 
+                [length_seconds] => 170 
+                [rating_avg] => 4.46 
+                [rating_count] => 921 
+                [description] => Hey, I heard someone wanted some Gershwin? This is for Erin. Whew - this one's from 1926, and it sure was dusty! Love always +Ysabella Brave Did the music sound drunk to anyone else? Fun fact = the shadow in the upper left is the infamous broken desk lamp! Whoops! 
+                [view_count] => 38461 
+                [upload_time] => 1185082544 
+                [comment_count] => 470 
+                [tags] => ysabellabrave sings lady in pink george ira gershwin do what you done before 
+                [url] => http://www.youtube.com/?v=lujl7sZUDy4 
+                [thumbnail_url] => http://img.youtube.com/vi/lujl7sZUDy4/default.jpg ) )

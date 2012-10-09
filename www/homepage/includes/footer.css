@@ -1,0 +1,52 @@
+#footer{
+	background-color: #f3f3f3;
+	background-image: url(../../img/template/gradient_footer.png);
+	background-repeat: repeat-x;
+}
+
+ul.footer{
+	margin: 0px;
+}
+
+li.footer{
+	margin: 3px 0px 8px 0px;
+	list-style: none;
+}
+
+
+a.header_right{
+	position: absolute;
+	top: 0px;
+	right:0px;
+	display: inline;
+	font-size: 80%;
+	margin-top: 5px;
+	background-image: url(../../img/misc/arrow.gif);
+	background-repeat: no-repeat;
+	padding-left: 15px;
+	text-transform: lowercase;
+}
+
+b.footer{
+	margin-top: 10px;
+	color: #777;
+	font-family: 'Francois One', sans-serif !important;
+}
+
+a.footer,a.footer:visited{
+	color: #777;
+	font-size:85%;
+}
+
+div.footer{
+	color: #777;
+	font-size:85%;
+}
+
+
+a.footer:hover,a.footer:hover:visited{
+	color: #777;
+}
+li.footer{
+	margin-bottom: 10px;
+}

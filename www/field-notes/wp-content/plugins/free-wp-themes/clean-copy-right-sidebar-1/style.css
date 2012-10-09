@@ -1,0 +1,356 @@
+/*  
+Theme Name: Clean Copy Right Sidebar
+Author URI: http://corymiller.com
+Version: 1
+Author: Cory Miller
+Description: Clean Copy 2 Column is a clean blue, grey and white theme designed for blog content and sharp simplicity.
+The CSS, XHTML and design is released under GPL: 
+http://www.opensource.org/licenses/gpl-license.php
+Header photo by Ville Miettinen, used with permission
+*/
+
+
+body {
+	background: #E0E0E0;
+	color: #000000;
+	font-size: 12px;
+	font-family: Arial, Verdana, Sans-Serif;
+	margin: 0px 0px 0px 0px;
+	}
+
+body * {margin: 0px; padding: 0px;}
+
+a, a:visited { 
+	color: #2397E9;
+	font-weight: bold;
+	text-decoration: underline;
+	}
+a:hover {
+	font-weight: bold;
+	text-decoration: none;
+	color: #000000;
+	}
+#container { 
+	background: #ffffff;
+	width: 860px;
+	text-align: left; 
+	margin: 20px auto 20px auto; 
+	border: 1px solid #cccccc;
+	overflow: hidden;
+	}
+#header {
+	width: 860px;
+	height: 150px;
+	background: #2397E9 url(images/header.jpg) top center no-repeat;
+	padding: 0px;
+	margin: 0px;
+	text-align: left;
+	}	
+#header h2 {
+	color: #ffffff;
+	font-size: 30px;
+	font-family: Helvetica, Arial, Verdana, Sans-Serif;
+	font-weight: bold;
+	margin: 0px;
+	text-indent: 30px; 
+	padding: 25px 0px 5px 0px;
+	}
+
+#header h2 a {
+	color: #ffffff;
+	text-decoration: none;
+	}
+
+#header h2 a:hover {
+	color: #006699;
+	text-decoration: none;
+	}
+
+#header h3 {
+	color: #ffffff;
+	font-size: 13px;
+	font-family: Georgia, Times New Roman, Sans-Serif;
+	text-indent: 35px; 
+	margin: 0px;
+	padding: 0px;
+	}
+
+#menu { 
+	background: #006699;
+	margin: 0px;
+	padding: 4px 0px 4px 0px;
+	text-align: center;
+	border-bottom: 5px solid #888888;
+	}
+#menu img{
+	border: none;
+	}
+#menu h2 {
+	color: #ffffff;
+	font-size: 15px;
+	font-family: Helvetica, Arial, Verdana, Sans-Serif;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px 0px 0px 0px;
+	}
+#menu li {
+	display: inline;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	}
+		
+#menu ul {
+	margin: 0px;
+	padding: 4px;
+	}
+	
+#menu ul li a {
+	font-family: Helvetica, Arial, Verdana, Sans-Serif;
+	font-weight: bold;
+	font-size: 15px;
+	color: #ffffff;
+	padding: 8px 20px 8px 20px;
+	margin: 0px 0px 0px 0px;
+	text-decoration: underline;
+	}
+
+#menu ul li a:hover {
+	color: #ffffff;
+	background: #2397E9;
+	padding: 8px 20px 8px 20px;
+	text-decoration: none;
+	}
+
+* html #content { width: 490px; margin: 20px 20px; }
+
+#content { 
+	display: block;
+	background: #ffffff;
+	width: 500px; 
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 30px;
+	margin-right: 30px;
+	float: left; 
+	position:relative;
+	padding: 0px;
+	}
+#content p{
+	margin: 0px;
+	line-height: 18px;
+	padding: 0px 0px 10px 0px;
+	}
+	
+#content p img{
+	border: none;
+	padding: 0px 10px 10px 0px;
+	}
+#content h1 {
+	color: #333333;
+	font-size: 22px;
+	font-family: Helvetica Bold, Arial Bold, Verdana, Sans-Serif;;
+	font-weight: normal;
+	padding: 10px 10px 10px 10px;
+	line-height: 150%;
+	margin: 0px;
+	}
+	
+#content h1 a  {
+	color: #cccccc;
+	text-decoration: underline;
+	}
+
+#content h1 a:hover {
+	color: #2397E9;
+	text-decoration: none;
+	}
+
+#content h2 {
+	color: #333333;
+	font-size: 18px;	
+	font-family: Helvetica Bold, Arial Bold, Verdana, Sans-Serif;;
+	font-weight: bold;
+	margin: 0px;
+	line-height: 120%;
+	font-variant: normal;
+	}
+#content h2 a  {
+	color: #333333;
+	text-decoration: none;
+	}
+
+#content h2 a:hover {
+	color: #2397E9;
+	background: none;
+	text-decoration: underline;
+	}
+
+#content h3 {
+	color: #333333;
+	font-size: 14px;
+	font-family: Helvetica Bold, Arial Bold, Verdana, Sans-Serif;;
+	font-weight: bold;
+	margin-bottom: 0px;
+	line-height: 120%;
+	}
+#content h3 a  {
+	color: #333333;
+	text-decoration: none;
+	}
+
+#content h3 a:hover {
+	color: #2397E9;
+	background: #ffffff;
+	text-decoration: underline;
+	}
+
+#content ol {
+	list-style-type: decimal;
+	line-height: 18px;
+	margin: 0px;
+	padding: 0px 0px 10px 30px;
+	}
+#content ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px 0px 10px 0px;
+	}
+	
+#content li {
+	margin: 0px;
+	padding: 0px;
+	}
+	
+#content ul li {
+	list-style: square inside;
+	margin: 0px 0px 0px 10px;
+	padding: 5px 0px 0px 0px;
+	}
+	
+#content ul li a {
+	color: #666666;
+	text-decoration: underline;
+	}
+
+#content ul li a:hover {
+	color: #000000;
+	text-decoration: underline;
+	}
+blockquote{
+	margin: 0px 0px 0px 25px;
+	padding: 0px 25px 0px 10px;
+	font-style: italic;
+	color: #666666;
+	border-left: 1px solid #cccccc;
+	}
+	
+#content blockquote p{
+	margin: 0px 0px 20px 0px;
+	padding: 0px;
+	}
+
+.postspace {
+	width: 440px;
+	height: 32px;
+	margin: 0px;
+	padding: 0px;
+	}
+.postspace2 {
+	width: 440px;
+	height: 0px;
+	margin: 0px;
+	padding: 0px;
+	}
+.postspace3 {
+	width: 440px;
+	height: 15px;
+	margin: 0px;
+	padding: 0px;
+	}
+
+
+#sidebar { 
+	display: block;
+	color: #000000;
+	width: 205px;
+	float: right; 
+	position:relative;
+	margin: 20px 30px 20px 0px;
+	padding: 20px 30px 20px 30px;
+	text-align: left;
+	border: 1px solid #cccccc;
+	}
+
+* html #sidebar { margin: 20px 20px 20px 10px; }
+
+#sidebar p{
+	margin: 0px;
+	line-height: 16px;
+	padding: 5px 0px 10px 0px;
+	}
+
+#sidebar h2 {
+	color: #333333;
+	font-size: 15px;
+	font-family: Helvetica Bold, Arial Bold, Verdana, Sans-Serif;;
+	list-style: none;
+	padding: 10px 0px 10px 0px;
+	margin: 0px;
+	border-bottom: 1px solid #cccccc;
+	}
+
+#sidebar ul {
+	list-style: none;
+	margin: 0px;
+	padding: 5px 0px 5px 0px;
+	}
+	
+#sidebar li {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	}
+	
+#sidebar ul li {
+	list-style: none;
+	margin: 0px;
+	padding: 6px 0px 5px 0px;
+	}
+#sidebar ul li a {
+	color: #2397E9;
+	font-weight: bold;
+	text-decoration: underline;
+	}
+
+#sidebar ul li a:hover {
+	color: #000000;
+	text-decoration: none;
+	}
+#sidebar ul li ul li {
+	padding: 10px 0px 0px 15px;
+}
+
+#sidebar ul li ul li a {
+	color: #2397E9;
+}
+
+#footer { 
+	color: #ffffff;
+	background: #666666;
+	font-weight: bold;
+	padding: 20px 20px 20px 20px;
+	height: 20px;
+	text-align: center;
+	clear: both;
+	border-top: 3px solid #cccccc;
+	border-bottom: 3px solid #cccccc;
+	}
+#footer a {
+	color: #FFFFFF;
+	text-decoration: none;
+	}
+#footer a:hover {
+	color: #FFFFFF;
+	text-decoration: underline;
+	}

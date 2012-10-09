@@ -1,0 +1,16 @@
+use localorb_www_testing;
+alter table lo_order add lo3_order_nbr varchar(255);
+alter table lo_order add domain_id int;
+alter table lo_fulfillment_order add lo3_order_nbr varchar(255);
+alter table lo_fulfillment_order add domain_id int;
+use localorb_www_qa;
+alter table lo_order add lo3_order_nbr varchar(255);
+alter table lo_order add domain_id int;
+alter table lo_fulfillment_order add lo3_order_nbr varchar(255);
+alter table lo_fulfillment_order add domain_id int;
+use localorb_www_production;
+alter table lo_order add lo3_order_nbr varchar(255);
+alter table lo_order add domain_id int;
+alter table lo_fulfillment_order add lo3_order_nbr varchar(255);
+alter table lo_fulfillment_order add domain_id int;
+use localorb_www_testing;

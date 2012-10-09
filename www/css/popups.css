@@ -1,0 +1,242 @@
+
+#overlay{
+	position: absolute;
+	top: 0px;
+	left:0px;
+	right:0px;
+	bottom:30px;
+	z-index: 20;
+	opacity: 0.8;
+	background-color:#fff;
+	display: none;
+}
+
+#popup{
+	position: absolute;
+	top: 0px;
+	left:260px;
+	right:260px;
+	height: 400px;
+	z-index: 1121;
+	background-color: <?=$options['p4a']?>;
+	border: #aaa 1px solid;
+	box-shadow:5px 0px 10px #555;
+	-webkit-box-shadow:0px 0px 10px <?=$options['p4d']?>;
+	-moz-box-shadow:0px 0px 10px <?=$options['p4d']?>;
+	display: none;
+	border-radius: 4px;
+}
+
+
+
+#popup_left{
+	position: absolute;
+	top: 0px;
+	left:0px;
+	width: 140px;
+	bottom: 45px;
+/*
+	background-color:<?=$options['p4b']?>;
+*/
+}
+
+#popup_center{
+	position: absolute;
+	top: 0px;
+	left:140px;
+	right:0px;
+	bottom: 45px;
+/*
+	background-color:<?=$options['p4f']?>;
+*/
+}
+
+#popup_foot{
+	position: absolute;
+	left: 0px;
+	right:0px;
+	height: 45px;
+	bottom: 0px;
+	background-color:<?=$options['p4a']?>;
+	text-align:right;
+	padding: 10px 10px 0px 0px;
+	border-radius: 4px;
+}
+
+#popup_content{
+	border: #bbb 1px solid;
+	border-width: 3px 1px 1px 1px;
+	position: absolute;
+	left: 10px;
+	right:10px;
+	top: 10px;
+	bottom: 10px;
+	border-radius: 20px;
+	padding: 15px;
+	background-color:<?=$options['p4f']?>
+}
+
+#notification{
+	position: absolute;
+	top: 54px;
+	left:260px;
+	right:260px;
+	height: 40px;
+	z-index: 1121;
+	background-color: <?=$options['p4e']?>;
+	border: #888 1px solid;
+	box-shadow:5px 0px 10px #555;
+	-webkit-box-shadow:0px 0px 10px #555;
+	-moz-box-shadow:0px 0px 10px #555;
+	display: none;
+	border-radius: 7px;
+	opacity: 0.94;
+	font-size: 130%;
+}
+
+#notification_content{
+	position: absolute;
+	top: 0px;
+	left:0px;
+	right:40px;
+	height:40px;
+	padding:8px;
+	font-weight: bold;
+	color:<?=$options['p4a']?>;
+}
+
+#notification_close{
+	position: absolute;
+	top: 0px;
+	right:0px;
+	height: 40px;
+	width:44px;
+	background-image: url(../img/misc/close.png);
+	background-repeat: no-repeat;
+	background-position: top left;
+	background-color:<?=$options['p4e']?>;
+	cursor:pointer;
+}
+
+#shop_popup{
+	display: none;
+	position: absolute;
+	width: 485px;
+	z-index:99;
+}
+
+.shop_popup_top{
+	height: 36px;
+	background-image: url(../img/popups/openWindow_top.png);
+	padding:0px;
+	margin: 0px;
+}
+
+.shop_popup_middle{
+	background-image: url(../img/popups/openWindow_middle.png);
+	background-repeat: repeat-y;
+	margin: 0px;
+}
+
+.shop_popup_bottom{
+	height: 25px;
+	padding:0px;
+	margin: 0px;
+	background-image: url(../img/popups/openWindow_bottom.png);
+}
+
+#shop_popup_content{
+	margin: 0px;
+	padding: 0px 20px 15px 20px;
+	width: 445px;
+	text-align: left;
+}
+
+body.popup{
+	background-image: none;
+	background-color: #fff;
+	text-align: left;
+	padding: 10px;
+}
+
+#dashboard_note{
+	position: absolute;
+	top: 10px;
+	left: 200px;
+	width: 89px;
+	height: 77px;
+	padding: 35px 30px;
+	background-image: url(../img/default/noteBkgd.png);
+	background-repeat: no-repeat;
+	z-index:100;
+	font-size: 90%;
+	text-align: center;
+}
+
+#weekly_special{
+	position: absolute;
+	top: 90px;
+	width: 980px;
+	height: 300px;
+	left: -22px;
+	z-index: 120;
+}
+
+.weeklyspecial_popup_top{
+	background-image: url(../img/popups/openLargeWindow_top.png);
+	background-repeat: no-repeat;
+	height: 50px;
+
+}
+
+.weeklyspecial_popup_middle{
+	background-image: url(../img/popups/openLargeWindow_middle.png);
+	background-repeat: repeat-y;
+}
+
+.weeklyspecial_popup_bottom{
+	background-image: url(../img/popups/openLargeWindow_bottom.png);
+	background-repeat: no-repeat;
+	height: 25px;
+}
+
+#weekly_special_icon{
+	position: absolute;
+	top: 72px;
+	left: 380px;
+	z-index: 99;
+}
+
+.weekly_header{
+	color: <?=$options['p1f']?>;
+	font-family: <?=$options['font2']?>;
+	font-size: 130%;
+	margin-bottom: 4px;
+}
+
+.weekly_title{
+	color: <?=$options['p1f']?>;
+	font-size: 140%;
+}
+
+#edit_popup{
+	background-color: <?=$options['p4f']?>;
+			 
+	-moz-background-clip: padding;     /* Firefox 3.6 */
+	-webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
+	background-clip: padding-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
+
+	border: 10px solid rgba(0,0,0,0.3);
+
+	-webkit-border-radius:12px;
+	-moz-border-radius:12px;
+	border-radius: 12px; 
+
+	padding: 5px 10px; 
+	text-align: left;
+
+	position: absolute; 
+	width: 370px;
+	display: none;
+	z-index: 120;
+}

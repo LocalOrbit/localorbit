@@ -1,0 +1,130 @@
+# 2.0 panos: Is it possible to enable smilies in recent_comments?
+
+
+### Maniac: I needed comments and pings displayed in one list combined 
+
+###produzentin: ich wollte mal vorsichtig nachfragen, ob es eine version geben
+###wird, in der man trackbacks und comments zusammen abfragen und unter ein
+###überschrift darstellen kann (siehe comment 213). oder geht das jetzt schon?
+
+# 2.0 Keith: One enhancement would be to provide %comment_age as well, so that you could show a comment as “14 minutes ago” or something, but that gets complicated when handling multiple languages. Oh, wait, I just saw there’s a human_time_diff() function in WordPress that handles the language issue, so %comment_age is easy to add.
+
+<a href="http://www.cricket.mailliw.com" rel="external nofollow">Will</a>: Is it possible to call the plugin and provide the parameters directly, over-riding the “Options” page?
+
+###DONE Zonekiller: I’d like to insert “comment_time” after comment_author” to abtain something like this:
+###Recent Comments
+###zonekiller: 18:00
+###samred: 17:50
+###jack234: 15:50
+
+###eyolf: Is there a way to customize the output so that all comments to the same
+###post are grouped together under one heading
+
+touchan: I’m trying to translate your recent comments plugin into Japanese, and make langauge failes (po/mo failes) for it.
+And this is a tiny favor. Could you put
+
+　load_plugin_textdomain(’get-recent-comments’)
+
+on your next release?
+
+Matt: Since the tagboard plugin sets up the tagboard as a static page, I was wondering whether it would be possible for your recent comments plugin to have an option exclude not only certain categories, but certain static pages.
+
+# done in 1.5.4 
+#beej: I just noticed that if the commenter does not supply a url, the link
+#points to the current post the viewer is on. Is there a way for the link to
+#point to the post the comment was made?
+#
+#carl: I have the commenters name link to their url. But if they did not supply
+#a url (or i deleted it) it links to my home page. Is there a way to make no
+#link appear if their isn o link?
+#
+#
+#FilSchiesty: I think that if a comment author does not type a url in the form,
+#then it should not link back to my website, it should just be author name
+#without the link.
+
+Fair Tax: This worked wonderfully. THANK YOU. Looked for a PayPal lnk to send you a tip, but couldn’t find one. Feel free to e-mail me, though.  Joshua
+
+ Chele in [dot] LA: was wondering can a favatar be used instead of a gravatar..
+
+### 2006-12-03 done:
+###Brandon Stone: Plugin laeuft langsam, wegen DESTINCT
+###King of Fools: dito - vorschlag fuer workaround
+###CountZero: dito - dito
+
+# 2.0 Imran: I was just wondering if there is a way of integrating Dunstan’s Time Since Plugin in this…
+
+
+
+
+# Eingbaut in 1.5.2
+#Slim: Exclude author’s comments YES or NO
+#Exclude these authors, to prevent certain comments to be showing on the main page
+#This is Zimbabwe: we’d like to exclude links to all our comments, and prioritise those left by visitors
+#
+
+### War kein bug ### Tobi: %post_title funktioniert leider nicht. Es wird nur der Autor und der gekürzte Kommentar ausgegeben.
+
+# herrmueller: widget
+
+Johan: But how do I change the chop-off-dots? Typographically anal, I’d like them to be a proper ellipsis […, …] instead of three dots […].
+
+
+Daniel: The plugin seems to work fine but I try to make it appear in a page instead of in the sidebar
+
+liseur: if it can be possible to display the most recent posts in a static page, not in the sidebar.
+
+
+# done in 1.5
+#ejm Says:
+#September 25th, 2006 at 19:21 e
+#Excuse me for replying to myself. I believe that I found the answer at php.net. I changed trim(htmlspecialchars(stripslashes($post[’Title’]))), in get-recent-comments.php to the following:
+#————————————–
+#$output = str_replace(”%post_title”,
+#html_entity_decode($post[’Title’]), $output);
+#
+#mobius: html tags in posts are not rendered as html, so you wind up getting what you see above instead of italicized type
+
+
+
+
+oliver: I wonder if there is an easy way to show additional recent comment results in categories or monthly archives, filtered by that category or month. May be this could be a feature for the next plugin version?
+
+Ville Säävuori | Edit This
+
+Hi! This is a great plugin.
+Just upgraded to version 1.2 and found a little bug. (Or maybe a feature?) The %comment_excerpt does not work expectedly when placed in the title-attribute of the link. The following, for example, outputs full (not shortened) comment:
+%comment_author: %post_title
+As a quick workaround, I found out that for some reason, this works:
+%comment_author: %post_title%comment_excerpt
+Dang. HTML-tags were ripped of. Maybe this will show up:
+<li>%comment_author: <a href="%comment_link" title="%comment_excerpt">%post_title</a></li>
+and
+<li>%comment_author: <a href="%comment_link" title="%comment_excerpt">%post_title</a><span style="display: none;">%comment_excerpt</span></li>
+
+Abel Cheung - utf8
+Tommaso Tessarolo - seltsames char problem
+2ndboy - utf8
+
+# Johanna http://comicsworthreading.com/ nr of comments in order by post wrong
+# Frédéric http://skyfall.free.fr/ nr of comments in order by post wrong
+
+julius http://julescubtree.dyn-o-saur.com/blog openid
+
+Marcel van Leeuwen http://www.amvanleeuwen.nl/ Only the line breaks disappeared. Now the text is show in one long line…
+
+Jessica http://www.schattendings.de/ disclose secret support http://bluesome.net/post/2006/01/01/121/
+
+Ceglie Messapica http://www.ceglieplurale.it/ FeedWordPress wrong link for comments and authors
+
+ prinzzess http://www.prinzzess.biz/ DE uebersetzung
+
+# Mirra: DB to slow
+
+# Andi http://gantenbein.ws/ Tiger Admin
+
+# Henry (nolink) custom smileys plugin
+
+# Pixelation Says:  http://pixcapacitor.com/ Anonymous
+
+

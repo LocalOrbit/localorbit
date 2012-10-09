@@ -1,0 +1,206 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: add-to-any-subscribe\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-25 00:55-0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: MicroPat\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Catalan\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: add-to-any-subscribe.php:155
+msgid "Share"
+msgstr "Compartir"
+
+#: add-to-any-subscribe.php:156
+msgid "Save"
+msgstr "Desar"
+
+#: add-to-any-subscribe.php:157
+#: add-to-any-subscribe.php:465
+msgid "Subscribe"
+msgstr "Subscriures"
+
+#: add-to-any-subscribe.php:158
+msgid "E-mail"
+msgstr "Correu electrònic"
+
+#: add-to-any-subscribe.php:159
+msgid "Bookmark"
+msgstr "Adreça d'interés"
+
+#: add-to-any-subscribe.php:160
+msgid "Show all"
+msgstr "Mostrar tots"
+
+#: add-to-any-subscribe.php:161
+msgid "Show less"
+msgstr "Mostrar menys"
+
+#: add-to-any-subscribe.php:162
+msgid "Find service(s)"
+msgstr "Cercar servei(s)"
+
+#: add-to-any-subscribe.php:163
+msgid "Instantly find any service to add to"
+msgstr "Trobar instantàniament qualsevol servei per a afegir a"
+
+#: add-to-any-subscribe.php:164
+msgid "Powered by"
+msgstr "Potenciat per"
+
+#: add-to-any-subscribe.php:165
+msgid "Share via e-mail"
+msgstr "Compartir per mitjà de correu electrònic"
+
+#: add-to-any-subscribe.php:166
+msgid "Subscribe via e-mail"
+msgstr "Subscriures per mitja de correu electrònic"
+
+#: add-to-any-subscribe.php:167
+msgid "Bookmark in your browser"
+msgstr "Afegir adreça d'interés al vostre navegador"
+
+#: add-to-any-subscribe.php:168
+msgid "Press Ctrl+D or Cmd+D to bookmark this page"
+msgstr "Pressioneu Ctrl+D o Cmd+D per afegir a preferits aquesta pàgina"
+
+#: add-to-any-subscribe.php:169
+msgid "Add to your favorites"
+msgstr "Afegir a favorits"
+
+#: add-to-any-subscribe.php:170
+msgid "Send from any e-mail address or e-mail program"
+msgstr "Enviar des de qualsevol adreça de correu electrònic o programa de correu electrònic"
+
+#: add-to-any-subscribe.php:171
+msgid "E-mail program"
+msgstr "Programa de correu electrònic"
+
+#: add-to-any-subscribe.php:196
+msgid "Your theme needs to be fixed. To fix your theme, use the <a href=\"theme-editor.php\">Theme Editor</a> to insert <code>&lt;?php wp_footer(); ?&gt;</code> just before the <code>&lt;/body&gt;</code> line of your theme's <code>footer.php</code> file."
+msgstr "El vostre tema ha de ser corretgit. per corretgir-lo, utilitzeu l'<a href=\"theme-editor.php\">Editor de tema</a> per afegir <code>&lt;?php wp_footer(); ?&gt;</code> justament abans de la línia <code>&lt;/body&gt;</code> del vostre tema al fitxer <code>footer.php</code>."
+
+#: add-to-any-subscribe.php:243
+msgid "Title (optional)"
+msgstr "Títol (opcional)"
+
+#: add-to-any-subscribe.php:274
+#: add-to-any-subscribe.php:368
+msgid "Image URL"
+msgstr "URL de l'imatge"
+
+#: add-to-any-subscribe.php:282
+#: add-to-any-subscribe.php:375
+msgid "Text only"
+msgstr "Només text"
+
+#: add-to-any-subscribe.php:288
+msgid "More Settings"
+msgstr "Més opcions"
+
+#: add-to-any-subscribe.php:318
+msgid "Settings saved."
+msgstr "Preferències desades."
+
+#: add-to-any-subscribe.php:329
+msgid "Add to Any: Subscribe "
+msgstr "Add to Any: Subscriures "
+
+#: add-to-any-subscribe.php:329
+#: add-to-any-subscribe.php:465
+msgid "Settings"
+msgstr "Preferències"
+
+#: add-to-any-subscribe.php:339
+msgid "Button"
+msgstr "Botó"
+
+#: add-to-any-subscribe.php:382
+msgid "Button Placement"
+msgstr "Emplaçament del botó"
+
+#: add-to-any-subscribe.php:384
+msgid "If you are using a widget-ready theme, you can use the <a href=\"widgets.php\">widgets page</a> to place the button where you want in your sidebar."
+msgstr "Si esteu utilitzant un tema widget-ready, podeu utilitzar la <a href=\"widgets.php\">pàgina de widgets</a> per emplaçar el botó on volgueu de la vostra barra lateral."
+
+#: add-to-any-subscribe.php:385
+msgid "Open Widgets Panel"
+msgstr "Obrir el panell de Widgets"
+
+#: add-to-any-subscribe.php:386
+msgid "Alternatively, you can place the following code in <a href=\"theme-editor.php\">your template pages</a> (within <code>sidebar.php</code>, <code>index.php</code>, <code>single.php</code>, and/or <code>page.php</code>)"
+msgstr "Alternativament, podeu afegir el següent codi a <a href=\"theme-editor.php\">les vostres pàgines de plantilla</a> (dins de <code>sidebar.php</code>, <code>index.php</code>, <code>single.php</code>, i/o <code>page.php</code>)"
+
+#: add-to-any-subscribe.php:391
+msgid "Menu Style"
+msgstr "Estil del menú"
+
+#: add-to-any-subscribe.php:393
+msgid "Using Add to Any's Menu Styler, you can customize the colors of your Subscribe menu! When you're done, be sure to paste the generated code in the <a href=\"#\" onclick=\"document.getElementById('A2A_SUBSCRIBE_additional_js_variables').focus();return false\">Additional Options</a> box below."
+msgstr "Utilitzant el personalitzador d'estil de Add to Any, vosté pot personalitzar els colors del vostre menú Subscriures! Quan hageu acabat, heu de copiar el codi generat al recuadre d'<a href=\"#\" onclick=\"document.getElementById('A2A_SUBSCRIBE_additional_js_variables').focus();return false\">opcions adicionals</a> de sota."
+
+#: add-to-any-subscribe.php:395
+msgid "Open the Add to Any Menu Styler in a new window"
+msgstr "Obrir el personalitzador d'estil de Add to Any a una nova finestra"
+
+#: add-to-any-subscribe.php:397
+msgid "Open Menu Styler"
+msgstr "Obrir el personalitzador d'estils"
+
+#: add-to-any-subscribe.php:402
+msgid "Menu Options"
+msgstr "Opcions del menú"
+
+#: add-to-any-subscribe.php:407
+msgid "Hide embedded objects (Flash, video, etc.) that intersect with the menu when displayed"
+msgstr "Amagar objectes incrustats (Flash, vídeo, etc) que interseccionin amb el menú quan aquest aparegui"
+
+#: add-to-any-subscribe.php:412
+msgid "Show the title of this blog within the menu"
+msgstr "Mostrar el títul d'aquest blog dins del menú"
+
+#: add-to-any-subscribe.php:419
+msgid "Only show the menu when the user clicks the Subscribe button"
+msgstr "Mostrar el menú solament quan un usuari cliqui sobre el botó Subscriures"
+
+#: add-to-any-subscribe.php:425
+msgid "Open the addtoany.com menu page in a new tab or window if the user clicks the Subscribe button"
+msgstr "Obrir el menú de addtoany.com en una nova pestanya o finestra si l'usuari clica al botó Subscriures"
+
+#: add-to-any-subscribe.php:430
+msgid "Additional Options"
+msgstr "Opcions adicionals"
+
+#: add-to-any-subscribe.php:434
+msgid "Paste the code from Add to Any's Menu Styler in the box below!"
+msgstr "Pegueu el codi del  personalitzador d'estil al següent recuadre!"
+
+#: add-to-any-subscribe.php:438
+msgid "Below you can set special JavaScript variables to apply to your Subscribe menu."
+msgstr "A continuació, podeu establir variables especials de JavaScript per aplicar al vostre menú Subscriures."
+
+#: add-to-any-subscribe.php:439
+msgid "Advanced users might want to explore Add to Any's <a href=\"http://www.addtoany.com/buttons/api/\" target=\"_blank\">JavaScript API</a>."
+msgstr "Els usuaris avançats poden preferir explorar l'<a href=\"http://www.addtoany.com/buttons/api/\" target=\"_blank\">API JavaScript</a> de Add to Any."
+
+#: add-to-any-subscribe.php:445
+msgid "<strong>Note</strong>: If you're adding new code, be careful not to accidentally overwrite any previous code."
+msgstr "<strong>Nota</strong>: Si heu d'afegir un nou codi, tingueu cura de no sobreescriure accidentalment qualsevol codi anterior."
+
+#: add-to-any-subscribe.php:452
+msgid "Save Changes"
+msgstr "Desar canvis"
+
+#: add-to-any-subscribe.php:466
+msgid "Subscribe Buttons"
+msgstr "Botons subscriures"
+

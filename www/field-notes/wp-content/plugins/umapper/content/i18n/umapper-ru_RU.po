@@ -1,0 +1,253 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: umapper\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-05 13:02+0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Victor Farazdagi <victor@afcomponents.com>\n"
+"Language-Team: CrabDish <support@afcomponents.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ../..\n"
+
+#: ../../Umapper.php:338
+#: ../../Umapper/Pages/GeneralConfig.php:94
+msgid "UMapper Configuration"
+msgstr "Конфигурация UMapper"
+
+#: ../../Umapper/Messages.php:45
+msgid "UMapper requires API key."
+msgstr "UMapper - API-ключ не найден."
+
+#: ../../Umapper/Messages.php:46
+#, php-format
+msgid "You must <a href=\"%1$s\">enter your umapper.com API key</a> for plugin to work."
+msgstr "Для корректной работы модуля требуется <a href=\"%1$s\">ввести API-ключ</a>."
+
+#: ../../Umapper/Messages.php:51
+msgid "UMapper located WordPressMU installation - integrator's API key required."
+msgstr "UMapper обнаружил WordPressMU установку - введите Integrator's API-ключ"
+
+#: ../../Umapper/Messages.php:52
+#, php-format
+msgid "You must <a href=\"%1$s\">enter your API key</a> for plugin to work.<br>If you do not configure the key, your users would have to do so on per blog basis."
+msgstr "Для корректной работы плагина требуется <a href=\"%1$s\">API-ключ</a>.<br>В случае если вы не зададите ключ сами, ваши пользователи должны будут сделать это вручную."
+
+#: ../../Umapper/Messages.php:57
+msgid "UMapper was NOT able to locate primary blog."
+msgstr "UMapper - не удалось найти первичный блог."
+
+#: ../../Umapper/Messages.php:58
+#, php-format
+msgid "Please <a href=\"%1$s\">contact our support</a>!"
+msgstr "Пожалуйста, <a href=\"%1$s\">отправте сообщение</a> в наш департамент поддержки."
+
+#: ../../Umapper/Messages.php:63
+msgid "UMapper Requirements Failed."
+msgstr "UMapper - минимальные требования не удовлетворенны."
+
+#: ../../Umapper/Messages.php:64
+#, php-format
+msgid "Plugin requires PHP %1$s+ and WordPress %2$s+ to work correctly!"
+msgstr "Для коректной работы требуется PHP версии %1$s+ и WordPress версии %2$s+!"
+
+#: ../../Umapper/Messages.php:68
+msgid "Your key has been cleared."
+msgstr "API-ключ удален."
+
+#: ../../Umapper/Messages.php:72
+msgid "Your connection details have been cleared."
+msgstr "Данные соединения удалены."
+
+#: ../../Umapper/Messages.php:76
+msgid "Your key has been saved. Make sure that it is valid!"
+msgstr "Ключ успешно сохранен. Проверте его корректность!"
+
+#: ../../Umapper/Messages.php:80
+msgid "Your connection details have been saved. Make sure that they are valid!"
+msgstr "Данные соединения успешно сохраненны. Убедитесь в их правильности!"
+
+#: ../../Umapper/Messages.php:84
+msgid "API key valid. Happy blogging!"
+msgstr "Верный ключ! UMapper готов к использованию."
+
+#: ../../Umapper/Messages.php:88
+msgid "Connection details are valid. Happy blogging!"
+msgstr "Данные соединения верны. UMapper готов к использованию."
+
+#: ../../Umapper/Messages.php:92
+msgid "API key invalid. Make sure you entered correct key!"
+msgstr "Неверный API-ключ, проверте введенные данные!"
+
+#: ../../Umapper/Messages.php:96
+msgid "Connection details are invalid. Make sure you entered correct values!"
+msgstr "Данные соединения неверны. Проверте введенную информацию!"
+
+#: ../../Umapper/Messages.php:100
+msgid "Map data updated.."
+msgstr "Данные карты сохранены.."
+
+#: ../../Umapper/Messages.php:104
+msgid "Map data can NOT be saved..Please try again!"
+msgstr "Ошибка сохранения данных. Попробуйте еще раз!"
+
+#: ../../Umapper/Shortcode.php:161
+msgid "Add UMapper Map"
+msgstr "Карта UMapper"
+
+#: ../../Umapper/Shortcode.php:209
+msgid "Map Details"
+msgstr "Данные Карты"
+
+#: ../../Umapper/Shortcode.php:210
+msgid "Map Editor"
+msgstr "Редактор"
+
+#: ../../Umapper/Shortcode.php:211
+msgid "My Maps"
+msgstr "Мои Карты"
+
+#: ../../Umapper/Shortcode.php:284
+msgid "Map Title"
+msgstr "Название"
+
+#: ../../Umapper/Shortcode.php:289
+msgid "Map Description"
+msgstr "Описание"
+
+#: ../../Umapper/Shortcode.php:294
+msgid "Map Provider"
+msgstr "Провайдер"
+
+#: ../../Umapper/Shortcode.php:307
+msgid "Update Map"
+msgstr "Обновить"
+
+#: ../../Umapper/Shortcode.php:309
+msgid "Create Map"
+msgstr "Создать"
+
+#: ../../Umapper/Shortcode.php:314
+#: ../../Umapper/Shortcode.php:377
+msgid "Insert Map"
+msgstr "Вставить"
+
+#: ../../Umapper/Shortcode.php:318
+msgid "Proceed to Map Editor"
+msgstr "Перейти в редактор"
+
+#: ../../Umapper/Shortcode.php:400
+msgid "Select map size"
+msgstr "Выберите размер"
+
+#: ../../Umapper/Shortcode.php:403
+msgid "Square"
+msgstr "Квадрат"
+
+#: ../../Umapper/Shortcode.php:404
+msgid "Thumbnail"
+msgstr "Набросок"
+
+#: ../../Umapper/Shortcode.php:405
+msgid "Small"
+msgstr "Небольшой"
+
+#: ../../Umapper/Shortcode.php:406
+msgid "Medium"
+msgstr "Средний"
+
+#: ../../Umapper/Shortcode.php:407
+msgid "Large"
+msgstr "Большой"
+
+#: ../../Umapper/Shortcode.php:411
+msgid "Select map alignment"
+msgstr "Выберите положение карты"
+
+#: ../../Umapper/Shortcode.php:414
+msgid "Default"
+msgstr "По-определению"
+
+#: ../../Umapper/Shortcode.php:415
+msgid "Left"
+msgstr "Слева"
+
+#: ../../Umapper/Shortcode.php:416
+msgid "Center"
+msgstr "По-центру"
+
+#: ../../Umapper/Shortcode.php:417
+msgid "Right"
+msgstr "Справа"
+
+#: ../../Umapper/Shortcode.php:421
+msgid "Cancel"
+msgstr "Отменить"
+
+#: ../../Umapper/Shortcode.php:422
+msgid "Insert"
+msgstr "Вставить"
+
+#: ../../Umapper/Pages/GeneralConfig.php:58
+#: ../../Umapper/Pages/GeneralConfigMu.php:88
+msgid "Cheatin&#8217; uh?"
+msgstr "Стоп, машина!"
+
+#: ../../Umapper/Pages/GeneralConfig.php:91
+#: ../../Umapper/Pages/GeneralConfigMu.php:111
+msgid "Options saved."
+msgstr "Опции сохраненны."
+
+#: ../../Umapper/Pages/GeneralConfig.php:97
+#, php-format
+msgid "In order to get access to UMapper API you need to <a href=\"%1$s\">obtain API-key</a>. This procedure is done only once. (<a href=\"%2$s\">More info</a>)"
+msgstr "Для доступа к системе UMapper, требуется API-ключ. Ключ предоставляется после <a href=\"%1$s\">регистрации пользователя</a>. Дополнительная информация на сайте <a href=\"%2$s\">UMapper.com</a>."
+
+#: ../../Umapper/Pages/GeneralConfig.php:98
+msgid "UMapper.com API Key"
+msgstr "UMapper API-ключ"
+
+#: ../../Umapper/Pages/GeneralConfig.php:102
+msgid "Validate key"
+msgstr "Проверить ключ"
+
+#: ../../Umapper/Pages/GeneralConfig.php:104
+#: ../../Umapper/Pages/GeneralConfigMu.php:129
+msgid "Save Changes"
+msgstr "Сохранить"
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:60
+#: ../../Umapper/Pages/GeneralConfigMu.php:61
+msgid "UMapper"
+msgstr "UMapper"
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:114
+msgid "UMapperMU Integrator Configuration"
+msgstr "Конфигурация UMapperMU Integrator"
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:117
+#, php-format
+msgid "In order to allow all hosted blogs to use UMapper Plugin without entering API key each time, <a href=\"%1$s\">obtain and use Integrator's API Key</a>."
+msgstr "Для того чтобы дочерние блоги получили автоматический доступ к системе UMapper - получите <a href=\"%1$s\">Integrator's API-ключ</a>."
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:121
+msgid "Username"
+msgstr "Логин"
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:123
+msgid "Password"
+msgstr "Пароль"
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:125
+msgid "API Key"
+msgstr "API-ключ"
+
+#: ../../Umapper/Pages/GeneralConfigMu.php:127
+msgid "Test Connection"
+msgstr "Тест-соединение"
+

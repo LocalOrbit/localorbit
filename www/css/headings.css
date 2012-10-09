@@ -1,0 +1,140 @@
+
+h1,h2,h3,h4,h5{
+	font-family: <?=$options['font1']?>;
+	font-size:135%;
+/*	font-weight: bold; */
+	color: <?=$options['p4e']?>;
+	border: <?=$options['p1b']?> 1px solid; 
+	padding: 0px 0px 10px 0px;
+	margin: 0px 0px 6px 0px;
+	border-width: 0px 0px 2px 0px;
+	position: relative;
+}
+
+h1{
+	font-family: <?=$options['font2']?>;
+}
+
+h2{
+	font-size:115%;
+	border-width: 0px 0px 2px 0px;
+	padding: 8px 0px;
+}
+
+h3,h4,h5{
+	font-size:110%;
+	border-width: 0px 0px 1px 0px;
+	font-weight: normal;
+	padding: 6px 0px;
+}
+
+h4{
+	font-size:105%;
+	padding: 4px 0px;
+}
+
+h5{
+	font-size:100%;
+	padding: 2px 0px;
+}
+
+.header_1,.header_2,.header_3,.header_4{
+	border-radius: 5px;
+	padding: 2px 12px;
+	color: <?=$options['p4f']?>;
+	background-color: <?=$options['p1e']?>;	margin: 2px;
+	text-transform:<?=$options['header1_transform']?>;
+}
+
+.header_2{
+	background-color: <?=$options['p3c']?>;
+}
+
+.header_3{
+	background-color: <?=$options['p2c']?>;
+}
+
+.header_4{
+	background-color: <?=$options['p1a']?>;
+	color: <?=$options['p4c']?>;
+}
+
+
+ul.subheader{
+	margin:0px;
+}
+
+li.subheader_1{
+	list-style: none;
+}
+div.subheader_1,div.subheader_2,div.subheader_3{
+	color: <?=$options['p4c']?>;
+	border-radius: 5px;
+	padding: 2px 12px;
+	background-color: <?=$options['p1a']?>;
+	
+	
+/*
+	background: -webkit-gradient(linear, left top, left bottom, from(<?=$options['p1a']?>), to(<?=$options['p1b']?>));
+	background: -moz-linear-gradient(top,  <?=$options['p1a']?>, <?=$options['p1b']?>);
+*/
+	margin: 2px;
+	font-size: 90%;
+}
+div.subheader_2{
+	background-color: <?=$options['p3a']?>;
+/*
+	background: -webkit-gradient(linear, left top, left bottom, from(<?=$options['p3a']?>), to(<?=$options['p3a']?>));
+	background: -moz-linear-gradient(top,  <?=$options['p3a']?>, <?=$options['p3a']?>);
+*/
+}
+
+div.subheader_3{
+	background-color: <?=$options['p2d']?>;
+
+/*
+	background: -webkit-gradient(linear, left top, left bottom, from(<?=$options['p2a']?>), to(<?=$options['p2a']?>));
+	background: -moz-linear-gradient(top,  <?=$options['p2a']?>, <?=$options['p2a']?>);
+*/
+}
+.subheader_off{
+	background-color: #fff !important;
+}
+
+.notification{
+	background-color: <?=$options['p3a']?>;
+	font-size: 117%;
+	padding: 8px;
+	border-radius: 4px;
+	border: <?=$options['p3c']?> 1px solid;
+	cursor: pointer;
+	margin: 10px;
+}
+
+.subheader_off{
+	background-color: #fff;
+}
+
+ul.footer{
+	margin: 0px;
+}
+
+li.footer{
+	margin: 3px 0px 8px 0px;
+	list-style: none;
+}
+
+
+a.header_right{
+	position: absolute;
+	top: 0px;
+	right:0px;
+	display: inline;
+	font-size: 80%;
+	margin-top: 5px;
+	background-image: url(../img/misc/arrow.gif);
+	background-repeat: no-repeat;
+	padding-left: 15px;
+	text-transform: lowercase;
+}
+

@@ -1,0 +1,65 @@
+# Authors Widget Wordpress Plugin.
+# Copyright (C) 2009 Gavriel Fleischer
+# This file is distributed under the same license as the Authors Widget package.
+# Gavriel Fleischer <flocsy@gmail.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Authors Widget\n"
+"Report-Msgid-Bugs-To: http://blog.fleischer.hu/wordpress/authors/\n"
+"POT-Creation-Date: 2009-02-18 18:34+0000\n"
+"PO-Revision-Date: 2009-08-27 18:17+0200\n"
+"Last-Translator: Fat Cow <zhr@tut.by>\n"
+"Language-Team: Fat Cow <zhr@tut.by>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: authors.php:30
+#: authors.php:161
+msgid "Authors"
+msgstr "Авторы"
+
+#: authors.php:118
+msgid "Title"
+msgstr "Название"
+
+#: authors.php:119
+msgid "Show RSS links"
+msgstr "Показывать RSS-ссылки"
+
+#: authors.php:120
+msgid "Show post counts"
+msgstr "Показывать счетчик постов"
+
+#: authors.php:121
+msgid "Exclude admin"
+msgstr "Исключая администратора"
+
+#: authors.php:159
+msgid "A list of the authors"
+msgstr "Список авторов"
+
+#. Plugin Name of an extension
+msgid "Authors Widget"
+msgstr "Виджет Авторы"
+
+#. Plugin URI of an extension
+msgid "http://blog.fleischer.hu/wordpress/authors/"
+msgstr "http://blog.fleischer.hu/wordpress/authors/"
+
+#. Description of an extension
+msgid "Authors Widget shows the list of the authors, with the number of posts, link to RSS feed next to their name. It is useful in a multi-author blog, where you want to have the list in the sidemenu."
+msgstr "Виджет Авторы отображает список авторов с количеством постов, ссылкой на RSS-ленту и их имя. "
+
+#. Author of an extension
+msgid "Gavriel Fleischer"
+msgstr "Gavriel Fleischer"
+
+#. Author URI of an extension
+msgid "http://blog.fleischer.hu/gavriel/"
+msgstr "http://blog.fleischer.hu/gavriel/"
+

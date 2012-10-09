@@ -1,0 +1,362 @@
+/*  
+Theme Name: Upstart Blogger Modicus
+Theme URI: http://www.upstartblogger.com/
+Description: Simple and clean, lightweight theme. For updates, please <a href="http://feeds.feedburner.com/UpstartBlogger">subscribe to Upstart Blogger</a>.
+Version: 0.3
+Author: Robert Ellis
+Author URI: http://www.mysticsoftheordinary.com/
+License: Creative Commons Attribution-Share Alike 3.0 (http://creativecommons.org/licenses/by-sa/3.0/. Feel free to make any changes, but please keep a link back to Upstart Blogger in your sidebar or footer.
+*/
+
+/* @group Normalize */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, th, td {
+	margin: 0;
+	padding: 0;
+}
+h1,h2,h3,h4,h5,h6 {
+	font-size: 100%;
+}
+ol,ul {
+	list-style: none;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+	font-style: normal;
+	font-weight: normal;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+fieldset,img {
+	border: 0;
+}
+caption,th {
+	text-align: left;
+}
+q:before, q:after {
+	content: '';
+}
+/* @end */
+
+/* @group Structure */
+
+#homebody {
+text-align: left;
+font-size: 1.5em;
+line-height: 2.5em;
+letter-spacing: .1em;
+width: 916px;
+padding-top: 200px;
+}
+
+#wrapper {
+	font-size: 1.2em;
+	width: 916px;
+	margin: 0 auto;
+	text-align: center;
+	position: relative;
+}
+
+#header {
+text-align: left;
+margin: 20px 0;
+height: 150px;
+font-size: 3em;
+font-variant: small-caps;
+}
+
+#sidebar2 h1 {
+font-size: 2em;
+text-transform: none;
+line-height: 1.2em;
+}
+
+body {
+	margin: 0 auto;
+	padding: 0;
+	background-color: #fff;
+	color: #444;
+	font: 62.5%/200% Arial, Helvetica, sans-serif;
+	text-align: center;
+	}
+
+
+
+/* @end */
+
+a:link, a:visited {
+	color: #444;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a:hover {
+color: silver;
+border-bottom: none;
+}
+
+#sidebar a {border: none; font-weight: normal;}
+
+.post li p, #sidebar2 li p {display: inline;}
+.post li a, #sidebar2 li a {font-weight: bold;}
+.post li, #sidebar2 li {display: inline;}
+
+#sidebar2 ul {padding-top: 15px;}
+
+#sidebar h2 {text-transform: uppercase;}
+
+a:link.subscribe, a:visited.subscribe {
+color: #f36a18;}
+
+a:hover.subscribe  {
+color: silver;}
+
+.description {font-size: .5em;}
+
+#header img {border: 0px solid #bebebe; float: left;}
+
+#sidebar {
+text-align: left;
+position: absolute;
+top: 170px;
+right: 0;
+width: 125px;
+padding-bottom: 25px;
+}
+
+#sidebar2 {
+text-align: left;
+position: absolute;
+top: 170px;
+left: 450px;
+width: 300px;
+padding-bottom: 25px;
+}
+
+#footer {
+}
+
+#sidebar2 h3 {
+margin: 1.5em 0 -1em;
+font-weight: normal;
+}
+
+#sidebar h1 a{
+font-weight: bold;}
+
+p.postmetadata {
+line-height: 100%;
+margin: 10px 0 25px;
+color: #5e5e5e;
+}
+
+
+.post {text-align: left;
+margin-left: 0px;
+width: 336px;
+position: absolute;
+left: 0px;
+top: 170px;
+padding-bottom: 25px;}
+
+.entry {
+text-align: left;
+width: 336px;
+}
+
+.entry p:first-child {font-weight: bold; font-size: 1.4em; padding-top: 0; color: #f5467a;}
+
+.entry blockquote p:first-child {font-weight: normal; color: #444; font-size: inherit;}
+
+.entry blockquote {font-weight: normal; color: #444; font-size: 1.1em; border-left: 2px solid silver; margin: 1.2em 0 1.2em 2em; padding-left: 1em;}
+
+
+.cat a:link, .cat a:visited{
+text-transform: uppercase;
+color: #f5467a;
+}
+
+.cat a:hover{
+text-transform: uppercase;
+color: silver;}
+
+.cat {text-transform: uppercase;}
+
+.entry img {
+max-width: 330px;
+padding: 2px;
+border: 1px solid silver;
+}
+
+p {padding: 1em 0 .5em 0;}
+
+strong {font-weight: bold;}
+
+h2 {padding-top: 10px; font-size: 1.2em;}
+
+h3 {
+padding-top: 10px; 
+text-transform: uppercase;
+}
+
+.navigation {
+margin: 0 0 1em;
+}
+
+.center {text-align: center;}
+
+.borderless img, img.borderless {border: none;}
+
+.imgleft {float:left;}
+
+em {font-style: italic;}
+
+.entry li {display: block;}
+
+ul {padding-bottom: 1em;}
+
+ul.related li a{display: block;}
+ul.related li {display: block;}
+
+ul.archive li{display: block; padding: 0 0 1em;}
+
+ul.archive p {
+display: block; padding: 0;}
+
+ul.archive {margin: 0; padding:0;}
+
+.alignleft {float: left;}
+.alignright {float: right;}
+
+/* Begin Comments*/
+
+/* Normal Bubble */
+div.bubble {
+	width: auto;
+	margin-bottom: 24px;
+}
+
+div.bubble blockquote {
+	margin: 0px;
+	padding: 10px;
+	border: 1px solid #c9c2c1;}
+
+div.bubble blockquote p {
+	margin: 0px;
+	padding: 0px;
+	line-height: 1.3em;
+}
+
+div.bubble cite {
+	position: relative;
+	margin: -7px;
+	padding: 7px 0px 10px 15px;
+	top: 5px;
+	background: transparent url('images/tip.gif') no-repeat 20px 0;
+	font-style: normal;
+	font-size: 1em;
+	display: block;
+}
+
+
+.alt {
+	margin: 0;
+	padding: 0;
+	}
+
+#commentform p {
+	padding: 5px 0;
+	font-size: 1.2em;
+	}
+
+#comment {
+
+	width: 336px;
+	height: 100px;
+	}
+.nocomments {
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	}
+
+.commentmetadata {
+	margin: 0;
+	display: block;
+	}
+	
+#commentPreview {
+font-size: .8em;}
+/* End Comments */
+
+/* Share This */
+
+.sharethis {padding: 2em 0 3em;}
+
+#akst_form {margin-left: -50px;}
+
+/* End Share This */
+
+/* Begin Calendar */
+#wp-calendar {
+	empty-cells: show;
+	margin: 10px auto 0;
+	width: 125px;
+	}
+
+#wp-calendar #next a {
+	padding-right: 10px;
+	text-align: right;
+	}
+
+#wp-calendar #prev a {
+	padding-left: 10px;
+	text-align: left;
+	}
+
+#wp-calendar a {
+	display: block;
+	}
+
+#wp-calendar caption {
+	text-align: center;
+	width: 100%;
+	}
+
+#wp-calendar td {
+	padding: 3px 0;
+	text-align: center;
+	}
+
+#wp-calendar td.pad:hover { /* Doesn't work in IE */
+	background-color: #fff; }
+	
+	#wp-calendar #prev a, #wp-calendar #next a {
+	font-size: 9pt;
+	}
+
+#wp-calendar a {
+	text-decoration: none;
+	}
+
+#wp-calendar caption {
+	font: bold 1.3em "Helvetica Neue", Helvetica, Arial, Sans-Serif;;
+	text-align: center;
+	}
+
+#wp-calendar th {
+	font-style: normal;
+	text-transform: capitalize;
+	}
+
+/* End Calendar */
+
+/* Begin Search */
+
+#search_form {
+width: 15px;}
+
+.search_input {
+width: 5px;}
+
+/* End Search */
