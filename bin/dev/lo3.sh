@@ -9,7 +9,17 @@ if [ -z "$1" ]; then
 fi
 
 # check out current files
-svn co svn+ssh://guanaco.iqguys.com/vcs/svn/lo3/trunk/
+svn co svn+ssh://svn/opt/localorbit/lo3/trunk/
+
+scp -r 'lo3:/var/www/production/www/img/organizations/*.jpg' $PWD/trunk/www/img
+scp -r 'lo3:/var/www/production/www/img/organizations/*.gif' $PWD/trunk/www/img
+scp -r 'lo3:/var/www/production/www/img/organizations/*.png' $PWD/trunk/www/img
+scp -r 'lo3:/var/www/production/www/img/products/raws/*.dat' $PWD/trunk/www/img/products/raws
+scp -r 'lo3:/var/www/production/www/img/newsletters/*' $PWD/trunk/www/img
+scp -r 'lo3:/var/www/production/www/img/weeklyspec/*' $PWD/trunk/www/img
+
+chmod 777 $PWD/trunk/www/img/products/cache
+chmod 777 $PWD/trunk/www/img/organizations/cached
 
 # dump production db
 ssh lo3 "mysqldump localorb_www_production -u localorb_www -pl0cal1sdab3st" > localorb_local_temp.sql
@@ -62,7 +72,7 @@ echo "NameVirtualHost *:80
 </VirtualHost>" > httpd-localorb.conf
 
 echo "
-Listen 443 
+Listen 443
 
 <IfModule mod_ssl.c>
 <VirtualHost _default_:443>
@@ -70,12 +80,12 @@ Listen 443
    ServerName dev.localorb.it
    ServerAlias dev*.localorb.it
    DocumentRoot $PWD/trunk/www
-   NameVirtualHost *:443   
+   NameVirtualHost *:443
    SSLEngine on
    SSLCertificateFile    $PWD/trunk/etc/ssl/2012-2013_ssl.crt
    SSLCertificateKeyFile $PWD/trunk/etc/ssl/2012-2013.decrypted.key
    SSLCertificateChainFile $PWD/trunk/etc/ssl/2012-2013_intermediate.crt
-   
+
    <Directory />
       Options FollowSymLinks
       AllowOverride All
@@ -95,4 +105,4 @@ Listen 443
 
    CustomLog $LOG_DIR/access-dev.log combined
 
-</VirtualHost>" >> httpd-localorb.conf 
+</VirtualHost>" >> httpd-localorb.conf
