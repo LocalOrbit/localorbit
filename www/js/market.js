@@ -45,7 +45,8 @@ market.showWeeklySellOn=function(dayNbr){
 
 market.editDeliv=function(DelivId){
 	//core.alertHash(core.delivery_days[DelivId][0]);
-	if(!$('#addDelivButton').is(':hidden')){
+	//alert();
+	if(!$('#addDelivButton').is(':hidden') || typeof(document.getElementById('sec_pin'))!='object'){
 		if(DelivId > 0){
 			//core.alertHash(core.delivery_days[DelivId][0]);
 			for(var key in core.delivery_days[DelivId][0]){
