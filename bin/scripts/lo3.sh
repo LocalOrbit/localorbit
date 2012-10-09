@@ -11,6 +11,7 @@ fi
 # check out current files
 svn co svn+ssh://svn/opt/localorbit/lo3/trunk/
 
+#copy images
 scp -r 'lo3:/var/www/production/www/img/organizations/*.jpg' $PWD/trunk/www/img
 scp -r 'lo3:/var/www/production/www/img/organizations/*.gif' $PWD/trunk/www/img
 scp -r 'lo3:/var/www/production/www/img/organizations/*.png' $PWD/trunk/www/img
