@@ -47,7 +47,7 @@ if($core->data['redirect_to_checkout'] == 1)
 			<h2><?=$core->i18n['header:reg:chooseloc']?></h2>
 			<select name="domain_id" style="width: 340px;" class="" onchange="core.registration.toggleForm();">
 				<option value=""><?=$core->i18n['field:reg:localto']?></option>
-				<?=core_ui::options($domains,0,'domain_id','detailed_name')?>
+				<?=core_ui::options($domains,$core->config['domain']['domain_id'],'domain_id','detailed_name')?>
 				<option value="-1">I don't see my location listed above</option>
 			</select>
 			<div id="email_signupform" style="display: none;margin-top: 10px;">
