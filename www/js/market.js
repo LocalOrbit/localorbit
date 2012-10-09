@@ -44,9 +44,10 @@ market.showWeeklySellOn=function(dayNbr){
 }
 
 market.editDeliv=function(DelivId){
-	//core.alertHash(core.delivery_days[DelivId][0]);
-	//alert();
-	if(!$('#addDelivButton').is(':hidden') || typeof(document.getElementById('sec_pin'))!='object'){
+	///core.alertHash(document.getElementById('sec_pin'));
+	//alert(typeof(document.getElementById('sec_pin')));
+	//alert('check: '+(typeof(document.getElementById('sec_pin'))!='object'));
+	if(!$('#addDelivButton').is(':hidden') || $('#sec_pin').length==0){
 		if(DelivId > 0){
 			//core.alertHash(core.delivery_days[DelivId][0]);
 			for(var key in core.delivery_days[DelivId][0]){
