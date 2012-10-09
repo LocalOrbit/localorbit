@@ -38,9 +38,7 @@ class core_model_domains extends core_model_base_domains
 
 		# admins and market managers should see ALL sellers
 		# that can hypothetically sell on this marketplace
-		#if(lo3::is_admin() || lo3::is_market())
-		#{
-			$sql .= '
+		$sql .= '
 			and (
 				o.org_id in (
 					select org_id
@@ -48,17 +46,18 @@ class core_model_domains extends core_model_base_domains
 					where odcs.dd_id in (
 						select dd_id
 						from delivery_days dd
-						where dd.domain_id ='.$core->session['home_domain_id'].'
+						where dd.domain_id ='.$core->config['domain']['domain_id'].'
 					)
 				) ';
-		$sql .= 'or otd.domain_id = '.$core->config['domain']['domain_id'].'
+				$sql .= 'or otd.domain_id = '.$core->config['domain']['domain_id'].'
 			)
-			';
-		#}
+		';
+
 		/*
 		# normal users only see sellers for which there are public
 		# prices, or have org-specific prices for them on this hub.
-		else
+		*/
+		if(lo3::is_customer())
 		{
 			# apply product rules
 			$sql .= '
@@ -102,7 +101,7 @@ class core_model_domains extends core_model_base_domains
 			)
 			';
 		}
-		*/
+		
 		$sellers = new core_collection($sql);
 		$sellers->__model = core::model('organizations');
 		$sellers->sort('o.name');
