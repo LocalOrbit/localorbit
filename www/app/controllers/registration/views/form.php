@@ -1,4 +1,5 @@
 <?
+global $core;
 core::ensure_navstate(array('left'=>'left_blank'));
 core::head($core->i18n['title:reg'],$core->i18n['description:reg']);
 lo3::require_permission();
@@ -10,6 +11,11 @@ $domains = core::model('domains')->collection(array('domain_id','name','detailed
 if($core->data['show_secret'] != 1)
 	$domains->filter('show_on_homepage',1);
 $domain_id = intval($core->data['domain_id']);
+
+if($domain_id == 0 && $core->config['domain']['domain_id'] > 1)
+{
+	$domain_id = $core->config['domain']['domain_id'];
+}
 
 # generate fake spammer fields
 $fields = $this->generate_fake_fields();
@@ -31,6 +37,7 @@ if($core->data['redirect_to_checkout'] == 1)
 {
 	$core->config['postauth_url'] = '#!catalog-checkout';
 }
+
 ?>
 <form name="regform" action="registration/process" onsubmit="return core.submit('/registration/process',this);">
 	<div class="tabset" id="regtabs">
