@@ -15,8 +15,8 @@ class core_model_lo_order extends core_model_base_lo_order
 			array('buyer_payment_status')
 		);
 		parent::init_fields();
-		$this->add_custom_field('(select sum(applied_amount) from lo_order_discount_codes where lo_order_discount_codes.lo_oid=lo_order.lo_oid) as discount_total');
-		$this->add_custom_field('(select sum(applied_amount) from lo_order_delivery_fees where lo_order_delivery_fees.lo_oid=lo_order.lo_oid) as delivery_total');
+		$this->add_custom_field('(select sum(applied_amount) from lo_order_discount_codes WHERE lo_order_discount_codes.lo_oid=lo_order.lo_oid) as discount_total');
+		$this->add_custom_field('(select sum(applied_amount) from lo_order_delivery_fees WHERE lo_order_delivery_fees.lo_oid=lo_order.lo_oid) as delivery_total');
 		return $this;
 	}
 
