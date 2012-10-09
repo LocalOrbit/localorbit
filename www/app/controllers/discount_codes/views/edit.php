@@ -20,6 +20,7 @@ $prod_sql = '
 ';
 if(lo3::is_market())
 {
+	$hubs->filter('domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 	$prod_sql .= '
 		and domains.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
 	';
@@ -71,7 +72,7 @@ page_header('Editing '.$data['name'],'#!discount_codes-list','cancel');
 				<td class="label">Hub</td>
 				<td class="value">
 					<select name="domain_id">
-						<option value="0">Everyone</option>
+						<?if(lo3::is_admin()){?><option value="0">Everyone</option><?}?>
 						<?=core_ui::options($hubs,$data['domain_id'],'domain_id','name')?>
 					</select>
 				</td>
