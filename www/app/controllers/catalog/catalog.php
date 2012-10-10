@@ -33,7 +33,7 @@ class core_controller_catalog extends core_controller
 		if($core->data['discount_code'] != '')
 		{			
 			core_db::query('delete from lo_order_discount_codes where lo_oid='.$cart['lo_oid']);
-			$code = core::model('discount_codes')->loadrow_by_code($core->data['discount_code']);
+			$code = core::model('discount_codes')->load_valid_code($core->data['discount_code']);
 			if(isset($code->__data['disc_id']))
 			{
 				$order_code = core::model('lo_order_discount_codes');
