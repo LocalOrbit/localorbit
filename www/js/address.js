@@ -25,7 +25,7 @@ core.address.setLatLng=function(address,gcResult,gcStatus){
 }
 
 core.address.editAddress=function(addrType,AddressId){
-	if(!$('#addAddressButton').is(':hidden')){
+	if(!$('#addAddressButton').is(':hidden') || $('#sec_pin').length==0){
 		//core.alertHash(core.addresses);
 		core.address.addrOk = true;
 		if(AddressId > 0){
