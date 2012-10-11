@@ -136,11 +136,11 @@ page_header('Editing '.$data['name'],'#!discount_codes-list','cancel');
 			-->
 	
 			<tr>
-				<td class="label">Minimum order (0 for no min)</td>
+				<td class="label">Minimum order total (0 for no min)</td>
 				<td class="value"><input type="text" name="min_order" value="<?=lo3_display_negative($data['min_order'])?>" /></td>
 			</tr>
 			<tr>
-				<td class="label">Maximum order (0 for no max)</td>
+				<td class="label">Maximum order total (0 for no max)</td>
 				<td class="value"><input type="text" name="max_order" value="<?=lo3_display_negative($data['max_order'])?>" /></td>
 			</tr>
 			<tr>
@@ -148,8 +148,8 @@ page_header('Editing '.$data['name'],'#!discount_codes-list','cancel');
 				<td class="value"><input type="text" name="nbr_uses_global" value="<?=$data['nbr_uses_global']?>" /></td>
 			</tr>
 			<tr>
-				<td class="label">Max per user uses (0 for no limit)</td>
-				<td class="value"><input type="text" name="nbr_uses_user" value="<?=$data['nbr_uses_user']?>" /></td>
+				<td class="label">Max per org uses (0 for no limit)</td>
+				<td class="value"><input type="text" name="nbr_uses_org" value="<?=$data['nbr_uses_org']?>" /></td>
 			</tr>
 		</table>
 	</div>
