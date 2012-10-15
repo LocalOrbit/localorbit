@@ -23,7 +23,7 @@ function org_col_formatter($data)
 	return $data;
 }
 
-$col = core::model('organizations')->collection()->filter('is_deleted',0);
+$col = core::model('organizations')->collection()->filter('is_deleted','=',0);
 $col->add_formatter('org_col_formatter');
 
 if(!lo3::is_market() && !lo3::is_admin())

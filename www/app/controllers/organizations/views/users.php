@@ -30,7 +30,7 @@
 	$col = core::model('customer_entity')->collection();
 	$col->add_formatter('enable_suspend_links');
 	$col->filter('org_id',$data['org_id']);	
-	$col->filter('is_deleted',0);	
+	$col->filter('is_deleted','=',0);	
 	$users = new core_datatable('org_users','organizations/users?org_id='.$core->data['org_id'],$col);
 	#$users->add_filter(new core_datatable_filter('org_id'));
 	$users->add(new core_datacolumn('first_name','Name',true,'30%','<a href="#!users-edit--entity_id-{entity_id}"><b>{first_name} {last_name}</b>'));
