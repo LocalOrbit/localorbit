@@ -1,34 +1,14 @@
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<table>
-		<col width="48%" />
-		<col width="4%" />
-		<col width="48%" />
+		<?=core_form::column_widths('48%','4%','48%')?>
 		<tr>
 			<td>
 				<h2>Payables</h2>
 				<table>
-					<tr>
-						<td class="label">Overdue:</td>
-						<td class="field">
-							<a href="#!payments-demo" onclick="$('#payables_overdue').toggle();"><div class="error">$70.00</div></a>
-							<div id="payables_overdue" style="display: none;">
-								United General Hospital: $70 <a href="#!payments-demo">Send Reminder</a><br />
-								Mike's Fruits: $50 <a href="#!payments-demo">Send Reminder</a><br />
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td class="label">Today:</td>
-						<td class="field">$30.00</td>
-					</tr>
-					<tr>
-						<td class="label">Next 7 days:</td>
-						<td class="field">$129.00</td>
-					</tr>
-					<tr>
-						<td class="label">Next 30 days:</td>
-						<td class="field">$328.00</td>
-					</tr>
+					<?=core_form::value('Overdue:','<div class="error">$10.00</div>')?>
+					<?=core_form::value('Today:','$12.00')?>
+					<?=core_form::value('Next 7 days:','$19.00')?>
+					<?=core_form::value('Next 30 days:','$32.00')?>
 				</table>
 			</td>
 			<td>&nbsp;</td>
@@ -36,22 +16,10 @@
 				<? if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1){?>
 				<h2>Receivables</h2>
 				<table>
-					<tr>
-						<td class="label">Overdue:</td>
-						<td class="field"><div class="error">$10.00</div></td>
-					</tr>
-					<tr>
-						<td class="label">Today:</td>
-						<td class="field">$12.00</td>
-					</tr>
-					<tr>
-						<td class="label">Next 7 days:</td>
-						<td class="field">$19.00</td>
-					</tr>
-					<tr>
-						<td class="label">Next 30 days:</td>
-						<td class="field">$32.00</td>
-					</tr>
+					<?=core_form::value('Overdue:','<div class="error">$10.00</div>')?>
+					<?=core_form::value('Today:','$12.00')?>
+					<?=core_form::value('Next 7 days:','$19.00')?>
+					<?=core_form::value('Next 30 days:','$32.00')?>
 				</table>
 				<?}?>
 			</td>
@@ -61,10 +29,7 @@
 				<br />&nbsp;<br />
 				<h3>Payables/Receivables by Organization</h3>
 				<table class="dt">
-					<col width="25%" />
-					<col width="25%" />
-					<col width="25%" />
-					<col width="25%" />
+					<?=core_form::column_widths('25%','25%','25%','25%')?>
 					<tr>
 						<td colspan="4" class="dt_filter_resizer">
 							<div class="dt_filter">
