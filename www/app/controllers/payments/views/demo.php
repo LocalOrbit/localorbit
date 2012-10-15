@@ -4,8 +4,9 @@ core::head('Order Management','This page is used to manage orders');
 lo3::require_permission();
 lo3::require_login();
 
-core_ui::tabset('paymentstabs');
+global $tabs;
 $tabs = array('Overview','Payables','Payments','Receivables','Invoices','Transaction Journal','Metrics');
+core_ui::tabset('paymentstabs');
 
 page_header('Payments Portal');
 echo(core_ui::tab_switchers('paymentstabs',$tabs));
