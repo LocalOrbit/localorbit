@@ -4,7 +4,7 @@
 		<tr>
 			<td>
 				<h2>Payables</h2>
-				<table>
+				<table class="form">
 					<?=core_form::value('Overdue:','<div class="error">$10.00</div>')?>
 					<?=core_form::value('Today:','$12.00')?>
 					<?=core_form::value('Next 7 days:','$19.00')?>
@@ -15,7 +15,7 @@
 			<td>
 				<? if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1){?>
 				<h2>Receivables</h2>
-				<table>
+				<table class="form">
 					<?=core_form::value('Overdue:','<div class="error">$10.00</div>')?>
 					<?=core_form::value('Today:','$12.00')?>
 					<?=core_form::value('Next 7 days:','$19.00')?>
@@ -58,24 +58,9 @@
 						<th class="dt">Payables</th>
 						<th class="dt">Receivables</th>
 					</tr>
-					<tr class="dt1">
-						<td class="dt">Detroit Western Market</td>
-						<td class="dt"><a href="#">Buyer A</a></td>
-						<td class="dt"><a href="#">$7.00</a></td>
-						<td class="dt"><a href="#">$0.00</a></td>
-					</tr>
-					<tr class="dt">
-						<td class="dt">Detroit Western Market</td>
-						<td class="dt"><a href="#">Seller B</a></td>
-						<td class="dt"><a href="#">$0.17</a></td>
-						<td class="dt"><a href="#">$0.00</a></td>
-					</tr>
-					<tr class="dt1">
-						<td class="dt">Detroit Western Market</td>
-						<td class="dt"><a href="#">Buyer B</a></td>
-						<td class="dt"><a href="#">$3.60</a></td>
-						<td class="dt"><a href="#">$0.00</a></td>
-					</tr>
+					<?=core_datatable::render_fake_row(false,'Detroit Western Market','Buyer A','$7.00','$0.00')?>
+					<?=core_datatable::render_fake_row(true,'Detroit Western Market','Seller A','$0.17','$0.00')?>
+					<?=core_datatable::render_fake_row(false,'Detroit Western Market','Buyer B','$3.60','$0.00')?>
 					<tr>
 						<td colspan="4" class="dt_exporter_pager">
 							<div class="dt_exporter">

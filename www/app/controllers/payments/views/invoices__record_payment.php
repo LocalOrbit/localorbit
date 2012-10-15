@@ -15,11 +15,7 @@
 		</table>
 		<br />
 		<table class="dt">
-			<col width="15%" />
-			<col width="25%" />
-			<col width="15%" />
-			<col width="15%" />
-			<col width="15%" />
+			<?=core_form::column_widths('15%','25%','15%','15%','15%')?>
 			<tr class="dt">
 				<th class="dt dt_sortable dt_sort_asc">Date</th>
 				<th class="dt">Hub</th>
