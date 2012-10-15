@@ -14,14 +14,9 @@ function fake_order_area($id)
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<table class="dt">
-		<col width="5%" />
-		<col width="15%" />
-		<col width="25%" />
-		<col width="15%" />
-		<col width="15%" />
-		<col width="15%" />
+		<?=core_form::column_widths('5%','15%','25%','15%','15%','15%')?>
 		<tr>
-			<td colspan="7" class="dt_filter_resizer">
+			<td colspan="6" class="dt_filter_resizer">
 				<div class="dt_filter">
 					<select class="dt">
 						<option>Org: Seller A</option>

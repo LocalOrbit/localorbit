@@ -30,7 +30,7 @@
 		</tr>
 		<?=core_datatable::render_fake_row(false,'<input type="checkbox" />','PY123','Oct 12, 2012','Detroit Western Market','Seller A','lo-28323','$12.00','Unpaid')?>
 		<?=core_datatable::render_fake_row(true, '<input type="checkbox" />','PY124','Oct 13, 2012','Detroit Western Market','Seller A','lo-28324','$8.00','Unpaid')?>
-		<?=core_datatable::render_fake_row(false,'<input type="checkbox" />','PY125','Oct 14, 2012','Detroit Western Market','Seller B','lo-28326','$0.20','Unpaid')?>
+		<?=core_datatable::render_fake_row(false,'<input type="checkbox" />','PY125','Oct 14, 2012','Detroit Western Market','Seller B','lo-28326','$0.20','Paid')?>
 		<tr>
 			<td colspan="8" class="dt_exporter_pager">
 				<div class="dt_exporter">
