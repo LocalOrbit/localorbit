@@ -1,4 +1,4 @@
-<div class="tabarea" id="paymentstabs-a2">
+<div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<table class="dt">
 		<col width="7%" />
 		<col width="13%" />
@@ -78,9 +78,11 @@
 			</td>
 		</tr>
 	</table>
+	<? if(lo3::is_admin() || lo3::is_market()){?>
 	<div class="buttonset" id="create_payables_button">
 		<input type="button" onclick="$('#create_payables_form,#create_payables_button').toggle();" value="Create Payment from checked" class="button_primary" />
 	</div>
 	<br />&nbsp;<br />
 	<? $this->payables__create_payment();?>
+	<?}?>
 </div>

@@ -1,4 +1,4 @@
-<div class="tabarea" id="paymentstabs-a7">
+<div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<h2>Graph of awesome</h2>
 	<select>
 		<option>Last 30 days</option>

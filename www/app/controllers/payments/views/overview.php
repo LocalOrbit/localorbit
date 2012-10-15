@@ -1,4 +1,4 @@
-<div class="tabarea" id="paymentstabs-a1">
+<div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<table>
 		<col width="48%" />
 		<col width="4%" />
@@ -33,6 +33,7 @@
 			</td>
 			<td>&nbsp;</td>
 			<td>
+				<? if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1){?>
 				<h2>Receivables</h2>
 				<table>
 					<tr>
@@ -52,6 +53,7 @@
 						<td class="field">$32.00</td>
 					</tr>
 				</table>
+				<?}?>
 			</td>
 		</tr>
 		<tr>

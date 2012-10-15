@@ -1,4 +1,4 @@
-<div class="tabarea" id="paymentstabs-a5">
+<div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<table class="dt">
 		<col width="15%" />
 		<col width="25%" />
