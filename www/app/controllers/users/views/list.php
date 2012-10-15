@@ -30,8 +30,8 @@ $col->__model->autojoin(
 	'(otd.orgtype_id=organization_types.orgtype_id)',
 	array('organization_types.name as orgtype_name')
 );
-$col->filter('o.is_deleted',0);
-$col->filter('customer_entity.is_deleted',0);
+$col->filter('o.is_deleted','=',0);
+$col->filter('customer_entity.is_deleted','=',0);
 
 if(lo3::is_market())
 {
