@@ -155,7 +155,7 @@ if($_SERVER['HTTP_HOST'] == 'testing.localorb.it' || strpos(__FILE__,'/testing/'
 	$core->config['hostname_prefix']  = $core->config['stage'];
 }
 
-if($_SERVER['HTTP_HOST'] == 'dev.localorb.it' || strpos(__FILE__,'/dev/') > 0)
+if($_SERVER['HTTP_HOST'] == 'dev.localorb.it' || strpos(__FILE__,'/dev/') > 0 || strpos(__FILE__,'/Clients/') > 0)
 {
 	$core->config['stage'] = 'dev';
 	$core->config['default_hostname'] = 'annarbor-mi.localorb.it';
@@ -173,6 +173,9 @@ if($_SERVER['HTTP_HOST'] == 'dev.localorb.it' || strpos(__FILE__,'/dev/') > 0)
 	$core->config['hostname_prefix']  = $core->config['stage'];
 }
 
+#echo('<pre>');
+#print_r($core->config);
+#exit();
 # finalize stage-specific settings
 $core->config['log_prefix']       = $core->config['stage'].'-';
 $core->config['mailchimp']['key'] = $core->config['mailchimp']['keys'][$core->config['stage']];
