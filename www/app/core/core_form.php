@@ -4,6 +4,15 @@
 class core_form
 {
 	
+	public function column_widths()
+	{
+		$widths = func_get_args();
+		foreach($widths as $width)
+		{
+			echo('<col width="'.$width.'" />');
+		}
+	}
+	
 	public static function required()
 	{
 		return '<span class="required">*</span>';
