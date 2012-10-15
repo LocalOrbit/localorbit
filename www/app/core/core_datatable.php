@@ -303,6 +303,19 @@ class core_datatable
 		}
 	}
 	
+	function render_fake_row($style)
+	{
+		$row = func_get_args();
+		array_shift($row);
+		$out = '<tr class="dt'.$style.'">';
+		foreach($row as $col)
+		{
+			$out .= '<td class="dt">'.$col.'</td>';
+		}
+		$out .= '</tr>';
+		return $out;
+	}
+	
 	function render_pdf_column_headers($pdf,$headfg,$headbg,$text)
 	{
 		global $core;
