@@ -7,13 +7,7 @@
 			<th class="dt">Method</th>
 			<th class="dt">Reference #</th>
 		</tr>
-		<tr class="dt">
-			<td class="dt">Seller B</td>
-			<td class="dt">PY125</td>
-			<td class="dt"><input type="text" value="$0.17" style="width:80px;" /></td>
-			<td class="dt"><select><option>Choose method</option><option>Check</option><option>Cash</option><option>'Favors'</option></select></td>
-			<td class="dt"><input type="text" value="" style="width:120px;" /></td>
-		</tr>
+		<?=core_datatable::render_fake_row(false,'Seller B','PY125','<input type="text" value="$0.17" style="width:80px;" />','<select><option>Choose method</option><option>Check</option><option>Cash</option><option>\'Favors\'</option></select>','<input type="text" value="" style="width:120px;" />')?>
 	</table>
 	<div class="buttonset">
 		<input type="button" onclick="$('#create_payables_form,#create_payables_button').toggle();" class="button_primary" value="cancel" />
