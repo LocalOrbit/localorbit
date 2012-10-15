@@ -16,7 +16,7 @@ list(
 	$org_all_domains,
 	$org_domains_by_orgtype_id
 ) = core::model('customer_entity')->get_domain_permissions( $data['org_id']);
-
+//print_r($org_all_domains);
 $is_mm = (count($org_domains_by_orgtype_id[2]) > 0);
 
 # get a list of domains whch this org can cross sell on
