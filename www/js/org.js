@@ -75,17 +75,17 @@ org.setHomeHub=function(domainId){
 	});
 }
 
-org.deleteOrg=function(orgId){
-	if(confirm('Are you sure you want to delete this organization? All discounts, users, prices, products related to this organization will also be deleted. This cannot be undone.')){
+org.deleteOrg=function(orgId,orgName,refObj){
+	if(confirm('Are you sure you want to delete organization '+orgName+'? All discounts, users, prices, products related to this organization will also be deleted. This cannot be undone.')){
 		core.doRequest('/organizations/delete_org',{'org_id':orgId});
 	}
 }
 
 
-org.deleteUser=function(userId,refObj,curUserId){
+org.deleteUser=function(userId,userName,refObj,curUserId){
 	if(userId == curUserId){
 		alert('You cannot delete yourself. If you wish to delete this account, login as a different user in your organization.');
-	}else if(confirm('Are you sure you want to delete this user? This cannot be undone.')){
+	}else if(confirm('Are you sure you want to delete user '+userName+'? This cannot be undone.')){
 		core.doRequest('/organizations/delete_user',{'user_id':userId});
 	}
 }

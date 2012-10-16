@@ -90,8 +90,7 @@ $orgs->add(new core_datacolumn('name',' ',false,'10%','<a href="javascript:core.
 
 if(lo3::is_admin())
 {
-	$orgs->add(new core_datacolumn('','&nbsp;',false,'12%','<a href="#!organizations-list" onclick="org.deleteOrg({org_id},this);">Delete&nbsp;&raquo;</a>',' ',' '));
-	
+	$orgs->add(new core_datacolumn('','&nbsp;',false,'12%','<a href="#!organizations-list" onclick="org.deleteOrg({org_id},\'{name}\',this);">Delete&nbsp;&raquo;</a>',' ',' '));
 }
 
 $orgs->columns[2]->autoformat='date-short';

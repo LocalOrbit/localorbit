@@ -95,7 +95,7 @@ $actions = '
 	<br />
 	<a href="javascript:core.doRequest(\'/users/{enable_action}\',{\'entity_id\':{entity_id},\'table\':\'customer_entity\'});">{enable_action}</a>
 	<br />
-	<a href="#!users-list" onclick="org.deleteUser({entity_id},this,'.$core->session['user_id'].');">Delete&nbsp;&raquo;</a>
+	<a href="#!users-list" onclick="org.deleteUser({entity_id},\'{first_name} {last_name}\',this,'.$core->session['user_id'].');">Delete&nbsp;&raquo;</a>
 ';
 
 #$users->add_filter(new core_datatable_filter('org_id'));
