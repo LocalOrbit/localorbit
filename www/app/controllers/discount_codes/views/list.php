@@ -33,10 +33,15 @@ function row_formatter($data)
 
 $col = core::model('discount_codes')
 	->add_custom_field('
-		(select count(disc_use_id) from discount_uses where discount_uses.disc_id=discount_codes.disc_id) as nbr_discount_uses
+		(select count(disc_use_id) from discount_uses WHERE discount_uses.disc_id=discount_codes.disc_id) as nbr_discount_uses
 	')
 	->collection();
 $col->add_formatter('row_formatter');
+if(!lo3::is_admin())
+{
+	$col->filter('discount_codes.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
+}
+
 $discount_codes = new core_datatable('discount_codes','discount_codes/list',$col);
 
 if(lo3::is_admin())
