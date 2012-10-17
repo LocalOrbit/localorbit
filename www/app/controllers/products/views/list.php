@@ -10,8 +10,8 @@ $col = core::model('products')
 	->add_custom_field('(select sum(qty) from product_inventory WHERE product_inventory.prod_id=products.prod_id) as inventory')
 	->collection()
 	->filter('products.org_id','is not null',true)
-	->filter('o.is_deleted',0)
-	->filter('products.is_deleted',0);
+	->filter('o.is_deleted','=',0)
+	->filter('products.is_deleted','=',0);
 
 $col->__model->autojoin(
 	'left',
