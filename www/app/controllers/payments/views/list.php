@@ -8,7 +8,7 @@ page_header('Payments');
 
 echo(core_ui::tab_switchers('paytabs',array('Payments from Buyers','Payments to Sellers','Payments to Markets','Payments to Local Orbit')));
 ?>
-<div class="tabarea" id="paytabs-a1">
+<div class="tabarea" id="paytabs-a3">
 	<table class="dt">
 		<tr>
 			<th class="dt">Payment #</th>
@@ -21,17 +21,14 @@ echo(core_ui::tab_switchers('paytabs',array('Payments from Buyers','Payments to 
 		</tr>
 		<tr class="dt">
 			<td class="dt">239842</td>
-			<td class="dt">$20.00</td>
+			<td class="dt">$0.01</td>
 			<td class="dt">Local Orbit</td>
-			<td class="dt">Brian Moore</td>
-			<td class="dt">LO-2342, LO-2344</td>
-			<td class="dt">April 1</td>
+			<td class="dt">Z01</td>
+			<td class="dt">Monthly Hub Fee</td>
+			<td class="dt">October 30</td>
 			<td class="dt">
-				<a href="#">Process via Paypal</a><br />
-				<a href="#">Process via Amazon</a><br />
-				<a href="#">E-mail check request</a><br />
-				<a href="#">Mark as Paid via Check</a><br />
-			</td>
+			   Paid to Hub
+         </td>
 		</tr>
 		<tr class="dt1">
 			<td class="dt">239843</td>

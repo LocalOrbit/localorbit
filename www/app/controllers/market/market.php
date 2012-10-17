@@ -276,11 +276,26 @@ class core_controller_market extends core_controller
 		}
 		# if all cross products insert rows into product_delivery_cross_sells      
 		if ($core->data['allcrosssellproducts']) {
-			core_db::query('insert into product_delivery_cross_sells (prod_id, dd_id) select prod_id,' . $dd['dd_id'] . ' from products
+			core_db::query('insert into product_delivery_cross_sells (prod_id, dd_id) select distinct products.prod_id,' . $dd['dd_id'] . ' from products
 			left join organizations on products.org_id = organizations.org_id
 			left join organizations_to_domains on organizations.org_id = organizations_to_domains.org_id and is_home = 1
 			left join domain_cross_sells on domain_cross_sells.accept_from_domain_id  = organizations_to_domains.domain_id
-			where domain_cross_sells.domain_id = '. $dd['domain_id']);
+			inner join product_delivery_cross_sells on products.prod_id = product_delivery_cross_sells.prod_id
+         where domain_cross_sells.domain_id = '. $dd['domain_id']);
+			
+         core_db::query('insert into organization_delivery_cross_sells (org_id, dd_id) select distinct organizations.org_id,' . $dd['dd_id'] .' from organizations 
+         left join organization_cross_sells 
+         on organizations.org_id = organization_cross_sells.org_id
+         left join products 
+         on organizations.org_id = products.org_id
+         inner join product_delivery_cross_sells 
+         on products.prod_id = product_delivery_cross_sells.prod_id
+         left join organizations_to_domains 
+         on organizations.org_id = organizations_to_domains.org_id and is_home = 1
+         left join domain_cross_sells 
+         on domain_cross_sells.accept_from_domain_id  = organizations_to_domains.domain_id 
+         and organization_cross_sells.sell_on_domain_id = domain_cross_sells.domain_id
+         where domain_cross_sells.domain_id = '. $dd['domain_id']);
 		}
 		core_datatable::js_reload('delivery_days');
 		#core::log('pickup_address_id is: '.$dd['pickup_address_id']);
