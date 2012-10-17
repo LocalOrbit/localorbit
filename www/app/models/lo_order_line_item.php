@@ -338,7 +338,7 @@ function determine_delivery_language($data)
 	}
 	else
 	{
-		$prefix = 'pickup_';
+		$prefix = (intval($data['pickup_address_id'])==0)?'delivery_':'pickup_';
 		$data['buyer_formatted_deliv1'] .= ' for pickup between '.core_format::date($data[$prefix.'start_time']).' and '.core_format::date($data[$prefix.'end_time']).' '.$core->session['tz_name'];
 		$data['buyer_formatted_deliv2'] .= ' can be picked up at <span id="lodelivinfo_'.$data['dd_id'].'">'.$data[$prefix.'address'].', '.$data[$prefix.'city'].', '.$data[$prefix.'state'].' '.$data[$prefix.'postal_code'].'</span>';
 	}
