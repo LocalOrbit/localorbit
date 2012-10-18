@@ -444,7 +444,7 @@ class core_model_lo_order extends core_model_base_lo_order
 			foreach($this->customer_addresses as $address)
 			{
 				core::log('test');
-				if($core->data['delivgroup-'.$delivery['dd_id'].'--'.$delivery['dd_id'].'--'.$address['address_id']] == 1 && $address['address_id'] != $core->data['deliv_'.$delivery['dd_id'].'_addr_id'] )
+				if($core->data['delivgroup-'.$delivery['dd_id'].'--'.$delivery['dd_id'].'--'.$address['address_id'].'_value'] == 1 && $address['address_id'] != $core->data['deliv_'.$delivery['dd_id'].'_addr_id'] )
 				{
 					core::log('found updated delivery address');
 					$delivery['deliv_address_id'] = $address['address_id'];
