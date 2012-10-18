@@ -4,6 +4,7 @@ drop table if exists payments;
 drop table if exists x_invoices_payments;
 drop table if exists invoice_send_dates;
 drop table if exists payment_methods;
+drop table if exists payable_types;
 
 
 create table payable_types (
