@@ -24,6 +24,7 @@ create table payables (
 	to_org_id bigint(20) NOT NULL,
 	amount decimal(10,2) NOT NULL,
 	invoice_id int(10),	
+	invoicable bool default false,
 	creation_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
 );
 
