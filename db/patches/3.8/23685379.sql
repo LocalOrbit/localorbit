@@ -84,6 +84,10 @@ values (1,'2012-10-21 12:00:00');
 insert into invoice_send_dates(invoice_id,send_date)
 values (1,'2012-10-25 12:00:00');
 
+insert into invoice_send_dates(invoice_id,send_date)
+values (2,'2012-10-26 12:00:00');
+
+
 create table payment_methods (
 	payment_method_id int(11) unsigned not null auto_increment PRIMARY KEY,
 	payment_method varchar(255) not null
@@ -131,3 +135,39 @@ CREATE VIEW v_payables AS
 	left join lo_fulfillment_order lfo on p.parent_obj_id=lfo.lo_foid;
 	
 select * from v_payables;
+
+
+
+drop view  if exists v_invoices;
+
+CREATE VIEW v_invoices AS 
+	select iv.due_date,iv.invoice_id,iv.amount,
+	iv.from_org_id,
+	o1.name as from_org_name,
+	iv.to_org_id,
+	o2.name as to_org_name,
+	
+	(
+		select sum(xip.amount_paid) 
+		from x_invoices_payments xip
+		where xip.invoice_id=iv.invoice_id
+	) as amount_paid,
+	
+	(
+		select sum(xip.amount_paid) - iv.amount 
+		from x_invoices_payments xip
+		where xip.invoice_id=iv.invoice_id
+	) as amount_due,
+	
+	(
+		select GROUP_CONCAT(UNIX_TIMESTAMP(isd.send_date)  ORDER BY isd.send_date desc SEPARATOR ',')
+		from invoice_send_dates isd
+		where isd.invoice_id=iv.invoice_id
+	) as send_dates
+	
+	from invoices iv
+	
+	inner join organizations o1 on iv.from_org_id=o1.org_id
+	inner join organizations o2 on iv.to_org_id=o2.org_id;
+
+select * from v_invoices;
