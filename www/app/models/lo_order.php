@@ -450,7 +450,7 @@ class core_model_lo_order extends core_model_base_lo_order
 					$delivery['deliv_address_id'] = $address['address_id'];
 				}
 
-				if(is_numeric($core->data['pickup_'.$delivery['dd_id'].'_addr_id']) && $delivery['pickup_address_id'] != $core->data['pickup_'.$delivery['dd_id'].'_addr_id'] )
+				if(is_numeric($core->data['pickup_'.$delivery['dd_id'].'_addr_id'].'_value') && $delivery['pickup_address_id'] != $core->data['pickup_'.$delivery['dd_id'].'_addr_id'] )
 				{
 					core::log('found updated pickup_ address');
 					$delivery['pickup_address_id'] = $address['address_id'];
