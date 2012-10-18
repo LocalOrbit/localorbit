@@ -80,6 +80,7 @@ class core_collection implements Iterator,ArrayAccess
 			}
 			$out .= '</tr>';
 		}
+		$out .= '</table>';
 		
 		if($echo_output)
 		{
