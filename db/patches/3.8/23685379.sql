@@ -148,13 +148,13 @@ CREATE VIEW v_invoices AS
 	o2.name as to_org_name,
 	
 	(
-		select sum(xip.amount_paid) 
+		select if(sum(xip.amount_paid) is null,0,sum(xip.amount_paid))
 		from x_invoices_payments xip
 		where xip.invoice_id=iv.invoice_id
 	) as amount_paid,
 	
 	(
-		select sum(xip.amount_paid) - iv.amount 
+		select (iv.amount  - if(sum(xip.amount_paid)  is null,0,sum(xip.amount_paid)))
 		from x_invoices_payments xip
 		where xip.invoice_id=iv.invoice_id
 	) as amount_due,
