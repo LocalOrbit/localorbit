@@ -176,7 +176,7 @@ CREATE VIEW v_invoices AS
 	) as send_dates,
 	
 	(
-		select group_concat(concat_ws(':',p.description,pt.payable_type,p.parent_obj_id) SEPARATOR '|')
+		select group_concat(concat_ws('|',p.description,pt.payable_type,p.parent_obj_id) SEPARATOR '$$')
 		from payables p 
 		inner join payable_types pt on pt.payable_type_id=p.payable_type_id
 		where p.invoice_id=iv.invoice_id
