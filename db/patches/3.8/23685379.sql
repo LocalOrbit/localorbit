@@ -98,6 +98,10 @@ insert into payment_methods (payment_method) values ('purchaseorder');
 insert into payment_methods (payment_method) values ('ACH');
 insert into payment_methods (payment_method) values ('check');
 
+
+
+
+
 drop view  if exists v_payables;
 
 CREATE VIEW v_payables AS 
@@ -154,7 +158,7 @@ CREATE VIEW v_invoices AS
 	) as amount_paid,
 	
 	(
-		select (iv.amount  - if(sum(xip.amount_paid)  is null,0,sum(xip.amount_paid)))
+		select iv.amount  - if(sum(xip.amount_paid)  is null,0,sum(xip.amount_paid))
 		from x_invoices_payments xip
 		where xip.invoice_id=iv.invoice_id
 	) as amount_due,
