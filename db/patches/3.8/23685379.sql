@@ -17,8 +17,10 @@ insert into payable_types (payable_type) values ('hub fees');
 
 create table payables (
 	payable_id int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	domain_id int,
 	payable_type_id int(10),
 	parent_obj_id int(10),
+	description varchar(255),
 	from_org_id bigint(20) NOT NULL,
 	to_org_id bigint(20) NOT NULL,
 	amount decimal(10,2) NOT NULL,
@@ -27,12 +29,12 @@ create table payables (
 	creation_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-insert into payables(payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable,invoice_id)
-values (1,2854,1086,1,20,true,1);
-insert into payables(payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable,invoice_id)
-values (1,2853,1086,1,10,true,2);
-insert into payables(payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable)
-values (1,2849,1086,1,8,false);
+insert into payables(domain_id,payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable,invoice_id)
+values (26,1,2854,1086,1,20,true,1);
+insert into payables(domain_id,payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable,invoice_id)
+values (26,1,2853,1086,1,10,true,2);
+insert into payables(domain_id,payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable)
+values (26,1,2849,1086,1,8,false);
 
 create table invoices (
 	invoice_id int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -108,6 +110,7 @@ CREATE VIEW v_payables AS
 	select p.payable_id,p.amount as payable_amount,p.creation_date,
 	(p.invoice_id is not null) as is_invoiced,
 	p.invoicable,
+	d.name as domain_name,
 	p.from_org_id,
 	o1.name as from_org_name,
 	p.to_org_id,
@@ -115,6 +118,7 @@ CREATE VIEW v_payables AS
 	pt.payable_type,
 	lo.lo3_order_nbr as buyer_order_identifier,
 	lfo.lo3_order_nbr as seller_order_identifier,
+	p.description,
 	
 	(
 		select sum(xip.amount_paid) 
@@ -130,6 +134,7 @@ CREATE VIEW v_payables AS
 	
 	from payables p
 	
+	inner join domains d on p.domain_id=d.domain_id
 	inner join organizations o1 on p.from_org_id=o1.org_id
 	inner join organizations o2 on p.to_org_id=o2.org_id
 	inner join payable_types pt on pt.payable_type_id = p.payable_type_id
@@ -158,18 +163,25 @@ CREATE VIEW v_invoices AS
 	) as amount_paid,
 	
 	
-	
-	(
-		select iv.amount  - if(sum(xip.amount_paid)  is null,0,sum(xip.amount_paid))
+	iv.amount - (
+		select if(sum(xip.amount_paid) is null,0,sum(xip.amount_paid))
 		from x_invoices_payments xip
 		where xip.invoice_id=iv.invoice_id
-	) as amount_due,
+	)  as amount_due,
 	
 	(
 		select GROUP_CONCAT(UNIX_TIMESTAMP(isd.send_date)  ORDER BY isd.send_date desc SEPARATOR ',')
 		from invoice_send_dates isd
 		where isd.invoice_id=iv.invoice_id
-	) as send_dates
+	) as send_dates,
+	
+	(
+		select group_concat(concat_ws(':',p.description,pt.payable_type,p.parent_obj_id) SEPARATOR '|')
+		from payables p 
+		inner join payable_types pt on pt.payable_type_id=p.payable_type_id
+		where p.invoice_id=iv.invoice_id
+	
+	) as payable_info
 	
 	from invoices iv
 	
