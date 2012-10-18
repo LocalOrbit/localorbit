@@ -101,7 +101,7 @@ insert into payment_methods (payment_method) values ('check');
 drop view  if exists v_payables;
 
 CREATE VIEW v_payables AS 
-	select p.amount as payable_amount,
+	select p.payable_id,p.amount as payable_amount,
 	(p.invoice_id is not null) as is_invoiced,
 	p.invoicable,
 	p.from_org_id,
@@ -141,7 +141,7 @@ select * from v_payables;
 drop view  if exists v_invoices;
 
 CREATE VIEW v_invoices AS 
-	select iv.due_date,iv.invoice_id,iv.amount,
+	select iv.invoice_id,iv.due_date,iv.amount,
 	iv.from_org_id,
 	o1.name as from_org_name,
 	iv.to_org_id,
