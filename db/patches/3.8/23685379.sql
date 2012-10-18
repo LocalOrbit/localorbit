@@ -25,28 +25,43 @@ create table payables (
 	amount decimal(10,2) NOT NULL,
 	invoice_id int(10),	
 	invoicable bool default false,
-	creation_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+	creation_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+insert into payables(payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable,invoice_id)
+values (1,2854,1086,1,20,true,1);
+insert into payables(payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable,invoice_id)
+values (1,2853,1086,1,10,true,2);
+insert into payables(payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable)
+values (1,2849,1086,1,8,false);
 
 create table invoices (
 	invoice_id int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	due_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+	due_date timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
 	from_org_id bigint(20) NOT NULL,
 	to_org_id bigint(20) NOT NULL,
 	amount decimal(10,2) NOT NULL,
-	creation_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+	creation_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+insert into invoices (due_date,from_org_id,to_org_id,amount)
+values ('2012-10-25 12:00:00',1086,1,20);
+insert into invoices (due_date,from_org_id,to_org_id,amount)
+values ('2012-10-27 12:00:00',1086,1,10);
 
 create table payments (
 	payment_id int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	amount decimal(10,2) NOT NULL,
 	from_org_id bigint(20) NOT NULL,
 	to_org_id bigint(20) NOT NULL,
+	amount decimal(10,2) NOT NULL,
 	payment_method_id int(11) unsigned not null,
 	ref_nbr varchar(255),
 	admin_note text,
-	creation_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+	creation_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+insert into payments (from_org_id,to_org_id,amount,payment_method_id,ref_nbr,admin_note,creation_date)
+values (1086,1,20,4,'CHECK 239829372','This is an admin note','2012-10-22 12:00:00');
 
 create table x_invoices_payments (
 	x_invoices_payments_id int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -55,11 +70,20 @@ create table x_invoices_payments (
 	amount_paid decimal(10,2)
 );
 
+insert into x_invoices_payments (invoice_id,payment_id,amount_paid)
+values (1,1,20);
+
+
 create table  invoice_send_dates (
 	invoice_send_date_id int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	invoice_id int(10) unsigned NOT NULL,
-	send_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
+	send_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+insert into invoice_send_dates(invoice_id,send_date)
+values (1,'2012-10-21 12:00:00');
+insert into invoice_send_dates(invoice_id,send_date)
+values (1,'2012-10-25 12:00:00');
 
 create table payment_methods (
 	payment_method_id int(11) unsigned not null auto_increment PRIMARY KEY,
