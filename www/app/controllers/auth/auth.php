@@ -141,7 +141,15 @@ class core_controller_auth extends core_controller
 
 			core::model('events')->add_record('Login');
 			
-			if(isset($core->data['postauth_url']) && $core->data['postauth_url'] != '')
+			#core::log('session data: '.print_r($core->data,true));
+			core::log('here: '.$core->data[$core->session['spammer_fake_fields'][0]]);
+			if(isset($core->data[$core->session['spammer_field']]) && $core->data[$core->session['spammer_field']] != '')
+			{
+				core::log('reg redirect');
+				core::js('location.href=\'https://'.$final_hostname.'/'.$core->config['app_page'].'#!dashboard-home\';');
+				core::deinit();
+			}
+			else if(isset($core->data['postauth_url']) && $core->data['postauth_url'] != '')
 			{
 				header('Location: '.$core->data['postauth_url'].'-redirect-1');
 				exit();
