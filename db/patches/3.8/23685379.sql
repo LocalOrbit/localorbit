@@ -6,7 +6,6 @@ drop table if exists invoice_send_dates;
 drop table if exists payment_methods;
 drop table if exists payable_types;
 
-
 create table payable_types (
 	payable_type_id int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	payable_type varchar(50)
@@ -94,3 +93,41 @@ insert into payment_methods (payment_method) values ('paypal');
 insert into payment_methods (payment_method) values ('purchaseorder');
 insert into payment_methods (payment_method) values ('ACH');
 insert into payment_methods (payment_method) values ('check');
+
+drop view  if exists v_payables;
+
+CREATE VIEW v_payables AS 
+	select p.amount as payable_amount,
+	(p.invoice_id is not null) as is_invoiced,
+	p.invoicable,
+	p.from_org_id,
+	o1.name as from_org_name,
+	p.to_org_id,
+	o2.name as to_org_name,
+	pt.payable_type,
+	lo.lo3_order_nbr as buyer_order_identifier,
+	lfo.lo3_order_nbr as seller_order_identifier,
+	
+	(
+		select sum(xip.amount_paid) 
+		from x_invoices_payments xip
+		where xip.invoice_id=iv.invoice_id
+	) as amount_paid,
+	
+	(
+		select sum(xip.amount_paid) - p.amount 
+		from x_invoices_payments xip
+		where xip.invoice_id=iv.invoice_id
+	) as amount_due
+	
+	from payables p
+	
+	inner join organizations o1 on p.from_org_id=o1.org_id
+	inner join organizations o2 on p.to_org_id=o2.org_id
+	inner join payable_types pt on pt.payable_type_id = p.payable_type_id
+	
+	left join invoices iv on iv.invoice_id=p.invoice_id
+	left join lo_order lo on p.parent_obj_id=lo.lo_oid
+	left join lo_fulfillment_order lfo on p.parent_obj_id=lfo.lo_foid;
+	
+select * from v_payables;
