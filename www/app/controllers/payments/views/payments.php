@@ -1,4 +1,14 @@
+<?php
+$payments = core::model('v_invoices')->collection();
+
+$payments_table = new core_datatable('payments','payments/portal',$payments);
+$payments_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','invoice_id'),' ',' '));
+?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
+	<?
+$payments_table->render();
+?>
+	<!--
 	<table class="dt">
 		<col width="5%" />
 		<col width="15%" />
@@ -74,7 +84,7 @@
 			</td>
 		</tr>
 	</table>
-		
+	-->
 	<div class="buttonset" id="create_payment_button">
 		<input type="button" onclick="$('#create_payment_form,#create_payment_button').toggle();" value="pay checked" class="button_primary" />
 	</div>

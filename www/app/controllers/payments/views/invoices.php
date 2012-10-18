@@ -1,4 +1,19 @@
+<?php
+$invoices = core::model('v_invoices')->collection();
+
+$invoices_table = new core_datatable('payments','payments/portal',$invoices);
+$invoices_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
+$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
+$invoices_table->add(new core_datacolumn('organization_name','Organization',true,'19%','{from_org_name}','{from_org_name}','{from_org_name}'));
+$invoices_table->add(new core_datacolumn('description','Description',true,'19%',			'{description}','{description}','{description}'));
+$invoices_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount}','{amount}','{amount}'));
+$invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
+?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
+	<?
+$invoices_table->render();
+	?>
+	<!--
 	<table class="dt">
 		<?=core_form::column_widths('15%','25%','15%','15%','15%')?>
 		<tr>
@@ -72,9 +87,11 @@
 			</td>
 		</tr>
 	</table>
+-->
 	<div class="buttonset" id="create_payment_form_toggler">
 		<input type="button" onclick="$('#create_payment_form_here,#create_payment_form_toggler').toggle();" class="button_primary" value="Record Payments" />
 	</div>
 	<br />&nbsp;<br />
 	<? $this->invoices__record_payment()?>
+
 </div>
