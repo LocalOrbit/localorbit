@@ -255,11 +255,12 @@ foreach($order->items as $item)
 <h2>Order Summary</h2>
 <?
 # calculate the totals here
-$hub_fee_total        = (($all_but_proc_fees/100) * $order['grand_total']);
-$processing_fee_total = (($processing_fee/100) * $order['grand_total']);
-$net_sale  = ($order['grand_total'] - $hub_fee_total - $processing_fee_total);
+$hub_fee_total        = (($all_but_proc_fees/100) * $order['adjusted_total']);
+$processing_fee_total = (($processing_fee/100) * $order['adjusted_total']);
+$net_sale  = ($order['adjusted_total'] - $hub_fee_total - $processing_fee_total);
 ?>
 <table class="dt">
+	<col width="12%" />
 	<col width="12%" />
 	<col width="16%" />
 	<col width="22%" />
@@ -268,6 +269,7 @@ $net_sale  = ($order['grand_total'] - $hub_fee_total - $processing_fee_total);
 	<col width="19%" />
 	<tr>
 		<th class="dt">Gross Total</th>
+		<th class="dt">Discount</th>
 		<th class="dt">Transaction Fee</th>
 		<th class="dt">Payment Processing Fee</th>
 		<th class="dt">Net Sale</th>
@@ -276,6 +278,7 @@ $net_sale  = ($order['grand_total'] - $hub_fee_total - $processing_fee_total);
 	</tr>
 	<tr>
 		<td class="dt"><?=core_format::price($order['grand_total'])?></td>
+		<td class="dt"><?=core_format::price($order['grand_total'] - $order['adjusted_total'])?></td>
 		<td class="dt"><?=core_format::price($hub_fee_total)?></td>
 		<td class="dt"><?=core_format::price($processing_fee_total)?></td>
 		<td class="dt"><?=core_format::price($net_sale)?></td>
