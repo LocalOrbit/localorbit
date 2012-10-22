@@ -7,7 +7,9 @@ core.catalog={
 		cartOnly:0
 	},
 	addressCoords:{
-	}
+	},
+	popupOn:0,
+	popupType:0
 };
 
 core.catalog.resetFilters=function(){
@@ -383,7 +385,7 @@ core.catalog.popupWho=function(prodId,refObj){
 	else if(seller['profile']+'' != 'undefined' && seller['profile']+'' != 'null' && seller['profile']+'' != '')
 		html += '<span class="farm_name">Who:</span> '+ seller['profile'];
 	html += '<br />&nbsp;<br /></td></tr></table>';
-	core.catalog.popupShow(refObj,html);
+	core.catalog.popupShow(refObj,html,'Who');
 }
 
 core.catalog.popupWhat=function(prodId,refObj){
@@ -403,7 +405,7 @@ core.catalog.popupWhat=function(prodId,refObj){
 	html += '<span class="what_section">How: </span>'+((prod['how'] == '')?seller['product_how']:prod['how']);
 	html += '</td></tr></table>';
 	
-	core.catalog.popupShow(refObj,html);
+	core.catalog.popupShow(refObj,html,'What');
 }
 
 core.catalog.popupWhere=function(prodId,refObj){
@@ -425,25 +427,71 @@ core.catalog.popupWhere=function(prodId,refObj){
 		core.ui.mapCenterByAddress('whereMap',core.prodIndex[prodId].city);
 		core.ui.mapAddMarkerByAddress('whereMap',core.prodIndex[prodId].city,core.base64_encode('<h1>'+seller.name+'</h1>'));
 	}
-	var pos = $(refObj).offset();
-	$('#shop_popup').hide().css('top',(pos.top + 15)+'px').css('left',(pos.left - 340)+'px').mouseleave(core.catalog.popupOff).fadeIn('fast');
+	core.catalog.popupShow(refObj,'','Where');
+	//var pos = $(refObj).offset();
+	//$('#shop_popup').hide().css('top',(pos.top + 15)+'px').css('left',(pos.left - 340)+'px').mouseleave(core.catalog.popupOff).fadeIn('fast');
 }
 
-core.catalog.popupShow=function(refObj,content){
+core.catalog.popupShow=function(refObj,content,type){
+	//console.log('show called');
 	var pos = $(refObj).offset();
-	$('#shop_popup_content').html(content);
-	//
-	$('#shop_popup').hide().css('top',(pos.top + 15)+'px').css('left',(pos.left - 340)+'px').mouseleave(core.catalog.popupOff).fadeIn('fast');
+	if(content != '')
+		$('#shop_popup_content').html(content);
+
+	//console.log('step 1');
+	
+	if(core.catalog.popupOn == 0 || (core.catalog.popupOn==1 && core.catalog.popupType != type))
+		$('#shop_popup').hide().css('top',(pos.top + 18)+'px').css('left',(pos.left - 340)+'px').fadeIn("slow");
+	
+	core.catalog.popupType = type;
+	core.catalog.popupOn = 1;
+	
+	$('#shop_popup').mouseleave(function(){core.catalog.popupOn=0;window.setTimeout(core.catalog.popupOff,500);}).mouseenter(function(){core.catalog.popupOn=1;});	
+	//console.log('step 2');
+	$(refObj).mouseleave(function(){core.catalog.popupOn=0;window.setTimeout(core.catalog.popupOff,500);}).mouseenter(function(){core.catalog.popupOn=1;});	
+	//console.log('step 3');
+	//$(refObj).mouseleave(core.catalog.popupOff);
+	//$('#shop_popup').hide().css('top',(pos.top + 15)+'px').css('left',(pos.left - 340)+'px');
+	//.mouseleave(core.catalog.popupOff).fadeIn('fast');
+	/*
+	$("#shop_popup").fadeIn("slow");
+	$('#'+id).mouseenter(function(){
+		if(core.catalog.popupFlag != type){
+			core.catalog.popupFlag = 0;
+			$('#shop_popup').hide();
+		}
+		core.catalog.popupFlag=type;
+	});
+	
+	$('#shop_popup').mouseenter(function(){
+		core.catalog.popupFlag=type;
+	});*/
+	//core.catalog.setupPopup(refObj.getAttribute('id'));
 }
 
 core.catalog.popupOff=function(refObj){
-	$('#shop_popup').fadeOut('fast');
+	if(core.catalog.popupOn == 0)
+		$('#shop_popup').fadeOut('fast');
 }
 
 core.catalog.closeAllPopups=function(args){
+	
 	core.catalog.popupOff();
 }
 
+core.catalog.setupPopup=function(id){
+	$("#"+id).mouseenter(function(){
+		clearTimeout($(this).data('timeoutId'));
+		$("#shop_popup").fadeIn("slow");
+	}).mouseleave(function(){
+		var someElement = $(this);
+		var timeoutId = setTimeout(function(){
+			$("#shop_popup").fadeOut("slow");
+		}, 650);
+		//set the timeoutId, allowing us to clear this trigger if the mouse comes back over
+		someElement.data('timeoutId', timeoutId); 
+	});
+}
 
 core.catalog.popupLoginRegister=function(idx){
 	var refObj = document.getElementById(((core.catalog.filters.cartOnly==1)?'continueShoppingButton':'showCartButton')+idx);
