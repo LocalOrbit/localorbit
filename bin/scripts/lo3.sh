@@ -12,12 +12,12 @@ fi
 svn co svn+ssh://svn/opt/localorbit/lo3/trunk/
 
 #copy images
-scp -r 'lo3:/var/www/production/www/img/organizations/*.jpg' $PWD/trunk/www/img
-scp -r 'lo3:/var/www/production/www/img/organizations/*.gif' $PWD/trunk/www/img
-scp -r 'lo3:/var/www/production/www/img/organizations/*.png' $PWD/trunk/www/img
+scp -r 'lo3:/var/www/production/www/img/organizations/*.jpg' $PWD/trunk/www/img/organizations
+scp -r 'lo3:/var/www/production/www/img/organizations/*.gif' $PWD/trunk/www/img/organizations
+scp -r 'lo3:/var/www/production/www/img/organizations/*.png' $PWD/trunk/www/img/organizations
 scp -r 'lo3:/var/www/production/www/img/products/raws/*.dat' $PWD/trunk/www/img/products/raws
-scp -r 'lo3:/var/www/production/www/img/newsletters/*' $PWD/trunk/www/img
-scp -r 'lo3:/var/www/production/www/img/weeklyspec/*' $PWD/trunk/www/img
+scp -r 'lo3:/var/www/production/www/img/newsletters/*' $PWD/trunk/www/img/newsletters
+scp -r 'lo3:/var/www/production/www/img/weeklyspec/*' $PWD/trunk/www/img/weeklyspec
 
 chmod 777 $PWD/trunk/www/img/products/cache
 chmod 777 $PWD/trunk/www/img/organizations/cached

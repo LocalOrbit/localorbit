@@ -23,10 +23,12 @@ rm $TRUNK_PATH/www/img/weeklyspec/*.jpg
 rm $TRUNK_PATH/www/img/weeklyspec/*.png
 rm $TRUNK_PATH/www/img/weeklyspec/*.gif
 
-scp -r 'lo3:/var/www/production/www/img/organizations/*.jpg' $TRUNK_PATH/www/img
+scp -r 'lo3:/var/www/production/www/img/organizations/*.jpg' $TRUNK_PATH/www/img/organizations
+scp -r 'lo3:/var/www/production/www/img/organizations/*.gif' $TRUNK_PATH/trunk/www/img/organizations
+scp -r 'lo3:/var/www/production/www/img/organizations/*.png' $TRUNK_PATH/trunk/www/img/organizations
 scp -r 'lo3:/var/www/production/www/img/products/raws/*.dat' $TRUNK_PATH/www/img/products/raws
-scp -r 'lo3:/var/www/production/www/img/newsletters/*' $TRUNK_PATH/www/img
-scp -r 'lo3:/var/www/production/www/img/weeklyspec/*' $TRUNK_PATH/www/img
+scp -r 'lo3:/var/www/production/www/img/newsletters/*' $TRUNK_PATH/www/img/newsletters
+scp -r 'lo3:/var/www/production/www/img/weeklyspec/*' $TRUNK_PATH/www/img/weeklyspec
 
 # dump production db
 ssh lo3 "mysqldump localorb_www_production -u localorb_www -pl0cal1sdab3st" > localorb_local_temp.sql
