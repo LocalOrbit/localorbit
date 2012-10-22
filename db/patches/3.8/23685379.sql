@@ -146,6 +146,34 @@ CREATE VIEW v_payables AS
 select * from v_payables;
 
 
+drop view  if exists v_payments;
+
+CREATE VIEW v_payments AS 
+	select pv.payment_id,pv.amount,pv.creation_date,
+	pv.from_org_id,
+	o1.name as from_org_name,
+	pv.to_org_id,
+	o2.name as to_org_name/*,
+	
+	(
+		select GROUP_CONCAT(UNIX_TIMESTAMP(isd.send_date)  ORDER BY isd.send_date desc SEPARATOR ',')
+		from invoice_send_dates isd
+		where isd.invoice_id=iv.invoice_id
+	) as send_dates,
+	
+	(
+		select group_concat(concat_ws('|',p.description,pt.payable_type,p.parent_obj_id) SEPARATOR '$$')
+		from payables p 
+		inner join payable_types pt on pt.payable_type_id=p.payable_type_id
+		where p.invoice_id=iv.invoice_id
+	
+	) as payable_info
+	*/
+	from payments pv
+	inner join organizations o1 on pv.from_org_id=o1.org_id
+	inner join organizations o2 on pv.to_org_id=o2.org_id;
+
+select * from v_payments;
 
 drop view  if exists v_invoices;
 
