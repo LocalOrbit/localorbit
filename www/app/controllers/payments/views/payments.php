@@ -1,14 +1,15 @@
 <?php
-$payments = core::model('payments')->collection();
+$payments = core::model('v_payments')->collection();
 
 $payments_table = new core_datatable('payments','payments/portal',$payments);
 $payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
 $payments_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
 //$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
-$payments_table->add(new core_datacolumn('organization_name','Organization',true,'19%','{to_org_name}','{to_org_name}','{to_org_name}'));
+$payments_table->add(new core_datacolumn('to_org_name','Organization',true,'19%','{to_org_name}','{to_org_name}','{to_org_name}'));
 //$invoices_table->add(new core_datacolumn('description','Description',true,'19%',			'{description}','{description}','{description}'));
 $payments_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount}','{amount}','{amount}'));
 //$invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
+$payments_table->columns[1]->autoformat='date-short';
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<?

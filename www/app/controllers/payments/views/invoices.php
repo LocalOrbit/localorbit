@@ -1,13 +1,23 @@
 <?php
 $invoices = core::model('v_invoices')->collection();
-
+$invoices->add_formatter('payable_info');
 $invoices_table = new core_datatable('payments','payments/portal',$invoices);
 $invoices_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
-$invoices_table->add(new core_datacolumn('organization_name','Organization',true,'19%','{from_org_name}','{from_org_name}','{from_org_name}'));
-$invoices_table->add(new core_datacolumn('description','Description',true,'19%',			'{description}','{description}','{description}'));
+//$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
+$invoices_table->add(new core_datacolumn('from_org_name','Organization',true,'19%','{from_org_name}','{from_org_name}','{from_org_name}'));
+$invoices_table->add(new core_datacolumn('description_html','Description',true,'19%',			'{description_html}','{description}','{description}'));
 $invoices_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount}','{amount}','{amount}'));
 $invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
+$invoices_table->columns[0]->autoformat='date-short';
+
+function payable_info ($data) {
+	$payable_info = array_map(function ($item) { return explode('|',$item); }, explode('$$', $data['payable_info']));
+
+   $data['description'] = 'test';
+   $data['description_html'] = 'test';
+   return $data;
+}
+
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<?
