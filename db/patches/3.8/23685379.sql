@@ -129,7 +129,12 @@ CREATE VIEW v_payables AS
 		select sum(xip.amount_paid) - p.amount 
 		from x_invoices_payments xip
 		where xip.invoice_id=iv.invoice_id
-	) as amount_due
+	) as amount_due,
+
+	(
+		select max(send_date) from invoice_send_dates
+		where invoice_send_dates.invoice_id = p.invoice_id
+	) as last_sent
 	
 	from payables p
 	

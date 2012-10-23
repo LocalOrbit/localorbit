@@ -17,6 +17,15 @@ function payable_desc ($data) {
    } else {
       $data['description_html'] = $data['description'];
    }
+
+   if ($data['is_invoiced']) {
+      $data['invoice_status'] = 'Invoiced';
+   } else if ($data['invoicable']) {
+      $data['invoice_status'] = 'Invoicable';
+   } else {
+      $data['invoice_status'] = 'Pending';
+   }
+
    return $data;
 }
 
