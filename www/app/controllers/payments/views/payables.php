@@ -1,5 +1,23 @@
+<?php
+$payments = core::model('v_payables')->collection();
+$payments->add_formatter('payable_desc');
+$payments_table = new core_datatable('payables','payments/portal',$payments);
+$payments_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
+$payments_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
+//$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
+$payments_table->add(new core_datacolumn('to_org_name','Organization',true,'19%','{to_org_name}','{to_org_name}','{to_org_name}'));
+$payments_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
+$payments_table->add(new core_datacolumn('payable_amount','Amount',true,'19%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
+$payments_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
+$payments_table->columns[1]->autoformat='date-short';
+?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
-	<table class="dt">
+<?php
+
+$payments_table->render();
+
+?>
+<!--	<table class="dt">
 		<?=core_form::column_widths('7%','13%','13%','20%','20%','20%','10%','10%')?>
 		<tr>
 			<td colspan="8" class="dt_filter_resizer">
@@ -43,7 +61,7 @@
 				</div>
 			</td>
 		</tr>
-	</table>
+	</table>-->
 	<? if(lo3::is_admin() || lo3::is_market()){?>
 	<div class="buttonset" id="create_payables_button">
 		<input type="button" onclick="$('#create_payables_form,#create_payables_button').toggle();" value="Create Payment from checked" class="button_primary" />

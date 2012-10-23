@@ -4,6 +4,22 @@ class core_controller_payments extends core_controller
 {
 }
 
+function payable_desc ($data) {
+   if (empty($data['description'])) {
+      if (strcmp($data['payable_type'],'buyer order') == 0) {
+         $data['description'] = $data['buyer_order_identifier'];
+         $data['description_html'] = $data['buyer_order_identifier'];
+      } else if ($data['payable_type'] == 'seller order') {
+         $data['description_html'] = $data['seller_order_identifier'];
+      } else if ($data['payable_type'] == 'hub fees') {
+         $data['description_html'] = 'Hub Fees';
+      }
+   } else {
+      $data['description_html'] = $data['description'];
+   }
+   return $data;
+}
+
 function payable_info ($data) {
    $payable_info = array_map(function ($item) { return explode('|',$item); }, explode('$$', $data['payable_info']));
 
