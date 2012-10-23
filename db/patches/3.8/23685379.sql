@@ -33,6 +33,8 @@ insert into payables(domain_id,payable_type_id,parent_obj_id,from_org_id,to_org_
 values (26,1,2854,1086,1,20,true,1);
 insert into payables(domain_id,payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable,invoice_id)
 values (26,1,2853,1086,1,10,true,2);
+insert into payables(domain_id,payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable,invoice_id)
+values (26,1,2853,1086,1,10,true,2);
 insert into payables(domain_id,payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable)
 values (26,1,2849,1086,1,8,false);
 
@@ -85,10 +87,7 @@ insert into invoice_send_dates(invoice_id,send_date)
 values (1,'2012-10-21 12:00:00');
 insert into invoice_send_dates(invoice_id,send_date)
 values (1,'2012-10-25 12:00:00');
-
-insert into invoice_send_dates(invoice_id,send_date)
-values (2,'2012-10-26 12:00:00');
-
+-- insert into invoice_send_dates(invoice_id,send_date) values (2,'2012-10-26 12:00:00');
 
 create table payment_methods (
 	payment_method_id int(11) unsigned not null auto_increment PRIMARY KEY,
@@ -153,22 +152,15 @@ CREATE VIEW v_payments AS
 	pv.from_org_id,
 	o1.name as from_org_name,
 	pv.to_org_id,
-	o2.name as to_org_name/*,
-	
-	(
-		select GROUP_CONCAT(UNIX_TIMESTAMP(isd.send_date)  ORDER BY isd.send_date desc SEPARATOR ',')
-		from invoice_send_dates isd
-		where isd.invoice_id=iv.invoice_id
-	) as send_dates,
-	
+	o2.name as to_org_name,
 	(
 		select group_concat(concat_ws('|',p.description,pt.payable_type,p.parent_obj_id) SEPARATOR '$$')
 		from payables p 
 		inner join payable_types pt on pt.payable_type_id=p.payable_type_id
-		where p.invoice_id=iv.invoice_id
+		inner join x_invoices_payments on p.invoice_id = x_invoices_payments.invoice_id
+		where pv.payment_id=x_invoices_payments.payment_id
 	
 	) as payable_info
-	*/
 	from payments pv
 	inner join organizations o1 on pv.from_org_id=o1.org_id
 	inner join organizations o2 on pv.to_org_id=o2.org_id;
