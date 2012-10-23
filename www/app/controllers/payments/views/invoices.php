@@ -12,22 +12,33 @@ $invoices_table->columns[0]->autoformat='date-short';
 
 function payable_info ($data) {
 	$payable_info = array_map(function ($item) { return explode('|',$item); }, explode('$$', $data['payable_info']));
-   
+
    if (count($payable_info) == 1) {
       $info = $payable_info[0];
       $data['description'] = format_text($info);
       $data['description_html'] = format_html($info);
    } else {
-      
-      $data['description'] = ''; //format_text($info);
-      $data['description_html'] = '';//format_html($info);
-      
+      $data['description'] = '';
+      $title = '';
+      if (stripos($payable_info[0][0], 'order') >= 0) {
+         $title = 'Orders';
+      } else if (stripos($payable_info[0][0], 'hub fees') >= 0) {
+         $title = 'Fees';
+      } else {
+         $title = $payable_info[0][0];
+      }
+
+      $id = str_replace(' ', '_', $payable_info[0][0]) . '_' . $payable_info[0][1];
+      $data['description_html'] = '<a href="#!payments-demo" onclick="$(\'#' . $id . '\').toggle();">' . $title . '</a><div id="' . $id .'" style="display: none;">';
+
       for ($index = 0; $index < count($payable_info); $index++) {
          $info = $payable_info[0];
-         
+
          $data['description'] .= (($index>0)?', ':'') . format_text($info);
-         $data['description_html'] .= format_html($info);
+         $data['description_html'] .= (($index>0)?'<br/>':'') .format_html($info);
       }
+
+      $data['description_html'] .= '</div>';
    }
    return $data;
 }
@@ -41,7 +52,7 @@ function format_html ($info) {
          $text .= '</a>';
       } else if ($info[0] === 'seller order') {
          $text .= 'Seller Order #' . $info[1];
-      } else if ($info[0] === 'hub fees') {  
+      } else if ($info[0] === 'hub fees') {
          $text .= 'Hub Fees';
       } else {
          $text .= $info[0];
@@ -60,7 +71,7 @@ function format_text ($info) {
          $text .= 'Order #' . $info[1];
       } else if ($info[0] === 'seller order') {
          $text .= 'Seller Order #' . $info[1];
-      } else if ($info[0] === 'hub fees') {  
+      } else if ($info[0] === 'hub fees') {
          $text .= 'Hub Fees';
       } else {
          $text .= $info[0];
