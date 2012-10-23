@@ -12,10 +12,64 @@ $invoices_table->columns[0]->autoformat='date-short';
 
 function payable_info ($data) {
 	$payable_info = array_map(function ($item) { return explode('|',$item); }, explode('$$', $data['payable_info']));
-
-   $data['description'] = 'test';
-   $data['description_html'] = 'test';
+   
+   if (count($payable_info) == 1) {
+      $info = $payable_info[0];
+      $data['description'] = format_text($info);
+      $data['description_html'] = format_html($info);
+   } else {
+      
+      $data['description'] = ''; //format_text($info);
+      $data['description_html'] = '';//format_html($info);
+      
+      for ($index = 0; $index < count($payable_info); $index++) {
+         $info = $payable_info[0];
+         
+         $data['description'] .= (($index>0)?', ':'') . format_text($info);
+         $data['description_html'] .= format_html($info);
+      }
+   }
    return $data;
+}
+
+function format_html ($info) {
+   $text = '';
+   if (count($info) > 0) {
+      if (strcmp($info[0],'buyer order') == 0) {
+         $text .= '<a href="#!orders-view_order--lo_oid-' . $info[1] . '">';
+         $text .= 'Order #' . $info[1];
+         $text .= '</a>';
+      } else if ($info[0] === 'seller order') {
+         $text .= 'Seller Order #' . $info[1];
+      } else if ($info[0] === 'hub fees') {  
+         $text .= 'Hub Fees';
+      } else {
+         $text .= $info[0];
+         if (count($info) > 1) {
+            $text .= ' #' . $info[1];
+         }
+      }
+   }
+   return $text;
+}
+
+function format_text ($info) {
+   $text = '';
+   if (count($info) > 0) {
+      if (strcmp($info[0],'buyer order') == 0) {
+         $text .= 'Order #' . $info[1];
+      } else if ($info[0] === 'seller order') {
+         $text .= 'Seller Order #' . $info[1];
+      } else if ($info[0] === 'hub fees') {  
+         $text .= 'Hub Fees';
+      } else {
+         $text .= $info[0];
+         if (count($info) > 1) {
+            $text .= ' #' . $info[1];
+         }
+      }
+   }
+   return $text;
 }
 
 ?>
