@@ -19,17 +19,7 @@ function payable_info ($data) {
       $data['description_html'] = format_html($info);
    } else {
       $data['description'] = '';
-      $title = '';
-      if (stripos($payable_info[0][0], 'order') >= 0) {
-         $title = 'Orders';
-      } else if (stripos($payable_info[0][0], 'hub fees') >= 0) {
-         $title = 'Fees';
-      } else {
-         $title = $payable_info[0][0];
-      }
-
-      $id = str_replace(' ', '_', $payable_info[0][0]) . '_' . $payable_info[0][1];
-      $data['description_html'] = '<a href="#!payments-demo" onclick="$(\'#' . $id . '\').toggle();">' . $title . '</a><div id="' . $id .'" style="display: none;">';
+      $data['description_html'] = format_html_header($payable_info);
 
       for ($index = 0; $index < count($payable_info); $index++) {
          $info = $payable_info[0];
@@ -41,6 +31,21 @@ function payable_info ($data) {
       $data['description_html'] .= '</div>';
    }
    return $data;
+}
+
+function format_html_header ($payable_info) {
+   $title = '';
+
+   if (stripos($payable_info[0][0], 'order') >= 0) {
+      $title = 'Orders';
+   } else if (stripos($payable_info[0][0], 'hub fees') >= 0) {
+      $title = 'Fees';
+   } else {
+      $title = $payable_info[0][0];
+   }
+
+   $id = str_replace(' ', '_', $payable_info[0][0]) . '_' . $payable_info[0][1];
+   return '<a href="#!payments-demo" onclick="$(\'#' . $id . '\').toggle();">' . $title . '</a><div id="' . $id .'" style="display: none;">';
 }
 
 function format_html ($info) {
