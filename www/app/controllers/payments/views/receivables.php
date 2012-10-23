@@ -1,5 +1,23 @@
+<?php
+$payables = core::model('v_payables')->collection();
+$payables->add_formatter('payable_desc');
+$payables_table = new core_datatable('payables','payments/portal',$payables);
+$payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
+$payables_table->add(new core_datacolumn('payable_id','#ID',true,'19%','{payable_id}','{payable_id}','{payable_id}'));
+$payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
+//$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
+$payables_table->add(new core_datacolumn('to_org_name','Organization',true,'19%','{to_org_name}','{to_org_name}','{to_org_name}'));
+$payables_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
+$payables_table->add(new core_datacolumn('payable_amount','Amount',true,'19%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
+$payables_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
+?>
+
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
-	<table class="dt">
+
+<?php
+$payables_table->render();
+?>
+<!--	<table class="dt">
 		<col width="5%" />
 		<col width="8%" />
 		<col width="20%" />
@@ -91,7 +109,7 @@
 				</div>
 			</td>
 		</tr>
-	</table>
+	</table> -->
 	<div class="buttonset" id="create_invoice_toggler">
 		<input type="button" onclick="$('#create_invoice_toggler,#create_invoice_form').toggle();" style="width:300px;" value="create invoices from checked" class="button_primary" />
 	</div>
