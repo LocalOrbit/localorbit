@@ -15,7 +15,7 @@ $events->filter_html .= core_datatable_filter::make_text('events','name',$domain
 
 
 $events->add(new core_datacolumn('creation_date','Event Date',true,'19%','<a href="#!events-view--event_id-{event_id}">{creation_date}</a>','{creation_date}','{creation_date}'));
-$events->add(new core_datacolumn('domain_id','Domain',true,'21%','<a href="#!market-edit--domain_id-{domain_id}">{domain_name}</a>','{domain_name}','{domain_name}'));
+$events->add(new core_datacolumn('domains.domain_id','Domain',true,'21%','<a href="#!market-edit--domain_id-{domain_id}">{domain_name}</a>','{domain_name}','{domain_name}'));
 $events->add(new core_datacolumn('event_type_id','Event Type',true,'15%','<a href="#!events-view--event_id-{event_id}">{event_type}</a>','{event_type}','{event_type}'));
 $events->add(new core_datacolumn('customer_id','User',true,'35%','<a href="#!users-edit--entity_id-{customer_id}">{first_name} {last_name}</a> (<a href="mailTo:{email}">E-mail</a>)<br /><a href="#!organizations-edit--org_id-{org_id}" onclick="core.go(this.href);">{org_name}</a>','{first_name} {last_name} - {org_name}','{first_name} {last_name} - {org_name}'));
 $events->add(new core_datacolumn('ip_address','IP Address',true,'10%','<a href="http://www.geobytes.com/IpLocator.htm?GetLocation&IpAddress={ip_address}" target="_blank">{ip_address}</a>','{ip_address}','{ip_address}'));
