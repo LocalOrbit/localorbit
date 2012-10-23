@@ -9,12 +9,13 @@ $values = array(
 	'domain_id'=>$core->view[3],
 );
 core::log('tryign to send email from domain '.$values['domain_id']);
+$auto_activate = core_db::col('SELECT autoactivate_organization FROM domains where domain_id='.$values['domain_id'],'autoactivate_organization');
 $values['hub_name'] = core_db::col('select name from domains where domain_id='.$values['domain_id'],'name');
 $values['hubname'] = $values['hub_name'];
 core::log('domain name is '.$values['hub_name']);
 
 $body  = $this->email_start();
-$body .= $this->handle_source($core->session['i18n']['email:new_registrant'],$values);
+$body .= $this->handle_source(($auto_activate?$core->session['i18n']['email:new_registrant']:$core->session['i18n']['email:new_registrant_auto_activate']),$values);
 $body .= $this->footer();
 $body .= $this->email_end();
 
