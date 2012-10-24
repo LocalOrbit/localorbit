@@ -1,8 +1,8 @@
 <?php
 $payables = core::model('v_payables')->collection()->filter('to_org_id' , $core->session['org_id']);
 $payables->add_formatter('payable_desc');
-$payables_table = new core_datatable('payables','payments/portal',$payables);
-$payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
+$payables_table = new core_datatable('receivables','payments/portal',$payables);
+$payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('receivables'),'',''),false,'4%',core_ui::check_all('receivables','payment_id'),' ',' '));
 $payables_table->add(new core_datacolumn('payable_id','#ID',true,'5%','{payable_id}','{payable_id}','{payable_id}'));
 $payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
 //$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
@@ -13,6 +13,19 @@ $payables_table->add(new core_datacolumn('invoice_status','Invoice Status',true,
 $payables_table->add(new core_datacolumn('last_sent','Last Sent',true,'19%',							'{last_sent}','{last_sent}','{last_sent}'));
 $payables_table->columns[2]->autoformat='date-short';
 $payables_table->columns[7]->autoformat='date-short';
+
+
+$payables_table->add_filter(new core_datatable_filter('from_org_id'));
+$payables_table->filter_html .= core_datatable_filter::make_select(
+	'receivables',
+	'from_org_id',
+	$items->filter_states['receivables__filter__from_org_id'],
+	new core_collection('select distinct from_org_id, from_org_name from v_payables where to_org_id = ' . $core->session['org_id'] . ';'),
+	'from_org_id',
+	'from_org_name',
+	'Show from all buyers',
+	'width: 270px;'
+);
 ?>
 
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">

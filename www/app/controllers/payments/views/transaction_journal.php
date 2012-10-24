@@ -11,6 +11,20 @@ $payments_table->add(new core_datacolumn('org_name','Organization',true,'19%','{
 $payments_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
 $payments_table->columns[2]->autoformat='date-short';
 
+/*
+$payments_table->add_filter(new core_datatable_filter('to_org_id'));
+$payments_table->filter_html .= core_datatable_filter::make_select(
+	'payments',
+	'lo_order.org_id',
+	$items->filter_states['transactions__filter__from_org_id'],
+	new core_collection('select distinct from_org_id, from_org_name from v_payments where from_org_id = ' . $core->session['org_id'] . ';'),
+	'from_org_id',
+	'from_org_name',
+	'Show from all buyers',
+	'width: 270px;'
+);
+*/
+
 function fake_order_area($id)
 {
 	return '

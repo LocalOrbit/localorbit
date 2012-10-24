@@ -11,6 +11,18 @@ $payables_table->add(new core_datacolumn('description','Description',true,'19%',
 $payables_table->add(new core_datacolumn('payable_amount','Amount',true,'19%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
 $payables_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
 $payables_table->columns[1]->autoformat='date-short';
+
+$payables_table->add_filter(new core_datatable_filter('to_org_id'));
+$payables_table->filter_html .= core_datatable_filter::make_select(
+	'v_payables',
+	'to_org_id',
+	$items->filter_states['payables__filter__to_org_id'],
+	new core_collection('select distinct to_org_id, to_org_name from v_payables where from_org_id = ' . $core->session['org_id'] . ';'),
+	'to_org_id',
+	'to_org_name',
+	'Show from all buyers',
+	'width: 270px;'
+);
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 <?php

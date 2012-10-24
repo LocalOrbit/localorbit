@@ -12,6 +12,17 @@ $payments_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{a
 //$invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
 $payments_table->columns[1]->autoformat='date-short';
 
+$payments_table->add_filter(new core_datatable_filter('to_org_id'));
+$payments_table->filter_html .= core_datatable_filter::make_select(
+	'payments',
+	'lo_order.org_id',
+	$items->filter_states['payments__filter__from_org_id'],
+	new core_collection('select distinct from_org_id, from_org_name from v_payments where from_org_id = ' . $core->session['org_id'] . ';'),
+	'from_org_id',
+	'from_org_name',
+	'Show from all buyers',
+	'width: 270px;'
+);
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<?

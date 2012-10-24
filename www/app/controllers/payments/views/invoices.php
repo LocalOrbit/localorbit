@@ -1,7 +1,7 @@
 <?php
 $invoices = core::model('v_invoices')->collection()->filter('to_org_id' , $core->session['org_id']);
 $invoices->add_formatter('payable_info');
-$invoices_table = new core_datatable('payments','payments/portal',$invoices);
+$invoices_table = new core_datatable('invoices','payments/portal',$invoices);
 $invoices_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
 //$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
 $invoices_table->add(new core_datacolumn('from_org_name','Organization',true,'19%','{from_org_name}','{from_org_name}','{from_org_name}'));
@@ -10,6 +10,17 @@ $invoices_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{a
 $invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
 $invoices_table->columns[0]->autoformat='date-short';
 
+$invoices_table->add_filter(new core_datatable_filter('from_org_id'));
+$invoices_table->filter_html .= core_datatable_filter::make_select(
+	'invoices',
+	'from_org_id',
+	$items->filter_states['invoices__filter__from_org_id'],
+	new core_collection('select distinct from_org_id, from_org_name from v_invoices where to_org_id = ' . $core->session['org_id'] . ';'),
+	'from_org_id',
+	'from_org_name',
+	'Show from all buyers',
+	'width: 270px;'
+);
 
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
