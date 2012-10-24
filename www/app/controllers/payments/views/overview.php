@@ -1,3 +1,17 @@
+<?
+global $core;
+$payables = core::model('v_payables')->collection()->filter('(from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')')->filter('is_invoiced', '0');
+$payables->add_formatter('payable_desc');
+$payables->add_formatter('org_amount');
+$payables_table = new core_datatable('payables','payments/portal',$payables);
+//$payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
+//$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
+$payables_table->add(new core_datacolumn('org_name','Organization',true,'19%','{org_name}','{org_name}','{org_name}'));
+//$payables_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
+$payables_table->add(new core_datacolumn('amount_due','Receivables',false,'19%',							'{in_amount}','{in_amount}','{in_amount}'));
+$payables_table->add(new core_datacolumn('amount_due','Payables',false,'19%',			'{out_amount}','{out_amount}','{out_amount}'));
+//$payables_table->columns[1]->autoformat='date-short';
+?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<table>
 		<?=core_form::column_widths('48%','4%','48%')?>
@@ -28,6 +42,10 @@
 			<td colspan="3">
 				<br />&nbsp;<br />
 				<h3>Payables/Receivables by Organization</h3>
+				<?
+				$payables_table->render();
+				?>
+				<!--
 				<table class="dt">
 					<?=core_form::column_widths('25%','25%','25%','25%')?>
 					<tr>
@@ -74,6 +92,7 @@
 						</td>
 					</tr>
 				</table>
+			-->
 			</td>
 		</tr>
 	</table>

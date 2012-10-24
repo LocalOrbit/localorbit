@@ -1,5 +1,6 @@
 <?
-$payments = core::model('v_payments')->collection();
+global $core;
+$payments = core::model('v_payments')->collection()->filter('(from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')');
 $payments->add_formatter('payable_info');
 $payments->add_formatter('org_amount');
 $payments_table = new core_datatable('transactions','payments/portal',$payments);

@@ -15,30 +15,30 @@ class core_form
 		$html .= '</div>';
 		return $html;
 	}
-	
+
 	public static function tab($tabset_name)
 	{
 		global $core;
-		
+
 		if(!is_numeric($core->config['tab_index_cache'][$tabset_name]))
 		{
 			$core->config['tab_index_cache'][$tabset_name] = 0;
 		}
 		$core->config['tab_index_cache'][$tabset_name]++;
-		
+
 		# get the final content list for this div
 		$items = func_get_args();
 		array_shift($items);
-		
+
 		$out = '<div class="tabarea" id="'.$tabset_name.'-a'.$core->config['tab_index_cache'][$tabset_name].'">';
 		$out .= core_form::render_items($items).'</div>';
 		return $out;
 	}
-	
+
 	public static function table_nv()
 	{
 		$items = func_get_args();
-		$out = '<table class="form">'.core_form::render_items($items).'</table>';		
+		$out = '<table class="form">'.core_form::render_items($items).'</table>';
 		return $out;
 	}
 
@@ -58,9 +58,9 @@ class core_form
 			'render'=>true,
 		));
 		if($options['render'] != true)	return '';
-		
+
 		$out = '<form name="'.$name.'" action="'.$url.'" method="post" id="'.$name.'" onsubmit="return core.submit(\''.$url.'\',this);" enctype="multipart/form-data"';
-		
+
 		if($options['style'] != '')
 		{
 			$out .= ' style="'.$options['style'].'"';
@@ -73,7 +73,7 @@ class core_form
 		$out .= core_form::render_items($items);
 		return $out .= '</form>';
 	}
-	
+
 	public static function page_header($title,$extrafunction='',$function_text='',$icon='')
 	{
 		$out = '<h1>'.$title;
@@ -95,7 +95,7 @@ class core_form
 		if($options['render'] != true)	return '';
 		return '<h'.$options['level'].'>'.$label.'</h'.$options['level'].'>';
 	}
-	
+
 	public static function header_nv($label,$options=null)
 	{
 		$options = core_form::finalize_options($options,array(
@@ -105,7 +105,7 @@ class core_form
 		if($options['render'] != true)	return '';
 		return '<tr><td colspan="2"><h'.$options['level'].'>'.$label.'</h'.$options['level'].'></tr></td>';
 	}
-	
+
 	public static function column_widths()
 	{
 		$widths = func_get_args();
@@ -114,19 +114,19 @@ class core_form
 			$out .= '<col width="'.$width.'" />';
 		return $out;
 	}
-	
+
 	public static function required()
 	{
 		return '<span class="required">*</span>';
 	}
-	
+
 	public static function tr_nv($label,$value,$options)
 	{
 		$label .= ($label != '&nbsp;')?':':'';
 		$label .= (isset($options['sublabel']) && $options['sublabel'] !='')?
 			'<div class="sublabel">'.$options['sublabel'].'</div>':'';
 		if($label == '&nbsp;')
-		{		
+		{
 			$value .= (isset($options['required']) && $options['required'] == true)?
 				core_form::required():'';
 		}
@@ -146,25 +146,25 @@ class core_form
 		</tr>';
 		return $html;
 	}
-	
+
 	public static function get_final_value($name,$value)
 	{
 		if(is_object($value) || is_array($value))
 			$value = $value[$name];
 		return $value;
 	}
-	
+
 	public static function finalize_options($passed,$defaults)
 	{
 		if($passed == null)
 			return $defaults;
-			
+
 		$final = $defaults;
 		foreach($passed as $name=>$value)
 			$final[$name] = $value;
 		return $final;
 	}
-	
+
 	public static function render_items($items)
 	{
 		$out = '';
@@ -177,7 +177,7 @@ class core_form
 		}
 		return $out;
 	}
-	
+
 	public static function input_button($name,$value,$onclick='',$options=null)
 	{
 		$options = core_form::finalize_options($options,array(
@@ -188,14 +188,14 @@ class core_form
 		if($options['render'] != true)	return '';
 		return '<input type="'.$options['type'].'" class="button_'.$options['class'].'" name="'.$name.'" value="'.$value.'" onclick="'.$onclick.'" />';
 	}
-	
-	
+
+
 	public static function input_hidden($name,$value)
 	{
 		$value = core_form::get_final_value($name,$value);
 		return '<input type="hidden" name="'.$name.'" value="'.$value.'" />';
-	}	
-	
+	}
+
 	public static function value($label,$value,$options=null)
 	{
 		$options = core_form::finalize_options($options,array(
@@ -224,7 +224,7 @@ class core_form
 			'info_icon'=>null,
 			'info_show'=>false,
 			'render'=>true,
-			
+
 			'src'=>'',
 			'img_id'=>'',
 			'img_style'=>'',
@@ -232,17 +232,17 @@ class core_form
 			'upload_js'=>'',
 		));
 		if($options['render'] != true)	return '';
-		
+
 		if($options['src'] == '')
 			$options['img_style'] .= 'display:none;';
-		
-		
+
+
 		$out = '<img id="'.$options['img_id'].'" src="'.$options['src'].'"';
 		$out .= (isset($options['img_style']) && $options['img_style'] !='')?' style="'.$options['img_style'].'"':'';
 		$out .= ' /><br />';
 		$out .= '<input type="file" name="new_image" value="" />';
 		$out .= '<input type="button" id="removenlimage" class="button_secondary" value="Remove Image" onclick="'.$options['remove_js'].'" />';
-		
+
 		return core_form::tr_nv($label,$out,$options);
 	}
 
@@ -262,7 +262,7 @@ class core_form
 		if($options['render'] != true)	return '';
 		return core_form::tr_nv($label,'<input type="text" name="'.$name.'" value="'.$value.'" />',$options);
 	}
-	
+
 	public static function input_datepicker($label,$name,$value,$options=null)
 	{
 		$value = core_form::get_final_value($name,$value);
@@ -279,7 +279,7 @@ class core_form
 		if($options['render'] != true)	return '';
 		return core_form::tr_nv($label,core_ui::date_picker($name,$value),$options);
 	}
-	
+
 	public static function input_check($label,$name,$value,$options=null)
 	{
 		$value = core_form::get_final_value($name,$value);
@@ -296,7 +296,7 @@ class core_form
 		if($options['render'] != true)	return '';
 		return core_form::tr_nv('&nbsp;',core_ui::checkdiv($name,$label,$value,$options['onclick'],$options));
 	}
-	
+
 	public static function input_password($label,$name,$value='',$options=null)
 	{
 		$value = core_form::get_final_value($name,$value);
@@ -313,7 +313,7 @@ class core_form
 		if($options['render'] != true)	return '';
 		return core_form::tr_nv($label,'<input type="password" name="'.$name.'" value="'.$value.'" />',$options);
 	}
-	
+
 	public static function input_select($label,$name,$value,$source,$options=null)
 	{
 		$value = core_form::get_final_value($name,$value);
@@ -327,28 +327,28 @@ class core_form
 			'info_show'=>false,
 			'render'=>true,
 			'select_style'=>'',
-			
+
 			'text_column'=>'text',
 			'value_column'=>'value',
-			
+
 			'default_show'=>false,
 			'default_text'=>'',
 			'default_value'=>0,
 			'onchange'=>'',
 		));
 		if($options['render'] != true)	return '';
-		
+
 		$out = '<select name="'.$name.'"';
 		$out .= (isset($options['select_style']) && $options['select_style'] != '')?' style="'.$options['select_style'].'"':'';
 		$out .='>';
-		
+
 		if($options['default_show'] == true)
 		{
 			$out .= '<option value="'.$options['default_value'].'"';
 			$out .= ($value==$options['default_value'])?' selected="selected"':'';
 			$out .= '>'.$options['default_text'].'</option>';
 		}
-		
+
 		if(is_array($source))
 		{
 			foreach($source as $opt_value=>$opt_text)
@@ -371,12 +371,12 @@ class core_form
 		{
 			$out .= $source;
 		}
-		
+
 		$out .= '</select>';
-		
+
 		return core_form::tr_nv($label,$out,$options);
 	}
-	
+
 	public static function input_textarea($label,$name,$value,$options=null)
 	{
 		$value = core_form::get_final_value($name,$value);
@@ -395,7 +395,7 @@ class core_form
 		if($options['render'] != true)	return '';
 		return core_form::tr_nv($label,'<textarea name="'.$name.'" rows="'.$options['rows'].'" cols="'.$options['rows'].'">'.$value.'</textarea>',$options);
 	}
-	
+
 	public static function input_rte($label,$name,$value,$options=null)
 	{
 		$value = core_form::get_final_value($name,$value);
@@ -415,14 +415,14 @@ class core_form
 		core_ui::rte();
 		return core_form::tr_nv($label,'<textarea class="rte" id="'.$name.'" name="'.$name.'" rows="'.$options['rows'].'" cols="'.$options['rows'].'">'.$value.'</textarea>',$options);
 	}
-		
+
 	public static function info($msg,$icon='speech',$show=false)
 	{
 		global $core;
 		# take care of a situation where this is called by one of the form generator functions
 		if(is_null($icon))
 			$icon = 'speech';
-		
+
 		$rand_id = strtr('f'.microtime(),' .','__');
 		$out  = '<div class="info_toggle" onclick="$(\'#'.$rand_id.'\').toggle(\'fast\');">&nbsp;</div>';
 		$out .= '<div class="info_area info_area_'.$icon.'" id="'.$rand_id.'"';
@@ -433,20 +433,20 @@ class core_form
 		$out .= '>'.$msg.'</div>';
 		return $out;
 	}
-	
-	
+
+
 	public static function save_buttons($options=null)
 	{
 		global $core;
 		$options = core_form::finalize_options($options,array(
 			'require_pin' => false,
 		));
-		
+
 		if($core->session['sec_pin'] == 1)
 		{
 			$options['require_pin'] = false;
 		}
-		
+
 		if($options['require_pin'])
 		{
 			$out = '
@@ -467,7 +467,7 @@ class core_form
 		}
 		return $out;
 	}
-	
+
 	public static function save_only_button($options=null)
 	{
 		global $core;
@@ -481,10 +481,10 @@ class core_form
 		if($options['cancel_button'])
 		{
 			$out .= '<input type="button" class="button_primary" name="cancel" onclick="'.$options['on_cancel'].'" value="'.$core->i18n['button:cancel'].'" />';
-			
+
 		}
 		$out .= '<input type="submit" class="button_primary" onclick="'.$options['on_save'].' name="save" value="'.$core->i18n['button:save'].'" /></div>';
-		
+
 		return $out;
 	}
 }
