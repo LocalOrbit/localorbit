@@ -18,9 +18,9 @@ $invoices_table->render();
 	?>
 	<!--
 	<table class="dt">
-		<?=core_form::column_widths('15%','25%','15%','15%','15%')?>
+		<?=core_form::column_widths('12%','12%','12%','12%','12%','12%','12%','12%')?>
 		<tr>
-			<td colspan="6" class="dt_filter_resizer">
+			<td colspan="8" class="dt_filter_resizer">
 				<div class="dt_filter">
 					<select>
 						<option> Filter by Hub: All Hubs</option>
@@ -40,45 +40,37 @@ $invoices_table->render();
 			</td>
 		</tr>
 		<tr class="dt">
-			<th class="dt dt_sortable dt_sort_asc">Date</th>
+			<th class="dt dt_sortable dt_sort_asc">Invoice #</th>
+			<th class="dt">Invoice Date</th>
+			<th class="dt">Due Date</th>
+			<th class="dt">Last Sent Date</th>
 			<th class="dt">Hub</th>
 			<th class="dt">Organization</th>
-			<th class="dt">Description</th>
 			<th class="dt">Amount</th>
-			<th class="dt">Status</th>
+			<th class="dt">Amount Due</th>
 		</tr>
 		<tr class="dt">
+			<td class="dt">INV-230823</td>
 			<td class="dt">May 1, 2012</td>
+			<td class="dt">May 5, 2012</td>
+			<td class="dt">May 2, 2012</td>
 			<td class="dt">Detroit Western Market</td>
 			<td class="dt">Buyer A</td>
-			<td class="dt">
-				<a href="#!payments-demo" onclick="$('#orders_8233').toggle();">Orders</a>
-				<div id="orders_8233" style="display: none;">
-					<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2491">	LO-12-015-0002423</a><br />
-					<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2489">	LO-12-023-0002431</a><br />
-					<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2489">	LO-12-023-0002455</a><br />
-				</div>
-			</td>
 			<td class="dt">$300.00</td>
-			<td class="dt">Unpaid</td>
+			<td class="dt">$200.00</td>
 		</tr>
 		<tr class="dt1">
+			<td class="dt">INV-230823</td>
 			<td class="dt">May 6, 2012</td>
+			<td class="dt">May 15, 2012</td>
+			<td class="dt">May 8, 2012</td>
 			<td class="dt">Detroit Western Market</td>
 			<td class="dt">Buyer A</td>
-			<td class="dt">
-				<a href="#!payments-demo" onclick="$('#orders_8233').toggle();">Orders</a>
-				<div id="orders_8233" style="display: none;">
-					<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2491">	LO-12-015-0002423</a><br />
-					<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2489">	LO-12-023-0002431</a><br />
-					<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2489">	LO-12-023-0002455</a><br />
-				</div>
-			</td>
 			<td class="dt">$220.00</td>
-			<td class="dt">Partially Paid</td>
+			<td class="dt">$220.00</td>
 		</tr>
 		<tr>
-			<td colspan="6" class="dt_exporter_pager">
+			<td colspan="8" class="dt_exporter_pager">
 				<div class="dt_exporter">
 					Save as: Quickbooks | CSV | PDF
 				</div>
