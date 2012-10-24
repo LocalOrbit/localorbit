@@ -1,5 +1,5 @@
 <?php
-$invoices = core::model('v_invoices')->collection();
+$invoices = core::model('v_invoices')->collection()->filter('to_org_id' , $core->session['org_id']);
 $invoices->add_formatter('payable_info');
 $invoices_table = new core_datatable('payments','payments/portal',$invoices);
 $invoices_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));

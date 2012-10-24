@@ -1,5 +1,5 @@
 <?php
-$payables = core::model('v_payables')->collection();
+$payables = core::model('v_payables')->collection()->filter('to_org_id' , $core->session['org_id']);
 $payables->add_formatter('payable_desc');
 $payables_table = new core_datatable('payables','payments/portal',$payables);
 $payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));

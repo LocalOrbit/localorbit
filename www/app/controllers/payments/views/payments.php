@@ -1,5 +1,5 @@
 <?php
-$payments = core::model('v_payments')->collection();
+$payments = core::model('v_payments')->collection()->filter('from_org_id' , $core->session['org_id']);
 $payments->add_formatter('payable_info');
 
 $payments_table = new core_datatable('payments','payments/portal',$payments);
