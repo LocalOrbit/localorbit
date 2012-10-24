@@ -1,5 +1,15 @@
-
 <?
+$payments = core::model('v_payments')->collection();
+$payments->add_formatter('payable_info');
+$payments->add_formatter('org_amount');
+$payments_table = new core_datatable('transactions','payments/portal',$payments);
+$payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('transactions'),'',''),false,'4%',core_ui::check_all('transactions','payment_id'),' ',' '));
+$payments_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount_value}','{amount_value}','{amount_value}'));
+$payments_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
+$payments_table->add(new core_datacolumn('org_name','Organization',true,'19%','{org_name}','{org_name}','{org_name}'));
+$payments_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
+$payments_table->columns[2]->autoformat='date-short';
+
 function fake_order_area($id)
 {
 	return '
@@ -13,7 +23,12 @@ function fake_order_area($id)
 }
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
-	<table class="dt">
+
+<?
+$payments_table->render();
+?>
+
+<!--	<table class="dt">
 		<?=core_form::column_widths('5%','15%','25%','15%','15%','15%')?>
 		<tr>
 			<td colspan="6" class="dt_filter_resizer">
@@ -44,7 +59,7 @@ function fake_order_area($id)
 		<?=core_datatable::render_fake_row(true,'<input type="checkbox" />','$220.00','May 12, 2012',fake_order_area(2),'Partially Paid','Seller A')?>
 		<?=core_datatable::render_fake_row(false,'<input type="checkbox" />','$100.00','May 23, 2012',fake_order_area(3),'Unpaid','Buyer A')?>
 		<?=core_datatable::render_fake_row(true,'<input type="checkbox" />','$120.00','May 30, 2012',fake_order_area(4),'Unpaid','Buyer A')?>
-	</table>
+	</table> -->
 	<div class="buttonset" id="payformtoggler">
 		<input type="button" onclick="$('#payform,#payformtoggler').toggle();" class="button_primary" value="Mark as Paid" />
 	</div>
