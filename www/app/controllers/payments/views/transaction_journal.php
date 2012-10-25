@@ -3,7 +3,7 @@ global $core;
 $payments = core::model('v_payments')->collection()->filter('(from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')');
 $payments->add_formatter('payable_info');
 $payments->add_formatter('org_amount');
-$payments_table = new core_datatable('transactions','payments/portal',$payments);
+$payments_table = new core_datatable('transactions','payments/transactions',$payments);
 $payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('transactions'),'',''),false,'4%',core_ui::check_all('transactions','payment_id'),' ',' '));
 $payments_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount_value}','{amount_value}','{amount_value}'));
 $payments_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));

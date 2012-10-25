@@ -2,7 +2,7 @@
 global $core;
 $payables = core::model('v_payables')->collection()->filter('from_org_id' , $core->session['org_id']);
 $payables->add_formatter('payable_desc');
-$payables_table = new core_datatable('payables','payments/portal',$payables);
+$payables_table = new core_datatable('payables','payments/payables',$payables);
 $payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
 $payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
 $payables_table->add(new core_datacolumn('from_domain_name','Hub',true,'19%','{from_domain_name}','{from_domain_name}','{from_domain_name}'));

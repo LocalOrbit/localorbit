@@ -1,7 +1,7 @@
 <?php
 $payables = core::model('v_payables')->collection()->filter('to_org_id' , $core->session['org_id']);
 $payables->add_formatter('payable_desc');
-$payables_table = new core_datatable('receivables','payments/portal',$payables);
+$payables_table = new core_datatable('receivables','payments/receivables',$payables);
 $payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('receivables'),'',''),false,'4%',core_ui::check_all('receivables','payment_id'),' ',' '));
 $payables_table->add(new core_datacolumn('payable_id','#ID',false,'5%','{payable_id}','{payable_id}','{payable_id}'));
 $payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
