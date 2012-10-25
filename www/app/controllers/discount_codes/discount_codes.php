@@ -34,6 +34,11 @@ class core_controller_discount_codes extends core_controller
 		$code['start_date'] = core_format::parse_date($core->data['start_date']).' 12:00:00';
 		$code['end_date'] = core_format::parse_date($core->data['end_date']).' 12:00:00';
 		$code['discount_amount'] = (-1 * $code['discount_amount']);
+		
+		if(count($core->session['domains_by_orgtype_id'][2]) == 1)
+		{
+			$code['domain_id'] = $core->session['domains_by_orgtype_id'][2][0];
+		}
 		$code->save('discForm');		
 		core_ui::notification($core->i18n('messages:generic_saved','discount code'),false,($core->data['do_redirect'] != 1));
 		if($core->data['do_redirect'] == 1)
