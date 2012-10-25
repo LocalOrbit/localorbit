@@ -11,6 +11,8 @@ $payables_table->add(new core_datacolumn('description','Description',true,'19%',
 $payables_table->add(new core_datacolumn('payable_amount','Amount',true,'19%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
 $payables_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
 $payables_table->columns[1]->autoformat='date-short';
+$payables_table->columns[5]->autoformat='price';
+$payables_table->columns[6]->autoformat='price';
 
 $payables_table->add_filter(new core_datatable_filter('to_org_id'));
 $payables_table->filter_html .= core_datatable_filter::make_select(

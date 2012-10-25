@@ -10,6 +10,9 @@ $payables_table->add(new core_datacolumn(null,'Organization',false,'19%','{org_n
 //$payables_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
 $payables_table->add(new core_datacolumn(null,'Receivables',false,'19%',							'{in_amount}','{in_amount}','{in_amount}'));
 $payables_table->add(new core_datacolumn(null,'Payables',false,'19%',			'{out_amount}','{out_amount}','{out_amount}'));
+
+$payables_table->columns[1]->autoformat='price';
+$payables_table->columns[2]->autoformat='price';
 //$payables_table->columns[1]->autoformat='date-short';
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">

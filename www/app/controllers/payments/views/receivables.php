@@ -12,6 +12,7 @@ $payables_table->add(new core_datacolumn('payable_amount','Amount',false,'19%',	
 $payables_table->add(new core_datacolumn('invoice_status','Invoice Status',false,'19%',							'{invoice_status}','{invoice_status}','{invoice_status}'));
 $payables_table->add(new core_datacolumn('last_sent','Last Sent',false,'19%',							'{last_sent}','{last_sent}','{last_sent}'));
 $payables_table->columns[2]->autoformat='date-short';
+$payables_table->columns[6]->autoformat='price';
 $payables_table->columns[8]->autoformat='date-short';
 
 $payables_table->add_filter(new core_datatable_filter('to_domain_id'));

@@ -9,6 +9,8 @@ $invoices_table->add(new core_datacolumn('description_html','Description',true,'
 $invoices_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount}','{amount}','{amount}'));
 $invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
 $invoices_table->columns[0]->autoformat='date-short';
+$invoices_table->columns[4]->autoformat='price';
+$invoices_table->columns[5]->autoformat='price';
 
 $invoices_table->add_filter(new core_datatable_filter('from_org_id'));
 $invoices_table->filter_html .= core_datatable_filter::make_select(

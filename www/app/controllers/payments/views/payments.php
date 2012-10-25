@@ -11,6 +11,7 @@ $payments_table->add(new core_datacolumn('description','Description',true,'19%',
 $payments_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount}','{amount}','{amount}'));
 //$invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
 $payments_table->columns[1]->autoformat='date-short';
+$payments_table->columns[5]->autoformat='price';
 
 $payments_table->add_filter(new core_datatable_filter('to_org_id'));
 $payments_table->filter_html .= core_datatable_filter::make_select(

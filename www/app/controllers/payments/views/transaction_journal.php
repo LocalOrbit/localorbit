@@ -10,8 +10,8 @@ $payments_table->add(new core_datacolumn('creation_date','Date',true,'19%','{cre
 $payments_table->add(new core_datacolumn('org_name','Organization',true,'19%','{org_name}','{org_name}','{org_name}'));
 $payments_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
 $payments_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
+$payments_table->columns[1]->autoformat='price';
 $payments_table->columns[2]->autoformat='date-short';
-
 /*
 $payments_table->add_filter(new core_datatable_filter('to_org_id'));
 $payments_table->filter_html .= core_datatable_filter::make_select(
