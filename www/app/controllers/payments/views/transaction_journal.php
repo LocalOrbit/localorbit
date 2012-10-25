@@ -8,6 +8,7 @@ $payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('
 $payments_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount_value}','{amount_value}','{amount_value}'));
 $payments_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
 $payments_table->add(new core_datacolumn('org_name','Organization',true,'19%','{org_name}','{org_name}','{org_name}'));
+$payments_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
 $payments_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
 $payments_table->columns[2]->autoformat='date-short';
 

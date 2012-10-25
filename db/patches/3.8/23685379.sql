@@ -194,6 +194,10 @@ CREATE VIEW v_invoices AS
 	o1.name as from_org_name,
 	iv.to_org_id,
 	o2.name as to_org_name,
+	from_org_domains.domain_id as from_domain_id,
+	from_org_domains.name as from_domain_name,
+	to_org_domains.domain_id as to_domain_id,
+	to_org_domains.name as to_domain_name,
 	
 	(
 		select if(sum(xip.amount_paid) is null,0,sum(xip.amount_paid))
@@ -225,6 +229,10 @@ CREATE VIEW v_invoices AS
 	from invoices iv
 	
 	inner join organizations o1 on iv.from_org_id=o1.org_id
-	inner join organizations o2 on iv.to_org_id=o2.org_id;
+	inner join organizations o2 on iv.to_org_id=o2.org_id
+    left join organizations_to_domains from_otd on iv.from_org_id = from_otd.org_id and from_otd.is_home = 1
+    left join organizations_to_domains to_otd on iv.to_org_id = to_otd.org_id and to_otd.is_home = 1
+    left join domains from_org_domains on from_otd.domain_id = from_org_domains.domain_id
+    left join domains to_org_domains on to_otd.domain_id = to_org_domains.domain_id;
 
 select * from v_invoices;

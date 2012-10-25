@@ -3,7 +3,7 @@ $invoices = core::model('v_invoices')->collection()->filter('to_org_id' , $core-
 $invoices->add_formatter('payable_info');
 $invoices_table = new core_datatable('invoices','payments/portal',$invoices);
 $invoices_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-//$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
+$invoices_table->add(new core_datacolumn('from_domain_name','Hub',true,'19%','{from_domain_name}','{from_domain_name}','{from_domain_name}'));
 $invoices_table->add(new core_datacolumn('from_org_name','Organization',true,'19%','{from_org_name}','{from_org_name}','{from_org_name}'));
 $invoices_table->add(new core_datacolumn('description_html','Description',true,'19%',			'{description_html}','{description}','{description}'));
 $invoices_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount}','{amount}','{amount}'));

@@ -5,7 +5,7 @@ $payables->add_formatter('payable_desc');
 $payables_table = new core_datatable('payables','payments/portal',$payables);
 $payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
 $payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-//$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
+$payables_table->add(new core_datacolumn('from_domain_name','Hub',true,'19%','{from_domain_name}','{from_domain_name}','{from_domain_name}'));
 $payables_table->add(new core_datacolumn('to_org_name','Organization',true,'19%','{to_org_name}','{to_org_name}','{to_org_name}'));
 $payables_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
 $payables_table->add(new core_datacolumn('payable_amount','Amount',true,'19%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
@@ -23,6 +23,7 @@ $payables_table->filter_html .= core_datatable_filter::make_select(
 	'Show from all buyers',
 	'width: 270px;'
 );
+
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 <?php

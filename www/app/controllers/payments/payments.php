@@ -10,11 +10,13 @@ function org_amount ($data) {
    $amount_field = isset($data['amount'])?'amount':'amount_due';
    if ($data['to_org_id'] == $core->session['org_id']) {
       $data['org_name'] = $data['from_org_name'];
+      $data['hub_name'] = $data['from_domain_name'];
       $sign = 1;
       $data['in_amount'] = $data[$amount_field];
       $data['out_amount'] = 0;
    } else {
       $data['org_name'] = $data['to_org_name'];
+      $data['hub_name'] = $data['to_domain_name'];
       $sign = -1;
       $data['in_amount'] = 0;
       $data['out_amount'] = $data[$amount_field];

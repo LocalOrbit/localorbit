@@ -3,17 +3,28 @@ $payables = core::model('v_payables')->collection()->filter('to_org_id' , $core-
 $payables->add_formatter('payable_desc');
 $payables_table = new core_datatable('receivables','payments/portal',$payables);
 $payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('receivables'),'',''),false,'4%',core_ui::check_all('receivables','payment_id'),' ',' '));
-$payables_table->add(new core_datacolumn('payable_id','#ID',true,'5%','{payable_id}','{payable_id}','{payable_id}'));
+$payables_table->add(new core_datacolumn('payable_id','#ID',false,'5%','{payable_id}','{payable_id}','{payable_id}'));
 $payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-//$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
-$payables_table->add(new core_datacolumn('from_org_name','Organization',true,'19%','{from_org_name}','{from_org_name}','{from_org_name}'));
-$payables_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
-$payables_table->add(new core_datacolumn('payable_amount','Amount',true,'19%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
-$payables_table->add(new core_datacolumn('invoice_status','Invoice Status',true,'19%',							'{invoice_status}','{invoice_status}','{invoice_status}'));
-$payables_table->add(new core_datacolumn('last_sent','Last Sent',true,'19%',							'{last_sent}','{last_sent}','{last_sent}'));
+$payables_table->add(new core_datacolumn('hub_name','Hub',false,'19%','{to_domain_name}','{to_domain_name}','{to_domain_name}'));
+$payables_table->add(new core_datacolumn('from_org_name','Organization',false,'19%','{from_org_name}','{from_org_name}','{from_org_name}'));
+$payables_table->add(new core_datacolumn('description','Description',false,'19%',			'{description_html}','{description}','{description}'));
+$payables_table->add(new core_datacolumn('payable_amount','Amount',false,'19%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
+$payables_table->add(new core_datacolumn('invoice_status','Invoice Status',false,'19%',							'{invoice_status}','{invoice_status}','{invoice_status}'));
+$payables_table->add(new core_datacolumn('last_sent','Last Sent',false,'19%',							'{last_sent}','{last_sent}','{last_sent}'));
 $payables_table->columns[2]->autoformat='date-short';
-$payables_table->columns[7]->autoformat='date-short';
+$payables_table->columns[8]->autoformat='date-short';
 
+$payables_table->add_filter(new core_datatable_filter('to_domain_id'));
+$payables_table->filter_html .= core_datatable_filter::make_select(
+	'receivables',
+	'to_domain_id',
+	$items->filter_states['receivables__filter__to_domain_id'],
+	new core_collection('select distinct to_domain_id, to_domain_name from v_payables where to_org_id = ' . $core->session['org_id'] . ';'),
+	'to_domain_id',
+	'to_domain_name',
+	'Filter by Hub: All Hubs',
+	'width: 270px;'
+);
 
 $payables_table->add_filter(new core_datatable_filter('from_org_id'));
 $payables_table->filter_html .= core_datatable_filter::make_select(
