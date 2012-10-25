@@ -16,7 +16,7 @@ $values['link'] = core::process_command(
 	$values['user']
 );
 
-
+$values['hub_name'] = core_db::col('select name from domains where domain_id='.$values['domain_id'],'name');
 
 
 $body  = $this->email_start();
