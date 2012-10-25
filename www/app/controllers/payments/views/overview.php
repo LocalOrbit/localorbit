@@ -3,16 +3,17 @@ global $core;
 $payables = core::model('v_payables')->collection()->filter('(from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')')->filter('is_invoiced', '0');
 $payables->add_formatter('payable_desc');
 $payables->add_formatter('org_amount');
-$payables_table = new core_datatable('overview','payments/portal',$payables);
+$payables_table = new core_datatable('overview','payments/overview',$payables);
 //$payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
 //$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
 $payables_table->add(new core_datacolumn(null,'Organization',false,'19%','{org_name}','{org_name}','{org_name}'));
+$payables_table->add(new core_datacolumn(null,'Hub',false,'19%','{hub_name}','{hub_name}','{hub_name}'));
 //$payables_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
 $payables_table->add(new core_datacolumn(null,'Receivables',false,'19%',							'{in_amount}','{in_amount}','{in_amount}'));
 $payables_table->add(new core_datacolumn(null,'Payables',false,'19%',			'{out_amount}','{out_amount}','{out_amount}'));
 
-$payables_table->columns[1]->autoformat='price';
 $payables_table->columns[2]->autoformat='price';
+$payables_table->columns[3]->autoformat='price';
 //$payables_table->columns[1]->autoformat='date-short';
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
