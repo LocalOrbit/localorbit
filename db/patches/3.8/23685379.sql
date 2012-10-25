@@ -114,6 +114,14 @@ CREATE VIEW v_payables AS
 	o1.name as from_org_name,
 	p.to_org_id,
 	o2.name as to_org_name,
+	from_org_domains.domain_id as from_domain_id,
+	from_org_domains.name as from_domain_name,
+	to_org_domains.domain_id as to_domain_id,
+	to_org_domains.name as to_domain_name,
+	order_domains.domain_id as order_domain_id,
+	order_domains.name as order_domain_name,
+	fulfillment_order_domains.domain_id as fulfillment_order_domain_id,
+	fulfillment_order_domains.name as fulfillment_order_domain_name,
 	pt.payable_type,
 	lo.lo3_order_nbr as buyer_order_identifier,
 	lfo.lo3_order_nbr as seller_order_identifier,
@@ -145,7 +153,13 @@ CREATE VIEW v_payables AS
 	
 	left join invoices iv on iv.invoice_id=p.invoice_id
 	left join lo_order lo on p.parent_obj_id=lo.lo_oid
-	left join lo_fulfillment_order lfo on p.parent_obj_id=lfo.lo_foid;
+	left join lo_fulfillment_order lfo on p.parent_obj_id=lfo.lo_foid
+    left join organizations_to_domains from_otd on p.from_org_id = from_otd.org_id and from_otd.is_home = 1
+    left join organizations_to_domains to_otd on p.to_org_id = to_otd.org_id and to_otd.is_home = 1
+    left join domains order_domains on lo.domain_id = order_domains.domain_id
+    left join domains fulfillment_order_domains on lfo.domain_id = fulfillment_order_domains.domain_id
+    left join domains from_org_domains on from_otd.domain_id = from_org_domains.domain_id
+    left join domains to_org_domains on to_otd.domain_id = to_org_domains.domain_id;
 	
 select * from v_payables;
 
