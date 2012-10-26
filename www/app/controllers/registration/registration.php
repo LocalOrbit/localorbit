@@ -173,7 +173,7 @@ class core_controller_registration extends core_controller
 		$user['password']   = core_crypto::encode_password($core->data['password']);
 		$user['org_id']     = $org['org_id'];
 		$user['created_at'] = core_format::date($core->config['time'],'db');
-		$user['is_active']  = 0;
+		$user['is_active']  = intval($domain['autoactivate_organization']);
 
 		$user->save();
 		core::log('user created: '.$user['entity_id']);
@@ -222,7 +222,9 @@ class core_controller_registration extends core_controller
 				$core->data['domain_id']
 			);
 		}
-		core::process_command('emails/new_registrant',false,
+		$email = 'emails/new_registrant';
+		$email .= (intval($domain['autoactivate_organization']) == 1)?'_auto_activate':'';
+		core::process_command($email,false,
 			$core->data['email'],
 			$user['first_name'],
 			$this->generate_verify_link($domain['hostname'],$user['entity_id']),
