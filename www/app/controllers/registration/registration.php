@@ -222,9 +222,7 @@ class core_controller_registration extends core_controller
 				$core->data['domain_id']
 			);
 		}
-		$email = 'emails/new_registrant';
-		$email .= (intval($domain['autoactivate_organization']) == 1)?'_auto_activate':'';
-		core::process_command($email,false,
+		core::process_command('emails/new_registrant',false,
 			$core->data['email'],
 			$user['first_name'],
 			$this->generate_verify_link($domain['hostname'],$user['entity_id']),
