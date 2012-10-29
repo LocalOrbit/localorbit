@@ -7,7 +7,7 @@ class core_controller_payments extends core_controller
 function org_amount ($data) {
    global $core;
 
-   $amount_field = isset($data['amount'])?'amount':'amount_due';
+   $amount_field = isset($data['amount'])?'amount':(isset($data['amount_due'])?'amount_due':'payable_amount');
    if ($data['to_org_id'] == $core->session['org_id']) {
       $data['org_name'] = $data['from_org_name'];
       $data['hub_name'] = $data['from_domain_name'];

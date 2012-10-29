@@ -1,6 +1,7 @@
 <?
 global $core;
-$payables = core::model('v_payables')->collection()->filter('(from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')')->filter('is_invoiced', '0');
+//$payables = core::model('v_payables')->collection()->filter('(from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')')->filter('is_invoicedd', '0');
+$payables = new core_collection('select v_payables.*,unix_timestamp(v_payables.creation_date) as creation_date,unix_timestamp(v_payables.last_sent) as last_sent from v_payables where (from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ') and is_invoiced=0');
 $payables->add_formatter('payable_desc');
 $payables->add_formatter('org_amount');
 $payables_table = new core_datatable('overview','payments/overview',$payables);
