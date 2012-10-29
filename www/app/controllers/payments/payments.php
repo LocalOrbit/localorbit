@@ -12,14 +12,14 @@ function org_amount ($data) {
       $data['org_name'] = $data['from_org_name'];
       $data['hub_name'] = $data['from_domain_name'];
       $sign = 1;
-      $data['in_amount'] = $data[$amount_field];
-      $data['out_amount'] = 0;
+      $data['in_amount'] = core_format::price($data[$amount_field], false);
+      $data['out_amount'] = core_format::price(0, false);
    } else {
       $data['org_name'] = $data['to_org_name'];
       $data['hub_name'] = $data['to_domain_name'];
       $sign = -1;
-      $data['in_amount'] = 0;
-      $data['out_amount'] = $data[$amount_field];
+      $data['in_amount'] = core_format::price(0, false);
+      $data['out_amount'] = core_format::price($data[$amount_field], false);
    }
 
    $data['amount_value'] = $sign * $data[$amount_field ];
