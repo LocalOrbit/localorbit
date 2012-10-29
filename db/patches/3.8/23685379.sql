@@ -139,7 +139,7 @@ CREATE VIEW v_payables AS
 	) as amount_due,
 
 	(
-		select max(send_date) from invoice_send_dates
+		select UNIX_TIMESTAMP(max(send_date)) from invoice_send_dates
 		where invoice_send_dates.invoice_id = p.invoice_id
 	) as last_sent
 	
