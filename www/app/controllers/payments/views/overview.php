@@ -1,21 +1,36 @@
 <?
 global $core;
-//$payables = core::model('v_payables')->collection()->filter('(from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')')->filter('is_invoicedd', '0');
 $payables = new core_collection('select v_payables.*,unix_timestamp(v_payables.creation_date) as creation_date,unix_timestamp(v_payables.last_sent) as last_sent from v_payables where (from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ') and is_invoiced=0');
 $payables->add_formatter('payable_desc');
 $payables->add_formatter('org_amount');
 $payables_table = new core_datatable('overview','payments/overview',$payables);
-//$payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-//$invoices_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
 $payables_table->add(new core_datacolumn(null,'Organization',false,'19%','{org_name}','{org_name}','{org_name}'));
 $payables_table->add(new core_datacolumn(null,'Hub',false,'19%','{hub_name}','{hub_name}','{hub_name}'));
-//$payables_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
 $payables_table->add(new core_datacolumn(null,'Receivables',false,'19%',							'{in_amount}','{in_amount}','{in_amount}'));
 $payables_table->add(new core_datacolumn(null,'Payables',false,'19%',			'{out_amount}','{out_amount}','{out_amount}'));
 
-$payables_table->columns[2]->autoformat='price';
-$payables_table->columns[3]->autoformat='price';
-//$payables_table->columns[1]->autoformat='date-short';
+$receivables_ov = core::model('v_invoices')->add_custom_field('DATEDIFF(due_date, NOW()) as days_since')->collection()->filter('to_org_id', $core->session['org_id'])->load()->to_array();
+$payables_ov = core::model('v_invoices')->add_custom_field('DATEDIFF(due_date, NOW()) as days_since')->collection()->filter('from_org_id', $core->session['org_id'])->load()->to_array();
+
+$intervals = array('Overdue' => 0, 'Today' => 1, 'Next 7 days' => 7, 'Next 30 days' => 30);
+
+$receivables_intervals = array_fill_keys(array_values($intervals), 0);
+$payables_intervals = array_fill_keys(array_values($intervals), 0);
+
+foreach ($intervals as $val) {
+	for($index = 0; $index < count($receivables_ov); $index++) {
+		if ($receivables_ov[$index]['days_since'] < $val) {
+			$receivables_intervals[$val] += $receivables_ov[$index]['amount_due'];
+		}
+
+	}
+	for($index = 0; $index < count($payables_ov); $index++) {
+		if ($payables_ov[$index]['days_since'] < $val) {
+			$payables_intervals[$val] += $payables_ov[$index]['amount_due'];
+		}
+
+	}
+}
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<table>
@@ -24,10 +39,20 @@ $payables_table->columns[3]->autoformat='price';
 			<td>
 				<h2>Payables</h2>
 				<table class="form">
+					<?
+					foreach ($intervals as $key=>$value) {
+						echo core_form::value($key,
+							(($value<=0)?'<div class="error">':'').
+							core_format::price($payables_intervals[$val], false)
+							.(($value<=0)?'</div>':''));
+					}
+?>
+<!--
 					<?=core_form::value('Overdue:','<div class="error">$10.00</div>')?>
 					<?=core_form::value('Today:','$12.00')?>
 					<?=core_form::value('Next 7 days:','$19.00')?>
 					<?=core_form::value('Next 30 days:','$32.00')?>
+-->
 				</table>
 			</td>
 			<td>&nbsp;</td>
@@ -35,10 +60,20 @@ $payables_table->columns[3]->autoformat='price';
 				<? if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1){?>
 				<h2>Receivables</h2>
 				<table class="form">
+<?
+					foreach ($intervals as $key=>$value) {
+						echo core_form::value($key,
+							(($value<=0)?'<div class="error">':'').
+							core_format::price($receivables_intervals[$val], false)
+							.(($value<=0)?'</div>':''));
+					}
+?>
+<!--
 					<?=core_form::value('Overdue:','<div class="error">$10.00</div>')?>
 					<?=core_form::value('Today:','$12.00')?>
 					<?=core_form::value('Next 7 days:','$19.00')?>
 					<?=core_form::value('Next 30 days:','$32.00')?>
+-->
 				</table>
 				<?}?>
 			</td>
