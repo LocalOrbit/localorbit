@@ -22,7 +22,7 @@ function org_amount ($data) {
       $data['out_amount'] = core_format::price($data[$amount_field], false);
    }
 
-   $data['amount_value'] = $sign * $data[$amount_field ];
+   $data['amount_value'] = core_format::price($sign * $data[$amount_field ], false);
 
    return $data;
 }
