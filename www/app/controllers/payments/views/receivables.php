@@ -4,12 +4,12 @@ $payables->add_formatter('payable_desc');
 $payables_table = new core_datatable('receivables','payments/receivables',$payables);
 $payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('receivables'),'',''),false,'4%',core_ui::check_all('receivables','payment_id'),' ',' '));
 $payables_table->add(new core_datacolumn('payable_id','#ID',false,'5%','{payable_id}','{payable_id}','{payable_id}'));
-$payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-$payables_table->add(new core_datacolumn('hub_name','Hub',false,'19%','{to_domain_name}','{to_domain_name}','{to_domain_name}'));
-$payables_table->add(new core_datacolumn('from_org_name','Organization',false,'19%','{from_org_name}','{from_org_name}','{from_org_name}'));
+$payables_table->add(new core_datacolumn('creation_date','Date',true,'12%','{creation_date}','{creation_date}','{creation_date}'));
+$payables_table->add(new core_datacolumn('hub_name','Hub',false,'12%','{to_domain_name}','{to_domain_name}','{to_domain_name}'));
+$payables_table->add(new core_datacolumn('from_org_name','Organization',false,'15%','{from_org_name}','{from_org_name}','{from_org_name}'));
 $payables_table->add(new core_datacolumn('description','Description',false,'19%',			'{description_html}','{description}','{description}'));
-$payables_table->add(new core_datacolumn('payable_amount','Amount',false,'19%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
-$payables_table->add(new core_datacolumn('invoice_status','Invoice Status',false,'19%',							'{invoice_status}','{invoice_status}','{invoice_status}'));
+$payables_table->add(new core_datacolumn('payable_amount','Amount',false,'10%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
+$payables_table->add(new core_datacolumn('invoice_status','Status',false,'10%',							'{invoice_status}','{invoice_status}','{invoice_status}'));
 $payables_table->add(new core_datacolumn('last_sent','Last Sent',false,'19%',							'{last_sent}','{last_sent}','{last_sent}'));
 $payables_table->columns[2]->autoformat='date-short';
 $payables_table->columns[6]->autoformat='price';
@@ -35,7 +35,7 @@ $payables_table->filter_html .= core_datatable_filter::make_select(
 	new core_collection('select distinct from_org_id, from_org_name from v_payables where to_org_id = ' . $core->session['org_id'] . ';'),
 	'from_org_id',
 	'from_org_name',
-	'Show from all buyers',
+	'Show from all organizations',
 	'width: 270px;'
 );
 ?>

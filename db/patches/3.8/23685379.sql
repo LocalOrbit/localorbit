@@ -33,8 +33,6 @@ insert into payables(domain_id,payable_type_id,parent_obj_id,from_org_id,to_org_
 values (26,1,2854,1086,1,20,true,1);
 insert into payables(domain_id,payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable,invoice_id)
 values (26,1,2853,1086,1,10,true,2);
-insert into payables(domain_id,payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable,invoice_id)
-values (26,1,2853,1086,1,10,true,2);
 insert into payables(domain_id,payable_type_id,parent_obj_id,from_org_id,to_org_id,amount,invoicable)
 values (26,1,2849,1086,1,8,false);
 
@@ -87,7 +85,7 @@ insert into invoice_send_dates(invoice_id,send_date)
 values (1,'2012-10-21 12:00:00');
 insert into invoice_send_dates(invoice_id,send_date)
 values (1,'2012-10-25 12:00:00');
--- insert into invoice_send_dates(invoice_id,send_date) values (2,'2012-10-26 12:00:00');
+insert into invoice_send_dates(invoice_id,send_date) values (2,'2012-10-26 12:00:00');
 
 create table payment_methods (
 	payment_method_id int(11) unsigned not null auto_increment PRIMARY KEY,
@@ -127,16 +125,17 @@ CREATE VIEW v_payables AS
 	lfo.lo3_order_nbr as seller_order_identifier,
 	p.description,
 	
-	(
+	
+	COALESCE((
 		select sum(xip.amount_paid) 
 		from x_invoices_payments xip
-		where xip.invoice_id=iv.invoice_id
+		where xip.invoice_id=iv.invoice_id), 0.0
 	) as amount_paid,
 	
-	(
-		select sum(xip.amount_paid) - p.amount 
+	COALESCE(
+		(select sum(xip.amount_paid) - p.amount 
 		from x_invoices_payments xip
-		where xip.invoice_id=iv.invoice_id
+		where xip.invoice_id=iv.invoice_id), p.amount
 	) as amount_due,
 
 	(

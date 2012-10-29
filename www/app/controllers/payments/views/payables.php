@@ -22,7 +22,7 @@ $payables_table->filter_html .= core_datatable_filter::make_select(
 	new core_collection('select distinct to_org_id, to_org_name from v_payables where from_org_id = ' . $core->session['org_id'] . ';'),
 	'to_org_id',
 	'to_org_name',
-	'Show from all buyers',
+	'Show from all organizations',
 	'width: 270px;'
 );
 
