@@ -1,6 +1,7 @@
 <?
 global $core;
-$payments = core::model('v_payments')->collection()->filter('(from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')');
+//$payments = core::model('v_payments')->collection()->filter('(from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')');
+$payments = new core_collection('select v_payments.*,unix_timestamp(v_payments.creation_date) as creation_date from v_payments where (from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')');
 $payments->add_formatter('payable_info');
 $payments->add_formatter('org_amount');
 $payments_table = new core_datatable('transactions','payments/transactions',$payments);
