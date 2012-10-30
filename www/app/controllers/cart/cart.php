@@ -218,6 +218,8 @@ class core_controller_cart extends core_controller
 			$new_item['producedat_delivery_instructions'] = $product['producedat_delivery_instructions'];
 			$new_item['producedat_longitude'] = $product['producedat_longitude'];
 			$new_item['producedat_latitude'] = $product['producedat_latitude'];	
+			$new_item->find_next_possible_delivery($new_item['lo_oid'], array());
+core::log(print_r($new_item, true));
 			$new_item->save();
 		}
 		
