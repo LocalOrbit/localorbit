@@ -1,4 +1,5 @@
 <?
+echo core_ui::date_picker_blur_setup();
 function misc_lots_formatting($data)
 {
 	#echo('formatted: '.($data['expires_on'].'/' == '/').'<br />');
@@ -18,7 +19,7 @@ $lots->next();
 $lot = $lots->current();
 $style = '';
 
-# only show the simple view if there is only one lot, AND that lot only has 
+# only show the simple view if there is only one lot, AND that lot only has
 # one field set (the qty)
 if($lots->__num_rows == 1 && $lot['good_from'] == 0 && $lot['expires_on'] == 0 && $lot['lot_id'] == '')
 {
@@ -50,14 +51,14 @@ else
 	<?=core_ui::checkdiv('sell_oldest_first','Sell from oldest lot first',true)?>
 	<?
 
-	
+
 	$inv = new core_datatable('inventory','products/inventory_form?prod_id='.$core->data['prod_id'],$lots);
 	$inv->add(new core_datacolumn('lot_id',core_ui::check_all('inventory'),false,'4%',core_ui::check_all('inventory','inv_id')));
 	$inv->add(new core_datacolumn('lot_id','Lot #',true,'11%','<a href="Javascript:product.editLot(\'{inv_id}\',\'{lot_id}\',\'{good_from}\',\'{expires_on}\',\'{qty}\');">{lot_id}</a>'));
 	$inv->add(new core_datacolumn('good_from','Good from',true,'30%','<a href="Javascript:product.editLot(\'{inv_id}\',\'{lot_id}\',\'{good_from}\',\'{expires_on}\',\'{qty}\');">{good_from}</a>'));
 	$inv->add(new core_datacolumn('expires_on','Expires on',true,'30%','<a href="Javascript:product.editLot(\'{inv_id}\',\'{lot_id}\',\'{good_from}\',\'{expires_on}\',\'{qty}\');">{expires_on}</a>'));
 	$inv->add(new core_datacolumn('qty','Qty',true,'25%','<a href="Javascript:product.editLot(\'{inv_id}\',\'{lot_id}\',\'{good_from}\',\'{expires_on}\',\'{qty}\');">{qty}</a>'));
-	
+
 	$inv->size = (-1);
 	$inv->display_filter_resizer = false;
 	$inv->render_page_select = false;

@@ -6,7 +6,7 @@ class core_ui
 	{
 		global $core;
 		#content_css_url: "css/loader.php?time='.$core->config['microtime'].'",
-			
+
 		core::js('
 		$(".rte").rte({
 			'.(($stylesheet != '')?'content_css_url:\''.$stylesheet.'\',':'').'
@@ -16,14 +16,14 @@ class core_ui
 			width: '.$width.'
 		});');
 	}
-	
+
 	public static function alert($string)
 	{
 		global $core;
 		core::js("alert('".$string."');");
 		core::deinit();
 	}
-	
+
 	public static function notification($string,$clear_response=false,$deinit=true)
 	{
 		global $core;
@@ -33,7 +33,7 @@ class core_ui
 		if($deinit)
 			core::deinit();
 	}
-	
+
 	public static function validate_error($string,$form='',$field='none')
 	{
 		core::js('core.validateForm(\''.$form.'\','.json_encode(
@@ -48,7 +48,7 @@ class core_ui
 		///core::js('core.validatePopup(\''.addslashes($string).'<br />\');');
 		core::deinit();
 	}
-	
+
 	public static function error($string)
 	{
 		global $core;
@@ -57,7 +57,7 @@ class core_ui
 		core::js("core.ui.error('".$string."');");
 		core::deinit();
 	}
-	
+
 	public static function popup($icon,$title,$content,$button_set)
 	{
 		global $core;
@@ -66,16 +66,16 @@ class core_ui
 		core::js("core.ui.popup('".$icon."','".$title."','".addslashes($content)."','".$button_set."');");
 		core::deinit();
 	}
-	
+
 	public static function map($id,$width,$height,$zoom)
 	{
-		
+
 		core::js('
 			core.ui.maps[\''.$id.'\'] = new google.maps.Map(document.getElementById("'.$id.'"),{zoom:'.intval($zoom).', mapTypeId: google.maps.MapTypeId.ROADMAP});
 		');
 		return '<div class="google_map" id="'.$id.'" style="width: '.$width.';height: '.$height.';"></div>';
 	}
-	
+
 	public static function map_center($id,$address,$long=null)
 	{
 		if(!is_null($long))
@@ -88,7 +88,7 @@ class core_ui
 			core::js('core.ui.mapCenterByAddress(\''.$id.'\',\''.core_format::remove_newlines($address).'\');');
 		}
 	}
-	
+
 	# this function can work in two different ways:
 	# pass id,lat,long,content. In this case you need 4 parameters
 	# pass id,address,content. In this case, you only need 3 parameters. Avoid this if possible
@@ -111,33 +111,33 @@ class core_ui
 		}
 		core::js($js);
 	}
-	
+
 	public static function checkdiv($name,$text,$checked=false,$onclick='',$clickable=true)
 	{
 		$html = '<div id="checkdiv_'.$name.'" class="checkdiv';
 		if($checked)
-			$html .= ' checkdiv_checked';	
-		$html .= '"';		
-		
+			$html .= ' checkdiv_checked';
+		$html .= '"';
+
 		if($clickable)
 			$html .= ' onclick="core.ui.checkDiv(\''.$name.'\');'.$onclick.'"';
 
 		$html .= '>';
-		
+
 		$html .= $text.'</div>';
 		$html .= '<input type="hidden" id="checkdiv_'.$name.'_value"';
 		$html .= ' name="'.$name.'" value="'.(($checked)?1:0).'" />';
 		core::js('core.preloadImages(\'default/checkdiv_checked.png\',\'default/checkdiv_unchecked.png\');');
 		return $html;
 	}
-	
+
 	public static function radiodiv($name,$text,$checked=false,$radiogroup='',$allow_radio_unselect=false,$onclick='')
 	{
 		$html = '<div id="radiodiv_'.$name.'" class="radiodiv';
 		if($radiogroup != '')
 			$html .= ' radiodiv_group_'.$radiogroup;
 		if($checked)
-			$html .= ' radiodiv_checked';			
+			$html .= ' radiodiv_checked';
 		$html .= '" onclick="core.ui.radioDiv(\''.$name.'\',\''.$radiogroup.'\','.(($allow_radio_unselect)?1:0).');'.$onclick.'">';
 		$html .= $text.'</div>';
 		$html .= '<input type="hidden" id="radiodiv_'.$name.'_value"';
@@ -145,12 +145,12 @@ class core_ui
 		core::js('core.preloadImages(\'default/radiodiv_checked.png\',\'default/radiodiv_unchecked.png\');');
 		return $html;
 	}
-	
+
 	public static function radio_value($prefix,$values=array())
 	{
 		global $core;
-		
-		# loop through the possible values. if one of them 
+
+		# loop through the possible values. if one of them
 		# is in the submitted data, return that value.
 		foreach($values as $value)
 		{
@@ -163,7 +163,7 @@ class core_ui
 		}
 		return null;
 	}
-	
+
 	public static function time_picker($field_name,$value=0,$start=0,$end=24,$increment='quarter',$onchange_js='')
 	{
 		global $core;
@@ -173,17 +173,17 @@ class core_ui
 			$out .= ' onchange="'.$onchange.'"';
 		}
 		$out .= '>';
-		
+
 		for ($i = $start; $i < $end; $i++)
 		{
 			$suffix = ($i >= 12)?'pm':'am';
 			$time = ($i > 12)?($i - 12):$i;
 			if($time == 0)
 				$time = '12';
-			
+
 			switch($increment)
 			{
-				
+
 				case 'quarter':
 					$out .= '<option value="'.$i.'">'.$time.':00 '.$suffix.'</option>';
 					$out .= '<option value="'.$i.'.25">'.$time.':15 '.$suffix.'</option>';
@@ -199,29 +199,45 @@ class core_ui
 					break;
 			}
 		}
-		
-		
+
+
 		$out .= '</select>';
-		
+
 		return $out;
 	}
-	
+
+	public static function date_picker_blur_setup ()
+	{
+		return '<script type="text/javascript">
+		$(document).ready(function ()  {
+			$(document).mouseup(function (e)
+			{
+			    var container = $("#datePicker");
+			    if (container.has(e.target).length === 0)
+			    {
+			      container.hide();
+			    }
+			});
+		});
+		</script>';
+	}
+
 	public static function date_picker($field_name_id,$value='',$onchange_js='')
 	{
 		global $core;
-		
+
 		if(is_numeric($value))
 		{
 			$value = core_format::date($value,'short');
 		}
-		
+
 		if(is_numeric($value) && $value < 0)
 			$value = '';
-			
+
 		core::js('$(\'#'.$field_name_id.'\').datePicker('.$onchange_js.');');
 		return '<input type="text" format="'.$core->config['formats']['dates']['jsshort'].'" class="datepicker" name="'.$field_name_id.'" id="'.$field_name_id.'" value="'.$value.'" />';
 	}
-	
+
 
 	public static function tab_switchers($tabset_name,$tab_list)
 	{
@@ -235,7 +251,7 @@ class core_ui
 		$html .= '</div>';
 		return $html;
 	}
-	
+
 	public static function tabset($name)
 	{
 		global $core;
@@ -246,12 +262,12 @@ class core_ui
 			core::js("$('#".$name."-s".$core->data['tabautoswitch_'.$name]."').click();");
 		}
 	}
-	
+
 	public static function load_library($type,$src)
 	{
 		core::js('core.loadLibrary(\''.$type.'\',\''.$src.'\');');
 	}
-	
+
 	public static function options($source,$current_value,$valuefield=null,$textfield=null)
 	{
 		$out = '';
@@ -279,7 +295,7 @@ class core_ui
 		}
 		return $out;
 	}
-	
+
 	public static function options_seq($type='',$value='',$start='',$end='',$prefix='',$suffix='')
 	{
 		$out = '';
@@ -292,12 +308,12 @@ class core_ui
 					$out .= ($i == $value)?' selected="selected"':'';
 					$out .= '>'.$prefix.$i.$suffix.'</option>';
 				}
-				
+
 				break;
 		}
 		return $out;
 	}
-	
+
 	public static function check_all($class_suffix,$id_col='')
 	{
 		# this is the header column, so setup the checkall box
@@ -311,18 +327,18 @@ class core_ui
 			return '<input type="checkbox" class="checkall_'.$class_suffix.'" name="checkall_'.$class_suffix.'_{'.$id_col.'}" />';
 		}
 	}
-	
-	
+
+
 	public function tagset_link($name,$value)
 	{
 		return '<span id="tagset_'.$name.'_'.$value.'" class="tagset_link" onclick="core.ui.tagSet.toggleFilter(\''.$name.'\',\''.$value.'\')">'.$value.'</span>';
 	}
-	
+
 	public function tagset_init($name,$mode='exclusive')
 	{
 		core::js('core.ui.tagSet.init(\''.$name.'\',\''.$mode.'\');');
 	}
-	
+
 	public function tagset_classes($name,$values=null,$do_class=true)
 	{
 		# we're setting the tagset attributes on an element
@@ -331,7 +347,7 @@ class core_ui
 		{
 			$classes .= ' tagset_'.$name.'_'.$value;
 		}
-		
+
 		if($do_class)
 		{
 			return ' class="'.$classes.'"';
