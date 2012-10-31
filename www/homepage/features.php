@@ -20,7 +20,7 @@
 			<div class="icon_list_item icon_list_item_radio_arrow" style="color: #000;">&nbsp;&nbsp;Multi-channel sales & marketing from a single dashboard</div>
 			<div class="icon_list_item icon_list_item_cart" style="cursor:pointer;" onclick="core.lo3.tourPopup(5);">&nbsp;&nbsp;Easy e-commerce & payment management services</div>
 			<div class="icon_list_item icon_list_item_graph" style="cursor:pointer;" onclick="core.lo3.tourPopup(4);">&nbsp;&nbsp;Business management tools - your back office in a box</div>
-			<div class="icon_list_item icon_list_item_smiley" style="cursor:pointer;" onclick="core.lo3.tourPopup(3);">&nbsp;&nbsp;Extraordinary customer service</div>
+			
 		</td>
 	</tr>
 </table>

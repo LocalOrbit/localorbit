@@ -37,10 +37,10 @@
 					<div class="slide">
 						<img src="/homepage/img/slideshow/slideshow-new-05.jpg" width="740" height="350" alt="Slide 2" />
 						<div class="caption">
-							I'm living for the day that someone <br />
-							starts a Local Orbit hub in Park Slope.
+							Local Orbit provides the best overall package in terms<br /> of product quality, service and cost effectiveness. 
+			
 							<br />
-							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Park Slope Parents Blog</span>
+							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Natasha Lantz, Marquette Food Hub</span>
 						</div>
 					</div>				
 					<div class="slide">
@@ -56,6 +56,7 @@
 						<img src="/homepage/img/slideshow/slideshow-new-07.jpg" width="740" height="350" alt="Slide 2" />
 						<div class="caption">
 							<div style="height:10px;overflow:hidden;"><br /></div>
+							
 							Local Orbit provides the information I need to minimize costs.
 							<br />
 							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Christine Quane, Detroit Eastern Market</span>

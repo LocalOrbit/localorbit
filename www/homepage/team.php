@@ -8,10 +8,10 @@
 		</td>
 		</td>
 		<td>
-			<h1>Meet the Local Orbit Team</h1>
-			Local Orbit is the creation of people very passionate about re-building local food systems. We know farmers don’t want to spend their days online, but we also know demand for access to local food is very high, rapidly growing and not going away. It’s our goal to serve every link in this food chain beautifully, by providing an elegant platform for multi-channel sales, streamlined purchasing and efficient business management. 
+			<h1>Management</h1>
+			Local Orbit is the creation of people who are passionate about re-building local food systems. We know farmers don’t want to spend their days online, but we also know demand for access to local food is very high, rapidly growing and not going away. It’s our goal to serve every link in this food chain beautifully, by providing an elegant platform for multi-channel sales, streamlined purchasing and efficient business management. 
 			<br />&nbsp;<br />
-			Our team brings an energetic mix of startup savvy, technical obsession and marketing prowess to the challenges ahead – with some down and dirty farm experience thrown in for good measure. 
+			Our team brings an energetic mix of startup savvy, technical obsession, marketing prowess and food business to its work to power the New Food Economy.
 			<br />&nbsp;<br />
 				
 			<h3>Erika Block</h3>
@@ -21,24 +21,28 @@
 			<br />
 			<p>Erika Block founded and ran an entrepreneurial arts organization for 12 years, overseeing programming, board development, marketing and financial management. She managed cross-sector non-profit, educational and commercial partnerships in the US, Great Britain and South Africa.  Erika also raised $2 million and led the renovation of a vacant building in Detroit into a theater, gallery and bar, working with vendors to source local food for events. Throughout her career, Erika has created collaborative environments that facilitate learning and action. </p>
 			<br />
-			<p>She is a 2011 PopTech Social Innovation Fellow.  Other awards include Crain’s Detroit Business 40 Under 40 and the GLEQ Spirit of Entrepreneurship Award.  Erika has a BGS from University of Michigan, an MFA from Columbia University, and did graduate work in Interactive Technology at New York University. She comes from a family of fruit peddlers, meat processors, restaurant owners and wholesalers.</p>
+			<p>She is a 2011 PopTech Social Innovation Fellow.  Other awards include Crain's Detroit Business 40 Under 40 and the GLEQ Spirit of Entrepreneurship Award.  Erika has a BGS from University of Michigan, an MFA from Columbia University, and did graduate work in Interactive Technology at New York University. She comes from a family of fruit peddlers, meat processors, restaurant owners and wholesalers.</p>
 			<br />
-			<p>Check out Erika’s <a href="http://poptech.org/erika_block">PopTech talk</a></p>
+			<p>Check out Erika's <a href="http://poptech.org/erika_block">PopTech talk</a></p>
 			<br /><br />
 
 			
 
-			<h3>Julie Mills</h3>
-			<p>Chief Technology Officer<br />
-			<a href="mailto:julie@localorb.it">julie@localorb.it</a><br />
+			<h3>Ragan Erickson</h3>
+			<p>Director of Customer Experience<br />
+			<a href="mailto:ragan@localorb.it">ragan@localorb.it</a><br />
 			</p>
 			<br />
-			<p>Julie Mills brings more than three decades of computer science and technology experience to the Local Orbit Team, and was most recently the Director of IT Governance, Risk, and Compliance for AOL. Previously, she held a number of technology positions within AOL including Interim Head of IT Security and Director of the Access business unit investment portfolio. She launched AOL ventures in Mexico, Argentina, Spain and China. Julie has also held positions in engineering and management at the CIA, Kmart, Morgan Interactive and Catapult Entertainment. </p>
+			<p>
+			Ragan Erickson's backyard is filled with chickens and seasonal crops, which makes her a perfect Local Orbit evangelist to the local food haven of Southern California. Prior to joining the Local Orbit, Ragan spent 10 years working for the region's only sustainable winery and restaurant. As Direct Sales and Marketing Manager, she created a wine club and launched one of the first online wine store in Southern California.  She also managed customer service procedures and standards for 100 employees.
+			</p>
 			<br />
-			<p>Julie earned Bachelor of Science degrees with honors in computer science and mathematics from the University of Detroit and an MBA from the Wharton School at the University of Pennsylvania. Julie is a CISSP, a PMP, and an ITIL Expert and holds three US Patents for innovations in online communication. She is well known for her ability to get things done.</p>
+			<p>
+			Ragan spent much of her early career working in her family's restaurant business, and she joined Local Orbit because the company intersects her passions for slow food and new media. "Working with a company that helps people build healthier communities through local food is a dream come true," she said.
+			</p>
 			<br />
-			<p><a href="http://www.localorb.it/field-notes/2011/12/great-lakes-a-great-homecoming-local-orbit-welcomes-a-new-chief-technology-officer/">Learn more about Julie</a></p>
-			<br /><br />
+			<p><a href="http://www.localorb.it/field-notes/2011/10/local-orbit-welcomes-two-new-community-managers/">Learn more about Ragan</a></p>
+			<br />
 
 
 			<h3>Mike Thorn</h3>
@@ -55,23 +59,19 @@
 
 
 	
+			<h3>Cory Van Horn</h3>
+			<p>Director of Marketing & Communications<br />
+			<a href="mailto:cory@localorb.it">cory@localorb.it</a><br />
+			</p>
+			<br />
+			<p>Cory brings a unique blend of food systems, marketing and tech start-up experiences to Local Orbit. Early in his career, Cory served as a District Marketing Manager at Aramark where he grew market penetration and sales 12% year-over-year. He later held various positions focused on developing company-wide marketing and communications initiatives for companies in industrial real estate, wireless power, and the gift and home industry. Most recently, Cory was the Marketing Director at SnapRetail, a wholesale e-commerce platform for local retailers. 
+			</p>
+			<br />
+Cory earned a B.S. in Hospitality and Tourism Management from Grand Valley State University and a M.A. in Food Studies from the School of Sustainability and the Environment at Chatham University. He is an avid food writer, educator and traveler. His website, CulinaryCory.com, was a Webby Award Honoree in 2012. 
+</p>
+			<br /><br />
 
 
-			<h3>Ragan Erickson</h3>
-			<p>Director of Customer Experience<br />
-			<a href="mailto:ragan@localorb.it">ragan@localorb.it</a><br />
-			</p>
-			<br />
-			<p>
-			Ragan Erickson's backyard is filled with chickens and seasonal crops, which makes her a perfect Local Orbit evangelist to the local food haven of Southern California. Prior to joining the company, Ragan served as Direct Sales and Marketing Manager for the region's only sustainable winery and restaurant.
-			</p>
-			<br />
-			<p>
-			Ragan spent much of her early career working in her family's restaurant business, and she joined Local Orbit because the company intersects her passions for slow food and new media. "Working with a company that is solving social problems by simply increasing access to locally produced food is a dream come true," she said.
-			</p>
-			<br />
-			<p><a href="http://www.localorb.it/field-notes/2011/10/local-orbit-welcomes-two-new-community-managers/">Learn more about Ragan</a></p>
-			<br />
 
 		</td>
 	</tr>
