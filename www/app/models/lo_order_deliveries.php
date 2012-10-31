@@ -31,10 +31,10 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 			array('dcr2.code  as pickup_state')
 		);
 
-		
+
 		$this->add_formatter('deliv_address_formatter');
 	}
-	
+
 	function get_sellers_for_deliveries($deliv_ids)
 	{
 		$sql = '
@@ -51,13 +51,13 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		}
 		return $orgs;
 	}
-	
+
 	function get_outstanding_deliveries()
 	{
 		global $core;
-		
+
 		$grouped_delivs = array();
-		
+
 		$sql = '
 			select lid.lodeliv_id,lod.delivery_start_time,lod.delivery_end_time,lod.deliv_address_id,lod.pickup_address_id,
 			a1.address as deliv_address,a1.city as deliv_city,dcr1.code as deliv_state,a1.postal_code as deliv_postal_code,
@@ -74,7 +74,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 			where lid.ldstat_id=2
 			and lod.delivery_start_time > (UNIX_TIMESTAMP(CURRENT_TIMESTAMP) - 86400)
 		';
-		
+
 		if(lo3::is_customer())
 		{
 			$sql .= '
@@ -92,9 +92,9 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 				and lod.dd_id in (
 					select dd.dd_id
 					from delivery_days dd
-					
+
 					where dd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
-					
+
 				)
 				and lid.ldstat_id=2
 			';
@@ -102,15 +102,15 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		else if(lo3::is_admin())
 		{
 		}
-		
+
 		$all_delivs = new core_collection($sql);
-		
+
 		# arrange all of the deliveries by time
 		foreach($all_delivs as $delivery)
 		{
 			#$key = $delivery['delivery_start_time'].'-'.$delivery['delivery_end_time'].'-'.$delivery['addr_id'];
 			$key = $delivery['delivery_start_time'];
-			
+
 			if(!is_array($grouped_delivs[$key]))
 			{
 				# we can add more data to this array if we want to display more information
@@ -126,18 +126,64 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 			$grouped_delivs[$key]['lodeliv_ids'][] = $delivery['lodeliv_id'];
 			$grouped_delivs[$key]['addresses'][$delivery['deliv_address'].', '.$delivery['deliv_city'].', '.$delivery['deliv_state'].' '.$delivery['deliv_postal_code']] = true;
 		}
-		
+
 		# sort the array
 		ksort($grouped_delivs,SORT_NUMERIC);
-		
+
 		# resort them by formatted date
 		$final_delivs = array();
 		foreach($grouped_delivs as $key=>$delivery)
 		{
 			$final_delivs[ date('Y-m-d H:m:s',$key)] = $delivery;
 		}
-		
+
 		return $final_delivs;
+	}
+
+	function create($lo_oid, $deliv, $address, $deliveries = null) {
+		# now we have all the right info
+		# store it in the db
+		$deliv_id = $deliv['lodeliv_id'];
+		$order_deliv = core::model('lo_order_deliveries');
+		$order_deliv['lo_oid'] = $lo_oid;
+		$order_deliv['dd_id']  = $deliv['dd_id'];
+		$order_deliv['status'] = '';
+		$order_deliv['delivery_start_time'] = $deliv['delivery_start_time'] - (intval($core->session['time_offset']));
+		$order_deliv['delivery_end_time']   = $deliv['delivery_end_time'] - (intval($core->session['time_offset']));
+		$order_deliv['pickup_start_time']   = $deliv['pickup_start_time'] - (intval($core->session['time_offset']));
+		$order_deliv['pickup_end_time']     = $deliv['pickup_end_time'] - (intval($core->session['time_offset']));
+		   # store the selected address into the right
+		# position. If the seller delivers directly to the buyer,
+		# put the selected address into the deliv_address_id field
+		#
+		# if the seller delivers to the hub and the hub delivers to the
+		# customer, then store the address to pickup_address_id
+		#
+		core::log('found the right delivery! for '.$deliv_id.', we should use '.$address['address_id']);
+		if($deliv['deliv_address_id'] == 0)
+		{
+		    core::log('assigned to deliv_address_id');
+		    $order_deliv['deliv_address_id'] = $address['address_id'];
+		}
+		else
+		{
+		    $order_deliv['deliv_address_id'] = $deliv['deliv_address_id'];
+		    if($deliv['pickup_address_id'] == 0)
+		    {
+		        core::log('assigned to pickup_address_id');
+		        $order_deliv['pickup_address_id'] = $address['address_id'];
+		    }
+		    else
+		    {
+		        core::log('using delivery_days-specified pickup address');
+		        $order_deliv['pickup_address_id'] = $deliv['pickup_address_id'];
+		    }
+		}
+		if (isset($deliveries)) {
+			$order_deliv['dd_id_group'] = implode('_',array_keys($deliveries));
+		}
+		$order_deliv->save();
+		return $order_deliv;
 	}
 
 	function save()
@@ -167,11 +213,11 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		$this['pickup_delivery_instructions']		= $pickup_address['delivery_instructions'];
 		$this['pickup_longitude']						= $pickup_address['longitude'];
 		$this['pickup_latitude']						= $pickup_address['latitude'];
-		
-		parent::save();	
+
+		parent::save();
 		core::log('UPDATED ADDRESS INFO');
 	}
-	
+
 	function get_items_for_delivery($deliv_ids,$org_id=0)
 	{
 		global $core;

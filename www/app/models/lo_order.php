@@ -169,7 +169,7 @@ class core_model_lo_order extends core_model_base_lo_order
 							$core->data['delivgroup-'.$group.'--'.$deliv_id.'--'.$address['address_id']] == 1
 							||
 							$core->data['delivgroup-'.$group.'--'.$deliv_id.'--'.$address['address_id'].'_value'] == 1
-							
+
 						)
 						{
 							# we've got a match! create one for every seller
@@ -186,7 +186,8 @@ class core_model_lo_order extends core_model_base_lo_order
 
 								# now we have all the right info
 								# store it in the db
-								$order_deliv = core::model('lo_order_deliveries');
+								$order_deliv = core::model('lo_order_deliveries')->create($this['lo_oid'], $deliv, $address);
+								/*
 								$order_deliv['lo_oid'] = $this['lo_oid'];
 								$order_deliv['dd_id']  = $deliv_id;
 								$order_deliv['status'] = '';
@@ -223,6 +224,7 @@ class core_model_lo_order extends core_model_base_lo_order
 									}
 								}
 								$order_deliv->save();
+								*/
 								$this->deliveries[] = $order_deliv;
 
 								# now that we've created the order delivery,

@@ -232,7 +232,9 @@ class core_controller_cart extends core_controller
 			$new_item['producedat_delivery_instructions'] = $product['producedat_delivery_instructions'];
 			$new_item['producedat_longitude'] = $product['producedat_longitude'];
 			$new_item['producedat_latitude'] = $product['producedat_latitude'];
-			$new_item->find_next_possible_delivery($new_item['lo_oid'], array());
+			$deliveries = $new_item->find_possible_deliveries($new_item['lo_oid'], array());
+			$deliv = $new_item->find_next_possible_delivery($new_item['lo_oid'], $deliveries);
+			$order_deliv = core::model('lo_order_deliveries')->create($new_item['lo_oid'], $new_item->delivery, $product, $deliveries);
 			$new_item->save();
 		}
 

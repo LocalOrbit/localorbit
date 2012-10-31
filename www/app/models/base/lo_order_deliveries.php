@@ -34,6 +34,7 @@ class core_model_base_lo_order_deliveries extends core_model
 		$this->add_field(new core_model_field(28,'pickup_delivery_instructions','string',8000,'','lo_order_deliveries'));
 		$this->add_field(new core_model_field(29,'pickup_longitude','string',-4,'','lo_order_deliveries'));
 		$this->add_field(new core_model_field(30,'pickup_latitude','string',-4,'','lo_order_deliveries'));
+		$this->add_field(new core_model_field(31,'dd_id_group','string',-4,'','lo_order_deliveries'));
 		$this->init_data();
 	}
 }

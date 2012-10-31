@@ -27,7 +27,7 @@ class core_model_base_v_payables extends core_model
 		$this->add_field(new core_model_field(21,'description','string',-4,'','v_payables'));
 		$this->add_field(new core_model_field(22,'amount_paid','float',10,'2','v_payables'));
 		$this->add_field(new core_model_field(23,'amount_due','float',10,'2','v_payables'));
-		$this->add_field(new core_model_field(24,'last_sent','timestamp',4,'','v_payables'));
+		$this->add_field(new core_model_field(24,'last_sent','int',8,'','v_payables'));
 		$this->init_data();
 	}
 }
