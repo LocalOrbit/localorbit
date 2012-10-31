@@ -1,17 +1,17 @@
 <?php
 
-class core_controller_cart extends core_controller 
+class core_controller_cart extends core_controller
 {
 	function init()
 	{
 		global $core;
-		
+
 	}
-	
+
 	function update_item()
 	{
 		global $core;
-		
+
 		# first check the inventory level for the product;
 		$qty = intval($core->data['qty']);
 		$inv = core::model('products')->get_inventory($core->data['prod_id']);
@@ -29,9 +29,9 @@ class core_controller_cart extends core_controller
 				core::deinit();
 			}
 		}
-		
+
 		//$delivery = core::model('lo_order_deliveries')->
-		
+
 		$cart = core::model('lo_order')->get_cart();
 		$cart->load_items();
 		$product = core::model('products')->autojoin(
@@ -40,7 +40,7 @@ class core_controller_cart extends core_controller
 			'(products.addr_id=addresses.address_id)',
 			array(
 				  'addresses.address_id as producedat_address_id',
-					'addresses.org_id as producedat_org_id',						
+					'addresses.org_id as producedat_org_id',
 					'addresses.address as producedat_address',
 					'addresses.city as producedat_city',
 					'addresses.region_id as producedat_region_id',
@@ -52,7 +52,7 @@ class core_controller_cart extends core_controller
 						'addresses.latitude as producedat_latitude')
 			)->load($core->data['prod_id']);
 		$found = false;
-		
+
 		foreach($cart->items as $item)
 		{
 			if($item['prod_id'] == $core->data['prod_id'])
@@ -67,24 +67,24 @@ class core_controller_cart extends core_controller
 					$item->find_best_price();
 					$item['category_ids'] = $product['category_ids'];
 					$item['final_cat_id'] =trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
-					$item['producedat_address_id'] = $product['producedat_address_id']; 
-					$item['producedat_org_id'] = $product['producedat_org_id'];				
-					$item['producedat_address'] = $product['producedat_address'];			
-					$item['producedat_city'] = $product['producedat_city'];					
-					$item['producedat_region_id'] = $product['producedat_region_id'];	
+					$item['producedat_address_id'] = $product['producedat_address_id'];
+					$item['producedat_org_id'] = $product['producedat_org_id'];
+					$item['producedat_address'] = $product['producedat_address'];
+					$item['producedat_city'] = $product['producedat_city'];
+					$item['producedat_region_id'] = $product['producedat_region_id'];
 					$item['producedat_postal_code'] = $product['producedat_postal_code'];
-					$item['producedat_telephone'] = $product['producedat_telephone'];	
-					$item['producedat_fax'] = $product['producedat_fax'];					
+					$item['producedat_telephone'] = $product['producedat_telephone'];
+					$item['producedat_fax'] = $product['producedat_fax'];
 					$item['producedat_delivery_instructions'] = $product['producedat_delivery_instructions'];
 					$item['producedat_longitude'] = $product['producedat_longitude'];
-					$item['producedat_latitude'] = $product['producedat_latitude'];	
+					$item['producedat_latitude'] = $product['producedat_latitude'];
 					$item->save();
 				}
-				
+
 				$found = true;
 			}
 		}
-		
+
 		if(!$found)
 		{
 			core::log('FOUND!');
@@ -104,41 +104,55 @@ class core_controller_cart extends core_controller
 			$new_item['seller_org_id'] = $product['org_id'];
 			$new_item['category_ids'] = $product['category_ids'];
 			$new_item['final_cat_id'] =trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
-			$new_item['producedat_address_id'] = $product['producedat_address_id']; 
-			$new_item['producedat_org_id'] = $product['producedat_org_id'];				
-			$new_item['producedat_address'] = $product['producedat_address'];			
-			$new_item['producedat_city'] = $product['producedat_city'];					
-			$new_item['producedat_region_id'] = $product['producedat_region_id'];	
+			$new_item['producedat_address_id'] = $product['producedat_address_id'];
+			$new_item['producedat_org_id'] = $product['producedat_org_id'];
+			$new_item['producedat_address'] = $product['producedat_address'];
+			$new_item['producedat_city'] = $product['producedat_city'];
+			$new_item['producedat_region_id'] = $product['producedat_region_id'];
 			$new_item['producedat_postal_code'] = $product['producedat_postal_code'];
-			$new_item['producedat_telephone'] = $product['producedat_telephone'];	
-			$new_item['producedat_fax'] = $product['producedat_fax'];					
+			$new_item['producedat_telephone'] = $product['producedat_telephone'];
+			$new_item['producedat_fax'] = $product['producedat_fax'];
 			$new_item['producedat_delivery_instructions'] = $product['producedat_delivery_instructions'];
 			$new_item['producedat_longitude'] = $product['producedat_longitude'];
-			$new_item['producedat_latitude'] = $product['producedat_latitude'];	
+			$new_item['producedat_latitude'] = $product['producedat_latitude'];
 			$new_item->save();
 		}
-		
+
 		$cart->load_items(true, true);
 		$cart->verify_integrity();
-		$cart->update_totals();	
+		$cart->update_totals();
 		core::process_command('navstate/left_cart',false);
 		core_ui::notification('cart updated');
 	}
-	
-	function update_quantity()
-	{
+
+	function parse_items () {
 		global $core;
 		$a_items = explode('_',$core->data['items']);
 		$items = array();
 		foreach($a_items as $item)
 			$items[$item] = $core->data['prod_'.$item];
 
+		return $items;
+	}
+
+	function update_quantity()
+	{
+		global $core;
+
+/*
+		$a_items = explode('_',$core->data['items']);
+		$items = array();
+		foreach($a_items as $item)
+			$items[$item] = $core->data['prod_'.$item];
+*/
+		$items = $this->parse_items();
+
 		$cart = core::model('lo_order')->get_cart();
 		$cart->load_items(false,true);
-		
+
 		core::log('items submitted: '.print_r($items,true));
-		
-		# loop through the exisitng items in teh cart. if the quanitty is diff, 
+
+		# loop through the exisitng items in teh cart. if the quanitty is diff,
 		# update it
 		foreach($cart->items as $item)
 		{
@@ -151,25 +165,25 @@ class core_controller_cart extends core_controller
 			}
 			else
 			{
-			
+
 				# if the qty has changed, set the new quantity and find the best price
 				if(floatval($items[$item['prod_id']]) != floatval($item['qty_ordered']))
 				{
 					$product = core::model('products')->load($item['prod_id']);
 					core::log('new qty on '.$item['prod_id']);
-					
+
 					$item['qty_ordered'] = $core->data['prod_'.$item['prod_id']];
 					$item['category_ids']  = $product['category_ids'];
 					$item['final_cat_id']  = trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
 					$item->find_best_price();
 				}
-				
+
 				# unset the item array
 				$item->save();
 			}
 			unset($items[$item['prod_id']]);
 		}
-		
+
 		# now, look for any entirely new items. Insert them
 		foreach($items as $prod_id=>$qty)
 		{
@@ -179,7 +193,7 @@ class core_controller_cart extends core_controller
 				'(products.addr_id=addresses.address_id)',
 				array(
 					  'addresses.address_id as producedat_address_id',
-						'addresses.org_id as producedat_org_id',						
+						'addresses.org_id as producedat_org_id',
 						'addresses.address as producedat_address',
 						'addresses.city as producedat_city',
 						'addresses.region_id as producedat_region_id',
@@ -207,27 +221,26 @@ class core_controller_cart extends core_controller
 			$new_item['seller_org_id'] = $product['org_id'];
 			$new_item['category_ids'] = $product['category_ids'];
 			$new_item['final_cat_id'] = trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
-			$new_item['producedat_address_id'] = $product['producedat_address_id']; 
-			$new_item['producedat_org_id'] = $product['producedat_org_id'];				
-			$new_item['producedat_address'] = $product['producedat_address'];			
-			$new_item['producedat_city'] = $product['producedat_city'];					
-			$new_item['producedat_region_id'] = $product['producedat_region_id'];	
+			$new_item['producedat_address_id'] = $product['producedat_address_id'];
+			$new_item['producedat_org_id'] = $product['producedat_org_id'];
+			$new_item['producedat_address'] = $product['producedat_address'];
+			$new_item['producedat_city'] = $product['producedat_city'];
+			$new_item['producedat_region_id'] = $product['producedat_region_id'];
 			$new_item['producedat_postal_code'] = $product['producedat_postal_code'];
-			$new_item['producedat_telephone'] = $product['producedat_telephone'];	
-			$new_item['producedat_fax'] = $product['producedat_fax'];					
+			$new_item['producedat_telephone'] = $product['producedat_telephone'];
+			$new_item['producedat_fax'] = $product['producedat_fax'];
 			$new_item['producedat_delivery_instructions'] = $product['producedat_delivery_instructions'];
 			$new_item['producedat_longitude'] = $product['producedat_longitude'];
-			$new_item['producedat_latitude'] = $product['producedat_latitude'];	
+			$new_item['producedat_latitude'] = $product['producedat_latitude'];
 			$new_item->find_next_possible_delivery($new_item['lo_oid'], array());
-core::log(print_r($new_item, true));
 			$new_item->save();
 		}
-		
+
 		# reload the cart and write it out to js
-		
+
 		$cart->load_items(true,true);
 		$cart->verify_integrity();
-		$cart->update_totals();		
+		$cart->update_totals();
 		$cart->write_js();
 	}
 }
