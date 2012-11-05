@@ -235,6 +235,7 @@ class core_controller_cart extends core_controller
 			$deliveries = $new_item->find_possible_deliveries($new_item['lo_oid'], array());
 			$deliv = $new_item->find_next_possible_delivery($new_item['lo_oid'], $deliveries);
 			$order_deliv = core::model('lo_order_deliveries')->create($new_item['lo_oid'], $new_item->delivery, $product, $deliveries);
+			$new_item['lodeliv_id'] = $order_deliv['lodeliv_id'];
 			$new_item->save();
 		}
 

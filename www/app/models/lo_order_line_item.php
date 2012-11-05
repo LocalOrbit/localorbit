@@ -87,7 +87,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		global $core;
 		$order->delivery_options = array();
 		$this->dd_ids=array();
-
+		core::log('quantity ' . $this['qty_ordered']);
 		$dds = core::model('delivery_days')->get_days_for_prod($this['prod_id'],$core->config['domain']['domain_id']);
 		foreach($dds as $dd)
 		{

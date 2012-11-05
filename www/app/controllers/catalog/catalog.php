@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 class core_controller_catalog extends core_controller
 {
-	
+
 	function update_fees($return_data='no',$cart = null)
 	{
 		global $core;
-		
+
 		# we need to determine the item grouping
 		$delivery_fee = 0;
 		$discount = 0;
@@ -16,7 +16,7 @@ class core_controller_catalog extends core_controller
 		$fee_total_by_ddaddr_id  = array();
 		$fee_total_by_lo_foid    = array();
 		$core->response['replace'] = array();
-		
+
 		# load the order and group things by delivery option group
 		if(is_null($cart))
 		{
@@ -25,13 +25,13 @@ class core_controller_catalog extends core_controller
 			$cart->arrange_by_next_delivery();
 		}
 		$cart->load_codes_fees();
-		
+
 		# first, we need to calculate the discounts applied to items
 		# we should store the discounted amount on the item level
 		$notify_discount = false;
 		core::log('------ calcing discount code ------');
 		if($core->data['discount_code'] != '')
-		{			
+		{
 			core_db::query('delete from lo_order_discount_codes where lo_oid='.$cart['lo_oid']);
 			$code = core::model('discount_codes')->load_valid_code($core->data['discount_code']);
 			if(isset($code->__data['disc_id']))
@@ -50,7 +50,7 @@ class core_controller_catalog extends core_controller
 					$order_code['lo_oid'] = $cart['lo_oid'];
 					$order_code->save();
 				}
-			
+
 			}
 			else
 			{
@@ -58,13 +58,11 @@ class core_controller_catalog extends core_controller
 			}
 		}
 		core::log('------ done with discount code ------');
-		
-		
-		
-		core::log('ready to calculate delivery fees');		
+
+		core::log('ready to calculate delivery fees');
 		# we need to reorganize all of the items by their final delivery combinations
 		foreach($cart->items_by_delivery as $delivery_opt_key=>$items)
-		{	
+		{
 			$final_delivery_breakdown[$core->data['group_'.$delivery_opt_key]] = array();
 			foreach($items as $item)
 			{
@@ -72,25 +70,25 @@ class core_controller_catalog extends core_controller
 			}
 		}
 		core::log('breakdown complete');
-		
-		
+
+
 		# now all items are in the correct breakdown. determine all the unique dd_ids
 		foreach($final_delivery_breakdown as $ddaddr_id=>$items)
 		{
 			list($dd_id,$addr_id) = explode('-',$ddaddr_id);
 			$dd_list[] = $dd_id;
 		}
-		
+
 		# load a cache of all the dd_ids
 		$dd_cache = core::model('delivery_days')
 			->collection()
 			->filter('delivery_days.dd_id','in',$dd_list)
 			->to_hash('dd_id');
 		core::log('dds loaded');
-		
-		# loop through the existing order delivery days and 
-		# record which ones exist. If there is a delivery day in the 
-		# order that has been ruled by by the request, then 
+
+		# loop through the existing order delivery days and
+		# record which ones exist. If there is a delivery day in the
+		# order that has been ruled by by the request, then
 		# delete it.
 		core::log('looking for fees to delete');
 		foreach($cart->delivery_fees as $fee)
@@ -107,7 +105,7 @@ class core_controller_catalog extends core_controller
 			}
 		}
 		core::log('fee delete complete');
-		
+
 		# add in the delivery days that we need to.
 		core::log('looking for fees to add');
 		foreach($dd_cache as $dd_id=>$data)
@@ -129,14 +127,14 @@ class core_controller_catalog extends core_controller
 		core::log('fee add complete. reloading');
 		$cart->load_codes_fees(true);
 		core::log('all fees now exist in db. Now to figure out how to apply them!');
-		
+
 		# loop through each fee and calculate it.
 		foreach($cart->delivery_fees as $fee)
 		{
 			$applied_amount = 0;
-			
+
 			#core::log('fee data: '.print_r($fee->__data,true));
-			
+
 			# we need to determine which of the items the delivery fee applies to
 			foreach($final_delivery_breakdown as $ddaddr_id=>$items)
 			{
@@ -147,9 +145,9 @@ class core_controller_catalog extends core_controller
 					# delivery fees are calculated one of two ways:
 					# if the fee_calc_type_id is 2, then this is a fixed
 					# price delivery fee. Just it the fee to the total, ONCE
-					# if the fee_calc_type_id is 1 however, then it's a 
-					# percentage fee. We need to loop through all of the items 
-					# and figure out what the percentage is. 
+					# if the fee_calc_type_id is 1 however, then it's a
+					# percentage fee. We need to loop through all of the items
+					# and figure out what the percentage is.
 					if($fee['fee_calc_type_id'] == 2)
 					{
 						# if this is a fixed amount fee,
@@ -171,7 +169,7 @@ class core_controller_catalog extends core_controller
 			$fee->save();
 			core::log('the final fee total for ddid '.$fee['dd_id'].' is: '.$applied_amount);
 		}
-		
+
 		# save the new order totals to the db
 		$cart['adjusted_total'] =  $delivery_fee + $discount;
 		$cart['grand_total']    = $cart['item_total'] + $cart['adjusted_total'];
@@ -193,7 +191,7 @@ class core_controller_catalog extends core_controller
 				core::replace('fee_total',core_format::price($delivery_fee));
 			else
 				core::replace('fee_total','Free!');
-				
+
 			core::replace('grand_total',core_format::price($cart['item_total'] + $delivery_fee + $discount,false));
 			core::replace('adjusted_total',core_format::price($discount,false));
 			core::js("$('#totals_loading').hide();$('#total_table').show(200);");
@@ -201,14 +199,14 @@ class core_controller_catalog extends core_controller
 			{
 				core_ui::notification('could not apply this discount code');
 			}
-			core::deinit();			
+			core::deinit();
 		}
 	}
-	
+
 	function order_confirmation()
 	{
 		$cart = core::model('lo_order')->get_cart();
-		
+
 		$cart->place_order(array(
 			'paypal'=>$this->paypal_rules(),
 			'authorize'=>$this->authorize_rules(),
@@ -216,7 +214,7 @@ class core_controller_catalog extends core_controller
 		));
 		$this->confirmation_message($cart);
 	}
-	
+
 	function paypal_rules()
 	{
 		global $core;
@@ -243,13 +241,13 @@ class core_controller_catalog extends core_controller
 			array('type'=>'min_length','name'=>'po_number','data1'=>3,'msg'=>$core->i18n['error:payment:po_number']),
 		));
 	}
-	
+
 	function __construct($path)
 	{
 		parent::__construct($path);
 		core::ensure_navstate(array('left'=>'left_about'));
 	}
-	
+
 	function render_cat1_start($cat1_id,$cat1_name,$style)
 	{
 		core::log(print_r($cat1_name,true));
@@ -262,11 +260,11 @@ class core_controller_catalog extends core_controller
 			<col width="110" />
 			<tr>
 				<td colspan="4" class="category_start1_<?=$style?>"><?=$cat1_name?></td>
-			</tr>		
+			</tr>
 		<?
 	}
 
-	
+
 	function render_cat1_end($cat1_id,$cat1_name)
 	{
 		?>
@@ -275,11 +273,11 @@ class core_controller_catalog extends core_controller
 		<!--<hr class="category_<?=$cat1_id?>" />-->
 		<?
 	}
-	
+
 	function render_cat2_start($cat2_id,$cat2_name,$cat3_id=0,$cat3_name='',$style)
 	{
 		$id_cat = $cat2_id;
-		if($cat3_id != 0 && $cat3_id != '')	
+		if($cat3_id != 0 && $cat3_id != '')
 			$id_cat = $cat3_id;
 		?>
 		<tr id="start_cat2_<?=$id_cat?>" class="category_<?=$cat2_id?> category_<?=$cat3_id?>">
@@ -292,11 +290,11 @@ class core_controller_catalog extends core_controller
 		</tr>
 		<?
 	}
-	
+
 	function render_cat2_end($cat2_id,$cat2_name,$cat3_id=0,$cat3_name='')
 	{
 		$id_cat = $cat2_id;
-		if($cat3_id != 0 && $cat3_id != '')	
+		if($cat3_id != 0 && $cat3_id != '')
 			$id_cat = $cat3_id;
 		?>
 		<tr id="end_cat2_<?=$id_cat?>">
@@ -304,7 +302,7 @@ class core_controller_catalog extends core_controller
 		</tr>
 		<?
 	}
-	
+
 	function render_total_line($idx)
 	{
 		global $core;
@@ -318,7 +316,7 @@ class core_controller_catalog extends core_controller
 				<input type="button" id="continueShoppingButton'.$idx.'" style="display: none;" class="button_secondary image_button button_continue_shopping" onclick="core.catalog.setFilter(\'cartOnly\')" value="continue shopping" />
 				<input type="button" id="showCartButton'.$idx.'" class="button_secondary image_button button_show_cart" onclick="core.catalog.setFilter(\'cartOnly\')" value="show my cart" />
 		';
-		
+
 		if(intval($core->session['user_id']) > 0)
 		{
 			$buttons .= '<input type="button" id="checkoutButton'.$idx.'" class="button_secondary image_button button_to_checkout" onclick="location.href=\'#!catalog-checkout\';" value="checkout" />';
@@ -328,7 +326,7 @@ class core_controller_catalog extends core_controller
 			$buttons .= '<input type="button" id="checkoutButton'.$idx.'" class="button_secondary image_button button_to_checkout" onclick="core.catalog.popupLoginRegister('.$idx.');" value="checkout" />';
 		}
 		$buttons .= '</div>';
-		
+
 		if($idx == 1)
 		{
 			echo($buttons . $total);
@@ -338,25 +336,25 @@ class core_controller_catalog extends core_controller
 			echo($total . $buttons);
 		}
 	}
-	
+
 	function render_no_products_line()
 	{
 		?>
 		<div id="no_prods_msg" style="display: none;margin: 8px 0px;">There aren't any products matching your selection. Please try adding a few more options.</div>
 		<?
 	}
-	
+
 	function render_cart_empty_line()
 	{
 		?>
 		<div id="cart_empty_msg" style="display: none;">Your cart is currently empty.</div>
 		<?
 	}
-	
+
 	function render_delivery_radio($radio_name,$radio_group,$option,$type,$delivery_opt_key,$address=null)
 	{
 		global $core;
-		
+
 		# if the address is being passed separately, then use that for address fields
 		# otherwise, use one of the addresses in the delivery option
 		if(is_null($address)){
@@ -377,16 +375,21 @@ class core_controller_catalog extends core_controller
 			"core.checkout.requestUpdatedDeliveryFees();"
 		));
 	}
-	
+
 	function determine_options($options_list,$options_data,$all_addrs,$item=null)
 	{
 		global $core;
 		$final_opts = array();
-		$opts = explode('-',$options_list);
+		core::log($options_list);
+		$opts = explode('_',$options_list);
+
 		#$options_data->dump();
 		foreach($opts as $opt)
 		{
-			#echo('examininign '.$opt.'<br />');
+
+			//print_r($dd);
+			//core::log('OPTION');
+			//core::log('examininign '.$opt.'<br />');
 			#print_r($options_data);
 			if(is_array($options_data))
 			{
@@ -398,8 +401,11 @@ class core_controller_catalog extends core_controller
 				print_r($options_data);
 				echo('</pre>');
 			}
-			
-			
+			$dd = core::model('delivery_days')->load($opt);
+			$dd->next_time();
+			$opt = $dd->__data;
+
+
 			# determine if we need to print a list of the user's addresses
 			if(intval($opt['deliv_address_id'])==0 || intval($opt['pickup_address_id'])==0)
 			{
@@ -409,10 +415,10 @@ class core_controller_catalog extends core_controller
 				//~ echo('</pre>');
 				foreach($all_addrs as $address)
 				{
-					
+
 					#echo('loooping');
 					# is this a 1 step process or a 2 step process?
-					
+
 					$onestep = (intval($opt['deliv_address_id'])==0);
 					$new_opt = array(
 						'uniqid'=>$options_list.'--'.$opt['dd_id'].'--'.$address['address_id'],

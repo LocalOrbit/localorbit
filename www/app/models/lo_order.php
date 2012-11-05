@@ -154,7 +154,7 @@ class core_model_lo_order extends core_model_base_lo_order
 				$sellers = array_unique($sellers);
 
 				core::log('examining deliv_group '.$group);
-				$group_list = explode('-',$group);
+				$group_list = explode('_',$group);
 				$order_deliv = null;
 
 				foreach($group_list as $deliv_id)
@@ -163,6 +163,8 @@ class core_model_lo_order extends core_model_base_lo_order
 					# for each delivery group, loop through the addresses
 					foreach($this->customer_addresses as $address)
 					{
+						core::log('checking on address'.'delivgroup-'.$group.'--'.$deliv_id.'--'.$address['address_id']);
+
 
 						# this is the address selected for the opt group
 						if(
@@ -172,6 +174,7 @@ class core_model_lo_order extends core_model_base_lo_order
 
 						)
 						{
+							core::log('test');
 							# we've got a match! create one for every seller
 
 							foreach($sellers as $seller_org_id)
@@ -187,6 +190,7 @@ class core_model_lo_order extends core_model_base_lo_order
 								# now we have all the right info
 								# store it in the db
 								$order_deliv = core::model('lo_order_deliveries')->create($this['lo_oid'], $deliv, $address);
+								print_r($order_deliv);
 								/*
 								$order_deliv['lo_oid'] = $this['lo_oid'];
 								$order_deliv['dd_id']  = $deliv_id;
@@ -769,8 +773,33 @@ class core_model_lo_order extends core_model_base_lo_order
 		return $this->deliveries;
 	}
 
+	function arrange_by_next_delivery($include_hub_addresses=false) {
+		global $core;
+		foreach ($this->items as $item) {
+			//print_r($item->__data);
+			$delivery = core::model('lo_order_deliveries')->load($item['lodeliv_id']);
+			if (!isset($this->items_by_delivery[$delivery['dd_id_group']])) {
+				$this->items_by_delivery[$delivery['dd_id_group']] = array();
+			}
+			$this->items_by_delivery[$delivery['dd_id_group']][] = $item->to_array();
+			$orgs = array(intval($core->session['org_id']));
+			if($include_hub_addresses)
+			{
+				$orgs[] = core_db::col('
+						select org_id from organizations_to_domains
+						where orgtype_id=2
+						and domain_id='.$core->config['domain']['domain_id'],'org_id');
 
-	function arrange_by_next_delivery($include_hub_addresses=false)
+			}
+			$this->customer_addresses = core::model('addresses')
+				->collection()
+				->filter('is_deleted','=',0)
+				->filter('org_id','in',$orgs)
+				->to_array();
+		}
+	}
+
+	function OBSOLETE_arrange_by_next_delivery($include_hub_addresses=false)
 	{
 		global $core;
 
@@ -779,7 +808,7 @@ class core_model_lo_order extends core_model_base_lo_order
 		$this->delete_deliveries();
 		$this->deliveries=array();
 
-
+core::log('DELETING ALL DELIVERIES...');
 		foreach($this->items as $item)
 		{
 			# if this hub is configured to auto select the next

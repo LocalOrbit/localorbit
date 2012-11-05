@@ -8,9 +8,9 @@ core::clear_response('replace','left');
 core::clear_response('replace','center');
 core::replace('left','&nbsp;&nbsp;');
 core_ui::load_library('js','checkout.js');
-$this->paypal_rules()->js(); 
-$this->authorize_rules()->js(); 
-$this->purchaseorder_rules()->js(); 
+$this->paypal_rules()->js();
+$this->authorize_rules()->js();
+$this->purchaseorder_rules()->js();
 
 $all_addrs = core::model('addresses')
 	->collection()
@@ -38,16 +38,22 @@ if(count($cart->items->to_array()) == 0)
 }
 core::ensure_navstate(array('left'=>'left_blank'));
 
+$cart->items_by_delivery = array();
+
+?>
+<pre>
+<?
 # rearrange the items so that they're grouped by delivery options.
 $cart->arrange_by_next_delivery();
 ?>
+</pre>
 <form name="checkoutForm" class="checkout" method="post" action="app/catalog/order_confirmation">
 	<table>
 		<col width="670" /><col width="3" /><col width="300" />
 		<tr>
 			<td>
 				<?php
-				foreach($cart->items_by_delivery as $delivery_opt_key=>$items){					
+				foreach($cart->items_by_delivery as $delivery_opt_key=>$items){
 				?>
 				<table>
 					<col width="400" /><col width="10" /><col width="260" />
@@ -74,7 +80,7 @@ $cart->arrange_by_next_delivery();
 					</tr>
 				</table>
 				<div class="dashed_divider">&nbsp;</div>
-				<?}?>		
+				<?}?>
 				Enter your discount code here: <input type="text" id="discount_code" name="discount_code" value="<?=$cart->discount_codes[0]['code']?>" />
 				<input type="button" class="button_secondary" value="apply code" onclick="core.checkout.requestUpdatedFees();" />
 			</td>
@@ -88,7 +94,7 @@ $cart->arrange_by_next_delivery();
 		</tr>
 	</table>
 </form>
-<? 
+<?
 # this is used to dynamically update the fees and such.
 core::js('window.setTimeout("core.checkout.requestUpdatedFees();",1000);');
 core::replace('full_width');
