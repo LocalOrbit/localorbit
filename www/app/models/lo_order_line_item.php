@@ -87,18 +87,18 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		global $core;
 		$order->delivery_options = array();
 		$this->dd_ids=array();
-		core::log('quantity ' . $this['qty_ordered']);
 		$dds = core::model('delivery_days')->get_days_for_prod($this['prod_id'],$core->config['domain']['domain_id']);
 		foreach($dds as $dd)
 		{
 			$dd->next_time();
 			if ($dd->is_valid($this)) {
-				core::log(print_r($dd->__data, true));
 				#echo('saving deliveyr into into order for ddid '.$dd['dd_id'].'<br />');
-				$order_deliveries[$dd['dd_id']] = $dd->__data;
+				$order_deliveries[$dd['dd_id']] = $dd;
 				#echo('order now contains: '.$order->delivery_options[$dd['dd_id']]['dd_id'].'<br />');
 				$this->dd_ids[] = $dd['dd_id'];
+			//} else {
 			}
+
 		}
 		asort($this->dd_ids);
 		$this->delivery_hash = implode('-',$this->dd_ids);
@@ -134,7 +134,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		foreach($dds as $dd)
 		{
 			$new_time = $dd->next_time();
-			if($new_time < $best_time)
+			if($new_time < $best_time && $dd->is_valid($this))
 			{
 				core::log('found a better time: '.core_format::date($dd['due_time']));
 				$best_time = $dd['due_time'];
@@ -224,9 +224,9 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		}
 
 		$this['dd_id']   = $this->delivery['dd_id'];
-		
+
 		$order_deliveries[$this['dd_id']]->load();
-	   	
+
 		#core::log('combination is: '.$this['addr_id'].'-'.$this['due_time']);
 		# see if this delivery already exists.
 		# in order to reuse a delivery for a 2nd item, the delivery must meet
