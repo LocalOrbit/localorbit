@@ -21,12 +21,12 @@ class core_model_delivery_days extends core_model_base_delivery_days
 		}
 		return $fee;
 	}
-	
+
 	function init_fields()
 	{
 		global $core;
 		$this->add_formatter('delivery_days_formatter');
-		
+
 		$this->autojoin(
 			'left',
 			'addresses a1',
@@ -57,10 +57,10 @@ class core_model_delivery_days extends core_model_base_delivery_days
          '(delivery_days.dd_id = delivery_fees.dd_id)',
          array('fee_calc_type_id','amount', 'minimum_order', 'devfee_id', 'fee_type')
       );
-		
+
 		parent::init_fields();
 	}
-	
+
 	function get_days_for_prod($prod_id,$domain_id=0)
 	{
 		global $core;
@@ -69,7 +69,7 @@ class core_model_delivery_days extends core_model_base_delivery_days
 			a1.address as deliv_address,a1.city as deliv_city,dcr1.code as deliv_state,a1.postal_code as deliv_postal_code,a1.org_id as deliv_org_id,
 			a2.address as pickup_address,a2.city as pickup_city,dcr2.code as pickup_state,a2.postal_code as pickup_postal_code,a2.org_id as pickup_org_id,
 			delivery_fees.fee_calc_type_id,delivery_fees.amount
-			
+
 			from delivery_days
 			left join domains d on (d.domain_id=delivery_days.domain_id)
 			left join timezones tz on (d.tz_id=tz.tz_id)
@@ -78,27 +78,27 @@ class core_model_delivery_days extends core_model_base_delivery_days
 			left join addresses a2 on delivery_days.pickup_address_id=a2.address_id
 			left join directory_country_region dcr2 on dcr2.region_id=a2.region_id
 			left join delivery_fees on (delivery_fees.dd_id=delivery_days.dd_id)
-			where delivery_days.dd_id in ( 
-				select pdcs.dd_id 
-				from product_delivery_cross_sells pdcs 
+			where delivery_days.dd_id in (
+				select pdcs.dd_id
+				from product_delivery_cross_sells pdcs
 				where pdcs.prod_id = '.$prod_id.'
-			) 
+			)
 		';
-		
+
 		if($domain_id != 0)
 			$sql .= ' and delivery_days.domain_id='.$domain_id;
-		
+
 		$dds = new core_collection($sql);
-		
-		
+
+
 		/*
 		or dd_id in (
-				select dd_id 
-				from delivery_days 
-				where domain_id in 
+				select dd_id
+				from delivery_days
+				where domain_id in
 				(
 					select organizations.domain_id
-					from organizations 
+					from organizations
 					left join products on products.org_id=organizations.org_id
 					where products.prod_id='.$prod_id.'
 				)
@@ -108,11 +108,14 @@ class core_model_delivery_days extends core_model_base_delivery_days
 		return $dds;
 	}
 
-	function is_valid ($lo_order_line_item) 
+	function is_valid ($lo_order_line_item)
 	{
-		return true;
+		$sql = sprintf('select FROM_UNIXTIME(%1$d), sum(qty) as total_qty from product_inventory where prod_id = %2$d and (good_from is null or good_from < FROM_UNIXTIME(%1$d)) and (expires_on is null or expires_on > FROM_UNIXTIME(%1$d));',
+				$this->__data['delivery_end_time'], $lo_order_line_item['prod_id']);
+		$total_qty = core_db::col($sql,'total_qty');
+		return $total_qty >= $lo_order_line_item['qty_ordered'];
 	}
-	
+
 	function join_tz()
 	{
 		$this->autojoin(
@@ -129,7 +132,7 @@ class core_model_delivery_days extends core_model_base_delivery_days
 		);
 		return $this;
 	}
-	
+
 	function load_for_products($prods)
 	{
 		global $core;
@@ -145,7 +148,7 @@ class core_model_delivery_days extends core_model_base_delivery_days
 		$col->load();
 		return $col->to_hash('product_id');
 	}
-	
+
 	function next_time()
 	{
 		global $core;
@@ -160,40 +163,40 @@ class core_model_delivery_days extends core_model_base_delivery_days
 				# build today's date at midnight
 				$start_of_today = mktime(0,0,0,$date_parts[0],$date_parts[1],$date_parts[2]);
 				core::log("orig sot: ".date('Y-m-d H:i:s',$start_of_today));
-				
+
 				# adjust to local timezone of this hub
 				$start_of_today -= ($this['offset_seconds']);
 				core::log("adjs sot: ".date('Y-m-d H:i:s',$start_of_today));
-				
+
 				# subtract 1 day's worth of seconds * day of week
 				# that gets you to the start of this week
 				$start_of_week = $start_of_today - ($weekday * 86400);
 				core::log("start of week: ".date('Y-m-d H:i:s',$start_of_week));
-				
+
 				# add 1 days worth of seconds * day_nbr
 				$deliv_day  = $start_of_week + ($this['day_nbr'] * 86400);
 				core::log("deliv day: ".date('Y-m-d H:i:s',$deliv_day));
-				
-				
+
+
 				# add delivery_star_time's worth of seconds
 				$delivery_start_time  = $deliv_day + ($this['delivery_start_time'] * 3600);
 				$delivery_end_time    = $deliv_day + ($this['delivery_end_time'] * 3600);
 				$pickup_start_time    = $deliv_day + ($this['pickup_start_time'] * 3600);
 				$pickup_end_time      = $deliv_day + ($this['pickup_end_time'] * 3600);
-				core::log("deliv time before timezone change: ".date('Y-m-d H:i:s',$delivery_start_time));		
-				
+				core::log("deliv time before timezone change: ".date('Y-m-d H:i:s',$delivery_start_time));
+
 				# if pickup time is actually the next day, add in the necessary seconds
 				if($pickup_start_time < $delivery_start_time)
 				{
 					$pickup_start_time += 86400;
 					$pickup_end_time   += 86400;
 				}
-				
+
 				# subtract hours due before seconds
 				$due_time  = $delivery_start_time - ($this['hours_due_before'] * 3600);
 				core::log("due time: ".date('Y-m-d H:i:s',$due_time));
 				core::log("right now is: ".date('Y-m-d H:i:s',time()));
-				
+
 				# if this # is less than the current timestamp, then you're good to order for this week.
 				# not, take this number and add 1 weeks' worth of seconds. thtat is the next closing time
 				# add hoursdue before to get actual delivery time. booyah.
@@ -217,7 +220,7 @@ class core_model_delivery_days extends core_model_base_delivery_days
 
 					return $this->__data['due_time'];
 				}
-				
+
 				break;
 			case 'bi-weekly':
 				break;
@@ -240,7 +243,7 @@ function delivery_days_formatter($data)
 		case 'weekly':
 			$data['short_formatted_cycle'] = 'Every '.$days[$data['day_nbr']];
 			$data['formatted_cycle'] = $data['short_formatted_cycle'].', order cutoff '.$data['hours_due_before'].' hours before delivery';
-			
+
 			break;
 		case 'bi-weekly':
 			$data['short_formatted_cycle'] = core_format::ordinal($data['day_ordinal']).' '.$days[$data['day_nbr']].' of every 2 weeks';
@@ -300,7 +303,7 @@ core::log($data['delivery_start_time']);
 			$data['buyer_formatted_cycle'] .= ' and '.core_format::time($data['pickup_end_time']);
 		}
 	}
-	
+
 	if($data['deliv_address_id'] > 0)
 	{
 		$data['delivery_time'] = core_format::time($data['delivery_start_time']) .' - '.core_format::time($data['delivery_end_time']);
@@ -313,7 +316,7 @@ core::log($data['delivery_start_time']);
 		$data['pickup_time'] = '';
  		$data['formatted_address'] = 'Direct to customer';
 	}
-		
+
 	return $data;
 }
 ?>
