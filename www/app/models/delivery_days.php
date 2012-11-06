@@ -107,6 +107,11 @@ class core_model_delivery_days extends core_model_base_delivery_days
 		$dds->__model=$this;
 		return $dds;
 	}
+
+	function is_valid ($lo_order_line_item) 
+	{
+		return true;
+	}
 	
 	function join_tz()
 	{

@@ -92,10 +92,13 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		foreach($dds as $dd)
 		{
 			$dd->next_time();
-			#echo('saving deliveyr into into order for ddid '.$dd['dd_id'].'<br />');
-			$order_deliveries[$dd['dd_id']] = $dd->__data;
-			#echo('order now contains: '.$order->delivery_options[$dd['dd_id']]['dd_id'].'<br />');
-			$this->dd_ids[] = $dd['dd_id'];
+			if ($dd->is_valid($this)) {
+				core::log(print_r($dd->__data, true));
+				#echo('saving deliveyr into into order for ddid '.$dd['dd_id'].'<br />');
+				$order_deliveries[$dd['dd_id']] = $dd->__data;
+				#echo('order now contains: '.$order->delivery_options[$dd['dd_id']]['dd_id'].'<br />');
+				$this->dd_ids[] = $dd['dd_id'];
+			}
 		}
 		asort($this->dd_ids);
 		$this->delivery_hash = implode('-',$this->dd_ids);
@@ -221,7 +224,9 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		}
 
 		$this['dd_id']   = $this->delivery['dd_id'];
-
+		
+		$order_deliveries[$this['dd_id']]->load();
+	   	
 		#core::log('combination is: '.$this['addr_id'].'-'.$this['due_time']);
 		# see if this delivery already exists.
 		# in order to reuse a delivery for a 2nd item, the delivery must meet
@@ -243,6 +248,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 			$new['delivery_end_time']  = $this->delivery['delivery_end_time'];
 			$new['pickup_start_time']  = $this->delivery['pickup_start_time'];
 			$new['pickup_end_time']  = $this->delivery['pickup_end_time'];
+			$new['dd_id_group'] = 'test';//implode('_',array_keys($order_deliveries));
 			if(!is_null($deliv_address))
 			{
 				$new['deliv_org_id']					= $deliv_address['org_id'];
