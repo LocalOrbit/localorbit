@@ -78,22 +78,23 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		}
 	}
 
-	function find_deliveries ($product) 
+	function find_deliveries ($product)
 	{
 		global $core;
 		$deliveries = array();
 
-		core::log('IS FORCED????');
+		core::log('IS FORCED???? ' . $core->config['domain']['feature_force_items_to_soonest_delivery']);
 		$deliveries = $this->find_possible_deliveries($this['lo_oid'], array());
 		$deliv = $this->find_next_possible_delivery($this['lo_oid'], $deliveries);
-		
-		/*
+
 		if($core->config['domain']['feature_force_items_to_soonest_delivery'] == 1) {
-			$deliveries = array($deliv);
-			$this->dd_ids[] = $this->delivery_hash = $deliv['dd_id'];
+			core::log('FORCED '. $this->delivery['dd_id']);
+			$deliveries = array($this->delivery['dd_id'] => $deliv[$this->delivery['dd_id']]);
+			$this->dd_ids = array_keys($deliveries);
+			$this->delivery_hash = implode('-',$this->dd_ids);
 		}
-		*/
-		core::log(print_r($deliveries, true));
+
+		core::log(print_r($this->delivery, true));
 
 		return core::model('lo_order_deliveries')->create($this['lo_oid'], $this->delivery, $product, $deliveries);
 	}
