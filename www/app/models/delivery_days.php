@@ -96,13 +96,14 @@ class core_model_delivery_days extends core_model_base_delivery_days
 	function is_valid ($lo_order_line_item)
 	{
 		$total_qty = $this->get_available($lo_order_line_item['prod_id']);
+		core::log($total_qty . ' are available.');
 		return $total_qty >= $lo_order_line_item['qty_ordered'];
 	}
 
 	function get_available ($prod_id)
 	{
 		$sql = sprintf('select COALESCE( sum(qty) , 0) as total_qty from product_inventory where prod_id = %2$d and (good_from is null or good_from < FROM_UNIXTIME(%1$d)) and (expires_on is null or expires_on > FROM_UNIXTIME(%1$d));',
-				$this->__data['delivery_end_time'], $prod_id);
+				$this['delivery_end_time'], $prod_id);
 		$total_qty = core_db::col($sql,'total_qty');
 		return $total_qty;
 	}

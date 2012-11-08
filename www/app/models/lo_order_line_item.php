@@ -83,12 +83,10 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		global $core;
 		$deliveries = array();
 
-		core::log('IS FORCED???? ' . $core->config['domain']['feature_force_items_to_soonest_delivery']);
 		$deliveries = $this->find_possible_deliveries($this['lo_oid'], array());
 		$deliv = $this->find_next_possible_delivery($this['lo_oid'], $deliveries);
 
 		if($core->config['domain']['feature_force_items_to_soonest_delivery'] == 1) {
-			core::log('FORCED '. $this->delivery['dd_id']);
 			$deliveries = array($this->delivery['dd_id'] => $deliv[$this->delivery['dd_id']]);
 			$this->dd_ids = array_keys($deliveries);
 			$this->delivery_hash = implode('-',$this->dd_ids);
@@ -112,7 +110,10 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		foreach($dds as $dd)
 		{
 			$dd->next_time();
+			core::log('checking ' . $this['qty_ordered'] .' on '. date('r', $dd['delivery_end_time']));
+			core::log('checking ' . $this['qty_ordered'] . ' on '. date('r', $dd['pickup_end_time']));
 			if ($dd->is_valid($this)) {
+				core::log($dd['dd_id'] . ' is valid!');
 				#echo('saving deliveyr into into order for ddid '.$dd['dd_id'].'<br />');
 				$order_deliveries[$dd['dd_id']] = $dd;
 				#echo('order now contains: '.$order->delivery_options[$dd['dd_id']]['dd_id'].'<br />');

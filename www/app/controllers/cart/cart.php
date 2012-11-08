@@ -135,6 +135,22 @@ class core_controller_cart extends core_controller
 		return $items;
 	}
 
+	function delete_old_deliveries ()
+	{
+		if ($item['lodeliv_id'])
+		{
+			$delivery_count = core_db::col('select count(*) as count from lo_order_line_item where lo_order_line_item.lo_liid != ' . $item['lo_liid'] . ' and lo_order_line_item.lodeliv_id = ' . $item['lodeliv_id'] . ';', 'count');
+			if ($delivery_count == 0)
+			{
+				core::log('deleting orphan deliveries');
+				core_db::query('
+					delete from lo_order_deliveries
+					where lodeliv_id = ' . $item['lodeliv_id']
+				);
+			}
+		}
+	}
+
 	function update_quantity()
 	{
 		global $core;
@@ -161,6 +177,7 @@ class core_controller_cart extends core_controller
 			if(!isset($items[$item['prod_id']]) || floatval($items[$item['prod_id']]) == 0)
 			{
 				core::log('deleting '.$item['prod_id']);
+				$this->delete_old_deliveries();
 				$item->delete($item['lo_liid']);
 			}
 			else
@@ -175,6 +192,13 @@ class core_controller_cart extends core_controller
 					$item['qty_ordered'] = $core->data['prod_'.$item['prod_id']];
 					$item['category_ids']  = $product['category_ids'];
 					$item['final_cat_id']  = trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
+
+					$order_deliv = $item->find_deliveries($product);
+					$this->delete_old_deliveries();
+					//$deliveries = $new_item->find_possible_deliveries($new_item['lo_oid'], array());
+					//$deliv = $new_item->find_next_possible_delivery($new_item['lo_oid'], $deliveries);
+					//$order_deliv = core::model('lo_order_deliveries')->create($new_item['lo_oid'], $new_item->delivery, $product, $deliveries);
+					$item['lodeliv_id'] = $order_deliv['lodeliv_id'];
 					$item->find_best_price();
 				}
 
