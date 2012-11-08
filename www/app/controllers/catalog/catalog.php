@@ -3,6 +3,32 @@
 class core_controller_catalog extends core_controller
 {
 
+	function check_inventory ()
+	{
+		global $core;
+
+		$inv = 0;
+
+		$dds = core::model('delivery_days')->get_days_for_prod($core->data['prod_id'],$core->config['domain']['domain_id']);
+		foreach($dds as $dd)
+		{
+			$dd->next_time();
+			$available = $dd->get_available($core->data['prod_id']);
+			$inv = max($available, $inv);
+		}
+
+		core::log('maximum inventory: '. $inv);
+
+		if ($inv < $core->data['newQty'])
+		{
+			core::js('core.catalog.checkInventoryFailure(' . $core->data['prod_id'] . ', ' . $inv . ');');
+		}
+		else
+		{
+			core::js('core.catalog.updateRowContinue(' . $core->data['prod_id'] . ', ' . $core->data['newQty'] . ');');
+		}
+	}
+
 	function update_fees($return_data='no',$cart = null)
 	{
 		global $core;

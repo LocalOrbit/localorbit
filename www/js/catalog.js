@@ -93,7 +93,7 @@ core.catalog.updateListing=function(){
 	for (var i = 0; i < core.products.length; i++){
 		core.products[i].show = true;
 	}
-	
+
 	// determine which products to show or hide
 	prodVisible = false;
 	for (var i = 0; i < core.products.length; i++){
@@ -105,7 +105,7 @@ core.catalog.updateListing=function(){
 					parseInt(document.cartForm['prodQty_'+core.products[i].prod_id].value) == 0
 					||
 					document.cartForm['prodQty_'+core.products[i].prod_id].value == ''
-					|| 
+					||
 					isNaN(document.cartForm['prodQty_'+core.products[i].prod_id].value)
 				){
 					core.products[i].show = false;
@@ -132,14 +132,14 @@ core.catalog.updateListing=function(){
 
 		// add this element to the list of things to hide
 		if(core.products[i].show){
-			
+
 			// remember the fact that there is at least one prod visible. Used for no product msgs
 			prodVisible = true;
-			
+
 			// add this product an its catgories to the list of things to show
 			core.thingsToShow.push('#product_'+core.products[i].prod_id);
 			catsToShow[core.products[i].category_ids[1]] = true;
-			
+
 			// if there are many levels to this product hierarchy, use the 4th index for the sub cat
 			// (0== base cat, 1 == root cat, 2 == 1st sub cat, 3 == 2nd sub cat)
 			// otherwise, use the 3rd index.
@@ -151,7 +151,7 @@ core.catalog.updateListing=function(){
 			core.thingsToHide.push('#product_'+core.products[i].prod_id);
 		}
 	}
-	
+
 	// determine which categories to show or hide
 	for(var key in core.categories){
 		for (var i = 0; i < core.categories[key].length; i++){
@@ -163,8 +163,8 @@ core.catalog.updateListing=function(){
 				core['thingsTo'+((catsToShow[core.categories[key][i].cat_id])?'Show':'Hide')].push('#start_cat2_'+core.categories[key][i].cat_id);
 				core['thingsTo'+((catsToShow[core.categories[key][i].cat_id])?'Show':'Hide')].push('#end_cat2_'+core.categories[key][i].cat_id);
 			}
-			
-			
+
+
 			// only affect showing of subcats
 			if(key != 2){
 				// if this cat does NOT belong to the cat1 fitler, just hide it
@@ -180,7 +180,7 @@ core.catalog.updateListing=function(){
 	if(!prodVisible){
 		// if its because the cart filter is on but there are no products in cart, use one msg.
 		if(
-			core.catalog.filters.cartOnly == 1 
+			core.catalog.filters.cartOnly == 1
 			&& core.catalog.filters.seller==0
 			&& core.catalog.filters.cat1==0
 			&& core.catalog.filters.cat2==0
@@ -207,9 +207,9 @@ core.catalog.updateListing=function(){
 	$(core.thingsToHideS.join(',')).hide(300);
 	$(core.thingsToFadeIn.join(',')).fadeIn(300);
 	$(core.thingsToFadeOut.join(',')).fadeOut(100);
-		
 
-	
+
+
 	core.ui.scrollTop();
 }
 
@@ -222,7 +222,7 @@ core.catalog.initCatalog=function(){
 		core.prodIndex[core.products[i]['prod_id']] = core.products[i];
 		core.catalog.addressCoords[core.products[i].address+', '+core.products[i].city+', '+core.products[i].code+', '+core.products[i].postal_code] = true;
 	}
-	
+
 	// build a cache of all the coordinates for the addresses for each product
 	for(var key in core.catalog.addressCoords){
 		core.ui.getLatLng(
@@ -230,14 +230,14 @@ core.catalog.initCatalog=function(){
 			'core.catalog.setAddressCache(\''+core.base64_encode(key)+'\',gcResult);'
 		);
 	}
-	
+
 	// set show state for all categories
 	for(var key in core.categories){
 		for (var i = 0; i < core.categories[key].length; i++){
 			core.categories[key][i].show = true;
 		}
 	}
-	
+
 	$('input.total_line').val(core.format.price(core.cart.total));
 	if(new String(location.href).indexOf('cart') >= 0)
 		core.catalog.setFilter('cartOnly');
@@ -254,35 +254,26 @@ core.catalog.setAddressCache=function(address,gcResult){
 	}
 }
 
+core.catalog.checkInventoryFailure=function(prodId, maximumQuantity){
+	core.log('failure...');
+	$('#prodQty_'+prodId).val(parseFloat(maximumQuantity));
+	$('#qtyBelowInv_'+prodId).html(((maximumQuantity)?'Only '+parseFloat(maximumQuantity):'Sorry none')+' are available.').fadeIn(300);
+	core.catalog.updateRowContinue(prodId, maximumQuantity);
+}
+
 core.catalog.doWeeklySpecial=function(prodId){
 	core.catalog.updateRow(prodId,1);
 	$('#prodQty_'+prodId).val(1);
 	$('#weekly_special').fadeOut('fast');
 }
 
-core.catalog.updateRow=function(prodId,newQty){
-	if(newQty == '')
-		newQty = 0;
-	var newQty = parseInt(newQty);
-	var rowTotal = 100000000000000;
-	
-	
-	// check the inventory, show warning if below
-	if(core.prodIndex[prodId].inventory < newQty){
-		newQty = core.prodIndex[prodId].inventory;
-		$('#prodQty_'+prodId).val(parseFloat(newQty));
-		$('#qtyBelowInv_'+prodId).html('Only '+parseFloat(newQty)+' available').fadeIn(300);
-	}else{
-		$('#qtyBelowInv_'+prodId).hide();
-	}
-
-
-	
+core.catalog.updateRowContinue=function(prodId, newQty) {
 	// loop through all the products
 	var priceId = -1;
 	var lowestMin = 100000000000000;
+	var rowTotal = 100000000000000;
 	for (var i = 0; i < core.prices[prodId].length; i++){
-		
+
 		// reformat the min qty to zero if it came across as an object (nulls can do this)
 		if(typeof(core.prices[prodId][i]['min_qty']) == 'object')
 			core.prices[prodId][i]['min_qty'] = 0;
@@ -300,7 +291,7 @@ core.catalog.updateRow=function(prodId,newQty){
 			if(possibleRow < rowTotal){
 				rowTotal = possibleRow;
 				priceId = core.prices[prodId][i]['price_id'];
-			}			
+			}
 		}
 
 
@@ -308,7 +299,7 @@ core.catalog.updateRow=function(prodId,newQty){
 			lowestMin = core.prices[prodId][i]['min_qty'];
 		}
 	}
-	
+
 	// if we we found a valid price,
 	if(priceId > 0){
 		//alert('lowest is: '+priceId+' / '+rowTotal);
@@ -328,8 +319,27 @@ core.catalog.updateRow=function(prodId,newQty){
 	}
 }
 
+core.catalog.updateRow=function(prodId,newQty){
+	if(newQty == '')
+		newQty = 0;
+	var newQty = parseInt(newQty);
+	$('#qtyBelowInv_'+prodId).hide();
+	core.doRequest('/catalog/check_inventory', '&prod_id=' + prodId +'&newQty=' + newQty);
+	/*
+	var rowTotal = 100000000000000;
+
+	// check the inventory, show warning if below
+	if(core.prodIndex[prodId].inventory < newQty){
+		newQty = core.prodIndex[prodId].inventory;
+		$('#prodQty_'+prodId).val(parseFloat(newQty));
+		$('#qtyBelowInv_'+prodId).html('Only '+parseFloat(newQty)+' available').fadeIn(300);
+	}else{
+	}
+	*/
+}
+
 core.catalog.setQty=function(prodId,newQty,rowTotal){
-	var found=false;	
+	var found=false;
 	//loop through the cart products
 	for (var i = 0; i < core.cart.items.length; i++){
 		// if we found it, then update its row total and quantity
@@ -348,8 +358,8 @@ core.catalog.setQty=function(prodId,newQty,rowTotal){
 			'qty_ordered':newQty
 		});
 	}
-	
-	
+
+
 	// show the total
 	$('#prodTotal_'+prodId).val(core.format.price(rowTotal));
 }
@@ -393,7 +403,7 @@ core.catalog.popupWhat=function(prodId,refObj){
 	var prod = core.prodIndex[prodId];
 	var html = '<table><tr><td>';
 	if(typeof(prod.pimg_id) != 'object'){
-		html += '<img class="catalog" style="float:left;margin: 0px 8px 8px 0px;" src="/img/products/cache/'+prod.pimg_id+'.'+prod.width+'.'+prod.height+'.200.150.'+prod.extension+'" />';		
+		html += '<img class="catalog" style="float:left;margin: 0px 8px 8px 0px;" src="/img/products/cache/'+prod.pimg_id+'.'+prod.width+'.'+prod.height+'.200.150.'+prod.extension+'" />';
 	}
 	html += '<span class="product_name">'+prod['name'];
 	if(prod['single_unit'] != ''){
@@ -404,7 +414,7 @@ core.catalog.popupWhat=function(prodId,refObj){
 	html += '<span class="what_section">What: </span>'+prod['description']+'<br />&nbsp;<br />';
 	html += '<span class="what_section">How: </span>'+((prod['how'] == '')?seller['product_how']:prod['how']);
 	html += '</td></tr></table>';
-	
+
 	core.catalog.popupShow(refObj,html,'What');
 }
 
@@ -414,7 +424,7 @@ core.catalog.popupWhere=function(prodId,refObj){
 	var latitude = parseFloat(core.prodIndex[prodId]['latitude']);
 	var longitude = parseFloat(core.prodIndex[prodId]['longitude']);
 	//core.alertHash(core.prodIndex[prodId]);
-	
+
 	core.ui.map('whereMap','#shop_popup_content',440,300,8);
 	// look for the address in our cache
 	if(!isNaN(latitude) && !isNaN(longitude)){
@@ -439,16 +449,16 @@ core.catalog.popupShow=function(refObj,content,type){
 		$('#shop_popup_content').html(content);
 
 	//console.log('step 1');
-	
+
 	if(core.catalog.popupOn == 0 || (core.catalog.popupOn==1 && core.catalog.popupType != type))
 		$('#shop_popup').hide().css('top',(pos.top + 18)+'px').css('left',(pos.left - 340)+'px').fadeIn("slow");
-	
+
 	core.catalog.popupType = type;
 	core.catalog.popupOn = 1;
-	
-	$('#shop_popup').mouseleave(function(){core.catalog.popupOn=0;window.setTimeout(core.catalog.popupOff,500);}).mouseenter(function(){core.catalog.popupOn=1;});	
+
+	$('#shop_popup').mouseleave(function(){core.catalog.popupOn=0;window.setTimeout(core.catalog.popupOff,500);}).mouseenter(function(){core.catalog.popupOn=1;});
 	//console.log('step 2');
-	$(refObj).mouseleave(function(){core.catalog.popupOn=0;window.setTimeout(core.catalog.popupOff,500);}).mouseenter(function(){core.catalog.popupOn=1;});	
+	$(refObj).mouseleave(function(){core.catalog.popupOn=0;window.setTimeout(core.catalog.popupOff,500);}).mouseenter(function(){core.catalog.popupOn=1;});
 	//console.log('step 3');
 	//$(refObj).mouseleave(core.catalog.popupOff);
 	//$('#shop_popup').hide().css('top',(pos.top + 15)+'px').css('left',(pos.left - 340)+'px');
@@ -462,7 +472,7 @@ core.catalog.popupShow=function(refObj,content,type){
 		}
 		core.catalog.popupFlag=type;
 	});
-	
+
 	$('#shop_popup').mouseenter(function(){
 		core.catalog.popupFlag=type;
 	});*/
@@ -475,7 +485,7 @@ core.catalog.popupOff=function(refObj){
 }
 
 core.catalog.closeAllPopups=function(args){
-	
+
 	core.catalog.popupOff();
 }
 
@@ -489,15 +499,15 @@ core.catalog.setupPopup=function(id){
 			$("#shop_popup").fadeOut("slow");
 		}, 650);
 		//set the timeoutId, allowing us to clear this trigger if the mouse comes back over
-		someElement.data('timeoutId', timeoutId); 
+		someElement.data('timeoutId', timeoutId);
 	});
 }
 
 core.catalog.popupLoginRegister=function(idx){
 	var refObj = document.getElementById(((core.catalog.filters.cartOnly==1)?'continueShoppingButton':'showCartButton')+idx);
-	var pos = $(refObj).offset(); 
-	$('#edit_popup').css( { 
-		'left': (pos.left - 100)+'px', 
+	var pos = $(refObj).offset();
+	$('#edit_popup').css( {
+		'left': (pos.left - 100)+'px',
 		'top': (pos.top - 30)+'px'
 	});
 	core.doRequest('/catalog/popup_login_register',{});
