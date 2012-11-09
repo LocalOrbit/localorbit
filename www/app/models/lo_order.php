@@ -401,6 +401,7 @@ class core_model_lo_order extends core_model_base_lo_order
 			#$fulfill['adjusted_total'] = $fulfill['grand_total'];
 
 			$fulfill->save();
+			$fulfill->create_order_payables($this['payment_method']);
 		}
 
 		# look for updates to the deliveries, such as changing addresses

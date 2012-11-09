@@ -8,25 +8,25 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 			->collection()
 			->filter('lo_foid',$this['lo_foid'])
 			->sort('deliv_time')
-			->sort('seller_name'); 
+			->sort('seller_name');
 		#$this->items->load();
 		return $this->items;
 	}
-	
+
 	function send_emails($order)
 	{
 		global $core;
 		core::log('sending email to seller org '.$this['org_id']);
 		$users = core::model('customer_entity')->collection()->filter('org_id',$this['org_id']);
 		$domain = core::model('domains')->load($this['domain_id']);
-		
+
 		$user_list = array();
 		foreach($users as $useritem)
 		{
 			$user_list[] = $useritem['email'];
 		}
 
-		
+
 		core::process_command('emails/order_seller',false,
 			$user_list,
 			$fullname,
@@ -37,11 +37,33 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 			$domain['domain_id'],
 			$domain['hostname'],
 			$domain['name'],
-			$this['org_id']			
+			$this['org_id']
 		);
-		
+
 	}
-	
+
+	function create_order_payables ($payment_method) {
+		global $core;
+
+		$payable = core::model('payables');
+		$payable['domain_id'] = $core->config['domain']['domain_id'];
+		$payable['amount'] = $this['grand_total'];
+		$payable['payable_type_id'] = 2;
+		$payable['parent_obj_id'] = $this['lo_foid'];
+		$payable['to_org_id'] = $this['org_id'];
+		$payable['description'] = $this['lo3_order_nbr'];
+
+		if ($core->config['domain']['payment_configuration']  == 'self_managed' && $payment_method == 'purchaseorder') {
+			$payable['from_org_id'] = core_db::col('SELECT payable_org_id from domains where domain_id ='.$core->config['domain']['domain_id'],'payable_org_id');
+		} else {
+			$payable['from_org_id'] = 1;
+		}
+
+		$payable->save();
+
+		return $payable;
+	}
+
 	function get_status_history()
 	{
 		global $core;
@@ -52,7 +74,7 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 			->to_array();
 		return $this->history;
 	}
-	
+
 	function get_item_status_history()
 	{
 		global $core;
@@ -69,8 +91,8 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 			left join lo_seller_payment_statuses on lo_order_item_status_changes.lsps_id = lo_seller_payment_statuses.lsps_id
 			left join lo_delivery_statuses on lo_order_item_status_changes.ldstat_id = lo_delivery_statuses.ldstat_id
 			where lo_liid in (
-				select lo_liid 
-				from lo_order_line_item 
+				select lo_liid
+				from lo_order_line_item
 				where lo_foid = '.$this['lo_foid'].'
 			)
 			order by loi_scid;
@@ -78,7 +100,7 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 		$this->item_history = $this->item_history->to_hash('lo_liid');
 		return $this->item_history;
 	}
-	
+
 	function get_items_by_delivery()
 	{
 		global $core;
@@ -133,19 +155,19 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 				'directory_country_region dcr2',
 				'(a2.region_id = dcr2.region_id)',
 				array('dcr2.code as pickup_state')
-			)			
+			)
 			->collection()
 			->add_formatter('determine_delivery_language')
 			->sort('delivery_start_time')
 			->filter('lo_order_line_item.lo_foid',$this['lo_foid']);
 		return $this->items;
 	}
-	
-	
+
+
 	function change_status($ldstat_id,$lsps_id,$do_update=true)
 	{
 		global $core;
-		
+
 		if(!is_numeric($this['lo_foid']))
 		{
 			throw new Exception('Cannot change status of unsaved order');
@@ -155,7 +177,7 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 		{
 			$this['ldstat_id'] = $ldstat_id;
 			$this['last_status_date'] = date('Y-m-d H:i:s');
-			
+
 			$stat_change = core::model('lo_fulfillment_order_status_changes');
 			$stat_change['user_id'] = $core->session['user_id'];
 			$stat_change['lo_foid'] = $this['lo_foid'];
@@ -167,7 +189,7 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 		{
 			$this['lsps_id'] = $lsps_id;
 			$this['last_status_date'] = date('Y-m-d H:i:s');
-			
+
 			$stat_change = core::model('lo_fulfillment_order_status_changes');
 			$stat_change['user_id'] = $core->session['user_id'];
 			$stat_change['lo_foid'] = $this['lo_foid'];
@@ -180,7 +202,7 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 			$this->save();
 		}
 	}
-	
+
 }
 
 function delivery_actions($data)
