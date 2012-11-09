@@ -174,7 +174,6 @@ class core_model_lo_order extends core_model_base_lo_order
 
 						)
 						{
-							core::log('test');
 							# we've got a match! create one for every seller
 
 							foreach($sellers as $seller_org_id)
@@ -476,6 +475,7 @@ class core_model_lo_order extends core_model_base_lo_order
 		$this->save();
 		$this['lo3_order_nbr']  = $this->generate_order_id('buyer',$core->config['domain']['domain_id'],$this['lo_oid']);
 		$this->save();
+		$this->create_order_payables();
 		core::model('events')->add_record('Checkout Complete',$this['lo_oid']);
 		$this->send_email($fulfills);
 	}
@@ -522,6 +522,28 @@ class core_model_lo_order extends core_model_base_lo_order
 		{
 			$this->save();
 		}
+	}
+
+	function create_order_payables () {
+		global $core;
+
+		$payable = core::model('payables');
+		$payable['domain_id'] = $core->config['domain']['domain_id'];
+		$payable['amount'] = $this['grand_total'];
+		$payable['payable_type_id'] = 1;
+		$payable['parent_obj_id'] = $this['lo_oid'];
+		$payable['from_org_id'] = $this['org_id'];
+		$payable['description'] = $this['lo3_order_nbr'];
+
+		if ($core->config['domain']['payment_configuration']  == 'self_managed' && $this['payment_method'] == 'purchaseorder') {
+			$payable['to_org_id'] = core_db::col('SELECT payable_org_id from domains where domain_id ='.$core->config['domain']['domain_id'],'payable_org_id');
+		} else {
+			$payable['to_org_id'] = 1;
+		}
+
+		$payable->save();
+
+		return $payable;
 	}
 
 	function get_status_history()
@@ -759,86 +781,6 @@ class core_model_lo_order extends core_model_base_lo_order
 				->filter('org_id','in',$orgs)
 				->to_array();
 		}
-	}
-
-	function OBSOLETE_arrange_by_next_delivery($include_hub_addresses=false)
-	{
-		global $core;
-
-		$this->items_by_delivery = array();
-
-		$this->delete_deliveries();
-		$this->deliveries=array();
-
-core::log('DELETING ALL DELIVERIES...');
-		foreach($this->items as $item)
-		{
-			# if this hub is configured to auto select the next
-			# possible delivery day, then
-			if($core->config['domain']['feature_force_items_to_soonest_delivery'] == 1)
-			{
-				core::log('tryign to find the next delivery time for '.$item['product_name']);
-				$this->delivery_options = $item->find_next_possible_delivery($this['lo_oid'],$this->delivery_options);
-				#echo('looking at ddid '.$item['dd_id'].'<br />');
-				if(!is_array($this->items_by_delivery[$item['dd_id']]))
-				{
-					$this->items_by_delivery[$item['dd_id']] = array();
-				}
-				$this->items_by_delivery[$item['dd_id']][] = $item->to_array();
-			}
-			else
-			{
-				core::log('Find all possible delivery options for '.$item['product_name']);
-				$this->delivery_options = $item->find_possible_deliveries($this['lo_oid'],$this->delivery_options);
-
-				# build a grouping by delivery options
-				if(!is_array($this->items_by_delivery[$item->delivery_hash]))
-				{
-					$this->items_by_delivery[$item->delivery_hash] = array();
-				}
-				$this->items_by_delivery[$item->delivery_hash][] = $item->to_array();
-
-				# load the customer addresses, if necessary
-				$has_customer_delivery = false;
-				foreach($this->delivery_options as $option)
-				{
-					# 2 possible situations exist where we need to load the
-					# customer addresses:
-					# either the seller delivers directly to the customer,
-					# or the seller delivers to the hub and then the hub
-					# delivers to the customer. Check for these cases
-					if(
-						intval($option['deliv_address_id']) == 0 ||
-						(intval($option['deliv_address_id']) != 0 && intval($option['pickup_address_id']) == 0)
-					){
-						$has_customer_delivery = true;
-					}
-				}
-
-
-				# confirmed: gotta load possible customer addresses
-				$orgs = array(intval($core->session['org_id']));
-
-				# if we're set to include all the addresses for the hub
-				# which is used for checkout purposes to make things more
-				# efficient, then query for the org_id of the hub
-				if($include_hub_addresses)
-				{
-					$orgs[] = core_db::col('
-							select org_id from organizations_to_domains
-							where orgtype_id=2
-							and domain_id='.$core->config['domain']['domain_id'],'org_id');
-				}
-				$this->customer_addresses = core::model('addresses')
-					->collection()
-					->filter('is_deleted',0)
-					->filter('org_id','in',$orgs)
-					->to_array();
-				#print_r($this->customer_addresses);
-
-			}
-		}
-		ksort($this->items_by_delivery);
 	}
 
 	function delete_deliveries()
