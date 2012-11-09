@@ -455,7 +455,7 @@ class core_controller_catalog extends core_controller
 						'fee_calc_type_id'=>$opt['fee_calc_type_id'],
 						'amount'=>$opt['amount'],
 					);
-					$final_opts[] = $new_opt;
+					$final_opts[$new_opt['end_time']] = $new_opt;
 				}
 			}
 			else
@@ -472,13 +472,14 @@ class core_controller_catalog extends core_controller
 					'fee_calc_type_id'=>$opt['fee_calc_type_id'],
 					'amount'=>$opt['amount'],
 				);
-				$final_opts[] = $new_opt;
+				$final_opts[$new_opt['end_time']] = $new_opt;
 			}
 			#print_r($opt);
 		}
+		// sort by key (end_time)
+		ksort($final_opts);
+		$final_opts = array_values($final_opts);
 		return $final_opts;
-		#$options = array();
-		#print_r($options_data);
 	}
 }
 
