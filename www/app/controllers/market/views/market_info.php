@@ -34,10 +34,10 @@
 	<tr>
 		<td class="label">Support Option</td>
 		<td class="value">
-			<select name="support_option">
-				<option value="lo_managed">Local Orbit Managed</option>
-				<option value="self_managed">Self-Managed</option>
-				<option value="ext_managed">Externally Managed</option>
+			<select name="seller_payment_managed_by">
+				<option value="fully_managed"<?=(($data['seller_payment_managed_by'] == 'fully_managed')?' selected="selected"':'')?>>Local Orbit Managed</option>
+				<option value="self_managed"<?=(($data['seller_payment_managed_by'] == 'self_managed')?' selected="selected"':'')?>>Self-Managed</option>
+				
 			</select>
 		</td>
 	</tr>
