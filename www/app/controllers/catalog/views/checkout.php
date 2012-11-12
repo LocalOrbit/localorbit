@@ -28,12 +28,17 @@ if(count($cart->discount_codes) == 0)
 {
 	$cart->discount_codes = array(array('code'=>''));
 }
-
 # if there are no items in the cart, send the user back to the shopping page
 if(count($cart->items->to_array()) == 0)
 {
 	core::js('location.href="#!catalog-shop";');
 	core_ui::notification('You have no items in your cart');
+	core::deinit();
+}
+else if ($cart['grand_total'] < $core->config['domain']['order_minimum'])
+{
+	core::js('location.href="#!catalog-shop";');
+	core_ui::notification('You have not met the minimum order requirement of ' . core_format::price($core->config['domain']['order_minimum']));
 	core::deinit();
 }
 core::ensure_navstate(array('left'=>'left_blank'));
