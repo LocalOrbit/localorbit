@@ -88,7 +88,7 @@ $orgs->add(new core_datacolumn('creation_date','Registered On',true,'15%','<a hr
 $orgs->add(new core_datacolumn('orgtype_id','Role',true,'10%','<a href="#!organizations-edit--org_id-{org_id}">{role}</a>','{role}','{role}'));
 $orgs->add(new core_datacolumn('name',' ',false,'10%','<a href="javascript:core.doRequest(\'/organizations/{activate_action}\',{\'org_id\':{org_id}});">{activate_action}</a><br /><a href="javascript:core.doRequest(\'/organizations/{enable_action}\',{\'org_id\':{org_id}});">{enable_action}</a>',' ',' '));
 
-if(lo3::is_admin())
+if(lo3::is_admin() || lo3::is_market())
 {
 	$orgs->add(new core_datacolumn('','&nbsp;',false,'12%','<a href="#!organizations-list" onclick="org.deleteOrg({org_id},\'{name}\',this);">Delete&nbsp;&raquo;</a>',' ',' '));
 }

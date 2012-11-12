@@ -527,7 +527,7 @@ class core_controller_organizations extends core_controller
 	function delete_org()
 	{
 		global $core;
-		lo3::require_orgtype('admin');
+		lo3::require_orgtype('market');
 		$org = core::model('organizations')->load(intval($core->data['org_id']));
 		$org['is_deleted'] = 1;
 		$org->save();
