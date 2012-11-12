@@ -481,6 +481,13 @@ class core_model_lo_order extends core_model_base_lo_order
 		$this->send_email($fulfills);
 	}
 
+	function set_payable_invoicable ($invoicable)
+	{
+		$payable = core::model('payables')->collection()->filter('payable_type_id',1)->filter('parent_obj_id',$this['lo_oid'])->row();
+		$payable['invoicable'] = true;
+		$payable->save();
+	}
+
 	function change_status($ldstat_id,$lbps_id,$do_update=true)
 	{
 		global $core;
@@ -498,6 +505,11 @@ class core_model_lo_order extends core_model_base_lo_order
 		{
 			$this['ldstat_id'] = $ldstat_id;
 			$this['last_status_date'] = date('Y-m-d H:i:s');
+
+			if ($ldstat_id == 4) {
+				$this->set_payable_invoicable(true);
+			}
+
 			$stat_change = core::model('lo_order_status_changes');
 			$stat_change['user_id'] = $core->session['user_id'];
 			$stat_change['lo_oid'] = $this['lo_oid'];
