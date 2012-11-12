@@ -15,7 +15,7 @@ if($order['org_id'] != $core->session['org_id'])
 	# load the organization that placed the order
 	# if it's on the same domain, make sure the viewer is a MM
 	# otherwise, make sure they're an admin
-	
+
 	if(!in_array($order['domain_id'],$core->session['domains_by_orgtype_id'][2]))
 	{
 		lo3::require_orgtype('admin');
@@ -53,7 +53,7 @@ $address = core::model('lo_order_address')
 		<col width="47%" />
 		<col width="6%" />
 		<col width="47%" />
-		
+
 		<tr>
 			<td>
 				<h2>Order Info</h2>
@@ -156,12 +156,12 @@ foreach($order->items as $item)
 			if ($item['delivery_org_id'] == $order['org_id'])
 			{
 				$field = 'deliv';
-			} 
+			}
 			else if (intval($item['pickup_org_id']) == intval($order['org_id']))
 			{
 				$field = 'pickup';
 			}
-			if (!isset($field) || $addresses->__num_rows < 2 || ($item['delivery_start_time'] - $item['hours_due_before']*60*60) < time()) 
+			if (!isset($field) || $addresses->__num_rows < 2 || ($item['delivery_start_time'] - $item['hours_due_before']*60*60) < time())
 			{
 			?>
 			<h2><?=$item['buyer_formatted_deliv1']?></h2>
@@ -170,7 +170,7 @@ foreach($order->items as $item)
 			<h2><?=$item['buyer_formatted_deliv1']?></h2>
 			<?=$item['buyer_formatted_deliv2']?>
 			<div style="padding:5px 0px 5px 0px;">Change delivery address: </div>
-			<select id="address_select_<?=$item['dd_id']?>" style="width: 500px;"> 
+			<select id="address_select_<?=$item['dd_id']?>" style="width: 500px;">
 				<?=core_ui::options($addresses, $item[$field.'_address_id'],'address_id','formatted_address')?>
 			</select>
 			<input type="button" class="button_secondary" value="update delivery address" onclick="$('#lodelivinfo_<?=$item['dd_id']?>').html($('#address_select_<?=$item['dd_id']?> option:selected').html());core.doRequest('/orders/update_delivery_address', {'lodeliv_id' :$('#deliv_ids_<?=$this_dd?>').val() ,  'id' : $('#address_select_<?=$item['dd_id']?>').val(), 'field' : '<?=$field?>'});" />
@@ -201,17 +201,17 @@ foreach($order->items as $item)
 		$dd_id = $this_dd;
 	}
 	$deliv_ids[] = $item['lodeliv_id'];
-	
+
 	$link = '#!catalog-view_product--prod_id-';
 	if(lo3::is_admin() || lo3::is_market() || $item['seller_org_id'] == $core->session['org_id'])
 	{
 		$link  = '#!products-edit--prod_id-';
 	}
-	
+
 	?>
 			<tr>
 				<td class="dt">
-					<a href="<?=$link?><?=$item['prod_id']?>"><?=$item['product_name']?></a> 
+					<a href="<?=$link?><?=$item['prod_id']?>"><?=$item['product_name']?></a>
 					from <?=$item['seller_name']?>
 					<? if(count($order->item_history[$item['lo_liid']]) > 0){?>
 					<div class="expandable" onclick="$('#item_status_history_<?=$item['lo_liid']?>').toggle();$(this).toggleClass('contract');">View Status History</div>
@@ -226,7 +226,7 @@ foreach($order->items as $item)
 								$status = 'Buyer Payment: '.$history['buyer_payment_status'];
 							if(is_numeric($history['lsps_id']))
 								$status = 'Seller Payment: '.$history['seller_payment_status'];
-	
+
 						?>
 						<tr>
 							<td><?=$status?> </td>
@@ -253,7 +253,7 @@ foreach($order->items as $item)
 }
 ?>
 	</table>
-<? 
+<?
 echo('<input type="hidden" id="deliv_ids_'.$dd_id.'" name="deliv_ids_'.$dd_id.'" value="'.implode('-',$deliv_ids).'" />');
 
 if((lo3::is_admin() || lo3::is_market()) && count($order->history) > 0){?>
@@ -261,7 +261,7 @@ if((lo3::is_admin() || lo3::is_market()) && count($order->history) > 0){?>
 	<h2>Order Status History</h2>
 	<table class="dt">
 	<?
-	$style = true; 
+	$style = true;
 	foreach($order->history as $change)
 	{
 		$style=(!$style);
@@ -273,6 +273,7 @@ if((lo3::is_admin() || lo3::is_market()) && count($order->history) > 0){?>
 		<tr class="dt<?=$style?>">
 			<td class="dt"><?=$status?></td>
 			<td class="dt"><?=core_format::date($change['creation_date'])?></td>
+			<td class="dt">by <a href="#!users-edit--entity_id-<?=$change['user_id']?>"><?=$change['email']?></a></td>
 		</tr>
 	<?}?>
 	</table>

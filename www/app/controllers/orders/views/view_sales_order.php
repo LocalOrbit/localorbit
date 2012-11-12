@@ -53,7 +53,7 @@ foreach($order->items as $item)
 
 
 $allow_delivery = (!lo3::is_customer() || (lo3::is_customer() && $core->config['domain']['feature_sellers_mark_items_delivered'] == 1));
-	
+
 #echo('<pre>');
 #print_r($order->item_history);
 ?>
@@ -321,6 +321,7 @@ $net_sale  = ($order['adjusted_total'] - $hub_fee_total - $processing_fee_total)
 		<tr class="dt<?=$style?>">
 			<td class="dt"><?=$status?></td>
 			<td class="dt"><?=core_format::date($change['creation_date'])?></td>
+			<td class="dt">by <a href="#!users-edit--entity_id-<?=$change['user_id']?>"><?=$change['email']?></a></td>
 		</tr>
 	<?}?>
 	</table>
