@@ -9,6 +9,7 @@ lo3::require_login();
 # load the data needed for this form and store it into misc global vars
 global $data,$domains,$all_domains,$org_all_domains;
 $data = core::model('organizations')->load();
+core::log('loading org '.$data['org_id']);
 $all_domains = core::model('domains')->collection()->sort('name');
 $org_domains = core::model('organizations_to_domains')->collection()->filter('org_id',$data['org_id']);
 list(
@@ -55,7 +56,7 @@ core_ui::load_library('js','org.js');
 core_ui::load_library('js','address.js');
 
 # determine which tabs we're going to show, and store the right tabid
-$tabs = array('Organization Info','Addresses','Users');
+$tabs = array('Organization Info','Addresses','Users','Payment Methods');
 if(
 	$data['allow_sell'] == 1 and 
 	$domains->__num_rows > 0 and
@@ -92,6 +93,7 @@ if($data['is_deleted'] == 1)
 	<? $this->info($is_mm); ?>
 	<? $this->addresses(); ?>
 	<? $this->users(); ?>
+	<? $this->payment_methods(); ?>
 	<? $this->cross_sell($crosssell_tab_id); ?>
 	<? $this->profile($profile_tab_id); ?>
 	<? $this->managed_hubs($managehubs_tab_id,$is_mm); ?>

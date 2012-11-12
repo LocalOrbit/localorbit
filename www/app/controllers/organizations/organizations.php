@@ -52,6 +52,48 @@ class core_controller_organizations extends core_controller
 		core_ui::notification('hubs removed',false);	
 	}
 	
+	function save_payment_method()
+	{
+		global $core;
+		core::load_library('crypto');
+		
+		if($core->data['org_id'] != $core->session['org_id'])
+			lo3::require_orgtype('market');
+	
+		core::log(print_r($core->data,true));
+		$pm = core::model('organization_payment_methods')
+			->import_fields('opm_id','label','name_on_account','org_id');
+		
+		if($core->data['nbr1'] != '' && strpos($core->data['nbr1'],'*')===false)
+		{
+			$pm['nbr1'] = core_crypto::encrypt($core->data['nbr1']);
+			$pm['nbr1_last_4'] = substr($core->data['nbr1'],strlen($core->data['nbr1'])-4,4);
+		}
+		if($core->data['nbr2'] != '' && strpos($core->data['nbr2'],'*')===false)
+		{
+			$pm['nbr2'] = core_crypto::encrypt($core->data['nbr2']);
+			$pm['nbr2_last_4'] = substr($core->data['nbr2'],strlen($core->data['nbr2'])-4,4);
+		}
+		core::log(print_r($pm->__data,true));
+			
+		$pm->save();
+		
+		
+		
+		core_datatable::js_reload('payment_methods');
+		
+		core_ui::notification('payment method saved',false);
+	}
+	
+	function delete_payment_methods()
+	{
+		global $core;
+		core_db::query('update addresses set is_deleted=1 where address_id in ('.$core->data['address_ids'].');');
+		core_datatable::js_reload('addresses');
+		
+		core_ui::notification('addresses deleted');
+	}
+	
 	function set_home_hub()
 	{
 		global $core;

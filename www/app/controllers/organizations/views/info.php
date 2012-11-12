@@ -1,8 +1,31 @@
+<?
+global $data,$domains,$all_domains;
+$domain = core::model('domains')->load($data['domain_id']);
+/*
+$items = array();
+$items[] = core_form::input_text('Name:','name',$data,true);
+$items[] = core_form::input_text($core->i18n['organizations:facebook'].':','facebook',$data);
+$items[] = core_form::input_text($core->i18n['organizations:twitter'].':','twitter',$data);
+
+if(lo3::is_admin() || lo3::is_market())
+{
+	$items[] = core_form::input_check('Allowed to sell products','allow_sell',$data);
+	$items[] = core_form::header_nv('Organization Payment Methods');
+	
+	
+}
+
+echo(
+	core_form::tab('orgtabs',
+		core_form::table_nv(
+			$items
+		)
+	)
+);
+*/
+
+?>
 <div class="tabarea" id="orgtabs-a1">
-	<? 
-	global $data,$domains,$all_domains;
-	$domain = core::model('domains')->load($data['domain_id']);
-	?>
 	<table class="form">
 		<tr>
 			<td class="label">Name</td>
