@@ -6,10 +6,9 @@ if($org['payment_allow_paypal'] == 1)
 ?>
 <div id="payment_paypal" class="payment_option form"<?=$style?>>
 	<h3>Credit Card Information</h3>
-	<img src="<?=image('store/payment_methods/cc_amex')?>" />
-	<img src="<?=image('store/payment_methods/cc_visa')?>" />
-	<img src="<?=image('store/payment_methods/cc_master')?>" />
-	<img src="<?=image('store/payment_methods/cc_disc')?>" />
+<!-- PayPal Logo -->
+<table border="0" cellpadding="10" cellspacing="0" align="center"><tr><td align="center"></td></tr><tr><td align="center"><a href="#" title="How PayPal Works" onclick="javascript:window.open('https://www.paypal.com/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=700, height=600');"><img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" border="0" alt="PayPal Acceptance Mark"></a></td></tr></table>
+<!-- PayPal Logo -->
 	<table class="form">
 		<tr>
 			<td class="label">Credit Card #</td>
