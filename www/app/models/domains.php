@@ -21,6 +21,29 @@ class core_model_domains extends core_model_base_domains
 
 		parent::init_fields();
 	}
+	
+	function get_mm_emails($domain_id)
+	{
+		global $core;
+		$domain_id = intval($domain_id);
+		$emails = array();
+		$sql = '
+			select email 
+			from customer_entity
+			where org_id in (
+				select otd.org_id
+				from organizations_to_domains otd
+				where otd.domain_id='.$domain_id.'
+				and otd.orgtype_id=2
+			);
+		';
+		$results = new core_collection($sql);
+		foreach($results as $result)
+		{
+			$emails[] = $result['email'];
+		}
+		return $emails;
+	}
 
 	function load_sellers()
 	{
