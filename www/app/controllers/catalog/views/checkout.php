@@ -38,7 +38,7 @@ if(count($cart->items->to_array()) == 0)
 else if ($cart['grand_total'] < $core->config['domain']['order_minimum'])
 {
 	core::js('location.href="#!catalog-shop";');
-	core_ui::notification('You have not met the minimum order requirement of ' . core_format::price($core->config['domain']['order_minimum']));
+	core_ui::notification(str_replace('{1}', core_format::price($core->config['domain']['order_minimum']), $core->session['i18n']['error:customer:minimum_error']));
 	core::deinit();
 }
 core::ensure_navstate(array('left'=>'left_blank'));
