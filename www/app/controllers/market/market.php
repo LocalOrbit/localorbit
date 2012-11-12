@@ -71,7 +71,7 @@ class core_controller_market extends core_controller
 				'feature_require_seller_all_delivery_opts','feature_force_items_to_soonest_delivery',
 				'feature_sellers_enter_price_without_fees','feature_sellers_cannot_manage_cross_sells',
 				'feature_sellers_mark_items_delivered','feature_allow_anonymous_shopping',
-				'default_homepage','seller_payment_managed_by'
+				'default_homepage','seller_payment_managed_by','payable_org_id'
 			);
 
 		}

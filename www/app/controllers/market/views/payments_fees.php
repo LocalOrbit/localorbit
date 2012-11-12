@@ -1,11 +1,26 @@
 <?
 global $data;
+
+$orgs = core::model('organizations')
+	->collection()
+	->filter('organizations.org_id','in','(select otd2.org_id from organizations_to_domains otd2 where otd2.domain_id='.$data['domain_id'].' and otd2.orgtype_id=2)');
 ?>
 <table class="form">
 	<? if(lo3::is_admin()){?>
 	<tr>
 		<td colspan="2"><h3>Fees</h3></td>
 	</tr>
+	<?=core_form::input_select(
+		'Payable Organization',
+		'payable_org_id',
+		$data['payable_org_id'],
+		$orgs,
+		array(
+			'text_column'=>'name',
+			'value_column'=>'org_id',
+			'select_style'=>'width:300px;',
+			'info'=>'This is the organization for whom payables are created when orders are placed',
+		))?>
 	<tr>
 		<td class="label">Order minimum</td>
 		<td class="value"><input type="text" name="order_minimum" value="<?=floatval($data['order_minimum'])?>" /></td>
