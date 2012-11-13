@@ -21,6 +21,18 @@ $orgs = core::model('organizations')
 			'select_style'=>'width:300px;',
 			'info'=>'This is the organization for whom payables are created when orders are placed',
 		))?>
+		
+	<tr>
+		<td class="label">Create Payables:</td>
+		<td class="value">
+			<select name="payables_create_on" style="width: 300px;">
+				<option value="buyer_paid"<?=(($data['payables_create_on'] == 'buyer_paid')?' selected="selected"':'')?>>Buyer Pays</option>
+				<option value="delivery"<?=(($data['payables_create_on'] == 'delivery')?' selected="selected"':'')?>>Products Delivered</option>
+				<option value="buyer_paid_and_delivered"<?=(($data['payables_create_on'] == 'buyer_paid_and_delivered')?' selected="selected"':'')?>>Buyer Pays and Products Delivered</option>
+				
+			</select>
+		</td>
+	</tr>
 	<tr>
 		<td class="label">Order minimum</td>
 		<td class="value"><input type="text" name="order_minimum" value="<?=floatval($data['order_minimum'])?>" /></td>
