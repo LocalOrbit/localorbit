@@ -1,6 +1,8 @@
 <?
 global $data,$domains,$all_domains;
 $domain = core::model('domains')->load($data['domain_id']);
+$users = core::model('customer_entity')->add_custom_field('CONCAT(first_name, \' \', last_name) as full_name')->collection()->filter('is_deleted',0)->filter('is_enabled', 1)->filter('is_active', 1)->filter('org_id', $data['org_id']);
+//print_r($users);
 /*
 $items = array();
 $items[] = core_form::input_text('Name:','name',$data,true);
@@ -11,8 +13,8 @@ if(lo3::is_admin() || lo3::is_market())
 {
 	$items[] = core_form::input_check('Allowed to sell products','allow_sell',$data);
 	$items[] = core_form::header_nv('Organization Payment Methods');
-	
-	
+
+
 }
 
 echo(
@@ -44,7 +46,7 @@ echo(
 			<td class="label">&nbsp;</td>
 			<td class="value"><?=core_ui::checkdiv('allow_sell','Allowed to sell products',$data['allow_sell'])?></td>
 		</tr>
-		
+
 		<tr>
 			<td colspan="2"><h3>Organization Payment Methods</h3></td>
 		</tr>
@@ -57,7 +59,17 @@ echo(
 			<td class="value"><?=core_ui::checkdiv('payment_allow_purchaseorder','Allow Purchase Orders',$data['payment_allow_purchaseorder'])?></td>
 		</tr>
 		<?}?>
-		
+		<?if(lo3::is_admin() || lo3::is_market() || $data['org_id'] == $core->session['org_id']){?>
+		<tr>
+			<td class="label">Payment Contact</td>
+			<td class="value">
+				<select name="payment_entity_id">
+					<?=core_ui::options($users,$data['payment_entity_id'],'entity_id','full_name')?>
+				</select>
+			</td>
+		</tr>
+		<?}?>
+
 		<?if(lo3::is_admin()){?>
 		<tr>
 			<td colspan="2"><h3>Organization Options</h3></td>
