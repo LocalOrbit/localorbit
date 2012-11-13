@@ -235,3 +235,6 @@ CREATE VIEW v_invoices AS
     left join domains to_org_domains on to_otd.domain_id = to_org_domains.domain_id;
 
 select * from v_invoices;
+
+
+alter table domains add payables_create_on enum('delivery','buyer_paid','buyer_paid_and_delivered');
