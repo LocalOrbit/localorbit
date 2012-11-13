@@ -55,11 +55,17 @@ class core_crypto
 		
 		if(is_null($key))
 			$key = $core->config['crypt_key'];
-		
+		core::log('trying to encrypt '.$input.' using key '.$key);
+		core::log(base64_encode(mcrypt_encrypt(
+					constant($core->config['crypt_algo']),
+					md5($key),
+					$input,
+					MCRYPT_MODE_CBC, md5(md5($key))
+				)));
 		$s = strtr(
 			base64_encode(
 				mcrypt_encrypt(
-					$core->config['crypt_algo'],
+					constant($core->config['crypt_algo']),
 					md5($key),
 					$input,
 					MCRYPT_MODE_CBC, md5(md5($key))
@@ -80,7 +86,7 @@ class core_crypto
 
 		$s = rtrim(
 			mcrypt_decrypt(
-				$core->config['crypt_algo'], 
+				constant($core->config['crypt_algo']), 
 				md5($key), 
 				base64_decode(
 					strtr($input, '-_,', '+/=')

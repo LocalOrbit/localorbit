@@ -103,7 +103,20 @@ class core_form
 			'render'=>true,
 		));
 		if($options['render'] != true)	return '';
-		return '<tr><td colspan="2"><h'.$options['level'].'>'.$label.'</h'.$options['level'].'></tr></td>';
+		$html = '<tr><td colspan="2"><h'.$options['level'].'>'.$label;
+		$html .= (isset($options['info'])  && $options['info'] != '')?
+			core_form::info($options['info'],$options['info_icon'],$options['info_show']):'';
+	
+		$html .= '</h'.$options['level'].'></td></tr>';
+		return $html;
+	}
+	
+	public static function spacer_nv($lines=1)
+	{
+		$html = '<br />';
+		for($i=1;$i<$lines;$i++)
+			$html .= '&nbsp;<br />';
+		return '<tr><td colspan="2">'.$html.'</td></tr>';
 	}
 
 	public static function column_widths()
@@ -135,8 +148,8 @@ class core_form
 			$label .= (isset($options['required']) && $options['required'] == true)?
 				core_form::required():'';
 		}
-		$value .= (isset($options['info_note'])  && $options['info_note'] != '')?
-			core_form::info($options['info_note'],$options['info_icon'],$options['info_show']):'';
+		$value .= (isset($options['info'])  && $options['info'] != '')?
+			core_form::info($options['info'],$options['info_icon'],$options['info_show']):'';
 
 
 		$html = '
@@ -327,6 +340,8 @@ class core_form
 			'info_show'=>false,
 			'render'=>true,
 			'select_style'=>'',
+			'option_prefix'=>'',
+			'option_suffix'=>'',
 
 			'text_column'=>'text',
 			'value_column'=>'value',
@@ -355,7 +370,7 @@ class core_form
 			{
 				$out .= '<option value="'.$opt_value.'"';
 				$out .= ($value==$opt_value)?' selected="selected"':'';
-				$out .= '>'.$opt_text.'</option>';
+				$out .= '>'.$options['option_prefix'].$opt_text.$options['option_suffix'].'</option>';
 			}
 		}
 		else if(is_object($source))
@@ -364,7 +379,7 @@ class core_form
 			{
 				$out .= '<option value="'.$source_row[$options['value_column']].'"';
 				$out .= ($value==$source_row[$options['value_column']])?' selected="selected"':'';
-				$out .= '>'.$source_row[$options['text_column']].'</option>';
+				$out .= '>'.$options['option_prefix'].$source_row[$options['text_column']].$options['option_suffix'].'</option>';
 			}
 		}
 		else if(is_string($source))
