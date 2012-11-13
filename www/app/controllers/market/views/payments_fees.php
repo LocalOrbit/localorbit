@@ -4,12 +4,50 @@ global $data;
 $orgs = core::model('organizations')
 	->collection()
 	->filter('organizations.org_id','in','(select otd2.org_id from organizations_to_domains otd2 where otd2.domain_id='.$data['domain_id'].' and otd2.orgtype_id=2)');
+	
+	
+$last_paid = core_format::date($data['service_fee_last_paid']);
+if($last_paid == '')
+	$last_paid = 'Never';
+	
+$payment_methods = core::model('organization_payment_methods')
+	->collection()
+	->filter('org_id','in','(
+		select org_id 
+		from organizations_to_domains
+		where domain_id='.$data['domain_id'].'
+		and   orgtype_id=2
+	)');
 ?>
 <table class="form">
-	<? if(lo3::is_admin()){?>
-	<tr>
-		<td colspan="2"><h3>Fees</h3></td>
-	</tr>
+	<? if(lo3::is_admin()){ ?>
+	<?=core_form::header_nv('Service Fee')?>
+	<?=core_form::input_text('Service Fee','service_fee',floatval($data['service_fee']))?>
+	<?=core_form::input_select(
+		'Fee Schedule',
+		'sfs_id',
+		$data['sfs_id'],
+		core::model('service_fee_schedules')->collection(),
+		array(
+			'text_column'=>'name',
+			'value_column'=>'sfs_id',
+			'select_style'=>'width:300px;',
+	))?>
+	<?=core_form::input_select(
+		'Pay Fee Via',
+		'opm_id',
+		$data['opm_id'],
+		$payment_methods,
+		array(
+			'text_column'=>'nbr1_last_4',
+			'value_column'=>'opm_id',
+			'select_style'=>'width:300px;',
+			'option_prefix'=>'************',
+	))?>	
+	<?=core_form::value('Last Paid',$last_paid)?>
+	<?=core_form::spacer_nv()?>
+	
+	<?=core_form::header_nv('Operational Fees')?>
 	<?=core_form::input_select(
 		'Payable Organization',
 		'payable_org_id',
@@ -33,45 +71,37 @@ $orgs = core::model('organizations')
 			</select>
 		</td>
 	</tr>
-	<tr>
-		<td class="label">Order minimum</td>
-		<td class="value"><input type="text" name="order_minimum" value="<?=floatval($data['order_minimum'])?>" /></td>
-	</tr>
-	<tr>
-		<td class="label">LO Fee %</td>
-		<td class="value"><input type="text" name="fee_percen_lo" value="<?=$data['fee_percen_lo']?>" /></td>
-	</tr>
-	<tr>
-		<td class="label">Hub Fee %</td>
-		<td class="value"><input type="text" name="fee_percen_hub" value="<?=$data['fee_percen_hub']?>" /></td>
-	</tr>
-	<tr>
-		<td class="label">Paypal Processing Fee %</td>
-		<td class="value"><input type="text" name="paypal_processing_fee" value="<?=$data['paypal_processing_fee']?>" /></td>
-	</tr>
-	<tr>
-		<td class="label">&nbsp;</td>
-		<td class="value"><?=core_ui::checkdiv('hub_covers_fees','Hub Covers Fees',$data['hub_covers_fees'])?></td>
-	</tr>
-	<tr>
-		<td colspan="2"><br/ ><h3>Allowed Payment Methods<?=core_form::info($core->i18n['note:allowed_payment_methods'],'speech',true)?></h3></td>
-	</tr>
-	<tr>
-		<td class="label">&nbsp;</td>
-		<td class="value"><?=core_ui::checkdiv('payment_allow_paypal','Allow CC via Paypal',$data['payment_allow_paypal'],'market.allowPaymentChanged(\'paypal\');')?></td>
-	</tr>
-	<tr>
-		<td class="label">&nbsp;</td>
-		<td class="value"><?=core_ui::checkdiv('payment_allow_purchaseorder','Allow Purchase Orders',$data['payment_allow_purchaseorder'],'market.allowPaymentChanged(\'purchaseorder\');market.togglePoDue();')?></td>
-	</tr>
+	<?=core_form::input_text('Order minimum','order_minimum',floatval($data['order_minimum']))?>
+	
+	<?=core_form::input_text('LO Fee %','fee_percen_lo',floatval($data['fee_percen_lo']))?>
+	<?=core_form::input_text('Hub Fee %','fee_percen_hub',floatval($data['fee_percen_hub']))?>
+	<?=core_form::input_text('Paypal Processing Fee %','paypal_processing_fee',floatval($data['paypal_processing_fee']))?>
+	<?=core_form::input_check('Hub Covers Fees','hub_covers_fees',$data['hub_covers_fees'])?>
+	<?=core_form::spacer_nv()?>
+	<?=core_form::header_nv('Allowed Payment Methods',array(
+		'info'=>$core->i18n['note:allowed_payment_methods'],
+		'info_icon'=>'speech',
+		'info_show'=>true
+	))?>
+	
+	<?=core_form::input_check('Allow CC via Paypal','payment_allow_paypal',$data['payment_allow_paypal'],array(
+		'onclick'=>'market.allowPaymentChanged(\'paypal\');',
+	))?>
+	<?=core_form::input_check('Allow Purchase Orders','payment_allow_purchaseorder',$data['payment_allow_purchaseorder'],array(
+		'onclick'=>'market.allowPaymentChanged(\'purchaseorder\');market.togglePoDue();',
+	))?>
 	<tr id="allow_po_row"<?=(($data['payment_allow_purchaseorder']==0)?' style="display:none;"':'')?>>
 		<td class="label">PO payments due</td>
 		<td class="value"><input type="text" name="po_due_within_days" style="width:40px;" value="<?=intval($data['po_due_within_days'])?>" /> days</td>
 	</tr>
 	<?}?>
-	<tr>
-		<td colspan="2"><br/ ><h3>Default Payment Methods<?=core_form::info($core->i18n['note:default_payment_methods'],'speech',true)?></h3></td>
-	</tr>
+	
+	<?=core_form::spacer_nv()?>
+	<?=core_form::header_nv('Default Payment Methods',array(
+		'info'=>$core->i18n['note:default_payment_methods'],
+		'info_icon'=>'speech',
+		'info_show'=>true
+	))?>
 	<tr id="div_payment_allow_paypal"<?=(($data['payment_allow_paypal'] == 1)?'':' style="display:none;"')?>>
 		<td class="label">&nbsp;</td>
 		<td class="value"><?=core_ui::checkdiv('payment_default_paypal','CC via Paypal',$data['payment_default_paypal'],'market.defaultPaymentChanged(\'paypal\');')?></td>
