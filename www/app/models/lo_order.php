@@ -3,7 +3,7 @@ class core_model_lo_order extends core_model_base_lo_order
 {
 	function init_fields()
 	{
-		$this->autojoin('left','organizations','(organizations.org_id=lo_order.org_id)',array('name as buyer_org_name'))->autojoin(
+		$this->autojoin('left','organizations','(organizations.org_id=lo_order.org_id)',array('organizations.name as buyer_org_name'))->autojoin(
 			'inner',
 			'lo_delivery_statuses',
 			'(lo_order.ldstat_id=lo_delivery_statuses.ldstat_id)',
@@ -13,6 +13,11 @@ class core_model_lo_order extends core_model_base_lo_order
 			'lo_buyer_payment_statuses',
 			'(lo_order.lbps_id=lo_buyer_payment_statuses.lbps_id)',
 			array('buyer_payment_status')
+		)->autojoin(
+			'left',
+			'domains',
+			'(lo_order.domain_id=domains.domain_id)',
+			array('payables_create_on', 'domains.name as domain_name')
 		);
 		parent::init_fields();
 		$this->add_custom_field('(select sum(applied_amount) from lo_order_discount_codes WHERE lo_order_discount_codes.lo_oid=lo_order.lo_oid) as discount_total');
@@ -484,15 +489,18 @@ class core_model_lo_order extends core_model_base_lo_order
 	function set_payable_invoicable ($invoicable)
 	{
 		$payable = core::model('payables')->collection()->filter('payable_type_id',1)->filter('parent_obj_id',$this['lo_oid'])->row();
-		$payable['invoicable'] = true;
-		$payable->save();
+		if ($payable) 
+		{
+			$payable['invoicable'] = $invoicable ? 1 : 0;
+			$payable->save();
+		}
 	}
 
 	function change_status($ldstat_id,$lbps_id,$do_update=true)
 	{
 		global $core;
 
-			core::log('CREATE ON:' . $core->config['domain']['payables_create_on']);
+			core::log('CREATE ON:' . $this['payables_create_on']);
 		if(!is_numeric($this['lo_oid']))
 		{
 			throw new Exception('Cannot change status of unsaved order');
@@ -507,8 +515,8 @@ class core_model_lo_order extends core_model_base_lo_order
 			$this['ldstat_id'] = $ldstat_id;
 			$this['last_status_date'] = date('Y-m-d H:i:s');
 
-			if ($ldstat_id == 4 && (($core->config['domain']['payables_create_on'] == 'delivery') ||
-				($lbps_id == 2 && $core->config['domain']['payables_create_on'] ==
+			if ($ldstat_id == 4 && (($this['payables_create_on'] == 'delivery') ||
+				($lbps_id == 2 && $this['payables_create_on'] ==
 'buyer_paid_and_delivered')))
 			{
 				$this->set_payable_invoicable(true);
@@ -525,9 +533,9 @@ class core_model_lo_order extends core_model_base_lo_order
 			$this['lbps_id'] = $lbps_id;
 			$this['last_status_date'] = date('Y-m-d H:i:s');
 			$stat_change = core::model('lo_order_status_changes');
-			core::log($core->config['domain']['payables_create_on']);
-			if ($lbps_id == 2 && ($core->config['domain']['payables_create_on'] == 'buyer_paid' ||
-				($ldstat_id == 4 && $core->config['domain']['payables_create_on'] ==
+			core::log('New Stat: ' . $lbps_id);
+			if ($lbps_id == 2 && ($this['payables_create_on'] == 'buyer_paid' ||
+				($ldstat_id == 4 && $this['payables_create_on'] ==
 'buyer_paid_and_delivered')))
 			{
 				$this->set_payable_invoicable(true);
