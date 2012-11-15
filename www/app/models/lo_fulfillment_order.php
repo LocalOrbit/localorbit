@@ -1,6 +1,17 @@
 <?php
 class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_order
 {
+	function init_fields()
+	{
+		$this->autojoin(
+			'left',
+			'domains',
+			'(lo_fulfillment_order.domain_id=domains.domain_id)',
+			array('payables_create_on', 'domains.name as domain_name', 'domains.paypal_processing_fee as domain_paypal_processing_fee')
+		);
+		parent::init_fields();
+		return $this;
+	}
 	function load_items()
 	{
 		global $core;
@@ -166,11 +177,15 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 	function set_payable_invoicable ($invoicable)
 	{
 		$payable = core::model('payables')->collection()->filter('payable_type_id',2)->filter('parent_obj_id',$this['lo_foid'])->row();
-		$payable['invoicable'] = true;
-		$payable->save();
+		if ($payable && $payable['invoicable'] != $invoicable)
+		{
+			$payable['invoicable'] = $invoicable;
+			$payable->save();
+			core::log('changed payable for lo_fulfillment_order'. $this['lo_foid'] . ' invoicable to '.  $invoicable);
+		}
 	}
 
-	function change_status($ldstat_id,$lsps_id,$do_update=true)
+	function change_status($ldstat_id,$lsps_id,$lbps_id,$do_update=true)
 	{
 		global $core;
 
@@ -184,7 +199,10 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 			$this['ldstat_id'] = $ldstat_id;
 			$this['last_status_date'] = date('Y-m-d H:i:s');
 
-			if ($ldstat_id == 4) {
+
+			if ($ldstat_id == 4 && (($this['payables_create_on'] == 'delivery') ||
+				($lbps_id == 2 && $this['payables_create_on'] =='buyer_paid_and_delivered')))
+			{
 				$this->set_payable_invoicable(true);
 			}
 
@@ -205,6 +223,11 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 			$stat_change['lo_foid'] = $this['lo_foid'];
 			$stat_change['lsps_id'] = $lsps_id;
 			$stat_change->save();
+		}
+
+		if ($lbps_id == 2 && $this['payables_create_on'] == 'buyer_paid')
+		{
+			$this->set_payable_invoicable(true);
 		}
 
 		if($do_update)

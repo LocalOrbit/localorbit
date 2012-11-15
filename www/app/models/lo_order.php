@@ -489,10 +489,11 @@ class core_model_lo_order extends core_model_base_lo_order
 	function set_payable_invoicable ($invoicable)
 	{
 		$payable = core::model('payables')->collection()->filter('payable_type_id',1)->filter('parent_obj_id',$this['lo_oid'])->row();
-		if ($payable) 
+		if ($payable && $payable['invoicable'] != $invoicable)
 		{
-			$payable['invoicable'] = $invoicable ? 1 : 0;
+			$payable['invoicable'] = $invoicable;
 			$payable->save();
+			core::log('changed payable for lo_order'. $this['lo_oid'] . ' invoicable to '.  $invoicable);
 		}
 	}
 
@@ -500,7 +501,6 @@ class core_model_lo_order extends core_model_base_lo_order
 	{
 		global $core;
 
-			core::log('CREATE ON:' . $this['payables_create_on']);
 		if(!is_numeric($this['lo_oid']))
 		{
 			throw new Exception('Cannot change status of unsaved order');
@@ -533,7 +533,7 @@ class core_model_lo_order extends core_model_base_lo_order
 			$this['lbps_id'] = $lbps_id;
 			$this['last_status_date'] = date('Y-m-d H:i:s');
 			$stat_change = core::model('lo_order_status_changes');
-			core::log('New Stat: ' . $lbps_id);
+
 			if ($lbps_id == 2 && ($this['payables_create_on'] == 'buyer_paid' ||
 				($ldstat_id == 4 && $this['payables_create_on'] ==
 'buyer_paid_and_delivered')))
@@ -1118,6 +1118,7 @@ order_addresses on addresses.address_id = order_addresses.address_id');
 			$statuses['lo_order']['lsps_id:'.$item['lsps_id']] = true;
 			$statuses[$item['lo_foid']]['ldstat_id:'.$item['ldstat_id']] = true;
 			$statuses[$item['lo_foid']]['lsps_id:'.$item['lsps_id']] = true;
+			$statuses[$item['lo_foid']]['lbps_id:'.$item['lbps_id']] = true;
 		}
 
 		core::log('status hash: '.print_r($statuses,true));
@@ -1138,7 +1139,7 @@ order_addresses on addresses.address_id = order_addresses.address_id');
 			{
 				# load the fulfillment order.
 				$fulfill = core::model('lo_fulfillment_order')->load($key);
-				$fulfill->change_status($newstats['ldstat_id'],$newstats['lsps_id']);
+				$fulfill->change_status($newstats['ldstat_id'],$newstats['lsps_id'],$newstats['lbps_id']);
 			}
 		}
 	}

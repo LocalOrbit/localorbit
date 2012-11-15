@@ -8,9 +8,9 @@ lo3::require_login();
 
 $order = core::model('lo_fulfillment_order')
 	->autojoin('left','lo_order_deliveries','(lo_order_deliveries.lo_foid=lo_fulfillment_order.lo_foid)',array())
-	->autojoin('left','lo_order','(lo_order.lo_oid=lo_order_deliveries.lo_oid)',array('payment_method','payment_ref','paypal_processing_fee','admin_notes'))
+	->autojoin('left','lo_order','(lo_order.lo_oid=lo_order_deliveries.lo_oid)',array('payment_method','payment_ref','lo_order.paypal_processing_fee as paypal_processing_fee','admin_notes'))
 	->autojoin('left','lo_buyer_payment_statuses','(lo_order.lbps_id=lo_buyer_payment_statuses.lbps_id)',array('buyer_payment_status'))
-	->autojoin('left','organizations','(organizations.org_id=lo_order.org_id)',array('name as buyer_org_name'))
+	->autojoin('left','organizations','(organizations.org_id=lo_order.org_id)',array('organizations.name as buyer_org_name'))
 	->autojoin(
 	'inner',
 	'lo_delivery_statuses',
