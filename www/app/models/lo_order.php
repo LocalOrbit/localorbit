@@ -492,6 +492,7 @@ class core_model_lo_order extends core_model_base_lo_order
 	{
 		global $core;
 
+			core::log('CREATE ON:' . $core->config['domain']['payables_create_on']);
 		if(!is_numeric($this['lo_oid']))
 		{
 			throw new Exception('Cannot change status of unsaved order');
@@ -506,7 +507,10 @@ class core_model_lo_order extends core_model_base_lo_order
 			$this['ldstat_id'] = $ldstat_id;
 			$this['last_status_date'] = date('Y-m-d H:i:s');
 
-			if ($ldstat_id == 4) {
+			if ($ldstat_id == 4 && (($core->config['domain']['payables_create_on'] == 'delivery') ||
+				($lbps_id == 2 && $core->config['domain']['payables_create_on'] ==
+'buyer_paid_and_delivered')))
+			{
 				$this->set_payable_invoicable(true);
 			}
 
@@ -521,6 +525,14 @@ class core_model_lo_order extends core_model_base_lo_order
 			$this['lbps_id'] = $lbps_id;
 			$this['last_status_date'] = date('Y-m-d H:i:s');
 			$stat_change = core::model('lo_order_status_changes');
+			core::log($core->config['domain']['payables_create_on']);
+			if ($lbps_id == 2 && ($core->config['domain']['payables_create_on'] == 'buyer_paid' ||
+				($ldstat_id == 4 && $core->config['domain']['payables_create_on'] ==
+'buyer_paid_and_delivered')))
+			{
+				$this->set_payable_invoicable(true);
+			}
+
 			$stat_change['user_id'] = $core->session['user_id'];
 			$stat_change['lo_oid'] = $this['lo_oid'];
 			$stat_change['lbps_id'] = $lbps_id;
