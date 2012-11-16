@@ -17,8 +17,8 @@ class core_model_base_v_invoices extends core_model
 		$this->add_field(new core_model_field(11,'to_domain_name','string',-4,'','v_invoices'));
 		$this->add_field(new core_model_field(12,'amount_paid','float',10,'2','v_invoices'));
 		$this->add_field(new core_model_field(13,'amount_due','float',10,'2','v_invoices'));
-		$this->add_field(new core_model_field(14,'send_dates','blob',8000000,'','v_invoices'));
-		$this->add_field(new core_model_field(15,'payable_info','blob',8000000,'','v_invoices'));
+		$this->add_field(new core_model_field(14,'send_dates','string',8000,'','v_invoices'));
+		$this->add_field(new core_model_field(15,'payable_info','string',8000,'','v_invoices'));
 		$this->init_data();
 	}
 }

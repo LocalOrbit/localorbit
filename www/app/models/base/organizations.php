@@ -20,6 +20,8 @@ class core_model_base_organizations extends core_model
 		$this->add_field(new core_model_field(14,'payment_allow_purchaseorder','int',8,'','organizations'));
 		$this->add_field(new core_model_field(15,'payment_allow_paypal','int',8,'','organizations'));
 		$this->add_field(new core_model_field(16,'is_deleted','int',8,'','organizations'));
+		$this->add_field(new core_model_field(17,'payment_entity_id','int',8,'','organizations'));
+		$this->add_field(new core_model_field(18,'payment_term','int',8,'','organizations'));
 		$this->init_data();
 	}
 }
