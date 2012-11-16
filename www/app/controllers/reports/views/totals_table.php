@@ -3,6 +3,7 @@ $prefix = $core->view[0];
 $suffix1 = (isset($core->view[1]))?($core->view[1]):((lo3::is_market() || lo3::is_seller() || lo3::is_admin())?'Sales':'Purchases');
 $suffix2 = (isset($core->view[2]))?($core->view[2]):('Fees');
 ?>
+<div<?=((lo3::is_customer())?' style="display: none;"':'')?>>
 <br />
 <h1>Total <?=$suffix1?></h1>
 <table class="dt">
@@ -42,3 +43,4 @@ if(lo3::is_market() || lo3::is_seller() || lo3::is_admin())
 		<td class="dt" id="<?=$prefix?>net">$0.00</td>
 	</tr>
 </table>
+</div>
