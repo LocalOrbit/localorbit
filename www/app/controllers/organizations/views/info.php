@@ -70,6 +70,13 @@ echo(
 		</tr>
 		<?}?>
 
+		<?if(lo3::is_admin() || lo3::is_market()){?>
+		<tr<?=(($domain['payment_allow_purchaseorder'] == 1 || $data['payment_allow_purchaseorder'])?'':' style="display:none;')?>>
+			<td class="label">PO payments due</td>
+		<td class="value"><input type="text" name="po_due_within_days" style="width:40px;" value="<?=intval($data['po_due_within_days'])?>" /> days</td>
+		</tr>
+		<?}?>
+
 		<?if(lo3::is_admin()){?>
 		<tr>
 			<td colspan="2"><h3>Organization Options</h3></td>
