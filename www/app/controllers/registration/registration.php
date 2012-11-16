@@ -18,7 +18,7 @@ class core_controller_registration extends core_controller
 		core::process_command('auth/process');
 		#core::redirect('dashboard','home');
 	}
-	
+
 	function rules()
 	{
 		global $core;
@@ -36,7 +36,7 @@ class core_controller_registration extends core_controller
 			array('type'=>'value_is','name'=>'tos_approve','data1'=>1,'msg'=>$core->i18n['error:registration:tos_approve']),
 		));
 	}
-	
+
 	function invite_rules()
 	{
 		global $core;
@@ -48,19 +48,19 @@ class core_controller_registration extends core_controller
 			array('type'=>'value_is','name'=>'tos_approve','data1'=>1,'msg'=>$core->i18n['error:registration:tos_approve']),
 		));
 	}
-	
+
 	#insert into phrases (pcat_id,label,default_value,tags) values (3,'error:registration:tos_approve','You must agree to the Terms of Service','customer');
 
 	function generate_fake_fields()
 	{
 		global $core;
-		
+
 		$core->session['spammer_field'] = 'f'.md5('stop, spammertime! '.time());
 		$core->session['spammer_fake_fields']=array();
 		$core->session['spammer_nums']  = array(
 			rand(1,12),rand(1,12)
 		);
-		
+
 		$fields = array();
 		for ($i = 1; $i < 50; $i++)
 		{
@@ -69,26 +69,26 @@ class core_controller_registration extends core_controller
 			$core->session['spammer_fake_fields'][] = $fake_field;
 		}
 		$fields[] = '<input type="text" style="display: none; width: 70px;" id="'.$core->session['spammer_field'].'" name="'.$core->session['spammer_field'].'" value="" />';
-		
+
 		# randomize the fields
 		shuffle($fields);
 		# turn on the only real field
 		core::js('document.getElementById(\''.$core->session['spammer_field'].'\').style.display=\'inline\';');
-		
+
 		return $fields;
 	}
-	
+
 	function checking_captcha()
 	{
 		global $core;
-		
+
 		# make sure that there are actually numbers stored in the captcha fields
 		if(!is_numeric($core->session['spammer_nums'][0])
 			|| !is_numeric($core->session['spammer_nums'][1])
 			|| !is_numeric($core->data[$core->session['spammer_field']])
 		)
 			core_ui::validate_error($core->i18n['error:customer:captcha_error'],'regform',$core->session['spammer_field']);
-		
+
 		# now, check the math
 		$result = intval($core->session['spammer_nums'][0]) + intval($core->session['spammer_nums'][1]);
 		if($result != intval($core->data[$core->session['spammer_field']]))
@@ -96,17 +96,17 @@ class core_controller_registration extends core_controller
 			core::log("spammer field check");
 			core_ui::validate_error($core->i18n['error:customer:captcha_error'],'regform',$core->session['spammer_field']);
 		}
-			
+
 		# woohoo!
 		core::log('passed captcha!!!');
 	}
-	
+
 	function check_unique($formname = 'regform',$not_entity_id=0)
 	{
 		global $core;
 		$sql = '
-			select entity_id 
-			from customer_entity 
+			select entity_id
+			from customer_entity
 			where lower(email)=lower(\''.$core->data['email'].'\')
 		';
 		if($not_entity_id > 0)
@@ -119,7 +119,7 @@ class core_controller_registration extends core_controller
 			core_ui::validate_error($core->i18n['error:customer:unique_email'],$formname,'email');
 		}
 	}
-	
+
 	function process()
 	{
 		global $core;
@@ -133,18 +133,18 @@ class core_controller_registration extends core_controller
 		core::log('passed captcha validation');
 		$this->check_unique();
 		core::log('passed unique validation');
-		
+
 		core::load_library('crypto');
-		
+
 		#$_SERVER['HTTP_HOST'] = core_db::col('select hostname from domains where domain_id='.$core->data['domain_id'],'hostname');
-		
+
 		# meddle with the data a bit
 		if($core->data['company_name'] == '')
 			$core->data['company_name'] = $core->data['first_name'] .' '.$core->data['last_name'];
-		
+
 		# load the domain's settings
 		$domain = core::model('domains')->load($core->data['domain_id']);
-		
+
 		# save to lo database
 		$org = core::model('organizations');
 		$org['parent_org_id'] = 0;
@@ -154,17 +154,18 @@ class core_controller_registration extends core_controller
 		$org['orgtype_id']    = 3;
 		$org['payment_allow_paypal']        = $domain['payment_default_paypal'];
 		$org['payment_allow_purchaseorder'] = $domain['payment_default_purchaseorder'];
+		$org['po_due_within_days'] = $domain['po_due_within_days'];
 		$org['is_active']     = (intval($domain['autoactivate_organization'])==1)?1:0;
 		$org->save();
 		core::log('org created: '.$org['org_id']);
-		
+
 		$o2d = core::model('organizations_to_domains');
 		$o2d['org_id'] = $org['org_id'];
 		$o2d['domain_id'] = $core->data['domain_id'];
 		$o2d['orgtype_id'] = 3;
 		$o2d['is_home'] = 1;
 		$o2d->save();
-		
+
 		# create the user
 		$user = core::model('customer_entity');
 		$user['first_name'] = $core->data['first_name'];
@@ -177,7 +178,7 @@ class core_controller_registration extends core_controller
 
 		$user->save();
 		core::log('user created: '.$user['entity_id']);
-		
+
 		# create the organization's address
 		$address = core::model('addresses');
 		$address['org_id']  = $org['org_id'];
@@ -192,11 +193,11 @@ class core_controller_registration extends core_controller
 		$address['longitude']   = $core->data['longitude'];
 		$address['default_shipping']   = 1;
 		$address['default_billing']   = 1;
-		
+
 		$address->save();
 		core::log('address created: '.$address['address_id']);
 		#core_ui::validate_error($core->i18n['error:customer:captcha_error']);
-		
+
 		# send email notifications
 		# this will get all market managers
 		$mms = core_db::col_array('
@@ -228,18 +229,18 @@ class core_controller_registration extends core_controller
 			$this->generate_verify_link($domain['hostname'],$user['entity_id']),
 			$core->data['domain_id']
 		);
-		
+
 		core::log('about to auth');
-		
+
 		# login and redirect to dashboard
 		core::process_command('auth/process');
 	}
-	
+
 	function generate_verify_link($hostname,$user_id)
 	{
 		return 'https://'.$hostname.'/app.php#!registration-verify_user--user_id-'.$user_id.'-key-'.$this->confirm_key_generate($user_id);
 	}
-	
+
 	function verify_user()
 	{
 		global $core;
@@ -248,23 +249,23 @@ class core_controller_registration extends core_controller
 		{
 			$this->already_logged_in();
 		}
-		
+
 		core::log('tryign to verify user_id '.$core->data['user_id'].' using key '.$core->data['key']);
-		
+
 		if($this->confirm_key_verify($core->data['user_id'],$core->data['key']))
 		{
 			$cust = core::model('customer_entity')->load($core->data['user_id']);
 			core::log('user loaded: '.$cust['org_id'].'/'.$cust['org_id']);
 			$org = core::model('organizations')->load($cust['org_id']);
-			
+
 			$domain = core::model('domains')->load($org['domain_id']);
 			core::log("domain is: ".$org['domain_id']);
 			$cust['is_active'] = 1;
 			$cust->save();
-			core::model('events')->add_record('E-mail Confirmed',$core->data['user_id']);		
-		
+			core::model('events')->add_record('E-mail Confirmed',$core->data['user_id']);
+
 			$core->session['is_active'] = 1;
-			
+
 			if($core->session['allow_sell'])
 			{
 				$email = 'emails/seller_welcome';
@@ -300,7 +301,7 @@ class core_controller_registration extends core_controller
 			<br />&nbsp;<br >
 			<br />&nbsp;<br >
 			<br />&nbsp;<br >
-			
+
 			<?php
 		}
 		else
@@ -309,14 +310,14 @@ class core_controller_registration extends core_controller
 		}
 	}
 
-	
-	
+
+
 	function confirm_key_generate($user_id)
 	{
 		global $core;
 		return substr(md5($user_id.$core->config['registration']['activate_hash_secret']),0,10);
 	}
-	
+
 	function confirm_key_verify($user_id,$to_test)
 	{
 		core::log($this->confirm_key_generate($user_id));

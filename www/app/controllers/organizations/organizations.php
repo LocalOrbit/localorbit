@@ -187,6 +187,7 @@ class core_controller_organizations extends core_controller
 		$domain = core::model('domains')->load($orgdomain['domain_id']);
 		$org['payment_allow_paypal'] = $domain['payment_default_paypal'];
 		$org['payment_allow_purchaseorder'] = $domain['payment_default_purchaseorder'];
+		$org['po_due_within_days'] = $domain['po_due_within_days'];
 		$org->save();
 
 		$orgdomain['org_id'] = $org['org_id'];

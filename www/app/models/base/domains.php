@@ -71,7 +71,6 @@ class core_model_base_domains extends core_model
 		$this->add_field(new core_model_field(65,'service_fee_last_paid','timestamp',4,'','domains'));
 		$this->add_field(new core_model_field(66,'payable_org_id','int',8,'','domains'));
 		$this->add_field(new core_model_field(67,'seller_payment_managed_by','string',-4,'','domains'));
-		$this->add_field(new core_model_field(68,'payment_term','int',8,'','domains'));
 		$this->init_data();
 	}
 }
