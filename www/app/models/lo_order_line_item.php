@@ -94,7 +94,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 
 		core::log(print_r($this->delivery, true));
 
-		return core::model('lo_order_deliveries')->create($this['lo_oid'], $this->delivery, $product, $deliveries);
+		return core::model('lo_order_deliveries')->create($this['lo_oid'], $this->delivery, $deliveries);
 	}
 
 	# this is used to find all possible delivery options

@@ -430,15 +430,10 @@ class core_controller_catalog extends core_controller
 			$dd = core::model('delivery_days')->load($opt);
 			$dd->next_time();
 			$opt = $dd->__data;
-
-
 			# determine if we need to print a list of the user's addresses
 			if(intval($opt['deliv_address_id'])==0 || intval($opt['pickup_address_id'])==0)
 			{
 				# echo('list needs address chosen');
-				//~ echo('<pre>');
-				//~ print_r($opt);
-				//~ echo('</pre>');
 				foreach($all_addrs as $address)
 				{
 
@@ -455,7 +450,7 @@ class core_controller_catalog extends core_controller
 						'fee_calc_type_id'=>$opt['fee_calc_type_id'],
 						'amount'=>$opt['amount'],
 					);
-					$final_opts[$new_opt['end_time']] = $new_opt;
+					$final_opts[$new_opt['end_time'].'--'.$address['address_id']] = $new_opt;
 				}
 			}
 			else
@@ -472,7 +467,7 @@ class core_controller_catalog extends core_controller
 					'fee_calc_type_id'=>$opt['fee_calc_type_id'],
 					'amount'=>$opt['amount'],
 				);
-				$final_opts[$new_opt['end_time']] = $new_opt;
+				$final_opts[$new_opt['end_time'].'--'.$address['pickup_address_id']] = $new_opt;
 			}
 			#print_r($opt);
 		}

@@ -140,7 +140,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		return $final_delivs;
 	}
 
-	function create($lo_oid, $deliv, $address, $deliveries = null) {
+	function create($lo_oid, $deliv, $deliveries = null) {
 		# now we have all the right info
 		# store it in the db
 		$deliv_id = $deliv['lodeliv_id'];
@@ -152,28 +152,11 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		$order_deliv['delivery_end_time']   = $deliv['delivery_end_time'] - (intval($core->session['time_offset']));
 		$order_deliv['pickup_start_time']   = $deliv['pickup_start_time'] - (intval($core->session['time_offset']));
 		$order_deliv['pickup_end_time']     = $deliv['pickup_end_time'] - (intval($core->session['time_offset']));
-		   # store the selected address into the right
-		# position. If the seller delivers directly to the buyer,
-		# put the selected address into the deliv_address_id field
-		#
-		# if the seller delivers to the hub and the hub delivers to the
-		# customer, then store the address to pickup_address_id
-		#
-		core::log('found the right delivery! for '.$deliv_id.', we should use '.$address['address_id']);
-		if($deliv['deliv_address_id'] == 0)
-		{
-		    core::log('assigned to deliv_address_id');
-		    $order_deliv['deliv_address_id'] = $address['address_id'];
-		}
-		else
+
+		if($deliv['deliv_address_id'] != 0)
 		{
 		    $order_deliv['deliv_address_id'] = $deliv['deliv_address_id'];
-		    if($deliv['pickup_address_id'] == 0)
-		    {
-		        core::log('assigned to pickup_address_id');
-		        $order_deliv['pickup_address_id'] = $address['address_id'];
-		    }
-		    else
+		    if($deliv['pickup_address_id'] != 0)
 		    {
 		        core::log('using delivery_days-specified pickup address');
 		        $order_deliv['pickup_address_id'] = $deliv['pickup_address_id'];
