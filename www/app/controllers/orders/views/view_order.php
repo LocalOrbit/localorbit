@@ -5,7 +5,7 @@ lo3::require_permission();
 lo3::require_login();
 
 $order = core::model('lo_order')
-	->add_custom_field('(select sum(applied_amount) from lo_order_discount_codes where lo_order_discount_codes.lo_oid=lo_order.lo_oid) as discount_total')
+	->add_custom_field('(select sum(applied_amount) from lo_order_discount_codes WHERE lo_order_discount_codes.lo_oid=lo_order.lo_oid) as discount_total')
 	->load(intval($core->data['lo_oid']));
 # check the security settings for the order
 # if the order is NOT for the same org as the viewing user,
