@@ -31,14 +31,16 @@ $payments_table->render();
 ?>
 	<!--
 	<table class="dt">
-		<col width="5%" />
+		<col width="3%" />
+		<col width="10%" />
 		<col width="15%" />
-		<col width="25%" />
+		<col width="15%" />
+		<col width="10%" />
 		<col width="15%" />
 		<col width="15%" />
 		<col width="15%" />
 		<tr>
-			<td colspan="7" class="dt_filter_resizer">
+			<td colspan="9" class="dt_filter_resizer">
 				<div class="dt_filter">
 					<select class="dt">
 						<option>Org: All</option>
@@ -56,16 +58,18 @@ $payments_table->render();
 		</tr>
 		<tr class="dt">
 			<th class="dt"><input type="checkbox" /></td>
-			<th class="dt dt_sortable dt_sort_asc">Date Paid</th>
 			<th class="dt">Hub</th>
 			<th class="dt">Organization</th>
 			<th class="dt">Description</th>
 			<th class="dt">Amount</th>
 			<th class="dt">Status</th>
+			<th class="dt dt_sortable dt_sort_asc">Date Invoiced</th>
+			<th class="dt dt_sortable dt_sort_asc">Date Due</th>
+			<th class="dt dt_sortable dt_sort_asc">Date Paid</th>
+
 		</tr>
 		<tr class="dt">
 			<td class="dt"><input type="checkbox" /></td>
-			<td class="dt">May 1, 2012</td>
 			<td class="dt">Detroit Western Market</td>
 			<td class="dt">Seller A</td>
 			<td class="dt">
@@ -77,10 +81,12 @@ $payments_table->render();
 			</td>
 			<td class="dt">$20.00</td>
 			<td class="dt">Paid</td>
+			<td class="dt">May 1, 2012</td>
+			<td class="dt">May 7, 2012</td>
+			<td class="dt">May 9, 2012</td>
 		</tr>
 		<tr class="dt1">
 			<td class="dt"><input type="checkbox" /></td>
-			<td class="dt">May 6, 2012</td>
 			<td class="dt">Detroit Western Market</td>
 			<td class="dt">Seller B</td>
 			<td class="dt">
@@ -91,9 +97,12 @@ $payments_table->render();
 			</td>
 			<td class="dt">$0.14</td>
 			<td class="dt">Paid</td>
+			<td class="dt">May 6, 2012</td>
+			<td class="dt">May 16, 2012</td>
+			<td class="dt">&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan="7" class="dt_exporter_pager">
+			<td colspan="9" class="dt_exporter_pager">
 				<div class="dt_exporter">
 					Save as: Quickbooks | CSV | PDF
 				</div>

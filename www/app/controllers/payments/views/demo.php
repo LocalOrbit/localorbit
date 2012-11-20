@@ -6,15 +6,23 @@ lo3::require_login();
 
 # build the list of tabs that we need to render
 global $tabs;
-$tabs = array('Overview','Payables','Payments');
+$tabs = array('Overview');
 if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 {
 	$tabs[] = 'Receivables';
-	$tabs[] = 'Invoices';
+	$tabs[] = 'Invoices Due';
+	
+}
+$tabs[] = 'Payables';
+$tabs[] = 'Payments Due';
+
+if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
+{
 	$tabs[] = 'Transaction Journal';
 }
-if(lo3::is_admin() || lo3::is_market() )
-	$tabs[] = 'Metrics';
+
+#if(lo3::is_admin() || lo3::is_market() )
+#	$tabs[] = 'Advanced Metrics';
 	
 # setup the page header and tab switchers
 core_ui::tabset('paymentstabs');
@@ -24,15 +32,15 @@ echo(core_ui::tab_switchers('paymentstabs',$tabs));
 # based on our rules, render the tabs one by one
 $this->overview((array_search('Overview',$tabs) + 1)); 
 $this->payables((array_search('Payables',$tabs) + 1)); 
-$this->payments((array_search('Payments',$tabs) + 1)); 
+$this->payments((array_search('Payments Due',$tabs) + 1)); 
 if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 {
 	$this->receivables((array_search('Receivables',$tabs) + 1)); 
-	$this->invoices((array_search('Invoices',$tabs) + 1)); 
+	$this->invoices((array_search('Invoices Due',$tabs) + 1)); 
 	$this->transaction_journal((array_search('Transaction Journal',$tabs) + 1)); 
 }
 if(lo3::is_admin() || lo3::is_market() )
 {
-	$this->metrics((array_search('Metrics',$tabs) + 1)); 
+	$this->metrics((array_search('Advanced Metrics',$tabs) + 1)); 
 }
 ?>

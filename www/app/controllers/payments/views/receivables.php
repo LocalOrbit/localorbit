@@ -139,7 +139,7 @@ $payables_table->render();
 		</tr>
 	</table> -->
 	<div class="buttonset" id="create_invoice_toggler">
-		<input type="button" onclick="$('#create_invoice_toggler,#create_invoice_form').toggle();" style="width:300px;" value="create invoices from checked" class="button_primary" />
+		<input type="button" onclick="$('#create_invoice_toggler,#create_invoice_form').toggle();" style="width:300px;" value="create money in from checked" class="button_primary" />
 	</div>
 	<br />&nbsp;<br />
 	<? $this->receivables__create_invoices(); ?>

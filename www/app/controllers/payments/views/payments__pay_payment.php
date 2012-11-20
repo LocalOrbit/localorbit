@@ -7,10 +7,10 @@
 			<th class="dt">Method</th>
 			<th class="dt">Reference #</th>
 		</tr>
-		<?=core_datatable::render_fake_row(false,'Seller B','PY125','<input type="text" value="$0.17" style="width:80px;" />','<select><option>Choose method</option><option>Check</option><option>Cash</option><option>\'Favors\'</option></select>','<input type="text" value="" style="width:120px;" />')?>
+		<?=core_datatable::render_fake_row(false,'Seller B','PY125','<input type="text" value="$0.17" style="width:80px;" />','<select><option>Choose method</option><option>ACH: **********92392</option></select>','<input type="text" value="" style="width:120px;" />')?>
 	</table>
 	<div class="buttonset">
-		<input type="button" onclick="$('#create_payables_form,#create_payables_button').toggle();" class="button_primary" value="cancel" />
-		<input type="button" class="button_primary" value="save payment" />
+		<input type="button" onclick="$('#create_payment_form,#create_payment_button').toggle();" class="button_primary" value="cancel" />
+		<input type="button" class="button_primary" value="send payment" />
 	</div>
 </fieldset>
