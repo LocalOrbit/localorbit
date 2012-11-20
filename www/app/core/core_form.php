@@ -135,7 +135,7 @@ class core_form
 
 	public static function tr_nv($label,$value,$options)
 	{
-		$label .= ($label != '&nbsp;')?':':'';
+		#$label .= ($label != '&nbsp;')?':':'';
 		$label .= (isset($options['sublabel']) && $options['sublabel'] !='')?
 			'<div class="sublabel">'.$options['sublabel'].'</div>':'';
 		if($label == '&nbsp;')
