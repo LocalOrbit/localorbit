@@ -26,11 +26,14 @@ $address = core::model('lo_order_address')
 
 <h1>Thank you for your order</h1>
 <br />
+<? if ($core->config['domain']['po_due_within_days'] > 0) { ?>
+Payment should be made in <?=$core->config['domain']['po_due_within_days']?> days.<br/>
+		<? } ?>
 You will receive a confirmation e-mail with details of your order and a link to track its progress.<br />
 <a href="http://localorbit.zendesk.com/anonymous_requests/new" target="_blank">Please let us know if you have any questions.</a><br />
 
 <form name="orderForm">
-	
+
 	<br />
 <?
 $dd_id = 0;
@@ -42,7 +45,7 @@ foreach($items as $item)
 	if($dd_id != $this_dd)
 	{
 		if($dd_id > 0)	echo('</table>');
-		
+
 		if($this_dd > 0)
 		{
 		?>

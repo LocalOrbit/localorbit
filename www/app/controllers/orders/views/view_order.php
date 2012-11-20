@@ -25,7 +25,6 @@ if($order['org_id'] != $core->session['org_id'])
 		lo3::require_orgtype('market');
 	}
 }
-
 $order->get_items_by_delivery();
 $order->get_status_history();
 $order->get_item_status_history();
@@ -133,6 +132,11 @@ $address = core::model('lo_order_address')
 	</table>
 	<br />
 <?
+
+if ($core->config['domain']['po_due_within_days'] > 0) { ?>
+Payment is due in <?=$core->config['domain']['po_due_within_days']?> days.<br/>
+<? }
+
 $dd_id = 0;
 
 foreach($order->items as $item)
