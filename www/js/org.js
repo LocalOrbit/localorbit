@@ -89,3 +89,43 @@ org.deleteUser=function(userId,userName,refObj,curUserId){
 		core.doRequest('/organizations/delete_user',{'user_id':userId});
 	}
 }
+
+
+org.editPaymentMethod=function(opm_id,name_on_account,label,nbr1last4,nbr2last4){
+	document.organizationsForm.pm_label.value=label;
+	document.organizationsForm.opm_id.value=opm_id;
+	document.organizationsForm.name_on_account.value=name_on_account;
+	if(!isNaN(nbr1last4))
+		document.organizationsForm.nbr1.value='************'+nbr1last4;
+	else
+		document.organizationsForm.nbr1.value = '';
+	if(!isNaN(nbr2last4))
+		document.organizationsForm.nbr2.value='************'+nbr2last4;
+	else
+		document.organizationsForm.nbr2.value = '';
+	$('#main_save_buttons,#addPaymentButton,#editPaymentMethod').toggle();
+}
+
+org.deletePaymentMethods=function(formObj){
+}
+
+org.savePaymentMethod=function(formObj){
+	data = {
+		'opm_id':formObj.opm_id.value,
+		'label':formObj.pm_label.value,
+		'name_on_account':formObj.name_on_account.value,
+		'org_id':formObj.org_id.value
+	}
+	
+	if(!isNaN(formObj.nbr1.value))
+		data['nbr1'] = formObj.nbr1.value;
+	if(!isNaN(formObj.nbr2.value))
+		data['nbr2'] = formObj.nbr2.value;
+		
+	$('#main_save_buttons,#addPaymentButton,#editPaymentMethod').toggle();
+	core.doRequest('/organizations/save_payment_method',data);
+}
+
+org.cancelPaymentChanges=function(){
+	$('#main_save_buttons,#addPaymentButton,#editPaymentMethod').toggle();
+}
