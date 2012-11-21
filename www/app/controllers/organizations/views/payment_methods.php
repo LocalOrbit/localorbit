@@ -23,15 +23,9 @@
 	$pms->add(new core_datacolumn('nbr2_last_4','Routing #',true,'25%','<a href="#!organizations-edit--org_id-{org_id}" onclick="org.editPaymentMethod({opm_id},\'{name_on_account}\',\'{label}\',\'{nbr1_last_4}\',\'{nbr2_last_4}\');">************{nbr2_last_4}</a>','************{nbr2_last_4}','************{nbr2_last_4}'));
 	$pms->render();
 	
-	core::log('not here');
+	#core::log('not here');
 	
 	
-	core::load_library('crypto');
-	foreach($col as $row)
-	{
-		echo('nbr 1: '.core_crypto::decrypt($row['nbr1']).'<br />');
-		echo('nbr 2: '.core_crypto::decrypt($row['nbr2']).'<br />');
-	}
 	?>
 	<div class="buttonset" id="addPaymentButton">
 		<input type="button" class="button_secondary" value="Add New Payment Method" onclick="org.editPaymentMethod(0,'','');" />
