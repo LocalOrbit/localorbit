@@ -22,7 +22,7 @@ $payment_methods = core::model('organization_payment_methods')
 <table class="form">
 	<? if(lo3::is_admin()){ ?>
 	<?=core_form::header_nv('Service Fee')?>
-	<?=core_form::input_text('Service Fee','service_fee',floatval($data['service_fee']))?>
+	<?=core_form::input_text('Service Fee','service_fee',core_format::price($data['service_fee']))?>
 	<?=core_form::input_select(
 		'Fee Schedule',
 		'sfs_id',
