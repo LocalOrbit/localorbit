@@ -42,38 +42,34 @@ else
 	}
 }
 
-
-# print different header if editing your own profile
-if($core->data['me'] == '1') 
-	page_header('Editing '.$data['first_name'].' '.$data['last_name']);
-else
-	page_header('Editing '.$data['first_name'].' '.$data['last_name'],'#!users-list','cancel');
-
-
 # write out the javascript rules for this form
 $this->edit_rules()->js();
+
+echo(
+	(
+		($core->data['me'] == '1')?
+		core_form::page_header('Editing '.$data['first_name'].' '.$data['last_name']):
+		core_form::page_header('Editing '.$data['first_name'].' '.$data['last_name'],'#!users-list','cancel')
+	).
+	core_form::form('userForm','/users/save',null,
+		core_form::tab_switchers('usertabs',array('User Info','Password Security')),
+		core_form::tab('usertabs',
+			core_form::table_nv(
+				core_form::value('Organization','<a href="#!organizations-edit--org_id-'.$org['org_id'].'">'.$org['name'].'</a>'),
+				core_form::input_text('First Name','first_name',$data,array('required'=>true)),
+				core_form::input_text('Last Name','last_name',$data,array('required'=>true)),
+				core_form::input_text('E-mail','email',$data,array('required'=>true))
+			)
+		),
+		core_form::tab('usertabs',
+			core_form::table_nv(
+				core_form::input_password('New Password','password'),
+				core_form::input_password('Confirm Password','confirm_password')
+			)
+		),
+		core_form::input_hidden('entity_id',$data),
+		(($core->data['me'] == '1')?core_form::save_only_button():core_form::save_buttons())
+	)
+);
+
 ?>
-<form name="userForm" method="post" action="/users/save" target="uploadArea" onsubmit="return core.submit('/users/save',this);" enctype="multipart/form-data">
-	<?=core_ui::tab_switchers('usertabs',array('User Info','Password Security'))?>
-	<div class="tabarea" id="usertabs-a1">	
-		<table class="form">
-			<?=core_form::value('Organization','<a href="#!organizations-edit--org_id-'.$org['org_id'].'">'.$org['name'].'</a>')?>
-			<?=core_form::input_text('First Name','first_name',$data,true)?>
-			<?=core_form::input_text('Last Name','last_name',$data,true)?>
-			<?=core_form::input_text('E-mail','email',$data,true)?>
-		</table>
-	</div>
-	<div class="tabarea" id="usertabs-a2">	
-		<table class="form">
-			<?=core_form::input_password('New Password','password','')?>
-			<?=core_form::input_password('Confirm Password','confirm_password','')?>
-		</table>
-	</div>
-	<?
-	if($core->data['me'] == '1') 
-		save_only_button();
-	else
-		save_buttons();
-	?>
-	<input type="hidden" name="entity_id" value="<?=$data['entity_id']?>" />	
-</form>
