@@ -1,11 +1,11 @@
 <?php
-
 core::ensure_navstate(array('left'=>'left_dashboard'));
 core::head('Edit Discount Code','This page is to edit Discount Code Information');
 lo3::require_permission();
 lo3::require_login();
 lo3::require_orgtype('market');
 
+# get a set of collections used for select lists in the page
 $hubs = core::model('domains')->collection()->sort('name');
 $seller_restrict = core::model('organizations')->collection()->filter('allow_sell',1)->sort('full_org_name');
 $buyer_restrict  = core::model('organizations')->collection()->sort('full_org_name');
@@ -18,141 +18,77 @@ $prod_sql = '
 	where products.is_deleted=0
 	and   organizations.is_deleted=0
 ';
+
+# apply some MM specific rules
 if(lo3::is_market())
 {
 	$hubs->filter('domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 	$prod_sql .= '
 		and domains.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
 	';
-}
-$prod_sql .= 'order by domains.name,organizations.name,products.name';
-$products = new core_collection($prod_sql);
-
-if(lo3::is_market())
-{
 	$buyer_restrict->filter('domains.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 	$seller_restrict->filter('domains.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 }
 
-if(!is_numeric($core->data['disc_id']))
-{
-	$data = array();
-}
-else
-{
-	$data = core::model('discount_codes')->load();
-}
+# finish loading the products
+$prod_sql .= 'order by domains.name,organizations.name,products.name';
+$products = new core_collection($prod_sql);
 
-core_ui::tabset('discounttabs');
+# load the code data and javascript rules
+$data = (is_numeric($core->data['disc_id']))?core::model('discount_codes')->load():array();
 $this->rules()->js();
 
-page_header('Editing '.$data['name'],'#!discount_codes-list','cancel');
-?>
-<form name="discForm" method="post" action="/discount_codes/update" onsubmit="return core.submit('/discount_codes/update',this);" enctype="multipart/form-data">
+# render the form
+echo(
+	core_form::page_header('Editing '.$data['name'],'#!discount_codes-list','cancel').
+	core_form::form('discForm','/discount_codes/update',null,
+		core_form::tab_switchers('discounttabs',array('Discounts')),
+		core_form::tab('discounttabs',
+			core_form::table_nv(
+				core_form::input_text('Name','name',$data),
+				core_form::input_text('Code','code',$data),
+				(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)?
+					core_form::input_select('Hub','domain_id',$data,$hubs,array(
+						'default_show'=>(lo3::is_admin()),
+						'default_text'=>'All Hubs',
+						'text_column'=>'name',
+						'value_column'=>'domain_id',
+					))
+				:'',
+				core_form::input_datepicker('Start Date','start_date',$data['start_date']),
+				core_form::input_datepicker('End Date','end_date',$data),
+				core_form::input_select('Type','discount_type',$data,array('Fixed'=>'Dollar Amount','Percent'=>'Percentage')),
+				core_form::input_text('Discount','discount_amount',lo3_display_negative($data['discount_amount'])),
+				core_form::input_select('Restrict to Product','restrict_to_product_id',$data,$products,array(
+					'default_show'=>true,
+					'default_text'=>'All Products',
+					'text_column'=>'prod_name',
+					'value_column'=>'prod_id',
+					'select_style'=>'width:300px;',
+				)),
+				core_form::input_select('Restrict to Buyer Org','restrict_to_buyer_org_id',$data,$buyer_restrict,array(
+					'default_show'=>true,
+					'default_text'=>'All Buyers',
+					'text_column'=>'full_org_name',
+					'value_column'=>'org_id',
+					'select_style'=>'width:300px;',
+				)),
+				core_form::input_select('Restrict to Seller Org','restrict_to_seller_org_id',$data,$seller_restrict,array(
+					'default_show'=>true,
+					'default_text'=>'All Sellers',
+					'text_column'=>'full_org_name',
+					'value_column'=>'org_id',
+					'select_style'=>'width:300px;',
+				)),
+				core_form::input_text('Minimum order total (0 for no min)','min_order',lo3_display_negative($data['min_order'])),
+				core_form::input_text('Maximum order total (0 for no max)','max_order',lo3_display_negative($data['max_order'])),
+				core_form::input_text('Max global uses (0 for no limit)','nbr_uses_global',$data),
+				core_form::input_text('Max per org uses (0 for no limit)','nbr_uses_org',$data)
+			)
+		),
+		core_form::input_hidden('disc_id',$data),
+		core_form::save_buttons()
+	)
+);
 
-	<div class="tabset" id="discounttabs">
-		<div class="tabswitch" id="discounttabs-s1">
-			Discounts
-		</div>
-	</div>
-	
-	<div class="tabarea" id="discounttabs-a1">
-		<table class="form">
-			<tr>
-				<td class="label">Name</td>
-				<td class="value"><input type="text" name="name" value="<?=$data['name']?>" /></td>
-			</tr>
-			<tr>
-				<td class="label">Code</td>
-				<td class="value"><input type="text" name="code" value="<?=$data['code']?>" /></td>
-			</tr>
-		<?if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1) 
-		{?>
-			<tr>
-				<td class="label">Hub</td>
-				<td class="value">
-					<select name="domain_id">
-						<?if(lo3::is_admin()){?><option value="0">Everyone</option><?}?>
-						<?=core_ui::options($hubs,$data['domain_id'],'domain_id','name')?>
-					</select>
-				</td>
-			</tr>
-		<?}?>
-			<tr>
-				<td class="label">Start Date</td>
-				<td class="value">
-					<?=core_ui::date_picker('start_date',$data['start_date'])?>
-				</td>
-			</tr>
-			<tr>
-				<td class="label">End Date</td>
-				<td class="value"><?=core_ui::date_picker('end_date',$data['end_date'])?></td>
-			</tr>
-			<tr>
-				<td class="label">Type</td>
-				<td class="value">
-					<select name="discount_type">
-						<?=core_ui::options(array('Fixed'=>'Dollar Amount','Percent'=>'Percentage'),$data['discount_type'],'value','text')?>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td class="label">Discount</td>
-				<td class="value"><input type="text" name="discount_amount" value="<?=lo3_display_negative($data['discount_amount'])?>" /></td>
-			</tr>
-			<tr>
-				<td class="label">Restrict to Product</td>
-				<td class="value">
-					<select name="restrict_to_product_id" style="width:550px;">
-						<option value="0">All Products</option>
-						<?=core_ui::options($products,$data['restrict_to_product_id'],'prod_id','prod_name')?>
-					</select>
-				</td>
-			</tr>	
-			<tr>
-				<td class="label">Restrict to Buyer Org</td>
-				<td class="value">
-					<select name="restrict_to_buyer_org_id" style="width:550px;">
-						<option value="0">Everyone</option>
-						<?=core_ui::options($buyer_restrict,$data['restrict_to_buyer_org_id'],'org_id','full_org_name')?>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td class="label">Restrict to Seller Org</td>
-				<td class="value">
-					<select name="restrict_to_seller_org_id" style="width:550px;">
-						<option value="0">Everyone</option>
-						<?=core_ui::options($seller_restrict,$data['restrict_to_seller_org_id'],'org_id','full_org_name')?>
-					</select>
-				</td>
-			</tr>
-			
-			<!-- NOTE: This is not yet enabled given complexities in LO3
-			<tr> 
-				<td class="label">Restrict to user type</td>
-				<td class="value"><input type="text" name="restrict_to_account_type_id" value="<?=$data['restrict_to_account_type_id']?>" /></td>
-			</tr> 
-			-->
-	
-			<tr>
-				<td class="label">Minimum order total (0 for no min)</td>
-				<td class="value"><input type="text" name="min_order" value="<?=lo3_display_negative($data['min_order'])?>" /></td>
-			</tr>
-			<tr>
-				<td class="label">Maximum order total (0 for no max)</td>
-				<td class="value"><input type="text" name="max_order" value="<?=lo3_display_negative($data['max_order'])?>" /></td>
-			</tr>
-			<tr>
-				<td class="label">Max global uses (0 for no limit)</td>
-				<td class="value"><input type="text" name="nbr_uses_global" value="<?=$data['nbr_uses_global']?>" /></td>
-			</tr>
-			<tr>
-				<td class="label">Max per org uses (0 for no limit)</td>
-				<td class="value"><input type="text" name="nbr_uses_org" value="<?=$data['nbr_uses_org']?>" /></td>
-			</tr>
-		</table>
-	</div>
-	<input type="hidden" name="disc_id" value="<?=$data['disc_id']?>" />
-	<? save_buttons(); ?>
-</form>
+?>

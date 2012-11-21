@@ -11,6 +11,15 @@ class core_controller_units extends core_controller
 		));
 	}
 	
+	function save_rules()
+	{
+		global $core;
+		return new core_ruleset('unitsForm',array(
+			array('type'=>'min_length','name'=>'NAME','data1'=>3,'msg'=>$core->i18n['error:units:single_length']),
+			array('type'=>'min_length','name'=>'PLURAL','data1'=>3,'msg'=>$core->i18n['error:units:plural_length']),
+		));
+	}
+	
 	function do_request()
 	{
 		global $core;
@@ -34,6 +43,7 @@ class core_controller_units extends core_controller
 		global $core;
 		lo3::require_orgtype('admin');
 		
+		$this->save_rules()->validate();
 		$code = core::model('Unit')->import_fields('UNIT_ID','NAME','PLURAL');
 		$code->save('unitsForm');
 		

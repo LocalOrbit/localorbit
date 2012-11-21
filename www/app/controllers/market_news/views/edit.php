@@ -1,31 +1,18 @@
 <?php
-
 core::ensure_navstate(array('left'=>'left_dashboard'));
 core::head('Buy and Sell Local Food on Local Orbit - Edit Market News','This page is used to edit Market News');
 lo3::require_permission();
 lo3::require_login();
 
-core_ui::tabset('marketnewstabs');
-core_ui::rte();
-$this->rules()->js();
-
-$hubs = core::model('domains')->collection();						
+# get a filtered list of domains that the current user can create news on
+$hubs = core::model('domains')->collection()->sort('name');						
 if (lo3::is_market()) { 
 	$hubs = $hubs->filter('domain_id', 'in', implode(',', $core->session['domains_by_orgtype_id'][2]));							
 } 
-$hubs = $hubs->sort('name');
 
-if($core->data['mnews_id'] == 0)
-{
-	$data = array(
-		'domain_id'=>$core->config['domain']['domain_id'],
-	);
-}
-else
-{
-	$data = core::model('market_news')->load();
-}
-
+# load the data and rules
+$data = (is_numeric($core->data['mnews_id']))?core::model('market_news')->load():array('domain_id'=>$core->config['domain']['domain_id']);
+$this->rules()->js();
 
 # if the hub you were trying to edit is NOT the same as YOUR hub, then 
 # make sure the user is actually an admin. Otherwise, they can be a market manager
@@ -38,42 +25,28 @@ else
 	lo3::require_orgtype('market');
 }
 
-
-page_header('Editing '.$data['title'],'#!market_news-list','cancel');
+# write the form
+echo(
+	core_form::page_header('Editing '.$data['title'],'#!market_news-list','cancel').
+	core_form::form('marketnewsform','/market_news/update',null,
+		core_form::tab_switchers('marketnewstabs',array('Market News')),
+		core_form::tab('marketnewstabs',
+			core_form::table_nv(
+				(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)?
+					core_form::input_select('Hub','domain_id',$data,$hubs,array(
+						'default_show'=>true,
+						'default_text'=>'Select a Hub',
+						'text_column'=>'name',
+						'value_column'=>'domain_id',
+					))
+				:'',
+				core_form::input_text('Title','title',$data),
+				core_form::input_rte('Content','content',$data)
+			)
+		),
+		(count($core->session['domains_by_orgtype_id'][2]) == 1)?core_form::input_hidden('domain_id',$core->session['domains_by_orgtype_id'][2][0]):'',
+		core_form::input_hidden('mnews_id',$data),
+		core_form::save_buttons()
+	)
+);
 ?>
-
-<form name="marketnewsform" method="post" action="/market_news/update" onsubmit="return core.submit('/market_news/update',this);" enctype="multipart/form-data">
-	<div class="tabset" id="marketnewstabs">
-		<div class="tabswitch" id="marketnewstabs-s1">
-			Market News
-		</div>
-	</div>
-	<div class="tabarea" id="marketnewstabs-a1">
-		<table class="form">
-			<?if(count($core->session['domains_by_orgtype_id'][2]) > 1){?>
-			<tr>
-				<td class="label">Hub</td>
-				<td class="value">
-					<select name="domain_id">
-						<option value="0">Select a hub</option>							
-						<?=core_ui::options($hubs,$data['domain_id'],'domain_id','name')?>
-					</select>
-				</td>
-			</tr>
-			<?}?>
-			<tr>
-				<td class="label">Title</td>
-				<td class="value"><input type="text" name="title" value="<?=$data['title']?>" /></td>
-			</tr>
-			<tr>
-				<td class="label">Content</td>
-				<td class="value"><textarea id="rte" class="rte" name="content" rows="7" cols="73"><?=$data['content']?></textarea></td>
-			</tr>				
-		</table>
-	</div>
-	<?if(count($core->session['domains_by_orgtype_id'][2]) == 1){?>
-	<input type="hidden" name="domain_id" value="<?=$data['domain_id']?>" />
-	<?}?>
-	<input type="hidden" name="mnews_id" value="<?=$data['mnews_id']?>" />
-	<? save_buttons(); ?>
-</form>

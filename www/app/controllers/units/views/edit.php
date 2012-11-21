@@ -5,36 +5,28 @@ core::head('Edit Unit','This page is used to edit product units');
 lo3::require_permission();
 lo3::require_login();
 
+# only admins can edit units
 lo3::require_orgtype('admin');
 
-core_ui::tabset('unittabs');
-core_ui::rte();
+# load the data if we're passed an ID. Otherwise, we're building a new unit
+$data = (is_numeric($core->data['UNIT_ID']))?core::model('Unit')->load():array();
 
-if(!is_numeric($core->data['UNIT_ID']))
-{
-	$data = array();
-}
-else
-{
-	$data = core::model('Unit')->load();
-}
+# write out the validation rules
+$this->save_rules()->js();
 
-
-page_header('Editing '.$data['SINGLE'],'#!units-list','cancel');
+# write out the form
+echo(
+	core_form::page_header('Editing '.$data['SINGLE'],'#!units-list','cancel').
+	core_form::form('unitsForm','/units/update','',
+		core_form::tab_switchers('unittabs',array('Unit')),
+		core_form::tab('unittabs',
+			core_form::table_nv(
+				core_form::input_text('Single','NAME',$data,array('required'=>true)),
+				core_form::input_text('Plural','PLURAL',$data,array('required'=>true))
+			)
+		),
+		core_form::input_hidden('UNIT_ID',$data),
+		core_form::save_buttons()
+	)
+);
 ?>
-
-<form name="unitsForm" method="post" action="/units/update" onsubmit="return core.submit('/units/update',this);" enctype="multipart/form-data">
-	<div class="tabset" id="unittabs">
-		<div class="tabswitch" id="unittabs-s1">
-			Unit
-		</div>
-	</div>
-	<div class="tabarea" id="unittabs-a1">
-		<table class="form">
-			<?=core_form::input_text('Single','NAME',$data,true)?>
-			<?=core_form::input_text('Plural','PLURAL',$data,true)?>
-		</table>
-	</div>
-	<input type="hidden" name="UNIT_ID" value="<?=$data['UNIT_ID']?>" />
-	<? save_buttons(); ?>
-</form>

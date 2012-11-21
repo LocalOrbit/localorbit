@@ -5,10 +5,7 @@ core::head('Edit Newsletter','Edit Newsletter');
 lo3::require_permission();
 lo3::require_login();
 
-
-core_ui::tabset('newslettertabs');
 core_ui::load_library('js','newsletters.js');
-core_ui::rte();
 
 if(!is_numeric($core->data['cont_id']))
 {
@@ -44,9 +41,51 @@ if(in_array(4,$groups))
 	$data['send_market'] = 1;
 
 
+
+echo(
+	core_form::page_header('Editing '.$data['title'],'#!newsletters-list','cancel').
+	core_form::form('nlForm','/newsletters/update',null,
+		core_form::tab_switchers('newslettertabs',array('Newsletter')),
+		core_form::tab('newslettertabs',
+			core_form::table_nv(
+				((lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)?
+					core_form::input_select('Hub','domain_id',$data,$hubs,array(
+						'default_show'=>true,
+						'default_text'=>'Select a Hub',
+						'text_column'=>'name',
+						'value_column'=>'domain_id',
+				)):''),
+				core_form::value(
+					'Send to these groups',
+					core_ui::checkdiv('send_seller','Sellers',$data['send_seller']).
+					core_ui::checkdiv('send_buyer','Buyers',$data['send_buyer']).
+					'<div class="error" style="display:none;" id="checkMsg">You must check at least one group that will receive this newsletter.</div>'
+				),
+				core_form::input_image_upload('Upload a new image','newsletters',array(
+					'display_row'=>($data['cont_id']>0),
+					'sublabel'=>'(No larger than 600 pixels wide and 300 pixels tall)',
+					'img_id'=>'newsletterImage',
+					'src'=>$webpath,
+				)),
+				core_form::input_text('Subject','title',$data),
+				core_form::input_text('Header','header',$data),
+				core_form::input_rte('Body','body',$data)
+			)
+		),
+		((lo3::is_market() && count($core->session['domains_by_orgtype_id'][2]) == 1)?
+			core_form::hidden('domain_id',$core->session['domains_by_orgtype_id'][2][0]):''
+		),
+		core_form::input_hidden('do_test',0),
+		core_form::input_hidden('do_send',0),
+		core_form::input_hidden('cont_id',$data['cont_id']),
+		core_form::save_buttons()
+	)
+);
+?>
+<!--
+<?
 page_header('Editing '.$data['title'],'#!newsletters-list','cancel');
 ?>
-
 <form name="nlForm" method="post" action="/newsletters/update" onsubmit="return core.submit('/newsletters/update',this);" enctype="multipart/form-data">
 	<div class="tabset" id="newslettertabs">
 		<div class="tabswitch" id="newslettertabs-s1">
@@ -99,10 +138,6 @@ page_header('Editing '.$data['title'],'#!newsletters-list','cancel');
 					<iframe name="uploadArea" id="uploadArea" width="300" height="20" style="color:#fff;background-color:#fff;overflow:hidden;"></iframe>
 				</td>
 			</tr>
-			<tr>
-				<td class="label">Body</td>
-				<td class="value"><textarea id="rte" class="rte" name="body" rows="7" cols="73"><?=$data['body']?></textarea></td>
-			</tr>
 			
 		</table>
 		<div class="buttonset" id="sendNewsletterButton">
@@ -123,3 +158,4 @@ page_header('Editing '.$data['title'],'#!newsletters-list','cancel');
 	<input type="hidden" name="cont_id" value="<?=$data['cont_id']?>" />
 	<? save_buttons(); ?>
 </form>
+-->
