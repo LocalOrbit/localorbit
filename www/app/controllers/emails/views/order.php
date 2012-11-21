@@ -82,4 +82,25 @@ $this->send_email(
 	$core->config['mailer']['From'],
 	$values['hubname']
 );
+
+
+$mm_emails = array();
+$mm_emails = core::model('domains')->get_mm_emails($values['domain_id']);
+if(count($mm_emails) > 0)
+{
+	# send the MM notification
+	$body  = $this->email_start();
+	$body .= $this->handle_source($core->session['i18n']['email:order_mm_notification'],$values);
+	$body .= $this->footer();
+	$body .= $this->email_end();
+	
+	$this->send_email(
+		'New order on '.$values['hubname'],
+		implode(',',$mm_emails),
+		$body,
+		array(),
+		$core->config['mailer']['From'],
+		$values['hubname']
+	);
+}
 ?>
