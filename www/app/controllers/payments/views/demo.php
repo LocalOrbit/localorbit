@@ -14,7 +14,7 @@ if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 	
 }
 $tabs[] = 'Payables';
-$tabs[] = 'Payments Due';
+$tabs[] = 'Payments Owed';
 
 if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 {
@@ -32,7 +32,7 @@ echo(core_ui::tab_switchers('paymentstabs',$tabs));
 # based on our rules, render the tabs one by one
 $this->overview((array_search('Overview',$tabs) + 1)); 
 $this->payables((array_search('Payables',$tabs) + 1)); 
-$this->payments((array_search('Payments Due',$tabs) + 1)); 
+$this->payments((array_search('Payments Owed',$tabs) + 1)); 
 if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 {
 	$this->receivables((array_search('Receivables',$tabs) + 1)); 

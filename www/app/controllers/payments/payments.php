@@ -2,6 +2,45 @@
 
 class core_controller_payments extends core_controller
 {
+	function get_totals_queries()
+	{
+				
+		$totals_base = 'select sum(amount_due) from v_payables vp';
+
+		if(lo3::is_admin())
+		{
+			$p_totals_base = $totals_base . ' where vp.payables_id>0';
+			$r_totals_base = $p_totals_base;
+		}
+		else if (lo3::is_market())
+		{
+			$p_totals_base = $totals_base . ' where from_domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')';
+			$r_totals_base = $p_totals_base;
+		}
+		else
+		{
+			$p_totals_base = $totals_base . ' where from_org_id='.$core->session['org_id'];
+			$r_totals_base = $totals_base . ' where to_org_id='.$core->session['org_id'];
+		}
+		$time_clauses = array(
+			'Overdue'=>'',
+			'Today'=>'',
+			'Next 7 days'=>'',
+			'Next 30 days'=>'',
+		);
+
+		$totals_queries = array('Receivables'=>array(),'Payables'=>array());
+
+		foreach($time_clauses as $range=>$clause)
+		{
+			$totals_queries['Payables'][$range] = $p_totals_base . $clause;
+			$totals_queries['Receivables'][$range] = $p_totals_base . $clause;
+		}
+		
+		
+		return $totals_queries;
+		
+	}
 }
 
 function org_amount ($data) {
