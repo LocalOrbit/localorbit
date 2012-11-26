@@ -385,7 +385,8 @@ class core_model_lo_order extends core_model_base_lo_order
 			$item['lbps_id']   = ($method == 'paypal')?2:1;
 			$item['lsps_id']   = 1;
 			$fulfills[$item['seller_org_id']]['grand_total']    = $fulfills[$item['seller_org_id']]['grand_total']    + $item['row_total'];
-			$fulfills[$item['seller_org_id']]['adjusted_total'] = $fulfills[$item['seller_org_id']]['adjusted_total'] + $item['row_adjusted_total'];
+			$fulfills[$item['seller_org_id']]['adjusted_total'] = 0;
+			#$fulfills[$item['seller_org_id']]['adjusted_total'] + $item['row_adjusted_total'];
 			$item->save();
 
 			$set_delivs[$item['lodeliv_id']] = $item['lo_foid'];
@@ -406,7 +407,7 @@ class core_model_lo_order extends core_model_base_lo_order
 			#$fulfill['adjusted_total'] = $fulfill['grand_total'];
 
 			$fulfill->save();
-			$fulfill->create_order_payables($this['payment_method']);
+			$fulfill->create_order_payables($this['payment_method'],$this);
 		}
 
 		# look for updates to the deliveries, such as changing addresses
@@ -481,7 +482,7 @@ class core_model_lo_order extends core_model_base_lo_order
 		$this->save();
 		$this['lo3_order_nbr']  = $this->generate_order_id('buyer',$core->config['domain']['domain_id'],$this['lo_oid']);
 		$this->save();
-		$this->create_order_payables();
+		$this->create_order_payables($this['payment_method']);
 		core::model('events')->add_record('Checkout Complete',$this['lo_oid']);
 		$this->send_email($fulfills);
 	}
@@ -557,23 +558,89 @@ class core_model_lo_order extends core_model_base_lo_order
 		}
 	}
 
-	function create_order_payables () {
+	function create_order_payables($payment_method)
+	{
 		global $core;
+		
+		# create the payable between the buyer and LO
 
 		$payable = core::model('payables');
 		$payable['domain_id'] = $core->config['domain']['domain_id'];
-		$payable['amount'] = $this['grand_total'];
+		$payable['amount'] = ($this['grand_total'] - $this['adjusted_total']);
 		$payable['payable_type_id'] = 1;
 		$payable['parent_obj_id'] = $this['lo_oid'];
 		$payable['from_org_id'] = $this['org_id'];
 		$payable['description'] = $this['lo3_order_nbr'];
 
-		if ($core->config['domain']['payment_configuration']  == 'self_managed' && $this['payment_method'] == 'purchaseorder') {
+		if ($core->config['domain']['payment_configuration']  == 'self_managed' && $this['payment_method'] == 'purchaseorder')
+		{
 			$payable['to_org_id'] = core_db::col('SELECT payable_org_id from domains where domain_id ='.$core->config['domain']['domain_id'],'payable_org_id');
-		} else {
+		}
+		else
+		{
 			$payable['to_org_id'] = 1;
 		}
 
+		$payable->save();
+		
+		
+		# if the user pays via paypal,
+		if($payment_method == 'paypal')
+		{
+			# also create the invoice, pa4ment
+			$invoice = core::model('invoices');
+			$invoice['due_date'] = core_format::date(time(),'db');
+			$invoice['amount']   = $payable['amount'];
+			$invoice['from_org_id']= $this['org_id'];
+			$invoice['to_org_id']= 1;
+			$invoice->save();
+			$payable['invoice_id'] = $invoice['invoice_id'];
+			$payable->save();
+			
+			$payment = core::model('payments');
+			$payment['from_org_id'] =  $this['org_id'];
+			$payment['to_org_id']   = 1;
+			$payment['amount']      = $payable['amount'];
+			$payment['payment_method_id'] = 1;
+			$payment['ref_nbr'] = $this['payment_ref'];
+			$payment->save();
+			
+			$xpi = core::model('x_invoices_payments');
+			$xpi['payment_id'] = $payment['payment_id'];
+			$xpi['invoice_id'] = $invoice['invoice_id'];
+			$xpi['amount_paid'] = $payable['amount'];
+		}
+		
+		# create the payable between LO and the Hub
+		#
+		# first set some common properties
+		$payable = core::model('payables');
+		$payable['domain_id'] = $core->config['domain']['domain_id'];
+		$payable['parent_obj_id'] = $this['lo_oid'];
+		$payable['description'] = $this['lo3_order_nbr'];
+		
+		# if the hub is self managed, then the hub will collect the money
+		# and owes local orbit the fee_percen_lo
+		#
+		# if the hub is managed by LO, then the money is collected by LO
+		# and LO owes the hub the fee_percen_hub
+		$hub_org_id = core_db::col('SELECT payable_org_id from domains where domain_id ='.$core->config['domain']['domain_id'],'payable_org_id');
+		if($core->config['domain']['payment_configuration']  == 'self_managed')
+		{
+			$payable['payable_type_id'] = 4;
+			$payable['from_org_id'] = $hub_org_id;
+			$payable['to_org_id']   = 1;
+			$payable['amount'] = (floatval($this['fee_percen_lo']) / 100) * ($this['grand_total'] - $this['adjusted_total']);
+					
+		}
+		else
+		{
+			$payable['payable_type_id'] = 3;
+			$payable['to_org_id']   = $hub_org_id;
+			$payable['from_org_id'] = 1;
+			$payable['amount'] = (floatval($this['fee_percen_hub']) / 100) * ($this['grand_total'] - $this['adjusted_total']);
+		}
+		
 		$payable->save();
 
 		return $payable;
@@ -921,7 +988,8 @@ class core_model_lo_order extends core_model_base_lo_order
 		//~ }
 
 		# set all the totals
-		$this['adjusted_total'] = $adjusted_total;
+		#$this['adjusted_total'] = $adjusted_total;
+		$this['adjusted_total'] = 0;
 		$this['item_total']     = $item_total;
 		$this['grand_total']    = $item_total + $adjusted_total;
 		#$this['adjusted_description'] = implode(',',$descriptions);
@@ -934,7 +1002,8 @@ class core_model_lo_order extends core_model_base_lo_order
 		{
 			$fulfill = core::model('lo_fulfillment_order')->load($foid);
 			$fulfill['grand_total']    = $item_total;
-			$fulfill['adjusted_total'] = $item_total;
+			$fulfill['adjusted_total'] = 0;
+			#$fulfill['adjusted_total'] = $item_total;
 			$fulfill->save();
 		}
 	}

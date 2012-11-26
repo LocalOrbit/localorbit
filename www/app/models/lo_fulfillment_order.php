@@ -53,20 +53,31 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 
 	}
 
-	function create_order_payables ($payment_method) {
+	function create_order_payables ($payment_method,$parent)
+	{
 		global $core;
+		
+		core::log('trying to calculate fulfillment payable. totals are : '.$this['grand_total'].' / '.$this['adjusted_total']);
+		$total = floatval(($this['grand_total'] - $this['adjusted_total']));
+		$fees  = floatval($parent['fee_percen_lo'] + $parent['fee_percen_hub'] + floatval($parent[$payment_method.'_processing_fee']));
+		$fees  = ($fees / 100) * $total;
+		core::log('fees are: '.$fees);
+		core::log('amount should be: '.($total - $fees));
 
 		$payable = core::model('payables');
 		$payable['domain_id'] = $core->config['domain']['domain_id'];
-		$payable['amount'] = $this['grand_total'];
+		$payable['amount'] = $total - $fees;
 		$payable['payable_type_id'] = 2;
 		$payable['parent_obj_id'] = $this['lo_foid'];
 		$payable['to_org_id'] = $this['org_id'];
 		$payable['description'] = $this['lo3_order_nbr'];
 
-		if ($core->config['domain']['payment_configuration']  == 'self_managed' && $payment_method == 'purchaseorder') {
+		if ($core->config['domain']['payment_configuration']  == 'self_managed' && $payment_method == 'purchaseorder')
+		{
 			$payable['from_org_id'] = core_db::col('SELECT payable_org_id from domains where domain_id ='.$core->config['domain']['domain_id'],'payable_org_id');
-		} else {
+		}
+		else
+		{
 			$payable['from_org_id'] = 1;
 		}
 
