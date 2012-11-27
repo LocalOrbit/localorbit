@@ -157,7 +157,6 @@ if($_SERVER['HTTP_HOST'] == 'testing.localorb.it' || strpos(__FILE__,'/testing/'
 
 if($_SERVER['HTTP_HOST'] == 'dev.localorb.it' || strpos(__FILE__,'/dev/') > 0 || strpos(__FILE__,'/Clients/') > 0)
 {
-	echo 'test';
 	$core->config['stage'] = 'dev';
 	$core->config['default_hostname'] = 'annarbor-mi.localorb.it';
 	$core->config['session_domain']   = '.localorb.it';
