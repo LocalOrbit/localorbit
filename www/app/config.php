@@ -157,13 +157,14 @@ if($_SERVER['HTTP_HOST'] == 'testing.localorb.it' || strpos(__FILE__,'/testing/'
 
 if($_SERVER['HTTP_HOST'] == 'dev.localorb.it' || strpos(__FILE__,'/dev/') > 0 || strpos(__FILE__,'/Clients/') > 0)
 {
+	echo 'test';
 	$core->config['stage'] = 'dev';
 	$core->config['default_hostname'] = 'annarbor-mi.localorb.it';
 	$core->config['session_domain']   = '.localorb.it';
 	$core->config['session_name']    .= 'dev';
 	$core->config['db']['database']   = 'localorb_www_dev';
 	$core->config['db']['password']   = 'localorb_www_dev';
-
+	$core->config['db']['hostname']   = 'localhost';
 	$core->config['payments']['paypal'] = array(
 		'password'=>'1331153423',
 		'username'=>'test_1331153383_biz_api1.localorb.it',
@@ -172,6 +173,7 @@ if($_SERVER['HTTP_HOST'] == 'dev.localorb.it' || strpos(__FILE__,'/dev/') > 0 ||
 	);
 	$core->config['hostname_prefix']  = $core->config['stage'];
 }
+
 
 #echo('<pre>');
 #print_r($core->config);
