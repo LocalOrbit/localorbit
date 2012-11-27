@@ -384,8 +384,9 @@ class core_model_lo_order extends core_model_base_lo_order
 			$item['ldstat_id'] = 2;
 			$item['lbps_id']   = ($method == 'paypal')?2:1;
 			$item['lsps_id']   = 1;
+
 			$fulfills[$item['seller_org_id']]['grand_total']    = $fulfills[$item['seller_org_id']]['grand_total']    + $item['row_total'];
-			$fulfills[$item['seller_org_id']]['adjusted_total'] = 0;
+			$fulfills[$item['seller_org_id']]['adjusted_total'] = $fulfills[$item['seller_org_id']]['adjusted_total'] + $item['row_adjusted_total'];
 			#$fulfills[$item['seller_org_id']]['adjusted_total'] + $item['row_adjusted_total'];
 			$item->save();
 
@@ -561,7 +562,7 @@ class core_model_lo_order extends core_model_base_lo_order
 	function create_order_payables($payment_method)
 	{
 		global $core;
-		
+
 		# create the payable between the buyer and LO
 
 		$payable = core::model('payables');
@@ -582,8 +583,8 @@ class core_model_lo_order extends core_model_base_lo_order
 		}
 
 		$payable->save();
-		
-		
+
+
 		# if the user pays via paypal,
 		if($payment_method == 'paypal')
 		{
@@ -596,7 +597,7 @@ class core_model_lo_order extends core_model_base_lo_order
 			$invoice->save();
 			$payable['invoice_id'] = $invoice['invoice_id'];
 			$payable->save();
-			
+
 			$payment = core::model('payments');
 			$payment['from_org_id'] =  $this['org_id'];
 			$payment['to_org_id']   = 1;
@@ -604,13 +605,13 @@ class core_model_lo_order extends core_model_base_lo_order
 			$payment['payment_method_id'] = 1;
 			$payment['ref_nbr'] = $this['payment_ref'];
 			$payment->save();
-			
+
 			$xpi = core::model('x_invoices_payments');
 			$xpi['payment_id'] = $payment['payment_id'];
 			$xpi['invoice_id'] = $invoice['invoice_id'];
 			$xpi['amount_paid'] = $payable['amount'];
 		}
-		
+
 		# create the payable between LO and the Hub
 		#
 		# first set some common properties
@@ -618,7 +619,7 @@ class core_model_lo_order extends core_model_base_lo_order
 		$payable['domain_id'] = $core->config['domain']['domain_id'];
 		$payable['parent_obj_id'] = $this['lo_oid'];
 		$payable['description'] = $this['lo3_order_nbr'];
-		
+
 		# if the hub is self managed, then the hub will collect the money
 		# and owes local orbit the fee_percen_lo
 		#
@@ -631,7 +632,7 @@ class core_model_lo_order extends core_model_base_lo_order
 			$payable['from_org_id'] = $hub_org_id;
 			$payable['to_org_id']   = 1;
 			$payable['amount'] = (floatval($this['fee_percen_lo']) / 100) * ($this['grand_total'] - $this['adjusted_total']);
-					
+
 		}
 		else
 		{
@@ -640,7 +641,7 @@ class core_model_lo_order extends core_model_base_lo_order
 			$payable['from_org_id'] = 1;
 			$payable['amount'] = (floatval($this['fee_percen_hub']) / 100) * ($this['grand_total'] - $this['adjusted_total']);
 		}
-		
+
 		$payable->save();
 
 		return $payable;
