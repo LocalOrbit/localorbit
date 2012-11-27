@@ -567,7 +567,7 @@ class core_model_lo_order extends core_model_base_lo_order
 
 		$payable = core::model('payables');
 		$payable['domain_id'] = $core->config['domain']['domain_id'];
-		$payable['amount'] = ($this['grand_total'] - $this['adjusted_total']);
+		$payable['amount'] = ($this['grand_total']);
 		$payable['payable_type_id'] = 1;
 		$payable['parent_obj_id'] = $this['lo_oid'];
 		$payable['from_org_id'] = $this['org_id'];
