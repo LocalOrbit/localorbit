@@ -2,10 +2,10 @@
 
 class core_model_lo_order___placeable extends core_model_base_lo_order
 {
-	
-	
-	
-	
+
+
+
+
 	function create_order_payables($payment_method)
 	{
 		global $core;
@@ -94,8 +94,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 
 		return $payable;
 	}
-	
-	
+
+
 	function send_email($fulfills)
 	{
 		global $core;
@@ -214,7 +214,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 
 								# now we have all the right info
 								# store it in the db
-								$order_deliv = core::model('lo_order_deliveries')->create($this['lo_oid'], $deliv, $address);
+								$order_deliv = core::model('lo_order_deliveries')->create($this['lo_oid'], $deliv, $group, $address);
 								$this->deliveries[] = $order_deliv;
 
 								# now that we've created the order delivery,
