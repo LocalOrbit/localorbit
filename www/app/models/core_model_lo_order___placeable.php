@@ -57,6 +57,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			$xpi['payment_id'] = $payment['payment_id'];
 			$xpi['invoice_id'] = $invoice['invoice_id'];
 			$xpi['amount_paid'] = $payable['amount'];
+			$xpi->save();
 		}
 
 		# create the payable between LO and the Hub

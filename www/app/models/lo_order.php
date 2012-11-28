@@ -32,9 +32,6 @@ class core_model_lo_order extends core_model_lo_order___utility
 
 
 
-		if($changes_made)
-			$this->load_items();
-	}
 
 	function change_status($ldstat_id,$lbps_id,$do_update=true)
 	{

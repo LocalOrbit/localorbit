@@ -64,16 +64,7 @@ class core_model_lo_order___utility extends core_model_lo_order___placeable
 		return $id;
 	}
 	
-	
-	function generate_order_id($type,$domain,$order_id)
-	{
-		$id = ($type == 'fulfill')?'LFO-':'LO-';
-		$id .= date('y').'-';
-		$id .= str_pad($domain,3,'0',STR_PAD_LEFT).'-';
-		$id .= str_pad($order_id,7,'0',STR_PAD_LEFT);
-		return $id;
-	}
-	
+
 	
 	function determine_status_from_set($statuses)
 	{
