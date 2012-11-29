@@ -14,6 +14,7 @@ create table payable_types (
 insert into payable_types (payable_type) values ('buyer order');
 insert into payable_types (payable_type) values ('seller order');
 insert into payable_types (payable_type) values ('hub fees');
+insert into payable_types (payable_type) values ('lo fees');
 
 create table payables (
 	payable_id int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -166,22 +167,26 @@ select * from v_payables;
 drop view  if exists v_payments;
 
 CREATE VIEW v_payments AS 
-	select pv.payment_id,pv.amount,pv.creation_date,
-	pv.from_org_id,
-	o1.name as from_org_name,
-	pv.to_org_id,
-	o2.name as to_org_name,
-	(
-		select group_concat(concat_ws('|',p.description,pt.payable_type,p.parent_obj_id) SEPARATOR '$$')
-		from payables p 
-		inner join payable_types pt on pt.payable_type_id=p.payable_type_id
-		inner join x_invoices_payments on p.invoice_id = x_invoices_payments.invoice_id
-		where pv.payment_id=x_invoices_payments.payment_id
-	
-	) as payable_info
-	from payments pv
-	inner join organizations o1 on pv.from_org_id=o1.org_id
-	inner join organizations o2 on pv.to_org_id=o2.org_id;
+select pv.payment_id,pv.amount,pv.creation_date,
+pm.payment_method,
+if(pv.payment_method_id=1,((3/100) * pv.amount),if(pv.payment_method_id=3,0.30,0)) as transaction_fees,
+(pv.amount - if(pv.payment_method_id=1,((3/100) * pv.amount),if(pv.payment_method_id=3,0.30,0))) as net_amount,
+pv.from_org_id,
+o1.name as from_org_name,
+pv.to_org_id,
+o2.name as to_org_name,
+(
+select group_concat(concat_ws('|',p.description,pt.payable_type,p.parent_obj_id) SEPARATOR '$$')
+from payables p 
+inner join payable_types pt on pt.payable_type_id=p.payable_type_id
+inner join x_invoices_payments on p.invoice_id = x_invoices_payments.invoice_id
+where pv.payment_id=x_invoices_payments.payment_id
+
+) as payable_info
+from payments pv
+inner join organizations o1 on pv.from_org_id=o1.org_id
+inner join organizations o2 on pv.to_org_id=o2.org_id
+inner join payment_methods pm on pm.payment_method_id=pv.payment_method_id;
 
 select * from v_payments;
 
