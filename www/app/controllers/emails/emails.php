@@ -8,6 +8,7 @@ class core_controller_emails extends core_controller
 		$this->path = $path;
 		$this->i18n = array();
 		$this->rules = array();
+		core::log('emails controller instantiated');
 		$this->options = core::model('template_options')->get_options();
 	}
 	

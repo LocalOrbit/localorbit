@@ -28,12 +28,12 @@
 	
 	?>
 	<div class="buttonset" id="addPaymentButton">
-		<input type="button" class="button_secondary" value="Add New Payment Method" onclick="org.editPaymentMethod(0,'','');" />
+		<input type="button" class="button_secondary" value="Add New Bank Account" onclick="org.editPaymentMethod(0,'','');" />
 		<input type="button" class="button_secondary" value="Remove Checked" onclick="org.deletePaymentMethods(this.form);" />
 	</div>
 	<br />
 	<fieldset id="editPaymentMethod" style="display: none;">
-		<legend>Payment Method Info</legend>
+		<legend>Bank Account Info</legend>
 		<table class="form">
 			<tr>
 				<td class="label">Label:</td>
@@ -55,7 +55,7 @@
 		</table>
 		<input type="hidden" name="opm_id" value="" />
 		<div class="buttonset">
-			<input type="button" class="button_secondary" value="save this payment method" onclick="org.savePaymentMethod(this.form);" />
+			<input type="button" class="button_secondary" value="save this bank account" onclick="org.savePaymentMethod(this.form);" />
 			<input type="button" class="button_secondary" value="cancel" onclick="org.cancelPaymentChanges();" />
 		</div>
 	</fieldset>

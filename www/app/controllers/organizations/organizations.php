@@ -82,7 +82,7 @@ class core_controller_organizations extends core_controller
 
 		core_datatable::js_reload('payment_methods');
 
-		core_ui::notification('payment method saved',false);
+		core_ui::notification('bank account saved',false);
 	}
 
 	function delete_payment_methods()

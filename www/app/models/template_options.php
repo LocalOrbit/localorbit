@@ -9,7 +9,7 @@ class core_model_template_options extends core_model_base_template_options
 			$types = array($types);
 		
 		if($force_domain == 0)
-			$force_domain = $core->config['domain']['domain_id'];
+			$force_domain = intval($core->config['domain']['domain_id']);
 		
 		$sql = '
 			select t.*,tor.*

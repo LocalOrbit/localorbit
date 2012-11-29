@@ -11,6 +11,14 @@ $payments_table->add(new core_datacolumn('creation_date','Date',true,'19%','{cre
 $payments_table->add(new core_datacolumn('org_name','Organization',true,'19%','{org_name}','{org_name}','{org_name}'));
 $payments_table->add(new core_datacolumn('hub_name','Hub',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
 $payments_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
+
+if(lo3::is_admin())
+{
+	$payments_table->add(new core_datacolumn('transaction_fees','Transaction Fee',true,'19%',			'{transaction_fees}','{transaction_fees}','{transaction_fees}'));
+	$payments_table->add(new core_datacolumn('net_amount','Net Amount',true,'19%',			'{net_amount}','{net_amount}','{net_amount}'));
+	$payments_table->columns[7]->autoformat='price';
+	$payments_table->columns[8]->autoformat='price';
+}
 $payments_table->columns[2]->autoformat='price';
 $payments_table->columns[3]->autoformat='date-short';
 

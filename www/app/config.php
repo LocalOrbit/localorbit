@@ -23,6 +23,16 @@ $core->config['db'] = array(
 	'database'=>'localorb_www_production',
 );
 
+$core->config['ach'] = array(
+	'SSS'=>'RPP',
+	'AccountSet'=>'01',
+	'LocID'=>'2764',
+	'Company'=>'LOCALORBITLLC001',
+	'CompanyKey'=>'QSFTHJJP3JCMFBXGQEDBZWKDBPPHFM2',
+	'url'=>'https://securesoap.achworks.com/dnet/achws.asmx?WSDL',
+	'error_email'=>'localorbit.testing@gmail.com',
+);
+
 $core->config['mailchimp'] = array(
 	'keys'=>array(
 		'production'=>'5a19fb44d348ceed1180340c973bbe80',
@@ -114,6 +124,7 @@ $core->config['payments']['paypal'] = array(
 	'username'=>'ank_api1.localorb.it',
 	'signature'=>'AbTutOCFkGFRNQBuUmG2lDGzKJGqAfafePhnjstmH97h5rUU1x1rYPRJ',
 	'url'=>'https://api-3t.paypal.com/nvp',
+	'error_email'=>'localorbit.testing@gmail.com',
 );
 
 $core->config['title_prefix'] = 'Local Orbit - ';

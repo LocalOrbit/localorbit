@@ -56,7 +56,7 @@ core_ui::load_library('js','org.js');
 core_ui::load_library('js','address.js');
 
 # determine which tabs we're going to show, and store the right tabid
-$tabs = array('Organization Info','Addresses','Users','Payment Methods');
+$tabs = array('Organization Info','Addresses','Users','Bank Account');
 if(
 	$data['allow_sell'] == 1 and 
 	$domains->__num_rows > 0 and
