@@ -408,7 +408,7 @@ class core_form
 			'render'=>true,
 		));
 		if($options['render'] != true)	return '';
-		return core_form::tr_nv($label,'<textarea name="'.$name.'" rows="'.$options['rows'].'" cols="'.$options['rows'].'">'.$value.'</textarea>',$options);
+		return core_form::tr_nv($label,'<textarea name="'.$name.'" rows="'.$options['rows'].'" cols="'.$options['cols'].'">'.$value.'</textarea>',$options);
 	}
 
 	public static function input_rte($label,$name,$value,$options=null)
