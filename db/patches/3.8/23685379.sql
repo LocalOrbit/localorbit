@@ -27,6 +27,7 @@ create table payables (
 	amount decimal(10,2) NOT NULL,
 	invoice_id int(10),	
 	invoicable bool default false,
+    is_imported bool default false,
 	creation_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -43,6 +44,7 @@ create table invoices (
 	from_org_id bigint(20) NOT NULL,
 	to_org_id bigint(20) NOT NULL,
 	amount decimal(10,2) NOT NULL,
+    is_imported bool default false,
 	creation_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -59,6 +61,7 @@ create table payments (
 	payment_method_id int(11) unsigned not null,
 	ref_nbr varchar(255),
 	admin_note text,
+    is_imported bool default false,
 	creation_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
