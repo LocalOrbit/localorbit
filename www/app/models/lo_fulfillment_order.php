@@ -7,7 +7,7 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 			'left',
 			'domains',
 			'(lo_fulfillment_order.domain_id=domains.domain_id)',
-			array('payables_create_on', 'domains.name as domain_name', 'domains.paypal_processing_fee as domain_paypal_processing_fee')
+			array('payables_create_on', 'domains.name as domain_name', 'domains.paypal_processing_fee as domain_paypal_processing_fee', 'seller_payment_managed_by')
 		);
 		parent::init_fields();
 		return $this;
