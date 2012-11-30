@@ -21,7 +21,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 			'left',
 			'domains',
 			'(lo_order.domain_id=domains.domain_id)',
-			array('payables_create_on', 'domains.name as domain_name')
+			array('payables_create_on', 'domains.name as domain_name', 'payable_org_id', 'domains.po_due_within_days as po_due_within_days', 'seller_payment_managed_by')
 		);
 		parent::init_fields();
 		$this->add_custom_field('(select sum(applied_amount) from lo_order_discount_codes WHERE lo_order_discount_codes.lo_oid=lo_order.lo_oid) as discount_total');
