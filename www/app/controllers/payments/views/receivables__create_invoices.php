@@ -1,4 +1,12 @@
-<fieldset id="create_invoice_form" style="display:none;">
+<?php
+global $core;
+
+$payables = core::model('payables')
+	->get_buyer_grouped_payables()
+	->filter('p.payable_id','in',explode(',',$core->data['payable_id']));
+	
+?>
+<div id="create_invoice_form">
 	<table class="dt">
 		<tr>
 			<th class="dt">Organization</th>
@@ -8,25 +16,60 @@
 			<th class="dt">Payment Terms</th>
 			<th class="dt">Due Date</th>
 		</tr>
-		<tr class="dt">
-			<td class="dt">Buyer A</td>
-			<td class="dt">R234,R235</td>
-			<td class="dt"><input type="text" value="$41.00" style="width:80px;" /></td>
-			<td class="dt"><input type="text" value="2012-10-05" style="width:80px;" /></td>
-			<td class="dt"><select><option>Net 15</option><option>Net 60</option><option>Net 90</option></select></td>
-			<td class="dt"><input type="text" value="2012-12-05" style="width:80px;" /></td>
+		<?
+		$counter = -1;
+		$p_group = '';
+		$style = true; 
+		foreach($payables as $payable)
+		{ 
+			$counter++;
+			$style = (!$style);
+			$group_key = str_replace(',','-',$payable['payables']);
+		?>
+		<tr class="dt<?=$style?>">
+			<td class="dt">
+				<?=$payable['org_name']?>
+				<input type="hidden" name="invoicecreate_<?=$counter?>" value="<?=$group_key?>" />
+				<input type="hidden" name="invoicecreate_<?=$group_key?>__to" value="<?=$payable['to_org_id']?>" />
+				<input type="hidden" name="invoicecreate_<?=$group_key?>__from" value="<?=$payable['from_org_id']?>" />
+			</td>
+			<td class="dt">
+				<?
+				$payables = explode(',',$payable['payables']);
+				for($i=0;$i<count($payables);$i++){
+					echo(($i==0)?'':',');
+					echo('R-'.$payables[$i]);
+				}
+				?>
+			</td>
+			<td class="dt"><input name="invoicecreate_<?=$group_key?>__amount" type="text" value="<?=core_format::price($payable['receivable_total'])?>" style="width:80px;" /></td>
+			<td class="dt"><?=core_format::date($payable['invoice_date'],'short')?></td>
+			<td class="dt">
+				<select name="invoicecreate_<?=$group_key?>__terms" style="width: 90px;">
+					<option value="7"<?=(($payable['po_due_within_days'] == 7)?' selected="selected"':'')?>>Net 7</option>
+					<option value="15"<?=(($payable['po_due_within_days'] == 15)?' selected="selected"':'')?>>Net 15</option>
+					<option value="30"<?=(($payable['po_due_within_days'] == 30)?' selected="selected"':'')?>>Net 30</option>
+					<option value="60"<?=(($payable['po_due_within_days'] == 60)?' selected="selected"':'')?>>Net 60</option>
+					<option value="90"<?=(($payable['po_due_within_days'] == 90)?' selected="selected"':'')?>>Net 90</option>
+				</select>
+			</td>
+			<td class="dt"><?=core_format::date($payable['due_date'],'short')?></td>
 		</tr>
-		<tr class="dt1">
-			<td class="dt">Buyer B</td>
-			<td class="dt">R236</td>
-			<td class="dt"><input type="text" value="$35.00" style="width:80px;" /></td>
-			<td class="dt"><input type="text" value="2012-10-05" style="width:80px;" /></td>
-			<td class="dt"><select><option>Net 15</option><option selected="selected">Net 60</option><option>Net 90</option></select></td>
-			<td class="dt"><input type="text" value="2012-12-05" style="width:80px;" /></td>
-		</tr>
+		
+		<?}?>
 	</table>
-	<div class="buttonset">
-		<input type="button" onclick="$('#create_invoice_toggler,#create_invoice_form').toggle();" value="cancel" class="button_primary" />
-		<input type="button" class="button_primary" value="send invoices" />
+	<input type="hidden" name="invoicecreate_groupcount" value="<?=$counter?>" />
+	<div class="buttonset" id="invoice_create_buttonset">
+		<input type="button" onclick="$('#receivables_create_area,#all_receivables').toggle();" value="cancel" class="button_primary" />
+		<input type="button" onclick="core.payments.createInvoices();" class="button_primary" value="send invoices" />
 	</div>
-</fieldset>
+	<div class="buttonset" id="invoice_create_loading_progress" style="display: none;">
+		<img src="<?=image('loading-progress')?>" />
+		
+	</div>
+	<br /> &nbsp;<br />
+</div>
+<?
+core::replace('receivables_create_area');
+core::js("$('#receivables_create_area,#all_receivables').toggle();");
+?>

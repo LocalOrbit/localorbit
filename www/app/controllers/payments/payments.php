@@ -2,6 +2,52 @@
 
 class core_controller_payments extends core_controller
 {
+	function do_create_invoices()
+	{
+		global $core;
+		core::log('called!');
+		
+		core::log(print_r($core->data,true));
+		
+		for($i=0;$i<$core->data['invoicecreate_groupcount'];$i++)
+		{
+			$group_key = $core->data['invoicecreate_'.$i];
+			$payable_ids  = explode('-',$core->data['invoicecreate_'.$i]);
+			$amount    = $core->data['invoicecreate_'.$group_key.'__amount'];
+			$terms     = $core->data['invoicecreate_'.$group_key.'__terms'];
+			$to        = $core->data['invoicecreate_'.$group_key.'__to'];
+			$from      = $core->data['invoicecreate_'.$group_key.'__from'];
+			
+			$invoice = core::model('invoices');
+			$invoice['due_date'] = date('Y-m-d H:i:s',time() + ($terms * 86400));
+			$invoice['amount']   = core_format::parse_price($amount);
+			$invoice['to_org_id'] = $to;
+			$invoice['from_org_id'] = $from;;
+			$invoice->save();
+			
+			
+				
+			
+			$payables = core::model('payables')->collection()->filter('payable_id','in',$payable_ids);
+			$domain_id = 0;
+			foreach($payables as $payable)
+			{
+				$domain_id = $payable['domain_id'];
+				$payable['invoice_id'] = $invoice['invoice_id'];
+				#$payable->save();
+			}
+			core::process_command('emails/payments_portal__invoice',false,
+				$invoice,$payables,$domain_id,core_format::date(time() + ($terms * 86400),'short')
+			);
+			
+		}
+		
+		core::js("$('#create_invoice_form,#all_receivables').toggle();");
+		#core_datatable::js_reload('receivables');
+		core_ui::notification('invoices created');
+		
+	}
+	
 	function get_totals_queries()
 	{
 				

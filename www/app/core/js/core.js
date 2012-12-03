@@ -113,22 +113,8 @@ core.b=function(){
 	return (arguments[0] === true || arguments[0]==='true' || arguments[0]===1);
 }
 
-core.submit=function(action,form,extraData){
-	var action = new String(action).split(/\//);
-	var method = action.pop();
-	var controller = action.pop();
-	action = '/'+controller+'/'+method;
-	
-	// handle rte content that is still focused by moving the content back to the textarea
-	$('textarea.rte').each(function(){
-		if(document.getElementById($(this).attr('id')+'-iframe'))
-			$(this).val(document.getElementById($(this).attr('id')+'-iframe').contentWindow.document.getElementsByTagName("body")[0].innerHTML);	
-	});
+core.getFormDataForSubmit=function(form){
 	var data = '';
-	
-	if(!core.validateForm(form))
-		return false;
-	
 	for (i = 0; i < form.elements.length; i++){
 		if(form.elements[i].type !='radio')
 			data += '&'+form.elements[i].name+'=';
@@ -158,6 +144,27 @@ core.submit=function(action,form,extraData){
 				break;
 		}
 	}
+	return data;
+}
+
+core.submit=function(action,form,extraData){
+	var action = new String(action).split(/\//);
+	var method = action.pop();
+	var controller = action.pop();
+	action = '/'+controller+'/'+method;
+	
+	// handle rte content that is still focused by moving the content back to the textarea
+	$('textarea.rte').each(function(){
+		if(document.getElementById($(this).attr('id')+'-iframe'))
+			$(this).val(document.getElementById($(this).attr('id')+'-iframe').contentWindow.document.getElementsByTagName("body")[0].innerHTML);	
+	});
+	var data = '';
+	
+	if(!core.validateForm(form))
+		return false;
+	
+	data += core.getFormDataForSubmit(form);
+	
 	for(var key in extraData){
 		data += '&'+key+'='+encodeURIComponent(extraData[key]);
 	}

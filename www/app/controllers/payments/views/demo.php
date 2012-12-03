@@ -4,6 +4,8 @@ core::head('Order Management','This page is used to manage orders');
 lo3::require_permission();
 lo3::require_login();
 
+core_ui::load_library('js','payments.js');
+
 # build the list of tabs that we need to render
 global $tabs;
 $tabs = array('Overview');
@@ -27,6 +29,7 @@ if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 # setup the page header and tab switchers
 core_ui::tabset('paymentstabs');
 page_header('Payments Portal');
+echo('<form name="paymentsForm">');
 echo(core_ui::tab_switchers('paymentstabs',$tabs));
 
 # based on our rules, render the tabs one by one
@@ -43,4 +46,5 @@ if(lo3::is_admin() || lo3::is_market() )
 {
 	$this->metrics((array_search('Advanced Metrics',$tabs) + 1)); 
 }
+echo('</form>');
 ?>
