@@ -4,11 +4,11 @@ global $core;
 # prepare the data for the top metrics table.
 $receivables_ov = core::model('v_invoices')
 	->add_custom_field('DATEDIFF(due_date, NOW()) as days_since')
-	->collection();
+	->collection()->filter('amount_due', '>', 0);
 $payables_ov    = core::model('v_invoices')
 	->add_custom_field('DATEDIFF(due_date, NOW()) as days_since')
-	->collection();
-$payables_dt = core::model('v_invoices')->collection();
+	->collection()->filter('amount_due', '>', 0);
+$payables_dt = core::model('v_invoices')->collection()->filter('amount_due', '>', 0);
 	
 if(lo3::is_admin())
 {

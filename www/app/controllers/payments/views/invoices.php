@@ -1,5 +1,5 @@
 <?php
-$invoices = core::model('v_invoices')->collection()->filter('to_org_id' , $core->session['org_id']);
+$invoices = core::model('v_invoices')->collection()->filter('to_org_id' , $core->session['org_id'])->filter('amount_due', '>', 0);
 $invoices->add_formatter('payable_info');
 $invoices_table = new core_datatable('invoices','payments/invoices',$invoices);
 $invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('invoices '),'',''),false,'4%',core_ui::check_all('invoices','invoice_id'),' ',' '));

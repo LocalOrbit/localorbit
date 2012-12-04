@@ -1,6 +1,6 @@
 <?php
 global $core;
-$payables = core::model('v_payables')->collection()->filter('from_org_id' , $core->session['org_id']);
+$payables = core::model('v_payables')->collection()->filter('from_org_id' , $core->session['org_id'])->filter('amount_due', '>', 0);
 $payables->add_formatter('payable_desc');
 $payables_table = new core_datatable('payables','payments/payables',$payables);
 $payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
