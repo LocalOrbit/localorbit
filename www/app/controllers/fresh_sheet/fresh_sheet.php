@@ -123,8 +123,8 @@ class core_controller_fresh_sheet extends core_controller
 				
 			$prods_by_catid_hash[$new_key][] = $prod;
 			
-			$cats_to_lookup[] = $cat_ids[1];
-			$cats_to_lookup[] = $cat_ids[2];
+			$cats_to_lookup[] = intval($cat_ids[1]);
+			$cats_to_lookup[] = intval($cat_ids[2]);
 		}
 		
 		# next, lookup the names of all the categories in the list
