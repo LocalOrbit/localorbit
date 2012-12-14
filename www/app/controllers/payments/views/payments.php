@@ -5,7 +5,7 @@ $payments->add_formatter('payable_info');
 $payments_table = new core_datatable('payments','payments/payments',$payments);
 $payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
 $payments_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-$payments_table->add(new core_datacolumn('to_domain_name','Hub',true,'19%','{to_domain_name}','{to_domain_name}','{to_domain_name}'));
+$payments_table->add(new core_datacolumn('to_domain_name','Market',true,'19%','{to_domain_name}','{to_domain_name}','{to_domain_name}'));
 $payments_table->add(new core_datacolumn('to_org_name','Organization',true,'19%','{to_org_name}','{to_org_name}','{to_org_name}'));
 $payments_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
 $payments_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount}','{amount}','{amount}'));

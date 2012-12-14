@@ -6,7 +6,7 @@ $payables_table = new core_datatable('payables','payments/payables',$payables);
 $payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
 $payables_table->add(new core_datacolumn('description','Description',true,'19%',			'<b>PO-0000{payable_id}</b><br />{description_html}','{description}','{description}'));
 $payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-$payables_table->add(new core_datacolumn('from_domain_name','Hub',true,'19%','{from_domain_name}','{from_domain_name}','{from_domain_name}'));
+$payables_table->add(new core_datacolumn('from_domain_name','Market',true,'19%','{from_domain_name}','{from_domain_name}','{from_domain_name}'));
 $payables_table->add(new core_datacolumn('to_org_name','Organization',true,'19%','{to_org_name}','{to_org_name}','{to_org_name}'));
 $payables_table->add(new core_datacolumn('payable_amount','Amount',true,'19%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
 $payables_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));

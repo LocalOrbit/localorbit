@@ -18,7 +18,7 @@
 			<?=core_form::column_widths('15%','25%','15%','15%','15%')?>
 			<tr class="dt">
 				<th class="dt dt_sortable dt_sort_asc">Date</th>
-				<th class="dt">Hub</th>
+				<th class="dt">Market</th>
 				<th class="dt">Organization</th>
 				<th class="dt">Description</th>
 				<th class="dt">Amount</th>
