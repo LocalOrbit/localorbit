@@ -100,7 +100,7 @@ insert into payment_methods (payment_method) values ('paypal');
 insert into payment_methods (payment_method) values ('purchaseorder');
 insert into payment_methods (payment_method) values ('ACH');
 insert into payment_methods (payment_method) values ('check');
-
+insert into payment_methods (payment_method) values ('cash');
 
 
 
@@ -172,8 +172,8 @@ drop view  if exists v_payments;
 CREATE VIEW v_payments AS 
 select pv.payment_id,pv.amount,pv.creation_date,
 pm.payment_method,
-if(pv.payment_method_id=1,((3/100) * pv.amount),if(pv.payment_method_id=3,0.30,0)) as transaction_fees,
-(pv.amount - if(pv.payment_method_id=1,((3/100) * pv.amount),if(pv.payment_method_id=3,0.30,0))) as net_amount,
+if(pv.payment_method_id=1,((3/100) * pv.amount),if(pv.payment_method_id=3,0.50,0)) as transaction_fees,
+(pv.amount - if(pv.payment_method_id=1,((3/100) * pv.amount),if(pv.payment_method_id=3,0.50,0))) as net_amount,
 pv.from_org_id,
 o1.name as from_org_name,
 pv.to_org_id,
@@ -246,3 +246,34 @@ select * from v_invoices;
 
 
 alter table domains add payables_create_on enum('delivery','buyer_paid','buyer_paid_and_delivered');
+
+
+delete from phrases where label in ('email:payments:new_invoice_body','email:payments:new_invoice_subject');
+INSERT INTO `phrases`
+(
+`pcat_id`,
+`label`,
+`default_value`,
+`edit_type`)
+VALUES
+(
+8,
+'email:payments:new_invoice_subject',
+'New Invoices',
+'text'
+);
+
+INSERT INTO `phrases`
+(
+`pcat_id`,
+`label`,
+`default_value`,
+`edit_type`,info_note)
+VALUES
+(
+8,
+'email:payments:new_invoice_body',
+'<h1>Invoice Info</h1><br /><b>Nbr: {invoicenbr}<br />Amount: {amount}<br />Due Date: {duedate}<br />&nbsp;<br /><h2>Payables</h2>{payables}<br />click here to pay now: <a href="{pay_link}">{pay_link}</a>',
+'rte',
+'You have the following fields available: {hubname}, {invoicenbr}, {amount}, {duedate}, {payables}, {pay_link}'
+);
