@@ -1,4 +1,4 @@
-<?php 
+<?php
 # get the start and end times for the default filters
 $start = $core->view[0];
 $end = $core->view[1];
@@ -49,10 +49,10 @@ $col->__model->autojoin(
 	array()
 );
 
-$hubs = core::model('domains')->collection();						
-if (lo3::is_market()) { 
-	$hubs = $hubs->filter('domain_id', 'in',$core->session['domains_by_orgtype_id'][2]);							
-} 
+$hubs = core::model('domains')->collection();
+if (lo3::is_market()) {
+	$hubs = $hubs->filter('domain_id', 'in',$core->session['domains_by_orgtype_id'][2]);
+}
 $hubs = $hubs->sort('name');
 
 # apply permissions
@@ -63,7 +63,7 @@ if(lo3::is_customer())
 
 # setup the basic table
 $items = new core_datatable('sales_by_buyer','reports/sales_by_buyer',$col);
-# this does the totaling 
+# this does the totaling
 function sbb_formatter($data)
 {
 	$data['row_discount'] = $data['row_adjusted_total'] - $data['row_total'];
@@ -103,21 +103,21 @@ if (lo3::is_admin()) {
 		'sbborg_id',
 		$items->filter_states['sales_by_product__filter__sbborg_id'],
 		new core_collection('
-			select org_id,name from organizations where org_id>0 
+			select org_id,name from organizations where org_id>0
 			 and org_id in (select org_id from lo_order where ldstat_id<>1)  order by name'),
 		'org_id',
 		'name',
 		'Show from all buyers',
 		'width: 230px;'
 	);
-} else if(lo3::is_market()) {	
+} else if(lo3::is_market()) {
 //	$items->add_filter(new core_datatable_filter('sbporg_id','lo_fulfillment_order.org_id'));
 	$items->filter_html .= core_datatable_filter::make_select(
 		'sales_by_buyer',
 		'sbborg_id',
 		$items->filter_states['sales_by_product__filter__sbborg_id'],
 		new core_collection('
-			select organizations.org_id, CONCAT(d.name, \': \', organizations.name) as name from organizations 
+			select organizations.org_id, CONCAT(d.name, \': \', organizations.name) as name from organizations
 			left join organizations_to_domains otd on organizations.org_id = otd.org_id
 			left join domains d on otd.domain_id = d.domain_id
 			where otd.domain_id in ('.implode(',', $core->session['domains_by_orgtype_id'][2]).') order by d.name, organizations.name'),
@@ -125,10 +125,25 @@ if (lo3::is_admin()) {
 		'name',
 		'Show from all buyers',
 		'width: 230px;');
+} else if(lo3::is_seller()) {
+//	$items->add_filter(new core_datatable_filter('sbporg_id','lo_fulfillment_order.org_id'));
+	$items->filter_html .= core_datatable_filter::make_select(
+		'sales_by_buyer',
+		'sbborg_id',
+		$items->filter_states['sales_by_product__filter__sbborg_id'],
+		new core_collection('
+			select organizations.org_id, organizations.name as name from organizations
+			left join organizations_to_domains otd on organizations.org_id = otd.org_id
+			left join domains d on otd.domain_id = d.domain_id
+			where otd.domain_id = ' . $core->session['home_domain_id'] . ' order by d.name, organizations.name'),
+		'org_id',
+		'name',
+		'Show from all buyers',
+		'width: 230px;');
 }
 
 if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
-{	
+{
 	$items->add_filter(new core_datatable_filter('lo_order.domain_id'));
 	$items->filter_html .= core_datatable_filter::make_select(
 		'sales_by_buyer',
