@@ -48,8 +48,8 @@ else
 <html>
 	<head>
 		<title>Local Orbit<?=((isset($title))?' - '.$title:'')?></title>
-		<meta name="description" content="Local Orbit - E-commerce & Business Management Tools for the New Local Food Economy" />
-		<meta name="keywords" content="" />
+		<meta name="description" content="Local Orbit - E-commerce & Business Management Tools for the New Food Economy" />
+		<meta name="keywords" content="market maker, local food technology, local food software, local food systems, local food, food distribution, online farmers market, order management, wholesale food distribution, new food economy, re-linking the foodchain, local economies, relocalization, food hub technology, food distribution software, food tech, sourcing local food, farm to chef, farm to school, farm to table, farm to hospital, farm to institution, local orbit, localorbit, food producers, farmers, market manager, farmers market, food hub, farmigo, food-hub.org, good eggs, local food systems, orfoodex, foodex, local dirt" />
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
 		<link rel="stylesheet" type="text/css" href="/css/reset.css" />
