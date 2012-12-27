@@ -17,11 +17,7 @@ if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 }
 $tabs[] = 'Payables';
 $tabs[] = 'Payments Owed';
-
-if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
-{
-	$tabs[] = 'Transaction Journal';
-}
+$tabs[] = 'Transaction Journal';
 
 #if(lo3::is_admin() || lo3::is_market() )
 #	$tabs[] = 'Advanced Metrics';
@@ -40,11 +36,14 @@ if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 {
 	$this->receivables((array_search('Receivables',$tabs) + 1)); 
 	$this->invoices((array_search('Invoices Due',$tabs) + 1)); 
-	$this->transaction_journal((array_search('Transaction Journal',$tabs) + 1)); 
+	
 }
 if(lo3::is_admin() || lo3::is_market() )
 {
 	$this->metrics((array_search('Advanced Metrics',$tabs) + 1)); 
 }
-echo('</form>');
+$this->transaction_journal((array_search('Transaction Journal',$tabs) + 1)); 
 ?>
+	<input type="text" name="invoice_list" value="" />
+	<input type="text" name="payment_from_tab" value="" />
+</form>

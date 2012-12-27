@@ -58,6 +58,10 @@ echo(
 			<td class="label">&nbsp;</td>
 			<td class="value"><?=core_ui::checkdiv('payment_allow_purchaseorder','Allow Purchase Orders',$data['payment_allow_purchaseorder'])?></td>
 		</tr>
+		<tr<?=(($domain['payment_allow_ach'] == 1 || $data['payment_allow_ach'])?'':' style="display:none;')?>>
+			<td class="label">&nbsp;</td>
+			<td class="value"><?=core_ui::checkdiv('payment_allow_ach','Allow ACH',$data['payment_allow_ach'])?></td>
+		</tr>
 		<?}?>
 		<?if(lo3::is_admin() || lo3::is_market() || $data['org_id'] == $core->session['org_id']){?>
 		<tr>

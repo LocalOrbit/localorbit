@@ -98,4 +98,3 @@ page_header('Hubs');
 #,'#!market-edit','Create new hub'
 $domains->render();
 ?>
-mike test

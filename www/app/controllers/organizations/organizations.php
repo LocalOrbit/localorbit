@@ -344,9 +344,9 @@ class core_controller_organizations extends core_controller
 
 		# figure out which fields to import, based on role
 		if(lo3::is_admin())
-			$org->import_fields('org_id','name','domain_id','allow_sell','payment_allow_paypal','payment_allow_purchaseorder','buyer_type','profile','product_how','public_profile','facebook','twitter', 'payment_entity_id', 'po_due_within_days');
+			$org->import_fields('org_id','name','domain_id','allow_sell','payment_allow_paypal','payment_allow_purchaseorder','buyer_type','profile','product_how','public_profile','facebook','twitter', 'payment_entity_id', 'po_due_within_days','payment_allow_ach');
 		else if(lo3::is_market())
-			$org->import_fields('org_id','name','allow_sell','profile','payment_allow_paypal','payment_allow_purchaseorder','product_how','public_profile','facebook','twitter', 'payment_entity_id', 'po_due_within_days');
+			$org->import_fields('org_id','name','allow_sell','profile','payment_allow_paypal','payment_allow_purchaseorder','product_how','public_profile','facebook','twitter', 'payment_entity_id', 'po_due_within_days','payment_allow_ach');
 		else
 			$org->import_fields('org_id','name','profile','product_how','public_profile','facebook','twitter', 'payment_entity_id');
 

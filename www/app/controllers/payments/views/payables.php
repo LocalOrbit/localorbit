@@ -1,6 +1,30 @@
 <?php
 global $core;
-$payables = core::model('v_payables')->collection()->filter('from_org_id' , $core->session['org_id'])->filter('amount_due', '>', 0);
+$payables = core::model('v_payables')
+	->collection()
+	->filter('amount_due', '>', 0);
+	
+	
+
+if(lo3::is_market())
+{	
+	$payables->filter(
+		'from_org_id' ,
+		'in',
+		'(
+			select org_id
+			 from organizations_to_domains 
+			where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+		)'
+	);
+}
+else if (!lo3::is_admin())
+{
+	$payables->filter('from_org_id','=',$core->session['org_id']);
+}	
+	
+	#->filter('from_org_id' , $core->session['org_id'])
+	
 $payables->add_formatter('payable_desc');
 $payables_table = new core_datatable('payables','payments/payables',$payables);
 $payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
@@ -11,8 +35,8 @@ $payables_table->add(new core_datacolumn('to_org_name','Organization',true,'19%'
 $payables_table->add(new core_datacolumn('payable_amount','Amount',true,'19%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
 $payables_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
 $payables_table->columns[2]->autoformat='date-short';
+$payables_table->columns[4]->autoformat='price';
 $payables_table->columns[5]->autoformat='price';
-$payables_table->columns[6]->autoformat='price';
 
 $payables_table->add_filter(new core_datatable_filter('to_org_id'));
 $payables_table->filter_html .= core_datatable_filter::make_select(
@@ -32,9 +56,11 @@ $payables_table->filter_html .= core_datatable_filter::make_select(
 	$payables_table->render();
 	?>
 	<? if(lo3::is_admin() || lo3::is_market()){?>
+	<!--
 	<div class="buttonset" id="create_payables_button">
 		<input type="button" onclick="$('#create_payables_form,#create_payables_button').toggle();" value="Create Payment from checked" class="button_primary" />
 	</div>
+	-->
 	<br />&nbsp;<br />
 	<? $this->payables__create_payment();?>
 	<?}?>

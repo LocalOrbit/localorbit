@@ -71,6 +71,10 @@ class core_model_base_domains extends core_model
 		$this->add_field(new core_model_field(65,'sfs_id','int',8,'','domains'));
 		$this->add_field(new core_model_field(66,'opm_id','int',8,'','domains'));
 		$this->add_field(new core_model_field(67,'service_fee_last_paid','timestamp',4,'','domains'));
+		$this->add_field(new core_model_field(68,'feature_paymentsportal_enable','int',8,'','domains'));
+		$this->add_field(new core_model_field(69,'feature_paymentsportal_bankaccounts','int',8,'','domains'));
+		$this->add_field(new core_model_field(70,'payment_allow_ach','int',8,'','domains'));
+		$this->add_field(new core_model_field(71,'payment_default_ach','int',8,'','domains'));
 		$this->init_data();
 	}
 }

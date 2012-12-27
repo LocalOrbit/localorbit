@@ -2,6 +2,99 @@
 
 class core_controller_payments extends core_controller
 {
+	function record_payments()
+	{
+		global $core;
+		core::log(print_r($core->data,true));
+		
+		$invoices = core::model('v_invoices')
+				->collection()
+				->filter('invoice_id','in',explode(',',$core->data['invoice_list']))
+				->sort('concat_ws(\'-\',to_org_id,from_org_id)');
+	
+		$cur_group = 0;
+		$index = 0;
+		$payments = array();
+		$prefix = $core->data['payment_from_tab'];
+		
+		# loop through the invoices and build a structure of all the db entries we need to make.
+		foreach($invoices as $invoice)
+		{
+			if($cur_group != $invoice['to_org_id'].'_'.$invoice['from_org_id'])
+			{
+				$cur_group = $invoice['to_org_id'].'_'.$invoice['from_org_id'];
+				$index = 0;
+				$payments[$cur_group] = array(
+					'total'=>0,
+					'invoices'=>array(),
+				);
+			}
+			
+			core::log('looking for invoice payment: '.$invoice['invoice_id']);
+			core::log($core->data[$prefix.'_pay_group_id_'.$invoice['invoice_id']]);
+			
+			$line_total = core_format::parse_price($core->data[$prefix.'_pay_group_id_'.$invoice['invoice_id']]);
+			$payments[$cur_group]['total'] += $line_total;
+			$payments[$cur_group]['invoices'][$invoice['invoice_id']] = $line_total;
+			
+			$index++;
+		
+		}
+		
+		core::log('payment structure: '.print_r($payments,true));
+		foreach($payments as $cur_group=>$payment)
+		{
+			if($payment['total'] > 0)
+			{
+				core::log('saving payment now: '.$payment['total']);
+				$new_payment = core::model('payments');
+				list($new_payment['to_org_id'],$new_payment['from_org_id']) = explode('_',$cur_group);
+				$new_payment['amount'] = $payment['total'];
+				$new_payment['admin_note'] = $core->data[$prefix.'_admin_note__'.$cur_group];
+				if($prefix == 'invoice')
+				{
+					$new_payment['payment_method_id'] = $core->data['payment_method_'.$cur_group];
+					$new_payment->save();
+				}
+				else
+				{
+					$new_payment['payment_method_id'] = 3;
+					$new_payment->save();
+					
+					$trace_nbr = 'LO-';
+					if($core->config['stage'] != 'production')
+						$trace_nbr = $core->config['stage'].'-'.$trace_nbr;
+					$trace_nbr .= str_pad($new_payment['payment_id'],8,0,STR_PAD_LEFT);
+
+					$paymeth = core::model('organization_payment_methods')->load($core->data['payment_group_'.$cur_group.'__opm_id']);
+					$paymet->make_payment($trace_nbr,$new_payment['amount']);
+					#core::log(print_r($paymeth->__data,true));
+				}
+				
+				foreach($payment['invoices'] as $invoice_id=>$amount)
+				{
+					if($amount > 0)
+					{
+						$x_invoices_payments = core::model('x_invoices_payments');
+						$x_invoices_payments['invoice_id'] = $invoice_id;
+						$x_invoices_payments['payment_id'] = $new_payment['payment_id'];
+						$x_invoices_payments['amount_paid'] = $amount;
+						#$x_invoices_payments->save();
+					}
+				}
+			}
+		}
+		
+		#core_datatable::js_reload('invoices');
+		#core_datatable::js_reload('transactions');
+		#core_datatable::js_reload('payables');t
+		#core_datatable::js_reload('payments');
+		#core_datatable::js_reload('payables');
+		core::js("$('#".$prefix."s_pay_area,#all_all_".$prefix."s').toggle();");
+		core_ui::notification('payments saved');
+	}
+	
+	
 	function do_create_invoices()
 	{
 		global $core;
@@ -34,7 +127,9 @@ class core_controller_payments extends core_controller
 			{
 				$domain_id = $payable['domain_id'];
 				$payable['invoice_id'] = $invoice['invoice_id'];
-				#$payable->save();
+				$payable['is_invoiced'] = 1;
+				$payable->save();
+				
 			}
 			core::process_command('emails/payments_portal__invoice',false,
 				$invoice,$payables,$domain_id,core_format::date(time() + ($terms * 86400),'short')
@@ -42,7 +137,10 @@ class core_controller_payments extends core_controller
 			
 		}
 		
-		core::js("$('#create_invoice_form,#all_receivables').toggle();");
+		core_datatable::js_reload('invoices');
+		core_datatable::js_reload('receivables');
+		
+		core::js("$('#receivables_create_area,#all_receivables').toggle();");
 		#core_datatable::js_reload('receivables');
 		core_ui::notification('invoices created');
 		
@@ -90,39 +188,48 @@ class core_controller_payments extends core_controller
 }
 
 function org_amount ($data) {
-   global $core;
+	global $core;
 
-   $amount_field = isset($data['amount'])?'amount':(isset($data['amount_due'])?'amount_due':'payable_amount');
-   if ($data['to_org_id'] == $core->session['org_id']) {
-      $data['org_name'] = $data['from_org_name'];
-      $data['hub_name'] = $data['from_domain_name'];
-      $sign = 1;
-      $data['in_amount'] = core_format::price($data[$amount_field], false);
-      $data['out_amount'] = core_format::price(0, false);
-   } else {
-      $data['org_name'] = $data['to_org_name'];
-      $data['hub_name'] = $data['to_domain_name'];
-      $sign = -1;
-      $data['in_amount'] = core_format::price(0, false);
-      $data['out_amount'] = core_format::price($data[$amount_field], false);
-   }
+	$amount_field = isset($data['amount'])?'amount':(isset($data['amount_due'])?'amount_due':'payable_amount');
+	if ($data['to_org_id'] == $core->session['org_id']) {
+		$data['org_name'] = $data['from_org_name'];
+		$data['hub_name'] = $data['from_domain_name'];
+		$sign = 1;
+		$data['in_amount'] = core_format::price($data[$amount_field], false);
+		$data['out_amount'] = core_format::price(0, false);
+	} else {
+		$data['org_name'] = $data['to_org_name'];
+		$data['hub_name'] = $data['to_domain_name'];
+		$sign = -1;
+		$data['in_amount'] = core_format::price(0, false);
+		$data['out_amount'] = core_format::price($data[$amount_field], false);
+	}
 
-   $data['amount_value'] = core_format::price($sign * $data[$amount_field ], false);
+	$data['amount_value'] = core_format::price($sign * $data[$amount_field ], false);
 
-   return $data;
+	return $data;
 }
 
-function payable_desc ($data) {
-   if (empty($data['description'])) {
-      if (strcmp($data['payable_type'],'buyer order') == 0) {
+function payable_desc ($data)
+{
+   if (empty($data['description']))
+   {
+      if (strcmp($data['payable_type'],'buyer order') == 0)
+      {
          $data['description'] = $data['buyer_order_identifier'];
          $data['description_html'] = $data['buyer_order_identifier'];
-      } else if ($data['payable_type'] == 'seller order') {
+      }
+      else if ($data['payable_type'] == 'seller order')
+      {
          $data['description_html'] = $data['seller_order_identifier'];
-      } else if ($data['payable_type'] == 'hub fees') {
+      }
+      else if ($data['payable_type'] == 'hub fees')
+      {
          $data['description_html'] = 'Hub Fees';
       }
-   } else {
+   }
+   else
+   {
       $data['description_html'] = $data['description'];
    }
 
@@ -133,6 +240,9 @@ function payable_desc ($data) {
    } else {
       $data['invoice_status'] = 'Pending';
    }
+   
+   if($data['from_org_id'] == 1)
+		$data['description_html'] .= '<div class="error">Worry not, auto invoiced this will be&lt;/yoda&gt;</div>';
 
    return $data;
 }
@@ -161,18 +271,18 @@ function payable_info ($data) {
 }
 
 function format_html_header ($payable_info) {
-   $title = '';
+	$title = '';
 
-   if (stripos($payable_info[0][0], 'order') >= 0) {
-      $title = 'Orders';
-   } else if (stripos($payable_info[0][0], 'hub fees') >= 0) {
-      $title = 'Fees';
-   } else {
-      $title = $payable_info[0][0];
-   }
+	if (stripos($payable_info[0][0], 'order') >= 0) {
+		$title = 'Orders';
+	} else if (stripos($payable_info[0][0], 'hub fees') >= 0) {
+		$title = 'Fees';
+	} else {
+		$title = $payable_info[0][0];
+	}
 
-   $id = str_replace(' ', '_', $payable_info[0][0]) . '_' . $payable_info[0][1];
-   return '<a href="#!payments-demo" onclick="$(\'#' . $id . '\').toggle();">' . $title . '</a><div id="' . $id .'" style="display: none;">';
+	$id = str_replace(' ', '_', $payable_info[0][0]) . '_' . $payable_info[0][1];
+	return '<a href="#!payments-demo" onclick="$(\'#' . $id . '\').toggle();">' . $title . '</a><div id="' . $id .'" style="display: none;">';
 }
 
 function format_html ($info) {

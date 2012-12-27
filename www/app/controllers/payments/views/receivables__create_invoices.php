@@ -5,6 +5,8 @@ $payables = core::model('payables')
 	->get_buyer_grouped_payables()
 	->filter('p.payable_id','in',explode(',',$core->data['payable_id']));
 	
+	
+	
 ?>
 <div id="create_invoice_form">
 	<table class="dt">
@@ -17,12 +19,12 @@ $payables = core::model('payables')
 			<th class="dt">Due Date</th>
 		</tr>
 		<?
-		$counter = -1;
+		$counter = 0;
 		$p_group = '';
 		$style = true; 
 		foreach($payables as $payable)
 		{ 
-			$counter++;
+			
 			$style = (!$style);
 			$group_key = str_replace(',','-',$payable['payables']);
 		?>
@@ -47,6 +49,7 @@ $payables = core::model('payables')
 			<td class="dt">
 				<select name="invoicecreate_<?=$group_key?>__terms" style="width: 90px;">
 					<option value="7"<?=(($payable['po_due_within_days'] == 7)?' selected="selected"':'')?>>Net 7</option>
+					<option value="14"<?=(($payable['po_due_within_days'] == 14)?' selected="selected"':'')?>>Net 14</option>
 					<option value="15"<?=(($payable['po_due_within_days'] == 15)?' selected="selected"':'')?>>Net 15</option>
 					<option value="30"<?=(($payable['po_due_within_days'] == 30)?' selected="selected"':'')?>>Net 30</option>
 					<option value="60"<?=(($payable['po_due_within_days'] == 60)?' selected="selected"':'')?>>Net 60</option>
@@ -56,7 +59,10 @@ $payables = core::model('payables')
 			<td class="dt"><?=core_format::date($payable['due_date'],'short')?></td>
 		</tr>
 		
-		<?}?>
+		<?
+			$counter++;
+		}
+		?>
 	</table>
 	<input type="hidden" name="invoicecreate_groupcount" value="<?=$counter?>" />
 	<div class="buttonset" id="invoice_create_buttonset">

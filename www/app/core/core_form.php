@@ -133,7 +133,7 @@ class core_form
 		return '<span class="required">*</span>';
 	}
 
-	public static function tr_nv($label,$value,$options)
+	public static function tr_nv($label,$value,$options=array())
 	{
 		#$label .= ($label != '&nbsp;')?':':'';
 		$label .= (isset($options['sublabel']) && $options['sublabel'] !='')?
@@ -155,7 +155,12 @@ class core_form
 		$html = '
 		<tr>
 			<td class="label">'.$label.'</td>
-			<td class="value">'.$value.'</td>
+			<td class="value"';
+		
+		if(isset($options['id']))
+			$html .= ' id="'.$options['id'].'"';
+		
+		$html .= '>'.$value.'</td>
 		</tr>';
 		return $html;
 	}
@@ -222,7 +227,7 @@ class core_form
 			'render'=>true,
 		));
 		if($options['render'] != true)	return '';
-		return core_form::tr_nv($label,$value);
+		return core_form::tr_nv($label,$value,$options);
 	}
 
 
@@ -271,9 +276,21 @@ class core_form
 			'info_icon'=>null,
 			'info_show'=>false,
 			'render'=>true,
+			'onkeyup'=>'',
+			'onfocus'=>'',
+			'onblur'=>'',
 		));
 		if($options['render'] != true)	return '';
-		return core_form::tr_nv($label,'<input type="text" name="'.$name.'" value="'.$value.'" />',$options);
+		
+		$html = '<input type="text" name="'.$name.'" value="'.$value.'"';
+		if($options['onkeyup'] != '')
+			$html .= ' onkeyup="'.$options['onkeyup'].'"';
+		if($options['onfocus'] != '')
+			$html .= ' onfocus="'.$options['onfocus'].'"';
+		if($options['onblur'] != '')
+			$html .= ' onblur="'.$options['onblur'].'"';
+		
+		return core_form::tr_nv($label,$html.' />',$options);
 	}
 
 	public static function input_datepicker($label,$name,$value,$options=null)
@@ -307,7 +324,7 @@ class core_form
 			'render'=>true,
 		));
 		if($options['render'] != true)	return '';
-		return core_form::tr_nv('&nbsp;',core_ui::checkdiv($name,$label,$value,$options['onclick'],$options));
+		return core_form::tr_nv('&nbsp;',core_ui::checkdiv($name,$label,$value,$options['onclick'],$options),$options);
 	}
 
 	public static function input_password($label,$name,$value='',$options=null)

@@ -8,6 +8,7 @@ $paymethods = 0;
 $paymethods += intval($org['payment_allow_authorize']);
 $paymethods += intval($org['payment_allow_paypal']);
 $paymethods += intval($org['payment_allow_purchaseorder']);
+$paymethods += intval($org['payment_allow_ach']);
 
 # if they've got more than one, show a radio selector
 if($paymethods > 1)
@@ -31,6 +32,7 @@ else
 $this->payment_authorize($paymethods);
 $this->payment_paypal($paymethods);
 $this->payment_purchaseorder($paymethods);
+$this->payment_ach($paymethods);
 ?>
 <br />
 <div id="placeorder_button" class="buttonset"<?=(($paymethods > 1)?' style="display:none;"':'')?>>

@@ -1,17 +1,36 @@
 <?php
-$invoices = core::model('v_invoices')->collection()->filter('to_org_id' , $core->session['org_id'])->filter('amount_due', '>', 0);
+$invoices = core::model('v_invoices')
+	->collection()
+	->filter('amount_due', '>', 0);
+	
+if(lo3::is_admin())
+{
+}
+else if (lo3::is_market())
+{
+	$invoices->filter('to_org_id' ,'in','(
+		select org_id
+		from organizations_to_domains 
+		where organizations_to_domains.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+	)');
+}
+else
+{
+	$invoices->filter('to_org_id' ,'=',$core->session['org_id']);
+}
+
+	
 $invoices->add_formatter('payable_info');
 $invoices_table = new core_datatable('invoices','payments/invoices',$invoices);
-$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('invoices '),'',''),false,'4%',core_ui::check_all('invoices','invoice_id'),' ',' '));
-$invoices_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-$invoices_table->add(new core_datacolumn('from_domain_name','Market',true,'19%','{from_domain_name}','{from_domain_name}','{from_domain_name}'));
-$invoices_table->add(new core_datacolumn('from_org_name','Organization',true,'19%','{from_org_name}','{from_org_name}','{from_org_name}'));
-$invoices_table->add(new core_datacolumn('description_html','Description',true,'19%',			'{description_html}','{description}','{description}'));
-$invoices_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount}','{amount}','{amount}'));
-$invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
-$invoices_table->columns[1]->autoformat='date-short';
+$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('dueinvoices '),'',''),false,'4%',core_ui::check_all('dueinvoices','invoice_id'),' ',' '));
+$invoices_table->add(new core_datacolumn('from_org_name','Organization',true,'26%','From: {from_domain_name}:{from_org_name}<br />To: {to_domain_name}:{to_org_name}','{from_org_name}','{from_org_name}'));
+$invoices_table->add(new core_datacolumn('creation_date','Date',true,'10%','{creation_date}','{creation_date}','{creation_date}'));
+$invoices_table->add(new core_datacolumn('description_html','Description',true,'30%',			'{description_html}','{description}','{description}'));
+$invoices_table->add(new core_datacolumn('amount','Amount',true,'10%',							'{amount}','{amount}','{amount}'));
+$invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'10%',			'{amount_due}','{amount_due}','{amount_due}'));
+$invoices_table->columns[2]->autoformat='date-short';
+$invoices_table->columns[4]->autoformat='price';
 $invoices_table->columns[5]->autoformat='price';
-$invoices_table->columns[6]->autoformat='price';
 
 $invoices_table->add_filter(new core_datatable_filter('from_domain_id'));
 $invoices_table->filter_html .= core_datatable_filter::make_select(
@@ -47,12 +66,17 @@ $invoices_table->filter_html .= core_datatable_filter::make_select(
 
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
-	<?
-	$invoices_table->render();
-	?>
-	<div class="buttonset" id="create_payment_form_toggler">
-		<input type="button" onclick="$('#create_payment_form_here,#create_payment_form_toggler').toggle();" class="button_primary" value="Record Payments" />
+	<div id="all_all_invoices">
+		<?
+		$invoices_table->render();
+		?>
+		<div class="buttonset" id="create_payment_form_toggler">
+			<input type="button" onclick="core.payments.recordPayments();" class="button_primary" value="Record Payments" />
+		</div>
+		<br />&nbsp;<br />
 	</div>
-	<br />&nbsp;<br />
-	<? $this->invoices__record_payment()?>
+	<div id="invoices_pay_area" style="display: none;">
+		
+	</div>
+	
 </div>

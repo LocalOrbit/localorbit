@@ -90,6 +90,9 @@ $payment_methods = core::model('organization_payment_methods')
 	<?=core_form::input_check('Allow Purchase Orders','payment_allow_purchaseorder',$data['payment_allow_purchaseorder'],array(
 		'onclick'=>'market.allowPaymentChanged(\'purchaseorder\');market.togglePoDue();',
 	))?>
+	<?=core_form::input_check('Allow ACH','payment_allow_ach',$data['payment_allow_ach'],array(
+		'onclick'=>'market.allowPaymentChanged(\'ach\');',
+	))?>
 	<tr id="allow_po_row"<?=(($data['payment_allow_purchaseorder']==0)?' style="display:none;"':'')?>>
 		<td class="label">PO payments due</td>
 		<td class="value"><input type="text" name="po_due_within_days" style="width:40px;" value="<?=intval($data['po_due_within_days'])?>" /> days</td>
@@ -109,6 +112,10 @@ $payment_methods = core::model('organization_payment_methods')
 	<tr id="div_payment_allow_purchaseorder"<?=(($data['payment_allow_purchaseorder'] == 1)?'':' style="display:none;"')?>>
 		<td class="label">&nbsp;</td>
 		<td class="value"><?=core_ui::checkdiv('payment_default_purchaseorder','Purchase Orders',$data['payment_default_purchaseorder'],'market.defaultPaymentChanged(\'purchaseorder\');')?></td>
+	</tr>
+	<tr id="div_payment_allow_ach"<?=(($data['payment_allow_ach'] == 1)?'':' style="display:none;"')?>>
+		<td class="label">&nbsp;</td>
+		<td class="value"><?=core_ui::checkdiv('payment_default_ach','ACH',$data['payment_default_ach'],'market.defaultPaymentChanged(\'ach\');')?></td>
 	</tr>
 	<?if(lo3::is_admin()){?>
 	<tr>

@@ -1,6 +1,7 @@
 <?php
 $payables = core::model('v_payables')
 	->collection()
+	->filter('amount_due','>',0)
 	->filter('is_invoiced','=',0);
 
 if(lo3::is_market())
@@ -30,10 +31,10 @@ $payables_table->add(new core_datacolumn('hub_name','Market',false,'12%','{to_do
 $payables_table->add(new core_datacolumn('from_org_name','Organization',false,'15%','{from_org_name}','{from_org_name}','{from_org_name}'));
 $payables_table->add(new core_datacolumn('payable_amount','Amount',false,'10%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
 $payables_table->add(new core_datacolumn('invoice_status','Status',false,'10%',							'{invoice_status}','{invoice_status}','{invoice_status}'));
-$payables_table->add(new core_datacolumn('last_sent','Last Sent',false,'19%',							'{last_sent}','{last_sent}','{last_sent}'));
+$payables_table->add(new core_datacolumn('last_sent','Last Sent',false,'10%',							'{last_sent}','{last_sent}','{last_sent}'));
 $payables_table->columns[2]->autoformat='date-short';
-$payables_table->columns[5]->autoformat='price';
-$payables_table->columns[7]->autoformat='date-short';
+$payables_table->columns[4]->autoformat='price';
+$payables_table->columns[6]->autoformat='date-short';
 
 $payables_table->add_filter(new core_datatable_filter('to_domain_id'));
 $payables_table->filter_html .= core_datatable_filter::make_select(

@@ -110,7 +110,7 @@ $payables_table->columns[0]->autoformat='date-short';
 		<?=core_form::column_widths('48%','4%','48%')?>
 		<tr>
 			<td>
-				<h2>Payables</h2>
+				<h2>Payments Owed</h2>
 				<table class="form">
 				<?
 				foreach ($intervals as $key=>$value)
@@ -126,7 +126,7 @@ $payables_table->columns[0]->autoformat='date-short';
 			<td>&nbsp;</td>
 			<td>
 				<? if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1){?>
-				<h2>Receivables</h2>
+				<h2>Invoices Due</h2>
 				<table class="form">
 				<?
 				foreach ($intervals as $key=>$value)

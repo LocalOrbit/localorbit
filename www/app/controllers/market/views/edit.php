@@ -156,12 +156,14 @@ if(lo3::is_admin())
 	<div class="tabarea" id="markettabs-a8">
 
 		<table class="form">
-			<?=core_form::input_check('Require sellers to accept all delivery options','feature_require_seller_all_delivery_opts',$data,false,$core->i18n['hub:features:req_selr_all_delv_opts'])?>			
-			<?=core_form::input_check('Force items at checkout to soonest delivery option','feature_force_items_to_soonest_delivery',$data,false,$core->i18n['hub:features:items_to_1st_delv'])?>			
-			<?=core_form::input_check('Sellers enter prices before fees','feature_sellers_enter_price_without_fees',$data,false,$core->i18n['hub:features:sellers_enter_price_without_fees'])?>			
-			<?=core_form::input_check('Sellers cannot modify cross-sells','feature_sellers_cannot_manage_cross_sells',$data,false,$core->i18n['hub:features:sellers_cannot_modify_cross_sells'])?>			
-			<?=core_form::input_check('Sellers can change delivery statuses','feature_sellers_mark_items_delivered',$data,false,$core->i18n['hub:features:feature_sellers_mark_items_delivered'])?>			
-			<?=core_form::input_check('Allow anonymous shopping','feature_allow_anonymous_shopping',$data,false,'Note: checking this feature will also enable organization auto-activation, credit card payments, and disable POs',null,false,"market.toggleAnon();")?>			
+			<?=core_form::input_check('Enable Payments Portal','feature_paymentsportal_enable',$data,array('info'=>''))?>			
+			<?=core_form::input_check('Enable Bank Accounts','feature_paymentsportal_bankaccounts',$data,array('info'=>''))?>			
+			<?=core_form::input_check('Require sellers to accept all delivery options','feature_require_seller_all_delivery_opts',$data,array('info'=>$core->i18n['hub:features:req_selr_all_delv_opts']))?>			
+			<?=core_form::input_check('Force items at checkout to soonest delivery option','feature_force_items_to_soonest_delivery',$data,array('info'=>$core->i18n['hub:features:items_to_1st_delv']))?>			
+			<?=core_form::input_check('Sellers enter prices before fees','feature_sellers_enter_price_without_fees',$data,array('info'=>$core->i18n['hub:features:sellers_enter_price_without_fees']))?>			
+			<?=core_form::input_check('Sellers cannot modify cross-sells','feature_sellers_cannot_manage_cross_sells',$data,array('info'=>$core->i18n['hub:features:sellers_cannot_modify_cross_sells']))?>			
+			<?=core_form::input_check('Sellers can change delivery statuses','feature_sellers_mark_items_delivered',$data,array('info'=>$core->i18n['hub:features:feature_sellers_mark_items_delivered']))?>			
+			<?=core_form::input_check('Allow anonymous shopping','feature_allow_anonymous_shopping',$data,array('info'=>'Note: checking this feature will also enable organization auto-activation, credit card payments, and disable POs','onclick'=>"market.toggleAnon();"))?>			
 			<tr id="default_homepage_selector"<?=(($data['feature_allow_anonymous_shopping'] != '1')?' style="display: none;"':'')?>>
 				<td class="label">Homepage:</td>
 				<td>
