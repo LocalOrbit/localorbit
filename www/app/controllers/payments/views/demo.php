@@ -36,7 +36,6 @@ if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 {
 	$this->receivables((array_search('Receivables',$tabs) + 1)); 
 	$this->invoices((array_search('Invoices Due',$tabs) + 1)); 
-	
 }
 if(lo3::is_admin() || lo3::is_market() )
 {
