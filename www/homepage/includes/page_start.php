@@ -25,7 +25,7 @@ if($core->config['domain']['feature_allow_anonymous_shopping'] == 1)
 			exit();
 			break;
 		case 'Our Sellers':
-			header('Location: /app.php#!oursellers-form');
+			header('Location: /app.php#!sellers-oursellers');
 			exit();
 			break;
 		case 'Shop':
