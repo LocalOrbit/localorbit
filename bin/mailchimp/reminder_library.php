@@ -15,10 +15,10 @@ ob_end_clean();
 function send_campaign($config)
 {
 	global $mc, $core;
-	
+
 	#echo('currently on stage '.$core->config['stage']."\n");
 	#echo('mc: '.$mc->key."\n");
-	
+
 	#exit();
 	#set additional defaults:
 	$config['from_email'] = 'service@localorb.it';
@@ -26,8 +26,8 @@ function send_campaign($config)
 	$config['to_name']    = 'Local Orbit Customer';
 	$config['do_domains'] = array();
 	$list_id     = $mc->get_list_id($config['list_name']);
-	
-	# create a hash of all orgs/users with a flag  
+echo $list_id;
+	# create a hash of all orgs/users with a flag
 	$all_users = array();
 	$users = new core_collection('select org_id,email from customer_entity');
 	foreach($users as $user)
@@ -36,7 +36,7 @@ function send_campaign($config)
 			$all_users[$user['org_id']] = array();
 		$all_users[$user['org_id']][$user['email']] = 0;
 	}
-	
+
 	# loop through all domains:
 	$domains_sql = 'select domain_id,mag_store,name from domains where is_closed=0';
 	$domains = new core_collection($domains_sql);
@@ -44,12 +44,12 @@ function send_campaign($config)
 	{
 		echo('determining flags to set on domain '.$domain['domain_id']."\n");
 	}
-	
+
 	# update mailchimp's db
 	echo("updating mailchimp\n");
 	$config['do_domains'] = set_flags($all_users,$list_id,$config['days_offset'],$config['seller_perspective']);
-	
-	
+
+
 	# loop through all domains
 	foreach($domains as $domain)
 	{
@@ -75,50 +75,53 @@ function send_campaign($config)
 function set_flags($all_users,$list_id,$days_offset,$seller_perspective=true)
 {
 	global $mc;
-	
+
 	$domains = array();
 	$today = explode('-',date('m-d-Y'));
 	$start = mktime(0,0,0,intval($today[0]),intval($today[1]),intval($today[2]));
 	$start += ($days_offset * 86400);
 	$end   = $start + 86399;
-	
+
+	echo($seller_perspective);
 	echo("\tfinding orders between ".date('Y-m-d H:i:s',$start).' and '.date('Y-m-d H:i:s',$end)."\n");
 	echo("\t$start - $end\n");
 	echo("\t".date('Y-m-d H:i',$start)." - ".date('Y-m-d H:i',$end)."\n");
-	
+
 	# first retrieve the list of applicable orgs
 	if($seller_perspective)
 	{
 		$orgs_sql = '
-			select o.org_id,o.name,o.domain_id
+			select o.org_id,o.name,otd.domain_id
 			from lo_fulfillment_order
 			left join organizations o on lo_fulfillment_order.org_id=o.org_id
+			left join organizations_to_domains otd on o.org_id = otd.org_id and otd.is_home != 0
 			where lo_foid in (
 				select lo_foid
 				from lo_order_deliveries
 				where delivery_start_time >= '.$start.'
 				and delivery_start_time <= '.$end.'
 			)
-			and lo_fulfillment_order.status=\'ORDERED\'
+			and lo_fulfillment_order.ldstat_id=2
 		';
 	}
 	else
 	{
 		$orgs_sql = '
-			select o.org_id,o.name,o.domain_id
+			select o.org_id,o.name,otd.domain_id
 			from lo_order
 			left join organizations o on lo_order.org_id=o.org_id
+			left join organizations_to_domains otd on o.org_id = otd.org_id and otd.is_home != 0
 			where lo_oid in (
 				select lo_oid
 				from lo_order_deliveries
 				where delivery_start_time >= '.$start.'
 				and delivery_start_time <= '.$end.'
 			)
-			and lo_order.status=\'ORDERED\'
+			and lo_order.ldstat_id=2
 		';
 	}
 	$orgs = new core_collection($orgs_sql);
-	
+	$domain_map = array();
 	# for each org, find all users
 	foreach($orgs as $org)
 	{
@@ -130,33 +133,42 @@ function set_flags($all_users,$list_id,$days_offset,$seller_perspective=true)
 		{
 			echo("\t\tsending email to ".$org['org_id'].':'.$org['name'].':'.$user['email']."\n");
 			$all_users[$org['org_id']][$user['email']] = 1;
+			$domain_map[$org['org_id']] = $org['domain_id'];
 		}
 	}
-	
+
+$index = -1;
 	# transform our org->user->doemail hash to the mailchimp update format
 	# and pass to mailchimp.
 	$final_users = array();
-	foreach($all_users as $org)
+	foreach($all_users as $org_id=>$org)
 	{
 		foreach($org as $email=>$flag)
 		{
-			$final_users[] = array(
+ 			$new_user = array(
 				'EMAIL'=>$email,
 				'EMAIL_TYPE'=>'html',
-				'DO_EMAIL'=>$flag,
+				'DO_EMAIL'=>$flag
 			);
+			if ($domain_map[$org_id]) {
+				$new_user['DOMAIN_ID']= $domain_map[$org_id];
+			}
+			$final_users[] = $new_user;
 		}
 	}
+
 	#print_r($final_users);
 	#echo($list_id);
 	#var_dump($mc);
 	#exit();
+
 	$errors = $mc->api->listBatchSubscribe($list_id,$final_users,false,true,false);
+
 	if ($mc->api->errorCode){
 		echo "Batch Subscribe failed!\n";
 		echo "code:".$mc->api->errorCode."\n";
 		echo "msg :".$mc->api->errorMessage."\n";
-	} 
+	}
 	#print_r($errors);
 	return $domains;
 }
@@ -164,11 +176,11 @@ function set_flags($all_users,$list_id,$days_offset,$seller_perspective=true)
 function construct_campaign($list_id,$subject,$from_email,$from_name,$to_name,$template_id,$domain_id)
 {
 	global $mc, $config;
-	
+
 	$camp_id = 0;
 	echo("\tcampaign settings: $list_id - $template_id - $domain_id \n");
 	#return 0;
-	
+
 	$camp_id = $mc->campaignCreate(
 		'regular',
 		array(
@@ -205,7 +217,7 @@ function construct_campaign($list_id,$subject,$from_email,$from_name,$to_name,$t
 		echo "code:".$mc->api->errorCode."\n";
 		echo "msg :".$mc->api->errorMessage."\n";
 		exit();
-	} 
+	}
 	return $camp_id;
 }
 
@@ -213,7 +225,7 @@ function real_send_campaign($subject,$camp_id)
 {
 	global $mc;
 	#$mc->campaignSendTest($camp_id,array('localorbit.testing@gmail.com'));
-	$mc->api->campaignSendNow($camp_id);
+	echo $mc->api->campaignSendNow($camp_id);
 	if ($mc->api->errorCode){
 		echo "Campaign send failed!\n";
 		echo "code:".$mc->api->errorCode."\n";
@@ -224,11 +236,11 @@ function real_send_campaign($subject,$camp_id)
 			'mike@localorb.it'
 		);
 		exit();
-	} 
+	}
 
 	echo("\tcampaign sent\n");
 	return;
-	
+
 }
 
 ?>
