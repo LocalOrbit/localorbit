@@ -412,7 +412,10 @@ core.catalog.popupWhat=function(prodId,refObj){
 	html += '</span><br />';
 	html += '<span class="farm_name">from '+prod['org_name']+'</span><br />&nbsp;<br />';
 	html += '<span class="what_section">What: </span>'+prod['description']+'<br />&nbsp;<br />';
-	html += '<span class="what_section">How: </span>'+((prod['how'] == '')?seller['product_how']:prod['how']);
+	if(seller['product_how']+'' =='null') seller['product_how'] = '';
+	if(prod['how']+'' =='null') prod['how'] = '';
+	if(seller['product_how']!='' || prod['how']!='')
+		html += '<span class="what_section">How: </span>'+((prod['how'] == '')?seller['product_how']:prod['how']);
 	html += '</td></tr></table>';
 
 	core.catalog.popupShow(refObj,html,'What');
