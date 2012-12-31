@@ -43,26 +43,31 @@ else
 }
 
 
-$payments->add_formatter('payable_info');
-$payments->add_formatter('org_amount');
-$payments_table = new core_datatable('transactions','payments/transactions',$payments);
-#$payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('transactions'),'',''),false,'4%',core_ui::check_all('transactions','payment_id'),' ',' '));
-$payments_table->add(new core_datacolumn('amount','Payment Method',true,'25%','{payment_method}','{payment_method}','{payment_method}'));
-$payments_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount_value}','{amount_value}','{amount_value}'));
-$payments_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-$payments_table->add(new core_datacolumn('org_name','Organization',true,'19%','{org_name}','{org_name}','{org_name}'));
-$payments_table->add(new core_datacolumn('hub_name','Market',true,'19%','{hub_name}','{hub_name}','{hub_name}'));
-$payments_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
+function transaction_formatter($data)
+{
+	core::log(print_r($data,true));
+	return $data;
+}
 
+$payments->add_formatter('payable_info');
+$payments->add_formatter('payment_link_formatter');
+$payments->add_formatter('payment_direction_formatter');
+$payments->add_formatter('transaction_formatter');
+$payments_table = new core_datatable('transactions','payments/transactions',$payments);
+
+$payments_table->add(new core_datacolumn('payable_info','Description',false,'27%',			'<b>T-{payment_id}</b><br />{description_html}','{description}','{description}'));
+$payments_table->add(new core_datacolumn(null,'Payment Info',false,'27%','{method_description}<br />{direction_info}','{direction_info}','{direction_info}'));
+$payments_table->add(new core_datacolumn('creation_date','Date',true,'14%','{creation_date}','{creation_date}','{creation_date}'));
+$payments_table->add(new core_datacolumn('amount','Amount',true,'14%',							'{amount}','{amount}','{amount}'));
 if(lo3::is_admin())
 {
 	$payments_table->add(new core_datacolumn('transaction_fees','Transaction Fee',true,'19%',			'{transaction_fees}','{transaction_fees}','{transaction_fees}'));
 	$payments_table->add(new core_datacolumn('net_amount','Net Amount',true,'19%',			'{net_amount}','{net_amount}','{net_amount}'));
-	$payments_table->columns[6]->autoformat='price';
-	$payments_table->columns[7]->autoformat='price';
+	$payments_table->columns[4]->autoformat='price';
+	$payments_table->columns[5]->autoformat='price';
 }
-$payments_table->columns[1]->autoformat='price';
 $payments_table->columns[2]->autoformat='date-long';
+$payments_table->columns[3]->autoformat='price';
 
 function fake_order_area($id)
 {

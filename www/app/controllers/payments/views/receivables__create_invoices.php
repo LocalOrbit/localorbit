@@ -44,7 +44,9 @@ $payables = core::model('payables')
 				}
 				?>
 			</td>
-			<td class="dt"><input name="invoicecreate_<?=$group_key?>__amount" type="text" value="<?=core_format::price($payable['receivable_total'])?>" style="width:80px;" /></td>
+			<td class="dt">
+				<?=core_format::price($payable['receivable_total'])?>
+				<input name="invoicecreate_<?=$group_key?>__amount" type="hidden" value="<?=$payable['receivable_total']?>" />
 			<td class="dt"><?=core_format::date($payable['invoice_date'],'short')?></td>
 			<td class="dt">
 				<select name="invoicecreate_<?=$group_key?>__terms" style="width: 90px;">

@@ -25,16 +25,17 @@ else if (!lo3::is_admin())
 	
 	#->filter('from_org_id' , $core->session['org_id'])
 	
-$payables->add_formatter('payable_desc');
+$payables->add_formatter('payable_info');
+$payables->add_formatter('payment_link_formatter');
+$payables->add_formatter('payment_direction_formatter');
 $payables_table = new core_datatable('payables','payments/payables',$payables);
-$payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
-$payables_table->add(new core_datacolumn('description','Description',true,'19%',			'<b>PO-0000{payable_id}</b><br />{description_html}','{description}','{description}'));
+$payables_table->add(new core_datacolumn('description','Description',true,'19%',			'<b>P-{payable_id}</b><br />{description_html}','{description}','{description}'));
+$payables_table->add(new core_datacolumn('from_org_name','Payment Info',true,'19%','{direction_info}','{to_org_name}','{to_org_name}'));
 $payables_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-$payables_table->add(new core_datacolumn('from_domain_name','Market',true,'19%','{from_domain_name}','{from_domain_name}','{from_domain_name}'));
-$payables_table->add(new core_datacolumn('to_org_name','Organization',true,'19%','{to_org_name}','{to_org_name}','{to_org_name}'));
 $payables_table->add(new core_datacolumn('payable_amount','Amount',true,'19%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
 $payables_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
-$payables_table->columns[2]->autoformat='date-short';
+$payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
+$payables_table->columns[2]->autoformat='date-long';
 $payables_table->columns[4]->autoformat='price';
 $payables_table->columns[5]->autoformat='price';
 

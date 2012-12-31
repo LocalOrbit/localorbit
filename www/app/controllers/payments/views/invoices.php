@@ -21,16 +21,17 @@ else
 
 	
 $invoices->add_formatter('payable_info');
+$invoices->add_formatter('payment_link_formatter');
 $invoices_table = new core_datatable('invoices','payments/invoices',$invoices);
-$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('dueinvoices '),'',''),false,'4%',core_ui::check_all('dueinvoices','invoice_id'),' ',' '));
-$invoices_table->add(new core_datacolumn('from_org_name','Organization',true,'26%','From: {from_domain_name}:{from_org_name}<br />To: {to_domain_name}:{to_org_name}','{from_org_name}','{from_org_name}'));
-$invoices_table->add(new core_datacolumn('creation_date','Date',true,'10%','{creation_date}','{creation_date}','{creation_date}'));
-$invoices_table->add(new core_datacolumn('description_html','Description',true,'30%',			'{description_html}','{description}','{description}'));
+$invoices_table->add(new core_datacolumn('payable_info','Description',false,'30%',			'<b>I-{invoice_id}</b><br />{description_html}','{description}','{description}'));
+$invoices_table->add(new core_datacolumn('from_org_name','Payment Info',true,'26%','From: {from_domain_name}:{from_org_name}<br />To: {to_domain_name}:{to_org_name}','{from_org_name}','{from_org_name}'));
+$invoices_table->add(new core_datacolumn('due_date','Due Date',true,'10%','{due_date}','{due_date}','{due_date}'));
 $invoices_table->add(new core_datacolumn('amount','Amount',true,'10%',							'{amount}','{amount}','{amount}'));
 $invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'10%',			'{amount_due}','{amount_due}','{amount_due}'));
-$invoices_table->columns[2]->autoformat='date-short';
+$invoices_table->columns[2]->autoformat='date-long';
+$invoices_table->columns[3]->autoformat='price';
 $invoices_table->columns[4]->autoformat='price';
-$invoices_table->columns[5]->autoformat='price';
+$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('dueinvoices '),'',''),false,'4%',core_ui::check_all('dueinvoices','invoice_id'),' ',' '));
 
 $invoices_table->add_filter(new core_datatable_filter('from_domain_id'));
 $invoices_table->filter_html .= core_datatable_filter::make_select(

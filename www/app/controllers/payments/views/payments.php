@@ -18,18 +18,18 @@ else
 {
 	$payments_owed->filter('from_org_id' , $core->session['org_id']);
 }
-#$payments->add_formatter('payable_info');
-
+$payments_owed->add_formatter('payable_info');
+$payments_owed->add_formatter('payment_link_formatter');
+$payments_owed->add_formatter('payment_direction_formatter');
 $payments_table = new core_datatable('payments','payments/payments',$payments_owed);
-$payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
+$payments_table->add(new core_datacolumn('payable_info','Description',false,'19%',			'<b>I-{invoice_id}</b><br />{description_html}','{description}','{description}'));
+$payments_table->add(new core_datacolumn('from_org_name','Organization',true,'19%','{direction_info}','{to_org_name}','{to_org_name}'));
 $payments_table->add(new core_datacolumn('creation_date','Date',true,'19%','{creation_date}','{creation_date}','{creation_date}'));
-$payments_table->add(new core_datacolumn('to_domain_name','Market',true,'19%','{to_domain_name}','{to_domain_name}','{to_domain_name}'));
-$payments_table->add(new core_datacolumn('to_org_name','Organization',true,'19%','{to_org_name}','{to_org_name}','{to_org_name}'));
-$payments_table->add(new core_datacolumn('description','Description',true,'19%',			'{description_html}','{description}','{description}'));
 $payments_table->add(new core_datacolumn('amount','Amount',true,'19%',							'{amount}','{amount}','{amount}'));
+$payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
 //$invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
-$payments_table->columns[1]->autoformat='date-short';
-$payments_table->columns[5]->autoformat='price';
+$payments_table->columns[2]->autoformat='date-long';
+$payments_table->columns[3]->autoformat='price';
 
 $payments_table->add_filter(new core_datatable_filter('to_org_id'));
 $payments_table->filter_html .= core_datatable_filter::make_select(

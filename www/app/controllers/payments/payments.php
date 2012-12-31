@@ -210,42 +210,7 @@ function org_amount ($data) {
 	return $data;
 }
 
-function payable_desc ($data)
-{
-   if (empty($data['description']))
-   {
-      if (strcmp($data['payable_type'],'buyer order') == 0)
-      {
-         $data['description'] = $data['buyer_order_identifier'];
-         $data['description_html'] = $data['buyer_order_identifier'];
-      }
-      else if ($data['payable_type'] == 'seller order')
-      {
-         $data['description_html'] = $data['seller_order_identifier'];
-      }
-      else if ($data['payable_type'] == 'hub fees')
-      {
-         $data['description_html'] = 'Hub Fees';
-      }
-   }
-   else
-   {
-      $data['description_html'] = $data['description'];
-   }
 
-   if ($data['is_invoiced']) {
-      $data['invoice_status'] = 'Invoiced';
-   } else if ($data['invoicable']) {
-      $data['invoice_status'] = 'Invoicable';
-   } else {
-      $data['invoice_status'] = 'Pending';
-   }
-   
-   if($data['from_org_id'] == 1)
-		$data['description_html'] .= '<div class="error">Worry not, auto invoiced this will be&lt;/yoda&gt;</div>';
-
-   return $data;
-}
 
 function payable_info ($data) {
    $payable_info = array_map(function ($item) { return explode('|',$item); }, explode('$$', $data['payable_info']));
@@ -306,8 +271,11 @@ function format_html ($info) {
    return $text;
 }
 
+
+
 function format_text ($info) {
    $text = '';
+   
    if (count($info) > 0) {
       if (strcmp($info[0],'buyer order') == 0) {
          $text .= 'Order #' . $info[1];
@@ -325,4 +293,104 @@ function format_text ($info) {
    return $text;
 }
 
+
+function payment_link_formatter($data)
+{
+	$data['description_html'] = '';
+	$data['description'] = '';
+
+	$info = explode('$$',$data['payable_info']);
+	for($i=0;$i<count($info);$i++)
+	{
+
+		$data['description_html'] .= ($i==0)?'':' <br /> ';
+		$data['description'] .= ($i==0)?'':' / ';
+
+		$info_item = explode('|',$info[$i]);
+		switch($info_item[1])
+		{
+			case 'buyer order':
+				$data['description'] .= $info_item[0];
+				$data['description_html'] .= '<a href="app.php#!orders-view_order--lo_oid='.$info_item[2];
+				$data['description_html'] .= '">'.$info_item[0].'</a>'; 
+				break;
+			case 'seller order':
+				$data['description'] .= $info_item[0];
+				$data['description_html'] .= '<a href="app.php#!orders-view_sales_order--lo_foid='.$info_item[2];
+				$data['description_html'] .= '">'.$info_item[0].'</a>'; 
+				break;
+			case 'hub fees':
+				$data['description'] .= 'Hub Fees';
+				$data['description_html'] .= 'Hub Fees';
+				break;
+		}
+	}
+	return $data;
+}
+
+function payment_direction_formatter($data)
+{
+	if(lo3::is_admin() || lo3::is_market())
+	{
+		$data['direction_info'] = 'From: '.$data['from_org_name'].'<br />';
+		$data['direction_info'] .= 'To: '.$data['to_org_name'].'<br />';
+		$data['payable_amount' ] = core_format::price($data['amount_due']);
+	}
+	else
+	{
+		if($data['to_org_id'] == $core->session['org_id'])
+		{
+			$data['direction_info'] = $data['from_org_name'];
+			$data['in_amount' ] = core_format::price($data['amount_due']);
+			$data['out_amount' ] = '';
+		}
+		else
+		{
+			$data['direction_info'] = $data['to_org_name'];
+			$data['out_amount' ] = core_format::price((-1 * $data['amount_due']));
+			$data['in_amount' ] = '';
+		}
+	}
+	return $data;
+}
+
+
+function payment_description_formatter($data)
+{
+	core::log(print_r($data,true));
+   if (empty($data['description']))
+   {
+      if (strcmp($data['payable_type'],'buyer order') == 0)
+      {
+         $data['description']      = $data['buyer_order_identifier'];
+         
+         $data['description_html'] = $data['buyer_order_identifier'];
+      }
+      else if ($data['payable_type'] == 'seller order')
+      {
+         $data['description_html'] = $data['seller_order_identifier'];
+      }
+      else if ($data['payable_type'] == 'hub fees')
+      {
+         $data['description_html'] = 'Hub Fees';
+      }
+   }
+   else
+   {
+      $data['description_html'] = $data['description'];
+   }
+
+   if ($data['is_invoiced']) {
+      $data['invoice_status'] = 'Invoiced';
+   } else if ($data['invoicable']) {
+      $data['invoice_status'] = 'Invoicable';
+   } else {
+      $data['invoice_status'] = 'Pending';
+   }
+   
+   #if($data['from_org_id'] == 1)
+	#	$data['description_html'] .= '<div class="error">Worry not, auto invoiced this will be&lt;/yoda&gt;</div>';
+
+   return $data;
+}
 ?>

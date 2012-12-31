@@ -39,7 +39,7 @@ if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 }
 if(lo3::is_admin() || lo3::is_market() )
 {
-	$this->metrics((array_search('Advanced Metrics',$tabs) + 1)); 
+	#$this->metrics((array_search('Advanced Metrics',$tabs) + 1)); 
 }
 $this->transaction_journal((array_search('Transaction Journal',$tabs) + 1)); 
 ?>
