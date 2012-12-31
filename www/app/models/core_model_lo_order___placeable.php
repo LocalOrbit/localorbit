@@ -60,6 +60,35 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			$xpi->save();
 		}
 
+		# if the user pays via ach,
+		if($payment_method == 'ach')
+		{
+			# also create the invoice, pa4ment
+			$invoice = core::model('invoices');
+			$invoice['due_date'] = core_format::date(time(),'db');
+			$invoice['amount']   = $payable['amount'];
+			$invoice['from_org_id']= $this['org_id'];
+			$invoice['to_org_id']= 1;
+			$invoice->save();
+			$payable['invoice_id'] = $invoice['invoice_id'];
+			$payable->save();
+
+			$payment = core::model('payments');
+			$payment['from_org_id'] =  $this['org_id'];
+			$payment['to_org_id']   = 1;
+			$payment['amount']      = $payable['amount'];
+			$payment['payment_method_id'] = 1;
+			#$payment['ref_nbr'] = $this['payment_ref'];
+			$payment->save();
+
+			$xpi = core::model('x_invoices_payments');
+			$xpi['payment_id'] = $payment['payment_id'];
+			$xpi['invoice_id'] = $invoice['invoice_id'];
+			$xpi['amount_paid'] = $payable['amount'];
+			$xpi->save();
+		}
+
+
 		# create the payable between LO and the Hub
 		#
 		# first set some common properties
@@ -130,7 +159,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 	{
 		global $core;
 		core::model('events')->add_record('Checkout Attempt',$this['lo_oid']);
-
+		$this['lo3_order_nbr']  = $this->generate_order_id('buyer',$core->config['domain']['domain_id'],$this['lo_oid']);
+		
 		core::log(print_r($core->data, true));
 		$method = $core->data['payment_method'];
 		if($core->data['show_payment_paypal'] == 1)
@@ -324,7 +354,16 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			case 'purchaseorder':
 				$this['payment_method'] = 'purchaseorder';
 				$this['payment_ref']    = $core->data['po_number'];
+				$this->create_order_payables($this['payment_method']);
+		
 				break;
+			case 'ach':
+				$payment = $this->create_order_payables($this['payment_method']);
+				$opm = core::model('organization_payment_methods')->load($core->data['opm_id']);
+				$opm->make_payment();
+				
+				break;
+
 		}
 
 		# loop through all the items and change their status,
@@ -502,9 +541,6 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$this['domain_id']      = $core->config['domain']['domain_id'];
 		$this['buyer_mage_customer_id'] = $core->session['user_id'];
 		$this->save();
-		$this['lo3_order_nbr']  = $this->generate_order_id('buyer',$core->config['domain']['domain_id'],$this['lo_oid']);
-		$this->save();
-		$this->create_order_payables($this['payment_method']);
 		core::model('events')->add_record('Checkout Complete',$this['lo_oid']);
 		$this->send_email($fulfills);
 	}

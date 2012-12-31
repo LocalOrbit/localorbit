@@ -11,6 +11,7 @@ class core_model_base_payments extends core_model
 		$this->add_field(new core_model_field(5,'ref_nbr','string',-4,'','payments'));
 		$this->add_field(new core_model_field(6,'admin_note','string',8000,'','payments'));
 		$this->add_field(new core_model_field(7,'creation_date','timestamp',4,'','payments'));
+		$this->add_field(new core_model_field(8,'method_description','string',-4,'','payments'));
 		$this->init_data();
 	}
 }
