@@ -10,8 +10,10 @@ $invoices = core::model('v_invoices')
 	->filter('invoice_id','in',explode(',',$core->data['due_invoices']))
 	->sort('concat_ws(\'-\',to_org_id,from_org_id)');
 $invoice_ids = array();	
-$invoices->add_formatter('payment_description_formatter');
-
+#$invoices->add_formatter('payment_description_formatter');
+$invoices->add_formatter('payable_info');
+$invoices->add_formatter('payment_link_formatter');
+$invoices->add_formatter('payment_direction_formatter');
 	
 	#->get_buyer_grouped_invoices()
 	#
@@ -53,11 +55,11 @@ foreach($invoices as $invoice)
 			<?=core_form::input_textarea('Memo:','invoice_admin_note__'.$cur_group)?>
 		</table>
 		<table class="dt">
-			<?=core_form::column_widths('15%','25%','15%','15%','15%')?>
+			<?=core_form::column_widths('22%','32%','14%','14%','15%')?>
 			<tr class="dt">
+				<th class="dt">Description</th>
 				<th class="dt">Payment Info</th>
 				<th class="dt dt_sortable dt_sort_asc">Date</th>
-				<th class="dt">Description</th>
 				<th class="dt">Amount</th>
 				<th class="dt">Applied Amount</th>
 			</tr>
@@ -68,10 +70,11 @@ foreach($invoices as $invoice)
 ?>
 
 			<tr class="dt">
-				<td class="dt">From: <?=$invoice['from_domain_name']?>:<?=$invoice['from_org_name']?><br />To <?=$invoice['to_domain_name']?>:<?=$invoice['to_org_name']?></td>
-				<td class="dt"><?=core_format::date($invoice['due_date'],'short')?></td>
 				<td class="dt">
-					coming soon!!!
+					<b>I-<?=$invoice['invoice_id']?></b><br /><?=$invoice['description_html']?>
+				</td>
+				<td class="dt"><?=$invoice['direction_info']?></td>
+				<td class="dt"><?=core_format::date($invoice['due_date'],'short')?></td>
 					<!--
 					<a href="#!payments-demo" onclick="$('#orders_8233').toggle();">Orders</a>
 					<div id="orders_8233" style="display: none;">
