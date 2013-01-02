@@ -129,6 +129,9 @@ lo.lo3_order_nbr as buyer_order_identifier,
 lfo.lo3_order_nbr as seller_order_identifier,
 p.description,
 
+# # , then type, then id
+concat_ws('|',if(pt.payable_type='buyer order',lo.lo3_order_nbr,lfo.lo3_order_nbr),pt.payable_type,p.parent_obj_id)  as payable_info,
+	
 
 COALESCE((
 select sum(xip.amount_paid) 
@@ -167,7 +170,10 @@ left join domains to_org_domains on to_otd.domain_id = to_org_domains.domain_id;
 select * from v_payables;
 
 
+alter table payments add method_description varchar(255);
 drop view  if exists v_payments;
+
+
 
 CREATE VIEW v_payments AS 
 select pv.payment_id,pv.amount,pv.creation_date,
@@ -177,7 +183,7 @@ if(pv.payment_method_id=1,((3/100) * pv.amount),if(pv.payment_method_id=3,0.50,0
 pv.from_org_id,
 o1.name as from_org_name,
 pv.to_org_id,
-o2.name as to_org_name,
+o2.name as to_org_name,pv.ref_nbr,pv.method_description,
 (
 select group_concat(concat_ws('|',p.description,pt.payable_type,p.parent_obj_id) SEPARATOR '$$')
 from payables p 
@@ -277,3 +283,6 @@ VALUES
 'rte',
 'You have the following fields available: {hubname}, {invoicenbr}, {amount}, {duedate}, {payables}, {pay_link}'
 );
+
+
+
