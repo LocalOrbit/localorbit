@@ -16,7 +16,8 @@ core.payments.recordPayments=function(){
 }
 
 core.payments.makePayments=function(){
-	core.doRequest('/payments/payments__pay_payment',{'checked_invoices':core.ui.getCheckallList(document.paymentsForm,'payableinvoices').join(',')});
+	//alert(core.ui.getCheckallList(document.paymentsForm,'payments').join(','));
+	core.doRequest('/payments/payments__pay_payment',{'checked_invoices':core.ui.getCheckallList(document.paymentsForm,'payments').join(',')});
 }
 
 core.payments.initInvoiceGroups=function(tabName){

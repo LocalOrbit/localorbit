@@ -1,6 +1,6 @@
 <?php
 global $core;
-
+core::log('preparing UI to record payments');
 
 #print_r($core->data);
 #echo('invoice ids: '.$core->data['due_invoices']);

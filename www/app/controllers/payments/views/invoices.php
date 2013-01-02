@@ -32,7 +32,7 @@ $invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'14%',		
 $invoices_table->columns[2]->autoformat='date-long';
 $invoices_table->columns[3]->autoformat='price';
 $invoices_table->columns[4]->autoformat='price';
-$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('dueinvoices '),'',''),false,'4%',core_ui::check_all('dueinvoices','invoice_id'),' ',' '));
+$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('dueinvoices'),'',''),false,'4%',core_ui::check_all('dueinvoices','invoice_id'),' ',' '));
 
 $invoices_table->add_filter(new core_datatable_filter('from_domain_id'));
 $invoices_table->filter_html .= core_datatable_filter::make_select(

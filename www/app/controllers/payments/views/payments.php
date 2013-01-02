@@ -26,7 +26,7 @@ $payments_table->add(new core_datacolumn('invoice_id','Description',false,'22%',
 $payments_table->add(new core_datacolumn('from_org_name','Payment Info',true,'34%','{direction_info}','{to_org_name}','{to_org_name}'));
 $payments_table->add(new core_datacolumn('creation_date','Date',true,'12%','{creation_date}','{creation_date}','{creation_date}'));
 $payments_table->add(new core_datacolumn('amount','Amount',true,'28%',							'{amount}','{amount}','{amount}'));
-$payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
+$payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','invoice_id'),' ',' '));
 //$invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
 $payments_table->columns[2]->autoformat='date-long';
 $payments_table->columns[3]->autoformat='price';
