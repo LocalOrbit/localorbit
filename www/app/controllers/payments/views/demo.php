@@ -43,6 +43,6 @@ if(lo3::is_admin() || lo3::is_market() )
 }
 $this->transaction_journal((array_search('Transaction Journal',$tabs) + 1)); 
 ?>
-	<input type="text" name="invoice_list" value="" />
-	<input type="text" name="payment_from_tab" value="" />
+	<input type="hidden" name="invoice_list" value="" />
+	<input type="hidden" name="payment_from_tab" value="" />
 </form>

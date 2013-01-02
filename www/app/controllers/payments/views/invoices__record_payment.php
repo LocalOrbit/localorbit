@@ -74,16 +74,7 @@ foreach($invoices as $invoice)
 					<b>I-<?=$invoice['invoice_id']?></b><br /><?=$invoice['description_html']?>
 				</td>
 				<td class="dt"><?=$invoice['direction_info']?></td>
-				<td class="dt"><?=core_format::date($invoice['due_date'],'short')?></td>
-					<!--
-					<a href="#!payments-demo" onclick="$('#orders_8233').toggle();">Orders</a>
-					<div id="orders_8233" style="display: none;">
-						<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2491">	LO-12-015-0002423</a><br />
-						<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2489">	LO-12-023-0002431</a><br />
-						<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2489">	LO-12-023-0002455</a><br />
-					</div>
-					-->
-				</td>
+				<td class="dt"><?=core_format::date($invoice['due_date'],'short')?></td></td>
 				<td class="dt"><?=core_format::price($invoice['amount_due'])?></td>
 				<td class="dt">
 					<input type="hidden" name="invoice_pay_group_<?=$cur_group?>__<?=$inv_counter?>" value="invoice_pay_<?=$invoice['invoice_id']?>" />

@@ -9,7 +9,9 @@ $invoices = core::model('v_invoices')
 	->collection()
 	->filter('invoice_id','in',explode(',',$core->data['checked_invoices']))
 	->sort('concat_ws(\'-\',to_org_id,from_org_id)');
-	
+$invoices->add_formatter('payable_info');
+$invoices->add_formatter('payment_link_formatter');
+$invoices->add_formatter('payment_direction_formatter');	
 
 	
 	#->get_buyer_grouped_invoices()
@@ -70,13 +72,13 @@ foreach($invoices as $invoice)
 		<input type="hidden" name="payment_method_<?=$cur_group?>" value="3" />
 		
 		<table class="dt">
-			<?=core_form::column_widths('15%','25%','15%','15%','15%')?>
+			<?=core_form::column_widths('22%','32%','14%','14%','15%')?>
 			<tr class="dt">
-				<th class="dt dt_sortable dt_sort_asc">Date</th>
-				<th class="dt">From/To</th>
 				<th class="dt">Description</th>
+				<th class="dt">Payment Info</th>
+				<th class="dt dt_sortable dt_sort_asc">Date</th>
 				<th class="dt">Amount</th>
-				<th class="dt">Applied Amount</th>
+				<th class="dt">Applied Amount</
 			</tr>
 		<?
 		
@@ -85,19 +87,11 @@ foreach($invoices as $invoice)
 ?>
 
 			<tr class="dt">
-				<td class="dt"><?=core_format::date($invoice['due_date'],'short')?></td>
-				<td class="dt"><?=$invoice['from_org_name']?> to <?=$invoice['to_org_name']?></td>
 				<td class="dt">
-					coming soon!!!
-					<!--
-					<a href="#!payments-demo" onclick="$('#orders_8233').toggle();">Orders</a>
-					<div id="orders_8233" style="display: none;">
-						<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2491">	LO-12-015-0002423</a><br />
-						<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2489">	LO-12-023-0002431</a><br />
-						<a href="https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-2489">	LO-12-023-0002455</a><br />
-					</div>
-					-->
+					<b>I-<?=$invoice['invoice_id']?></b><br /><?=$invoice['description_html']?>
 				</td>
+				<td class="dt"><?=$invoice['direction_info']?></td>
+				<td class="dt"><?=core_format::date($invoice['due_date'],'short')?></td></td>
 				<td class="dt"><?=core_format::price($invoice['amount_due'])?></td>
 				<td class="dt">
 					<input type="hidden" name="payment_pay_group_<?=$cur_group?>__<?=$inv_counter?>" value="payment_pay_<?=$invoice['invoice_id']?>" />
