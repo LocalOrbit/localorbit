@@ -16,6 +16,10 @@ class core_model_base_v_payments extends core_model
 		$this->add_field(new core_model_field(10,'ref_nbr','string',-4,'','v_payments'));
 		$this->add_field(new core_model_field(11,'method_description','string',-4,'','v_payments'));
 		$this->add_field(new core_model_field(12,'payable_info','string',8000,'','v_payments'));
+		$this->add_field(new core_model_field(13,'from_domain_id','int',8,'','v_payments'));
+		$this->add_field(new core_model_field(14,'from_domain_name','string',-4,'','v_payments'));
+		$this->add_field(new core_model_field(15,'to_domain_id','int',8,'','v_payments'));
+		$this->add_field(new core_model_field(16,'to_domain_name','string',-4,'','v_payments'));
 		$this->init_data();
 	}
 }

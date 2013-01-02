@@ -330,10 +330,21 @@ function payment_link_formatter($data)
 
 function payment_direction_formatter($data)
 {
+	global $core;
 	if(lo3::is_admin() || lo3::is_market())
 	{
-		$data['direction_info'] = 'From: '.$data['from_org_name'].'<br />';
-		$data['direction_info'] .= 'To: '.$data['to_org_name'].'<br />';
+		$data['direction_info'] = 'From: ';
+		
+		if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2]) > 1)
+			$data['direction_info'] .= $data['from_domain_name'].':';
+			
+		$data['direction_info'] .= '<a href="#!organizations-edit--org_id-'.$data['from_org_id'].'">'.$data['from_org_name'].'</a><br />';
+		$data['direction_info'] .= 'To: ';
+		
+		if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2]) > 1)
+			$data['direction_info'] .= $data['to_domain_name'].':';
+
+		$data['direction_info'] .= '<a href="#!organizations-edit--org_id-'.$data['to_org_id'].'">'.$data['to_org_name'].'</a>';
 		$data['payable_amount' ] = core_format::price($data['amount_due']);
 	}
 	else
