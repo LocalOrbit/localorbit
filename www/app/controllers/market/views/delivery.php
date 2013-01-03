@@ -38,7 +38,7 @@ $dds->render_page_arrows = false;
 $dds->render();
 
 ?>
-<div class="buttonset unlock_area" id="addDelivButton"<?=(($core->session['sec_pin'] == 1)?'':' style="display:none;"')?>>
+<div class="buttonset unlock_area" id="addDelivButton"<?=(($core->session['sec_pin'] == 1 || lo3::is_market())?'':' style="display:none;"')?>>
 	<input type="button" class="button_secondary" value="Add New Delivery Option" onclick="market.editDeliv(0);" />
 	<input type="button" class="button_secondary" value="Remove Checked" onclick="market.removeCheckedDelives(this.form);" />
 </div>
