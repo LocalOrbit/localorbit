@@ -18,30 +18,20 @@ else
 {
 	$payments_owed->filter('from_org_id' , $core->session['org_id']);
 }
+
 $payments_owed->add_formatter('payable_info');
 $payments_owed->add_formatter('payment_link_formatter');
 $payments_owed->add_formatter('payment_direction_formatter');
 $payments_table = new core_datatable('payments','payments/payments',$payments_owed);
-$payments_table->add(new core_datacolumn('invoice_id','Description',false,'22%',			'<b>I-{invoice_id}</b><br />{description_html}','{description}','{description}'));
-$payments_table->add(new core_datacolumn('from_org_name','Payment Info',true,'34%','{direction_info}','{to_org_name}','{to_org_name}'));
-$payments_table->add(new core_datacolumn('creation_date','Date',true,'12%','{creation_date}','{creation_date}','{creation_date}'));
-$payments_table->add(new core_datacolumn('amount','Amount',true,'28%',							'{amount}','{amount}','{amount}'));
+$payments_table->add(new core_datacolumn('invoice_id','Description',true,'22%',			'<b>I-{invoice_id}</b><br />{description_html}','{description}','{description}'));
+$payments_table->add(new core_datacolumn('from_org_name','Payment Info',true,'40%','{direction_info}','{to_org_name}','{to_org_name}'));
+$payments_table->add(new core_datacolumn('creation_date','Date',true,'20%','{creation_date}','{creation_date}','{creation_date}'));
+$payments_table->add(new core_datacolumn('amount_due','Amount',true,'14%',							'{amount_due}','{amount_due}','{amount_due}'));
 $payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','invoice_id'),' ',' '));
-//$invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'19%',			'{amount_due}','{amount_due}','{amount_due}'));
 $payments_table->columns[2]->autoformat='date-long';
 $payments_table->columns[3]->autoformat='price';
-
-$payments_table->add_filter(new core_datatable_filter('to_org_id'));
-$payments_table->filter_html .= core_datatable_filter::make_select(
-	'payments',
-	'lo_order.org_id',
-	$items->filter_states['payments__filter__from_org_id'],
-	new core_collection('select distinct from_org_id, from_org_name from v_payments where from_org_id = ' . $core->session['org_id'] . ';'),
-	'from_org_id',
-	'from_org_name',
-	'Show from all buyers',
-	'width: 270px;'
-);
+$payments_table->sort_direction='desc';
+$payments_table = payments__add_standard_filters($payments_table);
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<div id="all_all_payments">

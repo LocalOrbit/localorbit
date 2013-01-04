@@ -88,6 +88,6 @@
 		<li class="subheader_1"><a href="#!products-request" onclick="core.go(this.href);">Suggest A New Product</a></li>
 		<?}?>
 	<?}?>
-	<li class="subheader_1"><a href="#!payments-demo" onclick="core.go(this.href);">Payments Portal</a></li>
+	<li class="subheader_1"><a href="#!payments-demo" onclick="core.go(this.href);">Financial Management</a></li>
 </ul>
 <? core::replace('left'); ?>

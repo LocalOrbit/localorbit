@@ -1,6 +1,6 @@
 <?php
 core::ensure_navstate(array('left'=>'left_dashboard'));
-core::head('Order Management','This page is used to manage orders');
+core::head('Financial Management','This page is used to manage your payables, invoices, payments');
 lo3::require_permission();
 lo3::require_login();
 
@@ -15,6 +15,57 @@ if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 	$tabs[] = 'Invoices Due';
 	
 }
+
+# prepare the filters
+global $hub_filters,$to_filters,$from_filters;
+$hub_filters = false; $to_filters = false; $from_filters = false;
+if(lo3::is_admin())
+{
+	$hub_filters = core::model('domains')->collection()->sort('name');
+	$to_filters  = core::model('organizations')
+		->collection()
+		->filter('organizations.org_id','in','(select distinct to_org_id from payables)')
+		->sort('name');
+	$from_filters  = core::model('organizations')
+		->collection()
+		->filter('organizations.org_id','in','(select distinct from_org_id from payables)')
+		->sort('name');
+
+
+}
+else if(lo3::is_market())
+{
+	if(count($core->session['domains_by_orgtype_id'][2]) > 1)
+	{
+		$hub_filters = core::model('domains')
+			->collection()
+			->filter('domain_id','in',$core->session['domains_by_orgtype_id'][2])
+			->sort('name');
+	}
+	
+	$to_filters  = core::model('organizations')
+		->collection()
+		->filter('organizations.org_id','in','(
+			select org_id
+			from organizations_to_domains
+			where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+		)')
+		->sort('name');
+	$to_filters  = core::model('organizations')
+		->collection()
+		->filter('organizations.org_id','in','(
+			select org_id
+			from organizations_to_domains
+			where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+		)')
+		->sort('name');
+}
+else
+{
+	
+}
+
+
 $tabs[] = 'Payables';
 $tabs[] = 'Payments Owed';
 $tabs[] = 'Transaction Journal';
@@ -24,9 +75,11 @@ $tabs[] = 'Transaction Journal';
 	
 # setup the page header and tab switchers
 core_ui::tabset('paymentstabs');
-page_header('Payments Portal');
+page_header('Financial Management');
 echo('<form name="paymentsForm">');
 echo(core_ui::tab_switchers('paymentstabs',$tabs));
+
+
 
 # based on our rules, render the tabs one by one
 $this->overview((array_search('Overview',$tabs) + 1)); 

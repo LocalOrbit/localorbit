@@ -2,8 +2,8 @@
 global $core;
 $payables = core::model('v_payables')
 	->collection()
-	->filter('amount_due', '>', 0);
-	
+	->filter('amount_due', '>', 0)
+	->filter('is_invoiced','=',0);
 	
 
 if(lo3::is_market())
@@ -30,27 +30,15 @@ $payables->add_formatter('payment_link_formatter');
 $payables->add_formatter('payment_direction_formatter');
 $payables_table = new core_datatable('payables','payments/payables',$payables);
 $payables_table->add(new core_datacolumn('payable_id','Description',true,'22%',			'<b>P-{payable_id}</b><br />{description_html}','{description}','{description}'));
-$payables_table->add(new core_datacolumn('from_org_name','Payment Info',true,'34%','{direction_info}','{to_org_name}','{to_org_name}'));
-$payables_table->add(new core_datacolumn('creation_date','Date',true,'12%','{creation_date}','{creation_date}','{creation_date}'));
+$payables_table->add(new core_datacolumn('from_org_name','Payment Info',true,'40%','{direction_info}','{to_org_name}','{to_org_name}'));
+$payables_table->add(new core_datacolumn('creation_date','Date',true,'20%','{creation_date}','{creation_date}','{creation_date}'));
 $payables_table->add(new core_datacolumn('payable_amount','Amount',true,'14%',							'{payable_amount}','{payable_amount}','{payable_amount}'));
-$payables_table->add(new core_datacolumn('amount_due','Amount Due',true,'14%',			'{amount_due}','{amount_due}','{amount_due}'));
 $payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
 $payables_table->columns[2]->autoformat='date-long';
-$payables_table->columns[4]->autoformat='price';
-$payables_table->columns[5]->autoformat='price';
+$payables_table->columns[3]->autoformat='price';
+$payables_table->sort_direction='desc';
 
-$payables_table->add_filter(new core_datatable_filter('to_org_id'));
-$payables_table->filter_html .= core_datatable_filter::make_select(
-	'v_payables',
-	'to_org_id',
-	$items->filter_states['payables__filter__to_org_id'],
-	new core_collection('select distinct to_org_id, to_org_name from v_payables where from_org_id = ' . $core->session['org_id'] . ';'),
-	'to_org_id',
-	'to_org_name',
-	'Show from all organizations',
-	'width: 270px;'
-);
-
+$payables_table = payments__add_standard_filters($payables_table);
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<?php

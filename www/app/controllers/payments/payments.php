@@ -404,4 +404,70 @@ function payment_description_formatter($data)
 
    return $data;
 }
+
+function payments__add_standard_filters($datatable)
+{
+	global $hub_filters,$to_filters,$from_filters;
+	if($hub_filters !== false)
+	{
+		
+		$datatable->add_filter(new core_datatable_filter('from_domain_id'));
+		$datatable->filter_html .= core_datatable_filter::make_select(
+			$datatable->name,
+			'from_domain_id',
+			$datatable->filter_states[$datatable->name.'__filter__from_domain_id'],
+			$hub_filters,
+			'domain_id',
+			'name',
+			'Filter by From Hub: All Hubs',
+			'width: 270px;'
+		);
+		
+		$datatable->add_filter(new core_datatable_filter('to_domain_id'));
+		$datatable->filter_html .= core_datatable_filter::make_select(
+			$datatable->name,
+			'to_domain_id',
+			$datatable->filter_states[$datatable->name.'__filter__to_domain_id'],
+			$hub_filters,
+			'domain_id',
+			'name',
+			'Filter by To Hub: All Hubs',
+			'width: 270px;'
+		);
+	
+	}
+	
+	
+	if($from_filters !== false)
+	{
+		$datatable->add_filter(new core_datatable_filter('from_org_id'));
+		$datatable->filter_html .= core_datatable_filter::make_select(
+			$datatable->name,
+			'from_org_id',
+			$datatable->filter_states[$datatable->name.'__filter__from_org_id'],
+			$from_filters,
+			'org_id',
+			'name',
+			'Filter by From Org: All Orgs',
+			'width: 270px;'
+		);
+	}
+	
+	if($to_filters !== false)
+	{
+		$datatable->add_filter(new core_datatable_filter('to_org_id'));
+		$datatable->filter_html .= core_datatable_filter::make_select(
+			$datatable->name,
+			'to_org_id',
+			$datatable->filter_states[$datatable->name.'__filter__to_org_id'],
+			$to_filters,
+			'org_id',
+			'name',
+			'Filter by To Org: All Orgs',
+			'width: 270px;'
+		);
+	}
+	return $datatable;
+}
+
 ?>

@@ -25,47 +25,15 @@ $invoices->add_formatter('payment_link_formatter');
 $invoices->add_formatter('payment_direction_formatter');
 $invoices_table = new core_datatable('invoices','payments/invoices',$invoices);
 $invoices_table->add(new core_datacolumn('invoice_id','Description',true,'22%',			'<b>I-{invoice_id}</b><br />{description_html}','{description}','{description}'));
-$invoices_table->add(new core_datacolumn('from_org_name','Payment Info',true,'34%','{direction_info}','{from_org_name}','{from_org_name}'));
-$invoices_table->add(new core_datacolumn('due_date','Due Date',true,'12%','{due_date}','{due_date}','{due_date}'));
-$invoices_table->add(new core_datacolumn('amount','Amount',true,'14%',							'{amount}','{amount}','{amount}'));
+$invoices_table->add(new core_datacolumn('from_org_name','Payment Info',true,'40%','{direction_info}','{from_org_name}','{from_org_name}'));
+$invoices_table->add(new core_datacolumn('due_date','Due Date',true,'20%','{due_date}','{due_date}','{due_date}'));
 $invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'14%',			'{amount_due}','{amount_due}','{amount_due}'));
+$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('dueinvoices'),'',''),false,'4%',core_ui::check_all('dueinvoices','invoice_id'),' ',' '));
 $invoices_table->columns[2]->autoformat='date-long';
 $invoices_table->columns[3]->autoformat='price';
-$invoices_table->columns[4]->autoformat='price';
-$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('dueinvoices'),'',''),false,'4%',core_ui::check_all('dueinvoices','invoice_id'),' ',' '));
+$invoices_table->sort_direction='desc';
 
-$invoices_table->add_filter(new core_datatable_filter('from_domain_id'));
-$invoices_table->filter_html .= core_datatable_filter::make_select(
-	'invoices',
-	'from_domain_id',
-	$items->filter_states['invoices__filter__from_domain_id'],
-	new core_collection('select distinct from_domain_id, from_domain_name from v_invoices where to_org_id = ' . $core->session['org_id']),
-	'from_domain_id',
-	'from_domain_name',
-	'Show from all markets',
-	'width: 270px;'
-);
-
-$org_sql = 'select distinct from_org_id, from_org_name from v_invoices where to_org_id = ' . $core->session['org_id'];
-
-$domain_id = $invoices_table->filter_states['invoices__filter__from_domain_id'];
-if(is_numeric($domain_id) && $domain_id > 0)
-{
-   $org_sql .= ' and from_domain_id='.$invoices_table->filter_states['invoices__filter__from_domain_id'];
-}
-
-$invoices_table->add_filter(new core_datatable_filter('from_org_id'));
-$invoices_table->filter_html .= core_datatable_filter::make_select(
-	'invoices',
-	'from_org_id',
-	$items->filter_states['invoices__filter__from_org_id'],
-	new core_collection($org_sql),
-	'from_org_id',
-	'from_org_name',
-	'Show from all organizations',
-	'width: 270px;'
-);
-
+$invoices_table = payments__add_standard_filters($invoices_table);
 ?>
 <div class="tabarea" id="paymentstabs-a<?=$core->view[0]?>">
 	<div id="all_all_invoices">
