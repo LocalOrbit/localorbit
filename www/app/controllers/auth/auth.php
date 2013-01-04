@@ -5,10 +5,10 @@ class core_controller_auth extends core_controller
 	function unlock_pin()
 	{
 		global $core;
-		
+
 		'all_metrics';
 		$area = ($core->data['custom_unlock_area'] == '')?'main_save_buttons':$core->data['custom_unlock_area'];
-		
+
 		if($core->data['sec_pin'] == $core->config['sec_pin'])
 		{
 			$core->session['sec_pin'] = 1;
@@ -17,11 +17,11 @@ class core_controller_auth extends core_controller
 		else
 		{
 			core_ui::validate_error('Incorrect pin.',$core->data['formname'],'sec_pin');
-		
+
 		}
 		core::deinit();
 	}
-	
+
 	function rules()
 	{
 		global $core;
@@ -30,14 +30,14 @@ class core_controller_auth extends core_controller
 			array('type'=>'min_length','name'=>'password','data1'=>8,'msg'=>$core->i18n['error:customer:password']),
 		));
 	}
-	
+
 	function process_reset()
 	{
 		global $core;
-		
+
 		$this->reset_rules()->validate();
-		
-		
+
+
 		$cust = core::model('customer_entity')->loadrow_by_email($core->data['username']);
 		$org  = core::model('organizations')->load($cust['org_id']);
 		if(intval($cust['entity_id']) > 0)
@@ -60,7 +60,7 @@ class core_controller_auth extends core_controller
 			core_ui::error('Could not locate a user with this E-mail');
 		}
 	}
-	
+
 	function reset_rules()
 	{
 		global $core;
@@ -68,34 +68,42 @@ class core_controller_auth extends core_controller
 			array('type'=>'valid_email','name'=>'username','msg'=>$core->i18n['error:customer:email'])
 		));
 	}
-	
+
 	function process()
 	{
 		global $core;
-		
+
 		#core::log(print_r($core->config,true));
 		$core->data['email'] = trim($core->data['email']);
 		$core->data['password'] = trim($core->data['password']);
-		
+
 		$user = core::model('customer_entity')->authenticate(
 			$core->data['email'],
 			$core->data['password']
 		);
-		
+
 		if($user['entity_id'] == 0)
 		{
 			core::model('events')->add_record('Login Failed',0,0,$core->data['email']);
-			header('Location: /login.php?login_fail=1');
-			exit();
-			core_ui::validate_error($core->i18n['error:customer:login_fail'],((is_numeric($core->data['domain_id']))?'regform':'authform'),'password');		
-			
+
+			if ($core->data['tos_approve'] != 1) {
+				header('Location: /login.php?login_fail=1');
+				exit();
+			}
+
+			core_ui::validate_error($core->i18n['error:customer:login_fail'],((is_numeric($core->data['domain_id']))?'regform':'authform'),'password');
+
 		}
 		else if($user['org_is_enabled'] == 0 || $user['is_enabled'] == 0)
 		{
-			core::model('events')->add_record('Login Failed',0,0,$core->data['email'],'User or Org is suspended');			
-			header('Location: /login.php?account_suspended=1');
-			exit();
-			core_ui::validate_error($core->i18n['error:customer:account_suspended'],((is_numeric($core->data['domain_id']))?'regform':'authform'),'email');		
+			core::model('events')->add_record('Login Failed',0,0,$core->data['email'],'User or Org is suspended');
+
+			if ($core->data['tos_approve'] != 1) {
+				header('Location: /login.php?account_suspended=1');
+				exit();
+			}
+
+			core_ui::validate_error($core->i18n['error:customer:account_suspended'],((is_numeric($core->data['domain_id']))?'regform':'authform'),'email');
 		}
 		else
 		{
@@ -123,24 +131,24 @@ class core_controller_auth extends core_controller
 
 			# figure out what the final hostname should be
 			$final_hostname = $core->session['hostname'];
-			
+
 			#if the user logged in on anonymous shopping hub, don't change hubs
 			if($core->config['domain']['feature_allow_anonymous_shopping'] == 1)
 			{
 				$final_hostname = $core->config['domain']['hostname'];
-					
+
 				# also, change over the user's cart
 				core_db::query('
 					update lo_order set
-					org_id='.intval($core->session['org_id']).' 
-					where session_id=\''.session_id().'\' 
-					and org_id=0 
+					org_id='.intval($core->session['org_id']).'
+					where session_id=\''.session_id().'\'
+					and org_id=0
 					and ldstat_id=1;
 				');
 			}
 
 			core::model('events')->add_record('Login');
-			
+
 			#core::log('session data: '.print_r($core->data,true));
 			core::log('here: '.$core->data[$core->session['spammer_fake_fields'][0]]);
 			if(isset($core->data[$core->session['spammer_field']]) && $core->data[$core->session['spammer_field']] != '')
@@ -153,37 +161,42 @@ class core_controller_auth extends core_controller
 			{
 				header('Location: '.$core->data['postauth_url'].'-redirect-1');
 				exit();
-				#core::js('location.href=\''.;');			
+				#core::js('location.href=\''.;');
 			}
 			else{
 				# buyers who are fully activated should be sent directly to the catalog
 				if(
-					in_array($core->session['home_domain_id'],$core->session['domains_by_orgtype_id'][3]) && 
-					$core->session['is_active'] == 1 && 
-					$core->session['org_is_active'] == 1 && 
+					in_array($core->session['home_domain_id'],$core->session['domains_by_orgtype_id'][3]) &&
+					$core->session['is_active'] == 1 &&
+					$core->session['org_is_active'] == 1 &&
 					$core->session['allow_sell'] == 0
 				)
 				{
-					header('Location: https://'.$final_hostname.'/'.$core->config['app_page'].'#!catalog-shop');
-					exit();
+
+					if ($core->data['tos_approve'] != 1) {
+						header('Location: https://'.$final_hostname.'/'.$core->config['app_page'].'#!catalog-shop');
+						exit();
+					}
 					core::js('core.navState={};location.href=\'\';');
 				}
 				else
 				{
-					header('Location: https://'.$final_hostname.'/'.$core->config['app_page'].'#!dashboard-home');
+					if ($core->data['tos_approve'] != 1) {
+						header('Location: https://'.$final_hostname.'/'.$core->config['app_page'].'#!dashboard-home');
+					}
 					core::js('core.navState={};location.href=\'https://'.$final_hostname.'/'.$core->config['app_page'].'#!dashboard-home\';');
 				}
 			}
 			core::deinit();
 		}
 	}
-	
+
 	function logout()
 	{
 		global $core;
 		core::log('logging out');
 		core::model('events')->add_record('Logout');
-			
+
 		core::process_command_list('session-destroy');
 		session_destroy();
 		core_session::init();
@@ -192,11 +205,11 @@ class core_controller_auth extends core_controller
 		core::deinit();
 		#core::process_command('auth/form',false);
 	}
-	
+
 	function loginas()
 	{
 		global $core;
-		
+
 		core::log('attempting admin login as '.$core->data['user_id']);
 		$user = core::model('customer_entity');
 
@@ -230,7 +243,7 @@ class core_controller_auth extends core_controller
 			array('offset_seconds','tz_name')
 		);
 		$user->load($core->data['entity_id']);
-		
+
 		$core->session['user_id']    = $user['entity_id'];
 		$core->session['org_name']   = $user['name'];
 		$core->session['org_id']     = $user['org_id'];
@@ -249,20 +262,20 @@ class core_controller_auth extends core_controller
 		$core->session['tz_name'] = $user['tz_name'];
 		$core->session['org_is_active'] = $user['org_is_active'];
 		$core->config['navstate'] = array();
-	
+
 		list(
 			$core->session['home_domain_id'],
 			$core->session['all_domains'],
 			$core->session['domains_by_orgtype_id']
 		) = core::model('customer_entity')->get_domain_permissions( $user['org_id']);
-		
-		
+
+
 		core::model('events')->add_record('Login');
-		
+
 		if(
-			in_array($core->session['home_domain_id'],$core->session['domains_by_orgtype_id'][3]) && 
-			$core->session['is_active'] == 1 && 
-			$core->session['org_is_active'] == 1 && 
+			in_array($core->session['home_domain_id'],$core->session['domains_by_orgtype_id'][3]) &&
+			$core->session['is_active'] == 1 &&
+			$core->session['org_is_active'] == 1 &&
 			$core->session['allow_sell'] == 0
 		)
 		{
@@ -272,14 +285,14 @@ class core_controller_auth extends core_controller
 		{
 			core::js('core.navState={};location.href=\'https://'.$core->session['hostname'].'/'.$core->config['app_page'].'#!dashboard-home\';');
 		}
-	
+
 		core::deinit();
 	}
-	
+
 	function zendesk_work()
 	{
 		global $core;
-		
+
 		if($core->session['user_id'] == 0)
 		{
 			#print_r($core->config);
@@ -290,17 +303,17 @@ class core_controller_auth extends core_controller
 		}
 		else
 		{
-		
+
 			$sFullName = $core->session['first_name']." ".$core->session['last_name'];
 			$sEmail = $core->session['email'];
-			/* 
-			 * These are used if we want to give an ID other than e-mail address or a group organization 
+			/*
+			 * These are used if we want to give an ID other than e-mail address or a group organization
 			 * We may want to use the sOrganization later to distiguish between buyers and sellers.
 			 */
 			/* $sExternalID = ""; */
 			$sExternalID = $core->session['user_id'];
 			#$sExternalID = '';
-			
+
 
 			 /* Insert the Authentication Token here */
 			$sToken = 'Jgk5oJWgqPmdjVnPyJBKMKWP7KjeqWk9oTZwWffH6EwHihUT';
@@ -318,7 +331,7 @@ class core_controller_auth extends core_controller
 			//header("Location: ".$sso_url);
 			core::log('sso url: '.$sso_url);
 			header("Location: ".$sso_url);
-			exit();	
+			exit();
 		}
 	}
 }
