@@ -6,7 +6,7 @@
 				<div class="slides_container">
 					<div class="slide">
 						<img src="/homepage/img/slideshow/slideshow-new-01.jpg" width="740" height="350" alt="[Local Orbit surpasses anything out there]" />
-						<div class="caption"><div style="height:10px;overflow:hidden;"><br /></div>Local Orbit surpasses anything out there.<br /><span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Lucy Norris, Puget Sound Food Network</span></div>
+						<div class="caption"><div style="height:10px;overflow:hidden;"><br /></div>Local Orbit surpasses anything out there.<br /><span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Lucy Norris, Northwest Agriculture Business Center</span></div>
 					</div>
 					<div class="slide">
 						<img src="/homepage/img/slideshow/slideshow-new-02.jpg" width="740" height="350" alt="Slide 2" />
