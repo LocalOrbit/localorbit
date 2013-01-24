@@ -145,7 +145,6 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 						</p>
 						<![endif]-->
 						<h1>Log in to <span id="market_title"></span></h1>
-
 						<form name="authform" action="app/auth/process">
 							<div class="tabset" id="logintabs">
 								<div class="tabswitch tabswitch_on" id="logintabs-s1">

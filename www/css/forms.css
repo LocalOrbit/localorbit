@@ -110,9 +110,15 @@ select{
 	height: 28px;
 	vertical-align: top;
 	font-size: 90%;
+	background-color: #fff !important;
 }
 option{
 	vertical-align: top;
+	background-color: #fff !important;
+}
+
+::-webkit-selection{
+	background-color: #fff;
 }
 
 input[type=text]:focus,input[type=password]:focus,input[type=file]:focus,textarea:focus{

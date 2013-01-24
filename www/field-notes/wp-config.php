@@ -56,7 +56,7 @@ else
 
 
 /** MySQL hostname */
-define('DB_HOST', 'localhost');
+define('DB_HOST', 'app-db.cbuaulnl9t1m.us-west-2.rds.amazonaws.com');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');

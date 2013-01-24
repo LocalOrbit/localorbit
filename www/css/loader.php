@@ -51,6 +51,12 @@ while($opt = mysql_fetch_assoc($opts))
 # set the header an start processing code files
 header('Content-type: text/css');
 
+
+#$options['p1e'] = '#000';
+#$options['p4d'] = '#fff';
+#$options['p4f'] = '#000';
+#$options['p4a'] = '#000';
+
 # now load all the different css files
 foreach($files as $file)
 {
