@@ -23,15 +23,16 @@ rm $TRUNK_PATH/www/img/weeklyspec/*.jpg
 rm $TRUNK_PATH/www/img/weeklyspec/*.png
 rm $TRUNK_PATH/www/img/weeklyspec/*.gif
 
-scp -r 'lo3:/var/www/production/www/img/organizations/*.jpg' $TRUNK_PATH/www/img/organizations
-scp -r 'lo3:/var/www/production/www/img/organizations/*.gif' $TRUNK_PATH/www/img/organizations
-scp -r 'lo3:/var/www/production/www/img/organizations/*.png' $TRUNK_PATH/www/img/organizations
-scp -r 'lo3:/var/www/production/www/img/products/raws/*.dat' $TRUNK_PATH/www/img/products/raws
-scp -r 'lo3:/var/www/production/www/img/newsletters/*' $TRUNK_PATH/www/img/newsletters
-scp -r 'lo3:/var/www/production/www/img/weeklyspec/*' $TRUNK_PATH/www/img/weeklyspec
+scp -r 'lo-web1:/var/www/production/www/img/organizations/*.jpg' $TRUNK_PATH/www/img/organizations
+scp -r 'lo-web1:/var/www/production/www/img/organizations/*.gif' $TRUNK_PATH/www/img/organizations
+scp -r 'lo-web1:/var/www/production/www/img/organizations/*.png' $TRUNK_PATH/www/img/organizations
+scp -r 'lo-web1:/var/www/production/www/img/products/raws/*.dat' $TRUNK_PATH/www/img/products/raws
+scp -r 'lo-web1:/var/www/production/www/img/newsletters/*' $TRUNK_PATH/www/img/newsletters
+scp -r 'lo-web1:/var/www/production/www/img/weeklyspec/*' $TRUNK_PATH/www/img/weeklyspec
 
 # dump production db
-ssh lo3 "mysqldump localorb_www_production -u localorb_www -pl0cal1sdab3st" > localorb_local_temp.sql
+echo 'downloading production db...'
+ssh lo-web1 "mysqldump localorb_www_production -h localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com -u localorb_www -pl0cal1sdab3st" > localorb_local_temp.sql
 echo 'SET FOREIGN_KEY_CHECKS = 0;' > localorb_local.sql
 echo 'DROP DATABASE if exists localorb_www_dev;' >> localorb_local.sql
 echo 'CREATE DATABASE localorb_www_dev;' >> localorb_local.sql
@@ -44,5 +45,7 @@ echo 'update customer_entity set email = concat("localorbit.testing+",entity_id,
 echo 'grant all on localorb_www_dev.* to localorb_www identified by "localorb_www_dev";' >> localorb_local.sql
 
 # execute sql script
+echo 'running script...'
 mysql -u root -p$MYSQL_PASSWORD < localorb_local.sql
+echo 'done.'
 
