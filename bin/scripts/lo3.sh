@@ -12,18 +12,19 @@ fi
 svn co svn+ssh://svn/opt/localorbit/lo3/trunk/
 
 #copy images
-scp -r 'lo3:/var/www/production/www/img/organizations/*.jpg' $PWD/trunk/www/img/organizations
-scp -r 'lo3:/var/www/production/www/img/organizations/*.gif' $PWD/trunk/www/img/organizations
-scp -r 'lo3:/var/www/production/www/img/organizations/*.png' $PWD/trunk/www/img/organizations
-scp -r 'lo3:/var/www/production/www/img/products/raws/*.dat' $PWD/trunk/www/img/products/raws
-scp -r 'lo3:/var/www/production/www/img/newsletters/*' $PWD/trunk/www/img/newsletters
-scp -r 'lo3:/var/www/production/www/img/weeklyspec/*' $PWD/trunk/www/img/weeklyspec
+scp -r 'lo-web1:/var/www/production/www/img/organizations/*.jpg' $PWD/trunk/www/img/organizations
+scp -r 'lo-web1:/var/www/production/www/img/organizations/*.gif' $PWD/trunk/www/img/organizations
+scp -r 'lo-web1:/var/www/production/www/img/organizations/*.png' $PWD/trunk/www/img/organizations
+scp -r 'lo-web1:/var/www/production/www/img/products/raws/*.dat' $PWD/trunk/www/img/products/raws
+scp -r 'lo-web1:/var/www/production/www/img/newsletters/*' $PWD/trunk/www/img/newsletters
+scp -r 'lo-web1:/var/www/production/www/img/weeklyspec/*' $PWD/trunk/www/img/weeklyspec
 
 chmod 777 $PWD/trunk/www/img/products/cache
 chmod 777 $PWD/trunk/www/img/organizations/cached
 
 # dump production db
-ssh lo3 "mysqldump localorb_www_production -u localorb_www -pl0cal1sdab3st" > localorb_local_temp.sql
+echo "downloading production db..."
+ssh lo-web1 "mysqldump localorb_www_production -h localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com -u localorb_www -pl0cal1sdab3st" > localorb_local_temp.sql
 echo 'SET FOREIGN_KEY_CHECKS = 0;' > localorb_local.sql
 echo 'DROP DATABASE if exists localorb_www_dev;' >> localorb_local.sql
 echo 'CREATE DATABASE localorb_www_dev;' >> localorb_local.sql
