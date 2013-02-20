@@ -1,8 +1,8 @@
 #!/bin/bash
 MYSQL_PASSWORD=$1
 MYSQL_PASSWORD_ARG=-$1
-HTTPD_CONF=$(apachectl -V | grep -Po '(?<=SERVER_CONFIG_FILE=").+(?=")')
-LOG_DIR=$(grep -Po '(?<=ErrorLog ").+(?=/[^/]+")' $HTTPD_CONF)
+HTTPD_CONF=$(apachectl -V | perl -n -e '/SERVER_CONFIG_FILE="(.*)"/ && print $1')
+LOG_DIR=$(perl -n -e '/ErrorLog "((\/[^\/]*)+)\/.*"/ && print $1' $HTTPD_CONF)
 
 if [ -z "$1" ]; then
    MYSQL_PASSWORD_ARG=""
