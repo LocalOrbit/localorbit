@@ -480,7 +480,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				$fulfills[$item['seller_org_id']]['lsps_id']     = 1;
 				$fulfills[$item['seller_org_id']]['grand_total'] = 0;
 				$fulfills[$item['seller_org_id']]['adjusted_total'] = 0;
-				$fulfills[$item['seller_org_id']]['order_date']  = core_format::date(time(),'db');
+				$fulfills[$item['seller_org_id']]['order_date']  = date('Y-m-d H:i:s',time());
 				$fulfills[$item['seller_org_id']]['domain_id']   = $core->config['domain']['domain_id'];
 				$fulfills[$item['seller_org_id']]->save();
 				$fulfills[$item['seller_org_id']]['lo3_order_nbr'] = $this->generate_order_id('fulfill',$core->config['domain']['domain_id'],$fulfills[$item['seller_org_id']]['lo_foid']);
@@ -557,7 +557,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$this['ldstat_id'] = 2;
 		$this['lbps_id']   = ($method == 'paypal' || $method == 'ach')?2:1;
 
-		$this['order_date'] = core_format::date(time(),'db');
+		$this['order_date'] = date('Y-m-d H:i:s',time());
 
 		# save the fulfillment order
 		foreach($fulfills as $org_id=>$fulfill)
