@@ -1,0 +1,359 @@
+ <html> 
+     <head> 
+	<title>*|MC:SUBJECT|*</title>
+         <meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
+          
+     <style type="text/css">
+		p{
+			margin-bottom:10px;
+		}
+		body{
+			/*@editable*/background-color:#FFFFFF;
+			text-align:center;
+		}
+		#layout{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/border:0px none;
+			margin:0 auto;
+			text-align:left;
+		}
+	/*
+	@tab Links
+	@section link style
+	@tip Specify a color for all the hyperlinks in your email.
+	@theme link
+	*/
+		a,a:link,a:visited{
+			/*@editable*/color:#B20000;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:underline;
+		}
+	/*
+	@tab Top bar
+	@section top bar
+	@tip Set the look of the archive link.
+	*/
+		#header-top{
+			/*@tab Top bar
+@section top bar
+@tip Set the look of the archive link.*/background-color:#FFFFFF;
+			border-top:0px none;
+			border-bottom:0px none;
+			/*@editable*/color:#505050;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:12px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			padding:5px 0 5px;
+			/*@editable*/text-align:right;
+		}
+	/*
+	@tab Top bar
+	@section top bar links
+	@tip Set the look of the archive link.
+	*/
+		#header-top a{
+			/*@editable*/color:#cd3301;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:none;
+		}
+	/*
+	@tab Header
+	@section header bar
+	@tip Choose a set of colors that look good with the colors of your logo image or text header.
+	*/
+		#header{
+			/*@tab Header
+@section header bar
+@tip Choose a set of colors that look good with the colors of your logo image or text header.*/background-color:#FFFFFF;
+			/*@editable*/border-top:10px solid #577455;
+			/*@editable*/border-bottom:30px solid #577455;
+			/*@editable*/color:#577455;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:40px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			padding:10px 0 20px 0;
+			/*@editable*/text-align:center;
+		}
+	/*
+	@tab Header
+	@section title style
+	@tip Titles and headlines in your message body. Make them big and easy to read.
+	@theme title
+	*/
+		.primary-heading{
+			/*@editable*/background-color:#ffffff;
+			/*@editable*/color:#cd3301;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:70px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:100%;
+			/*@editable*/margin:0;
+			/*@editable*/padding:0;
+			/*@editable*/text-align:center;
+			/*@editable*/text-transform:none;
+		}
+	/*
+	@tab Header
+	@section subtitle style
+	@tip This is the byline text that appears immediately underneath your titles/headlines.
+	@theme subtitle
+	*/
+		#header .secondary-heading{
+			/*@editable*/background-color:#ffeeaa;
+			/*@editable*/color:#cd3301;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:30px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:100%;
+			/*@editable*/margin:0 0 0 0;
+			/*@editable*/padding:0;
+			/*@editable*/text-align:center;
+			/*@editable*/text-transform:none;
+		}
+	/*
+	@tab Body
+	@section default text
+	@tip This is the default text style for the body of your email.
+	@theme content
+	*/
+		#content{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/color:#cd3301;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:16px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:24px;
+			padding:5px 30px 15px;
+		}
+	/*
+	@tab Body
+	@section title style
+	@tip This is the byline text that appears immediately underneath your titles/headlines.
+	@theme title
+	*/
+		#header .secondary-heading{
+			/*@editable*/background-color:#ffeeaa;
+			/*@editable*/color:#cd3301;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:30px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:100%;
+			/*@editable*/margin:0 0 0 0;
+			/*@editable*/padding:0;
+			/*@editable*/text-align:center;
+			/*@editable*/text-transform:none;
+		}
+	/*
+	@tab Body
+	@section product image
+	@tip This is the image of the product related to the coupon.
+	@theme content
+	*/
+		#product-image{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/color:#505050;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:16px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:24px;
+			/*@editable*/padding:20px 0 0 0;
+			/*@editable*/text-align:center;
+		}
+	/*
+	@tab Body
+	@section product summary
+	@tip This is q basic summary of the product.
+	@theme content
+	*/
+		#product-summary{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/color:#808080;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:16px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:24px;
+			/*@editable*/padding:0 0 20px 0;
+		}
+	/*
+	@tab Body
+	@section product description
+	@tip This is a basic description about the product.
+	@theme content
+	*/
+		#product-description{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/color:#505050;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:14px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:24px;
+			/*@editable*/list-style:none;
+			/*@editable*/padding:0;
+		}
+	/*
+	@tab Body
+	@section product pros
+	@tip This is a list of the product's good features.
+	@theme content
+	*/
+		#product-pros{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/color:#505050;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:14px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:24px;
+			/*@editable*/list-style:none;
+			/*@editable*/padding:0;
+		}
+	/*
+	@tab Body
+	@section product cons
+	@tip This is a list of the product's bad features.
+	@theme content
+	*/
+		#product-cons{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/color:#505050;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:14px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:24px;
+			/*@editable*/list-style:none;
+			/*@editable*/padding:0;
+		}
+	/*
+	@tab Body
+	@section product link
+	@tip This is an area for the product button link
+	@theme content
+	*/
+		#product-link{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/border:0px none;
+			/*@editable*/color:#505050;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:16px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:24px;
+			/*@editable*/list-style:none;
+			/*@editable*/padding:20px 60px 30px;
+			/*@editable*/text-decoration:none;
+		}
+	/*
+	@tab Body
+	@section product button
+	@tip This is the button that takes readers to a website.
+	@theme content
+	*/
+		#product-button{
+			/*@editable*/background-color:#577455;
+			/*@editable*/border:2px solid #cd3301;
+			/*@editable*/color:#FFFFFF;
+			display:block;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:24px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:24px;
+			/*@editable*/list-style:none;
+			/*@editable*/padding:20px;
+			/*@editable*/text-decoration:none;
+		}
+	/*
+	@tab Footer
+	@section footer
+	@tip You might give your footer a light background color and separate it with a top border
+	@theme footer
+	*/
+		#footer{
+			/*@editable*/background-color:#FFFFFF;
+			/*@editable*/border-top:1px solid #EEEEEE;
+			/*@editable*/color:#505050;
+			/*@editable*/font-family:Arial;
+			/*@editable*/font-size:12px;
+			/*@editable*/font-style:normal;
+			/*@editable*/font-weight:normal;
+			/*@editable*/line-height:14px;
+			/*@editable*/padding:20px 0 0 0;
+			/*@editable*/text-align:center;
+		}
+	/*
+	@tab Footer
+	@section link style
+	@tip Specify a color for your footer hyperlinks.
+	@theme link_footer
+	*/
+		#footer a{
+			/*@editable*/color:#cd3301;
+			/*@editable*/font-weight:normal;
+			/*@editable*/text-decoration:none;
+		}
+		a,a:link,a:visited{
+			text-decoration:none;
+			color:#577455;
+		}
+</style></head> 
+     <body> 
+            <table width="600" border="0" cellspacing="0" cellpadding="0" id="layout">
+                <tr>
+                    <td id="header-top" colspan="3" mc:edit="headertop">
+                        <p>Email not displaying correctly? <a href="*|ARCHIVE|*" title="View this email in your browser.">View it in your browser</a>.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="header" colspan="3" mc:edit="header"><h1 class="primary-heading tpl-content-highlight">
+	January News</h1>
+</td>
+                </tr>
+                <tr>
+                    <td id="product-image" colspan="3">
+						<img mc:edit="image_1" style="max-width: 600px;" src="http://gallery.mailchimp.com/097ff089a21bda22fa71668f5/images/EM_digdowntown.jpg"> <!-- max-width sets image resize constraint when image is uploaded -->
+                    </td>
+                </tr>
+                <tr>
+                    <td id="product-summary" colspan="3" mc:edit="main"><h2 class="secondary-heading">
+	<br>
+	We&#39;re growing and want to fill you in on the latest news!<br>
+	&nbsp;</h2></td>
+                 </tr>
+                <tr>
+                    <td id="product-description" colspan="1" valign="top" mc:edit="description"></td>
+                    <td id="product-pros" colspan="1" valign="top" mc:edit="pros"></td>
+                    <td id="product-cons" colspan="1" valign="top" mc:edit="cons"></td>
+                    
+                 </tr>
+                 <tr>
+                 	<td id="product-link" colspan="3" align="center" valign="middle" mc:edit="button"><a class="tpl-content-highlight" href="http://localorb.it/lo2/authentication/login" id="product-button" title="Log in to Eastern Market">Log in to our site to update your account and profile today!</a> </td>
+                 </tr>
+                <tr>
+                    <td id="footer" colspan="3" mc:edit="footer"><p>
+	<a href="http://localorb.it/lo2/authentication/login"><img alt="Detroit Eastern Market powered by Local Orbit" height="108" src="http://gallery.mailchimp.com/097ff089a21bda22fa71668f5/files/detroit_eastern_market112x108.jpg" style="width: 112px; height: 108px; " width="112"><br>
+	<br>
+	<img alt="" height="21" src="http://gallery.mailchimp.com/097ff089a21bda22fa71668f5/files/poweredby_lo_1_.1.png" style="width: 126px; height: 21px; " width="126"><br>
+	<br>
+	<br>
+	Unsubscribe</a> | <a href="*|FORWARD|*">Forward to a friend</a></p>
+<p>
+	Copyright (C) *|CURRENT_YEAR|* *|LIST:COMPANY|* All rights reserved.</p>
+<p>
+	&nbsp;</p>
+<br>
+</td>
+                </tr>
+            </table>
+			<span style="padding: 0px;"></span>
+     </body> 
+ </html> 
