@@ -636,7 +636,15 @@ class core
 			$new_content = trim(ob_get_clean());
 			if($new_content != '')
 			{
-				$core->response['replace']['center'] .= $new_content; 
+				if (array_key_exists('replace', $core->response) && array_key_exists('center', $core->response['replace']))
+				{
+					$core->response['replace']['center'] .= $new_content;
+				}
+				else
+				{
+					$core->response['replace']['center'] = $new_content;
+				}
+				 
 			}
 			ob_start();
 		}
