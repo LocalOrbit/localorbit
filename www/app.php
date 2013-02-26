@@ -44,9 +44,9 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<!-- <link rel="stylesheet" type="text/css" href="css/reset.css" /> -->
 	<link rel="stylesheet" type="text/css" href="css/loader.php?time=<?php echo time();?>" media="all" /> <? # Loads forms.css, datatable.css, popups.css, rte.css ?>
-	<link rel="alternate stylesheet" type="text/css" href="css/less.php?which=style2" title="styles2" media="all" />
+<!--	<link rel="alternate stylesheet" type="text/css" href="css/less.php?which=style2" title="styles2" media="all" />
 	<link rel="alternate stylesheet" type="text/css" href="css/less.php?which=style3" title="styles3" media="all" />
-
+-->
 	<link rel="stylesheet" type="text/css" href="css/image-picker.css" media="all" />
 	<link rel="stylesheet" type="text/css" href="css/less.php" title="styles1" media="all" id="less-css" />
 	<link rel="stylesheet" type="text/css" href="css/fonts.php" media="all" />
