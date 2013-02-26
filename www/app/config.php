@@ -149,9 +149,27 @@ if($_SERVER['HTTP_HOST'] == 'qa.localorb.it' || strpos(__FILE__,'/qa/') > 0)
 		'signature'=>'An5ns1Kso7MWUdW4ErQKJJJ4qi4-A5NnmzyvwNlDn9R23U3X0TvhQXok',
 		'url'=>'https://api-3t.sandbox.paypal.com/nvp',
 	);
-$core->config['hostname_prefix']  = $core->config['stage'];
+	$core->config['hostname_prefix']  = $core->config['stage'];
 
 }
+
+if($_SERVER['HTTP_HOST'] == 'current.localorb.it' || strpos(__FILE__,'/current/') > 0)
+{
+	$core->config['stage'] = 'current';
+	$core->config['default_hostname'] = 'annarbor-mi.localorb.it';
+	$core->config['session_domain']   = '.localorb.it';
+	$core->config['session_name']    .= 'current';
+	$core->config['db']['database']   = 'localorb_www_current';
+
+	$core->config['payments']['paypal'] = array(
+		'password'=>'1331137290',
+		'username'=>'julie_1331137249_biz_api1.localorb.it',
+		'signature'=>'An5ns1Kso7MWUdW4ErQKJJJ4qi4-A5NnmzyvwNlDn9R23U3X0TvhQXok',
+		'url'=>'https://api-3t.sandbox.paypal.com/nvp',
+	);
+	$core->config['hostname_prefix']  = $core->config['stage'];
+}
+
 
 if($_SERVER['HTTP_HOST'] == 'testing.localorb.it' || strpos(__FILE__,'/testing/') > 0)
 {
