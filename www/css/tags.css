@@ -1,0 +1,76 @@
+body{
+	font-family: <?=$options['font1']?>;
+	font-size: <?=$options['font-size']?>;
+	line-height: 130%;
+	color: <?=$options['p4d']?>;
+	background-color: <?=$options['p1e']?>;
+/*
+	background-image: url(../img/background.jpg);
+	background-repeat: no-repeat;
+*/
+	padding:0;margin:0;
+	width: 100%;
+	height:100%;
+	text-align:center;
+	margin:0 auto; 
+	min-width: 1120px;
+	overflow: scroll;
+}
+
+a,a:visited{
+	color: <?=$options['p2c']?>;
+}
+
+a:hover,a:hover:visited{
+	color: <?=$options['p2b']?>;
+}
+
+ol, ul {
+	margin-left: 15px;	
+}
+ul{
+	list-style-image:url('../img/default/list_item.png');
+}
+
+ol{
+	list-style-type: decimal;
+}
+
+.entry p{
+	line-height: 1.6em;
+	margin: 10px 0;
+}
+
+b{
+	font-weight: bold;
+}
+
+ul{
+	padding-top: 4px;
+}
+
+li{
+	margin: 0px 0px 4px 14px;
+}
+
+table{
+	width:100%;
+}
+
+tr{
+}
+
+td{
+	margin: 0px;
+	padding: 0px;
+}
+
+fieldset{
+	padding: 0px;
+	margin: 0px;
+	border-radius: 7px;
+}
+
+legend{
+	font-weight: bold;
+}

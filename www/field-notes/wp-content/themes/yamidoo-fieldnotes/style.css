@@ -1,0 +1,222 @@
+/*
+Theme name: Yamidoo Magazine - Field-Notes
+Version: 1.0
+Template: yamidoo
+*/
+@import url(//fonts.googleapis.com/css?family=Francois+One);
+@import url("../yamidoo/style.css");
+@import url("/homepage/includes/popup.css");
+
+body {
+	
+	margin: 0 auto;
+	font-size: 13px;
+}
+
+#main_layout_homepage {
+	width: 1100px;margin-left: auto;
+margin-right: auto;
+}
+
+
+#articles .head_title{
+	text-transform: none !important;
+}
+
+#main_layout_homepage a {
+	color: #fff;
+	font-family: 'Francois One', sans-serif !important;
+	font-size: 15px;
+}
+a.nav1 {
+font-size: 22px !important;
+margin-right: 30px;
+}
+
+
+#nav1 {
+position: absolute;
+left: 165px;
+top: 00px;
+width: 520px;
+height: 40px;
+color: #fff !important;
+line-height: 50px;
+vertical-align: center;
+font-size: 22px !important;
+font-family: 'Francois One', sans-serif !important;
+}
+
+#nav2 {
+position: absolute;
+color: #fff !important;
+right: 5px;
+top: 14px;
+width: 190px;
+height: 50px;
+}
+
+#tagline {
+position: absolute;
+left: 95px;
+top: 65px;
+width: 220px;
+height: 20px;
+font-family: 'Francois One', sans-serif !important;
+font-size: 90%;
+}
+
+#top_background {
+	background-image: url(/homepage/includes/header_bg.png);
+	background-repeat: repeat-x;
+	width: 100%;
+	line-height: 20px;
+	margin-bottom: -40px;
+}
+
+#logo h1 a {
+	font-size:50px;
+font-family: 'Francois One', serif !important;
+}
+
+#logo span{
+	text-transform: none !important;
+	font-family: 'Francois One', serif !important;
+	font-size: 115% !important;
+}
+
+#topmenu a {
+	font-size:14px;
+	font-family: 'Francois One', Georgia, serif;
+}
+
+ul.dropdown a{
+	font-size: 110% !important;
+}
+
+ul.dropdown li { 
+
+	text-transform: none !important;
+}
+
+ul.dropdown li ul {
+        	background-color: #e0e1e2;
+        	border-top:3px solid #650B0B;
+}
+
+ul.dropdown ul li a {
+	text-transform: none !important;
+}
+
+#feature {
+        	background:#e0e1e2;
+}
+
+#panes h3 {
+        	font-family:Francois, Georgia, serif;
+}
+ 
+#panes .more {
+        	font-family:Francois, Georgia, serif;
+}
+
+.overlay {
+        	font-family:Francois, Georgia, serif;
+}
+
+.column h3 a,
+.column_first h3 a {
+        	color:#650d0d;
+        	font-family:Helvetica, Georgia, serif;
+ 
+}
+
+ 
+.article h2.title {
+        	font-family:Francois, Georgia, serif;
+}
+ 
+.article h2.title a {
+        	color:#650d0d;
+		font-size: 50px;
+ }
+
+ #articles .head_title,
+h3.archive_title {
+        	background-color:#e0e1e2;
+        	border-top:3px solid #650B0B;
+        	font-family:Francois, Georgia, serif;
+}
+  
+.post .post-meta {
+        	font-family:Francois, Georgia, serif;
+}
+
+.post h1.title {
+        	font-family:Francois, Georgia, serif;
+}
+ 
+.post blockquote {
+        	font-family:Francois, Georgia, "Times New Roman", Times,serif;
+        }
+
+.entry h1,
+.entry h2,
+.entry h3,
+.entry h4,
+.entry h5,
+.entry h6 {
+        	font-family:Francois, Georgia, serif;
+}
+
+.tag-links {
+        	font-family:Francois, Georgia, serif;
+}
+
+.post_author {
+        	background:#e0e1e2;
+        	font-family:Francois, Georgia, serif;
+}
+
+#comments h3 { font-family:Francois, Georgia, serif; }
+.comment-author cite { font-family:Francois, Georgia, serif; }
+#respond label { font-family:Francois, Georgia, serif;}
+
+.widget h3.title {
+        	background-color:#e0e1e2;
+        	border-top:3px solid #650B0B;
+        	font-family:Francois, Georgia, serif;
+}
+
+.widget a { font-family:Francois Georgia, serif; }
+
+.widget_tag_cloud a {font-family:Francois, Georgia, serif; }
+
+.widget .wpzoom-feature-posts small { font-family:Helvetica, Georgia, serif;  }
+
+.widget.wpzoom-popular-posts li {font-family:Francois, Georgia, serif; }
+
+.widget .twitter-list li { font-family:Francois, Georgia, serif; }
+
+.tab_menu_container {border-top: 3px solid #650B0B; background-color: #e0e1e2; }
+#tab_menu li { font-family: Francois, Georgia, sans-serif; }
+#sidebar .tabberlive { background: #e0e1e2; border-top:3px solid #650B0B; }
+
+ul.tabbernav li a { font-family:Francois, Georgia, serif; }
+
+ 
+#footer_right {
+        	font-family:Francois, Georgia, serif;
+}
+
+h1.title a, .post-info h3 a{
+	color: #650B0B;
+}
+
+.single .post h1.title a {
+font-size: 32px !important;
+}
+
+#topmenu a {
+	font-size: 14px !important;
+}

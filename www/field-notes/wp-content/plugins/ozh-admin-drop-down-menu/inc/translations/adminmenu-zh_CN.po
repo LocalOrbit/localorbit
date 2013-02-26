@@ -1,0 +1,204 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ozh/' Admin Drop Down Menu v3.1\n"
+"PO-Revision-Date: 2009-01-10 06:29-0800\n"
+"Last-Translator: Rui Shen <shenrui01@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=1;\n"
+"X-Poedit-Language: Chinese\n"
+"X-Poedit-Country: PEOPLE'S REPUBLIC OF CHINA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;__ngettext_noop:1,2;_c\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-SearchPath-0: ."
+
+#: inc/core.php:187
+msgid "Visit site"
+msgstr "访问网站"
+
+#: inc/core.php:315
+#: inc/core.php:315
+msgid "Log Out"
+msgstr "退出"
+
+#: inc/core.php:405
+msgid "updated"
+msgstr "更新"
+
+#: inc/core.php:410
+msgid "deleted"
+msgstr "删除"
+
+#: inc/core.php:415
+#, php-format
+msgid "Admin Drop Down Menu settings <strong>%s</strong>"
+msgstr "Admin Drop Down Menu设置已经<strong>%s</strong>"
+
+#: inc/options.php:51
+msgid "Top Level Icons"
+msgstr "顶层图标"
+
+#: inc/options.php:52
+msgid "Display original menu icons in top level links"
+msgstr "在顶层链接显示原来的菜单图标"
+
+#: inc/options.php:53
+msgid "Checking this enables Compact Mode &darr;"
+msgstr "检查这使用紧凑模式↓"
+
+#: inc/options.php:56
+msgid "Compact Mode"
+msgstr "紧凑模式"
+
+#: inc/options.php:57
+msgid "Shrink top level links down to their icons"
+msgstr "使用图标显示顶层的链接，"
+
+#: inc/options.php:58
+msgid "That was a cool WordPress feature, so I stole it :)"
+msgstr "这是一个很酷WordPress的功能，所以我偷用了它:)"
+
+#: inc/options.php:61
+msgid "Sublevel Icons"
+msgstr "子菜单图标"
+
+#: inc/options.php:62
+msgid "Display icons in drop down menus"
+msgstr "下拉菜单中显示图标"
+
+#: inc/options.php:63
+#, php-format
+msgid "They're so cute (and they're from %s)"
+msgstr "它们太可爱（它们来自 %s）"
+
+#: inc/options.php:66
+msgid "Color Scheme"
+msgstr "配色方案"
+
+#: inc/options.php:67
+msgid "Pick a color for your menu bar, using the color wheel or one of the presets"
+msgstr "为您的菜单栏选择一个颜色，使用色轮或一个预置"
+
+#: inc/options.php:68
+msgid "No subtle gradient, just plain color."
+msgstr "没有细微的梯度，纯粹色彩。"
+
+#: inc/options.php:113
+msgid "Minimal Mode"
+msgstr "最小模式"
+
+#: inc/options.php:114
+msgid "Hide header"
+msgstr "隐藏顶部"
+
+#: inc/options.php:115
+msgid "Remove the whole header bar for maximum screen real estate. Note: The quick link to your blog will be added to the menu, the Logout link in the Users sub-menu."
+msgstr "隐藏整个顶部以获得最大的屏幕。注：快速链接到自己的博客将被添加到菜单栏，退出链接被添加到用户子菜单。"
+
+#: inc/options.php:118
+msgid "Favorite Actions"
+msgstr "最常用的操作"
+
+#: inc/options.php:119
+msgid "Display Favorite Actions"
+msgstr "显示常用的操作"
+
+#: inc/options.php:120
+msgid "Just in case you realize you don't need this anymore with such a fast and usable menu."
+msgstr "为了以防万一，你会意识到你不再需要一个快速，可用菜单。"
+
+#: inc/options.php:123
+msgid "Break Long Lists"
+msgstr "折断长的菜单"
+
+#: inc/options.php:124
+#, php-format
+msgid "Break if more than %s menu entries"
+msgstr "折断超过 %s 的菜单条目"
+
+#: inc/options.php:125
+msgid "If a dropdown gets longer than this value, it will switch to horizontal mode so that it will hopefully fit in your screen (requires javascript)"
+msgstr "如果下拉菜单超过此值，它将切换到横向模式，使之适应你的屏幕（需要Javascript ）"
+
+#: inc/options.php:128
+msgid "Top Links"
+msgstr "顶层链接"
+
+#: inc/options.php:129
+msgid "Make top links clickable"
+msgstr "使顶层链接可点击"
+
+#: inc/options.php:130
+msgid "Uncheck this option to improve compatibility with browsers that cannot handle the \"hover\" event (<em>ie</em> most handheld devices)"
+msgstr "取消选中该选项，以改善兼容性浏览器无法处理\"悬停\"动作（ <em>即</em>大多数的手持设备）"
+
+#: inc/options.php:133
+msgid "Hide \"0\" Bubbles"
+msgstr "隐藏\"0\"气泡"
+
+#: inc/options.php:134
+msgid "Hide speech bubbles when no awaiting comments or outdated plugins"
+msgstr "当没有未审核的评论或需升级插件时隐藏气泡"
+
+#: inc/options.php:135
+msgid "Check if those tiny \"0\" speech bubble are too distracting for your taste"
+msgstr "检查如果这些微小的\"0\"气泡过于分散的感觉"
+
+#: inc/options.php:138
+msgid "Give Some &hearts;"
+msgstr "献些爱心♥"
+
+#: inc/options.php:139
+#, php-format
+msgid "Do you like this plugin? Then <a href=\"%s\">rate it 5 Stars</a> on the official Plugin Directory!"
+msgstr "你喜欢这个插件？那么去官方插件目录<a href=\"%s\">给它投5颗心</a>吧！"
+
+#: inc/options.php:140
+#, php-format
+msgid "Do you <em>love</em> this plugin? Please <a href=\"%s\">blog about it</a>! Tell your readers you like it so they will discover, try and hopefully like it too&nbsp;:)"
+msgstr "你<em>喜欢</em>这个插件？那<a href=\"%s\">写篇日志</a> ！告诉你的读者你喜欢它吧，所以他们去尝试它并也喜欢它:)"
+
+#: inc/options.php:141
+#, php-format
+msgid "Are you <span id=\"totallycrazy\">crazy</span> about this plugin? <a href=\"%s\">Paypal me a beer</a>! Every donation warms my heart and motivates me to release free stuff!"
+msgstr "你为这个插件<span id=\"totallycrazy\">疯狂</span>？那么<a href=\"%s\">给我来箱啤酒</a>吧 ！每一个捐赠温暖我的心并激励我将推出免费的东西！"
+
+#: inc/options.php:248
+msgid "Save Changes"
+msgstr "保存更改"
+
+#: inc/options.php:254
+#: inc/options.php:268
+msgid "Reset Settings"
+msgstr "复位设置"
+
+#: inc/options.php:263
+msgid "Clicking the following button will remove all the settings for this plugin from your database. You might want to do so in the following cases:"
+msgstr "点击以下按钮，将从您的数据库删除所有此插件的设置。在下列情况下，您可能希望这样做："
+
+#: inc/options.php:265
+msgid "you want to uninstall the plugin and leave no unnecessary entries in your database."
+msgstr "要卸载的插件，并不想在您的数据库中留下任何不必要的东西。"
+
+#: inc/options.php:266
+msgid "you want all settings to be reverted to their default values"
+msgstr "您想将所有设置恢复为默认值"
+
+#: inc/options.php:268
+msgid "Really do?"
+msgstr "确定这么做？"
+
+#: inc/options.php:269
+msgid "There is no undo, so be very sure you want to click the button!"
+msgstr "没有复原，所以是非常确定要按一下按钮！"
+
+#: inc/options.php:46
+msgid "Icons and Colors"
+msgstr "图标和颜色"
+
+#: inc/options.php:110
+msgid "Advanced Settings"
+msgstr "高级设置"
+

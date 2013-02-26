@@ -1,0 +1,16 @@
+iframe.rte{
+	border: <?=$options['p4c']?> 1px solid;
+	/* 	border-radius: 3px; */
+	-moz-border-radius-bottomleft:  3px;
+	border-bottom-left-radius:  3px;
+	-moz-border-radius-bottomright:  3px;
+	border-bottom-right-radius:  3px;
+}
+
+.rte-toolbar{
+	background-color: <?=$options['p4a']?>;
+	-moz-border-radius-topleft:  3px;
+	border-top-left-radius:  3px;
+	-moz-border-radius-topright:  3px;
+	border-top-right-radius:  3px;
+}

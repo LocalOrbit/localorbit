@@ -1,0 +1,389 @@
+<?php 
+
+class core_controller_catalog extends core_controller
+{
+	
+	function update_fees($return_data='no',$cart = null,$save_fees=null)
+	{
+		global $core;
+		if(is_null($save_fees))	$save_fees = false;
+		
+		$core->response['replace'] = array();
+		core::log(print_r($core->data,true));
+		
+		# load the order and group things by delivery option group
+		if(is_null($cart))
+		{
+			$cart = core::model('lo_order')->get_cart();
+			$cart->load_items(true);
+			$cart->arrange_by_next_delivery();
+		}
+			
+		# we need to determine the item grouping
+		$delivery_fee = 0;
+		$discount = 0;
+		$item_total_by_dd_id = array();
+		
+		# if we're saving the fees, delete the existing ones
+		if($save_fees)
+			core_db::query('delete from lo_order_delivery_fees where lo_oid='.$cart['lo_oid']);
+		
+		# loop through each delivery option group
+		foreach($cart->items_by_delivery as $delivery_opt_key=>$items)
+		{
+			#core::log('looking for options for group '.$delivery_opt_key);
+			$selected = explode('-',$core->data['group_'.$delivery_opt_key]);
+			foreach($items as $item)
+			{
+				# group the items by a combination of dd_id and address_id
+				if(!isset($item_total_by_dd_id[$selected[0].'-'.$selected[1]]))
+					$item_total_by_dd_id[$selected[0].'-'.$selected[1]] = 0;
+				$item_total_by_dd_id[$selected[0].'-'.$selected[1]] += $item['row_total'];
+			}
+			
+		}
+		
+		core_db::query('delete from lo_order_delivery_fees where lo_oid='.$cart['lo_oid']);
+		# now that we have them all grouped properly, loop through the grouping
+		# and figure out how much that group should cost to deliver
+		#core::log('items by dd_id: '.print_r($item_total_by_dd_id,true));
+		foreach($item_total_by_dd_id as $dd_id=>$total)
+		{
+			$dd_id = explode('-',$dd_id);
+			$dd_id = $dd_id[0];
+			core::log('delivery '.$dd_id.' total is '.$total);
+<<<<<<< .mine
+			$dd = core::model('delivery_days')->load($dd_id);
+			$delivery_fee += $dd->apply_fees($total);
+			
+			if($save_fees)
+			{
+				$fee = core::model('lo_order_delivery_fees');
+			}
+=======
+         $dd = core::model('delivery_days')->load($dd_id);
+			$delivery_fee += $dd->apply_fees($total);
+         $order_fee = core::model('lo_order_delivery_fees');
+         $order_fee['lo_oid'] = $cart['lo_oid'];
+         $order_fee->import($dd->__data);
+         $order_fee->__orig_data = array();
+         $order_fee->save();
+>>>>>>> .r1077
+		}
+		
+		$notify_discount = false;
+		core_db::query('delete from lo_order_discount_codes where lo_oid='.$cart['lo_oid']);
+		if($core->data['discount_code'] != '')
+		{
+			
+			$code = core::model('discount_codes')->loadrow_by_code($core->data['discount_code']);
+			if(isset($code->__data['disc_id']))
+			{
+				$order_code = core::model('lo_order_discount_codes');
+				$order_code->import($code->__data);
+				$order_code->__orig_data = array();
+				$discount = $order_code->apply_to_order($cart);
+				core::log('code info '.$discount.': '.print_r($order_code->__data,true));
+				if($discount == 0)
+				{
+					$notify_discount = true;
+				}
+				else
+				{
+					$order_code['lo_oid'] = $cart['lo_oid'];
+					$order_code->save();
+				}
+			
+			}
+			else
+			{
+				$notify_discount = true;
+			}
+		}
+
+		# if this method is being called from the checkout page, send
+		# the new totals back.
+		# if it's being called as part of the checkout process, then return the fee total
+		if($return_data == 'yes')
+		{
+			core::log('returnign for submit');
+			return $delivery_fee;
+		}
+		else
+		{
+			core::log('returning ajax');
+			core::log($cart['item_total'] .'/'. $delivery_fee .'/'. $discount);
+			core::replace('fee_total',core_format::price($delivery_fee));
+			core::replace('grand_total',core_format::price($cart['item_total'] + $delivery_fee - $discount));
+			core::replace('adjusted_total','-'.core_format::price($discount));
+			core::js("$('#totals_loading').hide();$('#total_table').show(200);");
+			if($notify_discount)
+			{
+				core_ui::notification('could not apply this discount code');
+			}
+			core::deinit();			
+		}
+	}
+	
+	function recalc_totals()
+	{
+		global $core;
+		
+		unset($core->response['replace']['full_width']);
+		$order = core::model('lo_order')->get_cart();
+		core::log('Recalculating totals on order '.$order['lo_oid']);
+		$order->update_totals();
+		
+		core::replace('grand_total',$order['grand_total']);
+		core::replace('adjusted_total',$order['adjusted_total']);
+		core::replace('item_total',$order['item_total']);
+		
+		core::deinit();
+	}
+	
+	function order_confirmation()
+	{
+		$cart = core::model('lo_order')->get_cart();
+		
+		$cart->place_order(array(
+			'paypal'=>$this->paypal_rules(),
+			'authorize'=>$this->authorize_rules(),
+			'purchaseorder'=>$this->purchaseorder_rules()
+		));
+		$this->confirmation_message($cart);
+	}
+	
+	function paypal_rules()
+	{
+		global $core;
+		return new core_ruleset('paypal',array(
+			array('type'=>'min_length','name'=>'pp_cc_number','data1'=>14,'msg'=>$core->i18n['error:payment:cc_number']),
+			array('type'=>'min_length','name'=>'pp_cvv2','data1'=>3,'msg'=>$core->i18n['error:payment:cc_cvv2']),
+			array('type'=>'min_length','name'=>'pp_first_name','data1'=>2,'msg'=>$core->i18n['error:customer:firstname']),
+			array('type'=>'min_length','name'=>'pp_last_name','data1'=>2,'msg'=>$core->i18n['error:customer:lastname']),
+			array('type'=>'min_length','name'=>'pp_street','data1'=>5,'msg'=>$core->i18n['error:address:address']),
+			array('type'=>'min_length','name'=>'pp_city','data1'=>2,'msg'=>$core->i18n['error:address:city']),
+			array('type'=>'min_length','name'=>'pp_zip','data1'=>5,'msg'=>$core->i18n['error:address:postalcode']),
+		));
+	}
+	function authorize_rules()
+	{
+		global $core;
+		return new core_ruleset('authorize',array(
+		));
+	}
+	function purchaseorder_rules()
+	{
+		global $core;
+		return new core_ruleset('purchaseorder',array(
+			array('type'=>'min_length','name'=>'po_number','data1'=>3,'msg'=>$core->i18n['error:payment:po_number']),
+		));
+	}
+	
+	function __construct($path)
+	{
+		parent::__construct($path);
+		core::ensure_navstate(array('left'=>'left_about'));
+	}
+	
+	function render_cat1_start($cat1_id,$cat1_name,$style)
+	{
+		core::log(print_r($cat1_name,true));
+		?>
+
+		<table id="start_cat1_<?=$cat1_id?>">
+			<col width="120" />
+			<col width="240" />
+			<col width="190" />
+			<col width="110" />
+			<tr>
+				<td colspan="4" class="category_start1_<?=$style?>"><?=$cat1_name?></td>
+			</tr>		
+		<?
+	}
+
+	
+	function render_cat1_end($cat1_id,$cat1_name)
+	{
+		?>
+			<tr id="end_cat1_<?=$cat1_id?>"><td colspan="4" class="category1_spacer"></td></tr>
+		</table>
+		<!--<hr class="category_<?=$cat1_id?>" />-->
+		<?
+	}
+	
+	function render_cat2_start($cat2_id,$cat2_name,$cat3_id=0,$cat3_name='',$style)
+	{
+		$id_cat = $cat2_id;
+		if($cat3_id != 0 && $cat3_id != '')	
+			$id_cat = $cat3_id;
+		?>
+		<tr id="start_cat2_<?=$id_cat?>" class="category_<?=$cat2_id?> category_<?=$cat3_id?>">
+			<td colspan="4" class="category_start2_<?=$style?>">
+				<?=$cat2_name?>
+				<?if($cat3_id != 0 && $cat3_id != ''){?>
+					 : <?=$cat3_name?>
+				<?}?>
+			</td>
+		</tr>
+		<?
+	}
+	
+	function render_cat2_end($cat2_id,$cat2_name,$cat3_id=0,$cat3_name='')
+	{
+		$id_cat = $cat2_id;
+		if($cat3_id != 0 && $cat3_id != '')	
+			$id_cat = $cat3_id;
+		?>
+		<tr id="end_cat2_<?=$id_cat?>">
+			<td colspan="4" class="category2_spacer">&nbsp;</td>
+		</tr>
+		<?
+	}
+	
+	function render_total_line($idx)
+	{
+		global $core;
+		$total = '
+		<div class="total_line">
+			Order Total: <input type="text" disabled=disabled class="total_line" name="total_'.$idx.'" value="" />
+		</div>
+		';
+		$buttons = '
+			<div class="buttonset_checkout">
+				<input type="button" id="continueShoppingButton'.$idx.'" style="display: none;" class="button_secondary image_button button_continue_shopping" onclick="core.catalog.setFilter(\'cartOnly\')" value="continue shopping" />
+				<input type="button" id="showCartButton'.$idx.'" class="button_secondary image_button button_show_cart" onclick="core.catalog.setFilter(\'cartOnly\')" value="show my cart" />
+		';
+		
+		if(intval($core->session['user_id']) > 0)
+		{
+			$buttons .= '<input type="button" id="checkoutButton'.$idx.'" class="button_secondary image_button button_to_checkout" onclick="location.href=\'#!catalog-checkout\';" value="checkout" />';
+		}
+		else
+		{
+			$buttons .= '<input type="button" id="checkoutButton'.$idx.'" class="button_secondary image_button button_to_checkout" onclick="core.catalog.popupLoginRegister('.$idx.');" value="checkout" />';
+		}
+		$buttons .= '</div>';
+		
+		if($idx == 1)
+		{
+			echo($buttons . $total);
+		}
+		else
+		{
+			echo($total . $buttons);
+		}
+	}
+	
+	function render_no_products_line()
+	{
+		?>
+		<div id="no_prods_msg" style="display: none;margin: 8px 0px;">There aren't any products matching your selection. Please try adding a few more options.</div>
+		<?
+	}
+	
+	function render_cart_empty_line()
+	{
+		?>
+		<div id="cart_empty_msg" style="display: none;">Your cart is currently empty.</div>
+		<?
+	}
+	
+	function render_delivery_radio($radio_name,$radio_group,$option,$type,$delivery_opt_key,$address=null)
+	{
+		global $core;
+		
+		# if the address is being passed separately, then use that for address fields
+		# otherwise, use one of the addresses in the delivery option
+		if(is_null($address)){
+			$address_type = $type;
+			$address = $option;
+		}else{
+			$address_type = '';
+		}
+		#echo('<input type="hidden" name="'.$radio_name.'_hidden" class="deliv_options" value="'.$delivery_opt_key.'----'.$radio_name.'" />');
+		echo(core_ui::radiodiv(
+			$radio_name,
+			$address[$address_type.'address'].', '.$address[$address_type.'city'].', '.$address[$address_type.'state'].' '.$address[$address_type.'postal_code'].
+				' on '.core_format::date($option[$type.'start_time'],'short').
+				' between '.core_format::date($option[$type.'start_time'],'time').' and '.core_format::date($option[$type.'end_time'],'time'),
+			false,
+			$radio_group,
+			false,
+			"core.checkout.requestUpdatedDeliveryFees();"
+		));
+	}
+	
+	function determine_options($options_list,$options_data,$all_addrs,$item=null)
+	{
+		global $core;
+		$final_opts = array();
+		$opts = explode('-',$options_list);
+		#$options_data->dump();
+		foreach($opts as $opt)
+		{
+			#echo('examininign '.$opt.'<br />');
+			#print_r($options_data);
+			if(is_array($options_data))
+			{
+				$opt = $options_data[$opt];
+			}
+			else
+			{
+				echo('<pre>');
+				print_r($options_data);
+				echo('</pre>');
+			}
+			
+			
+			# determine if we need to print a list of the user's addresses
+			if(intval($opt['deliv_address_id'])==0 || intval($opt['pickup_address_id'])==0)
+			{
+				# echo('list needs address chosen');
+				//~ echo('<pre>');
+				//~ print_r($opt);
+				//~ echo('</pre>');
+				foreach($all_addrs as $address)
+				{
+					
+					#echo('loooping');
+					# is this a 1 step process or a 2 step process?
+					
+					$onestep = (intval($opt['deliv_address_id'])==0);
+					$new_opt = array(
+						'uniqid'=>$options_list.'--'.$opt['dd_id'].'--'.$address['address_id'],
+						'type'=>'delivery',
+						'address'=>$address['address'].', '.$address['city'].', '.$address['code'].', '.$address['postal_code'],
+						'start_time'=>$opt[(($onestep)?'delivery':'pickup').'_start_time'],
+						'end_time'=>$opt[(($onestep)?'delivery':'pickup').'_end_time'],
+						'fee_calc_type_id'=>$opt['fee_calc_type_id'],
+						'amount'=>$opt['amount'],
+					);
+					$final_opts[] = $new_opt;
+				}
+			}
+			else
+			{
+				# core::log('here');
+				# echo('list is fixed');
+				# print_r($opt->__data);
+				$new_opt = array(
+					'uniqid'=>$options_list.'--'.$opt['dd_id'].'--'.$opt['pickup_address_id'],
+					'type'=>'pickup',
+					'address'=>$opt['pickup_address'].', '.$opt['pickup_city'].', '.$opt['pickup_code'].', '.$opt['pickup_postal_code'],
+					'start_time'=>$opt['pickup_start_time'],
+					'end_time'=>$opt['pickup_end_time'],
+					'fee_calc_type_id'=>$opt['fee_calc_type_id'],
+					'amount'=>$opt['amount'],
+				);
+				$final_opts[] = $new_opt;
+			}
+			#print_r($opt);
+		}
+		return $final_opts;
+		#$options = array();
+		#print_r($options_data);
+	}
+}
+
+?>

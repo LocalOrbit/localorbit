@@ -1,0 +1,95 @@
+
+img.homepage{
+	border: #000 1px solid;
+}
+
+#homepage_solutions,#homepage_company{
+	position: absolute;
+	z-index: 1000;
+	height: 400px;
+}
+
+div.homepage_message{
+	font-family: <?=$options['font2']?>;
+	font-size: 180%;
+	line-height: 130%;
+	vertical-align: top;
+	text-align: center;
+}
+
+a.homepage_learnmore{
+	font-family: <?=$options['font2']?>;
+}
+
+.homepage_popup_list{
+	background-color: #fff;
+	text-decoration: none;
+	padding: 5px;
+	border: #aaa 1px solid;
+	border-radius: 8px;
+	position: absolute;
+	top: 50px;
+	width: 152px;
+}
+
+.public_content_left,.public_content_right{
+	width: 350px;
+	float: left;
+	display: none;
+	vertical-align: top;
+}
+
+.public_content_middle_spacer{
+	width: 35px;
+	float: left;
+}
+
+.public_content_right
+{
+	width: 350px;
+	vertical-align: top;
+	text-align:right;
+}
+
+.public_content_photo{
+	border: #777 1px solid;
+	border-radius: 5px; 
+}
+
+.info_area_public{
+	text-align: right;
+	box-shadow: 3px 3px 5px #999;
+	border: #d3d3d3 1px solid;
+	background-color: #fff;
+	display: block;
+	margin: 30px 0px;
+}
+
+a.homepage_popup_link{
+	text-decoration: none;
+	color: #A00;
+	display: block;
+	text-align: left;
+	padding: 4px 4px;
+	border: #fff 1px solid;
+	border-radius: 3px;
+}
+
+a.homepage_popup_link:hover{
+	background-color: #f3f3f3;
+	border: #f3f3f3 1px solid;
+	cursor: pointer;
+}
+
+td.homepage{
+	vertical-align: top;
+}
+
+h1.homepage{
+	border-width: 0px !important;
+	font-size: 170%;
+}
+
+.public_content{
+	padding: 0px 30px;
+}

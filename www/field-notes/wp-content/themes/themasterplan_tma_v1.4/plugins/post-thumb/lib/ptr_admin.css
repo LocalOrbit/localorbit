@@ -1,0 +1,90 @@
+.wrap p.tabs, p.black {
+	width: 350px;
+	font-weight: bold;
+	float: left;
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+.wrap p.htabs {
+	font-weight: bold;
+	float: left;
+	margin: 5px 0 5px 10px;
+	padding: 0;
+}
+.wrap p.hdocs {
+	float: left;
+	margin: 2px 10px 2px 20px;
+	padding: 0;
+	font-weight: normal;
+}
+.wrap p.hcode  {
+	font-weight: normal;
+	font-style: normal;
+	float: left;
+	margin: 2px 10px 5px 150px;
+	padding: 5px 40px;
+	width: 650px;
+	background-color: #eee;
+}
+.wrap p.tabsi {
+	width: 350px;
+	font-style: italic;
+	float: left;
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+
+.wrap br {
+	clear: both;
+}
+p.submit {
+	margin-left: 75%;
+}
+p.white {
+	width: 150px;
+	font-weight: bold;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+.wrap span {
+	font-style: italic;
+}
+p.title {
+	width: 100%;
+	font-size: 1.1em;
+	font-weight: bold;
+	background-color: #DDD;
+	padding: 3px 0 3px 5px;
+	margin: 0;
+}
+p.title:hover, #basicoptions:hover, #advancedoptions:hover {cursor: pointer;}
+p.smalltitle {
+	font-size: 0.8em;
+	padding: 1px 0 1px 5px;
+	margin: 0;
+}
+p.info {
+	width: 100%;
+	background-color: #f6f6f6;
+	padding: 3px 5px;
+	margin: 0;
+}
+p#basicoptions, p#advancedoptions {
+  	background-color: transparent;
+	padding: 3px 5px;
+	margin: 0 0 10px 0;
+	display: inline;
+}
+p#basicoptions {
+  	background-color: #0D324F;
+  	color: white;
+}
+.advanced {  }
+.selected { background-color: #FFF; color: #0D324F !important; }
+
+#subsubmenu * { list-style: none; }
+#subsubmenu li { display: inline; margin-left: 5px; margin-right: 5px; }
+#subsubmenu .selected { background: #ddeaf4; }
+
+

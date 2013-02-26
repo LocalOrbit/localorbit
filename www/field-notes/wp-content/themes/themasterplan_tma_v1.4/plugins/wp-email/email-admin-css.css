@@ -1,0 +1,21 @@
+/*
++----------------------------------------------------------------+
+|																							|
+|	WordPress 2.7 Plugin: WP-EMail 2.40										|
+|	Copyright (c) 2008 Lester "GaMerZ" Chan									|
+|																							|
+|	File Written By:																	|
+|	- Lester "GaMerZ" Chan															|
+|	- http://lesterchan.net															|
+|																							|
+|	File Information:																	|
+|	- E-Mail Admin CSS Style														|
+|	- wp-content/plugins/wp-email/email-admin-css.css					|
+|																							|
++----------------------------------------------------------------+
+*/
+
+
+#icon-wp-email {
+	background: transparent url(images/email_admin_icon.png) no-repeat;
+}

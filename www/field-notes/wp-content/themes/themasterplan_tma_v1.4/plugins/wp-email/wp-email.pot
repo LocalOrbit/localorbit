@@ -1,0 +1,1112 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP-EMail 2.40\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-12 21:56+0800\n"
+"PO-Revision-Date: 2008-12-12 21:56+0800\n"
+"Last-Translator: Lester Chan <lesterchan@gmail.com>\n"
+"Language-Team: Lester Chan <lesterchan@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: SINGAPORE\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;__ngettext_noop:1,2\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: email-manager.php:54
+#: email-manager.php:180
+#: email-manager.php:301
+msgid "ID"
+msgstr ""
+
+#: email-manager.php:58
+#: email-manager.php:302
+msgid "From Name"
+msgstr ""
+
+#: email-manager.php:62
+#: email-manager.php:303
+msgid "From E-Mail"
+msgstr ""
+
+#: email-manager.php:66
+#: email-manager.php:304
+msgid "To Name"
+msgstr ""
+
+#: email-manager.php:70
+#: email-manager.php:305
+msgid "To E-Mail"
+msgstr ""
+
+#: email-manager.php:74
+#: email-manager.php:307
+msgid "Post ID"
+msgstr ""
+
+#: email-manager.php:78
+#: email-manager.php:190
+#: email-manager.php:308
+msgid "Post Title"
+msgstr ""
+
+#: email-manager.php:82
+#: email-manager.php:309
+msgid "IP"
+msgstr ""
+
+#: email-manager.php:86
+#: email-manager.php:310
+msgid "Host"
+msgstr ""
+
+#: email-manager.php:90
+#: email-manager.php:191
+#: email-manager.php:311
+msgid "Status"
+msgstr ""
+
+#: email-manager.php:95
+#: email-manager.php:306
+msgid "Date"
+msgstr ""
+
+#: email-manager.php:103
+#: email-manager.php:315
+msgid "Ascending"
+msgstr ""
+
+#: email-manager.php:108
+#: email-manager.php:316
+msgid "Descending"
+msgstr ""
+
+#: email-manager.php:117
+msgid "All E-Mail Logs Have Been Deleted."
+msgstr ""
+
+#: email-manager.php:119
+msgid "An Error Has Occured While Deleting All E-Mail Logs."
+msgstr ""
+
+#: email-manager.php:126
+#: wp-email.php:567
+#: wp-email.php:704
+#: wp-email.php:1003
+#: wp-email.php:1040
+#: wp-email.php:1251
+msgid "Success"
+msgstr ""
+
+#: email-manager.php:127
+#: wp-email.php:718
+#: wp-email.php:1015
+#: wp-email.php:1252
+msgid "Failed"
+msgstr ""
+
+#: email-manager.php:167
+#: wp-email.php:65
+msgid "Manage E-Mail"
+msgstr ""
+
+#: email-manager.php:168
+msgid "E-Mail Logs"
+msgstr ""
+
+#: email-manager.php:169
+#, php-format
+msgid "Displaying <strong>%s</strong> To <strong>%s</strong> Of <strong>%s</strong> E-Mail Logs"
+msgstr ""
+
+#: email-manager.php:170
+#, php-format
+msgid "Sorted By <strong>%s</strong> In <strong>%s</strong> Order"
+msgstr ""
+
+#: email-manager.php:181
+msgid "From"
+msgstr ""
+
+#: email-manager.php:182
+msgid "To"
+msgstr ""
+
+#: email-manager.php:183
+msgid "Date / Time"
+msgstr ""
+
+#: email-manager.php:184
+msgid "IP / Host"
+msgstr ""
+
+#: email-manager.php:187
+msgid "Remarks"
+msgstr ""
+
+#: email-manager.php:211
+#, php-format
+msgid "%s @ %s"
+msgstr ""
+
+#: email-manager.php:230
+msgid "No E-Mail Logs Found"
+msgstr ""
+
+#: email-manager.php:244
+msgid "Previous Page"
+msgstr ""
+
+#: email-manager.php:253
+msgid "Next Page"
+msgstr ""
+
+#: email-manager.php:262
+#, php-format
+msgid "Pages (%s): "
+msgstr ""
+
+#: email-manager.php:265
+msgid "Go to First Page"
+msgstr ""
+
+#: email-manager.php:265
+msgid "First"
+msgstr ""
+
+#: email-manager.php:268
+#: email-manager.php:280
+msgid "Go to Page"
+msgstr ""
+
+#: email-manager.php:275
+msgid "Page"
+msgstr ""
+
+#: email-manager.php:283
+msgid "Go to Last Page"
+msgstr ""
+
+#: email-manager.php:283
+msgid "Last"
+msgstr ""
+
+#: email-manager.php:299
+msgid "Sort Options:"
+msgstr ""
+
+#: email-manager.php:323
+#: email-manager.php:325
+msgid "Per Page"
+msgstr ""
+
+#: email-manager.php:330
+msgid "Sort"
+msgstr ""
+
+#: email-manager.php:340
+msgid "E-Mail Logs Stats"
+msgstr ""
+
+#: email-manager.php:344
+msgid "Total E-Mails:"
+msgstr ""
+
+#: email-manager.php:348
+msgid "Total E-Mail Sent:"
+msgstr ""
+
+#: email-manager.php:352
+msgid "Total E-Mail Failed:"
+msgstr ""
+
+#: email-manager.php:361
+msgid "Delete E-Mail Logs"
+msgstr ""
+
+#: email-manager.php:365
+msgid "Are You Sure You Want To Delete All E-Mail Logs?"
+msgstr ""
+
+#: email-manager.php:366
+#: email-options.php:306
+#: email-uninstall.php:133
+msgid "Yes"
+msgstr ""
+
+#: email-manager.php:367
+msgid "Delete"
+msgstr ""
+
+#: email-manager.php:367
+msgid ""
+"You Are About To Delete All E-Mail Logs\\n"
+"This Action Is Not Reversible.\\n"
+"\\n"
+" Choose [Cancel] to stop, [OK] to delete."
+msgstr ""
+
+#: email-options.php:83
+msgid "SMTP Information"
+msgstr ""
+
+#: email-options.php:84
+msgid "E-Mail Style"
+msgstr ""
+
+#: email-options.php:85
+msgid "E-Mail Fields"
+msgstr ""
+
+#: email-options.php:86
+msgid "E-Mail Content Type"
+msgstr ""
+
+#: email-options.php:87
+msgid "Send E-Mail Method"
+msgstr ""
+
+#: email-options.php:88
+msgid "Snippet Option"
+msgstr ""
+
+#: email-options.php:89
+msgid "Interval Option"
+msgstr ""
+
+#: email-options.php:90
+msgid "Multiple E-Mails Option"
+msgstr ""
+
+#: email-options.php:91
+msgid "Image Verification Option"
+msgstr ""
+
+#: email-options.php:92
+msgid "Page Title Template"
+msgstr ""
+
+#: email-options.php:93
+msgid "Page Subtitle Template"
+msgstr ""
+
+#: email-options.php:94
+msgid "Subject Template"
+msgstr ""
+
+#: email-options.php:95
+msgid "Body Template"
+msgstr ""
+
+#: email-options.php:96
+msgid "Alternate Body Template"
+msgstr ""
+
+#: email-options.php:97
+msgid "Sent Success Template"
+msgstr ""
+
+#: email-options.php:98
+msgid "Sent Failed Template"
+msgstr ""
+
+#: email-options.php:99
+msgid "Error Template"
+msgstr ""
+
+#: email-options.php:104
+msgid "Updated"
+msgstr ""
+
+#: email-options.php:109
+msgid "No E-Mail Option Updated"
+msgstr ""
+
+#: email-options.php:122
+#: wp-email.php:1339
+msgid "E-Mail '%EMAIL_POST_TITLE%' To A Friend"
+msgstr ""
+
+#: email-options.php:125
+#: wp-email.php:1340
+msgid "Email a copy of <strong>'%EMAIL_POST_TITLE%'</strong> to a friend"
+msgstr ""
+
+#: email-options.php:128
+#: wp-email.php:1314
+msgid "Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%"
+msgstr ""
+
+#: email-options.php:131
+msgid "<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled '<strong>%EMAIL_POST_TITLE%</strong>' to you.</p><p><strong>Here is his/her remarks:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\\\"%EMAIL_BLOG_URL%\\\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\\\"%EMAIL_PERMALINK%\\\">%EMAIL_PERMALINK%</a></p>"
+msgstr ""
+
+#: email-options.php:134
+msgid ""
+"Hi %EMAIL_FRIEND_NAME%,\\n"
+"Your friend, %EMAIL_YOUR_NAME%, has recommended this article entitled '%EMAIL_POST_TITLE%' to you.\\n"
+"\\n"
+"Here is his/her remark:\\n"
+"%EMAIL_YOUR_REMARKS%\\n"
+"\\n"
+"%EMAIL_POST_TITLE%\\n"
+"Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%\\n"
+"%EMAIL_POST_CONTENT%\\n"
+"Article taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%\\n"
+"URL to article: %EMAIL_PERMALINK%"
+msgstr ""
+
+#: email-options.php:137
+msgid "Article: <strong>%EMAIL_POST_TITLE%</strong> has been sent to <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong>"
+msgstr ""
+
+#: email-options.php:137
+#: wp-email.php:1325
+msgid "Back to %EMAIL_POST_TITLE%"
+msgstr ""
+
+#: email-options.php:140
+#: wp-email.php:1326
+msgid "An error has occurred when trying to send this email: "
+msgstr ""
+
+#: email-options.php:143
+#: wp-email.php:1327
+msgid "An error has occurred: "
+msgstr ""
+
+#: email-options.php:167
+#: wp-email.php:66
+msgid "E-Mail Options"
+msgstr ""
+
+#: email-options.php:168
+msgid "SMTP Settings"
+msgstr ""
+
+#: email-options.php:171
+msgid "SMTP Username:"
+msgstr ""
+
+#: email-options.php:175
+msgid "SMTP Password:"
+msgstr ""
+
+#: email-options.php:179
+msgid "SMTP Server:"
+msgstr ""
+
+#: email-options.php:180
+msgid "You may leave the above fields blank if you do not use a SMTP server."
+msgstr ""
+
+#: email-options.php:183
+msgid "E-Mail Styles"
+msgstr ""
+
+#: email-options.php:186
+msgid "E-Mail Text Link For Post"
+msgstr ""
+
+#: email-options.php:192
+msgid "E-Mail Text Link For Page"
+msgstr ""
+
+#: email-options.php:198
+msgid "E-Mail Icon"
+msgstr ""
+
+#: email-options.php:227
+msgid "E-Mail Link Type"
+msgstr ""
+
+#: email-options.php:230
+msgid "E-Mail Standalone Page"
+msgstr ""
+
+#: email-options.php:231
+msgid "E-Mail Popup"
+msgstr ""
+
+#: email-options.php:236
+msgid "E-Mail Text Link Style"
+msgstr ""
+
+#: email-options.php:239
+msgid "E-Mail Icon With Text Link"
+msgstr ""
+
+#: email-options.php:240
+msgid "E-Mail Icon Only"
+msgstr ""
+
+#: email-options.php:241
+msgid "E-Mail Text Link Only"
+msgstr ""
+
+#: email-options.php:242
+msgid "Custom"
+msgstr ""
+
+#: email-options.php:246
+msgid "HTML is allowed."
+msgstr ""
+
+#: email-options.php:247
+msgid "URL to the email post/page."
+msgstr ""
+
+#: email-options.php:248
+msgid "It will produce the onclick html code which is nescassary for popup."
+msgstr ""
+
+#: email-options.php:249
+msgid "Example Popup Template:"
+msgstr ""
+
+#: email-options.php:251
+msgid "E-Mail text link of the post/page that you have typed in above."
+msgstr ""
+
+#: email-options.php:252
+msgid "URL to the email icon you have chosen above."
+msgstr ""
+
+#: email-options.php:253
+#: email-options.php:362
+#: email-options.php:377
+#: email-options.php:398
+#: email-options.php:420
+#: email-options.php:442
+#: email-options.php:460
+#: email-options.php:475
+#: email-options.php:490
+msgid "Restore Default Template"
+msgstr ""
+
+#: email-options.php:258
+msgid "E-Mail Settings"
+msgstr ""
+
+#: email-options.php:261
+msgid "E-Mail Fields:"
+msgstr ""
+
+#: email-options.php:263
+msgid "Your Name"
+msgstr ""
+
+#: email-options.php:264
+msgid "Your E-Mail"
+msgstr ""
+
+#: email-options.php:265
+msgid "Your Remarks"
+msgstr ""
+
+#: email-options.php:266
+msgid "Friend's Name"
+msgstr ""
+
+#: email-options.php:267
+msgid "Friend's E-Mail"
+msgstr ""
+
+#: email-options.php:271
+msgid "E-Mail Content Type:"
+msgstr ""
+
+#: email-options.php:274
+msgid "Plain Text"
+msgstr ""
+
+#: email-options.php:275
+msgid "HTML"
+msgstr ""
+
+#: email-options.php:280
+msgid "Method Used To Send E-Mail:"
+msgstr ""
+
+#: email-options.php:283
+msgid "PHP"
+msgstr ""
+
+#: email-options.php:284
+msgid "SendMail"
+msgstr ""
+
+#: email-options.php:285
+msgid "SMTP"
+msgstr ""
+
+#: email-options.php:287
+msgid "If you ARE NOT using a smtp server of if there is a problem sending out email using your smtp server. Please Choose PHP or Send Mail."
+msgstr ""
+
+#: email-options.php:291
+msgid "No. Of Words Before Cutting Off:"
+msgstr ""
+
+#: email-options.php:292
+msgid "Setting this value more than 0 will enable the snippet feature. This feature will allow you to send a portion (defined by the text field above) of the article to your friend instead of the whole article."
+msgstr ""
+
+#: email-options.php:295
+msgid "Interval Between E-Mails:"
+msgstr ""
+
+#: email-options.php:296
+msgid "Mins"
+msgstr ""
+
+#: email-options.php:296
+msgid "It allows you to specify the interval in minutes between each email sent per user based on IP to prevent spam and flood."
+msgstr ""
+
+#: email-options.php:299
+msgid "Max Number Of Multiple E-Mails:"
+msgstr ""
+
+#: email-options.php:300
+msgid "Setting this value more than 1 will enable this feature. It allows the maximum number of multiple e-mails that can be send at one go."
+msgstr ""
+
+#: email-options.php:303
+msgid "Enable Image Verification:"
+msgstr ""
+
+#: email-options.php:307
+msgid "No"
+msgstr ""
+
+#: email-options.php:308
+msgid "It is recommanded to choose <strong>Yes</strong> unless your server does not support PHP GD Library."
+msgstr ""
+
+#: email-options.php:313
+msgid "Template Variables"
+msgstr ""
+
+#: email-options.php:316
+msgid "Display the sender's name"
+msgstr ""
+
+#: email-options.php:317
+msgid "Display the post's title"
+msgstr ""
+
+#: email-options.php:320
+msgid "Display the sender's email"
+msgstr ""
+
+#: email-options.php:321
+msgid "Display the post's author"
+msgstr ""
+
+#: email-options.php:324
+msgid "Display the sender's remarks"
+msgstr ""
+
+#: email-options.php:325
+msgid "Display the post's date"
+msgstr ""
+
+#: email-options.php:328
+msgid "Display the friend's name"
+msgstr ""
+
+#: email-options.php:329
+msgid "Display the post's category"
+msgstr ""
+
+#: email-options.php:332
+msgid "Display the friend's email"
+msgstr ""
+
+#: email-options.php:333
+msgid "Display the post's excerpt"
+msgstr ""
+
+#: email-options.php:336
+msgid "Display the error message"
+msgstr ""
+
+#: email-options.php:337
+msgid "Display the post's content"
+msgstr ""
+
+#: email-options.php:340
+msgid "Display the blog's name"
+msgstr ""
+
+#: email-options.php:341
+msgid "Display the permalink of the post"
+msgstr ""
+
+#: email-options.php:344
+msgid "Display the blog's url"
+msgstr ""
+
+#: email-options.php:349
+msgid "E-Mail Page Templates"
+msgstr ""
+
+#: email-options.php:353
+msgid "E-Mail Page Title:"
+msgstr ""
+
+#: email-options.php:354
+#: email-options.php:369
+#: email-options.php:388
+#: email-options.php:405
+#: email-options.php:427
+#: email-options.php:453
+#: email-options.php:467
+#: email-options.php:485
+msgid "Allowed Variables:"
+msgstr ""
+
+#: email-options.php:368
+msgid "E-Mail Page Subtitle:"
+msgstr ""
+
+#: email-options.php:383
+msgid "E-Mail Templates"
+msgstr ""
+
+#: email-options.php:387
+msgid "E-Mail Subject:"
+msgstr ""
+
+#: email-options.php:404
+msgid "E-Mail Body:"
+msgstr ""
+
+#: email-options.php:426
+msgid "E-Mail Alternate Body:"
+msgstr ""
+
+#: email-options.php:448
+msgid "After Sending E-Mail Templates"
+msgstr ""
+
+#: email-options.php:452
+msgid "Sent Successfully:"
+msgstr ""
+
+#: email-options.php:466
+msgid "Sent Failed:"
+msgstr ""
+
+#: email-options.php:480
+msgid "E-Mail Misc Templates"
+msgstr ""
+
+#: email-options.php:484
+msgid "E-Mail Error:"
+msgstr ""
+
+#: email-options.php:496
+msgid "Save Changes"
+msgstr ""
+
+#: email-popup.php:32
+msgid "Blog Archive"
+msgstr ""
+
+#: email-popup.php:52
+msgid "Close This Window"
+msgstr ""
+
+#: email-uninstall.php:39
+#: email-uninstall.php:134
+msgid "UNINSTALL WP-EMail"
+msgstr ""
+
+#: email-uninstall.php:46
+#, php-format
+msgid "Table '%s' has been deleted."
+msgstr ""
+
+#: email-uninstall.php:55
+#, php-format
+msgid "Setting Key '%s' has been deleted."
+msgstr ""
+
+#: email-uninstall.php:59
+#, php-format
+msgid "Error deleting Setting Key '%s'."
+msgstr ""
+
+#: email-uninstall.php:81
+#: email-uninstall.php:92
+#: wp-email.php:67
+msgid "Uninstall WP-EMail"
+msgstr ""
+
+#: email-uninstall.php:82
+#, php-format
+msgid "<a href=\"%s\">Click Here</a> To Finish The Uninstallation And WP-EMail Will Be Deactivated Automatically."
+msgstr ""
+
+#: email-uninstall.php:94
+msgid "Deactivating WP-EMail plugin does not remove any data that may have been created, such as the email options and the email logs. To completely remove this plugin, you can uninstall it here."
+msgstr ""
+
+#: email-uninstall.php:97
+msgid "WARNING:"
+msgstr ""
+
+#: email-uninstall.php:98
+msgid "Once uninstalled, this cannot be undone. You should use a Database Backup plugin of WordPress to back up all the data first."
+msgstr ""
+
+#: email-uninstall.php:101
+msgid "The following WordPress Options/Tables will be DELETED:"
+msgstr ""
+
+#: email-uninstall.php:106
+msgid "WordPress Options"
+msgstr ""
+
+#: email-uninstall.php:107
+msgid "WordPress Tables"
+msgstr ""
+
+#: email-uninstall.php:134
+msgid ""
+"You Are About To Uninstall WP-EMail From WordPress.\\n"
+"This Action Is Not Reversible.\\n"
+"\\n"
+" Choose [Cancel] To Stop, [OK] To Uninstall."
+msgstr ""
+
+#: wp-email-widget.php:55
+msgid "Most Emailed"
+msgstr ""
+
+#: wp-email-widget.php:65
+msgid "Title"
+msgstr ""
+
+#: wp-email-widget.php:68
+msgid "Show Views For: "
+msgstr ""
+
+#: wp-email-widget.php:74
+msgid "Posts &amp; Pages"
+msgstr ""
+
+#: wp-email-widget.php:79
+msgid "Posts"
+msgstr ""
+
+#: wp-email-widget.php:84
+msgid "Pages"
+msgstr ""
+
+#: wp-email-widget.php:87
+msgid "Only"
+msgstr ""
+
+#: wp-email-widget.php:90
+msgid "Limit"
+msgstr ""
+
+#: wp-email-widget.php:93
+msgid "Post Title Length (Characters)"
+msgstr ""
+
+#: wp-email-widget.php:95
+msgid "(<strong>0</strong> to disable)"
+msgstr ""
+
+#: wp-email.php:62
+#: wp-email.php:384
+msgid "E-Mail"
+msgstr ""
+
+#: wp-email.php:162
+msgid "The Following Error Occurs:"
+msgstr ""
+
+#: wp-email.php:163
+msgid "- Your Name is empty/invalid"
+msgstr ""
+
+#: wp-email.php:164
+msgid "- Your Email is empty/invalid"
+msgstr ""
+
+#: wp-email.php:165
+msgid "- Your Remarks is invalid"
+msgstr ""
+
+#: wp-email.php:166
+msgid "- Friend Name(s) is empty"
+msgstr ""
+
+#: wp-email.php:167
+msgid "- Friend Name is empty/invalid:"
+msgstr ""
+
+#: wp-email.php:168
+#, php-format
+msgid "- Maximum %s Friend Name allowed"
+msgid_plural "- Maximum %s Friend Names allowed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: wp-email.php:169
+msgid "- Friend Email(s) is empty"
+msgstr ""
+
+#: wp-email.php:170
+msgid "- Friend Email is invalid:"
+msgstr ""
+
+#: wp-email.php:171
+#, php-format
+msgid "- Maximum %s Friend Email allowed"
+msgid_plural "- Maximum %s Friend Emails allowed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: wp-email.php:172
+msgid "- Friend Name(s) count does not tally with Friend Email(s) count"
+msgstr ""
+
+#: wp-email.php:173
+msgid "- Image Verification is empty"
+msgstr ""
+
+#: wp-email.php:323
+msgid "Note: There is an email link embedded within this post, please visit this post to email it."
+msgstr ""
+
+#: wp-email.php:403
+#, php-format
+msgid "Protected: %s"
+msgstr ""
+
+#: wp-email.php:405
+#, php-format
+msgid "Private: %s"
+msgstr ""
+
+#: wp-email.php:417
+#: wp-email.php:815
+#: wp-email.php:1076
+msgid ","
+msgstr ""
+
+#: wp-email.php:472
+msgid "Password Protected Post"
+msgstr ""
+
+#: wp-email.php:676
+#, php-format
+msgid "Separate multiple entries with a comma. Maximum %s entry."
+msgid_plural "Separate multiple entries with a comma. Maximum %s entries."
+msgstr[0] ""
+msgstr[1] ""
+
+#: wp-email.php:746
+#: wp-email.php:752
+#, php-format
+msgid "%s email"
+msgid_plural "%s emails"
+msgstr[0] ""
+msgstr[1] ""
+
+#: wp-email.php:756
+#: wp-email.php:928
+#: wp-email.php:1014
+msgid "N/A"
+msgstr ""
+
+#: wp-email.php:840
+msgid "Your Name is empty"
+msgstr ""
+
+#: wp-email.php:843
+msgid "Your Name is invalid"
+msgstr ""
+
+#: wp-email.php:849
+msgid "Your Email is empty"
+msgstr ""
+
+#: wp-email.php:852
+msgid "Your Email is invalid"
+msgstr ""
+
+#: wp-email.php:858
+msgid "Your Remarks is invalid"
+msgstr ""
+
+#: wp-email.php:864
+msgid "Friend Name(s) is empty"
+msgstr ""
+
+#: wp-email.php:870
+#, php-format
+msgid "Friend Name is empty: %s"
+msgstr ""
+
+#: wp-email.php:872
+#, php-format
+msgid "Friend Name is invalid: %s"
+msgstr ""
+
+#: wp-email.php:886
+msgid "Friend Email(s) is empty"
+msgstr ""
+
+#: wp-email.php:892
+#, php-format
+msgid "Friend Email is empty: %s"
+msgstr ""
+
+#: wp-email.php:894
+#, php-format
+msgid "Friend Email is invalid: %s"
+msgstr ""
+
+#: wp-email.php:907
+#, php-format
+msgid "Maximum %s Friend allowed"
+msgid_plural "Maximum %s Friend(s) allowed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: wp-email.php:911
+msgid "Friend Name(s) count does not tally with Friend Email(s) count"
+msgstr ""
+
+#: wp-email.php:918
+msgid "Image Verification is empty"
+msgstr ""
+
+#: wp-email.php:921
+msgid "Image Verification failed"
+msgstr ""
+
+#: wp-email.php:1107
+msgid "* Required Field"
+msgstr ""
+
+#: wp-email.php:1110
+msgid "Your Name: *"
+msgstr ""
+
+#: wp-email.php:1116
+msgid "Your E-Mail: *"
+msgstr ""
+
+#: wp-email.php:1122
+msgid "Your Remark:"
+msgstr ""
+
+#: wp-email.php:1128
+msgid "Friend's Name: *"
+msgstr ""
+
+#: wp-email.php:1133
+msgid "Friend's E-Mail: *"
+msgstr ""
+
+#: wp-email.php:1138
+msgid "Image Verification: *"
+msgstr ""
+
+#: wp-email.php:1139
+msgid "E-Mail Image Verification"
+msgstr ""
+
+#: wp-email.php:1142
+msgid "     Mail It!     "
+msgstr ""
+
+#: wp-email.php:1148
+#, php-format
+msgid "Please wait for <strong>%s Minute</strong> before sending the next article."
+msgid_plural "Please wait for <strong>%s Minutes</strong> before sending the next article."
+msgstr[0] ""
+msgstr[1] ""
+
+#: wp-email.php:1150
+msgid "Loading"
+msgstr ""
+
+#: wp-email.php:1213
+#: wp-email.php:1215
+#: wp-email.php:1248
+msgid "WP-EMail"
+msgstr ""
+
+#: wp-email.php:1226
+#: wp-email.php:1228
+#: wp-email.php:1264
+#, php-format
+msgid "%s Most Emailed Post"
+msgid_plural "%s Most Emailed Posts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: wp-email.php:1250
+#, php-format
+msgid "<strong>%s</strong> email was sent."
+msgid_plural "<strong>%s</strong> emails were sent."
+msgstr[0] ""
+msgstr[1] ""
+
+#: wp-email.php:1251
+#, php-format
+msgid "<strong>%s</strong> email was sent successfully."
+msgid_plural "<strong>%s</strong> emails were sent successfully."
+msgstr[0] ""
+msgstr[1] ""
+
+#: wp-email.php:1252
+#, php-format
+msgid "<strong>%s</strong> email failed to send."
+msgid_plural "<strong>%s</strong> emails failed to send."
+msgstr[0] ""
+msgstr[1] ""
+
+#: wp-email.php:1315
+msgid "<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled '<strong>%EMAIL_POST_TITLE%</strong>' to you.</p><p><strong>Here is his/her remark:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>"
+msgstr ""
+
+#: wp-email.php:1316
+msgid ""
+"Hi %EMAIL_FRIEND_NAME%,\n"
+"Your friend, %EMAIL_YOUR_NAME%, has recommended this article entitled '%EMAIL_POST_TITLE%' to you.\n"
+"\n"
+"Here is his/her remarks:\n"
+"%EMAIL_YOUR_REMARKS%\n"
+"\n"
+"%EMAIL_POST_TITLE%\n"
+"Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%\n"
+"%EMAIL_POST_CONTENT%\n"
+"Article taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%\n"
+"URL to article: %EMAIL_PERMALINK%"
+msgstr ""
+
+#: wp-email.php:1325
+msgid "Article: <strong>%EMAIL_POST_TITLE%</strong> has been sent to <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong></p><p>&laquo; <a href=\"%EMAIL_PERMALINK%\">"
+msgstr ""
+
+#: wp-email.php:1334
+msgid "Email This Post"
+msgstr ""
+
+#: wp-email.php:1334
+msgid "Email This Page"
+msgstr ""
+

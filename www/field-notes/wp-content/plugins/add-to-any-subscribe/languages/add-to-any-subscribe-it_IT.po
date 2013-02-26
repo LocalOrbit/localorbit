@@ -1,0 +1,275 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: add-to-any-subscribe in italiano\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-25 00:55-0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Gianni Diurno (aka gidibao) <gidibao[at]gmail[dot]com>\n"
+"Language-Team: Gianni Diurno | gidibao.net <gidibao[at]gmail[dot]com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: add-to-any-subscribe.php:155
+msgid "Share"
+msgstr "Condividi"
+
+#: add-to-any-subscribe.php:156
+msgid "Save"
+msgstr "Salva"
+
+#: add-to-any-subscribe.php:157
+#: add-to-any-subscribe.php:465
+msgid "Subscribe"
+msgstr "Abbonati"
+
+#: add-to-any-subscribe.php:158
+msgid "E-mail"
+msgstr "Email"
+
+#: add-to-any-subscribe.php:159
+msgid "Bookmark"
+msgstr "Segnalibro"
+
+#: add-to-any-subscribe.php:160
+msgid "Show all"
+msgstr "espandi"
+
+#: add-to-any-subscribe.php:161
+msgid "Show less"
+msgstr "comprimi"
+
+#: add-to-any-subscribe.php:162
+msgid "Find service(s)"
+msgstr "Trova servizi"
+
+#: add-to-any-subscribe.php:163
+msgid "Instantly find any service to add to"
+msgstr "Trova subito un servizio da aggiungere"
+
+#: add-to-any-subscribe.php:164
+msgid "Powered by"
+msgstr "Fornito da"
+
+#: add-to-any-subscribe.php:165
+msgid "Share via e-mail"
+msgstr "Condividi via email"
+
+#: add-to-any-subscribe.php:166
+msgid "Subscribe via e-mail"
+msgstr "Abbonati via email"
+
+#: add-to-any-subscribe.php:167
+msgid "Bookmark in your browser"
+msgstr "Aggiungi ai segnalibri"
+
+#: add-to-any-subscribe.php:168
+msgid "Press Ctrl+D or Cmd+D to bookmark this page"
+msgstr "Premi Ctrl+D o Cmd+D per aggiungere questa pagina alla lista dei segnalibri"
+
+#: add-to-any-subscribe.php:169
+msgid "Add to your favorites"
+msgstr "Aggiungi ai favoriti"
+
+#: add-to-any-subscribe.php:170
+msgid "Send from any e-mail address or e-mail program"
+msgstr "Invia da un indirizzo email o client di posta elettronica"
+
+#: add-to-any-subscribe.php:171
+msgid "E-mail program"
+msgstr "Client di posta elettronica"
+
+#: add-to-any-subscribe.php:196
+msgid "Your theme needs to be fixed. To fix your theme, use the <a href=\"theme-editor.php\">Theme Editor</a> to insert <code>&lt;?php wp_footer(); ?&gt;</code> just before the <code>&lt;/body&gt;</code> line of your theme's <code>footer.php</code> file."
+msgstr "Il tuo tema deve essere aggiornato. Per apportare le modifiche necessarie, utilizza l'editor dei <a href=\"theme-editor.php\">temi</a> per inserire <code>&lt;?php wp_footer(); ?&gt;</code> subito prima del tag di chiusura <code>&lt;/body&gt;</code> presente nel file <code>footer.php</code>."
+
+#: add-to-any-subscribe.php:243
+msgid "Title (optional)"
+msgstr "Nome (facoltativo):"
+
+#: add-to-any-subscribe.php:274
+#: add-to-any-subscribe.php:368
+msgid "Image URL"
+msgstr "URL immagine"
+
+#: add-to-any-subscribe.php:282
+#: add-to-any-subscribe.php:375
+msgid "Text only"
+msgstr "Solo testo"
+
+#: add-to-any-subscribe.php:288
+msgid "More Settings"
+msgstr "Ulteriori impostazioni"
+
+#: add-to-any-subscribe.php:318
+msgid "Settings saved."
+msgstr "Le impostazioni sono state salvate"
+
+#: add-to-any-subscribe.php:329
+msgid "Add to Any: Subscribe "
+msgstr "Add to Any: Abbonati "
+
+#: add-to-any-subscribe.php:329
+#: add-to-any-subscribe.php:465
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: add-to-any-subscribe.php:339
+msgid "Button"
+msgstr "Pulsante"
+
+#: add-to-any-subscribe.php:382
+msgid "Button Placement"
+msgstr "Posizione pulsante"
+
+#: add-to-any-subscribe.php:384
+msgid "If you are using a widget-ready theme, you can use the <a href=\"widgets.php\">widgets page</a> to place the button where you want in your sidebar."
+msgstr "Qualora stessi utilizzando un tema widget-ready, vai alla <a href=\"widgets.php\">pagina widgets</a> per potere inserire laddove desideri nella barra laterale il pulsante."
+
+#: add-to-any-subscribe.php:385
+msgid "Open Widgets Panel"
+msgstr "Apri pannello widget"
+
+#: add-to-any-subscribe.php:386
+msgid "Alternatively, you can place the following code in <a href=\"theme-editor.php\">your template pages</a> (within <code>sidebar.php</code>, <code>index.php</code>, <code>single.php</code>, and/or <code>page.php</code>)"
+msgstr "In alternativa, dovrai inserire il codice qui sotto nelle <a href=\"theme-editor.php\">pagine del tuo tema</a> (in <code>sidebar.php</code>, <code>index.php</code>, <code>single.php</code>, e/o <code>page.php</code>)"
+
+#: add-to-any-subscribe.php:391
+msgid "Menu Style"
+msgstr "Stile menu"
+
+#: add-to-any-subscribe.php:393
+msgid "Using Add to Any's Menu Styler, you can customize the colors of your Subscribe menu! When you're done, be sure to paste the generated code in the <a href=\"#\" onclick=\"document.getElementById('A2A_SUBSCRIBE_additional_js_variables').focus();return false\">Additional Options</a> box below."
+msgstr "Utilizzando il Menu Styler di Add to Any potrai personalizzare i colori del menu Abbonati! Una volta apportata la modifica, incolla il codice così ottenuto nel riquadro delle <a href=\"#\" onclick=\"document.getElementById('A2A_SUBSCRIBE_additional_js_variables').focus();return false\">Opzioni agggiuntive</a> qui sotto."
+
+#: add-to-any-subscribe.php:395
+msgid "Open the Add to Any Menu Styler in a new window"
+msgstr "Apri in una nuova pagina per personalizzare il menu di Add to Any"
+
+#: add-to-any-subscribe.php:397
+msgid "Open Menu Styler"
+msgstr "Stile menu"
+
+#: add-to-any-subscribe.php:402
+msgid "Menu Options"
+msgstr "Opzioni menu"
+
+#: add-to-any-subscribe.php:407
+msgid "Hide embedded objects (Flash, video, etc.) that intersect with the menu when displayed"
+msgstr "Nascondi gli oggetti incorporati (Flash, video, etc.) che possono interferire con la visualizzazione corretta del menu"
+
+#: add-to-any-subscribe.php:412
+msgid "Show the title of this blog within the menu"
+msgstr "Mostra nel menu il nome del blog"
+
+#: add-to-any-subscribe.php:419
+msgid "Only show the menu when the user clicks the Subscribe button"
+msgstr "Mostra solamente il menu quando un utente clicca sul pulsante Abbonati"
+
+#: add-to-any-subscribe.php:425
+msgid "Open the addtoany.com menu page in a new tab or window if the user clicks the Subscribe button"
+msgstr "Apri in una nuova scheda o finestra la pagina menu di addtoany.com quando un utente clicca il pulsante Abbonati"
+
+#: add-to-any-subscribe.php:430
+msgid "Additional Options"
+msgstr "Opzioni aggiuntive"
+
+#: add-to-any-subscribe.php:434
+msgid "Paste the code from Add to Any's Menu Styler in the box below!"
+msgstr "Incolla nel riquadro qui sotto il nuovo codice personalizzato per il menu! "
+
+#: add-to-any-subscribe.php:438
+msgid "Below you can set special JavaScript variables to apply to your Subscribe menu."
+msgstr "Qui sotto é possibile impostare delle variabili JavaScript particolari applicabili ad ogni menu Abbonati."
+
+#: add-to-any-subscribe.php:439
+msgid "Advanced users might want to explore Add to Any's <a href=\"http://www.addtoany.com/buttons/api/\" target=\"_blank\">JavaScript API</a>."
+msgstr "Gli utenti più esperti possono prendere visione della <a href=\"http://www.addtoany.com/buttons/api/\" target=\"_blank\">JavaScript API</a> di Add to Any."
+
+#: add-to-any-subscribe.php:445
+msgid "<strong>Note</strong>: If you're adding new code, be careful not to accidentally overwrite any previous code."
+msgstr "<strong>Nota</strong>: qualora stessi aggiungendo un nuovo codice, fai attenzione a non sovrascrivere accidentalmente ogni codice precedente."
+
+#: add-to-any-subscribe.php:452
+msgid "Save Changes"
+msgstr "Salva le modifiche"
+
+#: add-to-any-subscribe.php:466
+msgid "Subscribe Buttons"
+msgstr "Pulsanti Abbonamento"
+
+#~ msgid "Standalone Services"
+#~ msgstr "Servizi indipendenti"
+
+#~ msgid ""
+#~ "Choose the services you want below. &nbsp;Click a chosen service again to "
+#~ "remove. &nbsp;Reorder services by dragging and dropping as they appear "
+#~ "above."
+#~ msgstr ""
+#~ "Scegli qui sotto i servizi di tuo gradimento. &nbsp;Clicca su di un "
+#~ "servizio attivo per rimuoverlo. &nbsp;Riordina i servizi via drag and "
+#~ "drop."
+
+#~ msgid "Display Share/Save button at the bottom of posts"
+#~ msgstr "Mostra il pulsante Share/Save in coda agli articoli"
+
+#~ msgid "Display Share/Save button at the bottom of posts on the front page"
+#~ msgstr ""
+#~ "Mostra il pulsante Share/Save in coda agli articoli nella pagina "
+#~ "principale"
+
+#~ msgid "Display Share/Save button at the bottom of posts in the feed"
+#~ msgstr "Mostra il pulsante Share/Save in coda agli articoli del feed"
+
+#~ msgid "Display Share/Save button at the bottom of pages"
+#~ msgstr "Mostra il pulsante Share/Save in coda alle pagine"
+
+#~ msgid "Like this plugin?"
+#~ msgstr "Ti é piaciuto questo plugin?"
+
+#~ msgid ""
+#~ "<a href=\"http://wordpress.org/extend/plugins/add-to-any/\">Give it a "
+#~ "good rating</a> on WordPress.org."
+#~ msgstr ""
+#~ "<a href=\"http://wordpress.org/extend/plugins/add-to-any/\">Votalo</a> su "
+#~ "WordPress.org."
+
+#~ msgid ""
+#~ "<a href=\"http://www.addtoany.com/share_save?linkname=WordPress%20Share%"
+#~ "20Plugin%20by%20AddToAny.com&amp;linkurl=http%3A%2F%2Fwordpress.org%"
+#~ "2Fextend%2Fplugins%2Fadd-to-any%2F\">Share it</a> with your friends."
+#~ msgstr ""
+#~ "<a href=\"http://www.addtoany.com/share_save?linkname=WordPress%20Share%"
+#~ "20Plugin%20by%20AddToAny.com&amp;linkurl=http%3A%2F%2Fwordpress.org%"
+#~ "2Fextend%2Fplugins%2Fadd-to-any%2F\">Condividi</a> con i tuoi amici."
+
+#~ msgid "Need support?"
+#~ msgstr "Serve aiuto?"
+
+#~ msgid ""
+#~ "See the <a href=\"http://wordpress.org/extend/plugins/add-to-any/faq/"
+#~ "\">FAQs</a>."
+#~ msgstr ""
+#~ "Vedi la pagina dedicata alle <a href=\"http://wordpress.org/extend/"
+#~ "plugins/add-to-any/faq/\">FAQ</a>."
+
+#~ msgid ""
+#~ "Search the <a href=\"http://wordpress.org/tags/add-to-any\">support "
+#~ "forums</a>."
+#~ msgstr ""
+#~ "Effettua una ricerca nel <a href=\"http://wordpress.org/tags/add-to-any"
+#~ "\">forum di supporto</a>."
+
+#~ msgid "Add/Remove Services"
+#~ msgstr "Aggiungi/Rimuovi i sevizi"
+
+#~ msgid "Share/Save"
+#~ msgstr "Condividi/Salva"
+
+#~ msgid "Share/Save Buttons"
+#~ msgstr "Pulsanti Condividi/Salva"

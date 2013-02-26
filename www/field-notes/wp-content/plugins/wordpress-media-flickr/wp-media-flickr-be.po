@@ -1,0 +1,290 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-media-flickr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-06 02:02+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: FatCow <zhr@tut.by>\n"
+"Language-Team: PC <pat.clausnitzer@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Belarusian\n"
+"X-Poedit-Country: BELARUS\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: wp-media-flickr-admin.php:15
+msgid "Cannot get Flickr user informations.<br />Please authorization \"Wordpress Media Flickr\" on flickr."
+msgstr "Не атрымана карыстацкая інфармацыя Flickr.<br />Аўтарызуйцеся \"Wordpress Media Flickr\" на flickr."
+
+#: wp-media-flickr-admin.php:35
+msgid "Flickr authorization complete."
+msgstr "Flickrавторизация завершана"
+
+#: wp-media-flickr-admin.php:37
+msgid "Flickr user informations are cleared."
+msgstr "Карыстацкая інфармацыя Flickr сцёртая"
+
+#: wp-media-flickr-admin.php:39
+msgid "Your PHP unsupported curl, and allow_url_fopen is disabled.<br />This is cause of cannot Flickr authentication."
+msgstr "Ваш PHP не падтрымлівае curl, allow_url_fopen таксама адключаны.<br />Таму аўтарызацыя Flickr немагчымая."
+
+#: wp-media-flickr-admin.php:43
+#: wp-media-flickr.php:77
+msgid "Media Flickr"
+msgstr "Media Flickr"
+
+#: wp-media-flickr-admin.php:45
+msgid "User informations"
+msgstr "Карыстацкая інфармацыя"
+
+#: wp-media-flickr-admin.php:48
+msgid "Are you sure you want to clear Flickr informations?"
+msgstr "Вы ўпэўнены, што жадаеце ачысціць інфармацыю Flickr?"
+
+#: wp-media-flickr-admin.php:52
+msgid "Flickr Username"
+msgstr "Імя карыстача Flickr"
+
+#: wp-media-flickr-admin.php:58
+msgid "Flickr User ID"
+msgstr "ID пользователяFlickr "
+
+#: wp-media-flickr-admin.php:64
+msgid "Clear user informations &raquo;"
+msgstr "Ачысціць карыстацкую інфармацыю &raquo;"
+
+#: wp-media-flickr-admin.php:68
+msgid "Please authorization according to the following instruction."
+msgstr "Калі ласка,  аўтарызуйцеся ў адпаведнасці з інструкцыяй."
+
+#: wp-media-flickr-admin.php:75
+msgid "Step1"
+msgstr "Крок 1"
+
+#: wp-media-flickr-admin.php:77
+msgid "Flickr authenticate"
+msgstr "Flickr аўтэнтыфікацыя"
+
+#: wp-media-flickr-admin.php:81
+msgid "Step2"
+msgstr "Крок 2"
+
+#: wp-media-flickr-admin.php:83
+msgid "Finish authenticate"
+msgstr "Канчатак аўтэнтыфікацыі"
+
+#: wp-media-flickr-admin.php:90
+msgid "Media Flickr Options"
+msgstr "Налады Media Flickr"
+
+#: wp-media-flickr-admin.php:96
+msgid "Link of photo"
+msgstr "Спасылкі фота"
+
+#: wp-media-flickr-admin.php:98
+msgid "The photo page of Flickr"
+msgstr "Старонка фота на Flickr"
+
+#: wp-media-flickr-admin.php:99
+msgid "The photo directly"
+msgstr "Фота напроста"
+
+#: wp-media-flickr-admin.php:103
+msgid "The \"rel\" attribute of link tag"
+msgstr "Аттрибут \"rel\" для тэгаў спасылкі"
+
+#: wp-media-flickr-admin.php:106
+msgid "(if you want to use the Lightbox, set \"lightbox\")"
+msgstr "(калі вы жадаеце выкарыстоўваць Lightbox, абярыце \"lightbox\")"
+
+#: wp-media-flickr-admin.php:110
+msgid "The \"class\" attribute of link tag"
+msgstr "Аттрибут \"class\" для тэгаў спасылкі"
+
+#: wp-media-flickr-admin.php:113
+msgid "(if you want to use the Lightview, set \"lightview\")"
+msgstr "(калі вы жадаеце выкарыстоўваць  Lightview, абярыце \"lightview\")"
+
+#: wp-media-flickr-admin.php:117
+msgid "Update options &raquo;"
+msgstr "Абнавіць опцыі &raquo;"
+
+#: wp-media-flickr.php:63
+msgid "Add Flickr photo"
+msgstr "Дадаць Flickr фота"
+
+#: wp-media-flickr.php:70
+msgid "Flickr photo"
+msgstr "Flickr фота"
+
+#: wp-media-flickr.php:303
+msgid "Search:"
+msgstr "Пошук:"
+
+#: wp-media-flickr.php:308
+msgid "Your Photos"
+msgstr "Вашы фота"
+
+#: wp-media-flickr.php:309
+msgid "Your Sets"
+msgstr "Вашы наборы"
+
+#: wp-media-flickr.php:310
+msgid "Everyone's Photos"
+msgstr "Кожная ў фатаграфія"
+
+#: wp-media-flickr.php:312
+msgid "Search photo"
+msgstr "Пошук фота"
+
+#: wp-media-flickr.php:314
+msgid "Flickr photos"
+msgstr "Flickr фота"
+
+#: wp-media-flickr.php:317
+msgid "&laquo; Prev page"
+msgstr "&laquo; Прад. старонка"
+
+#: wp-media-flickr.php:320
+msgid "Next page &raquo;"
+msgstr "След. старонка &raquo;"
+
+#: wp-media-flickr.php:330
+msgid "Select size of photo"
+msgstr "Абраць памер малюнкаў"
+
+#: wp-media-flickr.php:333
+msgid "Square"
+msgstr "Пляц"
+
+#: wp-media-flickr.php:334
+msgid "Thumbnail"
+msgstr "Эскіз"
+
+#: wp-media-flickr.php:335
+msgid "Small"
+msgstr "Маленькі"
+
+#: wp-media-flickr.php:336
+msgid "Medium"
+msgstr "Сярэдні"
+
+#: wp-media-flickr.php:337
+msgid "Large"
+msgstr "Вялікі"
+
+#: wp-media-flickr.php:338
+#: wp-media-flickr.php:339
+msgid "Original"
+msgstr "Арыгінальны"
+
+#: wp-media-flickr.php:339
+msgid "(not permitted)"
+msgstr "(Не дапушчаецца)"
+
+#: wp-media-flickr.php:343
+msgid "Select alignment of photo"
+msgstr "Стандартнае размяшчэнне фота"
+
+#: wp-media-flickr.php:346
+msgid "Default"
+msgstr "Па змаўчанні"
+
+#: wp-media-flickr.php:347
+msgid "Left"
+msgstr "Злева"
+
+#: wp-media-flickr.php:348
+msgid "Center"
+msgstr "Па цэнтры"
+
+#: wp-media-flickr.php:349
+msgid "Right"
+msgstr "Справа"
+
+#: wp-media-flickr.php:354
+msgid "Continue to insert other photo."
+msgstr "Працягваць устаўку фота"
+
+#: wp-media-flickr.php:357
+msgid "Cancel"
+msgstr "Адмена"
+
+#: wp-media-flickr.php:358
+msgid "Insert"
+msgstr "Уставіць"
+
+#: wp-media-flickr.php:372
+msgid "Not found photo"
+msgstr "Фота не знойдзена"
+
+#: wp-media-flickr.php:373
+msgid "Too many tags in ALL query"
+msgstr "Занадта шмат тэгаў у ALL запыце"
+
+#: wp-media-flickr.php:374
+msgid "Unknown user"
+msgstr "Невядомы карыстач"
+
+#: wp-media-flickr.php:375
+msgid "Parameterless searches have been disabled"
+msgstr "Беспараметрический пошук быў адключаны"
+
+#: wp-media-flickr.php:376
+msgid "You don't have permission to view this pool"
+msgstr "У вас няма правоў для прагляду гэтага пула"
+
+#: wp-media-flickr.php:377
+msgid "Sorry, the Flickr search API is not currently available."
+msgstr "Нажаль, пошук Flickr API у наш час недаступны."
+
+#: wp-media-flickr.php:378
+msgid "No valid machine tags"
+msgstr "Не знойдзены машинотеги"
+
+#: wp-media-flickr.php:379
+msgid "Exceeded maximum allowable machine tags"
+msgstr "Перавышэнне лімітава дапушчальных машинотегов"
+
+#: wp-media-flickr.php:380
+msgid "Invalid API Key"
+msgstr "Няправільны API ключ"
+
+#: wp-media-flickr.php:381
+msgid "Service currently unavailable"
+msgstr "Сэрвіс у сапраўдны момант недаступны"
+
+#: wp-media-flickr.php:382
+msgid "Unknown error"
+msgstr "Невядомая памылка"
+
+#: wp-media-flickr.php:385
+#, php-format
+msgid "(%1$s / %2$s page(s), %3$s photo(s))"
+msgstr "(%1$s / %2$s страниц, %3$s фото)"
+
+#, fuzzy
+#~ msgid "This photo owner has not permitted anyone to download."
+#~ msgstr "この写真の所有者は誰でもダウンロードできることを許可していません。"
+
+#~ msgid "User not found"
+#~ msgstr "指定されたユーザーは見つかりません。"
+
+#~ msgid "Flickr"
+#~ msgstr "Flickr"
+
+#~ msgid "Authenticate"
+#~ msgstr "認証を開始"
+
+#~ msgid "User not found."
+#~ msgstr "指定されたユーザーは見つかりません。"
+
+#~ msgid "Flickr API key"
+#~ msgstr "Flickr APIキー"
+
+#~ msgid "API key is invalid."
+#~ msgstr "APIキーが正しくありません。"

@@ -1,0 +1,438 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: umapper\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-06-28 05:45+0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Victor Farazdagi <victor@afcomponents.com>\n"
+"Language-Team: CrabDish <support@afcomponents.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ../..\n"
+
+#: ../../form.php:18
+#: ../../proxy.php:16
+#: ../../token.php:18
+#: ../../content/views/Umapper_Page_DialogueMapEditor.php:10
+msgid "You do not have permission to upload files."
+msgstr "Не хватает прав доступа для загрузки файлов."
+
+#: ../../form.php:28
+#: ../../token.php:28
+msgid "You are not allowed to be here"
+msgstr "Нет доступа."
+
+#: ../../content/js/UmapperInit.js.php:17
+msgid "Cheatin&#8217; uh?"
+msgstr "Стоп, машина!"
+
+#: ../../content/js/UmapperInit.js.php:18
+msgid "You do not have sufficient permissions to access this page."
+msgstr "У вас нет достаточных прав для доступа к данной странице."
+
+#: ../../content/views/Umapper_Page_Config.php:47
+#: ../../content/views/Umapper_Page_Config.php:63
+msgid "Saved.."
+msgstr "Сохранено.."
+
+#: ../../content/views/Umapper_Page_Config.php:73
+msgid "Request is being processed.."
+msgstr "Запрос обрабатывается.."
+
+#: ../../content/views/Umapper_Page_Config.php:78
+msgid "Requesting list of map providers.."
+msgstr "Получение списка провайдеров карт.."
+
+#: ../../content/views/Umapper_Page_Config.php:81
+msgid "Requesting list of map templates.."
+msgstr "Получение списка шаблонов.."
+
+#: ../../content/views/Umapper_Page_Config.php:98
+#: ../../content/views/Umapper_Page_DialogueHead.php:254
+msgid "Ok"
+msgstr "Ок"
+
+#: ../../content/views/Umapper_Page_Config.php:111
+msgid "API-key validation required!"
+msgstr "Проверка API-ключа обязательна!"
+
+#: ../../content/views/Umapper_Page_Config.php:114
+msgid "You must validate API key before saving!"
+msgstr "Вы должны проверить ключ перед сохранением!"
+
+#: ../../content/views/Umapper_Page_Config.php:119
+msgid "Options saved."
+msgstr "Опции сохраненны."
+
+#: ../../content/views/Umapper_Page_Config.php:123
+msgid "UMapper Configuration"
+msgstr "Конфигурация UMapper"
+
+#: ../../content/views/Umapper_Page_Config.php:129
+msgid "API Key Configuraion:"
+msgstr "Конфигурация API-ключа"
+
+#: ../../content/views/Umapper_Page_Config.php:131
+#, php-format
+msgid "In order to get access to UMapper API you need to <a href=\"%1$s\" target=\"blank\">obtain API-key</a>. <br /> <i>This procedure is done only once.</i> (<a href=\"%2$s\">More info</a>)"
+msgstr "Для доступа к системе UMapper, требуется API-ключ. Ключ предоставляется после <a href=\"%1$s\">регистрации пользователя</a>. <br /> <i>Данная операция выполняется единожды.</i> (<a href=\"%2$s\">Доп. иноформация</a>)"
+
+#: ../../content/views/Umapper_Page_Config.php:132
+msgid "UMapper.com API Key"
+msgstr "UMapper API-ключ"
+
+#: ../../content/views/Umapper_Page_Config.php:136
+msgid "Validate key"
+msgstr "Проверить ключ"
+
+#: ../../content/views/Umapper_Page_Config.php:140
+msgid "Save Changes"
+msgstr "Сохранить"
+
+#: ../../content/views/Umapper_Page_Config.php:149
+msgid "More Info:"
+msgstr "Доп. Информация"
+
+#: ../../content/views/Umapper_Page_Config.php:151
+msgid "Plugin Homepage"
+msgstr "Домашняя страница"
+
+#: ../../content/views/Umapper_Page_Config.php:152
+msgid "UMapper FAQ"
+msgstr "UMapper ЧаВо"
+
+#: ../../content/views/Umapper_Page_Config.php:153
+msgid "UMapper Google Group"
+msgstr "UMapper Google-группа"
+
+#: ../../content/views/Umapper_Page_Config.php:157
+msgid "i18n Contributors:"
+msgstr "Локализация"
+
+#: ../../content/views/Umapper_Page_Config.php:159
+msgid "Italian"
+msgstr "Итальянский"
+
+#: ../../content/views/Umapper_Page_Config.php:160
+msgid "Russian"
+msgstr "Русский"
+
+#: ../../content/views/Umapper_Page_Config.php:161
+msgid "Finnish"
+msgstr "Финский"
+
+#: ../../content/views/Umapper_Page_Config.php:162
+msgid "Czech"
+msgstr "Чешский"
+
+#: ../../content/views/Umapper_Page_Dialogue.php:11
+msgid "Are you sure?"
+msgstr "Не отступать?"
+
+#: ../../content/views/Umapper_Page_Dialogue.php:12
+msgid "This map will be permanently deleted and cannot be recovered. Are you sure?"
+msgstr "Данная карта будет удалена и не подлежит востановлению. Вы уверены?"
+
+#: ../../content/views/Umapper_Page_Dialogue.php:27
+msgid "Edit Map Info"
+msgstr "Описание"
+
+#: ../../content/views/Umapper_Page_Dialogue.php:29
+msgid "Create New Map"
+msgstr "Новая карта"
+
+#: ../../content/views/Umapper_Page_Dialogue.php:31
+#: ../../content/views/Umapper_Page_Dialogue.php:32
+msgid "Map Editor"
+msgstr "Редактор"
+
+#: ../../content/views/Umapper_Page_Dialogue.php:33
+msgid "My Maps"
+msgstr "Мои Карты"
+
+#: ../../content/views/Umapper_Page_Dialogue.php:37
+#: ../../content/views/Umapper_Page_Dialogue.php:47
+msgid "New Map"
+msgstr "Новая Карта"
+
+#: ../../content/views/Umapper_Page_Dialogue.php:38
+msgid "Save Map"
+msgstr "Сохранить"
+
+#: ../../content/views/Umapper_Page_Dialogue.php:41
+msgid "Create Map"
+msgstr "Создать"
+
+#: ../../content/views/Umapper_Page_Dialogue.php:48
+msgid "Insert Map"
+msgstr "Вставить"
+
+#: ../../content/views/Umapper_Page_Dialogue.php:54
+msgid "Refresh"
+msgstr "Обновить"
+
+#: ../../content/views/Umapper_Page_DialogueHead.php:178
+msgid "Delete"
+msgstr "Удалить"
+
+#: ../../content/views/Umapper_Page_DialogueHead.php:188
+#: ../../content/views/Umapper_Page_DialogueHead.php:230
+msgid "Cancel"
+msgstr "Отменить"
+
+#: ../../content/views/Umapper_Page_DialogueHead.php:214
+msgid "Insert"
+msgstr "Вставить"
+
+#: ../../content/views/Umapper_Page_DialogueHead.php:320
+#: ../../content/views/Umapper_Page_DialogueNewMap.php:11
+msgid "Map Title"
+msgstr "Название"
+
+#: ../../content/views/Umapper_Page_DialogueHead.php:324
+#: ../../content/views/Umapper_Page_DialogueNewMap.php:16
+msgid "Map Description"
+msgstr "Описание"
+
+#: ../../content/views/Umapper_Page_DialogueHead.php:328
+msgid "Required fields are empty!"
+msgstr "Обязательные поля не заполненны!"
+
+#: ../../content/views/Umapper_Page_DialogueHead.php:329
+msgid "Required fields left blank:<br />"
+msgstr "Обязательные поля:<br />"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:1
+msgid "Generate map code.."
+msgstr "Генерация кода карты.."
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:5
+msgid "Select map size"
+msgstr "Выберите размер"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:8
+msgid "Square"
+msgstr "Квадрат"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:9
+msgid "Thumbnail"
+msgstr "Набросок"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:10
+msgid "Small"
+msgstr "Небольшой"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:11
+msgid "Medium"
+msgstr "Средний"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:12
+msgid "Large"
+msgstr "Большой"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:13
+msgid "Custom"
+msgstr "Нестандартный"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:21
+msgid "Select map alignment"
+msgstr "Выберите положение карты"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:24
+msgid "Default"
+msgstr "По-определению"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:25
+msgid "Left"
+msgstr "Слева"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:26
+msgid "Center"
+msgstr "По-центру"
+
+#: ../../content/views/Umapper_Page_DialogueInsertOptions.php:27
+msgid "Right"
+msgstr "Справа"
+
+#: ../../content/views/Umapper_Page_DialogueMapList.php:2
+msgid "Total maps:"
+msgstr "Кол-во карт:"
+
+#: ../../content/views/Umapper_Page_DialogueMapList.php:8
+msgid "Title"
+msgstr "Название"
+
+#: ../../content/views/Umapper_Page_DialogueMapList.php:11
+msgid "Views"
+msgstr "Просмотры"
+
+#: ../../content/views/Umapper_Page_DialogueNewMap.php:5
+msgid "UMapper requires API key."
+msgstr "UMapper - API-ключ не найден."
+
+#: ../../content/views/Umapper_Page_DialogueNewMap.php:5
+msgid "You must enter your umapper.com API key for plugin to work."
+msgstr "Для корректной работы модуля требуется ввести API-ключ."
+
+#: ../../content/views/Umapper_Page_DialogueNewMap.php:21
+msgid "Map Provider"
+msgstr "Провайдер"
+
+#: ../../content/views/Umapper_Page_DialogueNewMap.php:36
+msgid "Map Template"
+msgstr "Название шаблона"
+
+#: ../../content/views/Umapper_Page_TokenHead.php:8
+msgid "Obtaining UMapper session.."
+msgstr "Получение сессии.."
+
+#: ../../content/views/Umapper_Page_TokenHead.php:17
+msgid "Done!"
+msgstr "Готово!"
+
+#: ../../content/views/Umapper_Page_TokenHead.php:21
+msgid "Request cannot be completed!"
+msgstr "Запрос не может быть выполнен!"
+
+#: ../../lib/Umapper/Actions.php:86
+msgid "UMapper"
+msgstr "UMapper"
+
+#: ../../lib/Umapper/Actions.php:126
+msgid "views"
+msgstr "просмотры"
+
+#: ../../lib/Umapper/Actions.php:127
+msgid "Delete Map"
+msgstr "Удалить"
+
+#: ../../lib/Umapper/Actions.php:128
+msgid "Edit Info"
+msgstr "Описание"
+
+#: ../../lib/Umapper/Actions.php:130
+#: ../../lib/Umapper/Messages.php:93
+msgid "Map data updated.."
+msgstr "Данные карты сохранены.."
+
+#: ../../lib/Umapper/Actions.php:209
+msgid "Add UMapper Map"
+msgstr "Карта UMapper"
+
+#: ../../lib/Umapper/Messages.php:44
+#, php-format
+msgid "You must <a href=\"%1$s\">enter your umapper.com API key</a> for plugin to work."
+msgstr "Для корректной работы модуля требуется <a href=\"%1$s\">ввести API-ключ</a>."
+
+#: ../../lib/Umapper/Messages.php:49
+msgid "UMapper located WordPressMU installation - integrator's API key required."
+msgstr "UMapper обнаружил WordPressMU установку - введите Integrator's API-ключ"
+
+#: ../../lib/Umapper/Messages.php:50
+#, php-format
+msgid "You must <a href=\"%1$s\">enter your API key</a> for plugin to work.<br>If you do not configure the key, your users would have to do so on per blog basis."
+msgstr "Для корректной работы плагина требуется <a href=\"%1$s\">API-ключ</a>.<br>В случае если вы не зададите ключ сами, ваши пользователи должны будут сделать это вручную."
+
+#: ../../lib/Umapper/Messages.php:55
+msgid "UMapper was NOT able to locate primary blog."
+msgstr "UMapper - не удалось найти первичный блог."
+
+#: ../../lib/Umapper/Messages.php:56
+#, php-format
+msgid "Please <a href=\"%1$s\">contact our support</a>!"
+msgstr "Пожалуйста, <a href=\"%1$s\">отправте сообщение</a> в наш департамент поддержки."
+
+#: ../../lib/Umapper/Messages.php:61
+msgid "Your key has been cleared."
+msgstr "API-ключ удален."
+
+#: ../../lib/Umapper/Messages.php:65
+msgid "Your connection details have been cleared."
+msgstr "Данные соединения удалены."
+
+#: ../../lib/Umapper/Messages.php:69
+msgid "Your key has been saved. Make sure that it is valid!"
+msgstr "Ключ успешно сохранен. Проверте его корректность!"
+
+#: ../../lib/Umapper/Messages.php:73
+msgid "Your connection details have been saved. Make sure that they are valid!"
+msgstr "Данные соединения успешно сохраненны. Убедитесь в их правильности!"
+
+#: ../../lib/Umapper/Messages.php:77
+msgid "API key valid. Happy blogging!"
+msgstr "Верный ключ! UMapper готов к использованию."
+
+#: ../../lib/Umapper/Messages.php:81
+msgid "Connection details are valid. Happy blogging!"
+msgstr "Данные соединения верны. UMapper готов к использованию."
+
+#: ../../lib/Umapper/Messages.php:85
+msgid "API key invalid. Make sure you entered correct key!"
+msgstr "Неверный API-ключ, проверте введенные данные!"
+
+#: ../../lib/Umapper/Messages.php:89
+msgid "Connection details are invalid. Make sure you entered correct values!"
+msgstr "Данные соединения неверны. Проверте введенную информацию!"
+
+#: ../../lib/Umapper/Messages.php:97
+msgid "Map data can NOT be saved..Please try again!"
+msgstr "Ошибка сохранения данных. Попробуйте еще раз!"
+
+#~ msgid "UMapper Requirements Failed."
+#~ msgstr "UMapper - минимальные требования не удовлетворенны."
+#~ msgid "Plugin requires PHP %1$s+ and WordPress %2$s+ to work correctly!"
+#~ msgstr ""
+#~ "Для коректной работы требуется PHP версии %1$s+ и WordPress версии %2$s+!"
+#~ msgid "Map Info"
+#~ msgstr "Описание Карты"
+#~ msgid "Redirecting"
+#~ msgstr "Переадресация"
+#~ msgid "Redirecting to map creation screen.."
+#~ msgstr "Перенаправление на экран создания карт.."
+#~ msgid "Map is being saved.."
+#~ msgstr "Сохранение карты.."
+#~ msgid "Selected map is being deleted.."
+#~ msgstr "Выбранная карта будет удалена.."
+#~ msgid "Represhing map list.."
+#~ msgstr "Обновление списка карт.."
+#~ msgid ""
+#~ "Map list is cached for better perfomance. <a href=\"%1$s\">Refresh</a> to "
+#~ "get updated map list."
+#~ msgstr ""
+#~ "Список карт кешируется для оптимизации загрузки. <a href=\"%1$s"
+#~ "\">Обновите список</a> для получения текущих данных."
+#~ msgid "UMapper FAQs"
+#~ msgstr "UMapper ЧаВо"
+#~ msgid "UMapper Google Groups"
+#~ msgstr "UMapper Google-группа"
+#~ msgid "UMapperMU Integrator Configuration"
+#~ msgstr "Конфигурация UMapperMU Integrator"
+#~ msgid ""
+#~ "In order to allow all hosted blogs to use UMapper Plugin without entering "
+#~ "API key each time, <a href=\"%1$s\">obtain and use Integrator's API Key</"
+#~ "a>."
+#~ msgstr ""
+#~ "Для того чтобы дочерние блоги получили автоматический доступ к системе "
+#~ "UMapper - получите <a href=\"%1$s\">Integrator's API-ключ</a>."
+#~ msgid "Username"
+#~ msgstr "Логин"
+#~ msgid "Password"
+#~ msgstr "Пароль"
+#~ msgid "API Key"
+#~ msgstr "API-ключ"
+#~ msgid "Test Connection"
+#~ msgstr "Тест-соединение"
+#~ msgid "Gianni Diurno"
+#~ msgstr "Джани Диурно"
+#~ msgid "Victor Farazdagi"
+#~ msgstr "Виктор Фараздаги"
+#~ msgid "Map Details"
+#~ msgstr "Данные Карты"
+#~ msgid "Proceed to Map Editor"
+#~ msgstr "Перейти в редактор"
+

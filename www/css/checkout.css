@@ -1,0 +1,38 @@
+h3 {
+	font-weight: bold;
+	line-height:20px;
+	margin-bottom: 0px;
+}
+i {	
+    font-size: 11px;
+}
+
+hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.hr_thick {
+	border-width: 3px;
+}
+.hr_pad_bottom {
+	padding-bottom: 20px;
+}
+.delivery {
+	color: #00b22d;
+    font-size: 14px;
+    font-weight: bold;		
+}
+.delivery_date {
+	color: #000000;
+    font-size: 14px;
+    font-weight: bold;		
+}
+
+.checkout_labels {
+	margin-top: 1px;
+	inherit: none; 
+}
+
+.float_right {
+	float:right;
+}

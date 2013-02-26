@@ -1,0 +1,236 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: adminmenu-el 3.3 [a]\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-20 15:33+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Πρόδρομος Τσαλικίδης <pr.tsalikidis@gmail.com>\n"
+"Language-Team:  <http://friedlich.wordpress.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: Greek\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:348
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:403
+msgid "updated"
+msgstr "ενημερώθηκε"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:353
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:408
+msgid "deleted"
+msgstr "διαγράφηκε"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:358
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:413
+#, php-format
+msgid "Admin Drop Down Menu settings <strong>%s</strong>"
+msgstr "Ρυθμίσεις Admin Drop Down Menu <strong>%s</strong>"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:33
+msgid "Icons"
+msgstr "Εικονίδια"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:34
+msgid "Display menu icons"
+msgstr "Εμφάνιση εικονιδίων μενού"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:35
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:63
+#, php-format
+msgid "They're so cute (and they're from %s)"
+msgstr "Είναι τόσο όμορφα (και είναι από το %s)!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:40
+msgid "Submenus"
+msgstr "Υπομενού"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:41
+msgid "Display sub menus the regular way"
+msgstr "Εμφάνιση υπομενού με τον κλασικό τρόπο"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:42
+msgid "Some like it better when sub menus don't even need you to hover the top menu link"
+msgstr "Σε μερικούς αρέσει καλύτερα όταν για τα υπομενού δεν χρειάζεται να περάσουν πάνω από τον σύνδεσμο πρώτου επιπέδου"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:45
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:123
+msgid "Break Long Lists"
+msgstr "Σπάσιμο Μακρών Λιστών"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:46
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:124
+#, php-format
+msgid "Break if more than %s menu entries"
+msgstr "Σπάσιμο αν υπάρχουν περισσότερες από %s γραμμές"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:47
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:125
+msgid "If a dropdown gets longer than this value, it will switch to horizontal mode so that it will hopefully fit in your screen (requires javascript)"
+msgstr "Αν ένα αναδυόμενο μενού γίνει μακρύτερο από αυτή την τιμή, θα γυρίσει στην οριζόντια μορφή, έτσι ώστε να χωρέσει στην οθόνη σας (απαιτεί javascript)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:52
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:128
+msgid "Top Links"
+msgstr "Σύνδεσμοι Πρώτου Επιπέδου"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:53
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:129
+msgid "Make top links clickable"
+msgstr "Να είναι δυνατό το κλικ πάνω στους συνδέσμους πρώτου επιπέδου"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:54
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:130
+msgid "Uncheck this option to improve compatibility with browsers that cannot handle the \"hover\" event (<em>ie</em> most handheld devices)"
+msgstr "Αποεπιλέξτε αυτή την επιλογή για να βελτιώσετε την συμβατότητα με browser που δεν μπορούν να χειριστούν το συμβάν \"hover\" (<em>πχ.</em> οι περισσότερες συσκευές χειρός)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:57
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:138
+msgid "Give Some &hearts;"
+msgstr "Give Some &hearts;"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:58
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:139
+#, php-format
+msgid "Do you like this plugin? Then <a href=\"%s\">rate it 5 Stars</a> on the official Plugin Directory!"
+msgstr "Do you like this plugin? Then <a href=\"%s\">rate it 5 Stars</a> on the official Plugin Directory!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:59
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:140
+#, php-format
+msgid "Do you <em>love</em> this plugin? Please <a href=\"%s\">blog about it</a>! Tell your readers you like it so they will discover, try and hopefully like it too&nbsp;:)"
+msgstr "Do you <em>love</em> this plugin? Please <a href=\"%s\">blog about it</a>! Tell your readers you like it so they will discover, try and hopefully like it too&nbsp;:)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:60
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:141
+#, php-format
+msgid "Are you <span id=\"totallycrazy\">crazy</span> about this plugin? <a href=\"%s\">Paypal me a beer</a>! Every donation warms my heart and motivates me to release free stuff!"
+msgstr "Are you <span id=\"totallycrazy\">crazy</span> about this plugin? <a href=\"%s\">Paypal me a beer</a>! Every donation warms my heart and motivates me to release free stuff!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:81
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:248
+msgid "Save Changes"
+msgstr "Αποθήκευση αλλαγών"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:87
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:101
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:254
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:268
+msgid "Reset Settings"
+msgstr "Επαναφορά αρχικών ρυθμίσεων"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:96
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:263
+msgid "Clicking the following button will remove all the settings for this plugin from your database. You might want to do so in the following cases:"
+msgstr "Κάνοντας κλικ στο παρακάτω πλήκτρο θα διαγραφούν όλες οι ρυθμίσεις για αυτό το πρόσθετο από τη βάση δεδομένων. Πιθανώς να θέλετε κάτι τέτοιο στις ακόλουθες περιπτώσεις:"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:98
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:265
+msgid "you want to uninstall the plugin and leave no unnecessary entries in your database."
+msgstr "Θέλετε να απεγκαταστήσετε το πρόσθετο και να μην αφήσετε άχρηστες εγγραφές στη βάση."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:99
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:266
+msgid "you want all settings to be reverted to their default values"
+msgstr "Θέλετε να επαναφέρετε όλες τις ρυθμίσεις στις προεπιλεγμένες τιμές."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:101
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:268
+msgid "Really do?"
+msgstr "Να γίνει σίγουρα;"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:102
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:269
+msgid "There is no undo, so be very sure you want to click the button!"
+msgstr "Δεν υπάρχει αναίρεση, γι' αυτό να είστε απολύτως βέβαιοι ότι θέλετε να κάνετε κλικ στο πλήκτρο!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:46
+msgid "Icons and Colors"
+msgstr "Εικονίδια και Χρώματα"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:51
+msgid "Top Level Icons"
+msgstr "Εικονίδια Πρώτου Επιπέδου"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:52
+msgid "Display original menu icons in top level links"
+msgstr "Εμφάνιση αρχικών εικονιδίων μενού για τους συνδέσμους πρώτου επιπέδου"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:53
+msgid "Checking this enables Compact Mode &darr;"
+msgstr "Επιλέγοντάς το ενεργοποιείται η Συμπιεσμένη Μορφή &darr;"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:56
+msgid "Compact Mode"
+msgstr "Συμπιεσμένη Μορφή"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:57
+msgid "Shrink top level links down to their icons"
+msgstr "Συρρίκνωση συνδέσμων πρώτου επιπέδου στα εικονίδιά τους"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:58
+msgid "That was a cool WordPress feature, so I stole it :)"
+msgstr "That was a cool WordPress feature, so I stole it :)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:61
+msgid "Sublevel Icons"
+msgstr "Εικονίδια Δευτέρου+ Επιπέδου"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:62
+msgid "Display icons in drop down menus"
+msgstr "Εμφάνιση εικονιδίων στα αναδυόμενα μενού"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:66
+msgid "Color Scheme"
+msgstr "Χρώμα"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:67
+msgid "Pick a color for your menu bar, using the color wheel or one of the presets"
+msgstr "Διαλέξτε ένα χρώμα για τη μπάρα του μενού σας χρησιμοποιώντας τον χρωματιστό τροχό ή μια από τις προεπιλογές"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:68
+msgid "No subtle gradient, just plain color."
+msgstr "Χωρίς ντεγκραντέ, μόνο σκέτο χρώμα."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:110
+msgid "Advanced Settings"
+msgstr "Προχωρημένες Ρυθμίσεις"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:113
+msgid "Minimal Mode"
+msgstr "Ελαχιστοποιημένη Μορφή"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:114
+msgid "Hide header"
+msgstr "Απόκρυψη κεφαλίδας"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:115
+msgid "Remove the whole header bar for maximum screen real estate. Note: The quick link to your blog will be added to the menu, the Logout link in the Users sub-menu."
+msgstr "Αφαίρεση ολόκληρης της κεφαλίδας για μέγιστη εκμετάλλευση του χώρου της οθόνης. Σημείωση: Ο ταχυσύνδεσμος προς το ιστολόγιό σας θα προστεθεί στο μενού, ο σύνδεσμος αποσύνδεσης στο υπομενού των Μελών."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:118
+msgid "Favorite Actions"
+msgstr "Αγαπημένες Ενέργειες"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:119
+msgid "Display Favorite Actions"
+msgstr "Εμφάνιση Αγαπημένων Ενεργειών"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:120
+msgid "Just in case you realize you don't need this anymore with such a fast and usable menu."
+msgstr "Σε περίπτωση που δεν έχετε συνειδητοποιήσει ότι δεν το χρειάζεστε άλλο πια με ένα τόσο γρήγορο και εύχρηστο μενού..."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:133
+msgid "Hide \"0\" Bubbles"
+msgstr "Κρύψε τα Συννεφάκια \"0\""
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:134
+msgid "Hide speech bubbles when no awaiting comments or outdated plugins"
+msgstr "Δεν θα φαίνονται τα συννεφάκια όταν δεν υπάρχουν σχόλια προς έγκριση ή πρόσθετα που έχουν ενημερωμένη έκδοση"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:135
+msgid "Check if those tiny \"0\" speech bubble are too distracting for your taste"
+msgstr "Επιλέξτε το αν αυτά τα μικροσκοπικά συννεφάκια \"0\" είναι υπερβολικά ενοχλητικά για το γούστο σας"
+

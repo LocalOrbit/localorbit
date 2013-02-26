@@ -1,0 +1,206 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ozh' Admin Drop Down Menu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-12 21:24+0100\n"
+"PO-Revision-Date: 2009-01-26 10:01-0600\n"
+"Last-Translator: Karin Sequen <karin.sequen@bumerang180.com>\n"
+"Language-Team: Karin Sequen || Bumerang 180 <info at bumerang dot com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: wp_ozh_adminmenu__\n"
+"X-Poedit-Basepath: E:/home/ozh/planetozh.com/blog/wp-content/plugins/ozh-admin-drop-down-menu\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: GUATEMALA\n"
+"X-Poedit-SearchPath-0: E:/home/ozh/planetozh.com/blog/wp-content/plugins/ozh-admin-drop-down-menu\n"
+": "
+
+#: inc/core.php:405
+msgid "updated"
+msgstr "actualizadas"
+
+#: inc/core.php:410
+msgid "deleted"
+msgstr "eliminadas"
+
+#: inc/core.php:415
+#, php-format
+msgid "Admin Drop Down Menu settings <strong>%s</strong>"
+msgstr "Opciones de Admin Drop Down Menu <strong>%s</strong>"
+
+#: inc/options.php:51
+msgid "Top Level Icons"
+msgstr "Iconos Superiores"
+
+#: inc/options.php:52
+msgid "Display original menu icons in top level links"
+msgstr "Mostrar los íconos originales en los menús superiores"
+
+#: inc/options.php:53
+msgid "Checking this enables Compact Mode &darr;"
+msgstr "Marcar esto habilita la opción de Modo Compacto &darr;"
+
+#: inc/options.php:56
+msgid "Compact Mode"
+msgstr "Modo Compacto"
+
+#: inc/options.php:57
+msgid "Shrink top level links down to their icons"
+msgstr "Comprimir los men&uacute;s superiores a sus iconos."
+
+#: inc/options.php:58
+msgid "That was a cool WordPress feature, so I stole it :)"
+msgstr "Esta era una caracter&iacute;stica genial de WordPress, as&iacute; que me la rob&eacute; :)"
+
+#: inc/options.php:61
+msgid "Sublevel Icons"
+msgstr "Iconos de SubNiveles"
+
+#: inc/options.php:62
+msgid "Display icons in drop down menus"
+msgstr "Mostrar iconos en los menús desplegables"
+
+#: inc/options.php:63
+#, php-format
+msgid "They're so cute (and they're from %s)"
+msgstr "Son tan lindos (y provienen de %s)"
+
+#: inc/options.php:66
+msgid "Color Scheme"
+msgstr "Gama de Colores"
+
+#: inc/options.php:67
+msgid "Pick a color for your menu bar, using the color wheel or one of the presets"
+msgstr "Selecciona un color para tu barra de men&uacute;, usando el c&iacute;rculo crom&aacute;tico o uno de los colores predeterminados."
+
+#: inc/options.php:68
+msgid "No subtle gradient, just plain color."
+msgstr "Sin degradado, s&oacute;lo color plano."
+
+#: inc/options.php:113
+msgid "Minimal Mode"
+msgstr "Modo Minimalista"
+
+#: inc/options.php:114
+msgid "Hide header"
+msgstr "Ocultar Encabezado"
+
+#: inc/options.php:115
+msgid "Remove the whole header bar for maximum screen real estate. Note: The quick link to your blog will be added to the menu, the Logout link in the Users sub-menu."
+msgstr "Remover el encabezado completo para m&aacute;ximo aprovechamiento de la pantalla. Nota: el v&iacute;nculo de acceso r&aacute;pido al sitio se a&ntilde;adir&aacute; al men&uacute;, el v&iacute;nculo para Cerrar Sesión se a&ntilde;adir&aacute; al submen&uacute; de Usuarios."
+
+#: inc/options.php:118
+msgid "Favorite Actions"
+msgstr "Acciones Favoritas"
+
+#: inc/options.php:119
+msgid "Display Favorite Actions"
+msgstr "Mostrar Acciones Favoritas"
+
+#: inc/options.php:120
+msgid "Just in case you realize you don't need this anymore with such a fast and usable menu."
+msgstr "Sólo en caso de que te des cuenta que no necesitas nada de esto con tan rápido y práctico menú."
+
+#: inc/options.php:123
+msgid "Break Long Lists"
+msgstr "Partir Listas Largas"
+
+#: inc/options.php:124
+#, php-format
+msgid "Break if more than %s menu entries"
+msgstr "Partir en columnas si hay más de %s opciones en el menú"
+
+#: inc/options.php:125
+msgid "If a dropdown gets longer than this value, it will switch to horizontal mode so that it will hopefully fit in your screen (requires javascript)"
+msgstr "Si un menú tiene más opciones que este valor, cambiará a modo horizontal para que quepan en tu pantalla (requiere javascript)"
+
+#: inc/options.php:128
+msgid "Top Links"
+msgstr "Enlaces Superiores"
+
+#: inc/options.php:129
+msgid "Make top links clickable"
+msgstr "Permitir hacer clic en los enlaces superiores"
+
+#: inc/options.php:130
+msgid "Uncheck this option to improve compatibility with browsers that cannot handle the \"hover\" event (<em>ie</em> most handheld devices)"
+msgstr "Desmarque esta opción para mejorar la compatibilidad con browsers que no pueden manejar el evento \"hover\"  (<em>ie</em> debe manejar dispositivos)"
+
+#: inc/options.php:133
+msgid "Hide \"0\" Bubbles"
+msgstr "Ocultar Burbujas"
+
+#: inc/options.php:134
+msgid "Hide speech bubbles when no awaiting comments or outdated plugins"
+msgstr "Ocultar burbujas cuando no hay comentarios pendientes ni plugins desactualizados"
+
+#: inc/options.php:135
+msgid "Check if those tiny \"0\" speech bubble are too distracting for your taste"
+msgstr "Usa esta opción si las burbujas \"0\" te distraen demasiado"
+
+#: inc/options.php:138
+msgid "Give Some &hearts;"
+msgstr "Da un poco de &hearts;"
+
+#: inc/options.php:139
+#, php-format
+msgid "Do you like this plugin? Then <a href=\"%s\">rate it 5 Stars</a> on the official Plugin Directory!"
+msgstr "¿Te gusta este plugin? Entonces <a href=\"%s\">dale 5 estrellas</a> en el directorio oficial de plugins!"
+
+#: inc/options.php:140
+#, php-format
+msgid "Do you <em>love</em> this plugin? Please <a href=\"%s\">blog about it</a>! Tell your readers you like it so they will discover, try and hopefully like it too&nbsp;:)"
+msgstr "¿Te <em>encanta</em> este plugin? Por favor <a href=\"%s\">promociónalo</a>! Cuéntale a tus lectores que te gusta para que ellos lo descubran, prueben y posiblemente disfruten también&nbsp;:)"
+
+#: inc/options.php:141
+#, php-format
+msgid "Are you <span id=\"totallycrazy\">crazy</span> about this plugin? <a href=\"%s\">Paypal me a beer</a>! Every donation warms my heart and motivates me to release free stuff!"
+msgstr "¿Estás <span id=\"totallycrazy\">loco</span> por este plugin? <a href=\"%s\">Haz una donación vía Paypal</a>!  Cada donación anima mi corazón y me motiva a continuar ofreciendo cosas gratuitas!"
+
+#: inc/options.php:249
+msgid "Save Changes"
+msgstr "Guardar Cambios"
+
+#: inc/options.php:255
+#: inc/options.php:269
+msgid "Reset Settings"
+msgstr "Reiniciar Opciones"
+
+#: inc/options.php:264
+msgid "Clicking the following button will remove all the settings for this plugin from your database. You might want to do so in the following cases:"
+msgstr "Al hacer clic en el siguiente botón se removerán todas las configuraciones de este plugin de tu base de datos. Es posible que quieras hacerlo en alguno de estos casos:"
+
+#: inc/options.php:266
+msgid "you want to uninstall the plugin and leave no unnecessary entries in your database."
+msgstr "deseas desinstalar el plugin y no dejar información innecesaria en tu base de datos."
+
+#: inc/options.php:267
+msgid "you want all settings to be reverted to their default values"
+msgstr "deseas que todas las opciones vuelvan a tener sus valores predeterminados."
+
+#: inc/options.php:269
+msgid "Really do?"
+msgstr "¿En verdad deseas hacer esto?"
+
+#: inc/options.php:270
+msgid "There is no undo, so be very sure you want to click the button!"
+msgstr "No hay opción de deshacer, así que sea muy cuidadoso al darle clic a este botón!"
+
+#: inc/core.php:188
+msgid "Visit site"
+msgstr "Visitar el sitio"
+
+#: inc/core.php:314
+#: inc/core.php:314
+msgid "Log Out"
+msgstr "Cerrar Sesión"
+
+#: inc/options.php:46
+msgid "Icons and Colors"
+msgstr "Iconos y Colores"
+
+#: inc/options.php:110
+msgid "Advanced Settings"
+msgstr "Opciones Avanzadas"
+

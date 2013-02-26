@@ -1,0 +1,241 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ozh' Admin Drop Down Menu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-20 15:33+0100\n"
+"PO-Revision-Date: 2010-06-08 14:03+0100\n"
+"Last-Translator: Jan Mudrák <honza.mudrak@seznam.cz>\n"
+"Language-Team: honzamudrak.ic.cz <honza.mudrak@seznam.cz>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: wp_ozh_adminmenu__\n"
+"X-Poedit-Basepath: E:\\home\\ozh\\planetozh.com\\blog\\wp-content\\plugins\\ozh-admin-drop-down-menu\n"
+"X-Poedit-Language: Czech\n"
+"X-Poedit-Country: CZECH REPUBLIC\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: E:\\home\\ozh\\planetozh.com\\blog\\wp-content\\plugins\\ozh-admin-drop-down-menu\n"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:348
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:403
+msgid "updated"
+msgstr "aktualizováno"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:353
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:408
+msgid "deleted"
+msgstr "smazáno"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:358
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:413
+#, php-format
+msgid "Admin Drop Down Menu settings <strong>%s</strong>"
+msgstr "Nastavení pro plugin Admin Drop Down menu <strong>%s</strong>"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:33
+msgid "Icons"
+msgstr "Ikony"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:34
+msgid "Display menu icons"
+msgstr "Zobrazit ikony menu"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:35
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:63
+#, php-format
+msgid "They're so cute (and they're from %s)"
+msgstr "Jsou velmi rozkošné (a jsou z % s) "
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:40
+msgid "Submenus"
+msgstr "Podmenu"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:41
+msgid "Display sub menus the regular way"
+msgstr "Zobrazit podřazené menu správně"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:42
+msgid "Some like it better when sub menus don't even need you to hover the top menu link"
+msgstr "Někdo má raději když se na podřadné menu nemusí pokaždé přejít hover událostí"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:45
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:123
+msgid "Break Long Lists"
+msgstr "Zalomit dlouhý seznam"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:46
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:124
+#, php-format
+msgid "Break if more than %s menu entries"
+msgstr "Zalomit pokud je více než %s řádků použitých pluginů"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:47
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:125
+msgid "If a dropdown gets longer than this value, it will switch to horizontal mode so that it will hopefully fit in your screen (requires javascript)"
+msgstr "Pokud bude obsahovat více než tuto hodnotu, zalomí se horizontálně (vyžaduje javascript)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:52
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:128
+msgid "Top Links"
+msgstr "Hlavní odkazy"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:53
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:129
+msgid "Make top links clickable"
+msgstr "Lze rozliknout jako odkaz"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:54
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:130
+msgid "Uncheck this option to improve compatibility with browsers that cannot handle the \"hover\" event (<em>ie</em> most handheld devices)"
+msgstr "Odznačte tuto volbu k dosáhnutí kompatibility s prohlížeči, které neumí \"hover\"  událost (<em>IE</em> většinou ano)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:57
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:138
+msgid "Give Some &hearts;"
+msgstr "Pro autora &hearts;"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:58
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:139
+#, php-format
+msgid "Do you like this plugin? Then <a href=\"%s\">rate it 5 Stars</a> on the official Plugin Directory!"
+msgstr "Líbí se Vám tento plugin? Potom jej <a href=\"%s\">ohodňotte</a> na oficiálních stránkách pluginu!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:59
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:140
+#, php-format
+msgid "Do you <em>love</em> this plugin? Please <a href=\"%s\">blog about it</a>! Tell your readers you like it so they will discover, try and hopefully like it too&nbsp;:)"
+msgstr "<em>Zamilovali</em> jste si tento plugin? Prosím <a href=\"%s\">napiště o tom</a> Řekněte svým čtenářům co jste objevili, vyzkoušeli a doufám i oblíbili &nbsp;:)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:60
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:141
+#, php-format
+msgid "Are you <span id=\"totallycrazy\">crazy</span> about this plugin? <a href=\"%s\">Paypal me a beer</a>! Every donation warms my heart and motivates me to release free stuff!"
+msgstr "Máte rádi <span id=\"totallycrazy\">tento</span> plugin? <a href=\"%s\">Kupte mi pivo</a> ;)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:81
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:248
+msgid "Save Changes"
+msgstr "Uložit změny"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:87
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:101
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:254
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:268
+msgid "Reset Settings"
+msgstr "Obnovit nastavení"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:96
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:263
+msgid "Clicking the following button will remove all the settings for this plugin from your database. You might want to do so in the following cases:"
+msgstr "Kliknutím na následující tlačítko odeberete všechna nastavení pluginu z databáze. Možná to chce udělat z těchto důvodů"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:98
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:265
+msgid "you want to uninstall the plugin and leave no unnecessary entries in your database."
+msgstr "chcete odinstalovat tento plugin a nezanechat žádné nepotřebné záznamy v databázi"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:99
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:266
+msgid "you want all settings to be reverted to their default values"
+msgstr "chcete vrátit všechna nastavení do výchozích hodnot"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:101
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:268
+msgid "Really do?"
+msgstr "Opravdu?"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:102
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:269
+msgid "There is no undo, so be very sure you want to click the button!"
+msgstr "Potvrzené změny nelze vrátit zpět. Klikejte prosím opatrně!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:46
+msgid "Icons and Colors"
+msgstr "Ikony a barvy"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:51
+msgid "Top Level Icons"
+msgstr "Hlavní ikony menu"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:52
+msgid "Display original menu icons in top level links"
+msgstr "Zobrazit originální ikony v hlavní nabídce"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:53
+msgid "Checking this enables Compact Mode &darr;"
+msgstr "Zkontrolujte jestli je povolen kompaktní mód &darr;"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:56
+msgid "Compact Mode"
+msgstr "Kompaktní mód"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:57
+msgid "Shrink top level links down to their icons"
+msgstr "Zobrazit pouze ikony v hlavním menu"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:58
+msgid "That was a cool WordPress feature, so I stole it :)"
+msgstr "Toto je báječná funkce Wordpressu, tak ji asi ukradnu :)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:61
+msgid "Sublevel Icons"
+msgstr "Ikony v submenu"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:62
+msgid "Display icons in drop down menus"
+msgstr "Zobrazit ikony v samootevíracím menu"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:66
+msgid "Color Scheme"
+msgstr "Barevné schéma"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:67
+msgid "Pick a color for your menu bar, using the color wheel or one of the presets"
+msgstr "Vyber barvu pro Vaše menu použitím barevného kolečka nebo vyberte z výchozích"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:68
+msgid "No subtle gradient, just plain color."
+msgstr "Žádný přechod, pouze barva. "
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:110
+msgid "Advanced Settings"
+msgstr "Rotšířená nastavení"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:113
+msgid "Minimal Mode"
+msgstr "Minimální mód"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:114
+msgid "Hide header"
+msgstr "Skrýt hlavičku"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:115
+msgid "Remove the whole header bar for maximum screen real estate. Note: The quick link to your blog will be added to the menu, the Logout link in the Users sub-menu."
+msgstr "Odstranit celou hlavičku. Poznámka: Rychlé odkazy k Vašemu blogu budou přidány do menu, odkaz pro odhlášení bude v podřadném menu Uživatelé."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:118
+msgid "Favorite Actions"
+msgstr "Oblíbené akce"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:119
+msgid "Display Favorite Actions"
+msgstr "Zobrazit oblíbené akce"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:120
+msgid "Just in case you realize you don't need this anymore with such a fast and usable menu."
+msgstr "S tímto rychlým přístupem v menu, tyto akce potřebovat nebudete.Тільки у тому випадку, якщо Ви зрозуміли, що це непотрібне та і меню не надто зручне."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:133
+msgid "Hide \"0\" Bubbles"
+msgstr "Skrýt \"0\" informativní bubliny"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:134
+msgid "Hide speech bubbles when no awaiting comments or outdated plugins"
+msgstr "Skrýv informativní bubliny o čekajících komentářích nebo dostupné aktualizaci pluginu"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:135
+msgid "Check if those tiny \"0\" speech bubble are too distracting for your taste"
+msgstr "Zatrhněte pokud Vás textové bubliny \"0\"  rozptylují."
+
+#~ msgid "(might need a page refresh here)"
+#~ msgstr "(puede necesitar volver a cargar la página aquí)"

@@ -1,0 +1,29 @@
+#wrapper {
+	position: relative;
+}
+.slider1, .slider2 {
+	width: 200px;
+	height: 16px;
+	background-image: url(images/slider_back.png);
+	position: relative;
+/*	top: 360px;
+	left: 10px; */
+	border: 0px hidden #000;
+}
+.indicator1, .indicator2 {
+/*	margin: 0;
+	padding: 0; */
+	width: 16px;
+	height: 16px;
+	background-color: #FF9900;
+	position: absolute;
+	font-size: 1px;
+	overflow: hidden;
+	border: none;
+}
+#indicator11, #indicator22 {
+	margin: 0;
+	padding: 0;
+	background-image: url('images/indicator.gif');
+	background-color: transparent;
+}

@@ -1,0 +1,83 @@
+/* WP Dashboard widgets */
+#dashboard_wpzoom {
+
+}
+
+#dashboard_wpzoom .table {
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+#dashboard_wpzoom .inside {
+    padding-top: 20px;
+    font-size: 12px;
+}
+
+#dashboard_wpzoom .table_news,
+#dashboard_wpzoom .table_theme {
+    border-top: #ECECEC 1px solid;
+    padding-top: 7px;
+    float: left;
+    width: 45%;
+}
+
+#dashboard_wpzoom .table_theme {
+    float: right;
+}
+
+#dashboard_wpzoom p.sub {
+    padding: 5px 0 15px;
+    color: #8F8F8F;
+    font-size: 14px;
+    position: absolute;
+    top: -17px;
+    left: 15px;
+}
+
+#dashboard_wpzoom p.sub {
+    margin: -12px;
+}
+
+#dashboard_wpzoom .theme_thumb {
+    border: 1px solid #6f6f6f;
+    display: block;
+    background: url("../images/bg_theme.png") no-repeat 50% -4px;
+    position: relative;
+
+    margin-bottom: 10px;
+    
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    
+    max-width: 245px; 
+}
+
+#dashboard_wpzoom a.button {
+    font-size: 13px!important;
+}
+
+#dashboard_wpzoom .theme_thumb img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#dashboard_wpzoom .theme_thumb a {
+    padding: 21px 0 0 0;
+    display: block;
+    position: relative;
+    line-height: 0;
+}
+
+#dashboard_wpzoom .news {
+    margin: 0;
+    padding: 0;
+}
+
+#dashboard_wpzoom .rssSummary p {
+    margin: 0;
+}

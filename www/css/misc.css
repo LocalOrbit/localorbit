@@ -1,0 +1,62 @@
+.clear{
+	clear:both;
+	height: 2px;
+	overflow:hidden;
+	margin-top: 8px;
+}
+
+
+.bubble_pointer{
+	position: absolute;
+	top: 32px;
+	left: 75px;
+	background: url(../img/misc/bubble_top_arrow.png) no-repeat;
+	background-position: top left;
+	width: 142px;
+	height: 40px;
+	z-index: 1001;
+}
+
+div.wordpress_h1{
+	color: #912529;
+	outline: none;
+	text-decoration: none;
+	font-size: 1.8em;
+	font-weight: bold;
+}
+
+div.market_news_date{
+	font-size:75%;
+	font-style:italic;
+}
+
+div.market_news_divider{
+	margin: 10px 0px;
+	background-image: url(../img/default/catalog_dash.png);
+	background-position: 5px 5px;
+	background-repeat: repeat-x;
+	height: 15px;
+	overflow:hidden;
+}
+
+div.email_view{
+	width: 600px;
+	height: 450px;
+	overflow: auto;
+	border: <?=$options['p4c']?> 1px solid;
+	padding: 5px;
+}
+
+.expandable{
+	cursor: pointer;
+	padding-left: 20px;
+	line-height: 21px;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-position: top left;
+	background-image: url(../img/default/expand.png);
+}
+
+.contract{
+	background-image: url(../img/default/contract.png);
+}

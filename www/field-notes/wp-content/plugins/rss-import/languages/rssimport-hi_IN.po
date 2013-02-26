@@ -1,0 +1,316 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP-RSSImport\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-06-08 13:26+0100\n"
+"PO-Revision-Date: 2010-07-08 21:36+0530\n"
+"Last-Translator: Ashish Jha <ashish@outshinesolutions.com>\n"
+"Language-Team: Outshine Solutions <ashish@outshinesolutions.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: Hindi\n"
+"X-Poedit-Country: INDIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ../\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#@ rssimport
+#: rssimport.php:529
+#: rssimport.php:841
+msgid "RSSImport"
+msgstr "RSSImport"
+
+#@ rssimport
+#: rssimport.php:529
+msgid "Import a feed with RSSImport"
+msgstr "आयात RSSImport के साथ एक फ़ीड"
+
+#: rssimport.php:132
+msgid "Error in file:  on line: .<br />The Wordpress file \"rss-functions.php\" or \"rss.php\" could not be included."
+msgstr "फाइल में त्रुटि: लाइन पर: <br /> WordPress संचिका \"class-simplepie.php\" शामिल नहीं किया जा सकता है."
+
+#@ rssimport
+#: rssimport.php:440
+msgid "No items, feed is empty."
+msgstr "कोई आइटम नहीं, फ़ीड खाली है."
+
+#@ rssimport
+#: rssimport.php:443
+msgid "Error: Feed has a error or is not valid"
+msgstr "त्रुटि: फ़ीड एक त्रुटि है या मान्य नहीं है"
+
+#@ rssimport
+#: rssimport.php:446
+msgid "&laquo; Previous"
+msgstr "&laquo; पिछला"
+
+#@ rssimport
+#: rssimport.php:447
+msgid "Next &raquo;"
+msgstr "अगला &raquo;"
+
+#@ rssimport
+#: rssimport.php:448
+#: rssimport.php:449
+msgid "more items"
+msgstr "अधिक आइटम"
+
+#@ rssimport
+#: rssimport.php:840
+msgid "Entries from any RSS or Atom feed"
+msgstr "कोई RSS या एटम फ़ीड से Entries"
+
+#@ rssimport
+#: rssimport.php:1045
+msgid "Title:"
+msgstr "शीर्षक:"
+
+#@ rssimport
+#: rssimport.php:1048
+msgid "URL for Title (incl. http://):"
+msgstr "शीर्षक के लिए यूआरएल (incl. http://):"
+
+#@ rssimport
+#: rssimport.php:1051
+msgid "Display:"
+msgstr "प्रदर्शन:"
+
+#@ rssimport
+#: rssimport.php:1054
+msgid "FeedURL:"
+msgstr "FeedURL:"
+
+#@ rssimport
+#: rssimport.php:1057
+msgid "Before Description:"
+msgstr "विवरण से पहले:"
+
+#@ rssimport
+#: rssimport.php:1060
+msgid "Display Description:"
+msgstr "प्रदर्शन विवरण:"
+
+#@ rssimport
+#: rssimport.php:1062
+#: rssimport.php:1075
+#: rssimport.php:1098
+#: rssimport.php:1116
+#: rssimport.php:1145
+#: rssimport.php:1153
+#: rssimport.php:1179
+#: rssimport.php:1199
+#: rssimport.php:1207
+msgid "False"
+msgstr "झूठी"
+
+#@ rssimport
+#: rssimport.php:1063
+#: rssimport.php:1076
+#: rssimport.php:1099
+#: rssimport.php:1117
+#: rssimport.php:1146
+#: rssimport.php:1154
+#: rssimport.php:1180
+#: rssimport.php:1200
+#: rssimport.php:1208
+msgid "True"
+msgstr "सच्चा"
+
+#@ rssimport
+#: rssimport.php:1068
+msgid "After Description:"
+msgstr "बाद विवरण"
+
+#@ rssimport
+#: rssimport.php:1069
+msgid "You can use the follow strings for create custom links:"
+msgstr "आप कस्टम लिंक बनाने के तार का उपयोग कर सकते हैं:"
+
+#@ rssimport
+#: rssimport.php:1070
+msgid "Example:"
+msgstr "उदाहरण:"
+
+#@ rssimport
+#: rssimport.php:1073
+msgid "HTML:"
+msgstr "HTML:"
+
+#@ rssimport
+#: rssimport.php:1081
+msgid "Truncate Description Char:"
+msgstr "Truncate चार विवरण:"
+
+#@ rssimport
+#: rssimport.php:1084
+msgid "Truncate Description String (HTML):"
+msgstr "Truncate विवरण अक्षर (HTML):"
+
+#@ rssimport
+#: rssimport.php:1087
+msgid "Truncate Title Char:"
+msgstr "Truncate चार शीर्षक:"
+
+#@ rssimport
+#: rssimport.php:1090
+msgid "Truncate Title String (HTML):"
+msgstr "Truncate शीर्षक अक्षर(HTML):"
+
+#@ rssimport
+#: rssimport.php:1093
+msgid "Before Date (HTML):"
+msgstr "तारीख से पहले (HTML):"
+
+#@ rssimport
+#: rssimport.php:1096
+msgid "Date:"
+msgstr "दिनांक:"
+
+#@ rssimport
+#: rssimport.php:1104
+msgid "After Date (HTML):"
+msgstr "दिनांक के बाद(HTML):"
+
+#@ rssimport
+#: rssimport.php:1111
+msgid "Before Creator (HTML):"
+msgstr "निर्माता से पहले (HTML):"
+
+#@ rssimport
+#: rssimport.php:1114
+msgid "Creator:"
+msgstr "निर्माता:"
+
+#@ rssimport
+#: rssimport.php:1122
+msgid "After Creator (HTML):"
+msgstr "बाद निर्माता (HTML):"
+
+#@ rssimport
+#: rssimport.php:1125
+msgid "Before Items (HTML):"
+msgstr "आइटम से पहले(HTML):"
+
+#@ rssimport
+#: rssimport.php:1128
+msgid "After Items (HTML):"
+msgstr "आइटम के बाद (HTML):"
+
+#@ rssimport
+#: rssimport.php:1131
+msgid "Before Item (HTML):"
+msgstr "मद से पहले(HTML):"
+
+#@ rssimport
+#: rssimport.php:1134
+msgid "After Item (HTML):"
+msgstr "बाद आइटम (HTML):"
+
+#@ rssimport
+#: rssimport.php:1137
+msgid "Target Attribut:"
+msgstr "लक्ष्य Attribut:"
+
+#@ rssimport
+#: rssimport.php:1140
+msgid "Rel Attribut:"
+msgstr "Rel Attribut:"
+
+#@ rssimport
+#: rssimport.php:1143
+msgid "Charsetscan:"
+msgstr "Charsetscan:"
+
+#@ rssimport
+#: rssimport.php:1151
+msgid "Debug mode:"
+msgstr "डीबग मोड:"
+
+#@ rssimport
+#: rssimport.php:1205
+msgid "Echo/Return:"
+msgstr "इको / लौटें:"
+
+#@ rssimport
+#: rssimport.php:1159
+msgid "Before <em>No</em> Items Message (HTML):"
+msgstr "पहले <em>नहीं</em> आइटम संदेश(HTML):"
+
+#@ rssimport
+#: rssimport.php:1162
+msgid "<em>No</em> Items Message:"
+msgstr "<em>नहीं</em> आइटम संदेश:"
+
+#@ rssimport
+#: rssimport.php:1165
+msgid "After <em>No</em> Items Message (HTML):"
+msgstr "बाद में<em>नहीं</em>आइटम संदेश (HTML):"
+
+#@ rssimport
+#: rssimport.php:1168
+msgid "Before Error Message (HTML):"
+msgstr "त्रुटि संदेश से पहले (HTML):"
+
+#@ rssimport
+#: rssimport.php:1171
+msgid "Error Message:"
+msgstr "त्रुटि संदेश:"
+
+#@ rssimport
+#: rssimport.php:1174
+msgid "After Error Message (HTML):"
+msgstr "बाद में त्रुटि संदेश(HTML):"
+
+#@ rssimport
+#: rssimport.php:1177
+msgid "Pagination:"
+msgstr "पृष्ठ पर अंक लगाना:"
+
+#@ rssimport
+#: rssimport.php:1185
+msgid "Previous Pagination Link String:"
+msgstr "पिछले पृष्ठ पर अंक लगाना लिंक String:"
+
+#@ rssimport
+#: rssimport.php:1188
+msgid "Next Pagination Link String:"
+msgstr "अगले पन्ने पर नंबर डालना लिंक String:"
+
+#@ rssimport
+#: rssimport.php:1191
+msgid "Previous Pagination Title String:"
+msgstr "पिछले पृष्ठ पर अंक लगाना शीर्षक String:"
+
+#@ rssimport
+#: rssimport.php:1194
+msgid "Next Pagination Title String:"
+msgstr "अगले पन्ने पर नंबर डालना शीर्षक String:"
+
+#: rssimport.php:120
+msgid "Error in file:  on line: .<br />The WordPress file \"class-simplepie.php\" with class SimplePie could not be included."
+msgstr "फाइल में त्रुटि: लाइन पर: <br /> WordPress संचिका \"class-simplepie.php\" वर्ग SimplePie के साथ शामिल नहीं किया जा सकता है."
+
+#@ rssimport
+#: rssimport.php:1197
+msgid "Use SimplePie class:"
+msgstr "SimplePie वर्ग का प्रयोग करें :"
+
+#@ rssimport
+#: rssimport.php:1107
+msgid "Date Formatting:"
+msgstr "स्वरूपण दिनांक:"
+
+#@ rssimport
+#: rssimport.php:1108
+msgid "Leave empty for use the date format of your WordPress settings."
+msgstr "छुट्टी के लिए खाली अपने WordPress सेटिंग्स की तारीख के प्रारूप का उपयोग करें."
+
+#@ rssimport
+#: rssimport.php:1108
+msgid "Documentation on date formatting"
+msgstr "तारीख पर दस्तावेज़ीकरण स्वरूपण"
+

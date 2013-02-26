@@ -1,0 +1,367 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP-RSSImport v4.2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-06-04 13:29+0100\n"
+"PO-Revision-Date: 2012-03-07 16:50+0200\n"
+"X-Poedit-Language: Romanian\n"
+"X-Poedit-Country: Romania\n"
+"Language-Team: Web Geeks\n"
+"Last-Translator: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ../\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#@ rssimport
+#: rssimport.php:465
+msgid "No items, feed is empty."
+msgstr "Articole, alimentare este gol."
+
+#@ rssimport
+#: rssimport.php:468
+msgid "Error: Feed has a error or is not valid"
+msgstr "Eroare: Are o eroare sau nu este valid"
+
+#@ rssimport
+#: rssimport.php:471
+msgid "« Previous"
+msgstr "«Anterioare"
+
+#@ rssimport
+#: rssimport.php:472
+msgid "Next »"
+msgstr "Next»"
+
+#@ rssimport
+#: rssimport.php:473
+#: rssimport.php:474
+msgid "more items"
+msgstr "mai multe elemente"
+
+#@ rssimport
+#@ default
+#: rssimport.php:568
+#: rssimport.php:880
+msgid "RSSImport"
+msgstr "RSSImport"
+
+#@ rssimport
+#: rssimport.php:568
+msgid "Import a feed with RSSImport"
+msgstr "Import un flux cu RSSImport"
+
+#@ rssimport
+#: rssimport.php:879
+msgid "Entries from any RSS or Atom feed"
+msgstr "Intrările din orice RSS sau Atom feed"
+
+#@ rssimport
+#: rssimport.php:1089
+msgid "Title:"
+msgstr "Titlu:"
+
+#@ rssimport
+#: rssimport.php:1092
+msgid "URL for Title (incl. http://):"
+msgstr "URL-ul pentru titlu (incl. http://):"
+
+#@ rssimport
+#: rssimport.php:1095
+msgid "Display:"
+msgstr "Afişare:"
+
+#@ rssimport
+#: rssimport.php:1098
+msgid "FeedURL:"
+msgstr "FeedURL:"
+
+#@ rssimport
+#: rssimport.php:1101
+msgid "Before Description:"
+msgstr "Înainte de Descriere:"
+
+#@ rssimport
+#: rssimport.php:1104
+msgid "Display Description:"
+msgstr "Afişare Descriere:"
+
+#@ rssimport
+#: rssimport.php:1106
+#: rssimport.php:1119
+#: rssimport.php:1142
+#: rssimport.php:1160
+#: rssimport.php:1189
+#: rssimport.php:1199
+#: rssimport.php:1207
+#: rssimport.php:1233
+#: rssimport.php:1253
+#: rssimport.php:1261
+msgid "False"
+msgstr "False"
+
+#@ rssimport
+#: rssimport.php:1107
+#: rssimport.php:1120
+#: rssimport.php:1143
+#: rssimport.php:1161
+#: rssimport.php:1190
+#: rssimport.php:1200
+#: rssimport.php:1208
+#: rssimport.php:1234
+#: rssimport.php:1254
+#: rssimport.php:1262
+msgid "True"
+msgstr "Adevărat"
+
+#@ rssimport
+#: rssimport.php:1112
+msgid "After Description:"
+msgstr "După descrierea:"
+
+#@ rssimport
+#: rssimport.php:1113
+msgid "You can use the follow strings for create custom links:"
+msgstr "Aveţi posibilitatea să utilizaţi urmaţi siruri de caractere pentru a crea linkuri particularizate:"
+
+#@ rssimport
+#: rssimport.php:1114
+msgid "Example:"
+msgstr "Exemplu:"
+
+#@ rssimport
+#: rssimport.php:1117
+msgid "HTML:"
+msgstr "HTML:"
+
+#@ rssimport
+#: rssimport.php:1125
+msgid "Truncate Description Char:"
+msgstr "Trunchiaţi Char Descriere:"
+
+#@ rssimport
+#: rssimport.php:1128
+msgid "Truncate Description String (HTML):"
+msgstr "Trunchiaţi Descriere String (HTML):"
+
+#@ rssimport
+#: rssimport.php:1131
+msgid "Truncate Title Char:"
+msgstr "Trunchiaţi Char titlu:"
+
+#@ rssimport
+#: rssimport.php:1134
+msgid "Truncate Title String (HTML):"
+msgstr "Trunchiaţi titlul şir (HTML):"
+
+#@ rssimport
+#: rssimport.php:1137
+msgid "Before Date (HTML):"
+msgstr "Înainte de data (HTML):"
+
+#@ rssimport
+#: rssimport.php:1140
+msgid "Date:"
+msgstr "Data:"
+
+#@ rssimport
+#: rssimport.php:1148
+msgid "After Date (HTML):"
+msgstr "Data (HTML):"
+
+#@ rssimport
+#: rssimport.php:1151
+msgid "Date Formatting:"
+msgstr "Data de formatare:"
+
+#@ rssimport
+#: rssimport.php:1152
+msgid "Leave empty for use the date format of your WordPress settings."
+msgstr "Lăsaţi necompletat pentru utilizarea formatul de dată setările de WordPress."
+
+#@ rssimport
+#: rssimport.php:1152
+msgid "Documentation on date formatting"
+msgstr "Documentația privind data de formatare"
+
+#@ rssimport
+#: rssimport.php:1155
+msgid "Before Creator (HTML):"
+msgstr "Înainte de Creator (HTML):"
+
+#@ rssimport
+#: rssimport.php:1158
+msgid "Creator:"
+msgstr "Creator:"
+
+#@ rssimport
+#: rssimport.php:1166
+msgid "After Creator (HTML):"
+msgstr "După Creator (HTML):"
+
+#@ rssimport
+#: rssimport.php:1169
+msgid "Before Items (HTML):"
+msgstr "Înainte de elemente (HTML):"
+
+#@ rssimport
+#: rssimport.php:1172
+msgid "After Items (HTML):"
+msgstr "După elemente (HTML):"
+
+#@ rssimport
+#: rssimport.php:1175
+msgid "Before Item (HTML):"
+msgstr "Element (HTML):"
+
+#@ rssimport
+#: rssimport.php:1178
+msgid "After Item (HTML):"
+msgstr "După punctul (HTML):"
+
+#@ rssimport
+#: rssimport.php:1181
+msgid "Target Attribut:"
+msgstr "Ţintă Attribut:"
+
+#@ rssimport
+#: rssimport.php:1184
+msgid "Rel Attribut:"
+msgstr "Rel Attribut:"
+
+#@ rssimport
+#: rssimport.php:1197
+msgid "Charsetscan:"
+msgstr "Charsetscan:"
+
+#@ rssimport
+#: rssimport.php:1205
+msgid "Debug mode:"
+msgstr "Debug mode:"
+
+#@ rssimport
+#: rssimport.php:1213
+msgid "Before <em>No</em> Items Message (HTML):"
+msgstr "Înainte de a <em>nu</em> elemente mesajului (HTML):"
+
+#@ rssimport
+#: rssimport.php:1216
+msgid "<em>No</em> Items Message:"
+msgstr "<em>Nu</em> Elemente mesaj:"
+
+#@ rssimport
+#: rssimport.php:1219
+msgid "After <em>No</em> Items Message (HTML):"
+msgstr "După <em>nu</em> elemente mesajului (HTML):"
+
+#@ rssimport
+#: rssimport.php:1222
+msgid "Before Error Message (HTML):"
+msgstr "Înainte de mesaj de eroare (HTML):"
+
+#@ rssimport
+#: rssimport.php:1225
+msgid "Error Message:"
+msgstr "Mesaj de eroare:"
+
+#@ rssimport
+#: rssimport.php:1228
+msgid "After Error Message (HTML):"
+msgstr "După mesajul de eroare (HTML):"
+
+#@ rssimport
+#: rssimport.php:1231
+msgid "Pagination:"
+msgstr "Pagination:"
+
+#@ rssimport
+#: rssimport.php:1239
+msgid "Previous Pagination Link String:"
+msgstr "Anterioare Pagination Link String:"
+
+#@ rssimport
+#: rssimport.php:1242
+msgid "Next Pagination Link String:"
+msgstr "Următoarea Pagination Link String:"
+
+#@ rssimport
+#: rssimport.php:1245
+msgid "Previous Pagination Title String:"
+msgstr "Anterioare Pagination titlul String:"
+
+#@ rssimport
+#: rssimport.php:1248
+msgid "Next Pagination Title String:"
+msgstr "Următoarea Pagination titlul String:"
+
+#@ rssimport
+#: rssimport.php:1251
+msgid "Use SimplePie class:"
+msgstr "Utilizarea SimplePie clasa:"
+
+#@ rssimport
+#: rssimport.php:1259
+msgid "Echo/Return:"
+msgstr "Echo/întoarcere:"
+
+#@ rssimport
+#. translators: plugin header field 'Description'
+#: rssimport.php:0
+msgid "Import and display Feeds in your blog, use the function RSSImport(), a Widget or Shortcode [RSSImport]. Please see the new <a href=\"http://wordpress.org/extend/plugins/rss-import/\">possibilities</a>."
+msgstr "De import şi a afişa mai multe detalii în blog-ul dvs., utilizaţi funcţia de RSSImport(), un widget sau Shortcode [RSSImport]. Vă rugăm să consultaţi <a href=\"http://wordpress.org/extend/plugins/rss-import/\"> posibilităţi </a>."
+
+#@ rssimport
+#. translators: plugin header field 'Name'
+#: rssimport.php:0
+msgid "WP-RSSImport"
+msgstr "WP-RSSImport"
+
+#@ rssimport
+#. translators: plugin header field 'PluginURI'
+#: rssimport.php:0
+msgid "http://bueltge.de/wp-rss-import-plugin/55/"
+msgstr "http://bueltge.de/WP-RSS-import-plugin/55/"
+
+#@ rssimport
+#. translators: plugin header field 'Author'
+#: rssimport.php:0
+msgid "Frank Bültge"
+msgstr "Frank Bültge"
+
+#@ rssimport
+#. translators: plugin header field 'AuthorURI'
+#: rssimport.php:0
+msgid "http://bueltge.de/"
+msgstr "http://bueltge.de/"
+
+#@ rssimport
+#. translators: plugin header field 'Version'
+#: rssimport.php:0
+msgid "4.4.9"
+msgstr "4.4.9"
+
+#@ default
+#: rssimport.php:130
+msgid "Error in file:  on line: .<br />The WordPress file \"class-simplepie.php\" with class SimplePie could not be included."
+msgstr "Eroare în fişier: pe linia:. <br /> Fişier WordPress \"clasa-simplepie.php\" cu clasa SimplePie nu ar putea fi incluse."
+
+#@ default
+#: rssimport.php:142
+msgid "Error in file:  on line: .<br />The Wordpress file \"rss-functions.php\" or \"rss.php\" could not be included."
+msgstr "Eroare în fişier: pe linia:. <br /> Wordpress fisierul \"RSS-functions.php\" sau \"rss.php\" nu a putut fi incluse."
+
+#@ rssimport
+#: rssimport.php:1187
+msgid "Desc4Title:"
+msgstr "Desc4Title:"
+
+#@ rssimport
+#: rssimport.php:1194
+msgid "Description for title-Attribut on Title-Link"
+msgstr "Descriere pentru titlul-Attribut pe titlul-Link"
+

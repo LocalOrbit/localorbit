@@ -1,0 +1,237 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ozh/' Admin Drop Down Menu v3.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-20 15:33+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=1;\n"
+"X-Poedit-Language: Chinese\n"
+"X-Poedit-Country: TAIWAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:348
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:403
+msgid "updated"
+msgstr "更新"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:353
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:408
+msgid "deleted"
+msgstr "刪除"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:358
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:413
+#, php-format
+msgid "Admin Drop Down Menu settings <strong>%s</strong>"
+msgstr "Admin Drop Down Menu設定已經<strong>%s</strong>"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:33
+msgid "Icons"
+msgstr "圖示"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:34
+msgid "Display menu icons"
+msgstr "顯示選單圖示"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:35
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:63
+#, php-format
+msgid "They're so cute (and they're from %s)"
+msgstr "它們太可愛（它們來自 %s）"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:40
+msgid "Submenus"
+msgstr "子選單"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:41
+msgid "Display sub menus the regular way"
+msgstr "顯示子選單的方式"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:42
+msgid "Some like it better when sub menus don't even need you to hover the top menu link"
+msgstr "有些人喜歡子選單而不需要顯示上方選單連結"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:45
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:123
+msgid "Break Long Lists"
+msgstr "將過長的選單折行"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:46
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:124
+#, php-format
+msgid "Break if more than %s menu entries"
+msgstr "超過 %s 的選單項目折行"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:47
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:125
+msgid "If a dropdown gets longer than this value, it will switch to horizontal mode so that it will hopefully fit in your screen (requires javascript)"
+msgstr "如果下拉選單超過這項目，它將會切換成橫向顯示，這樣符合你的螢幕（需要Javascript ）"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:52
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:128
+msgid "Top Links"
+msgstr "主選單連結"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:53
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:129
+msgid "Make top links clickable"
+msgstr "使主選單連結可點選"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:54
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:130
+msgid "Uncheck this option to improve compatibility with browsers that cannot handle the \"hover\" event (<em>ie</em> most handheld devices)"
+msgstr "取消選中該選項，以改善兼容性瀏覽器無法處理\"滑鼠滑過\"動作（ <em>ie</em>可能會有這問題）"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:57
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:138
+msgid "Give Some &hearts;"
+msgstr "獻出愛心 &hearts;"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:58
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:139
+#, php-format
+msgid "Do you like this plugin? Then <a href=\"%s\">rate it 5 Stars</a> on the official Plugin Directory!"
+msgstr "你喜歡這個外掛？那麼去官方外掛目錄<a href=\"%s\">給它投5顆心</a>吧！"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:59
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:140
+#, php-format
+msgid "Do you <em>love</em> this plugin? Please <a href=\"%s\">blog about it</a>! Tell your readers you like it so they will discover, try and hopefully like it too&nbsp;:)"
+msgstr "你<em>喜歡</em>這個外掛？那<a href=\"%s\">寫篇網誌</a> ！告訴你的讀者你喜歡它吧，讓他們也去嘗試並喜歡上:)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:60
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:141
+#, php-format
+msgid "Are you <span id=\"totallycrazy\">crazy</span> about this plugin? <a href=\"%s\">Paypal me a beer</a>! Every donation warms my heart and motivates me to release free stuff!"
+msgstr "你為這個外掛<span id=\"totallycrazy\">瘋狂</span>？那麼<a href=\"%s\">給我來箱啤酒</a>吧！每一個捐贈都會溫暖我的心並激勵我推出更多免費的東西！"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:81
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:248
+msgid "Save Changes"
+msgstr "儲存設定"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:87
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:101
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:254
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:268
+msgid "Reset Settings"
+msgstr "恢復預設"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:96
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:263
+msgid "Clicking the following button will remove all the settings for this plugin from your database. You might want to do so in the following cases:"
+msgstr "點選以下按鈕，在你的資料庫刪除所有此外掛的設定。在下列情況下，你可能希望這樣做："
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:98
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:265
+msgid "you want to uninstall the plugin and leave no unnecessary entries in your database."
+msgstr "要解除安裝此外掛，並不想在你的資料庫中留下任何不必要的東西。"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:99
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:266
+msgid "you want all settings to be reverted to their default values"
+msgstr "你想將所有設定恢復成預設"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:101
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:268
+msgid "Really do?"
+msgstr "確定這麼做？"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:102
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:269
+msgid "There is no undo, so be very sure you want to click the button!"
+msgstr "沒有回復，所以你要確定按下這按鈕！"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:46
+msgid "Icons and Colors"
+msgstr "圖示和顏色"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:51
+msgid "Top Level Icons"
+msgstr "上方選單圖示"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:52
+msgid "Display original menu icons in top level links"
+msgstr "在主選單連結顯示原本的圖示"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:53
+msgid "Checking this enables Compact Mode &darr;"
+msgstr "(勾選後，還可以選擇簡單模式 ，勾選看看!!) &darr;"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:56
+msgid "Compact Mode"
+msgstr "簡單模式"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:57
+msgid "Shrink top level links down to their icons"
+msgstr "只使用圖示，不顯示主選單文字"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:58
+msgid "That was a cool WordPress feature, so I stole it :)"
+msgstr "這是一個很酷的WordPress功能，所以我偷用了它:)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:61
+msgid "Sublevel Icons"
+msgstr "子選單圖示"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:62
+msgid "Display icons in drop down menus"
+msgstr "下拉選單中顯示圖示"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:66
+msgid "Color Scheme"
+msgstr "配色方案"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:67
+msgid "Pick a color for your menu bar, using the color wheel or one of the presets"
+msgstr "為你的選單設定一個顏色(←點左方圓型小圖來使用色盤，或是只使用預設)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:68
+msgid "No subtle gradient, just plain color."
+msgstr "不使用漸層，只使用單色色彩。"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:110
+msgid "Advanced Settings"
+msgstr "進階設定"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:113
+msgid "Minimal Mode"
+msgstr "最小模式"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:114
+msgid "Hide header"
+msgstr "隱藏主選單上方區塊"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:115
+msgid "Remove the whole header bar for maximum screen real estate. Note: The quick link to your blog will be added to the menu, the Logout link in the Users sub-menu."
+msgstr "隱藏整個主選單上方區塊，來獲得最大視窗。注意：左上方站台名稱的『回首頁連結功能』將被增加到選單欄，『登出功能區塊』會被加到子選單內。"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:118
+msgid "Favorite Actions"
+msgstr "最常用的操作"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:119
+msgid "Display Favorite Actions"
+msgstr "顯示常用的操作"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:120
+msgid "Just in case you realize you don't need this anymore with such a fast and usable menu."
+msgstr "為了以防萬一，你意識到你不需要一個快速的可用選單。"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:133
+msgid "Hide \"0\" Bubbles"
+msgstr "隱藏\"0\"數字提示框"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:134
+msgid "Hide speech bubbles when no awaiting comments or outdated plugins"
+msgstr "當沒有未審核的迴響或需要升級的外掛時，隱藏數字提示框"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:135
+msgid "Check if those tiny \"0\" speech bubble are too distracting for your taste"
+msgstr "檢查如果這些微小的\"0\"數字提示框過於分散的感覺"
+

@@ -1,0 +1,47 @@
+3.1.0
+ + Updated language files
+ + Added Belorussian translation
+3.0.5
+ + Added Chinese - Thanks Bo Zhao
+3.0
+ + Completely rewritten. Plain JS used instead of ZF classes
+2.4.14
+ + Added Finish language
+2.4.1
+ + Updated Italian language files
+2.3.8
+ + Revamped configuration page - now users see extra links
+ + Added Italian lang files - thanks Gianni!
+2.3.7
+ + Added context help to umapper configuration
+ + Moved configuration page into settings instead of plugins sub-page
+2.3.5
+ + Map templates are fully supported - most prominentely geodart games are now available
+2.3.0
+ + Made plugin WP 2.7.1 compatible
+ + Updated internal ZF to 1.8.1
+ + Fixed various estetic bugs
+2.2.0
+ + Completely rewritted user interface - map creation made more easy and straightforward process
+ + ability to delete maps
+2.0.5
+ + custom map sizes are now available
+2.0.4
+ + fixed unhandled exception occuring when api key is invalid
+1.3.7
+ + Fixed "Fatal error: Cannot redeclare media_admin_css()"
+ + Backward compatibility with WP 2.5.1 restored
+1.3.6
+ + New screenshots added
+ + Minor bugs fixed
+1.3.3
+ + Documentation updated
+ + Embed object updated
+ + FIX - Plugin wasn't working if - short_open_tag = Off
+1.3.0
+ + Support for true edit maps. Now you can select [umap] tag in your editor press U button, and editor loads with a selected map.
+ + Added insert buttons to map meta page, so you can insert map directly from the main page
+ + Minor fixes in layout - overall plugin pages should be more sexy now.
+1.2.0
+ + Fixed bug when "call_user_func_array() [function.call-user-func-array]:" emited in new WP 2.6
+ + Plugin fully compatible with WP 2.6

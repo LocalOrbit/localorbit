@@ -1,0 +1,13 @@
+<IfModule mod_php5.c>
+	php_flag session.auto_start off
+</IfModule>
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /field-notes/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /field-notes/index.php [L]
+</IfModule>
+
+# END WordPress

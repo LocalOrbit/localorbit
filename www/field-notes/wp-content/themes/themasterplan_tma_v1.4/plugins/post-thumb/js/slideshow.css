@@ -1,0 +1,6 @@
+/* 	Post-Thumb-Template-Library
+	CSS file for slideshow
+*/
+#rotator { border: 1px solid #000; margin: 10px auto 10px; overflow: hidden; position: relative;  }
+#rotator img { margin:0; padding:0; }
+

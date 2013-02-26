@@ -1,0 +1,145 @@
+# Copyright (C) 2012 Authors Widget
+# This file is distributed under the same license as the Authors Widget package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Authors Widget 2.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/authors\n"
+"POT-Creation-Date: 2012-02-22 14:32:13+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2012-02-23 12:08+0100\n"
+"Last-Translator: KrzysztofS <ks@prywatny.eu>\n"
+"Language-Team: \n"
+
+#: authors.php:151
+msgid "Select Author..."
+msgstr "Wybierz autora..."
+
+#: authors.php:255
+msgid "Posts by %s"
+msgstr "Opublikowane przez %s"
+
+#: authors.php:315
+#: authors.php:524
+msgid "Authors"
+msgstr "Autorzy"
+
+#: authors.php:350
+msgid "Powered by %s"
+msgstr "Wspierany przez %s"
+
+#: authors.php:350
+msgid "Authors Widget Plugin for Wordpress"
+msgstr "Wtyczka Widget Autorzy dla Wordpress'a"
+
+#. #-#-#-#-#  plugin.pot (Authors Widget 2.1)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: authors.php:350
+msgid "Authors Widget"
+msgstr "Widget Autorzy"
+
+#: authors.php:458
+msgid "Title"
+msgstr "Tytuł"
+
+#: authors.php:460
+msgid "Format"
+msgstr "Format"
+
+#: authors.php:461
+msgid "List"
+msgstr "Lista"
+
+#: authors.php:463
+msgid "Cloud"
+msgstr "Chmura"
+
+#: authors.php:465
+msgid "Dropdown"
+msgstr "Lista rozwijana"
+
+#: authors.php:468
+msgid "Order by"
+msgstr "Uporządkowanie"
+
+#: authors.php:469
+msgid "Display name"
+msgstr "Nazwa"
+
+#: authors.php:470
+msgid "First name"
+msgstr "Imię"
+
+#: authors.php:471
+msgid "Last name"
+msgstr "Nazwisko"
+
+#: authors.php:472
+msgid "Post count"
+msgstr "Liczba postów"
+
+#: authors.php:474
+msgid "Number of authors to show"
+msgstr "Ilość wyświetlanych autorów "
+
+#: authors.php:475
+msgid "Show full name"
+msgstr "Wyświetl pełną nazwę"
+
+#: authors.php:476
+msgid "Show avatar"
+msgstr "Wyświetl avatar"
+
+#: authors.php:477
+msgid "Avatar size"
+msgstr "Rozmiar awatara"
+
+#: authors.php:478
+msgid "Show RSS links"
+msgstr "Wyświetl linki RSS"
+
+#: authors.php:479
+msgid "Show post counts"
+msgstr "Wyświetl liczbę postów"
+
+#: authors.php:480
+msgid "Exclude admin"
+msgstr "Wyklucz admina"
+
+#: authors.php:481
+msgid "Exclude"
+msgstr "Wyklucz"
+
+#: authors.php:482
+msgid "Include"
+msgstr "Uwzględnij"
+
+#: authors.php:483
+msgid "Hide credit"
+msgstr "Ukryj stopkę"
+
+#: authors.php:484
+msgid "Donate"
+msgstr "Darowizna"
+
+#: authors.php:522
+msgid "A list of the authors"
+msgstr "Lista autorów"
+
+#. Plugin URI of the plugin/theme
+msgid "http://blog.fleischer.hu/wordpress/authors/"
+msgstr "http://blog.fleischer.hu/wordpress/authors/"
+
+#. Description of the plugin/theme
+msgid "Authors Widget shows the list or cloud of the authors, with the number of posts, link to RSS feed next to their name, avatar. It is useful in a multi-author blog, where you want to have the list in the sidemenu."
+msgstr "Widget Autorzy pokazuje listę lub chmurę autorów, z liczbą postów, link do kanału RSS obok ich nazwy, avatar. Jest to przydatne w przypadku wielu autorów bloga, w którym chcesz mieć listę w pamelu bocznym."
+
+#. Author of the plugin/theme
+msgid "Gavriel Fleischer"
+msgstr "Gavriel Fleischer"
+
+#. Author URI of the plugin/theme
+msgid "http://blog.fleischer.hu/gavriel/"
+msgstr "http://blog.fleischer.hu/gavriel/"
+

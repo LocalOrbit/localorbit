@@ -1,0 +1,131 @@
+.umapper{
+    
+}
+
+.umapper #test {
+    border: 1px solid red;
+}
+
+.umapper .clear {
+	clear:both;
+}
+
+.umapper .frmElement{
+    margin:10px;
+    padding:2px;
+}
+
+.umapper .elTitle{
+	margin: 0 8px 5px 0;
+	padding: 0;
+	font-size:1.6em;
+	
+}
+
+.umapper .elInput, .umapper .elTextarea {
+	border: 1px solid #ccc;
+	background-color:#ebebeb;
+	width: 600px;
+	padding:5px;
+	font-size:1.4em;
+}
+
+
+.umapper .elTextarea {
+    font-size:1.1em;
+}
+
+/**
+ * Message box
+ */
+.umapper #msg_box_background {
+    position: absolute;
+    display: none;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    filter:alpha(opacity=75); /*IE*/
+    -moz-opacity:0.75; /*FF*/
+    opacity:0.75;
+}
+
+.umapper #msg_box_dialog {
+    z-index:10;
+    display: none;
+    position: absolute;
+    border: 1px solid #888;
+    background-color: #fff;
+    top: 185px;
+    left: 140px;
+    padding: 10px;
+    width:400px;
+}
+.umapper .indicator_m{
+    height:32px;
+    width:32px;
+    float:left;
+    margin-right:15px;
+}
+.umapper #msg_box_dialog div{
+    padding: 0px;
+}
+
+/**
+ * Insert dialogue
+ */
+.umapper #put_background {
+    position: absolute;
+    display: none;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    filter:alpha(opacity=75); /*IE*/
+    -moz-opacity:0.75; /*FF*/
+    opacity:0.75;
+}
+
+.umapper form input {
+    vertical-align: middle;
+}
+
+.umapper #put_dialog {
+    z-index:10;
+    display: none;
+    position: absolute;
+    border: 1px solid #888;
+    background-color: #fff;
+    top: 120px;
+    left: 110px;
+    padding: 10px;
+}
+.umapper #put_dialog div{
+    padding-top: 10px;
+}
+
+.umapper #alignment_preview,
+.umapper #size_preview {
+    text-align: center;
+}
+.umapper #buttons {
+	clear: both;
+    text-align: center;
+}
+.umapper #allignments {
+    padding-left: 40px;
+}
+.umapper #sizes {
+	padding-left: 20px;
+}
+.umapper #select_size {
+	float: left;
+	width: 200px;
+}
+.umapper #select_alignment {
+	float: left;
+	width: 200px;
+}
+

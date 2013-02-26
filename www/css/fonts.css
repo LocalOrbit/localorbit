@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'TravelingTypewriterRegular';
+    src: url('fonts/travelingtypewriter-webfont.eot');
+    src: url('fonts/travelingtypewriter-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/travelingtypewriter-webfont.woff') format('woff'),
+         url('fonts/travelingtypewriter-webfont.ttf') format('truetype'),
+         url('fonts/travelingtypewriter-webfont.svg#TravelingTypewriterRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

@@ -1,0 +1,220 @@
+#overlay{
+	position: absolute;
+	top: 0px;
+	left:0px;
+	right:0px;
+	bottom:30px;
+	z-index: 20;
+	opacity: 0.8;
+	background-color:#fff;
+	display: none;
+}
+
+#popup{
+	position: absolute;
+	top: 0px;
+	left:260px;
+	right:260px;
+	height: 400px;
+	z-index: 1121;
+	background-color: <?=$options['p4a']?>;
+	border: #aaa 1px solid;
+	box-shadow:5px 0px 10px #555;
+	-webkit-box-shadow:0px 0px 10px <?=$options['p4d']?>;
+	-moz-box-shadow:0px 0px 10px <?=$options['p4d']?>;
+	display: none;
+	border-radius: 4px;
+}
+
+
+
+#popup_left{
+	position: absolute;
+	top: 0px;
+	left:0px;
+	width: 140px;
+	bottom: 45px;
+/*
+	background-color:<?=$options['p4b']?>;
+*/
+}
+
+#popup_center{
+	position: absolute;
+	top: 0px;
+	left:140px;
+	right:0px;
+	bottom: 45px;
+/*
+	background-color:<?=$options['p4f']?>;
+*/
+}
+
+#popup_foot{
+	position: absolute;
+	left: 0px;
+	right:0px;
+	height: 45px;
+	bottom: 0px;
+	background-color:<?=$options['p4a']?>;
+	text-align:right;
+	padding: 10px 10px 0px 0px;
+	border-radius: 4px;
+}
+
+#popup_content{
+	border: #bbb 1px solid;
+	border-width: 3px 1px 1px 1px;
+	position: absolute;
+	left: 10px;
+	right:10px;
+	top: 10px;
+	bottom: 10px;
+	border-radius: 20px;
+	padding: 15px;
+	background-color:<?=$options['p4f']?>
+}
+
+#notification{
+	position: absolute;
+	top: 150px;
+	left:400px;
+	right:400px;
+	min-height: 80px;
+	z-index: 1121;
+	display: none;
+	text-align: center;
+	font-size: 250%;
+}
+
+#notification_content{
+}
+
+#notification_close{
+	position: absolute;
+	top: 0px;
+	right:0px;
+	height: 40px;
+	width:44px;
+}
+
+#shop_popup{
+	display: none;
+	position: absolute;
+	width: 485px;
+	z-index:99;
+}
+
+.shop_popup_top{
+	height: 36px;
+	background-image: url(../img/popups/openWindow_top.png);
+	padding:0px;
+	margin: 0px;
+}
+
+.shop_popup_middle{
+	background-image: url(../img/popups/openWindow_middle.png);
+	background-repeat: repeat-y;
+	margin: 0px;
+}
+
+.shop_popup_bottom{
+	height: 25px;
+	padding:0px;
+	margin: 0px;
+	background-image: url(../img/popups/openWindow_bottom.png);
+}
+
+#shop_popup_content{
+	margin: 0px;
+	padding: 0px 20px 15px 20px;
+	width: 445px;
+	text-align: left;
+}
+
+body.popup{
+	background-image: none;
+	background-color: #fff;
+	text-align: left;
+	padding: 10px;
+}
+
+
+#edit_popup{
+	background-color: <?=$options['p4f']?>;
+			 
+	-moz-background-clip: padding;     /* Firefox 3.6 */
+	-webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
+	background-clip: padding-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
+
+	border: 10px solid rgba(0,0,0,0.3);
+
+	-webkit-border-radius:12px;
+	-moz-border-radius:12px;
+	border-radius: 12px; 
+
+	padding: 5px 10px; 
+	text-align: left;
+
+	position: absolute; 
+	width: 370px;
+	display: none;
+	z-index: 120;
+}
+
+
+
+
+
+/* From homepage/includes/popups.css */
+
+#overlay{
+	z-index: 1110;
+	position: fixed;
+	top: 0px;
+	left:0px;
+	bottom: 0px;
+	right: 0px;
+	background-color: #333;
+	opacity: 0.8;
+	display:none;
+}
+
+#popup_closer{
+	position: absolute;
+	z-index: 1112;
+	top: 105px;
+	height: 100px;
+	text-align: right;
+	display:none;
+	width: 940px;
+    left: 50%;
+    margin-left: -470px;
+}
+
+.popup{
+
+	position: absolute;
+	z-index: 1111;
+	top: 100px;
+	bottom:0px;
+	display:none;
+	width: 900px;
+    left: 50%;
+    margin-left: -450px;
+}
+
+.popup_content{
+	background-color:#fff;
+	border:#888;
+	border-radius: 12px;
+	padding: 15px;
+	width: 900px;
+	text-align: left !important;
+}
+
+.popup_spacer{
+	margin: 10px 0px;
+	border: #eee 2px solid;
+	border-width: 2px 0px 0px 0px;
+}

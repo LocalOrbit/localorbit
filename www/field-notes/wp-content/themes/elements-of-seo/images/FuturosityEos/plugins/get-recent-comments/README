@@ -1,0 +1,159 @@
+Installation
+~~~~~~~~~~~~
+
+1. Drop the file in wordpress/wp-content/plugins
+2. Activate the plugin the WordPress Plugin Management
+
+If you have WordPress 1.2.x go to section WordPress 1.2.x
+
+If you have WordPress 1.5 continue:
+
+WordPress 1.5
+~~~~~~~~~~~~~
+
+3. Insert one of the following code snippets into the sidebar
+template. Which one is the right depends on the theme you are using. There are
+two functions:
+
+get_recent_comments()   - Show comments
+get_recent_trackbacks() - Show trackbacks
+
+---------------------------------------------------------------
+Default Theme: wp-content/themes/default/sidebar.php 
+
+   <?php if (function_exists('get_recent_comments')) { ?>
+   <li><h2><?php _e('Recent Comments:'); ?></h2>
+        <ul>
+        <?php get_recent_comments(); ?>
+        </ul>
+   </li>
+   <?php } ?>   
+
+   <?php if (function_exists('get_recent_trackbacks')) { ?>
+   <li><h2><?php _e('Recent Trackbacks:'); ?></h2>
+        <ul>
+        <?php get_recent_trackbacks(); ?>
+        </ul>
+   </li>
+   <?php } ?>
+---------------------------------------------------------------
+Classic Theme: wp-content/themes/classic/sidebar.php 
+
+   <?php if (function_exists('get_recent_comments')) { ?>
+   <li><?php _e('Recent Comments:'); ?>
+        <ul>
+        <?php get_recent_comments(); ?>
+        </ul>
+   </li>
+   <?php } ?>
+
+   <?php if (function_exists('get_recent_trackbacks')) { ?>
+   <li><?php _e('Recent Trackbacks:'); ?>
+        <ul>
+        <?php get_recent_trackbacks(); ?>
+        </ul>
+   </li>
+   <?php } ?>
+---------------------------------------------------------------
+
+4. (Optional) Set options in the admin gui:
+Options/Recent Comments   
+
+You can configure the number of Comments and Trackbacks, that are shown.  And
+you can set the length of the cited comments and specify a maximum word length.
+Word longer than this value are wrapped, preventing them from damaging your
+layout.
+
+Using macros you can customize the format of the cited comments and trackbacks.
+%comment_excerpt The text of the comment. It might get shorted to the number of
+                 characters you entered in "Long comments are chopped off at..."
+
+%comment_link    The URL to the cited comment.
+
+%comment_author  The name, the commenter entered in the comment form. If she
+                 left the field empty, the name is "Anonymous".
+
+%comment_date    The date, when the comment was posted in the style you configured
+                 as default date format.
+
+%comment_time    The time, when the comment was posted
+
+%author_url      The URL, the comment author left in the comment form, or if the
+		 comment is a trackback, the URL of the site that issued the
+                 trackback.
+
+%post_title      The title of the posting that was commented.
+
+%post_link       The URL of the posting that was commented.
+
+%post_date       The date when the commented posting was published.
+
+%trackback_title Only applicable in trackbacks: The title of the trackback. It
+		 might get shorted to the number of characters you entered in
+                 "Long trackbacks are chopped off at..."
+
+WordPress 1.2.x
+~~~~~~~~~~~~~~~
+
+3. Write the following piece of code into your template (index.php)
+                  
+                  
+<li id="recent_comments"><?php _e('Recent Comments:'); ?>
+        <ul>
+        <? get_recent_comments(); ?>
+        </ul>
+</li>
+
+Done. If you want more, read on... 
+
+WordPress 1.2.x Advanced configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+4. (Optional) 
+   You can specify one to three arguments to the function. It is possible to
+   name only one argument or only two. Look at the following examples.
+   
+   The arguments have the following meaning: 
+   1. Number of comments to display.  
+   2. Maximum Number of characters in a comment excerpt
+   3. Formatting
+
+   If you don't specify arguments the plugin defaults to 5 comments, 120
+   characters per comment and a standard formatting.
+   
+   The format is a piece of html code where you use tags that will be replaced
+   by the actual data:
+
+   %comment_excerpt - Shortened comment. 
+   %comment_link    - Link to the comment. Something like:
+                      http://blog.example.com/wp/archives/2005/02/03/this-is-a-test/#comment-523
+   %comment_author  - Name left by the commenter
+   %comment_date    - Date of comment
+   %comment_time    - Time of comment
+   %post_title      - Title of the posting 
+   %post_link       - Link to the posting (and not the comment). Something like:
+                      http://blog.example.com/wp/archives/2005/02/03/this-is-a-test/
+   %post_date       - Date of the posting
+    
+
+WordPress 1.2.x Examples
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Show the 8 most recent comments
+<?php get_recent_comments(8); ?>
+
+Show the 8 most recent comments, with a maximum of 100 characters per comment:
+<?php get_recent_comments(8,100); ?>
+
+The same with your own formatting 
+<?php get_recent_comments(8,100,'<li><a href="%comment_link">%comment_author</a>: %comment_excerpt</li>');
+
+
+
+Feedback
+~~~~~~~~
+
+krischan@jodies.de
+http://blog.jodies.de
+
+

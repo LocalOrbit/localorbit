@@ -1,0 +1,672 @@
+/*  
+
+Theme Name: Clean Copy Full 3 Column
+
+Author URI: http://corymiller.com
+
+Version: 1
+
+Author: Cory Miller and Nathan Parikh
+
+Description: Clean Copy Full is a 3 Column, clean blue, grey and white theme designed for blog content and sharp simplicity, based on Copywriter Michel Fortin's blog.
+
+The CSS, XHTML and design is released under GPL: 
+
+http://www.opensource.org/licenses/gpl-license.php
+
+Header photo by Ville Miettinen, used with permission
+
+*/
+
+
+
+
+
+body {
+
+background: #E0E0E0;
+
+color: #000000;
+
+font-size: 12px;
+
+font-family: Arial, Verdana, Sans-Serif;
+
+margin: 0px 0px 0px 0px;
+
+}
+
+body * {margin: 0px; padding: 0px;}
+
+a, a:visited { 
+
+color: #2397E9;
+
+font-weight: bold;
+
+text-decoration: underline;
+
+}
+
+a:hover {
+
+font-weight: bold;
+
+text-decoration: none;
+
+color: #000000;
+
+}
+
+#container { 
+
+background: #ffffff;
+
+width: 860px;
+
+text-align: left; 
+
+margin: 20px auto 30px auto; 
+
+border: 1px solid #cccccc;
+
+overflow: hidden;
+
+}
+
+#header {
+
+background: #2397E9 url(images/header.jpg) top center no-repeat;
+
+padding: 25px 0px 90px 0px;
+
+text-align: left;
+
+width: 860px;
+
+margin: 0px;
+
+}	
+
+#header h2 {
+
+color: #ffffff;
+
+font-size: 30px;
+
+font-family: Helvetica, Arial, Verdana, Sans-Serif;
+
+font-weight: bold;
+
+margin: 0px;
+
+text-indent: 35px; 
+
+padding: 25px 0px 5px 0px;
+}
+
+#header h2 a {
+
+color: #ffffff;
+
+text-decoration: none;
+
+}
+
+
+
+#header h3 {
+
+color: #ffffff;
+
+font-size: 13px;
+
+font-family: Georgia, Times New Roman, Sans-Serif;
+
+text-indent: 35px; 
+
+margin: 0px;
+
+}
+
+#menu { 
+
+background: #006699;
+
+margin: 0px;
+
+padding: 4px 0px 4px 0px;
+
+text-align: center;
+
+border-bottom: 5px solid #000000;
+
+}
+
+#menu img{ border: none; }
+
+#menu h2 {
+
+color: #ffffff;
+
+font-size: 15px;
+
+font-family: Helvetica, Arial, Verdana, Sans-Serif;
+
+font-weight: bold;
+
+margin: 0px;
+
+padding: 0px 0px 0px 0px;
+
+}
+
+#menu li {
+
+display: inline;
+
+list-style-type: none;
+
+margin: 0px;
+
+padding: 0px;
+
+}
+
+#menu ul {
+
+margin: 0px;
+
+padding: 4px;
+
+}
+
+#menu ul li a {
+
+font-family: Helvetica, Arial, Verdana, Sans-Serif;
+
+font-weight: bold;
+
+font-size: 15px;
+
+color: #ffffff;
+
+padding: 8px 20px 8px 20px;
+
+margin: 0px 0px 0px 0px;
+
+text-decoration: none;
+
+}
+
+#menu ul li a:hover {
+
+color: #000;
+
+background: #8CD7FE;
+
+padding: 15px 20px 8px 20px;
+
+text-decoration: none;
+
+border-top: 1px solid #C5EBFF;
+
+}
+* html #content { width: 340px; margin: 20px 0px; }
+
+#content { 
+
+display: inline;
+
+background: #ffffff;
+
+width: 350px; 
+
+margin-top: 20px;
+
+margin-bottom: 20px;
+
+margin-left: 0px;
+
+margin-right: 0px;
+
+float: left; 
+
+position:relative;
+
+padding: 0px 20px;
+
+border-left: 1px dotted #cccccc;
+
+border-right: 1px dotted #cccccc;
+
+minimum-height: 500px;
+
+overflow: hidden;
+
+}
+
+#content p{
+
+margin: 0px;
+
+line-height: 18px;
+
+padding: 0px 0px 10px 0px;
+
+}
+
+#content p img{
+
+border: none;
+
+padding: 0px 10px 10px 0px;
+
+}
+
+#content p a { text-decoration: none; }
+
+#content p a:hover { color: #68221A; text-decoration: underline;}
+
+#content h1 {
+
+color: #333333;
+
+font-size: 20px;	
+
+font-family: Georgia, Helvetica Bold, Arial Bold, Verdana, Sans-Serif;;
+
+font-weight: bold;
+
+margin: 0px;
+
+line-height: 120%;
+
+font-variant: normal;
+
+}
+
+#content h1 a  {
+
+color: #333333;
+
+text-decoration: none;
+
+}
+
+#content h1 a:hover {
+
+color: #2397E9;
+
+background: none;
+
+text-decoration: underline;
+
+}
+
+#content h2 {
+
+color: #333333;
+
+font-size: 19px;	
+
+font-family: Georgia, Helvetica Bold, Arial Bold, Verdana, Sans-Serif;;
+
+font-weight: bold;
+
+margin: 0px;
+
+line-height: 150%;
+
+font-variant: normal;
+
+}
+#content h2 a  {
+
+color: #333333;
+
+text-decoration: none;
+
+}
+
+#content h2 a:hover {
+
+color: #2397E9;
+
+background: none;
+
+text-decoration: underline;
+
+}
+
+#content h3 {
+
+color: #333333;
+
+font-size: 14px;
+
+font-family: Helvetica Bold, Arial Bold, Verdana, Sans-Serif;;
+
+font-weight: bold;
+
+margin-bottom: 0px;
+
+line-height: 120%;
+
+}
+
+#content h3 a  {
+
+color: #333333;
+
+text-decoration: none;
+
+}
+
+#content h3 a:hover {
+
+color: #2397E9;
+
+background: #ffffff;
+
+text-decoration: underline;
+
+}
+
+#content ol {
+
+list-style-type: decimal;
+
+line-height: 18px;
+
+margin: 0px;
+
+padding: 0px 0px 10px 30px;
+
+}
+
+#content ul {
+
+list-style: none;
+
+margin: 0px;
+
+padding: 0px 0px 10px 0px;
+
+}
+
+#content li {
+
+margin: 0px;
+
+padding: 0px;
+
+}
+
+#content ul li {
+
+list-style: square inside;
+
+margin: 0px 0px 0px 10px;
+
+padding: 5px 0px 0px 0px;
+
+}
+
+#content ul li a {
+
+color: #666666;
+
+text-decoration: underline;
+
+}
+
+#content ul li a:hover {
+
+color: #000000;
+
+text-decoration: underline;
+
+}
+
+blockquote{
+
+margin: 0px 0px 0px 25px;
+
+padding: 0px 25px 0px 10px;
+
+font-style: italic;
+
+color: #666666;
+
+border-left: 1px solid #cccccc;
+
+}
+
+#content blockquote p{
+
+margin: 0px 0px 20px 0px;
+
+padding: 0px;
+
+}
+
+.postspace {
+
+width: 440px;
+
+height: 32px;
+
+margin: 0px;
+
+padding: 0px;
+
+}
+
+.postspace2 {
+
+width: 440px;
+
+height: 0px;
+
+margin: 0px;
+
+padding: 0px;
+
+}
+
+.postspace3 {
+
+width: 440px;
+
+height: 15px;
+
+margin: 0px;
+
+padding: 0px;
+
+}
+
+* html #sidebarl, * html #sidebarr { width: 160px; margin: 0px 10px; }
+
+#sidebarl { 
+
+display: block;
+
+color: #000000;
+
+width: 170px;
+
+float: left; 
+
+position:relative;
+
+margin: 0px 10px;
+
+padding: 0px 20px;
+
+text-align: left;
+
+border: none;
+
+}
+
+#sidebarl p{
+
+margin: 0px;
+
+line-height: 16px;
+
+padding: 5px 0px 10px 0px;
+
+}
+
+#sidebarl h2, #sidebarr h2 {
+
+color: #333333;
+
+font-size: 15px;
+
+font-family: Georgia, Helvetica Bold, Arial Bold, Verdana, Sans-Serif;;
+
+list-style: none;
+
+padding: 25px 0px 10px 0px;
+
+margin: 0px;
+
+border-bottom: 1px solid #cccccc;
+
+}
+
+#sidebarl img, #sidebarr img{
+
+border: none;
+
+padding: 20px 10px 0px 0px;
+
+}
+
+#sidebarl ul, #sidebarr ul {
+
+list-style: none;
+
+margin: 0px;
+
+padding: 0px 0px 0px 0px;
+
+}
+
+#sidebarl li, #sidebarr li {
+
+list-style: none;
+
+margin: 0px;
+
+padding: 0px;
+
+}
+
+#sidebarl ul li, #sidebarr ul li {
+
+list-style: none;
+
+margin: 0px;
+
+padding: 6px 0px 6px 0px;
+
+}
+
+#sidebarl ul li a, #sidebarr ul li a {
+
+color: #2397E9;
+
+font-weight: bold;
+
+text-decoration: none;
+
+}
+
+#sidebarl ul li a:hover, #sidebarr ul li a:hover {
+
+color: #68221A;
+
+text-decoration: underline;
+
+}
+
+#sidebarl ul li ul li, #sidebarr ul li ul li {
+
+padding: 10px 0px 0px 15px;
+
+}
+
+#sidebar1 ul li ul li a, #sidebarr ul li ul li a {
+
+color: #0066cc;
+
+}
+
+
+
+#sidebarr { 
+
+display: block;
+
+color: #000000;
+
+width: 175px;
+
+float: right; 
+
+position:relative;
+
+margin: 0px 10px;
+
+padding: 0px 20px;
+
+text-align: left;
+
+border: none;
+
+}
+
+#footer { 
+
+height: 45px; 
+
+color: #ffffff;
+
+background: #000;
+
+font-weight: bold;
+
+padding: 25px;
+
+margin: 0px; 
+
+text-align: center;
+
+clear: both;
+
+border-top: 3px solid #cccccc;
+
+border-bottom: 3px solid #cccccc;
+
+}
+
+#footer a {
+
+color: #fff;
+
+text-decoration: none;
+
+}
+
+#footer a:hover {
+
+color: #FFFFFF;
+
+text-decoration: underline;
+
+}

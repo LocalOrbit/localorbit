@@ -1,0 +1,297 @@
+Zoom Framework Changelog 
+---------
+
+v 1.3.7 - January 14, 2013
+
+    - Fixed dashboard widget bug
+    - Fixed wrong value showing in select options
+
+    M   components/admin/settings-fields.php
+    M   components/dashboard/dashboard.php
+
+
+v 1.3.6 - November 30, 2012
+
+    - Minor adjustments for WordPress 3.5
+    - TimThumb script removed from the framework. If your theme requires it, replace the code from file /functions/theme/thumb.php with: http://timthumb.googlecode.com/svn/trunk/timthumb.php
+
+
+    M   assets/options.css
+    M   pages/admin.php
+    R   components/timthumb.php
+
+
+v 1.3.5 - September 12, 2012
+
+    - Contextual help on ZOOM options page
+    - New typography settings field
+    - New framework & theme updater module
+    - Various bug fixes & improvements
+
+    A   assets/js/wp-admin.js
+    M   assets/options.css
+    M   changelog.txt
+    M   components/admin/admin.php
+    M   components/admin/settings-fields.php
+    M   components/admin/settings-page.php
+    M   components/get-the-image.php
+    M   components/theme/theme.php
+    M   components/theme/ui.php
+    M   components/updater/framework-updater.php
+    M   components/updater/theme-updater.php
+    M   components/updater/updater.php
+    A   components/video-api.php
+    A   components/video-thumb.php
+    M   init.php
+    M   options.php
+    M   pages/update.php
+
+
+v 1.3.4 - September 7, 2012
+
+    - Use an excerpt from full post content as meta description when post excerpt isn't available
+
+    M   components/theme/theme.php
+
+
+v 1.3.3 - July 31, 2012
+
+    - Don't echo before=> and after=> parameters if there is no image.
+    - Fixed bug with layout selector in admin panel
+
+    M   components/get-the-image.php
+    M   components/admin/settings-fields.php
+
+
+v 1.3.2 - July 30, 2012
+
+    - Use attached image to a post as thumbnails, in case there is no Featured Image set
+
+    M   components/get-the-image.php
+
+
+v 1.3.1 - July 20, 2012
+
+    - Fixed bug with pixelated thumbnails
+
+    M   components/get-the-image.php
+
+
+v 1.3.0 - July 20, 2012
+
+    - Theme Options page was redesigned
+    - Minor UI changes
+    - New Features:
+        - Theme Update Notification
+        - Keyboard shortcuts (j/k for navigation, Ctrl+S for saving modificaitons)
+        - "Framework" section in Theme Options
+    - Most of the files were written
+
+
+v 1.2.9 - June 19, 2012
+
+    - TimThumb updated to latest version 2.8.10
+    - Bugfix with bbPress not working properly in some themes
+    - New "Debug" section under Miscellaneous menu in Theme Options
+
+    M   assets/js/zoomAdmin.js
+    M   components/ui.php
+    M   components/timthumb.php
+    M   options.php
+    M   wpzoom.php
+
+ 
+v 1.2.8 - May 6, 2012
+
+    - Shortcode preview functionality was rewritten and restored in the framework
+
+    M   assets/js/shortcode-generator/dialog.php 
+    M   assets/js/shortcode-generator/editor_plugin.js 
+    M   assets/js/shortcode-generator/js/dialog-js.php 
+    M   shortcodes/init.php 
+    A   assets/js/shortcode-generator/preview-shortcode-external.php
+
+
+v 1.2.7 - April 29, 2012
+
+    - Removed the functionality relating to the shortcode preview due to potential exploit.
+
+    M   assets/js/shortcode-generator/dialog.php 
+    M   assets/js/shortcode-generator/editor_plugin.js 
+    M   assets/js/shortcode-generator/js/dialog-js.php 
+    M   shortcodes/init.php 
+    R(emoved) assets/js/shortcode-generator/preview-shortcode-external.php
+ 
+
+v 1.2.6 - March 26, 2012
+
+    - added new option to disable/enable Framework Meta Generator Tags
+
+    M   components/ui.php
+    M   options.php
+    M   wpzoom.php
+
+
+v 1.2.5 - February 26, 2012
+
+    - added a new dropdown to displays a list with all pages
+
+    M   components/dashboard.php
+
+
+v 1.2.4 - February 15, 2012
+
+    - [wzslider] can now be displayed on archives pages too.
+
+    M   shortcodes/wzslider.php
+
+
+v 1.2.3 - February 6, 2012
+
+    - fix with dropdown select fields for multiple category/tags
+
+    M   components/dashboard.php
+
+
+v 1.2.2 - January 30, 2012
+
+    - bug fix with latest theme in admin widget
+
+    M   components/dashboard-widgets.php
+
+
+v 1.2.1 - January 28, 2012
+    
+    - bug fix with [wzslider] not working
+
+    M   init.php
+
+
+v 1.2.0 - January 27, 2012
+    
+    - new feature in Framework: WPZOOM Slideshow Shortcode [wzslider]
+    
+    A   assets/css/wzslider.css 
+    A   assets/images/wzslider/
+    A   assets/js/galleria.js
+    A   assets/js/wzslider.js
+    A   assets/js/wzslider_button.js
+    A   shortcodes/wzslider.php
+    
+    - new widget with WPZOOM News in WordPress Dashboard
+    
+    A   assets/css/dashboard.css
+    A   components/dashboard-widgets.php
+    M   init.php
+
+
+v 1.1.10 - January 17, 2012
+
+    - don't list blank styles
+
+    M   components/ui.php
+
+
+v 1.1.9 - January 15, 2012
+
+    - bug fix with video thumbnails
+
+    M   components/get-the-image.php
+ 
+
+v 1.1.8 - January 10, 2012
+
+    - added support for video thumbnails
+
+    M   components/get-the-image.php
+    M   components/timthumb.php
+
+
+v 1.1.7 - December 20, 2011
+
+    - fixed bug with multi-select in WordPress 3.3 and a minor styling bug
+
+    M   assets/js/zoomAdmin.js
+    M   assets/options.css
+
+
+v 1.1.6 - December 7, 2011
+
+    - fixed bug with strip slashes and multi-category saving
+    
+    M   assets/js/zoomAdmin.js
+
+
+v 1.1.5 - November 30, 2011
+
+    - small bug fix, strip slashes from user input
+    
+    M   wpzoom.php
+
+
+v 1.1.4 - October 16, 2011
+    
+    - added support for css styling from admin panel
+    
+    M   components/ui.php
+
+
+v 1.1.3 - October 11, 2011
+    
+    - added layout-select support for Theme Options page (in selected themes)
+    
+    M   components/dashboard.php
+    M   assets/options.css
+    M   assets/js/zoomAdmin.js
+
+
+v 1.1.2 - October 8, 2011
+    
+    - bug fix with localization
+    
+    M   wpzoom.php
+    
+    
+v 1.1.1 - October 3, 2011
+    
+    - bug fix, options saving failed unless you did import
+    - some strings modified to be more informative for UX
+
+    M   assets/js/zoomAdmin.js
+
+
+v 1.1 - October 2, 2011
+
+    - added export/import for widgets settings
+    - now all export/import data is encoded with base64 to provide better compatibility
+    - introduced possibility to preload widgets settings provided by us
+    - added new option type: button
+    - added new function in ui: getCropLocation()
+    - refactored some code
+
+    M   assets/js/zoomAdmin.js
+    M   assets/options.css
+    M   components/dashboard.php
+    M   components/option-manager.php
+    M   options.php
+    M   wpzoom.php
+    M   ui.php
+
+
+v 1.0.2 - September 28, 2011
+
+    - bug fix for update system
+    
+    M   wpzoom.php
+
+
+v 1.0.1 - September 28, 2011
+
+    - bug fix in shortcodes manager
+    
+    M   assets/js/shortcode-generator/js/dialog-js.php
+
+
+v 1.0 - September 27, 2011
+
+    - initial release

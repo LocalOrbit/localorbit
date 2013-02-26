@@ -1,0 +1,238 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ozh' Admin Drop Down Menu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-20 15:33+0100\n"
+"PO-Revision-Date: 2011-03-01 11:29+0100\n"
+"Last-Translator: Cees van den Heuvel <cvandenheuvel@intermediad.nl>\n"
+"Language-Team:  <cvandenheuvel@intermediad.nl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: wp_ozh_adminmenu__\n"
+"X-Poedit-Basepath: E:\\home\\svn\\plugins\\ozh-admin-drop-down-menu\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-SearchPath-0: E:\\home\\svn\\plugins\\ozh-admin-drop-down-menu\n"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:348
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:403
+msgid "updated"
+msgstr "bijgewerkt"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:353
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:408
+msgid "deleted"
+msgstr "verwijderd"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:358
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:413
+#, php-format
+msgid "Admin Drop Down Menu settings <strong>%s</strong>"
+msgstr "Admin Drop Down Menu instellingen <strong>%s</strong>"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:33
+msgid "Icons"
+msgstr "Iconen"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:34
+msgid "Display menu icons"
+msgstr "Toon menu iconen"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:35
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:63
+#, php-format
+msgid "They're so cute (and they're from %s)"
+msgstr "Heel grappig (ze komen van %s)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:40
+msgid "Submenus"
+msgstr "Submenus"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:41
+msgid "Display sub menus the regular way"
+msgstr "Toon submenus op de gebruikelijke manier"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:42
+msgid "Some like it better when sub menus don't even need you to hover the top menu link"
+msgstr "Sommige mensen geven er de voorkeur aan dat je voor submenus niet over het hoofditem hoeft te gaan"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:45
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:123
+msgid "Break Long Lists"
+msgstr "Verdeel lange lijsten"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:46
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:124
+#, php-format
+msgid "Break if more than %s menu entries"
+msgstr "Verdeel als er meer dan %s menu opties zijn"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:47
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:125
+msgid "If a dropdown gets longer than this value, it will switch to horizontal mode so that it will hopefully fit in your screen (requires javascript)"
+msgstr "Als een lijst langer wordt dan deze waarde wordt overgeschakeld naar horizontale weergave zodat het hopelijk op je scherm past (javascript vereist)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:52
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:128
+msgid "Top Links"
+msgstr "Hoofditem"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:53
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:129
+msgid "Make top links clickable"
+msgstr "Maak hoofditems klikbaar"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:54
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:130
+msgid "Uncheck this option to improve compatibility with browsers that cannot handle the \"hover\" event (<em>ie</em> most handheld devices)"
+msgstr "Schakel deze optie uit om de compatibiliteit met browsers te verbeteren die niet kunnen omgaan met het \"hover\" mechanisme (<em>zoals</em> de meeste portable devices)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:57
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:138
+msgid "Give Some &hearts;"
+msgstr "Deel een aantal &hearts; uit"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:58
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:139
+#, php-format
+msgid "Do you like this plugin? Then <a href=\"%s\">rate it 5 Stars</a> on the official Plugin Directory!"
+msgstr "Vind je de plugin nuttig?  Dan <a href=\"%s\">geef hem 5 Sterren</a>op de officiele Plugin Directory!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:59
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:140
+#, php-format
+msgid "Do you <em>love</em> this plugin? Please <a href=\"%s\">blog about it</a>! Tell your readers you like it so they will discover, try and hopefully like it too&nbsp;:)"
+msgstr "Vind je deze plugin <em>super</em>? Dan <a href=\"%s\">vertel er iets over op je site</a>! Vertel je bezoekers erover zodat ze hem ook ontdekken, uitproberen en hopelijk ook waarderen &nbsp;:)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:60
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:141
+#, php-format
+msgid "Are you <span id=\"totallycrazy\">crazy</span> about this plugin? <a href=\"%s\">Paypal me a beer</a>! Every donation warms my heart and motivates me to release free stuff!"
+msgstr "Ben je helemaal <span id=\"totallycrazy\">weg</span> van deze plugin? <a href=\"%s\">Paypal me een biertjer</a>! Elke donatie geeft me een warm gevoel en motiveert me om meer gratis zaken beschikbaar te maken!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:81
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:248
+msgid "Save Changes"
+msgstr "Opslaan wijzigingen"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:87
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:101
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:254
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:268
+msgid "Reset Settings"
+msgstr "Terugzetten instellingen"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:96
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:263
+msgid "Clicking the following button will remove all the settings for this plugin from your database. You might want to do so in the following cases:"
+msgstr "Als je op de volgende knop klikt worden alle instellingen van de plugin verwijderd uit je database. Dat zou je willen doen in de volgende situaties:"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:98
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:265
+msgid "you want to uninstall the plugin and leave no unnecessary entries in your database."
+msgstr "je wil de plugin deinstalleren en geen onnodige gegevens in je database achterlaten."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:99
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:266
+msgid "you want all settings to be reverted to their default values"
+msgstr "je wilt alle instellingen terugzetten naar hun beginwaardes."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:101
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:268
+msgid "Really do?"
+msgstr "Weet je het zeker?"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:102
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:269
+msgid "There is no undo, so be very sure you want to click the button!"
+msgstr "Er is geen weg terug, dus zorg dat je heel zeker weet dat je op de knop wilt drukken!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:46
+msgid "Icons and Colors"
+msgstr "Iconen en kleuren"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:51
+msgid "Top Level Icons"
+msgstr "Hoofditem iconen"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:52
+msgid "Display original menu icons in top level links"
+msgstr "Toon de originele menu iconen in de hoofditems"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:53
+msgid "Checking this enables Compact Mode &darr;"
+msgstr "Deze optie aanvinken maakt de Compacte weergave mogelijk &darr;"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:56
+msgid "Compact Mode"
+msgstr "Compacte weergave"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:57
+msgid "Shrink top level links down to their icons"
+msgstr "Geef de hoofditems weer als allleen iconen (geen tekst)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:58
+msgid "That was a cool WordPress feature, so I stole it :)"
+msgstr "Een heel fraaie Wordpress optie, dus die heb ik gestolen :)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:61
+msgid "Sublevel Icons"
+msgstr "Submenu iconen"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:62
+msgid "Display icons in drop down menus"
+msgstr "Toon iconen in de dropdown menus"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:66
+msgid "Color Scheme"
+msgstr "Kleurenschema"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:67
+msgid "Pick a color for your menu bar, using the color wheel or one of the presets"
+msgstr "Kies een kleur voor je menu, gebruik de kleurenwaaier of een van de voorkeurinstellingen"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:68
+msgid "No subtle gradient, just plain color."
+msgstr "Geen subtiel verloop, gewoon standaard kleuren."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:110
+msgid "Advanced Settings"
+msgstr "Geavanceerde instellingen"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:113
+msgid "Minimal Mode"
+msgstr "Minimale weergave"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:114
+msgid "Hide header"
+msgstr "Verberg de kopregel"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:115
+msgid "Remove the whole header bar for maximum screen real estate. Note: The quick link to your blog will be added to the menu, the Logout link in the Users sub-menu."
+msgstr "Verwijder de hele kopregel om maximale schermruimte mogelijk te maken. Let op: de de link naar je site wordt toegevoegd aan het menu, de link voor uitloggen aan het submenu Gebruikers."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:118
+msgid "Favorite Actions"
+msgstr "Favoriete acties"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:119
+msgid "Display Favorite Actions"
+msgstr "Geef Favoriete acties weer"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:120
+msgid "Just in case you realize you don't need this anymore with such a fast and usable menu."
+msgstr "Wanneer je tot de conclusie komt dat je die met zo'n snel en bruikbaar menu niet meer nodig hebt."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:133
+msgid "Hide \"0\" Bubbles"
+msgstr "Verberg \"0\" popup teksten"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:134
+msgid "Hide speech bubbles when no awaiting comments or outdated plugins"
+msgstr "Verberg de popup teksten als er geen opmerkingen of bijgewerkte plugins zijn"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:135
+msgid "Check if those tiny \"0\" speech bubble are too distracting for your taste"
+msgstr "Controleer of de kleine \"0\" popup teksten je teveel afleiden"
+

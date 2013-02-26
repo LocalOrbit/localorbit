@@ -1,0 +1,78 @@
+
+td.nav1,td.nav2{
+
+}
+
+
+#nav1{
+	position: absolute;
+	left: 165px;
+	top: 00px;
+	width:320px;
+	height: 40px;
+	color: #fff !important;
+	line-height: 50px;
+	vertical-align: center;
+	font-size: 15px;
+}
+
+a.nav1{
+	font-size: 22px;
+	margin-right: 30px;
+	color: #fff;
+	letter-spacing: 1px;
+	font-family: 'Francois One', sans-serif !important;
+}
+
+#nav2{
+	position: absolute;
+	color: #fff !important;
+	right: 5px;
+	top: 14px;
+	width:190px;
+	height: 50px;
+}
+
+
+a.nav2{
+	font-size: 15px;
+	color: #fff;
+	font-family: 'Francois One', sans-serif !important;
+}
+
+
+div.nav3{
+	margin: 62px 0px 20px 0px;
+	background-color: #f1f1f1;
+	border-radius: 10px;
+	padding: 10px 12px;
+	width: 120px;
+}
+
+a.nav3{
+	color: #000;
+	font-size: 90%;
+	font-family: 'Francois One', sans-serif !important;
+}
+
+a.nav3title{
+	font-size: 140%;
+}
+
+a.logo{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width:120px;
+	height: 120px;
+}
+
+#tagline{
+	position: absolute;
+	left: 95px;
+	top: 65px;
+	width:220px;
+	height: 20px;
+	font-family: 'Francois One', sans-serif !important;
+	font-size: 90%;
+}

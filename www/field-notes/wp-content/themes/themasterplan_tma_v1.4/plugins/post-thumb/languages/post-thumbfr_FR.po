@@ -1,0 +1,347 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-02-08 20:37+0100\n"
+"Last-Translator: alakhnor <alakhnor@wanadoo.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: ..\\source\n"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-functions.php:629
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-functions.php:641
+#: ..\source/post-thumb-classes.php:652
+#: ..\source/post-thumb-library.php:513
+#: ..\source/post-thumb.php:794
+msgid "Direct link to: "
+msgstr "Lien direct vers : "
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-functions.php:201
+#: ..\source/post-thumb-functions.php:283
+#: ..\source/post-thumb-functions.php:334
+msgid "There is no excerpt because this is a protected post."
+msgstr "Pas d'excerpt car c'est un article protégé."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-highslide.php:122
+#: ..\source/post-thumb-smoothbox.php:86
+#: ..\source/post-thumb-thickbox.php:86
+msgid "Click to enlarge: "
+msgstr "Cliquez pour agrandir : "
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:39
+#: ..\source/post-thumb-template-library.php:122
+msgid "Error in file: "
+msgstr "Error in file: "
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:138
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:139
+#: ..\source/post-thumb-template-library.php:207
+#: ..\source/post-thumb-template-library.php:208
+#: ..\source/post-thumb-template-library.php:588
+#, php-format
+msgid "View all posts filed under %s"
+msgstr "View all posts filed under %s"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:252
+#: ..\source/post-thumb-template-library.php:221
+msgid "Category"
+msgstr "Catégorie"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:179
+#: ..\source/post-thumb-template-library.php:235
+#, php-format
+msgid "Feed for all posts filed under %s"
+msgstr "Feed for all posts filed under %s"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:252
+#: ..\source/post-thumb-template-library.php:309
+#: ..\source/post-thumb-widgets.php:414
+msgid "Categories"
+msgstr "Catégories"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:267
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:269
+#: ..\source/post-thumb-template-library.php:324
+#: ..\source/post-thumb-template-library.php:326
+#: ..\source/post-thumb-template-library.php:653
+msgid "No categories"
+msgstr "No categories"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:329
+#: ..\source/post-thumb-template-library.php:387
+#, php-format
+msgid "Last updated: %s"
+msgstr "Last updated: %s"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:388
+#: ..\source/post-thumb-template-library.php:443
+msgid "Bookmarks"
+msgstr "Bookmarks"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:67
+#: ..\source/post-thumb-widgets.php:171
+#: ..\source/post-thumb-widgets.php:248
+#: ..\source/post-thumb-widgets.php:445
+#: ..\source/post-thumb-widgets.php:498
+#: ..\source/post-thumb-widgets.php:564
+#: ..\source/post-thumb-widgets.php:638
+#: ..\source/post-thumb-widgets.php:704
+#: ..\source/post-thumb-widgets.php:797
+msgid "Title:"
+msgstr "Titre :"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:68
+msgid "Select Media:"
+msgstr "Select Media:"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:96
+msgid "Forum"
+msgstr "Forum"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:120
+msgid "Random"
+msgstr "Hasard"
+
+# c:\wamp\www\test211\wp-content\plugins\post-thumb/post-thumb-options.php:165
+#: ..\source/post-thumb-widgets.php:172
+#: ..\source/post-thumb-widgets.php:249
+#: ..\source/post-thumb-widgets.php:705
+#: ..\source/post-thumb-widgets.php:798
+msgid "Keep ratio"
+msgstr "Conserver les proportions ?"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:173
+#: ..\source/post-thumb-widgets.php:251
+#: ..\source/post-thumb-widgets.php:640
+#: ..\source/post-thumb-widgets.php:706
+#: ..\source/post-thumb-widgets.php:799
+msgid "Width"
+msgstr "Largeur"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:174
+#: ..\source/post-thumb-widgets.php:252
+#: ..\source/post-thumb-widgets.php:641
+#: ..\source/post-thumb-widgets.php:707
+#: ..\source/post-thumb-widgets.php:800
+msgid "Height"
+msgstr "Hauteur"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:175
+#: ..\source/post-thumb-widgets.php:708
+msgid "Show count"
+msgstr "Montrer nombre d'articles"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:176
+#: ..\source/post-thumb-widgets.php:709
+#: ..\source/post-thumb-widgets.php:804
+msgid "Show title"
+msgstr "Montrer titre"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-widgets.php:161
+#: ..\source/post-thumb-widgets.php:177
+#: ..\source/post-thumb-widgets.php:254
+#: ..\source/post-thumb-widgets.php:806
+msgid "Link to post"
+msgstr "Lier à l'article ?"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb-widgets.php:161
+#: ..\source/post-thumb-widgets.php:178
+#: ..\source/post-thumb-widgets.php:255
+#: ..\source/post-thumb-widgets.php:807
+msgid "Link to url"
+msgstr "Lier à l'url ?"
+
+# c:\wamp\www\wordpress21\wp-content\plugins\post-thumb/post-thumb-includes.php:252
+#: ..\source/post-thumb-widgets.php:179
+#: ..\source/post-thumb-widgets.php:250
+#: ..\source/post-thumb-widgets.php:803
+msgid "Category filter"
+msgstr "Filtre de catégories"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:180
+#: ..\source/post-thumb-widgets.php:256
+#: ..\source/post-thumb-widgets.php:710
+#: ..\source/post-thumb-widgets.php:808
+msgid "HS effect"
+msgstr "Effet HS"
+
+#: ..\source/post-thumb-widgets.php:181
+#: ..\source/post-thumb-widgets.php:711
+#: ..\source/post-thumb-widgets.php:809
+msgid "Closing html:"
+msgstr "html de fin : "
+
+#: ..\source/post-thumb-widgets.php:182
+#: ..\source/post-thumb-widgets.php:712
+#: ..\source/post-thumb-widgets.php:810
+msgid "Closing class:"
+msgstr "Classe de fin : "
+
+#: ..\source/post-thumb-widgets.php:183
+#: ..\source/post-thumb-widgets.php:258
+msgid "Force name to unique"
+msgstr "Utiliser un nom unique"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:203
+msgid "Slideshow"
+msgstr "Slideshow"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:253
+#: ..\source/post-thumb-widgets.php:565
+#: ..\source/post-thumb-widgets.php:801
+msgid "Number of posts"
+msgstr "Nombre d'articles"
+
+#: ..\source/post-thumb-widgets.php:257
+msgid "Randomize images?"
+msgstr "Images choisies au hasard ?"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:279
+msgid "Recent Posts"
+msgstr "Articles récents"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:314
+msgid "Recent Images"
+msgstr "Images récentes"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:347
+msgid "Recent videos"
+msgstr "Vidéos récentes"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:381
+msgid "Recent youtube"
+msgstr "Youtube récents"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:446
+msgid "Show post counts"
+msgstr "Montre nombre d'articles"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:447
+msgid "Show hierarchy"
+msgstr "Montrer hiérarchie"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:464
+msgid "<h4>"
+msgstr "<h4>"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:465
+msgid "</h4>"
+msgstr "</h4>"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:466
+msgid "Blogroll"
+msgstr "Blogoliste"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:499
+msgid "html before title"
+msgstr "html before title"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:500
+msgid "html after title"
+msgstr "html after title"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:521
+msgid "News"
+msgstr "Actualités"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:566
+msgid "Feed 1"
+msgstr "Feed 1"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:567
+msgid "Feed 2"
+msgstr "Feed 2"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:568
+msgid "Number of words"
+msgstr "Nombre de mots"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-widgets.php:655
+#: ..\source/post-thumb-widgets.php:589
+msgid "Last youtube"
+msgstr "Dernier Youtube"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-widgets.php:700
+#: ..\source/post-thumb-widgets.php:639
+msgid "User id"
+msgstr "Id utilisateur"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:662
+msgid "Recent images"
+msgstr "Dernières images"
+
+#: ..\source/post-thumb-widgets.php:713
+msgid "Cache delay (minutes)"
+msgstr "Durée du cache (minutes)"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:802
+msgid "Offset of posts"
+msgstr "Nombre d'articles à ignorer"
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb-widgets.php:805
+msgid "Choose title (T/C/E)"
+msgstr "Choose title (T/C/E)"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb.php:989
+#: ..\source/post-thumb.php:597
+msgid "Expand to actual size"
+msgstr "Agrandir à la taille réelle"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb.php:990
+#: ..\source/post-thumb.php:598
+msgid "Click to close image, click and drag to move. Use arrow keys for next and previous."
+msgstr "Cliquez pour fermer l'image, cliquez-glissez pour la déplacer. Utilisez les flèches pour naviguer."
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb2/post-thumb-options.php:412
+#: ..\source/post-thumb.php:599
+msgid "Click to bring to front"
+msgstr "Cliquez pour mettre au premier plan"
+
+# c:\wamp\www\wordpress212\wp-content\plugins\post-thumb/post-thumb.php:992
+#: ..\source/post-thumb.php:600
+msgid "Loading..."
+msgstr "Chargement..."
+
+# c:\_web\post-thumb\\post-thumb
+#: ..\source/post-thumb.php:601
+msgid "Click to cancel"
+msgstr "Cliquez pour annuler "
+

@@ -1,0 +1,21 @@
+/*
++----------------------------------------------------------------+
+|																							|
+|	WordPress 2.7 Plugin: WP-EMail 2.40										|
+|	Copyright (c) 2008 Lester "GaMerZ" Chan									|
+|																							|
+|	File Written By:																	|
+|	- Lester "GaMerZ" Chan															|
+|	- http://lesterchan.net															|
+|																							|
+|	File Information:																	|
+|	- E-Mail CSS Style (RTL)														|
+|	- wp-content/plugins/wp-email/email-css-rtl.css						|
+|																							|
++----------------------------------------------------------------+
+*/
+
+
+.wp-email P {
+	text-align: right;
+}

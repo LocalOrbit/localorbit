@@ -1,0 +1,78 @@
+/*-----------------------------------------------------------------------------------
+
+Description: WPZOOM shortcode generator CSS.
+Author: Based on the work of the Shortcode Ninja plugin by VisualShortcodes.com.
+
+-----------------------------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------------------------
+  1. Layout
+-----------------------------------------------------------------------------------*/
+
+#wpz-options-buttons { margin: -3px -15px 0; background: #EDEDED; padding: 12px 20px 8px; border-bottom: 1px solid #ddd; } 
+#wpz-options {float: left; width: 380px; margin-right: 19px; position: relative; z-index: 2; }
+#wpz-options.shortcode-related, #wpz-options.shortcode-column, #wpz-options.shortcode-tab  { width: 100%; }
+#wpz-options h3, #wpz-preview h3, #wpz-options-error h3 { border-bottom: 1px solid #E7E7E7; font-size: 13px; margin: 10px 0; padding: 7px 0; }
+#wpz-preview { width: 225px; position: relative; z-index: 2; }
+#wpz-preloader { position: absolute; }
+.wpz-loading { background: url( "../images/loading-bottom.gif") no-repeat scroll right center transparent; padding-right: 15px; }
+#wpz-options.shortcode-contactform { width: 100%; display: block;  }
+#wpz-preview.shortcode-contactform { width: 100%; margin-top: -20px; display: block; }
+#wpz-preview.shortcode-contactform iframe { height: 530px!important; }
+
+/*-----------------------------------------------------------------------------------
+  2. Attributes Table
+-----------------------------------------------------------------------------------*/
+
+#wpz-options-table { border: 0px solid #DFDFDF; width: 100%; margin-bottom: 8px; }
+#wpz-options-table th { padding-top: 0.2em; }
+#wpz-options.shortcode-column th, #wpz-options.shortcode-tab th  { width: 20px; vertical-align: top; }
+#wpz-options-table td { vertical-align: middle; padding: 0 5px 10px 0; }
+.wpz-input-help { font-size: 11px; color: #999; font-style: italic; font-family: sans-serif; display: block; clear: both; }
+.wpz-input-help p   { margin: 0; color: #888; font-size: 11px; }
+abbr.wpz-required { color: #FF0000; }
+
+/*-----------------------------------------------------------------------------------
+  3. Validation
+-----------------------------------------------------------------------------------*/
+
+#wpz-options-error p { margin: 0; }
+#wpz-options-error h4 { margin: 1.33em 0 0.8em 0; }
+input.wpz-required {}
+.wpz-validating { background: url( "../images/loading-bottom.gif") no-repeat scroll right center transparent; padding-right: 18px; }
+.wpz-validated { background: url( "../images/happy.png") no-repeat scroll right center transparent; padding-right: 15px; }
+.wpz-validation-error { background: url( "../images/ico-alert.png") no-repeat scroll right center transparent; padding-right: 15px; }
+
+/*-----------------------------------------------------------------------------------
+  4. Column Control
+-----------------------------------------------------------------------------------*/
+
+div.column-button { border: 1px solid #333333; width: 100px; margin:  4px 0; text-align: center; }
+input.column-button[disabled], input.column-button[disabled]:hover { background-color: #fff !important; color: #aaa; border: 1px solid #eee; }
+input.column-button { float: left; clear: left; margin-top: 2px; border: 1px solid #777777; background-color: #EEEEEE !important; }
+.rounded5p { -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
+#wpz-column-text { border: 1px solid #AAAAAA; font-size: 22px; font-family: Sans-serif; padding: 5px 40px 5px 5px; }
+
+/*-----------------------------------------------------------------------------------
+  5. Form Elements
+-----------------------------------------------------------------------------------*/
+
+#wpz-options input[type=text], #wpz-options select  { margin-bottom: 4px; border-color: #CCCCCC #EEEEEE #EEEEEE #CCCCCC; border-style: solid; border-width: 1px; font-family: "Lucida Grande",Verdana,sans-serif;height: 28px;  width: 280px; color: #555555; font-size: 12px; }
+#wpz-options.shortcode-related input[type=text]  { width: 560px; }
+#wpz-options.shortcode-contactform label  {  width: 130px; }
+#wpz-options.shortcode-column label  {}
+#wpz-options.shortcode-contactform input[type=text]  { width: 483px; }
+#wpz-options input[type=text]  {  padding: 5px; -moz-border-radius: 4px 4px 4px 4px; }
+#wpz-options select  { cursor: pointer; opacity: 0; padding: 0; position: relative; z-index: 4; padding: 5px; }
+#wpz-options-table label { width: 89px; text-align: right; padding: 6px 6px 0 0; font-weight: bold; font-size: 11px; line-height: 12px; color: #333333; display: block; }
+label.wpz-required span.required {padding: 0 0 0 2px; margin-top: -4px; font-size: smaller; color: #FF0000; }
+#wpz-options .select_wrapper  { -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; font-family: "Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif; font-size: 12px; background: url(../images/select.png) no-repeat right center; border-color: #ccc #eee #eee #ccc; border-style: solid; border-width: 1px; float: left; height: 26px; width: 280px; margin: 0 0 4px; display: block; }
+#wpz-options .select_wrapper span { height: 26px; line-height: 26px; padding-left: 6px; position: absolute; z-index: 2; }
+
+/*-----------------------------------------------------------------------------------
+  -5.1 Colour Picker
+-----------------------------------------------------------------------------------*/
+
+#wpz-options .wpz-marker-colourpicker-control .colorSelector { margin-top: 1px; }
+#wpz-options .wpz-marker-colourpicker-control input.input-colourpicker { float: right; width: 248px; }
+#wpz-options .wpz-marker-colourpicker-control br { clear: both; }

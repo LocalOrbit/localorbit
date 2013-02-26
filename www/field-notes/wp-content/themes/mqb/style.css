@@ -1,0 +1,474 @@
+/*  
+Theme Name: MQB
+Theme URI: http://www.maiq.info/mqb-free-wordpress-theme/
+Description: Widget ready theme with nice design and simple banner management.
+Author: MaiQ
+Author URI: http://maiq.info/
+Tags: simple, clean, fixed width, widget-ready, widgets, right sidebar, three columns, valid XHTML, valid CSS
+Version: 1.1
+
+	MQB v1.1
+	 http://maiq.info/
+	This theme was designed and built by Maiq,
+	whose blog you will find at http://maiq.info/
+
+	The CSS, XHTML and design is released under GPL:
+	http://www.opensource.org/licenses/gpl-license.php
+
+*/
+/* GENERAL TAGS */
+* {
+margin:0;
+padding:0;
+}
+body {
+font:12px arial,helvetica,verdana,sans-serif;
+color:#333;
+}
+h1,h2,h3 {
+font-size:16px;
+}
+h4 {
+font-size:14px;
+}
+h5 {
+font-size:10px;
+color:#7f7f7f;
+padding-left:1px;
+font-weight:400;
+}
+a {
+color:#920a3a;
+text-decoration:none;
+}
+a:hover {
+color:#b50e51;
+}
+pre, code {
+	font-family:"Courier New", Courier, monospace;
+	color:#2175BC;
+	background:#fbfbda;
+}
+pre {
+	padding:0 2em 1.7em 2em;
+	background:#fbfbda;
+	border:1px solid #B4C24B;
+	overflow:auto;
+	width: 50%;
+	w\idth /**/:auto;
+}
+pre strong { background:#efc }
+blockquote {padding-left:10px; border-left: 1px solid #1e1e1e; background:#eee;}
+#wrap{
+width:100%;
+margin:0;
+padding:0;
+}
+/* HEADER */
+#header{
+margin:0;
+padding:0;
+width:100%;
+height:140px;
+background:#1e1e1e;
+}
+#headone{
+float:left;
+width:49%;
+height:140px;
+}
+#headone  h1{
+font-size:2em;
+padding:20px 15px 0px 100px;
+color:#b60e52;
+}
+#headone h2{
+padding:15px 0px 0px 20px;
+color:#b60e52;
+font-size:16px;
+	}
+#headtwo{
+float:right;
+width:50%;
+height:140px;
+background:#b60e52;
+}
+/* MENU */
+ul#menu{
+padding:10px;
+color:#f5f5f5;
+list-style-type:none;
+}
+ul#menu li {
+	float:left;
+	}
+ul#menu li a {
+	padding:0 15px;
+	display:block;
+	color:#ffffff;
+	margin-right:2px;
+	font-weight:bold;
+	}
+ul#menu li a:hover {
+	padding:0 15px;
+	display:block;
+	color:#1e1e1e;
+	background:#fff;
+	margin-right:2px;
+	font-weight:bold;
+	}
+/* CONTAINER */
+#container{
+width:1070px;
+margin:0 auto;
+}
+/* MAIN CONTENT */
+#content {
+float:left;
+margin:26px 0 0;
+width:468px;
+overflow:hidden;
+}
+#content img{
+border:0px;
+}
+
+/* POSTS */
+.post {
+margin:0 0 10px;
+}
+.post h2 {
+line-height:1.2em;
+}
+.post h2 a {
+width:100%;
+display:block;
+outline:none;
+}
+.post img {
+	padding: 3px;
+	margin: 5px;
+	border: 2px solid #E1E1E1;
+	max-width: 460px;
+}
+.post .entry {
+line-height:1.4em;
+overflow:hidden;
+}
+.post .entry p {
+margin:5px 0;
+}
+.post .entry p a {
+font-weight:700;
+}
+.entry blockquote {
+margin:0 1.3em;
+}
+.entry h3 {
+margin:1em 0;
+}
+.entry ul {
+margin:0 1.3em;
+list-style:none;
+}
+.entry li a {
+color:#333;
+font-weight:700;
+}
+.entry ul li {
+padding-left:18px;
+margin-bottom:7px;
+}
+.entry ol {
+margin:0 1em 0 3em;
+}
+.entry ol li {
+margin:0 0 7px;
+}
+.entry table tr {
+padding:15px 0;
+}
+.entry table tr.alt {
+background:#eee;
+}
+.postMain {
+overflow:hidden;
+margin-bottom:15px;
+}
+.postMeta {
+background:url(images/dot.gif) repeat-x left center;
+text-transform:uppercase;
+font-size:11px;
+text-align:right;
+margin-bottom:5px;
+}
+.postMeta span.date {
+background:#FFF;
+color:#7F7F7F;
+padding:0 2px 0 4px;
+}
+.postMeta span.comments {
+background:#FFF url(images/user.gif) no-repeat left center;
+padding-left:15px;
+margin-left:2px;
+}
+.postMeta span.comments a,.postMeta span.date a {
+color:#555;
+}
+img.wp-smiley {
+	border:none;
+	background: none;
+        padding:0;
+	margin:0 2px;
+        vertical-align:0;
+}
+#more {
+color:#7F7F7F;
+font-size:11px;
+text-transform:uppercase;
+margin-bottom:15px;
+margin-top:15px;
+text-align:right;
+}
+#more p,#more img {
+vertical-align:middle;
+}
+#more a img {
+border:none;
+margin:0 0 3px 2px;
+}
+/* Sidebar */
+#search {
+margin-bottom:20px;
+}
+#search input {
+vertical-align:middle;
+}
+#search #s {
+font-size:1.1em;
+border:1px solid #BBB;
+padding:1px 2px;
+margin-right:3px;
+width:220px;
+}
+.sidebar_links h3 {
+margin-bottom:5px;
+}
+.sidebar_links ul li {
+color:#7F7F7F;
+line-height:1.2em;
+border-top:1px solid #BBB;
+padding:3px 0 4px;
+}
+.sidebar_links img {
+border:0;
+}
+.side_content {
+margin:0 0 20px;
+}
+.side_content h3 {
+margin-bottom:5px;
+}
+.rss_links h3 {
+margin-bottom:5px;
+}
+.rss_links {
+margin-bottom:20px;
+}
+.rss_links ul li {
+background:url(images/rss.gif) no-repeat 0 3px;
+color:#7F7F7F;
+line-height:1.2em;
+border-top:1px solid #BBB;
+padding:3px 0 4px 16px;
+}
+.user_links h3 {
+margin-bottom:5px;
+}
+.user_links {
+margin-bottom:20px;
+}
+.user_links ul li {
+background:url(images/user.gif) no-repeat 0 3px;
+color:#7F7F7F;
+line-height:1.2em;
+border-top:1px solid #BBB;
+padding:3px 0 4px 16px;
+}
+#sidebar_one ul {
+list-style:none;
+margin:8px 0 4px;
+}
+#sidebar_one a {
+font-weight:700;
+}
+#sidebar_one {
+color:#444;
+float:left;
+margin:25px 0 0 20px;
+width:250px;
+line-height:1.3em;
+}
+#sidebar_one p {
+color:#777;
+}
+#sidebar_one ul {
+list-style:none;
+margin:8px 0 4px;
+}
+#sidebar_one img {
+border:0;
+}
+#sidebar_two {
+float:left;
+width:312px;
+margin:23px 0 0 20px;
+}
+#sidebar_two p {
+color:#777;
+}
+#sidebar_two ul {
+list-style:none;
+margin:8px 0 4px;
+}
+#sidebar_two img {
+border:0;
+}
+/* COMMENTS */
+#comments {
+width:435px;
+padding:12px 0 0;
+}
+#comments h3,h3#respond {
+color:#555;
+margin-bottom:7px;
+}
+ol.commentlist {
+color: #666;
+list-style-type: none;
+margin: 0;
+margin-top: 1.5em;
+padding: 0;
+}
+.commentlist li {
+margin-bottom: 2em;
+padding: 0.5em 1em;
+margin-bottom:7px;
+}
+.alt2 {
+background: #eaeaea;
+padding: 0.5em;
+color:#000;
+}
+.alt1 {
+background: #f3f3f3;
+padding: 0.5em;
+color:#000;
+}
+p.nocomments {
+margin:0 12px 0 7px;
+}
+p.nocomments a {
+color:#ddd;
+font-weight:700;
+text-decoration:underline;
+}
+p.nocomments a:hover {
+color:#FFF;
+}
+#commentform p {
+margin:1em 0;
+}
+#commentform p a {
+font-weight:700;
+}
+#author,#email,#url,#comment {
+font:1.1em arial,helvetica,verdana,sans-serif;
+border:1px solid #BBB;
+padding:2px;
+}
+#comment {
+width:458px;
+overflow:auto;
+}
+#commentform p small {
+font-size:10px;
+color:#7F7F7F;
+}
+/* footer */
+#footer {
+padding-top:10px;
+padding-bottom:60px;
+text-align:center;
+background:#2b2b2b;
+}
+#footer ,#footer a {
+font-family:Arial;
+font-size:10px;
+font-weight:normal;
+color:#FFF;
+}
+#footer a:hover{
+text-decoration:underline;
+}
+/* fixes */
+.fix:after {
+content:".";
+display:block;
+height:0;
+clear:both;
+visibility:hidden;
+}
+.fix {
+display:inline-block;
+}
+* html .fix {
+height:1%;
+}
+.fix {
+display:block;
+}
+.ez100{
+float:left;
+margin:1px;
+border:1px solid #eaeaea;
+}
+.ez100:hover {
+border:1px solid #ccc;
+}
+/** WORDPRESS CSS */
+.clear {
+clear:both;
+}
+.aligncenter,
+div.aligncenter {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+}
+.alignleft {
+   float: left;
+   margin: 0 10px 10px 0;
+}
+.alignright {
+   float: right;
+   margin: 0 0 10px 10px;
+}
+.wp-caption {
+   border: 1px solid #ccc;
+   text-align: center;
+   background-color: #f3f4f0;
+   padding-top: 4px;
+}
+.wp-caption img {
+   float: none;
+   margin: 0;
+   padding: 0;
+   border: 0 none;
+}
+.wp-caption p.wp-caption-text {
+   font-size: 11px;
+   line-height: 17px;
+   padding: 0px;
+   margin: 0px;
+}

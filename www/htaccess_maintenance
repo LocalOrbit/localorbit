@@ -1,0 +1,12 @@
+Options +FollowSymlinks
+RewriteEngine On
+RewriteBase /
+# ignore this ip
+#RewriteCond %{REMOTE_ADDR} !^111\.222\.333\.444$ 
+
+RewriteCond %{REQUEST_URI} !^*/img/.*$
+RewriteCond %{REQUEST_URI} !^/img/.*$
+RewriteCond %{REQUEST_URI} !^/css/.*$ 
+RewriteCond %{REQUEST_URI} !^/js/.*$ 
+RewriteCond %{REQUEST_URI} !/maintenance.php$
+RewriteRule .* /maintenance.php [R=307,L]

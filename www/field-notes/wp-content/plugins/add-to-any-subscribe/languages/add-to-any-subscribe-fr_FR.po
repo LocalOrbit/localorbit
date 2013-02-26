@@ -1,0 +1,210 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: add-to-any-subscribe\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-25 00:55-0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Whiler <webmaster@blogs.wittwer.fr>\n"
+"Language-Team: Whiler <webmaster@blogs.wittwer.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: add-to-any-subscribe.php:155
+msgid "Share"
+msgstr "Partager"
+
+#: add-to-any-subscribe.php:156
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: add-to-any-subscribe.php:157
+#: add-to-any-subscribe.php:465
+#: add-to-any-subscribe.php:404
+msgid "Subscribe"
+msgstr "S'abonner"
+
+#: add-to-any-subscribe.php:158
+msgid "E-mail"
+msgstr "Email"
+
+#: add-to-any-subscribe.php:159
+msgid "Bookmark"
+msgstr "Marque-page"
+
+#: add-to-any-subscribe.php:160
+msgid "Show all"
+msgstr "Tout afficher"
+
+#: add-to-any-subscribe.php:161
+msgid "Show less"
+msgstr "Afficher moins"
+
+#: add-to-any-subscribe.php:162
+msgid "Find service(s)"
+msgstr "Trouver service(s)"
+
+#: add-to-any-subscribe.php:163
+msgid "Instantly find any service to add to"
+msgstr "Trouver instantan&eacute;ment un service &agrave; ajouter"
+
+#: add-to-any-subscribe.php:164
+msgid "Powered by"
+msgstr "Propuls&eacute; par"
+
+#: add-to-any-subscribe.php:165
+msgid "Share via e-mail"
+msgstr "Partager par email"
+
+#: add-to-any-subscribe.php:166
+msgid "Subscribe via e-mail"
+msgstr "S'abonner par email"
+
+#: add-to-any-subscribe.php:167
+msgid "Bookmark in your browser"
+msgstr "Ajouter un marque-page dans votre navigateur"
+
+#: add-to-any-subscribe.php:168
+msgid "Press Ctrl+D or Cmd+D to bookmark this page"
+msgstr "Appuyer sur Ctrl+D ou Cmd+D pour ajouter cette page &agrave; vos favoris"
+
+#: add-to-any-subscribe.php:169
+msgid "Add to your favorites"
+msgstr "Ajouter aux favoris"
+
+#: add-to-any-subscribe.php:170
+msgid "Send from any e-mail address or e-mail program"
+msgstr "Envoyer depuis toute adresse email ou messagerie"
+
+#: add-to-any-subscribe.php:171
+msgid "E-mail program"
+msgstr "Logiciel de messagerie"
+
+#: add-to-any-subscribe.php:196
+msgid "Your theme needs to be fixed. To fix your theme, use the <a href=\"theme-editor.php\">Theme Editor</a> to insert <code>&lt;?php wp_footer(); ?&gt;</code> just before the <code>&lt;/body&gt;</code> line of your theme's <code>footer.php</code> file."
+msgstr "Votre th&egrave;me doit &ecirc;tre adapt&eacute;. Pour adapter votre th&egrave;me, utilisez l'<a href=\"theme-editor.php\">&eacute;diteur de th&egrave;me</a> pour ins&eacute;rer <code>&lt;?php wp_footer(); ?&gt;</code> juste avant la ligne <code>&lt;/body&gt;</code> du fichier <code>footer.php</code> de votre th&egrave;me."
+
+#: add-to-any-subscribe.php:243
+msgid "Title (optional)"
+msgstr "Titre (optionnel)"
+
+#: add-to-any-subscribe.php:274
+#: add-to-any-subscribe.php:368
+#: add-to-any-subscribe.php:394
+msgid "Image URL"
+msgstr "URL de l'image"
+
+#: add-to-any-subscribe.php:282
+msgid "Text only"
+msgstr "Texte seulement"
+
+#: add-to-any-subscribe.php:401
+msgid "Texte seulement"
+msgstr "Texte seulement&nbsp;"
+
+#: add-to-any-subscribe.php:288
+msgid "More Settings"
+msgstr "Plus de r&eacute;glages"
+
+#: add-to-any-subscribe.php:318
+msgid "Settings saved."
+msgstr "R&eacute;glages sauvegard&eacute;s"
+
+#: add-to-any-subscribe.php:329
+msgid "Add to Any: Subscribe "
+msgstr "Add to Any : S'abonner - "
+
+#: add-to-any-subscribe.php:329
+#: add-to-any-subscribe.php:465
+msgid "Settings"
+msgstr "R&eacute;glages"
+
+#: add-to-any-subscribe.php:339
+msgid "Button"
+msgstr "Bouton"
+
+#: add-to-any-subscribe.php:382
+msgid "Button Placement"
+msgstr "Emplacement du bouton"
+
+#: add-to-any-subscribe.php:384
+msgid "If you are using a widget-ready theme, you can use the <a href=\"widgets.php\">widgets page</a> to place the button where you want in your sidebar."
+msgstr "Si votre th&egrave;me est compatible avec les widgets, vous pouvez utiliser la <a href=\"widgets.php\">page des widgets</a> pour sp&eacute;cifier l'emplacement du bouton dans la barre."
+
+#: add-to-any-subscribe.php:385
+msgid "Open Widgets Panel"
+msgstr "Ouvrir le panneau des widgets"
+
+#: add-to-any-subscribe.php:386
+msgid "Alternatively, you can place the following code in <a href=\"theme-editor.php\">your template pages</a> (within <code>sidebar.php</code>, <code>index.php</code>, <code>single.php</code>, and/or <code>page.php</code>)"
+msgstr "Autrement, vous pouvez ajouter le code suivant dans <a href=\"theme-editor.php\">les mod&egrave;les des pages de votre th&egrave;me</a> (tels que <code>sidebar.php</code>, <code>index.php</code>, <code>single.php</code>, et/ou <code>page.php</code>)"
+
+#: add-to-any-subscribe.php:391
+msgid "Menu Style"
+msgstr "Style du Menu"
+
+#: add-to-any-subscribe.php:393
+msgid "Using Add to Any's Menu Styler, you can customize the colors of your Subscribe menu! When you're done, be sure to paste the generated code in the <a href=\"#\" onclick=\"document.getElementById('A2A_SUBSCRIBE_additional_js_variables').focus();return false\">Additional Options</a> box below."
+msgstr "En utilisant le concepteur de menu d'Add to Any, vous pouvez personnaliser les couleurs de votre menu d'abonnement ! Lorsque vous avez termin&eacute;, soyez certain de coller le code g&eacute;n&eacute;r&eacute; dans la <a href=\"#\" onclick=\"document.getElementById('A2A_SUBSCRIBE_additional_js_variables').focus();return false\">bo&icirc;te des Options additionnelles</a> ci-dessous."
+
+#: add-to-any-subscribe.php:395
+msgid "Open the Add to Any Menu Styler in a new window"
+msgstr "Ouvrir le concepteur de menu d'Add to Any dans une nouvelle fen&ecirc;tre"
+
+#: add-to-any-subscribe.php:397
+msgid "Open Menu Styler"
+msgstr "Ouvrir le concepteur de menu"
+
+#: add-to-any-subscribe.php:402
+msgid "Menu Options"
+msgstr "Options du Menu"
+
+#: add-to-any-subscribe.php:407
+msgid "Hide embedded objects (Flash, video, etc.) that intersect with the menu when displayed"
+msgstr "Cacher les objets inclus (Flash, vid&eacute;os,  ...) qui chevaucheraient le menu lors de son affichage"
+
+#: add-to-any-subscribe.php:412
+msgid "Show the title of this blog within the menu"
+msgstr "Afficher le titre de ce blog dans le menu"
+
+#: add-to-any-subscribe.php:419
+msgid "Only show the menu when the user clicks the Subscribe button"
+msgstr "N'afficher le menu que lorsque l'utilisateur clique sur le bouton S'abonner"
+
+#: add-to-any-subscribe.php:425
+msgid "Open the addtoany.com menu page in a new tab or window if the user clicks the Subscribe button"
+msgstr "Ouvrir la page de menu addtoany.com dans un nouvel onglet ou une nouvelle fen&ecirc;tre si l'utilisateur clique sur le bouton S'abonner"
+
+#: add-to-any-subscribe.php:430
+msgid "Additional Options"
+msgstr "Options additionnelles"
+
+#: add-to-any-subscribe.php:434
+msgid "Paste the code from Add to Any's Menu Styler in the box below!"
+msgstr "Coller le code du concepteur de menu Add to Any dans la bo&icirc;te ci-dessous !"
+
+#: add-to-any-subscribe.php:438
+msgid "Below you can set special JavaScript variables to apply to your Subscribe menu."
+msgstr "Vous pouvez sp&eacute;cifier des variables sp&eacute;ciales JavaScript &agrave; utiliser par votre menu d'abonnement"
+
+#: add-to-any-subscribe.php:439
+msgid "Advanced users might want to explore Add to Any's <a href=\"http://www.addtoany.com/buttons/api/\" target=\"_blank\">JavaScript API</a>."
+msgstr "Les utilisateurs avanc&eacute;s peuvent souhaiter explorer l'<a href=\"http://www.addtoany.com/buttons/api/\" target=\"_blank\">API JavaScript</a> d'Add to Any."
+
+#: add-to-any-subscribe.php:445
+msgid "<strong>Note</strong>: If you're adding new code, be careful not to accidentally overwrite any previous code."
+msgstr "<strong>Note</strong>&nbsp;: Si vous ajoutez du code nouveau, faites attention de ne pas accidentellement &eacute;craser le pr&eacute;c&eacute;dent."
+
+#: add-to-any-subscribe.php:452
+msgid "Save Changes"
+msgstr "Enregistrer les modifications"
+
+#: add-to-any-subscribe.php:466
+msgid "Subscribe Buttons"
+msgstr "Add to Any"
+

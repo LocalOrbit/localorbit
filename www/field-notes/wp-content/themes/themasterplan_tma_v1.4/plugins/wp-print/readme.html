@@ -1,0 +1,541 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>	
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>WP-Print 2.40 Readme</title>
+	<style type="text/css" media="screen">
+		/* Default Style */
+		BODY {
+			font-family: Verdana, Arial;
+			font-size: 12px;
+			color: #000000;
+			background: #FFFFFF;
+		}
+		P {
+			padding-left: 10px;
+		}
+		BLOCKQUOTE {
+			margin: 10px 20px 0px 20px;
+			padding: 10px;
+			border: 1px solid #8d8d8d;
+			background-color: #f5f5f5;
+		}
+		LI {
+			margin-top: 20px;
+		}
+		UL LI UL LI {
+			margin-top: 10px;
+		}
+		A, A:active, A:link, A:visited {
+			color: #2d3a4c;
+			text-decoration: none;
+		}
+		A:hover {
+			color: #5577a5;
+			text-decoration: underline;
+		}
+		/* Place Holder Style */
+		#Container {
+			width: 780px;
+			margin-left: auto;
+			margin-right: auto; 
+		}
+		#Content {
+			background-color: #fafafa;
+			border: 1px solid #a2b6cb;
+			padding: 10px;
+			margin-top: -13px;
+		}
+		/* Title Style */
+		#Title {
+			font-family: Verdana, Arial;
+			font-size: 22px;
+			font-weight: bold;
+			color: #389aff;
+			border-bottom: 1px solid #389aff;
+			margin-bottom: 10px;
+		}
+		.SubTitle {
+			font-family: Verdana, Arial;
+			font-size: 18px;
+			font-weight: bold;
+			color: #5b87b4;
+		}
+		.SubSubTitle {
+			font-family: Verdana, Arial;
+			font-size: 14px;
+			font-weight: bold;
+			color: #73a4d6;
+		}
+		/* Tabs */
+		UL#Tabs {
+			font-family: Verdana, Arial;
+			font-size: 12px;
+			font-weight: bold;
+			list-style-type: none;
+			padding-bottom: 28px;
+			border-bottom: 1px solid #a2b6cb;
+			margin-bottom: 12px;
+			z-index: 1;
+		}
+		#Tabs LI.Tab {
+			float: right;
+			height: 25px;
+			background-color: #deedfb;
+			margin: 2px 0px 0px 5px;
+			border: 1px solid #a2b6cb;
+		}
+		#Tabs LI.Tab A {
+			float: left;
+			display: block;
+			color: #666666;
+			text-decoration: none;
+			padding: 5px;
+		}
+		#Tabs LI.Tab A:hover {
+			background-color: #bfe0fe;
+			border-bottom: 1px solid #bfe0fe;
+		}
+		/* Selected Tab */
+		#Tabs LI.SelectedTab {
+			float: right;
+			height: 25px;
+			background-color: #fafafa;
+			margin: 2px 0px 0px 5px;
+			border-top: 1px solid #a2b6cb;
+			border-right: 1px solid #a2b6cb;
+			border-bottom: 1px solid #fafafa;
+			border-left: 1px solid #a2b6cb;
+		}
+		#Tabs LI.SelectedTab A {
+			float: left;
+			display: block;
+			color: #666666;
+			text-decoration: none;
+			padding: 5px;
+			cursor: default;
+		}
+		/* Copyright */
+		#Copyright {
+			text-align: center;
+		}
+	</style>
+	<script type="text/javascript">
+	/* <![CDATA[*/
+		// Index Page
+		function index() {
+			// Tab
+			document.getElementById('IndexTab').className = 'SelectedTab';
+			document.getElementById('ChangelogTab').className = 'Tab';
+			document.getElementById('InstallTab').className = 'Tab';
+			document.getElementById('UpgradeTab').className = 'Tab';
+			document.getElementById('UsageTab').className = 'Tab';
+			// Page
+			document.getElementById('Index').style.display= 'block';
+			document.getElementById('Changelog').style.display = 'none';
+			document.getElementById('Install').style.display = 'none';
+			document.getElementById('Upgrade').style.display = 'none';
+			document.getElementById('Usage').style.display = 'none';
+		}
+		// Changelog Page
+		function changelog() {
+			// Tab
+			document.getElementById('IndexTab').className = 'Tab';
+			document.getElementById('ChangelogTab').className = 'SelectedTab';
+			document.getElementById('InstallTab').className = 'Tab';
+			document.getElementById('UpgradeTab').className = 'Tab';
+			document.getElementById('UsageTab').className = 'Tab';
+			// Page
+			document.getElementById('Index').style.display = 'none';
+			document.getElementById('Changelog').style.display = 'block';
+			document.getElementById('Install').style.display = 'none';
+			document.getElementById('Upgrade').style.display = 'none';
+			document.getElementById('Usage').style.display = 'none';
+		}
+		// Installation Page
+		function install() {
+			// Tab
+			document.getElementById('IndexTab').className = 'Tab';
+			document.getElementById('ChangelogTab').className = 'Tab';
+			document.getElementById('InstallTab').className = 'SelectedTab';
+			document.getElementById('UpgradeTab').className = 'Tab';
+			document.getElementById('UsageTab').className = 'Tab';
+			// Page
+			document.getElementById('Index').style.display= 'none';
+			document.getElementById('Changelog').style.display = 'none';
+			document.getElementById('Install').style.display = 'block';
+			document.getElementById('Upgrade').style.display = 'none';
+			document.getElementById('Usage').style.display = 'none';
+		}
+		// Upgrade Page
+		function upgrade() {
+			// Tab
+			document.getElementById('IndexTab').className = 'Tab';
+			document.getElementById('ChangelogTab').className = 'Tab';
+			document.getElementById('InstallTab').className = 'Tab';
+			document.getElementById('UpgradeTab').className = 'SelectedTab';
+			document.getElementById('UsageTab').className = 'Tab';
+			// Page
+			document.getElementById('Index').style.display= 'none';
+			document.getElementById('Changelog').style.display = 'none';
+			document.getElementById('Install').style.display = 'none';
+			document.getElementById('Upgrade').style.display = 'block';
+			document.getElementById('Usage').style.display = 'none';
+		}
+		// Usage Page
+		function usage() {
+			// Tab
+			document.getElementById('IndexTab').className = 'Tab';
+			document.getElementById('ChangelogTab').className = 'Tab';
+			document.getElementById('InstallTab').className = 'Tab';
+			document.getElementById('UpgradeTab').className = 'Tab';
+			document.getElementById('UsageTab').className = 'SelectedTab';
+			// Page
+			document.getElementById('Index').style.display= 'none';
+			document.getElementById('Changelog').style.display = 'none';
+			document.getElementById('Install').style.display = 'none';
+			document.getElementById('Upgrade').style.display = 'none';
+			document.getElementById('Usage').style.display = 'block';
+		}
+	/* ]]> */
+	</script>
+</head>
+<body>
+<div id="Container">
+	<!-- Title -->
+	<div id="Title">WP-Print 2.40&nbsp;&nbsp;&nbsp;<span style="color: #aaaaaa;">Readme</span></div>
+
+	<!-- Tabs -->
+	<ul id="Tabs">
+		<li id="UsageTab" class="Tab"><a href="#Usage" onclick="usage(); return false;" title="Usage Instructions">Usage</a></li>
+		<li id="UpgradeTab" class="Tab"><a href="#Upgrade" onclick="upgrade(); return false;" title="Upgrade Instructions">Upgrade</a></li>
+		<li id="InstallTab" class="Tab"><a href="#Installation" onclick="install(); return false;" title="Installation Instructions">Installation</a></li>
+		<li id="ChangelogTab" class="Tab"><a href="#Changelog" onclick="changelog(); return false;" title="Changelog">Changelog</a></li>
+		<li id="IndexTab" class="SelectedTab"><a href="#Index" onclick="index(); return false;" title="Index Instructions">Index</a></li>
+	</ul>
+
+	<!-- Content -->
+	<div id="Content">
+		<!-- Index -->
+		<div id="Index">
+			<div class="SubTitle">&raquo; Index</div>
+			<div class="SubSubTitle">Plugin Information</div>
+			<p>
+				<strong>Author:</strong><br />
+				<strong>&raquo;</strong> Lester 'GaMerZ' Chan
+			</p>
+			<p>
+				<strong>Website:</strong><br />
+				<strong>&raquo;</strong> <a href="http://lesterchan.net/" title="http://lesterchan.net/">http://lesterchan.net/</a>
+			</p>
+			<p>
+				<strong>Features:</strong><br />
+				<strong>&raquo;</strong> Displays a printable version of your WordPress blog's post/page.
+			</p>
+			<p>
+				<strong>Download:</strong><br />
+				<strong>&raquo;</strong> <a href="http://downloads.wordpress.org/plugin/wp-print.2.40.zip" title="http://downloads.wordpress.org/plugin/wp-print.2.40.zip">WP-Print 2.40 For WordPress 2.7.x</a><br />
+				<strong>&raquo;</strong> <a href="http://downloads.wordpress.org/plugin/wp-print.2.31.zip" title="http://downloads.wordpress.org/plugin/wp-print.2.31.zip">WP-Print 2.31 For WordPress 2.5.x And 2.6.x</a><br />
+				<strong>&raquo;</strong> <a href="http://downloads.wordpress.org/plugin/wp-print.2.20.zip" title="http://downloads.wordpress.org/plugin/wp-print.2.20.zip">WP-Print 2.20 For WordPress 2.1.x, 2.2.x And 2.3.x</a><br />
+				<strong>&raquo;</strong> <a href="http://downloads.wordpress.org/plugin/wp-print.2.06.zip" title="http://downloads.wordpress.org/plugin/wp-print.2.06.zip">WP-Print 2.06 For WordPress 2.0.x</a><br />
+				<strong>&raquo;</strong> <a href="http://downloads.wordpress.org/plugin/wp-print.2.00.zip" title="http://downloads.wordpress.org/plugin/wp-print.2.00.zip">WP-Print 2.00 For WordPress 1.5.2</a>
+			</p>
+			<p>
+				<strong>Screenshots:</strong><br />
+				<strong>&raquo;</strong> <a href="http://lesterchan.net/wordpress/screenshots/browse/wp-print/" title="http://lesterchan.net/wordpress/screenshots/browse/wp-print/">http://lesterchan.net/wordpress/screenshots/browse/wp-print/</a>
+			</p>
+			<p>
+				<strong>Demo:</strong><br />
+				<strong>&raquo;</strong> <a href="http://lesterchan.net/wordpress/2006/07/05/donations/print/" title="http://lesterchan.net/wordpress/2006/07/05/donations/print/">http://lesterchan.net/wordpress/2006/07/05/donations/print/</a>
+			</p>
+			<p>
+				<strong>Development:</strong><br />
+				<strong>&raquo;</strong> <a href="http://dev.wp-plugins.org/browser/wp-print/" title="http://dev.wp-plugins.org/browser/wp-print/">http://dev.wp-plugins.org/browser/wp-print/</a>
+			</p>
+			<p>
+				<strong>Translations:</strong><br />
+				<strong>&raquo;</strong> <a href="http://dev.wp-plugins.org/browser/wp-print/i18n/" title="http://dev.wp-plugins.org/browser/wp-print/i18n/">http://dev.wp-plugins.org/browser/wp-print/i18n/</a>
+			</p>
+			<p>
+				<strong>Support Forums:</strong><br />
+				<strong>&raquo;</strong> <a href="http://forums.lesterchan.net/index.php?board=18.0" title="http://forums.lesterchan.net/index.php?board=18.0">http://forums.lesterchan.net/index.php?board=18.0</a>
+			</p>
+			<p>
+				<strong>Credits:</strong><br />
+				<strong>&raquo;</strong> Icons courtesy of <a href="http://www.famfamfam.com/">FamFamFam</a>.<br />
+				<strong>&raquo;</strong> Do Not Print idea by <a href="http://www.nilpo.com/">Robert "Nilpo" Dunham</a>.<br />
+				<strong>&raquo;</strong> __ngetext() by <a href="http://hweia.ru/" title="http://hweia.ru/">Anna Ozeritskaya</a>.<br />
+				<strong>&raquo;</strong> Right To Left Language Support by <a href="http://persian-programming.com/" title="http://persian-programming.com/">Kambiz R. Khojasteh</a>.
+			</p>
+			<p>
+				<strong>Note:</strong><br />
+				<strong>&raquo;</strong> The <strong>Changelog</strong>, <strong>Installation</strong>, <strong>Upgrade</strong>, <strong>Usage</strong> Tab at the top of the page.<br />
+			</p>
+			<p>
+				<strong>Donations:</strong><br />
+				<strong>&raquo;</strong> I spent most of my free time creating, updating, maintaining and supporting these plugins, if you really love my plugins and could spare me a couple of bucks as my school allowance, I will really appericiate it. If not feel free to use it without any obligations. Thank You. My Paypal account is 
+				<script type="text/javascript">
+					/* <![CDATA[*/
+					document.write(' <strong>lesterchan@gmail.com</strong>.');
+					/* ]]> */
+				</script>
+			</p>
+		</div>
+
+		<!-- Changelog -->
+		<div id="Changelog" style="display: none;">
+			<div class="SubTitle">&raquo; Changelog</div>
+			<ul>
+				<li>
+					<strong>Version 2.40 (12-12-2008)</strong>
+					<ul>
+						<li>NEW: Works For WordPress 2.67 Only</li>
+						<li>NEW: Better Translation Using __ngetext() by <a href="http://hweia.ru/" title="http://hweia.ru/">Anna Ozeritskaya</a></li>
+						<li>NEW: Right To Left Language Support by <a href="http://persian-programming.com/" title="http://persian-programming.com/">Kambiz R. Khojasteh</a></li>
+ 						<li>NEW: Call print_textdomain() In print_init() by <a href="http://persian-programming.com/" title="http://persian-programming.com/">Kambiz R. Khojasteh</a></li>
+ 						<li>NEW: Replace "text_direction" Option With $text_direction And language_attributes() by <a href="http://persian-programming.com/" title="http://persian-programming.com/">Kambiz R. Khojasteh</a></li>
+ 						<li>NEW: Added "print-css-rtl.css" by <a href="http://persian-programming.com/" title="http://persian-programming.com/">Kambiz R. Khojasteh</a></li>
+						<li>NEW: Page Title Is Now "Post Title -> Print" Instead Of "Print -> Post Title" by <a href="http://persian-programming.com/" title="http://persian-programming.com/">Kambiz R. Khojasteh</a></li>
+						<li>NEW: Modified "print-css.css" To Hide "comments_controls" Element For Print  by <a href="http://persian-programming.com/" title="http://persian-programming.com/">Kambiz R. Khojasteh</a></li>
+						<li>FIXED: Footnotes Referencing Is Now "link1 <sup>[1]</sup>" Instead Of "[1] link1" by <a href="http://persian-programming.com/" title="http://persian-programming.com/">Kambiz R. Khojasteh</a></li>
+						<li>FIXED: Remove chunk_split() As Browser Will Try To Wrap Word Boundaries Based On Page Width by <a href="http://persian-programming.com/" title="http://persian-programming.com/">Kambiz R. Khojasteh</a></li>
+						<li>FIXED: Remove [print_link] ShortCode In Print Pages</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.31 (16-07-2008)</strong>
+					<ul>
+						<li>NEW: Works For WordPress 2.6</li>
+						<li>NEW: Added donotprint ShortCode. See Usage Tab</li>
+						<li>NEW: WP-Print Will Load print-posts.php And print-comments.php Templates From Your Theme Directory First If The Exist</li>
+						<li>FIXED: Replace &lt;center&gt; With &lt;div style="margin: 0px auto 0px auto;"&gt;</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.30 (01-06-2008)</strong>
+					<ul>
+						<li>NEW: Works For WordPress 2.5 Only</li>
+						<li>NEW: WP-Print Will Load 'print-css.css' Inside Your Theme Directory If It Exists. If Not, It Will Just Load The Default 'print-css.css' By WP-Print</li>
+						<li>NEW: Uses Shortcode API</li>
+						<li>NEW: Added "Right To Left" And "Left To Right Text" Direction Option</li>
+						<li>NEW: Option To Remove Videos From Post</li>
+						<li>NEW: Duplicate Links Now Uses A Single Number And Printed Only Once By <a href="http://www.cneophytou.com/">Constantinos Neophytou</a></li>
+						<li>NEW: &lt;IMG&gt; And &lt;A&gt; Tag Now Matches Single Quotes By <a href="http://www.cneophytou.com/">Constantinos Neophytou</a></li>
+						<li>NEW: Uses /wp-print/ Folder Instead Of /print/</li>
+						<li>NEW: Uses wp-print.php Instead Of print.php</li>
+						<li>NEW: Changed wp-print.php To print-posts.php</li>
+						<li>NEW: Changed wp-print-comments.php To print-comments.php</li>
+						<li>NEW: Changed wp-print-css.css To print-css.css</li>
+						<li>FIXED: Comment Type Not Translated</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.20 (01-10-2007)</strong>
+					<ul>
+						<li>NEW: Works For WordPress 2.3 Only</li>
+						<li>NEW: Ability To Embed [print_link] Into Excerpt</li>
+						<li>NEW: wp-print-css.css Now Controls The CSS Styles For The Printer Friendly Page</li>
+						<li>NEW: Disclaimer/Copyright Text Option By <a href="http://www.journalsoftheheart.com/">Duane Craig</a></li>
+						<li>NEW: Anchor Link To Comments By <a href="http://www.reinventia.net/">Reinventia</a></li>
+						<li>NEW: Collapsable Comments By <a href="http://www.reinventia.net/">Reinventia</a></li>
+						<li>NEW: Ability To Uninstall WP-Print</li>
+						<li>FIXED: If There Is No Trailing Slash In Your Permalink, WP-Print Will Add It For You</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.11 (01-06-2007)</strong>
+					<ul>
+						<li>NEW: Putting [print_link] In Your Post/Page Content Will Display A Link To The Printable Post/Page</li>
+						<li>FIXED: Worked With Polyglot Plugin, Fixed By <a href="http://www.getoto.net/">zeridon</a></li>
+						<li>FIXED: Wrong URL If Front Page Is A Static Page</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.10 (01-02-2007)</strong>
+					<ul>
+						<li>NEW: Added Fam Fam Fam's Printer Icon</li>
+						<li>NEW: Works For WordPress 2.1 Only</li>
+						<li>NEW: Localize WP-Print</li>
+						<li>NEW: Ability To Configure The Text For Print Links Via 'WP-Admin -> Options -> Print'</li>
+						<li>NEW: The Text For Print Links Can No Longer Be Pass To The Function print_link() or print_link_image()</li>
+						<li>FIXED: MUltiple URL Type Fixed By (Virgil - <a href="http://virgil.gr">http://virgil.gr</a>)</li>
+						<li>FIXED: 'Click Here To Print' Will Be Hidden When Printing By <a href="http://blog.fileville.net/">Joe (Ttech)</a></li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.06 (01-10-2006)</strong>
+					<ul>
+						<li>NEW: Used Default Date/Time Format Under WordPress Options</li>
+						<li>NEW: Added robots: noindex To Printer Friendly Pages</li>
+						<li>NEW: Added rel="nofollow" To All Links Generated By WP-Print</li>
+						<li>FIXED: &lt;abbr&gt; Tag Mixed Up With &lt;a&gt;</li>
+						<li>FIXED: PHP5 Compatibility Issue</li>
+						<li>FIXED: Long URL Will Not Break Into More Than 1 Line</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.05 (01-06-2006)</strong>
+					<ul>
+						<li>NEW: Added Print Options In WP Administration Panel Under 'Options -> Print'</li>
+						<li>NEW: Print Administration Panel And The Code That WP-Print Generated Is XHTML 1.0 Transitional</li>
+						<li>FIXED: Comment's Content Formatting</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.04 (01-04-2006)</strong>
+					<ul>
+						<li>NEW: Able To Print Comments Together With Post Using $can_print_comments In wp-print.php</li>
+						<li>NEW: Moved wp-print.php To Plugin Folder</li>
+						<li>FIXED: Removed Link From Post Comment Count And Post Category</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.03 (01-03-2006)</strong>
+					<ul>
+						<li>NEW: Added Print Image With print_link_image()</li>
+						<li>NEW: Automatically Break To Next Line If Link Contains More Than 100 Chars</li>
+						<li>FIXED: Comment Numbers Showing In Password Protected Post</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.02 (01-02-2006)</strong>
+					<ul>
+						<li>FIXED: Able To View Password Protected Blog</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.01 (01-01-2006)</strong>
+					<ul>
+						<li>NEW: Compatible With WordPress 2.0</li>
+						<li>NEW: Automatically Detect Whether You Are Using Nice Permalink</li>	
+						<li>NEW: Automated Permalink</li>
+						<li>NEW: Now You Only Need To Insert 1 Line Into Your index.php Of Your Theme</li>
+						<li>NEW: GPL License Added</li>
+						<li>FIXED: Links Not Displaying Properly When Printing More Than 1 Post On A Single Page</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.00a (17-11-2005)</strong>
+					<ul>
+						<li>NEW: Permlink For The Page Feature</li>
+					</ul>
+				</li>
+				<li>
+					<strong>Version 2.00 (10-11-2005)</strong>
+					<ul>
+						<li>NEW: Print Out A Summary Of URLS In The Post At The Bottom Of The Page</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+		<!-- Installation Instructions -->
+		<div id="Install" style="display: none;">
+			<div class="SubTitle">&raquo; Installation Instructions</div>
+			<ol>
+				<li>
+					Open <strong>wp-content/plugins</strong> Folder
+				</li>
+				<li>
+					Put:
+					<blockquote>Folder: wp-print</blockquote>
+				</li>
+				<li>
+					<strong>Activate</strong> WP-Print Plugin
+				</li>
+				<li>
+					You Need To Re-Generate The Permalink (<strong>WP-Admin -> Settings -> Permalinks -> Save Changes</strong>)
+				</li>
+				<li>
+					Refer To <strong>Usage</strong> For Further Instructions
+				</li>
+			</ol>
+		</div>
+
+		<!-- Upgrade Instructions -->	
+		<div id="Upgrade" style="display: none;">
+			<div class="SubTitle">&raquo; Upgrade Instructions</div>
+			<div class="SubSubTitle">From v2.0x To v2.40</div>
+			<ol>
+				<li>
+					<strong>Deactivate</strong> WP-Print Plugin
+				</li>
+				<li>
+					Open <strong>wp-content/plugins</strong> Folder
+				</li>
+				<li>
+					Put/Overwrite:
+					<blockquote>Folder: wp-print</blockquote>
+				</li>
+				<li>
+					Delete this folder if exists:
+					<blockquote>
+						Folder: print
+					</blockquote>
+				</li>
+				<li>
+					<strong>Activate</strong> WP-Print Plugin
+				</li>
+				<li>
+					You Need To Re-Generate The Permalink (<strong>WP-Admin -> Settings -> Permalinks -> Save Changes</strong>)
+				</li>
+				<li>
+					Refer To <strong>Usage</strong> For Further Instructions
+				</li>
+			</ol>
+		</div>
+
+		<!-- Usage Instructions -->	
+		<div id="Usage" style="display: none;">
+			<div class="SubTitle">&raquo; Usage Instructions</div>
+			<div class="SubSubTitle">General Usage</div>
+			<ol>
+				<li>
+					Open <strong>wp-content/themes/&lt;YOUR THEME NAME&gt;/index.php</strong>
+					<p>You may place it in <strong>single.php</strong>, <strong>post.php</strong>, <strong>page.php</strong> or <strong>theloop.php</strong> also.</p>
+				</li>
+				<li>
+					Find:
+					<blockquote>
+						&lt;?php while (have_posts()) : the_post(); ?&gt;
+					</blockquote>
+				</li>
+				<li>
+					Add Anywhere Below It:
+					<blockquote>
+						&lt;?php if(function_exists('wp_print')) { print_link(); } ?&gt;
+					</blockquote>
+					<p>If you DO NOT want the print link to appear in every post/page, DO NOT use the code above. Just type in <strong>[print_link]</strong> into the selected post/page content and it will embed the print link into that post/page only.</p>
+					<p>The <b>first value</b> is the text for printing post.</p>
+					<p>The <b>second value</b> is the text for printing page.</p>					
+					<p>Default: print_link('', '')</p>
+					<p>Alternatively, you can set the text in 'WP-Admin -> Settings -> Print'.</p>
+				</li>
+				<li>
+					Go to <strong>'WP-Admin -> Settings -> Print'</strong> to configure the style of the print text link.
+				</li>
+			</ol>
+			<div class="SubSubTitle">Note</div>
+			<ul>
+				<li>
+					If you do not want to print a portion of your post's content, do the following:
+					<blockquote>
+						[donotprint]Text within this tag will not be displayed when printing[/donotprint]
+					</blockquote>
+					<p>The text within [donotprint][/donotprint] will not be displayed when you are viewing a printer friendly version of a post or page.</p>
+					<p>However, it will still be displayed as normal on a normal post or page view.</p>
+				</li>
+				<li>
+					WP-Print will load '<strong>print-css.css</strong>', '<strong>print-posts.php</strong>' and '<strong>print-comments.php</strong>' from your theme's directory if it exists.
+					<ul>
+						<li>If it doesn't exists, it will just load the respective defalult file that comes with WP-Print.</li>
+						<li>This will allow you to upgrade WP-Print without worrying about overwriting your printing styles or templates that you have created.</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<p id="Copyright">WP-Print 2.40<br />Copyright &copy; 2008 Lester 'GaMerZ' Chan. All Rights Reserved.</p>
+</body>
+</html>

@@ -1,0 +1,85 @@
+th.dt_sortable {
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+	}
+
+	th.dt_sortable:hover{
+		opacity: 0.9;
+		}
+
+	th.dt_sort_asc{
+		background-image: url(../img/default/sort_asc.gif);
+		background-position: left;
+		padding-left: 20px !important;
+		}
+	
+	th.dt_sort_desc{
+		background-image: url(../img/default/sort_desc.gif);
+		background-position: left;
+		padding-left: 20px !important;
+		}
+
+
+div.dt_filter,
+div.dt_exporter {
+	float: left;
+	padding: 5px 0 0 0;
+	}
+
+
+div.dt_resizer,
+div.dt_pager {
+	float: right;
+	padding: 5px 0 0 0;
+	}
+	
+	div.dt_resizer { margin-right: 20px; }
+
+
+div.dt_filter{
+/*
+	height: 27px;
+	overflow: hidden;
+*/
+}
+
+a.dt_pager{
+	cursor: pointer;
+}
+
+select.dt{
+	width: auto;	
+}
+
+a.dt{
+
+}
+
+a.dt:hover{
+
+	cursor: pointer;
+}
+
+a.dt_filter_expander{
+	display: block;
+	width: 20px;
+	float: left;
+}
+
+div.dt_filter_area{
+	float: left;
+}
+
+.label_dt_filter{
+	width: auto  !important;
+/*
+	color: <?=$options['p4f']?> !important;
+*/
+}
+
+
+td.dt_nodata
+{
+	height: 50px;
+}

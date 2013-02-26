@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Better Plugin Compatibility Control v1.0\n"
+"PO-Revision-Date: 2010-03-09 18:36+0100\n"
+"Last-Translator: tolingo translations <nadin.grunenberg@tolingo.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;__ngettext_noop:1,2;_c\n"
+"X-Poedit-Basepath: ../\n"
+"POT-Creation-Date: \n"
+"Language-Team: tolingo translations <support@tolingo.com>\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: better-plugin-compatibility-control.php:193
+#: better-plugin-compatibility-control.php:197
+msgid "Warning: This plugin has not been tested with your current version of WordPress."
+msgstr "Avertissement: Ce plugin n'a pas été testé avec votre version actuelle de WordPress."
+
+#: better-plugin-compatibility-control.php:193
+#: better-plugin-compatibility-control.php:197
+msgid "This plugin has been tested successfully with your current version of WordPress."
+msgstr "Ce plugin a été testé avec succès sur votre version actuelle de WordPress."
+
+#: better-plugin-compatibility-control.php:194
+#: better-plugin-compatibility-control.php:198
+msgid "No compatibility info for this plugin available."
+msgstr "Aucune information n'est disponible sur la compatibilité de ce plugin."
+
+#: better-plugin-compatibility-control.php:194
+#: better-plugin-compatibility-control.php:198
+msgid "N/A"
+msgstr "N/A"
+
+#: better-plugin-compatibility-control.php:202
+msgid "No readme.txt file for this plugin found. Contact the plugin author!"
+msgstr "Aucun fichier readme.txt n'a été trouvé pour ce plugin. Veuillez consulter l'auteur du plugin!"
+
+#: better-plugin-compatibility-control.php:202
+msgid "No readme.txt found"
+msgstr "Aucun fichier readme.txt n'a été trouvé "
+
+#: better-plugin-compatibility-control.php:237
+msgid "Better Plugin Compatibility Control requires at least WordPress 2.5!"
+msgstr "Better Plugin Compatibility Control nécessite au moins WordPress 2.5!"
+

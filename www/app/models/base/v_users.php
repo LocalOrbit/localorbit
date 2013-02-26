@@ -1,0 +1,32 @@
+<?php
+class core_model_base_v_users extends core_model
+{
+	function init_fields()
+	{
+		$this->add_field(new core_model_field(0,'entity_id','int',8,'','v_users'));
+		$this->add_field(new core_model_field(1,'entity_type_id','int',8,'','v_users'));
+		$this->add_field(new core_model_field(2,'attribute_set_id','int',8,'','v_users'));
+		$this->add_field(new core_model_field(3,'website_id','int',8,'','v_users'));
+		$this->add_field(new core_model_field(4,'email','string',-4,'','v_users'));
+		$this->add_field(new core_model_field(5,'group_id','int',8,'','v_users'));
+		$this->add_field(new core_model_field(6,'increment_id','string',-4,'','v_users'));
+		$this->add_field(new core_model_field(7,'store_id','int',8,'','v_users'));
+		$this->add_field(new core_model_field(8,'created_at','timestamp',4,'','v_users'));
+		$this->add_field(new core_model_field(9,'updated_at','timestamp',4,'','v_users'));
+		$this->add_field(new core_model_field(10,'is_active','int',8,'','v_users'));
+		$this->add_field(new core_model_field(11,'org_id','int',8,'','v_users'));
+		$this->add_field(new core_model_field(12,'first_name','string',-4,'','v_users'));
+		$this->add_field(new core_model_field(13,'last_name','string',-4,'','v_users'));
+		$this->add_field(new core_model_field(14,'password','string',-4,'','v_users'));
+		$this->add_field(new core_model_field(15,'is_enabled','int',8,'','v_users'));
+		$this->add_field(new core_model_field(16,'is_deleted','int',8,'','v_users'));
+		$this->add_field(new core_model_field(17,'org_name','string',-4,'','v_users'));
+		$this->add_field(new core_model_field(18,'domain_id','int',8,'','v_users'));
+		$this->add_field(new core_model_field(19,'domain_name','string',-4,'','v_users'));
+		$this->add_field(new core_model_field(20,'hostname','string',-4,'','v_users'));
+		$this->add_field(new core_model_field(21,'org_is_deleted','int',8,'','v_users'));
+		$this->add_field(new core_model_field(22,'composite_role','string',-4,'','v_users'));
+		$this->init_data();
+	}
+}
+?>

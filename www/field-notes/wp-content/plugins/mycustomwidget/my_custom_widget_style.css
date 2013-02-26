@@ -1,0 +1,122 @@
+ <style type="text/css">
+    
+    .mcw_maint_display{
+      border-style: dotted;
+	    border-color: gray;
+	    border-width: 1px;
+	    padding: 5px;
+	    margin-left: 20px;
+    }
+    
+    .mcw_deactivated{
+      background: #D3D3D3;
+      readonly: true;
+    }
+    
+    .mcw_hidden{
+      display: none;
+    }
+    
+    .mcw_readonly{
+      background-color: #EEEEEE;
+    }
+    
+    .mcw_debug{
+      color:#4B963C;
+      background:#EEEEEE none repeat scroll 0%;
+    }
+    
+    .mcw_config_table{
+      border-spacing: 2px;
+      border-collapse: collapse;
+	    border-width: 1px;
+	    padding: 3px;
+	    border-style: dotted;
+	    border-color: gray;
+	    background-color: white;
+	    empty-cells: show;
+	    -moz-border-radius: 0px 0px 0px 0px;
+    }
+    
+    .mcw_config_filters{
+      border-spacing: 2px;
+      border-collapse: collapse;
+	    border-width: 1px;
+	    padding: 0px;
+	    border-style: dotted ;
+	    border-color: gray;
+	    background-color: white;
+	    empty-cells: show;
+	    -moz-border-radius: 0px 0px 0px 0px;
+    }
+    .mcw_config_filters th{
+      padding: 5px;
+    }
+
+    .mcw_option_table{
+      border-spacing: 2px;
+      border-collapse: collapse;
+	    border-width: 1px;
+	    padding: 3px;
+	    border-style: dotted;
+	    border-color: gray;
+	    background-color: white;
+	    empty-cells: show;
+	    -moz-border-radius: 0px 0px 0px 0px;
+    }
+    
+    .mcw_option_table td,
+    .mcw_option_table th,
+    .mcw_config_table td,
+    .mcw_config_table th{
+      border-spacing: 2px;
+      border-collapse: collapse;
+	    border-width: 1px;
+      padding: 3px;
+      border-style: dotted;
+	    border-color: gray;
+	    background-color: white;
+	    empty-cells: show;
+	    -moz-border-radius: 0px 0px 0px 0px;
+    }    
+    .mcw-row {
+      clear:both;
+      width: 95%;
+    }
+    .mcw_preview{
+      border: 1px dotted;
+      padding:7px;
+      clear:both;
+      width: 100%;
+    }    
+    .mcw-row label {
+      width: 100%;
+      padding-top:7px;
+      float:left;
+    }
+    .mcw-row-small label {
+      width: <?php echo MCW_get_option('filter_width').'px'; ?>; 
+      padding-top:1px;
+      float:left;
+    }
+    .mcw-row input{
+      width: 20px;
+      float:left;
+    } 
+    .mcw-row textarea {
+      width: 100%;
+      float:left;
+    }
+    
+    .mcw_updated{
+      background-color:#FFFFE0;
+      border-color:#E6DB55;
+      margin:0px 10px;
+    }
+    
+    .mcw_error{
+      background-color:#FFEBE8;
+      border-color:#CC0000;
+      margin:0px 10px;
+    }
+  </style>    

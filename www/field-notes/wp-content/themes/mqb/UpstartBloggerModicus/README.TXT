@@ -1,0 +1,3 @@
+Upstart Blogger Modicus was designed by Robert Ellis of Upstart Blogger (http://www.upstartblogger.com). For information on installation and customization, please visit the theme page at http://www.upstartblogger.com/wordpress-theme-upstart-blogger-modicus.
+
+This WordPress theme is released under the Creative Commons Attribution v3.0 license (http://creativecommons.org/licenses/by/3.0/), meaning you can do pretty much whatever you want with it, but you should (please) keep the link back to Upstart Blogger, either in the sidebar or the footer.

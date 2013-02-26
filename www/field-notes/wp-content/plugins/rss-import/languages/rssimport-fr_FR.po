@@ -1,0 +1,312 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: RSSImport v4.2.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-01-12 21:15+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Martin Korolczuk <martin@petitnuage.fr>\n"
+"Language-Team: Petit Nuage <contact@petitnuage.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: /Volumes/Disque Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import\n"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:120
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:132
+msgid "Error in file: "
+msgstr ""
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:440
+msgid "No items, feed is empty."
+msgstr "Aucune entrée dans le flux."
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:443
+msgid "Error: Feed has a error or is not valid"
+msgstr "Erreur : Le flux comprend des erreurs."
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:446
+msgid "&laquo; Previous"
+msgstr "&laquo; Précédent"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:447
+msgid "Next &raquo;"
+msgstr "&raquo; Suivant"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:448
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:449
+msgid "more items"
+msgstr "suite"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:529
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:841
+msgid "RSSImport"
+msgstr "RSSImport"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:529
+msgid "Import a feed with RSSImport"
+msgstr "Importer un flux avec RSSImport"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:840
+msgid "Entries from any RSS or Atom feed"
+msgstr "Entrées d'un flux RSS ou Atom"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1045
+msgid "Title:"
+msgstr "Titre&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1048
+msgid "URL for Title (incl. http://):"
+msgstr "Adresse (URL) associée au titre (inclure <code>http://</code>)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1051
+msgid "Display:"
+msgstr "Nombre d'entrées du flux à afficher&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1054
+msgid "FeedURL:"
+msgstr "Adresse (URL) du flux (inclure <code>http://</code>)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1057
+msgid "Before Description:"
+msgstr "Préfixe de la description&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1060
+msgid "Display Description:"
+msgstr "Afficher la description&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1062
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1075
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1098
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1116
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1145
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1153
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1179
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1199
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1207
+msgid "False"
+msgstr "Faux"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1063
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1076
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1099
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1117
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1146
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1154
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1180
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1200
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1208
+msgid "True"
+msgstr "Vrai"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1068
+msgid "After Description:"
+msgstr "Suffixe la description&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1069
+msgid "You can use the follow strings for create custom links:"
+msgstr "Vous pouvez utiliser les chaînes de caractères suivantes pour créer des liens personnalisés&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1070
+msgid "Example:"
+msgstr "Par exemple&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1073
+msgid "HTML:"
+msgstr "Conserver les balises de formatage (HTML) figurant dans la description&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1081
+msgid "Truncate Description Char:"
+msgstr "Couper la description au-delà d'une longueur de (signes)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1084
+msgid "Truncate Description String (HTML):"
+msgstr "Texte indiquant la coupure de la description (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1087
+msgid "Truncate Title Char:"
+msgstr "Couper le titre au-delà d'une longueur de (signes)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1090
+msgid "Truncate Title String (HTML):"
+msgstr "Texte indiquant la coupure du titre (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1093
+msgid "Before Date (HTML):"
+msgstr "Préfixe de la date (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1096
+msgid "Date:"
+msgstr "Afficher la date&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1104
+msgid "After Date (HTML):"
+msgstr "Suffixe de la date (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1107
+msgid "Date Formatting:"
+msgstr "Format de la date&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1108
+msgid "Leave empty for use the date format of your WordPress settings."
+msgstr "Laissez vide pour utiliser le format de la date spécifié dans les réglages de <em>WordPress</em> (voir menu <em>Réglages</em> &raquo; <em>Général</em> &raquo; <em>Format de date</em>)."
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1108
+msgid "Documentation on date formatting"
+msgstr "Consulter la documentation sur le format de la date."
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1111
+msgid "Before Creator (HTML):"
+msgstr "Préfixe de l'auteur (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1114
+msgid "Creator:"
+msgstr "Auteur&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1122
+msgid "After Creator (HTML):"
+msgstr "Suffixe de l'auteur (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1125
+msgid "Before Items (HTML):"
+msgstr "Préfixe des entrées (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1128
+msgid "After Items (HTML):"
+msgstr "Suffixe des entrées (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1131
+msgid "Before Item (HTML):"
+msgstr "Préfixe d'une entrée (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1134
+msgid "After Item (HTML):"
+msgstr "Suffixe d'une entrée (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1137
+msgid "Target Attribut:"
+msgstr "Attribut <code>target</code> du lien vers l'entrée (un parmi&nbsp;: <code>_blank</code>, <code>_parent</code>, <code>_self</code>, <code>_top</code>)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1140
+msgid "Rel Attribut:"
+msgstr "Attribut <code>rel</code> du lien vers l'entrée (un ou plusieurs, le cas échéant séparés par des espaces, parmi&nbsp;: <code>nofollow</code>, <code>bookmark</code>, etc.)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1143
+msgid "Charsetscan:"
+msgstr "Vérification du format d'encodage du flux (peut provoquer des ralentissements&nbsp;; à n'utiliser que si les caractères du flux apparaissent corrompus)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1151
+msgid "Debug mode:"
+msgstr "Activer le mode de déboguage&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1159
+msgid "Before <em>No</em> Items Message (HTML):"
+msgstr "Préfixe du message &laquo;&nbsp;<em>Aucune entrée disponible</em>&nbsp;&raquo; (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1162
+msgid "<em>No</em> Items Message:"
+msgstr "Message &laquo;&nbsp;<em>Aucune entrée disponible</em>&nbsp;&raquo; (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1165
+msgid "After <em>No</em> Items Message (HTML):"
+msgstr "Suffixe du message &laquo;&nbsp;<em>Aucune entrée disponible</em>&nbsp;&raquo; (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1168
+msgid "Before Error Message (HTML):"
+msgstr "Préfixe des messages d'erreur (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1171
+msgid "Error Message:"
+msgstr "Message d'erreur&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1174
+msgid "After Error Message (HTML):"
+msgstr "Suffixe des messages d'erreur (HTML)&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1177
+msgid "Pagination:"
+msgstr "Pagination&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1185
+msgid "Previous Pagination Link String:"
+msgstr "Message &laquo;&nbsp;<em>Page précédente</em>&nbsp;&raquo;&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1188
+msgid "Next Pagination Link String:"
+msgstr "Message &laquo;&nbsp;<em>Page suivante</em>&nbsp;&raquo;&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1191
+msgid "Previous Pagination Title String:"
+msgstr "Titre du lien &laquo;&nbsp;<em>Page précédente</em>&nbsp;&raquo;&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1194
+msgid "Next Pagination Title String:"
+msgstr "Titre du lien &laquo;&nbsp;<em>Page suivante</em>&nbsp;&raquo;&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1197
+msgid "Use SimplePie class:"
+msgstr "Utiliser la classe <em>SimplePie</em>&nbsp;:"
+
+#: /Volumes/Disque
+#: Dur/Users/martin/PROJECTS/www/petitnuage.fr/sd/www1/www/wordpress/wp-content/plugins/rss-import/rssimport.php:1205
+msgid "Echo/Return:"
+msgstr "Autoriser l'affichage&nbsp;:"
+

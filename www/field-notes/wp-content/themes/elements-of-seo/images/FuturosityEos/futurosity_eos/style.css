@@ -1,0 +1,482 @@
+/*
+THEME NAME:Futurosity Eos
+THEME URI:http://www.futurosity.com/wordpress-theme-futurosity-eos
+DESCRIPTION:Futurosity theme. For updates, please <a href="http://feeds.feedburner.com/futurosity">subscribe to Futurosity</a>.
+VERSION:0.6
+AUTHOR:Robert Ellis
+AUTHOR URI:http://www.futurosity.com
+*/
+
+
+#access {
+font-size:0px;
+height:0;
+line-height:0px;
+margin-left:-999px!important;
+}
+
+#blog-title,#blog-description {
+color:red;
+display:inline;
+font-size:14px;
+font-weight:600;
+text-transform:uppercase;
+}
+
+#comment {
+height:140px;
+margin-bottom:12px;
+width:460px;
+}
+
+#comments {
+clear:both;
+width:460px;
+}
+
+#container {
+clear:both;
+float:left;
+width:600px;
+}
+
+#content {
+padding-bottom:24px;
+}
+
+#footer {
+border-top:1px solid #eaeaea;
+clear:both;
+margin:24px 0;
+padding:12px 0;
+width:100%;
+}
+
+#header {
+border-bottom:1px solid #eaeaea;
+float:left;
+height:80px;
+margin:24px 0 18px;
+width:928px;
+}
+
+#menu ul li:hover {
+background:#fff;
+}
+
+#nav-above {
+display:none;
+}
+
+#nav-below {
+clear:both;
+padding-bottom:24px;
+}
+
+.about {
+font-size:14px;
+line-height:1.2em;
+margin-top:-2px;
+}
+
+.archive .entry-date, .search .entry-date {
+display:inline;
+}
+
+.archive .post h3.entry-title, .search h3.entry-title, li#tags h3 {
+background:#fff;
+border-top:1px solid #eaeaea;
+color:#000;
+font-size:18px;
+font-weight:400;
+line-height:1.2em;
+margin:0;
+padding:12px 0 0;
+}
+
+.archive .entry-meta, .search .entry-meta {
+padding-bottom:24px;
+}
+
+.comments ol {
+margin:0;
+padding:0 0 24px;
+}
+
+.comments ol li {
+list-style-type:none;
+}
+
+.comments ol li:hover {
+background: #eaeaea;
+}
+
+.comment-meta {
+border-bottom:1px solid #eaeaea;
+float:left;
+font-size:1.2em;
+margin-bottom:12px;
+padding:12px 0 4px;
+width:100%;
+}
+
+.content-column {
+padding-bottom:24px;
+}
+
+.entry-content h3  {
+background:#fff;
+color:#000;
+font-size:14px;
+font-weight:bolder;
+padding:0;
+margin:18px 0 -0.8em;
+}
+
+.entry-meta h3 {
+width:105px;
+}
+
+.entry-meta ul {
+padding:0;
+margin:0;
+}
+
+.entry-meta ul li {
+border-bottom:1px solid #eaeaea;
+list-style-type:none;
+margin:0;
+padding:5px 0;
+}
+
+.excerpt  {
+border-bottom:1px solid #eaeaea;
+color:#777;
+font-size:1.5em;
+margin-bottom:28px;
+}
+
+.home #content {
+float:left;
+width:360px;
+}
+
+.home #nav-above,.home #nav-below,.home .tag-links,#archives {
+display:none;
+}
+
+.home .cat-links a {
+color:red;
+font-size:10px;
+font-weight:bolder;
+text-transform:uppercase;
+}
+
+.home .entry-content p {
+color:#777;
+}
+
+.home .entry-meta, .home .entry-date {
+display:inline;
+font-size:10px;
+}
+
+.home h2.entry-title {
+margin-bottom: -0.3em;
+}
+
+.home h2.entry-title a {
+font-weight:400;
+line-height:1.2em;
+margin:0;
+padding:0;
+}
+
+.home .p1 {
+font-size:1.5em;
+}
+
+.home .p2 {
+font-size:1.4em;
+}
+
+.home .p3 {
+font-size:1.3em;
+}
+
+.home .p4 {
+font-size:1.2em;
+}
+
+.home .p5 {
+font-size:1.1em;
+}
+
+.home .post {
+border-top:1px solid #eaeaea;
+padding:4px 0 24px;
+width:360px;
+}
+
+.p1, .archive .p1 h3.entry-title{
+border-top:none;
+}
+
+.home .post:hover,.home ul li:hover {
+background:#eaeaea;
+}
+
+.middle {
+float:left;
+line-height:1.4em;
+margin-left:24px;
+width:216px;
+}
+
+.middle ul, .page ul {
+padding:0 0 12px;
+margin:0;
+}
+
+.middle ul li {
+border-top:1px solid #eaeaea;
+list-style-type:none;
+padding:5px 0;
+margin-left:0;
+}
+
+#nav-below {
+width:460px;
+padding:24px 0;
+}
+
+.archive #nav-below {
+width:600px;
+}
+
+.nav-next {
+float:right;
+width:225px;
+}
+
+.nav-previous {
+float:left;
+padding-right: 10px;
+width:225px;
+}
+
+.page .entry-content ul li {
+list-style-type:none;
+}
+
+.p5,.p9,.p13,.p17,.p21,.p24,.p27,.p31,.p34,.p37,.clear {
+clear:both;
+}
+
+.sidebar {
+clear:right;
+float:right;
+margin:0 0 0 84px;
+padding:0;
+width:244px;
+}
+
+.sidebar a {
+color:red;
+}
+
+.sidebar li {
+list-style-type:none;
+padding:0;
+}
+
+.sidebar ul {
+padding:0 0 12px;
+margin-left:0;
+}
+
+.sidebar ul li:hover {
+background:inherit;
+}
+
+.single #content {
+float:left;
+width:600px;
+}
+
+.single .entry-content  {
+float:left;
+width:460px;
+}
+
+.single .entry-content p img {
+border:1px solid #eaeaea;
+margin-bottom:12px;
+max-width:458px;
+}
+
+.single .entry-meta {
+float:left;
+padding-left:24px;
+width:115px;
+}
+}
+
+.single .excerpt  {
+border-bottom:1px solid #eaeaea;
+color:#777;
+font-size:1.5em;
+margin-bottom:28px;
+}
+
+.single .excerpt p {
+margin-top:0;
+}
+
+.single .post {
+float:left;
+padding-bottom:24px;
+width:460px;
+}
+
+a {
+color:#000;
+font-weight:bolder;
+text-decoration:none;
+}
+
+a:hover {
+text-decoration:underline;
+}
+
+abbr {
+border:none;
+}
+
+blockquote {
+background:#eaeaea;
+padding:1em;
+}
+
+body {
+background:#fff;
+color:#444;
+font:12px/1.5 Arial, sans-serif;
+margin:0 auto;
+padding:0 0 20px;
+width:928px;
+}
+
+code, pre {
+overflow: auto;
+}
+
+cite {
+color:#silver;
+display:block;
+font-style:normal;
+padding:.3em 0;
+}
+
+h2 {
+margin-top:0;
+}
+
+h2.page-title, .page h2.entry-title a, .archive h2.entry-title a, .search h2.entry-title a, .single h2.entry-title a, .four04 h2.entry-title {
+font-size:24px;
+font-weight:400;
+line-height:1.2em;
+margin:0;
+padding:0;
+}
+
+h3 {
+background:#000;
+color:#fff;
+display:block;
+font-size:10px;
+font-weight:bolder;
+padding:3px 5px;
+}
+
+h3.entry-title, h3.entry-title a {
+background:#fff;
+color:#000;
+font-weight:400;
+margin-top:18px;
+padding:0;
+}
+
+a img {
+border: 0;
+}
+
+img.alignleft, .comment-meta img {
+float:left;
+margin:0 10px 0 0;
+}
+
+img.alignright {
+float:right;
+margin:0 0 0 10px;
+}
+
+li.comment.bypostauthor:hover {
+font-style: italic;
+}
+
+li.linkcat h3 {
+background:#fff;
+color:#000;
+font-size:1.5em;
+font-weight:400;
+padding:0;
+margin:18px 0 0;
+}
+
+li#search {
+padding-bottom:4px;
+}
+
+li#tags a {
+font-weight:400;
+margin-bottom:-1em;
+}
+
+ul#archives-page li h3 {
+background:#fff;
+border-top:none;
+color:#000;
+font-size:18px;
+font-weight:400;
+line-height:1.2em;
+margin:0;
+padding:0 0 12px;
+}
+
+ul.related {
+margin:0;
+padding: 0 0 12px;
+}
+
+ul.related li{
+list-style-type:none;
+}
+
+ul.xoxo{
+margin:0;
+padding:0;
+}
+
+/* featured */
+.featured-image-wrapper { background: #000; position: relative; }
+.featured-image-wrapper h2 { background: #000; font-size: 16px; position: absolute; bottom: -10px; left: 0; padding:4px; z-index: 1;height:60px;width:592px; margin-bottom: 10px;}
+.featured-image-wrapper h2 a { color: #fff; font-weight:400; text-decoration: none; }
+.featured-image-wrapper img { height: 180px; width: 600px; }
+
+.transparent {
+filter:alpha(opacity=50);
+-moz-opacity:0.5;
+-khtml-opacity: 0.5;
+opacity: 0.5;
+}

@@ -1,0 +1,188 @@
+  <p><strong>Changelog</strong></p>
+  <table>
+  <tbody><tr>
+  <td>Version</td>
+  <td>Date</td>
+
+  <td>Changes</td>
+  </tr>
+
+ <td valign="top">2.0.2</td>
+   <td valign="top">2007/09/25</td>
+   <td valign="top">Fix: Plugin was not compatible to WordPress 2.0.11 any more. Thank you to <a href="http://info.zumtee.de/">Stephan</a> for reporting the bug.
+   </td>
+  </tr>
+
+
+   <td valign="top">2.0.1</td>
+   <td valign="top">2007/09/24</td>
+   <td valign="top">Added switch on the categories page, which reverses the
+selection. It is now possible to include or exclude categories.
+   </td>
+  </tr>
+
+  <tr>
+   <td valign="top">2.0</td>
+   <td valign="top">2007/09/24</td>
+   <td valign="top">
+   New code for fetching the data:</br>
+   1. Instead of one expensive database query we now use two or more cheap queries. Thanks to mirra, who reported the problem. And again thank you to the people mentioned in changlog 1.4, where the cache was introduced for the same (performance-) problems on big blogs.</br>
+   2. This also fixed a bug, which lead to too less than requested comments in lists, ordered by post. Thanks to <a href="http://comicsworthreading.com/">Johanna</a> and <a href="http://comicsworthreading.com/">Frˆ©dˆ©ric</a> for reporting and documenting this.
+   </br>
+Changed the css in the admin gui, to work around a display issue with Tiger Admin. Thank you, <a href="http://gantenbein.ws/">Andi</a>, for finding this.
+   </br>
+   Added %time_since macro, which displays the time since the comment was posted. Thanks to <a href="http://www.iamalik.com/">Imran</a> and <a href="http://dcdl.org/">Keith</a> for sugesting (something like) this (very long ago).
+   </br>Admin interface: Added switch fpr turning on and off smileys. Thank you, panos, for requesting this feature.
+   </br>
+   Support for Custom Smileys Plugin. Thanks to Henry for suggesting this.
+   </br>
+   Fix: Username was not displayed as "Anonymous", if commentor left no name. Thanks to <a href="http://pixcapacitor.com/">Pixelation</a> for reporting this.   </br>
+   Added support for WordPress 2.3. It will drop the post2cat table. Changed plugin to new taxonomy scheme. A *great* thank you goes to <a href="http://djz.hu">Lakatos Zsolt</a>, who provided a complete patch for get-recent-comments-1.5.6, which made it very easy for me to understand how 2.0-beta10 had to be changed. Thank you also to xelios, Ville and <a href="http://diekretzschmars.de/">Kretzschmar</a> who warned me, that WordPress 2.3 will break the old plugin code.
+   </br>
+   </td>
+  </tr>
+<tr>
+  <td valign="top">1.5.5</td>
+  <td valign="top">2007/03/26</td>
+  <td valign="top">Added support for <a href="http://fredfred.net/skriker/index.php/polyglot">malyfred's</a> <a href="http://fredfred.net/skriker/index.php/polyglot">Polyglot</a> Plugin. Requested by <a href="http://blog.schreiter.info/">Torben</a>.
+</tr>
+<tr>
+  <td valign="top">1.5.4</td>
+  <td valign="top">2007/02/01</td>
+  <td valign="top">Use full pingback_author as %comment_author (instead of 'Unknown', if the pingback parser fails to recognize the pingback_author. Thanks again to <a href="http://www.garamiz.hu/blog">Gant</a> who found this in his blog.</br>
+ Added %author_url_href macros, which allows to generate inactive links, if the
+ commentator did not leave an url. This was wished (in part long ago) by <a href="http://somegirlwitha.com/">beej</a>, 
+ <a href="http://revivalblog.com/">carl</a>, <a href="http://www.schiesty.org/">FilSchiesty</a> and SwB.<br>
+ Added %profile_picture macro, which supports <a href="http://geekgrl.net">Hannah Gray's</a> <a href="http://geekgrl.net/2007/01/02/profile-pics-plugin-release/">Profile Pics Plugin</a>. Thank you for the idea and your help, <a href="http://mein.meerblickzimmer.de/">Markus</a>
+  </td>
+</tr>
+
+<tr>
+  <td valign="top">1.5.3</td>
+  <td valign="top">2007/01/15</td>
+  <td valign="top">Refresh cache, when a comment is approved by moderator. Problem found by <a href="http://www.garamiz.hu/blog">Gant</a>. Thank you!
+  </td>
+</tr>
+
+<tr>
+  <td valign="top">1.5.2</td>
+  <td valign="top">2007/01/05</td>
+  <td valign="top">Added option for excluding comments from blog authors. Suggested by <a href="http://www.sokwanele.com/thisiszimbabwe">This is Zimbabwe</a>, <a href="http://tricolore.ca/">Slim</a>, <a href="http://marilynshampoo.co.uk/">marilyn's shampoo</a> and <a href="http://www.bizmord.com/Blog">Igor M.</a><br>
+  </td>
+</tr>
+
+<tr>
+  <td valign="top">1.5.1</td>
+  <td valign="top">2006/12/29</td>
+  <td valign="top">Store the cache base64 encoded. There seems to be a problem with the unserialization of multibyte characters. Thanks to <a href="http://priv.tw/blog">priv</a>, who reported the problem and suggested the encoding.<br>
+  <strong>After upgrading to this version you should trigger a regeneration of the cache by adding a comment somewhere.</strong> 
+  </td>
+</tr>
+
+  <tr>
+  <td valign="top">1.5</td>
+  <td valign="top">2006/12/27</td>
+  <td valign="top">New pingback parser<br>
+  		   Stop losing html entities and tags in the post titles and comments by using wptexturize. Thanks to <a href="http://etherwork.net/blog/">ejm</a> (again!) and <a href="http://www.orthodoxanarchist.com/">mobius</a> for reporting the problem and making suggestions.<br>
+                   Bugfix in widget code: Error, when trackbacks came before comments
+  </td>
+  </tr>
+
+  <tr>
+  <td valign="top">1.4</td>
+  <td valign="top">2006/12/24</td>
+  <td valign="top">
+  The plugin is a widget now. Thanks to <a href="http://www.herrmueller.net/">herrmueller</a> and <a href="http://blog.deklein.de">Thomas de Klein</a> for suggesting this feature.<br />
+  Cache the output in order to reduce the database impact of the plugin. Thanks to the following people for reporting the poor performance and making suggestions to solve the problem: <a href="http://www.brandonstone.com/">Brandon Stone</a>, <a href="http://king-of-fools.com/">King of Fools</a>, <a href="http://www.basicthinking.de/blog/">Robert Basic</a> and especially <a href="http://www.4null4.de/">CountZero</a>.<br />
+  Option to combine comments and trackbacks in one list (requested by <a href="http://softwaremaniacs.org/blog/">Maniac</a> and <a href="http://www.dieproduzentin.de/">die produzentin</a>)<br />
+  Allow to Group comments by their posting (requested by <a href="http://www.dylanchords.com/blog">eyolf</a>)<br />
+  Allow limit of comments per post (suggested by <a href="http://blog.deklein.de">Thomas</a>)<br />
+  Use Wordpress 2.1 compatible database variables. Thanks to <a href="http://spencerp.net">spencerp</a>, for reporting and fixing.<br />
+  Bugfix: Wrong key used in gravatar hash (Thank you, <a href="http://scatterload.blogspot.com/">Hamzeh N.</a>, for finding and fixing this).<br />
+  Updated the stylesheets to the look of wordpress 2.x.<br />
+  Added two macros: %comment_type and %post_counter.<br />
+  Use less option variables in db.<br />
+  Updated instructions page.<br />
+  Dropped support for Wordpress 1.2
+  </td>
+  </tr>
+ 
+  <tr>
+  <td valign="top">1.3.1</td>
+  <td valign="top">2006/12/11</td>
+  <td valign="top">Fixes for problems with wordpress running under windows.</td>
+  </tr>
+
+  <tr>
+  <td valign="top">1.3</td>
+  <td valign="top">2006/11/26</td>
+  <td valign="top">Fixes for problems with php5.</td>
+  </tr>
+
+  <tr>
+  <td valign="top">1.2</td>
+  <td valign="top">2005/09/15</td>
+  <td valign="top">Prevent pingbacks from own blog.  Thanks to <a href="http://www.tatteredcoat.com/">Matt</a> for the idea and support!<br>To use the feature, go to the trackbacks configuration and enter the address of your webserver.</td>
+  </tr>
+  </tr>
+
+<tr>
+  <td valign="top">1.0</td>
+  <td valign="top" nowrap>2005/03/21</td>
+  <td valign="top">Also show comments to static pages. (They are new in WP 1.5). Thanks to <a href="http://www.mazalien.nl/weblog/">maza</a> for the hint.</td>
+  </tr>
+
+  <tr>
+  <td valign="top">0.9</td>
+  <td valign="top">2005/03/20</td>
+
+  <td valign="top">Introduced admin gui. Handle trackbacks different than comments. Replaced most regular expressions with basic string operations.
+  Dedicated macro for posting time. Requested by Zonekiller</td>
+  </tr>
+
+  <tr>
+  <td valign="top">0.8</td>
+  <td valign="top">2005/02/04</td>
+  <td valign="top">Readjusted sequence of arguments to the one described in the documentation. Thanks to <a href="http://blog.deklein.de">Thomas</a> </td>
+  </tr>
+
+<tr>
+  <td valign="top">0.7</td>
+  <td valign="top">2005/02/03</td>
+  <td valign="top">Renamed plugin to get-recent-comments, to make it possible to use the subversion system at www.wp-plugins.org<br>
+
+  Allow to specify your own formatting in the function call</td>
+  </tr>
+
+<tr>
+  <td valign="top">0.5</td>
+  <td valign="top">2005/01/02</td>
+  <td valign="top">Removed superfluous &lt;/p&gt;</td>
+</tr>
+
+<tr>
+  <td valign="top">0.4</td>
+  <td valign="top">2004/12/19</td>
+  <td valign="top">Use function arguments for displaying HTML before and after the comment<br>Make number of comments and number of characters also function arguments</td>
+</tr>
+
+<tr>
+  <td valign="top">0.3</td>
+  <td valign="top">2004/12/08</td>
+  <td valign="top">Link to permalink of comment<br>Wrap very long strings</td>
+</tr>
+
+<tr>
+  <td valign="top">0.2</td>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">Don’Äôt show comments that are not approved</td>
+</tr>
+
+<tr>
+  <td valign="top">0.1</td>
+  <td valign="top">2004/11/03</td>
+  <td valign="top">Initial release</td>
+</tr>
+
+</tbody></table>
+  <p>Thanks to all who sent  bug reports and ideas for improvements. Please send me a mail if I forgot you to mention here.</p>

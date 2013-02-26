@@ -1,0 +1,47 @@
+b.footer{
+	margin-top: 10px;
+	color: <?=$options['p4c']?>;
+}
+
+
+a.footer,a.footer:visited{
+	color: <?=$options['p4c']?>;
+	font-size:85%;
+	
+}
+
+div.footer{
+	color: <?=$options['p4c']?>;
+	font-size:85%;
+}
+
+
+a.footer:hover,a.footer:hover:visited{
+	color: <?=$options['p4c']?>;
+}
+li.footer{
+	margin-bottom: 10px;
+}
+
+a.main{
+	font-family: <?=$options['font2']?>;
+	font-size: 160%;
+	color: <?=$options['p4e']?>;
+	margin: 5px 25px;
+}
+
+a.main:hover{
+	color: <?=$options['p2c']?>;
+}
+
+a.arrow_link{
+	padding: 5px 30px 8px 12px;
+	background-image: url(../img/misc/arrow_red.png);
+	background-repeat:no-repeat;
+	background-position: top right;
+}
+
+a.arrow_link:hover{
+	background-color: #eee;
+	border-radius: 5px;
+}

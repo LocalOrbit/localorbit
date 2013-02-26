@@ -1,0 +1,106 @@
+
+#outer_frame{
+	text-align: left;
+	width: 1120px;
+	*width: 1160px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: <?=$options['p4f']?>;
+	position:relative;
+}
+
+#footer{
+	background-color: <?=$options['p4a']?>;
+	background-image: url(../img/template/gradient_footer.png);
+	background-repeat: repeat-x;
+}
+
+#logo{
+/*
+	margin-left: 8px;
+*/
+}
+
+
+
+#nav1top{
+
+	height: 30px;
+	text-align: right;
+	padding-right: 18px;
+}
+
+#nav1sub{
+	height: 50px;
+	text-align: right;
+	padding-top: 10px;
+}
+
+#nav1divider{
+	border: <?=$options['p4b']?> 1px solid;
+	border-width: 0px 0px 1px 0px;
+}
+
+#tagline_left{
+	width:20px !important;
+	height:31px;
+	background-color: <?=$options['p4f']?>;
+	background-image: url(../img/default/tagline_left.png);
+	background-repeat: no-repeat;
+	background-position: top right;
+}
+
+#tagline_right{
+	width:20px !important;
+	height:31px;
+	
+	background-image: url(../img/default/tagline_right.png);
+	background-repeat: no-repeat;
+	background-position: top left;
+
+}
+
+#tagline_center{
+	padding-top: 5px;
+	padding-right: 10px;
+	background-image: url(../img/default/tagline_newright.png);
+	background-repeat: no-repeat;
+	background-position: top right;
+
+}
+#tagline{
+	white-space:nowrap;
+	position: relative;
+	top: 0px;
+	left:0px;
+	padding-top: 4px;
+}
+
+
+#left{
+	padding: 0px 10px 10px 15px;
+	vertical-align: top;
+}
+
+.left_col{
+	padding: 0px 10px 10px 15px;
+	vertical-align: top;
+}
+
+#center{
+	padding: 0px 20px 7px 0px;
+	vertical-align: top;
+}
+
+.center_col{
+	padding: 0px 10px 7px 0px;
+	vertical-align: top;
+}
+
+#main_layout{
+	table-layout: fixed;
+	-moz-box-shadow: 0 0 9px #444;
+	-webkit-box-shadow: 0 0 9px #444;
+	box-shadow: 0 0 9px #444;
+}
+

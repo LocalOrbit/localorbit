@@ -1,0 +1,244 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ozh' Admin Drop Down Menu in italiano\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-20 15:33+0100\n"
+"PO-Revision-Date: 2009-02-22 17:59+0100\n"
+"Last-Translator: Gianni Diurno (aka gidibao) <gidibao@gmail.com>\n"
+"Language-Team: Gianni Diurno | http://gidibao.net/ <gidibao at gmail dot com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: wp_ozh_adminmenu__\n"
+"X-Poedit-Basepath: E:\\home\\ozh\\planetozh.com\\blog\\wp-content\\plugins\\ozh-admin-drop-down-menu\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: E:\\home\\ozh\\planetozh.com\\blog\\wp-content\\plugins\\ozh-admin-drop-down-menu\n"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:348
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:403
+msgid "updated"
+msgstr "aggiornato"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:353
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:408
+msgid "deleted"
+msgstr "cancellato"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/core.php:358
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/core.php:413
+#, php-format
+msgid "Admin Drop Down Menu settings <strong>%s</strong>"
+msgstr "Impostazioni menu Drop Down di amministrazione <strong>%s</strong>"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:33
+msgid "Icons"
+msgstr "Icone"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:34
+msgid "Display menu icons"
+msgstr "Mostra menu icone"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:35
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:63
+#, php-format
+msgid "They're so cute (and they're from %s)"
+msgstr "(icone fornite da %s)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:40
+msgid "Submenus"
+msgstr "Menu a discesa"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:41
+msgid "Display sub menus the regular way"
+msgstr "Mostra i sotto-menu nel modo consueto"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:42
+msgid "Some like it better when sub menus don't even need you to hover the top menu link"
+msgstr "Qualora preferissi non utilizzare la funzione hover per la navigazione dei link dal menu principale "
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:45
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:123
+msgid "Break Long Lists"
+msgstr "Elenchi"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:46
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:124
+#, php-format
+msgid "Break if more than %s menu entries"
+msgstr "Spezza in presenza di più di %s voci nel menu"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:47
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:125
+msgid "If a dropdown gets longer than this value, it will switch to horizontal mode so that it will hopefully fit in your screen (requires javascript)"
+msgstr "Se il numero degli elementi sarà superiore a questo valore, la loro disposizione verrà mostrata orizzontalmente nella speranza che la visualizzazione possa essere adeguata allo schermo (javascript necessario) "
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:52
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:128
+msgid "Top Links"
+msgstr "Link principali"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:53
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:129
+msgid "Make top links clickable"
+msgstr "Rendi cliccabili i link del menu principale"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:54
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:130
+msgid "Uncheck this option to improve compatibility with browsers that cannot handle the \"hover\" event (<em>ie</em> most handheld devices)"
+msgstr "Leva il segno di spunta per migliorare la compatibilità con quella tipologia di browsers che non sono in grado di gestire la funzione \"hover\" (<em>ie</em>)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:57
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:138
+msgid "Give Some &hearts;"
+msgstr "Riconoscimenti"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:58
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:139
+#, php-format
+msgid "Do you like this plugin? Then <a href=\"%s\">rate it 5 Stars</a> on the official Plugin Directory!"
+msgstr "Ti piace questo plugin? Allora <a href=\"%s\">vota 5 stelle</a> nella Plugin Directory ufficiale!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:59
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:140
+#, php-format
+msgid "Do you <em>love</em> this plugin? Please <a href=\"%s\">blog about it</a>! Tell your readers you like it so they will discover, try and hopefully like it too&nbsp;:)"
+msgstr "<em>Ami</em> questo plugin? Scrivi un <a href=\"%s\">articolo</a> nel tuo blog! Racconta ai tuoi lettori quanto ti piaccia facendo sì che anche loro lo possano conoscere&nbsp;:)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:60
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:141
+#, php-format
+msgid "Are you <span id=\"totallycrazy\">crazy</span> about this plugin? <a href=\"%s\">Paypal me a beer</a>! Every donation warms my heart and motivates me to release free stuff!"
+msgstr "Sei <span id=\"totallycrazy\">follemente</span> innamorato del plugin? <a href=\"%s\">Offrimi una birra con Paypal</a>! Ogni donazione affrancherà il mio cuore motivandomi ulteriormente nella creazione di nuovi plugin!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:81
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:248
+msgid "Save Changes"
+msgstr "Salva le modifiche"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:87
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:101
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:254
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:268
+msgid "Reset Settings"
+msgstr "Ripristino impostazioni"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:96
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:263
+msgid "Clicking the following button will remove all the settings for this plugin from your database. You might want to do so in the following cases:"
+msgstr "Cliccando sul pulsante verranno rimosse dal database tutte le impostazioni per il plugin. L'operazione é necessaria nei seguenti casi:"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:98
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:265
+msgid "you want to uninstall the plugin and leave no unnecessary entries in your database."
+msgstr "desideri disinstallare il plugin e non lasciare alcun dato inutile nel database"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:99
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:266
+msgid "you want all settings to be reverted to their default values"
+msgstr "desideri che tutte le impostazioni siano ripristinate ai loro valori predefiniti"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:101
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:268
+msgid "Really do?"
+msgstr "Sei certo?"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/tags/2.3.4.1/inc/options.php:102
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:269
+msgid "There is no undo, so be very sure you want to click the button!"
+msgstr "L'operazione sarà irreversibile. Sii ben certo di quello che stai facendo prima di cliccare il bottone!"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:46
+msgid "Icons and Colors"
+msgstr "Icone e colori"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:51
+msgid "Top Level Icons"
+msgstr "Icone principali"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:52
+msgid "Display original menu icons in top level links"
+msgstr "Mostra le icone originali nei link principali"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:53
+msgid "Checking this enables Compact Mode &darr;"
+msgstr "Il segno di spunta attiverà la modalità compatta &darr;"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:56
+msgid "Compact Mode"
+msgstr "Modalità compatta"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:57
+msgid "Shrink top level links down to their icons"
+msgstr "Porta a livello delle proprie icone i link principali"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:58
+msgid "That was a cool WordPress feature, so I stole it :)"
+msgstr "Questa é un'ottima opzione di WordPress :-)"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:61
+msgid "Sublevel Icons"
+msgstr "Icone sotto-livelli"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:62
+msgid "Display icons in drop down menus"
+msgstr "Mostra le icone via menu a tendina"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:66
+msgid "Color Scheme"
+msgstr "Schema colore"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:67
+msgid "Pick a color for your menu bar, using the color wheel or one of the presets"
+msgstr "Scegli un colore per la barra del menu utilizzado lo strumento dedicato oppure uno dei predefiniti"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:68
+msgid "No subtle gradient, just plain color."
+msgstr "Nessun gradiente, solo colore a tinta unica."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:110
+msgid "Advanced Settings"
+msgstr "Impostazioni avanzate"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:113
+msgid "Minimal Mode"
+msgstr "Modalità minimalista"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:114
+msgid "Hide header"
+msgstr "Nascondi la intestazione"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:115
+msgid "Remove the whole header bar for maximum screen real estate. Note: The quick link to your blog will be added to the menu, the Logout link in the Users sub-menu."
+msgstr "Rimuovi l'intera barra del titolo per ottenere il massimo spazio nello schermo. Il link veloce al tuo blog sarà aggiunto al menu mentre il collegamento di logout verrà aggiunto al sotto-menu utenti."
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:118
+msgid "Favorite Actions"
+msgstr "Azioni preferite"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:119
+msgid "Display Favorite Actions"
+msgstr "Mostra azioni preferite"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:120
+msgid "Just in case you realize you don't need this anymore with such a fast and usable menu."
+msgstr "Solo nel caso in cui non lo desiderassi preferendo un menu più veloce. "
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:133
+msgid "Hide \"0\" Bubbles"
+msgstr "Nacondi \"0\" Bubbles"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:134
+msgid "Hide speech bubbles when no awaiting comments or outdated plugins"
+msgstr "Nascondi le bubble informative in assenza di commenti da moderare o plugin da aggiornare"
+
+#: E:\home\svn\plugins\ozh-admin-drop-down-menu/trunk/inc/options.php:135
+msgid "Check if those tiny \"0\" speech bubble are too distracting for your taste"
+msgstr "Metti il segno di spunta allo \"0\" se le bubble informative ti infastidissero"
+
+#~ msgid "(might need a page refresh here)"
+#~ msgstr "(potrebbe essere necessario ricaricare la pagina)"
+#~ msgid "They're so cute."
+#~ msgstr "Bellissime"
+

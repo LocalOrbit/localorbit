@@ -1,0 +1,5 @@
+<?php
+class core_model_catalog_product_super_attribute_label extends core_model_base_catalog_product_super_attribute_label
+{
+}
+?>

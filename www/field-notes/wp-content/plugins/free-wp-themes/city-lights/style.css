@@ -1,0 +1,485 @@
+/*  
+Theme Name: City Lights
+Author URI: http://ithemes.com
+Version: 1
+Author: Cory Miller
+Description: City Light 2 Column is a free WordPress theme released by 1800blogger.com
+The CSS, XHTML and design is released under GPL: 
+http://www.opensource.org/licenses/gpl-license.php
+*/
+
+
+body {
+	background: #000;
+	color: #000000;
+	font-family: Georgia, Times New Roman, Sans-Serif;
+	font-size: 13px;
+	margin: 0px 0px 0px 0px;
+	}
+
+body * {margin: 0px; padding: 0px;}
+
+a, a:visited { 
+	color: #333399;
+	font-weight: bold;
+	text-decoration: underline;
+	}
+a:hover {
+	font-weight: bold;
+	text-decoration: none;
+	color: #fff;
+	background: #333399;
+	}
+#container { 
+	width: 960px;
+	background: #fff;
+	text-align: left; 
+	margin: 0px auto 0px; 
+	overflow: hidden;
+	}
+* html #header{ width: 960px; padding: 0px;}
+
+#header {
+	background: #000 url(images/header.jpg) top center repeat-x;
+	padding: 10px;
+	text-align: center;
+	margin: 0px auto 0px;
+	clear: both;
+	height: 140px;
+	}	
+
+#header h1 {
+	color: #fff;
+	background: transparent;
+	font-size: 45px;
+	font-family: Georgia, Times New Roman, Sans-Serif;
+	font-weight: normal;
+	margin: 30px 0px 5px 0px;
+	text-transform: uppercase;
+	letter-spacing: 6px;
+	text-align: center;
+	}
+
+#header h1 a {
+	color: #fff;
+	background: transparent;
+	text-decoration: none;
+	font-weight: normal;
+	}
+#header h1 a:hover {
+	color: #ccc;
+	text-decoration: none;
+	}
+
+#header h2 {
+	color: #fff;
+	font-style: normal;
+	font-size: 20px;
+	font-family: Georgia, Times New Roman, Sans-Serif;
+	font-weight: normal;
+	margin: 0px 0px 4px 0px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	text-align: center;
+	}
+
+#header h2 a {
+	color: #fff;
+	font-size: 20px;
+	font-family: Georgia, Times New Roman, Sans-Serif;
+	font-weight: normal;
+	font-style: italic;
+	}
+
+#header h2 a:hover {
+	color: #006699;
+	text-decoration: none;
+	}
+	
+#header img {
+	margin: 0px;
+	padding: 0px;
+	}
+
+#menu { 
+	background: #333 url(images/menuback.gif) top center repeat-x;
+	margin: 0px 0px 8px 0px;
+	padding: 4px 0px 4px 0px;
+	text-align: center;
+	clear: both;
+	}
+#menu img{
+	border: none;
+	}
+#menu h2 {
+	color: #fff;
+	font-size: 18px;
+	font-family: Georgia, Times New Roman, Sans-Serif;
+	font-weight: normal;
+	margin: 0px;
+	padding: 0px 0px 0px 0px;
+	}
+#menu li {
+	display: inline;
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	}
+		
+#menu ul {
+	margin: 0px;
+	padding: 4px;
+	}
+	
+#menu ul li a {
+	font-family: Georgia, Times New Roman, Sans-Serif;
+	font-weight: normal;
+	font-size: 18px;
+	background: transparent;
+	color: #fff;
+	padding: 2px 20px 2px 20px;
+	margin: 0px 0px 0px 0px;
+	text-decoration: none;
+	text-transform: uppercase;
+	}
+
+#menu ul li a:hover {
+	color: #333399;
+	background: #fff;
+	padding: 8px 20px 8px 20px;
+	text-decoration: none;
+	}
+
+* html #content { width: 500px; }
+* html #content_box { width: 500px; }
+
+#content { 
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	margin-left: 0px;
+	margin-right: 0px;
+	float: left; 
+	padding: 0px;
+	}
+
+#content_box { 
+	background: #fff;
+	display: block;
+	width: 545px; 
+	margin: 0px;
+	float: left; 
+	padding: 20px 0px 30px 30px;
+	}
+.toptags {
+	color: #333;
+	background: #ddd;
+	font-size: 11px;	
+	font-family: Lucida Grande, Tahoma, Verdana;
+	font-weight: normal;
+	text-transform: uppercase;
+	margin: 0px 0px 5px 0px;
+	padding: 5px 0px 5px 0px;
+	line-height: 120%;
+	text-align: center; 
+	letter-spacing: 5px;
+	border-bottom: 1px solid #ccc;
+	}
+
+.tags {
+	color: #666;
+	background: #dddddd;
+	font-size: 11px;	
+	font-family: Lucida Grande, Tahoma, Verdana;
+	font-weight: bold;
+	text-transform: uppercase;
+	margin: 10px 0px 0px 0px;
+	padding: 10px;
+	line-height: 120%;
+	border: 1px solid #dddddd;
+	border-bottom: 3px solid #333;
+	text-align: center; 
+	}
+.tags a {
+	color: #333399;
+	background: #dddddd;
+	font-size: 11px;	
+	font-family: Lucida Grande, Tahoma, Verdana;
+	font-weight: normal;
+	text-transform: uppercase;
+	margin: 0px;
+	padding: 0px 0px 5px 0px;
+	line-height: 120%;
+	}
+#content p{
+	margin: 0px;
+	line-height: 18px;
+	padding: 5px 0px 5px 0px;
+	}
+	
+#content p img{
+	border: none;
+	float: left;
+	padding: 0px 10px 10px 0px;
+	}
+
+#content h1 {
+	color: #333399;
+	font-size: 29px;
+	font-family: Georgia, Arial, Helvetica;
+	font-weight: normal;
+	margin: 0px 0px 0px 0px;
+	padding: 10px 0px 10px 0px;
+	border-bottom: 1px solid #ccc;
+	border-top: 5px solid #333;
+	background: #fff;
+	text-align: center; 
+	letter-spacing: 2px;
+	}
+#content h1 a  {
+	color: #333399;
+	background: #fff;
+	font-weight: normal;
+	text-decoration: none;
+	}
+
+#content h1 a:hover {
+	color: #000;
+	text-decoration: none;
+	}
+
+
+#content h2 {
+	color: #333399;
+	font-size: 18px;	
+	font-family: Georgia, Times New Roman, Sans-Serif;
+	font-weight: normal;
+	margin: 0px;
+	padding: 0px 0px 5px 0px;
+	line-height: 120%;
+	}
+#content h2 a  {
+	color: #333399;
+	font-size: 18px;	
+	margin: 0px;
+	padding: 0px 0px 5px 0px;
+	font-weight: bold;
+	text-decoration: none;
+	}
+
+#content h2 a:hover {
+	color: #000;
+	background: none;
+	text-decoration: underline;
+	}
+
+#content h3 {
+	color: #333399;
+	font-size: 14px;
+	font-family: Georgia, Times New Roman, Sans-Serif;
+	font-weight: normal;
+	margin-bottom: 0px;
+	line-height: 120%;
+	}
+#content h3 a  {
+	color: #333399;
+	text-decoration: none;
+	}
+
+#content h3 a:hover {
+	color: #000;
+	background: #ffffff;
+	text-decoration: underline;
+	}
+
+#content ol {
+	list-style-type: decimal;
+	line-height: 18px;
+	margin: 0px;
+	padding: 0px 0px 10px 30px;
+	}
+#content ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px 0px 10px 0px;
+	}
+	
+#content li {
+	margin: 0px;
+	padding: 0px;
+	}
+	
+#content ul li {
+	list-style: square inside;
+	margin: 0px 0px 0px 10px;
+	padding: 5px 0px 0px 0px;
+	}
+	
+#content ul li a {
+	color: #333399;
+	text-decoration: underline;
+	}
+
+#content ul li a:hover {
+	color: #000000;
+	text-decoration: underline;
+	}
+blockquote{
+	margin: 15px;
+	padding: 15px;
+	font-style: italic;
+	color: #333;
+	background: #dddddd;
+	}
+	
+
+.postspace {
+	width: 440px;
+	height: 5px;
+	margin: 0px;
+	padding: 0px;
+	}
+.postspace2 {
+	width: 440px;
+	height: 0px;
+	margin: 0px;
+	padding: 0px;
+	}
+.postspace3 {
+	width: 440px;
+	height: 15px;
+	margin: 0px;
+	padding: 0px;
+	}
+
+
+#sidebar { 
+	display: block;
+	background: transparent;
+	color: #000000;
+	width: 320px;
+	float: right; 
+	margin: 20px 0px 20px 20px;
+	padding: 0px 30px 20px 0px;
+	text-align: left;
+	}
+
+* html #sidebar { width: 310px; margin: 20px 20px 20px 25px; }
+
+#sidebar p, #sidebar .textwidget{
+	margin: 0px;
+	line-height: 17px;
+	padding: 5px 0px 16px 0px;
+	}
+
+#sidebar h2 {
+	background: #fff;
+	color: #666;
+	font-size: 11px;	
+	font-family: Lucida Grande, Tahoma, Verdana;
+	font-weight: normal;
+	text-transform: uppercase;
+	list-style: none;
+	padding: 10px 0px 10px;
+	margin: 10px 0px 5px 0px;
+	text-align: center;
+	letter-spacing: 5px;
+	border-top: 5px solid #333;
+	border-bottom: 1px solid #666;
+	}
+
+#sidebar ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px 0px 16px 0px;
+	}
+	
+#sidebar li {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	}
+	
+#sidebar ul li {
+	list-style: none;
+	margin: 0px 0px 0px 0px;
+	padding: 6px 0px 6px 20px;
+	border-bottom: 1px dotted #666;
+	}
+#sidebar ul li a {
+	color: #333;
+	font-weight: normal;
+	text-decoration: none;
+	}
+
+#sidebar ul li a:hover {
+	color: #fff;
+	text-decoration: none;
+	}
+#sidebar ul li ul li {
+	list-style: none;
+	margin: 0px;
+	padding: 6px 0px 0px 10px;
+	}
+
+#footer { 
+	color: #fff;
+	font-family: Georgia, Times New Roman, Sans-Serif;
+	font-weight: normal;
+	font-size: 11px;
+	background: #000;
+	padding: 20px 20px 20px 20px;
+	text-align: center;
+	clear: both;
+	border-top: 5px solid #333;
+	text-transform: normal;
+	letter-spacing: 3px;
+	}
+#footer a {
+	color: #fff;
+	background: #000;
+	text-decoration: underline;
+	}
+#footer a:hover {
+	color: #333;
+	text-decoration: none;
+	}
+
+
+/*************************************************************/
+
+
+.thecomments{
+	float: right;
+	display:inline;
+	text-align:center;
+	height:70px;
+	margin:	8px 0px 8px;
+	padding:5px;
+	font-size: 11px;	
+	font-family: Lucida Grande, Tahoma, Verdana;
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+.thecomments span {
+	font-size:34px;
+	font-weight:bold;
+}
+.thecomments div {
+	margin: 0px;
+	font-size:15px;
+	font-weight:bold;
+}
+
+A.commentlink:link{color:#006699;
+background: #fff;
+	text-decoration:none;
+				   }
+A.commentlink:visited{color:#006699;
+background: #fff;
+	text-decoration:none;
+				   }
+A.commentlink:hover{color:#000;
+	text-decoration:none;
+				   }

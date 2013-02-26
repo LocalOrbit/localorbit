@@ -1,0 +1,186 @@
+Yamidoo Magazine
+http://www.wpzoom.com/themes/yamidoo/
+ 
+CHANGELOG
+---------
+
+v 2.0.6 (January 30, 2013)
+	
+	- Added option to change the background of widgets and the yellow color from other elements.
+	- modified files:
+		/functions/theme/options.php
+
+		
+v 2.0.5 (January 26, 2013)
+	
+	- Added "Styling" section in Theme Options.
+ 	- modified files:
+		/functions/theme/options.php
+
+
+v 2.0.4 (December 25, 2012)
+
+	- Fixed background bug
+	- modified file:
+		- style.css
+
+
+v 2.0.3 (December 16, 2012)
+
+	- Fixed custom background feature
+	- modified file:
+		- style.css
+
+
+v 2.0.2 (September 11, 2012)
+
+	- Bug fix: thumbnail weren't generated from custom fields.
+	- modified files:
+		- loop.php
+		- sidebar.php
+		- wpzoom-blocks.php
+		- wpzoom-featured.php
+		- functions/theme/widgets/recentposts.php
+
+
+v 2.0.1 (September 6, 2012)
+	
+ 	- wpzoom-blocks.php - fixed the bug to show only selected Featured Category in 4 blocks.
+
+
+v 2.0 (July 25, 2012)
+
+	- Theme redesigned
+	- Fully re-written code
+	- WPZOOM Framework is now integrated in this theme
+	- All theme files were modified.
+	- Added support for native WordPress image cropping
+	- The theme doesn't uses TimThumb script for thumbnails cropping anymore
+
+	New features:
+		- Widgets in Footer
+		- Facebook Widget
+		- Twitter Widget
+		- Social Widget
+		- Slideshow now can display only specific posts which you mark as featured
+ 
+	Improvements:
+		- All widgets were updated.
+ 		- Posts from slideshow can be excluded from Recent Posts section
+		- Numerous bug fixes and code improvements
+
+
+v 1.6.5 (December 14, 2011)
+	- An update for WordPress 3.3
+	- File edited: header.php 
+	- bug fixed in file: /functions/wpzoom-functions.php
+
+
+v 1.6.4 (13 December, 2011)
+	- An update for WP 3.3
+	- File edited: header.php
+
+
+v 1.6.3 (16 November, 2011)
+	
+	- style.css - modified class .overlay
+
+
+v 1.6.2 (6th August, 2011)
+	- An important security fix: /scripts/timthumb.php has been updated to 2.0
+
+
+v 1.6.1 - 2011.06.14
+
+	- style.css - modified padding property for "#socialicons ul"
+	- single.php - modified lines: #24 and #36
+
+
+v 1.6 - 2011.03.09
+
+	- new file: custom.css - add in it your custom CSS code.
+	- minor fixes to support child themes
+	- modified files:
+		functions/wpzoom-core.php
+		functions/wpzoom-functions.php
+		wpzoom_admin/admin_functions.php
+		wpzoom_admin/options.css
+		wpzoom-featured.php
+		header.php
+		style.css
+		footer.php
+		single.php
+		
+		
+v 1.5 - 2010.12.10
+ 
+ 	- author.php file removed
+ 	- minor bug fixes
+	- added localization support (multilingual). Details in /languages/ folder
+	- added support for WPMU
+	- /scripts/timthumb.php file updated
+	- "wpzoom-tabs.php" file deleted.
+	- new feature: Dynamic Widgetized Tabs
+	- new feature: Video Support in Featured Slider.
+	
+	
+v 1.4 - 2010.08.01
+
+	- wpzoom-tabs.php - fixed a bug on line #39
+	- style.css - modified ID #content-wrap
+	- wpzoom_admin/admin_functions.php - added "Show Post Thumbnail in Sidebar" option
+	- sidebar.php - added "Show Post Thumbnail in Sidebar" option, registered a new Top Sidebar
+	- functions/wpzoom-core.php - registered a new Top Sidebar
+	- header.php - fixed conflict with FancyBox, Lightbox 2, jQuery Lightbox
+	- js/slider.js - update jQuery Tools to latest version
+
+
+v 1.3 - 2010.06.22
+
+	- added WPZOOM Options Panel
+	- admin_setup renamed to wpzoom_admin
+	- added /js/dropdown.js
+	- added support for Custom Menus (3.0+)
+	- added support for Custom Background (3.0+)
+	
+	
+v 1.2 - 2010.02.25
+
+	- added support for "Post Thumbnails" functions
+	- featured.php - Featured Section modified with a new slider to entire width of page
+	- single.php - added "wp_link_pages" function
+	- fullwidth.php - added a new Full Width Page Template
+	- comments.php - changed comments styling
+	- integrated Flickr Widget
+	- ui.tabs.php c- changed name to tabs.php
+	- added Drop-down menu for Page
+	- added a "Share on Facebook" button in single.php
+	- improved Themes Options with new features:
+		- Categories & Pages Excluder from Main Menu
+		- Category Excluder from The Loop - very useful when you want to hide and prevent duplicate posts from Featured Category on Recent Articles.
+		- Logo Path - you can easy upload your modified logo image. 
+	- "the_content_limit" functions was replaced with "the_excerpt" 
+
+
+
+v 1.1.0	- 2009.06.30
+	- upgraded the Options Page
+	- fixed bugs with inactive plugins
+	- fixed navigation
+	- improved ad management
+	- improved images management
+	- improved slideshow section (now it pulls posts from a specific category)
+	- no plugins needed (you can install optionally: WP-PageNavi, ori flickrRSS)
+
+
+v 1.0.2
+
+	- added threaded comments
+	- improved tabbed widgets from sidebar
+
+	- added WP-RecentComments plugin in the pack. INSTALL IT.
+
+ 
+v 1.0.1 
+
+	- initial version
