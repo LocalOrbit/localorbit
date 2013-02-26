@@ -1,0 +1,1 @@
+alter table organizations add opm_id int8 default 0;

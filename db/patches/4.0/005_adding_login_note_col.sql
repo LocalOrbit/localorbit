@@ -1,0 +1,1 @@
+alter table customer_entity add login_note_viewed int default 0;
