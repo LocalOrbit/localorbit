@@ -30,9 +30,9 @@ if($core->config['domain']['domain_id'] > 1)
 		//echo $seller['facebook'] ;
 		//core::js('$("#facebook").attr("src", "//www.facebook.com/' . $seller['facebook'] . '").fadeIn();');
 	} else if ($core->config['domain']['social_option_id'] == 2 && !empty($core->config['domain']['twitter'])) {
-		core::js('var tweets = new jqTweet("'.$core->config['domain']['twitter'].'", "#tweets > div", 10);			
+		core::js('var tweets = new jqTweet("'.$core->config['domain']['twitter'].'", "#tweets div.twitter-feed", 10);			
 		tweets.loadTweets(function() { $("#tweets").fadeIn();  console.log("tweets loaded");
-			$("#tweets > span").append(\'<iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?show_screen_name=false&show_count=false&screen_name='.$core->config['domain']['twitter'].'" style="width:60px; height:20px;"></iframe>\');
+			$("#tweets div.twitter-header").append(\'<iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?show_screen_name=false&show_count=false&screen_name='.$core->config['domain']['twitter'].'" style="width:60px; height:20px;"></iframe>\');
 		});');
 	}
 ?>
