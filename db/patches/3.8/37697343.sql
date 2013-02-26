@@ -1,1 +1,0 @@
-alter table organizations add column po_due_within_days int not null default 7;

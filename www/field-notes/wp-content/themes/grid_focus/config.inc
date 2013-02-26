@@ -1,1 +1,0 @@
-<?phpglobal $base;$base = "http://www.localorb.it";global $magstore;$magstore = "//www.localorb.it/MAGstore";?>
