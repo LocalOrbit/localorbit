@@ -79,7 +79,6 @@ $payables_table->columns[1]->autoformat='date-long';
 ?>
 
 <div class="tabarea tab-pane active" id="paymentstabs-a<?=$core->view[0]?>">
-	<h1>Financial Management coming soon!</h1>
 	<div class="row row-top-margin-buffer">
 		<div class="span4">
 			<h2>Payments Owed</h2>
