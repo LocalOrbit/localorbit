@@ -44,11 +44,10 @@ echo('</ul>');
 ?>
 
 <div id="tweets">
-	<span>
-	<h3>Tweets</h3>
-	</span>
-	<div>
+	<div class="twitter-header">
+		<h3>Tweets</h3>
 	</div>
+	<div class="twitter-feed"></div>
 </div>
 <iframe id="facebook" style="display: none;"></iframe>
 
