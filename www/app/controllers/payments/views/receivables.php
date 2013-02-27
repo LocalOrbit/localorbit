@@ -46,7 +46,6 @@ $payables_table->sort_direction='desc';
 
 		?>
 		<div class="pull-right" id="create_invoice_toggler">
-			<input type="button" onclick="core.payments.getCreatePaymentsForm('receivables');" value="pay checked" class="btn btn-info" />
 			<input type="button" onclick="core.payments.getCreateInvoicesForm();" value="create invoice from checked" class="btn btn-info" />
 		</div>
 	<br />&nbsp;<br />
