@@ -69,10 +69,12 @@ echo(
 					'<div class="error" style="display:none;" id="checkMsg">You must check at least one group that will receive this newsletter.</div>'
 				),
 				core_form::input_image_upload('Upload a new image','newsletters',array(
-					'display_row'=>($data['cont_id']>0),
 					'sublabel'=>'(No larger than 600 pixels wide and 300 pixels tall)',
 					'img_id'=>'newsletterImage',
 					'src'=>$webpath,
+					'form_name'=>'nlForm',
+					'action'=>'app/newsletters/save_image',
+					'callback'=>'core.newsletters.refreshImage({params});'
 				)),
 				core_form::input_text('Subject','title',$data),
 				core_form::input_text('Header','header',$data),

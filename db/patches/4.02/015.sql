@@ -1,4 +1,1 @@
-/*
-INSERT INTO migrations (version_id, pt_ticket_no) 
-VALUES ('015', '42367377');
-*/
+INSERT INTO migrations (version_id, pt_ticket_no) VALUES ('015', '42367377');alter table newsletter_content add column is_draft tinyint not null;alter table newsletter_content add column created_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP;

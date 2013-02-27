@@ -66,6 +66,7 @@ class core_controller_newsletters extends core_controller
 		core::log(print_r($core->data,true));
 
 		$nl = core::model('newsletter_content')->import_fields('cont_id','domain_id','title','header','body','send_buyer','send_seller','send_to_groups');
+		$nl['is_draft'] = 0;
 		$nl->save('nlForm');
 		core::js("$('#img_upload_row').show();$('#img_msg_row').hide();");
 		$core->data['cont_id'] = $nl['cont_id'];
@@ -235,17 +236,27 @@ class core_controller_newsletters extends core_controller
 	function save_image()
 	{
 		global $core;
+		$cont_id = $core->data['cont_id'];
 		core::load_library('image');
 
 		$new = new core_image($_FILES['new_image']);
 		$new->load_image();
+
+		if (!$cont_id)
+		{
+			$newsletter_content = core::model('newsletter_content');
+			$newsletter_content['is_draft'] = 1;
+			$newsletter_content->save();
+			//core::log(print_r($newsletter_content, true));
+			$cont_id = $newsletter_content['cont_id'];
+		}
 
 		if($new->width > 600 || $new->height > 300)
 		{
 			exit('<html><body style="color: #fff;background-color:#fff;overflow:hidden;">toolarge:done</body></html>');
 		}
 
-		$filepath = $core->paths['base'].'/../img/newsletters/'.$core->data['cont_id'].'.' ;
+		$filepath = $core->paths['base'].'/../img/newsletters/'.$cont_id.'.' ;
 		if(file_exists($filepath.'png'))
 			unlink($filepath.'png');
 		if(file_exists($filepath.'jpg'))
@@ -253,10 +264,10 @@ class core_controller_newsletters extends core_controller
 		if(file_exists($filepath.'gif'))
 			unlink($filepath.'gif');
 
-		core::log('trying to move file to: '.$core->paths['base'].'/../img/newsletters/'.$core->data['cont_id'].'.'.$new->extension);
-		move_uploaded_file($new->path,$core->paths['base'].'/../img/newsletters/'.$core->data['cont_id'].'.'.$new->extension);
+		core::log('trying to move file to: '.$core->paths['base'].'/../img/newsletters/'.$cont_id.'.'.$new->extension);
+		move_uploaded_file($new->path,$core->paths['base'].'/../img/newsletters/'.$cont_id.'.'.$new->extension);
 
-		exit('<html><body style="color: #fff;background-color:#fff;overflow:hidden;">'.$new->extension.':done</body></html>');
+		exit('<html><body style="color: #fff;background-color:#fff;overflow:hidden;">'.$new->extension.':' . $cont_id . ':done</body></html>');
 
 	}
 

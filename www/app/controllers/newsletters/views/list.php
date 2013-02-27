@@ -7,7 +7,7 @@ lo3::require_login();
 
 
 
-$col = core::model('newsletter_content')->collection();
+$col = core::model('newsletter_content')->collection()->filter('is_draft','=',0);
 $newsletters = new core_datatable('newsletters','newsletters/list',$col);
 
 

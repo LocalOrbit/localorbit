@@ -27,7 +27,12 @@ core.newsletters.toggleTestEmail=function(){
 	$('#testLabel,#testEmail,#showTest,#sendTest,#cancelTest,#sendCustomers').toggle(100);
 }
 
-core.newsletters.refreshImage=function(extension){
+core.newsletters.refreshImage=function(extension, cont_id){
+	if (cont_id) 
+	{
+		$('[name="cont_id"]').val(cont_id);
+	}
+
 	if(extension=='toolarge'){
 		alert('image is too large');
 	}else{

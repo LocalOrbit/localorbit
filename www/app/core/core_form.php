@@ -289,25 +289,34 @@ class core_form
 			'info_icon'=>null,
 			'info_show'=>false,
 			'render'=>true,
-
 			'src'=>'',
 			'img_id'=>'',
 			'img_style'=>'',
 			'remove_js'=>'',
 			'upload_js'=>'',
+			'callback'=>''
 		));
 		if($options['render'] != true)	return '';
 
 		if($options['src'] == '')
 			$options['img_style'] .= 'display:none;';
 
+		$onclick_js = "core.ui.uploadFrame(document.";
+		$onclick_js .= $options['form_name'];
+		$onclick_js .= ", 'uploadArea', '";
+		$onclick_js .= $options['callback'];
+		$onclick_js .= "', '";
+		$onclick_js .= $options['action'];
+		$onclick_js .= "', 'new_image');";
 
 		$out = '<img id="'.$options['img_id'].'" src="'.$options['src'].'"';
 		$out .= (isset($options['img_style']) && $options['img_style'] !='')?' style="'.$options['img_style'].'"':'';
 		$out .= ' /><br />';
-		$out .= '<input type="file" name="new_image" value="" />';
-		$out .= '<input type="button" id="removenlimage" class="button_secondary" value="Remove Image" onclick="'.$options['remove_js'].'" />';
-
+		$out .= '<input type="file" id="new_image" name="new_image" value="" />';
+		$out .= '<input type="button" class="btn btn-info" value="Upload" onclick="' . $onclick_js . '"/>&nbsp;';
+		//core.ui.uploadFrame(document.prodForm,'uploadArea','product.refreshImage(<?=intval($images[0]['pimg_id']) ,{params});','app/products/save_image','new_image');" />'
+		$out .= '<input type="button" class="btn btn-warning" id="removenlimage" value="Remove Image" onclick="'.$options['remove_js'].'" />';
+		$out .= '<iframe name="uploadArea" id="uploadArea" width="300" height="20" style="border-width: 0px;color:#fff;background-color:#fff;overflow:hidden;"></iframe>';
 		return core_form::tr_nv($label,$out,$options);
 	}
 

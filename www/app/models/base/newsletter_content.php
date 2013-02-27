@@ -11,6 +11,8 @@ class core_model_base_newsletter_content extends core_model
 		$this->add_field(new core_model_field(5,'header','string',-4,'','newsletter_content'));
 		$this->add_field(new core_model_field(6,'image_header','string',-4,'','newsletter_content'));
 		$this->add_field(new core_model_field(7,'domain_id','int',8,'','newsletter_content'));
+		$this->add_field(new core_model_field(8,'is_draft','int',8,'','newsletter_content'));
+		$this->add_field(new core_model_field(9,'created_date','timestamp',4,'','newsletter_content'));
 		$this->init_data();
 	}
 }
