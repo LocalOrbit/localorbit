@@ -314,6 +314,7 @@ product.savePrice=function(){
 	if(core.validateForm(document.prodForm)){
 		core.doRequest('/products/save_price',data);
 	}
+	core.valRules['prodForm'] = [];
 }
 
 product.removeCheckedPrices=function(form){
