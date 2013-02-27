@@ -135,7 +135,7 @@ class core_controller_market extends core_controller
 			$core->config['domain'] = $market;
 			core::process_command('whitelabel/get_options');
 		}
-		core_ui::notification($core->i18n('messages:generic_saved','hub'),false,($core->data['do_redirect'] != 1));
+		core_ui::notification($core->i18n('messages:generic_saved','Market'),false,($core->data['do_redirect'] != 1));
 		if($core->data['do_redirect'] == 1)
 			core::redirect('market','list');
 
