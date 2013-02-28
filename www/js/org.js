@@ -38,7 +38,7 @@ org.refreshImage=function(extension){
 		//alert(newSrc);
 		//$('#orgImg').attr('src',true);
 		//$('#orgImg').remove();
-		$('#imgContainer').html('<img src="'+newSrc+'" />');
+		$('#imgContainer').html('<img id="orgImg" src="'+newSrc+'" />');
 		//location.reload();
 	}
 }
