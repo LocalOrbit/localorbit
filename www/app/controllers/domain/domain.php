@@ -20,9 +20,17 @@ class core_controller_domain extends core_controller
 		$core->config['domain'] = core::model('domains')->loadrow_by_hostname(strtolower($_SERVER['HTTP_HOST']));
 		if(!is_numeric($core->config['domain']['domain_id']))
 		{
-			core::log('on an unknown domain, issue redirect');
-			core::js("location.href='https://".(($core->config['stage'] == 'production')?'www':$core->config['stage']).".localorb.it';");
-			$core->config['domain'] = core::model('domains')->loadrow_by_hostname((($core->config['stage'] == 'production')?'':$core->config['stage']).$core->config['default_hostname']);
+			# we're on the deafult hostname, load this.
+			if($core->config['default_hostname'] == $_SERVER['HTTP_HOST'])
+			{
+				$core->config['domain'] = core::model('domains')->load(1);
+			}
+			else
+			{
+				core::log('on an unknown domain, issue redirect');
+				core::js("location.href='https://".(($core->config['stage'] == 'production')?'www':$core->config['stage']).".localorb.it';");
+				$core->config['domain'] = core::model('domains')->loadrow_by_hostname((($core->config['stage'] == 'production')?'':$core->config['stage']).$core->config['default_hostname']);
+			}
 		}
 		
 		# if this is a new session, just set their session domain to the 
