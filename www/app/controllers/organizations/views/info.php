@@ -185,7 +185,5 @@ if(lo3::is_admin() || lo3::is_market() || $data['org_id'] == $core->session['org
 			<span class="help-inline">Choose the market that this organization should be part of.</span>
 		</div>
 	</div>
-		
-
-		
+	<?php core::js("$('.chzn-select').chosen();"); ?>	
 <?}?>
