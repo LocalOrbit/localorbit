@@ -40,6 +40,9 @@ $payment_methods = core::model('organization_payment_methods')
 			$data['opm_id'],
 			$payment_methods,
 			array(
+				'default_show'=>true,
+				'default_text'=>'Select an account',
+				'default_value'=>0,
 				'text_column'=>'nbr1_last_4',
 				'value_column'=>'opm_id',
 				'select_style'=>'width:300px;',
