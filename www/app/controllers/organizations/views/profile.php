@@ -36,9 +36,9 @@ if($data['allow_sell'] == 1)
 				<span class="help-block">Note: images can not be larger than 400 pixels wide by 400 pixels tall.</span>
 			</label>
 			<div class="controls row">
-				<div class="span3"><img class="pull-left img_upload_view" id="logo1" src="<?=$webpath?>" /></div>
+				<div class="span3" id="imgContainer"><img class="pull-left img_upload_view" id="orgImg" src="<?=$webpath?>" /></div>
 				<div class="span5">
-					<input type="file" name="logo_image" value="" />
+					<input type="file" name="new_image" value="" />
 					<input type="button" class="btn btn-mini" value="Upload" onclick="core.ui.uploadFrame(document.organizationsForm,'uploadArea','org.refreshImage({params});','app/organizations/save_image');" />
 					<input type="button" id="removeLogo1" class="btn btn-mini btn-danger" value="Remove Image" onclick="core.doRequest('/organizations/remove_image',{'org_id':<?=$data['org_id']?>});" />
 		

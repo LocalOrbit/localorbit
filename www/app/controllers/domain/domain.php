@@ -21,7 +21,7 @@ class core_controller_domain extends core_controller
 		if(!is_numeric($core->config['domain']['domain_id']))
 		{
 			# we're on the deafult hostname, load this.
-			if($core->config['default_hostname'] == $_SERVER['HTTP_HOST'])
+			if($core->config['hostname_prefix'].$core->config['session_domain'] == $_SERVER['HTTP_HOST'])
 			{
 				$core->config['domain'] = core::model('domains')->load(1);
 			}

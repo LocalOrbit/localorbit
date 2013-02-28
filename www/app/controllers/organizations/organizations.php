@@ -490,7 +490,8 @@ class core_controller_organizations extends core_controller
 		global $core;
 		core::load_library('image');
 
-		#echo('prod_id: '.$core->data['prod_id'].'<br />');
+		core::log('prod_id: '.$core->data['prod_id'].'<br />');
+		core::log(print_r($_FILES,true));
 		$new = new core_image($_FILES['new_image']);
 		$new->load_image();
 
@@ -510,7 +511,7 @@ class core_controller_organizations extends core_controller
 			unlink($filepath.'gif');
 
 		move_uploaded_file($new->path,$core->paths['base'].'/../img/organizations/'.$core->data['org_id'].'.'.$new->extension);
-		#core::log('rm '.$core->paths['base'].'/../img/organizations/cached/'.$core->data['org_id'].'.*.jpg;');
+		core::log('rm '.$core->paths['base'].'/../img/organizations/cached/'.$core->data['org_id'].'.*.jpg;');
 		shell_exec('rm '.$core->paths['base'].'/../img/organizations/cached/'.$core->data['org_id'].'.*.jpg;');
 
 		exit('<html><body style="color: #fff;background-color:#fff;overflow:hidden;">'.$new->extension.':done</body></html>');
