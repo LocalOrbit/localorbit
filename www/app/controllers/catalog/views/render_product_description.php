@@ -80,3 +80,5 @@ if (!empty($long_description) && trim($prod['description']) !== trim($descriptio
 		<i class="icon icon-direction" /> Where
 	</a>
 </small>
+
+<?php core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });"); ?>
