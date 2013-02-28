@@ -290,6 +290,7 @@ if($core->data['show_news'] == 'yes')
 }
 
 core::js("window.setTimeout('core.catalog.initCatalog();',1000);");
+core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });");
 core_ui::showLeftNav();
 
 
