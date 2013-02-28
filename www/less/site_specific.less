@@ -1,3 +1,100 @@
+/* Bootstrap modifications pulled to site-specific.less */
+
+/* type.less */
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+	letter-spacing: @headingLetterSpacing;
+	word-spacing: @headingWordSpacing;
+}
+
+// Horizontal rules
+hr {
+	border-top: 2px solid @hrBorder;
+}
+
+/* forms.less */
+// HELP TEXT
+// ---------
+
+.help-block {
+  font-size: 80%;
+}
+
+// Horizontal-specific styles
+// --------------------------
+
+.form-horizontal {
+  // Increase spacing between groups
+  .control-group {
+    margin-bottom: @baseLineHeight / 2;
+  }
+  // Float the labels left
+  .control-label {
+    padding-top: 0px;
+  }
+}
+
+/* buttons.less */
+// Base styles
+// --------------------------------------------------
+
+// Core
+.btn {
+  // Hover state
+  &:hover {
+    background-color: darken(@white, 15%);
+  }
+}
+
+/* navs.less */
+
+// TABS
+// ----
+
+// Give the tabs something to sit on
+.nav-tabs {
+  border-bottom: 2px solid #ddd;
+}
+// Make the list-items overlay the bottom border
+.nav-tabs > li {
+  margin-bottom: -2px;
+}
+// Actual tabs (as links)
+.nav-tabs > li > a {
+  border: 2px solid transparent;
+}
+// Active state, and it's :hover to override normal :hover
+.nav-tabs > .active > a,
+.nav-tabs > .active > a:hover,
+.nav-tabs > .active > a:focus {
+  border: 2px solid #ddd;
+}
+
+/* navbar.less */
+
+// NAVIGATION
+// ----------
+
+.navbar .nav {
+	margin: 0 10px 0 0;
+}
+
+/* popovers.less */
+
+.popover-content {
+	padding: 9px 14px 12px 14px;
+	p, ul, ol {
+		margin-bottom: 0;
+	}
+	p .btn{
+		color: #fff !important;
+	}
+}
+
+
+
+
 /* General --------------- */
 
 h1, h2, h3, h4 {
