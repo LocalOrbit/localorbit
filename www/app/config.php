@@ -230,6 +230,50 @@ if($_SERVER['HTTP_HOST'] == 'dev.localorb.it' || strpos(__FILE__,'/dev/') > 0 ||
 	$core->config['hostname_prefix']  = $core->config['stage'];
 }
 
+# this is the new definition for mike's local trunk checkout
+if(strpos(__FILE__,'/trunk/')) {
+	$core->config['stage'] = 'dev';
+	$core->config['default_hostname'] = 'dev.localorb.it';
+	$core->config['session_domain']   = '.localorb.it';
+	$core->config['session_name']    .= 'dev';
+	
+	$core->config['db']['database']   = 'localorb_www_dev';
+	$core->config['db']['hostname']   = 'localhost';
+	$core->config['db']['username']   = 'localorb_www';
+	$core->config['db']['password']   = 'localorb_www_dev';
+	
+	$core->config['hostname_prefix']  = $core->config['stage'];
+	
+	$core->config['payments']['paypal'] = array(
+			'password'=>'1331153423',
+			'username'=>'test_1331153383_biz_api1.localorb.it',
+			'signature'=>'AFYqE2DluOQPGVmQcxxRIFQ289lfAeR95YuTxuE7wJSX68MHHvPRQIr.',
+			'url'=>'https://api-3t.sandbox.paypal.com/nvp',
+	);
+}
+
+# this is a branch, and therefore likely the 'current' production branch
+if(strpos(__FILE__,'/branches/')) {
+	$core->config['stage'] = 'devcurrent';
+	$core->config['default_hostname'] = 'devcurrent.localorb.it';
+	$core->config['session_domain']   = '.localorb.it';
+	$core->config['session_name']    .= 'devcurrent';
+	
+	$core->config['db']['database']   = 'localorb_www_devcurrent';
+	$core->config['db']['hostname']   = 'localhost';
+	$core->config['db']['username']   = 'localorb_www';
+	$core->config['db']['password']   = 'localorb_www_dev';
+	
+	$core->config['hostname_prefix']  = $core->config['stage'];
+	
+	$core->config['payments']['paypal'] = array(
+			'password'=>'1331153423',
+			'username'=>'test_1331153383_biz_api1.localorb.it',
+			'signature'=>'AFYqE2DluOQPGVmQcxxRIFQ289lfAeR95YuTxuE7wJSX68MHHvPRQIr.',
+			'url'=>'https://api-3t.sandbox.paypal.com/nvp',
+	);
+}
+
 if($_SERVER['SERVER_ENV'] == 'chad') {
 	$core->config['stage'] = 'dev';
 	$core->config['default_hostname'] = 'dev.localorb.it';
