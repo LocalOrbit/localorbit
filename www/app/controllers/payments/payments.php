@@ -480,8 +480,8 @@ function payments__add_standard_filters($datatable,$tab='')
 			$hub_filters,
 			'domain_id',
 			'name',
-			'Filter by From Hub: All Hubs',
-			'width: 270px;'
+			'Filter by From Market: All Markets',
+			'width: 270px; max-width: 210px;'
 		);
 		
 		$datatable->add_filter(new core_datatable_filter('to_domain_id'));
@@ -492,7 +492,7 @@ function payments__add_standard_filters($datatable,$tab='')
 			$hub_filters,
 			'domain_id',
 			'name',
-			'Filter by To Hub: All Hubs',
+			'Filter by To Market: All Markets',
 			'width: 270px;'
 		);
 	
