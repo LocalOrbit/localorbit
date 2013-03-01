@@ -22,7 +22,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 
 		if ($core->config['domain']['buyer_invoicer']  == 'hub' && $this['payment_method'] == 'purchaseorder')
 		{
-			$payable['to_org_id'] = $core->config['domain']['domain_id']['payable_org_id'];
+			$payable['to_org_id'] = $core->config['domain']['payable_org_id'];
 		}
 		else
 		{
