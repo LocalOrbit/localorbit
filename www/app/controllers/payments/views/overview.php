@@ -68,7 +68,7 @@ $payables_dt->add_formatter('payment_direction_formatter');
 $payables_table = new core_datatable('overview','payments/overview',$payables_dt);
 
 $payables_table->add(new core_datacolumn(null,'Payment Info',false,'50%','{direction_info}','{direction_info}','{direction_info}'));
-$payables_table->add(new core_datacolumn('creation_date','Date',true,'25%','{creation_date}','{creation_date}','{creation_date}'));
+$payables_table->add(new core_datacolumn('due_date','Due Date',true,'25%','{due_date}','{due_date}','{due_date}'));
 $payables_table->add(new core_datacolumn(null,'Amount',false,'25%',	'{amount_due}','{amount_due}','{amount_due}'));
 $payables_table->columns[1]->autoformat='date-long';
 
