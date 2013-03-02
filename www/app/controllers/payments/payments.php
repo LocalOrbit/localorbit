@@ -422,6 +422,8 @@ function payment_direction_formatter($data)
 			$data['in_amount' ] = '';
 		}
 	}
+	
+	$data['amount_due'] = core_format::price(($data['amount_due']));
 	return $data;
 }
 

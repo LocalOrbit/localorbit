@@ -58,7 +58,7 @@ else if(lo3::is_market())
 			where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
 		)')
 		->sort('name');
-	$to_filters  = core::model('organizations')
+	$from_filters  = core::model('organizations')
 		->collection()
 		->filter('organizations.org_id','in','(
 			select org_id

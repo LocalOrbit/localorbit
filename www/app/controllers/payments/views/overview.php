@@ -71,6 +71,8 @@ $payables_table->add(new core_datacolumn(null,'Payment Info',false,'50%','{direc
 $payables_table->add(new core_datacolumn('due_date','Due Date',true,'25%','{due_date}','{due_date}','{due_date}'));
 $payables_table->add(new core_datacolumn(null,'Amount',false,'25%',	'{amount_due}','{amount_due}','{amount_due}'));
 $payables_table->columns[1]->autoformat='date-long';
+$payables_table->columns[2]->autoformat='price';
+
 
 
 
