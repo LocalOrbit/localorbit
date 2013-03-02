@@ -422,8 +422,6 @@ function payment_direction_formatter($data)
 			$data['in_amount' ] = '';
 		}
 	}
-	
-	$data['amount_due'] = core_format::price(($data['amount_due']));
 	return $data;
 }
 
@@ -467,44 +465,43 @@ function payment_description_formatter($data)
    return $data;
 }
 
-function payments__add_standard_filters($datatable,$tab='')
+function payments_add_standard_filters($datatable, $hub_from_filters, $hub_to_filters, $org_from_filters, $org_to_filters, $set_org_from_filter_state = false, $set_org_to_filter_state = false)
 {
-	global $core,$hub_filters,$to_filters,$from_filters;
-	if($hub_filters !== false)
+	global $core;
+	if($hub_from_filters !== false)
 	{
-		
-	
 		$datatable->add_filter(new core_datatable_filter('from_domain_id'));
 		$datatable->filter_html .= core_datatable_filter::make_select(
 			$datatable->name,
 			'from_domain_id',
 			$datatable->filter_states[$datatable->name.'__filter__from_domain_id'],
-			$hub_filters,
+			$hub_from_filters,
 			'domain_id',
 			'name',
 			'Filter by From Market: All Markets',
-			'width: 270px; max-width: 210px;'
+			'width: 270px; max-width: 218px;'
 		);
-		
+	}
+	
+	if($hub_to_filters !== false)
+	{
 		$datatable->add_filter(new core_datatable_filter('to_domain_id'));
 		$datatable->filter_html .= core_datatable_filter::make_select(
 			$datatable->name,
 			'to_domain_id',
 			$datatable->filter_states[$datatable->name.'__filter__to_domain_id'],
-			$hub_filters,
+			$hub_to_filters,
 			'domain_id',
 			'name',
 			'Filter by To Market: All Markets',
 			'width: 270px;'
 		);
-	
 	}
 	
-	
-	if($from_filters !== false)
+	if($org_from_filters !== false)
 	{
-		
-		if(($tab == 'payables' || $tab == 'payments') && !isset($datatable->filter_states[$datatable->name.'__filter__from_org_id']))
+		//($tab == 'payables' || $tab == 'payments')
+		if($set_org_from_filter_state && !isset($datatable->filter_states[$datatable->name.'__filter__from_org_id']))
 		{
 			$datatable->filter_states[$datatable->name.'__filter__from_org_id'] = $core->session['org_id'];
 		}
@@ -514,7 +511,7 @@ function payments__add_standard_filters($datatable,$tab='')
 			$datatable->name,
 			'from_org_id',
 			$datatable->filter_states[$datatable->name.'__filter__from_org_id'],
-			$from_filters,
+			$org_from_filters,
 			'org_id',
 			'name',
 			'Filter by From Org: All Orgs',
@@ -522,10 +519,10 @@ function payments__add_standard_filters($datatable,$tab='')
 		);
 	}
 	
-	if($to_filters !== false)
+	if($org_to_filters !== false)
 	{
-		
-		if(($tab == 'receivables' || $tab == 'invoices') && !isset($datatable->filter_states[$datatable->name.'__filter__to_org_id']))
+		//($tab == 'receivables' || $tab == 'invoices')
+		if($set_org_to_filter_state && !isset($datatable->filter_states[$datatable->name.'__filter__to_org_id']))
 		{
 			$datatable->filter_states[$datatable->name.'__filter__to_org_id'] = $core->session['org_id'];
 		}
@@ -535,7 +532,7 @@ function payments__add_standard_filters($datatable,$tab='')
 			$datatable->name,
 			'to_org_id',
 			$datatable->filter_states[$datatable->name.'__filter__to_org_id'],
-			$to_filters,
+			$org_to_filters,
 			'org_id',
 			'name',
 			'Filter by To Org: All Orgs',
