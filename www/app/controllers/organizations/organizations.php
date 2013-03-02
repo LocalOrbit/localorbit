@@ -60,6 +60,8 @@ class core_controller_organizations extends core_controller
 		if($core->data['org_id'] != $core->session['org_id'])
 			lo3::require_orgtype('market');
 
+
+	
 		core::log(print_r($core->data,true));
 		$pm = core::model('organization_payment_methods')
 			->import_fields('opm_id','label','name_on_account','org_id');
@@ -78,6 +80,18 @@ class core_controller_organizations extends core_controller
 
 		$pm->save();
 
+		# if this is the only bank account, update the organization
+		# so that this is the default account
+		$existing = core::model('organization_payment_methods')->collection()->filter('org_id','=',$core->data['org_id']);
+		$existing->load();
+		core::log('ccurrent number of accounts: '.$existing->__num_rows );
+		if(intval($existing->__num_rows) == 1)
+		{
+			$org = core::model('organizations')->load($core->data['org_id']);
+			$org['opm_id'] = $pm['opm_id'];
+			core::log(print_r($org->__data,true));
+			$org->save();
+		}
 
 
 		core_datatable::js_reload('payment_methods');
