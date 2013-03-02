@@ -40,7 +40,7 @@ foreach($invoices as $invoice)
 		$group_total = 0;
 		$inv_counter = 0;
 		
-		$label = 'Amount Received';
+		$label = 'Amount Paid';
 		
 		if($invoice['from_org_id'] == $core->session['org_id'])
 		{
