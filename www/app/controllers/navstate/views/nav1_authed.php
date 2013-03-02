@@ -143,6 +143,14 @@ $(function()
 <p class="navbar-text pull-right">
 	<?=$core->i18n['greeting']?> <?=$core->session['first_name']?>
 </p>
+
+<ul class="nav pull-left">
+	<li>
+		<a style="line-height: normal; padding: 12px; font-size: 10px" href="http://<?=$core->config['hostname_prefix']?><?=$core->config['default_hostname']?>">
+			<strong>Powered by Local Orbit</strong><br/>
+		</a>
+	</li>
+</ul>
 <? core::replace('nav1top');?>
 <li>
 	<a id="catalog-shop" href="<?=$core->config['app_page']?>#!catalog-shop" onclick="core.go(this.href);" class="main">

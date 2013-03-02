@@ -35,8 +35,10 @@ else
 				</div>
 				-->
 				<div class="span6">
-					<h4 style="margin: 10px 0 0 0;">Powered by Local Orbit</h4>
-					<small>Copyright <?=date('Y')?>, All Rights Reserved</small>
+					<a href="http://<?=$core->config['hostname_prefix']?><?=$core->config['default_hostname']?>">
+                        <h4 style="margin: 10px 0 0 0;">Powered by Local Orbit</h4>
+                        <small>Copyright Copyright <?=date('Y')?>, All Rights Reserved</small>
+               		</a>
 				</div>
 			</div>
 		</div>
