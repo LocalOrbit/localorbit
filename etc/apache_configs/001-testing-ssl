@@ -7,7 +7,7 @@
 	NameVirtualHost *:443	
 	SSLEngine on
 	SSLCertificateFile    /var/www/testing/etc/ssl/2012-2013_ssl.crt
-	SSLCertificateKeyFile /var/www/testing/etc/ssl/2012-2013.key
+	SSLCertificateKeyFile /var/www/testing/etc/ssl/2012-2013.decrypted.key
 	SSLCertificateChainFile /var/www/testing/etc/ssl/2012-2013_intermediate.crt
 	
 	<Directory />
