@@ -542,7 +542,7 @@ class core_datatable
 			echo('<div class="dt_exporter">');
 			if($this->render_exporter)
 			{
-				echo('<a class="dt" onclick="core.ui.dataTables[\''.$this->name.'\'].loadData(\'csv\');"><i class="icon-table"></i> Export CSV</a> &nbsp; <a onclick="core.ui.dataTables[\''.$this->name.'\'].loadData(\'pdf\');" class="dt"><i class="icon-file"></i> Export PDF</a>');
+				echo('<a class="dt" onclick="core.ui.dataTables[\''.$this->name.'\'].loadData(\'csv\');"><i class="icon-table"></i> Export CSV</a>');
 			}
 			echo('</div>');
 			
