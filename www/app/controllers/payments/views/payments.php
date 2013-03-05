@@ -90,7 +90,7 @@ $payments_table->add(new core_datacolumn('creation_date','Date',true,'20%','{cre
 $payments_table->add(new core_datacolumn('amount_due','Amount',true,'14%',							'{amount_due}','{amount_due}','{amount_due}'));
 $payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','invoice_id'),' ',' '));
 $payments_table->columns[2]->autoformat='date-long';
-$payments_table->columns[3]->autoformat='price';
+#$payments_table->columns[3]->autoformat='price';
 $payments_table->sort_direction='desc';
 
 ?>
