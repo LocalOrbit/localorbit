@@ -217,7 +217,7 @@ product.saveLot=function(){
 		'inv_id':document.prodForm.inv_id.value,
 		'good_from':document.prodForm.good_from.value,
 		'expires_on':document.prodForm.expires_on.value,
-		'qty':document.prodForm.lot_qty.value,
+		'qty':document.prodForm.lot_qty.value
 	});
 	product.cancelLotChanges();
 }
@@ -309,7 +309,7 @@ product.savePrice=function(){
 			'domain_id':document.prodForm.domain_id.options[document.prodForm.domain_id.selectedIndex].value,
 			'org_id':document.prodForm.org_id.options[document.prodForm.org_id.selectedIndex].value,
 			'price':document.prodForm.price.value,
-			'min_qty':document.prodForm.min_qty.value,
+			'min_qty':document.prodForm.min_qty.value
 	};
 	if(core.validateForm(document.prodForm)){
 		core.doRequest('/products/save_price',data);

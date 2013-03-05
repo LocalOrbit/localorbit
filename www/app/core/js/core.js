@@ -87,7 +87,7 @@ core.resetNavHighlight= function () {
 core.navHighlight=function(level, navHighlight) {
 	var className = level <= 1 ? 'nav-active' : ('nav-subactive' + (level - 1));
 	if (navHighlight) {
-		console.log('navHighlight: '+navHighlight);
+		core.log('navHighlight: '+navHighlight);
 		$('#'+navHighlight).addClass(className);
 	}
 };
