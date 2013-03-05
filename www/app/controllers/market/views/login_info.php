@@ -27,8 +27,7 @@ if($core->config['domain']['domain_id'] > 1)
 }
 
 	if ($core->config['domain']['social_option_id'] == 1 && !empty($core->config['domain']['facebook'])) {
-		//echo $seller['facebook'] ;
-		//core::js('$("#facebook").attr("src", "//www.facebook.com/' . $seller['facebook'] . '").fadeIn();');
+		core::js('core.ui.facebookfeed("' . $core->config['domain']['facebook'] .'");'); //$(\'facebook > div\').facebookfeed({access_token : \'e95944096d2ca36ae56593f509625cdd\', id : \'' . $core->config['domain']['facebook'] .'\'});');
 	} else if ($core->config['domain']['social_option_id'] == 2 && !empty($core->config['domain']['twitter'])) {
 		core::js('var tweets = new jqTweet("'.$core->config['domain']['twitter'].'", "#tweets div.twitter-feed", 10);			
 		tweets.loadTweets(function() { $("#tweets").fadeIn();  console.log("tweets loaded");

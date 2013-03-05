@@ -48,6 +48,7 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<link rel="alternate stylesheet" type="text/css" href="css/less.php?which=style3" title="styles3" media="all" />
 -->
 	<link rel="stylesheet" type="text/css" href="css/image-picker.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-wysihtml5.css"></link>
 	<link rel="stylesheet" type="text/css" href="css/less.php" title="styles1" media="all" id="less-css" />
 	<link rel="stylesheet" type="text/css" href="css/fonts.php" media="all" />
 	<link rel="stylesheet" href="/css/icomoon-ultimate1563/style.css">
@@ -55,6 +56,7 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<!--<link rel="stylesheet" type="text/css" href="css/responsive.css" />-->
 
 	<!--<script language="Javascript" type="text/javascript" src="app/core/js/console.min.js"></script>-->
+	<script language="Javascript" type="text/javascript" src="js/wysihtml5-0.3.0.min.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/jquery.min.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/jquery.jqtweets.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -62,7 +64,7 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<script language="Javascript" type="text/javascript" src="js/bootstrapx-clickover.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/bootstrap-colorpicker.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/image-picker.js"></script>
-
+	<script language="Javascript" type="text/javascript" src="js/bootstrap-wysihtml5.js"></script>
 
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.validator.js?time=<?php echo time();?>"></script>

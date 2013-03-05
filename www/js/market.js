@@ -275,7 +275,7 @@ market.saveStyle = function () {
 	var domainId = $('input[name=domain_id]').val();
 
 	core.doRequest('/market/save_temp_style', '&domain_id=' + domainId +'&background_color=' + bgColor +'&background_id=' + bgImageId +'&font_color='+fontColor+'&header_font='+fontId);
-	window.open(document.location.protocol + "//" + hostname + "/app.php#!market-info?width="+jqwindow.width()*0.80+"&height="+ jqwindow.height()*0.80 + "&temp_style=true&reload=" + new Date().getTime() , "_blank", "height=0, width=0,top="+jqwindow.height()*0.10+", left="+jqwindow.width()*0.10+", status=no, toolbar=no, menubar=no, resizable=yes");
+	window.open(document.location.protocol + "//" + hostname + "/app.php#!market-info?width="+Math.min(Math.max(jqwindow.width()*0.80,1280), jqwindow.width()) +"&height="+ jqwindow.height()*0.80 + "&temp_style=true&reload=" + new Date().getTime() , "_blank", "height=0, width=0,top="+jqwindow.height()*0.10+", left="+jqwindow.width()*0.10+", status=no, toolbar=no, menubar=no, resizable=yes");
 }
 
 market.initialize=function () {

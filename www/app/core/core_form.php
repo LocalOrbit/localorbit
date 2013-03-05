@@ -582,8 +582,8 @@ class core_form
 			'render'=>true,
 		));
 		if($options['render'] != true)	return '';
-		core_ui::rte();
-		return core_form::tr_nv($label,'<textarea class="rte" id="'.$name.'" name="'.$name.'" rows="'.$options['rows'].'" cols="'.$options['rows'].'">'.$value.'</textarea>',$options);
+		//core_ui::rte();
+		return core_form::tr_nv($label,'<textarea class="wysihtml5" id="'.$name.'" name="'.$name.'" rows="'.$options['rows'].'" cols="'.$options['rows'].'">'.$value.'</textarea>',$options);
 	}
 
 	public static function info($msg,$icon='speech',$show=false)

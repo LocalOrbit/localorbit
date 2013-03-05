@@ -1,7 +1,11 @@
 core.ui={
 	'maps':{},
 	'closeHandle':0,
-	'closeTime':3000
+	'closeTime':3000,
+	facebook : {
+		id : '543819475652932',
+		secret : 'e95944096d2ca36ae56593f509625cdd'
+	}
 }
 
 core.ui.scrollTop=function(){
@@ -27,6 +31,25 @@ core.ui.error=function(content){
 	window.clearTimeout(core.ui.closeHandle);
 	core.ui.closeHandle = core.ui.setCloseTimout('core.ui.errorClose();');
 	*/
+}
+
+core.ui.facebookfeed=function (name) {
+	if (core.ui.facebook.token) {
+		core.ui.pullfacebookfeed(name);
+	} else {
+		$.get('https://graph.facebook.com/oauth/access_token?client_id=' + core.ui.facebook.id + '&client_secret=' + core.ui.facebook.secret + '&grant_type=client_credentials' , function (data) {
+			core.ui.facebook.token = data.split('=')[1];
+			core.ui.pullfacebookfeed(name);
+		});
+	}
+	$('.fb-follow').attr('data-href',"https://www.facebook.com/" + name)
+}
+
+core.ui.pullfacebookfeed = function (name) {
+	//$('#facebook').fadeIn();
+	$('#facebook > ol').facebookfeed({access_token : core.ui.facebook.token, id : name}, function () {
+		$('#facebook').fadeIn();
+	});
 }
 
 core.ui.errorClose=function(){

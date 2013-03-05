@@ -122,6 +122,7 @@ core.jqInit=function(){
 			});
 		});
 		$('.control-label i.icon-required').hover(function() { changeTooltipColorTo('#990000') });
+		$("textarea.wysihtml5:visible").wysihtml5({"image": false});
 
 		$('.natural-num-only').keypress(core.isNumberKey);
 	});

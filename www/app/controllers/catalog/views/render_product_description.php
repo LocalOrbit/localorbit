@@ -6,18 +6,19 @@ $description = $prod['short_description'];
 $farm_name = $prod['org_name'];
 
 $long_description = $prod['description'];
-$description_popup = trim($prod['product_who']);
 
 if (!empty($long_description))
 {
 	$long_description = htmlentities($long_description . '<p><a class="btn btn-small btn-info pull-right learnMore" href="#!catalog-view_product--prod_id-'.$prod['prod_id'].'">Learn More</a></p><i data-dismiss="clickover" class="icon-close"/>');
 }
-//if($description_popup == '')
+
+$description_popup = trim($prod['product_who']);
+if($description_popup == '')
+	$description_popup = trim($seller['profile']);
 if (!empty($description_popup))
 {
-	$description_popup = trim($seller['profile']);
 	$description_popup .= '<p><a class="btn btn-small btn-info pull-right learnMore" href="#!sellers-oursellers--org_id-'.$prod['org_id'].'">Learn More</a></p> <i data-dismiss="clickover" class="icon-close"/>';
-	$description_popup = htmlentities($description_popup);
+	$description_popup = htmlspecialchars($description_popup);
 }
 
 $how_popup = $prod['how'];
@@ -26,7 +27,7 @@ if($how_popup == '')
 if(!empty($how_popup))
 {
 	$how_popup .= '<p><a class="btn btn-small btn-info pull-right learnMore" href="#!catalog-view_product--prod_id-'.$prod['prod_id'].'"> Learn More</a></p> <i data-dismiss="clickover" class="icon-close"/>';
-	$how_popup = htmlentities($how_popup);
+	$how_popup = htmlspecialchars($how_popup);
 }
 
 $where_center = '';

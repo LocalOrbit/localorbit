@@ -53,6 +53,9 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<!--<script language="Javascript" type="text/javascript" src="app/core/js/console.min.js"></script>-->
 	<script language="Javascript" type="text/javascript" src="js/jquery.min.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/jquery.jqtweets.js"></script>
+	<script language="Javascript" type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+	<script language="Javascript" type="text/javascript" src="js/jquery.facebookfeed.min.js"></script>
+	<script language="Javascript" type="text/javascript" src="js/wysihtml5-0.3.0.min.js"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.validator.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.format.js?time=<?php echo time();?>"></script>
@@ -90,6 +93,34 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 
 </head>
 <body onload="core.init(false);">
+	<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    // init the FB JS SDK
+    FB.init({
+      appId      : '543819475652932', // App ID from the App Dashboard
+      channelUrl : '/channel.html', // Channel File for x-domain communication
+      status     : true, // check the login status upon init?
+      cookie     : true, // set sessions cookies to allow your server to access the session?
+      xfbml      : true  // parse XFBML tags on this page?
+    });
+
+    // Additional initialization code such as adding Event Listeners goes here
+
+  };
+
+  // Load the SDK's source Asynchronously
+  // Note that the debug version is being actively developed and might 
+  // contain some type checks that are overly strict. 
+  // Please report such bugs using the bugs tool.
+  (function(d, debug){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document, /*debug*/ false));
+</script>
 	<div id="wrap">
 		<div id="statusnav" class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">

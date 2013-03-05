@@ -8,7 +8,7 @@ lo3::require_login();
 core_ui::load_library('js','weeklySpecials.js');
 
 core_ui::tabset('specialstabs');
-core_ui::rte();
+//core_ui::rte();
 
 $products = core::model('products')->get_list_for_dropdown();
 
@@ -103,7 +103,7 @@ page_header('Editing '.$data['name'],'#!weekly_specials-list','cancel', 'cancel'
 	<div class="control-group">
 		<label class="control-label" for="body">Body</label>
 		<div class="controls">
-			<textarea id="rte" class="rte input-xxlarge" name="body" rows="7"><?=$data['body']?></textarea>
+			<textarea id="rte" class="wysihtml5 input-xxlarge" name="body" rows="7"><?=$data['body']?></textarea>
 		</div>
 	</div>
 	
