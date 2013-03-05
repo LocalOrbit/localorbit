@@ -13,6 +13,9 @@ core.catalog={
 	popupType:0
 };
 
+if(!core.cart)
+	core.cart={'items':[]};
+
 core.catalog.resetFilters=function(){
 	core.catalog.filters={
 		seller:0,
@@ -712,7 +715,10 @@ core.catalog.changeProductDeliveryDay=function(event, prodId, dd_ids) {
 };
 
 core.catalog.isOpen = false;
-core.catalog.emptyCart = (core.cart.items.length < 1);
+if(core.cart)
+	core.catalog.emptyCart = (core.cart.items.length < 1);
+else
+	core.catalog.emptyCart = true;
 
 
 core.catalog.updateDropDown=function() {
