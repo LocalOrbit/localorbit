@@ -453,7 +453,7 @@ core.ui.mapAddMarkerByCoord=function(id,lat,lng,content,imgPath){
 
 	if(imgPath != '' && imgPath+'' != 'undefined'){
 		mapOpts['icon'] = new google.maps.MarkerImage(imgPath);
-		console.log('using custom marker image: '+imgPath);
+		core.log('using custom marker image: '+imgPath);
 	}
 
 	var marker = new google.maps.Marker(mapOpts);
