@@ -91,7 +91,7 @@ $invoices_table->add(new core_datacolumn('due_date','Due Date',true,'20%','{due_
 $invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'14%','{amount_due}','{amount_due}','{amount_due}'));
 $invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('invoices'),'',''),false,'4%',core_ui::check_all('invoices','invoice_id'),' ',' '));
 $invoices_table->columns[2]->autoformat='date-long';
-$invoices_table->columns[3]->autoformat='price';
+#$invoices_table->columns[3]->autoformat='price';
 $invoices_table->sort_direction='desc';
 
 
