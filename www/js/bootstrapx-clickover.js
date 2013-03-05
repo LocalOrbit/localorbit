@@ -169,7 +169,7 @@
     , debughide: function() {
       var dt = new Date().toString();
 
-      console.log(dt + ": clickover hide");
+      //console.log(dt + ": clickover hide");
       this.hide();
     }
   })

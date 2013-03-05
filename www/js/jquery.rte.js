@@ -48,7 +48,7 @@ if(typeof $.fn.rte === "undefined") {
 
             // already created? show/hide
             if(iframe) {
-                console.log("already created");
+                //console.log("already created");
                 textarea.hide();
                 $(iframe).contents().find("body").html(content);
                 $(iframe).show();

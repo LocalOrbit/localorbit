@@ -88,7 +88,7 @@ var jqTweet;
                                 }
                             }
                         }
-                        console.log(data[i]);
+                        //console.log(data[i]);
                         $(appendTo).append(
                             html.replace(/TWEET_TEXT/g, jqTweet.ify.clean(data[i].text))
                             .replace(/USER_LABEL/g, data[i].user.name)

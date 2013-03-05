@@ -620,7 +620,7 @@ core.catalog.popupWhere=function(prodId,refObj){
 		core.ui.mapCenterByCoord('whereMap',latitude,longitude);
 		core.ui.mapAddMarkerByCoord('whereMap',latitude,longitude,core.base64_encode('<h1>'+seller.name+'</h1>'),'/img/default/farm_bubble.png');
 	}else{
-		console.log('no coords');
+		core.log('no coords');
 		// if we dont' find it, set the map to the city
 		core.ui.mapCenterByAddress('whereMap',core.prodIndex[prodId].city);
 		core.ui.mapAddMarkerByAddress('whereMap',core.prodIndex[prodId].city,core.base64_encode('<h1>'+seller.name+'</h1>'));
