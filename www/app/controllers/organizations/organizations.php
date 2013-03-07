@@ -201,7 +201,12 @@ class core_controller_organizations extends core_controller
 		}
 		else if(lo3::is_market())
 		{
-			$orgdomain['domain_id'] = $core->session['home_domain_id'];
+			$domain_id = $core->data['domain_id'];
+			if(!in_array($domain_id,$core->session['domains_by_orgtype_id'][2]))
+			{
+				lo3::require_type('admin');
+			}
+			$orgdomain['domain_id'] = $domain_id;
 		}
 		else
 		{
