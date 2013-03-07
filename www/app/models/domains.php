@@ -73,12 +73,8 @@ class core_model_domains extends core_model_base_domains
 			and (
 				o.org_id in (
 					select org_id
-					from organization_delivery_cross_sells odcs
-					where odcs.dd_id in (
-						select dd_id
-						from delivery_days dd
-						where dd.domain_id ='.$core->config['domain']['domain_id'].'
-					)
+					from organization_cross_sells ocs
+					where ocs.sell_on_domain_id = '.$core->config['domain']['domain_id'].'
 				) ';
 				$sql .= 'or otd.domain_id = '.$core->config['domain']['domain_id'].'
 			)
