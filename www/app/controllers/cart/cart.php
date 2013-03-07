@@ -206,61 +206,67 @@ class core_controller_cart extends core_controller
 				# unset the item array
 				$item->save();
 			}
-			unset($items[$item['prod_id']][0]);
+			unset($items[$item['prod_id']]);
 		}
+		
+		core::log('items after reviewing existing cart items: '.print_r($items,true));
 
 		# now, look for any entirely new items. Insert them
 		foreach($items as $prod_id=>$data)
 		{
-			$product = core::model('products')->autojoin(
-				'left',
-				'addresses',
-				'(products.addr_id=addresses.address_id)',
-				array(
-					  'addresses.address_id as producedat_address_id',
-						'addresses.org_id as producedat_org_id',
-						'addresses.address as producedat_address',
-						'addresses.city as producedat_city',
-						'addresses.region_id as producedat_region_id',
-						'addresses.postal_code as producedat_postal_code',
-						'addresses.telephone as producedat_telephone',
-						'addresses.fax as producedat_fax',
-						'addresses.delivery_instructions as producedat_delivery_instructions',
-						'addresses.longitude as producedat_longitude',
-						'addresses.latitude as producedat_latitude')
-			)->load($prod_id);
-			$new_item = core::model('lo_order_line_item');
-			list($qty, $dd_id) = $data;
-			core::log('DELIVERY : ' . $dd_id);
-			$new_item['lo_oid'] = $cart['lo_oid'];
-			$new_item['prod_id'] = $prod_id;
-			$new_item['qty_ordered'] = $qty;
-			$new_item['product_name'] = $product['name'];
-			$new_item['seller_name'] = $product['org_name'];
-			$new_item['seller_org_id'] = $product['org_id'];
-			$new_item['ldstat_id'] = 1;
-			$new_item['lbps_id']   = 1;
-			$new_item['lsps_id']   = 1;
-			$new_item['unit'] = $product['single_unit'];
-			$new_item['unit_plural'] = $product['plural_unit'];
-			$new_item->find_best_price();
-			$new_item['seller_org_id'] = $product['org_id'];
-			$new_item['category_ids'] = $product['category_ids'];
-			$new_item['final_cat_id'] = trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
-			$new_item['producedat_address_id'] = $product['producedat_address_id'];
-			$new_item['producedat_org_id'] = $product['producedat_org_id'];
-			$new_item['producedat_address'] = $product['producedat_address'];
-			$new_item['producedat_city'] = $product['producedat_city'];
-			$new_item['producedat_region_id'] = $product['producedat_region_id'];
-			$new_item['producedat_postal_code'] = $product['producedat_postal_code'];
-			$new_item['producedat_telephone'] = $product['producedat_telephone'];
-			$new_item['producedat_fax'] = $product['producedat_fax'];
-			$new_item['producedat_delivery_instructions'] = $product['producedat_delivery_instructions'];
-			$new_item['producedat_longitude'] = $product['producedat_longitude'];
-			$new_item['producedat_latitude'] = $product['producedat_latitude'];
-			$order_deliv = $new_item->find_deliveries($product, $dd_id);
-			$new_item['lodeliv_id'] = $order_deliv['lodeliv_id'];
-			$new_item->save();
+			if (isset($data[0]))
+			{
+				core::log('processing cart items id: '.$prod_id);
+				$product = core::model('products')->autojoin(
+					'left',
+					'addresses',
+					'(products.addr_id=addresses.address_id)',
+					array(
+						  'addresses.address_id as producedat_address_id',
+							'addresses.org_id as producedat_org_id',
+							'addresses.address as producedat_address',
+							'addresses.city as producedat_city',
+							'addresses.region_id as producedat_region_id',
+							'addresses.postal_code as producedat_postal_code',
+							'addresses.telephone as producedat_telephone',
+							'addresses.fax as producedat_fax',
+							'addresses.delivery_instructions as producedat_delivery_instructions',
+							'addresses.longitude as producedat_longitude',
+							'addresses.latitude as producedat_latitude')
+				)->load($prod_id);
+				$new_item = core::model('lo_order_line_item');
+				list($qty, $dd_id) = $data;
+				core::log('DELIVERY : ' . $dd_id);
+				$new_item['lo_oid'] = $cart['lo_oid'];
+				$new_item['prod_id'] = $prod_id;
+				$new_item['qty_ordered'] = $qty;
+				$new_item['product_name'] = $product['name'];
+				$new_item['seller_name'] = $product['org_name'];
+				$new_item['seller_org_id'] = $product['org_id'];
+				$new_item['ldstat_id'] = 1;
+				$new_item['lbps_id']   = 1;
+				$new_item['lsps_id']   = 1;
+				$new_item['unit'] = $product['single_unit'];
+				$new_item['unit_plural'] = $product['plural_unit'];
+				$new_item->find_best_price();
+				$new_item['seller_org_id'] = $product['org_id'];
+				$new_item['category_ids'] = $product['category_ids'];
+				$new_item['final_cat_id'] = trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
+				$new_item['producedat_address_id'] = $product['producedat_address_id'];
+				$new_item['producedat_org_id'] = $product['producedat_org_id'];
+				$new_item['producedat_address'] = $product['producedat_address'];
+				$new_item['producedat_city'] = $product['producedat_city'];
+				$new_item['producedat_region_id'] = $product['producedat_region_id'];
+				$new_item['producedat_postal_code'] = $product['producedat_postal_code'];
+				$new_item['producedat_telephone'] = $product['producedat_telephone'];
+				$new_item['producedat_fax'] = $product['producedat_fax'];
+				$new_item['producedat_delivery_instructions'] = $product['producedat_delivery_instructions'];
+				$new_item['producedat_longitude'] = $product['producedat_longitude'];
+				$new_item['producedat_latitude'] = $product['producedat_latitude'];
+				$order_deliv = $new_item->find_deliveries($product, $dd_id);
+				$new_item['lodeliv_id'] = $order_deliv['lodeliv_id'];
+				$new_item->save();
+			}
 		}
 
 		# reload the cart and write it out to js

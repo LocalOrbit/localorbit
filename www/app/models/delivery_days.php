@@ -167,7 +167,7 @@ class core_model_delivery_days extends core_model_base_delivery_days
 				core::log("orig sot: ".date('Y-m-d H:i:s',$start_of_today));
 
 				# adjust to local timezone of this hub
-				$start_of_today -= ($core->config['domain']['offset_seconds']);
+				$start_of_today -= ($core->session['time_offset']);
 				core::log("adjs sot: ".date('Y-m-d H:i:s',$start_of_today));
 
 				# subtract 1 day's worth of seconds * day of week

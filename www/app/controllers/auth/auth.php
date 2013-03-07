@@ -116,7 +116,7 @@ class core_controller_auth extends core_controller
 			$core->session['email']      = $user['email'];
 			$core->session['buyer_type'] = $user['buyer_type'];
 			$core->session['allow_sell'] = $user['allow_sell'];
-			$core->session['time_offset']= $user['offset_seconds'];
+			$core->session['time_offset']= $user['offset_seconds'] + (3600 * $user['do_daylight_savings']);;
 			$core->session['tz_name']    = $user['tz_name'];
 			$core->session['home_domain_id'] = $user['home_domain_id'];
 			$core->session['all_domains'] = $user['all_domains'];
@@ -258,7 +258,7 @@ class core_controller_auth extends core_controller
 		$core->session['buyer_type'] = $user['buyer_type'];
 		$core->session['allow_sell'] = $user['allow_sell'];
 		$core->session['is_active'] = $user['is_active'];
-		$core->session['time_offset'] = $user['offset_seconds'] - (3600 * $user['do_daylight_savings']);
+		$core->session['time_offset'] = $user['offset_seconds'] + (3600 * $user['do_daylight_savings']);
 		$core->session['tz_name'] = $user['tz_name'];
 		$core->session['org_is_active'] = $user['org_is_active'];
 		$core->session['login_note_viewed'] = $user['login_note_viewed'];

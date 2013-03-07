@@ -148,10 +148,10 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		$order_deliv['lo_oid'] = $lo_oid;
 		$order_deliv['dd_id']  = $deliv['dd_id'];
 		$order_deliv['status'] = '';
-		$order_deliv['delivery_start_time'] = $deliv['delivery_start_time'] - (intval($core->session['time_offset']));
-		$order_deliv['delivery_end_time']   = $deliv['delivery_end_time'] - (intval($core->session['time_offset']));
-		$order_deliv['pickup_start_time']   = $deliv['pickup_start_time'] - (intval($core->session['time_offset']));
-		$order_deliv['pickup_end_time']     = $deliv['pickup_end_time'] - (intval($core->session['time_offset']));
+		$order_deliv['delivery_start_time'] = $deliv['delivery_start_time'];
+		$order_deliv['delivery_end_time']   = $deliv['delivery_end_time'];
+		$order_deliv['pickup_start_time']   = $deliv['pickup_start_time'];
+		$order_deliv['pickup_end_time']     = $deliv['pickup_end_time'];
 
 		if(isset($deliv['deliv_address_id']) && $deliv['deliv_address_id'] != 0)
 		{
