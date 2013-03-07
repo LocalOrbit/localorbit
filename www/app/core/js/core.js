@@ -7,8 +7,49 @@ var core={
 	},
 	doHandlers:{
 	},
-	query: {}
+	query: {},
+	wysihtml5 : {
+		"image": false,
+		customTemplates: {
+	        "lists": function(locale, options) {
+	            var size = (options && options.size) ? ' btn-'+options.size : '';
+	            return "<li>" +
+	              "<div class='btn-group'>" +
+	                "<a class='btn" + size + "' data-wysihtml5-command='insertUnorderedList' title='" + locale.lists.unordered + "' tabindex='-1'><i class='icon-list'></i></a>" +
+	                "<a class='btn" + size + "' data-wysihtml5-command='insertOrderedList' title='" + locale.lists.ordered + "' tabindex='-1'><i class='icon-numbered-list'></i></a>" +
+	                "<a class='btn" + size + "' data-wysihtml5-command='Outdent' title='" + locale.lists.outdent + "' tabindex='-1'><i class='icon-indent-left'></i></a>" +
+	                "<a class='btn" + size + "' data-wysihtml5-command='Indent' title='" + locale.lists.indent + "' tabindex='-1'><i class='icon-indent-right'></i></a>" +
+	              "</div>" +
+	            "</li>";
+	        },
+
+	        "link": function(locale, options) {
+	            var size = (options && options.size) ? ' btn-'+options.size : '';
+	            return "<li>" +
+	              "<div class='bootstrap-wysihtml5-insert-link-modal modal hide fade'>" +
+	                "<div class='modal-header'>" +
+	                  "<a class='close' data-dismiss='modal'>&times;</a>" +
+	                  "<h3>" + locale.link.insert + "</h3>" +
+	                "</div>" +
+	                "<div class='modal-body'>" +
+	                  "<input value='http://' class='bootstrap-wysihtml5-insert-link-url input-xlarge'>" +
+	                "</div>" +
+	                "<div class='modal-footer'>" +
+	                  "<a href='#' class='btn' data-dismiss='modal'>" + locale.link.cancel + "</a>" +
+	                  "<a href='#' class='btn btn-primary' data-dismiss='modal'>" + locale.link.insert + "</a>" +
+	                "</div>" +
+	              "</div>" +
+	              "<a class='btn" + size + "' data-wysihtml5-command='createLink' title='" + locale.link.insert + "' tabindex='-1'><i class='icon-link'></i></a>" +
+	            "</li>";
+	        }
+		}
+	}
 };
+
+core.wysihtml5_init=function(width, height, stylesheet) {
+	var options = $.extend({'stylesheets' : [stylesheet]}, core.wysihtml5);
+	$('.wysihtml5').wysihtml5(options);
+}
 
 core.loadingStart=function(){
 	var v1 = $('#body-start').position();
@@ -122,7 +163,7 @@ core.jqInit=function(){
 			});
 		});
 		$('.control-label i.icon-required').hover(function() { changeTooltipColorTo('#990000') });
-		$("textarea.wysihtml5:visible").wysihtml5({"image": false});
+		$("textarea.wysihtml5:visible").wysihtml5(core.wysihtml5);
 
 		$('.natural-num-only').keypress(core.isNumberKey);
 	});

@@ -17,6 +17,23 @@ class core_ui
 		});');
 	}
 	
+	public static function wysihtml5($width=610,$height=350,$stylesheet='')
+	{
+		global $core;
+		#content_css_url: "css/loader.php?time='.$core->config['microtime'].'",
+
+		core::js('core.wysihtml5_init(' . $width . ',' . $height . ',"' . $stylesheet . '"' . ');');
+		/*
+		$(".rte").rte({
+			'.(($stylesheet != '')?'content_css_url:\''.$stylesheet.'\',':'').'
+			useImagePicker:false,
+			media_url: "img/default/rte",
+			height: '.$height.',
+			width: '.$width.'
+		});');
+		*/
+	}
+
 	public static function update_select($id,$opts)
 	{
 		core::js('core.ui.updateSelect(\''.$id.'\','.json_encode($opts).');');

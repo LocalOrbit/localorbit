@@ -33,6 +33,19 @@ core.ui.error=function(content){
 	*/
 }
 
+core.ui.hidesocial=function() {
+	$('#facebook, #tweets').hide();
+}
+
+core.ui.twitterfeed=function (name) {
+	var tweets = new jqTweet(name, "#tweets div.twitter-feed", 10);	
+	tweets.loadTweets(function() { 
+		$("#tweets div.twitter-header iframe").remove();
+		$("#tweets div.twitter-header").append('<iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?show_screen_name=false&show_count=false&screen_name='+name+'" style="width:60px; height:20px;"></iframe>');
+		$("#tweets").fadeIn(); 
+	});	
+}
+
 core.ui.facebookfeed=function (name) {
 	if (core.ui.facebook.token) {
 		core.ui.pullfacebookfeed(name);
@@ -46,7 +59,6 @@ core.ui.facebookfeed=function (name) {
 }
 
 core.ui.pullfacebookfeed = function (name) {
-	//$('#facebook').fadeIn();
 	$('#facebook > ol').facebookfeed({access_token : core.ui.facebook.token, id : name}, function () {
 		$('#facebook').fadeIn();
 	});
@@ -394,7 +406,7 @@ core.ui.map=function(newId,refObj,width,height,zoom){
 }
 
 core.ui.mapCenterByCoord=function(id,latitude,longitude){
-	console.log('centering map '+id+' on '+latitude+'/'+longitude);
+	core.log('centering map '+id+' on '+latitude+'/'+longitude);
 	core.ui.maps[id].setCenter(new google.maps.LatLng(latitude,longitude));
 }
 

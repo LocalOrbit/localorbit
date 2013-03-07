@@ -66,7 +66,7 @@ $tag_classes=array('customer','address');
 						<?}else if($phrase['edit_type'] == 'textarea'){?>
 							<textarea name="phrase_<?=$phrase['phrase_id']?>" rows="5" cols="45"><?=htmlentities($phrase['default_value'])?></textarea>
 						<?} if($phrase['edit_type'] == 'rte'){?>
-							<textarea class="rte" id="phrase_<?=$phrase['phrase_id']?>" name="phrase_<?=$phrase['phrase_id']?>" rows="5" cols="45"><?=htmlentities($phrase['default_value'])?></textarea>						
+							<textarea class="wysihtml5 input-xxlarge" id="phrase_<?=$phrase['phrase_id']?>" name="phrase_<?=$phrase['phrase_id']?>" rows="5" cols="45"><?=htmlentities($phrase['default_value'])?></textarea>						
 						<?}?>
 						<?if($phrase['info_note'] != ''){ echo(info($phrase['info_note']));	}?>
 					</div>
@@ -78,7 +78,7 @@ $tag_classes=array('customer','address');
 	<? endforeach; ?>
 	</div> <!-- /.tab-content-->
 	
-	<? core_ui::rte(500,300,'/css/emails.css'); ?>
+	<? core_ui::wysihtml5(500,300,'/css/emails.css'); ?>
 	<div class="form-actions">
 		<!--<button type="button" class="btn" onclick="history.go(-1);">Cancel</button>-->
 		<button type="submit" class="btn btn-primary">Save changes</button>

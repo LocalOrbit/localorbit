@@ -7,7 +7,8 @@ $values = array(
 	'email'=>$core->view[3],
 	'activate'=>$core->view[4],
 	'user_type'=>$core->view[5],
-	'domain_id'=>$core->view[6]
+	'domain_id'=>$core->view[6],
+	'dashboard'=>$core->view[7]
 );
 core::log('tryign to send email from domain '.$values['domain_id']);
 $values['hub_name'] = core_db::col('select name from domains where domain_id='.$values['domain_id'],'name');

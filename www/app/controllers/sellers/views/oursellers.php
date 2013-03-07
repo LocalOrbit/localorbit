@@ -216,13 +216,16 @@ else
 <?}?>
 <?}?>
 <?
+	core::js('core.ui.hidesocial();');
 	if ($seller['social_option_id'] == 1 && !empty($seller['facebook'])) {
-		//echo $seller['facebook'] ;
-		//core::js('$("#facebook").attr("src", "//www.facebook.com/' . $seller['facebook'] . '").fadeIn();');
+		core::js('core.ui.facebookfeed("' . $seller['facebook'] .'");'); //$(\'facebook > div\').facebookfeed({access_token : \'e95944096d2ca36ae56593f509625cdd\', id : \'' . $core->config['domain']['facebook'] .'\'});');
 	} else if ($seller['social_option_id'] == 2 && !empty($seller['twitter'])) {
+		core::js('core.ui.twitterfeed("'.$seller['twitter'].'");');
+		/*
 		core::js('var tweets = new jqTweet("'.$seller['twitter'].'", "#tweets div.twitter-feed", 10);			
 		tweets.loadTweets(function() { $("#tweets").fadeIn(); 
 			$("#tweets div.twitter-header").append(\'<iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?show_screen_name=false&show_count=false&screen_name='.$seller['twitter'].'" style="width:60px; height:20px;"></iframe>\');
 		});');
+		*/
 	}
 ?>

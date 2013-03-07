@@ -228,7 +228,8 @@ class core_controller_registration extends core_controller
 				$core->data['email'],
 				'https://'.$core->config['domain']['hostname'].'/app.php#!organizations-edit--org_id-'.$user['org_id'],
 				((intval($core->data['allow_sell']) == 0)?'Buyer only':'Buyer and Seller'),
-				$core->config['domain']['domain_id']
+				$core->config['domain']['domain_id'],
+				'https://'.$core->config['domain']['hostname'].'/app.php#!dashboard-home'
 			);
 		}
 		

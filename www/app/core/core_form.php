@@ -578,12 +578,14 @@ class core_form
 			'info_icon'=>null,
 			'info_show'=>false,
 			'rows'=>7,
-			'cols'=>73,
 			'render'=>true,
+			'class'=>''
 		));
 		if($options['render'] != true)	return '';
 		//core_ui::rte();
-		return core_form::tr_nv($label,'<textarea class="wysihtml5" id="'.$name.'" name="'.$name.'" rows="'.$options['rows'].'" cols="'.$options['rows'].'">'.$value.'</textarea>',$options);
+		$class = count($options['class']) > 0 ? ' ' . $options['class'] : $options['class'];
+		$cols = array_key_exists('cols', $options) ? (' cols="' . $options['cols'] . '"') : '';
+		return core_form::tr_nv($label,'<textarea class="wysihtml5' . $class . '" id="'.$name.'" name="'.$name.'" rows="'.$options['rows'].'"'. $cols . '>'.$value.'</textarea>',$options);
 	}
 
 	public static function info($msg,$icon='speech',$show=false)

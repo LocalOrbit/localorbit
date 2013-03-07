@@ -51,11 +51,13 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<!--<link rel="stylesheet" type="text/css" href="css/responsive.css" />-->
 
 	<!--<script language="Javascript" type="text/javascript" src="app/core/js/console.min.js"></script>-->
+	
 	<script language="Javascript" type="text/javascript" src="js/jquery.min.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/jquery.jqtweets.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/jquery.tmpl.min.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/jquery.facebookfeed.min.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/wysihtml5-0.3.0.min.js"></script>
+	<script language="Javascript" type="text/javascript" src="js/bootstrap-wysihtml5.js"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.validator.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.format.js?time=<?php echo time();?>"></script>

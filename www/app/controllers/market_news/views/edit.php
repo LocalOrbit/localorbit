@@ -42,7 +42,7 @@ echo(
 					))
 				:'',
 				core_form::input_text('Title','title',$data),
-				core_form::input_rte('Content','content',$data)
+				core_form::input_rte('Content','content',$data,array('class' => 'input-xxlarge'))
 			)
 		),
 		(count($core->session['domains_by_orgtype_id'][2]) == 1)?core_form::input_hidden('domain_id',$core->session['domains_by_orgtype_id'][2][0]):'',

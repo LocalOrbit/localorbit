@@ -78,7 +78,7 @@ echo(
 				)),
 				core_form::input_text('Subject','title',$data),
 				core_form::input_text('Header','header',$data),
-				core_form::input_rte('Body','body',$data)
+				core_form::input_rte('Body','body',$data,array('class' => 'input-xxlarge'))
 			)
 		),
 		((lo3::is_market() && count($core->session['domains_by_orgtype_id'][2]) == 1)?

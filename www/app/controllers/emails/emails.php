@@ -239,7 +239,8 @@ class core_controller_emails extends core_controller
 						'mike@localorb.it',
 						'http://detroiteasternmarket.localorb.it/#!',
 						'Buyer only',
-						6
+						6,
+						'http://detroiteasternmarket.localorb.it/app.php#!dashboard-home'
 					);
 				break;
 			case 'buyer_welcome':

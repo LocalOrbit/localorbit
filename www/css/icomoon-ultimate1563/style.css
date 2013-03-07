@@ -1,5 +1,5 @@
 @font-face {
-	font-family: 'icomoon-ultimate';
+	font-family: 'icomoon-ultimate1565';
 	src:url('fonts/icomoon-ultimate.eot');
 	src:url('fonts/icomoon-ultimate.eot?#iefix') format('embedded-opentype'),
 		url('fonts/icomoon-ultimate.svg#icomoon-ultimate') format('svg'),
@@ -11,7 +11,7 @@
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
 [data-icon]:before {
-	font-family: 'icomoon-ultimate';
+	font-family: 'icomoon-ultimate1565';
 	content: attr(data-icon);
 	speak: none;
 	font-weight: normal;
@@ -26,7 +26,7 @@ you can use the generic selector below, but it's slower:
 [class*="icon-"]:before {
 */
 .icon-home:before, .icon-home-2:before, .icon-pencil:before, .icon-newspaper:before, .icon-image:before, .icon-bullhorn:before, .icon-file:before, .icon-book:before, .icon-book-2:before, .icon-books:before, .icon-profile:before, .icon-tag:before, .icon-cart-checkout:before, .icon-cart:before, .icon-coin:before, .icon-coins:before, .icon-credit:before, .icon-address-book:before, .icon-mail-send:before, .icon-calendar:before, .icon-print:before, .icon-database:before, .icon-bubbles:before, .icon-users:before, .icon-user:before, .icon-busy:before, .icon-binoculars:before, .icon-key:before, .icon-settings:before, .icon-cogs:before, .icon-bars:before, .icon-apple-fruit:before, .icon-lamp:before, .icon-paper-plane:before, .icon-truck:before, .icon-list:before, .icon-signup:before, .icon-clipboard:before, .icon-grid:before, .icon-grid-2:before, .icon-download:before, .icon-upload:before, .icon-flag:before, .icon-eye:before, .icon-thumbs-up:before, .icon-stack-checkmark:before, .icon-plus-circle:before, .icon-minus-circle:before, .icon-close:before, .icon-checkmark:before, .icon-arrow-right:before, .icon-arrow-down:before, .icon-checkbox-checked:before, .icon-checkbox-unchecked:before, .icon-filter:before, .icon-font-size:before, .icon-bold:before, .icon-underline:before, .icon-italic:before, .icon-paragraph-left:before, .icon-paragraph-center:before, .icon-paragraph-right:before, .icon-mail:before, .icon-mail-2:before, .icon-twitter:before, .icon-feed:before, .icon-facebook:before, .icon-share:before, .icon-close-2:before, .icon-stack-list:before, .icon-happy:before, .icon-smiley:before, .icon-sad:before, .icon-shocked:before, .icon-remove:before, .icon-steps:before, .icon-direction:before, .icon-compass:before, .icon-clock:before, .icon-bubble:before, .icon-search:before, .icon-health:before, .icon-pie:before, .icon-wand:before {
-	font-family: 'icomoon-ultimate';
+	font-family: 'icomoon-ultimate1565';
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
