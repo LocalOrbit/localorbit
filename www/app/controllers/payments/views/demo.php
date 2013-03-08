@@ -70,6 +70,15 @@ else
 	$tabs = array('Overview', 'Payments Owed', 'Transaction Journal');
 }
 
+
+// remove 'Payments Owed' col if no orders have been placed ever
+$total_orders = core_db::col('select count(lo_oid) as mycount from lo_order where ldstat_id<>1 and org_id='.$core->session['org_id'].';','mycount');
+if ($total_orders == 0) {
+	$tabs = array_merge(array_diff($tabs, array('Payments Owed')));
+}
+
+
+
 page_header('Financial Management - Coming Soon!');
 echo('<form name="paymentsForm">');
 echo(core_ui::tab_switchers('paymentstabs',$tabs));
