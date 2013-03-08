@@ -191,7 +191,7 @@ function do_monthly_payment($domain)
 				$payable['from_org_id'] = $domain['payable_org_id'];
 				$payable['to_org_id'] = 1;
 				$payable['domain_id'] = $domain['domain_id'];
-				$payable['payable_type_id1'] = 5;
+				$payable['payable_type_id'] = 5;
 				$payable['parent_obj_id'] = $domain['domain_id'];
 				$payable['amount'] = $domain['service_fee'];
 				$payable['description'] = $trace;
