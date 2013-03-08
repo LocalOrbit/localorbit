@@ -8,7 +8,7 @@ ob_end_flush();
 core::load_library('crypto');
 
 global $actually_do_payment;
-$actually_do_payment = $argv[1] == 'do-ach';
+$actually_do_payment = ($argv[1] == 'do-ach');
 
 if($actually_do_payment)
 	echo("REALLY DOING IT\n");
@@ -133,13 +133,13 @@ function do_monthly_payment($domain)
 		$transaction->LocID      = $core->config['ach']['LocID'];
 		$transaction->CompanyKey = $core->config['ach']['CompanyKey'];
 		
-		$trace = 'LO-';
+		$trace = 'LSO-';
 		if($core->config['stage'] != 'production')
 		{
-			$trace .= $core->config['stage'].'-';
+			$trace .= $core->config['stage'].time().'-';
 		}
 		$trace .= $domain['domain_id'].'-';
-		$trace .= time();
+		$trace .= date('Ym');
 		echo "trace is: ".$trace."\n";
 		
 		$transaction->FrontEndTrace = $trace;
@@ -194,6 +194,8 @@ function do_monthly_payment($domain)
 				$payable['payable_type_id1'] = 5;
 				$payable['parent_obj_id'] = $domain['domain_id'];
 				$payable['amount'] = $domain['service_fee'];
+				$payable['description'] = $trace;
+				#exit('description is: '.$payable['description']);
 				$payable->save();
 				
 				$invoice = core::model('invoices');
