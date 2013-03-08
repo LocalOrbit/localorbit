@@ -219,12 +219,13 @@ $orgs    = core::model('organizations')->collection()->filter('is_active',1)->fi
 
 	<legend>Price Info</legend>
 	<?=core_form::input_select(
-		'Market','domain_id',0,$domains,array(
+		'Market','domain_id',(count($domain_ids)>1?0:$domain_ids[0]),$domains,array(
 			'text_column'=>'name',
 			'value_column'=>'domain_id',
-			'default_show'=>true,
+			'default_show'=>count($domain_ids)>1,
 			'default_text'=>'All Markets',
 			'default_value'=>0,
+			'display_row'=>count($domain_ids)>1
 		)
 	)?>
 	<?=core_form::input_select(

@@ -8,6 +8,12 @@ lo3::require_permission();
 lo3::require_login();
 core_ui::load_library('js','org.js');
 
+function escape_names ($org) 
+{
+	$org['name_esc'] = str_replace('\'', '\\\'', $org['name']);
+	return $org;
+}
+
 function org_col_formatter($data)
 {
 	$data['allow_sell_printable'] = ($data['allow_sell'] == 1)?'True':'False';
@@ -39,6 +45,8 @@ if(lo3::is_market())
 {
 	$col->filter('domain_id','in', $core->session['domains_by_orgtype_id'][2]);
 }
+
+$col->add_formatter('escape_names');
 
 
 
@@ -113,12 +121,12 @@ if(lo3::is_admin() || lo3::is_market())
 	$orgs->add(new core_datacolumn('name',' ',false,$widths[4],'
 		<a class="btn btn-wide btn-small" href="javascript:core.doRequest(\'/organizations/{activate_action}\',{\'org_id\':{org_id}});"><i class="icon-off" /> {activate_action}</a>
 		<a class="btn btn-wide btn-small btn-info" href="javascript:core.doRequest(\'/organizations/{enable_action}\',{\'org_id\':{org_id}});" class="text-warning"><i class="icon-eye-close" /> {enable_action}</a>
-		<a class="btn btn-wide btn-small btn-danger" href="#!organizations-list" class="text-error" onclick="org.deleteOrg({org_id},\'{name}\',this);"><i class="icon-ban-circle" /> Delete</a>
+		<a class="btn btn-wide btn-small btn-danger" href="#!organizations-list" class="text-error" onclick="org.deleteOrg({org_id},\'{name_esc}\',this);"><i class="icon-ban-circle" /> Delete</a>
 	',' ',' '));
 }
 else
 {
-	$orgs->add(new core_datacolumn('','&nbsp;',false,$widths[4],'<a href="#!organizations-list" onclick="org.deleteOrg({org_id},\'{name}\',this);">Delete&nbsp;&raquo;</a>',' ',' '));
+	$orgs->add(new core_datacolumn('','&nbsp;',false,$widths[4],'<a href="#!organizations-list" onclick="org.deleteOrg({org_id},\'{name_esc}\',this);">Delete&nbsp;&raquo;</a>',' ',' '));
 }
 
 $orgs->columns[2]->autoformat='date-short';
