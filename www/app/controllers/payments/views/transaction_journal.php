@@ -141,19 +141,20 @@ $col_widths = (lo3::is_admin())?array('14%','10%','12%','12%'):array('22%','22%'
 $payments_table->add(new core_datacolumn('payment_id','Description',true,'22%',			'<b>T-{payment_id}</b><br />{description_html}','{description}','{description}'));
 $payments_table->add(new core_datacolumn('payment_info','Payment Info',false,'30%','{method_description}<br />{direction_info}','{direction_info}','{direction_info}'));
 $payments_table->add(new core_datacolumn('creation_date','Date Paid',true,$col_widths[0],'{creation_date}','{creation_date}','{creation_date}'));
+$payments_table->add(new core_datacolumn('payable_type','payable_type',true,'10%','{payable_type}'));
 $payments_table->add(new core_datacolumn('amount','Amount',true,$col_widths[1],							'{amount}','{amount}','{amount}'));
 if(lo3::is_admin())
 {
 	$payments_table->add(new core_datacolumn('transaction_fees','Trans. Fee',true,$col_widths[2],			'{transaction_fees}','{transaction_fees}','{transaction_fees}'));
 	$payments_table->add(new core_datacolumn('net_amount','Net Amount',true,$col_widths[3],			'{net_amount}','{net_amount}','{net_amount}'));
-	$payments_table->columns[4]->autoformat='price';
-	$payments_table->columns[5]->autoformat='price';
+	#$payments_table->columns[4]->autoformat='price';
+	#$payments_table->columns[5]->autoformat='price';
 }
-$payments_table->columns[2]->autoformat='date-long';
-$payments_table->columns[3]->autoformat='price';
+#$payments_table->columns[2]->autoformat='date-long';
+#$payments_table->columns[3]->autoformat='price';
 $payments_table->sort_column = 0;
 $payments_table->sort_direction = 'desc';
-$payments_table = payments_add_standard_filters($payments_table, $hub_from_filters, $hub_to_filters, $org_from_filters, $org_to_filters, false, false);
+$payments_table = payments__add_standard_filters($payments_table,'transactionjournal');
 
 ?>
 
