@@ -313,7 +313,6 @@ class core_ui
 		return '<input type="text" format="'.$core->config['formats']['dates']['jsshort'].'" class="datepicker input-small" name="'.$field_name_id.'" id="'.$field_name_id.'" value="'.$value.'" />';
 	}
 
-
 	public static function tab_switchers($tabset_name,$tab_list)
 	{
 		global $core;
@@ -322,7 +321,7 @@ class core_ui
 		for ($i = 0; $i < count($tab_list); $i++)
 		{
 			if ($i == 0): $default_active = 'active'; else: $default_active = ''; endif; # Picks first tab as default active
-			$html .= '<li class="' . $default_active . '"><a href="#'.$tabset_name.'-a'.($i + 1).'" class="tabswitch" data-toggle="tab">'.$tab_list[$i].'</a></li>';
+			$html .= '<li class="' . $default_active . '"><a href="#'.$tabset_name.'-a'.($i + 1).'" id="'.$tabset_name.'-s'.($i + 1).'" class="tabswitch" data-toggle="tab">'.$tab_list[$i].'</a></li>';
 		}
 		$html .= '</ul>';
 		return $html;

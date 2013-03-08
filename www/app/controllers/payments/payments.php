@@ -467,7 +467,7 @@ function payment_description_formatter($data)
    return $data;
 }
 
-function payments_add_standard_filters($datatable, $hub_from_filters, $hub_to_filters, $org_from_filters, $org_to_filters, $set_org_from_filter_state = false, $set_org_to_filter_state = false)
+function payments__add_standard_filters($datatable,$tab='')
 {
 	global $core,$hub_filters,$to_filters,$from_filters;
 	
@@ -518,7 +518,7 @@ function payments_add_standard_filters($datatable, $hub_from_filters, $hub_to_fi
 			$datatable->name,
 			'from_domain_id',
 			$datatable->filter_states[$datatable->name.'__filter__from_domain_id'],
-			$hub_from_filters,
+			$hub_filters,
 			'domain_id',
 			'name',
 			'All Markets',
@@ -526,19 +526,6 @@ function payments_add_standard_filters($datatable, $hub_from_filters, $hub_to_fi
 		);
 		
 		$datatable->filter_html .= '</div>';
-	if($hub_to_filters !== false)
-	{
-		$datatable->add_filter(new core_datatable_filter('to_domain_id'));
-		$datatable->filter_html .= core_datatable_filter::make_select(
-			$datatable->name,
-			'to_domain_id',
-			$datatable->filter_states[$datatable->name.'__filter__to_domain_id'],
-			$hub_to_filters,
-			'domain_id',
-			'name',
-			'Filter by To Market: All Markets',
-			'width: 270px;'
-		);
 	}
 		
 	# check to see if we need the from org filter
@@ -551,7 +538,7 @@ function payments_add_standard_filters($datatable, $hub_from_filters, $hub_to_fi
 			$datatable->name,
 			'from_org_id',
 			$datatable->filter_states[$datatable->name.'__filter__from_org_id'],
-			$org_from_filters,
+			$from_filters,
 			'org_id',
 			'name',
 			'All Organizationss',
@@ -617,7 +604,7 @@ function payments_add_standard_filters($datatable, $hub_from_filters, $hub_to_fi
 			$datatable->name,
 			'to_org_id',
 			$datatable->filter_states[$datatable->name.'__filter__to_org_id'],
-			$org_to_filters,
+			$to_filters,
 			'org_id',
 			'name',
 			'All Organizationss',
@@ -659,5 +646,4 @@ function payments_add_standard_filters($datatable, $hub_from_filters, $hub_to_fi
 	
 	return $datatable;
 }
-
 ?>
