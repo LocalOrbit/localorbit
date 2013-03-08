@@ -44,71 +44,6 @@ else
 	');
 }
 
-$hub_from_filters = false;
-$hub_to_filters = false;
-$org_from_filters = false;
-$org_to_filters = false;
-
-if(lo3::is_admin())
-{
-	$hub_from_filters = core::model('domains')->collection()->sort('name');
-	$hub_to_filters = core::model('domains')->collection()->sort('name');
-	$org_to_filters  = core::model('organizations')
-		->collection()
-		->filter('organizations.org_id','in','(select distinct to_org_id from v_payments)')
-		->sort('name');
-	$org_from_filters  = core::model('organizations')
-		->collection()
-		->filter('organizations.org_id','in','(select distinct from_org_id from v_payments)')
-		->sort('name');
-}
-else if(lo3::is_market())
-{
-	$assigned_domain_ids_including_admin = array_merge($core->session['domains_by_orgtype_id'][2], array(1));
-	
-	if(count($core->session['domains_by_orgtype_id'][2]) > 1)
-	{
-		$hub_from_filters = core::model('domains')
-			->collection()
-			->filter('domain_id','in',$assigned_domain_ids_including_admin)
-			->sort('name');
-		$hub_to_filters = core::model('domains')
-			->collection()
-			->filter('domain_id','in',$assigned_domain_ids_including_admin)
-			->sort('name');
-	}
-
-	$org_to_filters  = core::model('organizations')
-		->collection()
-		->filter('organizations.org_id','in','(select distinct to_org_id from v_payments)')
-		->filter(
-				'organizations.org_id' ,
-				'in',
-				'(
-					select org_id
-					 from organizations_to_domains
-					where domain_id in ('.implode(',',$assigned_domain_ids_including_admin).')
-				)'
-		)
-		->sort('name');
-	$org_from_filters  = core::model('organizations')
-		->collection()
-		->filter('organizations.org_id','in','(select distinct from_org_id from v_payments)')
-		->filter(
-			'organizations.org_id' ,
-			'in',
-			'(
-					select org_id
-					 from organizations_to_domains
-					where domain_id in ('.implode(',',$assigned_domain_ids_including_admin).')
-				)'
-		)
-		->sort('name');
-}
-else
-{
-}
-
 function transaction_formatter($data)
 {
 	#core::log(print_r($data,true));
@@ -127,6 +62,41 @@ function transaction_formatter($data)
 			$data['method_description'] = 'Cash';
 			break;
 	}
+	
+	$data['payment_method'] = ucfirst($data['payment_method']);
+	
+	if ($data['from_org_id'] == $core->session['org_id'])
+	{
+		$data['formatted_amount'] = '<span style="color: red;">$(' . number_format($data['amount'], 2) . ')</span>';
+		$data['amount'] = -$data['amount'];
+	}
+	else
+	{
+		$data['formatted_amount'] = '$' . number_format($data['amount'], 2);
+	}
+	
+	switch(strtolower($data['payable_type']))
+	{
+		case 'buyer order':
+			$data['payable_type_formatted'] = 'Purchase';
+			break;
+		case 'seller order':
+			$data['payable_type_formatted'] = 'Seller Pmt';
+			break;
+		case 'hub fees':
+			$data['payable_type_formatted'] = 'Hub Fees';
+			break;
+		case 'lo fees':
+			$data['payable_type_formatted'] = 'LO Fees';
+			break;
+		case 'monthly fees':
+			$data['payable_type_formatted'] = 'Monthly Fees';
+			break;
+		default:
+			$data['payable_type_formatted'] = ucfirst($data['payable_type']);
+			break;
+	}
+	
 	return $data;
 }
 
@@ -136,22 +106,19 @@ $payments->add_formatter('payment_direction_formatter');
 $payments->add_formatter('transaction_formatter');
 $payments_table = new core_datatable('transactions','payments/transaction_journal',$payments);
 
-$col_widths = (lo3::is_admin())?array('14%','10%','12%','12%'):array('22%','22%');
+$payments_table->add(new core_datacolumn('payment_id','Reference',true,'17%','{description_html}','{description}','{description}'));
 
-$payments_table->add(new core_datacolumn('payment_id','Description',true,'22%',			'<b>T-{payment_id}</b><br />{description_html}','{description}','{description}'));
-$payments_table->add(new core_datacolumn('payment_info','Payment Info',false,'30%','{method_description}<br />{direction_info}','{direction_info}','{direction_info}'));
-$payments_table->add(new core_datacolumn('creation_date','Date Paid',true,$col_widths[0],'{creation_date}','{creation_date}','{creation_date}'));
-$payments_table->add(new core_datacolumn('payable_type','payable_type',true,'10%','{payable_type}'));
-$payments_table->add(new core_datacolumn('amount','Amount',true,$col_widths[1],							'{amount}','{amount}','{amount}'));
-if(lo3::is_admin())
-{
-	$payments_table->add(new core_datacolumn('transaction_fees','Trans. Fee',true,$col_widths[2],			'{transaction_fees}','{transaction_fees}','{transaction_fees}'));
-	$payments_table->add(new core_datacolumn('net_amount','Net Amount',true,$col_widths[3],			'{net_amount}','{net_amount}','{net_amount}'));
-	#$payments_table->columns[4]->autoformat='price';
-	#$payments_table->columns[5]->autoformat='price';
-}
-#$payments_table->columns[2]->autoformat='date-long';
-#$payments_table->columns[3]->autoformat='price';
+$payments_table->add(new core_datacolumn('payable_type','Type',true,'10%','{payable_type_formatted}','{payable_type_formatted}','{payable_type_formatted}'));
+
+$payments_table->add(new core_datacolumn('creation_date','Date Paid',true,'18%','{creation_date}','{creation_date}','{creation_date}'));
+
+$payments_table->add(new core_datacolumn('payment_info','Description',false,'30%','{direction_info}','{direction_info}','{direction_info}'));
+
+$payments_table->add(new core_datacolumn('payment_method','Method',false,'15%','{payment_method}','{payment_method}','{payment_method}'));
+
+$payments_table->add(new core_datacolumn('amount','Amount',true,'10%','{formatted_amount}','{formatted_amount}','{formatted_amount}'));
+
+$payments_table->columns[2]->autoformat='date-long';
 $payments_table->sort_column = 0;
 $payments_table->sort_direction = 'desc';
 $payments_table = payments__add_standard_filters($payments_table,'transactionjournal');

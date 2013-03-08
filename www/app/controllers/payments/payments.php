@@ -549,7 +549,7 @@ function payments__add_standard_filters($datatable,$tab='')
 			$from_filters,
 			'org_id',
 			'name',
-			'All Organizationss',
+			'All Organizations',
 			'width: 180px;'
 		);
 		$datatable->filter_html .= '</div>';

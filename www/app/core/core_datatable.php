@@ -60,6 +60,8 @@ class core_datatable
 		$this->filter_html = '';
 		$this->filter_states = array();
 		
+		$this->custom_csv_export_path = '';
+		
 		# try to load the settings for the table from the session
 		if(isset($core->session['datatables'][$this->name]))
 		{
@@ -542,7 +544,14 @@ class core_datatable
 			echo('<div class="dt_exporter">');
 			if($this->render_exporter)
 			{
-				echo('<a class="dt" onclick="core.ui.dataTables[\''.$this->name.'\'].loadData(\'csv\');"><i class="icon-table"></i> Export CSV</a>');
+				if ($this->custom_csv_export_path != '')
+				{
+					echo('<a class="dt" onclick="core.ui.dataTables[\''.$this->name.'\'].loadCustomCSVExport(\'' . $this->custom_csv_export_path . '\');"><i class="icon-table"></i> Export CSV</a>');
+				} 
+				else
+				{
+					echo('<a class="dt" onclick="core.ui.dataTables[\''.$this->name.'\'].loadData(\'csv\');"><i class="icon-table"></i> Export CSV</a>');
+				}
 			}
 			echo('</div>');
 			
