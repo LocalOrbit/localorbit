@@ -4,9 +4,9 @@ class core_model_payables extends core_model_base_payables
 	function get_buyer_grouped_payables($payable_ids=array())
 	{
 		$sql = '
-			select count(p.payable_id) as payable_count,
-			sum(p.amount) as receivable_total,
-			GROUP_CONCAT(p.payable_id) as payables,
+			select 1 as payable_count,
+			p.amount as receivable_total,
+			p.payable_id as payables,
 			p.from_org_id,p.to_org_id,
 			o1.name as from_org_name,
 			o2.name as to_org_name,
@@ -22,7 +22,7 @@ class core_model_payables extends core_model_base_payables
 		$col = new core_collection($sql);
 	
 		$col->filter('p.invoice_id','is null');
-		$col->group("concat_ws('-',p.from_org_id,p.to_org_id)");
+		#$col->group("concat_ws('-',p.from_org_id,p.to_org_id)");
 		
 		
 		
