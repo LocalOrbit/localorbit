@@ -71,7 +71,7 @@ else
 }
 
 page_header('Financial Management - Coming Soon!');
-echo('<form name="paymentsForm" class="form-horizontal">');
+echo('<form name="paymentsForm">');
 echo(core_ui::tab_switchers('paymentstabs',$tabs));
 echo('<div class="tab-content">');
 

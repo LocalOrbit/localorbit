@@ -582,7 +582,7 @@ function payments__add_standard_filters($datatable,$tab='')
 	}
 	else
 	{
-		$datatable->filter_html .= '<div style="float:left;width: '.$filter_width.'px;height: 33px;"><img src="/img/blank.png" width="285" height="33" /></div>';
+		$datatable->filter_html .= '<div style="float:left;width: '.$filter_width.'px;height: 38px;clear:right;"><img src="/img/blank.png" width="285" height="33" /></div>';
 	}
 	
 	# Check to see if we need either of the To filters and the method filter. MMs and Admins get all of them
