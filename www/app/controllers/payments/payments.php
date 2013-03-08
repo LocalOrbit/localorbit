@@ -488,7 +488,7 @@ function payments__add_standard_filters($datatable,$tab='')
 	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat1',null,$date_verb.' on or after ');
 	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat2',null,$date_verb.' on or before ');
 	
-	$datatable->add_filter(new core_datatable_filter('payable_info','concat_ws(\'\',to_org_name,from_org_name,payable_info)','~'));
+	$datatable->add_filter(new core_datatable_filter('payable_info','concat_ws(\'\',to_org_name,from_org_name,payable_info)','~','search'));
 	$datatable->filter_html .= core_datatable_filter::make_text($datatable->name,'payable_info',$orgs->filter_states[$datatable->name.'__filter__payable_info'],'Search');
 
 	

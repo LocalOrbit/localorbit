@@ -174,7 +174,7 @@ $items->add_filter(new core_datatable_filter('sicreatedat2','lo_fulfillment_orde
 $items->filter_html .= core_datatable_filter::make_date('sold_items','sicreatedat1',core_format::date($start,'short'),'Placed on or after ');
 $items->filter_html .= core_datatable_filter::make_date('sold_items','sicreatedat2',core_format::date($end,'short'),'Placed on or before ');
 
-$items->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',seller_name,o1.name,lo_order.lo3_order_nbr,lo_fulfillment_order.lo3_order_nbr,product_name)','~'));
+$items->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',seller_name,o1.name,lo_order.lo3_order_nbr,lo_fulfillment_order.lo3_order_nbr,product_name)','~','search'));
 $items->filter_html .= core_datatable_filter::make_text('sold_items','searchables',$items->filter_states['sold_items__filter__searchables'],'Search');
 
 $items->filter_html .= '</div>';

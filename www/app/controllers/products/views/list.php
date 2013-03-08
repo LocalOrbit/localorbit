@@ -128,7 +128,7 @@ if(lo3::is_admin() || lo3::is_market())
 }
 
 # everyone gets a text filter on product name
-$products->add_filter(new core_datatable_filter('name','products.name','~'));
+$products->add_filter(new core_datatable_filter('name','products.name','~','search'));
 $products->filter_html .= core_datatable_filter::make_text(
 	'products',
 	'name',

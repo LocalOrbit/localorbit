@@ -100,7 +100,7 @@ if(lo3::is_admin())
 }
 
 
-$users->add_filter(new core_datatable_filter('name','concat(first_name,last_name,email)','~'));
+$users->add_filter(new core_datatable_filter('name','concat(first_name,last_name,email)','~','search'));
 echo(core_datatable_filter::make_text('customer_entity','name',$users->filter_states['customer_entity__filter__name'],'Search by name'));
 
 

@@ -95,7 +95,7 @@ if(lo3::is_admin())
 
 core::log('here');
 
-$orgs->add_filter(new core_datatable_filter('name','name','~'));
+$orgs->add_filter(new core_datatable_filter('name','name','~','search'));
 echo(core_datatable_filter::make_text('v_organizations','name',$orgs->filter_states['v_organizations__filter__name'],'Search by name'));
 
 

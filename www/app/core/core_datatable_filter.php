@@ -88,11 +88,30 @@ class core_datatable_filter
 		if($this->has_value && $this->value != __core_datatable_filter_nullval__)
 		{
 			# fudging with dates a bit
-			if(strlen($this->value) < 11 && ($this->operator == '>' || $this->operator == '<'))
+			if($this->type == 'date')
 			{
-				$this->value .= ($this->operator == '>')?' 00:00:00':' 23:59:59';
+				if(strlen($this->value) < 11 && ($this->operator == '>' || $this->operator == '<'))
+				{
+					$this->value .= ($this->operator == '>')?' 00:00:00':' 23:59:59';
+				}
+				$this->parent->data->filter($this->field,$this->operator,$this->value);
 			}
-			$this->parent->data->filter($this->field,$this->operator,$this->value);
+			else if($this->type == 'search')
+			{
+				$values = explode(' ',$this->value);
+				foreach($values as $value)
+				{
+					$value = trim($value);
+					if($value != '')
+					{
+						$this->parent->data->filter($this->field,$this->operator,$value);
+					}
+				}
+			}
+			else
+			{
+				$this->parent->data->filter($this->field,$this->operator,$this->value);
+			}
 		}
 	}
 	

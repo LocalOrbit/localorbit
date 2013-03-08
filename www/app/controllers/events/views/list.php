@@ -11,7 +11,7 @@ lo3::require_orgtype('admin');
 $col = core::model('events')->collection();
 $events = new core_datatable('events','events/list',$col);
 
-$events->add_filter(new core_datatable_filter('name','concat_ws(\' \',customer_entity.first_name,customer_entity.last_name,organizations.name)','~'));
+$events->add_filter(new core_datatable_filter('name','concat_ws(\' \',customer_entity.first_name,customer_entity.last_name,organizations.name)','~','search'));
 $events->filter_html .= core_datatable_filter::make_text('events','name',$domains->filter_states['events__filter__name'],'Search by name');
 
 

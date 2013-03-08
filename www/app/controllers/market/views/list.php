@@ -82,7 +82,7 @@ $domains->filter_html .= core_datatable_filter::make_select(
 	'Open/Closed hubs'
 );
 
-$domains->add_filter(new core_datatable_filter('name','name','~'));
+$domains->add_filter(new core_datatable_filter('name','name','~','search'));
 $domains->filter_html .= core_datatable_filter::make_text('domains','name',$domains->filter_states['domains__filter__name'],'Search by name');
 
 $domains->add(new core_datacolumn('name','Name',true,$cols[0],'<a href="#!market-edit--domain_id-{domain_id}"><b>{name}</b></a><br /><i class="icon-signin" /> <a href="https://{hostname}/app.php#!dashboard-home">Switch to {hostname}</a>'));
