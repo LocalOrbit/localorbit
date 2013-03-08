@@ -23,19 +23,17 @@ from payables p
 inner join payable_types pt on pt.payable_type_id=p.payable_type_id
 inner join x_invoices_payments on p.invoice_id = x_invoices_payments.invoice_id
 where pv.payment_id=x_invoices_payments.payment_id
-
 ) as payable_info,
 (
-	select distinct payable_types.payable_type
-	from payables 
-	inner join payable_types on (payable_types.payable_type_id=payables.payable_type_id)
-	where payables.invoice_id in (
-		select invoice_id
-		from x_invoices_payments
-		where x_invoices_payments.payment_id=pv.payment_id
-	)
+select distinct payable_types.payable_type
+from payables 
+inner join payable_types on (payable_types.payable_type_id=payables.payable_type_id)
+where payables.invoice_id in (
+select invoice_id
+from x_invoices_payments
+where x_invoices_payments.payment_id=pv.payment_id
+)
 ) as payable_type
-	
 from payments pv
 inner join organizations o1 on pv.from_org_id=o1.org_id
 inner join organizations o2 on pv.to_org_id=o2.org_id
