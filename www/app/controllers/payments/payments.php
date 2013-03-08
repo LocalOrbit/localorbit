@@ -383,6 +383,10 @@ function payment_link_formatter($data)
 				$data['description'] .= 'Hub Fees';
 				$data['description_html'] .= 'Hub Fees';
 				break;
+			case 'monthly fees':
+				$data['description'] .= $info_item[0];
+				$data['description_html'] .= $info_item[0];
+				break;
 		}
 	}
 	return $data;
