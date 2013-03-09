@@ -74,27 +74,6 @@ function transaction_formatter($data)
 		$data['formatted_amount'] = '$' . number_format($data['amount'], 2);
 	}
 	
-	switch(strtolower($data['payable_type']))
-	{
-		case 'buyer order':
-			$data['payable_type_formatted'] = 'Purchase';
-			break;
-		case 'seller order':
-			$data['payable_type_formatted'] = 'Seller Pmt';
-			break;
-		case 'hub fees':
-			$data['payable_type_formatted'] = 'Hub Fees';
-			break;
-		case 'lo fees':
-			$data['payable_type_formatted'] = 'LO Fees';
-			break;
-		case 'monthly fees':
-			$data['payable_type_formatted'] = 'Monthly Fees';
-			break;
-		default:
-			$data['payable_type_formatted'] = ucfirst($data['payable_type']);
-			break;
-	}
 	
 	return $data;
 }
@@ -103,6 +82,7 @@ $payments->add_formatter('payable_info');
 $payments->add_formatter('payment_link_formatter');
 $payments->add_formatter('payment_direction_formatter');
 $payments->add_formatter('transaction_formatter');
+$payments->add_formatter('type_formatter');
 $payments_table = new core_datatable('transactions','payments/transaction_journal',$payments);
 
 $payments_table->add(new core_datacolumn('payment_id','Reference',true,'17%','{description_html}','{description}','{description}'));
