@@ -23,7 +23,8 @@ else if (!lo3::is_admin())
 	if(lo3::is_seller())
 	{
 		$payables = new core_collection('
-			select * from v_payables
+			select *,UNIX_TIMESTAMP(creation_date) as creation_date
+			from v_payables
 			where (
 				to_org_id = '.$core->session['org_id'].' 
 				or 
