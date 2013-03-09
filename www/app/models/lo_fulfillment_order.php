@@ -110,7 +110,7 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 			}
 		
 		}
-		else if($core->config['domain']['seller_payer'] == 'lo')
+		else
 		{
 			$payable = core::model('payables');
 			$payable['domain_id'] = $core->config['domain']['domain_id'];

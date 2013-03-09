@@ -20,7 +20,25 @@ if(lo3::is_market())
 }
 else if (!lo3::is_admin())
 {
-	$payables->filter('to_org_id','=',$core->session['org_id']);
+	if(lo3::is_seller())
+	{
+		$payables = new core_collection('
+			select * from v_payables
+			where (
+				to_org_id = '.$core->session['org_id'].' 
+				or 
+				from_org_id = '.$core->session['org_id'].'
+			)
+			and amount_due > 0
+			and is_invoiced=0
+		
+		');
+	}
+	else
+	{
+		$payables->filter('to_org_id','=',$core->session['org_id']);
+	}
+
 }
 
 $payables->add_formatter('payable_info');
@@ -38,7 +56,6 @@ $payables_table->columns[3]->autoformat='price';
 $payables_table->sort_direction='desc';
 
 ?>
-
 <div class="tabarea tab-pane" id="paymentstabs-a<?=$core->view[0]?>">
 	<div id="all_receivables">
 		<?php
