@@ -45,7 +45,7 @@ else
 
 function transaction_formatter($data)
 {
-	#core::log(print_r($data,true));
+	global $core;
 	switch(strtolower($data['payment_method']))
 	{
 		case 'check':
@@ -66,8 +66,8 @@ function transaction_formatter($data)
 	
 	if ($data['from_org_id'] == $core->session['org_id'])
 	{
-		$data['formatted_amount'] = '<span style="color: red;">$(' . number_format($data['amount'], 2) . ')</span>';
-		$data['amount'] = -$data['amount'];
+		$data['formatted_amount'] = '<span class="text-error">(-' . core_format::price($data['amount']) . ')</span>';
+		#$data['amount'] = -$data['amount'];
 	}
 	else
 	{
