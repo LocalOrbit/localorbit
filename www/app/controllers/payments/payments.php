@@ -395,7 +395,7 @@ function payment_link_formatter($data)
 function payment_direction_formatter($data)
 {
 	global $core;
-	if(lo3::is_admin() || lo3::is_market())
+	if(lo3::is_admin() || lo3::is_market() || lo3::is_seller())
 	{
 		$data['direction_info'] = 'From: ';
 		

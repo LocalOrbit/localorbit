@@ -44,6 +44,7 @@ else if (!lo3::is_admin())
 $payables->add_formatter('payable_info');
 $payables->add_formatter('payment_link_formatter');
 $payables->add_formatter('payment_direction_formatter');
+$payables->add_formatter('seller_specific_po_format');
 $payables_table = new core_datatable('purchase_orders','payments/purchase_orders',$payables);
 $payables_table = payments__add_standard_filters($payables_table,'receivables');
 $payables_table->add(new core_datacolumn('payable_id','Description',true,'22%',			'<b>R-{payable_id}</b><br />{description_html}','{description}','{description}'));
@@ -51,9 +52,19 @@ $payables_table->add(new core_datacolumn(null,'Payment Info',false,'40%','{direc
 $payables_table->add(new core_datacolumn('creation_date','Date',true,'20%','{creation_date}','{creation_date}','{creation_date}'));
 $payables_table->add(new core_datacolumn('payable_amount','Amount',true,'14%',							'{amount_due}','{amount_due}','{amount_due}'));
 $payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('receivables'),'',''),false,'4%',core_ui::check_all('receivables','payable_id'),' ',' '));
-$payables_table->columns[2]->autoformat='date-long';
-$payables_table->columns[3]->autoformat='price';
+#$payables_table->columns[2]->autoformat='date-long';
+#$payables_table->columns[3]->autoformat='price';
 $payables_table->sort_direction='desc';
+
+function seller_specific_po_format($data)
+{
+	global $core;
+	if(!lo3::is_market() && lo3::is_seller() && $data['from_org_id'] == $core->session['org_id'])
+	{
+		$data['amount_due'] = '<span class="text-error">(-'.$data['amount_due'] .')</span>';
+	}
+	return $data;
+}
 
 ?>
 <div class="tabarea tab-pane" id="paymentstabs-a<?=$core->view[0]?>">
