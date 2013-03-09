@@ -31,7 +31,7 @@
 			</li>
 		</ul>
 
-		<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-checkbox-unchecked  icon-large"></i>Financials</a></li></ul>
+		<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
 		
 		
 		<ul class="nav">
@@ -113,7 +113,7 @@
 				</ul>
 			</li>
 		</ul>
-		<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-checkbox-unchecked  icon-large"></i>Financials</a></li></ul>
+		<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
 		<ul class="nav">
 			<li class="dropdown">
 				<a id="products-delivery" href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -169,7 +169,7 @@
 				</ul>
 			</li>
 		</ul>
-		<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-checkbox-unchecked  icon-large"></i>Financials</a></li></ul>
+		<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
 		<ul class="nav"><li><a id="products-list" href="#!products-list" onclick="core.go(this.href);"><i class="icon-apple-fruit icon-large"></i> Products</a></li></ul>
 
 		<?} # / is customer or seller ?>
@@ -196,7 +196,7 @@
 			</li>
 		</ul>
 		<? if(lo3::is_customer() && !lo3::is_seller()){1?>
-			<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-checkbox-unchecked  icon-large"></i>Financials</a></li></ul>
+			<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
 		<?}?>
 		</div> <!-- /.nav-collapse-->
 
