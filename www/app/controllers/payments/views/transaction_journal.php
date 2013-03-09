@@ -1,7 +1,6 @@
 <?
 global $core;
 #$payments = new core_collection('select v_payments.*,unix_timestamp(v_payments.creation_date) as creation_date from v_payments where (from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')');
-
 if(lo3::is_admin())
 {
 	# the admin sees all transactions
@@ -124,8 +123,8 @@ $payments_table->sort_direction = 'desc';
 $payments_table = payments__add_standard_filters($payments_table,'transactionjournal');
 
 ?>
+<div class="tabarea tab-pane" id="paymentstabs-a<?=$core->view[0]?>"<?=(($core->view[1]==1)?' style="display: block;"':'')?>>
 
-<div class="tabarea tab-pane" id="paymentstabs-a<?=$core->view[0]?>">
 
 	<?
 	$payments_table->render();

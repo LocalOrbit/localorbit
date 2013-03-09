@@ -1,4 +1,5 @@
 <?php
+
 core::ensure_navstate(array('left'=>'left_dashboard'), 'payments-demo', '');
 
 core_ui::fullWidth();
@@ -9,14 +10,33 @@ lo3::require_login();
 
 core_ui::load_library('js','payments.js');
 
-#
+$total_orders = 0;
+if(!lo3::is_admin() && !lo3::is_market() && lo3::is_seller())
+	$total_orders = core_db::col('select count(lo_oid) as mycount from lo_order where ldstat_id<>1 and org_id='.$core->session['org_id'].';','mycount');
+
+$has_pos = true;
+if(!lo3::is_admin() && !lo3::is_market() && !lo3::is_seller())
+	$has_pos = ((core_db::col('select count(lo_oid) as mycount from lo_order where payment_method=\'purchaseorder\' and org_id='.$core->session['org_id'].';','mycount') > 0));
+
+
 $tabs = array();
 $tabs[] = 'Overview';
-$tabs[] = 'Purchase Orders';
-$tabs[] = 'Receivables';
-$tabs[] = 'Payables';
+if(lo3::is_admin() || lo3::is_market() || lo3::is_seller() || $has_pos)
+	$tabs[] = 'Purchase Orders';
+if(lo3::is_admin() || lo3::is_market() || lo3::is_seller())
+	$tabs[] = 'Receivables';
+if(lo3::is_admin() || lo3::is_market() || lo3::is_seller() || $has_pos)
+	$tabs[] = 'Payables';
 $tabs[] = 'Transaction Journal';
-$tabs[] = 'Systemwide Payables/Receivables';
+if(lo3::is_admin())
+	$tabs[] = 'Systemwide Payables/Receivables';
+	
+# if we got through all those rules and the user only has overview and transaction journal,
+# then remove transaction journal
+if(count($tabs) == 2)
+{
+	array_shift($tabs);
+}
 
 
 # prepare the filters
@@ -36,7 +56,7 @@ if(lo3::is_admin())
 }
 else if(lo3::is_market())
 {
-	$tabs[] = 'Payables';
+	#$tabs[] = 'Payables';
 	
 	if(count($core->session['domains_by_orgtype_id'][2]) > 1)
 	{
@@ -62,24 +82,55 @@ else if(lo3::is_market())
 			where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
 		)')
 		->sort('name');
-	$tabs[] = 'Receivables';
+	#$tabs[] = 'Receivables';
 }
 else
 {
-	
+	#$tabs = array('Overview', 'Payments Owed', 'Transaction Journal');
 }
+
+
+// remove 'Payments Owed' col if no orders have been placed ever
+
+
 
 page_header('Financial Management - Coming Soon!');
 echo('<form name="paymentsForm">');
 echo(core_ui::tab_switchers('paymentstabs',$tabs));
 echo('<div class="tab-content">');
 
-$this->overview(1);
-$this->purchase_orders(2);
-$this->receivables(3);
-$this->payables(4);
-$this->transaction_journal(5);
-$this->systemwide_payablesreceivables(6);
+$tab_count = 1;
+
+if(in_array('Overview',$tabs))
+{
+	$this->overview($tab_count);
+	$tab_count++;
+}
+if(in_array('Purchase Orders',$tabs))
+{
+	$this->purchase_orders($tab_count);
+	$tab_count++;
+}
+if(in_array('Receivables',$tabs))
+{
+	$this->receivables($tab_count);
+	$tab_count++;
+}
+if(in_array('Payables',$tabs))
+{
+	$this->payables($tab_count);
+	$tab_count++;
+}
+if(in_array('Transaction Journal',$tabs))
+{
+	$this->transaction_journal($tab_count,count($tabs));
+	$tab_count++;
+}
+if(in_array('Systemwide Payables/Receivables',$tabs))
+{
+	$this->systemwide_payablesreceivables($tab_count);
+	$tab_count++;
+}
 
 ?>
 
@@ -113,22 +164,20 @@ if(lo3::is_market() || lo3::is_admin())
 $tabs[] = 'Payments Owed';
 $tabs[] = 'Transaction Journal';
 
-#if(lo3::is_admin() || lo3::is_market() )
-#	$tabs[] = 'Advanced Metrics';
-	
+
 # setup the page header and tab switchers
 
 
 
 
 # based on our rules, render the tabs one by one
-$this->overview((array_search('Overview',$tabs) + 1)); 
-$this->payables((array_search('Payables',$tabs) + 1)); 
-$this->payments((array_search('Payments Owed',$tabs) + 1)); 
-if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
+$this->overview((array_search('Overview', $tabs) + 1)); 
+$this->payables((array_search('Payables', $tabs) + 1)); 
+$this->payments((array_search('Payments Owed', $tabs) + 1)); 
+if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] == 1)
 {
-	$this->receivables((array_search('Receivables',$tabs) + 1)); 
-	$this->invoices((array_search('Invoices Due',$tabs) + 1)); 
+	$this->receivables((array_search('Receivables', $tabs) + 1)); 
+	$this->invoices((array_search('Invoices Due', $tabs) + 1)); 
 }
 if(lo3::is_admin() || lo3::is_market() )
 {
