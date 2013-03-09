@@ -531,17 +531,6 @@ function payments__add_standard_filters($datatable,$tab='')
 		||
 		
 		(lo3::is_market() && count($core->session['domains_by_orgtype_id'][2]) > 1)
-		
-		||
-		
-		(
-			lo3::is_seller() 
-			&&
-			core_db::col('
-				select count(distinct sell_on_domain_id) as nbr_domains 
-				from organization_cross_sells 
-				where org_id='.$core->session['org_id'],'nbr_domains') > 1
-		)
 	)
 	{
 		$datatable->add_filter(new core_datatable_filter('from_domain_id'));
