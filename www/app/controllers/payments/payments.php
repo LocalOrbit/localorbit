@@ -245,6 +245,32 @@ class core_controller_payments extends core_controller
 	}
 }
 
+function type_formatter($data)
+{
+	switch(strtolower($data['payable_type']))
+	{
+		case 'buyer order':
+			$data['payable_type_formatted'] = 'Purchase';
+			break;
+		case 'seller order':
+			$data['payable_type_formatted'] = 'Seller Pmt';
+			break;
+		case 'hub fees':
+			$data['payable_type_formatted'] = 'Hub Fees';
+			break;
+		case 'lo fees':
+			$data['payable_type_formatted'] = 'LO Fees';
+			break;
+		case 'monthly fees':
+			$data['payable_type_formatted'] = 'Monthly Fees';
+			break;
+		default:
+			$data['payable_type_formatted'] = ucfirst($data['payable_type']);
+			break;
+	}
+	return $data;
+}
+
 function org_amount ($data) {
 	global $core;
 
