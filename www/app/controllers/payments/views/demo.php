@@ -1,5 +1,4 @@
 <?php
-
 core::ensure_navstate(array('left'=>'left_dashboard'), 'payments-demo', '');
 
 core_ui::fullWidth();
@@ -67,17 +66,8 @@ else if(lo3::is_market())
 }
 else
 {
-	$tabs = array('Overview', 'Payments Owed', 'Transaction Journal');
+	
 }
-
-
-// remove 'Payments Owed' col if no orders have been placed ever
-$total_orders = core_db::col('select count(lo_oid) as mycount from lo_order where ldstat_id<>1 and org_id='.$core->session['org_id'].';','mycount');
-if ($total_orders == 0) {
-	$tabs = array_merge(array_diff($tabs, array('Payments Owed')));
-}
-
-
 
 page_header('Financial Management - Coming Soon!');
 echo('<form name="paymentsForm">');
@@ -123,20 +113,22 @@ if(lo3::is_market() || lo3::is_admin())
 $tabs[] = 'Payments Owed';
 $tabs[] = 'Transaction Journal';
 
-
+#if(lo3::is_admin() || lo3::is_market() )
+#	$tabs[] = 'Advanced Metrics';
+	
 # setup the page header and tab switchers
 
 
 
 
 # based on our rules, render the tabs one by one
-$this->overview((array_search('Overview', $tabs) + 1)); 
-$this->payables((array_search('Payables', $tabs) + 1)); 
-$this->payments((array_search('Payments Owed', $tabs) + 1)); 
-if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] == 1)
+$this->overview((array_search('Overview',$tabs) + 1)); 
+$this->payables((array_search('Payables',$tabs) + 1)); 
+$this->payments((array_search('Payments Owed',$tabs) + 1)); 
+if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 {
-	$this->receivables((array_search('Receivables', $tabs) + 1)); 
-	$this->invoices((array_search('Invoices Due', $tabs) + 1)); 
+	$this->receivables((array_search('Receivables',$tabs) + 1)); 
+	$this->invoices((array_search('Invoices Due',$tabs) + 1)); 
 }
 if(lo3::is_admin() || lo3::is_market() )
 {

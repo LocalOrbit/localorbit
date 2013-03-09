@@ -1,4 +1,3 @@
-=========
 <?php
 $invoices = core::model('v_invoices')
 	->collection()
