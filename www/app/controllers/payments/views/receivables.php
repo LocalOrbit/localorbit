@@ -40,7 +40,7 @@ $invoices->add_formatter('payment_direction_formatter');
 $invoices->add_formatter('receivable_age_formatter');
 $invoices_table = new core_datatable('receivables','payments/receivables',$invoices);
 $invoices_table = payments__add_standard_filters($invoices_table,'invoices');
-$invoices_table->add(new core_datacolumn('invoice_id','Reference',true,'17%',			'<b>I-{invoice_id}</b><br />{description_html}','{description}','{description}'));
+$invoices_table->add(new core_datacolumn('invoice_id','Reference',true,'17%',			'{description_html}','{description}','{description}'));
 $invoices_table->add(new core_datacolumn('from_org_name','Description',false,'40%','{direction_info}','{from_org_name}','{from_org_name}'));
 $invoices_table->add(new core_datacolumn('creation_date','Invoice Date',true,'15%','{creation_date}','{creation_date}','{creation_date}'));
 $invoices_table->add(new core_datacolumn('due_date','Due Date',true,'15%','{due_date}','{due_date}','{due_date}'));

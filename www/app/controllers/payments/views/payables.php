@@ -40,7 +40,7 @@ $payments_owed->add_formatter('payment_direction_formatter');
 $payments_owed->add_formatter('payable_age_formatter');
 $payments_table = new core_datatable('payables','payments/payables',$payments_owed);
 $payments_table = payments__add_standard_filters($payments_table,'payments');
-$payments_table->add(new core_datacolumn('invoice_id','Reference',true,'20%',			'<b>I-{invoice_id}</b><br />{description_html}','{description}','{description}'));
+$payments_table->add(new core_datacolumn('invoice_id','Reference',true,'20%',			'{description_html}','{description}','{description}'));
 $payments_table->add(new core_datacolumn('from_org_name','Description',false,'40%','{direction_info}','{from_org_name}','{from_org_name}'));
 $payments_table->add(new core_datacolumn('creation_date','Invoice Date',true,'10%','{creation_date}','{creation_date}','{creation_date}'));
 $payments_table->add(new core_datacolumn('due_date','Due Date',true,'10%','{due_date}','{due_date}','{due_date}'));

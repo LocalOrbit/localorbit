@@ -75,7 +75,7 @@ $invoices->add_formatter('payment_direction_formatter');
 $invoices->add_formatter('systemwide_age_formatter');
 $systemwide_table = new core_datatable('systemwide','payments/systemwide_payablesreceivables',$invoices);
 $systemwide_table = payments__add_standard_filters($systemwide_table,'systemwide');
-$systemwide_table->add(new core_datacolumn('invoice_id','Reference',true,'20%',			'<b>I-{invoice_id}</b><br />{description_html}','{description}','{description}'));
+$systemwide_table->add(new core_datacolumn('invoice_id','Reference',true,'20%',			'{description_html}','{description}','{description}'));
 $systemwide_table->add(new core_datacolumn('from_org_name','Description',false,'40%','{direction_info}','{from_org_name}','{from_org_name}'));
 $systemwide_table->add(new core_datacolumn('creation_date','Invoice Date',true,'10%','{creation_date}','{creation_date}','{creation_date}'));
 $systemwide_table->add(new core_datacolumn('due_date','Due Date',true,'10%','{due_date}','{due_date}','{due_date}'));

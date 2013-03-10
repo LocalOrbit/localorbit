@@ -49,7 +49,7 @@ $payables->add_formatter('seller_specific_po_format');
 $payables->add_formatter('type_formatter');
 $payables_table = new core_datatable('purchase_orders','payments/purchase_orders',$payables);
 $payables_table = payments__add_standard_filters($payables_table,'receivables');
-$payables_table->add(new core_datacolumn('payable_id','Reference',true,'22%',			'<b>R-{payable_id}</b><br />{description_html}','{description}','{description}'));
+$payables_table->add(new core_datacolumn('payable_id','Reference',true,'22%',			'{description_html}','{description}','{description}'));
 $payables_table->add(new core_datacolumn('payable_type','Type',true,'12%',			'{payable_type_formatted}','{payable_type_formatted}','{payable_type_formatted}'));
 $payables_table->add(new core_datacolumn('creation_date','Date Ordered',true,'20%','{creation_date}','{creation_date}','{creation_date}'));
 $payables_table->add(new core_datacolumn(null,'Description',false,'40%','{direction_info}','{direction_info}','{direction_info}'));
