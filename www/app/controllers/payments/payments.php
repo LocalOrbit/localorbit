@@ -425,14 +425,14 @@ function payment_direction_formatter($data)
 	{
 		$data['direction_info'] = 'From: ';
 		
-		if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2]) > 1)
-			$data['direction_info'] .= $data['from_domain_name'].': ';
+		#if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2]) > 1)
+		#	$data['direction_info'] .= $data['from_domain_name'].': ';
 			
 		$data['direction_info'] .= $data['from_org_name'].'<br />';
 		$data['direction_info'] .= 'To: ';
 		
-		if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2]) > 1)
-			$data['direction_info'] .= $data['to_domain_name'].': ';
+		#if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2]) > 1)
+		#	$data['direction_info'] .= $data['to_domain_name'].': ';
 
 		$data['direction_info'] .= $data['to_org_name'];
 		$data['payable_amount' ] = core_format::price($data['amount_due']);
