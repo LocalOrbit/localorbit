@@ -89,9 +89,9 @@ $payments_table->add(new core_datacolumn('payment_id','Reference',true,'17%','{d
 
 $payments_table->add(new core_datacolumn('payable_type','Type',true,'10%','{payable_type_formatted}','{payable_type_formatted}','{payable_type_formatted}'));
 
-$payments_table->add(new core_datacolumn('creation_date','Date Paid',true,'18%','{creation_date}','{creation_date}','{creation_date}'));
+$payments_table->add(new core_datacolumn('creation_date','Date Paid',true,'11%','{creation_date}','{creation_date}','{creation_date}'));
 
-$payments_table->add(new core_datacolumn('payment_info','Description',false,'30%','{direction_info}','{direction_info}','{direction_info}'));
+$payments_table->add(new core_datacolumn('payment_info','Description',false,'36%','{direction_info}','{direction_info}','{direction_info}'));
 
 $payments_table->add(new core_datacolumn('payment_method','Method',false,'15%','{payment_method}','{payment_method}','{payment_method}'));
 

@@ -51,8 +51,8 @@ $payables_table = new core_datatable('purchase_orders','payments/purchase_orders
 $payables_table = payments__add_standard_filters($payables_table,'receivables');
 $payables_table->add(new core_datacolumn('payable_id','Reference',true,'22%',			'{description_html}','{description}','{description}'));
 $payables_table->add(new core_datacolumn('payable_type','Type',true,'12%',			'{payable_type_formatted}','{payable_type_formatted}','{payable_type_formatted}'));
-$payables_table->add(new core_datacolumn('creation_date','Date Ordered',true,'20%','{creation_date}','{creation_date}','{creation_date}'));
-$payables_table->add(new core_datacolumn(null,'Description',false,'40%','{direction_info}','{direction_info}','{direction_info}'));
+$payables_table->add(new core_datacolumn('creation_date','Date Ordered',true,'12%','{creation_date}','{creation_date}','{creation_date}'));
+$payables_table->add(new core_datacolumn(null,'Description',false,'48%','{direction_info}','{direction_info}','{direction_info}'));
 $payables_table->add(new core_datacolumn('payable_amount','Amount',true,'14%',							'{amount_due}','{amount_due}','{amount_due}'));
 if(lo3::is_market() || lo3::is_admin())
 	$payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('receivables'),'',''),false,'4%',core_ui::check_all('receivables','payable_id'),' ',' '));

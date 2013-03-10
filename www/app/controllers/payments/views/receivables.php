@@ -41,14 +41,14 @@ $invoices->add_formatter('receivable_age_formatter');
 $invoices_table = new core_datatable('receivables','payments/receivables',$invoices);
 $invoices_table = payments__add_standard_filters($invoices_table,'invoices');
 $invoices_table->add(new core_datacolumn('invoice_id','Reference',true,'17%',			'{description_html}','{description}','{description}'));
-$invoices_table->add(new core_datacolumn('from_org_name','Description',false,'40%','{direction_info}','{from_org_name}','{from_org_name}'));
-$invoices_table->add(new core_datacolumn('creation_date','Invoice Date',true,'15%','{creation_date}','{creation_date}','{creation_date}'));
-$invoices_table->add(new core_datacolumn('due_date','Due Date',true,'15%','{due_date}','{due_date}','{due_date}'));
+$invoices_table->add(new core_datacolumn('from_org_name','Description',false,'46%','{direction_info}','{from_org_name}','{from_org_name}'));
+$invoices_table->add(new core_datacolumn('creation_date','Invoice Date',true,'12%','{creation_date}','{creation_date}','{creation_date}'));
+$invoices_table->add(new core_datacolumn('due_date','Due Date',true,'12%','{due_date}','{due_date}','{due_date}'));
 $invoices_table->add(new core_datacolumn('aging','Aging',true,'10%','{age}','{age}','{age}'));
 $invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'14%',			'{amount_due}','{amount_due}','{amount_due}'));
 $invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('invoices'),'',''),false,'4%',core_ui::check_all('invoices','invoice_id'),' ',' '));
 $invoices_table->columns[2]->autoformat='date-long';
-#$invoices_table->columns[3]->autoformat='price';
+$invoices_table->columns[3]->autoformat='date-long';
 $invoices_table->sort_direction='desc';
 
 

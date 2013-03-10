@@ -82,8 +82,8 @@ $systemwide_table->add(new core_datacolumn('due_date','Due Date',true,'10%','{du
 $systemwide_table->add(new core_datacolumn('DATEDIFF(due_date,CURRENT_TIMESTAMP)','Aging',true,'10%',			'{age}','{age}','{age}'));
 $systemwide_table->add(new core_datacolumn('amount_due','Amount Due',true,'10%',			'{amount_due}','{amount_due}','{amount_due}'));
 #$systemwide_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('systemwide'),'',''),false,'4%',core_ui::check_all('systemwide','invoice_id'),' ',' '));
-$systemwide_table->columns[2]->autoformat='date-short';
-$systemwide_table->columns[3]->autoformat='date-short';
+$systemwide_table->columns[2]->autoformat='date-long';
+$systemwide_table->columns[3]->autoformat='date-long';
 $systemwide_table->sort_direction='desc';
 
 
