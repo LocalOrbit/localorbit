@@ -38,7 +38,8 @@ class core_model_customer_entity extends core_model_base_customer_entity
 			o.name,o.buyer_type,o.allow_sell,o.is_active as org_is_active,
 			o.is_enabled as org_is_enabled,otd.orgtype_id,
 			d.name as hub_name,d.detailed_name as hub_detailed_name,
-			(tz.offset_seconds - (3600 * d.do_daylight_savings)) as offset_seconds
+			tz.offset_seconds as offset_seconds,
+			d.do_daylight_savings as do_daylight_savings
 
 			from customer_entity ce
 			inner join organizations o on (ce.org_id=o.org_id)
@@ -89,7 +90,7 @@ class core_model_customer_entity extends core_model_base_customer_entity
 			inner join core_store cs on ce.website_id=cs.website_id
 			inner join domains d on cs.store_id=d.mag_store
 			where (ce.email=\''.mysql_escape_string($username).'\' or ou.LOGIN_NAME=\''.mysql_escape_string($username).'\')
-			and ou.PASSWORD=\''.mysql_escape_string($password).'\'
+			and ou.PASSWORD=\''.mysl_escape_string($password).'\'
 		';
 */
 		$row = core_db::row($sql);
