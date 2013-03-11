@@ -136,7 +136,7 @@ $(function()
 		</div>
 	</li>
 	<li class="divider-vertical"></li>
-	<li><a href="https://localorbit.zendesk.com/forums">Help</a></li>
+	<li><a href="http://myaccount.zendesk.com/account/dropboxes/20147973" onClick="script: Zenbox.show(); return false;">Help</a></li>
 	<li class="divider-vertical"></li>
 	<li><a id="auth-logout" href="<?=$core->config['app_page']?>#!auth-logout" onclick="core.go(this.href);"><?=$core->i18n['nav1:logout']?></a></li>
 </ul>

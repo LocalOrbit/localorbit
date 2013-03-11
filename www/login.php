@@ -211,7 +211,7 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 		<div id="push"></div> <!-- This pushes the footer to the bottom of the window-->
 	</div> <!-- /#wrap -->
 	<div id="footer"></div>
-	<script language="Javascript" type="text/javascript" defer="defer">
+	<script type="text/javascript" defer="defer">
 		
 		core.doRequest('/market/login_info','');
 		core.doRequest('/whitelabel/get_options','');
@@ -226,28 +226,7 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	
 	</script>
 
-	<?
-		/*
-		<script language="Javascript" type="text/javascript" src="<?=$prtcl?>asset0.zendesk.com/external/zenbox/v2.1/zenbox.js"></script>
-		<script language="Javascript" type="text/javascript" defer="defer">
-		var fileref=document.createElement("link")
-		fileref.setAttribute("rel", "stylesheet")
-		fileref.setAttribute("type", "text/css")
-		fileref.setAttribute("href", 'https://asset0.zendesk.com/external/zenbox/v2.1/zenbox.css');
-		document.getElementsByTagName("head")[0].appendChild(fileref)
-		if (typeof(Zenbox) !== "undefined") {
-			Zenbox.init({
-			dropboxID: "20013343",
-			url: "https://localorbit.zendesk.com",
-			tabID: "help",
-			tabColor: "#912529",
-			tabPosition: "Left"
-			});
-		}
-		*/
-	?>
-
-	<script language="Javascript" type="text/javascript" defer="defer">
+	<script type="text/javascript" defer="defer">
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-19817823-1']);
 		_gaq.push(['_setDomainName', '.localorb.it']);

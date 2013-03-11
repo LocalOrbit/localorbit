@@ -53,6 +53,10 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<link rel="stylesheet" type="text/css" href="css/fonts.php" media="all" />
 	<link rel="stylesheet" href="/css/icomoon-ultimate1563/style.css">
 	<link rel="stylesheet" href="/css/icomoon-ultimate88910/style.css">
+	
+	<style type="text/css" media="screen, projection">
+		@import url(//assets.zendesk.com/external/zenbox/v2.5/zenbox.css); 
+	</style>
 
 	<!--<link rel="stylesheet" type="text/css" href="css/responsive.css" />-->
 
@@ -245,42 +249,38 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 
 
 
-<script language="Javascript" type="text/javascript" defer="defer">
+<script type="text/javascript" defer="defer">
 <!--
 core.doRequest('/whitelabel/get_options','');
 //-->
 </script>
 
-<?/*
-<script language="Javascript" type="text/javascript" src="<?=$prtcl?>asset0.zendesk.com/external/zenbox/v2.1/zenbox.js"></script>
-<script language="Javascript" type="text/javascript" defer="defer">
-var fileref=document.createElement("link")
-fileref.setAttribute("rel", "stylesheet")
-fileref.setAttribute("type", "text/css")
-fileref.setAttribute("href", 'https://asset0.zendesk.com/external/zenbox/v2.1/zenbox.css');
-document.getElementsByTagName("head")[0].appendChild(fileref)
-if (typeof(Zenbox) !== "undefined") {
-	Zenbox.init({
-	dropboxID: "20013343",
-	url: "https://localorbit.zendesk.com",
-	tabID: "help",
-	tabColor: "#912529",
-	tabPosition: "Left"
-	});
-}
-*/?>
+<script type="text/javascript" src="//assets.zendesk.com/external/zenbox/v2.5/zenbox.js"></script>
 
-<script language="Javascript" type="text/javascript" defer="defer">
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-19817823-1']);
-_gaq.push(['_setDomainName', '.localorb.it']);
-_gaq.push(['_trackPageview']);
+<script type="text/javascript">
+  if (typeof(Zenbox) !== "undefined") {
+    Zenbox.init({
+      dropboxID:   "20147973",
+      url:         "https://localorbit.zendesk.com",
+      tabID:       "Support",
+      tabColor:    "black",
+      tabPosition: "Left",
+      hide_tab: "true"
+    });
+  }
+</script>
 
-(function() {
-var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
+<script  type="text/javascript" defer="defer">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-19817823-1']);
+	_gaq.push(['_setDomainName', '.localorb.it']);
+	_gaq.push(['_trackPageview']);
+	
+	(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
 </script>
 
 <!--<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>-->
