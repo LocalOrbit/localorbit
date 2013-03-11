@@ -250,7 +250,7 @@ function type_formatter($data)
 	switch(strtolower($data['payable_type']))
 	{
 		case 'buyer order':
-			$data['payable_type_formatted'] = 'Purchase';
+			$data['payable_type_formatted'] = 'Order';
 			break;
 		case 'seller order':
 			$data['payable_type_formatted'] = 'Seller Pmt';
