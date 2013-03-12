@@ -255,13 +255,15 @@ class core_controller_registration extends core_controller
 	function verify_user()
 	{
 		global $core;
+		
 		lo3::require_login();
+		
 		if($core->data['user_id'] != $core->session['user_id'])
 		{
 			$this->already_logged_in();
 		}
 
-		core::log('tryign to verify user_id '.$core->data['user_id'].' using key '.$core->data['key']);
+		core::log('trying to verify user_id '.$core->data['user_id'].' using key '.$core->data['key']);
 
 		if($this->confirm_key_verify($core->data['user_id'],$core->data['key']))
 		{
@@ -270,6 +272,7 @@ class core_controller_registration extends core_controller
 			$org = core::model('organizations')->load($cust['org_id']);
 
 			$domain = core::model('domains')->load($org['domain_id']);
+			
 			core::log("domain is: ".$org['domain_id']);
 			$cust['is_active'] = 1;
 			$cust->save();
@@ -307,13 +310,31 @@ class core_controller_registration extends core_controller
 				);
 			}
 			page_header('Thank you!');
-			?>
-			You have successfully activated your account! <a href="app.php#!dashboard-home" onclick="core.go(this.href);">Click here</a> to go to your dashboard.
-			<br />&nbsp;<br >
-			<br />&nbsp;<br >
-			<br />&nbsp;<br >
-
-			<?php
+			
+			if ($cust['is_enabled'] && $org['is_enabled']) {
+		?>
+				You have successfully activated your account! <a href="app.php#!dashboard-home" onclick="core.go(this.href);">Click here</a> to go to your dashboard.
+				<br />&nbsp;<br >
+				<br />&nbsp;<br >
+				<br />&nbsp;<br >
+		<?php
+			} 
+			else 
+			{
+		?>
+				Thank You! Your email is now verified.<br /><br />
+				The Market Manager for <?php echo $domain['name']; ?> still needs to activate your account. 
+				All accounts are reviewed as quickly as possible, though activation might 
+				take up to 24 hours.<br /><br />
+				
+ 				For additional questions, feel free to contact <?php echo $domain['secondary_contact_name'] != '' ? $domain['secondary_contact_name'] : 'the market manager'; ?> 
+ 				<?php echo $domain['secondary_contact_email'] != '' ? ' at ' . $domain['secondary_contact_email'] : ''; ?>
+ 				<?php echo $domain['secondary_contact_phone'] != '' ? ($domain['secondary_contact_email'] != '' ? ' or ' : ' at ') . $domain['secondary_contact_phone'] : ''; ?>.
+				<br />&nbsp;<br >
+				<br />&nbsp;<br >
+				<br />&nbsp;<br >
+		<?php
+			}
 		}
 		else
 		{
