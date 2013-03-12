@@ -49,6 +49,10 @@ $payments_table->add(new core_datacolumn('creation_date','Invoice Date',true,'10
 $payments_table->add(new core_datacolumn('due_date','Due Date',true,'10%','{due_date}','{due_date}','{due_date}'));
 $payments_table->add(new core_datacolumn('DATEDIFF(due_date,CURRENT_TIMESTAMP)','Overdue',true,'10%',			'{age}','{age}','{age}'));
 $payments_table->add(new core_datacolumn('amount_due','Amount Due',true,'10%',			'{amount_due}','{amount_due}','{amount_due}'));
+if(lo3::is_market() || lo3::is_admin())
+	$payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','invoice_id'),' ',' '));
+
+
 $payments_table->columns[2]->autoformat='date-long';
 $payments_table->columns[3]->autoformat='date-long';
 
