@@ -38,6 +38,9 @@ $invoices->add_formatter('payable_info');
 $invoices->add_formatter('payment_link_formatter');
 $invoices->add_formatter('payment_direction_formatter');
 $invoices->add_formatter('receivable_age_formatter');
+if(lo3::is_market() || lo3::is_admin())
+	$invoices->add_formatter('lfo_accordion');
+	
 $invoices_table = new core_datatable('receivables','payments/receivables',$invoices);
 $invoices_table = payments__add_standard_filters($invoices_table,'invoices');
 $invoices_table->add(new core_datacolumn('invoice_id','Reference',true,'17%',			'{description_html}','{description}','{description}'));

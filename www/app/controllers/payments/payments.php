@@ -497,6 +497,41 @@ function payment_description_formatter($data)
    return $data;
 }
 
+function lfo_accordion($data)
+{
+	$orders = array();
+	$lo_oids = array();
+	$lines = explode('$$',$data['payable_info']);
+	foreach($lines as $line)
+	{
+		$line = explode('|',$line);
+		if($line[1] == 'buyer order')
+			$lo_oids[] = $line[2];
+	}
+	
+	if(count($lo_oids) > 0)
+	{
+		$lfos = new core_collection('
+			select lfo.lo3_order_nbr,lfo.lo_foid
+			from lo_order_line_item loi 
+			inner join lo_fulfillment_order lfo on (loi.lo_foid=lfo.lo_foid)
+			where loi.lo_oid in ('.implode(',',$lo_oids).')
+		');
+		$lfos = $lfos->to_array();
+		
+		$id = 't'.str_replace(' ','__',str_replace('.','__',microtime()));
+		$data['description_html'] = '<i class="icon icon-plus-circle hoverpointer" onclick="$(\'#'.$id.'\').toggle(\'fast\');$(this).toggleClass(\'icon-minus-circle\');" />&nbsp;'.$data['description_html'];
+		$data['description_html'] .= '<div id="'.$id.'" style="display: none;">';
+		foreach($lfos as $lfo)
+		{
+			$data['description_html'] .= '&nbsp;&nbsp;&nbsp;&nbsp;<a href="app.php#!orders-view_sales_order--lo_foid-'.$lfo['lo_foid'].'" onclick="core.go(this.href);">'.$lfo['lo3_order_nbr'].'</a><br />';
+		}
+		$data['description_html'] .= '</div>';
+	}
+	#core::log('data: '.print_r($data,true));
+	return $data;
+}
+
 function payments__add_standard_filters($datatable,$tab='')
 {
 	global $core,$hub_filters,$to_filters,$from_filters;

@@ -83,6 +83,9 @@ $payments->add_formatter('payment_link_formatter');
 $payments->add_formatter('payment_direction_formatter');
 $payments->add_formatter('transaction_formatter');
 $payments->add_formatter('type_formatter');
+if(lo3::is_market() || lo3::is_admin())
+	$payments->add_formatter('lfo_accordion');
+
 $payments_table = new core_datatable('transactions','payments/transaction_journal',$payments);
 
 $payments_table->add(new core_datacolumn('payment_id','Reference',true,'17%','{description_html}','{description}','{description}'));

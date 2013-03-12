@@ -47,6 +47,9 @@ $payables->add_formatter('payment_link_formatter');
 $payables->add_formatter('payment_direction_formatter');
 $payables->add_formatter('seller_specific_po_format');
 $payables->add_formatter('type_formatter');
+if(lo3::is_market() || lo3::is_admin())
+	$payables->add_formatter('lfo_accordion');
+	
 $payables_table = new core_datatable('purchase_orders','payments/purchase_orders',$payables);
 $payables_table = payments__add_standard_filters($payables_table,'receivables');
 $payables_table->add(new core_datacolumn('payable_id','Reference',true,'22%',			'{description_html}','{description}','{description}'));

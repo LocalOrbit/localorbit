@@ -38,6 +38,9 @@ $payments_owed->add_formatter('payable_info');
 $payments_owed->add_formatter('payment_link_formatter');
 $payments_owed->add_formatter('payment_direction_formatter');
 $payments_owed->add_formatter('payable_age_formatter');
+if(lo3::is_market() || lo3::is_admin())
+	$payments_owed->add_formatter('lfo_accordion');
+	
 $payments_table = new core_datatable('payables','payments/payables',$payments_owed);
 $payments_table = payments__add_standard_filters($payments_table,'payments');
 $payments_table->add(new core_datacolumn('invoice_id','Reference',true,'20%',			'{description_html}','{description}','{description}'));
