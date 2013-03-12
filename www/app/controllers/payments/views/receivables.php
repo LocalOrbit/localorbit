@@ -49,7 +49,9 @@ $invoices_table->add(new core_datacolumn('creation_date','Invoice Date',true,'12
 $invoices_table->add(new core_datacolumn('due_date','Due Date',true,'12%','{due_date}','{due_date}','{due_date}'));
 $invoices_table->add(new core_datacolumn('aging','Aging',true,'10%','{age}','{age}','{age}'));
 $invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'14%',			'{amount_due}','{amount_due}','{amount_due}'));
-$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('invoices'),'',''),false,'4%',core_ui::check_all('invoices','invoice_id'),' ',' '));
+
+if(lo3::is_admin() || lo3::is_market())
+	$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('invoices'),'',''),false,'4%',core_ui::check_all('invoices','invoice_id'),' ',' '));
 $invoices_table->columns[2]->autoformat='date-long';
 $invoices_table->columns[3]->autoformat='date-long';
 $invoices_table->sort_direction='desc';
@@ -61,10 +63,14 @@ $invoices_table->sort_direction='desc';
 	<div id="all_all_invoices">
 		<?
 		$invoices_table->render();
+		
+		if(lo3::is_admin() || lo3::is_market())
+		{
 		?>
 		<div class="pull-right" id="create_payment_form_toggler">
 			<input type="button" onclick="core.payments.makePayments('invoices');" class="btn btn-info" value="Make Payments" />
 		</div>
+		<?}?>
 		<br />&nbsp;<br />
 	</div>
 	<div id="invoices_pay_area" style="display: none;">
