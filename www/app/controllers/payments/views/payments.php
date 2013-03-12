@@ -99,10 +99,14 @@ $payments_table->sort_direction='desc';
 	<div id="all_all_payments">
 		<?
 		$payments_table->render();
+		
+		if(lo3::is_market() || lo3::is_admin())
+		{
 		?>
 		<div class="pull-right" id="create_payment_button">
 			<input type="button" onclick="core.payments.makePayments('payments');" class="btn btn-info" value="Make Payment" />
 		</div>
+		<?}?>
 	</div>
 	
 	<br />&nbsp;<br />
