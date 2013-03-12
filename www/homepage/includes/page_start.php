@@ -82,6 +82,9 @@ else
 		$.fn.datePicker.format = 'M d,y';
 		//-->
 		</script>
+		<style type="text/css" media="screen, projection">
+			@import url(//assets.zendesk.com/external/zenbox/v2.5/zenbox.css); 
+		</style>
 	</head>
 	<body>	
 		<table id="main_layout_homepage" width="100%">

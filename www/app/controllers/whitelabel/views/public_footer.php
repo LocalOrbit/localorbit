@@ -69,7 +69,7 @@ else
 </table>
 
 <br />&nbsp;<br />
-<div class="footer">&nbsp; &nbsp; &nbsp; &copy; <?=date('Y')?> | <a class="footer" style="font-size: 100%;" href="app.php#!misc-tos" onclick="core.go(this.href);">Terms of Service</a> | <a style="font-size: 100%;" class="footer" href="app.php#!misc-localorbit_privacy" onclick="core.go(this.href);">Privacy</a> | <a class="footer" href="http://localorbit.zendesk.com/forums" style="font-size: 100%;" target="_blank">Help</a></div>
+<div class="footer">&nbsp; &nbsp; &nbsp; &copy; <?=date('Y')?> | <a class="footer" style="font-size: 100%;" href="app.php#!misc-tos" onclick="core.go(this.href);">Terms of Service</a> | <a style="font-size: 100%;" class="footer" href="app.php#!misc-localorbit_privacy" onclick="core.go(this.href);">Privacy</a> | <a class="footer" href="http://myaccount.zendesk.com/account/dropboxes/20147973" onClick="script: Zenbox.show(); return false;">Help</a></div>
 <br />
 <? 
 

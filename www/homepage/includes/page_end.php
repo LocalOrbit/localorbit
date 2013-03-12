@@ -31,6 +31,21 @@
 			</tr>
 		</table>
 		
+		<script type="text/javascript" src="//assets.zendesk.com/external/zenbox/v2.5/zenbox.js"></script>
+
+		<script type="text/javascript">
+		  if (typeof(Zenbox) !== "undefined") {
+		    Zenbox.init({
+		      dropboxID:   "20147973",
+		      url:         "https://localorbit.zendesk.com",
+		      tabID:       "Support",
+		      tabColor:    "black",
+		      tabPosition: "Left",
+		      hide_tab: "true"
+		    });
+		  }
+		</script>
+		
 		<script type="text/javascript" defer="defer">
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-19817823-1']);
