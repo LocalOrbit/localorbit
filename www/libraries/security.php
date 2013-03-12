@@ -96,6 +96,11 @@ class lo3
 		global $core;
 		return ($core->session['allow_sell'] == 1);
 	}
+	
+	public static function is_buyer()
+	{
+		return (!lo3::is_admin() && !lo3::is_market() && !lo3::is_seller());
+	}
 }
 
 ?>

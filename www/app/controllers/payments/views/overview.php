@@ -57,6 +57,7 @@ foreach ($intervals as $val)
 ?>
 <div class="tabarea tab-pane active" id="paymentstabs-a<?=$core->view[0]?>">
 	<div class="row row-top-margin-buffer">
+		<? if(count($receivables_ov) > 0 ){?>
 		<div class="span4">
 			<h2>Receivables</h2>
 			<?
@@ -72,12 +73,11 @@ foreach ($intervals as $val)
 			}
 			?>
 			<div class="span4 pagination-centered">
-				<input type="button" class="btn btn-info" value="Enter Receipts" onclick="$('#paymentstabs #paymentstabs-s3').tab('show');" />
+				<input type="button" class="btn btn-info" value="Enter Receipts" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Receivables',$core->view[1]) + 1)?>').tab('show');" />
 			</div>
 		</div>
-		
+		<?}?>
 		<div class="span4">
-			<? if(count($payables_ov) > 0 ){?>
 				<h2>Payables</h2>
 				<?
 				foreach ($intervals as $key => $value)
@@ -92,9 +92,9 @@ foreach ($intervals as $val)
 				}
 				?>
 			<div class="span4 pagination-centered">
-				<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s4').tab('show');" />
+				<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Payables',$core->view[1]) + 1)?>').tab('show');" />
 			</div>
-			<?}?>
+		
 		</div>
 	</div>
 </div>

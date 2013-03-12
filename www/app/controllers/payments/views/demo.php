@@ -103,7 +103,7 @@ $tab_count = 1;
 
 if(in_array('Overview',$tabs))
 {
-	$this->overview($tab_count);
+	$this->overview($tab_count,$tabs);
 	$tab_count++;
 }
 if(in_array('Purchase Orders',$tabs))
