@@ -20,7 +20,7 @@ $edit .= '-tabautoswitch_producttabs-3';
 $this->pricing_advanced_rules()->js();
 ?>
 <form name="pricing_advanced_rules" class="form-horizontal" action="/products/popup_save_price" onsubmit="return core.submit('/products/save_price',this);">
-	<fieldset id="editPrice">
+	<fieldset id="editPricePopupForm">
 		<legend>Price Info</legend>
 		<?=core_form::input_select('Market','domain_id',$price['domain_id'],$domains,array(
 			'text_column'=>'name',
