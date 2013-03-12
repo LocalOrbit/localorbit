@@ -15,7 +15,7 @@ if(!lo3::is_admin() && !lo3::is_market() && lo3::is_seller())
 	$total_orders = core_db::col('select count(lo_oid) as mycount from lo_order where ldstat_id<>1 and org_id='.$core->session['org_id'].';','mycount');
 
 $has_pos = true;
-if(!lo3::is_admin() && !lo3::is_market() && !lo3::is_seller())
+if(!lo3::is_admin() && !lo3::is_market())
 	$has_pos = ((core_db::col('select count(lo_oid) as mycount from lo_order where payment_method=\'purchaseorder\' and org_id='.$core->session['org_id'].';','mycount') > 0));
 
 
@@ -25,7 +25,7 @@ if(lo3::is_admin() || lo3::is_market() || lo3::is_seller() || $has_pos)
 	$tabs[] = 'Purchase Orders';
 if(lo3::is_admin() || lo3::is_market() || lo3::is_seller())
 	$tabs[] = 'Receivables';
-if(lo3::is_admin() || lo3::is_market() || lo3::is_seller() || $has_pos)
+if(lo3::is_admin() || lo3::is_market() || $has_pos)
 	$tabs[] = 'Payables';
 $tabs[] = 'Transaction Journal';
 if(lo3::is_admin())
