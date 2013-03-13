@@ -137,6 +137,6 @@ Total: <strong><?=core_format::price($total)?></strong>
 </div>
 <div class="row">&nbsp;</div>
 <?
-$this->template_footer($multi_view);
+$this->template_footer($multi_view, $org["domain_id"]);
 $this->template_pageend($multi_view);
 ?>

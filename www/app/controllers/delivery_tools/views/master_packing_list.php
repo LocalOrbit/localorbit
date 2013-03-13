@@ -84,7 +84,7 @@ $this->lot_details();
 	<? $style = (!$style);}?>
 </table>
 	<?
-	$this->template_footer($multi_view);
+	$this->template_footer($multi_view, $org["domain_id"]);
 }
 $this->template_pageend($multi_view);
 ?>

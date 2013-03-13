@@ -5,14 +5,12 @@ $orgs = core::model('lo_order_deliveries')->get_sellers_for_deliveries(explode('
 $first = true;
 foreach($orgs as $org)
 {
-      if (!$first) {
-      ?>
-<div class="page-break"/>
-<?
-   }
+	if (!$first) {
+		echo '<div class="page-break"/>';
+	}
 	$core->data['org_id'] = $org;
 	$this->pick_list();
-   $first = false;
+	$first = false;
 }
 $this->template_pageend();
 ?>

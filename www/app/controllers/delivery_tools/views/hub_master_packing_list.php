@@ -107,7 +107,7 @@ $this->lot_details();
 		<?
 	}
 	echo('</tbody></table></div>');
-	$this->template_footer(false);
+	$this->template_footer(false, $org["domain_id"]);
 
 }
 ?>

@@ -136,6 +136,6 @@ $this->lot_details();
 </table>
 </div>
 <?
-$this->template_footer($multi_view);
+$this->template_footer($multi_view, $org["domain_id"]);
 $this->template_pageend($multi_view);
 ?>

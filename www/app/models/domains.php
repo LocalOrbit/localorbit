@@ -144,7 +144,15 @@ class core_model_domains extends core_model_base_domains
 		}
 		return parent::loadrow_by_hostname($hostname);
 	}
-
+	
+	function get_domain_info($domain_id) {
+		global $core;
+		$sql = 'select secondary_contact_email, secondary_contact_phone
+			from domains
+			where domain_id = '.$domain_id;
+		return new core_collection($sql);
+	}
+	
 	function get_sellers($store_id=0)
 	{
 		global $core;
