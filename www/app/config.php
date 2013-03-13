@@ -17,12 +17,12 @@ $core->config['mailer'] = array(
 
 $core->config['db'] = array(
 	'type'=>'mysql',
-	#'hostname'=>'app-db.cbuaulnl9t1m.us-west-2.rds.amazonaws.com',
-	'hostname'=>'127.0.0.1',
+	'hostname'=>'localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com',
 	'username'=>'localorb_www',
 	'password'=>'l0cal1sdab3st',
 	'database'=>'localorb_www_production',
 );
+
 
 $core->config['ach'] = array(
 	'SSS'=>'RPP',
@@ -145,7 +145,8 @@ if($_SERVER['HTTP_HOST'] == 'qa.localorb.it' || strpos(__FILE__,'/qa/') > 0)
 	$core->config['session_domain']   = '.localorb.it';
 	$core->config['session_name']    .= 'qa';
 	$core->config['db']['database']   = 'localorb_www_qa';
-
+	$core->config['db']['hostname'] = 'app-db.cbuaulnl9t1m.us-west-2.rds.amazonaws.com';
+	
 	$core->config['payments']['paypal'] = array(
 		'password'=>'1331137290',
 		'username'=>'julie_1331137249_biz_api1.localorb.it',
@@ -200,6 +201,7 @@ if($_SERVER['HTTP_HOST'] == 'newui.localorb.it' || strpos(__FILE__,'/newui/') > 
 	$core->config['session_domain']   = '.localorb.it';
 	$core->config['session_name']    .= 'newui';
 	$core->config['db']['database']   = 'localorb_www_newui';
+	$core->config['db']['hostname']   = 'localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com';	
 
 	$core->config['payments']['paypal'] = array(
 		'password'=>'1331153423',
@@ -221,7 +223,7 @@ if($_SERVER['HTTP_HOST'] == 'dev.localorb.it' || strpos(__FILE__,'/dev/') > 0 ||
 	$core->config['session_domain']   = '.localorb.it';
 	$core->config['session_name']    .= 'dev';
 	$core->config['db']['database']   = 'localorb_www_dev';
-	$core->config['db']['hostname']   = 'localhost';
+	$core->config['db']['hostname']   = '127.0.0.1';
 	$core->config['db']['username']   = 'localorb_www';
 	$core->config['db']['password']   = 'localorb_www_dev';
 	$core->config['payments']['paypal'] = array(
