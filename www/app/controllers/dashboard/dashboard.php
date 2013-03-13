@@ -159,6 +159,7 @@ class core_controller_dashboard extends core_controller
 		global $core;
 		#echo('<pre>');
 		#print_r($core->session);
+		lo3::require_login();
 		$this->dashboard_note();
 		if(lo3::is_admin())
 		{

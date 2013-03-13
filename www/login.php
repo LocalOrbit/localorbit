@@ -175,12 +175,17 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	
 							<label style="display: none;">Password</label>
 							<input type="password" tabindex="2" class="text" name="password" value="" placeholder="Password" />
-	
-							<input type="submit" value="Log In" tabindex="3" class="btn btn-primary button_primary" />
+							<div class="control-group">
+								<label class="control-label" for="remember_me" style="width:9px;"></label>
+								<div class="controls pull-left">
+									<input type="checkbox" id="remember_me" name="remember_me" checked="checked"><span class="help-inline">Remember Me</span>
+								</div>
+							</div>
+							<input type="submit" value="Log In" tabindex="4" class="btn btn-primary button_primary" />
 							<input type="hidden" name="postauth_url" value="" />
 							<ul>
 								<li id="requestAccountLink" style="display: none;"><a href="app.php#!registration-form" tabindex="5" /><strong>Request an account</strong></a></li>
-								<li><a href="app.php#!auth-forgot_password" tabindex="4" />Having trouble logging in?</a></li>
+								<li><a href="app.php#!auth-forgot_password" tabindex="6" />Having trouble logging in?</a></li>
 							</ul>
 	
 						</form>

@@ -87,6 +87,8 @@ $core->config['session_name'] = 'localorbit';
 $core->config['session_time'] = 2073600;
 $core->config['registration_secret_key'] = 'hey localorbit why are you so cool';
 $core->config['notification_email'] = 'service@localorb.it';
+$core->config['cookie_auth_command'] = 'auth/cookie_auth';
+
 
 # use this hostname for default settings:
 $core->config['default_hostname'] = 'annarbor-mi.localorb.it';

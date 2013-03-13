@@ -22,6 +22,20 @@ class core_controller_auth extends core_controller
 		core::deinit();
 	}
 	
+	function cookie_auth($user_id = 0)
+	{
+		global $core;
+		
+		core::log('attempting cooking auth for user '.$user_id);
+		
+		$core->data['entity_id'] = $user_id;
+		$this->loginas(true,false);
+		
+		
+		
+		#core::deinit();
+	}
+	
 	function rules()
 	{
 		global $core;
@@ -99,6 +113,9 @@ class core_controller_auth extends core_controller
 		}
 		else
 		{
+			
+		
+
 			$core->session['org_id']     = $user['org_id'];
 			$core->session['login_note_viewed']     = $user['login_note_viewed'];
 			$core->session['is_active']  = $user['is_active'];
@@ -128,6 +145,11 @@ class core_controller_auth extends core_controller
 			$core->session['org_purchase_order_count'] = $user['purchase_order_count'];
 			
 			
+			if($core->data['remember_me'] == 'on')
+			{
+				core_session::write_id_cookie();
+			}
+	
 			
 			
 			# figure out what the final hostname should be
@@ -214,9 +236,12 @@ class core_controller_auth extends core_controller
 		#core::process_command('auth/form',false);
 	}
 	
-	function loginas()
+	function loginas($force=false,$do_redirect=true)
 	{
 		global $core;
+		
+		if($force == false)
+			lo3::require_market();
 		
 		core::log('attempting admin login as '.$core->data['entity_id']);
 		$user = core::model('customer_entity');
@@ -294,23 +319,28 @@ class core_controller_auth extends core_controller
 		) = core::model('customer_entity')->get_domain_permissions( $user['org_id']);
 		
 		
-		core::model('events')->add_record('Login');
+		if($do_redirect)
+		{
+			core::model('events')->add_record('Login');
+			
+			if(
+				in_array($core->session['home_domain_id'],$core->session['domains_by_orgtype_id'][3]) && 
+				$core->session['is_active'] == 1 && 
+				$core->session['org_is_active'] == 1 && 
+				$core->session['allow_sell'] == 0
+			)
+			{
+				core::js('core.navState={};location.href=\'https://'.$core->session['hostname'].'/'.$core->config['app_page'].'#!catalog-shop--show_news-yes\';');
+			}
+			else
+			{
+				core::js('core.navState={};location.href=\'https://'.$core->session['hostname'].'/'.$core->config['app_page'].'#!dashboard-home\';');
+			}
 		
-		if(
-			in_array($core->session['home_domain_id'],$core->session['domains_by_orgtype_id'][3]) && 
-			$core->session['is_active'] == 1 && 
-			$core->session['org_is_active'] == 1 && 
-			$core->session['allow_sell'] == 0
-		)
-		{
-			core::js('core.navState={};location.href=\'https://'.$core->session['hostname'].'/'.$core->config['app_page'].'#!catalog-shop--show_news-yes\';');
+			core::deinit();
 		}
-		else
-		{
-			core::js('core.navState={};location.href=\'https://'.$core->session['hostname'].'/'.$core->config['app_page'].'#!dashboard-home\';');
-		}
-	
-		core::deinit();
+		
+		return true;
 	}
 	
 	function zendesk_work()

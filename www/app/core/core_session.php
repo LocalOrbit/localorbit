@@ -112,6 +112,7 @@ class core_session
 	public static function write_id_cookie()
 	{
 		global $core;
+		
 		# generate teh new cookie text. user id must be part of the hash
 		$random_num	= rand(0,1000000);
 		#core::log('random number is '.$random_num);
@@ -127,15 +128,15 @@ class core_session
 		#core::log('cookies are currently '.print_r($_COOKIE,true));
 		#core::log('all config: '.print_r($core->paths,true));
 		#unset($_COOKIE['core-user-id']);
-		setcookie('core-user-id',$key,$core->config['time'] * 2,'',$core->paths['domain']);
-		setcookie('core-user-id',$key);
+		setcookie('core-user-id',$key,$core->config['time'] * 2,'/',$core->paths['domain']);
+		#setcookie('core-user-id',$key);
 		#core::log('cookies are now '.print_r($_COOKIE,true));
 	}
 	
 	public static function handle_id_cookie($force_set=false)
 	{
 		global $core;
-		#core::log('id cookie handler called');
+		core::log('id cookie handler called');
 		
 		# if there's already a user id cookie, examine it and use it if necessary
 		if(isset($_COOKIE['core-user-id']))
@@ -144,7 +145,7 @@ class core_session
 			$cookie = explode(':',$_COOKIE['core-user-id']);
 			
 			# we only need to try to auth if the cookie user id does NOT equal the current user id
-			if($cookie[0] == $core->session['user_id'])
+			if($cookie[0] != $core->session['user_id'] && $core->session['user_id']==0 && $cookie[0] > 0)
 			{
 				core::log('attempting to use cookie to login: '.$core->session['user_id'].'/'.$cookie[0]);
 				
@@ -162,7 +163,7 @@ class core_session
 					# see if there is a cookie_auth_command defined. if there is, use it
 					if($core->config['cookie_auth_command'] != '')
 					{
-						core::process_command($core->config['cookie_auth_command'],$cookie[0]);
+						core::process_command($core->config['cookie_auth_command'],false,$cookie[0]);
 					}
 					# otherwise just set the user_id and move on
 					else
@@ -173,14 +174,16 @@ class core_session
 				else
 				{
 					core::log('this cookie is NOT a valid login cookie for user '.$cookie[0].', reissuing');
-					core_session::write_id_cookie();
+					if($core->config['cookie_auth_autowrite'] == true)
+						core_session::write_id_cookie();
 				}
 				
 			}
 		} 
 		else
 		{
-			core_session::write_id_cookie();
+			if($core->config['cookie_auth_autowrite'] == true)
+				core_session::write_id_cookie();
 		}
 	}
 	

@@ -54,6 +54,7 @@ class core
 			'current_navstate'=>array(),
 			
 			'cookie_auth_command'=>'',
+			'cookie_auth_autowrite'=>false,
 			
 			'title_prefix'=>'',
 			'title_suffix'=>'',
