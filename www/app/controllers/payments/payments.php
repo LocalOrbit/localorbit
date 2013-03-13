@@ -631,7 +631,7 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->filter_html .= '</div>';
 	}
 	
-	if(in_array($datatable->name,array('transactions','systemwide','payables')) && (lo3::is_admin() || lo3::is_market() || lo3::is_seller()))
+	if(in_array($datatable->name,array('transactions','systemwide','payables','receivables')) && (lo3::is_admin() || lo3::is_market() || lo3::is_seller()))
 	{
 		$datatable->add_filter(new core_datatable_filter('payable_type'));
 		
