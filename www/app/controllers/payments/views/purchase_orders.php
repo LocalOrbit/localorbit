@@ -3,6 +3,7 @@ global $hub_filters;
 
 $payables = core::model('v_payables')
 	->collection()
+	->filter('payable_type','=','buyer order')
 	->filter('amount_due','>',0)
 	->filter('is_invoiced','=',0);
 
