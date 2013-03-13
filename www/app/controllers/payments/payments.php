@@ -573,12 +573,25 @@ function payments__add_standard_filters($datatable,$tab='')
 	#		1) user is an admin
 	#		2) user is a market manager who manages more than 1 market
 	#		3) user is a seller who is assigned to sell on more than 1 market
+	
+	# if the user is a seller, we need to know how many domains they sell on
+	$sell_domain_count = 1;
+	if(lo3::is_seller())
+	{
+		$sell_domain_count = core_db::col('select count(distinct sell_on_domain_id) as mycount from organization_cross_sells where org_id='.$core->session['org_id'],'mycount');
+		#echo('sell domain count: '.$sell_domain_count);
+	}
+	
 	if(
 		lo3::is_admin()
 		
 		||
 		
 		(lo3::is_market() && count($core->session['domains_by_orgtype_id'][2]) > 1)
+		
+		||
+		
+		(lo3::is_seller() && $sell_domain_count > 1)
 	)
 	{
 		$datatable->add_filter(new core_datatable_filter('from_domain_id'));

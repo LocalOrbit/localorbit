@@ -84,8 +84,17 @@ else if(lo3::is_market())
 		->sort('name');
 	#$tabs[] = 'Receivables';
 }
-else
+else if(lo3::is_seller())
 {
+
+	$hub_filters = new core_collection('
+		select domain_id,name
+		from domains
+		where domain_id in (select domain_id from organizations_to_domains where org_id='.$core->session['org_id'].')
+		or domain_id in (select sell_on_domain_id from organization_cross_sells where org_id='.$core->session['org_id'].')
+	');
+	$hub_filters->sort('name');
+
 	#$tabs = array('Overview', 'Payments Owed', 'Transaction Journal');
 }
 
