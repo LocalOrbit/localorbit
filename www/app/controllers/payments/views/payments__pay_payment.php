@@ -4,12 +4,15 @@ global $core;
 core::log(print_r($core->data,true));
 
 $invoices = core::model('v_invoices')
+	->add_custom_field('DATEDIFF(CURRENT_TIMESTAMP,due_date) as age')
 	->collection()
+	->filter('amount_due','>',0)
 	->filter('invoice_id','in',explode(',',$core->data['checked_invoices']))
 	->sort('concat_ws(\'-\',to_org_id,from_org_id)');
 $invoices->add_formatter('payable_info');
 $invoices->add_formatter('payment_link_formatter');
 $invoices->add_formatter('payment_direction_formatter');	
+$invoices->add_formatter('payments__age_formatter');
 
 $cur_group = '';
 $group_total = 0;
@@ -20,8 +23,10 @@ core::js('core.payments.invoiceGroups={};');
 $button_label = (lo3::is_market() || lo3::is_admin())?'save payments':'make payment';
 
 
+$counter = 0;
 foreach($invoices as $invoice)
 {
+	$counter++;
 	core::log('building UI for invoice '.$invoice['invoice_id']);
 	if($invoice['to_org_id'].'_'.$invoice['from_org_id'] != $cur_group)
 	{
@@ -36,7 +41,8 @@ foreach($invoices as $invoice)
 			echo('</table><br />&nbsp;<br /><hr /><br />&nbsp;<br />');
 		}
 				
-		$cur_group = $invoice['to_org_id'].'_'.$invoice['from_org_id'];
+		# remove the counter append in order to re-enable invoice grouping
+		$cur_group = $invoice['to_org_id'].'_'.$invoice['from_org_id'].'__'.$counter;
 		$group_total = 0;
 		$inv_counter = 0;
 		
@@ -95,13 +101,14 @@ foreach($invoices as $invoice)
 		<?=core_form::input_hidden('payment_method_'.$cur_group,3)?>
 	
 		<table class="dt span12">
-			<?=core_form::column_widths('22%','32%','14%','14%','15%')?>
+			<?=core_form::column_widths('20%','30%','12%','12%','13%','13%')?>
 			<tr class="dt">
+				<th class="dt">Reference</th>
 				<th class="dt">Description</th>
-				<th class="dt">Payment Info</th>
-				<th class="dt dt_sortable dt_sort_asc">Date</th>
+				<th class="dt">Invoice Date</th>
+				<th class="dt">Due Date</th>
+				<th class="dt">Aging</th>
 				<th class="dt">Amount</th>
-				<th class="dt">Applied Amount</th>
 			</tr>
 		<?
 		
@@ -112,13 +119,14 @@ foreach($invoices as $invoice)
 
 			<tr class="dt">
 				<td class="dt">
-					<b>I-<?=$invoice['invoice_id']?></b><br /><?=$invoice['description_html']?>
+					<?=$invoice['description_html']?>
 				</td>
 				<td class="dt"><?=$invoice['direction_info']?></td>
-				<td class="dt"><?=core_format::date($invoice['due_date'],'short')?></td></td>
-				<td class="dt"><?=core_format::price($invoice['amount_due'])?></td>
+				<td class="dt"><?=core_format::date($invoice['creation_date'],'long')?></td></td>
+				<td class="dt"><?=core_format::date($invoice['due_date'],'long')?></td></td>
+				<td class="dt"><?=$invoice['age']?></td></td>
 				<td class="dt">
-					<input type="text" name="<?=$core->data['tab_name']?>_invoice_<?=$invoice['invoice_id']?>" style="width: 120px;" />
+					<input type="text" class="pull-left" name="<?=$core->data['tab_name']?>_invoice_<?=$invoice['invoice_id']?>" style="width: 120px;" />
 					<input type="hidden" name="<?=$core->data['tab_name']?>_invoice_<?=$invoice['invoice_id']?>_amount_due" value="<?=$invoice['amount_due']?>" />
 				</td>
 			</tr>
