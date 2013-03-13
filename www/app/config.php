@@ -110,6 +110,7 @@ $core->config['includes'][] = '/../../libraries/formatter.php';
 
 # misc dat formatting
 $core->config['formats']['dates']['long'] = 'M j, Y g:i a';
+$core->config['formats']['dates']['long-wrapped'] = 'M j, Y<\b\r />g:i a';
 $core->config['formats']['dates']['short'] = 'M j, Y';
 $core->config['formats']['dates']['jsshort'] = 'M j, y';
 $core->config['formats']['dates']['time'] = 'g:i a';

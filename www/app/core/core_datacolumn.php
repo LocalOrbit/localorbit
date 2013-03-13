@@ -89,6 +89,13 @@ class core_datacolumn
 				case 'date-long':
 					$data[$this->dbname] = core_format::date($data[$this->dbname],'long');
 					break;
+				case 'date-long-wrapped':
+					if($format == 'html')
+						$data[$this->dbname] = core_format::date($data[$this->dbname],'long-wrapped');
+					else
+						$data[$this->dbname] = core_format::date($data[$this->dbname],'long');
+						
+					break;
 				case 'date-short':
 					$data[$this->dbname] = core_format::date($data[$this->dbname],'short');
 					
