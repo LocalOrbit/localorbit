@@ -58,7 +58,7 @@ foreach($invoices as $invoice)
 			5=>'Cash',
 			4=>'Check',
 		);
-		if($invoice['from_org_id'] == 1 ||  $invoice['to_org_id'] == 1)
+		if($core->data['tab_name'] != 'invoices' && ($invoice['from_org_id'] == 1 ||  $invoice['to_org_id'] == 1))
 		{
 			$allow_ach = true;
 			$methods[3] = 'ACH';
@@ -77,7 +77,7 @@ foreach($invoices as $invoice)
 			# which account the money is coming from
 			
 			
-			if($invoice['from_org_id'] == 1 ||  $invoice['to_org_id'] == 1)
+			if($core->data['tab_name'] != 'invoices' && ($invoice['from_org_id'] == 1 ||  $invoice['to_org_id'] == 1))
 			{
 				$org_id = ($invoice['from_org_id'] == 1)?$invoice['to_org_id']:$invoice['from_org_id'];
 				$methods = core::model('organization_payment_methods')
