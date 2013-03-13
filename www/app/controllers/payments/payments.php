@@ -413,6 +413,11 @@ function payment_link_formatter($data)
 				$data['description'] .= $info_item[0];
 				$data['description_html'] .= $info_item[0];
 				break;
+			case 'lo fees':
+				$data['description'] .= $info_item[0];
+				$data['description_html'] .= '<a href="app.php#!orders-view_order--lo_oid='.$info_item[2];
+				$data['description_html'] .= '">'.$info_item[0].'</a>'; 
+				break;
 		}
 	}
 	return $data;
@@ -505,7 +510,7 @@ function lfo_accordion($data)
 	foreach($lines as $line)
 	{
 		$line = explode('|',$line);
-		if($line[1] == 'buyer order')
+		if($line[1] == 'buyer order' || $line[1] == 'lo fees')
 			$lo_oids[] = $line[2];
 	}
 	
