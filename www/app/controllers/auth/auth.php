@@ -240,8 +240,10 @@ class core_controller_auth extends core_controller
 	{
 		global $core;
 		
+		if(is_null($force))
+			$force = false;
 		if($force == false)
-			lo3::require_market();
+			lo3::require_orgtype('market');
 		
 		core::log('attempting admin login as '.$core->data['entity_id']);
 		$user = core::model('customer_entity');
@@ -319,7 +321,7 @@ class core_controller_auth extends core_controller
 		) = core::model('customer_entity')->get_domain_permissions( $user['org_id']);
 		
 		
-		if($do_redirect)
+		if($do_redirect !== false)
 		{
 			core::model('events')->add_record('Login');
 			
