@@ -33,12 +33,11 @@
 
 		<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
 		
-		
 		<ul class="nav">
 			<li class="dropdown">
 				<a id="products-delivery" href="#" class="dropdown-toggle" data-toggle="dropdown">
 					<i class="icon-signup icon-large"></i>
-					Products & Delivery
+					Products &amp; Delivery
 					<b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
@@ -118,7 +117,7 @@
 			<li class="dropdown">
 				<a id="products-delivery" href="#" class="dropdown-toggle" data-toggle="dropdown">
 					<i class="icon-signup icon-large"></i>
-					Orders & Delivery
+					Orders &amp; Delivery
 					<b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
@@ -195,7 +194,7 @@
 				</ul>
 			</li>
 		</ul>
-		<? if(lo3::is_customer() && !lo3::is_seller()){1?>
+		<? if(lo3::is_buyer() && (lo3::is_org_payment_purchase_order_allowed() || lo3::does_org_have_purchase_order_history())){ ?>
 			<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
 		<?}?>
 		</div> <!-- /.nav-collapse-->

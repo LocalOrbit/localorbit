@@ -101,6 +101,30 @@ class lo3
 	{
 		return (!lo3::is_admin() && !lo3::is_market() && !lo3::is_seller());
 	}
+	
+	public static function is_org_payment_purchase_order_allowed()
+	{
+		global $core;
+		return ($core->session['org_payment_allow_purchaseorder'] == 1);
+	}
+	
+	public static function is_org_payment_paypal_allowed()
+	{
+		global $core;
+		return ($core->session['org_payment_allow_paypal'] == 1);
+	}
+	
+	public static function is_org_payment_ach_allowed()
+	{
+		global $core;
+		return ($core->session['org_payment_allow_ach'] == 1);
+	}
+	
+	public static function does_org_have_purchase_order_history()
+	{
+		global $core;
+		return ($core->session['org_purchase_order_count'] > 0);
+	}
 }
 
 ?>

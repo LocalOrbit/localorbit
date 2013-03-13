@@ -39,13 +39,19 @@ class core_model_customer_entity extends core_model_base_customer_entity
 			o.is_enabled as org_is_enabled,otd.orgtype_id,
 			d.name as hub_name,d.detailed_name as hub_detailed_name,
 			tz.offset_seconds as offset_seconds,
-			d.do_daylight_savings as do_daylight_savings
+			d.do_daylight_savings as do_daylight_savings,
+			o.payment_allow_purchaseorder as payment_allow_purchase_order,
+			o.payment_allow_paypal as payment_allow_paypal,
+			o.payment_allow_ach as payment_allow_ach,
+			count(distinct oh.lo_oid) as purchase_order_count
+			
 
 			from customer_entity ce
 			inner join organizations o on (ce.org_id=o.org_id)
 			inner join organizations_to_domains otd on (o.org_id=otd.org_id)
 			inner join domains d on (d.domain_id=otd.domain_id and otd.is_home=1)
 			inner join timezones tz using (tz_id)
+			inner join lo_order oh on (ce.org_id=oh.org_id and oh.payment_method = \'purchaseorder\')
 			where trim(lower(ce.email))=lower(\''.mysql_escape_string($username).'\')
 			and ce.is_deleted=0
 			and o.is_deleted=0

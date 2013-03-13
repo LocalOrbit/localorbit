@@ -122,7 +122,14 @@ class core_controller_auth extends core_controller
 			$core->session['all_domains'] = $user['all_domains'];
 			$core->session['login_note_viewed'] = $user['login_note_viewed'];
 			$core->session['domains_by_orgtype_id'] = $user['domains_by_orgtype_id'];
-
+			$core->session['org_payment_allow_purchaseorder'] = $user['payment_allow_purchaseorder'];
+			$core->session['org_payment_allow_paypal'] = $user['payment_allow_paypal'];
+			$core->session['org_payment_allow_ach'] = $user['payment_allow_ach'];
+			$core->session['org_purchase_order_count'] = $user['purchase_order_count'];
+			
+			
+			
+			
 			# figure out what the final hostname should be
 			$final_hostname = $core->session['hostname'];
 			
@@ -209,7 +216,7 @@ class core_controller_auth extends core_controller
 	{
 		global $core;
 		
-		core::log('attempting admin login as '.$core->data['user_id']);
+		core::log('attempting admin login as '.$core->data['entity_id']);
 		$user = core::model('customer_entity');
 
 		$user->autojoin(
@@ -220,7 +227,10 @@ class core_controller_auth extends core_controller
 				'organizations.name as org_name',
 				'organizations.is_active as org_is_active',
 				'organizations.buyer_type',
-				'organizations.allow_sell'
+				'organizations.allow_sell',
+				'organizations.payment_allow_purchaseorder',
+				'organizations.payment_allow_paypal',
+				'organizations.payment_allow_ach'
 			)
 		);
 		$user->autojoin(
@@ -240,6 +250,12 @@ class core_controller_auth extends core_controller
 			'timezones',
 			'(domains.tz_id=timezones.tz_id)',
 			array('offset_seconds','tz_name')
+		);
+		$user->autojoin(
+				'left',
+				'lo_order',
+				'(customer_entity.org_id=lo_order.org_id and lo_order.payment_method = \'purchaseorder\')',
+				array('count(distinct lo_order.lo_oid) as purchase_order_count')
 		);
 		$user->load($core->data['entity_id']);
 		
@@ -262,6 +278,10 @@ class core_controller_auth extends core_controller
 		$core->session['tz_name'] = $user['tz_name'];
 		$core->session['org_is_active'] = $user['org_is_active'];
 		$core->session['login_note_viewed'] = $user['login_note_viewed'];
+		$core->session['org_payment_allow_purchaseorder'] = $user['payment_allow_purchaseorder'];
+		$core->session['org_payment_allow_paypal'] = $user['payment_allow_paypal'];
+		$core->session['org_payment_allow_ach'] = $user['payment_allow_ach'];
+		$core->session['org_purchase_order_count'] = $user['purchase_order_count'];
 		
 		$core->config['navstate'] = array();
 	
