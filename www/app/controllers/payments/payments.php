@@ -199,7 +199,7 @@ class core_controller_payments extends core_controller
 		$this->reload_all_tabs();
 		
 		core::js("$('#receivables_create_area,#all_receivables').toggle();");
-		#core_datatable::js_reload('receivables');
+		core_datatable::js_reload('purchase_orders');
 		core_ui::notification('invoices created');
 		
 	}
