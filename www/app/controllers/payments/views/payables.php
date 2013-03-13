@@ -37,7 +37,7 @@ $payments_table->add(new core_datacolumn('amount_due','Amount Due',true,'10%',		
 $payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','invoice_id'),' ',' '));
 
 
-$payments_table->columns[2]->autoformat='date-long';
+$payments_table->columns[2]->autoformat='date-long-wrapped';
 $payments_table->columns[3]->autoformat='date-short';
 
 #$payments_table->columns[3]->autoformat='price';

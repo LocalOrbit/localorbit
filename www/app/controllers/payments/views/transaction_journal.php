@@ -70,7 +70,7 @@ $payments_table->add(new core_datacolumn('payment_method','Method',false,'15%','
 
 $payments_table->add(new core_datacolumn('amount','Amount',true,'10%','{formatted_amount}','{formatted_amount}','{formatted_amount}'));
 
-$payments_table->columns[2]->autoformat='date-long';
+$payments_table->columns[2]->autoformat='date-long-wrapped';
 $payments_table->sort_column = 0;
 $payments_table->sort_direction = 'desc';
 $payments_table = payments__add_standard_filters($payments_table,'transactionjournal');

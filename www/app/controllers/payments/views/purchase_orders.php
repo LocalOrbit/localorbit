@@ -51,7 +51,7 @@ $payables_table->add(new core_datacolumn(null,'Description',false,'48%','{direct
 $payables_table->add(new core_datacolumn('payable_amount','Amount',true,'14%',							'{amount_due}','{amount_due}','{amount_due}'));
 if(lo3::is_market() || lo3::is_admin())
 	$payables_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('receivables'),'',''),false,'4%',core_ui::check_all('receivables','payable_id'),' ',' '));
-$payables_table->columns[2]->autoformat='date-long';
+$payables_table->columns[2]->autoformat='date-long-wrapped';
 #$payables_table->columns[3]->autoformat='price';
 $payables_table->sort_direction='desc';
 
