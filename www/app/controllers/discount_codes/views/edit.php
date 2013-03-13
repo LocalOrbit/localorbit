@@ -67,24 +67,24 @@ echo(
 					'value_column'=>'prod_id',
 					'select_style'=>'width:300px;',
 				)),
-				core_form::input_select('Restrict to Buyer Org','restrict_to_buyer_org_id',$data,$buyer_restrict,array(
+				core_form::input_select('Restrict to Buyer Organization','restrict_to_buyer_org_id',$data,$buyer_restrict,array(
 					'default_show'=>true,
 					'default_text'=>'All Buyers',
 					'text_column'=>'full_org_name',
 					'value_column'=>'org_id',
 					'select_style'=>'width:300px;',
 				)),
-				core_form::input_select('Restrict to Seller Org','restrict_to_seller_org_id',$data,$seller_restrict,array(
+				core_form::input_select('Restrict to Seller Organization','restrict_to_seller_org_id',$data,$seller_restrict,array(
 					'default_show'=>true,
 					'default_text'=>'All Sellers',
 					'text_column'=>'full_org_name',
 					'value_column'=>'org_id',
 					'select_style'=>'width:300px;',
 				)),
-				core_form::input_text('Minimum order total','min_order',lo3_display_negative($data['min_order']),array('sublabel'=>'0 for no min')),
-				core_form::input_text('Maximum order total','max_order',lo3_display_negative($data['max_order']),array('sublabel'=>'0 for no min')),
-				core_form::input_text('Max global uses','nbr_uses_global',$data,array('sublabel'=>'0 for no min')),
-				core_form::input_text('Max per org uses','nbr_uses_org',$data,array('sublabel'=>'0 for no min'))
+				core_form::input_text('Minimum order total','min_order',lo3_display_negative($data['min_order']),array('sublabel'=>'Enter 0 for no minimim purchase')),
+				core_form::input_text('Maximum order total','max_order',lo3_display_negative($data['max_order']),array('sublabel'=>'Enter 0 for no minimim purchase')),
+				core_form::input_text('Maximum global uses','nbr_uses_global',$data,array('sublabel'=>'Enter 0 for no minimim purchase')),
+				core_form::input_text('Maximum per org uses','nbr_uses_org',$data,array('sublabel'=>'Enter 0 for no minimim purchase'))
 			)
 		),
 		core_form::input_hidden('disc_id',$data),

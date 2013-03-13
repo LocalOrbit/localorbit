@@ -73,7 +73,7 @@ echo(
 				core_form::value('Organization','<a href="#!organizations-edit--org_id-'.$org['org_id'].'">'.$org['name'].'</a>'),
 				core_form::input_text('First Name','first_name',$data,array('required'=>true)),
 				core_form::input_text('Last Name','last_name',$data,array('required'=>true)),
-				core_form::input_text('E-mail','email',$data,array('required'=>true))
+				core_form::input_text('Email','email',$data,array('required'=>true))
 			),'active'
 		),
 		core_form::tab('usertabs',

@@ -14,7 +14,7 @@ $data = core::model('events')->load();
 <?=core_form::value('Event Type',$data['event_type'])?>
 <?=core_form::value('Organization','<a href="#!organizations-edit--org_id-'.$data['org_id'].'">'.$data['org_name'].'</a>')?>
 <?=core_form::value('User','<a href="#!users-edit--entity_id-'.$data['customer_id'].'">'.$data['first_name'].' '.$data['last_name'].'</a>')?>
-<?=core_form::value('E-mail','<a href="mailTo:'.$data['email'].'">'.$data['email'].'</a>')?>
+<?=core_form::value('Email','<a href="mailTo:'.$data['email'].'">'.$data['email'].'</a>')?>
 <?=core_form::value('Domain','<a href="#!market-edit--domain_id-'.$data['domain_id'].'">'.$data['domain_name'].'</a>')?>
 <?=core_form::value('IP Address',$data['ip_address'])?>
 <?=core_form::value('Date',core_format::date($data['creation_date'],'long'))?>

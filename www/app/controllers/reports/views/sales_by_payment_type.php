@@ -132,7 +132,7 @@ if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 		$hubs,
 		'domain_id',
 		'name',
-		'Show from all hubs',
+		'Show from all markets',
 		'width: 250px;'
 	);
 }

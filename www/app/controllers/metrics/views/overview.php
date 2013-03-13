@@ -40,10 +40,10 @@ $domains = core::model('domains')->collection()->filter('domain_id','not in',arr
 					<td class="value"><?=core_ui::date_picker('end_date',$values['end_date'])?></td>
 				</tr>
 				<tr>
-					<td class="label">Hub:</td>
+					<td class="label">Market:</td>
 					<td class="value">
 						<select name="domain_id">
-							<option value="0">All Hubs</option>
+							<option value="0">All Markets</option>
 							<?=core_ui::options($domains,$values['domain_id'],'domain_id','name')?>
 						</select>
 					</td>

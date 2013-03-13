@@ -21,7 +21,7 @@ core::js('window.setTimeout("$(\'#notification_area\').fadeOut();",5000);');
 				</select>
 				<br />
 				<select>
-					<option>All Hubs</option>
+					<option>All Markets</option>
 					<option>Only Springfield</option>
 					<option>Only Test of Michigan</option>
 					<option>Only Benzie</option>

@@ -36,7 +36,7 @@ echo(
 				(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)?
 					core_form::input_select('Hub','domain_id',$data,$hubs,array(
 						'default_show'=>true,
-						'default_text'=>'Select a Hub',
+						'default_text'=>'Select a Market',
 						'text_column'=>'name',
 						'value_column'=>'domain_id',
 					))

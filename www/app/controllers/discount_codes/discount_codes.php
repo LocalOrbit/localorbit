@@ -40,7 +40,7 @@ class core_controller_discount_codes extends core_controller
 			$code['domain_id'] = $core->session['domains_by_orgtype_id'][2][0];
 		}
 		$code->save('discForm');		
-		core_ui::notification($core->i18n('messages:generic_saved','discount code'),false,($core->data['do_redirect'] != 1));
+		core_ui::notification($core->i18n('messages:generic_saved','Discount Code'),false,($core->data['do_redirect'] != 1));
 		if($core->data['do_redirect'] == 1)
 			core::redirect('discount_codes','list');
 	}

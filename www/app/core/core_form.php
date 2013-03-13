@@ -313,9 +313,9 @@ class core_form
 		$out .= (isset($options['img_style']) && $options['img_style'] !='')?' style="'.$options['img_style'].'"':'';
 		$out .= ' /><br />';
 		$out .= '<input type="file" id="new_image" name="new_image" value="" />';
-		$out .= '<input type="button" class="btn btn-info" value="Upload" onclick="' . $onclick_js . '"/>&nbsp;';
+		$out .= '<input type="button" class="btn" value="Upload File" onclick="' . $onclick_js . '"/>&nbsp;';
 		//core.ui.uploadFrame(document.prodForm,'uploadArea','product.refreshImage(<?=intval($images[0]['pimg_id']) ,{params});','app/products/save_image','new_image');" />'
-		$out .= '<input type="button" class="btn btn-warning" id="removenlimage" value="Remove Image" onclick="'.$options['remove_js'].'" />';
+		$out .= '<input type="button" class="btn btn-danger" id="removenlimage" value="Remove File" onclick="'.$options['remove_js'].'" />';
 		$out .= '<iframe name="uploadArea" id="uploadArea" width="300" height="20" style="border-width: 0px;color:#fff;background-color:#fff;overflow:hidden;"></iframe>';
 		return core_form::tr_nv($label,$out,$options);
 	}

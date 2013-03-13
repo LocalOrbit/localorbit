@@ -25,7 +25,7 @@ echo(
 			)),
 			core_form::input_text('First Name','first_name'),
 			core_form::input_text('Last Name','last_name'),
-			core_form::input_text('E-mail','email'),
+			core_form::input_text('Email','email'),
 			core_form::input_password('Password','password'),
 			core_form::input_password('Confirm Password','password_confirm')
 		),

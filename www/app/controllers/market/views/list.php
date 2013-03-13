@@ -79,7 +79,7 @@ $domains->filter_html .= core_datatable_filter::make_select(
 	array('false'=>'Open only','1'=>'Closed only'),
 	null,
 	null,
-	'Open/Closed hubs'
+	'Open/Closed Markets'
 );
 
 $domains->add_filter(new core_datatable_filter('name','name','~','search'));

@@ -44,7 +44,7 @@ $col->filter('is_deleted','=',0);
 $users = new core_datatable('org_users','organizations/users?org_id='.$core->data['org_id'],$col);
 #$users->add_filter(new core_datatable_filter('org_id'));
 $users->add(new core_datacolumn('first_name','Name',true,'25%','<a href="#!users-edit--entity_id-{entity_id}"><b>{first_name} {last_name}</b>'));
-$users->add(new core_datacolumn('email','E-mail',true,'25%','<a href="mailTo:{email}"><i class="icon icon-envelope" /> {email}</a>'));
+$users->add(new core_datacolumn('email','Email',true,'25%','<a href="mailTo:{email}"><i class="icon icon-envelope" /> {email}</a>'));
 $users->add(new core_datacolumn('created_at','Registered On',true,'15%','{created_at}'));
 
 # They are an admin or a MM in their home hub so let them login as users

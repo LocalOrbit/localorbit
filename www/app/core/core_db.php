@@ -92,7 +92,7 @@ class core_db
 		{
 			#core::log('an exception!');
 			core::log($core->config['db']['aliases']['error'](),'error');
-			core_ui::error('sql'.$sql.' '.$core->config['error_ui_msg']);
+			core_ui::error($core->config['error_ui_msg']);
 			core::log("FAILURE ============================== ".$sql,'sql');
 			
 			#throw new Exception(pg_last_error());

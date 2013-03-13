@@ -190,7 +190,7 @@ class core_controller_users extends core_controller
 			core::js("$('h1').html('Editing ".addslashes($core->data['first_name'])." ".addslashes($core->data['last_name'])."');");
 		}
 		
-		core_ui::notification($core->i18n('messages:generic_saved','user'),false,($core->data['do_redirect'] != 1));
+		core_ui::notification($core->i18n('messages:generic_saved','User'),false,false);
 		if($core->data['do_redirect'] == 1)
 			core::redirect('users','list');
 	}

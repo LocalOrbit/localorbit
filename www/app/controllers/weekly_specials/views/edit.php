@@ -2,7 +2,7 @@
 
 core::ensure_navstate(array('left'=>'left_dashboard'),'weekly_specials-list','marketing');
 core_ui::fullWidth();
-core::head('Buy and Sell Local Food on Local Orbit - Edit Weekly Specials','This page is used to edit Weekly Specials');
+core::head('Buy and Sell Local Food on Local Orbit - Edit Featured Promotions','This page is used to edit Weekly Specials');
 lo3::require_permission();
 lo3::require_login();
 core_ui::load_library('js','weeklySpecials.js');
@@ -112,16 +112,16 @@ page_header('Editing '.$data['name'],'#!weekly_specials-list','cancel', 'cancel'
 	<div class="control-group">
 		<label class="control-label" for="specimage">Image</label>
 		<div class="controls row">
-			<div class="span3"><img class="pull-left" id="specimage" src="<?=$image_path?>" /></div>
-			<div class="span5">
-			<input type="file" name="spec_image" value="" />
-			<input type="button" class="btn btn-mini" value="Upload File" onclick="core.ui.uploadFrame(document.specialsForm,'uploadArea1','core.weeklySpecials.refreshImage({params});','app/weekly_specials/save_spec1');" />
-			<input type="button" id="removeLogo" class="btn btn-mini btn-danger" value="Remove Image" onclick="core.doRequest('/weekly_specials/remove_logo',{'spec_id':<?=$data['spec_id']?>});" />
-
-			<p class="alert alert-info help-block note">Note: images can not be larger than 400 pixels wide by 300 pixels tall. 
-			For best results, use images that are exactly 400 pixels wide by 300 pixels tall.</p>
-			<input type="hidden" name="placeholder_image" value="<?=$placeholder_image?>" />
-			<iframe name="uploadArea1" id="uploadArea1" width="300" height="20" style="color:#fff;background-color:#fff;overflow:hidden;border:0;"></iframe>
+			<div><img class="pull-left" id="specimage" src="<?=$image_path?>" /></div>
+			<div>
+				<input type="file" name="spec_image" value="" />
+				<input type="button" class="btn" value="Upload File" onclick="core.ui.uploadFrame(document.specialsForm,'uploadArea1','core.weeklySpecials.refreshImage({params});','app/weekly_specials/save_spec1');" />
+				<input type="button" id="removeLogo" class="btn btn-danger" value="Remove File" onclick="core.doRequest('/weekly_specials/remove_logo',{'spec_id':<?=$data['spec_id']?>});" />
+	
+				<p class="alert alert-info help-block note">Note: images cannot be larger than 400 pixels wide by 300 pixels tall. 
+				For best results, use images that are exactly 400 pixels wide by 300 pixels tall.</p>
+				<input type="hidden" name="placeholder_image" value="<?=$placeholder_image?>" />
+				<iframe name="uploadArea1" id="uploadArea1" width="300" height="20" style="color:#fff;background-color:#fff;overflow:hidden;border:0;"></iframe>
 			</div>
 			
 		</div>

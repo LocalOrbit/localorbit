@@ -8,7 +8,7 @@
 			$total_delivs = $core->view[3];
 			$deliv = core::model('lo_order_deliveries')->load($lodeliv_id);
 			
-			# this determines if the buyer picks up the items from a hub location
+			# this determines if the buyer picks up the items from a market location
 			
 			if(intval($deliv['pickup_address_id']) > 0 && !isset($all_addrs[$deliv['pickup_address_id']]))
 			{

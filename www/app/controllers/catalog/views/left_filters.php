@@ -31,7 +31,7 @@ if (count($days) > 1)
 </label>
 
 <hr class="tight">
-<strong><input type="checkbox" class="filtercheck" disabled="disabled" checked="checked" style="display: none;" />Availablity Date</strong>
+<strong><input type="checkbox" class="filtercheck" disabled="disabled" checked="checked" style="display: none;" />Availability Date</strong>
 
 <ul class="nav nav-list">
 <?php

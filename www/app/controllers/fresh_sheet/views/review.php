@@ -17,7 +17,7 @@ if(lo3::is_admin() || (lo3::is_market() && count($core->session['domains_by_orgt
 	?>
 	<form name="domainSelector" class="pull-right" style="position: relative; top: 8px;">
 		<span style="position: relative; top: -3px;">Choose Market:</span> <select style="width: auto;" onchange="location.href='#!fresh_sheet-review--domain_id-'+this.options[this.selectedIndex].value;">
-			<option value="0">Select a hub</option>
+			<option value="0">Select a Market</option>
 			<?foreach($domains as $domain){?>
 			<option value="<?=$domain['domain_id']?>"<?=(($core->data['domain_id']==$domain['domain_id'])?' selected="selected"':'')?>><?=$domain['name']?></option>
 			<?}?>

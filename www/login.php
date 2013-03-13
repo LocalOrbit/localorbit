@@ -223,7 +223,7 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 		core.doRequest('/navstate/left_hub_info','');
 		
 		<?if(array_key_exists('login_fail', $_REQUEST) && $_REQUEST['login_fail'] == 1){?>
-			core.ui.error('Whoops! Your user name and password don\'t match. Please try again.');
+			core.ui.error('Your user name and password don\'t match. Please try again.');
 		<?}?>
 		<?if(array_key_exists('account_suspended', $_REQUEST) && $_REQUEST['account_suspended'] == 1){?>
 			core.ui.error('Your account has been suspended. Please <a href="https://localorbit.zendesk.com/anonymous_requests/new">contact customer support</a>');
