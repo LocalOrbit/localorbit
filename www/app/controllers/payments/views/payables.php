@@ -2,23 +2,8 @@
 $payments_owed = core::model('v_invoices')
 	->add_custom_field('DATEDIFF(CURRENT_TIMESTAMP,due_date) as age')
 	->collection()
+	->filter('from_org_id' , $core->session['org_id'])
 	->filter('amount_due', '>', 0);
-	
-if(lo3::is_admin())
-{
-}
-else if (lo3::is_market())
-{
-	$payments_owed->filter('to_org_id' ,'in','(
-		select org_id
-		from organizations_to_domains 
-		where organizations_to_domains.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
-	)');
-}
-else
-{
-	$payments_owed->filter('from_org_id' , $core->session['org_id']);
-}
 
 
 function payable_age_formatter($data)
