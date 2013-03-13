@@ -1,47 +1,17 @@
 <?
 global $core;
 #$payments = new core_collection('select v_payments.*,unix_timestamp(v_payments.creation_date) as creation_date from v_payments where (from_org_id = ' . $core->session['org_id'] . ' or to_org_id = '. $core->session['org_id'] . ')');
-if(lo3::is_admin())
-{
-	# the admin sees all transactions
-	$payments = core::model('v_payments')->collection();
-}
-else if(lo3::is_market())
-{
-	# the market manager sees only transactions that apply to orgs that they manage
-	$payments = new core_collection('
-		select *,
-		UNIX_TIMESTAMP(creation_date) as creation_date
-		from v_payments vp
-		where (
-			vp.from_org_id in (
-				select otd1.org_id
-				from organizations_to_domains otd1
-				where otd1.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
-			)
-			or
-			vp.to_org_id in (
-				select otd1.org_id
-				from organizations_to_domains otd1
-				where otd1.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
-			)
-		)
-	');
-}
-else
-{
-	# buyers and sellers only see transactions to/from themselves.
-	$payments = new core_collection('
-		select *,
-		UNIX_TIMESTAMP(creation_date) as creation_date
-		from v_payments vp
-		where (
-			vp.from_org_id = '.$core->session['org_id'].'
-			or
-			vp.to_org_id = '.$core->session['org_id'].'
-		)
-	');
-}
+# buyers and sellers only see transactions to/from themselves.
+$payments = new core_collection('
+	select *,
+	UNIX_TIMESTAMP(creation_date) as creation_date
+	from v_payments vp
+	where (
+		vp.from_org_id = '.$core->session['org_id'].'
+		or
+		vp.to_org_id = '.$core->session['org_id'].'
+	)
+');
 
 function transaction_formatter($data)
 {
