@@ -6,19 +6,11 @@ $payables = core::model('v_payables')
 	->filter('amount_due','>',0)
 	->filter('is_invoiced','=',0);
 
-if(lo3::is_market())
+if(lo3::is_market() || lo3::is_admin())
 {	
-	$payables->filter(
-		'to_org_id' ,
-		'in',
-		'(
-			select org_id
-			 from organizations_to_domains 
-			where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
-		)'
-	);
+	$payables->filter('to_org_id','=',$core->session['org_id']);
 }
-else if (!lo3::is_admin())
+else
 {
 	if(lo3::is_seller())
 	{
