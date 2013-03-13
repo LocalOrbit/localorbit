@@ -156,7 +156,7 @@
 		<ul class="nav">
 			<li class="dropdown">
 				<a id="sales-information" href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<i class="icon-coins icon-large"></i>
+					<i class="icon-coin icon-large"></i>
 					Sales Information
 					<b class="caret"></b>
 				</a>
