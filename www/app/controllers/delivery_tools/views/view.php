@@ -4,7 +4,7 @@ core::ensure_navstate(array('left'=>'left_dashboard'), 'delivery_tools-view', ar
 core::head('Weekly Sales & Delivery Info','Local Orbit weekly sales & delivery info');
 lo3::require_permission();
 lo3::require_login();
-
+core_ui::fullWidth();
 #echo('<pre>');
 #print_r($core->session);
 
