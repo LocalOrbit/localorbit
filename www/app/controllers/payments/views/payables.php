@@ -38,7 +38,7 @@ $payments_table->add(new core_datacolumn('payment_id',array(core_ui::check_all('
 
 
 $payments_table->columns[2]->autoformat='date-long';
-$payments_table->columns[3]->autoformat='date-long';
+$payments_table->columns[3]->autoformat='date-short';
 
 #$payments_table->columns[3]->autoformat='price';
 $payments_table->sort_direction='desc';

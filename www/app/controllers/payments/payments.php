@@ -250,7 +250,7 @@ function type_formatter($data)
 	switch(strtolower($data['payable_type']))
 	{
 		case 'buyer order':
-			$data['payable_type_formatted'] = 'Order';
+			$data['payable_type_formatted'] = 'Purchase';
 			break;
 		case 'seller order':
 			$data['payable_type_formatted'] = 'Seller Pmt';
@@ -259,7 +259,7 @@ function type_formatter($data)
 			$data['payable_type_formatted'] = 'Hub Fees';
 			break;
 		case 'lo fees':
-			$data['payable_type_formatted'] = 'LO Fees';
+			$data['payable_type_formatted'] = 'Local Orbit Fees';
 			break;
 		case 'monthly fees':
 			$data['payable_type_formatted'] = 'Monthly Fees';
@@ -632,7 +632,7 @@ function payments__add_standard_filters($datatable,$tab='')
 				'buyer order'=>'Purchase',
 				'seller order'=>'Seller Pmt',
 				'hub fees'=>'Hub Fees',
-				'lo fees'=>'LO Fees',
+				'lo fees'=>'Local Orbit Fees',
 				'monthly fees'=>'Monthly Fees',
 			),
 			null,

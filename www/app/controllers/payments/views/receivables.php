@@ -29,7 +29,7 @@ $invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'14%',		
 if(lo3::is_admin() || lo3::is_market())
 	$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('invoices'),'',''),false,'4%',core_ui::check_all('invoices','invoice_id'),' ',' '));
 $invoices_table->columns[2]->autoformat='date-long';
-$invoices_table->columns[3]->autoformat='date-long';
+$invoices_table->columns[3]->autoformat='date-short';
 $invoices_table->sort_direction='desc';
 
 
