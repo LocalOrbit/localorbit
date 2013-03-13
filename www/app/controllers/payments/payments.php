@@ -532,6 +532,19 @@ function lfo_accordion($data)
 	return $data;
 }
 
+function payments__age_formatter($data)
+{
+	if($data['age'] <= 0)
+	{
+		$data['age'] = 'Current';
+	}
+	else
+	{
+		$data['age'] = '<span class="text-error">'.$data['age'].'</span>';
+	}
+	return $data;
+}
+
 function payments__add_standard_filters($datatable,$tab='')
 {
 	global $core,$hub_filters,$to_filters,$from_filters;
