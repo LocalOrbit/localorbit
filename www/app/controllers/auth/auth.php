@@ -152,7 +152,14 @@ class core_controller_auth extends core_controller
 			
 			#core::log('session data: '.print_r($core->data,true));
 			core::log('here: '.$core->data[$core->session['spammer_fake_fields'][0]]);
-			if(isset($core->data[$core->session['spammer_field']]) && $core->data[$core->session['spammer_field']] != '')
+			if(isset($core->session['postauth_url']) && $core->session['postauth_url'] != '')
+			{
+				header('Location: '.$core->session['postauth_url'].'--redirect-1');
+				$core->session['postauth_url'] = '';
+				exit();
+				#core::js('location.href=\''.;');			
+			}
+			else if(isset($core->data[$core->session['spammer_field']]) && $core->data[$core->session['spammer_field']] != '')
 			{				
 				core::log('reg redirect');
 				if(
@@ -168,12 +175,7 @@ class core_controller_auth extends core_controller
 					core::deinit();
 				}
 			}
-			else if(isset($core->data['postauth_url']) && $core->data['postauth_url'] != '')
-			{
-				header('Location: '.$core->data['postauth_url'].'-redirect-1');
-				exit();
-				#core::js('location.href=\''.;');			
-			}
+			
 			else{
 				# buyers who are fully activated should be sent directly to the catalog
 				if(

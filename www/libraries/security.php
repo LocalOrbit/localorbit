@@ -7,8 +7,9 @@ class lo3
 		global $core;
 		if(intval($core->session['user_id']) == 0)
 		{
-			$core->config['postauth_url'] = $core->data['_requestor_url'];
-			core::process_command('auth/form');
+			$core->session['postauth_url'] = $core->data['_requestor_url'];
+			
+			core::js("location.href='/login.php';");
 			core::deinit();
 		}
 	}
