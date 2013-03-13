@@ -145,7 +145,7 @@ if($_SERVER['HTTP_HOST'] == 'qa.localorb.it' || strpos(__FILE__,'/qa/') > 0)
 	$core->config['session_domain']   = '.localorb.it';
 	$core->config['session_name']    .= 'qa';
 	$core->config['db']['database']   = 'localorb_www_qa';
-	$core->config['db']['hostname'] = 'app-db.cbuaulnl9t1m.us-west-2.rds.amazonaws.com';
+	$core->config['db']['hostname'] = 'localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com';
 	
 	$core->config['payments']['paypal'] = array(
 		'password'=>'1331137290',
