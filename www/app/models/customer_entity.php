@@ -51,7 +51,7 @@ class core_model_customer_entity extends core_model_base_customer_entity
 			inner join organizations_to_domains otd on (o.org_id=otd.org_id)
 			inner join domains d on (d.domain_id=otd.domain_id and otd.is_home=1)
 			inner join timezones tz using (tz_id)
-			inner join lo_order oh on (ce.org_id=oh.org_id and oh.payment_method = \'purchaseorder\')
+			left join lo_order oh on (ce.org_id=oh.org_id and oh.payment_method = \'purchaseorder\')
 			where trim(lower(ce.email))=lower(\''.mysql_escape_string($username).'\')
 			and ce.is_deleted=0
 			and o.is_deleted=0
