@@ -524,14 +524,15 @@ function lfo_accordion($data)
 		');
 		$lfos = $lfos->to_array();
 		
-		$id = 't'.str_replace(' ','__',str_replace('.','__',microtime()));
-		$data['description_html'] = '<i class="icon icon-plus-circle hoverpointer" onclick="$(\'#'.$id.'\').toggle(\'fast\');$(this).toggleClass(\'icon-minus-circle\');" />&nbsp;'.$data['description_html'];
-		$data['description_html'] .= '<div id="'.$id.'" style="display: none;">';
+		#$id = 't'.str_replace(' ','__',str_replace('.','__',microtime()));
+		$seller_html = '';
 		foreach($lfos as $lfo)
 		{
-			$data['description_html'] .= '&nbsp;&nbsp;&nbsp;&nbsp;<a href="app.php#!orders-view_sales_order--lo_foid-'.$lfo['lo_foid'].'" onclick="core.go(this.href);">'.$lfo['lo3_order_nbr'].'</a><br />';
+			$seller_html .= '<a href="app.php#!orders-view_sales_order--lo_foid-'.$lfo['lo_foid'].'" onclick="core.go(this.href);">'.$lfo['lo3_order_nbr'].'</a><br />';
 		}
-		$data['description_html'] .= '</div>';
+		#$seller_html = 'mike testing';
+		$data['description_html'] .= '&nbsp;<i class="icon-plus-circle" data-placement="bottom" rel="clickover" title="Seller Orders" data-content="'.htmlentities($seller_html).'">&nbsp;</i>';
+		
 	}
 	#core::log('data: '.print_r($data,true));
 	return $data;

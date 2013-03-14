@@ -150,6 +150,7 @@ if(in_array('Systemwide Payables/Receivables',$tabs))
 	<input type="hidden" name="payment_from_tab" value="" />
 </form>
 <?
+core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });");
 
 /*
 

@@ -100,7 +100,7 @@ core.init=function(autoredirect){
 		core.go(url);
 	}else{
 		if(autoredirect){
-			alert('here');
+			//alert('here');
 			if(core.user_id == 0)
 				core.go(core.unauth_controller);
 			else
