@@ -385,7 +385,9 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		#core::deinit();ta
 
 		# handle payment processing
-		core::load_library('payments');
+		core::load_library('payments'); 
+		$cleaned_pp_cc_number = ereg_replace( '[^0-9]+', '', $core->data['pp_cc_number']);
+		core::log('handle payments: '.$method);
 		switch($method)
 		{
 			# handle authorize.net payments
@@ -402,7 +404,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 					$core->data['pp_zip'],
 					core_db::col('select country_id from directory_country_region where code=\''.$core->data['pp_state'].'\' and country_id in (\'US\',\'CA\');','country_id'),
 					core_format::parse_price($this['grand_total']),
-					$core->data['pp_cc_number'],
+					$cleaned_pp_cc_number,
 					core_payments::get_cc_type($core->data['pp_cc_number']),
 					$core->data['pp_exp_month'].$core->data['pp_exp_year'],
 					$core->data['pp_cvv2']
@@ -418,7 +420,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 					$core->data['pp_zip'],
 					core_db::col('select country_id from directory_country_region where code=\''.$core->data['pp_state'].'\' and country_id in (\'US\',\'CA\');','country_id'),
 					core_format::parse_price($this['grand_total']),
-					$core->data['pp_cc_number'],
+					$cleaned_pp_cc_number,
 					core_payments::get_cc_type($core->data['pp_cc_number']),
 					$core->data['pp_exp_month'].$core->data['pp_exp_year'],
 					$core->data['pp_cvv2']
