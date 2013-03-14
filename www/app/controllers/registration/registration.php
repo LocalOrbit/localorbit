@@ -311,7 +311,7 @@ class core_controller_registration extends core_controller
 			}
 			page_header('Thank you!');
 			
-			if ($cust['is_enabled'] && $org['is_enabled']) {
+			if ($cust['is_enabled'] && $org['is_enabled'] && $org['is_active']) {
 		?>
 				You have successfully activated your account! <a href="app.php#!dashboard-home" onclick="core.go(this.href);">Click here</a> to go to your dashboard.
 				<br />&nbsp;<br >
