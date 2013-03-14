@@ -209,3 +209,9 @@ DROP TABLE IF EXISTS vendorcatalog;
 DROP TABLE IF EXISTS version;
 
 DROP TABLE IF EXISTS wishlist;
+
+
+
+
+ALTER TABLE delivery_fees
+  MODIFY minimum_order decimal(10,2);

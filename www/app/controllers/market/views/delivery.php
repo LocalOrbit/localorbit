@@ -161,6 +161,7 @@ echo('</div>');
 		<div class="controls">
 			<select name="pickup_address_id" id="pickup_address_id">
 				<option value="0">Delivered to Buyer from Market</option>
+				<option value="-1">Direct to Customer</option>
 				<?=core_ui::options($addresses,null,'address_id','label')?>
 			</select>
 		</div>
