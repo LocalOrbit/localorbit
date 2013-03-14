@@ -46,9 +46,17 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<link rel="stylesheet" type="text/css" href="css/loader.php?time=<?php echo time();?>" media="all" /> <? # Loads forms.css, datatable.css, popups.css, rte.css ?>
 	<link rel="alternate stylesheet" type="text/css" href="css/less.php?which=style3" title="styles3" media="all" />
 
-	<link rel="stylesheet" type="text/css" href="css/less.php" title="styles1" media="all" />
-
-	<!--<link rel="stylesheet" type="text/css" href="css/responsive.css" />-->
+	
+	<link rel="stylesheet" type="text/css" href="css/image-picker.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-wysihtml5.css"></link>
+	<link rel="stylesheet" type="text/css" href="css/less.php" title="styles1" media="all" id="less-css" />
+	<link rel="stylesheet" type="text/css" href="css/fonts.php" media="all" />
+	<link rel="stylesheet" href="/css/icomoon-ultimate1563/style.css">
+	<link rel="stylesheet" href="/css/icomoon-ultimate88910/style.css">
+	
+	<style type="text/css" media="screen, projection">
+		@import url(//assets.zendesk.com/external/zenbox/v2.5/zenbox.css); 
+	</style>	<!--<link rel="stylesheet" type="text/css" href="css/responsive.css" />-->
 
 	<!--<script language="Javascript" type="text/javascript" src="app/core/js/console.min.js"></script>-->
 	
@@ -175,14 +183,16 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	
 							<label style="display: none;">Password</label>
 							<input type="password" tabindex="2" class="text" name="password" value="" placeholder="Password" />
-							<div class="control-group">
-								<label class="control-label" for="remember_me" style="width:9px;"></label>
+							<div class="control-group" style="margin-left: 28px;">
 								<div class="controls pull-left">
-									<input type="checkbox" id="remember_me" name="remember_me" checked="checked"><span class="help-inline">Remember Me</span>
+									<input type="checkbox" id="remember_me" name="remember_me" checked="checked"><span class="help-inline">Keep me logged in</span>
+									<i class="helpslug icon-question-sign pull-right" style="margin-top: -18px;margin-right:-28px;" data-position="right" rel="popover" data-content="This is not recommended for shared computers. Unless you log out, anyone using this computer will be able to access your account." data-original-title="Keep me logged in">&nbsp;</i>
 								</div>
 							</div>
-							<input type="submit" value="Log In" tabindex="4" class="btn btn-primary button_primary" />
-							<input type="hidden" name="postauth_url" value="" />
+							<div style="clear:both;margin-top: 40px;">
+								<input type="submit" value="Log In" tabindex="4" class="btn btn-primary button_primary" />
+								<input type="hidden" name="postauth_url" value="" />
+							</div>
 							<ul>
 								<li id="requestAccountLink" style="display: none;"><a href="app.php#!registration-form" tabindex="5" /><strong>Request an account</strong></a></li>
 								<li><a href="app.php#!auth-forgot_password" tabindex="6" />Having trouble logging in?</a></li>

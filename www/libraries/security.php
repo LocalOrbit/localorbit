@@ -33,7 +33,7 @@ class lo3
 		if(!in_array($core->config['domain']['domain_id'],$core->session['domains_by_orgtype_id'][$types[$orgtype]]))
 		{
 			$core->config['postauth_url'] = $core->data['_requestor_url'];
-			core::process_command('auth/form');
+			core::js("location.href='/login.php';");
 			core::deinit();
 		}
 	}
@@ -48,7 +48,7 @@ class lo3
 		if(intval($core->session['allow_sell']) == 0)
 		{
 			$core->config['postauth_url'] = $core->data['_requestor_url'];
-			core::process_command('auth/form');
+			core::js("location.href='/login.php';");
 			core::deinit();
 		}
 	}

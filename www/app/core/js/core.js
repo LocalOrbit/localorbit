@@ -150,8 +150,9 @@ core.isNumberKey=function(evt) {
 core.jqInit=function(){
 	$(function() {
 		$(".helpslug, [rel=popover]").each(function() {
+			var pos = ($(this).attr('data-position') == 'right')?'right':'left';
 			$(this).popover({
-				placement : "left",
+				placement : pos,
 				trigger : "hover",
 				html : true,
 				delay: { show: 250, hide: 100 }
