@@ -183,7 +183,7 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	
 							<label style="display: none;">Password</label>
 							<input type="password" tabindex="2" class="text" name="password" value="" placeholder="Password" />
-							<div class="control-group" style="margin-left: 28px;">
+							<div class="control-group" style="margin-left: 21px;">
 								<div class="controls pull-left">
 									<input type="checkbox" id="remember_me" name="remember_me" checked="checked"><span class="help-inline">Keep me logged in</span>
 									<i class="helpslug icon-question-sign pull-right" style="margin-top: <?=((strpos(strtolower($_SERVER['HTTP_USER_AGENT']),'webkit')===false)?'0':'-18')?>px;margin-right:-28px;" data-position="right" rel="popover" data-content="This is not recommended for shared computers. Unless you log out, anyone using this computer will be able to access your account." data-original-title="Keep me logged in">&nbsp;</i>
