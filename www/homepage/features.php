@@ -38,8 +38,8 @@
 				<div class="caption tour_caption"><div style="height:14px;overflow:hidden;"><br /></div>Get started today!</div>
 			</div>
 			<div class="slide tour_slide">
-				<img src="/homepage/img/tour/1-1.jpg" width="824" height="498" alt="Start with the details about your farm, business, market or hub..." />
-				<div class="caption tour_caption"><div style="height:14px;overflow:hidden;"><br /></div>Start with the details about your farm, business, market or hub...</div>
+				<img src="/homepage/img/tour/1-1.jpg" width="824" height="498" alt="Start with the details about your farm, business or market..." />
+				<div class="caption tour_caption"><div style="height:14px;overflow:hidden;"><br /></div>Start with the details about your farm, business or market...</div>
 			</div>
 			<div class="slide tour_slide">
 				<img src="/homepage/img/tour/1-2.jpg" width="824" height="498" alt="Add details about your suppliers..." />
@@ -112,7 +112,7 @@
 				<div class="tour_slide_text">
 					Because of our uniquely open approach,<br />
 					Local Orbit provides multi-channel sales opportunities for producers<br />
-					and multi-channel marketing options for distributors, farmers markets and food hubs.
+					and multi-channel marketing options for distributors, farmers markets and food markets.
 				</div>
 				<div class="caption tour_caption"><div style="height:14px;overflow:hidden;"><br /></div>Opportunity from an open approach.</div>
 			</div>

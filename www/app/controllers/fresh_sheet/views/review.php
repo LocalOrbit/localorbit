@@ -56,7 +56,7 @@ if($domain_id > 0)
 	?>
 	<?if($fs_html == ''){?>
 		<? if(lo3::is_admin()) { ?>
-			<p>There are no products available for this hub this week.</p>
+			<p>There are no products available for this market this week.</p>
 		<? } else { ?>
 			<p>There are no products available for your fresh sheet this week.</p>
 		<? } ?>

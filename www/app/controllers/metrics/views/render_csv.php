@@ -60,7 +60,7 @@ render_ranges($core->data['breakdown_by'],$data['ranges']);
 render_row('# of Orders',$data['financials']['nbr_orders']);
 render_row('Total Sales',$data['financials']['total_sales'],1);
 render_row('Sales % Growth',$data['financials']['sales_growth'],1);
-render_row('LO Fees',$data['financials']['lo_fees']);
+render_row('Local Orbit Fees',$data['financials']['lo_fees']);
 render_row('Fee % Growth',$data['financials']['fee_growth'],1);
 echo($this->get_financials_note());
 core::log('render complete');

@@ -47,7 +47,7 @@ lo3::require_permission();
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Willowood Farm (Seattle)<br /><br />
 			Distributors     
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Albuquerque Fresh<br /><br />		
-			Food Hubs  
+			Food Markets  
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Detroit Eastern Market
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Farm to Table (Seattle)
 			<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Skagit County<br /><br />

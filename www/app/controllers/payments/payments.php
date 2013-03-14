@@ -256,7 +256,7 @@ function type_formatter($data)
 			$data['payable_type_formatted'] = 'Seller Pmt';
 			break;
 		case 'hub fees':
-			$data['payable_type_formatted'] = 'Hub Fees';
+			$data['payable_type_formatted'] = 'Market Fees';
 			break;
 		case 'lo fees':
 			$data['payable_type_formatted'] = 'Local Orbit Fees';
@@ -346,7 +346,7 @@ function format_html ($info) {
       } else if ($info[0] === 'seller order') {
          $text .= 'Seller Order #' . $info[1];
       } else if ($info[0] === 'hub fees') {
-         $text .= 'Hub Fees';
+         $text .= 'Market Fees';
       } else {
          $text .= $info[0];
          if (count($info) > 1) {
@@ -368,7 +368,7 @@ function format_text ($info) {
       } else if ($info[0] === 'seller order') {
          $text .= 'Seller Order #' . $info[1];
       } else if ($info[0] === 'hub fees') {
-         $text .= 'Hub Fees';
+         $text .= 'Market Fees';
       } else {
          $text .= $info[0];
          if (count($info) > 1) {
@@ -406,8 +406,8 @@ function payment_link_formatter($data)
 				$data['description_html'] .= '">'.$info_item[0].'</a>'; 
 				break;
 			case 'hub fees':
-				$data['description'] .= 'Hub Fees';
-				$data['description_html'] .= 'Hub Fees';
+				$data['description'] .= 'Market Fees';
+				$data['description_html'] .= 'Market Fees';
 				break;
 			case 'monthly fees':
 				$data['description'] .= $info_item[0];
@@ -480,7 +480,7 @@ function payment_description_formatter($data)
       }
       else if ($data['payable_type'] == 'hub fees')
       {
-         $data['description_html'] = 'Hub Fees';
+         $data['description_html'] = 'Market Fees';
       }
    }
    else
@@ -653,7 +653,7 @@ function payments__add_standard_filters($datatable,$tab='')
 			array(
 				'buyer order'=>'Purchase',
 				'seller order'=>'Seller Pmt',
-				'hub fees'=>'Hub Fees',
+				'hub fees'=>'Market Fees',
 				'lo fees'=>'Local Orbit Fees',
 				'monthly fees'=>'Monthly Fees',
 			),

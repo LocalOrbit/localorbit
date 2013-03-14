@@ -24,7 +24,7 @@ lo3::require_permission();
 </ul>
 <br />
 <h2>How we define local:</h2>
-<p>Local for us is within 300 miles of the hub OR within the same state.</p>
+<p>Local for us is within 300 miles of the market OR within the same state.</p>
 <br />
 <p>Local artisan producers and processors may use non-local ingredients if they are not available locally and if the ingredients they use ensure the human, animal welfare and environmental practices of Local Orbit sellers.</p>
 <br />

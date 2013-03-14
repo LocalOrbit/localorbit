@@ -63,8 +63,8 @@ org.removeManagedHubs=function(){
 	var domain_ids = core.ui.getCheckallList(document.organizationsForm,'domainids');
 	
 	if(domain_ids.length == 0)
-		core.validatePopup('You must check at least one hub to remove.<br />');
-	else if(confirm('Are you sure you want to remove these hubs?'))
+		core.validatePopup('You must check at least one market to remove.<br />');
+	else if(confirm('Are you sure you want to remove these markets?'))
 		core.doRequest(
 			'/organizations/delete_managed_hubs',
 			{'org_id':document.organizationsForm.org_id.value,'domain_ids':domain_ids.join(',')}

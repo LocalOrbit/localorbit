@@ -49,7 +49,7 @@ if(lo3::is_admin())
 		array('false'=>'Secret only','1'=>'Public only'),
 		null,
 		null,
-		'Public/Secret hubs'
+		'Public/Secret Markets'
 	);
 
 
@@ -61,7 +61,7 @@ if(lo3::is_admin())
 		array('false'=>'Not live only','1'=>'Live only'),
 		null,
 		null,
-		'Live/Not live hubs'
+		'Live/Not live Markets'
 	);
 	
 	$cols = array('34%','42%','8%','8%','8%');

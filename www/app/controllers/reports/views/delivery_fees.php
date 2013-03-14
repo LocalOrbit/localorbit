@@ -188,7 +188,7 @@ $fees->render();
 	<thead>
 	<tr>
 		<th class="dt">Gross Fees</th>
-		<th class="dt">LO Fees</th>
+		<th class="dt">Local Orbit Fees</th>
 		<th class="dt">Payment Processing Fees</th>
 		<th class="dt">Net Fees</th>
 	</tr>

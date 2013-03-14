@@ -44,7 +44,7 @@ if($is_mm || isset($core->data['currentdomains_page']))
 	{
 		$data['is_home_radio']  = core_ui::radiodiv(
 			'is_home_'.$data['domain_id'],
-			($data['is_home'] == 1)?'Current home hub':'Set as home hub',
+			($data['is_home'] == 1)?'Current home market':'Set as home market',
 			($data['is_home'] == 1),
 			'set_as_home',
 			false,
@@ -73,7 +73,7 @@ if($is_mm || isset($core->data['currentdomains_page']))
 	?>
 	<div class="tabarea" id="orgtabs-a<?=$tab_id?>">
 		<div id="currentHubs">
-			<h2>Currently Managed Hubs</h2>
+			<h2>Currently Managed Markets</h2>
 			<?=$current_domains->render();?>
 			<?if(lo3::is_admin()){ $this->new_managed_hub_selector(); }?>
 		</div>

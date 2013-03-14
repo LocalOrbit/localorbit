@@ -19,7 +19,7 @@ lo3::require_permission();
 			<li>Traceability &amp; transparency</li>
 			<li>E-commerce &amp; managed payments</li>
 			<li>Robust reporting</li>
-			<li>Cross-selling with other markets, food hubs &amp; producer co-ops </li>
+			<li>Cross-selling with other markets, food markets &amp; producer co-ops </li>
 			<li>And much more</li>
 		</ul>
 	</div>

@@ -18,7 +18,7 @@ lo3::require_permission();
 
 <h5>email us:</h5>
 <p>For customer service,
-to become a seller or hub site, to become a buyer,or for all other inquiries (including partnerships,  press and job opportunities), please <a href="http://localorbit.zendesk.com/anonymous_requests/new">contact us</a>.
+to become a seller or market site, to become a buyer, or for all other inquiries (including partnerships, press and job opportunities), please <a href="http://localorbit.zendesk.com/anonymous_requests/new">contact us</a>.
 
 <!--<h3>our mailing address:</h3>
 <p>343 South Main Street, Suite 207<br />

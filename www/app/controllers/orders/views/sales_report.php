@@ -94,7 +94,7 @@ $orders->add(new core_datacolumn('status','Status',true,'25%','<a href="#!orders
 $orders->columns[0]->autoformat='date-short';
 $orders->columns[2]->autoformat='price';
 $orders->sort_direction = 'desc';
-page_header('Sales History','#!orders-current_sales','View only outstanding sales');
+page_header('Sales History','#!orders-current_sales','View only outstanding sales', null, 'plus', '');
 $orders->render();
 $this->totals_table();
 ?>

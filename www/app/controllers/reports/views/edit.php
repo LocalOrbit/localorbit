@@ -86,7 +86,7 @@ $start = $end - (30 * 86400);
 <ul>
 <li> For all reports default ot past calendar month and make dates customizable
 <li>All reports should have totals - gross and net - on bottom for same info as LO2
-<li>If a MM or Seller has more than one hub, they will always be able to select a specific hub for each report type - or an aggregate report across all or selected hubs
+<li>If a MM or Seller has more than one market, they will always be able to select a specific market for each report type - or an aggregate report across all or selected markets
 </ul>
 -->
 <!--
@@ -100,7 +100,7 @@ $start = $end - (30 * 86400);
 		relevant buyers by date, item, amount, status
 	</div>
 	<div class="tabarea" id="reportstabs-a4">
-		date, produ cat, item, amount, status, payment method (NOTE: If hub has only one payment type, this report tab does not show up)
+		date, produ cat, item, amount, status, payment method (NOTE: If market has only one payment type, this report tab does not show up)
 	</div>
 	<div class="tabarea" id="reportstabs-a5">
 		date, prod cat, item, amount, status (filter by producer)

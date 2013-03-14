@@ -56,8 +56,8 @@ core_ui::load_library('js','jquery.lightbox_me.js');
 				<div class="caption tour_caption"><div style="height:14px;overflow:hidden;"><br /></div>Get started today!</div>
 			</div>
 			<div class="slide tour_slide">
-				<img src="img/tour/1-1.jpg" width="824" height="498" alt="Start with the details about your farm, business, market, or hub..." />
-				<div class="caption tour_caption"><div style="height:14px;overflow:hidden;"><br /></div>Start wtih the details about your farm, business, market, or hub...</div>
+				<img src="img/tour/1-1.jpg" width="824" height="498" alt="Start with the details about your farm, business, or market..." />
+				<div class="caption tour_caption"><div style="height:14px;overflow:hidden;"><br /></div>Start wtih the details about your farm, business, market...</div>
 			</div>
 			<div class="slide tour_slide">
 				<img src="img/tour/1-2.jpg" width="824" height="498" alt="Add details about your suppliers..." />
@@ -123,7 +123,7 @@ core_ui::load_library('js','jquery.lightbox_me.js');
 				<div class="tour_slide_text">
 					Because of our uniquely open approach,<br />
 					Local Orbit provides multi-channel sales opportunities for producers<br />
-					and multi-channel marketing options for distributors, farmers markets and food hubs.
+					and multi-channel marketing options for distributors, farmers markets and food markets.
 				</div>
 				<div class="caption tour_caption"><div style="height:14px;overflow:hidden;"><br /></div>Opportunity from an open approach.</div>
 			</div>
@@ -236,7 +236,7 @@ Unlike other software options, which limit your sales to one discrete set of cus
 	<tr style="background-color: #f4f6f4;">
 		<td class="left_col">
 			<h2>Reason #5: Quick &amp; easy setup, with low or no upfront fees</h2>
-			Why wait months and pay thousands of dollars to get your co-op, store, hub, market 
+			Why wait months and pay thousands of dollars to get your co-op, store, market 
 			or catalog online? Local Orbit can have you collecting orders quickly, 
 			with very low - or no - upfront fees, depending on your business type and choice of service. 
 		</td>

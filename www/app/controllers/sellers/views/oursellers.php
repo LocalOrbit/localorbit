@@ -48,7 +48,7 @@ else
 	{
 		page_header('No sellers yet!');
 		?>
-		<div class="alert alert-error">There are no sellers on this hub yet. Please check back once some have registered.</div>
+		<div class="alert alert-error">There are no sellers on this market yet. Please check back once some have registered.</div>
 		<?
 		#core::replace('left','&nbsp;');
 	}

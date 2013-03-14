@@ -68,7 +68,7 @@ else
 # Add some role-specific filters
 if(lo3::is_admin() || lo3::is_market() && count($core->session['domains_by_orgtype_id'][2])>1)
 {
-	# get a collectio for the hub filter
+	# get a collectio for the Market filter
 	$hubs = core::model('domains')->collection()->sort('name');						
 	if (lo3::is_market()){ 
 		$hubs = $hubs->filter('domain_id', 'in',$core->session['domains_by_orgtype_id'][2]);							
@@ -91,7 +91,7 @@ if(lo3::is_admin() || lo3::is_market() && count($core->session['domains_by_orgty
 
 if(lo3::is_admin() || lo3::is_market())
 {
-	# mms should only see sellers on their hub
+	# mms should only see sellers on their Market
 	$sql = '
 		select organizations.org_id,organizations.name,d.name as domain_name,
 		concat_ws(\': \',d.name,organizations.name) as selector_name

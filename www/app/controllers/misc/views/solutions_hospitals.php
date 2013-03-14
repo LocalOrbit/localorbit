@@ -5,7 +5,7 @@ lo3::require_permission();
 ?>
 <div class="public_content">
 	<h1>Solutions for Hospitals</h1>
-	Local Orbit saves chefs and purchasing departments time makes sourcing from multiple farmers quick and easy.  If you're near a food hub or market that's powered by Local Orbit, you can sign up as a buyer on their website. Or, if you work directly with vendors, Local Orbit can create an online management portal that lets you order from multiple sellers with a single payment.  
+	Local Orbit saves chefs and purchasing departments time makes sourcing from multiple farmers quick and easy.  If you're near a food market that's powered by Local Orbit, you can sign up as a buyer on their website. Or, if you work directly with vendors, Local Orbit can create an online management portal that lets you order from multiple sellers with a single payment.  
 	<br />
 	<div class="clear"></div>
 	<div class="public_content_left">
@@ -15,7 +15,7 @@ lo3::require_permission();
 			<li>Efficient communications and vendor reminders</li>
 			<li>Traceable &amp; transparent purchasing</li>
 			<li>Easily share with patients &amp; staff the story of the food on your menu</li>
-			<li>Access to new vendors through other food hubs, co-ops, producers &amp; distributors </li>
+			<li>Access to new vendors through other food markets, co-ops, producers &amp; distributors </li>
 			<li>And much more</li>
 		</ul>
 	</div>

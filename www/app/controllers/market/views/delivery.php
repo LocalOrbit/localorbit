@@ -116,14 +116,14 @@ echo('</div>');
 	<div class="control-group">
 		<label class="control-label"></label>
 		<div class="controls">
-			<?=core_ui::checkdiv('allproducts','All products from sellers on this hub will deliver on this cycle.')?>
+			<?=core_ui::checkdiv('allproducts','All products from sellers on this market will deliver on this cycle.')?>
 		</div>
 	</div>
 	
 	<div class="control-group">
 		<label class="control-label"></label>
 		<div class="controls">
-			<?=core_ui::checkdiv('allcrosssellproducts','All cross-sell products from sellers on this hub will deliver on this cycle.')?>
+			<?=core_ui::checkdiv('allcrosssellproducts','All cross-sell products from sellers on this market will deliver on this cycle.')?>
 		</div>
 	</div>
 	
@@ -160,7 +160,7 @@ echo('</div>');
 		<label class="control-label">Buyer Pick up location</label>
 		<div class="controls">
 			<select name="pickup_address_id" id="pickup_address_id">
-				<option value="0">Delivered to Buyer from Hub</option>
+				<option value="0">Delivered to Buyer from Market</option>
 				<?=core_ui::options($addresses,null,'address_id','label')?>
 			</select>
 		</div>

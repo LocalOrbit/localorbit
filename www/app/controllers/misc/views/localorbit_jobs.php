@@ -34,6 +34,6 @@ lo3::require_permission();
 </div>
 <!--
 <h2  class="no_underline">Become an Affiliate</h2>
- <p>pread the word about Local Orbit and earn cash and food for your referrals (tied to discount code and RSS widget features)<a href="/lo2/misc/affiliates.php">Find out how to start your own hub</a></p>
+ <p>pread the word about Local Orbit and earn cash and food for your referrals (tied to discount code and RSS widget features)<a href="/lo2/misc/affiliates.php">Find out how to start your own market</a></p>
 -->
 

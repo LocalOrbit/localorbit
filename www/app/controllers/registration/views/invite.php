@@ -20,7 +20,7 @@ $core->session['spammer_field'] = 'invite';
 		<?=core_ui::checkdiv('subscribe_mailchimp',$core->i18n['field:reg:check-newsletter'])?><br />
 		<br />&nbsp;<br />
 		
-		<h2><?=$core->i18n['header:reg:tos']?><span class="required">*</span></h2>
+		<h2><?=$core->i18n['header:reg:tos']?></h2>
 		<?=core_ui::checkdiv('tos_approve',$core->i18n['field:reg:check-tos'])?>		
 	
 

@@ -50,7 +50,7 @@ else
 						<img src="img/slideshow/slideshow-new-03.jpg" width="740" height="350" alt="Slide 2" />
 						<div class="caption">
 							I was impressed with Local Orbit's capacity; the flexibility is 
-							<br />essential as we seek to build food hubs across the country<br />
+							<br />essential as we seek to build food markets across the country<br />
 							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Rich Pirog, MSU Center for Regional Food Systems</span>
 						</div>
 					</div>
@@ -67,7 +67,7 @@ else
 						<img src="img/slideshow/slideshow-new-05.jpg" width="740" height="350" alt="Slide 2" />
 						<div class="caption">
 							I'm living for the day that someone <br />
-							starts a Local Orbit hub in Park Slope.
+							starts a Local Orbit Market in Park Slope.
 							<br />
 							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Park Slope Parents Blog</span>
 						</div>
@@ -150,7 +150,7 @@ else
 			<ul>
 				<li>Farmers, ranchers &amp; specialty products makers</li>
 				<li>Distributors, hospitals, universities, schools &amp; restaurants</li>
-				<li>Food hubs, farmers markets &amp; producer co-ops</li>
+				<li>Food markets, farmers markets &amp; producer co-ops</li>
 				<li>Entrepreneurs re-building local food chains across the country</li>
 			</ul>
 		</td>

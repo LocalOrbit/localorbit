@@ -31,7 +31,7 @@
 					<td>
 						<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">How do people sell through Local Orbit? </div>
 						<div class="faq_answer">
-							Local Orbit creates online marketplaces for farmers, producer coops, food hubs, farmers markets, distributors and buying groups. <br /><br />They set standards for each marketplace and know who's producing the best food in their communities. Market managers approve each seller before they can list products.  
+							Local Orbit creates online marketplaces for farmers, producer coops, food markets, farmers markets, distributors and buying groups. <br /><br />They set standards for each marketplace and know who's producing the best food in their communities. Market managers approve each seller before they can list products.  
 						</div>
 
 					</td>

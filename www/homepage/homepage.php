@@ -21,7 +21,7 @@
 						<img src="/homepage/img/slideshow/slideshow-new-03.jpg" width="740" height="350" alt="Slide 2" />
 						<div class="caption">
 							I am impressed with Local Orbit's capacity; the flexibility is
-							<br />essential for food hubs across the country<br />
+							<br />essential for food markets across the country<br />
 							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Rich Pirog, MSU Center for Regional Food Systems</span>
 						</div>
 					</div>
@@ -40,7 +40,7 @@
 							Local Orbit provides the best overall package in terms<br /> of product quality, service and cost effectiveness.
 
 							<br />
-							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Natasha Lantz, Marquette Food Hub</span>
+							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Natasha Lantz, Marquette Food Market</span>
 						</div>
 					</div>
 					<div class="slide">
@@ -83,7 +83,7 @@
 			<div class="homepage_msg">
 				Local Orbit is a one-stop shop<br />
 				for entrepreneurs, farmers,<br /> producer co-ops,
-				food hubs<br /> and independent distributors
+				food markets<br /> and independent distributors
 				<br />who are building and managing<br />
 				local food marketplaces.
 			</div>
@@ -133,7 +133,7 @@
 					<td>&nbsp;</td>
 					<td>
 						<h3>Market Makers</h3>
-						Market makers are the farmers markets, food hubs and independent aggregators who connect local buyers and sellers. They use Local Orbit's tools to facilitate sales, manage buyer and seller relationships, and streamline distribution.
+						Market makers are the farmers markets, food markets and independent aggregators who connect local buyers and sellers. They use Local Orbit's tools to facilitate sales, manage buyer and seller relationships, and streamline distribution.
 					</td>
 					<td>&nbsp;</td>
 

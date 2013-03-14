@@ -1,7 +1,7 @@
 <?php
 
 core::ensure_navstate(array('left'=>'left_about'));
-core::head('Food Hubs & Entrepreneurs','Local Orbit supports regional networks of buyers and sellers');
+core::head('Food Markets & Entrepreneurs','Local Orbit supports regional networks of buyers and sellers');
 lo3::require_permission();
 
 ?>
@@ -17,11 +17,11 @@ We help delivery service providers operate at full capacity, reducing waste and 
 <br />
 Our tools and best practices help people work together more effectively, spend less time communicating and organizing information - and reach more buyers.
 <br />
-We're also building a network of market managers and food hubs to share best practices and solve common problems.
+We're also building a network of market managers and food markets to share best practices and solve common problems.
 <br />
 Working together, everyone gets a more transparent, equitable, profitable and sustainable food system.
 <br />
-Would Local Orbit's marketplace tools help your business or organization? We'll be adding new hubs later this year and we'd love to hear from you.
+Would Local Orbit's marketplace tools help your business or organization? We'll be adding new markets later this year and we'd love to hear from you.
 <br />
 Please fill out our Partner Survey to help us understand more about your work and how we might help.
 <br />

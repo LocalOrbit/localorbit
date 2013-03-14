@@ -24,11 +24,9 @@ echo(core_ui::tab_switchers('paytabs',array('Payments from Buyers','Payments to 
 			<td class="dt">$0.01</td>
 			<td class="dt">Local Orbit</td>
 			<td class="dt">Z01</td>
-			<td class="dt">Monthly Hub Fee</td>
+			<td class="dt">Monthly Market Fee</td>
 			<td class="dt">October 30</td>
-			<td class="dt">
-			   Paid to Hub
-         </td>
+			<td class="dt">Paid to Market</td>
 		</tr>
 		<tr class="dt1">
 			<td class="dt">239843</td>

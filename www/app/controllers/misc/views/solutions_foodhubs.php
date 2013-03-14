@@ -1,11 +1,11 @@
 <?php
 core::ensure_navstate(array('left'=>'left_solutions'));
-core::head('Solutions for Food Hubs');
+core::head('Solutions for Food Markets');
 lo3::require_permission();
 ?>
 <div class="public_content">
-	<h1>Solutions for Food Hubs</h1>
-	We make it easy to build &amp; manage your hub.  Whether you're just getting started or rapidly expanding, Local Orbit offers a range of service options and pricing plans to meet you where you are today - and to grow with you as you scale.
+	<h1>Solutions for Food Markets</h1>
+	We make it easy to build &amp; manage your market.  Whether you're just getting started or rapidly expanding, Local Orbit offers a range of service options and pricing plans to meet you where you are today - and to grow with you as you scale.
 	<br />
 	<div class="clear"></div>
 	<div class="public_content_left">
@@ -18,7 +18,7 @@ lo3::require_permission();
 			<li>E-commerce &amp; managed payments</li>
 			<li>Inventory management, fulfillment &amp; delivery tools</li>
 			<li>Robust reporting</li>
-			<li>Cross-selling with other markets, hubs, co-ops &amp; producers</li>
+			<li>Cross-selling with other markets, co-ops &amp; producers</li>
 			<li>And much more</li>
 		</ul>
 	</div>

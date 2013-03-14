@@ -5,7 +5,7 @@ lo3::require_permission();
 ?>
 <div class="public_content">
 	<h1>Solutions for Schools</h1>
-	Local Orbit saves school chefs and food service purchasers time by making sourcing from multiple farmers quick and easy. If you're near a food hub or market that's powered by Local Orbit, you can sign up as a buyer on their website. 
+	Local Orbit saves school chefs and food service purchasers time by making sourcing from multiple farmers quick and easy. If you're near a food market that's powered by Local Orbit, you can sign up as a buyer on their website. 
 	<br />&nbsp;<br />
 
 	Or, if you work directly with vendors, Local Orbit can create an online management portal that lets you order from multiple sellers with a single payment. 
@@ -17,7 +17,7 @@ lo3::require_permission();
 			<li>Efficient communications and vendor reminders</li>
 			<li>Traceable &amp; transparent food purchases</li>
 			<li>Easily share with students the story of the food on your menu</li>
-			<li>Access to new vendors through other food hubs, co-ops, producers &amp; distributors </li>
+			<li>Access to new vendors through other food markets, co-ops, producers &amp; distributors </li>
 			<li>And much more</li>
 		</ul>
 	</div>

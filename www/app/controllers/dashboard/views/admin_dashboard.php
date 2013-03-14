@@ -113,7 +113,7 @@ for ($i = 0; $i < count($ord_data); $i++)
 			<td style="text-align: right"><?=core_format::price($cycle_data['week'][2])?></td>
 		</tr>
 		<tr>
-			<td>Hub Fees</td>
+			<td>Market Fees</td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['day'][3])?></td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['day'][4])?></td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['week'][3])?></td>
@@ -121,7 +121,7 @@ for ($i = 0; $i < count($ord_data); $i++)
 			<td style="text-align: right"><?=core_format::price($cycle_data['week'][5])?></td>
 		</tr>
 		<tr>
-			<td>LO Fees</td>
+			<td>Local Orbit Fees</td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['day'][6])?></td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['day'][7])?></td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['week'][6])?></td>
@@ -153,13 +153,13 @@ for ($i = 0; $i < count($ord_data); $i++)
 			<td style="text-align: right"><?=core_format::price($cycle_data['month'][2])?></td>
 		</tr>
 		<tr>
-			<td>Hub Fees</td>
+			<td>Market Fees</td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['month'][3])?></td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['month'][4])?></td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['month'][5])?></td>
 		</tr>
 		<tr>
-			<td>LO Fees</td>
+			<td>Local Orbit Fees</td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['month'][6])?></td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['month'][7])?></td>
 			<td style="text-align: right"><?=core_format::price($cycle_data['month'][8])?></td>

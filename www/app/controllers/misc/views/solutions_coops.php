@@ -5,7 +5,7 @@ lo3::require_permission();
 ?>
 <div class="public_content">
 	<h1>Solutions for Producers &amp; Co-ops</h1>
-	Everyone wants your products, but selling efficiently to different kinds of customers can be a monumental management challenge. Local Orbit is the only online service that lets you manage everything &ndash; marketing, inventory, sales, logistics and delivery &ndash; to everyone &ndash; restaurants, distributors, farmers markets, food hubs and consumers &ndash; from a single account, with one easy-to-read dashboard. 
+	Everyone wants your products, but selling efficiently to different kinds of customers can be a monumental management challenge. Local Orbit is the only online service that lets you manage everything &ndash; marketing, inventory, sales, logistics and delivery &ndash; to everyone &ndash; restaurants, distributors, farmers markets, food markets and consumers &ndash; from a single account, with one easy-to-read dashboard. 
 	<br />
 	<div class="clear"></div>
 	<div class="public_content_left">

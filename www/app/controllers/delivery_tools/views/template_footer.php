@@ -10,7 +10,7 @@ $domain_infos = core::model('domains')->get_domain_info($domain_id);
 			<?
 				foreach($domain_infos as $domain_info) {
 					echo 'Email <a href="mailTo:'.$domain_info["secondary_contact_email"].'">'.$domain_info["secondary_contact_email"].'</a> <br />';
-					echo 'or call '.$domain_info["secondary_contact_phone"].'<br />';
+					echo 'Call '.$domain_info["secondary_contact_phone"].'<br />';
 				}
 			?>
 		</div>

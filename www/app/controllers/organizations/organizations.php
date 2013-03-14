@@ -140,7 +140,7 @@ class core_controller_organizations extends core_controller
 			and domain_id='.intval($core->data['domain_id'])
 		);
 		core_datatable::js_reload('currentdomains');
-		core_ui::notification('home hub set',false);
+		core_ui::notification('home market set',false);
 	}
 
 	function get_filtered_orgs()
@@ -369,7 +369,7 @@ class core_controller_organizations extends core_controller
 		{
 			if(count(array_intersect($core->session['domains_by_orgtype_id'][2],$org_all_domains)) == 0)
 			{
-				core::log('no interset between hubs this user is MM of and org that is being updated. require admin');
+				core::log('no interset between markets this user is MM of and org that is being updated. require admin');
 				lo3::require_orgtype('admin');
 			}
 		}
@@ -444,10 +444,10 @@ class core_controller_organizations extends core_controller
 		//~ core::log('cond 3: '.(!in_array($core->data['domain_id'],$org_domains_by_orgtype_id[3])));
 		//~ core::log('current org domains: '.print_r($org_domains_by_orgtype_id[3],true));
 		//~ core::log('new domain: '.$core->data['domain_id']);
-		# check for a hub change
+		# check for a market change
 		if(lo3::is_admin() && count($org_domains_by_orgtype_id[3]) > 0 && !in_array($core->data['domain_id'],$org_domains_by_orgtype_id[3]))
 		{
-			core::log('changing hub');
+			core::log('changing market');
 			core_db::query('delete from organizations_to_domains where org_id='.$org['org_id']);
 			core_db::query('insert into organizations_to_domains (domain_id,org_id,orgtype_id,is_home) values ('.intval($core->data['domain_id']).','.$org['org_id'].',3,1)');
 		}

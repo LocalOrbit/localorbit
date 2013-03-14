@@ -26,9 +26,9 @@ lo3::require_permission();
 <h2>How It Works</h2>
 <p><img src="img/misc/HowItWorksSellerPayment.png" /></p>
 <ol>
-	<li>Local Orbit provides tools for food hubs, farmers markets, co-ops and local distribution entrepreneurs.</li>
+	<li>Local Orbit provides tools for food markets, farmers markets, co-ops and local distribution entrepreneurs.</li>
 	<li>Producers sell direct to customers through one or more Local Orbit marketplaces. Buyers order on a weekly basis. Local Orbit handles the payments and communications to support you in fulfilling your orders.</li>
-	<li>Depending on the region, sellers either deliver wholesale orders directly or through aggregated delivery services. Consumer orders are delivered to a central hub site. Each marketplace has a regular order and delivery schedule.</li>
+	<li>Depending on the region, sellers either deliver wholesale orders directly or through aggregated delivery services. Consumer orders are delivered to a central market site. Each marketplace has a regular order and delivery schedule.</li>
 	<li>Local Orbit sends payments within two business days of delivery, after deducting a sales commission. The commission includes credit card processing fees and a share to the local marketplace partner. Fees are established with local partners.</li>
 </ol>
 <br />

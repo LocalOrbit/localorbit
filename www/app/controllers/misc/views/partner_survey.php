@@ -1,7 +1,7 @@
 <?php
 
 core::ensure_navstate(array('left'=>'left_about'));
-core::head('Buy and Sell Food on Local Orbit - Start Your Own Local Orbit Hub','Start Your Own Local Orbit Hub');
+core::head('Buy and Sell Food on Local Orbit - Start Your Own Local Orbit Market','Start Your Own Local Orbit Market');
 lo3::require_permission();
 
 ?>

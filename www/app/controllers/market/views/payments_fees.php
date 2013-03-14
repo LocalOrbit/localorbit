@@ -77,10 +77,10 @@ $payment_methods = core::model('organization_payment_methods')
 
 		<?=core_form::input_text('Order minimum','order_minimum',floatval($data['order_minimum']))?>
 	
-		<?=core_form::input_text('LO Fee %','fee_percen_lo',floatval($data['fee_percen_lo']))?>
-		<?=core_form::input_text('Hub Fee %','fee_percen_hub',floatval($data['fee_percen_hub']))?>
+		<?=core_form::input_text('Local Orbit Fee %','fee_percen_lo',floatval($data['fee_percen_lo']))?>
+		<?=core_form::input_text('Market Fee %','fee_percen_hub',floatval($data['fee_percen_hub']))?>
 		<?=core_form::input_text('Paypal Processing Fee %','paypal_processing_fee',floatval($data['paypal_processing_fee']))?>
-		<?=core_form::input_check('Hub Covers Fees','hub_covers_fees',$data['hub_covers_fees'])?>
+		<?=core_form::input_check('Market Covers Fees','hub_covers_fees',$data['hub_covers_fees'])?>
 
 		<?=core_form::header_nv('Allowed Payment Methods',array(
 			'info'=>$core->i18n['note:allowed_payment_methods'],

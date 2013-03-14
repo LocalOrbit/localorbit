@@ -89,7 +89,7 @@ if($data['allow_sell'] == 1)
 }
 if($is_mm && lo3::is_admin())
 {
-	$tabs[] = 'Managed Hubs';
+	$tabs[] = 'Managed Markets';
 	$managehubs_tab_id = count($tabs);
 }
 
