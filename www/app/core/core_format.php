@@ -139,7 +139,10 @@ class core_format
 			$int = ($int + intval($core->session['time_offset']));
 
 		#echo('adjusted is '.date($core->config['formats']['dates'][$format],$int).'<br />');
-		return date($core->config['formats']['dates'][$format],$int);
+		$date = date($core->config['formats']['dates'][$format],$int);
+		$date = str_replace('am','a.m.',$date);
+		$date = str_replace('pm','p.m.',$date);
+		return $date;
 	}
 
 	public static function dbdate($int,$format='long')
