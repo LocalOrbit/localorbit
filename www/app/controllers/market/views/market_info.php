@@ -60,14 +60,21 @@ $social_options = core::model('social_options')->collection()->to_array();
 </div>
 
 <div class="control-group">
-	<label class="control-label">Market Profile</label>
+	<label class="control-label">
+		Market Profile
+		<?=core_ui::tool_tip("Market Profile", "Here is your opportunity to tell your market's story.  Why is your market best source for local food?   What makes your market unique?")?>			
+	</label>
 	<div class="controls">
 		<textarea rows="5" class="input-xxlarge" name="market_profile"><?=$data['market_profile']?></textarea>
 	</div>
 </div>
 
 <div class="control-group">
-	<label class="control-label">Market Policies</label>
+	<label class="control-label">
+		Market Policies
+		<?=core_ui::help_tip("Market Policies", "This information appears on the Market Info page.")?>
+		<?=core_ui::tool_tip("Market Policies", "This is your chance to tell the market's story. We recommend that you do not copy and paste directly from your website.")?>	
+	</label>
 	<div class="controls">
 		<textarea rows="5" class="input-xxlarge" cols="60" name="market_policies"><?=$data['market_policies']?></textarea>
 	</div>
@@ -79,7 +86,11 @@ $has_custom = (strpos($logo,'default') === false);
 ?>
 
 <div class="control-group">
-	<label class="control-label" for="specimage">Profile</label>
+	<label class="control-label" for="specimage">
+		Profile	
+		<?=core_ui::help_tip("Profile", "This image will appear on the Market Info page.")?>
+		<?=core_ui::tool_tip("Profile", "Select a profile image that best represents your business. Are you known for great service? Consider posting an image of your team members.  Or are you known for the best product? Insert an image of your team with a basket of products.")?>
+	</label>
 	<div class="controls row">
 		<div class="span3"><img class="pull-left img-polaroid" src="<?=$logo?>?_time_=<?=$core->config['time']?>" id="logo3" /></div>
 		<div class="span5">
@@ -95,7 +106,10 @@ $has_custom = (strpos($logo,'default') === false);
 </div>
 
 <div class="control-group">
-	<label class="control-label">Store Closed Note</label>
+	<label class="control-label">
+		Store Closed Note	
+		<?=core_ui::help_tip("Store Closed Note	", "This lets the buyers know the market is closed and when it will reopen.")?>
+	</label>
 	<div class="controls">
 		<textarea rows="5" class="input-xxlarge" name="closed_note"><?=$data['closed_note']?></textarea>
 	</div>

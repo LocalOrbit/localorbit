@@ -189,6 +189,9 @@ class core_form
 		$html .= ($options['display_row'])?'':' style="display: none;"';
 		$html .= ($options['row_id'] == '')?'':' id="'.$options['row_id'].'"';
 		$html .='><label class="control-label" for="' . $options['field_name'] . '">'.$label;
+		
+		if ($options['tool_tip']): $html .= '<i class="helpslug icon-lamp icon_tool_tip" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
+		if ($options['help_tip']): $html .= '<i class="helpslug icon-question-sign" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
 		if ($options['sublabel']): $html .= '<span class="help-block">' . $options['sublabel'] . '</span>'; endif;
 			
 		if(isset($options['popover']) && $options['popover']!='')
@@ -258,6 +261,8 @@ class core_form
 	{
 		$options = core_form::finalize_options($options,array(
 			'sublabel'=>'',
+			'help_tip'=>'',
+			'tool_tip'=>'',	
 			'row_id'=>'',
 			'display_row'=>true,
 			'required'=>false,
@@ -282,6 +287,8 @@ class core_form
 	{
 		$options = core_form::finalize_options($options,array(
 			'sublabel'=>'',
+			'help_tip'=>'',
+			'tool_tip'=>'',	
 			'row_id'=>'',
 			'display_row'=>true,
 			'required'=>false,
@@ -325,6 +332,8 @@ class core_form
 		$value   = core_form::get_final_value($name,$value);
 		$options = core_form::finalize_options($options,array(
 			'sublabel'=>'',
+			'help_tip'=>'',
+			'tool_tip'=>'',				
 			'row_id'=>'',
 			'display_row'=>true,
 			'required'=>false,
@@ -348,9 +357,11 @@ class core_form
 		$html .= ($options['display_row'])?'':' style="display: none;"';
 		$html .= ($options['row_id'] == '')?'':' id="'.$options['row_id'].'"';
 		$html .='><label class="control-label" for="' . $options['field_name'] . '">'.$label;
-				
+		
+		if ($options['tool_tip']): $html .= '<i class="helpslug icon-lamp icon_tool_tip" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
+		if ($options['help_tip']): $html .= '<i class="helpslug icon-question-sign" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
 		if ($options['sublabel']): $html .= '<span class="help-block">' . $options['sublabel'] . '</span>'; endif;
-
+		
 		if ($options['popover']):
 			$html .=' <i class="helpslug icon-question-sign" rel="popover" data-title="' . $label . '" data-content="' . $options['popover'] . '" />';
 		endif;
@@ -380,6 +391,8 @@ class core_form
 		$value = core_form::get_final_value($name,$value);
 		$options = core_form::finalize_options($options,array(
 			'sublabel'=>'',
+			'help_tip'=>'',
+			'tool_tip'=>'',	
 			'row_id'=>'',
 			'display_row'=>true,
 			'required'=>false,
@@ -399,6 +412,8 @@ class core_form
 		$value = core_form::get_final_value($name,$value);
 		$options = core_form::finalize_options($options,array(
 			'sublabel'=>'',
+			'help_tip'=>'',
+			'tool_tip'=>'',	
 			'row_id'=>'',
 			'display_row'=>true,
 			'required'=>false,
@@ -413,11 +428,14 @@ class core_form
 		return core_form::tr_nv($label,core_ui::checkdiv($name,'',$value,$options['onclick']),$options);
 	}
 
+	
 	public static function input_password($label,$name,$value='',$options=null)
 	{
 		$value   = core_form::get_final_value($name,$value);
 		$options = core_form::finalize_options($options,array(
 			'sublabel'=>'',
+			'help_tip'=>'',
+			'tool_tip'=>'',	
 			'row_id'=>'',
 			'display_row'=>true,
 			'required'=>false,
@@ -434,6 +452,8 @@ class core_form
 		$html = '<div class="control-group">';
 		$html .= '<label class="control-label" for="' . $name . '">' . $required . $label;
 		
+		if ($options['tool_tip']): $html .= '<i class="helpslug icon-lamp icon_tool_tip" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
+		if ($options['help_tip']): $html .= '<i class="helpslug icon-question-sign" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
 		if ($options['sublabel']): $html .= '<span class="help-block">' . $options['sublabel'] . '</span>'; endif;
 
 		if ($options['popover']):
@@ -456,6 +476,8 @@ class core_form
 		$value = core_form::get_final_value($name,$value);
 		$options = core_form::finalize_options($options,array(
 			'sublabel'=>'',
+			'help_tip'=>'',
+			'tool_tip'=>'',	
 			'rowid'=>'',
 			'display_row'=>true,
 			'required'=>false,
@@ -522,6 +544,8 @@ class core_form
 		$value = core_form::get_final_value($name,$value);
 		$options = core_form::finalize_options($options,array(
 			'sublabel'=>'',
+			'help_tip'=>'',
+			'tool_tip'=>'',	
 			'rowid'=>'',
 			'display_row'=>true,
 			'required'=>false,
@@ -543,6 +567,8 @@ class core_form
 		$html = '<div class="control-group">';
 		$html .= '<label class="control-label" for="' . $name . '">' . $required . $label;
 	
+		if ($options['tool_tip']): $html .= '<i class="helpslug icon-lamp icon_tool_tip" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
+		if ($options['help_tip']): $html .= '<i class="helpslug icon-question-sign" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
 		if ($options['sublabel']): $html .= '<span class="help-block">' . $options['sublabel'] . '</span>'; endif;
 
 		if ($options['popover']):
@@ -571,6 +597,8 @@ class core_form
 		$value = core_form::get_final_value($name,$value);
 		$options = core_form::finalize_options($options,array(
 			'sublabel'=>'',
+			'help_tip'=>'',
+			'tool_tip'=>'',					
 			'rowid'=>'',
 			'display_row'=>true,
 			'required'=>false,

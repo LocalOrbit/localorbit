@@ -82,7 +82,10 @@ page_header('Editing Product: '.$data['name'],'#!products-list','cancel','cancel
 				<?=core_form::value('Seller','<p><a href="#!organizations-edit--org_id-'.$data['org_id'].'">'.$data['org_name'].'</a></p>')?>
 			<?}?>
 			
-			<?=core_form::input_text('Product','product_name',$data['name'],array('required' => true))?>
+			<?=core_form::input_text('Product','product_name',$data['name'],array(
+				'required' => true, 
+				'help_tip'=>'Only list the product name here. Quantity, sizes and units should be included in the short description section.'
+			))?>
 			
 			<div class="control-group">
 			    <label class="control-label" for="">Product Category</label>
@@ -99,6 +102,7 @@ page_header('Editing Product: '.$data['name'],'#!products-list','cancel','cancel
 				$data['short_description'],
 				array(
 					'required'=>true,
+					'help_tip'=>'This is the first opportunity for a buyer to learn about the product. Include additional explanation about the quantity, size or unit here, if needed.',
 					'size'=>'input-xxlarge',
 					'popover'=>'',
 					'rows'=>2,
@@ -113,7 +117,9 @@ page_header('Editing Product: '.$data['name'],'#!products-list','cancel','cancel
 				$data['description'],
 				array(
 					'size'=>'input-xxlarge',
-					'popover'=>'Buyers want to know how you grow or prepare your products. Tell them how you do it!'
+					'tool_tip'=>'These durable, yet attractive baskets are wonderful as a receptacle for your fresh fruit on the counter or to keep your desk organized. Great for gift giving too.',
+					'help_tip'=>'Buyers want to know how you grow or prepare your products. Tell them how you do it!',
+					'sublabel'=>'Please limit this to 500 characters'
 			))?>
 			
 			
@@ -156,6 +162,8 @@ page_header('Editing Product: '.$data['name'],'#!products-list','cancel','cancel
 				$data['who'],
 				array(
 					'sublabel' => $who_msg,
+					'help_tip'=>'This field is pre-populated with the `Who` from your My Organization page. Feel free to edit to relate the story to your product.',
+					'sublabel'=>'This description comes from the My Organization page. <a href="#!organizations-edit--org_id-'.$data['org_id'].'">Edit here</a>.',
 					'size'=>'input-xxlarge',
 			))?>
 
@@ -165,7 +173,8 @@ page_header('Editing Product: '.$data['name'],'#!products-list','cancel','cancel
 				'how',
 				$data['how'],
 				array(
-					'sublabel' => $how_msg,
+					'help_tip'=>'This field is pre-populated with the `How` from your My Organization page. Feel free to edit to relate the story to your product.',
+					'sublabel'=>'This description comes from the My Organization page. <a href="#!organizations-edit--org_id-'.$data['org_id'].'">Edit here</a>.',
 					'size'=>'input-xxlarge',
 			))?>
 

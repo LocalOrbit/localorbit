@@ -134,8 +134,16 @@ class core_ui
 		}
 		core::js($js);
 	}
-
-
+	public static function field_note($text) {
+		return '<span class="help-block">'.$text.'</span>';
+	}
+	public static function tool_tip($title, $text) {
+		return '<i class="helpslug icon_tool_tip icon-lamp" rel="popover" data-title="'.$title.'" data-content="'.$text.'" data-original-title=""></i>';
+	}
+	public static function help_tip($title, $text) {
+		return '<i class="helpslug icon-question-sign" rel="popover" data-title="'.$title.'" data-content="'.$text.'" data-original-title=""></i>';
+	}
+	
 	/* Standard HTML checkbox */
 	public static function checkdiv($name, $text, $checked = false, $onclick='')
 	{

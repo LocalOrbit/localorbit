@@ -14,6 +14,8 @@ if($data['allow_sell'] == 1)
 	
 	<div class="tabarea" id="orgtabs-a<?=$tab_id?>">
 		<?=core_form::input_textarea('Who','profile',$data,array(
+			'help_tip'=>'This information is automatically added to each product listing and can be edited for individual products.',
+			'tool_tip'=>'Buyers want to know who you are. Tell them about yourself.',
 			'sublabel'=>'Your organization\'s story',
 			'required'=>true,
 			'rows'=>5,
@@ -23,6 +25,8 @@ if($data['allow_sell'] == 1)
 
 
 		<?=core_form::input_textarea('How','product_how',$data,array(
+			'help_tip'=>'This information is automatically added to each product listing and can be edited for individual products.',
+			'tool_tip'=>'Buyers want to know how you grow or prepare your products. Tell them how you do it!',
 			'sublabel'=>'Your products\' story',
 			'required'=>true,
 			'rows'=>5,

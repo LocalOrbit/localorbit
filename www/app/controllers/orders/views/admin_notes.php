@@ -10,7 +10,10 @@ if ($core->data['load_popup'] == 'yes') {
 	$admin_notes = $core->view[1];
 }
 ?>
-	<h4>Admin Notes</h4>
+	<h4>
+		Admin Notes
+		<?=core_ui::help_tip("Admin Notes", "Only Market Managers and Admins can see the text you enter here.")?>	
+	</h4>
 	<input type="hidden" name="lo_oid" value="<?=$lo_oid?>" />
 	<textarea name="admin_notes" class="span6" rows="5"><?=$admin_notes?></textarea>
 	<? 

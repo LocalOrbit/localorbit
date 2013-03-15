@@ -71,14 +71,20 @@ if(lo3::is_admin())
 			<fieldset>
 				<?if(lo3::is_admin()){?>
 				<div class="control-group">
-					<label class="control-label">Domain ID</label>
+					<label class="control-label">
+						Domain ID
+						<?=core_ui::help_tip("Domain ID", "A unique number associated with the market. It is most notably used for passing data for creating custom email templates.")?>
+					</label>
 					<div class="controls">
 						<?=$data['domain_id']?>
 					</div>
 				</div>
 				<?}?>
 				<div class="control-group">
-					<label class="control-label">Name</label>
+					<label class="control-label">
+						Name
+						<?=core_ui::tool_tip("Name", "Don't forget to double check your spelling")?>
+					</label>
 					<div class="controls">
 						<input type="text" name="name" value="<?=$data['name']?>" />
 					</div>
@@ -114,14 +120,38 @@ if(lo3::is_admin())
 					</div>
 				</div>
 
-				<?= core_form::input_check('Apply Daylight Savings','do_daylight_savings',$data['do_daylight_savings']); ?>
-				<?if(lo3::is_admin()){?>
-				<?= core_form::input_check('Is Live','is_live',$data['is_live']); ?>
-				<?}?>
-				<?= core_form::input_check('Close Store','is_closed',$data['is_closed']); ?>
+				
+					
+				<div class="control-group">
+					<label class="control-label">
+						Apply Daylight Savings
+						<?=core_ui::help_tip("Apply Daylight Savings", "This box needs to be checked for all states that recognize daylight savings time.  Arizona and Hawaii are the only two states in the US that do not.")?>
+					</label>
+					<div class="controls">
+						<?=core_ui::checkdiv('do_daylight_savings','', ($data['do_daylight_savings'] == 1))?>
+					</div>
+				</div>
+				
+				
+				<?
+					if(lo3::is_admin()){
+						echo core_form::input_check('Is Live','is_live',$data['is_live']);
+					}
+				?>
+				
+				<?= core_form::input_check('Close Store','is_closed',$data['is_closed'], array('sublabel'=>'A closed message will appear on the Shop page.')); ?>
 
+				
 				<?if(lo3::is_admin()){?>
-					<?= core_form::input_check('Auto-activate Organizations','autoactivate_organization',$data['autoactivate_organization']); ?>
+					<div class="control-group">
+						<label class="control-label">
+							Auto-activate Organizations
+							<?=core_ui::help_tip("Auto-activate Organizations", "A buyer can register and shop without Market Manager approval.")?>
+						</label>
+						<div class="controls">
+							<?=core_ui::checkdiv('autoactivate_organization','', ($data['autoactivate_organization'] == 1))?>
+						</div>
+					</div>
 				<?}?>
 
 			</fieldset>

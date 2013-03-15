@@ -1,6 +1,9 @@
 <?php global $data; ?>
 <div class="control-group">
-	<label class="control-label">Dashboard Note</label>
+	<label class="control-label">
+		Dashboard Note
+		<?=core_ui::help_tip("Dashboard Note", "This is an announcement that is only visible to Market Manager and sellers. This note appears in a colored box towards the top of the page when the user first logs on.  The note can be hidden by the user by selecting the 'dismiss this message' button.")?>
+	</label>
 	<div class="controls">
 		<textarea rows="5" class="input-xxlarge" name="dashboard_note"><?=htmlentities($data['dashboard_note'])?></textarea>
 	</div>
@@ -16,7 +19,11 @@
 */?>
 
 <div class="control-group">
-	<label class="control-label">Custom Tagline</label>
+	<label class="control-label">
+		Custom Tagline		
+		<?=core_ui::field_note("Character limit is 60 or less.")?>
+		<?=core_ui::help_tip("Custom Tagline", "Located directly below the logo at the top of the page.")?>
+	</label>
 	<div class="controls">
 		<input type="text" name="custom_tagline" class="input-xxlarge" value="<?=$data['custom_tagline']?>" maxlength="60" />
 	</div>
@@ -28,7 +35,10 @@ $has_custom = (strpos($logo,'default') === false);
 ?>
 
 <div class="control-group">
-	<label class="control-label" for="specimage">Main Logo</label>
+	<label class="control-label" for="specimage">
+		Main Logo	
+		<?=core_ui::help_tip("Main Logo", "The main logo located at the top of each page, pick list and packing slip.")?>
+	</label>
 	<div class="controls row">
 		<div class="span3"><img class="pull-left img-polaroid" id="logo1" src="<?=$logo?>" /></div>
 		<div class="span5">
@@ -49,7 +59,10 @@ $has_custom = (strpos($logo,'default') === false);
 ?>
 
 <div class="control-group">
-	<label class="control-label" for="email_image">E-mail Logo</label>
+	<label class="control-label" for="email_image">
+		E-mail Logo
+		<?=core_ui::help_tip("E-mail Logo", "The email logo appears in all email notifications sent to users.")?>
+	</label>
 	<div class="controls row">
 		<div class="span3"><img class="pull-left img-polaroid" id="logo2" src="<?=$logo?>" /></div>
 		<div class="span5">

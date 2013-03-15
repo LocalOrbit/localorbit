@@ -49,7 +49,8 @@ echo('</div>');
 		}	
 	</script>
 
-	<?=core_form::input_text('Address Label','label','','')?>
+	
+	<?=core_form::input_text('Address Label','label','',array('help_tip'=>'Label your address to easily identify it later.  For instance, Warehouse, Corporate Office, Food Hub.'))?>
 	<?=core_form::input_text('Address','address','','')?>
 	<?=core_form::input_text('City','city','','')?>
 	
