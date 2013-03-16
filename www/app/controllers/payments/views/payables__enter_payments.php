@@ -88,7 +88,7 @@ foreach($invoice_groups as $group)
 					</tr>
 				</table>
 		</div>
-		<div class="span5">
+		<div class="span6">
 			<h2><i class="icon-coins">&nbsp;</i>Method</h2>
 			<? 
 			if($group['to_org_id'] == 1){
@@ -104,7 +104,7 @@ foreach($invoice_groups as $group)
 				if($methods->__num_rows > 0)
 				{
 					echo(core_form::input_select('Pay Via: ','payment_group_'.$group['to_org_id'].'__opm_id',null,$methods,array(
-						'select_style'=>'width: 320px;',
+						'select_style'=>'width: 300px;',
 						'text_column'=>'dropdown_text',
 						'value_column'=>'opm_id',
 					)));
@@ -116,7 +116,7 @@ foreach($invoice_groups as $group)
 			?>
 				
 				<br />
-				<input type="button" class="btn btn-info" value="Add New Account" onclick="core.payments.newAccount(this)" />
+				<input type="button" class="btn btn-info pull-right" value="Add New Account" onclick="core.payments.newAccount(this)" />
 				<br />
 				<input type="hidden" name="paygroup-<?=$group['to_org_id']?>" value="3" />
 			<?
