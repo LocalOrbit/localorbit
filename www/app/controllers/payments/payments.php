@@ -60,6 +60,46 @@ class core_controller_payments extends core_controller
 			{
 				case 3:
 					# do an ach payment for this:
+					$new_payment = core::model('payments');
+					$new_payment['from_org_id'] = $group['from_org_id'];
+					$new_payment['to_org_id']   = $group['to_org_id'];
+					$new_payment['payment_method_id'] = 3;
+					$new_payment['amount'] = $group['amount'];
+					$new_payment->save();
+					$trace_nbr = 'LO-';
+					
+					if($core->config['stage'] != 'production')
+						$trace_nbr = $core->config['stage'].'-'.$trace_nbr;
+					$trace_nbr .= str_pad($new_payment['payment_id'],8,0,STR_PAD_LEFT);
+
+					$paymeth = core::model('organization_payment_methods')->load($core->data['payment_group_'.$group['to_org_id'].'__opm_id']);
+					
+					
+					$ach_amount = $group['amount'];
+					$result = $paymeth->make_payment($trace_nbr,'',$ach_amount);
+					$new_payment->save();
+					
+					
+					if($result)
+					{
+						foreach($group['invoices'] as $invoice)
+						{
+							
+							$x_invoices_payments = core::model('x_invoices_payments');
+							$x_invoices_payments['invoice_id']  = $invoice['invoice_id'];
+							$x_invoices_payments['payment_id']  = $new_payment['payment_id'];
+							$x_invoices_payments['amount_paid'] = $invoice['amount'];
+							$x_invoices_payments->save();			
+							
+						}
+					}
+					else
+					{
+						$new_payment->delete($new_payment['payment_id']);
+						core_ui::notification('payment failed. Local Orbit will contact you shortly.');
+						core::deinit();
+					}
+					
 					break;
 				
 				case 4:
