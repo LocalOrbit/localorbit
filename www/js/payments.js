@@ -140,6 +140,15 @@ core.payments.saveInvoicePayments=function(tabName){
 	core.doRequest('/payments/record_payments',core.getFormDataForSubmit(document.paymentsForm));
 }
 
+core.payments.newAccount=function(refObj){
+	var pos = $(refObj).offset(); 
+	$('#edit_popup').css( { 
+		'left': (pos.left - 100)+'px', 
+		'top': (pos.top - 30)+'px'
+	});
+	core.doRequest('/payments/new_bank_account',{});
+}
+
 core.payments.newRecordPayments=function(tabName){
 	document.paymentsForm.payment_from_tab.value=tabName;
 	core.doRequest('/payments/new_record_payments',core.getFormDataForSubmit(document.paymentsForm));

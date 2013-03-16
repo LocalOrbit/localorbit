@@ -93,10 +93,18 @@ class core_controller_organizations extends core_controller
 			$org->save();
 		}
 
+		if($core->data['from_financials'] == 'yes')
+		{
+			core::js('$(\'#edit_popup\').fadeOut(\'fast\');$(\'#all_all_payments,#payments_pay_area\').toggle();core.payments.makePayments(\'payments\');');
+			core_ui::notification('bank account saved',false);
+		}
+		else
+		{
+			core_datatable::js_reload('payment_methods');
 
-		core_datatable::js_reload('payment_methods');
-
-		core_ui::notification('bank account saved',false);
+			core_ui::notification('bank account saved',false);
+		}
+		core::deinit();
 	}
 	
 	function set_primary_account()
