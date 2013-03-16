@@ -73,7 +73,7 @@ class core_controller_payments extends core_controller
 					
 					# only checks get ref nbrs
 					if($new_payment['payment_method_id'] == 4)
-						$new_payment['ref_nbr'] =  $core->data['_ref_nbr_'.$group['to_org_id']];
+						$new_payment['ref_nbr'] =  $core->data['ref_nbr_'.$group['to_org_id']];
 					
 					core::log('saving payment to '.$group['to_org_id']);
 					$new_payment->save();
@@ -89,7 +89,9 @@ class core_controller_payments extends core_controller
 					break;
 			}
 		}
-				
+		$this->reload_all_tabs();
+		core::js("$('#all_all_payments,#payments_pay_area').toggle();");
+		core_ui::notification('payments saved');
 	}
 	
 	function record_payments()
