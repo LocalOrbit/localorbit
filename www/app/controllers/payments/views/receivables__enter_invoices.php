@@ -113,7 +113,7 @@ foreach($invoices as $invoice)
 		<?
 		
 	}
-	$group_total += $invoice['amount_due'];
+	$group_total += $invoice['amount'];
 	$invoices[] = $invoice['invoice_id'];
 ?>
 
