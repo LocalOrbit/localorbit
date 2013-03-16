@@ -778,7 +778,8 @@ function payments__add_standard_filters($datatable,$tab='')
 	}
 	else
 	{
-		$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - ((lo3::is_market())?40:0)).'px;height: 38px;clear:right;"><img src="/img/blank.png" width="285" height="33" /></div>';
+		if($datatable->name != 'purchase_orders')
+			$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - ((lo3::is_market())?40:0)).'px;height: 38px;clear:right;"><img src="/img/blank.png" width="285" height="33" /></div>';
 	}
 	
 	# Check to see if we need either of the To filters and the method filter. MMs and Admins get all of them
@@ -787,7 +788,7 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->add_filter(new core_datatable_filter('to_domain_id'));
 		
 		$datatable->filter_html .= '<div style="float:left;width: '.$filter_width.'px;">';
-		$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width -((lo3::is_market())?10:0)).'px;text-align: right;">To Market: </div>';
+		$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width -((lo3::is_market() && $datatable->name != 'purchase_orders')?10:0)).'px;text-align: right;">To Market: </div>';
 		$datatable->filter_html .= core_datatable_filter::make_select(
 			$datatable->name,
 			'to_domain_id',
