@@ -10,14 +10,14 @@ core.payments.createInvoices=function(){
 	core.doRequest('/payments/do_create_invoices',core.getFormDataForSubmit(document.paymentsForm));
 	
 }
-
-core.payments.recordPayments=function(){
-	core.doRequest('/payments/invoices__record_payment',{'due_invoices':core.ui.getCheckallList(document.paymentsForm,'dueinvoices').join(',')});
-}
-
 core.payments.makePayments=function(tabName){
 	//alert(core.ui.getCheckallList(document.paymentsForm,'payments').join(','));
-	core.doRequest('/payments/payments__pay_payment',{'tab_name':tabName,'checked_invoices':core.ui.getCheckallList(document.paymentsForm,tabName).join(',')});
+	core.doRequest('/payments/payables__enter_payments',{'tab_name':tabName,'checked_invoices':core.ui.getCheckallList(document.paymentsForm,tabName).join(',')});
+}
+
+core.payments.enterInvoices=function(tabName){
+	//alert(core.ui.getCheckallList(document.paymentsForm,'payments').join(','));
+	core.doRequest('/payments/receivables__enter_invoices',{'tab_name':tabName,'checked_invoices':core.ui.getCheckallList(document.paymentsForm,tabName).join(',')});
 }
 
 core.payments.initInvoiceGroups=function(tabName){
@@ -139,6 +139,12 @@ core.payments.saveInvoicePayments=function(tabName){
 	document.paymentsForm.payment_from_tab.value=tabName;
 	core.doRequest('/payments/record_payments',core.getFormDataForSubmit(document.paymentsForm));
 }
+
+core.payments.newRecordPayments=function(tabName){
+	document.paymentsForm.payment_from_tab.value=tabName;
+	core.doRequest('/payments/new_record_payments',core.getFormDataForSubmit(document.paymentsForm));
+}
+
 
 core.payments.setPaymentOptions=function(curGroup,val){
 	//alert('called: '+val+'/'+curGroup);

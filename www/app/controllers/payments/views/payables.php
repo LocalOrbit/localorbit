@@ -51,7 +51,7 @@ $payments_table->sort_direction='desc';
 		$payments_table->render();
 		?>
 		<div class="pull-right" id="create_payment_button">
-			<input type="button" onclick="core.payments.makePayments('payments');" class="btn btn-info" value="Make Payment" />
+			<input type="button" onclick="core.payments.<?=((lo3::is_admin())?'enterInvoices':'makePayments')?>('payments');" class="btn btn-info" value="Make Payment" />
 		</div>
 	</div>
 	

@@ -44,7 +44,7 @@ $invoices_table->sort_direction='desc';
 		{
 		?>
 		<div class="pull-right" id="create_payment_form_toggler">
-			<input type="button" onclick="core.payments.makePayments('invoices');" class="btn btn-info" value="Enter Receipts" />
+			<input type="button" onclick="core.payments.enterInvoices('invoices');" class="btn btn-info" value="Enter Receipts" />
 		</div>
 		<?}?>
 		<br />&nbsp;<br />

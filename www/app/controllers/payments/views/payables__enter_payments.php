@@ -18,141 +18,136 @@ $cur_group = '';
 $group_total = 0;
 $invoice_ids = array();
 core::js('core.payments.invoiceGroups={};');
+$invoice_list = array();
 
 
 $button_label = (lo3::is_market() || lo3::is_admin())?'save payments':'make payment';
-
-
-$counter = 0;
+$invoice_groups = array();
 foreach($invoices as $invoice)
 {
-	$counter++;
-	core::log('building UI for invoice '.$invoice['invoice_id']);
-	if($invoice['to_org_id'].'_'.$invoice['from_org_id'] != $cur_group)
+	$invoice_list[] = $invoice['invoice_id'];
+	if(!isset($invoice_groups[$invoice['to_org_id']]))
 	{
-		if(count($invoices) > 0)
-		{
-			echo('<input type="hidden" name="'.$core->data['tab_name'].'_group_'.$cur_group.'_invoices" value="'.implode(',',$invoices).'" />');
-		}
-		$invoices = array();
-		if($cur_group != '')
-		{
-			core::js('core.payments.invoiceGroups[\''.$cur_group.'\']='.$group_total.';');
-			echo('</table><br />&nbsp;<br /><hr /><br />&nbsp;<br />');
-		}
-				
-		# remove the counter append in order to re-enable invoice grouping
-		$cur_group = $invoice['to_org_id'].'_'.$invoice['from_org_id'].'__'.$counter;
-		$group_total = 0;
-		$inv_counter = 0;
-		
-		$label = 'Amount Paid';
-		
-		if($invoice['from_org_id'] == $core->session['org_id'])
-		{
-			$label = 'Amount to Pay';
-		}
-		
-		$allow_ach = false;
-		$methods = array(
-			5=>'Cash',
-			4=>'Check',
+		$invoice_groups[$invoice['to_org_id']] = array(
+			'amount'=>0,
+			'from_org_id'=>$invoice['from_org_id'],
+			'to_org_id'=>$invoice['to_org_id'],
+			'to_org_name'=>$invoice['to_org_name'],
+			'invoices'=>array()
 		);
-		if($core->data['tab_name'] != 'invoices' && ($invoice['from_org_id'] == 1 ||  $invoice['to_org_id'] == 1))
-		{
-			$allow_ach = true;
-			$methods[3] = 'ACH';
-		}
-		
-		?>
-		<h3>From <?=$invoice['from_org_name']?> to <?=$invoice['to_org_name']?></h3>
-		<?=core_form::value('Amount Due','',array('id'=>$core->data['tab_name'].'_amount_due_'.$cur_group))?>
-		<?=core_form::input_text($label ,$core->data['tab_name'].'_payment_amount_'.$cur_group,0,array('onkeyup'=>'core.payments.applyMoneyToInvoices(\''.$core->data['tab_name'].'\',this.value,\''.$cur_group.'\',this);'))?>
-		<?=core_form::input_select('Payment Method',$core->data['tab_name'].'_payment_method_'.$cur_group,null,$methods,array(
-				'onchange'=>'core.payments.setPaymentOptions(\''.$cur_group.'\',this.options[this.selectedIndex].value);',
-			)
-		)?>
-			<?
-			# if this is NOT from local orbit, we need to let the user select 
-			# which account the money is coming from
-			
-			
-			if($core->data['tab_name'] != 'invoices' && ($invoice['from_org_id'] == 1 ||  $invoice['to_org_id'] == 1))
-			{
-				$org_id = ($invoice['from_org_id'] == 1)?$invoice['to_org_id']:$invoice['from_org_id'];
-				$methods = core::model('organization_payment_methods')
-						->collection()
-						->add_formatter('organization_payment_methods__formatter_dropdown')
-						->filter('org_id','=',$org_id);
-						
-				echo(core_form::input_select('Account',$core->data['tab_name'].'_payment_group_'.$cur_group.'__opm_id',null,$methods,array(
-					'select_style'=>'width: 320px;',
-					'text_column'=>'dropdown_text',
-					'value_column'=>'opm_id',
-					'row_id'=>'area_ach_'.$cur_group,
-					'display_row'=>false,
-				)));
-			?>
-			
-			<?}?>
-			<?=core_form::input_text('Check Number',$core->data['tab_name'].'_ref_nbr_'.$cur_group,'',array('row_id'=>'area_check_nbr_'.$cur_group,'display_row'=>false,))?>
-			<?=core_form::input_textarea('Memo:',$core->data['tab_name'].'_admin_note__'.$cur_group)?>
-
-		<?=core_form::input_hidden('payment_method_'.$cur_group,3)?>
-	
-		<table class="dt span12">
-			<?=core_form::column_widths('20%','30%','12%','12%','13%','13%')?>
-			<tr class="dt">
-				<th class="dt">Reference</th>
-				<th class="dt">Description</th>
-				<th class="dt">Invoice Date</th>
-				<th class="dt">Due Date</th>
-				<th class="dt">Aging</th>
-				<th class="dt">Amount</th>
-			</tr>
-		<?
-		
 	}
-	$group_total += $invoice['amount_due'];
-	$invoices[] = $invoice['invoice_id'];
-?>
-
-			<tr class="dt">
-				<td class="dt">
-					<?=$invoice['description_html']?>
-				</td>
-				<td class="dt"><?=$invoice['direction_info']?></td>
-				<td class="dt"><?=core_format::date($invoice['creation_date'],'long')?></td></td>
-				<td class="dt"><?=core_format::date($invoice['due_date'],'long')?></td></td>
-				<td class="dt"><?=$invoice['age']?></td></td>
-				<td class="dt">
-					<input type="text" class="pull-left" name="<?=$core->data['tab_name']?>_invoice_<?=$invoice['invoice_id']?>" style="width: 120px;" />
-					<input type="hidden" name="<?=$core->data['tab_name']?>_invoice_<?=$invoice['invoice_id']?>_amount_due" value="<?=$invoice['amount_due']?>" />
-				</td>
-			</tr>
-<?php
-	$inv_counter++;
+	
+	$invoice_groups[$invoice['to_org_id']]['invoices'][] = $invoice->__data;
+	$invoice_groups[$invoice['to_org_id']]['amount'] += $invoice['amount']; 
 }
 
+$to_lo = false;
 
-
-if($cur_group != '')
+foreach($invoice_groups as $group)
 {
-	core::js('core.payments.invoiceGroups[\''.$cur_group.'\']='.$group_total.';');
-	echo('</table>');
-	echo('<input type="hidden" name="'.$core->data['tab_name'].'_group_'.$cur_group.'_invoices" value="'.implode(',',$invoices).'" />');
-}
-?>
+	if($group['to_org_id'] == 1)
+	{
+		$to_lo = true;
+	}
+	?>
+	<div class="row">
+		<div class="span6">
+			<h2><i class="icon-cart">&nbsp;</i>Invoices Due to <?=$group['to_org_name']?></h2>
+			<table class="dt span5">
+				<tr style="border: #eee 0px solid;border-bottom-width: 1px;">
+					<th class="dt">Reference</th>
+					<th class="dt">Due Date</th>
+					<th class="dt" style="text-align: right;">Amount</th>
+				</tr>
+				<? 
+				$style=true;
+				$total = 0;
+				foreach($group['invoices'] as $invoice)
+				{
+					$total += $invoice['amount_due'];
+					$style   = (!$style);
+					$invoice = payable_info($invoice);
+					$invoice = payment_link_formatter($invoice);
+					$invoice = payment_direction_formatter($invoice);
+					#$invoice = payable_age_formatter($invoice);
+					
+					?>
+					<tr class="dt<?=$style?>" style="border: #eee 0px solid;border-bottom-width: 1px;">
+						<td class="dt"><?=$invoice['description_html']?></td>
+						<td class="dt"><?=core_format::date($invoice['due_date'],'short')?></td>
+						<td class="dt" style="text-align: right;"><?=core_format::price($invoice['amount'])?></td>
+					</tr>
+				<?}?>
+					<tr>
+						<td class="dt" style="text-align: right;padding-top: 10px;">	
+							<strong>Total Due:</strong>
+						</td>
+						<td class="dt" colspan="2" style="text-align: right;padding-top: 10px;">
+							<strong><?=core_format::price($group['amount'])?></strong>
+						</td>
+					</tr>
+				</table>
+		</div>
+		<div class="span5">
+			<h2><i class="icon-coins">&nbsp;</i>Method</h2>
+			<? 
+			if($group['to_org_id'] == 1){
+				# if this is someone paying localorbit, then they MUST choose a bank account
+			?>
+				Pay Via: <select><option>****-****-98328</option>
+				<br />
+				<input type="button" class="btn btn-info" value="Add New Account" />
+				<br />
+				<input type="hidden" name="paygroup-<?=$group['to_org_id']?>" value="3" />
+			<?
+			}else{
+				# this is someone recording a cash/check payment made offline
+			?>
+				<div class="row">
+					<span class="span2" style="padding-top: 5px;">
+					<?=core_ui::radiodiv(
+						4,
+						'Paid via Check',
+						true,
+						'paygroup-'.$group['to_org_id'],
+						false,
+						'$(\'#ref_nbr_'.$group['to_org_id'].'\')[(($(\'input:radio[name=\\\'paygroup-'.$group['to_org_id'].'\\\']:checked\').val()==4)?\'show\':\'hide\')](300);'
+					)
+					?></span>
+					<span class="span2"><input type="text" name="ref_nbr_<?=$group['to_org_id']?>" id="ref_nbr_<?=$group['to_org_id']?>" placeholder="Check Number" /></span>
+				</div>
+				
+				<div class="row">
+					<br />
+					<span class="span5">
+					<?=core_ui::radiodiv(
+						5,
+						'Paid via Cash',
+						false,
+						'paygroup-'.$group['to_org_id'],
+						false,
+						'$(\'#ref_nbr_'.$group['to_org_id'].'\')[(($(\'input:radio[name=\\\'paygroup-'.$group['to_org_id'].'\\\']:checked\').val()==4)?\'show\':\'hide\')](300);'
+					)?>
+					</span>
+				</div>
 
-<div class="pull-right">
-	<input type="button" onclick="$('#<?=$core->data['tab_name']?>_pay_area,#all_all_<?=$core->data['tab_name']?>').toggle();" class="btn btn-warning" value="cancel" />
-		
-	<input type="button" class="btn btn-info" value="<?=$button_label?>" onclick="core.payments.saveInvoicePayments('<?=$core->data['tab_name']?>');" />
-</div>
+
+			<?}?>
+		</div>
+	</div>
+	<br />
+	<hr />
+	<br />
+	<?
+}
+
+?>
+	<div class="pull-right">
+		<input type="button" class="btn btn-large btn-warning" value="Cancel" onclick="$('#all_all_payments,#payments_pay_area').toggle();" />
+		<input type="button" class="btn btn-large btn-success" onclick="core.payments.newRecordPayments();" value="<?=(($to_lo)?'Make Payment':'Record Payments')?>" />
+	</div>
 <?
-core::log('building payments UI complete. ready to send back to client');
-core::replace($core->data['tab_name'].'_pay_area');
-core::js("document.paymentsForm.invoice_list.value='".$core->data['checked_invoices']."';");
-core::js("$('#".$core->data['tab_name']."_pay_area,#all_all_".$core->data['tab_name']."').toggle();");
-core::js("core.payments.initInvoiceGroups('".$core->data['tab_name']."');");
+core::js('document.paymentsForm.invoice_list.value=\''.implode(',',$invoice_list).'\';');
+core::replace('payments_pay_area');
+core::js("$('#all_all_payments,#payments_pay_area').toggle();");
 ?>

@@ -24,6 +24,74 @@ class core_controller_payments extends core_controller
 		core_datatable::js_reload('payables');
 	}
 	
+	function new_record_payments()
+	{
+		global $core;
+		
+		core::load_library('crypto');
+		$invoices = core::model('v_invoices')
+			->add_custom_field('DATEDIFF(CURRENT_TIMESTAMP,due_date) as age')
+			->collection()
+			->filter('amount_due','>',0)
+			->filter('invoice_id','in',explode(',',$core->data['invoice_list']))
+			->sort('concat_ws(\'-\',to_org_id,from_org_id)');
+		
+		$invoice_groups = array();
+		foreach($invoices as $invoice)
+		{
+			if(!isset($invoice_groups[$invoice['to_org_id']]))
+			{
+				$invoice_groups[$invoice['to_org_id']] = array(
+					'amount'=>0,
+					'from_org_id'=>$invoice['from_org_id'],
+					'to_org_id'=>$invoice['to_org_id'],
+					'to_org_name'=>$invoice['to_org_name'],
+					'invoices'=>array()
+				);
+			}
+			
+			$invoice_groups[$invoice['to_org_id']]['invoices'][] = $invoice->__data;
+			$invoice_groups[$invoice['to_org_id']]['amount'] += $invoice['amount']; 
+		}
+		
+		foreach($invoice_groups as $group)
+		{
+			switch($core->data['paygroup-'.$group['to_org_id']])
+			{
+				case 3:
+					# do an ach payment for this:
+					break;
+				
+				case 4:
+				case 5:
+					# record a check or cash payment
+					$new_payment = core::model('payments');
+					$new_payment['to_org_id']   = $group['to_org_id'];
+					$new_payment['from_org_id'] = $group['from_org_id'];
+					$new_payment['amount'] = $group['amount'];
+					$new_payment['payment_method_id'] = $core->data['paygroup-'.$group['to_org_id']];
+					
+					# only checks get ref nbrs
+					if($new_payment['payment_method_id'] == 4)
+						$new_payment['ref_nbr'] =  $core->data['_ref_nbr_'.$group['to_org_id']];
+					
+					core::log('saving payment to '.$group['to_org_id']);
+					$new_payment->save();
+					
+					foreach($group['invoices'] as $invoice)
+					{
+						$x_invoices_payments = core::model('x_invoices_payments');
+						$x_invoices_payments['invoice_id'] = $invoice['invoice_id'];
+						$x_invoices_payments['payment_id'] = $new_payment['payment_id'];
+						$x_invoices_payments['amount_paid'] = $invoice['amount'];
+						$x_invoices_payments->save();
+					}
+					break;
+			}
+		}
+				
+	}
+	
 	function record_payments()
 	{
 		global $core;
