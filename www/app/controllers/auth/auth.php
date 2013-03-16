@@ -229,8 +229,10 @@ class core_controller_auth extends core_controller
 			
 		core::process_command_list('session-destroy');
 		session_destroy();
-		core_session::init();
-		#$core->session = array('user_id' => 0);
+		core_session::destroy_id_cookie();
+		#core_session::init();
+		
+		$core->session = array('user_id' => 0);
 		core::js('core.navState={};location.href=\'/login.php\';');
 		core::deinit();
 		#core::process_command('auth/form',false);

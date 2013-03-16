@@ -109,6 +109,28 @@ class core_session
 		core::process_command_list('session-init');
 	}
 	
+	public static function destroy_id_cookie()
+	{
+		global $core;
+		
+		# generate teh new cookie text. user id must be part of the hash
+		$random_num	= rand(0,1000000);
+		#core::log('random number is '.$random_num);
+		#$random_num = hash($core->config['hash_algo'],'user_id'.$random_num);
+		#core::log('random number hashed is '.$random_num);
+		$key = '0:0:ffffff';
+		
+		#core::log('new cookie is '.$key);
+		#core::log('cookies are currently '.print_r($_COOKIE,true));
+		#core::log('all config: '.print_r($core->paths,true));
+		#unset($_COOKIE['core-user-id']);
+		setcookie('core-user-id',false,$core->config['time'] * 2,'/','.localorb.it');
+		#setcookie('core-user-id',false,time() - 60*100000,'/',$core->paths['domain']);
+		unset($_COOKIE['core-user-id']);
+		#setcookie('core-user-id',$key);
+		core::log('cookies are now '.print_r($_COOKIE,true));
+	}
+	
 	public static function write_id_cookie()
 	{
 		global $core;
@@ -128,7 +150,7 @@ class core_session
 		#core::log('cookies are currently '.print_r($_COOKIE,true));
 		#core::log('all config: '.print_r($core->paths,true));
 		#unset($_COOKIE['core-user-id']);
-		setcookie('core-user-id',$key,$core->config['time'] * 2,'/',$core->paths['domain']);
+		setcookie('core-user-id',$key,$core->config['time'] * 2,'/','.localorb.it');
 		#setcookie('core-user-id',$key);
 		#core::log('cookies are now '.print_r($_COOKIE,true));
 	}
@@ -136,7 +158,7 @@ class core_session
 	public static function handle_id_cookie($force_set=false)
 	{
 		global $core;
-		core::log('id cookie handler called');
+		core::log('id cookie handler called: '.print_r($_COOKIE,true));
 		
 		# if there's already a user id cookie, examine it and use it if necessary
 		if(isset($_COOKIE['core-user-id']))
