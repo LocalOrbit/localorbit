@@ -77,14 +77,16 @@
 			<div class="homepage_title">
 				E-commerce &amp; business management
 				tools for people connecting restaurant
-				amp; institutions with local producers.
+				&amp; institutions with local producers.
 			</div>
 			<br />
 			<img src="/homepage/img/icon_pitchfork_shovel_blue.png" />
 			<br />&nbsp;<br />
-			<div class="homepage_msg">
+			<div class="homepage_title">
 				We help people build profitable
 				businesses &amp; healthier communities.
+				<br />&nbsp;<br />
+				<input type="button" class="homepage_button" value="Learn More" />
 			</div>
 		</td>
 	</tr>

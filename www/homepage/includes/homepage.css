@@ -172,15 +172,13 @@ div.faq_question_expanded{
 	border-radius: 5px; 
 }
 
-.homepage_msg{
-	font-size: 140%;
-	line-height: 140%;
-}
+
 
 div.homepage_title{
-	font-size: 22px;
+	font-size: 20px;
 	color: #000;
-	line-height: 30px;
+	line-height: 27px;
+	padding-top: 10px;
 	font-family: 'Francois One', sans-serif !important;
 }
 
@@ -206,4 +204,14 @@ a{
 .home_paragraph{
 	clear:both;
 	padding: 10px 4px 24px 4px;
+}
+
+.homepage_button{
+	color: #777;
+	border-radius: 4px;
+	padding: 3px 39px;
+	font-weight: bold;
+	font-size: 20px;
+	border-color: #999;
+	background-color: #fff;
 }
