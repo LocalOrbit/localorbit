@@ -248,7 +248,7 @@ class core_controller_catalog extends core_controller
 	function order_confirmation()
 	{
 		$cart = core::model('lo_order')->get_cart();
-
+		core::js('$(\'#checkout_progress,#checkout_buttons\').toggle();');
 		$cart->place_order(array(
 			'paypal'=>$this->paypal_rules(),
 			'authorize'=>$this->authorize_rules(),
@@ -261,7 +261,7 @@ class core_controller_catalog extends core_controller
 	function paypal_rules()
 	{
 		global $core;
-		return new core_ruleset('paypal',array(
+		return new core_ruleset('checkoutForm',array(
 			array('type'=>'min_length','name'=>'pp_cc_number','data1'=>14,'msg'=>$core->i18n['error:payment:cc_number']),
 			array('type'=>'min_length','name'=>'pp_cvv2','data1'=>3,'msg'=>$core->i18n['error:payment:cc_cvv2']),
 			array('type'=>'min_length','name'=>'pp_first_name','data1'=>2,'msg'=>$core->i18n['error:customer:firstname']),
@@ -274,19 +274,19 @@ class core_controller_catalog extends core_controller
 	function ach_rules()
 	{
 		global $core;
-		return new core_ruleset('paypal',array(
+		return new core_ruleset('checkoutForm',array(
 		));
 	}
 	function authorize_rules()
 	{
 		global $core;
-		return new core_ruleset('authorize',array(
+		return new core_ruleset('checkoutForm',array(
 		));
 	}
 	function purchaseorder_rules()
 	{
 		global $core;
-		return new core_ruleset('purchaseorder',array(
+		return new core_ruleset('checkoutForm',array(
 			array('type'=>'min_length','name'=>'po_number','data1'=>3,'msg'=>$core->i18n['error:payment:po_number']),
 		));
 	}
