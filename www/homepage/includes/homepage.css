@@ -5,14 +5,13 @@ h1,h2,h3,h4,h5{
 	font-family: 'Francois One', sans-serif !important;
 }
 h2{
-	font-size: 28px;
-	color: #670000;
-	text-align: center;
+	font-size: 20px;
+	color: #777;
 	margin: 5px 0px 20px 0px;
 }
 h3{
-	font-size: 18px;
-	color: #670000;
+	font-size: 17px;
+	color: #666;
 	margin-bottom: 5px;
 }
 
@@ -179,13 +178,32 @@ div.faq_question_expanded{
 }
 
 div.homepage_title{
-	font-size: 32px;
+	font-size: 22px;
 	color: #000;
-	letter-spacing: 1px;
-	line-height: 44px;
+	line-height: 30px;
 	font-family: 'Francois One', sans-serif !important;
 }
 
 a{
 	color: #670000;
+}
+
+.home_icon{
+	display: block;
+	float:left;
+}
+
+
+.home_header{
+	display: block;
+	float:left;
+	height: 42px;
+	line-height: 42px;
+	vertical-align: middle;
+	margin-left: 15px;
+}
+
+.home_paragraph{
+	clear:both;
+	padding: 10px 4px 24px 4px;
 }

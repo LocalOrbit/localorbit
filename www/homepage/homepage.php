@@ -74,187 +74,98 @@
 		</td>
 		<td>&nbsp;&nbsp;&nbsp;</td>
 		<td style="text-align: center !important;">
-			<div class="homepage_title">E-commerce &amp; Business
-			Management Tools for
-			the New Food Economy</div>
+			<div class="homepage_title">
+				E-commerce &amp; business management
+				tools for people connecting restaurant
+				amp; institutions with local producers.
+			</div>
 			<br />
 			<img src="/homepage/img/icon_pitchfork_shovel_blue.png" />
 			<br />&nbsp;<br />
 			<div class="homepage_msg">
-				Local Orbit is a one-stop shop<br />
-				for entrepreneurs, farmers,<br /> producer co-ops,
-				food markets<br /> and independent distributors
-				<br />who are building and managing<br />
-				local food marketplaces.
+				We help people build profitable
+				businesses &amp; healthier communities.
 			</div>
 		</td>
 	</tr>
 </table>
 <br />
-<? # 3 big red links to popups ?>
+
 <table width="1100" style="table-layout: fixed;">
-	<col width="33%" />
-	<col width="38%" />
-	<col width="29%" />
+	<col width="24%" />
+	<col width="1%" />
+	<col width="23.5%" />
+	<col width="1%" />
+	<col width="23.5%" />
+	<col width="1%" />
+	<col width="24%" />
 	<tr>
-		<td colspan="3"><img src="/homepage/img/homepage_divider.png" /></td>
+		<td colspan="7"><img src="/homepage/img/homepage_divider.png" /><br />&nbsp;<br /></td>
 	</tr>
 	<tr>
-		<td class="homepage_popup"><a href="#" onclick="$('#overlay,#popup1,#popup_closer').fadeIn(150);" class="homepage_popup">Who Uses<br />Local Orbit?</a></td>
-		<td class="homepage_popup"><a href="#" onclick="$('#overlay,#popup2,#popup_closer').fadeIn(150);" class="homepage_popup">Why Choose<br />Local Orbit?</a></td>
-		<td class="homepage_popup"><a href="#" onclick="$('#overlay,#popup3,#popup_closer').fadeIn(150);" class="homepage_popup">Learn<br />More</a></td>
+		<td rowspan="2">
+			<h2 style="margin-top: 10px;">Why Choose Local Orbit?</h3> 
+			
+			Affordable tools that grow with you.
+			<br />&nbsp;<br />
+			Designed for the entrepreneurs,
+			farmers, producer co-ops, food
+			hubs and independent distributors
+			who are rebuilding the local &amp;
+			regional food systems.
+		</td>
+		<td rowspan="2">&nbsp;</td>
+		<td>
+			<img src="/homepage/img/icon_wand.png" class="home_icon" /><h3 class="home_header">No Risk, No Start Up Costs</h3>
+			<div class="home_paragraph">
+				No upfront investment. Four service levels to support local food markets 
+				at every stage. 30-day guarantee.
+			</div>
+		</td>
+		<td rowspan="2">&nbsp;</td>
+		<td>
+			<img src="/homepage/img/icon_wand.png" class="home_icon" /><h3 class="home_header">Unrivaled Flexibility</h3>
+			<div class="home_paragraph">
+				Custom branding, granular pricing, flexible delivery and pick-up tools, 
+				multiple payment options and reporting.
+			</div>
+		</td>
+		<td rowspan="2">&nbsp;</td>
+		<td>
+			<img src="/homepage/img/icon_smiley.png" class="home_icon" /><h3 class="home_header">Simple, Intuitive Design</h3>
+			<div class="home_paragraph">
+				Easy adoption of enterprise-level services for businesses of all sizes, 
+				customized for local food distribution workflows.
+			</div>
+		</td>
 	</tr>
 	<tr>
-		<td colspan="3"><img src="/homepage/img/homepage_divider.png" /></td>
+		<td>
+			<img src="/homepage/img/icon_puzzle_piece.png" class="home_icon" /><h3 class="home_header">Operational Efficiency</h3>
+			<div class="home_paragraph">
+				Save time by managing inventory, orders, marketing, finances, reports 
+				and analytics from a single dashboard.
+			</div>
+		</td>
+		<td>
+			<img src="/homepage/img/icon_graph.png" class="home_icon" /><h3 class="home_header">Streamlined Financials</h3>
+			<div class="home_paragraph">
+				Track the status of every transaction from a single payments portal. 
+				Collect payments from buyers and make payments to producers for the 
+				cost of a stamp &amp; envelope, with the click of a button.
+			</div>
+		</td>
+		<td>
+			<img src="/homepage/img/icon_magnifying.png" class="home_icon" /><h3 class="home_header">Transparency &amp; Flexibility</h3>
+			<div class="home_paragraph">
+				Tell customers teh story of your products. Track the supply chain 
+				journey with just a few clicks.
+			</div>
+		</td>		
+	</tr>
+	<tr>
+		<td colspan="7"><img src="/homepage/img/homepage_divider.png" /></td>
 	</tr>
 </table>
 <br />&nbsp;<br />
-
-
-
-<div class="popup" id="popup1">
-	<div class="popup_content">
-		<h2>Who Uses Local Orbit?</h2>
-		<div style="text-align: center;">
-			Local Orbit provides e-commerce, marketing and business management tools for the
-			<br />entrepreneurs and organizations that are creating a new local food economy,
-			<br />connecting buyers and sellers through a shorter, transparent supply chain.
-			<br />&nbsp;<br />
-			<table width="800" style="table-layout: fixed;">
-				<col width="20" />
-				<col width="70" />
-				<col width="20" />
-				<col width="335" />
-				<col width="20" />
-				<col width="335" />
-				<tr>
-					<td>&nbsp;</td>
-					<td><img style="margin-top: 30px;" src="/homepage/img/icon_puzzle_piece.png" /></td>
-					<td>&nbsp;</td>
-					<td>
-						<h3>Market Makers</h3>
-						Market makers are the farmers markets, food markets and independent aggregators who connect local buyers and sellers. They use Local Orbit's tools to facilitate sales, manage buyer and seller relationships, and streamline distribution.
-					</td>
-					<td>&nbsp;</td>
-
-					<td>
-						<h3>Producer Cooperatives</h3>
-						Cooperatives create online ordering portals, either maintaining individual seller branding or promoting a cooperative brand. Local Orbit's tools enable efficient management of inventory, sales and deliveries to all of their customer types.
-						</td>
-				</tr>
-				<tr>
-					<td colspan="3"></td>
-					<td colspan="3"><div class="popup_spacer"></div></td>
-				</tr>
-
-				<tr>
-					<td>&nbsp;</td>
-					<td><img style="margin-top: 30px;" src="/homepage/img/icon_farmhouse.png" /></td>
-					<td>&nbsp;</td>
-					<td>
-						<h3>Farmers, Ranchers, Specialty Producers</h3>
-						Producers sell through aggregate marketplaces. They can also create their own online stores for on-farm pick up, often adding products from nearby farms. Sales, inventory and deliveries across multiple marketplaces are managed through a central dashboard.
-					</td>
-					<td>&nbsp;</td>
-					<td>
-						<h3>Independent Distributors</h3>
-						Distributors can create a private ordering system to sell local and regional products. Orders can be placed directly by customers or by the distributor during a sales call. Distributors that have extra trucking capacity also provide delivery services in some markets powered by Local Orbit.
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3"></td>
-					<td colspan="3"><div class="popup_spacer"></div></td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td><img style="margin-top: 20px;" src="/homepage/img/icon_link.png" /></td>
-					<td>&nbsp;</td>
-					<td>
-						<h3>Restaurants, Universities, Hospitals</h3>
-						For restaurants and institutions with their own local supplier relationships, we create vendor management portals, making it easy to source from multiple suppliers and pay with a single purchase order. Buyers can also source directly from any marketplace in their region.
-
-					</td>
-					<td>&nbsp;</td>
-					<td>
-						<h3>Buying Groups</h3>
-						Business and consumer buying groups create online marketplaces for their members, with private access to local products and customized ordering, delivery and pricing options. Buying clubs can also source from other marketplaces powered by Local Orbit.
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-</div>
-
-<div class="popup" id="popup2">
-	<div class="popup_content">
-		<h2>Why Choose Local Orbit's Software Services?</h2>
-		<div style="text-align: center;">
-			Juggling spreadsheets, google docs, email, quickbooks, faxes, post it notes, <br /> phone calls and receivables limits your ability to grow your business.<br />
-
-			<br />&nbsp;<br />
-			<table width="800" style="table-layout: fixed;">
-				<col width="20" />
-				<col width="70" />
-				<col width="20" />
-				<col width="335" />
-				<col width="20" />
-				<col width="335" />
-				<tr>
-					<td>&nbsp;</td>
-					<td><img style="margin-top: 10px;" src="/homepage/img/icon_clipboard.png" /></td>
-					<td>&nbsp;</td>
-					<td>
-						<h3>Smarter Tools</h3>
-						Increase your efficiency &amp; profitability with <br />real-time information, streamlined processes & detailed reports.
-					</td>
-					<td>&nbsp;</td>
-					<td>
-						<h3>Simple to Manage. Easy to Learn.</h3>
-						Run your business from a single dashboard you <br />
-						can access from the road, in the field or wherever your work takes you.
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3"></td>
-					<td colspan="3"><div class="popup_spacer"></div></td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td><img style="margin-top: 10px;" src="/homepage/img/icon_paperclip.png" /></td>
-					<td>&nbsp;</td>
-					<td>
-						<h3>Multi-channel Sales</h3>
-						Track all your customers and markets, with connected, real time inventory. Individualized <br />pricing and delivery options.
-					</td>
-					<td>&nbsp;</td>
-					<td>
-						<h3>Integrated Marketing</h3>
-						Fresh sheets, newsletters, special deals, discount codes and tools to make it easy for buyers to promote their local sourcing.
-					</td>
-				</tr>
-				<tr>
-					<td colspan="3"></td>
-					<td colspan="3"><div class="popup_spacer"></div></td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td><img style="margin-top: 10px;" src="/homepage/img/icon_magnifying.png" /></td>
-					<td>&nbsp;</td>
-					<td>
-						<h3>Transparency & Traceability</h3>
-						Track product & producer information from<br /> farm to table.
-					</td>
-					<td>&nbsp;</td>
-					<td>
-						<h3>Secure & Scalable</h3>
-						A reliable, flexible platform to power your business as it grows.
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-</div>
-
-
-
 <? include('includes/page_end.php'); ?>
