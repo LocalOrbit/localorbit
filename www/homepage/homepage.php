@@ -115,10 +115,12 @@
 			hubs and independent distributors
 			who are rebuilding the local &amp;
 			regional food systems.
+			<input type="button" class="schedule_button" value="Schedule a Demo" />
+			
 		</td>
 		<td rowspan="2">&nbsp;</td>
 		<td>
-			<img src="/homepage/img/icon_wand.png" class="home_icon" /><h3 class="home_header">No Risk, No Start Up Costs</h3>
+			<img src="/homepage/img/icon_smiley.png" class="home_icon" /><h3 class="home_header">No Risk, No Start Up Costs</h3>
 			<div class="home_paragraph">
 				No upfront investment. Four service levels to support local food markets 
 				at every stage. 30-day guarantee.
@@ -134,7 +136,7 @@
 		</td>
 		<td rowspan="2">&nbsp;</td>
 		<td>
-			<img src="/homepage/img/icon_smiley.png" class="home_icon" /><h3 class="home_header">Simple, Intuitive Design</h3>
+			<img src="/homepage/img/icon_paperclip.png" class="home_icon" /><h3 class="home_header">Simple, Intuitive Design</h3>
 			<div class="home_paragraph">
 				Easy adoption of enterprise-level services for businesses of all sizes, 
 				customized for local food distribution workflows.
@@ -143,7 +145,7 @@
 	</tr>
 	<tr>
 		<td>
-			<img src="/homepage/img/icon_puzzle_piece.png" class="home_icon" /><h3 class="home_header">Operational Efficiency</h3>
+			<img src="/homepage/img/icon_clock.png" class="home_icon" /><h3 class="home_header">Operational Efficiency</h3>
 			<div class="home_paragraph">
 				Save time by managing inventory, orders, marketing, finances, reports 
 				and analytics from a single dashboard.
@@ -158,7 +160,7 @@
 			</div>
 		</td>
 		<td>
-			<img src="/homepage/img/icon_magnifying.png" class="home_icon" /><h3 class="home_header">Transparency &amp; Flexibility</h3>
+			<img src="/homepage/img/icon_magnifying_flipped.png" class="home_icon" /><h3 class="home_header">Transparency &amp; Flexibility</h3>
 			<div class="home_paragraph">
 				Tell customers teh story of your products. Track the supply chain 
 				journey with just a few clicks.
