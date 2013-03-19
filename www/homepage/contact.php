@@ -16,7 +16,8 @@
 			<img src="/homepage/img/contact/phone_small.png" class="home_icon" />
 			<span class="home_header" style="line-height: 21px;font-size:130%;">300 East Liberty<br />Ann Arbor, MI 48104
 			</span>
-
+			
+			<div style="padding-left:73px;clear:both;"><br />Send us a note</div>
 		</td>
 		<td>&nbsp;</td>
 		<td style="text-align: center;">
