@@ -227,3 +227,24 @@ a{
 	margin-left: 30px;
 	margin-top: 50px;
 }
+
+
+.jobs_button{
+	border-radius: 4px;
+	background-color: #6095c9;
+	border:  #6095c9 1px solid;
+	color: #fff;
+	font-size: 120%;
+	font-weight: bold;
+	padding: 7px 60px;
+	margin: 20px 0px 10px 30px;
+}
+
+.jobs_area{
+	border-radius: 2px; 
+	border: #ccc 1px solid;
+	padding: 30px 30px;
+	background-color: #f2f2f2;
+	margin-right: 20px;
+	height: 70px;
+}

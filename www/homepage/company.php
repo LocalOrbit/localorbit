@@ -5,7 +5,7 @@
 	<col width="560" />
 	<tr>
 		<td>
-			<h1>Re-linking the Food Chain</h1>
+			<h2>Re-linking the Food Chain</h2>
 			Local Orbit is building flexible, localized tools designed to help people build healthier communities through better food.  
 			<br />&nbsp;<br />
 			Our web platform provides custom online marketplaces and back-office infrastructure for businesses and people working to increase local food distribution.
@@ -68,7 +68,22 @@
 			</div>			
 		</td>
 	</tr>
+	<tr>
+		<td colspan="3">
+			<div class="jobs_area">
+				<div style="width: 800px; float: left;">
+					<h3>Work with Us!</h3>
+					We are always looking for talented team members who are passionate about helping people build profitable businesses and healthier communities in the New Food Economy.
+				</div>
+				<div style="width: 200px; float: left;">
+					<input type="button" class="jobs_button" value="Jobs" />
+				</div>
+			</div>
+		</td>
+	</tr>
 </table>
+<br />&nbsp;<br />
+
 
 
 <? include('includes/page_end.php'); ?>
