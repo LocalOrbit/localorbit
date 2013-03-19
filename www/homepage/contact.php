@@ -60,7 +60,7 @@
 		<td>&nbsp;</td>
 		<td><input type="button" class="schedule_button newsletter_button" value="Stay Informed" /></td>
 		<td>&nbsp;</td>
-		<td></td>
+		<td><input type="button" class="schedule_button zendesk_button" value="Submit a Request" /></td>
 </table>
 <br />&nbsp;<br />
 

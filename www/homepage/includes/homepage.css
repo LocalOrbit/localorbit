@@ -228,15 +228,13 @@ a{
 	margin-top: 50px;
 }
 .newsletter_button{
-	border-radius: 4px;
 	background-color: #6095c9;
-	border:  #6095c9 1px solid;
-	color: #fff;
-	font-size: 120%;
-	font-weight: bold;
-	padding: 7px 20px;
-	margin-left: 30px;
-	margin-top: 50px;
+	border:  #6095c9 1px solid;	
+}
+.zendesk_button{
+	background-color: #fff;
+	border:  #bbb 1px solid;
+	color: #777;
 }
 
 .jobs_button{
