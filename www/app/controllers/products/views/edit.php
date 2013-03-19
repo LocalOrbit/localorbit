@@ -43,11 +43,20 @@ $all_dds = new core_collection('
 	left join directory_country_region  dcr on (a.region_id=dcr.region_id)
 	left join organization_delivery_cross_sells  odcs using (dd_id)
 	left join domains  d using (domain_id)
-	where  
-	(
-		odcs.org_id='.$data['org_id'].'
-		or
-		dd.domain_id in ('.implode(',',$org_all_domains).')
+	where dd.domain_id in (
+		select d.domain_id 
+		from domains d
+		where d.domain_id in (
+			select otd.domain_id
+			from organizations_to_domains otd
+			where otd.org_id='.$data['org_id'].'
+		)
+		or d.domain_id in (
+			select ocs.sell_on_domain_id
+			from organization_cross_sells ocs
+			where ocs.org_id='.$data['org_id'].'
+			
+		)
 	)
 	
 	order by d.name'
