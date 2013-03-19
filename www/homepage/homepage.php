@@ -86,7 +86,7 @@
 				We help people build profitable
 				businesses &amp; healthier communities.
 				<br />&nbsp;<br />
-				<input type="button" class="homepage_button" value="Learn More" />
+				<a href="/homepage/features.php" class="homepage_button">Learn More</a>
 			</div>
 		</td>
 	</tr>

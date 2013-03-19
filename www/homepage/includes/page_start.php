@@ -98,8 +98,8 @@ else
 						<a href="/" class="logo"><img width="112" height="111" src="/homepage/includes/logo5.png" /></a>
 						<div id="nav1">
 							<a class="nav1" href="/homepage/features.php">Features</a>
-							<a class="nav1" href="/homepage/faq.php">FAQ</a>
 							<a class="nav1" href="/homepage/about.php">Company</a>
+							<a class="nav1" href="/field-notes/">Field Notes</a>
 						</div>
 						<div id="nav2">
 							<a href="#" class="nav2" onclick="$('#overlay,#popup3,#popup_closer').fadeIn(150);">contact</a>
