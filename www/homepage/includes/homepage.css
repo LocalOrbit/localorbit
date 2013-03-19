@@ -227,7 +227,17 @@ a{
 	margin-left: 30px;
 	margin-top: 50px;
 }
-
+.newsletter_button{
+	border-radius: 4px;
+	background-color: #6095c9;
+	border:  #6095c9 1px solid;
+	color: #fff;
+	font-size: 120%;
+	font-weight: bold;
+	padding: 7px 20px;
+	margin-left: 30px;
+	margin-top: 50px;
+}
 
 .jobs_button{
 	border-radius: 4px;
