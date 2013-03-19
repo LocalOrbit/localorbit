@@ -360,7 +360,7 @@ function type_formatter($data)
 	switch(strtolower($data['payable_type']))
 	{
 		case 'buyer order':
-			$data['payable_type_formatted'] = 'Purchase';
+			$data['payable_type_formatted'] = 'Order';
 			break;
 		case 'seller order':
 			$data['payable_type_formatted'] = 'Seller Pmt';
@@ -762,7 +762,7 @@ function payments__add_standard_filters($datatable,$tab='')
 			'payable_type',
 			$datatable->filter_states[$datatable->name.'__filter__payable_type'],
 			array(
-				'buyer order'=>'Purchase',
+				'buyer order'=>'Order',
 				'seller order'=>'Seller Pmt',
 				'hub fees'=>'Market Fees',
 				'lo fees'=>'Local Orbit Fees',
