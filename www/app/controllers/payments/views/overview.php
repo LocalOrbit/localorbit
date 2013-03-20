@@ -57,19 +57,19 @@ foreach ($intervals as $val)
 ?>
 <div class="tabarea tab-pane active" id="paymentstabs-a<?=$core->view[0]?>">
 	<div class="row row-top-margin-buffer">
-		<? if(count($receivables_ov) > 0 ){?>
+		<? if(count($receivables_ov) > 0 || lo3::is_seller()){?>
 		<div class="span4">
 			<h2>Receivables</h2>
 			<?
 			foreach ($intervals as $key => $value)
 			{
 				echo '<div class="overview-summary-list-item">
-					<div class="overview-summary-list-item-label">' . $key . '</div>
-					<div class="overview-summary-list-item-value">' .
-					(($payables_intervals[$value] <= 0)?'<div class="error">':'').
-					core_format::price($payables_intervals[$value], false)
-					.(($payables_intervals[$value] <= 0)?'</div>':'') .
-					'</div></div>';
+						<div class="overview-summary-list-item-label">' . $key . '</div>
+						<div class="overview-summary-list-item-value">' . 
+							(($receivables_intervals[$value] <= 0)?'<div class="error">':'').
+							core_format::price($receivables_intervals[$value], false)
+							.(($receivables_intervals[$value] <= 0)?'</div>':'') . 
+						'</div></div>';
 			}
 			?>
 			<div class="span4 pagination-centered">
@@ -77,18 +77,20 @@ foreach ($intervals as $val)
 			</div>
 		</div>
 		<?}?>
+		<? if((count($payables_ov) > 0 && lo3::is_seller()) || (!lo3::is_seller())){?>
 		<div class="span4">
 				<h2>Payables</h2>
 				<?
 				foreach ($intervals as $key => $value)
 				{
 					echo '<div class="overview-summary-list-item">
-						<div class="overview-summary-list-item-label">' . $key . '</div>
-						<div class="overview-summary-list-item-value">' . 
-							(($receivables_intervals[$value] <= 0)?'<div class="error">':'').
-							core_format::price($receivables_intervals[$value], false)
-							.(($receivables_intervals[$value] <= 0)?'</div>':'') . 
-						'</div></div>';
+					<div class="overview-summary-list-item-label">' . $key . '</div>
+					<div class="overview-summary-list-item-value">' .
+					(($payables_intervals[$value] <= 0)?'<div class="error">':'').
+					core_format::price($payables_intervals[$value], false)
+					.(($payables_intervals[$value] <= 0)?'</div>':'') .
+					'</div></div>';
+					
 				}
 				?>
 			<div class="span4 pagination-centered">
@@ -96,5 +98,6 @@ foreach ($intervals as $val)
 			</div>
 		
 		</div>
+		<?}?>
 	</div>
 </div>
