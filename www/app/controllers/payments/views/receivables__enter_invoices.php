@@ -122,8 +122,8 @@ foreach($invoices as $invoice)
 					<?=$invoice['description_html']?>
 				</td>
 				<td class="dt"><?=$invoice['direction_info']?></td>
-				<td class="dt"><?=core_format::date($invoice['creation_date'],'long')?></td></td>
-				<td class="dt"><?=core_format::date($invoice['due_date'],'long')?></td></td>
+				<td class="dt"><?=core_format::date($invoice['creation_date'],'short')?></td></td>
+				<td class="dt"><?=core_format::date($invoice['due_date'],'short')?></td></td>
 				<td class="dt"><?=$invoice['age']?></td></td>
 				<td class="dt">
 					<input type="text" class="pull-left" name="<?=$core->data['tab_name']?>_invoice_<?=$invoice['invoice_id']?>" style="width: 120px;" />
