@@ -20,6 +20,14 @@ core.payments.enterInvoices=function(tabName){
 	core.doRequest('/payments/receivables__enter_invoices',{'tab_name':tabName,'checked_invoices':core.ui.getCheckallList(document.paymentsForm,tabName).join(',')});
 }
 
+core.payments.updateDueDates=function(identifier,newInterval){
+	var epoch = parseInt(new Date().valueOf()) + parseInt((newInterval * 86400000));
+	var newDate = new Date(epoch);
+	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+	var out = months[newDate.getMonth()]+' '+newDate.getDate()+', '+newDate.getFullYear();
+	$('#due_date_'+identifier).html(out);
+}
+
 core.payments.initInvoiceGroups=function(tabName){
 	//alert('called: '+tabName);
 	//core.alertHash(core.payments.invoiceGroups);

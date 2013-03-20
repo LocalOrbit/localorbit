@@ -51,7 +51,7 @@ $payables = core::model('payables')
 				<input name="invoicecreate_<?=$group_key?>__amount" type="hidden" value="<?=$payable['receivable_total']?>" />
 			<td class="dt"><?=core_format::date($payable['invoice_date'],'short')?></td>
 			<td class="dt">
-				<select name="invoicecreate_<?=$group_key?>__terms" style="width: 90px;">
+				<select name="invoicecreate_<?=$group_key?>__terms" style="width: 90px;" onchange="core.payments.updateDueDates('<?=$group_key?>',this.options[this.selectedIndex].value);">
 					<option value="7"<?=(($payable['po_due_within_days'] == 7)?' selected="selected"':'')?>>Net 7</option>
 					<option value="14"<?=(($payable['po_due_within_days'] == 14)?' selected="selected"':'')?>>Net 14</option>
 					<option value="15"<?=(($payable['po_due_within_days'] == 15)?' selected="selected"':'')?>>Net 15</option>
@@ -60,7 +60,7 @@ $payables = core::model('payables')
 					<option value="90"<?=(($payable['po_due_within_days'] == 90)?' selected="selected"':'')?>>Net 90</option>
 				</select>
 			</td>
-			<td class="dt"><?=core_format::date($payable['due_date'],'short')?></td>
+			<td class="dt" id="due_date_<?=$group_key?>"><?=core_format::date($payable['due_date'],'short')?></td>
 		</tr>
 		
 		<?
