@@ -83,11 +83,16 @@ $addresses = $core->view[6];
 		{
 			reset($validDays);
 			list($key, $day) = each($validDays);
-			list($type, $time) = explode('-', $key);
+			list($type, $time,$deliv_address_id,$pickup_address_id) = explode('-', $key);
+			$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
+			$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 			$dd_ids_id = implode('_', array_keys($day));
 			?>
 			<input class="prodDd" type="hidden" name="prodDd_<?=$prod['prod_id']?>" id="prodDd_<?=$prod['prod_id']?>" value="<?=$dd_ids_id?>"/>
-			<span class="dd_selector"><?=$type?> <?=core_format::date($time, 'shortest-weekday',false)?></span>
+			<span class="dd_selector">
+				<?=$type?> <?=core_format::date($time, 'shortest-weekday',false)?>
+				<br /><?=$final_address?></a>
+			</span>
 			<?
 		}
 		?>

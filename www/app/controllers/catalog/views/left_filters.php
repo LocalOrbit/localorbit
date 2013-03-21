@@ -41,11 +41,12 @@ if (count($days) > 1)
 	{
 		$name = core_format::date($time, 'shorter-weekday');
 		$dd_ids = implode('_', array_keys($day));
+		#print_r($dd_ids );
 		list($type, $time,$deliv_address_id,$pickup_address_id) = explode('-', $key);
 		$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
 		$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 		?>
-		<li class="filter dd" id="filter_dd_<?=$dd_ids?>"><a href="#!catalog-shop#dd<?=$dd_ids?>" onclick="core.catalog.setFilter('dd','<?=$dd_ids?>'); return <?=$hashUrl?>;">
+		<li class="filter dd" id="filter_dd_<?=$dd_ids?>"><a href="#!catalog-shop" onclick="core.catalog.setFilter('dd','<?=$dd_ids?>'); return <?=$hashUrl?>;">
 		<?=$type?> <?=core_format::date($time, 'shorter-weekday',false)?>
 		<br />
 		<?=$final_address?>
@@ -67,7 +68,7 @@ foreach($sellers as $seller)
 	if($seller[0]['name'] != '')
 	{
 	?>
-	<li class="filter seller" id="filter_org_<?=$seller[0]['org_id']?>"><a href="#!catalog-shop#seller=<?=$seller[0]['org_id']?>" onclick="core.catalog.setFilter('seller',<?=$seller[0]['org_id']?>); return <?=$hashUrl?>;"><?=$seller[0]['name']?></a>
+	<li class="filter seller" id="filter_org_<?=$seller[0]['org_id']?>"><a href="#!catalog-shop" onclick="core.catalog.setFilter('seller',<?=$seller[0]['org_id']?>); return <?=$hashUrl?>;"><?=$seller[0]['name']?></a>
 	<input type="hidden" id="filtercheck_<?=$cat[0]['cat_id']?>" class="filtercheck" checked="checked" /></li>
 	<?
 	}
@@ -86,7 +87,7 @@ foreach($cats->roots as $root)
 	$cat = $cats->by_id[$root];
 ?>
 <li class="filter category" data-name="<?=$cat[0]['cat_name']?>" id="filter_cat_<?=$cat[0]['cat_id']?>">
-	<a href="#!catalog-shop#cat1=<?=$cat[0]['cat_id']?>" onclick="core.catalog.setFilter('cat1',<?=$cat[0]['cat_id']?>);  return <?=$hashUrl?>;">
+	<a href="#!catalog-shop" onclick="core.catalog.setFilter('cat1',<?=$cat[0]['cat_id']?>);  return <?=$hashUrl?>;">
 		<!--<input type="hidden" id="filtercheck_<?=$cat[0]['cat_id']?>" class="filtercheck" checked="checked" />-->
 		<?=$cat[0]['cat_name']?>
 	</a>

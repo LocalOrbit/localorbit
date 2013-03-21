@@ -17,6 +17,7 @@ if(!core.cart)
 	core.cart={'items':[]};
 
 core.catalog.resetFilters=function(){
+	core.log('reseting filters');
 	core.catalog.filters={
 		seller:0,
 		cat1:0,
@@ -41,6 +42,7 @@ core.catalog.hideSpecial=function(){
 
 core.catalog.setFilter=function(type,id,parentId,updateListing){
 	var newfilter;
+	core.log('set filter called: '+type+' /' +id);
 	$('#weekly_special').hide();
 	if(arguments.length <4)
 		updateListing=true;
@@ -95,14 +97,23 @@ core.catalog.setFilter=function(type,id,parentId,updateListing){
 		case 'pricetype':
 			break;
 		case 'dd':
+			core.log("current :"+core.catalog.filters.dd);
+			//$('.filter_dd').removeClass('active');
+			if(core.catalog.filters.dd != 0){
+				core.log('removing class from '+core.catalog.filters.dd);
+				$('#filter_dd_'+core.catalog.filters.dd).removeClass('active');
+			}
+			var oldDD = core.catalog.filters.dd;
 			core.catalog.filters.dd = (core.catalog.filters.dd == id)?0:id;
-			if(core.catalog.filters.dd == 0){
+			core.log("now :"+core.catalog.filters.dd);
+			updateListing = true;
+			if(core.catalog.filters.dd != 0){
 				// if we were turning off the filter, turn all on
-				$('.filter_dd').removeClass('subheader_off');
-				$('#filter_list .dd_' + id).remove();
-				$('#filter_dd_'+id).removeClass('active');
-			}else{
-				updateListing = false;
+				core.log('adding class');
+				$('#filter_dd_'+id).addClass('active');
+			}
+			if(oldDD != 0 && core.catalog.filters.dd != oldDD){
+				//updateListing = false;
 				core.catalog.confirmDeliveryDateChange(true);
 				//$('.prodDd').val(id);
 			}
@@ -133,6 +144,7 @@ core.catalog.modalPopup = function () {
 }
 
 core.catalog.confirmDeliveryDateChange = function (confirmed) {
+	core.log('confirmDeliveryDateChange called');
 	var fdds = core.catalog.filters.dd.split('_');
 	if (confirmed)
 	{
@@ -174,8 +186,8 @@ core.catalog.confirmDeliveryDateChange = function (confirmed) {
 		var text = $.trim($('#filter_dd_' + core.catalog.filters.dd).text());
 		$('.filter_dd').addClass('subheader_off');
 		$('#filter_dd_'+core.catalog.filters.dd).removeClass('subheader_off');
-		$('#filter_list .dd').remove();
 		newfilter = $('<li class="dd dd_' + core.catalog.filters.dd + '"><i class="icon-remove-sign"/>' + text + '</li>').appendTo($('#filter_list'));
+		$('#filter_list .dd').remove();
 		$('.filter.dd').removeClass('active');
 		$('#filter_dd_'+core.catalog.filters.dd).addClass('active');
 		newfilter.click(function () {
