@@ -2,7 +2,16 @@
 
 class core_controller_catalog extends core_controller
 {
-
+	function update_product_delivery()
+	{
+		global $core;
+		
+		$delivery = core::model('delivery_days')->load($core_data['dd_id']);
+		$delivery->next_time();
+		
+		
+	}
+	
 	function check_inventory ()
 	{
 		global $core;

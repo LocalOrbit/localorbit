@@ -145,7 +145,8 @@ core.catalog.modalPopup = function () {
 
 core.catalog.confirmDeliveryDateChange = function (confirmed) {
 	core.log('confirmDeliveryDateChange called');
-	var fdds = core.catalog.filters.dd.split('_');
+	var fdds = core.catalog.filters.dd;
+	//.split('_');
 	if (confirmed)
 	{
 		$('.product-row').each(function () {
@@ -717,11 +718,13 @@ core.catalog.popupLoginRegister=function(idx){
 }
 
 core.catalog.changeProductDeliveryDay=function(event, prodId, dd_ids) {
+	core.log('called changeProductDeliveryDay');
 	var jq = $('#product_' + prodId);
 	var text = $.trim($('#filter_dd_' + dd_ids).text());
 	jq.find('.dd_selector .content').text(text);
 	jq.find('.prodDd').val(dd_ids);
 	jq.find('.filter.dd').dropdown('toggle');
+	//core.doRequest('/catalog/update_product_delivery',{'prod_id':prodId,'dd_id':dd_ids});
     event.stopPropagation();
 	return false;
 };

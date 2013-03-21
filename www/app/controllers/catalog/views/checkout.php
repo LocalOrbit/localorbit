@@ -3,6 +3,9 @@
 global $core;
 
 core::head('Checkout','go mike');
+
+core::log('starting checkout logic');
+
 lo3::require_permission();
 core::clear_response('replace','left');
 core::clear_response('replace','center');
