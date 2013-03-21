@@ -85,7 +85,7 @@ foreach($delivs as $deliv)
 
 core::ensure_navstate(array('left'=>'left_blank'));
 core::write_navstate();
-$this->left_filters($cats,$sellers,undefined,true);
+$this->left_filters($cats,$sellers,undefined,array(),true);
 core_ui::load_library('js','catalog.js');
 
 $cats  = core::model('categories')->load_for_products(explode(',',$data['category_ids']));//->load()->collection();

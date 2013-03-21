@@ -12,6 +12,7 @@ $qty     = $core->view[7];
 $total   = $core->view[8];
 $days 	 = $core->view[9];
 $dd_id 	 = $core->view[10];
+$addresses = $core->view[11];
 
 
 # remove this code
@@ -59,7 +60,7 @@ $rendered_prices = 0;
 						</ol>
 
 						<div class="span2">
-							<? $this->render_qty_delivery($prod,$days,$dd_id,$dd_ids,$qty,$total); ?>
+							<? $this->render_qty_delivery($prod,$days,$dd_id,$dd_ids,$qty,$total,$addresses); ?>
 						</div>
 					</div>
 					<div class="row">

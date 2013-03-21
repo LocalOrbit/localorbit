@@ -5,8 +5,10 @@ $cats = $core->view[0];
 $sellers = $core->view[1];
 //$delivs = $core->view[2];
 $days = $core->view[2];
+$addresses = $core->view[3];
 $hashUrl = $core->view[3]?'true':'false';
 
+#print_r($addresses);
 if($core->data['cart'] == 'yes')
 	core::js('$(\'#cartFilterCheck\').prop(\'checked\',true);core.catalog.setFilter(\'cartOnly\',true);');
 ?>
@@ -39,10 +41,15 @@ if (count($days) > 1)
 	{
 		$name = core_format::date($time, 'shorter-weekday');
 		$dd_ids = implode('_', array_keys($day));
-		list($type, $time) = explode('-', $key);
+		list($type, $time,$deliv_address_id,$pickup_address_id) = explode('-', $key);
+		$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
+		$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 		?>
 		<li class="filter dd" id="filter_dd_<?=$dd_ids?>"><a href="#!catalog-shop#dd<?=$dd_ids?>" onclick="core.catalog.setFilter('dd','<?=$dd_ids?>'); return <?=$hashUrl?>;">
-		<?=$type?> <?=core_format::date($time, 'shorter-weekday',false)?></a>
+		<?=$type?> <?=core_format::date($time, 'shorter-weekday',false)?>
+		<br />
+		<?=$final_address?>
+		</a>
 		<input type="hidden" id="filtercheck_<?=$dd_ids?>" class="filtercheck" checked="checked" /></li>
 		<?
 	}

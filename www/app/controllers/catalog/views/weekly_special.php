@@ -6,6 +6,7 @@ $all_sellers    = $core->view[2];
 $delivs   = $core->view[3];
 $item_hash     = $core->view[4];
 $days 	 = $core->view[5];
+$addresses = $core->view[6];
 
 $special = core::model('weekly_specials')
 	->collection()
@@ -68,7 +69,7 @@ if($special && $special['product_id'] != 0)
 	
 	</ol>
 	<div class="span2 cartstuff">
-		<? $this->render_qty_delivery($prod,$days,$dd_id,$dd_ids,$qty,$total); ?>
+		<? $this->render_qty_delivery($prod,$days,$dd_id,$dd_ids,$qty,$total,$addresses); ?>
 	</div>
 </div>
 <?

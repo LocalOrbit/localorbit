@@ -38,13 +38,7 @@ $payables = core::model('payables')
 				<input type="hidden" name="invoicecreate_<?=$group_key?>__from" value="<?=$payable['from_org_id']?>" />
 			</td>
 			<td class="dt">
-				<?
-				$payables = explode(',',$payable['payables']);
-				for($i=0;$i<count($payables);$i++){
-					echo(($i==0)?'':',');
-					echo('R-'.$payables[$i]);
-				}
-				?>
+				<?=print_r($payable,true)?>
 			</td>
 			<td class="dt">
 				<?=core_format::price($payable['receivable_total'])?>

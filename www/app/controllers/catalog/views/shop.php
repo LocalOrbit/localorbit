@@ -86,14 +86,23 @@ if($core->data['show_news'] == 'yes')
 			->filter('delivery_days.dd_id','in',$dd_ids)
 			->filter('domain_id','=',$core->config['domain']['domain_id']);
 		$deliveries = array();
+		$addrs = array();
 		foreach ($delivs as $value) {
 			$value->next_time();
+			if($value['deliv_address_id'] != 0)
+				$addrs[] = $value['deliv_address_id'];
+			if($value['pickup_address_id'] != 0)
+				$addrs[] = $value['pickup_address_id'];
+	
 			$deliveries[$value['dd_id']] = array($value->__data);
 		}
-		#exit();
+		
+		# get a list of all addresses that are used by for deliveries
+		$addresses = core::model('addresses')->add_formatter('simple_formatter')->collection()->filter('address_id','in',$addrs)->to_hash('address_id');
+		#print_r($addresses);
 
 		$delivs = $deliveries;
-		//print_r($deliveries);
+		#print_r($deliveries);
 		//print_r($delivs->to_hash('dd_id'));
 
 		# reformat the products to an array
@@ -123,6 +132,8 @@ if($core->data['show_news'] == 'yes')
 		foreach($delivs as $deliv)
 		{
 			$time = ($deliv[0]['pickup_address_id'] ? 'Pick Up' : 'Delivered') . '-' . strtotime('midnight',$deliv[0]['pickup_address_id'] ? $deliv[0]['pickup_end_time'] : $deliv[0]['delivery_end_time']);
+			$time .= '-'.$deliv[0]['deliv_address_id'];
+			$time .= '-'.$deliv[0]['pickup_address_id'];
 			if (!array_key_exists($time, $days)) {
 				$days[$time] = array();
 			}
@@ -160,6 +171,7 @@ if($core->data['show_news'] == 'yes')
 		core::js('core.delivs ='.json_encode($delivs).';');
 		core::js('core.cart = '.$cart->write_js(true).';');
 		core::js('core.dds = '.json_encode($days) . ';');
+		core::js('core.addresses = '.json_encode($addresses).';');
 
 		# reorganize the cart into a hash by prod_id, so we can look up quantities easier
 		# while rendering the catalog
@@ -168,7 +180,7 @@ if($core->data['show_news'] == 'yes')
 		# render the filters on the left side
 		core::ensure_navstate(array('left'=>'left_blank'), 'catalog-shop');
 		core::write_navstate();
-		$this->left_filters($cats,$sellers,$days);
+		$this->left_filters($cats,$sellers,$days,$addresses);
 		core::hide_dashboard();
 
 		#===============================
@@ -194,7 +206,8 @@ if($core->data['show_news'] == 'yes')
 			$sellers,
 			$delivs,
 			$item_hash,
-			$days
+			$days,
+			$addresses
 		);
 		//$this->render_total_line(1);
 		$this->render_no_products_line();
@@ -261,7 +274,8 @@ if($core->data['show_news'] == 'yes')
 					$item_hash[$prod['prod_id']][0]['qty_ordered'],
 					$item_hash[$prod['prod_id']][0]['row_total'],
 					$days,
-					$item_hash[$prod['prod_id']][0]['dd_id']
+					$item_hash[$prod['prod_id']][0]['dd_id'],
+					$addresses
 				);
 				$styles[1] = ($styles[1] == 1)?2:1;
 			}
