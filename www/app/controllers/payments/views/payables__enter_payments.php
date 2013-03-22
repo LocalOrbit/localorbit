@@ -94,25 +94,28 @@ foreach($invoice_groups as $group)
 			if($group['to_org_id'] == 1){
 				# if this is someone paying localorbit, then they MUST choose a bank account
 				
+				if(lo3::is_market())
+				{
+					
+					$methods = core::model('organization_payment_methods')
+							->collection()
+							->add_formatter('organization_payment_methods__formatter_dropdown')
+							->filter('org_id','=',$group['from_org_id']);
+					$methods->load();
+							
+					if($methods->__num_rows > 0)
+					{
+						echo(core_form::input_select('Pay Via: ','payment_group_'.$group['to_org_id'].'__opm_id',null,$methods,array(
+							'select_style'=>'width: 300px;',
+							'text_column'=>'dropdown_text',
+							'value_column'=>'opm_id',
+						)));
+					}
+					else
+					{
+						echo('You do not currently have a bank account setup.<br />&nbsp;');
+					}
 				
-				$methods = core::model('organization_payment_methods')
-						->collection()
-						->add_formatter('organization_payment_methods__formatter_dropdown')
-						->filter('org_id','=',$group['from_org_id']);
-				$methods->load();
-						
-				if($methods->__num_rows > 0)
-				{
-					echo(core_form::input_select('Pay Via: ','payment_group_'.$group['to_org_id'].'__opm_id',null,$methods,array(
-						'select_style'=>'width: 300px;',
-						'text_column'=>'dropdown_text',
-						'value_column'=>'opm_id',
-					)));
-				}
-				else
-				{
-					echo('You do not currently have a bank account setup.<br />&nbsp;');
-				}
 			?>
 				
 				<br />
@@ -120,6 +123,13 @@ foreach($invoice_groups as $group)
 				<br />
 				<input type="hidden" name="paygroup-<?=$group['to_org_id']?>" value="3" />
 			<?
+				}
+				else
+				{
+					?>
+						You cannot pay this bill online. 
+					<?
+				}
 			}else{
 				# this is someone recording a cash/check payment made offline
 			?>
