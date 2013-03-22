@@ -724,7 +724,7 @@ core.catalog.changeProductDeliveryDay=function(event, prodId, dd_ids) {
 	jq.find('.dd_selector .content').text(text);
 	jq.find('.prodDd').val(dd_ids);
 	jq.find('.filter.dd').dropdown('toggle');
-	//core.doRequest('/catalog/update_product_delivery',{'prod_id':prodId,'dd_id':dd_ids});
+	core.doRequest('/catalog/update_product_delivery',{'prod_id':prodId,'dd_id':dd_ids});
     event.stopPropagation();
 	return false;
 };
