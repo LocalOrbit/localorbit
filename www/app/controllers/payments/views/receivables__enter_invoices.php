@@ -28,7 +28,7 @@ foreach($invoices as $invoice)
 {
 	$counter++;
 	core::log('building UI for invoice '.$invoice['invoice_id']);
-	if($invoice['to_org_id'].'_'.$invoice['from_org_id'] != $cur_group)
+	if($invoice['to_org_id'].'_'.$invoice['from_org_id'].'__'.$counter != $cur_group)
 	{
 		if(count($invoices) > 0)
 		{
@@ -42,7 +42,7 @@ foreach($invoices as $invoice)
 		}
 				
 		# remove the counter append in order to re-enable invoice grouping
-		$cur_group = $invoice['to_org_id'].'_'.$invoice['from_org_id'].'__'.$counter;
+		$cur_group = $invoice['to_org_id'].'_'.$invoice['from_org_id'];
 		$group_total = 0;
 		$inv_counter = 0;
 		
