@@ -6,10 +6,90 @@ class core_controller_catalog extends core_controller
 	{
 		global $core;
 		
-		$delivery = core::model('delivery_days')->load($core_data['dd_id']);
-		$delivery->next_time();
+		$prod_id = $core->data['prod_id'];
+		$dd_id   = $core->data['dd_id'];
+		$cart_item    = null;
+		$lodeliv_id = 0;
 		
 		
+		
+		# figure out if a delivery for this dd_id already exists. If it does, reuse this.
+		$cart = core::model('lo_order')->get_cart();
+		$cart->load_items();
+		foreach($cart->items as $item)
+		{
+			if($item['dd_id'] == $dd_id)
+			{
+				$lodeliv_id = $item['lodeliv_id'];
+			}
+			
+			if($item['prod_id'] == $prod_id)
+			{
+				$cart_item = $item;
+			}
+		}
+		
+		
+		
+		# check if we did not find a delivery. If we did not, then create it.
+		if($lodeliv_id == 0)
+		{
+			$delivery = core::model('lo_order_deliveries');
+			
+			$sql = 'select dd.*,';
+			$sql .= ' a1.org_id as deliv_org_id,a1.address as deliv_address,				a1.city as deliv_city,a1.region_id as deliv_region_id,				a1.postal_code as deliv_postal_code,a1.telephone as deliv_telephone,a1.fax as deliv_fax,				a1.longitude as deliv_longitude,a1.latitude as deliv_latitude,';
+			$sql .= ' a2.org_id as pickup_org_id,a2.address as pickup_address,				a2.city as pickup_city,a2.region_id as pickup_region_id,				a2.postal_code as pickup_postal_code,a2.telephone as pickup_telephone,a2.fax as pickup_fax,				a2.longitude as pickup_longitude,a2.latitude as pickup_latitude';
+			
+			$sql .= ' from delivery_days dd';
+			$sql .= ' left join addresses a1 on (a1.address_id=dd.deliv_address_id)';
+			$sql .= ' left join addresses a2 on (a2.address_id=dd.pickup_address_id)';
+			$sql .= ' where dd_id='.$dd_id;
+			
+			$data = core_db::row($sql);
+			$dd = core::model('delivery_days');
+			foreach($data as $field=>$value)
+				$dd[$field] = $value;
+			$dd->next_time();
+			
+			
+			$delivery['lo_oid'] = $cart_item['lo_oid'];
+			$delivery['lo_foid'] = $cart_item['lo_foid'];
+			$delivery['dd_id'] = $dd_id;
+			$delivery['deliv_address_id'] = $dd['deliv_address_id'];
+			$delivery['delivery_start_time'] = $dd['delivery_start_time'];
+			$delivery['delivery_end_time'] = $dd['delivery_end_time'];
+			$delivery['pickup_start_time'] = $dd['pickup_start_time'];
+			$delivery['pickup_end_time'] = $dd['pickup_end_time'];
+			$delivery['pickup_address_id'] = $dd['pickup_address_id'];
+			$delivery['deliv_org_id'] = $dd['deliv_org_id'];
+			$delivery['deliv_address'] = $dd['deliv_address'];
+			$delivery['deliv_city'] = $dd['deliv_city'];
+			$delivery['deliv_region_id'] = $dd['deliv_region_id'];
+			$delivery['deliv_postal_code'] = $dd['deliv_postal_code'];
+			$delivery['deliv_telephone'] = $dd['deliv_telephone'];
+			$delivery['deliv_fax'] = $dd['deliv_fax'];
+			$delivery['deliv_longitude'] = $dd['deliv_longitude'];
+			$delivery['deliv_latitude'] = $dd['deliv_latitude'];
+
+			$delivery['pickup_org_id'] = $dd['pickup_org_id'];
+			$delivery['pickup_address'] = $dd['pickup_address'];
+			$delivery['pickup_city'] = $dd['pickup_city'];
+			$delivery['pickup_region_id'] = $dd['pickup_region_id'];
+			$delivery['pickup_postal_code'] = $dd['pickup_postal_code'];
+			$delivery['pickup_telephone'] = $dd['pickup_telephone'];
+			$delivery['pickup_fax'] = $dd['pickup_fax'];
+			$delivery['pickup_longitude'] = $dd['pickup_longitude'];
+			$delivery['pickup_latitude'] = $dd['pickup_latitude'];
+
+			$delivery->save();
+			$cart_item['lodeliv_id'] = $delivery['lodeliv_id'];
+			$cart_item->save();
+		}
+		else
+		{
+			$cart_item['lodeliv_id'] = $lodeliv_id;
+			$cart_item->save();
+		}
 	}
 	
 	function check_inventory ()
