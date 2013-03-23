@@ -152,11 +152,9 @@ class core_model_organizations extends core_model_base_organizations
 			from domains 
 			where domain_id in (select domain_id from organizations_to_domains where org_id='.$org_id.')
 			or domain_id in (
-				select domain_id 
-				from delivery_days
-				where dd_id in (
-					select dd_id from organization_delivery_cross_sells where org_id='.$org_id.'
-				)
+				select sell_on_domain_id
+				from organization_cross_sells
+				where org_id='.$org_id.'
 			)
 			order by name
 		';
