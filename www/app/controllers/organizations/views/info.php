@@ -29,7 +29,39 @@ echo(
 */
 ?>
 
+
 <h3>Organization Info</h3>
+<script>
+	function checkPaymentMethodChosen() {
+		var paymentMethodChosen = false;
+		
+		<? global $core;
+			// check if 1 is checked
+			if($domain['payment_allow_paypal'] == 1 || $data['payment_allow_paypal']) {
+				//payment_allow_paypal
+				echo "if ($('#payment_allow_paypal').attr('checked')) { paymentMethodChosen = true;}";
+				
+			} 
+			if ($domain['payment_allow_purchaseorder'] == 1 || $data['payment_allow_purchaseorder']) {
+				//payment_allow_purchaseorder
+				echo "if ($('#payment_allow_purchaseorder').attr('checked')) { paymentMethodChosen = true;}";
+			
+			} 
+			if ($domain['payment_allow_ach'] == 1 || $data['payment_allow_ach']) {
+				//payment_allow_ach
+				echo "if ($('#payment_allow_ach').attr('checked')) { paymentMethodChosen = true;}";
+			}	
+		?>
+
+		if (!paymentMethodChosen) {
+			$('#orgtabs-s1').click();
+			core.validatePopup("Please select a Payment Method.");
+			return false;
+		}
+		
+		return true;			
+	}
+</script>
 
 <!--
 <div class="alert note alert-info">

@@ -101,9 +101,8 @@ if($data['is_deleted'] == 1)
 	echo('<div class="alert alert-error">This organization has been deleted.</div>');
 }
 ?>
-<form class="form-horizontal" name="organizationsForm" method="post" action="/organizations/save" onsubmit="return core.submit('/organizations/save',this);" enctype="multipart/form-data">
-	<?=core_ui::tab_switchers('orgtabs',$tabs)?>
-	
+<form class="form-horizontal" id="organizationsForm" name="organizationsForm" method="post" action="/organizations/save" onsubmit="return core.submit('/organizations/save',this);" enctype="multipart/form-data">
+	<?=core_ui::tab_switchers('orgtabs',$tabs)?>	
 	<div class="tab-content">
 		<div class="tab-pane active" id="orgtabs-a1"><? $this->info($is_mm); ?></div>
 		<div class="tab-pane" id="orgtabs-a2"><? $this->addresses(); ?></div>
@@ -116,9 +115,12 @@ if($data['is_deleted'] == 1)
 	
 	<?
 	if($core->data['me'] == '1') 
-		save_only_button();
+		save_only_button(false,'if (checkPaymentMethodChosen() == true) core.submit(this.form.action,this.form);', 
+			'if (checkPaymentMethodChosen() == true) core.submit(this.form.action,this.form,{\'do_redirect\':1});');
 	else
-		save_buttons();
+		save_buttons(false,'if (checkPaymentMethodChosen() == true) core.submit(this.form.action,this.form);', 
+			'if (checkPaymentMethodChosen() == true) core.submit(this.form.action,this.form,{\'do_redirect\':1});');
 	?>
+	
 	<input type="hidden" name="org_id" value="<?=$data['org_id']?>" />
 </form>
