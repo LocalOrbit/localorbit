@@ -492,10 +492,14 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			$qty_left = $item['qty_ordered'];
 			$order_deliv = core::model('lo_order_deliveries')->collection()->filter('lodeliv_id', $item['lodeliv_id'])->row();
 			$end_time = $order_deliv['delivery_end_time'];
-			$sql =sprintf('select *, now(), good_from is null  as good_from_null, expires_on is null  as expires_on_null
-				 from product_inventory where prod_id = %1$d and qty > 0
- 				 and (expires_on > %2$d or expires_on is null) and (good_from <= %2$d or good_from is null)
-   			  order by expires_on_null, expires_on, good_from_null, good_from',$item['prod_id'],$end_time);
+			$sql =sprintf('
+				select *, now(), good_from is null  as good_from_null, expires_on is null  as expires_on_null
+				from product_inventory 
+				where prod_id = %1$d 
+				and qty > 0
+				and (UNIX_TIMESTAMP(expires_on) > %2$d or expires_on is null) 
+				and (UNIX_TIMESTAMP(good_from) <= %2$d or good_from is null)
+   			order by expires_on_null, expires_on, good_from_null, good_from',$item['prod_id'],$end_time);
 			$inventory = new core_collection ($sql);
 			$inventory->__model = core::model('product_inventory');
 			foreach ($inventory as $inv)
