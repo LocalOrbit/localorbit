@@ -190,8 +190,10 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 			# loop through the possible delivery days,
 			# determine the next possible time. If it is sooner
 			# than our previous best time, use that delivery day.
+			$all_dds = array();
 			foreach($dds as $dd)
 			{
+				$all_dds[] = $dd['dd_id'];
 				$new_time = $dd->next_time();
 				if($new_time < $best_time && $dd->is_valid($this))
 				{
@@ -256,7 +258,8 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		$this['pickup_start_time']   = $this->delivery['pickup_start_time'];
 		$this['pickup_end_time']     = $this->delivery['pickup_end_time'];
 		$this['due_time']            = $this->delivery['due_time'];
-		$this['deliv_org_id'] 							= $deliv_address['org_id'];
+		$this['deliv_org_id']		  = $deliv_address['org_id'];
+		$this['dd_id_group'] = implode('_',$all_dds);
 
 		if(!is_null($deliv_address))
 		{
@@ -321,7 +324,9 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 			$new['delivery_end_time']  = $this->delivery['delivery_end_time'];
 			$new['pickup_start_time']  = $this->delivery['pickup_start_time'];
 			$new['pickup_end_time']  = $this->delivery['pickup_end_time'];
-			$new['dd_id_group'] = 'test';//implode('_',array_keys($order_deliveries));
+			$new['dd_id_group'] = $this['dd_id_group'];
+			#//implode('_',array_keys($order_deliveries));
+			
 			if(!is_null($deliv_address))
 			{
 				$new['deliv_org_id']					= $deliv_address['org_id'];

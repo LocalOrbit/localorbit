@@ -52,6 +52,13 @@ class core_controller_catalog extends core_controller
 			$dd->next_time();
 			
 			
+			$dds = core::model('delivery_days')->get_days_for_prod($prod_id,$core->config['domain']['domain_id']);
+			$all_dds = array();
+			foreach($dds as $dd_item)
+			{
+				$all_dds[] = $dd_item['dd_id'];
+			}
+			
 			$delivery['lo_oid'] = $cart_item['lo_oid'];
 			$delivery['lo_foid'] = $cart_item['lo_foid'];
 			$delivery['dd_id'] = $dd_id;
@@ -80,6 +87,7 @@ class core_controller_catalog extends core_controller
 			$delivery['pickup_fax'] = $dd['pickup_fax'];
 			$delivery['pickup_longitude'] = $dd['pickup_longitude'];
 			$delivery['pickup_latitude'] = $dd['pickup_latitude'];
+			$delivery['dd_id_group'] = implode('_',$all_dds);
 
 			$delivery->save();
 			$cart_item['lodeliv_id'] = $delivery['lodeliv_id'];

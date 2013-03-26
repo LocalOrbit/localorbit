@@ -88,6 +88,7 @@ class core_model_delivery_days extends core_model_base_delivery_days
 		if($domain_id != 0)
 			$sql .= ' and delivery_days.domain_id='.$domain_id;
 
+		$sql .= ' order by delivery_days.dd_id';
 		core::log($sql);
 		$dds = new core_collection($sql);
 		$dds->__model=$this;
