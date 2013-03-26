@@ -30,7 +30,7 @@
 				$verb = 'Delivery';
 				#echo('need to get a list of delivery addresses');
 			}
-			print_r($deliv->__data);
+			#print_r($deliv->__data);
 			# if there's only one delivery, render it this way:
 			if($total_delivs == 1)
 			{
