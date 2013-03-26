@@ -621,7 +621,7 @@ function lfo_accordion($data)
 	{
 		$line = explode('|',$line);
 		if($line[1] == 'buyer order' || $line[1] == 'lo fees')
-			$lo_oids[] = $line[2];
+			$lo_oids[] = intval($line[2]);
 	}
 	
 	if(count($lo_oids) > 0)

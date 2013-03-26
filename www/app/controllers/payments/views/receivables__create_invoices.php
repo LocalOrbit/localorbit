@@ -1,9 +1,10 @@
 <?php
 global $core;
 
-$payables = core::model('payables')
+$payables = core::model('v_payables')
 	->get_buyer_grouped_payables()
-	->filter('p.payable_id','in',explode(',',$core->data['payable_id']));
+	->filter('p.payable_id','in',explode(',',$core->data['payable_id']))
+	->group('concat_ws(\'_\',p.from_org_id,p.to_org_id)');
 	
 ?>
 <div id="create_invoice_form">
@@ -26,7 +27,11 @@ $payables = core::model('payables')
 			
 			$style = (!$style);
 			$group_key = str_replace(',','-',$payable['payables']);
-			
+			$payable = payable_info($payable);
+			$payable = payment_link_formatter($payable);
+			$payable = payment_direction_formatter($payable);
+			$payable = lfo_accordion($payable);
+		
 			#print_r($payable);
 		?>
 		<tr class="dt<?=$style?>">
@@ -38,7 +43,7 @@ $payables = core::model('payables')
 				<input type="hidden" name="invoicecreate_<?=$group_key?>__from" value="<?=$payable['from_org_id']?>" />
 			</td>
 			<td class="dt">
-				<?=print_r($payable,true)?>
+				<?=$payable['description_html']?>
 			</td>
 			<td class="dt">
 				<?=core_format::price($payable['receivable_total'])?>
