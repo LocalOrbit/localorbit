@@ -81,5 +81,6 @@ $payables = core::model('v_payables')
 </div>
 <?
 core::replace('receivables_create_area');
+core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });");
 core::js("$('#receivables_create_area,#all_receivables').toggle();");
 ?>
