@@ -70,7 +70,7 @@ $cart->arrange_by_next_delivery();
 		</div>
 		<?php
 			$count = 0;
-			echo('Cart id: '.$cart['lo_oid']);
+			#echo('Cart id: '.$cart['lo_oid']);
 			foreach($cart->items_by_delivery as $delivery_opt_key=>$items) {
 				// delivery date
 				
