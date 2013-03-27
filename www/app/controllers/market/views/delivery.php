@@ -89,7 +89,7 @@ echo('</div>');
 		</div>
 	</div>
 	
-	<div class="control-group" style="display: none;">
+	<div class="control-group">
 		<label class="control-label">Delivery fee</label>
 		<div class="controls">
 			<input type="text" name="amount" />
@@ -97,7 +97,7 @@ echo('</div>');
 		</div>
 	</div>
 	
-	<div class="control-group" style="display: none;">
+	<div class="control-group">
 		<label class="control-label">Fee type</label>
 		<div class="controls">
 			 <select name="fee_calc_type_id">

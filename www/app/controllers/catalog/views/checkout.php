@@ -24,6 +24,7 @@ $all_addrs = core::model('addresses')
 
 # load up the order and arrange it for rendering
 $cart = core::model('lo_order')->get_cart();
+
 $cart->load_items(true);
 $cart->load_codes_fees();
 $cart->discount_codes = $cart->discount_codes->to_array();
@@ -69,7 +70,7 @@ $cart->arrange_by_next_delivery();
 		</div>
 		<?php
 			$count = 0;
-	
+			echo('Cart id: '.$cart['lo_oid']);
 			foreach($cart->items_by_delivery as $delivery_opt_key=>$items) {
 				// delivery date
 				

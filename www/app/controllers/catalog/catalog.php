@@ -87,7 +87,7 @@ class core_controller_catalog extends core_controller
 			$delivery['pickup_fax'] = $dd['pickup_fax'];
 			$delivery['pickup_longitude'] = $dd['pickup_longitude'];
 			$delivery['pickup_latitude'] = $dd['pickup_latitude'];
-			$delivery['dd_id_group'] = implode('_',$all_dds);
+			$delivery['dd_id_group'] = $dd_id;
 
 			$delivery->save();
 			$cart_item['lodeliv_id'] = $delivery['lodeliv_id'];
@@ -199,22 +199,25 @@ class core_controller_catalog extends core_controller
 		core::log('------ done with discount code ------');
 
 		core::log('ready to calculate delivery fees');
+		core::log(print_R($core->data,true));
 		# we need to reorganize all of the items by their final delivery combinations
 		foreach($cart->items_by_delivery as $delivery_opt_key=>$items)
 		{
-			$final_delivery_breakdown[$core->data['group_'.$delivery_opt_key]] = array();
+			core::log('looking for fees for '.$delivery_opt_key);
+			$final_delivery_breakdown[$delivery_opt_key] = array();
 			foreach($items as $item)
 			{
-				$final_delivery_breakdown[$core->data['group_'.$delivery_opt_key]][] = $item;
+				$final_delivery_breakdown[$delivery_opt_key][] = $item;
 			}
 		}
 		core::log('breakdown complete');
 
 
 		# now all items are in the correct breakdown. determine all the unique dd_ids
-		foreach($final_delivery_breakdown as $ddaddr_id=>$items)
+		foreach($final_delivery_breakdown as $dd_id=>$items)
 		{
-			list($dd_id,$addr_id) = explode('-',$ddaddr_id);
+			core::log('attempting to pick apart breakdown keys: '.$dd_id);
+			#list($dd_id,$addr_id) = explode('-',$ddaddr_id);
 			$dd_list[] = $dd_id;
 		}
 
@@ -249,6 +252,7 @@ class core_controller_catalog extends core_controller
 		core::log('looking for fees to add');
 		foreach($dd_cache as $dd_id=>$data)
 		{
+			core::log('examining first dd: '.$dd_id);
 			if($data[0]['exists'] !== true)
 			{
 				core::log('adding new fee: '.$fee['dd_id']);

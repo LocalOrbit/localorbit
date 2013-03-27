@@ -30,7 +30,7 @@ else
 	}
 	else
 	{
-		$payables->filter('to_org_id','=',$core->session['org_id']);
+		$payables->filter('from_org_id','=',$core->session['org_id']);
 	}
 
 }
