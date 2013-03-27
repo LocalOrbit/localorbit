@@ -42,6 +42,7 @@ foreach($invoices as $invoice)
 }
 
 $to_lo = false;
+$valid_payables = 0;
 
 foreach($invoice_groups as $group)
 {
@@ -91,30 +92,28 @@ foreach($invoice_groups as $group)
 		<div class="span6">
 			<h2><i class="icon-coins">&nbsp;</i>Method</h2>
 			<? 
-			if($group['to_org_id'] == 1){
+			if($group['to_org_id'] == 1 && $group['from_org_id'] == $core->session['org_id']){
 				# if this is someone paying localorbit, then they MUST choose a bank account
 				
-				if(lo3::is_market())
+				$valid_payables++;
+				$methods = core::model('organization_payment_methods')
+						->collection()
+						->add_formatter('organization_payment_methods__formatter_dropdown')
+						->filter('org_id','=',$group['from_org_id']);
+				$methods->load();
+						
+				if($methods->__num_rows > 0)
 				{
-					
-					$methods = core::model('organization_payment_methods')
-							->collection()
-							->add_formatter('organization_payment_methods__formatter_dropdown')
-							->filter('org_id','=',$group['from_org_id']);
-					$methods->load();
-							
-					if($methods->__num_rows > 0)
-					{
-						echo(core_form::input_select('Pay Via: ','payment_group_'.$group['to_org_id'].'__opm_id',null,$methods,array(
-							'select_style'=>'width: 300px;',
-							'text_column'=>'dropdown_text',
-							'value_column'=>'opm_id',
-						)));
-					}
-					else
-					{
-						echo('You do not currently have a bank account setup.<br />&nbsp;');
-					}
+					echo(core_form::input_select('Pay Via: ','payment_group_'.$group['to_org_id'].'__opm_id',null,$methods,array(
+						'select_style'=>'width: 300px;',
+						'text_column'=>'dropdown_text',
+						'value_column'=>'opm_id',
+					)));
+				}
+				else
+				{
+					echo('You do not currently have a bank account setup.<br />&nbsp;');
+				}
 				
 			?>
 				
@@ -123,14 +122,11 @@ foreach($invoice_groups as $group)
 				<br />
 				<input type="hidden" name="paygroup-<?=$group['to_org_id']?>" value="3" />
 			<?
-				}
-				else
-				{
-					?>
-						You cannot pay this bill online. 
-					<?
-				}
+				
 			}else{
+				if(lo3::is_market() || lo3::is_admin())
+				{
+					$valid_payables++;
 				# this is someone recording a cash/check payment made offline
 			?>
 				<div class="row">
@@ -162,7 +158,13 @@ foreach($invoice_groups as $group)
 				</div>
 
 
-			<?}?>
+			<?
+				}
+				else
+				{
+					echo('You cannot pay this bill online. ');
+				}
+			}?>
 		</div>
 	</div>
 	<br />
@@ -173,8 +175,13 @@ foreach($invoice_groups as $group)
 
 ?>
 	<div class="pull-right">
+		<?if($valid_payables == 0){?>
+		<input type="button" class="btn btn-large btn-warning" value="Go Back" onclick="$('#all_all_payments,#payments_pay_area').toggle();" />
+		
+		<?}else{?>
 		<input type="button" class="btn btn-large btn-warning" value="Cancel" onclick="$('#all_all_payments,#payments_pay_area').toggle();" />
 		<input type="button" class="btn btn-large btn-success" onclick="core.payments.newRecordPayments();" value="<?=(($to_lo)?'Make Payment':'Record Payments')?>" />
+		<?}?>
 	</div>
 <?
 core::js('document.paymentsForm.invoice_list.value=\''.implode(',',$invoice_list).'\';');
