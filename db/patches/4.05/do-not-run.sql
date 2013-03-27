@@ -11,6 +11,10 @@ ORDER  BY table_name
 LIMIT  1000;
 */
 
+ALTER TABLE organizations
+MODIFY payment_entity_id int(10) UNSIGNED;
+
+
 DROP TABLE IF EXISTS adminnotification_inbox;
 DROP TABLE IF EXISTS admin_role;
 DROP TABLE IF EXISTS admin_rule;

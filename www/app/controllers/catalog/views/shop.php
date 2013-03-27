@@ -5,7 +5,6 @@ global $core;
 
 #$start = microtime();
 
-
 if($core->config['domain']['is_closed'] == 1)
 {
 	$this->store_closed();
@@ -86,7 +85,7 @@ if($core->data['show_news'] == 'yes')
 			->filter('delivery_days.dd_id','in',$dd_ids)
 			->filter('domain_id','=',$core->config['domain']['domain_id']);
 		$deliveries = array();
-		$addrs = array();
+		$addrs = array(0); // 0 in case no $delivs set
 		foreach ($delivs as $value) {
 			$value->next_time();
 			if($value['deliv_address_id'] != 0)
@@ -97,7 +96,7 @@ if($core->data['show_news'] == 'yes')
 			$deliveries[$value['dd_id']] = array($value->__data);
 		}
 		
-		# get a list of all addresses that are used by for deliveries
+		# get a list of all addresses that are used by for deliveries 
 		$addresses = core::model('addresses')->add_formatter('simple_formatter')->collection()->filter('address_id','in',$addrs)->to_hash('address_id');
 		#print_r($addresses);
 

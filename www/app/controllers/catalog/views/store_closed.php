@@ -7,7 +7,7 @@ if(trim($core->config['domain']['closed_note']) != '')
 }
 else
 {
-	echo($core->i18n['note:catalog:closed']);
+	echo($core->i18n('note:catalog:closed', $core->config['domain']['name']));
 }
 echo('<br />&nbsp;<br /><br />&nbsp;<br />');
 core::replace('center');
