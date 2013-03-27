@@ -115,6 +115,21 @@ org.deletePaymentMethods=function(formObj){
 }
 
 org.savePaymentMethod=function(formObj){
+	var account_num = $.trim(formObj.nbr1.value);
+	var routing_num = $.trim(formObj.nbr2.value);
+
+	// account number 5 digit check
+	if(isNaN(account_num) || account_num.length < 5) {
+		core.validatePopup("Please enter a valid Account number.");
+		return false;
+	}
+	
+	// routing number 9 digit check
+	if(isNaN(routing_num) || routing_num.length != 9) {
+		core.validatePopup("Please enter a valid 9 digit Routing number.");
+		return false;
+	}
+	
 	data = {
 		'opm_id':formObj.opm_id.value,
 		'label':formObj.pm_label.value,
