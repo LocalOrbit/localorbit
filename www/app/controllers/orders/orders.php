@@ -121,8 +121,9 @@ class core_controller_orders extends core_controller
 				#$item['qty_ordered']   = $core->data['qty_ordered_'.$item['lo_liid']];
 				$inventory['qty_delivered'] = $core->data['qty_delivered_'.$item['lo_liid']];
 				$item['qty_delivered'] = $core->data['qty_delivered_'.$item['lo_liid']];
-				#$item['row_total']     = $core->data['qty_ordered_'.$item['lo_liid']] * $item['unit_price'];
-				#$item['row_adjusted_total']   = $core->data['qty_ordered_'.$item['lo_liid']] * $item['unit_price'];
+				#$item['row_total'] = floatval($core->data['qty_delivered_'.$item['lo_liid']]) * floatval($item['unit_price']);
+				$item['row_total']     = floatval($core->data['qty_delivered_'.$item['lo_liid']]) * floatval($item['unit_price']);
+				$item['row_adjusted_total']   = floatval($core->data['qty_delivered_'.$item['lo_liid']]) * floatval($item['unit_price']);
 				$item->save();
             core::log('inventory ' . print_r($inventory, true));
 				$inventory->save();
