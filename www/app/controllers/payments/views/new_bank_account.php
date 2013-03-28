@@ -5,7 +5,7 @@ global $core;
 <form name="bankForm" action="/organizations/save_payment_method" class="form-horizontal" onsubmit="return core.submit('/organizations/save_payment_method',this);">
 	<fieldset id="editInv">
 		<legend>Bank Account Info</legend>
-		<?=core_form::input_text('Label','pm_label')?>
+		<?=core_form::input_text('Account Nickname','pm_label')?>
 		<?=core_form::input_text('Name on Account','name_on_account')?>
 		<?=core_form::input_text('Account #','nbr1','',array('onfocus'=>"if(new String(this.value).indexOf('*')===0){this.value='';}"))?>
 		<?=core_form::input_text('Routing #','nbr2','',array('onfocus'=>"if(new String(this.value).indexOf('*')===0){this.value='';}"))?>
