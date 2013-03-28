@@ -10,8 +10,8 @@ class core_controller_catalog extends core_controller
 		$dd_id   = $core->data['dd_id'];
 		$cart_item    = null;
 		$lodeliv_id = 0;
-		
-		
+		$lo_liid = 0;
+		core::log('here');
 		
 		# figure out if a delivery for this dd_id already exists. If it does, reuse this.
 		$cart = core::model('lo_order')->get_cart();
@@ -21,19 +21,22 @@ class core_controller_catalog extends core_controller
 			if($item['dd_id'] == $dd_id)
 			{
 				$lodeliv_id = $item['lodeliv_id'];
+				
 			}
 			
 			if($item['prod_id'] == $prod_id)
 			{
-				$cart_item = $item;
+				
+				$lo_liid = $item['lo_liid'];
 			}
 		}
-		
-		
+		$cart_item = core::model('lo_order_line_item')->load($lo_liid);
+		core::log('attempting to change item '.$cart_item['lo_liid'].' from '.$cart_item['dd_id'].' to '.$dd_id);
 		
 		# check if we did not find a delivery. If we did not, then create it.
 		if($lodeliv_id == 0)
 		{
+			core::log('tryign to create delivery day');
 			$delivery = core::model('lo_order_deliveries');
 			
 			$sql = 'select dd.*,';
@@ -95,7 +98,9 @@ class core_controller_catalog extends core_controller
 		}
 		else
 		{
+			$cart_item->__orig_data = array();
 			$cart_item['lodeliv_id'] = $lodeliv_id;
+			$cart_item['dd_id'] = $dd_id;
 			$cart_item->save();
 		}
 	}
