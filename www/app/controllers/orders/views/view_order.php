@@ -115,7 +115,8 @@ foreach($order->items as $item)
 		unset($field);
 		if($dd_id > 0)
 		{
-			echo('<input type="hidden" id="deliv_ids_'.$dd_id.'" name="deliv_ids_'.$dd_id.'" value="'.implode('-',$deliv_ids).'" />');
+			echo('</tbody></table>');
+			echo('<input type="hidden" id="deliv_ids_'.$dd_id.'" name="deliv_ids_'.$dd_id.'" value="'.implode('-',$deliv_ids).'" />');			
 			$deliv_ids = array();
 		}
 
@@ -215,8 +216,9 @@ foreach($order->items as $item)
 			</tr>
 	<?
 }
-?>	</tbody>
-	</table>
+?>
+	</tbody>
+</table>
 <?
 echo('<input type="hidden" id="deliv_ids_'.$dd_id.'" name="deliv_ids_'.$dd_id.'" value="'.implode('-',$deliv_ids).'" />');
 
