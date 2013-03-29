@@ -105,12 +105,12 @@
 	<tr>
 		<td colspan="3">
 			<div class="jobs_area">
-				<div style="width: 800px; float: left;">
+				<div style="width: 750px; float: left;">
 					<h3>Work with Us!</h3>
 					We're always looking for talented people. Are you rigorous, driven and a great communicator? Do you have a track record of making things happen? Are you passionate about building the New Food Economy? We'd love to talk.
 				</div>
-				<div style="width: 200px; float: left;">
-					<a href="/homepage/work_with_us.php" style="margin-top: 20px;" class="btn btn_blue">Jobs</a>
+				<div style="width: 250px; float: left;">
+					<a href="/homepage/work_with_us.php" style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Jobs</a>
 				</div>
 			</div>
 		</td>
