@@ -11,7 +11,7 @@ h2{
 }
 h3{
 	font-size: 17px;
-	color: #666;
+	color: #670000;
 	margin-bottom: 5px;
 }
 
@@ -255,4 +255,31 @@ a{
 	background-color: #f2f2f2;
 	margin-right: 20px;
 	height: 70px;
+}
+
+.btn{
+	border-radius: 4px;
+	padding: 7px 0px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+	border: #999 1px solid;
+	width: 230px;
+	display: block;
+	color: #fff;
+	background-color: #fff;
+}
+
+.btn_green{
+	background-color: #669933;
+	border: #558822 1px solid;
+}
+
+.btn_blue{
+	background-color: #336699;
+	border: #225588 1px solid;
+}
+
+.btn_grey{
+	color: #777;
 }

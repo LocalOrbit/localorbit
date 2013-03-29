@@ -86,7 +86,8 @@
 				We help people build profitable
 				businesses &amp; healthier communities.
 				<br />&nbsp;<br />
-				<a href="/homepage/features.php" class="homepage_button">Learn More</a>
+				<a class="btn btn_grey" style="margin-left: 55px;" href="/homepage/features.php">Learn More</a>
+			
 			</div>
 		</td>
 	</tr>
@@ -115,7 +116,8 @@
 			hubs and independent distributors
 			who are rebuilding the local &amp;
 			regional food systems.
-			<input type="button" class="schedule_button" value="Schedule a Demo" />
+			<br />&nbsp;<br />
+			<a class="btn btn_green" href="/field-notes/schedule-a-demo">Schedule a Demo</a>
 			
 		</td>
 		<td rowspan="2">&nbsp;</td>
@@ -164,6 +166,60 @@
 			<div class="home_paragraph">
 				Tell customers teh story of your products. Track the supply chain 
 				journey with just a few clicks.
+			</div>
+		</td>		
+	</tr>
+<tr>
+		<td colspan="7"><img src="/homepage/img/homepage_divider.png" /><br />&nbsp;<br /></td>
+	</tr>
+	<tr>
+		<td rowspan="2">
+			<h2 style="margin-top: 10px;">Who Uses Local Orbit?</h3> 
+			
+			Local Orbit provides e-commerce, marketing and business management tools for the entrepeneurs and organizations that are creating a new local food economy, connecting buyers and sellers through a shorter, transparent supply chain,
+			<br />&nbsp;<br />
+			<a class="btn btn_blue" href="/homepage/features.php">Learn More</a>
+			
+		</td>
+		<td rowspan="2">&nbsp;</td>
+		<td>
+			<h3>Market Makers</h3>
+			<div class="home_paragraph">
+				Market makers are the farmers markets, food markets and independent aggregators who connect local buyers and sellers. They use Local Orbit's tools to facilitate sales, manage buyer and seller relationships, and streamline distribution.
+			</div>
+		</td>
+		<td rowspan="2">&nbsp;</td>
+		<td>
+			<h3>Producer Cooperatives</h3>
+			<div class="home_paragraph">
+				Cooperatives create online ordering portals, either maintaining individual seller branding or promoting a cooperative brand. Local Orbit's tools enable efficient management of inventory, sales and deliveries to all of their customer types.
+			</div>
+		</td>
+		<td rowspan="2">&nbsp;</td>
+		<td>
+			<h3>Farmers, Ranchers, Specialty Producers</h3>
+			<div class="home_paragraph">
+				Producers sell through aggregate marketplaces. They can also create their own online stores for on-farm pick up, often adding products from nearby farms. Sales, inventory and deliveries across multiple marketplaces are managed through a central dashboard.
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<h3>Independent Distributors</h3>
+			<div class="home_paragraph">
+				Distributors can create a private ordering system to sell local and regional products. Orders can be placed directly by consumers or by the distributor during a sales call. Distributors that have extra trucking capacity also provide delivery services in some markets powered by Local Orbit.
+			</div>
+		</td>
+		<td>
+			<h3>Restaurants, Universities, Hospitals</h3>
+			<div class="home_paragraph">
+				For restaurants and institutions with their own local supplier relationships, we create vendor management portals, making it easy to source from multiple suppliers and pay with a single purchase order. Buyers can also source directly from any marketplace in their region.
+			</div>
+		</td>
+		<td>
+			<h3>Buying Groups</h3>
+			<div class="home_paragraph">
+				Business and consumer buying groups create online marketplaces for their members, with private access to lcoal products and customized ordering, delivery and pricing options. Buying clubs can also source from other marketplaces powered by Local Orbit.
 			</div>
 		</td>		
 	</tr>
