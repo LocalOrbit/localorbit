@@ -63,6 +63,11 @@
 							</tr>
 						</tbody>
 					</table>
+					<br />
+					<div class="footer">&nbsp; &nbsp; &nbsp; © 2013 | 
+					<a class="footer" style="font-size: 100%;" href="/homepage/tos.php" onclick="core.go(this.href);">Terms of Service</a> | 
+					<a style="font-size: 100%;" class="footer" href="/homepage/privacy.php" onclick="core.go(this.href);">Privacy</a> | 
+					<a class="footer" href="https://localorbit.zendesk.com/anonymous_requests/new" onclick="script: Zenbox.show(); return false;">Help</a></div>
 				</td>
 			</tr>
 		</table>
