@@ -33,9 +33,9 @@
 										<b class="footer">Dig Deeper</b>
 										<ul class="footer">
 											<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
-												<li class="footer"><a class="footer" href="/login.php">Pricing</a></li>
+												<li class="footer"><a class="footer" href="/homepage/pricing.php">Pricing</a></li>
 												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/">Schedule a Demo</a></li>
-												<li class="footer"><a class="footer" href="/login.php">Sign Up</a></li>
+												<li class="footer"><a class="footer" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c">Sign Up</a></li>
 
 										</ul>
 									</td>
@@ -44,7 +44,7 @@
 										
 										<b class="footer">Connect</b>
 										<ul class="footer">
-											<li class="footer"><a class="footer" href="/field-notes/">Newsletter Sign Up </a></li>
+											<li class="footer"><a class="footer" target="_blank" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d">Newsletter Sign Up </a></li>
 											<li class="footer"><a class="footer" target="_blank" href="http://www.facebook.com/localorbit">Facebook</a></li>
 											<li class="footer"><a class="footer" target="_blank" href="http://www.twitter.com/localorbit">Twitter</a></li>
 											<li class="footer"><a class="footer" target="_blank" href="http://www.linkedin.com/company/local-orbit">LinkedIn</a></li>
