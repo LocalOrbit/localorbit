@@ -1,8 +1,8 @@
 <? $title='About'; include('includes/page_start.php'); ?>	
 <table>
-	<col width="520" />
+	<col width="580" />
 	<col width="40" />
-	<col width="540" />
+	<col width="470" />
 	<tr>
 		<td>
 			<h2>Re-linking the Food Chain</h2>
@@ -22,7 +22,7 @@
 		<td rowspan="2">&nbsp;</td>
 		<td>
 		<div>
-			<img src="/homepage/img/page_images/company.jpg" class="public_content_photo" />
+			<img src="/homepage/img/page_images/company_reduced_15.jpg" class="public_content_photo" />
 		</td>
 	</tr>
 	<tr>
