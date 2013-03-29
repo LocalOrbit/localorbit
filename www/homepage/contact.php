@@ -53,16 +53,17 @@
 				your Local Orbit powered market? we are here to help. 
 				Submit a request through our knowledge base and we 
 				will respond shortly.
+				<br />&nbsp;<br />
 			</div>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">&nbsp;</td>
-		<td><input type="button" class="schedule_button" style="margin-top: 10px;" value="Schedule a Demo" /></td>
+		<td><a href="http://www.localorb.it/field-notes/schedule-a-demo" class="btn btn_green">Schedule a Demo</a></td>
 		<td>&nbsp;</td>
-		<td><input type="button" class="schedule_button newsletter_button" style="margin-top: 10px;"  value="Stay Informed" /></td>
+		<td><a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" class="btn btn_blue">Stay Informed</a></td>
 		<td>&nbsp;</td>
-		<td><input type="button" class="schedule_button learn_button" style="margin-top: 10px;"  value="Learn More" /></td>
+		<td><a href="/homepage/features.php" class="btn btn_green">Learn More</a></td>
 </table>
 <br />&nbsp;<br />
 
