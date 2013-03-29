@@ -35,6 +35,7 @@
 				<a href="#" class="slideshow_prev slideshow_prev_tour"><img src="/homepage/img/slideshow/library/arrow-prev_new.png" alt="Arrow Prev"></a>
 				<a href="#" class="slideshow_next slideshow_next_tour"><img src="/homepage/img/slideshow/library/arrow-next_new.png" alt="Arrow Next"></a>
 			</div>
+			<br />
 		</td>
 
 		<td>&nbsp;&nbsp;&nbsp;</td>
@@ -54,9 +55,6 @@
 	</tr>
 	<tr>
 		<td colspan="3">
-			
-			
-			
 			<table width="1100" style="table-layout: fixed;">
 				<col width="24%" />
 				<col width="1%" />
