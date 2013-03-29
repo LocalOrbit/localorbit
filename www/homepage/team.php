@@ -21,7 +21,7 @@
 			<br />
 			<p>Erika Block founded and ran an entrepreneurial arts organization for 12 years, overseeing programming, board development, marketing and financial management. She managed cross-sector non-profit, educational and commercial partnerships in the US, Great Britain and South Africa.  Erika also raised $2 million and led the renovation of a vacant building in Detroit into a theater, gallery and bar, working with vendors to source local food for events. Throughout her career, Erika has created collaborative environments that facilitate learning and action. </p>
 			<br />
-			<p>She is a 2011 PopTech Social Innovation Fellow.  Other awards include Crain's Detroit Business 40 Under 40 and the GLEQ Spirit of Entrepreneurship Award.  Erika has a BGS from University of Michigan, an MFA from Columbia University, and did graduate work in Interactive Technology at New York University. She comes from a family of fruit peddlers, meat processors, restaurant owners and wholesalers.</p>
+			<p>She is a PopTech Social Innovation Fellow.  Other awards include Crain's Detroit Business 40 Under 40 and the GLEQ Spirit of Entrepreneurship Award.  Erika has a BGS from University of Michigan, an MFA from Columbia University, and did graduate work in Interactive Technology at New York University. She comes from a family of fruit peddlers, meat processors, restaurant owners and wholesalers.</p>
 			<br />
 			<p>Check out Erika's <a href="http://poptech.org/erika_block">PopTech talk</a></p>
 			<br /><br />

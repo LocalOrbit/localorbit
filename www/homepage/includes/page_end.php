@@ -23,26 +23,31 @@
 										<ul class="footer">
 											<li class="footer"><a class="footer" href="/homepage/company.php">Company</a></li>
 											<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
-											<li class="footer"><a class="footer" href="/login.php">Customer Log in</a></li>
+											<li class="footer"><a class="footer" href="/field-notes/">Field Notes: Our Blog</a></li>
+										<!--	<li class="footer"><a class="footer" href="#">Press</a></li> -->
+											<li class="footer"><a class="footer" href="/login.php">Customer Log In</a></li>
 										</ul>
 									</td>
 									<td>
 										<img src="/img/default/footer/scarecrow_gray.png"><br>
 										<b class="footer">Dig Deeper</b>
 										<ul class="footer">
-											<li class="footer"><a class="footer" href="/field-notes/">Field Notes: Our Blog</a></li>
-											<li class="footer"><a class="footer" href="#">Schedule a Demo</a></li>
-											<li class="footer"><a class="footer" href="#">Newsletter Sign Up</a></li>
+											<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
+												<li class="footer"><a class="footer" href="/login.php">Pricing</a></li>
+												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/">Schedule a Demo</a></li>
+												<li class="footer"><a class="footer" href="/login.php">Sign Up</a></li>
+
 										</ul>
 									</td>
 									<td>
 										<img src="/img/default/footer/thumbsup_gray.png"><br>
 										
-										<b class="footer">Get Social</b>
+										<b class="footer">Connect</b>
 										<ul class="footer">
-											<li class="footer"><a class="footer" target="_blank" href="http://www.facebook.com/localorbit">Like On Facebook</a></li>
-											<li class="footer"><a class="footer" target="_blank" href="http://www.twitter.com/localorbit">Follow On Twitter</a></li>
-											<li class="footer"><a class="footer" target="_blank" href="#">Connect On Linkedin</a></li>
+											<li class="footer"><a class="footer" href="/field-notes/">Newsletter Sign Up </a></li>
+											<li class="footer"><a class="footer" target="_blank" href="http://www.facebook.com/localorbit">Facebook</a></li>
+											<li class="footer"><a class="footer" target="_blank" href="http://www.twitter.com/localorbit">Twitter</a></li>
+											<li class="footer"><a class="footer" target="_blank" href="http://www.linkedin.com/company/local-orbit">LinkedIn</a></li>
 										</ul>
 									</td>
 								
@@ -50,7 +55,7 @@
 									<img src="/img/default/footer/phone_gray.png"><br>
 									<b class="footer">Contact</b>
 									<ul class="footer">
-										<li class="footer"><a class="footer" href="#">Call 734.418.8628</a></li>
+										<li class="footer"><a class="footer" href="#">Call 734.545.8100</a></li>
 										<li class="footer"><a class="footer" href="#">Send Us A Note</a></li>
 										<li class="footer"><a class="footer" href="#">Customer Support</a></li>
 									</ul>

@@ -8,13 +8,16 @@
 	<col width="44%" />
 	<tr>
 		<td colspan="2">
-			
-			<input type="button" class="schedule_button" style="margin-top: 475px;margin-left: 26px;" value="Schedule a Demo" />
+		<br />&nbsp;<br />&nbsp;<br />&nbsp;<br />&nbsp;<br />&nbsp;<br />&nbsp;<br />
+		<span style="font-size:110%;">
+		See Local Orbit in action. Learn how our smart, flexible tools will save you time and help you grow your business. 
+		<input type="button" class="schedule_button" style="margin-top: 30px;margin-left: 20px;" value="Schedule a Demo" />
 			
 		</td>
 		<td colspan="3">
 			<!-- slideshow here -->
 			<div class="slides" id="slides_tour_1">
+				<!-- <div class="slides_container" style="width:824px;height: 578px;"> -->
 				<div class="slides_container" style="width:824px;height: 578px;">
 					<div class="slide tour_slide">
 						<div class="tour_slide_text" style="padding-top: 138px !important;">
@@ -47,7 +50,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="5">
+		<td colspan="4">
 			<img src="/homepage/img/homepage_divider.png" /><br />&nbsp;<br />
 		</td>
 	</tr>
@@ -62,7 +65,7 @@
 		<td colspan="2">
 			<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">What is Local Orbit?</div>
 			<div class="faq_answer">
-				Local Orbit is a web platform that provides customized websites with e-commerce, marketing and management tools for small businesses and organizations building local food supply chains. <br /><br />Local Orbit's tools help people build their businesses and meet the growing demand for food that is produced closer to where we live.
+				Local Orbit provides customized websites with e-commerce, marketing and management tools for small businesses and organizations building local food supply chains. <br /><br />Local Orbit's tools help people build their businesses and meet the growing demand for food that is produced closer to where we live.
 			</div>
 		</td>
 		<td>&nbsp;</td>
@@ -110,7 +113,7 @@
 			<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">How much does it cost? </div>
 			<div class="faq_answer">
 				Local Orbit offers different service tiers designed to fit the needs of every business we support. <br />
-				<br />We offer a 30-day free trial period. There are no set-up fees. Transaction fees range from 2%-7%, depending on what service level you choose.
+				<br />We offer a 30-day free trial period. There are no set-up fees. Learn more on our Pricing Page.
 			</div>
 		</td>
 	</tr>
