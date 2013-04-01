@@ -59,11 +59,11 @@
 	</tr>
 	<tr>
 		<td colspan="2">&nbsp;</td>
-		<td><a href="http://www.localorb.it/field-notes/schedule-a-demo" class="btn btn_green">Schedule a Demo</a></td>
+		<td><a href="http://www.localorb.it/field-notes/schedule-a-demo" class="btn btn_blue">Schedule a Demo</a></td>
 		<td>&nbsp;</td>
 		<td><a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" class="btn btn_blue">Stay Informed</a></td>
 		<td>&nbsp;</td>
-		<td><a href="/homepage/features.php" class="btn btn_green">Learn More</a></td>
+		<td><a href="/homepage/features.php" class="btn btn_blue">Learn More</a></td>
 </table>
 <br />&nbsp;<br />
 
