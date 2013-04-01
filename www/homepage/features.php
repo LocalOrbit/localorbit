@@ -44,7 +44,7 @@
 			<span style="font-size:110%;">
 			See Local Orbit in action. Learn how our smart, flexible tools will save you time and help you grow your business. 
 			<br />&nbsp;<br />
-			<a style="margin-left: 15px;" href="http://www.localorb.it/field-notes/schedule-a-demo/" class="btn btn_green">Schedule a Demo</a>
+			<a style="margin-left: 15px;" href="http://www.localorb.it/field-notes/schedule-a-demo/" class="btn btn_blue">Schedule a Demo</a>
 
 		</td>
 	</tr>
