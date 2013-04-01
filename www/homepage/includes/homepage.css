@@ -283,3 +283,27 @@ a{
 .btn_grey{
 	color: #777;
 }
+
+
+div.pricing{
+	float:left;
+	margin: 15px 3px 3px 3px;
+	border: #777 1px solid;
+	border-radius: 4px;
+	padding: 10px 14px;
+	width: 200px;
+	height: 300px;
+	background-color: #e6f1f7;
+	text-align: center;
+}
+
+div.pricing_emphasis{
+	margin-top: 0px;
+	height: 335px;
+	background-color: #fff;
+}
+
+span.pricing{
+	font-weight: bold;
+	font-size: 160%;
+}
