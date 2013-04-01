@@ -224,9 +224,7 @@
 			</div>
 		</td>		
 	</tr>
-	<tr>
-		<td colspan="7"><img src="/homepage/img/homepage_divider.png" /></td>
-	</tr>
+
 </table>
 <br />&nbsp;<br />
 <? include('includes/page_end.php'); ?>
