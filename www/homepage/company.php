@@ -30,7 +30,8 @@
 			<h2>Management Team</h2>
 			<table width="940">
 				<col width="340" />
-				<col width="600" />
+				<col width="20" />
+				<col width="580" />
 				<tr>
 					<td>
 						<div>
@@ -47,6 +48,7 @@
 							</div>
 						</div>
 					</td>
+					<td>&nbsp;</td>
 					<td>
 						<div>
 							<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Mike Thorn | Lead Developer</div>
@@ -82,6 +84,7 @@
 							</div>
 						</div>
 					</td>
+					<td>&nbsp;</td>
 					<td>
 						<div>
 							<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Cory Van Horn | Director of Marketing & Communications</div>
