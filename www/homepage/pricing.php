@@ -86,8 +86,9 @@
 		<td>&nbsp;</td>
 		<td>
 			<div class="pricing">
-				<span class="pricing">Start Up</span>&nbsp;&nbsp;$19/month
-				<br />+ 2% of sales
+				<span class="pricing">Start Up</span>
+				<br />
+				$19/month + 2% of sales
 				
 				<hr style="width: 80%;" />
 				<ul style="text-align: left;">
