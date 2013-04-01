@@ -87,8 +87,9 @@
 		<td>
 			<div class="pricing">
 				<span class="pricing">Start Up</span>&nbsp;&nbsp;$19/month
+				<br />+ 2% of sales
 				<br />
-				save $40 if paid annually<br />+ 2% of sales
+				save $40 if paid annually
 				<hr style="width: 80%;" />
 				<ul style="text-align: left;">
 					<li>Everything you need<br />Manage marketing, sales, order fulfillment and finances</li>
@@ -98,8 +99,9 @@
 			
 			<div class="pricing pricing_emphasis">
 				<span class="pricing">Grow</span>&nbsp;&nbsp;$49/month
+				<br />+ 3% of sales
 				<br />
-				save $100 if paid annually<br />+ 3% of sales
+				save $100 if paid annually
 				<hr style="width: 80%;" />
 				<ul style="text-align: left;">
 					<li>Customizable branding</li>
@@ -110,8 +112,9 @@
 			</div>
 			<div class="pricing">
 				<span class="pricing">Automate</span>&nbsp;&nbsp;$99/month
+				<br />+ 4% of sales
 								<br />
-				save $200 if paid annually<br />+ 4% of sales
+				save $200 if paid annually
 				<hr style="width: 80%;" />
 				<ul style="text-align: left;">
 					<li>Automated Payments to all your sellers</li>
