@@ -94,38 +94,41 @@
 				<ul style="text-align: left;">
 					<li>Everything you need<br />Manage marketing, sales, order fulfillment and finances</li>
 				</ul>
-				<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c" class="btn btn_green btn_pricing" style="bottom: 28px;">Get Started</a>
-				<div style="position: absolute; bottom: 4px; text-align: center;left: 37px;">
+				<div class="pricing_footer">
+					<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c" class="btn btn_green btn_pricing">Get Started</a>
 					save $40 if paid annually
 				</div>
 			</div>
 			
 			<div class="pricing pricing_emphasis">
-				<span class="pricing">Grow</span>&nbsp;&nbsp;$49/month
-				<br />+ 3% of sales
-				<br />
-				save $100 if paid annually
+				<span class="pricing">Grow</span>
+				<br />$49/month + 3% of sales
+				
 				<hr style="width: 80%;" />
 				<ul style="text-align: left;">
 					<li>Customizable branding</li>
 					<li>Cross-selling &amp; Multi-Channel Sales</li>
 					<li>Flexible Discount Codes</li>
 				</ul>
-				<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c" class="btn btn_green btn_pricing">Get Started</a>
+				<div class="pricing_footer">
+					<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c" class="btn btn_green btn_pricing">Get Started</a>
+					save $100 if paid annually
+				</div>
 			</div>
 			<div class="pricing">
-				<span class="pricing">Automate</span>&nbsp;&nbsp;$99/month
-				<br />+ 4% of sales
-								<br />
-				save $200 if paid annually
+				<span class="pricing">Automate</span>
+				<br />$99/month + 4% of sales
 				<hr style="width: 80%;" />
 				<ul style="text-align: left;">
 					<li>Automated Payments to all your sellers</li>
 					<li>Advanced Reporting</li>
 				</ul>
-				<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c" class="btn btn_green btn_pricing">Get Started</a>
+				<div class="pricing_footer">
+					<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c" class="btn btn_green btn_pricing">Get Started</a>
+					save $200 if paid annually
+				</div>
 			</div>
-		
+			
 			<h3 style="clear:both;text-align: center;">	<br />14-day FREE trial. No risks. No start-up costs.<br /></h3>
 		</td>
 	</tr>

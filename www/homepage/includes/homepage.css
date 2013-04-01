@@ -286,8 +286,6 @@ a{
 .btn_pricing{
 	width:190px;
 	margin-left: 5px;
-	position: absolute; bottom: 14px;
-	left: 14px;
 }
 
 
@@ -298,7 +296,7 @@ div.pricing{
 	border-radius: 4px;
 	padding: 10px 14px;
 	width: 213px;
-	height: 230px;
+	height: 210px;
 	background-color: #e6f1f7;
 	text-align: center;
 	position: relative;
@@ -306,13 +304,20 @@ div.pricing{
 
 div.pricing_emphasis{
 	margin-top: 0px;
-	height: 265px;
+	height: 245px;
 	background-color: #fff;
 }
 
 span.pricing{
 	font-weight: bold;
 	font-size: 160%;
+}
+
+div.pricing_footer{
+	position: absolute; 
+	bottom: 4px; 
+	text-align: center;
+
 }
 
 div.pricing_bottom{
