@@ -88,13 +88,15 @@
 			<div class="pricing">
 				<span class="pricing">Start Up</span>&nbsp;&nbsp;$19/month
 				<br />+ 2% of sales
-				<br />
-				save $40 if paid annually
+				
 				<hr style="width: 80%;" />
 				<ul style="text-align: left;">
 					<li>Everything you need<br />Manage marketing, sales, order fulfillment and finances</li>
 				</ul>
-				<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c" class="btn btn_green btn_pricing">Get Started</a>
+				<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c" class="btn btn_green btn_pricing" style="bottom: 28px;">Get Started</a>
+				<div style="position: absolute; bottom: 4px; text-align: center;left: 37px;">
+					save $40 if paid annually
+				</div>
 			</div>
 			
 			<div class="pricing pricing_emphasis">
