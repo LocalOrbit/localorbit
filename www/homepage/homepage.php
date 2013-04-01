@@ -170,11 +170,11 @@
 		</td>		
 	</tr>
 <tr>
-		<td colspan="7"><img src="/homepage/img/homepage_divider.png" /><br />&nbsp;<br /></td>
+		<td colspan="7"><a name="whouses"></a><img src="/homepage/img/homepage_divider.png" /><br />&nbsp;<br /></td>
 	</tr>
 	<tr>
 		<td rowspan="2">
-			<a name="whouses"></a>
+			
 			<h2 style="margin-top: 10px;">Who Uses Local Orbit?</h3> 
 			
 			Local Orbit provides e-commerce, marketing and business management tools for the entrepeneurs and organizations that are creating a new local food economy, connecting buyers and sellers through a shorter, transparent supply chain,
