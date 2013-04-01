@@ -174,6 +174,7 @@
 	</tr>
 	<tr>
 		<td rowspan="2">
+			<a name="whouses"></a>
 			<h2 style="margin-top: 10px;">Who Uses Local Orbit?</h3> 
 			
 			Local Orbit provides e-commerce, marketing and business management tools for the entrepeneurs and organizations that are creating a new local food economy, connecting buyers and sellers through a shorter, transparent supply chain,

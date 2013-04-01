@@ -97,6 +97,7 @@ else
 					<div style="position: relative;width:1100px;height: 120px;">
 						<a href="/" class="logo"><img width="112" height="111" src="/homepage/includes/logo5.png" /></a>
 						<div id="nav1">
+							<a class="nav1" href="/homepage/homepage.php#whouses">Customers</a>
 							<a class="nav1" href="/homepage/features.php">Features</a>
 							<a class="nav1" href="/homepage/pricing.php">Pricing</a>
 							<a class="nav1" href="/homepage/company.php">Company</a>
