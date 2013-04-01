@@ -157,7 +157,7 @@
 						Focus on building your market and let Local Orbit 
 						automate the payments. Secure, transparent, simple.
 						<br />&nbsp;<br />&nbsp;<br />&nbsp;<br />
-						<a href="" class="btn btn_blue" style="position: absolute; bottom: 5px; left: 100px;">Get in Touch</a>
+						<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=14fe9e7e95" class="btn btn_blue" style="position: absolute; bottom: 5px; left: 100px;">Get in Touch</a>
 					</td>
 					<td>&nbsp;</td>
 					<td><br />&nbsp;<br />&nbsp;<br />&nbsp;<br /><img src="/homepage/img/icon_puzzle_piece.png" /></td>
@@ -177,7 +177,7 @@
 						Orbit handle the administrative hassle.
 						<br />&nbsp;<br />&nbsp;<br />&nbsp;<br />
 						
-						<a href="" class="btn btn_blue" style="position: absolute; bottom: 5px; left: 100px;">Get in Touch</a>
+						<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=14fe9e7e95" class="btn btn_blue" style="position: absolute; bottom: 5px; left: 100px;">Get in Touch</a>
 					</td>
 				</tr>
 			</table>
