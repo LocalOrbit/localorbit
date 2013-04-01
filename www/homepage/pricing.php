@@ -111,7 +111,7 @@
 			<div class="pricing">
 				<span class="pricing">Automate</span>&nbsp;&nbsp;$99/month
 								<br />
-				save $100 if paid annually<br />+ 3% of sales
+				save $200 if paid annually<br />+ 4% of sales
 				<hr style="width: 80%;" />
 				<ul style="text-align: left;">
 					<li>Automated Payments to all your sellers</li>
