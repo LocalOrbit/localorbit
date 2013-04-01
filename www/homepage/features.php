@@ -120,11 +120,7 @@
 			</table>
 		</td>
 	</tr>
-	<tr>
-		<td colspan="3">
-			<img src="/homepage/img/homepage_divider.png" /><br />&nbsp;<br />
-		</td>
-	</tr>
+
 </table>
 <script language="Javascript">
 $('#slides_tour_1').slides();
