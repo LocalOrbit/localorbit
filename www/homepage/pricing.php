@@ -88,15 +88,36 @@
 			<div class="pricing">
 				<span class="pricing">Start Up</span>&nbsp;&nbsp;$19/month
 				<br />
+				save $40 if paid annually<br />+ 2% of sales
+				<hr style="width: 80%;" />
+				<ul style="text-align: left;">
+					<li>Everything you need<br />Manage marketing, sales, order fulfillment and finances</li>
+				</ul>
+				<a href="" class="btn btn_green btn_pricing">Get Started</a>
 			</div>
 			
 			<div class="pricing pricing_emphasis">
 				<span class="pricing">Grow</span>&nbsp;&nbsp;$49/month
 				<br />
+				save $100 if paid annually<br />+ 3% of sales
+				<hr style="width: 80%;" />
+				<ul style="text-align: left;">
+					<li>Customizable branding</li>
+					<li>Cross-selling &amp; Multi-Channel Sales</li>
+					<li>Flexible Discount Codes</li>
+				</ul>
+				<a href="" class="btn btn_green btn_pricing">Get Started</a>
 			</div>
 			<div class="pricing">
 				<span class="pricing">Automate</span>&nbsp;&nbsp;$99/month
-				<br />
+								<br />
+				save $100 if paid annually<br />+ 3% of sales
+				<hr style="width: 80%;" />
+				<ul style="text-align: left;">
+					<li>Automated Payments to all your sellers</li>
+					<li>Advanced Reporting</li>
+				</ul>
+				<a href="" class="btn btn_green btn_pricing">Get Started</a>
 			</div>
 			<h3 style="clear:both;">14-day FREE trial. No risks. No start-up costs.</h3>
 		</td>
