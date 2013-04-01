@@ -86,7 +86,7 @@
 				We help people build profitable
 				businesses &amp; healthier communities.
 				<br />&nbsp;<br />
-				<a class="btn btn_grey" style="margin-left: 55px;" href="/homepage/features.php">Learn More</a>
+				<a class="btn btn_blue" style="margin-left: 55px;" href="/homepage/features.php">Learn More</a>
 			
 			</div>
 		</td>
@@ -117,7 +117,7 @@
 			who are rebuilding the local &amp;
 			regional food systems.
 			<br />&nbsp;<br />
-			<a class="btn btn_green" href="/field-notes/schedule-a-demo">Schedule a Demo</a>
+			<a class="btn btn_blue" href="/field-notes/schedule-a-demo">Schedule a Demo</a>
 			
 		</td>
 		<td rowspan="2">&nbsp;</td>
