@@ -164,7 +164,7 @@
 		<td>
 			<img src="/homepage/img/icon_magnifying_flipped.png" class="home_icon" /><h3 class="home_header">Transparency &amp; Flexibility</h3>
 			<div class="home_paragraph">
-				Tell customers teh story of your products. Track the supply chain 
+				Tell customers the story of your products. Track the supply chain 
 				journey with just a few clicks.
 			</div>
 		</td>		

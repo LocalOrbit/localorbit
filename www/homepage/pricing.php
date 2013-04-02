@@ -134,63 +134,68 @@
 	</tr>
 	<tr>
 		<td colspan="3">
-			<br />
-			<div class="homepage_title pricing_bottom">
-				Interested in <u>even more</u> services to simplify local sourcing, enabling institutions<br />
-				&amp; restaurant groups to expand their purchasing? We've got a solution for that.
-				<br />&nbsp;<br />
-				<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=14fe9e7e95" class="btn btn_blue" style="margin-left: 420px;">Learn More</a>
-			</div>
-			<br />&nbsp;<br />
-			<h1 style="display:block;text-align: center;">
-				Local Sourcing at Institutional Scale.
-			</h1>
-			<br />
-			<table width="100%">
-				<col width="44%" />
-				<col width="3%" />
-				<col width="6%" />
-				<col width="3%" />
-				<col width="44%" />
+			
+			
+			
+			
+			
+			
+			<table width="1100" style="table-layout: fixed;">
+				<col width="31%" />
+				<col width="2%" />
+				<col width="33%" />
+				<col width="1%" />
+				<col width="32%" />
 				<tr>
-					<td style="position:relative;">
-						<h2>Managed Payments</h2>
-						Services for food hubs, farmers markets and aggregators 
-						that want to simplify ﬁnancial management. 
-						<br />&nbsp;<br />
-						Local Orbit can invoice your institutional buyers, collect 
-						payment, and transfer funds directly to your sellers, on 
-						terms you establish. Then track the status of money in 
-						and out from your account dashboard. 
-						<br />&nbsp;<br />
-						Focus on building your market and let Local Orbit 
-						automate the payments. Secure, transparent, simple.
-						<br />&nbsp;<br />&nbsp;<br />&nbsp;<br />
-						<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=14fe9e7e95" class="btn btn_blue" style="position: absolute; bottom: 5px; left: 100px;">Get in Touch</a>
-					</td>
-					<td>&nbsp;</td>
-					<td><br />&nbsp;<br />&nbsp;<br />&nbsp;<br /><img src="/homepage/img/icon_puzzle_piece.png" /></td>
-					<td>&nbsp;</td>
-					<td style="position:relative;">
-						<h2>Vendor Management</h2>
-						For Institutions &amp; Restaurants who source direct from 
-						local farms, artisans &amp; independent producers. 
-						<br />&nbsp;<br />
-						Purchase from your favorite small farms and artisan 
-						producers - without the hassle of managing dozens of 
-						weekly emails, calls, orders, invoices, payments, or 
-						stories. Order from 20 vendors with a single click, and a 
-						single payment.
-						<br />&nbsp;<br />
-						Focus on growing your vendor relationships and let Local 
-						Orbit handle the administrative hassle.
-						<br />&nbsp;<br />&nbsp;<br />&nbsp;<br />
+					<td colspan="7"><img src="/homepage/img/homepage_divider.png" /><br />&nbsp;<br /></td>
+				</tr>
+				<tr>
+					<td rowspan="2">
+						<h2 style="margin-top: 10px;">Local Sourcing at Institutional Scale</h3> 
 						
-						<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=14fe9e7e95" class="btn btn_blue" style="position: absolute; bottom: 5px; left: 100px;">Get in Touch</a>
+						Interested in <u>even more</u> services to simplify local sourcing, enabling institutions<br />
+						&amp; restaurant groups to expand their purchasing? We've got a solution for that.
+						<br />&nbsp;<br />
+						<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=14fe9e7e95" class="btn btn_blue" style="margin-left: 10px;">Learn More</a>
+				
+					</td>
+					<td rowspan="2">&nbsp;</td>
+					<td>
+						<h3>Managed Payments</h3>
+						<div class="home_paragraph">
+							Services for food hubs, farmers markets and aggregators 
+							that want to simplify ﬁnancial management. 
+							<br />&nbsp;<br />
+							Local Orbit can invoice your institutional buyers, collect 
+							payment, and transfer funds directly to your sellers, on 
+							terms you establish. Then track the status of money in 
+							and out from your account dashboard. 
+							<br />&nbsp;<br />
+							Focus on building your market and let Local Orbit 
+							automate the payments. Secure, transparent, simple.
+							<br />&nbsp;<br />
+						</div>
+					</td>
+					<td rowspan="2">&nbsp;</td>
+					<td>
+						<h3>Vendor Management</h3>
+						<div class="home_paragraph">
+							For Institutions &amp; Restaurants who source direct from 
+							local farms, artisans &amp; independent producers. 
+							<br />&nbsp;<br />
+							Purchase from your favorite small farms and artisan 
+							producers - without the hassle of managing dozens of 
+							weekly emails, calls, orders, invoices, payments, or 
+							stories. Order from 20 vendors with a single click, and a 
+							single payment.
+							<br />&nbsp;<br />
+							Focus on growing your vendor relationships and let Local 
+							Orbit handle the administrative hassle.
+							<br />&nbsp;<br />
+						</div>
 					</td>
 				</tr>
 			</table>
-			<br />&nbsp;<br />
 		</td>
 	</tr>
 </table>
