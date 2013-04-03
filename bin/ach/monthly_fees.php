@@ -27,7 +27,8 @@ $domains = core::model('domains')
 	->filter('is_live','=',1);
 	
 
-	
+echo("Accounts retrieved\n");
+
 # loop through the domains and calculate the fee
 foreach($domains as $domain)
 {
@@ -99,13 +100,14 @@ class  InpACHTransRecord{
 function do_monthly_payment($domain)
 {
 	global $core,$actually_do_payment;
-	echo("called\n");
+	#echo("called\n");
 	
 	$account_nbr = core_crypto::decrypt($domain['nbr1']);
 	$routing_nbr = core_crypto::decrypt($domain['nbr2']);
 	
 	if(!is_numeric($account_nbr) || !is_numeric($routing_nbr))
 	{
+		echo("no valid account\n");
 		core::process_command('emails/ach_error',false,
 			'ACH Error: bank account not setup for '.$domain['name'],
 			'It appears that this domain does not have their bank account fully setup. Please verify the details with the client'

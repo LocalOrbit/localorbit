@@ -112,8 +112,8 @@ if($actually_do_payment)
 		$trace = 'LO-SMSP-'.$org_id.'-'.date('Ymd');
 		$trace .= '-'.time();
 		
-		$result = $opm->make_payment($trace,'Seller payments on '.date('M, d Y'),$info['total']);
-		
+		#$result = $opm->make_payment($trace,'Seller payments on '.date('M, d Y'),$info['total']);
+		$result = true;
 		if($result)
 		{
 			$invoice = core::model('invoices');
