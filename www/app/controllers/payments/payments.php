@@ -37,6 +37,8 @@ class core_controller_payments extends core_controller
 			->sort('concat_ws(\'-\',to_org_id,from_org_id)');
 		
 		$invoice_groups = array();
+		$order_ids = array();
+		
 		foreach($invoices as $invoice)
 		{
 			if(!isset($invoice_groups[$invoice['to_org_id']]))
@@ -50,6 +52,17 @@ class core_controller_payments extends core_controller
 				);
 			}
 			
+			# look for buyer orders that may need sellers invoiced based on 
+			# this action.
+			$payable_items = explode('$$',$invoice['payable_info']);
+			foreach($payable_items as $payable_item)
+			{
+				$payable_item = explode('|',$payable_item);
+				if($payable_item[1] == 'buyer order')
+				{
+					$order_ids[] = $payable_item[2];
+				}
+			}
 			$invoice_groups[$invoice['to_org_id']]['invoices'][] = $invoice->__data;
 			$invoice_groups[$invoice['to_org_id']]['amount'] += $invoice['amount']; 
 		}
@@ -129,6 +142,16 @@ class core_controller_payments extends core_controller
 					break;
 			}
 		}
+		
+		if(count($order_ids) > 0)
+		{
+			$controller = core::controller('orders');
+			foreach($order_ids as $lo_oid)
+			{
+				$controller->update_statuses_due_to_payments($lo_oid);
+			}
+		}
+		
 		$this->reload_all_tabs();
 		core::js("$('#all_all_payments,#payments_pay_area').toggle();");
 		core_ui::notification('payments saved');

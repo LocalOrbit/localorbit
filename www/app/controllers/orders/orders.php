@@ -15,9 +15,9 @@ class core_controller_orders extends core_controller
 	function update_statuses_due_to_payments($lo_oid,$payable_id=null)
 	{
 		global $core;
-		return;
+	
 		
-		#core::log('called update_statuses_due_to_payments on lo_oid '.$lo_oid.' and payable '.$payable_id);
+		core::log('called update_statuses_due_to_payments on lo_oid '.$lo_oid.' and payable '.$payable_id);
 		# we need to figure out how much is due on the order
 		$changes_made = false;
 		$amount_due = floatval(core_db::col('select amount_due from v_payables where payable_type=\'buyer order\' and parent_obj_id='.$lo_oid,'amount_due'));
@@ -27,12 +27,16 @@ class core_controller_orders extends core_controller
 		if($amount_due == 0)
 		{
 			$seller_orders    = new core_collection('
-				select lo_foid,ldstat_id,payables.payable_id,payables.amount,payables.to_org_id,payables.from_org_id
+				select lo_foid,ldstat_id,payables.payable_id,payables.amount,
+				payables.to_org_id,payables.from_org_id
 				from lo_fulfillment_order 
 				inner join payables on (lo_fulfillment_order.lo_foid=payables.parent_obj_id and payables.payable_type_id=2 and payables.invoice_id is null)
+				inner join domains d on (lo_fulfillment_order.domain_id = d.domain_id)
 				where lo_foid in (
 					 select lo_foid from lo_order_line_item where lo_oid='.$lo_oid.'
 				)
+				and d.seller_payer = \'hub\'
+				and (payables.invoice_id is null or payables.invoice_id=0)
 				and lo_fulfillment_order.ldstat_id=4
 			');
 			foreach($seller_orders as $seller_order)

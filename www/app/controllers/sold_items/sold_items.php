@@ -226,6 +226,7 @@ class core_controller_sold_items extends core_controller
 				$fulfils_to_check[$item['lo_foid']] = true;
 			}
 		}
+		core::log('preparing to do checks');
 		
 		# check the orders to see if we need to update their status
 		foreach($orders_to_check as $order=>$check)
@@ -236,6 +237,7 @@ class core_controller_sold_items extends core_controller
 		}
 		
 		# this checks if we need to invoice sellers based on the changes made
+		core::log('total items: '.count($invoices_to_check));
 		if(count($invoices_to_check) > 0)
 		{
 			$controller = core::controller('orders');
@@ -257,8 +259,8 @@ class core_controller_sold_items extends core_controller
 			$this->status_errors($errors);
 		}
 		
-		core_datatable::js_reload('sold_items');
-		core::js('document.itemForm.checkall_solditem.checked=false;core.sold_items.resetActions();');
+		#core_datatable::js_reload('sold_items');
+		#core::js('document.itemForm.checkall_solditem.checked=false;core.sold_items.resetActions();');
 		core_ui::notification('items updated');		
 	}
 	
