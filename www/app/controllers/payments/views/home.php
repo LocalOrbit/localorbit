@@ -1,6 +1,6 @@
 <?php
 
-core::ensure_navstate(array('left'=>'left_dashboard'), 'payments-demo', '');
+core::ensure_navstate(array('left'=>'left_dashboard'), 'payments-home', '');
 
 core_ui::fullWidth();
 

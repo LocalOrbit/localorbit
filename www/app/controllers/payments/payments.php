@@ -465,7 +465,7 @@ function format_html_header ($payable_info) {
 	}
 
 	$id = str_replace(' ', '_', $payable_info[0][0]) . '_' . $payable_info[0][1];
-	return '<a href="#!payments-demo" onclick="$(\'#' . $id . '\').toggle();">' . $title . '</a><div id="' . $id .'" style="display: none;">';
+	return '<a href="#!payments-home" onclick="$(\'#' . $id . '\').toggle();">' . $title . '</a><div id="' . $id .'" style="display: none;">';
 }
 
 function format_html ($info) {

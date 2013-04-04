@@ -141,7 +141,7 @@ class core_controller_emails extends core_controller
 		global $core;
 		if(is_null($text))
 		{
-			$text = 'For customer service please reply to this email or call 734.418.8628';
+			$text = 'For customer service please reply to this email or call 734.545.8100 ';
 		}
 		
 		$img = image('logo-email');

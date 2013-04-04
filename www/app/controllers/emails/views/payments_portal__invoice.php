@@ -29,7 +29,7 @@ $values['hubname'] = $domain['name'];
 $values['invoicenbr'] = 'LINV-'.$invoice['invoice_id'];
 $values['duedate'] = $due_date;
 $values['amount'] = core_format::price($invoice['amount']);
-$values['pay_link'] = 'https://'.$domain['hostname'].'/app.php#!payments-demo';
+$values['pay_link'] = 'https://'.$domain['hostname'].'/app.php#!payments-home';
 
 
 $values['payables'] = '
@@ -38,7 +38,7 @@ $values['payables'] = '
 	<col width="40%" />
 	<col width="40%" />
 	<tr>
-		<th class="dt">Payable</th>
+		<th class="dt">Reference</th>
 		<th class="dt">Description</th>
 		<th class="dt">Amount</th>
 	</tr>
@@ -51,8 +51,8 @@ foreach($payables as $payable)
 	#$values['payables'] .= print_r($payable->__data,true);
 	$values['payables'] .= '
 		<tr class="dt'.$counter.'">
-			<td class="dt">P-'.$payable['payable_id'].'</td>
 			<td class="dt">'.$payable['description'].'</td>
+			<td class="dt">'.$payable['to_org_name'].'</td>
 			<td class="dt">'.core_format::price($payable['amount']).'</td>
 		</tr>';
 	$counter = (!$counter);

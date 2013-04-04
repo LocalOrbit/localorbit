@@ -31,7 +31,7 @@
 			</li>
 		</ul>
 
-		<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
+		<ul class="nav"><li><a id="payments-home" href="#!payments-home" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
 		
 		<ul class="nav">
 			<li class="dropdown">
@@ -112,7 +112,7 @@
 				</ul>
 			</li>
 		</ul>
-		<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
+		<ul class="nav"><li><a id="payments-home" href="#!payments-home" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
 		<ul class="nav">
 			<li class="dropdown">
 				<a id="products-delivery" href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -168,7 +168,7 @@
 				</ul>
 			</li>
 		</ul>
-		<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
+		<ul class="nav"><li><a id="payments-home" href="#!payments-home" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
 		<ul class="nav"><li><a id="products-list" href="#!products-list" onclick="core.go(this.href);"><i class="icon-apple-fruit icon-large"></i> Products</a></li></ul>
 
 		<?} # / is customer or seller ?>
@@ -183,7 +183,7 @@
 					<b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu">
-					<!--<li><a href="#!payments-demo" onclick="core.go(this.href);">Financials</a></li>	-->
+					<!--<li><a href="#!payments-home" onclick="core.go(this.href);">Financials</a></li>	-->
 					<li><a id="users-edit-me" href="#!users-edit--entity_id-<?=$core->session['user_id']?>-me-1" onclick="core.go(this.href);"><i class="icon-user"></i>E-mail 	&amp; Password</a></li>
 					<li><a id="organizations-edit-me" href="#!organizations-edit--org_id-<?=$core->session['org_id']?>-me-1" onclick="core.go(this.href);"><i class="icon-grid"></i>Your Organization</a></li>
 					<?if($core->session['is_active'] == 1 && $core->session['org_is_active'] == 1){?>
@@ -195,7 +195,7 @@
 			</li>
 		</ul>
 		<? if(lo3::is_buyer() && (lo3::is_org_payment_purchase_order_allowed() || lo3::does_org_have_purchase_order_history())){ ?>
-			<ul class="nav"><li><a id="payments-demo" href="#!payments-demo" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
+			<ul class="nav"><li><a id="payments-home" href="#!payments-home" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
 		<?}?>
 		</div> <!-- /.nav-collapse-->
 
@@ -206,7 +206,7 @@
 
 <h2>Your Account</h2>
 <ul class="nav nav-list">
-	<!-- <li><a href="#!payments-demo" onclick="core.go(this.href);">Financials</a></li> -->
+	<!-- <li><a href="#!payments-home" onclick="core.go(this.href);">Financials</a></li> -->
 	<li><a id="users-edit-me" href="#!users-edit--entity_id-<?=$core->session['user_id']?>-me-1" onclick="core.go(this.href);">Update Profile</a></li>
 	<li><a id="organizations-edit-me" href="#!organizations-edit--org_id-<?=$core->session['org_id']?>-me-1" onclick="core.go(this.href);">My Organization</a></li>
 	<?if($core->session['is_active'] == 1 && $core->session['org_is_active'] == 1){?>

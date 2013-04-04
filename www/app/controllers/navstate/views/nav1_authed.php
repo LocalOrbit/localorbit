@@ -80,7 +80,7 @@ $(function()
 				<li><a href="#!reports-edit" onclick="core.go(this.href);">Reports</a></li>
 				<?}?>
 				<li><a href="#!users-change_password" onclick="core.go(this.href);">Change Your Password</a></li>
-				<li><a href="#!payments-demo" onclick="core.go(this.href);">Financials</a></li>
+				<li><a href="#!payments-home" onclick="core.go(this.href);">Financials</a></li>
 			</ul>
 		</li>-->
 	<? endif; ?>
