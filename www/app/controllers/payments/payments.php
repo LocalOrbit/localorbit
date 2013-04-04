@@ -304,7 +304,9 @@ class core_controller_payments extends core_controller
 			$from      = $core->data['invoicecreate_'.$group_key.'__from'];
 			
 			$invoice = core::model('invoices');
-			$invoice['due_date'] = date('Y-m-d H:i:s',time() + ($terms * 86400));
+			$invoice['due_date_epoch'] = time() + ($terms * 86400);
+			$invoice['due_date'] = date('Y-m-d H:i:s',$invoice['due_date_epoch']);
+			
 			$invoice['amount']   = core_format::parse_price($amount);
 			$invoice['to_org_id'] = $to;
 			$invoice['from_org_id'] = $from;;
@@ -323,6 +325,7 @@ class core_controller_payments extends core_controller
 				$payable->save();
 				
 			}
+			$payables = core::model('v_payables')->collection()->filter('payable_id','in',$payable_ids);
 			core::process_command('emails/payments_portal__invoice',false,
 				$invoice,$payables,$domain_id,core_format::date(time() + ($terms * 86400),'short')
 			);

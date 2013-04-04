@@ -35,11 +35,15 @@ $values['pay_link'] = 'https://'.$domain['hostname'].'/app.php#!payments-home';
 $values['payables'] = '
 <table class="dt">
 	<col width="20%" />
-	<col width="40%" />
-	<col width="40%" />
+	<col width="20%" />
+	<col width="20%" />
+	<col width="20%" />
+	<col width="20%" />
 	<tr>
 		<th class="dt">Reference</th>
 		<th class="dt">Description</th>
+		<th class="dt">Invoice Date</th>
+		<th class="dt">Due Date</th>
 		<th class="dt">Amount</th>
 	</tr>
 ';
@@ -53,7 +57,9 @@ foreach($payables as $payable)
 		<tr class="dt'.$counter.'">
 			<td class="dt">'.$payable['description'].'</td>
 			<td class="dt">'.$payable['to_org_name'].'</td>
-			<td class="dt">'.core_format::price($payable['amount']).'</td>
+			<td class="dt">'.core_format::date(time(),'long-wrapped').'</td>
+			<td class="dt">'.core_format::date($invoice['due_date_epoch'],'short').'</td>
+			<td class="dt">'.core_format::price($payable['amount_due']).'</td>
 		</tr>';
 	$counter = (!$counter);
 }
