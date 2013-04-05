@@ -67,10 +67,12 @@ class core_model_organization_payment_methods extends core_model_base_organizati
 			'InpACHTransRecord'=>$transaction,
 		));
 		
+		core::log(print_r($myresult,true));
+		
 		if($myresult->SendACHTransResult->Status !='SUCCESS')
 		{
-			echo("ERROR\n");
-			echo('Transaction message: '.print_r($myresult,true)."\n------------\nTransaction Details:".print_r($transaction,true));
+			core::log("ERROR\n");
+			core::log('Transaction message: '.print_r($myresult,true)."\n------------\nTransaction Details:".print_r($transaction,true));
 			#core::process_command('emails/ach_error',false,'test','test');
 			#echo("EMAIL SENT\n");
 			
@@ -83,7 +85,7 @@ class core_model_organization_payment_methods extends core_model_base_organizati
 		}
 		else
 		{
-			echo("PAYMENT SUCCESS!\n");
+			core::log("PAYMENT SUCCESS!\n");
 			return true;
 		}
 
