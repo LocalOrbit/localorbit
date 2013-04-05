@@ -40,13 +40,23 @@ $err = curl_error($soap_do);
 
 //SOAP call ‐ test server 
 $myclient = new SoapClient("http://tstsvr.achworks.com/dnet/achws.asmx?WSDL"); 
-$myresult = $myclient->GetErrorFile(
+$myresult = $myclient->GetResultFile(
 		array(
 			"InpCompanyInfo"=>$mycompanyinfo, 
-			"ErrorDateFrom"=>$myDateFrom, 
-			"ErrorDateTo"=>$myDateTo
+			"ResultDateFrom"=>$myDateFrom, 
+			"ResultDateTo"=>$myDateTo
 		)
-	); 
-print_r($myresult);
-exit();
+	);
+
+
+echo("Results: \n");
+$ignore_methods = array('GetResultFile','GetErrorFile');
+foreach($myresult->GetResultFileResult->TransResults->TransResult as $item)
+{
+	if(!in_array($item->CallMethod,$ignore_methods))
+	{
+		print_r($item);
+	}
+}
+exit("Done\n");
 ?>
