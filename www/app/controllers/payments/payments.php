@@ -152,7 +152,7 @@ class core_controller_payments extends core_controller
 			}
 		}
 		
-		$this->reload_all_tabs();
+		#$this->reload_all_tabs();
 		core::js("$('#all_all_payments,#payments_pay_area').toggle();");
 		core_ui::notification('payments saved');
 	}
