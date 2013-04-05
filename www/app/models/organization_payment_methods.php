@@ -33,8 +33,8 @@ class core_model_organization_payment_methods extends core_model_base_organizati
 			$CustTransType = 'C';
 		}
 		
-		
-		$myclient = new SoapClient($core->config['ach']['url']);
+		$option=array('trace'=>1);
+		$myclient = new SoapClient($core->config['ach']['url'], $option);
 		$mycompanyinfo = new CompanyInfo();
 		$mycompanyinfo->SSS        = $core->config['ach']['SSS'];
 		$mycompanyinfo->LocID      = $core->config['ach']['LocID'];
@@ -66,8 +66,13 @@ class core_model_organization_payment_methods extends core_model_base_organizati
 			'InpCompanyInfo'=>$mycompanyinfo,
 			'InpACHTransRecord'=>$transaction,
 		));
+
+
+		$this['request'] = $myclient->__getLastRequest();		
+		$this['response'] = $myclient->__getLastResponse();	
 		
-		core::log(print_r($myresult,true));
+		core::log(print_r($myresult,true));		
+		
 		
 		if($myresult->SendACHTransResult->Status !='SUCCESS')
 		{

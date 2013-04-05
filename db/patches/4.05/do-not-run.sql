@@ -219,3 +219,29 @@ DROP TABLE IF EXISTS wishlist;
 
 ALTER TABLE delivery_fees
   MODIFY minimum_order decimal(10,2);
+  
+  
+  
+ ALTER TABLE lo_fulfillment_order_status_changes  ENGINE = InnoDB; 
+  ALTER TABLE lo_fulfillment_order_status_changes
+  MODIFY lo_foid int(10);
+  
+  DELETE FROM lo_fulfillment_order_status_changes
+WHERE NOT lo_foid IN (SELECT lo_foid FROM lo_fulfillment_order);
+  
+  
+  
+  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ALTER TABLE lo_fulfillment_order_status_changes
+  ADD CONSTRAINT lo_fulfillment_order_status_changes_fk1
+  FOREIGN KEY (lo_foid)
+    REFERENCES lo_fulfillment_order(lo_foid)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+  
+  
+  
+  
+  
+  
+  

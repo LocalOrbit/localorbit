@@ -35,12 +35,12 @@ class core_model_events extends core_model_base_events
 		parent::init_fields();
 	}
 	
-	function add_record($type,$obj1_id=0,$obj2_id=0,$varchar1='',$varchar2='')
+	function add_record($type,$obj1_id=0,$obj2_id=0,$varchar1='',$varchar2='',$text1='')
 	{
 		global $core;
 		core_db::query('
 			insert into events
-				(event_type_id,customer_id,domain_id,obj_id1,obj_id2,varchar1,varchar2,ip_address)
+				(event_type_id,customer_id,domain_id,obj_id1,obj_id2,varchar1,varchar2,ip_address, text1)
 			values
 				(
 					(select event_type_id from event_types where name=\''.mysql_escape_string($type).'\'),
@@ -50,7 +50,8 @@ class core_model_events extends core_model_base_events
 					'.intval($obj2_id).',
 					\''.mysql_escape_string($varchar1).'\',
 					\''.mysql_escape_string($varchar2).'\',
-					\''.$_SERVER['REMOTE_ADDR'].'\'
+					\''.$_SERVER['REMOTE_ADDR'].'\',
+					\''.mysql_escape_string($text1).'\'
 				);
 		
 		');

@@ -85,13 +85,20 @@ class core_controller_payments extends core_controller
 						$trace_nbr = $core->config['stage'].'-'.$trace_nbr.'-'.time();
 					$trace_nbr .= str_pad($new_payment['payment_id'],8,0,STR_PAD_LEFT);
 
-					$paymeth = core::model('organization_payment_methods')->load($core->data['payment_group_'.$group['to_org_id'].'__opm_id']);
+					$payment = core::model('organization_payment_methods')->load($core->data['payment_group_'.$group['to_org_id'].'__opm_id']);
 					
 					$new_payment['ref_nbr'] = $trace_nbr;
 					$ach_amount = $group['amount'];
-					$result = $paymeth->make_payment($trace_nbr,'',$ach_amount);
+					$result = $payment->make_payment($trace_nbr,'',$ach_amount);
 					$new_payment->save();
 					
+									
+					
+
+					// save RQ anad RS in event log
+					core::model('events')->add_record('ACH RQ', $new_payment['payment_id'], 0, '', '', $payment['request']);
+					core::model('events')->add_record('ACH RS', $new_payment['payment_id'], 0, '', '', $payment['response']);
+										
 					
 					if($result)
 					{
@@ -231,7 +238,7 @@ class core_controller_payments extends core_controller
 						$trace_nbr = $core->config['stage'].'-'.$trace_nbr;
 					$trace_nbr .= str_pad($new_payment['payment_id'],8,0,STR_PAD_LEFT);
 
-					$paymeth = core::model('organization_payment_methods')->load($core->data[$prefix.'_payment_group_'.$cur_group.'__opm_id']);
+					$payment = core::model('organization_payment_methods')->load($core->data[$prefix.'_payment_group_'.$cur_group.'__opm_id']);
 					
 					
 					$ach_amount = $new_payment['amount'];
@@ -241,7 +248,7 @@ class core_controller_payments extends core_controller
 						$ach_amount = (-1) * $ach_amount;
 					}
 					
-					$result = $paymeth->make_payment($trace_nbr,$new_payment['admin_note'],$ach_amount);
+					$result = $payment->make_payment($trace_nbr,$new_payment['admin_note'],$ach_amount);
 				}
 				$new_payment->save();
 				
