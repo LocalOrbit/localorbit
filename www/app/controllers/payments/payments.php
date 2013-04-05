@@ -82,7 +82,7 @@ class core_controller_payments extends core_controller
 					$trace_nbr = 'LO-';
 					
 					if($core->config['stage'] != 'production')
-						$trace_nbr = $core->config['stage'].'-'.$trace_nbr;
+						$trace_nbr = $core->config['stage'].'-'.$trace_nbr.'-'.time();
 					$trace_nbr .= str_pad($new_payment['payment_id'],8,0,STR_PAD_LEFT);
 
 					$paymeth = core::model('organization_payment_methods')->load($core->data['payment_group_'.$group['to_org_id'].'__opm_id']);
