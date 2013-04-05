@@ -13,6 +13,7 @@ class core_model_base_events extends core_model
 		$this->add_field(new core_model_field(7,'creation_date','timestamp',4,'','events'));
 		$this->add_field(new core_model_field(8,'ip_address','string',-4,'','events'));
 		$this->add_field(new core_model_field(9,'domain_id','int',8,'','events'));
+		$this->add_field(new core_model_field(10,'text1','string',-4,'','events'));
 		$this->init_data();
 	}
 }
