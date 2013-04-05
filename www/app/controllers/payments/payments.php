@@ -87,7 +87,7 @@ class core_controller_payments extends core_controller
 
 					$paymeth = core::model('organization_payment_methods')->load($core->data['payment_group_'.$group['to_org_id'].'__opm_id']);
 					
-					
+					$new_payment['ref_nbr'] = $trace_nbr;
 					$ach_amount = $group['amount'];
 					$result = $paymeth->make_payment($trace_nbr,'',$ach_amount);
 					$new_payment->save();
