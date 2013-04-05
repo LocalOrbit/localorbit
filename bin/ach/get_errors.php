@@ -12,10 +12,10 @@ class CompanyInfo {
  
 //CompanyInfo 
 $mycompanyinfo = new CompanyInfo;
-$mycompanyinfo -> SSS = "TST";
-$mycompanyinfo -> LocID = "9561";
-$mycompanyinfo -> Company = "TSTLOCALORBIT";
-$mycompanyinfo -> CompanyKey = 'TESTKEY2764'; 
+$mycompanyinfo -> SSS = "RPP";
+$mycompanyinfo -> LocID = "2764";
+$mycompanyinfo -> Company = "LOCALORBITLLC001";
+$mycompanyinfo -> CompanyKey = 'QSFTHJJP3JCMFBXGQEDBZWKDBPPHFM2'; 
  
 $myDateFrom = date('Y-m-d',time() - 86400); //include leading zero for mm and dd e.g. 01 for Jan 
 $myDateTo = date('Y-m-d',time() + 86400);   //include leading zero for mm and dd e.g. 01 for Jan 
@@ -39,7 +39,7 @@ $err = curl_error($soap_do);
 
 
 //SOAP call ‐ test server 
-$myclient = new SoapClient("http://tstsvr.achworks.com/dnet/achws.asmx?WSDL"); 
+$myclient = new SoapClient("https://securesoap.achworks.com/dnet/achws.asmx?WSDL"); 
 $myresult = $myclient->GetErrorFile(
 		array(
 			"InpCompanyInfo"=>$mycompanyinfo, 
