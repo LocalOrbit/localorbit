@@ -4,7 +4,7 @@ global $core;
 $payables = core::model('v_payables')
 	->get_buyer_grouped_payables()
 	->filter('p.payable_id','in',explode(',',$core->data['payable_id']))
-	->group('concat_ws(\'_\',p.from_org_id,p.to_org_id)');
+	->group('concat_ws(\'_\',p.from_org_id,p.to_org_id,p.payable_id)');
 	
 ?>
 <div id="create_invoice_form">

@@ -26,7 +26,7 @@ else
 
 $domain = core::model('domains')->load($domain_id);
 $values['hubname'] = $domain['name'];
-$values['invoicenbr'] = 'LINV-'.$invoice['invoice_id'];
+$values['invoicenbr'] = $invoice['order_nbr'];
 $values['duedate'] = $due_date;
 $values['amount'] = core_format::price($invoice['amount']);
 $values['pay_link'] = 'https://'.$domain['hostname'].'/app.php#!payments-home';

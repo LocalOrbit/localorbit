@@ -21,7 +21,7 @@ class core_controller_emails extends core_controller
 			$values['hubname'] = $core->config['domain']['name'];
 			
 		$styles = array(
-			'h1'=>'text-align: center;color: '.$this->options['email_p1a'].';border: '.$this->options['email_p1a'].' 1px solid;border-width: 4px 0px 18px 0px;font-size: 32pt;padding: 15px 0px;font-weight: normal;',
+			'h1'=>'text-align: center;color: '.$this->options['email_p1a'].';border: '.$this->options['email_p1a'].' 1px solid;border-width: 4px 0px 18px 0px;font-size: 32px !important;padding: 15px 0px;font-weight: normal;',
 			'h2'=>'border: '.$this->options['email_p1a'].' 1px solid;padding-bottom:4px;border-width: 0px 0px 2px 0px;',
 			'h3'=>'font-weight: bold;font-size: 110%;margin: 8px 0px;',
 			'h4'=>'font-weight: bold;margin: 8px 0px;',

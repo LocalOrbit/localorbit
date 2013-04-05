@@ -326,6 +326,11 @@ class core_controller_payments extends core_controller
 				
 			}
 			$payables = core::model('v_payables')->collection()->filter('payable_id','in',$payable_ids);
+			foreach($payables as $payable)
+			{
+				$payable_info = explode('|',$payable['payable_info']);
+				$invoice['order_nbr'] = $payable_info[0];
+			}
 			core::process_command('emails/payments_portal__invoice',false,
 				$invoice,$payables,$domain_id,core_format::date(time() + ($terms * 86400),'short')
 			);
