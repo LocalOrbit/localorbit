@@ -107,6 +107,7 @@ page_header('Financial Management - Coming Soon!');
 echo('<form name="paymentsForm" class="form-horizontal">');
 echo(core_ui::tab_switchers('paymentstabs',$tabs));
 echo('<div class="tab-content">');
+core_ui::inline_message("Overview", "This is a snapshot of all money currently owed to your organization and that you owe to other organizations.");
 
 $tab_count = 1;
 
@@ -142,7 +143,6 @@ if(in_array('Systemwide Payables/Receivables',$tabs))
 }
 
 ?>
-
 
 
 	</div>

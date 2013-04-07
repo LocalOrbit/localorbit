@@ -55,6 +55,7 @@ foreach ($intervals as $val)
 	$previousIndex = $val;
 }
 ?>
+
 <div class="tabarea tab-pane active" id="paymentstabs-a<?=$core->view[0]?>">
 	<div class="row row-top-margin-buffer">
 		<? if(count($receivables_ov) > 0 || lo3::is_seller()){?>
@@ -99,5 +100,9 @@ foreach ($intervals as $val)
 		
 		</div>
 		<?}?>
+		<div class="span4">
+			<h2>&nbsp;</h2>
+			<? echo get_inline_message("overview", 200);?>
+		</div>
 	</div>
 </div>

@@ -58,6 +58,7 @@ class core_datatable
 		# these are used to store the data used for filtering and their current state
 		$this->filters = array();
 		$this->filter_html = '';
+		$this->inline_message = '';
 		$this->filter_states = array();
 		
 		$this->custom_csv_export_path = '';
@@ -426,18 +427,40 @@ class core_datatable
 	function render_filter_resizer()
 	{
 		global $core;
+				
+		
 		echo('<div class="dt_filter_resizer"');
 		if(!$this->filter_html)
 			echo(' style="display: none;"');
 		echo('>');
+
 		
-		echo('<div class="dt_filter" id="dt_'.$this->name.'_filters">');
+		// controls to hide filter
+		echo("<script>");
+			echo("$('#dt_".$this->name."_filters').on('show', function() { $('#filter_show_hide_icon".$this->name."').removeClass('icon-plus').addClass('icon-minus'); });");
+			echo("$('#dt_".$this->name."_filters').on('hide', function() { $('#filter_show_hide_icon".$this->name."').removeClass('icon-minus').addClass('icon-plus'); });");
+		echo("</script>");
+				
+		echo('<div id="filter_accordian" class="">');
+			echo('<a class="accordion-toggle" style="text-decoration:none" data-toggle="collapse" href="#dt_'.$this->name.'_filters">');
+				echo('<div id="filter_show_hide_icon'.$this->name.'" class="icon-minus float_right"></div>');
+			echo('</a>');
+		echo('</div>');
+	
+		
+		
+		echo('<div class="dt_filter collapse in" id="dt_'.$this->name.'_filters">');
 		
 		if($this->filter_html != '')
 		{
 			echo('<h4 class="pull-left">Filter Results:</h4> ');
 			$this->render_filter_expander();
-			echo('<div class="dt_filter_area">'.$this->filter_html.'</div>');
+			echo('<div class="dt_filter_area">');
+				if($this->inline_message) {
+					echo($this->inline_message);
+				}
+				echo($this->filter_html);
+			echo('</div>');
 		}
 		echo('</div><div class="clearfix"></div>');
 		echo('</div>');

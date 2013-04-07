@@ -45,6 +45,11 @@ class core_ui
 		core::js("alert('".$string."');");
 		core::deinit();
 	}
+	
+	public static function inline_message($width, $title, $string)
+	{
+		return '<div class="alert alert-info float_right clearfix" style="width:'.$width.'px"><b>'.$title.'</b><br/>'.$string.'</div>';
+	}
 
 	public static function notification($string,$clear_response=false,$deinit=true)
 	{
