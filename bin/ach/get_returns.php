@@ -16,7 +16,7 @@ $mycompanyinfo -> LocID = "2764";
 $mycompanyinfo -> Company = "LOCALORBITLLC001";
 $mycompanyinfo -> CompanyKey = 'QSFTHJJP3JCMFBXGQEDBZWKDBPPHFM2'; 
  
-$myDateFrom = date('Y-m-d',time() - 86400); //include leading zero for mm and dd e.g. 01 for Jan 
+$myDateFrom = date('Y-m-d',time() - (4* 86400)); //include leading zero for mm and dd e.g. 01 for Jan 
 $myDateTo  = date('Y-m-d',time() + 86400);   //include leading zero for mm and dd e.g. 01 for Jan 
  
  
@@ -28,10 +28,13 @@ $myresult = $myclient->GetACHReturnsHist(array("InpCompanyInfo"=>$mycompanyinfo,
 print($myresult->Status . ", " . $myresult->Details . "\n"); 
  
 //print ACHReturnRecords if there is any 
-foreach ($myresult->ACHReturnRecords->ACHReturnRecord as $myACHReturnRecord) { 
-	print("FrontEndTrace:" . $myACHReturnRecord->FrontEndTrace . ", EffectiveDate:" . $myACHReturnRecord->EffectiveDate . ", 
-		Name:" . $myACHReturnRecord->CustomerName . ", Amount:" . $myACHReturnRecord->TransAmount . ", 
-		ResponseCode:" . $myACHReturnRecord->ResponseCode . ", ActionDetail:" . $myACHReturnRecord->ActionDetail . 
-		"\n"); 
-} 
+if($myresult->ACHReturnRecords->ACHReturnRecord)
+{
+	foreach ($myresult->ACHReturnRecords->ACHReturnRecord as $myACHReturnRecord) { 
+		print("FrontEndTrace:" . $myACHReturnRecord->FrontEndTrace . ", EffectiveDate:" . $myACHReturnRecord->EffectiveDate . ", 
+			Name:" . $myACHReturnRecord->CustomerName . ", Amount:" . $myACHReturnRecord->TransAmount . ", 
+			ResponseCode:" . $myACHReturnRecord->ResponseCode . ", ActionDetail:" . $myACHReturnRecord->ActionDetail . 
+			"\n"); 
+	}
+}
 ?> 
