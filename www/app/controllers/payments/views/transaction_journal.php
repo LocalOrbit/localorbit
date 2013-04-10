@@ -48,6 +48,59 @@ function transaction_formatter($data)
 	return $data;
 }
 
+function ach_history($data)
+{
+	
+	$responses = array(
+		'1SNT'=>'Sent to ACH',
+		'2STL'=>'Transaction settled',
+		'3RET'=>'Returned',
+		'4INT'=>'Cannot be processed',
+		'5COR'=>'Correction Received',
+		'9BNK'=>'Settlement Update',
+	);
+	
+	if($data['payment_method'] == 'ACH')
+	{
+		$html = '';
+		
+		$history = core::model('payments_ach_history')->collection()->filter('payment_id','=',$data['payment_id'])->load()->to_array();
+		if(count($history) > 0)
+		{
+			$togglejs = 'javascript:$(\'#ach_history_'.$data['payment_id'].'_toggle,#ach_history_'.$data['payment_id'].'\').toggle();';
+			$html .= '<br /><a id="ach_history_'.$data['payment_id'].'_toggle"';
+			$html .= ' href="'.$togglejs.'">View ACH History</a>';
+			$html .= '<table style="display: none;" id="ach_history_'.$data['payment_id'].'">';
+			$html .= '<col width="30%" />';
+			$html .= '<col width="30%" />';
+			$html .= '<col width="40%" />';
+			$html .= '<tr><th>Action Type</th><th>Code</th><th>Effective Date</th></tr>';
+			
+			foreach($history as $event)
+			{
+				$html .= '<tr>';
+				
+				$html .= '<td>'.$responses[$event['response_code']].'</td>';
+				$html .= '<td>'.$event['action_detail'].'</td>';
+				$html .= '<td>'.core_format::date($event['effective_date']).'</td>';
+				
+				$html .= '</tr>';
+			}
+			$html .= '<tr><td colspan="3"><a href="'.$togglejs.'">Close ACH History</a></td></tr>';
+			$html .= '</table>';
+		}
+		else
+		{
+			$html .= '<br /><i>No ACH history available</i>';
+		}
+		
+		$data['direction_info'] = $data['direction_info'].$html;
+	}
+	
+	#print_r($data);
+	return $data;
+}
+
 $payments->add_formatter('payable_info');
 $payments->add_formatter('payment_link_formatter');
 $payments->add_formatter('payment_direction_formatter');
@@ -55,6 +108,9 @@ $payments->add_formatter('transaction_formatter');
 $payments->add_formatter('type_formatter');
 if(lo3::is_market() || lo3::is_admin())
 	$payments->add_formatter('lfo_accordion');
+if(lo3::is_admin())
+	$payments->add_formatter('ach_history');
+
 
 $payments_table = new core_datatable('transactions','payments/transaction_journal',$payments);
 
