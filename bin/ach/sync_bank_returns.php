@@ -34,7 +34,7 @@ print($myresult->Status . ", " . $myresult->Details . "\n");
  
 echo("results received, determining records to update\n");
 $trace_nbrs = array();
-if($myresult->ACHReturnRecords->ACHReturnRecord)
+if(is_object($myresult->ACHReturnRecords->ACHReturnRecord))
 {	
 	foreach ($myresult->ACHReturnRecords->ACHReturnRecord as $myACHReturnRecord)
 	{
