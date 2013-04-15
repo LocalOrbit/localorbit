@@ -8,6 +8,8 @@ we protect you:
 	<input type="button" onclick="$('#edit_popup').fadeOut('fast');" class="btn btn-warning" value="close" />
 </div>	
 <?php
+
 core::js("$('#edit_popup').fadeIn('fast');"); 
 core::replace('edit_popup'); 
+
 ?>
