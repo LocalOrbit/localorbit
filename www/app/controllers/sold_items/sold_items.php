@@ -259,8 +259,8 @@ class core_controller_sold_items extends core_controller
 			$this->status_errors($errors);
 		}
 		
-		#core_datatable::js_reload('sold_items');
-		#core::js('document.itemForm.checkall_solditem.checked=false;core.sold_items.resetActions();');
+		core_datatable::js_reload('sold_items');
+		core::js('document.itemForm.checkall_solditem.checked=false;core.sold_items.resetActions();');
 		core_ui::notification('items updated');		
 	}
 	
