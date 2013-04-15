@@ -151,6 +151,7 @@ org.cancelPaymentChanges=function(){
 }
 
 org.securityAssurance=function(refObj){
+	
 	var pos = $(refObj).offset(); 
 	$('#edit_popup').css( { 
 		'left': (pos.left - 160)+'px', 
