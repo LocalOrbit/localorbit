@@ -72,7 +72,9 @@
 				<input type="button" class="btn btn-primary" value="Save This Bank Account" onclick="org.savePaymentMethod(document.organizationsForm);" />
 			</div>
 			<div class="form-actions pull-right" style="margin-top: 5px;padding-top: 0px;padding-right; 10px;">
+				
 				<a id="seclink" href="Javascript:org.securityAssurance(document.getElementById('seclink'));">Security info</a>
+				
 			</div>
 		</fieldset>
 	</div>
