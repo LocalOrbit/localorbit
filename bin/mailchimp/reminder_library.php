@@ -89,7 +89,7 @@ function set_flags($all_users,$list_id,$days_offset,$seller_perspective=true)
 	# first retrieve the list of applicable orgs
 	if($seller_perspective)
 	{
-		$orgs_sql = '
+		/* $orgs_sql = '
 			select o.org_id,o.name,o.domain_id
 			from lo_fulfillment_order
 			left join organizations o on lo_fulfillment_order.org_id=o.org_id
@@ -100,11 +100,18 @@ function set_flags($all_users,$list_id,$days_offset,$seller_perspective=true)
 				and delivery_start_time <= '.$end.'
 			)
 			and lo_fulfillment_order.status=\'ORDERED\'
-		';
-	}
-	else
-	{
-		$orgs_sql = '
+		'; */
+		$orgs_sql = 'SELECT DISTINCT lo_fulfillment_order.org_id, organizations.name,lo_fulfillment_order.domain_id
+			FROM lo_fulfillment_order INNER JOIN organizations ON lo_fulfillment_order.org_id=organizations.org_id
+			INNER JOIN lo_order_deliveries ON lo_order_deliveries.lo_foid = lo_fulfillment_order.lo_foid
+			WHERE lo_order_deliveries.status=\'ORDERED\'
+				AND lo_order_deliveries.delivery_start_time >= '.$start.'
+				and lo_order_deliveries.delivery_start_time <= '.$end
+		;
+		
+		
+	} else {
+		/* $orgs_sql = '
 			select o.org_id,o.name,o.domain_id
 			from lo_order
 			left join organizations o on lo_order.org_id=o.org_id
@@ -115,9 +122,20 @@ function set_flags($all_users,$list_id,$days_offset,$seller_perspective=true)
 				and delivery_start_time <= '.$end.'
 			)
 			and lo_order.status=\'ORDERED\'
-		';
+		'; */
+		
+		$orgs_sql = 'SELECT DISTINCT lo_order.org_id, organizations.name,lo_order.domain_id
+			FROM lo_order INNER JOIN organizations ON lo_order.org_id=organizations.org_id
+			INNER JOIN lo_order_deliveries ON lo_order_deliveries.lo_oid = lo_order.lo_oid
+			WHERE lo_order_deliveries.status=\'ORDERED\'
+				AND lo_order_deliveries.delivery_start_time >= '.$start.'
+				and lo_order_deliveries.delivery_start_time <= '.$end
+		;
 	}
 	$orgs = new core_collection($orgs_sql);
+
+	
+	//echo "<br><br>";	var_dump($orgs_sql);	echo "<br><br>";	var_dump($orgs);	echo "<br><br>";
 	
 	# for each org, find all users
 	foreach($orgs as $org)
@@ -132,6 +150,9 @@ function set_flags($all_users,$list_id,$days_offset,$seller_perspective=true)
 			$all_users[$org['org_id']][$user['email']] = 1;
 		}
 	}
+	
+
+	// echo "<br><br>";var_dump($users_sql);echo "<br><br>";var_dump($users);echo "<br><br>";die();
 	
 	# transform our org->user->doemail hash to the mailchimp update format
 	# and pass to mailchimp.
