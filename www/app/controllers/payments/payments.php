@@ -707,7 +707,7 @@ function get_inline_message($tab_name, $width=350) {
 				return core_ui::inline_message($width, "Overview", "This is a snapshot of all money currently owed to your organization and that you owe to other organizations.");
 				break;
 			case 'purchase_orders':			
-				return core_ui::inline_message($width,"Purchase Orders", "These are open orders from buyers who have the ability to purchase via Purchase Order. They not been delivered or invoiced.  When you create invoices from this tab, they will move to the Receivables tab.");
+				return core_ui::inline_message($width,"Purchase Orders", "These are unpaid orders from buyers who have the ability to purchase on credit. The orders have not been invoiced. Once an invoice has been sent, it moves to the Receivables tab.");
 				break;
 			case 'receivables':
 				return core_ui::inline_message($width,"Receivables", "These are outstanding invoices that are current or overdue. You can re-issue overdue invoices from this tab, and record payments received off-line.  Once an invoice has been payed, the transaction moves to the Transaction Journal tab.");
@@ -761,10 +761,10 @@ function get_inline_message($tab_name, $width=350) {
 				return core_ui::inline_message($width, "Overview", "This is a snapshot of all money you currently owed to your Market.");
 				break;
 			case 'purchase_orders':			
-				return core_ui::inline_message($width,"Purchase Orders", "These are your open orders. They have not been delivered or invoiced.  Once an invoice has been sent, it moves to the Payables tab.");
+				return core_ui::inline_message($width,"Purchase Orders", "These are unpaid orders from buyers who have the ability to purchase on credit. The orders have not been invoiced. Once an invoice has been sent, it moves to the Receivables tab.");
 				break;
 			case 'payables':
-				return core_ui::inline_message($width,"Payables", "All money you currently owe to your Market. Make payments from this tab. Once an invoice has been paid, it moves to the Transaction Journal tab.");
+				return core_ui::inline_message($width,"Payables", "Make or view payments on this tab.");
 				break;
 			case 'transactions':
 				return core_ui::inline_message($width,"Transaction Journal", "A complete history of all payments you’ve made.  You can download a csv file from the Transaction Journal to import into your accounting system.");
