@@ -29,7 +29,7 @@ $values['hubname'] = $domain['name'];
 $values['invoicenbr'] = $invoice['order_nbr'];
 $values['duedate'] = $due_date;
 $values['amount'] = core_format::price($invoice['amount']);
-$values['pay_link'] = 'https://'.$domain['hostname'].'/app.php#!payments-home';
+$values['pay_link'] = 'https://'.$domain['hostname'].'/app.php#!payments-home--link_payables-yes';
 
 
 $values['payables'] = '
