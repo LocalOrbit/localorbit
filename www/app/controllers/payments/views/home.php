@@ -110,6 +110,7 @@ echo('<div class="tab-content">');
 core_ui::inline_message("Overview", "This is a snapshot of all money currently owed to your organization and that you owe to other organizations.");
 
 $tab_count = 1;
+$payables_id = 0;
 
 if(in_array('Overview',$tabs))
 {
@@ -129,6 +130,7 @@ if(in_array('Receivables',$tabs))
 if(in_array('Payables',$tabs))
 {
 	$this->payables($tab_count);
+	$payables_id = $tab_count;
 	$tab_count++;
 }
 if(in_array('Transaction Journal',$tabs))
@@ -141,6 +143,13 @@ if(in_array('Systemwide Payables/Receivables',$tabs))
 	$this->systemwide_payablesreceivables($tab_count);
 	$tab_count++;
 }
+
+
+if($core->data['link_payables'] == 'yes')
+{
+	core::js("$('#paymentstabs-s".$payables_id."').click();");
+}
+
 
 ?>
 
