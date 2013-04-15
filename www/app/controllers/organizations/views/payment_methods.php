@@ -67,6 +67,12 @@
 			<?=core_form::input_text('Account #','nbr1','',array('onfocus'=>"if(new String(this.value).indexOf('*')===0){this.value='';}"))?>
 			<?=core_form::input_text('Routing #','nbr2','',array('onfocus'=>"if(new String(this.value).indexOf('*')===0){this.value='';}"))?>
 			<?=core_form::input_hidden('opm_id','')?>
-			<? subform_buttons('org.savePaymentMethod(document.organizationsForm);','Save This Bank Account','org.cancelPaymentChanges();'); ?>
+			<div class="form-actions pull-right" style="padding-bottom: 0px;margin-bottom: 0px;">
+				<input type="button" class="btn btn-warning" value="Cancel" onclick="org.cancelPaymentChanges();" />
+				<input type="button" class="btn btn-primary" value="Save This Bank Account" onclick="org.savePaymentMethod(document.organizationsForm);" />
+			</div>
+			<div class="form-actions pull-right" style="margin-top: 5px;padding-top: 0px;padding-right; 10px;">
+				<a id="seclink" href="Javascript:org.securityAssurance(document.getElementById('seclink'));">Security info</a>
+			</div>
 		</fieldset>
 	</div>
