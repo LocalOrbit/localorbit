@@ -182,6 +182,13 @@ class core_model_products extends core_model_base_products
 					)
 				)
 			)
+			and (
+				'.$domain_id.' in (
+					select sell_on_domain_id
+					from organization_cross_sells
+					where org_id =p.org_id
+				)
+			)
 
 		';
 		#order by prod_id desc
