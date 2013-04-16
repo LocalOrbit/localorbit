@@ -1,5 +1,6 @@
 Adding a bank account to your Local Orbit powered market is safe and secure. Here's how 
 we protect you:
+<br />&nbsp;<br />
 <ul>
 	<li>No one from Local Orbit, your market or the payment processor can view or access your bank account information at any time. Account information is stored using the strictest security standards and transmitted securely by our payments provider.</li>
 	<li>You will receive a receipt each time you make an online payment so you can monitor your account activity.</li>
