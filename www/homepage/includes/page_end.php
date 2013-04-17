@@ -72,8 +72,7 @@
 			</tr>
 		</table>
 		
-		<script type="text/javascript" src="//assets.zendesk.com/external/zenbox/v2.5/zenbox.js"></script>
-
+	
 		<script type="text/javascript">
 		  if (typeof(Zenbox) !== "undefined") {
 		    Zenbox.init({
