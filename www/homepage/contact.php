@@ -26,7 +26,11 @@
 					<img src="/homepage/img/contact/demo.png" />
 				</div>
 				<h3>See it in Action</h3>
-				We know every business is a little different and we'd love to show you how Local Orbit's tools can work for you. We offer live demos on Tuesdays and Thursdays.
+				Our tools speak for themselves. We offer live demos 
+				on Tuesdays and Thursdays. We keep these small so there's lots of time 
+				for questions about how Local Orbit can work for your business.  
+				Reserve your place today.
+				<br />&nbsp;<br />
 			</div>
 		</td>	
 		<td>&nbsp;</td>
@@ -38,8 +42,8 @@
 				<h3>Sign Up for Our Newsletter</h3>
 				Get the latest news and information about 
 				Local Orbit by signing up for our email list. 
-				We will send you a quarterly newsletter and a 
-				few extra updates along the way.
+				We'll send you a quarterly newsletter and a 
+				few extra updates along the way. 
 			</div>
 		</td>
 		<td>&nbsp;</td>
@@ -48,22 +52,19 @@
 				<div style="height: 130px;">
 					<img src="/homepage/img/contact/smiley.png" />
 				</div>
-				<h3>Need More?</h3>
-				Are you a current customer and have questions about 
-				your Local Orbit powered market? we are here to help. 
-				Submit a request through our knowledge base and we 
-				will respond shortly.
+				<h3>Need Something Else?</h3>
+				If there's a question we haven't answered, we're here to help. Just let us know what you need.
 				<br />&nbsp;<br />
 			</div>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">&nbsp;</td>
-		<td><a href="http://www.localorb.it/field-notes/schedule-a-demo" class="btn btn_blue">Schedule a Demo</a></td>
+		<td><a href="http://www.localorb.it/field-notes/schedule-a-demo" class="btn btn_blue">Sign Up for a Demo</a></td>
 		<td>&nbsp;</td>
 		<td><a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" class="btn btn_blue">Stay Informed</a></td>
 		<td>&nbsp;</td>
-		<td><a href="/homepage/features.php" class="btn btn_blue">Learn More</a></td>
+		<td><a href="/homepage/features.php" class="btn btn_blue">Submit a Request</a></td>
 </table>
 <br />&nbsp;<br />
 

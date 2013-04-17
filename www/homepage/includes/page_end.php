@@ -35,7 +35,7 @@
 											<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
 												<li class="footer"><a class="footer" href="/homepage/pricing.php">Pricing</a></li>
 												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/">Schedule a Demo</a></li>
-												<li class="footer"><a class="footer" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c">Sign Up</a></li>
+												<li class="footer"><a class="footer" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c">Get Started</a></li>
 
 										</ul>
 									</td>
@@ -55,9 +55,9 @@
 									<img src="/img/default/footer/phone_gray.png"><br>
 									<b class="footer">Contact</b>
 									<ul class="footer">
-										<li class="footer"><a class="footer" href="#">Call 734.545.8100</a></li>
-										<li class="footer"><a class="footer" href="#">Send Us A Note</a></li>
-										<li class="footer"><a class="footer" href="#">Customer Support</a></li>
+										<li class="footer" style="font-size: 80%;"> Call 734.545.8100</a></li>
+					
+										<li class="footer"><a class="footer" href="https://localorbit.zendesk.com/anonymous_requests/new" onclick="script: Zenbox.show(); return false;">Ask us a question</a></li>
 									</ul>
 								</td>
 							</tr>
@@ -67,7 +67,11 @@
 					<div class="footer">&nbsp; &nbsp; &nbsp; © 2013 | 
 					<a class="footer" style="font-size: 100%;" href="/homepage/tos.php" onclick="core.go(this.href);">Terms of Service</a> | 
 					<a style="font-size: 100%;" class="footer" href="/homepage/privacy.php" onclick="core.go(this.href);">Privacy</a> | 
-					<a class="footer" href="https://localorbit.zendesk.com/anonymous_requests/new" onclick="script: Zenbox.show(); return false;">Help</a></div>
+					<a class="footer" style="font-size: 100%;" href="https://localorbit.zendesk.com/anonymous_requests/new" onclick="script: Zenbox.show(); return false;">Help</a>
+				<br>&nbsp; &nbsp; &nbsp;
+					<a class="footer" style="font-size: 80%;" href="http://jasonhouston.com" onclick="core.go(this.href);">site photos by Jason Houston</a></div>
+				 
+				
 				</td>
 			</tr>
 		</table>

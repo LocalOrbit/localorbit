@@ -97,21 +97,21 @@ else
 					<div style="position: relative;width:1100px;height: 120px;">
 						<a href="/" class="logo"><img width="112" height="111" src="/homepage/includes/logo5.png" /></a>
 						<div id="nav1">
-							<a class="nav1" href="/homepage/features.php">Features</a>
-							<a class="nav1" href="/homepage/homepage.php#whouses">Customers</a>
-							<a class="nav1" href="/homepage/pricing.php">Pricing</a>
-							<a class="nav1" href="/homepage/company.php">Company</a>
-							<a class="nav1" href="/field-notes/">Field Notes</a>
+							<a class="nav1" style="font-size: 125%;" href="/homepage/features.php">Features</a>
+							<a class="nav1" style="font-size: 125%;" href="/homepage/homepage.php#whouses">Customers</a>
+							<a class="nav1" style="font-size: 125%;" href="/homepage/pricing.php">Pricing</a>
+							<a class="nav1" style="font-size: 125%;" href="/homepage/company.php">Company</a>
+							<a class="nav1" style="font-size: 125%;" href="/field-notes/">Field Notes</a>
 						</div>
 						<div id="nav2">
-							<a href="/homepage/contact.php" class="nav2">contact</a>
+							<a style="font-size: 85%;" href="/homepage/contact.php" class="nav2">contact</a>
 							&nbsp;&nbsp;|&nbsp;&nbsp;
 							<? if($core->session['user_id'] == 0){?>
-							<a class="nav2" href="/login.php">log in</a>
+							<a class="nav2" style="font-size: 85%;" href="/login.php">log in</a>
 							&nbsp;&nbsp;|&nbsp;&nbsp;
-							<a class="nav2" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c">Sign Up</a>
+							<a class="nav2" style="font-size: 85%;" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c">get started</a>
 							<?}else{?>
-							<a class="nav2" href="/app.php#!dashboard-home">dashboard</a>
+							<a class="nav2" style="font-size: 85%;" href="/app.php#!dashboard-home">dashboard</a>
 							<?}?>
 						</div>
 						<div id="tagline">

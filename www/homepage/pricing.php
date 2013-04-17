@@ -6,7 +6,7 @@
 	<tr>
 		<td colspan="3">
 			<div class="homepage_title" style="text-align: center;">
-				Affordable, beautifully designed sales &amp; business management tools to help<br />
+				Affordable, thoughtfully designed sales &amp; business management tools to help<br />
 				any size organization work more efficiently, with room to grow.
 			</div>
 			<br />&nbsp;<br />
@@ -21,29 +21,10 @@
 				<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Streamlined Ordering &amp; Payments</div>
 				<div class="faq_answer" style="padding-left: 27px;">
 					<ul>
-						<li>Ordering that ﬁts your business, whether you need a catalog with full e-commerce features and 24/7 ordering, or your buyers call in orders to your sales team </li>
-						<li>Payment Options: Credit cards, E-checks or Purchase Orders</li>
-					</ul>
-				</div>
-			</div>
-			<div>
-				<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Flexible Product Management</div>
-				<div class="faq_answer" style="padding-left: 27px;">
-					<ul>
-						<li>Sellers can manage their own products &amp; stories, or Market Managers can control product management</li>
-						<li>Simple or Lot-based inventory optinos, with sell-by dates</li>
-						<li>Adjust pricing &amp; quantities on the fly</li>
-					</ul>
-				</div>
-			</div>
-			<div>
-				<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Efficient Fulfillment Logistics</div>
-				<div class="faq_answer" style="padding-left: 27px;">
-					<ul>
-						<li>Pick lists that draw from oldest lots first</li>
-						<li>Packing slips for aggregation</li>
-						<li>Automatic delivery reminders</li>
-						<li>Track &amp; trace orders throughout the delivery cycle</li>
+						<li>Ordering that ﬁts your business: provide full featured e-commerce, or have your team enter orders on sales calls </li>
+						<li>Payment options: purchase orders, <br>e-checks or 
+						credit cards (additional payment processing fees apply)</li>
+						<br>
 					</ul>
 				</div>
 			</div>
@@ -51,32 +32,61 @@
 				<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Complete Financial Management</div>
 				<div class="faq_answer" style="padding-left: 27px;">
 					<ul>
-						<li>Tools for invoicing, tracking receivables, and paying your sellers</li>
-						<li>Robust sales &amp; financial reporting</li>
+						<li>Invoice, track receivables &amp; pay your sellers</li>
+						<li>Robust sales &amp; financial reports</li>
+						<li>Easily export your Local Orbit transaction journal to your accounting software</li>
+						<br>
 					</ul>
 				</div>
-			</div>
 			<div>
 				<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Integrated Marketing</div>
 				<div class="faq_answer" style="padding-left: 27px;">
 					<ul>
-						<li>Fresh sheets</li>
+						<li>Fresh Sheets</li>
 						<li>Newsletters</li>
-						<li>Featured promotions</li>
+						<li>Featured Promotions</li>
 						<li>Micro-blogs</li>
 						<li>Twitter &amp; Facebook integration</li>
 						<li>Rich product and producer stories</li>
+						<br>
+					</ul>
+				</div>
+			<div>
+				<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Flexible Inventory Management</div>
+				<div class="faq_answer" style="padding-left: 27px;">
+					<ul>
+						<li>Sellers can manage their own products and stories, or Market Managers can handle product management</li>
+						<li>Simple or lot-based inventory options</li>
+						<li>Adjust pricing &amp; quantities on the fly</li>
+						<br>
 					</ul>
 				</div>
 			</div>
+			<div>
+				<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Efficient Logistics</div>
+				<div class="faq_answer" style="padding-left: 27px;">
+					<ul>
+						<li>Intelligent, lot-based Pick Lists</li>
+						<li>Packing Slips for aggregation</li>
+						<li>Automatic delivery reminders</li>
+						<li>Track &amp; trace orders throughout<br> the delivery cycle</li>
+						<br>
+					</ul>
+				</div>
+			</div>
+			
+			</div>
+			
+			</div>
 
 			<div>
-				<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Quick set up &amp; fabulous support</div>
+				<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Quick Set-up &amp; Fabulous Support</div>
 				<div class="faq_answer" style="padding-left: 27px;">
 					<ul>
 						<li>One-hour launch training</li>
 						<li>Phone &amp; live chat</li>
 						<li>Online forums, tutorials &amp; webinars</li>
+						<br>
 					</ul>
 				</div>
 			</div>
@@ -92,7 +102,7 @@
 				
 				<hr style="width: 80%;" />
 				<ul style="text-align: left;">
-					<li>Everything you need<br />Manage marketing, sales, order fulfillment and finances</li>
+					<li>Everything you need to<br />manage marketing, sales, order fulfillment &amp; finances</li>
 				</ul>
 				<div class="pricing_footer">
 					<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c" class="btn btn_green btn_pricing">Get Started</a>
@@ -107,8 +117,8 @@
 				<hr style="width: 80%;" />
 				<ul style="text-align: left;">
 					<li>Customizable branding</li>
-					<li>Cross-selling &amp; Multi-Channel Sales</li>
-					<li>Flexible Discount Codes</li>
+					<li>Cross-selling &amp; multi-channel sales</li>
+					<li>Flexible discount codes</li>
 				</ul>
 				<div class="pricing_footer">
 					<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c" class="btn btn_green btn_pricing">Get Started</a>
@@ -120,16 +130,17 @@
 				<br />$99/month + 4% of sales
 				<hr style="width: 80%;" />
 				<ul style="text-align: left;">
-					<li>Automated Payments to all your sellers</li>
-					<li>Advanced Reporting</li>
+					<li>Save time with automated payments to your sellers</li>
+					<li>Advanced reporting</li>
 				</ul>
 				<div class="pricing_footer">
 					<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c" class="btn btn_green btn_pricing">Get Started</a>
-					save $200 if paid annually
+					<em>save $200 if paid annually</em>
 				</div>
 			</div>
-			
-			<h3 style="clear:both;text-align: center;">	<br />14-day FREE trial. No risks. No start-up costs.<br /></h3>
+		
+			<h3 style="clear:both;text-align: center;">	<br /><br>30-day guarantee. No risks. No start-up costs.<br /></h3>
+			<br><br>
 		</td>
 	</tr>
 	<tr>
@@ -153,8 +164,12 @@
 					<td rowspan="2">
 						<h2 style="margin-top: 10px;">Local Sourcing at Institutional Scale</h3> 
 						
-						Interested in <u>even more</u> services to simplify local sourcing, enabling institutions<br />
-						&amp; restaurant groups to expand their purchasing? We've got a solution for that.
+						Customers want you to use locally sourced products - and they want 
+						the stories behind <br>them. It's a competitive and culinary advantage. 
+						But for large organizations, sourcing from lots of small vendors 
+						can be an administrative challenge.  
+						<br />&nbsp;<br />
+						We've got a solution for that. Actually, we've got<br> a couple of solutions.
 						<br />&nbsp;<br />
 						<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=14fe9e7e95" class="btn btn_blue" style="margin-left: 10px;">Learn More</a>
 				
@@ -163,16 +178,19 @@
 					<td>
 						<img src="/homepage/img/icon_puzzle_piece.png" class="home_icon" /><h3 class="home_header">Managed Payments</h3>
 						<div class="home_paragraph">
-							Services for food hubs, farmers markets and aggregators 
-							that want to simplify ﬁnancial management. 
+							Looking to simplify financial management and keep your staffing 
+							costs down? Focus on building your market and let us manage the payments. 
 							<br />&nbsp;<br />
-							Local Orbit can invoice your institutional buyers, collect 
-							payment, and transfer funds directly to your sellers, on 
-							terms you establish. Then track the status of money in 
+							Local Orbit invoices institutional buyers, collects 
+							payment and transfers funds directly to sellers, on 
+							terms you establish. Track the status of all money in 
 							and out from your account dashboard. 
 							<br />&nbsp;<br />
-							Focus on building your market and let Local Orbit 
-							automate the payments. Secure, transparent, simple.
+							Ideal for food hubs, farmers markets and aggregators.
+							Secure, transparent, simple.
+							
+							 
+					
 							<br />&nbsp;<br />
 						</div>
 					</td>
@@ -180,17 +198,17 @@
 					<td>
 						<img src="/homepage/img/icon_puzzle_piece.png" class="home_icon" /><h3 class="home_header">Vendor Management</h3>
 						<div class="home_paragraph">
-							For Institutions &amp; Restaurants who source direct from 
-							local farms, artisans &amp; independent producers. 
-							<br />&nbsp;<br />
 							Purchase from your favorite small farms and artisan 
 							producers - without the hassle of managing dozens of 
-							weekly emails, calls, orders, invoices, payments, or 
-							stories. Order from 20 vendors with a single click, and a 
+							weekly emails, calls, orders, invoices, payments or 
+							stories. Order from many vendors with a single click, and a 
 							single payment.
 							<br />&nbsp;<br />
-							Focus on growing your vendor relationships and let Local 
-							Orbit handle the administrative hassle.
+							Focus on developing relationships with your vendors and let Local 
+							Orbit eliminate the administrative burden.
+							Ideal for institutional food service and restaurants that 
+							source direct from many local farms and independent producers. 
+							<br />&nbsp;<br />
 							<br />&nbsp;<br />
 						</div>
 					</td>

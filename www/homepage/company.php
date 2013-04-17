@@ -105,19 +105,24 @@
 			<br />&nbsp;<br />
 		</td>
 	</tr>
+	<!-- TEMP COMMENT OUT JOBS
 	<tr>
 		<td colspan="3">
 			<div class="jobs_area">
 				<div style="width: 750px; float: left;">
 					<h3>Work with Us!</h3>
-					We're always looking for talented people. Are you rigorous, driven and a great communicator? Do you have a track record of making things happen? Are you passionate about building the New Food Economy? We'd love to talk.
+					We're looking for talented sales/business development leaders and web developers to join us. Are you rigorous, driven and a great communicator? Do you have a track record of making things happen? Are you passionate about building the New Food Economy? We'd love to hear from you.
 				</div>
 				<div style="width: 250px; float: left;">
-					<a href="/homepage/work_with_us.php" style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Jobs</a>
+					<a href=”mailto:eblock.5472e190@status.hr.localorbit.podio.com?
+					subject=Candidate&body=In no more than 140 characters: What makes you unique? %0A%0
+					Why do you want to work with Local Orbit?%0A%0Please include your a cover letter in the body of this email," 
+					style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Jobs</a>
 				</div>
 			</div>
 		</td>
 	</tr>
+	END COMMENT -->
 </table>
 <br />&nbsp;<br />
 
