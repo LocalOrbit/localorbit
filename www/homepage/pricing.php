@@ -161,7 +161,7 @@
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<h3>Managed Payments</h3>
+						<img src="/homepage/img/icon_puzzle_piece.png" class="home_icon" /><h3 class="home_header">Managed Payments</h3>
 						<div class="home_paragraph">
 							Services for food hubs, farmers markets and aggregators 
 							that want to simplify ﬁnancial management. 
@@ -178,7 +178,7 @@
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<h3>Vendor Management</h3>
+						<img src="/homepage/img/icon_puzzle_piece.png" class="home_icon" /><h3 class="home_header">Vendor Management</h3>
 						<div class="home_paragraph">
 							For Institutions &amp; Restaurants who source direct from 
 							local farms, artisans &amp; independent producers. 
