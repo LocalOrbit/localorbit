@@ -326,3 +326,15 @@ div.pricing_bottom{
 	background-repeat: repeat-x;
 	height: 120px;
 }
+
+.thumb{
+	border: #bbb 3px solid;
+	cursor: pointer;
+}
+
+.feature_popup_closer{
+	padding: 4px;
+	background-color: #fff;
+		width: 100%;
+	
+}

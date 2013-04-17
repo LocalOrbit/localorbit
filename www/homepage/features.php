@@ -48,7 +48,9 @@
 					<td rowspan="2">&nbsp;</td>
 					<td>
 						<h3>Streamlined Ordering</h3>
-						<br />&nbsp;<br /><br>REPLACE with THUMBNAIL<br>with pop-up to full size<br />&nbsp;<br /><br>
+						<br />&nbsp;<br />
+						<img class="thumb" onclick="doFeaturePopup('streamlined_ordering',1132)" src="/homepage/img/features/streamlined_ordering_thumb.png" />
+						<br />&nbsp;<br />
 						<div class="home_paragraph">
 							Full-featured e-commerce for buyers, 
 							or order entry by your sales team. Process orders the way you prefer to manage your business. </div>
@@ -57,14 +59,18 @@
 					<td rowspan="2">&nbsp;</td>
 					<td>
 						<h3>Financial Management </h3>
-						<br />&nbsp;<br /><br>REPLACE with THUMBNAIL<br>with pop-up to full size<br />&nbsp;<br /><br>
+						<br />&nbsp;<br />
+						<img class="thumb" onclick="doFeaturePopup('financial_management',673)" src="/homepage/img/features/financial_management_thumb.png" />
+						<br />&nbsp;<br />
 						<div class="home_paragraph">
 					        One dashboard simplifies your day-to-day financials: track money in and out, issue invoices, make payments to your sellers. 					</div>
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
 						<h3>Inventory Management</h3>
-						<br />&nbsp;<br /><br>REPLACE with THUMBNAIL<br>with pop-up to full size<br />&nbsp;<br /><br>
+						<br />&nbsp;<br />
+						<img class="thumb" onclick="doFeaturePopup('inventory',1109)" src="/homepage/img/features/inventory_thumb.png" />
+						<br />&nbsp;<br />
 						<div class="home_paragraph">
 							Real-time inventory. Adjust pricing and quantities on the fly. 
 							Flexible inventory options - simple or lot-based to ensure deep traceability.
@@ -74,20 +80,26 @@
 				<tr>
 					<td>
 						<h3>Logistics</h3>
-						<br />&nbsp;<br /><br>REPLACE with THUMBNAIL<br>with pop-up to full size<br />&nbsp;<br /><br>
+						<br />&nbsp;<br />
+						<img class="thumb" onclick="doFeaturePopup('logistics',892)" src="/homepage/img/features/logistics_thumb.png" />
+						<br />&nbsp;<br />
 						<div class="home_paragraph">
 							Generate pick lists and packing slips. Automated emails remind buyers and sellers about upcoming deliveries. Producers maintain their brand throughout the process.  
 					</td>
 					<td>
 						<h3>Integrated Marketing</h3>
-					<br />&nbsp;<br /><br>REPLACE with THUMBNAIL<br>with pop-up to full size<br />&nbsp;<br /><br>
+						<br />&nbsp;<br />
+						<img class="thumb" onclick="doFeaturePopup('integrated_marketing',1049)" src="/homepage/img/features/integrated_marketing_thumb.png" />
+						<br />&nbsp;<br />
 						<div class="home_paragraph">
 						 Manage everything in one place: create discounts, promotions, <br>micro-blogs, newsletters and Fresh Sheets in minutes. Integrate your facebook or twitter feeds.
 						</div>
 					</td>
 					<td>
 						<h3>Reporting and Analysis</h3>
-						<br />&nbsp;<br /><br>REPLACE with THUMBNAIL<br>with pop-up to full size<br />&nbsp;<br /><br>
+						<br />&nbsp;<br />
+						<img class="thumb" onclick="doFeaturePopup('reporting',1136)" src="/homepage/img/features/reporting_thumb.png" />
+						<br />&nbsp;<br />
 						<div class="home_paragraph">
 							Sophisticated, easy-to-use reports enable you to track, learn from and grow your business - weekly, monthly and year-over-year.
 						</div>
