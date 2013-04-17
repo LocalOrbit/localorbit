@@ -1,8 +1,8 @@
 <?
 global $core;
-
+core_ui::load_library('js','org.js');
 ?>
-<form name="bankForm" action="/organizations/save_payment_method" class="form-horizontal" onsubmit="return core.submit('/organizations/save_payment_method',this);">
+<form id="organizationsForm" name="organizationsForm" class="form-horizontal" onsubmit="return core.submit('/organizations/save_payment_method',this);" action="/organizations/save_payment_method" >
 	<fieldset id="editInv">
 		<legend>Bank Account Info</legend>
 		<?=core_form::input_text('Account Nickname','pm_label')?>
@@ -13,7 +13,7 @@ global $core;
 		<input type="hidden" name="org_id" value="<?=$core->session['org_id']?>" />
 		<div class="form-actions pull-right">
 			<input type="button" onclick="$('#edit_popup').fadeOut('fast');" class="btn btn-warning" value="cancel" />
-			<input type="submit" class="btn btn-primary" value="Save This Bank Account" />
+			<input type="submit" class="btn btn-primary" value="Save This Bank Account" onclick="return org.checkBankRouting(document.organizationsForm);" />
 		</div>		
 	</fieldset>
 </form>
