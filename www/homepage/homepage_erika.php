@@ -115,7 +115,7 @@
 			calls limits your ability to grow your business. There's a better way.
 			<br />&nbsp;<br />
 			Manage your marketing, sales and financials 
-			with from a single dashboard. Save time & increase profitability with 
+			with from a single dashboard. Save time &amp; increase profitability with 
 			real-time information, streamlined processes and powerful communications tools.
 			 
 			<br />&nbsp;<br />
@@ -138,7 +138,7 @@
 		<td>
 			<img src="/homepage/img/icon_wand.png" class="home_icon" /><h3 class="home_header">Unrivaled Flexibility</h3>
 			<div class="home_paragraph">
-				Custom branding, granular pricing & discounts, flexible delivery tools, 
+				Custom branding, granular pricing &amp; discounts, flexible delivery tools, 
 				multiple payment options.
 			</div>
 		</td>
@@ -164,7 +164,7 @@
 			<img src="/homepage/img/icon_graph.png" class="home_icon" /><h3 class="home_header">Streamlined Financials</h3>
 			<div class="home_paragraph">
 				Track the status of every transaction. 
-				Collect & make payments for the cost of a stamp, with the click of a button.
+				Collect &amp; make payments for the cost of a stamp, with the click of a button.
 			</div>
 		</td>
 		<td>
@@ -184,12 +184,12 @@
 			<h2 style="margin-top: 10px;">Who Uses Local Orbit?</h3> 
 			
 			Local Orbit is designed with the flexibility to
-			support the innovative business models & regional diversity 
+			support the innovative business models &amp; regional diversity 
 			that are hallmarks of the New Food Economy. 
 			
 			<br />&nbsp;<br />
 			Our sweet spot: 
-			powering local marketplaces that enable efficient restaurant & institutional sales.  
+			powering local marketplaces that enable efficient restaurant &amp; institutional sales.  
 		
 			<br />&nbsp;<br />
 			<a class="btn btn_blue" href="/homepage/features.php">Learn More</a>
@@ -234,7 +234,7 @@
 			<h3>Farmers</h3>
 			<div class="home_paragraph">
 				Sell through Local Orbit powered marketplaces in their communities. They 
-				also create their own ordering systems & aggregate from other nearby producers. 
+				also create their own ordering systems &amp; aggregate from other nearby producers. 
 			</div>
 			
 		</td>

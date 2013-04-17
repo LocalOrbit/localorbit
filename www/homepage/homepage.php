@@ -49,7 +49,7 @@
 							We chose Local Orbit because of the individual support, <br />
 							the friendly staff and the user-friendly interfaces.
 							<br />
-							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Maya Kosok, Food Alliance of Baltimore City</span>
+							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Maya Kosok, Farm Alliance of Baltimore City</span>
 						</div>
 					</div>
 					<div class="slide">
@@ -75,16 +75,18 @@
 		<td>&nbsp;&nbsp;&nbsp;</td>
 		<td style="text-align: center !important;">
 			<div class="homepage_title">
-				E-commerce &amp; business management
-				tools for people connecting restaurant
-				&amp; institutions with local producers.
+				Sales &amp; business management
+				tools for the entrepeneurs &amp; organizations that are 
+				creating a New Food Economy, connecting buyers &amp; sellers 
+				through shorter, transparent supply chains.
 			</div>
 			<br />
 			<img src="/homepage/img/icon_pitchfork_shovel_blue.png" />
 			<br />&nbsp;<br />
 			<div class="homepage_title">
-				We help people build profitable
-				businesses &amp; healthier communities.
+			We help people build profitable
+			businesses &amp; healthier communities.
+			
 				<br />&nbsp;<br />
 				<a class="btn btn_blue" style="margin-left: 55px;" href="/homepage/features.php">Learn More</a>
 			
@@ -107,41 +109,46 @@
 	</tr>
 	<tr>
 		<td rowspan="2">
-			<h2 style="margin-top: 10px;">Why Choose Local Orbit?</h3> 
+			<h2 style="margin-top: 10px;">Why Choose Local Orbit? </h3> 
 			
-			Affordable tools that grow with you.
+			Juggling spreadsheets, handwritten orders, quickbooks, emails and phone 
+			calls limits your ability to grow your business. There's a better way.
 			<br />&nbsp;<br />
-			Designed for the entrepreneurs,
-			farmers, producer co-ops, food
-			hubs and independent distributors
-			who are rebuilding the local &amp;
-			regional food systems.
+			Manage your marketing, sales and financials 
+			with from a single dashboard. Save time &amp; increase profitability with 
+			real-time information, streamlined processes and powerful communications tools.
+			 
 			<br />&nbsp;<br />
+			
 			<a class="btn btn_blue" href="/field-notes/schedule-a-demo">Schedule a Demo</a>
+			
+			<br />&nbsp;<br />
+			
+			<br />&nbsp;<br />
 			
 		</td>
 		<td rowspan="2">&nbsp;</td>
 		<td>
 			<img src="/homepage/img/icon_smiley.png" class="home_icon" /><h3 class="home_header">No Risk, No Start Up Costs</h3>
 			<div class="home_paragraph">
-				No upfront investment. Four service levels to support local food markets 
-				at every stage. 30-day guarantee.
+			Affordable tools that grow with you, at every stage of your business. No upfront investment. 14-day free trial. 
 			</div>
 		</td>
 		<td rowspan="2">&nbsp;</td>
 		<td>
 			<img src="/homepage/img/icon_wand.png" class="home_icon" /><h3 class="home_header">Unrivaled Flexibility</h3>
 			<div class="home_paragraph">
-				Custom branding, granular pricing, flexible delivery and pick-up tools, 
-				multiple payment options and reporting.
+				Custom branding, granular pricing &amp; discounts, flexible delivery tools, 
+				multiple payment options.
 			</div>
 		</td>
 		<td rowspan="2">&nbsp;</td>
 		<td>
-			<img src="/homepage/img/icon_paperclip.png" class="home_icon" /><h3 class="home_header">Simple, Intuitive Design</h3>
+			<img src="/homepage/img/icon_paperclip.png" class="home_icon" /><h3 class="home_header">Beautiful, Intuitive Design</h3>
 			<div class="home_paragraph">
-				Easy adoption of enterprise-level services for businesses of all sizes, 
-				customized for local food distribution workflows.
+				Supports the management processes you already use. 
+				Incorporates best practices from successful businesses.
+			
 			</div>
 		</td>
 	</tr>
@@ -149,16 +156,15 @@
 		<td>
 			<img src="/homepage/img/icon_clock.png" class="home_icon" /><h3 class="home_header">Operational Efficiency</h3>
 			<div class="home_paragraph">
-				Save time by managing inventory, orders, marketing, finances, reports 
-				and analytics from a single dashboard.
+				Run your business from one dashboard, accessible from any device, wherever you need it.
+				
 			</div>
 		</td>
 		<td>
 			<img src="/homepage/img/icon_graph.png" class="home_icon" /><h3 class="home_header">Streamlined Financials</h3>
 			<div class="home_paragraph">
-				Track the status of every transaction from a single payments portal. 
-				Collect payments from buyers and make payments to producers for the 
-				cost of a stamp &amp; envelope, with the click of a button.
+				Track the status of every transaction. 
+				Collect &amp; make payments for the cost of a stamp, with the click of a button.
 			</div>
 		</td>
 		<td>
@@ -177,7 +183,14 @@
 			
 			<h2 style="margin-top: 10px;">Who Uses Local Orbit?</h3> 
 			
-			Local Orbit provides e-commerce, marketing and business management tools for the entrepeneurs and organizations that are creating a new local food economy, connecting buyers and sellers through a shorter, transparent supply chain,
+			Local Orbit is designed with the flexibility to
+			support the innovative business models &amp; regional diversity 
+			that are hallmarks of the New Food Economy. 
+			
+			<br />&nbsp;<br />
+			Our sweet spot: 
+			powering local marketplaces that enable efficient restaurant &amp; institutional sales.  
+		
 			<br />&nbsp;<br />
 			<a class="btn btn_blue" href="/homepage/features.php">Learn More</a>
 			
@@ -186,42 +199,53 @@
 		<td>
 			<img src="/homepage/img/icon_person_network_smaller.png" class="home_icon" /><h3 class="home_header">Market Makers</h3>
 			<div class="home_paragraph">
-				Market makers are the farmers markets, food markets and independent aggregators who connect local buyers and sellers. They use Local Orbit's tools to facilitate sales, manage buyer and seller relationships, and streamline distribution.
+				Food hubs, farmers markets and independent aggregators 
+				that facilitate direct sales.
 			</div>
 		</td>
 		<td rowspan="2">&nbsp;</td>
 		<td>
 			<img src="/homepage/img/icon_handshake.png" class="home_icon" /><h3 class="home_header">Producer Cooperatives</h3>
 			<div class="home_paragraph">
-				Cooperatives create online ordering portals, either maintaining individual seller branding or promoting a cooperative brand. Local Orbit's tools enable efficient management of inventory, sales and deliveries to all of their customer types.
+				Groups of farmers and specialty producers who 
+				partner for marketing, sales and distribution.
 			</div>
 		</td>
 		<td rowspan="2">&nbsp;</td>
 		<td>
-			<img src="/homepage/img/icon_barn.png" class="home_icon" /><h3 class="home_header" style="line-height: 21px;">Farmers, Ranchers, <br />Specialty Producers</h3>
+			<img src="/homepage/img/icon_truck.png" class="home_icon" /><h3 class="home_header">Independent Distributors</h3>
 			<div class="home_paragraph">
-				Producers sell through aggregate marketplaces. They can also create their own online stores for on-farm pick up, often adding products from nearby farms. Sales, inventory and deliveries across multiple marketplaces are managed through a central dashboard.
+				Create ordering systems for local products. 
+				They may also offer extra truck space for 3rd party delivery.
 			</div>
+			
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<img src="/homepage/img/icon_truck.png" class="home_icon" /><h3 class="home_header">Independent Distributors</h3>
-			<div class="home_paragraph">
-				Distributors can create a private ordering system to sell local and regional products. Orders can be placed directly by consumers or by the distributor during a sales call. Distributors that have extra trucking capacity also provide delivery services in some markets powered by Local Orbit.
-			</div>
-		</td>
-		<td>
 			<img src="/homepage/img/icon_house_4people.png" class="home_icon" /><h3 class="home_header" style="line-height: 21px;">Restaurants, Universities, <br/>Hospitals</h3>
 			<div class="home_paragraph">
-				For restaurants and institutions with their own local supplier relationships, we create vendor management portals, making it easy to source from multiple suppliers and pay with a single purchase order. Buyers can also source directly from any marketplace in their region.
+				Purchase through Local Orbit powered markets. For organizations with 
+				their own local supplier networks, our vendor management services simplify procurement.
 			</div>
 		</td>
+	
 		<td>
-			<img src="/homepage/img/icon_people_pyramid.png" class="home_icon" /><h3 class="home_header">Buying Groups</h3>
+			<img src="/homepage/img/icon_barn.png" class="home_icon" /><h3 class="home_header">Farmers</h3>
 			<div class="home_paragraph">
-				Business and consumer buying groups create online marketplaces for their members, with private access to lcoal products and customized ordering, delivery and pricing options. Buying clubs can also source from other marketplaces powered by Local Orbit.
+				Sell through Local Orbit powered marketplaces in their communities. They 
+				also create their own ordering systems &amp; aggregate from other nearby producers. 
 			</div>
+			
+		</td>
+		<td>
+		<img src="/homepage/img/icon_people_pyramid.png" class="home_icon" /><h3 class="home_header">Buying Groups</h3>
+			<div class="home_paragraph">
+				Create private, local ordering systems for members. Buying groups may also 
+				source through Local Orbit powered marketplaces in their regions.
+			</div
+			
+			
 		</td>		
 	</tr>
 
