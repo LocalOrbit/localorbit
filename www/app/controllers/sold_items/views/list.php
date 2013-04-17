@@ -111,9 +111,9 @@ function sold_items_formatter($data)
 	global $core;
 
 	# calculate the totals for each type of fee
-	$lo   = ($data['row_adjusted_total'] * (floatval($data['fee_percen_lo']) / 100));
-	$hub  = ($data['row_adjusted_total'] * (floatval($data['fee_percen_hub']) / 100));
-	$proc = ($data['row_adjusted_total'] * (floatval($data[$data['payment_method'].'_processing_fee']) / 100));
+	$lo   = round($data['row_adjusted_total'] * (floatval($data['fee_percen_lo']) / 100), 2);
+	$hub  = round($data['row_adjusted_total'] * (floatval($data['fee_percen_hub']) / 100), 2);
+	$proc = round($data['row_adjusted_total'] * (floatval($data[$data['payment_method'].'_processing_fee']) / 100), 2);
 	$discount = $data['row_total'] - $data['row_adjusted_total'];
 	
 	
