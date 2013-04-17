@@ -17,7 +17,7 @@ else if (lo3::is_market())
 {
 	# if we're a market manager, we only want payables that apply to our market
 	$receivables_ov->filter('from_domain_id','in',$core->session['domains_by_orgtype_id'][2]);
-	$payables_ov->filter('from_domain_id','in',$core->session['domains_by_orgtype_id'][2]);
+	$payables_ov->filter('to_org_id','in',$core->session['domains_by_orgtype_id'][2]);
 }
 else
 {
