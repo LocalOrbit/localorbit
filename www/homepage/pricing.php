@@ -193,7 +193,7 @@ popupWindow = window.open(url,winName,settings)
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<img src="/homepage/img/icon_puzzle_piece.png" class="home_icon" /><h3 class="home_header">Managed Payments</h3>
+						<img src="/homepage/img/icon_puzzle_piece_smaller.png" class="home_icon" /><h3 class="home_header">Managed Payments</h3>
 						<div class="home_paragraph">
 							Looking to simplify financial management and keep your staffing 
 							costs down? Focus on building your market and let us manage the payments. 
@@ -213,7 +213,7 @@ popupWindow = window.open(url,winName,settings)
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<img src="/homepage/img/icon_puzzle_piece.png" class="home_icon" /><h3 class="home_header">Vendor Management</h3>
+						<img src="/homepage/img/icon_puzzle_piece_smaller.png" class="home_icon" /><h3 class="home_header">Vendor Management</h3>
 						<div class="home_paragraph">
 							Purchase from your favorite small farms and artisan 
 							producers - without the hassle of managing dozens of 
