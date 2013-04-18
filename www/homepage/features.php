@@ -28,7 +28,7 @@
 							help grow your business. 
 							<br />&nbsp;<br />
 							Our cloud-based technology is scalable, reliable and worry-free,
-							<br>so you can focus on your work - <br />not on managing your tools.  
+							so you can focus on what's most important - not managing your tools.  
 									
 							<br />&nbsp;<br />
 							We offer live demos and keep these sessions small, so there's lots of time 
@@ -47,7 +47,7 @@ popupWindow = window.open(url,winName,settings)
 }
 </script>		
 				
-							<a href="http://www.localorb.it/field-notes/schedule-a-demo/" class="btn btn_blue"onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a>
+							<a href="http://www.localorb.it/field-notes/schedule-a-demo/" class="btn btn_blue" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a>
 								</div>	
 						
 					<!-- <br />&nbsp;<br />
@@ -69,7 +69,7 @@ popupWindow = window.open(url,winName,settings)
 						<h2>Financial Management </h2>
 						
 						<div class="home_paragraph">
-					        One dashboard simplifies your day-to-day financials: track money in and out, issue invoices, 
+					        One dashboard simplifies your day-to-day financials: track money in and out, send invoices, 
 					        make payments to your sellers.</div>
 					     
 						<img class="thumb" onclick="doFeaturePopup('financial_management',673)" src="/homepage/img/features/financial_management_thumb.png" />
@@ -90,7 +90,7 @@ popupWindow = window.open(url,winName,settings)
 				</tr>
 				<tr>
 					<td>
-						<h2>Logistics</h2>
+						<h2>Efficient Logistics</h2>
 						<div class="home_paragraph">
 							Generate pick lists and packing slips. Automated emails remind buyers and sellers about 
 							upcoming deliveries. Producers maintain their brand throughout the process. </div>
@@ -113,7 +113,7 @@ popupWindow = window.open(url,winName,settings)
 					<td>
 						<h2>Reporting and Analysis</h2>
 						<div class="home_paragraph">
-							Sophisticated, easy-to-use reports enable you to track, learn from and grow your business - weekly, monthly and year-over-year.
+							Power your business with knowledge. Sophisticated, easy-to-use reports let you to track, learn from and improve your business weekly, monthly and year-over-year.
 						</div>
 					
 						<img class="thumb" onclick="doFeaturePopup('reporting',1136)" src="/homepage/img/features/reporting_thumb.png" />

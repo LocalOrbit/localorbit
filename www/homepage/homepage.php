@@ -97,13 +97,13 @@
 <br />
 
 <table width="1100" style="table-layout: fixed;">
-	<col width="24%" />
-	<col width="1%" />
+	<col width="22%" />
+	<col width="2%" />
 	<col width="23.5%" />
-	<col width="1%" />
+	<col width="1.5%" />
 	<col width="23.5%" />
-	<col width="1%" />
-	<col width="24%" />
+	<col width="1.5%" />
+	<col width="23.5%" />
 	<tr>
 		<td colspan="7"><img src="/homepage/img/homepage_divider.png" /><br />&nbsp;<br /></td>
 	</tr>
@@ -111,16 +111,25 @@
 		<td rowspan="2">
 			<h2 style="margin-top: 10px;">Why Choose Local Orbit? </h3> 
 			
-			Juggling spreadsheets, handwritten orders, quickbooks, emails and phone 
-			calls limits your ability to grow your business. There's a better way.
+			Juggling spreadsheets, sticky notes, Quickbooks, emails and phone 
+			calls limits your business's growth.<br><br> There's a better way.
 			<br />&nbsp;<br />
 			Manage your marketing, sales and financials 
-			with from a single dashboard. Save time &amp; increase profitability with 
-			real-time information, streamlined processes and powerful communications tools.
+			from a single dashboard. Save time and increase profitability with 
+			real-time information, powerful communications tools and streamlined processes.
 			 
 			<br />&nbsp;<br />
-			
-			<a class="btn btn_blue" href="/field-notes/schedule-a-demo">Sign Up for a Demo</a>
+			<script language="javascript">
+var popupWindow = null;
+function centeredPopup(url,winName,w,h,scroll){
+LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+settings =
+'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable'
+popupWindow = window.open(url,winName,settings)
+}
+</script>	
+			<a class="btn btn_blue" href="/field-notes/schedule-a-demo" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a>
 			
 			<br />&nbsp;<br />
 			

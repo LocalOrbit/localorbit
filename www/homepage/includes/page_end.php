@@ -14,6 +14,17 @@
 								<col width="20%">
 							</colgroup>
 							<tbody>
+<script language="javascript">
+var popupWindow = null;
+function centeredPopup(url,winName,w,h,scroll){
+LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+settings =
+'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable'
+popupWindow = window.open(url,winName,settings)
+}
+</script>
+
 								<tr>
 									<td>&nbsp;</td>
 									<td><a href="/index.php"><img src="/img/default/logo_gray.png"></a></td>
@@ -34,8 +45,8 @@
 										<ul class="footer">
 											<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
 												<li class="footer"><a class="footer" href="/homepage/pricing.php">Pricing</a></li>
-												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/">Sign Up for a Demo</a></li>
-												<li class="footer"><a class="footer" href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA">Get Started</a></li>
+												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a></li>
+												<li class="footer"><a class="footer" href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Started</a></li>
 
 										</ul>
 									</td>
@@ -44,7 +55,7 @@
 										
 										<b class="footer">Connect</b>
 										<ul class="footer">
-											<li class="footer"><a class="footer" target="_blank" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d">Newsletter Sign Up </a></li>
+											<li class="footer"><a class="footer" target="_blank" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Our Newsletter</a></li>
 											<li class="footer"><a class="footer" target="_blank" href="http://www.facebook.com/localorbit">Facebook</a></li>
 											<li class="footer"><a class="footer" target="_blank" href="http://www.twitter.com/localorbit">Twitter</a></li>
 											<li class="footer"><a class="footer" target="_blank" href="http://www.linkedin.com/company/local-orbit">LinkedIn</a></li>
@@ -57,7 +68,7 @@
 									<ul class="footer">
 										<li class="footer" style="font-size: 80%;"> Call 734.545.8100</a></li>
 					
-										<li class="footer"><a class="footer" href="https://localorbit.zendesk.com/anonymous_requests/new" onclick="script: Zenbox.show(); return false;">Ask us a question</a></li>
+										<li class="footer"><a class="footer" href="https://localorbit.zendesk.com/anonymous_requests/new" onclick="script: Zenbox.show(); return false;">Ask a Question</a></li>
 									</ul>
 								</td>
 							</tr>
