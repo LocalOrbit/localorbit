@@ -56,7 +56,7 @@ popupWindow = window.open(url,winName,settings)
 					</td> -->
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<h2>Streamlined Ordering</h2>
+						<img src="/homepage/img/icon_cart.png" class="home_icon" /><h3 class="home_header">Streamlined Ordering</h3>
 							<div class="home_paragraph">
 							Full-featured e-commerce for buyers, 
 							or order entry by your sales team. Process orders the way you prefer to manage your business. </div>
@@ -66,7 +66,7 @@ popupWindow = window.open(url,winName,settings)
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<h2>Financial Management </h2>
+						<img src="/homepage/img/icon_dollarsign.png" class="home_icon" /><h3 class="home_header">Financial Management </h3>
 						
 						<div class="home_paragraph">
 					        One dashboard simplifies your day-to-day financials: track money in and out, send invoices, 
@@ -77,7 +77,7 @@ popupWindow = window.open(url,winName,settings)
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<h2>Inventory Management</h2>
+						<img src="/homepage/img/icon_clipboard_small.png" class="home_icon" /><h3 class="home_header">Inventory Management</h3>
 						<div class="home_paragraph">
 							Real-time inventory. Adjust pricing and quantities on the fly. 
 							Flexible inventory options - simple or lot-based to ensure deep traceability.
@@ -90,7 +90,7 @@ popupWindow = window.open(url,winName,settings)
 				</tr>
 				<tr>
 					<td>
-						<h2>Efficient Logistics</h2>
+						<img src="/homepage/img/icon_link_small.png" class="home_icon" /><h3 class="home_header">Efficient Logistics</h3>
 						<div class="home_paragraph">
 							Generate pick lists and packing slips. Automated emails remind buyers and sellers about 
 							upcoming deliveries. Producers maintain their brand throughout the process. </div>
@@ -99,7 +99,7 @@ popupWindow = window.open(url,winName,settings)
 						
 					</td>
 					<td>
-						<h2>Integrated Marketing</h2>
+						<img src="/homepage/img/icon_megaphone.png" class="home_icon" /><h3 class="home_header">Integrated Marketing</h3>
 						 <div class="home_paragraph">
 						 Manage everything in one place: create discounts, promotions, <br>micro-blogs, newsletters and Fresh Sheets 
 						 in minutes. Integrate your facebook or twitter feeds.
@@ -111,7 +111,7 @@ popupWindow = window.open(url,winName,settings)
 						
 					</td>
 					<td>
-						<h2>Reporting and Analysis</h2>
+						<img src="/homepage/img/icon_graph.png" class="home_icon" /><h3 class="home_header">Reporting and Analysis</h3>
 						<div class="home_paragraph">
 							Power your business with knowledge. Sophisticated, easy-to-use reports let you to track, learn from and improve your business weekly, monthly and year-over-year.
 						</div>
