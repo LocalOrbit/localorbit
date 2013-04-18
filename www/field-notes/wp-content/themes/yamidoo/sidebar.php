@@ -35,7 +35,6 @@
 	if ( function_exists('dynamic_sidebar') ) {
 
 		dynamic_sidebar('Sidebar');
-		echo('<h1>here</h1>');
 		echo '<div id="sidebar_left">';
 		dynamic_sidebar('Sidebar (half left)');
 		echo '</div><div id="sidebar_right">';
