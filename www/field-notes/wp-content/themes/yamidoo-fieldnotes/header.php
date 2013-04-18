@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" media="screen" />
     <link href='http://fonts.googleapis.com/css?family=Prata' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
- 	
+ 	<link rel="stylesheet" type="text/css" href="/homepage/includes/footer.css" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 		<script language="Javascript" type="text/javascript" src="/js/jquery.min.js"></script>
 
