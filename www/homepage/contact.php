@@ -64,7 +64,7 @@
 		<td>&nbsp;</td>
 		<td><a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" class="btn btn_blue">Stay Informed</a></td>
 		<td>&nbsp;</td>
-		<td><a href="/homepage/features.php" class="btn btn_blue">How Can We Help?</a></td>
+		<td><a href="http://myaccount.zendesk.com/account/dropboxes/20147973" onclick="script: Zenbox.show(); return false;" class="btn btn_blue">How Can We Help?</a></td>
 </table>
 <br />&nbsp;<br />
 

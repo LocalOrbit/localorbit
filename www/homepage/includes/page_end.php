@@ -68,7 +68,7 @@ popupWindow = window.open(url,winName,settings)
 									<ul class="footer">
 										<li class="footer" style="font-size: 80%;"> Call 734.545.8100</a></li>
 					
-										<li class="footer"><a class="footer" href="https://localorbit.zendesk.com/anonymous_requests/new" onclick="script: Zenbox.show(); return false;">Ask a Question</a></li>
+										<li class="footer"><a href="http://myaccount.zendesk.com/account/dropboxes/20147973" onclick="script: Zenbox.show(); return false;" class="footer">Ask a Question</a></li>
 									</ul>
 								</td>
 							</tr>
@@ -87,6 +87,8 @@ popupWindow = window.open(url,winName,settings)
 			</tr>
 		</table>
 		
+	<script type="text/javascript" src="//assets.zendesk.com/external/zenbox/v2.5/zenbox.js"></script>
+
 	
 		<script type="text/javascript">
 		  if (typeof(Zenbox) !== "undefined") {
