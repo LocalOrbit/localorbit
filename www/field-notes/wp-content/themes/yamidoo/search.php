@@ -15,7 +15,7 @@
 		?><br/>
 		<h2><?php _e('No results for:', 'wpzoom'); ?> <em>"<?php the_search_query(); ?>"</em></h2>
 		<br/><?php
-		get_template_part('searchform');
+		#get_template_part('searchform');
 
 	endif; ?>
 

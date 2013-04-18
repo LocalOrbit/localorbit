@@ -16,7 +16,7 @@
 	}
 	
 	if ( option::get('sidebar_thumb_show') == 'on' && ( is_single() || is_page() ) ) {
- 
+		
 		$custom_field = ( option::get( 'cf_use' ) == 'on' ) ? get_post_meta( $post->ID, option::get( 'cf_photo' ), true ) : '';
 			$args = array( 'width' => 310, 'image_class' => 'post-cover', 'size' => 'post-cover');
 		if ($custom_field) { 
@@ -28,13 +28,14 @@
 	}
 
 	if ( is_single() ) {
-	
+		
 		if ( option::get('post_related') == 'on' && function_exists('wp_related_posts') ) wp_related_posts(); 
  	}
 
 	if ( function_exists('dynamic_sidebar') ) {
 
 		dynamic_sidebar('Sidebar');
+		echo('<h1>here</h1>');
 		echo '<div id="sidebar_left">';
 		dynamic_sidebar('Sidebar (half left)');
 		echo '</div><div id="sidebar_right">';

@@ -58,8 +58,7 @@
 
 			<div id="header">
 
- 				<div id="search"><?php get_template_part('searchform'); ?></div>
-
+ 				
  				<div id="topmenu">
 
 					<?php if (has_nav_menu( 'secondary' )) { 
