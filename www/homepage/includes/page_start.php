@@ -126,7 +126,7 @@ else
 			</table>
 		</div>
 		
-		<table id="main_layout_homepage" width="100%" style="margin-top: 70px;">
+		<table id="main_layout_homepage" width="100%" style="margin-top: 120px;">
 			<col />
 			<col width="1100" />
 			<col />
