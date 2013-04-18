@@ -87,41 +87,50 @@ else
 			@import url(//assets.zendesk.com/external/zenbox/v2.5/zenbox.css); 
 		</style>
 	</head>
-	<body>	
-		<table id="main_layout_homepage" width="100%">
+	<body>
+		<div style="position: fixed;top:0px;left:0px;right:0px;z-index:1001;background-image: url(/homepage/includes/header_bg.png);background-repeat: repeat-x;">
+			<table id="main_layout_homepage" width="100%">
+				<col />
+				<col width="1100" />
+				<col />
+				<tr>
+					<td><img src="/img/blank.png" width="1" height="120" /></td>
+					<td style="position: relative;">
+						<div style="position: relative;width:1100px;height: 120px;">
+							<a href="/" class="logo"><img width="112" height="111" src="/homepage/includes/logo5.png" /></a>
+							<div id="nav1">
+								<a class="nav1" style="font-size: 125%;" href="/homepage/features.php">Features</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/homepage.php#whouses">Customers</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/pricing.php">Pricing</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/company.php">Company</a>
+								<a class="nav1" style="font-size: 125%;" href="/field-notes/">Field Notes</a>
+							</div>
+							<div id="nav2">
+								<a style="font-size: 85%;" href="/homepage/contact.php" class="nav2">contact</a>
+								&nbsp;&nbsp;|&nbsp;&nbsp;
+								<? if($core->session['user_id'] == 0){?>
+								<a class="nav2" style="font-size: 85%;" href="/login.php">log in</a>
+								&nbsp;&nbsp;|&nbsp;&nbsp;
+								<a class="nav2" style="font-size: 85%;" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c">get started</a>
+								<?}else{?>
+								<a class="nav2" style="font-size: 85%;" href="/app.php#!dashboard-home">dashboard</a>
+								<?}?>
+							</div>
+							<div id="tagline">
+								re-linking the food chain&#153;
+							</div>
+						</div>
+					</td>
+					<td><img src="/img/blank.png" width="1" height="120" /></td>
+				</tr>
+			</table>
+		</div>
+		
+		<table id="main_layout_homepage" width="100%" style="margin-top: 70px;">
 			<col />
 			<col width="1100" />
 			<col />
-			<tr>
-				<td><img src="/img/blank.png" width="1" height="120" /></td>
-				<td style="position: relative;">
-					<div style="position: relative;width:1100px;height: 120px;">
-						<a href="/" class="logo"><img width="112" height="111" src="/homepage/includes/logo5.png" /></a>
-						<div id="nav1">
-							<a class="nav1" style="font-size: 125%;" href="/homepage/features.php">Features</a>
-							<a class="nav1" style="font-size: 125%;" href="/homepage/homepage.php#whouses">Customers</a>
-							<a class="nav1" style="font-size: 125%;" href="/homepage/pricing.php">Pricing</a>
-							<a class="nav1" style="font-size: 125%;" href="/homepage/company.php">Company</a>
-							<a class="nav1" style="font-size: 125%;" href="/field-notes/">Field Notes</a>
-						</div>
-						<div id="nav2">
-							<a style="font-size: 85%;" href="/homepage/contact.php" class="nav2">contact</a>
-							&nbsp;&nbsp;|&nbsp;&nbsp;
-							<? if($core->session['user_id'] == 0){?>
-							<a class="nav2" style="font-size: 85%;" href="/login.php">log in</a>
-							&nbsp;&nbsp;|&nbsp;&nbsp;
-							<a class="nav2" style="font-size: 85%;" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c">get started</a>
-							<?}else{?>
-							<a class="nav2" style="font-size: 85%;" href="/app.php#!dashboard-home">dashboard</a>
-							<?}?>
-						</div>
-						<div id="tagline">
-							re-linking the food chain&#153;
-						</div>
-					</div>
-				</td>
-				<td><img src="/img/blank.png" width="1" height="120" /></td>
-			</tr>
+			
 			<tr>
 				<td><img src="/img/blank.png" width="1" height="400" /></td>
 				<td id="main_content_homepage">
