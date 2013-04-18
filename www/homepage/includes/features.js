@@ -4,7 +4,7 @@ function doFeaturePopup(src,width){
 	
 
 	src += '<div class="feature_popup_closer">';
-	src += '<img src="/homepage/img/icon_popup_close_grey.png" style="cursor: pointer;" onclick="$(\'#popup3,#overlay\').fadeOut(300);" /></div>';
+	src += '<img src="/homepage/img/icon_popup_close_grey.png?__updated=true" style="cursor: pointer;" onclick="$(\'#popup3,#overlay\').fadeOut(300);" /></div>';
 	var pos = (new String(Math.floor(($('body').width() - width) / 2 )) + 'px');
 	//alert(pos);
 	$('#popup3').css({'margin-left':'0px','top':'40px','left':pos}).html(src);$('#popup3,#overlay').fadeIn(300);
