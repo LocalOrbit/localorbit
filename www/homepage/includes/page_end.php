@@ -34,8 +34,8 @@
 										<ul class="footer">
 											<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
 												<li class="footer"><a class="footer" href="/homepage/pricing.php">Pricing</a></li>
-												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/">Schedule a Demo</a></li>
-												<li class="footer"><a class="footer" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c">Get Started</a></li>
+												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/">Sign Up for a Demo</a></li>
+												<li class="footer"><a class="footer" href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA">Get Started</a></li>
 
 										</ul>
 									</td>
@@ -69,7 +69,7 @@
 					<a style="font-size: 100%;" class="footer" href="/homepage/privacy.php" onclick="core.go(this.href);">Privacy</a> | 
 					<a class="footer" style="font-size: 100%;" href="https://localorbit.zendesk.com/anonymous_requests/new" onclick="script: Zenbox.show(); return false;">Help</a>
 				<br>&nbsp; &nbsp; &nbsp;
-					<a class="footer" style="font-size: 80%;" href="http://jasonhouston.com" onclick="core.go(this.href);">site photos by Jason Houston</a></div>
+					<a class="footer" style="font-size: 80%;" href="http://jasonhouston.com" onclick="core.go(this.href);"target="_blank">site photos by Jason Houston</a></div>
 				 
 				
 				</td>

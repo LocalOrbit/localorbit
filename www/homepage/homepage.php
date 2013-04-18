@@ -120,7 +120,7 @@
 			 
 			<br />&nbsp;<br />
 			
-			<a class="btn btn_blue" href="/field-notes/schedule-a-demo">Schedule a Demo</a>
+			<a class="btn btn_blue" href="/field-notes/schedule-a-demo">Sign Up for a Demo</a>
 			
 			<br />&nbsp;<br />
 			
@@ -216,14 +216,14 @@
 			<img src="/homepage/img/icon_truck.png" class="home_icon" /><h3 class="home_header">Independent Distributors</h3>
 			<div class="home_paragraph">
 				Create ordering systems for local products. 
-				They may also offer extra truck space for 3rd party delivery.
+				They also provide 3rd party delivery services.
 			</div>
 			
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<img src="/homepage/img/icon_house_4people.png" class="home_icon" /><h3 class="home_header" style="line-height: 21px;">Restaurants, Universities, <br/>Hospitals</h3>
+			<img src="/homepage/img/icon_house_4people.png" class="home_icon" /><h3 class="home_header" style="line-height: 21px;">Universities, Hospitals, <br/>Restaurants</h3>
 			<div class="home_paragraph">
 				Purchase through Local Orbit powered markets. For organizations with 
 				their own local supplier networks, our vendor management services simplify procurement.
@@ -233,7 +233,7 @@
 		<td>
 			<img src="/homepage/img/icon_barn.png" class="home_icon" /><h3 class="home_header">Farmers</h3>
 			<div class="home_paragraph">
-				Sell through Local Orbit powered marketplaces in their communities. They 
+				Sell through Local Orbit powered markets in their communities. They 
 				also create their own ordering systems &amp; aggregate from other nearby producers. 
 			</div>
 			
@@ -242,7 +242,7 @@
 		<img src="/homepage/img/icon_people_pyramid.png" class="home_icon" /><h3 class="home_header">Buying Groups</h3>
 			<div class="home_paragraph">
 				Create private, local ordering systems for members. Buying groups may also 
-				source through Local Orbit powered marketplaces in their regions.
+				source through Local Orbit powered markets in their regions.
 			</div
 			
 			

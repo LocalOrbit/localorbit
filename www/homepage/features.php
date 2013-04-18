@@ -6,18 +6,18 @@
 	<tr>
 		<td colspan="3">
 			<table width="1100" style="table-layout: fixed;">
-				<col width="24%" />
-				<col width="1%" />
-				<col width="23.5%" />
-				<col width="1%" />
-				<col width="23.5%" />
-				<col width="1%" />
-				<col width="24%" />
+				<col width="20%" />
+				<col width="4%" />
+				<col width="23%" />
+				<col width="3.5%" />
+				<col width="23%" />
+				<col width="3.5%" />
+				<col width="23%" />
 
 				<tr>
 			
 					<td rowspan="2">
-						<img style="margin-left: 80px;" src="/homepage/img/icon_pitchfork_shovel_blue.png" />
+						<img style="margin-left: 60px;" src="/homepage/img/icon_pitchfork_shovel_blue.png" />
 						<br />&nbsp;<br />
 					
 						<h2 style="margin-top: 10px;">Smart. Secure. Efficient. </h2> 
@@ -28,7 +28,7 @@
 							help grow your business. 
 							<br />&nbsp;<br />
 							Our cloud-based technology is scalable, reliable and worry-free,
-							so you can focus on your work - not on managing your tools.  
+							<br>so you can focus on your work - <br />not on managing your tools.  
 									
 							<br />&nbsp;<br />
 							We offer live demos and keep these sessions small, so there's lots of time 
@@ -36,9 +36,18 @@
 							<br />&nbsp;<br />
 							Reserve your place today.
 							<br />&nbsp;<br /> 
-					
+			<script language="javascript">
+var popupWindow = null;
+function centeredPopup(url,winName,w,h,scroll){
+LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+settings =
+'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable'
+popupWindow = window.open(url,winName,settings)
+}
+</script>		
 				
-							<a href="http://www.localorb.it/field-notes/schedule-a-demo/" class="btn btn_blue">Sign Up for a Demo</a>
+							<a href="http://www.localorb.it/field-notes/schedule-a-demo/" class="btn btn_blue"onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a>
 								</div>	
 						
 					<!-- <br />&nbsp;<br />
@@ -47,62 +56,69 @@
 					</td> -->
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<h3>Streamlined Ordering</h3>
-						<br />&nbsp;<br />
-						<img class="thumb" onclick="doFeaturePopup('streamlined_ordering',1132)" src="/homepage/img/features/streamlined_ordering_thumb.png" />
-						<br />&nbsp;<br />
-						<div class="home_paragraph">
+						<h2>Streamlined Ordering</h2>
+							<div class="home_paragraph">
 							Full-featured e-commerce for buyers, 
 							or order entry by your sales team. Process orders the way you prefer to manage your business. </div>
+						<img class="thumb" onclick="doFeaturePopup('streamlined_ordering',1132)" src="/homepage/img/features/streamlined_ordering_thumb.png" />
+						<br />&nbsp;<br />
 						
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<h3>Financial Management </h3>
-						<br />&nbsp;<br />
+						<h2>Financial Management </h2>
+						
+						<div class="home_paragraph">
+					        One dashboard simplifies your day-to-day financials: track money in and out, issue invoices, 
+					        make payments to your sellers.</div>
+					     
 						<img class="thumb" onclick="doFeaturePopup('financial_management',673)" src="/homepage/img/features/financial_management_thumb.png" />
 						<br />&nbsp;<br />
-						<div class="home_paragraph">
-					        One dashboard simplifies your day-to-day financials: track money in and out, issue invoices, make payments to your sellers. 					</div>
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<h3>Inventory Management</h3>
-						<br />&nbsp;<br />
-						<img class="thumb" onclick="doFeaturePopup('inventory',1109)" src="/homepage/img/features/inventory_thumb.png" />
-						<br />&nbsp;<br />
+						<h2>Inventory Management</h2>
 						<div class="home_paragraph">
 							Real-time inventory. Adjust pricing and quantities on the fly. 
 							Flexible inventory options - simple or lot-based to ensure deep traceability.
 						</div>
+						
+						<img class="thumb" onclick="doFeaturePopup('inventory',1109)" src="/homepage/img/features/inventory_thumb.png" />
+						<br />&nbsp;<br />
+						
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<h3>Logistics</h3>
-						<br />&nbsp;<br />
+						<h2>Logistics</h2>
+						<div class="home_paragraph">
+							Generate pick lists and packing slips. Automated emails remind buyers and sellers about 
+							upcoming deliveries. Producers maintain their brand throughout the process. </div>
 						<img class="thumb" onclick="doFeaturePopup('logistics',892)" src="/homepage/img/features/logistics_thumb.png" />
 						<br />&nbsp;<br />
-						<div class="home_paragraph">
-							Generate pick lists and packing slips. Automated emails remind buyers and sellers about upcoming deliveries. Producers maintain their brand throughout the process.  
+						
 					</td>
 					<td>
-						<h3>Integrated Marketing</h3>
-						<br />&nbsp;<br />
+						<h2>Integrated Marketing</h2>
+						 <div class="home_paragraph">
+						 Manage everything in one place: create discounts, promotions, <br>micro-blogs, newsletters and Fresh Sheets 
+						 in minutes. Integrate your facebook or twitter feeds.
+						</div>
+				
 						<img class="thumb" onclick="doFeaturePopup('integrated_marketing',1049)" src="/homepage/img/features/integrated_marketing_thumb.png" />
 						<br />&nbsp;<br />
 						<div class="home_paragraph">
-						 Manage everything in one place: create discounts, promotions, <br>micro-blogs, newsletters and Fresh Sheets in minutes. Integrate your facebook or twitter feeds.
-						</div>
+						
 					</td>
 					<td>
-						<h3>Reporting and Analysis</h3>
-						<br />&nbsp;<br />
-						<img class="thumb" onclick="doFeaturePopup('reporting',1136)" src="/homepage/img/features/reporting_thumb.png" />
-						<br />&nbsp;<br />
+						<h2>Reporting and Analysis</h2>
 						<div class="home_paragraph">
 							Sophisticated, easy-to-use reports enable you to track, learn from and grow your business - weekly, monthly and year-over-year.
 						</div>
+					
+						<img class="thumb" onclick="doFeaturePopup('reporting',1136)" src="/homepage/img/features/reporting_thumb.png" />
+						<br />&nbsp;<br />
+						
 					</td>
 				</tr>
 			</table>
