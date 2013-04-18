@@ -1076,7 +1076,7 @@ html .tabbertab ul { margin: 0; }
 #footer .widget-area {
     padding:0 0 15px;
     margin:0 0 15px;
-    border-bottom:1px solid #ececec;
+    border-width: 0px !important;
 }
 
 #footer .column .widget {

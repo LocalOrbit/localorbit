@@ -26,9 +26,11 @@
 
 
 		<div id="footer_right">
+			<!--
 			<?php wp_nav_menu( array( 'container' => '', 'container_class' => '', 'menu_class' => '', 'sort_column' => 'menu_order', 'theme_location' => 'tertiary', 'depth' => '1' ) ); ?>
 			
 			<?php _e('Copyright', 'wpzoom');?> &copy; <?php echo date("Y"); ?> &mdash; <a href="<?php echo home_url(); ?>/" class="on"><?php bloginfo('name'); ?></a>. <?php _e('All Rights Reserved.', 'wpzoom');?>
+			-->
 		</div>
 
 	</div> <!-- /#footer -->
