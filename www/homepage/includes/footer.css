@@ -28,13 +28,13 @@ a.header_right{
 }
 
 b.footer{
-	margin-top: 10px;
+	margin-top: 20px !important;
 	color: #777;
 	font-family: 'Francois One', sans-serif !important;
 }
 
 a.footer,a.footer:visited{
-	color: #777;
+	color: #777 !important;
 	font-size:85%;
 }
 
