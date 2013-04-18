@@ -60,7 +60,7 @@ popupWindow = window.open(url,winName,settings)
 							<div class="home_paragraph">
 							Full-featured e-commerce for buyers, 
 							or order entry by your sales team. Process orders the way you prefer to manage your business. </div>
-						<img class="thumb" onclick="doFeaturePopup('streamlined_ordering',1132)" src="/homepage/img/features/streamlined_ordering_thumb.png" />
+						<img class="thumb" onclick="doFeaturePopup('streamlined_ordering',924)" src="/homepage/img/features/streamlined_ordering_thumb.png" />
 						<br />&nbsp;<br />
 						
 					</td>
@@ -72,7 +72,7 @@ popupWindow = window.open(url,winName,settings)
 					        One dashboard simplifies your day-to-day financials: track money in and out, send invoices, 
 					        make payments to your sellers.</div>
 					     
-						<img class="thumb" onclick="doFeaturePopup('financial_management',673)" src="/homepage/img/features/financial_management_thumb.png" />
+						<img class="thumb" onclick="doFeaturePopup('financial_management',975)" src="/homepage/img/features/financial_management_thumb.png" />
 						<br />&nbsp;<br />
 					</td>
 					<td rowspan="2">&nbsp;</td>
@@ -83,7 +83,7 @@ popupWindow = window.open(url,winName,settings)
 							Flexible inventory options - simple or lot-based to ensure deep traceability.
 						</div>
 						
-						<img class="thumb" onclick="doFeaturePopup('inventory',1109)" src="/homepage/img/features/inventory_thumb.png" />
+						<img class="thumb" onclick="doFeaturePopup('inventory',975)" src="/homepage/img/features/inventory_thumb.png" />
 						<br />&nbsp;<br />
 						
 					</td>
@@ -94,7 +94,7 @@ popupWindow = window.open(url,winName,settings)
 						<div class="home_paragraph">
 							Generate pick lists and packing slips. Automated emails remind buyers and sellers about 
 							upcoming deliveries. Producers maintain their brand throughout the process. </div>
-						<img class="thumb" onclick="doFeaturePopup('logistics',892)" src="/homepage/img/features/logistics_thumb.png" />
+						<img class="thumb" onclick="doFeaturePopup('logistics',975)" src="/homepage/img/features/logistics_thumb.png" />
 						<br />&nbsp;<br />
 						
 					</td>
@@ -105,7 +105,7 @@ popupWindow = window.open(url,winName,settings)
 						 in minutes. Integrate your facebook or twitter feeds.
 						</div>
 				
-						<img class="thumb" onclick="doFeaturePopup('integrated_marketing',1049)" src="/homepage/img/features/integrated_marketing_thumb.png" />
+						<img class="thumb" onclick="doFeaturePopup('integrated_marketing',975)" src="/homepage/img/features/integrated_marketing_thumb.png" />
 						<br />&nbsp;<br />
 						<div class="home_paragraph">
 						
@@ -116,7 +116,7 @@ popupWindow = window.open(url,winName,settings)
 							Power your business with knowledge. Sophisticated, easy-to-use reports let you to track, learn from and improve your business weekly, monthly and year-over-year.
 						</div>
 					
-						<img class="thumb" onclick="doFeaturePopup('reporting',1136)" src="/homepage/img/features/reporting_thumb.png" />
+						<img class="thumb" onclick="doFeaturePopup('reporting',975)" src="/homepage/img/features/reporting_thumb.png" />
 						<br />&nbsp;<br />
 						
 					</td>
