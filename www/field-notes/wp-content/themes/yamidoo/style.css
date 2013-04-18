@@ -139,7 +139,6 @@ input[type=submit]:hover { background: #222;  cursor: pointer; -webkit-transitio
 #header #search {
 	height: 23px;
 	width: 163px;
-	border:1px solid #DAD8D8;
 	font-size:12px;
 	line-height:15px;
 	float: left;
@@ -232,8 +231,9 @@ p { line-height: 1.5; margin:0; }
  	margin:0 0 20px;
  	padding-top:20px;
 	text-align:center;
-	border-top:1px solid #EEE;
+	border-top:0px solid #EEE;
 	font-family:Prata, Georgia,"Times New Roman",Times,serif;
+	border-width: 0px !important;
 }
 
 #logo h1 a {
