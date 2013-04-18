@@ -60,7 +60,7 @@ popupWindow = window.open(url,winName,settings)
 							<div class="home_paragraph">
 							Full-featured e-commerce for buyers, 
 							or order entry by your sales team. Process orders the way you prefer to manage your business. </div>
-						<img class="thumb" onclick="doFeaturePopup('streamlined_ordering',924)" src="/homepage/img/features/streamlined_ordering_thumb.png" />
+						<img class="thumb" onclick="doFeaturePopup('streamlined_ordering',975)" src="/homepage/img/features/streamlined_ordering_thumb.png" />
 						<br />&nbsp;<br />
 						
 					</td>

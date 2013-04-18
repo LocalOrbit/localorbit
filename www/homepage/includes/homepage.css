@@ -331,8 +331,9 @@ div.pricing_bottom{
 }
 
 .feature_popup_closer{
-	padding: 4px;
+	position: absolute;
+	top: 3px; 
+	right:3px;
 	background-color: #fff;
-		width: 100%;
 	
 }
