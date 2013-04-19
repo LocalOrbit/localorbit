@@ -12,6 +12,66 @@ if($actually_do_payment)
 
 echo("-------------------\n");
 
+echo("getting a list of delivered items\n");
+
+$sql = "
+	select 
+	distinct loi.lo_liid,p.payable_id,p.invoice_id,loi.row_total,o.org_id,o.name,loi.product_name,
+	opm.name_on_account,opm.nbr1,opm.nbr2
+	from lo_fulfillment_order lfo
+	inner join lo_order_line_item loi on (loi.lo_foid = lfo.lo_foid)
+	inner join lo_order lo on (lo.lo_oid = loi.lo_oid and lo.payment_method in ('paypal','ach'))
+	inner join lo_order_item_status_changes loisc on (loi.lo_liid=loisc.lo_liid and loisc.ldstat_id=4)
+	inner join payables p on (p.payable_type_id=2 and p.parent_obj_id=lfo.lo_foid and p.from_org_id=1)
+	inner join domains d on (lo.domain_id = d.domain_id)
+	inner join organizations o on (d.payable_org_id=o.org_id)
+	inner join organization_payment_methods opm on (d.opm_id=opm.opm_id)
+	where loisc.creation_date > '2013-04-03 00:00:00' and loisc.creation_date < '2013-04-10 00:00:00'
+	and loi.lsps_id=1
+	and loi.ldstat_id=4
+	order by loisc.creation_date desc
+";
+$payments = new core_collection($sql);
+$payments = $payments->to_hash('org_id');
+#print_r($payments);
+
+
+foreach($payments as $org_id=>$items)
+{
+	$amount = 0;
+	$name = $items[0]['name_on_account'];
+	$account = core_crypto::decrypt($items[0]['nbr1']);
+	$routing = core_crypto::decrypt($items[0]['nbr2']);
+	
+	$trace = 'LO-SMSP-'.$org_id.'-'.date('Ymd').'-'.time();
+	
+	$items_to_mark      = array();
+	$payables_to_update = array();
+		
+	echo("".$items[0]['name']."::\n");
+	foreach($items as $item)
+	{
+		if(!isset($payables_to_update[$item['payable_id'].'-'.$item['invoice_id']]))
+			$payables_to_update[$item['payable_id'].'-'.$item['invoice_id']] = 0;
+		
+		$payables_to_update[$item['payable_id'].'-'.$item['invoice_id']] += $item['row_total'];
+		$items_to_mark[] = $item['lo_liid'];
+			
+		echo("\t".$item['lo_liid'].":".$item['product_name']."\n");
+		$amount += $item['row_total'];
+	}
+	echo("need to pay ".core_format::price($amount)." to ".$name." / ".$account." / ".$routing."\n");
+	echo("\tNeed to mark these items as paid: ".implode(',',$items_to_mark)."\n");
+	echo("\tNeed to add payments for these payables:\n");
+	foreach($payables_to_update as $payable_id=>$payable_amount)
+	{
+		echo("\t\t".$payable_id.":".$payable_amount."\n");
+	}
+}
+
+
+exit("COMPLETE\n");
+
 $sql = '
 	select 
 	p.payable_id,p.amount,p.payable_type_id,p.invoice_id,
@@ -35,6 +95,7 @@ $sql = '
 	and   lo.ldstat_id=4
 	and   lo.payment_method in (\'ach\',\'paypal\')
 	and   d1.seller_payer = \'hub\'
+	and   p.creation_date > \'2013-03-21 00:00:00\'
 	group by lfo.lo_foid
 ';
 

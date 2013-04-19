@@ -31,10 +31,11 @@ print($myresult->Status . ", " . $myresult->Details . "\n");
 if($myresult->ACHReturnRecords->ACHReturnRecord)
 {
 	foreach ($myresult->ACHReturnRecords->ACHReturnRecord as $myACHReturnRecord) { 
-		print("FrontEndTrace:" . $myACHReturnRecord->FrontEndTrace . ", EffectiveDate:" . $myACHReturnRecord->EffectiveDate . ", 
-			Name:" . $myACHReturnRecord->CustomerName . ", Amount:" . $myACHReturnRecord->TransAmount . ", 
-			ResponseCode:" . $myACHReturnRecord->ResponseCode . ", ActionDetail:" . $myACHReturnRecord->ActionDetail . 
-			"\n"); 
+		print_r($myACHReturnRecord);
+		//~ print("FrontEndTrace:" . $myACHReturnRecord->FrontEndTrace . ", EffectiveDate:" . $myACHReturnRecord->EffectiveDate . ", 
+			//~ Name:" . $myACHReturnRecord->CustomerName . ", Amount:" . $myACHReturnRecord->TransAmount . ", 
+			//~ ResponseCode:" . $myACHReturnRecord->ResponseCode . ", ActionDetail:" . $myACHReturnRecord->ActionDetail . 
+			//~ "\n"); 
 	}
 }
 ?> 
