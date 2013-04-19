@@ -31,7 +31,8 @@ b.footer{
 	padding-top: 20px !important;
 	color: #777;
 	font-size: 13px !important;
-	font-family: 'Droid Sans';
+	font-family: 'Francois One', sans-serif !important;
+	font-weight: bold;
 }
 
 a.footer,a.footer:visited{
