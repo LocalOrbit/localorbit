@@ -28,7 +28,7 @@
 							help grow your business. 
 							<br />&nbsp;<br />
 							Our cloud-based technology is scalable, reliable and worry-free,
-							so you can focus on what's most important - not managing your tools.  
+							so you can focus on what's most important.  
 									
 							<br />&nbsp;<br />
 							We offer live demos and keep these sessions small, so there's lots of time 

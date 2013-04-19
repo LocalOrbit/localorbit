@@ -18,6 +18,18 @@
 			</span>
 			
 			<!--<div style="padding-left:73px;clear:both;"><br />Send us a note</div>-->
+			
+			<script language="javascript">
+var popupWindow = null;
+function centeredPopup(url,winName,w,h,scroll){
+LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+settings =
+'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable'
+popupWindow = window.open(url,winName,settings)
+}
+</script>
+			
 		</td>
 		<td>&nbsp;</td>
 		<td style="text-align: left;">
@@ -60,11 +72,11 @@
 	</tr>
 	<tr>
 		<td colspan="2">&nbsp;</td>
-		<td><a href="http://www.localorb.it/field-notes/schedule-a-demo" class="btn btn_blue">Sign Up for a Demo</a></td>
+		<td><a href="http://www.localorb.it/field-notes/schedule-a-demo" class="btn btn_blue" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a></td>
 		<td>&nbsp;</td>
-		<td><a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" class="btn btn_blue">Stay Informed</a></td>
+		<td><a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" class="btn btn_blue" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Stay Informed</a></td>
 		<td>&nbsp;</td>
-		<td><a href="http://myaccount.zendesk.com/account/dropboxes/20147973" onclick="script: Zenbox.show(); return false;" class="btn btn_blue">How Can We Help?</a></td>
+		<td><a href="http://myaccount.zendesk.com/account/dropboxes/20147973" onclick="script: Zenbox.show(); return false;" class="btn btn_blue" >How Can We Help?</a></td>
 </table>
 <br />&nbsp;<br />
 

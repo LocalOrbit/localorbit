@@ -182,9 +182,9 @@ popupWindow = window.open(url,winName,settings)
 						<h2 style="margin-top: 10px;">Local Sourcing at Institutional Scale</h3> 
 						
 						Customers want you to use locally sourced products - and they want 
-						the stories behind <br>them. It's a competitive and culinary advantage. 
+						the stories behind <br>them. It's both a competitive and culinary advantage. 
 						But for large organizations, sourcing from lots of small vendors 
-						can be an administrative challenge.  
+						can be an administrative headache.  
 						<br />&nbsp;<br />
 						We've got a solution for that. Actually, we've got<br> a couple of solutions.
 						<br />&nbsp;<br />
