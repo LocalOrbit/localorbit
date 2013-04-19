@@ -106,16 +106,15 @@ else
 								<a class="nav1" style="font-size: 125%;" href="/field-notes/">Field Notes</a>
 							</div>
 							<div id="nav2">
-								<a style="font-size: 85%;" href="/homepage/contact.php" class="nav2">contact</a>
+								<a href="#" class="nav2" onclick="$('#overlay,#popup3,#popup_closer').fadeIn(150);">contact</a>
 								&nbsp;&nbsp;|&nbsp;&nbsp;
 								<? if($core->session['user_id'] == 0){?>
-								<a class="nav2" style="font-size: 85%;" href="/login.php">log in</a>
-								&nbsp;&nbsp;|&nbsp;&nbsp;
-								<a class="nav2" style="font-size: 85%;" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c">get started</a>
+								<a class="nav2" href="/login.php">log in</a>
 								<?}else{?>
-								<a class="nav2" style="font-size: 85%;" href="/app.php#!dashboard-home">dashboard</a>
+								<a class="nav2" href="/app.php#!dashboard-home">dashboard</a>
 								<?}?>
 							</div>
+							
 							<div id="tagline">
 								re-linking the food chain&#153;
 							</div>
