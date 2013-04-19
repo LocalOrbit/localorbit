@@ -189,7 +189,8 @@ popupWindow = window.open(url,winName,settings)
 						<br />&nbsp;<br />
 						We've got a solution for that. Actually, we've got a couple of solutions.
 						<br />&nbsp;<br />
-						<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=14fe9e7e95" class="btn btn_blue" style="margin-left: 10px;">Learn More</a>
+						<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dGN1aERlZ3Q2bnRHbDBDUkdqdEcwNnc6MQ" class="btn btn_blue" style="margin-left: 10px;" 
+						onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Learn More</a>
 				
 					</td>
 					<td rowspan="2">&nbsp;</td>
