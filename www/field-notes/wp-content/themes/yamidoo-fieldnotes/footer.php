@@ -62,7 +62,7 @@
 					<img src="/img/default/footer/phone_gray.png"><br>
 					<b class="footer">Contact</b>
 					<ul class="footer">
-						<li class="footer" style="font-size: 80%;"> Call 734.545.8100</li>
+						<li class="footer"> Call 734.545.8100</li>
 	
 						<li class="footer"><a href="http://myaccount.zendesk.com/account/dropboxes/20147973" onclick="script: Zenbox.show(); return false;" class="footer">Ask a Question</a></li>
 					</ul>
