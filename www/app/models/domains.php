@@ -57,13 +57,15 @@ class core_model_domains extends core_model_base_domains
 	{
 		global $core;
 		$sql = '
-			select o.*
+			select o.*,address,city,postal_code,latitude,longitude,dcr.code
 			from organizations o
 			left join organizations_to_domains otd on otd.org_id = o.org_id
+			left join addresses a on (a.org_id=o.org_id and a.default_shipping=1 and latitude is not null and latitude<>0)
+			left join directory_country_region dcr on (a.region_id=dcr.region_id)
 			where allow_sell=1
-			and is_active=1
-			and is_enabled=1
-			and is_deleted=0
+			and o.is_active=1
+			and o.is_enabled=1
+			and o.is_deleted=0
 			and public_profile=1
 		';
 
