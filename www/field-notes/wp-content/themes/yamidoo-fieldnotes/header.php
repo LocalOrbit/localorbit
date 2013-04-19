@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
-	<head>
-		<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<head>
+    <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-		<title><?php ui::title(); ?></title>
+    <title><?php ui::title(); ?></title>
 
-		<link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" media="screen" />
-		<link href='http://fonts.googleapis.com/css?family=Prata' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" type="text/css" href="/homepage/includes/footer.css" />
-		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" media="screen" />
+    <link href='http://fonts.googleapis.com/css?family=Prata' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+ 	<link rel="stylesheet" type="text/css" href="/homepage/includes/footer.css" />
+    <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 		<script language="Javascript" type="text/javascript" src="/js/jquery.min.js"></script>
-		<style type="text/css" media="screen, projection">
-			@import url(//assets.zendesk.com/external/zenbox/v2.5/zenbox.css); 
-		</style>
-		<?php if ( option::get('sidebar_pos') == 'Left' ) { ?><style type="text/css">#sidebar{float:left;margin-right:20px;} #articles, #main {float:right;}</style><?php } ?>
 
-		<?php wp_head(); ?>
+	<?php if ( option::get('sidebar_pos') == 'Left' ) { ?><style type="text/css">#sidebar{float:left;margin-right:20px;} #articles, #main {float:right;}</style><?php } ?>
 
-	</head>
+	<?php wp_head(); ?>
+	
+</head>
 
-	<body <?php body_class(); ?>>
-		<div id="top_background">
-			<table id="main_layout_homepage" width="100%">
+<body <?php body_class(); ?>>
+<div id="top_background">
+<table id="main_layout_homepage" width="100%">
 			<colgroup><col>
 			<col width="1100">
 			<col>
@@ -34,15 +32,21 @@
 					<div style="position: relative;width:1100px;height: 120px;">
 						<a href="/" class="logo"><img width="112" height="111" src="/homepage/includes/logo5.png"></a>
 						<div id="nav1">
-							<a class="nav1" href="/homepage/features.php">Features</a>
-							<a class="nav1" href="/homepage/faq.php">FAQ</a>
-							<a class="nav1" href="/homepage/about.php">Company</a>
+							<a class="nav1" style="font-size: 125%;" href="/homepage/features.php">Features</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/homepage.php#whouses">Customers</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/pricing.php">Pricing</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/company.php">Company</a>
+								<a class="nav1" style="font-size: 125%;" href="/field-notes/">Field Notes</a>
 						</div>
 						<div id="nav2">
 							<a href="#" class="nav2" onclick="$('#overlay,#popup3,#popup_closer').fadeIn(150);">contact</a>
-							&nbsp;&nbsp;|&nbsp;&nbsp;
-														<a class="nav2" href="/login.php">customer log in</a>
-													</div>
+								&nbsp;&nbsp;|&nbsp;&nbsp;
+								<? if($core->session['user_id'] == 0){?>
+								<a class="nav2" href="/login.php">log in</a>
+								<?}else{?>
+								<a class="nav2" href="/app.php#!dashboard-home">dashboard</a>
+								<?}?>
+						</div>
 						<div id="tagline">re-linking the food chain ™</div>
 					</div>
 				</td>

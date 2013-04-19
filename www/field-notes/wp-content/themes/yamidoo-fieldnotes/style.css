@@ -38,7 +38,7 @@ margin-right: 30px;
 position: absolute;
 left: 165px;
 top: 00px;
-width: 520px;
+width: 710px;
 height: 40px;
 color: #fff !important;
 line-height: 50px;
@@ -47,14 +47,24 @@ font-size: 22px !important;
 font-family: 'Francois One', sans-serif !important;
 }
 
-#nav2 {
-position: absolute;
-color: #fff !important;
-right: 5px;
-top: 14px;
-width: 190px;
-height: 50px;
+
+
+#nav2{
+	position: absolute;
+	color: #fff !important;
+	right: 5px;
+	top: 14px;
+	width:210px;
+	height: 50px;
 }
+
+
+a.nav2{
+	font-size: 15px;
+	color: #fff;
+	font-family: 'Francois One', sans-serif !important;
+}
+
 
 #tagline {
 position: absolute;
