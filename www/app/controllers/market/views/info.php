@@ -45,25 +45,7 @@ else
 		->limit(3);
 	$market_news->load();
 
-	$sellers = core::model('organizations')
-		->autojoin(
-			'left',
-			'addresses',
-			'(addresses.org_id=organizations.org_id and addresses.default_shipping=1 and latitude is not null and latitude<>0)',
-			array('address','city','postal_code','latitude','longitude')
-		)
-		->autojoin(
-			'left',
-			'directory_country_region',
-			'(addresses.region_id=directory_country_region.region_id)',
-			array('code')
-		)
-		->collection()
-		->filter('latitude','is not null',true)
-		->filter('organizations_to_domains.domain_id',$market['domain_id'])
-		->filter('is_active',1)
-		->filter('is_enabled',1)
-		->filter('public_profile',1);
+	$sellers = core::model('domains')->load_sellers();
 		
 
 ?>
