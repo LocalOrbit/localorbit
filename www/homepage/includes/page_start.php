@@ -53,11 +53,11 @@ else
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
 		<link rel="stylesheet" type="text/css" href="/css/reset.css" />
-		<link rel="stylesheet" type="text/css" href="/homepage/includes/homepage.css" />
-		<link rel="stylesheet" type="text/css" href="/homepage/includes/footer.css" />
-		<link rel="stylesheet" type="text/css" href="/homepage/includes/popup.css" />
-		<link rel="stylesheet" type="text/css" href="/homepage/includes/nav.css?_updated_=20120711" />
-		<link rel="stylesheet" type="text/css" href="/homepage/includes/tour.css" />
+		<link rel="stylesheet" type="text/css" href="/homepage/includes/homepage.css?_v=4.0.6.1" />
+		<link rel="stylesheet" type="text/css" href="/homepage/includes/footer.css?_v=4.0.6.1" />
+		<link rel="stylesheet" type="text/css" href="/homepage/includes/popup.css?_v=4.0.6.1" />
+		<link rel="stylesheet" type="text/css" href="/homepage/includes/nav.css?_v=4.0.6.1" />
+		<link rel="stylesheet" type="text/css" href="/homepage/includes/tour.css?_v=4.0.6.1" />
 		<script language="Javascript" type="text/javascript" src="/js/jquery.min.js"></script>
 		<script language="Javascript" type="text/javascript" src="/js/wysihtml5-0.3.0.min.js"></script>
 		<script language="Javascript" type="text/javascript" src="js/bootstrap-wysihtml5.js"></script>
@@ -71,7 +71,7 @@ else
 		<script language="Javascript" type="text/javascript" src="/js/jquery.rte.js?time=<?php echo time();?>"></script>
 		<script language="Javascript" type="text/javascript" src="/js/lo3.js?time=<?php echo time();?>"></script>
 		<script language="Javascript" type="text/javascript" src="/js/slides.jquery.js"></script>
-		<script language="Javascript" type="text/javascript" src="/homepage/includes/features.js"></script>
+		<script language="Javascript" type="text/javascript" src="/homepage/includes/features.js?_v=4.0.6.1"></script>
 		<script language="Javascript" type="text/javascript">
 		<!--
 		//
