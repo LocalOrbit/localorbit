@@ -147,13 +147,12 @@ popupWindow = window.open(url,winName,settings)
 		<td>
 			<img src="/homepage/img/icon_wand.png" class="home_icon" /><h3 class="home_header">Unrivaled Flexibility</h3>
 			<div class="home_paragraph">
-				Custom branding, granular pricing &amp; discounts, flexible delivery tools, 
-				multiple payment options.
+				Custom branding, granular pricing, multiple payment options, versatile discount codes and delivery tools.
 			</div>
 		</td>
 		<td rowspan="2">&nbsp;</td>
 		<td>
-			<img src="/homepage/img/icon_paperclip.png" class="home_icon" /><h3 class="home_header">Beautiful, Intuitive Design</h3>
+			<img src="/homepage/img/icon_paperclip.png" class="home_icon" /><h3 class="home_header">Intuitive Design</h3>
 			<div class="home_paragraph">
 				Supports the management processes you already use. 
 				Incorporates best practices from successful businesses.

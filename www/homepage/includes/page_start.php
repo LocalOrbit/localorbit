@@ -106,7 +106,7 @@ else
 								<a class="nav1" style="font-size: 125%;" href="/field-notes/">Field Notes</a>
 							</div>
 							<div id="nav2">
-								<a href="#" class="nav2" onclick="$('#overlay,#popup3,#popup_closer').fadeIn(150);">contact</a>
+								<a href="/homepage/contact.php" class="nav2" >contact</a>
 								&nbsp;&nbsp;|&nbsp;&nbsp;
 								<? if($core->session['user_id'] == 0){?>
 								<a class="nav2" href="/login.php">log in</a>

@@ -169,31 +169,32 @@ popupWindow = window.open(url,winName,settings)
 			
 			
 			<table width="1100" style="table-layout: fixed;">
-				<col width="31%" />
-				<col width="2%" />
-				<col width="33%" />
-				<col width="1%" />
+				<col width="28%" />
+				<col width="5%" />
+				<col width="32%" />
+				<col width="3%" />
 				<col width="32%" />
 				<tr>
 					<td colspan="7"><img src="/homepage/img/homepage_divider.png" /><br />&nbsp;<br /></td>
 				</tr>
 				<tr>
 					<td rowspan="2">
-						<h2 style="margin-top: 10px;">Local Sourcing at Institutional Scale</h3> 
+					
+						<h2 style="margin-top: 10px;">Local Sourcing at Institutional Scale</h2> 
 						
 						Customers want you to use locally sourced products - and they want 
-						the stories behind <br>them. It's both a competitive and culinary advantage. 
+						the stories behind them. It's both a competitive and culinary advantage. 
 						But for large organizations, sourcing from lots of small vendors 
 						can be an administrative headache.  
 						<br />&nbsp;<br />
-						We've got a solution for that. Actually, we've got<br> a couple of solutions.
+						We've got a solution for that. Actually, we've got a couple of solutions.
 						<br />&nbsp;<br />
 						<a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=14fe9e7e95" class="btn btn_blue" style="margin-left: 10px;">Learn More</a>
 				
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<img src="/homepage/img/icon_puzzle_piece_smaller.png" class="home_icon" /><h3 class="home_header">Managed Payments</h3>
+						<img src="/homepage/img/icon_puzzle_piece_smaller.png" class="home_icon" /><h2 class="home_header">Managed Payments</h2>
 						<div class="home_paragraph">
 							Looking to simplify financial management and keep your staffing 
 							costs down? Focus on building your market and let us manage the payments. 
@@ -213,7 +214,7 @@ popupWindow = window.open(url,winName,settings)
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
-						<img src="/homepage/img/icon_puzzle_piece_smaller.png" class="home_icon" /><h3 class="home_header">Vendor Management</h3>
+						<img src="/homepage/img/icon_puzzle_piece_smaller.png" class="home_icon" /><h2 class="home_header">Vendor Management</h2>
 						<div class="home_paragraph">
 							Purchase from your favorite small farms and artisan 
 							producers - without the hassle of managing dozens of 
@@ -221,10 +222,9 @@ popupWindow = window.open(url,winName,settings)
 							stories. Order from many vendors with a single click, and a 
 							single payment.
 							<br />&nbsp;<br />
-							Focus on developing relationships with your vendors and let Local 
-							Orbit eliminate the administrative burden.
+							Local Orbit removes the administrative burden so you can focus on developing relationships with your vendors.
 							Ideal for institutional food service and restaurants that 
-							source direct from many local farms and independent producers. 
+							source direct from many local farms and independent suppliers. 
 							<br />&nbsp;<br />
 							<br />&nbsp;<br />
 						</div>

@@ -113,7 +113,7 @@ popupWindow = window.open(url,winName,settings)
 					<td>
 						<img src="/homepage/img/icon_bar_graph.png" class="home_icon" /><h3 class="home_header">Reporting and Analysis</h3>
 						<div class="home_paragraph">
-							Power your business with knowledge. Sophisticated, easy-to-use reports let you to track, learn from and improve your business weekly, monthly and year-over-year.
+							Power your business with knowledge. Sophisticated, easy-to-use reports let you track, learn from and improve your business weekly, monthly and year-over-year.
 						</div>
 					
 						<img class="thumb" onclick="doFeaturePopup('reporting',975)" src="/homepage/img/features/reporting_thumb.png" />
