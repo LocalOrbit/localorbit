@@ -29,8 +29,13 @@ margin-right: auto;
 	font-size: 15px;
 }
 a.nav1 {
-font-size: 22px !important;
+font-size: 18px !important;
 margin-right: 30px;
+	letter-spacing: 0.8px !important;
+}
+
+a.nav1:hover{
+	text-decoration: none !important;
 }
 
 
