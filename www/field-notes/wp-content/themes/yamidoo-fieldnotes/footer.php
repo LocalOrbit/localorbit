@@ -41,8 +41,8 @@
 						<ul class="footer">
 							<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
 								<li class="footer"><a class="footer" href="/homepage/pricing.php">Pricing</a></li>
-								<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/">Sign Up for a Demo</a></li>
-								<li class="footer"><a class="footer" href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA">Get Started</a></li>
+								<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a></li>
+								<li class="footer"><a class="footer" href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Started</a></li>
 
 						</ul>
 					</td>
