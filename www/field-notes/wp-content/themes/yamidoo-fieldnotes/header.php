@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
-<head>
-    <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<head>
+		<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title><?php ui::title(); ?></title>
+		<title><?php ui::title(); ?></title>
 
-    <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" media="screen" />
-    <link href='http://fonts.googleapis.com/css?family=Prata' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
- 	<link rel="stylesheet" type="text/css" href="/homepage/includes/footer.css" />
-    <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+		<link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" media="screen" />
+		<link href='http://fonts.googleapis.com/css?family=Prata' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="/homepage/includes/footer.css" />
+		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
 		<script language="Javascript" type="text/javascript" src="/js/jquery.min.js"></script>
+		<style type="text/css" media="screen, projection">
+			@import url(//assets.zendesk.com/external/zenbox/v2.5/zenbox.css); 
+		</style>
+		<?php if ( option::get('sidebar_pos') == 'Left' ) { ?><style type="text/css">#sidebar{float:left;margin-right:20px;} #articles, #main {float:right;}</style><?php } ?>
 
-	<?php if ( option::get('sidebar_pos') == 'Left' ) { ?><style type="text/css">#sidebar{float:left;margin-right:20px;} #articles, #main {float:right;}</style><?php } ?>
+		<?php wp_head(); ?>
 
-	<?php wp_head(); ?>
-	
-</head>
+	</head>
 
-<body <?php body_class(); ?>>
-<div id="top_background">
-<table id="main_layout_homepage" width="100%">
+	<body <?php body_class(); ?>>
+		<div id="top_background">
+			<table id="main_layout_homepage" width="100%">
 			<colgroup><col>
 			<col width="1100">
 			<col>

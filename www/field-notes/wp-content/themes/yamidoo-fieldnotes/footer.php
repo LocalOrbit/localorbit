@@ -64,7 +64,7 @@
 					<ul class="footer">
 						<li class="footer" style="font-size: 80%;"> Call 734.545.8100</li>
 	
-						<li class="footer"><a class="footer" href="https://localorbit.zendesk.com/anonymous_requests/new" onclick="script: Zenbox.show(); return false;">Ask us a question</a></li>
+						<li class="footer"><a href="http://myaccount.zendesk.com/account/dropboxes/20147973" onclick="script: Zenbox.show(); return false;" class="footer">Ask a Question</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -78,9 +78,22 @@
 	<br>&nbsp; &nbsp; &nbsp;
 	<a class="footer" style="font-size: 80%;" href="http://jasonhouston.com" onclick="core.go(this.href);" target="_blank">site photos by Jason Houston</a></div>
 		<?php 
-if ( is_home() && $paged < 2 && option::get('featured_enable') == 'on' ) { 
-	ui::js("slider");
+	if ( is_home() && $paged < 2 && option::get('featured_enable') == 'on' ) { 
+		ui::js("slider");
 	?>
+	<script type="text/javascript" src="//assets.zendesk.com/external/zenbox/v2.5/zenbox.js"></script>
+	<script type="text/javascript">
+		  if (typeof(Zenbox) !== "undefined") {
+		    Zenbox.init({
+		      dropboxID:   "20147973",
+		      url:         "https://localorbit.zendesk.com",
+		      tabID:       "Support",
+		      tabColor:    "black",
+		      tabPosition: "Left",
+		      hide_tab: "true"
+		    });
+		  }
+		</script>
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery("#navi ul").tabs("#panes > div", {
