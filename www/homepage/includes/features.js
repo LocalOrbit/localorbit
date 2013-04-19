@@ -8,4 +8,5 @@ function doFeaturePopup(src,width){
 	var pos = (new String(Math.floor(($('body').width() - width) / 2 )) + 'px');
 	//alert(pos);
 	$('#popup3').css({'margin-left':'0px','top':'40px','left':pos}).html(src);$('#popup3,#overlay').fadeIn(300);
+	$('#overlay').click(function(){$('#popup3,#overlay').fadeOut(300);});
 }
