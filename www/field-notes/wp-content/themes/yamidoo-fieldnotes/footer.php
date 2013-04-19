@@ -51,7 +51,7 @@
 						
 						<b class="footer">Connect</b>
 						<ul class="footer">
-							<li class="footer"><a class="footer" target="_blank" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&amp;id=bad2d7741d">Newsletter Sign Up </a></li>
+							<li class="footer"><a class="footer" target="_blank" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Our Newsletter</a></li>
 							<li class="footer"><a class="footer" target="_blank" href="http://www.facebook.com/localorbit">Facebook</a></li>
 							<li class="footer"><a class="footer" target="_blank" href="http://www.twitter.com/localorbit">Twitter</a></li>
 							<li class="footer"><a class="footer" target="_blank" href="http://www.linkedin.com/company/local-orbit">LinkedIn</a></li>

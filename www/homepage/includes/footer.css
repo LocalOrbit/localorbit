@@ -30,12 +30,13 @@ a.header_right{
 b.footer{
 	padding-top: 20px !important;
 	color: #777;
-	font-family: 'Francois One', sans-serif !important;
+	font-size: 13px !important;
+	font-family: 'Droid Sans';
 }
 
 a.footer,a.footer:visited{
 	color: #777 !important;
-	font-size:85%;
+	font-size: 13px !important;
 }
 
 div.footer{
