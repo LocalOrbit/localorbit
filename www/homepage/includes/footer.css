@@ -28,7 +28,7 @@ a.header_right{
 }
 
 b.footer{
-	margin-top: 20px !important;
+	padding-top: 20px !important;
 	color: #777;
 	font-family: 'Francois One', sans-serif !important;
 }
