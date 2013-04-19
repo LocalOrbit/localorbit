@@ -230,3 +230,11 @@ font-size: 32px !important;
 #topmenu a {
 	font-size: 14px !important;
 }
+
+a.footer{
+	font-family: 'Droid Sans' !important;
+}
+
+a.footer:hover{
+	text-decoration: none;
+}
