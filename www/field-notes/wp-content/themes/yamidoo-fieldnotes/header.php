@@ -7,13 +7,13 @@
 
     <title><?php ui::title(); ?></title>
 
-    <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>?_v=4.0.6.1" media="screen" />
     <link href='http://fonts.googleapis.com/css?family=Prata' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
  	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
- 	<link rel="stylesheet" type="text/css" href="/homepage/includes/footer.css" />
+ 	<link rel="stylesheet" type="text/css" href="/homepage/includes/footer.css?_v=4.0.6.1" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
-		<script language="Javascript" type="text/javascript" src="/js/jquery.min.js"></script>
+		<script language="Javascript" type="text/javascript" src="/js/jquery.min.js?_v=4.0.6.1"></script>
 
 	<?php if ( option::get('sidebar_pos') == 'Left' ) { ?><style type="text/css">#sidebar{float:left;margin-right:20px;} #articles, #main {float:right;}</style><?php } ?>
 
