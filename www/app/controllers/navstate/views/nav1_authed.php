@@ -103,7 +103,7 @@ $(function()
 					<img class="img-polaroid catalog_placeholder" src="<?=image('product_placeholder_small')?>" />
 					<?}?>
 				</span>
-				<span class="span3">
+				<span class="span2">
 					<div class="productName"><?=$item[0]['product_name']?></div>
 					<div>Quantity: <?=$item[0]['qty_ordered']?> <?=(($item[0]['qty_ordered']>1)?$item[0]['unit_plural']:$item[0]['unit'])?></div>
 				</span>
