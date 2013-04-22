@@ -89,28 +89,32 @@ $(function()
 	<li class="dropdown">
 		<input type="hidden" id="emptyCart" value="<?=($totalQty<=0)?>"/>
 		<a id="yourCartDropDown" class="dropdown-toggle" data-toggle="dropdown" href=""><i class="icon-cart icon-white"></i> Your Cart <span class="badge" id="totalQty"><?=$totalQty?></span></a>
-		<div class="dropdown-menu span4 yourCart">
-			<?
-		foreach ($item_hash as $prod_id => $item) {
-			$cart_count++;
-			$prod = core::model('products')->load($item[0]['prod_id']);
-			?>
-			<div class="row">
-				<span class="span1 product-image">
-					<? if(intval($prod['pimg_id']) > 0){?>
-					<img class="img-polaroid catalog" src="/img/products/cache/<?=$prod['pimg_id']?>.<?=$prod['width']?>.<?=$prod['height']?>.100.75.<?=$prod['extension']?>" />
-					<?}else{?>
-					<img class="img-polaroid catalog_placeholder" src="<?=image('product_placeholder_small')?>" />
-					<?}?>
-				</span>
-				<span class="span2">
-					<div class="productName"><?=$item[0]['product_name']?></div>
-					<div>Quantity: <?=$item[0]['qty_ordered']?> <?=(($item[0]['qty_ordered']>1)?$item[0]['unit_plural']:$item[0]['unit'])?></div>
-				</span>
+		<div class="dropdown-menu span4 yourCart" style="padding: 15px 5px;">
+			<div style="height: 300px; overflow:hidden;overflow-y: auto;padding:0px;margin:0px;" class="row">
+				<div class="span4" style="padding:0px;margin:0px;">
+					<?
+				foreach ($item_hash as $prod_id => $item) {
+					$cart_count++;
+					$prod = core::model('products')->load($item[0]['prod_id']);
+					?>
+					<div class="row">
+						<span class="span1 product-image">
+							<? if(intval($prod['pimg_id']) > 0){?>
+							<img class="img-polaroid catalog" src="/img/products/cache/<?=$prod['pimg_id']?>.<?=$prod['width']?>.<?=$prod['height']?>.100.75.<?=$prod['extension']?>" />
+							<?}else{?>
+							<img class="img-polaroid catalog_placeholder" src="<?=image('product_placeholder_small')?>" />
+							<?}?>
+						</span>
+						<span class="span3">
+							<div class="productName"><?=$item[0]['product_name']?></div>
+							<div>Quantity: <?=$item[0]['qty_ordered']?> <?=(($item[0]['qty_ordered']>1)?$item[0]['unit_plural']:$item[0]['unit'])?></div>
+						</span>
+					</div>
+					<?
+				}
+				?>
+				</div>
 			</div>
-			<?
-		}
-		?>
 			<div class="row">
 				<span class="span4">
 					<? if($cart_count == 0){?>
