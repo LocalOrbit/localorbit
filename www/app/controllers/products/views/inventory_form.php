@@ -66,7 +66,7 @@ else
 		</div>
 		<div class="pull-right">
 			<a class="btn btn-small btn-info" onclick="product.editLot(0);"><i class="icon-plus" /> Add New Lot</a>
-			<a class="btn btn-small btn-danger" onclick="product.removeCheckedLots(this.form);"><i class="icon-trash" />  Remove Checked</a>
+			<a class="btn btn-small btn-danger" onclick="product.removeCheckedLots(document.prodForm);"><i class="icon-trash" />  Remove Checked</a>
 		</div>
 	</div>
 
