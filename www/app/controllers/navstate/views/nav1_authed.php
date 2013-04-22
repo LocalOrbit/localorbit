@@ -90,7 +90,7 @@ $(function()
 		<input type="hidden" id="emptyCart" value="<?=($totalQty<=0)?>"/>
 		<a id="yourCartDropDown" class="dropdown-toggle" data-toggle="dropdown" href=""><i class="icon-cart icon-white"></i> Your Cart <span class="badge" id="totalQty"><?=$totalQty?></span></a>
 		<div class="dropdown-menu span4 yourCart" style="padding: 15px 5px;">
-			<div style="height: 300px; overflow:hidden;overflow-y: auto;padding:0px;margin:0px;" class="row">
+			<div style="max-height: 300px; overflow:hidden;overflow-y: auto;padding:0px;margin:0px;" class="row">
 				<div class="span4" style="padding:0px;margin:0px;">
 					<?
 				foreach ($item_hash as $prod_id => $item) {
