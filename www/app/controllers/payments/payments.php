@@ -210,9 +210,9 @@ class core_controller_payments extends core_controller
 		# this is used to check the payable status of orders to invoice sllers
 		# since it's reused, it makes since to instantiate here
 		$orders_controller = core::controller('orders');
-		
+
 		foreach($payments as $cur_group=>$payment)
-		{
+		{					
 			if($payment['total'] > 0)
 			{
 				core::log('saving payment now: '.$payment['total']);
@@ -240,7 +240,6 @@ class core_controller_payments extends core_controller
 
 					$payment = core::model('organization_payment_methods')->load($core->data[$prefix.'_payment_group_'.$cur_group.'__opm_id']);
 					
-					
 					$ach_amount = $new_payment['amount'];
 					# if the money is coming FROM local orbit, pass to the make_payment method as a negative amount
 					if($new_payment['from_org_id'] == 1)
@@ -248,13 +247,21 @@ class core_controller_payments extends core_controller
 						$ach_amount = (-1) * $ach_amount;
 					}
 					
-					$result = $payment->make_payment($trace_nbr,$new_payment['admin_note'],$ach_amount);
+					
+					$result = $payment->make_payment($trace_nbr,$new_payment['admin_note'],$ach_amount);						
 				}
 				$new_payment->save();
 				
 				
+				
+				
 				if($result)
 				{
+					// send email of payment received
+					core::process_command('emails/payment_received',false,
+						$new_payment, $trace_nbr, $invoices
+					);
+					
 					foreach($payment['invoices'] as $invoice_id=>$amount)
 					{
 						if(floatval($amount) > 0)
@@ -282,7 +289,7 @@ class core_controller_payments extends core_controller
 					}
 				}
 				else
-				{
+				{				
 					core_ui::error('ACH Transfer failed. Please contact customer service');
 				}
 			}

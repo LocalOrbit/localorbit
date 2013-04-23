@@ -9,10 +9,10 @@ $to_org = core::model('organizations')->load($new_payment['to_org_id']);
 
 $values = array();
 $values['hubname'] = $to_org['name'];
-$values['amount'] = $new_payment['amount'];
+$values['invoicenbr'] = $trace_nbr;
+$values['amount'] = core_format::price($new_payment['amount']);
 $values['date_received'] = core_format::date(time() + (7 * 86400),'short');
 $values['invoice_ids'] = explode(',',$invoices['invoice_id']);
-//$values['trace_nbr'] = $trace_nbr;
 
 
 
@@ -74,13 +74,14 @@ if($new_payment['payment_method_id']  == 3) {
 	$body .= $this->handle_source($core->i18n['email:payments:payment_received_body_ach'],$values);
 	$body .= $this->footer();
 	$body .= $this->email_end();
-	
+
 	$this->send_email(
 		$core->i18n['email:payments:payment_received_subject_ach'],$emails,
 		$body,
 		array(),
 		$core->config['mailer']['From'],
 		$values['hubname']
+
 	);
 	
 } else {
