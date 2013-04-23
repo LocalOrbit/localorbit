@@ -25,7 +25,7 @@ function send_campaign($config)
 	$config['from_name']  = 'Local Orbit';
 	$config['to_name']    = 'Local Orbit Customer';
 	$config['do_domains'] = array();
-	$list_id     = $mc->get_list_id($config['list_name']);
+	$list_id = $mc->get_list_id($config['list_name']);
 	
 	# create a hash of all orgs/users with a flag  
 	$all_users = array();
@@ -56,8 +56,15 @@ function send_campaign($config)
 		# only do domains that we have users to send for
 		if($config['do_domains'][$domain['domain_id']])
 		{
-			echo('sending campaigns on domain '.$domain['domain_id']."\n");
 			$template_id = $mc->get_template_id($config['template_name'],$domain['domain_id']);
+			echo('sending campaigns on domain '.$domain['domain_id']. 
+					" domain=".$domain['name']. 
+					" templateId=".$template_id. 
+					" config['subject']=".$config['subject']. 
+					" config['from_email']=".$config['from_email']. 
+					" config['to_name']=".$config['to_name']. 
+					" list_id=".$list_id.
+					"\n");
 			$camp_id = construct_campaign(
 				$list_id,
 				$config['subject'],
@@ -134,19 +141,21 @@ function set_flags($all_users,$list_id,$days_offset,$seller_perspective=true)
 	}
 	$orgs = new core_collection($orgs_sql);
 
+	echo("\n\tfinding orgs_sql = ".$orgs_sql);
 	
 	//echo "<br><br>";	var_dump($orgs_sql);	echo "<br><br>";	var_dump($orgs);	echo "<br><br>";
 	
 	# for each org, find all users
 	foreach($orgs as $org)
 	{
+		echo("\org data ".$org['org_id'].':'.$org['name']);
 		# for each user, set do_email flag
 		$domains[$org['domain_id']] = 1;
-		$users_sql = 'select email from customer_entity where org_id='.$org['org_id'];
+		$users_sql = 'select DISTINCT email from customer_entity where org_id='.$org['org_id'];
 		$users = new core_collection($users_sql);
 		foreach($users as $user)
 		{
-			echo("\t\tsending email to ".$org['org_id'].':'.$org['name'].':'.$user['email']."\n");
+			echo("\n\tsending email to ".$org['org_id'].':'.$org['name'].':'.$user['email']."\n");
 			$all_users[$org['org_id']][$user['email']] = 1;
 		}
 	}
@@ -168,8 +177,8 @@ function set_flags($all_users,$list_id,$days_offset,$seller_perspective=true)
 			);
 		}
 	}
-	#print_r($final_users);
-	#echo($list_id);
+	//print_r($final_users);
+	echo("\list id ". $list_id);
 	#var_dump($mc);
 	#exit();
 	$errors = $mc->api->listBatchSubscribe($list_id,$final_users,false,true,false);
@@ -201,10 +210,11 @@ function construct_campaign($list_id,$subject,$from_email,$from_name,$to_name,$t
 			'to_name'=>$to_name,
 			'title'=>$subject.'_'.date('Y-m-d').'_'.$domain_id,
 		),
-		array(
+		/* I think this is overwriting the  
+		 *  array(
 			'html'=>'testing',
 			'text'=>'Please view the html version of this e-mail',
-		),
+		), */
 		array(
 			'match'=>'all',
 			'conditions'=>array(
