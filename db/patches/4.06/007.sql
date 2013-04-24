@@ -1,4 +1,4 @@
-INSERT INTO migrations (tag, version_id, pt_ticket_no) VALUES ('4.07', '006', '47552823');
+INSERT INTO migrations (tag, version_id, pt_ticket_no) VALUES ('4.06', '007', '47552823');
 
 DELETE FROM phrases WHERE label = 'email:payments:payment_received_body_ach';
 DELETE FROM phrases WHERE label = 'email:payments:payment_received_subject_ach';
