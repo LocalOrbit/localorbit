@@ -1,6 +1,7 @@
 <?php
 global $core;
 
+
 # these are being passed in 
 $to_org_id = $core->view[0];
 $received_from_org_id = $core->view[1];
@@ -20,17 +21,6 @@ $values['received_from'] = $from_org['name'];
 $values['amount'] = core_format::price($amount);
 $values['date_received'] = core_format::date(time() + (7 * 86400),'short');
 $values['invoice_ids'] = explode(',',$invoices['invoice_id']);
-
-
-
-$emails = core_db::col('
-	SELECT group_concat(email) AS emails
-	FROM customer_entity
-	WHERE org_id='.$new_payment['to_org_id'].'
-		AND is_active=1 AND is_deleted=0
-	GROUP BY org_id;','emails');
-$emails = "jvavul@gmail.com";
-
 
 
 
@@ -71,6 +61,14 @@ $values['payables'] .='</table>'; */
 
 
 // made payment
+$emails = core_db::col('
+	SELECT group_concat(email) AS emails
+	FROM customer_entity
+	WHERE org_id='.$from_org['org_id'].'
+		AND is_active=1 AND is_deleted=0
+	GROUP BY org_id;','emails');
+$emails = "jvavul@gmail.com";
+
 $body  = $this->email_start();
 $body .= $this->handle_source($core->i18n['email:payments:payment_made_body'],$values);
 $body .= $this->footer();
@@ -88,6 +86,14 @@ $this->send_email(
 
 
 // received payment
+$emails = core_db::col('
+	SELECT group_concat(email) AS emails
+	FROM customer_entity
+	WHERE org_id='.$to_org['org_id'].'
+		AND is_active=1 AND is_deleted=0
+	GROUP BY org_id;','emails');
+$emails = "jvavul@gmail.com";
+
 $body  = $this->email_start();
 $body .= $this->handle_source($core->i18n['email:payment_received_body'],$values);
 $body .= $this->footer();
