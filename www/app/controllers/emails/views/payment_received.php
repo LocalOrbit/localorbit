@@ -25,7 +25,7 @@ $values['invoice_ids'] = explode(',',$invoices['invoice_id']);
 
 
 core::log('payment_received ' . print_r($values, true));
-echo print_r($values, true);
+//echo print_r($values, true);
 
 
 
