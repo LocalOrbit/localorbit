@@ -9,7 +9,7 @@ $amount = $core->view[2];
 $invoices = $core->view[3];
 $date_received = core_format::date(time(),'short');
 
-
+ 
 $to_org = core::model('organizations')->load($to_org_id);
 $from_org = core::model('organizations')->load($received_from_org_id);
 
