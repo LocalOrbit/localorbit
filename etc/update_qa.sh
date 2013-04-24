@@ -48,9 +48,15 @@ live_web() {
 if [ $# -lt 2 ]
 then
         echo "USAGE:"
-        echo "$0 [switch live] version or trunk"
+        echo "$0 [update_1_step switch live] version or trunk"
 else
         case "$1" in
+                update_1_step)
+                        VERSION_NUMBER=$2
+                        echo $VERSION_NUMBER
+                        switch_web                        
+                        live_web
+                ;;
                 switch)
                         VERSION_NUMBER=$2
                         echo $VERSION_NUMBER

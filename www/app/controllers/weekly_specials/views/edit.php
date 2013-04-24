@@ -2,7 +2,7 @@
 
 core::ensure_navstate(array('left'=>'left_dashboard'),'weekly_specials-list','marketing');
 core_ui::fullWidth();
-core::head('Buy and Sell Local Food on Local Orbit - Edit Featured Promotions','This page is used to edit Weekly Specials');
+core::head('Buy and Sell Local Food on Local Orbit - Edit Featured Promotions','This page is used to edit Featured Promotions');
 lo3::require_permission();
 lo3::require_login();
 core_ui::load_library('js','weeklySpecials.js');

@@ -124,7 +124,7 @@ if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 	);
 }
 
-# date, product cat, item, amount, status (filter by item specific to producer - see weekly specials)
+# date, product cat, item, amount, status (filter by item specific to producer - see Featured Promotions)
 
 $price_formatter_start = 4;
 

@@ -79,7 +79,7 @@ class core_controller_weekly_specials extends core_controller
 		}
 		
 		$code->save('specialsForm');		
-		core_ui::notification($core->i18n('messages:generic_saved','weekly special'),false,($core->data['do_redirect'] != 1));
+		core_ui::notification($core->i18n('messages:generic_saved','Featured Promotion'),false,($core->data['do_redirect'] != 1));
 		if($core->data['do_redirect'] == 1)
 			core::redirect('weekly_specials','list');
 	}

@@ -94,7 +94,7 @@ $start = $end - (30 * 86400);
 		date, item, amount, status
 	</div>
 	<div class="tabarea" id="reportstabs-a2">
-		date, product cat, item, amount, status (filter by produ cat and filter by item specific to producer - see weekly specials for example
+		date, product cat, item, amount, status (filter by produ cat and filter by item specific to producer - see Featured Promotions for example
 	</div>
 	<div class="tabarea" id="reportstabs-a3">
 		relevant buyers by date, item, amount, status
@@ -109,7 +109,7 @@ $start = $end - (30 * 86400);
 		date, amount, status, order number
 	</div>
 	<div class="tabarea" id="reportstabs-a7">
-		date, product cat, item, amount, status (filter by item specific to producer - see weekly specials)
+		date, product cat, item, amount, status (filter by item specific to producer - see Featured Promotions)
 	</div>
 -->
 

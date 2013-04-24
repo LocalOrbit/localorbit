@@ -166,7 +166,7 @@ if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 	);
 }
 
-# date, product cat, item, amount, status (filter by item specific to producer - see weekly specials)
+# date, product cat, item, amount, status (filter by item specific to producer - see Featured Promotions)
 $items->add(new core_datacolumn('order_date','Placed On',true,'15%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{order_date}</a>','{order_date}','{order_date}'));
 if (lo3::is_seller()) {
 	$items->add(new core_datacolumn('category_ids','Category',true,'20%','<a href="#!products-edit--prod_id-{prod_id}">{parent_cat_name}</a>','{parent_cat_name}','{parent_cat_name}'));

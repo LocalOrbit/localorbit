@@ -37,7 +37,7 @@ else
 				<div class="span6">
 					<a href="http://<?=$core->config['hostname_prefix']?><?=$core->config['default_hostname']?>">
                         <h4 style="margin: 10px 0 0 0;">Powered by Local Orbit</h4>
-                        <small>Copyright Copyright <?=date('Y')?>. All Rights Reserved</small>
+                        <small>Copyright Copyright <?=date('Y')?>. All Rights Reserved.</small>
                		</a>
 				</div>
 			</div>
