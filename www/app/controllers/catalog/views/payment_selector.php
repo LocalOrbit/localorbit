@@ -20,7 +20,7 @@ if($org['payment_allow_paypal'] == 1) {
 <?
 }
 //	echo(core_ui::radiodiv('show_payment_paypal','Pay by Credit Card',false,'payment_method',false,"$('.payment_option').hide();$('#payment_paypal,#placeorder_button').fadeIn(300);").'<br />');
-if($org['payment_allow_purchaseorder'] == 1) 
+if($org['payment_allow_purchaseorder'] == 1 && !lo3::is_seller()) 
 {
 ?>
 	<label class="radio">
