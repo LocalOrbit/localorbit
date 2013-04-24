@@ -2,15 +2,22 @@
 global $core;
 
 # these are being passed in 
-$new_payment = $core->view[0];
-$trace_nbr = $core->view[1];
-$invoices = $core->view[2];
-$to_org = core::model('organizations')->load($new_payment['to_org_id']);
+$to_org_id = $core->view[0];
+$received_from_org_id = $core->view[1];
+$amount = $core->view[2];
+$invoices = $core->view[3];
+$date_received = core_format::date(time(),'short');
+
+
+$to_org = core::model('organizations')->load($to_org_id);
+$from_org = core::model('organizations')->load($received_from_org_id);
+
+
 
 $values = array();
-$values['hubname'] = $to_org['name'];
-$values['invoicenbr'] = $trace_nbr;
-$values['amount'] = core_format::price($new_payment['amount']);
+$values['paid_to'] = $to_org['name'];
+$values['received_from'] = $from_org['name'];
+$values['amount'] = core_format::price($amount);
 $values['date_received'] = core_format::date(time() + (7 * 86400),'short');
 $values['invoice_ids'] = explode(',',$invoices['invoice_id']);
 
@@ -27,13 +34,8 @@ $emails = "jvavul@gmail.com";
 
 
 
-core::log('payment_received ' . print_r($values));
-
-echo $values['hubname'] . "<br>";
-echo $emails . "<br>";
-echo $values['amount'] . "<br>";
-echo $values['trace_nbr'] . "<br>";
-echo $values['invoice_ids'] . "<br>";
+core::log('payment_received ' . print_r($values, true));
+echo print_r($values, true);
 
 
 
@@ -68,36 +70,37 @@ foreach($invoices as $invoice)
 $values['payables'] .='</table>'; */
 
 
-// paid via ACH
-if($new_payment['payment_method_id']  == 3) {
-	$body  = $this->email_start();
-	$body .= $this->handle_source($core->i18n['email:payments:payment_received_body_ach'],$values);
-	$body .= $this->footer();
-	$body .= $this->email_end();
+// made payment
+$body  = $this->email_start();
+$body .= $this->handle_source($core->i18n['email:payments:payment_made_body'],$values);
+$body .= $this->footer();
+$body .= $this->email_end();
 
-	$this->send_email(
-		$core->i18n['email:payments:payment_received_subject_ach'],$emails,
+$this->send_email(
+	$core->i18n['email:payments:payment_made_subject'],
+	$emails,
+	$body,
+	array(),
+	$core->config['mailer']['From'],
+	$values['received_from']
+);
+
+
+
+// received payment
+$body  = $this->email_start();
+$body .= $this->handle_source($core->i18n['email:payment_received_body'],$values);
+$body .= $this->footer();
+$body .= $this->email_end();
+
+$this->send_email(
+		$core->i18n['email:payments:payment_received_subject'],
+		$emails,
 		$body,
 		array(),
 		$core->config['mailer']['From'],
-		$values['hubname']
+		$values['paid_to']
+);
 
-	);
-	
-} else {
-	$body  = $this->email_start();
-	$body .= $this->handle_source($core->i18n['email:payments:payment_received_body_other'],$values);
-	$body .= $this->footer();
-	$body .= $this->email_end();
-	
-	$this->send_email(
-			$core->i18n['email:payments:payment_received_subject_other'],$emails,
-			$body,
-			array(),
-			$core->config['mailer']['From'],
-			$values['hubname']
-	);
-}
 
-die();
 ?>

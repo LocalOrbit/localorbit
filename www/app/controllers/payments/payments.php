@@ -257,10 +257,12 @@ class core_controller_payments extends core_controller
 				
 				if($result)
 				{
-					// send email of payment received
+					// send emails of payment to both parties
 					core::process_command('emails/payment_received',false,
-						$new_payment, $trace_nbr, $invoices
+						$new_payment['to_org_id'], $new_payment['from_org_id'], $new_payment['amount'], $invoices
 					);
+
+					
 					
 					foreach($payment['invoices'] as $invoice_id=>$amount)
 					{
