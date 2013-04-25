@@ -173,11 +173,17 @@ div.faq_question_expanded{
 
 
 div.homepage_title{
-	font-size: 20px;
+	font-size: 19px;
 	color: #000;
-	line-height: 27px;
+	line-height: 29px;
 	padding-top: 10px;
+
 	font-family: 'Francois One', sans-serif !important;
+
+	
+/*
+	font-family: Droid Sans, sans-serif;
+*/
 }
 
 a{
