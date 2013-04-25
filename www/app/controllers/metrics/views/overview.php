@@ -1,6 +1,7 @@
 <?
 global $core;
 core_ui::load_library('js','metrics.js');
+core_ui::fullWidth();
 lo3::require_orgtype('admin');
 core::ensure_navstate(array('left'=>'left_dashboard'),'metrics-overview','reports');
 core::head('Metrics','This page is used to view various metrics');
