@@ -162,11 +162,22 @@ popupWindow = window.open(url,winName,settings)
 	</tr>
 	<tr>
 		<td colspan="3">
-			
-			
-			
-			
-			
+			<div class="jobs_area">
+				<div style="width: 750px; float: left;">
+					<h3>Local Sourcing &amp; Institutional Scale</h3>
+					Interested in <u>even more</u> services to simplify local sourcing, enabling institutions &amp; restaurant groups
+					to expand their purchasing? We've got a solution for that.
+				</div>
+				<div style="width: 250px; float: left;">
+					<a id="learnMoreExpand" href="Javascript:$('#learnMore,#learnMoreExpand,#learnMoreCollapse').toggle(300);" style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Learn More</a>
+					<a id="learnMoreCollapse" href="Javascript:$('#learnMore,#learnMoreExpand,#learnMoreCollapse').toggle(300);" style="display:none;margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Not Now</a>
+				</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3" id="learnMore" style="display: none;">
+			<br />&nbsp;<br />
 			
 			<table width="1100" style="table-layout: fixed;">
 				<col width="28%" />
@@ -180,7 +191,9 @@ popupWindow = window.open(url,winName,settings)
 				<tr>
 					<td rowspan="2">
 					
+<!--
 						<h2 style="margin-top: 10px;">Local Sourcing at Institutional Scale</h2> 
+-->
 						
 						Customers want you to use locally sourced products - and they want 
 						the stories behind them. It's both a competitive and culinary advantage. 
@@ -238,4 +251,5 @@ popupWindow = window.open(url,winName,settings)
 		</td>
 	</tr>
 </table>
+<br />&nbsp;<br />
 <? include('includes/page_end.php'); ?>
