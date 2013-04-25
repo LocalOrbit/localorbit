@@ -31,10 +31,7 @@
 							so you can focus on what's most important.  
 									
 							<br />&nbsp;<br />
-							We offer live demos and keep these sessions small, so there's lots of time 
-							for questions about how Local Orbit can work for your business. 
-							<br />&nbsp;<br />
-							Reserve your place today.
+							We offer live demos. Reserve your place today.
 							<br />&nbsp;<br /> 
 			<script language="javascript">
 var popupWindow = null;
@@ -74,13 +71,14 @@ popupWindow = window.open(url,winName,settings)
 					     
 						<img class="thumb" onclick="doFeaturePopup('financial_management',975)" src="/homepage/img/features/financial_management_thumb.png" />
 						<br />&nbsp;<br />
+						
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
 						<img src="/homepage/img/icon_clipboard_small.png" class="home_icon" /><h3 class="home_header">Inventory Management</h3>
 						<div class="home_paragraph" style="height: 115px;">
 							Real-time inventory. Adjust pricing and quantities on the fly. 
-							Flexible inventory options - simple or lot-based to ensure deep traceability.
+							Simple or lot-based inventory options to ensure deep traceability.
 						</div>
 						
 						<img class="thumb" onclick="doFeaturePopup('inventory',975)" src="/homepage/img/features/inventory_thumb.png" />
@@ -93,7 +91,7 @@ popupWindow = window.open(url,winName,settings)
 						<img src="/homepage/img/icon_link_small.png" class="home_icon" /><h3 class="home_header">Efficient Logistics</h3>
 						<div class="home_paragraph">
 							Generate pick lists and packing slips. Automated emails remind buyers and sellers about 
-							upcoming deliveries. Producers maintain their brand throughout the process. </div>
+							upcoming deliveries. Producers maintain their brand throughout the process. <br />&nbsp;<br /></div>
 						<img class="thumb" onclick="doFeaturePopup('logistics',975)" src="/homepage/img/features/logistics_thumb.png" />
 						<br />&nbsp;<br />
 						
@@ -102,19 +100,20 @@ popupWindow = window.open(url,winName,settings)
 						<img src="/homepage/img/icon_megaphone.png" class="home_icon" /><h3 class="home_header">Integrated Marketing</h3>
 						 <div class="home_paragraph">
 						 Manage everything in one place: create discounts, promotions, <br>micro-blogs, newsletters and Fresh Sheets 
-						 in minutes. Integrate your facebook or twitter feeds.
+						 in minutes. Integrate your facebook or twitter feeds.<br />&nbsp;<br />
 						</div>
 				
 						<img class="thumb" onclick="doFeaturePopup('integrated_marketing',975)" src="/homepage/img/features/integrated_marketing_thumb.png" />
 						<br />&nbsp;<br />
 						<div class="home_paragraph">
 						
+						
 					</td>
 					<td>
 						<img src="/homepage/img/icon_bar_graph.png" class="home_icon" /><h3 class="home_header">Reporting and Analysis</h3>
 						<div class="home_paragraph">
-							Power your business with knowledge. Sophisticated, easy-to-use reports let you track, learn from and improve your business weekly, monthly and year-over-year.
-						</div>
+							Power your business with knowledge. Sophisticated, easy-to-use reports let you track your business weekly, monthly and year-over-year.
+						<br />&nbsp;<br /></div>
 					
 						<img class="thumb" onclick="doFeaturePopup('reporting',975)" src="/homepage/img/features/reporting_thumb.png" />
 						<br />&nbsp;<br />

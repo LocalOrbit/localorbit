@@ -190,13 +190,16 @@ popupWindow = window.open(url,winName,settings)
 						We've got a solution for that. Actually, we've got a couple of solutions.
 						<br />&nbsp;<br />
 						<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dGN1aERlZ3Q2bnRHbDBDUkdqdEcwNnc6MQ" class="btn btn_blue" style="margin-left: 10px;" 
-						onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Learn More</a>
+						onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Contact Us</a>
 				
 					</td>
 					<td rowspan="2">&nbsp;</td>
 					<td>
 						<img src="/homepage/img/icon_puzzle_piece_smaller.png" class="home_icon" /><h2 class="home_header">Managed Payments</h2>
 						<div class="home_paragraph">
+							Ideal for food hubs, farmers markets and aggregators.
+							Secure, transparent, simple.
+							<br />&nbsp;<br />
 							Looking to simplify financial management and keep your staffing 
 							costs down? Focus on building your market and let us manage the payments. 
 							<br />&nbsp;<br />
@@ -204,9 +207,8 @@ popupWindow = window.open(url,winName,settings)
 							payment and transfers funds directly to sellers, on 
 							terms you establish. Track the status of all money in 
 							and out from your account dashboard. 
-							<br />&nbsp;<br />
-							Ideal for food hubs, farmers markets and aggregators.
-							Secure, transparent, simple.
+							
+							
 							
 							 
 					
@@ -217,6 +219,9 @@ popupWindow = window.open(url,winName,settings)
 					<td>
 						<img src="/homepage/img/icon_puzzle_piece_smaller.png" class="home_icon" /><h2 class="home_header">Vendor Management</h2>
 						<div class="home_paragraph">
+							Ideal for institutional food service and restaurants that 
+							source direct from many local farms and independent suppliers. 
+							<br />&nbsp;<br />
 							Purchase from your favorite small farms and artisan 
 							producers - without the hassle of managing dozens of 
 							weekly emails, calls, orders, invoices, payments or 
@@ -224,9 +229,7 @@ popupWindow = window.open(url,winName,settings)
 							single payment.
 							<br />&nbsp;<br />
 							Local Orbit removes the administrative burden so you can focus on developing relationships with your vendors.
-							Ideal for institutional food service and restaurants that 
-							source direct from many local farms and independent suppliers. 
-							<br />&nbsp;<br />
+							
 							<br />&nbsp;<br />
 						</div>
 					</td>

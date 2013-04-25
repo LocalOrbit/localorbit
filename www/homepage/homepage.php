@@ -114,9 +114,7 @@
 			Juggling spreadsheets, sticky notes, Quickbooks, emails and phone 
 			calls limits your business's growth.<br><br> There's a better way.
 			<br />&nbsp;<br />
-			Manage your marketing, sales and financials 
-			from a single dashboard. Save time and increase profitability with 
-			real-time information, powerful communications tools and streamlined processes.
+			Save time and increase profitability.
 			 
 			<br />&nbsp;<br />
 			<script language="javascript">
@@ -140,7 +138,7 @@ popupWindow = window.open(url,winName,settings)
 		<td>
 			<img src="/homepage/img/icon_smiley.png" class="home_icon" /><h3 class="home_header">No Risk, No Start Up Costs</h3>
 			<div class="home_paragraph">
-			Affordable tools that grow with you, at every stage of your business. No upfront investment. 14-day free trial. 
+			Affordable tools that grow with you, at every stage of your business. No upfront investment. 30-day free trial. 
 			</div>
 		</td>
 		<td rowspan="2">&nbsp;</td>

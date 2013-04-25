@@ -39,9 +39,8 @@ popupWindow = window.open(url,winName,settings)
 				</div>
 				<h3>See it in Action</h3>
 				Our tools speak for themselves. We offer live demos 
-				on Tuesdays and Thursdays. We keep these small so there's lots of time 
-				for questions about how Local Orbit can work for your business.  
-				Reserve your place today.
+				on Tuesdays and Thursdays. Reserve your place today.
+				<br />&nbsp;<br />
 				<br />&nbsp;<br />
 			</div>
 		</td>	
@@ -52,10 +51,10 @@ popupWindow = window.open(url,winName,settings)
 					<img src="/homepage/img/contact/newsletter.png" />
 				</div>
 				<h3>Sign Up for Our Newsletter</h3>
-				Get the latest news and information about 
-				Local Orbit by signing up for our email list. 
+				Get the latest news and information. 
 				We'll send you a quarterly newsletter and a 
-				few extra updates along the way. 
+				few extra updates along the way.
+				<br />&nbsp;<br /> 
 			</div>
 		</td>
 		<td>&nbsp;</td>
@@ -65,7 +64,8 @@ popupWindow = window.open(url,winName,settings)
 					<img src="/homepage/img/contact/smiley.png" />
 				</div>
 				<h3>Need Something Else?</h3>
-				If there's a question we haven't answered, we're here to help. Just let us know what you need.
+				Just let us know. If there's a question we haven't answered, we're here to help. 
+				<br />&nbsp;<br />
 				<br />&nbsp;<br />
 			</div>
 		</td>
