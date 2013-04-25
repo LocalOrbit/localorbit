@@ -79,7 +79,8 @@ function render_ranges($breakdown_by,$ranges)
 	render_row('Total Sales',$data['financials']['total_sales']);
 	render_row('Average Order',$data['financials']['avg_order'],1);
 	render_row('Average # Items',$data['financials']['avg_items'],1);
-	render_row('Average Transaction Fees',$data['financials']['avg_lo_fee'],1);
+	render_row('Average LO Fees',$data['financials']['avg_lo_fee'],1);
+	render_row('Average LO Fees %',$data['financials']['avg_lo_fee_percent'],1);
 	render_row('Sales % Growth',$data['financials']['sales_growth'],1);
 	render_row('Local Orbit Fees',$data['financials']['lo_fees']);
 	render_row('Fee % Growth',$data['financials']['fee_growth'],1);
