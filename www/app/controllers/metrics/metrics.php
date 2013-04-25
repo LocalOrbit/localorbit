@@ -100,6 +100,8 @@ The math:
 				'nbr_orders'=>$this->get_metric_data_nbr_orders($ranges),
 				'total_sales'=>$this->get_metric_data_total_sales($ranges),
 				'avg_order'=>$this->get_metric_data_avg_orders($ranges),
+				'avg_items'=>$this->get_metric_data_avg_items($ranges),
+				'avg_lo_fee'=>$this->get_metric_data_avg_lo_fee($ranges),
 				'lo_fees'=>$this->get_metric_data_lo_fees($ranges),
 			)
 		);
@@ -230,6 +232,8 @@ The math:
 			$data['financials']['total_sales'][$i] = core_format::price($data['financials']['total_sales'][$i],false);
 			$data['financials']['lo_fees'][$i]     = core_format::price($data['financials']['lo_fees'][$i],false);
 			$data['financials']['avg_order'][$i]     = core_format::price($data['financials']['avg_order'][$i],false);
+			$data['financials']['avg_items'][$i]     = round($data['financials']['avg_items'][$i],1);
+			$data['financials']['avg_lo_fee'][$i]     = core_format::price($data['financials']['avg_lo_fee'][$i],false);
 			
 			# format infinities and negativs nicely
 			$data['financials']['sales_growth'][$i] = $this->format_percents($data['financials']['sales_growth'][$i],($core->data['output_as'] == 'html'));
@@ -502,6 +506,76 @@ The math:
 		}
 		return $data;
 	}
+	
+	function get_metric_data_avg_items($ranges)
+	{
+		global $core;
+		$data = array();
+		foreach($ranges as $range)
+		{
+			$sql = '
+				select (sum((select count(lo_liid) from lo_order_line_item where lo_order_line_item.lo_oid=lo_order.lo_oid)) / count(lo_order.lo_oid)) as mycount
+				from lo_order
+				where ldstat_id not in (1,3)
+				and order_date >= \''.date('Y-m-d H:i:s',$range[0]).'\'
+				and order_date < \''.date('Y-m-d H:i:s',$range[1]).'\'
+				and org_id not in (
+					select org_id
+					from organizations_to_domains
+					where domain_id in (1,3,6,23,24,25,26)
+				)
+			';
+			if(intval($core->data['domain_id']) > 0)
+			{
+				
+				$sql .= '
+					and org_id in (
+						select org_id
+						from organizations_to_domains
+						where domain_id='.intval($core->data['domain_id']).'
+					)
+				';
+			}
+			$data[] = core_db::col($sql,'mycount');
+		}
+		return $data;
+	}
+	
+	function get_metric_data_avg_lo_fee($ranges)
+	{
+		global $core;
+		$data = array();
+		foreach($ranges as $range)
+		{
+			$sql = '
+				select ((sum(grand_total * (fee_percen_lo / 100))) / count(grand_total)) as mycount
+				from lo_order
+				where ldstat_id not in (1,3)
+				and order_date >= \''.date('Y-m-d H:i:s',$range[0]).'\'
+				and order_date < \''.date('Y-m-d H:i:s',$range[1]).'\'
+				and org_id not in (
+					select org_id
+					from organizations_to_domains
+					where domain_id in (1,3,6,23,24,25,26)
+				)
+			';
+			if(intval($core->data['domain_id']) > 0)
+			{
+				
+				$sql .= '
+					and org_id in (
+						select org_id
+						from organizations_to_domains
+						where domain_id='.intval($core->data['domain_id']).'
+					)
+				';
+			}
+			$data[] = core_db::col($sql,'mycount');
+		}
+		return $data;
+	}
+	
+	
 	function get_metric_data_lo_fees($ranges)
 	{
 		global $core;
