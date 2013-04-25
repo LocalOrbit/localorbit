@@ -77,6 +77,7 @@ function render_ranges($breakdown_by,$ranges)
 	render_ranges($core->data['breakdown_by'],$data['ranges']);
 	render_row('# of Orders',$data['financials']['nbr_orders'],1);
 	render_row('Total Sales',$data['financials']['total_sales']);
+	render_row('Average Order',$data['financials']['avg_order'],1);
 	render_row('Sales % Growth',$data['financials']['sales_growth'],1);
 	render_row('Local Orbit Fees',$data['financials']['lo_fees']);
 	render_row('Fee % Growth',$data['financials']['fee_growth'],1);
