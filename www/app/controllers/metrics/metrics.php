@@ -585,7 +585,7 @@ The math:
 		foreach($ranges as $range)
 		{
 			$sql = '
-				select (sum(fee_percen_lo) / count(grand_total)) as mycount
+				select (((sum(grand_total * (fee_percen_lo / 100))) / sum(grand_total)) * 100) as mycount
 				from lo_order
 				where ldstat_id not in (1,3)
 				and order_date >= \''.date('Y-m-d H:i:s',$range[0]).'\'
