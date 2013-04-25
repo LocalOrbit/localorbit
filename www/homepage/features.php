@@ -54,7 +54,7 @@ popupWindow = window.open(url,winName,settings)
 					<td rowspan="2">&nbsp;</td>
 					<td>
 						<img src="/homepage/img/icon_cart.png" class="home_icon" /><h3 class="home_header">Streamlined Ordering</h3>
-							<div class="home_paragraph" style="height: 115px;">
+							<div class="home_paragraph" style="height: 100px;">
 							Full-featured e-commerce for buyers, 
 							or order entry by your sales team. Process orders the way you prefer to manage your business. </div>
 						<img class="thumb" onclick="doFeaturePopup('streamlined_ordering',975)" src="/homepage/img/features/streamlined_ordering_thumb.png" />
@@ -65,7 +65,7 @@ popupWindow = window.open(url,winName,settings)
 					<td>
 						<img src="/homepage/img/icon_dollarsign.png" class="home_icon" /><h3 class="home_header">Financial Management </h3>
 						
-						<div class="home_paragraph" style="height: 115px;">
+						<div class="home_paragraph" style="height: 100px;">
 					        One dashboard simplifies your day-to-day financials: track money in and out, send invoices, 
 					        make payments to your sellers.</div>
 					     
@@ -76,7 +76,7 @@ popupWindow = window.open(url,winName,settings)
 					<td rowspan="2">&nbsp;</td>
 					<td>
 						<img src="/homepage/img/icon_clipboard_small.png" class="home_icon" /><h3 class="home_header">Inventory Management</h3>
-						<div class="home_paragraph" style="height: 115px;">
+						<div class="home_paragraph" style="height: 100px;">
 							Real-time inventory. Adjust pricing and quantities on the fly. 
 							Simple or lot-based inventory options to ensure deep traceability.
 						</div>
