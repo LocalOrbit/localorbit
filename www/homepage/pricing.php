@@ -156,7 +156,7 @@ popupWindow = window.open(url,winName,settings)
 					<em>save $200 if paid annually</em>
 				</div>
 			</div>
-		
+			<a name="learn_more"></a>
 			<h3 style="clear:both;text-align: center;">	<br /><br>30-day guarantee. No risks. No start-up costs.<br /></h3>
 			<br><br>
 		</td>
@@ -164,7 +164,7 @@ popupWindow = window.open(url,winName,settings)
 	<tr>
 		<td colspan="3">
 			<div class="jobs_area">
-				<a name="learn_more"></a>
+				
 				<div style="width: 750px; float: left;">
 					<h3>Local Sourcing &amp; Institutional Scale</h3>
 					Interested in <u>even more</u> services to simplify local sourcing, enabling institutions &amp; restaurant groups
