@@ -1,4 +1,5 @@
 <? $title='Pricing'; include('includes/page_start.php'); ?>	
+<a name="top"></a>
 <table width="100%">
 	<col width="30%" />
 	<col width="2%" />
@@ -163,14 +164,15 @@ popupWindow = window.open(url,winName,settings)
 	<tr>
 		<td colspan="3">
 			<div class="jobs_area">
+				<a name="learn_more"></a>
 				<div style="width: 750px; float: left;">
 					<h3>Local Sourcing &amp; Institutional Scale</h3>
 					Interested in <u>even more</u> services to simplify local sourcing, enabling institutions &amp; restaurant groups
 					to expand their purchasing? We've got a solution for that.
 				</div>
 				<div style="width: 250px; float: left;">
-					<a id="learnMoreExpand" href="Javascript:$('#learnMore,#learnMoreExpand,#learnMoreCollapse').toggle(300);" style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Learn More</a>
-					<a id="learnMoreCollapse" href="Javascript:$('#learnMore,#learnMoreExpand,#learnMoreCollapse').toggle(300);" style="display:none;margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Not Now</a>
+					<a id="learnMoreExpand" href="#learn_more" onclick="$('#learnMore,#learnMoreExpand,#learnMoreCollapse').toggle(300);" style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Learn More</a>
+					<a id="learnMoreCollapse" href="#top" onclick="$('#learnMore,#learnMoreExpand,#learnMoreCollapse').toggle(300);" style="display:none;margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Not Now</a>
 				</div>
 			</div>
 		</td>
@@ -190,7 +192,7 @@ popupWindow = window.open(url,winName,settings)
 				</tr>
 				<tr>
 					<td rowspan="2">
-					
+						
 <!--
 						<h2 style="margin-top: 10px;">Local Sourcing at Institutional Scale</h2> 
 -->
