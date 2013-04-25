@@ -89,7 +89,7 @@ popupWindow = window.open(url,winName,settings)
 				<tr>
 					<td>
 						<img src="/homepage/img/icon_link_small.png" class="home_icon" /><h3 class="home_header">Efficient Logistics</h3>
-						<div class="home_paragraph">
+						<div class="home_paragraph" style="height: 115px;">
 							Generate pick lists and packing slips. Automated emails remind buyers and sellers about 
 							upcoming deliveries. Producers maintain their brand throughout the process. <br />&nbsp;<br /></div>
 						<img class="thumb" onclick="doFeaturePopup('logistics',975)" src="/homepage/img/features/logistics_thumb.png" />
@@ -98,7 +98,7 @@ popupWindow = window.open(url,winName,settings)
 					</td>
 					<td>
 						<img src="/homepage/img/icon_megaphone.png" class="home_icon" /><h3 class="home_header">Integrated Marketing</h3>
-						 <div class="home_paragraph">
+						 <div class="home_paragraph" style="height: 115px;">
 						 Manage everything in one place: create discounts, promotions, <br>micro-blogs, newsletters and Fresh Sheets 
 						 in minutes. Integrate your facebook or twitter feeds.<br />&nbsp;<br />
 						</div>
@@ -111,7 +111,7 @@ popupWindow = window.open(url,winName,settings)
 					</td>
 					<td>
 						<img src="/homepage/img/icon_bar_graph.png" class="home_icon" /><h3 class="home_header">Reporting and Analysis</h3>
-						<div class="home_paragraph">
+						<div class="home_paragraph" style="height: 115px;">
 							Power your business with knowledge. Sophisticated, easy-to-use reports let you track your business weekly, monthly and year-over-year.
 						<br />&nbsp;<br /></div>
 					
