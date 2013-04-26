@@ -172,7 +172,7 @@ popupWindow = window.open(url,winName,settings)
 					Looking for help with invoicing and payments? We've got a solution. 
 				</div>
 				<div style="width: 250px; float: left;">
-					<a href="/homepage/managed_services.php"  style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Learn More</a>
+					<a href="/homepage/managed-services.php"  style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Learn More</a>
 		
 				</div>
 			</div>
