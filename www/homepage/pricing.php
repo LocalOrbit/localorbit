@@ -166,13 +166,14 @@ popupWindow = window.open(url,winName,settings)
 			<div class="jobs_area">
 				
 				<div style="width: 750px; float: left;">
-					<h3>Local Sourcing &amp; Institutional Scale</h3>
-					Interested in <u>even more</u> services to simplify local sourcing, enabling institutions &amp; restaurant groups
-					to expand their purchasing? We've got a solution for that.
+					<h3>Local Sourcing at Institutional Scale</h3>
+					Interested in even more services to simplify local sourcing for your institution or restaurant group? 
+					<br />
+					Looking for help with invoicing and payments? We've got a solution. 
 				</div>
 				<div style="width: 250px; float: left;">
 					<a id="learnMoreExpand" href="#learn_more" onclick="$('#learnMore,#learnMoreExpand,#learnMoreCollapse').toggle(300);" style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Learn More</a>
-					<a id="learnMoreCollapse" href="#top" onclick="$('#learnMore,#learnMoreExpand,#learnMoreCollapse').toggle(300);" style="display:none;margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Not Now</a>
+					<a id="learnMoreCollapse" href="#top" onclick="$('#learnMore,#learnMoreExpand,#learnMoreCollapse').toggle(300);" style="display:none;margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Maybe Later</a>
 				</div>
 			</div>
 		</td>
@@ -193,16 +194,17 @@ popupWindow = window.open(url,winName,settings)
 				<tr>
 					<td rowspan="2">
 						
-<!--
-						<h2 style="margin-top: 10px;">Local Sourcing at Institutional Scale</h2> 
--->
 						
+						<h2 style="margin-top: 10px;">Focus on What You Do Best</h2> 
+
+				
 						Customers want you to use locally sourced products - and they want 
-						the stories behind them. It's both a competitive and culinary advantage. 
+						the stories behind them. It's both a competitive and culinary advantage.
+						<br />&nbsp;<br /> 
 						But for large organizations, sourcing from lots of small vendors 
-						can be an administrative headache.  
+						is an administrative headache.  
 						<br />&nbsp;<br />
-						We've got a solution for that. Actually, we've got a couple of solutions.
+						Actually, we've got a couple of solutions. 
 						<br />&nbsp;<br />
 						<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dGN1aERlZ3Q2bnRHbDBDUkdqdEcwNnc6MQ" class="btn btn_blue" style="margin-left: 10px;" 
 						onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Contact Us</a>
@@ -212,8 +214,8 @@ popupWindow = window.open(url,winName,settings)
 					<td>
 						<img src="/homepage/img/icon_puzzle_piece_smaller.png" class="home_icon" /><h2 class="home_header">Managed Payments</h2>
 						<div class="home_paragraph">
-							Ideal for food hubs, farmers markets and aggregators.
-							Secure, transparent, simple.
+							For food hubs, farmers markets and aggregators.
+							
 							<br />&nbsp;<br />
 							Looking to simplify financial management and keep your staffing 
 							costs down? Focus on building your market and let us manage the payments. 
@@ -222,6 +224,8 @@ popupWindow = window.open(url,winName,settings)
 							payment and transfers funds directly to sellers, on 
 							terms you establish. Track the status of all money in 
 							and out from your account dashboard. 
+							<br />&nbsp;<br />
+							Secure, transparent, simple.
 							
 							
 							
@@ -234,16 +238,16 @@ popupWindow = window.open(url,winName,settings)
 					<td>
 						<img src="/homepage/img/icon_puzzle_piece_smaller.png" class="home_icon" /><h2 class="home_header">Vendor Management</h2>
 						<div class="home_paragraph">
-							Ideal for institutional food service and restaurants that 
-							source direct from many local farms and independent suppliers. 
+							For institutional food service and restaurants that 
+							source direct from many farms and independent suppliers. 
 							<br />&nbsp;<br />
-							Purchase from your favorite small farms and artisan 
+							Purchase from your favorite farms and artisan 
 							producers - without the hassle of managing dozens of 
 							weekly emails, calls, orders, invoices, payments or 
 							stories. Order from many vendors with a single click, and a 
 							single payment.
 							<br />&nbsp;<br />
-							Local Orbit removes the administrative burden so you can focus on developing relationships with your vendors.
+							Eliminate the administrative hassle and focus on building relationships.
 							
 							<br />&nbsp;<br />
 						</div>

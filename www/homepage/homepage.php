@@ -75,17 +75,17 @@
 		<td>&nbsp;&nbsp;&nbsp;</td>
 		<td style="text-align: center !important;">
 			<div class="homepage_title">
-				Sales &amp; business management
-				tools for the entrepeneurs &amp; organizations that are 
-				creating a New Food Economy, connecting buyers &amp; sellers 
-				through shorter, transparent supply chains.
+				Sales and business management
+				tools for the entrepeneurs and organizations  
+				building the New Food Economy, connecting buyers and sellers 
+				with shorter, transparent supply chains.
 			</div>
 			<br />
 			<img src="/homepage/img/icon_pitchfork_shovel_blue.png" />
 			<br />&nbsp;<br />
 			<div class="homepage_title">
-			We help people build profitable
-			businesses &amp; healthier communities.
+			We help people build profitable<br />
+			businesses and healthier communities.
 			
 				<br />&nbsp;<br />
 				<a class="btn btn_blue" style="margin-left: 55px;" href="/homepage/features.php">Learn More</a>
