@@ -6,7 +6,7 @@
 	<tr>
 		<td>
 			<h2>Re-linking the Food Chain</h2>
-			People are hungry for food that's produced by farmers, ranchers and artisans they know and trust. They want to spend a larger share fo their food dollars in their own communities. Local Orbit's services create stronger, more efficient food networks that can meet the demand for the food produced closer to where we live.
+			People are hungry for food that's produced by farmers, ranchers and artisans they know and trust. They want to spend a larger share of their food dollars in their own communities. Local Orbit's services create stronger, more efficient food networks that can meet the demand for the food produced closer to where we live.
 			<br />&nbsp;<br />
 			Our flexible, localized tools are designed to support the businesses and organizations that are rebuilding local and regional supply chains.
 			<br />&nbsp;<br />
