@@ -100,7 +100,7 @@ else
 							<a href="/" class="logo"><img width="112" height="111" src="/homepage/includes/logo5.png" /></a>
 							<div id="nav1">
 								<a class="nav1" style="font-size: 125%;" href="/homepage/features.php">Features</a>
-								<a class="nav1" style="font-size: 125%;" href="/homepage/homepage.php#whouses">Customers</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/customers.php">Customers</a>
 								<a class="nav1" style="font-size: 125%;" href="/homepage/pricing.php">Pricing</a>
 								<a class="nav1" style="font-size: 125%;" href="/homepage/company.php">About</a>
 								<a class="nav1" style="font-size: 125%;" href="/field-notes/">Field Notes</a>
