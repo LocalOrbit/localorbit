@@ -19,7 +19,7 @@
 						But for large organizations, sourcing from lots of small vendors 
 						is an administrative headache.  
 						<br />&nbsp;<br />
-						Actually, we've got a couple of solutions. 
+						We've got a solution for that. Actually, we've got a couple of solutions. 
 						<br />&nbsp;<br />
 						<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dGN1aERlZ3Q2bnRHbDBDUkdqdEcwNnc6MQ" class="btn btn_blue" style="margin-left: 10px;" 
 						onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Contact Us</a>
