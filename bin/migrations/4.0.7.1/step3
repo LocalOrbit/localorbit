@@ -1,5 +1,6 @@
-#!/bin/bash
-echo "step 3: dropping old tables, renaming tables"
+#!/usr/bin/php
+<?php
+echo "step 3: dropping old tables, renaming tables\n";
 
 
 if($argv[1] == 'prod') {
@@ -20,5 +21,6 @@ if($argv[1] == 'prod') {
 	$host = '127.0.0.1';
 	$database = 'localorb_www_dev';
 }
-mysql -A --host=$host --user=$user --password=$pass $database < ./sql/step3.sql;
+echo(shell_exec("mysql -A --host=$host --user=$user --password=$pass $database < ./sql/step3.sql"));
 
+?>

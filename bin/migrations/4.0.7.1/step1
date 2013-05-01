@@ -1,5 +1,7 @@
-#!/bin/bash
-echo "step 1: creating tables"
+#!/usr/bin/php
+<?php
+echo "step 1: creating new tables\n";
+
 
 if($argv[1] == 'prod') {
 	$user = 'localorb_www';
@@ -19,5 +21,6 @@ if($argv[1] == 'prod') {
 	$host = '127.0.0.1';
 	$database = 'localorb_www_dev';
 }
+echo(shell_exec("mysql -A --host=$host --user=$user --password=$pass $database < ./sql/step1.sql"));
 
-mysql -A --host=$host --user=$user --password=$pass $database < ./sql/step1.sql;
+?>

@@ -21,7 +21,7 @@ if($argv[1] == 'prod') {
 	$host = '127.0.0.1';
 	$database = 'localorb_www_dev';
 }
-echo $host."  ".$user."  ".$pass;
+#echo $host."  ".$user."  ".$pass;
 mysql_connect($host,$user,$pass);
 mysql_select_db($database);
 

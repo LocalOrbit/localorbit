@@ -5,9 +5,16 @@ function migrate_type1()
 	echo "\tA: buyer orders\n";
 	
 	# get a list of all the payables / items that need to be stored for this payable type
-	$payables = get_array('select * from payables where payable_type_id=1;');
+	$sql = '
+		select p.*
+		from payables p
+		where payable_type_id=1;
+	';
+	#echo($sql."\n");
+	$payables = get_array($sql);
 	$invoices = array();
-	$items = get_array('
+	#print_r(get_array_fields($payables,'parent_obj_id'));
+	$sql = '
 		select loi.*,p.domain_id,p.invoice_id,p.from_org_id,p.to_org_id,
 		UNIX_TIMESTAMP(p.creation_date) as payable_date,
 		UNIX_TIMESTAMP(i.creation_date) as invoice_date,
@@ -15,10 +22,12 @@ function migrate_type1()
 		from lo_order_line_item loi
 		inner join payables p on (loi.lo_oid=p.parent_obj_id and p.payable_type_id=1)
 		left join invoices i on (p.invoice_id=i.invoice_id)
-		where loi.lo_oid in ('.implode(',',get_array_fields($payables,'parent_obj_id')).');');
+		where loi.lo_oid in ('.implode(',',get_array_fields($payables,'parent_obj_id')).');';
+	#echo($sql."\n");
+	$items = get_array($sql);
 	echo("\t\tA1: ".count($items)." payables to create\n");
 	
-	
+	#exit();
 	# create the new payables
 	foreach($items as $item)
 	{
@@ -40,7 +49,7 @@ function migrate_type1()
 			'domain_id'=>$item['domain_id'],
 			'from_org_id'=>$item['from_org_id'],
 			'to_org_id'=>$item['to_org_id'],
-			'po_type'=>'buyer order',
+			'payable_type'=>'buyer order',
 			'parent_obj_id'=>$item['lo_liid'],
 			'amount'=>$item['row_adjusted_total'],
 			'creation_date'=>$item['payable_date'],
@@ -53,24 +62,28 @@ function migrate_type1()
 		}
 		
 		# do the insert!
-		$sql = make_insert('purchase_orders',$data);
+		$sql = make_insert('new_payables',$data);
 		mysql_query($sql);
 	}
+	#print_r($invoices);
+	#exit();
 	echo("\t\tA2: invoices/payments created\n");
 	
 	
 	# get a list of all the payments for this type, and create them.
 	$sql = '
 		select p.*,UNIX_TIMESTAMP(p.creation_date) as p_creation_date,
-		group_concat(xip.invoice_id) as invoices
+		group_concat(xip.invoice_id) as invoices,
+		pm.payment_method
 		from payments p
 		inner join x_invoices_payments xip on (xip.payment_id=p.payment_id)
+		inner join payment_methods pm on (pm.payment_method_id=p.payment_method_id)
 		where xip.invoice_id in (
 			'.implode(',',array_keys($invoices)).'
 		)
 		group by p.payment_id
 	';
-	echo($sql."\n");
+	#echo($sql."\n");
 	$payments = get_array($sql);
 	
 	echo("\t\tA3: payments found.\n");
@@ -79,7 +92,7 @@ function migrate_type1()
 	{
 		mysql_query(make_insert('new_payments',array(
 			'amount'=>$payment['amount'],
-			'payment_method_id'=>$payment['payment_method_id'],
+			'payment_method'=>$payment['payment_method'],
 			'ref_nbr'=>$payment['ref_nbr'],
 			'admin_note'=>$payment['admin_note'],
 			'creation_date'=>$payment['p_creation_date'],
@@ -95,8 +108,8 @@ function migrate_type1()
 		}
 		
 		$purchase_orders = get_array('
-			select po_id,amount,parent_obj_id
-			from purchase_orders 
+			select payable_id,amount,parent_obj_id
+			from new_payables 
 			where invoice_id in ('.implode(',',$final_invs).');
 		');
 		
@@ -112,9 +125,9 @@ function migrate_type1()
 			#echo($payment['payment_id'].": good"."\n");
 			foreach($purchase_orders as $po)
 			{
-				mysql_query(make_insert('x_po_payments',array(
+				mysql_query(make_insert('x_payables_payments',array(
 					'payment_id'=>$payment_id,
-					'po_id'=>$po['po_id'],
+					'payable_id'=>$po['payable_id'],
 					'amount'=>$po['amount'],
 				)));
 			}
