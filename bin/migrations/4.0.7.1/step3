@@ -2,3 +2,23 @@
 echo "step 3: dropping old tables, renaming tables"
 
 
+if($argv[1] == 'prod') {
+	$user = 'localorb_www';
+	$pass = 'l0cal1sdab3st';
+	$host = 'localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com';
+	$database = 'localorb_www_production';
+	
+} else if($argv[1] == 'dev') {
+	$user = 'localorb_www';
+	$pass = 'localorb_www_dev';
+	$host = 'localhost';
+	$database = 'localorb_www_dev';
+	
+} else if($argv[1] == 'jvavul') {
+	$user = 'root';
+	$pass = 'a1b2c3';
+	$host = '127.0.0.1';
+	$database = 'localorb_www_dev';
+}
+mysql -A --host=$host --user=$user --password=$pass $database < ./sql/step3.sql;
+

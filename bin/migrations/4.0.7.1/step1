@@ -1,13 +1,23 @@
 #!/bin/bash
 echo "step 1: creating tables"
 
-host="localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com";
-password="l0cal1sdab3st";
+if($argv[1] == 'prod') {
+	$user = 'localorb_www';
+	$pass = 'l0cal1sdab3st';
+	$host = 'localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com';
+	$database = 'localorb_www_production';
+	
+} else if($argv[1] == 'dev') {
+	$user = 'localorb_www';
+	$pass = 'localorb_www_dev';
+	$host = 'localhost';
+	$database = 'localorb_www_dev';
+	
+} else if($argv[1] == 'jvavul') {
+	$user = 'root';
+	$pass = 'a1b2c3';
+	$host = '127.0.0.1';
+	$database = 'localorb_www_dev';
+}
 
-if [ $1 = "dev" ]
-then
-	password="localorb_www_dev"
-	host="localhost";
-fi
-
-mysql -A --host=$host --user=localorb_www --password=$password localorb_www_$1 < ./sql/step1.sql;
+mysql -A --host=$host --user=$user --password=$pass $database < ./sql/step1.sql;
