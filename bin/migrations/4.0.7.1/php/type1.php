@@ -34,6 +34,7 @@ function migrate_type1()
 			$invoices[$item['invoice_id']] = mysql_insert_id();
 		}
 		
+		
 		# build the data for the PO
 		$data = array(
 			'domain_id'=>$item['domain_id'],
@@ -55,6 +56,8 @@ function migrate_type1()
 		$sql = make_insert('purchase_orders',$data);
 		mysql_query($sql);
 	}
+	echo("\t\tA2: invoices/payments created\n");
+	
 	
 	# get a list of all the payments for this type, and create them.
 	$sql = '
@@ -67,8 +70,10 @@ function migrate_type1()
 		)
 		group by p.payment_id
 	';
-	#echo($sql."\n");
+	echo($sql."\n");
 	$payments = get_array($sql);
+	
+	echo("\t\tA3: payments found.\n");
 	
 	foreach($payments as $payment)
 	{
@@ -80,6 +85,7 @@ function migrate_type1()
 			'creation_date'=>$payment['p_creation_date'],
 		)));
 		$payment_id = mysql_insert_id();
+		#echo("\t\t\tnew payment id: ".$payment_id."\n");
 	
 		$final_invs = array();
 		$inv_ids = explode(',',$payment['invoices']);
@@ -114,7 +120,7 @@ function migrate_type1()
 		}
 		else
 		{
-			echo($payment['payment_id'].": DOES NOT MATCH: ".$po_total."/".$payment['amount']."\n");
+			echo($payment['payment_id'].": DOES NOT MATCH FROM ".$payment['from_org_id']." to ".$payment['to_org_id'].": ".$po_total."/".$payment['amount']."\n");
 			if($po_total > $payment['amount'])
 			{
 				echo "\t\titems are more than the payment\n";
@@ -129,7 +135,8 @@ function migrate_type1()
 				#print_r($item);
 			}
 		}
-	}	
+	}
+	echo("\t\tA4: payments fully created.\n");
 }
 
 ?>
