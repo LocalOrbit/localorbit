@@ -647,7 +647,13 @@ core.ui.tagSet.apply=function(setName){
 core.ui.getFieldHash=function(formObj,fieldList){
 	returnVal={};
 	for (var i = 0; i < fieldList.length; i++){
-		returnVal[fieldList[i]]=$(formObj[fieldList[i]]).val();
+		var obj = $(formObj[fieldList[i]]);
+		if(obj.attr('type') == 'checkbox'){
+			if(formObj[fieldList[i]].checked)
+				returnVal[fieldList[i]]=$(formObj[fieldList[i]]).val()
+		}else{
+			returnVal[fieldList[i]]=$(formObj[fieldList[i]]).val();
+		}
 	}
 	return returnVal;
 }
