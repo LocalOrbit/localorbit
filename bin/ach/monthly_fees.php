@@ -223,6 +223,12 @@ function do_monthly_payment($domain)
 				$xpi['amount_paid'] = $domain['service_fee'];
 				$xpi->save();
 				
+				
+
+				// send emails of payment to both parties
+				core::process_command('emails/payment_received',false,
+					$payment['to_org_id'], $payment['from_org_id'], $payment['amount'], array()
+				);
 				#core_db::
 			}
 		}
