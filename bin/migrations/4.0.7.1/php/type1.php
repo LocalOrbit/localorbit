@@ -106,7 +106,8 @@ function migrate_type1()
 			$po_total += $po['amount'];
 		}
 		
-		if($po_total == $payment['amount'])
+		#echo((round(floatval($po_total),2) .'/'. round(floatval($payment['amount']),2)) . "\n");
+		if(round(floatval($po_total),2) == round(floatval($payment['amount']),2))
 		{
 			#echo($payment['payment_id'].": good"."\n");
 			foreach($purchase_orders as $po)
