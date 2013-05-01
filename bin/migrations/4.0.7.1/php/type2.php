@@ -20,7 +20,7 @@ function migrate_type2()
 		UNIX_TIMESTAMP(i.creation_date) as invoice_date,
 		UNIX_TIMESTAMP(i.due_date) as due_date
 		from lo_order_line_item loi
-		inner join payables p on (loi.lo_oid=p.parent_obj_id and p.payable_type_id=1)
+		inner join payables p on (loi.lo_foid=p.parent_obj_id and p.payable_type_id=2)
 		left join invoices i on (p.invoice_id=i.invoice_id)
 		where loi.lo_foid in ('.implode(',',get_array_fields($payables,'parent_obj_id')).');';
 	#echo($sql."\n");
