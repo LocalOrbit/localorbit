@@ -67,7 +67,6 @@ $emails = core_db::col('
 	WHERE org_id='.$from_org['org_id'].'
 		AND is_active=1 AND is_deleted=0
 	GROUP BY org_id;','emails');
-$emails = "jvavul@gmail.com";
 
 $body  = $this->email_start();
 $body .= $this->handle_source($core->i18n['email:payments:payment_made_body'],$values);
