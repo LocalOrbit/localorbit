@@ -23,7 +23,7 @@ if($argv[1] == 'prod') {
 }
 echo $host."  ".$user."  ".$pass;
 mysql_connect($host,$user,$pass);
-mysql_select_db(database);
+mysql_select_db($database);
 
 include(__DIR__.'/php/helper_funcs.php');
 include(__DIR__.'/php/type1.php');
