@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "step 3: dropping old tables, renaming tables"
+
+

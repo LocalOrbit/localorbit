@@ -1,0 +1,33 @@
+#!/usr/bin/php
+<?php
+echo "step 2: migrating data\n";
+
+$user = 'localorb_www';
+$pass = 'l0cal1sdab3st';
+$host = 'localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com';
+
+if($argv[1] == 'dev')
+{
+	$pass = 'localorb_www_dev';
+	$host = 'localhost';
+}
+
+mysql_connect($host,$user,$pass);
+mysql_select_db('localorb_www_'.$argv[1]);
+
+include(__DIR__.'/php/helper_funcs.php');
+include(__DIR__.'/php/type1.php');
+include(__DIR__.'/php/type2.php');
+include(__DIR__.'/php/type3.php');
+include(__DIR__.'/php/type4.php');
+include(__DIR__.'/php/type5.php');
+
+migrate_type1();
+migrate_type2();
+migrate_type3();
+migrate_type4();
+migrate_type5();
+
+exit();
+
+?>
