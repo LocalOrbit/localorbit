@@ -59,7 +59,7 @@ $all_dds = new core_collection('
 		)
 	)
 	
-	order by d.name'
+	order by d.name,(dd.cycle=\'weekly\'),dd.day_ordinal,dd.day_nbr'
 );
 $all_dds->__model = core::model('delivery_days');
 $all_dds->load();
