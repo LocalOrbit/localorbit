@@ -2,3 +2,4 @@
 ./step1 $1
 ./step2 $1
 ./step3 $1
+./step4 $1

@@ -25,6 +25,11 @@ if($argv[1] == 'prod') {
 mysql_connect($host,$user,$pass);
 mysql_select_db($database);
 
+mysql_query('delete from new_payables;');
+mysql_query('delete from new_invoices;');
+mysql_query('delete from new_payments;');
+mysql_query('delete from x_payables_payments;');
+
 include(__DIR__.'/php/helper_funcs.php');
 include(__DIR__.'/php/type1.php');
 include(__DIR__.'/php/type2.php');

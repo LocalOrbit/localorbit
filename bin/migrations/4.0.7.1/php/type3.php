@@ -2,7 +2,7 @@
 
 function migrate_type3()
 {
-	echo "\tC: hub fees\n";
+	echo "\tC: lo/hub fees\n";
 	
 	# get a list of all the payables / items that need to be stored for this payable type
 	$sql = '
@@ -22,8 +22,8 @@ function migrate_type3()
 		from lo_order_line_item loi
 		inner join payables p on (loi.lo_oid=p.parent_obj_id and p.payable_type_id in (3,4))
 		left join invoices i on (p.invoice_id=i.invoice_id)
-		where loi.lo_foid in ('.implode(',',get_array_fields($payables,'parent_obj_id')).');';
-	#echo($sql."\n");
+		where loi.lo_oid in ('.implode(',',get_array_fields($payables,'parent_obj_id')).');';
+	echo($sql."\n");
 	$items = get_array($sql);
 	echo("\t\tC1: ".count($items)." payables to create\n");
 	
@@ -55,6 +55,7 @@ function migrate_type3()
 			'amount'=>$item['row_adjusted_total'],
 			'creation_date'=>$item['payable_date'],
 		);
+		#print_r($data);
 		
 		# if this po was invoiced, link it
 		if(is_numeric($item['invoice_id']))
@@ -64,6 +65,7 @@ function migrate_type3()
 		
 		# do the insert!
 		$sql = make_insert('new_payables',$data);
+		echo($sql."\n");
 		mysql_query($sql);
 	}
 	#print_r($invoices);
