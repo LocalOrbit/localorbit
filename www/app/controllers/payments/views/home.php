@@ -1,15 +1,58 @@
 <?php
 
 core::ensure_navstate(array('left'=>'left_dashboard'), 'payments-home', '');
-
 core_ui::fullWidth();
-
 core::head('Financial Management','This page is used to manage your payables, invoices, payments');
 lo3::require_permission();
 lo3::require_login();
-
 core_ui::load_library('js','payments.js');
 
+$tabs = array('Overview');
+
+if(lo3::is_seller())
+{
+	$count = core_db::col('select count(payable_id) as mycount from payables where from_org_id='.$core->session['org_id'],'mycount');
+	if($count == 0)
+		$tabs[] = 'Review Orders &amp; Make Payments';
+}
+else
+{
+	$tabs[] = 'Review Orders &amp; Make Payments';
+}
+
+if(lo3::is_seller() || lo3::is_market() || lo3::is_admin())
+{
+	$tabs[] = 'Review &amp; Deliver Orders';
+}
+$tabs[] = 'Review Payment History';
+
+
+page_header('Financial Management');
+echo('<form name="paymentsForm" class="form-horizontal">');
+echo(core_ui::tab_switchers('paymentstabs',$tabs));
+echo('<div class="tab-content">');
+
+
+core_ui::inline_message("Overview", "This is a snapshot of all money currently owed to your organization and that you owe to other organizations.");
+
+
+$tab_count = 0;
+$this->overview($tab_count);
+
+if(in_array('Review Orders &amp; Make Payments',$tabs))
+{
+	$tab_count++;
+	$this->review_orders($tab_count,$tabs);
+}
+if(in_array('Review &amp; Deliver Orders',$tabs))
+{
+	$tab_count++;
+	$this->review_deliver_orders($tab_count,$tabs);
+}
+$tab_count++;
+$this->payment_history($tab_count,$tabs);
+
+/*
 $total_orders = 0;
 if(!lo3::is_admin() && !lo3::is_market() && lo3::is_seller())
 	$total_orders = core_db::col('select count(lo_oid) as mycount from lo_order where ldstat_id<>1 and org_id='.$core->session['org_id'].';','mycount');
@@ -160,55 +203,5 @@ if($core->data['link_payables'] == 'yes')
 </form>
 <?
 core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });");
-
-/*
-
-# build the list of tabs that we need to render
-global $tabs;
-
-
-
-$tabs = array('Overview');
-if(lo3::is_market() || lo3::is_admin())
-{
-	
-	$tabs[] = 'Invoices Due';
-	
-}
-
-
-
-
-
-$tabs[] = 'Payments Owed';
-$tabs[] = 'Transaction Journal';
-
-
-# setup the page header and tab switchers
-
-
-
-
-# based on our rules, render the tabs one by one
-$this->overview((array_search('Overview', $tabs) + 1)); 
-$this->payables((array_search('Payables', $tabs) + 1)); 
-$this->payments((array_search('Payments Owed', $tabs) + 1)); 
-if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] == 1)
-{
-	$this->receivables((array_search('Receivables', $tabs) + 1)); 
-	$this->invoices((array_search('Invoices Due', $tabs) + 1)); 
-}
-if(lo3::is_admin() || lo3::is_market() )
-{
-	#$this->metrics((array_search('Advanced Metrics',$tabs) + 1)); 
-}
-$this->transaction_journal((array_search('Transaction Journal',$tabs) + 1)); 
-?>
-	</div>
-	<input type="hidden" name="invoice_list" value="" />
-	<input type="hidden" name="payment_from_tab" value="" />
-</form>
-
-<?
 */
 ?>

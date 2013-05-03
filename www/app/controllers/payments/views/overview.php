@@ -2,29 +2,16 @@
 global $core;
 
 # prepare the data for the top metrics table.
-$receivables_ov = core::model('v_invoices')
-	->add_custom_field('DATEDIFF(due_date, NOW()) as days_since')
-	->collection()->filter('amount_due', '>', 0);
-$payables_ov    = core::model('v_invoices')
-	->add_custom_field('DATEDIFF(due_date, NOW()) as days_since')
-	->collection()->filter('amount_due', '>', 0);
-	
-if(lo3::is_admin())
-{
-	# if we're an admin, we don't have to filter this at all.
-}
-else if (lo3::is_market())
-{
-	# if we're a market manager, we only want payables that apply to our market
-	$receivables_ov->filter('from_domain_id','in',$core->session['domains_by_orgtype_id'][2]);
-	$payables_ov->filter('to_org_id','in',$core->session['domains_by_orgtype_id'][2]);
-}
-else
-{
-	# otherwise, we want payables only for our organization.
-	$receivables_ov->filter('to_org_id','=',$core->session['org_id']);
-	$payables_ov->filter('from_org_id','=',$core->session['org_id']);
-}
+$receivables_ov = core::model('v_payables')
+	->collection()
+	->filter('to_org_id','=',$core->session['org_id'])
+	->filter('(amount - amount_paid)', '>', 0)
+	->filter('invoiced','=','1');
+$payables_ov    = core::model('v_payables')
+	->collection()
+	->filter('from_org_id','=',$core->session['org_id'])
+	->filter('(amount - amount_paid)', '>', 0)
+	->filter('invoiced','=','1');
 
 $payables_ov    = $payables_ov->load()->to_array();
 $receivables_ov = $receivables_ov->load()->to_array();
@@ -39,24 +26,24 @@ foreach ($intervals as $val)
 {
 	for($index = 0; $index < count($receivables_ov); $index++)
 	{
-		if ($receivables_ov[$index]['days_since'] <= $val && ($val == $previousIndex || ($val != $previousIndex && $receivables_ov[$index]['days_since'] > 0)))
+		if ($receivables_ov[$index]['days_left'] <= $val && ($val == $previousIndex || ($val != $previousIndex && $receivables_ov[$index]['days_left'] > 0)))
 		{
-			$receivables_intervals[$val] += $receivables_ov[$index]['amount_due'];
+			$receivables_intervals[$val] += $receivables_ov[$index]['amount'] -$receivables_ov[$index]['amount_paid'];
 		}
 	}
 	
 	for($index = 0; $index < count($payables_ov); $index++)
 	{
-		if ($payables_ov[$index]['days_since'] <= $val && ($val == $previousIndex || ($val != $previousIndex && $payables_ov[$index]['days_since'] > 0)))
+		if ($payables_ov[$index]['days_left'] <= $val && ($val == $previousIndex || ($val != $previousIndex && $payables_ov[$index]['days_left'] > 0)))
 		{
-			$payables_intervals[$val] += $payables_ov[$index]['amount_due'];
+			$payables_intervals[$val] += $payables_ov[$index]['amount'] -$payables_ov[$index]['amount_paid'];
 		}
 	}
 	$previousIndex = $val;
 }
 ?>
 
-<div class="tabarea tab-pane active" id="paymentstabs-a<?=$core->view[0]?>">
+<div class="tabarea tab-pane active" id="paymentstabs-a<?=($core->view[0]+1)?>">
 	<div class="row row-top-margin-buffer">
 		<? if(count($receivables_ov) > 0 || lo3::is_seller()){?>
 		<div class="span4">
@@ -95,7 +82,7 @@ foreach ($intervals as $val)
 				}
 				?>
 			<div class="span4 pagination-centered">
-				<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Payables',$core->view[1]) + 1)?>').tab('show');" />
+				<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Review Orders &amp; Make Payments',$core->view[1]) + 1)?>').tab('show');" />
 			</div>
 		
 		</div>
