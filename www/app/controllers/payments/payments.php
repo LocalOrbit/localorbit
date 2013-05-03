@@ -1065,17 +1065,17 @@ function format_payable_info($data)
 	{
 		if($data['days_left'] < 0)
 		{
-			$html .= '<div style="font-weight:bold;color: #c00;">'.core_format::date($time);
+			$html .= '<div style="font-weight:bold;color: #c00;">'.core_format::date($time,'short');
 			$html .= '<br />'.(-1 * $data['days_left']).' day(s) overdue</div>';
 		}
 		else if($data['days_left'] == 0)
 		{
-			$html .= '<div style="font-weight:bold;color: #c00;">'.core_format::date($time);
+			$html .= '<div style="font-weight:bold;color: #c00;">'.core_format::date($time,'short');
 			$html .= '<br />Today</div>';
 		}
 		else
 		{
-			$html .= core_format::date($time);
+			$html .= core_format::date($time,'short');
 			$html .= '<br />'.$data['days_left'].' day(s) left';
 		}
 	}
