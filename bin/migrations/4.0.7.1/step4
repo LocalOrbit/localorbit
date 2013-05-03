@@ -3,7 +3,7 @@
 echo "step 4: adding views\n";
 
 
-if(in_array($argv[1],array('prod','qa','testing','current')) {
+if(in_array($argv[1],array('production','qa','testing','current'))) {
 	$user = 'localorb_www';
 	$pass = 'l0cal1sdab3st';
 	$host = 'localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com';
