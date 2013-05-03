@@ -1018,7 +1018,7 @@ function format_payable_info($data)
 		{
 			$html .= '<a href="#!orders-view_sales_order--lo_foid-'.$info[2];
 		}
-		else if(in_array($payable_info[1],array('buyer order','hub fees','lo fees')))
+		else if(in_array($info[1],array('buyer order','hub fees','lo fees')))
 		{
 			$html .= '<a href="#!orders-view_order--lo_oid-'.$info[2];
 		}
@@ -1036,12 +1036,13 @@ function format_payable_info($data)
 	{
 		if($html != '')
 			$html .= '<br />';
-			
+		
+		#echo($info[1]);	
 		if($info[1] == 'seller order')
 		{
 			$html .= '<a href="#!orders-view_sales_order--lo_foid-'.$info[2];
 		}
-		else if(in_array($payable_info[1],array('buyer order','hub fees','lo fees')))
+		else if(in_array(trim($info[1]),array('buyer order','hub fees','lo fees')))
 		{
 			$html .= '<a href="#!orders-view_order--lo_oid-'.$info[2];
 		}
