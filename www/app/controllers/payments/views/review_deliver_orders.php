@@ -6,7 +6,7 @@ if(!lo3::is_admin())
 	$v_payables->filter('to_org_id','=',$core->session['org_id']);
 }
 $receivables = new core_datatable('receivables','payments/review_deliver_orders',$v_payables);
-$receivables = new core_datatable('payables','payments/review_orders',$v_payables);
+payments__add_standard_filters($receivables,'receivables');
 $receivables->add(new core_datacolumn('creation_date','Ref #',false,'13%',			'{ref_nbr_html}','{ref_nbr_html}','{ref_nbr_html}'));
 $receivables->add(new core_datacolumn('creation_date','Description',false,'15%','{description_html}','{description_html}','{description_html}'));
 $receivables->add(new core_datacolumn('creation_date','Order Date',true,'10%','{creation_date}','{creation_date}','{creation_date}'));

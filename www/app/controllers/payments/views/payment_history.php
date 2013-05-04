@@ -7,6 +7,7 @@ $v_payments = new core_collection('
 $v_payments->add_formatter('format_payable_info');
 
 $payments = new core_datatable('payments','payments/payment_history',$v_payments);
+payments__add_standard_filters($payments,'transactions');
 $payments->add(new core_datacolumn('payment_date','Date Paid',true,'15%',			'{payment_date}','{payment_date}','{payment_date}'));
 $payments->add(new core_datacolumn('order_date','Ref #',false,'13%',			'{ref_nbr_html}','{ref_nbr_html}','{ref_nbr_html}'));
 $payments->add(new core_datacolumn('order_date','Description',false,'15%','{description_html}','{description_html}','{description_html}'));
