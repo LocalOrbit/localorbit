@@ -197,6 +197,9 @@ if($core->data['show_news'] == 'yes')
 		# this array keeps track of the style for each row type
 		$styles =array(1,1);
 
+		
+		
+		
 		# 1st total line
 		echo('<div id="filter_container"><ol id="filter_list"/></div>');
 		echo('<form name="cartForm">');
@@ -308,9 +311,11 @@ core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function (
 core_ui::showLeftNav();
 
 
-
 #core::log('total time on server: '.($end - $start))
-?><div id="deliveryDateModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+?>
+
+
+<div id="deliveryDateModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Delivery Date Change</h3>
@@ -325,3 +330,8 @@ core_ui::showLeftNav();
 </div>
 
 <input type="hidden" id="emptyCart"/>
+
+<?php 
+// auto filter any cat1 that come from emails directly to a specific category
+core::js("core.catalog.setFilter('cat1',".$core->data['cat1'].");");
+?>

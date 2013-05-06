@@ -26,7 +26,7 @@ class core_controller_fresh_sheet extends core_controller
 			lo3::require_orgtype('admin');
 		}
 
-		// testing $core->data['domain_id'] = 26;
+//$core->data['domain_id'] = 26;
 		$domain =  core::model('domains')->load($core->data['domain_id']);
 		
 		core::load_library('mailchimp');
@@ -35,9 +35,6 @@ class core_controller_fresh_sheet extends core_controller
 		
 		
 		$html = $this->generate_html($core->data['domain_id']);
-		// apply styles
-		// $html = core::process_command('emails/handle_source_new',true,$html,array());
-
 		$template_id = $mc->get_template_id('Weekly Fresh Sheet',$core->data['domain_id']);
 		$list_id     = $mc->get_list_id('Weekly Fresh Sheet');
 		$logo = "http://".$domain['hostname'].image('logo-large');
@@ -98,7 +95,6 @@ class core_controller_fresh_sheet extends core_controller
 			core::js("$('#tf1,#tf2').hide();$('#bs1,#bs2').show();");
 			$mc->campaignSendTest($camp_id,array('jvavul@gmail.com',$core->data['email']));
 
-			/* testing
 			echo 'test sent ' . $mc->api->errorMessage. '<br>';
 			echo "list_id" . $list_id . " template_id" . $template_id .
 				"domain['hostname'] " . $domain['hostname'].
@@ -110,7 +106,7 @@ class core_controller_fresh_sheet extends core_controller
 			echo '<br><br>shop_now_button = '.$shop_now_button;
 			print_r($camp_id);
 			echo $html;
-			die(); */
+			die(); 
 			core_ui::notification('test sent ' . $mc->api->errorMessage);
 		}
 		else
@@ -126,7 +122,7 @@ class core_controller_fresh_sheet extends core_controller
 				core::log("Successfully sent real campaign:".$camp_id."\n");
 			}
 			core_ui::notification('fresh sheet sent');
-		}
+		} 
 	}
 
 
@@ -164,12 +160,14 @@ class core_controller_fresh_sheet extends core_controller
 		
 		# next, lookup the names of all the categories in the list
 		$cat_names = array();
+		$cat_names_by_name = array();
 		if(count($cats_to_lookup) > 0)
 		{
 			$cats = core::model('categories')->collection()->filter('cat_id','in',$cats_to_lookup);
 			foreach($cats as $cat)
 			{
 				$cat_names[$cat['cat_id']] = $cat['cat_name'];
+				$cat_names_by_name[$cat['cat_name']] = $cat['cat_id'];
 			}
 		}
 		
@@ -193,19 +191,54 @@ class core_controller_fresh_sheet extends core_controller
 		
 		
 		
-		
+
 		$has_prods = false;
-		$cur_cat = '';
-		foreach($prods_by_catname_hash as $category => $prods)
-		{
-			$html .= '<tr style="color:#839a0e; text-align:left;">';
-				$html .= '<th'.(($show_edit_links)?' colspan="3"':' colspan="2"').'>'.$category.' | <a href="" style="color:#5d5d5d; font-size:16px;">Shop Now</a></th>';				
-			$html .= '</tr>';
+		$drew_hr = false;
+		$last_cat = "";
+		$last_sub_cat = "";
+		foreach($prods_by_catname_hash as $category => $prods) {
+			$cur_cat = explode(":", $category);
+			
+			
+			// new cat 1
+			if($last_cat != trim($cur_cat[0])) {
+				// single row
+				if (!$drew_hr) {
+					$html .= '<tr>';
+						$html .= '<td'.(($show_edit_links)?' colspan="3"':' colspan="2"').'><hr style="color: #fef7f1; height: 1px;"></td>';
+					$html .= '</tr>';
+					$drew_hr = true;
+				}
+				
+				$last_cat = trim($cur_cat[0]);
+				$cat_url = 'https://'.$domain['hostname'].'/app.php#!catalog-shop--cat1-'.$cat_names_by_name[$last_cat];
+				$html .= '<tr style="color:#839a0e; text-align:left; font-size:16px; font-weight:bold;">';
+					$html .= '<th'.(($show_edit_links)?' colspan="3"':' colspan="2"').'>'.$cur_cat[0].' | <a href="'.$cat_url.'" style="color:#5d5d5d; font-size:16px;">Shop Now</a></th>';
+				$html .= '</tr>';
+			}
+
+			// new cat 2
+			if($last_sub_cat != trim($cur_cat[1])) {
+				// single row
+				if (!$drew_hr) {
+					$html .= '<tr>';
+						$html .= '<td'.(($show_edit_links)?' colspan="3"':' colspan="2"').'><hr style="color: #fef7f1; height: 1px;"></td>';
+					$html .= '</tr>';
+				}				
+				
+				$last_sub_cat = trim($cur_cat[1]);
+				$html .= '<tr style="color:#5d5d5d; text-align:left; font-size:14px; font-weight:bold;">';
+					$html .= '<th'.(($show_edit_links)?' colspan="3"':' colspan="2"').'>'.$cur_cat[1].'</th>';
+				$html .= '</tr>';
+				$drew_hr = true;
+			}
+				
+			$drew_hr = false;
 			
 			// double row
-			$html .= '<tr>';
+			/* $html .= '<tr>';
 				$html .= '<td'.(($show_edit_links)?' colspan="3"':' colspan="2"').'><hr style="border: 1px solid #e5dbd1; height:5px;"></td>';
-			$html .= '</tr>';
+			$html .= '</tr>'; */
 			
 			foreach($prods as $prod)
 			{
@@ -227,11 +260,6 @@ class core_controller_fresh_sheet extends core_controller
 					$html .= '<td style="color:#5d5d5d; font-weight:bold; font-size:12px; text-align:right;"><a href="https://'.$domain['hostname'].'/app.php#!catalog-view_product--prod_id-'.$prod['prod_id'].'" style="color:#5d5d5d; font-weight:bold;">Buy Now</a></td>';
 				$html .= '</tr>';
 				
-				
-				// single row
-				$html .= '<tr>';
-					$html .= '<td'.(($show_edit_links)?' colspan="3"':' colspan="2"').'><hr style="color: #fef7f1;"></td>';
-				$html .= '</tr>';
 				
 				$has_prods = true;
 			}
