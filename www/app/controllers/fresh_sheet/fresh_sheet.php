@@ -25,16 +25,26 @@ class core_controller_fresh_sheet extends core_controller
 		{
 			lo3::require_orgtype('admin');
 		}
+
+		// testing $core->data['domain_id'] = 26;
+		$domain =  core::model('domains')->load($core->data['domain_id']);
 		
 		core::load_library('mailchimp');
 		$mc = new core_mailchimp();
+
+		
 		
 		$html = $this->generate_html($core->data['domain_id']);
-		$html = core::process_command('emails/handle_source',true,$html,array());
-		
-		$domain =  core::model('domains')->load($core->data['domain_id']);
+		// apply styles
+		// $html = core::process_command('emails/handle_source_new',true,$html,array());
+
 		$template_id = $mc->get_template_id('Weekly Fresh Sheet',$core->data['domain_id']);
 		$list_id     = $mc->get_list_id('Weekly Fresh Sheet');
+		$logo = "http://".$domain['hostname'].image('logo-large');
+		$logo_image = '<img style="margin: 0px 0px 5px 0px" alt="logo" src="'.$logo.'" />';
+		$shop_now_button = '<a href=""https://'.$domain['hostname'].'/app.php#!catalog-shop" target="_blank"><img src="https://www.localorb.it/img/mailchimp/ShopNow_Button.jpg" alt="Button" border="0"></a>';
+		
+
 		$seg_opts = array(
 			'match'=>'all',
 			'conditions'=>array(
@@ -57,14 +67,23 @@ class core_controller_fresh_sheet extends core_controller
 				'template_id'=>$template_id,
 			),
 			array(
-				'html'=>$html,
-				'html_MAIN'=>$html,
-				'html_FOOTER'=>'',
-				'html_SIDECOLUMN'=>'',
-				'text'=>' ',
+				'HTML'=>$html,
+				'HTML_MAIN'=>$html,
+				'HTML_FOOTER'=>'',
+				'HTML_SIDECOLUMN'=>'',
+					
+				'HTML_SHOP_NOW_BUTTON'=>$shop_now_button,
+				'HTML_FRESH_ITEMS'=>$html,
+				'HTML_FROM_NAME1'=>$domain['name'],
+				'HTML_FROM_NAME2'=>$domain['name'],
+				'HTML_LOGO_IMAGE1'=>$logo_image,
+				'HTML_LOGO_IMAGE2'=>$logo_image,
+				'HTML_ABOUT_US'=>$domain['market_profile'],
 			),
 			$seg_opts
 		);
+		
+		
 		if ($mc->api->errorCode){
 			core::log("Unable to Create New Campaign!");
 			core::log("\n\tCode=".$mc->api->errorCode);
@@ -75,10 +94,24 @@ class core_controller_fresh_sheet extends core_controller
 		}
 		
 		if($core->data['test_only'] == '1')
-		{
+		{ 
 			core::js("$('#tf1,#tf2').hide();$('#bs1,#bs2').show();");
-			$mc->campaignSendTest($camp_id,array('mike@localorb.it',$core->data['email']));
-			core_ui::notification('test sent');
+			$mc->campaignSendTest($camp_id,array('jvavul@gmail.com',$core->data['email']));
+
+			/* testing
+			echo 'test sent ' . $mc->api->errorMessage. '<br>';
+			echo "list_id" . $list_id . " template_id" . $template_id .
+				"domain['hostname'] " . $domain['hostname'].
+				"domain['market_profile'] " . $domain['market_profile'];
+			echo '<br><br><br><br>';
+			print_r($core->data['email']);
+			echo '<br><br>logo = '.$logo;
+			echo '<br><br>logo_image = '.$logo_image;
+			echo '<br><br>shop_now_button = '.$shop_now_button;
+			print_r($camp_id);
+			echo $html;
+			die(); */
+			core_ui::notification('test sent ' . $mc->api->errorMessage);
 		}
 		else
 		{
@@ -97,10 +130,12 @@ class core_controller_fresh_sheet extends core_controller
 	}
 
 
-	function generate_html($domain_id,$show_edit_links=false)
+	function generate_html($domain_id, $show_edit_links=false)
 	{
 		global $core;
-		$html = '<table class="table table-hover">';
+		$domain =  core::model('domains')->load($core->data['domain_id']);
+		
+		$html = '<table class="table table-hover" style="font-family:Helvectica, Trebuchet MS, Arial" width="100%">';
 		$prods = core::model('products')->get_catalog($domain_id,0)->sort('name');
 		
 		$prods = $prods->to_array();
@@ -154,7 +189,7 @@ class core_controller_fresh_sheet extends core_controller
 		
 		#echo('<pre>');
 		#print_r($prods);
-		
+
 		
 		
 		
@@ -163,22 +198,41 @@ class core_controller_fresh_sheet extends core_controller
 		$cur_cat = '';
 		foreach($prods_by_catname_hash as $category => $prods)
 		{
-			$html .= '<tr class="'.$style.'">';
-				$html .= '<th'.(($show_edit_links)?' colspan="2"':'').'>'.$category.'</th>';
-				
+			$html .= '<tr style="color:#839a0e; text-align:left;">';
+				$html .= '<th'.(($show_edit_links)?' colspan="3"':' colspan="2"').'>'.$category.' | <a href="" style="color:#5d5d5d; font-size:16px;">Shop Now</a></th>';				
 			$html .= '</tr>';
-			$style = false;
+			
+			// double row
+			$html .= '<tr>';
+				$html .= '<td'.(($show_edit_links)?' colspan="3"':' colspan="2"').'><hr style="border: 1px solid #e5dbd1; height:5px;"></td>';
+			$html .= '</tr>';
+			
 			foreach($prods as $prod)
 			{
-				$html .= '<tr class="dt'.$style.'">';
-			
-				$html .= '<td class="dt">'.$prod['name'].' ('.$prod['single_unit'].') from '.$prod['org_name'].' - '.intval($prod['inventory']).' remaining</td>';
-				if($show_edit_links)
-				{
-					$html .= '<td class="dt"><a class="btn" href="#!products-edit--prod_id-'.$prod['prod_id'].'"><i class="icon-edit" />Edit Product</a></td>';
-				}
+				// item remaining
+				$html .= '<tr class="dt">';			
+					$html .= '<td class="dt" style="color:#5d5d5d; font-size:11px;">'.$prod['name'].' ('.$prod['single_unit'].')</td>';
+					$html .= '<td class="dt" style="color:#5d5d5d; font-weight:bold; font-size:11px; text-align:right;">'.intval($prod['inventory']).' remaining</td>';
+					
+					if($show_edit_links)
+					{
+						$html .= '<td class="dt"><a class="btn" href="#!products-edit--prod_id-'.$prod['prod_id'].'"><i class="icon-edit" />Edit Product</a></td>';
+					}
 				$html .= '</tr>';
-				$style = (!$style);
+				
+				
+				// farm buynow
+				$html .= '<tr style="color:#839a0e; text-align:left; font-family:Helvectica, Trebuchet MS, Arial">';
+					$html .= '<td style="color:#5d5d5d; font-size:11px; font-style:italic;">'.$prod['org_name'].'</td>';
+					$html .= '<td style="color:#5d5d5d; font-weight:bold; font-size:12px; text-align:right;"><a href="https://'.$domain['hostname'].'/app.php#!catalog-view_product--prod_id-'.$prod['prod_id'].'" style="color:#5d5d5d; font-weight:bold;">Buy Now</a></td>';
+				$html .= '</tr>';
+				
+				
+				// single row
+				$html .= '<tr>';
+					$html .= '<td'.(($show_edit_links)?' colspan="3"':' colspan="2"').'><hr style="color: #fef7f1;"></td>';
+				$html .= '</tr>';
+				
 				$has_prods = true;
 			}
 		}

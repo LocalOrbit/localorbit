@@ -52,7 +52,7 @@ echo($core->i18n['fresh_sheet:head']);
 
 if($domain_id > 0)
 {
-	$fs_html = $this->generate_html($domain_id,true);
+	$fs_html = $this->generate_html($domain_id,true); 
 	?>
 	<?if($fs_html == ''){?>
 		<? if(lo3::is_admin()) { ?>
@@ -68,13 +68,27 @@ if($domain_id > 0)
 		<input type="button" onclick="core.doRequest('/fresh_sheet/send',{'domain_id':<?=$domain_id?>});" class="btn btn-primary" value="Send Now" />
 	</p>
 	
+	
 	<form name="tf1" id="tf1" style="display: none;text-align:right;" onsubmit="return core.submit('/fresh_sheet/send',this,{'test_only':1,'email':$('#te1').val(),'domain_id':<?=$domain_id?>});">
 		Send test to <input type="text" name="te1" id="te1" value="" />
 		<input type="button" onclick="$('#bs1,#bs2').show();$('#tf1').hide()" class="button_primary" value="cancel" />
 		<input type="submit" class="button_primary" value="send test" />
 	</form>
 	
-	<?=$fs_html?>
+	
+	
+	
+	<style>
+		.fresh_sheet_review th, .fresh_sheet_review td {
+			line-height: 1;
+    		padding: 3px;
+    		border-top: 0px;
+		}
+	</style> 
+	<div class="fresh_sheet_review">
+		<?=$fs_html?>
+	</div>
+	
 	
 	<hr>
 	
