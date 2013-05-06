@@ -331,7 +331,3 @@ core_ui::showLeftNav();
 
 <input type="hidden" id="emptyCart"/>
 
-<?php 
-// auto filter any cat1 that come from emails directly to a specific category
-
-?>

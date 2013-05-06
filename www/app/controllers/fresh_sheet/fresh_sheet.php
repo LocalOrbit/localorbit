@@ -95,7 +95,7 @@ class core_controller_fresh_sheet extends core_controller
 			core::js("$('#tf1,#tf2').hide();$('#bs1,#bs2').show();");
 			$mc->campaignSendTest($camp_id,array('jvavul@gmail.com',$core->data['email']));
 
-			echo 'test sent ' . $mc->api->errorMessage. '<br>';
+			/* echo 'test sent ' . $mc->api->errorMessage. '<br>';
 			echo "list_id" . $list_id . " template_id" . $template_id .
 				"domain['hostname'] " . $domain['hostname'].
 				"domain['market_profile'] " . $domain['market_profile'];
@@ -106,7 +106,7 @@ class core_controller_fresh_sheet extends core_controller
 			echo '<br><br>shop_now_button = '.$shop_now_button;
 			print_r($camp_id);
 			echo $html;
-			die(); 
+			die();  */
 			core_ui::notification('test sent ' . $mc->api->errorMessage);
 		}
 		else
@@ -244,7 +244,10 @@ class core_controller_fresh_sheet extends core_controller
 			{
 				// item remaining
 				$html .= '<tr class="dt">';			
-					$html .= '<td class="dt" style="color:#5d5d5d; font-size:11px;">'.$prod['name'].' ('.$prod['single_unit'].')</td>';
+					$html .= '<td class="dt" style="color:#5d5d5d; font-size:11px;">';
+						$html .= $prod['name'].' ('.$prod['single_unit'].') | ';
+						$html .= '<span style="color:#5d5d5d; font-size:11px; font-style:italic;">'.$prod['org_name'].'</span>';
+					$html .= '</td>';
 					$html .= '<td class="dt" style="color:#5d5d5d; font-weight:bold; font-size:11px; text-align:right;">'.intval($prod['inventory']).' remaining</td>';
 					
 					if($show_edit_links)
@@ -256,8 +259,8 @@ class core_controller_fresh_sheet extends core_controller
 				
 				// farm buynow
 				$html .= '<tr style="color:#839a0e; text-align:left; font-family:Helvectica, Trebuchet MS, Arial">';
-					$html .= '<td style="color:#5d5d5d; font-size:11px; font-style:italic;">'.$prod['org_name'].'</td>';
-					$html .= '<td style="color:#5d5d5d; font-weight:bold; font-size:12px; text-align:right;"><a href="https://'.$domain['hostname'].'/app.php#!catalog-view_product--prod_id-'.$prod['prod_id'].'" style="color:#5d5d5d; font-weight:bold;">Buy Now</a></td>';
+					$html .= '<td style="color:#5d5d5d; font-size:11px; font-style:italic;"></td>';
+					$html .= '<td style="color:#5d5d5d; font-weight:bold; font-size:12px; text-align:right;"><a href="https://'.$domain['hostname'].'/app.php#!catalog-view_product--prod_id-'.$prod['prod_id'].'" style="color:#5d5d5d; font-weight:bold; text-decoration:underline;">Buy Now</a></td>';
 				$html .= '</tr>';
 				
 				
