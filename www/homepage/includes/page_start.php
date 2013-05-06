@@ -86,6 +86,20 @@ else
 		<style type="text/css" media="screen, projection">
 			@import url(//assets.zendesk.com/external/zenbox/v2.5/zenbox.css); 
 		</style>
+<script type="text/javascript">
+var fb_param = {};
+fb_param.pixel_id = '6008232512301';
+fb_param.value = '0.00';
+(function(){
+  var fpw = document.createElement('script');
+  fpw.async = true;
+  fpw.src = '//connect.facebook.net/en_US/fp.js';
+  var ref = document.getElementsByTagName('script')[0];
+  ref.parentNode.insertBefore(fpw, ref);
+})();
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/offsite_event.php?id=6008232512301&amp;value=0" /></noscript>
+
 	</head>
 	<body>
 		<div style="position: fixed;top:0px;left:0px;right:0px;z-index:1001;background-image: url(/homepage/includes/header_bg.png);background-repeat: repeat-x;">
