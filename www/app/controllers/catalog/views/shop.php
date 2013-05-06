@@ -305,7 +305,7 @@ else
 
 	//$this->weekly_special();
 }
-print_r($core->data);
+#print_r($core->data);
 core::js("window.setTimeout('core.catalog.initCatalog();core.catalog.setFilter(\'cat1\',".intval(trim($core->data['cat1'])).");',1000);");
 core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });");
 core_ui::showLeftNav();
