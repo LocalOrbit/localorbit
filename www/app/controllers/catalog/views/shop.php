@@ -38,11 +38,11 @@ else if(
 else
 {
 
-# if the buyer is reaching this page after logging in, show the news
-if($core->data['show_news'] == 'yes')
-{
-	core::process_command('dashboard/release_news');
-}
+	# if the buyer is reaching this page after logging in, show the news
+	if($core->data['show_news'] == 'yes')
+	{
+		core::process_command('dashboard/release_news');
+	}
 
 	#core::ensure_navstate(array('left'=>'left_shop'));
 	core::head('Buy Local Food','Buy local food on Local Orbit');
@@ -305,8 +305,8 @@ if($core->data['show_news'] == 'yes')
 
 	//$this->weekly_special();
 }
-
-core::js("window.setTimeout('core.catalog.initCatalog();',1000);");
+print_r($core->data);
+core::js("window.setTimeout('core.catalog.initCatalog();core.catalog.setFilter(\'cat1\',".intval(trim($core->data['cat1'])).");',1000);");
 core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });");
 core_ui::showLeftNav();
 
@@ -333,5 +333,5 @@ core_ui::showLeftNav();
 
 <?php 
 // auto filter any cat1 that come from emails directly to a specific category
-core::js("core.catalog.setFilter('cat1',".$core->data['cat1'].");");
+
 ?>
