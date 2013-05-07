@@ -56,12 +56,16 @@ $addresses = $core->view[6];
 			$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
 			$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 			?>
-			<a class="dropdown-toggle dd_selector" data-toggle="dropdown">
-				<span class="content"><?=$type?> <?=core_format::date($time, 'shortest-weekday',false)?><br /><?=$final_address?></span>
-				<span class="caret"></span>
-			</a>
-			<input class="prodDd" type="hidden" name="prodDd_<?=$prod['prod_id']?>" id="prodDd_<?=$prod['prod_id']?>" value="<?=$dd_ids_id?>"/>
-			<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			<span class="prod_dd_display content" style="font-size: 11px;display: none;" id="prod_dd_single_display_<?=$prod['prod_id']?>">
+				
+			</span>
+			<div id="prod_dd_selector_<?=$prod['prod_id']?>" class="prod_dd_selector">
+				<a class="dropdown-toggle dd_selector" data-toggle="dropdown">
+					<span class="content" id="prod_dd_display_<?=$prod['prod_id']?>"><?=$type?> <?=core_format::date($time, 'shortest-weekday',false)?><br /><?=$final_address?></span>
+					<span class="caret"></span>
+				</a>
+				<input class="prodDd" type="hidden" name="prodDd_<?=$prod['prod_id']?>" id="prodDd_<?=$prod['prod_id']?>" value="<?=$dd_ids_id?>"/>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<?
 			foreach($validDays as $key => $day)
 			{
@@ -71,13 +75,17 @@ $addresses = $core->view[6];
 					$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
 					$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 					?>
-					<li class="filter dd" id="filter_dd_<?=$dd_ids_id?>"><a href="<?=($hashUrl?'#!catalog-shop#dd='.$dd_ids_id:'#')?>" onclick="return core.catalog.changeProductDeliveryDay(event, <?=$prod['prod_id']?>,'<?=$dd_ids_id?>');">
+					<li class="filter dd prod_dd dd_<?=$dd_ids_id?> proddd_<?=$prod['prod_id']?>" id="filter_dd_<?=$dd_ids_id?>"><a href="<?=($hashUrl?'#!catalog-shop#dd='.$dd_ids_id:'#')?>" onclick="return core.catalog.changeProductDeliveryDay(event, <?=$prod['prod_id']?>,'<?=$dd_ids_id?>');">
 					<?=$type?> <?=core_format::date($time, 'shorter-weekday',false)?>
 					<br /><?=$final_address?></a>
 					</li>
 					<?
 				}
 			}
+			?>
+				</ul>
+			</div>
+			<?
 		}
 		else
 		{
