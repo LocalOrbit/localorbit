@@ -107,6 +107,7 @@ class core_controller_catalog extends core_controller
 	
 	function check_inventory ()
 	{
+		
 		global $core;
 
 		$inv = 0;
