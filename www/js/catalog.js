@@ -101,21 +101,21 @@ core.catalog.setFilter=function(type,id,parentId,updateListing){
 			//$('.filter_dd').removeClass('active');
 			if(core.catalog.filters.dd != 0){
 				core.log('removing class from '+core.catalog.filters.dd);
-				$('#filter_dd_'+core.catalog.filters.dd).removeClass('active');
+				$('#filter_dd_'+core.catalog.filters.dd).parent().removeClass('active');
 			}
 			var oldDD = core.catalog.filters.dd;
 			core.catalog.filters.dd = (core.catalog.filters.dd == id)?0:id;
 			core.log("now :"+core.catalog.filters.dd);
 			updateListing = true;
+			//alert('filter is now '+core.catalog.filters.dd);
 			if(core.catalog.filters.dd != 0){
 				// if we were turning off the filter, turn all on
-				core.log('adding class');
-				$('#filter_dd_'+id).addClass('active');
-			}
-			if(oldDD != 0 && core.catalog.filters.dd != oldDD){
-				//updateListing = false;
+				//core.log('adding class');
+				$('#filter_dd_'+core.catalog.filters.dd).parent().addClass('active');
 				core.catalog.confirmDeliveryDateChange(true);
 				//$('.prodDd').val(id);
+			}else{
+				core.catalog.resetDeliveryDateChange();
 			}
 			break;
 		case 'cartOnly':
@@ -137,6 +137,12 @@ core.catalog.setFilter=function(type,id,parentId,updateListing){
 		core.catalog.updateListing();
 }
 
+core.catalog.resetDeliveryDateChange=function(){
+	$('.prod_dd_display').hide();
+	$('.prod_dd_selector').show();
+	$('.filter.dd').removeClass('active');
+}
+
 core.catalog.modalPopup = function () {
 	var text = $.trim($('#filter_dd_' + core.catalog.filters.dd).text());
 	$('#modalDeliveryDate').text(text);
@@ -147,8 +153,42 @@ core.catalog.confirmDeliveryDateChange = function (confirmed) {
 	core.log('confirmDeliveryDateChange called');
 	var fdds = core.catalog.filters.dd;
 	//.split('_');
-	if (confirmed)
+	if (confirmed && core.catalog.filters.dd != 0)
 	{
+	
+		filterObj = $('#filter_dd_' + core.catalog.filters.dd);
+		var text = filterObj.html();
+		//alert(text);
+		//core.log(text);
+		/* make sure we're only dealing with products with zero quantity already */
+		for(var i=0;i<core.products.length;i++){
+			var qty = parseInt(document.cartForm['prodQty_'+core.products[i].prod_id].value);
+			if(isNaN(qty))
+				qty = 0;
+			//core.log(qty);
+			if(qty == 0){
+				
+				/* now we need to figure out if this product supports this delivery day */
+				var dd_ids = new String(core.products[i].dd_ids).split(',');
+				prodHasDeliv = false;
+				for(var j=0;j<dd_ids.length;j++){
+					if(dd_ids[j] == core.catalog.filters.dd){
+						j =dd_ids.length;
+						prodHasDeliv = true;
+					}
+				}
+				
+				/* ok, the product has the delivery day and no qty. we need to remove all 
+				 * of the options except the one we want, change the hidden delivery day field,
+				 * and update the text on the dropdown*/
+				if(prodHasDeliv){
+					$('#prod_dd_selector_'+core.products[i].prod_id).hide();
+					$('#prod_dd_single_display_'+core.products[i].prod_id).html(text).show();
+					document.cartForm['prodDd_'+core.products[i].prod_id].value = core.catalog.filters.dd; 
+				}
+			}
+		}
+		/*
 		$('.product-row').each(function () {
 			var jq = $(this);
 			var prodQtyJq = jq.find('.prodQty');
@@ -184,13 +224,18 @@ core.catalog.confirmDeliveryDateChange = function (confirmed) {
 				}
 			}
 		});
+		*/
 		var text = $.trim($('#filter_dd_' + core.catalog.filters.dd).text());
 		$('.filter_dd').addClass('subheader_off');
 		$('#filter_dd_'+core.catalog.filters.dd).removeClass('subheader_off');
 		newfilter = $('<li class="dd dd_' + core.catalog.filters.dd + '"><i class="icon-remove-sign"/>' + text + '</li>').appendTo($('#filter_list'));
 		$('#filter_list .dd').remove();
-		$('.filter.dd').removeClass('active');
-		$('#filter_dd_'+core.catalog.filters.dd).addClass('active');
+		
+		/* this code is ok I think*/
+		//$('.filter.dd').removeClass('active');
+		
+		/* this code is good!! */
+		//$('#filter_dd_'+core.catalog.filters.dd).addClass('active');
 		newfilter.click(function () {
 			var classes = $(this).attr('class').split(/\s+/);
 			var id = classes[1].split('_')[1];
