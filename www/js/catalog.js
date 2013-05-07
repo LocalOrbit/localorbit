@@ -141,6 +141,13 @@ core.catalog.setFilter=function(type,id,parentId,updateListing){
 }
 
 core.catalog.resetDeliveryDateChange=function(){
+	var ddDescs = {};
+	for(var key in core.delivs){
+		ddDescs[key] = $('#filter_dd_'+key).html();
+	}
+	for(var i=0;i<core.products.length;i++){
+		$('#prod_dd_display_'+core.products[i].prod_id).html(ddDescs[document.cartForm['prodDd_'+core.products[i].prod_id].value]);
+	}
 	$('span.prod_dd_display').hide();
 	$('div.prod_dd_selector').show();
 	$('.filter.dd').removeClass('active');
