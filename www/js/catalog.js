@@ -113,6 +113,7 @@ core.catalog.setFilter=function(type,id,parentId,updateListing){
 			if(core.catalog.filters.dd != 0){
 				// if we were turning off the filter, turn all on
 				//core.log('adding class');
+				core.catalog.resetDeliveryDateChange();
 				$('#filter_dd_'+core.catalog.filters.dd).parent().addClass('active');
 				core.catalog.confirmDeliveryDateChange(true);
 				//$('.prodDd').val(id);
