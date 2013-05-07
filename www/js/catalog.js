@@ -182,8 +182,8 @@ core.catalog.confirmDeliveryDateChange = function (confirmed) {
 				 * of the options except the one we want, change the hidden delivery day field,
 				 * and update the text on the dropdown*/
 				if(prodHasDeliv){
-					$('#prod_dd_selector_'+core.products[i].prod_id).hide();
-					$('#prod_dd_single_display_'+core.products[i].prod_id).html(text).show();
+					$('.prod_dd_selector_'+core.products[i].prod_id).hide();
+					$('.prod_dd_single_display_'+core.products[i].prod_id).html(text).show();
 					document.cartForm['prodDd_'+core.products[i].prod_id].value = core.catalog.filters.dd; 
 				}
 			}
