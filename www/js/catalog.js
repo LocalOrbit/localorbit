@@ -18,6 +18,8 @@ if(!core.cart)
 
 core.catalog.resetFilters=function(){
 	core.log('reseting filters');
+	if(core.catalog.filters.dd != 0)
+		core.catalog.resetDeliveryDateChange();
 	core.catalog.filters={
 		seller:0,
 		cat1:0,
