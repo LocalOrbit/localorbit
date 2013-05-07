@@ -138,8 +138,8 @@ core.catalog.setFilter=function(type,id,parentId,updateListing){
 }
 
 core.catalog.resetDeliveryDateChange=function(){
-	$('.prod_dd_display').hide();
-	$('.prod_dd_selector').show();
+	$('span.prod_dd_display').hide();
+	$('div.prod_dd_selector').show();
 	$('.filter.dd').removeClass('active');
 }
 
@@ -182,8 +182,8 @@ core.catalog.confirmDeliveryDateChange = function (confirmed) {
 				 * of the options except the one we want, change the hidden delivery day field,
 				 * and update the text on the dropdown*/
 				if(prodHasDeliv){
-					$('.prod_dd_selector_'+core.products[i].prod_id).hide();
-					$('.prod_dd_single_display_'+core.products[i].prod_id).html(text).show();
+					$('div.prod_dd_selector_'+core.products[i].prod_id).hide();
+					$('span.prod_dd_single_display_'+core.products[i].prod_id).html(text).show();
 					document.cartForm['prodDd_'+core.products[i].prod_id].value = core.catalog.filters.dd; 
 				}
 			}
