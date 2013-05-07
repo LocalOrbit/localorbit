@@ -47,7 +47,7 @@ if (count($days) > 1)
 		$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
 		$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 		?>
-		<li class="filter dd" id="filter_dd_<?=$dd_ids?>"><a href="#!catalog-shop" onclick="core.catalog.setFilter('dd','<?=$dd_ids?>'); return <?=$hashUrl?>;">
+		<li class="filter dd"><a href="#!catalog-shop" onclick="core.catalog.setFilter('dd','<?=$dd_ids?>'); return <?=$hashUrl?>;" id="filter_dd_<?=$dd_ids?>">
 		<?=$type?> <?=core_format::date($time, 'shorter-weekday',false)?>
 		<br />
 		<?=$final_address?>
