@@ -56,10 +56,10 @@ $addresses = $core->view[6];
 			$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
 			$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 			?>
-			<span class="prod_dd_display content" style="font-size: 11px;display: none;" id="prod_dd_single_display_<?=$prod['prod_id']?>">
+			<span class="prod_dd_display content prod_dd_single_display_<?=$prod['prod_id']?>" style="font-size: 11px;display: none;">
 				
 			</span>
-			<div id="prod_dd_selector_<?=$prod['prod_id']?>" class="prod_dd_selector">
+			<div class="prod_dd_selector prod_dd_selector_<?=$prod['prod_id']?>">
 				<a class="dropdown-toggle dd_selector" data-toggle="dropdown">
 					<span class="content" id="prod_dd_display_<?=$prod['prod_id']?>"><?=$type?> <?=core_format::date($time, 'shortest-weekday',false)?><br /><?=$final_address?></span>
 					<span class="caret"></span>
