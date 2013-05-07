@@ -76,7 +76,7 @@
 								
 			<a href="mailto:ragan@localorb.it">ragan@localorb.it</a> <br><br>
 
-			Ragan Erickson's backyard is filled with chickens and seasonal crops, which makes her a perfect Local Orbit evangelist to the local food haven of Southern California. Prior to joining the Local Orbit, Ragan spent 10 years working for the region's only sustainable winery and restaurant. As Direct Sales and Marketing Manager, she created a wine club and launched one of the first online wine store in Southern California. She also managed customer service procedures and standards for 100 employees.
+			Ragan Erickson's backyard is filled with chickens and seasonal crops, which makes her a perfect Local Orbit evangelist to the local food haven of Southern California. Prior to joining Local Orbit, Ragan spent 10 years working for the region's only sustainable winery and restaurant. As Direct Sales and Marketing Manager, she created a wine club and launched one of the first online wine store in Southern California. She also managed customer service procedures and standards for 100 employees.
 
 			Ragan spent much of her early career working in her family's restaurant business, and she joined Local Orbit because the company intersects her passions for slow food and new media. "Working with a company that helps people build healthier communities through local food is a dream come true," she said. <br> <br>
 

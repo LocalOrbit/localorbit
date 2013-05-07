@@ -76,7 +76,7 @@
 		<td style="text-align: center !important;">
 			<div class="homepage_title">
 				Sales and business management
-				tools for the entrepeneurs and organizations  
+				tools for the entrepreneurs and organizations  
 				building the New Food Economy, connecting buyers and sellers 
 				with shorter, transparent supply chains.
 			</div>
