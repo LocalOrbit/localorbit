@@ -1,14 +1,19 @@
 #!/bin/sh
+
 echo "stage 1: dumping production db"
-mysqldump --user=localorb_www --password=l0cal1sdab3st localorb_www_production > /root/dbdump.sql;
+mysqldump --host=localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com  --user=localorb_www --password=l0cal1sdab3st localorb_www_production > /tmp/dbdump.sql;
 echo "stage 2: restoring to qa"
-mysql --user=localorb_www --password=l0cal1sdab3st localorb_www_qa < /root/dbdump.sql;
+mysql  --host=localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com --user=localorb_www --password=l0cal1sdab3st localorb_www_qa < /tmp/dbdump.sql;
 echo "stage 3: changing hostnames to foodhubresource.com"
-mysql --user=localorb_www --password=l0cal1sdab3st localorb_www_qa < /var/www/testing/db/change_prod2qa.sql;
+#mysql  --host=localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com --user=localorb_www --password=l0cal1sdab3st localorb_www_qa < /var/www/qa/db/change_prod2qa.sql;
 echo "stage 4: changing customer emails"
-php -f /var/www/qa/bin/prod2testqa_emails.php
+#php -f /var/www/qa/bin/prod2testqa_emails.php
+mysql  --host=localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com  --user=localorb_www --password=l0cal1sdab3st localorb_www_qa -e "update customer_entity set email=concat_ws('','localorbit.testing+',entity_id,'@gmail.com') where org_id<>1;";
+mysql  --host=localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com  --user=localorb_www --password=l0cal1sdab3st localorb_www_qa -e "delete from organization_payment_methods;";
+mysql  --host=localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com  --user=localorb_www --password=l0cal1sdab3st localorb_www_qa -e "update domains set hostname=concat_ws('','qa',hostname);";
 echo "stage 5: moving profile images"
 rm /var/www/qa/www/img/organizations/*.jpg;
+rm /var/www/qa/www/img/organizations/cached/*.jpg;
 cp -v /var/www/production/www/img/organizations/*.jpg /var/www/qa/www/img/organizations/;
 echo "stage 6: moving product images"
 rm -Rf /var/www/qa/www/img/products/raws/*.dat;
