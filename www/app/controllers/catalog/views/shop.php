@@ -176,7 +176,8 @@ else
 		# reorganize the cart into a hash by prod_id, so we can look up quantities easier
 		# while rendering the catalog
 		$item_hash = $cart->items->to_hash('prod_id');
-
+		#print_r($item_hash);
+		
 		# render the filters on the left side
 		core::ensure_navstate(array('left'=>'left_blank'), 'catalog-shop');
 		core::write_navstate();
