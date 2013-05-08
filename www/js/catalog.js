@@ -518,8 +518,8 @@ core.catalog.updateRowContinue=function(prodId, newQty, dd_id, failure) {
 	var rowTotal = 100000000000000;
 
 	//core.alertHash(core.prices[prodId])
-
 	for (var i = 0; i < core.prices[prodId].length; i++){
+
 
 		// reformat the min qty to zero if it came across as an object (nulls can do this)
 		if(typeof(core.prices[prodId][i]['min_qty']) == 'object')
