@@ -306,7 +306,10 @@ else
 	//$this->weekly_special();
 }
 #print_r($core->data);
-core::js("window.setTimeout('core.catalog.initCatalog();core.catalog.setFilter(\'cat1\',".intval(trim($core->data['cat1'])).");',1000);");
+$js = "core.catalog.initCatalog();";
+if(is_numeric(trim($core->data['cat1'])))
+	$js .= 'core.catalog.setFilter(\'cat1\','.intval(trim($core->data['cat1'])).');';
+core::js("window.setTimeout('".$js."',1000);");
 core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });");
 core_ui::showLeftNav();
 
