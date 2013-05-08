@@ -12,6 +12,7 @@ $addresses = $core->view[6];
 #echo('<h1>/'.$qty.'/</h1>');
 ?>
 <div class="row">
+	
 	<div class="span1 product-quantity">
 		<input class="span1 prodQty prodQty_<?=$prod['prod_id']?> natural-num-only" type="text" name="prodQty_<?=$prod['prod_id']?>" id="prodQty_<?=$prod['prod_id']?>" onkeyup="core.catalog.updateRow(<?=$prod['prod_id']?>,this.value);" value="<?=$qty?>" placeholder="Qty" />
 	</div>
