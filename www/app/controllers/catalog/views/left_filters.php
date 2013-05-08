@@ -39,7 +39,7 @@ if (count($days) > 1)
 <?php
 	foreach($days as $key => $day)
 	{
-		$name = core_format::date($time, 'shorter-weekday');
+		$name = core_format::date($time, 'shortest-weekday');
 		$dd_ids = implode('_', array_keys($day));
 		#print_r($dd_ids );
 		#print_r(explode('-', $key));
@@ -48,7 +48,7 @@ if (count($days) > 1)
 		$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 		?>
 		<li class="filter dd"><a href="#!catalog-shop" onclick="core.catalog.setFilter('dd','<?=$dd_ids?>'); return <?=$hashUrl?>;" id="filter_dd_<?=$dd_ids?>">
-		<?=$type?> <?=core_format::date($time, 'shorter-weekday',false)?>
+		<?=$type?> <?=core_format::date($time, 'shortest-weekday',false)?>
 		<br />
 		<?=$final_address?>
 		</a>
