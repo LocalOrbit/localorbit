@@ -31,7 +31,7 @@ $col->__model->autojoin(
 $col = $col
 ->filter('delivery_status','in',array('Partially Delivered','Pending'))
 	#->filter('status','in',array('ORDERED','PARTIALLY DELIVERED'))
-	->filter('lo_fulfillment_order.domain_id','in','('.implode(',',$core->session['domains_by_orgtype_id'][2]).')');
+	->filter('lo_fulfillment_order.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 
 
 $orders = new core_datatable('market_orders','dashboard/market_orders',$col);
