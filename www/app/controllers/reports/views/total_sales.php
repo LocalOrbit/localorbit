@@ -46,11 +46,11 @@ $hubs = core::model('domains')->collection();
 if (lo3::is_market()) { 
 	$hubs = $hubs->filter('domain_id', 'in',$core->session['domains_by_orgtype_id'][2]);							
 } 
-$hubs = $hubs->sort('name');
 
+$hubs = $hubs->sort('name');
 # apply permissions
 if(lo3::is_market())
-	$col->filter('organizations_to_domains.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
+	$col->filter('lo_order.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 if(lo3::is_customer())
 	$col->filter('lo_fulfillment_order.org_id',$core->session['org_id']);
 
