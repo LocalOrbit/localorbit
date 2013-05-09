@@ -89,12 +89,16 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		else if(lo3::is_market())
 		{
 			$sql .= '
-				and lod.dd_id in (
-					select dd.dd_id
-					from delivery_days dd
+				and (
+					lod.dd_id in (
+						select dd.dd_id
+						from delivery_days dd
 
-					where dd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+						where dd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
 
+					)
+					or
+					lid.seller_org_id='.$core->session['org_id'].'
 				)
 				and lid.ldstat_id=2
 			';
