@@ -57,7 +57,7 @@ $col->__model->autojoin(
 
 $hubs = core::model('domains')->collection();						
 if (lo3::is_market()) { 
-	$hubs = $hubs->filter('lo_order.domain_id', 'in',$core->session['domains_by_orgtype_id'][2]);							
+	$hubs = $hubs->filter('domain_id', 'in',$core->session['domains_by_orgtype_id'][2]);							
 } 
 $hubs = $hubs->sort('name');
 
