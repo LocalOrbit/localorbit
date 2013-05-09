@@ -27,6 +27,7 @@ foreach($items as $org_id=>$item_list)
 
 	if (!$first) {
 	?>
+		<div class="page-break">&nbsp;</div>
 		<div class="row">&nbsp;</div>
 	<?
 	}
