@@ -10,7 +10,7 @@ foreach($orgs as $org)
 {
    if (!$first) {
       ?>
-<div class="page-break"/>
+<div class="page-break">&nbsp;</div>
 <?
    }
 	$core->data['org_id'] = $org;
