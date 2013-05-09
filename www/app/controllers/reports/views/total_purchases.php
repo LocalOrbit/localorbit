@@ -44,7 +44,7 @@ $col->__model->autojoin(
 
 # apply permissions
 if(lo3::is_market())
-	$col->filter('organizations_to_domains.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
+	$col->filter('lo_order.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 if(lo3::is_customer())
 	$col->filter('lo_order.org_id',$core->session['org_id']);
 
