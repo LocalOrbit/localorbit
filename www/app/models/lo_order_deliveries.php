@@ -37,12 +37,21 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 
 	function get_sellers_for_deliveries($deliv_ids)
 	{
+		global $core;
 		$sql = '
 			select distinct lfo.org_id
 			from lo_order_line_item lid
 			left join lo_fulfillment_order lfo on lfo.lo_foid=lid.lo_foid
-			where lid.lodeliv_id in ('.implode(',',$deliv_ids).');
+			where lid.lodeliv_id in ('.implode(',',$deliv_ids).')
 		';
+		if(lo3::is_market())
+		{
+			$sql .= ' and lfo.org_id in (
+				select org_id 
+				from organizations_to_domains otd
+				where otd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+			) ';
+		}
 		$orgs = array();
 		$list = new core_collection($sql);
 		foreach($list as $item)
