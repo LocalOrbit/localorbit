@@ -294,6 +294,16 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 			->add_custom_field('sum(qty_ordered) as sum_qty_ordered')
 			->add_custom_field('sum(row_total) as sum_row_total')
 			->collection();
+		if(lo3::is_market())
+		{
+			$col->filter(
+				'lo_fulfillment_order.org_id','in','(
+					select otd.org_id 
+					from organizations_to_domains otd
+					where otd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+				)'
+			);
+		}
 		#$col->group('lo_order_deliveries.delivery_start_time');
 		#$col->group('lo_order_deliveries.deliv_address_id');
 		$col->group('lo_order.org_id');
