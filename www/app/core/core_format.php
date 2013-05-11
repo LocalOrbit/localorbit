@@ -109,6 +109,34 @@ class core_format
 		return $output;
 	}
 
+	public static function fix_unix_dates()
+	{
+		global $core;
+		//$trace = "fix_unix_dates ";
+		$fields = func_get_args();
+		
+		foreach($fields as $field) {
+			//core::log($trace." fix_unix_dates() field=".$field);
+			
+			if(isset($core->data[$field]) && $core->data[$field] != '' && !is_numeric(substr($core->data[$field],0,4)))	{
+				//core::log($trace." fix_unix_dates() data found and is date | field=".$field." data=".$core->data[$field]);
+				$core->data[$field] = strtotime($core->data[$field]);
+
+			} else if (isset($core->data[$field])) {
+				//core::log($trace." fix_unix_dates() data is set | field=".$field." data=".$core->data[$field]);	
+				
+				// set default dates to big range
+				if (strpos($field, "createdat1") > 0) {	
+					$core->data[$field] = $core->config['time'] - (86400*30);
+					//core::log($trace." fix_unix_dates() data1 found | field=".$field." data=".$core->data[$field]);		
+				} else if (strpos($field, "createdat2") > 0) {
+					$core->data[$field] = $core->config['time'];
+					//core::log($trace." fix_unix_dates() data1 found | field=".$field." data=".$core->data[$field]);						
+				}				
+			}
+		}
+	}
+
 	public static function fix_dates()
 	{
 		global $core;

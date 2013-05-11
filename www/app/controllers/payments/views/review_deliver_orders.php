@@ -12,7 +12,7 @@ $receivables->add(new core_datacolumn('creation_date','Description',false,'15%',
 $receivables->add(new core_datacolumn('creation_date','Order Date',true,'10%','{creation_date}','{creation_date}','{creation_date}'));
 $receivables->add(new core_datacolumn('delivery_end_time','Deliver Date',true,'10%','{delivery_end_time}','{delivery_end_time}','{delivery_end_time}'));
 $receivables->add(new core_datacolumn('amount','Amount',true,'10%','{amount}','{amount}','{amount}'));
-$receivables->add(new core_datacolumn('status','Payment Status',true,'15%','{payment_status}','{payment_status}','{payment_status}'));
+$receivables->add(new core_datacolumn('order_status','Status',true,'15%','{order_status}','{order_status}','{order_status}'));
 $receivables->columns[2]->autoformat='date-short';
 $receivables->columns[3]->autoformat='date-short';
 $receivables->columns[4]->autoformat='price';?>

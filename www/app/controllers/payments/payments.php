@@ -801,30 +801,30 @@ function payments__add_standard_filters($datatable,$tab='')
 		
 	$filter_width = 285;
 	$label_width  = 85;
-	$date_verb    = (in_array($datatable->name,array('payables','systemwide','receivables')))?'Invoiced':'Placed';
+	$date_verb    = (in_array($datatable->name,array('payables','systemwide','receivables')))?'Invoiced':'Paid';
 	
-	core_format::fix_dates(
+	// convert to unix dates	
+	core_format::fix_unix_dates(
 		$datatable->name.'__filter__'.$tab.'createdat1',
 		$datatable->name.'__filter__'.$tab.'createdat2'
 	);
 	
 	
+	// payment history has different columns payment_date vs creation_date
+	if (in_array($tab,array('transactions'))) {
+		$datatable->add_filter(new core_datatable_filter($tab.'createdat1','payment_date','>','unix_date',null));
+		$datatable->add_filter(new core_datatable_filter($tab.'createdat2','payment_date','<','unix_date',null));
+	} else {
+		$datatable->add_filter(new core_datatable_filter($tab.'createdat1','creation_date','>','unix_date',null));
+		$datatable->add_filter(new core_datatable_filter($tab.'createdat2','creation_date','<','unix_date',null));
+	}
 	
-	
-	$datatable->add_filter(new core_datatable_filter($tab.'createdat1','creation_date','>','date',null));
-	$datatable->add_filter(new core_datatable_filter($tab.'createdat2','creation_date','<','date',null));
 	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat1',null,$date_verb.' on or after ');
 	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat2',null,$date_verb.' on or before ');
 	
 	$datatable->add_filter(new core_datatable_filter('payable_info','concat_ws(\'\',to_org_name,from_org_name,payable_info)','~','search'));
 	$datatable->filter_html .= core_datatable_filter::make_text($datatable->name,'payable_info',$datatable->filter_states[$datatable->name.'__filter__payable_info'],'Search');
 
-	
-	
-	
-	
-	
-	
 	
 	$datatable->filter_html .= '</div><br /><div style="width: '.($filter_width * 3).'px;clear:both;">';
 	
@@ -854,6 +854,7 @@ function payments__add_standard_filters($datatable,$tab='')
 		(lo3::is_seller() && $sell_domain_count > 1)
 	)
 	{
+		// From Market: ***************************************************************************************************************
 		$datatable->add_filter(new core_datatable_filter('from_domain_id'));
 		
 		$datatable->filter_html .= '<div style="float:left;width: '.$filter_width.'px;">';
@@ -871,8 +872,65 @@ function payments__add_standard_filters($datatable,$tab='')
 		
 		$datatable->filter_html .= '</div>';
 	}
+	
+	
+	
+	// Delivery Status ***************************************************************************************************************
+	if (lo3::is_seller() && in_array($tab,array('receivables'))) {
+		$datatable->add_filter(new core_datatable_filter('delivery_status'));
+		$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - 14).'px;">';
+		$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Delivery Status: </div>';
+		$datatable->filter_html .= core_datatable_filter::make_select(
+				$datatable->name,
+				'delivery_status',
+				$datatable->filter_states[$datatable->name.'__filter__delivery_status'],
+				array(
+						'Pending'=>'Pending',
+						'Canceled'=>'Canceled',
+						'Delivered'=>'Delivered',
+						'Partially Delivered'=>'Partially Delivered',
+						'Contested'=>'Contested',
+				),
+				null,
+				null,
+				'All Types',
+				'width: 120px; max-width: 120px;'
+		);
 		
-	# check to see if we need the from org filter
+		$datatable->filter_html .= '</div>';
+	}
+	
+	
+	
+	// Order Status (seller, ) ***************************************************************************************************************
+	// Record Payments to Vendors ????	// Status (paid, awaiting delivery, awaiting buyer payment, awaiting MM, awaiting LO transfer)		
+	if (lo3::is_seller() && in_array($tab,array('receivables'))) {
+			$datatable->add_filter(new core_datatable_filter('order_status'));
+				
+			$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - 14).'px;">';
+			$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Status: </div>';
+			$datatable->filter_html .= core_datatable_filter::make_select(
+					$datatable->name,
+					'order_status',
+					$datatable->filter_states[$datatable->name.'__filter__order_status'],
+					array(
+							'paid'=>'paid',
+							'awaiting delivery'=>'awaiting delivery',
+							'awaiting buyer payment'=>'awaiting buyer payment',
+							'awaiting MM or LO transfer'=>'awaiting MM or LO transfer',
+					),
+					null,
+					null,
+					'All Types',
+					'width: 120px; max-width: 120px;'
+			);
+				
+			$datatable->filter_html .= '</div>';
+	}
+	
+	
+
+	// Filter: From Org: ***************************************************************************************************************
 	if(lo3::is_admin() || lo3::is_market())
 	{
 		$datatable->add_filter(new core_datatable_filter('from_org_id'));
@@ -891,8 +949,61 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->filter_html .= '</div>';
 	}
 	
+	
+	
+	
+	// Filter: Payment Status  ***************************************************************************************************************
+	if (in_array($tab,array('payables'))) {
+		if(lo3::is_buyer()) {
+			//Status (paid, unpaid, all; defaults to unpaid)
+			$datatable->add_filter(new core_datatable_filter('amount_paid'));
+			$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - 14).'px;">';
+				$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Payment Status: </div>';
+				$datatable->filter_html .= core_datatable_filter::make_select(
+						$datatable->name,
+						'amount_paid',
+						$datatable->filter_states[$datatable->name.'__filter__amount_paid'],
+						array(
+								'1'=>'Paid',
+								'0'=>'Unpaid',
+						),
+						null,
+						null,
+						'All Types',
+						'width: 120px; max-width: 120px;'
+				);
+			$datatable->filter_html .= '</div>';
+	
+			
+			//Invoiced (invoiced, un-invoiced, all; defaults to all)
+			$datatable->add_filter(new core_datatable_filter('invoiced'));
+			$datatable->filter_html .= '<div style="float:left;width: '.$filter_width.'px;">';			
+				$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Payment Invoiced: </div>';
+				$datatable->filter_html .= core_datatable_filter::make_select(
+						$datatable->name,
+						'invoiced',
+						$datatable->filter_states[$datatable->name.'__filter__invoiced'],
+						array(
+								'1'=>'Invoiced',
+								'0'=>'Un-Invoice',
+						),
+						null,
+						null,
+						'All Types',
+						'width: 120px; max-width: 120px;'
+				);			
+			$datatable->filter_html .= '</div>';
+		}
+	}
+		
+	
+	
+	
+	
+	
+	// Filter: Transaction Type: ***************************************************************************************************************
 	if(
-		in_array($datatable->name,array('transactions','systemwide','payables','receivables')) && (lo3::is_admin() || lo3::is_market() || lo3::is_seller())
+		in_array($datatable->name,array('transactions','systemwide','payables','receivables')) && (lo3::is_admin() || lo3::is_market())
 		||
 		($datatable->name == 'purchase_orders' && lo3::is_admin())
 	)
@@ -925,8 +1036,9 @@ function payments__add_standard_filters($datatable,$tab='')
 		if($datatable->name != 'purchase_orders')
 			$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - ((lo3::is_market())?40:0)).'px;height: 38px;clear:right;"><img src="/img/blank.png" width="285" height="33" /></div>';
 	}
+
 	
-	# Check to see if we need either of the To filters and the method filter. MMs and Admins get all of them
+	// Filter: To Market: ***************************************************************************************************************
 	if(lo3::is_admin() || lo3::is_market())
 	{
 		$datatable->add_filter(new core_datatable_filter('to_domain_id'));
@@ -961,8 +1073,10 @@ function payments__add_standard_filters($datatable,$tab='')
 		);
 		$datatable->filter_html .= '</div>';
 		
+
 		
-		if($datatable->name == 'transactions' )
+		// Filter: Payment Method: ***************************************************************************************************************
+		if(lo3::is_buyer() && $datatable->name == 'transactions' )
 		{
 			$datatable->add_filter(new core_datatable_filter('payment_method'));
 			
@@ -987,6 +1101,11 @@ function payments__add_standard_filters($datatable,$tab='')
 			$datatable->filter_html .= '</div>';
 		}
 	}
+	
+	
+	
+	
+	
 
 	$datatable->filter_html .= '<br /><div style="width: '.($filter_width * 3).'px;clear:both;">&nbsp;</div>';
 	
@@ -1036,6 +1155,11 @@ function format_payable_info($data)
 	}
 	$data['ref_nbr_html'] = $html;
 	
+		
+	
+	
+	
+	
 	# format the Description column
 	$html = '';
 	foreach($payable_info as $info)
@@ -1059,6 +1183,10 @@ function format_payable_info($data)
 		$html .= '">'.$info[3].' ('.$info[4].')</a>';
 	}
 	$data['description_html'] = $html;
+	
+	
+	
+	
 	
 	# format payment due
 	$time = intval($data['due_date']);
@@ -1086,6 +1214,22 @@ function format_payable_info($data)
 		}
 	}
 	$data['payment_due'] = $html;
+	
+	
+	
+	
+	# delivery_end_time
+	$html = '';
+	if ($data['delivery_status'] = "Delivered") {
+		$html = core_format::date($data['delivery_end_time'],'short');
+	} else {
+		$time = intval($data['delivery_end_time']);
+		$html .= '<div style="font-weight:bold;color: #c00;">'.core_format::date($time,'short').'<br />overdue</div>';
+	}
+	$data['delivery_end_time_html'] = $html;
+	
+	
+	
 	
 	# format payment status
 	$data['payment_status'] = ($data['status'] == '1')?'Paid':'Unpaid';

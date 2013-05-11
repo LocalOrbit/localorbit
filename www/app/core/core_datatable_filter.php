@@ -88,12 +88,17 @@ class core_datatable_filter
 		if($this->has_value && $this->value != __core_datatable_filter_nullval__)
 		{
 			# fudging with dates a bit
-			if($this->type == 'date')
+		if($this->type == 'date')
 			{
 				if(strlen($this->value) < 11 && ($this->operator == '>' || $this->operator == '<'))
 				{
 					$this->value .= ($this->operator == '>')?' 00:00:00':' 23:59:59';
 				}
+				$this->parent->data->filter($this->field,$this->operator,$this->value);
+			}
+			else if($this->type == 'unix_date')
+			{
+				if(strlen($this->value) < 11 && ($this->operator == '>' || $this->operator == '<'))
 				$this->parent->data->filter($this->field,$this->operator,$this->value);
 			}
 			else if($this->type == 'search')
@@ -164,7 +169,7 @@ class core_datatable_filter
 	{
 		global $core;
 		if(is_null($value))
-			$value = '';
+			$value = $core->config['time'];
 		
 		if($value != '' && !isset($core->data[$tablename.'__filter__'.$name])){
 			core::log('setting initial value of filter '.$tablename.'__filter__'.$name.' to '.$value);
