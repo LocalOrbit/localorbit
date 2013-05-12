@@ -51,8 +51,11 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-wysihtml5.css"></link>
 	<link rel="stylesheet" type="text/css" href="css/less.php" title="styles1" media="all" id="less-css" />
 	<link rel="stylesheet" type="text/css" href="css/fonts.php" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" media="all" />
 	<link rel="stylesheet" href="/css/icomoon-ultimate1563/style.css">
 	<link rel="stylesheet" href="/css/icomoon-ultimate88910/style.css">
+	
+	
 	
 	<style type="text/css" media="screen, projection">
 		@import url(//assets.zendesk.com/external/zenbox/v2.5/zenbox.css); 
@@ -78,31 +81,33 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.format.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.ui.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="js/lo4.js?time=<?php echo time();?>"></script>
-	<script language="Javascript" type="text/javascript" src="app/core/js/jquery.datePicker.js?time=<?php echo time();?>"></script>
-	<!--<script language="Javascript" type="text/javascript" src="app/core/js/jquery.tabset.js?time=<?php echo time();?>"></script>-->
-	<script language="Javascript" type="text/javascript" src="js/jquery.rte.js?time=<?php echo time();?>"></script>
-	<script language="Javascript" type="text/javascript" src="js/lo3.js?time=<?php echo time();?>"></script>
-	<script language="Javascript" type="text/javascript" src="js/slides.jquery.js"></script>
-	<script language="Javascript" type="text/javascript" src="js/chosen.jquery.min.js"></script>
+	
+	<!-- new calendar -->
+	<script language="Javascript" type="text/javascript" src="js/jquery-ui.min.js"></script>
+	
+	<!-- old calendar
+	<script language="Javascript" type="text/javascript" src="app/core/js/jquery.datePicker.js?time=<?php echo time();?>"></script> -->
+	
+	<!-- <script language="Javascript" type="text/javascript" src="app/core/js/jquery.tabset.js?time=<?php echo time();?>"></script>-->
 
 	<script language="Javascript" type="text/javascript" src="js/stylesheetToggle.js"></script>
 
-	<script type="text/javascript" src="js/jquery.autocomplete.pack.js"></script>
-	<script type="text/javascript" src="js/jquery.select-autocomplete.js"></script>
 	<!--<script language="Javascript" type="text/javascript" src="js/jquery.jqplot.min.js"></script>-->
 	<script language="Javascript" type="text/javascript" src="<?=$prtcl?>maps.googleapis.com/maps/api/js?key=AIzaSyAMekmlIkMHfj2m5G4lgWrwgZyrgM6rhgU&sensor=false"></script>
 
+  
+
 	<script language="Javascript" type="text/javascript">
-	<!--
-	//
-	core.hostname = '<?php echo($_SERVER['SERVER_NAME'])?>';
-	core.appPage  = 'app.php';
-	core.baseUrl  = '<?php echo($_SERVER['REQUEST_URI'])?>';
-	core.user_id  = '<?php echo(intval($_SESSION['core']['user_id'])); ?>';
-	core.unauth_controller = '#!misc-home';
-	core.authed_controller = '#!dashboard-view';
-	$.fn.datePicker.format = 'M d,y';
-	//-->
+		<!--
+		//
+		core.hostname = '<?php echo($_SERVER['SERVER_NAME'])?>';
+		core.appPage  = 'app.php';
+		core.baseUrl  = '<?php echo($_SERVER['REQUEST_URI'])?>';
+		core.user_id  = '<?php echo(intval($_SESSION['core']['user_id'])); ?>';
+		core.unauth_controller = '#!misc-home';
+		core.authed_controller = '#!dashboard-view';
+		//$.fn.datePicker.format = 'M d,y';
+		//-->
 	</script>
 
 </head>

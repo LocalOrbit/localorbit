@@ -294,7 +294,7 @@ class core_ui
 		return $out;
 	}
 
-	public static function date_picker_blur_setup ()
+	/* public static function date_picker_blur_setup ()
 	{
 		return '<script type="text/javascript">
 		$(document).ready(function ()  {
@@ -308,7 +308,7 @@ class core_ui
 			});
 		});
 		</script>';
-	}
+	} */
 
 	public static function date_picker($field_name_id,$value='',$onchange_js='')
 	{
@@ -322,9 +322,14 @@ class core_ui
 		if(is_numeric($value) && $value < 0)
 			$value = '';
 
-		core::js('$(\'#'.$field_name_id.'\').datePicker('.$onchange_js.');');
+		// new calendar
+		core::js('$(\'#'.$field_name_id.'\').datepicker({changeMonth: true, changeYear: true, dateFormat: "MM d, yy",'.$onchange_js.'});');
+		
+		// old calendar
+		// core::js('$(\'#'.$field_name_id.'\').datePicker('.$onchange_js.');');
 		return '<input type="text" format="'.$core->config['formats']['dates']['jsshort'].'" class="datepicker input-small" name="'.$field_name_id.'" id="'.$field_name_id.'" value="'.$value.'" />';
 	}
+	
 
 	public static function tab_switchers($tabset_name,$tab_list)
 	{

@@ -380,6 +380,7 @@ core.ui.dataTable.updateFilter=function(dtFilterName,filtValue,testingVar){
 	filterInfo = new String(dtFilterName).split('__filter__');
 	core.ui.dataTables[filterInfo[0]].setFilterValue(filterInfo[1],filtValue);
 	//alert('updating '+dtFilterName+' to '+filtValue+': '+testingVar);
+	//alert('dataTables '+filterInfo[0]+' setFilterValue '+filterInfo[1]+': '+filtValue);
 }
 
 core.ui.dataTable.prototype.handleTextFilter=function(dtFilterName,filtValue){

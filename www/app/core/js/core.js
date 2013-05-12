@@ -698,11 +698,11 @@ core.loadQuery=function(){
 	}
 }
 
-$(document).click(function (evt){
+/*$(document).click(function (evt){
 	if (!$(evt.srcElement).hasClass('datepicker') && $(evt.srcElement).parents('.datePicker').length < 1) {
 		$('#datePicker').hide();
 	}
-});
+});*/
 
 core.loadQuery();
 //~ loadjscssfile("myscript.js", "js") //dynamically load and add this .js file

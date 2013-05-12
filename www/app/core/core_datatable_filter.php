@@ -177,7 +177,12 @@ class core_datatable_filter
 		}
 	
 		$out  = '<div class="date-filter pull-left">';
-		$out .= core_ui::date_picker($tablename.'__filter__'.$name,$value,'function(var1,var2){core.ui.dataTable.updateFilter(var1,var2);}').$post_label;
+		// new calendar	
+		$js = 'onClose: function(var1,var2){core.ui.dataTable.updateFilter("'.$tablename."__filter__".$name.'",var1);}';		
+		$out .= core_ui::date_picker($tablename."__filter__".$name,$value,$js).$post_label;
+			
+		// old calendar
+		//$out .= core_ui::date_picker($tablename.'__filter__'.$name,$value,'function(var1,var2){core.ui.dataTable.updateFilter(var1,var2);}').$post_label;
 		$out .= '<br><small>'.$pre_label.'</small></div>';
 		return $out;
 	}
