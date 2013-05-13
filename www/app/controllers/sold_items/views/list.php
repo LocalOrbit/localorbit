@@ -72,15 +72,12 @@ $col->__model->autojoin(
 );
 
 $hubs = core::model('domains')->collection();						
-if (lo3::is_market()) { 
-	$hubs = $hubs->filter('domain_id', 'in',$core->session['domains_by_orgtype_id'][2]);							
-} 
 $hubs = $hubs->sort('name');
 
 # apply permissions
 if(lo3::is_market())
 {
-	$col->filter('otd_f.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
+	$col->filter('lo_order.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 	$buyer_sql  = 'select org_id,name from organizations where org_id in (select org_id from lo_order where ldstat_id<>1 and lo_order.domain_id in ('.implode(',', $core->session['domains_by_orgtype_id'][2]).')) order by name';
 	$seller_sql = 'select org_id,name from organizations where org_id in (select org_id from lo_fulfillment_order where ldstat_id<>1 and lo_fulfillment_order.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')) and allow_sell=1 order by name';
 }
