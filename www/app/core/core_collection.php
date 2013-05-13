@@ -135,7 +135,11 @@ class core_collection implements Iterator,ArrayAccess
 	function filter($field,$val_or_op=null,$val=null)
 	{
 		$arg_count = func_num_args();
-		if($arg_count == 2)
+		if($arg_count == 1)
+		{
+			$this->__filters[] = $field;
+		}
+		else if($arg_count == 2)
 		{
 			if(in_array($val_or_op,array('is null','is not null')))
 			{
@@ -154,7 +158,7 @@ class core_collection implements Iterator,ArrayAccess
 				);
 			}
 		}
-		if($arg_count == 3)
+		else if($arg_count == 3)
 		{
 			$this->__filters[] = array(
 				'field'=>$field,
@@ -222,65 +226,72 @@ class core_collection implements Iterator,ArrayAccess
 		for ($i = 0; $i < count($this->__filters); $i++)
 		{
 			$this->__sql .= ($has_where)?' and ':' where ';
-			switch($this->__filters[$i]['operator'])
+			if(is_array($this->__filters[$i]))
 			{
-				case '=~':
-				case 'like%':
-					$this->__sql .= $this->__filters[$i]['field'];
-					$this->__sql .= ' like ';
-					$this->__sql .= "'".core_db::escape_string($this->__filters[$i]['value'])."%'";
-					break;
-				case '~=':
-				case '%like':
-					$this->__sql .= $this->__filters[$i]['field'];
-					$this->__sql .= ' like ';
-					$this->__sql .= "'%".core_db::escape_string($this->__filters[$i]['value'])."'";
-					break;
-				case '~':
-				case 'like':
-					$this->__sql .= $this->__filters[$i]['field'];
-					$this->__sql .= ' like ';
-					$this->__sql .= "'%".core_db::escape_string($this->__filters[$i]['value'])."%'";
-					break;
-				case '=':
-				case '>':
-				case '<':
-				case '>=':
-				case '<=':
-				case '<>':
-					$this->__sql .= $this->__filters[$i]['field'];
-					$this->__sql .= $this->__filters[$i]['operator'];
-					if(is_string($this->__filters[$i]['value']))
-						$this->__sql .= "'".core_db::escape_string($this->__filters[$i]['value'])."'";
-					else
-						$this->__sql .= $this->__filters[$i]['value'];
-					break;
-				case 'in':
-				case 'not in':
-					$this->__sql .= $this->__filters[$i]['field'].' ';
-					$this->__sql .= $this->__filters[$i]['operator'].' (';
-					$vals = array();
-					if(is_string($this->__filters[$i]['value']))
-					{
-						$this->__sql .= $this->__filters[$i]['value'].')';
-					}
-					else
-					{
-						foreach($this->__filters[$i]['value'] as $val)
+				switch($this->__filters[$i]['operator'])
+				{
+					case '=~':
+					case 'like%':
+						$this->__sql .= $this->__filters[$i]['field'];
+						$this->__sql .= ' like ';
+						$this->__sql .= "'".core_db::escape_string($this->__filters[$i]['value'])."%'";
+						break;
+					case '~=':
+					case '%like':
+						$this->__sql .= $this->__filters[$i]['field'];
+						$this->__sql .= ' like ';
+						$this->__sql .= "'%".core_db::escape_string($this->__filters[$i]['value'])."'";
+						break;
+					case '~':
+					case 'like':
+						$this->__sql .= $this->__filters[$i]['field'];
+						$this->__sql .= ' like ';
+						$this->__sql .= "'%".core_db::escape_string($this->__filters[$i]['value'])."%'";
+						break;
+					case '=':
+					case '>':
+					case '<':
+					case '>=':
+					case '<=':
+					case '<>':
+						$this->__sql .= $this->__filters[$i]['field'];
+						$this->__sql .= $this->__filters[$i]['operator'];
+						if(is_string($this->__filters[$i]['value']))
+							$this->__sql .= "'".core_db::escape_string($this->__filters[$i]['value'])."'";
+						else
+							$this->__sql .= $this->__filters[$i]['value'];
+						break;
+					case 'in':
+					case 'not in':
+						$this->__sql .= $this->__filters[$i]['field'].' ';
+						$this->__sql .= $this->__filters[$i]['operator'].' (';
+						$vals = array();
+						if(is_string($this->__filters[$i]['value']))
 						{
-							if(is_string($val))
-								$vals[] = "'".core_db::escape_string($val)."'";
-							else
-								$vals[] = $val;
+							$this->__sql .= $this->__filters[$i]['value'].')';
 						}
-						$this->__sql .= implode(',',$vals).') ';
-					}
-					break;
-				case 'is null':
-				case 'is not null':
-					$this->__sql .= $this->__filters[$i]['field'].' ';
-					$this->__sql .= $this->__filters[$i]['operator'];
-					break;
+						else
+						{
+							foreach($this->__filters[$i]['value'] as $val)
+							{
+								if(is_string($val))
+									$vals[] = "'".core_db::escape_string($val)."'";
+								else
+									$vals[] = $val;
+							}
+							$this->__sql .= implode(',',$vals).') ';
+						}
+						break;
+					case 'is null':
+					case 'is not null':
+						$this->__sql .= $this->__filters[$i]['field'].' ';
+						$this->__sql .= $this->__filters[$i]['operator'];
+						break;
+				}
+			}
+			else
+			{
+				$this->__sql .= $this->__filters[$i];
 			}
 			$has_where = true;
 		}
