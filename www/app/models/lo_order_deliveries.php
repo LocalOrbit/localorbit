@@ -46,11 +46,9 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		';
 		if(lo3::is_market())
 		{
-			$sql .= ' and lfo.org_id in (
-				select org_id 
-				from organizations_to_domains otd
-				where otd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
-			) ';
+			$sql .= ' and (lfo.domain_id in (
+				'.implode(',',$core->session['domains_by_orgtype_id'][2]).'
+			) or lfo.org_id='.$core->session['org_id'].')';
 		}
 		$orgs = array();
 		$list = new core_collection($sql);
@@ -73,6 +71,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 			a2.address as pickup_address,a2.city as pickup_city,dcr2.code as pickup_state,a2.postal_code as pickup_postal_code,
 			d.name as domain_name,d.hostname
 			from lo_order_line_item lid
+			inner join lo_fulfillment_order on lo_fulfillment_order.lo_foid=lid.lo_foid
 			left join lo_order_deliveries lod on  lid.lodeliv_id=lod.lodeliv_id
 			left join addresses a1 on lod.deliv_address_id=a1.address_id
 			left join directory_country_region dcr1 on dcr1.region_id=a1.region_id
@@ -97,20 +96,17 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		}
 		else if(lo3::is_market())
 		{
-			$sql .= '
+			$sql .= ' 
 				and (
-					lod.dd_id in (
-						select dd.dd_id
-						from delivery_days dd
-
-						where dd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
-
-					)
+					lo_fulfillment_order.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
 					or
-					lid.seller_org_id='.$core->session['org_id'].'
-				)
-				and lid.ldstat_id=2
-			';
+					lo_fulfillment_order.org_id in (
+						select otd.org_id 
+						from organizations_to_domains otd
+						where otd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+					)
+				)';
+
 		}
 		else if(lo3::is_admin())
 		{
@@ -296,13 +292,19 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 			->collection();
 		if(lo3::is_market())
 		{
+			
 			$col->filter(
-				'lo_fulfillment_order.org_id','in','(
-					select otd.org_id 
-					from organizations_to_domains otd
-					where otd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+				'(
+					lo_fulfillment_order.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+					or
+					lo_fulfillment_order.org_id in (
+						select otd.org_id 
+						from organizations_to_domains otd
+						where otd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+					)
 				)'
 			);
+			
 		}
 		#$col->group('lo_order_deliveries.delivery_start_time');
 		#$col->group('lo_order_deliveries.deliv_address_id');
