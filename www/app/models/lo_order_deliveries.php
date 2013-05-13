@@ -111,9 +111,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 					lo_fulfillment_order.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
 					or
 					lo_fulfillment_order.org_id in (
-						select otd.org_id 
-						from organizations_to_domains otd
-						where otd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+						'.$core->session['org_id'].'
 					)
 				)';
 
@@ -308,9 +306,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 					lo_fulfillment_order.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
 					or
 					lo_fulfillment_order.org_id in (
-						select otd.org_id 
-						from organizations_to_domains otd
-						where otd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+						'.$core->session['org_id'].'
 					)
 				)'
 			);
