@@ -49,10 +49,16 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 			$sql .= ' and (lfo.domain_id in (
 				'.implode(',',$core->session['domains_by_orgtype_id'][2]).'
 			) or lfo.org_id in (
+				'.$core->session['org_id'].'
+			))';
+			/*
+			 * 		$sql .= ' and (lfo.domain_id in (
+				'.implode(',',$core->session['domains_by_orgtype_id'][2]).'
+			) or lfo.org_id in (
 				select otd.org_id
 				from organizations_to_domains otd
 				where otd.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
-			))';
+			))';*/
 		}
 		$orgs = array();
 		$list = new core_collection($sql);
