@@ -6,13 +6,7 @@ core::init();
 ob_end_flush();
 
 core::load_library('crypto');
-
-global $actually_do_payment;
-$actually_do_payment = ($argv[1] == 'do-ach');
-
-if($actually_do_payment)
-	echo("REALLY DOING IT\n");
-
+array_shift($argv);
 
 # get the list of all domains
 $domains = core::model('domains')
@@ -25,6 +19,19 @@ $domains = core::model('domains')
 	->collection()
 	->filter('service_fee','>',0)
 	->filter('is_live','=',1);
+
+
+global $domain_id;
+if(is_numeric($argv[0]))
+	$domains->filter('domain_id','=',array_shift($argv));
+	
+global $actually_do_payment;
+$actually_do_payment = ($argv[0] == 'do-ach');
+
+if($actually_do_payment)
+	echo("REALLY DOING IT\n");
+
+
 	
 
 echo("Accounts retrieved\n");
@@ -108,10 +115,13 @@ function do_monthly_payment($domain)
 	if(!is_numeric($account_nbr) || !is_numeric($routing_nbr))
 	{
 		echo("no valid account\n");
-		core::process_command('emails/ach_error',false,
-			'ACH Error: bank account not setup for '.$domain['name'],
-			'It appears that this domain does not have their bank account fully setup. Please verify the details with the client'
-		);
+		if($actually_do_payment)
+		{
+			core::process_command('emails/ach_error',false,
+				'ACH Error: bank account not setup for '.$domain['name'],
+				'It appears that this domain does not have their bank account fully setup. Please verify the details with the client'
+			);
+		}
 	}
 	else
 	{
@@ -222,22 +232,25 @@ function do_monthly_payment($domain)
 				$xpi['payment_id']  = $payment['payment_id'];
 				$xpi['amount_paid'] = $domain['service_fee'];
 				$xpi->save();
+			
 				
-				
-
 				// send emails of payment to both parties
 				core::process_command('emails/payment_received',false,
-					$payment['to_org_id'], $payment['from_org_id'], $payment['amount'], array()
+					1, $domain['payable_org_id'], $domain['service_fee'], array()
 				);
+
+				
 				#core_db::
 			}
+			
 		}
 		else
 		{
 			echo "NOT actually performing monthly fees\n";
+			
 		}
 		
-		#print_r($myresult);
+				#print_r($myresult);
 	}
 	
 }
