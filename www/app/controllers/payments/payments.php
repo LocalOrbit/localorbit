@@ -809,6 +809,9 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->name.'__filter__'.$tab.'createdat2'
 	);
 	
+	$start = $core->config['time'] - (86400*7);
+	$end = $core->config['time'];
+	
 	
 	// payment history has different columns payment_date vs creation_date
 	if (in_array($tab,array('transactions'))) {
@@ -818,9 +821,9 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->add_filter(new core_datatable_filter($tab.'createdat1','creation_date','>','unix_date',null));
 		$datatable->add_filter(new core_datatable_filter($tab.'createdat2','creation_date','<','unix_date',null));
 	}
-	
-	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat1',null,$date_verb.' on or after ');
-	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat2',null,$date_verb.' on or before ');
+
+	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat1',core_format::date($start,'short'),$date_verb.' on or before ');
+	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat2',core_format::date($end,'short'),$date_verb.' on or before ');	
 	
 	$datatable->add_filter(new core_datatable_filter('payable_info','concat_ws(\'\',to_org_name,from_org_name,payable_info)','~','search'));
 	$datatable->filter_html .= core_datatable_filter::make_text($datatable->name,'payable_info',$datatable->filter_states[$datatable->name.'__filter__payable_info'],'Search');

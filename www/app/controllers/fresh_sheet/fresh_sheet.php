@@ -73,6 +73,7 @@ class core_controller_fresh_sheet extends core_controller
 				'HTML_FRESH_ITEMS'=>$html,
 				'HTML_FROM_NAME1'=>$domain['name'],
 				'HTML_FROM_NAME2'=>$domain['name'],
+				'HTML_FROM_NAME3'=>$domain['name'],
 				'HTML_LOGO_IMAGE1'=>$logo_image,
 				'HTML_LOGO_IMAGE2'=>$logo_image,
 				'HTML_ABOUT_US'=>$domain['market_profile'],
@@ -213,7 +214,7 @@ class core_controller_fresh_sheet extends core_controller
 				$last_cat = trim($cur_cat[0]);
 				$cat_url = 'https://'.$domain['hostname'].'/app.php#!catalog-shop--cat1-'.$cat_names_by_name[$last_cat];
 				$html .= '<tr style="color:#839a0e; text-align:left; font-size:16px; font-weight:bold;">';
-					$html .= '<th'.(($show_edit_links)?' colspan="3"':' colspan="2"').'>'.$cur_cat[0].' | <a href="'.$cat_url.'" style="color:#5d5d5d; font-size:16px;">Shop Now</a></th>';
+					$html .= '<th style="text-align:left;"'.(($show_edit_links)?' colspan="3"':' colspan="2"').'>'.$cur_cat[0].' | <a href="'.$cat_url.'" style="color:#5d5d5d; font-size:16px;">Shop Now</a></th>';
 				$html .= '</tr>';
 			}
 
