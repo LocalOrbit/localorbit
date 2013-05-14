@@ -61,7 +61,7 @@ class core_controller_market extends core_controller
 		if(lo3::is_admin())
 		{
 			core::log(print_r($core->data, true));
-			
+			$core->data['service_fee'] = core_format::parse_price($core->data['service_fee']);
 			$core->data['hostname'] = strtolower($core->data['hostname']);
 			$core->data['seller_payer']   = core_ui::radio_value('seller_payer',  array('lo','hub'));
 			$core->data['buyer_invoicer'] = core_ui::radio_value('buyer_invoicer',array('lo','hub'));
@@ -85,7 +85,7 @@ class core_controller_market extends core_controller
 				'feature_sellers_enter_price_without_fees','feature_sellers_cannot_manage_cross_sells',
 				'feature_sellers_mark_items_delivered','feature_allow_anonymous_shopping',
 				'default_homepage','seller_payment_managed_by','payable_org_id','payables_create_on',
-				'service_fee','sfs_id','opm_id','service_fee_last_paid','facebook','twitter', 'social_option_id'
+				'service_fee','sfs_id','opm_id','facebook','twitter', 'social_option_id'
 			);
 		}
 		else if(lo3::is_market())
@@ -304,8 +304,11 @@ class core_controller_market extends core_controller
 		$delivery_fee['dd_id'] = $dd['dd_id'];
 		$delivery_fee->save();
 
+		core::log(print_r($core->data,true));
+
 		# if all products insert rows into product_delivery_cross_sells
 		if ($core->data['allproducts']) {
+			core::log('adding all products');
 			core_db::query('insert into product_delivery_cross_sells (prod_id, dd_id) select prod_id,'. $dd['dd_id'] . ' from products
 			left join organizations on products.org_id = organizations.org_id
 			left join organizations_to_domains on organizations.org_id = organizations_to_domains.org_id and is_home = 1
@@ -313,6 +316,7 @@ class core_controller_market extends core_controller
 		}
 		# if all cross products insert rows into product_delivery_cross_sells
 		if ($core->data['allcrosssellproducts']) {
+			core::log('adding all cross sell products');
 			core_db::query('insert into product_delivery_cross_sells (prod_id, dd_id) select distinct products.prod_id,' . $dd['dd_id'] . ' from products
 			left join organizations on products.org_id = organizations.org_id
 			left join organizations_to_domains on organizations.org_id = organizations_to_domains.org_id and is_home = 1
