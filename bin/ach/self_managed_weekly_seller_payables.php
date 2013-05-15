@@ -26,7 +26,7 @@ $sql = "
 	inner join domains d on (lo.domain_id = d.domain_id)
 	inner join organizations o on (d.payable_org_id=o.org_id)
 	inner join organization_payment_methods opm on (d.opm_id=opm.opm_id)
-	where loisc.creation_date < '2015-05-01 00:00:00' 
+	where loisc.creation_date > '2015-05-01 00:00:00' 
 	and loi.lsps_id=1
 	and loi.ldstat_id=4
 	order by loisc.creation_date desc
