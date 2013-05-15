@@ -809,9 +809,15 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->name.'__filter__'.$tab.'createdat2'
 	);
 	
+	// default dates
 	$start = $core->config['time'] - (86400*7);
 	$end = $core->config['time'];
-	
+	if(!isset($core->data[$datatable->name.'__filter__'.$tab.'createdat1'])){ 
+		$core->data[$datatable->name.'__filter__'.$tab.'createdat1'] = $start; 
+	}
+	if(!isset($core->data[$datatable->name.'__filter__'.$tab.'createdat2'])){ 
+		$core->data[$datatable->name.'__filter__'.$tab.'createdat2'] = $end; 
+	}
 	
 	// payment history has different columns payment_date vs creation_date
 	if (in_array($tab,array('transactions'))) {
