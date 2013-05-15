@@ -17,7 +17,7 @@ echo("getting a list of delivered items\n");
 $sql = "
 	select 
 	distinct loi.lo_liid,p.payable_id,p.invoice_id,loi.row_total,o.org_id,o.name,loi.product_name,
-	opm.name_on_account,opm.nbr1,opm.nbr2
+	opm.name_on_account,opm.nbr1,opm.nbr2,p.parent_obj_id
 	from lo_fulfillment_order lfo
 	inner join lo_order_line_item loi on (loi.lo_foid = lfo.lo_foid)
 	inner join lo_order lo on (lo.lo_oid = loi.lo_oid and lo.payment_method in ('paypal','ach'))
@@ -26,7 +26,7 @@ $sql = "
 	inner join domains d on (lo.domain_id = d.domain_id)
 	inner join organizations o on (d.payable_org_id=o.org_id)
 	inner join organization_payment_methods opm on (d.opm_id=opm.opm_id)
-	where loisc.creation_date > '2013-04-03 00:00:00' and loisc.creation_date < '2013-04-10 00:00:00'
+	where loisc.creation_date > '2013-05-01 00:00:00' 
 	and loi.lsps_id=1
 	and loi.ldstat_id=4
 	order by loisc.creation_date desc
@@ -57,20 +57,20 @@ foreach($payments as $org_id=>$items)
 		$payables_to_update[$item['payable_id'].'-'.$item['invoice_id']] += $item['row_total'];
 		$items_to_mark[] = $item['lo_liid'];
 			
-		echo("\t".$item['lo_liid'].":".$item['product_name']."\n");
+		echo("\t".$item['lo_liid'].":".$item['parent_obj_id'].":".$item['product_name']."\n");
 		$amount += $item['row_total'];
 	}
 	echo("need to pay ".core_format::price($amount)." to ".$name." / ".$account." / ".$routing."\n");
 	echo("\tNeed to mark these items as paid: ".implode(',',$items_to_mark)."\n");
-	echo("\tNeed to add payments for these payables:\n");
+	echo("\tNeed to add payments for these payables:\n\t\t");
 	foreach($payables_to_update as $payable_id=>$payable_amount)
 	{
-		echo("\t\t".$payable_id.":".$payable_amount."\n");
+		echo(",".$payable_id.":".$payable_amount."\t");
 	}
 }
 
 
-exit("COMPLETE\n");
+#exit("COMPLETE\n");
 
 $sql = '
 	select 
@@ -79,7 +79,7 @@ $sql = '
 	opm.*,d1.payable_org_id,lo.domain_id,
 	sp.payable_id as seller_payable_id,
 	sp.from_org_id as seller_from_org_id,
-	sp.to_org_id as seller_to_org_id
+	sp.to_org_id as seller_to_org_id,p.parent_obj_id
 	from payables p
 	inner join payables sp on (sp.parent_obj_id=p.parent_obj_id and sp.payable_type_id=2 and sp.from_org_id=p.to_org_id)
 	inner join lo_fulfillment_order lfo on (lfo.lo_foid=p.parent_obj_id)
@@ -141,7 +141,7 @@ foreach($sellers as $org_id=>$seller)
 	echo('we need to invoice '.$seller['name'] .' '.$seller['total'].' for payables: ');
 	foreach($seller['payables'] as $payable)
 	{
-		echo($payable['seller_payable_id'].' ');
+		echo($payable['seller_payable_id'].'/'.$payable['parent_obj_id'].' ');
 	}
 	echo("\n");
 }
