@@ -8,7 +8,7 @@ if($org['payment_allow_paypal'] == 1)
 	<div id="payment_paypal" class="span6 payment_option"<?=$style?>>
 		<div class="row">
 			
-			<?if($core->config['stage'] == 'testing' || $core->config['stage'] == 'qa' || $core->config['stage'] == 'dev' || $core->config['stage'] == 'newui'){?>
+			<?if($core->config['stage'] != 'production'){?>
 				<br />
 				<input type="button" value="Testing/QA ONLY" class="btn btn-info" onclick="core.checkout.fakeFill();" />
 			<?}?>

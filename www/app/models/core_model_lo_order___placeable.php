@@ -12,176 +12,180 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 
 		# create the payable between the buyer and LO
 
-		$payable = core::model('payables');
-		$payable['domain_id'] = $core->config['domain']['domain_id'];
-		$payable['amount'] = ($this['grand_total']);
-		$payable['payable_type_id'] = 1;
-		$payable['parent_obj_id'] = $this['lo_oid'];
-		$payable['from_org_id'] = $this['org_id'];
-		$payable['description'] = $this['lo3_order_nbr'];
-
-		if ($core->config['domain']['buyer_invoicer']  == 'hub' && $this['payment_method'] == 'purchaseorder')
+		if($payment_method != 'cash')
 		{
-			$payable['to_org_id'] = $core->config['domain']['payable_org_id'];
-		}
-		else
-		{
-			$payable['to_org_id'] = 1;
-		}
-
-		$payable->save();
-
-
-		# if the user pays via paypal,
-		if($payment_method == 'paypal')
-		{
-			# also create the invoice, pa4ment
-			$invoice = core::model('invoices');
-			$invoice['due_date'] = core_format::date(time(),'db');
-			$invoice['amount']   = $payable['amount'];
-			$invoice['from_org_id']= $this['org_id'];
-			$invoice['to_org_id']= 1;
-			$invoice->save();
-			$payable['invoice_id'] = $invoice['invoice_id'];
-			$payable->save();
-
-			$payment = core::model('payments');
-			$payment['from_org_id'] =  $this['org_id'];
-			$payment['to_org_id']   = 1;
-			$payment['amount']      = $payable['amount'];
-			$payment['payment_method_id'] = 1;
-			$payment['ref_nbr'] = $this['payment_ref'];
-			$payment->save();
-
-			$xpi = core::model('x_invoices_payments');
-			$xpi['payment_id'] = $payment['payment_id'];
-			$xpi['invoice_id'] = $invoice['invoice_id'];
-			$xpi['amount_paid'] = $payable['amount'];
-			$xpi->save();
-		}
-
-		# create the payable between LO and the Hub
-		#
-		# first set some common properties
-		$payable = core::model('payables');
-		$payable['domain_id'] = $core->config['domain']['domain_id'];
-		$payable['parent_obj_id'] = $this['lo_oid'];
-		$payable['description'] = $this['lo3_order_nbr'];
-
-		# if the hub is self managed, then the hub will collect the money
-		# and owes local orbit the fee_percen_lo
-		#
-		# if the hub is managed by LO, then the money is collected by LO
-		# and LO owes the hub the fee_percen_hub
-		$hub_org_id = $core->config['domain']['payable_org_id'];
-		if($core->config['domain']['buyer_invoicer']  == 'hub')
-		{
-			$payable['payable_type_id'] = 4;
-			$payable['from_org_id'] = $hub_org_id;
-			$payable['to_org_id']   = 1;
-			$payable['amount'] = (floatval($this['fee_percen_lo']) / 100) * ($this['grand_total'] - $this['adjusted_total']);
-
-		}
-		else
-		{
-			$payable['payable_type_id'] = 3;
-			$payable['to_org_id']   = $hub_org_id;
-			$payable['from_org_id'] = 1;
-			$payable['amount'] = (floatval($this['fee_percen_hub']) / 100) * ($this['grand_total'] - $this['adjusted_total']);
-		}
-
-		$payable->save();
-		
-		if($payment_method == 'ach')
-		{
-			core::log('preparing to attempt ach');
-			core::load_library('crypto');
 			
-			# also create the invoice, pa4ment
-			$invoice = core::model('invoices');
-			$invoice['due_date'] = core_format::date(time(),'db');
-			$invoice['amount']   = $payable['amount'];
-			$invoice['from_org_id']= $this['org_id'];
-			$invoice['to_org_id']= 1;
-			$invoice->save();
-			$payable['invoice_id'] = $invoice['invoice_id'];
-			$payable->save();
+			$payable = core::model('payables');
+			$payable['domain_id'] = $core->config['domain']['domain_id'];
+			$payable['amount'] = ($this['grand_total']);
+			$payable['payable_type_id'] = 1;
+			$payable['parent_obj_id'] = $this['lo_oid'];
+			$payable['from_org_id'] = $this['org_id'];
+			$payable['description'] = $this['lo3_order_nbr'];
 
-			$payment = core::model('payments');
-			$payment['from_org_id'] =  $this['org_id'];
-			$payment['to_org_id']   = 1;
-			$payment['amount']      = $payable['amount'];
-			$payment['payment_method_id'] = 3;
-			
-			$payment->save();
-			
-		#	core::log(print_r($payment->__data,true));
-			#return false;
-
-			$xpi = core::model('x_invoices_payments');
-			$xpi['payment_id'] = $payment['payment_id'];
-			$xpi['invoice_id'] = $invoice['invoice_id'];
-			$xpi['amount_paid'] = $payable['amount'];
-			$xpi->save();
-			core::log('payment structure created');
-			
-			$account = core::model('organization_payment_methods')->load($core->data['opm_id']);
-			
-			core::log(core_crypto::decrypt($account['nbr1']));
-			core::log(core_crypto::decrypt($account['nbr2']));
-
-			
-			$myclient = new SoapClient($core->config['ach']['url']);
-			$mycompanyinfo = new CompanyInfo();
-			$mycompanyinfo->SSS        = $core->config['ach']['SSS'];
-			$mycompanyinfo->LocID      = $core->config['ach']['LocID'];
-			$mycompanyinfo->Company    = $core->config['ach']['Company'];
-			$mycompanyinfo->CompanyKey = $core->config['ach']['CompanyKey'];
-			
-			$transaction = new InpACHTransRecord;
-			$transaction->SSS        = $core->config['ach']['SSS'];
-			$transaction->LocID      = $core->config['ach']['LocID'];
-			$transaction->CompanyKey = $core->config['ach']['CompanyKey'];
-			
-			if($core->config['stage'] == 'production')
-				$transaction->FrontEndTrace = 'LOPAY-'.$payment['payment_id'];			
-			else
-				$transaction->FrontEndTrace = 'LOPAY-'.$core->config['stage'].'-'.$payment['payment_id'];
-			
-			$transaction->CustomerName  = strtoupper($account['name_on_account']);
-			$transaction->CustomerRoutingNo  = core_crypto::decrypt($account['nbr2']);
-			$transaction->CustomerAcctNo     = core_crypto::decrypt($account['nbr1']);
-			$transaction->TransAmount   = $this['grand_total'];
-			$transaction->TransactionCode = 'WEB';
-			$transaction->CustomerAcctType = 'C';
-			$transaction->OriginatorName  = $core->config['ach']['Company'];
-			$transaction->OpCode = 'R';
-			$transaction->CustTransType = 'D';
-			$transaction->Memo = 'Payment for '.$this['lo3_order_nbr'];
-			$transaction->CheckOrTransDate = date('Y-m-d');
-			$transaction->EffectiveDate = date('Y-m-d');
-			$transaction->AccountSet = $core->config['ach']['AccountSet'];
-
-			core::log('ready to transact: '.print_r($transaction,true)."\n");
-			$myresult = $myclient->SendACHTrans(array(
-				'InpCompanyInfo'=>$mycompanyinfo,
-				'InpACHTransRecord'=>$transaction,
-			));
-			
-			core::log(print_r($myresult,true));
-			
-			if($myresult->SendACHTransResult->Status =='SUCCESS')
+			if ($core->config['domain']['buyer_invoicer']  == 'hub' && $this['payment_method'] == 'purchaseorder')
 			{
-				#$payment['ref_nbr'] = 
-				return true;
+				$payable['to_org_id'] = $core->config['domain']['payable_org_id'];
 			}
 			else
 			{
-				$payable->delete();
-				$invoice->delete();
-				$payment->delete();
-				$xpi->delete();
-				return false;
+				$payable['to_org_id'] = 1;
+			}
+
+			$payable->save();
+
+
+			# if the user pays via paypal,
+			if($payment_method == 'paypal')
+			{
+				# also create the invoice, pa4ment
+				$invoice = core::model('invoices');
+				$invoice['due_date'] = core_format::date(time(),'db');
+				$invoice['amount']   = $payable['amount'];
+				$invoice['from_org_id']= $this['org_id'];
+				$invoice['to_org_id']= 1;
+				$invoice->save();
+				$payable['invoice_id'] = $invoice['invoice_id'];
+				$payable->save();
+
+				$payment = core::model('payments');
+				$payment['from_org_id'] =  $this['org_id'];
+				$payment['to_org_id']   = 1;
+				$payment['amount']      = $payable['amount'];
+				$payment['payment_method_id'] = 1;
+				$payment['ref_nbr'] = $this['payment_ref'];
+				$payment->save();
+
+				$xpi = core::model('x_invoices_payments');
+				$xpi['payment_id'] = $payment['payment_id'];
+				$xpi['invoice_id'] = $invoice['invoice_id'];
+				$xpi['amount_paid'] = $payable['amount'];
+				$xpi->save();
+			}
+
+			# create the payable between LO and the Hub
+			#
+			# first set some common properties
+			$payable = core::model('payables');
+			$payable['domain_id'] = $core->config['domain']['domain_id'];
+			$payable['parent_obj_id'] = $this['lo_oid'];
+			$payable['description'] = $this['lo3_order_nbr'];
+
+			# if the hub is self managed, then the hub will collect the money
+			# and owes local orbit the fee_percen_lo
+			#
+			# if the hub is managed by LO, then the money is collected by LO
+			# and LO owes the hub the fee_percen_hub
+			$hub_org_id = $core->config['domain']['payable_org_id'];
+			if($core->config['domain']['buyer_invoicer']  == 'hub')
+			{
+				$payable['payable_type_id'] = 4;
+				$payable['from_org_id'] = $hub_org_id;
+				$payable['to_org_id']   = 1;
+				$payable['amount'] = (floatval($this['fee_percen_lo']) / 100) * ($this['grand_total'] - $this['adjusted_total']);
+
+			}
+			else
+			{
+				$payable['payable_type_id'] = 3;
+				$payable['to_org_id']   = $hub_org_id;
+				$payable['from_org_id'] = 1;
+				$payable['amount'] = (floatval($this['fee_percen_hub']) / 100) * ($this['grand_total'] - $this['adjusted_total']);
+			}
+
+			$payable->save();
+			
+			if($payment_method == 'ach')
+			{
+				core::log('preparing to attempt ach');
+				core::load_library('crypto');
+				
+				# also create the invoice, pa4ment
+				$invoice = core::model('invoices');
+				$invoice['due_date'] = core_format::date(time(),'db');
+				$invoice['amount']   = $payable['amount'];
+				$invoice['from_org_id']= $this['org_id'];
+				$invoice['to_org_id']= 1;
+				$invoice->save();
+				$payable['invoice_id'] = $invoice['invoice_id'];
+				$payable->save();
+
+				$payment = core::model('payments');
+				$payment['from_org_id'] =  $this['org_id'];
+				$payment['to_org_id']   = 1;
+				$payment['amount']      = $payable['amount'];
+				$payment['payment_method_id'] = 3;
+				
+				$payment->save();
+				
+			#	core::log(print_r($payment->__data,true));
+				#return false;
+
+				$xpi = core::model('x_invoices_payments');
+				$xpi['payment_id'] = $payment['payment_id'];
+				$xpi['invoice_id'] = $invoice['invoice_id'];
+				$xpi['amount_paid'] = $payable['amount'];
+				$xpi->save();
+				core::log('payment structure created');
+				
+				$account = core::model('organization_payment_methods')->load($core->data['opm_id']);
+				
+				core::log(core_crypto::decrypt($account['nbr1']));
+				core::log(core_crypto::decrypt($account['nbr2']));
+
+				
+				$myclient = new SoapClient($core->config['ach']['url']);
+				$mycompanyinfo = new CompanyInfo();
+				$mycompanyinfo->SSS        = $core->config['ach']['SSS'];
+				$mycompanyinfo->LocID      = $core->config['ach']['LocID'];
+				$mycompanyinfo->Company    = $core->config['ach']['Company'];
+				$mycompanyinfo->CompanyKey = $core->config['ach']['CompanyKey'];
+				
+				$transaction = new InpACHTransRecord;
+				$transaction->SSS        = $core->config['ach']['SSS'];
+				$transaction->LocID      = $core->config['ach']['LocID'];
+				$transaction->CompanyKey = $core->config['ach']['CompanyKey'];
+				
+				if($core->config['stage'] == 'production')
+					$transaction->FrontEndTrace = 'LOPAY-'.$payment['payment_id'];			
+				else
+					$transaction->FrontEndTrace = 'LOPAY-'.$core->config['stage'].'-'.$payment['payment_id'];
+				
+				$transaction->CustomerName  = strtoupper($account['name_on_account']);
+				$transaction->CustomerRoutingNo  = core_crypto::decrypt($account['nbr2']);
+				$transaction->CustomerAcctNo     = core_crypto::decrypt($account['nbr1']);
+				$transaction->TransAmount   = $this['grand_total'];
+				$transaction->TransactionCode = 'WEB';
+				$transaction->CustomerAcctType = 'C';
+				$transaction->OriginatorName  = $core->config['ach']['Company'];
+				$transaction->OpCode = 'R';
+				$transaction->CustTransType = 'D';
+				$transaction->Memo = 'Payment for '.$this['lo3_order_nbr'];
+				$transaction->CheckOrTransDate = date('Y-m-d');
+				$transaction->EffectiveDate = date('Y-m-d');
+				$transaction->AccountSet = $core->config['ach']['AccountSet'];
+
+				core::log('ready to transact: '.print_r($transaction,true)."\n");
+				$myresult = $myclient->SendACHTrans(array(
+					'InpCompanyInfo'=>$mycompanyinfo,
+					'InpACHTransRecord'=>$transaction,
+				));
+				
+				core::log(print_r($myresult,true));
+				
+				if($myresult->SendACHTransResult->Status =='SUCCESS')
+				{
+					#$payment['ref_nbr'] = 
+					return true;
+				}
+				else
+				{
+					$payable->delete();
+					$invoice->delete();
+					$payment->delete();
+					$xpi->delete();
+					return false;
+				}
 			}
 		}
 
@@ -235,7 +239,9 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			$method = 'purchaseorder';
 		if($core->data['show_payment_ach'] == 1)
 			$method = 'ach';
-
+		if($core->data['show_payment_ach'] == 1)
+			$method = 'ach';
+			
 		if(!isset($method))
 		{
 			//core::log('unable to locate an appropriate delivery_days/addresses combination');
@@ -244,7 +250,11 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			core::deinit();
 		}
 		#core::log(print_r($rules[$methods]->rules,true));
-		$rules[$method]->validate('checkoutForm');
+		if($method != 'cash')
+		{
+			$rules[$method]->validate('checkoutForm');
+			$this['lbps_id'] = 2;
+		}
 		#core::log('error hold on: '.$method);
 		#core::deinit();
 
@@ -545,7 +555,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			# attach this item to the fulfillment order, set the status, continue totalling
 			$item['lo_foid'] = $fulfills[$item['seller_org_id']]['lo_foid'];
 			$item['ldstat_id'] = 2;
-			$item['lbps_id']   = ($method == 'paypal' || $method == 'ach')?2:1;
+			$item['lbps_id']   = ($method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
 			$item['lsps_id']   = 1;
 
 			$fulfills[$item['seller_org_id']]['grand_total']    = $fulfills[$item['seller_org_id']]['grand_total']    + $item['row_total'];
@@ -561,7 +571,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$this['fee_percen_hub']        = $core->config['domain']['fee_percen_hub'];
 		$this['paypal_processing_fee'] = $core->config['domain']['paypal_processing_fee'];
 		$this['ldstat_id'] = 2;
-		$this['lbps_id']   = ($method == 'paypal' || $method == 'ach')?2:1;
+		$this['lbps_id']   = ($method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
 
 		$this['order_date'] = date('Y-m-d H:i:s',time());
 

@@ -24,13 +24,16 @@ core.checkout.process=function(){
 		//~ alert($('#radiodiv_show_payment_paypal_value').val())
 		//~ alert($('#radiodiv_show_payment_authorize_value').val())
 		//~ alert($('#radiodiv_show_payment_purchaseorder_value').val())
+		paymentMethod = 'cash';
 		if($('#radiodiv_show_payment_paypal_value').val() == 1)
 			paymentMethod = 'paypal';
 		if($('#radiodiv_show_payment_authorize_value').val() == 1)
 			paymentMethod = 'authorize';
 		if($('#radiodiv_show_payment_purchaseorder_value').val() == 1)
 			paymentMethod = 'purchaseorder';
+
 	}else{
+		paymentMethod = 'cash';
 		if(document.getElementById('payment_authorize'))	
 			paymentMethod='authorize';
 		if(document.getElementById('payment_paypal'))	
@@ -151,4 +154,24 @@ core.checkout.requestUpdatedFees=function(){
 	$('#total_table').hide();
 	$('#totals_loading').show();
 	core.doRequest('/catalog/update_fees',valsToPass);
+}
+
+core.checkout.showNoPayment=function(){
+	$('.payment_option').hide();
+	$('#payment_none').show();
+	var obj = $('#radio_payment_method_none');
+	if(obj.length == 0) {
+		// there's only one payment option, so use the hidden input field
+		$('#payment_method').val('cash');
+	}else{
+		// there are multiple payment options, show the radio buttons
+		obj.attr('checked', 'checked');
+		$('#payment_selector_div').hide();
+	}
+}
+
+core.checkout.hideNoPayment=function(){
+	$('#payment_none').hide();
+	$('#payment_selector_div').show();
+	
 }

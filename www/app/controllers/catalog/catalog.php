@@ -341,8 +341,13 @@ class core_controller_catalog extends core_controller
 				core::replace('fee_total',core_format::price($delivery_fee));
 			else
 				core::replace('fee_total','Free!');
-
-			core::replace('grand_total',core_format::price($cart['item_total'] + $delivery_fee + $discount,false));
+			$grand_total = $cart['item_total'] + $delivery_fee + $discount;
+			if($grand_total == 0){
+				core::js("core.checkout.showNoPayment();");
+			}else{
+				core::js("core.checkout.hideNoPayment();");
+			}
+			core::replace('grand_total',core_format::price($grand_total,false));
 			core::replace('adjusted_total',core_format::price($discount,false));
 			core::js("$('#totals_loading').hide();$('#total_table').show(200);");
 			if($notify_discount)
