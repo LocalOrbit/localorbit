@@ -1,3 +1,107 @@
+ALTER TABLE organizations
+  MODIFY org_id int(10) NOT NULL;
+ALTER TABLE organizations
+  ENGINE = InnoDB;
+
+
+
+
+ALTER TABLE payables
+	ADD CONSTRAINT payables_from_org_id_fk
+	FOREIGN KEY (from_org_id)
+	REFERENCES organizations (org_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    
+ALTER TABLE payables
+	ADD CONSTRAINT payables_to_org_id_fk
+	FOREIGN KEY (to_org_id)
+	REFERENCES organizations (org_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    
+    
+ALTER TABLE domains
+  ENGINE = InnoDB;    
+ALTER TABLE domains
+  MODIFY domain_id int(10) AUTO_INCREMENT NOT NULL;
+ALTER TABLE payables
+	ADD CONSTRAINT payables_domain_id_fk
+	FOREIGN KEY (domain_id)
+	REFERENCES domains (domain_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    
+  
+ALTER TABLE payables
+	ADD CONSTRAINT payables_invoice_id_fk
+	FOREIGN KEY (invoice_id)
+	REFERENCES invoices (invoice_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+        
+    
+ALTER TABLE lo_order_line_item
+  MODIFY lo_liid int(10) AUTO_INCREMENT NOT NULL;    
+    
+ALTER TABLE payables
+	ADD CONSTRAINT payables_parent_obj_id_fk
+	FOREIGN KEY (parent_obj_id)
+	REFERENCES lo_order_line_item (lo_liid) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    
+    
+    
+    
+ALTER TABLE lo_order_line_item
+  MODIFY lodeliv_id int(10);
+ALTER TABLE lo_order_deliveries
+  MODIFY lodeliv_id int(10) NOT NULL;  
+ALTER TABLE lo_order_line_item
+	ADD CONSTRAINT llo_order_line_item_lodeliv_id_fk
+	FOREIGN KEY (lodeliv_id)
+	REFERENCES lo_order_deliveries (lodeliv_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    
+    
+    
+    
+    
+    
+**********************************************************
+    do these
+    
+ALTER TABLE lo_order_line_item
+	ADD CONSTRAINT lo_order_line_item_lo_oid_fk
+	FOREIGN KEY (lo_oid)
+	REFERENCES lo_order (lo_oid) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE lo_fulfillment_order
+  MODIFY lo_foid int(10) AUTO_INCREMENT NOT NULL;
+ ALTER TABLE lo_order_line_item
+  MODIFY lo_foid int(10) NOT NULL;
+
+ALTER TABLE lo_delivery_statuses
+  ENGINE = InnoDB;
+ALTER TABLE lo_order
+  MODIFY ldstat_id int(10);
+ALTER TABLE lo_delivery_statuses
+  MODIFY ldstat_id int(10) AUTO_INCREMENT NOT NULL; 
+ALTER TABLE lo_order
+	ADD CONSTRAINT lo_order_ldstat_id_fk
+	FOREIGN KEY (ldstat_id)
+	REFERENCES lo_delivery_statuses (ldstat_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+	
+	
+********************************************************** bad data 0s on lo_order_line_item.lo_foid
+ALTER TABLE lo_order_line_item
+  MODIFY lo_foid int(10);
+  
+ALTER TABLE lo_order_line_item
+	ADD CONSTRAINT lo_order_line_item_lo_foid_fk
+	FOREIGN KEY (lo_foid)
+	REFERENCES lo_fulfillment_order (lo_foid) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    
+
+    
+    
+
+**********************************************************
+
+
+
+
+
 
   
  ALTER TABLE lo_fulfillment_order_status_changes  ENGINE = InnoDB; 

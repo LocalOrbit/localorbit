@@ -7,38 +7,105 @@ lo3::require_permission();
 lo3::require_login();
 core_ui::load_library('js','payments.js');
 
-$tabs = array('Overview');
 
-if(lo3::is_seller())
-{
-	$count = core_db::col('select count(payable_id) as mycount from payables where from_org_id='.$core->session['org_id'],'mycount');
-	if($count == 0)
-		$tabs[] = 'Review Orders &amp; Make Payments';
-}
-else
-{
+
+
+// tabs *******************************************************************************
+$tabs = array();
+if(lo3::is_admin()) {
+	$tabs[] = 'Overview';
 	$tabs[] = 'Review Orders &amp; Make Payments';
-}
-
-if(lo3::is_seller() || lo3::is_market() || lo3::is_admin())
-{
 	$tabs[] = 'Review &amp; Deliver Orders';
+	$tabs[] = 'Review Payment History';	
+} else if(lo3::is_market()) {
+	$tabs[] = 'Overview';
+	$tabs[] = 'Review Orders &amp; Make Payments';
+	$tabs[] = 'Review &amp; Deliver Orders';
+	$tabs[] = 'Review Payment History';
+} else if(lo3::is_seller()) {
+	$count = core_db::col('select count(payable_id) as mycount from payables where from_org_id='.$core->session['org_id'],'mycount');
+	$tabs[] = 'Overview';
+	if($count == 0) $tabs[] = 'Review Orders &amp; Make Payments';
+	$tabs[] = 'Review &amp; Deliver Orders';
+	$tabs[] = 'Review Payment History';
 }
-$tabs[] = 'Review Payment History';
 
 
+// page_header *******************************************************************************
 page_header('Financial Management');
 echo('<form name="paymentsForm" class="form-horizontal">');
 echo(core_ui::tab_switchers('paymentstabs',$tabs));
 echo('<div class="tab-content">');
 
-
 core_ui::inline_message("Overview", "This is a snapshot of all money currently owed to your organization and that you owe to other organizations.");
 
 
+
+
+// filters *******************************************************************************
+global $hub_filters,$to_filters,$from_filters;
+
+if(lo3::is_admin())
+{
+	$hub_filters = core::model('domains')->collection()->sort('name');
+	$to_filters  = core::model('organizations')
+		->collection()
+		->filter('organizations.org_id','in','(select distinct to_org_id from payables)')
+		->sort('name');
+	$from_filters  = core::model('organizations')
+		->collection()
+		->filter('organizations.org_id','in','(select distinct from_org_id from payables)')
+		->sort('name');
+}
+else if(lo3::is_market())
+{
+	if(count($core->session['domains_by_orgtype_id'][2]) > 1)
+	{
+		$hub_filters = core::model('domains')
+			->collection()
+			->filter('domain_id','in',$core->session['domains_by_orgtype_id'][2])
+			->sort('name');
+	}
+
+	$to_filters  = core::model('organizations')
+		->collection()
+		->filter('organizations.org_id','in','(
+			select org_id
+			from organizations_to_domains
+			where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+		)')
+		->sort('name');
+	$from_filters  = core::model('organizations')
+		->collection()
+		->filter('organizations.org_id','in','(
+			select org_id
+			from organizations_to_domains
+			where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+		)')
+		->sort('name');
+	
+	
+}
+else if(lo3::is_seller())
+{
+	$hub_filters = new core_collection('
+		select domain_id,name
+		from domains
+		where domain_id in (select domain_id from organizations_to_domains where org_id='.$core->session['org_id'].')
+		or domain_id in (select sell_on_domain_id from organization_cross_sells where org_id='.$core->session['org_id'].')
+	');
+	$hub_filters->sort('name');
+	
+	$count = core_db::col('select count(payable_id) as mycount from payables where from_org_id='.$core->session['org_id'],'mycount');
+}
+
+
+
+
+
+// tab contents ******************************************************************************* = 0;
 $tab_count = 0;
 $this->overview($tab_count);
-
 if(in_array('Review Orders &amp; Make Payments',$tabs))
 {
 	$tab_count++;
@@ -51,6 +118,21 @@ if(in_array('Review &amp; Deliver Orders',$tabs))
 }
 $tab_count++;
 $this->payment_history($tab_count,$tabs);
+
+var_dump($tabs);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 $total_orders = 0;

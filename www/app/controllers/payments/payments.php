@@ -791,7 +791,6 @@ $('#accordion').on('hide', function() {
 }); */
 
 
-
 function payments__add_standard_filters($datatable,$tab='')
 {
 	global $core,$hub_filters,$to_filters,$from_filters;
@@ -1045,15 +1044,13 @@ function payments__add_standard_filters($datatable,$tab='')
 		if($datatable->name != 'purchase_orders')
 			$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - ((lo3::is_market())?40:0)).'px;height: 38px;clear:right;"><img src="/img/blank.png" width="285" height="33" /></div>';
 	}
-
-	
 	// Filter: To Market: ***************************************************************************************************************
 	if(lo3::is_admin() || lo3::is_market())
 	{
 		$datatable->add_filter(new core_datatable_filter('to_domain_id'));
 		
 		$datatable->filter_html .= '<div style="float:left;width: '.$filter_width.'px;">';
-		$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width -((lo3::is_market() && $datatable->name != 'purchase_orders')?10:0)).'px;text-align: right;">To Market: </div>';
+		$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.$label_width.'px;text-align: right;">To Market: </div>';
 		$datatable->filter_html .= core_datatable_filter::make_select(
 			$datatable->name,
 			'to_domain_id',
