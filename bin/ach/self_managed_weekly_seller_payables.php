@@ -35,7 +35,7 @@ $payments = new core_collection($sql);
 $payments = $payments->to_hash('org_id');
 #print_r($payments);
 
-
+/*
 foreach($payments as $org_id=>$items)
 {
 	$amount = 0;
@@ -68,35 +68,35 @@ foreach($payments as $org_id=>$items)
 		echo(",".$payable_id.":".$payable_amount."\t");
 	}
 }
+*/
 
-
-#exit("COMPLETE\n");
 
 $sql = '
-	select 
-	p.payable_id,p.amount,p.payable_type_id,p.invoice_id,
-	lfo.org_id as seller_org_id,o.name,
-	opm.*,d1.payable_org_id,lo.domain_id,
-	sp.payable_id as seller_payable_id,
-	sp.from_org_id as seller_from_org_id,
-	sp.to_org_id as seller_to_org_id,p.parent_obj_id
-	from payables p
-	inner join payables sp on (sp.parent_obj_id=p.parent_obj_id and sp.payable_type_id=2 and sp.from_org_id=p.to_org_id)
-	inner join lo_fulfillment_order lfo on (lfo.lo_foid=p.parent_obj_id)
-	inner join lo_order_line_item loi on (lfo.lo_foid=loi.lo_foid)
-	inner join lo_order lo on (lo.lo_oid=loi.lo_oid)
-	inner join organizations o on (lfo.org_id=o.org_id)
-	inner join domains d1 on (lo.domain_id=d1.domain_id)
+	select p.payable_id,p2.payable_id as seller_payable_id,
+	p.payable_amount as mm_payable_amount,p2.payable_amount as seller_payable_amount,
+	p.to_org_id,
+	o1.name as mm_name,
+	o2.name as seller_name,
+	lfo.lo_foid,
+	opm.*,d1.payable_org_id as mm_org_id,p2.to_org_id as seller_org_id,
+	lfosc.creation_date as delivery_date
+	
+	from v_payables p
+	inner join v_payables p2 on (p2.parent_obj_id=p.parent_obj_id and p2.payable_type=\'seller order\' and p2.from_org_id<>1)
+	inner join organizations o1 on p.to_org_id=o1.org_id
+	inner join organizations o2 on p2.to_org_id=o2.org_id
+	inner join lo_fulfillment_order lfo on lfo.lo_foid=p.parent_obj_id
+	inner join domains d on lfo.domain_id=d.domain_id
+	inner join lo_fulfillment_order_status_changes lfosc on (lfosc.lo_foid=lfo.lo_foid and lfosc.ldstat_id=4)
+	inner join domains d1 on (lfo.domain_id=d1.domain_id)
 	inner join organization_payment_methods opm on (d1.opm_id = opm.opm_id)
-		
-	where p.payable_type_id=2
-	and   p.invoice_id is null
+	where p.amount_due > 0
+	and   p.payable_type=\'seller order\'
 	and   p.from_org_id=1
-	and   lo.ldstat_id=4
-	and   lo.payment_method in (\'ach\',\'paypal\')
-	and   d1.seller_payer = \'hub\'
-	and   p.creation_date > \'2013-03-21 00:00:00\'
-	group by lfo.lo_foid
+
+	and lfosc.creation_date > \'2013-05-05 00:00:00\'
+	and lfosc.creation_date < \'2013-05-15 00:00:00\'
+	order by lfo.lo_foid
 ';
 
 $payables = new core_collection($sql);
@@ -111,26 +111,27 @@ foreach($payables as $payable)
 	{
 		$sellers[$payable['seller_org_id']] = array(
 			'total'=>0,
-			'name'=>$payable['name'],
+			'name'=>$payable['seller_name'],
 			'payables'=>array(),
 		);
 	}
 	
-	if(!is_array($domains[$payable['payable_org_id']]))
+	if(!is_array($domains[$payable['mm_org_id']]))
 	{
-		$domains[$payable['payable_org_id']] = array(
+		$domains[$payable['mm_org_id']] = array(
 			'total'=>0,
+			'name'=>$payable['mm_name'],
 			'account'=>$payable,
 			'payables'=>array(),
 		);
 	}
 	
 	
-	$sellers[$payable['seller_org_id']]['total']  += $payable['amount'];
+	$sellers[$payable['seller_org_id']]['total']  += $payable['seller_payable_amount'];
 	$sellers[$payable['seller_org_id']]['payables'][] = $payable;
 	
-	$domains[$payable['payable_org_id']]['total'] += $payable['amount'];
-	$domains[$payable['payable_org_id']]['payables'][] = $payable;
+	$domains[$payable['mm_org_id']]['total'] += $payable['mm_payable_amount'];
+	$domains[$payable['mm_org_id']]['payables'][] = $payable;
 	
 }
 
@@ -150,7 +151,7 @@ echo("-------------------\n");
 echo("Payments to MMs: \n");
 foreach($domains as $org_id=>$info)
 {
-	echo("we need to pay org ".$org_id." ".$info['total']."\n");
+	echo("we need to pay org ".$info['name']." ".$info['total']."\n");
 	
 	foreach($info['payables'] as $payable)
 	{
@@ -223,7 +224,7 @@ if($actually_do_payment)
 		{
 			# create teh invoice
 			$invoice = core::model('invoices');
-			$invoice['from_org_id'] = $payable['payable_org_id'];
+			$invoice['from_org_id'] = $payable['mm_org_id'];
 			$invoice['to_org_id'] = $org_id;
 			$invoice['amount'] = $seller['total'];
 			$invoice['due_date'] = date('Y-m-d H:i:s',time() + (7*86400));
