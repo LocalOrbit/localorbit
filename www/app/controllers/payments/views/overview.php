@@ -58,10 +58,10 @@ foreach ($intervals as $val)
 							core_format::price($receivables_intervals[$value], false)
 							.(($receivables_intervals[$value] <= 0)?'</div>':'') . 
 						'</div></div>';
-			}
+			}				
 			?>
 			<div class="span4 pagination-centered">
-				<input type="button" class="btn btn-info" value="Enter Receipts" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Receivables',$core->view[1]) + 1)?>').tab('show');" />
+				<input type="button" class="btn btn-info" value="Enter Receipts" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Receivables',$core->view[1]) + 2)?>').tab('show');" />
 			</div>
 		</div>
 		<?}?>
@@ -82,7 +82,7 @@ foreach ($intervals as $val)
 				}
 				?>
 			<div class="span4 pagination-centered">
-				<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Review Orders &amp; Make Payments',$core->view[1]) + 1)?>').tab('show');" />
+				<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Review Orders &amp; Make Payments',$core->view[1]) + 2)?>').tab('show');" />
 			</div>
 		
 		</div>

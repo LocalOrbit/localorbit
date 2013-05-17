@@ -20,9 +20,9 @@ $payables->columns[3]->autoformat='date-short';
 $payables->columns[6]->autoformat='price';
 ?>
 
-
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
 	<?
 	$payables->render();
 	?>
 </div>
+

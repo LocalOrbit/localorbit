@@ -104,32 +104,21 @@ else if(lo3::is_seller())
 
 
 // tab contents ******************************************************************************* = 0;
-$tab_count = 0;
-$this->overview($tab_count);
+$tab_count = 0;  //affects ids
+$this->overview((array_search('Overview',$tabs)));
+
 if(in_array('Review Orders &amp; Make Payments',$tabs))
 {
 	$tab_count++;
-	$this->review_orders($tab_count,$tabs);
+	$this->review_orders((array_search('Review Orders &amp; Make Payments',$tabs)),$tabs);
 }
 if(in_array('Review &amp; Deliver Orders',$tabs))
 {
 	$tab_count++;
-	$this->review_deliver_orders($tab_count,$tabs);
+	$this->review_deliver_orders((array_search('Review &amp; Deliver Orders',$tabs)),$tabs);
 }
 $tab_count++;
-$this->payment_history($tab_count,$tabs);
-
-var_dump($tabs);
-
-
-
-
-
-
-
-
-
-
+$this->payment_history((array_search('Review Payment History',$tabs)),$tabs);
 
 
 
