@@ -69,58 +69,68 @@ class core_model_lo_fulfillment_order extends core_model_base_lo_fulfillment_ord
 		# then lo owes the hub the money for the products, and the hub owes the money to the sellers
 		#
 		# if lo is in charge of pyaing the sellers, then lo owes the money to the sellers and that's it.
+		$items = core::model('lo_order_line_item')->collection()->filter('lo_foid','=',$this['lo_foid']);
 		if($core->config['domain']['seller_payer'] == 'hub')
 		{
-			if($payment_method == 'purchaseorder')
+			foreach($items as $item)
 			{
-				# create only one payable: hub to seller
-				$payable = core::model('payables');
-				$payable['domain_id'] = $core->config['domain']['domain_id'];
-				$payable['amount'] = $amount;
-				$payable['payable_type_id'] = 2;
-				$payable['parent_obj_id'] = $this['lo_foid'];
-				$payable['from_org_id'] = $core->config['domain']['payable_org_id'];
-				$payable['to_org_id'] = $this['org_id'];
-				$payable['description'] = $this['lo3_order_nbr'];
-				$payable->save();
+				if($payment_method == 'purchaseorder')
+				{
+					# create only one payable: hub to seller
+					$payable = core::model('payables');
+					$payable['domain_id'] = $core->config['domain']['domain_id'];
+					$payable['amount'] = $item['row_adjusted_total'] * ((floatval($core->config['domain']['fee_percen_lo']) + floatval($core->config['domain']['fee_percen_hub'])) / 100);
+					$payable['payable_type_id'] = 2;
+					$payable['parent_obj_id'] = $item['lo_liid'];
+					$payable['from_org_id'] = $core->config['domain']['payable_org_id'];
+					$payable['to_org_id'] = $this['org_id'];
+					$payable['description'] = $this['lo3_order_nbr'];
+					$payable->save();
+				}
+				else
+				{
+					$percent = floatval($core->config['domain']['fee_percen_lo']) + floatval($core->config['domain']['fee_percen_hub']);
+					
+					#$amount = $item['row_adjusted_total'] * ((floatval($core->config['domain']['fee_percen_lo']) + floatval($core->config['domain']['fee_percen_hub'])) / 100);
+					
+					#  create first payable: lo to hub for seller products
+					$payable = core::model('payables');
+					$payable['domain_id'] = $core->config['domain']['domain_id'];
+					$payable['amount'] = $item['row_adjusted_total'];
+					$payable['payable_type_id'] = 2;
+					$payable['parent_obj_id'] = $item['lo_liid'];
+					$payable['from_org_id'] = 1;
+					$payable['to_org_id'] = $core->config['domain']['payable_org_id'];;
+					$payable['description'] = $this['lo3_order_nbr'];
+					$payable->save();
+					
+					# create second payable:  hub to seller for seller products
+					$payable = core::model('payables');
+					$payable['domain_id'] = $core->config['domain']['domain_id'];
+					$payable['amount'] = $item['row_adjusted_total'];
+					$payable['payable_type_id'] = 2;
+					$payable['parent_obj_id'] = $item['lo_liid'];
+					$payable['from_org_id'] = $core->config['domain']['payable_org_id'];
+					$payable['to_org_id'] = $this['org_id'];
+					$payable['description'] = $this['lo3_order_nbr'];
+					$payable->save();
+				}
 			}
-			else
-			{
-				#  create first payable: lo to hub for seller products
-				$payable = core::model('payables');
-				$payable['domain_id'] = $core->config['domain']['domain_id'];
-				$payable['amount'] = $amount;
-				$payable['payable_type_id'] = 2;
-				$payable['parent_obj_id'] = $this['lo_foid'];
-				$payable['from_org_id'] = 1;
-				$payable['to_org_id'] = $core->config['domain']['payable_org_id'];;
-				$payable['description'] = $this['lo3_order_nbr'];
-				$payable->save();
-				
-				# create second payable:  hub to seller for seller products
-				$payable = core::model('payables');
-				$payable['domain_id'] = $core->config['domain']['domain_id'];
-				$payable['amount'] = $amount;
-				$payable['payable_type_id'] = 2;
-				$payable['parent_obj_id'] = $this['lo_foid'];
-				$payable['from_org_id'] = $core->config['domain']['payable_org_id'];
-				$payable['to_org_id'] = $this['org_id'];
-				$payable['description'] = $this['lo3_order_nbr'];
-				$payable->save();
-			}
-		
 		}
 		else
 		{
-			$payable = core::model('payables');
-			$payable['domain_id'] = $core->config['domain']['domain_id'];
-			$payable['amount'] = $amount;
-			$payable['payable_type_id'] = 2;
-			$payable['parent_obj_id'] = $this['lo_foid'];
-			$payable['from_org_id'] = 1;
-			$payable['to_org_id'] = $this['org_id'];
-			$payable['description'] = $this['lo3_order_nbr'];
-			$payable->save();
+			foreach($items as $item)
+			{
+				$payable = core::model('payables');
+				$payable['domain_id'] = $core->config['domain']['domain_id'];
+				$payable['amount'] = $item['row_adjusted_total'];
+				$payable['payable_type_id'] = 2;
+				$payable['parent_obj_id'] = $item['lo_liid'];
+				$payable['from_org_id'] = 1;
+				$payable['to_org_id'] = $this['org_id'];
+				$payable['description'] = $this['lo3_order_nbr'];
+				$payable->save();
+			}
 		}
 
 	
