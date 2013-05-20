@@ -49,7 +49,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			{
 				unset($payable->__data['payable_id']);
 				$payable['amount'] = $item['row_adjusted_total'];
-				$payable['parent_obj_id'] = $Item['lo_liid'];
+				$payable['parent_obj_id'] = $item['lo_liid'];
 				$payable->save();
 				$payable_ids[$payable['payable_id']] = $item['row_adjusted_total'];
 			}
@@ -149,7 +149,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 					$payable['payable_type'] = 'seller order';
 					$payable['from_org_id']  = 1;
 					$payable['to_org_id']    = $item['seller_org_id'];
-					
+					$payable['parent_obj_id'] = $item['lo_liid'];
 					
 					$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);
 					if($this['payment_method'] == 'paypal')
@@ -171,6 +171,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 						$payable['payable_type'] = 'seller order';
 						$payable['from_org_id']  = 1;
 						$payable['to_org_id']    = $core->config['domain']['payable_org_id'];
+						$payable['parent_obj_id'] = $item['lo_liid'];
+						
 						$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);
 						if($this['payment_method'] == 'paypal')
 						{
@@ -194,6 +196,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 						$payable['payable_type'] = 'seller order';
 						$payable['from_org_id']  = $core->config['domain']['payable_org_id'];
 						$payable['to_org_id']    = $item['seller_org_id'];
+						$payable['parent_obj_id'] = $item['lo_liid'];
 						$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);					
 						$payable['amount'] = round(($item['row_adjusted_total'] * ((100 - $fee) / 100)),2);				
 						$payable->save();
