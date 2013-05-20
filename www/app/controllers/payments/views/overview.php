@@ -47,7 +47,7 @@ foreach ($intervals as $val)
 	<div class="row row-top-margin-buffer">
 		<? if(count($receivables_ov) > 0 || lo3::is_seller()){?>
 		<div class="span4">
-			<h2>Receivables</h2>
+			<h2>Money In</h2>
 			<?
 			foreach ($intervals as $key => $value)
 			{
@@ -67,7 +67,7 @@ foreach ($intervals as $val)
 		<?}?>
 		<? if((count($payables_ov) > 0 && lo3::is_seller()) || (!lo3::is_seller())){?>
 		<div class="span4">
-				<h2>Payables</h2>
+				<h2>Money Out</h2>
 				<?
 				foreach ($intervals as $key => $value)
 				{
