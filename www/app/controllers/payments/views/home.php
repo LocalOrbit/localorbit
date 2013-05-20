@@ -12,24 +12,34 @@ core_ui::load_library('js','payments.js');
 
 // tabs *******************************************************************************
 $tabs = array();
-if(lo3::is_admin()) {
+if(lo3::is_admin())
+{
 	$tabs[] = 'Overview';
 	$tabs[] = 'Review Orders &amp; Make Payments';
 	$tabs[] = 'Review &amp; Deliver Orders';
 	$tabs[] = 'Review Payment History';	
-} else if(lo3::is_market()) {
+}
+else if(lo3::is_market())
+{
 	$tabs[] = 'Overview';
 	$tabs[] = 'Review Orders &amp; Make Payments';
 	$tabs[] = 'Review &amp; Deliver Orders';
 	$tabs[] = 'Review Payment History';
-} else if(lo3::is_seller()) {
+}
+else if(lo3::is_seller())
+{
 	$count = core_db::col('select count(payable_id) as mycount from payables where from_org_id='.$core->session['org_id'],'mycount');
 	$tabs[] = 'Overview';
-	if($count == 0) $tabs[] = 'Review Orders &amp; Make Payments';
+	if($count > 0) $tabs[] = 'Review Orders &amp; Make Payments';
 	$tabs[] = 'Review &amp; Deliver Orders';
 	$tabs[] = 'Review Payment History';
 }
-
+else
+{
+	$tabs[] = 'Overview';
+	$tabs[] = 'Review Orders &amp; Make Payments';
+	$tabs[] = 'Review Payment History';
+}
 
 // page_header *******************************************************************************
 page_header('Financial Management');
