@@ -294,7 +294,7 @@ class core_ui
 		return $out;
 	}
 
-	/* public static function date_picker_blur_setup ()
+	public static function date_picker_blur_setup ()
 	{
 		return '<script type="text/javascript">
 		$(document).ready(function ()  {
@@ -308,7 +308,7 @@ class core_ui
 			});
 		});
 		</script>';
-	} */
+	}
 
 	public static function date_picker($field_name_id,$value='',$onchange_js='')
 	{
