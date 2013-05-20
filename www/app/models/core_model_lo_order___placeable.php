@@ -15,14 +15,13 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		if($payment_method != 'cash')
 		{
 			
+			$invoice = null;
 			if($payment_method == 'paypal' || $payment_method == 'ACH')
 			{
 				# also create the invoice, pa4ment
 				$invoice = core::model('invoices');
 				$invoice['due_date'] = core_format::date(time(),'db');
 				$invoice['amount']   = $payable['amount'];
-				$invoice['from_org_id']= $this['org_id'];
-				$invoice['to_org_id']= 1;
 				$invoice->save();
 			}
 			
@@ -30,10 +29,12 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			
 			$payable = core::model('payables');
 			$payable['domain_id'] = $core->config['domain']['domain_id'];
-			$payable['payable_type_id'] = 1;
+			$payable['payable_type'] = 'buyer order';
 			$payable['from_org_id'] = $this['org_id'];
-			$payable['description'] = $this['lo3_order_nbr'];
-			$payable['invoice_id'] = $invoice['invoice_id'];
+			if(!is_null($invoice))
+			{
+				$payable['invoice_id'] = $invoice['invoice_id'];
+			}
 
 			if ($core->config['domain']['buyer_invoicer']  == 'hub' && $this['payment_method'] == 'purchaseorder')
 			{
@@ -122,10 +123,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				}
 
 				$payment = core::model('payments');
-				$payment['from_org_id'] =  $this['org_id'];
-				$payment['to_org_id']   = 1;
 				$payment['amount']      = $this['grand_total'];
-				$payment['payment_method_id'] = ($payment_method == 'paypal')?1:3;
+				$payment['payment_method'] = 'paypal';
 				$payment['ref_nbr'] = $this['payment_ref'];
 				$payment->save();
 				
@@ -139,54 +138,102 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				}
 			}
 			
+			# create the payments to the sellers
 			
-			# if the order is paid via ACH or paypal AND the hub pays the seller,
-			# the hub fees need to be created per item, and are part of the amount 
-			# lo owes the MM. They'll be created by the lo_fulfillment_order->create_order_payables
-			# method call
-			# so only create this if the order:
-			#  * is NOT paid by ach or paypal and the hub pays the seller. 
-			#    create a payable per item from the hub to LO
-			#  * lo pays the seller. 
-			#    create a payable per item from lo to the hub
-			
-			if($core->config['domain']['seller_payer'] == 'lo')
+			foreach($this->items as $item)
 			{
-				$payable = core::model('payables');
-				$payable['domain_id'] = $core->config['domain']['domain_id'];
-				$payable['payable_type_id'] = 3;
+				if($core->config['domain']['seller_payer'] == 'lo')
+				{
+					$payable = core::model('payables');
+					$payable['domain_id']    = $core->config['domain']['domain_id'];
+					$payable['payable_type'] = 'seller order';
+					$payable['from_org_id']  = 1;
+					$payable['to_org_id']    = $item['seller_org_id'];
+					
+					
+					$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);
+					if($this['payment_method'] == 'paypal')
+					{
+						$fee += 3;
+					}
+					
+					$payable['amount'] = round(($item['row_adjusted_total'] * ((100 - $fee) / 100)),2);
+					
+					$payable->save();
+				}
+				else
+				{
+					# if lo temporarily has the money, we need to create two payables
+					if($this['payment_method'] == 'paypal' || $this['payment_method'] == 'ACH')
+					{
+						$payable = core::model('payables');
+						$payable['domain_id']    = $core->config['domain']['domain_id'];
+						$payable['payable_type'] = 'seller order';
+						$payable['from_org_id']  = 1;
+						$payable['to_org_id']    = $core->config['domain']['payable_org_id'];
+						$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);
+						if($this['payment_method'] == 'paypal')
+						{
+							$fee += 3;
+						}
+						
+						$payable['amount'] = round(($item['row_adjusted_total'] * ((100 - $fee) / 100)),2);
+						$payable->save();
+						
+						# modify the payment to make it from the market to the seller
+						unset($payable->__data['payable_id']);
+						$payable['from_org_id']  = $core->config['domain']['payable_org_id'];
+						$payable['to_org_id']    = $item['seller_org_id'];
+						$payable->save();
+
+					}
+					else
+					{
+						$payable = core::model('payables');
+						$payable['domain_id']    = $core->config['domain']['domain_id'];
+						$payable['payable_type'] = 'seller order';
+						$payable['from_org_id']  = $core->config['domain']['payable_org_id'];
+						$payable['to_org_id']    = $item['seller_org_id'];
+						$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);					
+						$payable['amount'] = round(($item['row_adjusted_total'] * ((100 - $fee) / 100)),2);				
+						$payable->save();
+					}
+					
+				}
+			}
+			
+			# create the lo/hub fees per item
+			# if LO has/is going to have the money from the buyer,
+			# then the hub fees are from LO to the market org.
+			#
+			# if the market will be collecting the money, then the market owes
+			# us the LO fees
+			
+			$payable = core::model('payables');
+			$payable['domain_id'] = $core->config['domain']['domain_id'];
+			
+			if(($this['payment_method'] == 'paypal' || $this['payment_method'] == 'ach') || $core->config['domain']['buyer_invoicer'] == 'lo')
+			{
+				$payable['payable_type'] = 'hub fees';
 				$payable['from_org_id'] = 1;
 				$payable['to_org_id'] = $core->config['domain']['payable_org_id'];
-
-				foreach($this->items as $item)
-				{
-					unset($payable->__data['payable_id']);
-					$payable['amount'] = floatval($item['row_adjusted_total'] * (( $core->config['domain']['fee_percen_hub'] / 100)));
-					$payable['parent_obj_id'] = $Item['lo_liid'];
-					$payable->save();
-				}
-
+				$fee_percent = floatval($core->config['domain']['fee_percen_hub']);
 			}
-			else if(
-				($payment_method != 'paypal' && $payment_method != 'ACH')
-				&& 
-				$core->config['domain']['seller_payer'] == 'hub'
-			)
+			else
 			{
-				$payable = core::model('payables');
-				$payable['domain_id'] = $core->config['domain']['domain_id'];
-				$payable['payable_type_id'] = 3;
+				$payable['payable_type'] = 'lo fees';
 				$payable['from_org_id'] = $core->config['domain']['payable_org_id'];
 				$payable['to_org_id'] = 1;
-
-				foreach($this->items as $item)
-				{
-					unset($payable->__data['payable_id']);
-					$payable['amount'] = floatval($item['row_adjusted_total'] * (( $core->config['domain']['fee_percen_hub'] / 100)));
-					$payable['parent_obj_id'] = $Item['lo_liid'];
-					$payable->save();
-				}
+				$fee_percent = floatval($core->config['domain']['fee_percen_lo']);
+				
 			}
+			foreach($this->items as $item)
+			{
+				unset($payable->__data['payable_id']);
+				$payable['amount'] = round((floatval($item['row_adjusted_total'] * (($fee_percent / 100)))),2);
+				$payable['parent_obj_id'] = $item['lo_liid'];
+				$payable->save();
+			}	
 		}
 
 		return true;
@@ -579,9 +626,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		foreach($fulfills as $org_id=>$fulfill)
 		{
 			#$fulfill['adjusted_total'] = $fulfill['grand_total'];
-
 			$fulfill->save();
-			$fulfill->create_order_payables($this['payment_method'],$this);
 		}
 
 		# look for updates to the deliveries, such as changing addresses
@@ -653,7 +698,6 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$this['amount_paid']    = ($method == 'paypal' || $method == 'ach')?$this['grand_total']:0;
 		$this['domain_id']      = $core->config['domain']['domain_id'];
 		$this['buyer_mage_customer_id'] = $core->session['user_id'];
-		$this->save();
 		$this['lo3_order_nbr']  = $this->generate_order_id('buyer',$core->config['domain']['domain_id'],$this['lo_oid']);
 		$this->save();
 		$ach_result = $this->create_order_payables($method);
