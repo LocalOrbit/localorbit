@@ -20,8 +20,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			{
 				# also create the invoice, pa4ment
 				$invoice = core::model('invoices');
-				$invoice['due_date'] = core_format::date(time(),'db');
-				$invoice['amount']   = $payable['amount'];
+				$invoice['due_date'] = time();
+				$invoice['creation_date'] = time();
 				$invoice->save();
 			}
 			
@@ -31,6 +31,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			$payable['domain_id'] = $core->config['domain']['domain_id'];
 			$payable['payable_type'] = 'buyer order';
 			$payable['from_org_id'] = $this['org_id'];
+			$payable['creation_date'] = time();
+			
 			if(!is_null($invoice))
 			{
 				$payable['invoice_id'] = $invoice['invoice_id'];
@@ -126,6 +128,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				$payment['amount']      = $this['grand_total'];
 				$payment['payment_method'] = 'paypal';
 				$payment['ref_nbr'] = $this['payment_ref'];
+				$payment['creation_date'] = time();
 				$payment->save();
 				
 				foreach($payable_ids as $payable_id=>$amount)
@@ -133,7 +136,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 					$xpp = core::model('x_payables_payments');
 					$xpp['payment_id'] = $payment['payment_id'];
 					$xpp['payable_id'] = $payable_id;
-					$xpp['amount_paid'] = $amount;
+					$xpp['amount'] = $amount;
 					$xpp->save();
 				}
 			}
@@ -150,6 +153,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 					$payable['from_org_id']  = 1;
 					$payable['to_org_id']    = $item['seller_org_id'];
 					$payable['parent_obj_id'] = $item['lo_liid'];
+					$payable['creation_date'] = time();
 					
 					$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);
 					if($this['payment_method'] == 'paypal')
@@ -172,6 +176,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 						$payable['from_org_id']  = 1;
 						$payable['to_org_id']    = $core->config['domain']['payable_org_id'];
 						$payable['parent_obj_id'] = $item['lo_liid'];
+						$payable['creation_date'] = time();
 						
 						$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);
 						if($this['payment_method'] == 'paypal')
@@ -197,6 +202,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 						$payable['from_org_id']  = $core->config['domain']['payable_org_id'];
 						$payable['to_org_id']    = $item['seller_org_id'];
 						$payable['parent_obj_id'] = $item['lo_liid'];
+						$payable['creation_date'] = time();
 						$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);					
 						$payable['amount'] = round(($item['row_adjusted_total'] * ((100 - $fee) / 100)),2);				
 						$payable->save();
@@ -214,6 +220,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			
 			$payable = core::model('payables');
 			$payable['domain_id'] = $core->config['domain']['domain_id'];
+			$payable['creation_date'] = time();
 			
 			if(($this['payment_method'] == 'paypal' || $this['payment_method'] == 'ach') || $core->config['domain']['buyer_invoicer'] == 'lo')
 			{
