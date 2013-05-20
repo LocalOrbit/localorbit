@@ -14,15 +14,28 @@ $payables->add(new core_datacolumn('creation_date','Order Date',true,'10%','{cre
 $payables->add(new core_datacolumn('delivery_end_time','Deliver Date',true,'10%','{delivery_end_time_html}','{delivery_end_time_html}','{delivery_end_time_html}'));
 $payables->add(new core_datacolumn('due_date','Payment Due',true,'12%','{payment_due}','{payment_due}','{payment_due}'));
 $payables->add(new core_datacolumn('amount','Amount',true,'8%','{amount}','{amount}','{amount}'));
-$payables->add(new core_datacolumn('status','Payment Status',true,'12%','{payment_status}','{payment_status}','{payment_status}'));
+#$payables->add(new core_datacolumn('status','Payment Status',true,'12%','{payment_status}','{payment_status}','{payment_status}'));
+$payables->add(new core_datacolumn('payable_id',array(core_ui::check_all('payables'),'',''),false,'4%',core_ui::check_all('payables','payable_id'),' ',' '));
+
 $payables->columns[3]->autoformat='date-short';
 //$payables->columns[4]->autoformat='date-short';
 $payables->columns[6]->autoformat='price';
 ?>
 
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
-	<?
-	$payables->render();
-	?>
+	<div id="payables_list">
+		<?
+		$payables->render();
+		?>
+		<div class="pull-right" id="create_payment_button">
+			<?php if(lo3::is_admin() || lo3::is_market()){?>
+			<input type="button" onclick="core.payments.sendInvoices();" class="btn btn-info" value="Send Invoices" />
+			<?}?>
+			<input type="button" onclick="core.payments.makePayments();" class="btn btn-info" value="Make Payment" />
+		</div>
+	</div>
+	<div id="payables_actions" style="display: none;">
+		
+	</div>
 </div>
 

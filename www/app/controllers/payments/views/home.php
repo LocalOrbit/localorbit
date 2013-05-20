@@ -12,33 +12,38 @@ core_ui::load_library('js','payments.js');
 
 // tabs *******************************************************************************
 $tabs = array();
-if(lo3::is_admin())
+$payables = false;
+$receivables = false;
+
+if(lo3::is_admin() || lo3::is_market())
 {
 	$tabs[] = 'Overview';
-	$tabs[] = 'Review Orders &amp; Make Payments';
-	$tabs[] = 'Review &amp; Deliver Orders';
-	$tabs[] = 'Review Payment History';	
-}
-else if(lo3::is_market())
-{
-	$tabs[] = 'Overview';
-	$tabs[] = 'Review Orders &amp; Make Payments';
-	$tabs[] = 'Review &amp; Deliver Orders';
+	$tabs[] = 'Record Payments to Vendors';
+	$tabs[] = 'Send Invoices and Enter Receipts';
 	$tabs[] = 'Review Payment History';
+	$payables = true;
+	$receivables = true;
 }
 else if(lo3::is_seller())
 {
 	$count = core_db::col('select count(payable_id) as mycount from payables where from_org_id='.$core->session['org_id'],'mycount');
 	$tabs[] = 'Overview';
-	if($count > 0) $tabs[] = 'Review Orders &amp; Make Payments';
+	if($count > 0)
+	{
+		$tabs[] = 'Review Orders &amp; Make Payments';
+		$payables = true;
+	}
+	$receivables = true;
 	$tabs[] = 'Review &amp; Deliver Orders';
 	$tabs[] = 'Review Payment History';
 }
 else
 {
 	$tabs[] = 'Overview';
-	$tabs[] = 'Review Orders &amp; Make Payments';
+	$tabs[] = 'Record Payments to Vendors';
+	$tabs[] = 'Send Invoices and Enter Receipts';
 	$tabs[] = 'Review Payment History';
+	$payables = true;
 }
 
 // page_header *******************************************************************************
@@ -115,20 +120,20 @@ else if(lo3::is_seller())
 
 // tab contents ******************************************************************************* = 0;
 $tab_count = 0;  //affects ids
-$this->overview((array_search('Overview',$tabs)));
+$this->overview($tab_count);
 
-if(in_array('Review Orders &amp; Make Payments',$tabs))
+if($payables)
 {
 	$tab_count++;
-	$this->review_orders((array_search('Review Orders &amp; Make Payments',$tabs)),$tabs);
+	$this->review_orders($tab_count);
 }
-if(in_array('Review &amp; Deliver Orders',$tabs))
+if($receivables)
 {
 	$tab_count++;
-	$this->review_deliver_orders((array_search('Review &amp; Deliver Orders',$tabs)),$tabs);
+	$this->review_deliver_orders($tab_count);
 }
 $tab_count++;
-$this->payment_history((array_search('Review Payment History',$tabs)),$tabs);
+$this->payment_history($tab_count);
 
 
 
