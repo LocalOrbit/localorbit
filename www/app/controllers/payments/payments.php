@@ -961,9 +961,15 @@ function payments__add_standard_filters($datatable,$tab='')
 	
 	
 	// Filter: Payment Status  ***************************************************************************************************************
+	core::log(print_r($core->data,true));
 	if (in_array($tab,array('payables'))) {
 		if(lo3::is_buyer()) {
+			
 			//Status (paid, unpaid, all; defaults to unpaid)
+			if(!isset($core->data[$datatable->name.'__filter__amount_paid']))
+			{
+				$core->data[$datatable->name.'__filter__amount_paid'] = 0;
+			}
 			$datatable->add_filter(new core_datatable_filter('amount_paid'));
 			$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - 14).'px;">';
 				$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Payment Status: </div>';
@@ -977,7 +983,7 @@ function payments__add_standard_filters($datatable,$tab='')
 						),
 						null,
 						null,
-						'All Types',
+						'All Statuses',
 						'width: 120px; max-width: 120px;'
 				);
 			$datatable->filter_html .= '</div>';
@@ -993,11 +999,11 @@ function payments__add_standard_filters($datatable,$tab='')
 						$datatable->filter_states[$datatable->name.'__filter__invoiced'],
 						array(
 								'1'=>'Invoiced',
-								'0'=>'Un-Invoice',
+								'0'=>'Not Invoiced Yet',
 						),
 						null,
 						null,
-						'All Types',
+						'All Statuses',
 						'width: 120px; max-width: 120px;'
 				);			
 			$datatable->filter_html .= '</div>';
@@ -1203,20 +1209,27 @@ function format_payable_info($data)
 	}
 	else
 	{
-		if($data['days_left'] < 0)
+		if($data['status'] == '1')
 		{
-			$html .= '<div style="font-weight:bold;color: #c00;">'.core_format::date($time,'short');
-			$html .= '<br />'.(-1 * $data['days_left']).' day(s) overdue</div>';
-		}
-		else if($data['days_left'] == 0)
-		{
-			$html .= '<div style="font-weight:bold;color: #c00;">'.core_format::date($time,'short');
-			$html .= '<br />Today</div>';
+			$html .= 'Paid';
 		}
 		else
 		{
-			$html .= core_format::date($time,'short');
-			$html .= '<br />'.$data['days_left'].' day(s) left';
+			if($data['days_left'] < 0)
+			{
+				$html .= '<div style="font-weight:bold;color: #c00;">'.core_format::date($time,'short');
+				$html .= '<br />'.(-1 * $data['days_left']).' day(s) overdue</div>';
+			}
+			else if($data['days_left'] == 0)
+			{
+				$html .= '<div style="font-weight:bold;color: #c00;">'.core_format::date($time,'short');
+				$html .= '<br />Today</div>';
+			}
+			else
+			{
+				$html .= core_format::date($time,'short');
+				$html .= '<br />'.$data['days_left'].' day(s) left';
+			}
 		}
 	}
 	$data['payment_due'] = $html;
