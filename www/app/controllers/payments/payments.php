@@ -964,50 +964,49 @@ function payments__add_standard_filters($datatable,$tab='')
 	
 	
 	// Filter: Payment Status  ***************************************************************************************************************
-	if (in_array($tab,array('payables'))) {
-		if(lo3::is_buyer()) {
+	if (in_array($tab,array('payables','receivables'))) {
 			
-			//Status (paid, unpaid, all; defaults to unpaid)
-			if(!isset($core->data[$datatable->name.'__filter__amount_paid']))
-				$core->data[$datatable->name.'__filter__amount_paid'] = 0;
-			$datatable->add_filter(new core_datatable_filter('amount_paid'));
-			$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - 14).'px;">';
-				$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Payment Status: </div>';
-				$datatable->filter_html .= core_datatable_filter::make_select(
-						$datatable->name,
-						'amount_paid',
-						$datatable->filter_states[$datatable->name.'__filter__amount_paid'],
-						array(
-								'1'=>'Paid',
-								'0'=>'Unpaid',
-						),
-						null,
-						null,
-						'All Statuses',
-						'width: 120px; max-width: 120px;'
-				);
-			$datatable->filter_html .= '</div>';
+		//Status (paid, unpaid, all; defaults to unpaid)
+		if(!isset($core->data[$datatable->name.'__filter__amount_paid']))
+			$core->data[$datatable->name.'__filter__amount_paid'] = 0;
+		$datatable->add_filter(new core_datatable_filter('amount_paid'));
+		$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - 14).'px;">';
+			$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Payment Status: </div>';
+			$datatable->filter_html .= core_datatable_filter::make_select(
+					$datatable->name,
+					'amount_paid',
+					$datatable->filter_states[$datatable->name.'__filter__amount_paid'],
+					array(
+							'1'=>'Paid',
+							'0'=>'Unpaid',
+					),
+					null,
+					null,
+					'All Statuses',
+					'width: 120px; max-width: 120px;'
+			);
+		$datatable->filter_html .= '</div>';
+
+		
+		//Invoiced (invoiced, un-invoiced, all; defaults to all)
+		$datatable->add_filter(new core_datatable_filter('invoiced'));
+		$datatable->filter_html .= '<div style="float:left;width: '.$filter_width.'px;">';			
+			$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Payment Invoiced: </div>';
+			$datatable->filter_html .= core_datatable_filter::make_select(
+					$datatable->name,
+					'invoiced',
+					$datatable->filter_states[$datatable->name.'__filter__invoiced'],
+					array(
+							'1'=>'Invoiced',
+							'0'=>'Not Invoiced Yet',
+					),
+					null,
+					null,
+					'All Statuses',
+					'width: 120px; max-width: 120px;'
+			);			
+		$datatable->filter_html .= '</div>';
 	
-			
-			//Invoiced (invoiced, un-invoiced, all; defaults to all)
-			$datatable->add_filter(new core_datatable_filter('invoiced'));
-			$datatable->filter_html .= '<div style="float:left;width: '.$filter_width.'px;">';			
-				$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Payment Invoiced: </div>';
-				$datatable->filter_html .= core_datatable_filter::make_select(
-						$datatable->name,
-						'invoiced',
-						$datatable->filter_states[$datatable->name.'__filter__invoiced'],
-						array(
-								'1'=>'Invoiced',
-								'0'=>'Not Invoiced Yet',
-						),
-						null,
-						null,
-						'All Statuses',
-						'width: 120px; max-width: 120px;'
-				);			
-			$datatable->filter_html .= '</div>';
-		}
 	}
 		
 	

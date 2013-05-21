@@ -40,8 +40,7 @@ else if(lo3::is_seller())
 else
 {
 	$tabs[] = 'Overview';
-	$tabs[] = 'Record Payments to Vendors';
-	$tabs[] = 'Send Invoices and Enter Receipts';
+	$tabs[] = 'Review Orders &amp; Make Payments';
 	$tabs[] = 'Review Payment History';
 	$payables = true;
 }
