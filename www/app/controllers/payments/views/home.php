@@ -64,11 +64,11 @@ if(lo3::is_admin())
 	$hub_filters = core::model('domains')->collection()->sort('name');
 	$to_filters  = core::model('organizations')
 		->collection()
-		->filter('organizations.org_id','in','(select distinct to_org_id from payables)')
+		->filter('(organizations.org_id in (select distinct to_org_id from payables) or organizations.org_id in ('.$core->session['org_id'].'))')
 		->sort('name');
 	$from_filters  = core::model('organizations')
 		->collection()
-		->filter('organizations.org_id','in','(select distinct from_org_id from payables)')
+		->filter('(organizations.org_id in (select distinct from_org_id from payables) or organizations.org_id in ('.$core->session['org_id'].'))')
 		->sort('name');
 }
 else if(lo3::is_market())

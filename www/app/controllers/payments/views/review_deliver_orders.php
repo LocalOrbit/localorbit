@@ -3,8 +3,11 @@ $v_payables = core::model('v_payables')->collection();
 $v_payables->add_formatter('format_payable_info');
 if(!lo3::is_admin())
 {
-	$v_payables->filter('to_org_id','=',$core->session['org_id']);
+	#$v_payables->filter('to_org_id','=',$core->session['org_id']);
 }
+#echo('<pre>');
+#print_r($v_payables);
+#echo('</pre>');
 $receivables = new core_datatable('receivables','payments/review_deliver_orders',$v_payables);
 payments__add_standard_filters($receivables,'receivables');
 $receivables->add(new core_datacolumn('creation_date','Ref #',false,'13%',			'{ref_nbr_html}','{ref_nbr_html}','{ref_nbr_html}'));
@@ -17,11 +20,18 @@ $receivables->add(new core_datacolumn('payable_id',array(core_ui::check_all('rec
 
 $receivables->columns[2]->autoformat='date-short';
 $receivables->columns[3]->autoformat='date-short';
-$receivables->columns[4]->autoformat='price';?>
+$receivables->columns[4]->autoformat='price';
+
+
+?>
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
 	<div id="receivables_list">
+		<h1>Receivables</h1>
 		<?php
 		$receivables->render();
+#echo('<pre>');
+#print_r($v_payables);
+#echo('</pre>');
 		?>
 		<div class="pull-right" id="create_payment_button">
 			<button onclick="core.payments.markItemsDelivered();" class="btn btn-info">Mark Items as Delivered</button>

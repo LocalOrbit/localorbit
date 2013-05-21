@@ -922,10 +922,10 @@ function payments__add_standard_filters($datatable,$tab='')
 					'order_status',
 					$datatable->filter_states[$datatable->name.'__filter__order_status'],
 					array(
-							'paid'=>'paid',
-							'awaiting delivery'=>'awaiting delivery',
-							'awaiting buyer payment'=>'awaiting buyer payment',
-							'awaiting MM or LO transfer'=>'awaiting MM or LO transfer',
+							'Paid'=>'paid',
+							'Awaiting delivery'=>'awaiting delivery',
+							'Awaiting buyer payment'=>'awaiting buyer payment',
+							'Awaiting MM or LO transfer'=>'awaiting MM or LO transfer',
 					),
 					null,
 					null,
@@ -941,9 +941,10 @@ function payments__add_standard_filters($datatable,$tab='')
 	// Filter: From Org: ***************************************************************************************************************
 	if(lo3::is_admin() || lo3::is_market())
 	{
-		if(!isset($core->data[$datatable->name.'__filter__from_org_id']) && $datatable->name == 'receivables')
+		
+		if(!isset($core->data[$datatable->name.'__filter__from_org_id']) && $datatable->name == 'payables')
 			$core->data[$datatable->name.'__filter__from_org_id'] = $core->session['org_id'];
-
+		
 		$datatable->add_filter(new core_datatable_filter('from_org_id'));
 		$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - 0).'px;">';
 		$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.$label_width.'px;text-align: right;">From Org: </div>';
@@ -1069,7 +1070,7 @@ function payments__add_standard_filters($datatable,$tab='')
 		
 		$datatable->filter_html .= '</div>';
 		
-		if(!isset($core->data[$datatable->name.'__filter__to_org_id']) && $datatable->name == 'payables')
+		if(!isset($core->data[$datatable->name.'__filter__to_org_id']) && $datatable->name == 'receivables')
 			$core->data[$datatable->name.'__filter__to_org_id'] = $core->session['org_id'];
 
 		$datatable->add_filter(new core_datatable_filter('to_org_id'));
@@ -1115,11 +1116,6 @@ function payments__add_standard_filters($datatable,$tab='')
 			$datatable->filter_html .= '</div>';
 		}
 	}
-	
-	
-	
-	
-	
 
 	$datatable->filter_html .= '<br /><div style="width: '.($filter_width * 3).'px;clear:both;">&nbsp;</div>';
 	
