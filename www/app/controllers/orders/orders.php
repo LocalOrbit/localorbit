@@ -42,9 +42,8 @@ class core_controller_orders extends core_controller
 			foreach($seller_orders as $seller_order)
 			{
 				$invoice = core::model('invoices');
-				$invoice['to_org_id']   = $seller_order['to_org_id'];
-				$invoice['from_org_id'] = $seller_order['from_org_id'];
-				$invoice['due_date']    = core_format::date(time() + (86400*7),'db');
+				$invoice['creation_date']    = time();
+				$invoice['due_date']    = time();
 				$invoice['amount']      = $seller_order['amount'];
 				$invoice->save();
 				core_db::query('update payables set invoice_id='.$invoice['invoice_id'].' where payable_id='.$seller_order['payable_id']);
