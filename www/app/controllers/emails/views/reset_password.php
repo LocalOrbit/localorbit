@@ -7,6 +7,7 @@ $values = array(
 core::log('tryign to send email from domain '.$values['domain_id']);
 $values['hub_name'] = core_db::col('select name from domains where domain_id='.$values['domain_id'],'name');
 core::log('domain name is '.$values['hub_name']);
+//core::log('new_password is '.$core->view[1]);
 
 $body  = $this->email_start();
 $body .= $this->handle_source($core->session['i18n']['email:reset_password'],$values);

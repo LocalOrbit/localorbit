@@ -14,6 +14,17 @@ class lo3
 		}
 	}
 	
+	public static function require_can_shop()
+	{
+		global $core;	
+		if($core->config['domain']['feature_allow_anonymous_shopping'] != 1)
+		{
+			lo3::require_login();
+		}
+	}
+	
+	
+	
 	public static function require_orgtype($orgtype)
 	{
 		global $core;

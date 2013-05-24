@@ -37,7 +37,7 @@ else if(
 }
 else
 {
-
+	lo3::require_can_shop();
 	# if the buyer is reaching this page after logging in, show the news
 	if($core->data['show_news'] == 'yes')
 	{

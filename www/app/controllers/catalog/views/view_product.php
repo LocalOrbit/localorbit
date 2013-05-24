@@ -4,6 +4,7 @@ core::ensure_navstate(array('left'=>'left_filters'));
 core_ui::showLeftNav();
 core::head('View a product','View a product.');
 lo3::require_permission();
+lo3::require_can_shop();
 
 $data = core::model('products')
 	->join_address()
