@@ -417,7 +417,9 @@ function determine_delivery_language($data)
 
 	# if the 1st or 2nd address is owned by the buyer org,
 	# then this is being delivered.
+	// this does not work for Maya buying from Five Seeds Farm
 	$prefix = ($data['buyer_org_id'] == $data['delivery_org_id'])?'delivery_':'pickup_';
+	$prefix = 'pickup_';
 	#echo('about to fork, using prefix '.$prefix.', address is '.$data[$prefix.'address']);
 
 	if($data['buyer_org_id'] == $data['delivery_org_id'] || $data['buyer_org_id'] == $data['pickup_org_id'])
