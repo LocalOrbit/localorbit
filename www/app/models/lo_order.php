@@ -51,13 +51,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 			$this['ldstat_id'] = $ldstat_id;
 			$this['last_status_date'] = date('Y-m-d H:i:s');
 
-			if ($ldstat_id == 4 && (($this['payables_create_on'] == 'delivery') ||
-				($lbps_id == 2 && $this['payables_create_on'] ==
-'buyer_paid_and_delivered')))
-			{
-				$this->set_payable_invoicable(true);
-			}
-
+			
 			$stat_change = core::model('lo_order_status_changes');
 			$stat_change['user_id'] = $core->session['user_id'];
 			$stat_change['lo_oid'] = $this['lo_oid'];
@@ -69,13 +63,6 @@ class core_model_lo_order extends core_model_lo_order___utility
 			$this['lbps_id'] = $lbps_id;
 			$this['last_status_date'] = date('Y-m-d H:i:s');
 			$stat_change = core::model('lo_order_status_changes');
-
-			if ($lbps_id == 2 && ($this['payables_create_on'] == 'buyer_paid' ||
-				($ldstat_id == 4 && $this['payables_create_on'] ==
-'buyer_paid_and_delivered')))
-			{
-				$this->set_payable_invoicable(true);
-			}
 
 			$stat_change['user_id'] = $core->session['user_id'];
 			$stat_change['lo_oid'] = $this['lo_oid'];

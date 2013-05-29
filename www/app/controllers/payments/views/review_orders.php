@@ -28,7 +28,6 @@ $payables->columns[6]->autoformat='price';
 
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
 	<div id="payables_list">
-		<h1>Payables</h1>
 		<?
 		$payables->render();
 		?>

@@ -403,13 +403,13 @@ class core_controller_payments extends core_controller
 	function do_send_invoices()
 	{
 		global $core;
-		core::log('send called');
-		core::log(print_r($core->data,true));
+		#core::log('send called');
+		#core::log(print_r($core->data,true));
 		$ids = explode(',',$core->data['payables_to_send']);
 		$receivables = core::model('v_payables')->get_invoice_payables($ids,0);
 		foreach($receivables as $receivable)
 		{
-			core::log('resending invoices '.print_r($receivable,true));
+			#core::log('resending invoices '.print_r($receivable,true));
 			$payables = array();
 			$info = explode('$$',$receivable['payable_info']);
 			foreach($info as $line)
@@ -417,7 +417,7 @@ class core_controller_payments extends core_controller
 			#	$line = format_payable_info($line);
 				$payables[] = array_combine(array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date','amount'),explode('|',$line));
 			}
-			core::log('payables '.print_r($payables,true));
+			#core::log('payables '.print_r($payables,true));
 			
 			
 			$invoice = core::model('invoices');
@@ -447,13 +447,13 @@ class core_controller_payments extends core_controller
 	function do_resend_invoices()
 	{
 		global $core;
-		core::log('resend called');
-		core::log(print_r($core->data,true));
+		#core::log('resend called');
+		#core::log(print_r($core->data,true));
 		$ids = explode(',',$core->data['payables_to_send']);
 		$receivables = core::model('v_payables')->get_invoice_payables($ids,1);
 		foreach($receivables as $receivable)
 		{
-			core::log('resending invoices '.print_r($receivable,true));
+			#core::log('resending invoices '.print_r($receivable,true));
 			$payables = array();
 			$info = explode('$$',$receivable['payable_info']);
 			foreach($info as $line)
@@ -461,7 +461,7 @@ class core_controller_payments extends core_controller
 			#	$line = format_payable_info($line);
 				$payables[] = array_combine(array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date','amount'),explode('|',$line));
 			}
-			core::log('payables '.print_r($payables,true));
+			#core::log('payables '.print_r($payables,true));
 			
 			
 			$invoice = core::model('invoices')->load($receivable['invoice_id']);
@@ -481,7 +481,68 @@ class core_controller_payments extends core_controller
 		core_datatable::js_reload('receivables');
 		core_ui::notification('Invoices Re-sent.');
 		core::deinit();
-
+	}
+	
+	function mark_items_delivered()
+	{
+		global $core;
+		core::log(print_r($core->data,true));
+		$payable_ids = explode(',',$core->data['checked_receivables']);
+		$final_ids = array();
+		foreach($payable_ids as $id)
+			$final_ids[] = intval($id);
+			
+		# we need to verify that we actually need to make this change
+		$sql = "
+			select * from lo_order_line_item
+			where lo_liid in (
+				select parent_obj_id 
+				from payables
+				where payable_id in (".implode(',',$final_ids).")
+				and payable_type in ('buyer order','seller_order','lo_fees','hub fees')
+			);
+		";
+		
+		$orders_to_update = array();
+		$items = new core_collection($sql);
+		foreach($items as $item)
+		{
+			# 
+			if($item['ldstat_id'] != 4)
+			{
+				# save the item's change
+				core_db::query('
+					update lo_order_line_item set 
+					ldstat_id=4,
+					qty_delivered=qty_ordered,
+					qty_adjusted=qty_ordered
+					where lo_liid='.$item['lo_liid']
+				);
+				
+				# insert the record of the change
+				$status = core::model('lo_order_item_status_changes');
+				$status['lo_liid'] = $item['lo_liid'];
+				$status['user_Id'] = $core->session['user_id'];
+				$status['ldstat_id'] = 4;
+				$status->save();
+				
+				# add the order to the list of orders we need to check
+				$orders_to_update[] = $item['lo_oid'];
+			}
+		}
+		
+		# examine all of the orders and update their statuses as necessary
+		foreach($orders_to_update as $order)
+		{
+			core::model('lo_order')->load($order)->update_status();
+		}
+		
+		
+		#core_db::query($sql);
+		core_datatable::js_reload('receivables');
+		core_datatable::js_reload('payables');
+		core_ui::notification('Items marked delivered.');
+		core::deinit();
 	}
 }
 
@@ -1356,6 +1417,7 @@ function format_payable_info($data)
 	
 	# format payment status
 	$data['payment_status'] = ($data['status'] == '1')?'Paid':'Unpaid';
+	$data['receivable_status']  = ucwords($data['receivable_status']);
 	
 	# if this is a payment, do payment specific formatting
 	if(isset($data['payment_id']))

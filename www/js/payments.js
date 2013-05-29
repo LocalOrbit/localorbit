@@ -187,7 +187,7 @@ core.payments.sendInvoices=function(){
 	//alert('in progress');
 	var receivables = core.ui.getCheckallList(document.paymentsForm,'receivables');
 	if(receivables.length == 0){
-		alert('please check at least one payable.');
+		alert('please check at least one receivable.');
 	}else{
 		core.doRequest('/payments/send_invoices',{'checked_receivables':receivables.join(',')});
 	}
@@ -203,7 +203,12 @@ core.payments.makePayments=function(){
 }
 
 core.payments.markItemsDelivered=function(){
-	alert('in progress');
+	var receivables = core.ui.getCheckallList(document.paymentsForm,'receivables');
+	if(receivables.length == 0){
+		alert('please check at least one item.');
+	}else{
+		core.doRequest('/payments/mark_items_delivered',{'checked_receivables':receivables.join(',')});
+	}
 }
 
 core.payments.doSendInvoices=function(){
