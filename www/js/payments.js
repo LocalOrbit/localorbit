@@ -181,3 +181,55 @@ core.payments.setPaymentOptions=function(curGroup,val){
 	}
 }
 
+/* DELETE ALL ABOVE */
+
+core.payments.sendInvoices=function(){
+	//alert('in progress');
+	var receivables = core.ui.getCheckallList(document.paymentsForm,'receivables');
+	if(receivables.length == 0){
+		alert('please check at least one payable.');
+	}else{
+		core.doRequest('/payments/send_invoices',{'checked_receivables':receivables.join(',')});
+	}
+}
+
+core.payments.makePayments=function(){
+	var payables = core.ui.getCheckallList(document.paymentsForm,'payables');
+	if(payables.length == 0){
+		alert('please check at least one payable.');
+	}else{
+		core.doRequest('/payments/make_payments',{'checked_payables':payables.join(',')});
+	}
+}
+
+core.payments.markItemsDelivered=function(){
+	alert('in progress');
+}
+
+core.payments.doSendInvoices=function(){
+	//alert(core.getFormDataForSubmit(document.paymentsForm));
+	//alert(document.paymentsForm.payables_to_send.value);
+	document.paymentsForm.has_sendables.value = 0;
+	core.doRequest('/payments/do_send_invoices',core.getFormDataForSubmit(document.paymentsForm));
+	if(document.paymentsForm.has_resendables.value == 0){
+		core.payments.resetInvoiceSending();
+	}else{
+		$('#sendable_payables').hide(300);
+	}
+}
+
+core.payments.doResendInvoices=function(){
+	//alert(core.getFormDataForSubmit(document.paymentsForm));
+	//alert(document.paymentsForm.payables_to_send.value);
+	document.paymentsForm.has_resendables.value = 0;
+	core.doRequest('/payments/do_resend_invoices',core.getFormDataForSubmit(document.paymentsForm));
+	if(document.paymentsForm.has_sendables.value == 0){
+		core.payments.resetInvoiceSending();
+	}else{
+		$('#resendable_payables').hide(300);
+	}
+}
+
+core.payments.resetInvoiceSending=function(){
+	$('#receivables_list,#receivables_actions').toggle(300);
+}

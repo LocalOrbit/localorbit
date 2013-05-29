@@ -206,10 +206,11 @@ core.b=function(){
 
 core.getFormDataForSubmit=function(form){
 	var data = '';
-	for (i = 0; i < form.elements.length; i++){
+	for (var i = 0; i < form.elements.length; i++){
 		if(form.elements[i].type !='radio')
 			data += '&'+form.elements[i].name+'=';
 		//alert(form.elements[i].type);
+		console.log(form.elements[i].type);
 		switch(form.elements[i].type){
 			case 'text':
 			case 'textarea':
@@ -232,6 +233,8 @@ core.getFormDataForSubmit=function(form){
 			case 'radio':
 				if(form.elements[i].checked)
 					data += '&'+form.elements[i].name+'='+encodeURIComponent(form.elements[i].value);
+				break;
+			default:
 				break;
 		}
 	}
