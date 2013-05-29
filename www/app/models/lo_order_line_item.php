@@ -76,6 +76,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 			$event[$stat_field]  = $new_value;
 			$event->save();
 		}
+		return $this;
 	}
 
 	function find_deliveries ($product, $dd_id)

@@ -94,13 +94,15 @@ $emails = core_db::col('
 //$emails = "jvavul@gmail.com";
 
 $body  = $this->email_start();
-$body .= $this->handle_source($core->i18n['email:payment_received_body'],$values);
+$body .= $this->handle_source($core->i18n['email:payments:payment_received_body'],$values);
 $body .= $this->footer();
 $body .= $this->email_end();
+#echo($body);
 
 $this->send_email(
 		$core->i18n['email:payments:payment_received_subject'],
-		$emails,
+		'mike@localorb.it',
+		# emails
 		$body,
 		array(),
 		$core->config['mailer']['From'],

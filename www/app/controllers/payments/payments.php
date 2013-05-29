@@ -617,15 +617,49 @@ class core_controller_payments extends core_controller
 				$payment['creation_date'] = time();
 				$payment->save();
 				
+				$orders_to_check = array();
 				foreach($payables as $payable)
 				{
+					# update the item statuses
+					switch($payable['payable_type'])
+					{
+						case 'buyer order':
+							# if this is the buyer paying off an item, then 
+							# change lbps_id on the item
+							$item = core::model('lo_order_line_item')->load($payable['parent_obj_id'])->change_status('lbps_id',2);
+							$orders_to_check[] = $item['lo_oid'];
+							
+							break;
+						case 'seller order':
+							# this is complicated. This could either be
+							# from LO to the market, the market to the seller,
+							# or lo to the seller. 
+							$item = core::model('lo_order_line_item')->load($payable['parent_obj_id']);
+							if($item['seller_org_id'] == $payable['to_org_id'])
+							{
+								$item->change_status('lsps_id',2);
+								$orders_to_check[] = $item['lo_oid'];
+							}
+							
+							break;
+						default:
+							# other payable types do not imply status changing
+							break;
+					}
 					$xpp = core::model('x_payables_payments');
 					$xpp['payable_id'] = $payable['payable_id'];
 					$xpp['payment_id'] = $payment['payment_id'];
 					$xpp['amount'] = floatval($payable['amount']) - floatval($payable['amount_paid']);
 					$xpp->save();
 				}
-				break;
+				
+				$orders_to_check = core::model('lo_order')
+					->collection()
+					->filter('lo_oid','in',$orders_to_check);
+				foreach($orders_to_check as $order)
+				{
+					$order->update_status();
+				}
 		}
 		
 		core_datatable::js_reload('receivables');
