@@ -190,7 +190,7 @@ class core_model_products extends core_model_base_products
 					where org_id =p.org_id
 				)
 				or '.$domain_id.' in (select domain_id from organizations_to_domains where org_id='.$org_id.')
-				
+				'.((lo3::is_admin())?'or true':'').'
 			)
 
 		';
