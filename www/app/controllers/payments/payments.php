@@ -486,7 +486,7 @@ class core_controller_payments extends core_controller
 	function mark_items_delivered()
 	{
 		global $core;
-		core::log(print_r($core->data,true));
+		#core::log(print_r($core->data,true));
 		$payable_ids = explode(',',$core->data['checked_receivables']);
 		$final_ids = array();
 		foreach($payable_ids as $id)
@@ -542,6 +542,97 @@ class core_controller_payments extends core_controller
 		core_datatable::js_reload('receivables');
 		core_datatable::js_reload('payables');
 		core_ui::notification('Items marked delivered.');
+		core::deinit();
+	}
+	
+	function save_new_payment()
+	{
+		global $core;
+		core::log(print_r($core->data,true));
+		
+		$payables = core::model('v_payables')
+			->collection()
+			->filter('payable_id','in',explode(',',$core->data['payable_ids']));
+		list($from_org_id,$to_org_id) = explode('-',$core->data['group']);
+		$amount = round(floatval($core->data['amount']),2);
+		
+		switch($core->data['payment_method'])
+		{
+			# ach!
+			case '3':
+				core::load_library('crypto');
+				
+				$payment = core::model('payments');
+				$payment['amount'] = $amount;
+				$payment['payment_method'] = 'ACH';
+				$payment['creation_date'] = time();
+				$payment->save();
+				
+				$trace   = 'P-'.str_pad($payment['payment_id'],6,'0',STR_PAD_LEFT);
+				$account = core::model('organization_payment_methods')->load($core->data['opm_id']);
+				
+				if($from_org_id == 1)
+				{
+					$ach_amount = (-1) * $amount;
+				}
+				
+				$result = $account->make_payment($trace,'Orders',$amount);						
+				
+				
+				
+				if($result)
+				{
+					// send emails of payment to both parties
+					core::process_command('emails/payment_received',false,
+						$from_org_id,$to_org_id,$amount,$payables
+					);
+					$payment['ref_nbr'] = $trace;
+					$payment->save();
+				}
+				else
+				{
+					$payment->delete();
+					core_ui::notification('Could not process transaction. We will investigate further.');
+					core::deinit();
+				}
+				
+				foreach($payables as $payable)
+				{
+					$xpp = core::model('x_payables_payments');
+					$xpp['payable_id'] = $payable['payable_id'];
+					$xpp['payment_id'] = $payment['payment_id'];
+					$xpp['amount'] = floatval($payable['amount']) - floatval($payable['amount_paid']);
+					$xpp->save();
+				}
+					
+				break;
+				
+			# check
+			case '4':
+			case '5':
+				$payment = core::model('payments');
+				$payment['amount'] = $amount;
+				$payment['payment_method'] = ($core->data['payment_method'] == '4')?'check':'cash';
+				$payment['ref_nbr'] = ($core->data['payment_method'] == '4')?$core->data['ref_nbr']:'';
+				$payment['creation_date'] = time();
+				$payment->save();
+				
+				foreach($payables as $payable)
+				{
+					$xpp = core::model('x_payables_payments');
+					$xpp['payable_id'] = $payable['payable_id'];
+					$xpp['payment_id'] = $payment['payment_id'];
+					$xpp['amount'] = floatval($payable['amount']) - floatval($payable['amount_paid']);
+					$xpp->save();
+				}
+				break;
+		}
+		
+		core_datatable::js_reload('receivables');
+		core_datatable::js_reload('payables');
+		core_datatable::js_reload('payments');
+		core::js("$('#".$core->data['tab']."__area__".$core->data['group']."').hide();core.payments.checkAllPaymentsMade('".$core->data['tab']."');");
+		core_ui::notification('Payment Saved.');
 		core::deinit();
 	}
 }
@@ -953,7 +1044,7 @@ function payments__add_standard_filters($datatable,$tab='')
 	);
 	
 	// default dates
-	$start = $core->config['time'] - (86400*7);
+	$start = $core->config['time'] - (86400*30);
 	$end = $core->config['time'];
 	if(!isset($core->data[$datatable->name.'__filter__'.$tab.'createdat1'])){ 
 		$core->data[$datatable->name.'__filter__'.$tab.'createdat1'] = $start; 

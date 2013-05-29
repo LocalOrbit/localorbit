@@ -56,6 +56,7 @@ if($allow_ach)
 	$methods->load();
 		
 	# if the user has a bank account	
+	$show_save = false;
 	if($methods->__num_rows > 0)
 	{
 		
@@ -65,6 +66,7 @@ if($allow_ach)
 			'value_column'=>'opm_id',
 		)));
 		echo('<input type="hidden" name="'.$tab.'__group_method__'.$group_key.'" value="3" />');
+		$show_save = true;
 	}
 	else
 	{
@@ -75,6 +77,14 @@ if($allow_ach)
 	
 		echo('<br /><input type="button" class="btn btn-info pull-right" value="Add New Account" onclick="core.payments.newAccount(this)" />');
 	}
+	?>
+	<div class="pull-right" id="<?=$tab?>__save_button__<?=$group_key?>"<?=(($show_save)?'':' style="display: none;"')?>>
+		<input type="button" onclick="$('#<?=$tab?>__area__<?=$group_key?>').hide();core.payments.checkAllPaymentsMade('<?=$tab?>');" class="btn btn-warning" value="Cancel this payment" />
+		<input type="button" onclick="core.payments.savePayment('<?=$tab?>','<?=$group_key?>');" class="btn btn-primary" value="Save Payment" />
+	</div>
+
+	
+	<?php
 }
 else if($allow_offline)
 {
@@ -108,9 +118,9 @@ else if($allow_offline)
 		</span>
 	</div>
 	<div class="pull-right">
-			<input type="button" onclick="$('#<?=$core->data['tab']?>_list,#<?=$core->data['tab']?>_actions').toggle(300);" class="btn btn-warning" value="Cancel" />
-			<input type="button" onclick="core.payments.savePayment('<?=$tab?>','<?=$group_key?>');" class="btn btn-primary" value="Save Payment" />
-		</div>
+		<input type="button" onclick="$('#<?=$tab?>__area__<?=$group_key?>').hide();core.payments.checkAllPaymentsMade('<?=$tab?>');" class="btn btn-warning" value="Cancel this payment" />
+		<input type="button" onclick="core.payments.savePayment('<?=$tab?>','<?=$group_key?>');" class="btn btn-primary" value="Save Payment" />
+	</div>
 	<?php
 }
 else

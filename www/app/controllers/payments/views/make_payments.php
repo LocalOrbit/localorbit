@@ -13,10 +13,12 @@ foreach($payables as $group_key=>$payable_list)
 
 foreach($payables as $group_key=>$payable_list)
 {
-	
+	$payable_ids = array();
+	list($need_pay,$from_org_id,$to_org_id) = explode('-', $group_key);
 ?>
-<div class="row">
+<div class="row <?=$core->data['tab']?>_row" id="<?=$core->data['tab']?>__area__<?=$group_key?>">
 	<div class="span8">
+		Need Pay: <?=$need_pay?>
 		<h2><i class="icon-cart">&nbsp;</i>From <?=$payable_list[0]['from_org_name']?> to  <?=$payable_list[0]['to_org_name']?></h2>
 		<table class="dt" style="width:100%;" width="100%">
 			<tr>
@@ -25,7 +27,7 @@ foreach($payables as $group_key=>$payable_list)
 				<th class="dt">Due Date</th>
 				<th class="dt">Amount</th>
 			</tr>
-			<?php foreach($payable_list as $payable){?>
+			<?php foreach($payable_list as $payable){	$payable_ids[] = $payable['payable_id']; ?>
 			<tr>
 				<td class="dt"><?=$payable['ref_nbr_html']?></th>
 				<td class="dt"><?=$payable['description_html']?></td>
@@ -44,12 +46,21 @@ foreach($payables as $group_key=>$payable_list)
 		</table>
 	</div>
 	<div class="span4">
+		<?if($group_totals[$group_key] > 0){?>
 		<h2><i class="icon-coins">&nbsp;</i>Method</h2>
 		<input type="hidden" name="<?=$core->data['tab']?>__group_total__<?=$group_key?>" value="<?=$group_totals[$group_key]?>" />
+		<input type="hidden" name="<?=$core->data['tab']?>__payable_ids__<?=$group_key?>" value="<?=implode(',',$payable_ids)?>" />
 		<? $this->payment_method_selector($core->data['tab'],$payable_list[0]['from_org_id'],$payable_list[0]['to_org_id'],$group_key);?>
+		<?}else{?>
+			<h2><i class="icon-coins">&nbsp;</i>These payables have already been paid.</h2>
+			<br />
+			<input type="button" onclick="$('#<?=$core->data['tab']?>__area__<?=$group_key?>').hide();core.payments.checkAllPaymentsMade('<?=$tab?>');" class="btn btn-warning" value="Got it" />
+	
+		<?}?>
 	</div>
+	<br />&nbsp;<br />
 </div>
-<br />&nbsp;<br />
+
 
 <?php
 

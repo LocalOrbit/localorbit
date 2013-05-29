@@ -209,10 +209,11 @@ core.payments.savePayment=function(tab,group){
 	data['ref_nbr'] = $(document.paymentsForm[tab+'__group_ref_nbr__'+group]).val();
 	data['opm_id'] = $(document.paymentsForm[tab+'__group_opm_id__'+group]).val();
 	data['amount'] = $(document.paymentsForm[tab+'__group_total__'+group]).val();
+	data['payable_ids'] = $(document.paymentsForm[tab+'__payable_ids__'+group]).val();
 	data['group'] = group;
-	core.alertHash(data);
+	//core.alertHash(data);
 	
-	//core.doRequest('/payments/save_new_payment',data);
+	core.doRequest('/payments/save_new_payment',data);
 }
 
 core.payments.markItemsDelivered=function(){
@@ -250,4 +251,10 @@ core.payments.doResendInvoices=function(){
 
 core.payments.resetInvoiceSending=function(){
 	$('#receivables_list,#receivables_actions').toggle(300);
+}
+
+core.payments.checkAllPaymentsMade=function(tab){
+	if($('div.'+tab+'_row:visible').length == 0){
+		$('#'+tab+'_list,#'+tab+'_actions').toggle(300);
+	}
 }
