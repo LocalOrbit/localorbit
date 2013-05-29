@@ -211,9 +211,16 @@ class core_collection implements Iterator,ArrayAccess
 		$this->__current = (-1);
 		#core::log('there appear to be '.$this->__num_rows.' rows');
 		
-		if($this->__determine_max_page && $this->__size < 0)
+		if($this->__determine_max_page)
 		{
-			$this->__max_page = 0;
+			if($this->__size < 0)
+			{
+				$this->__max_page = 0;
+			}
+			else
+			{
+				$this->__max_page = ceil(core_db::col('SELECT FOUND_ROWS() as myrows','myrows') / $this->__size);
+			}
 		}
 		return $this;
 	}
@@ -315,11 +322,7 @@ class core_collection implements Iterator,ArrayAccess
 		#core::log('size is: '.$this->__size);
 		
 		
-		if($this->__determine_max_page && $this->__size > 0)
-		{
-			$this->__max_page = core_db::num_rows($this->__sql);
-			$this->__max_page = ceil ( $this->__max_page / $this->__size);
-		}
+		
 
 		
 		
@@ -333,6 +336,13 @@ class core_collection implements Iterator,ArrayAccess
 			{
 				$this->__sql .= ' offset '.($this->__page * $this->__size);
 			}
+		}
+		
+		if($this->__determine_max_page && $this->__size > 0)
+		{
+			$this->__sql = trim($this->__sql);
+			$this->__sql = substr($this->__sql,6,strlen($this->__sql));
+			$this->__sql = 'select SQL_CALC_FOUND_ROWS '.$this->__sql;
 		}
 		
 		return $this->__sql;
