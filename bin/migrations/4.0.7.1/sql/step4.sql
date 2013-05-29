@@ -50,13 +50,13 @@ select p.*,
 	i.creation_date as last_invoiced,
 	lods.delivery_status,
 
-
+	lbps.buyer_payment_status as  payable_status,
+	
 	CASE 
-		WHEN loi.lbps_id=2 THEN 'paid'
 		WHEN loi.ldstat_id=2 THEN 'awaiting delivery'
 		WHEN loi.lbps_id in (1,3,4) THEN 'awaiting buyer payment'
-		WHEN loi.lbps_id=2 AND loi.ldstat_id THEN 'awaiting MM or LO transfer'
-	END AS order_status,
+		WHEN loi.lbps_id=2 AND loi.ldstat_id=4 THEN 'delivered, payment pending'
+	END AS receivable_status,
 	
 	concat_ws(' ',loi.product_name,lo.payment_ref,if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr),p.amount) as searchable_fields
 
@@ -66,6 +66,7 @@ from payables p
 	inner join domains d on (d.domain_id=p.domain_id)
 	left join invoices i on (i.invoice_id=p.invoice_id)
 	left join lo_order_line_item loi on (loi.lo_liid=p.parent_obj_id)
+	left join lo_buyer_payment_statuses lbps on (loi.lbps_id=lbps.lbps_id)
 	left join lo_order_deliveries lod on (loi.lodeliv_id=lod.lodeliv_id)
 	left join lo_order lo on (lo.lo_oid=loi.lo_oid)
 	left join lo_fulfillment_order lfo on (lfo.lo_foid=loi.lo_foid)
