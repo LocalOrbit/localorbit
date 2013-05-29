@@ -35,7 +35,7 @@ $payables->columns[6]->autoformat='price';
 			<?php if(lo3::is_admin() || lo3::is_market()){?>
 			<input type="button" onclick="core.payments.sendInvoices();" class="btn btn-info" value="Send Invoices" />
 			<?}?>
-			<input type="button" onclick="core.payments.makePayments();" class="btn btn-info" value="Make Payment" />
+			<input type="button" onclick="core.payments.makePayments('payables');" class="btn btn-info" value="Make Payment" />
 		</div>
 	</div>
 	<div id="payables_actions" style="display: none;">

@@ -56,5 +56,17 @@ class core_model_v_payables extends core_model_base_v_payables
 		$payables = new core_collection($sql);
 		return $payables->add_formatter('format_payable_info')->to_array();
 	}
+	
+	function get_payables_for_payment($ids)
+	{
+		$sql = "
+			select p.*,concat_ws('-',p.from_org_id,p.to_org_id) as group_key
+			from v_payables p
+			where p.payable_id in (".implode(',',$ids).")
+			order by concat_ws('-',p.from_org_name,p.to_org_name)
+		";
+		$payables = new core_collection($sql);
+		return $payables->add_formatter('format_payable_info')->to_hash('group_key');
+	}
 }
 ?>

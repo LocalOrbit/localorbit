@@ -193,13 +193,26 @@ core.payments.sendInvoices=function(){
 	}
 }
 
-core.payments.makePayments=function(){
-	var payables = core.ui.getCheckallList(document.paymentsForm,'payables');
+core.payments.makePayments=function(tab){
+	var payables = core.ui.getCheckallList(document.paymentsForm,tab);
 	if(payables.length == 0){
-		alert('please check at least one payable.');
+		alert('please check at least one '+tab+'.');
 	}else{
-		core.doRequest('/payments/make_payments',{'checked_payables':payables.join(',')});
+		core.doRequest('/payments/make_payments',{'tab':tab,'checked_payables':payables.join(',')});
 	}
+}
+
+core.payments.savePayment=function(tab,group){
+	var data = {};
+	data['tab'] = tab;
+	data['payment_method'] = $(document.paymentsForm[tab+'__group_method__'+group]).val();
+	data['ref_nbr'] = $(document.paymentsForm[tab+'__group_ref_nbr__'+group]).val();
+	data['opm_id'] = $(document.paymentsForm[tab+'__group_opm_id__'+group]).val();
+	data['amount'] = $(document.paymentsForm[tab+'__group_total__'+group]).val();
+	data['group'] = group;
+	core.alertHash(data);
+	
+	//core.doRequest('/payments/save_new_payment',data);
 }
 
 core.payments.markItemsDelivered=function(){

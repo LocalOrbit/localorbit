@@ -53,7 +53,7 @@ $receivables->columns[($autoformat_offset+2)]->autoformat='price';
 		<div class="pull-right">
 			<input type="button" onclick="core.payments.markItemsDelivered();" class="btn" value="Mark Items as Delivered" />
 			<?if(lo3::is_admin() || lo3::is_market()){?>
-				<input type="button" onclick="core.payments.recordSellerPayments();" class="btn btn-info" value="Record Seller Payments" />
+				<input type="button" onclick="core.payments.makePayments('receivables');" class="btn btn-info" value="Record Seller Payments" />
 				<input type="button" onclick="core.payments.sendInvoices();" class="btn btn-primary" value="Send Invoices" />
 			<?}?>
 		</div>
