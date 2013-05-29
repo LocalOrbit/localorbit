@@ -2,10 +2,12 @@
 global $core;
 
 # these are being passed in from the payments portal
-$invoice   = $core->view[0];
-$payables  = $core->view[1];
-$domain_id = $core->view[2];
-$due_date  = $core->view[3];
+$from_org_id = $core->view[0];
+$amount    = $core->view[1];
+$invoice   = $core->view[2];
+$payables  = $core->view[3];
+$domain_id = $core->view[4];
+$due_date  = $core->view[5];
 
 $values = array();
 
@@ -19,16 +21,16 @@ else
 	$emails = core_db::col('
 		select group_concat(email) as emails
 		from customer_entity
-		where org_id='.$invoice['from_org_id'].'
+		where org_id='.$from_org_id.'
 		and is_active=1 and is_deleted=0
 		group by org_id;','emails');
 }
 
 $domain = core::model('domains')->load($domain_id);
 $values['hubname'] = $domain['name'];
-$values['invoicenbr'] = $invoice['order_nbr'];
+$values['invoicenbr'] = 'LINV-'.str_pad($invoice,6,'0',STR_PAD_LEFT);
 $values['duedate'] = $due_date;
-$values['amount'] = core_format::price($invoice['amount']);
+$values['amount'] = core_format::price($amount);
 $values['pay_link'] = 'https://'.$domain['hostname'].'/app.php#!payments-home--link_payables-yes';
 
 
@@ -40,10 +42,9 @@ $values['payables'] = '
 	<col width="20%" />
 	<col width="20%" />
 	<tr>
-		<th class="dt">Reference</th>
+		<th class="dt">Ref #</th>
 		<th class="dt">Description</th>
-		<th class="dt">Invoice Date</th>
-		<th class="dt">Due Date</th>
+		<th class="dt">Order Date</th>
 		<th class="dt">Amount</th>
 	</tr>
 ';
@@ -55,11 +56,10 @@ foreach($payables as $payable)
 	#$values['payables'] .= print_r($payable->__data,true);
 	$values['payables'] .= '
 		<tr class="dt'.$counter.'">
-			<td class="dt">'.$payable['description'].'</td>
-			<td class="dt">'.$payable['to_org_name'].'</td>
-			<td class="dt">'.core_format::date(time(),'long-wrapped').'</td>
-			<td class="dt">'.core_format::date($invoice['due_date_epoch'],'short').'</td>
-			<td class="dt">'.core_format::price($payable['amount_due']).'</td>
+			<td class="dt">'.$payable['lo3_order_nbr'].'</td>
+			<td class="dt">'.$payable['product_name'].' ('.$payable['qty_ordered'].')</td>
+			<td class="dt">'.core_format::date($payable['order_date'],'short').'</td>
+			<td class="dt">'.core_format::price($payable['amount']).'</td>
 		</tr>';
 	$counter = (!$counter);
 }
@@ -69,6 +69,9 @@ $body  = $this->email_start();
 $body .= $this->handle_source($core->i18n['email:payments:new_invoice_body'],$values);
 $body .= $this->footer();
 $body .= $this->email_end();
+
+#core::log($body);
+#core::log($emails);
 
 $this->send_email(
 	$core->i18n['email:payments:new_invoice_subject'],$emails,

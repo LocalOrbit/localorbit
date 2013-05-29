@@ -320,12 +320,10 @@ class core_controller_payments extends core_controller
 			$from      = $core->data['invoicecreate_'.$group_key.'__from'];
 			
 			$invoice = core::model('invoices');
-			$invoice['due_date_epoch'] = time() + ($terms * 86400);
-			$invoice['due_date'] = date('Y-m-d H:i:s',$invoice['due_date_epoch']);
+			$invoice['due_date'] = time() + ($terms * 86400);
+			$invoice['creation_date'] = time();
 			
 			$invoice['amount']   = core_format::parse_price($amount);
-			$invoice['to_org_id'] = $to;
-			$invoice['from_org_id'] = $from;;
 			$invoice->save();
 			
 			
@@ -399,6 +397,91 @@ class core_controller_payments extends core_controller
 		
 		return $totals_queries;
 		
+	}
+	
+	
+	function do_send_invoices()
+	{
+		global $core;
+		core::log('send called');
+		core::log(print_r($core->data,true));
+		$ids = explode(',',$core->data['payables_to_send']);
+		$receivables = core::model('v_payables')->get_invoice_payables($ids,0);
+		foreach($receivables as $receivable)
+		{
+			core::log('resending invoices '.print_r($receivable,true));
+			$payables = array();
+			$info = explode('$$',$receivable['payable_info']);
+			foreach($info as $line)
+			{
+			#	$line = format_payable_info($line);
+				$payables[] = array_combine(array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date','amount'),explode('|',$line));
+			}
+			core::log('payables '.print_r($payables,true));
+			
+			
+			$invoice = core::model('invoices');
+			$invoice['due_date'] = time() + (intval($core->data['invgroup_'.$receivable['group_key'].'__terms']) * 86400);
+			$invoice['creation_date'] = time();
+			$invoice->save();
+			
+			$receivable['invoice_id'] = $invoice['invoice_id'];
+			core_db::query('
+				update payables set invoice_id='.$invoice['invoice_id'].' where payable_id in ('.$receivable['payable_ids'].');
+			');
+			
+			core::process_command('emails/payments_portal__invoice',false,
+				$receivable['from_org_id'],
+				$receivable['amount'],
+				$receivable['invoice_id'],
+				$payables,
+				$domain_id,
+				core_format::date(time() + ($terms * 86400),'short')
+			);	
+		}
+		core_datatable::js_reload('receivables');
+		core_ui::notification('Invoices Sent.');
+		core::deinit();
+	}
+	
+	function do_resend_invoices()
+	{
+		global $core;
+		core::log('resend called');
+		core::log(print_r($core->data,true));
+		$ids = explode(',',$core->data['payables_to_send']);
+		$receivables = core::model('v_payables')->get_invoice_payables($ids,1);
+		foreach($receivables as $receivable)
+		{
+			core::log('resending invoices '.print_r($receivable,true));
+			$payables = array();
+			$info = explode('$$',$receivable['payable_info']);
+			foreach($info as $line)
+			{
+			#	$line = format_payable_info($line);
+				$payables[] = array_combine(array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date','amount'),explode('|',$line));
+			}
+			core::log('payables '.print_r($payables,true));
+			
+			
+			$invoice = core::model('invoices')->load($receivable['invoice_id']);
+			$invoice['creation_date'] = time();
+			$invoice->save();
+			
+			core::process_command('emails/payments_portal__invoice',false,
+				$receivable['from_org_id'],
+				$receivable['amount'],
+				$receivable['invoice_id'],
+				$payables,
+				$domain_id,
+				core_format::date(time() + ($terms * 86400),'short')
+			);	
+		}
+		
+		core_datatable::js_reload('receivables');
+		core_ui::notification('Invoices Re-sent.');
+		core::deinit();
+
 	}
 }
 
@@ -1195,15 +1278,35 @@ function format_payable_info($data)
 	$data['description_html'] = $html;
 	
 	
+	# format the direction info
+	$data['direction_html'] = '';
+	$data['direction'] = '';
 	
+	$data['direction_html'] .= 'From: <a href="#!organizations-edit--org_id-'.$data['from_org_id'].'">';
+	$data['direction'] .= 'From: ';
 	
+	$data['direction_html'] .= $data['from_org_name'];
+	$data['direction'] .= $data['from_org_name'];
 	
+	$data['direction_html'] .= '</a><br />';
+	$data['direction'] .= ' / ';
+	
+	$data['direction_html'] .= 'To: <a href="#!organizations-edit--org_id-'.$data['to_org_id'].'">';
+	$data['direction'] .= 'To: ';
+	
+	$data['direction_html'] .= $data['to_org_name'];
+	$data['direction'] .= $data['to_org_name'];
+	
+	$data['direction_html'] .= '</a>';
+
+
 	# format payment due
 	$time = intval($data['due_date']);
 	$html = '';
 	if($time == 9999999999999)
 	{
 		$html = 'Not Yet Invoiced';
+		$last_sent_html = '';
 	}
 	else
 	{
@@ -1228,9 +1331,12 @@ function format_payable_info($data)
 				$html .= core_format::date($time,'short');
 				$html .= '<br />'.$data['days_left'].' day(s) left';
 			}
+			
+			$last_sent_html .= '<br />Last Invoiced: '.core_format::date($data['last_invoiced'],'long');
 		}
 	}
 	$data['payment_due'] = $html;
+	$data['last_sent'] = $last_sent_html;
 	
 	
 	

@@ -18,7 +18,8 @@ select p.*,
 		loi.qty_ordered,
 		loi.seller_name,
 		loi.seller_org_id,
-		UNIX_TIMESTAMP(lo.order_date)
+		UNIX_TIMESTAMP(lo.order_date),
+		loi.row_adjusted_total
 	) as payable_info,
 
 	(
@@ -46,6 +47,17 @@ select p.*,
 		),2) > 0
 	) as status,
 	if(ifnull(i.invoice_id,0)=0,0,1) as invoiced,
+	i.creation_date as last_invoiced,
+	lods.delivery_status,
+
+
+	CASE 
+		WHEN loi.lbps_id=2 THEN 'paid'
+		WHEN loi.ldstat_id=2 THEN 'awaiting delivery'
+		WHEN loi.lbps_id in (1,3,4) THEN 'awaiting buyer payment'
+		WHEN loi.lbps_id=2 AND loi.ldstat_id THEN 'awaiting MM or LO transfer'
+	END AS order_status,
+	
 	concat_ws(' ',loi.product_name,lo.payment_ref,if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr),p.amount) as searchable_fields
 
 from payables p
@@ -57,6 +69,8 @@ from payables p
 	left join lo_order_deliveries lod on (loi.lodeliv_id=lod.lodeliv_id)
 	left join lo_order lo on (lo.lo_oid=loi.lo_oid)
 	left join lo_fulfillment_order lfo on (lfo.lo_foid=loi.lo_foid)
+	left join lo_delivery_statuses lods on (loi.ldstat_id=lods.ldstat_id)
+	
 ;
 
 

@@ -8,6 +8,10 @@ if(!lo3::is_admin())
 $payables = new core_datatable('payables','payments/review_orders',$v_payables);
 payments__add_standard_filters($payables,'payables');
 $payables->add(new core_datacolumn('creation_date','Ref #',false,'14%',			'{ref_nbr_html}','{ref_nbr_html}','{ref_nbr_html}'));
+if(lo3::is_admin() || lo3::is_market())
+{
+	$payables->add(new core_datacolumn('concat_ws(\' \',from_org_name,to_org_name)','From/To',true,'13%',			'{direction_html}','{direction}','{direction}'));
+}
 $payables->add(new core_datacolumn('po_number','PO #',false,'10%',			'{po_number}','{po_number}','{po_number}'));
 $payables->add(new core_datacolumn('creation_date','Description',false,'23%','{description_html}','{description_html}','{description_html}'));
 $payables->add(new core_datacolumn('creation_date','Order Date',true,'10%','{creation_date}','{creation_date}','{creation_date}'));
