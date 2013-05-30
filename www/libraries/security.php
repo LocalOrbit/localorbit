@@ -24,21 +24,22 @@ class lo3
 		}
 	}
 
-	public static function is_account_authenticated()
+	public static function confirm_account_authenticated()
 	{
 		global $core;
 		
 		if (lo3::is_logged_in()) {
 			if($core->session['is_active'] == 0) {
+				//core::process_command('catalog/not_emailconfirm',false);
 				core::process_command('catalog/not_emailconfirm',false);
-				$this->not_emailconfirm();
-				return false;
+				core::js("location.href='/app.php#!catalog-not_emailconfirm';");
+				core::deinit();
 			} else if ($core->session['org_is_active'] == 0) {
-				core::process_command('catalog/not_activated',false);
-				return false;
+				//core::process_command('catalog/not_activated',false);
+				core::js("location.href='/app.php#!catalog-not_activated';");
+				core::deinit();
 			}
 		}
-		return true;
 	}
 	
 	public static function user_can_shop()
@@ -46,14 +47,16 @@ class lo3
 		global $core;	
 		// store closed
 		if($core->config['domain']['is_closed'] == 1) {
-			core::process_command('catalog/store_closed',false);
-			return false;
+			//core::process_command('catalog/store_closed',false);
+			core::js("location.href='/app.php#!catalog-store_closed';");
+			core::deinit();
 		}
 		
 		if($core->config['domain']['feature_allow_anonymous_shopping'] != 1) {
 			lo3::require_login();
 		}
-		return lo3::is_account_authenticated();
+		
+		lo3::confirm_account_authenticated();
 	}
 	
 	

@@ -3,11 +3,12 @@
 # basics
 global $core;
 
+lo3::user_can_shop();
 
 
+//http://devspringfield.localorb.it/app.php#!catalog-view_product--prod_id-2351
 
 #$start = microtime();
-if (lo3::user_can_shop()) {
  	# if the buyer is reaching this page after logging in, show the news
 	if($core->data['show_news'] == 'yes')
 	{
@@ -275,7 +276,7 @@ if (lo3::user_can_shop()) {
 	}
 
 	//$this->weekly_special();
-}
+
 
 
 #print_r($core->data);

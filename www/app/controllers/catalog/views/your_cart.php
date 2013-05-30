@@ -1,6 +1,7 @@
 <?php
 # basics
 global $core;
+lo3::user_can_shop();
 
 #$start = microtime();
 $index = strrpos($core->data['_requestor_url'], '#');
@@ -9,7 +10,7 @@ if ($hash[0] === '!') {
 	$hash = 'cat';
 }
 
-if (lo3::user_can_shop()) {
+
 	#core::ensure_navstate(array('left'=>'left_shop'));
 	core::head('Buy Local Food','Buy local food on Local Orbit');
 	lo3::require_permission();
@@ -313,7 +314,6 @@ if (lo3::user_can_shop()) {
 	}
 
 	//$this->weekly_special();
-}
 ?>
 <div class="row">
 	<div class="offset7 span2">
