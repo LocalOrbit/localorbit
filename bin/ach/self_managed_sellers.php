@@ -38,7 +38,7 @@ $sql = "
 	and p.from_org_id=1
 	and loi.ldstat_id=4
 	and d.seller_payer = 'hub'
-	group by p.to_org_id
+	group by concat_ws('-',p.to_org_id,p.payable_type)
 ";
 $payments = new core_collection($sql);
 $payments = $payments->to_array();
