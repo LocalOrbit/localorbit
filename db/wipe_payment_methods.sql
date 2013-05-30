@@ -15,5 +15,16 @@ SELECT otd.org_id,'Test Market Account' as label,'BLOCKWORK,LLC' as name_on_acco
 INSERT INTO organization_payment_methods (org_id,label,name_on_account,nbr1,nbr1_last_4,nbr2,nbr2_last_4)
 SELECT otd.org_id,'LO Account' as label,'BLOCKWORK,LLC' as name_on_account,'1YN98ZVB0yGlnv08Gi0_kZoKp8ByELGx0Mw8z1aDciU,' as nbr1,'7019' as nbr1_last_4,'bWoFBMNvFDzJ8ITpNVl2qSAc1YDo0AsamnIIYxj220k,' as nbr2,'0139' as nbr2_last_4 from organizations_to_domains otd inner join organizations o on otd.org_id=o.org_id where orgtype_id=1;
 
-
+update organizations set opm_id=(select opm_id from organization_payment_methods where organization_payment_methods.org_id=organizations.org_id limit 1);
 update product_prices set price=round(rand()*10)/100;
+
+update domains set opm_id = (
+select opm_id from organization_payment_methods opm
+where opm.org_id in (
+select org_id
+from organizations_to_domains otd
+where otd.domain_id=domains.domain_id
+and otd.orgtype_id=2
+)
+limit 1
+);

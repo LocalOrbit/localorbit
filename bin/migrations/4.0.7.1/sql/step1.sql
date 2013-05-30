@@ -14,7 +14,7 @@ create table new_payables (
 	domain_id int(10),
 	from_org_id int(10),
 	to_org_id int(10),
-	payable_type enum('buyer order','seller order','hub fees','lo fees','service fee'),
+	payable_type enum('buyer order','seller order','hub fees','lo fees','service fee','delivery fee'),
 	parent_obj_id int(10),
 	amount decimal(10,2),
 	invoice_id int(10),
@@ -39,8 +39,8 @@ create table new_payments (
 	payment_id int(10) auto_increment primary key,
 	amount numeric(10,2),
 	payment_method enum('paypal','purchaseorder','ACH','check','cash'),
-	ref_nbr varchar(255),
 	admin_note text,
+	ref_nbr varchar(255),
 	creation_date int(10)
 );
 CREATE INDEX x_new_payments_idx1 ON new_payments (payment_method);

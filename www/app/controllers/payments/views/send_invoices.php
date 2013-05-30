@@ -6,17 +6,28 @@ $receivables = core::model('v_payables')->get_invoice_payables($ids);
 
 $has_sendables = false;
 $has_resendables = false;
+$has_paid = false;
 
 foreach($receivables as $receivable)
 {
-	if($receivable['invoiced'] == 0)
+	if(floatval($receivable['amount']) == 0)
+	{
+		$has_paid = true;
+	}
+	if($receivable['invoiced'] == 0 && floatval($receivable['amount']) > 0)
 	{
 		$has_sendables = true;
 	}
-	else
+	else if($receivable['invoiced'] == 1 && floatval($receivable['amount']) > 0)
 	{
 		$has_resendables = true;
 	}
+}
+
+if(!$has_sendables && !$has_resendables)
+{
+	core_ui::notification('All of the payables you checked have been paid.');
+	core::deinit();
 }
 
 $header = '
@@ -35,7 +46,7 @@ if($has_sendables)
 	echo('<div id="sendable_payables"><h2>New Invoices</h2><table class="dt" width="100%">'.$header);
 	foreach($receivables as $receivable)
 	{
-		if($receivable['invoiced'] == 0)
+		if($receivable['invoiced'] == 0 && floatval($receivable['amount']) > 0)
 		{
 		?>
 		<tr>
@@ -86,7 +97,7 @@ if($has_resendables)
 	echo('<div id="resendable_payables"><h2>Re-send Invoices</h2><table class="dt" width="100%">'.$header);
 	foreach($receivables as $receivable)
 	{
-		if($receivable['invoiced'] == 1)
+		if($receivable['invoiced'] == 1 && floatval($receivable['amount']) > 0)
 		{
 		?>
 		<tr>
@@ -130,6 +141,42 @@ else
 {
 	echo('<input type="hidden" name="has_resendables" value="0" />');
 }
+
+if($has_resendables)
+{
+	
+	echo('<div id="paid_payables"><h2>Invoices already paid</h2><table class="dt" width="100%">'.$header);
+	foreach($receivables as $receivable)
+	{
+		if(floatval($receivable['amount']) == 0)
+		{
+		?>
+		<tr>
+			<td>
+				From: <?=$receivable['from_org_name']?><br />
+				To: <?=$receivable['to_org_name']?>
+			</td>
+			<td>
+				<?=$receivable['ref_nbr_html']?>
+			</td>
+			<td>
+				<?=core_format::price($receivable['amount'])?>
+			</td>
+			<td colspan="3">&nbsp;</td>
+		</tr>
+		<?php
+		}
+	}
+	?>
+		</table>
+	</div>
+	<?php
+}
+else
+{
+	echo('<input type="hidden" name="has_resendables" value="0" />');
+}
+
 
 echo('<input type="hidden" name="payables_to_send" value="'.implode(',',$ids).'" />');
 

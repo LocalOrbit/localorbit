@@ -32,13 +32,13 @@ class core_model_v_payables extends core_model_base_v_payables
 	{
 		$sql = '
 			select p.from_org_id,p.from_org_name,p.to_org_id,p.to_org_name,p.domain_id,
-			sum(p.amount) as amount,p.invoiced,p.invoice_id,
+			sum(p.amount) - sum(p.amount_paid) as amount,p.invoiced,p.invoice_id,
 			group_concat(p.payable_info SEPARATOR \'$$\') as payable_info,
 			group_concat(p.parent_obj_id SEPARATOR \',\') as lo_liids,
 			group_concat(p.delivery_status SEPARATOR \',\') as delivery_status,
 			group_concat(p.payable_id SEPARATOR \',\') as payable_ids,
 			o.po_due_within_days,
-			concat_ws(\'-\',p.domain_id,p.invoice_id,p.invoiced,from_org_id,to_org_id) as group_key
+			concat_ws(\'-\',p.domain_id,REPLACE(p.payable_type,\' \',\'_\'),p.invoice_id,p.invoiced,from_org_id,to_org_id) as group_key
 			from v_payables p
 			inner join organizations o on (p.from_org_id=o.org_id)
 			where p.payable_id in ('.implode(',',$ids).')
@@ -50,10 +50,13 @@ class core_model_v_payables extends core_model_base_v_payables
 		}
 		
 		$sql .= '
-			group by concat_ws(\'-\',p.domain_id,p.invoice_id,p.invoiced,from_org_id,to_org_id)
+			group by concat_ws(\'-\',p.domain_id,REPLACE(p.payable_type,\' \',\'_\'),p.invoice_id,p.invoiced,from_org_id,to_org_id)
 			order by p.invoiced,p.from_org_name,p.payable_info
 		';
 		$payables = new core_collection($sql);
+		#echo '<pre>';
+		#print_r($payables->to_array());
+		#echo('</pre>');
 		return $payables->add_formatter('format_payable_info')->to_array();
 	}
 	

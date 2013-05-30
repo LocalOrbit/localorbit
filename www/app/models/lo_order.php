@@ -173,7 +173,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 			from product_prices
 			WHERE product_prices.prod_id=lo_order_line_item.prod_id
 			and (product_prices.min_qty <= lo_order_line_item.qty_ordered or product_prices.min_qty is null)
-			and (product_prices.org_id = 0 or product_prices.org_id='.intval($core->session['org_id']).')
+			and (product_prices.org_id = 0 or product_prices.org_id='.intval($this['org_id']).')
 			and (product_prices.domain_id=0 or product_prices.domain_id='.$core->config['domain']['domain_id'].')
 		) as has_valid_prices');
 

@@ -404,7 +404,7 @@ class core_controller_payments extends core_controller
 	{
 		global $core;
 		#core::log('send called');
-		#core::log(print_r($core->data,true));
+		core::log(print_r($core->data,true));
 		$ids = explode(',',$core->data['payables_to_send']);
 		$receivables = core::model('v_payables')->get_invoice_payables($ids,0);
 		foreach($receivables as $receivable)
@@ -421,7 +421,7 @@ class core_controller_payments extends core_controller
 			
 			
 			$invoice = core::model('invoices');
-			$invoice['due_date'] = time() + (intval($core->data['invgroup_'.$receivable['group_key'].'__terms']) * 86400);
+			$invoice['due_date'] = (time() + (intval($core->data['invgroup_'.$receivable['group_key'].'__terms']) * 86400));
 			$invoice['creation_date'] = time();
 			$invoice->save();
 			
@@ -436,7 +436,7 @@ class core_controller_payments extends core_controller
 				$receivable['invoice_id'],
 				$payables,
 				$domain_id,
-				core_format::date(time() + ($terms * 86400),'short')
+				core_format::date($invoice['due_date'],'short')
 			);	
 		}
 		core_datatable::js_reload('receivables');
