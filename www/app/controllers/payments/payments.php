@@ -603,6 +603,18 @@ class core_controller_payments extends core_controller
 					$xpp['payment_id'] = $payment['payment_id'];
 					$xpp['amount'] = floatval($payable['amount']) - floatval($payable['amount_paid']);
 					$xpp->save();
+					
+					$item = core::model('lo_order_line_item')->load($payable['parent_obj_id']);
+					$item->change_status('lbps_id',2);
+					$orders_to_check[] = $item['lo_oid'];
+					
+				}
+				$orders_to_check = core::model('lo_order')
+					->collection()
+					->filter('lo_oid','in',$orders_to_check);
+				foreach($orders_to_check as $order)
+				{
+					$order->update_status();
 				}
 					
 				break;
