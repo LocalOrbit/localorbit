@@ -27,12 +27,14 @@ $sql = "
 	from v_payables p
 	inner join lo_order_line_item loi on (p.parent_obj_id=loi.lo_liid)
 	inner join lo_order lo on (loi.lo_oid = lo.lo_oid)
+	inner join domains d on (d.domain_id=lo.domain_id)
 	inner join organizations o on (o.org_id=loi.seller_org_id)
 	left join organization_payment_methods opm on (o.opm_id=opm.opm_id )
 	where (p.amount - p.amount_paid) > 0
 	and p.payable_type = 'seller order'
 	and p.from_org_id=1
 	and loi.ldstat_id=4
+	and d.seller_payer = 'lo'
 	group by p.to_org_id
 ";
 $payments = new core_collection($sql);
