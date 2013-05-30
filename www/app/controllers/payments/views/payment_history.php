@@ -9,6 +9,14 @@ $v_payments->add_formatter('format_payable_info');
 $payments = new core_datatable('payments','payments/payment_history',$v_payments);
 payments__add_standard_filters($payments,'transactions');
 $payments->add(new core_datacolumn('payment_date','Date Paid',true,'15%',			'{payment_date}','{payment_date}','{payment_date}'));
+
+$autoformat_offset = 5;
+if(lo3::is_admin() || lo3::is_market())
+{
+	$payments->add(new core_datacolumn('concat_ws(\' \',from_org_name,to_org_name)','From/To',true,'13%',			'{direction_html}','{direction}','{direction}'));
+	$autoformat_offset++;
+}
+
 $payments->add(new core_datacolumn('order_date','Ref #',false,'13%',			'{ref_nbr_html}','{ref_nbr_html}','{ref_nbr_html}'));
 $payments->add(new core_datacolumn('order_date','Description',false,'15%','{description_html}','{description_html}','{description_html}'));
 $payments->add(new core_datacolumn('order_date','Order Date',true,'10%','{order_date}','{order_date}','{order_date}'));
@@ -17,7 +25,7 @@ $payments->add(new core_datacolumn('amount','Amount',true,'10%','{amount}','{amo
 
 #$payments->add(new core_datacolumn('payable_info','Payable Info',true,'50%','{payable_info}','{payable_info}','{payable_info}'));
 $payments->columns[0]->autoformat='date-short';
-$payments->columns[5]->autoformat='price';
+$payments->columns[($autoformat_offset)]->autoformat='price';
 ?>
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
 	<?php
