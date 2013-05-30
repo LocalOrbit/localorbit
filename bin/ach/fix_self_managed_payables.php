@@ -22,7 +22,7 @@ $sql = '
 	and   p.from_org_id=1
 
 	and lfosc.creation_date > \'2013-05-05 00:00:00\'
-	and lfosc.creation_date < \'2013-05-15 00:00:00\'
+	and lfosc.creation_date < \'2013-05-23 00:00:00\'
 	order by lfo.lo_foid
 ';
 
