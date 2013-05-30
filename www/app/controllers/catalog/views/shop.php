@@ -3,42 +3,12 @@
 # basics
 global $core;
 
+
+
+
 #$start = microtime();
-
-if($core->config['domain']['is_closed'] == 1)
-{
-	$this->store_closed();
-}
-# logic before julie's change 5/7/12
-#else if($core->session['is_active'] != 1 || $core->session['org_is_active'] != 1)
-#{
-#	$this->not_activated();
-#}
-else if(
-	(
-		$core->session['is_active'] != 1 ||
-		$core->session['org_is_active'] != 1
-	)
-	&&
-	$core->config['domain']['feature_allow_anonymous_shopping'] != 1
-)
-{
-	#core::log('user active state: '.$core->session['is_active']);
-	#core::log('org  active state: '.$core->session['org_is_active']);
-
-	if($core->session['is_active'] != 1)
-	{
-		$this->not_emailconfirm();
-	}
-	else
-	{
-		$this->not_activated();
-	}
-}
-else
-{
-	lo3::require_can_shop();
-	# if the buyer is reaching this page after logging in, show the news
+if (lo3::user_can_shop()) {
+ 	# if the buyer is reaching this page after logging in, show the news
 	if($core->data['show_news'] == 'yes')
 	{
 		core::process_command('dashboard/release_news');
@@ -306,6 +276,8 @@ else
 
 	//$this->weekly_special();
 }
+
+
 #print_r($core->data);
 $js = "core.catalog.initCatalog();";
 if(is_numeric(trim($core->data['cat1'])))

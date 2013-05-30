@@ -2,6 +2,16 @@
 
 class lo3
 {
+	public static function is_logged_in()
+	{
+		global $core;
+		if (intval($core->session['user_id']) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public static function require_login()
 	{
 		global $core;
@@ -13,14 +23,37 @@ class lo3
 			core::deinit();
 		}
 	}
+
+	public static function is_account_authenticated()
+	{
+		global $core;
+		
+		if (lo3::is_logged_in()) {
+			if($core->session['is_active'] == 0) {
+				core::process_command('catalog/not_emailconfirm',false);
+				$this->not_emailconfirm();
+				return false;
+			} else if ($core->session['org_is_active'] == 0) {
+				core::process_command('catalog/not_activated',false);
+				return false;
+			}
+		}
+		return true;
+	}
 	
-	public static function require_can_shop()
+	public static function user_can_shop()
 	{
 		global $core;	
-		if($core->config['domain']['feature_allow_anonymous_shopping'] != 1)
-		{
+		// store closed
+		if($core->config['domain']['is_closed'] == 1) {
+			core::process_command('catalog/store_closed',false);
+			return false;
+		}
+		
+		if($core->config['domain']['feature_allow_anonymous_shopping'] != 1) {
 			lo3::require_login();
 		}
+		return lo3::is_account_authenticated();
 	}
 	
 	
