@@ -51,10 +51,10 @@ $receivables->columns[($autoformat_offset+2)]->autoformat='price';
 		$receivables->render();
 		?>
 		<div class="pull-right">
-			<input type="button" onclick="core.payments.markItemsDelivered();" class="btn" value="Mark Items as Delivered" />
+			<input type="button" onclick="core.payments.markItemsDelivered();" class="btn" value="<?=$core->i18n('button:payments:mark_items_delivered')?>" />
 			<?if(lo3::is_admin() || lo3::is_market()){?>
-				<input type="button" onclick="core.payments.makePayments('receivables');" class="btn btn-info" value="Record Seller Payments" />
-				<input type="button" onclick="core.payments.sendInvoices();" class="btn btn-primary" value="Send Invoices" />
+				<input type="button" onclick="core.payments.makePayments('receivables');" class="btn btn-info" value="<?=$core->i18n('button:payments:enter_offline_payments')?>" />
+				<input type="button" onclick="core.payments.sendInvoices();" class="btn btn-primary" value="<?=$core->i18n('button:payments:send_invoices')?>" />
 			<?}?>
 		</div>
 	</div>

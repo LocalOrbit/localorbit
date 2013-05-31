@@ -32,10 +32,11 @@ $payables->columns[6]->autoformat='price';
 		$payables->render();
 		?>
 		<div class="pull-right" id="create_payment_button">
-			<?php if(lo3::is_admin() || lo3::is_market()){?>
-			<input type="button" onclick="core.payments.sendInvoices();" class="btn btn-info" value="Send Invoices" />
-			<?}?>
-			<input type="button" onclick="core.payments.makePayments('payables');" class="btn btn-info" value="Make Payment" />
+			<!-- this is right for buyers -->
+			<!-- this is right for sellers -->
+			<!-- this is right for market managers-->
+			<!-- uncertain for admins -->
+			<input type="button" onclick="core.payments.makePayments('payables');" class="btn btn-info" value="<?=$core->i18n('button:payments:'.((lo3::is_market() || lo3::is_admin())?'enter_offline_payments':'enter_online_payments'))?>" />
 		</div>
 	</div>
 	<div id="payables_actions" style="display: none;">
