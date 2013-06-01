@@ -1,4 +1,5 @@
 var core={
+	doBase64:true,
 	currentHash:'',
 	valRules:{},
 	navState:{},
@@ -371,7 +372,10 @@ core.doRequest=function(path,data){
 				if(key == 'center')
 					mainChanged=true;
 				//core.log('new content for '+key);
-				var tmp = core.base64_decode(jsondata.replace[key]);
+				if(core.doBase64 == true)
+					var tmp = core.base64_decode(jsondata.replace[key]);
+				else
+					var tmp = jsondata.replace[key];
 				//var tmp = Base64.decode(jsondata.replace[key]);
 				$('#'+key).html(tmp);
 			}
@@ -379,7 +383,10 @@ core.doRequest=function(path,data){
 		if(jsondata.append){
 			for(var key in jsondata.append){
 				//core.log(core.base64_decode(jsondata.append[key]));
-				var tmp = core.base64_decode(jsondata.append[key]);
+				if(core.doBase64 == true)
+					var tmp = core.base64_decode(jsondata.append[key]);
+				else
+					var tmp = jsondata.append[key];
 				//var tmp = Base64.decode(jsondata.append[key])
 				$('#'+key).append(tmp);
 			}
@@ -416,10 +423,13 @@ core.doRequest=function(path,data){
 				core.ui.scrollTop();
 		}
 		try{
-			eval(Base64.decode(jsondata.js));
+			if(core.doBase64 == true)
+				eval(core.base64_decode(jsondata.js));
+			else
+				eval(jsondata.js);
 		}
 		catch(e){
-			//alert('could not eval: '+core.base64_decode(jsondata.js));
+			//alert('could not eval: '
 
 			//~ var js = new String(core.base64_decode(jsondata.js)).split(/;/);
 			//~ for (i = 0; i < js.length; i++)

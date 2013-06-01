@@ -38,6 +38,7 @@ class core
 		$this->data =& $_REQUEST;
 		
 		$this->config = array(
+			'do_base_64'=>true,
 			'app_page'=>'index.php',
 			'page'=>'default',
 			'layout'=>'default',
@@ -399,15 +400,19 @@ class core
 	function encode_output()
 	{
 		global $core;
-		foreach($core->response['replace'] as $key=>$value)
-			$core->response['replace'][$key] = base64_encode($value);
-		foreach($core->response['append'] as $key=>$value)
-			$core->response['append'][$key] = base64_encode($value);
-			
-		$core->response['js'] = base64_encode($core->response['js']);
-		$core->response['title'] = base64_encode($core->response['title']);
-		$core->response['description'] = base64_encode($core->response['description']);
-		$core->response['keywords'] = base64_encode($core->response['keywords']);
+		
+		if($core->config['do_base_64'])
+		{
+			foreach($core->response['replace'] as $key=>$value)
+				$core->response['replace'][$key] = base64_encode($value);
+			foreach($core->response['append'] as $key=>$value)
+				$core->response['append'][$key] = base64_encode($value);
+				
+			$core->response['js'] = base64_encode($core->response['js']);
+			$core->response['title'] = base64_encode($core->response['title']);
+			$core->response['description'] = base64_encode($core->response['description']);
+			$core->response['keywords'] = base64_encode($core->response['keywords']);
+		}
 		
 		return json_encode($core->response);
 	}
