@@ -1303,6 +1303,11 @@ function payments__add_standard_filters($datatable,$tab='')
 		($datatable->name == 'purchase_orders' && lo3::is_admin())
 	)
 	{
+		if(!isset($core->data[$datatable->name.'__filter__payable_type']) && $datatable->name == 'payables')
+			$core->data[$datatable->name.'__filter__payable_type'] = 'seller order';
+		if(!isset($core->data[$datatable->name.'__filter__payable_type']) && $datatable->name == 'receivables')
+			$core->data[$datatable->name.'__filter__payable_type'] = 'buyer order';
+		
 		$datatable->add_filter(new core_datatable_filter('payable_type'));
 		
 		$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - 24).'px;">';
