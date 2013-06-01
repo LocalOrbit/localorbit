@@ -328,7 +328,7 @@ core.ui.dataTable.prototype.adjustRows=function(newsize,newLength){
 		for (var i = (this.displaySize); i > newLength; i--){
 			//alert('turning off '+'#dt_'+this.name+'_'+(i - 1));
 			$('#dt_'+this.name+'_'+(new String(i - 1))).hide();
-			$('#dt_'+this.name+'_'+(new String(i - 1))+'_0').html('&nbsp;');
+			$('#dt_'+this.name+'_'+(new String(i - 1))).children().html('&nbsp;');
 			this.displaySize--;
 		}
 	}

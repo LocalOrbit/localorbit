@@ -32,6 +32,7 @@ CREATE INDEX x_new_payables_idx7 ON new_payables (invoice_id);
 
 create table new_invoices (
 	invoice_id int(10) auto_increment primary key,
+	first_invoice_date int(10),
 	due_date int(10),
 	creation_date int(10)
 ) engine=InnoDB;

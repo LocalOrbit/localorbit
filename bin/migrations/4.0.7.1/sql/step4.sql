@@ -48,6 +48,7 @@ select p.*,
 	) as status,
 	if(ifnull(i.invoice_id,0)=0,0,1) as invoiced,
 	i.creation_date as last_invoiced,
+	ceiling((i.due_date - i.first_invoice_date ) / 86400) as po_terms,
 	lods.delivery_status,
 
 	lbps.buyer_payment_status as  payable_status,

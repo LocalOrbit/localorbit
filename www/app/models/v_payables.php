@@ -37,7 +37,8 @@ class core_model_v_payables extends core_model_base_v_payables
 			group_concat(p.parent_obj_id SEPARATOR \',\') as lo_liids,
 			group_concat(p.delivery_status SEPARATOR \',\') as delivery_status,
 			group_concat(p.payable_id SEPARATOR \',\') as payable_ids,
-			o.po_due_within_days,
+			o.po_due_within_days,p.payable_type,
+			p.po_terms,
 			concat_ws(\'-\',p.domain_id,REPLACE(p.payable_type,\' \',\'_\'),p.invoice_id,p.invoiced,from_org_id,to_org_id) as group_key
 			from v_payables p
 			inner join organizations o on (p.from_org_id=o.org_id)

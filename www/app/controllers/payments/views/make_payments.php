@@ -18,21 +18,20 @@ foreach($payables as $group_key=>$payable_list)
 ?>
 <div class="row <?=$core->data['tab']?>_row" id="<?=$core->data['tab']?>__area__<?=$group_key?>">
 	<div class="span8">
-		Need Pay: <?=$need_pay?>
 		<h2><i class="icon-cart">&nbsp;</i>From <?=$payable_list[0]['from_org_name']?> to  <?=$payable_list[0]['to_org_name']?></h2>
 		<table class="dt" style="width:100%;" width="100%">
 			<tr>
 				<th class="dt">Ref #</th>
 				<th class="dt">Description</th>
 				<th class="dt">Due Date</th>
-				<th class="dt">Amount</th>
+				<th class="dt">Amount Due</th>
 			</tr>
 			<?php foreach($payable_list as $payable){	$payable_ids[] = $payable['payable_id']; ?>
 			<tr>
 				<td class="dt"><?=$payable['ref_nbr_html']?></th>
 				<td class="dt"><?=$payable['description_html']?></td>
 				<td class="dt"><?=$payable['payment_due']?></td>
-				<td class="dt"><?=core_format::price($payable['amount'])?></td>
+				<td class="dt"><?=core_format::price((floatval($payable['amount']) - floatval($payable['amount_paid'])),false)?></td>
 			</tr>
 			<?}?>
 			<tr>
@@ -40,7 +39,7 @@ foreach($payables as $group_key=>$payable_list)
 					<b>Total Due:</b>
 				</td>
 				<td colspan="1">
-					<b><?=core_format::price($group_totals[$group_key])?></b>
+					<b><?=core_format::price($group_totals[$group_key],false)?></b>
 				</td>
 			</tr>
 		</table>
@@ -52,9 +51,9 @@ foreach($payables as $group_key=>$payable_list)
 		<input type="hidden" name="<?=$core->data['tab']?>__payable_ids__<?=$group_key?>" value="<?=implode(',',$payable_ids)?>" />
 		<? $this->payment_method_selector($core->data['tab'],$payable_list[0]['from_org_id'],$payable_list[0]['to_org_id'],$group_key);?>
 		<?}else{?>
-			<h2><i class="icon-coins">&nbsp;</i>These payables have already been paid.</h2>
+			<h2><i class="icon-coins">&nbsp;</i>These invoices have already been paid.</h2>
 			<br />
-			<input type="button" onclick="$('#<?=$core->data['tab']?>__area__<?=$group_key?>').hide();core.payments.checkAllPaymentsMade('<?=$tab?>');" class="btn btn-warning" value="Got it" />
+			<input type="button" onclick="$('#<?=$core->data['tab']?>__area__<?=$group_key?>').hide();core.payments.checkAllPaymentsMade('<?=$core->data['tab']?>');" class="btn btn-warning" value="Got it" />
 	
 		<?}?>
 	</div>

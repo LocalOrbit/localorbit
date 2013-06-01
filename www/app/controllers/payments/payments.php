@@ -421,6 +421,7 @@ class core_controller_payments extends core_controller
 			
 			
 			$invoice = core::model('invoices');
+			$invoice['first_invoice_date'] = time();
 			$invoice['due_date'] = (time() + (intval($core->data['invgroup_'.$receivable['group_key'].'__terms']) * 86400));
 			$invoice['creation_date'] = time();
 			$invoice->save();
@@ -474,7 +475,7 @@ class core_controller_payments extends core_controller
 				$receivable['invoice_id'],
 				$payables,
 				$domain_id,
-				core_format::date(time() + ($terms * 86400),'short')
+				core_format::date($invoice['due_date'],'short')
 			);	
 		}
 		

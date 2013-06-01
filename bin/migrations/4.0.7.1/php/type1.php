@@ -35,6 +35,7 @@ function migrate_type1()
 		if(is_numeric($item['invoice_id']) && !isset($invoices[$item['invoice_id']]))
 		{
 			$sql = make_insert('new_invoices',array(
+				'first_invoice_date'=>$item['invoice_date'],
 				'due_date'=>$item['due_date'],
 				'creation_date'=>$item['invoice_date']
 				)
