@@ -1006,8 +1006,8 @@ function get_inline_message($tab_name, $width=350) {
 			case 'payables':
 				return core_ui::inline_message($width,"Payables", "All money Local Orbit currently owes to Markets and sellers: Market fees, Sales Revenue (for self-managed markets that use LO's credit card or ACH services, and payments owed to sellers on markets where Local Orbit manages seller payments.)");
 				break;
-			case 'transactions':
-				return core_ui::inline_message($width,"Transaction Journal", "All completed payments to and from Local Orbit.  Download a csv file from the Transaction Journal to import into your accounting system.");
+			case 'payments':
+				return core_ui::inline_message($width,"Review Payment History", "All completed payments to and from Local Orbit.  Download a csv file from the Payment History to import into your accounting system.");
 				break;
 			case 'systemwide':
 				return core_ui::inline_message($width,"System Wide Payables/Receivables", "All outstanding payments and receivables for all live markets, including outstanding Local Orbit's outstanding payments and receivables Local Orbit admin market.");
@@ -1027,8 +1027,8 @@ function get_inline_message($tab_name, $width=350) {
 			case 'payables':
 				return core_ui::inline_message($width,"Payables", "All money your Market currently owes to sellers and Local Orbit.   You can make payments from this section. Please note: if you are signed up for the Automate Plan, Local Orbit will pay your sellers on all credit card and e-check orders.  You must pay your sellers on Purchase Orders. (If you are on a Managed Services Plan, you won't have the option to make payments.)");
 				break;
-			case 'transactions':
-				return core_ui::inline_message($width,"Transaction Journal", "All completed payments to and from your market.  You can download a csv file from the Transaction Journal to import into your accounting system.");
+			case 'payments':
+				return core_ui::inline_message($width,"Review Payment History", "All completed payments to and from your market.  You can download a csv file from the Payment History to import into your accounting system.");
 				break;
 		}
 	} else if(lo3::is_seller()) {	
@@ -1045,6 +1045,9 @@ function get_inline_message($tab_name, $width=350) {
 			case 'systemwide':
 				return core_ui::inline_message($width,"System Wide Payables/Receivables", "All completed payments to and from your organization.  You can download a csv file from the Transaction Journal to import into your accounting system.");
 				break;
+			case 'payments':
+				return core_ui::inline_message($width,"Review Payment History", "A complete history of all payments you've made.  You can download a csv file from the Payment History to import into your accounting system.");
+				break;
 		}
 	} else if(lo3::is_buyer()) {	
 		switch(strtolower($tab_name)) {
@@ -1057,8 +1060,8 @@ function get_inline_message($tab_name, $width=350) {
 			case 'payables':
 				return core_ui::inline_message($width,"Payables", "Make or view payments on this tab.");
 				break;
-			case 'transactions':
-				return core_ui::inline_message($width,"Transaction Journal", "A complete history of all payments you've made.  You can download a csv file from the Transaction Journal to import into your accounting system.");
+			case 'payments':
+				return core_ui::inline_message($width,"Review Payment History", "A complete history of all payments you've made.  You can download a csv file from the Payment History to import into your accounting system.");
 				break;
 		}
 	}

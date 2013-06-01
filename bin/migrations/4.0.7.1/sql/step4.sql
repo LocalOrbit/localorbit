@@ -155,18 +155,25 @@ select
 ;
 
 /* dictionary entries */
-insert into phrases (pcat_id,edit_type,label,default_value)
-values (1,'text','button:payments:enter_offline_payments','Enter Receipts');
+delete from phrases where label in (
+	'button:payments:enter_offline_payments',
+	'button:payments:enter_online_payments',
+	'button:payments:send_invoices',
+	'button:payments:mark_items_delivered'
+);
 
 insert into phrases (pcat_id,edit_type,label,default_value)
-values (1,'text','button:payments:enter_online_payments','Make Payment');
+values (1,'text','button:payments:enter_offline_payments','Record Offline Payments');
+
+insert into phrases (pcat_id,edit_type,label,default_value)
+values (1,'text','button:payments:enter_online_payments','Make Online Payments');
 
 
 insert into phrases (pcat_id,edit_type,label,default_value)
 values (1,'text','button:payments:send_invoices','Send Invoices');
 
 insert into phrases (pcat_id,edit_type,label,default_value)
-values (1,'text','button:payments:mark_items_delivered','Mark Items Delivered');
+values (1,'text','button:payments:mark_items_delivered','Mark Items as Delivered');
 
 
 
