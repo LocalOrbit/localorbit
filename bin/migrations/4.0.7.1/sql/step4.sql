@@ -78,6 +78,12 @@ select p.*,
 		WHEN (p.invoice_id is null) THEN 'purchase_orders'
 	END AS payment_status,
 	
+	CASE 
+		WHEN (loi.lbps_id<>2) THEN 'buyer_payment'
+		WHEN (loi.ldstat_id<>4) THEN 'delivery'
+		else 'transfer'
+	END AS pending,
+	
 	concat_ws(' ',loi.product_name,lo.payment_ref,if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr),p.amount) as searchable_fields
 
 from payables p

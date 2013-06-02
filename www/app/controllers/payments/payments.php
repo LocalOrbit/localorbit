@@ -1207,10 +1207,10 @@ function payments__add_standard_filters($datatable,$tab='')
 					'order_status',
 					$datatable->filter_states[$datatable->name.'__filter__order_status'],
 					array(
-							'Paid'=>'paid',
-							'Awaiting delivery'=>'awaiting delivery',
-							'Awaiting buyer payment'=>'awaiting buyer payment',
-							'Awaiting MM or LO transfer'=>'awaiting MM or LO transfer',
+							'paid'=>'Paid',
+							'awaiting delivery'=>'Awaiting delivery',
+							'awaiting buyer payment'=>'Awaiting buyer payment',
+							'awaiting MM or LO transfer'=>'Awaiting MM or LO transfer',
 					),
 					null,
 					null,
@@ -1269,6 +1269,29 @@ function payments__add_standard_filters($datatable,$tab='')
 					null,
 					'All Statuses',
 					'width: 120px; max-width: 120px;'
+			);
+		$datatable->filter_html .= '</div>';
+	}
+	
+	# sellers get the pending filter
+	if($tab == 'receivables' && !(lo3::is_admin() || lo3::is_market()))
+	{
+		$datatable->add_filter(new core_datatable_filter('pending'));
+		$datatable->filter_html .= '<div style="float:left;width: '.($filter_width).'px;">';
+			$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Pending: </div>';
+			$datatable->filter_html .= core_datatable_filter::make_select(
+					$datatable->name,
+					'pending',
+					$datatable->filter_states[$datatable->name.'__filter__pending'],
+					array(
+						'buyer_payment'=>'Buyer Payment',
+						'delivery'=>'Delivery Confirmation',
+						'transfer'=>'Payment Transfer',
+					),
+					null,
+					null,
+					'All Types',
+					'width: 150px; max-width: 150px;'
 			);
 		$datatable->filter_html .= '</div>';
 	}
