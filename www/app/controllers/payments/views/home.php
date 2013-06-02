@@ -18,8 +18,8 @@ $receivables = false;
 if(lo3::is_admin() || lo3::is_market())
 {
 	$tabs[] = 'Overview';
-	$tabs[] = 'Record Payments to Vendors';
 	$tabs[] = 'Send Invoices and Enter Receipts';
+	$tabs[] = 'Record Payments to Vendors';
 	$tabs[] = 'Review Payment History';
 	$payables = true;
 	$receivables = true;
@@ -28,13 +28,14 @@ else if(lo3::is_seller())
 {
 	$count = core_db::col('select count(payable_id) as mycount from payables where from_org_id='.$core->session['org_id'],'mycount');
 	$tabs[] = 'Overview';
+	$tabs[] = 'Review &amp; Deliver Orders';
+	$receivables = true;
 	if($count > 0)
 	{
 		$tabs[] = 'Review Orders &amp; Make Payments';
 		$payables = true;
 	}
-	$receivables = true;
-	$tabs[] = 'Review &amp; Deliver Orders';
+	
 	$tabs[] = 'Review Payment History';
 }
 else
@@ -120,17 +121,17 @@ else if(lo3::is_seller())
 // tab contents ******************************************************************************* = 0;
 $tab_count = 0;  //affects ids
 $this->overview($tab_count);
-
-if($payables)
-{
-	$tab_count++;
-	$this->review_orders($tab_count);
-}
 if($receivables)
 {
 	$tab_count++;
 	$this->review_deliver_orders($tab_count);
 }
+if($payables)
+{
+	$tab_count++;
+	$this->review_orders($tab_count);
+}
+
 $tab_count++;
 $this->payment_history($tab_count);
 
