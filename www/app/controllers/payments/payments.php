@@ -1116,7 +1116,7 @@ function payments__add_standard_filters($datatable,$tab='')
 	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat2',core_format::date($end,'short'),$date_verb.' on or before ');	
 	
 	$datatable->add_filter(new core_datatable_filter('payable_info','searchable_fields','~','search'));
-	$datatable->filter_html .= core_datatable_filter::make_text($datatable->name,'payable_info',$datatable->filter_states[$datatable->name.'__filter__payable_info'],'Search');
+	$datatable->filter_html .= core_datatable_filter::make_text($datatable->name,'payable_info',$datatable->filter_states[$datatable->name.'__filter__payable_info'],'Search by name or ref #');
 
 	
 	$datatable->filter_html .= '</div><br /><div style="width: '.($filter_width * 3).'px;clear:both;">';
@@ -1250,6 +1250,29 @@ function payments__add_standard_filters($datatable,$tab='')
 	
 	
 	// Filter: Payment Status  ***************************************************************************************************************
+	if($tab == 'payables' || $tab == 'receivables')
+	{
+		$datatable->add_filter(new core_datatable_filter('payment_status'));
+		$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - 14).'px;">';
+			$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Payment Status: </div>';
+			$datatable->filter_html .= core_datatable_filter::make_select(
+					$datatable->name,
+					'payment_status',
+					$datatable->filter_states[$datatable->name.'__filter__payment_status'],
+					array(
+						'invoiced'=>'Invoiced',
+						'overdue'=>'Overdue',
+						'paid'=>'Paid',
+						'purchase_orders'=>'Purchase Orders',
+					),
+					null,
+					null,
+					'All Statuses',
+					'width: 120px; max-width: 120px;'
+			);
+		$datatable->filter_html .= '</div>';
+	}
+	/*
 	if (in_array($tab,array('payables','receivables'))) {
 			
 		//Status (paid, unpaid, all; defaults to unpaid)
@@ -1294,6 +1317,7 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->filter_html .= '</div>';
 	
 	}
+	*/
 		
 	
 	
@@ -1321,11 +1345,12 @@ function payments__add_standard_filters($datatable,$tab='')
 			'payable_type',
 			$datatable->filter_states[$datatable->name.'__filter__payable_type'],
 			array(
-				'buyer order'=>'Order',
-				'seller order'=>'Seller Pmt',
+				#'lo fees'=>'Delivery Fees',
 				'hub fees'=>'Market Fees',
-				'lo fees'=>'Local Orbit Fees',
-				'monthly fees'=>'Monthly Fees',
+				'buyer order'=>'Purchase Orders',
+				'seller order'=>'Seller Payments',
+				'monthly fees'=>'Service Fees',
+				'lo fees'=>'Transaction Fees',
 			),
 			null,
 			null,

@@ -52,12 +52,31 @@ select p.*,
 	lods.delivery_status,
 
 	lbps.buyer_payment_status as  payable_status,
-	
+		
 	CASE 
 		WHEN loi.ldstat_id=2 THEN 'awaiting delivery'
 		WHEN loi.lbps_id in (1,3,4) THEN 'awaiting buyer payment'
 		WHEN loi.lbps_id=2 AND loi.ldstat_id=4 THEN 'delivered, payment pending'
 	END AS receivable_status,
+	
+	CASE 
+		WHEN (p.amount - round(COALESCE((
+			select sum(xpp.amount) 
+			from x_payables_payments xpp
+			where xpp.payable_id=p.payable_id), 0.0
+		),2) > 0 and UNIX_TIMESTAMP(CURRENT_TIMESTAMP) > i.due_date and p.invoice_id is not null) THEN 'overdue'
+		WHEN (p.amount - round(COALESCE((
+			select sum(xpp.amount) 
+			from x_payables_payments xpp
+			where xpp.payable_id=p.payable_id), 0.0
+		),2) > 0 and UNIX_TIMESTAMP(CURRENT_TIMESTAMP) <= i.due_date and p.invoice_id is not null) THEN 'invoiced'
+		WHEN (p.amount - round(COALESCE((
+			select sum(xpp.amount) 
+			from x_payables_payments xpp
+			where xpp.payable_id=p.payable_id), 0.0
+		),2) <= 0) THEN 'paid'
+		WHEN (p.invoice_id is null) THEN 'purchase_orders'
+	END AS payment_status,
 	
 	concat_ws(' ',loi.product_name,lo.payment_ref,if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr),p.amount) as searchable_fields
 
