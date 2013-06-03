@@ -453,7 +453,7 @@ class core_datatable
 		
 		if($this->filter_html != '')
 		{
-			echo('<h4 class="pull-left">Filter Results:</h4> ');
+			echo('<h4>Filter Results</h4> ');
 			$this->render_filter_expander();
 			echo('<div class="dt_filter_area">');
 				if($this->inline_message) {

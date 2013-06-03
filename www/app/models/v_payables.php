@@ -72,5 +72,90 @@ class core_model_v_payables extends core_model_base_v_payables
 		$payables = new core_collection($sql);
 		return $payables->add_formatter('format_payable_info')->to_hash('group_key');
 	}
+	
+	function get_domains_options_for_org($org_id,$role)
+	{
+		if($role == 'admin')
+		{
+			$filter = new core_collection('
+				select domain_id as id,name
+				from domains
+				order by name
+			');
+		}
+		else if($role == 'market')
+		{
+			$filter = new core_collection('
+				select domain_id as id,name
+				from domains
+				where domain_id in (
+					select domain_id 
+					from organizations_to_domains
+					where org_id ='.$org_id.'
+				) or domain_id in (
+					select count(distinct domain_id) from payables where (from_org_id='.$org_id.' or to_org_id='.$org_id.')
+				)
+				order by name
+			');
+		}
+		else
+		{
+			$filter = new core_collection('
+				select domain_id as id,name
+				from domains
+				where domain_id in (
+					select domain_id
+					from delivery_days
+					where delivery_days.dd_id in (
+						select dd_id 
+						from organization_delivery_cross_sells
+						where org_id='.$org_id.'
+					)
+				) or domain_id in (
+					select count(distinct domain_id) from payables where (from_org_id='.$org_id.' or to_org_id='.$org_id.')
+				)
+				order by name
+			');
+		}
+		return $filter;
+	}
+	
+
+	function get_orgs_options_for_org($org_id,$role)
+	{
+		if($role == 'admin')
+		{
+			$filter = new core_collection('
+				select org_id as id,name
+				from organizations
+				where org_id in (select distinct from_org_id from payables)
+				or org_id in (select distinct to_org_id from payables)
+				order by name
+			');
+		}
+		else if($role == 'market')
+		{
+			$filter = new core_collection('
+				select org_id as id,name
+				from organizations
+				where org_id in (
+					select org_id from organizations_to_domains
+					where domain_id in (
+						select domain_id 
+						from organizations_to_domains
+						where org_id ='.$org_id.'
+						and orgtype_id=2
+					)
+				) or org_id in (
+					select distinct to_org_id from payables where from_org_id='.$org_id.'
+				) or org_id in (
+					select distinct from_org_id from payables where to_org_id='.$org_id.'
+				)
+				order by name
+			');
+		}
+		
+		return $filter;
+	}
 }
 ?>

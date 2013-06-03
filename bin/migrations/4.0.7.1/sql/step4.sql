@@ -4,6 +4,8 @@ create or replace view v_payables as
 select p.*,
 	o1.name as from_org_name,
 	o2.name as to_org_name,
+	otd1.domain_id as from_domain_id,
+	otd2.domain_id as to_domain_id,
 	d.name as domain_name,
 	ifnull(i.due_date,9999999999999) as due_date,
 	i.creation_date as invoice_date,
@@ -90,6 +92,8 @@ from payables p
 	inner join organizations o1 on (p.from_org_id=o1.org_id)
 	inner join organizations o2 on (p.to_org_id=o2.org_id)
 	inner join domains d on (d.domain_id=p.domain_id)
+	inner join organizations_to_domains otd1 on (otd1.org_id=o1.org_id and otd1.is_home=1)
+	inner join organizations_to_domains otd2 on (otd2.org_id=o2.org_id and otd2.is_home=1)
 	left join invoices i on (i.invoice_id=p.invoice_id)
 	left join lo_order_line_item loi on (loi.lo_liid=p.parent_obj_id)
 	left join lo_buyer_payment_statuses lbps on (loi.lbps_id=lbps.lbps_id)
@@ -110,6 +114,8 @@ select
 	o1.name as from_org_name,
 	p3.to_org_id,
 	o2.name as to_org_name,
+	otd1.domain_id as from_domain_id,
+	otd2.domain_id as to_domain_id,
 	pv.creation_date as payment_date,
 	pv.payment_method,
 	pv.ref_nbr,
@@ -176,6 +182,8 @@ select
 	left join lo_order lo3 on (lo3.lo_oid=loi3.lo_oid)
 	left join organizations o1 on (o1.org_id=p3.from_org_id)
 	left join organizations o2 on (o2.org_id=p3.to_org_id)
+	left join organizations_to_domains otd1 on (otd1.org_id=o1.org_id and otd1.is_home=1)
+	left join organizations_to_domains otd2 on (otd2.org_id=o2.org_id and otd2.is_home=1)
 	group by pv.payment_id
 ;
 
