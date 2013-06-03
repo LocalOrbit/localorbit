@@ -141,6 +141,11 @@ function payments__add_standard_filters($datatable,$tab='')
 		$do_payable_type = true;
 	}
 	
+	if($datatable->name == 'receivables' and lo3::is_seller())
+	{
+		$do_status_delivery = true;
+	}
+	
 	
 	# We now know what filters to render. Now try to place them into 
 	# a layout as best we can.
