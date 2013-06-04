@@ -2,20 +2,21 @@
 create or replace view v_payables as 
 
 select p.*,
-	o1.name as from_org_name,
-	o2.name as to_org_name,
+	(select o1.name from organizations o1 where p.from_org_id=o1.org_id) as from_org_name,
+	(select o2.name from organizations o2 where p.to_org_id=o2.org_id) as to_org_name,
 	otd1.domain_id as from_domain_id,
 	otd2.domain_id as to_domain_id,
-	d.name as domain_name,
+	(select d.name from domains d where d.domain_id=p.domain_id) as domain_name,
 	ifnull(i.due_date,9999999999999) as due_date,
 	i.creation_date as invoice_date,
 	if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr) as order_nbr,
 	FLOOR((i.due_date - UNIX_TIMESTAMP(CURRENT_TIMESTAMP)) /86400) as days_left,
+	
 	concat_ws(
 		'|',
 		if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr),
 		p.payable_type,
-		if(payable_type='seller order',loi.lo_foid,loi.lo_oid),
+		if(payable_type='seller order',loi.lo_foid,lo.lo_oid),
 		loi.product_name,
 		loi.qty_ordered,
 		loi.seller_name,
@@ -51,9 +52,18 @@ select p.*,
 	if(ifnull(i.invoice_id,0)=0,0,1) as invoiced,
 	i.creation_date as last_invoiced,
 	ceiling((i.due_date - i.first_invoice_date ) / 86400) as po_terms,
-	lods.delivery_status,
-
-	lbps.buyer_payment_status as  payable_status,
+	(
+		select lods.delivery_status 
+		from lo_delivery_statuses lods 
+		where lods.ldstat_id=if(payable_type='delivery fee',lo.ldstat_id,loi.ldstat_id)
+	) as delivery_status,
+	
+	(
+		select lbps.buyer_payment_status 
+		from lo_buyer_payment_statuses lbps 
+		where if(payable_type='delivery fee',lo.lbps_id,loi.lbps_id)=lbps.lbps_id
+	) as payable_status,
+	
 		
 	CASE 
 		WHEN loi.ldstat_id=2 THEN 'awaiting delivery'
@@ -89,19 +99,14 @@ select p.*,
 	concat_ws(' ',loi.product_name,lo.payment_ref,if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr),p.amount) as searchable_fields
 
 from payables p
-	inner join organizations o1 on (p.from_org_id=o1.org_id)
-	inner join organizations o2 on (p.to_org_id=o2.org_id)
-	inner join domains d on (d.domain_id=p.domain_id)
-	inner join organizations_to_domains otd1 on (otd1.org_id=o1.org_id and otd1.is_home=1)
-	inner join organizations_to_domains otd2 on (otd2.org_id=o2.org_id and otd2.is_home=1)
+	inner join organizations_to_domains otd1 on (otd1.org_id=p.from_org_id and otd1.is_home=1)
+	inner join organizations_to_domains otd2 on (otd2.org_id=p.to_org_id and otd2.is_home=1)
 	left join invoices i on (i.invoice_id=p.invoice_id)
 	left join lo_order_line_item loi on (loi.lo_liid=p.parent_obj_id)
-	left join lo_buyer_payment_statuses lbps on (loi.lbps_id=lbps.lbps_id)
+
 	left join lo_order_deliveries lod on (loi.lodeliv_id=lod.lodeliv_id)
-	left join lo_order lo on (lo.lo_oid=loi.lo_oid)
-	left join lo_fulfillment_order lfo on (lfo.lo_foid=loi.lo_foid)
-	left join lo_delivery_statuses lods on (loi.ldstat_id=lods.ldstat_id)
-	
+	left join lo_order lo on (lo.lo_oid=if(payable_type='delivery fee',p.parent_obj_id,loi.lo_oid))
+	left join lo_fulfillment_order lfo on (lfo.lo_foid=loi.lo_foid)	
 ;
 
 
@@ -216,6 +221,21 @@ values (1,'text','button:payments:mark_items_delivered','Mark Items as Delivered
 
 
 
+ALTER TABLE payables ENGINE=InnoDB;
+
+ALTER TABLE invoices ENGINE=InnoDB;
+ALTER TABLE payments ENGINE=InnoDB;
+ALTER TABLE x_payables_payments ENGINE=InnoDB;
+ALTER TABLE lo_order ENGINE=InnoDB;
+ALTER TABLE lo_order_line_item ENGINE=InnoDB;
+ALTER TABLE lo_fulfillment_order ENGINE=InnoDB;
+ALTER TABLE lo_order_deliveries ENGINE=InnoDB;
+ALTER TABLE organizations_to_domains ENGINE=InnoDB;
+ALTER TABLE domains ENGINE=InnoDB;
+ALTER TABLE organizations ENGINE=InnoDB;
+ALTER TABLE lo_buyer_payment_statuses ENGINE=InnoDB;
+ALTER TABLE lo_delivery_statuses ENGINE=InnoDB;
+ALTER TABLE lo_buyer_payment_statuses ENGINE=InnoDB;
 
 
 
