@@ -1,4 +1,8 @@
 
+
+CREATE index organizations_to_domains_idx5 on organizations_to_domains (org_id,is_home) using btree;
+
+
 create or replace view v_payables as 
 
 select p.*,
@@ -99,8 +103,8 @@ select p.*,
 	concat_ws(' ',loi.product_name,lo.payment_ref,if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr),p.amount) as searchable_fields
 
 from payables p
-	inner join organizations_to_domains otd1 on (otd1.org_id=p.from_org_id and otd1.is_home=1)
-	inner join organizations_to_domains otd2 on (otd2.org_id=p.to_org_id and otd2.is_home=1)
+	inner join organizations_to_domains otd1 force index for join (`organizations_to_domains_idx5`) on (otd1.org_id=p.from_org_id and otd1.is_home=1)
+	inner join organizations_to_domains otd2 force index for join (`organizations_to_domains_idx5`)  on (otd2.org_id=p.to_org_id and otd2.is_home=1)
 	left join invoices i on (i.invoice_id=p.invoice_id)
 	left join lo_order_line_item loi on (loi.lo_liid=p.parent_obj_id)
 
@@ -236,6 +240,8 @@ ALTER TABLE organizations ENGINE=InnoDB;
 ALTER TABLE lo_buyer_payment_statuses ENGINE=InnoDB;
 ALTER TABLE lo_delivery_statuses ENGINE=InnoDB;
 ALTER TABLE lo_buyer_payment_statuses ENGINE=InnoDB;
+
+
 
 
 
