@@ -214,10 +214,10 @@ function payments__add_standard_filters($datatable,$tab='')
 			if($do_status_pending)
 				{
 					make_filter($datatable,'pending',array(
-							'buyer_payment'=>'Buyer Payment',
-							'delivery'=>'Delivery Confirmation',
-							'transfer'=>'Payment Transfer',
-						),'Pending','All Types');
+						'buyer_payment'=>'Buyer Payment',
+						'delivery'=>'Delivery Confirmation',
+						'transfer'=>'Payment Transfer',
+					),'Pending','All Types');
 				}
 		}
 		

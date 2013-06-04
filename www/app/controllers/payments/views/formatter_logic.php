@@ -98,7 +98,7 @@ function format_payable_info($data)
 	}
 	else
 	{
-		if($data['status'] == '1')
+		if($data['payment_status'] == 'paid')
 		{
 			$html .= 'Paid';
 		}
