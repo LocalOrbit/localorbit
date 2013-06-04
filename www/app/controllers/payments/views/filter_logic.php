@@ -259,6 +259,7 @@ function payments__add_standard_filters($datatable,$tab='')
 				),'Status','All Statuses');
 			if($do_payable_type)
 				make_filter($datatable,'payable_type',array(
+					'delivery fee'=>'Delivery Fees',
 					'hub fees'=>'Market Fees',
 					'buyer order'=>'Purchase Orders',
 					'seller order'=>'Seller Payments',
@@ -311,6 +312,7 @@ function payments__add_standard_filters($datatable,$tab='')
 					),'Status','All Statuses');
 				if($do_payable_type)
 					make_filter($datatable,'payable_type',array(
+						'delivery fee'=>'Delivery Fees',
 						'hub fees'=>'Market Fees',
 						'buyer order'=>'Purchase Orders',
 						'seller order'=>'Seller Payments',
