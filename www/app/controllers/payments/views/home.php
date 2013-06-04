@@ -19,7 +19,13 @@ if(lo3::is_admin() || lo3::is_market())
 {
 	$tabs[] = 'Overview';
 	$tabs[] = 'Send Invoices and Enter Receipts';
-	$tabs[] = 'Record Payments to Vendors';
+	
+	if(lo3::is_admin()) {
+		$tabs[] = 'Make or Record Payments to Vendors';
+	} else {
+		$tabs[] = 'Record Payments to Vendors';
+	}	
+	
 	$tabs[] = 'Review Payment History';
 	$payables = true;
 	$receivables = true;
