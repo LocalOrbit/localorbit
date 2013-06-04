@@ -31,7 +31,7 @@ function format_payable_info($data)
 			{
 				$html .= '<a href="#!';
 			}
-			$html .= '">'.$info[0].'</a>';
+			$html .= '">'.$info[0].'</a> ('.ucwords($info[1]).')';
 		}
 	}
 	$data['ref_nbr_html'] = $html;
