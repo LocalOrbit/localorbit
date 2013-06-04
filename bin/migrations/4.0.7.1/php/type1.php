@@ -66,8 +66,95 @@ function migrate_type1()
 		$sql = make_insert('new_payables',$data);
 		mysql_query($sql);
 	}
-	#print_r($invoices);
-	#exit();
+
+	# handle all the delivery fees
+	$fees = get_array('
+		select ldf.*,lo.*,d.buyer_invoicer,p.invoice_id,d.payable_org_id
+		from lo_order_delivery_fees ldf 
+		inner join lo_order lo on (lo.lo_oid=ldf.lo_oid) 
+		inner join payables p on (p.parent_obj_id=lo.lo_oid and p.payable_type_id=1)
+		inner join domains d on (lo.domain_id=d.domain_id)
+		where lo.ldstat_id<>1 
+		and ldf.amount>0 
+	');
+	
+		# loop through and build the queries
+	echo("\t\tF1: delivery fees found.\n");
+	foreach($fees as $fee)
+	{
+		$invoice_id = 0;
+		if(is_numeric($fee['invoice_id']))
+		{
+			$invoice_id =  $invoices[$fee['invoice_id']];
+		}
+		
+		$market_id = $fee['payable_org_id'];
+		
+		if($fee['buyer_invoicer'] == 'hub' and $fee['payment_method'] == 'purchaseorder')
+		{
+			
+			
+			
+			$data = array(
+				'domain_id'=>$fee['domain_id'],
+				'payable_type'=>'delivery fee',
+				'parent_obj_id'=>$fee['lo_oid'],
+				'from_org_id'=>$fee['org_id'],
+				'to_org_id'=>$market_id,
+				'amount'=>($fee['amount']),
+			);
+			if($invoice_id > 0)
+				$data['invoice_id'] = $invoice_id;
+			
+			$sql1 = make_insert('new_payables',$data);
+			echo("$sql1\n");
+			mysql_query($sql1);
+			
+			$sql2 = make_insert('new_payables',array(
+				'domain_id'=>$fee['domain_id'],
+				'payable_type'=>'delivery fee',
+				'parent_obj_id'=>$fee['lo_oid'],
+				'from_org_id'=>$market_id,
+				'to_org_id'=>1,
+				'amount'=>($fee['amount'] * ($fee['fee_percen_lo']/100)),
+			));
+			echo("$sql2\n");
+			
+			mysql_query($sql2);
+	
+		}
+		else
+		{
+			$data = array(
+				'domain_id'=>$fee['domain_id'],
+				'payable_type'=>'delivery fee',
+				'parent_obj_id'=>$fee['lo_oid'],
+				'from_org_id'=>$fee['org_id'],
+				'to_org_id'=>1,
+				'amount'=>($fee['amount']),
+			);
+			if($invoice_id > 0)
+				$data['invoice_id'] = $invoice_id;
+			$sql1 = make_insert('new_payables',$data);
+			echo("$sql1\n");
+			mysql_query($sql1);
+				
+			$sql2 = make_insert('new_payables',array(
+				'domain_id'=>$fee['domain_id'],
+				'payable_type'=>'delivery fee',
+				'parent_obj_id'=>$fee['lo_oid'],
+				'from_org_id'=>1,
+				'to_org_id'=>$market_id,
+				'amount'=>($fee['amount'] - ($fee['amount'] * ($fee['fee_percen_lo']/100))),
+			));
+			echo("$sql2\n");
+			
+			mysql_query($sql2);
+		}
+	}
+	
+	
+	
 	echo("\t\tA2: invoices/payments created\n");
 	
 	

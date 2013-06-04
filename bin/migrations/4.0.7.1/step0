@@ -1,0 +1,136 @@
+#!/usr/bin/php
+<?php
+echo "step 0: fixing up delivery fees\n";
+
+
+if(in_array($argv[1],array('production','qa','testing','current'))) {
+
+	$user = 'localorb_www';
+	$pass = 'l0cal1sdab3st';
+	$host = 'localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com';
+	$database = 'localorb_www_'.$argv[1];
+	
+} else if($argv[1] == 'dev') {
+	$user = 'localorb_www';
+	$pass = 'localorb_www_dev';
+	$host = 'localhost';
+	$database = 'localorb_www_dev';
+	
+} else if($argv[1] == 'devcurrent') {
+	$user = 'localorb_www';
+	$pass = 'localorb_www_dev';
+	$host = 'localhost';
+	$database = 'localorb_www_devcurrent';
+	
+}else if($argv[1] == 'jvavul') {
+	$user = 'root';
+	$pass = 'a1b2c3';
+	$host = '127.0.0.1';
+	$database = 'localorb_www_dev';
+}
+
+
+#echo $host."  ".$user."  ".$pass."  ".$database;
+mysql_connect($host,$user,$pass);
+mysql_select_db($database);
+
+include(__DIR__.'/php/helper_funcs.php');
+
+
+mysql_query('delete from payable_types where payable_type=\'delivery fee\';delete from payables where payable_type_id=6;');
+mysql_query('insert into payable_types (payable_type) values (\'delivery fee\');');
+
+# check the status:
+$fees = get_array('
+	select ldf.*,lo.*,d.buyer_invoicer
+	from lo_order_delivery_fees ldf 
+	inner join lo_order lo on (lo.lo_oid=ldf.lo_oid) 
+	inner join domains d on (lo.domain_id=d.domain_id)
+	where lo.ldstat_id<>1 
+	and ldf.amount>0 
+');
+
+foreach($fees as $fee)
+{
+	$payables = get_array('select * from payables where parent_obj_id='.$fee['lo_oid'].' order by payable_type_id');
+	if(count($payables) == 1)
+	{
+		#echo("only one payable: ".print_r($payables,true)."\n\n");
+	}
+	else
+	{
+		if(is_numeric($payables[1]['invoice_id']))
+		{
+			#echo("2nd payable is invoiced: ".print_r($payables,true)."\n\n");
+		}
+	}
+	#print_r($payables);
+}
+
+#exit();
+
+# query for everything to be fixed
+$fees = get_array('
+	select ldf.*,lo.*,d.buyer_invoicer
+	from lo_order_delivery_fees ldf 
+	inner join lo_order lo on (lo.lo_oid=ldf.lo_oid) 
+	inner join domains d on (lo.domain_id=d.domain_id)
+	where lo.ldstat_id<>1 
+	and ldf.amount>0 
+');
+
+# loop through and build the queries
+foreach($fees as $fee)
+{
+	#echo("examining fee: ".print_r($fee,true)."\n");
+	
+	if($fee['buyer_invoicer'] == 'hub' and $fee['payment_method'] == 'purchaseorder')
+	{
+		# we need to create 2 payables
+		#	1: from the buyer to the market for the delivery fee amount. This may already be paid.
+		#	2: from the market to LO for the delivery fee amount * (fee_percen_lo / 100)
+		$market_id = get_array('
+			select payable_org_id 
+			from domains 
+			where domain_id='.$fee['domain_id']
+		);
+		$market_id = $market_id[0]['payable_org_id'];
+		
+
+		
+		$sql2 = make_insert('payables',array(
+			'domain_id'=>$fee['domain_id'],
+			'payable_type_id'=>6,
+			'parent_obj_id'=>$fee['lo_oid'],
+			'description'=>$fee['lo3_order_nbr'],
+			'from_org_id'=>$market_id,
+			'to_org_id'=>1,
+			'amount'=>($fee['amount'] * ($fee['fee_percen_lo']/100)),
+		));
+		#echo("$sql2\n");
+		
+		mysql_query($sql2);
+	}
+	else
+	{
+		# we need to create 2 payables:
+		#	1: from the buyer to LO for the delivery fee amount
+		#	2: from LO to the market for the delivery fee amount * (fee_percen_lo / 100)
+	
+		$sql2 = make_insert('payables',array(
+			'domain_id'=>$fee['domain_id'],
+			'payable_type_id'=>6,
+			'parent_obj_id'=>$fee['lo_oid'],
+			'description'=>$fee['lo3_order_nbr'],
+			'from_org_id'=>1,
+			'to_org_id'=>$market_id,
+			'amount'=>($fee['amount'] - ($fee['amount'] * ($fee['fee_percen_lo']/100))),
+		));
+		#echo("$sql2\n");
+
+			mysql_query($sql2);
+
+	}
+}
+
+?>

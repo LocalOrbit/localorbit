@@ -37,13 +37,15 @@ include(__DIR__.'/php/type2.php');
 include(__DIR__.'/php/type3.php');
 include(__DIR__.'/php/type4.php');
 include(__DIR__.'/php/type5.php');
+include(__DIR__.'/php/type6.php');
 
 migrate_type1();
 migrate_type2();
 migrate_type3();
-#migrate_type4();
-#migrate_type5();
+migrate_type4();
+migrate_type5();
+#migrate_type6();
 
-exit();
+#exit();
 
 ?>

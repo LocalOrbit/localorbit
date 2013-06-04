@@ -10,17 +10,19 @@ function migrate_type3()
 		from payables p
 		where payable_type_id in (3,4);
 	';
-	#echo($sql."\n");
+	echo($sql."\n");
 	$payables = get_array($sql);
 	$invoices = array();
 	#print_r(get_array_fields($payables,'parent_obj_id'));
 	$sql = '
 		select loi.*,p.domain_id,p.invoice_id,p.from_org_id,p.to_org_id,p.payable_type_id,
+		lo.fee_percen_lo,lo.fee_percen_hub,
 		UNIX_TIMESTAMP(p.creation_date) as payable_date,
 		UNIX_TIMESTAMP(i.creation_date) as invoice_date,
 		UNIX_TIMESTAMP(i.due_date) as due_date
 		from lo_order_line_item loi
 		inner join payables p on (loi.lo_oid=p.parent_obj_id and p.payable_type_id in (3,4))
+		inner join lo_order lo on (lo.lo_oid = loi.lo_oid)
 		left join invoices i on (p.invoice_id=i.invoice_id)
 		where loi.lo_oid in ('.implode(',',get_array_fields($payables,'parent_obj_id')).');';
 	echo($sql."\n");
@@ -40,7 +42,7 @@ function migrate_type3()
 				'creation_date'=>$item['invoice_date']
 				)
 			);
-			#echo($sql);
+			echo($sql);
 			mysql_query($sql);
 			$invoices[$item['invoice_id']] = mysql_insert_id();
 		}
@@ -53,7 +55,7 @@ function migrate_type3()
 			'to_org_id'=>$item['to_org_id'],
 			'payable_type'=>(($item['payable_type_id'] == 3)?'hub fees':'lo fees'),
 			'parent_obj_id'=>$item['lo_liid'],
-			'amount'=>$item['row_adjusted_total'],
+			'amount'=>($item['row_adjusted_total'] * ($item['fee_percen_'.(($item['payable_type_id'] == 3)?'hub':'lo')] / 100)),
 			'creation_date'=>$item['payable_date'],
 		);
 		#print_r($data);
