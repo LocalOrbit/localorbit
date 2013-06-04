@@ -69,7 +69,7 @@ function migrate_type1()
 
 	# handle all the delivery fees
 	$fees = get_array('
-		select ldf.*,lo.*,d.buyer_invoicer,p.invoice_id,d.payable_org_id
+		select ldf.*,lo.*,d.buyer_invoicer,p.invoice_id,d.payable_org_id,UNIX_TIMESTAMP(lo.order_date) as order_date
 		from lo_order_delivery_fees ldf 
 		inner join lo_order lo on (lo.lo_oid=ldf.lo_oid) 
 		inner join payables p on (p.parent_obj_id=lo.lo_oid and p.payable_type_id=1)
@@ -102,6 +102,7 @@ function migrate_type1()
 				'from_org_id'=>$fee['org_id'],
 				'to_org_id'=>$market_id,
 				'amount'=>($fee['amount']),
+				'creation_date'=>$fee['order_date'],
 			);
 			if($invoice_id > 0)
 				$data['invoice_id'] = $invoice_id;
@@ -117,6 +118,7 @@ function migrate_type1()
 				'from_org_id'=>$market_id,
 				'to_org_id'=>1,
 				'amount'=>($fee['amount'] * ($fee['fee_percen_lo']/100)),
+				'creation_date'=>$fee['order_date'],
 			));
 			echo("$sql2\n");
 			
@@ -132,6 +134,7 @@ function migrate_type1()
 				'from_org_id'=>$fee['org_id'],
 				'to_org_id'=>1,
 				'amount'=>($fee['amount']),
+				'creation_date'=>$fee['order_date'],
 			);
 			if($invoice_id > 0)
 				$data['invoice_id'] = $invoice_id;
@@ -146,6 +149,7 @@ function migrate_type1()
 				'from_org_id'=>1,
 				'to_org_id'=>$market_id,
 				'amount'=>($fee['amount'] - ($fee['amount'] * ($fee['fee_percen_lo']/100))),
+				'creation_date'=>$fee['order_date'],
 			));
 			echo("$sql2\n");
 			
