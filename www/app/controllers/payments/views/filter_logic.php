@@ -177,6 +177,13 @@ function payments__add_standard_filters($datatable,$tab='')
 				make_filter($datatable,'to_org_id',$org_filter,'To','All Organizations');
 		}
 		
+		$datatable->filter_html .= '<h4>Delivery Status</h4>';
+		make_filter($datatable,'delivery_status',array(
+				'Delivered'=>'Delivered',
+				'Pending'=>'Pending',
+				'Canceled'=>'Canceled',
+			),'Status','All');
+		
 		
 		if($do_payment_method)
 		{
