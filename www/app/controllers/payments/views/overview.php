@@ -5,7 +5,7 @@ global $core;
 $all = new core_collection("
 	select from_org_id,to_org_id,amount,amount_paid,days_left,invoice_id from v_payables 
 	where payment_status <> 'paid'
-	and payable_id in (select payable_id from payables where from_org_id=1 or to_org_id=1);
+	and payable_id in (select payable_id from payables where from_org_id=".$core->session['org_id']." or to_org_id=".$core->session['org_id'].");
 ");
 
 
@@ -15,7 +15,7 @@ $data['receivables'] = array_fill_keys(array_values($intervals), 0);
 
 foreach($all as $item)
 {
-	$type = (($item['from_org_id'] == 1)?'payables':'receivables');
+	$type = (($item['from_org_id'] == $core->session['org_id'])?'payables':'receivables');
 	$amount_due = floatval(($item['amount'] - $item['amount_paid']));
 	#print_r($item);
 	
