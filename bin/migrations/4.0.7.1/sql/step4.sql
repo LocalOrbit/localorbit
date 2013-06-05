@@ -11,7 +11,6 @@ select p.*,
 	(select o2.name from organizations o2 where p.to_org_id=o2.org_id) as to_org_name,
 	otd1.domain_id as from_domain_id,
 	otd2.domain_id as to_domain_id,
-	(select d.name from domains d where d.domain_id=p.domain_id) as domain_name,
 	ifnull(i.due_date,9999999999999) as due_date,
 	i.creation_date as invoice_date,
 	if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr) as order_nbr,
@@ -26,8 +25,7 @@ select p.*,
 		loi.qty_ordered,
 		loi.seller_name,
 		loi.seller_org_id,
-		UNIX_TIMESTAMP(lo.order_date),
-		loi.row_adjusted_total
+		UNIX_TIMESTAMP(lo.order_date)
 	) as payable_info,
 
 	(
@@ -41,11 +39,7 @@ select p.*,
 		)
 	) as delivery_end_time,
 	
-	round(COALESCE((
-		select sum(xpp.amount) 
-		from x_payables_payments xpp
-		where xpp.payable_id=p.payable_id), 0.0
-	),2) as amount_paid,
+	COALESCE(sum(xpp.amount),0) as amount_paid,
 	lo.payment_ref as po_number,
 
 
@@ -81,11 +75,7 @@ select p.*,
 	
 	if(p.invoice_id is null,'purchase orders',
 		if(
-			(p.amount - round(COALESCE((
-				select sum(xpp.amount) 
-				from x_payables_payments xpp
-				where xpp.payable_id=p.payable_id), 0.0
-			),2) > 0),
+			(p.amount - COALESCE(sum(xpp.amount),0) > 0),
 				/* the if here */
 				if(UNIX_TIMESTAMP(CURRENT_TIMESTAMP) > i.due_date,'overdue','invoiced')
 				,
@@ -106,11 +96,13 @@ select p.*,
 from payables p
 	inner join organizations_to_domains otd1 force index for join (`organizations_to_domains_idx5`) on (otd1.org_id=p.from_org_id and otd1.is_home=1)
 	inner join organizations_to_domains otd2 force index for join (`organizations_to_domains_idx5`)  on (otd2.org_id=p.to_org_id and otd2.is_home=1)
+	left join x_payables_payments xpp on (xpp.payable_id=p.payable_id)
 	left join invoices i on (i.invoice_id=p.invoice_id)
 	left join lo_order_line_item loi on (loi.lo_liid=p.parent_obj_id)
 	left join lo_order_deliveries lod on (loi.lodeliv_id=lod.lodeliv_id)
 	left join lo_order lo on (lo.lo_oid=if(payable_type='delivery fee',p.parent_obj_id,loi.lo_oid))
 	left join lo_fulfillment_order lfo on (lfo.lo_foid=loi.lo_foid)	
+	group by p.payable_id;
 ;
 
 select count(payable_id) from v_payables;
