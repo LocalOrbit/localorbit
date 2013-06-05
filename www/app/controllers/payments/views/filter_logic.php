@@ -31,6 +31,11 @@ function payments__add_standard_filters($datatable,$tab='')
 	if(!isset($core->data[$datatable->name.'__filter__payment_status']) && $datatable->name == 'receivables')
 		$core->data[$datatable->name.'__filter__payment_status'] = "'invoiced','overdue','purchase orders'";
 
+	if(!isset($core->data[$datatable->name.'__filter__from_org_id']) && $datatable->name == 'payables')
+		$core->data[$datatable->name.'__filter__from_org_id'] = $core->session['org_id'];
+	if(!isset($core->data[$datatable->name.'__filter__to_org_id']) && $datatable->name == 'receivables')
+		$core->data[$datatable->name.'__filter__to_org_id'] = $core->session['org_id'];
+
 	// default dates
 	$start = $core->config['time'] - (86400*30);
 	$end = $core->config['time'];

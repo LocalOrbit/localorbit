@@ -69,6 +69,7 @@ select p.*,
 	end as payable_status,
 		
 	CASE 
+		WHEN loi.lbps_id in (1,3,4) and loi.ldstat_id=2 THEN 'awaiting delivery / buyer payment'
 		WHEN loi.ldstat_id=2 THEN 'awaiting delivery'
 		WHEN loi.lbps_id in (1,3,4) THEN 'awaiting buyer payment'
 		WHEN loi.lbps_id=2 AND loi.ldstat_id=4 THEN 'delivered, payment pending'
