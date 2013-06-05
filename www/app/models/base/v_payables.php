@@ -14,19 +14,26 @@ class core_model_base_v_payables extends core_model
 		$this->add_field(new core_model_field(8,'creation_date','int',8,'','v_payables'));
 		$this->add_field(new core_model_field(9,'from_org_name','string',-4,'','v_payables'));
 		$this->add_field(new core_model_field(10,'to_org_name','string',-4,'','v_payables'));
-		$this->add_field(new core_model_field(11,'domain_name','string',-4,'','v_payables'));
-		$this->add_field(new core_model_field(12,'due_date','int',8,'','v_payables'));
-		$this->add_field(new core_model_field(13,'invoice_date','int',8,'','v_payables'));
-		$this->add_field(new core_model_field(14,'order_nbr','string',-4,'','v_payables'));
-		$this->add_field(new core_model_field(15,'days_left','int',8,'','v_payables'));
-		$this->add_field(new core_model_field(16,'payable_info','string',8000,'','v_payables'));
-		$this->add_field(new core_model_field(17,'delivery_start_time','int',8,'','v_payables'));
-		$this->add_field(new core_model_field(18,'delivery_end_time','int',8,'','v_payables'));
-		$this->add_field(new core_model_field(19,'amount_paid','float',10,'2','v_payables'));
-		$this->add_field(new core_model_field(20,'po_number','string',-4,'','v_payables'));
-		$this->add_field(new core_model_field(21,'status','int',8,'','v_payables'));
+		$this->add_field(new core_model_field(11,'from_domain_id','int',8,'','v_payables'));
+		$this->add_field(new core_model_field(12,'to_domain_id','int',8,'','v_payables'));
+		$this->add_field(new core_model_field(13,'due_date','int',8,'','v_payables'));
+		$this->add_field(new core_model_field(14,'invoice_date','int',8,'','v_payables'));
+		$this->add_field(new core_model_field(15,'order_nbr','string',-4,'','v_payables'));
+		$this->add_field(new core_model_field(16,'days_left','int',8,'','v_payables'));
+		$this->add_field(new core_model_field(17,'payable_info','string',8000,'','v_payables'));
+		$this->add_field(new core_model_field(18,'delivery_start_time','int',8,'','v_payables'));
+		$this->add_field(new core_model_field(19,'delivery_end_time','int',8,'','v_payables'));
+		$this->add_field(new core_model_field(20,'amount_paid','float',10,'2','v_payables'));
+		$this->add_field(new core_model_field(21,'po_number','string',-4,'','v_payables'));
 		$this->add_field(new core_model_field(22,'invoiced','int',8,'','v_payables'));
-		$this->add_field(new core_model_field(23,'searchable_fields','string',8000,'','v_payables'));
+		$this->add_field(new core_model_field(23,'last_invoiced','int',8,'','v_payables'));
+		$this->add_field(new core_model_field(24,'po_terms','int',8,'','v_payables'));
+		$this->add_field(new core_model_field(25,'delivery_status','string',-4,'','v_payables'));
+		$this->add_field(new core_model_field(26,'payable_status','string',-4,'','v_payables'));
+		$this->add_field(new core_model_field(27,'receivable_status','string',-4,'','v_payables'));
+		$this->add_field(new core_model_field(28,'payment_status','string',-4,'','v_payables'));
+		$this->add_field(new core_model_field(29,'pending','string',-4,'','v_payables'));
+		$this->add_field(new core_model_field(30,'searchable_fields','string',8000,'','v_payables'));
 		$this->init_data();
 	}
 }

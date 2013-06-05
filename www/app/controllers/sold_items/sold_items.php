@@ -21,9 +21,11 @@ class core_controller_sold_items extends core_controller
 							<option value="ldstat_id:6">Contested</option>
 						</select>
 					<!--</td>-->
+					<input type="button" class="button_primary btn btn-mini btn-info" value="Apply Action to Checked Items" onclick="core.sold_items.applyAction();" />
+					
 			';
 		}
-		
+		/*
 		$html .= '
 				<!--<td>-->
 					<select name="actions_'.($idx+2).'" id="actions_menu_'.($idx+2).'" onchange="document.getElementById(\'actions_menu_3\').selectedIndex=this.selectedIndex;document.getElementById(\'actions_menu_6\').selectedIndex=this.selectedIndex;">
@@ -45,11 +47,12 @@ class core_controller_sold_items extends core_controller
 					</select>
 				<!--</td>
 				<td>-->
-					<input type="button" class="button_primary btn btn-mini btn-info" value="Apply Action to Checked Items" onclick="core.sold_items.applyAction();" />
+					
 				<!--</td>
 			</tr>
 		</table>-->
 		';
+		*/
 		return $html;
 	}
 	
@@ -79,7 +82,7 @@ class core_controller_sold_items extends core_controller
 		$orders_to_check  = array();
 		$fulfils_to_check = array();
 		$inventory_to_edit = array();
-		$invoices_to_check = array();
+		$payables_to_invoice = array();
 		
 		$lbps_id = $core->data['lbps_id'];
 		$lsps_id = $core->data['lsps_id'];
@@ -216,7 +219,7 @@ class core_controller_sold_items extends core_controller
 				
 				if($ldstat_id == 4)
 				{
-					$invoices_to_check[] = $item['lo_oid'];
+					$payables_to_invoice[] = $item['lo_liid'];
 				}
 			}
 				
@@ -239,14 +242,11 @@ class core_controller_sold_items extends core_controller
 		}
 		
 		# this checks if we need to invoice sellers based on the changes made
-		core::log('total items: '.count($invoices_to_check));
-		if(count($invoices_to_check) > 0)
+		core::log('total items: '.count($payables_to_invoice));
+		if(count($payables_to_invoice) > 0)
 		{
 			$controller = core::controller('orders');
-			foreach($invoices_to_check as $invoice)
-			{
-				$controller->update_statuses_due_to_payments($invoice);
-			}
+			$controller->invoice_seller_payables($payables_to_invoice);
 		}
 		
 		# popup the inventory editor if necessary

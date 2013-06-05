@@ -64,7 +64,8 @@ class core_model_v_payables extends core_model_base_v_payables
 	function get_payables_for_payment($ids)
 	{
 		$sql = "
-			select p.*,concat_ws('-',if(((p.amount - p.amount_paid)>0),0,1),p.from_org_id,p.to_org_id) as group_key
+			select p.*,
+			concat_ws('-',if(((p.amount - p.amount_paid)>0),0,1),p.from_org_id,p.to_org_id) as group_key
 			from v_payables p
 			where p.payable_id in (".implode(',',$ids).")
 			order by if(((p.amount - p.amount_paid)>0),0,1),concat_ws('-',p.from_org_name,p.to_org_name)

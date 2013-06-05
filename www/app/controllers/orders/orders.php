@@ -12,18 +12,54 @@ class core_controller_orders extends core_controller
 		core_ui::notification('email sent');
 	}
 	
-	function update_statuses_due_to_payments($lo_oid,$payable_id=null)
+	function invoice_seller_payables($item_ids)
 	{
 		global $core;
 	
 		
-		core::log('called update_statuses_due_to_payments on lo_oid '.$lo_oid.' and payable '.$payable_id);
+		core::log('called update_statuses_due_to_payments on payables for items: '.print_r($item_ids,true));
 		# we need to figure out how much is due on the order
 		$changes_made = false;
-		$amount_due = floatval(core_db::col('select amount_due from v_payables where payable_type=\'buyer order\' and parent_obj_id='.$lo_oid,'amount_due'));
+		#$amount_due = floatval(core_db::col('select amount_due from v_payables where payable_type=\'buyer order\' and parent_obj_id='.$lo_oid,'amount_due'));
+		
+		$payables = core::model('v_payables')
+			->collection()
+			->filter('parent_obj_id','in',$item_ids)
+			->filter('payable_type','=','seller order');
+			
+		$new_invoices = array();
+		
+		foreach($payables as $payable)
+		{
+			if(!is_numeric($payable['invoice_id']))
+			{
+				if(!isset($new_invoices[$payable['from_org_id'].'-'.$payable['to_org_id']]))
+				{
+					$new_invoices[$payable['from_org_id'].'-'.$payable['to_org_id']] = array();
+				}
+				$new_invoices[$payable['from_org_id'].'-'.$payable['to_org_id']][] = $payable['payable_id'];
+			}
+		}
+		
+		foreach($new_invoices as $to_from=>$payable_list)
+		{
+			$invoice = core::model('invoices');
+			$invoice['first_invoice_date'] = time();
+			$invoice['due_date'] = time() + (7 * 86400);
+			$invoice['creation_date'] = time();
+			$invoice->save();
+			
+			core_db::query('
+				update payables 
+				set invoice_id='.$invoice['invoice_id'].' 
+				where payable_id in ('.implode(',',$payable_list).');
+			');
+			$changes_made = true;
+		}
 		
 		# if the buyer has fully paid, then we need to look through the seller orders
 		# and see if one of them is NOT invoiced, but fully delivered. If that is so, then we need to invoice them.
+		/*
 		if($amount_due == 0)
 		{
 			$seller_orders    = new core_collection('
@@ -43,13 +79,14 @@ class core_controller_orders extends core_controller
 			{
 				$invoice = core::model('invoices');
 				$invoice['creation_date']    = time();
-				$invoice['due_date']    = time();
+				$invoice['due_date']    = time() + (7*86400);
 				$invoice['amount']      = $seller_order['amount'];
 				$invoice->save();
 				core_db::query('update payables set invoice_id='.$invoice['invoice_id'].' where payable_id='.$seller_order['payable_id']);
 				$changes_made = true;
 			}			
 		}
+		*/
 		return $changes_made;
 	}
 	
