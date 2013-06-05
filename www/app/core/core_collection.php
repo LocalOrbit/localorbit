@@ -342,7 +342,7 @@ class core_collection implements Iterator,ArrayAccess
 		{
 			$this->__sql = trim($this->__sql);
 			$this->__sql = substr($this->__sql,6,strlen($this->__sql));
-			$this->__sql = 'select SQL_CALC_FOUND_ROWS '.$this->__sql;
+			$this->__sql = 'select SQL_CACHE SQL_CALC_FOUND_ROWS '.$this->__sql;
 		}
 		
 		return $this->__sql;
