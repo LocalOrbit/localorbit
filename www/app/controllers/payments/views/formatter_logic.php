@@ -143,7 +143,7 @@ function format_payable_info($data)
 	
 	
 	# format payment status
-	$data['payment_status'] = ($data['status'] == '1')?'Paid':'Unpaid';
+	$data['payment_status'] = ucwords($data['payment_status']);
 	$data['receivable_status']  = ucwords($data['receivable_status']);
 	
 	# if this is a payment, do payment specific formatting
