@@ -10,17 +10,8 @@ function payments__add_standard_filters($datatable,$tab='')
 	$datatable->filter_html = '';
 	$datatable->filter_html .= '<div style="float:right;width:450px;">'.get_inline_message($datatable->name).'</div>';
 	$datatable->filter_html .= '<div style="float:left;width:450px;">';
-		
-	$filter_width = 285;
-	$label_width  = 125;
-	$date_verb    = (in_array($datatable->name,array('payables','systemwide','receivables')))?'Invoiced':'Paid';
 	
-	// convert to unix dates	
-	core_format::fix_unix_dates(
-		$datatable->name.'__filter__'.$tab.'createdat1',
-		$datatable->name.'__filter__'.$tab.'createdat2'
-	);
-	
+	# set defaults on all filters
 	if(!isset($core->data[$datatable->name.'__filter__payable_type']) && $datatable->name == 'payables')
 		$core->data[$datatable->name.'__filter__payable_type'] = 'seller order';
 	if(!isset($core->data[$datatable->name.'__filter__payable_type']) && $datatable->name == 'receivables')
@@ -36,9 +27,15 @@ function payments__add_standard_filters($datatable,$tab='')
 	if(!isset($core->data[$datatable->name.'__filter__to_org_id']) && $datatable->name == 'receivables')
 		$core->data[$datatable->name.'__filter__to_org_id'] = $core->session['org_id'];
 
+	// convert to unix dates	
+	core_format::fix_unix_dates(
+		$datatable->name.'__filter__'.$tab.'createdat1',
+		$datatable->name.'__filter__'.$tab.'createdat2'
+	);
+	
 	// default dates
 	$start = $core->config['time'] - (86400*30);
-	$end = $core->config['time'];
+	$end = $core->config['time']+3600;
 	if(!isset($core->data[$datatable->name.'__filter__'.$tab.'createdat1'])){ 
 		$core->data[$datatable->name.'__filter__'.$tab.'createdat1'] = $start; 
 	}
@@ -54,10 +51,11 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->add_filter(new core_datatable_filter($tab.'createdat1','creation_date','>','unix_date',null));
 		$datatable->add_filter(new core_datatable_filter($tab.'createdat2','creation_date','<','unix_date',null));
 	}
-
+	$date_verb    = (in_array($datatable->name,array('payables','systemwide','receivables')))?'Invoiced':'Paid';
 	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat1',core_format::date($start,'short'),$date_verb.' on or before ');
 	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat2',core_format::date($end,'short'),$date_verb.' on or before ');	
 	
+	# add the searchable fields filter
 	$datatable->add_filter(new core_datatable_filter('payable_info','searchable_fields','~','search'));
 	$datatable->filter_html .= core_datatable_filter::make_text($datatable->name,'payable_info',$datatable->filter_states[$datatable->name.'__filter__payable_info'],'Search by name or ref #');
 
@@ -158,8 +156,6 @@ function payments__add_standard_filters($datatable,$tab='')
 	
 	# We now know what filters to render. Now try to place them into 
 	# a layout as best we can.
-
-	
 	if(lo3::is_buyer())
 	{
 		# the buyer is the only role that doesn't have any kind if layout 
@@ -374,118 +370,25 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->filter_html .= '</div>';
 	}
 
-	
 	$datatable->filter_html .= '</div>';
-	
-	return $datatable;
-
-	
-	
-	// Order Status (seller, ) ***************************************************************************************************************
-	// Record Payments to Vendors ????	// Status (paid, awaiting delivery, awaiting buyer payment, awaiting MM, awaiting LO transfer)		
-	/*
-	 * 
-	 * I dont' think we're using this at all now
-	 * 
-	 * 
-	 * 
-	if (lo3::is_seller() && in_array($tab,array('receivables'))) {
-			$datatable->add_filter(new core_datatable_filter('order_status'));
-				
-			$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - 14).'px;">';
-			$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Status: </div>';
-			$datatable->filter_html .= core_datatable_filter::make_select(
-					$datatable->name,
-					'order_status',
-					$datatable->filter_states[$datatable->name.'__filter__order_status'],
-					array(
-							'paid'=>'Paid',
-							'awaiting delivery'=>'Awaiting delivery',
-							'awaiting buyer payment'=>'Awaiting buyer payment',
-							'awaiting MM or LO transfer'=>'Awaiting MM or LO transfer',
-					),
-					null,
-					null,
-					'All Types',
-					'width: 120px; max-width: 120px;'
-			);
-				
-			$datatable->filter_html .= '</div>';
-	}
-	*/
-
-	
-	
-	
-
-	
-
-	/*
-	if (in_array($tab,array('payables','receivables'))) {
-			
-		//Status (paid, unpaid, all; defaults to unpaid)
-		if(!isset($core->data[$datatable->name.'__filter__amount_paid']))
-			$core->data[$datatable->name.'__filter__amount_paid'] = 0;
-		$datatable->add_filter(new core_datatable_filter('amount_paid'));
-		$datatable->filter_html .= '<div style="float:left;width: '.($filter_width - 14).'px;">';
-			$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Payment Status: </div>';
-			$datatable->filter_html .= core_datatable_filter::make_select(
-					$datatable->name,
-					'amount_paid',
-					$datatable->filter_states[$datatable->name.'__filter__amount_paid'],
-					array(
-							'1'=>'Paid',
-							'0'=>'Unpaid',
-					),
-					null,
-					null,
-					'All Statuses',
-					'width: 120px; max-width: 120px;'
-			);
-		$datatable->filter_html .= '</div>';
-
-		
-		//Invoiced (invoiced, un-invoiced, all; defaults to all)
-		$datatable->add_filter(new core_datatable_filter('invoiced'));
-		$datatable->filter_html .= '<div style="float:left;width: '.$filter_width.'px;">';			
-			$datatable->filter_html .= '<div class="pull-left" style="padding: 10px 10px 0px 0px;width:'.($label_width + 36).'px;text-align: right;">Payment Invoiced: </div>';
-			$datatable->filter_html .= core_datatable_filter::make_select(
-					$datatable->name,
-					'invoiced',
-					$datatable->filter_states[$datatable->name.'__filter__invoiced'],
-					array(
-							'1'=>'Invoiced',
-							'0'=>'Not Invoiced Yet',
-					),
-					null,
-					null,
-					'All Statuses',
-					'width: 120px; max-width: 120px;'
-			);			
-		$datatable->filter_html .= '</div>';
-	
-	}
-	*/
-		
-	
-
-
-	
-
-	#$datatable->filter_html .= '<br /><div style="width: '.($filter_width * 3).'px;clear:both;">&nbsp;</div>';
 	
 	return $datatable;
 }
 
+
+/* this function is used to make a generic pulldown filter specifically for the payments area */
 function make_filter($datatable,$field,$options,$label,$all_label)
 {
+	# we may need to adjust these later
 	$label_width = 49;
 	$field_width = 160;
 	
+	# one of the filters needs to be an 'in' filter.
 	if($field == 'payment_status')
 		$datatable->add_filter(new core_datatable_filter($field,'','in'));
 	else
 		$datatable->add_filter(new core_datatable_filter($field));
+	
 	$datatable->filter_html .= '<div style="width:'.$label_width.'px;padding-top: 7px;padding-right: 5px;text-align: right;float:left;">'.$label.' </div>';
 	$datatable->filter_html .= core_datatable_filter::make_select(
 		$datatable->name,
