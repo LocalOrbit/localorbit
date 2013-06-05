@@ -3,6 +3,7 @@
 CREATE index organizations_to_domains_idx5 on organizations_to_domains (org_id,is_home) using btree;
 
 
+
 create or replace view v_payables as 
 
 select p.*,
@@ -46,28 +47,30 @@ select p.*,
 		where xpp.payable_id=p.payable_id), 0.0
 	),2) as amount_paid,
 	lo.payment_ref as po_number,
-	(
-		round(COALESCE((
-		select sum(xpp.amount) 
-		from x_payables_payments xpp
-		where xpp.payable_id=p.payable_id), 0.0
-		),2) > 0
-	) as status,
+
+
 	if(ifnull(i.invoice_id,0)=0,0,1) as invoiced,
 	i.creation_date as last_invoiced,
 	ceiling((i.due_date - i.first_invoice_date ) / 86400) as po_terms,
-	(
-		select lods.delivery_status 
-		from lo_delivery_statuses lods 
-		where lods.ldstat_id=if(payable_type='delivery fee',lo.ldstat_id,loi.ldstat_id)
-	) as delivery_status,
 	
-	(
-		select lbps.buyer_payment_status 
-		from lo_buyer_payment_statuses lbps 
-		where if(payable_type='delivery fee',lo.lbps_id,loi.lbps_id)=lbps.lbps_id
-	) as payable_status,
 	
+	case if(payable_type='delivery fee',lo.ldstat_id,loi.ldstat_id)
+		when 	2 then 'Pending'
+		when 	3 then 'Canceled'
+		when 	4 then 'Delivered'
+		when 	5 then 'Partially Delivered'
+		when 	6 then 'Contested'
+	end as delivery_status,
+	
+	
+	case if(payable_type='delivery fee',lo.lbps_id,loi.lbps_id)
+		when 	1 then 'Unpaid'
+		when 	2 then 'Paid'
+		when 	3 then 'Invoice Issued'
+		when 	4 then 'Partially Paid'
+		when 	5 then 'Refunded'
+		when 	6 then 'Manual Review'
+	end as payable_status,
 		
 	CASE 
 		WHEN loi.ldstat_id=2 THEN 'awaiting delivery'
@@ -75,24 +78,22 @@ select p.*,
 		WHEN loi.lbps_id=2 AND loi.ldstat_id=4 THEN 'delivered, payment pending'
 	END AS receivable_status,
 	
-	CASE 
-		WHEN (p.amount - round(COALESCE((
-			select sum(xpp.amount) 
-			from x_payables_payments xpp
-			where xpp.payable_id=p.payable_id), 0.0
-		),2) > 0 and UNIX_TIMESTAMP(CURRENT_TIMESTAMP) > i.due_date and p.invoice_id is not null) THEN 'overdue'
-		WHEN (p.amount - round(COALESCE((
-			select sum(xpp.amount) 
-			from x_payables_payments xpp
-			where xpp.payable_id=p.payable_id), 0.0
-		),2) > 0 and UNIX_TIMESTAMP(CURRENT_TIMESTAMP) <= i.due_date and p.invoice_id is not null) THEN 'invoiced'
-		WHEN (p.amount - round(COALESCE((
-			select sum(xpp.amount) 
-			from x_payables_payments xpp
-			where xpp.payable_id=p.payable_id), 0.0
-		),2) <= 0) THEN 'paid'
-		WHEN (p.invoice_id is null) THEN 'purchase_orders'
-	END AS payment_status,
+	
+	if(p.invoice_id is null,'purchase orders',
+		if(
+			(p.amount - round(COALESCE((
+				select sum(xpp.amount) 
+				from x_payables_payments xpp
+				where xpp.payable_id=p.payable_id), 0.0
+			),2) > 0),
+				/* the if here */
+				if(UNIX_TIMESTAMP(CURRENT_TIMESTAMP) > i.due_date,'overdue','invoiced')
+				,
+				'paid'
+				/* the else here */
+		)
+	) as payment_status,
+			
 	
 	CASE 
 		WHEN (loi.lbps_id<>2) THEN 'buyer_payment'
@@ -107,12 +108,12 @@ from payables p
 	inner join organizations_to_domains otd2 force index for join (`organizations_to_domains_idx5`)  on (otd2.org_id=p.to_org_id and otd2.is_home=1)
 	left join invoices i on (i.invoice_id=p.invoice_id)
 	left join lo_order_line_item loi on (loi.lo_liid=p.parent_obj_id)
-
 	left join lo_order_deliveries lod on (loi.lodeliv_id=lod.lodeliv_id)
 	left join lo_order lo on (lo.lo_oid=if(payable_type='delivery fee',p.parent_obj_id,loi.lo_oid))
 	left join lo_fulfillment_order lfo on (lfo.lo_foid=loi.lo_foid)	
 ;
 
+select count(payable_id) from v_payables;
 
 
 CREATE or replace VIEW v_payments AS 
