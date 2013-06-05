@@ -140,6 +140,7 @@ core.catalog.setFilter=function(type,id,parentId,updateListing){
 		core.catalog.updateListing();
 }
 
+
 core.catalog.resetDeliveryDateChange=function(){
 	var ddDescs = {};
 	for(var key in core.delivs){

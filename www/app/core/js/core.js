@@ -1,5 +1,5 @@
 var core={
-	doBase64:true,
+	doBase64:false,
 	currentHash:'',
 	valRules:{},
 	navState:{},
@@ -320,6 +320,12 @@ core.doRequest=function(path,data){
 	finalData += '&_browserX='+winW;
 	finalData += '&_browserY='+winH;
 	finalData += '&_os='+encodeURIComponent(navigator.platform);
+	
+	if(!core.doBase64)
+	{
+		finalData += '&no_base64=true';
+	}
+
 
 	// prepare navState
 	var finalNavState = [];
@@ -398,26 +404,32 @@ core.doRequest=function(path,data){
 		core.cleanupStartTime = new Date().valueOf();
 
 
-		var title = Base64.decode(jsondata.title);
+		var title = jsondata.title;
+		if(core.doBase64)
+			title = Base64.decode(title);
 		if(title != ''){
 			//alert('trying to set title');
 			document.title=title;
 			//alert('title append done');
 		}
-		var desc = Base64.decode(jsondata.description);
+		var desc = jsondata.description;
+		if(core.doBase64)
+			desc = Base64.decode(desc);
 		if(desc != '')
 			$('meta[name=description]').attr('content',desc);
 		//alert('meta description append done');
-		var keywords = Base64.decode(jsondata.keywords);
+		var keywords = jsondata.title;
+		if(core.doBase64)
+			keywords = Base64.decode(keywords);
 		if(keywords != '')
-			$('meta[name=keywords]').attr('keywords',desc);
+			$('meta[name=keywords]').attr('keywords',keywords);
 		//alert('meta keywordss append done');
 
 		core.fixDropDown();
 
 		//$('#loading').hide();
 		//alert(Base64.decode(jsondata.js));
-		core.log(Base64.decode(jsondata.js));
+		//core.log(Base64.decode(jsondata.js));
 		if(mainChanged){
 			if(core.ui)
 				core.ui.scrollTop();

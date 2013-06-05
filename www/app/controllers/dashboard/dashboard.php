@@ -55,7 +55,7 @@ class core_controller_dashboard extends core_controller
 
 			# full sales total
 			$data['week'][$i] = core_db::col('
-				select sum(grand_total) as mytotal
+				select sum(grand_total) as mytotal,\'week'.$i.'-sales\' as label
 				from lo_order
 				'.$status_exclude.'
 				and UNIX_TIMESTAMP(order_date) >= '.$w[$i][0].'
@@ -65,7 +65,7 @@ class core_controller_dashboard extends core_controller
 			if($i<2)
 			{
 				$data['day'][$i] = core_db::col('
-					select sum(grand_total) as mytotal
+					select sum(grand_total) as mytotal,\'day'.$i.'-sales\' as label
 					from lo_order
 					'.$status_exclude.'
 					and UNIX_TIMESTAMP(order_date) >= '.$d[$i][0].'
@@ -76,7 +76,7 @@ class core_controller_dashboard extends core_controller
 
 			# hub fee total
 			$data['week'][$i+3] = core_db::col('
-				select sum((grand_total * (fee_percen_hub / 100))) as mytotal
+				select sum((grand_total * (fee_percen_hub / 100))) as mytotal,\'week'.$i.'-hubfee\' as label
 				from lo_order
 				'.$status_exclude.'
 				and UNIX_TIMESTAMP(order_date) >= '.$w[$i][0].'
@@ -86,7 +86,7 @@ class core_controller_dashboard extends core_controller
 			if($i<2)
 			{
 				$data['day'][$i+3] = core_db::col('
-					select sum((grand_total * (fee_percen_hub / 100))) as mytotal
+					select sum((grand_total * (fee_percen_hub / 100))) as mytotal,\'day'.$i.'-hubfee\' as label
 					from lo_order
 					'.$status_exclude.'
 					and UNIX_TIMESTAMP(order_date) >= '.$d[$i][0].'
@@ -97,7 +97,7 @@ class core_controller_dashboard extends core_controller
 
 			# lo fee total
 			$data['week'][$i+6] = core_db::col('
-				select sum((grand_total * (fee_percen_lo / 100))) as mytotal
+				select sum((grand_total * (fee_percen_lo / 100))) as mytotal,\'week'.$i.'-lofee\' as label
 				from lo_order
 				'.$status_exclude.'
 				and UNIX_TIMESTAMP(order_date) >= '.$w[$i][0].'
@@ -107,7 +107,7 @@ class core_controller_dashboard extends core_controller
 			if($i<2)
 			{
 				$data['day'][$i+6] = core_db::col('
-					select sum((grand_total * (fee_percen_lo / 100))) as mytotal
+					select sum((grand_total * (fee_percen_lo / 100))) as mytotal,\'day'.$i.'-lofee\' as label
 					from lo_order
 					'.$status_exclude.'
 					and UNIX_TIMESTAMP(order_date) >= '.$d[$i][0].'
@@ -118,7 +118,7 @@ class core_controller_dashboard extends core_controller
 
 
 			$data['month'][$i] = core_db::col('
-				select sum(grand_total) as mytotal
+				select sum(grand_total) as mytotal,\'month'.$i.'-sales\' as label
 				from lo_order
 				'.$status_exclude.'
 				and UNIX_TIMESTAMP(order_date) >= '.$m[$i][0].'
@@ -128,7 +128,7 @@ class core_controller_dashboard extends core_controller
 
 			# hub fee total
 			$data['month'][$i+3] = core_db::col('
-				select sum((grand_total * (fee_percen_hub / 100))) as mytotal
+				select sum((grand_total * (fee_percen_hub / 100))) as mytotal,\'month'.$i.'-hubfee\' as label
 				from lo_order
 				'.$status_exclude.'
 				and UNIX_TIMESTAMP(order_date) >= '.$m[$i][0].'
@@ -138,7 +138,7 @@ class core_controller_dashboard extends core_controller
 
 			# lo fee total
 			$data['month'][$i+6] = core_db::col('
-				select sum((grand_total * (fee_percen_lo / 100))) as mytotal
+				select sum((grand_total * (fee_percen_lo / 100))) as mytotal,\'month'.$i.'-lofee\' as label
 				from lo_order
 				'.$status_exclude.'
 				and UNIX_TIMESTAMP(order_date) >= '.$m[$i][0].'

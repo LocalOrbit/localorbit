@@ -26,6 +26,7 @@ class core_model_base_v_users extends core_model
 		$this->add_field(new core_model_field(20,'hostname','string',-4,'','v_users'));
 		$this->add_field(new core_model_field(21,'org_is_deleted','int',8,'','v_users'));
 		$this->add_field(new core_model_field(22,'composite_role','string',-4,'','v_users'));
+		$this->add_field(new core_model_field(23,'role_label','string',-4,'','v_users'));
 		$this->init_data();
 	}
 }

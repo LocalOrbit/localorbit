@@ -401,7 +401,7 @@ class core
 	{
 		global $core;
 		
-		if($core->config['do_base_64'])
+		if($core->data['no_base64'] != 'true')
 		{
 			foreach($core->response['replace'] as $key=>$value)
 				$core->response['replace'][$key] = base64_encode($value);

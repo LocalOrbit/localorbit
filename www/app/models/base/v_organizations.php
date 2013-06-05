@@ -20,10 +20,13 @@ class core_model_base_v_organizations extends core_model
 		$this->add_field(new core_model_field(14,'payment_allow_purchaseorder','int',8,'','v_organizations'));
 		$this->add_field(new core_model_field(15,'payment_allow_paypal','int',8,'','v_organizations'));
 		$this->add_field(new core_model_field(16,'is_deleted','int',8,'','v_organizations'));
-		$this->add_field(new core_model_field(17,'domain_id','int',8,'','v_organizations'));
-		$this->add_field(new core_model_field(18,'domain_name','string',-4,'','v_organizations'));
-		$this->add_field(new core_model_field(19,'hostname','string',-4,'','v_organizations'));
-		$this->add_field(new core_model_field(20,'composite_role','string',-4,'','v_organizations'));
+		$this->add_field(new core_model_field(17,'payment_entity_id','int',8,'','v_organizations'));
+		$this->add_field(new core_model_field(18,'po_due_within_days','int',8,'','v_organizations'));
+		$this->add_field(new core_model_field(19,'domain_id','int',8,'','v_organizations'));
+		$this->add_field(new core_model_field(20,'domain_name','string',-4,'','v_organizations'));
+		$this->add_field(new core_model_field(21,'hostname','string',-4,'','v_organizations'));
+		$this->add_field(new core_model_field(22,'composite_role','string',-4,'','v_organizations'));
+		$this->add_field(new core_model_field(23,'role_label','string',-4,'','v_organizations'));
 		$this->init_data();
 	}
 }
