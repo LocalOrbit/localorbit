@@ -146,6 +146,17 @@ class lo3
 			select count(sell_on_domain_id) as mycount from organization_cross_sells where org_id='.$core->session['org_id'],'mycount');
 		return ($count > 0);		
 	}
+
+	public static function is_self_managed()
+	{
+		global $core;
+		return (lo3::is_market() and $core->config['domain']['seller_payer'] == 'hub');
+	}
+	public static function is_fully_managed()
+	{
+		global $core;
+		return (lo3::is_market() and $core->config['domain']['seller_payer'] != 'hub');
+	}
 	
 	
 	public static function is_seller()

@@ -18,13 +18,23 @@ $receivables = false;
 if(lo3::is_admin() || lo3::is_market())
 {
 	$tabs[] = 'Overview';
-	$tabs[] = 'Send Invoices and Enter Receipts';
+	
+	if(lo3::is_admin()) {
+		$tabs[] = 'Send Invoices and Enter Receipts';
+	} else if(lo3::is_fully_managed()) {
+		$tabs[] = 'View Invoices';
+	} else {
+		$tabs[] = 'Send Invoices and Enter Receipts';
+	}
 	
 	if(lo3::is_admin()) {
 		$tabs[] = 'Make or Record Payments to Vendors';
+	} else if(lo3::is_fully_managed()) {		
+		$tabs[] = 'View Payments';
 	} else {
 		$tabs[] = 'Record Payments to Vendors';
-	}	
+	}
+	
 	
 	$tabs[] = 'Review Payment History';
 	$payables = true;
