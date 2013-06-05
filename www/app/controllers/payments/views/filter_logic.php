@@ -161,28 +161,27 @@ function payments__add_standard_filters($datatable,$tab='')
 					'overdue'=>'Overdue',
 					'paid'=>'Paid',
 					'purchase_orders'=>'Purchase Orders',
-				),'Payment Status','All Statuses');
+				),'Status','All Statuses');
 		}
 	}
 	else if(lo3::is_seller())
 	{
-		$datatable->filter_html .= '<div style="float:left; width:225px;">';
+		$do_to_org = lo3::is_cross_seller();
 		
-		if($do_from_org || $do_to_org)
-		{
-			$datatable->filter_html .= '<h4>Delivery Filters</h4>';
-			if($do_from_org)
-				make_filter($datatable,'from_org_id',$org_filter,'From','All Organizations');
-			if($do_to_org)
-				make_filter($datatable,'to_org_id',$org_filter,'To','All Organizations');
-		}
-		
-		$datatable->filter_html .= '<h4>Delivery Status</h4>';
+		$datatable->filter_html .= '<div style="float:left; width:225px;">';		
+		$datatable->filter_html .= '<h4>Delivery Filters</h4>';
 		make_filter($datatable,'delivery_status',array(
-				'Delivered'=>'Delivered',
-				'Pending'=>'Pending',
-				'Canceled'=>'Canceled',
+			'Delivered'=>'Delivered',
+			'Pending'=>'Pending',
+			'Canceled'=>'Canceled',
 			),'Status','All');
+		
+		if($do_from_org)
+			make_filter($datatable,'from_org_id',$org_filter,'From','All Organizations');
+		if($do_to_org)
+			make_filter($datatable,'to_org_id',$org_filter,'To','All Organizations');
+	
+	
 		
 		
 		if($do_payment_method)

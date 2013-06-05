@@ -139,6 +139,15 @@ class lo3
 		return (in_array($core->config['domain']['domain_id'],$core->session['domains_by_orgtype_id'][3]));
 	}
 	
+	public static function is_cross_seller()
+	{
+		global $core;
+		$count = core_db::col('
+			select count(sell_on_domain_id) as mycount from organization_cross_sells where org_id='.$core->session['org_id'],'mycount');
+		return ($count > 0);		
+	}
+	
+	
 	public static function is_seller()
 	{
 		global $core;
