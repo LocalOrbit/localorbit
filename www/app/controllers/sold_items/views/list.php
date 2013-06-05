@@ -78,18 +78,18 @@ $hubs = $hubs->sort('name');
 if(lo3::is_market())
 {
 	$col->filter('lo_order.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
-	$buyer_sql  = 'select org_id,name from organizations where org_id in (select org_id from lo_order where ldstat_id<>1 and lo_order.domain_id in ('.implode(',', $core->session['domains_by_orgtype_id'][2]).')) order by name';
-	$seller_sql = 'select org_id,name from organizations where org_id in (select org_id from lo_fulfillment_order where ldstat_id<>1 and lo_fulfillment_order.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')) and allow_sell=1 order by name';
+	$buyer_sql  = 'select distinct o.org_id,o.name from organizations o inner join lo_order lo on (lo.org_id=o.org_id and lo.domain_id in ('.implode(',', $core->session['domains_by_orgtype_id'][2]).')) where lo.ldstat_id<>1 order by name;';
+	$seller_sql = 'select distinct o.org_id,o.name from organizations o inner join lo_fulfillment_order lfo on (lfo.org_id=o.org_id and lfo.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')) where lfo.ldstat_id<>1 order by name;';
 }
 else if(lo3::is_customer())
 {
-	$col->filter('lo_fulfillment_order.org_id',$core->session['org_id']);
+	$col->filter('lo_fulfillment_order.org_id',$core->session['org_id']);	
 	$buyer_sql  = 'select org_id,name from organizations where org_id in (select org_id from lo_order left join lo_order_line_item using lo_oid where lo_order.ldstat_id<>1 and lo_order_line_item.seller_org_id='.$core->session['org_id'].') order by name';
 }
 else
 {
-	$buyer_sql  = 'select org_id,name from organizations where org_id in (select org_id from lo_order where ldstat_id<>1) order by name';
-	$seller_sql = 'select org_id,name from organizations where allow_sell=1 and org_id in (select org_id from lo_fulfillment_order where ldstat_id<>1) order by name';
+	$buyer_sql  = 'select distinct o.org_id,o.name from organizations o inner join lo_order lo on (lo.org_id=o.org_id) where lo.ldstat_id<>1 order by name;';
+	$seller_sql = 'select distinct o.org_id,o.name from organizations o inner join lo_fulfillment_order lfo on (lfo.org_id=o.org_id) where lfo.ldstat_id<>1 order by name;';
 }
 
 # this stores the totals
