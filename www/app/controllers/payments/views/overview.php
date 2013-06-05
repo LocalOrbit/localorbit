@@ -3,11 +3,10 @@ global $core;
 
 # prepare the data for the top metrics table.
 $all = new core_collection("
-	select from_org_id,to_org_id,amount,amount_paid,days_left,invoice_id from v_payables 
-	where payment_status <> 'paid'
-	and payable_id in (select payable_id from payables where from_org_id=".$core->session['org_id']." or to_org_id=".$core->session['org_id'].");
+	select vpo.* from v_payables_overview vpo 
+	where amount > amount_paid
+	and (vpo.from_org_id=".$core->session['org_id']." or vpo.to_org_id=".$core->session['org_id'].");
 ");
-
 
 $intervals = array('Overdue' => 0, 'Today' => 1, 'Next 7 days' => 7, 'Next 30 days' => 30,'Purchase Orders'=>31);
 $data['payables']    = array_fill_keys(array_values($intervals), 0);
