@@ -77,7 +77,7 @@ if($allow_ach || $allow_offline)
 			else
 				echo('You do not currently have a bank account setup.<br />&nbsp;');
 		
-			echo('<br /><input type="button" class="btn btn-info pull-right" value="Add New Account" onclick="core.payments.newAccount(this)" />');
+			echo('<br /><input type="button" class="btn btn-info pull-right" value="Add New Account" onclick="core.payments.newAccount(this)" /><br /><br />');
 		}
 	}
 	if($allow_offline)
