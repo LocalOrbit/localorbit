@@ -4,6 +4,7 @@ CREATE index organizations_to_domains_idx5 on organizations_to_domains (org_id,i
 
 
 
+
 create or replace view v_payables as 
 
 select p.*,
@@ -235,6 +236,12 @@ ALTER TABLE lo_delivery_statuses ENGINE=InnoDB;
 ALTER TABLE lo_buyer_payment_statuses ENGINE=InnoDB;
 
 
+
+CREATE index domains_idx2 on domains (tz_id) using btree;
+CREATE index domains_idx3 on domains (seller_payer) using btree;
+CREATE index domains_idx4 on domains (buyer_invoicer) using btree;
+CREATE index domains_idx5 on domains (sfs_id) using btree;
+CREATE index domains_idx6 on domains (payable_org_id) using btree;
 
 
 
