@@ -15,6 +15,9 @@ $tabs = array();
 $payables = false;
 $receivables = false;
 
+# just any random positive nbr. This determines if the money out section in overview is shown.
+# this really only needs to be dynamic for sellers, for all other roles just assume there's a positive #.
+$money_out_count = 10;
 if(lo3::is_admin() || lo3::is_market())
 {
 	$tabs[] = 'Overview';
@@ -42,11 +45,11 @@ if(lo3::is_admin() || lo3::is_market())
 }
 else if(lo3::is_seller())
 {
-	$count = core_db::col('select count(payable_id) as mycount from payables where from_org_id='.$core->session['org_id'],'mycount');
+	$money_out_count = core_db::col('select count(payable_id) as mycount from payables where from_org_id='.$core->session['org_id'],'mycount');
 	$tabs[] = 'Overview';
 	$tabs[] = 'Review &amp; Deliver Orders';
 	$receivables = true;
-	if($count > 0)
+	if($money_out_count > 0)
 	{
 		$tabs[] = 'Review Orders &amp; Make Payments';
 		$payables = true;
@@ -74,7 +77,7 @@ core_ui::inline_message("Overview", "This is a snapshot of all money currently o
 
 // tab contents ******************************************************************************* = 0;
 $tab_count = 0;  //affects ids
-$this->overview($tab_count);
+$this->overview($tab_count,$money_out_count);
 if($receivables)
 {
 	$tab_count++;

@@ -1,6 +1,9 @@
 <?
 global $core;
 
+$tab_id = $core->view[0];
+$money_out_count = $core->view[1];
+
 # prepare the data for the top metrics table.
 $all = new core_collection("
 	select vpo.* from v_payables_overview vpo 
@@ -70,7 +73,7 @@ $receivables = $data['receivables'];
 			</div>
 		</div>
 		<?}?>
-		<? if((count($payables) > 0 && lo3::is_seller()) || (!lo3::is_seller())){?>
+		<? if($money_out_count > 0 || (!lo3::is_seller())){?>
 		<div class="span4">
 				<h2>Money Out</h2>
 				<?
