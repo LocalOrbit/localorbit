@@ -14,6 +14,16 @@ function format_payable_info($data)
 	{
 		if(!isset($printed_orders[$info[1].'-'.$info[2]]))
 		{
+			$type = $info[1];
+			switch($type)
+			{
+				case 'seller order':
+					$type = 'Seller Payment';
+					break;
+				default:
+					$type = ucwords($type);
+					break;
+			}
 			$printed_orders[$info[1].'-'.$info[2]] = true;
 			
 			if($html != '')
@@ -31,7 +41,7 @@ function format_payable_info($data)
 			{
 				$html .= '<a href="#!';
 			}
-			$html .= '">'.$info[0].'</a><br />'.ucwords($info[1]).'';
+			$html .= '">'.$info[0].'</a><br />'.$type.'';
 		}
 	}
 	$data['ref_nbr_html'] = $html;
