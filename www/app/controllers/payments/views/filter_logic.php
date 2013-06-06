@@ -46,8 +46,8 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->add_filter(new core_datatable_filter($tab.'createdat2','creation_date','<','unix_date',null));
 	}
 
-	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat1',core_format::date($start,'short'),$date_verb.' on or before ');
-	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat2',core_format::date($end,'short'),$date_verb.' on or before ');	
+	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat1',core_format::date($start,'short'),$date_verb.' from ');
+	$datatable->filter_html .= core_datatable_filter::make_date($datatable->name,$tab.'createdat2',core_format::date($end,'short'),$date_verb.' to ');	
 	
 	$datatable->add_filter(new core_datatable_filter('payable_info','searchable_fields','~','search'));
 	$datatable->filter_html .= core_datatable_filter::make_text($datatable->name,'payable_info',$datatable->filter_states[$datatable->name.'__filter__payable_info'],'Search by name or ref #');
