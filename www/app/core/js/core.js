@@ -1,5 +1,5 @@
 var core={
-	doBase64:false,
+	doBase64:true,
 	currentHash:'',
 	valRules:{},
 	navState:{},

@@ -38,7 +38,7 @@ class core
 		$this->data =& $_REQUEST;
 		
 		$this->config = array(
-			'do_base_64'=>true,
+			'no_base64'=>$_REQUEST['no_base64'],
 			'app_page'=>'index.php',
 			'page'=>'default',
 			'layout'=>'default',
@@ -401,7 +401,7 @@ class core
 	{
 		global $core;
 		
-		if($core->data['no_base64'] != 'true')
+		if($core->config['no_base64'] != 'true')
 		{
 			foreach($core->response['replace'] as $key=>$value)
 				$core->response['replace'][$key] = base64_encode($value);
