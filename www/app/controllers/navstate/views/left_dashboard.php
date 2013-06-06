@@ -194,7 +194,10 @@
 				</ul>
 			</li>
 		</ul>
-		<? if(lo3::is_buyer() && (lo3::is_org_payment_purchase_order_allowed() || lo3::does_org_have_purchase_order_history())){ ?>
+		<? 		
+			//if(lo3::is_buyer() && (lo3::is_org_payment_purchase_order_allowed() || lo3::does_org_have_purchase_order_history())){  per https://www.pivotaltracker.com/s/projects/764301/stories/51209443
+			if(lo3::is_buyer()) {
+		?>
 			<ul class="nav"><li><a id="payments-home" href="#!payments-home" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
 		<?}?>
 		</div> <!-- /.nav-collapse-->
