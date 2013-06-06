@@ -78,7 +78,7 @@ if($actually_send)
 	{
 		$invoice = core::model('invoices');
 		$invoice['amount']      = $buyer['total'];
-		$invoice['due_date']    = date('Y-m-d H:i:s',time() + ($buyer['po_terms'] * 86400));
+		$invoice['due_date']    = (time() + ($buyer['po_terms'] * 86400));
 		$invoice['first_invoice_date'] = time();
 		$invoice['creation_date'] = time();
 		$invoice->save();
