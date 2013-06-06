@@ -205,7 +205,7 @@ core.payments.makePayments=function(tab){
 core.payments.savePayment=function(tab,group){
 	var data = {};
 	data['tab'] = tab;
-	data['payment_method'] = $(document.paymentsForm[tab+'__group_method__'+group]).val();
+	data['payment_method'] = $('input[name='+tab+'__group_method__'+group+']:checked').val();
 	data['ref_nbr'] = $(document.paymentsForm[tab+'__group_ref_nbr__'+group]).val();
 	data['opm_id'] = $(document.paymentsForm[tab+'__group_opm_id__'+group]).val();
 	data['amount'] = $(document.paymentsForm[tab+'__group_total__'+group]).val();
@@ -257,4 +257,11 @@ core.payments.checkAllPaymentsMade=function(tab){
 	if($('div.'+tab+'_row:visible').length == 0){
 		$('#'+tab+'_list,#'+tab+'_actions').toggle(300);
 	}
+}
+
+core.payments.setPayFields=function(tab,group){
+	var val = $('form[name=paymentsForm] input[name='+tab+'__group_method__'+group+']:checked').val();
+	$('.'+tab+'__group__'+group+'__pay_field').hide();
+	$('#'+tab+'__group__'+group+'__pay_fields_'+val).show(300);
+
 }

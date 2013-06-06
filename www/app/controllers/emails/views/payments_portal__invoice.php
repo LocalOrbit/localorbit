@@ -12,7 +12,7 @@ $due_date  = $core->view[5];
 $values = array();
 
 # figure out how to send this to
-if($invoice['from_org_id'] == 1)
+if($from_org_id == 1)
 {
 	$emails = 'mike@localorb.it';
 }
@@ -54,13 +54,30 @@ $counter = false;
 foreach($payables as $payable)
 {
 	#$values['payables'] .= print_r($payable->__data,true);
-	$values['payables'] .= '
-		<tr class="dt'.$counter.'">
-			<td class="dt">'.$payable['lo3_order_nbr'].'</td>
-			<td class="dt">'.$payable['product_name'].' ('.$payable['qty_ordered'].')</td>
-			<td class="dt">'.core_format::date($payable['order_date'],'short').'</td>
-			<td class="dt">'.core_format::price($payable['amount']).'</td>
-		</tr>';
+	$payable = core::model('v_payables')->load($payable);
+	if($payable['payable_type'] == 'buyer order')
+	{
+		$info = explode('|',$payable['payable_info']);
+		$values['payables'] .= '
+			<tr class="dt'.$counter.'">
+				<td class="dt">'.$info[0].'</td>
+				<td class="dt">'.$info[3].' ('.$info[4].')</td>
+				<td class="dt">'.core_format::date($info[7],'short').'</td>
+				<td class="dt">'.core_format::price($payable['amount']).'</td>
+			</tr>';
+	}
+	if($payable['payable_type'] == 'delivery fee')
+	{
+		$info = explode('|',$payable['payable_info']);
+		$values['payables'] .= '
+			<tr class="dt'.$counter.'">
+				<td class="dt">'.$info[0].'</td>
+				<td class="dt">Delivery Fee</td>
+				<td class="dt"></td>
+				<td class="dt">'.core_format::price($payable['amount']).'</td>
+			</tr>';
+	}
+	
 	$counter = (!$counter);
 }
 $values['payables'] .='</table>';

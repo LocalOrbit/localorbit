@@ -15,6 +15,7 @@ if(lo3::is_admin())
 		# admins to make ACH payments to/from Local Orbit from/to anyone 
 		# with an ach account.
 		$allow_ach = true;
+		$allow_offline = true;
 	}
 	else
 	{
@@ -51,11 +52,53 @@ if($allow_ach || $allow_offline)
 {
 	if($allow_ach)
 	{
+		echo('<div class="row">');
+		if($allow_offline)
+		{
+			?>
+			<span class="span6" style="padding-top: 5px;">
+			<?=core_ui::radiodiv(
+				3,
+				'Paid via ACH',
+				false,
+				$tab.'__group_method__'.$group_key,
+				false,
+				'core.payments.setPayFields(\''.$tab.'\',\''.$group_key.'\');'
+			)
+			?></span>
+			<?php
+		}
+		else
+		{
+			echo('<input type="hidden" name="'.$tab.'__group_method__'.$group_key.'" value="3" />');
+		}
+		
 		$methods = core::model('organization_payment_methods')
 				->collection()
 				->add_formatter('organization_payment_methods__formatter_dropdown')
 				->filter('org_id','=',(($from_org_id == 1)?$to_org_id:$from_org_id));
 		$methods->load();
+		echo('</div><div class="row"><div class="span6" style="padding-top: 5px;">');
+		echo('<div class="'.$tab.'__group__'.$group_key.'__pay_field" id="'.$tab.'__group__'.$group_key.'__pay_fields_3" style="'.(($allow_offline)?'display: none;':'').'">');
+			# if the user has a bank account	
+			$show_save = false;
+			if($methods->__num_rows > 0)
+			{
+				
+				echo(core_form::input_select('Pay Via: ',$tab.'__group_opm_id__'.$group_key,null,$methods,array(
+					'select_style'=>'width: 300px;',
+					'text_column'=>'dropdown_text',
+					'value_column'=>'opm_id',
+				)));
+				
+				$show_save = true;
+			}
+			else
+			{
+				if(lo3::is_admin() || lo3::is_market())
+					echo('This organization does not have a bank account setup.<br />&nbsp;');
+				else
+					echo('You do not currently have a bank account setup.<br />&nbsp;');
 			
 		# if the user has a bank account	
 		$show_save = false;
@@ -87,29 +130,31 @@ if($allow_ach || $allow_offline)
 		?>
 		<div class="row">
 		
-			<span class="span2" style="padding-top: 5px;">
+			<span class="span6" style="padding-top: 5px;">
 			<?=core_ui::radiodiv(
 				4,
 				'Paid via Check',
-				true,
+				(($allow_ach)?false:true),
 				$tab.'__group_method__'.$group_key,
 				false,
-				'$(\'#ref_nbr_'.$group_key.'\')[(($(\'input:radio[name=\\\''.$tab.'__group_method__'.$group_key.'\\\']:checked\').val()==4)?\'show\':\'hide\')](300);'
+				'core.payments.setPayFields(\''.$tab.'\',\''.$group_key.'\');'
 			)
 			?></span>
-			<span class="span2"><input type="text" name="<?=$tab?>__group_ref_nbr__<?=$group_key?>" id="ref_nbr_<?=$group_key?>" placeholder="Check Number" /></span>
+			<div class="span6 <?=$tab?>__group__<?=$group_key?>__pay_field" id="<?=$tab?>__group__<?=$group_key?>__pay_fields_4" style="<?=(($allow_ach)?'display: none;':'')?>">
+				<input type="text" name="<?=$tab?>__group_ref_nbr__<?=$group_key?>" placeholder="Check Number" />
+			</div>
 		</div>
 
 		<div class="row">
 			<br />
-			<span class="span2">
+			<span class="span6">
 			<?=core_ui::radiodiv(
 				5,
 				'Paid via Cash',
 				false,
 				$tab.'__group_method__'.$group_key,
 				false,
-				'$(\'#ref_nbr_'.$group_key.'\')[(($(\'input:radio[name=\\\''.$tab.'__group_method__'.$group_key.'\\\']:checked\').val()==4)?\'show\':\'hide\')](300);'
+				'core.payments.setPayFields(\''.$tab.'\',\''.$group_key.'\');'
 			)?>
 			</span>
 		</div>

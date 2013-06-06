@@ -15,6 +15,7 @@ class core_controller_payments extends core_controller
 			core_db::query('delete from payables;');
 			core_db::query('delete from invoices;');
 			core_db::query('delete from payments;');
+			core_db::query('delete from x_payables_payments;');
 		}
 	}
 	

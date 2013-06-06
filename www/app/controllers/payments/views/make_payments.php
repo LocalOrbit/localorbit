@@ -17,7 +17,7 @@ foreach($payables as $group_key=>$payable_list)
 	list($need_pay,$from_org_id,$to_org_id) = explode('-', $group_key);
 ?>
 <div class="row <?=$core->data['tab']?>_row" id="<?=$core->data['tab']?>__area__<?=$group_key?>">
-	<div class="span8">
+	<div class="span6">
 		<h2><i class="icon-cart">&nbsp;</i>From <?=$payable_list[0]['from_org_name']?> to  <?=$payable_list[0]['to_org_name']?></h2>
 		<table class="dt" style="width:100%;" width="100%">
 			<tr>
@@ -44,7 +44,7 @@ foreach($payables as $group_key=>$payable_list)
 			</tr>
 		</table>
 	</div>
-	<div class="span4">
+	<div class="span6">
 		<?if($group_totals[$group_key] > 0){?>
 		<h2><i class="icon-coins">&nbsp;</i>Method</h2>
 		<input type="hidden" name="<?=$core->data['tab']?>__group_total__<?=$group_key?>" value="<?=$group_totals[$group_key]?>" />
