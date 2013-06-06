@@ -5,7 +5,8 @@ global $core;
 
 lo3::user_can_shop();
 
-
+global $left_url;
+$left_url = 'app.php#!catalog-shop';
 //http://devspringfield.localorb.it/app.php#!catalog-view_product--prod_id-2351
 
 #$start = microtime();
@@ -13,6 +14,7 @@ lo3::user_can_shop();
 	if($core->data['show_news'] == 'yes')
 	{
 		core::process_command('dashboard/release_news');
+		$left_url .= '--show_news-yes';
 	}
 
 	#core::ensure_navstate(array('left'=>'left_shop'));
@@ -152,7 +154,7 @@ lo3::user_can_shop();
 		# render the filters on the left side
 		core::ensure_navstate(array('left'=>'left_blank'), 'catalog-shop');
 		core::write_navstate();
-		$this->left_filters($cats,$sellers,$days,$addresses);
+		$this->left_filters($cats,$sellers,$days,$addresses,$left_url);
 		core::hide_dashboard();
 
 		#===============================
@@ -283,7 +285,7 @@ lo3::user_can_shop();
 $js = "core.catalog.initCatalog();";
 if(is_numeric(trim($core->data['cat1'])))
 	$js .= 'core.catalog.setFilter(\'cat1\','.intval(trim($core->data['cat1'])).');';
-core::js("window.setTimeout('".$js."',1000);");
+core::js("window.setTimeout('".$js."',200);");
 core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });");
 core_ui::showLeftNav();
 
