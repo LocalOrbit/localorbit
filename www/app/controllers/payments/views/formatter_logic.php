@@ -55,23 +55,28 @@ function format_payable_info($data)
 	$html = '';
 	foreach($payable_info as $info)
 	{
-		if($html != '')
-			$html .= '<br />';
-		
-		#echo($info[1]);	
-		if($info[1] == 'seller order')
+		if($info[1] == 'delivery fee')
 		{
-			$html .= '<a href="#!orders-view_sales_order--lo_foid-'.$info[2];
-		}
-		else if(in_array(trim($info[1]),array('buyer order','hub fees','lo fees')))
-		{
-			$html .= '<a href="#!orders-view_order--lo_oid-'.$info[2];
 		}
 		else
 		{
-			$html .= '<a href="#!';
+			if($html != '')
+				$html .= '<br />';
+			
+			if($info[1] == 'seller order')
+			{
+				$html .= '<a href="#!orders-view_sales_order--lo_foid-'.$info[2];
+			}
+			else if(in_array(trim($info[1]),array('buyer order','hub fees','lo fees')))
+			{
+				$html .= '<a href="#!orders-view_order--lo_oid-'.$info[2];
+			}
+			else
+			{
+				$html .= '<a href="#!';
+			}
+			$html .= '">'.$info[3].' ('.$info[4].')</a>';
 		}
-		$html .= '">'.$info[3].' ('.$info[4].')</a>';
 	}
 	$data['description_html'] = $html;
 	

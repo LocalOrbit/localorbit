@@ -24,10 +24,10 @@ select p.*,
 		if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr),
 		p.payable_type,
 		if(payable_type='seller order',loi.lo_foid,lo.lo_oid),
-		loi.product_name,
-		loi.qty_ordered,
-		loi.seller_name,
-		loi.seller_org_id,
+		ifnull(loi.product_name,' '),
+		ifnull(loi.qty_ordered,' '),
+		ifnull(loi.seller_name,' '),
+		ifnull(loi.seller_org_id,' '),
 		UNIX_TIMESTAMP(lo.order_date)
 	) as payable_info,
 
@@ -70,10 +70,10 @@ select p.*,
 	end as payable_status,
 		
 	CASE 
-		WHEN loi.lbps_id in (1,3,4) and loi.ldstat_id=2 THEN 'awaiting delivery / buyer payment'
-		WHEN loi.ldstat_id=2 THEN 'awaiting delivery'
-		WHEN loi.lbps_id in (1,3,4) THEN 'awaiting buyer payment'
-		WHEN loi.lbps_id=2 AND loi.ldstat_id=4 THEN 'delivered, payment pending'
+		WHEN if(payable_type='delivery fee',lo.lbps_id,loi.lbps_id) in (1,3,4) and if(payable_type='delivery fee',lo.ldstat_id,loi.ldstat_id)=2 THEN 'awaiting delivery / buyer payment'
+		WHEN if(payable_type='delivery fee',lo.ldstat_id,loi.ldstat_id)=2 THEN 'awaiting delivery'
+		WHEN if(payable_type='delivery fee',lo.lbps_id,loi.lbps_id) in (1,3,4) THEN 'awaiting buyer payment'
+		WHEN if(payable_type='delivery fee',lo.lbps_id,loi.lbps_id)=2 AND if(payable_type='delivery fee',lo.ldstat_id,loi.ldstat_id)=4 THEN 'delivered, seller payment pending'
 	END AS receivable_status,
 	
 

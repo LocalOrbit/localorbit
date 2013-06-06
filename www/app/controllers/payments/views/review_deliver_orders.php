@@ -42,7 +42,7 @@ $receivables->add(new core_datacolumn('payable_id',array(core_ui::check_all('rec
 
 
 $receivables->columns[($autoformat_offset+2)]->autoformat='price';
-$receivables->sort_column = 3 + ((lo3::is_admin() || lo3::is_market())?1:0);
+$receivables->sort_column = 2 + ((lo3::is_admin() || lo3::is_market())?1:0);
 $receivables->sort_direction = 'desc';
 
 ?>
