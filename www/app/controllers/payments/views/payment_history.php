@@ -26,6 +26,8 @@ $payments->add(new core_datacolumn('amount','Amount',true,'10%','{amount}','{amo
 #$payments->add(new core_datacolumn('payable_info','Payable Info',true,'50%','{payable_info}','{payable_info}','{payable_info}'));
 $payments->columns[0]->autoformat='date-short';
 $payments->columns[($autoformat_offset)]->autoformat='price';
+$payments->sort_column = 0;
+$payments->sort_direction = 'desc';
 ?>
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
 	<?php
