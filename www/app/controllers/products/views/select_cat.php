@@ -15,11 +15,13 @@ core::js('core.allCats='.json_encode($cats).';');
 
 page_header('Choose a Category','#!products-list','Cancel','cancel');
 
+
 if(!lo3::is_customer())
 {
 	$sellers = core::model('organizations')		
 		->collection()
 		->filter('allow_sell',1)
+		->filter('is_enabled',1)
 		->sort('organizations.name')
 		->sort('domains.name');
 	if(lo3::is_market())
