@@ -127,7 +127,7 @@ class core_model_v_payables extends core_model_base_v_payables
 		if($role == 'admin')
 		{
 			$filter = new core_collection('
-				select org_id as id,name
+				select distinct org_id as id,name
 				from organizations
 				where org_id in (select distinct from_org_id from payables)
 				or org_id in (select distinct to_org_id from payables)
@@ -137,7 +137,7 @@ class core_model_v_payables extends core_model_base_v_payables
 		else if($role == 'market')
 		{
 			$filter = new core_collection('
-				select org_id as id,name
+				select distinct org_id as id,name
 				from organizations
 				where org_id in (
 					select org_id from organizations_to_domains
