@@ -93,8 +93,15 @@ function format_payable_info($data)
 	$html = '';
 	if($time == 9999999999999)
 	{
-		$html = 'Not Yet Invoiced';
-		$last_sent_html = '';
+		if($data['payment_status'] == 'paid')
+		{
+			$html .= 'Paid';
+		}
+		else
+		{
+			$html = 'Not Yet Invoiced';
+			$last_sent_html = '';
+		}
 	}
 	else
 	{
@@ -185,6 +192,10 @@ function format_payable_info($data)
 		}
 		$data['payment_method_html'] = $html;
 	}
+	
+	
+	# format the amounts
+	$data['amount'] = core_format::price(floatval($data['amount']) - floatval($data['amount_paid']),false);
 	
 	return $data;
 }

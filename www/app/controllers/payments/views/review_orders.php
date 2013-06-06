@@ -22,8 +22,6 @@ $payables->add(new core_datacolumn('amount','Amount',true,'8%','{amount}','{amou
 $payables->add(new core_datacolumn('payable_id',array(core_ui::check_all('payables'),'',''),false,'4%',core_ui::check_all('payables','payable_id'),' ',' '));
 
 $payables->columns[3]->autoformat='date-short';
-//$payables->columns[4]->autoformat='date-short';
-$payables->columns[6]->autoformat='price';
 ?>
 
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">

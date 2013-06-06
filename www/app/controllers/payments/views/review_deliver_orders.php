@@ -38,12 +38,6 @@ $receivables->add(new core_datacolumn('receivable_status','Status',true,'10%','{
 $receivables->add(new core_datacolumn('payable_id',array(core_ui::check_all('receivables'),'',''),false,'4%',core_ui::check_all('receivables','payable_id'),' ',' '));
 
 
-
-
-
-$receivables->columns[($autoformat_offset+2)]->autoformat='price';
-
-
 ?>
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
 	<div id="receivables_list">

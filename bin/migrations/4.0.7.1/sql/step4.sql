@@ -75,16 +75,11 @@ select p.*,
 		WHEN loi.lbps_id=2 AND loi.ldstat_id=4 THEN 'delivered, payment pending'
 	END AS receivable_status,
 	
-	
-	if(p.invoice_id is null,'purchase orders',
-		if(
-			(p.amount - COALESCE(sum(xpp.amount),0) > 0),
-				/* the if here */
-				if(UNIX_TIMESTAMP(CURRENT_TIMESTAMP) > i.due_date,'overdue','invoiced')
-				,
-				'paid'
-				/* the else here */
-		)
+
+	if(
+		(p.amount - COALESCE(sum(xpp.amount),0) = 0),
+		'paid',
+		if(p.invoice_id is null,'purchase orders',if(UNIX_TIMESTAMP(CURRENT_TIMESTAMP) > i.due_date,'overdue','invoiced'))
 	) as payment_status,
 			
 	
