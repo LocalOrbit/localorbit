@@ -481,12 +481,12 @@ core.catalog.updateTotalViews = function () {
 
 core.catalog.setAddressCache=function(address,gcResult){
 	if(gcResult && gcResult[0]){
-		core.catalog.addressCoords[core.base64_decode(address)] = [
+		core.catalog.addressCoords[(address)] = [
 			gcResult[0].geometry.location.lat(),
 			gcResult[0].geometry.location.lng()
 		];
 	}else{
-		core.catalog.addressCoords[core.base64_decode(address)] = false;
+		core.catalog.addressCoords[(address)] = false;
 	}
 }
 
