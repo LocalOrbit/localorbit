@@ -25,7 +25,7 @@ if(lo3::is_admin() || lo3::is_market())
 	if(lo3::is_admin()) {
 		$tabs[] = 'Send Invoices and Enter Receipts';
 	} else if(lo3::is_fully_managed()) {
-		$tabs[] = 'View Invoices';
+		$tabs[] = 'View Invoices and Enter Receipts';
 	} else {
 		$tabs[] = 'Send Invoices and Enter Receipts';
 	}
@@ -33,7 +33,7 @@ if(lo3::is_admin() || lo3::is_market())
 	if(lo3::is_admin()) {
 		$tabs[] = 'Make or Record Payments to Vendors';
 	} else if(lo3::is_fully_managed()) {		
-		$tabs[] = 'View Payments';
+		$tabs[] = 'View Payments to Vendors';
 	} else {
 		$tabs[] = 'Record Payments to Vendors';
 	}

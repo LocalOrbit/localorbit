@@ -68,31 +68,44 @@ $receivables = $data['receivables'];
 						'</div></div>';
 			}				
 			?>
-			<div class="span4 pagination-centered">
-				<input type="button" class="btn btn-info" value="Enter Receipts" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Receivables',$core->view[1]) + 2)?>').tab('show');" />
-			</div>
+			
+			<?php 
+				if(!lo3::is_seller()) {
+			?>
+				<div class="span4 pagination-centered">
+					<input type="button" class="btn btn-info" value="Enter Receipts" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Receivables',$core->view[1]) + 2)?>').tab('show');" />
+				</div>
+			<?php 
+				}
+			?>
 		</div>
 		<?}?>
 		<? if($money_out_count > 0 || (!lo3::is_seller())){?>
 		<div class="span4">
-				<h2>Money Out</h2>
-				<?
-				foreach ($intervals as $key => $value)
-				{
-					echo '<div class="overview-summary-list-item">
-					<div class="overview-summary-list-item-label">' . $key . '</div>
-					<div class="overview-summary-list-item-value">' .
-					(($payables[$value] <= 0)?'<div class="error">':'').
-					core_format::price($payables[$value], false)
-					.(($payables[$value] <= 0)?'</div>':'') .
-					'</div></div>';
-					
+			<h2>Money Out</h2>
+			<?
+			foreach ($intervals as $key => $value)
+			{
+				echo '<div class="overview-summary-list-item">
+				<div class="overview-summary-list-item-label">' . $key . '</div>
+				<div class="overview-summary-list-item-value">' .
+				(($payables[$value] <= 0)?'<div class="error">':'').
+				core_format::price($payables[$value], false)
+				.(($payables[$value] <= 0)?'</div>':'') .
+				'</div></div>';
+				
+			}
+			?>
+			
+			<?php 
+				if(!lo3::is_fully_managed()) {
+			?>
+				<div class="span4 pagination-centered">
+					<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Review Orders &amp; Make Payments',$core->view[1]) + 2)?>').tab('show');" />
+				</div>
+			<?php 
 				}
-				?>
-			<div class="span4 pagination-centered">
-				<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Review Orders &amp; Make Payments',$core->view[1]) + 2)?>').tab('show');" />
-			</div>
-		
+			?>		
 		</div>
 		<?}?>
 		<div class="span4">
