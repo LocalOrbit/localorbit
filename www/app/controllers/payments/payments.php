@@ -145,7 +145,7 @@ class core_controller_payments extends core_controller
 	function mark_items_delivered()
 	{
 		global $core;
-		#core::log(print_r($core->data,true));
+	#core::log(print_r($core->data,true));
 		$payable_ids = explode(',',$core->data['checked_receivables']);
 		$final_ids = array();
 		foreach($payable_ids as $id)
@@ -158,12 +158,16 @@ class core_controller_payments extends core_controller
 				select parent_obj_id 
 				from payables
 				where payable_id in (".implode(',',$final_ids).")
-				and payable_type in ('buyer order','seller_order','lo_fees','hub fees')
+				and payable_type in ('buyer order','seller order','lo fees','hub fees')
 			);
 		";
 		
+		
+		
 		$orders_to_update = array();
 		$items = new core_collection($sql);
+		$items->load();
+			
 		foreach($items as $item)
 		{
 			# 
