@@ -38,7 +38,9 @@ $payables->sort_direction = 'desc';
 			<!-- this is right for sellers -->
 			<!-- this is right for market managers-->
 			<!-- uncertain for admins -->
-			<input type="button" onclick="core.payments.makePayments('payables');" class="btn btn-info" value="<?=$core->i18n('button:payments:'.((lo3::is_market() || lo3::is_admin())?'enter_offline_payments':'enter_online_payments'))?>" />
+			<?if(lo3::is_admin() || lo3::is_self_managed()){?>
+			<input type="button" onclick="core.payments.makePayments('payables');" class="btn btn-info" value="<?=$core->i18n('button:payments:'.((lo3::is_market())?'enter_offline_payments':'enter_online_payments'))?>" />
+			<?}?>
 		</div>
 	</div>
 	<div id="payables_actions" style="display: none;">

@@ -229,7 +229,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			# determine the percent the seller should receive of the tiem
 			$seller_percent = floatval($core->config['domain']['fee_percen_lo']) + floatval($core->config['domain']['fee_percen_hub']);
 			if($payment_method == 'paypal')
-				$seller_percent += 3;
+				$seller_percent += $core->config['domain']['paypal_processing_fee'];
 			$seller_percent = ((100 - $seller_percent) / 100);
 			
 			
@@ -273,8 +273,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			# if the buyer paid/will pay lo, then it's the hub fee we need to transfer;
 			# and vice versa
 			$market_percent = $core->config['domain']['fee_percen_'.(($buyer_pays_lo)?'hub':'lo')];
-			if($payment_method == 'paypal')
-				$market_percent += 3;
+			#if($payment_method == 'paypal')
+			#	$market_percent += $core->config['domain']['paypal_processing_fee'];
 			$market_percent = $market_percent / 100;
 				
 			# loop through the items and save payables

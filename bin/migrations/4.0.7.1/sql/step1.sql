@@ -14,7 +14,7 @@ create table new_payables (
 	domain_id int(10),
 	from_org_id int(10),
 	to_org_id int(10),
-	payable_type enum('buyer order','seller order','hub fees','lo fees','service fee','delivery fee'),
+	payable_type enum('buyer order','seller order','hub fees','lo fees','service fee','delivery fee','paypal fee','payment processing fee'),
 	parent_obj_id int(10),
 	amount decimal(10,2),
 	invoice_id int(10),
