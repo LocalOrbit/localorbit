@@ -195,7 +195,7 @@ function format_payable_info($data)
 	
 	
 	# format the amounts
-	$data['amount'] = core_format::price(floatval($data['amount']) - floatval($data['amount_paid']),false);
+	$data['amount'] = floatval($data['amount']) - floatval($data['amount_paid']);
 	
 	return $data;
 }
