@@ -4,6 +4,7 @@ CREATE index organizations_to_domains_idx5 on organizations_to_domains (org_id,i
 
 CREATE index lo_order_line_item_idx9 on lo_order_line_item (lo_liid,ldstat_id) using btree;
 
+CREATE index x_new_payables_idx8 on payables (creation_date) using btree;
 
 create or replace view v_payables as 
 

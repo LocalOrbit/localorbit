@@ -423,7 +423,7 @@ core.catalog.initCatalog=function(){
 	for(var key in core.catalog.addressCoords){
 		core.ui.getLatLng(
 			key,
-			'core.catalog.setAddressCache(\''+core.base64_encode(key)+'\',gcResult);'
+			'core.catalog.setAddressCache(\''+(key)+'\',gcResult);'
 		);
 	}
 
@@ -689,12 +689,12 @@ core.catalog.popupWhere=function(prodId,refObj){
 	if(!isNaN(latitude) && !isNaN(longitude)){
 		//alert('got coords: '+latitude+'/'+longitude);
 		core.ui.mapCenterByCoord('whereMap',latitude,longitude);
-		core.ui.mapAddMarkerByCoord('whereMap',latitude,longitude,core.base64_encode('<h1>'+seller.name+'</h1>'),'/img/default/farm_bubble.png');
+		core.ui.mapAddMarkerByCoord('whereMap',latitude,longitude,('<h1>'+seller.name+'</h1>'),'/img/default/farm_bubble.png');
 	}else{
 		core.log('no coords');
 		// if we dont' find it, set the map to the city
 		core.ui.mapCenterByAddress('whereMap',core.prodIndex[prodId].city);
-		core.ui.mapAddMarkerByAddress('whereMap',core.prodIndex[prodId].city,core.base64_encode('<h1>'+seller.name+'</h1>'));
+		core.ui.mapAddMarkerByAddress('whereMap',core.prodIndex[prodId].city,('<h1>'+seller.name+'</h1>'));
 	}
 	core.catalog.popupShow(refObj,'','Where');
 	//var pos = $(refObj).offset();
