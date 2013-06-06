@@ -2,7 +2,7 @@
 
 <?if(trim($core->config['domain']['market_profile']) != ''){?>
 	<h3>Market Info</h3>
-	<?=$core->config['domain']['market_profile']?>
+	<?=core_format::plaintext2html($core->config['domain']['market_profile'])?>
 	<br />&nbsp;<br />
 <?
 }
@@ -10,10 +10,11 @@ core::replace('market_profile');
 ?>
 <?if(trim($core->config['domain']['market_policies']) != ''){?>
 	<h3>Market Policies</h3>
-	<?=$core->config['domain']['market_policies']?>
+	<?=core_format::plaintext2html($core->config['domain']['market_policies'])?>
 	<br />&nbsp;<br />
 <?
 }
+
 core::replace('market_policies');
 
 core::replace('market_title',$core->config['domain']['detailed_name']);
