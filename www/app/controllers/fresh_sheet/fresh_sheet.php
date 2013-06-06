@@ -37,8 +37,7 @@ class core_controller_fresh_sheet extends core_controller
 		$html = $this->generate_html($core->data['domain_id']);
 		$template_id = $mc->get_template_id('Weekly Fresh Sheet',$core->data['domain_id']);
 		$list_id     = $mc->get_list_id('Weekly Fresh Sheet');
-		//$logo = "http://".$domain['hostname'].image('logo-large');
-		$logo = image('logo-email',$domain['domain_id']);
+		$logo = "http://".$domain['hostname'].image('logo-email',$domain['domain_id']);
 		$logo_image = '<img style="margin: 0px 0px 5px 0px" alt="logo" src="'.$logo.'" />';
 		$shop_now_button = '<a href=""https://'.$domain['hostname'].'/app.php#!catalog-shop" target="_blank"><img src="https://www.localorb.it/img/mailchimp/ShopNow_Button.jpg" alt="Button" border="0"></a>';
 		
