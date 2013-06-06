@@ -324,12 +324,15 @@ class core_controller_payments extends core_controller
 					$xpp->save();
 				}
 				
-				$orders_to_check = core::model('lo_order')
-					->collection()
-					->filter('lo_oid','in',$orders_to_check);
-				foreach($orders_to_check as $order)
+				if(count($orders_to_check) > 0)
 				{
-					$order->update_status();
+					$orders_to_check = core::model('lo_order')
+						->collection()
+						->filter('lo_oid','in',$orders_to_check);
+					foreach($orders_to_check as $order)
+					{
+						$order->update_status();
+					}
 				}
 		}
 		

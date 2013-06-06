@@ -80,25 +80,7 @@ if($allow_ach || $allow_offline)
 		$methods->load();
 		echo('</div><div class="row"><div class="span6" style="padding-top: 5px;">');
 		echo('<div class="'.$tab.'__group__'.$group_key.'__pay_field" id="'.$tab.'__group__'.$group_key.'__pay_fields_3" style="'.(($allow_offline)?'display: none;':'').'">');
-			# if the user has a bank account	
-			$show_save = false;
-			if($methods->__num_rows > 0)
-			{
-				
-				echo(core_form::input_select('Pay Via: ',$tab.'__group_opm_id__'.$group_key,null,$methods,array(
-					'select_style'=>'width: 300px;',
-					'text_column'=>'dropdown_text',
-					'value_column'=>'opm_id',
-				)));
-				
-				$show_save = true;
-			}
-			else
-			{
-				if(lo3::is_admin() || lo3::is_market())
-					echo('This organization does not have a bank account setup.<br />&nbsp;');
-				else
-					echo('You do not currently have a bank account setup.<br />&nbsp;');
+			
 			
 		# if the user has a bank account	
 		$show_save = false;
@@ -122,6 +104,7 @@ if($allow_ach || $allow_offline)
 		
 			echo('<br /><input type="button" class="btn btn-info pull-right" value="Add New Account" onclick="core.payments.newAccount(this)" /><br /><br />');
 		}
+		echo('</div></div></div>');
 	}
 	if($allow_offline)
 	{
