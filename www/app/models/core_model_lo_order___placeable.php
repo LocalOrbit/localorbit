@@ -4,7 +4,17 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 {
 
 
-
+	function wipe_payables_for_order($lo_oid)
+	{
+		core_db::query("
+			delete from payables
+			where 
+				(parent_obj_id=".$lo_oid." and payable_type='delivery fee')
+				or
+				(parent_obj_id in (select lo_liid from lo_order_line_item where lo_oid = ".$lo_oid.") and payable_type in ('hub fee','lo fee','buyer order','seller order'))
+			;
+		");
+	}
 
 	function create_order_payables($payment_method)
 	{
@@ -14,75 +24,189 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$fee_total = 0;
 		$fee_payable_ids = array();
 		
+		# first, wipe out any existing payables for this order
+		core::log('wiping existing payables for order '.$this['lo_oid']);
+		$this->wipe_payables_for_order($this['lo_oid']);
+		
+		# we'll check this boolean later to see if we need to 
+		# mark some of the payables as paid
+		$payment = false;
+		
+		# try to make the payment.
+		if($payment_method == 'paypal' || $payment_method == 'ACH')
+		{
+			core::load_library('payments'); 
+		
+			# either payment method will need a payment created in the db
+			core::log('since the user paid via paypal or ACH, creating a payment');
+			$payment = core::model('payments');
+			$payment['amount']      = $this['grand_total'];
+			$payment['payment_method'] = $payment_method;
+			$payment['creation_date'] = time();
+			$payment->save();
+			
+			if($payment_method == 'ACH')
+			{
+				# if the user pays via ach,
+				$method = core::model('organization_payment_methods')->load($core->data['opm_id']);
+				$result = make_payment('P-'.str_pad($payment['payment_id'],6,'0',STR_PAD_LEFT),'Order',$payment['amount']);
+				
+				if($result)
+				{
+					$this['amount_paid']  = $this['grand_total'];
+					$this['payment_ref'] = 'P-'.str_pad($payment['payment_id'],6,'0',STR_PAD_LEFT);
+					$payment['ref_nbr'] = $payment['payment_ref'];
+				}
+				else
+				{
+					$this->wipe_payables_for_order($this['lo_oid']);
+					$payment->delete();
+					unset($core->response['replace']['full_width']);
+					core::js('core.checkout.hideSubmitProgress();');
+					core_ui::notification('ACH Failure.');
+					core::deinit();
+				}
+			}
+			if($payment_method == 'paypal')
+			{
+				# if the user pays via paypal,
+				$cleaned_pp_cc_number = ereg_replace( '[^0-9]+', '', $core->data['pp_cc_number']);
+		
+				$data = array(
+					$core->data['pp_first_name'],
+					$core->data['pp_last_name'],
+					$core->data['pp_street'],
+					$core->data['pp_city'],
+					$core->data['pp_state'],
+					$core->data['pp_zip'],
+					core_db::col('select country_id from directory_country_region where code=\''.$core->data['pp_state'].'\' and country_id in (\'US\',\'CA\');','country_id'),
+					core_format::parse_price($this['grand_total']),
+					$cleaned_pp_cc_number,
+					core_payments::get_cc_type($core->data['pp_cc_number']),
+					$core->data['pp_exp_month'].$core->data['pp_exp_year'],
+					$core->data['pp_cvv2']
+				);
+				core::log('data sent to paypal: '.print_r($data,true));
+
+				$response = core_payments::paypal_cc(
+					$core->data['pp_first_name'],
+					$core->data['pp_last_name'],
+					$core->data['pp_street_name'],
+					$core->data['pp_city'],
+					$core->data['pp_state'],
+					$core->data['pp_zip'],
+					core_db::col('select country_id from directory_country_region where code=\''.$core->data['pp_state'].'\' and country_id in (\'US\',\'CA\');','country_id'),
+					core_format::parse_price($this['grand_total']),
+					$cleaned_pp_cc_number,
+					core_payments::get_cc_type($core->data['pp_cc_number']),
+					$core->data['pp_exp_month'].$core->data['pp_exp_year'],
+					$core->data['pp_cvv2']
+				);
+
+
+				if(!$response['success'])
+				{
+					core::log(print_r($response,true));
+					core::load_library('core_phpmailer');
+
+					core_phpmailer::send_email(
+						'paypal fail',
+						'Response: '.print_r($response,true)."\n\n\n".str_replace($core->data['pp_cc_number'],'****-****-****-****',print_r($data,true)),
+						'mike@localorb.it',
+						'Mike Thorn'
+					);
+
+					core::model('events')->add_record('Paypal Transaction Failure',$this['lo_oid'],$response['ERROR_CODE'],$response['SHORT_ERROR'],$response['LONG_ERROR']);
+
+					unset($core->response['replace']['full_width']);
+					core::js('core.checkout.hideSubmitProgress();');
+					core_ui::notification('Credit Card failure. Please check your info and try again');
+					core::deinit();
+				}
+				core::model('events')->add_record('Paypal Transaction Success',$this['lo_oid'],0);
+				$this['amount_paid']  = $this['grand_total'];
+				$this['payment_ref']    = $response['TRANSACTIONID'];
+				$payment['ref_nbr']    = $response['TRANSACTIONID'];
+			}
+			$payment->save();
+			core::log('payment success');
+		}
+		else if($payment_method == 'purchaseorder')
+		{
+			$this['payment_method'] = 'purchaseorder';
+			$this['payment_ref']    = $core->data['po_number'];
+		}
+		
+		# ok, at this point a payment has been successfully created (if necesary)
+		# we now need to create all of the payables
+		core::log('creating delivery fee payables');
+		$paid_payables = array();
 		foreach($this->delivery_fees as $fee)
 		{
-			$deliv_to_lo = ($payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
-			
-			$fee_total += $fee['applied_amount'];
-			
-			$payable = core::model('payables');
-			$payable['domain_id'] = $core->config['domain']['domain_id'];
-			$payable['parent_obj_id'] = $this['lo_oid'];
-			$payable['payable_type'] = 'delivery fee';
-			$payable['from_org_id'] = $this['org_id'];
-			$payable['to_org_id'] = ($deliv_to_lo)?1:$core->config['domain']['payable_org_id'];
-			$payable['amount'] = $fee['applied_amount'];
-			$payable['creation_date'] = time();
-			$payable->save();
-			$fee_payable_ids[$payable['payable_id']] = $fee['applied_amount'];
-			
-			
-			$payable2 = core::model('payables');
-			$payable2['domain_id'] = $core->config['domain']['domain_id'];
-			$payable2['parent_obj_id'] = $this['lo_oid'];
-			$payable2['payable_type'] = 'delivery fee';
-			$payable2['from_org_id'] = ($deliv_to_lo)?1:$core->config['domain']['payable_org_id'];
-			$payable2['to_org_id'] = ($deliv_to_lo)?$core->config['domain']['payable_org_id']:1;
-			
-			$fee_percent = $core->config['domain']['fee_percen_lo'];
-			if ($deliv_to_lo)
+			if($fee['applied_amount'] > 0)
 			{
-				# in this case, the delivery fee is being paid to lo, and lo needs to 
-				# transfer it to the market, minus lo fee
-				$amount = $fee['applied_amount'] * ((100 - $fee_percent) / 100);
+				$deliv_to_lo = ($payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
+				
+				# create the fee from the buyer to whoever is taking the money
+				$payable = core::model('payables');
+				$payable['domain_id'] = $core->config['domain']['domain_id'];
+				$payable['parent_obj_id'] = $this['lo_oid'];
+				$payable['payable_type'] = 'delivery fee';
+				$payable['from_org_id'] = $this['org_id'];
+				$payable['to_org_id'] = ($deliv_to_lo)?1:$core->config['domain']['payable_org_id'];
+				$payable['amount'] = $fee['applied_amount'];
+				$payable['creation_date'] = time();
+				$payable->save();
+				
+				# the delivery fee from the buyer is paid automatically if ACH or paypal
+				$paid_payables[$payable['payable_id']] = $fee['applied_amount'];
+				
+				# create the 2nd delivery fee payable from whoever received the money
+				# for EITHER:
+				#		the amount LO needs to give the market manager to pay the seller
+				# 		or
+				# 		the % of the delivery fee that LO earns when the MM collects the fee
+				$payable2 = core::model('payables');
+				$payable2['domain_id'] = $core->config['domain']['domain_id'];
+				$payable2['parent_obj_id'] = $this['lo_oid'];
+				$payable2['payable_type'] = 'delivery fee';
+				$payable2['from_org_id'] = ($deliv_to_lo)?1:$core->config['domain']['payable_org_id'];
+				$payable2['to_org_id'] = ($deliv_to_lo)?$core->config['domain']['payable_org_id']:1;
+				
+				$fee_percent = $core->config['domain']['fee_percen_lo'];
+				if ($deliv_to_lo)
+				{
+					# in this case, the delivery fee is being paid to lo, and lo needs to 
+					# transfer it to the market, minus lo fee
+					$amount = $fee['applied_amount'] * ((100 - $fee_percent) / 100);
+				}
+				else
+				{
+					# in this case, the delivery fee is being paid to the market, 
+					# and lo needs to transfer the fee_percen_lo of the fee
+					$amount = $fee['applied_amount'] * (($fee_percent) / 100);
+				}
+				
+				$payable2['amount'] = $amount;
+				$payable2['creation_date'] = time();
+				$payable2->save();
 			}
-			else
-			{
-				# in this case, the delivery fee is being paid to the market, 
-				# and lo needs to transfer the fee_percen_lo of the fee
-				$amount = $fee['applied_amount'] * (($fee_percent) / 100);
-			}
-			
-			$payable2['amount'] = $amount;
-			$payable2['creation_date'] = time();
-			$payable2->save();
 		}
 		
 		
-		# create the payable between the buyer and LO
-
-		if($payment_method != 'cash')
-		{
-			
 		
-			
-			$payable_ids = array();
-			
+		$buyer_pays_lo = ($payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
+				
+		if($payment_method != 'cash')
+		{	
+			# create the payable between the buyer and LO
+			core::log('creating buyer order payables');
 			$payable = core::model('payables');
 			$payable['domain_id'] = $core->config['domain']['domain_id'];
 			$payable['payable_type'] = 'buyer order';
 			$payable['from_org_id'] = $this['org_id'];
+			$payable['to_org_id'] = ($buyer_pays_lo)?1:$core->config['domain']['payable_org_id'];
 			$payable['creation_date'] = time();
-			
-		
-			if ($core->config['domain']['buyer_invoicer']  == 'hub' && $this['payment_method'] == 'purchaseorder')
-			{
-				$payable['to_org_id'] = $core->config['domain']['payable_org_id'];
-			}
-			else
-			{
-				$payable['to_org_id'] = 1;
-			}
 			
 			foreach($this->items as $item)
 			{
@@ -90,210 +214,94 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				$payable['amount'] = $item['row_adjusted_total'];
 				$payable['parent_obj_id'] = $item['lo_liid'];
 				$payable->save();
-				$payable_ids[$payable['payable_id']] = $item['row_adjusted_total'];
+				$paid_payables[$payable['payable_id']] = $item['row_adjusted_total'];
 			}
-
+			# END BUYER PAYABLES;
 			
-
-
-			# if the user pays via paypal,
-			if($payment_method == 'paypal' || $payment_method == 'ACH')
-			{
-				
-				if($payment_method == 'ACH')
-				{
-					core::log('preparing to attempt ach');
-					core::load_library('crypto');
-					
-					$myclient = new SoapClient($core->config['ach']['url']);
-					$mycompanyinfo = new CompanyInfo();
-					$mycompanyinfo->SSS        = $core->config['ach']['SSS'];
-					$mycompanyinfo->LocID      = $core->config['ach']['LocID'];
-					$mycompanyinfo->Company    = $core->config['ach']['Company'];
-					$mycompanyinfo->CompanyKey = $core->config['ach']['CompanyKey'];
-					
-					$transaction = new InpACHTransRecord;
-					$transaction->SSS        = $core->config['ach']['SSS'];
-					$transaction->LocID      = $core->config['ach']['LocID'];
-					$transaction->CompanyKey = $core->config['ach']['CompanyKey'];
-					
-					if($core->config['stage'] == 'production')
-						$transaction->FrontEndTrace = 'LOPAY-'.$invoice['invoice_id'];			
-					else
-						$transaction->FrontEndTrace = 'LOPAY-'.$core->config['stage'].'-'.$invoice['invoice_id'].'-'.time();
-					
-					$transaction->CustomerName  = strtoupper($account['name_on_account']);
-					$transaction->CustomerRoutingNo  = core_crypto::decrypt($account['nbr2']);
-					$transaction->CustomerAcctNo     = core_crypto::decrypt($account['nbr1']);
-					$transaction->TransAmount   = $this['grand_total'];
-					$transaction->TransactionCode = 'WEB';
-					$transaction->CustomerAcctType = 'C';
-					$transaction->OriginatorName  = $core->config['ach']['Company'];
-					$transaction->OpCode = 'R';
-					$transaction->CustTransType = 'D';
-					$transaction->Memo = 'Payment for '.$this['lo3_order_nbr'];
-					$transaction->CheckOrTransDate = date('Y-m-d');
-					$transaction->EffectiveDate = date('Y-m-d');
-					$transaction->AccountSet = $core->config['ach']['AccountSet'];
-
-					core::log('ready to transact: '.print_r($transaction,true)."\n");
-					$myresult = $myclient->SendACHTrans(array(
-						'InpCompanyInfo'=>$mycompanyinfo,
-						'InpACHTransRecord'=>$transaction,
-					));
-					
-					core::log(print_r($myresult,true));
-					
-					if($myresult->SendACHTransResult->Status =='SUCCESS')
-					{
-						$this['payment_ref'] = $transaction->FrontEndTrace;
-						return true;
-					}
-					else
-					{
-						foreach($payable_ids as $payable_id=>$amount)
-						{
-							core_db::query('delete from payables where payable_id='.$payable_id);
-						}
-						
-						return false;
-					}
-				}
-
-				$payment = core::model('payments');
-				$payment['amount']      = $this['grand_total'];
-				$payment['payment_method'] = 'paypal';
-				$payment['ref_nbr'] = $this['payment_ref'];
-				$payment['creation_date'] = time();
-				$payment->save();
-				
-				foreach($payable_ids as $payable_id=>$amount)
-				{
-					$xpp = core::model('x_payables_payments');
-					$xpp['payment_id'] = $payment['payment_id'];
-					$xpp['payable_id'] = $payable_id;
-					$xpp['amount'] = $amount;
-					$xpp->save();
-				}
-				
-				foreach($fee_payable_ids as $payable_id=>$amount)
-				{
-					$xpp = core::model('x_payables_payments');
-					$xpp['payment_id'] = $payment['payment_id'];
-					$xpp['payable_id'] = $payable_id;
-					$xpp['amount'] = $amount;
-					$xpp->save();
-				}
-				
-			}
 			
-			# create the payments to the sellers
-			
-			foreach($this->items as $item)
-			{
-				if($core->config['domain']['seller_payer'] == 'lo')
-				{
-					$payable = core::model('payables');
-					$payable['domain_id']    = $core->config['domain']['domain_id'];
-					$payable['payable_type'] = 'seller order';
-					$payable['from_org_id']  = 1;
-					$payable['to_org_id']    = $item['seller_org_id'];
-					$payable['parent_obj_id'] = $item['lo_liid'];
-					$payable['creation_date'] = time();
-					
-					$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);
-					if($this['payment_method'] == 'paypal')
-					{
-						$fee += 3;
-					}
-					
-					$payable['amount'] = round(($item['row_adjusted_total'] * ((100 - $fee) / 100)),2);
-					
-					$payable->save();
-				}
-				else
-				{
-					# if lo temporarily has the money, we need to create two payables
-					if($this['payment_method'] == 'paypal' || $this['payment_method'] == 'ACH')
-					{
-						$payable = core::model('payables');
-						$payable['domain_id']    = $core->config['domain']['domain_id'];
-						$payable['payable_type'] = 'seller order';
-						$payable['from_org_id']  = 1;
-						$payable['to_org_id']    = $core->config['domain']['payable_org_id'];
-						$payable['parent_obj_id'] = $item['lo_liid'];
-						$payable['creation_date'] = time();
-						
-						$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);
-						if($this['payment_method'] == 'paypal')
-						{
-							$fee += 3;
-						}
-						
-						$payable['amount'] = round(($item['row_adjusted_total'] * ((100 - $fee) / 100)),2);
-						$payable->save();
-						
-						# modify the payment to make it from the market to the seller
-						unset($payable->__data['payable_id']);
-						$payable['from_org_id']  = $core->config['domain']['payable_org_id'];
-						$payable['to_org_id']    = $item['seller_org_id'];
-						$payable->save();
-
-					}
-					else
-					{
-						$payable = core::model('payables');
-						$payable['domain_id']    = $core->config['domain']['domain_id'];
-						$payable['payable_type'] = 'seller order';
-						$payable['from_org_id']  = $core->config['domain']['payable_org_id'];
-						$payable['to_org_id']    = $item['seller_org_id'];
-						$payable['parent_obj_id'] = $item['lo_liid'];
-						$payable['creation_date'] = time();
-						$fee = floatval($core->config['domain']['fee_percen_hub'] + $core->config['domain']['fee_percen_lo']);					
-						$payable['amount'] = round(($item['row_adjusted_total'] * ((100 - $fee) / 100)),2);				
-						$payable->save();
-					}
-					
-				}
-			}
-			
-			# create the lo/hub fees per item
-			# if LO has/is going to have the money from the buyer,
-			# then the hub fees are from LO to the market org.
-			#
-			# if the market will be collecting the money, then the market owes
-			# us the LO fees
-			
+			# create the payable to the seller
+			core::log('creating seller order payables');
 			$payable = core::model('payables');
 			$payable['domain_id'] = $core->config['domain']['domain_id'];
+			$payable['payable_type'] = 'seller order';
 			$payable['creation_date'] = time();
 			
-			if(($this['payment_method'] == 'paypal' || $this['payment_method'] == 'ach') || $core->config['domain']['buyer_invoicer'] == 'lo')
+			# determine the percent the seller should receive of the tiem
+			$seller_percent = floatval($core->config['domain']['fee_percen_lo']) + floatval($core->config['domain']['fee_percen_hub']);
+			if($payment_method == 'paypal')
+				$seller_percent += 3;
+			$seller_percent = ((100 - $seller_percent) / 100);
+			
+			
+			# determine if we need to move the money to the market to pay the seller
+			$need_transfer_to_mm = (($payment_method == 'paypal' || $payment_method == 'ACH') && $core->config['domain']['seller_payer'] == 'hub');
+			
+			# loop through the items and save payables
+			foreach($this->items as $item)
 			{
-				$payable['payable_type'] = 'hub fees';
-				$payable['from_org_id'] = 1;
-				$payable['to_org_id'] = $core->config['domain']['payable_org_id'];
-				$fee_percent = floatval($core->config['domain']['fee_percen_hub']);
-			}
-			else
-			{
-				$payable['payable_type'] = 'lo fees';
-				$payable['from_org_id'] = $core->config['domain']['payable_org_id'];
-				$payable['to_org_id'] = 1;
-				$fee_percent = floatval($core->config['domain']['fee_percen_lo']);
+				# first create the payable to the seller
+				unset($payable->__data['payable_id']);
+				$payable['from_org_id'] = ($core->config['domain']['seller_payer'] == 'lo')?1:$core->config['domain']['payable_org_id'];
+				$payable['to_org_id'] = $item['seller_org_id'];
+				$payable['amount'] = floatval($item['row_adjusted_total']) * $seller_percent;
+				$payable['parent_obj_id'] = $item['lo_liid'];
+				$payable->save();
 				
+				# next, create the transfers from LO to the hub
+				if($need_transfer_to_mm)
+				{
+					unset($payable->__data['payable_id']);
+					$payable['from_org_id'] = 1;
+					$payable['to_org_id'] = $core->config['domain']['payable_org_id'];
+					$payable['amount'] = floatval($item['row_adjusted_total']) * $seller_percent;
+					$payable['parent_obj_id'] = $item['lo_liid'];
+					$payable->save();
+				}
 			}
+			# END SELLER PAYABLES;
+			
+			# Finally, create the lo/hub fee payables
+			core::log('creating hub/lo fees payables');
+			$payable = core::model('payables');
+			$payable['domain_id'] = $core->config['domain']['domain_id'];
+			$payable['payable_type'] = (($buyer_pays_lo)?'hub':'lo').' fees';
+			$payable['creation_date'] = time();
+			$payable['from_org_id'] = ($buyer_pays_lo)?1:$core->config['domain']['payable_org_id'];
+			$payable['to_org_id']   = ($buyer_pays_lo)?$core->config['domain']['payable_org_id']:1;
+			
+			# determine the %
+			# if the buyer paid/will pay lo, then it's the hub fee we need to transfer;
+			# and vice versa
+			$market_percent = $core->config['domain']['fee_percen_'.(($buyer_pays_lo)?'hub':'lo')];
+			if($payment_method == 'paypal')
+				$market_percent += 3;
+			$market_percent = $market_percent / 100;
+				
+			# loop through the items and save payables
 			foreach($this->items as $item)
 			{
 				unset($payable->__data['payable_id']);
-				$payable['amount'] = round((floatval($item['row_adjusted_total'] * (($fee_percent / 100)))),2);
+				$payable['amount'] = floatval($item['row_adjusted_total']) * $market_percent;
 				$payable['parent_obj_id'] = $item['lo_liid'];
 				$payable->save();
 			}
-			
-
+		
+			# if a payment was actually made, then link all paid payables to the payment
+			core::log('linking payables to payment');
+			if($payment !== false)
+			{
+				foreach($paid_payables as $payable_id=>$amount)
+				{
+					$xpp = core::model('x_payables_payments');
+					$xpp['payment_id'] = $payment['payment_id'];
+					$xpp['payable_id'] = $payable_id;
+					$xpp['amount'] = $amount;
+					$xpp->save();
+				}
+			}
 		}
-
+		$this->save();
+		
 		return true;
 	}
 
@@ -355,7 +363,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			core::deinit();
 		}
 		#core::log(print_r($rules[$methods]->rules,true));
-		if($method != 'cash')
+		if($method == 'ach' || $method == 'paypal' || $method == 'cash')
 		{
 			$rules[$method]->validate('checkoutForm');
 			$this['lbps_id'] = 2;
@@ -496,89 +504,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			#core::deinit();
 		}
 
-		#$this->deliveries->log();
-		#core::deinit();ta
 
-		# handle payment processing
-		core::load_library('payments'); 
-		$cleaned_pp_cc_number = ereg_replace( '[^0-9]+', '', $core->data['pp_cc_number']);
-		core::log('handle payments: '.$method);
-		switch($method)
-		{
-			# handle authorize.net payments
-			case 'authorize':
-				break;
-			# handle paypal payments
-			case 'paypal':
-				$data = array(
-					$core->data['pp_first_name'],
-					$core->data['pp_last_name'],
-					$core->data['pp_street'],
-					$core->data['pp_city'],
-					$core->data['pp_state'],
-					$core->data['pp_zip'],
-					core_db::col('select country_id from directory_country_region where code=\''.$core->data['pp_state'].'\' and country_id in (\'US\',\'CA\');','country_id'),
-					core_format::parse_price($this['grand_total']),
-					$cleaned_pp_cc_number,
-					core_payments::get_cc_type($core->data['pp_cc_number']),
-					$core->data['pp_exp_month'].$core->data['pp_exp_year'],
-					$core->data['pp_cvv2']
-				);
-				core::log('data sent to paypal: '.print_r($data,true));
-
-				$response = core_payments::paypal_cc(
-					$core->data['pp_first_name'],
-					$core->data['pp_last_name'],
-					$core->data['pp_street_name'],
-					$core->data['pp_city'],
-					$core->data['pp_state'],
-					$core->data['pp_zip'],
-					core_db::col('select country_id from directory_country_region where code=\''.$core->data['pp_state'].'\' and country_id in (\'US\',\'CA\');','country_id'),
-					core_format::parse_price($this['grand_total']),
-					$cleaned_pp_cc_number,
-					core_payments::get_cc_type($core->data['pp_cc_number']),
-					$core->data['pp_exp_month'].$core->data['pp_exp_year'],
-					$core->data['pp_cvv2']
-				);
-
-
-				if(!$response['success'])
-				{
-					core::load_library('core_phpmailer');
-
-					core_phpmailer::send_email(
-						'paypal fail',
-						'Response: '.print_r($response,true)."\n\n\n".str_replace($core->data['pp_cc_number'],'****-****-****-****',print_r($data,true)),
-						'mike@localorb.it',
-						'Mike Thorn'
-					);
-
-					core::model('events')->add_record('Paypal Transaction Failure',$this['lo_oid'],$response['ERROR_CODE'],$response['SHORT_ERROR'],$response['LONG_ERROR']);
-
-					unset($core->response['replace']['full_width']);
-					core::js('core.checkout.hideSubmitProgress();');
-					core_ui::notification('Credit Card failure. Please check your info and try again');
-					core::deinit();
-				}
-				core::model('events')->add_record('Paypal Transaction Success',$this['lo_oid'],0);
-				$this['payment_method'] = 'paypal';
-				$this['amount_paid']  = $this['grand_total'];
-				$this['payment_ref']    = $response['TRANSACTIONID'];
-
-				break;
-			# handle PO payments
-			case 'purchaseorder':
-				$this['payment_method'] = 'purchaseorder';
-				$this['payment_ref']    = $core->data['po_number'];
-				break;
-			
-			# annnnd here's the problem with the code. we can't create the
-			# ach transaction until the payable order structure is in place.
-			# so, hold off on this until the end of the order placement process;
-			case 'ach':
-			
-				break;
-		}
 
 		# loop through all the items and change their status,
 		# create the fulfillment orders
