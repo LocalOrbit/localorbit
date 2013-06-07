@@ -23,7 +23,7 @@ if(!lo3::is_customer())
 		->filter('allow_sell',1)
 		->filter('is_enabled',1)
 		->filter('is_active',1)
-		->filter('is_deleted',0)
+		->filter('is_deleted','=',0)
 		->sort('organizations.name')
 		->sort('domains.name');
 	if(lo3::is_market())
