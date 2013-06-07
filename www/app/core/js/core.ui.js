@@ -376,8 +376,31 @@ core.ui.dataTable.prototype.setFilterValue=function(filterName,newValue){
 	this.loadData();
 }
 
-core.ui.dataTable.updateFilter=function(dtFilterName,filtValue,testingVar){
+core.ui.dataTable.updateFilter=function(dtFilterName,filtValue,parseDate){
 	filterInfo = new String(dtFilterName).split('__filter__');
+	if(parseDate === true)
+	{
+		var months = {
+			'January':'01',
+			'February':'02',
+			'March':'03',
+			'April':'04',
+			'May':'05',
+			'June':'06',
+			'July':'07',
+			'August':'08',
+			'September':'09',
+			'October':'10',
+			'November':'11',
+			'December':'12',
+		};
+		var parts = new String(filtValue).split(/\s/);
+		parts[1] = parseInt(new String(parts[1]).replace(',',''));
+		if(parts[1] < 10) {
+			parts[1] = '0'+(new String(parts[1]));
+		}
+		filtValue = parts[2]+'-'+months[parts[0]]+'-'+parts[1];
+	}
 	core.ui.dataTables[filterInfo[0]].setFilterValue(filterInfo[1],filtValue);
 	//alert('updating '+dtFilterName+' to '+filtValue+': '+testingVar);
 	//alert('dataTables '+filterInfo[0]+' setFilterValue '+filterInfo[1]+': '+filtValue);
