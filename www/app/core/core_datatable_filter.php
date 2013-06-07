@@ -178,7 +178,7 @@ class core_datatable_filter
 	
 		$out  = '<div class="date-filter pull-left">';
 		// new calendar	
-		$js = 'onClose: function(var1,var2){core.ui.dataTable.updateFilter("'.$tablename."__filter__".$name.'",var1);}';		
+		$js = 'onClose: function(var1,var2){core.ui.dataTable.updateFilter("'.$tablename."__filter__".$name.'",var1,true);}';		
 		$out .= core_ui::date_picker($tablename."__filter__".$name,$value,$js).$post_label;
 			
 		// old calendar
