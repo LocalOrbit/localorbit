@@ -117,7 +117,8 @@ class core_format
 		
 		foreach($fields as $field)
 		{
-			$core->data[$field] =  date("U",strtotime($core->data[$field].'T12:00:00+00:00'));
+			if(isset($core->data[$field]))
+				$core->data[$field] =  date("U",strtotime($core->data[$field].'T12:00:00+00:00'));
 		}
 		return;
 		
