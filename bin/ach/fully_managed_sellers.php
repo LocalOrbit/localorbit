@@ -34,6 +34,7 @@ $sql = "
 	and p.payable_type = 'seller order'
 	and p.from_org_id=1
 	and loi.ldstat_id=4
+	and loi.lbps_id=2
 	and d.seller_payer = 'lo'
 	group by concat_ws('-',p.to_org_id,p.payable_type)
 ";
