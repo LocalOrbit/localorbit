@@ -115,6 +115,12 @@ class core_format
 		//$trace = "fix_unix_dates ";
 		$fields = func_get_args();
 		
+		foreach($fields as $field)
+		{
+			$core->data[$field] =  date("U",strtotime($core->data[$field].'T12:00:00+00:00'));
+		}
+		return;
+		
 		foreach($fields as $field) {
 			//core::log($trace." fix_unix_dates() field=".$field);
 			
