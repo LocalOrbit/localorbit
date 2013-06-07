@@ -76,7 +76,7 @@ if(count($sendables) > 0)
 					<option value="90"<?=(($receivable['po_due_within_days'] == 90)?' selected="selected"':'')?>>Net 90</option>
 				</select>
 			</td>
-			<td><?=core_format::date($now + ($receivable['po_due_within_days'] * 86400),'short')?></td>
+			<td id="due_date_<?=$receivable['group_key']?>"><?=core_format::date($now + ($receivable['po_due_within_days'] * 86400),'short')?></td>
 		</tr>
 		<?php
 	}
