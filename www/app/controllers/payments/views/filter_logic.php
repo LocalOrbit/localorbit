@@ -21,6 +21,12 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->name.'__filter__'.$tab.'createdat2'
 	);
 	
+	if(!isset($core->data[$datatable->name.'__filter__from_org_id']) && $datatable->name == 'payables')
+		$core->data[$datatable->name.'__filter__from_org_id'] = $core->session['org_id'];
+	if(!isset($core->data[$datatable->name.'__filter__to_org_id']) && $datatable->name == 'receivables')
+		$core->data[$datatable->name.'__filter__to_org_id'] = $core->session['org_id'];
+
+
 	if(!isset($core->data[$datatable->name.'__filter__payable_type']) && $datatable->name == 'payables')
 		$core->data[$datatable->name.'__filter__payable_type'] = 'seller order';
 	//if(!isset($core->data[$datatable->name.'__filter__payable_type']) && $datatable->name == 'receivables')
