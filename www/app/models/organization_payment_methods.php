@@ -52,10 +52,21 @@ class core_model_organization_payment_methods extends core_model_base_organizati
 		$transaction->CustomerRoutingNo  = core_crypto::decrypt($this['nbr2']);
 		$transaction->CustomerAcctNo     = core_crypto::decrypt($this['nbr1']);
 		$transaction->TransAmount   = $amount;
-		$transaction->TransactionCode = 'WEB';
+		
+		if($CustTransType == 'D')
+		{
+			# if this is a debit, we can use the WEB trans code
+			$transaction->TransactionCode = 'WEB';
+		}
+		else
+		{
+			# if it's a credit ,we need to use either PPD or CCD
+			$transaction->TransactionCode = 'CCD';
+		}
+		
 		$transaction->CustomerAcctType = 'C';
 		$transaction->OriginatorName  = $core->config['ach']['Company'];
-		$transaction->OpCode = 'R';
+		$transaction->OpCode = 'S';
 		$transaction->CustTransType = $CustTransType;
 		$transaction->Memo = $memo;
 		$transaction->CheckOrTransDate = date('Y-m-d');
