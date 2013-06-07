@@ -22,6 +22,7 @@ if(!lo3::is_customer())
 		->collection()
 		->filter('allow_sell',1)
 		->filter('is_enabled',1)
+		->filter('is_active',1)
 		->filter('is_deleted',0)
 		->sort('organizations.name')
 		->sort('domains.name');
@@ -30,7 +31,6 @@ if(!lo3::is_customer())
 		$sellers->filter('domains.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 	}
 }
-	
 ?>
 <form name="catform" action="products/request_new" onsubmit="return core.submit('/products/request_new',this);">
 	<div class="row">
