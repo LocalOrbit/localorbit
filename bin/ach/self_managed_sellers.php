@@ -21,11 +21,13 @@ while(count($argv) > 0)
 	}
 }
 
+mysql_query('SET SESSION group_concat_max_len = 1000000;');
 $sql = "
 select p.to_org_id,p.to_org_name,sum((p.amount - p.amount_paid)) as amount,opm.*,
 group_concat(p.payable_id) as payables
 from v_payables p
 inner join lo_order_line_item loi on (p.parent_obj_id=loi.lo_liid and loi.ldstat_id=4)
+inner join lo_order lo on (lo.lo_oid=loi.lo_oid)
 inner join domains d on (d.domain_id=lo.domain_id and d.seller_payer = 'hub')
 inner join v_payables p2 on (p2.from_org_id=lo.org_id and p2.parent_obj_id=loi.lo_liid and p2.payable_type='buyer order')
 left join organization_payment_methods opm on (d.opm_id=opm.opm_id )
