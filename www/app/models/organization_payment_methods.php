@@ -48,7 +48,7 @@ class core_model_organization_payment_methods extends core_model_base_organizati
 		
 		
 		$transaction->FrontEndTrace = $trace;
-		$transaction->CustomerName  = strtoupper($this['name_on_account']);
+		$transaction->CustomerName  = substr(strtoupper($this['name_on_account']),0,22);
 		$transaction->CustomerRoutingNo  = core_crypto::decrypt($this['nbr2']);
 		$transaction->CustomerAcctNo     = core_crypto::decrypt($this['nbr1']);
 		$transaction->TransAmount   = $amount;
