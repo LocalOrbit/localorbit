@@ -7,18 +7,17 @@ core::load_library('crypto');
 ob_end_flush();
 
 $config = array(
-	'do-ach'=>false,
+	'do-ach'=>0,
+	'to-org-id'=>0,  # allows you to restrict the query to a single vendor
+	'report-payables'=>0, # prints out info on all the payables covered by the payment
 );
 
+
 array_shift($argv);
-while(count($argv) > 0)
+foreach($argv as $arg)
 {
-	switch(array_shift($argv))
-	{
-		case 'do-ach':
-			$config['do-ach'] = true;
-			break;
-	}
+	$arg = explode(':',$arg);
+	$config[$arg[0]] = str_replace('"','',$arg[1]);
 }
 
 $sql = "
@@ -35,7 +34,14 @@ $sql = "
 	and p.from_org_id=1
 	and loi.ldstat_id=4
 	and loi.lbps_id=2
-	and d.seller_payer = 'lo'
+	and d.seller_payer = 'lo'";
+
+if($config['to-org-id'] != 0)
+{
+	$sql .= ' and p.to_org_id='.$config['to-org-id'].' ';
+}
+
+$sql .="
 	group by concat_ws('-',p.to_org_id,p.payable_type)
 ";
 $payments = new core_collection($sql);
@@ -52,10 +58,18 @@ foreach($payments as $payment)
 		->filter('payable_id','in',explode(',',$payment['payables']));
 		
 	# write some logging
-	echo("Paying ".$payment['to_org_name']." ".core_format::price($payment['amount'])." for payables: \n");
-	foreach($payables as $payable)
+	echo("Paying ".$payment['to_org_name']." (".$payment['to_org_id'].") ".core_format::price($payment['amount'])." ");
+	if($config['report-payables'] == 1)
 	{
-		echo("\t".$payable['payable_info'].' '.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_due']),2)))."\n");
+		echo(" for payables: \n");
+		foreach($payables as $payable)
+		{
+			echo("\t".$payable['payable_info'].' '.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_due']),2)))."\n");
+		}
+	}
+	else
+	{
+		echo("\n");
 	}
 	
 	# only do this if they actually have an account setup
@@ -68,7 +82,7 @@ foreach($payments as $payment)
 	else
 	{
 		
-		if($config['do-ach'])
+		if($config['do-ach'] == 1)
 		{
 			
 			$record = core::model('payments');
@@ -116,6 +130,7 @@ foreach($payments as $payment)
 					->filter('lo_oid','in',$orders_to_check);
 				foreach($orders_to_check as $order)
 				{
+					
 					$core->config['domain']['domain_id'] = $order['domain_id'];
 					$order->update_status();
 				}
