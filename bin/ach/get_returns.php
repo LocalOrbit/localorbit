@@ -16,7 +16,7 @@ $mycompanyinfo -> LocID = "2764";
 $mycompanyinfo -> Company = "LOCALORBITLLC001";
 $mycompanyinfo -> CompanyKey = 'QSFTHJJP3JCMFBXGQEDBZWKDBPPHFM2'; 
  
-$myDateFrom = date('Y-m-d',time() - (4* 86400)); //include leading zero for mm and dd e.g. 01 for Jan 
+$myDateFrom = date('Y-m-d',time() - (1* 86400)); //include leading zero for mm and dd e.g. 01 for Jan 
 $myDateTo  = date('Y-m-d',time() + 86400);   //include leading zero for mm and dd e.g. 01 for Jan 
  
  
