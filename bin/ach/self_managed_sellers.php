@@ -29,13 +29,11 @@ from v_payables p
 inner join lo_order_line_item loi on (p.parent_obj_id=loi.lo_liid and loi.ldstat_id=4)
 inner join lo_order lo on (lo.lo_oid=loi.lo_oid)
 inner join domains d on (d.domain_id=lo.domain_id and d.seller_payer = 'hub')
-inner join v_payables p2 on (p2.from_org_id=lo.org_id and p2.parent_obj_id=loi.lo_liid and p2.payable_type='buyer order')
 left join organization_payment_methods opm on (d.opm_id=opm.opm_id )
 where (p.amount - p.amount_paid) > 0
-and (p2.amount - p2.amount_paid) = 0
 and p.payable_type = 'seller order'
 and p.from_org_id=1
-
+and loi.lbps_id=2
 group by concat_ws('-',p.to_org_id,p.payable_type);
 ";
 $payments = new core_collection($sql);
