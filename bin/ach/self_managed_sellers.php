@@ -22,24 +22,19 @@ while(count($argv) > 0)
 }
 
 $sql = "
-	select p.to_org_id,p.to_org_name,sum((p.amount - p.amount_paid)) as amount,opm.*,
-	group_concat(p.payable_id) as payables,group_concat(p3.payable_id) as seller_payable_ids
-	from v_payables p
-	inner join lo_order_line_item loi on (p.parent_obj_id=loi.lo_liid)
-	inner join lo_order lo on (loi.lo_oid = lo.lo_oid)
-	inner join domains d on (d.domain_id=lo.domain_id)
-	inner join organizations o on (o.org_id=loi.seller_org_id)
-	inner join v_payables p2 on (p2.from_org_id=lo.org_id and p2.parent_obj_id=loi.lo_liid and p2.payable_type='buyer order')
-	inner join v_payables p3 on (p3.payable_type = 'seller order' and p3.parent_obj_id=p.parent_obj_id and p3.payable_id<>p.payable_id)
-	left join organization_payment_methods opm on (d.opm_id=opm.opm_id )
-	where (p.amount - p.amount_paid) > 0
-	and (p2.amount - p2.amount_paid) = 0
-	and p.payable_type = 'seller order'
-	and p.from_org_id=1
-	and loi.ldstat_id=4
-	and loi.lbps_id=2
-	and d.seller_payer = 'hub'
-	group by concat_ws('-',p.to_org_id,p.payable_type)
+select p.to_org_id,p.to_org_name,sum((p.amount - p.amount_paid)) as amount,opm.*,
+group_concat(p.payable_id) as payables
+from v_payables p
+inner join lo_order_line_item loi on (p.parent_obj_id=loi.lo_liid and loi.ldstat_id=4)
+inner join domains d on (d.domain_id=lo.domain_id and d.seller_payer = 'hub')
+inner join v_payables p2 on (p2.from_org_id=lo.org_id and p2.parent_obj_id=loi.lo_liid and p2.payable_type='buyer order')
+left join organization_payment_methods opm on (d.opm_id=opm.opm_id )
+where (p.amount - p.amount_paid) > 0
+and (p2.amount - p2.amount_paid) = 0
+and p.payable_type = 'seller order'
+and p.from_org_id=1
+
+group by concat_ws('-',p.to_org_id,p.payable_type);
 ";
 $payments = new core_collection($sql);
 $payments = $payments->to_array();
