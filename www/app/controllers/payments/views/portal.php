@@ -9,9 +9,9 @@ global $tabs;
 $tabs = array('Overview','Payables','Payments');
 if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 {
-   $tabs[] = 'Receivables';
-   $tabs[] = 'Invoices';
-   $tabs[] = 'Transaction Journal';
+   $tabs[] = 'Money In';
+   $tabs[] = 'Money Out';
+   $tabs[] = 'Review Payment History';
 }
 if(lo3::is_admin() || lo3::is_market() )
    $tabs[] = 'Metrics';
@@ -27,9 +27,9 @@ $this->payables((array_search('Payables',$tabs) + 1));
 $this->payments((array_search('Payments',$tabs) + 1));
 if(lo3::is_admin() || lo3::is_market() || $core->session['allow_sell'] ==1)
 {
-   $this->receivables((array_search('Receivables',$tabs) + 1));
-   $this->invoices((array_search('Invoices',$tabs) + 1));
-   $this->transaction_journal((array_search('Transaction Journal',$tabs) + 1));
+   $this->receivables((array_search('Money In',$tabs) + 1));
+   $this->invoices((array_search('Money Out',$tabs) + 1));
+   $this->transaction_journal((array_search('Review Payment History',$tabs) + 1));
 }
 if(lo3::is_admin() || lo3::is_market() )
 {
