@@ -58,8 +58,6 @@
 <?}?>
 
 
-<div class="row">
-<div class="span3">
 <div id="tweets">
 	<div class="twitter-header">
 		<h3>Tweets</h3>
@@ -73,8 +71,6 @@
 	</div>
 	<ol class="facebook-feed">
 	</ol>
-</div>
-</div>
 </div>
 
 <?
