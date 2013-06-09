@@ -8,6 +8,7 @@ ob_end_flush();
 
 $config = array(
 	'do-ach'=>0,
+	'do-email'=>0,
 	'seller-org-id'=>0,
 	'mm-org-id'=>0,
 	'domain-id'=>0,
@@ -25,6 +26,11 @@ foreach($argv as $arg)
 	$arg = explode(':',$arg);
 	$config[$arg[0]] = str_replace('"','',$arg[1]);
 }
+if($config['do-ach'] == 1)
+{
+	$config['do-email'] = 1;
+}
+
 
 mysql_query('SET SESSION group_concat_max_len = 1000000;');
 $sql = "
@@ -100,7 +106,7 @@ foreach($payments as $payment)
 	$payables = new core_collection($sql);
 		
 	# write some logging
-	echo("Paying ".$payment['to_org_name']." ".core_format::price($payment['amount'])." ");
+	echo("Paying ".$payment['to_org_name']." (".$payment['to_org_id'].") ".core_format::price($payment['amount'])." ");
 	if($config['report-payables'] == 1)
 	{
 		echo("for payables: \n");
@@ -124,16 +130,18 @@ foreach($payments as $payment)
 	}
 	else
 	{
+		$record = core::model('payments');
+		$record['amount'] = $payment['amount'];
+		$record['payment_method'] = 'ACH';
+		$record['creation_date'] = time();
+		$record->save();
+		$trace   = 'P-'.str_pad($record['payment_id'],6,'0',STR_PAD_LEFT);
+		
 		
 		if($config['do-ach'] == 1)
 		{
 			
-			$record = core::model('payments');
-			$record['amount'] = $payment['amount'];
-			$record['payment_method'] = 'ACH';
-			$record['creation_date'] = time();
-			$record->save();
-			$trace   = 'P-'.str_pad($record['payment_id'],6,'0',STR_PAD_LEFT);
+		
 			echo("\tprocessing payment: ".$trace."\n");
 					
 			$account = core::model('organization_payment_methods')->load($opm_id);
@@ -144,9 +152,6 @@ foreach($payments as $payment)
 				echo("\tPayment success!\n");
 				
 				# send emails of payment to both parties
-				core::process_command('emails/payment_received',false,
-					1,$payment['to_org_id'],$amount,$payables
-				);
 				
 				# update the payment record with the trace
 				$record['ref_nbr'] = $trace;
@@ -182,13 +187,30 @@ foreach($payments as $payment)
 						$seller_payable->save();
 					}
 				}
-
+				if($config['do-email'] == 1)
+				{
+					core::process_command('emails/payment_received',false,
+						1,$payment['to_org_id'],$payment['amount'],$payables
+					);
+				}
 			}
 			else
 			{
 				$record->delete();
 				echo("\tPAYMENT FAIL\n");
 			}
+			
+			
+		}
+		else
+		{
+			if($config['do-email'] == 1)
+			{
+				core::process_command('emails/payment_received',false,
+					1,$payment['to_org_id'],$payment['amount'],$payables
+				);
+			}
+			$record->delete();
 		}
 	}
 }

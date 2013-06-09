@@ -3,8 +3,8 @@ global $core;
 
 
 # these are being passed in 
-$to_org_id = $core->view[0];
-$received_from_org_id = $core->view[1];
+$received_from_org_id = $core->view[0];
+$to_org_id = $core->view[1];
 $amount = $core->view[2];
 $invoices = $core->view[3];
 $date_received = core_format::date(time(),'short');
@@ -19,7 +19,7 @@ $values = array();
 $values['paid_to'] = $to_org['name'];
 $values['received_from'] = $from_org['name'];
 $values['amount'] = core_format::price($amount);
-$values['date_received'] = core_format::date(time() + (7 * 86400),'short');
+$values['date_received'] = core_format::date(time(),'short');
 $values['invoice_ids'] = explode(',',$invoices['invoice_id']);
 
 
@@ -85,12 +85,19 @@ $this->send_email(
 
 
 // received payment
-$emails = core_db::col('
-	SELECT group_concat(email) AS emails
-	FROM customer_entity
-	WHERE org_id='.$to_org['org_id'].'
-		AND is_active=1 AND is_deleted=0
-	GROUP BY org_id;','emails');
+if($core->config['stage'] == 'production')
+{
+	$emails = core_db::col('
+		SELECT group_concat(email) AS emails
+		FROM customer_entity
+		WHERE org_id='.$to_org['org_id'].'
+			AND is_active=1 AND is_deleted=0
+		GROUP BY org_id;','emails');
+}
+else
+{
+	$emails = 'localorbit.testing@gmail.com';
+}
 //$emails = "jvavul@gmail.com";
 
 $body  = $this->email_start();
@@ -101,7 +108,7 @@ $body .= $this->email_end();
 
 $this->send_email(
 		$core->i18n['email:payments:payment_received_subject'],
-		'mike@localorb.it',
+		$emails,
 		# emails
 		$body,
 		array(),

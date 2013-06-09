@@ -8,9 +8,15 @@ ob_end_flush();
 
 $config = array(
 	'do-ach'=>0,
-	'to-org-id'=>0,  # allows you to restrict the query to a single vendor
+	'do-email'=>0,
+	'seller-org-id'=>0,  # allows you to restrict the query to a single vendor
 	'report-payables'=>0, # prints out info on all the payables covered by the payment
 );
+if($config['do-ach'] == 1)
+{
+	$config['do-email'] = 1;
+}
+
 
 
 array_shift($argv);
@@ -36,9 +42,9 @@ $sql = "
 	and loi.lbps_id=2
 	and d.seller_payer = 'lo'";
 
-if($config['to-org-id'] != 0)
+if($config['seller-org-id'] != 0)
 {
-	$sql .= ' and p.to_org_id='.$config['to-org-id'].' ';
+	$sql .= ' and p.to_org_id='.$config['seller-org-id'].' ';
 }
 
 $sql .="
@@ -81,16 +87,17 @@ foreach($payments as $payment)
 	}
 	else
 	{
+		$record = core::model('payments');
+		$record['amount'] = $payment['amount'];
+		$record['payment_method'] = 'ACH';
+		$record['creation_date'] = time();
+		$record->save();
+		$trace   = 'P-'.str_pad($record['payment_id'],6,'0',STR_PAD_LEFT);
 		
 		if($config['do-ach'] == 1)
 		{
 			
-			$record = core::model('payments');
-			$record['amount'] = $payment['amount'];
-			$record['payment_method'] = 'ACH';
-			$record['creation_date'] = time();
-			$record->save();
-			$trace   = 'P-'.str_pad($record['payment_id'],6,'0',STR_PAD_LEFT);
+			
 			echo("\tprocessing payment: ".$trace."\n");
 					
 			$account = core::model('organization_payment_methods')->load($opm_id);
@@ -101,9 +108,12 @@ foreach($payments as $payment)
 				echo("\tPayment success!\n");
 				
 				# send emails of payment to both parties
-				core::process_command('emails/payment_received',false,
-					1,$payment['to_org_id'],$amount,$payables
-				);
+				if($config['do-email'] == 1)
+				{
+					core::process_command('emails/payment_received',false,
+						1,$payment['to_org_id'],$payment['amount'],$payables
+					);
+				}
 				
 				# update the payment record with the trace
 				$record['ref_nbr'] = $trace;
@@ -129,8 +139,7 @@ foreach($payments as $payment)
 					->collection()
 					->filter('lo_oid','in',$orders_to_check);
 				foreach($orders_to_check as $order)
-				{
-					
+				{		
 					$core->config['domain']['domain_id'] = $order['domain_id'];
 					$order->update_status();
 				}
@@ -140,6 +149,17 @@ foreach($payments as $payment)
 				$record->delete();
 				echo("\tPAYMENT FAIL\n");
 			}
+		}
+		else
+		{
+			if($config['do-email'] == 1)
+			{
+				core::process_command('emails/payment_received',false,
+					1,$payment['to_org_id'],$payment['amount'],$payables
+				);
+			}
+			$record->delete();
+			
 		}
 	}
 }
