@@ -20,6 +20,9 @@ function format_payable_info($data)
 				case 'seller order':
 					$type = 'Seller Payment';
 					break;
+				case 'hub fees':
+					$type = 'Market Fees';
+					break;
 				default:
 					$type = ucwords($type);
 					break;
