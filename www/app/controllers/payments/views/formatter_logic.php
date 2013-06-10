@@ -41,7 +41,11 @@ function format_payable_info($data)
 			{
 				$html .= '<a href="#!';
 			}
-			$html .= '">'.$info[0].'</a><br />'.$type.'';
+			
+			$html .= '">'.$info[0].'</a>';
+			
+			if(lo3::is_admin() || lo3::is_market())
+				$html .= '<br />'.$type.'';
 		}
 	}
 	$data['ref_nbr_html'] = $html;
