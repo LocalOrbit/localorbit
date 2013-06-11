@@ -36,16 +36,13 @@ $values['pay_link'] = 'https://'.$domain['hostname'].'/app.php#!payments-home--l
 
 $values['payables'] = '
 <table class="dt">
-	<col width="20%" />
-	<col width="20%" />
-	<col width="20%" />
-	<col width="20%" />
-	<col width="20%" />
+	<col width="30%" />
+	<col width="40%" />
+	<col width="30%" />
 	<tr>
 		<th class="dt">Ref #</th>
 		<th class="dt">Description</th>
 		<th class="dt">Order Date</th>
-		<th class="dt">Amount</th>
 	</tr>
 ';
 
@@ -53,17 +50,17 @@ $values['payables'] = '
 $counter = false;
 foreach($payables as $payable)
 {
-	#$values['payables'] .= print_r($payable->__data,true);
-	$payable = core::model('v_payables')->load($payable);
+	core::log(print_r($payable,true));
+	#$values['payables'] .= 
+	#$payable = core::model('v_payables')->load($payable);
 	if($payable['payable_type'] == 'buyer order')
 	{
-		$info = explode('|',$payable['payable_info']);
+		#$info = explode('|',$payable['payable_info']);
 		$values['payables'] .= '
 			<tr class="dt'.$counter.'">
-				<td class="dt">'.$info[0].'</td>
-				<td class="dt">'.$info[3].' ('.$info[4].')</td>
-				<td class="dt">'.core_format::date($info[7],'short').'</td>
-				<td class="dt">'.core_format::price($payable['amount']).'</td>
+				<td class="dt">'.$paayble['lo3_order_nbr'].'</td>
+				<td class="dt">'.$payable['product_name'].' ('.$payable['qty_ordered'].')</td>
+				<td class="dt">'.core_format::date($payable['order_date'],'short').'</td>
 			</tr>';
 	}
 	if($payable['payable_type'] == 'delivery fee')
@@ -81,6 +78,8 @@ foreach($payables as $payable)
 	$counter = (!$counter);
 }
 $values['payables'] .='</table>';
+
+
 
 $body  = $this->email_start();
 $body .= $this->handle_source($core->i18n['email:payments:new_invoice_body'],$values);
