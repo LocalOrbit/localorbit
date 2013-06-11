@@ -51,7 +51,7 @@ class core_datatable_mike extends core_datatable
 				# loop through the columns and render the data for that column
 				for ($j = 0; $j < count($this->columns); $j++)
 				{
-					/*
+					
 					if($this->columns[$j]->autoformat != '')
 					{
 						switch($this->columns[$j]->autoformat)
@@ -75,7 +75,7 @@ class core_datatable_mike extends core_datatable
 								break;
 						}
 					}
-					*/
+					
 					$row .= '<td class="dt" id="dt_'.$this->name.'_'.$i.'_'.$j.'">'.$this->columns[$j]->render_data('html').'</td>';
 				}
 				$row .= '</tr>';
