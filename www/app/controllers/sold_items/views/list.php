@@ -110,7 +110,7 @@ function sold_items_output($output_type,$dt)
 
 # setup the basic table
 $col->add_formatter('sold_items_formatter');
-$items = new core_datatable_mike('sold_items','sold_items/list',$col);
+$items = new core_datatable('sold_items','sold_items/list',$col);
 $items->handler_onoutput = 'sold_items_output';
 
 # this particular data table is meant to show EVERYTHING in the date range.
@@ -251,16 +251,16 @@ $items->filter_html .= '</div>';
 
 #relevant buyers by date, item, amount, status
 $order_link = '<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">';
-$items->add(new core_datacolumn_mike('lo_liid',array(core_ui::check_all('solditem'),'',''),false,'4%',core_ui::check_all('solditem','lo_liid'),' ',' '));
+$items->add(new core_datacolumn('lo_liid',array(core_ui::check_all('solditem'),'',''),false,'4%',core_ui::check_all('solditem','lo_liid'),' ',' '));
 
 if (lo3::is_admin() || lo3::is_market()) {
-	#$items->add(new core_datacolumn_mike('order_date','&nbsp;',false,'14%','<a onclick="core.sold_items.editAdminNotes({lo_oid}, this);" style="cursor: pointer;">Note</a>'));
+	#$items->add(new core_datacolumn('order_date','&nbsp;',false,'14%','<a onclick="core.sold_items.editAdminNotes({lo_oid}, this);" style="cursor: pointer;">Note</a>'));
 }
 
 
 #if(lo3::is_admin())
 #{
-	$items->add(new core_datacolumn_mike('order_date','Order',true,'29%','{order_date}<br>
+	$items->add(new core_datacolumn('order_date','Order',true,'29%','{order_date}<br>
 	<a href="#!orders-view_order--lo_oid-{lo_oid}">{lo3_order_nbr}</a>
 	<br />
 	<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{lfo3_order_nbr}</a>'
@@ -269,19 +269,19 @@ if (lo3::is_admin() || lo3::is_market()) {
 
 # do not link customers to org profiles.
 #if(lo3::is_customer())
-	$items->add(new core_datacolumn_mike('o.name','Buyer',true,'20%','{buyer_name}','{buyer_name}','{buyer_name}'));
+	$items->add(new core_datacolumn('o.name','Buyer',true,'20%','{buyer_name}','{buyer_name}','{buyer_name}'));
 #else
-#	$items->add(new core_datacolumn_mike('o1.name','Buyer',true,'20%',$order_link.'{buyer_name}</a>','{buyer_name}','{buyer_name}'));
+#	$items->add(new core_datacolumn('o1.name','Buyer',true,'20%',$order_link.'{buyer_name}</a>','{buyer_name}','{buyer_name}'));
 
 # do
-$items->add(new core_datacolumn_mike('seller_name','Seller',true,'20%','{seller_name}<br><small>{domain_name}</small>'));
-$items->add(new core_datacolumn_mike('product_name','Product',true,'25%',$order_link.'{product_name}</a>'));
-$items->add(new core_datacolumn_mike('qty_ordered','Qty',true,'8','{qty_ordered}x'));
-$items->add(new core_datacolumn_mike('unit_price','Row Total',true,'14%','<small>Unit:</small>&nbsp;{unit_price}<br><small>Row&nbsp;Total:</small>&nbsp;{row_total}'));
-$items->add(new core_datacolumn_mike('discount','Discount',true,'14%','<small>Discount:</small>&nbsp;{discount}<br><small>Discounted&nbsp;Total:</small>&nbsp;{row_adjusted_total}'));
-$items->add(new core_datacolumn_mike('delivery_status','Delivery',true,'14%',$order_link.'{delivery_status}</a>'));
-$items->add(new core_datacolumn_mike('buyer_payment_status','Buyer',true,'14%',$order_link.'{buyer_payment_status}</a>'));
-$items->add(new core_datacolumn_mike('seller_payment_status','Seller',true,'14%',$order_link.'{seller_payment_status}</a>'));
+$items->add(new core_datacolumn('seller_name','Seller',true,'20%','{seller_name}<br><small>{domain_name}</small>'));
+$items->add(new core_datacolumn('product_name','Product',true,'25%',$order_link.'{product_name}</a>'));
+$items->add(new core_datacolumn('qty_ordered','Qty',true,'8','{qty_ordered}x'));
+$items->add(new core_datacolumn('unit_price','Row Total',true,'14%','<small>Unit:</small>&nbsp;{unit_price}<br><small>Row&nbsp;Total:</small>&nbsp;{row_total}'));
+$items->add(new core_datacolumn('discount','Discount',true,'14%','<small>Discount:</small>&nbsp;{discount}<br><small>Discounted&nbsp;Total:</small>&nbsp;{row_adjusted_total}'));
+$items->add(new core_datacolumn('delivery_status','Delivery',true,'14%',$order_link.'{delivery_status}</a>'));
+$items->add(new core_datacolumn('buyer_payment_status','Buyer',true,'14%',$order_link.'{buyer_payment_status}</a>'));
+$items->add(new core_datacolumn('seller_payment_status','Seller',true,'14%',$order_link.'{seller_payment_status}</a>'));
 
 
 # setup formatters
