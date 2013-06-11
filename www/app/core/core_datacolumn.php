@@ -74,73 +74,49 @@ class core_datacolumn
 		}
 	}
 	
-	function render_data($data,$format='html')
+	
+	function render_data($format='html')
 	{
 		global $core;
 		
 		#core::log('chekcing format on ');
-		if($this->autoformat != '')
-		{
-			switch($this->autoformat)
-			{
-				case 'price':
-					$data[$this->dbname] = core_format::price($data[$this->dbname],false);
-					break;
-				case 'date-long':
-					$data[$this->dbname] = core_format::date($data[$this->dbname],'long');
-					break;
-				case 'date-long-wrapped':
-					if($format == 'html')
-						$data[$this->dbname] = core_format::date($data[$this->dbname],'long-wrapped');
-					else
-						$data[$this->dbname] = core_format::date($data[$this->dbname],'long');
-						
-					break;
-				case 'date-short':
-					$data[$this->dbname] = core_format::date($data[$this->dbname],'short');
-					
-					break;
-			}
-		}
+		
 		
 		$out = '';
 		
 		# if there's no template, just output the field's value
 		$template_type = 'template_'.$format;
-		if($this->$template_type == '')
-		{
-			$out .= $data[$this->dbname];
-		}
-		else
-		{
-		
-			# if there is, figure out if this is just a dumb array, or an object
-			$out = $this->$template_type;
-			if(is_array($data))
-			{
-				foreach($data as $key=>$value)
-				{
-					$out = str_replace('{'.$key.'}',$value,$out);
-				}
-			}
-			else
-			{
-				foreach($data->__data as $key=>$value)
-				{
-					$out = str_replace(
-						'{'.$key.'}',
-						$value,
-						$out
-					);
-				}
-			}
-		}
-		return $out;
+		return $this->$template_type;
 	}
 	
 	function determine_pdf_num_rows($data,$pdf,$row_height)
 	{
 		return 1;
+	}
+	
+	function handle_autoformat($data)
+	{
+		switch($this->autoformat)
+		{
+			case 'price':
+				$data[$this->dbname] = core_format::price($data[$this->dbname],false);
+				break;
+			case 'date-long':
+				$data[$this->dbname] = core_format::date($data[$this->dbname],'long');
+				break;
+			case 'date-long-wrapped':
+				if($format == 'html')
+					$data[$this->dbname] = core_format::date($data[$this->dbname],'long-wrapped');
+				else
+					$data[$this->dbname] = core_format::date($data[$this->dbname],'long');
+					
+				break;
+			case 'date-short':
+				$data[$this->dbname] = core_format::date($data[$this->dbname],'short');
+				
+				break;
+		}
+		return $data;
 	}
 }
 
