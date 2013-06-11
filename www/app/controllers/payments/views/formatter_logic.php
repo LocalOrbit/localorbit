@@ -40,9 +40,11 @@ function format_payable_info($data)
 				$html .= '<div id="ref_nbr_'.intval($data['payment_id']).'" style="display:none;">';
 				$payment_id_class_started = true;
 			}
-			
-			if($html != '')
-				$html .= '<br />';
+			else
+			{
+				if($html != '')
+					$html .= '<br />';
+			}
 		
 			
 			if($info[1] == 'seller order')
@@ -93,10 +95,11 @@ function format_payable_info($data)
 				$html .= '<div id="payables_'.intval($data['payment_id']).'" style="display:none;">';
 				$expander_rendered = true;
 			}
-			
-			if($html != '')
-				$html .= '<br />';
-			
+			else
+			{
+				if($html != '')
+					$html .= '<br />';
+			}
 			if($info[1] == 'seller order')
 			{
 				$html .= '<a href="#!orders-view_sales_order--lo_foid-'.$info[2];
