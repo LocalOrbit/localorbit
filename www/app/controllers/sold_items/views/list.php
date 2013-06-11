@@ -38,13 +38,13 @@ $hubs = $hubs->sort('name');
 # apply permissions
 if(lo3::is_market())
 {
-	$col->filter('lo_order.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
+	$col->filter('lo.domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 	$buyer_sql  = 'select distinct o.org_id,o.name from organizations o inner join lo_order lo on (lo.org_id=o.org_id and lo.domain_id in ('.implode(',', $core->session['domains_by_orgtype_id'][2]).')) where lo.ldstat_id<>1 order by name;';
 	$seller_sql = 'select distinct o.org_id,o.name from organizations o inner join lo_fulfillment_order lfo on (lfo.org_id=o.org_id and lfo.domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')) where lfo.ldstat_id<>1 order by name;';
 }
 else if(lo3::is_customer())
 {
-	$col->filter('lo_fulfillment_order.org_id',$core->session['org_id']);	
+	$col->filter('lfo.org_id',$core->session['org_id']);	
 	$buyer_sql  = 'select org_id,name from organizations where org_id in (select org_id from lo_order left join lo_order_line_item using lo_oid where lo_order.ldstat_id<>1 and lo_order_line_item.seller_org_id='.$core->session['org_id'].') order by name';
 }
 else
@@ -148,7 +148,7 @@ if(isset($core->i18n['title:sold_items_filters1']))
 $items->add_filter(new core_datatable_filter('loi.ldstat_id'));
 $items->filter_html .= core_datatable_filter::make_select(
 	'sold_items',
-	'lo_order_line_item.ldstat_id',
+	'loi.ldstat_id',
 	$items->filter_states['sold_items__filter__loi_ldstat_id'],
 	array(
 		'2'=>'Pending',
@@ -166,7 +166,7 @@ $items->filter_html .= core_datatable_filter::make_select(
 $items->add_filter(new core_datatable_filter('loi.lbps_id'));
 $items->filter_html .= core_datatable_filter::make_select(
 	'sold_items',
-	'lo_order_line_item.lbps_id',
+	'loi.lbps_id',
 	$items->filter_states['sold_items__filter__loi_lbps_id'],
 	array(
 		'1'=>'Unpaid',
@@ -185,7 +185,7 @@ $items->filter_html .= core_datatable_filter::make_select(
 $items->add_filter(new core_datatable_filter('loi.lsps_id'));
 $items->filter_html .= core_datatable_filter::make_select(
 	'sold_items',
-	'lo_order_line_item.lsps_id',
+	'loi.lsps_id',
 	$items->filter_states['sold_items__filter__loi_lsps_id'],
 	array(
 		'1'=>'Unpaid',
@@ -206,7 +206,7 @@ if(isset($core->i18n['title:sold_items_filters2']))
 # only admins can filter by hub
 if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 {
-	$items->add_filter(new core_datatable_filter('lo_order.domain_id'));
+	$items->add_filter(new core_datatable_filter('lo.domain_id'));
 	$items->filter_html .= core_datatable_filter::make_select(
 		'sold_items',
 		'lo_order.domain_id',
@@ -219,10 +219,10 @@ if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 }
 
 # everyone can use the buyer filter
-$items->add_filter(new core_datatable_filter('lo_order.org_id'));
+$items->add_filter(new core_datatable_filter('lo.org_id'));
 $items->filter_html .= core_datatable_filter::make_select(
 	'sold_items',
-	'lo_order.org_id',
+	'lo.org_id',
 	$items->filter_states['sold_items__filter__lo_order_org_id'],
 	new core_collection($buyer_sql),
 	'org_id',
@@ -236,7 +236,7 @@ if(lo3::is_market() || lo3::is_admin())
 	$items->add_filter(new core_datatable_filter('lo_fulfillment_order.org_id'));
 	$items->filter_html .= core_datatable_filter::make_select(
 		'sold_items',
-		'lo_fulfillment_order.org_id',
+		'lfo.org_id',
 		$items->filter_states['sold_items__filter__lo_fulfillment_order_org_id'],
 		new core_collection($seller_sql),
 		'org_id',
