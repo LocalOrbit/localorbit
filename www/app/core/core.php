@@ -286,6 +286,8 @@ class core
 		include($core->paths['libraries'].'/core_datacolumn.php');
 		include($core->paths['libraries'].'/core_datatable_filter.php');
 		
+		include($core->paths['libraries'].'/core_datatable_mike.php');
+		include($core->paths['libraries'].'/core_datacolumn_mike.php');
 		# include any additional libraries as specified in config.php
 		foreach($core->config['includes'] as $file)
 		{
