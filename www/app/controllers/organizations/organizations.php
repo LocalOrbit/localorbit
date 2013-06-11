@@ -64,7 +64,7 @@ class core_controller_organizations extends core_controller
 	
 		core::log(print_r($core->data,true));
 		$pm = core::model('organization_payment_methods')
-			->import_fields('opm_id','label','name_on_account','org_id');
+			->import_fields('opm_id','label','name_on_account','org_id','account_type');
 
 		if($core->data['nbr1'] != '' && strpos($core->data['nbr1'],'*')===false)
 		{
