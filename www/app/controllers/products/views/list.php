@@ -99,6 +99,9 @@ if(lo3::is_admin() || lo3::is_market())
 		left join organizations_to_domains otd on (organizations.org_id=otd.org_id and otd.is_home=1) 
 		left join domains d on (otd.domain_id=d.domain_id) 
 		where allow_sell=1 
+		AND is_enabled = 1
+			AND is_active = 1
+			AND is_deleted = 0
 		and organizations.name<>\'\' is not null
 	';
 

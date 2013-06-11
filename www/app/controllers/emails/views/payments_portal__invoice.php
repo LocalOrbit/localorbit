@@ -22,7 +22,9 @@ else
 		select group_concat(email) as emails
 		from customer_entity
 		where org_id='.$from_org_id.'
-		and is_active=1 and is_deleted=0
+			AND is_deleted = 0
+			AND is_enabled = 1
+			AND is_active = 1
 		group by org_id;','emails');
 }
 

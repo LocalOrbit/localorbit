@@ -210,11 +210,15 @@ class core_controller_registration extends core_controller
 		$mms = core_db::col_array('
 			select email
 			from customer_entity
-			where org_id in (
+			where is_deleted = 0
+				AND is_enabled = 1
+				AND is_active = 1
+				
+				AND org_id in (
 				select org_id
 				from organizations_to_domains
 				where orgtype_id=2
-				and domain_id='.$core->config['domain']['domain_id'].'
+				AND domain_id='.$core->config['domain']['domain_id'].'
 			)
 		');
 		core::log('retrieved mm list');

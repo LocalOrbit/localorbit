@@ -64,8 +64,10 @@ $values['payables'] .='</table>'; */
 $emails = core_db::col('
 	SELECT group_concat(email) AS emails
 	FROM customer_entity
-	WHERE org_id='.$from_org['org_id'].'
-		AND is_active=1 AND is_deleted=0
+	WHERE org_id='.$from_org['org_id'].'	
+		AND is_deleted = 0
+		AND is_enabled = 1
+		AND is_active = 1
 	GROUP BY org_id;','emails');
 
 $body  = $this->email_start();
@@ -91,7 +93,9 @@ if($core->config['stage'] == 'production')
 		SELECT group_concat(email) AS emails
 		FROM customer_entity
 		WHERE org_id='.$to_org['org_id'].'
-			AND is_active=1 AND is_deleted=0
+			AND is_deleted = 0
+			AND is_enabled = 1
+			AND is_active = 1
 		GROUP BY org_id;','emails');
 }
 else

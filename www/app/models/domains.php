@@ -38,7 +38,12 @@ class core_model_domains extends core_model_base_domains
 		$sql = '
 			select email
 			from customer_entity
-			where org_id in (
+			where 
+				is_deleted = 0
+				AND is_enabled = 1
+				AND is_active = 1
+				
+				AND org_id in (
 				select otd.org_id
 				from organizations_to_domains otd
 				where otd.domain_id='.$domain_id.'

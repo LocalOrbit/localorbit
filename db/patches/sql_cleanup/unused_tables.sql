@@ -10,10 +10,6 @@ ORDER  BY table_name
 LIMIT  1000;
 */
 
-ALTER TABLE organizations
-MODIFY payment_entity_id int(10) UNSIGNED;
-
-
 DROP TABLE IF EXISTS adminnotification_inbox;
 DROP TABLE IF EXISTS admin_role;
 DROP TABLE IF EXISTS admin_rule;
@@ -211,8 +207,3 @@ DROP TABLE IF EXISTS vendorcatalog;
 DROP TABLE IF EXISTS version;
 
 DROP TABLE IF EXISTS wishlist;
-
-
-
-ALTER TABLE delivery_fees
-  MODIFY minimum_order decimal(10,2);
