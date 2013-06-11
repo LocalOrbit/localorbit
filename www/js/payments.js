@@ -273,5 +273,4 @@ core.payments.toggle=function(typeName,id,refObj){
 	$('#'+typeName+'_'+id).toggle();
 	refObj[((state==0)?'removeClass':'addClass')]('icon-plus-circle');
 	refObj[((state==1)?'removeClass':'addClass')]('icon-minus-circle');
-	//alert(state);
 };
