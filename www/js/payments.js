@@ -263,5 +263,15 @@ core.payments.setPayFields=function(tab,group){
 	var val = $('form[name=paymentsForm] input[name='+tab+'__group_method__'+group+']:checked').val();
 	$('.'+tab+'__group__'+group+'__pay_field').hide();
 	$('#'+tab+'__group__'+group+'__pay_fields_'+val).show(300);
-
 }
+
+
+core.payments.toggle=function(typeName,id,refObj){
+	refObj = $(refObj);
+	var state = refObj.attr('data-expanded');
+	refObj.attr('data-expanded',((state==0)?1:0));
+	$('#'+typeName+'_'+id).toggle();
+	refObj[((state==0)?'removeClass':'addClass')]('icon-plus-circle');
+	refObj[((state==1)?'removeClass':'addClass')]('icon-minus');
+	//alert(state);
+};
