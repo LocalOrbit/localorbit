@@ -69,14 +69,17 @@ class core_format
 			'dec'=>'12',
 		);
 		$input =  preg_split("/[\s,]+/",trim(strtolower($input)));
+		
+		$month = substr($input[0],0, 3);
+		
 		#core::log('parts of date: '.print_r($input,true));
 		switch($return_format)
 		{
 			case 'db':
 				return $input[2].'-'.$months[$input[0]].'-'.$input[1];
 				break;
-			case 'timestamp':
-				return mktime(0,0,0,intval($months[$input[0]]),$input[1],$input[2]);
+			case 'timestamp':				
+				return mktime(0,0,0,intval($months[$month]),$input[1],$input[2]);
 				break;
 			default:
 				exit('unknown return type for core_format::parse_date();');
