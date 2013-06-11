@@ -274,3 +274,12 @@ core.payments.toggle=function(typeName,id,refObj){
 	refObj[((state==0)?'removeClass':'addClass')]('icon-plus-circle');
 	refObj[((state==1)?'removeClass':'addClass')]('icon-minus-circle');
 };
+
+core.payments.resendPaymentNotification=function(){
+	var payments = core.ui.getCheckallList(document.paymentsForm,'payments');
+	if(payments.length == 0){
+		alert('please check at least one payment.');
+	}else{
+		core.doRequest('/payments/resend_payment_notifications',{'checked_payments':payments.join(',')});
+	}
+}
