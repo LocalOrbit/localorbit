@@ -86,7 +86,14 @@ class core_datacolumn
 		
 		# if there's no template, just output the field's value
 		$template_type = 'template_'.$format;
-		return $this->$template_type;
+		if($this->$template_type == '')
+		{
+			return '{'.$this->dbname.'}';
+		}
+		else
+		{
+			return $this->$template_type;
+		}
 	}
 	
 	function determine_pdf_num_rows($data,$pdf,$row_height)
