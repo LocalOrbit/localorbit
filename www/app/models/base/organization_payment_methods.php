@@ -13,6 +13,7 @@ class core_model_base_organization_payment_methods extends core_model
 		$this->add_field(new core_model_field(7,'nbr2','string',-4,'','organization_payment_methods'));
 		$this->add_field(new core_model_field(8,'nbr2_last_4','string',-4,'','organization_payment_methods'));
 		$this->add_field(new core_model_field(9,'last_updated','timestamp',4,'','organization_payment_methods'));
+		$this->add_field(new core_model_field(10,'account_type','string',-4,'','organization_payment_methods'));
 		$this->init_data();
 	}
 }
