@@ -14,7 +14,7 @@ $end = $core->config['time'] + 86400;
 
 $sql = '
 	select 
-	loi.product_name,loi.qty_ordered,loi.row_total,loi.row_adjusted_total,loi.row_total,
+	loi.lo_liid,loi.product_name,loi.qty_ordered,loi.row_total,loi.row_adjusted_total,loi.row_total,
 	loi.unit_price,loi.seller_name,
 	o.name as buyer_name,o.org_id as buyer_org_id,d.name as domain_name,
 	ds.delivery_status,bps.buyer_payment_status,sps.seller_payment_status,
