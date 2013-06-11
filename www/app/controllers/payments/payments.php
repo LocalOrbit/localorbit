@@ -348,6 +348,30 @@ class core_controller_payments extends core_controller
 		core_ui::notification('Payment Saved.');
 		core::deinit();
 	}
+	
+	function resend_payment_notifications()
+	{
+		global $core;
+		lo3::require_orgtype('admin');
+		
+		$ids = explode(',',$core->data['checked_payments']);
+		$payments = core::model('v_payments')->collection()->filter('payment_id','in',$ids);
+		foreach($payments as $payment)
+		{
+			$payables = array();
+			$info = explode('$$',$payment['payable_info']);
+			foreach($info as $line)
+			{
+				$payables[] = array_combine(array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date'),explode('|',$line));
+			}
+			
+			core::process_command('emails/payment_received',false,
+				1,$payment['to_org_id'],$payment['amount'],$payables
+			);
+		}
+		core_ui::notification('Payment E-mail Re-sent.');
+		core::deinit();
+	}
 }
 
 ?>
