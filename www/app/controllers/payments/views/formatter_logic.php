@@ -10,6 +10,8 @@ function format_payable_info($data)
 	# format the Ref Nbr column
 	$html = '';
 	$printed_orders = array();
+	$first_payable = true;
+	$payment_id_class_started = false;
 	foreach($payable_info as $info)
 	{
 		if(!isset($printed_orders[$info[1].'-'.$info[2]]))
@@ -29,9 +31,20 @@ function format_payable_info($data)
 			}
 			$printed_orders[$info[1].'-'.$info[2]] = true;
 			
+					
+			# in order to enable the accordion functionality for payments, we need to wrap 
+			# every order # after the first one in a div with a class applied
+			if(!$first_payable && !$payment_id_class_started && is_numeric($data['payment_id']))
+			{
+				$html .= '&nbsp;<i class="icon-plus-circle hoverpointer" onclick="core.payments.toggle(\'ref_nbr\','.intval($data['payment_id']).',this);" data-expanded="0"></i>';
+				$html .= '<div id="ref_nbr_'.intval($data['payment_id']).'" style="display:none;">';
+				$payment_id_class_started = true;
+			}
+			
 			if($html != '')
 				$html .= '<br />';
-				
+		
+			
 			if($info[1] == 'seller order')
 			{
 				$html .= '<a href="#!orders-view_sales_order--lo_foid-'.$info[2];
@@ -47,10 +60,15 @@ function format_payable_info($data)
 			
 			$html .= '">'.$info[0].'</a>';
 			
+			
+			
 			if(lo3::is_admin() || lo3::is_market())
 				$html .= '<br />'.$type.'';
 		}
+		$first_payable = false;
 	}
+	if($payment_id_class_started)
+		$html .= '</div>';
 	$data['ref_nbr_html'] = $html;
 	
 		
@@ -60,6 +78,8 @@ function format_payable_info($data)
 	
 	# format the Description column
 	$html = '';
+	$count = 0;
+	$expander_rendered = false;
 	foreach($payable_info as $info)
 	{
 		if($info[1] == 'delivery fee')
@@ -67,6 +87,13 @@ function format_payable_info($data)
 		}
 		else
 		{
+			if($html != '' && $expander_rendered == false)
+			{
+				$html .= '&nbsp;<i class="icon-plus-circle hoverpointer" onclick="core.payments.toggle(\'payables\','.intval($data['payment_id']).',this);" data-expanded="0"></i>';
+				$html .= '<div id="payables_'.intval($data['payment_id']).'" style="display:none;">';
+				$expander_rendered = true;
+			}
+			
 			if($html != '')
 				$html .= '<br />';
 			
@@ -84,6 +111,11 @@ function format_payable_info($data)
 			}
 			$html .= '">'.$info[3].' ('.$info[4].')</a>';
 		}
+		$count++;
+	}
+	if($count > 1)
+	{
+		$html .= '</div>';
 	}
 	$data['description_html'] = $html;
 	
