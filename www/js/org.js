@@ -95,16 +95,17 @@ org.deleteUser=function(userId,userName,refObj,curUserId){
 }
 
 
-org.editPaymentMethod=function(opm_id,name_on_account,label,nbr1last4,nbr2last4){
+org.editPaymentMethod=function(opm_id,name_on_account,account_type,label,nbr1last4,nbr2last4){
 	document.organizationsForm.pm_label.value=label;
 	document.organizationsForm.opm_id.value=opm_id;
 	document.organizationsForm.name_on_account.value=name_on_account;
+	$(document.organizationsForm.account_type).val(account_type)
 	if(!isNaN(nbr1last4))
-		document.organizationsForm.nbr1.value='************'+nbr1last4;
+		document.organizationsForm.nbr1.value='*****'+nbr1last4;
 	else
 		document.organizationsForm.nbr1.value = '';
 	if(!isNaN(nbr2last4))
-		document.organizationsForm.nbr2.value='************'+nbr2last4;
+		document.organizationsForm.nbr2.value='*****'+nbr2last4;
 	else
 		document.organizationsForm.nbr2.value = '';
 	$('#paymentsTable,#main_save_buttons,#addPaymentButton,#editPaymentMethod').toggle();
@@ -138,22 +139,27 @@ org.savePaymentMethod=function(formObj){
 	var routing_num = $.trim(formObj.nbr2.value);
 
 	// account number 5 digit check
-	if(isNaN(account_num) || account_num.length < 5) {
-		core.validatePopup("Please enter a valid Account number.");
-		return false;
+	if(account_num.indexOf('*') == -1){
+		if(isNaN(account_num) || account_num.length < 5) {
+			core.validatePopup("Please enter a valid Account number.");
+			return false;
+		}
 	}
 	
 	// routing number 9 digit check
-	if(isNaN(routing_num) || routing_num.length != 9) {
-		core.validatePopup("Please enter a valid 9 digit Routing number.");
-		return false;
+	if(routing_num.indexOf('*') == -1){
+		if(isNaN(routing_num) || routing_num.length != 9) {
+			core.validatePopup("Please enter a valid 9 digit Routing number.");
+			return false;
+		}
 	}
 	
 	data = {
 		'opm_id':formObj.opm_id.value,
 		'label':formObj.pm_label.value,
 		'name_on_account':formObj.name_on_account.value,
-		'org_id':formObj.org_id.value
+		'org_id':formObj.org_id.value,
+		'account_type':formObj.account_type.options[formObj.account_type.selectedIndex].value
 	}
 	
 	if(!isNaN(formObj.nbr1.value))
