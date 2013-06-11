@@ -138,12 +138,17 @@ class core_datatable
 				# loop through and output
 				foreach($this->data as $data)
 				{
+					$row = '';
 					for ($i = 0; $i < count($this->columns); $i++)
 					{
-						echo(($i==0)?'':',');
-						echo('"'.$this->columns[$i]->render_data($data,'csv').'"');
+						$row .= ($i==0)?'':',';
+						if($this->columns[$j]->autoformat != '')
+							$data = $this->columns[$j]->handle_autoformat($data);
+						
+						$row .= '"'.$this->columns[$i]->render_data('csv').'"';
 					}
-					echo("\n");
+					
+					echo($this->swap_data($data,$row)."\n");
 				}
 				
 				# call output handler
@@ -230,6 +235,9 @@ class core_datatable
 					$x = $start_x;
 					for ($j = 0; $j < count($this->columns); $j++)
 					{
+						if($this->columns[$j]->autoformat != '')
+							$data = $this->columns[$j]->handle_autoformat($data);
+							
 						$pdf->setXY($x,($start_y + ($current_row * $row_height)));
 						$pdf->Cell(
 							($this->columns[$j]->width * 2),
@@ -274,7 +282,10 @@ class core_datatable
 					$core->response['datatable']['data'][$index] = array();
 					for ($i = 0; $i < count($this->columns); $i++)
 					{
-						$core->response['datatable']['data'][$index][$i] = base64_encode($this->columns[$i]->render_data($data,'html'));
+						if($this->columns[$i]->autoformat != '')
+							$data = $this->columns[$i]->handle_autoformat($data);
+							
+						$core->response['datatable']['data'][$index][$i] = base64_encode($this->swap_data($data,$this->columns[$i]->render_data('html')));
 					}
 					
 					$index++;
@@ -529,6 +540,8 @@ class core_datatable
 		if($final_row == (-1))
 			$final_row = $this->data->__num_rows;
 			
+		$html = '';
+			
 		for ($i = 0; $i < $final_row; $i++)
 		{
 			# get the next row of data
@@ -539,16 +552,20 @@ class core_datatable
 			{
 				$data = $this->data->current();
 				$this->display_size++;
-				echo('<tr class="dt'.$style.'" id="dt_'.$this->name.'_'.$i.'">');
+				$row = '<tr class="dt'.$style.'" id="dt_'.$this->name.'_'.$i.'">';
 				
 				# loop through the columns and render the data for that column
 				for ($j = 0; $j < count($this->columns); $j++)
 				{
-					echo('<td class="dt" id="dt_'.$this->name.'_'.$i.'_'.$j.'">');
-					echo($this->columns[$j]->render_data($data,'html'));
-					echo('</td>');
+					
+					if($this->columns[$j]->autoformat != '')
+						$data = $this->columns[$j]->handle_autoformat($data);
+					
+					$row .= '<td class="dt" id="dt_'.$this->name.'_'.$i.'_'.$j.'">'.$this->columns[$j]->render_data('html').'</td>';
 				}
-				echo('</tr>');
+				$row .= '</tr>';
+
+				$html .= $this->swap_data($data,$row);
 				$style = (!$style);
 			}
 			else
@@ -556,6 +573,7 @@ class core_datatable
 				$i = $this->size;
 			}
 		}
+		echo($html);
 	}
 	
 	# renders the exporter area (save as csv/xls/pdf), and the pager (first/previous/next/last) areas
@@ -652,6 +670,29 @@ class core_datatable
 		core::log(print_r($core->response,true));
 		core::js('if(core.ui.dataTables[\''.$name.'\']){ core.ui.dataTables[\''.$name.'\'].loadData();};');
 		core::log($core->response['js']);
+	}
+	
+	public function swap_data($data,$content)
+	{
+		if(is_array($data))
+		{
+			foreach($data as $key=>$value)
+			{
+				$content = str_replace('{'.$key.'}',$value,$content);
+			}
+		}
+		else
+		{
+			foreach($data->__data as $key=>$value)
+			{
+				$content = str_replace(
+					'{'.$key.'}',
+					$value,
+					$content
+				);
+			}
+		}
+		return $content;
 	}
 }
 
