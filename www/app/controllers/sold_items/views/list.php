@@ -12,64 +12,25 @@ $start = ($core->config['time'] - (86400*30));
 $end = $core->config['time'] + 86400;
 
 
-$col = core::model('lo_order_line_item')->collection();
-$col->__model->autojoin(
-	'left',
-	'lo_fulfillment_order',
-	'(lo_fulfillment_order.lo_foid=lo_order_line_item.lo_foid)',
-	array('lo_fulfillment_order.lo3_order_nbr as lfo3_order_nbr','UNIX_TIMESTAMP(lo_fulfillment_order.order_date) as order_date','lo_fulfillment_order.org_id as seller_org_id')
-);
-
-$col->__model->autojoin(
-	'left',
-	'lo_order',
-	'(lo_order.lo_oid=lo_order_line_item.lo_oid)',
-	array('lo_order.lo3_order_nbr','lo_order.org_id as buyer_org_id','lo_order.fee_percen_lo','lo_order.fee_percen_hub','payment_method','lo_order.paypal_processing_fee')
-);
-$col->__model->autojoin(
-	'left',
-	'organizations o1',
-	'(o1.org_id=lo_order.org_id)',
-	array('o1.name as buyer_name','o1.org_id as buyer_org_id')
-);
-
-$col->__model->autojoin(
-	'left',
-	'domains d',
-	'(d.domain_id=lo_order.domain_id)',
-	array('d.name as domain_name')
-);
-
-$col->__model->autojoin(
-	'left',
-	'organizations org_f',
-	'(org_f.org_id=lo_fulfillment_order.org_id)',
-	array()
-);
-
-$col->__model->autojoin(
-	'left',
-	'organizations_to_domains otd_f',
-	'(otd_f.org_id=org_f.org_id)',
-	array()
-);
-
-$col->__model->autojoin(
-	'inner',
-	'lo_delivery_statuses',
-	'(lo_order_line_item.ldstat_id=lo_delivery_statuses.ldstat_id)',
-	array('delivery_status')
-)->autojoin(
-	'inner',
-	'lo_buyer_payment_statuses',
-	'(lo_order_line_item.lbps_id=lo_buyer_payment_statuses.lbps_id)',
-	array('buyer_payment_status')
-)->autojoin(
-	'left',
-	'lo_seller_payment_statuses',
-	'(lo_order_line_item.lsps_id=lo_seller_payment_statuses.lsps_id)',
-	array('seller_payment_status')
-);
+$sql = '
+	select 
+	loi.product_name,loi.qty_ordered,loi.row_total,loi.row_adjusted_total,loi.row_total,
+	loi.unit_price,loi.seller_name,
+	o.name as buyer_name,o.org_id as buyer_org_id,d.name as domain_name,
+	ds.delivery_status,bps.buyer_payment_status,sps.seller_payment_status,
+	lo.fee_percen_lo,lo.fee_percen_hub,lo.payment_method,UNIX_TIMESTAMP(lfo.order_date) as order_date,
+	lfo.lo3_order_nbr as lfo3_order_nbr,lo.lo3_order_nbr,lo.lo_oid,lfo.lo_foid
+	from lo_order_line_item loi
+	inner join lo_order lo on (loi.lo_oid=lo.lo_oid and lo.ldstat_id<>1)
+	inner join lo_fulfillment_order lfo on (loi.lo_foid=lfo.lo_foid and lfo.ldstat_id<>1)
+	inner join organizations o on (lo.org_id=o.org_id)
+	inner join domains d on (lo.domain_id=d.domain_id)
+	inner join lo_delivery_statuses ds on (loi.ldstat_id=ds.ldstat_id)
+	inner join lo_buyer_payment_statuses bps on (loi.lbps_id=bps.lbps_id)
+	inner join lo_seller_payment_statuses sps on (loi.lsps_id=sps.lsps_id)
+	
+';
+$col = new core_collection($sql);
 
 $hubs = core::model('domains')->collection();						
 $hubs = $hubs->sort('name');
@@ -148,7 +109,7 @@ function sold_items_output($output_type,$dt)
 }
 
 # setup the basic table
-$col->__model->add_formatter('sold_items_formatter');
+$col->add_formatter('sold_items_formatter');
 $items = new core_datatable_mike('sold_items','sold_items/list',$col);
 $items->handler_onoutput = 'sold_items_output';
 
@@ -165,13 +126,13 @@ $items->size = (-1);
 $items->filter_html .= '<div class="clearfix">';
 
 core_format::fix_dates('sold_items__filter__sicreatedat1','sold_items__filter__sicreatedat2');
-$items->add_filter(new core_datatable_filter('sicreatedat1','lo_fulfillment_order.order_date','>','date',core_format::date($start,'db')));
-$items->add_filter(new core_datatable_filter('sicreatedat2','lo_fulfillment_order.order_date','<','date',core_format::date($end,'db')));
+$items->add_filter(new core_datatable_filter('sicreatedat1','lfo.order_date','>','date',core_format::date($start,'db')));
+$items->add_filter(new core_datatable_filter('sicreatedat2','lfo.order_date','<','date',core_format::date($end,'db')));
 #$items->filter_html .= '<table>';
 $items->filter_html .= core_datatable_filter::make_date('sold_items','sicreatedat1',core_format::date($start,'short'),'Placed on or after ');
 $items->filter_html .= core_datatable_filter::make_date('sold_items','sicreatedat2',core_format::date($end,'short'),'Placed on or before ');
 
-$items->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',seller_name,o1.name,lo_order.lo3_order_nbr,lo_fulfillment_order.lo3_order_nbr,product_name)','~','search'));
+$items->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',seller_name,o.name,lo.lo3_order_nbr,lfo.lo3_order_nbr,product_name)','~','search'));
 $items->filter_html .= core_datatable_filter::make_text('sold_items','searchables',$items->filter_states['sold_items__filter__searchables'],'Search');
 
 $items->filter_html .= '</div>';
@@ -184,11 +145,11 @@ if(isset($core->i18n['title:sold_items_filters1']))
 
 
 # everyone can use the status filter
-$items->add_filter(new core_datatable_filter('lo_order_line_item.ldstat_id'));
+$items->add_filter(new core_datatable_filter('loi.ldstat_id'));
 $items->filter_html .= core_datatable_filter::make_select(
 	'sold_items',
 	'lo_order_line_item.ldstat_id',
-	$items->filter_states['sold_items__filter__lo_order_line_item_ldstat_id'],
+	$items->filter_states['sold_items__filter__loi_ldstat_id'],
 	array(
 		'2'=>'Pending',
 		'3'=>'Canceled',
@@ -202,11 +163,11 @@ $items->filter_html .= core_datatable_filter::make_select(
 );
 
 
-$items->add_filter(new core_datatable_filter('lo_order_line_item.lbps_id'));
+$items->add_filter(new core_datatable_filter('loi.lbps_id'));
 $items->filter_html .= core_datatable_filter::make_select(
 	'sold_items',
 	'lo_order_line_item.lbps_id',
-	$items->filter_states['sold_items__filter__lo_order_line_item_lbps_id'],
+	$items->filter_states['sold_items__filter__loi_lbps_id'],
 	array(
 		'1'=>'Unpaid',
 		'2'=>'Paid',
@@ -221,11 +182,11 @@ $items->filter_html .= core_datatable_filter::make_select(
 );
 
 
-$items->add_filter(new core_datatable_filter('lo_order_line_item.lsps_id'));
+$items->add_filter(new core_datatable_filter('loi.lsps_id'));
 $items->filter_html .= core_datatable_filter::make_select(
 	'sold_items',
 	'lo_order_line_item.lsps_id',
-	$items->filter_states['sold_items__filter__lo_order_line_item_lsps_id'],
+	$items->filter_states['sold_items__filter__loi_lsps_id'],
 	array(
 		'1'=>'Unpaid',
 		'2'=>'Paid',
@@ -308,7 +269,7 @@ if (lo3::is_admin() || lo3::is_market()) {
 
 # do not link customers to org profiles.
 #if(lo3::is_customer())
-	$items->add(new core_datacolumn_mike('o1.name','Buyer',true,'20%','{buyer_name}','{buyer_name}','{buyer_name}'));
+	$items->add(new core_datacolumn_mike('o.name','Buyer',true,'20%','{buyer_name}','{buyer_name}','{buyer_name}'));
 #else
 #	$items->add(new core_datacolumn_mike('o1.name','Buyer',true,'20%',$order_link.'{buyer_name}</a>','{buyer_name}','{buyer_name}'));
 
