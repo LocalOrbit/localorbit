@@ -73,9 +73,9 @@ class core_controller_payments extends core_controller
 			foreach($info as $line)
 			{
 			#	$line = format_payable_info($line);
-				$payables[] = array_combine(array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date','amount'),explode('|',$line));
+				$payables[] = array_combine(array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date'),explode('|',$line));
 			}
-			#core::log('payables '.print_r($payables,true));
+			core::log('payables '.print_r($payables,true));
 			
 			
 			$invoice = core::model('invoices');
@@ -117,10 +117,11 @@ class core_controller_payments extends core_controller
 			$info = explode('$$',$receivable['payable_info']);
 			foreach($info as $line)
 			{
-			#	$line = format_payable_info($line);
-				$payables[] = array_combine(array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date','amount'),explode('|',$line));
+				#	$line = format_payable_info($line);
+				#core::log($line);
+				$payables[] = array_combine(array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date'),explode('|',$line));
 			}
-			#core::log('payables '.print_r($payables,true));
+			core::log('payables '.print_r($payables,true));
 			
 			
 			$invoice = core::model('invoices')->load($receivable['invoice_id']);
