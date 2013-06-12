@@ -21,9 +21,9 @@ $payments->add(new core_datacolumn('order_date','Ref #',false,'15%',			'{ref_nbr
 $payments->add(new core_datacolumn('order_date','Description',false,'15%','{description_html}','{description_html}','{description_html}'));
 $payments->add(new core_datacolumn('payment_method','Payment Method',true,'10%','{payment_method_html}','{payment_method_html}','{payment_method_html}'));
 $payments->add(new core_datacolumn('amount','Amount',true,'10%','{amount}','{amount}','{amount}'));
-
+<?if(lo3::is_admin()){?>
 $payments->add(new core_datacolumn('payment_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payment_id'),' ',' '));
-
+<?}?>
 #$payments->add(new core_datacolumn('payable_info','Payable Info',true,'50%','{payable_info}','{payable_info}','{payable_info}'));
 $payments->columns[0]->autoformat='date-short';
 $payments->columns[($autoformat_offset)]->autoformat='price';
