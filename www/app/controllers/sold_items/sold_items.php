@@ -21,38 +21,34 @@ class core_controller_sold_items extends core_controller
 							<option value="ldstat_id:6">Contested</option>
 						</select>
 					<!--</td>-->
-					<input type="button" class="button_primary btn btn-mini btn-info" value="Apply Action to Checked Items" onclick="core.sold_items.applyAction();" />
+					
 					
 			';
 		}
-		/*
-		$html .= '
-				<!--<td>-->
+		
+		if(lo3::is_market() || lo3::is_admin())
+		{
+			$html .= '
+
 					<select name="actions_'.($idx+2).'" id="actions_menu_'.($idx+2).'" onchange="document.getElementById(\'actions_menu_3\').selectedIndex=this.selectedIndex;document.getElementById(\'actions_menu_6\').selectedIndex=this.selectedIndex;">
 						<option value="none">Set Buyer Payment Status</option>
-						<option value="lbps_id:2">Paid</option>
-						<option value="lbps_id:1">Unpaid</option>
-						<option value="lbps_id:3">Invoice Issued</option>
 						<option value="lbps_id:4">Partially Paid</option>
 						<option value="lbps_id:5">Refunded</option>
 						<option value="lbps_id:6">Manual Review</option>
 					</select>
-				<!--</td>
-				<td>-->
+					<!--
 					<select name="actions_'.($idx+1).'" id="actions_menu_'.($idx+1).'" onchange="document.getElementById(\'actions_menu_2\').selectedIndex=this.selectedIndex;document.getElementById(\'actions_menu_5\').selectedIndex=this.selectedIndex;">
 						<option value="none">Set Seller Payment Status</option>
 						<option value="lsps_id:2">Paid</option>
 						<option value="lsps_id:1">Unpaid</option>
 						<option value="lsps_id:3">Partially Paid</option>
 					</select>
-				<!--</td>
-				<td>-->
+					-->
 					
-				<!--</td>
-			</tr>
-		</table>-->
-		';
-		*/
+			';
+		}
+		
+		$html .= '<input type="button" class="button_primary btn btn-mini btn-info" value="Apply Action to Checked Items" onclick="core.sold_items.applyAction();" />';
 		return $html;
 	}
 	
