@@ -21,6 +21,12 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->name.'__filter__'.$tab.'createdat2'
 	);
 	
+	if(!isset($core->data[$datatable->name.'__filter__payment_status']) && $datatable->name == 'payables')
+		$core->data[$datatable->name.'__filter__payment_status'] = "'invoiced','overdue','purchase orders'";
+	if(!isset($core->data[$datatable->name.'__filter__payment_status']) && $datatable->name == 'receivables')
+		$core->data[$datatable->name.'__filter__payment_status'] = "'invoiced','overdue','purchase orders'";
+
+	
 	if(!isset($core->data[$datatable->name.'__filter__from_org_id']) && $datatable->name == 'payables')
 		$core->data[$datatable->name.'__filter__from_org_id'] = $core->session['org_id'];
 	if(!isset($core->data[$datatable->name.'__filter__to_org_id']) && $datatable->name == 'receivables')
@@ -162,11 +168,13 @@ function payments__add_standard_filters($datatable,$tab='')
 		# the buyer is the only role that doesn't have any kind if layout 
 		if($do_status_payment)
 		{
-			make_filter($datatable,'payment_status',array(
-					'invoiced'=>'Invoiced',
-					'overdue'=>'Overdue',
-					'paid'=>'Paid',
-					'purchase_orders'=>'Purchase Orders',
+			if($do_status_payment)
+				make_filter($datatable,'payment_status',array(
+					"'invoiced','overdue','purchase orders'"=>'All Unpaid',
+					"'invoiced'"=>'Invoiced',
+					"'overdue'"=>'Overdue',
+					"'paid'"=>'Paid',
+					"'purchase_orders'"=>'Purchase Orders',
 				),'Status','All Statuses');
 		}
 	}
@@ -218,10 +226,11 @@ function payments__add_standard_filters($datatable,$tab='')
 			$datatable->filter_html .= '<h4>Payment Filters</h4>';
 			if($do_status_payment)
 				make_filter($datatable,'payment_status',array(
-					'invoiced'=>'Invoiced',
-					'overdue'=>'Overdue',
-					'paid'=>'Paid',
-					'purchase_orders'=>'Purchase Orders',
+					"'invoiced','overdue','purchase orders'"=>'All Unpaid',
+					"'invoiced'"=>'Invoiced',
+					"'overdue'"=>'Overdue',
+					"'paid'"=>'Paid',
+					"'purchase_orders'"=>'Purchase Orders',
 				),'Status','All Statuses');
 			if($do_status_pending)
 				{
@@ -257,10 +266,11 @@ function payments__add_standard_filters($datatable,$tab='')
 			$datatable->filter_html .= '<h4>Payment Filters</h4>';
 			if($do_status_payment)
 				make_filter($datatable,'payment_status',array(
-					'invoiced'=>'Invoiced',
-					'overdue'=>'Overdue',
-					'paid'=>'Paid',
-					'purchase_orders'=>'Purchase Orders',
+					"'invoiced','overdue','purchase orders'"=>'All Unpaid',
+					"'invoiced'"=>'Invoiced',
+					"'overdue'"=>'Overdue',
+					"'paid'"=>'Paid',
+					"'purchase_orders'"=>'Purchase Orders',
 				),'Status','All Statuses');
 			if($do_payable_type)
 				make_filter($datatable,'payable_type',array(
@@ -476,7 +486,13 @@ function make_filter($datatable,$field,$options,$label,$all_label)
 	$label_width = 49;
 	$field_width = 160;
 	
-	$datatable->add_filter(new core_datatable_filter($field));
+	# one of the filters needs to be an 'in' filter.
+	if($field == 'payment_status')
+		$datatable->add_filter(new core_datatable_filter($field,'','in'));
+	else
+		$datatable->add_filter(new core_datatable_filter($field));
+		
+
 	$datatable->filter_html .= '<div style="width:'.$label_width.'px;padding-top: 7px;padding-right: 5px;text-align: right;float:left;">'.$label.' </div>';
 	$datatable->filter_html .= core_datatable_filter::make_select(
 		$datatable->name,
