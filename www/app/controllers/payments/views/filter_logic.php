@@ -489,6 +489,8 @@ function make_filter($datatable,$field,$options,$label,$all_label)
 	# one of the filters needs to be an 'in' filter.
 	if($field == 'payment_status')
 		$datatable->add_filter(new core_datatable_filter($field,'','in'));
+	else if($field == 'payable_type' && $datatable->name == 'payments')
+		$datatable->add_filter(new core_datatable_filter($field,'','like'));
 	else
 		$datatable->add_filter(new core_datatable_filter($field));
 		
