@@ -12,10 +12,6 @@ $config = array(
 	'seller-org-id'=>0,  # allows you to restrict the query to a single vendor
 	'report-payables'=>0, # prints out info on all the payables covered by the payment
 );
-if($config['do-ach'] == 1)
-{
-	$config['do-email'] = 1;
-}
 
 
 
@@ -25,6 +21,12 @@ foreach($argv as $arg)
 	$arg = explode(':',$arg);
 	$config[$arg[0]] = str_replace('"','',$arg[1]);
 }
+if($config['do-ach'] == 1)
+{
+	$config['do-email'] = 1;
+}
+
+
 
 $sql = "
 	select p.to_org_id,p.to_org_name,sum((p.amount - p.amount_paid)) as amount,opm.*,
