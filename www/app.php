@@ -80,6 +80,7 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.validator.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.format.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.ui.js?time=<?php echo time();?>"></script>
+	<script language="Javascript" type="text/javascript" src="js/lo3.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="js/lo4.js?time=<?php echo time();?>"></script>
 	
 	<!-- new calendar -->
