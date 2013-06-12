@@ -179,7 +179,7 @@ foreach($payments as $payment)
 					$seller_payables = core::model('payables')
 						->collection()
 						->filter('payable_type','=','seller order')
-						->filter('from_org_id','!=',1)
+						->filter('from_org_id','<>','1')
 						->filter('parent_obj_id','=',$payable['parent_obj_id']);
 					foreach($seller_payables as $seller_payable)
 					{
