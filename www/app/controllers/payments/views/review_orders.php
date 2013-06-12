@@ -17,7 +17,7 @@ $payables->add(new core_datacolumn('creation_date','Description',false,'23%','{d
 $payables->add(new core_datacolumn('creation_date','Order Date',true,'10%','{creation_date}','{creation_date}','{creation_date}'));
 $payables->add(new core_datacolumn('delivery_end_time','Deliver Date',true,'10%','{delivery_end_time_html}','{delivery_end_time_html}','{delivery_end_time_html}'));
 $payables->add(new core_datacolumn('due_date','Payment Due',true,'12%','{payment_due}','{payment_due}','{payment_due}'));
-$payables->add(new core_datacolumn('amount','Amount',true,'8%','{amount}','{amount}','{amount}'));
+$payables->add(new core_datacolumn('amount','Amount Owed',true,'8%','{amount}','{amount}','{amount}'));
 #$payables->add(new core_datacolumn('status','Payment Status',true,'12%','{payment_status}','{payment_status}','{payment_status}'));
 $payables->add(new core_datacolumn('payable_id',array(core_ui::check_all('payables'),'',''),false,'4%',core_ui::check_all('payables','payable_id'),' ',' '));
 
