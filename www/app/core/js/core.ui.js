@@ -301,60 +301,22 @@ core.ui.dataTable.prototype.loadData=function(format){
 
 core.ui.dataTable.prototype.insertData=function(jsondata){
 	//alert('inserting data');
-	this.adjustRows(jsondata.size,jsondata.data.length);
 	this.adjustPager(jsondata.page,jsondata.max_page);
-	for (var i = 0; i < jsondata.data.length; i++){
-		for (var j = 0; j < jsondata.data[i].length; j++){
-			//alert('trying to set '+'#dt_'+this.name+'_'+i+'_'+j);
-			$('#dt_'+this.name+'_'+i+'_'+j).html(core.base64_decode(jsondata.data[i][j]));
-		}
-		//alert(core.base64_decode(jsondata.data[i][1]));
-	}
-	if(jsondata.data.length>0){
-		$('#dt_'+this.name+'_nodata').hide();
-		$('#dt_'+this.name+'_columns').show();
+	//alert(core.base64_decode(jsondata.data));
+	var content = core.base64_decode(jsondata.data);
+	var outObj =$('#dt_'+this.name+' > tbody');
+	//alert(content);
+	//alert('#dt_'+this.name+' > tbody');
+	outObj.html(content);
+	if(jsondata.data == ''){
+		$('#dt_'+this.name+' > thead > tr.dt_nodata').show();
+		$('#dt_'+this.name+' > thead > tr.dt_columns,#dt_'+this.name+' > tbody').hide();
 	}else{
-		$('#dt_'+this.name+'_nodata').show();
-		$('#dt_'+this.name+'_columns').hide();
+		$('#dt_'+this.name+' > thead > tr.dt_columns,#dt_'+this.name+' > tbody').show();
+		$('#dt_'+this.name+' > thead > tr.dt_nodata').hide();
 	}
 }
 
-
-
-core.ui.dataTable.prototype.adjustRows=function(newsize,newLength){
-	//alert('need to show '+newsize+'.\nthe new data length is '+newLength+'.\nwe have '+this.renderedSize+' rows rendered.\n we have '+this.displaySize+' displayed');
-	if(this.displaySize > (newLength)){
-		//alert('gotta turn rows off');
-		for (var i = (this.displaySize); i > newLength; i--){
-			//alert('turning off '+'#dt_'+this.name+'_'+(i - 1));
-			$('#dt_'+this.name+'_'+(new String(i - 1))).hide();
-			$('#dt_'+this.name+'_'+(new String(i - 1))).children().html('&nbsp;');
-			this.displaySize--;
-		}
-	}
-	if (this.renderedSize < newLength){
-		var html = '';
-		for (var i = (this.renderedSize); i < newLength; i++)
-		{
-			html += '<tr id="dt_'+this.name+'_'+i+'" class="dt'+(i%2)+'">';
-			for (var j= 0; j < this.colCount; j++)
-				html += '<td class="dt" id="dt_'+this.name+'_'+i+'_'+j+'">&nbsp;</td>';
-			html += '</tr>';
-			this.displaySize++;
-		}
-		this.renderedSize = newLength;
-		$('#dt_'+this.name+' tr:last').before(html);
-		// add more rows
-	}
-	//alert('need to show '+newsize+'.\nthe new data length is '+newLength+'.\nwe have '+this.renderedSize+' rows rendered.\n we have '+this.displaySize+' displayed');
-
-	if(this.displaySize < newLength)
-	{
-		for (var i = this.displaySize; i < newLength; i++)
-			$('#dt_'+this.name+'_'+(i)).show();
-		this.displaySize = (newLength);
-	}
-}
 
 core.ui.dataTable.prototype.adjustPager=function(page,maxPage){
 	var selector = $('#dt_'+this.name+'_pager');

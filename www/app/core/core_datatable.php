@@ -95,7 +95,7 @@ class core_datatable
 	}
 	
 	# this is the master render function
-	function render()
+	function render($echo=true)
 	{
 		global $core;
 		
@@ -271,25 +271,13 @@ class core_datatable
 					'sort_column'=>$this->sort_column,
 					'sort_direction'=>$this->sort_direction,
 					'max_page'=>$this->max_page,
-					'data'=>array(),
+					'data'=>'',
 				);
 				
-				$index = 0;
-				# loop through all the data in the collection and construct a json response
-				# base64 encode to prevent quote/escaping problems 
-				foreach($this->data as $data)
-				{
-					$core->response['datatable']['data'][$index] = array();
-					for ($i = 0; $i < count($this->columns); $i++)
-					{
-						if($this->columns[$i]->autoformat != '')
-							$data = $this->columns[$i]->handle_autoformat($data);
-							
-						$core->response['datatable']['data'][$index][$i] = base64_encode($this->swap_data($data,$this->columns[$i]->render_data('html')));
-					}
-					
-					$index++;
-				}
+				$this->html = '';
+				$this->render_data();
+				
+				$core->response['datatable']['data'] = base64_encode($this->html);
 			}
 			core::log('sending back js: '.$core->response['js']);
 			
@@ -304,15 +292,21 @@ class core_datatable
 		else
 		{	
 			# the table is rendered in this order:
+			$this->html = '';
 			$this->render_filter_resizer();
 			$this->render_action_options();
+			$this->html .= '<table id="dt_'.$this->name.'" class="dt table table-striped"><thead>';
 			
-			$this->render_start();
+			
+			$this->render_widths();
 			$this->render_no_data();
 			$this->render_column_headers();
+			$this->html .= '</thead><tbody>';
 			$this->render_data();
+			$this->html .= '</tbody><tfoot>';
 			$this->render_exporter_pager();
-			$this->render_end();
+			$this->html .= '</tfoot></table>';
+			
 			$this->render_js();
 			# call output handler
 			if(!is_null($this->handler_onoutput))
@@ -320,20 +314,9 @@ class core_datatable
 				$function = $this->handler_onoutput;
 				$function('html',$this);
 			}
+			if($echo)
+				echo($this->html);
 		}
-	}
-	
-	function render_fake_row($style)
-	{
-		$row = func_get_args();
-		array_shift($row);
-		$out = '<tr class="dt'.$style.'">';
-		foreach($row as $col)
-		{
-			$out .= '<td class="dt">'.$col.'</td>';
-		}
-		$out .= '</tr>';
-		return $out;
 	}
 	
 	function render_pdf_column_headers($pdf,$headfg,$headbg,$text)
@@ -423,15 +406,15 @@ class core_datatable
 	}
 	
 	# writes out the table tag and column widths. That's it.
-	function render_start()
+	function render_widths()
 	{
 		global $core;
 		
-		echo('<table class="dt table table-striped" id="dt_'.$this->name.'">');
 		for ($j = 0; $j < count($this->columns); $j++)
 		{
-			echo($this->columns[$j]->render_width());
+			$this->html .= $this->columns[$j]->render_width();
 		}
+		
 	}
 
 	# renders a row that contains the filters in the upper left, and the resizer in the upper right.
@@ -440,88 +423,86 @@ class core_datatable
 		global $core;
 				
 		
-		echo('<div class="dt_filter_resizer"');
+		$this->html .= ('<div class="dt_filter_resizer"');
 		if(!$this->filter_html)
-			echo(' style="display: none;"');
-		echo('>');
+			$this->html .= (' style="display: none;"');
+		$this->html .= ('>');
 
 		
 		// controls to hide filter
-		echo("<script>");
-			echo("$('#dt_".$this->name."_filters').on('show', function() { $('#filter_show_hide_icon".$this->name."').removeClass('icon-plus').addClass('icon-minus'); });");
-			echo("$('#dt_".$this->name."_filters').on('hide', function() { $('#filter_show_hide_icon".$this->name."').removeClass('icon-minus').addClass('icon-plus'); });");
-		echo("</script>");
+		core::js("$('#dt_".$this->name."_filters').on('show', function() { $('#filter_show_hide_icon".$this->name."').removeClass('icon-plus').addClass('icon-minus'); });");
+		core::js("$('#dt_".$this->name."_filters').on('hide', function() { $('#filter_show_hide_icon".$this->name."').removeClass('icon-minus').addClass('icon-plus'); });");
 
 		if($this->filter_html != '') {
-			echo('<div id="filter_accordian" class="">');
-				echo('<h4>Filter Results');
-					echo('<a class="accordion-toggle" style="text-decoration:none" data-toggle="collapse" href="#dt_'.$this->name.'_filters">');
-						echo('<div id="filter_show_hide_icon'.$this->name.'" class="icon-minus float_right"></div>');
-					echo('</a>');
-				echo('</h4> ');
-			echo('</div>');
+			$this->html .= ('<div id="filter_accordian" class="">');
+				$this->html .= ('<h4>Filter Results');
+					$this->html .= ('<a class="accordion-toggle" style="text-decoration:none" data-toggle="collapse" href="#dt_'.$this->name.'_filters">');
+						$this->html .= ('<div id="filter_show_hide_icon'.$this->name.'" class="icon-minus float_right"></div>');
+					$this->html .= ('</a>');
+				$this->html .= ('</h4> ');
+			$this->html .= ('</div>');
 		}
 		
 		
-		echo('<div class="dt_filter collapse in" id="dt_'.$this->name.'_filters">');
+		$this->html .= ('<div class="dt_filter collapse in" id="dt_'.$this->name.'_filters">');
 		
 		if($this->filter_html != '')
 		{
 			$this->render_filter_expander();
-			echo('<div class="dt_filter_area">');
+			$this->html .= ('<div class="dt_filter_area">');
 				if($this->inline_message) {
-					echo($this->inline_message);
+					$this->html .= ($this->inline_message);
 				}
-				echo($this->filter_html);
-			echo('</div>');
+				$this->html .= ($this->filter_html);
+			$this->html .= ('</div>');
 		}
-		echo('</div><div class="clearfix"></div>');
-		echo('</div>');
+		$this->html .= ('</div><div class="clearfix"></div>');
+		$this->html .= ('</div>');
 	}
 	
 	function render_action_options()
 	{
 		global $core;
-		echo('<div class="dt_action_options alert alert-info"');
+		$this->html .= ('<div class="dt_action_options alert alert-info"');
 		if(!$this->action_html)
-			echo(' style="display: none;"');
-		echo('>');
+			$this->html .= (' style="display: none;"');
+		$this->html .= ('>');
 		
 		if($this->action_html != '')
 		{
-			echo('<strong>Actions:</strong> ');
-			echo($this->action_html);
+			$this->html .= ('<strong>Actions:</strong> ');
+			$this->html .= ($this->action_html);
 		}
-		echo('</div>');
+		$this->html .= ('</div>');
 	}
 	
 	function render_filter_expander()
 	{
 		if($this->render_filter_expander)
-			echo('<a onclick="core.ui.dataTable.filterToggle(\''.$this->name.'\');" class="dt_filter_expander">&raquo;</a>');
+			$this->html .= ('<a onclick="core.ui.dataTable.filterToggle(\''.$this->name.'\');" class="dt_filter_expander">&raquo;</a>');
 	}
 
 	# renders the column headers, which are used for sorting. 
 	function render_column_headers()
 	{
 		global $core;
-		echo('<thead><tr id="dt_'.$this->name.'_columns"'.(($this->data->__num_rows > 0)?'':' style="display:none;"').'>');
+		$this->html .= ('<tr class="dt_columns"'.(($this->data->__num_rows > 0)?'':' style="display:none;"').'>');
 		for ($j = 0; $j < count($this->columns); $j++)
 		{
-			echo($this->columns[$j]->render_header('html'));
+			$this->html .= ($this->columns[$j]->render_header('html'));
 		}
-		echo('</tr></thead>');
+		$this->html .= ('</tr>');
 	}
 	
 	# this adds a row that is used to inform the user that there is no data available 
 	# given teh current filter set
 	function render_no_data()
 	{
-		echo('<tr id="dt_'.$this->name.'_nodata"'.(($this->data->__num_rows > 0)?' style="display:none;"':'').'>');
-		echo('<td class="dt dt_nodata" colspan="'.count($this->columns).'">');
-		echo('<div class="alert alert-info alert-block span5 offset3" style="margin-top: 20px;">' . $this->no_data_message . '</div>');
-		echo('</td>');
-		echo('</tr>');		
+		$this->html .= ('<tr class="dt_nodata"'.(($this->data->__num_rows > 0)?' style="display:none;"':'').'>');
+		$this->html .= ('<td colspan="'.count($this->columns).'">');
+		$this->html .= ('<div class="alert alert-info alert-block span5 offset3" style="margin-top: 20px;">' . $this->no_data_message . '</div>');
+		$this->html .= ('</td>');
+		$this->html .= ('</tr>');		
 	}
 	
 	# this loops through the data and renders all necessary table rows.
@@ -552,7 +533,7 @@ class core_datatable
 			{
 				$data = $this->data->current();
 				$this->display_size++;
-				$row = '<tr class="dt'.$style.'" id="dt_'.$this->name.'_'.$i.'">';
+				$row = '<tr>';
 				
 				# loop through the columns and render the data for that column
 				for ($j = 0; $j < count($this->columns); $j++)
@@ -561,7 +542,7 @@ class core_datatable
 					if($this->columns[$j]->autoformat != '')
 						$data = $this->columns[$j]->handle_autoformat($data);
 					
-					$row .= '<td class="dt" id="dt_'.$this->name.'_'.$i.'_'.$j.'">'.$this->columns[$j]->render_data('html').'</td>';
+					$row .= '<td>'.$this->columns[$j]->render_data('html').'</td>';
 				}
 				$row .= '</tr>';
 
@@ -573,89 +554,82 @@ class core_datatable
 				$i = $this->size;
 			}
 		}
-		echo($html);
+		$this->html .= ($html);
 	}
 	
 	# renders the exporter area (save as csv/xls/pdf), and the pager (first/previous/next/last) areas
 	function render_exporter_pager()
 	{
 		global $core;
-		echo('<tr><td class="dt_exporter_pager" colspan="'.count($this->columns).'"');
+		$this->html .= ('<tr><td class="dt_exporter_pager" colspan="'.count($this->columns).'"');
 		if(!$this->display_exporter_pager)
-			echo(' style="display: none;"');
-		echo('>');
-			echo('<div class="dt_exporter">');
+			$this->html .= (' style="display: none;"');
+		$this->html .= ('>');
+			$this->html .= ('<div class="dt_exporter">');
 			if($this->render_exporter)
 			{
 				if ($this->custom_csv_export_path != '')
 				{
-					echo('<a class="dt" onclick="core.ui.dataTables[\''.$this->name.'\'].loadCustomCSVExport(\'' . $this->custom_csv_export_path . '\');"><i class="icon-table"></i> Export CSV</a>');
+					$this->html .= ('<a class="dt" onclick="core.ui.dataTables[\''.$this->name.'\'].loadCustomCSVExport(\'' . $this->custom_csv_export_path . '\');"><i class="icon-table"></i> Export CSV</a>');
 				} 
 				else
 				{
-					echo('<a class="dt" onclick="core.ui.dataTables[\''.$this->name.'\'].loadData(\'csv\');"><i class="icon-table"></i> Export CSV</a>');
+					$this->html .= ('<a class="dt" onclick="core.ui.dataTables[\''.$this->name.'\'].loadData(\'csv\');"><i class="icon-table"></i> Export CSV</a>');
 				}
 			}
-			echo('</div>');
+			$this->html .= ('</div>');
 			
-			echo('<div class="dt_pager">');
+			$this->html .= ('<div class="dt_pager">');
 				if($this->render_page_arrows)
 				{
-					echo('<a class="dt_pager first" onclick="core.ui.dataTables[\''.$this->name.'\'].changePage(\'first\');"><i class="icon-caret-left"></i> First</a>&nbsp;&nbsp;&nbsp;');
-					echo('<a class="dt_pager previous" onclick="core.ui.dataTables[\''.$this->name.'\'].changePage(\'previous\');"><i class="icon-caret-left"></i> Previous</a>');
+					$this->html .= ('<a class="dt_pager first" onclick="core.ui.dataTables[\''.$this->name.'\'].changePage(\'first\');"><i class="icon-caret-left"></i> First</a>&nbsp;&nbsp;&nbsp;');
+					$this->html .= ('<a class="dt_pager previous" onclick="core.ui.dataTables[\''.$this->name.'\'].changePage(\'previous\');"><i class="icon-caret-left"></i> Previous</a>');
 				}
 				if($this->render_page_select)
 				{
-					echo('<select class="dt" name="dt_'.$this->name.'_pager" id="dt_'.$this->name.'_pager"');
-					echo(' onchange="core.ui.dataTables[\''.$this->name.'\'].changePage(this.selectedIndex);">');
+					$this->html .= ('<select class="dt" name="dt_'.$this->name.'_pager" id="dt_'.$this->name.'_pager"');
+					$this->html .= (' onchange="core.ui.dataTables[\''.$this->name.'\'].changePage(this.selectedIndex);">');
 					for ($i = 0; $i < ($this->max_page); $i++)
 					{
-						echo('<option value="'.$i.'"');
-						echo((($this->page == $i)?' selected="selected"':''));
-						echo('>Page '.($i + 1).' of '.($this->max_page).'</option>');
+						$this->html .= ('<option value="'.$i.'"');
+						$this->html .= ((($this->page == $i)?' selected="selected"':''));
+						$this->html .= ('>Page '.($i + 1).' of '.($this->max_page).'</option>');
 					}
-					echo('</select>');
+					$this->html .= ('</select>');
 				}
 				if($this->render_page_arrows)
 				{
-					echo('&nbsp;&nbsp;');
-					echo('<a class="dt_pager next" onclick="core.ui.dataTables[\''.$this->name.'\'].changePage(\'next\');">Next <i class="icon-caret-right"></i></a>&nbsp;&nbsp;&nbsp;');
-					echo('<a class="dt_pager last" onclick="core.ui.dataTables[\''.$this->name.'\'].changePage(\'last\');">Last <i class="icon-caret-right"></i></a>');
+					$this->html .= ('&nbsp;&nbsp;');
+					$this->html .= ('<a class="dt_pager next" onclick="core.ui.dataTables[\''.$this->name.'\'].changePage(\'next\');">Next <i class="icon-caret-right"></i></a>&nbsp;&nbsp;&nbsp;');
+					$this->html .= ('<a class="dt_pager last" onclick="core.ui.dataTables[\''.$this->name.'\'].changePage(\'last\');">Last <i class="icon-caret-right"></i></a>');
 				}
-			echo('</div>');
+			$this->html .= ('</div>');
 			
-			echo('<div class="dt_resizer">');
+			$this->html .= ('<div class="dt_resizer">');
 				if($this->render_resizer)
 				{
-					echo('<select class="dt" name="dt_'.$this->name.'_resizer" id="dt_'.$this->name.'_resizer"');
-					echo(' onchange="core.ui.dataTables[\''.$this->name.'\'].changeSize(this.options[this.selectedIndex].value);">');
+					$this->html .= ('<select class="dt" name="dt_'.$this->name.'_resizer" id="dt_'.$this->name.'_resizer"');
+					$this->html .= (' onchange="core.ui.dataTables[\''.$this->name.'\'].changeSize(this.options[this.selectedIndex].value);">');
 					for ($i = 0; $i < count($this->size_options); $i++)
 					{
-						echo('<option value="'.$this->size_options[$i].'"');
+						$this->html .= ('<option value="'.$this->size_options[$i].'"');
 						if($this->size == $this->size_options[$i])
-							echo(' selected="selected"');
-						echo('>Show '.$this->size_options[$i].' rows</option>');
+							$this->html .= (' selected="selected"');
+						$this->html .= ('>Show '.$this->size_options[$i].' rows</option>');
 					}
 				
 					if($this->size_allow_all)
 					{
-						echo('<option value="-1"');
+						$this->html .= ('<option value="-1"');
 						if($this->size == (-1))
-							echo(' selected="selected"');
-						echo('>Show all rows</option>');
+							$this->html .= (' selected="selected"');
+						$this->html .= ('>Show all rows</option>');
 					}
-					echo('</select>');
+					$this->html .= ('</select>');
 				}
-			echo('</div>');
+			$this->html .= ('</div>');
 			
-		echo('</td></tr>');
-	}
-	
-	# finishes up the table, and that's it.
-	function render_end()
-	{
-		global $core;
-		echo('</table>');
+		$this->html .= ('</td></tr>');
 	}
 	
 	# renders the js needed to init the table
@@ -667,9 +641,7 @@ class core_datatable
 	public static function js_reload($name)
 	{
 		global $core;
-		core::log(print_r($core->response,true));
 		core::js('if(core.ui.dataTables[\''.$name.'\']){ core.ui.dataTables[\''.$name.'\'].loadData();};');
-		core::log($core->response['js']);
 	}
 	
 	public function swap_data($data,$content)

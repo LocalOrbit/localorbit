@@ -677,8 +677,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		}
 
 		# finalize things!
-		#$this['grand_total'] = $this['item_total'] + $adjusted_total;
-		#$this['adjusted_total'] = $adjusted_total;
+		$this['grand_total'] = $this['item_total'] + $adjusted_total;
+		$this['adjusted_total'] = $adjusted_total;
 		$this['amount_paid']    = ($method == 'paypal' || $method == 'ach')?$this['grand_total']:0;
 		$this['domain_id']      = $core->config['domain']['domain_id'];
 		$this['buyer_mage_customer_id'] = $core->session['user_id'];
