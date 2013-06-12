@@ -33,7 +33,7 @@ if(lo3::is_admin() || lo3::is_market())
 	$receivables->columns[($autoformat_offset+1)]->autoformat='date-short';
 }
 
-$receivables->add(new core_datacolumn('amount','Amount',true,'10%','{amount}','{amount}','{amount}'));
+$receivables->add(new core_datacolumn('amount','Amount Owed',true,'10%','{amount}','{amount}','{amount}'));
 $receivables->add(new core_datacolumn('receivable_status','Status',true,'10%','{receivable_status}','{receivable_status}','{receivable_status}'));
 $receivables->add(new core_datacolumn('payable_id',array(core_ui::check_all('receivables'),'',''),false,'4%',core_ui::check_all('receivables','payable_id'),' ',' '));
 
