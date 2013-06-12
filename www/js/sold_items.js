@@ -4,7 +4,9 @@ core.sold_items.applyAction=function(){
 	var params = {};
 	params['ldstat_id'] = document.itemForm.actions_1.options[document.itemForm.actions_1.selectedIndex].value.split(':')[1];
 	//params['lsps_id'] = document.itemForm.actions_2.options[document.itemForm.actions_2.selectedIndex].value.split(':')[1];
-	//params['lbps_id'] = document.itemForm.actions_3.options[document.itemForm.actions_3.selectedIndex].value.split(':')[1];
+	if(document.itemForm.actions_3){
+		params['lbps_id'] = document.itemForm.actions_3.options[document.itemForm.actions_3.selectedIndex].value.split(':')[1];
+	}
 	var notNone = false;
 	$('#statusErrors').hide(300);
 	
