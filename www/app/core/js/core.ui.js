@@ -300,21 +300,11 @@ core.ui.dataTable.prototype.loadData=function(format){
 }
 
 core.ui.dataTable.prototype.insertData=function(jsondata){
-	//alert('inserting data');
+	
 	this.adjustPager(jsondata.page,jsondata.max_page);
-	//alert(core.base64_decode(jsondata.data));
-	var content = core.base64_decode(jsondata.data);
-	var outObj =$('#dt_'+this.name+' > tbody');
-	//alert(content);
-	//alert('#dt_'+this.name+' > tbody');
-	outObj.html(content);
-	if(jsondata.data == ''){
-		$('#dt_'+this.name+' > thead > tr.dt_nodata').show();
-		$('#dt_'+this.name+' > thead > tr.dt_columns,#dt_'+this.name+' > tbody').hide();
-	}else{
-		$('#dt_'+this.name+' > thead > tr.dt_columns,#dt_'+this.name+' > tbody').show();
-		$('#dt_'+this.name+' > thead > tr.dt_nodata').hide();
-	}
+	$('#dt_'+this.name+' > tbody').html(core.base64_decode(jsondata.data));
+	$('#dt_'+this.name+' > thead > tr.dt_nodata')[((jsondata.data == '')?'show':'hide')]();
+	$('#dt_'+this.name+' > thead > tr.dt_columns,#dt_'+this.name+' > tbody')[((jsondata.data == '')?'hide':'show')]();
 }
 
 

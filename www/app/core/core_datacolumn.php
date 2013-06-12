@@ -32,7 +32,7 @@ class core_datacolumn
 	
 	function render_width()
 	{
-		echo('<col width="'.$this->width.'" />');
+		return '<col width="'.$this->width.'" />';
 	}
 	
 	

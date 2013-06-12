@@ -295,10 +295,11 @@ class core_datatable
 			$this->html = '';
 			$this->render_filter_resizer();
 			$this->render_action_options();
-			$this->html .= '<table id="dt_'.$this->name.'" class="dt table table-striped"><thead>';
+			$this->html .= '<table id="dt_'.$this->name.'" class="dt table table-striped">';
 			
 			
 			$this->render_widths();
+			$this->html .= '<thead>';
 			$this->render_no_data();
 			$this->render_column_headers();
 			$this->html .= '</thead><tbody>';
