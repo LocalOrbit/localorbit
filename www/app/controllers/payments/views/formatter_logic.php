@@ -211,7 +211,7 @@ function format_payable_info($data)
 	$data['receivable_status']  = ucwords($data['receivable_status']);
 	if((floatval($data['amount']) - floatval($data['amount_paid'])) == 0)
 	{
-		$data['receivable_status'] = 'Paid';
+		$data['receivable_status'] = 'Delivered, Paid';
 	}
 	
 	# if this is a payment, do payment specific formatting
