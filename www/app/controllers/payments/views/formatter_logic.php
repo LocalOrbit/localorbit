@@ -209,6 +209,10 @@ function format_payable_info($data)
 	# format payment status
 	$data['payment_status'] = ucwords($data['payment_status']);
 	$data['receivable_status']  = ucwords($data['receivable_status']);
+	if((floatval($data['amount']) - floatval($data['amount_paid'])) == 0)
+	{
+		$data['receivable_status'] = 'Paid';
+	}
 	
 	# if this is a payment, do payment specific formatting
 	if(isset($data['payment_id']))
