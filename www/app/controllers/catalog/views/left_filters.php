@@ -9,6 +9,7 @@ $addresses = $core->view[3];
 $left_url = $core->view[4];
 $hashUrl = $core->view[3]?'true':'false';
 
+
 #print_r($addresses);
 if($core->data['cart'] == 'yes')
 	core::js('$(\'#cartFilterCheck\').prop(\'checked\',true);core.catalog.setFilter(\'cartOnly\',true);');
@@ -49,7 +50,7 @@ if (count($days) > 1)
 		$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 		?>
 		<li class="filter dd"><a href="<?=$left_url?>" onclick="core.catalog.setFilter('dd','<?=$dd_ids?>'); return <?=$hashUrl?>;" id="filter_dd_<?=$dd_ids?>">
-		<?=$type?> <?=core_format::date($time, 'shortest-weekday',false)?>
+		<?=$type?> <?=core_format::date($time, 'shortest-weekday',true)?>
 		<br />
 		<?=$final_address?>
 		</a>
