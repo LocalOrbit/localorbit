@@ -136,7 +136,6 @@ $left_url = 'app.php#!catalog-shop';
 		$cart->load_items();
 
 		# write out necessary javascript, including the complete product/pricing/delivery listing
-		core_ui::load_library('js','catalog.js');
 		core::js('core.categories ='.json_encode($cats->by_parent).';');
 		core::js('core.products ='.json_encode($prods).';');
 		core::js('core.sellers ='.json_encode($sellers).';');
