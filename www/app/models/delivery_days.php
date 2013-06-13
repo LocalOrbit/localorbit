@@ -168,7 +168,8 @@ class core_model_delivery_days extends core_model_base_delivery_days
 				core::log("orig sot: ".date('Y-m-d H:i:s',$start_of_today));
 
 				# adjust to local timezone of this hub
-				$start_of_today -= ($core->session['time_offset']);
+				core::log(print_r($core->config['domain']->__data,true));
+				$start_of_today -= ($core->config['domain']['offset_seconds']);
 				core::log("adjs sot: ".date('Y-m-d H:i:s',$start_of_today));
 
 				# subtract 1 day's worth of seconds * day of week
@@ -225,8 +226,6 @@ class core_model_delivery_days extends core_model_base_delivery_days
 				core::log("final pickup_start_time: ".date('Y-m-d H:i:s',$pickup_start_time));
 				core::log("final pickup_end_time: ".date('Y-m-d H:i:s',$pickup_end_time));
 
-				core::log('option 1');
-				#core::log(print_r($this->__data,true));
 				#exit();
 				return $due_time;
 				
