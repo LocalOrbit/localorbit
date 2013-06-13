@@ -187,47 +187,49 @@ class core_model_delivery_days extends core_model_base_delivery_days
 				$pickup_start_time    = $deliv_day + ($this['pickup_start_time'] * 3600);
 				$pickup_end_time      = $deliv_day + ($this['pickup_end_time'] * 3600);
 				core::log("deliv time before timezone change: ".date('Y-m-d H:i:s',$delivery_start_time));
-
+				
+				
 				# if pickup time is actually the next day, add in the necessary seconds
 				if($pickup_start_time < $delivery_start_time)
 				{
 					$pickup_start_time += 86400;
 					$pickup_end_time   += 86400;
 				}
+				core::log("pickup_start_time: ".date('Y-m-d H:i:s',$pickup_start_time));
+				core::log("pickup_end_time: ".date('Y-m-d H:i:s',$pickup_end_time));
 
 				# subtract hours due before seconds
 				$due_time  = $delivery_start_time - ($this['hours_due_before'] * 3600);
 				core::log("due time: ".date('Y-m-d H:i:s',$due_time));
 				core::log("right now is: ".date('Y-m-d H:i:s',time()));
-
+				
+				
 				# if this # is less than the current timestamp, then you're good to order for this week.
 				# not, take this number and add 1 weeks' worth of seconds. thtat is the next closing time
 				# add hoursdue before to get actual delivery time. booyah.
-				if($now < $due_time)
+				if($now >= $due_time)
 				{
-					$this->__data['due_time'] = $due_time;
-					$this->__data['delivery_start_time'] = $delivery_start_time;
-					$this->__data['delivery_end_time'] = $delivery_end_time;
-					$this->__data['pickup_start_time'] = $pickup_start_time;
-					$this->__data['pickup_end_time'] = $pickup_end_time;
-
-
-					core::log('option 1');
-					#exit();
-					return $due_time;
+					$due_time += (604800);
+					$delivery_start_time += (604800);
+					$delivery_end_time += (604800);
+					$pickup_start_time += (604800);
+					$pickup_end_time += (604800);
 				}
-				else
-				{
-					$this->__data['due_time'] = $due_time + (7 * 86400);
-					$this->__data['delivery_start_time'] = $delivery_start_time + (7 * 86400);
-					$this->__data['delivery_end_time'] = $delivery_end_time + (7 * 86400);
-					$this->__data['pickup_start_time'] = $pickup_start_time + (7 * 86400);
-					$this->__data['pickup_end_time'] = $pickup_end_time + (7 * 86400);
 					
-					core::log('option 2');
-					#exit();
-					return $this->__data['due_time'];
-				}
+				$this->__data['due_time'] = $due_time;
+				$this->__data['delivery_start_time'] = $delivery_start_time;
+				$this->__data['delivery_end_time'] = $delivery_end_time;
+				$this->__data['pickup_start_time'] = $pickup_start_time;
+				$this->__data['pickup_end_time'] = $pickup_end_time;
+
+				core::log("final pickup_start_time: ".date('Y-m-d H:i:s',$pickup_start_time));
+				core::log("final pickup_end_time: ".date('Y-m-d H:i:s',$pickup_end_time));
+
+				core::log('option 1');
+				#core::log(print_r($this->__data,true));
+				#exit();
+				return $due_time;
+				
 
 				break;
 			case 'bi-weekly':
