@@ -75,7 +75,7 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<script language="Javascript" type="text/javascript" src="js/bootstrap-colorpicker.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/image-picker.js"></script>
 	<script language="Javascript" type="text/javascript" src="js/bootstrap-wysihtml5.js"></script>
-
+<script language="Javascript" type="text/javascript" src="js/chosen.jquery.min.js"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.validator.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="app/core/js/core.format.js?time=<?php echo time();?>"></script>
