@@ -265,16 +265,11 @@ core.catalog.updateListing=function(){
 	core.thingsToFadeIn  = [];
 	core.thingsToFadeOut = [];
 	var catsToShow={};
-
-	// set all products to show
-	for (var i = 0; i < core.products.length; i++){
-		core.products[i].show = true;
-	}
-
+	
 	// determine which products to show or hide
 	prodVisible = false;
 	for (var i = 0; i < core.products.length; i++){
-
+		core.products[i].show = true;
 		if(core.catalog.filters.cartOnly == 1){
 			//alert(document.cartForm['prodQty_'+core.products[i].prod_id].value);
 			if(document.cartForm['prodQty_'+core.products[i].prod_id]){
@@ -294,13 +289,15 @@ core.catalog.updateListing=function(){
 				//alert('going to hide  '+core.products[i].prod_id);
 				core.products[i].show = false;
 			}
-	}
+		}
 		// apply seller filter
 		if(core.catalog.filters.seller > 0 && core.products[i].org_id != core.catalog.filters.seller)
 			core.products[i].show = false;
 		// apply the cat1 filter if necessary
-		if(core.catalog.filters.cat1 > 0 && (!core.lo3.inArray(core.products[i].category_ids,core.catalog.filters.cat1)))
+		if(core.catalog.filters.cat1 > 0 && (!core.lo3.inArray(core.products[i].category_ids,core.catalog.filters.cat1))){
+			//core.log('looking for '+core.catalog.filters.cat1+' in '+core.products[i].category_ids.join(','));
 			core.products[i].show = false;
+		}
 		// apply the cat2 filter if necessary
 		if(core.catalog.filters.cat2 > 0 && (!core.lo3.inArray(core.products[i].category_ids,core.catalog.filters.cat2)))
 			core.products[i].show = false;
@@ -308,7 +305,7 @@ core.catalog.updateListing=function(){
 		if(core.catalog.filters.dd !== 0 && !(core.catalog.matchesDeliveryDay(core.catalog.filters.dd, core.products[i]))) {
 			core.products[i].show = false;
 		}
-
+		//core.log(i+': '+core.products[i].show);
 
 
 		// add this element to the list of things to hide
