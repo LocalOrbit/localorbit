@@ -3,7 +3,7 @@ $v_payables = core::model('v_payables')->collection();
 $v_payables->add_formatter('format_payable_info');
 if(!lo3::is_admin())
 {
-	#$v_payables->filter('to_org_id','=',$core->session['org_id']);
+	$v_payables->filter('to_org_id','=',$core->session['org_id']);
 }
 #echo('<pre>');
 #print_r($v_payables);
