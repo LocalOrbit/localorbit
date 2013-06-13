@@ -142,8 +142,9 @@ function format_payable_info($data)
 	$data['direction_html'] .= $data['to_org_name'];
 	$data['direction'] .= $data['to_org_name'];
 	
-	$data['direction_html'] .= '</a>';
-
+	$data['direction_html'] .= '</a>'.'<br />'.$data['payable_id'];
+	core::log('direction info: '.print_r($data,true));
+	
 
 	# format payment due
 	$time = intval($data['due_date']);
