@@ -171,7 +171,7 @@ class core_format
 		if(!is_numeric($int) && is_string($int))
 			$int = core_format::parse_date($int,'timestamp');
 
-		#echo('original is '.date($core->config['formats']['dates'][$format],$int).'<br />');
+		#echo('original is '.date($core->config['formats']['dates']['long'],$int).'<br />');
 		#echo('adjusting '.$int.' by '.$core->session['time_offset'].': '.($int + intval($core->session['time_offset'])).'<br />');
 		
 		if($do_session_adjust)
