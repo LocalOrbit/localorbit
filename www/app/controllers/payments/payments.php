@@ -1,5 +1,5 @@
 <?php
-
+mysql_query('SET SESSION group_concat_max_len = 1000000;');
 include_once(__DIR__.'/views/filter_logic.php');
 include_once(__DIR__.'/views/formatter_logic.php');
 include_once(__DIR__.'/views/inline_messages.php');
