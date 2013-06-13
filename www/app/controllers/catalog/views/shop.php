@@ -69,6 +69,8 @@ $left_url = 'app.php#!catalog-shop';
 			$deliveries[$value['dd_id']] = array($value->__data);
 		}
 		
+		#print_r($deliveries);
+		
 		# get a list of all addresses that are used by for deliveries 
 		$addresses = core::model('addresses')->add_formatter('simple_formatter')->collection()->filter('address_id','in',$addrs)->to_hash('address_id');
 		#print_r($addresses);
@@ -107,6 +109,7 @@ $left_url = 'app.php#!catalog-shop';
 			
 			$time .= '-'.$deliv[0]['deliv_address_id'];
 			$time .= '-'.$deliv[0]['pickup_address_id'];
+			#echo($time .'<br />');
 			if (!array_key_exists($time, $days)) {
 				$days[$time] = array();
 			}
