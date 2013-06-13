@@ -11,4 +11,4 @@ rm ~/prod.sql;
 mysql --host=localhost --user=localorb_www --password=localorb_www_dev localorb_www_dev -e "update customer_entity set email=concat_ws('','localorbit.testing+',entity_id,'@gmail.com') where org_id<>1;";
 mysql --host=localhost --user=localorb_www --password=localorb_www_dev localorb_www_dev -e "delete from organization_payment_methods;";
 mysql --host=localhost --user=localorb_www --password=localorb_www_dev localorb_www_dev -e "update domains set hostname=concat_ws('','dev',hostname);";
-
+mysql --host=localhost --user=localorb_www --password=localorb_www_dev localorb_www_dev -e "update customer_entity set password='9I1XRsbPFFHptVaRCQYJPHJbtZ6SdZnM4-6fba0cc28d8026cbb4b4902dcbfc308e4bb931e48010283e8a37f54643a0c0aebb66b6cf213b226b4a39de77f66e7ade74422dd6b8ab47e5b78277e18882e81f',is_active=1;"
