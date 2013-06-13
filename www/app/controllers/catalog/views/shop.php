@@ -68,6 +68,7 @@ $left_url = 'app.php#!catalog-shop';
 	
 			$deliveries[$value['dd_id']] = array($value->__data);
 		}
+	#	exit();
 		
 		#print_r($deliveries);
 		
@@ -105,7 +106,7 @@ $left_url = 'app.php#!catalog-shop';
 		$days = array();
 		foreach($delivs as $deliv)
 		{
-			$time = (($deliv[0]['pickup_address_id'] == 0 || $deliv[0]['deliv_address_id']==0) ? 'Delivered' : 'Pick Up') . '-' . strtotime('midnight',$deliv[0]['pickup_address_id'] ? $deliv[0]['pickup_end_time'] : $deliv[0]['delivery_end_time']);
+			$time = ((($deliv[0]['pickup_address_id'] == 0 || $deliv[0]['deliv_address_id']==0) ? 'Delivered' : 'Pick Up') . '-' . (($deliv[0]['delivery_addr_id'] == 0)? $deliv[0]['delivery_end_time'] : $deliv[0]['pickup_end_time']));
 			
 			$time .= '-'.$deliv[0]['deliv_address_id'];
 			$time .= '-'.$deliv[0]['pickup_address_id'];
