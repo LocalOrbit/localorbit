@@ -116,8 +116,10 @@ function payments__add_standard_filters($datatable,$tab='')
 	# determine whether or not to render org filters
 	if(lo3::is_admin() || lo3::is_market())
 	{
-		$do_from_org = true;
-		$do_to_org   = true;
+		if($datatable->name == 'receivables' || lo3::is_admin())
+			$do_from_org = true;
+		if($datatable->name == 'payables' || lo3::is_admin())
+			$do_to_org   = true;
 		if(is_null($core->session['payment___orgs_filter']))
 		{
 			$core->session['payment___orgs_filter'] = core::model('v_payables')->get_orgs_options_for_org(
@@ -177,6 +179,69 @@ function payments__add_standard_filters($datatable,$tab='')
 					"'purchase orders'"=>'Purchase Orders',
 				),'Status','All Statuses');
 		}
+	}
+	else if(lo3::is_market())
+	{
+		$datatable->filter_html .= '<div style="float:left; width:225px;">';
+		
+		if($do_from_market || $do_to_market)
+		{
+			$datatable->filter_html .= '<h4>Market Filters</h4>';
+			if($do_from_market)
+				make_filter($datatable,'from_domain_id',$market_filter,'From','All Markets');
+			if($do_to_market)
+				make_filter($datatable,'to_domain_id',$market_filter,'To','All Markets');
+
+		}
+			
+		
+		if($do_status_payment || $do_payable_type)
+		{
+			$datatable->filter_html .= '<h4>Payment Filters</h4>';
+			if($do_status_payment)
+				make_filter($datatable,'payment_status',array(
+					"'invoiced','overdue','purchase orders'"=>'All Unpaid',
+					"'invoiced'"=>'Invoiced',
+					"'overdue'"=>'Overdue',
+					"'paid'"=>'Paid',
+					"'purchase orders'"=>'Purchase Orders',
+				),'Status','All Statuses');
+			if($do_payable_type)
+				make_filter($datatable,'payable_type',array(
+					'delivery fee'=>'Delivery Fees',
+					'hub fees'=>'Market Fees',
+					'buyer order'=>'Purchase Orders',
+					'seller order'=>'Seller Payments',
+					'service fee'=>'Service Fees',
+					'lo fees'=>'Transaction Fees',
+				),'Type','All Types');
+		}
+		
+		
+		if($do_payment_method)
+		{
+			make_filter($datatable,'payment_method',array(
+				'cash'=>'Cash',
+				
+				'check'=>'Check',
+				'ACH'=>'ACH',
+				'paypal'=>'Paypal',
+			),'Method','All Methods');
+		}
+		
+		$datatable->filter_html .= '</div>';
+		$datatable->filter_html .= '<div style="float:left; width:225px;">';
+		
+		if($do_from_org || $do_to_org)
+		{
+			$datatable->filter_html .= '<h4>Organization Filters</h4>';
+			if($do_from_org)
+				make_filter($datatable,'from_org_id',$org_filter,'From','All Organizations');
+			if($do_to_org)
+				make_filter($datatable,'to_org_id',$org_filter,'To','All Organizations');
+		}
+			
+		$datatable->filter_html .= '</div>';
 	}
 	else if(lo3::is_seller())
 	{
@@ -246,69 +311,7 @@ function payments__add_standard_filters($datatable,$tab='')
 		$datatable->filter_html .= '</div>';
 		
 	}
-	else if(lo3::is_market())
-	{
-		$datatable->filter_html .= '<div style="float:left; width:225px;">';
-		
-		if($do_from_market || $do_to_market)
-		{
-			$datatable->filter_html .= '<h4>Market Filters</h4>';
-			if($do_from_market)
-				make_filter($datatable,'from_domain_id',$market_filter,'From','All Markets');
-			if($do_to_market)
-				make_filter($datatable,'to_domain_id',$market_filter,'To','All Markets');
-
-		}
-			
-		
-		if($do_status_payment || $do_payable_type)
-		{
-			$datatable->filter_html .= '<h4>Payment Filters</h4>';
-			if($do_status_payment)
-				make_filter($datatable,'payment_status',array(
-					"'invoiced','overdue','purchase orders'"=>'All Unpaid',
-					"'invoiced'"=>'Invoiced',
-					"'overdue'"=>'Overdue',
-					"'paid'"=>'Paid',
-					"'purchase orders'"=>'Purchase Orders',
-				),'Status','All Statuses');
-			if($do_payable_type)
-				make_filter($datatable,'payable_type',array(
-					'delivery fee'=>'Delivery Fees',
-					'hub fees'=>'Market Fees',
-					'buyer order'=>'Purchase Orders',
-					'seller order'=>'Seller Payments',
-					'service fee'=>'Service Fees',
-					'lo fees'=>'Transaction Fees',
-				),'Type','All Types');
-		}
-		
-		
-		if($do_payment_method)
-		{
-			make_filter($datatable,'payment_method',array(
-				'cash'=>'Cash',
-				
-				'check'=>'Check',
-				'ACH'=>'ACH',
-				'paypal'=>'Paypal',
-			),'Method','All Methods');
-		}
-		
-		$datatable->filter_html .= '</div>';
-		$datatable->filter_html .= '<div style="float:left; width:225px;">';
-		
-		if($do_from_org || $do_to_org)
-		{
-			$datatable->filter_html .= '<h4>Organization Filters</h4>';
-			if($do_from_org)
-				make_filter($datatable,'from_org_id',$org_filter,'From','All Organizations');
-			if($do_to_org)
-				make_filter($datatable,'to_org_id',$org_filter,'To','All Organizations');
-		}
-			
-		$datatable->filter_html .= '</div>';
-	}
+	
 	else if(lo3::is_admin())
 	{
 		$datatable->filter_html .= '<div style="float:left; width:225px;">';
