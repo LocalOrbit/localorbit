@@ -35,7 +35,9 @@ class core_controller_fresh_sheet extends core_controller
 		
 		
 		$html = $this->generate_html($core->data['domain_id']);
-		$template_id = $mc->get_template_id('Weekly Fresh Sheet',$core->data['domain_id']);
+		// dont let anyone override template with doamin_id 
+		$template_id = $mc->get_template_id('Weekly Fresh Sheet',0);
+		
 		$list_id     = $mc->get_list_id('Weekly Fresh Sheet');
 		$logo = "http://".$domain['hostname'].image('logo-email',$domain['domain_id']);
 		$logo_image = '<img style="margin: 0px 0px 5px 0px" alt="logo" src="'.$logo.'" />';
