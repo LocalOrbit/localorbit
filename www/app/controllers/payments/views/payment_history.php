@@ -1,9 +1,39 @@
 <?php
-$v_payments = new core_collection('
-	select * 
-	from v_payments
-	where (from_org_id='.$core->session['org_id'].' or to_org_id='.$core->session['org_id'].')
-');
+
+if(lo3::is_admin())
+{
+	$v_payments = new core_collection('
+		select * 
+		from v_payments
+		where (from_org_id='.$core->session['org_id'].' or to_org_id='.$core->session['org_id'].')
+	');
+}
+else if(lo3::is_market())
+{
+	
+	$v_payments = new core_collection('
+		select * 
+		from v_payments
+		where payment_id in (
+			select payment_id
+			from x_payables_payments
+			where payable_id in (
+				select payable_id
+				from payables
+				where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+			)
+		)
+		
+	');
+}
+else
+{
+	$v_payments = new core_collection('
+		select * 
+		from v_payments
+		where (from_org_id='.$core->session['org_id'].' or to_org_id='.$core->session['org_id'].')
+	');
+}
 $v_payments->add_formatter('format_payable_info');
 
 $payments = new core_datatable('payments','payments/payment_history',$v_payments);
