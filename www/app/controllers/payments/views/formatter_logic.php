@@ -2,6 +2,7 @@
 
 function format_payable_info($data)
 {
+	core::log(print_r($data,true));
 	$payable_info = array();
 	$tmp_payable_info = explode('$$',$data['payable_info']);
 	foreach($tmp_payable_info as $info)
@@ -31,41 +32,48 @@ function format_payable_info($data)
 			}
 			$printed_orders[$info[1].'-'.$info[2]] = true;
 			
+			if($info[1] == 'service fee')
+			{
+				$html .= 'Service Fee';
+			}
+			else
+			{
 					
-			# in order to enable the accordion functionality for payments, we need to wrap 
-			# every order # after the first one in a div with a class applied
-			if(!$first_payable && !$payment_id_class_started && is_numeric($data['payment_id']))
-			{
-				$html .= '&nbsp;<i class="icon-plus-circle hoverpointer" onclick="core.payments.toggle(\'ref_nbr\','.intval($data['payment_id']).',this);" data-expanded="0"></i>';
-				$html .= '<div id="ref_nbr_'.intval($data['payment_id']).'" style="display:none;">';
-				$payment_id_class_started = true;
-			}
-			else
-			{
-				if($html != '')
-					$html .= '<br />';
-			}
-		
+				# in order to enable the accordion functionality for payments, we need to wrap 
+				# every order # after the first one in a div with a class applied
+				if(!$first_payable && !$payment_id_class_started && is_numeric($data['payment_id']))
+				{
+					$html .= '&nbsp;<i class="icon-plus-circle hoverpointer" onclick="core.payments.toggle(\'ref_nbr\','.intval($data['payment_id']).',this);" data-expanded="0"></i>';
+					$html .= '<div id="ref_nbr_'.intval($data['payment_id']).'" style="display:none;">';
+					$payment_id_class_started = true;
+				}
+				else
+				{
+					if($html != '')
+						$html .= '<br />';
+				}
 			
-			if($info[1] == 'seller order')
-			{
-				$html .= '<a href="#!orders-view_sales_order--lo_foid-'.$info[2];
+				
+				if($info[1] == 'seller order')
+				{
+					$html .= '<a href="#!orders-view_sales_order--lo_foid-'.$info[2];
+				}
+				else if(in_array($info[1],array('buyer order','hub fees','lo fees')))
+				{
+					$html .= '<a href="#!orders-view_order--lo_oid-'.$info[2];
+				}
+				else
+				{
+					$html .= '<a href="#!';
+				}
+				
+				$html .= '">'.$info[0].'</a>';
+				
+				
+				
+				if(lo3::is_admin() || lo3::is_market())
+					$html .= '<br />'.$type.'';
 			}
-			else if(in_array($info[1],array('buyer order','hub fees','lo fees')))
-			{
-				$html .= '<a href="#!orders-view_order--lo_oid-'.$info[2];
-			}
-			else
-			{
-				$html .= '<a href="#!';
-			}
-			
-			$html .= '">'.$info[0].'</a>';
-			
-			
-			
-			if(lo3::is_admin() || lo3::is_market())
-				$html .= '<br />'.$type.'';
 		}
 		$first_payable = false;
 	}
@@ -84,7 +92,11 @@ function format_payable_info($data)
 	$expander_rendered = false;
 	foreach($payable_info as $info)
 	{
-		if($info[1] == 'delivery fee')
+		if($info[1] == 'service fee')
+		{
+			$html .= 'Service fee for <a href="app.php#!market-edit--domain_id-'.$info[2].'">'.$info[3].'</a>';
+		}
+		else if($info[1] == 'delivery fee')
 		{
 		}
 		else
@@ -142,7 +154,7 @@ function format_payable_info($data)
 	$data['direction_html'] .= $data['to_org_name'];
 	$data['direction'] .= $data['to_org_name'];
 	
-	$data['direction_html'] .= '</a>'.'<br />'.$data['payable_id'];
+	$data['direction_html'] .= '</a>';
 	core::log('direction info: '.print_r($data,true));
 	
 
