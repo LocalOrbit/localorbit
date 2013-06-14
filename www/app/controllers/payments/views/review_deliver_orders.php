@@ -3,6 +3,18 @@ $v_payables = core::model('v_payables')->collection();
 $v_payables->add_formatter('format_payable_info');
 if(!lo3::is_admin())
 {
+}
+else if(lo3::is_self_managed())
+{
+	$v_payables->filter('to_org_id','=',$core->session['org_id']);
+}
+else if(lo3::is_fully_managed())
+{
+	$v_payables->filter('to_org_id','in',array(1,$core->session['org_id']));
+	$v_payables->filter('domain_id','in',$core->session['domains_by_orgtype_id'][2]);
+}
+else
+{
 	$v_payables->filter('to_org_id','=',$core->session['org_id']);
 }
 #echo('<pre>');
