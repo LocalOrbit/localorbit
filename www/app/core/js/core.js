@@ -211,7 +211,7 @@ core.getFormDataForSubmit=function(form){
 		if(form.elements[i].type !='radio')
 			data += '&'+form.elements[i].name+'=';
 		//alert(form.elements[i].type);
-		console.log(form.elements[i].type);
+		//console.log(form.elements[i].type);
 		switch(form.elements[i].type){
 			case 'text':
 			case 'textarea':

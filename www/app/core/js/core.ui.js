@@ -432,7 +432,7 @@ core.ui.setLatLong=function(form,prefix,lat,longitude){
 }
 
 core.ui.mapAddMarkerByCoord=function(id,lat,lng,content,imgPath){
-	console.log(lat+'/'+lng+'/'+core.base64_decode(content));
+	//console.log(lat+'/'+lng+'/'+core.base64_decode(content));
 	var mapOpts = {
 		'position': new google.maps.LatLng(lat,lng),
 		'map': core.ui.maps[id],
