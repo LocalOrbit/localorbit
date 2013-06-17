@@ -79,7 +79,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 			select lid.lodeliv_id,lod.delivery_start_time,lod.delivery_end_time,lod.deliv_address_id,lod.pickup_address_id,
 			a1.address as deliv_address,a1.city as deliv_city,dcr1.code as deliv_state,a1.postal_code as deliv_postal_code,
 			a2.address as pickup_address,a2.city as pickup_city,dcr2.code as pickup_state,a2.postal_code as pickup_postal_code,
-			d.name as domain_name,d.hostname
+			d.name as domain_name,d.hostname,dd.deliv_address_id as orig_deliv_address_id
 			from lo_order_line_item lid
 			inner join lo_fulfillment_order on lo_fulfillment_order.lo_foid=lid.lo_foid
 			left join lo_order_deliveries lod on  lid.lodeliv_id=lod.lodeliv_id
@@ -127,7 +127,13 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		{
 			#$key = $delivery['delivery_start_time'].'-'.$delivery['delivery_end_time'].'-'.$delivery['addr_id'];
 			$key = $delivery['delivery_start_time'];
-
+			#print_r($delivery);
+			if($delivery['orig_deliv_address_id'] != 0)
+			{
+				$key = $key.''.str_pad($delivery['orig_deliv_address_id'],6,'0',STR_PAD_LEFT);
+			}
+			#echo('key is '.$key);
+			
 			if(!is_array($grouped_delivs[$key]))
 			{
 				# we can add more data to this array if we want to display more information
