@@ -101,7 +101,8 @@ else
 
 
 
-
+<form name="ordersForm" method="post" action="/orders/update_quantities" onsubmit="return core.submit('/orders/update_quantities',this);" enctype="multipart/form-data">
+		
 <?
 $dd_id = 0;
 foreach($order->items as $item)
@@ -111,7 +112,10 @@ foreach($order->items as $item)
 		$this_dd = (-1);
 	if($dd_id != $this_dd)
 	{
-
+		if($dd_id != 0)
+		{
+			echo('</table>');
+		}
 		if($this_dd > 0)
 		{
 			?>
@@ -120,7 +124,6 @@ foreach($order->items as $item)
 		<?}?>
 
 
-		<form name="ordersForm" method="post" action="/orders/update_quantities" onsubmit="return core.submit('/orders/update_quantities',this);" enctype="multipart/form-data">
 			<table class="dt table table-striped">
 				<tr>
 					<th class="dt">Product</th>
