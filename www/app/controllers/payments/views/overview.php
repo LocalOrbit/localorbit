@@ -101,7 +101,7 @@ $receivables = $data['receivables'];
 				if(!lo3::is_fully_managed()) {
 			?>
 				<div class="span4 pagination-centered">
-					<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Review Orders &amp; Make Payments',$core->view[1]) + 2)?>').tab('show');" />
+					<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Review Orders &amp; Make Payments',$core->view[1]) + 3)?>').tab('show');" />
 				</div>
 			<?php 
 				}
