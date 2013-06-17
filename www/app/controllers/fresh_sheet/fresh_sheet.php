@@ -146,6 +146,18 @@ class core_controller_fresh_sheet extends core_controller
 		# first, arrange the products into a hash using the 2/3 category as the key
 		# we ignore the first category because it is simply the 'root' category
 		# of the catalog, and isn't actually used/displayed/relevant.
+		
+		
+		
+		
+		$cats = core::model('categories')->collection()->sort('order_by')->to_array();
+		foreach($cats as $cat){
+			//echo $cat['cat_name']."<br>";
+			
+		}
+		
+		
+		
 		$prods_by_catid_hash = array();
 		$cats_to_lookup      = array();
 		foreach($prods as $prod)
@@ -153,6 +165,8 @@ class core_controller_fresh_sheet extends core_controller
 			$cat_ids = explode(',',$prod['category_ids']);
 			$new_key = $cat_ids[1].'-'.$cat_ids[2];
 			if(!is_array($prods_by_catid_hash[$new_key]))
+				//echo "adding new key ".$new_key."<br>";
+							
 				$prods_by_catid_hash[$new_key] = array();
 				
 			$prods_by_catid_hash[$new_key][] = $prod;
@@ -162,14 +176,16 @@ class core_controller_fresh_sheet extends core_controller
 		}
 		
 		# next, lookup the names of all the categories in the list
+		$cat_order_by = array();
 		$cat_names = array();
 		$cat_names_by_name = array();
 		if(count($cats_to_lookup) > 0)
 		{
-			$cats = core::model('categories')->collection()->filter('cat_id','in',$cats_to_lookup);
+			$cats = core::model('categories')->collection()->filter('cat_id','in',$cats_to_lookup)->sort('order_by');
 			foreach($cats as $cat)
 			{
 				$cat_names[$cat['cat_id']] = $cat['cat_name'];
+				$cat_order_by[$cat['cat_id']] = $cat['order_by'];
 				$cat_names_by_name[$cat['cat_name']] = $cat['cat_id'];
 			}
 		}
@@ -178,8 +194,10 @@ class core_controller_fresh_sheet extends core_controller
 		$prods_by_catname_hash = array();
 		foreach($prods_by_catid_hash as $cat_ids => $prods)
 		{
+			
 			$cat_ids = explode('-',$cat_ids);
-			$new_key = $cat_names[$cat_ids[0]].' : '.$cat_names[$cat_ids[1]];
+			$new_key = $cat_order_by[$cat_ids[0]].' : '.$cat_names[$cat_ids[0]].' : '.$cat_names[$cat_ids[1]];
+			//echo('found a new_key: '.$new_key.' === '.$cat_ids[0].' ======== '. $cat_order_by[$cat_ids[0]].' ======== '. $cat_order_by[$cat_ids[1]].'<br />');
 			$prods_by_catname_hash[$new_key] = $prods;
 			
 		}
@@ -204,7 +222,7 @@ class core_controller_fresh_sheet extends core_controller
 			
 			
 			// new cat 1
-			if($last_cat != trim($cur_cat[0])) {
+			if($last_cat != trim($cur_cat[1])) {
 				// single row
 				if (!$drew_hr) {
 					$html .= '<tr>';
@@ -213,15 +231,15 @@ class core_controller_fresh_sheet extends core_controller
 					$drew_hr = true;
 				}
 				
-				$last_cat = trim($cur_cat[0]);
+				$last_cat = trim($cur_cat[1]);
 				$cat_url = 'https://'.$domain['hostname'].'/app.php#!catalog-shop--cat1-'.$cat_names_by_name[$last_cat];
 				$html .= '<tr style="color:#839a0e; text-align:left; font-size:16px; font-weight:bold;">';
-					$html .= '<th style="text-align:left;"'.(($show_edit_links)?' colspan="3"':' colspan="2"').'>'.$cur_cat[0].' | <a href="'.$cat_url.'" style="color:#5d5d5d; font-size:16px;">Shop Now</a></th>';
+					$html .= '<th style="text-align:left;"'.(($show_edit_links)?' colspan="3"':' colspan="2"').'>'.$cur_cat[1].' | <a href="'.$cat_url.'" style="color:#5d5d5d; font-size:16px;">Shop Now</a></th>';
 				$html .= '</tr>';
 			}
 
 			// new cat 2
-			if($last_sub_cat != trim($cur_cat[1])) {
+			if($last_sub_cat != trim($cur_cat[2])) {
 				// single row
 				if (!$drew_hr) {
 					$html .= '<tr>';
@@ -229,9 +247,9 @@ class core_controller_fresh_sheet extends core_controller
 					$html .= '</tr>';
 				}				
 				
-				$last_sub_cat = trim($cur_cat[1]);
+				$last_sub_cat = trim($cur_cat[2]);
 				$html .= '<tr style="color:#5d5d5d; text-align:left; font-size:14px; font-weight:bold;">';
-					$html .= '<th'.(($show_edit_links)?' colspan="3"':' colspan="2"').'>'.$cur_cat[1].'</th>';
+					$html .= '<th'.(($show_edit_links)?' colspan="3"':' colspan="2"').'>'.$cur_cat[2].'</th>';
 				$html .= '</tr>';
 				$drew_hr = true;
 			}
