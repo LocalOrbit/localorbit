@@ -148,16 +148,6 @@ class core_controller_fresh_sheet extends core_controller
 		# of the catalog, and isn't actually used/displayed/relevant.
 		
 		
-		
-		
-		$cats = core::model('categories')->collection()->sort('order_by')->to_array();
-		foreach($cats as $cat){
-			//echo $cat['cat_name']."<br>";
-			
-		}
-		
-		
-		
 		$prods_by_catid_hash = array();
 		$cats_to_lookup      = array();
 		foreach($prods as $prod)
@@ -193,17 +183,18 @@ class core_controller_fresh_sheet extends core_controller
 		# next, rebuild the product hash, this time using the category names as the key
 		$prods_by_catname_hash = array();
 		foreach($prods_by_catid_hash as $cat_ids => $prods)
-		{
-			
+		{			
 			$cat_ids = explode('-',$cat_ids);
 			$new_key = $cat_order_by[$cat_ids[0]].' : '.$cat_names[$cat_ids[0]].' : '.$cat_names[$cat_ids[1]];
 			//echo('found a new_key: '.$new_key.' === '.$cat_ids[0].' ======== '. $cat_order_by[$cat_ids[0]].' ======== '. $cat_order_by[$cat_ids[1]].'<br />');
-			$prods_by_catname_hash[$new_key] = $prods;
-			
+			$prods_by_catname_hash[$new_key] = $prods;			
 		}
 		
 		# finally, sorry the product hash by key
-		ksort($prods_by_catname_hash);
+		ksort($prods_by_catname_hash, SORT_NUMERIC);
+		/* foreach($prods_by_catname_hash as $category => $prods) {
+			echo('found a new_key: '.$category.'<br />');
+		} */
 		
 		
 		#echo('<pre>');

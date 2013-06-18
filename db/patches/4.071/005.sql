@@ -31,3 +31,8 @@ UPDATE categories SET order_by = 23 WHERE cat_name = '647 2 Pet Products';
 UPDATE categories SET order_by = 24 WHERE cat_name = '656 2 Cookbooks';
 UPDATE categories SET order_by =25  WHERE cat_name = '168 2 Gift Cards';
 UPDATE categories SET order_by =26 WHERE cat_name = 'Membership';
+
+
+UPDATE categories
+SET order_by = 100
+WHERE order_by IS null;
