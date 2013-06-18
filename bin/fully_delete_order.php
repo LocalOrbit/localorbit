@@ -56,7 +56,7 @@ if($config['report-sql'] == 1)	echo("\n\n".$sql."\n\n");
 if($config['do-delete'] == 1)
 {
 	mysql_query($sql);
-	echo("DELETE COMPLETE\n"):
+	echo("DELETE COMPLETE\n");
 }
 else
 {
