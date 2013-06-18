@@ -59,6 +59,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				}
 				else
 				{
+					$this->reset_order_statuses();
 					$this->wipe_payables_for_order($this['lo_oid']);
 					$payment->delete();
 					unset($core->response['replace']['full_width']);
@@ -104,11 +105,12 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				);
 
 
-				if(!$response['success'])
+				if(intval($response['success']) != 1)
 				{
 					core::log(print_r($response,true));
 					core::load_library('core_phpmailer');
-
+					$this->reset_order_statuses();
+					$this->wipe_payables_for_order($this['lo_oid']);
 					core_phpmailer::send_email(
 						'paypal fail',
 						'Response: '.print_r($response,true)."\n\n\n".str_replace($core->data['pp_cc_number'],'****-****-****-****',print_r($data,true)),
