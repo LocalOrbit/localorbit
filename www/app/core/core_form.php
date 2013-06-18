@@ -350,13 +350,13 @@ class core_form
 		$natural_class = ($options['natural_numbers'])?' natural-num-only':'';
 
 		if($options['render'] != true)	return '';
-		if ($options['required'] == true): $required = core_form::required(); endif;
+		if ($options['required'] == true) $required = core_form::required();
 		#return core_form::tr_nv($label,'<input type="text" name="'.$name.'" value="'.$value.'" />',$options);
 		
 		$html = '<div class="control-group"';
 		$html .= ($options['display_row'])?'':' style="display: none;"';
 		$html .= ($options['row_id'] == '')?'':' id="'.$options['row_id'].'"';
-		$html .='><label class="control-label" for="' . $options['field_name'] . '">'.$label;
+		$html .='><label class="control-label" for="' . $options['field_name'] . '">'.$required .$label;
 		
 		if ($options['tool_tip']): $html .= '<i class="helpslug icon-lamp icon_tool_tip" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
 		if ($options['help_tip']): $html .= '<i class="helpslug icon-question-sign" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
