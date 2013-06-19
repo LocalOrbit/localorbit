@@ -44,7 +44,7 @@ if($core->data['redirect_to_checkout'] == 1)
 <form name="regform" class="form-horizontal" action="registration/process" onsubmit="return core.submit('/registration/process',this);">
 		<div class="row">
 			<div class="span12">
-				<h2><?=$core->i18n['header:reg:choosetype']?></h2>
+				<h2><?=$core->i18n['header:reg:choosetype']?><?=core_form::required()?></h2>
 			</div>
 		</div>
 		<div class="row">
@@ -56,7 +56,7 @@ if($core->data['redirect_to_checkout'] == 1)
 			</div>
 			<!--<div id="checkdiv_buy_biz" class="checkdiv checkdiv_checked">I would like to buy food</div>-->
 		</div>
-		<div class="row" id="reg_mainform"<?=(($domain_id>0)?'':' style="display:none;"')?>>
+		<div class="row" id="reg_mainform"<?=(($domain_id>0)?'':' style="display:nonffe;"')?>>
 			<div class="span12">
 				<br />
 				<h2><?=$core->i18n['header:reg:mainform']?></h2>
