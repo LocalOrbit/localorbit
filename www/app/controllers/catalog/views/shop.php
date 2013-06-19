@@ -94,10 +94,13 @@ $left_url = 'app.php#!catalog-shop';
 			# create a new property called sort_col, then append on the text version
 			# of the first two categories
 			$prods[$i]['sort_col'] = '';
+			$prods[$i]['sort_col'] .= $cats->by_id[$prods[$i]['cat_list'][0]][0]['order_by'].'-';
 			$prods[$i]['sort_col'] .= $cats->by_id[$prods[$i]['cat_list'][0]][0]['cat_name'].'-';
 			$prods[$i]['sort_col'] .= $cats->by_id[$prods[$i]['cat_list'][1]][0]['cat_name'].'-';
 			$prods[$i]['sort_col'] .= $cats->by_id[$prods[$i]['cat_list'][2]][0]['cat_name'];
 			$prods[$i]['sort_col'] .= '-'.$prods[$i]['name'];
+			
+			//echo $prods[$i]['sort_col']."<br>";
 
 			# lowercase the sort_col just to make sure we're comparing in a way that will
 			# make sense to the user
@@ -130,7 +133,16 @@ $left_url = 'app.php#!catalog-shop';
 		# define a custom sorting function that uses our new sort column
 		function prod_sort($a,$b)
 		{
-			return strcmp($a['sort_col'], $b['sort_col']);
+			$aArray = explode('-', $a['sort_col']);
+			$bArray = explode('-', $b['sort_col']);
+			
+			// compare orderby field
+			if ($aArray[0] == $bArray[0]) {
+				return strcmp($aArray[1]."-".$aArray[2]."-".$aArray[3], $bArray[1]."-".$bArray[2]."-".$bArray[3]);
+			} else {
+				return $aArray[0] > $bArray[0];
+			}
+			//return strcmp($a['sort_col'], $b['sort_col']);
 		}
 		# apply the sort
 		usort($prods,'prod_sort');
