@@ -117,7 +117,7 @@ if($core->data['redirect_to_checkout'] == 1)
 
 			
 			
-			<h2><?=$core->i18n['header:reg:spamprotection']?></h2>
+			<h2><?=$core->i18n['header:reg:spamprotection']?><?=core_form::required()?></h2>
 			<div class="control-group">
 				<label class="control-label" for="label"><?=core::i18n('field:reg:spam-protect',$core->session['spammer_nums'][0],$core->session['spammer_nums'][1],$core->session['spammer_nums'][2])?></label>
 				<div class="controls">
