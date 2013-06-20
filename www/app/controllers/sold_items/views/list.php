@@ -115,10 +115,10 @@ $items->handler_onoutput = 'sold_items_output';
 
 # this particular data table is meant to show EVERYTHING in the date range.
 # don't bother with paging
-$items->render_resizer = false;
-$items->render_page_select = false;
-$items->render_page_arrows = false;
-$items->size = (-1);
+#$items->render_resizer = false;
+#$items->render_page_select = false;
+#$items->render_page_arrows = false;
+#$items->size = (-1);
 
 # add filters
 #$items->filter_html .= '</table>';
