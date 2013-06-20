@@ -145,10 +145,10 @@ else
 $col->__model->add_formatter('dcpp_formatter');
 $items->handler_onoutput = 'dcpp_output';
 
-$items->render_resizer = false;
-$items->render_page_select = false;
-$items->render_page_arrows = false;
-$items->size = (-1);
+//~ $items->render_resizer = false;
+//~ $items->render_page_select = false;
+//~ $items->render_page_arrows = false;
+//~ $items->size = (-1);
 
 # add filters
 core_format::fix_dates('discount_code_per_product__filter__dcppcreatedat1','discount_code_per_product__filter__dcppcreatedat2');
