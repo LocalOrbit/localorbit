@@ -98,10 +98,10 @@ function sbs_output($format,$dt)
 $col->__model->add_formatter('sbs_formatter');
 $items->handler_onoutput = 'sbs_output';
 
-$items->render_resizer = false;
-$items->render_page_select = false;
-$items->render_page_arrows = false;
-$items->size = (-1);
+//~ $items->render_resizer = false;
+//~ $items->render_page_select = false;
+//~ $items->render_page_arrows = false;
+//~ $items->size = (-1);
 
 # add filters
 core_format::fix_dates('sales_by_seller__filter__sbscreatedat1','sales_by_seller__filter__sbscreatedat2');
