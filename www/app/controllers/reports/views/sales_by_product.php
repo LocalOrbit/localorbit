@@ -125,10 +125,10 @@ else
 $col->__model->add_formatter('sbp_formatter');
 $items->handler_onoutput = 'sbp_output';
 
-$items->render_resizer = false;
-$items->render_page_select = false;
-$items->render_page_arrows = false;
-$items->size = (-1);
+//~ $items->render_resizer = false;
+//~ $items->render_page_select = false;
+//~ $items->render_page_arrows = false;
+//~ $items->size = (-1);
 
 # add filters
 
