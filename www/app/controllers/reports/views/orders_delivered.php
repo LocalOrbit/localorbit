@@ -95,11 +95,11 @@ function od_output($format,$dt)
 $col->__model->add_formatter('od_formatter');
 $orders->handler_onoutput = 'od_output';
 
-
-$orders->render_resizer = false;
-$orders->render_page_select = false;
-$orders->render_page_arrows = false;
-$orders->size = (-1);
+//~ 
+//~ $orders->render_resizer = false;
+//~ $orders->render_page_select = false;
+//~ $orders->render_page_arrows = false;
+//~ $orders->size = (-1);
 
 
 # add filters
