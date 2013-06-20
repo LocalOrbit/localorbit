@@ -132,6 +132,8 @@ function do_monthly_payment($domain)
 		
 		if($result)
 		{
+			$payment->save();
+			
 			echo("\tPayment success!\n");
 			
 			# now we need to create the paayble for it.
