@@ -127,6 +127,7 @@ foreach($payments as $payment)
 				$record->save();
 				
 				# update payables
+				$orders_to_check = array();
 				foreach($payables as $payable)
 				{
 					$xpp = core::model('x_payables_payments');
