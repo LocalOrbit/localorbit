@@ -17,7 +17,7 @@ $config = array(
 	'exit-on-error'=>0,
 	'lo-oid'=>0,
 	'lo-liid'=>0,
-	'start-lo-oid'=>8500,
+	'start-lo-oid'=>6400,
 	'report-good'=>0,
 );
 
@@ -30,7 +30,7 @@ foreach($argv as $arg)
 }
 
 $sql = "
-	select loi.*,lo.fee_percen_lo,lo.fee_percen_hub,d.paypal_processing_fee,py.payment_method,
+	select loi.*,lo.fee_percen_lo,lo.fee_percen_hub,d.paypal_processing_fee,lo.payment_method,
 	lo.domain_id
 	from lo_order_line_item loi
 	inner join lo_order lo on (lo.lo_oid=loi.lo_oid)
@@ -113,9 +113,9 @@ foreach($items as $item)
 		
 			$sql = '
 				insert into payables 
-					(domain_id,from_org_id,to_org_id,payable_type,parent_obj_id,amount)
+					(domain_id,from_org_id,to_org_id,payable_type,parent_obj_id,amount,creation_date)
 				values
-					('.$item['domain_id'].',1,'.$item['seller_org_id'].',\'seller order\','.$item['lo_liid'].','.($correct_amount - $current_amount).');
+					('.$item['domain_id'].',1,'.$item['seller_org_id'].',\'seller order\','.$item['lo_liid'].','.($correct_amount - $current_amount).','.time().');
 			';
 			if($config['report-sql'] == 1)	echo("\t".$sql."\n");
 			if($config['do-adjust'] == 1)
