@@ -97,10 +97,10 @@ if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 
 # do some settings, add columns, output
 $codes->handler_onoutput = 'discount_code_outputer';
-$codes->render_resizer = false;
-$codes->render_page_select = false;
-$codes->render_page_arrows = false;
-$codes->size = (-1);
+//~ $codes->render_resizer = false;
+//~ $codes->render_page_select = false;
+//~ $codes->render_page_arrows = false;
+//~ $codes->size = (-1);
 $codes->add(new core_datacolumn('lo_order.order_date','Placed On',true,'15%','<a href="#!orders-view_order--lo_oid-{lo_oid}">{formatted_order_date}<br />{lo3_order_nbr}</a>','{formatted_order_date}/{lo3_order_nbr}','{formatted_order_date}/{lo3_order_nbr}'));
 $codes->add(new core_datacolumn('organizations.name','Buyer',true,'20%','<a href="#!organizations-edit--org_id-{buyer_org_id}">{buyer_org_name}</a><br />{first_name} {last_name}<br /><a href="mailTo:{email}">{email}</a>','{buyer_org_name}/{first_name} {last_name}/{email}','{buyer_org_name}/{first_name} {last_name}/{email}'));
 $codes->add(new core_datacolumn('code','Code',true,'20%','{code}','{code}','{code}'));
