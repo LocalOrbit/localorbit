@@ -139,8 +139,8 @@ function do_monthly_payment($domain)
 			# now we need to create the paayble for it.
 			$payable = core::model('payables');
 			$payable['domain_id'] = $domain['domain_id'];
-			$payable['from_org_id'] = 1;
-			$payable['to_org_id'] = $domain['payable_org_id'];
+			$payable['from_org_id'] = $domain['payable_org_id'];
+			$payable['to_org_id'] = 1;
 			$payable['payable_type'] = 'service fee';
 			$payable['parent_obj_id'] = $domain['domain_id'];
 			$payable['amount'] = $payment['amount'];
