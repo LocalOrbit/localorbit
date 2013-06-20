@@ -158,7 +158,7 @@ function do_monthly_payment($domain)
 			if($config['do-email'] == 1)
 			{
 				core::process_command('emails/payment_received',false,
-					1,$domain['payable_org_id'],$payment['amount'],array()
+					$domain['payable_org_id'],1,$payment['amount'],array()
 				);
 			}
 			
