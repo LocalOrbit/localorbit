@@ -76,10 +76,10 @@ function tp_output($format,$dt)
 $col->__model->add_formatter('tp_formatter');
 $items->handler_onoutput = 'tp_output';
 
-$items->render_resizer = false;
-$items->render_page_select = false;
-$items->render_page_arrows = false;
-$items->size = (-1);
+//~ $items->render_resizer = false;
+//~ $items->render_page_select = false;
+//~ $items->render_page_arrows = false;
+//~ $items->size = (-1);
 
 # add filters
 core_format::fix_dates('total_purchases__filter__tpcreatedat1','total_purchases__filter__tpcreatedat2');
