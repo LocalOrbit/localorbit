@@ -67,7 +67,7 @@ if($core->data['redirect_to_checkout'] == 1)
 			<?=core_form::input_text($core->i18n['field:customer:email'],'email','',array('required' => true))?>
 			<?=core_form::input_text($core->i18n['field:customer:email-match'],'email_confirm','',array('required' => true))?>
 			
-			<?=core_form::input_password($core->i18n['field:customer:password'],'password','',array('required' => true))?>
+			<?=core_form::input_password($core->i18n['field:customer:password'],'password','',array('required' => true,  'help_tip'=>'Please choose a password that is 8 characters or longer.'))?>
 			<?=core_form::input_password($core->i18n['field:customer:password-match'],'password_confirm','',array('required' => true))?>
 			
 			
