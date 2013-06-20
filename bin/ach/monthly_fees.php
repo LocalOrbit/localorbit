@@ -6,41 +6,56 @@ core::init();
 ob_end_flush();
 
 core::load_library('crypto');
+
+global $config;
+$config = array(
+	'do-ach'=>0,
+	'do-email'=>0,
+	'is-live'=>1,
+	'domain-ids'=>0,  # allows you to restrict the query to a single domain
+);
+
+
+
 array_shift($argv);
-
-# get the list of all domains
-$domains = core::model('domains')
-	->autojoin(
-		'left',
-		'organization_payment_methods',
-		'(domains.opm_id=organization_payment_methods.opm_id)',
-		array('organization_payment_methods.*')
-	)
-	->collection()
-	->filter('service_fee','>',0)
-	->filter('is_live','=',1);
+foreach($argv as $arg)
+{
+	$arg = explode(':',$arg);
+	$config[$arg[0]] = str_replace('"','',$arg[1]);
+}
+if($config['do-ach'] == 1)
+{
+	$config['do-email'] = 1;
+}
 
 
-global $domain_id;
-if(is_numeric($argv[0]))
-	$domains->filter('domain_id','=',array_shift($argv));
+$sql = '
+	select * 
+	from domains
+	where service_fee > 0
+';
+
+if($config['domain-ids'] != 0)
+{
+	$sql .= ' and domain_id in ('.$config['domain-ids'].') ';
+}
+
+
+if($config['is-live'] == 1)
+{
+	$sql .= ' and is_live=1 	';
+}
+
+
 	
-global $actually_do_payment;
-$actually_do_payment = ($argv[0] == 'do-ach');
 
-if($actually_do_payment)
-	echo("REALLY DOING IT\n");
-
-
-	
-
-echo("Accounts retrieved\n");
 
 # loop through the domains and calculate the fee
+$domains = new core_collection($sql);
 foreach($domains as $domain)
 {
 	
-	echo('checking '.$domain['name']."\n");
+	echo('checking '.$domain['name']." (".$domain['domain_id'].") \n");
 	echo("\tservice fee is:      ".$domain['service_fee']."\n");
 	echo("\tservice schedule is: ".$domain['sfs_id']."\n");
 	echo("\tlast paid is:        ".$domain['service_fee_last_paid']."\n");   
@@ -57,7 +72,7 @@ foreach($domains as $domain)
 	}
 	$last_paid_difference  = $now[1] - $last[1];
 
-	echo('difference between last paid is: '.$last_paid_difference."\n");
+	#echo("\tdifference between last paid is: ".$last_paid_difference."\n");
 	switch($domain['sfs_id'])
 	{
 		case 1:
@@ -71,188 +86,89 @@ foreach($domains as $domain)
 			break;
 	}
 	
-	echo('months: '.intval($now[1]).' / '.intval($last[1])."\n");
+	#echo('months: '.intval($now[1]).' / '.intval($last[1])."\n");
 	
 	# check if we need to charge the client
 	if((intval($now[1]) - intval($last[1])) >= $min_diff)
 	{
-		echo("need to do payment\n");
-		do_monthly_payment($domain);
+		echo("\tneed to do payment for ".$domain['service_fee']."\n");
+		if(!is_numeric($domain['opm_id']) || $domain['opm_id'] == 0)
+		{
+			echo("\tthis market does NOT have an account setup\n");
+		}
+		else
+		{
+			do_monthly_payment($domain);
+		}
 	}
 	else
 	{
-		echo("no need to do payment\n");
+		echo("\tno need to do payment for this market\n");
 	}
 }
 
-# these classes are needed to make a payment
-class CompanyInfo {
-	public $SSS;
-	public $LocID;
-	public $Company;
-	public $CompanyKey;
-}
-
-class  InpACHTransRecord{
-	public $SSS;
-	public $LocID;
-	public $FrontEndTrace;
-	public $CustomerName;
-	public $CustomerRoutingNo;
-	public $CustomerAcctNo;
-	public $CompanyKey;
-}
 
 
 function do_monthly_payment($domain)
 {
-	global $core,$actually_do_payment;
+	global $core,$config;
 	#echo("called\n");
-	
-	$account_nbr = core_crypto::decrypt($domain['nbr1']);
-	$routing_nbr = core_crypto::decrypt($domain['nbr2']);
-	
-	if(!is_numeric($account_nbr) || !is_numeric($routing_nbr))
-	{
-		echo("no valid account\n");
-		if($actually_do_payment)
-		{
-			core::process_command('emails/ach_error',false,
-				'ACH Error: bank account not setup for '.$domain['name'],
-				'It appears that this domain does not have their bank account fully setup. Please verify the details with the client'
-			);
-		}
-	}
-	else
-	{
-	
-		echo('creating payment using '.$domain['name_on_account'].' / ');
-		echo(core_crypto::decrypt($domain['nbr1']));
-		echo('/');
-		echo(core_crypto::decrypt($domain['nbr2']));
-		echo("\n");
-		
-		
-		$myclient = new SoapClient($core->config['ach']['url']);
-		$mycompanyinfo = new CompanyInfo();
-		$mycompanyinfo->SSS        = $core->config['ach']['SSS'];
-		$mycompanyinfo->LocID      = $core->config['ach']['LocID'];
-		$mycompanyinfo->Company    = $core->config['ach']['Company'];
-		$mycompanyinfo->CompanyKey = $core->config['ach']['CompanyKey'];
-		
-		$transaction = new InpACHTransRecord;
-		$transaction->SSS        = $core->config['ach']['SSS'];
-		$transaction->LocID      = $core->config['ach']['LocID'];
-		$transaction->CompanyKey = $core->config['ach']['CompanyKey'];
-		
-		$trace = 'LSO-';
-		if($core->config['stage'] != 'production')
-		{
-			$trace .= $core->config['stage'].time().'-';
-		}
-		$trace .= $domain['domain_id'].'-';
-		$trace .= date('Ym');
-		echo "trace is: ".$trace."\n";
-		
-		$transaction->FrontEndTrace = $trace;
-		$transaction->CustomerName  = strtoupper($domain['name_on_account']);
-		$transaction->CustomerRoutingNo  = core_crypto::decrypt($domain['nbr2']);
-		$transaction->CustomerAcctNo     = core_crypto::decrypt($domain['nbr1']);
-		$transaction->TransAmount   = $domain['service_fee'];
-		$transaction->TransactionCode = 'WEB';
-		$transaction->CustomerAcctType = 'C';
-		$transaction->OriginatorName  = $core->config['ach']['Company'];
-		$transaction->OpCode = 'R';
-		$transaction->CustTransType = 'D';
-		$transaction->Memo = 'Service Fee for domain '.$domain['name'];
-		$transaction->CheckOrTransDate = date('Y-m-d');
-		$transaction->EffectiveDate = date('Y-m-d');
-		$transaction->AccountSet = $core->config['ach']['AccountSet'];
 
-		if($actually_do_payment)
+	if($config['do-ach'] == 1)
+	{
+		$payment = core::model('payments');
+		$payment['amount'] = $domain['service_fee'];
+		$payment['payment_method'] = 'ACH';
+		$payment['creation_date'] = time();
+		$payment->save();
+		$trace   = 'P-'.str_pad($payment['payment_id'],6,'0',STR_PAD_LEFT);
+		$payment['ref_nbr'] = $trace;
+		
+		
+		
+		$account = core::model('organization_payment_methods')->load($domain['opm_id']);
+		$result = $account->make_payment($trace,'Services',round(floatval($payment['amount']),2));
+		
+		
+		if($result)
 		{
+			echo("\tPayment success!\n");
 			
-			echo('ready to transact: '.print_r($transaction,true)."\n");
-			$myresult = $myclient->SendACHTrans(array(
-				'InpCompanyInfo'=>$mycompanyinfo,
-				'InpACHTransRecord'=>$transaction,
-			));
+			# now we need to create the paayble for it.
+			$payable = core::model('payables');
+			$payable['domain_id'] = $domain['domain_id'];
+			$payable['from_org_id'] = 1;
+			$payable['to_org_id'] = $domain['payable_org_id'];
+			$payable['payable_type'] = 'service fee';
+			$payable['parent_obj_id'] = $domain['domain_id'];
+			$payable['amount'] = $payment['amount'];
+			$payable['creation_date'] = time();
+			$payable->save();
 			
-			echo("trans sent \n");
+			$xpp = core::model('x_payables_payments');
+			$xpp['payable_id'] = $payable['payable_id'];
+			$xpp['payment_id'] = $payment['payment_id'];
+			$xpp['amount'] = (round(floatval($payable['amount']),2));
+			$xpp->save();
 			
-			if($myresult->SendACHTransResult->Status !='SUCCESS')
+			
+			core_db::query('update domains set service_fee_last_paid=CURRENT_TIMESTAMP where domain_id='.$domain['domain_id']);
+			
+			
+			if($config['do-email'] == 1)
 			{
-				echo("ERROR\n");
-				echo('Transaction message: '.print_r($myresult,true)."\n------------\nTransaction Details:".print_r($transaction,true));
-				#core::process_command('emails/ach_error',false,'test','test');
-				#echo("EMAIL SENT\n");
-				
-				core::process_command('emails/ach_error',false,
-					'ACH FAIL for '.$domain['name'].' monthly fees',
-					'Transaction message: '.print_r($myresult,true)."\n------------\nTransaction Details:".print_r($transaction,true)
-				);
-				
-				
-			}
-			else
-			{
-				# since the transation succeeded, we need to add all of the payable info
-				# to the database and update the last paid date.
-				
-				$payable = core::model('payables');
-				$payable['from_org_id'] = $domain['payable_org_id'];
-				$payable['to_org_id'] = 1;
-				$payable['domain_id'] = $domain['domain_id'];
-				$payable['payable_type_id'] = 5;
-				$payable['parent_obj_id'] = $domain['domain_id'];
-				$payable['amount'] = $domain['service_fee'];
-				$payable['description'] = $trace;
-				#exit('description is: '.$payable['description']);
-				$payable->save();
-				
-				$invoice = core::model('invoices');
-				$invoice['from_org_id'] = $domain['payable_org_id'];
-				$invoice['to_org_id'] = 1;
-				$invoice['amount'] = $domain['service_fee'];
-				$invoice->save();
-				
-				$payable['invoice_id'] = $invoice['invoice_id'];
-				$payable->save();
-				
-				$payment = core::model('payments');
-				$payment['from_org_id'] = $domain['payable_org_id'];
-				$payment['to_org_id'] = 1;
-				$payment['amount'] = $domain['service_fee'];
-				$payment['payment_method_id'] = 3;
-				$payment['ref_nbr'] = $trace;
-				$payment->save();
-				
-				$xpi = core::model('x_invoices_payments');
-				$xpi['invoice_id']  = $invoice['invoice_id'];
-				$xpi['payment_id']  = $payment['payment_id'];
-				$xpi['amount_paid'] = $domain['service_fee'];
-				$xpi->save();
-			
-				
-				// send emails of payment to both parties
 				core::process_command('emails/payment_received',false,
-					1, $domain['payable_org_id'], $domain['service_fee'], array()
+					1,$domain['payable_org_id'],$payment['amount'],array()
 				);
-
-				
-				#core_db::
 			}
 			
 		}
 		else
 		{
-			echo "NOT actually performing monthly fees\n";
-			
+			$payment->save();
 		}
 		
-				#print_r($myresult);
 	}
-	
 }
 
 exit("done\n");
