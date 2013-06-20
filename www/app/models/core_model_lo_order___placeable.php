@@ -684,6 +684,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$this['amount_paid']    = ($method == 'paypal' || $method == 'ach')?$this['grand_total']:0;
 		$this['domain_id']      = $core->config['domain']['domain_id'];
 		$this['buyer_mage_customer_id'] = $core->session['user_id'];
+		$this['payment_method'] = $method;
 		$this['lo3_order_nbr']  = $this->generate_order_id('buyer',$core->config['domain']['domain_id'],$this['lo_oid']);
 		$this->save();
 		$ach_result = $this->create_order_payables($method);

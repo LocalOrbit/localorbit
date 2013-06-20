@@ -143,7 +143,7 @@ class core_model_delivery_days extends core_model_base_delivery_days
 		return $col->to_hash('product_id');
 	}
 
-	function next_time()
+	function next_time($start_time = 0)
 	{
 		global $core;
 		
@@ -159,9 +159,13 @@ class core_model_delivery_days extends core_model_base_delivery_days
 				core::log('examining dd: '.$this['dd_id']);
 				#core::log(print_r($this->__data,true));
 				
-				$now = time();
-				$weekday = date('w');
-				$date_parts = explode('-',date('m-d-Y'));
+				if($start_time == 0)
+					$now = time();
+				else
+					$now = $start_time;
+					
+				$weekday = date('w',$now);
+				$date_parts = explode('-',date('m-d-Y',$now));
 
 				# build today's date at midnight
 				$start_of_today = mktime(0,0,0,$date_parts[0],$date_parts[1],$date_parts[2]);
