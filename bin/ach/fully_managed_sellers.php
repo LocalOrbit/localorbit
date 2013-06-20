@@ -144,7 +144,7 @@ foreach($payments as $payment)
 				# update the items 
 				$orders_to_check = core::model('lo_order')
 					->collection()
-					->filter('lo_oid','in',$orders_to_check);
+					->filter('lo_oid','in',implode(',',$orders_to_check));
 				foreach($orders_to_check as $order)
 				{		
 					$core->config['domain']['domain_id'] = $order['domain_id'];
