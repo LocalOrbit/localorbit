@@ -56,7 +56,7 @@ if($core->data['redirect_to_checkout'] == 1)
 			</div>
 			<!--<div id="checkdiv_buy_biz" class="checkdiv checkdiv_checked">I would like to buy food</div>-->
 		</div>
-		<div class="row" id="reg_mainform"<?=(($domain_id>0)?'':' style="display:nonffe;"')?>>
+		<div class="row" id="reg_mainform"<?=(($domain_id>0)?'':' style="display:none;"')?>>
 			<div class="span12">
 				<br />
 				<h2><?=$core->i18n['header:reg:mainform']?></h2>
