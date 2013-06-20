@@ -163,10 +163,10 @@ $fees->filter_html .= core_datatable_filter::make_select(
 
 # do some settings, add columns, output
 $fees->handler_onoutput = 'delivery_fee_outputer';
-$fees->render_resizer = false;
-$fees->render_page_select = false;
-$fees->render_page_arrows = false;
-$fees->size = (-1);
+//~ $fees->render_resizer = false;
+//~ $fees->render_page_select = false;
+//~ $fees->render_page_arrows = false;
+//~ $fees->size = (-1);
 $fees->add(new core_datacolumn('lo_oid','Order #',true,'20%','<a href="#!orders-view_order--lo_oid-{lo_oid}">{lo3_order_nbr}</a>','{lo3_order_nbr}','{lo3_order_nbr}'));
 $fees->add(new core_datacolumn('order_date','Order Date',true,'20%','{order_date}','{order_date}','{order_date}'));
 $fees->add(new core_datacolumn('amount','Fee',true,'15%','{amount}','{amount}','{amount}'));
