@@ -11,6 +11,7 @@ $config = array(
 	'do-email'=>0,
 	'seller-org-id'=>0,  # allows you to restrict the query to a single vendor
 	'report-payables'=>0, # prints out info on all the payables covered by the payment
+	'exlude-domain-ids'=>'35',
 );
 
 
@@ -47,6 +48,10 @@ $sql = "
 if($config['seller-org-id'] != 0)
 {
 	$sql .= ' and p.to_org_id='.$config['seller-org-id'].' ';
+}
+if($config['exlude-domain-ids'] != 0)
+{
+	$sql .= ' and p.domain_id not in ('.$config['exlude-domain-ids'].') ';
 }
 
 $sql .="
