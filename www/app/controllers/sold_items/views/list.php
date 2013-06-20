@@ -209,8 +209,8 @@ if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 	$items->add_filter(new core_datatable_filter('lo.domain_id'));
 	$items->filter_html .= core_datatable_filter::make_select(
 		'sold_items',
-		'lo_order.domain_id',
-		$items->filter_states['sold_items__filter__lo_order_org_id'],
+		'lo.domain_id',
+		$items->filter_states['sold_items__filter__lo_domain_id'],
 		$hubs,
 		'domain_id',
 		'name',
@@ -233,11 +233,11 @@ $items->filter_html .= core_datatable_filter::make_select(
 # only MMs and admins get a seller filter
 if(lo3::is_market() || lo3::is_admin())
 {
-	$items->add_filter(new core_datatable_filter('lo_fulfillment_order.org_id'));
+	$items->add_filter(new core_datatable_filter('lfo.org_id'));
 	$items->filter_html .= core_datatable_filter::make_select(
 		'sold_items',
 		'lfo.org_id',
-		$items->filter_states['sold_items__filter__lo_fulfillment_order_org_id'],
+		$items->filter_states['sold_items__filter__lfo_order_org_id'],
 		new core_collection($seller_sql),
 		'org_id',
 		'name',
