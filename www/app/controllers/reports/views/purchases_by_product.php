@@ -125,11 +125,11 @@ function pbp_output($format,$dt)
 # apply the output formatters which make the totalling work
 $col->__model->add_formatter('pbp_formatter');
 $items->handler_onoutput = 'pbp_output';
-
-$items->render_resizer = false;
-$items->render_page_select = false;
-$items->render_page_arrows = false;
-$items->size = (-1);
+//~ 
+//~ $items->render_resizer = false;
+//~ $items->render_page_select = false;
+//~ $items->render_page_arrows = false;
+//~ $items->size = (-1);
 
 
 # add filters
