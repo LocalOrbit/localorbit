@@ -126,7 +126,7 @@ if($config['exclude-payable-ids'] != 0)
 }
 if($config['exclude-payable-types'] != 0)
 {
-	$sql .= ' and p.payable_type not in ('.$config['exclude-payable-types'].') ';
+	$sql .= ' and p.payable_type not in ('.str-relace('-',' ',$config['exclude-payable-types']).') ';
 }
 
 
@@ -189,7 +189,7 @@ if($config['exclude-payable-ids'] != 0)
 }
 if($config['exclude-payable-types'] != 0)
 {
-	$sql .= ' and p.payable_type not in ('.$config['exclude-payable-types'].') ';
+	$sql .= ' and p.payable_type not in ('.str-relace('-',' ',$config['exclude-payable-types']).') ';
 }
 
 $sql .= " group by concat_ws('-',p.domain_id,p.from_org_id,p.to_org_id) ";
