@@ -163,7 +163,7 @@ foreach($payments as $payment)
 					$xpp = core::model('x_payables_payments');
 					$xpp['payable_id'] = $payable['payable_id'];
 					$xpp['payment_id'] = $record['payment_id'];
-					$xpp['amount'] = (round(floatval($payable['amount']),2) - round(floatval($payable['amount_due']),2));
+					$xpp['amount'] = (round(floatval($payable['amount']),2) - round(floatval($payable['amount_paid']),2));
 					$xpp->save();
 				}
 				
