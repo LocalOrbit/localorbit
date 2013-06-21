@@ -344,7 +344,7 @@ core.ui.dataTable.updateFilter=function(dtFilterName,filtValue,parseDate){
 			'September':'09',
 			'October':'10',
 			'November':'11',
-			'December':'12',
+			'December':'12'
 		};
 		var parts = new String(filtValue).split(/\s/);
 		parts[1] = parseInt(new String(parts[1]).replace(',',''));
