@@ -13,6 +13,7 @@ $config = array(
 	'exclude-domain-ids'=>'2,3,25,26,6',
 	'from-org-ids'=>0,
 	'to-org-ids'=>0,
+	'exclude-payable-ids'=>0,
 	'report-payable-ids'=>0,
 	'report-payable-details'=>0,
 	'report-sql'=>0,
@@ -118,6 +119,10 @@ if($config['to-org-ids'] != 0)
 {
 	$sql .= ' and p.to_org_id in ('.$config['to-org-ids'].') ';
 }
+if($config['exclude-payable-ids'] != 0)
+{
+	$sql .= ' and p.payable_id not in ('.$config['exclude-payable-ids'].') ';
+}
 $sql .= " group by concat_ws('-',p.domain_id,p.from_org_id,p.to_org_id) ";
 if($config['report-sql'] == 1)	echo($sql."\n\n");
 
@@ -170,6 +175,10 @@ if($config['from-org-ids'] != 0)
 if($config['to-org-ids'] != 0)
 {
 	$sql .= ' and p.to_org_id in ('.$config['to-org-ids'].') ';
+}
+if($config['exclude-payable-ids'] != 0)
+{
+	$sql .= ' and p.payable_id not in ('.$config['exclude-payable-ids'].') ';
 }
 $sql .= " group by concat_ws('-',p.domain_id,p.from_org_id,p.to_org_id) ";
 if($config['report-sql'] == 1)	echo($sql."\n\n");
