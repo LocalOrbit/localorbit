@@ -27,19 +27,44 @@ foreach($argv as $arg)
 	$config[$arg[0]] = str_replace('"','',$arg[1]);
 }
 
-$sql = '
-	select sum(p.amount) as amount,sum(p.amount_paid) as amount_paid,
-	group_concat(p.payable_id separator \',\') as payable_ids,
-	loi.lo_liid,loi.row_adjusted_total,lo.fee_percen_lo,lo.fee_percen_hub,lo.payment_method,
-	d.paypal_processing_fee,p.payable_type,p.domain_id,p.from_org_id,p.to_org_id
-	from v_payables p
-	inner join lo_order_line_item loi on (p.parent_obj_id = loi.lo_liid)
-	inner join lo_order lo on (lo.lo_oid = loi.lo_oid)
-	inner join domains d on (lo.domain_id=d.domain_id)
-	where p.payable_type in ('.$config['payable-types'].')
-	and lo.ldstat_id<>1
-	
-';
+if($config['payable-types'] == "'delivery fee'")
+{
+	$sql = '
+		select distinct p.payable_id as payable_ids,
+		p.amount,p.amount_paid,
+		
+		df.amount as delivery_fee,
+		lo.fee_percen_lo,lo.fee_percen_hub,lo.payment_method,
+		d.paypal_processing_fee,p.payable_type,p.domain_id,p.from_org_id,p.to_org_id
+		from v_payables p
+		inner join lo_order lo on (lo.lo_oid = p.parent_obj_id)
+		inner join lo_order_deliveries lod on (lod.lo_oid=lo.lo_oid)
+		inner join delivery_days dd on (lod.dd_id=dd.dd_id)
+		inner join delivery_fees df on (df.dd_id=dd.dd_id)
+		inner join domains d on (lo.domain_id=d.domain_id)
+		where p.payable_type in ('.$config['payable-types'].')
+		and lo.ldstat_id<>1
+		
+	';
+}
+else
+{
+	$sql = '
+		select sum(p.amount) as amount,sum(p.amount_paid) as amount_paid,
+		group_concat(p.payable_id separator \',\') as payable_ids,
+		loi.lo_liid,loi.row_adjusted_total,lo.fee_percen_lo,lo.fee_percen_hub,lo.payment_method,
+		d.paypal_processing_fee,p.payable_type,p.domain_id,p.from_org_id,p.to_org_id
+		from v_payables p
+		inner join lo_order_line_item loi on (p.parent_obj_id = loi.lo_liid)
+		inner join lo_order lo on (lo.lo_oid = loi.lo_oid)
+		inner join domains d on (lo.domain_id=d.domain_id)
+		where p.payable_type in ('.$config['payable-types'].')
+		and lo.ldstat_id<>1
+		
+	';
+}
+
+
 
 if($config['to-org-id'] != 0)
 	$sql .= ' and p.to_org_id='.$config['to-org-id'].' ';
@@ -52,7 +77,8 @@ if($config['domain-ids'] != 0)
 if($config['start-lo-oid'] != 0)
 	$sql .= ' and lo.lo_oid >= '.$config['start-lo-oid'].' ';
 
-$sql .= ' group by concat_ws(\' \',p.payable_type,p.parent_obj_id,p.from_org_id,p.to_org_id) ';
+if($config['payable-types'] != "'delivery fee'")
+	$sql .= ' group by concat_ws(\' \',p.payable_type,p.parent_obj_id,p.from_org_id,p.to_org_id) ';
 
 if($config['report-sql'] == 1)	echo("\n$sql\n\n");
 
@@ -60,7 +86,15 @@ $payables = new core_collection($sql);
 $checked = 0;
 foreach($payables as $payable)
 {
-	$correct = $payable['row_adjusted_total'];
+	if($payable['payable_type'] == 'delivery fee')
+	{
+		$correct = $payable['delivery_fee'];
+	}
+	else
+	{
+		$correct = $payable['row_adjusted_total'];
+	}
+	
 	$current = round(floatval($payable['amount']),2);
 	
 	$fee = 100;
@@ -77,6 +111,9 @@ foreach($payables as $payable)
 			break;
 		case 'lo fees':
 			$fee = $payable['fee_percen_lo'] / 100;
+			break;
+		case 'delivery fee':
+			$fee = (100 - $payable['fee_percen_lo']) / 100;
 			break;
 	}
 	$correct = round(floatval($fee * $correct),2);
