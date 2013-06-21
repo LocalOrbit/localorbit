@@ -11,7 +11,7 @@ $config = array(
 	'do-email'=>0,
 	'seller-org-id'=>0,  # allows you to restrict the query to a single vendor
 	'report-payables'=>0, # prints out info on all the payables covered by the payment
-	'exlude-domain-ids'=>'35',
+	'exclude-domain-ids'=>'35',
 );
 
 
@@ -49,7 +49,7 @@ if($config['seller-org-id'] != 0)
 {
 	$sql .= ' and p.to_org_id='.$config['seller-org-id'].' ';
 }
-if($config['exlude-domain-ids'] != 0)
+if($config['exclude-domain-ids'] != 0)
 {
 	$sql .= ' and p.domain_id not in ('.$config['exlude-domain-ids'].') ';
 }
@@ -133,7 +133,7 @@ foreach($payments as $payment)
 					$xpp = core::model('x_payables_payments');
 					$xpp['payable_id'] = $payable['payable_id'];
 					$xpp['payment_id'] = $record['payment_id'];
-					$xpp['amount'] = (round(floatval($payable['amount']),2) - round(floatval($payable['amount_due']),2));
+					$xpp['amount'] = (round(floatval($payable['amount']),2) - round(floatval($payable['amount_paid']),2));
 					$xpp->save();
 					
 					# load the item
