@@ -227,9 +227,58 @@ foreach($payments_by_recip as $org_id=>$payment)
 	{
 		if($config['do-ach'] == 1)
 		{
-			echo("\tperforming charges \n");
+			$record = core::model('payments');
+			$record['amount'] = abs($payment['amount']);
+			$record['payment_method'] = 'ACH';
+			$record['creation_date'] = time();
+			$record->save();
+			$trace   = 'P-'.str_pad($record['payment_id'],6,'0',STR_PAD_LEFT);
 			
-			
+			echo("\tprocessing payment: ".$trace."\n");
+					
+			$account = core::model('organization_payment_methods')->load($payment['opm_id']);
+			$result = $account->make_payment($trace,'Fees',$payment['amount']);
+		
+			if($result)
+			{
+				echo("\tPayment success!\n");
+				$record['ref_nbr'] = $trace;
+				$record->save();
+				
+				$paid_payables = core::model('v_payables')
+					->collection()
+					->filter('payable_id','in',implode(',',$payment['payable_ids']));
+				foreach($paid_payables as $paid_payable)
+				{
+					$xpp = core::model('x_payables_payments');
+					$xpp['payable_id'] = $paid_payable['payable_id'];
+					$xpp['payment_id'] = $record['payment_id'];
+					$xpp['amount'] = (round(floatval($paid_payable['amount']),2) - round(floatval($paid_payable['amount_paid']),2));
+					$xpp->save();
+				}
+				
+				
+				if($payment['amount'] < 0)
+				{
+					# lo owed them money. it's FROM lo to the market
+					core::process_command('emails/payment_received',false,
+						1,$org_id,abs($payment['amount']),null
+					);
+				}
+				else
+				{
+					# market owed LO money.
+					core::process_command('emails/payment_received',false,
+						$org_id,1,abs($payment['amount']),null
+					);
+				}
+			}
+			else
+			{
+				echo("\TPAYMENT FAILURE :(\n");
+				print_r($result);
+				exit();
+			}
 		}
 	}
 }
