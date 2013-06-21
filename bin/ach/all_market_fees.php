@@ -20,6 +20,8 @@ $config = array(
 	'report-sql'=>0,
 );
 
+
+
 array_shift($argv);
 foreach($argv as $arg)
 {
@@ -124,9 +126,9 @@ if($config['exclude-payable-ids'] != 0)
 {
 	$sql .= ' and p.payable_id not in ('.$config['exclude-payable-ids'].') ';
 }
-if($config['exclude-payable-types'] != 0)
+if($config['exclude-payable-types'] !== 0)
 {
-	$sql .= ' and p.payable_type not in ('.str-relace('-',' ',$config['exclude-payable-types']).') ';
+	$sql .= ' and p.payable_type not in (\''.str_replace('-',' ',$config['exclude-payable-types']).'\') ';
 }
 
 
@@ -187,9 +189,9 @@ if($config['exclude-payable-ids'] != 0)
 {
 	$sql .= ' and p.payable_id not in ('.$config['exclude-payable-ids'].') ';
 }
-if($config['exclude-payable-types'] != 0)
+if($config['exclude-payable-types'] !== 0)
 {
-	$sql .= ' and p.payable_type not in ('.str-relace('-',' ',$config['exclude-payable-types']).') ';
+	$sql .= ' and p.payable_type not in (\''.str_replace('-',' ',$config['exclude-payable-types']).'\') ';
 }
 
 $sql .= " group by concat_ws('-',p.domain_id,p.from_org_id,p.to_org_id) ";
