@@ -6,6 +6,7 @@ core::init();
 core::load_library('crypto');
 ob_end_flush();
 
+mysql_query('SET SESSION group_concat_max_len = 1000000;');
 $config = array(
 	'do-ach'=>0,
 	'domain-ids'=>0,
@@ -77,6 +78,7 @@ function handle_payment($payment)
 
 # get the delivery fees
 # this is the base SQL used to pull the payables covered by the payment
+mysql_query('SET SESSION group_concat_max_len = 1000000;');
 $sql = "
 	select 
 		sum(p.amount - p.amount_paid) as amount,p.domain_id,d.name as domain_name,
@@ -87,6 +89,7 @@ $sql = "
 		d.opm_id
 	from v_payables p
 	inner join domains d on (p.domain_id=d.domain_id)
+	inner join lo_order lo on (p.parent_obj_id=lo.lo_oid)
 	where p.payable_type in ('delivery fee')
 	and (
 		(from_org_id=1 and to_org_id in (select org_id from organizations_to_domains where orgtype_id=2))
@@ -94,6 +97,7 @@ $sql = "
 		(to_org_id=1 and from_org_id in (select org_id from organizations_to_domains where orgtype_id=2))
 	)
 	and (p.amount - p.amount_paid) > 0
+	and lo.lbps_id = 2
 ";
 
 # add on any clauses based on the command line parameters
@@ -135,13 +139,18 @@ $sql = "
 		d.opm_id
 	from v_payables p
 	inner join domains d on (p.domain_id=d.domain_id)
+	inner join lo_order_line_item loi on (p.parent_obj_id=loi.lo_liid)
+	inner join lo_order lo on (loi.lo_oid=lo.lo_oid)
+	
 	where p.payable_type in ('hub fees','lo fees')
+	
 	and (
 		(from_org_id=1 and to_org_id in (select org_id from organizations_to_domains where orgtype_id=2))
 		or
 		(to_org_id=1 and from_org_id in (select org_id from organizations_to_domains where orgtype_id=2))
 	)
 	and (p.amount - p.amount_paid) > 0
+	and lo.lbps_id = 2
 ";
 
 # add on any clauses based on the command line parameters
