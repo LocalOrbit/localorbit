@@ -18,6 +18,7 @@ $config = array(
 	'report-payable-ids'=>0,
 	'report-payable-details'=>0,
 	'report-sql'=>0,
+	'payable-start-date'=>0,
 );
 
 
@@ -102,6 +103,7 @@ $sql = "
 	)
 	and (p.amount - p.amount_paid) > 0
 	and lo.lbps_id = 2
+	and lo.ldstat_id=4
 ";
 
 # add on any clauses based on the command line parameters
@@ -130,7 +132,10 @@ if($config['exclude-payable-types'] !== 0)
 {
 	$sql .= ' and p.payable_type not in (\''.str_replace('-',' ',$config['exclude-payable-types']).'\') ';
 }
-
+if($config['payable-start-date'] !== 0)
+{
+	$sql .= ' and p.creation_date >= UNIX_TIMESTAMP(\''.$config['payable-start-date'].'\') ';
+}
 
 $sql .= " group by concat_ws('-',p.domain_id,p.from_org_id,p.to_org_id) ";
 if($config['report-sql'] == 1)	echo($sql."\n\n");
@@ -165,6 +170,7 @@ $sql = "
 	)
 	and (p.amount - p.amount_paid) > 0
 	and lo.lbps_id = 2
+	and loi.ldstat_id=4
 ";
 
 # add on any clauses based on the command line parameters
@@ -192,6 +198,10 @@ if($config['exclude-payable-ids'] != 0)
 if($config['exclude-payable-types'] !== 0)
 {
 	$sql .= ' and p.payable_type not in (\''.str_replace('-',' ',$config['exclude-payable-types']).'\') ';
+}
+if($config['payable-start-date'] !== 0)
+{
+	$sql .= ' and p.creation_date >= UNIX_TIMESTAMP(\''.$config['payable-start-date'].'\') ';
 }
 
 $sql .= " group by concat_ws('-',p.domain_id,p.from_org_id,p.to_org_id) ";
