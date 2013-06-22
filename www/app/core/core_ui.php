@@ -323,7 +323,7 @@ class core_ui
 			$value = '';
 
 		// new calendar
-		core::js('$(\'#'.$field_name_id.'\').datepicker({changeMonth: true, changeYear: true, dateFormat: "MM d, yy",'.$onchange_js.'});');
+		core::js('$(\'#'.$field_name_id.'\').datepicker({changeMonth: true, changeYear: true, dateFormat: "MM d, yy", monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], '.$onchange_js.'});');
 		
 		// old calendar
 		// core::js('$(\'#'.$field_name_id.'\').datePicker('.$onchange_js.');');
