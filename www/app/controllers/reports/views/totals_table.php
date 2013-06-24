@@ -4,7 +4,7 @@ $suffix1 = (isset($core->view[1]))?($core->view[1]):((lo3::is_market() || lo3::i
 $suffix2 = (isset($core->view[2]))?($core->view[2]):('Fees');
 ?>
 <div<?=((lo3::is_seller() || lo3::is_admin() || lo3::is_market())?'':' style="display: none;"')?>>
-	<h2 class="pull-left">Total <?=$suffix1?></h2> <i class="helpslug icon-question-sign pull-left" rel="popover" data-title="Total <?=$suffix1?>" data-content="<?=core::i18n('note:totals_table_current_view')?>" data-original-title="" style="font-size: 180%;margin-left:5px;"></i>
+	<h2 class="pull-left">Total <?=$suffix1?></h2> <i class="helpslug icon-question-sign pull-left" rel="popover" data-title="Total <?=$suffix1?>" data-content="<?=core::i18n('note:totals_table_current_view')?>" data-original-title="" style="font-size: 180%;margin-left:5px;margin-top:5px;"></i>
 	
 
 	<table class="dt table table-striped">
