@@ -38,15 +38,46 @@ class core_controller_reports extends core_controller
 	public static function master_output_formatter($prefix,$output_type,$dt)
 	{
 		global $core;
-		$js = '';
-		$js .= "$('#".$prefix."gross').html('".core_format::price($core->data['reporting_totals'][$prefix]['gross'],false)."');";
-		$js .= "$('#".$prefix."combined').html('".core_format::price($core->data['reporting_totals'][$prefix]['combined'],false)."');";
-		$js .= "$('#".$prefix."hub').html('".core_format::price($core->data['reporting_totals'][$prefix]['hub'],false)."');";
-		$js .= "$('#".$prefix."lo').html('".core_format::price($core->data['reporting_totals'][$prefix]['lo'],false)."');";
-		$js .= "$('#".$prefix."proc').html('".core_format::price($core->data['reporting_totals'][$prefix]['proc'],false)."');";
-		$js .= "$('#".$prefix."discount').html('".core_format::price($core->data['reporting_totals'][$prefix]['discount'],false)."');";
-		$js .= "$('#".$prefix."net').html('".core_format::price($core->data['reporting_totals'][$prefix]['net'],false)."');";
-		core::js($js);
+		
+		if($output_type == 'data' || $output_type == 'html')
+		{
+			$js = '';
+			$js .= "$('#".$prefix."gross').html('".core_format::price($core->data['reporting_totals'][$prefix]['gross'],false)."');";
+			$js .= "$('#".$prefix."combined').html('".core_format::price($core->data['reporting_totals'][$prefix]['combined'],false)."');";
+			$js .= "$('#".$prefix."hub').html('".core_format::price($core->data['reporting_totals'][$prefix]['hub'],false)."');";
+			$js .= "$('#".$prefix."lo').html('".core_format::price($core->data['reporting_totals'][$prefix]['lo'],false)."');";
+			$js .= "$('#".$prefix."proc').html('".core_format::price($core->data['reporting_totals'][$prefix]['proc'],false)."');";
+			$js .= "$('#".$prefix."discount').html('".core_format::price($core->data['reporting_totals'][$prefix]['discount'],false)."');";
+			$js .= "$('#".$prefix."net').html('".core_format::price($core->data['reporting_totals'][$prefix]['net'],false)."');";
+			core::js($js);
+		}
+		if($output_type == 'csv' && (lo3::is_admin() || lo3::is_market() || lo3::is_seller()))
+		{
+			echo("\nTotals:\n");
+			echo("Gross,Discounts,");
+			if(lo3::is_seller())
+			{
+				echo("Fees,Payment Processing,Net\n");
+				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['gross'],false).'",');
+				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['discount'],false).'",');
+				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['combined'],false).'",');
+				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['proc'],false).'",');
+				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['net'],false).'",');
+				
+			}
+			else
+			{
+				echo("Market,LO,Payment Processing,Net\n");
+				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['gross'],false).'",');
+				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['discount'],false).'",');
+				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['hub'],false).'",');
+				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['lo'],false).'",');
+				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['proc'],false).'",');
+				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['net'],false).'",');
+			}
+			echo("\n");
+			
+		}
 	}
 }
 
