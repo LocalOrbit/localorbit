@@ -107,7 +107,7 @@ if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 # date, amount, status, order number
 $items->add(new core_datacolumn('order_date','Placed On',true,'13%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{order_date}</a>','{order_date}','{order_date}'));
 if (lo3::is_seller()) {
-	$items->add(new core_datacolumn('product_name','Product',true,'25%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a> from {seller_name}','{product_name}','{product_name}'));
+	$items->add(new core_datacolumn('product_name','Product',true,'25%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a>','{product_name}','{product_name}'));
 } else {
 	$items->add(new core_datacolumn('product_name','Product',true,'25%','{product_name} from {seller_name}','{product_name}','{product_name}'));
 }

@@ -204,7 +204,7 @@ $items->filter_html .= core_datatable_filter::make_select(
 # date, product cat, item, amount, status (filter by produ cat and filter by item specific to producer - see Featured Promotions for example
 $items->add(new core_datacolumn('lo_fulfillment_order.order_date','Placed On',true,'15%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{formatted_order_date}</a>','{formatted_order_date}','{formatted_order_date}'));
 $items->add(new core_datacolumn('category_ids','Category',true,'20%','<a href="#!products-edit--prod_id-{prod_id}">{parent_cat_name}</a>','{parent_cat_name}','{parent_cat_name}'));
-$items->add(new core_datacolumn('product_name','Product',true,'29%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a> from {seller_name}','{product_name}','{product_name}'));
+$items->add(new core_datacolumn('product_name','Product',true,'29%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a>'.((lo3::is_seller())?'':' from {seller_name}'),'{product_name}','{product_name}'));
 $items->add(new core_datacolumn('qty_ordered','Quantity',true,'9%'));
 $items->add(new core_datacolumn('unit_price','Unit Price',true,'9%'));
 $items->add(new core_datacolumn('row_discount','Discount',true,'9%','{row_discount}','{row_discount}','{row_discount}'));

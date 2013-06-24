@@ -25,6 +25,7 @@ class core_controller_reports extends core_controller
 		{
 			$core->data['reporting_totals'][$prefix]['gross'] += $data['row_total'];
 			$core->data['reporting_totals'][$prefix]['lo']   += $lo;
+			$core->data['reporting_totals'][$prefix]['combined']   += ($lo + $hub);
 			$core->data['reporting_totals'][$prefix]['hub']  += $hub;
 			$core->data['reporting_totals'][$prefix]['proc'] += $proc;
 			$core->data['reporting_totals'][$prefix]['discount'] += $discount;
@@ -38,12 +39,13 @@ class core_controller_reports extends core_controller
 	{
 		global $core;
 		$js = '';
-		$js .= "$('#".$prefix."gross').html('".core_format::price($core->data['reporting_totals'][$prefix]['gross'])."');";
-		$js .= "$('#".$prefix."hub').html('".core_format::price($core->data['reporting_totals'][$prefix]['hub'])."');";
-		$js .= "$('#".$prefix."lo').html('".core_format::price($core->data['reporting_totals'][$prefix]['lo'])."');";
-		$js .= "$('#".$prefix."proc').html('".core_format::price($core->data['reporting_totals'][$prefix]['proc'])."');";
-		$js .= "$('#".$prefix."discount').html('".core_format::price($core->data['reporting_totals'][$prefix]['discount'])."');";
-		$js .= "$('#".$prefix."net').html('".core_format::price($core->data['reporting_totals'][$prefix]['net'])."');";
+		$js .= "$('#".$prefix."gross').html('".core_format::price($core->data['reporting_totals'][$prefix]['gross'],false)."');";
+		$js .= "$('#".$prefix."combined').html('".core_format::price($core->data['reporting_totals'][$prefix]['combined'],false)."');";
+		$js .= "$('#".$prefix."hub').html('".core_format::price($core->data['reporting_totals'][$prefix]['hub'],false)."');";
+		$js .= "$('#".$prefix."lo').html('".core_format::price($core->data['reporting_totals'][$prefix]['lo'],false)."');";
+		$js .= "$('#".$prefix."proc').html('".core_format::price($core->data['reporting_totals'][$prefix]['proc'],false)."');";
+		$js .= "$('#".$prefix."discount').html('".core_format::price($core->data['reporting_totals'][$prefix]['discount'],false)."');";
+		$js .= "$('#".$prefix."net').html('".core_format::price($core->data['reporting_totals'][$prefix]['net'],false)."');";
 		core::js($js);
 	}
 }

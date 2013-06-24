@@ -139,7 +139,7 @@ if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 
 #date, produ cat, item, amount, status, payment method (NOTE: If hub has only one payment type, this report tab does not show up)
 $items->add(new core_datacolumn('order_date','Placed On',true,'15%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{order_date}</a>','{order_date}','{order_date}'));
-$items->add(new core_datacolumn('product_name','Product',false,'35%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a> from {seller_name}','{product_name}','{product_name}'));
+$items->add(new core_datacolumn('product_name','Product',false,'35%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a>'.((lo3::is_seller())?'':' from {seller_name}'),'{product_name}','{product_name}'));
 $items->add(new core_datacolumn('qty_ordered','Quantity',false,'11%'));
 $items->add(new core_datacolumn('unit_price','Unit Price',false,'12%'));
 $items->add(new core_datacolumn('row_discount','Discount',true,'9%','{row_discount}','{row_discount}','{row_discount}'));

@@ -175,7 +175,7 @@ if (lo3::is_seller()) {
 }
 
 if (lo3::is_seller()) {
-	$items->add(new core_datacolumn('product_name','Product',true,'25%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a> from {seller_name}','{product_name}','{product_name}'));
+	$items->add(new core_datacolumn('product_name','Product',true,'25%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a>','{product_name}','{product_name}'));
 } else {
 	$items->add(new core_datacolumn('product_name','Product',true,'25%','{product_name} from {seller_name}','{product_name}','{product_name}'));
 }

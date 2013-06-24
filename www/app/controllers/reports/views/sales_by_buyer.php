@@ -149,7 +149,7 @@ if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 #relevant buyers by date, item, amount, status
 $items->add(new core_datacolumn('order_date','Placed On',true,'14%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{order_date}</a>'));
 $items->add(new core_datacolumn('organizations.name','Buyer',true,'20%','<a href="#!organizations-edit--org_id-{org_id}">{org_name}</a>','{org_name}','{org_name}'));
-$items->add(new core_datacolumn('product_name','Product',true,'25%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a> from {seller_name}','{product_name}','{product_name}'));
+$items->add(new core_datacolumn('product_name','Product',true,'25%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a>'.((lo3::is_seller())?'':' from {seller_name}'),'{product_name}','{product_name}'));
 $items->add(new core_datacolumn('qty_ordered','Quantity',true,'14%'));
 $items->add(new core_datacolumn('unit_price','Unit Price',true,'14%'));
 $items->add(new core_datacolumn('row_discount','Discount',true,'9%','{row_discount}','{row_discount}','{row_discount}'));

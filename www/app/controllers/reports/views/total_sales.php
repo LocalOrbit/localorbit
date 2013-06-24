@@ -109,7 +109,7 @@ if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 }
 
 $items->add(new core_datacolumn('lo_fulfillment_order.order_date','Placed On',true,'15%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{formatted_order_date}</a>','{formatted_order_date}','{formatted_order_date}'));
-$items->add(new core_datacolumn('product_name','Product',true,'40%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a> from {seller_name}','{product_name} from {seller_name}','{product_name} from {seller_name}'));
+$items->add(new core_datacolumn('product_name','Product',true,'40%','<a href="#!products-edit--prod_id-{prod_id}">{product_name}</a>'.((lo3::is_seller())?'':' from {seller_name}'),'{product_name} from {seller_name}','{product_name} from {seller_name}'));
 $items->add(new core_datacolumn('qty_ordered','Quantity',true,'15%'));
 $items->add(new core_datacolumn('unit_price','Unit Price',true,'15%'));
 $items->add(new core_datacolumn('row_discount','Discount',true,'9%','{row_discount}','{row_discount}','{row_discount}'));
