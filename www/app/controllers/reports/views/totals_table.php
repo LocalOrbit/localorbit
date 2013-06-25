@@ -4,7 +4,7 @@ $suffix1 = (isset($core->view[1]))?($core->view[1]):((lo3::is_market() || lo3::i
 $suffix2 = (isset($core->view[2]))?($core->view[2]):('Fees');
 ?>
 <div<?=((lo3::is_seller() || lo3::is_admin() || lo3::is_market())?'':' style="display: none;"')?>>
-	<h2 class="pull-left">Total <?=$suffix1?></h2> <i class="helpslug icon-question-sign pull-left" rel="popover" data-title="Total <?=$suffix1?>" data-content="<?=core::i18n('note:totals_table_current_view')?>" data-original-title="" style="font-size: 180%;margin-left:5px;margin-top:5px;"></i>
+	<h2 class="pull-left">Total <?=$suffix1?></h2> <i class="helpslug icon-question-sign pull-left" rel="popover" data-title="Total <?=$suffix1?>" data-content="<?=core::i18n('note:totals_table_current_view')?>" data-original-title="" data-placement="right" style="margin-left:5px;margin-top:11px;"></i>
 	
 
 	<table class="dt table table-striped">
@@ -18,12 +18,12 @@ if(lo3::is_market() || lo3::is_admin())
 	?>
 				<th class="dt">Market <?=$suffix2?></th>
 				<th class="dt">LO <?=$suffix2?></th>
-				<th class="dt">Payment Processing <?=$suffix2?></th>
+				<th class="dt">Payment Processing</th>
 	<?
 }else  if(lo3::is_seller()){
 	?>
-				<th class="dt"><?=$suffix2?></th>
-				<th class="dt">Payment Processing <?=$suffix2?></th>
+				<th class="dt">Transaction <?=$suffix2?></th>
+				<th class="dt">Payment Processing</th>
 	<?}?>
 				<th class="dt">Net <?=$suffix1?></th>
 			</tr>
