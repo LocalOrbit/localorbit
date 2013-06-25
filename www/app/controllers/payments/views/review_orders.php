@@ -35,6 +35,7 @@ $payables->columns[3]->autoformat='date-short';
 $payables->columns[((lo3::is_admin() || lo3::is_market())?7:6)]->autoformat='price';
 $payables->sort_column = 3 + ((lo3::is_admin() || lo3::is_market())?1:0);;
 $payables->sort_direction = 'desc';
+$payables->render_exporter = false;
 ?>
 
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
