@@ -185,6 +185,8 @@ $items->add(new core_datacolumn('product_name','Product',true,'29%','<a href="#!
 $items->add(new core_datacolumn('discount_type','Discount',true,'9%','{formatted_discount}','{formatted_discount}','{formatted_discount}'));
 $items->add(new core_datacolumn('applied_amount','Actual Discount',true,'9%'));
 $items->add(new core_datacolumn('row_adjusted_total','Item Total',true,'9%'));
+$items->add(new core_datacolumn('net_total','Net Sale',true,'9%','{net_total}','{net_total}','{net_total}'));
+
 $items->add(new core_datacolumn('grand_total','Order Total',true,'9%'));
 
 #$items->columns[0]->autoformat='date-short';
