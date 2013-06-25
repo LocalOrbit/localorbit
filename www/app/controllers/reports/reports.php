@@ -57,7 +57,7 @@ class core_controller_reports extends core_controller
 			echo("Gross,Discounts,");
 			if(lo3::is_seller())
 			{
-				echo("Fees,Payment Processing,Net\n");
+				echo("Transaction Fees,Payment Processing,Net\n");
 				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['gross'],false).'",');
 				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['discount'],false).'",');
 				echo('"'.core_format::price($core->data['reporting_totals'][$prefix]['combined'],false).'",');
