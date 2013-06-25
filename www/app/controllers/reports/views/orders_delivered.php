@@ -161,6 +161,7 @@ $orders->add(new core_datacolumn('product_name','Product',true,'10%','<a href="#
 #$orders->add(new core_datacolumn('unit_price','Unit Price',true,'9%','{unit_price}','{unit_price}','{unit_price}'));
 #$orders->add(new core_datacolumn('row_discount','Discount',true,'9%','{row_discount}','{row_discount}','{row_discount}'));
 $orders->add(new core_datacolumn('row_adjusted_total','Row Total',true,'8%','{row_adjusted_total}','{row_adjusted_total}','{row_adjusted_total}'));
+$orders->add(new core_datacolumn('net_total','Net Sale',true,'9%','{net_total}','{net_total}','{net_total}'));
 $orders->add(new core_datacolumn('payment_method','Payment Method',true,'8%','{payment_method}','{payment_method}','{payment_method}'));
 $orders->add(new core_datacolumn('payment_ref','Payment Reference',true,'8%','{payment_ref}','{payment_ref}','{payment_ref}'));
 #$orders->add(new core_datacolumn('delivery_status','Current Status',true,'9%','{delivery_status}','{delivery_status}','{delivery_status}'));
@@ -168,6 +169,7 @@ $orders->add(new core_datacolumn('payment_ref','Payment Reference',true,'8%','{p
 
 
 $orders->columns[$price_formatter_start]->autoformat='price';
+$orders->columns[$price_formatter_start+1]->autoformat='price';
 #$orders->columns[$price_formatter_start+1]->autoformat='price';
 #$orders->columns[$price_formatter_start+2]->autoformat='price';
 $orders->sort_direction = 'desc';
