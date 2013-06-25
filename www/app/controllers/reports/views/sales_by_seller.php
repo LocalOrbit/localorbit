@@ -183,6 +183,7 @@ $items->add(new core_datacolumn('qty_ordered','Quantity',true,'9%'));
 $items->add(new core_datacolumn('unit_price','Unit Price',true,'9%'));
 $items->add(new core_datacolumn('row_discount','Discount',true,'9%','{row_discount}','{row_discount}','{row_discount}'));
 $items->add(new core_datacolumn('row_adjusted_total','Row Total',true,'9%','{row_adjusted_total}','{row_adjusted_total}','{row_adjusted_total}'));
+$items->add(new core_datacolumn('net_total','Net Sale',true,'9%','{net_total}','{net_total}','{net_total}'));
 $items->add(new core_datacolumn('delivery_status','Delivery Status',true,'9%','{delivery_status}','{delivery_status}','{delivery_status}'));
 $items->add(new core_datacolumn('buyer_payment_status','Buyer Payment Status',true,'9%','{buyer_payment_status}','{buyer_payment_status}','{buyer_payment_status}'));
 $items->add(new core_datacolumn('seller_payment_status','Seller Payment Status',true,'9%','{seller_payment_status}','{seller_payment_status}','{seller_payment_status}'));
@@ -191,6 +192,7 @@ $items->columns[0]->autoformat='date-short';
 $items->columns[4]->autoformat='price';
 $items->columns[5]->autoformat='price';
 $items->columns[6]->autoformat='price';
+$items->columns[7]->autoformat='price';
 $items->sort_direction = 'desc';
 $items->render();
 
