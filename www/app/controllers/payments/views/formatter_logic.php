@@ -2,7 +2,7 @@
 
 function format_payable_info($data)
 {
-	core::log(print_r($data,true));
+	#core::log(print_r($data,true));
 	$payable_info = array();
 	$tmp_payable_info = explode('$$',$data['payable_info']);
 	foreach($tmp_payable_info as $info)
@@ -80,7 +80,7 @@ function format_payable_info($data)
 	if($payment_id_class_started)
 		$html .= '</div>';
 	$data['ref_nbr_html'] = $html;
-	
+	$data['ref_nbr_unformatted'] = 'See website';
 		
 	
 	
@@ -133,6 +133,7 @@ function format_payable_info($data)
 		$html .= '</div>';
 	}
 	$data['description_html'] = $html;
+	$data['description_unformatted'] = 'See website';
 	
 	
 	# format the direction info
@@ -155,7 +156,7 @@ function format_payable_info($data)
 	$data['direction'] .= $data['to_org_name'];
 	
 	$data['direction_html'] .= '</a>';
-	core::log('direction info: '.print_r($data,true));
+	#core::log('direction info: '.print_r($data,true));
 	
 
 	# format payment due
