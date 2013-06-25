@@ -272,6 +272,12 @@ function format_payable_info($data)
 	# format the amounts
 	$data['amount'] = floatval($data['amount']) - floatval($data['amount_paid']);
 	
+	if($core->data['format'] == 'csv')
+	{
+		$data['amount'] = core_format::price($data['amount'],false);
+		$data['payment_date'] = core_format::date($data['payment_date'],'short');
+	}
+	
 	return $data;
 }
 ?>
