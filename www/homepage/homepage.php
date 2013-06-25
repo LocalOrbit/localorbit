@@ -21,7 +21,7 @@
 						<img src="/homepage/img/slideshow/slideshow-new-03.jpg" width="740" height="350" alt="Slide 2" />
 						<div class="caption">
 							I am impressed with Local Orbit's capacity; the flexibility is
-							<br />essential for food markets across the country<br />
+							<br />essential for food hubs across the country.<br />
 							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Rich Pirog, MSU Center for Regional Food Systems</span>
 						</div>
 					</div>
@@ -40,7 +40,7 @@
 							Local Orbit provides the best overall package in terms<br /> of product quality, service and cost effectiveness.
 
 							<br />
-							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Natasha Lantz, Marquette Food Market</span>
+							<span class="caption_who">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;Natasha Lantz, Marquette Food Hub</span>
 						</div>
 					</div>
 					<div class="slide">
