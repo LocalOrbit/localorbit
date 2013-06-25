@@ -19,6 +19,7 @@ class core_controller_reports extends core_controller
 		$hub  = ($data['row_adjusted_total'] * (floatval($data['fee_percen_hub']) / 100));
 		$proc = ($data['row_adjusted_total'] * (floatval($data[$data['payment_method'].'_processing_fee']) / 100));
 		$discount = $data['row_adjusted_total'] - $data['row_total'];
+		$data['net_total'] = $data['row_adjusted_total'] - $lo - $hub - $proc;
 		
 		# only add up items if the item is NOT canceled.
 		if($data['ldstat_id'] != 3)
