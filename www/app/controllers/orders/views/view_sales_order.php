@@ -11,7 +11,7 @@ lo3::require_login();
 
 $order = core::model('lo_fulfillment_order')
 	->autojoin('left','lo_order_deliveries','(lo_order_deliveries.lo_foid=lo_fulfillment_order.lo_foid)',array())
-	->autojoin('left','lo_order','(lo_order.lo_oid=lo_order_deliveries.lo_oid)',array('payment_method','payment_ref','lo_order.paypal_processing_fee as paypal_processing_fee','admin_notes','item_total'))
+	->autojoin('left','lo_order','(lo_order.lo_oid=lo_order_deliveries.lo_oid)',array('lo_order.fee_percen_lo','lo_order.fee_percen_hub','payment_method','payment_ref','lo_order.paypal_processing_fee as paypal_processing_fee','admin_notes'))
 	->autojoin('left','lo_buyer_payment_statuses','(lo_order.lbps_id=lo_buyer_payment_statuses.lbps_id)',array('buyer_payment_status'))
 	->autojoin('left','organizations','(organizations.org_id=lo_order.org_id)',array('organizations.name as buyer_org_name'))
 	->autojoin(
@@ -44,15 +44,18 @@ if($order['org_id'] != $core->session['org_id'])
 	}
 }
 
+
 $order->get_items_by_delivery();
 $order->get_status_history();
 $order->get_item_status_history();
-$fees = false;
+$item_total = 0;
 foreach($order->items as $item)
 {
 	$lo_oid = $item['lo_oid'];
-	break;
+	$item_total += $item['row_adjusted_total'];
+	
 }
+
 
 
 $allow_delivery = (!lo3::is_customer() || (lo3::is_customer() && $core->config['domain']['feature_sellers_mark_items_delivered'] == 1));
@@ -76,7 +79,7 @@ else
 		<?=core_form::value('Buyer #',$order['buyer_org_name'])?>
 		<?=core_form::value('Placed On',core_format::date($order['order_date'],'long'))?>
 		<? if(!lo3::is_seller()){?>
-			<?=core_form::value('Item Total',core_format::price($order['item_total']))?>
+			<?=core_form::value('Item Total',core_format::price($item_total,false))?>
 		<?}?>
 		<? if($order['discount_total'] != 0){?>
 			<?=core_form::value('Discounts',core_format::price($order['discount_total']))?>
@@ -140,13 +143,7 @@ foreach($order->items as $item)
 		$dd_id = $this_dd;
 	}
 
-	# if we haven't already cached the fees for later totaling, then do so now
-	if($fees === false)
-	{
-		$all_but_proc_fees = floatval($item['fee_percen_lo']) + floatval($item['fee_percen_hub']);
-		$processing_fee    = floatval($order[$order['payment_method'].'_processing_fee']);
-		$fees = true;
-	}
+
 	?>
 				<tr>
 					<td class="dt">
@@ -220,26 +217,38 @@ foreach($order->items as $item)
 <h2>Order Summary</h2>
 <?
 # calculate the totals here
-$hub_fee_total        = (($all_but_proc_fees/100) * $order['adjusted_total']);
-$processing_fee_total = (($processing_fee/100) * $order['adjusted_total']);
-$net_sale  = ($order['adjusted_total'] - $hub_fee_total - $processing_fee_total);
+$market_fee_total = (($order['fee_percen_hub']/100) * ($order['grand_total']));
+$lo_fee_total = (($order['fee_percen_lo']/100) * ($order['grand_total']));
+$processing_fee_total = (($order[$order['payment_method'].'_processing_fee'] / 100) * ($order['grand_total']));
+$net_sale  = (($order['grand_total']) - $market_fee_total - $lo_fee_total - $processing_fee_total);
+#echo('<pre>');print_r($order->__data);echo('</pre>');
 ?>
 <table class="dt table table-striped">
 	<tr>
 		<th class="dt">Gross Total</th>
 		<th class="dt">Discount</th>
-		<th class="dt">Transaction Fee</th>
-		<th class="dt">Payment Processing Fee</th>
+		<?if(lo3::is_market() || lo3::is_admin()){?>
+			<th class="dt">Market Fees</th>
+			<th class="dt">Lo Fees</th>
+		<?}else{?>
+			<th class="dt">Transaction Fees</th>
+		<?}?>
+		<th class="dt">Payment Processing</th>
 		<th class="dt">Net Sale</th>
 		<th class="dt">Delivery Status</th>
 		<th class="dt">Payment Status</th>
 	</tr>
 	<tr>
-		<td class="dt"><?=core_format::price($order['grand_total'])?></td>
-		<td class="dt"><?=core_format::price($order['grand_total'] - $order['adjusted_total'])?></td>
-		<td class="dt"><?=core_format::price($hub_fee_total)?></td>
-		<td class="dt"><?=core_format::price($processing_fee_total)?></td>
-		<td class="dt"><?=core_format::price($net_sale)?></td>
+		<td class="dt"><?=core_format::price($order['grand_total'],false)?></td>
+		<td class="dt"><?=core_format::price($order['grand_total'] - $order['adjusted_total'],false)?></td>
+		<?if(lo3::is_market() || lo3::is_admin()){?>
+			<td class="dt"><?=core_format::price($market_fee_total,false)?></td>
+			<td class="dt"><?=core_format::price($lo_fee_total,false)?></td>
+		<?}else{?>
+			<td class="dt"><?=core_format::price($lo_fee_total + $market_fee_total,false)?></td>
+		<?}?>
+		<td class="dt"><?=core_format::price($processing_fee_total,false)?></td>
+		<td class="dt"><?=core_format::price($net_sale,false)?></td>
 		<td class="dt">
 			<span id="delivery_status2"><?=$order['delivery_status']?></span><br />
 
