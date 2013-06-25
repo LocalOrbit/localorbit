@@ -142,8 +142,8 @@ class core_datatable
 					for ($i = 0; $i < count($this->columns); $i++)
 					{
 						$row .= ($i==0)?'':',';
-						if($this->columns[$j]->autoformat != '')
-							$data = $this->columns[$j]->handle_autoformat($data);
+						if($this->columns[$i]->autoformat != '')
+							$data = $this->columns[$i]->handle_autoformat($data);
 						
 						$row .= '"'.$this->columns[$i]->render_data('csv').'"';
 					}
@@ -390,7 +390,7 @@ class core_datatable
 		
 		# now that we have all the parameters, save them to the session
 		# so if we change pages and come back to this table, we'll be on teh same page
-		if($this->write_to_session)
+		if($this->write_to_session && $core->data['format'] != 'csv' && $core->data['format'] != 'pdf')
 		{
 			$core->session['datatables'][$this->name] = array(
 				'page'=>$this->page,
