@@ -45,13 +45,13 @@ $sql = "
 	and loi.lbps_id=2
 	and d.seller_payer = 'lo'";
 
-if($config['seller-org-id'] != 0)
+if($config['seller-org-id'] !== 0)
 {
 	$sql .= ' and p.to_org_id='.$config['seller-org-id'].' ';
 }
-if($config['exclude-domain-ids'] != 0)
+if($config['exclude-domain-ids'] !== 0)
 {
-	$sql .= ' and p.domain_id not in ('.$config['exlude-domain-ids'].') ';
+	$sql .= ' and p.domain_id not in ('.$config['exclude-domain-ids'].') ';
 }
 
 $sql .="
@@ -68,7 +68,8 @@ foreach($payments as $payment)
 	# get the list of payables so we can mark them as paid to seller
 	$payables = core::model('v_payables')
 		->collection()
-		->filter('payable_id','in',explode(',',$payment['payables']));
+		->filter('payable_id','in',explode(',',$payment['payables']))
+		->sort('parent_obj_id');
 		
 	# write some logging
 	echo("Paying ".$payment['to_org_name']." (".$payment['to_org_id'].") ".core_format::price($payment['amount'])." ");
