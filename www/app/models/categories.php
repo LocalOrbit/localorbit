@@ -9,7 +9,7 @@ class core_model_categories extends core_model_base_categories
 			select * 
 			from categories 
 			where cat_id in ('.implode(',',$cats).') 
-			order by cat_name
+			order by order_by, cat_name
 		');
 		
 		$this->by_parent = $this->categories->to_hash('parent_id');

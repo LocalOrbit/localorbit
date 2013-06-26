@@ -701,3 +701,4 @@ core.ui.updateSelect=function(id,opts){
 	});
 	$("#"+id+" option[value=" + curVal +"]").attr("selected","selected") ;
 }
+

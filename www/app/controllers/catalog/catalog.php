@@ -364,6 +364,7 @@ class core_controller_catalog extends core_controller
 		core::js('$(\'#checkout_progress,#checkout_buttons\').toggle();');
 		$cart->place_order(array(
 			'paypal'=>$this->paypal_rules(),
+			'paypal_popup'=>$this->paypal_popup_rules(),
 			'authorize'=>$this->authorize_rules(),
 			'purchaseorder'=>$this->purchaseorder_rules(),
 			'ach'=>$this->ach_rules()
@@ -382,6 +383,12 @@ class core_controller_catalog extends core_controller
 			array('type'=>'min_length','name'=>'pp_street','data1'=>5,'msg'=>$core->i18n['error:address:address']),
 			array('type'=>'min_length','name'=>'pp_city','data1'=>2,'msg'=>$core->i18n['error:address:city']),
 			array('type'=>'min_length','name'=>'pp_zip','data1'=>5,'msg'=>$core->i18n['error:address:postalcode']),
+		));
+	}
+	function paypal_popup_rules()
+	{
+		global $core;
+		return new core_ruleset('checkoutForm',array(
 		));
 	}
 	function ach_rules()

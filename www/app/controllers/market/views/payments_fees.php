@@ -88,6 +88,9 @@ $payment_methods = core::model('organization_payment_methods')
 			'info_show'=>true
 		))?>
 	
+		<?=core_form::input_check('Allow CC via Paypal Popup','payment_allow_paypal_popup',$data['payment_allow_paypal_popup'],array(
+			'onclick'=>'market.allowPaymentChanged(\'paypal\');',
+		))?>
 		<?=core_form::input_check('Allow CC via Paypal','payment_allow_paypal',$data['payment_allow_paypal'],array(
 			'onclick'=>'market.allowPaymentChanged(\'paypal\');',
 		))?>
@@ -114,6 +117,7 @@ $payment_methods = core::model('organization_payment_methods')
 		'info_show'=>true
 	))?>
 	
+	<?= core_form::input_check('CC via Paypal Popup','payment_default_paypal_popup', $data['payment_default_paypal_popup'], array('display_row'=>($data['payment_default_paypal_popup'] == 1),'checked' => 'market.defaultPaymentChanged(\'paypal_popup\');','row_id'=>'div_payment_allow_paypal_popup')); ?>
 	<?= core_form::input_check('CC via Paypal','payment_default_paypal', $data['payment_default_paypal'], array('display_row'=>($data['payment_allow_paypal'] == 1),'checked' => 'market.defaultPaymentChanged(\'paypal\');','row_id'=>'div_payment_allow_paypal')); ?>
 	<?= core_form::input_check('ACH','payment_default_ach', $data['payment_default_ach'], array('display_row'=>($data['payment_allow_ach'] == 1),'checked' => 'market.defaultPaymentChanged(\'ach\');','row_id'=>'div_payment_allow_ach')); ?>	
 	<?= core_form::input_check('Purchase Orders','payment_default_purchaseorder', $data['payment_default_purchaseorder'], array('display_row'=>($data['payment_allow_purchaseorder'] == 1),'checked' => 'market.defaultPaymentChanged(\'purchaseorder\');','row_id'=>'div_payment_allow_purchase_order')); ?>

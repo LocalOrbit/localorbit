@@ -156,7 +156,7 @@ $cart->arrange_by_next_delivery();
 	<div class="span7 pull-right" id="checkout_buttons" style="text-align: right;">
 		<a class="btn btn-large btn-danger" href="#!catalog-shop">Cancel</a>
 		<a class="btn btn-large btn-info" href="#!catalog-shop--cart-yes">Modify Your Cart</a>
-		<input type="button" value="Place Order" class="btn btn-large btn-success" onclick="core.checkout.process();" />
+		<input id="button_checkout_process" type="button" value="Place Order" class="btn btn-large btn-success" onclick="core.checkout.process();" />
 			
 	</div>
 	<div class="span5  pull-right" id="checkout_progress" style="display: none;">
@@ -169,4 +169,42 @@ $cart->arrange_by_next_delivery();
 # this is used to dynamically update the fees and such.
 core::js('window.setTimeout("core.checkout.requestUpdatedFees();",1000);');
 ?>
+
 </form>
+
+
+
+
+
+
+
+
+
+<!-- process PayPay inline -->
+<?php
+	// test it
+	//$core->session['paypal_popup_transaction_id'] = "123456789";
+	//$core->session['paypal_popup_error_message'] = "eeeeeeeeeeevvvvvvvvvvvv";
+	
+	
+	/* if (isset($core->session['paypal_popup_error_message'])) {
+		core::js('core.ui.showPayPalError(\''.$core->session['paypal_popup_error_message'].'\');');
+		unset($core->session['paypal_popup_error_message']);
+	}
+
+	// paypal was successful, process order	
+	if (isset($core->session['paypal_popup_transaction_id'])
+		&& $core->session['paypal_popup_transaction_id']) {
+		core::js('$("#payment_method_paypal_popup").attr("checked",true);');
+		
+		// delay so its all loaded
+		core::js('window.setTimeout("core.checkout.process();",1500);');
+		// remove in create_order_payables 	// unset($core->session['paypal_popup_transaction_id']);
+	}	 */
+?>
+
+
+
+
+
+

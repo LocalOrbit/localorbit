@@ -33,7 +33,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$payment = false;
 		
 		# try to make the payment.
-		if($payment_method == 'paypal' || $payment_method == 'ACH')
+		if($payment_method == 'paypal_popup' || $payment_method == 'paypal' || $payment_method == 'ACH')
 		{
 			core::load_library('payments'); 
 		
@@ -44,6 +44,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			$payment['payment_method'] = $payment_method;
 			$payment['creation_date'] = time();
 			$payment->save();
+			
 			
 			if($payment_method == 'ACH')
 			{
@@ -68,6 +69,19 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 					core::deinit();
 				}
 			}
+			
+			if($payment_method == 'paypal_popup')
+			{
+				core::model('events')->add_record('Paypal Transaction Success',$this['lo_oid'],0);
+				$this['amount_paid'] = $this['grand_total'];
+				$this['payment_ref'] = $core->session['paypal_popup_transaction_id'];
+				$payment['ref_nbr'] = $core->session['paypal_popup_transaction_id'];
+				core::log('paypal_popup payment success '.$core->session['paypal_popup_transaction_id']);
+				
+				// remove var
+				unset($core->session['paypal_popup_transaction_id']);
+			}
+			
 			if($payment_method == 'paypal')
 			{
 				# if the user pays via paypal,
@@ -139,6 +153,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			$this['payment_ref']    = $core->data['po_number'];
 		}
 		
+		
 		# ok, at this point a payment has been successfully created (if necesary)
 		# we now need to create all of the payables
 		core::log('creating delivery fee payables');
@@ -147,7 +162,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		{
 			if($fee['applied_amount'] > 0)
 			{
-				$deliv_to_lo = ($payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
+				$deliv_to_lo = ($payment_method == 'paypal_popup' || $payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
 				
 				# create the fee from the buyer to whoever is taking the money
 				$payable = core::model('payables');
@@ -197,7 +212,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		
 		
 		
-		$buyer_pays_lo = ($payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
+		$buyer_pays_lo = ($payment_method == 'paypal_popup' || $payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
 				
 		if($payment_method != 'cash')
 		{	
@@ -230,13 +245,13 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			
 			# determine the percent the seller should receive of the tiem
 			$seller_percent = floatval($core->config['domain']['fee_percen_lo']) + floatval($core->config['domain']['fee_percen_hub']);
-			if($payment_method == 'paypal')
+			if($payment_method == 'paypal_popup' || $payment_method == 'paypal')
 				$seller_percent += $core->config['domain']['paypal_processing_fee'];
 			$seller_percent = ((100 - $seller_percent) / 100);
 			
 			
 			# determine if we need to move the money to the market to pay the seller
-			$need_transfer_to_mm = (($payment_method == 'paypal' || $payment_method == 'ACH') && $core->config['domain']['seller_payer'] == 'hub');
+			$need_transfer_to_mm = (($payment_method == 'paypal_popup' || $payment_method == 'paypal' || $payment_method == 'ACH') && $core->config['domain']['seller_payer'] == 'hub');
 			
 			# loop through the items and save payables
 			foreach($this->items as $item)
@@ -346,16 +361,6 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 
 		core::log(print_r($core->data, true));
 		$method = $core->data['payment_method'];
-		if($core->data['show_payment_paypal'] == 1)
-			$method = 'paypal';
-		if($core->data['show_payment_authorize'] == 1)
-			$method = 'authorize';
-		if($core->data['show_payment_purchaseorder'] == 1)
-			$method = 'purchaseorder';
-		if($core->data['show_payment_ach'] == 1)
-			$method = 'ach';
-		if($core->data['show_payment_ach'] == 1)
-			$method = 'ach';
 			
 		if(!isset($method))
 		{
@@ -365,7 +370,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			core::deinit();
 		}
 		#core::log(print_r($rules[$methods]->rules,true));
-		if($method == 'ach' || $method == 'paypal' || $method == 'cash')
+		if($method == 'ach' || $method == 'paypal_popup' || $method == 'paypal' || $method == 'cash')
 		{
 			$rules[$method]->validate('checkoutForm');
 			$this['lbps_id'] = 2;
@@ -588,7 +593,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			# attach this item to the fulfillment order, set the status, continue totalling
 			$item['lo_foid'] = $fulfills[$item['seller_org_id']]['lo_foid'];
 			$item['ldstat_id'] = 2;
-			$item['lbps_id']   = ($method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
+			$item['lbps_id']   = ($method == 'paypal_popup' || $method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
 			$item['lsps_id']   = 1;
 
 			$fulfills[$item['seller_org_id']]['grand_total']    = $fulfills[$item['seller_org_id']]['grand_total']    + $item['row_total'];
@@ -604,7 +609,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$this['fee_percen_hub']        = $core->config['domain']['fee_percen_hub'];
 		$this['paypal_processing_fee'] = $core->config['domain']['paypal_processing_fee'];
 		$this['ldstat_id'] = 2;
-		$this['lbps_id']   = ($method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
+		$this['lbps_id']   = ($method == 'paypal_popup' || $method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
 
 		$this['order_date'] = date('Y-m-d H:i:s',time());
 
@@ -681,7 +686,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		# finalize things!
 		$this['grand_total'] = $this['item_total'] + $adjusted_total;
 		$this['adjusted_total'] = $adjusted_total;
-		$this['amount_paid']    = ($method == 'paypal' || $method == 'ach')?$this['grand_total']:0;
+		$this['amount_paid']    = ($method == 'paypal_popup' || $method == 'paypal' || $method == 'ach')?$this['grand_total']:0;
 		$this['domain_id']      = $core->config['domain']['domain_id'];
 		$this['buyer_mage_customer_id'] = $core->session['user_id'];
 		$this['payment_method'] = $method;

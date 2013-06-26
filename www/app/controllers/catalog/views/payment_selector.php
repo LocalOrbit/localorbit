@@ -11,7 +11,7 @@ if($org['payment_allow_authorize'] == 1) {
 	</label>
 <?
 }
-//	echo(core_ui::radiodiv('show_payment_authorize','Pay by Authorize.net',false,'payment_method',false,"$('.payment_option').hide();$('#payment_authorize,#placeorder_button').fadeIn(300);").'<br />');
+
 if($org['payment_allow_paypal'] == 1) {
 ?>
 	<label class="radio">
@@ -20,7 +20,7 @@ if($org['payment_allow_paypal'] == 1) {
 	</label>
 <?
 }
-//	echo(core_ui::radiodiv('show_payment_paypal','Pay by Credit Card',false,'payment_method',false,"$('.payment_option').hide();$('#payment_paypal,#placeorder_button').fadeIn(300);").'<br />');
+
 if($org['payment_allow_purchaseorder'] == 1) 
 {
 ?>
@@ -40,7 +40,58 @@ if($org['payment_allow_ach'] == 1)
 	</label>
 <?
 }
-//	ech
-//	echo(core_ui::radiodiv('show_payment_purchaseorder','Pay by Purchase Order',false,'payment_method',false,"$('.payment_option').hide();$('#payment_purchaseorder,#placeorder_button').fadeIn(300);").'<br />');
+
+
+if($org['payment_allow_paypal_popup'] == 1) 
+{
+	include($_SERVER['DOCUMENT_ROOT'].'/../bin/paypal/PayPalApi.php');	
+	echo $payPalApi->getExpressCheckoutButton();
 ?>
+
+
+<?
+}
+
+
+include($_SERVER['DOCUMENT_ROOT'].'/../bin/paypal/PayPalApi.php');
+echo $payPalApi->getExpressCheckoutButton();
+?>
+
+
+
+
+
+
+<!-- 
+this fails  {"append":[],"replace":[],"js":"Y29yZS5jaGVja291dC5oaWRlU3VibWl0UHJvZ3J
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" target="PPDGFrame">
+	<input id="type" type="hidden" name="cmd" value="_express-checkout">
+	<input id="token" type="hidden" name="token" value="EC-9YC63326WS826921V">	
+	<input type="submit" id="submitBtn" value="Pay with PayPal"> 	
+</form>
+
+<script>
+	var dgFlow = new PAYPAL.apps.DGFlow({ trigger: 'submitBtn' });
+</script>
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
