@@ -84,17 +84,23 @@ class core_datatable_filter
 	function apply_to_collection()
 	{
 		global $core;
-		core::log('applying filter: '.$this->has_value.'/'.$this->value);
+		core::log('applying filter: '.$this->has_value.'/'.$this->value.'/');
 		if($this->has_value && $this->value != __core_datatable_filter_nullval__)
 		{
 			# fudging with dates a bit
-		if($this->type == 'date')
+			if($this->type == 'date')
 			{
-				if(strlen($this->value) < 11 && ($this->operator == '>' || $this->operator == '<'))
+				if($this->value == '')
 				{
-					$this->value .= ($this->operator == '>')?' 00:00:00':' 23:59:59';
 				}
-				$this->parent->data->filter($this->field,$this->operator,$this->value);
+				else
+				{
+					if(strlen($this->value) < 11 && ($this->operator == '>' || $this->operator == '<'))
+					{
+						$this->value .= ($this->operator == '>')?' 00:00:00':' 23:59:59';
+					}
+					$this->parent->data->filter($this->field,$this->operator,$this->value);
+				}
 			}
 			else if($this->type == 'unix_date')
 			{
