@@ -16,7 +16,7 @@ $col->__model->autojoin(
 	'left',
 	'lo_fulfillment_order',
 	'(lo_fulfillment_order.lo_foid=lo_order_line_item.lo_foid)',
-	array('UNIX_TIMESTAMP(lo_fulfillment_order.order_date) as order_date')
+	array('UNIX_TIMESTAMP(lo_fulfillment_order.order_date) as order_date','lo_fulfillment_order.lo3_order_nbr as lo3_lfo_order_nbr')
 );
 $col->__model->autojoin(
 	'left',
@@ -46,7 +46,7 @@ $col->__model->autojoin(
 	'left',
 	'lo_order',
 	'(lo_order.lo_oid=lo_order_line_item.lo_oid)',
-	array('fee_percen_lo','fee_percen_hub','lo_order.payment_method','lo_order.paypal_processing_fee')
+	array('fee_percen_lo','fee_percen_hub','lo_order.payment_method','lo_order.paypal_processing_fee','lo_order.lo3_order_nbr')
 );
 $col->__model->autojoin(
 	'left',
@@ -167,7 +167,32 @@ if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 }
 
 # date, product cat, item, amount, status (filter by item specific to producer - see Featured Promotions)
-$items->add(new core_datacolumn('order_date','Placed On',true,'15%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{order_date}</a>','{order_date}','{order_date}'));
+#$items->add(new core_datacolumn('order_date','Placed On',true,'15%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{order_date}</a>','{order_date}','{order_date}'));
+
+
+$offset = 0;
+if($core->data['format'] == 'csv')
+{
+	$items->add(new core_datacolumn('lo_fulfillment_order.order_date','Placed On',true,'15%','<a href="#!orders-view_order--lo_oid-{lo_oid}">{formatted_order_date}</a>','{formatted_order_date}','{formatted_order_date}'));
+	if(lo3::is_market() || lo3::is_admin())
+	{
+		$items->add(new core_datacolumn('lo_fulfillment_order.lo3_order_nbr','Seller Order Nbr',true,'15%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{formatted_order_date}</a>','{lo3_lfo_order_nbr}','{lo3_lfo_order_nbr}'));
+		$offset++;
+	}
+	$items->add(new core_datacolumn('lo_order.lo3_order_nbr','Buyer Order Nbr',true,'15%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{formatted_order_date}</a>','{lo3_order_nbr}','{lo3_order_nbr}'));
+		
+	$offset++;
+}
+else
+{
+	$order_link = '';
+	$order_link .= '<br /><a href="app.php#!orders-view_order--lo_oid-{lo_oid}">{lo3_order_nbr}</a>';
+	if(lo3::is_market() || lo3::is_admin())
+		$order_link .= '<br /><a href="app.php#!orders-view_sales_order--lo_foid-{lo_foid}">{lo3_lfo_order_nbr}</a>';
+	$items->add(new core_datacolumn('lo_fulfillment_order.order_date','Placed On',true,'15%','<a href="#!orders-view_order--lo_oid-{lo_oid}">{formatted_order_date}</a>'.$order_link,'{formatted_order_date}','{formatted_order_date}'));
+}
+
+
 if (lo3::is_seller()) {
 	$items->add(new core_datacolumn('category_ids','Category',true,'20%','<a href="#!products-edit--prod_id-{prod_id}">{parent_cat_name}</a>','{parent_cat_name}','{parent_cat_name}'));
 } else {
@@ -190,11 +215,11 @@ $items->add(new core_datacolumn('delivery_status','Delivery Status',true,'9%','{
 $items->add(new core_datacolumn('buyer_payment_status','Buyer Payment Status',true,'9%','{buyer_payment_status}','{buyer_payment_status}','{buyer_payment_status}'));
 $items->add(new core_datacolumn('seller_payment_status','Seller Payment Status',true,'9%','{seller_payment_status}','{seller_payment_status}','{seller_payment_status}'));
 
-$items->columns[0]->autoformat='date-short';
-$items->columns[4]->autoformat='price';
-$items->columns[5]->autoformat='price';
-$items->columns[6]->autoformat='price';
-$items->columns[7]->autoformat='price';
+#$items->columns[0]->autoformat='date-short';
+$items->columns[4 + $offset]->autoformat='price';
+$items->columns[5 + $offset]->autoformat='price';
+$items->columns[6 + $offset]->autoformat='price';
+$items->columns[7 + $offset]->autoformat='price';
 $items->sort_direction = 'desc';
 $items->render();
 $this->totals_table('pbp_');
