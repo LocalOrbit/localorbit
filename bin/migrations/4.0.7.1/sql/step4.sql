@@ -14,6 +14,8 @@ select p.*,
 	(select o2.name from organizations o2 where p.to_org_id=o2.org_id) as to_org_name,
 	otd1.domain_id as from_domain_id,
 	otd2.domain_id as to_domain_id,
+	
+	
 	ifnull(i.due_date,9999999999999) as due_date,
 	i.creation_date as invoice_date,
 	if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr) as order_nbr,
@@ -23,8 +25,16 @@ select p.*,
 		'|',
 		if(payable_type='seller order',lfo.lo3_order_nbr,lo.lo3_order_nbr),
 		p.payable_type,
-		if(payable_type='seller order',loi.lo_foid,lo.lo_oid),
-		ifnull(loi.product_name,' '),
+		if(
+			payable_type='seller order',
+			loi.lo_foid,
+			if(
+				payable_type='service fee',
+				d.domain_id,
+				lo.lo_oid
+			)
+		),
+		if(payable_type='service fee',d.name,ifnull(loi.product_name,' ')),
 		ifnull(loi.qty_ordered,' '),
 		ifnull(loi.seller_name,' '),
 		ifnull(loi.seller_org_id,' '),
@@ -101,6 +111,7 @@ from payables p
 	left join lo_order_deliveries lod on (loi.lodeliv_id=lod.lodeliv_id)
 	left join lo_order lo on (lo.lo_oid=if(payable_type='delivery fee',p.parent_obj_id,loi.lo_oid))
 	left join lo_fulfillment_order lfo on (lfo.lo_foid=loi.lo_foid)	
+	left join domains d on (d.domain_id=p.parent_obj_id)
 	group by p.payable_id
 ;
 
@@ -123,6 +134,7 @@ select count(payable_id) from v_payables;
 CREATE or replace VIEW v_payments AS 
 select 
 	pv.payment_id,
+	group_concat(p3.payable_type) as payable_type,
 	group_concat(UNIX_TIMESTAMP(lo3.order_date)  SEPARATOR '|') as order_date,
 	p3.from_org_id,
 	o1.name as from_org_name,
@@ -150,21 +162,31 @@ select
 			group_concat(
 				concat_ws(
 					'|',
-					if(p1.payable_type='seller order',lfo1.lo3_order_nbr,lo1.lo3_order_nbr),
+					if(payable_type='seller order',lfo1.lo3_order_nbr,lo1.lo3_order_nbr),
 					p1.payable_type,
-					if(payable_type='seller order',loi1.lo_foid,loi1.lo_oid),
-					loi1.product_name,
-					loi1.qty_ordered,
-					loi1.seller_name,
-					loi1.seller_org_id,
+					if(
+						p1.payable_type='seller order',
+						loi1.lo_foid,
+						if(
+							p1.payable_type='service fee',
+							d1.domain_id,
+							lo1.lo_oid
+						)
+					),
+					if(p1.payable_type='service fee',d1.name,ifnull(loi1.product_name,' ')),
+					ifnull(loi1.qty_ordered,' '),
+					ifnull(loi1.seller_name,' '),
+					ifnull(loi1.seller_org_id,' '),
 					UNIX_TIMESTAMP(lo1.order_date)
-				) SEPARATOR '$$'
+				)
+				SEPARATOR '$$'
 			)
 			from payables p1 
 			inner join x_payables_payments xpp1 on p1.payable_id = xpp1.payable_id
-			left join lo_order_line_item loi1 on (loi1.lo_liid=p1.parent_obj_id)
-			left join lo_order lo1 on (lo1.lo_oid=loi1.lo_oid)
+				left join lo_order_line_item loi1 on (loi1.lo_liid=p1.parent_obj_id)
+			left join lo_order lo1 on (lo1.lo_oid=if(p1.payable_type='delivery fee',p1.parent_obj_id,loi1.lo_oid))
 			left join lo_fulfillment_order lfo1 on (lfo1.lo_foid=loi1.lo_foid)
+			left join domains d1 on (d1.domain_id=p1.parent_obj_id)
 			
 			where pv.payment_id=xpp1.payment_id
 
@@ -182,9 +204,13 @@ select
 			)
 			from payables p2 
 			inner join x_payables_payments xpp2 on p2.payable_id = xpp2.payable_id
+			
+		
+			
 			left join lo_order_line_item loi2 on (loi2.lo_liid=p2.parent_obj_id)
-			left join lo_order lo2 on (lo2.lo_oid=loi2.lo_oid)
+			left join lo_order lo2 on (lo2.lo_oid=if(p2.payable_type='delivery fee',p2.parent_obj_id,loi2.lo_oid))
 			left join lo_fulfillment_order lfo2 on (lfo2.lo_foid=loi2.lo_foid)
+			left join domains d2 on (d2.domain_id=p2.parent_obj_id)
 			
 			where pv.payment_id=xpp2.payment_id
 
