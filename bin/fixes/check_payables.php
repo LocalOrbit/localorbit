@@ -66,18 +66,16 @@ else
 
 
 
-if($config['to-org-id'] != 0)
-	$sql .= ' and p.to_org_id='.$config['to-org-id'].' ';
-if($config['to-org-id'] != 0)
-	$sql .= ' and p.to_org_id='.$config['to-org-id'].' ';
-if($config['from-org-id'] != 0)
-	$sql .= ' and p.from_org_id='.$config['from-org-id'].' ';
-if($config['domain-ids'] != 0)
+if($config['to-org-ids'] !== 0)
+	$sql .= ' and p.to_org_id in ('.$config['to-org-ids'].') ';
+if($config['from-org-ids'] !== 0)
+	$sql .= ' and p.from_org_id in ('.$config['from-org-ids'].') ';
+if($config['domain-ids'] !== 0)
 	$sql .= ' and lo.domain_id in ('.$config['domain-ids'].') ';
-if($config['start-lo-oid'] != 0)
+if($config['start-lo-oid'] !== 0)
 	$sql .= ' and lo.lo_oid >= '.$config['start-lo-oid'].' ';
 
-if($config['payable-types'] != "'delivery fee'")
+if($config['payable-types'] !== "'delivery fee'")
 	$sql .= ' group by concat_ws(\' \',p.payable_type,p.parent_obj_id,p.from_org_id,p.to_org_id) ';
 
 if($config['report-sql'] == 1)	echo("\n$sql\n\n");
