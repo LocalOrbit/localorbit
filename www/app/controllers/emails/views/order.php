@@ -12,6 +12,12 @@ $values = array(
 	'logo'=>'<img src="http://'.$core->view[7].image('logo-email',$core->view[6]).'" />',
 );
 
+//get order_id for use in email
+$order_nbr = explode("-", $values['order_nbr']);
+$values['order_id'] = intval($order_nbr[3]);
+
+
+
 #core::log('email values: '.print_r($values,true));
 
 $body  = $this->email_start();
@@ -93,14 +99,14 @@ if(count($mm_emails) > 0)
 	$body .= $this->handle_source($core->session['i18n']['email:order_mm_notification'],$values);
 	$body .= $this->footer();
 	$body .= $this->email_end();
-	
+
 	$this->send_email(
-		'New order on '.$values['hubname'],
-		implode(',',$mm_emails),
-		$body,
-		array(),
-		$core->config['mailer']['From'],
-		$values['hubname']
+			'New order on '.$values['hubname'],
+			implode(',',$mm_emails),
+			$body,
+			array(),
+			$core->config['mailer']['From'],
+			$values['hubname']
 	);
 }
 ?>
