@@ -112,7 +112,7 @@ echo('</div>');
 			<?=core_ui::help_tip("Order cutoff", "The order cutoff is the latest time a buyer can place an order for that delivery cycle.  If your delivery starts at 6am on Wednesday and you have a 24 hour cutoff, the last time an order can be placed for delivery in the current cycle is 5:59am on Tuesday morning.")?>
 		</label>
 		<div class="controls">
-			<select name="hours_due_before"><?=core_ui::options_seq('numbers',24,6,100,'',' hours before delivery')?></select>
+			<select name="hours_due_before"><?=core_ui::options_seq('numbers',24,6,504,'',' hours before delivery')?></select>
 		</div>
 	</div>		
 	
