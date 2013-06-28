@@ -212,7 +212,7 @@ class core_model_delivery_days extends core_model_base_delivery_days
 				# if this # is less than the current timestamp, then you're good to order for this week.
 				# not, take this number and add 1 weeks' worth of seconds. thtat is the next closing time
 				# add hoursdue before to get actual delivery time. booyah.
-				if($now >= $due_time)
+				while($now >= $due_time)
 				{
 					$due_time += (604800);
 					$delivery_start_time += (604800);
