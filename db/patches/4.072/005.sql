@@ -1,5 +1,5 @@
 
-INSERT INTO migrations (tag, version_id, pt_ticket_no) VALUES ('4.072', '004', '51530693');
+INSERT INTO migrations (tag, version_id, pt_ticket_no) VALUES ('4.072', '005', '51530693');
 
 ALTER TABLE organizations ADD payment_allow_paypal_popup int DEFAULT 0;
 
