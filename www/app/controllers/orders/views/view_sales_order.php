@@ -240,7 +240,7 @@ $net_sale  = (($order['grand_total']) - $market_fee_total - $lo_fee_total - $pro
 	</tr>
 	<tr>
 		<td class="dt"><?=core_format::price($order['grand_total'],false)?></td>
-		<td class="dt"><?=core_format::price($order['grand_total'] - $order['adjusted_total'],false)?></td>
+		<td class="dt"><?=core_format::price($order['adjusted_total'],false)?></td>
 		<?if(lo3::is_market() || lo3::is_admin()){?>
 			<td class="dt"><?=core_format::price($market_fee_total,false)?></td>
 			<td class="dt"><?=core_format::price($lo_fee_total,false)?></td>
