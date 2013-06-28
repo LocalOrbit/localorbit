@@ -14,6 +14,7 @@ class PayPalApi {
 			$url .= '&USER='.$core->config['payments']['paypal']['username'];
 			$url .= '&PWD='.$core->config['payments']['paypal']['password'];
 			$url .= '&SIGNATURE='.$core->config['payments']['paypal']['signature'];
+			//$url .= '&'.urlencode($rqParamString);
 			$url .= '&'.$rqParamString;
 		
 			//echo $url;
@@ -27,6 +28,7 @@ class PayPalApi {
 			curl_setopt($ch, CURLOPT_TIMEOUT, 8);
 				
 			$response = curl_exec($ch);
+			
 			curl_close($ch);
 				
 			return $response;
@@ -62,18 +64,17 @@ class PayPalApi {
 		// Items
 		$rqParamString .= '&PAYMENTREQUEST_0_PAYMENTACTION=Sale';	
 		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.$cart_total;	
-		$rqParamString .= '&PAYMENTREQUEST_0_ITEMAMT=1';	
 		$rqParamString .= '&PAYMENTREQUEST_0_SHIPPINGAMT=0';	
 		$rqParamString .= '&PAYMENTREQUEST_0_TAXAMT=0';
 		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT=0';
 		$rqParamString .= '&PAYMENTREQUEST_0_CURRENCYCODE=USD';	
-		$rqParamString .= '&PAYMENTREQUEST_0_DESC=LO EC payment';
+		$rqParamString .= '&PAYMENTREQUEST_0_DESC='.urlencode('Local Orbit EC payment');
 		
 
-		$rqParamString .= '&L_PAYMENTREQUEST_0_NAME0=item1';
-		$rqParamString .= '&L_PAYMENTREQUEST_0_DESC0=item1 description';		
+		$rqParamString .= '&L_PAYMENTREQUEST_0_NAME0='.urlencode('misc items');	
+		$rqParamString .= '&L_PAYMENTREQUEST_0_DESC0='.urlencode('');	
 		$rqParamString .= '&L_PAYMENTREQUEST_0_AMT0='.$cart_total;	
-		$rqParamString .= '&L_PAYMENTREQUEST_0_NUMBER0=a';		
+		//$rqParamString .= '&L_PAYMENTREQUEST_0_NUMBER0=';		
 		$rqParamString .= '&L_PAYMENTREQUEST_0_QTY0=1';		
 		$rqParamString .= '&L_PAYMENTREQUEST_0_TAXAMT0=0';
 		
@@ -135,7 +136,7 @@ class PayPalApi {
 		$token = $_GET["token"];
 		core::log("PayPal API SUCCESS 1. paypal returns to page with vars in URL token = ".$token);
 		
-		// 2. confirm transaction 
+		// 2. confirm transaction
 		$rqParamString = 'METHOD=GetExpressCheckoutDetails';
 		$rqParamString .= '&TOKEN='.$token;
 				
