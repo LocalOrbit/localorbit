@@ -12,13 +12,10 @@ if($org['payment_allow_authorize'] == 1) {
 <?
 }
 
-if($org['payment_allow_paypal'] == 1) {
-?>
-	<label class="radio">
-	<input name="payment_method" type="radio" value="paypal" onclick="$('.payment_option').hide();$('#payment_paypal,#placeorder_button').fadeIn(300);"/>
-	Pay by Credit Card
-	</label>
-<?
+if($org['payment_allow_paypal_popup'] == 1)
+{
+	include($_SERVER['DOCUMENT_ROOT'].'/../bin/paypal/PayPalApi.php');
+	echo $payPalApi->getExpressCheckoutButton();
 }
 
 if($org['payment_allow_purchaseorder'] == 1) 
@@ -39,13 +36,6 @@ if($org['payment_allow_ach'] == 1)
 	Pay by ACH
 	</label>
 <?
-}
-
-
-if($org['payment_allow_paypal_popup'] == 1) 
-{
-	include($_SERVER['DOCUMENT_ROOT'].'/../bin/paypal/PayPalApi.php');	
-	echo $payPalApi->getExpressCheckoutButton();
 }
 ?>
 

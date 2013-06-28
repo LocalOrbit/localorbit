@@ -16,6 +16,8 @@ class PayPalApi {
 			$url .= '&SIGNATURE='.$core->config['payments']['paypal']['signature'];
 			$url .= '&'.$rqParamString;
 		
+			//echo $url;
+			
 			# setup curl
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
@@ -53,17 +55,34 @@ class PayPalApi {
 		// popup
 		$rqParamString .= '&RETURNURL='.$this->getDomainUrl().'/app/controllers/catalog/views/payment_paypal_express_popup.php';
 		$rqParamString .= '&CANCELURL='.$this->getDomainUrl().'/app/controllers/catalog/views/payment_paypal_express_popup_close.php';
-		$rqParamString .= '&PAYMENTREQUEST_0_PAYMENTACTION=Sale';
 		$rqParamString .= '&SOLUTIONTYPE=Sole';
+		$rqParamString .= '&L_PAYMENTTYPE0=InstantOnly';
 	
 
-		// DIGITAL
-		/* $rqParamString .= '&PAYMENTREQUEST_0_ITEMAMT='.$cart_total;
-		$rqParamString .= '&L_PAYMENTREQUEST_0_NAME0=Food';
-		$rqParamString .= '&L_PAYMENTREQUEST_0_AMT0='.$cart_total;
-		$rqParamString .= '&L_PAYMENTREQUEST_0_QTY0=1';
-		$rqParamString .= '&L_PAYMENTREQUEST_0_ITEMCATEGORY0=Digital'; */
-			
+		// Items
+		$rqParamString .= '&PAYMENTREQUEST_0_PAYMENTACTION=Sale';	
+		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.$cart_total;	
+		$rqParamString .= '&PAYMENTREQUEST_0_ITEMAMT=1';	
+		$rqParamString .= '&PAYMENTREQUEST_0_SHIPPINGAMT=0';	
+		$rqParamString .= '&PAYMENTREQUEST_0_TAXAMT=0';
+		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT=0';
+		$rqParamString .= '&PAYMENTREQUEST_0_CURRENCYCODE=USD';	
+		$rqParamString .= '&PAYMENTREQUEST_0_DESC=LO EC payment';
+		
+
+		$rqParamString .= '&L_PAYMENTREQUEST_0_NAME0=item1';
+		$rqParamString .= '&L_PAYMENTREQUEST_0_DESC0=item1 description';		
+		$rqParamString .= '&L_PAYMENTREQUEST_0_AMT0='.$cart_total;	
+		$rqParamString .= '&L_PAYMENTREQUEST_0_NUMBER0=a';		
+		$rqParamString .= '&L_PAYMENTREQUEST_0_QTY0=1';		
+		$rqParamString .= '&L_PAYMENTREQUEST_0_TAXAMT0=0';
+		
+		
+
+		//$rqParamString .= 'PAYMENTREQUEST_0_PAYMENTACTION=Sale&PAYMENTREQUEST_0_AMT=4&PAYMENTREQUEST_0_ITEMAMT=2&PAYMENTREQUEST_0_SHIPPINGAMT=1&PAYMENTREQUEST_0_TAXAMT=2&PAYMENTREQUEST_0_SHIPDISCAMT=-1&PAYMENTREQUEST_0_CURRENCYCODE=USD&PAYMENTREQUEST_0_DESC=test EC payment&L_PAYMENTREQUEST_0_NAME0=item1&L_PAYMENTREQUEST_0_DESC0=item1 description&L_PAYMENTREQUEST_0_AMT0=1&L_PAYMENTREQUEST_0_NUMBER0=a&L_PAYMENTREQUEST_0_QTY0=1&L_PAYMENTREQUEST_0_TAXAMT0=1&L_PAYMENTREQUEST_0_NAME1=item2&L_PAYMENTREQUEST_0_DESC1=item2 description&L_PAYMENTREQUEST_0_AMT1=1&L_PAYMENTREQUEST_0_NUMBER1=b&L_PAYMENTREQUEST_0_QTY1=1&L_PAYMENTREQUEST_0_TAXAMT1=1';
+		
+		//echo $rqParamString;
+		
 		
 		$button = '';
 		try {
@@ -76,6 +95,8 @@ class PayPalApi {
 				// $payalUrl = 'https://www.paypal.com/incontext?token='.$response_vars['TOKEN'];
 				
 				$paypalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token='.$response_vars['TOKEN'];
+
+		
 				
 				// popup
 				$js = 'javascript:void window.open(\''.$paypalUrl.'\',\'123654786441\',\'width=950,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
@@ -85,7 +106,7 @@ class PayPalApi {
 	
 				$button.= '<label class="radio">';				
 					$button.= '<input id="payment_method_paypal_popup" name="payment_method" type="radio" value="paypal_popup" onclick="'.$js.'"/>';
-					$button.= 'Pay by PayPal';
+					$button.= 'Pay by Credit Card';
 				$button.= '</label>';
 				//$button.= '<a href="'.$paypalUrl.'" onclick="javascript:void window.open(\''.$paypalUrl.'\',\'1371801313845\',\'width=950,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;">';
 				//$button.= '<img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" style="margin-right:7px;">';
