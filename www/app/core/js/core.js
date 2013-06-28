@@ -282,10 +282,16 @@ core.go=function(url){
 			data +='&'+newurl[1][i]+'='+newurl[1][i+1];
 		}
 	}
+		
 	data += '&_requestor_url='+encodeURIComponent(url);
-	if(_gaq)
-		_gaq.push(['_trackPageview', path]);
-	core.doRequest(path,data);
+	
+	if(core.lastUrl != ('#!'+newurl[0][0]+'-'+newurl[0][1])){
+		if(_gaq)
+			_gaq.push(['_trackPageview', path]);
+		
+		core.lastUrl = '#!'+newurl[0][0]+'-'+newurl[0][1];
+		core.doRequest(path,data);
+	}
 }
 
 core.doRequest=function(path,data){
