@@ -54,8 +54,16 @@ class PayPalApi {
 		$rqParamString .= '&RETURNURL='.$this->getDomainUrl().'/app/controllers/catalog/views/payment_paypal_express_popup.php';
 		$rqParamString .= '&CANCELURL='.$this->getDomainUrl().'/app/controllers/catalog/views/payment_paypal_express_popup_close.php';
 		$rqParamString .= '&PAYMENTREQUEST_0_PAYMENTACTION=Sale';
+		$rqParamString .= '&SOLUTIONTYPE=Sole';
 	
-				
+
+		// DIGITAL
+		/* $rqParamString .= '&PAYMENTREQUEST_0_ITEMAMT='.$cart_total;
+		$rqParamString .= '&L_PAYMENTREQUEST_0_NAME0=Food';
+		$rqParamString .= '&L_PAYMENTREQUEST_0_AMT0='.$cart_total;
+		$rqParamString .= '&L_PAYMENTREQUEST_0_QTY0=1';
+		$rqParamString .= '&L_PAYMENTREQUEST_0_ITEMCATEGORY0=Digital'; */
+			
 		
 		$button = '';
 		try {
@@ -64,23 +72,31 @@ class PayPalApi {
 			parse_str($response,$response_vars);
 	
 			if ($response_vars['ACK'] == 'Success') {
+				// DIGITAL You are not signed up to accept payment for digitally delivered goods. 
+				// $payalUrl = 'https://www.paypal.com/incontext?token='.$response_vars['TOKEN'];
+				
 				$paypalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token='.$response_vars['TOKEN'];
+				
 				// popup
 				$js = 'javascript:void window.open(\''.$paypalUrl.'\',\'123654786441\',\'width=950,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
 				
 				// inline
 				//$js = "window.location='".$paypalUrl."';";
 	
-				$button.= '<input id="payment_method_paypal_popup" name="payment_method" type="radio" value="paypal_popup" onclick="'.$js.'"/>';
-	
+				$button.= '<label class="radio">';				
+					$button.= '<input id="payment_method_paypal_popup" name="payment_method" type="radio" value="paypal_popup" onclick="'.$js.'"/>';
+					$button.= 'Pay by PayPal';
+				$button.= '</label>';
 				//$button.= '<a href="'.$paypalUrl.'" onclick="javascript:void window.open(\''.$paypalUrl.'\',\'1371801313845\',\'width=950,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;">';
-				$button.= '<img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" style="margin-right:7px;">';
+				//$button.= '<img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" style="margin-right:7px;">';
 				//$button.= '</a>';
 			} else {
 				$button = 'Error with Paypal: '.$response_vars['L_SHORTMESSAGE0'];
+				$button = 'Error with Paypal: '.$response_vars['L_LONGMESSAGE0'];
 			}
 		} catch (Exception $e) {
 			$button = 'Error with Paypal: '.$response_vars['L_SHORTMESSAGE0'];
+			$button = 'Error with Paypal: '.$response_vars['L_LONGMESSAGE0'];
 		}
 	
 		return $button;
@@ -124,6 +140,8 @@ class PayPalApi {
 			$rqParamString .= '&PAYERID='.$payerID;
 			$rqParamString .= '&PAYMENTREQUEST_0_AMT='.$cart_total;
 			$rqParamString .= '&PAYMENTREQUEST_0_PAYMENTACTION=Sale';
+			
+			
 			
 			$response = $this->getPaypalApiRS($rqParamString);
 			parse_str($response,$response_vars);
@@ -191,11 +209,18 @@ Paypal
 	https://www.paypal.com/webapps/customerprofile/summary.view
 	vavuljohn
 	1j2o3h4n
+	
+	RAGANERICKSON
+	gr0wnl0cally
+
 	Express Checkout as popup
 	https://paypalmanager.paypal.com/reskinning.do?reskinExternalUrlServiceKey=paypal&reskinSection=profile&reskinRelativeUrl=cgi-bin/webscr?cmd=_additional-payment-integration
 	https://developer.paypal.com/webapps/developer/docs/classic/express-checkout/integration-guide/ECGettingStarted/
 	
-	
+Customize Buyer Experience
+	https://cms.paypal.com/us/cgi-bin/marketingweb?cmd=_render-content&content_ID=acct_setup/Buyer_Experience_EC&fli=true
+
+
 API
 	Endpoint 	api.sandbox.paypal.com
 	Client 		ID Afvd9hDXcR8FFEkr1XYXQFQPNppS-ONHBkSiT_v2c9XNibtUOulEQzGzZOXQ
@@ -213,6 +238,7 @@ Payment Page setttings
 	
 	
 Adaptive Payments (nice popup)
+	http://paypal.github.io/ ***************
 	https://developer.paypal.com/webapps/developer/docs/classic/adaptive-payments/integration-guide/APIntro/	
 		section "Setting Up Web Pages to Invoke the Embedded Payment Flow Using a Lightbox"
 	https://developer.paypal.com/webapps/developer/docs/classic/adaptive-payments/gs_AdaptivePayments/	

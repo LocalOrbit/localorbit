@@ -8,6 +8,7 @@ $paymethods = 0;
 $paymethods += intval($org['payment_allow_authorize']);
 $paymethods += intval($org['payment_allow_ach']);
 $paymethods += intval($org['payment_allow_paypal']);
+$paymethods += intval($org['payment_allow_paypal_popup']);
 $paymethods += intval($org['payment_allow_purchaseorder']);
 
 # if they've got more than one, show a radio selector
