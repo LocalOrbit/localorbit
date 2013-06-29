@@ -15,6 +15,11 @@ $values = array(
 
 #core::log('email values: '.print_r($values,true));
 
+//get order_id for use in email
+$order_nbr = explode("-", $values['order_nbr']);
+$values['lo_foid'] = intval($order_nbr[3]);
+
+
 $body  = $this->email_start();
 
 

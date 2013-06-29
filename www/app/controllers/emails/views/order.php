@@ -14,7 +14,7 @@ $values = array(
 
 //get order_id for use in email
 $order_nbr = explode("-", $values['order_nbr']);
-$values['order_id'] = intval($order_nbr[3]);
+$values['lo_oid'] = intval($order_nbr[3]);
 
 
 
