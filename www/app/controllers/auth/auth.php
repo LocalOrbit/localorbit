@@ -117,7 +117,6 @@ class core_controller_auth extends core_controller
 		
 
 			$core->session['org_id']     = $user['org_id'];
-			$core->session['login_note_viewed']     = $user['login_note_viewed'];
 			$core->session['is_active']  = $user['is_active'];
 			$core->session['org_is_active']  = $user['org_is_active'];
 			$core->session['org_name']   = $user['name'];
