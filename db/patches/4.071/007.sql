@@ -17,7 +17,7 @@ WHERE label ='email:order_seller';
 
 
 UPDATE phrases
-SET default_value = '<span>{logo}&nbsp;&nbsp;<span><h2>Order #: <a href="http://{hostname}/app.php#!orders-view_sales_order--lo_oid-{lo_oid}">LO #: {order_nbr}</a></h2></span></span>
+SET default_value = '<span>{logo}&nbsp;&nbsp;<span><h2>Order #: <a href="http://{hostname}/app.php#!orders-view_order--lo_oid-{lo_oid}">LO #: {order_nbr}</a></h2></span></span>
 <br>&nbsp;<br>
 Hello!<br>&nbsp;<br>
 Thank you for your order through {hubname}!. <br>
