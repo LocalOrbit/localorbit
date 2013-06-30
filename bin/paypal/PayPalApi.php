@@ -208,23 +208,9 @@ class PayPalApi {
 
 $payPalApi = new PayPalApi();
 
-
-// paypal_express_checkout_success.php
-//
 /* 
-
-call GetExpressCheckoutDetails 
-	get token
-call DoExpressCheckoutPayment
-	get &ACK=Success
-	get token
-call DoExpressCheckoutPayment 
-	dbase &PAYMENTREQUEST_0_TRANSACTIONID=043144440L487742J
-
 Apps
 	https://developer.paypal.com/webapps/developer/applications/myapps#account/createApps
-
-
 		<a href="http://google.com" onclick="javascript:void window.open('http://google.com','1371801313845','width=400,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');return false;">Pop-up Window</a>
 		
 Paypal
@@ -234,11 +220,11 @@ Paypal
 	
 	RAGANERICKSON
 	gr0wnl0cally
-
-	Express Checkout as popup
-	https://paypalmanager.paypal.com/reskinning.do?reskinExternalUrlServiceKey=paypal&reskinSection=profile&reskinRelativeUrl=cgi-bin/webscr?cmd=_additional-payment-integration
-	https://developer.paypal.com/webapps/developer/docs/classic/express-checkout/integration-guide/ECGettingStarted/
 	
+https://www.paypal.com/us/cgi-bin/webscr?cmd=_flow&SESSION=phzKC4vWlAp3Kql4K_lT8Er6g9JTIwzTLUgmaK_A44vgU-MwewRbDAE8tNS&dispatch=5885d80a13c0db1f8e263663d3faee8d4e181b3aff599f99a338772351021e7d
+	RAGANERICKSON
+	gr0wnl0cally
+
 Customize Buyer Experience
 	https://cms.paypal.com/us/cgi-bin/marketingweb?cmd=_render-content&content_ID=acct_setup/Buyer_Experience_EC&fli=true
 
@@ -247,7 +233,11 @@ API
 	Endpoint 	api.sandbox.paypal.com
 	Client 		ID Afvd9hDXcR8FFEkr1XYXQFQPNppS-ONHBkSiT_v2c9XNibtUOulEQzGzZOXQ
 	Secret 		EPvhehDAv8oqCXDDObNrPHiCPmSkfzOqX4ggB330VPizjidOQB4mEIBc-Rmp
-
+	
+Express Checkout as popup
+	https://paypalmanager.paypal.com/reskinning.do?reskinExternalUrlServiceKey=paypal&reskinSection=profile&reskinRelativeUrl=cgi-bin/webscr?cmd=_additional-payment-integration
+	https://developer.paypal.com/webapps/developer/docs/classic/express-checkout/integration-guide/ECGettingStarted/
+	
 
 Test accounts
 	https://developer.paypal.com/webapps/developer/applications/accounts
