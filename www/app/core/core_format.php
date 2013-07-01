@@ -111,6 +111,28 @@ class core_format
 		$output = str_replace("\r",'',$output);
 		return $output;
 	}
+	
+	public static function fix_unix_date_range($start,$end)
+	{
+		global $core;
+		//$trace = "fix_unix_dates ";
+		$fields = func_get_args();
+		
+		
+		if(isset($core->data[$start]))
+		{
+			#core::log('start date sent: '.strtotime($core->data[$start]));
+			$core->data[$start] =  date("U",strtotime($core->data[$start].'T00:00:00+00:00'));
+			$core->data[$start]  -= intval($core->session['time_offset']);
+		}
+		if(isset($core->data[$end]))
+		{
+			#core::log('end date sent: '.strtotime($core->data[$end]));
+			$core->data[$end] =  date("U",strtotime($core->data[$end].'T00:00:00+00:00'));
+			$core->data[$end]  -= intval($core->session['time_offset']);
+			$core->data[$end] +=  86399;
+		}
+	}
 
 	public static function fix_unix_dates()
 	{
