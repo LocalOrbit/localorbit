@@ -20,45 +20,13 @@ if($core->data['format'] == 'csv')
 		
 	}
 	
-	$v_payments = new core_collection('
-		select 
-			p.payable_type,
-			p.amount as payable_amount,xpp.amount as amount_paid,py.amount as total_payment,
-			
-			p.from_org_id,o1.name as from_org_name,
-			p.to_org_id,o2.name as to_org_name,
-			
-			py.payment_id,py.creation_date as payment_date,py.ref_nbr,py.payment_method,
-			
-			lo.lo3_order_nbr as buyer_order_nbr,
-			lfo.lo3_order_nbr as seller_order_nbr,
-			
-			CASE payable_type
-				WHEN \'buyer order\' then concat(loi.product_name,\' (\',loi.qty_ordered,\')\')
-				WHEN \'seller order\' then concat(loi.product_name,\' (\',loi.qty_ordered,\')\')
-				WHEN \'hub fees\' then concat(loi.product_name,\' (\',loi.qty_ordered,\')\')
-				WHEN \'lo fees\' then concat(loi.product_name,\' (\',loi.qty_ordered,\')\')
-				WHEN \'delivery fee\' then \'\'
-				WHEN \'service fee\' then d.name
-			END as payable_info
-			
-		from payables p
-		inner join x_payables_payments xpp on (xpp.payable_id=p.payable_id)
-		inner join payments py on (xpp.payment_id=py.payment_id)
-		inner join organizations o1 on (o1.org_id=p.from_org_id)
-		inner join organizations o2 on (o2.org_id=p.to_org_id)
-		left join domains d on (d.domain_id=p.domain_id)
-		left join lo_order_line_item loi on (p.parent_obj_id=loi.lo_liid and loi.ldstat_id<>1)
-		left join lo_order lo on (if(p.payable_type=\'delivery fee\',p.parent_obj_id,loi.lo_oid)=lo.lo_oid and lo.ldstat_id<>1)
-		left join lo_fulfillment_order lfo on (loi.lo_foid=lfo.lo_foid and lfo.ldstat_id<>1)
-		where p.payable_id>0
-	');
+	$v_payments = new core_collection('select * from v_payments_export');
 	$v_payments->add_formatter('format_payable_info');
 	$v_payments->add_formatter('csv_formatter');
 	
 	$offset = 0;
 	$payments = new core_datatable('payments','payments/payment_history',$v_payments);
-	payments__add_standard_filters($payments,'transactions',true);
+	payments__add_standard_filters($payments,'transactions');
 	$payments->add(new core_datacolumn('payment_date','Date Paid',true,'15%',			'{payment_date}','{payment_date}','{payment_date}'));
 	if(lo3::is_admin() || lo3::is_market())
 	{
