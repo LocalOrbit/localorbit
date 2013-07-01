@@ -3,7 +3,7 @@ global $core;
 $core->session['payment___markets_filter'] = null;
 $core->session['payment___orgs_filter'] = null;
 
-function payments__add_standard_filters($datatable,$tab='')
+function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_columns=false)
 {
 	global $core;
 	
@@ -51,8 +51,16 @@ function payments__add_standard_filters($datatable,$tab='')
 	
 	// payment history has different columns payment_date vs creation_date
 	if (in_array($tab,array('transactions'))) {
-		$datatable->add_filter(new core_datatable_filter($tab.'createdat1','payment_date','>','unix_date',null));
-		$datatable->add_filter(new core_datatable_filter($tab.'createdat2','payment_date','<','unix_date',null));
+		if($do_orig_payment_columns)
+		{
+			$datatable->add_filter(new core_datatable_filter($tab.'createdat1','py.creation_date','>','unix_date',null));
+			$datatable->add_filter(new core_datatable_filter($tab.'createdat2','py.creation_date','<','unix_date',null));
+		}
+		else
+		{
+			$datatable->add_filter(new core_datatable_filter($tab.'createdat1','payment_date','>','unix_date',null));
+			$datatable->add_filter(new core_datatable_filter($tab.'createdat2','payment_date','<','unix_date',null));
+		}
 	} else {
 		$datatable->add_filter(new core_datatable_filter($tab.'createdat1','creation_date','>','unix_date',null));
 		$datatable->add_filter(new core_datatable_filter($tab.'createdat2','creation_date','<','unix_date',null));
