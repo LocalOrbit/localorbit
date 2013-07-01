@@ -16,7 +16,7 @@ function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_colu
 	$date_verb    = (in_array($datatable->name,array('payables','systemwide','receivables')))?'Invoiced':'Paid';
 	
 	// convert to unix dates	
-	core_format::fix_unix_dates(
+	core_format::fix_unix_date_range(
 		$datatable->name.'__filter__'.$tab.'createdat1',
 		$datatable->name.'__filter__'.$tab.'createdat2'
 	);
@@ -40,8 +40,9 @@ function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_colu
 
 
 	// default dates
-	$start = $core->config['time'] - (86400*30);
-	$end = $core->config['time'];
+	$base = mktime(0, 0, 0, date('n'), date('j') + 1);
+	$start =  $base - (86400*30) - intval($core->session['time_offset']);
+	$end = $base - intval($core->session['time_offset']) + 86399;
 	if(!isset($core->data[$datatable->name.'__filter__'.$tab.'createdat1'])){ 
 		$core->data[$datatable->name.'__filter__'.$tab.'createdat1'] = $start; 
 	}
