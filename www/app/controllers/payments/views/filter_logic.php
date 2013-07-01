@@ -40,7 +40,7 @@ function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_colu
 
 
 	// default dates
-	$base = mktime(0, 0, 0, date('n'), date('j') + 1);
+	$base = mktime(0, 0, 0, date('n'), date('j'));
 	$start =  $base - (86400*30) - intval($core->session['time_offset']);
 	$end = $base - intval($core->session['time_offset']) + 86399;
 	if(!isset($core->data[$datatable->name.'__filter__'.$tab.'createdat1'])){ 
