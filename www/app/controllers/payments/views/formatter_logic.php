@@ -1,5 +1,138 @@
 <?php
 
+function new_format_payable_info($data)
+{
+	global $core;
+	
+	# amount owed:
+	$data['amount_owed'] = core_format::price($data['amount'] - $data['amount_paid'],false);
+	
+	$data['creation_date'] = core_format::date($data['creation_date']);
+	
+	$info = explode('|',$data['payable_info']);
+	$info['buyer_lo3_order_nbr'] = $info[0];
+	$info['seller_lo3_order_nbr'] = $info[1];
+	$info['descriptor'] = $info[2];
+	$info['descriptor_id'] = $info[3];
+	$info['descriptor_data_0'] = $info[4];
+	$info['descriptor_data_1'] = $info[5];
+	
+	# format the direction info
+	$data['direction_html'] = '';
+	$data['direction'] = '';
+	
+	$data['direction_html'] .= 'From: <a href="#!organizations-edit--org_id-'.$data['from_org_id'].'">';
+	$data['direction'] .= 'From: ';
+	
+	$data['direction_html'] .= $data['from_org_name'];
+	$data['direction'] .= $data['from_org_name'];
+	
+	$data['direction_html'] .= '</a><br />';
+	$data['direction'] .= ' / ';
+	
+	$data['direction_html'] .= 'To: <a href="#!organizations-edit--org_id-'.$data['to_org_id'].'">';
+	$data['direction'] .= 'To: ';
+	
+	$data['direction_html'] .= $data['to_org_name'];
+	$data['direction'] .= $data['to_org_name'];
+	
+	$data['direction_html'] .= '</a>';
+	
+	
+	# handle ref nbr
+	switch($data['payable_type'])
+	{
+		case 'hub fees':
+		case 'lo fees':
+		case 'delivery fee':
+		case 'buyer order':
+			$data['ref_nbr_nohtml'] = $data['buyer_lo3_order_nbr'];
+			$data['ref_nbr_html'] = '<a href="app.php#!orders-view_order--lo_oid-'.$data['lo_oid'].'" onclick="core.go(this.href);">';
+			$data['ref_nbr_html'] .= $data['buyer_lo3_order_nbr'].'</a>';
+			
+			
+			if(lo3::is_market() || lo3::is_admin())
+			{
+				$data['ref_nbr_nohtml'] = ' / ' .$data['seller_lo3_order_nbr'];
+				$data['ref_nbr_html'] .= '<br /><a href="app.php#!orders-view_sales_order--lo_foid-'.$data['lo_foid'].'" onclick="core.go(this.href);">';
+				$data['ref_nbr_html'] .= $data['seller_lo3_order_nbr'].'</a>';
+			}
+			$data['ref_nbr_nohtml'] = ' / ' .$data['buyer_org_name'];
+			
+			$data['ref_nbr_html'] .= '<br />';
+			if(lo3::is_market() || lo3::is_admin())
+				$data['ref_nbr_html'] .= '<a href="app.php#!organizations-edit--org_id-'.$data['buyer_org_id'].'" onclick="core.go(this.href);">';
+			$data['ref_nbr_html'] .= $data['buyer_org_name'];
+			if(lo3::is_market() || lo3::is_admin())
+				$data['ref_nbr_html'] .= '</a>';
+			
+			break;
+		case 'seller order':
+			if(lo3::is_market() || lo3::is_admin())
+			{
+				$data['ref_nbr_nohtml'] = $data['buyer_lo3_order_nbr'];
+				$data['ref_nbr_html'] = '<a href="app.php#!orders-view_order--lo_oid-'.$data['lo_oid'].'" onclick="core.go(this.href);">';
+				$data['ref_nbr_html'] .= $data['buyer_lo3_order_nbr'].'</a>';
+				
+				
+				if(lo3::is_market() || lo3::is_admin())
+				{
+					$data['ref_nbr_nohtml'] = ' / ' .$data['seller_lo3_order_nbr'];
+					$data['ref_nbr_html'] .= '<br /><a href="app.php#!orders-view_sales_order--lo_foid-'.$data['lo_foid'].'" onclick="core.go(this.href);">';
+					$data['ref_nbr_html'] .= $data['seller_lo3_order_nbr'].'</a>';
+				}
+				$data['ref_nbr_nohtml'] = ' / ' .$data['buyer_org_name'];
+				
+				$data['ref_nbr_html'] .= '<br />';
+				if(lo3::is_market() || lo3::is_admin())
+					$data['ref_nbr_html'] .= '<a href="app.php#!organizations-edit--org_id-'.$data['buyer_org_id'].'" onclick="core.go(this.href);">';
+				$data['ref_nbr_html'] .= $data['buyer_org_name'];
+				if(lo3::is_market() || lo3::is_admin())
+					$data['ref_nbr_html'] .= '</a>';
+			}
+			else
+			{
+				$data['ref_nbr_nohtml'] = $data['seller_lo3_order_nbr'];
+				$data['ref_nbr_html'] = '<a href="app.php#!orders-view_sales_order--lo_foid-'.$data['lo_foid'].'" onclick="core.go(this.href);">';
+				$data['ref_nbr_html'] .= $data['seller_lo3_order_nbr'].'</a>';
+			}
+			
+			
+			break;
+		case 'service fee':
+			$data['ref_nbr_nohtml'] = 'Service fee for '.$info['descriptor'];
+			$data['ref_nbr_html'] = 'Service fee for <a href="app.php#!market-edit--domain_id-'.$info['descriptor_id'].'" onclick="core.go(this.href);">'.$info['descriptor'].'</a>';
+			break;
+	}
+	
+	# handle dsecription
+	$data['description'] = '';
+	$data['description_html'] = '';
+	switch($data['payable_type'])
+	{
+		case 'hub fees':
+		case 'lo fees':
+		case 'buyer order':
+		case 'seller order':
+			$data['description_html'] .= '<a href="app.php#!products-edit--prod_id-'.$info['descriptor_id'].'" onclick="core.go(this.href);">';
+			
+			$data['description'] .= $info['descriptor'].' ('.$info['descriptor_data_0'].')';
+			$data['description_html'] .= $info['descriptor'].' ('.$info['descriptor_data_0'].')';
+			
+			$data['description_html'] .= '</a>';
+			
+			break;
+		
+		case 'delivery fee':
+		case 'service fee':
+			$data['description'] = '';
+			$data['description_html'] = '';
+			break;
+	}
+	
+	return $data;
+}
+
 function format_payable_info($data)
 {
 	#core::log(print_r($data,true));
@@ -88,6 +221,7 @@ function format_payable_info($data)
 	
 	# format the Description column
 	$html = '';
+	$nohtml = '';
 	$count = 0;
 	$expander_rendered = false;
 	foreach($payable_info as $info)
@@ -95,6 +229,7 @@ function format_payable_info($data)
 		if($info[1] == 'service fee')
 		{
 			$html .= 'Service fee for <a href="app.php#!market-edit--domain_id-'.$info[2].'">'.$info[3].'</a>';
+			#$nohtml .= 'Service fee for '.$info[3]
 		}
 		else if($info[1] == 'delivery fee')
 		{
