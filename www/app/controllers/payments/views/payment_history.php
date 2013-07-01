@@ -24,7 +24,34 @@ if($core->data['format'] == 'csv')
 	
 	
 	# handle the free form search query
-	$sql = 'select * from v_payments_export where payment_id > 0 ';
+	$sql = 'select * from v_payments_export ';
+	if(lo3::is_admin())
+	{
+		$sql .= '
+			where (from_org_id='.$core->session['org_id'].' or to_org_id='.$core->session['org_id'].')
+		';
+	}
+	else if(lo3::is_market())
+	{
+		
+		$sql .= '
+			where payment_id in (
+				select payment_id
+				from x_payables_payments
+				where payable_id in (
+					select payable_id
+					from payables
+					where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).')
+				)
+			)
+		';
+	}
+	else
+	{
+		$sql .= '
+			where (from_org_id='.$core->session['org_id'].' or to_org_id='.$core->session['org_id'].')
+		';
+	}
 	if(isset($core->data['payments__filter__payable_info']) and trim($core->data['payments__filter__payable_info']) != '')
 	{
 		$sql .= ' and payment_id in (
@@ -32,6 +59,11 @@ if($core->data['format'] == 'csv')
 			from v_payments vp
 			where vp.payment_id > 0
 		';
+
+
+		
+
+
 		$terms = explode(' ',$core->data['payments__filter__payable_info']);
 		foreach($terms as $term)
 		{
