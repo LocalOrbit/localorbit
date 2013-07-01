@@ -20,7 +20,32 @@ if($core->data['format'] == 'csv')
 		
 	}
 	
-	$v_payments = new core_collection('select * from v_payments_export');
+	core::log(print_r($core->data,true));
+	
+	
+	# handle the free form search query
+	$sql = 'select * from v_payments_export where payment_id > 0 ';
+	if(isset($core->data['payments__filter__payable_info']) and trim($core->data['payments__filter__payable_info']) != '')
+	{
+		$sql .= ' and payment_id in (
+			select vp.payment_id
+			from v_payments vp
+			where vp.payment_id > 0
+		';
+		$terms = explode(' ',$core->data['payments__filter__payable_info']);
+		foreach($terms as $term)
+		{
+			$term = trim($term);
+			if($term != '')
+			{
+				$sql .= ' and vp.searchable_fields like \'%'.$term.'%\' ';
+			}
+		}
+			
+		$sql .= ' ) ';
+		$core->data['payments__filter__payable_info'] = '';
+	}
+	$v_payments = new core_collection($sql);
 	$v_payments->add_formatter('format_payable_info');
 	$v_payments->add_formatter('csv_formatter');
 	
