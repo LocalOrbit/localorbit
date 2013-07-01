@@ -121,7 +121,11 @@ class core_format
 		foreach($fields as $field)
 		{
 			if(isset($core->data[$field]))
-				$core->data[$field] =  date("U",strtotime($core->data[$field].'T12:00:00+00:00'));
+			{
+				$core->data[$field] =  date("U",strtotime($core->data[$field].'T00:00:00+00:00'));
+				$core->data[$field]  += intval($core->session['time_offset']);
+			}
+			
 		}
 		return;
 		
