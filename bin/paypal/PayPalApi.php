@@ -38,28 +38,32 @@ class PayPalApi {
 		}
 	}
 
-	
+
 	public function getExpressCheckoutButton() {
+		// popup
+		$js = 'javascript:void window.open(\'/app/controllers/catalog/views/payment_paypal_express_popup.php\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
+
+		$button.= '<label class="radio">';
+			$button.= '<input id="payment_method_paypal_popup" name="payment_method" type="radio" value="paypal_popup" onclick="'.$js.'"/>';
+			$button.= 'Pay by Credit Card';
+		$button.= '</label>';
+		return $button;
+	}
+	
+	public function getExpressCheckoutRedirect() {
 		global $core;
 	
 		$cart_total = $this->getCartTotal();
 	
 		$rqParamString = 'METHOD=SetExpressCheckout';
 		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.$cart_total;
-		$rqParamString .= '&PAYMENTREQUEST_0_CURRENCYCODE=USD';
+		$rqParamString .= '&PAYMENTREQUEST_0_CURRENCYCODE=USD';	
 	
-		///$rqParamString .= '&RETURNURL='.$this->getDomainUrl().'/test.php';
-		//$rqParamString .= '&CANCELURL='.$this->getDomainUrl().'/test.php';
-		
-		// inline  *change checkout.php page too
-		//$rqParamString .= '&RETURNURL='.$this->getDomainUrl().'/app/controllers/catalog/views/payment_paypal_express_inline.php';
-
 		// popup
-		$rqParamString .= '&RETURNURL='.$this->getDomainUrl().'/app/controllers/catalog/views/payment_paypal_express_popup.php';
+		$rqParamString .= '&RETURNURL='.$this->getDomainUrl().'/app/controllers/catalog/views/payment_paypal_express_popup_return.php';
 		$rqParamString .= '&CANCELURL='.$this->getDomainUrl().'/app/controllers/catalog/views/payment_paypal_express_popup_close.php';
 		$rqParamString .= '&SOLUTIONTYPE=Sole';
-		$rqParamString .= '&L_PAYMENTTYPE0=InstantOnly';
-	
+		$rqParamString .= '&L_PAYMENTTYPE0=InstantOnly';	
 
 		// Items
 		$rqParamString .= '&PAYMENTREQUEST_0_PAYMENTACTION=Sale';	
@@ -70,21 +74,14 @@ class PayPalApi {
 		$rqParamString .= '&PAYMENTREQUEST_0_CURRENCYCODE=USD';	
 		$rqParamString .= '&PAYMENTREQUEST_0_DESC='.urlencode('Local Orbit EC payment');
 		
-
-		$rqParamString .= '&L_PAYMENTREQUEST_0_NAME0='.urlencode('misc items');	
+		
+		$rqParamString .= '&L_PAYMENTREQUEST_0_NAME0='.urlencode('items');	
 		$rqParamString .= '&L_PAYMENTREQUEST_0_DESC0='.urlencode('');	
 		$rqParamString .= '&L_PAYMENTREQUEST_0_AMT0='.$cart_total;	
 		//$rqParamString .= '&L_PAYMENTREQUEST_0_NUMBER0=';		
 		$rqParamString .= '&L_PAYMENTREQUEST_0_QTY0=1';		
 		$rqParamString .= '&L_PAYMENTREQUEST_0_TAXAMT0=0';
-		
-		
-
-		//$rqParamString .= 'PAYMENTREQUEST_0_PAYMENTACTION=Sale&PAYMENTREQUEST_0_AMT=4&PAYMENTREQUEST_0_ITEMAMT=2&PAYMENTREQUEST_0_SHIPPINGAMT=1&PAYMENTREQUEST_0_TAXAMT=2&PAYMENTREQUEST_0_SHIPDISCAMT=-1&PAYMENTREQUEST_0_CURRENCYCODE=USD&PAYMENTREQUEST_0_DESC=test EC payment&L_PAYMENTREQUEST_0_NAME0=item1&L_PAYMENTREQUEST_0_DESC0=item1 description&L_PAYMENTREQUEST_0_AMT0=1&L_PAYMENTREQUEST_0_NUMBER0=a&L_PAYMENTREQUEST_0_QTY0=1&L_PAYMENTREQUEST_0_TAXAMT0=1&L_PAYMENTREQUEST_0_NAME1=item2&L_PAYMENTREQUEST_0_DESC1=item2 description&L_PAYMENTREQUEST_0_AMT1=1&L_PAYMENTREQUEST_0_NUMBER1=b&L_PAYMENTREQUEST_0_QTY1=1&L_PAYMENTREQUEST_0_TAXAMT1=1';
-		
-		//echo $rqParamString;
-		
-		
+			
 		$button = '';
 		try {
 			$response = $this->getPaypalApiRS($rqParamString);
@@ -96,29 +93,12 @@ class PayPalApi {
 				// $payalUrl = 'https://www.paypal.com/incontext?token='.$response_vars['TOKEN'];
 				
 				$paypalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token='.$response_vars['TOKEN'];
-
-		
-				
-				// popup
-				$js = 'javascript:void window.open(\''.$paypalUrl.'\',\'123654786441\',\'width=950,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
-				
-				// inline
-				//$js = "window.location='".$paypalUrl."';";
-	
-				$button.= '<label class="radio">';				
-					$button.= '<input id="payment_method_paypal_popup" name="payment_method" type="radio" value="paypal_popup" onclick="'.$js.'"/>';
-					$button.= 'Pay by Credit Card';
-				$button.= '</label>';
-				//$button.= '<a href="'.$paypalUrl.'" onclick="javascript:void window.open(\''.$paypalUrl.'\',\'1371801313845\',\'width=950,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;">';
-				//$button.= '<img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" style="margin-right:7px;">';
-				//$button.= '</a>';
+				return $paypalUrl;				
 			} else {
-				$button = 'Error with Paypal: '.$response_vars['L_SHORTMESSAGE0'];
-				$button = 'Error with Paypal: '.$response_vars['L_LONGMESSAGE0'];
+				throw new Exception("PayPal Error: ".$response_vars['L_SHORTMESSAGE0']);
 			}
 		} catch (Exception $e) {
-			$button = 'Error with Paypal: '.$response_vars['L_SHORTMESSAGE0'];
-			$button = 'Error with Paypal: '.$response_vars['L_LONGMESSAGE0'];
+			throw new Exception("PayPal Error: ".$response_vars['L_SHORTMESSAGE0']);
 		}
 	
 		return $button;
@@ -176,7 +156,7 @@ class PayPalApi {
 				
 			}
 		} else {
-			throw ("PayPal Error: ".$response_vars['L_SHORTMESSAGE0']);
+			throw new Exception("PayPal Error: ".$response_vars['L_SHORTMESSAGE0']);
 		}
 	}
 	

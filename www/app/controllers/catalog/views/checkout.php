@@ -144,7 +144,6 @@ $cart->arrange_by_next_delivery();
 			<hr class="span6 hr_pad_bottom"/>			
 		</div>
 		
-		
 		<!-- Payment Method -->
 		<?
 			$this->checkout_payment_info();

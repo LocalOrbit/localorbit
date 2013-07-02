@@ -1,4 +1,4 @@
-<div id="payment_selector_div">
+<div id="payment_selector_div" style="display:none;">
 <h3 id="payment_selector"><i class="icon-coins"/>Method</h3>
 <br />
 <?
@@ -38,42 +38,12 @@ if($org['payment_allow_ach'] == 1)
 <?
 }
 ?>
-
-
-
-
-
-
-<!-- 
-this fails  {"append":[],"replace":[],"js":"Y29yZS5jaGVja291dC5oaWRlU3VibWl0UHJvZ3J
-<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" target="PPDGFrame">
-	<input id="type" type="hidden" name="cmd" value="_express-checkout">
-	<input id="token" type="hidden" name="token" value="EC-9YC63326WS826921V">	
-	<input type="submit" id="submitBtn" value="Pay with PayPal"> 	
-</form>
-
-<script>
-	var dgFlow = new PAYPAL.apps.DGFlow({ trigger: 'submitBtn' });
-</script>
-
--->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
+
+<style>
+	// hack until core::js('window.setTimeout("core.checkout.requestUpdatedFees();",1000);'); is fixed
+	function showPaymentSelector() {
+		$("#payment_selector_div").show();
+	}
+	core::js('window.setTimeout("showPaymentSelector()",2000);');
+</style>
