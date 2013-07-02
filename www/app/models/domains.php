@@ -62,7 +62,7 @@ class core_model_domains extends core_model_base_domains
 	{
 		global $core;
 		$sql = '
-			select o.*,address,city,postal_code,latitude,longitude,dcr.code
+			select distinct o.*,address,city,postal_code,latitude,longitude,dcr.code
 			from organizations o
 			left join organizations_to_domains otd on otd.org_id = o.org_id
 			left join addresses a on (a.org_id=o.org_id and a.default_shipping=1 and latitude is not null and latitude<>0)
