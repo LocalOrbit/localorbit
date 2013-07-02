@@ -285,11 +285,11 @@ core.go=function(url){
 		
 	data += '&_requestor_url='+encodeURIComponent(url);
 	
-	if(core.lastUrl != ('#!'+newurl[0][0]+'-'+newurl[0][1])){
+	if(core.lastUrl != ('#!'+newurl[0][0]+'-'+newurl[0][1] + '--'+data)){
 		if(_gaq)
 			_gaq.push(['_trackPageview', path]);
 		
-		core.lastUrl = '#!'+newurl[0][0]+'-'+newurl[0][1];
+		core.lastUrl = '#!'+newurl[0][0]+'-'+newurl[0][1] + '--'+data;
 		core.doRequest(path,data);
 	}
 }
