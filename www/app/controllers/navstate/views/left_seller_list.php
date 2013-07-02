@@ -34,7 +34,7 @@ foreach($sellers as $seller)
 {
 	?>
 	<li>
-		<a href="#!sellers-oursellers--org_id-<?=$seller['org_id']?>">
+		<a href="#!sellers-oursellers--org_id-<?=$seller['org_id']?>" onclick="core.go(this.href);">
 			<?=$seller['name']?>
 		</a>
 	</li>
