@@ -68,7 +68,29 @@ $cart->arrange_by_next_delivery();
 		<div class="row">
 			<hr class="span6 tight"/>
 		</div>
+		
+		
+		
+		<a href="#!catalog-checkout" onclick="core.checkout.openPayPal()">ttttttttt</a>
+		
 		<?php
+
+		/* echo "<pre>";
+			//var_dump($cart);
+		echo "</pre>";
+		foreach($cart->items as $item) {
+			echo $item['product_name'];
+			echo $item['qty_ordered'];
+			echo core_format::price($item['unit_price']);
+			missing discount ?
+						
+			echo "<br>";
+		} */
+		
+		
+		
+		
+			
 			$count = 0;
 			#echo('Cart id: '.$cart['lo_oid']);
 			foreach($cart->items_by_delivery as $delivery_opt_key=>$items) {

@@ -321,6 +321,7 @@ class core_controller_catalog extends core_controller
 		}
 
 		# save the new order totals to the db
+		$cart['discount'] =  $discount;
 		$cart['adjusted_total'] =  $delivery_fee + $discount;
 		$cart['grand_total']    = $cart['item_total'] + $cart['adjusted_total'];
 		$cart->save();
