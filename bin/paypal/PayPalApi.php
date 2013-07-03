@@ -41,8 +41,8 @@ class PayPalApi {
 
 	public function getExpressCheckoutButton() {
 		// popup
-		$js = 'javascript:void window.open(\'/app/controllers/catalog/views/payment_paypal_express_popup.php\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
-
+		#$js = 'javascript:void window.open(\'/app/controllers/catalog/views/payment_paypal_express_popup.php\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
+		$js = "javascript:core.doRequest('/catalog/payment_paypal_express_popup');";
 		$button.= '<label class="radio">';
 			$button.= '<input id="payment_method_paypal_popup" name="payment_method" type="radio" value="paypal_popup" onclick="'.$js.'"/>';
 			$button.= 'Pay by Credit Card';
