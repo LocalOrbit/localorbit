@@ -81,7 +81,7 @@ $this->overview($tab_count,$money_out_count);
 if($receivables)
 {
 	$tab_count++;
-	$this->review_deliver_orders($tab_count);
+	$this->receivables($tab_count);
 }
 if($payables)
 {

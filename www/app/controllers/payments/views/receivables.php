@@ -1,55 +1,55 @@
 <?php
-$invoices = core::model('v_invoices')
-	->add_custom_field('DATEDIFF(CURRENT_TIMESTAMP,due_date) as age')
-	->collection()
-	->filter('to_org_id' ,'=',$core->session['org_id'])
-	->filter('amount_due', '>', 0);
-	
 
+$v_payables = core::model('v_payables_4071')->collection();
+$v_payables->add_formatter('new_format_payable_info');
 
+if(lo3::is_admin())
+{
+}
+else if(lo3::is_market())
+{
+	$v_payables->filter('to_org_id','in',array(1,$core->session['org_id']));
+	$v_payables->filter('domain_id','in',$core->session['domains_by_orgtype_id'][2]);
+}
+else
+{
+	$v_payables->filter('to_org_id','=',$core->session['org_id']);
+}
 
+$receivables = new core_datatable('receivables','payments/receivables',$v_payables);
+$receivables->add(new core_datacolumn('ref_nbr_sortable','Ref Nbr',true,'10%','{ref_nbr_html}','{ref_nbr_nohtml}','{ref_nbr_nohtml}'));
 
+$receivables->add(new core_datacolumn('description_sortable','Description',true,'10%','{description_html}','{description_nohtml}','{description_nohtml}'));
 
-$invoices->add_formatter('payable_info');
-$invoices->add_formatter('payment_link_formatter');
-$invoices->add_formatter('payment_direction_formatter');
-$invoices->add_formatter('payments__age_formatter');
 if(lo3::is_market() || lo3::is_admin())
-	$invoices->add_formatter('lfo_accordion');
-	
-$invoices_table = new core_datatable('receivables','payments/receivables',$invoices);
-$invoices_table = payments__add_standard_filters($invoices_table,'invoices');
-$invoices_table->add(new core_datacolumn('invoice_id','Reference',true,'17%',			'{description_html}','{description}','{description}'));
-$invoices_table->add(new core_datacolumn('from_org_name','Description',false,'46%','{direction_info}','{from_org_name}','{from_org_name}'));
-$invoices_table->add(new core_datacolumn('creation_date','Invoice Date',true,'12%','{creation_date}','{creation_date}','{creation_date}'));
-$invoices_table->add(new core_datacolumn('due_date','Due Date',true,'12%','{due_date}','{due_date}','{due_date}'));
-$invoices_table->add(new core_datacolumn('aging','Aging',true,'10%','{age}','{age}','{age}'));
-$invoices_table->add(new core_datacolumn('amount_due','Amount Due',true,'14%',			'{amount_due}','{amount_due}','{amount_due}'));
+	$receivables->add(new core_datacolumn('concat_ws(\' \',from_org_name,to_org_name)','From/To',true,'10%','{direction_html}','{direction}','{direction}'));
 
-if(lo3::is_admin() || lo3::is_market())
-	$invoices_table->add(new core_datacolumn('invoice_id',array(core_ui::check_all('invoices'),'',''),false,'4%',core_ui::check_all('invoices','invoice_id'),' ',' '));
-$invoices_table->columns[2]->autoformat='date-long-wrapped';
-$invoices_table->columns[3]->autoformat='date-short';
-$invoices_table->sort_direction='desc';
+
+$receivables->add(new core_datacolumn('creation_date','Order Date',true,'10%','{creation_date}','{creation_date}','{creation_date}'));
+
+$receivables->add(new core_datacolumn('(amount - amount_paid)','Amount Owed',true,'10%','{amount_owed}','{amount_owed}','{amount_owed}'));
+
+$receivables->add(new core_datacolumn('delivery_status','Delivery',true,'10%','{delivery_status}','{delivery_status}','{delivery_status}'));
+$receivables->add(new core_datacolumn('buyer_payment_status','Buyer Pmt',true,'10%','{buyer_payment_status}','{buyer_payment_status}','{buyer_payment_status}'));
+$receivables->add(new core_datacolumn('seller_payment_status','Seller Pmt',true,'10%','{seller_payment_status}','{seller_payment_status}','{seller_payment_status}'));
+
 
 
 ?>
-
-<div class="tabarea tab-pane" id="paymentstabs-a<?=$core->view[0]?>">
-	<div id="all_all_invoices">
-		<?
-		$invoices_table->render();
-		
-		if(lo3::is_admin() || lo3::is_market())
-		{
+<div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
+	<div id="receivables_list">
+		<?php
+		$receivables->render();
 		?>
-		<div class="pull-right" id="create_payment_form_toggler">
-			<input type="button" onclick="core.payments.enterInvoices('invoices');" class="btn btn-info" value="Enter Receipts" />
+		<div class="pull-right">
+			<input type="button" onclick="core.payments.markItemsDelivered();" class="btn" value="<?=$core->i18n('button:payments:mark_items_delivered')?>" />
+			<?if(lo3::is_admin() || lo3::is_market()){?>
+				<input type="button" onclick="core.payments.makePayments('receivables');" class="btn btn-info" value="<?=$core->i18n('button:payments:enter_offline_payments')?>" />
+				<input type="button" onclick="core.payments.sendInvoices();" class="btn btn-primary" value="<?=$core->i18n('button:payments:send_invoices')?>" />
+			<?}?>
 		</div>
-		<?}?>
-		<br />&nbsp;<br />
 	</div>
-	<div id="invoices_pay_area" style="display: none;">
+	<div id="receivables_actions" style="display: none;">
 		
 	</div>
 </div>
