@@ -11,14 +11,16 @@ $config = array(
 	'do-ach'=>0,
 	'domain-ids'=>0,
 	'exclude-domain-ids'=>'2,3,25,26,6',
+	'exclude-to-org-ids'=>'1076,706,613,1324',
+	'exclude-from-org-ids'=>'1076,706,613,1324',
 	'from-org-ids'=>0,
 	'to-org-ids'=>0,
-	'exclude-payable-ids'=>0,
+	'exclude-payable-ids'=>'1349,1387',
 	'exclude-payable-types'=>0,
 	'report-payable-ids'=>0,
 	'report-payable-details'=>0,
 	'report-sql'=>0,
-	'payable-start-date'=>0,
+	'payable-start-date'=>"2013-05-01",
 );
 
 
@@ -116,6 +118,18 @@ if($config['exclude-domain-ids'] != 0)
 {
 	$sql .= ' and p.domain_id not in ('.$config['exclude-domain-ids'].') ';
 }
+if($config['exclude-domain-ids'] != 0)
+{
+	$sql .= ' and p.domain_id not in ('.$config['exclude-domain-ids'].') ';
+}
+if($config['exclude-from-org-ids'] != 0)
+{
+	$sql .= ' and p.from_org_id not in ('.$config['exclude-from-org-ids'].') ';
+}
+if($config['exclude-to-org-ids'] != 0)
+{
+	$sql .= ' and p.to_org_id not in ('.$config['exclude-to-org-ids'].') ';
+}
 if($config['from-org-ids'] != 0)
 {
 	$sql .= ' and p.from_org_id in ('.$config['from-org-ids'].') ';
@@ -182,6 +196,14 @@ if($config['domain-ids'] != 0)
 if($config['exclude-domain-ids'] != 0)
 {
 	$sql .= ' and p.domain_id not in ('.$config['exclude-domain-ids'].') ';
+}
+if($config['exclude-from-org-ids'] != 0)
+{
+	$sql .= ' and p.from_org_id not in ('.$config['exclude-from-org-ids'].') ';
+}
+if($config['exclude-to-org-ids'] != 0)
+{
+	$sql .= ' and p.to_org_id not in ('.$config['exclude-to-org-ids'].') ';
 }
 if($config['from-org-ids'] != 0)
 {
