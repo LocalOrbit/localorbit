@@ -90,8 +90,14 @@ class core_model_domains extends core_model_base_domains
 		/*
 		# normal users only see sellers for which there are public
 		# prices, or have org-specific prices for them on this hub.
+		* 
+		* MIKE NOTE: erika had me disabled this bit of logic due to ticket
+		* 52819241. I left the logic in place since I think there's a good 
+		* chance we'll be reenabling this at some point in the future,
+		* and simply added the false to the conditional. Apologies to 
+		* future developers.
 		*/
-		if(lo3::is_customer())
+		if(lo3::is_customer() && false)
 		{
 			# apply product rules
 			$sql .= '
