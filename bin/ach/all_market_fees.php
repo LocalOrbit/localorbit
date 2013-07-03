@@ -165,14 +165,16 @@ foreach($payments as $payment)
 $sql = "
 	select 
 		sum(p.amount - p.amount_paid) as amount,p.domain_id,d.name as domain_name,
-		group_concat(p.payable_info separator '$$') as payable_info,
+		group_concat(concat(lfo.lo3_order_nbr,'|',p.payable_info) separator '$$') as payable_info,
 		p.from_org_id,p.to_org_id,p.from_org_name,p.to_org_name,
 		group_concat(p.payable_id separator ',') as payable_ids,
+		
 		group_concat((p.amount - p.amount_paid) separator ',') as amounts,
 		d.opm_id
 	from v_payables p
 	inner join domains d on (p.domain_id=d.domain_id)
 	inner join lo_order_line_item loi on (p.parent_obj_id=loi.lo_liid)
+	inner join lo_fulfillment_order lfo on (lfo.lo_foid=loi.lo_foid)
 	inner join lo_order lo on (loi.lo_oid=lo.lo_oid)
 	
 	where p.payable_type in ('hub fees','lo fees')

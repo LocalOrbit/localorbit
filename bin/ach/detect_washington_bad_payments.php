@@ -55,6 +55,7 @@ foreach($payables as $payable)
 			'broken_total'=>0,
 			'correct_total'=>0,
 			'items'=>array(),
+			'payables'=>array(),
 		);
 	}
 	
@@ -63,6 +64,7 @@ foreach($payables as $payable)
 	$sellers[$payable['to_org_id']]['broken_total'] += $payable['amount'];
 	$sellers[$payable['to_org_id']]['correct_total'] += round($payable['row_adjusted_total'] * ((100 - $fee) / 100),2);
 	$sellers[$payable['to_org_id']]['items'][$payable['parent_obj_id']] = round((($payable['row_adjusted_total'] * ((100 - $fee) / 100)) - $payable['amount']),2);
+	$sellers[$payable['to_org_id']]['payables'][] = $payable;
 }
 
 $found = false;

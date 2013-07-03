@@ -18,6 +18,7 @@ $config = array(
 	'exclude-liids'=>0,
 	'start-from-date'=>'2013-04-04 00:00:00',
 	'start-delivery-date'=>'2013-05-01 00:00',
+	'amount-operator'=>'>',
 );
 
 array_shift($argv);
@@ -43,7 +44,7 @@ inner join lo_order_item_status_changes loisc on (loisc.lo_liid = loi.lo_liid an
 inner join lo_order lo on (lo.lo_oid=loi.lo_oid)
 inner join domains d on (d.domain_id=lo.domain_id and d.seller_payer = 'hub')
 left join organization_payment_methods opm on (d.opm_id=opm.opm_id )
-where (p.amount - p.amount_paid) > 0
+where (p.amount - p.amount_paid) ".$config['amount-operator']." 0
 and p.payable_type = 'seller order'
 and p.from_org_id=1
 and loi.lbps_id=2
@@ -113,7 +114,7 @@ foreach($payments as $payment)
 		foreach($payables as $payable)
 		{
 			
-			echo("\t".$payable['item_date']." ".$payable['payable_info'].' '.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_due']),2)))."\n");
+			echo("\t".$payable['item_date']." ".$payable['payable_info'].' '.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_paid']),2)))."\n");
 		}
 	}
 	else
