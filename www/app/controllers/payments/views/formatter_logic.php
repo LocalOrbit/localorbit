@@ -5,9 +5,9 @@ function new_format_payable_info($data)
 	global $core;
 	
 	# amount owed:
-	$data['amount_owed'] = core_format::price($data['amount'] - $data['amount_paid'],false);
+	$data['amount_owed'] = core_format::price($data['amount_owed'],false);
 	
-	$data['creation_date'] = core_format::date($data['creation_date']);
+	$data['creation_date'] = core_format::date($data['creation_date'],'short');
 	
 	$info = explode('|',$data['payable_info']);
 	$info['buyer_lo3_order_nbr'] = $info[0];
@@ -128,6 +128,14 @@ function new_format_payable_info($data)
 			$data['description'] = '';
 			$data['description_html'] = '';
 			break;
+	}
+	
+	# misc cleanup on delivery/buyer/seller for service fees
+	if($data['payable_type'] == 'service fee')
+	{
+		$data['buyer_payment_status'] = 'NA';
+		$data['seller_payment_status'] = 'NA';
+		$data['delivery_status'] = 'NA';
 	}
 	
 	return $data;
