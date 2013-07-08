@@ -246,8 +246,10 @@ else if(lo3::is_seller())
 		$receivables->render();
 		?>
 		<div class="pull-right">
+			<?if(lo3::is_admin() || (lo3::is_market() && !lo3::is_fully_managed()) || lo3::is_seller()){?>
 			<input type="button" onclick="core.payments.markItemsDelivered();" class="btn" value="<?=$core->i18n('button:payments:mark_items_delivered')?>" />
-			<?if(lo3::is_admin() || lo3::is_market()){?>
+			<?}?>
+			<?if(lo3::is_admin() || (lo3::is_market() && !lo3::is_fully_managed())){?>
 				<input type="button" onclick="core.payments.makePayments('receivables');" class="btn btn-info" value="<?=$core->i18n('button:payments:enter_offline_payments')?>" />
 				<input type="button" onclick="core.payments.sendInvoices();" class="btn btn-primary" value="<?=$core->i18n('button:payments:send_invoices')?>" />
 			<?}?>
