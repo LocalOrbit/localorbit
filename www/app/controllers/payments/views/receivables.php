@@ -17,9 +17,9 @@ else
 }
 
 $receivables = new core_datatable('receivables','payments/receivables',$v_payables);
-$receivables->add(new core_datacolumn('ref_nbr_sortable','Reference',true,'10%','{ref_nbr_html}','{ref_nbr_nohtml}','{ref_nbr_nohtml}'));
+$receivables->add(new core_datacolumn('ref_nbr_sortable','Reference',true,'20%','{ref_nbr_html}','{ref_nbr_nohtml}','{ref_nbr_nohtml}'));
 
-$receivables->add(new core_datacolumn('description_sortable','Description',true,'10%','{description_html}','{description_nohtml}','{description_nohtml}'));
+$receivables->add(new core_datacolumn('description_sortable','Description',true,'20%','{description_html}','{description_nohtml}','{description_nohtml}'));
 
 if(lo3::is_market() || lo3::is_admin())
 	$receivables->add(new core_datacolumn('concat_ws(\' \',from_org_name,to_org_name)','From/To',true,'10%','{direction_html}','{direction}','{direction}'));
