@@ -61,10 +61,14 @@ function new_format_payable_info($data)
 			
 			$data['ref_nbr_html'] .= '<br />';
 			if(lo3::is_market() || lo3::is_admin())
+			{
 				$data['ref_nbr_html'] .= '<a href="app.php#!organizations-edit--org_id-'.$data['buyer_org_id'].'" onclick="core.go(this.href);">';
+			}
 			$data['ref_nbr_html'] .= $data['buyer_org_name'];
 			if(lo3::is_market() || lo3::is_admin())
+			{
 				$data['ref_nbr_html'] .= '</a>';
+			}
 			
 			break;
 		case 'seller order':
@@ -85,16 +89,32 @@ function new_format_payable_info($data)
 				
 				$data['ref_nbr_html'] .= '<br />';
 				if(lo3::is_market() || lo3::is_admin())
+				{
 					$data['ref_nbr_html'] .= '<a href="app.php#!organizations-edit--org_id-'.$data['buyer_org_id'].'" onclick="core.go(this.href);">';
+				}
 				$data['ref_nbr_html'] .= $data['buyer_org_name'];
 				if(lo3::is_market() || lo3::is_admin())
+				{
 					$data['ref_nbr_html'] .= '</a>';
+				}
+				$data['ref_nbr_html'] .= '<!--'.$data['payable_id'].'-->';
 			}
 			else
 			{
 				$data['ref_nbr_nohtml'] = $data['seller_lo3_order_nbr'];
 				$data['ref_nbr_html'] = '<a href="app.php#!orders-view_sales_order--lo_foid-'.$data['lo_foid'].'" onclick="core.go(this.href);">';
 				$data['ref_nbr_html'] .= $data['seller_lo3_order_nbr'].'</a>';
+				
+				$data['ref_nbr_html'] .= '<br />';
+				if(lo3::is_market() || lo3::is_admin())
+				{
+					$data['ref_nbr_html'] .= '<a href="app.php#!organizations-edit--org_id-'.$data['buyer_org_id'].'" onclick="core.go(this.href);">';
+				}
+				$data['ref_nbr_html'] .= $data['buyer_org_name'];
+				if(lo3::is_market() || lo3::is_admin())
+				{
+					$data['ref_nbr_html'] .= '</a>';
+				}
 			}
 			
 			
