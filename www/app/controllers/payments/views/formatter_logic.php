@@ -38,6 +38,28 @@ function new_format_payable_info($data)
 	
 	$data['direction_html'] .= '</a>';
 	
+	switch($data['payable_type'])
+	{
+		case 'buyer order':
+			$data['payable_type_displayable'] = 'Purchase Order';
+			break;
+		case 'seller order':
+			$data['payable_type_displayable'] = 'Seller Payment';
+			break;
+		case 'delivery fee':
+			$data['payable_type_displayable'] = 'Delivery Fees';
+			break;
+		case 'lo fees':
+			$data['payable_type_displayable'] = 'Transaction Fees';
+			break;
+		case 'hub fees':
+			$data['payable_type_displayable'] = 'Market Fees';
+			break;
+		case 'service fee':
+			$data['payable_type_displayable'] = 'Service Fees';
+			break;
+	}
+	
 	
 	# handle ref nbr
 	switch($data['payable_type'])
@@ -59,15 +81,11 @@ function new_format_payable_info($data)
 			}
 			$data['ref_nbr_nohtml'] = ' / ' .$data['buyer_org_name'];
 			
-			$data['ref_nbr_html'] .= '<br />';
+			
 			if(lo3::is_market() || lo3::is_admin())
 			{
-				$data['ref_nbr_html'] .= '<a href="app.php#!organizations-edit--org_id-'.$data['buyer_org_id'].'" onclick="core.go(this.href);">';
-			}
-			$data['ref_nbr_html'] .= $data['buyer_org_name'];
-			if(lo3::is_market() || lo3::is_admin())
-			{
-				$data['ref_nbr_html'] .= '</a>';
+				$data['ref_nbr_html'] .= '<br />';
+				$data['ref_nbr_html'] .= $data['payable_type_displayable'];
 			}
 			
 			break;
@@ -88,6 +106,7 @@ function new_format_payable_info($data)
 				$data['ref_nbr_nohtml'] = ' / ' .$data['buyer_org_name'];
 				
 				$data['ref_nbr_html'] .= '<br />';
+				$data['ref_nbr_html'] .= $data['payable_type_displayable'];
 				if(lo3::is_market() || lo3::is_admin())
 				{
 					$data['ref_nbr_html'] .= '<a href="app.php#!organizations-edit--org_id-'.$data['buyer_org_id'].'" onclick="core.go(this.href);">';
