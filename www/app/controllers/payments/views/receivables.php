@@ -30,8 +30,8 @@ $receivables->add(new core_datacolumn('creation_date','Order Date',true,'10%','{
 $receivables->add(new core_datacolumn('amount_owed','Amount Owed',true,'10%','{amount_owed}','{amount_owed}','{amount_owed}'));
 
 $receivables->add(new core_datacolumn('delivery_status','Delivery',true,'10%','{delivery_status}','{delivery_status}','{delivery_status}'));
-$receivables->add(new core_datacolumn('buyer_payment_status','Buyer Pmt',true,'10%','{buyer_payment_status}','{buyer_payment_status}','{buyer_payment_status}'));
-$receivables->add(new core_datacolumn('seller_payment_status','Seller Pmt',true,'10%','{seller_payment_status}','{seller_payment_status}','{seller_payment_status}'));
+$receivables->add(new core_datacolumn('buyer_payment_status','Buyer',true,'10%','{buyer_payment_status}','{buyer_payment_status}','{buyer_payment_status}'));
+$receivables->add(new core_datacolumn('seller_payment_status','Seller',true,'10%','{seller_payment_status}','{seller_payment_status}','{seller_payment_status}'));
 $receivables->add(new core_datacolumn('payable_id',array(core_ui::check_all('receivables'),'',''),false,'4%',core_ui::check_all('receivables','payable_id'),' ',' '));
 
 
