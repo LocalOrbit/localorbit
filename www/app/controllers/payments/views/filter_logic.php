@@ -494,10 +494,8 @@ function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_colu
 	return $datatable;
 }
 
-function make_filter($datatable,$field,$options,$label,$all_label)
+function make_filter($datatable,$field,$options,$label,$all_label,$label_width=49,$field_width=160)
 {
-	$label_width = 49;
-	$field_width = 160;
 	
 	# one of the filters needs to be an 'in' filter.
 	if($field == 'payment_status')
