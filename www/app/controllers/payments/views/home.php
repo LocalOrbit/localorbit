@@ -25,7 +25,7 @@ if(lo3::is_admin() || lo3::is_market())
 	if(lo3::is_admin()) {
 		$tabs[] = 'Send Invoices and Enter Receipts';
 	} else if(lo3::is_fully_managed()) {
-		$tabs[] = 'View Invoices and Enter Receipts';
+		$tabs[] = 'View Invoices';
 	} else {
 		$tabs[] = 'Send Invoices and Enter Receipts';
 	}
