@@ -144,6 +144,11 @@ function new_format_payable_info($data)
 			break;
 	}
 	
+	if($core->data['debug_payables'] == 'yes')
+	{
+		$data['ref_nbr_html'] .= '<br />Payable: '.$data['payable_id'];
+	}
+	
 	# handle dsecription
 	$data['description'] = '';
 	$data['description_html'] = '';
