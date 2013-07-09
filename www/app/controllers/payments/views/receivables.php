@@ -33,7 +33,7 @@ $receivables->add(new core_datacolumn('creation_date','Order Date',true,'10%','{
 $receivables->add(new core_datacolumn('amount_owed','Amount Owed',true,'10%','{amount_owed}','{amount_owed}','{amount_owed}'));
 
 $receivables->add(new core_datacolumn('delivery_status','Delivery',true,'10%','{delivery_status}','{delivery_status}','{delivery_status}'));
-$receivables->add(new core_datacolumn('buyer_payment_status','Buyer',true,'10%','{buyer_payment_status}','{buyer_payment_status}','{buyer_payment_status}'));
+$receivables->add(new core_datacolumn('buyer_payment_status','Buyer',true,'10%','{buyer_payment_status_html}','{buyer_payment_status}','{buyer_payment_status}'));
 $receivables->add(new core_datacolumn('seller_payment_status','Seller',true,'10%','{seller_payment_status}','{seller_payment_status}','{seller_payment_status}'));
 
 if(!lo3::is_fully_managed())
@@ -141,7 +141,7 @@ if(lo3::is_market() || lo3::is_admin())
 					'4'=>'Delivered',
 					'5'=>'Partially Delivered',
 					'6'=>'Contested',
-				),'Status','All',96,130);
+				),'Delivery','All',96,130);
 				
 			make_filter($receivables,'payable_type',array(
 				'delivery fee'=>'Delivery Fees',
