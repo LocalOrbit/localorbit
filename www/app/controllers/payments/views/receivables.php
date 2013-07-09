@@ -8,7 +8,7 @@ if(lo3::is_admin())
 }
 else if(lo3::is_market())
 {
-	$v_payables->filter('to_org_id','in',array(1,$core->session['org_id']));
+	#$v_payables->filter('to_org_id','in',array(1,$core->session['org_id']));
 	$v_payables->filter('domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 }
 else
@@ -62,7 +62,25 @@ if(!isset($core->data[$receivables->name.'__filter__receivables_createdat2'])){
 if(lo3::is_market() || lo3::is_admin())
 {
 	$from_orgs_sql  = 'select org_id as id,name from organizations where org_id in (select distinct from_org_id from payables ';
-	$to_orgs_sql    = 'select org_id as id,name from organizations where org_id in (select distinct to_org_id from payables ';
+	$to_orgs_sql    = 'select distinct org_id as id,name from organizations ';
+	if(lo3::is_admin())
+	{
+		$to_orgs_sql .= 'where org_id in (select to_org_id from payables  )';
+	}
+	else
+	{
+		$to_orgs_sql .= 'where (
+			org_id=1 or 
+			org_id in (
+				select payable_org_id 
+				from domains
+				where domain_id in (
+					'.implode(',',$core->session['domains_by_orgtype_id'][2]).'
+				)
+			)
+		)';
+	}
+	
 	$buyer_orgs_sql = 'select org_id as id,name from organizations where org_id in (
 		select org_id
 		from lo_order
@@ -73,13 +91,12 @@ if(lo3::is_market() || lo3::is_admin())
 	if(lo3::is_market())
 	{
 		$from_orgs_sql  .= ' where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).') ';
-		$to_orgs_sql  .= ' where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).') ';
 		$buyer_orgs_sql .= ' and lo_oid.domain_id ('.implode(',',$core->session['domains_by_orgtype_id'][2]).') ';
 		$markets_sql    .= ' where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).') ';
 	}
 	
 	$from_orgs_sql  .= ') order by name';
-	$to_orgs_sql    .= ') order by name';
+	$to_orgs_sql    .= ' order by name';
 	$buyer_orgs_sql .= ') order by name';
 	$markets_sql    .= ' order by name';
 	
@@ -157,7 +174,27 @@ if(lo3::is_market() || lo3::is_admin())
 		$receivables->filter_html .= '<div style="float:left; width:220px;">';
 			$receivables->filter_html .= '<h4>Organization Filters</h4>';
 			make_filter($receivables,'from_org_id',$from_orgs,'From','All Organizations',40);
-			make_filter($receivables,'to_org_id',$to_orgs,'To','All Organizations',40);
+			
+			if(lo3::is_admin())
+			{
+				make_filter($receivables,'to_org_id',$to_orgs,'To','All Organizations',40);
+			}
+			else
+			{
+				$options = array();
+				$all = '';
+				foreach($to_orgs as $to_org)
+				{
+					$all .= (($all == '')?'':',') . "'".$to_org['id']."'";
+				}
+				$options[$all] = 'All Organizations';
+				foreach($to_orgs as $to_org)
+				{
+					$options[$to_org['id']] = $to_org['name'];
+				}
+				make_filter($receivables,'to_org_id',$options,'To',null,40);
+				$v_payables->filter('to_org_id','in',$all);
+			}
 			
 
 		$receivables->filter_html .= '</div>';
