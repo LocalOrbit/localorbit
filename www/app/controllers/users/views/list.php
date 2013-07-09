@@ -51,7 +51,7 @@ else
 }
  */
 
-$col->add_formatter('enable_suspend_links');
+$col->add_formatter('v_users__enable_suspend_links');
 //$col->add_formatter('user_role_formatter');
 
 
