@@ -182,6 +182,15 @@ function new_format_payable_info($data)
 		$data['delivery_status'] = 'NA';
 	}
 	
+	if($data['payable_type'] != 'service fee' && $data['buyer_payable_due_date'] > 0 && in_array($data['lbps_id'],array(1,3,4)))
+	{
+		$data['buyer_payment_status_html'] = $data['buyer_payment_status'].'<br />Due on '.core_format::date($data['buyer_payable_due_date'],short);
+	}
+	else
+	{
+		$data['buyer_payment_status_html'] = $data['buyer_payment_status'];
+	}
+	
 	return $data;
 }
 
