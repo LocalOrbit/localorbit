@@ -42,10 +42,22 @@ if(!lo3::is_fully_managed())
 }
 
 
+$base = mktime(0, 0, 0, date('n'), date('j'));
+$start =  $base - (86400*30) - intval($core->session['time_offset']);
+$end = $base - intval($core->session['time_offset']) + 86399;
+
 core_format::fix_unix_date_range(
 	$receivables->name.'__filter__receivables_createdat1',
 	$receivables->name.'__filter__receivables_createdat2'
 );
+
+if(!isset($core->data[$receivables->name.'__filter__receivables_createdat1'])){ 
+	$core->data[$receivables->name.'__filter__receivables_createdat1'] = $start; 
+}
+if(!isset($core->data[$receivables->name.'__filter__receivables_createdat2'])){ 
+	$core->data[$receivables->name.'__filter__receivables_createdat2'] = $end; 
+}
+
 
 if(lo3::is_market() || lo3::is_admin())
 {
@@ -78,17 +90,15 @@ if(lo3::is_market() || lo3::is_admin())
 	$markets->load();
 	
 	
-	$base = mktime(0, 0, 0, date('n'), date('j'));
-	$start =  $base - (86400*30) - intval($core->session['time_offset']);
-	$end = $base - intval($core->session['time_offset']) + 86399;
+
 	
 	$receivables->filter_html .= '<div style="float:right;width:410px;">'.get_inline_message($receivables->name,330).'</div>';
 	$receivables->filter_html .= '<div style="float:left;width:490px;">';
 
 		$receivables->add_filter(new core_datatable_filter('receivables_createdat1','creation_date','>','unix_date',null));
 		$receivables->add_filter(new core_datatable_filter('receivables_createdat2','creation_date','<','unix_date',null));
-		$receivables->filter_html .= core_datatable_filter::make_date($receivables->name,'receivables_createdat1',core_format::date($start,'short'),'Invoiced from ');
-		$receivables->filter_html .= core_datatable_filter::make_date($receivables->name,'receivables_createdat2',core_format::date($end,'short'),'Invoiced to ');	
+		$receivables->filter_html .= core_datatable_filter::make_date($receivables->name,'receivables_createdat1',core_format::date($start,'short'),'Ordered from ');
+		$receivables->filter_html .= core_datatable_filter::make_date($receivables->name,'receivables_createdat2',core_format::date($end,'short'),'Ordered to ');	
 
 		$receivables->add_filter(new core_datatable_filter('payable_info','payable_info','~','search'));
 		$receivables->filter_html .= core_datatable_filter::make_text($receivables->name,'payable_info',$receivables->filter_states[$receivables->name.'__filter__payable_info'],'Search by name or ref #');
@@ -118,6 +128,12 @@ if(lo3::is_market() || lo3::is_admin())
 					'2'=>'Paid',
 					'3'=>'Partially Paid',
 			),'Seller Payment','All',96,130);
+			
+			# default this filter to value 2
+			if(!isset($core->data[$receivables->name.'__filter__lsps_id']))
+				$core->data['receivables__filter__lsps_id'] = 2;
+
+
 			
 			make_filter($receivables,'ldstat_id',array(
 					'2'=>'Pending',
@@ -179,17 +195,13 @@ else if(lo3::is_seller())
 	$markets->load();
 	
 	
-	$base = mktime(0, 0, 0, date('n'), date('j'));
-	$start =  $base - (86400*30) - intval($core->session['time_offset']);
-	$end = $base - intval($core->session['time_offset']) + 86399;
-	
 	$receivables->filter_html .= '<div style="float:right;width:410px;">'.get_inline_message($receivables->name,330).'</div>';
 	$receivables->filter_html .= '<div style="float:left;width:490px;">';
 
 	$receivables->add_filter(new core_datatable_filter('receivables_createdat1','creation_date','>','unix_date',null));
 	$receivables->add_filter(new core_datatable_filter('receivables_createdat2','creation_date','<','unix_date',null));
-	$receivables->filter_html .= core_datatable_filter::make_date($receivables->name,'receivables_createdat1',core_format::date($start,'short'),'Invoiced from ');
-	$receivables->filter_html .= core_datatable_filter::make_date($receivables->name,'receivables_createdat2',core_format::date($end,'short'),'Invoiced to ');	
+	$receivables->filter_html .= core_datatable_filter::make_date($receivables->name,'receivables_createdat1',core_format::date($start,'short'),'Ordered from ');
+	$receivables->filter_html .= core_datatable_filter::make_date($receivables->name,'receivables_createdat2',core_format::date($end,'short'),'Ordered to ');	
 
 	$receivables->add_filter(new core_datatable_filter('payable_info','payable_info','~','search'));
 	$receivables->filter_html .= core_datatable_filter::make_text($receivables->name,'payable_info',$receivables->filter_states[$receivables->name.'__filter__payable_info'],'Search by name or ref #');
@@ -197,7 +209,7 @@ else if(lo3::is_seller())
 	$receivables->filter_html .= '<br /><div class="clearfix">&nbsp;</div>';
 
 
-	$receivables->filter_html .= '<div style="float:left; width:215px;">';
+	$receivables->filter_html .= '<div style="float:left; width:225px;">';
 	
 	
 	$receivables->filter_html .= '<h4>Delivery Filters</h4>';
@@ -207,8 +219,8 @@ else if(lo3::is_seller())
 			'4'=>'Delivered',
 			'5'=>'Partially Delivered',
 			'6'=>'Contested',
-		),'Status','All',40);
-	make_filter($receivables,'buyer_org_id',$buyer_collection,'To','All Organizations',40);
+		),'Delivery','All',50);
+	make_filter($receivables,'buyer_org_id',$buyer_collection,'Buyer','All Organizations',50);
 	
 	$receivables->filter_html .= '</div>';
 	$receivables->filter_html .= '<div style="float:left; width:250px;">';
@@ -216,7 +228,7 @@ else if(lo3::is_seller())
 	if($markets->__num_rows > 1)
 	{
 		$receivables->filter_html .= '<h4>Market Filters</h4>';
-		make_filter($receivables,'domain_id',$markets,'From','All Markets',90,130);
+		make_filter($receivables,'domain_id',$markets,'Market','All Markets',90,130);
 		$receivables->filter_html .= '<br />';
 	}
 	
@@ -233,7 +245,10 @@ else if(lo3::is_seller())
 			'2'=>'Paid',
 			'3'=>'Partially Paid',
 	),'Seller Payment','All',96,130);
-	
+	# default this filter to value 2
+	if(!isset($core->data[$receivables->name.'__filter__lsps_id']))
+		$core->data['receivables__filter__lsps_id'] = 2;
+
 
 	$receivables->filter_html .= '</div>';
 	$receivables->filter_html .= '</div>';
