@@ -106,7 +106,6 @@ function new_format_payable_info($data)
 				$data['ref_nbr_nohtml'] = ' / ' .$data['buyer_org_name'];
 				
 				$data['ref_nbr_html'] .= '<br />';
-				$data['ref_nbr_html'] .= $data['payable_type_displayable'];
 				if(lo3::is_market() || lo3::is_admin())
 				{
 					$data['ref_nbr_html'] .= '<a href="app.php#!organizations-edit--org_id-'.$data['buyer_org_id'].'" onclick="core.go(this.href);">';
@@ -116,7 +115,8 @@ function new_format_payable_info($data)
 				{
 					$data['ref_nbr_html'] .= '</a>';
 				}
-				$data['ref_nbr_html'] .= '<!--'.$data['payable_id'].'-->';
+				$data['ref_nbr_html'] .= '<br />';
+				$data['ref_nbr_html'] .= $data['payable_type_displayable'];
 			}
 			else
 			{
