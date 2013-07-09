@@ -55,12 +55,8 @@ class PayPalApi {
 	
 	public function getExpressCheckoutRedirect($cart) {
 		global $core;
-	
-		$cart_total = $this->getCartTotal();
-	
+		
 		$rqParamString = 'METHOD=SetExpressCheckout';
-		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.$cart_total;
-		$rqParamString .= '&PAYMENTREQUEST_0_CURRENCYCODE=USD';	
 	
 		// popup
 		$rqParamString .= '&RETURNURL='.$this->getDomainUrl().'/app/controllers/catalog/views/payment_paypal_express_popup_return.php';
@@ -85,7 +81,6 @@ class PayPalApi {
 			$rqParamString .= '&L_PAYMENTREQUEST_0_TAXAMT'.$count.'=0';
 			$count++;
 		}
-		$total = $cart['grand_total']+$discount_total;
 		
 		$rqParamString .= '&PAYMENTREQUEST_0_PAYMENTACTION=Sale';
 		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT=0';
@@ -96,9 +91,9 @@ class PayPalApi {
 		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT='.$discount_total;
 		$rqParamString .= '&PAYMENTREQUEST_0_TAXAMT=0';
 		$rqParamString .= '&PAYMENTREQUEST_0_ITEMAMT='.$items_total;
-		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.$total;
+		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.$cart['grand_total'];
 		
-
+		core::log('paypal rqParamString: '.$rqParamString);
 		/* echo 'delivery_fee = '.$cart['delivery_fee']."<br>";
 		echo 'discount_total = '.$discount_total."<br>";
 		echo 'items_total = '.$items_total."<br>";
