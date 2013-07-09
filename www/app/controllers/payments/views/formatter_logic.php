@@ -164,7 +164,12 @@ function new_format_payable_info($data)
 			$data['description_html'] .= $info['descriptor'].' ('.$info['descriptor_data_0'].')';
 			
 			$data['description_html'] .= '</a>';
-			
+			if(lo3::is_market() || lo3::is_admin())
+			{
+				$data['description'] .= ' from '.$data['seller_name'];
+				$data['description_html'] .= ' from <a href="app.php#!organizations-edit--org_id-'.$data['seller_org_id'].'" onclick="core.go(this.href);">';
+				$data['description_html'] .= $data['seller_name'].'</a>';
+			}
 			break;
 		
 		case 'delivery fee':
