@@ -307,13 +307,13 @@ function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_colu
 					"'purchase orders'"=>'Purchase Orders',
 				),'Status','All Statuses');
 			if($do_status_pending)
-				{
-					make_filter($datatable,'pending',array(
-						'buyer_payment'=>'Buyer Payment',
-						'delivery'=>'Delivery Confirmation',
-						'transfer'=>'Payment Transfer',
-					),'Pending','All Types');
-				}
+			{
+				make_filter($datatable,'pending',array(
+					'buyer_payment'=>'Buyer Payment',
+					'delivery'=>'Delivery Confirmation',
+					'transfer'=>'Payment Transfer',
+				),'Pending','All Types');
+			}
 		}
 		
 			
@@ -498,7 +498,9 @@ function make_filter($datatable,$field,$options,$label,$all_label,$label_width=4
 {
 	
 	# one of the filters needs to be an 'in' filter.
-	if($field == 'payment_status')
+	if($field == 'to_org_id' && $datatable->name == 'receivables')
+		$datatable->add_filter(new core_datatable_filter($field,'','in'));
+	else if($field == 'payment_status')
 		$datatable->add_filter(new core_datatable_filter($field,'','in'));
 	else if($field == 'payable_type' && $datatable->name == 'payments')
 		$datatable->add_filter(new core_datatable_filter($field,'','like'));
