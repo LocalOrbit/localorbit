@@ -26,7 +26,7 @@
 		}
 	?>
 	<script>
-		window.close();
+		//window.close();
 	</script>
 </body>
 </html>

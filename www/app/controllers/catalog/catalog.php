@@ -322,6 +322,7 @@ class core_controller_catalog extends core_controller
 
 		# save the new order totals to the db
 		$cart['discount'] =  $discount;
+		$cart['delivery_fee'] =  $delivery_fee;
 		$cart['adjusted_total'] =  $delivery_fee + $discount;
 		$cart['grand_total']    = $cart['item_total'] + $cart['adjusted_total'];
 		$cart->save();
@@ -332,7 +333,7 @@ class core_controller_catalog extends core_controller
 		if($return_data == 'yes')
 		{
 			core::log('returnign for submit');
-			return $cart['adjusted_total'];
+			return $cart;
 		}
 		else
 		{

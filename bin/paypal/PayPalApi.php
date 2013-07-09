@@ -1,5 +1,5 @@
 <?php
-
+ 
 class PayPalApi {	
 	public function PayPalApi() {
 	}
@@ -41,8 +41,11 @@ class PayPalApi {
 
 	public function getExpressCheckoutButton() {
 		// popup
-		#$js = 'javascript:void window.open(\'/app/controllers/catalog/views/payment_paypal_express_popup.php\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
-		$js = "javascript:core.doRequest('/catalog/payment_paypal_express_popup');return false;";
+		//$js = 'javascript:void window.open(\'/app/controllers/catalog/views/payment_paypal_express_popup.php\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
+
+		$js = 'javascript:void window.open(\'/app/catalog/views/payment_paypal_express_popup\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
+		
+		
 		$button.= '<label class="radio">';
 			$button.= '<input id="payment_method_paypal_popup" name="payment_method" type="radio" value="paypal_popup" onclick="'.$js.'"/>';
 			$button.= 'Pay by Credit Card';
@@ -50,7 +53,7 @@ class PayPalApi {
 		return $button;
 	}
 	
-	public function getExpressCheckoutRedirect() {
+	public function getExpressCheckoutRedirect($cart) {
 		global $core;
 	
 		$cart_total = $this->getCartTotal();
@@ -65,23 +68,44 @@ class PayPalApi {
 		$rqParamString .= '&SOLUTIONTYPE=Sole';
 		$rqParamString .= '&L_PAYMENTTYPE0=InstantOnly';	
 
+		
+		
 		// Items
-		$rqParamString .= '&PAYMENTREQUEST_0_PAYMENTACTION=Sale';	
-		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.$cart_total;	
-		$rqParamString .= '&PAYMENTREQUEST_0_SHIPPINGAMT=0';	
-		$rqParamString .= '&PAYMENTREQUEST_0_TAXAMT=0';
+		$items_total = 0;
+		$discount_total = 0;
+		$count = 0;
+		foreach($cart->items as $item) {			
+			$discount_total += $item['row_adjusted_total'] - $item['row_total'] ;
+			$items_total += $item['row_total'];
+
+			$rqParamString .= '&L_PAYMENTREQUEST_0_NAME'.$count.'='.urlencode($item['product_name']);
+			$rqParamString .= '&L_PAYMENTREQUEST_0_DESC'.$count.'='.urlencode('');
+			$rqParamString .= '&L_PAYMENTREQUEST_0_AMT'.$count.'='.$item['unit_price'];
+			$rqParamString .= '&L_PAYMENTREQUEST_0_QTY'.$count.'='.$item['qty_ordered'];
+			$rqParamString .= '&L_PAYMENTREQUEST_0_TAXAMT'.$count.'=0';
+			$count++;
+		}
+		$total = $cart['grand_total']+$discount_total;
+		
+		$rqParamString .= '&PAYMENTREQUEST_0_PAYMENTACTION=Sale';
 		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT=0';
-		$rqParamString .= '&PAYMENTREQUEST_0_CURRENCYCODE=USD';	
+		$rqParamString .= '&PAYMENTREQUEST_0_CURRENCYCODE=USD';
 		$rqParamString .= '&PAYMENTREQUEST_0_DESC='.urlencode('Local Orbit EC payment');
+
+		$rqParamString .= '&PAYMENTREQUEST_0_SHIPPINGAMT='.$cart['delivery_fee'];
+		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT='.$discount_total;
+		$rqParamString .= '&PAYMENTREQUEST_0_TAXAMT=0';
+		$rqParamString .= '&PAYMENTREQUEST_0_ITEMAMT='.$items_total;
+		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.$total;
+		
+
+		/* echo 'delivery_fee = '.$cart['delivery_fee']."<br>";
+		echo 'discount_total = '.$discount_total."<br>";
+		echo 'items_total = '.$items_total."<br>";
+		echo 'grand_total = '.$total."<br>"; */
 		
 		
-		$rqParamString .= '&L_PAYMENTREQUEST_0_NAME0='.urlencode('items');	
-		$rqParamString .= '&L_PAYMENTREQUEST_0_DESC0='.urlencode('');	
-		$rqParamString .= '&L_PAYMENTREQUEST_0_AMT0='.$cart_total;	
-		//$rqParamString .= '&L_PAYMENTREQUEST_0_NUMBER0=';		
-		$rqParamString .= '&L_PAYMENTREQUEST_0_QTY0=1';		
-		$rqParamString .= '&L_PAYMENTREQUEST_0_TAXAMT0=0';
-			
+		
 		$button = '';
 		try {
 			$response = $this->getPaypalApiRS($rqParamString);
@@ -93,15 +117,16 @@ class PayPalApi {
 				// $payalUrl = 'https://www.paypal.com/incontext?token='.$response_vars['TOKEN'];
 				
 				$paypalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token='.$response_vars['TOKEN'];
-				return $paypalUrl;				
+				header ( "Location: ".$paypalUrl);
+				//return $paypalUrl;				
 			} else {
-				throw new Exception("PayPal Error: ".$response_vars['L_SHORTMESSAGE0']);
+				throw new Exception("PayPal Error: ".$response_vars['L_LONGMESSAGE0']);
 			}
 		} catch (Exception $e) {
-			throw new Exception("PayPal Error: ".$response_vars['L_SHORTMESSAGE0']);
+			throw new Exception("PayPal Error: ".$response_vars['L_LONGMESSAGE0']);
 		}
 	
-		return $button;
+		//return $button;
 	}
 
 

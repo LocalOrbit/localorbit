@@ -54,7 +54,7 @@ core::replace('full_width');
 $cart->arrange_by_next_delivery();
 ?>
 
-<!--<link href="/css/checkout.css" rel="stylesheet">-->
+
 
 <form id="checkoutForm" name="checkoutForm" class="checkout" method="post" action="app/catalog/order_confirmation">
 <div class="row">
@@ -70,27 +70,7 @@ $cart->arrange_by_next_delivery();
 		</div>
 		
 		
-		
-		<a href="#!catalog-checkout" onclick="core.checkout.openPayPal()">ttttttttt</a>
-		
 		<?php
-
-		/* echo "<pre>";
-			//var_dump($cart);
-		echo "</pre>";
-		foreach($cart->items as $item) {
-			echo $item['product_name'];
-			echo $item['qty_ordered'];
-			echo core_format::price($item['unit_price']);
-			missing discount ?
-						
-			echo "<br>";
-		} */
-		
-		
-		
-		
-			
 			$count = 0;
 			#echo('Cart id: '.$cart['lo_oid']);
 			foreach($cart->items_by_delivery as $delivery_opt_key=>$items) {
