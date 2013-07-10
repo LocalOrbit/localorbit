@@ -10,21 +10,40 @@ lo3::require_login();
 #$core->session['time_offset'] = -4 * 3600;
 
 $order = core::model('lo_fulfillment_order')
-	->autojoin('left','lo_order_deliveries','(lo_order_deliveries.lo_foid=lo_fulfillment_order.lo_foid)',array())
-	->autojoin('left','lo_order','(lo_order.lo_oid=lo_order_deliveries.lo_oid)',array('lo_order.fee_percen_lo','lo_order.fee_percen_hub','payment_method','payment_ref','lo_order.paypal_processing_fee as paypal_processing_fee','admin_notes'))
-	->autojoin('left','lo_buyer_payment_statuses','(lo_order.lbps_id=lo_buyer_payment_statuses.lbps_id)',array('buyer_payment_status'))
-	->autojoin('left','organizations','(organizations.org_id=lo_order.org_id)',array('organizations.name as buyer_org_name'))
 	->autojoin(
-	'inner',
-	'lo_delivery_statuses',
-	'(lo_fulfillment_order.ldstat_id=lo_delivery_statuses.ldstat_id)',
-	array('delivery_status')
-)->autojoin(
-	'inner',
-	'lo_seller_payment_statuses',
-	'(lo_fulfillment_order.lsps_id=lo_seller_payment_statuses.lsps_id)',
-	array('seller_payment_status')
+		'left',
+		'lo_order_line_item',
+		'(lo_order_line_item.lo_foid=lo_fulfillment_order.lo_foid)',
+		array()
+	)->autojoin(
+		'left',
+		'lo_order',
+		'(lo_order.lo_oid=lo_order_line_item.lo_oid)',
+		array('lo_order.fee_percen_lo','lo_order.fee_percen_hub','payment_method','payment_ref','lo_order.paypal_processing_fee as paypal_processing_fee','admin_notes','lo_order.lo3_order_nbr as buyer_order_nbr')
+	)->autojoin(
+		'left',
+		'lo_buyer_payment_statuses',
+		'(lo_order.lbps_id=lo_buyer_payment_statuses.lbps_id)',
+		array('buyer_payment_status')
+	)->autojoin(
+		'left',
+		'organizations',
+		'(organizations.org_id=lo_order.org_id)',
+		array('organizations.name as buyer_org_name')
+	)->autojoin(
+		'inner',
+		'lo_delivery_statuses',
+		'(lo_fulfillment_order.ldstat_id=lo_delivery_statuses.ldstat_id)',
+		array('delivery_status')
+	)->autojoin(
+		'inner',
+		'lo_seller_payment_statuses',
+		'(lo_fulfillment_order.lsps_id=lo_seller_payment_statuses.lsps_id)',
+		array('seller_payment_status')
 )->load();
+
+#core::deinit();
+#print_r($order->__data);
 
 # check the security settings for the order
 # if the order is NOT for the same org as the viewing user,
@@ -76,7 +95,7 @@ else
 
 		<h1>Order Info</h1>
 		<?=core_form::value('Order #','<b>'.$order['lo3_order_nbr'].'</b>')?>
-		<?=core_form::value('Buyer #',$order['buyer_org_name'])?>
+		<?=core_form::value('Buyer',$order['buyer_org_name'])?>
 		<?=core_form::value('Placed On',core_format::date($order['order_date'],'long'))?>
 		<? if(!lo3::is_seller()){?>
 			<?=core_form::value('Item Total',core_format::price($item_total,false))?>
