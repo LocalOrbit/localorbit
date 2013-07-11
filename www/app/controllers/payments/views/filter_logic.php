@@ -90,20 +90,25 @@ function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_colu
 	$do_payable_type   = false;
 	
 	# determine whether or not to render market filters
-	if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2]) > 1)
+	if(lo3::is_admin() || lo3::is_market())
 	{
 		# admins always get them. Market managers who manage more than one market get them
-		$do_from_market = true;
-		$do_to_market   = true;
-		
 		if(is_null($core->session['payment___markets_filter']))
 		{
 			$core->session['payment___markets_filter'] = core::model('v_payables')->get_domains_options_for_org(
 				$core->session['org_id'],
 				((lo3::is_admin())?'admin':'market')
-			);
+			)->load();
 		}
-		$market_filter = $core->session['payment___markets_filter'];
+		core::log('managing '.$core->session['payment___markets_filter']->__num_rows.' markets!!!');
+		if(lo3::is_admin() || $core->session['payment___markets_filter']->__num_rows > 1)
+		{
+			$do_from_market = true;
+			$do_to_market   = true;
+			
+			
+			$market_filter = $core->session['payment___markets_filter'];
+		}
 	}
 	else if(lo3::is_seller())
 	{
