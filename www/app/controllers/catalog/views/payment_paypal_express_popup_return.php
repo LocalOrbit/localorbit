@@ -1,6 +1,6 @@
 <?php
 include($_SERVER['DOCUMENT_ROOT'].'/../bin/paypal/PayPalApi.php');	
-core::init();
+
 	
 	try {
 		$transactionId = $payPalApi->confirmTransaction();		
