@@ -92,9 +92,21 @@ class core_model_v_payables extends core_model_base_v_payables
 				where domain_id in (
 					select domain_id 
 					from organizations_to_domains
-					where org_id ='.$org_id.'
+					where (
+						org_id in (
+							select to_org_id
+							from payables
+							where from_org_id = '.$org_id.'
+						) 
+						or org_id in (
+							select from_org_id
+							from payables
+							where to_org_id = '.$org_id.'
+						)
+					)
+					and is_home = 1
 				) or domain_id in (
-					select count(distinct domain_id) from payables where (from_org_id='.$org_id.' or to_org_id='.$org_id.')
+					select distinct domain_id from payables where (from_org_id='.$org_id.' or to_org_id='.$org_id.')
 				)
 				order by name
 			');
