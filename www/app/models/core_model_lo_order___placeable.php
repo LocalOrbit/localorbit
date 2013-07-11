@@ -370,9 +370,13 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			core::deinit();
 		}
 		#core::log(print_r($rules[$methods]->rules,true));
-		if($method == 'ach' || $method == 'paypal_popup' || $method == 'paypal' || $method == 'cash')
+		if($method == 'ach' || $method == 'paypal_popup' || $method == 'paypal')
 		{
 			$rules[$method]->validate('checkoutForm');
+			
+		}
+		if($method == 'ach' || $method == 'paypal_popup' || $method == 'paypal' || $method == 'cash')
+		{
 			$this['lbps_id'] = 2;
 		}
 		#core::log('error hold on: '.$method);
