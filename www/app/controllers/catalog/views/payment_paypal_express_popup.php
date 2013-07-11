@@ -7,10 +7,8 @@
 		$cart = $this->update_fees('yes');
 		
 		include(__DIR__.'/../../../../../bin/paypal/PayPalApi.php');
-		$paypalUrl = $payPalApi->getExpressCheckoutRedirect($cart);\
-		core::log('url: '.$paypalUrl);
+		$paypalUrl = $payPalApi->getExpressCheckoutRedirect($cart);
 		echo('<script>location.href="'.$paypalUrl.'";</script>');
-		
  
 	} catch (Exception $e) {
 		core::log('paypal error: '.$e->getMessage());
@@ -20,6 +18,7 @@
 		echo "</script>";
 	}
 	
+	// dont send back json
 	ob_end_flush();
 	exit();
 ?>
