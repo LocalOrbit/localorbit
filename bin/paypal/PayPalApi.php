@@ -59,7 +59,7 @@ class PayPalApi {
 		$rqParamString = 'METHOD=SetExpressCheckout';
 	
 		// popup
-		$rqParamString .= '&RETURNURL='.$this->getDomainUrl().'/app/controllers/catalog/views/payment_paypal_express_popup_return.php';
+		$rqParamString .= '&RETURNURL='.$this->getDomainUrl().'/app/catalog/payment_paypal_express_popup_return';
 		$rqParamString .= '&CANCELURL='.$this->getDomainUrl().'/app/controllers/catalog/views/payment_paypal_express_popup_close.php';
 		$rqParamString .= '&SOLUTIONTYPE=Sole';
 		$rqParamString .= '&L_PAYMENTTYPE0=InstantOnly';	
@@ -129,7 +129,8 @@ class PayPalApi {
 		global $core;
 
 		// HACKER CHECK - confirm amount returned is same as cart
-		$cart_total = $this->getCartTotal();
+		$cart = core::model('lo_order')->get_cart();		
+		$cart_total = $cart['grand_total'];		//return core_format::parse_price($cart['grand_total']);
 		
 		
 		// 1. paypal returns to page with vars in URL
@@ -181,18 +182,7 @@ class PayPalApi {
 	}
 	
 	
-	
-	
-	
-
-	private function getCartTotal() {
-		global $core;
 		
-		$cart = core::model('lo_order')->get_cart();
-		return core_format::parse_price($cart['grand_total']);
-	}
-	
-	
 	private function getDomainUrl() {		
 		if ($_SERVER['SERVER_PORT'] == "80") { 
 			return "http://".$_SERVER['HTTP_HOST'];
