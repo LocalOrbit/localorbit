@@ -203,6 +203,7 @@ class core_controller_catalog extends core_controller
 				$notify_discount = true;
 			}
 		}
+		$discount = 0;
 		core::log('------ done with discount code ------');
 
 		core::log('ready to calculate delivery fees');
@@ -214,6 +215,7 @@ class core_controller_catalog extends core_controller
 			$final_delivery_breakdown[$delivery_opt_key] = array();
 			foreach($items as $item)
 			{
+				$discount += $item['row_adjusted_total'] - $item['row_total'];
 				$final_delivery_breakdown[$delivery_opt_key][] = $item;
 			}
 		}
@@ -325,6 +327,11 @@ class core_controller_catalog extends core_controller
 		$cart['delivery_fee'] =  $delivery_fee;
 		$cart['adjusted_total'] =  $delivery_fee + $discount;
 		$cart['grand_total']    = $cart['item_total'] + $cart['adjusted_total'];
+		core::log('final cart info: ');
+		core::log('discount: '.$discount);
+		core::log('delivery_fee: '.$delivery_fee);
+		core::log('adjusted_total: '.($delivery_fee + $discount));
+		core::log('grand_total: '.($cart['item_total'] + $cart['adjusted_total']));
 		$cart->save();
 
 		# if this method is being called from the checkout page, send
