@@ -173,11 +173,11 @@ class PayPalApi {
 				
 				return $response_vars['PAYMENTINFO_0_TRANSACTIONID'];				
 			} else {
-				throw new Exception("PayPal Error: ".$response_vars['L_SHORTMESSAGE0']);
+				throw new Exception("PayPal Error: ".$response_vars['L_LONGMESSAGE0']);
 				
 			}
 		} else {
-			throw new Exception("PayPal Error: ".$response_vars['L_SHORTMESSAGE0']);
+			throw new Exception("PayPal Error: ".$response_vars['L_LONGMESSAGE0']);
 		}
 	}
 	

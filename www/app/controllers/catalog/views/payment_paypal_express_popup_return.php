@@ -9,6 +9,14 @@ include($_SERVER['DOCUMENT_ROOT'].'/../bin/paypal/PayPalApi.php');
 		core::deinit();
 	} catch (Exception $e) {
 		core::log($e->getMessage());
+		echo "<script>";
+			echo "window.opener.core.ui.popup('','','<strong>Error with Paypal</strong><br />".$e->getMessage()."','close');";
+			echo "window.close();";
+		echo "</script>";
 	}
+	
+	// dont send back json
+	ob_end_flush();
+	exit();
 ?>
 
