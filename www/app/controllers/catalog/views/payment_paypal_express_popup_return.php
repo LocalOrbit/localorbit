@@ -11,8 +11,4 @@ core::init();
 		core::log($e->getMessage());
 	}
 ?>
-<script>
-	
-	</script>
-</body>
-</html>
+
