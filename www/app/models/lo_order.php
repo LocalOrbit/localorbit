@@ -153,6 +153,8 @@ class core_model_lo_order extends core_model_lo_order___utility
 		global $core;
 		$this->items = core::model('lo_order_line_item');
 
+		
+		
 		# these custom fields can be used to verify the validity
 		# of the item state
 

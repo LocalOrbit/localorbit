@@ -373,7 +373,6 @@ class core_controller_catalog extends core_controller
 		core::js('$(\'#checkout_progress,#checkout_buttons\').toggle();');
 		$cart->place_order(array(
 			'paypal'=>$this->paypal_rules(),
-			'paypal_popup'=>$this->paypal_popup_rules(),
 			'authorize'=>$this->authorize_rules(),
 			'purchaseorder'=>$this->purchaseorder_rules(),
 			'ach'=>$this->ach_rules()
@@ -382,19 +381,6 @@ class core_controller_catalog extends core_controller
 	}
 
 	function paypal_rules()
-	{
-		global $core;
-		return new core_ruleset('checkoutForm',array(
-			array('type'=>'min_length','name'=>'pp_cc_number','data1'=>14,'msg'=>$core->i18n['error:payment:cc_number']),
-			array('type'=>'min_length','name'=>'pp_cvv2','data1'=>3,'msg'=>$core->i18n['error:payment:cc_cvv2']),
-			array('type'=>'min_length','name'=>'pp_first_name','data1'=>2,'msg'=>$core->i18n['error:customer:firstname']),
-			array('type'=>'min_length','name'=>'pp_last_name','data1'=>2,'msg'=>$core->i18n['error:customer:lastname']),
-			array('type'=>'min_length','name'=>'pp_street','data1'=>5,'msg'=>$core->i18n['error:address:address']),
-			array('type'=>'min_length','name'=>'pp_city','data1'=>2,'msg'=>$core->i18n['error:address:city']),
-			array('type'=>'min_length','name'=>'pp_zip','data1'=>5,'msg'=>$core->i18n['error:address:postalcode']),
-		));
-	}
-	function paypal_popup_rules()
 	{
 		global $core;
 		return new core_ruleset('checkoutForm',array(

@@ -33,7 +33,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$payment = false;
 		
 		# try to make the payment.
-		if($payment_method == 'paypal_popup' || $payment_method == 'paypal' || $payment_method == 'ACH')
+		if($payment_method == 'paypal' || $payment_method == 'ACH')
 		{
 			core::load_library('payments'); 
 		
@@ -46,8 +46,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			$payment->save();
 			
 			
-			if($payment_method == 'ACH')
-			{
+			if($payment_method == 'ACH') {
 				# if the user pays via ach,
 				$method = core::model('organization_payment_methods')->load($core->data['opm_id']);
 				$result = make_payment('P-'.str_pad($payment['payment_id'],6,'0',STR_PAD_LEFT),'Order',$payment['amount']);
@@ -68,87 +67,18 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 					core_ui::notification('ACH Failure.');
 					core::deinit();
 				}
-			}
-			
-			if($payment_method == 'paypal_popup')
-			{
+				
+			} else if($payment_method == 'paypal') {
 				core::model('events')->add_record('Paypal Transaction Success',$this['lo_oid'],0);
 				$this['amount_paid'] = $this['grand_total'];
-				$this['payment_ref'] = $core->session['paypal_popup_transaction_id'];
-				$payment['ref_nbr'] = $core->session['paypal_popup_transaction_id'];
-				core::log('paypal_popup payment success '.$core->session['paypal_popup_transaction_id']);
+				$this['payment_ref'] = $core->session['paypal_transaction_id'];
+				$payment['ref_nbr'] = $core->session['paypal_transaction_id'];
+				core::log('paypal payment success '.$core->session['paypal_transaction_id']);
 				
 				// remove var
-				unset($core->session['paypal_popup_transaction_id']);
+				unset($core->session['paypal_transaction_id']);
 			}
-			
-			if($payment_method == 'paypal')
-			{
-				# if the user pays via paypal,
-				$cleaned_pp_cc_number = ereg_replace( '[^0-9]+', '', $core->data['pp_cc_number']);
-		
-				$data = array(
-					$core->data['pp_first_name'],
-					$core->data['pp_last_name'],
-					$core->data['pp_street'],
-					$core->data['pp_city'],
-					$core->data['pp_state'],
-					$core->data['pp_zip'],
-					core_db::col('select country_id from directory_country_region where code=\''.$core->data['pp_state'].'\' and country_id in (\'US\',\'CA\');','country_id'),
-					core_format::parse_price($this['grand_total']),
-					$cleaned_pp_cc_number,
-					core_payments::get_cc_type($core->data['pp_cc_number']),
-					$core->data['pp_exp_month'].$core->data['pp_exp_year'],
-					$core->data['pp_cvv2']
-				);
-				core::log('data sent to paypal: '.print_r($data,true));
-
-				$response = core_payments::paypal_cc(
-					$core->data['pp_first_name'],
-					$core->data['pp_last_name'],
-					$core->data['pp_street_name'],
-					$core->data['pp_city'],
-					$core->data['pp_state'],
-					$core->data['pp_zip'],
-					core_db::col('select country_id from directory_country_region where code=\''.$core->data['pp_state'].'\' and country_id in (\'US\',\'CA\');','country_id'),
-					core_format::parse_price($this['grand_total']),
-					$cleaned_pp_cc_number,
-					core_payments::get_cc_type($core->data['pp_cc_number']),
-					$core->data['pp_exp_month'].$core->data['pp_exp_year'],
-					$core->data['pp_cvv2']
-				);
-
-
-				if(intval($response['success']) != 1)
-				{
-					core::log(print_r($response,true));
-					core::load_library('core_phpmailer');
-					$this->reset_order_statuses();
-					$this->wipe_payables_for_order($this['lo_oid']);
-					core_phpmailer::send_email(
-						'paypal fail',
-						'Response: '.print_r($response,true)."\n\n\n".str_replace($core->data['pp_cc_number'],'****-****-****-****',print_r($data,true)),
-						'mike@localorb.it',
-						'Mike Thorn'
-					);
-
-					core::model('events')->add_record('Paypal Transaction Failure',$this['lo_oid'],$response['ERROR_CODE'],$response['SHORT_ERROR'],$response['LONG_ERROR']);
-
-					unset($core->response['replace']['full_width']);
-					core::js('core.checkout.hideSubmitProgress();');
-					core_ui::notification('Credit Card failure. Please check your info and try again');
-					core::deinit();
-				}
-				core::model('events')->add_record('Paypal Transaction Success',$this['lo_oid'],0);
-				$this['amount_paid']  = $this['grand_total'];
-				$this['payment_ref']    = $response['TRANSACTIONID'];
-				$payment['ref_nbr']    = $response['TRANSACTIONID'];
-			}
-			$payment->save();
-			core::log('payment success');
-		}
-		else if($payment_method == 'purchaseorder')
-		{
+		} else if($payment_method == 'purchaseorder') {
 			$this['payment_method'] = 'purchaseorder';
 			$this['payment_ref']    = $core->data['po_number'];
 		}
@@ -162,7 +92,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		{
 			if($fee['applied_amount'] > 0)
 			{
-				$deliv_to_lo = ($payment_method == 'paypal_popup' || $payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
+				$deliv_to_lo = ($payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
 				
 				# create the fee from the buyer to whoever is taking the money
 				$payable = core::model('payables');
@@ -212,7 +142,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		
 		
 		
-		$buyer_pays_lo = ($payment_method == 'paypal_popup' || $payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
+		$buyer_pays_lo = ($payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
 				
 		if($payment_method != 'cash')
 		{	
@@ -245,13 +175,13 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			
 			# determine the percent the seller should receive of the tiem
 			$seller_percent = floatval($core->config['domain']['fee_percen_lo']) + floatval($core->config['domain']['fee_percen_hub']);
-			if($payment_method == 'paypal_popup' || $payment_method == 'paypal')
+			if($payment_method == 'paypal')
 				$seller_percent += $core->config['domain']['paypal_processing_fee'];
 			$seller_percent = ((100 - $seller_percent) / 100);
 			
 			
 			# determine if we need to move the money to the market to pay the seller
-			$need_transfer_to_mm = (($payment_method == 'paypal_popup' || $payment_method == 'paypal' || $payment_method == 'ACH') && $core->config['domain']['seller_payer'] == 'hub');
+			$need_transfer_to_mm = (($payment_method == 'paypal' || $payment_method == 'ACH') && $core->config['domain']['seller_payer'] == 'hub');
 			
 			# loop through the items and save payables
 			foreach($this->items as $item)
@@ -370,12 +300,12 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			core::deinit();
 		}
 		#core::log(print_r($rules[$methods]->rules,true));
-		if($method == 'ach' || $method == 'paypal_popup' || $method == 'paypal')
+		if($method == 'ach' || $method == 'paypal')
 		{
 			$rules[$method]->validate('checkoutForm');
 			
 		}
-		if($method == 'ach' || $method == 'paypal_popup' || $method == 'paypal' || $method == 'cash')
+		if($method == 'ach' || $method == 'paypal' || $method == 'cash')
 		{
 			$this['lbps_id'] = 2;
 		}
@@ -597,7 +527,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			# attach this item to the fulfillment order, set the status, continue totalling
 			$item['lo_foid'] = $fulfills[$item['seller_org_id']]['lo_foid'];
 			$item['ldstat_id'] = 2;
-			$item['lbps_id']   = ($method == 'paypal_popup' || $method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
+			$item['lbps_id']   = ($method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
 			$item['lsps_id']   = 1;
 
 			$fulfills[$item['seller_org_id']]['grand_total']    = $fulfills[$item['seller_org_id']]['grand_total']    + $item['row_adjusted_total'];
@@ -614,7 +544,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$this['fee_percen_hub']        = $core->config['domain']['fee_percen_hub'];
 		$this['paypal_processing_fee'] = $core->config['domain']['paypal_processing_fee'];
 		$this['ldstat_id'] = 2;
-		$this['lbps_id']   = ($method == 'paypal_popup' || $method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
+		$this['lbps_id']   = ($method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
 
 		$this['order_date'] = date('Y-m-d H:i:s',time());
 
@@ -696,7 +626,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$this['grand_total'] = $this['item_total'] - $adjusted_total + $final_fee_total;
 		
 		$this['adjusted_total'] = $adjusted_total;
-		$this['amount_paid']    = ($method == 'paypal_popup' || $method == 'paypal' || $method == 'ach')?$this['grand_total']:0;
+		$this['amount_paid']    = ($method == 'paypal' || $method == 'ach')?$this['grand_total']:0;
 		$this['domain_id']      = $core->config['domain']['domain_id'];
 		$this['buyer_mage_customer_id'] = $core->session['user_id'];
 		$this['payment_method'] = $method;

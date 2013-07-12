@@ -19,6 +19,5 @@
 	}
 	
 	// dont send back json
-	ob_end_flush();
 	exit();
 ?>

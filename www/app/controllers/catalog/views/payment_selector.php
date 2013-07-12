@@ -12,7 +12,7 @@ if($org['payment_allow_authorize'] == 1) {
 <?
 }
 
-if($org['payment_allow_paypal_popup'] == 1)
+if($org['payment_allow_paypal'] == 1)
 {
 	include($_SERVER['DOCUMENT_ROOT'].'/../bin/paypal/PayPalApi.php');
 	echo $payPalApi->getExpressCheckoutButton();
