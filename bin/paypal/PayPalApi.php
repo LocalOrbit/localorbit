@@ -43,7 +43,7 @@ class PayPalApi {
 		// popup
 		//$js = 'javascript:void window.open(\'/app/controllers/catalog/views/payment_paypal_express_popup.php\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
 
-		$js = 'javascript:void window.open(\'/app/catalog/payment_paypal_express_popup\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
+		$js = 'javascript:core.paypalWindow=window.open(\'/app/catalog/payment_paypal_express_popup\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
 		
 		
 		$button.= '<label class="radio">';
@@ -110,7 +110,9 @@ class PayPalApi {
 				// DIGITAL You are not signed up to accept payment for digitally delivered goods. 
 				// $payalUrl = 'https://www.paypal.com/incontext?token='.$response_vars['TOKEN'];
 				
-				$paypalUrl = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token='.$response_vars['TOKEN'];
+				$paypalUrl = 'https://www.';
+				$paypalUrl .= ($core->config['stage'] == 'production')?'':'sandbox.';
+				$paypalUrl .= 'paypal.com/cgi-bin/webscr?cmd=_express-checkout&token='.$response_vars['TOKEN'];
 				#header ( "Location: ".$paypalUrl);
 				//return $paypalUrl;				
 			} else {
