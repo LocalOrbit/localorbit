@@ -47,7 +47,7 @@ class PayPalApi {
 		
 		
 		$button.= '<label class="radio">';
-			$button.= '<input id="payment_method_paypal" name="payment_method" type="radio" value="paypal_popup" onclick="'.$js.'"/>';
+			$button.= '<input id="payment_method_paypal" name="payment_method" type="radio" value="paypal" onclick="'.$js.'"/>';
 			$button.= 'Pay by Credit Card';
 		$button.= '</label>';
 		return $button;
