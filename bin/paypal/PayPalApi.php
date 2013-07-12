@@ -83,7 +83,6 @@ class PayPalApi {
 		}
 		
 		$rqParamString .= '&PAYMENTREQUEST_0_PAYMENTACTION=Sale';
-		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT=0';
 		$rqParamString .= '&PAYMENTREQUEST_0_CURRENCYCODE=USD';
 		$rqParamString .= '&PAYMENTREQUEST_0_DESC='.urlencode('Local Orbit EC payment');
 
@@ -130,7 +129,7 @@ class PayPalApi {
 
 		// HACKER CHECK - confirm amount returned is same as cart
 		$cart = core::model('lo_order')->get_cart();		
-		$cart_total = $cart['grand_total'];		//return core_format::parse_price($cart['grand_total']);
+		$cart_total = core_format::parse_price($cart['grand_total']);		//return core_format::parse_price($cart['grand_total']);
 		
 		
 		// 1. paypal returns to page with vars in URL
@@ -173,11 +172,11 @@ class PayPalApi {
 				
 				return $response_vars['PAYMENTINFO_0_TRANSACTIONID'];				
 			} else {
-				throw new Exception("PayPal Error: ".$response_vars['L_LONGMESSAGE0']);
+				throw new Exception("PayPal Error1: ".$response_vars['L_LONGMESSAGE0']." cart total=".$cart['grand_total']);
 				
 			}
 		} else {
-			throw new Exception("PayPal Error: ".$response_vars['L_LONGMESSAGE0']);
+			throw new Exception("PayPal Error2: ".$response_vars['L_LONGMESSAGE0']." cart total=".$cart['grand_total']);
 		}
 	}
 	
