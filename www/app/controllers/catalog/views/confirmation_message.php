@@ -5,8 +5,14 @@ core::head('Order Confirmation','Order Confirmation');
 lo3::require_permission();
 lo3::require_login();
 
-$cart = $core->view[0];
-
+if(is_object($core->view[0]))
+{
+	$cart = $core->view[0];
+}
+else
+{
+	$cart = array('lo_oid'=>$core->session['last_oid']);
+}
 $order = core::model('lo_order')->load($cart['lo_oid']);
 $items = $order->get_items_by_delivery();
 $address = core::model('lo_order_address')

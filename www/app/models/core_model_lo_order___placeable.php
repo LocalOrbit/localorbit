@@ -283,7 +283,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		);
 	}
 
-	function place_order($rules)
+	function place_order($rules,$paypal_place=false)
 	{
 		global $core;
 
@@ -300,7 +300,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			core::deinit();
 		}
 		#core::log(print_r($rules[$methods]->rules,true));
-		if($method == 'ach' || $method == 'paypal')
+		if($method == 'ach' || $method == 'paypal' && $paypal_place == false)
 		{
 			$rules[$method]->validate('checkoutForm');
 			
