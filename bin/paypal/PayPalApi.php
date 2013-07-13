@@ -43,7 +43,7 @@ class PayPalApi {
 		// popup
 		//$js = 'javascript:void window.open(\'/app/controllers/catalog/views/payment_paypal_express_popup.php\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
 
-		$js = 'javascript:core.paypalWindow=window.open(\'/app/catalog/payment_paypal_express_popup\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');return false;';
+		$js = 'javascript:core.paypalWindow=window.open(\'/app/catalog/payment_paypal_express_popup\',\'123654786441\',\'width=960,height=800,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0\');$(\'#checkout_buttons\').hide();return true;';
 		
 		
 		$button.= '<label class="radio">';
