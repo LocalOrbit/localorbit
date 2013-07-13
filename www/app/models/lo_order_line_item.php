@@ -95,11 +95,13 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		#core::log('find_deliveries ' . $dd_id);
 		#exit();
 		
+		/*
 		if($core->config['domain']['feature_force_items_to_soonest_delivery'] == 1) {
 			$deliveries = array($this->delivery['dd_id'] => $deliv[$this->delivery['dd_id']]);
 			$this->dd_ids = array_keys($deliveries);
 			$this->delivery_hash = implode('-',$this->dd_ids);
 		}
+		*/
 
 		return core::model('lo_order_deliveries')->create($this['lo_oid'], $this->delivery, $deliveries);
 	}
