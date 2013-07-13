@@ -18,6 +18,7 @@
 					->collection()
 					->add_formatter('address_formatter')
 					->filter('address_id','=',$deliv['pickup_address_id'])
+					->filter('is_deleted','=',0)
 					->to_hash('address_id');
 				#print_r($address);
 				$address = $address[$deliv['pickup_address_id']][0];
