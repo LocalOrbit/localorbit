@@ -73,6 +73,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				$this['amount_paid'] = $this['grand_total'];
 				$this['payment_ref'] = $core->session['paypal_transaction_id'];
 				$payment['ref_nbr'] = $core->session['paypal_transaction_id'];
+				$payment->save();
 				core::log('paypal payment success '.$core->session['paypal_transaction_id']);
 				
 				// remove var
