@@ -2,6 +2,11 @@
 
 class core_model_lo_order___utility extends core_model_lo_order___placeable
 {
+	
+	function update_times($delivery)
+	{
+		core::log('called! '.print_r($delivery->__data,true));
+	}
 
 	function reset_order_statuses()
 	{
