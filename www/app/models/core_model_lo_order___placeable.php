@@ -548,6 +548,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$this['lbps_id']   = ($method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
 
 		$this['order_date'] = date('Y-m-d H:i:s',time());
+		$this['last_status_date'] = date('Y-m-d H:i:s',time());
 
 		# save the fulfillment order
 		foreach($fulfills as $org_id=>$fulfill)
