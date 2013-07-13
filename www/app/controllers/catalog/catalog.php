@@ -293,16 +293,19 @@ class core_controller_catalog extends core_controller
 			{
 				foreach($items as $item)
 				{
+					core::log('item: '.$item['dd_id'].' / '.$fee['dd_id']);
 					if($item['dd_id'] == $fee['dd_id'])
 					{
 						if($fee['fee_calc_type_id'] == 2 )
 						{
+							core::log('this is a fixed fee, if its currently 0, then add it to the applied amount: '.$fee['amount']);
 							# if this is a fixed amount fee,
 							if($applied_amount == 0)
 								$applied_amount += $fee['amount'];
 						}
 						else
 						{
+							core::log('this is a % fee, calc the delivery fee: '.$fee['amount']);
 							# if this is a % fee:
 							core::log('applying to item '.print_r($item,true));
 							$applied_amount += ($fee['amount'] / 100) * $item['row_total'];
