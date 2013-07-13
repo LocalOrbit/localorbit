@@ -76,7 +76,7 @@ class PayPalApi {
 
 			$rqParamString .= '&L_PAYMENTREQUEST_0_NAME'.$count.'='.urlencode($item['product_name']);
 			$rqParamString .= '&L_PAYMENTREQUEST_0_DESC'.$count.'='.urlencode('');
-			$rqParamString .= '&L_PAYMENTREQUEST_0_AMT'.$count.'='.$item['unit_price'];
+			$rqParamString .= '&L_PAYMENTREQUEST_0_AMT'.$count.'='.round($item['unit_price'],2);
 			$rqParamString .= '&L_PAYMENTREQUEST_0_QTY'.$count.'='.$item['qty_ordered'];
 			$rqParamString .= '&L_PAYMENTREQUEST_0_TAXAMT'.$count.'=0';
 			$count++;
@@ -86,11 +86,11 @@ class PayPalApi {
 		$rqParamString .= '&PAYMENTREQUEST_0_CURRENCYCODE=USD';
 		$rqParamString .= '&PAYMENTREQUEST_0_DESC='.urlencode('Local Orbit EC payment');
 
-		$rqParamString .= '&PAYMENTREQUEST_0_SHIPPINGAMT='.$cart['delivery_fee'];
-		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT='.$discount_total;
+		$rqParamString .= '&PAYMENTREQUEST_0_SHIPPINGAMT='.round($cart['delivery_fee'],2);
+		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT='.round($discount_total,2);
 		$rqParamString .= '&PAYMENTREQUEST_0_TAXAMT=0';
-		$rqParamString .= '&PAYMENTREQUEST_0_ITEMAMT='.$items_total;
-		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.$cart['grand_total'];
+		$rqParamString .= '&PAYMENTREQUEST_0_ITEMAMT='.round($items_total,2);
+		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.round($cart['grand_total'],2);
 		
 		core::log('paypal rqParamString: '.$rqParamString);
 		/* echo 'delivery_fee = '.$cart['delivery_fee']."<br>";

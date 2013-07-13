@@ -623,10 +623,10 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			select sum(applied_amount) as delivery_fees 
 			from lo_order_delivery_fees
 			where lo_oid='.$this['lo_oid'],'delivery_fees'));
-		$this['grand_total'] = $this['item_total'] - $adjusted_total + $final_fee_total;
+		$this['grand_total'] = round($this['item_total'] - $adjusted_total + $final_fee_total,2);
 		
-		$this['adjusted_total'] = $adjusted_total;
-		$this['amount_paid']    = ($method == 'paypal' || $method == 'ach')?$this['grand_total']:0;
+		$this['adjusted_total'] = round($adjusted_total,2);
+		$this['amount_paid']    = round(($method == 'paypal' || $method == 'ach')?$this['grand_total']:0,2);
 		$this['domain_id']      = $core->config['domain']['domain_id'];
 		$this['buyer_mage_customer_id'] = $core->session['user_id'];
 		$this['payment_method'] = $method;
