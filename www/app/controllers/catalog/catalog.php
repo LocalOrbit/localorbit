@@ -226,8 +226,11 @@ class core_controller_catalog extends core_controller
 		foreach($final_delivery_breakdown as $dd_id=>$items)
 		{
 			core::log('attempting to pick apart breakdown keys: '.$dd_id);
+			$dd_id = explode('_',$dd_id);
+			foreach($dd_id as $id)
+				$dd_list[] = $id;
 			#list($dd_id,$addr_id) = explode('-',$ddaddr_id);
-			$dd_list[] = $dd_id;
+			
 		}
 
 		# load a cache of all the dd_ids
