@@ -290,6 +290,7 @@ class core_controller_catalog extends core_controller
 			# we need to determine which of the items the delivery fee applies to
 			foreach($final_delivery_breakdown as $ddaddr_id=>$items)
 			{
+				core::log('breaking apart '.$ddaddr_id);
 				list($dd_id,$addr_id) = explode('-',$ddaddr_id);
 				# if this item matches, then add the fee
 				#core::log('trying to calc '.$dd_id);
