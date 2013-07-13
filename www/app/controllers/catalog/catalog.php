@@ -281,6 +281,7 @@ class core_controller_catalog extends core_controller
 		core::log('all fees now exist in db. Now to figure out how to apply them!');
 
 		# loop through each fee and calculate it.
+		
 		foreach($cart->delivery_fees as $fee)
 		{
 			$applied_amount = 0;
@@ -290,38 +291,22 @@ class core_controller_catalog extends core_controller
 			# we need to determine which of the items the delivery fee applies to
 			foreach($final_delivery_breakdown as $ddaddr_id=>$items)
 			{
-				core::log('breaking apart '.$ddaddr_id);
-				list($dd_id,$addr_id) = explode('-',$ddaddr_id);
-				$dd_ids = explode('_',$dd_id);
-				foreach($dd_ids as $tmp_dd_id)
+				foreach($items as $item)
 				{
-					if($items[0]['dd_id'] == $tmp_dd_id)
-						$dd_id = $tmp_dd_id;
-				}
-				# if this item matches, then add the fee
-				#core::log('trying to calc '.$dd_id);
-				if($dd_id == $fee['dd_id'])
-				{
-					core::log('trying to calc '.print_r($fee->__data,true));
-				
-					# delivery fees are calculated one of two ways:
-					# if the fee_calc_type_id is 2, then this is a fixed
-					# price delivery fee. Just it the fee to the total, ONCE
-					# if the fee_calc_type_id is 1 however, then it's a
-					# percentage fee. We need to loop through all of the items
-					# and figure out what the percentage is.
-					if($fee['fee_calc_type_id'] == 2)
+					if($item['dd_id'] == $fee['dd_id'])
 					{
-						# if this is a fixed amount fee,
-						$applied_amount += $fee['amount'];
-					}
-					else
-					{
-						# if this is a % fee:
-						foreach($items as $item)
+						if($fee['fee_calc_type_id'] == 2 )
 						{
+							# if this is a fixed amount fee,
+							if($applied_amount == 0)
+								$applied_amount += $fee['amount'];
+						}
+						else
+						{
+							# if this is a % fee:
 							core::log('applying to item '.print_r($item,true));
 							$applied_amount += ($fee['amount'] / 100) * $item['row_total'];
+							
 						}
 					}
 				}
