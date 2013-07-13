@@ -258,7 +258,7 @@ class core_controller_catalog extends core_controller
 		core::log('fee delete complete');
 
 		# add in the delivery days that we need to.
-		core::log('looking for fees to add');
+		core::log('looking for fees to add to order '.$cart['lo_oid']);
 		foreach($dd_cache as $dd_id=>$data)
 		{
 			core::log('examining first dd: '.$dd_id);
@@ -292,8 +292,11 @@ class core_controller_catalog extends core_controller
 			{
 				list($dd_id,$addr_id) = explode('-',$ddaddr_id);
 				# if this item matches, then add the fee
+				#core::log('trying to calc '.$dd_id);
 				if($dd_id == $fee['dd_id'])
 				{
+					core::log('trying to calc '.print_r($fee->__data,true));
+				
 					# delivery fees are calculated one of two ways:
 					# if the fee_calc_type_id is 2, then this is a fixed
 					# price delivery fee. Just it the fee to the total, ONCE
@@ -310,7 +313,7 @@ class core_controller_catalog extends core_controller
 						# if this is a % fee:
 						foreach($items as $item)
 						{
-							#core::log('applying to item '.print_r($item,true));
+							core::log('applying to item '.print_r($item,true));
 							$applied_amount += ($fee['amount'] / 100) * $item['row_total'];
 						}
 					}
