@@ -20,7 +20,7 @@ $all_addrs = core::model('addresses')
 	->collection()
 	->add_formatter('address_formatter')
 	->filter('org_id',$core->session['org_id'])
-	->filter('is_deleted',0)->to_hash('address_id');
+	->filter('is_deleted','=',0)->to_hash('address_id');
 
 # load up the order and arrange it for rendering
 $cart = core::model('lo_order')->get_cart();
