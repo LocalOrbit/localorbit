@@ -292,6 +292,8 @@ class core_controller_catalog extends core_controller
 			{
 				core::log('breaking apart '.$ddaddr_id);
 				list($dd_id,$addr_id) = explode('-',$ddaddr_id);
+				$dd_id = explode('_',$dd_id);
+				$dd_id = $dd_id[0];
 				# if this item matches, then add the fee
 				#core::log('trying to calc '.$dd_id);
 				if($dd_id == $fee['dd_id'])
