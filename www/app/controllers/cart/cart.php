@@ -154,7 +154,7 @@ class core_controller_cart extends core_controller
 	function update_quantity()
 	{
 		global $core;
-
+		
 /*
 		$a_items = explode('_',$core->data['items']);
 		$items = array();
@@ -164,6 +164,7 @@ class core_controller_cart extends core_controller
 		$items = $this->parse_items();
 
 		$cart = core::model('lo_order')->get_cart();
+		core_db::query('delete from lo_order_deliveries where lo_oid='.$cart['lo_oid']);
 		$cart->load_items(false,true);
 
 		core::log('items submitted: '.print_r($items,true));
