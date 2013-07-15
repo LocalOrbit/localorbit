@@ -288,6 +288,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 
 	function arrange_by_next_delivery($include_hub_addresses=false) {
 		global $core;
+		$this->items_by_delivery = array();
 		foreach ($this->items as $item) {
 			//print_r($item->__data);
 			$delivery = core::model('lo_order_deliveries')->load($item['lodeliv_id']);
