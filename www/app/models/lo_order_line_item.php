@@ -79,19 +79,19 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		return $this;
 	}
 
-	function find_deliveries ($product, $dd_id)
+	function find_deliveries ($product,$dd_id)
 	{
 		global $core;
 		
 		
-		$deliveries = array();
+		$order_deliveries = core::model('lo_order_deliveries')->collection()->filter('lo_oid','=',$this['lo_oid']);
 		
 		# this contains a list of all the possible deliveres for the product in question
-		$deliveries = $this->find_possible_deliveries($this['lo_oid'], array(), $dd_id);
+		#$deliveries = $this->find_possible_deliveries($this['lo_oid'], $order_deliveries, $dd_id);
 		
 		# based on the list of possible deliveries above, this function
 		# determines the best one to use.
-		$deliv = $this->find_next_possible_delivery($this['lo_oid'], $deliveries, $dd_id);
+		$deliv = $this->find_next_possible_delivery($this['lo_oid'], $order_deliveries,$dd_id);
 		#core::log('find_deliveries ' . $dd_id);
 		#exit();
 		
@@ -102,8 +102,8 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 			$this->delivery_hash = implode('-',$this->dd_ids);
 		}
 		*/
-
-		return core::model('lo_order_deliveries')->create($this['lo_oid'], $this->delivery, $deliveries);
+		return $deliv;
+		#return core::model('lo_order_deliveries')->create($this['lo_oid'], $this->delivery, $deliveries);
 	}
 
 	# this is used to find all possible delivery options
@@ -162,6 +162,8 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 	{
 		global $core;
 		
+		#determine the delivery combination for this product
+		
 		#core::log('whats in order_deliveries at start of func? '.print_r($order_deliveries,true));
 		#exit();
 
@@ -171,6 +173,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 
 			core::log('using set delivery day: '. $dd_id . ':' .core_format::date($dd['due_time']));
 			$best_time = $dd['due_time'];
+			$this['dd_id'] = $dd['dd_id'];
 			$this->delivery = $dd->__data;
 		} else {
 
@@ -203,12 +206,13 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 					core::log('found a better time: '.core_format::date($dd['due_time']));
 					$best_time = $dd['due_time'];
 					$this->delivery = $dd->__data;
+					$this['dd_id'] = $dd['dd_id'];
 				}
 			}
 			#exit();
 		}
 		
-		#core::log('final delivery info: '.print_r($this->delivery,true));
+		core::log('final delivery info: '.print_r($this->delivery,true));
 		#exit();
 
 		# handle the situation where we can't find a valid deliv day
@@ -224,7 +228,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		$addresses = core::model('addresses')
 			->collection()
 			->filter('org_id',$core->session['org_id'])
-			->filter('addresses.is_deleted',0)
+			->filter('addresses.is_deleted','=',0)
 			->load();
 
 		if(intval($this->delivery['deliv_address_id']) != 0)
@@ -262,7 +266,6 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		$this['pickup_end_time']     = $this->delivery['pickup_end_time'];
 		$this['due_time']            = $this->delivery['due_time'];
 		$this['deliv_org_id']		  = $deliv_address['org_id'];
-		$this['dd_id_group'] = implode('_',$all_dds);
 
 		if(!is_null($deliv_address))
 		{
@@ -313,11 +316,22 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		#	1: delivered to the same address
 		#	2: delivered on exactly the same time
 		#	3: delivered from the same seller
-		if(!isset($order_deliveries[$this['dd_id']]))
+		
+		$found = false;
+		foreach($order_deliveries as $possible_delivery)
+		{
+			if($possible_delivery['dd_id_group'] == $this['dd_id'])
+			{
+				$found = true;
+				$this['lodeliv_id'] = $possible_delivery['lodeliv_id'];
+			}
+		}
+		
+		if(!$found)
 		{
 			# in this case, a delivery matching the above requirements
 			# did not exist, then we have to create a new one
-			core::log('creating delivery...');
+			core::log('creating delivery... '.(is_null($deliv_address)).'/'.(is_null($pickup_address)));
 			$new = core::model('lo_order_deliveries');
 			$new['lo_oid'] = $lo_oid;
 			$new['dd_id']  = $this->delivery['dd_id'];
@@ -366,21 +380,18 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 			))->to_hash('region_id');
 			$new['pickup_code'] = $states[$pickup_address['region_id']][0]['code'];
 			$new['delivery_code'] = $states[$deliv_address['region_id']][0]['code'];
-
+			$new['dd_id_group'] = $this['dd_id'];
 			$new->save();
-			$order_deliveries[$this['dd_id']] = $new;
+			
+			$this['lodeliv_id'] = $new['lodeliv_id'];
+			$this->save();
+			
 		}
 		#print_r($this->__data);
 
 		# finish associating this order line item with the delivery day
 		#$order_deliveries[$this['dd_id']]->save();
-		$this['lodeliv_id'] = $order_deliveries[$this['dd_id']]['lodeliv_id'];
-		$this['delivery_start_time'] = $this->delivery['delivery_start_time'];
-		$this['delivery_end_time']   = $this->delivery['delivery_end_time'];
-		$this['pickup_start_time'] = $this->delivery['pickup_start_time'];
-		$this['pickup_end_time']   = $this->delivery['pickup_end_time'];
 
-		$this->save();
 		#exit();
 		
 		return $order_deliveries;

@@ -163,7 +163,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		return $final_delivs;
 	}
 
-	function create($lo_oid, $deliv, $deliveries = null, $address) {
+	function create($lo_oid, $deliv, $deliveries = null, $address=null) {
 		# now we have all the right info
 		# store it in the db
 		$deliv_id = $deliv['lodeliv_id'];
@@ -175,6 +175,8 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		$order_deliv['delivery_end_time']   = $deliv['delivery_end_time'];
 		$order_deliv['pickup_start_time']   = $deliv['pickup_start_time'];
 		$order_deliv['pickup_end_time']     = $deliv['pickup_end_time'];
+		
+		core::log('delivery info: '.print_r( $deliv,true));
 
 		if(isset($deliv['deliv_address_id']) && $deliv['deliv_address_id'] != 0)
 		{
@@ -186,7 +188,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		    }
 		    else
 		    {
-				$order_deliv['pickup_address_id'] = $address['address_id'];
+				#$order_deliv['pickup_address_id'] = $address['address_id'];
 		    }
 		} else {
 			$order_deliv['deliv_address_id'] = $address['address_id'];
@@ -197,7 +199,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		    }
 		    else
 		    {
-				$order_deliv['pickup_address_id'] = $address['address_id'];
+				#$order_deliv['pickup_address_id'] = $address['address_id'];
 		    }
 		}
 

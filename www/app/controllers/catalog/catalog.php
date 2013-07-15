@@ -91,8 +91,8 @@ class core_controller_catalog extends core_controller
 			$delivery['pickup_longitude'] = $dd['pickup_longitude'];
 			$delivery['pickup_latitude'] = $dd['pickup_latitude'];
 			$delivery['dd_id_group'] = $dd_id;
-
-			$delivery->save();
+#
+			#$delivery->save();
 			$cart_item['lodeliv_id'] = $delivery['lodeliv_id'];
 			$cart_item['dd_id'] = $dd_id;
 			$cart_item->save();

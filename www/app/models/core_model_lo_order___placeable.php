@@ -318,38 +318,64 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		# we need to store the delivery info if we're letting the user
 		# choose their delivery day on this hub
 		$this->load_items();
-		if($core->config['domain']['feature_force_items_to_soonest_delivery'] == 1)
+	
+		$this->load_deliveries();
+		# we need to store the right delivery info for each delivery day
+		$this->arrange_by_next_delivery(true);
+		$byddid_deliveries = $this->deliveries->to_hash('dd_id');
+
+
+		# loop through all the delivery groups
+		core::log('submitted data: '.print_r($core->data,true));
+		foreach($this->items_by_delivery as $deliv_id=>$item_list)
 		{
-			core::log('setting deliveries to soonest');
-			$this->load_deliveries();
-			$this->customer_addresses = core::model('addresses')
-				->collection()
-				->filter('org_id',$core->session['org_id'])
-				->filter('addresses.is_deleted',0);
-			foreach ($this->deliveries as $id => $order_deliv) {
-				$address = core::model('addresses')->load($core->data['delivgroup-'.$order_deliv['dd_id']]);
-				if(isset($deliv['deliv_address_id']) && $deliv['deliv_address_id'] != 0)						{
-					    $order_deliv['deliv_address_id'] = $deliv['deliv_address_id'];
-					    if(isset($deliv['pickup_address_id']) &&$deliv['pickup_address_id'] != 0)
-					    {
-					        core::log('using delivery_days-specified pickup address');
-					        //$order_deliv['pickup_address_id'] = $deliv['pickup_address_id'];
-					    }
-					    else
-					    {
+
+			# first, build a list of sellers so that we know
+			# all of the people we have to create deliveries for
+			$sellers = array();
+			foreach($item_list as $item)
+			{
+				$sellers[] = $item['seller_org_id'];
+			}
+			$sellers = array_unique($sellers);
+
+			/*
+			core::log('examining deliv_group '.$deliv_id);
+			$deliv_id = explode('_',$group);
+			*/
+			$order_deliv = null;
+
+			core::log('checking on specific day '.$deliv_id);
+			$deliveries = $byddid_deliveries[$deliv_id];
+
+			//foreach ($byddid_deliveries[$deliv_id] => $deliveries)
+			//{
+				$address = core::model('addresses')->load($core->data['delivgroup-'.$deliv_id]);
+				foreach ($deliveries as $deliv) {
+					$order_deliv = core::model('lo_order_deliveries')->load($deliv['lodeliv_id']);
+					if(isset($deliv['deliv_address_id']) && $deliv['deliv_address_id'] != 0)
+					{
+						 $order_deliv['deliv_address_id'] = $deliv['deliv_address_id'];
+						 if(isset($deliv['pickup_address_id']) &&$deliv['pickup_address_id'] != 0)
+						 {
+							  core::log('using delivery_days-specified pickup address');
+							  $order_deliv['pickup_address_id'] = $deliv['pickup_address_id'];
+						 }
+						 else
+						 {
 							$order_deliv['pickup_address_id'] = $address['address_id'];
-					    }
+						 }
 					} else {
 						$order_deliv['deliv_address_id'] = $address['address_id'];
 						if(isset($deliv['pickup_address_id']) && $deliv['pickup_address_id'] != 0)
-					    {
-					        core::log('using delivery_days-specified pickup address');
-					        //$order_deliv['pickup_address_id'] = $deliv['pickup_address_id'];
-					    }
-					    else
-					    {
+						 {
+							  core::log('using delivery_days-specified pickup address');
+							  $order_deliv['pickup_address_id'] = $deliv['pickup_address_id'];
+						 }
+						 else
+						 {
 							$order_deliv['pickup_address_id'] = $address['address_id'];
-					    }
+						 }
 					}
 					# did we correctly create a delivery? if no, inform user.
 					# if yes, continue!
@@ -360,91 +386,13 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 						core::deinit();
 					}
 					$order_deliv->save();
-				/*
-				core::log($id);
-				core::log(print_r($delivery, true));
-				*/
-			}
-		}
-		else
-		{
-			$this->load_deliveries();
-			# we need to store the right delivery info for each delivery day
-			$this->arrange_by_next_delivery(true);
-			$byddid_deliveries = $this->deliveries->to_hash('dd_id');
-
-
-			# loop through all the delivery groups
-			core::log('submitted data: '.print_r($core->data,true));
-			foreach($this->items_by_delivery as $deliv_id=>$item_list)
-			{
-
-				# first, build a list of sellers so that we know
-				# all of the people we have to create deliveries for
-				$sellers = array();
-				foreach($item_list as $item)
-				{
-					$sellers[] = $item['seller_org_id'];
 				}
-				$sellers = array_unique($sellers);
-
-				/*
-				core::log('examining deliv_group '.$deliv_id);
-				$deliv_id = explode('_',$group);
-				*/
-				$order_deliv = null;
-
-				core::log('checking on specific day '.$deliv_id);
-				$deliveries = $byddid_deliveries[$deliv_id];
-
-				//foreach ($byddid_deliveries[$deliv_id] => $deliveries)
-				//{
-					$address = core::model('addresses')->load($core->data['delivgroup-'.$deliv_id]);
-					foreach ($deliveries as $deliv) {
-						$order_deliv = core::model('lo_order_deliveries')->load($deliv['lodeliv_id']);
-						if(isset($deliv['deliv_address_id']) && $deliv['deliv_address_id'] != 0)
-						{
-						    $order_deliv['deliv_address_id'] = $deliv['deliv_address_id'];
-						    if(isset($deliv['pickup_address_id']) &&$deliv['pickup_address_id'] != 0)
-						    {
-						        core::log('using delivery_days-specified pickup address');
-						        $order_deliv['pickup_address_id'] = $deliv['pickup_address_id'];
-						    }
-						    else
-						    {
-								$order_deliv['pickup_address_id'] = $address['address_id'];
-						    }
-						} else {
-							$order_deliv['deliv_address_id'] = $address['address_id'];
-							if(isset($deliv['pickup_address_id']) && $deliv['pickup_address_id'] != 0)
-						    {
-						        core::log('using delivery_days-specified pickup address');
-						        $order_deliv['pickup_address_id'] = $deliv['pickup_address_id'];
-						    }
-						    else
-						    {
-								$order_deliv['pickup_address_id'] = $address['address_id'];
-						    }
-						}
-						# did we correctly create a delivery? if no, inform user.
-						# if yes, continue!
-						if(is_null($order_deliv))
-						{
-							core::log('unable to locate an appropriate delivery_days/addresses combination');
-							core_ui::error('An error has occured while trying to place this order.');
-							core::deinit();
-						}
-						$order_deliv->save();
-					}
-				//}
-			}
-			core::log('done determining delivery information!');
-			$this->items = null;
-			$this->load_items();
-			#exit('{}');
-			#core_ui::notification('done');
-			#core::deinit();
+			//}
 		}
+		core::log('done determining delivery information!');
+		$this->items = null;
+		$this->load_items();
+	
 
 
 
