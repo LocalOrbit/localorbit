@@ -1,6 +1,6 @@
 <?
 global $org;
-if($org['payment_allow_paypal'] == 1)
+if($org['payment_allow_paypal'] == 1 && false)
 {
 	$style = ($core->view[0] > 1)?' style="display:none;"':'';
 	?>
