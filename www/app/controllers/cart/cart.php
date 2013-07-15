@@ -171,6 +171,8 @@ class core_controller_cart extends core_controller
 
 		# loop through the exisitng items in teh cart. if the quanitty is diff,
 		# update it
+		$order_deliveries = array();
+		
 		foreach($cart->items as $item)
 		{
 			core::log("examinig: ".$item['prod_id'].'/'.$item['lo_liid'].'/'.$items[$item['prod_id']][0]);
@@ -178,14 +180,13 @@ class core_controller_cart extends core_controller
 			if(!isset($items[$item['prod_id']][0]) || floatval($items[$item['prod_id']][0]) == 0)
 			{
 				core::log('deleting '.$item['prod_id']);
-				$this->delete_old_deliveries();
 				$item->delete($item['lo_liid']);
 			}
 			else
 			{
 
 				# if the qty has changed, set the new quantity and find the best price
-				if(floatval($items[$item['prod_id']][0]) != floatval($item['qty_ordered']))
+				if(floatval($items[$item['prod_id']][0]) != floatval($item['qty_ordered']) || intval($items[$item['prod_id']][1]) != intval($item['dd_id']))
 				{
 					$product = core::model('products')->load($item['prod_id']);
 					core::log('new qty on '.$item['prod_id']);
@@ -195,12 +196,10 @@ class core_controller_cart extends core_controller
 					$item['category_ids']  = $product['category_ids'];
 					$item['final_cat_id']  = trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
 
-					$order_deliv = $item->find_deliveries($product, $dd_id);
-					$this->delete_old_deliveries();
+					$order_deliveries = $item->find_next_possible_delivery($product,$item['dd_id'],$order_deliveries);
 					//$deliveries = $new_item->find_possible_deliveries($new_item['lo_oid'], array());
 					//$deliv = $new_item->find_next_possible_delivery($new_item['lo_oid'], $deliveries);
 					//$order_deliv = core::model('lo_order_deliveries')->create($new_item['lo_oid'], $new_item->delivery, $product, $deliveries);
-					$item['lodeliv_id'] = $order_deliv['lodeliv_id'];
 					$item->find_best_price();
 				}
 
@@ -264,7 +263,7 @@ class core_controller_cart extends core_controller
 				$new_item['producedat_delivery_instructions'] = $product['producedat_delivery_instructions'];
 				$new_item['producedat_longitude'] = $product['producedat_longitude'];
 				$new_item['producedat_latitude'] = $product['producedat_latitude'];
-				$order_deliv = $new_item->find_deliveries($product, $dd_id);
+				$order_deliveries = $new_item->find_next_possible_delivery($product, $dd_id,$order_deliveries);
 				$new_item['lodeliv_id'] = $order_deliv['lodeliv_id'];
 				$new_item->save();
 			}
