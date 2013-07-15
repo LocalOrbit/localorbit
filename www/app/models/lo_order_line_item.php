@@ -208,6 +208,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 			{
 				$found = true;
 				$this['lodeliv_id'] = $possible_delivery['lodeliv_id'];
+				$this->save();
 			}
 		}
 		
