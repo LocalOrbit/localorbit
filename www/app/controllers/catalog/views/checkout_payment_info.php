@@ -11,11 +11,12 @@ $paymethods += intval($org['payment_allow_paypal']);
 $paymethods += intval($org['payment_allow_purchaseorder']);
 
 # if they've got more than one, show a radio selector
-if($paymethods > 1)
-{
+#if($paymethods > 1)
+#{
 	$this->payment_selector();
-}
-else
+#}
+/*
+#else
 {
 	#otherwise, create a hidden option to store the payment method
 	if(intval($org['payment_allow_authorize']) == 1)
@@ -28,10 +29,11 @@ else
 		$method = 'ach';
 	echo('<input type="hidden" id="payment_method" name="payment_method" value="'.$method.'" />');
 }
+**/
 
 # print all the payment forms. Each view function 
 # will determine whether or not it needs to actually be rendered.
-$this->payment_authorize($paymethods);
+#$this->payment_authorize($paymethods);
 $this->payment_paypal($paymethods);
 $this->payment_purchaseorder($paymethods);
 $this->payment_ach($paymethods);
