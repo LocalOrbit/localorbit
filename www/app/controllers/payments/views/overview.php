@@ -14,10 +14,12 @@ $all = new core_collection("
 $intervals = array('Overdue' => 0, 'Today' => 1, 'Next 7 days' => 7, 'Next 30 days' => 30,'Purchase Orders'=>31);
 $data['payables']    = array_fill_keys(array_values($intervals), 0);
 $data['receivables'] = array_fill_keys(array_values($intervals), 0);
+$total = array('payables'=>0,'receivables'=>0);
 
 foreach($all as $item)
 {
 	$type = (($item['from_org_id'] == $core->session['org_id'])?'payables':'receivables');
+	$total[$type]++;
 	$amount_due = floatval(($item['amount'] - $item['amount_paid']));
 	#print_r($item);
 	
@@ -53,7 +55,7 @@ $receivables = $data['receivables'];
 
 <div class="tabarea tab-pane active" id="paymentstabs-a<?=($core->view[0]+1)?>">
 	<div class="row row-top-margin-buffer">
-		<? if(count($receivables) > 0 || lo3::is_seller()){?>
+		<? if($total['receivables'] > 0 || lo3::is_seller()){?>
 		<div class="span4">
 			<h2>Money In</h2>
 			<?
