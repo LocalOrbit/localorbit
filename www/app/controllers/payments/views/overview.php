@@ -168,7 +168,7 @@ $receivables = $data['receivables'];
 				{
 				?>
 				<div class="span4 pagination-centered">
-					<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=($tab_count - 1)?>').tab('show');" />
+					<input type="button" class="btn btn-info " value="Pay Now" onclick="$('#paymentstabs #paymentstabs-s<?=($tab_count - 1)?>').tab('show');" />
 				</div>
 
 				<?php
