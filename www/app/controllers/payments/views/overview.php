@@ -117,7 +117,6 @@ $receivables = $data['receivables'];
 				{
 					$options['help_tip_label'] = $core->i18n('payments:overview:po_note_title');
 					$options['help_tip'] = $core->i18n('payments:overview:po_note_content');
-					
 				}
 				$value = core_format::price($payables[$value],false);
 				
@@ -137,13 +136,43 @@ $receivables = $data['receivables'];
 			?>
 			
 			<?php 
-				if(!lo3::is_fully_managed()) {
-			?>
+			if(lo3::is_self_managed() || lo3::is_admin())
+			{
+				# admins and self managed always get the button
+				?>
 				<div class="span4 pagination-centered">
-					<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Review Orders &amp; Make Payments',$core->view[1]) + 3)?>').tab('show');" />
+					<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s3').tab('show');" />
 				</div>
-			<?php 
+				<?php
+			}
+			else if(lo3::is_fully_managed())
+			{
+				# fully managed never gets the button
+			}
+			else 
+			{
+				# buyers/sellers get the button if they have a payable from them to LO
+				$payable_count = core_db::col(
+					'
+						select count(payable_id) as payable_count
+						from payables
+						where from_org_id='.$core->session['org_id'].'
+						and to_org_id=1
+						and amount >0
+					','payable_count'
+				);
+				
+				if($payable_count > 0)
+				{
+				?>
+				<div class="span4 pagination-centered">
+					<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s3').tab('show');" />
+				</div>
+
+				<?php
 				}
+			}
+			
 			?>		
 		</div>
 		<?}?>
