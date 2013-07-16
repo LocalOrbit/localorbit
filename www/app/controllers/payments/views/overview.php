@@ -2,7 +2,9 @@
 global $core;
 
 $tab_id = $core->view[0];
+
 $money_out_count = $core->view[1];
+$tab_count = $core->view[2];
 
 # prepare the data for the top metrics table.
 $all = new core_collection("
@@ -93,7 +95,7 @@ $receivables = $data['receivables'];
 				if(!lo3::is_seller()) {
 			?>
 				<div class="span4 pagination-centered">
-					<input type="button" class="btn btn-info" value="Enter Receipts" onclick="$('#paymentstabs #paymentstabs-s<?=(array_search('Receivables',$core->view[1]) + 2)?>').tab('show');" />
+					<input type="button" class="btn btn-info" value="Enter Receipts" onclick="$('#paymentstabs #paymentstabs-s2').tab('show');" />
 				</div>
 			<?php 
 				}
@@ -141,7 +143,7 @@ $receivables = $data['receivables'];
 				# admins and self managed always get the button
 				?>
 				<div class="span4 pagination-centered">
-					<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s3').tab('show');" />
+					<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=($tab_count -1)?>').tab('show');" />
 				</div>
 				<?php
 			}
@@ -166,7 +168,7 @@ $receivables = $data['receivables'];
 				{
 				?>
 				<div class="span4 pagination-centered">
-					<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s3').tab('show');" />
+					<input type="button" class="btn btn-info " value="Make Payments" onclick="$('#paymentstabs #paymentstabs-s<?=($tab_count - 1)?>').tab('show');" />
 				</div>
 
 				<?php
