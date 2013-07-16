@@ -1,6 +1,7 @@
 <?php
 
 $v_payables = core::model('v_payables_4071')->collection();
+$v_payables->filter('amount_owed','>',0);
 $v_payables->add_formatter('new_format_payable_info');
 
 if(lo3::is_admin())
@@ -10,10 +11,12 @@ else if(lo3::is_market())
 {
 	#$v_payables->filter('to_org_id','in',array(1,$core->session['org_id']));
 	$v_payables->filter('domain_id','in',$core->session['domains_by_orgtype_id'][2]);
+	$v_payables->filter('payable_type','in',array('delivery fee','buyer order'));
 }
 else
 {
 	$v_payables->filter('to_org_id','=',$core->session['org_id']);
+	$v_payables->filter('payable_type','in',array('seller order'));
 }
 
 
@@ -159,16 +162,17 @@ if(lo3::is_market() || lo3::is_admin())
 					'5'=>'Partially Delivered',
 					'6'=>'Contested',
 				),'Delivery','All',96,130);
-				
-			make_filter($receivables,'payable_type',array(
-				'delivery fee'=>'Delivery Fees',
-				'hub fees'=>'Market Fees',
-				'buyer order'=>'Purchase Orders',
-				'seller order'=>'Seller Payments',
-				'service fee'=>'Service Fees',
-				'lo fees'=>'Transaction Fees',
-			),'Type','All Types',96,130);
-			
+			if(lo3::is_admin())
+			{
+				make_filter($receivables,'payable_type',array(
+					'delivery fee'=>'Delivery Fees',
+					'hub fees'=>'Market Fees',
+					'buyer order'=>'Purchase Orders',
+					'seller order'=>'Seller Payments',
+					'service fee'=>'Service Fees',
+					'lo fees'=>'Transaction Fees',
+				),'Type','All Types',96,130);
+			}
 			
 		$receivables->filter_html .= '</div>';
 		$receivables->filter_html .= '<div style="float:left; width:220px;">';
