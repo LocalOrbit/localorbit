@@ -188,10 +188,15 @@ class core_form
 		$html = '<div class="control-group"';
 		$html .= ($options['display_row'])?'':' style="display: none;"';
 		$html .= ($options['row_id'] == '')?'':' id="'.$options['row_id'].'"';
-		$html .='><label class="control-label" for="' . $options['field_name'] . '">'.$label;
+		$html .='><label class="control-label" for="' . $options['field_name'] . '"';
+		
+		if(isset($options['label_area_style']) && $options['label_area_style'] != '')
+			$html .= ' style="'.$options['label_area_style'].'"';
+
+		$html .= '>'.$label;
 		
 		if ($options['tool_tip']): $html .= '<i class="helpslug icon-lamp icon_tool_tip" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
-		if ($options['help_tip']): $html .= '<i class="helpslug icon-question-sign" rel="popover" data-title="'.$label.'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
+		if ($options['help_tip']): $html .= '<i class="helpslug icon-question-sign" rel="popover" data-title="'.((isset($options['help_tip_label']))?$options['help_tip_label']:$label).'" data-content="'.$options['help_tip'].'" data-original-title=""></i>'; endif;
 		if ($options['sublabel']): $html .= '<span class="help-block">' . $options['sublabel'] . '</span>'; endif;
 			
 		if(isset($options['popover']) && $options['popover']!='')
@@ -202,6 +207,8 @@ class core_form
 		$html .='</label><div class="controls"';
 		if(isset($options['value_area_id']) && $options['value_area_id'] != '')
 			$html .= ' id="'.$options['value_area_id'].'"';
+		if(isset($options['value_area_style']) && $options['value_area_style'] != '')
+			$html .= ' style="'.$options['value_area_style'].'"';
 		$html .= '>'. $value;
 
 		$html .= '</div></div>';
