@@ -138,7 +138,7 @@ class core_controller_auth extends core_controller
 			$core->session['all_domains'] = $user['all_domains'];
 			$core->session['login_note_viewed'] = $user['login_note_viewed'];
 			$core->session['domains_by_orgtype_id'] = $user['domains_by_orgtype_id'];
-			$core->session['org_payment_allow_purchaseorder'] = $user['payment_allow_purchaseorder'];
+			$core->session['org_payment_allow_purchaseorder'] = $user['payment_allow_purchase_order'];
 			$core->session['org_payment_allow_paypal'] = $user['payment_allow_paypal'];
 			$core->session['org_payment_allow_ach'] = $user['payment_allow_ach'];
 			$core->session['org_purchase_order_count'] = $user['purchase_order_count'];
