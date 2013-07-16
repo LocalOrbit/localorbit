@@ -204,7 +204,7 @@
 					and lbps_id <> 1
 					and payment_method=\'purchaseorder\';
 				','order_count');
-				if($order_count > 0 || $core->session['payment_allow_purchaseorder'] == 1)
+				if($order_count > 0 || $core->session['org_payment_allow_purchaseorder'] == 1)
 				{
 		?>
 			<ul class="nav"><li><a id="payments-home" href="#!payments-home" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>		<?}}?>
