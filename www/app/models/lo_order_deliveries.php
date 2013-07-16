@@ -1,6 +1,7 @@
 <?php
 class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 {
+	
 	function init_fields()
 	{
 		global $core;
@@ -211,37 +212,6 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		return $order_deliv;
 	}
 
-	function save()
-	{
-		core::log('UPDATING ADDRESS INFO');
-
-		$deliv_address = core::model('addresses')->load($this['deliv_address_id']);
-		$pickup_address = core::model('addresses')->load($this['pickup_address_id']);
-
-		$this['deliv_org_id'] 							= $deliv_address['org_id'];
-		$this['deliv_address']							= $deliv_address['address'];
-		$this['deliv_city'] 								= $deliv_address['city'];
-		$this['deliv_region_id'] 						= $deliv_address['region_id'];
-		$this['deliv_postal_code']						= $deliv_address['postal_code'];
-		$this['deliv_telephone'] 						= $deliv_address['telephone'];
-		$this['deliv_fax'] 								= $deliv_address['fax'];
-		$this['deliv_delivery_instructions'] 		= $deliv_address['delivery_instructions'];
-		$this['deliv_longitude']				 		= $deliv_address['longitude'];
-		$this['deliv_latitude'] 						= $deliv_address['latitude'];
-		$this['pickup_org_id']							= $pickup_address['org_id'];
-		$this['pickup_address']							= $pickup_address['address'];
-		$this['pickup_city']								= $pickup_address['city'];
-		$this['pickup_region_id']						= $pickup_address['region_id'];
-		$this['pickup_postal_code']					= $pickup_address['postal_code'];
-		$this['pickup_telephone']						= $pickup_address['telephone'];
-		$this['pickup_fax']								= $pickup_address['fax'];
-		$this['pickup_delivery_instructions']		= $pickup_address['delivery_instructions'];
-		$this['pickup_longitude']						= $pickup_address['longitude'];
-		$this['pickup_latitude']						= $pickup_address['latitude'];
-
-		parent::save();
-		core::log('UPDATED ADDRESS INFO');
-	}
 
 	function get_items_for_delivery($deliv_ids,$org_id=0)
 	{
