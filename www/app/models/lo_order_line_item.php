@@ -109,39 +109,26 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		$this->delivery->next_time();
 
 		#core::log('final delivery info: '.print_r($this->delivery->__data,true));
-		$addresses = core::model('addresses')
-			->collection()
-			->filter('org_id',$core->session['org_id'])
-			->filter('addresses.is_deleted','=',0)
-			->load();
-
+		$deliv_address = null;
+		$pickup_address= null;
+		
+		core::log('addresses for the user: '.print_r($addresses,true));
+		
+		core::log('----looking for addresses: '.intval($this->delivery['deliv_address_id']).'/'.intval($this->delivery['pickup_address_id']));
 		if(intval($this->delivery['deliv_address_id']) != 0)
 		{
+			core::log('step 1 is set already to '.intval($this->delivery['deliv_address_id']));
 			$deliv_address = core::model('addresses')->load($this->delivery['deliv_address_id']);
+			if(intval($this->delivery['pickup_address_id']) != 0)
+			{
+				core::log('step 2 is set already to '.intval($this->delivery['pickup_address_id']));
+				$pickup_address = core::model('addresses')->load($this->delivery['pickup_address_id']);
+			}
 		}
-		else if($addresses->__num_rows == 1)
-		{
-			$addresses->next();
-			$deliv_address = $addresses->current();
-		}
-		else
-		{
-			$deliv_address = null;
-		}
-
-		if(intval($this->delivery['pickup_address_id']) != 0)
-		{
-			$pickup_address = core::model('addresses')->load($this->delivery['pickup_address_id']);
-		}
-		else if($addresses->__num_rows == 1)
-		{
-			$addresses->next();
-			$pickup_address = $addresses->current();
-		}
-		else
-		{
-			$pickup_address = null;
-		}
+		
+		core::log('------');
+		
+		
 
 		# set various item properties based on the delivery chosen
 		$this['delivery_start_time'] = $this->delivery['delivery_start_time'];
@@ -153,7 +140,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 
 		if(!is_null($deliv_address))
 		{
-			$this['deliv_address_id'] = $this->delivery['deliv_address_id'];
+			$this['deliv_address_id'] = $deliv_address['address_id'];
 			$this['deliv_address']    = $deliv_address['address'];
 			$this['deliv_city']       = $deliv_address['city'];
 			$this['deliv_region_id']  = $deliv_address['region_id'];
@@ -167,7 +154,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 
 		if(!is_null($pickup_address))
 		{
-			$this['pickup_address_id'] = $this->delivery['pickup_address_id'];
+			$this['pickup_address_id'] =  $pickup_address['address_id'];
 			$this['pickup_org_id']	   = $pickup_address['org_id'];
 			$this['pickup_address']    = $pickup_address['address'];
 			$this['pickup_city']       = $pickup_address['city'];
@@ -220,8 +207,13 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 			$new = core::model('lo_order_deliveries');
 			$new['lo_oid'] = $lo_oid;
 			$new['dd_id']  = $this->delivery['dd_id'];
-			$new['deliv_address_id']   = $this->delivery['deliv_address_id'];
-			$new['pickup_address_id']  = $this->delivery['pickup_address_id'];
+			
+			if(!is_null($deliv_address))
+				$new['deliv_address_id']   = $deliv_address['address_id'];
+			
+			if(!is_null($pickup_address))
+				$new['pickup_address_id']  = $pickup_address['address_id'];
+				
 			$new['delivery_start_time']= $this->delivery['delivery_start_time'];
 			$new['delivery_end_time']  = $this->delivery['delivery_end_time'];
 			$new['pickup_start_time']  = $this->delivery['pickup_start_time'];
@@ -257,14 +249,21 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 				$new['pickup_latitude']					= $pickup_address['latitude'];
 			}
 
+			$states = array(
+				intval($deliv_address['region_id']),0
+			);
+			if(!is_null($pickup_address))
+			{
+				$states[] = $pickup_address['region_id'];
+			}
 			$states = core::model('directory_country_region')
 				->collection()
-				->filter('region_id','in',array(
-				intval($pickup_address['region_id']),
-				intval($deliv_address['region_id']),0
-			))->to_hash('region_id');
-			$new['pickup_code'] = $states[$pickup_address['region_id']][0]['code'];
+				->filter('region_id','in',$states)->to_hash('region_id');
 			$new['delivery_code'] = $states[$deliv_address['region_id']][0]['code'];
+			if(!is_null($pickup_address))
+			{
+				$new['pickup_code'] = $states[$pickup_address['region_id']][0]['code'];
+			}
 			$new['dd_id_group'] = $this['dd_id'];
 			$new->save();
 			
@@ -319,7 +318,7 @@ function determine_delivery_language($data)
 	# then this is being delivered.
 	// this does not work for Maya buying from Five Seeds Farm
 	$prefix = ($data['buyer_org_id'] == $data['delivery_org_id'])?'delivery_':'pickup_';
-	$prefix = 'pickup_';
+	#$prefix = 'pickup_';
 	#echo('about to fork, using prefix '.$prefix.', address is '.$data[$prefix.'address']);
 
 	if($data['buyer_org_id'] == $data['delivery_org_id'] || $data['buyer_org_id'] == $data['pickup_org_id'])
