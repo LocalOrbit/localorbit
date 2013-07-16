@@ -135,7 +135,7 @@ echo('</div>');
 	<div class="control-group">
 		<label class="control-label"><?=$core->i18n['field:delivery_days:seller_deliv_section']?></label>
 		<div class="controls">
-			<select name="deliv_address_id" id="deliv_address_id" onchange="market.setPickupLabel(this.selectedIndex);">
+			<select name="deliv_address_id" id="deliv_address_id" onchange="market.determine2ndStepState();">
 				<option value="0">Direct to customer</option>
 				<?=core_ui::options($addresses,null,'address_id','label')?>
 			</select>
@@ -156,34 +156,33 @@ echo('</div>');
 			<?=core_ui::time_picker('delivery_end_time')?>
 		</div>
 	</div>
-	
-	
-	<h3><?=$core->i18n['field:delivery_days:buyer_deliv_section']?></h3>	
-	<div class="control-group">
-		<label class="control-label">Buyer Pick up location</label>
-		<div class="controls">
-			<select name="pickup_address_id" id="pickup_address_id">
-				<option value="0">Delivered to Buyer from Market</option>
-				<option value="-1">Direct to Customer</option>
-				<?=core_ui::options($addresses,null,'address_id','label')?>
-			</select>
+	<div id="delivery_2nd_step">
+		<h3><?=$core->i18n['field:delivery_days:buyer_deliv_section']?></h3>	
+		<div class="control-group">
+			<label class="control-label">Buyer Pick up location</label>
+			<div class="controls">
+				<select name="pickup_address_id" id="pickup_address_id">
+					<option value="0">Delivered to Buyer from Market</option>
+					<option value="-1">Direct to Customer</option>
+					<?=core_ui::options($addresses,null,'address_id','label')?>
+				</select>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">Buyer Pick up Start</label>
+			<div class="controls">
+				<?=core_ui::time_picker('pickup_start_time',0,0,24,'half')?>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">Buyer Pick up End</label>
+			<div class="controls">
+				<?=core_ui::time_picker('pickup_end_time',0,0,24,'half')?>
+			</div>
 		</div>
 	</div>
-	
-	<div class="control-group">
-		<label class="control-label">Buyer Pick up Start</label>
-		<div class="controls">
-			<?=core_ui::time_picker('pickup_start_time',0,0,24,'half')?>
-		</div>
-	</div>
-	
-	<div class="control-group">
-		<label class="control-label">Buyer Pick up End</label>
-		<div class="controls">
-			<?=core_ui::time_picker('pickup_end_time',0,0,24,'half')?>
-		</div>
-	</div>
-	
 	<input type="hidden" name="dd_id" value="" />
 	<input type="hidden" name="devfee_id" value="" />
 	<div class="form-actions buttonset">
