@@ -61,16 +61,31 @@ $receivables = $data['receivables'];
 			<?
 			foreach ($intervals as $key => $value)
 			{
-				echo('<div class="overview-summary-list-item">');
-				echo('<div class="overview-summary-list-item-label'.(($key=='Overdue')?' text-error':'').'"><label class="control-label" style="width:100%;">' . $key);
-				if ($key == 'Purchase Orders'){	echo(' <i class="helpslug icon-question-sign icon_tool_tip" rel="popover" data-title="'.$core->i18n('payments:overview:po_note_title').'" data-content="'.$core->i18n('payments:overview:po_note_content').'" data-original-title=""></i>'); }
-		
-				echo('</label></div>
-						<div class="overview-summary-list-item-value'.(($key=='Overdue')?' text-error':'').'">' . 
-							(($receivables[$value] <= 0)?'<div class="error">':'').
-							core_format::price($receivables[$value], false)
-							.(($receivables[$value] <= 0)?'</div>':'') . 
-						'</div></div>');
+				$options = array(
+					'display_row'=>true,
+					'label_area_style'=>'width:43%;',
+					'value_area_style'=>'margin-left:55%;',
+				);
+				if($key == 'Purchase Orders')
+				{
+					$options['help_tip_label'] = $core->i18n('payments:overview:po_note_title');
+					$options['help_tip'] = $core->i18n('payments:overview:po_note_content');
+					
+				}
+				$value = core_format::price($receivables[$value],false);
+				
+				if($key == 'Overdue')
+				{
+					$key = '<p class="text-error">'.$key.'</p>';
+					$value = '<p class="text-error">'.$value.'</p>';
+				}
+				else
+				{
+					$key = '<p>'.$key.'</p>';
+					$value = '<p>'.$value.'</p>';
+				}
+	
+				echo(core_form::tr_nv($key,$value,$options));
 			}				
 			?>
 			
@@ -93,18 +108,31 @@ $receivables = $data['receivables'];
 			<?
 			foreach ($intervals as $key => $value)
 			{
-				echo('<div class="overview-summary-list-item">');
-				echo('<div class="overview-summary-list-item-label'.(($key=='Overdue')?' text-error':'').'"><label class="control-label" style="width:100%;">' . $key);
+				$options = array(
+					'display_row'=>true,
+					'label_area_style'=>'width:43%;',
+					'value_area_style'=>'margin-left:55%;',
+				);
+				if($key == 'Purchase Orders')
+				{
+					$options['help_tip_label'] = $core->i18n('payments:overview:po_note_title');
+					$options['help_tip'] = $core->i18n('payments:overview:po_note_content');
+					
+				}
+				$value = core_format::price($payables[$value],false);
 				
-				if ($key == 'Purchase Orders'){	echo(' <i class="helpslug icon-question-sign icon_tool_tip" rel="popover" data-title="'.$core->i18n('payments:overview:po_note_title').'" data-content="'.$core->i18n('payments:overview:po_note_content').'" data-original-title=""></i>'); }
-		
-				echo('</label></div>');
-				echo('<div class="overview-summary-list-item-value'.(($key=='Overdue')?' text-error':'').'">' .
-				(($payables[$value] <= 0)?'<div class="error">':'').
-				core_format::price($payables[$value], false)
-				.(($payables[$value] <= 0)?'</div>':'') .
-				'</div></div>');
-				
+				if($key == 'Overdue')
+				{
+					$key = '<p class="text-error">'.$key.'</p>';
+					$value = '<p class="text-error">'.$value.'</p>';
+				}
+				else
+				{
+					$key = '<p>'.$key.'</p>';
+					$value = '<p>'.$value.'</p>';
+				}
+	
+				echo(core_form::tr_nv($key,$value,$options));
 			}
 			?>
 			
