@@ -197,9 +197,17 @@
 		<? 		
 			//if(lo3::is_buyer() && (lo3::is_org_payment_purchase_order_allowed() || lo3::does_org_have_purchase_order_history())){  per https://www.pivotaltracker.com/s/projects/764301/stories/51209443
 			if(lo3::is_buyer()) {
+				$order_count = core_db::col('
+					select count(lo_oid) as order_count
+					from lo_order
+					where org_id='.$core->session['org_id'].'
+					and lbps_id <> 1
+					and payment_method=\'purchaseorder\';
+				','order_count');
+				if($order_count > 0 || $core->session['payment_allow_purchaseorder'] == 1)
+				{
 		?>
-			<ul class="nav"><li><a id="payments-home" href="#!payments-home" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>
-		<?}?>
+			<ul class="nav"><li><a id="payments-home" href="#!payments-home" onclick="core.go(this.href);"><i class="icon-coins  icon-large"></i>Financials</a></li></ul>		<?}}?>
 		</div> <!-- /.nav-collapse-->
 
 	</div>
