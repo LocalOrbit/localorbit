@@ -74,7 +74,7 @@ market.editDeliv=function(DelivId){
 		}else{
 			core.ui.clearFields(document.marketForm,['day_ordinal','day_nbr','cycle','hours_due_before','delivery_start_time','delivery_end_time','pickup_start_time','pickup_end_time','fee_calc_type_id'],['deliv_address_id','hours_due_before','dd_id','pickup_address_id','devfee_id','amount']);
 		}
-		market.setPickupLabel();
+		market.determine2ndStepState();
 		$('#addDelivButton,#main_save_buttons,#delivTable').hide();
 
 		$('#editDeliv').fadeIn('fast');
@@ -82,8 +82,15 @@ market.editDeliv=function(DelivId){
 	}
 }
 
-market.setPickupLabel=function(){
-	$('#pickup_label1,#pickup_label2,#pickup_label3,#pickup_header')[((document.marketForm.deliv_address_id.selectedIndex == 0)?'hide':'show')]();
+market.determine2ndStepState=function(){
+	if(document.marketForm.deliv_address_id.options[document.marketForm.deliv_address_id.selectedIndex].value == 0)
+	{
+		$('#delivery_2nd_step').hide();
+	}
+	else
+	{
+		$('#delivery_2nd_step').show();
+	}
 }
 
 market.setOrdinalOptions=function(){
