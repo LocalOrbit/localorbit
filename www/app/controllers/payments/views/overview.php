@@ -84,7 +84,9 @@ $receivables = $data['receivables'];
 		<?}?>
 		<? if($money_out_count > 0 || (!lo3::is_seller())){?>
 		<div class="span4">
+			<? if($total['receivables'] > 0 || lo3::is_seller()){?>
 			<h2>Money Out</h2>
+			<?}?>
 			<?
 			foreach ($intervals as $key => $value)
 			{
