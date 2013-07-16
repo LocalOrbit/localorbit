@@ -61,13 +61,16 @@ $receivables = $data['receivables'];
 			<?
 			foreach ($intervals as $key => $value)
 			{
-				echo '<div class="overview-summary-list-item">
-						<div class="overview-summary-list-item-label'.(($key=='Overdue')?' text-error':'').'">' . $key . '</div>
+				echo('<div class="overview-summary-list-item">');
+				echo('<div class="overview-summary-list-item-label'.(($key=='Overdue')?' text-error':'').'">' . $key);
+				if ($key == 'Purchase Orders'){	echo(' <i class="helpslug icon-question-sign" rel="popover" data-title="'.$core->i18n('payments:overview:po_note_title').'" data-content="'.$core->i18n('payments:overview:po_note_content').'" data-original-title=""></i>'); }
+		
+				echo('</div>
 						<div class="overview-summary-list-item-value'.(($key=='Overdue')?' text-error':'').'">' . 
 							(($receivables[$value] <= 0)?'<div class="error">':'').
 							core_format::price($receivables[$value], false)
 							.(($receivables[$value] <= 0)?'</div>':'') . 
-						'</div></div>';
+						'</div></div>');
 			}				
 			?>
 			
@@ -90,13 +93,17 @@ $receivables = $data['receivables'];
 			<?
 			foreach ($intervals as $key => $value)
 			{
-				echo '<div class="overview-summary-list-item">
-				<div class="overview-summary-list-item-label'.(($key=='Overdue')?' text-error':'').'">' . $key . '</div>
-				<div class="overview-summary-list-item-value'.(($key=='Overdue')?' text-error':'').'">' .
+				echo('<div class="overview-summary-list-item">');
+				echo('<div class="overview-summary-list-item-label'.(($key=='Overdue')?' text-error':'').'">' . $key);
+				
+				if ($key == 'Purchase Orders'){	echo(' <i class="helpslug icon-question-sign" rel="popover" data-title="'.$core->i18n('payments:overview:po_note_title').'" data-content="'.$core->i18n('payments:overview:po_note_content').'" data-original-title=""></i>'); }
+		
+				echo('</div>');
+				echo('<div class="overview-summary-list-item-value'.(($key=='Overdue')?' text-error':'').'">' .
 				(($payables[$value] <= 0)?'<div class="error">':'').
 				core_format::price($payables[$value], false)
 				.(($payables[$value] <= 0)?'</div>':'') .
-				'</div></div>';
+				'</div></div>');
 				
 			}
 			?>
