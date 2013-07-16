@@ -77,7 +77,7 @@ core_ui::inline_message("Overview", "This is a snapshot of all money currently o
 
 // tab contents ******************************************************************************* = 0;
 $tab_count = 0;  //affects ids
-$this->overview($tab_count,$money_out_count);
+$this->overview($tab_count,$money_out_count,count($tabs));
 if($receivables)
 {
 	$tab_count++;
