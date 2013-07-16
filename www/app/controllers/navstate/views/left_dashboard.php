@@ -201,7 +201,7 @@
 					select count(lo_oid) as order_count
 					from lo_order
 					where org_id='.$core->session['org_id'].'
-					and lbps_id <> 1
+					and ldstat_id <> 1
 					and payment_method=\'purchaseorder\';
 				','order_count');
 				if($order_count > 0 || $core->session['org_payment_allow_purchaseorder'] == 1)
