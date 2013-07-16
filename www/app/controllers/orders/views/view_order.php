@@ -121,6 +121,7 @@ foreach($order->items as $item)
 		}
 
 
+		$field = 'pickup';
 		if($this_dd > 0)
 		{
 			if ($item['delivery_org_id'] == $order['org_id'])
@@ -178,6 +179,7 @@ foreach($order->items as $item)
 				<td class="dt">
 					<a href="<?=$link?><?=$item['prod_id']?>"><?=$item['product_name']?></a>
 					from <a href="#!sellers-oursellers--org_id-<?=$item['org_id']?>"><?=$item['seller_name']?></a>
+					<?=$item['lodeliv_id']?>
 					<? if(count($order->item_history[$item['lo_liid']]) > 0){?>
 					<div class="expandable" onclick="$('#item_status_history_<?=$item['lo_liid']?>').toggle();$(this).toggleClass('contract');">View Status History</div>
 					<?}?>
