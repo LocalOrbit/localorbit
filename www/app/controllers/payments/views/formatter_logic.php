@@ -414,7 +414,7 @@ function format_payable_info($data)
 	
 	# delivery_end_time
 	$html = '';
-	if ($data['delivery_status'] = "Delivered") {
+	if ($data['delivery_status'] == "Delivered") {
 		$html = core_format::date($data['delivery_end_time'],'short');
 	} else {
 		$time = intval($data['delivery_end_time']);
