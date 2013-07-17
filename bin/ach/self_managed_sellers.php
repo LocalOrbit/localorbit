@@ -114,7 +114,7 @@ foreach($payments as $payment)
 		foreach($payables as $payable)
 		{
 			
-			echo("\t".$payable['item_date']." ".$payable['payable_info'].' '.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_paid']),2)))."\n");
+			echo("\t".$payable['item_date']."|".$payable['payable_info'].'|'.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_paid']),2)))."\n");
 		}
 	}
 	else
