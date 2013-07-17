@@ -221,7 +221,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 				'inner',
 				'lo_order',
 				'(lo_order.lo_oid=lo_order_line_item.lo_oid)',
-				array('lo_order.org_id as buyer_org_id')
+				array('lo_order.org_id as buyer_org_id','lo_order.lo3_order_nbr')
 			)
 			->autojoin(
 				'inner',
