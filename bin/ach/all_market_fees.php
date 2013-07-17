@@ -104,6 +104,7 @@ $sql = "
 		(to_org_id=1 and from_org_id in (select org_id from organizations_to_domains where orgtype_id=2))
 	)
 	and (p.amount - p.amount_paid) > 0
+	and lo.lbps_id = 2
 	and lo.ldstat_id=4
 ";
 
