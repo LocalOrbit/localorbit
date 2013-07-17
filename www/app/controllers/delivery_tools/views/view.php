@@ -10,6 +10,9 @@ core_ui::fullWidth();
 
 $delivs = core::model('lo_order_deliveries')->get_outstanding_deliveries();
 $found = false;
+#echo('<pre>');
+#print_r($delivs);
+#echo('</pre>');
 foreach($delivs as $key=>$deliv)
 {
 	$found=true;
