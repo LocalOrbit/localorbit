@@ -83,13 +83,13 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 			d.name as domain_name,d.hostname,dd.deliv_address_id as orig_deliv_address_id
 			from lo_order_line_item lid
 			inner join lo_fulfillment_order on lo_fulfillment_order.lo_foid=lid.lo_foid
-			left join lo_order_deliveries lod on  lid.lodeliv_id=lod.lodeliv_id
-			left join addresses a1 on lod.deliv_address_id=a1.address_id
-			left join directory_country_region dcr1 on dcr1.region_id=a1.region_id
+			inner join lo_order_deliveries lod on  lid.lodeliv_id=lod.lodeliv_id
+			inner join addresses a1 on lod.deliv_address_id=a1.address_id
+			inner join directory_country_region dcr1 on dcr1.region_id=a1.region_id
 			left join addresses a2 on lod.pickup_address_id=a2.address_id
 			left join directory_country_region dcr2 on dcr2.region_id=a2.region_id
-			left join delivery_days dd on lod.dd_id=dd.dd_id
-			left join domains d on d.domain_id=dd.domain_id
+			inner join delivery_days dd on lod.dd_id=dd.dd_id
+			inner join domains d on d.domain_id=dd.domain_id
 			where lid.ldstat_id=2
 			and lod.delivery_start_time > (UNIX_TIMESTAMP(CURRENT_TIMESTAMP) - 86400)
 		';
@@ -218,43 +218,43 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		global $core;
 		$col = core::model('lo_order_line_item')
 			->autojoin(
-				'left',
+				'inner',
 				'lo_order',
 				'(lo_order.lo_oid=lo_order_line_item.lo_oid)',
 				array('lo_order.org_id as buyer_org_id')
 			)
 			->autojoin(
-				'left',
+				'inner',
 				'lo_fulfillment_order',
 				'(lo_fulfillment_order.lo_foid=lo_order_line_item.lo_foid)',
 				array('lo_fulfillment_order.lo3_order_nbr as seller_lo3_order_nbr')
 			)
 			->autojoin(
-				'left',
+				'inner',
 				'organizations',
 				'(organizations.org_id=lo_order.org_id)',
 				array('name')
 			)
 			->autojoin(
-				'left',
+				'inner',
 				'lo_order_deliveries',
 				'(lo_order_deliveries.lodeliv_id = lo_order_line_item.lodeliv_id)',
 				array('concat_ws(\'-\',organizations.org_id,lo_order_deliveries.deliv_address_id) as deliv_key_hash','lo_order_deliveries.pickup_start_time','lo_order_deliveries.pickup_end_time','lo_order_deliveries.deliv_org_id')
 			)
 			->autojoin(
-				'left',
+				'inner',
 				'delivery_days',
 				'(delivery_days.dd_id = lo_order_deliveries.dd_id)',
 				array('hours_due_before')
 			)
 			->autojoin(
-				'left',
+				'inner',
 				'addresses a1',
 				'(a1.address_id = lo_order_deliveries.deliv_address_id)',
 				array('a1.address as deliv_address','a1.city as deliv_city','a1.postal_code as deliv_postal_code','a1.org_id as address_org_id as deliv_org_id')
 			)
 			->autojoin(
-				'left',
+				'inner',
 				'directory_country_region dcr1',
 				'(a1.region_id = dcr1.region_id)',
 				array('dcr1.code as deliv_state')
