@@ -135,26 +135,10 @@ class core_controller_cart extends core_controller
 		return $items;
 	}
 
-	function delete_old_deliveries ()
-	{
-		if ($item['lodeliv_id'])
-		{
-			$delivery_count = core_db::col('select count(*) as count from lo_order_line_item where lo_order_line_item.lo_liid != ' . $item['lo_liid'] . ' and lo_order_line_item.lodeliv_id = ' . $item['lodeliv_id'] . ';', 'count');
-			if ($delivery_count == 0)
-			{
-				core::log('deleting orphan deliveries');
-				core_db::query('
-					delete from lo_order_deliveries
-					where lodeliv_id = ' . $item['lodeliv_id']
-				);
-			}
-		}
-	}
-
 	function update_quantity()
 	{
 		global $core;
-		
+		core::log('processing updating quantity');
 /*
 		$a_items = explode('_',$core->data['items']);
 		$items = array();
@@ -164,7 +148,9 @@ class core_controller_cart extends core_controller
 		$items = $this->parse_items();
 
 		$cart = core::model('lo_order')->get_cart();
-		core_db::query('delete from lo_order_deliveries where lo_oid='.$cart['lo_oid']);
+		$sql = 'delete from lo_order_deliveries where lo_oid='.$cart['lo_oid'];
+		core::log('about to wipe deliveries: '.$sql);
+		core_db::query($sql);
 		$cart->load_items(false,true);
 
 		core::log('items submitted: '.print_r($items,true));
@@ -263,7 +249,7 @@ class core_controller_cart extends core_controller
 				$new_item['producedat_delivery_instructions'] = $product['producedat_delivery_instructions'];
 				$new_item['producedat_longitude'] = $product['producedat_longitude'];
 				$new_item['producedat_latitude'] = $product['producedat_latitude'];
-				$order_deliveries = $new_item->find_next_possible_delivery($product, $dd_id,$order_deliveries);
+				$order_deliveries = $new_item->find_next_possible_delivery($cart['lo_oid'], $dd_id,$order_deliveries);
 				$new_item['lodeliv_id'] = $order_deliv['lodeliv_id'];
 				$new_item->save();
 			}
