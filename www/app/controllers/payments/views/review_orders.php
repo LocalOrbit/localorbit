@@ -16,18 +16,22 @@ else
 }
 $payables = new core_datatable('payables','payments/review_orders',$v_payables);
 payments__add_standard_filters($payables,'payables');
-$payables->add(new core_datacolumn('creation_date','Ref #',false,'14%',			'{ref_nbr_html}','{ref_nbr_html}','{ref_nbr_html}'));
+$payables->add(new core_datacolumn('creation_date','Ref #',false,'14%',			'{ref_nbr_html}','{ref_nbr}','{ref_nbr}'));
 if(lo3::is_admin() || lo3::is_market())
 {
 	$payables->add(new core_datacolumn('concat_ws(\' \',from_org_name,to_org_name)','From/To',true,'13%',			'{direction_html}','{direction}','{direction}'));
 }
 $payables->add(new core_datacolumn('po_number','PO #',false,'10%',			'{po_number}','{po_number}','{po_number}'));
-$payables->add(new core_datacolumn('creation_date','Description',false,'23%','{description_html}','{description_html}','{description_html}'));
+$payables->add(new core_datacolumn('creation_date','Description',false,'23%','{description_html}','{description_unformatted}','{description_unformatted}'));
 $payables->add(new core_datacolumn('creation_date','Order Date',true,'10%','{creation_date}','{creation_date}','{creation_date}'));
-$payables->add(new core_datacolumn('delivery_end_time','Deliver Date',true,'10%','{delivery_end_time_html}','{delivery_end_time_html}','{delivery_end_time_html}'));
+$payables->add(new core_datacolumn('delivery_end_time','Deliver Date',true,'10%','{delivery_end_time_html}','{delivery_end_time}','{delivery_end_time}'));
 $payables->add(new core_datacolumn('due_date','Payment Due',true,'12%','{payment_due}','{payment_due}','{payment_due}'));
 $payables->add(new core_datacolumn('amount','Amount Owed',true,'8%','{amount}','{amount}','{amount}'));
-#$payables->add(new core_datacolumn('status','Payment Status',true,'12%','{payment_status}','{payment_status}','{payment_status}'));
+
+
+if(lo3::is_admin())
+	$payables->add(new core_datacolumn('delivery_status','Delivery Status',true,'12%','{delivery_status}','{delivery_status}','{delivery_status}'));
+
 $payables->add(new core_datacolumn('payable_id',array(core_ui::check_all('payables'),'',''),false,'4%',core_ui::check_all('payables','payable_id'),' ',' '));
 
 $payables->columns[3]->autoformat='date-short';
@@ -35,7 +39,8 @@ $payables->columns[3]->autoformat='date-short';
 $payables->columns[((lo3::is_admin() || lo3::is_market())?7:6)]->autoformat='price';
 $payables->sort_column = 3 + ((lo3::is_admin() || lo3::is_market())?1:0);;
 $payables->sort_direction = 'desc';
-$payables->render_exporter = false;
+if(!lo3::is_admin())
+	$payables->render_exporter = false;
 ?>
 
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
