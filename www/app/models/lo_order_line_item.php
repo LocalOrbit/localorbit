@@ -191,7 +191,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		$found = false;
 		foreach($order_deliveries as $possible_delivery)
 		{
-			if($possible_delivery['dd_id_group'] == $this['dd_id'])
+			if($possible_delivery['dd_id'] == $this['dd_id'])
 			{
 				$found = true;
 				$this['lodeliv_id'] = $possible_delivery['lodeliv_id'];
@@ -269,7 +269,8 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 			
 			$this['lodeliv_id'] = $new['lodeliv_id'];
 			$this->save();
-			$order_deliveries = core::model('lo_order_deliveries')->collection()->filter('lo_oid','=',$this['lo_oid'])->load();
+			$order_deliveries[] = $new->__data; 
+			#= core::model('lo_order_deliveries')->collection()->filter('lo_oid','=',$this['lo_oid'])->to_array();
 		
 		}
 		#print_r($this->__data);
