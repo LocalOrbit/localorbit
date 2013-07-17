@@ -208,10 +208,12 @@ function format_payable_info($data)
 		$payable_info[] = explode('|',$info);
 		
 	# format the Ref Nbr column
+	$nohtml = '';
 	$html = '';
 	$printed_orders = array();
 	$first_payable = true;
 	$payment_id_class_started = false;
+	
 	foreach($payable_info as $info)
 	{
 		if(!isset($printed_orders[$info[1].'-'.$info[2]]))
@@ -252,9 +254,10 @@ function format_payable_info($data)
 						$html .= '<br />';
 				}
 			
-				
+				$nohtml .= (($nohtml == '')?'':' / ').$info[0];
 				if($info[1] == 'seller order')
 				{
+					
 					$html .= '<a href="#!orders-view_sales_order--lo_foid-'.$info[2];
 				}
 				else if(in_array($info[1],array('buyer order','hub fees','lo fees')))
@@ -278,6 +281,7 @@ function format_payable_info($data)
 	}
 	if($payment_id_class_started)
 		$html .= '</div>';
+	$data['ref_nbr'] = $nohtml;
 	$data['ref_nbr_html'] = $html;
 	$data['ref_nbr_unformatted'] = 'See website';
 		
@@ -417,6 +421,7 @@ function format_payable_info($data)
 		$html .= '<div style="font-weight:bold;color: #c00;">'.core_format::date($time,'short').'<br />overdue</div>';
 	}
 	$data['delivery_end_time_html'] = $html;
+	$data['delivery_end_time'] = core_format::date($data['delivery_end_time'],'short');
 	
 	
 	
