@@ -141,6 +141,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 		if(!is_null($deliv_address))
 		{
 			$this['deliv_address_id'] = $deliv_address['address_id'];
+			$this['deliv_org_id'] = $deliv_address['org_id'];
 			$this['deliv_address']    = $deliv_address['address'];
 			$this['deliv_city']       = $deliv_address['city'];
 			$this['deliv_region_id']  = $deliv_address['region_id'];
