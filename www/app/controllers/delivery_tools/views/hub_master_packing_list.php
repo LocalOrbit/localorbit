@@ -19,6 +19,11 @@ $core->config['delivery_tools_buttons'] = true;
 $first = true;
 foreach($items as $org_id=>$item_list)
 {
+	$order_nbrs = array();
+	foreach($item_list as $Item)
+	{
+		$order_nbrs[$Item['lo3_order_nbr']] = true;
+	}
 	if (!$first) {
 	?>
 		<div class="row page-break">&nbsp;</div>
@@ -42,6 +47,7 @@ foreach($items as $org_id=>$item_list)
 	<?
 	#print_r($item_list[0]);
 	echo('<h1>Items purchased by '.$item_list[0]['name'].'</h1>');
+	echo('<h4>Orders: '.implode(',',array_keys($order_nbrs)).'</h4>');
 	echo('<h4>Seller Delivery to ');
 	echo(($item_list[0]['buyer_org_id'] == $item_list[0]['deliv_org_id'])?'Buyer':'Hub');
 	echo(': '.core_format::date($core->data['start_time'],'short').' between '.core_format::date($core->data['start_time'],'time').' and '.core_format::date($core->data['end_time'],'time').' to '.$item_list[0]['deliv_address'].', '.$item_list[0]['deliv_city'].', '.$item_list[0]['deliv_state'].' '.$item_list[0]['deliv_postal_code'].'</h4>');
