@@ -24,7 +24,14 @@ if(!isset($core->config['delivery_tools_buttons']))
 $first = true;
 foreach($items as $org_id=>$item_list)
 {
-
+	$buyer_order_nbrs = array();
+	$seller_order_nbrs = array();
+	foreach($item_list as $Item)
+	{
+		$buyer_order_nbrs[$Item['lo3_order_nbr']] = true;
+		$seller_order_nbrs[$Item['seller_lo3_order_nbr']] = true;
+	}
+	#print_r($item_list[0]);
 	if (!$first) {
 	?>
 		<div class="page-break">&nbsp;</div>
@@ -44,9 +51,12 @@ foreach($items as $org_id=>$item_list)
 <div class="span6">
 	<?if(lo3::is_admin() || lo3::is_market()){?>
 	<h1>Individual Packing Slips</h1>
+	<? echo('<h4>Buyer Orders: '.implode(',',array_keys($buyer_order_nbrs)).'</h4>'); ?>
+	<? echo('<h4>Seller Orders: '.implode(',',array_keys($seller_order_nbrs)).'</h4>'); ?>
 	<?}else{?>
 	<h1>Buyer Packing Slips</h1>
-
+	<? echo('<h4>Orders: '.implode(',',array_keys($seller_order_nbrs)).'</h4>'); ?>
+	
 	<?}?>
 	Items purchased from <?=$org['name']?> by <?=$buyer['name']?>
 	<h4>Delivery: <?=core_format::date($core->data['start_time'],'short')?> between <?=core_format::date($core->data['start_time'],'time')?> and <?=core_format::date($core->data['end_time'],'time')?> to <?=$item_list[0]['deliv_address']?>, <?=$item_list[0]['deliv_city']?>, <?=$item_list[0]['deliv_state']?> <?=$item_list[0]['deliv_postal_code']?></h4>
