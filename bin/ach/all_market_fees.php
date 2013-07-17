@@ -256,7 +256,7 @@ foreach($payments_by_recip as $org_id=>$payment)
 		echo("\tpayable details: \n\t------------------------------\n");
 		for($i=0;$i<count($payment['details']);$i++)
 		{
-			echo("\t".$payment['payable_ids'][$i]." : ".core_format::price($payment['amounts'][$i],false)." : ".$payment['details'][$i]."\n");
+			echo("\t".$payment['payable_ids'][$i]."|".core_format::price($payment['amounts'][$i],false)."|".$payment['details'][$i]."\n");
 		}
 		echo("\t------------------------------\n");
 	}
