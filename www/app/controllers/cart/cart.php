@@ -182,15 +182,16 @@ class core_controller_cart extends core_controller
 					$item['category_ids']  = $product['category_ids'];
 					$item['final_cat_id']  = trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
 
-					$order_deliveries = $item->find_next_possible_delivery($product,$item['dd_id'],$order_deliveries);
 					//$deliveries = $new_item->find_possible_deliveries($new_item['lo_oid'], array());
 					//$deliv = $new_item->find_next_possible_delivery($new_item['lo_oid'], $deliveries);
 					//$order_deliv = core::model('lo_order_deliveries')->create($new_item['lo_oid'], $new_item->delivery, $product, $deliveries);
 					$item->find_best_price();
 				}
+				$order_deliveries = $item->find_next_possible_delivery($item['lo_oid'],$item['dd_id'],$order_deliveries);
+					
 
 				# unset the item array
-				$item->save();
+				#$item->save();
 			}
 			unset($items[$item['prod_id']]);
 		}
