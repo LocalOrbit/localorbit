@@ -2,6 +2,8 @@
 core::ensure_navstate(array('left'=>'left_dashboard'),'orders-list','products-delivery');
 
 core_ui::fullWidth();
+core_ui::load_library('js','checkout.js');
+
 
 core::head('View Order','');
 lo3::require_permission();
@@ -32,8 +34,7 @@ $order->get_items_by_delivery();
 $order->get_status_history();
 $order->get_item_status_history();
 #$addresses = $order->get_possible_delivery_addresses();
-$addresses = core::model('addresses')->collection()->add_formatter('simple_formatter')->filter('is_deleted',0)->filter('org_id',$order['org_id']);
-foreach($addresses as $address);
+$addresses = core::model('addresses')->collection()->add_formatter('simple_formatter')->filter('is_deleted','=',0)->filter('org_id','=',$order['org_id'])->load();
 
 $address = core::model('lo_order_address')
 	->autojoin(
@@ -43,7 +44,7 @@ $address = core::model('lo_order_address')
 		array('directory_country_region.code')
 	)
 	->collection()
-	->filter('lo_oid',$order['lo_oid'])
+	->filter('lo_oid','=',$order['lo_oid'])
 	->filter('address_type','Billing')
 	->row();
 
@@ -108,11 +109,9 @@ $dd_id = 0;
 foreach($order->items as $item)
 {
 	$this_dd = $item['dd_id'];
-	if($this_dd.'' == '')
-		$this_dd = (-1);
+
 	if($dd_id != $this_dd)
 	{
-		unset($field);
 		if($dd_id > 0)
 		{
 			echo('</tbody></table>');
@@ -122,32 +121,34 @@ foreach($order->items as $item)
 
 
 		$field = 'pickup';
-		if($this_dd > 0)
+		if ($item['delivery_org_id'] == $order['org_id'])
 		{
-			if ($item['delivery_org_id'] == $order['org_id'])
-			{
-				$field = 'deliv';
-			}
-			else if (intval($item['pickup_org_id']) == intval($order['org_id']))
-			{
-				$field = 'pickup';
-			}
-			if (!isset($field) || $addresses->__num_rows < 2 || ($item['delivery_start_time'] - $item['hours_due_before']*60*60) < time())
-			{
-			?>
-				<h3><?=$item['buyer_formatted_deliv1']?></h3>
-				<?=$item['buyer_formatted_deliv2']?>
-			<?} else { ?>
-				<h3><?=$item['buyer_formatted_deliv1']?></h3>
-				<?=$item['buyer_formatted_deliv2']?>
-				<p>Change delivery address: </p>
-				<select id="address_select_<?=$item['dd_id']?>">
-					<?=core_ui::options($addresses, $item[$field.'_address_id'],'address_id','formatted_address')?>
-				</select>
-				<input type="button" class="button_secondary" value="update delivery address" onclick="$('#lodelivinfo_<?=$item['dd_id']?>').html($('#address_select_<?=$item['dd_id']?> option:selected').html());core.doRequest('/orders/update_delivery_address', {'lodeliv_id' :$('#deliv_ids_<?=$this_dd?>').val() ,  'id' : $('#address_select_<?=$item['dd_id']?>').val(), 'field' : '<?=$field?>'});" />
-		  <?
-			}
+			$field = 'delivery';
 		}
+		
+		
+		# this only neesd to show if the user can actually configure the delivery
+		?>
+		<h3><?=$item['buyer_formatted_deliv1']?> <?=($item[$field.'_org_id'] .' / '.$order['org_id'])?></h3>
+		<?=$item['buyer_formatted_deliv2']?>
+		<?
+		if (
+			$addresses->__num_rows > 1 
+			&& 
+			($item['delivery_start_time'] - $item['hours_due_before']*60*60) > time() 
+			&&
+			($item[$field.'_org_id'] == $order['org_id'])
+		)
+		{
+		?>			
+			<p>Change delivery address: </p>
+			<select id="address_select_<?=$item['dd_id']?>">
+				<?=core_ui::options($addresses, $item[(($field == 'delivery')?'deliv':'pickup').'_address_id'],'address_id','formatted_address')?>
+			</select>
+			<input type="button" class="button_secondary" value="update delivery address" onclick="core.checkout.updateDelivery(<?=$item['lo_oid']?>,<?=$item['dd_id']?>,$('#address_select_<?=$item['dd_id']?>').val(),'<?=(($field == 'delivery')?'deliv_':'pickup_')?>',1);" />
+	  <?
+		}
+		
       ?>
 		<table class="dt table table-striped">
 			<thead>
