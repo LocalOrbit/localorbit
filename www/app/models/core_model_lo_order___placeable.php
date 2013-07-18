@@ -324,56 +324,6 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$this->arrange_by_next_delivery(true);
 		$byddid_deliveries = $this->deliveries->to_hash('dd_id');
 
-
-		# loop through all the delivery groups
-		core::log('submitted data: '.print_r($core->data,true));
-		foreach($this->items_by_delivery as $deliv_id=>$item_list)
-		{	
-			core::log('chekcing group '.$deliv_id);
-			if(is_numeric($core->data['delivgroup-'.$deliv_id]))
-			{
-				$address = core::model('addresses')->load($core->data['delivgroup-'.$deliv_id]);
-				foreach($item_list as $item)
-				{
-					$order_deliv = core::model('lo_order_deliveries')->load($item['lodeliv_id']);
-					if(intval($order_deliv['deliv_address_id']) == 0)
-					{
-						core::log('deliv address was 0');
-						$order_deliv['deliv_address_id'] = $address['address_id'];
-						$order_deliv['deliv_address'] = $address['address'];
-						$order_deliv['deliv_city'] = $address['city'];
-						$order_deliv['deliv_region_id'] = $address['region_id'];
-						$order_deliv['deliv_postal_code'] = $address['postal_code'];
-						$order_deliv['deliv_telephone'] = $address['telephone'];
-						$order_deliv['deliv_fax'] = $address['fax'];
-						$order_deliv['deliv_longitude'] = $address['longitude'];
-						$order_deliv['deliv_latitude'] = $address['latitude'];
-						$order_deliv['deliv_org_id'] = $core->session['org_id'];
-						$order_deliv->save();
-					}
-					else if(intval($order_deliv['pickup_address_id']) == 0)
-					{
-						core::log('pickup address was 0');
-						$order_deliv['pickup_address_id'] = $address['address_id'];
-						$order_deliv['pickup_address'] = $address['address'];
-						$order_deliv['pickup_city'] = $address['city'];
-						$order_deliv['pickup_region_id'] = $address['region_id'];
-						$order_deliv['pickup_postal_code'] = $address['postal_code'];
-						$order_deliv['pickup_telephone'] = $address['telephone'];
-						$order_deliv['pickup_fax'] = $address['fax'];
-						$order_deliv['pickup_longitude'] = $address['longitude'];
-						$order_deliv['pickup_latitude'] = $address['latitude'];
-						$order_deliv['pickup_org_id'] = $core->session['org_id'];
-						$order_deliv->save();
-							
-					}
-					else
-					{
-						core::log('neither was zero');
-					}
-				}
-			}
-		}
 		core::log('done determining delivery information!');
 		$this->items = null;
 		$this->load_items();
