@@ -175,3 +175,12 @@ core.checkout.hideNoPayment=function(){
 	$('#payment_selector_div').show();
 	
 }
+
+core.checkout.updateDelivery=function(oid,ddId,addrId,prefix){
+	core.doRequest('/catalog/update_checkout_delivery',{
+		'lo_oid':oid,
+		'dd_id':ddId,
+		'address_id':addrId,
+		'prefix':prefix
+	});
+}
