@@ -129,7 +129,7 @@ foreach($order->items as $item)
 		
 		# this only neesd to show if the user can actually configure the delivery
 		?>
-		<h3><?=$item['buyer_formatted_deliv1']?> <?=($item[$field.'_org_id'] .' / '.$order['org_id'])?></h3>
+		<h3><?=$item['buyer_formatted_deliv1']?></h3>
 		<?=$item['buyer_formatted_deliv2']?>
 		<?
 		if (
