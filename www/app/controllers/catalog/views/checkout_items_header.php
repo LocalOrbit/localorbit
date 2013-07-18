@@ -66,7 +66,7 @@
 				$final_address = 0;
 				if(count($all_addrs) > 1)
 				{
-					echo '<select name="delivgroup-'.$deliv['dd_id_group'].'" style="margin-top:8px;width:390px;" onchange="core.checkout.updateDelivery('.$deliv['lo_oid'].','.$deliv['dd_id'].',this.options[this.selectedIndex].value,\''.$prefix.'\');">';
+					echo '<select name="delivgroup-'.$deliv['dd_id_group'].'" style="margin-top:8px;width:390px;" onchange="core.checkout.updateDelivery('.$deliv['lo_oid'].','.$deliv['dd_id'].',this.options[this.selectedIndex].value,\''.$prefix.'\',0);">';
 					foreach($all_addrs as $address_id=>$address)
 					{
 						if($final_address == 0)
