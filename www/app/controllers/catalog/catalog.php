@@ -9,7 +9,11 @@ class core_controller_catalog extends core_controller
 		# verify that the user can actually update the order
 		$prefix = $core->data['prefix'];
 		core::log('select lo_oid from lo_order where lo_oid='.$core->data['lo_oid'].' and org_id='.$core->session['org_id']);
-		$oid = intval(core_db::col('select lo_oid from lo_order where lo_oid='.$core->data['lo_oid'].' and org_id='.$core->session['org_id'],'lo_oid'));
+		
+		if(lo3::is_admin() || lo3::is_market())
+			$oid = $core->data['lo_oid'];
+		else
+			$oid = intval(core_db::col('select lo_oid from lo_order where lo_oid='.$core->data['lo_oid'].' and org_id='.$core->session['org_id'],'lo_oid'));
 		
 		if($oid > 0)
 		{
@@ -43,7 +47,10 @@ class core_controller_catalog extends core_controller
 		{
 			core::log("could not find order");
 		}
-		
+		if($core->data['do_alert'] == 1)
+		{
+			core_ui::notification('Address updated.');
+		}
 		core::deinit();
 	}
 	
