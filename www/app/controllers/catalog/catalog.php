@@ -2,6 +2,51 @@
 
 class core_controller_catalog extends core_controller
 {
+	function update_checkout_delivery()
+	{
+		global $core;
+		
+		# verify that the user can actually update the order
+		$prefix = $core->data['prefix'];
+		core::log('select lo_oid from lo_order where lo_oid='.$core->data['lo_oid'].' and org_id='.$core->session['org_id']);
+		$oid = intval(core_db::col('select lo_oid from lo_order where lo_oid='.$core->data['lo_oid'].' and org_id='.$core->session['org_id'],'lo_oid'));
+		
+		if($oid > 0)
+		{
+			core::log('updating address');
+			$address = core::model('addresses')
+				->collection()
+				->filter('org_id','=',$core->session['org_id'])
+				->filter('address_id','=',$core->data['address_id'])
+				->to_array();
+			$deliveries = core::model('lo_order_deliveries')
+				->collection()
+				->filter('lo_oid','=',$oid)
+				->filter('dd_id','=',$core->data['dd_id']);
+			
+			foreach($deliveries as $deliv)
+			{
+				$deliv[$prefix.'address_id'] = $address[0]['address_id'];
+				$deliv[$prefix.'org_id'] = $core->session['org_id'];
+				$deliv[$prefix.'address'] = $address[0]['address'];
+				$deliv[$prefix.'city'] = $address[0]['city'];
+				$deliv[$prefix.'region_id'] = $address[0]['region_id'];
+				$deliv[$prefix.'postal_code'] = $address[0]['postal_code'];
+				$deliv[$prefix.'telephone'] = $address[0]['telephone'];
+				$deliv[$prefix.'fax'] = $address[0]['fax'];
+				$deliv[$prefix.'longitude'] = $address[0]['longitude'];
+				$deliv[$prefix.'latitude'] = $address[0]['latitude'];
+				$deliv->save();
+			}
+		}
+		else
+		{
+			core::log("could not find order");
+		}
+		
+		core::deinit();
+	}
+	
 	function update_product_delivery()
 	{
 		global $core;
