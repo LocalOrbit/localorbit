@@ -336,7 +336,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				foreach($item_list as $item)
 				{
 					$order_deliv = core::model('lo_order_deliveries')->load($item['lodeliv_id']);
-					if($order_deliv['deliv_address_id'] == 0)
+					if(intval($order_deliv['deliv_address_id']) == 0)
 					{
 						core::log('deliv address was 0');
 						$order_deliv['deliv_address_id'] = $address['address_id'];
@@ -351,7 +351,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 						$order_deliv['deliv_org_id'] = $core->session['org_id'];
 						$order_deliv->save();
 					}
-					else if($order_deliv['pickup_address_id'] == 0)
+					else if(intval($order_deliv['pickup_address_id']) == 0)
 					{
 						core::log('pickup address was 0');
 						$order_deliv['pickup_address_id'] = $address['address_id'];
