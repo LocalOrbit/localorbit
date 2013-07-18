@@ -176,11 +176,12 @@ core.checkout.hideNoPayment=function(){
 	
 }
 
-core.checkout.updateDelivery=function(oid,ddId,addrId,prefix){
+core.checkout.updateDelivery=function(oid,ddId,addrId,prefix,doAlert){
 	core.doRequest('/catalog/update_checkout_delivery',{
 		'lo_oid':oid,
 		'dd_id':ddId,
 		'address_id':addrId,
-		'prefix':prefix
+		'prefix':prefix,
+		'do_alert':doAlert
 	});
 }
