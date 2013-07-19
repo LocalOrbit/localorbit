@@ -11,8 +11,8 @@ $hashUrl = $core->view[3]?'true':'false';
 
 
 #print_r($addresses);
-if($core->data['cart'] == 'yes')
-	core::js('$(\'#cartFilterCheck\').prop(\'checked\',true);core.catalog.setFilter(\'cartOnly\',true);');
+#if($core->data['cart'] == 'yes')
+#	core::js('$(\'#cartFilterCheck\').prop(\'checked\',true);core.catalog.setFilter(\'cartOnly\',true);');
 ?>
 
 <!--
