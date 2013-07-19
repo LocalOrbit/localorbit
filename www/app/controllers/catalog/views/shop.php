@@ -6,7 +6,7 @@ global $core;
 lo3::user_can_shop();
 
 global $left_url;
-$left_url = 'app.php#!catalog-shop';
+$left_url = 'app.php#!catalog-shop-';
 //http://devspringfield.localorb.it/app.php#!catalog-view_product--prod_id-2351
 
 #$start = microtime();
@@ -14,8 +14,14 @@ $left_url = 'app.php#!catalog-shop';
 	if($core->data['show_news'] == 'yes')
 	{
 		core::process_command('dashboard/release_news');
-		$left_url .= '--show_news-yes';
+		$left_url .= '-show_news-yes';
 	}
+	
+	if($core->data['cart'] == 'yes')
+	{
+		$left_url .= '-cart-yes';
+	}
+
 
 	#core::ensure_navstate(array('left'=>'left_shop'));
 	core::head('Buy Local Food','Buy local food on Local Orbit');
