@@ -43,7 +43,7 @@ core.catalog.hideSpecial=function(){
 }
 
 core.catalog.setFilter=function(type,id,parentId,updateListing){
-	core.alertHash(core.catalog.filters);
+	//core.alertHash(core.catalog.filters);
 	var newfilter;
 	core.log('set filter called: '+type+' /' +id);
 	$('#weekly_special').hide();
@@ -138,7 +138,7 @@ core.catalog.setFilter=function(type,id,parentId,updateListing){
 		});
 	}
 	//core.alertHash(core.catalog.filters);
-	core.alertHash(core.catalog.filters);
+	//core.alertHash(core.catalog.filters);
 	if(updateListing)
 		core.catalog.updateListing();
 }
