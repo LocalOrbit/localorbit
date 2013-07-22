@@ -28,13 +28,23 @@ echo("\n");
 
 
 $order = core_db::row('
-	select domain_id,org_id,UNIX_TIMESTAMP(order_date) as start_time
+	select lo_order.domain_id,lo_order.org_id,UNIX_TIMESTAMP(order_date) as start_time,
+	d.tz_id,tz.offset_seconds,d.do_daylight_savings
 	from lo_order 
+	inner join domains d on (lo_order.domain_id=d.domain_id)
+	inner join timezones tz on (d.tz_id=tz.tz_id)
 	where lo_oid='.$config['oid']
 );
 $start_time = $order['start_time'];
 $domain_id  = $order['domain_id'];
 $org_id     = $order['org_id'];
+
+$core->config['domain'] = array(
+	'offset_seconds'=>$order['offset_seconds'],
+	'do_daylight_savings'=>$order['do_daylight_savings'],
+
+);
+$core->session['time_offset'] = $order['offset_seconds'] + (3600 * $order['do_daylight_savings']);
 
 $items = core::model('lo_order_line_item')
 	->collection()
