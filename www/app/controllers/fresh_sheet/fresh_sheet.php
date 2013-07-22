@@ -79,6 +79,7 @@ class core_controller_fresh_sheet extends core_controller
 				'HTML_LOGO_IMAGE1'=>$logo_image,
 				'HTML_LOGO_IMAGE2'=>$logo_image,
 				'HTML_ABOUT_US'=>$domain['market_profile'],
+				'HTML_CUSTOM_TAGLINE'=>$domain['custom_tagline'],
 			),
 			$seg_opts
 		);
