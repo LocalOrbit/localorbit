@@ -15,7 +15,7 @@ foreach($payables as $group_key=>$payable_list)
 {
 	$payable_ids = array();
 	list($need_pay,$from_org_id,$to_org_id) = explode('-', $group_key);
-	echo('from org is: '. $from_org_id.'<br />');
+
 ?>
 <div class="row <?=$core->data['tab']?>_row" id="<?=$core->data['tab']?>__area__<?=$group_key?>">
 	<div class="span6">
