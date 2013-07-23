@@ -26,6 +26,7 @@ $payables->add(new core_datacolumn('creation_date','Description',false,'23%','{d
 $payables->add(new core_datacolumn('creation_date','Order Date',true,'10%','{creation_date}','{creation_date}','{creation_date}'));
 $payables->add(new core_datacolumn('delivery_end_time','Deliver Date',true,'10%','{delivery_end_time_html}','{delivery_end_time}','{delivery_end_time}'));
 $payables->add(new core_datacolumn('due_date','Payment Due',true,'12%','{payment_due}','{payment_due}','{payment_due}'));
+$payables->add(new core_datacolumn('payable_status','Buyer Payment',true,'8%','{payable_status}','{payable_status}','{payable_status}'));
 $payables->add(new core_datacolumn('amount','Amount Owed',true,'8%','{amount}','{amount}','{amount}'));
 
 
@@ -36,7 +37,7 @@ $payables->add(new core_datacolumn('payable_id',array(core_ui::check_all('payabl
 
 $payables->columns[3]->autoformat='date-short';
 //$payables->columns[4]->autoformat='date-short';
-$payables->columns[((lo3::is_admin() || lo3::is_market())?7:6)]->autoformat='price';
+$payables->columns[((lo3::is_admin() || lo3::is_market())?8:7)]->autoformat='price';
 $payables->sort_column = 3 + ((lo3::is_admin() || lo3::is_market())?1:0);;
 $payables->sort_direction = 'desc';
 if(!lo3::is_admin())
