@@ -86,6 +86,7 @@ function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_colu
 	$do_status_pending = false;
 	$do_status_delivery = false;
 	
+	
 	$do_payment_method = false;
 	$do_payable_type   = false;
 	
@@ -169,7 +170,11 @@ function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_colu
 		$do_payable_type = true;
 	}
 	
-	if($datatable->name == 'receivables' and lo3::is_seller())
+	if(
+		($datatable->name == 'receivables' and lo3::is_seller())
+		||
+		($datatable->name == 'payables' && (lo3::is_admin() || lo3::is_market()))
+		)
 	{
 		$do_status_delivery = true;
 	}
@@ -229,6 +234,18 @@ function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_colu
 					'service fee'=>'Service Fees',
 					'lo fees'=>'Transaction Fees',
 				),'Type','All Types');
+			make_filter($datatable,'delivery_status',array(
+				'Delivered'=>'Delivered',
+				'Pending'=>'Pending',
+				'Canceled'=>'Canceled',
+				),'Delivery','All');
+			make_filter($datatable,'payable_status',array(
+				'Paid'=>'Paid',
+				'Unpaid'=>'Unpaid',
+				'Paid'=>'Paid',
+				'Refunded'=>'Refunded',
+				'Partially Paid'=>'Partially Paid',
+				),'Buyer Payment','All');
 		}
 		
 		
@@ -360,16 +377,24 @@ function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_colu
 							'transfer'=>'Payment Transfer',
 						),'Pending','All Types');
 				}
-				if($do_status_delivery)
-				{
-					make_filter($datatable,'delivery_status',array(
-						'Pending'=>'Pending',
-						'Canceled'=>'Canceled',
-						'Delivered'=>'Delivered',
-						'Partially Delivered'=>'Partially Delivered',
-						'Contested'=>'Contested',
-					),'Delivery Status','All Statuses');
-				}
+
+				
+				make_filter($datatable,'delivery_status',array(
+					'Pending'=>'Pending',
+					'Canceled'=>'Canceled',
+					'Delivered'=>'Delivered',
+					'Partially Delivered'=>'Partially Delivered',
+					'Contested'=>'Contested',
+					),'Delivery','All');
+				make_filter($datatable,'payable_status',array(
+					'Paid'=>'Paid',
+					'Unpaid'=>'Unpaid',
+					'Paid'=>'Paid',
+					'Refunded'=>'Refunded',
+					'Partially Paid'=>'Partially Paid',
+					'Manual Review'=>'Manual Review',
+					),'Buyer Payment','All');
+				
 				
 				if($do_payment_method)
 				{
