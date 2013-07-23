@@ -242,10 +242,6 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 		<?}?>
 		<?if(array_key_exists('account_suspended', $_REQUEST) && $_REQUEST['account_suspended'] == 1){?>
 			core.ui.error('Your account has been suspended. Please <a href="https://localorbit.zendesk.com/anonymous_requests/new">contact customer support</a>');
-		<?}?>
-
-		<?if(isset($_REQUEST['login_req'])) {?>
-			core.ui.error('Log in here to begin shopping.');
 		<?}?>	
 	</script>
 
