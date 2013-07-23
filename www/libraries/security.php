@@ -18,8 +18,9 @@ class lo3
 		if(intval($core->session['user_id']) == 0)
 		{
 			$core->session['postauth_url'] = $core->data['_requestor_url'];
-			
-			core::js("location.href='/login.php';");
+
+			//core.ui.popup('','','<strong>Error:</strong><br />Please correct this error and try again.','close');
+			core::js("location.href='/login.php?login_req=1';");
 			core::deinit();
 		}
 	}
@@ -46,6 +47,8 @@ class lo3
 	{
 		global $core;	
 		// store closed
+		//http://devnorthsoundwa.localorb.it/app.php#!catalog-shop--cat1-121
+		
 		if($core->config['domain']['is_closed'] == 1) {
 			//core::process_command('catalog/store_closed',false);
 			core::js("location.href='/app.php#!catalog-store_closed';");
