@@ -483,7 +483,7 @@ function format_payable_info($data)
 		$data['amount'] = core_format::price($data['amount'],false);
 		$data['payment_date'] = core_format::date($data['payment_date'],'short');
 	}
-	
+	#core::log(print_r($data,true));
 	return $data;
 }
 ?>
