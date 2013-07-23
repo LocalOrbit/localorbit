@@ -227,11 +227,19 @@ class core_model_lo_order___utility extends core_model_lo_order___placeable
 			# keep track of the item statuses for the main order,
 			# and for each of the fulfillment orders
 			$statuses['lo_order']['ldstat_id:'.$item['ldstat_id']] = true;
-			$statuses['lo_order']['lbps_id:'.$item['lbps_id']] = true;
 			$statuses['lo_order']['lsps_id:'.$item['lsps_id']] = true;
 			$statuses[$item['lo_foid']]['ldstat_id:'.$item['ldstat_id']] = true;
 			$statuses[$item['lo_foid']]['lsps_id:'.$item['lsps_id']] = true;
-			$statuses[$item['lo_foid']]['lbps_id:'.$item['lbps_id']] = true;
+			if($item['ldstat_id'] == 3)
+			{
+				$statuses['lo_order']['lbps_id:2'] = true;
+				$statuses[$item['lo_foid']]['lbps_id:2'] = true;
+			}
+			else
+			{
+				$statuses['lo_order']['lbps_id:'.$item['lbps_id']] = true;
+				$statuses[$item['lo_foid']]['lbps_id:'.$item['lbps_id']] = true;
+			}
 		}
 
 		core::log('status hash: '.print_r($statuses,true));
