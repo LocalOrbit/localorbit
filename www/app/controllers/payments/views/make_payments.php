@@ -15,6 +15,7 @@ foreach($payables as $group_key=>$payable_list)
 {
 	$payable_ids = array();
 	list($need_pay,$from_org_id,$to_org_id) = explode('-', $group_key);
+	echo('from org is: '. $from_org_id.'<br />');
 ?>
 <div class="row <?=$core->data['tab']?>_row" id="<?=$core->data['tab']?>__area__<?=$group_key?>">
 	<div class="span6">
@@ -45,13 +46,20 @@ foreach($payables as $group_key=>$payable_list)
 		</table>
 	</div>
 	<div class="span6">
-		<?if($group_totals[$group_key] > 0){?>
+		<? if($group_totals[$group_key] > 0 && $from_org_id != 1){?>
 		<h2><i class="icon-coins">&nbsp;</i>Method</h2>
 		<input type="hidden" name="<?=$core->data['tab']?>__group_total__<?=$group_key?>" value="<?=$group_totals[$group_key]?>" />
 		<input type="hidden" name="<?=$core->data['tab']?>__payable_ids__<?=$group_key?>" value="<?=implode(',',$payable_ids)?>" />
 		<? $this->payment_method_selector($core->data['tab'],$payable_list[0]['from_org_id'],$payable_list[0]['to_org_id'],$group_key);?>
 		<?}else{?>
-			<h2><i class="icon-coins">&nbsp;</i>These invoices have already been paid.</h2>
+			
+			<?if($from_org_id == 1){?>
+				<h2><i class="icon-coins">&nbsp;</i>You cannot invoice Local Orbit.</h2>
+
+			<?}else{?>
+				
+				<h2><i class="icon-coins">&nbsp;</i>These invoices have already been paid.</h2>
+			<?}?>
 			<br />
 			<input type="button" onclick="$('#<?=$core->data['tab']?>__area__<?=$group_key?>').hide();core.payments.checkAllPaymentsMade('<?=$core->data['tab']?>');" class="btn btn-warning" value="Got it" />
 	
