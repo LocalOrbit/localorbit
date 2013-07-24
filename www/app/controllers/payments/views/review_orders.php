@@ -40,7 +40,10 @@ $payables->add(new core_datacolumn('payable_id',array(core_ui::check_all('payabl
 
 $payables->columns[3]->autoformat='date-short';
 //$payables->columns[4]->autoformat='date-short';
-$payables->columns[((lo3::is_admin() || lo3::is_market())?8:7)]->autoformat='price';
+$amount_col = ((lo3::is_admin() || lo3::is_market())?7:6);
+if(lo3::is_admin())
+	$amount_col++;
+$payables->columns[$amount_col]->autoformat='price';
 $payables->sort_column = 3 + ((lo3::is_admin() || lo3::is_market())?1:0);;
 $payables->sort_direction = 'desc';
 if(!lo3::is_admin())
