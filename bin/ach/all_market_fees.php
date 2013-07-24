@@ -21,6 +21,7 @@ $config = array(
 	'report-payable-details'=>0,
 	'report-sql'=>0,
 	'payable-start-date'=>"2013-05-01",
+	'process-org-id'=>0,
 );
 
 
@@ -273,7 +274,7 @@ foreach($payments_by_recip as $org_id=>$payment)
 	}
 	else
 	{
-		if($config['do-ach'] == 1)
+		if($config['do-ach'] == 1 || ($config['process-org-id'] == $org_id))
 		{
 			$record = core::model('payments');
 			$record['amount'] = abs($payment['amount']);
