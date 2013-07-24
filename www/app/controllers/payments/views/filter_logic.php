@@ -234,18 +234,6 @@ function payments__add_standard_filters($datatable,$tab='',$do_orig_payment_colu
 					'service fee'=>'Service Fees',
 					'lo fees'=>'Transaction Fees',
 				),'Type','All Types');
-			make_filter($datatable,'delivery_status',array(
-				'Delivered'=>'Delivered',
-				'Pending'=>'Pending',
-				'Canceled'=>'Canceled',
-				),'Delivery','All');
-			make_filter($datatable,'payable_status',array(
-				'Paid'=>'Paid',
-				'Unpaid'=>'Unpaid',
-				'Paid'=>'Paid',
-				'Refunded'=>'Refunded',
-				'Partially Paid'=>'Partially Paid',
-				),'Buyer Payment','All');
 		}
 		
 		
