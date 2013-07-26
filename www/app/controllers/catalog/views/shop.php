@@ -11,9 +11,13 @@ $left_url = 'app.php#!catalog-shop-';
 
 #$start = microtime();
  	# if the buyer is reaching this page after logging in, show the news
+ 	
+ 	
 	if($core->data['show_news'] == 'yes')
 	{
-		core::process_command('dashboard/release_news');
+		# we don't want to show the news if we have to show the dd_id selector
+		if(intval($core->session['dd_id']) != 0)
+			core::process_command('dashboard/release_news');
 		$left_url .= '-show_news-yes';
 	}
 	
@@ -177,6 +181,29 @@ $left_url = 'app.php#!catalog-shop-';
 		core::write_navstate();
 		$this->left_filters($cats,$sellers,$days,$addresses,$left_url);
 		core::hide_dashboard();
+		
+		# figure out if we need to show the dd_id selector
+		$deliv_keys = array_keys($delivs);
+		
+		# check to see if the user's dd_id in their session is valid on 
+		# this market
+		if(intval($core->session['dd_id']) != 0 && !in_array($core->session['dd_id'],$deliv_keys))
+		{
+			$core->session['dd_id'] = 0;
+		}
+			
+		if(intval($core->session['dd_id']) == 0)
+		{
+			if(count($deliv_keys) == 1)
+			{
+				$core->session['dd_id'] = $deliv_keys[0];
+			}
+			else
+			{
+				echo("need to show selector\n");
+				$this->delivery_day_selector($days,$left_url);
+			}
+		}
 
 		#===============================
 		# now render the main product listing
@@ -311,7 +338,7 @@ $js = '';
 	
 #	$js .= 'core.catalog.setFilter(\'cat1\','.intval(trim($core->data['cat1'])).');';
 	
-$js .= "core.catalog.initCatalog(".(($core->data['cart'] == 'yes')?1:0).");";
+$js .= "core.catalog.initCatalog(".(($core->data['cart'] == 'yes')?1:0).",".(intval($core->session['dd_id'])).");";
 	
 core::js("window.setTimeout('".$js."',400);");
 core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });");

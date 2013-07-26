@@ -2,6 +2,14 @@
 
 class core_controller_catalog extends core_controller
 {
+	function set_dd_session()
+	{
+		global $core;
+		$core->session['dd_id'] = $core->data['dd_id'];
+		core::log('session dd_id is now: '.$core->session['dd_id']);
+		core::deinit();
+	}
+	
 	function update_checkout_delivery()
 	{
 		global $core;

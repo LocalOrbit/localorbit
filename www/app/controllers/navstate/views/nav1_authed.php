@@ -119,7 +119,7 @@ $(function()
 				<span class="span4">
 					<? if($cart_count == 0){?>
 						You do not have any items in your cart.
-						<a class="btn btn-primary btn-block" href="#!catalog-shop">Shop Now</a>
+						<a class="btn btn-primary btn-block" href="#!catalog-shop-">Shop Now</a>
 
 					<?}else{?>
 					<span class="pull-left" style="padding-top: 8px;"><strong>Subtotal: <?=core_format::price($cart['grand_total'])?></strong></span>
@@ -157,7 +157,7 @@ $(function()
 </ul>
 <? core::replace('nav1top');?>
 <li>
-	<a id="catalog-shop" href="<?=$core->config['app_page']?>#!catalog-shop" onclick="core.go(this.href);" class="main">
+	<a id="catalog-shop" href="<?=$core->config['app_page']?>#!catalog-shop-" onclick="core.go(this.href);" class="main">
 		<span id="catalog-shop" class="nav-actual"><?=$core->i18n['nav1:shop']?></span>
 		<span class="nav-sec">See what's fresh</span>
 	</a>

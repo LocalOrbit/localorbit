@@ -397,7 +397,7 @@ core.catalog.updateListing=function(){
 }
 
 core.catalog.matchesDeliveryDay=function(deliveryDays, product) {
-	var a = deliveryDays.split('_').sort();
+	var a = new String(deliveryDays).split('_').sort();
 	var b = product.dd_ids.split(',').sort();
 	while( a.length > 0 && b.length > 0 )
 	{
@@ -411,13 +411,14 @@ core.catalog.matchesDeliveryDay=function(deliveryDays, product) {
 	return false;
 }
 
-core.catalog.initCatalog=function(cartOnly){
+core.catalog.initCatalog=function(cartOnly,ddIdFilter){
 	core.catalog['filters']['seller'] = 0;
 	core.catalog['filters']['cat1'] = 0;
 	core.catalog['filters']['cat2'] = 0;
 	core.catalog['filters']['priceType'] = 0;
 	core.catalog['filters']['cartOnly'] = 0;
 	core.catalog['filters']['cartOnly'] = 0;
+	core.catalog['filters']['dd'] = 0;
 
 
 	core.addHandler('onrequest',core.catalog.closeAllPopups);
@@ -467,9 +468,18 @@ core.catalog.initCatalog=function(cartOnly){
 	if(cartOnly == 1){
 		core.catalog.setFilter('cartOnly',true);
 	}
+	var updateListing = false;
 	if(!isNaN(core.afterCatalogInitCat1Filter)){
 		core.catalog.setFilter('cat1',core.afterCatalogInitCat1Filter);
 		core.afterCatalogInitCat1Filter = null;
+		updateListing = true;
+	}
+	if(ddIdFilter != 0){
+		core.catalog.setFilter('dd',ddIdFilter);
+		updateListing = true;
+	}
+	if(updateListing){
+		core.catalog.updateListing();
 	}
 }
 
