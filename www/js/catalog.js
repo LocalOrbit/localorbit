@@ -104,7 +104,7 @@ core.catalog.setFilter=function(type,id,parentId,updateListing){
 			//$('.filter_dd').removeClass('active');
 			if(core.catalog.filters.dd != 0){
 				core.log('removing class from '+core.catalog.filters.dd);
-				$('#filter_dd_'+core.catalog.filters.dd).parent().removeClass('active');
+				$('#filter_dd_'+core.catalog.filters.dd+',#filter_ddpopup_'+core.catalog.filters.dd).parent().removeClass('active');
 			}
 			var oldDD = core.catalog.filters.dd;
 			core.catalog.filters.dd = (core.catalog.filters.dd == id)?0:id;
@@ -115,7 +115,7 @@ core.catalog.setFilter=function(type,id,parentId,updateListing){
 				// if we were turning off the filter, turn all on
 				//core.log('adding class');
 				core.catalog.resetDeliveryDateChange();
-				$('#filter_dd_'+core.catalog.filters.dd).parent().addClass('active');
+				$('#filter_dd_'+core.catalog.filters.dd+',#filter_ddpopup_'+core.catalog.filters.dd).parent().addClass('active');
 				core.catalog.confirmDeliveryDateChange(true);
 				//$('.prodDd').val(id);
 			}else{
