@@ -1,6 +1,7 @@
 <?php
 $days = $core->view[0];
 $hashUrl = $core->view[1];
+$addresses = $core->view[2];
 
 ?>
 <div id="ddSelectorContinue"></div>
@@ -8,7 +9,7 @@ $hashUrl = $core->view[1];
 	<div class="modal-header">
 		<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button> -->
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3 id="myModalLabel">Select your order date/location</h3>
+		<h3 id="myModalLabel">Please select your order date and delivery location</h3>
 	</div>
 		 
 	<div class="modal-body"> 
@@ -27,7 +28,7 @@ $hashUrl = $core->view[1];
 				$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 				?>
 				<li class="filter dd"><a style="padding: 10px 5px 10px 5px;" href="<?=$left_url?>" onclick="core.catalog.setFilter('dd','<?=$dd_ids?>');core.doRequest('/catalog/set_dd_session',{'dd_id':<?=$dd_ids?>}); return false;" id="filter_ddpopup_<?=$dd_ids?>">
-				<?=$type?> <?=core_format::date($time, 'shortest-weekday',true)?>, <?=$final_address?>
+				<?=$type?> <?=core_format::date($time,'l, M jS',true)?>, <?=$final_address?>
 				</a>
 				<?
 			}

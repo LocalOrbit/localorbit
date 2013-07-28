@@ -200,7 +200,7 @@ $left_url = 'app.php#!catalog-shop-';
 			}
 			else
 			{
-				$this->delivery_day_selector($days,$left_url);
+				$this->delivery_day_selector($days,$left_url,$addresses);
 			}
 		}
 

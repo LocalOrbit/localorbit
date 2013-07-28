@@ -204,7 +204,8 @@ class core_format
 			$int += intval($core->session['time_offset']);
 
 		#echo('adjusted is '.date($core->config['formats']['dates'][$format],$int).'<br />');
-		$date = date($core->config['formats']['dates'][$format],$int);
+		$format = (isset($core->config['formats']['dates'][$format]))?$core->config['formats']['dates'][$format]:$format;
+		$date = date($format,$int);
 		$date = str_replace('am','a.m.',$date);
 		$date = str_replace('pm','p.m.',$date);
 		return $date;
