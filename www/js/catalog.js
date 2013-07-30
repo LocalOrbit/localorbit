@@ -42,11 +42,14 @@ core.catalog.hideSpecial=function(){
 	$('#weekly_special').hide();
 }
 
-core.catalog.setFilter=function(type,id,parentId,updateListing){
+core.catalog.setFilter=function(type,id,parentId,updateListing,noHideSpecial){
 	//core.alertHash(core.catalog.filters);
 	var newfilter;
 	core.log('set filter called: '+type+' /' +id);
-	$('#weekly_special').hide();
+	if(noHideSpecial !== true){
+		core.log('hiding the weekly special');
+		$('#weekly_special').hide();
+	}
 	if(arguments.length <4)
 		updateListing=true;
 	switch(type){
@@ -258,7 +261,7 @@ core.catalog.confirmDeliveryDateChange = function (confirmed) {
 	}
 }
 
-core.catalog.updateListing=function(){
+core.catalog.updateListing=function(noHideSpecial){
 
 	// loop through all categories and toggle off show if neceesary
 	core.thingsToShow    = [];
@@ -466,16 +469,16 @@ core.catalog.initCatalog=function(cartOnly,ddIdFilter){
 
 	//alert( core.afterCatalogInitCartFilter +'/'+ core.afterCatalogInitCat1Filter);
 	if(cartOnly == 1){
-		core.catalog.setFilter('cartOnly',true);
+		core.catalog.setFilter('cartOnly',true,true,true,true);
 	}
 	var updateListing = false;
 	if(!isNaN(core.afterCatalogInitCat1Filter)){
-		core.catalog.setFilter('cat1',core.afterCatalogInitCat1Filter);
+		core.catalog.setFilter('cat1',core.afterCatalogInitCat1Filter,true,true,true);
 		core.afterCatalogInitCat1Filter = null;
 		updateListing = true;
 	}
 	if(ddIdFilter != 0){
-		core.catalog.setFilter('dd',ddIdFilter);
+		core.catalog.setFilter('dd',ddIdFilter,true,true,true);
 		updateListing = true;
 	}
 	if(updateListing){
