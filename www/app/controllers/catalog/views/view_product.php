@@ -1,7 +1,5 @@
 <?php
 
-core::ensure_navstate(array('left'=>'left_filters'));
-core_ui::showLeftNav();
 core::head('View a product','View a product.');
 lo3::require_permission();
 lo3::user_can_shop();
@@ -84,9 +82,8 @@ foreach($delivs as $deliv)
 		
 		uksort($days,'day_sort');
 
-core::ensure_navstate(array('left'=>'left_blank'));
+core::ensure_navstate(array('left'=>'left_empty'));
 core::write_navstate();
-$this->left_filters($cats,$sellers,undefined,array(),true);
 core_ui::load_library('js','catalog.js');
 
 $cats  = core::model('categories')->load_for_products(explode(',',$data['category_ids']));//->load()->collection();
