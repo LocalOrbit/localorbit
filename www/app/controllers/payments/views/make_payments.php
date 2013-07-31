@@ -46,14 +46,14 @@ foreach($payables as $group_key=>$payable_list)
 		</table>
 	</div>
 	<div class="span6">
-		<? if($group_totals[$group_key] > 0 && ($to_org_id != 1 && $from_org_id != 1)){?>
+		<? if($group_totals[$group_key] > 0 && (($to_org_id != 1 && $from_org_id != 1) || lo3::is_admin())){?>
 		<h2><i class="icon-coins">&nbsp;</i>Method</h2>
 		<input type="hidden" name="<?=$core->data['tab']?>__group_total__<?=$group_key?>" value="<?=$group_totals[$group_key]?>" />
 		<input type="hidden" name="<?=$core->data['tab']?>__payable_ids__<?=$group_key?>" value="<?=implode(',',$payable_ids)?>" />
 		<? $this->payment_method_selector($core->data['tab'],$payable_list[0]['from_org_id'],$payable_list[0]['to_org_id'],$group_key);?>
 		<?}else{?>
 			
-			<?if($to_org_id == 1 || $from_org_id == 1){?>
+			<?if((($to_org_id == 1 || $from_org_id == 1) && !lo3::is_admin())){?>
 				<h2><i class="icon-coins">&nbsp;</i>You cannot record payments to or from Local Orbit.</h2>
 
 			<?}else{?>
