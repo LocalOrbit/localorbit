@@ -407,6 +407,8 @@ class core_model_lo_order extends core_model_lo_order___utility
 				
 		$this->load_items();
 		
+		core::log('items: '.print_r($this->items->to_array(),true));
+		
 		# first, build the total that the delivery applies to
 		foreach($this->items as $item)
 		{
@@ -561,7 +563,8 @@ class core_model_lo_order extends core_model_lo_order___utility
 		$final_amount = 0;
 		if($discount['discount_type'] == 'Percent')
 		{
-			# if it's a % discount, figure out the final amount and save it.
+			# if it's a % discount, figure out the final amount and save it.	
+			core::log('for the % based discount, '.$discount['applicable_total'].' in items apply');
 			$final_amount = round(floatval($discount['applicable_total']) * ($discount['discount_amount'] / 100),2) * (-1);
 			$discount['applied_amount'] = ($final_amount * (-1));
 			$discount->save();
@@ -570,11 +573,16 @@ class core_model_lo_order extends core_model_lo_order___utility
 		{
 			# if it's a $ figure, we need to make sure that we're only discounting
 			# at MOST the discount amount.
+			core::log('for the fixed $ discount, '.$discount['applicable_total'].' items applied');
 			if($discount['applicable_total'] > $discount['discount_amount'])
 			{
-				$discount['applicable_total'] = $discount['discount_amount'];
+				$discount['applied_amount'] = ($discount['discount_amount']);
 			}
-			$discount['applied_amount'] = ($discount['applicable_total'] * (-1));
+			else
+			{
+				$discount['applied_amount'] = ($discount['applicable_total']);
+			}
+			
 			$discount->save();
 		}
 		core::log('final discount info: '.print_r($discount->__data,true));
