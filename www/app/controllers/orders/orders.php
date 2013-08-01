@@ -139,6 +139,7 @@ class core_controller_orders extends core_controller
 		$order = core::model('lo_order')->load($core->data['lo_oid']);
 		$order->get_items_by_delivery();
 		
+		
 		$changes = false;
 		
 		#core::log(print_r($core->data,true));
@@ -165,15 +166,39 @@ class core_controller_orders extends core_controller
 				$item['row_total']     = floatval($core->data['qty_delivered_'.$item['lo_liid']]) * floatval($item['unit_price']);
 				$item['row_adjusted_total']   = floatval($core->data['qty_delivered_'.$item['lo_liid']]) * floatval($item['unit_price']);
 				$item->save();
-            core::log('inventory ' . print_r($inventory, true));
+            core::log('inventory ' . print_r($inventory->__data, true));
 				$inventory->save();
 				$changes = true;
+				
+				# if this is a PO order, we can also adjust the payables for this item.
+				/*
+				if($order['payment_method'] == 'purchaseorder')
+				{
+					$payables = core::model('payables')
+						->collection()
+						->filter('parent_obj_id','=',$item['lo_liid'])
+						->filter('payable_type','in',array('buyer order','seller order','hub fees','lo fees'));
+					foreach($payables as $payable)
+					{
+						$correct_amount = round(floatval(($item['row_adjusted_total'] * $final_fees[$payable['payable_type']])),2);
+						$current_amount = round(floatval($payable['amount']),2);
+						
+						if($current_amount !== $correct_amount)
+						{
+							core::log('need to update payable: '.$payable['payable_id']);
+							$payable['amount'] = $correct_amount;
+							$payable->save();
+						}
+					}
+				}
+				*/
 			}
 		}
 		if($changes)
 		{
-			$order->get_items_by_delivery();
-			$order->update_totals();
+			#$order->get_items_by_delivery();
+			#$order->update_totals();
+			$order->rebuild_totals_payables(($order['payment_method'] == 'purchaseorder'));
 			core::js('$("#refresh_msg").show(300);');
 			core_ui::notification('quantities updated.');
 		}
