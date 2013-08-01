@@ -356,6 +356,315 @@ class core_model_lo_order extends core_model_lo_order___utility
 				->filter('lo_oid',$this['lo_oid']);
 		}
 	}
+	
+	function rebuild_totals_payables($update_payables=false)
+	{
+		global $core;
+		
+		# this hash contains the %s for each kind of payable
+		# it's used to recalc the payables later on after the final amounts
+		# are all setup.
+		$final_fees = array(
+			'buyer order'=>1,
+			'seller order'=>((100 - (
+				$this['fee_percen_hub'] + $this['fee_percen_lo'] + (($this['payment_method'] == 'paypal')?$order['paypal_processing_fee']:0)
+			)) / 100),
+			'hub fees'=>($this['fee_percen_hub'] / 100),
+			'lo fees'=>($this['fee_percen_lo'] / 100),
+		);
+		
+		core::log('final fee structure: '.print_r($final_fees,true));
+					
+		# load all of the delivery fees for calculation
+		$delivs = core::model('lo_order_delivery_fees')
+			->collection()
+			->filter('lo_oid','=',$this['lo_oid'])
+			->to_hash('dd_id');
+		foreach($delivs as $dd_id=>$deliv)
+			$delivs[$dd_id][0]['applicable_total'] = 0;
+
+		# load the discount code
+		$discount = core::model('lo_order_discount_codes')
+			->collection()
+			->filter('lo_oid','=',$this['lo_oid']);
+		$discount->next();
+		$discount = $discount->__model;
+		$discount['applicable_total'] = 0;
+		
+		
+		# These are used to keep track of various totals
+		$item_total = 0;
+		$adjusted_item_total = 0;
+		$grand_total = 0;
+		$delivery_total = 0;
+		$foids = array();
+		
+		# this is used to keep track of whether or not a discount applies.
+		# we're determining this in one loop, and applying in a second loop
+		# storing whether or not the discount needs to be applied to this item
+		# means we don't have to dupe that logic into the second loop
+		$item_discount_apply = array();
+				
+		$this->load_items();
+		
+		# first, build the total that the delivery applies to
+		foreach($this->items as $item)
+		{
+			# setup the hash to keep track of the totals per foid.
+			# we'll add up the final values in the 3rd item loop.
+			$foids[$item['lo_foid']] = array(
+				'grand_total'=>0,
+				'adjusted_total'=>0,
+			);
+			
+			# handle item to delivery total
+			
+			# there's a property of the delivery called 'applicable_total'
+			# it's used in two different ways depending on the type of delivery fee
+			#
+			# if it's a % delivery, then it's the total $ amount of item 
+			# delivered to the buyer, which at the end is multipled by the 
+			# fee %
+			# 
+			# if it's a $ figure, then applicable_total contains the NUMBER
+			# of items delivered. In this case, we need this amount to determine
+			# whether or not the fee should be applied at all. For example,
+			# a delivery might originally contain 3 items, but if none of them
+			# end up being delivered, then the fee should go away.
+			if($delivs[$item['dd_id']][0]['fee_calc_type_id'] == 1)
+			{
+				$delivs[$item['dd_id']][0]['applicable_total'] += floatval($item['unit_price'] * $item['qty_delivered']);
+			}
+			else
+			{
+				$delivs[$item['dd_id']][0]['applicable_total'] += floatval($item['qty_delivered']);
+			}
+		}
+		
+		#next, calculate the final delivery fees
+		foreach($delivs as $dd_id=>$deliv)
+		{
+			if($delivs[$dd_id][0]['fee_calc_type_id'] == 1)
+			{
+				# if this is a percentage fee,
+				$final_amount = round(floatval($delivs[$item['dd_id']][0]['applicable_total'] * ($delivs[$dd_id][0]['amount'] / 100)),2);
+				core::log($dd_id.' requires a '.$delivs[$dd_id][0]['amount'].' % delivery fee.');
+				core::log('the applicable items total '.$delivs[$item['dd_id']][0]['applicable_total']);
+				core::log('final amount: '.$final_amount);
+				$delivs[$dd_id][0]['applied_amount'] = $final_amount;
+			}
+			else
+			{
+				# if this is a fixed $ fee, then ONLY apply the fee
+				# if some positive quantity has been delivered:
+				if($delivs[$item['dd_id']][0]['applicable_total'] > 0)
+				{
+					$final_amount = $delivs[$dd_id][0]['amount'];
+					core::log($dd_id.' requires a $'.$delivs[$dd_id][0]['amount'].' delivery fee.');
+					core::log($delivs[$item['dd_id']][0]['applicable_total'].' applicable items were delivered');
+					core::log('final amount: '.$final_amount);
+					$delivs[$dd_id][0]['applied_amount'] = $final_amount;
+				}
+			}
+			
+			$delivery_total += $delivs[$dd_id][0]['applied_amount'];
+			
+			core::log('ready to save lo_order_delivery_fees '.$dd_id.': '.print_r($delivs[$dd_id][0],true));
+			$delivery = core::model('lo_order_delivery_fees')
+				->import($delivs[$dd_id][0]);
+			$delivery->__orig_data = array();
+			$delivery->save();			
+		}
+		
+		if($update_payables)
+		{
+			$deliveries = core::model('payables')
+				->collection()
+				->filter('parent_obj_id','=',$this['lo_oid'])
+				->filter('payable_type','=','delivery fee');
+			foreach($deliveries as $payable)
+			{			
+				# if this payable is from the buyer to local orbit,
+				# then it's for the full amount
+				if($payable['from_org_id'] == $this['org_id'])
+				{
+					$payable['amount'] = $delivery_total;
+					$payable->save();
+				}
+				else
+				{
+					# otherwise, we need to subtract some amount
+					if($payable['from_org_id'] == 1)
+					{
+						# this delivery fee is from local orbit to the MM.
+						# so, we need to subtract the hub fees off of it
+						$payable['amount'] = $delivery_total - ($delivery_total * $final_fees['lo fees']);
+						$payable->save();
+					}
+					else if($payable['to_org_id'] == 1)
+					{
+						# this delivery fee is from the MM back to LO
+						# so, it should only be the LO fee % of the total delivery
+						$payable['amount'] = ($delivery_total * $final_fees['hub fees']);
+						$payable->save();
+					}
+				}
+			}
+		}
+		
+		# next, figure out how much of the discount applies to items
+		# including their delivery fees.
+		foreach($this->items as $item)
+		{
+			# we need to determine if the discount code should be applied 
+			# to this item. Assume that it does, then rule it out
+			# based on the code's configuration.
+			$apply_discount = true;
+			
+			if(intval($discount['lodisc_id']) != 0)
+			{
+				# if the discount is restricted to a particular product...
+				if(intval($discount['restrict_to_product_id']) != 0)
+				{
+					if(intval($discount['restrict_to_product_id']) != intval($item['prod_id']))
+					{
+						$apply_discount = false;
+					}
+				}
+
+				# if the discount is restricted to a particular seller...
+				if(intval($discount['restrict_to_seller_org_id']) != 0)
+				{
+					if(intval($discount['restrict_to_seller_org_id']) != intval($item['seller_org_id']))
+					{
+						$apply_discount = false;
+					}
+				}
+				
+				# record the fact that this item does or does NOT need the discount.
+				$item_discount_apply[$item['lo_liid']] = $apply_discount;
+				
+				# if it did, then add it up.
+				if($apply_discount)
+				{
+					$discount['applicable_total'] += floatval($item['unit_price'] * $item['qty_delivered']);
+				}
+			}
+			else
+			{
+				# record the fact that this item does NOT need the discount.
+				$item_discount_apply[$item['lo_liid']] = false;
+			}
+		}
+		
+		# ok, we know now the final total for the discount. Save it as necessary
+		$final_amount = 0;
+		if($discount['discount_type'] == 'Percent')
+		{
+			# if it's a % discount, figure out the final amount and save it.
+			$final_amount = round(floatval($discount['applicable_total']) * ($discount['discount_amount'] / 100),2) * (-1);
+			$discount['applied_amount'] = ($final_amount * (-1));
+			$discount->save();
+		}
+		else
+		{
+			# if it's a $ figure, we need to make sure that we're only discounting
+			# at MOST the discount amount.
+			if($discount['applicable_total'] > $discount['discount_amount'])
+			{
+				$discount['applicable_total'] = $discount['discount_amount'];
+			}
+			$discount['applied_amount'] = ($discount['applicable_total'] * (-1));
+			$discount->save();
+		}
+		core::log('final discount info: '.print_r($discount->__data,true));
+		
+		# once we have the total, then apply the discounted amount to the items
+		# including payable updates
+		foreach($this->items as $item)
+		{
+			core::log('applying discount to item: '.$item['lo_liid']);
+			if($item_discount_apply[$item['lo_liid']])
+			{
+				# determine what % of the item this item makes up.
+				# apply that % to the total discount
+				
+				$orig_total = floatval($item['unit_price'] * $item['qty_delivered']);
+				$item_percent_of_total = $orig_total / $discount['applicable_total'];
+				$adjust_total_by = $item_percent_of_total * $discount['applied_amount'];
+				$adjust_total = $orig_total + $adjust_total_by;
+				
+				# write out a whole ton of debug for the items.
+				core::log('items original total: '.$orig_total);
+				core::log('this is '.($item_percent_of_total * 100).' % of the applicable total');
+				core::log('we need to adjust by '.$adjust_total_by);
+				core::log('therefore, the items adjusted total should be '.$adjust_total);
+				
+				$item['row_adjusted_total'] = $adjust_total;
+				$item->save();
+				
+				# save the adjusted total for the foid and oid
+				$foids[$item['lo_foid']]['item_total'] += $orig_total;
+				$foids[$item['lo_foid']]['adjusted_total'] += $adjust_total;
+				
+				$item_total += $orig_total;
+				$adjusted_item_total += $adjust_total;
+			}
+			else
+			{
+				$orig_total = floatval($item['unit_price'] * $item['qty_delivered']);
+				$adjust_total = $orig_total;
+				$item['row_adjusted_total'] = $adjust_total;
+				$item->save();
+				
+				# save the adjusted total for the foid and oid
+				$foids[$item['lo_foid']]['item_total'] += $orig_total;
+				$foids[$item['lo_foid']]['adjusted_total'] += $orig_total;
+				
+				$item_total += $orig_total;
+				$adjusted_item_total += $orig_total;
+			}
+			
+			# write the new payables here!
+			if($update_payables && ($orig_total != $adjusted_total))
+			{
+				core::log('we need to update the payables for item '.$item['lo_liid']);
+				$payables = core::model('payables')
+					->collection()
+					->filter('parent_obj_id','=',$item['lo_liid'])
+					->filter('payable_type','in',array('buyer order','seller order','lo fees','hub fees'));
+					
+				# loop through the payables for the item
+				# and adjust as necessary
+				foreach($payables as $payable)
+				{
+					$new_amount = floatval($adjust_total) * floatval($final_fees[$payable['payable_type']]);
+					core::log('adjusted '.$payable['payable_type'].' by '.$final_fees[$payable['payable_type']].' from '.$payable['amount'].' to '.$new_amount);
+					$payable['amount'] = $new_amount;
+					$payable->save();
+				}
+			}
+		}
+		
+		
+		# Save the final computed values to each seller order
+		foreach($foids as $foid=>$data)
+		{
+			$order = core::model('lo_fulfillment_order')->load($foid);
+			$order['grand_total'] = $data['adjusted_total'];
+			$order['adjusted_total'] = $data['item_total'] - $data['adjusted_total'];
+			$order->save();
+		}
+		
+		# Save the final computed values to the order
+		$this['grand_total'] = $adjusted_item_total + $delivery_total;
+		$this['item_total'] = $item_total;
+		$this['adjusted_total'] = $item_total - $adjusted_item_total;
+		
+		$this->save();
+
+		return $this;
+	}
 
 	function update_totals()
 	{
