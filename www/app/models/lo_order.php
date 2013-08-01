@@ -505,7 +505,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 					{
 						# this delivery fee is from the MM back to LO
 						# so, it should only be the LO fee % of the total delivery
-						$payable['amount'] = ($delivery_total * $final_fees['hub fees']);
+						$payable['amount'] = ($delivery_total * $final_fees['lo fees']);
 						$payable->save();
 					}
 				}
