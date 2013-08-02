@@ -75,7 +75,7 @@ class PayPalApi {
 			$items_total += $item['row_total'];
 
 			$rqParamString .= '&L_PAYMENTREQUEST_0_NAME'.$count.'='.urlencode($item['product_name']);
-			$rqParamString .= '&L_PAYMENTREQUEST_0_DESC'.$count.'='.urlencode('');
+			#$rqParamString .= '&L_PAYMENTREQUEST_0_DESC'.$count.'='.urlencode('');
 			$rqParamString .= '&L_PAYMENTREQUEST_0_AMT'.$count.'='.round($item['unit_price'],2);
 			$rqParamString .= '&L_PAYMENTREQUEST_0_QTY'.$count.'='.$item['qty_ordered'];
 			$rqParamString .= '&L_PAYMENTREQUEST_0_TAXAMT'.$count.'=0';
