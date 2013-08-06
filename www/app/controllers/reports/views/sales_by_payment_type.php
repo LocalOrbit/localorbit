@@ -60,6 +60,12 @@ $items = new core_datatable('sales_by_payment_type','reports/sales_by_payment_ty
 # this does the totaling 
 function sbpt_formatter($data)
 {
+	if($data['qty_delivered'] > 0 || $data['ldstat_id'] == 3)
+	{
+		$data['qty_ordered'] = intval($data['qty_delivered']);
+	}
+	
+	$data['row_total'] = $data['qty_ordered'] * $data['unit_price'];
 	$data['row_discount'] = $data['row_adjusted_total'] - $data['row_total'];
 
 	$data = core_controller_reports::master_formatter('sbpt_',$data);
