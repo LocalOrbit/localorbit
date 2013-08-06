@@ -108,6 +108,14 @@ $dd_id = 0;
 
 foreach($order->items as $item)
 {
+	$final_qty = $item['qty_ordered'];
+	if($item['qty_delivered'] > 0 || $item['ldstat_id'] == 3)
+	{
+		$final_qty = intval($item['qty_delivered']);
+	}
+
+	$item['row_total'] = $final_qty * $item['unit_price'];
+	
 	$this_dd = $item['dd_id'];
 
 	if($dd_id != $this_dd)
@@ -212,7 +220,7 @@ foreach($order->items as $item)
 					<?=$item[((intval($item['qty_delivered'])==1)?'unit':'unit_plural')]?>
 				</td>
 				<td class="dt"><?=core_format::price($item['unit_price'])?></td>
-				<td class="dt"><?=core_format::price(floatval($item['row_total']) - floatval($item['row_adjusted_total']))?></td>
+				<td class="dt"><?=core_format::price(floatval($item['row_total']) - floatval($item['row_adjusted_total']),false)?></td>
 				<td class="dt"><?=core_format::price($item['row_adjusted_total'],false)?></td>
 				<td class="dt"><?=$item['delivery_status']?></td>
 				<td class="dt"><?=$item['buyer_payment_status']?></td>
