@@ -68,6 +68,12 @@ function sold_items_formatter($data)
 {
 	global $core;
 
+	if($data['qty_delivered'] > 0 || $data['ldstat_id'] == 3)
+	{
+		$data['qty_ordered'] = intval($data['qty_delivered']);
+	}
+	$data['row_total'] = $data['qty_ordered'] * $data['unit_price'];
+	
 	# calculate the totals for each type of fee
 	$lo   = round($data['row_adjusted_total'] * (floatval($data['fee_percen_lo']) / 100), 2);
 	$hub  = round($data['row_adjusted_total'] * (floatval($data['fee_percen_hub']) / 100), 2);
@@ -86,18 +92,14 @@ function sold_items_formatter($data)
 		$core->data['sold_items_data']['net'] += $data['row_adjusted_total'] - $lo - $hub - $proc;
 	}
 	
+
+	
 	$data['unit_price'] = core_format::price($data['unit_price']);
 	$data['row_total'] = core_format::price($data['row_total']);
 	
 	$data['discount'] = core_format::price($discount,false);
 	$data['row_adjusted_total'] = core_format::price($data['row_adjusted_total'],false);
-	
-	if($data['qty_delivered'] > 0 || $data['ldstat_id'] == 3)
-	{
-		$data['qty_ordered'] = intval($data['qty_delivered']);
-	}
-	
-	
+		
 	return $data;
 }
 
