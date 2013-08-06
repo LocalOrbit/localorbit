@@ -129,12 +129,12 @@ class core_controller_orders extends core_controller
 	function update_quantities()
 	{
 		global $core;
-		
-		if(!lo3::is_admin() && !lo3::is_market())
+		$allow_delivery = (!lo3::is_customer() || (lo3::is_customer() && $core->config['domain']['feature_sellers_mark_items_delivered'] == 1));
+
+		if(!$allow_delivery)
 		{
 			lo3::require_orgtype('admin');
 		}
-		#lo3::require_admin();
 		
 		$order = core::model('lo_order')->load($core->data['lo_oid']);
 		$order->get_items_by_delivery();
@@ -149,26 +149,37 @@ class core_controller_orders extends core_controller
 			#core::log('current quantity for '.$item['lo_liid'].': '.$item['qty_ordered']);
 			#core::log('new qty is: '.$core->data['qty_'.$item['lo_liid']]);
 			
-			if(
-				(isset($core->data['qty_ordered_'.$item['lo_liid']]) && $item['qty_ordered'] != $core->data['qty_ordered_'.$item['lo_liid']])
-				||
-				(isset($core->data['qty_delivered_'.$item['lo_liid']]) && $item['qty_delivered'] != $core->data['qty_delivered_'.$item['lo_liid']])
-			)
+			if(isset($core->data['qty_delivered_'.$item['lo_liid']]))
 			{
-            core::log('getting inventory');
-				$inventory = core::model('lo_order_line_item_inventory')->get_inventory($item['lo_liid'], $item['prod_id']);
             
-            core::log('got inventory');
-				#$item['qty_ordered']   = $core->data['qty_ordered_'.$item['lo_liid']];
-				$inventory['qty_delivered'] = $core->data['qty_delivered_'.$item['lo_liid']];
-				$item['qty_delivered'] = $core->data['qty_delivered_'.$item['lo_liid']];
-				#$item['row_total'] = floatval($core->data['qty_delivered_'.$item['lo_liid']]) * floatval($item['unit_price']);
-				$item['row_total']     = floatval($core->data['qty_delivered_'.$item['lo_liid']]) * floatval($item['unit_price']);
-				$item['row_adjusted_total']   = floatval($core->data['qty_delivered_'.$item['lo_liid']]) * floatval($item['unit_price']);
-				$item->save();
-            core::log('inventory ' . print_r($inventory->__data, true));
-				$inventory->save();
-				$changes = true;
+            $qty = $core->data['qty_delivered_'.$item['lo_liid']];
+            if($qty > 0)
+            {
+					if($qty != $item['qty_delivered'])
+					{
+						core::log('getting inventory');
+						$inventory = core::model('lo_order_line_item_inventory')->get_inventory($item['lo_liid'], $item['prod_id']);
+						
+						core::log('got inventory');
+						
+						#$item['qty_ordered']   = $core->data['qty_ordered_'.$item['lo_liid']];
+						$inventory['qty_delivered'] = $qty;
+						$item['qty_delivered'] = $qty;
+						$item->save();
+						$inventory->save();
+						$changes = true;
+					}
+				}
+				else
+				{
+					if($core->data['cancel_item_'.$item['lo_liid']] == 1)
+					{
+						$item['qty_delivered'] = 0;
+						$item['ldstat_id'] = 3;
+						$item->save();
+						$changes = true;
+					}
+				}
 				
 				# if this is a PO order, we can also adjust the payables for this item.
 				/*
@@ -198,6 +209,7 @@ class core_controller_orders extends core_controller
 		{
 			#$order->get_items_by_delivery();
 			#$order->update_totals();
+			$order->update_status();
 			$order->rebuild_totals_payables(($order['payment_method'] == 'purchaseorder'));
 			core::js('$("#refresh_msg").show(300);');
 			core_ui::notification('quantities updated.');
