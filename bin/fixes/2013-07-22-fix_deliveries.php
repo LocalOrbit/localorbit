@@ -100,7 +100,7 @@ foreach($deliveries as $dd_id=>$items)
 	$need_set_pickup = true;
 	if(intval($delivery['deliv_address_id']) == 0)
 	{
-		$address1[0] = core::model('addresses')->collection()->filter('org_id','=',$org_id)->to_array();
+		$address1 = core::model('addresses')->collection()->filter('org_id','=',$org_id)->to_array();
 		$order_delivery['deliv_org_id'] = $address1[0]['org_id'];
 		$order_delivery['deliv_address_id'] = $address1[0]['address_id'];
 		$order_delivery['deliv_address'] = $address1[0]['address'];
@@ -113,6 +113,7 @@ foreach($deliveries as $dd_id=>$items)
 		$order_delivery['deliv_longitude'] = $address1[0]['longitude'];
 		$order_delivery['deliv_latitude'] = $address1[0]['latitude'];
 		$need_set_deliv = false;
+		$need_set_pickup = false;
 	}
 	else if(intval($delivery['pickup_address_id']) == 0)
 	{
