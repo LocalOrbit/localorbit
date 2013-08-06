@@ -403,3 +403,19 @@ product.deleteProduct=function(prodId){
 		core.doRequest('/products/delete_product',{'prod_id':prodId});
 	}
 }
+
+product.updateDelivered=function(obj){
+	var parts = new String(obj.name).split(/_/);
+	var id = parts[2];
+	var val = parseInt(obj.value);
+	if(val == 0){
+		if(confirm('You have entered a delivered quantity of 0. Do you want to cancel this item?')){
+			document.ordersForm['cancel_item_'+id].value = 1;
+		}else{
+			document.ordersForm['cancel_item_'+id].value = 0;
+		}
+		
+	}else{
+		document.ordersForm['cancel_item_'+id].value = 0;
+	}
+}
