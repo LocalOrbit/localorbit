@@ -129,6 +129,15 @@ else
 $dd_id = 0;
 foreach($order->items as $item)
 {
+	$final_qty = $item['qty_ordered'];
+	if($item['qty_delivered'] > 0 || $item['ldstat_id'] == 3)
+	{
+		$final_qty = intval($item['qty_delivered']);
+	}
+
+	$item['row_total'] = $final_qty * $item['unit_price'];
+	#$data['row_discount'] = $data['row_adjusted_total'] - $data['row_total'];
+	
 	$this_dd = $item['dd_id'];
 	if($this_dd.'' == '')
 		$this_dd = (-1);
