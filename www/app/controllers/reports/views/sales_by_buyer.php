@@ -66,6 +66,12 @@ $items = new core_datatable('sales_by_buyer','reports/sales_by_buyer',$col);
 # this does the totaling 
 function sbb_formatter($data)
 {
+	if($data['qty_delivered'] > 0 || $data['ldstat_id'] == 3)
+	{
+		$data['qty_ordered'] = intval($data['qty_delivered']);
+	}
+	
+	$data['row_total'] = $data['qty_ordered'] * $data['unit_price'];
 	$data['row_discount'] = $data['row_adjusted_total'] - $data['row_total'];
 
 	return core_controller_reports::master_formatter('sbb_',$data);
