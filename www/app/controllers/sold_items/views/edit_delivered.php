@@ -1,7 +1,8 @@
 <?
 $items = $core->view[0];
+core_ui::load_library('js','product.js');
 ?>
-<form name="deliveredInv" action="/sold_items/update_delivered_inventory" onsubmit="return core.submit('/sold_items/update_delivered_inventory',this);">
+<form name="ordersForm" action="/sold_items/update_delivered_inventory" onsubmit="return core.submit('/sold_items/update_delivered_inventory',this);">
 	<h1>Enter delivered quantities</h1>
 	<table class="dt" width="100%">
 		<tr>
@@ -16,12 +17,21 @@ $items = $core->view[0];
 		foreach($items as $item){ 
 			$style=(!$style);
 			$id_list[] = $item['lo_liid'];
+			
+			$qty = intval($item['qty_delivered']);
+			if($qty == 0 && $item['ldstat_id'] != 3)
+			{
+				$qty = '';
+			}
 		?>
 		<tr class="dt<?=$style?>">
 			<td class="dt"><?=$item['lo3_order_nbr']?></td>
 			<td class="dt"><?=$item['product_name']?></td>
 			<td class="dt"><?=$item['qty_ordered']?></td>
-			<td class="dt"><input type="text" name="qty_delivered_<?=$item['lo_liid']?>" value="<?=intval($item['qty_delivered'])?>" style="width: 60px;" /></td>
+			<td class="dt">
+				<input type="text" onkeyup="product.updateDelivered(this);" name="qty_delivered_<?=$item['lo_liid']?>" value="<?=$qty?>" style="width: 60px;" />
+				<input type="hidden" name="cancel_item_<?=$item['lo_liid']?>" value="0" />
+			</td>
 		</tr>
 		<?}?>
 	</table>
