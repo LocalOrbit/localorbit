@@ -14,6 +14,14 @@ class core_controller_reports extends core_controller
 			$core->data['reporting_totals'] = array();
 		if(!is_array($core->data['reporting_totals'][$prefix]))
 			$core->data['reporting_totals'][$prefix] = array('gross'=>0,'hub'=>0,'lo'=>0,'proc'=>0,'net'=>0);
+		
+		if($data['qty_delivered'] > 0 || $data['ldstat_id'] == 3)
+		{
+			$data['qty_ordered'] = intval($data['qty_delivered']);
+		}
+		
+		$data['row_total'] = $data['qty_ordered'] * $data['unit_price'];
+
 			
 		$lo   = ($data['row_adjusted_total'] * (floatval($data['fee_percen_lo']) / 100));
 		$hub  = ($data['row_adjusted_total'] * (floatval($data['fee_percen_hub']) / 100));
@@ -21,6 +29,9 @@ class core_controller_reports extends core_controller
 		$discount = $data['row_adjusted_total'] - $data['row_total'];
 		$data['net_total'] = $data['row_adjusted_total'] - $lo - $hub - $proc;
 		
+
+				
+			
 		# only add up items if the item is NOT canceled.
 		if($data['ldstat_id'] != 3)
 		{
