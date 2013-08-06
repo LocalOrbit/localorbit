@@ -194,7 +194,7 @@ foreach($order->items as $item)
 						<?=$item[((intval($item['qty_ordered'])==1)?'unit':'unit_plural')]?>
 					</td>
 					<td class="dt">
-						<? if($item['qty_delivered'] > 0 || $item['delivery_status'] != 'Canceled')
+						<? if($allow_delivery && ($item['qty_delivered'] > 0 || $item['delivery_status'] != 'Canceled'))
 						{
 							$qty_deliv = intval($item['qty_delivered']);
 							if($qty_deliv == 0 && $item['delivery_status'] != 'Canceled')
@@ -233,10 +233,10 @@ foreach($order->items as $item)
 				</tr>
 <?}?>
 			</table>
-			<? if(lo3::is_admin() || lo3::is_market()){?>
+			<? if($allow_delivery){?>
 			<div class="info_area" id="refresh_msg">You must reload the page for totals to update</div>
 
-			<input type="submit" class="button_primary" onclick="" value="update quantities" />
+			<input type="submit" class="btn btn-primary" onclick="" value="update quantities" />
 			<?}?>
 			<input type="hidden" name="lo_oid" value="<?=$lo_oid?>" />
 		</form>
