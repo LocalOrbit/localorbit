@@ -41,7 +41,7 @@ $order = core::model('lo_fulfillment_order')
 		'(lo_fulfillment_order.lsps_id=lo_seller_payment_statuses.lsps_id)',
 		array('seller_payment_status')
 )->load();
-
+core_ui::load_library('js','product.js');
 #core::deinit();
 #print_r($order->__data);
 
@@ -194,8 +194,16 @@ foreach($order->items as $item)
 						<?=$item[((intval($item['qty_ordered'])==1)?'unit':'unit_plural')]?>
 					</td>
 					<td class="dt">
-						<? if(lo3::is_admin() || lo3::is_market()){?>
-							<input style="width: 60px;" type="text" size="3" name="qty_delivered_<?=$item['lo_liid']?>" value="<?=intval($item['qty_delivered'])?>" />
+						<? if($item['qty_delivered'] > 0 || $item['delivery_status'] != 'Canceled')
+						{
+							$qty_deliv = intval($item['qty_delivered']);
+							if($qty_deliv == 0 && $item['delivery_status'] != 'Canceled')
+							{
+								$qty_deliv = '';
+							}
+						?>
+							<input style="width: 60px;" onkeyup="product.updateDelivered(this);" type="text" size="3" name="qty_delivered_<?=$item['lo_liid']?>" value="<?=$qty_deliv?>" />
+							<input type="hidden" name="cancel_item_<?=$item['lo_liid']?>" value="0" />
 						<?}else{?>
 						<?=intval($item['qty_delivered'])?>
 						<?}?>
