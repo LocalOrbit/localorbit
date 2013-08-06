@@ -14,7 +14,7 @@ $end = $core->config['time'] + 86400;
 
 $sql = '
 	select 
-	loi.lo_liid,loi.product_name,loi.qty_ordered,loi.row_total,loi.row_adjusted_total,loi.row_total,
+	loi.lo_liid,loi.product_name,loi.qty_ordered,loi.row_total,loi.row_adjusted_total,loi.row_total,loi.ldstat_id,loi.qty_delivered,
 	loi.unit_price,loi.seller_name,
 	o.name as buyer_name,o.org_id as buyer_org_id,d.name as domain_name,
 	ds.delivery_status,bps.buyer_payment_status,sps.seller_payment_status,
@@ -91,6 +91,13 @@ function sold_items_formatter($data)
 	
 	$data['discount'] = core_format::price($discount,false);
 	$data['row_adjusted_total'] = core_format::price($data['row_adjusted_total'],false);
+	
+	if($data['qty_delivered'] > 0 || $data['ldstat_id'] == 3)
+	{
+		$data['qty_ordered'] = intval($data['qty_delivered']);
+	}
+	
+	
 	return $data;
 }
 
