@@ -233,7 +233,7 @@ class core_controller_sold_items extends core_controller
 		foreach($orders_to_check as $order=>$check)
 		{
 			$order = core::model('lo_order')->load($order);
-			$order->update_totals();
+			$order->rebuild_totals_payables();
 			$order->update_status();
 		}
 		
@@ -271,13 +271,36 @@ class core_controller_sold_items extends core_controller
 			->collection()
 			->filter('lo_liid','in',explode(',',$core->data['id_list']));
 		
+		$oids = array();
 		foreach($items as $item)
 		{
-			$item['qty_delivered'] = intval($core->data['qty_delivered_'.$item['lo_liid']]);
-			$item->save();
+			if(isset($core->data['qty_delivered_'.$item['lo_liid']]))
+			{
+				$oids[$item['lo_oid']] = true;
+				if(intval($core->data['cancel_item_'.$item['lo_liid']]) == 1)
+				{
+					$item['qty_delivered'] = 0;
+					$item['ldstat_id'] = 3;
+				}
+				else
+				{
+					$item['qty_delivered'] = intval($core->data['qty_delivered_'.$item['lo_liid']]);
+				}
+				$item->save();
+			}
+		}
+		
+		$orders = core::model('lo_order')
+			->collection()
+			->filter('lo_oid','in',array_keys($oids));
+		foreach($orders as $order)
+		{
+			$order->update_status();
+			$order->rebuild_totals_payables(($order['payment_method'] != 'paypal'));
 		}
 		
 		core::js("$('#qtyDeliveredForm').hide(300);");
+		core_datatable::js_reload('sold_items');
 		core_ui::notification('delivered quantities updated');
 	}
 }
