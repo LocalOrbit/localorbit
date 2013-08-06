@@ -419,6 +419,12 @@ class core_model_lo_order extends core_model_lo_order___utility
 				'adjusted_total'=>0,
 			);
 			
+			# if the seller hasn't yet entered the delivered amount and 
+			# also hasn't canceled the item, calculate assuming full
+			# delivery.
+			$qty = $item[(($item['qty_delivered'] == 0 and $item['ldstat_id'] != 3)?'qty_ordered':'qty_delivered')];
+		
+			
 			# handle item to delivery total
 			
 			# there's a property of the delivery called 'applicable_total'
@@ -435,7 +441,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 			# end up being delivered, then the fee should go away.
 			if($delivs[$item['dd_id']][0]['fee_calc_type_id'] == 1)
 			{
-				$delivs[$item['dd_id']][0]['applicable_total'] += floatval($item['unit_price'] * $item['qty_delivered']);
+				$delivs[$item['dd_id']][0]['applicable_total'] += floatval($item['unit_price'] * $qty);
 			}
 			else
 			{
@@ -523,6 +529,11 @@ class core_model_lo_order extends core_model_lo_order___utility
 			# based on the code's configuration.
 			$apply_discount = true;
 			
+			# if the seller hasn't yet entered the delivered amount and 
+			# also hasn't canceled the item, calculate assuming full
+			# delivery.
+			$qty = $item[(($item['qty_delivered'] == 0 and $item['ldstat_id'] != 3)?'qty_ordered':'qty_delivered')];
+			
 			if(intval($discount['lodisc_id']) != 0)
 			{
 				# if the discount is restricted to a particular product...
@@ -549,7 +560,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 				# if it did, then add it up.
 				if($apply_discount)
 				{
-					$discount['applicable_total'] += floatval($item['unit_price'] * $item['qty_delivered']);
+					$discount['applicable_total'] += floatval($item['unit_price'] * $qty);
 				}
 			}
 			else
@@ -591,13 +602,19 @@ class core_model_lo_order extends core_model_lo_order___utility
 		# including payable updates
 		foreach($this->items as $item)
 		{
+
+			# if the seller hasn't yet entered the delivered amount and 
+			# also hasn't canceled the item, calculate assuming full
+			# delivery.
+			$qty = $item[(($item['qty_delivered'] == 0 and $item['ldstat_id'] != 3)?'qty_ordered':'qty_delivered')];
+
 			core::log('applying discount to item: '.$item['lo_liid']);
 			if($item_discount_apply[$item['lo_liid']])
 			{
 				# determine what % of the item this item makes up.
 				# apply that % to the total discount
 				
-				$orig_total = floatval($item['unit_price'] * $item['qty_delivered']);
+				$orig_total = floatval($item['unit_price'] * $qty);
 				$item_percent_of_total = $orig_total / $discount['applicable_total'];
 				$adjust_total_by = $item_percent_of_total * $discount['applied_amount'];
 				$adjust_total = $orig_total + $adjust_total_by;
@@ -620,7 +637,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 			}
 			else
 			{
-				$orig_total = floatval($item['unit_price'] * $item['qty_delivered']);
+				$orig_total = floatval($item['unit_price'] * $qty);
 				$adjust_total = $orig_total;
 				$item['row_adjusted_total'] = $adjust_total;
 				$item->save();
