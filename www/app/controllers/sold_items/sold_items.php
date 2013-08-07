@@ -184,6 +184,10 @@ class core_controller_sold_items extends core_controller
 				# canceled item notification
 				if($ldstat_id == 3 and $item['ldstat_id'] != 3)
 				{
+					$item['qty_delivered'] = 0;
+					$item->save();
+					$item->change_status('ldstat_id',$ldstat_id);
+					
 					$order = core::model('lo_order')->load($item['lo_oid']);
 					if($order['payment_method'] == 'paypal')
 					{
