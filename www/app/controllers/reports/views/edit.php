@@ -50,8 +50,9 @@ if(lo3::is_market() || lo3::is_admin())
 
 
 # figure out the start and end times for this report
-$end = mktime(23,59,59);
-$start = $end - (30 * 86400);
+#print_r($core->session);
+$end = mktime(23,59,59) - $core->session['time_offset'];
+$start = $end - (30 * 86400) - $core->session['time_offset'];
 
 ?>
 <form name="reportsForm" method="post" action="/reports/update" onsubmit="return core.submit('/reports/update',this);" enctype="multipart/form-data">
