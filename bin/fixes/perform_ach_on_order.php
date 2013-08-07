@@ -44,7 +44,7 @@ if($order['payment_method'] == 'ach' and $order['payment_ref'] == '')
 	$amount = 0;
 	
 	$sql = '
-		select amount
+		select payable_id,amount
 		from payables
 		where from_org_id='.$order['org_id'].'
 		and (
