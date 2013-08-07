@@ -42,8 +42,7 @@ $order = core::model('lo_fulfillment_order')
 		array('seller_payment_status')
 )->load();
 core_ui::load_library('js','product.js');
-#core::deinit();
-#print_r($order->__data);
+
 
 # check the security settings for the order
 # if the order is NOT for the same org as the viewing user,
@@ -219,8 +218,8 @@ foreach($order->items as $item)
 						<?=$item[((intval($item['qty_delivered'])==1)?'unit':'unit_plural')]?>
 					</td>
 					<td class="dt"><?=core_format::price($item['unit_price'])?></td>
-					<td class="dt"><?=core_format::price($item['row_adjusted_total'] - $item['row_total'])?></td>
-					<td class="dt"><?=core_format::price($item['row_adjusted_total'])?></td>
+					<td class="dt"><?=core_format::price($item['row_adjusted_total'] - $item['row_total'],false)?></td>
+					<td class="dt"><?=core_format::price($item['row_adjusted_total'],false)?></td>
 					<td class="dt">
 						<span id="ldstat_id_<?=$item['lo_liid']?>"><?=$item['delivery_status']?></span>
 						<? if($allow_delivery && ($item['ldstat_id'] == 2 || $item['ldstat_id'] == 5)){?>
