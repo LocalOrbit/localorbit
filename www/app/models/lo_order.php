@@ -585,7 +585,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 			# if it's a $ figure, we need to make sure that we're only discounting
 			# at MOST the discount amount.
 			core::log('for the fixed $ discount, '.$discount['applicable_total'].' items applied');
-			if($discount['applicable_total'] > $discount['discount_amount'])
+			if($discount['applicable_total'] < $discount['discount_amount'])
 			{
 				$discount['applied_amount'] = ($discount['discount_amount']);
 			}
