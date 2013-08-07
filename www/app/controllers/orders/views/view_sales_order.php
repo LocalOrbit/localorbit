@@ -135,6 +135,7 @@ foreach($order->items as $item)
 	}
 
 	$item['row_total'] = $final_qty * $item['unit_price'];
+	#echo('item: '.$item['row_total'].'<br />');
 	#$data['row_discount'] = $data['row_adjusted_total'] - $data['row_total'];
 	
 	$this_dd = $item['dd_id'];
