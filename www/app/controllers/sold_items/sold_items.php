@@ -199,10 +199,12 @@ class core_controller_sold_items extends core_controller
 						);
 					}
 				}
-				
-				$item['qty_delivered'] = $item['qty_ordered'];
-				$item->save();
-				$item->change_status('ldstat_id',$ldstat_id);
+				else
+				{
+					$item['qty_delivered'] = $item['qty_ordered'];
+					$item->save();
+					$item->change_status('ldstat_id',$ldstat_id);
+				}
 				$changes_made = true;
 				
 				# if any of these items are being changed to 
