@@ -24,6 +24,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$fee_total = 0;
 		$fee_payable_ids = array();
 		
+		core::log('payment method is: '.$payment_method);
+		
 		# first, wipe out any existing payables for this order
 		core::log('wiping existing payables for order '.$this['lo_oid']);
 		$this->wipe_payables_for_order($this['lo_oid']);
@@ -33,9 +35,10 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		$payment = false;
 		
 		# try to make the payment.
-		if($payment_method == 'paypal' || $payment_method == 'ACH')
+		if($payment_method == 'paypal' || $payment_method == 'ach')
 		{
 			core::load_library('payments'); 
+			core::load_library('crypto'); 
 		
 			# either payment method will need a payment created in the db
 			core::log('since the user paid via paypal or ACH, creating a payment');
@@ -46,10 +49,18 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			$payment->save();
 			
 			
-			if($payment_method == 'ACH') {
+			if($payment_method == 'ach')
+			{
+				core::log('attemping ach payment');
 				# if the user pays via ach,
 				$method = core::model('organization_payment_methods')->load($core->data['opm_id']);
-				$result = make_payment('P-'.str_pad($payment['payment_id'],6,'0',STR_PAD_LEFT),'Order',$payment['amount']);
+				if($method['org_id'] != $core->session['org_id'])
+				{
+					exit('NO');
+				}
+				
+				$result = $method->make_payment('P-'.str_pad($payment['payment_id'],6,'0',STR_PAD_LEFT),'Order',$payment['amount']);
+				core::log(print_r($result,true));
 				
 				if($result)
 				{
@@ -93,7 +104,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		{
 			if($fee['applied_amount'] > 0)
 			{
-				$deliv_to_lo = ($payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
+				$deliv_to_lo = ($payment_method == 'paypal' || $payment_method == 'ach' || $core->config['domain']['buyer_invoicer'] == 'lo');
 				
 				# create the fee from the buyer to whoever is taking the money
 				$payable = core::model('payables');
@@ -143,7 +154,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		
 		
 		
-		$buyer_pays_lo = ($payment_method == 'paypal' || $payment_method == 'ACH' || $core->config['domain']['buyer_invoicer'] == 'lo');
+		$buyer_pays_lo = ($payment_method == 'paypal' || $payment_method == 'ach' || $core->config['domain']['buyer_invoicer'] == 'lo');
 				
 		if($payment_method != 'cash')
 		{	
@@ -182,7 +193,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			
 			
 			# determine if we need to move the money to the market to pay the seller
-			$need_transfer_to_mm = (($payment_method == 'paypal' || $payment_method == 'ACH') && $core->config['domain']['seller_payer'] == 'hub');
+			$need_transfer_to_mm = (($payment_method == 'paypal' || $payment_method == 'ach') && $core->config['domain']['seller_payer'] == 'hub');
 			
 			# loop through the items and save payables
 			foreach($this->items as $item)
