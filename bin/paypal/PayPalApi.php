@@ -130,7 +130,7 @@ class PayPalApi {
 
 		// HACKER CHECK - confirm amount returned is same as cart
 		$cart = core::model('lo_order')->get_cart();		
-		$cart_total = core_format::parse_price($cart['grand_total']);		//return core_format::parse_price($cart['grand_total']);
+		$cart_total = str_replace(core_format::parse_price($cart['grand_total']), ",", "");		//return core_format::parse_price($cart['grand_total']);
 		
 		
 		// 1. paypal returns to page with vars in URL
