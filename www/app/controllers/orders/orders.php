@@ -233,7 +233,9 @@ class core_controller_orders extends core_controller
 		# changing delivery status
 		if($core->data['ldstat_id'] == 4 && $item['ldstat_id'] != $core->data['ldstat_id'])
 		{
-			$item['qty_delivered'] = $item['qty_ordered'];
+			if(intval($item['qty_delivered']) == 0)
+				$item['qty_delivered'] = $item['qty_ordered'];
+			$item->save();
 			$item->change_status('ldstat_id',4);
 			core::js("$('#itemDeliveryLink_".$item['lo_liid']."').hide(300);");
 			core::js("$('#ldstat_id_".$item['lo_liid']."').html('Delivered');");
@@ -250,6 +252,7 @@ class core_controller_orders extends core_controller
 		# load the main order and update the status
 		$order = core::model('lo_order')->load($item['lo_oid']);
 		$order->update_status();
+		$order->rebuild_totals_payables(($order['payment_method'] == 'paypal'));
 		$fulfill = core::model('lo_fulfillment_order')->load($item['lo_foid']);
 		 
 		# update the html with the new order status
