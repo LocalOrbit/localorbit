@@ -77,7 +77,7 @@ else
 	<div class="span6" id="editLot" style="display: none;">
 		<h2>Available</h2>
 		<?=core_form::input_text('Quantity','lot_qty','',array('required'=>true, 'natural_numbers' => true))?>
-		<div style="margin-bottom:5px;"><span style="font-size: 150%;">Lot Information</span> optional <i class="helpslug icon-question-sign" rel="popover" data-title="Lots" data-content="<?=$core->i18n('note:inventory:optional')?>" data-original-title=""></i></div>
+		<div style="margin-bottom:5px;margin-top:30px;"><span style="font-size: 150%;">Lot Information</span> (optional) <i class="helpslug icon-question-sign" rel="popover" data-title="Lots" data-content="<?=$core->i18n('note:inventory:optional')?>" data-original-title=""></i></div>
 		<?=core_form::input_text('Lot #','lot_id','',array())?>
 		<?=core_form::input_datepicker('Good from','good_from','')?>
 		<?=core_form::input_datepicker('Product expires on','expires_on','')?>
