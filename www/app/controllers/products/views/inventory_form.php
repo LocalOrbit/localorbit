@@ -74,16 +74,17 @@ else
 <br />
 <div class="row">
 	<div class="span3">&nbsp;</div>
-	<fieldset id="editLot" class="span6" style="display: none;">
-		<legend>Lot Info</legend>
+	<div class="span6" id="editLot" style="display: none;">
+		<h2>Available</h2>
+		<?=core_form::input_text('Quantity','lot_qty','',array('required'=>true, 'natural_numbers' => true))?>
+		<div style="margin-bottom:5px;"><span style="font-size: 150%;">Lot Information</span> optional <i class="helpslug icon-question-sign" rel="popover" data-title="Lots" data-content="<?=$core->i18n('note:inventory:optional')?>" data-original-title=""></i></div>
 		<?=core_form::input_text('Lot #','lot_id','',array())?>
 		<?=core_form::input_datepicker('Good from','good_from','')?>
 		<?=core_form::input_datepicker('Product expires on','expires_on','')?>
-		<?=core_form::input_text('Qty','lot_qty','',array('required'=>true, 'natural_numbers' => true))?>
 		<?=core_form::input_hidden('inv_id','')?>
-		<? subform_buttons('product.saveLot();','Save This Lot','product.cancelLotChanges();'); ?>
+		<? subform_buttons('product.saveLot();','Save','product.cancelLotChanges();'); ?>
 		<? core::js('$(\'[name="lot_qty"]\').focus(function () {core.ui.onFocusQty(this);}).blur(function () {core.ui.integerOnBlur(this);});'); ?>
-		</fieldset>
+	</div>
 	<div class="span3">&nbsp;</div>
 	<div class="clear-both"></div>
 </div>
