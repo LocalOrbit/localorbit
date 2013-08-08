@@ -66,7 +66,7 @@ else
 }
 
 // page_header *******************************************************************************
-page_header('Financial Management');
+page_header('Financial Management (beta)');
 echo('<form name="paymentsForm" class="form-horizontal">');
 echo(core_ui::tab_switchers('paymentstabs',$tabs));
 echo('<div class="tab-content">');
