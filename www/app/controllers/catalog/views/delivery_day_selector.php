@@ -27,7 +27,7 @@ $addresses = $core->view[2];
 				$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
 				$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 				?>
-				<li class="filter dd"><a style="padding: 10px 5px 10px 5px;" href="<?=$left_url?>" onclick="core.catalog.setFilter('dd','<?=$dd_ids?>',true,true,true);core.doRequest('/catalog/set_dd_session',{'dd_id':<?=$dd_ids?>}); return false;" id="filter_ddpopup_<?=$dd_ids?>">
+				<li class="filter dd"><a style="padding: 10px 5px 10px 5px;" href="<?=$left_url?>" onclick="core.catalog.setFilter('dd','<?=$dd_ids?>',true,true,true);core.doRequest('/catalog/set_dd_session',{'dd_id':<?=$dd_ids?>}); $('#shop_button').show(300);return false;" id="filter_ddpopup_<?=$dd_ids?>">
 				<?=$type?> <?=core_format::date($time,'l, M jS',true)?>, <?=$final_address?>
 				</a>
 				<?
@@ -37,7 +37,7 @@ $addresses = $core->view[2];
 		</p>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-large btn-primary" onclick="$('#ddSelectorModal').modal('hide');">Shop</button>
+		<button id="shop_button" class="btn btn-large btn-primary" onclick="$('#ddSelectorModal').modal('hide');" style="display:none;">Shop</button>
 	</div>
 </div>
 <?php
