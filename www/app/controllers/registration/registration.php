@@ -259,10 +259,9 @@ class core_controller_registration extends core_controller
 	function verify_user()
 	{
 		global $core;
-		
-		lo3::require_login();
-		
-		if($core->data['user_id'] != $core->session['user_id'])
+
+		//lo3::require_login();
+		if($core->session['user_id'] != 0 && $core->data['user_id'] != $core->session['user_id'])
 		{
 			$this->already_logged_in();
 		}
