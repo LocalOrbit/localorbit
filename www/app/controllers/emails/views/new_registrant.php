@@ -18,11 +18,6 @@ $body .= $this->handle_source(($auto_activate?$core->session['i18n']['email:new_
 $body .= $this->footer();
 $body .= $this->email_end();
 
-
-echo $body;
-die();
-
-
 core::log('final subject is '.'Verify your email address with '.$values['hub_name']);
 $this->send_email(
 	'Verify your email address with '.$values['hub_name'],
