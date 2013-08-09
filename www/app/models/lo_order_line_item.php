@@ -313,7 +313,7 @@ function determine_delivery_language($data)
 	$data['buyer_formatted_deliv1'] ='Items ';
 	$data['buyer_formatted_deliv2'] ='Your order ';
 	// vvvvvvvvvvvvv changing delivery_start_time to pickup_start_time
-	$data['seller_formatted_deliv1'] ='Items for delivery between '.core_format::date($data['pickup_start_time']).' and '.core_format::date($data['pickup_end_time']).' '.$core->session['tz_name'];
+	$data['seller_formatted_deliv1'] ='Items for delivery between '.core_format::date($data['delivery_start_time']).' and '.core_format::date($data['delivery_end_time']).' '.$core->session['tz_name'];
 	$data['seller_formatted_deliv2'] ='These items must be delivered to '.$data['delivery_address'].', '.$data['delivery_city'].', '.$data['delivery_state'].' '.$data['delivery_postal_code'];
 
 	# if the 1st or 2nd address is owned by the buyer org,
