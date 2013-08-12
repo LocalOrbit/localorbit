@@ -60,7 +60,7 @@ if(!lo3::is_admin())
 			<!-- this is right for sellers -->
 			<!-- this is right for market managers-->
 			<!-- uncertain for admins -->
-			<?if(lo3::is_admin() || lo3::is_self_managed()){?>
+			<?if(lo3::is_admin() || lo3::is_self_managed() || lo3::is_fully_managed_customer()){?>
 			<input type="button" onclick="core.payments.makePayments('payables');" class="btn btn-info" value="<?=$core->i18n('button:payments:'.((lo3::is_market())?'enter_offline_payments':'enter_online_payments'))?>" />
 			<?}?>
 		</div>
