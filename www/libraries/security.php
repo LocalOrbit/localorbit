@@ -161,6 +161,17 @@ class lo3
 		return (lo3::is_market() and $core->config['domain']['seller_payer'] != 'hub');
 	}
 	
+	public static function is_self_managed_customer()
+	{
+		global $core;
+		return (lo3::is_customer() and $core->config['domain']['seller_payer'] == 'hub');
+	}
+	public static function is_fully_managed_customer()
+	{
+		global $core;
+		return (lo3::is_customer() and $core->config['domain']['seller_payer'] != 'hub');
+	}
+	
 	
 	public static function is_seller()
 	{
