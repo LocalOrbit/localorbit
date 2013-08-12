@@ -104,8 +104,18 @@ class core_model_delivery_days extends core_model_base_delivery_days
 
 	function get_available ($prod_id)
 	{
-		$sql = sprintf('select COALESCE( sum(qty) , 0) as total_qty from product_inventory where prod_id = %2$d and (good_from is null or good_from < FROM_UNIXTIME(%1$d)) and (expires_on is null or expires_on > FROM_UNIXTIME(%1$d));',
-				$this['delivery_end_time'], $prod_id);
+		global $core;
+		$sql = sprintf(
+			'
+				select COALESCE( sum(qty) , 0) as total_qty 
+				from product_inventory 
+				where prod_id = %2$d 
+				and (good_from is null or UNIX_TIMESTAMP(good_from - '.intval($core->session['time_offset']).') < (%1$d)) 
+				and (expires_on is null or UNIX_TIMESTAMP(expires_on)  + 86399 - '.intval($core->session['time_offset']).'> (%1$d));
+			',
+			$this['delivery_end_time'], 
+			$prod_id
+		);
 		$total_qty = core_db::col($sql,'total_qty');
 		return $total_qty;
 	}
