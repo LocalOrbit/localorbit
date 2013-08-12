@@ -98,7 +98,8 @@ $left_url = 'app.php#!catalog-shop-';
 		# also, make sure that each of the delivery days for the product is 
 		# actually valid. If there's no valid DDs for the product,
 		# then flag them as such so the product doesn't get rendered.
-		$final_prods = array();
+		$final_prods   = array();
+		$all_valid_dds = array();
 		for ($i = 0; $i < count($prods); $i++)
 		{
 			# convert comma separated list to an array
@@ -173,7 +174,8 @@ $left_url = 'app.php#!catalog-shop-';
 						{
 							# if it matched, add this dd to the list of valid 
 							# deliveries for the product.
-							$valid_dds[] = $prod_dds[$i];
+							$valid_dds[] = $prod_dds[$k];
+							$all_valid_dds[] = $prod_dds[$k];
 						}
 					}
 				}
