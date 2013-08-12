@@ -121,20 +121,17 @@ $left_url = 'app.php#!catalog-shop-';
 			# make sense to the user
 			$prods[$i]['sort_col'] = strtolower($prods[$i]['sort_col']);
 			
-			# check the dds
-			$prods[$i]['has_valid_dd'] = 0;
+			# check the each delivery to make sure it's actually valid.
 			$prod_dds = explode(',',$prods[$i]['dd_ids']);
-			#echo('ddids: '.print_r($prod_dds,true));
+			$prods[$i]['has_valid_dd'] = 0;
 			$valid_dds = array();
-			#echo('<hr />chekcing product '.$prods[$i]['prod_id'].'<br />');
 			
 			for($j=0;$j<count($inventory[$prods[$i]['prod_id']]);$j++)
 			{
-				#echo('checking inventory '.$inventory[$prods[$i]['prod_id']][$j]['inv_id'].'<br />');
 				# first, determine the date range that this lot is good for.
 				
 				# if this inventory lot has an good from, then calculate
-				# that date. if not, assume super far into the ;ast. 
+				# that date. if not, assume super far into the past. 
 				if(trim($inventory[$prods[$i]['prod_id']][$j]['good_from']) !='')
 				{
 					$good_from = core_format::parse_date($inventory[$prods[$i]['prod_id']][$j]['good_from'],'timestamp') + 86400 - 1;
@@ -158,12 +155,13 @@ $left_url = 'app.php#!catalog-shop-';
 				# now, loop through all of the deliveries and see if 
 				# that delivery is valid for the current inventory lot
 				for($k=0;$k<count($prod_dds);$k++)
-				{	
+				{
+					# only check if the delivery is valid for this market
+					# since a product may have other deliveries on cross-selling
+					# markets.
 					if(isset($deliveries[$prod_dds[$k]]))
 					{
-						
-						#echo('checking if delivery '.$prod_dds[$k].' which starts on '.core_format::date($deliveries[$prod_dds[$k]][0]['delivery_start_time']));
-						#echo(' is between '.core_format::date($good_from).' and '.core_format::date($expires_on).'<br />');
+						# check all 3 conditions!
 						if(
 							$deliveries[$prod_dds[$k]][0]['delivery_start_time'] > $good_from
 							and
@@ -173,6 +171,8 @@ $left_url = 'app.php#!catalog-shop-';
 							
 						)
 						{
+							# if it matched, add this dd to the list of valid 
+							# deliveries for the product.
 							$valid_dds[] = $prod_dds[$i];
 						}
 					}
@@ -260,24 +260,21 @@ $left_url = 'app.php#!catalog-shop-';
 		
 		# figure out if we need to show the dd_id selector
 		$deliv_keys = array_keys($delivs);
-		
+		#print_r($deliv_keys);
 		# check to see if the user's dd_id in their session is valid on 
 		# this market
 		if(intval($core->session['dd_id']) != 0 && !in_array($core->session['dd_id'],$deliv_keys))
 		{
 			$core->session['dd_id'] = 0;
 		}
-			
-		if(intval($core->session['dd_id']) == 0)
+		
+		if(count($deliv_keys) == 1)
 		{
-			if(count($deliv_keys) == 1)
-			{
-				$core->session['dd_id'] = $deliv_keys[0];
-			}
-			else
-			{
-				$this->delivery_day_selector($days,$left_url,$addresses);
-			}
+			$core->session['dd_id'] = 0;
+		}
+		else if(intval($core->session['dd_id']) == 0)
+		{
+			$this->delivery_day_selector($days,$left_url,$addresses);
 		}
 
 		#===============================
