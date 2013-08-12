@@ -1,4 +1,3 @@
-
 <?php
 # basics
 global $core;
@@ -49,12 +48,14 @@ $left_url = 'app.php#!catalog-shop-';
 		$dd_ids    = $prods->get_unique_values('dd_ids',true,true);
 		$price_ids = $prods->get_unique_values('price_ids',true,true);
 		$org_ids   = $prods->get_unique_values('org_id');
+		$prod_ids  = $prods->get_unique_values('prod_id');
 
 		# load sub table data
 		$cats  = core::model('categories')->load_for_products($cat_ids);
 		$sellers   = core::model('organizations')->collection()->sort('name');
 		$sellers	  = $sellers->filter('organizations.org_id','in',$org_ids)->to_hash('org_id');
 		$orgmodel  = core::model('organizations');
+		$inventory = core::model('product_inventory')->collection()->filter('prod_id','in',$prod_ids)->to_hash('prod_id');
 
 		# get the seller photos
 		foreach($sellers as $key=>$seller)
@@ -94,6 +95,10 @@ $left_url = 'app.php#!catalog-shop-';
 		$prods = $prods->to_array();
 
 		# build a column based on text category names that we can sort the product list on
+		# also, make sure that each of the delivery days for the product is 
+		# actually valid. If there's no valid DDs for the product,
+		# then flag them as such so the product doesn't get rendered.
+		$final_prods = array();
 		for ($i = 0; $i < count($prods); $i++)
 		{
 			# convert comma separated list to an array
@@ -115,7 +120,78 @@ $left_url = 'app.php#!catalog-shop-';
 			# lowercase the sort_col just to make sure we're comparing in a way that will
 			# make sense to the user
 			$prods[$i]['sort_col'] = strtolower($prods[$i]['sort_col']);
+			
+			# check the dds
+			$prods[$i]['has_valid_dd'] = 0;
+			$prod_dds = explode(',',$prods[$i]['dd_ids']);
+			#echo('ddids: '.print_r($prod_dds,true));
+			$valid_dds = array();
+			#echo('<hr />chekcing product '.$prods[$i]['prod_id'].'<br />');
+			
+			for($j=0;$j<count($inventory[$prods[$i]['prod_id']]);$j++)
+			{
+				#echo('checking inventory '.$inventory[$prods[$i]['prod_id']][$j]['inv_id'].'<br />');
+				# first, determine the date range that this lot is good for.
+				
+				# if this inventory lot has an good from, then calculate
+				# that date. if not, assume super far into the ;ast. 
+				if(trim($inventory[$prods[$i]['prod_id']][$j]['good_from']) !='')
+				{
+					$good_from = core_format::parse_date($inventory[$prods[$i]['prod_id']][$j]['good_from'],'timestamp') + 86400 - 1;
+				}
+				else
+				{
+					$good_from = 0;
+				}
+				
+				# if this inventory lot has an expires on, then calculate
+				# that date. if not, assume super far into the future. 
+				if(trim($inventory[$prods[$i]['prod_id']][$j]['expires_on']) !='')
+				{
+					$expires_on = core_format::parse_date($inventory[$prods[$i]['prod_id']][$j]['expires_on'],'timestamp') + 86400 - 1;
+				}
+				else
+				{
+					$expires_on = 99999999999999999;
+				}
+					
+				# now, loop through all of the deliveries and see if 
+				# that delivery is valid for the current inventory lot
+				for($k=0;$k<count($prod_dds);$k++)
+				{	
+					if(isset($deliveries[$prod_dds[$k]]))
+					{
+						
+						#echo('checking if delivery '.$prod_dds[$k].' which starts on '.core_format::date($deliveries[$prod_dds[$k]][0]['delivery_start_time']));
+						#echo(' is between '.core_format::date($good_from).' and '.core_format::date($expires_on).'<br />');
+						if(
+							$deliveries[$prod_dds[$k]][0]['delivery_start_time'] > $good_from
+							and
+							$deliveries[$prod_dds[$k]][0]['delivery_start_time'] < $expires_on
+							and
+							$inventory[$prods[$i]['prod_id']][$j]['qty'] > 0
+							
+						)
+						{
+							$valid_dds[] = $prod_dds[$i];
+						}
+					}
+				}
+			}
+			
+			# we only want to include unique dds, since one dd might match
+			# multipe inventory lots.
+			$prods[$i]['dd_ids'] = implode(',',array_unique($valid_dds));
+			$prods[$i]['has_valid_dd'] = (count($valid_dds) > 0)?1:0;
+
+			# only add the product to the final list of products if it has valid dds
+			if($prods[$i]['has_valid_dd'] == 1)
+			{
+				$final_prods[] = $prods[$i];
+			}
 		}
+		$prods = $final_prods;
+		
 		$days = array();
 		foreach($delivs as $deliv)
 		{
