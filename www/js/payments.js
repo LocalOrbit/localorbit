@@ -206,6 +206,10 @@ core.payments.savePayment=function(tab,group){
 	var data = {};
 	data['tab'] = tab;
 	data['payment_method'] = $('input[name='+tab+'__group_method__'+group+']:checked').val();
+	if(typeof(data['payment_method']) == 'undefined')
+	{
+		data['payment_method'] = $(document.paymentsForm[tab+'__group_method__'+group]).val();
+	}
 	data['ref_nbr'] = $(document.paymentsForm[tab+'__group_ref_nbr__'+group]).val();
 	data['opm_id'] = $(document.paymentsForm[tab+'__group_opm_id__'+group]).val();
 	data['amount'] = $(document.paymentsForm[tab+'__group_total__'+group]).val();
