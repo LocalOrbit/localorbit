@@ -135,7 +135,7 @@ $left_url = 'app.php#!catalog-shop-';
 				# that date. if not, assume super far into the past. 
 				if(trim($inventory[$prods[$i]['prod_id']][$j]['good_from']) !='')
 				{
-					$good_from = core_format::parse_date($inventory[$prods[$i]['prod_id']][$j]['good_from'],'timestamp');
+					$good_from = core_format::parse_date($inventory[$prods[$i]['prod_id']][$j]['good_from'],'timestamp') - intval($core->session['time_offset']);
 				}
 				else
 				{
@@ -146,7 +146,7 @@ $left_url = 'app.php#!catalog-shop-';
 				# that date. if not, assume super far into the future. 
 				if(trim($inventory[$prods[$i]['prod_id']][$j]['expires_on']) !='')
 				{
-					$expires_on = core_format::parse_date($inventory[$prods[$i]['prod_id']][$j]['expires_on'],'timestamp') + 86400 - 1;
+					$expires_on = core_format::parse_date($inventory[$prods[$i]['prod_id']][$j]['expires_on'],'timestamp') + 86400 - 1 - intval($core->session['time_offset']);
 				}
 				else
 				{
@@ -164,9 +164,9 @@ $left_url = 'app.php#!catalog-shop-';
 					{
 						# check all 3 conditions!
 						if(
-							$deliveries[$prod_dds[$k]][0]['delivery_start_time'] > $good_from
+							$deliveries[$prod_dds[$k]][0]['delivery_end_time'] > $good_from
 							and
-							$deliveries[$prod_dds[$k]][0]['delivery_start_time'] < $expires_on
+							$deliveries[$prod_dds[$k]][0]['delivery_end_time'] < $expires_on
 							and
 							$inventory[$prods[$i]['prod_id']][$j]['qty'] > 0
 							
