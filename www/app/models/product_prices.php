@@ -45,14 +45,14 @@ class core_model_product_prices extends core_model_base_product_prices
 		
 		$prices = core::model('product_prices')
 			->collection()
-			->filter('prod_id',$this['prod_id'])
-			->filter('min_qty',$this['min_qty'])
-			->filter('product_prices.domain_id',$this['domain_id'])
-			->filter('product_prices.org_id',$this['org_id']);
+			->filter('prod_id','=',$this['prod_id'])
+			->filter('min_qty','=',floatval($this['min_qty']))
+			->filter('product_prices.domain_id','=',intval($this['domain_id']))
+			->filter('product_prices.org_id','=',intval($this['org_id']));
 
-		if ($this['price_id']) 
+		if (isset($this->__data['price_id'])) 
 		{
-			$prices = $prices->filter('price_id','<>',$this['price_id']);
+			$prices = $prices->filter('price_id','<>',intval($this['price_id']));
 		}
 		$prices = $prices->load();
 		
