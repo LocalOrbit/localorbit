@@ -135,7 +135,7 @@ $left_url = 'app.php#!catalog-shop-';
 				# that date. if not, assume super far into the past. 
 				if(trim($inventory[$prods[$i]['prod_id']][$j]['good_from']) !='')
 				{
-					$good_from = core_format::parse_date($inventory[$prods[$i]['prod_id']][$j]['good_from'],'timestamp') + 86400 - 1;
+					$good_from = core_format::parse_date($inventory[$prods[$i]['prod_id']][$j]['good_from'],'timestamp');
 				}
 				else
 				{
