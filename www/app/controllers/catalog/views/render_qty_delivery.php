@@ -99,7 +99,7 @@ $addresses = $core->view[6];
 			?>
 			<input class="prodDd" type="hidden" name="prodDd_<?=$prod['prod_id']?>" id="prodDd_<?=$prod['prod_id']?>" value="<?=$dd_ids_id?>"/>
 			<span class="dd_selector">
-				<?=$type?> <?=core_format::date($time, 'shortest-weekday',false)?>
+				<?=$type?> <?=core_format::date($time, 'shortest-weekday',true)?>
 				<br /><?=$final_address?></a>
 			</span>
 			<?
