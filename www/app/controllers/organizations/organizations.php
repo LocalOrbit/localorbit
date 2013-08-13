@@ -95,7 +95,25 @@ class core_controller_organizations extends core_controller
 
 		if($core->data['from_financials'] == 'yes')
 		{
-			core::js('$(\'#edit_popup\').fadeOut(\'fast\');$(\'#all_all_payments,#payments_pay_area\').toggle();core.payments.makePayments(\'payments\');');
+			core::js('$(\'#edit_popup\').fadeOut(\'fast\');$(\'#'.$core->data['tab'].'__no_opm_msg__'.$core->data['group_key'].'\').hide();$(\'#'.$core->data['tab'].'__opm_selector__'.$core->data['group_key'].'\').show();');
+			#$(\'#all_all_payments,#payments_pay_area\').toggle();core.payments.makePayments(\'payments\');');
+			
+			# generate the new payment method selector
+			$methods = core::model('organization_payment_methods')
+				->collection()
+				->add_formatter('organization_payment_methods__formatter_dropdown')
+				->filter('org_id','=',$core->session['org_id']);
+			$methods->load();
+			$selector = core_form::input_select('Pay Via: ',$core->data['tab'].'__group_opm_id__'.$core->data['group_key'],null,$methods,array(
+				'select_style'=>'width: 300px;',
+				'text_column'=>'dropdown_text',
+				'value_column'=>'opm_id',
+			));
+			
+			# place it into the form
+			core::replace($core->data['tab'].'__opm_selector__'.$core->data['group_key'],$selector);
+			
+			
 			core_ui::notification('bank account saved',false);
 		}
 		else
