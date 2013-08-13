@@ -66,12 +66,12 @@ else
 		<h1>Order Info</h1>
 		<?=core_form::value('Order #','<b>'.$order['lo3_order_nbr'].'</b>')?>
 		<?=core_form::value('Placed On',core_format::date($order['order_date'],'long'))?>
-		<?=core_form::value('Item Total',core_format::price($order['item_total']))?>
+		<?=core_form::value('Item Total',core_format::price($order['item_total'],false))?>
 		<? if($order['discount_total'] != 0){?>
-			<?=core_form::value('Discounts',core_format::price($order['discount_total']))?>
+			<?=core_form::value('Discounts',core_format::price($order['discount_total'],false))?>
 		<?}?>
 		<?=core_form::value('Delivery Fees',(($order['delivery_total']>0)?core_format::price($order['delivery_total'],false):'Free!'))?>
-		<?=core_form::value('Grand Total',core_format::price($order['grand_total']))?>
+		<?=core_form::value('Grand Total',core_format::price($order['grand_total'],false))?>
 		<?=core_form::value('Delivery Status',$order['delivery_status'])?>
 		<?=core_form::value('Buyer Payment',$order['buyer_payment_status'])?>
 		<?=core_form::value('Payment Method',$display_payment_method)?>
