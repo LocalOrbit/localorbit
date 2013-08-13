@@ -14,6 +14,7 @@ $config = array(
 	'do-adjust'=>0,
 	'report-sql'=>0,
 	'oid'=>9000,
+	'offset'=>0,
 );
 array_shift($argv);
 foreach($argv as $arg)
@@ -35,7 +36,7 @@ $order = core_db::row('
 	inner join timezones tz on (d.tz_id=tz.tz_id)
 	where lo_oid='.$config['oid']
 );
-$start_time = $order['start_time'];
+$start_time = $order['start_time'] + $config['offset'];
 $domain_id  = $order['domain_id'];
 $org_id     = $order['org_id'];
 
