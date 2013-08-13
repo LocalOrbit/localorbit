@@ -84,6 +84,7 @@ if($allow_ach || $allow_offline)
 			
 		# if the user has a bank account	
 		$show_save = false;
+		
 		if($methods->__num_rows > 0)
 		{
 			
@@ -92,18 +93,23 @@ if($allow_ach || $allow_offline)
 				'text_column'=>'dropdown_text',
 				'value_column'=>'opm_id',
 			)));
-			echo('<input type="hidden" name="'.$tab.'__group_method__'.$group_key.'" value="3" />');
+			
 			$show_save = true;
 		}
 		else
 		{
-			if(lo3::is_admin() || lo3::is_market())
-				echo('This organization does not have a bank account setup.<br />&nbsp;');
-			else
-				echo('You do not currently have a bank account setup.<br />&nbsp;');
-		
-			echo('<br /><input type="button" class="btn btn-info pull-right" value="Add New Account" onclick="core.payments.newAccount(this)" /><br /><br />');
+			echo('<div id="'.$tab.'__opm_selector__'.$group_key.'" style="display:none;"></div>');
+			echo('<div id="'.$tab.'__no_opm_msg__'.$group_key.'">');
+				if(lo3::is_admin() || lo3::is_market())
+					echo('This organization does not have a bank account setup.<br />&nbsp;');
+				else
+					echo('You do not currently have a bank account setup.<br />&nbsp;');
+			
+				echo('<br /><input type="button" class="btn btn-info pull-right" value="Add New Account" onclick="core.payments.newAccount(this,\''.$tab.'\',\''.$group_key.'\')" /><br /><br />');
+			echo('</div>');
 		}
+		echo('<input type="hidden" name="'.$tab.'__group_method__'.$group_key.'" value="3" />');
+			
 		echo('</div></div></div>');
 	}
 	if($allow_offline)
