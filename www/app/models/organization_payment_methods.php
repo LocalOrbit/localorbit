@@ -22,6 +22,15 @@ class  InpACHTransRecord{
 
 class core_model_organization_payment_methods extends core_model_base_organization_payment_methods
 {
+	function get_routing_nbr()
+	{
+		return core_crypto::decrypt($this['nbr2']);
+	}
+	function get_account_nbr()
+	{
+		return core_crypto::decrypt($this['nbr1']);
+	}
+	
 	function make_payment($trace='',$memo='',$amount='')
 	{
 		global $core;
@@ -49,8 +58,8 @@ class core_model_organization_payment_methods extends core_model_base_organizati
 		
 		$transaction->FrontEndTrace = $trace;
 		$transaction->CustomerName  = substr(strtoupper($this['name_on_account']),0,22);
-		$transaction->CustomerRoutingNo  = core_crypto::decrypt($this['nbr2']);
-		$transaction->CustomerAcctNo     = core_crypto::decrypt($this['nbr1']);
+		$transaction->CustomerRoutingNo  = $this->get_routing_nbr();
+		$transaction->CustomerAcctNo     = $this->get_account_nbr();
 		$transaction->TransAmount   = $amount;
 		$transaction->TransactionCode = 'CCD';
 		
