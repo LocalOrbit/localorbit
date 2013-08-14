@@ -40,6 +40,8 @@ $accounts->load();
 $accounts->next();
 $account = $accounts->__model;
 
+
+
 if(!is_numeric($account['opm_id']))
 {
 	exit("could not find an account for this org :(\n");
@@ -54,9 +56,9 @@ echo("    Amount: ".$payment['to_org_name']." (".$payment['to_org_id'].")\n");
 echo("  Acc Name: ".$account['name_on_account']."\n");
 echo("   Account: ".$account->get_account_nbr()."\n");
 echo("   Routing: ".$account->get_routing_nbr()."\n");
-echo("      Mode: ".(($config['do-ach'] === 1)?'PROCESS':'TEST')."\n");
+echo("      Mode: ".(($config['do-ach'] == 1)?'PROCESS':'TEST')."\n");
 
-if($config['do-ach'] === 1)
+if($config['do-ach'] == 1)
 {
 	$result = $account->make_payment("P-".str_pad($config['payment-id'],6,'0',STR_PAD_LEFT),"Orders",$amount);
 	
