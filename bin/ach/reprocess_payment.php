@@ -49,8 +49,8 @@ echo("Final payment details: \n\n");
 
 echo("     Trace: P-".str_pad($config['payment-id'],6,'0',STR_PAD_LEFT)."\n");
 echo("    Amount: ".$amount."\n");
-echo("      From: ".$payment['from_org_name']."\n");
-echo("    Amount: ".$payment['to_org_name']."\n");
+echo("      From: ".$payment['from_org_name']." (".$payment['from_org_id'].")\n");
+echo("    Amount: ".$payment['to_org_name']." (".$payment['to_org_id'].")\n");
 echo("  Acc Name: ".$account['name_on_account']."\n");
 echo("   Account: ".$account->get_account_nbr()."\n");
 echo("   Routing: ".$account->get_routing_nbr()."\n");
