@@ -8,7 +8,21 @@ class CompanyInfo {
       public $Company; 
       public $CompanyKey; 
 } 
- 
+$config = array(
+	'days':1,
+	'code':'all',
+);
+
+
+
+array_shift($argv);
+foreach($argv as $arg)
+{
+	$arg = explode(':',$arg);
+	$config[$arg[0]] = str_replace('"','',$arg[1]);
+}
+
+echo("\nbeginning processing. using the following config:\n\n".print_r($config,true)."\n\n");
  
 //CompanyInfo 
 $mycompanyinfo = new CompanyInfo;
@@ -17,7 +31,7 @@ $mycompanyinfo -> LocID = "2764";
 $mycompanyinfo -> Company = "LOCALORBITLLC001";
 $mycompanyinfo -> CompanyKey = 'QSFTHJJP3JCMFBXGQEDBZWKDBPPHFM2'; 
  
-$myDateFrom = date('Y-m-d',time() - 86400); //include leading zero for mm and dd e.g. 01 for Jan 
+$myDateFrom = date('Y-m-d',time() - (86400 * $config['days']); //include leading zero for mm and dd e.g. 01 for Jan 
 $myDateTo = date('Y-m-d',time() + 86400);   //include leading zero for mm and dd e.g. 01 for Jan 
  
  
@@ -55,7 +69,8 @@ foreach($myresult->GetResultFileResult->TransResults->TransResult as $item)
 {
 	if(!in_array($item->CallMethod,$ignore_methods))
 	{
-		print_r($item);
+		if($config['code'] == 'all' || $item['ResponseCode'] == $config['code'])
+			print_r($item);
 	}
 }
 exit("Done\n");
