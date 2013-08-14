@@ -13,6 +13,16 @@ $config = array(
 	'code'=>'all',
 );
 
+array_shift($argv);
+foreach($argv as $arg)
+{
+	$arg = explode(':',$arg);
+	$config[$arg[0]] = str_replace('"','',$arg[1]);
+}
+
+echo("\nbeginning processing. using the following config:\n\n".print_r($config,true)."\n\n");
+
+
 //CompanyInfo 
 $mycompanyinfo = new CompanyInfo;
 $mycompanyinfo -> SSS = "RPP";
