@@ -12,6 +12,9 @@ $config = array(
 	'seller-org-id'=>0,  # allows you to restrict the query to a single vendor
 	'report-payables'=>0, # prints out info on all the payables covered by the payment
 	'exclude-domain-ids'=>'35',
+	'exclude-oids'=>0,
+	'exclude-foids'=>0,
+	'exclude-payables'=>0,
 );
 
 
@@ -53,6 +56,19 @@ if($config['exclude-domain-ids'] !== 0)
 {
 	$sql .= ' and p.domain_id not in ('.$config['exclude-domain-ids'].') ';
 }
+if($config['exclude-oids'] !== 0)
+{
+	$sql .= ' and loi.lo_oid not in ('.$config['exclude-oids'].') ';
+}
+if($config['exclude-foids'] !== 0)
+{
+	$sql .= ' and loi.lo_foid not in ('.$config['exclude-foids'].') ';
+}
+if($config['exclude-payables'] !== 0)
+{
+	$sql .= ' and p.payable_id not in ('.$config['exclude-payables'].') ';
+}
+
 
 $sql .="
 	group by concat_ws('-',p.to_org_id,p.payable_type)
