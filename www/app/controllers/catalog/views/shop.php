@@ -34,7 +34,7 @@ $left_url = 'app.php#!catalog-shop-';
 	global $prods,$sellers,$prices,$delivs;
 
 	# get the full list of products
-	$prods = core::model('products')->get_catalog()->load();
+	$prods = core::model('products')->get_catalog(null,-1,false)->load();
 
 	if($prods->__num_rows == 0)
 	{
