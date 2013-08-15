@@ -111,7 +111,7 @@ class core_model_products extends core_model_base_products
 		return $col;
 	}
 
-	function get_catalog($domain_id=null,$org_id=-1)
+	function get_catalog($domain_id=null,$org_id=-1,$check_inventory=true)
 	{
 		global $core;
 
@@ -167,6 +167,16 @@ class core_model_products extends core_model_base_products
 						select sum(qty) from product_inventory where product_inventory.prod_id=p.prod_id
 					)
 			)
+		';
+		
+		if($check_inventory)
+		{
+			$sql .= '
+				and (select sum(qty) from product_inventory where product_inventory.prod_id=p.prod_id and (date(expires_on) > now() or expires_on is null) and (date(good_from) <= now() or good_from is null)) > 0
+			';
+		}
+		
+		$sql .= '
 			and p.unit_id is not null
 			and p.unit_id <> 0
 			and p.is_deleted=0
