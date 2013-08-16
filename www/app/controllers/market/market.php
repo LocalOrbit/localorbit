@@ -85,7 +85,7 @@ class core_controller_market extends core_controller
 				'feature_sellers_enter_price_without_fees','feature_sellers_cannot_manage_cross_sells',
 				'feature_sellers_mark_items_delivered','feature_allow_anonymous_shopping',
 				'default_homepage','seller_payment_managed_by','payable_org_id','payables_create_on',
-				'service_fee','sfs_id','opm_id','facebook','twitter', 'social_option_id'
+				'service_fee','sfs_id','opm_id','facebook','twitter', 'social_option_id','address_id'
 			);
 		}
 		else if(lo3::is_market())
@@ -96,7 +96,7 @@ class core_controller_market extends core_controller
 				'is_closed','show_on_homepage','payment_default_paypal','payment_default_purchaseorder',
 				'secondary_contact_name','secondary_contact_email','secondary_contact_phone',
 				'lo_managed','custom_zendesk','custom_tagline','dashboard_note','market_policies',
-				'market_profile','closed_note','buyer_types_description','bubble_offset','facebook','twitter', 'social_option_id'
+				'market_profile','closed_note','buyer_types_description','bubble_offset','facebook','twitter', 'social_option_id','address_id'
 			);
 		}
 		else
