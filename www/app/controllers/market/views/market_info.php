@@ -1,6 +1,8 @@
 <?php 
 global $data; 
 $social_options = core::model('social_options')->collection()->to_array();
+$addresses = $data->get_addresses();
+$addresses->add_formatter('address_formatter');
 ?>
 
 <div class="control-group">
@@ -29,7 +31,7 @@ $social_options = core::model('social_options')->collection()->to_array();
 	<div class="controls">
 		<div class="input-prepend">
 		  	<span class="add-on">facebook.com/</span>
-			<input type="text" name="facebook" class="input-small" value="<?=$data['facebook']?>" placeholder="Username">
+			<input type="text" name="facebook" class="input-small" value="<?=$data['facebook']?>" placeholder="Username" />
 		</div>
 	</div>
 </div>
@@ -48,7 +50,7 @@ $social_options = core::model('social_options')->collection()->to_array();
 <div class="control-group">
 	<label class="control-label" for="twitter">Display Feed on Profile Page</label>
 	<div class="controls">
-		<select name="social_option_id">
+		<select name="social_option_id" style="width: 300px;">
 			<option>None</option>
 <?foreach ($social_options as $so) {?>
 			<option value="<?=$so['social_option_id']?>"<?=$data['social_option_id']===$so['social_option_id']?'selected':''?>>
@@ -58,7 +60,19 @@ $social_options = core::model('social_options')->collection()->to_array();
 		</select>
 	</div>
 </div>
-
+<div class="control-group">
+	<label class="control-label" for="address_id">Market Info Address</label>
+	<div class="controls">
+		<select name="address_id" style="width: 300px;">
+			<option>None</option>
+<?foreach ($addresses as $address) {?>
+			<option value="<?=$address['address_id']?>"<?=$data['address_id']===$address['address_id']?' selected="selected"':''?>>
+  				<?=$address['formatted_address']?>
+  			</option>
+<?}?>
+		</select>
+	</div>
+</div>
 <div class="control-group">
 	<label class="control-label">
 		Market Profile
