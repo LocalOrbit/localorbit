@@ -1,9 +1,15 @@
 <?
 
 	$market = $core->config['domain'];	
-	$address = $market->get_addresses();
-	$address->__source .= ' and default_shipping=1';
-	$address = $address->load()->row();
+	$address = false;
+	if(is_numeric($market['address_id']))
+	{
+		$address = core::model('addresses')->load($market['address_id']);
+		if($address['is_deleted'] == 1)
+		{
+			$address = false;
+		}
+	}
 	
 	$delivs = core::model('delivery_days')->collection()->filter('domain_id',$market['domain_id']);
 
