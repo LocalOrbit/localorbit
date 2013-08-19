@@ -15,7 +15,7 @@ class core_model_addresses extends core_model_base_addresses
 	function get_table($type,$col,$url)
 	{
 		global $core;
-		echo('type: '.$type);
+		#echo('type: '.$type);
 		#	core::log(gettype($col->__model->autojoin));
 		#core::log('tring to determine class: '.print_r(get_class_methods(get_class($col->__model)),true));
 		$col->add_formatter('address_formatter');
