@@ -101,9 +101,9 @@ else
 	<div class="span5">
 		
 		
-		
+	<?if($has_address):?>
 		<h3><i class="icon-direction"/>Where</h3>
-	<? if($has_address):
+	<? 
 			echo(core_ui::map('hubmap','100%','300px',6));
 			core_ui::map_center('hubmap',$lat,$long);
 			
