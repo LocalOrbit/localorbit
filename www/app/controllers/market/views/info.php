@@ -23,7 +23,7 @@ else
 
 	$market = $core->config['domain'];
 	$address = false;
-	if(is_numeric($market['address_id']))
+	if(is_numeric($market['address_id']) && intval($market['address_id']) != 0)
 	{
 		$address = core::model('addresses')->load($market['address_id']);
 		if($address['is_deleted'] == 1)
@@ -101,7 +101,7 @@ else
 	<div class="span5">
 		
 		
-	<?if($has_address):?>
+	<?if($has_address !== false):?>
 		<h3><i class="icon-direction"/>Where</h3>
 	<? 
 			echo(core_ui::map('hubmap','100%','300px',6));
