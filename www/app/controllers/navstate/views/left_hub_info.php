@@ -2,7 +2,7 @@
 
 	$market = $core->config['domain'];	
 	$address = false;
-	if(is_numeric($market['address_id']))
+	if(is_numeric($market['address_id']) && intval($market['address_id']) != 0)
 	{
 		$address = core::model('addresses')->load($market['address_id']);
 		if($address['is_deleted'] == 1)
@@ -33,7 +33,7 @@
 			<?=$core->config['domain']['secondary_contact_email']?>
 		</a>
 		<br />
-		<? if ($address): ?>
+		<? if ($address !== false): ?>
 			<div class="left-hub-info-address">
 				<?= $address['address'] ?>
 				<br />
