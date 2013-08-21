@@ -10,7 +10,7 @@ class CompanyInfo {
  
 $config = array(
 	'days'=>1,
-	'code'=>'2STL,3RET',
+	'code'=>'2STL,3RET,4INT',
 );
 
 
