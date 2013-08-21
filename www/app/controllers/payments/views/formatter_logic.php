@@ -484,6 +484,16 @@ function format_payable_info($data)
 		$data['payment_date'] = core_format::date($data['payment_date'],'short');
 	}
 	#core::log(print_r($data,true));
+	
+	if(lo3::is_admin() && is_numeric($data['payment_id']))
+	{
+		$data['payment_id_formatted'] = '<br />P-'.str_pad($data['payment_id'],6,0,STR_PAD_LEFT);
+	}
+	else
+	{
+		$data['payment_id_formatted'] = '';
+	}
+	
 	return $data;
 }
 ?>
