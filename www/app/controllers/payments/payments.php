@@ -217,7 +217,9 @@ class core_controller_payments extends core_controller
 		$payables = core::model('v_payables')
 			->collection()
 			->filter('payable_id','in',explode(',',$core->data['payable_ids']));
-		list($from_org_id,$to_org_id) = explode('-',$core->data['group']);
+		#core::log("payment group: ".$core->data['group']);
+		#exit();
+		list($need_pay,$from_org_id,$to_org_id) = explode('-',$core->data['group']);
 		$amount = round(floatval($core->data['amount']),2);
 		
 		switch($core->data['payment_method'])
