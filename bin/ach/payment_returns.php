@@ -52,6 +52,7 @@ $codes = array(
 );
  
 //print ACHReturnRecords if there is any 
+echo("payment_id|Effective_Date|Action|Amount|Detail\n");
 if($myresult->ACHReturnRecords->ACHReturnRecord)
 {
 	
