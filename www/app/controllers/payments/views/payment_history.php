@@ -180,7 +180,7 @@ if($core->data['format'] == 'csv')
 }
 else
 {
-	$payments->add(new core_datacolumn('payment_date','Date Paid',true,'15%',			'{payment_date}','{payment_date}','{payment_date}'));
+	$payments->add(new core_datacolumn('payment_date','Date Paid',true,'15%',			'{payment_date}{payment_id_formatted}','{payment_date}','{payment_date}'));
 	$autoformat_offset = 4;
 	if(lo3::is_admin() || lo3::is_market())
 	{
