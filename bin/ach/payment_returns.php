@@ -59,7 +59,10 @@ if($myresult->ACHReturnRecords->ACHReturnRecord)
 	{ 
 		if($config['code'][0] == 'all' ||  in_array($myACHReturnRecord->ResponseCode,$config['code']))
 		{
-			echo($myACHReturnRecord->FrontEndTrace.'|'.$myACHReturnRecord->EffectiveDate.'|'.$codes[$myACHReturnRecord->ResponseCode]."\n");
+			echo($myACHReturnRecord->FrontEndTrace.'|'.$myACHReturnRecord->EffectiveDate.'|');
+			echo($codes[$myACHReturnRecord->ResponseCode].'|');
+			echo((($myACHReturnRecord->CustTransType == 'C')?'-':'').$myACHReturnRecord->TransAmount.'|');
+			echo($myACHReturnRecord->ActionDetail."\n");
 		}
 		//~ print("FrontEndTrace:" . $myACHReturnRecord->FrontEndTrace . ", EffectiveDate:" . $myACHReturnRecord->EffectiveDate . ", 
 			//~ Name:" . $myACHReturnRecord->CustomerName . ", Amount:" . $myACHReturnRecord->TransAmount . ", 
