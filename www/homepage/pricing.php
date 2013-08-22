@@ -117,7 +117,7 @@ popupWindow = window.open(url,winName,settings)
 				</ul>
 				<div class="pricing_footer">
 
-					<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" 
+					<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA"onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);" 
 					class="btn btn_green btn_pricing"onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">
 					Get Started</a>
 					save $40 if paid annually
@@ -135,7 +135,7 @@ popupWindow = window.open(url,winName,settings)
 					<li>Flexible discount codes</li>
 				</ul>
 				<div class="pricing_footer">
-					<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" 
+					<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);" 
 					class="btn btn_green btn_pricing"onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">
 					Get Started</a>
 					save $100 if paid annually
@@ -150,7 +150,7 @@ popupWindow = window.open(url,winName,settings)
 					<li>Advanced reporting</li>
 				</ul>
 				<div class="pricing_footer">
-					<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" 
+					<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);"
 					class="btn btn_green btn_pricing"onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">
 					Get Started</a>
 					<em>save $200 if paid annually</em>

@@ -127,7 +127,7 @@ settings =
 popupWindow = window.open(url,winName,settings)
 }
 </script>	
-			<a class="btn btn_blue" href="/field-notes/schedule-a-demo" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a>
+			<a class="btn btn_blue" href="/field-notes/schedule-a-demo" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Register', 'Demo Registration']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a>
 			
 			<br />&nbsp;<br />
 			

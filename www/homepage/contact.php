@@ -72,9 +72,9 @@ popupWindow = window.open(url,winName,settings)
 	</tr>
 	<tr>
 		<td colspan="2">&nbsp;</td>
-		<td><a href="http://www.localorb.it/field-notes/schedule-a-demo" class="btn btn_blue" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a></td>
+		<td><a href="http://www.localorb.it/field-notes/schedule-a-demo" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Register', 'Demo Registration']);" class="btn btn_blue" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a></td>
 		<td>&nbsp;</td>
-		<td><a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" class="btn btn_blue" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Stay Informed</a></td>
+		<td><a href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" onClick="_gaq.push(['_trackEvent', 'Call to Action', ‘Sign Up', 'Newsletter Sign Up']);" class="btn btn_blue" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Stay Informed</a></td>
 		<td>&nbsp;</td>
 		<td><a href="http://myaccount.zendesk.com/account/dropboxes/20147973" onclick="script: Zenbox.show(); return false;" class="btn btn_blue" >How Can We Help?</a></td>
 </table>

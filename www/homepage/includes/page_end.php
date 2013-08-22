@@ -45,8 +45,8 @@ popupWindow = window.open(url,winName,settings)
 										<ul class="footer">
 											<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
 												<li class="footer"><a class="footer" href="/homepage/pricing.php">Pricing</a></li>
-												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a></li>
-												<li class="footer"><a class="footer" href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Started</a></li>
+												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Register', 'Demo Registration']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a></li>
+												<li class="footer"><a class="footer" href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Started</a></li>
 
 										</ul>
 									</td>
@@ -55,7 +55,7 @@ popupWindow = window.open(url,winName,settings)
 										
 										<b class="footer">Connect</b>
 										<ul class="footer">
-											<li class="footer"><a class="footer" target="_blank" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Our Newsletter</a></li>
+											<li class="footer"><a class="footer" target="_blank" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Sign Up', 'Newsletter Sign Up']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Our Newsletter</a></li>
 											<li class="footer"><a class="footer" target="_blank" href="http://www.facebook.com/localorbit">Facebook</a></li>
 											<li class="footer"><a class="footer" target="_blank" href="http://www.twitter.com/localorbit">Twitter</a></li>
 											<li class="footer"><a class="footer" target="_blank" href="http://www.linkedin.com/company/local-orbit">LinkedIn</a></li>

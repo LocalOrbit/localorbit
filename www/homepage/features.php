@@ -44,7 +44,7 @@ popupWindow = window.open(url,winName,settings)
 }
 </script>		
 				
-							<a href="http://www.localorb.it/field-notes/schedule-a-demo/" class="btn btn_blue" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a>
+							<a href="http://www.localorb.it/field-notes/schedule-a-demo/" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Register', 'Demo Registration']);" class="btn btn_blue" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a>
 								</div>	
 						
 					<!-- <br />&nbsp;<br />
