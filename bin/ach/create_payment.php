@@ -17,6 +17,7 @@ $config = array(
 	'do-ach'=>0,
 	'report-details'=>0,
 	'memo'=>'',
+	'do-email'=>0,
 );
 
 array_shift($argv);
@@ -29,6 +30,10 @@ foreach($argv as $arg)
 if($config['payment-type'] == 'service')
 {
 	$config['parent-obj-id'] = $config['domain-id'];
+}
+if($config['do-ach'] == 1)
+{
+	$config['do-email'] = 1;
 }
 
 
@@ -58,6 +63,7 @@ $types = array(
 	'lo'=>'lo fees',
 	'service'=>'service fee',
 	'delivery'=>'delivery fee',
+
 );
 
 $payable = core::model('payables');
@@ -92,11 +98,20 @@ if($config['report-details'] == 1)
 	echo('payment: '.print_r($payment->__data,true));
 }
 
+if($config['do-email'] == 1)
+{
+	core::process_command('emails/payment_received',false,
+		$config['from-org'],$config['to-org'],$config['amount'],array()
+	);
+}
+
 if($config['do-ach'] == 1)
 {
 	$payment->save();
 	$payment['ref_nbr'] = 'P-'.str_pad($payment['payment_id'],6,0,STR_PAD_LEFT);
 	$payment->save();
+	
+	
 
 	$result = $method->make_payment($payment['ref_nbr'],(($config['memo'] === '')?'Fees':$config['memo']),$final_amount);
 	if($result)
