@@ -46,7 +46,13 @@ foreach($payables as $group_key=>$payable_list)
 		</table>
 	</div>
 	<div class="span6">
-		<? if($group_totals[$group_key] > 0 && ((($to_org_id != 1 && $from_org_id==1) ||  ($from_org_id != 1 && $to_org_id==1)) || lo3::is_admin() || ($from_org_id != 1 && $to_org_id != 1 && lo3::is_self_managed()))){?>
+		<!--
+		condition 1: <?=($to_org_id != 1 && $from_org_id==1 && lo3::is_admin())?><br />
+		condition 2: <?=($from_org_id != 1 && $to_org_id==1)?><br />
+		condition 3: <?=lo3::is_admin()?><br />
+		condition 4: <?=($from_org_id != 1 && $to_org_id != 1 && lo3::is_self_managed())?><br />
+		-->
+		<? if($group_totals[$group_key] > 0 && ((($to_org_id != 1 && $from_org_id==1 && lo3::is_admin()) ||  ($from_org_id != 1 && $to_org_id==1)) || lo3::is_admin() || ($from_org_id != 1 && $to_org_id != 1 && lo3::is_self_managed()))){?>
 		<h2><i class="icon-coins">&nbsp;</i>Method</h2>
 		<input type="hidden" name="<?=$core->data['tab']?>__group_total__<?=$group_key?>" value="<?=$group_totals[$group_key]?>" />
 		<input type="hidden" name="<?=$core->data['tab']?>__payable_ids__<?=$group_key?>" value="<?=implode(',',$payable_ids)?>" />
