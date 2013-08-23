@@ -48,7 +48,7 @@ foreach($payables as $group_key=>$payable_list)
 	<div class="span6">
 		
 		
-		<? if($group_totals[$group_key] > 0 && ((($to_org_id != 1 && $from_org_id==1 && lo3::is_admin())) || lo3::is_admin() || ($from_org_id != 1 && $to_org_id != 1 && lo3::is_self_managed()))){?>
+		<? if($group_totals[$group_key] > 0 && ((($to_org_id != 1 && $from_org_id==1 && lo3::is_admin()) ||  ($from_org_id != 1 && $to_org_id==1 && (!lo3::is_market()))) || lo3::is_admin() || ($from_org_id != 1 && $to_org_id != 1 && lo3::is_self_managed()))){?>
 		<h2><i class="icon-coins">&nbsp;</i>Method</h2>
 		<input type="hidden" name="<?=$core->data['tab']?>__group_total__<?=$group_key?>" value="<?=$group_totals[$group_key]?>" />
 		<input type="hidden" name="<?=$core->data['tab']?>__payable_ids__<?=$group_key?>" value="<?=implode(',',$payable_ids)?>" />
