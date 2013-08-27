@@ -16,8 +16,7 @@
 		     INNER JOIN organizations ON organizations.org_id = payables.from_org_id
 		     LEFT JOIN invoices ON invoices.invoice_id = payables.invoice_id
 		     
-		WHERE payables.payable_type = 'buyer order'
-			AND payables.to_org_id = ".$core->session['org_id']."
+		WHERE payables.to_org_id = ".$core->session['org_id']."
 			AND lo_order.lo_oid = ".$core->data['lo_oid']."
 			AND lo_order_line_item.ldstat_id = 4
 			AND invoices.invoice_id IS NULL";
