@@ -9,6 +9,7 @@ ob_end_flush();
 mysql_query('SET SESSION group_concat_max_len = 1000000;');
 $config = array(
 	'do-ach'=>0,
+	'new-id'=>1,
 	'payment-id'=>0,
 );
 
@@ -26,20 +27,35 @@ if($config['payment-id'] == 0)
 
 echo("\nbeginning processing. using the following config:\n\n".print_r($config,true)."\n\n");
 
-$payment = core::model('v_payments')->load($config['payment-id']);
-$amount  = $payment['amount'];
-$from_lo = ($payment['from_org_id'] == 1);
+$old_payment = core::model('v_payments')->load($config['payment-id']);
+$amount  = $old_payment['amount'];
+$from_lo = ($old_payment['from_org_id'] == 1);
 if($from_lo)
 	$amount = (-1 * $amount);
 
 $accounts = core::model('organization_payment_methods')
 	->collection()
-	->filter('org_id','=',($from_lo)?$payment['to_org_id']:$payment['from_org_id']);
+	->filter('org_id','=',($from_lo)?$old_payment['to_org_id']:$old_payment['from_org_id']);
 
 $accounts->load();
 $accounts->next();
 $account = $accounts->__model;
 
+
+if($config['new-id'] == 1)
+{
+	$new_payment = core::model('payments');
+	$new_payment['amount'] = $old_payment['amount'];
+	$new_payment['payment_method'] = $old_payment['payment_method'];
+	$new_payment['admin_note'] = $old_payment['admin_note'];
+	$new_payment['creation_date'] = time();
+	$new_payment->save();
+	$new_payment['ref_nbr'] = "P-".str_pad($new_payment['payment_id'],6,'0',STR_PAD_LEFT);
+}
+else
+{
+	$new_payment = $old_payment;
+}
 
 
 if(!is_numeric($account['opm_id']))
@@ -49,10 +65,10 @@ if(!is_numeric($account['opm_id']))
 
 echo("Final payment details: \n\n");
 
-echo("     Trace: P-".str_pad($config['payment-id'],6,'0',STR_PAD_LEFT)."\n");
+echo("     Trace: ".$new_payment['ref_nbr']."\n");
 echo("    Amount: ".$amount."\n");
-echo("      From: ".$payment['from_org_name']." (".$payment['from_org_id'].")\n");
-echo("    Amount: ".$payment['to_org_name']." (".$payment['to_org_id'].")\n");
+echo("      From: ".$old_payment['from_org_name']." (".$old_payment['from_org_id'].")\n");
+echo("    Amount: ".$old_payment['to_org_name']." (".$old_payment['to_org_id'].")\n");
 echo("  Acc Name: ".$account['name_on_account']."\n");
 echo("   Account: ".$account->get_account_nbr()."\n");
 echo("   Routing: ".$account->get_routing_nbr()."\n");
@@ -60,15 +76,27 @@ echo("      Mode: ".(($config['do-ach'] == 1)?'PROCESS':'TEST')."\n");
 
 if($config['do-ach'] == 1)
 {
-	$result = $account->make_payment("P-".str_pad($config['payment-id'],6,'0',STR_PAD_LEFT),"Orders",$amount);
+	$result = $account->make_payment($new_payment['ref_nbr'],"Orders",$amount);
 	
 	if($result)
 	{
 		echo("\tPayment success!\n");
+		if($config['new-id'] == 1)
+		{
+			$query = '
+				update x_payables_payments
+				set payment_id='.$new_payment['payment_id'].' 
+				where payment_id='.$old_payment['payment_id'].';
+			';
+			echo($query."\n");
+			core_db::query($query);
+		}
+	
 	}
 	else
 	{
-		exit("\npayment failed. Check email for details\n");
+		exit("\npayment failed: ".print_r($account['last_result'],true)."\n");
+		
 	}
 }
 
