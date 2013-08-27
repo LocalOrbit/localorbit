@@ -10,6 +10,9 @@ core.payments.createInvoices=function(){
 	core.doRequest('/payments/do_create_invoices',core.getFormDataForSubmit(document.paymentsForm));
 	
 }
+/*core.payments.makeCreateInvoicePdf=function(tab_name, lo_oid, preview){
+	core.doRequest('/payments/create_invoice_pdf',{'lo_oid':lo_oid, 'preview':preview});
+}*/
 core.payments.makePayments=function(tabName){
 	//alert(core.ui.getCheckallList(document.paymentsForm,'payments').join(','));
 	core.doRequest('/payments/payables__enter_payments',{'tab_name':tabName,'checked_invoices':core.ui.getCheckallList(document.paymentsForm,tabName).join(',')});

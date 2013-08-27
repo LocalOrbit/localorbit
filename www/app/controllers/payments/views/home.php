@@ -14,6 +14,7 @@ core_ui::load_library('js','payments.js');
 $tabs = array();
 $payables = false;
 $receivables = false;
+$create_invoices = false;
 
 # just any random positive nbr. This determines if the money out section in overview is shown.
 # this really only needs to be dynamic for sellers, for all other roles just assume there's a positive #.
@@ -65,6 +66,11 @@ else
 	$payables = true;
 }
 
+if(lo3::is_self_managed()) {
+	$tabs[] = 'Create Invoices';
+	$create_invoices = true;
+}
+
 // page_header *******************************************************************************
 page_header('Financial Management (beta)');
 echo('<form name="paymentsForm" class="form-horizontal">');
@@ -78,18 +84,22 @@ core_ui::inline_message("Overview", "This is a snapshot of all money currently o
 // tab contents ******************************************************************************* = 0;
 $tab_count = 0;  //affects ids
 $this->overview($tab_count,$money_out_count,count($tabs));
-if($receivables)
-{
+if($receivables) {
 	$tab_count++;
 	$this->receivables($tab_count);
 }
-if($payables)
-{
+if($payables) {
 	$tab_count++;
 	$this->review_orders($tab_count);
 }
 
+
 $tab_count++;
 $this->payment_history($tab_count);
 
+
+if($create_invoices) {
+	$tab_count++;
+	$this->create_invoices($tab_count);
+}
 ?>
