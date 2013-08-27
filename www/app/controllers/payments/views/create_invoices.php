@@ -18,7 +18,7 @@ $sql = "
 	     LEFT JOIN payments ON x_payables_payments.payment_id = payments.payment_id
 	     LEFT JOIN lo_order_deliveries ON lo_order_deliveries.lodeliv_id = lo_order_line_item.lodeliv_id 
 	WHERE invoices.invoice_id IS NULL
-		AND payables.to_org_id = 1014 /* Z01-mm */
+		AND payables.to_org_id = ".$core->session['org_id']." /* Z01-mm */
 		AND payables.payable_type = 'buyer order'
 		AND lo_order_line_item.ldstat_id = 4 /* delivered */
 	GROUP BY lo_order.lo_oid
