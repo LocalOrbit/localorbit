@@ -1,28 +1,52 @@
 <?php 
 $sql = "
-	SELECT DISTINCT 
-		invoices.invoice_id,
-		lo_order.lo_oid,
-		lo_order.payment_ref,
-		lo_order.order_date,
-		SUM(payables.amount) AS invoice_amount,
-		SUM(payments.amount) AS paid_invoice_amount,
-		payables.from_org_id,
-		payables.to_org_id,
-		case when (lo_order_line_item.ldstat_id = 4) then 'delivered' else 'not delivered' end AS delivery_status
-	       
-	FROM lo_order INNER JOIN lo_order_line_item ON lo_order.lo_oid = lo_order_line_item.lo_oid
-	     INNER JOIN payables ON (payables.parent_obj_id = lo_order.lo_oid OR payables.parent_obj_id = lo_order_line_item.lo_liid) 
-	     LEFT JOIN invoices ON invoices.invoice_id = payables.invoice_id	     
-	     LEFT JOIN x_payables_payments ON x_payables_payments.payable_id = payables.payable_id
-	     LEFT JOIN payments ON x_payables_payments.payment_id = payments.payment_id
-	     LEFT JOIN lo_order_deliveries ON lo_order_deliveries.lodeliv_id = lo_order_line_item.lodeliv_id 
-	WHERE invoices.invoice_id IS NULL
-		AND payables.to_org_id = ".$core->session['org_id']." /* Z01-mm */
-		AND lo_order_line_item.ldstat_id = 4 /* delivered */
-	GROUP BY lo_order.lo_oid
-	ORDER BY lo_order.lo_oid
+	SELECT 
+       u.lo_oid,
+       u.payment_ref,
+       u.order_date,
+       SUM(u.invoice_amount) AS invoice_amount
+		
+	FROM (
+	     SELECT 
+			lo_order.lo_oid,
+			lo_order.payment_ref,
+			lo_order.order_date,
+	        payables.amount as invoice_amount
+	     FROM payables INNER JOIN lo_order ON lo_order.lo_oid = payables.parent_obj_id
+			INNER JOIN lo_order_line_item ON lo_order_line_item.lo_oid = lo_order.lo_oid
+			LEFT JOIN invoices ON invoices.invoice_id = payables.invoice_id
+			
+	     WHERE invoices.invoice_id IS NULL
+	           AND payables.payable_type = 'delivery fee'
+	           AND lo_order_line_item.ldstat_id = 4 /* delivered */
+	           AND lo_order.lbps_id = 1  /* unpaid */
+	           AND payables.amount != 0
+	           AND payables.to_org_id = ".$core->session['org_id']." /* Z01-mm */
+	     GROUP BY lo_order.lo_oid
+	     
+	     UNION 
+	     SELECT 
+			lo_order.lo_oid,
+			lo_order.payment_ref,
+			lo_order.order_date,
+	        SUM(payables.amount) as invoice_amount
+	            
+	     FROM payables INNER JOIN lo_order_line_item ON lo_order_line_item.lo_liid = payables.parent_obj_id
+			INNER JOIN lo_order ON lo_order.lo_oid = lo_order_line_item.lo_oid
+			LEFT JOIN invoices ON invoices.invoice_id = payables.invoice_id
+	     WHERE invoices.invoice_id IS NULL
+	           AND payables.payable_type = 'buyer order'
+	           AND lo_order_line_item.ldstat_id = 4 /* delivered */
+	           AND lo_order_line_item.lbps_id = 1  /* unpaid */ 
+	           AND payables.amount != 0
+	           AND payables.to_org_id = ".$core->session['org_id']." /* Z01-mm */
+	     GROUP BY lo_order.lo_oid
+	     ) u
+	          
+	GROUP BY u.lo_oid
 ";
+
+
 
 $to_be_invoiced = new core_collection($sql);
 
