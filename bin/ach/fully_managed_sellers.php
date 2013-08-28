@@ -13,7 +13,7 @@ $config = array(
 	'report-payables'=>0, # prints out info on all the payables covered by the payment
 	'exclude-domain-ids'=>'35',
 	'exclude-oids'=>0,
-	'exclude-foids'=>0,
+	'exclude-foids'=>'9222,9223,9221',
 	'exclude-payables'=>0,
 );
 
