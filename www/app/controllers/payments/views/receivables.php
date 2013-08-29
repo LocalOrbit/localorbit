@@ -1,6 +1,8 @@
 <?php
 
-$v_payables = core::model('v_payables_4071')->collection();
+$v_payables = core::model('v_payables_4071')
+	->collection()
+	->filter('delivery_status','<>','Canceled');
 $v_payables->filter('amount_owed','>',0);
 $v_payables->add_formatter('new_format_payable_info');
 
