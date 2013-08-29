@@ -367,7 +367,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 		$final_fees = array(
 			'buyer order'=>1,
 			'seller order'=>((100 - (
-				$this['fee_percen_hub'] + $this['fee_percen_lo'] + (($this['payment_method'] == 'paypal')?$order['paypal_processing_fee']:0)
+				$this['fee_percen_hub'] + $this['fee_percen_lo'] + (($this['payment_method'] == 'paypal')?$this['paypal_processing_fee']:0)
 			)) / 100),
 			'hub fees'=>($this['fee_percen_hub'] / 100),
 			'lo fees'=>($this['fee_percen_lo'] / 100),

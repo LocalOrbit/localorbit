@@ -252,7 +252,7 @@ class core_controller_orders extends core_controller
 		# load the main order and update the status
 		$order = core::model('lo_order')->load($item['lo_oid']);
 		$order->update_status();
-		$order->rebuild_totals_payables(($order['payment_method'] == 'paypal'));
+		$order->rebuild_totals_payables(($order['payment_method'] == 'paypal' || $order['payment_method'] == 'ach'));
 		$fulfill = core::model('lo_fulfillment_order')->load($item['lo_foid']);
 		 
 		# update the html with the new order status
