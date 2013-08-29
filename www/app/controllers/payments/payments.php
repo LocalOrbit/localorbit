@@ -94,7 +94,12 @@ class core_controller_payments extends core_controller
 				$receivable['amount'],
 				$receivable['invoice_id'],
 				$payables,
-				$domain_id,
+				core_db::col('
+					select domain_id
+					from organizations_to_domains
+					where org_id='.$receivable['from_org_id'].'
+					and is_home=1
+				','domain_id'),
 				core_format::date($invoice['due_date'],'short')
 			);	
 		}
@@ -133,7 +138,12 @@ class core_controller_payments extends core_controller
 				$receivable['amount'],
 				$receivable['invoice_id'],
 				$payables,
-				$domain_id,
+				core_db::col('
+					select domain_id
+					from organizations_to_domains
+					where org_id='.$receivable['from_org_id'].'
+					and is_home=1
+				','domain_id'),
 				core_format::date($invoice['due_date'],'short')
 			);	
 		}

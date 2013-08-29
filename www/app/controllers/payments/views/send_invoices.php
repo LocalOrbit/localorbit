@@ -167,10 +167,6 @@ if(count($nonsendables) > 0)
 	</div>
 	<?php
 }
-else
-{
-	echo('<input type="hidden" name="has_resendables" value="0" />');
-}
 
 
 echo('<input type="hidden" name="payables_to_send" value="'.implode(',',$ids).'" />');
