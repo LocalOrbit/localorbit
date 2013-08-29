@@ -1,5 +1,7 @@
 <?php
-$v_payables = core::model('v_payables')->collection();
+$v_payables = core::model('v_payables')
+	->collection()
+	->filter('delivery_status','<>','Canceled');
 $v_payables->add_formatter('format_payable_info');
 if(lo3::is_admin())
 {
