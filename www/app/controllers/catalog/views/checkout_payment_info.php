@@ -51,5 +51,5 @@ $this->payment_ach($paymethods);
 <input id="radio_payment_method_none" name="payment_method" type="radio" value="cash" style="display:none;" />
 <?}?>
 <div id="payment_none" class="payment_option span6 form" style="display: none;">
-	The discount code you're using completely covers the cost of your order. Woohoo!
+	<b>The discount code you're using completely covers the cost of your order. You must click Place Order to complete this transaction.</b>
 </div>
