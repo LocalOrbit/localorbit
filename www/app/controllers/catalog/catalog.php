@@ -208,224 +208,53 @@ class core_controller_catalog extends core_controller
 			}
 		}
 	}
-
+	
 	function update_fees($return_data='no',$cart = null)
 	{
 		global $core;
 
-		# we need to determine the item grouping
-		$delivery_fee = 0;
-		$discount = 0;
-		$dd_list  = array();
-		$dd_cache = array();
-		$final_delivery_breakdown = array();
-		$fee_total_by_ddaddr_id  = array();
-		$fee_total_by_lo_foid    = array();
-		$core->response['replace'] = array();
 
-		# load the order and group things by delivery option group
-		if(is_null($cart))
-		{
-			$cart = core::model('lo_order')->get_cart();
-			$cart->load_items(true);
-			$cart->arrange_by_next_delivery();
-		}
-		$cart->load_codes_fees();
+		
+		$cart = core::model('lo_order')->get_cart();
 
-		# first, we need to calculate the discounts applied to items
-		# we should store the discounted amount on the item level
+		# add the discount code if necessary
 		$notify_discount = false;
-		core::log('------ calcing discount code ------');
+		core_db::query('delete from lo_order_discount_codes where lo_oid='.$cart['lo_oid']);
 		if($core->data['discount_code'] != '')
 		{
-			core_db::query('delete from lo_order_discount_codes where lo_oid='.$cart['lo_oid']);
 			$code = core::model('discount_codes')->load_valid_code($core->data['discount_code']);
 			if(isset($code->__data['disc_id']))
 			{
 				$order_code = core::model('lo_order_discount_codes');
 				$order_code->import($code->__data);
 				$order_code->__orig_data = array();
-				$discount = $order_code->apply_to_order($cart);
-				#core::log('code info '.$discount.': '.print_r($order_code->__data,true));
-				if($discount == 0)
-				{
-					$notify_discount = true;
-				}
-				else
-				{
-					$order_code['lo_oid'] = $cart['lo_oid'];
-					$order_code->save();
-				}
-
-			}
-			else
-			{
-				$notify_discount = true;
+				$order_code['lo_oid'] = $cart['lo_oid'];
+				$order_code->save();
 			}
 		}
-		$discount = 0;
-		core::log('------ done with discount code ------');
 
-		core::log('ready to calculate delivery fees');
-		core::log(print_R($core->data,true));
-		# we need to reorganize all of the items by their final delivery combinations
-		foreach($cart->items_by_delivery as $delivery_opt_key=>$items)
-		{
-			core::log('looking for fees for '.$delivery_opt_key);
-			$final_delivery_breakdown[$delivery_opt_key] = array();
-			foreach($items as $item)
-			{
-				$discount += $item['row_adjusted_total'] - $item['row_total'];
-				$final_delivery_breakdown[$delivery_opt_key][] = $item;
-			}
-		}
-		core::log('breakdown complete');
-
-
-		# now all items are in the correct breakdown. determine all the unique dd_ids
-		foreach($final_delivery_breakdown as $dd_id=>$items)
-		{
-			core::log('attempting to pick apart breakdown keys: '.$dd_id);
-			$dd_id = explode('_',$dd_id);
-			foreach($dd_id as $id)
-				$dd_list[] = $id;
-			#list($dd_id,$addr_id) = explode('-',$ddaddr_id);
-			
-		}
-
-		# load a cache of all the dd_ids
-		$dd_cache = core::model('delivery_days')
-			->collection()
-			->filter('delivery_days.dd_id','in',$dd_list)
-			->to_hash('dd_id');
-		core::log('dds loaded');
-
-		# loop through the existing order delivery days and
-		# record which ones exist. If there is a delivery day in the
-		# order that has been ruled by by the request, then
-		# delete it.
-		core::log('looking for fees to delete');
-		foreach($cart->delivery_fees as $fee)
-		{
-			if(!isset($dd_cache[$fee['dd_id']]))
-			{
-				core::log('deleting fee '.$fee['dd_id']);
-				$fee->delete();
-			}
-			else
-			{
-				core::log('fee '.$fee['dd_id'].' already exists');
-				$dd_cache[$fee['dd_id']][0]['exists'] = true;
-			}
-		}
-		core::log('fee delete complete');
-
-		# add in the delivery days that we need to.
-		core::log('looking for fees to add to order '.$cart['lo_oid']);
-		foreach($dd_cache as $dd_id=>$data)
-		{
-			core::log('examining first dd: '.$dd_id);
-			if($data[0]['exists'] !== true)
-			{
-				core::log('adding new fee: '.$fee['dd_id']);
-				$fee = core::model('lo_order_delivery_fees');
-				$fee['lo_oid']    = $cart['lo_oid'];
-				$fee['dd_id']     = $dd_id;
-				$fee['devfee_id'] = $data[0]['devfee_id'];
-				$fee['fee_type']  = $data[0]['fee_type'];
-				$fee['fee_calc_type_id'] = $data[0]['fee_calc_type_id'];
-				$fee['amount']    = $data[0]['amount'];
-				$fee['minimum_order'] = 0;
-				$fee->save();
-			}
-		}
-		core::log('fee add complete. reloading');
-		$cart->load_codes_fees(true);
-		core::log('all fees now exist in db. Now to figure out how to apply them!');
-
-		# loop through each fee and calculate it.
+		$cart->rebuild_totals_payables(false);
 		
-		foreach($cart->delivery_fees as $fee)
-		{
-			$applied_amount = 0;
 
-			#core::log('fee data: '.print_r($fee->__data,true));
-
-			# we need to determine which of the items the delivery fee applies to
-			foreach($final_delivery_breakdown as $ddaddr_id=>$items)
-			{
-				foreach($items as $item)
-				{
-					core::log('item: '.$item['dd_id'].' / '.$fee['dd_id']);
-					if($item['dd_id'] == $fee['dd_id'])
-					{
-						if($fee['fee_calc_type_id'] == 2 )
-						{
-							core::log('this is a fixed fee, if its currently 0, then add it to the applied amount: '.$fee['amount']);
-							# if this is a fixed amount fee,
-							if($applied_amount == 0)
-								$applied_amount += $fee['amount'];
-						}
-						else
-						{
-							core::log('this is a % fee, calc the delivery fee: '.$fee['amount']);
-							# if this is a % fee:
-							core::log('applying to item '.print_r($item,true));
-							$applied_amount += ($fee['amount'] / 100) * $item['row_total'];
-							
-						}
-					}
-				}
-			}
-			$fee['applied_amount'] = $applied_amount;
-			$delivery_fee += $applied_amount;
-			$fee->save();
-			core::log('the final fee total for ddid '.$fee['dd_id'].' is: '.$applied_amount);
-		}
-
-		# save the new order totals to the db
-		$cart['discount'] =  $discount;
-		$cart['delivery_fee'] =  $delivery_fee;
-		$cart['adjusted_total'] =  $delivery_fee + $discount;
-		$cart['grand_total']    = $cart['item_total'] + $cart['adjusted_total'];
-		core::log('final cart info: ');
-		core::log('discount: '.$discount);
-		core::log('delivery_fee: '.$delivery_fee);
-		core::log('adjusted_total: '.($delivery_fee + $discount));
-		core::log('grand_total: '.($cart['item_total'] + $cart['adjusted_total']));
-		$cart->save();
-
-		# if this method is being called from the checkout page, send
-		# the new totals back.
-		# if it's being called as part of the checkout process, then return the fee total
-		if($return_data == 'yes')
-		{
-			core::log('returnign for submit');
-			return $cart;
-		}
+		
+		core::log('returning ajax');
+		if($cart['delivery_total'] > 0)
+			core::replace('fee_total',core_format::price($cart['delivery_total']));
 		else
-		{
-			core::log('returning ajax');
-			core::log($cart['item_total'] .'/'. $delivery_fee .'/'. $discount);
-			if($delivery_fee > 0)
-				core::replace('fee_total',core_format::price($delivery_fee));
-			else
-				core::replace('fee_total','Free!');
-			$grand_total = $cart['item_total'] + $delivery_fee + $discount;
-			if($grand_total == 0){
-				core::js("core.checkout.showNoPayment();");
-			}else{
-				core::js("core.checkout.hideNoPayment();");
-			}
-			core::replace('grand_total',core_format::price($grand_total,false));
-			core::replace('adjusted_total',core_format::price($discount,false));
-			core::js("$('#totals_loading').hide();$('#total_table').show(200);");
-			if($notify_discount)
-			{
-				core_ui::notification('could not apply this discount code');
-			}
-			core::deinit();
+			core::replace('fee_total','Free!');
+		if($cart['grand_total'] == 0){
+			core::js("core.checkout.showNoPayment();");
+		}else{
+			core::js("core.checkout.hideNoPayment();");
 		}
+		core::replace('grand_total',core_format::price($cart['grand_total'],false));
+		core::replace('adjusted_total',core_format::price($cart['adjusted_total'],false));
+		core::js("$('#totals_loading').hide();$('#total_table').show(200);");
+		if($core->data['discount_code'] != '' && $cart['adjusted_total']==0)
+		{
+			core_ui::notification('could not apply this discount code');
+		}
+		core::deinit();
 	}
 
 	function order_confirmation()

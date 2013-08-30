@@ -685,6 +685,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 		$this['grand_total'] = $adjusted_item_total + $delivery_total;
 		$this['item_total'] = $item_total;
 		$this['adjusted_total'] = $item_total - $adjusted_item_total;
+		$this['delivery_total'] = $delivery_total;
 		
 		$this->save();
 
