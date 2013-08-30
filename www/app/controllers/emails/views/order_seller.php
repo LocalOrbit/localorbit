@@ -10,7 +10,8 @@ $values = array(
 	'hostname'=>$core->view[7],
 	'hubname'=>$core->view[8],
 	'logo'=>'<img src="http://'.$core->view[7].image('logo-email',$core->view[6]).'" />',
-	'org_id'=>$core->view[9]
+	'org_id'=>$core->view[9],
+	'buyer_name'=>$core->session['org_name']
 );
 
 #core::log('email values: '.print_r($values,true));

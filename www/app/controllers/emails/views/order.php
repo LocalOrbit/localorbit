@@ -10,6 +10,7 @@ $values = array(
 	'hostname'=>$core->view[7],
 	'hubname'=>$core->view[8],
 	'logo'=>'<img src="http://'.$core->view[7].image('logo-email',$core->view[6]).'" />',
+	'buyer_name'=>$core->session['org_name']
 );
 
 //get order_id for use in email
