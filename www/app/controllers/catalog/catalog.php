@@ -209,10 +209,82 @@ class core_controller_catalog extends core_controller
 		}
 	}
 	
+	
+	
+	
+
+	function update_delivery_fees() {
+		global $core;
+	
+		$cart = core::model('lo_order')->get_cart();
+		//core::log(print_r($cart->__data,true));
+	
+	
+		// clear old ones
+		core_db::query('DELETE FROM lo_order_delivery_fees WHERE lo_oid='.$cart['lo_oid']);
+	
+		/* flat delivery fee */
+		$flat_fee_exists = core_db::num_rows("SELECT lo_order_line_item.lo_oid
+				FROM delivery_fees INNER JOIN lo_order_line_item ON delivery_fees.dd_id = lo_order_line_item.dd_id
+			WHERE delivery_fees.fee_calc_type_id = 2 /* flat amount */
+			AND lo_order_line_item.lo_oid=".$cart['lo_oid']);
+	
+		if ($flat_fee_exists > 0) {
+			core_db::query("INSERT INTO lo_order_delivery_fees
+			(lo_oid, devfee_id, dd_id, fee_type, fee_calc_type_id, amount, applied_amount)
+			SELECT lo_order_line_item.lo_oid,
+			  delivery_fees.devfee_id,
+			  delivery_fees.dd_id,
+			  'delivery' AS fee_type,
+			  2 AS fee_calc_type_id ,
+			  SUM(COALESCE(delivery_fees.amount,0)) AS   amount,
+			  SUM(COALESCE(delivery_fees.amount,0)) AS   applied_amount
+			FROM delivery_fees INNER JOIN lo_order_line_item ON delivery_fees.dd_id = lo_order_line_item.dd_id
+			WHERE delivery_fees.fee_calc_type_id = 2 /* flat amount */
+			AND lo_order_line_item.lo_oid=".$cart['lo_oid']);
+		}
+	
+	
+	
+		/* percentage delivery fee */
+		$percentage_fee_exists = core_db::num_rows("SELECT lo_order_line_item.lo_oid
+				FROM delivery_fees INNER JOIN lo_order_line_item ON delivery_fees.dd_id = lo_order_line_item.dd_id
+			WHERE delivery_fees.fee_calc_type_id = 1 /* percentage amount */
+			AND lo_order_line_item.lo_oid=".$cart['lo_oid']);
+	
+		if ($percentage_fee_exists > 0) {
+			core_db::query("INSERT INTO lo_order_delivery_fees
+			(lo_oid, devfee_id, dd_id, fee_type, fee_calc_type_id, amount, applied_amount)
+			SELECT lo_order_line_item.lo_oid,
+			delivery_fees.devfee_id,
+			delivery_fees.dd_id,
+			'delivery' AS fee_type,
+			1 AS fee_calc_type_id ,
+			SUM(COALESCE(delivery_fees.amount / 100 * row_total,0)) AS   amount,
+			SUM(COALESCE(delivery_fees.amount / 100 * row_total,0)) AS   applied_amount
+			FROM delivery_fees INNER JOIN lo_order_line_item ON delivery_fees.dd_id = lo_order_line_item.dd_id
+			WHERE delivery_fees.fee_calc_type_id = 1 /* percentage amount */
+			AND lo_order_line_item.lo_oid=".$cart['lo_oid']);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	function update_fees($return_data='no',$cart = null)
 	{
 		global $core;
-
+		
+		// delivery fees *****************************************************************************************************
+		$this->update_delivery_fees();
+		
 
 		
 		$cart = core::model('lo_order')->get_cart();

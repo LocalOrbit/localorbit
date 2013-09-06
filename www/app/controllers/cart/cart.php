@@ -178,7 +178,15 @@ class core_controller_cart extends core_controller
 					core::log('new qty on '.$item['prod_id']);
 					core::log($core->data['prod_'.$item['prod_id']]);
 					$item['qty_ordered'] = $items[$item['prod_id']][0];
-					$item['dd_id'] = $items[$item['prod_id']][1];
+					
+					// assign to correct delivery day
+					if ($core->session['dd_id'] > 0) {
+						$item['dd_id'] = $core->session['dd_id'];
+					} else {
+						$item['dd_id'] = $items[$item['prod_id']][1];
+					}
+					
+					
 					$item['category_ids']  = $product['category_ids'];
 					$item['final_cat_id']  = trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
 
