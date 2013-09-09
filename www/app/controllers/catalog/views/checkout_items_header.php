@@ -73,7 +73,10 @@
 							$final_address = $address[0];
 						echo '<option value="'. $address[0]['address_id'].'"';
 						
-						if($deliv[$prefix.'address_id'] == $address_id)
+						//if($deliv[$prefix.'address_id'] == $address_id)
+							//	echo(' selected="selected"');
+
+						if($address[0]['default_shipping'] == 1)
 							echo(' selected="selected"');
 						
 						echo '>'.$address[0]['formatted_address'].'</option>';
