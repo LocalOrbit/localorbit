@@ -35,7 +35,7 @@ class core_format
 	{
 		$input = str_replace('$','',$input);
 		$input = str_replace(' ','',$input);
-		return number_format(floatval($input),2);
+		return number_format(floatval($input),2,'.','');
 	}
 
 	function parse_prices()
