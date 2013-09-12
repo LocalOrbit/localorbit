@@ -357,6 +357,71 @@ class core_model_lo_order extends core_model_lo_order___utility
 		}
 	}
 	
+	
+	
+	
+
+	function save_delivery_fees() {
+		global $core;
+		$cart = core::model('lo_order')->get_cart();
+		//core::log(print_r($cart->__data,true));
+	
+	
+		// clear old ones
+		core_db::query('DELETE FROM lo_order_delivery_fees WHERE lo_oid='.$cart['lo_oid']);
+	
+		/* flat delivery fee */
+		$flat_fee_exists = core_db::num_rows("SELECT lo_order_line_item.lo_oid
+				FROM delivery_fees INNER JOIN lo_order_line_item ON delivery_fees.dd_id = lo_order_line_item.dd_id
+			WHERE delivery_fees.fee_calc_type_id = 2 /* flat amount */
+			AND lo_order_line_item.lo_oid=".$cart['lo_oid']);
+	
+	
+		// applied 1 time per delivery day
+		if ($flat_fee_exists > 0) {
+			core_db::query("INSERT INTO lo_order_delivery_fees
+			(lo_oid, devfee_id, dd_id, fee_type, fee_calc_type_id, amount, applied_amount)
+			SELECT DISTINCT lo_order_line_item.lo_oid,
+			  delivery_fees.devfee_id,
+			  delivery_fees.dd_id,
+			  'delivery' AS fee_type,
+			  2 AS fee_calc_type_id ,
+			delivery_fees.amount AS   amount,
+			delivery_fees.amount AS   applied_amount
+			FROM delivery_fees INNER JOIN lo_order_line_item ON delivery_fees.dd_id = lo_order_line_item.dd_id
+			WHERE delivery_fees.fee_calc_type_id = 2 /* flat amount */
+			AND lo_order_line_item.lo_oid=".$cart['lo_oid']);
+		}
+	
+	
+	
+		/* percentage delivery fee */
+		$percentage_fee_exists = core_db::num_rows("SELECT lo_order_line_item.lo_oid
+				FROM delivery_fees INNER JOIN lo_order_line_item ON delivery_fees.dd_id = lo_order_line_item.dd_id
+			WHERE delivery_fees.fee_calc_type_id = 1 /* percentage amount */
+			AND lo_order_line_item.lo_oid=".$cart['lo_oid']);
+	
+		if ($percentage_fee_exists > 0) {
+			core_db::query("INSERT INTO lo_order_delivery_fees
+			(lo_oid, devfee_id, dd_id, fee_type, fee_calc_type_id, amount, applied_amount)
+			SELECT lo_order_line_item.lo_oid,
+			delivery_fees.devfee_id,
+			delivery_fees.dd_id,
+			'delivery' AS fee_type,
+			1 AS fee_calc_type_id ,
+			delivery_fees.amount AS amount,
+			Round(SUM(COALESCE(delivery_fees.amount / 100 * row_total,0)),2) AS applied_amount
+			FROM delivery_fees INNER JOIN lo_order_line_item ON delivery_fees.dd_id = lo_order_line_item.dd_id
+			WHERE delivery_fees.fee_calc_type_id = 1 /* percentage amount */
+			AND lo_order_line_item.lo_oid=".$cart['lo_oid']);
+		}
+	}
+	
+	
+	
+	
+	
+	
 	function rebuild_totals_payables($update_payables=false)
 	{
 		global $core;
@@ -379,7 +444,7 @@ class core_model_lo_order extends core_model_lo_order___utility
 		$delivs = core::model('lo_order_delivery_fees')
 			->collection()
 			->filter('lo_oid','=',$this['lo_oid'])
-			->to_hash('dd_id');
+			->to_hash('dd_id');			
 		foreach($delivs as $dd_id=>$deliv)
 			$delivs[$dd_id][0]['applicable_total'] = 0;
 
@@ -418,12 +483,12 @@ class core_model_lo_order extends core_model_lo_order___utility
 				'grand_total'=>0,
 				'adjusted_total'=>0,
 			);
-			
+
 			# if the seller hasn't yet entered the delivered amount and 
 			# also hasn't canceled the item, calculate assuming full
 			# delivery.
 			$qty = $item[(($item['qty_delivered'] == 0 and $item['ldstat_id'] != 3)?'qty_ordered':'qty_delivered')];
-		
+
 			
 			# handle item to delivery total
 			
@@ -448,12 +513,23 @@ class core_model_lo_order extends core_model_lo_order___utility
 				$delivs[$item['dd_id']][0]['applicable_total'] += floatval($item['qty_delivered']);
 			}
 		}
-		
+
+
+core::log("========================================= delivs REMOVE THIS ");
+core::log(print_r($delivs->__data,true));
+
 		#next, calculate the final delivery fees
-		foreach($delivs as $dd_id=>$deliv)
+	 	$delivery_total = core_db::row("SELECT SUM(COALESCE(lo_order_delivery_fees.applied_amount, 0)) AS delivery_total
+			FROM lo_order_delivery_fees
+			WHERE lo_order_delivery_fees.lo_oid=".$this['lo_oid']);
+	 	$delivery_total = $delivery_total['delivery_total'];
+	 	core::log("delivery_total " . $delivery_total);
+	 	
+		/* foreach($delivs as $dd_id=>$deliv)
 		{
 			if($delivs[$dd_id][0]['fee_calc_type_id'] == 1)
 			{
+			core::log("lo_order_delivery_fees 11111======================================================");
 				# if this is a percentage fee,
 				$final_amount = round(floatval($delivs[$item['dd_id']][0]['applicable_total'] * ($delivs[$dd_id][0]['amount'] / 100)),2);
 				core::log($dd_id.' requires a '.$delivs[$dd_id][0]['amount'].' % delivery fee.');
@@ -463,10 +539,12 @@ class core_model_lo_order extends core_model_lo_order___utility
 			}
 			else
 			{
+			core::log("lo_order_delivery_fees 2222======================================================");
 				# if this is a fixed $ fee, then ONLY apply the fee
 				# if some positive quantity has been delivered:
 				if($delivs[$item['dd_id']][0]['applicable_total'] > 0)
 				{
+			core::log("lo_order_delivery_fees 3333======================================================");
 					$final_amount = $delivs[$dd_id][0]['amount'];
 					core::log($dd_id.' requires a $'.$delivs[$dd_id][0]['amount'].' delivery fee.');
 					core::log($delivs[$item['dd_id']][0]['applicable_total'].' applicable items were delivered');
@@ -475,15 +553,19 @@ class core_model_lo_order extends core_model_lo_order___utility
 				}
 			}
 			
-			$delivery_total += $delivs[$dd_id][0]['applied_amount'];
-			
-			core::log('ready to save lo_order_delivery_fees '.$dd_id.': '.print_r($delivs[$dd_id][0],true));
+			$delivery_total += $delivs[$dd_id][0]['applied_amount'];			
+			core::log('ready to save lo_order_delivery_fees '.$dd_id.': '.print_r($delivs[$dd_id][0]->__data,true));
 			$delivery = core::model('lo_order_delivery_fees')
 				->import($delivs[$dd_id][0]);
 			$delivery->__orig_data = array();
-			$delivery->save();			
-		}
-		
+			core::log("lo_order_delivery_fees ======================================================");
+			core::log(print_r($delivs[$dd_id][0]->__data,true));
+			core::log("delivery ======================================================");
+			core::log(print_r($delivery->__data,true));
+			//$delivery->save();			
+		} */
+
+		#next, calculate the final delivery fees
 		if($update_payables)
 		{
 			$deliveries = core::model('payables')
