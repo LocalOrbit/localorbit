@@ -29,7 +29,7 @@ $col = $col
 $orders = new core_datatable('seller_orders','dashboard/seller_orders',$col);
 $orders->add(new core_datacolumn('lo3_order_nbr','Order #',true,'25%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{lo3_order_nbr}</a>'));
 $orders->add(new core_datacolumn('order_date','Date',true,'25%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{order_date}</a>'));
-$orders->add(new core_datacolumn('delivery_status','Delivery State',true,'15%','<a href="#!orders-view_order--lo_oid-{lo_oid}">{delivery_status}</a>','{delivery_status}','{delivery_status}'));
+$orders->add(new core_datacolumn('delivery_status','Delivery State',true,'15%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{delivery_status}</a>','{delivery_status}','{delivery_status}'));
 $orders->add(new core_datacolumn('grand_total','Total',true,'25%'));
 $orders->columns[1]->autoformat='date-short';
 $orders->columns[3]->autoformat='price';
