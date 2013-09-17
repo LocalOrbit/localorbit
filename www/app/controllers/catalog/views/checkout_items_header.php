@@ -76,8 +76,9 @@
 						//if($deliv[$prefix.'address_id'] == $address_id)
 							//	echo(' selected="selected"');
 
-						if($address[0]['default_shipping'] == 1)
+						if($address[0]['default_shipping'] == 1) {
 							echo(' selected="selected"');
+						}
 						
 						echo '>'.$address[0]['formatted_address'].'</option>';
 					}

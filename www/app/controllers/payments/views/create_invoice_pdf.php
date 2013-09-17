@@ -8,12 +8,14 @@
 	$order_sql = "SELECT DISTINCT
 			lo_order.payment_ref,
 			lo_order.lo_oid,
-			organizations.name AS buyer_organization		       
+			lo_order.order_date,
+			organizations.name AS buyer_organization,
+			organizations.po_due_within_days			
 		FROM lo_order INNER JOIN organizations ON organizations.org_id = lo_order.org_id		     
 		WHERE lo_order.lo_oid = ".$core->data['lo_oid'];
-	$orders = new core_collection($order_sql);
-	foreach($orders as $order) {
-		$order = $orders;
+	$orderInfos = new core_collection($order_sql);
+	foreach($orderInfos as $orderInfo) {
+		$orderInfo = $orderInfo;
 	}
 
 	
@@ -34,6 +36,7 @@
 				lo_order.lo_oid,
 	
 				'delivery fee' AS product_name,
+				'' AS seller_name,
 				'ea' AS unit,
 				1 AS qty_ordered,
 				1 AS qty_delivered,
@@ -49,7 +52,7 @@
 		     LIMIT 1
 		     
 		           		
-		     /* items*/ 
+		     /* items */ 
 		     UNION 
 		     SELECT 
 				payables.payable_type,
@@ -64,6 +67,7 @@
 				lo_order.lo_oid,
 	
 				lo_order_line_item.product_name,
+				lo_order_line_item.seller_name,
 				lo_order_line_item.unit,
 				lo_order_line_item.qty_ordered,
 				lo_order_line_item.qty_delivered,
@@ -131,34 +135,39 @@
 	$html = $html."<tr>";
 		$html = $html."<td width='50%'>";
 			$html = $html.$logo_image."<br />";
-			$html = $html."<b>".$domain['custom_tagline']."</b><br /><br />";
+			if ($domain['custom_tagline'].length > 0) {
+				$html = $html."<b>".$domain['custom_tagline']."</b><br /><br />";
+			}
+			
+			$html = $html."<b>Powered by Local Orbit</b><br /><br />";
+			
 			$html = $html.$domain['name']."<br />";
 			$html = $html.$address['address']."<br />";
-			$html = $html.$address['city']." ".$address['postal_code']."<br />";
+			$html = $html.$address['city'].", ".$address['code']." ".$address['postal_code']."<br />";
 		$html = $html."</td>";
 		
 		$html = $html."<td width='50%'>";
-			$html = $html."Invoice Number: XXXXXXXXXXXXXXXXX<br />";
-			$html = $html."Purchase Order Number: ".$order['payment_ref']."<br />";
-			$html = $html."Invoice Date: XXXXXXXXXXXX<br />";
-			$html = $html."Payment Due: XXXXXXXXX<br />";
-			$html = $html."Amount Due: ".core_format::price($invoice_total)."<br />";
+			$html = $html."Invoice Number: ".core::model('invoices')->getNextInvoiceNumber($orderInfo['lo_oid'])."<br />";
+			$html = $html."Purchase Order Number: ".$orderInfo['payment_ref']."<br />";
+			$html = $html."Invoice Date: ".core_format::date(date("Y-m-d"),'short')."<br /><br /><br />";
+			
+			$dueDate = core_format::date(core_format::addDaysToDate($orderInfo['order_date'], $orderInfo['po_due_within_days']),'short');			
+			$html = $html."Payment Due: <b>".$dueDate."</b><br />";
+			$html = $html."Amount Due: <b>".core_format::price($invoice_total)."</b><br />";
 		$html = $html."</td>";
 	$html = $html."</tr>";
 	$html = $html."</table>";
 		
 
 	
-	
-	
 	// invoice
 	$html = $html."<h2>Detail</h2>";
 	$html = $html."<table width='100%'>";
 	$html = $html."<tr>";
-		$html = $html."<th nowrap><b>Description</b></th>";
-		$html = $html."<th><b>Price</b></th>";
-		$html = $html."<th><b>Qty Ord/Del</b></th>";
-		$html = $html."<th><b>Amount</b></th>";
+		$html = $html."<th width=\"300\"><b>Description</b></th>";
+		$html = $html."<th width=\"100\" align=\"right\"><b>Price</b></th>";
+		$html = $html."<th align=\"right\"><b>Qty Ordered/Delivered</b></th>";
+		$html = $html."<th width=\"100\" align=\"right\"><b>Amount</b></th>";
 	$html = $html."</tr>";
 
 	$last_invoice_type = "";
@@ -178,31 +187,37 @@
 			// new invoices
 			$html = $html."<tr>";
 				if ($invoice['product_name'] > '') {
-					$html = $html."<td>".$invoice['product_name']."</td>";
+					$html = $html."<td width=\"300\">".ucwords($invoice['product_name']);
+					if ($invoice['seller_name'] > '') {
+						$html = $html."<i> from " .$invoice['seller_name']."</i>";
+					}
+					$html = $html."</td>";
+					
 				} else {
-					$html = $html."<td>".$invoice['payable_type']."</td>";
+					$html = $html."<td width=\"300\">".$invoice['payable_type']."</td>";
 				}
-				$html = $html."<td align='right'>".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</td>";
-				$html = $html."<td align='right'>".$invoice['qty_ordered']." / ".$invoice['qty_delivered']."</td>";
-				$html = $html."<td align='right'>".$invoice['row_total']."</td>";
+				$html = $html."<td width=\"100\" align=\"right\">".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</td>";
+				$html = $html."<td align=\"right\">".$invoice['qty_ordered']." / ".$invoice['qty_delivered']."</td>";
+				$html = $html."<td width=\"100\" align=\"right\">".core_format::price($invoice['row_total'])."</td>";
 			$html = $html."</tr>";
 		
 			
 		} else if ($invoice['type'] == "not delivered") {
 			$html = $html."<tr>";
-				$html = $html."<td><i>".$invoice['product_name']."</i></td>";
-				$html = $html."<td align='right'><i>".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</i></td>";
-				$html = $html."<td align='right'><i>".$invoice['qty_ordered']." / ".$invoice['qty_delivered']."</i></td>";
-				$html = $html."<td align='right'><i>$0.00</i></td>";
+				$html = $html."<td width=\"300\"><i>".$invoice['product_name']."</i></td>";
+				$html = $html."<td width=\"100\" align=\"right\"><i>".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</i></td>";
+				$html = $html."<td align=\"right\"><i>".$invoice['qty_ordered']." / 0</i></td>";
+				$html = $html."<td width=\"100\" align=\"right\"><i>$0.00</i></td>";
 			$html = $html."</tr>";
 			$order_complete = false;
 			
+			
 		} else if ($invoice['type'] == "already invoiced") {
 			$html = $html."<tr>";
-				$html = $html."<td><i>".$invoice['product_name']."</i></td>";
-				$html = $html."<td align='right'><i>".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</i></td>";
-				$html = $html."<td align='right'><i>".$invoice['qty_ordered']." / ".$invoice['qty_delivered']."</i></td>";
-				$html = $html."<td align='right'><i>$0.00</i></td>";
+				$html = $html."<td width=\"300\"><i>".$invoice['product_name']."</i></td>";
+				$html = $html."<td width=\"100\" align=\"right\"><i>".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</i></td>";
+				$html = $html."<td align=\"right\"><i>".$invoice['qty_ordered']." / ".$invoice['qty_delivered']."</i></td>";
+				$html = $html."<td width=\"100\" align=\"right\"><i>$0.00</i></td>";
 			$html = $html."</tr>";
 		}
 	}
@@ -213,13 +228,13 @@
 	$html = $html."<tr><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr>";
 	$html = $html."<tr>";
 		if ($order_complete) {
-			$html = $html."<td>This order is complete</td>";
+			$html = $html."<td width=\"300\">This order is complete</td>";
 		} else {
-			$html = $html."<td>*This order is not complete</td>";			
+			$html = $html."<td width=\"300\">*This order is not complete</td>";			
 		}
-		$html = $html."<td align='right'></td>";
-		$html = $html."<td align='right'></td>";
-		$html = $html."<td align='right'><b>Total: $".$invoice_total."</b></td>";
+		$html = $html."<td align=\"right\" width=\"100\"></td>";
+		$html = $html."<td align=\"right\"></td>";
+		$html = $html."<td width=\"100\" align=\"right\"><b>Total: ".core_format::price($invoice_total)."</b></td>";
 	$html = $html."</tr>";
 	
 	

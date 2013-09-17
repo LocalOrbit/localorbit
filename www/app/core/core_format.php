@@ -11,6 +11,11 @@ class core_format
 		return $input;
 	}
 
+	function addDaysToDate($date,$days){
+		$endDate = date("Y-m-d", strtotime("$date +".$days." days"));
+		return $endDate;
+	}
+	
 	function hex2rgb($color)
 	{
 		core::log('color passed: '.$color);
@@ -190,15 +195,23 @@ class core_format
 	public static function date($int,$format='long',$do_session_adjust=true)
 	{
 		global $core;
-
+		
 		if($int == 0 || $int == '')
 			return '';
-
-		if(!is_numeric($int) && is_string($int))
-			$int = core_format::parse_date($int,'timestamp');
-
-		#echo('original is '.date($core->config['formats']['dates']['long'],$int).'<br />');
-		#echo('adjusting '.$int.' by '.$core->session['time_offset'].': '.($int + intval($core->session['time_offset'])).'<br />');
+		
+		if(!is_numeric($int) && is_string($int)) {
+			// jan 13, 2013
+			if (strpos($int, ",")) {
+				$int = core_format::parse_date($int,'timestamp');
+				
+			// 2013-09-16 22:37:48
+			} else {
+				$int = strtotime($int);
+			}			
+		}		
+		
+		//echo('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv original is '.date($core->config['formats']['dates']['long'],$int).'<br />');
+		//echo('adjusting '.$int.' by '.$core->session['time_offset'].': '.($int + intval($core->session['time_offset'])).'<br />');
 		
 		if($do_session_adjust)
 			$int += intval($core->session['time_offset']);

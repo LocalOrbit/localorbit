@@ -67,7 +67,7 @@ else
 }
 
 if(lo3::is_self_managed()) {
-	$tabs[] = 'Create Invoices';
+	$tabs[] = 'Send Invoices';
 	$create_invoices = true;
 }
 
