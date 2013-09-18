@@ -237,6 +237,8 @@ class core_model_products extends core_model_base_products
 			'categories'=>array(),
 			'days'=>array(),
 			'addresses'=>array(),
+			'cart'=>null,
+			'item_hash'=>null,
 		);
 		
 		# setup some temp arrays 
@@ -392,8 +394,6 @@ class core_model_products extends core_model_base_products
 				}
 			}
 			
-			#print_r($prods[$i]);
-			
 			# we now know which DDs have inventory for them. If the product
 			# has a valid dd, add this product to the final list of products 
 			# to return
@@ -508,6 +508,21 @@ class core_model_products extends core_model_base_products
 		
 		# get a collection of all the addresses used by the deliveries;
 		$final['addresses'] = core::model('addresses')->add_formatter('simple_formatter')->collection()->filter('address_id','in',array_unique($tmp_addresses))->to_hash('address_id');
+		
+		# load up the cart now
+		$final['cart'] = core::model('lo_order')->get_cart();
+		$final['cart']->load_items();
+		
+		# write out all of the javascript necessary to process the catalog
+		core::js('core.categories ='.json_encode($final['categories']->by_parent).';');
+		core::js('core.products ='.json_encode($final['products']).';');
+		core::js('core.sellers ='.json_encode($final['sellers']).';');
+		core::js('core.prices ='.json_encode($final['prices']).';');
+		core::js('core.delivs ='.json_encode($final['deliveries']).';');
+		core::js('core.cart = '.$final['cart']->write_js(true).';');
+		core::js('core.dds = '.json_encode($final['days']) . ';');
+		core::js('core.addresses = '.json_encode($final['addresses']).';');
+		$final['item_hash'] = $final['cart']->items->to_hash('prod_id');
 		
 		return $final;
 	}
