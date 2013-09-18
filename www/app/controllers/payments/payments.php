@@ -6,6 +6,16 @@ include_once(__DIR__.'/views/inline_messages.php');
 
 class core_controller_payments extends core_controller
 {
+	
+	function create_invoice_loader_pdf()
+	{
+		global $core;
+		core_datatable::js_reload('XXXXXXXXXXXXXXXXXXXXXXX');
+		core_ui::notification("Invoices Sent.",false,false);
+		core::js("location.href='/app/payments/create_invoice_pdf?lo_oid=".$core->data['lo_oid']."&preview=".$core->data['preview']."';");
+		core::deinit();
+	}
+	
 	function wipe_payables()
 	{
 		global $core;

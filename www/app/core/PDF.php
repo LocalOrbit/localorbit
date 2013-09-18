@@ -3,7 +3,7 @@ class PDF {
 	public function PDF() {
 	}
 	
-	public function generatePDF($html) {
+	public function generatePDF($html, $pdf_file_location, $pdf_dest) {
 		// Include the main TCPDF library (search for installation path).
 		require_once($_SERVER['DOCUMENT_ROOT'].'/../bin/tcpdf/config/tcpdf_config.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/../bin/tcpdf/tcpdf.php');
@@ -73,7 +73,9 @@ class PDF {
 		
 		// Close and output PDF document
 		// This method has several options, check the source code documentation for more information.
-		$pdf->Output('lo_invoice.pdf', 'I');
+		
+		//$pdf->Output('lo_invoice.pdf', $pdf_dest);
+		$pdf->Output($pdf_file_location, $pdf_dest);
 		
 		//============================================================+
 		// END OF FILE

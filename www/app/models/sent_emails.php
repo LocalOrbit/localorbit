@@ -8,8 +8,12 @@ class core_model_sent_emails extends core_model_base_sent_emails
 		$to = $this['to_address'];
 		$subject = $this['subject'];
 		$body = $this['body'];
+		$attachement_file_location = $this['attachement_file_location'];
+		
+		$core::log('sending email to '.$to.': '.$subject . " with attachement? " . $attachement_file_location);
 
 		# startup the mail sender
+$core::load_library('core_phpmailer');
 		$mail = new core_phpmailer(false,$this['from_email'],$this['from_name']);
 		$mail->IsHTML(true);
 		
@@ -27,9 +31,13 @@ class core_model_sent_emails extends core_model_base_sent_emails
 		{
 			$mail->SetFrom('service@localorb.it',$from_name);
 		}
+
+		//add attachment AddAttachment($path,$name,$encoding,$type);
+		if ($attachement_file_location > "") {
+			$mail->AddAttachment($attachement_file_location);
+		}
 		
-		# send out the email, check for errors, email the errors if they occur
-		core::log('sending email to '.$to.': '.$subject);
+		
 		$mail->Send();
 		if($mail->ErrorInfo != '')
 		{

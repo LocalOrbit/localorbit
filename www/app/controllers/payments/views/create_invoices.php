@@ -67,9 +67,12 @@ $to_be_invoiced_table->sort_column = -1;
 $to_be_invoiced_table->sort_direction = 'desc';
 
 
-$preview_button = '<input type="button" onclick="core.payments.makeCreateInvoicePdf(\'create_invoice\', 15594, true);" class="btn btn-primary" value="Preview" />';
 $preview_button = '<a class="btn btn-primary" href="/app/payments/create_invoice_pdf?lo_oid={lo_oid}&preview=true" class="btn btn-primary">Preview</a>';
 $send_button = '<a class="btn btn-primary" href="/app/payments/create_invoice_pdf?lo_oid={lo_oid}&preview=false" class="btn btn-primary">Send</a>';
+
+
+$preview_button = '<input type="button" class="btn btn-primary" onclick="core.doRequest(\'/payments/create_invoice_loader_pdf\',{\'lo_oid\':{lo_oid},\'preview\':true});" value="Preview" />';
+
 
 // Order Number 	Purchase Order Number     Buyer Order Date      Invoice Amount
 $to_be_invoiced_table->add(new core_datacolumn('creation_date', 'Order Number', false, '14%', '{lo3_order_nbr}', '{lo3_order_nbr}', '{lo3_order_nbr}'));

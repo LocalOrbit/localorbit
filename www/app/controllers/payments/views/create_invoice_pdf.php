@@ -3,15 +3,16 @@
 	
 	require_once($_SERVER['DOCUMENT_ROOT'].'/app/core/PDF.php');	
 	$PDF = new PDF();
-
 	
 	$order_sql = "SELECT DISTINCT
 			lo_order.payment_ref,
 			lo_order.lo_oid,
-			lo_order.order_date,
+			customer_entity.email AS buyer_email,
+			UNIX_TIMESTAMP(lo_order.order_date) AS order_date,
 			organizations.name AS buyer_organization,
 			organizations.po_due_within_days			
-		FROM lo_order INNER JOIN organizations ON organizations.org_id = lo_order.org_id		     
+		FROM lo_order INNER JOIN organizations ON organizations.org_id = lo_order.org_id	
+			INNER JOIN customer_entity ON customer_entity.entity_id = lo_order.buyer_mage_customer_id
 		WHERE lo_order.lo_oid = ".$core->data['lo_oid'];
 	$orderInfos = new core_collection($order_sql);
 	foreach($orderInfos as $orderInfo) {
@@ -25,6 +26,8 @@
 		    /* delivery fee */ 
 			SELECT 
 				payables.payable_type,
+				payables.payable_id,
+			
 				case
 					when (lo_order_line_item.ldstat_id != 4) then 'not delivered'
 					when (invoices.invoice_id IS NULL) then 'not invoiced'
@@ -32,6 +35,7 @@
 				end AS type,
 		
 				invoices.invoice_id,
+				invoices.invoice_num,			
 				lo_order.payment_ref,
 				lo_order.lo_oid,
 	
@@ -56,6 +60,8 @@
 		     UNION 
 		     SELECT 
 				payables.payable_type,
+				payables.payable_id,
+		           		
 				case
 					when (lo_order_line_item.ldstat_id != 4) then 'not delivered'
 					when (invoices.invoice_id IS NULL) then 'not invoiced'
@@ -63,6 +69,7 @@
 				end AS type,
 		
 				invoices.invoice_id,
+				invoices.invoice_num,
 				lo_order.payment_ref,
 				lo_order.lo_oid,
 	
@@ -120,8 +127,8 @@
 		->filter('org_id',$core->session['org_id'])
 		->limit(1);
 	$address = $address->row();
+
 		
-	
 	// invoice total
 	$invoice_total = 0;
 	foreach($invoices as $invoice) {
@@ -129,6 +136,13 @@
 			$invoice_total += $invoice['row_total'];
 		}
 	}
+	
+	$invoice_num = core::model('invoices')->getNextInvoiceNumber($orderInfo['lo_oid']);
+	
+	
+	// list of payables to tie to new invoice
+	$payable_ids = array();
+	
 	
 	// header 
 	$html = "<table width='100%'>";
@@ -147,12 +161,14 @@
 		$html = $html."</td>";
 		
 		$html = $html."<td width='50%'>";
-			$html = $html."Invoice Number: ".core::model('invoices')->getNextInvoiceNumber($orderInfo['lo_oid'])."<br />";
+			$html = $html."Invoice Number: ".$invoice_num."<br />";
 			$html = $html."Purchase Order Number: ".$orderInfo['payment_ref']."<br />";
 			$html = $html."Invoice Date: ".core_format::date(date("Y-m-d"),'short')."<br /><br /><br />";
+
+			$due_date = $orderInfo['order_date'];
+			$due_date_unixtime = $orderInfo['order_date'] + 60 * 60 *24 * $orderInfo['po_due_within_days'];
 			
-			$dueDate = core_format::date(core_format::addDaysToDate($orderInfo['order_date'], $orderInfo['po_due_within_days']),'short');			
-			$html = $html."Payment Due: <b>".$dueDate."</b><br />";
+			$html = $html."Payment Due: <b>".core_format::date($due_date_unixtime,'short')."</b><br />";
 			$html = $html."Amount Due: <b>".core_format::price($invoice_total)."</b><br />";
 		$html = $html."</td>";
 	$html = $html."</tr>";
@@ -179,12 +195,14 @@
 			if ($invoice['type'] == "not delivered") {
 				$html = $html."<tr><td colspan='4'><b><i>".$invoice['type']."</i></b></td></tr>";
 			} else if ($invoice['type'] == "already invoiced") {
-				$html = $html."<tr><td colspan='4'><b><i>invoice: ".$invoice['invoice_id']."</i></b></td></tr>";
+				$html = $html."<tr><td colspan='4'><b><i>invoice: ".$invoice['invoice_num']."</i></b></td></tr>";
 			}
 		}
 		
 		if ($invoice['type'] == "not invoiced") {
 			// new invoices
+			$payable_ids[] = $invoice['payable_id'];
+
 			$html = $html."<tr>";
 				if ($invoice['product_name'] > '') {
 					$html = $html."<td width=\"300\">".ucwords($invoice['product_name']);
@@ -236,23 +254,53 @@
 		$html = $html."<td align=\"right\"></td>";
 		$html = $html."<td width=\"100\" align=\"right\"><b>Total: ".core_format::price($invoice_total)."</b></td>";
 	$html = $html."</tr>";
-	
-	
-	
 	$html = $html."</table>";
 	
-
-
 	
 	
-	// creat invoice
-	if ($core->data['preview'] == 'true') {
+	// save invoice pdf *************************************************************************************************************
+	// make the directory if we need to
+	if(!is_dir($core->paths['base'].'/../img/'.$domain['domain_id'])) {
+		mkdir($core->paths['base'].'/../img/'.$domain['domain_id']);
+	}
+	if(!is_dir($core->paths['base'].'/../img/'.$domain['domain_id'].'/invoices')) {
+		mkdir($core->paths['base'].'/../img/'.$domain['domain_id'].'/invoices');
+	}
 		
+	if ($core->data['preview'] != 'true') {
+		$pdf_dest = "F";
+		$pdf_file_location= $_SERVER['DOCUMENT_ROOT'].'/img/'.$domain['domain_id'].'/invoices/'.$invoice_num.'.pdf';
+	} else {
+		$pdf_dest = "I";
+		$pdf_file_location= $_SERVER['DOCUMENT_ROOT'].'/img/'.$domain['domain_id'].'/invoices/'.$invoice_num.'.pdf';
+	}
+
+	$PDF->generatePDF($html, $pdf_file_location, $pdf_dest);
+	
+	
+	// create invoice entry?
+	if ($core->data['preview'] != 'true' && count($payable_ids) >= 0) { // $payable_ids double submit
+		$invoice = core::model('invoices')->createInvoiceWithPayableIds($orderInfo['lo_oid'], $invoice_num, $payable_ids, $due_date_unixtime);
+		
+		
+		// email it
+		$body = "<h1>You have a new invoice from ".$domain['name']."</h1>";
+		$body .= "Thank you for your recent purchase from ".$domain['name'].".<br />";
+		$body .= "Please find attached your most recent invoice.<br />";
+		$body .= "For billing questions please email ".$domain['secondary_contact_email']."] or call ".$domain['secondary_contact_phone'];
+		$body .= "<br /><br />Thank you. <br /><br />".$domain['name'];
+		
+		$email = core::model('sent_emails');
+		$email['subject'] = "Invoice #".$invoice_num;
+		$email['body'] = $body;
+		
+		$email['to_address'] = "jvavul@gmail.com,".$orderInfo['buyer_email'];
+		$email['from_email'] = $domain['secondary_contact_email'];
+		$email['from_name']  = $domain['name'];
+		$email['attachement_file_location'] = $pdf_file_location;
+		$email->send();
 	}
 	
-	//echo $sql;
-	//echo $html;
-	
-	$PDF->generatePDF($html);
+	# generate the pdf and echo the src
 	exit();
 ?>
