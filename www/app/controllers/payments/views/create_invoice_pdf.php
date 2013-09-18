@@ -279,10 +279,9 @@
 	
 	
 	// create invoice entry?
-	if ($core->data['preview'] != 'true' && count($payable_ids) >= 0) { // $payable_ids double submit
+	if ($core->data['preview'] != 'true' && count($payable_ids) > 0) { // $payable_ids double submit
 		$invoice = core::model('invoices')->createInvoiceWithPayableIds($orderInfo['lo_oid'], $invoice_num, $payable_ids, $due_date_unixtime);
-		
-		
+				
 		// email it
 		$body = "<h1>You have a new invoice from ".$domain['name']."</h1>";
 		$body .= "Thank you for your recent purchase from ".$domain['name'].".<br />";
@@ -301,6 +300,5 @@
 		$email->send();
 	}
 	
-	# generate the pdf and echo the src
 	exit();
 ?>

@@ -62,16 +62,17 @@ $sql = "
 
 $to_be_invoiced = new core_collection($sql);
 
-$to_be_invoiced_table = new core_datatable('payables', 'payments/create_invoices', $to_be_invoiced);
+$to_be_invoiced_table = new core_datatable('create_invoices', 'payments/create_invoices', $to_be_invoiced);
 $to_be_invoiced_table->sort_column = -1;
 $to_be_invoiced_table->sort_direction = 'desc';
 
 
-$preview_button = '<a class="btn btn-primary" href="/app/payments/create_invoice_pdf?lo_oid={lo_oid}&preview=true" class="btn btn-primary">Preview</a>';
-$send_button = '<a class="btn btn-primary" href="/app/payments/create_invoice_pdf?lo_oid={lo_oid}&preview=false" class="btn btn-primary">Send</a>';
+//$preview_button = '<a class="btn btn-primary" href="/app/payments/create_invoice_pdf?lo_oid={lo_oid}&preview=true" class="btn btn-primary">Preview</a>';
+//$send_button = '<a class="btn btn-primary" href="/app/payments/create_invoice_pdf?lo_oid={lo_oid}&preview=false" class="btn btn-primary">Send</a>';
 
 
 $preview_button = '<input type="button" class="btn btn-primary" onclick="core.doRequest(\'/payments/create_invoice_loader_pdf\',{\'lo_oid\':{lo_oid},\'preview\':true});" value="Preview" />';
+$send_button = '<input type="button" class="btn btn-primary" onclick="core.doRequest(\'/payments/create_invoice_loader_pdf\',{\'lo_oid\':{lo_oid},\'preview\':false});" value="Send" />';
 
 
 // Order Number 	Purchase Order Number     Buyer Order Date      Invoice Amount
@@ -89,6 +90,8 @@ $to_be_invoiced_table->render_exporter = false;
 
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
 	<?php
+	echo "fffffffff".time();
+	
 		$to_be_invoiced_table->render();
 	?>
 </div>
