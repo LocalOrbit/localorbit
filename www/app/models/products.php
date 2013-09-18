@@ -138,7 +138,7 @@ class core_model_products extends core_model_base_products
 				and (product_prices.domain_id = 0 or product_prices.domain_id='.$domain_id.')
 			) as price_ids,
 			(
-				select group_concat(product_delivery_cross_sells.dd_id) 
+				select group_concat(distinct product_delivery_cross_sells.dd_id) 
 				from product_delivery_cross_sells 
 				inner join delivery_days dd1 on (product_delivery_cross_sells.dd_id=dd1.dd_id)
 				where product_delivery_cross_sells.prod_id=p.prod_id 
@@ -286,8 +286,10 @@ class core_model_products extends core_model_base_products
 			# we'll use this flag to only return delivs
 			# for which there is inventory in the date range. will be 
 			# flipped to true later.
-			$tmp_deliveries[$delivery['dd_id']]['has_products'] = false;
+			$tmp_deliveries[$delivery['dd_id']][0]['has_products'] = false;
 		}
+		
+		
 		
 		# now that we have the final delivery times, we can calculate
 		# the actual inventory.
@@ -320,6 +322,7 @@ class core_model_products extends core_model_base_products
 			$prods[$i]['sort_col'] = strtolower($prods[$i]['sort_col']);
 			
 			# check the each delivery to make sure it's actually valid.
+			#core::log('this prod supports the following dds: '.$prods[$i]['dd_ids']);
 			$prod_dds = array_unique(explode(',',$prods[$i]['dd_ids']));
 			
 			
@@ -388,7 +391,8 @@ class core_model_products extends core_model_base_products
 							# deliveries for the product.
 							$valid_prod_dds[] = $prod_dds[$k];
 							$prods[$i]['inventory_by_dd'][$prod_dds[$k]] += $inventory[$prods[$i]['prod_id']][$j]['qty'];
-							$tmp_deliveries[$prod_dds[$k]]['has_products'] = true;
+							#core::log('delivery '.$prod_dds[$k].' has products!');
+							$tmp_deliveries[$prod_dds[$k]][0]['has_products'] = true;
 						}
 					}
 				}
@@ -444,7 +448,7 @@ class core_model_products extends core_model_base_products
 		# their info into the final array.
 		foreach($tmp_deliveries as $tmp_delivery)
 		{
-			if($tmp_delivery['has_products'])
+			if($tmp_delivery[0]['has_products'])
 			{
 				$final['deliveries'][] = $tmp_delivery;
 			}
