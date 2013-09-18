@@ -417,6 +417,11 @@ class core_model_products extends core_model_base_products
 			}
 		}
 		
+		if(count($final['products']) == 0)
+		{
+			return $final;
+		}
+		
 		# we now have a final list of valid sellers. Query for their profiles
 		# and add to the final array.
 		if(count($tmp_sellers) > 0)
@@ -442,7 +447,11 @@ class core_model_products extends core_model_base_products
 		}
 		
 		# get the very final list of categories
-		$final['categories'] = core::model('categories')->load_for_products(array_unique($tmp_categories));
+		$final_cat_ids = array_unique($tmp_categories);
+		if(count($final_cat_ids) > 0)
+		{
+			$final['categories'] = core::model('categories')->load_for_products($final_cat_ids);
+		}
 		
 		# we now have a final list of valid deliveries. copy
 		# their info into the final array.
