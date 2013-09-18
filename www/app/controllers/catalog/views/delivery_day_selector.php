@@ -19,11 +19,9 @@ $addresses = $core->view[2];
 			<?php
 			foreach($days as $key => $day)
 			{
-				#print_r($dd_ids );
-				#print_r(explode('-', $key));
 				list($type, $time,$deliv_address_id,$pickup_address_id) = explode('-', $key);
 				$name = core_format::date($time, 'shortest-weekday');
-				$dd_ids = implode('_', array_keys($day));
+				$dd_ids = implode('_',array_unique(array_keys($day)));
 				$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
 				$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 				?>
