@@ -34,15 +34,17 @@ $left_url = 'app.php#!catalog-shop-';
 	global $prods,$sellers,$prices,$delivs;
 
 	# get the full list of products
-	$prods = core::model('products')->get_catalog(null,-1,false)->load();
-
-	if($prods->__num_rows == 0)
+	$catalog = core::model('products')->get_final_catalog();
+	
+	
+	if(count($catalog['products']) == 0)
 	{
 		$this->no_valid_products();
 	}
 	else
 	{
 
+		/*
 		# get teh unique keys for sub tables
 		$cat_ids   = $prods->get_unique_values('category_ids',true,true);
 		$dd_ids    = $prods->get_unique_values('dd_ids',true,true);
@@ -58,210 +60,41 @@ $left_url = 'app.php#!catalog-shop-';
 		$inventory = core::model('product_inventory')->collection()->filter('prod_id','in',$prod_ids)->to_hash('prod_id');
 
 		# get the seller photos
-		foreach($sellers as $key=>$seller)
+		/*
+		 * foreach($sellers as $key=>$seller)
 			list(
 				$sellers[$key][0]['has_image'],$sellers[$key][0]['img_webpath'],$sellers[$key][0]['img_filepath']
 			) = $orgmodel->get_image($sellers[$key][0]['org_id']);
-		$prices    = core::model('product_prices')->get_valid_prices($price_ids, $core->config['domain']['domain_id'],$core->session['org_id']);
- 		//collection()->filter('price_id','in',$price_ids)->filter('price','>',0)->to_hash('prod_id');
-		$delivs    = core::model('delivery_days')
-			->collection()
-			->filter('delivery_days.dd_id','in',$dd_ids)
-			->filter('domain_id','=',$core->config['domain']['domain_id']);
-		$deliveries = array();
-		$addrs = array(0); // 0 in case no $delivs set
-		foreach ($delivs as $value) {
-			$value->next_time();
-			if($value['deliv_address_id'] != 0)
-				$addrs[] = $value['deliv_address_id'];
-			if($value['pickup_address_id'] != 0)
-				$addrs[] = $value['pickup_address_id'];
-	
-			$deliveries[$value['dd_id']] = array($value->__data);
-		}
-	#	exit();
+		*/
 		
-		#print_r($deliveries);
-		
-		# get a list of all addresses that are used by for deliveries 
-		$addresses = core::model('addresses')->add_formatter('simple_formatter')->collection()->filter('address_id','in',$addrs)->to_hash('address_id');
-		#print_r($addresses);
-
-		$delivs = $deliveries;
-		#print_r($deliveries);
-		//print_r($delivs->to_hash('dd_id'));
-
-		# reformat the products to an array
-		$prods = $prods->to_array();
-
-		# build a column based on text category names that we can sort the product list on
-		# also, make sure that each of the delivery days for the product is 
-		# actually valid. If there's no valid DDs for the product,
-		# then flag them as such so the product doesn't get rendered.
-		$final_prods   = array();
-		$all_valid_dds = array();
-		for ($i = 0; $i < count($prods); $i++)
-		{
-			# convert comma separated list to an array
-			$prods[$i]['cat_list'] = explode(',',$prods[$i]['category_ids']);
-			# the first category is the catalog root, so just remove it
-			array_shift($prods[$i]['cat_list']);
-
-			# create a new property called sort_col, then append on the text version
-			# of the first two categories
-			$prods[$i]['sort_col'] = '';
-			$prods[$i]['sort_col'] .= $cats->by_id[$prods[$i]['cat_list'][0]][0]['order_by'].'-';
-			$prods[$i]['sort_col'] .= $cats->by_id[$prods[$i]['cat_list'][0]][0]['cat_name'].'-';
-			$prods[$i]['sort_col'] .= $cats->by_id[$prods[$i]['cat_list'][1]][0]['cat_name'].'-';
-			$prods[$i]['sort_col'] .= $cats->by_id[$prods[$i]['cat_list'][2]][0]['cat_name'];
-			$prods[$i]['sort_col'] .= '-'.$prods[$i]['name'];
-			
-			//echo $prods[$i]['sort_col']."<br>";
-
-			# lowercase the sort_col just to make sure we're comparing in a way that will
-			# make sense to the user
-			$prods[$i]['sort_col'] = strtolower($prods[$i]['sort_col']);
-			
-			# check the each delivery to make sure it's actually valid.
-			$prod_dds = explode(',',$prods[$i]['dd_ids']);
-			$prods[$i]['has_valid_dd'] = 0;
-			$valid_dds = array();
-			
-			for($j=0;$j<count($inventory[$prods[$i]['prod_id']]);$j++)
-			{
-				# first, determine the date range that this lot is good for.
-				
-				# if this inventory lot has an good from, then calculate
-				# that date. if not, assume super far into the past. 
-				if(trim($inventory[$prods[$i]['prod_id']][$j]['good_from']) !='')
-				{
-					$good_from = core_format::parse_date($inventory[$prods[$i]['prod_id']][$j]['good_from'],'timestamp') - intval($core->session['time_offset']);
-				}
-				else
-				{
-					$good_from = 0;
-				}
-				
-				# if this inventory lot has an expires on, then calculate
-				# that date. if not, assume super far into the future. 
-				if(trim($inventory[$prods[$i]['prod_id']][$j]['expires_on']) !='')
-				{
-					$expires_on = core_format::parse_date($inventory[$prods[$i]['prod_id']][$j]['expires_on'],'timestamp') + 86400 - 1 - intval($core->session['time_offset']);
-				}
-				else
-				{
-					$expires_on = 99999999999999999;
-				}
-					
-				# now, loop through all of the deliveries and see if 
-				# that delivery is valid for the current inventory lot
-				for($k=0;$k<count($prod_dds);$k++)
-				{
-					# only check if the delivery is valid for this market
-					# since a product may have other deliveries on cross-selling
-					# markets.
-					if(isset($deliveries[$prod_dds[$k]]))
-					{
-						# check all 3 conditions!
-						if(
-							$deliveries[$prod_dds[$k]][0]['delivery_end_time'] > $good_from
-							and
-							$deliveries[$prod_dds[$k]][0]['delivery_end_time'] < $expires_on
-							and
-							$inventory[$prods[$i]['prod_id']][$j]['qty'] > 0
-							
-						)
-						{
-							# if it matched, add this dd to the list of valid 
-							# deliveries for the product.
-							$valid_dds[] = $prod_dds[$k];
-							$all_valid_dds[] = $prod_dds[$k];
-						}
-					}
-				}
-			}
-			
-			# we only want to include unique dds, since one dd might match
-			# multipe inventory lots.
-			$prods[$i]['dd_ids'] = implode(',',array_unique($valid_dds));
-			$prods[$i]['has_valid_dd'] = (count($valid_dds) > 0)?1:0;
-
-			# only add the product to the final list of products if it has valid dds
-			if($prods[$i]['has_valid_dd'] == 1)
-			{
-				$final_prods[] = $prods[$i];
-			}
-		}
-		$prods = $final_prods;
-		
-		$days = array();
-		foreach($delivs as $deliv)
-		{
-			$time = ((($deliv[0]['pickup_address_id'] == 0 || $deliv[0]['deliv_address_id']==0) ? 'Delivered' : 'Pick Up') . '-' . (($deliv[0]['delivery_addr_id'] == 0)? $deliv[0]['delivery_end_time'] : $deliv[0]['pickup_end_time']));
-			
-			$time .= '-'.$deliv[0]['deliv_address_id'];
-			$time .= '-'.$deliv[0]['pickup_address_id'];
-			#echo($time .'<br />');
-			if (!array_key_exists($time, $days)) {
-				$days[$time] = array();
-			}
-			foreach ($deliv as $value) {
-				//print_r($deliv);
-				$days[$time][$value['dd_id']] = $value;
-			}
-		}
-		function day_sort($a,$b)
-		{
-			list($type, $atime) = explode('-', $a);
-			list($type, $btime) = explode('-', $b);
-			return intval($atime) - intval($btime);
-		}
-
-		uksort($days,'day_sort');
-		# define a custom sorting function that uses our new sort column
-		function prod_sort($a,$b)
-		{
-			$aArray = explode('-', $a['sort_col']);
-			$bArray = explode('-', $b['sort_col']);
-			
-			// compare orderby field
-			if ($aArray[0] == $bArray[0]) {
-				return strcmp($aArray[1]."-".$aArray[2]."-".$aArray[3], $bArray[1]."-".$bArray[2]."-".$bArray[3]);
-			} else {
-				return $aArray[0] > $bArray[0];
-			}
-			//return strcmp($a['sort_col'], $b['sort_col']);
-		}
-		# apply the sort
-		usort($prods,'prod_sort');
-
 		# handle the cart
 		$cart = core::model('lo_order')->get_cart();
 		$cart->load_items();
 
 		# write out necessary javascript, including the complete product/pricing/delivery listing
-		core::js('core.categories ='.json_encode($cats->by_parent).';');
-		core::js('core.products ='.json_encode($prods).';');
-		core::js('core.sellers ='.json_encode($sellers).';');
-		core::js('core.prices ='.json_encode($prices).';');
-		core::js('core.delivs ='.json_encode($delivs).';');
+		#core::log(print_r($cats->by_parent,true));
+		#exit();
+		core::js('core.categories ='.json_encode($catalog['categories']->by_parent).';');
+		core::js('core.products ='.json_encode($catalog['products']).';');
+		core::js('core.sellers ='.json_encode($catalog['sellers']).';');
+		core::js('core.prices ='.json_encode($catalog['prices']).';');
+		core::js('core.delivs ='.json_encode($catalog['deliveries']).';');
 		core::js('core.cart = '.$cart->write_js(true).';');
-		core::js('core.dds = '.json_encode($days) . ';');
-		core::js('core.addresses = '.json_encode($addresses).';');
+		core::js('core.dds = '.json_encode($catalog['days']) . ';');
+		core::js('core.addresses = '.json_encode($catalog['addresses']).';');
 
 		# reorganize the cart into a hash by prod_id, so we can look up quantities easier
 		# while rendering the catalog
 		$item_hash = $cart->items->to_hash('prod_id');
-		#print_r($item_hash);
 		
 		# render the filters on the left side
 		core::ensure_navstate(array('left'=>'left_blank'), 'catalog-shop');
 		core::write_navstate();
-		$this->left_filters($cats,$sellers,$days,$addresses,$left_url);
+		$this->left_filters($catalog['categories'],$catalog['sellers'],$catalog['days'],$catalog['addresses'],$left_url);
 		core::hide_dashboard();
 		
 		# figure out if we need to show the dd_id selector
-		$deliv_keys = array_keys($delivs);
+		$deliv_keys = array_keys($catalog['deliveries']);
 		#print_r($deliv_keys);
 		# check to see if the user's dd_id in their session is valid on 
 		# this market
@@ -276,7 +109,7 @@ $left_url = 'app.php#!catalog-shop-';
 		}
 		else if(intval($core->session['dd_id']) == 0)
 		{
-			$this->delivery_day_selector($days,$left_url,$addresses);
+			$this->delivery_day_selector($catalog['days'],$left_url,$catalog['addresses']);
 		}
 
 		#===============================
@@ -294,28 +127,29 @@ $left_url = 'app.php#!catalog-shop-';
 		$styles =array(1,1);
 
 		
+
 		
 		
 		# 1st total line
 		echo('<div id="filter_container"><ol id="filter_list"/></div>');
 		echo('<form name="cartForm">');
 		$this->weekly_special(
-			$prods,
-			$prices,
-			$sellers,
-			$delivs,
+			$catalog['products'],
+			$catalog['prices'],
+			$catalog['sellers'],
+			$catalog['deliveries'],
 			$item_hash,
-			$days,
-			$addresses
+			$catalog['days'],
+			$catalog['addresses']
 		);
 		//$this->render_total_line(1);
 		$this->render_no_products_line();
 		$this->render_cart_empty_line();
 
-		foreach($prods as $prod)
+		foreach($catalog['products'] as $prod)
 		{
 			# only render products with prices
-			if(count($prices[$prod['prod_id']]) > 0)
+			if(count($catalog['prices'][$prod['prod_id']]) > 0)
 			{
 				# get the actual starting categories
 				$prod['cats'] = explode(',',$prod['category_ids']);
@@ -328,13 +162,13 @@ $left_url = 'app.php#!catalog-shop-';
 					{
 						# reset teh 2nd level style
 						$styles[1] = 1;
-						$this->render_cat2_end($rendering_cats[1],$cats->by_id[$rendering_cats[1]][0]['cat_name'],$rendering_cats[2],$cats->by_id[$rendering_cats[2]][0]['cat_name'],$styles[0]);
+						$this->render_cat2_end($rendering_cats[1],$catalog['categories']->by_id[$rendering_cats[1]][0]['cat_name'],$rendering_cats[2],$catalog['categories']->by_id[$rendering_cats[2]][0]['cat_name'],$styles[0]);
 					}
 
 					# if we started rendering 1st level cats, close them
 					if($rendering_cats[0] > 0)
 					{
-						$this->render_cat1_end($rendering_cats[0],$cats->by_id[$rendering_cats[0]][0]['cat_name']);
+						$this->render_cat1_end($rendering_cats[0],$catalog['categories']->by_id[$rendering_cats[0]][0]['cat_name']);
 					}
 
 					# reset 2nd/3rd level cat taht we're rendering
@@ -344,7 +178,7 @@ $left_url = 'app.php#!catalog-shop-';
 
 					# reset the 1st level style
 					$styles[0] = ($styles[0]==1)?2:1;
-					$this->render_cat1_start($rendering_cats[0],$cats->by_id[$rendering_cats[0]][0]['cat_name'],$styles[0]);
+					$this->render_cat1_start($rendering_cats[0],$catalog['categories']->by_id[$rendering_cats[0]][0]['cat_name'],$styles[0]);
 				}
 
 				# if this is a new 2nd or 3rd level cat
@@ -355,26 +189,26 @@ $left_url = 'app.php#!catalog-shop-';
 					{
 						# reset teh 2nd level style
 						$styles[1] = 1;
-						$this->render_cat2_end($rendering_cats[1],$cats->by_id[$rendering_cats[1]][0]['cat_name'],$rendering_cats[2],$cats->by_id[$rendering_cats[2]][0]['cat_name'],$styles[0]);
+						$this->render_cat2_end($rendering_cats[1],$catalog['categories']->by_id[$rendering_cats[1]][0]['cat_name'],$rendering_cats[2],$catalog['categories']->by_id[$rendering_cats[2]][0]['cat_name'],$styles[0]);
 					}
 					$rendering_cats[1] = $prod['cats'][2];
 					$rendering_cats[2] = $prod['cats'][3];
-					$this->render_cat2_start($rendering_cats[1],$cats->by_id[$rendering_cats[1]][0]['cat_name'],$rendering_cats[2],$cats->by_id[$rendering_cats[2]][0]['cat_name'],$styles[0]);
+					$this->render_cat2_start($rendering_cats[1],$catalog['categories']->by_id[$rendering_cats[1]][0]['cat_name'],$rendering_cats[2],$catalog['categories']->by_id[$rendering_cats[2]][0]['cat_name'],$styles[0]);
 				}
 				# actually render the product
 				$this->render_product(
 					$prod,
-					$cats->by_id,
-					$sellers[$prod['org_id']][0],
-					$prices[$prod['prod_id']],
-					$delivs,
+					$catalog['categories']->by_id,
+					$catalog['sellers'][$prod['org_id']][0],
+					$catalog['prices'][$prod['prod_id']],
+					$catalog['deliveries'],
 					$styles[0],
 					$styles[1],
 					$item_hash[$prod['prod_id']][0]['qty_ordered'],
 					$item_hash[$prod['prod_id']][0]['row_total'],
-					$days,
+					$catalog['days'],
 					$item_hash[$prod['prod_id']][0]['dd_id'],
-					$addresses
+					$catalog['addresses']
 				);
 				$styles[1] = ($styles[1] == 1)?2:1;
 			}
