@@ -42,38 +42,12 @@ $left_url = 'app.php#!catalog-shop-';
 		$this->no_valid_products();
 	}
 	else
-	{
-
-		/*
-		# get teh unique keys for sub tables
-		$cat_ids   = $prods->get_unique_values('category_ids',true,true);
-		$dd_ids    = $prods->get_unique_values('dd_ids',true,true);
-		$price_ids = $prods->get_unique_values('price_ids',true,true);
-		$org_ids   = $prods->get_unique_values('org_id');
-		$prod_ids  = $prods->get_unique_values('prod_id');
-
-		# load sub table data
-		$cats  = core::model('categories')->load_for_products($cat_ids);
-		$sellers   = core::model('organizations')->collection()->sort('name');
-		$sellers	  = $sellers->filter('organizations.org_id','in',$org_ids)->to_hash('org_id');
-		$orgmodel  = core::model('organizations');
-		$inventory = core::model('product_inventory')->collection()->filter('prod_id','in',$prod_ids)->to_hash('prod_id');
-
-		# get the seller photos
-		/*
-		 * foreach($sellers as $key=>$seller)
-			list(
-				$sellers[$key][0]['has_image'],$sellers[$key][0]['img_webpath'],$sellers[$key][0]['img_filepath']
-			) = $orgmodel->get_image($sellers[$key][0]['org_id']);
-		*/
-		
+	{	
 		# handle the cart
 		$cart = core::model('lo_order')->get_cart();
 		$cart->load_items();
 
 		# write out necessary javascript, including the complete product/pricing/delivery listing
-		#core::log(print_r($cats->by_parent,true));
-		#exit();
 		core::js('core.categories ='.json_encode($catalog['categories']->by_parent).';');
 		core::js('core.products ='.json_encode($catalog['products']).';');
 		core::js('core.sellers ='.json_encode($catalog['sellers']).';');
@@ -125,10 +99,6 @@ $left_url = 'app.php#!catalog-shop-';
 		$rendering_cats = array(0,0,0);
 		# this array keeps track of the style for each row type
 		$styles =array(1,1);
-
-		
-
-		
 		
 		# 1st total line
 		echo('<div id="filter_container"><ol id="filter_list"/></div>');
@@ -214,7 +184,6 @@ $left_url = 'app.php#!catalog-shop-';
 			}
 		}
 
-
 		# perform final closeups
 		# if we started rendering 2nd/3rd level cats, close them.
 		if($rendering_cats[1] > 0)
@@ -233,24 +202,20 @@ $left_url = 'app.php#!catalog-shop-';
 		echo('</form>');
 	}
 
-	//$this->weekly_special();
-
-
-
-#print_r($core->data);
-$js = '';
-##if($core->data['cart'] == 'yes')
-#$js .= 'core.afterCatalogInitCartFilter=\'cart\';';
-#if(is_numeric(trim($core->data['cat1'])))
-#	$js .= 'core.afterCatalogInitCat1Filter='.intval(trim($core->data['cat1']));
-	
-#	$js .= 'core.catalog.setFilter(\'cat1\','.intval(trim($core->data['cat1'])).');';
-	
-$js .= "core.catalog.initCatalog(".(($core->data['cart'] == 'yes')?1:0).",".(intval($core->session['dd_id'])).");";
-	
-core::js("window.setTimeout('".$js."',400);");
-core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });");
-core_ui::showLeftNav();
+	#print_r($core->data);
+	$js = '';
+	##if($core->data['cart'] == 'yes')
+	#$js .= 'core.afterCatalogInitCartFilter=\'cart\';';
+	#if(is_numeric(trim($core->data['cat1'])))
+	#	$js .= 'core.afterCatalogInitCat1Filter='.intval(trim($core->data['cat1']));
+		
+	#	$js .= 'core.catalog.setFilter(\'cat1\','.intval(trim($core->data['cat1'])).');';
+		
+	$js .= "core.catalog.initCatalog(".(($core->data['cart'] == 'yes')?1:0).",".(intval($core->session['dd_id'])).");";
+		
+	core::js("window.setTimeout('".$js."',400);");
+	core::js("$('[rel=\"clickover\"]').clickover({ html : true, onShown : function () { core.changePopoverExpandButton(this, true); }, onHidden : function () { core.changePopoverExpandButton(this, false); } });");
+	core_ui::showLeftNav();
 
 
 #core::log('total time on server: '.($end - $start))
