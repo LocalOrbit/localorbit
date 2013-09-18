@@ -36,31 +36,12 @@ $left_url = 'app.php#!catalog-shop-';
 	# get the full list of products
 	$catalog = core::model('products')->get_final_catalog();
 	
-	
 	if(count($catalog['products']) == 0)
 	{
 		$this->no_valid_products();
 	}
 	else
-	{	
-		# handle the cart
-		$cart = core::model('lo_order')->get_cart();
-		$cart->load_items();
-
-		# write out necessary javascript, including the complete product/pricing/delivery listing
-		core::js('core.categories ='.json_encode($catalog['categories']->by_parent).';');
-		core::js('core.products ='.json_encode($catalog['products']).';');
-		core::js('core.sellers ='.json_encode($catalog['sellers']).';');
-		core::js('core.prices ='.json_encode($catalog['prices']).';');
-		core::js('core.delivs ='.json_encode($catalog['deliveries']).';');
-		core::js('core.cart = '.$cart->write_js(true).';');
-		core::js('core.dds = '.json_encode($catalog['days']) . ';');
-		core::js('core.addresses = '.json_encode($catalog['addresses']).';');
-
-		# reorganize the cart into a hash by prod_id, so we can look up quantities easier
-		# while rendering the catalog
-		$item_hash = $cart->items->to_hash('prod_id');
-		
+	{
 		# render the filters on the left side
 		core::ensure_navstate(array('left'=>'left_blank'), 'catalog-shop');
 		core::write_navstate();
@@ -68,7 +49,9 @@ $left_url = 'app.php#!catalog-shop-';
 		core::hide_dashboard();
 		
 		# figure out if we need to show the dd_id selector
-		$deliv_keys = array_keys($catalog['deliveries']);
+		$deliv_keys = array();
+		foreach($catalog['deliveries'] as $delivery)
+			$deliv_keys[] = $delivery[0]['dd_id'];
 		#print_r($deliv_keys);
 		# check to see if the user's dd_id in their session is valid on 
 		# this market
@@ -77,6 +60,7 @@ $left_url = 'app.php#!catalog-shop-';
 			$core->session['dd_id'] = 0;
 		}
 		
+		#echo('current dd_id in session: '.intval($core->session['dd_id']));
 		if(count($deliv_keys) == 1)
 		{
 			$core->session['dd_id'] = 0;
@@ -108,7 +92,7 @@ $left_url = 'app.php#!catalog-shop-';
 			$catalog['prices'],
 			$catalog['sellers'],
 			$catalog['deliveries'],
-			$item_hash,
+			$catalog['item_hash'],
 			$catalog['days'],
 			$catalog['addresses']
 		);
@@ -174,10 +158,10 @@ $left_url = 'app.php#!catalog-shop-';
 					$catalog['deliveries'],
 					$styles[0],
 					$styles[1],
-					$item_hash[$prod['prod_id']][0]['qty_ordered'],
-					$item_hash[$prod['prod_id']][0]['row_total'],
+					$catalog['item_hash'][$prod['prod_id']][0]['qty_ordered'],
+					$catalog['item_hash'][$prod['prod_id']][0]['row_total'],
 					$catalog['days'],
-					$item_hash[$prod['prod_id']][0]['dd_id'],
+					$catalog['item_hash'][$prod['prod_id']][0]['dd_id'],
 					$catalog['addresses']
 				);
 				$styles[1] = ($styles[1] == 1)?2:1;
@@ -188,13 +172,13 @@ $left_url = 'app.php#!catalog-shop-';
 		# if we started rendering 2nd/3rd level cats, close them.
 		if($rendering_cats[1] > 0)
 		{
-			$this->render_cat2_end($rendering_cats[1],$cats->by_id[$rendering_cats[1]][0]['cat_name'],$rendering_cats[2],$cats->by_id[$rendering_cats[2]][0]['cat_name']);
+			$this->render_cat2_end($rendering_cats[1],$catalog['categories']->by_id[$rendering_cats[1]][0]['cat_name'],$rendering_cats[2],$catalog['categories']->by_id[$rendering_cats[2]][0]['cat_name']);
 		}
 
 		# if we started rendering 1st level cats, close them
 		if($rendering_cats[0] > 0)
 		{
-			$this->render_cat1_end($rendering_cats[0],$cats->by_id[$rendering_cats[0]][0]['cat_name']);
+			$this->render_cat1_end($rendering_cats[0],$catalog['categories']->by_id[$rendering_cats[0]][0]['cat_name']);
 		}
 
 		# 2nd total line
