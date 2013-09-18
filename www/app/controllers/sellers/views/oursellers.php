@@ -77,53 +77,14 @@ else
 		list($has_image,$web_path) = $seller->get_image();
 
 		# get a list of their products
-		$products = core::model('products')->get_catalog_for_seller($seller['org_id']);
-
-		$products->load();
-
-		$price_ids = $products->get_unique_values('price_ids',true,true);	
-		$deliveries = array();
-		$days = array();
-		$has_products = false;
+		$catalog = core::model('products')->get_final_catalog(null,$seller['org_id']);
 		
-		if(count($price_ids) > 0)
+		
+		if(count($catalog['products']) > 0)
 		{
 			$has_products = true;
-			$prices    = core::model('product_prices')->get_valid_prices($price_ids, $core->config['domain']['domain_id'],$core->session['org_id']);
-				
-			$dd_ids    = $products->get_unique_values('dd_ids',true,true);
-			$delivs    = core::model('delivery_days')->collection()->filter('delivery_days.dd_id','in',$dd_ids);
-			foreach ($delivs as $value) {
-				$value->next_time();
-				$deliveries[$value['dd_id']] = array($value->__data);
-			}
-
-			$delivs = $deliveries;
-				
-
-			foreach($delivs as $deliv)
-			{
-				$time = ($deliv[0]['pickup_address_id'] ? 'Pick Up' : 'Delivered') . '-' . strtotime('midnight',$deliv[0]['pickup_address_id'] ? $deliv[0]['pickup_end_time'] : $deliv[0]['delivery_end_time']);
-				if (!array_key_exists($time, $days)) {
-					$days[$time] = array();
-				}
-				foreach ($deliv as $value) {
-					//print_r($deliv);
-					$days[$time][$value['dd_id']] = $value;
-				}
-			}
 		}
-					$cart = core::model('lo_order')->get_cart();
-		$cart->load_items();
-		core_ui::load_library('js','catalog.js');
-		core::js('core.categories ='.json_encode($cats->by_parent).';');
-		core::js('core.products ='.json_encode($products).';');
-		core::js('core.sellers ='.json_encode($sellers).';');
-		core::js('core.prices ='.json_encode($prices).';');
-		core::js('core.delivs ='.json_encode($delivs).';');
-		core::js('core.cart = '.$cart->write_js(true).';');
 		core::js('core.lo4.initRemoveSigns();');
-		$item_hash = $cart->items->to_hash('prod_id');
 ?>
 
 <div class="row">
@@ -185,32 +146,37 @@ else
 	</div>
 </div>
 -->
+<?php
+
+#echo('<pre>');
+#print_r($catalog['deliveries']);
+#echo('</pre>');
+
+?>
 
 <div class="row">
-
 	<div class="span9">
-		<? foreach($products as $prod){?>
+		<? foreach($catalog['products'] as $prod){?>
 		<div class="subheader_1">
 			<a href="#!catalog-view_product--prod_id-<?=$prod['prod_id']?>"> <?
 				core::process_command('catalog/render_product', true,
 					$prod,
-					$cats->by_id,
-					$sellers[$prod['org_id']][0],
-					$prices[$prod['prod_id']],
-					$delivs,
+					$catalog['categories']->by_id,
+					$catalog['sellers'][$prod['org_id']][0],
+					$catalog['prices'][$prod['prod_id']],
+					$catalog['deliveries'],
 					$styles[0],
 					$styles[1],
-					$item_hash[$prod['prod_id']][0]['qty_ordered'],
-					$item_hash[$prod['prod_id']][0]['row_total'],
-					$days,
-					$item_hash[$prod['prod_id']][0]['dd_id']
+					$catalog['item_hash'][$prod['prod_id']][0]['qty_ordered'],
+					$catalog['item_hash'][$prod['prod_id']][0]['row_total'],
+					$catalog['days'],
+					$catalog['item_hash'][$prod['prod_id']][0]['dd_id'],
+					$catalog['addresses']
 				);
 		?>	</a>
 		</div>
 		<?}?>
-	
 	</div>
-
 </div>
 <?}?>	
 <?}?>
