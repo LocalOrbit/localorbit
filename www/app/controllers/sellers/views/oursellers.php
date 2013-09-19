@@ -78,7 +78,7 @@ else
 
 		# get a list of their products
 		$catalog = core::model('products')->get_final_catalog(null,$seller['org_id']);
-		
+
 		
 		if(count($catalog['products']) > 0)
 		{
@@ -159,6 +159,10 @@ else
 		<? foreach($catalog['products'] as $prod){?>
 		<div class="subheader_1">
 			<a href="#!catalog-view_product--prod_id-<?=$prod['prod_id']?>"> <?
+			
+					#echo('<pre>');
+		#print_r($catalog['addresses']);
+		#echo('</pre>');
 				core::process_command('catalog/render_product', true,
 					$prod,
 					$catalog['categories']->by_id,
