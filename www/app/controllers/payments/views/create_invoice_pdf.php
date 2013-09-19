@@ -29,8 +29,12 @@
 				payables.payable_id,
 			
 				case
-					when (lo_order_line_item.ldstat_id != 4) then 'not delivered'
-					when (invoices.invoice_id IS NULL) then 'not invoiced'
+					when payables.invoice_id IS null 
+					     AND (SELECT COUNT(*) FROM lo_order_line_item WHERE lo_order_line_item.lo_oid = 15650 AND lo_order_line_item.ldstat_id = 4 /* delivered */) > 0
+                    then 'not invoiced'
+					when payables.invoice_id IS null 
+					     AND (SELECT COUNT(*) FROM lo_order_line_item WHERE lo_order_line_item.lo_oid = 15650 AND lo_order_line_item.ldstat_id = 4 /* delivered */) = 0
+                    then 'not delivered'
 					else 'already invoiced'
 				end AS type,
 		
@@ -47,7 +51,6 @@
 				payables.amount AS unit_price,
 				payables.amount AS row_total
 		     FROM payables INNER JOIN lo_order ON lo_order.lo_oid = payables.parent_obj_id
-		          INNER JOIN lo_order_line_item ON lo_order_line_item.lo_oid = lo_order.lo_oid
 				  LEFT JOIN invoices ON invoices.invoice_id = payables.invoice_id
 		     WHERE payables.payable_type = 'delivery fee'
 		           AND payables.amount != 0
@@ -222,7 +225,7 @@
 			
 		} else if ($invoice['type'] == "not delivered") {
 			$html = $html."<tr>";
-				$html = $html."<td width=\"300\"><i>".$invoice['product_name']."</i></td>";
+				$html = $html."<td width=\"300\"><i>".ucwords($invoice['product_name'])."</i></td>";
 				$html = $html."<td width=\"100\" align=\"right\"><i>".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</i></td>";
 				$html = $html."<td align=\"right\"><i>".$invoice['qty_ordered']." / 0</i></td>";
 				$html = $html."<td width=\"100\" align=\"right\"><i>$0.00</i></td>";
@@ -232,7 +235,7 @@
 			
 		} else if ($invoice['type'] == "already invoiced") {
 			$html = $html."<tr>";
-				$html = $html."<td width=\"300\"><i>".$invoice['product_name']."</i></td>";
+				$html = $html."<td width=\"300\"><i>".ucwords($invoice['product_name'])."</i></td>";
 				$html = $html."<td width=\"100\" align=\"right\"><i>".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</i></td>";
 				$html = $html."<td align=\"right\"><i>".$invoice['qty_ordered']." / ".$invoice['qty_delivered']."</i></td>";
 				$html = $html."<td width=\"100\" align=\"right\"><i>$0.00</i></td>";
@@ -279,7 +282,10 @@
 	
 	
 	// create invoice entry?
+	$core::log("create_invoice_pdf preview?=" .$core->data['preview']. " count(payable_ids) = " . count($payable_ids));
+	
 	if ($core->data['preview'] != 'true' && count($payable_ids) > 0) { // $payable_ids double submit
+		$core::log("create_invoice_pdf createInvoiceWithPayableIds");
 		$invoice = core::model('invoices')->createInvoiceWithPayableIds($orderInfo['lo_oid'], $invoice_num, $payable_ids, $due_date_unixtime);
 				
 		// email it
