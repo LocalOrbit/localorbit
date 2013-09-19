@@ -36,7 +36,7 @@ function render_ranges($breakdown_by,$ranges)
 				echo('"'.date('M j',$ranges[$i][0]).' - '.date('M j',$ranges[$i][1] - 1).'",');
 				break;
 			case 'month':
-				echo('"'.date('M, y',$ranges[$i][0]).'",');
+				echo('"'.date('M, Y',$ranges[$i][0]).'",');
 				break;
 		}
 	}
