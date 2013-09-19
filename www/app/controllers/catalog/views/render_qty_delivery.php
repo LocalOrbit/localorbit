@@ -9,6 +9,8 @@ $qty = ($qty===0)?'':$qty;
 $total = floatval($core->view[5]);
 $addresses = $core->view[6];
 
+
+
 #echo('<h1>/'.$qty.'/</h1>');
 ?>
 <div class="row">
