@@ -305,11 +305,14 @@ class core_controller_sold_items extends core_controller
 		foreach($oids_to_notify as $oid)
 		{
 			$order = core::model('lo_order')->load($oid);
-			core::process_command('emails/mm_underdelivery',true,
-				$order['domain_id'],
-				$order['lo_oid'],
-				$order['lo3_order_nbr']
-			);
+			if($order['payment_method'] == 'ach' || $order['payment_method'] == 'paypal')
+			{
+				core::process_command('emails/mm_underdelivery',true,
+					$order['domain_id'],
+					$order['lo_oid'],
+					$order['lo3_order_nbr']
+				);
+			}
 		}
 		
 		$orders = core::model('lo_order')
