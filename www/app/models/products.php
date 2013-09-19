@@ -249,7 +249,12 @@ class core_model_products extends core_model_base_products
 		$tmp_categories = array();
 		
 		# run the main query for all the products
-		$catalog = $this->get_catalog($domain_id,null,false,$seller_id)->load();
+		$catalog = $this->get_catalog($domain_id,null,false,$seller_id);
+		if(!is_null($prod_id))
+		{
+			$catalog->filter('p.prod_id','=',$prod_id);
+		}
+		$catalog->load();
 		
 		# if no products were found, stop processing right here.
 		if($catalog->__num_rows == 0)
