@@ -100,7 +100,7 @@ else
 
 <?
 
-if ($core->config['domain']['po_due_within_days'] > 0) { ?>
+if ($core->config['domain']['po_due_within_days'] > 0 && $order['payment_method'] == 'purchaseorder') { ?>
 Payment is due in <?=$core->config['domain']['po_due_within_days']?> days.<br/>
 <? }
 
@@ -118,7 +118,7 @@ foreach($order->items as $item)
 	
 	$this_dd = $item['dd_id'];
 
-	if($dd_id != $this_dd)
+	if($dd_id !== $this_dd)
 	{
 		if($dd_id > 0)
 		{
@@ -173,7 +173,7 @@ foreach($order->items as $item)
 			</thead>
 			<tbody>
 	<?
-		$dd_id = $this_dd;
+		$dd_id = intval($this_dd);
 	}
 	$deliv_ids[] = $item['lodeliv_id'];
 
