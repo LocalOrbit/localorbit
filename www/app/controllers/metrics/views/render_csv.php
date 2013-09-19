@@ -30,13 +30,13 @@ function render_ranges($breakdown_by,$ranges)
 		switch($breakdown_by)
 		{
 			case 'day':
-				echo('"'.date('n/j',$ranges[$i][0]).'",');
+				echo('"'.date('M j',$ranges[$i][0]).'",');
 				break;
 			case 'week':
-				echo('"'.date('n/j',$ranges[$i][0]).' - '.date('n/j',$ranges[$i][1] - 1).'",');
+				echo('"'.date('M j',$ranges[$i][0]).' - '.date('M j',$ranges[$i][1] - 1).'",');
 				break;
 			case 'month':
-				echo('"'.date('M y',$ranges[$i][0]).'",');
+				echo('"'.date('M, y',$ranges[$i][0]).'",');
 				break;
 		}
 	}
