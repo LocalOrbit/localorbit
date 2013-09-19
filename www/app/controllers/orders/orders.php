@@ -186,7 +186,7 @@ class core_controller_orders extends core_controller
 			}
 		}
 		
-		if($notify_underdeliver)
+		if($notify_underdeliver && ($order['payment_method'] == 'ach' || $order['payment_method'] == 'paypal'))
 		{
 			core::process_command('emails/mm_underdelivery',true,
 				$order['domain_id'],
