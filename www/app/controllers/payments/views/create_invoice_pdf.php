@@ -268,7 +268,7 @@
 	}
 		
 	if ($core->data['preview'] != 'true') {
-		$pdf_dest = "F";
+		$pdf_dest = "FI";
 		$pdf_file_location= $_SERVER['DOCUMENT_ROOT'].'/img/'.$domain['domain_id'].'/invoices/'.$invoice_num.'.pdf';
 	} else {
 		$pdf_dest = "I";
@@ -296,8 +296,9 @@
 		$email['to_address'] = "jvavul@gmail.com,".$orderInfo['buyer_email'];
 		$email['from_email'] = $domain['secondary_contact_email'];
 		$email['from_name']  = $domain['name'];
-		$email['attachement_file_location'] = $pdf_file_location;
-		$email->send();
+		$email['attachment_file_location'] = $pdf_file_location;
+		//$email->send(); takes too long with attachment
+		$email->save();
 	}
 	
 	exit();

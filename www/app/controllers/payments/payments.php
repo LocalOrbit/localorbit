@@ -10,9 +10,9 @@ class core_controller_payments extends core_controller
 	function create_invoice_loader_pdf()
 	{
 		global $core;
+		core::js("location.href='/app/payments/create_invoice_pdf?lo_oid=".$core->data['lo_oid']."&preview=".$core->data['preview']."';");
 		core_datatable::js_reload('create_invoices');
 		core_ui::notification("Invoices Sent.",false,false);
-		core::js("location.href='/app/payments/create_invoice_pdf?lo_oid=".$core->data['lo_oid']."&preview=".$core->data['preview']."';");
 		core::deinit();
 	}
 	

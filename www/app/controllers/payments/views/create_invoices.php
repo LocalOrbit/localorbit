@@ -90,8 +90,6 @@ $to_be_invoiced_table->render_exporter = false;
 
 <div class="tab-pane tabarea" id="paymentstabs-a<?=($core->view[0]+1)?>">
 	<?php
-	echo "fffffffff".time();
-	
 		$to_be_invoiced_table->render();
 	?>
 </div>

@@ -8,12 +8,12 @@ class core_model_sent_emails extends core_model_base_sent_emails
 		$to = $this['to_address'];
 		$subject = $this['subject'];
 		$body = $this['body'];
-		$attachement_file_location = $this['attachement_file_location'];
+		$attachment_file_location = $this['attachment_file_location'];
 		
-		$core::log('sending email to '.$to.': '.$subject . " with attachement? " . $attachement_file_location);
+		$core::log('sending email to '.$to.': '.$subject . " with attachement? " . $attachment_file_location);
 
 		# startup the mail sender
-$core::load_library('core_phpmailer');
+		$core::load_library('core_phpmailer');
 		$mail = new core_phpmailer(false,$this['from_email'],$this['from_name']);
 		$mail->IsHTML(true);
 		
@@ -33,8 +33,8 @@ $core::load_library('core_phpmailer');
 		}
 
 		//add attachment AddAttachment($path,$name,$encoding,$type);
-		if ($attachement_file_location > "") {
-			$mail->AddAttachment($attachement_file_location);
+		if ($attachment_file_location > "") {
+			$mail->AddAttachment($attachment_file_location);
 		}
 		
 		
