@@ -77,7 +77,7 @@
 			<div class="homepage_title">
 				Sales and business management
 				tools for the entrepreneurs and organizations  
-				building the New Food Economy, connecting buyers and sellers 
+				building the New Food Economy, connecting local buyers and sellers 
 				with shorter, transparent supply chains.
 			</div>
 			<br />
