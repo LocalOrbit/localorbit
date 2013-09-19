@@ -30,18 +30,15 @@
 			
 				case
 					when payables.invoice_id IS null 
-					     AND (SELECT COUNT(*) FROM lo_order_line_item WHERE lo_order_line_item.lo_oid = 15650 AND lo_order_line_item.ldstat_id = 4 /* delivered */) > 0
+					     AND (SELECT COUNT(*) FROM lo_order_line_item WHERE lo_order_line_item.lo_oid = lo.lo_oid AND lo_order_line_item.ldstat_id = 4 /* delivered */) > 0
                     then 'not invoiced'
-					when payables.invoice_id IS null 
-					     AND (SELECT COUNT(*) FROM lo_order_line_item WHERE lo_order_line_item.lo_oid = 15650 AND lo_order_line_item.ldstat_id = 4 /* delivered */) = 0
-                    then 'not delivered'
 					else 'already invoiced'
 				end AS type,
 		
 				invoices.invoice_id,
 				invoices.invoice_num,			
-				lo_order.payment_ref,
-				lo_order.lo_oid,
+				lo.payment_ref,
+				lo.lo_oid,
 	
 				'delivery fee' AS product_name,
 				'' AS seller_name,
@@ -50,13 +47,12 @@
 				1 AS qty_delivered,
 				payables.amount AS unit_price,
 				payables.amount AS row_total
-		     FROM payables INNER JOIN lo_order ON lo_order.lo_oid = payables.parent_obj_id
+		     FROM payables INNER JOIN lo_order lo ON lo.lo_oid = payables.parent_obj_id
 				  LEFT JOIN invoices ON invoices.invoice_id = payables.invoice_id
 		     WHERE payables.payable_type = 'delivery fee'
 		           AND payables.amount != 0
 		           AND payables.to_org_id = ".$core->session['org_id']." /* Z01-mm */
-		           AND lo_order.lo_oid = ".$core->data['lo_oid']."
-		     LIMIT 1
+		           AND lo.lo_oid = ".$core->data['lo_oid']."
 		     
 		           		
 		     /* items */ 

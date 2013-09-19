@@ -219,10 +219,10 @@ class core_controller_sold_items extends core_controller
 					$inventory_to_edit[] = $item->__data;
 				}
 				
-				if($ldstat_id == 4)
+				/* if($ldstat_id == 4)
 				{
 					$payables_to_invoice[] = $item['lo_liid'];
-				}
+				} */
 			}
 				
 			# only perform this change if item meets all rules
@@ -244,12 +244,12 @@ class core_controller_sold_items extends core_controller
 		}
 		
 		# this checks if we need to invoice sellers based on the changes made
-		core::log('total items: '.count($payables_to_invoice));
+		/* core::log('total items: '.count($payables_to_invoice));
 		if(count($payables_to_invoice) > 0)
 		{
 			$controller = core::controller('orders');
 			$controller->invoice_seller_payables($payables_to_invoice);
-		}
+		} */
 		
 		# popup the inventory editor if necessary
 		if(count($inventory_to_edit) > 0)

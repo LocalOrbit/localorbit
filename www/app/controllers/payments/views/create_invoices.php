@@ -11,27 +11,26 @@ $sql = "
 	FROM (
 	    /* delivery fee */  
 		SELECT 
-			lo_order.lo_oid,
-			lo_order.lo3_order_nbr,
-			lo_order.payment_ref,
-			lo_order.order_date,
+			lo.lo_oid,
+			lo.lo3_order_nbr,
+			lo.payment_ref,
+			lo.order_date,
 	        payables.amount as invoice_amount,
 			organizations.name AS buyer_name		
 		
 		
-	     FROM payables INNER JOIN lo_order ON lo_order.lo_oid = payables.parent_obj_id
-			INNER JOIN organizations ON organizations.org_id = lo_order.org_id
+	     FROM payables INNER JOIN lo_order lo ON lo.lo_oid = payables.parent_obj_id
+			INNER JOIN organizations ON organizations.org_id = lo.org_id
 			LEFT JOIN invoices ON invoices.invoice_id = payables.invoice_id
 			
 	     WHERE invoices.invoice_id IS NULL
 	           AND payables.payable_type = 'delivery fee'
-	           AND lo_order.lbps_id = 1  /* unpaid */
+	           AND lo.lbps_id = 1  /* unpaid */
 	           AND payables.amount != 0
 				AND payables.invoice_id IS null
 	           AND payables.to_org_id = ".$core->session['org_id']." /* Z01-mm */
-	           AND (SELECT COUNT(*) FROM lo_order_line_item WHERE lo_order_line_item.lo_oid = 15650 AND lo_order_line_item.ldstat_id = 4 /* delivered */) > 0
-	     GROUP BY lo_order.lo_oid
-	     
+	           AND (SELECT COUNT(*) FROM lo_order_line_item WHERE lo_order_line_item.lo_oid = lo.lo_oid AND lo_order_line_item.ldstat_id = 4 /* delivered */) > 0
+	    	     
 	           		
 	     /* items */ 
 	     UNION 
