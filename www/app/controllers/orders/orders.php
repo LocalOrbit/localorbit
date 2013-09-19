@@ -115,7 +115,9 @@ class core_controller_orders extends core_controller
 		
 		$changes = false;
 		
-		#core::log(print_r($core->data,true));
+		# use this flag to record if we need to notify the MM
+		# that an order was underdelivered.
+		$notify_underdeliver = false;
 		
 		foreach($order->items as $item)
 		{
@@ -141,6 +143,11 @@ class core_controller_orders extends core_controller
 						$item->save();
 						$inventory->save();
 						$changes = true;
+					}
+					
+					if($qty != $item['qty_ordered'])
+					{
+						$notify_underdeliver = true;
 					}
 				}
 				else
@@ -178,6 +185,17 @@ class core_controller_orders extends core_controller
 				*/
 			}
 		}
+		
+		if($notify_underdeliver)
+		{
+			core::process_command('emails/mm_underdelivery',true,
+				$order['domain_id'],
+				$order['lo_oid'],
+				$order['lo3_order_nbr']
+			);
+			ob_get_clean();
+		}
+		
 		if($changes)
 		{
 			#$order->get_items_by_delivery();
