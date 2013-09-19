@@ -139,6 +139,7 @@ class core_controller_cart extends core_controller
 	{
 		global $core;
 		core::log('processing updating quantity');
+		core::log(print_r($core->data,true));
 /*
 		$a_items = explode('_',$core->data['items']);
 		$items = array();
@@ -170,7 +171,7 @@ class core_controller_cart extends core_controller
 			}
 			else
 			{
-
+				core::log('checking for either updated qty or dd_id');
 				# if the qty has changed, set the new quantity and find the best price
 				if(floatval($items[$item['prod_id']][0]) != floatval($item['qty_ordered']) || intval($items[$item['prod_id']][1]) != intval($item['dd_id']))
 				{
@@ -180,11 +181,9 @@ class core_controller_cart extends core_controller
 					$item['qty_ordered'] = $items[$item['prod_id']][0];
 					
 					// assign to correct delivery day
-					if ($core->session['dd_id'] > 0) {
-						$item['dd_id'] = $core->session['dd_id'];
-					} else {
-						$item['dd_id'] = $items[$item['prod_id']][1];
-					}
+					core::log('setting final dd_id to '.$items[$item['prod_id']][1]);
+					$item['dd_id'] = $items[$item['prod_id']][1];
+					
 					
 					
 					$item['category_ids']  = $product['category_ids'];
@@ -194,6 +193,7 @@ class core_controller_cart extends core_controller
 					//$deliv = $new_item->find_next_possible_delivery($new_item['lo_oid'], $deliveries);
 					//$order_deliv = core::model('lo_order_deliveries')->create($new_item['lo_oid'], $new_item->delivery, $product, $deliveries);
 					$item->find_best_price();
+					$item->save();
 				}
 				$order_deliveries = $item->find_next_possible_delivery($item['lo_oid'],$item['dd_id'],$order_deliveries);
 					
@@ -266,9 +266,9 @@ class core_controller_cart extends core_controller
 
 		# reload the cart and write it out to js
 
-		$cart->load_items(true,true);
-		$cart->verify_integrity();
-		$cart->update_totals();
+		#$cart->load_items(true,true);
+		#$cart->verify_integrity();
+		#$cart->update_totals();
 		$cart->write_js();
 		core::log($core->data);
 	}
