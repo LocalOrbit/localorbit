@@ -251,6 +251,7 @@ class core_controller_catalog extends core_controller
 		}
 		
 		
+		core::replace('item_total',core_format::price($cart['item_total'],false));
 		core::replace('grand_total',core_format::price($cart['grand_total'],false));
 		core::replace('adjusted_total',core_format::price($cart['adjusted_total'],false));
 		core::js("$('#totals_loading').hide();$('#total_table').show(200);");
