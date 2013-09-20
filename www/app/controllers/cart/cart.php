@@ -171,36 +171,49 @@ class core_controller_cart extends core_controller
 			}
 			else
 			{
-				core::log('checking for either updated qty or dd_id');
-				# if the qty has changed, set the new quantity and find the best price
-				if(floatval($items[$item['prod_id']][0]) != floatval($item['qty_ordered']) || intval($items[$item['prod_id']][1]) != intval($item['dd_id']))
+				# we only want to update items if the item was rendered on the originating 
+				# page. If it was there, there should be a numeric dd_id
+				# 
+				# if the item was NOT on the originating page, there's no dd_id. For example,
+				# a buyer might add a product from Seller A from the shop page, then go view
+				# the Seller B page and add a 2nd item. In this case, there are 2 items in the 
+				# cart, but the first one isn't actually on the page. The javascript can send 
+				# the quantity for the 1st product, but not the delivery day since the 
+				# html wasn't there.
+				if(is_numeric($items[$item['prod_id']][1]))
 				{
-					$product = core::model('products')->load($item['prod_id']);
-					core::log('new qty on '.$item['prod_id']);
-					core::log($core->data['prod_'.$item['prod_id']]);
-					$item['qty_ordered'] = $items[$item['prod_id']][0];
+					core::log('checking for either updated qty or dd_id');
+					# if the qty has changed, set the new quantity and find the best price
 					
-					// assign to correct delivery day
-					core::log('setting final dd_id to '.$items[$item['prod_id']][1]);
-					$item['dd_id'] = $items[$item['prod_id']][1];
-					
-					
-					
-					$item['category_ids']  = $product['category_ids'];
-					$item['final_cat_id']  = trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
+					if(floatval($items[$item['prod_id']][0]) != floatval($item['qty_ordered']) || intval($items[$item['prod_id']][1]) != intval($item['dd_id']))
+					{
+						$product = core::model('products')->load($item['prod_id']);
+						core::log('new qty on '.$item['prod_id']);
+						core::log($core->data['prod_'.$item['prod_id']]);
+						$item['qty_ordered'] = $items[$item['prod_id']][0];
+						
+						// assign to correct delivery day
+						core::log('setting final dd_id to '.$items[$item['prod_id']][1]);
+						$item['dd_id'] = $items[$item['prod_id']][1];
+						
+						
+						
+						$item['category_ids']  = $product['category_ids'];
+						$item['final_cat_id']  = trim(substr($product['category_ids'], strrpos($product['category_ids'],',') +1 ));
 
-					//$deliveries = $new_item->find_possible_deliveries($new_item['lo_oid'], array());
-					//$deliv = $new_item->find_next_possible_delivery($new_item['lo_oid'], $deliveries);
-					//$order_deliv = core::model('lo_order_deliveries')->create($new_item['lo_oid'], $new_item->delivery, $product, $deliveries);
-					$item->find_best_price();
-					$item->save();
-				}
-				$order_deliveries = $item->find_next_possible_delivery($item['lo_oid'],$item['dd_id'],$order_deliveries);
+						//$deliveries = $new_item->find_possible_deliveries($new_item['lo_oid'], array());
+						//$deliv = $new_item->find_next_possible_delivery($new_item['lo_oid'], $deliveries);
+						//$order_deliv = core::model('lo_order_deliveries')->create($new_item['lo_oid'], $new_item->delivery, $product, $deliveries);
+						$item->find_best_price();
+						$item->save();
+					}
 					
+				}
 
 				# unset the item array
 				#$item->save();
 			}
+			$order_deliveries = $item->find_next_possible_delivery($item['lo_oid'],$item['dd_id'],$order_deliveries);
 			unset($items[$item['prod_id']]);
 		}
 		
