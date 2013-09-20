@@ -118,7 +118,7 @@ foreach($order->items as $item)
 	
 	$this_dd = $item['dd_id'];
 
-	if($dd_id !== $this_dd)
+	if($dd_id != $this_dd)
 	{
 		if($dd_id > 0)
 		{
