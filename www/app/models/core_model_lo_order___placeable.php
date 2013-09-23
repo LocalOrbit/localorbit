@@ -46,6 +46,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			$payment['amount']      = $this['grand_total'];
 			$payment['payment_method'] = $payment_method;
 			$payment['creation_date'] = time();
+			$payment['processing_status'] = ($payment_method == 'ACH')?'pending':'confirmed';
 			$payment->save();
 			
 			
