@@ -3,7 +3,7 @@ $opts = core::model('template_options')->get_options(array('footer'));
 
 $market = $core->config['domain'];
 $address = $market->get_addresses();
-$address->__source .= ' and default_shipping=1';
+$address->__source .= ' and address_id='.$market['address_id'];
 $address = $address->load()->row();
 if($address)
 {
