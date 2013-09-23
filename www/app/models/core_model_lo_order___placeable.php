@@ -318,7 +318,11 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			$rules[$method]->validate('checkoutForm');
 			
 		}
-		if($method == 'ach' || $method == 'paypal' || $method == 'cash')
+		if($method == 'ach')
+		{
+			$this['lbps_id'] = 7;
+		}
+		else if($method == 'paypal' || $method == 'cash')
 		{
 			$this['lbps_id'] = 2;
 		}
@@ -423,7 +427,22 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 			# attach this item to the fulfillment order, set the status, continue totalling
 			$item['lo_foid'] = $fulfills[$item['seller_org_id']]['lo_foid'];
 			$item['ldstat_id'] = 2;
-			$item['lbps_id']   = ($method == 'paypal' || $method == 'ach' || $method == 'cash')?2:1;
+			
+			# ach payments get saved as 'Pending', and then updated by cron job
+			if($method == 'ach')
+			{
+				$item['lbps_id'] = 7;
+			}
+			# cc/cash payments go in as 'Paid'
+			else if($method == 'paypal' || $method == 'cash')
+			{
+				$item['lbps_id'] = 2;
+			}
+			# everything else, 'Unpaid'
+			else
+			{
+				$item['lbps_id'] = 1;
+			}
 			$item['lsps_id']   = 1;
 
 			$fulfills[$item['seller_org_id']]['grand_total']    = $fulfills[$item['seller_org_id']]['grand_total']    + $item['row_adjusted_total'];
