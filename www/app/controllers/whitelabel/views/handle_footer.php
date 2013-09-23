@@ -1,10 +1,14 @@
 <?php 
 $opts = core::model('template_options')->get_options(array('footer'));
 
-$market = $core->config['domain'];
-$address = $market->get_addresses();
-$address->__source .= ' and address_id='.$market['address_id'];
-$address = $address->load()->row();
+$address = false;
+if(is_numeric($market['address_id']))
+{
+	$market = $core->config['domain'];
+	$address = $market->get_addresses();
+	$address->__source .= ' and address_id='.$market['address_id'];
+	$address = $address->load()->row();
+}
 if($address)
 {
 	$has_address = true;
@@ -52,7 +56,7 @@ else
 					T: <?=$core->config['domain']['secondary_contact_phone']?><br>
 				<?}?>
 
-				<? if ($address): ?>
+				<? if ($has_address): ?>
 				<?= $address['address'] ?><br>
 				<?= $address['city'] ?>, <?= $address['code'] ?> <?= $address['postal_code'] ?>
 				<? endif; ?>
