@@ -180,6 +180,7 @@ $items->filter_html .= core_datatable_filter::make_select(
 	array(
 		'1'=>'Unpaid',
 		'2'=>'Paid',
+		'7'=>'Pending',
 		'3'=>'Invoice Issued',
 		'4'=>'Partially Paid',
 		'5'=>'Refunded',
@@ -200,6 +201,7 @@ $items->filter_html .= core_datatable_filter::make_select(
 		'1'=>'Unpaid',
 		'2'=>'Paid',
 		'3'=>'Partially Paid',
+		'4'=>'Pending',
 	),
 	null,
 	null,
