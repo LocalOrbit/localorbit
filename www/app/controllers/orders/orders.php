@@ -145,7 +145,7 @@ class core_controller_orders extends core_controller
 						$changes = true;
 					}
 					
-					if($qty != $item['qty_ordered'])
+					if($qty < $item['qty_ordered'])
 					{
 						$notify_underdeliver = true;
 					}
