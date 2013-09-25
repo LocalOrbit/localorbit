@@ -292,7 +292,7 @@ class core_controller_sold_items extends core_controller
 				else
 				{
 					$item['qty_delivered'] = intval($core->data['qty_delivered_'.$item['lo_liid']]);
-					if($item['qty_delivered'] != $item['qty_ordered'])
+					if($item['qty_delivered'] < $item['qty_ordered'])
 					{
 						$oids_to_notify[] = $item['lo_oid'];
 					}
