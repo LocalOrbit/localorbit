@@ -100,7 +100,7 @@ else
 
 <?
 
-if ($core->config['domain']['po_due_within_days'] > 0 && $order['payment_method'] == 'purchaseorder') { ?>
+if ($order['payment_method'] == 'purchaseorder' && ($order['lbps_id'] == 1 || $order['lbps_id'] == 3 || $order['lbps_id'] == 4) { ?>
 Payment is due in <?=$core->config['domain']['po_due_within_days']?> days.<br/>
 <? }
 
