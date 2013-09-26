@@ -99,9 +99,35 @@ else
 </div>
 
 <?
+$item_ids = array();
+foreach($order->items as $item)
+{
+	$item_ids[] = $item['lo_liid'];
+}
+$due_dates = core_db::col('
+	select group_concat(due_date) as due_dates
+	from invoices
+	where invoice_id in (
+		select distinct invoice_id 
+		from payables 
+		where payable_id in (
+			'.implode(',',$item_ids).'
+		)
+		and payable_type=\'buyer order\'
+	)
+	order by due_date 
+	','due_dates');
+$due_dates = explode(',',$due_dates);
+if (
+	$order['payment_method'] == 'purchaseorder' 
+	&& ($order['lbps_id'] == 1 || $order['lbps_id'] == 3 || $order['lbps_id'] == 4)
+	&& is_numeric($due_dates[0])
 
-if ($order['payment_method'] == 'purchaseorder' && ($order['lbps_id'] == 1 || $order['lbps_id'] == 3 || $order['lbps_id'] == 4)) { ?>
-Payment is due in <?=$core->config['domain']['po_due_within_days']?> days.<br/>
+)
+{ 
+	$days = ceil(($due_dates[0] - time()) / 3600);
+?>
+Payment is due in <?=$days?> days.<br/>
 <? }
 
 $dd_id = 0;
