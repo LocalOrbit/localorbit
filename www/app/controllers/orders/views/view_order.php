@@ -110,7 +110,7 @@ $due_dates = core_db::col('
 	where invoice_id in (
 		select distinct invoice_id 
 		from payables 
-		where payable_id in (
+		where parent_obj_id in (
 			'.implode(',',$item_ids).'
 		)
 		and payable_type=\'buyer order\'
