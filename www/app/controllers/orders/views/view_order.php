@@ -125,7 +125,7 @@ if (
 
 )
 { 
-	$days = ceil(($due_dates[0] - time()) / 3600);
+	$days = ceil(($due_dates[0] - time()) / 86400);
 ?>
 Payment is due in <?=$days?> days.<br/>
 <? }
