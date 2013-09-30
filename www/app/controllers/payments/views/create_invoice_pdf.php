@@ -7,6 +7,8 @@
 	$order_sql = "SELECT DISTINCT
 			lo_order.payment_ref,
 			lo_order.lo_oid,
+			(lo_order.grand_total - lo_order.item_total) AS shipping_total,
+			lo_order.adjusted_total AS flat_discount,
 			customer_entity.email AS buyer_email,
 			UNIX_TIMESTAMP(lo_order.order_date) AS order_date,
 			organizations.name AS buyer_organization,
@@ -19,80 +21,32 @@
 		$orderInfo = $orderInfo;
 	}
 
-	
-	
 
-	$sql = "		
-		    /* delivery fee */ 
-			SELECT 
-				payables.payable_type,
-				payables.payable_id,
+
+
+	$sql = "	
+	    SELECT 
+			payables.payable_type,
+			payables.payable_id,
+	
+			lo_order.payment_ref,
+			lo_order.lo_oid,
+
+			lo_order_line_item.product_name,
+			lo_order_line_item.seller_name,
+			lo_order_line_item.unit,
+			lo_order_line_item.qty_ordered,
+			lo_order_line_item.qty_delivered,
+			lo_order_line_item.unit_price,
+			lo_order_line_item.row_total
+	             
+	     FROM payables INNER JOIN lo_order ON payables.lo_oid = lo_order.lo_oid
+			LEFT JOIN lo_order_line_item ON lo_order_line_item.lo_liid = payables.lo_liid
 			
-				case
-					when payables.invoice_id IS null 
-					     AND (SELECT COUNT(*) FROM lo_order_line_item WHERE lo_order_line_item.lo_oid = lo.lo_oid AND lo_order_line_item.ldstat_id = 4 /* delivered */) > 0
-                    then 'not invoiced'
-					else 'already invoiced'
-				end AS type,
-		
-				invoices.invoice_id,
-				invoices.invoice_num,			
-				lo.payment_ref,
-				lo.lo_oid,
-	
-				'delivery fee' AS product_name,
-				'' AS seller_name,
-				'ea' AS unit,
-				1 AS qty_ordered,
-				1 AS qty_delivered,
-				payables.amount AS unit_price,
-				payables.amount AS row_total
-		     FROM payables INNER JOIN lo_order lo ON lo.lo_oid = payables.parent_obj_id
-				  LEFT JOIN invoices ON invoices.invoice_id = payables.invoice_id
-		     WHERE payables.payable_type = 'delivery fee'
-		           AND payables.amount != 0
-		           AND payables.to_org_id = ".$core->session['org_id']." /* Z01-mm */
-		           AND lo.lo_oid = ".$core->data['lo_oid']."
-		     
-		           		
-		     /* items */ 
-		     UNION 
-		     SELECT 
-				payables.payable_type,
-				payables.payable_id,
-		           		
-				case
-					when (lo_order_line_item.ldstat_id != 4) then 'not delivered'
-					when (invoices.invoice_id IS NULL) then 'not invoiced'
-					else 'already invoiced'
-				end AS type,
-		
-				invoices.invoice_id,
-				invoices.invoice_num,
-				lo_order.payment_ref,
-				lo_order.lo_oid,
-	
-				lo_order_line_item.product_name,
-				lo_order_line_item.seller_name,
-				lo_order_line_item.unit,
-				lo_order_line_item.qty_ordered,
-				lo_order_line_item.qty_delivered,
-				lo_order_line_item.unit_price,
-				lo_order_line_item.row_total
-		             
-		     FROM payables INNER JOIN lo_order_line_item ON lo_order_line_item.lo_liid = payables.parent_obj_id
-				INNER JOIN lo_order ON lo_order.lo_oid = lo_order_line_item.lo_oid
-				LEFT JOIN invoices ON invoices.invoice_id = payables.invoice_id
-		     WHERE payables.payable_type = 'buyer order'
-				AND payables.amount != 0
-				AND payables.to_org_id = ".$core->session['org_id']." /* Z01-mm */
-				AND lo_order.lo_oid = ".$core->data['lo_oid']."
-		     
-			ORDER BY CASE WHEN type = 'not invoiced' THEN 0
-				WHEN type = 'already invoiced' THEN 1
-				WHEN type = 'not invoiced' THEN 2
-				ELSE 3
-				END				
+	     WHERE payables.payable_type IN('delivery fee', 'buyer order')
+			AND payables.amount != 0
+			AND payables.to_org_id = ".$core->session['org_id']." /* Z01-mm */
+			AND lo_order.lo_oid = ".$core->data['lo_oid']."			
 		";
 
 	$invoices = new core_collection($sql);
@@ -130,14 +84,9 @@
 		
 	// invoice total
 	$invoice_total = 0;
-	foreach($invoices as $invoice) {
-		if ($invoice['type'] == "not invoiced") {
-			$invoice_total += $invoice['row_total'];
-		}
-	}
 	
-	$invoice_num = core::model('invoices')->getNextInvoiceNumber($orderInfo['lo_oid']);
-	
+	//$invoice_num = core::model('invoices')->getNextInvoiceNumber($orderInfo['lo_oid']);
+	$invoice_num = $core->data['lo_oid'];
 	
 	// list of payables to tie to new invoice
 	$payable_ids = array();
@@ -173,7 +122,7 @@
 	$html = $html."</tr>";
 	$html = $html."</table>";
 		
-
+	
 	
 	// invoice
 	$html = $html."<h2>Detail</h2>";
@@ -181,27 +130,15 @@
 	$html = $html."<tr>";
 		$html = $html."<th width=\"300\"><b>Description</b></th>";
 		$html = $html."<th width=\"100\" align=\"right\"><b>Price</b></th>";
-		$html = $html."<th align=\"right\"><b>Qty Ordered/Delivered</b></th>";
+		$html = $html."<th align=\"right\"><b>Quanity<br /> Ordered/Delivered</b></th>";
 		$html = $html."<th width=\"100\" align=\"right\"><b>Amount</b></th>";
 	$html = $html."</tr>";
 
-	$last_invoice_type = "";
-	$order_complete= true;
 	foreach($invoices as $invoice) {
-		if ($invoice['type'] != $last_invoice_type) {
-			$last_invoice_type = $invoice['type'];
-			$html = $html."<tr><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr>";
-			if ($invoice['type'] == "not delivered") {
-				$html = $html."<tr><td colspan='4'><b><i>".$invoice['type']."</i></b></td></tr>";
-			} else if ($invoice['type'] == "already invoiced") {
-				$html = $html."<tr><td colspan='4'><b><i>invoice: ".$invoice['invoice_num']."</i></b></td></tr>";
-			}
-		}
-		
-		if ($invoice['type'] == "not invoiced") {
-			// new invoices
-			$payable_ids[] = $invoice['payable_id'];
+		$payable_ids[] = $invoice['payable_id'];
 
+		if ($invoice['payable_type'] == 'buyer order') {
+			$invoice_total += $invoice['row_total'];
 			$html = $html."<tr>";
 				if ($invoice['product_name'] > '') {
 					$html = $html."<td width=\"300\">".ucwords($invoice['product_name']);
@@ -217,40 +154,40 @@
 				$html = $html."<td align=\"right\">".$invoice['qty_ordered']." / ".$invoice['qty_delivered']."</td>";
 				$html = $html."<td width=\"100\" align=\"right\">".core_format::price($invoice['row_total'])."</td>";
 			$html = $html."</tr>";
-		
-			
-		} else if ($invoice['type'] == "not delivered") {
-			$html = $html."<tr>";
-				$html = $html."<td width=\"300\"><i>".ucwords($invoice['product_name'])."</i></td>";
-				$html = $html."<td width=\"100\" align=\"right\"><i>".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</i></td>";
-				$html = $html."<td align=\"right\"><i>".$invoice['qty_ordered']." / 0</i></td>";
-				$html = $html."<td width=\"100\" align=\"right\"><i>$0.00</i></td>";
-			$html = $html."</tr>";
-			$order_complete = false;
-			
-			
-		} else if ($invoice['type'] == "already invoiced") {
-			$html = $html."<tr>";
-				$html = $html."<td width=\"300\"><i>".ucwords($invoice['product_name'])."</i></td>";
-				$html = $html."<td width=\"100\" align=\"right\"><i>".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</i></td>";
-				$html = $html."<td align=\"right\"><i>".$invoice['qty_ordered']." / ".$invoice['qty_delivered']."</i></td>";
-				$html = $html."<td width=\"100\" align=\"right\"><i>$0.00</i></td>";
-			$html = $html."</tr>";
-		}
+		}			
+	}
+	
+
+	// shipping	
+	if ($orderInfo['shipping_total'] > 0) {
+		$invoice_total += $orderInfo['shipping_total'];
+		$html = $html."<tr>";
+			$html = $html."<td>Shipping Total</td>";
+			$html = $html."<td width=\"100\" align=\"right\"></td>";
+			$html = $html."<td align=\"right\"></td>";
+			$html = $html."<td width=\"100\" align=\"right\">".core_format::price($orderInfo['shipping_total'])."</td>";
+		$html = $html."</tr>";
 	}
 	
 	
+	// flat discount line
+	if ($orderInfo['flat_discount'] > 0) {
+		$invoice_total -= $orderInfo['flat_discount'];
+		$html = $html."<tr>";
+			$html = $html."<td>Flat Discount</td>";
+			$html = $html."<td width=\"100\" align=\"right\"></td>";
+			$html = $html."<td align=\"right\"></td>";
+			$html = $html."<td width=\"100\" align=\"right\">(".core_format::price($orderInfo['flat_discount']).")</td>";
+		$html = $html."</tr>";
+	}
+
 	
 	// total line
 	$html = $html."<tr><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr>";
 	$html = $html."<tr>";
-		if ($order_complete) {
-			$html = $html."<td width=\"300\">This order is complete</td>";
-		} else {
-			$html = $html."<td width=\"300\">*This order is not complete</td>";			
-		}
-		$html = $html."<td align=\"right\" width=\"100\"></td>";
-		$html = $html."<td align=\"right\"></td>";
+		$html = $html."<td></td>";
+		$html = $html."<td></td>";
+		$html = $html."<td></td>";
 		$html = $html."<td width=\"100\" align=\"right\"><b>Total: ".core_format::price($invoice_total)."</b></td>";
 	$html = $html."</tr>";
 	$html = $html."</table>";
@@ -300,6 +237,12 @@
 		$email['from_name']  = $domain['name'];
 		$email['attachment_file_location'] = $pdf_file_location;
 		//$email->send(); takes too long with attachment
+		
+		
+		// mark order as invoiced?
+		//update lo_order set lbps_id = 3
+		
+		
 		$email->save();
 	}
 	

@@ -12,7 +12,8 @@ class core_model_base_payables extends core_model
 		$this->add_field(new core_model_field(6,'amount','float',10,'2','payables'));
 		$this->add_field(new core_model_field(7,'invoice_id','int',8,'','payables'));
 		$this->add_field(new core_model_field(8,'creation_date','int',8,'','payables'));
-		$this->add_field(new core_model_field(9,'is_deleted','int',8,'','payables'));
+		$this->add_field(new core_model_field(10,'lo_oid','int',8,'','payables'));
+		$this->add_field(new core_model_field(11,'lo_liid','int',8,'','payables'));
 		$this->init_data();
 	}
 }

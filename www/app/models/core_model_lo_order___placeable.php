@@ -116,6 +116,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				$payable['to_org_id'] = ($deliv_to_lo)?1:$core->config['domain']['payable_org_id'];
 				$payable['amount'] = $fee['applied_amount'];
 				$payable['creation_date'] = time();
+				$payable['lo_oid'] = $this['lo_oid'];
 				$payable->save();
 				
 				# the delivery fee from the buyer is paid automatically if ACH or paypal
@@ -132,6 +133,7 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				$payable2['payable_type'] = 'delivery fee';
 				$payable2['from_org_id'] = ($deliv_to_lo)?1:$core->config['domain']['payable_org_id'];
 				$payable2['to_org_id'] = ($deliv_to_lo)?$core->config['domain']['payable_org_id']:1;
+				$payable2['lo_oid'] = $this['lo_oid'];
 				
 				$fee_percent = $core->config['domain']['fee_percen_lo'];
 				if ($deliv_to_lo)
@@ -173,6 +175,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				unset($payable->__data['payable_id']);
 				$payable['amount'] = $item['row_adjusted_total'];
 				$payable['parent_obj_id'] = $item['lo_liid'];
+				$payable['lo_oid'] = $item['lo_oid'];
+				$payable['lo_liid'] = $item['lo_liid'];
 				$payable->save();
 				$paid_payables[$payable['payable_id']] = $item['row_adjusted_total'];
 			}
@@ -205,8 +209,10 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				$payable['to_org_id'] = $item['seller_org_id'];
 				$payable['amount'] = floatval($item['row_adjusted_total']) * $seller_percent;
 				$payable['parent_obj_id'] = $item['lo_liid'];
+				$payable['lo_oid'] = $item['lo_oid'];
+				$payable['lo_liid'] = $item['lo_liid'];
 				$payable->save();
-				
+
 				# next, create the transfers from LO to the hub
 				if($need_transfer_to_mm)
 				{
@@ -215,6 +221,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 					$payable['to_org_id'] = $core->config['domain']['payable_org_id'];
 					$payable['amount'] = floatval($item['row_adjusted_total']) * $seller_percent;
 					$payable['parent_obj_id'] = $item['lo_liid'];
+					$payable['lo_oid'] = $item['lo_oid'];
+					$payable['lo_liid'] = $item['lo_liid'];
 					$payable->save();
 				}
 			}
@@ -243,6 +251,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 				unset($payable->__data['payable_id']);
 				$payable['amount'] = floatval($item['row_adjusted_total']) * $market_percent;
 				$payable['parent_obj_id'] = $item['lo_liid'];
+				$payable['lo_oid'] = $item['lo_oid'];
+				$payable['lo_liid'] = $item['lo_liid'];
 				$payable->save();
 			}
 		
@@ -571,6 +581,8 @@ class core_model_lo_order___placeable extends core_model_base_lo_order
 		{
 			$payable['invoicable'] = $invoicable;
 			$payable->save();
+
+			core::log('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv 6');
 			core::log('changed payable for lo_order'. $this['lo_oid'] . ' invoicable to '.  $invoicable);
 		}
 	}
