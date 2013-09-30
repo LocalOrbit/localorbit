@@ -38,10 +38,13 @@
 			lo_order_line_item.qty_ordered,
 			lo_order_line_item.qty_delivered,
 			lo_order_line_item.unit_price,
-			lo_order_line_item.row_total
+			lo_order_line_item.row_total,
+			domains.secondary_contact_email, 
+			domains.secondary_contact_phone
 	             
 	     FROM payables INNER JOIN lo_order ON payables.lo_oid = lo_order.lo_oid
 			LEFT JOIN lo_order_line_item ON lo_order_line_item.lo_liid = payables.lo_liid
+			LEFT JOIN domains ON domains.payable_org_id = payables.to_org_id
 			
 	     WHERE payables.payable_type IN('delivery fee', 'buyer order')
 			AND payables.amount != 0
@@ -80,7 +83,12 @@
 		->filter('org_id',$core->session['org_id'])
 		->limit(1);
 	$address = $address->row();
-
+	
+	foreach($invoices as $invoice) {
+		$email = $invoice['secondary_contact_email'];
+		$phone = $invoice['secondary_contact_phone'];
+		break;
+	}	
 		
 	// invoice total
 	$invoice_total = 0;
@@ -105,7 +113,12 @@
 			
 			$html = $html.$domain['name']."<br />";
 			$html = $html.$address['address']."<br />";
-			$html = $html.$address['city'].", ".$address['code']." ".$address['postal_code']."<br />";
+			$html = $html.$address['city'].", ".$address['code']." ".$address['postal_code']."<br /><br />";
+			$html = $html.$email." ";
+			$html = $html.$phone."<br /><br />";
+			
+			$html = $html."To:".$orderInfo['buyer_organization']."<br />";
+			
 		$html = $html."</td>";
 		
 		$html = $html."<td width='50%'>";
