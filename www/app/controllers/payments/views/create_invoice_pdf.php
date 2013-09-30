@@ -117,7 +117,7 @@
 			$html = $html.$email." ";
 			$html = $html.$phone."<br /><br />";
 			
-			$html = $html."To:".$orderInfo['buyer_organization']."<br />";
+			$html = $html."To: ".$orderInfo['buyer_organization']."<br />";
 			
 		$html = $html."</td>";
 		
