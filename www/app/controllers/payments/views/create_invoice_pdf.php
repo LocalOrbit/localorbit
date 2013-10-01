@@ -210,10 +210,10 @@
 	// save invoice pdf *************************************************************************************************************
 	// make the directory if we need to
 	if(!is_dir($core->paths['base'].'/../img/'.$domain['domain_id'])) {
-		mkdir($core->paths['base'].'/../img/'.$domain['domain_id']);
+		mkdir($core->paths['base'].'/../img/'.$domain['domain_id'].'/');
 	}
 	if(!is_dir($core->paths['base'].'/../img/'.$domain['domain_id'].'/invoices')) {
-		mkdir($core->paths['base'].'/../img/'.$domain['domain_id'].'/invoices');
+		mkdir($core->paths['base'].'/../img/'.$domain['domain_id'].'/invoices'.'/');
 	}
 		
 	if ($core->data['preview'] != 'true') {
