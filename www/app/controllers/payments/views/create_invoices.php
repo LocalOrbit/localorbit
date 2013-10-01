@@ -7,7 +7,7 @@ $sql = "
 		lo_order.order_date,
 		lo_order.lbps_id,
 		lo_order.ldstat_id,
-        (SUM(payables.amount) - lo_order.adjusted_total) AS invoice_amount,
+        (lo_order.grand_total) AS invoice_amount,
 		organizations.name AS buyer_name
             
     FROM payables INNER JOIN lo_order ON payables.lo_oid = lo_order.lo_oid
@@ -15,10 +15,11 @@ $sql = "
 		INNER JOIN organizations ON organizations.org_id = lo_order.org_id
 		
      WHERE lo_order.ldstat_id = 4 /* delivered */
-		AND lo_order.lbps_id = 1  /* unpaid */ 
+		AND lo_order.lbps_id IN (1,4) /* unpaid or item canceled */ 
 		AND payables.amount != 0
 		AND payables.payable_type IN('buyer order', 'delivery fee')
 		AND payables.to_org_id = ".$core->session['org_id']." /* Z01-mm */
+				
      GROUP BY lo_order.lo_oid
 ";
 

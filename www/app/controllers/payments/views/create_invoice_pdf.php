@@ -7,7 +7,8 @@
 	$order_sql = "SELECT DISTINCT
 			lo_order.payment_ref,
 			lo_order.lo_oid,
-			(lo_order.grand_total - lo_order.item_total) AS shipping_total,
+			(lo_order.grand_total + lo_order.adjusted_total - lo_order.item_total) AS shipping_total,
+			(lo_order.grand_total) AS total_due,
 			lo_order.adjusted_total AS flat_discount,
 			customer_entity.email AS buyer_email,
 			UNIX_TIMESTAMP(lo_order.order_date) AS order_date,
@@ -39,6 +40,7 @@
 			lo_order_line_item.qty_delivered,
 			lo_order_line_item.unit_price,
 			lo_order_line_item.row_total,
+			lo_order_line_item.ldstat_id,
 			domains.secondary_contact_email, 
 			domains.secondary_contact_phone
 	             
@@ -130,11 +132,11 @@
 			$due_date_unixtime = $orderInfo['order_date'] + 60 * 60 *24 * $orderInfo['po_due_within_days'];
 			
 			$html = $html."Payment Due: <b>".core_format::date($due_date_unixtime,'short')."</b><br />";
-			$html = $html."Amount Due: <b>".core_format::price($invoice_total)."</b><br />";
+			$html = $html."Amount Due: <b>".core_format::price($orderInfo['total_due'])."</b><br />";
 		$html = $html."</td>";
 	$html = $html."</tr>";
 	$html = $html."</table>";
-		
+	
 	
 	
 	// invoice
@@ -147,11 +149,13 @@
 		$html = $html."<th width=\"100\" align=\"right\"><b>Amount</b></th>";
 	$html = $html."</tr>";
 
+	
 	foreach($invoices as $invoice) {
 		$payable_ids[] = $invoice['payable_id'];
 
-		if ($invoice['payable_type'] == 'buyer order') {
-			$invoice_total += $invoice['row_total'];
+		if ($invoice['payable_type'] == 'buyer order') {	// 4 - delivered
+			$invoice_total += $invoice['unit_price'] * $invoice['qty_delivered'];  // will remove the canceled items
+			
 			$html = $html."<tr>";
 				if ($invoice['product_name'] > '') {
 					$html = $html."<td width=\"300\">".ucwords($invoice['product_name']);
