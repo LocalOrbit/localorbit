@@ -40,34 +40,6 @@ class core_model_lo_order___utility extends core_model_lo_order___placeable
 			)'
 		);
 	}
-
-	function verify_integrity()
-	{
-		global $core;
-		core::log('trying to verify the integrity of the order');
-		$changes_made = false;
-		foreach($this->items as $item)
-		{
-			core::log('vi for '.$item['product_name']);
-			core::log('check 1: '.$item['has_valid_inventory']);
-			core::log('check 2: '.$item['has_valid_delivs']);
-			core::log('check 3: '.$item['has_valid_prices']);
-
-			if(
-				$item['has_valid_inventory'] != 1 ||
-				$item['has_valid_delivs'] != 1 ||
-				$item['has_valid_prices'] != 1
-			)
-			{
-				$item->delete();
-				$changes_made = true;
-			}
-		}
-
-		if($changes_made)
-			$this->load_items();
-	}
-
 	
 	
 	function generate_order_id($type,$domain,$order_id)
