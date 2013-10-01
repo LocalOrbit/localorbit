@@ -7,6 +7,7 @@
 	$order_sql = "SELECT DISTINCT
 			lo_order.payment_ref,
 			lo_order.lo_oid,
+			lo_order.lo3_order_nbr,
 			(lo_order.grand_total + lo_order.adjusted_total - lo_order.item_total) AS shipping_total,
 			(lo_order.grand_total) AS total_due,
 			lo_order.adjusted_total AS flat_discount,
@@ -96,7 +97,7 @@
 	$invoice_total = 0;
 	
 	//$invoice_num = core::model('invoices')->getNextInvoiceNumber($orderInfo['lo_oid']);
-	$invoice_num = $core->data['lo_oid'];
+	$invoice_num = $orderInfo['lo3_order_nbr'];
 	
 	// list of payables to tie to new invoice
 	$payable_ids = array();
@@ -116,8 +117,8 @@
 			$html = $html.$domain['name']."<br />";
 			$html = $html.$address['address']."<br />";
 			$html = $html.$address['city'].", ".$address['code']." ".$address['postal_code']."<br /><br />";
-			$html = $html.$email." ";
-			$html = $html.$phone."<br /><br />";
+			$html = $html.$email."<br />";
+			$html = "Tel: ".$html.$phone."<br /><br />";
 			
 			$html = $html."To: ".$orderInfo['buyer_organization']."<br />";
 			
@@ -179,7 +180,7 @@
 	if ($orderInfo['shipping_total'] > 0) {
 		$invoice_total += $orderInfo['shipping_total'];
 		$html = $html."<tr>";
-			$html = $html."<td>Shipping Total</td>";
+			$html = $html."<td>Delivery Fees</td>";
 			$html = $html."<td width=\"100\" align=\"right\"></td>";
 			$html = $html."<td align=\"right\"></td>";
 			$html = $html."<td width=\"100\" align=\"right\">".core_format::price($orderInfo['shipping_total'])."</td>";
@@ -242,7 +243,7 @@
 		$body = "<h1>You have a new invoice from ".$domain['name']."</h1>";
 		$body .= "Thank you for your recent purchase from ".$domain['name'].".<br />";
 		$body .= "Please find attached your most recent invoice.<br />";
-		$body .= "For billing questions please email ".$domain['secondary_contact_email']."] or call ".$domain['secondary_contact_phone'];
+		$body .= "For billing questions please email ".$domain['secondary_contact_email']." or call ".$domain['secondary_contact_phone'].".";
 		$body .= "<br /><br />Thank you. <br /><br />".$domain['name'];
 		
 		$email = core::model('sent_emails');

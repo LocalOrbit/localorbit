@@ -42,7 +42,7 @@ $send_button = '<input type="button" class="btn btn-primary" onclick="core.doReq
 
 // Order Number 	Purchase Order Number     Buyer Order Date      Invoice Amount
 $to_be_invoiced_table->add(new core_datacolumn('order_date','Order #',true,'19%','<a href="#!orders-view_order--lo_oid-{lo_oid}"><b>{lo3_order_nbr}</b></a>','{lo3_order_nbr}','{lo3_order_nbr}'));
-$to_be_invoiced_table->add(new core_datacolumn('creation_date', 'Purchase Order', false, '14%', '{payment_ref}', '{payment_ref}', '{payment_ref}'));
+$to_be_invoiced_table->add(new core_datacolumn('creation_date', 'Purchase Order Number', false, '14%', '{payment_ref}', '{payment_ref}', '{payment_ref}'));
 $to_be_invoiced_table->add(new core_datacolumn('creation_date', 'Buyer', false, '14%', '{buyer_name}', '{buyer_name}', '{buyer_name}'));
 $to_be_invoiced_table->add(new core_datacolumn('order_date', 'Order Date', false, '14%', '{order_date}', '{order_date}', '{order_date}'));
 $to_be_invoiced_table->add(new core_datacolumn('invoice_amount', 'Invoice Amount', false, '14%', '{invoice_amount}', '{invoice_amount}', '{invoice_amount}'));
