@@ -155,7 +155,8 @@
 		$payable_ids[] = $invoice['payable_id'];
 
 		if ($invoice['payable_type'] == 'buyer order') {	// 4 - delivered
-			$invoice_total += $invoice['unit_price'] * $invoice['qty_delivered'];  // will remove the canceled items
+			$row_total = $invoice['unit_price'] * $invoice['qty_delivered'];  // will remove the canceled items
+			$invoice_total += $row_total;
 			
 			$html = $html."<tr>";
 				if ($invoice['product_name'] > '') {
@@ -170,7 +171,7 @@
 				}
 				$html = $html."<td width=\"100\" align=\"right\">".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</td>";
 				$html = $html."<td align=\"right\">".$invoice['qty_ordered']." / ".$invoice['qty_delivered']."</td>";
-				$html = $html."<td width=\"100\" align=\"right\">".core_format::price($invoice['row_total'])."</td>";
+				$html = $html."<td width=\"100\" align=\"right\">".core_format::price($row_total)."</td>";
 			$html = $html."</tr>";
 		}			
 	}
