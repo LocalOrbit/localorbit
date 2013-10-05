@@ -7,12 +7,23 @@ include_once(__DIR__.'/views/inline_messages.php');
 class core_controller_payments extends core_controller
 {
 	
-	function create_invoice_loader_pdf()
+	/* function create_invoice_loader_pdf()
 	{
 		global $core;
 
 		$core::log("payments create_invoice_loader_pdf");
 		
+		//core::js("location.href='/app/payments/create_invoice_pdf?lo_oid=".$core->data['lo_oid']."&send_it=".$core->data['send_it']."';");
+		core::process_command('payments/create_invoice_pdf',false,
+			$core->data['lo_oid'],$core->data['send_it']);
+		
+		if ($core->data['send_it'] == "true") {
+			$core::log("payments create_invoice_loader_pdf js_reload create_invoices");
+			core_datatable::js_reload('create_invoices');
+			core_ui::notification("Invoices Sent.",false,false);
+		}
+		
+		old
 		core::js("location.href='/app/payments/create_invoice_pdf?lo_oid=".$core->data['lo_oid']."&preview=".$core->data['preview']."';");
 		if ($core->data['preview'] != "true") {
 			$core::log("payments create_invoice_loader_pdf js_reload create_invoices");
@@ -20,7 +31,7 @@ class core_controller_payments extends core_controller
 			core_ui::notification("Invoices Sent.",false,false);		
 		}
 		core::deinit();
-	}
+	} */
 	
 	function wipe_payables()
 	{

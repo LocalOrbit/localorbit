@@ -36,20 +36,20 @@ $to_be_invoiced_sql = "
 $to_be_invoiced = new core_collection($to_be_invoiced_sql);
 
 $to_be_invoiced_table = new core_datatable('create_invoices', 'payments/create_invoices', $to_be_invoiced);
-$to_be_invoiced_table->sort_column = -1;
-$to_be_invoiced_table->sort_direction = 'desc';
+$to_be_invoiced_table->sort_column = 3;
+$to_be_invoiced_table->sort_direction = 'asc';
 
 
-//$preview_button = '<a class="btn btn-primary" href="/app/payments/create_invoice_pdf?lo_oid={lo_oid}&preview=true" class="btn btn-primary">Preview</a>';
-//$send_button = '<a class="btn btn-primary" href="/app/payments/create_invoice_pdf?lo_oid={lo_oid}&preview=false" class="btn btn-primary">Send</a>';
 
-
-$preview_button = '<input type="button" class="btn btn-primary" onclick="core.doRequest(\'/payments/create_invoice_loader_pdf\',{\'lo_oid\':{lo_oid},\'preview\':true});" value="Preview" />';
-$send_button = '<input type="button" class="btn btn-primary" onclick="core.doRequest(\'/payments/create_invoice_loader_pdf\',{\'lo_oid\':{lo_oid},\'preview\':false});" value="Send" />';
+// needs to open in new tab
+//$preview_button = '<input type="button" class="btn btn-primary" onclick="core.doRequest(\'/payments/create_invoice_loader_pdf\',{\'lo_oid\':{lo_oid},\'preview\':true});" value="Preview" />';
+$preview_button = '<a class="btn btn-primary" target="_blank" href="/app/payments/create_invoice_pdf?lo_oid={lo_oid}">Preview</a>';
+//$send_button = '<input type="button" class="btn btn-primary" onclick="core.doRequest(\'/payments/create_invoice_loader_pdf\',{\'lo_oid\':{lo_oid},\'send_it\':true});" value="Send11" />';
+$send_button = '<input type="button" class="btn btn-primary" onclick="core.doRequest(\'/payments/create_invoice_pdf\',{\'lo_oid\':{lo_oid},\'send_it\':true});" value="Send" />';
 
 
 // Order Number 	Purchase Order Number     Buyer Order Date      Invoice Amount
-$to_be_invoiced_table->add(new core_datacolumn('lo3_order_nbr','Order #',true,'19%','<a href="#!orders-view_order--lo_oid-{lo_oid}"><b>{lo3_order_nbr}</b></a>','{lo3_order_nbr}','{lo3_order_nbr}'));
+$to_be_invoiced_table->add(new core_datacolumn('lo3_order_nbr','Order Number',true,'19%','<a href="#!orders-view_order--lo_oid-{lo_oid}"><b>{lo3_order_nbr}</b></a>','{lo3_order_nbr}','{lo3_order_nbr}'));
 $to_be_invoiced_table->add(new core_datacolumn('payment_ref', 'Purchase Order Number', true, '14%', '{payment_ref}', '{payment_ref}', '{payment_ref}'));
 $to_be_invoiced_table->add(new core_datacolumn('buyer_name', 'Buyer', true, '14%', '{buyer_name}', '{buyer_name}', '{buyer_name}'));
 $to_be_invoiced_table->add(new core_datacolumn('order_date', 'Order Date', true, '14%', '{order_date}', '{order_date}', '{order_date}'));
@@ -62,7 +62,7 @@ $to_be_invoiced_table->render_exporter = false;
 
 // default seach dates
 $start = Date('Y-m-d', strtotime("-30 days"));
-$end = Date('Y-m-d', strtotime("1 days"));
+$end = Date('Y-m-d', strtotime("+2 days"));
 if(!isset($core->data[$to_be_invoiced_table->name.'__filter__receivables_createdat1'])){
 	$core->data[$to_be_invoiced_table->name.'__filter__receivables_createdat1'] = $start;
 }
@@ -83,7 +83,7 @@ $to_be_invoiced_table->filter_html .= '<div style="float:left;width:490px;">';
 	
 	// order number
 	$to_be_invoiced_table->add_filter(new core_datatable_filter('payable_info','lo3_order_nbr','~','search'));
-	$to_be_invoiced_table->filter_html .= core_datatable_filter::make_text($to_be_invoiced_table->name,'payable_info',$to_be_invoiced_table->filter_states[$to_be_invoiced_table->name.'__filter__payable_info'],'Search by name or ref #');
+	$to_be_invoiced_table->filter_html .= core_datatable_filter::make_text($to_be_invoiced_table->name,'payable_info',$to_be_invoiced_table->filter_states[$to_be_invoiced_table->name.'__filter__payable_info'],'Search by order number');
 	$to_be_invoiced_table->filter_html .= '<br /><div class="clearfix">&nbsp;</div>';
 
 	// buyer org

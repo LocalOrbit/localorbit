@@ -313,6 +313,15 @@ class core_model_lo_order extends core_model_lo_order___utility
 		}
 	}
 
+	
+
+	function update_payment_status($lbps_id)
+	{
+		global $core;
+		core::log('lo_order.update_payment_status lo_oid='.$this['lo_oid']);
+		core_db::query('update lo_order set lbps_id = '.$lbps_id.' where lo_oid='.$this['lo_oid']);
+	}
+	
 	function delete_deliveries()
 	{
 		global $core;

@@ -1,4 +1,8 @@
 <?php 
+	// needed to be called from loader
+	//$core->data['lo_oid'] = $core->view[0];
+	//$core->data['send_it'] = $core->view[1];
+
 	// document new PDF - remove old one
 	
 	require_once($_SERVER['DOCUMENT_ROOT'].'/app/core/PDF.php');	
@@ -118,7 +122,7 @@
 			$html = $html.$address['address']."<br />";
 			$html = $html.$address['city'].", ".$address['code']." ".$address['postal_code']."<br /><br />";
 			$html = $html.$email."<br />";
-			$html = "Tel: ".$html.$phone."<br /><br />";
+			$html = $html."Tel: ".$phone."<br /><br />";
 			
 			$html = $html."To: ".$orderInfo['buyer_organization']."<br />";
 			
@@ -129,10 +133,9 @@
 			$html = $html."Purchase Order Number: ".$orderInfo['payment_ref']."<br />";
 			$html = $html."Invoice Date: ".core_format::date(date("Y-m-d"),'short')."<br /><br /><br />";
 
-			$due_date = $orderInfo['order_date'];
 			$due_date_unixtime = $orderInfo['order_date'] + 60 * 60 *24 * $orderInfo['po_due_within_days'];
-			
-			$html = $html."Payment Due: <b>".core_format::date($due_date_unixtime,'short')."</b><br />";
+
+			$html = $html."Payment Due: <b>".core_format::date($due_date_unixtime,'short')."</b><br />";			
 			$html = $html."Amount Due: <b>".core_format::price($orderInfo['total_due'])."</b><br />";
 		$html = $html."</td>";
 	$html = $html."</tr>";
@@ -222,21 +225,20 @@
 		mkdir($core->paths['base'].'/../img/'.$domain['domain_id'].'/invoices'.'/');
 	}
 		
-	if ($core->data['preview'] != 'true') {
-		$pdf_dest = "FI";
-		$pdf_file_location= $_SERVER['DOCUMENT_ROOT'].'/img/'.$domain['domain_id'].'/invoices/'.$invoice_num.'.pdf';
+	if ($core->data['send_it'] == 'true') {
+		$pdf_dest = "F";
 	} else {
 		$pdf_dest = "I";
-		$pdf_file_location= $_SERVER['DOCUMENT_ROOT'].'/img/'.$domain['domain_id'].'/invoices/'.$invoice_num.'.pdf';
 	}
-
+	
+	$pdf_file_location= $_SERVER['DOCUMENT_ROOT'].'/img/'.$domain['domain_id'].'/invoices/'.$invoice_num.'.pdf';
 	$PDF->generatePDF($html, $pdf_file_location, $pdf_dest);
 	
 	
 	// create invoice entry?
-	$core::log("create_invoice_pdf preview?=" .$core->data['preview']. " count(payable_ids) = " . count($payable_ids));
+	$core::log("create_invoice_pdf send_it?=" .$core->data['send_it']. " count(payable_ids) = " . count($payable_ids));
 	
-	if ($core->data['preview'] != 'true' && count($payable_ids) > 0) { // $payable_ids double submit
+	if ($core->data['send_it'] == 'true' && count($payable_ids) > 0) { // $payable_ids double submit
 		$core::log("create_invoice_pdf createInvoiceWithPayableIds");
 		$invoice = core::model('invoices')->createInvoiceWithPayableIds($orderInfo['lo_oid'], $invoice_num, $payable_ids, $due_date_unixtime);
 				
@@ -258,12 +260,20 @@
 		//$email->send(); takes too long with attachment
 		
 		
-		// mark order as invoiced?
+		// mark order as invoiced
+		$lo_order = core::model('lo_order')->load($core->data['lo_oid']);
+		$lo_order->update_payment_status(3);
 		//update lo_order set lbps_id = 3
 		
 		
 		$email->save();
-	}
-	
-	exit();
+		
+		
+		$core::log("payments/create_invoice_pdf js_reload('create_invoices')");
+		core_datatable::js_reload('create_invoices');
+		core_ui::notification("Invoices Sent.",false,false);
+		
+	} else {
+		exit();
+	}	
 ?>
