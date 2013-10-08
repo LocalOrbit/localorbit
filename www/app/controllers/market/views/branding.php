@@ -1,7 +1,7 @@
 <?php global $data; ?>
 <div class="control-group">
 	<label class="control-label">
-		Dashboard Note
+		Dashboard Note (for sellers)
 		<?=core_ui::help_tip("Dashboard Note", "This is an announcement that is only visible to Market Manager and sellers. This note appears in a colored box towards the top of the page when the user first logs on.  The note can be hidden by the user by selecting the 'dismiss this message' button.")?>
 	</label>
 	<div class="controls">
