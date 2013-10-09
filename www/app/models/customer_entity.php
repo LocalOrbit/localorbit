@@ -55,6 +55,7 @@ class core_model_customer_entity extends core_model_base_customer_entity
 			where trim(lower(ce.email))=lower(\''.mysql_escape_string($username).'\')
 			and ce.is_deleted=0
 			and o.is_deleted=0
+			and d.login_enabled=1
 		';
 		$row = core_db::row($sql);
 
