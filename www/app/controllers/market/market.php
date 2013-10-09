@@ -85,7 +85,7 @@ class core_controller_market extends core_controller
 				'feature_sellers_enter_price_without_fees','feature_sellers_cannot_manage_cross_sells',
 				'feature_sellers_mark_items_delivered','feature_allow_anonymous_shopping',
 				'default_homepage','seller_payment_managed_by','payable_org_id','payables_create_on',
-				'service_fee','sfs_id','opm_id','facebook','twitter', 'social_option_id','address_id'
+				'service_fee','sfs_id','opm_id','facebook','twitter', 'social_option_id','address_id','login_enabled'
 			);
 		}
 		else if(lo3::is_market())
