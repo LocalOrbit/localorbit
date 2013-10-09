@@ -140,7 +140,11 @@ if(lo3::is_admin())
 				?>
 				
 				<?= core_form::input_check('Close Store','is_closed',$data['is_closed'], array('sublabel'=>'A closed message will appear on the Shop page.')); ?>
-
+				<?
+					if(lo3::is_admin()){
+						echo core_form::input_check('Login Enabled','login_enabled',$data['login_enabled']);
+					}
+				?>
 				
 				<?if(lo3::is_admin()){?>
 					<div class="control-group">
