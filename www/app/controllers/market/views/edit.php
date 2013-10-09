@@ -142,7 +142,7 @@ if(lo3::is_admin())
 				<?= core_form::input_check('Close Store','is_closed',$data['is_closed'], array('sublabel'=>'A closed message will appear on the Shop page.')); ?>
 				<?
 					if(lo3::is_admin()){
-						echo core_form::input_check('Login Enabled','login_enabled',$data['login_enabled']);
+						echo core_form::input_check('Login Enabled','login_enabled',$data['login_enabled'],, array('sublabel'=>'Unchecking this and saving will prevent all users from logging into this market.'));
 					}
 				?>
 				
