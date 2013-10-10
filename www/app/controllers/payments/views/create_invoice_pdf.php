@@ -56,7 +56,8 @@
 	     WHERE payables.payable_type IN('delivery fee', 'buyer order')
 			AND payables.amount != 0
 			AND payables.to_org_id = ".$core->session['org_id']." /* Z01-mm */
-			AND lo_order.lo_oid = ".$core->data['lo_oid']."			
+			AND lo_order.lo_oid = ".$core->data['lo_oid']."
+		ORDER BY lo_order_line_item.qty_delivered DESC
 		";
 
 	$invoices = new core_collection($sql);
@@ -174,7 +175,12 @@
 				}
 				$html = $html."<td width=\"100\" align=\"right\">".core_format::price($invoice['unit_price'])."/".$invoice['unit']."</td>";
 				$html = $html."<td align=\"right\">".$invoice['qty_ordered']." / ".$invoice['qty_delivered']."</td>";
-				$html = $html."<td width=\"100\" align=\"right\">".core_format::price($row_total)."</td>";
+				if ($invoice['qty_delivered'] == 0) {
+					$html = $html."<td width=\"100\" align=\"right\">cancelled</td>";
+				} else {
+					$html = $html."<td width=\"100\" align=\"right\">".core_format::price($row_total)."</td>";
+				}
+				
 			$html = $html."</tr>";
 		}			
 	}
