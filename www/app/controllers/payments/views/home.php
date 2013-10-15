@@ -15,6 +15,7 @@ $tabs = array();
 $payables = false;
 $receivables = false;
 $create_invoices = false;
+$view_invoices = false;
 
 # just any random positive nbr. This determines if the money out section in overview is shown.
 # this really only needs to be dynamic for sellers, for all other roles just assume there's a positive #.
@@ -68,8 +69,22 @@ else
 
 if(lo3::is_self_managed()) {
 	$tabs[] = 'Send Invoices';
-	$create_invoices = true;
+	$create_invoices = true;	
 }
+
+
+if(lo3::is_self_managed_customer() && lo3::is_buyer()) {
+	$tabs[] = 'View Invoices';
+	$view_invoices = true;
+}
+
+/* if(lo3::is_fully_managed_customer() && lo3::is_buyer()) {
+	$tabs[] = 'Pay Invoices';
+	$pay_invoices = true;
+} */
+
+
+
 
 // page_header *******************************************************************************
 page_header('Financial Management (beta)');
@@ -102,4 +117,10 @@ if($create_invoices) {
 	$tab_count++;
 	$this->create_invoices($tab_count);
 }
+if($view_invoices) {
+	$tab_count++;
+	$this->view_invoices($tab_count);
+}
+
+
 ?>

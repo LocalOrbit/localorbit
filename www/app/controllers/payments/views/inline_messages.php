@@ -74,6 +74,9 @@ function get_inline_message($tab_name, $width=350) {
 			case 'payments':
 				return core_ui::inline_message($width, $core->i18n['payments:is_buyer:payments_title'], $core->i18n['payments:is_buyer:payments']);
 				break;
+			case 'view_invoice':
+				return core_ui::inline_message($width, $core->i18n['payments:is_buyer:payments_view_invoice_title'], $core->i18n['payments:is_buyer:payments_view_invoice']);
+				break;
 		}
 	}
 }
