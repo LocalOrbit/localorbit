@@ -79,6 +79,7 @@ $payments = new core_collection($sql);
 $payments = $payments->to_array();
 $cannot_process = array();
 $no_payments = true;
+$total_amount = 0;
 
 foreach($payments as $payment)
 {
@@ -91,6 +92,7 @@ foreach($payments as $payment)
 		
 	# write some logging
 	echo("Paying ".$payment['to_org_name']." (".$payment['to_org_id'].") ".core_format::price($payment['amount'])." ");
+	
 	if($config['report-payables'] == 1)
 	{
 		echo(" for payables: \n");
@@ -112,17 +114,19 @@ foreach($payments as $payment)
 		$cannot_process[] = $payment;
 	}
 	else
-	{
-		$record = core::model('payments');
-		$record['amount'] = $payment['amount'];
-		$record['payment_method'] = 'ACH';
-		$record['creation_date'] = time();
-		$record->save();
-		$trace   = 'P-'.str_pad($record['payment_id'],6,'0',STR_PAD_LEFT);
+	{	
+		$total_amount += $payment['amount'];
+
 		
 		if($config['do-ach'] == 1)
 		{
 			
+			$record = core::model('payments');
+			$record['amount'] = $payment['amount'];
+			$record['payment_method'] = 'ACH';
+			$record['creation_date'] = time();
+			$record->save();
+			$trace   = 'P-'.str_pad($record['payment_id'],6,'0',STR_PAD_LEFT);
 			
 			echo("\tprocessing payment: ".$trace."\n");
 					
@@ -185,7 +189,7 @@ foreach($payments as $payment)
 					1,$payment['to_org_id'],$payment['amount'],$payables
 				);
 			}
-			$record->delete();
+		#	$record->delete();
 			
 		}
 	}
@@ -196,6 +200,6 @@ if($no_payments)
 	echo("No payments due to sellers\n");
 }
 
-
+echo("\n\nTotal payments: ".core_format::price($total_amount,false)."\n");
 exit();
 ?>
