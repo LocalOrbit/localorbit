@@ -46,6 +46,7 @@ inner join domains d on (d.domain_id=lo.domain_id and d.seller_payer = 'hub')
 left join organization_payment_methods opm on (d.opm_id=opm.opm_id )
 where (p.amount - p.amount_paid) ".$config['amount-operator']." 0
 and p.payable_type = 'seller order'
+and p.payment_processing_statuses='confirmed'
 and p.from_org_id=1
 and loi.lbps_id=2
 and loi.ldstat_id=4
@@ -114,7 +115,7 @@ foreach($payments as $payment)
 		foreach($payables as $payable)
 		{
 			
-			echo("\t".$payable['item_date']."|".$payable['payable_info'].'|'.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_paid']),2)))."\n");
+			echo("\tpayment:".$payable['payment_processing_statuses']."|".$payable['item_date']."|".$payable['payable_info'].'|'.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_paid']),2)))."\n");
 		}
 	}
 	else
