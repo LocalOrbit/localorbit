@@ -119,7 +119,7 @@ class core_model_products extends core_model_base_products
 
 		if(is_null($domain_id))
 			$domain_id = intval($core->config['domain']['domain_id']);
-		if($org_id == -1)
+		if($org_id == -1 || is_null($org_id))
 			$org_id = intval($core->session['org_id']);
 		$core->session['domains_by_orgtype_id'][2][] = 0;
 		$core->session['domains_by_orgtype_id'][3][] = 0;
@@ -225,7 +225,12 @@ class core_model_products extends core_model_base_products
 		return $col;
 	}
 	
-	function get_final_catalog($domain_id=null,$seller_id=null,$prod_id=null)
+	function get_best_price_for_product($prod_id,$catalog)
+	{
+		
+	}
+	
+	function get_final_catalog($domain_id=null,$seller_id=null,$prod_id=null,$write_js=true,$get_secondary_data=true)
 	{
 		global $core;
 		
@@ -239,6 +244,7 @@ class core_model_products extends core_model_base_products
 			'addresses'=>array(),
 			'cart'=>null,
 			'item_hash'=>null,
+			'prods_by_id'=>array(),
 		);
 		
 		# setup some temp arrays 
@@ -429,7 +435,7 @@ class core_model_products extends core_model_base_products
 		
 		# we now have a final list of valid sellers. Query for their profiles
 		# and add to the final array.
-		if(count($tmp_sellers) > 0)
+		if(count($tmp_sellers) > 0 && $get_secondary_data)
 		{
 			$final['sellers'] = core::model('organizations')
 				->collection()
@@ -492,7 +498,10 @@ class core_model_products extends core_model_base_products
 		
 		# apply the sort function to the final product list
 		usort($final['products'],'final_prod_sort');
-		
+		for($i=0;$i<count($final['products']);$i++)
+		{
+			$final['prods_by_id'][$final['products'][$i]['prod_id']] = $i;
+		}
 		# prepare a much nicer formatted and sorted
 		# list of the delivery days, organized by the address
 		# combination
@@ -532,14 +541,17 @@ class core_model_products extends core_model_base_products
 		$final['cart']->load_items();
 		
 		# write out all of the javascript necessary to process the catalog
-		core::js('core.categories ='.json_encode($final['categories']->by_parent).';');
-		core::js('core.products ='.json_encode($final['products']).';');
-		core::js('core.sellers ='.json_encode($final['sellers']).';');
-		core::js('core.prices ='.json_encode($final['prices']).';');
-		core::js('core.delivs ='.json_encode($final['deliveries']).';');
-		core::js('core.cart = '.$final['cart']->write_js(true).';');
-		core::js('core.dds = '.json_encode($final['days']) . ';');
-		core::js('core.addresses = '.json_encode($final['addresses']).';');
+		if($write_js)
+		{
+			core::js('core.categories ='.json_encode($final['categories']->by_parent).';');
+			core::js('core.products ='.json_encode($final['products']).';');
+			core::js('core.sellers ='.json_encode($final['sellers']).';');
+			core::js('core.prices ='.json_encode($final['prices']).';');
+			core::js('core.delivs ='.json_encode($final['deliveries']).';');
+			core::js('core.cart = '.$final['cart']->write_js(true).';');
+			core::js('core.dds = '.json_encode($final['days']) . ';');
+			core::js('core.addresses = '.json_encode($final['addresses']).';');
+		}
 		$final['item_hash'] = $final['cart']->items->to_hash('prod_id');
 		
 		return $final;
