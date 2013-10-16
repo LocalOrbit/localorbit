@@ -33,7 +33,8 @@ if($config['do-ach'] == 1)
 
 
 $sql = "
-	select p.to_org_id,p.to_org_name,sum((p.amount - p.amount_paid)) as amount,opm.*,
+	select p.to_org_id,p.to_org_name,p.payment_processing_statuses,
+	sum((p.amount - p.amount_paid)) as amount,opm.*,
 	group_concat(p.payable_id) as payables
 	from v_payables p
 	inner join lo_order_line_item loi on (p.parent_obj_id=loi.lo_liid)
@@ -46,6 +47,7 @@ $sql = "
 	and p.from_org_id=1
 	and loi.ldstat_id=4
 	and loi.lbps_id=2
+	and p.payment_processing_statuses='confirmed'
 	and d.seller_payer = 'lo'";
 
 if($config['seller-org-id'] !== 0)
@@ -94,7 +96,7 @@ foreach($payments as $payment)
 		echo(" for payables: \n");
 		foreach($payables as $payable)
 		{
-			echo("\t".$payable['payable_info'].' '.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_due']),2)))."\n");
+			echo("\tpayment:".$payable['payment_processing_statuses']."|".$payable['payable_info'].' '.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_due']),2)))."\n");
 		}
 	}
 	else
