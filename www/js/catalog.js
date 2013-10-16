@@ -605,20 +605,22 @@ core.catalog.updateRowContinue=function(prodId, newQty, dd_id, failure) {
 }
 
 core.catalog.updateRow=function(prodId,newQty,dd){
-	//alert('setting '+prodId+' to '+newQty);
-	if(newQty == '')
-		newQty = 0;
 	var newQty = new String(newQty).replace(/[^0-9\.]+/g, '');
 	var newQty = parseInt(newQty);
-	dd = dd | $('#prodDd_' + prodId).val() | core.catalog.filters.dd;
-	$('#qtyBelowInv_'+prodId).hide();
-	for (var i = 0; i < core.cart.items.length; i++){
-		if(core.cart.items[i].prod_id == prodId){
-			core.cart.items[i].qty_ordered = newQty;
-		}
-	}
-	core.doRequest('/catalog/check_inventory', '&prod_id=' + prodId +'&newQty=' + newQty +'&dd_id='+dd);
-	//core.alertHash(core.cart);
+	//alert(parseInt(dd) + ' / '+  parseInt($('#prodDd_' + prodId).val()) + ' / ' + parseInt(core.catalog.filters.dd));
+
+	
+	dd = parseInt(dd);
+	if(isNaN(dd) || dd==0)
+		dd = parseInt($('#prodDd_' + prodId).val());
+	if(isNaN(dd) || dd==0)
+		dd = parseInt(core.catalog.filters.dd);
+	
+	core.doRequest('/catalog/new_update_item', '&prod_id=' + prodId +'&newQty=' + newQty +'&dd_id='+dd);
+}
+
+core.catalog.cartProdInvalid=function(prodId,errorType,errorData){
+	core.alertHash(arguments);
 }
 
 core.catalog.setQty=function(prodId,newQty,rowTotal){
