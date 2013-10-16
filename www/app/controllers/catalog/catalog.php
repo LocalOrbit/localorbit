@@ -2,6 +2,236 @@
 
 class core_controller_catalog extends core_controller
 {
+
+	function determine_best_price($product,$qty,$prices,$delivery)
+	{
+		$price_id = 0;
+		$amount = 99999999999;
+		$error_type = '';
+		$error_data = null;
+		
+		# check to make sure we've got enough inventory by the start of the delivery time
+		core::log('inventory check on product '.$product['prod_id'].', dd_id '.$delivery['dd_id'].': '.print_r($product['inventory_by_dd'],true));
+		if($product['inventory_by_dd'][$delivery['dd_id']] < $qty)
+		{
+			$error_type = 'insufficient_inventory';
+			$error_data = $product['inventory_by_dd'][$delivery['dd_id']];
+			return array(false,$price_id,$amount,$error_type,$error_data);
+		}
+		
+		# check to make sure there's a price that covers this quantity
+		core::log(print_r($catalog['prices'],true));
+		foreach($prices[$product['prod_id']] as $price)
+		{
+			if($qty >= $price['min_qty'] && $price['price'] < $amount)
+			{
+				$price_id = $price['price_id'];
+				$amount = $price['price'];
+			}
+		}
+		
+		
+		return array(($price_id != 0),$price_id,$amount,$error_type,$error_data);
+	}
+	
+	# this function is used to call the JS for communicating a problem with a qty to the user.
+	function send_back_invalid_price($product,$error_type,$error_data)
+	{
+		core::log('writing js for invalid price for '.$product['prod_id']);
+		core::js('core.catalog.cartProdInvalid('.$product['prod_id'].',\''.$error_type.'\',\''.$error_data.'\');');
+	}
+	
+	function new_update_item()
+	{
+		global $core;
+		
+		# general overview of the function:::
+		#
+		# 1) build a hash of all the deliveries currently in the order
+ 		#
+		# 2) loop through all existing products, if you find the product that you're trying to update:
+		#     2a) update its qty
+		#     2b) update its delivery (this may involve creating a new delivery)
+		#         (also check if there's enough inventory for the qty, handled by determine_best_price()
+		# 3) If the product was NOT found, then:    
+		#     3a) insert into lo_order_line_item
+		#     3b) create delivery if necessary
+		#         (also check if there's enough inventory for the qty, handled by determine_best_price()
+		#
+		# 4) delete any deliveries that no longer have items in them
+		#
+		
+		
+		core::log('started call to new_update_item: '.print_r($core->data,true));
+		$core->data['newQty'] = floatval($core->data['newQty']);
+		
+		# first, load up the catalog and the cart.
+		$catalog = core::model('products')->get_final_catalog(null,null,null,false,false);
+		$cart = core::model('lo_order')->get_cart();
+		$cart->load_items();
+
+		# first look if there's an existing cart item with
+		# the same prod_id.
+		#
+		# At the same time, check if there's a delivery with the same dd_id
+		$existing = false;	
+		$dd_hash = array();
+		
+		# 1) first, get a list of all the existing deliveries in the order
+		foreach($cart->items as $item)
+		{
+			# record the fact that there's already a delivery in the db for this dd_id
+			# record this as an array with 2 indices. 
+			# Index 0 is the lodeliv_id
+			# Index 1 is the count of the number of items in that delivery
+			if(!isset($dd_hash[$item['dd_id']]))
+				$dd_hash[$item['dd_id']] = array(core::model('lo_order_deliveries')->load($item['lodeliv_id']),0);
+			$dd_hash[$item['dd_id']][1]++;
+		}
+		
+		# 2) look for an existing cart item. if it's not there, insert it.
+		foreach($cart->items as $item)
+		{
+			# if this is the item being adjusted, do the adjustment now
+			# otherwise, it'll be added later.
+			if($item['prod_id'] == $core->data['prod_id'])
+			{
+				$existing = true;
+				
+				# if we're deleting this,
+				if($core->data['newQty'] == 0)
+				{
+					$item->delete();
+					$dd_hash[$item['dd_id']][1]--;
+				}
+				else
+				{
+					# check to see if we're changing dd_ids
+					if($item['dd_id'] != $core->data['dd_id'])
+					{
+						core::log('need to change delivery from '.$item['dd_id'].' to '.$core->data['dd_id']);
+						
+						# remove the record fo this item from the array storing info about deliveries
+						$dd_hash[$item['dd_id']][1]--;
+						
+						# set the new dd_id for the item
+						$item['dd_id'] = $core->data['dd_id'];
+						
+						# if this is an entirely new delivery, create it
+						if(!isset($dd_hash[$item['dd_id']]))
+						{
+							$order_delivery = core::model('delivery_days')->create_order_delivery($cart['lo_oid'],$core->data['dd_id']);
+							$dd_hash[$item['dd_id']] = array($order_delivery,0);
+						}
+							
+						# save the new deliv_id to the item
+						$item['lodeliv_id'] = $dd_hash[$item['dd_id']][0]['lodeliv_id'];
+						
+						# increment the item count for this new delivery
+						$dd_hash[$item['dd_id']][1]++;
+					}
+					
+					$order_delivery = $dd_hash[$item['dd_id']][0];
+					$product = $catalog['products'][$catalog['prods_by_id'][$core->data['prod_id']]];
+					list($valid,$price_id,$amount,$error_type,$error_data) = $this->determine_best_price($product,$core->data['newQty'],$catalog['prices'],$order_delivery);
+				
+					if($valid)
+					{
+						$item['unit_price' ] = $amount;
+						$item['row_total'] = $core->data['newQty'] * $amount;
+						$item->save();
+					}
+					else
+					{
+						$dd_hash[$item['dd_id']][1]--;
+						$this->send_back_invalid_price($product,$error_type,$error_data);
+					}
+				}
+			}
+		}
+		
+		# done looping through existing products
+		# emit a bit of debug so we can see which deliveries are now in the db.
+		#core::log('existing deliveries: '.print_r($dd_hash,true));
+		
+		# 3) if this is a new item in the cart, we need to insert it
+		# possibly a new delivery too.
+		if(!$existing)
+		{
+			# if we found a valid price, create a delivery if necessary
+			# if we didn't find a delivery day for this, then create the delivery
+			if(!isset($dd_hash[$core->data['dd_id']]))
+			{
+				core::log('no existing delivery for dd_id '.$core->data['dd_id'].' found. creating new one');
+				$order_delivery = core::model('delivery_days')->create_order_delivery($cart['lo_oid'],$core->data['dd_id']);
+				core::log('delivery saved. lodeliv_id '.$order_delivery['lodeliv_id']);
+				$dd_hash[$core->data['dd_id']] = array($order_delivery,0);
+			}
+			else
+			{
+				$order_delivery = $dd_hash[$core->data['dd_id']][0];
+			}
+			
+			# get the product's info about of the catalog
+			# this will check to make sure there's actually a valid price
+			$product = $catalog['products'][$catalog['prods_by_id'][$core->data['prod_id']]];
+			list($valid,$price_id,$amount,$error_type,$error_data) = $this->determine_best_price($product,$core->data['newQty'],$catalog['prices'],$order_delivery);
+		
+			#core::log(print_r($product,true));
+			if($valid)
+			{
+				# record that this item is a valid part of this delivery
+				$dd_hash[$core->data['dd_id']][1]++;
+				
+				#core::log('using price '.$price_id.' for '.$amount.' for product '.$core->data['prod_id']);
+				$new_item = core::model('lo_order_line_item');
+				$new_item['lo_oid'] = $cart['lo_oid'];
+				$new_item['seller_name'] = $product['org_name'];
+				$new_item['product_name'] = $product['name'];
+				$new_item['qty_ordered'] = $core->data['newQty'];
+				$new_item['qty_adjusted'] = $core->data['newQty'];
+				$new_item['unit'] = $product['single_unit'];
+				$new_item['unit_price'] = $amount;
+				$new_item['row_total'] = $amount * $core->data['qty_ordered'];
+				$new_item['unit_plural'] = $product['plural_unit'];
+				$new_item['prod_id'] = $product['prod_id'];
+				$new_item['addr_id'] = $product['addr_id'];
+				$new_item['dd_id'] = $core->data['dd_id'];
+				
+				$new_item['seller_org_id'] = $product['org_id'];
+				
+				$new_item['lodeliv_id'] = $dd_hash[$new_item['dd_id']][0]['lodeliv_id'];
+				$new_item['lbps_id'] = 1;
+				$new_item['ldstat_id'] = 1;
+				$new_item['lsps_id'] = 1;
+				$new_item['category_ids'] = $product['category_ids'];
+				$new_item['final_cat_id'] = $product['final_cat_id'];
+				$new_item->save();
+				
+			}
+			else
+			{
+				core::log('did NOT find a valid price for this product. uh oh');
+				$dd_hash[$new_item['dd_id']][1]--;
+				$this->send_back_invalid_price($product,$error_type,$error_data);
+			}
+		}
+		
+		
+		
+		# 4) delete any deliveries without items
+		foreach($dd_hash as $dd_id=>$info)
+		{
+			if($info[1] == 0)
+			{
+				core_db::query('delete from lo_order_deliveries where lodeliv_id='.$info[0]['lodeliv_id']);
+				unset($dd_hash[$dd_id]);
+			}
+		}
+		
+		# done!
+	}
+	
 	function set_dd_session()
 	{
 		global $core;
@@ -62,152 +292,6 @@ class core_controller_catalog extends core_controller
 		core::deinit();
 	}
 	
-	function update_product_delivery()
-	{
-		global $core;
-		
-		$prod_id = $core->data['prod_id'];
-		$dd_id   = $core->data['dd_id'];
-		$cart_item    = null;
-		$lodeliv_id = 0;
-		$lo_liid = 0;
-		core::log('here');
-		
-		# figure out if a delivery for this dd_id already exists. If it does, reuse this.
-		$cart = core::model('lo_order')->get_cart();
-		$cart->load_items();
-		foreach($cart->items as $item)
-		{
-			if($item['dd_id'] == $dd_id)
-			{
-				$lodeliv_id = $item['lodeliv_id'];
-				
-			}
-			
-			if($item['prod_id'] == $prod_id)
-			{
-				
-				$lo_liid = $item['lo_liid'];
-			}
-		}
-		$cart_item = core::model('lo_order_line_item')->load($lo_liid);
-		core::log('attempting to change item '.$cart_item['lo_liid'].' from '.$cart_item['dd_id'].' to '.$dd_id);
-		
-		# check if we did not find a delivery. If we did not, then create it.
-		if($lodeliv_id == 0)
-		{
-			core::log('tryign to create delivery day');
-			$delivery = core::model('lo_order_deliveries');
-			
-			$sql = 'select dd.*,';
-			$sql .= ' a1.org_id as deliv_org_id,a1.address as deliv_address,				a1.city as deliv_city,a1.region_id as deliv_region_id,				a1.postal_code as deliv_postal_code,a1.telephone as deliv_telephone,a1.fax as deliv_fax,				a1.longitude as deliv_longitude,a1.latitude as deliv_latitude,';
-			$sql .= ' a2.org_id as pickup_org_id,a2.address as pickup_address,				a2.city as pickup_city,a2.region_id as pickup_region_id,				a2.postal_code as pickup_postal_code,a2.telephone as pickup_telephone,a2.fax as pickup_fax,				a2.longitude as pickup_longitude,a2.latitude as pickup_latitude';
-			
-			$sql .= ' from delivery_days dd';
-			$sql .= ' left join addresses a1 on (a1.address_id=dd.deliv_address_id)';
-			$sql .= ' left join addresses a2 on (a2.address_id=dd.pickup_address_id)';
-			$sql .= ' where dd_id='.$dd_id;
-			
-			$data = core_db::row($sql);
-			$dd = core::model('delivery_days');
-			foreach($data as $field=>$value)
-				$dd[$field] = $value;
-			$dd->next_time();
-			
-			
-			$dds = core::model('delivery_days')->get_days_for_prod($prod_id,$core->config['domain']['domain_id']);
-			$all_dds = array();
-			foreach($dds as $dd_item)
-			{
-				$all_dds[] = $dd_item['dd_id'];
-			}
-			
-			$delivery['lo_oid'] = $cart_item['lo_oid'];
-			$delivery['lo_foid'] = $cart_item['lo_foid'];
-			$delivery['dd_id'] = $dd_id;
-			$delivery['deliv_address_id'] = $dd['deliv_address_id'];
-			$delivery['delivery_start_time'] = $dd['delivery_start_time'];
-			$delivery['delivery_end_time'] = $dd['delivery_end_time'];
-			$delivery['pickup_start_time'] = $dd['pickup_start_time'];
-			$delivery['pickup_end_time'] = $dd['pickup_end_time'];
-			$delivery['pickup_address_id'] = $dd['pickup_address_id'];
-			$delivery['deliv_org_id'] = $dd['deliv_org_id'];
-			$delivery['deliv_address'] = $dd['deliv_address'];
-			$delivery['deliv_city'] = $dd['deliv_city'];
-			$delivery['deliv_region_id'] = $dd['deliv_region_id'];
-			$delivery['deliv_postal_code'] = $dd['deliv_postal_code'];
-			$delivery['deliv_telephone'] = $dd['deliv_telephone'];
-			$delivery['deliv_fax'] = $dd['deliv_fax'];
-			$delivery['deliv_longitude'] = $dd['deliv_longitude'];
-			$delivery['deliv_latitude'] = $dd['deliv_latitude'];
-
-			$delivery['pickup_org_id'] = $dd['pickup_org_id'];
-			$delivery['pickup_address'] = $dd['pickup_address'];
-			$delivery['pickup_city'] = $dd['pickup_city'];
-			$delivery['pickup_region_id'] = $dd['pickup_region_id'];
-			$delivery['pickup_postal_code'] = $dd['pickup_postal_code'];
-			$delivery['pickup_telephone'] = $dd['pickup_telephone'];
-			$delivery['pickup_fax'] = $dd['pickup_fax'];
-			$delivery['pickup_longitude'] = $dd['pickup_longitude'];
-			$delivery['pickup_latitude'] = $dd['pickup_latitude'];
-			$delivery['dd_id_group'] = $dd_id;
-#
-			#$delivery->save();
-			$cart_item['lodeliv_id'] = $delivery['lodeliv_id'];
-			$cart_item['dd_id'] = $dd_id;
-			$cart_item->save();
-		}
-		else
-		{
-			$cart_item->__orig_data = array();
-			$cart_item['lodeliv_id'] = $lodeliv_id;
-			$cart_item['dd_id'] = $dd_id;
-			$cart_item->save();
-		}
-	}
-	
-	function check_inventory ()
-	{
-		
-		global $core;
-
-		$inv = 0;
-		
-		core::log('checking prod '.$core->data['prod_id'].' on dd '.$core->data['dd_id']);
-		
-		if($core->data['newQty'] == 0)
-		{
-			core::js('core.catalog.updateRowContinue(' . $core->data['prod_id'] . ', 0, ' . $core->data['dd_id'] . ');');
-		}
-		else
-		{
-
-			core::log('delivery day: ' . $core->data['dd_id']);
-
-			if ($core->data['dd_id']) {
-				$dds = array(core::model('delivery_days')->load($core->data['dd_id']));
-			} else {
-				$dds = core::model('delivery_days')->get_days_for_prod($core->data['prod_id'],$core->config['domain']['domain_id']);
-			}
-
-			foreach($dds as $dd)
-			{
-				$dd->next_time();
-				$available = $dd->get_available($core->data['prod_id']);
-				$inv = max($available, $inv);
-			}
-			core::log('maximum inventory: '. $inv);
-
-			if ($inv < $core->data['newQty'])
-			{
-				core::js('core.catalog.checkInventoryFailure(' . $core->data['prod_id'] . ', ' . $inv . ', ' . $core->data['dd_id'] . ');');
-			}
-			else
-			{
-				core::js('core.catalog.updateRowContinue(' . $core->data['prod_id'] . ', ' . $core->data['newQty'] . ', ' . $core->data['dd_id'] . ');');
-			}
-		}
-	}
 	
 	function update_fees($return_data='no',$cart = null)
 	{
