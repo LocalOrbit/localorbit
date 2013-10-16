@@ -105,6 +105,7 @@ $sql = "
 		(to_org_id=1 and from_org_id in (select org_id from organizations_to_domains where orgtype_id=2))
 	)
 	and (p.amount - p.amount_paid) > 0
+	and p.payment_processing_statuses='confirmed'
 	and lo.lbps_id = 2
 	and lo.ldstat_id=4
 ";
@@ -186,6 +187,7 @@ $sql = "
 		(to_org_id=1 and from_org_id in (select org_id from organizations_to_domains where orgtype_id=2))
 	)
 	and (p.amount - p.amount_paid) > 0
+	and (p.payment_processing_statuses = 'confirmed')
 	and loi.lbps_id = 2
 	and loi.ldstat_id=4
 ";
@@ -257,7 +259,7 @@ foreach($payments_by_recip as $org_id=>$payment)
 		echo("\tpayable details: \n\t------------------------------\n");
 		for($i=0;$i<count($payment['details']);$i++)
 		{
-			echo("\t".$payment['payable_ids'][$i]."|".core_format::price($payment['amounts'][$i],false)."|".$payment['details'][$i]."\n");
+			echo("\tpayment:".$payable['payment_processing_statuses']."|".$payment['payable_ids'][$i]."|".core_format::price($payment['amounts'][$i],false)."|".$payment['details'][$i]."\n");
 		}
 		echo("\t------------------------------\n");
 	}
