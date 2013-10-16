@@ -1,6 +1,68 @@
 <?php
 class core_model_delivery_days extends core_model_base_delivery_days
 {
+	function create_order_delivery($lo_oid,$dd_id=0,$start_time=0)
+	{
+		# get all of the address data needed to create the delivery
+		$this->import(core_db::row('
+			select delivery_days.*,d.do_daylight_savings,tz.offset_seconds,
+			a1.address as deliv_address,a1.city as deliv_city,dcr1.code as deliv_state,a1.postal_code as deliv_postal_code,a1.org_id as deliv_org_id,
+			a2.address as pickup_address,a2.city as pickup_city,dcr2.code as pickup_state,a2.postal_code as pickup_postal_code,a2.org_id as pickup_org_id,
+			delivery_fees.fee_calc_type_id,delivery_fees.amount
+
+			from delivery_days
+			left join domains d on (d.domain_id=delivery_days.domain_id)
+			left join timezones tz on (d.tz_id=tz.tz_id)
+			left join addresses a1 on delivery_days.deliv_address_id=a1.address_id
+			left join directory_country_region dcr1 on dcr1.region_id=a1.region_id
+			left join addresses a2 on delivery_days.pickup_address_id=a2.address_id
+			left join directory_country_region dcr2 on dcr2.region_id=a2.region_id
+			left join delivery_fees on (delivery_fees.dd_id=delivery_days.dd_id)
+			where delivery_days.dd_id='.$dd_id.'
+		
+		'));
+		$this->next_time($start_time);
+		
+		# set some basic fields
+		$order_delivery = core::model('lo_order_deliveries');
+		$order_delivery['lo_oid'] = $lo_oid;
+		$order_delivery['dd_id'] = $dd_id;
+		$order_delivery['dd_id_group'] = $dd_id;
+		
+		# all 4 of the times
+		$order_delivery['delivery_start_time'] = $this['delivery_start_time'];
+		$order_delivery['delivery_end_time'] = $this['delivery_end_time'];
+		$order_delivery['pickup_start_time'] = $this['pickup_start_time'];
+		$order_delivery['pickup_end_time'] = $this['pickup_end_time'];
+		
+		# lastly, all the address info
+		$order_delivery['deliv_address_id'] = $this['deliv_address_id'];
+		$order_delivery['deliv_org_id'] = $this['deliv_org_id'];
+		$order_delivery['deliv_address'] = $this['deliv_address'];
+		$order_delivery['deliv_city'] = $this['deliv_city'];
+		$order_delivery['deliv_region_id'] = $this['deliv_region_id'];
+		$order_delivery['deliv_postal_code'] = $this['deliv_postal_code'];
+		$order_delivery['deliv_telephone'] = $this['deliv_telephone'];
+		$order_delivery['deliv_fax'] = $this['deliv_fax'];
+		$order_delivery['deliv_longitude'] = $this['deliv_longitude'];
+		$order_delivery['deliv_latitude'] = $this['deliv_latitude'];
+
+		$order_delivery['pickup_address_id'] = $this['pickup_address_id'];
+		$order_delivery['pickup_org_id'] = $this['pickup_org_id'];
+		$order_delivery['pickup_address'] = $this['pickup_address'];
+		$order_delivery['pickup_city'] = $this['pickup_city'];
+		$order_delivery['pickup_region_id'] = $this['pickup_region_id'];
+		$order_delivery['pickup_postal_code'] = $this['pickup_postal_code'];
+		$order_delivery['pickup_telephone'] = $this['pickup_telephone'];
+		$order_delivery['pickup_fax'] = $this['pickup_fax'];
+		$order_delivery['pickup_longitude'] = $this['pickup_longitude'];
+		$order_delivery['pickup_latitude'] = $this['pickup_latitude'];
+		
+		
+		$order_delivery->save();
+		return $order_delivery;
+	}
+	
 	function apply_fees($item_total)
 	{
 		global $core;
@@ -182,7 +244,7 @@ class core_model_delivery_days extends core_model_base_delivery_days
 				core::log("orig sot: ".date('Y-m-d H:i:s',$start_of_today));
 
 				# adjust to local timezone of this hub
-				core::log(print_r($core->config['domain']->__data,true));
+				#core::log(print_r($core->config['domain']->__data,true));
 				$start_of_today -= ($core->config['domain']['offset_seconds'] + (3600 * $core->config['domain']['do_daylight_savings']));
 				core::log("adjs sot: ".date('Y-m-d H:i:s',$start_of_today));
 
