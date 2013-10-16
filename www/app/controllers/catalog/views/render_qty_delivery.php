@@ -78,7 +78,8 @@ $addresses = $core->view[6];
 					$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
 					$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
 					?>
-					<li class="filter dd prod_dd dd_<?=$dd_ids_id?> proddd_<?=$prod['prod_id']?>" id="filter_dd_<?=$dd_ids_id?>"><a href="<?=($hashUrl?'#!catalog-shop#dd='.$dd_ids_id:'#')?>" onclick="return core.catalog.changeProductDeliveryDay(event, <?=$prod['prod_id']?>,'<?=$dd_ids_id?>');">
+					<li class="filter dd prod_dd dd_<?=$dd_ids_id?> proddd_<?=$prod['prod_id']?>" id="filter_dd_<?=$dd_ids_id?>"><a href="<?=($hashUrl?'#!catalog-shop#dd='.$dd_ids_id:'#')?>" onclick="core.catalog.updateRow(<?=$prod['prod_id']?>,$('#prodQty_<?=$prod['prod_id']?>').val(),<?=$dd_ids_id?>);return false;">
+					<!-- onclick="return core.catalog.changeProductDeliveryDay(event, <?=$prod['prod_id']?>,'<?=$dd_ids_id?>');-->
 					<?=$type?> <?=core_format::date($time, 'shorter-weekday',true)?>
 					<br /><?=$final_address?></a>
 					</li>
