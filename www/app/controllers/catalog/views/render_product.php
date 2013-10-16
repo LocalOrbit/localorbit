@@ -14,7 +14,6 @@ $days 	 = $core->view[9];
 $dd_id 	 = $core->view[10];
 $addresses = $core->view[11];
 
-
 # remove this code
 #$first_period = strpos($description,'.');
 #$first_exclam = strpos($description,'!');
