@@ -153,32 +153,6 @@ class core_model_lo_order extends core_model_lo_order___utility
 		global $core;
 		$this->items = core::model('lo_order_line_item');
 
-		
-		
-		# these custom fields can be used to verify the validity
-		# of the item state
-
-		$this->items->add_custom_field('(
-			select sum(product_inventory.qty) >= lo_order_line_item.qty_ordered
-			from product_inventory
-			WHERE product_inventory.prod_id=lo_order_line_item.prod_id
-		) as has_valid_inventory');
-		$this->items->add_custom_field('(
-			select count(pcs_id) > 0
-			from product_delivery_cross_sells
-			inner join delivery_days on (product_delivery_cross_sells.dd_id=delivery_days.dd_id)
-			WHERE product_delivery_cross_sells.prod_id=lo_order_line_item.prod_id
-			and delivery_days.domain_id='.$core->config['domain']['domain_id'].'
-		) as has_valid_delivs');
-		$this->items->add_custom_field('(
-			select count(price_id) > 0
-			from product_prices
-			WHERE product_prices.prod_id=lo_order_line_item.prod_id
-			and (product_prices.min_qty <= lo_order_line_item.qty_ordered or product_prices.min_qty is null)
-			and (product_prices.org_id = 0 or product_prices.org_id='.intval($this['org_id']).')
-			and (product_prices.domain_id=0 or product_prices.domain_id='.$core->config['domain']['domain_id'].')
-		) as has_valid_prices');
-
 		$this->items = $this->items->collection()
 			->filter('lo_oid',$this['lo_oid'])
 			->sort('deliv_time')
