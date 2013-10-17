@@ -1,24 +1,34 @@
 <?php 
 
-$date = "2013-09-16 22:37:48";
-echo $date."<br>";
-
-echo core_format::date($date,'short')."<br>";
-
-echo core::model('invoices')->getNextInvoiceNumber(15620)."<br>";
 
 
-$invoice_id = mysql_insert_id();
+$order_sql = "SELECT DISTINCT
+			
+			UNIX_TIMESTAMP(lo_order.order_date) AS order_date_u,
+			lo_order.order_date		
+		FROM lo_order
+		WHERE lo_order.lo_oid = 17188";
 
-$payable_ids = array();
-$payable_ids[] = 4;
-$payable_ids[] = 5;
-$payable_ids[] = 6;
-$payable_ids[] = 0;
+	$orderInfos = new core_collection($order_sql);
+	foreach($orderInfos as $orderInfo) {
+		$orderInfo = $orderInfo;
+	}
 
+	echo $orderInfo['order_date'];
+	echo "'order_date' <br>";
 
+	echo core_format::date($orderInfo['order_date'],'short');
+	echo "'order_date'],'short<br>";
 
-echo implode(",", $payable_ids)."<br>";
+	echo core_format::date($orderInfo['order_date'],'long');
+	echo "order_date'],'long<br>";
+	echo $core->session['time_offset'];
 
-$sql = "UPDATE payables SET invoice_id = ".$invoice_id." WHERE payable_id IN (".implode(",", $payable_ids).")";
+	
+	
+	
+
+	$due_date_unixtime = $orderInfo['order_date_u'] + 60 * 60 * 24 * 14;
+	
+	echo "Payment Due: <b>".core_format::date($due_date_unixtime,'long')."</b><br />";
 ?>

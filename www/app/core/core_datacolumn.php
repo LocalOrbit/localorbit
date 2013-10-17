@@ -115,12 +115,18 @@ class core_datacolumn
 				if($format == 'html')
 					$data[$this->dbname] = core_format::date($data[$this->dbname],'long-wrapped');
 				else
-					$data[$this->dbname] = core_format::date($data[$this->dbname],'long');
-					
+					$data[$this->dbname] = core_format::date($data[$this->dbname],'long');					
 				break;
 			case 'date-short':
-				$data[$this->dbname] = core_format::date($data[$this->dbname],'short');
-				
+				$data[$this->dbname] = core_format::date($data[$this->dbname],'short');				
+				break;
+			case 'date-short-highlight-past':
+				$time_diff = $data[$this->dbname] - time() - $core->session['time_offset'];
+				if ($time_diff < 0) {
+					$data[$this->dbname] = '<div style="font-weight:bold;color: #c00;">'.core_format::date($data[$this->dbname],'short').'</div>';
+				} else {
+					$data[$this->dbname] = core_format::date($data[$this->dbname],'short');
+				}
 				break;
 		}
 		return $data;
