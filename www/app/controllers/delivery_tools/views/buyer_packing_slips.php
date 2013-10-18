@@ -8,18 +8,21 @@ $addr_seller = false;
 
 # when market managers and admins view this report, they're viewing multiple at a time.
 $multi_view = (lo3::is_market() || lo3::is_admin());
-$org = core::model('organizations')->join_default_billing()->load(($multi_view)?$core->data['org_id']:$core->session['org_id']);
+$org_id = ($multi_view)?$core->data['org_id']:$core->session['org_id'];
+$core->data['org_id'] = $org_id;
+core::log('loading items from seller '.$org_id);
+$org = core::model('organizations')->join_default_billing()->load($org_id);
 
 
 # get the list of items in this set of deliveries
 $items = core::model('lo_order_deliveries')
-		->get_items_for_delivery(explode(' ',$core->data['lodeliv_id']),$org['org_id'],$mm_grouping);
+		->get_items_for_delivery(explode(' ',$core->data['lodeliv_id']),$org_id,$mm_grouping);
 		
 
 if($mm_grouping)
-	$items->group('concat_ws(\'-\',lo_order_deliveries.deliv_address_id,lo_order_deliveries.pickup_address_id)')->to_hash('deliv_key_hash');
+	$items = $items->group('concat_ws(\'-\',lo_order_deliveries.deliv_address_id,lo_order_deliveries.pickup_address_id)')->to_hash('deliv_key_hash');
 else
-	$items->group('lo_order_deliveries.deliv_address_id')->to_hash('deliv_key_hash');
+	$items = $items->group('lo_order_deliveries.deliv_address_id')->to_hash('deliv_key_hash');
 
 #echo('<pre>');
 #print_r($items);
@@ -32,6 +35,7 @@ if(!isset($core->config['delivery_tools_buttons']))
 $first = true;
 foreach($items as $org_id=>$item_list)
 {
+	#core::log('item list: '.print_r($item_list,true));
 	$buyer_order_nbrs = array();
 	$seller_order_nbrs = array();
 	foreach($item_list as $Item)
@@ -39,7 +43,7 @@ foreach($items as $org_id=>$item_list)
 		$buyer_order_nbrs[$Item['lo3_order_nbr']] = true;
 		$seller_order_nbrs[$Item['seller_lo3_order_nbr']] = true;
 	}
-	#print_r($item_list[0]);
+	#core::log(print_r($item_list[0],true));
 	if (!$first) {
 	?>
 		<div class="page-break">&nbsp;</div>
@@ -110,13 +114,17 @@ core::log('this cycle is still open: '.((($core->data['start_time'] - ($item_lis
 		<th>Initials</th>
 		<th>Notes</th>
 	</tr>
-	<?foreach($item_list as $item){?>
+	<?foreach($item_list as $item){
+
+		?>
 	<tr class="pr">
 		<td class="pr"><?=$item['product_name']?> from <?=$item['seller_name']?></td>
 		<td class="pr"><?=$item['sum_qty_ordered']?>
 		<?
 $core->data['prod_id'] = $item['prod_id'];
 $core->data['org_id'] = $item['buyer_org_id'];
+
+core::log('setting org_id in core->data to '.$core->data['org_id']);
 $this->lot_details();
 ?></td>
 		<td class="pr"><?=$item['unit_plural']?></td>
