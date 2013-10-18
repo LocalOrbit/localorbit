@@ -17,7 +17,7 @@ $items = core::model('lo_order_deliveries')
 		
 
 if($mm_grouping)
-	$items->group('concat_ws(\'-\',lo_order_deliveries.deliv_address_id,lo_order_deliveries.pickup_address_id')->to_hash('deliv_key_hash');
+	$items->group('concat_ws(\'-\',lo_order_deliveries.deliv_address_id,lo_order_deliveries.pickup_address_id)')->to_hash('deliv_key_hash');
 else
 	$items->group('lo_order_deliveries.deliv_address_id')->to_hash('deliv_key_hash');
 
