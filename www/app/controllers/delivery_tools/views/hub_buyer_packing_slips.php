@@ -14,7 +14,7 @@ foreach($orgs as $org)
 <?
    }
 	$core->data['org_id'] = $org;
-	$this->buyer_packing_slips();
+	$this->buyer_packing_slips(true);
    $first = false;
 }
 $this->template_pageend();
