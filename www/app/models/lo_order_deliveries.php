@@ -213,7 +213,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 	}
 
 
-	function get_items_for_delivery($deliv_ids,$org_id=0)
+	function get_items_for_delivery($deliv_ids,$org_id=0,$mm_view=false)
 	{
 		global $core;
 		$col = core::model('lo_order_line_item')
@@ -234,14 +234,18 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 				'organizations',
 				'(organizations.org_id=lo_order.org_id)',
 				array('name')
+			);
+		
+		$col->autojoin(
+			'inner',
+			'lo_order_deliveries',
+			'(lo_order_deliveries.lodeliv_id = lo_order_line_item.lodeliv_id)',
+			array(
+				'concat_ws(\'-\',organizations.org_id,lo_order_deliveries.deliv_address_id'.(($mm_view)?',lo_order_deliveries.pickup_address_id':'').') as deliv_key_hash','lo_order_deliveries.pickup_start_time','lo_order_deliveries.pickup_end_time','lo_order_deliveries.deliv_org_id'
 			)
-			->autojoin(
-				'inner',
-				'lo_order_deliveries',
-				'(lo_order_deliveries.lodeliv_id = lo_order_line_item.lodeliv_id)',
-				array('concat_ws(\'-\',organizations.org_id,lo_order_deliveries.deliv_address_id) as deliv_key_hash','lo_order_deliveries.pickup_start_time','lo_order_deliveries.pickup_end_time','lo_order_deliveries.deliv_org_id')
-			)
-			->autojoin(
+		);
+			
+		$col = $col->autojoin(
 				'inner',
 				'delivery_days',
 				'(delivery_days.dd_id = lo_order_deliveries.dd_id)',
