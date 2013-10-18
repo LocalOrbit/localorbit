@@ -6,8 +6,8 @@ $addr_seller = false;
 
 # get a list of all items in this set of deliveries
 $items = core::model('lo_order_deliveries')
-	->get_items_for_delivery(explode(' ',$core->data['lodeliv_id']))
-	->group('lo_order_deliveries.deliv_address_id');
+	->get_items_for_delivery(explode(' ',$core->data['lodeliv_id']),null,true)
+	->group('concat_ws(\'-\',lo_order_deliveries.deliv_address_id,lo_order_deliveries.pickup_address_id)');
 
 # organize all of the items by buyer
 $items = $items->to_hash('deliv_key_hash');
