@@ -1,4 +1,8 @@
 <?php
+if(!isset($core->view[0]))
+	$core->view[0] = false;
+$mm_grouping = $core->view[0];
+	
 $auto_exit = true;
 $addr_seller = false;
 
@@ -9,9 +13,13 @@ $org = core::model('organizations')->join_default_billing()->load(($multi_view)?
 
 # get the list of items in this set of deliveries
 $items = core::model('lo_order_deliveries')
-		->get_items_for_delivery(explode(' ',$core->data['lodeliv_id']),$org['org_id'])
-		->group('lo_order_deliveries.deliv_address_id')
-		->to_hash('deliv_key_hash');
+		->get_items_for_delivery(explode(' ',$core->data['lodeliv_id']),$org['org_id'],$mm_grouping);
+		
+
+if($mm_grouping)
+	$items->group('concat_ws(\'-\',lo_order_deliveries.deliv_address_id,lo_order_deliveries.pickup_address_id')->to_hash('deliv_key_hash');
+else
+	$items->group('lo_order_deliveries.deliv_address_id')->to_hash('deliv_key_hash');
 
 #echo('<pre>');
 #print_r($items);
