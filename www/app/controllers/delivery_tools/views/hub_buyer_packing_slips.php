@@ -13,6 +13,7 @@ foreach($orgs as $org)
 <div class="page-break">&nbsp;</div>
 <?
    }
+   core::log('rendering packing slips for '.$org);
 	$core->data['org_id'] = $org;
 	$this->buyer_packing_slips(true);
    $first = false;
