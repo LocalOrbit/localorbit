@@ -10,7 +10,8 @@ core.catalog={
 	addressCoords:{
 	},
 	popupOn:0,
-	popupType:0
+	popupType:0,
+	qtySendHandle:0
 };
 
 if(!core.cart)
@@ -605,6 +606,13 @@ core.catalog.updateRowContinue=function(prodId, newQty, dd_id, failure) {
 }
 
 core.catalog.updateRow=function(prodId,newQty,dd){
+	if(core.catalog.qtySendHandle !== 0){
+		window.clearTimeout(core.catalog.qtySendHandle);
+	}
+	core.catalog.qtySendHandle = window.setTimeout(Function('','core.catalog.sendQty('+prodId+','+newQty+','+dd+');'),300);
+}
+
+core.catalog.sendQty=function(prodId,newQty,dd){
 	var newQty = new String(newQty).replace(/[^0-9\.]+/g, '');
 	var newQty = parseInt(newQty);
 	//alert(parseInt(dd) + ' / '+  parseInt($('#prodDd_' + prodId).val()) + ' / ' + parseInt(core.catalog.filters.dd));
@@ -617,7 +625,7 @@ core.catalog.updateRow=function(prodId,newQty,dd){
 		dd = parseInt(core.catalog.filters.dd);
 	
 	$('.prod_' +prodId+ '_min_qty',$('#product_' + prodId + ' .alertContainer')).hide();
-	core.doRequest('/catalog/new_update_item', '&prod_id=' + prodId +'&newQty=' + newQty +'&dd_id='+dd);
+	core.doRequest('/catalog/new_update_item', '&prod_id=' + prodId +'&newQty=' + newQty +'&dd_id='+dd);	
 }
 
 core.catalog.cartProdInvalid=function(prodId,errorType,errorData){
