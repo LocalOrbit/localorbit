@@ -147,7 +147,7 @@ class core_controller_catalog extends core_controller
 					$order_delivery = $dd_hash[$item['dd_id']][0];
 					$product = $catalog['products'][$catalog['prods_by_id'][$core->data['prod_id']]];
 					list($valid,$price_id,$amount,$error_type,$error_data) = $this->determine_best_price($product,$core->data['newQty'],$catalog['prices'],$order_delivery);
-				
+					
 					if($valid)
 					{
 						$item['unit_price' ] = $amount;
@@ -239,7 +239,7 @@ class core_controller_catalog extends core_controller
 		{
 			if($info[1] == 0)
 			{
-				core_db::query('delete from lo_order_deliveries where lodeliv_id='.$info[0]['lodeliv_id']);
+				core_db::query('delete from lo_order_deliveries where lodeliv_id='.intval($info[0]['lodeliv_id']));
 				unset($dd_hash[$dd_id]);
 			}
 		}
