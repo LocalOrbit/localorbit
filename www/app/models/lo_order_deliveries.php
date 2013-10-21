@@ -300,7 +300,7 @@ class core_model_lo_order_deliveries extends core_model_base_lo_order_deliveries
 		$col->group('prod_id');
 		if($org_id > 0)
 		{
-			$col->filter('seller_org_id',$org_id);
+			$col->filter('seller_org_id','=',$org_id);
 		}
 		$col->filter('lo_order_deliveries.lodeliv_id','in',$deliv_ids);
 		$col->sort('lo_order_line_item.product_name');
