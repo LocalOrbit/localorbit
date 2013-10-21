@@ -616,11 +616,27 @@ core.catalog.updateRow=function(prodId,newQty,dd){
 	if(isNaN(dd) || dd==0)
 		dd = parseInt(core.catalog.filters.dd);
 	
+	$('.prod_' +prodId+ '_min_qty',$('#product_' + prodId + ' .alertContainer')).hide();
 	core.doRequest('/catalog/new_update_item', '&prod_id=' + prodId +'&newQty=' + newQty +'&dd_id='+dd);
 }
 
 core.catalog.cartProdInvalid=function(prodId,errorType,errorData){
-	core.alertHash(arguments);
+	var qtyAlert;
+
+	var qtyAlert = $('.prod_' +prodId+ '_min_qty',$('#product_' + prodId + ' .alertContainer'));
+	if(qtyAlert.length == 0){
+		qtyAlert = $('.prod_' +prodId+ '_min_qty').clone().appendTo($('#product_' + prodId + ' .alertContainer'));
+	}
+	var msg;
+	switch(errorType){
+		case 'must_order_more':
+			msg = 'You must order at least '+parseFloat(errorData);
+			break;
+		case 'insufficient_inventory':
+			msg = 'Only '+errorData+' are available';
+			break;
+	}
+	qtyAlert.html('<small>'+msg+'</small>').show();
 }
 
 core.catalog.setQty=function(prodId,newQty,rowTotal){
