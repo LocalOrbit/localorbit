@@ -25,7 +25,6 @@ $invoices_table->sort_direction = 'asc';
 
 $pdf_preview_link = '<a target="_blank" href="/app/payments/view_invoice_pdf?invoice_num={invoice_num}"><b>{invoice_num}</b></a>';
 
-$days_diff = 
 
 // Order Number 	Purchase Order Number     Buyer Order Date      Invoice Amount
 $invoices_table->add(new core_datacolumn('invoice_num','Invoice Number',true,'15%',$pdf_preview_link,'{invoice_num}','{invoice_num}'));
@@ -57,7 +56,7 @@ if(!isset($core->data[$invoices_table->name.'__filter__date2'])){
 // default dates
 $base = mktime(0, 0, 0, date('n'), date('j'));
 $start =  $base - (86400*30) - intval($core->session['time_offset']);
-$end = $base - intval($core->session['time_offset']) + 86399;
+$end = $base + (86400*30) - intval($core->session['time_offset']) + 86399;
 
 // invoices.due_date is unix date
 core_format::fix_unix_date_range(
