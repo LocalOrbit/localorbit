@@ -138,6 +138,7 @@ class core_controller_catalog extends core_controller
 					if($valid)
 					{
 						$item['unit_price' ] = $amount;
+						$item['qty_ordered'] = $core->data['newQty'];
 						$item['row_total'] = $core->data['newQty'] * $amount;
 						$item->save();
 					}
@@ -192,7 +193,7 @@ class core_controller_catalog extends core_controller
 				$new_item['qty_adjusted'] = $core->data['newQty'];
 				$new_item['unit'] = $product['single_unit'];
 				$new_item['unit_price'] = $amount;
-				$new_item['row_total'] = $amount * $core->data['qty_ordered'];
+				$new_item['row_total'] = $amount * $core->data['newQty'];
 				$new_item['unit_plural'] = $product['plural_unit'];
 				$new_item['prod_id'] = $product['prod_id'];
 				$new_item['addr_id'] = $product['addr_id'];
