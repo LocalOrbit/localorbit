@@ -21,6 +21,10 @@ class core_controller_catalog extends core_controller
 		
 		# check to make sure there's a price that covers this quantity
 		core::log(print_r($catalog['prices'],true));
+		
+		# in this case, use the $error_data variable to store the 
+		# smallest amount the user has to order for there to be a valid price.
+		$error_data = 99999999999;
 		foreach($prices[$product['prod_id']] as $price)
 		{
 			if($qty >= $price['min_qty'] && $price['price'] < $amount)
@@ -28,8 +32,17 @@ class core_controller_catalog extends core_controller
 				$price_id = $price['price_id'];
 				$amount = $price['price'];
 			}
+			if($price['min_qty'] < $error_data)
+			{
+				$error_data = $price['min_qty'];
+			}
 		}
 		
+		# if we didn't find a price at all, set the error_type to imply this
+		if($price_id == 0)
+		{
+			$error_type = 'must_order_more';
+		}
 		
 		return array(($price_id != 0),$price_id,$amount,$error_type,$error_data);
 	}
@@ -145,6 +158,7 @@ class core_controller_catalog extends core_controller
 					else
 					{
 						$dd_hash[$item['dd_id']][1]--;
+						core::log('got back error type: '.$error_type);
 						$this->send_back_invalid_price($product,$error_type,$error_data);
 					}
 				}
@@ -177,7 +191,7 @@ class core_controller_catalog extends core_controller
 			# this will check to make sure there's actually a valid price
 			$product = $catalog['products'][$catalog['prods_by_id'][$core->data['prod_id']]];
 			list($valid,$price_id,$amount,$error_type,$error_data) = $this->determine_best_price($product,$core->data['newQty'],$catalog['prices'],$order_delivery);
-		
+			core::log('got back error type: '.$error_type);
 			#core::log(print_r($product,true));
 			if($valid)
 			{
