@@ -628,6 +628,18 @@ core.catalog.sendQty=function(prodId,newQty,dd){
 	core.doRequest('/catalog/new_update_item', '&prod_id=' + prodId +'&newQty=' + newQty +'&dd_id='+dd);	
 }
 
+core.catalog.cartUpdateRowPrice=function(prodId,qty,newRowTotal){
+	if(parseFloat(newRowTotal)  == 0){
+		var msg = ''
+	}else{
+		var msg = '<span class="value">'+core.format.price(newRowTotal)+'</span> <i class="icon-close"/>'
+	}
+	$('.prodTotal_'+prodId+'_text').html(msg).show();
+	
+	core.catalog.updateTotalViews();
+	//alert('setting row total to '+newRowTotal);
+}
+
 core.catalog.cartProdInvalid=function(prodId,errorType,errorData){
 	var qtyAlert;
 
@@ -635,7 +647,7 @@ core.catalog.cartProdInvalid=function(prodId,errorType,errorData){
 	if(qtyAlert.length == 0){
 		qtyAlert = $('.prod_' +prodId+ '_min_qty').clone().appendTo($('#product_' + prodId + ' .alertContainer'));
 	}
-	var msg;
+	var msg = '';;
 	switch(errorType){
 		case 'must_order_more':
 			msg = 'You must order at least '+parseFloat(errorData);
@@ -644,7 +656,8 @@ core.catalog.cartProdInvalid=function(prodId,errorType,errorData){
 			msg = 'Only '+errorData+' are available';
 			break;
 	}
-	qtyAlert.html('<small>'+msg+'</small>').show();
+	if(msg != '')
+		qtyAlert.html('<small>'+msg+'</small>').show();
 }
 
 core.catalog.setQty=function(prodId,newQty,rowTotal){
