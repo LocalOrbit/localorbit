@@ -635,17 +635,19 @@ core.catalog.cartUpdateRowPrice=function(prodId,qty,newRowTotal){
 		var msg = core.format.price(newRowTotal);
 	}
 	if(msg == '')
-		$('.prodTotal_'+prodId+'_text > span').hide();
+		$('.prodTotal_'+prodId+'_text > span').parent().hide();
 	else
-		$('.prodTotal_'+prodId+'_text > span').html(msg).show();
+		$('.prodTotal_'+prodId+'_text > span').html(msg).parent().show();
 	$('input.prodQty_'+prodId).val(qty);
 }
 
 core.catalog.cartClearRowError=function(prodId){
+	//alert('clearing error');
 	$('.prod_' +prodId+ '_min_qty').hide();
 }
 
 core.catalog.cartProdInvalid=function(prodId,errorType,errorData){
+	//alert('setting invalid: '+errorType+'/'+errorData);
 	var qtyAlert;
 
 	var qtyAlert = $('.prod_' +prodId+ '_min_qty',$('#product_' + prodId + ' .alertContainer'));
