@@ -632,9 +632,12 @@ core.catalog.cartUpdateRowPrice=function(prodId,qty,newRowTotal){
 	if(parseFloat(newRowTotal)  == 0){
 		var msg = ''
 	}else{
-		var msg = '<span class="value">'+core.format.price(newRowTotal)+'</span> <i class="icon-close"/>'
+		var msg = core.format.price(newRowTotal);
 	}
-	$('.prodTotal_'+prodId+'_text').html(msg).show();
+	if(msg == '')
+		$('.prodTotal_'+prodId+'_text > span').hide();
+	else
+		$('.prodTotal_'+prodId+'_text > span').html(msg).show();
 	$('input.prodQty_'+prodId).val(qty);
 }
 
@@ -658,7 +661,9 @@ core.catalog.cartProdInvalid=function(prodId,errorType,errorData){
 			msg = 'Only '+errorData+' are available';
 			break;
 	}
-	if(msg != '')
+	if(msg == '')
+		qtyAlert.hide();
+	else
 		qtyAlert.html('<small>'+msg+'</small>').show();
 }
 
