@@ -22,11 +22,6 @@ $hashUrl = $core->view[3]?'true':'false';
 
 <small style="position: relative; bottom: -1.6em;" class="pull-right hoverpointer" onclick="core.catalog.resetFilters();"><i class="icon-remove-sign"/>Remove Filters</small>
 <h2>Filter By:</h2>
-<?
-
-if (count($days) > 1)
-{
-?>
 <hr class="tight">
 
 <label>
@@ -36,6 +31,12 @@ if (count($days) > 1)
 
 <hr class="tight">
 <strong><input type="checkbox" class="filtercheck" disabled="disabled" checked="checked" style="display: none;" />Availability Date</strong>
+
+<?
+
+if (count($days) > 1)
+{
+?>
 
 <ul class="nav nav-list">
 <?php
