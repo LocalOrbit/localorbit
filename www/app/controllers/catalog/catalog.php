@@ -54,6 +54,12 @@ class core_controller_catalog extends core_controller
 		core::js('core.catalog.cartProdInvalid('.$product['prod_id'].',\''.$error_type.'\',\''.$error_data.'\');');
 	}
 	
+	function update_row_row_total($product,$qty,$amount)
+	{
+		core::log('writing js to update the row total for '.$product['prod_id']);
+		core::js('core.catalog.cartUpdateRowPrice('.$product['prod_id'].','.$qty.','.$amount.');');
+	}
+	
 	function new_update_item()
 	{
 		global $core;
@@ -154,12 +160,36 @@ class core_controller_catalog extends core_controller
 						$item['qty_ordered'] = $core->data['newQty'];
 						$item['row_total'] = $core->data['newQty'] * $amount;
 						$item->save();
+						$this->update_row_row_total($product, $core->data['newQty'],$item['row_total']);
 					}
 					else
 					{
-						$dd_hash[$item['dd_id']][1]--;
-						core::log('got back error type: '.$error_type);
-						$this->send_back_invalid_price($product,$error_type,$error_data);
+						# if there wasn't enough to fulfill the amount, downgrade the amount
+						if($error_type == 'insufficient_inventory')
+						{
+							list($valid2,$price_id2,$amount2,$error_type2,$error_data2) = $this->determine_best_price(
+								$product,
+								$error_data,
+								$catalog['prices'],
+								$order_delivery
+							);
+							
+							if($valid2)
+							{
+								$item['unit_price' ] = $amount;
+								$item['qty_ordered'] = $error_data;
+								$item['row_total'] = $error_data * $amount;
+								$item->save();
+								$this->update_row_row_total($product,$error_data,$item['row_total']);
+								$this->send_back_invalid_price($product,$error_type,$error_data);
+							}
+						}
+						else
+						{
+							$dd_hash[$item['dd_id']][1]--;
+							core::log('got back error type: '.$error_type);
+							$this->send_back_invalid_price($product,$error_type,$error_data);
+						}
 					}
 				}
 			}
@@ -191,7 +221,27 @@ class core_controller_catalog extends core_controller
 			# this will check to make sure there's actually a valid price
 			$product = $catalog['products'][$catalog['prods_by_id'][$core->data['prod_id']]];
 			list($valid,$price_id,$amount,$error_type,$error_data) = $this->determine_best_price($product,$core->data['newQty'],$catalog['prices'],$order_delivery);
-			core::log('got back error type: '.$error_type);
+			$valid2 = null;
+			
+			# if there wasn't enough to fulfill the amount, downgrade the amount
+			if($error_type == 'insufficient_inventory')
+			{
+				list($valid2,$price_id2,$amount2,$error_type2,$error_data2) = $this->determine_best_price(
+					$product,
+					$error_data,
+					$catalog['prices'],
+					$order_delivery
+				);
+				
+				if($valid2)
+				{
+					$valid = $valid2;
+					$price_id = $price_id2;
+					$amount = $amount2;
+					$core->data['newQty'] = $error_data;
+				}
+			}
+		
 			#core::log(print_r($product,true));
 			if($valid)
 			{
@@ -223,6 +273,12 @@ class core_controller_catalog extends core_controller
 				$new_item['final_cat_id'] = $product['final_cat_id'];
 				$new_item->save();
 				
+				$this->update_row_row_total($product,$core->data['newQty'],$new_item['row_total']);
+				
+				if(is_null($valid2))
+				{
+					$this->send_back_invalid_price($product,$error_type,$error_data);
+				}
 			}
 			else
 			{
