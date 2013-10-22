@@ -127,6 +127,8 @@ class core_controller_catalog extends core_controller
 				{
 					$item->delete();
 					$dd_hash[$item['dd_id']][1]--;
+					$this->update_row_row_total($item,0,0);
+					$this->clear_row_error($item);
 				}
 				else
 				{
