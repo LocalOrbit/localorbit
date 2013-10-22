@@ -606,6 +606,8 @@ core.catalog.updateRowContinue=function(prodId, newQty, dd_id, failure) {
 }
 
 core.catalog.updateRow=function(prodId,newQty,dd){
+	var newQty = parseFloat(newQty);
+	if(isNaN(newQty)) newQty = 0;
 	if(core.catalog.qtySendHandle !== 0){
 		window.clearTimeout(core.catalog.qtySendHandle);
 	}
@@ -614,7 +616,9 @@ core.catalog.updateRow=function(prodId,newQty,dd){
 
 core.catalog.sendQty=function(prodId,newQty,dd){
 	var newQty = new String(newQty).replace(/[^0-9\.]+/g, '');
-	var newQty = parseInt(newQty);
+	var newQty = parseFloat(newQty);
+	if(isNaN(newQty)) newQty = 0;
+	core.log('sending qty '+newQty);
 	//alert(parseInt(dd) + ' / '+  parseInt($('#prodDd_' + prodId).val()) + ' / ' + parseInt(core.catalog.filters.dd));
 
 	
