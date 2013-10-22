@@ -93,8 +93,11 @@ $(function()
 			<div style="max-height: 300px; overflow:hidden;overflow-y: auto;padding:0px;margin:0px;" class="row">
 				<div class="span4" style="padding:0px;margin:0px;">
 					<?
+					
+				$total = 0;
 				foreach ($item_hash as $prod_id => $item) {
 					$cart_count++;
+					$total += $item[0]['row_total'];
 					$prod = core::model('products')->load($item[0]['prod_id']);
 					?>
 					<div class="row">
@@ -122,7 +125,7 @@ $(function()
 						<a class="btn btn-primary btn-block" href="#!catalog-shop-">Shop Now</a>
 
 					<?}else{?>
-					<span class="pull-left" style="padding-top: 8px;"><strong>Subtotal: <?=core_format::price($cart['grand_total'])?></strong></span>
+					<span class="pull-left" style="padding-top: 8px;"><strong>Subtotal: <?=core_format::price($total)?></strong></span>
 					<span class="pull-right">
 						<a class="btn btn-info btn-small" href="#!catalog-shop--cart-yes">Modify your cart</a>
 						<a class="btn btn-primary btn-small" href="#!catalog-checkout">Check out</a>
@@ -132,7 +135,7 @@ $(function()
 					<a class="btn btn-block btn-warning" href="#!catalog-your_cart">
 						<span class="viewCart pull-left">View Cart</span>
 						&nbsp;
-						<span class="pull-right">Subtotal: <?=core_format::price($cart['grand_total'])?></span>
+						<span class="pull-right">Subtotal: <?=core_format::price($total)?></span>
 					</a>
 					-->
 				</span>
