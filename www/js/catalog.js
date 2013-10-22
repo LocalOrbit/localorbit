@@ -635,9 +635,11 @@ core.catalog.cartUpdateRowPrice=function(prodId,qty,newRowTotal){
 		var msg = '<span class="value">'+core.format.price(newRowTotal)+'</span> <i class="icon-close"/>'
 	}
 	$('.prodTotal_'+prodId+'_text').html(msg).show();
-	
-	core.catalog.updateTotalViews();
-	//alert('setting row total to '+newRowTotal);
+	$('input.prodQty_'+prodId).val(qty);
+}
+
+core.catalog.cartClearRowError=function(prodId){
+	$('.prod_' +prodId+ '_min_qty').hide();
 }
 
 core.catalog.cartProdInvalid=function(prodId,errorType,errorData){
