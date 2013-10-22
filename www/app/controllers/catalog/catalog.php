@@ -243,6 +243,7 @@ class core_controller_catalog extends core_controller
 			# if there wasn't enough to fulfill the amount, downgrade the amount
 			if($error_type == 'insufficient_inventory')
 			{
+				$this->send_back_invalid_price($product,$error_type,$error_data);
 				list($valid2,$price_id2,$amount2,$error_type2,$error_data2) = $this->determine_best_price(
 					$product,
 					$error_data,
@@ -292,10 +293,7 @@ class core_controller_catalog extends core_controller
 				
 				$this->update_row_row_total($product,$core->data['newQty'],$new_item['row_total']);
 				
-				if(is_null($valid2))
-				{
-					$this->send_back_invalid_price($product,$error_type,$error_data);
-				}
+				
 			}
 			else
 			{
