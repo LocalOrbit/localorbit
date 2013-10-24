@@ -88,6 +88,7 @@ class core_controller_catalog extends core_controller
 		
 		core::log('started call to new_update_item: '.print_r($core->data,true));
 		$core->data['newQty'] = floatval($core->data['newQty']);
+		$show_dropdown = true;
 		
 		# first, load up the catalog and the cart.
 		$catalog = core::model('products')->get_final_catalog(null,null,null,false,false);
@@ -100,6 +101,7 @@ class core_controller_catalog extends core_controller
 		# At the same time, check if there's a delivery with the same dd_id
 		$existing = false;	
 		$dd_hash = array();
+		
 		
 		# 1) first, get a list of all the existing deliveries in the order
 		foreach($cart->items as $item)
@@ -204,6 +206,9 @@ class core_controller_catalog extends core_controller
 					}
 				}
 			}
+		
+			# we don't want to show the dropdown if there's an item in the cart
+			$show_dropdown	= false;
 		}
 		
 		# done looping through existing products
@@ -315,6 +320,11 @@ class core_controller_catalog extends core_controller
 			}
 		}
 		
+		# reload the updated cart and write it to javascript, call the popup if necessary
+		$cart->load_items();
+		core::js('core.cart = '.$cart->write_js(true).';');
+		core::js("core.catalog.showInitialDropdown();");
+
 		# done!
 	}
 	
