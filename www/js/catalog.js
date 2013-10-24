@@ -541,7 +541,18 @@ core.catalog.updateRow=function(prodId,newQty,dd){
 	if(core.catalog.qtySendHandle !== 0){
 		window.clearTimeout(core.catalog.qtySendHandle);
 	}
-	core.catalog.qtySendHandle = window.setTimeout(Function('','core.catalog.sendQty('+prodId+','+newQty+','+dd+');'),300);
+	
+	// by default, you can't submit 0, unless this item is already in the cart
+	var allowSubmit = (newQty > 0);
+	if(!allowSubmit){
+		for(var i=0;i<core.cart.items.length;i++){
+			if(core.cart.items[i].prod_id == prodId && core.cart.items[i].qty_ordered > 0){
+				allowSubmit = true;
+			}
+		}
+	}
+	if(allowSubmit)
+		core.catalog.qtySendHandle = window.setTimeout(Function('','core.catalog.sendQty('+prodId+','+newQty+','+dd+');'),300);
 }
 
 core.catalog.sendQty=function(prodId,newQty,dd){
