@@ -104,7 +104,8 @@ The math:
 				'avg_lo_fee'=>$this->get_metric_data_avg_lo_fee($ranges),
 				'avg_lo_fee_percent'=>$this->get_metric_data_avg_lo_fee_percent($ranges),
 				'lo_fees'=>$this->get_metric_data_lo_fees($ranges),
-			)
+				'service_fees'=>$this->get_metric_data_service_fees($ranges),
+			),
 		);
 		
 		# these are special because they require previous data to work with
@@ -236,6 +237,7 @@ The math:
 			$data['financials']['avg_items'][$i]     = round($data['financials']['avg_items'][$i],1);
 			$data['financials']['avg_lo_fee'][$i]     = core_format::price($data['financials']['avg_lo_fee'][$i],false);
 			$data['financials']['avg_lo_fee_percent'][$i]     =  round($data['financials']['avg_lo_fee_percent'][$i],1).'%';
+			$data['financials']['service_fees'][$i]     = core_format::price($data['financials']['service_fees'][$i],false);
 			
 			# format infinities and negativs nicely
 			$data['financials']['sales_growth'][$i] = $this->format_percents($data['financials']['sales_growth'][$i],($core->data['output_as'] == 'html'));
@@ -697,6 +699,23 @@ The math:
 			$data[] = $nbr;
 		}
 		
+		return $data;
+	}
+	
+	function get_metric_data_service_fees($ranges)
+	{
+		$data = array();
+		foreach($ranges as $range)
+		{
+			$sql = '
+				select sum(vp.amount) as amount
+				from v_payments vp
+				where vp.payable_type =\'service fee\'
+				and vp.payment_date >= '.$range[0].'
+				and vp.payment_date < '.$range[1].'
+			';
+			$data[] = core_db::col($sql,'amount');
+		}
 		return $data;
 	}
 }
