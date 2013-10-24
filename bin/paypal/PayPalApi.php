@@ -48,6 +48,7 @@ class PayPalApi {
 		$button.= '<label class="radio">';
 			$button.= '<input id="payment_method_paypal" name="payment_method" type="radio" value="paypal" onclick="'.$js.'"/>';
 			$button.= 'Pay by Credit Card';
+			$button .= '<div class="alert alert-warning"><strong>Note:</strong> If you would like to checkout without creating a paypal account, click the link in the popup that says "Check out as a guest"</div>';
 		$button.= '</label>';
 		return $button;
 	}
