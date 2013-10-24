@@ -618,10 +618,10 @@ core.catalog.updateRow=function(prodId,newQty,dd){
 core.catalog.sendQty=function(prodId,newQty,dd){
 	var newQty = new String(newQty).replace(/[^0-9\.]+/g, '');
 	var newQty = parseFloat(newQty);
+	var ddText = $('#filter_dd_'+dd).html();
+	$('#prod_dd_display_'+prodId).html(ddText);
 	if(isNaN(newQty)) newQty = 0;
-	core.log('sending qty '+newQty);
-	//alert(parseInt(dd) + ' / '+  parseInt($('#prodDd_' + prodId).val()) + ' / ' + parseInt(core.catalog.filters.dd));
-
+	
 	
 	dd = parseInt(dd);
 	if(isNaN(dd) || dd==0)
