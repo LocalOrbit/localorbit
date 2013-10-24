@@ -84,6 +84,9 @@ function sbpt_formatter($data)
 		case 'purchaseorder':
 			$data['payment_method'] = 'Purchase Order';
 			break;
+		case 'ach':
+			$data['payment_method'] = 'ACH';
+			break;
 		default:
 			$data['payment_method'] = 'Unknown';
 			break;
@@ -120,7 +123,7 @@ $items->filter_html .= core_datatable_filter::make_select(
 	'sales_by_payment_type',
 	'sbptpayment_method',
 	$items->filter_states['sales_by_payment_type__filter__sbptpayment_method'],
-	array('paypal'=>'Paypal','purchaseorder'=>'Purchase Order'),
+	array('paypal'=>'Paypal','purchaseorder'=>'Purchase Order','ach'=>'ACH'),
 	null,
 	null,
 	'Show all payment types',
