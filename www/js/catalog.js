@@ -535,77 +535,6 @@ core.catalog.doWeeklySpecial=function(prodId){
 	$('#weekly_special').fadeOut('fast');
 }
 
-core.catalog.updateRowContinue=function(prodId, newQty, dd_id, failure) {
-	//alert('ok, all set to update the ui: '+prodId+'/'+newQty+'/'+dd_id);
-
-	// loop through all the products
-	var priceId = -1;
-	var lowestMin = 100000000000000;
-	var rowTotal = 100000000000000;
-
-	//core.alertHash(core.prices[prodId])
-	for (var i = 0; i < core.prices[prodId].length; i++){
-
-
-		// reformat the min qty to zero if it came across as an object (nulls can do this)
-		if(typeof(core.prices[prodId][i]['min_qty']) == 'object')
-			core.prices[prodId][i]['min_qty'] = 0;
-
-		// reformat the price if necessary
-		core.prices[prodId][i]['price'] =parseFloat(new String(core.prices[prodId][i]['price']).replace('$','').replace(' ',''));
-
-		// if this is a valid price,
-		if(newQty >= parseFloat(core.prices[prodId][i]['min_qty']) &&  core.prices[prodId][i]['price'] > 0){
-			//alert('examining '+core.prices[prodId][i]['price_id']+': '+core.prices[prodId][i]['price']);
-			// then calculate the row total based on this price
-			var possibleRow = parseFloat(core.prices[prodId][i]['price']) * newQty;
-
-			// if this is lower than our previous best, use this price
-			if(possibleRow < rowTotal){
-				rowTotal = possibleRow;
-				priceId = core.prices[prodId][i]['price_id'];
-			}
-		}
-
-
-		if(core.prices[prodId][i]['min_qty'] > 0 && core.prices[prodId][i]['min_qty'] < lowestMin){
-			lowestMin = core.prices[prodId][i]['min_qty'];
-		}
-	}
-
-	var qtyAlert;
-
-	if (!failure) {
-		$('.prod_' +prodId+ '_min_qty:visible').remove();
-		qtyAlert = $('.prod_' +prodId+ '_min_qty:first').clone().appendTo($('#product_' + prodId + ' .alertContainer'));
-	}
-
-	// if we we found a valid price,
-	if(priceId > 0){
-		if (!failure) {
-			qtyAlert.hide();
-		}
-		//alert('lowest is: '+priceId+' / '+rowTotal);
-		//alert();
-		core.catalog.setQty(prodId,newQty,rowTotal);
-		$('#qtyBelowMin_'+prodId).html('<br />');
-		core.catalog.sendNewQtys();
-	}else{
-		//alert('here')
-		if(newQty > 0 && qtyAlert){
-			qtyAlert.find('small').text('You must order at least '+parseFloat(lowestMin))
-			qtyAlert.show();
-			//qtyAlert.alert();
-			//alert('You must order '+prodId+' at least '+parseFloat(lowestMin))
-			//$('#qtyBelowMin_'+prodId).html().show();
-		}
-		$('.prodTotal_'+prodId).val(0);
-		core.catalog.setQty(prodId,0,0);
-		core.catalog.sendNewQtys();
-	}
-	//core.alertHash(core.cart);
-}
-
 core.catalog.updateRow=function(prodId,newQty,dd){
 	var newQty = parseFloat(newQty);
 	if(isNaN(newQty)) newQty = 0;
@@ -630,6 +559,7 @@ core.catalog.sendQty=function(prodId,newQty,dd){
 		dd = parseInt(core.catalog.filters.dd);
 	core.log('dd_id after step 2: '+dd);
 	
+	$('#prodDd_' + prodId).val(dd);
 	var ddText = $('div.prod_dd_selector_'+prodId+' > ul > li.dd_'+dd+' > a').html();
 	$('#prod_dd_display_'+prodId).html(ddText);
 	
