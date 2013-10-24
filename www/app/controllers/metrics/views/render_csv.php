@@ -66,6 +66,7 @@ render_row('Average LO Fees %',$data['financials']['avg_lo_fee_percent'],1);
 render_row('Sales % Growth',$data['financials']['sales_growth'],1);
 render_row('Local Orbit Fees',$data['financials']['lo_fees']);
 render_row('Fee % Growth',$data['financials']['fee_growth'],1);
+render_row('Service Fees',$data['financials']['service_fees'],1);
 echo($this->get_financials_note());
 core::log('render complete');
 core::deinit(false);
