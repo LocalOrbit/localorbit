@@ -616,16 +616,19 @@ core.catalog.updateRow=function(prodId,newQty,dd){
 }
 
 core.catalog.sendQty=function(prodId,newQty,dd){
+	
 	var newQty = new String(newQty).replace(/[^0-9\.]+/g, '');
 	var newQty = parseFloat(newQty);
 	if(isNaN(newQty)) newQty = 0;
 	
-	
+	core.log('dd_id passed: '+dd);
 	dd = parseInt(dd);
 	if(isNaN(dd) || dd==0)
 		dd = parseInt($('#prodDd_' + prodId).val());
+	core.log('dd_id after step 1: '+dd);
 	if(isNaN(dd) || dd==0)
 		dd = parseInt(core.catalog.filters.dd);
+	core.log('dd_id after step 2: '+dd);
 	
 	var ddText = $('div.prod_dd_selector_'+prodId+' > ul > li.dd_'+dd+' > a').html();
 	$('#prod_dd_display_'+prodId).html(ddText);
