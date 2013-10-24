@@ -84,6 +84,7 @@ function render_ranges($breakdown_by,$ranges)
 	render_row('Sales % Growth',$data['financials']['sales_growth'],1);
 	render_row('Local Orbit Fees',$data['financials']['lo_fees']);
 	render_row('Fee % Growth',$data['financials']['fee_growth'],1);
+	render_row('Service Fees',$data['financials']['service_fees'],1);
 	?>
 </table>
 <div class="error"><?=$this->get_financials_note()?></div>
