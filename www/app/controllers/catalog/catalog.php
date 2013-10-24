@@ -388,6 +388,13 @@ class core_controller_catalog extends core_controller
 		core::deinit();
 	}
 	
+	function reset_delivery_selector()
+	{
+		global $core;
+		$core->session['dd_id'] = 0;
+		echo('done');
+	}
+	
 	
 	function update_fees($return_data='no',$cart = null)
 	{
