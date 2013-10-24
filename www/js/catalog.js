@@ -11,7 +11,8 @@ core.catalog={
 	},
 	popupOn:0,
 	popupType:0,
-	qtySendHandle:0
+	qtySendHandle:0,
+	dropdownShown:false
 };
 
 if(!core.cart)
@@ -632,6 +633,16 @@ core.catalog.sendQty=function(prodId,newQty,dd){
 	core.doRequest('/catalog/new_update_item', '&prod_id=' + prodId +'&newQty=' + newQty +'&dd_id='+dd);	
 }
 
+core.catalog.showInitialDropdown=function(){
+	var link = $('#yourCartDropdown');
+	var dropdown = $('div.dropdown-menu',link);
+	if(!(dropdown.is(":visible")) && core.cart.items.length == 1 && !core.catalog.dropdownShown)
+	{
+		core.catalog.dropdownShown = true;
+		$('#yourCartDropDown').dropdown('toggle');
+	}
+}
+
 core.catalog.cartUpdateRowPrice=function(prodId,qty,newRowTotal){
 	if(parseFloat(newRowTotal)  == 0){
 		var msg = ''
@@ -643,6 +654,7 @@ core.catalog.cartUpdateRowPrice=function(prodId,qty,newRowTotal){
 	else
 		$('.prodTotal_'+prodId+'_text > span').html(msg).parent().show();
 	$('input.prodQty_'+prodId).val(qty);
+	
 }
 
 core.catalog.cartClearRowError=function(prodId){
