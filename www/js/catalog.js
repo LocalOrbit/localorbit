@@ -542,17 +542,8 @@ core.catalog.updateRow=function(prodId,newQty,dd){
 		window.clearTimeout(core.catalog.qtySendHandle);
 	}
 	
-	// by default, you can't submit 0, unless this item is already in the cart
-	var allowSubmit = (newQty > 0);
-	if(!allowSubmit){
-		for(var i=0;i<core.cart.items.length;i++){
-			if(core.cart.items[i].prod_id == prodId && core.cart.items[i].qty_ordered > 0){
-				allowSubmit = true;
-			}
-		}
-	}
-	if(allowSubmit)
-		core.catalog.qtySendHandle = window.setTimeout(Function('','core.catalog.sendQty('+prodId+','+newQty+','+dd+');'),300);
+	
+	core.catalog.qtySendHandle = window.setTimeout(Function('','core.catalog.sendQty('+prodId+','+newQty+','+dd+');'),300);
 }
 
 core.catalog.sendQty=function(prodId,newQty,dd){
@@ -574,8 +565,19 @@ core.catalog.sendQty=function(prodId,newQty,dd){
 	var ddText = $('div.prod_dd_selector_'+prodId+' > ul > li.dd_'+dd+' > a').html();
 	$('#prod_dd_display_'+prodId).html(ddText);
 	
-	$('.prod_' +prodId+ '_min_qty',$('#product_' + prodId + ' .alertContainer')).hide();
-	core.doRequest('/catalog/new_update_item', '&prod_id=' + prodId +'&newQty=' + newQty +'&dd_id='+dd);	
+	// by default, you can't submit 0, unless this item is already in the cart
+	var allowSubmit = (newQty > 0);
+	if(!allowSubmit){
+		for(var i=0;i<core.cart.items.length;i++){
+			if(core.cart.items[i].prod_id == prodId && core.cart.items[i].qty_ordered > 0){
+				allowSubmit = true;
+			}
+		}
+	}
+	if(allowSubmit){
+		$('.prod_' +prodId+ '_min_qty',$('#product_' + prodId + ' .alertContainer')).hide();
+		core.doRequest('/catalog/new_update_item', '&prod_id=' + prodId +'&newQty=' + newQty +'&dd_id='+dd);	
+	}
 }
 
 core.catalog.showInitialDropdown=function(){
