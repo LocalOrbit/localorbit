@@ -60,7 +60,7 @@ foreach($payables as $payable)
 		#$info = explode('|',$payable['payable_info']);
 		$values['payables'] .= '
 			<tr class="dt'.$counter.'">
-				<td class="dt">'.$paayble['lo3_order_nbr'].'</td>
+				<td class="dt">'.$payable['lo3_order_nbr'].'</td>
 				<td class="dt">'.$payable['product_name'].' ('.$payable['qty_ordered'].')</td>
 				<td class="dt">'.core_format::date($payable['order_date'],'short').'</td>
 			</tr>';
@@ -85,7 +85,7 @@ $values['payables'] .='</table>';
 
 $body  = $this->email_start();
 $body .= $this->handle_source($core->i18n['email:payments:new_invoice_body'],$values);
-$body .= $this->footer();
+$body .= $this->footer(null,$domain_id);
 $body .= $this->email_end();
 
 #core::log($body);
