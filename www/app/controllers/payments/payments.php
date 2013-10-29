@@ -84,6 +84,39 @@ class core_controller_payments extends core_controller
 		return $totals_queries;
 	}
 	
+	function parse_receivables_for_sending($receivable)
+	{
+		$payables = array();
+		$info = explode('$$',$receivable['payable_info']);
+		foreach($info as $line)
+		{
+			
+			$line = explode('|',$line);
+			$fields = array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date');
+			while(count($line) < count($fields))
+			{
+				$line[] = '';
+			}
+			$new_payable = array_combine($fields,$line);
+			
+			# for delivery fees, we need to look up the order date.
+			if($new_payable['payable_type'] == 'delivery fee')
+			{
+				
+				$order_id = explode('-',$new_payable['lo3_order_nbr']);
+				$order_id = intval($order_id[3]);
+				core::log('doing additional lookup on delivery fee for order '.$order_id);
+				$new_payable['order_date'] = core_db::col('
+					select UNIX_TIMESTAMP(order_date) as order_date
+					from lo_order
+					where lo_oid='.$order_id.'
+				','order_date');
+			}
+			
+			$payables[] = $new_payable;
+		}
+		return $payables;
+	}
 	
 	function do_send_invoices()
 	{
@@ -94,16 +127,8 @@ class core_controller_payments extends core_controller
 		$receivables = core::model('v_payables')->get_invoice_payables($ids,0);
 		foreach($receivables as $receivable)
 		{
-			#core::log('resending invoices '.print_r($receivable,true));
-			$payables = array();
-			$info = explode('$$',$receivable['payable_info']);
-			foreach($info as $line)
-			{
-			#	$line = format_payable_info($line);
-				$payables[] = array_combine(array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date'),explode('|',$line));
-			}
-			core::log('payables '.print_r($payables,true));
-			
+			$payables = $this->parse_receivables_for_sending($receivable);
+			core::log('sending payables: '.print_r($payables,true));
 			
 			$invoice = core::model('invoices');
 			$invoice['first_invoice_date'] = time();
@@ -144,16 +169,8 @@ class core_controller_payments extends core_controller
 		$receivables = core::model('v_payables')->get_invoice_payables($ids,1);
 		foreach($receivables as $receivable)
 		{
-			#core::log('resending invoices '.print_r($receivable,true));
-			$payables = array();
-			$info = explode('$$',$receivable['payable_info']);
-			foreach($info as $line)
-			{
-				#	$line = format_payable_info($line);
-				#core::log($line);
-				$payables[] = array_combine(array('lo3_order_nbr','payable_type','parent_obj_id','product_name','qty_ordered','seller','seller_org_id','order_date'),explode('|',$line));
-			}
-			core::log('payables '.print_r($payables,true));
+			$payables = $this->parse_receivables_for_sending($receivable);
+			
 			
 			
 			$invoice = core::model('invoices')->load($receivable['invoice_id']);
@@ -172,7 +189,9 @@ class core_controller_payments extends core_controller
 					and is_home=1
 				','domain_id'),
 				core_format::date($invoice['due_date'],'short')
-			);	
+			);
+			
+			
 		}
 		
 		core_datatable::js_reload('receivables');
