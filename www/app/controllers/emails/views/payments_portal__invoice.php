@@ -65,17 +65,16 @@ foreach($payables as $payable)
 				<td class="dt">'.core_format::date($payable['order_date'],'short').'</td>
 			</tr>';
 	}
-	if($payable['payable_type'] == 'delivery fee')
+	else if($payable['payable_type'] == 'delivery fee')
 	{
-		$info = explode('|',$payable['payable_info']);
 		$values['payables'] .= '
 			<tr class="dt'.$counter.'">
-				<td class="dt">'.$info[0].'</td>
+				<td class="dt">'.$payable['lo3_order_nbr'].'</td>
 				<td class="dt">Delivery Fee</td>
-				<td class="dt"></td>
-				<td class="dt">'.core_format::price($payable['amount']).'</td>
+				<td class="dt">'.core_format::date($payable['order_date'],'short').'</td>
 			</tr>';
 	}
+	
 	
 	$counter = (!$counter);
 }
