@@ -1,8 +1,8 @@
 #!/bin/bash
 cd /var/www/$1/www/img;
 
-for i in {1 .. $2}
+for (( c=1; c<=$2; c++ ))
 do
-   mkdir $i;
-   chmod 777 $i;
+   mkdir $c;
+   chmod 777 $c;
 done
