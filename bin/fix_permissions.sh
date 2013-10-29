@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 cd /var/www/$1/www/img;
 
 for i in {1..$2}
