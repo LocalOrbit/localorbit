@@ -136,7 +136,7 @@ class core_controller_emails extends core_controller
 		return '</div>';
 	}
 	
-	function footer($text=null)
+	function footer($text=null,$domain_id=null)
 	{
 		global $core;
 		if(is_null($text))
@@ -144,7 +144,7 @@ class core_controller_emails extends core_controller
 			$text = 'For customer service please reply to this email or call 734.545.8100 ';
 		}
 		
-		$img = image('logo-email');
+		$img = image('logo-email',$domain_id);
 		$foot  = '<div style="margin-top: 20px;color: '.$this->options['p4d'].';font-size: 90%;">'.$text.'</div>';
 		$foot .= '<div style="text-align: center;margin-top: 10px;">';
 			$foot .='<img src="http://'.$core->config['domain']['hostname'].$img.'" />';
