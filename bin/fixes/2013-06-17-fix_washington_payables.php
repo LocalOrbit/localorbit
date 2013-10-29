@@ -19,6 +19,7 @@ $config = array(
 	'lo-liid'=>0,
 	'start-lo-oid'=>6400,
 	'report-good'=>0,
+	'mode'=>'insert',
 );
 
 
@@ -76,7 +77,8 @@ foreach($items as $item)
 	echo("checking item ".$item['lo_liid']." in order ".$item['lo_oid'].": ".$item['product_name']."\n");
 	
 	$sql = '
-		select sum(amount) as amount,sum(amount_paid) as amount_paid
+		select sum(amount) as amount,sum(amount_paid) as amount_paid,
+		group_concat(\',\',payable_id as payable_ids
 		from v_payables 
 		where parent_obj_id='.$item['lo_liid'].'
 		and payable_type=\'seller order\'
@@ -110,13 +112,34 @@ foreach($items as $item)
 		}
 		else
 		{
-		
-			$sql = '
-				insert into payables 
-					(domain_id,from_org_id,to_org_id,payable_type,parent_obj_id,amount,creation_date)
-				values
-					('.$item['domain_id'].',1,'.$item['seller_org_id'].',\'seller order\','.$item['lo_liid'].','.($correct_amount - $current_amount).','.time().');
-			';
+			if($config['mode'] == 'insert')
+			{
+				$sql = '
+					insert into payables 
+						(domain_id,from_org_id,to_org_id,payable_type,parent_obj_id,amount,creation_date)
+					values
+						('.$item['domain_id'].',1,'.$item['seller_org_id'].',\'seller order\','.$item['lo_liid'].','.($correct_amount - $current_amount).','.time().');
+				';
+			
+			}
+			else if($config['mode'] == 'update')
+			{
+				$payable_ids = explode(',',$payments['payable_ids']);
+				if(count($payable_ids) > 1)
+				{
+					exit("serious problem updating this since there is more than one payable\n");
+				}
+				$sql = '
+					update payables
+						set amount = '.$correct_amount.'
+						where payable_id='.$payable_ids[0].'
+				';
+			}
+			else
+			{
+				exit("Unknown SQL Mode: ".$config['mode'].". must be either insert or update\n");
+			}
+			
 			if($config['report-sql'] == 1)	echo("\t".$sql."\n");
 			if($config['do-adjust'] == 1)
 			{
