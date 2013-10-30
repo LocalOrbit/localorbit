@@ -30,7 +30,11 @@
 		</strong>
 		<br />
 		<a href="mailTo:<?=$core->config['domain']['secondary_contact_email']?>">
+			<? if( strlen($core->config['domain']['secondary_contact_email']) > 25){?>
+			<small><?=$core->config['domain']['secondary_contact_email']?></small>	
+			<?}else{?>
 			<?=$core->config['domain']['secondary_contact_email']?>
+			<?}?>
 		</a>
 		<br />
 		<? if ($address !== false): ?>
