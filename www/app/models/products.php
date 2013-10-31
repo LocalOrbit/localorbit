@@ -111,15 +111,14 @@ class core_model_products extends core_model_base_products
 		return $col;
 	}
 
-	function get_catalog($domain_id=null,$org_id=-1,$check_inventory=true,$seller_id=null)
+	function get_catalog($domain_id=null,$org_id=null,$check_inventory=true,$seller_id=null)
 	{
 		global $core;
 
-		$org_id = intval($org_id);
 
 		if(is_null($domain_id))
 			$domain_id = intval($core->config['domain']['domain_id']);
-		if($org_id == -1 || is_null($org_id))
+		if(is_null($org_id))
 			$org_id = intval($core->session['org_id']);
 		$core->session['domains_by_orgtype_id'][2][] = 0;
 		$core->session['domains_by_orgtype_id'][3][] = 0;
