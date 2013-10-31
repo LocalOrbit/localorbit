@@ -52,26 +52,30 @@ $addresses = $core->view[6];
 				$this_dd_id = array_keys($day);
 				$this_dd_id = $this_dd_id[0];
 				
-				# if there's no selected key, use this one
-				if (!isset($selected_dd_key)) {
-					$selected_dd_key = $key;
-					$selected_dd_id  = $this_dd_id;
-				}
-				
-				# override if you've selected this key from the shopping filters
-				if($core->session['dd_id'] == $this_dd_id && intval($dd_id) == 0)
+				if($prod['inventory_by_dd'][$this_dd_id] > 0)
 				{
-					$selected_dd_key = $key;
-					$selected_dd_id  = $this_dd_id;
-				}
-				
-				
-				# do a final override if you've already added this product to your
-				# cart for this delivery day
-				if($dd_id == $this_dd_id)
-				{
-					$selected_dd_key = $key;
-					$selected_dd_id  = $this_dd_id;
+					
+					# if there's no selected key, use this one
+					if (!isset($selected_dd_key)) {
+						$selected_dd_key = $key;
+						$selected_dd_id  = $this_dd_id;
+					}
+					
+					# override if you've selected this key from the shopping filters
+					if($core->session['dd_id'] == $this_dd_id && intval($dd_id) == 0)
+					{
+						$selected_dd_key = $key;
+						$selected_dd_id  = $this_dd_id;
+					}
+					
+					
+					# do a final override if you've already added this product to your
+					# cart for this delivery day
+					if($dd_id == $this_dd_id)
+					{
+						$selected_dd_key = $key;
+						$selected_dd_id  = $this_dd_id;
+					}
 				}
 				
 			}
@@ -99,20 +103,30 @@ $addresses = $core->view[6];
 				<input class="prodDd" type="hidden" name="prodDd_<?=$prod['prod_id']?>" id="prodDd_<?=$prod['prod_id']?>" value="<?=$selected_dd_id?>"/>
 				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 			<?
+			
+			if($prod['prod_id'] == 4818)
+			{
+				#core::log(print_r($prod['inventory_by_dd'],true));
+				#exit();
+			}
 			foreach($validDays as $key => $day)
 			{
 				if (count(array_intersect($dd_ids, array_keys($day))) > 0) {
 					$this_dd_id = array_keys($day);
 					$this_dd_id = $this_dd_id[0];
-					list($type, $time,$deliv_address_id,$pickup_address_id) = explode('-', $key);
-					$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
-					$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
-					?>
-					<li class="filter dd prod_dd dd_<?=$this_dd_id?> proddd_<?=$prod['prod_id']?>" id="filter_dd_<?=$this_dd_id?>"><a href="<?=($hashUrl?'#!catalog-shop#dd='.$dd_ids_id:'#')?>" onclick="core.catalog.updateRow(<?=$prod['prod_id']?>,$('#prodQty_<?=$prod['prod_id']?>').val(),<?=$this_dd_id?>);return false;">
-					<?=$type?> <?=core_format::date($time, 'shorter-weekday',true)?>
-					<br /><?=$final_address?></a>
-					</li>
+					
+					if($prod['inventory_by_dd'][$this_dd_id] > 0)
+					{
+						list($type, $time,$deliv_address_id,$pickup_address_id) = explode('-', $key);
+						$final_address = ($deliv_address_id == 0)?$deliv_address_id:$pickup_address_id;
+						$final_address = ($final_address == 0)?'directly to you':' at ' .$addresses[$final_address][0]['formatted_address'];
+						?>
+						<li class="filter dd prod_dd dd_<?=$this_dd_id?> proddd_<?=$prod['prod_id']?>" id="filter_dd_<?=$this_dd_id?>"><a href="<?=($hashUrl?'#!catalog-shop#dd='.$dd_ids_id:'#')?>" onclick="core.catalog.updateRow(<?=$prod['prod_id']?>,$('#prodQty_<?=$prod['prod_id']?>').val(),<?=$this_dd_id?>);return false;">
+						<?=$type?> <?=core_format::date($time, 'shorter-weekday',true)?>
+						<br /><?=$final_address?></a>
+						</li>
 					<?
+					}
 				}
 			}
 			?>
