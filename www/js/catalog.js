@@ -403,15 +403,9 @@ core.catalog.updateListing=function(noHideSpecial){
 
 core.catalog.matchesDeliveryDay=function(deliveryDays, product) {
 	var a = new String(deliveryDays).split('_').sort();
-	var b = product.dd_ids.split(',').sort();
-	while( a.length > 0 && b.length > 0 )
-	{
-		if      (a[0] < b[0] ){ a.shift(); }
-		else if (a[0] > b[0] ){ b.shift(); }
-		else /* they're equal */
-		{
-		  return true;
-		}
+	for(var dd_id in product.inventory_by_dd){
+		if(dd_id == a[0] && product.inventory_by_dd[dd_id] > 0)
+			return true;
 	}
 	return false;
 }
