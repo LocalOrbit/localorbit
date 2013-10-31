@@ -321,6 +321,26 @@ if($_SERVER['SERVER_ENV'] == 'jvavul') {
 	$core->config['hostname_prefix']  = $core->config['stage'];
 }
 
+if(is_dir("/Users")) {
+	$core->config['stage'] = 'dev';
+	$core->config['default_hostname'] = 'dev.localorb.it';
+	$core->config['session_domain']   = '.localorb.it';
+	$core->config['session_name']    .= 'dev';
+	$core->config['db']['username']   = 'root';
+	$core->config['db']['database']   = 'localorb_www_dev';
+	$core->config['db']['password']   = '';
+	$core->config['db']['hostname']   = 'localhost';
+	
+	$core->paths['logs'] = '/tmp';
+	$core->config['payments']['paypal'] = array(
+		'password'=>'1331153423',
+		'username'=>'test_1331153383_biz_api1.localorb.it',
+		'signature'=>'AFYqE2DluOQPGVmQcxxRIFQ289lfAeR95YuTxuE7wJSX68MHHvPRQIr.',
+		'url'=>'https://api-3t.sandbox.paypal.com/nvp',
+	);
+	$core->config['hostname_prefix']  = $core->config['stage'];
+}
+
 #echo('<pre>');
 #print_r($core->config);
 #exit();
