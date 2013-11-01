@@ -33,48 +33,55 @@ $item_html = '
 $counter = false;
 $cur_seller = '';
 $is_first = true;
-foreach($values['items'] as $item)
+
+$sql = '
+	select loi.qty_ordered,loi.product_name,loi.qty_ordered,
+	loi.unit_plural,loi.unit_price,
+	loi.row_total,lod.delivery_start_time,lod.delivery_end_time
+	from lo_order_line_item loi
+	inner join lo_order_deliveries lod on (lod.lodeliv_id=loi.lodeliv_id)
+	where loi.lo_foid='.$values['lo_foid'].'
+	
+	order by lod.delivery_start_time
+';
+$items = new core_collection($sql);
+$cur_deliv_time = 0;
+
+foreach($items as $item)
 {
-	if($item['seller_org_id'] == $values['org_id'])
+	if($cur_deliv_time != $item['delivery_start_time'])
 	{
-		if($cur_seller != $item['seller_name'])
-		{
-			$cur_seller = $item['seller_name'];
-			$item_html .= '
-				<tr>
-					<th class="dt">Item</th>
-			';
-			
-			if($is_first)
-			{
-				$item_html .= '
-					<th class="dt">Quantity</th>
-					<th class="dt">Unit Price</th>
-					<th class="dt">Subtotal</th>
-				';
-			}
-			else
-			{
-				$item_html .= '
-					<th class="dt" colspan="3">&nbsp;</th>
-				';
-			}
+		if($cur_deliv_time != 0)
+			$item_html .= '</table><br />';
 		
-			$item_html .= '</tr>';
-			
-			$is_first = false;
-		}
+		$cur_deliv_time = $item['delivery_start_time'];
+		
+		$item_html .= '<b>Items for delivery between '.core_format::date($item['delivery_start_time']).' '.core_format::date($item['delivery_end_time']).' '.$core->session['tz_name'].'</b>
+		<table width="100%">
+			<col width="40%" />
+			<col width="20%" />
+			<col width="20%" />
+			<col width="20%" />
+		';
 		$item_html .= '
-			<tr class="dt'.$counter.'">
-				<td class="dt">'.$item['product_name'].'</td>
-				<td class="dt">'.$item['qty_ordered'].' '.$item['unit_plural'].'</td>
-				<td class="dt">'.core_format::price($item['unit_price']).'</td>
-				<td class="dt">'.core_format::price($item['row_total']).'</td>
+			<tr>
+				<th class="dt">Item</th>
+				<th class="dt">Quantity</th>
+				<th class="dt">Unit Price</th>
+				<th class="dt">Subtotal</th>
 			</tr>
 		';
-		$counter = (!$counter);
-
 	}
+
+	$item_html .= '
+		<tr class="dt'.$counter.'">
+			<td class="dt">'.$item['product_name'].'</td>
+			<td class="dt">'.$item['qty_ordered'].' '.$item['unit_plural'].'</td>
+			<td class="dt">'.core_format::price($item['unit_price']).'</td>
+			<td class="dt">'.core_format::price($item['row_total']).'</td>
+		</tr>
+	';
+	$counter = (!$counter);
 }
 
 $item_html .= '</table>';
