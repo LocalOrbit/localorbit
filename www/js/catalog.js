@@ -469,6 +469,7 @@ core.catalog.initCatalog=function(cartOnly,ddIdFilter){
 	}
 	var updateListing = false;
 	if(!isNaN(core.afterCatalogInitCat1Filter)){
+		core.log('autosetting cat1 filter');
 		core.catalog.setFilter('cat1',core.afterCatalogInitCat1Filter,true,true,true);
 		core.afterCatalogInitCat1Filter = null;
 		updateListing = true;
