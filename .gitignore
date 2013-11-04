@@ -1,0 +1,42 @@
+
+# /
+/.buildpath
+/.project
+/.settings
+
+# /www/
+/www/t.php
+/www/test.php
+/www/test2.php
+/www/test3.php
+/www/test4.php
+
+# /www/img/
+/www/img/26
+
+# /www/img/newsletters/
+/www/img/newsletters/*.jpg
+/www/img/newsletters/*.gif
+/www/img/newsletters/*.png
+/www/img/newsletters/*.pdf
+
+# /www/img/organizations/
+/www/img/organizations/*.jpg
+/www/img/organizations/*.png
+/www/img/organizations/*.gif
+
+# /www/img/organizations/cached/
+/www/img/organizations/cached/*.png
+/www/img/organizations/cached/*.gif
+/www/img/organizations/cached/*.jpg
+
+# /www/img/products/cache/
+/www/img/products/cache/*.jpg
+
+# /www/img/products/raws/
+/www/img/products/raws/*.dat
+
+# /www/img/weeklyspec/
+/www/img/weeklyspec/*.jpg
+/www/img/weeklyspec/*.gif
+/www/img/weeklyspec/*.png
