@@ -24,6 +24,10 @@ $left_url = 'app.php#!catalog-shop-';
 	{
 		$left_url .= '-cart-yes';
 	}
+	if(is_numeric($core->data['cat1']))
+	{
+		$left_url .= '-cat1-'.intval($core->data['cat1']);
+	}
 
 
 	#core::ensure_navstate(array('left'=>'left_shop'));
@@ -190,8 +194,8 @@ $left_url = 'app.php#!catalog-shop-';
 	$js = '';
 	##if($core->data['cart'] == 'yes')
 	#$js .= 'core.afterCatalogInitCartFilter=\'cart\';';
-	#if(is_numeric(trim($core->data['cat1'])))
-	#	$js .= 'core.afterCatalogInitCat1Filter='.intval(trim($core->data['cat1']));
+	if(is_numeric(trim($core->data['cat1'])))
+		$js .= 'core.afterCatalogInitCat1Filter='.intval(trim($core->data['cat1'])).';';
 		
 	#	$js .= 'core.catalog.setFilter(\'cat1\','.intval(trim($core->data['cat1'])).');';
 		
