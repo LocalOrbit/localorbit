@@ -16,13 +16,11 @@ $org = core::model('organizations')->join_default_billing()->load($org_id);
 
 # get the list of items in this set of deliveries
 $items = core::model('lo_order_deliveries')
-		->get_items_for_delivery(explode(' ',$core->data['lodeliv_id']),$org_id,$mm_grouping);
+		->get_items_for_delivery(explode(' ',$core->data['lodeliv_id']),$org_id,true);
 		
 
-if($mm_grouping)
-	$items = $items->group('concat_ws(\'-\',lo_order_deliveries.deliv_address_id,lo_order_deliveries.pickup_address_id)')->to_hash('deliv_key_hash');
-else
-	$items = $items->group('lo_order_deliveries.deliv_address_id')->to_hash('deliv_key_hash');
+
+$items = $items->group('concat_ws(\'-\',lo_order_deliveries.deliv_address_id,lo_order_deliveries.pickup_address_id)')->to_hash('deliv_key_hash');
 
 #echo('<pre>');
 #print_r($items);
@@ -92,7 +90,14 @@ core::log('this cycle is still open: '.((($core->data['start_time'] - ($item_lis
 	Ordering has not yet closed for this delivery
 
 	<?}
-	$this->template_postheader($buyer,$core->config['delivery_tools_buttons'],$addr_seller);
+	$this->template_postheader($buyer,$core->config['delivery_tools_buttons'],$addr_seller,array(
+		'address_id'=>$item_list[0]['pickup_address_id'],
+		'address'=>$item_list[0]['pickup_address'],
+		'city'=>$item_list[0]['pickup_city'],
+		'postal_code'=>$item_list[0]['pickup_postal_code'],
+		'code'=>$item_list[0]['pickup_state'],
+		'telephone'=>$item_list[0]['pickup_telephone'],
+	));
 	$core->config['delivery_tools_buttons'] = false;
 	?>
 </div>
