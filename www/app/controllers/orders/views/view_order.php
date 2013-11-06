@@ -130,7 +130,7 @@ if (
 Payment is due in <?=$days?> days.<br/>
 <? }
 
-$dd_id = 0;
+$dd_id = null;
 
 foreach($order->items as $item)
 {
@@ -142,17 +142,17 @@ foreach($order->items as $item)
 
 	$item['row_total'] = $final_qty * $item['unit_price'];
 	
-	$this_dd = $item['dd_id'];
-
-	if($dd_id != $this_dd)
+	$this_dd = intval($item['dd_id']);
+	
+	if($dd_id !== $this_dd)
 	{
-		if($dd_id > 0)
+		if(!is_null($dd_id))
 		{
 			echo('</tbody></table>');
 			echo('<input type="hidden" id="deliv_ids_'.$dd_id.'" name="deliv_ids_'.$dd_id.'" value="'.implode('-',$deliv_ids).'" />');			
 			$deliv_ids = array();
 		}
-
+		
 
 		$field = 'pickup';
 		if ($item['delivery_org_id'] == $order['org_id'])
@@ -257,6 +257,12 @@ foreach($order->items as $item)
 	</tbody>
 </table>
 <?
+
+$content = ob_get_clean();
+ob_start();
+core::log($content);
+echo($content);
+
 echo('<input type="hidden" id="deliv_ids_'.$dd_id.'" name="deliv_ids_'.$dd_id.'" value="'.implode('-',$deliv_ids).'" />');
 
 if((lo3::is_admin() || lo3::is_market()) && count($order->history) > 0){?>
