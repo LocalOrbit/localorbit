@@ -16,6 +16,11 @@ $config = array(
 	'report-sql'=>0,
 );
 
+core_db::query('
+	update payments 
+	set processing_status=\'confirmed\' 
+	where payment_method in (\'paypal\',\'check\',\'cash\');
+');
 
 
 array_shift($argv);
