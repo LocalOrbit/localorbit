@@ -143,7 +143,7 @@ class core_model_products extends core_model_base_products
 				where product_delivery_cross_sells.prod_id=p.prod_id 
 				and dd1.domain_id='.$domain_id.'
 			) as dd_ids,
-			(select sum(qty) from product_inventory inv where inv.prod_id=p.prod_id and (expires_on > now() or expires_on is null) and (good_from <= now() or good_from is null)) as inventory,
+			(select sum(qty) from product_inventory inv where inv.prod_id=p.prod_id and (UNIX_TIMESTAMP(expires_on) > '.$core->config['time'].' or expires_on is null) and (UNIX_TIMESTAMP(good_from) <= '.$core->config['time'].' or good_from is null)) as inventory,
 			a.address,a.city,a.postal_code,dcr.code,a.latitude,a.longitude
 			from products p
 			left join product_images pi on pi.prod_id=p.prod_id
@@ -178,7 +178,7 @@ class core_model_products extends core_model_base_products
 		if($check_inventory)
 		{
 			$sql .= '
-				and (select sum(qty) from product_inventory where product_inventory.prod_id=p.prod_id and (date(expires_on) > now() or expires_on is null) and (date(good_from) <= now() or good_from is null)) > 0
+				and (select sum(qty) from product_inventory where product_inventory.prod_id=p.prod_id and (UNIX_TIMESTAMP(expires_on) > '.$core->config['time'].' or expires_on is null) and (UNIX_TIMESTAMP(good_from) <= '.$core->config['time'].' or good_from is null)) > 0
 			';
 		}
 		
@@ -229,6 +229,11 @@ class core_model_products extends core_model_base_products
 	{
 		global $core;
 		
+		if(is_null($domain_id))
+		{
+			$domain_id = $core->config['domain']['domain_id'];
+		}
+		
 		# setup the structure that's going to be returned at the end of the function
 		$final = array(
 			'products'=>array(),
@@ -273,7 +278,7 @@ class core_model_products extends core_model_base_products
 		$deliveries    = core::model('delivery_days')
 			->collection()
 			->filter('delivery_days.dd_id','in',$dd_ids)
-			->filter('domain_id','=',$core->config['domain']['domain_id']);
+			->filter('domain_id','=',$domain_id);
 
 		foreach ($deliveries as $delivery)
 		{	
@@ -306,6 +311,8 @@ class core_model_products extends core_model_base_products
 		# in order to properly sort, we'll need the text for each category
 		$cat_ids   = $catalog->get_unique_values('category_ids',true,true);
 		$cats  = core::model('categories')->load_for_products($cat_ids);
+		
+		core::log('tmp deliveries: '.print_r($tmp_deliveries,true));
 		
 		$prods = $catalog->to_array();
 		for ($i = 0; $i < count($prods); $i++)
@@ -375,11 +382,11 @@ class core_model_products extends core_model_base_products
 					# only check if the delivery is valid for this market
 					# since a product may have other deliveries on cross-selling
 					# markets.
-					#print_r($inventory[$prods[$i]['prod_id']][$j]);
-					#echo('checking deliv: '.$prod_dds[$k]."\n\n");
-					#print_r($tmp_deliveries[$prod_dds[$k]][0]);
-					#echo('good from: '.$good_from."\n\n");
-					#echo('expires on: '.$expires_on."\n\n");
+					#core::log(print_r($inventory[$prods[$i]['prod_id']][$j],true));
+					#core::log('checking deliv: '.$prod_dds[$k]."\n\n");
+					#core::log(print_r($tmp_deliveries[$prod_dds[$k]][0],true));
+					#core::log('good from: '.$good_from."\n\n");
+					#core::log('expires on: '.$expires_on."\n\n");
 					if(isset($tmp_deliveries[$prod_dds[$k]]))
 					{
 						
@@ -420,6 +427,10 @@ class core_model_products extends core_model_base_products
 					$tmp_categories[] = $prods[$i]['cat_list'][1];
 				if(is_numeric($prods[$i]['cat_list'][2]))
 					$tmp_categories[] = $prods[$i]['cat_list'][2];
+			}
+			else
+			{
+				core::log('product not added because there are no valid dds');
 			}
 		}
 		
@@ -470,7 +481,7 @@ class core_model_products extends core_model_base_products
 		}
 		
 		# get the final list of prices
-		$final['prices'] = core::model('product_prices')->get_valid_prices($tmp_prices, $core->config['domain']['domain_id'],$core->session['org_id']);
+		$final['prices'] = core::model('product_prices')->get_valid_prices($tmp_prices, $domain_id,$core->session['org_id']);
 		
 		# define a sort function that sorts by our defined sort 
 		# column created in this function
