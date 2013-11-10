@@ -210,7 +210,63 @@ core.checkout.changeItemAmountInOrder=function(lo_oid,dd_id,prod_id,amount){
 	if(currentAmount < 0)
 		currentAmount = 0;
 	inputfield.val(currentAmount);
+	core.checkout.verifyValidAmount(lo_oid,dd_id,prod_id,currentAmount);
 }
+
+
+core.checkout.verifyValidAmount=function(lo_oid,dd_id,prod_id,amount){
+	core.log('verifying valid amount for '+prod_id+': '+amount);
+	
+	if(amount == 0){
+		core.checkout.hideInvError(lo_oid,dd_id,prod_id);
+		core.checkout.hidePriceError(lo_oid,dd_id,prod_id);
+		return true;
+	}else{
+	
+		var hasPrice  = false;
+		var hasInv = false;
+		var lowest = 9999999999999;
+		
+		// first, check to see if there's a price for this amount.
+		for(var key in core.checkout.allPrices['prod_'+prod_id]){
+			var priceData = new String(key).split('-');
+			if(lowest > priceData[1])
+				lowest = priceData[1];
+			if(priceData[1] <= amount)
+				hasPrice = true;
+		}
+		
+		// next, check to make sure there's enough inventory for this amount
+		if(amount <= core.checkout.allInventory['prod_'+prod_id])
+			hasInv = true;
+		
+		if(!hasPrice)
+			core.checkout.showPriceError(lo_oid,dd_id,prod_id,lowest);
+		else
+			core.checkout.hidePriceError(lo_oid,dd_id,prod_id);
+
+		if(!hasInv)
+			core.checkout.showInvError(lo_oid,dd_id,prod_id,core.checkout.allInventory['prod_'+prod_id]);
+		else
+			core.checkout.hideInvError(lo_oid,dd_id,prod_id);
+			
+		return (hasPrice && hasInv);
+	}
+}
+
+core.checkout.showPriceError=function(lo_oid,dd_id,prod_id,data){
+	$('#priceError-'+dd_id+'-'+prod_id).html('You must order at least '+data).show();
+}
+core.checkout.hidePriceError=function(lo_oid,dd_id,prod_id,data){
+	$('#priceError-'+dd_id+'-'+prod_id).hide();
+}
+core.checkout.showInvError=function(lo_oid,dd_id,prod_id,data){
+	$('#invError-'+dd_id+'-'+prod_id).html('Only '+data+' are available').show();
+}
+core.checkout.hideInvError=function(lo_oid,dd_id,prod_id,data){
+	$('#invError-'+dd_id+'-'+prod_id).hide();
+}
+
 
 core.checkout.saveNewItems=function(lo_oid,dd_id){
 	var data = {};
