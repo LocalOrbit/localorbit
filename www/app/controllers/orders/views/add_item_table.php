@@ -14,7 +14,7 @@ $existing_items = array_unique($existing_items);
 
 $core->session['org_id'] = $order['org_id'];
 $dd_id=$core->data['dd_id'];
-$catalog = $this->get_cached_catalog($order['domain_id'],$dd_id,$order['org_id']);
+$catalog = $this->get_cached_catalog($order['domain_id'],$dd_id,$order['org_id'],strftime($order['order_date']));
 
 
 $prod_ids = array();
@@ -28,6 +28,7 @@ core::log('catalog in session: '.print_r($catalog,true));
 core::log("found ".count($catalog['products'])." products");
 for($i=0;$i<count($catalog['products']);$i++)
 {
+	core::log('checking if '.$catalog['products'][$i]['prod_id'].' is valid: ');
 	if($catalog['products'][$i]['inventory_by_dd'][$core->data['dd_id']] > 0)
 	{
 		if(!in_array($catalog['products'][$i]['prod_id'],$existing_items))
@@ -35,7 +36,16 @@ for($i=0;$i<count($catalog['products']);$i++)
 			$prod_ids[] = $catalog['products'][$i]['prod_id'];
 			$org_ids[]  = $catalog['products'][$i]['org_id'];
 			$dom_ids[]  = $catalog['products'][$i]['org_domain_id'];
+			core::log(' VALID! ');
 		}
+		else
+		{
+			core::log(' already in order');
+		}
+	}
+	else
+	{
+		core::log(' no inventory for delivery ');
 	}
 }
 #core::log('prods for table: '.print_r($prod_ids,true));
