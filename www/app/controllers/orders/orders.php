@@ -2,6 +2,298 @@
 
 class core_controller_orders extends core_controller
 {
+	function get_cached_catalog($domain_id,$dd_id,$org_id,$time)
+	{
+		global $core;
+		
+		$original_org_id = $core->session['org_id'];
+		$core->session['org_id'] = $org_id;
+		
+		$catalog = null;
+		$seller_id=null;
+		$prod_id=null;
+		$write_js=false;
+		$get_secondary_data=true;
+
+		
+		# check to see if there's a generated catalog in the session
+		#$core->session['catalog-'.$domain_id.'-'.$dd_id] = null;
+		if(isset($core->session['catalog-'.$domain_id.'-'.$dd_id.'-'.$org_id]) && is_array($core->session['catalog-'.$domain_id.'-'.$dd_id.'-'.$org_id]))
+		{
+			core::log('Found a catalog in the session');
+			$catalog = $core->session['catalog-'.$domain_id.'-'.$dd_id.'-'.$org_id];
+			$now = time();
+			
+			# toss it out if it's too old
+			if(($catalog['time-generated'] - $now) > 120)
+			{
+				core::log('Catalog in session was too old :(');
+				unset($core->session['catalog-'.$domain_id.'-'.$dd_id.'-'.$org_id]);
+				$catalog = null;
+			}
+			else
+			{
+				core::log('ok to use catalog in session!');
+			}
+		}
+		else
+		{
+			core::log('no catalog in the session');
+		}
+
+		# if there is not, then build it
+		if(is_null($catalog))
+		{
+			core::log('generating new catalog');
+			$catalog  = core::model('products')->get_final_catalog(
+				$domain_id,
+				$seller_id,
+				$prod_id,
+				$write_js,
+				$get_secondary_data,
+				$dd_id
+			);
+			$catalog['time-generated'] = time();
+			$core->session['catalog-'.$domain_id.'-'.$dd_id.'-'.$org_id] = $catalog;
+		}
+		$org_id = $original_org_id;
+		
+		return $catalog;
+	}
+	
+	function add_items_to_existing_order()
+	{
+		global $core;
+		core::log('data sent to add_items_to_order: '.print_r($core->data,true));
+		
+		# get the buyer's order info
+		$order = core::model('lo_order')->load($core->data['lo_oid']);
+		$core->config['time'] = strtotime($order['order_date']);
+		
+		# get the domain config. Will need this when creating the payables.
+		$domain = core::model('domains')->load($order['domain_id']);
+		
+		# load the catalog we'll need for the order
+		$catalog = $this->get_cached_catalog($order['domain_id'],$core->data['dd_id'],$order['org_id'],time());
+
+		
+		# build an associative array of the new prods.
+		# key == prod_id,
+		# value == qty to add
+		$new_prod_ids = explode('_',$core->data['prod_ids']);
+		$to_add = array();
+		foreach($new_prod_ids as $prod_id)
+		{
+			$to_add[$prod_id] = floatval($core->data['prod_'.$prod_id]);
+		}
+		
+		
+		# first, get an array of existing deliveries
+		$deliveries_in_order = core::model('lo_order_deliveries')
+			->autojoin(
+				'left',
+				'lo_fulfillment_order',
+				'(lo_fulfillment_order.lo_foid=lo_order_deliveries.lo_foid)',
+				array('lo_fulfillment_order.org_id as seller_org_id')
+			)
+			->collection()
+			->filter('lo_oid','=',$core->data['lo_oid'])
+			->filter('dd_id','=',$core->data['dd_id'])
+			->to_array();
+		#core::log('existing deliveries: '.print_r($deliveries_in_order,true));
+		#core::deinit();
+			
+		# build an associative array of the deliveries. 
+		# key == org_id
+		# value == lodeliv_id
+		# this will be used to determine if there's a delivery for a particular seller
+		# or if we need to add one.
+		$deliveries_by_org_id = array();
+		$foids_by_org_id      = array();
+		foreach($deliveries_in_order as $delivery)
+		{
+			$deliveries_by_org_id[$delivery['seller_org_id']] = $delivery['lodeliv_id'];
+		}
+		
+		# then loop through the new items and see if they'll work with an existing delivery
+		# if they do not, then we'll have to create a new delivery
+		foreach($to_add as $prod_id=>$qty)
+		{
+			$prod = $catalog['products'][$catalog['prods_by_id'][$prod_id]];
+			#core::log('product data: '.print_r($prod->__data,true));
+			core::log('looking for delivery for '.$prod['name'].' from '.$prod['org_name']);
+			
+			# there is no delivery for this org, and possibly no fulfillment order
+			# we need to create one.
+			if(!isset($deliveries_by_org_id[$prod['org_id']]))
+			{
+				core::log('need to create a new delivery for '.$prod['org_id']);
+				
+				# determine if we need to create a fulfillment order
+				# there may already be a fulfillment order, but with a different
+				# delivery.
+				$lo_foid = intval(core_db::col('
+					select lo_foid
+					from lo_fulfillment_order
+					where lo_foid in (
+						select distinct lo_foid 
+						from lo_order_line_item 
+						where lo_oid='.$core->data['lo_oid'].'
+					)
+					and org_id='.$prod['org_id'].'
+				','lo_foid'));
+			
+				if(!is_numeric($lo_foid) || $lo_foid <=0)
+				{
+					core::log('need to create a new fulfillment_order for '.$prod['org_id']);
+					# we need to create a new fulfillment order for this seller
+					$fulfill = core::model('lo_fulfillment_order');
+					$fulfill['order_date'] = $order['order_date'];
+					$fulfill['org_id']     = $prod['org_id'];
+					$fulfill['domain_id']  = $order['domain_id'];
+					$fulfill['ldstat_id']  = 2;
+					$fulfill['lsps_id']    = 1;
+					$fulfill->save();
+					$lo_foid = $fulfill['lo_foid'];
+				}
+				
+				$foids_by_org_id[$prod['org_id']] = $lo_foid;
+				
+				# if we need to create a delivery, do so now
+				$delivery = core::model('lo_order_deliveries');
+				
+				# copy over ALL of the delivery info from a different delivery for this dd_id
+				# all deliveries for the same dd_id have the same times/addresses
+				foreach($deliveries_in_order[0] as $field=>$value)
+				{
+					$delivery[$field] = $value;
+				}
+				
+				# then unset the primary key, change the foid and save.
+				unset($delivery->__data['lodeliv_id']);
+				$delivery['lo_foid'] = $lo_foid;
+				$delivery['lo_oid']  = $order['lo_oid'];
+				$delivery->save();
+				$deliveries_in_order[] = $delivery->__data;
+				
+				# save the lodeliv_id back into the $deliveries hash 
+				$deliveries_by_org_id[$prod['org_id']] = $delivery['lodeliv_id'];
+				
+				core::log('using delivery '.$delivery['lodeliv_id'].', foid '.$lo_foid);
+			}
+			else
+			{
+				core::log('found existing delivery! '.$deliveries_by_org_id[$prod['org_id']]);
+			}
+		}
+		
+		# instantiate the catalog controller. This contains some methods needed
+		# for adding products to the cart.
+		$catalog_controller = core::controller('catalog');
+		
+		# now loop through the new item and insert rows into lo_order_line_item
+		# create necessary payables at this time as well
+		foreach($to_add as $prod_id=>$qty)
+		{
+			
+			$product = $catalog['products'][$catalog['prods_by_id'][$prod_id]];
+			core::log('adding '.$product['name'].' for real now');
+			
+			# determine best price
+			list($valid,$price_id,$amount,$error_type,$error_data) = $catalog_controller->determine_best_price(
+				$product,$qty,$catalog['prices'],array('dd_id'=>$core->data['dd_id'])
+			);
+			
+			core::log('final price: '.$amount.'. error received from pricing: '.$error_type);
+			
+			# insert into lo_order_line_item
+			$item = core::model('lo_order_line_item');
+			$item['lo_oid'] = $order['lo_oid'];
+			$item['lo_foid'] = $foids_by_org_id[$product['org_id']];
+			$item['product_name'] = $product['name'];
+			$item['qty_ordered'] = $qty;
+			$item['qty_adjusted'] = $qty;
+			$item['unit'] = $product['single_unit'];
+			$item['unit_price'] = $amount;
+			$item['row_total'] = $amount * $qty;
+			$item['unit_plural'] = $product['plural_unit'];
+			$item['prod_id'] = $product['prod_id'];
+			$item['addr_id'] = $product['addr_id'];
+			$item['dd_id'] = $product['name'];
+			$item['seller_org_id'] = $product['org_id'];
+			$item['seller_name'] = $product['org_name'];
+			$item['lodeliv_id'] = $deliveries_by_org_id[$prod['org_id']];
+			$item['lbps_id'] = 1;
+			$item['ldstat_id'] = 2;
+			$item['lsps_id'] = 1;
+			$item['category_ids'] = $product['category_ids'];
+			$item['final_cat_id'] = $product['final_cat_id'];
+			$item->save();
+			core::log('item saved: '.$item['lo_liid']);
+			
+			# create buyer payable
+			$b_payable = core::model('payables');
+			$b_payable['domain_id'] = $order['domain_id'];
+			$b_payable['parent_obj_id'] = $item['lo_liid'];
+			$b_payable['payable_type'] = 'buyer order';
+			$b_payable['from_org_id'] = $order['org_id'];
+			$b_payable['to_org_id'] = ($domain['buyer_invoicer'] == 'hub')?$domain['payable_org_id']:1;
+			$b_payable['amount'] = $item['row_total'];
+			$b_payable['creation_date'] = time();
+			$b_payable->save();
+			core::log('buyer payable saved: '.$b_payable['payable_id']);
+			
+			
+			# create market/lo payable
+			$m_payable = core::model('payables');
+			$m_payable['domain_id'] = $order['domain_id'];
+			$m_payable['parent_obj_id'] = $item['lo_liid'];
+			$m_payable['creation_date'] = time();
+			
+			if($domain['buyer_invoicer'] == 'hub')
+			{
+				# if the hub is collecting the money, then they need to send LO our fees
+				$m_payable['payable_type'] = 'lo fees';
+				$m_payable['from_org_id']  = $domain['payable_org_id'];
+				$m_payable['to_org_id']    = 1;
+				$m_payable['amount'] = $item['row_total'] * ($order['fee_percen_lo'] / 100);
+			}
+			else
+			{
+				# if lo is collecting the money, we need to send the hub the hub fees
+				$m_payable['payable_type'] = 'hub fees';
+				$m_payable['from_org_id']    = 1;
+				$m_payable['to_org_id']  = $domain['payable_org_id'];
+				$m_payable['amount'] = $item['row_total'] * ($order['fee_percen_hub'] / 100);
+			}
+			$m_payable->save();
+			core::log('market/lo payable saved: '.$m_payable['payable_id']);
+						
+			# create the seller payable
+			$s_payable = core::model('payables');
+			$s_payable['domain_id'] = $order['domain_id'];
+			$s_payable['parent_obj_id'] = $item['lo_liid'];
+			$s_payable['creation_date'] = time();
+			$s_payable['payable_type'] = 'seller order';
+			$s_payable['to_org_id']  = $product['org_id'];
+			$s_payable['amount'] = $item['row_total']  - (
+				$item['row_total'] * (($order['fee_percen_hub'] + $order['fee_percen_lo']) / 100)
+			);
+			$s_payable->save();
+			$s_payable['from_org_id'] = ($domain['seller_payer'] == 'hub')?$domain['payable_org_id']:1;
+			core::log('seller payable saved: '.$s_payable['payable_id']);
+		}
+		
+
+		# finally, recalc the order totals for everything.
+		# this *should* reapply/distribute the discount code and such
+		$order->rebuild_totals_payables(true);
+		core::log('order totals rebuilt. grand total: '.$order['grand_total']);
+		
+		# tell the browser to reload all of the order info so that the new totals show up	
+		core::js("core.doRequest('/orders/view_order',{'lo_oid':".$order['lo_oid']."});");
+		core::deinit();
+	}
 	
 	function send_email()
 	{
@@ -118,6 +410,7 @@ class core_controller_orders extends core_controller
 		# use this flag to record if we need to notify the MM
 		# that an order was underdelivered.
 		$notify_underdeliver = false;
+		$foids_to_notify = array();
 		
 		foreach($order->items as $item)
 		{
@@ -148,6 +441,14 @@ class core_controller_orders extends core_controller
 					if($qty < $item['qty_ordered'])
 					{
 						$notify_underdeliver = true;
+						if(!is_array($foids_to_notify[$item['lo_foid']]))
+							$foids_to_notify[$item['lo_foid']] = array('amount'=>0,'lo_oid'=>$item['lo_oid']);
+						
+						$foids_to_notify[$item['lo_foid']]['amount'] += (
+							($item['qty_ordered'] * $item['unit_price']) 
+							-
+							($item['qty_delivered'] * $item['unit_price'])
+						);
 					}
 				}
 				else
@@ -188,12 +489,22 @@ class core_controller_orders extends core_controller
 		
 		if($notify_underdeliver && ($order['payment_method'] == 'ach' || $order['payment_method'] == 'paypal'))
 		{
-			core::process_command('emails/mm_underdelivery',true,
-				$order['domain_id'],
-				$order['lo_oid'],
-				$order['lo3_order_nbr']
-			);
-			ob_get_clean();
+			foreach($foids_to_notify as $foid=>$info)
+			{
+				$order = core::model('lo_order')->load($info['lo_oid']);
+				$fulfillment_order = core::model('lo_fulfillment_order')->load($foid);
+				$seller = core::model('organizations')->load($fulfillment_order['org_id']);
+				core::process_command('emails/mm_underdelivery',true,
+					$order['domain_id'],
+					$order['lo_oid'],
+					$order['lo3_order_nbr'],
+					$order['buyer_name'],
+					$seller['name'],
+					$info['amount']
+				);
+				ob_get_clean();
+				}
+			
 		}
 		
 		if($changes)
