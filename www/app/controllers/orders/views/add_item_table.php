@@ -22,7 +22,6 @@ $org_ids  = array();
 $dom_ids  = array();
 $prod_ids[] = 0;
 
-core::log('catalog in session: '.print_r($catalog,true));
 # build a list of the prod_ids, org_ids, and domain_ids in the complete
 # data set. Will be used later to build the queries for the pulldown filters
 core::log("found ".count($catalog['products'])." products");
@@ -50,12 +49,19 @@ for($i=0;$i<count($catalog['products']);$i++)
 }
 #core::log('prods for table: '.print_r($prod_ids,true));
 
+# these arraya will store the pricing/inventory data for all products rendered
+# it will be sent back in JS form so that the client side logic can 
+# enforce pricing minimums and inventory maxs.
+global $all_prices,$all_inventory;
+$all_prices = array();
+$all_inventory = array();
+
 
 # this is the main formatter for all of the data in the table
 # It creates the html for each column
 function in_page_ordering_formatter($data)
 {
-	global $catalog,$core;
+	global $catalog,$core,$all_prices,$all_inventory;
 
 	$product = $catalog['products'][$catalog['prods_by_id'][$data['prod_id']]];
 	$prices  = $catalog['prices'][$data['prod_id']];
@@ -68,8 +74,11 @@ function in_page_ordering_formatter($data)
 	$data['market_name'] = '<a href="app.php#!market-edit--domain_id-'.$data['domain_id'].'">'.$data['market_name'].'</a>';
 	$data['name'] = '<a href="app.php#!products-edit--prod_id-'.$data['prod_id'].'">'.$data['name'].'</a>';
 	$data['pricing'] = '';
+	
+	$all_prices['prod_'.$data['prod_id']] = array();
 	foreach($prices as $price)
 	{
+		$all_prices['prod_'.$data['prod_id']]['min-'.floatval($price['min_qty']).'-'.$price['price_id']] = $price['price'];
 		$data['pricing'] .= ($data['pricing'] == '')?'':'<br />';
 		$data['pricing'] .= core_format::price($price['price']);
 		if(floatval($price['min_qty']) > 1)
@@ -77,16 +86,19 @@ function in_page_ordering_formatter($data)
 			$data['pricing'] .= ' (min '.floatval($price['min_qty']).')';
 		}
 	}
+	$all_inventory['prod_'.$data['prod_id']] = $product['inventory_by_dd'][$core->data['dd_id']];
 	$data['stock'] = $product['inventory_by_dd'][$core->data['dd_id']];
 	$data['amount'] = '
-		<input type="text" class="items_for_dd_id_'.$core->data['dd_id'].'" size="3" style="width: 40px;" id="item_'.$core->data['lo_oid'].'_'.$core->data['dd_id'].'_'.$data['prod_id'].'" value="" />
+		<input type="text" class="items_for_dd_id_'.$core->data['dd_id'].'" onkeyup="core.checkout.verifyValidAmount('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',parseFloat($(this).val()));" size="3" style="width: 40px;margin-top: 7px;" id="item_'.$core->data['lo_oid'].'_'.$core->data['dd_id'].'_'.$data['prod_id'].'" value="" />
 	';
-	$data['buttons'] = '
+	$data['amount'] .= '&nbsp;&nbsp;
 		<div class="btn-group">
 			<button class="btn btn-info btn-mini" onclick="core.checkout.changeItemAmountInOrder('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',1);"><i class="icon icon-plus"></i></button>
 			<button class="btn btn-info btn-mini" onclick="core.checkout.changeItemAmountInOrder('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',-1);"><i class="icon icon-minus"></i></button>
 		</div>
 		<button class="btn btn-danger btn-mini" onclick="core.checkout.changeItemAmountInOrder('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',0);"><i class="icon icon-remove"></i></button>
+		<div class="text-error" id="priceError-'.$core->data['dd_id'].'-'.$data['prod_id'].'" style="clear: both;display:none;"></div>
+		<div class="text-error" id="invError-'.$core->data['dd_id'].'-'.$data['prod_id'].'" style="clear: both;display:none;"></div>
 	';
 	
 	#core::log("in page order formatter called! ".print_r($data,true));
@@ -119,8 +131,8 @@ $products->add(new core_datacolumn('market_name','Market',true,'20%'));
 $products->add(new core_datacolumn('name','Name',true,'20%'));
 $products->add(new core_datacolumn('pricing','Pricing',false,'14%'));
 $products->add(new core_datacolumn('stock','In Stock',false,'9%'));
-$products->add(new core_datacolumn('amount','Amount',false,'9%'));
-$products->add(new core_datacolumn('buttons','&nbsp;',false,'13%'));
+$products->add(new core_datacolumn('amount','Amount',false,'22%'));
+
 
 
 # add a filter for the home market of the seller
@@ -195,6 +207,11 @@ $products->render();
 </div>
 <div style="clear:both;">&nbsp;</div>
 <?php
+
+# write the pricing/inventory data to JS
+core::js('core.checkout.allPrices='.json_encode($all_prices).';');
+core::js('core.checkout.allInventory='.json_encode($all_inventory).';');
+
 core::log('outputting to new_item_dd_id_'.$core->data['dd_id']);
 core::replace('new_item_dd_id_'.$core->data['dd_id']);
 
