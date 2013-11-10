@@ -281,9 +281,13 @@ core.checkout.saveNewItems=function(lo_oid,dd_id){
 		if(isNaN(amt))
 			amt = 0;
 		if(amt > 0){
-			hasProducts = true
-			data['prod_'+ids[3]] = amt;
-			prod_ids.push(ids[3]);
+			
+			var isValid = core.checkout.verifyValidAmount(lo_oid,dd_id,ids[3],amt);
+			if(isValid){
+				hasProducts = true
+				data['prod_'+ids[3]] = amt;
+				prod_ids.push(ids[3]);
+			}
 		}
 	}
 	if(hasProducts){
