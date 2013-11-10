@@ -16,7 +16,7 @@ class core_controller_orders extends core_controller
 		$seller_id=null;
 		$prod_id=null;
 		$write_js=false;
-		$get_secondary_data=true;
+		$get_secondary_data=false;
 
 		
 		# check to see if there's a generated catalog in the session
