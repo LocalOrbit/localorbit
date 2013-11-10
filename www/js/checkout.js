@@ -185,3 +185,58 @@ core.checkout.updateDelivery=function(oid,ddId,addrId,prefix,doAlert){
 		'do_alert':doAlert
 	});
 }
+
+
+core.checkout.addItemToOrder=function(loOid,ddId){
+	core.checkout.progressHtml = $('#new_item_dd_id_'+ddId).html();
+	$('#new_item_button_dd_id_'+ddId+',#new_item_dd_id_'+ddId).toggle(300);
+	core.doRequest('/orders/add_item_table',{'lo_oid':loOid,'dd_id':ddId});
+	
+}
+
+core.checkout.cancelAddItemToOrder=function(loOid,ddId){
+	$('#new_item_button_dd_id_'+ddId+',#new_item_dd_id_'+ddId).toggle(300);
+}
+
+core.checkout.changeItemAmountInOrder=function(lo_oid,dd_id,prod_id,amount){
+	var inputfield = $('#item_'+lo_oid+'_'+dd_id+'_'+prod_id);
+	var currentAmount = parseFloat(inputfield.val());
+	if(isNaN(currentAmount))
+		currentAmount = 0;
+	if(amount == 0)
+		currentAmount = 0;
+	else
+		currentAmount += amount;
+	if(currentAmount < 0)
+		currentAmount = 0;
+	inputfield.val(currentAmount);
+}
+
+core.checkout.saveNewItems=function(lo_oid,dd_id){
+	var data = {};
+	var itemObjs = $('input.items_for_dd_id_'+dd_id);
+	var prod_ids = [];
+	var hasProducts = false;
+	
+	for(var i=0;i<itemObjs.length;i++){
+		var itemObj = $(itemObjs[i]);
+		var ids = new String(itemObj.attr('id')).split('_');
+		var amt = parseFloat(itemObj.val());
+		if(isNaN(amt))
+			amt = 0;
+		if(amt > 0){
+			hasProducts = true
+			data['prod_'+ids[3]] = amt;
+			prod_ids.push(ids[3]);
+		}
+	}
+	if(hasProducts){
+		data['prod_ids'] = prod_ids.join('_');
+		data['dd_id'] = dd_id;
+		data['lo_oid'] = lo_oid;
+		//$('#new_item_dd_id_'+dd_id).html(core.checkout.progressHtml);
+		core.doRequest('/orders/add_items_to_existing_order',data);
+	}else{
+		alert('no products selected :(');
+	}
+}
