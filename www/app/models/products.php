@@ -111,7 +111,7 @@ class core_model_products extends core_model_base_products
 		return $col;
 	}
 
-	function get_catalog($domain_id=null,$org_id=null,$check_inventory=true,$seller_id=null)
+	function get_catalog($domain_id=null,$org_id=null,$check_inventory=true,$seller_id=null,$dd_id=null)
 	{
 		global $core;
 
@@ -128,7 +128,7 @@ class core_model_products extends core_model_base_products
 			
 			category_ids,p.org_id,
 			pi.pimg_id,pi.width,pi.height,pi.extension,u.NAME as single_unit,u.PLURAL as plural_unit,
-			o.name as org_name,
+			o.name as org_name,otd.domain_id as org_domain_id,
 			(
 				select group_concat(price_id)
 				from product_prices
@@ -148,6 +148,7 @@ class core_model_products extends core_model_base_products
 			from products p
 			left join product_images pi on pi.prod_id=p.prod_id
 			left join organizations o on o.org_id=p.org_id
+			left join organizations_to_domains otd on (otd.org_id=o.org_id and otd.is_home=1)
 			left join addresses a on p.addr_id=a.address_id
 			left join directory_country_region dcr on a.region_id=dcr.region_id
 			left join Unit u on p.unit_id=u.UNIT_ID
@@ -224,12 +225,7 @@ class core_model_products extends core_model_base_products
 		return $col;
 	}
 	
-	function get_best_price_for_product($prod_id,$catalog)
-	{
-		
-	}
-	
-	function get_final_catalog($domain_id=null,$seller_id=null,$prod_id=null,$write_js=true,$get_secondary_data=true)
+	function get_final_catalog($domain_id=null,$seller_id=null,$prod_id=null,$write_js=true,$get_secondary_data=true,$dd_id=null)
 	{
 		global $core;
 		
@@ -254,7 +250,7 @@ class core_model_products extends core_model_base_products
 		$tmp_categories = array();
 		
 		# run the main query for all the products
-		$catalog = $this->get_catalog($domain_id,null,false,$seller_id);
+		$catalog = $this->get_catalog($domain_id,null,false,$seller_id,$dd_id);
 		if(!is_null($prod_id))
 		{
 			$catalog->filter('p.prod_id','=',$prod_id);
