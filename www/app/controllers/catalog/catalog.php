@@ -217,7 +217,7 @@ class core_controller_catalog extends core_controller
 		
 		# 3) if this is a new item in the cart, we need to insert it
 		# possibly a new delivery too.
-		if(!$existing)
+		if(!$existing && $core->data['newQty'] > 0)
 		{
 			# if we found a valid price, create a delivery if necessary
 			# if we didn't find a delivery day for this, then create the delivery
