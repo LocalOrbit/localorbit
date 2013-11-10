@@ -232,7 +232,7 @@ class core_model_delivery_days extends core_model_base_delivery_days
 				#core::log(print_r($this->__data,true));
 				
 				if($start_time == 0)
-					$now = time();
+					$now = $core->config['time'];
 				else
 					$now = $start_time;
 					
@@ -278,7 +278,7 @@ class core_model_delivery_days extends core_model_base_delivery_days
 				# subtract hours due before seconds
 				$due_time  = $delivery_start_time - ($this['hours_due_before'] * 3600);
 				core::log("due time: ".date('Y-m-d H:i:s',$due_time));
-				core::log("right now is: ".date('Y-m-d H:i:s',time()));
+				core::log("right now is: ".date('Y-m-d H:i:s',$core->config['time']));
 				
 				
 				# if this # is less than the current timestamp, then you're good to order for this week.
