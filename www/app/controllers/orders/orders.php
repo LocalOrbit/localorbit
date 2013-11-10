@@ -43,7 +43,7 @@ class core_controller_orders extends core_controller
 		{
 			core::log('no catalog in the session');
 		}
-		$catalog = null;
+		#$catalog = null;
 		
 		# if there is not, then build it
 		if(is_null($catalog))
