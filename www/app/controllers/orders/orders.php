@@ -6,6 +6,9 @@ class core_controller_orders extends core_controller
 	{
 		global $core;
 		
+		$original_time = $core->config['time'];
+		$core->config['time'] = $time;
+		
 		$original_org_id = $core->session['org_id'];
 		$core->session['org_id'] = $org_id;
 		
@@ -40,7 +43,8 @@ class core_controller_orders extends core_controller
 		{
 			core::log('no catalog in the session');
 		}
-
+		$catalog = null;
+		
 		# if there is not, then build it
 		if(is_null($catalog))
 		{
@@ -58,6 +62,8 @@ class core_controller_orders extends core_controller
 		}
 		$org_id = $original_org_id;
 		
+		$core->config['time'] = $original_time;
+		
 		return $catalog;
 	}
 	
@@ -74,7 +80,7 @@ class core_controller_orders extends core_controller
 		$domain = core::model('domains')->load($order['domain_id']);
 		
 		# load the catalog we'll need for the order
-		$catalog = $this->get_cached_catalog($order['domain_id'],$core->data['dd_id'],$order['org_id'],time());
+		$catalog = $this->get_cached_catalog($order['domain_id'],$core->data['dd_id'],$order['org_id'],strftime($order['order_date']));
 
 		
 		# build an associative array of the new prods.
