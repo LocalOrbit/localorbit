@@ -16,10 +16,19 @@ function escape_names ($org)
 
 function org_col_formatter($data)
 {
+	global $core;
 	$data['allow_sell_printable'] = ($data['allow_sell'] == 1)?'True':'False';
 	
 	$data['activate_action'] = ($data['is_active'] == 1)?'deactivate':'activate';
 	$data['enable_action']   = ($data['is_enabled'] == 1)?'suspend':'enable';
+	
+	
+	# handle additional csv columns
+	if($core->data['format'] == 'csv')
+	{
+		$data['shipping_address'] .= ', '.$data['shipping_city'].' '.$data['shipping_state'].' '.$data['shipping_postal_code'];
+		$data['billing_address'] .= ', '.$data['billing_city'].' '.$data['billing_state'].' '.$data['billing_postal_code'];
+	}
 	
 	/* switch($data['composite_role'])
 	{
@@ -33,7 +42,32 @@ function org_col_formatter($data)
 	return $data;
 }
 
-$col = core::model('v_organizations')->collection()->filter('is_deleted','=',0);
+$col = core::model('v_organizations');
+if($core->data['format'] == 'csv')
+{
+	$col->autojoin(
+		'left',
+		'addresses a1',
+		'(v_organizations.org_id=a1.org_id and a1.default_shipping=1)',
+		array('a1.address as shipping_address','a1.city as shipping_city','a1.postal_code as shipping_postal_code','a1.telephone as shipping_phone')
+	)->autojoin(
+		'left',
+		'directory_country_region dcr1',
+		'(dcr1.region_id=a1.region_id)',
+		array('dcr1.code as shipping_state')
+	)->autojoin(
+		'left',
+		'addresses a2',
+		'(v_organizations.org_id=a2.org_id and a2.default_billing=1)',
+		array('a2.address as billing_address','a2.city as billing_city','a2.postal_code as billing_postal_code','a2.telephone as billing_phone')
+	)->autojoin(
+		'left',
+		'directory_country_region dcr2',
+		'(dcr2.region_id=a2.region_id)',
+		array('dcr2.code as billing_state')
+	);
+}
+$col = $col->collection()->filter('v_organizations.is_deleted','=',0);
 $col->add_formatter('org_col_formatter');
 
 if(!lo3::is_market() && !lo3::is_admin())
@@ -116,17 +150,29 @@ $orgs->add(new core_datacolumn('domain_name','Market',true,$widths[1],'{domain_n
 $orgs->add(new core_datacolumn('creation_date','Registered On',true,$widths[2],'{creation_date}','{creation_date}','{creation_date}'));
 $orgs->add(new core_datacolumn('role_label','Role',true,$widths[3],'{role_label}','{role_label}','{role_label}'));
 
-if(lo3::is_admin() || lo3::is_market())
+# csv format needs additional columns
+if($core->data['format'] == 'csv')
 {
-	$orgs->add(new core_datacolumn('name',' ',false,$widths[4],'
-		<a class="btn btn-wide btn-small" href="javascript:core.doRequest(\'/organizations/{activate_action}\',{\'org_id\':{org_id}});"><i class="icon-off" /> {activate_action}</a>
-		<a class="btn btn-wide btn-small btn-info" href="javascript:core.doRequest(\'/organizations/{enable_action}\',{\'org_id\':{org_id}});" class="text-warning"><i class="icon-eye-close" /> {enable_action}</a>
-		<a class="btn btn-wide btn-small btn-danger" href="#!organizations-list" class="text-error" onclick="org.deleteOrg({org_id},\'{name_esc}\',this);"><i class="icon-ban-circle" /> Delete</a>
-	',' ',' '));
+	$orgs->add(new core_datacolumn('shipping_address','Shipping Address',false,$widths[3]));
+	$orgs->add(new core_datacolumn('shipping_phone','Shipping Phone',false,$widths[3]));
+	$orgs->add(new core_datacolumn('billing_address','Billing Address',false,$widths[3]));
+	$orgs->add(new core_datacolumn('billing_phone','Billing Phone',false,$widths[3]));
 }
 else
 {
-	$orgs->add(new core_datacolumn('','&nbsp;',false,$widths[4],'<a href="#!organizations-list" onclick="org.deleteOrg({org_id},\'{name_esc}\',this);">Delete&nbsp;&raquo;</a>',' ',' '));
+
+	if(lo3::is_admin() || lo3::is_market())
+	{
+		$orgs->add(new core_datacolumn('name',' ',false,$widths[4],'
+			<a class="btn btn-wide btn-small" href="javascript:core.doRequest(\'/organizations/{activate_action}\',{\'org_id\':{org_id}});"><i class="icon-off" /> {activate_action}</a>
+			<a class="btn btn-wide btn-small btn-info" href="javascript:core.doRequest(\'/organizations/{enable_action}\',{\'org_id\':{org_id}});" class="text-warning"><i class="icon-eye-close" /> {enable_action}</a>
+			<a class="btn btn-wide btn-small btn-danger" href="#!organizations-list" class="text-error" onclick="org.deleteOrg({org_id},\'{name_esc}\',this);"><i class="icon-ban-circle" /> Delete</a>
+		',' ',' '));
+	}
+	else
+	{
+		$orgs->add(new core_datacolumn('','&nbsp;',false,$widths[4],'<a href="#!organizations-list" onclick="org.deleteOrg({org_id},\'{name_esc}\',this);">Delete&nbsp;&raquo;</a>',' ',' '));
+	}
 }
 
 $orgs->columns[2]->autoformat='date-short';
@@ -136,5 +182,8 @@ $orgs->sort_direction = 'desc';
 core::replace('datatable_filters');
 $orgs->filter_html .= core::getclear_position('datatable_filters');
 page_header('Organizations','#!organizations-add','New organization', null, 'plus', 'grid');
+
+core::log('parameters passed: '.print_r($core->data,true));
+
 $orgs->render();
 ?>
