@@ -15,6 +15,7 @@ core.payments.createInvoices=function(){
 }*/
 core.payments.makePayments=function(tabName){
 	//alert(core.ui.getCheckallList(document.paymentsForm,'payments').join(','));
+	alert("1");
 	core.doRequest('/payments/payables__enter_payments',{'tab_name':tabName,'checked_invoices':core.ui.getCheckallList(document.paymentsForm,tabName).join(',')});
 }
 
@@ -196,14 +197,7 @@ core.payments.sendInvoices=function(){
 	}
 }
 
-core.payments.makePayments=function(tab){
-	var payables = core.ui.getCheckallList(document.paymentsForm,tab);
-	if(payables.length == 0){
-		alert('please check at least one '+tab+'.');
-	}else{
-		core.doRequest('/payments/make_payments',{'tab':tab,'checked_payables':payables.join(',')});
-	}
-}
+
 
 core.payments.savePayment=function(tab,group){
 	var data = {};
@@ -226,9 +220,44 @@ core.payments.savePayment=function(tab,group){
 core.payments.markItemsDelivered=function(){
 	var receivables = core.ui.getCheckallList(document.paymentsForm,'receivables');
 	if(receivables.length == 0){
-		alert('please check at least one item.');
+		alert('Please check at least one item.');
 	}else{
 		core.doRequest('/payments/mark_items_delivered',{'checked_receivables':receivables.join(',')});
+	}
+}
+
+
+
+
+core.payments.makePayments=function(tab){
+	var payables = core.ui.getCheckallList(document.paymentsForm,tab);
+	//alert(tab + " payables " + payables.join(','));
+	if(payables.length == 0){
+		alert('please check at least one '+tab+'.');
+	}else{
+		core.doRequest('/payments/make_payments',{'tab':tab,'checked_payables':payables.join(',')});
+	}
+}
+core.payments.enterReceipts=function(tab){
+	var invoices = core.ui.getCheckallList(document.paymentsForm,'invoices');
+	//alert(tab + " invoices " + invoices.join(','));
+	
+	if(invoices.length == 0){
+		alert('You must select at least one row to enter receipts.');
+	}else{
+		core.doRequest('/payments/enter_receipts_make_payments',{'tab':tab,'invoice_nums':invoices.join(',')});
+	}
+}
+
+
+core.payments.reSendInvoices=function(){
+	var invoices = core.ui.getCheckallList(document.paymentsForm,'invoices');
+	//alert(invoices);
+	
+	if(invoices.length == 0){
+		alert('You must select at least one invoice to re-send.');
+	}else{
+		core.doRequest('/payments/re_send_invoice',{'invoice_nums':invoices.join(',')});
 	}
 }
 
@@ -260,11 +289,13 @@ core.payments.resetInvoiceSending=function(){
 	$('#receivables_list,#receivables_actions').toggle(300);
 }
 
+
 core.payments.checkAllPaymentsMade=function(tab){
 	if($('div.'+tab+'_row:visible').length == 0){
 		$('#'+tab+'_list,#'+tab+'_actions').toggle(300);
 	}
 }
+
 
 core.payments.setPayFields=function(tab,group){
 	var val = $('form[name=paymentsForm] input[name='+tab+'__group_method__'+group+']:checked').val();

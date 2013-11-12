@@ -158,7 +158,7 @@
 	foreach($invoices as $invoice) {
 		$payable_ids[] = $invoice['payable_id'];
 
-		if ($invoice['payable_type'] == 'buyer order') {	// 4 - delivered
+		if ($invoice['payable_type'] == 'buyer order') {
 			$row_total = $invoice['unit_price'] * $invoice['qty_delivered'];  // will remove the canceled items
 			$invoice_total += $row_total;
 			
@@ -248,37 +248,15 @@
 		$core::log("create_invoice_pdf createInvoiceWithPayableIds");
 		$invoice = core::model('invoices')->createInvoiceWithPayableIds($orderInfo['lo_oid'], $invoice_num, $payable_ids, $due_date_unixtime);
 				
-		// email it
-		$body = "<h1>You have a new invoice from ".$domain['name']."</h1>";
-		$body .= "Thank you for your recent purchase from ".$domain['name'].".<br />";
-		$body .= "Please find attached your most recent invoice.<br />";
-		$body .= "For billing questions please email ".$domain['secondary_contact_email']." or call ".$domain['secondary_contact_phone'].".";
-		$body .= "<br /><br />Thank you. <br /><br />".$domain['name'];
-		
-		$email = core::model('sent_emails');
-		$email['subject'] = "Invoice #".$invoice_num;
-		$email['body'] = $body;
-		
-		$email['to_address'] = "jvavul@gmail.com,".$orderInfo['buyer_email'];
-		$email['from_email'] = $domain['secondary_contact_email'];
-		$email['from_name']  = $domain['name'];
-		$email['attachment_file_location'] = $pdf_file_location;
-		//$email->send(); takes too long with attachment
-		
+		$this->send_invoice($invoice_num);
 		
 		// mark order as invoiced
 		$lo_order = core::model('lo_order')->load($core->data['lo_oid']);
 		$lo_order->update_payment_status(3);
-		//update lo_order set lbps_id = 3
-		
-		
-		$email->save();
-		
-		
+				
 		$core::log("payments/create_invoice_pdf js_reload('create_invoices')");
 		core_datatable::js_reload('create_invoices');
-		core_ui::notification("Invoices Sent.",false,false);
-		
+		core_ui::notification("Invoices Sent.",false,false);		
 	} else {
 		exit();
 	}	

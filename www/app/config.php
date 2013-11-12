@@ -97,7 +97,7 @@ $core->config['default_hostname'] = 'annarbor-mi.localorb.it';
 #$core->config['hooks']['phpmailer_onsend'] = 'phpmailer_onsend';
 
 # change some logging stuff
-$core->paths['logs'] = '/tmp';
+$core->paths['logs'] = '/var/log/apache2';
 
 # setup varous commands
 $core->config['navstate_command'] = 'navstate/ensure';

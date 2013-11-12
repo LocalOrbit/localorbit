@@ -118,6 +118,64 @@ class core_controller_payments extends core_controller
 		return $payables;
 	}
 	
+	function process_enter_receipts() {
+		global $core;
+		$invoice_nums = $core->data['invoice_nums'];
+		
+		// mark order as invoiced
+		$lo_order = core::model('lo_order')->load($core->data['lo_oid']);
+		$lo_order->update_payment_status(3);
+		
+		$core::log("payments/create_invoice_pdf js_reload('create_invoices')");
+		core_datatable::js_reload('create_invoices');
+		core_ui::notification("Invoices Sent.",false,false);
+	}
+	
+	function re_send_invoice() {	
+		global $core;
+		$invoice_nums = $core->data['invoice_nums'];
+		$this->send_invoice($invoice_nums);
+		
+		$invoice_nums_array = explode(',', $invoice_nums);
+		if (sizeof($invoice_nums_array) > 1) {
+			core_ui::notification("Invoices has been resent.",false,false);
+		} else {
+			core_ui::notification("Invoice has been resent.",false,false);
+		}
+	}
+	
+	function send_invoice($invoice_nums) {		
+		global $core;
+		$domain =  core::model('domains')->load($core->config['domain']['domain_id']);
+		$invoice_nums_array = explode(',', $invoice_nums);
+
+		foreach($invoice_nums_array as $invoice_num) {			
+			$pdf_file_location= $_SERVER['DOCUMENT_ROOT'].'/img/'.$domain['domain_id'].'/invoices/'.$invoice_num.'.pdf';		
+			$buyer_email = core::model('invoices')->getBuyerEmail($invoice_num);
+			
+			// email it
+			$body = "<h1>You have a new invoice from ".$domain['name']."</h1>";
+			$body .= "Thank you for your recent purchase from ".$domain['name'].".<br />";
+			$body .= "Please find attached your most recent invoice.<br />";
+			$body .= "For billing questions please email ".$domain['secondary_contact_email']." or call ".$domain['secondary_contact_phone'].".";
+			$body .= "<br /><br />Thank you. <br /><br />".$domain['name'];
+			
+			$email = core::model('sent_emails');
+			$email['subject'] = "Invoice #".$invoice_num;
+			$email['body'] = $body;
+			
+			$email['to_address'] = "jvavul@gmail.com,".$buyer_email;
+			$email['from_email'] = $domain['secondary_contact_email'];
+			$email['from_name']  = $domain['name'];
+			$email['attachment_file_location'] = $pdf_file_location;
+			//$email->send(); takes too long with attachment
+			
+			$email->save();
+		}
+	}
+	
+	
+	
 	function do_send_invoices()
 	{
 		global $core;
@@ -159,6 +217,9 @@ class core_controller_payments extends core_controller
 		core_ui::notification('Invoices Sent.');
 		core::deinit();
 	}
+	
+	
+	
 	
 	function do_resend_invoices()
 	{
@@ -402,6 +463,7 @@ class core_controller_payments extends core_controller
 		core_datatable::js_reload('receivables');
 		core_datatable::js_reload('payables');
 		core_datatable::js_reload('payments');
+		core_datatable::js_reload('enter_receipts');
 		core::js("$('#".$core->data['tab']."__area__".$core->data['group']."').hide();core.payments.checkAllPaymentsMade('".$core->data['tab']."');");
 		core_ui::notification('Payment Saved.');
 		core::deinit();

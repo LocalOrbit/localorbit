@@ -29,13 +29,13 @@
 		Allow from all
 	</Directory>
 
-	ErrorLog /var/log/apache2/error-production.log
+	ErrorLog /var/log/apache2/production-error.log
 
 	# Possible values include: debug, info, notice, warn, error, crit,
 	# alert, emerg.
 	LogLevel warn
 
-	CustomLog /var/log/apache2/access-production.log combined
+	CustomLog /var/log/apache2/production-access.log combined
 
     Alias /doc/ "/usr/share/doc/"
     <Directory "/usr/share/doc/">

@@ -22,13 +22,13 @@
 		Allow from all
 	</Directory>
 
-	ErrorLog /var/log/apache2/error-testing.log
+	ErrorLog /var/log/apache2/testing-error.log
 
 	# Possible values include: debug, info, notice, warn, error, crit,
 	# alert, emerg.
 	LogLevel warn
 
-	CustomLog /var/log/apache2/access-testing.log combined
+	CustomLog /var/log/apache2/testing-access.log combined
 
     Alias /doc/ "/usr/share/doc/"
     <Directory "/usr/share/doc/">

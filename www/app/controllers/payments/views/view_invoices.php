@@ -84,7 +84,7 @@ $invoices_table->filter_html .= '<div style="float:left;width:490px;">';
 	
 	// order number	and PO number
 	$invoices_table->add_filter(new core_datatable_filter('payable_info','concat(lo3_order_nbr,payment_ref)','~','search'));
-	$invoices_table->filter_html .= core_datatable_filter::make_text($invoices_table->name,'payable_info',$invoices_table->filter_states[$invoices_table->name.'__filter__payable_info'],'Search by order number');
+	$invoices_table->filter_html .= core_datatable_filter::make_text($invoices_table->name,'payable_info',$invoices_table->filter_states[$invoices_table->name.'__filter__payable_info'],'Search by Invoice or Purchase Order Number');
 	$invoices_table->filter_html .= '<br /><div class="clearfix">&nbsp;</div>';
 $invoices_table->filter_html .= '</div>';
 

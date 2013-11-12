@@ -214,10 +214,6 @@ Paypal
 	
 	RAGANERICKSON
 	gr0wnl0cally
-	
-https://www.paypal.com/us/cgi-bin/webscr?cmd=_flow&SESSION=phzKC4vWlAp3Kql4K_lT8Er6g9JTIwzTLUgmaK_A44vgU-MwewRbDAE8tNS&dispatch=5885d80a13c0db1f8e263663d3faee8d4e181b3aff599f99a338772351021e7d
-	RAGANERICKSON
-	gr0wnl0cally
 
 Customize Buyer Experience
 	https://cms.paypal.com/us/cgi-bin/marketingweb?cmd=_render-content&content_ID=acct_setup/Buyer_Experience_EC&fli=true

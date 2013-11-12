@@ -16,6 +16,7 @@ $payables = false;
 $receivables = false;
 $create_invoices = false;
 $view_invoices = false;
+$enter_receipts = false;
 
 # just any random positive nbr. This determines if the money out section in overview is shown.
 # this really only needs to be dynamic for sellers, for all other roles just assume there's a positive #.
@@ -24,13 +25,15 @@ if(lo3::is_admin() || lo3::is_market())
 {
 	$tabs[] = 'Overview';
 	
-	if(lo3::is_admin()) {
+	/* if(lo3::is_admin()) {
 		$tabs[] = 'Send Invoices and Enter Receipts';
 	} else if(lo3::is_fully_managed()) {
 		$tabs[] = 'View Invoices';
 	} else {
 		$tabs[] = 'Send Invoices and Enter Receipts';
-	}
+	} 
+	$receivables = true;
+	*/
 	
 	if(lo3::is_admin()) {
 		$tabs[] = 'Make or Record Payments to Vendors';
@@ -43,7 +46,6 @@ if(lo3::is_admin() || lo3::is_market())
 	
 	$tabs[] = 'Review Payment History';
 	$payables = true;
-	$receivables = true;
 }
 else if(lo3::is_seller())
 {
@@ -69,7 +71,10 @@ else
 
 if(lo3::is_self_managed()) {
 	$tabs[] = 'Send Invoices';
-	$create_invoices = true;	
+	$create_invoices = true;
+	
+	$tabs[] = 'Enter Receipts';
+	$enter_receipts = true;
 }
 
 
@@ -120,6 +125,10 @@ if($create_invoices) {
 if($view_invoices) {
 	$tab_count++;
 	$this->view_invoices($tab_count);
+}
+if($enter_receipts) {
+	$tab_count++;
+	$this->enter_receipts($tab_count);
 }
 
 

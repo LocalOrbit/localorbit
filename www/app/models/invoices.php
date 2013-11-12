@@ -6,6 +6,16 @@ class core_model_invoices extends core_model_base_invoices
 		global $core;
 		return $lo_oid.'-'.core_db::col('SELECT (COUNT(lo_oid) + 1) AS invoice_num FROM invoices WHERE lo_oid = '.$lo_oid, 'invoice_num');
 	}
+
+
+	function getBuyerEmail($invoice_num) {
+		global $core;
+		$sql = "SELECT customer_entity.email
+			FROM lo_order INNER JOIN customer_entity ON customer_entity.entity_id = lo_order.buyer_mage_customer_id
+			WHERE lo_order.lo3_order_nbr = '".$invoice_num."'";
+			
+		return core_db::col($sql, 'email');
+	}
 	
 	
 	function createInvoiceWithPayableIds($lo_oid, $invoice_num, $payable_ids, $due_date) {	

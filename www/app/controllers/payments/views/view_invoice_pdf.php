@@ -1,13 +1,13 @@
 <?php
 
 	
-	$sql = "select lo_order.org_id as org_id from lo_order inner join invoices ON lo_order.lo_oid = invoices.lo_oid where invoices.invoice_num = '" .
+	$sql = "select lo_order.domain_id from lo_order inner join invoices ON lo_order.lo_oid = invoices.lo_oid where invoices.invoice_num = '" .
 		filter_var($core->data['invoice_num'], FILTER_SANITIZE_STRING)."'";
-	$org_id = core_db::col($sql, "org_id");
+	$domain_id = core_db::col($sql, "domain_id");
 
 	// is users org the one that invoice is from?
-	if($org_id != $core->session['org_id']) {
-		echo "You are not authorized to view this invoice.";
+	if($domain_id != $core->config['domain']['domain_id']) {
+		echo "You are not authorized to view this invoice. " . $org_id . " != ". $core->config['domain']['domain_id'];
 		die();		
 	}
 	
