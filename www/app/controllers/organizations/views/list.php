@@ -65,10 +65,19 @@ if($core->data['format'] == 'csv')
 		'directory_country_region dcr2',
 		'(dcr2.region_id=a2.region_id)',
 		array('dcr2.code as billing_state')
+	)->autojoin(
+		'left',
+		'customer_entity ce',
+		'(ce.org_id=v_organizations.org_id)',
+		array('group_concat(\',\',concat_ws(\' \',ce.first_name,ce.last_name)) as user_list')
 	);
 }
 $col = $col->collection()->filter('v_organizations.is_deleted','=',0);
 $col->add_formatter('org_col_formatter');
+if($core->data['format'] == 'csv')
+{
+	$col->group('v_organizations.org_id');
+}
 
 if(!lo3::is_market() && !lo3::is_admin())
 {
@@ -157,6 +166,7 @@ if($core->data['format'] == 'csv')
 	$orgs->add(new core_datacolumn('shipping_phone','Shipping Phone',false,$widths[3]));
 	$orgs->add(new core_datacolumn('billing_address','Billing Address',false,$widths[3]));
 	$orgs->add(new core_datacolumn('billing_phone','Billing Phone',false,$widths[3]));
+	$orgs->add(new core_datacolumn('user_list','User List',false,$widths[3]));
 }
 else
 {
