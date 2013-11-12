@@ -34,6 +34,12 @@ $col->__model->autojoin(
 	'(lo_order.lo_oid = lo_order_deliveries.lo_oid)',
 	array('lo_order.lo3_order_nbr','lo_order.org_id as buyer_org_id','lo_order.fee_percen_lo','lo_order.fee_percen_hub','payment_method','lo_order.paypal_processing_fee')
 );
+$col->__model->autojoin(
+	'left',
+	'organizations o2',
+	'(o2.org_id=lo_order.org_id)',
+	array('o2.name as buyer_org_name')
+);
 $col->filter('lo_delivery_statuses.ldstat_id','<>','1');
 $col->filter('lo_fulfillment_order.org_id',$core->session['org_id']);
 $col->add_formatter('delivery_actions');
@@ -83,12 +89,13 @@ function sold_items_output($output_type,$dt)
 }
 
 $col->add_formatter('sold_items_formatter');
+$col->group('lo_fulfillment_order.lo_foid');
 
 $orders = new core_datatable('orders','orders/sales_report',$col);
 $orders->handler_onoutput = 'sold_items_output';
 #$orders->add(new core_datacolumn('lo_foid','Order #',true,'15%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}"><b>LFO-{lo_foid}</b>'));
 $orders->add(new core_datacolumn('order_date','Placed On',true,'15%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{order_date}</a>'));
-$orders->add(new core_datacolumn('lo_foid','Sold To',true,'25%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{org_name}</b>'));
+$orders->add(new core_datacolumn('lo_foid','Sold To',true,'25%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{buyer_org_name}</b>'));
 $orders->add(new core_datacolumn('grand_total','Total',false,'20%'));
 $orders->add(new core_datacolumn('status','Status',true,'25%','<a href="#!orders-view_sales_order--lo_foid-{lo_foid}">{delivery_status}{actions}</a>'));
 $orders->columns[0]->autoformat='date-short';
@@ -96,5 +103,6 @@ $orders->columns[2]->autoformat='price';
 $orders->sort_direction = 'desc';
 page_header('Sales History','#!orders-current_sales','View only outstanding sales', null, 'plus', '');
 $orders->render();
+
 $this->totals_table();
 ?>
