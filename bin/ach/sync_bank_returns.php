@@ -53,7 +53,8 @@ $mycompanyinfo -> CompanyKey = 'QSFTHJJP3JCMFBXGQEDBZWKDBPPHFM2';
  
 $myDateFrom = date('Y-m-d',time() - ($config['start-days-before']* 86400)); //include leading zero for mm and dd e.g. 01 for Jan 
 $myDateTo  = date('Y-m-d',time() - ($config['end-days-before']* 86400));   //include leading zero for mm and dd e.g. 01 for Jan 
- 
+
+echo('From '.$myDateFrom.' till '.$myDateTo."\n"); 
  
 //SOAP call ‐ test server 
 $myclient = new SoapClient("https://securesoap.achworks.com/dnet/achws.asmx?WSDL"); 
@@ -67,14 +68,15 @@ $myresult = $myclient->GetACHReturnsHistRC(array(
 #->GetACHReturnsHistResult; 
  
 //print status and details 
-#print($myresult->Status . ", " . $myresult->Details . "\n"); 
+print($myresult->Status . ", " . $myresult->Details . "\n"); 
  
 echo($myresult->TotalNumRecords." results received.\n");
-for($i=0; $i < $myresult->TotalNumRecords; $i++)
+for($i=0; $i <= $myresult->TotalNumRecords; $i++)
 {
 	echo('Payment '.$settlement->FrontEndTrace." was settled.\n");
+	$payment_id = intval(str_replace('P-00','',$settlement->FrontEndTrace));
 	$settlement = $myresult->ACHReturnRecords->ACHReturnRecord[$i];
-	$sql = 'update payments set processing_status=\'confirmed\' where ref_nbr=\''.$settlement->FrontEndTrace.'\' and payment_method=\'ACH\';';
+	$sql = 'update payments set processing_status=\'confirmed\' where (ref_nbr=\''.$settlement->FrontEndTrace.'\' or payment_id='.$payment_id.') and payment_method=\'ACH\';';
 	if($config['report-sql'] == 1)
 		echo("\t".$sql."\n");
 		

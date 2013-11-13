@@ -143,6 +143,7 @@ foreach($payments as $payment)
 					core::process_command('emails/payment_received',false,
 						1,$payment['to_org_id'],$payment['amount'],$payables
 					);
+					ob_end_flush();
 				}
 				
 				# update the payment record with the trace
@@ -188,6 +189,7 @@ foreach($payments as $payment)
 				core::process_command('emails/payment_received',false,
 					1,$payment['to_org_id'],$payment['amount'],$payables
 				);
+				ob_end_flush();
 			}
 		#	$record->delete();
 			

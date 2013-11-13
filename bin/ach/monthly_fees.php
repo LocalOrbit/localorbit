@@ -125,7 +125,6 @@ function do_monthly_payment($domain)
 		$payment['ref_nbr'] = $trace;
 		
 		
-		
 		$account = core::model('organization_payment_methods')->load($domain['opm_id']);
 		$result = $account->make_payment($trace,'Services',round(floatval($payment['amount']),2));
 		
