@@ -46,8 +46,7 @@ popupWindow = window.open(url,winName,settings)
 											<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
 												<li class="footer"><a class="footer" href="/homepage/pricing.php">Pricing</a></li>
 												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Register', 'Demo Registration']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a></li>
-												<li class="footer"><a class="footer" href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Started</a></li>
-
+												<li class="footer"><a class="footer" href="/homepage/hubcamp.php">Hub Camp</a></li>
 										</ul>
 									</td>
 									<td>
@@ -69,6 +68,7 @@ popupWindow = window.open(url,winName,settings)
 										<li class="footer" style="font-size: 12px;"> Call 734.545.8100</a></li>
 					
 										<li class="footer"><a href="http://myaccount.zendesk.com/account/dropboxes/20147973" onclick="script: Zenbox.show(); return false;" class="footer">Ask a Question</a></li>
+                                        <li class="footer"><a class="footer" href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Started</a></li>
 									</ul>
 								</td>
 							</tr>
