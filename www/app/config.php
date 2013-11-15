@@ -15,6 +15,17 @@ $core->config['mailer'] = array(
 	'FromName'=>'Localorb.it',
 );
 
+$core->config['mandrill'] = array(
+	'SMTPAuth'=>true,
+	'SMTPSecure'=>'tls',
+	'Host'=>'smtp.mandrillapp.com',
+	'Port'=>587,
+	'Username'=>'localorbit.testing+mandrill.testing@gmail.com',
+	'Password'=>'oqvkDcp-1E6JBw92bZbL-w',
+	'From'=>'service@localorb.it',
+	'FromName'=>'Localorb.it',
+);
+
 $core->config['db'] = array(
 	'type'=>'mysql',
 	'hostname'=>'localorb.cc2ndox9watl.us-west-2.rds.amazonaws.com',
