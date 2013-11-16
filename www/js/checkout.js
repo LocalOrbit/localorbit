@@ -228,6 +228,7 @@ core.checkout.verifyValidAmount=function(lo_oid,dd_id,prod_id,amount){
 		var lowest = 9999999999999;
 		
 		// first, check to see if there's a price for this amount.
+		//core.alertHash(core.checkout.allPrices['prod_'+prod_id]);
 		for(var key in core.checkout.allPrices['prod_'+prod_id]){
 			var priceData = new String(key).split('-');
 			if(lowest > priceData[1])
