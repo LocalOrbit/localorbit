@@ -199,6 +199,17 @@ $products->render_page_arrows = false;
 $products->render_exporter = false;
 $products->size = (-1);
 core::log('data sent: '.print_r($core->data,true));
+
+# we need to write pricing data before the render call so that if the table has 
+# been changed, the data is available for the next set of items.
+function write_final_pricing_inventory_data()
+{
+	global $all_prices,$all_inventory;
+	core::log('pricing data sent to client: '.json_encode($all_prices));
+	core::js('core.checkout.allPrices='.json_encode($all_prices).';');
+	core::js('core.checkout.allInventory='.json_encode($all_inventory).';');
+}
+$products->handler_onoutput = 'write_final_pricing_inventory_data';
 $products->render();
 ?>
 <div class="form-actions pull-right" style="margin-top: 0px;padding-top: 0px;">
@@ -209,8 +220,7 @@ $products->render();
 <?php
 
 # write the pricing/inventory data to JS
-core::js('core.checkout.allPrices='.json_encode($all_prices).';');
-core::js('core.checkout.allInventory='.json_encode($all_inventory).';');
+
 
 core::log('outputting to new_item_dd_id_'.$core->data['dd_id']);
 core::replace('new_item_dd_id_'.$core->data['dd_id']);
