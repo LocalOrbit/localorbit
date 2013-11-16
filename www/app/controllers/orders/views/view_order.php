@@ -262,7 +262,7 @@ foreach($order->items as $item)
 </table>
 
 <?
-$this->add_item_button($order['lo_oid'],$this_dd,$dd_start_time);
+$this->add_item_button($order['lo_oid'],$this_dd,$dd_start_time,$order);
 
 
 echo('<input type="hidden" id="deliv_ids_'.$dd_id.'" name="deliv_ids_'.$dd_id.'" value="'.implode('-',$deliv_ids).'" />');
