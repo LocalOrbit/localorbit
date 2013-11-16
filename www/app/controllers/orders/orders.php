@@ -74,6 +74,7 @@ class core_controller_orders extends core_controller
 		
 		# get the buyer's order info
 		$order = core::model('lo_order')->load($core->data['lo_oid']);
+		$order->load_items();
 		$core->config['time'] = strtotime($order['order_date']);
 		
 		# get the domain config. Will need this when creating the payables.
@@ -120,6 +121,11 @@ class core_controller_orders extends core_controller
 		{
 			$deliveries_by_org_id[$delivery['seller_org_id']] = $delivery['lodeliv_id'];
 		}
+		foreach($order->items as $item)
+		{
+			$foids_by_org_id[$item['seller_org_id']] = $item['lo_foid'];
+		}
+		core::log('$foids_by_org_id: '.print_r($foids_by_org_id,true));
 		
 		# then loop through the new items and see if they'll work with an existing delivery
 		# if they do not, then we'll have to create a new delivery
@@ -294,7 +300,7 @@ class core_controller_orders extends core_controller
 		# finally, recalc the order totals for everything.
 		# this *should* reapply/distribute the discount code and such
 		$order->rebuild_totals_payables(true);
-		core::log('order totals rebuilt. grand total: '.$order['grand_total']);
+		#core::log('order totals rebuilt. grand total: '.$order['grand_total']);
 		
 		# tell the browser to reload all of the order info so that the new totals show up	
 		core::js("core.doRequest('/orders/view_order',{'lo_oid':".$order['lo_oid']."});");
