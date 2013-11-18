@@ -298,6 +298,6 @@ core.checkout.saveNewItems=function(lo_oid,dd_id){
 		//$('#new_item_dd_id_'+dd_id).html(core.checkout.progressHtml);
 		core.doRequest('/orders/add_items_to_existing_order',data);
 	}else{
-		alert('no products selected :(');
+		core.validatePopup('You must add at least one product.');
 	}
 }
