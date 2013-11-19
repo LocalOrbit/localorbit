@@ -75,6 +75,13 @@ class core_controller_orders extends core_controller
 		# get the buyer's order info
 		$order = core::model('lo_order')->load($core->data['lo_oid']);
 		$order->load_items();
+		
+		$existing_items = array();
+		foreach($order->items as $item)
+		{
+			$existing_items[$item['prod_id']] = $item['qty_ordered'];
+		}
+
 		$core->config['time'] = strtotime($order['order_date']);
 		
 		# get the domain config. Will need this when creating the payables.
@@ -91,7 +98,20 @@ class core_controller_orders extends core_controller
 		$to_add = array();
 		foreach($new_prod_ids as $prod_id)
 		{
-			$to_add[$prod_id] = floatval($core->data['prod_'.$prod_id]);
+			if(isset($existing_items[$prod_id]) && $existing_items[$prod_id] > 0)
+			{
+				$order_item = core::model('lo_order_line_item')
+					->collection()
+					->filter('lo_oid','=',$order['lo_oid'])
+					->filter('prod_id','=',$prod_id)
+					->row();
+				$order_item['qty_ordered'] = floatval($core->data['prod_'.$prod_id]);
+				$order_item->save();
+			}
+			else
+			{
+				$to_add[$prod_id] = floatval($core->data['prod_'.$prod_id]);
+			}
 		}
 		
 		
@@ -301,6 +321,14 @@ class core_controller_orders extends core_controller
 		# this *should* reapply/distribute the discount code and such
 		$order->rebuild_totals_payables(true);
 		#core::log('order totals rebuilt. grand total: '.$order['grand_total']);
+		
+		# handle the inventory reduction
+		$order->load_items();
+		$inv_model = core::model('product_inventory');
+		foreach($order->items as $item)
+		{
+			$inv_model->reduce_inventory($item);
+		}
 		
 		# tell the browser to reload all of the order info so that the new totals show up	
 		core::js("core.doRequest('/orders/view_order',{'lo_oid':".$order['lo_oid']."});");
