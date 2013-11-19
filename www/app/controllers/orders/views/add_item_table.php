@@ -1,13 +1,15 @@
 <?php
 global $catalog,$core;
 $order    = core::model('lo_order')->load($core->data['lo_oid']);
+$order->load_items();
 
-$existing_items = explode(',',core_db::col('
-	select group_concat(\',\',prod_id) as items
-	from lo_order_line_item
-	where lo_oid='.$order['lo_oid'].';
-','items'));
-$existing_items = array_unique($existing_items);
+global $existing_items;
+$existing_items = array();
+foreach($order->items as $item)
+{
+	$existing_items[$item['prod_id']] = $item['qty_ordered'];
+}
+
 
 #core::log('existing items: '.print_r($existing_items,true));
 #core::deinit();
@@ -30,17 +32,11 @@ for($i=0;$i<count($catalog['products']);$i++)
 	core::log('checking if '.$catalog['products'][$i]['prod_id'].' is valid: ');
 	if($catalog['products'][$i]['inventory_by_dd'][$core->data['dd_id']] > 0)
 	{
-		if(!in_array($catalog['products'][$i]['prod_id'],$existing_items))
-		{
-			$prod_ids[] = $catalog['products'][$i]['prod_id'];
-			$org_ids[]  = $catalog['products'][$i]['org_id'];
-			$dom_ids[]  = $catalog['products'][$i]['org_domain_id'];
-			core::log(' VALID! ');
-		}
-		else
-		{
-			core::log(' already in order');
-		}
+		
+		$prod_ids[] = $catalog['products'][$i]['prod_id'];
+		$org_ids[]  = $catalog['products'][$i]['org_id'];
+		$dom_ids[]  = $catalog['products'][$i]['org_domain_id'];
+		core::log(' VALID! ');
 	}
 	else
 	{
@@ -61,7 +57,8 @@ $all_inventory = array();
 # It creates the html for each column
 function in_page_ordering_formatter($data)
 {
-	global $catalog,$core,$all_prices,$all_inventory;
+	global $catalog,$core,$all_prices,$all_inventory,$existing_items;
+	$amount = intval($existing_items[$data['prod_id']]);
 
 	$product = $catalog['products'][$catalog['prods_by_id'][$data['prod_id']]];
 	$prices  = $catalog['prices'][$data['prod_id']];
@@ -89,7 +86,7 @@ function in_page_ordering_formatter($data)
 	$all_inventory['prod_'.$data['prod_id']] = $product['inventory_by_dd'][$core->data['dd_id']];
 	$data['stock'] = $product['inventory_by_dd'][$core->data['dd_id']];
 	$data['amount'] = '
-		<input type="text" class="items_for_dd_id_'.$core->data['dd_id'].'" onkeyup="core.checkout.verifyValidAmount('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',parseFloat($(this).val()));" size="3" style="width: 40px;margin-top: 7px;" id="item_'.$core->data['lo_oid'].'_'.$core->data['dd_id'].'_'.$data['prod_id'].'" value="" />
+		<input type="text" class="items_for_dd_id_'.$core->data['dd_id'].'" onkeyup="core.checkout.verifyValidAmount('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',parseFloat($(this).val()));" size="3" style="width: 40px;margin-top: 7px;" id="item_'.$core->data['lo_oid'].'_'.$core->data['dd_id'].'_'.$data['prod_id'].'" value="'.(($amount == 0)?'':$amount).'" />
 	';
 	$data['amount'] .= '&nbsp;&nbsp;
 		<div class="btn-group">
