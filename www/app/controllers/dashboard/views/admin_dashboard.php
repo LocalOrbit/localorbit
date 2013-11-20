@@ -83,10 +83,20 @@ for ($i = 0; $i < count($ord_data); $i++)
 }
 ?>
 <h1>Welcome <?=$core->session['first_name']?> <?=$core->session['last_name']?></h1>
-
+<p>You are currently logged into Local Orbit as an administrator.  You can 
+<a href="app.php#!market-list">configure a market</a>, 
+<a href="app.php#!products-list">modify a product</a>, 
+<a href="app.php#!organizations-add">create a new customer company</a>, 
+or 
+<a href="app.php#!dictionaries-edit">modify the dictionary</a>
+ - or do just about anything else related to 
+managing markets and supporting our customers.  That’s a lot of power!  
+Please be careful. 
+</p>
+<!--
 <p>You are currently logged into Local orbit as an administrator. This gives you the right to do pretty much anything you want, such as <a href="#!market-list">configure a market</a>, <a href="#!products-list">modify a product</a>, <a href="#!organizations-create">create a new customer company</a>, or <a href="#!dictionaries-edit">modify the dictionary</a>.</p>
 <p>Remember though: With great power, comes bad movie quotes. And remember that Mike Thorn can undo *almost* anything. Be careful.</p>
-
+-->
 <div class="row">
 <div class="span6">
 
