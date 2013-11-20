@@ -172,6 +172,8 @@ class core_controller_payments extends core_controller
 			
 			$email->save();
 		}
+
+		core_datatable::js_reload('enter_receipts');
 	}
 	
 	

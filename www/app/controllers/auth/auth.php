@@ -131,8 +131,7 @@ class core_controller_auth extends core_controller
 			$core->session['last_name']  = $user['last_name'];
 			$core->session['email']      = $user['email'];
 			$core->session['buyer_type'] = $user['buyer_type'];
-			$core->session['allow_sell'] = $user['allow_sell'];
-			$core->session['time_offset']= $user['offset_seconds'] + (3600 * $user['do_daylight_savings']);
+			$core->session['allow_sell'] = $user['allow_sell'];			
 			$core->session['tz_name']    = $user['tz_name'];
 			$core->session['home_domain_id'] = $user['home_domain_id'];
 			$core->session['all_domains'] = $user['all_domains'];
@@ -143,13 +142,19 @@ class core_controller_auth extends core_controller
 			$core->session['org_payment_allow_ach'] = $user['payment_allow_ach'];
 			$core->session['org_purchase_order_count'] = $user['purchase_order_count'];
 			
+			// daylight_savings
+			if (date("I") == 0) { 
+				$core->session['time_offset']= $user['offset_seconds'];
+			} else {
+				$core->session['time_offset']= $user['offset_seconds'] + (3600 * $user['do_daylight_savings']);
+			}
+			
 			
 			if($core->data['remember_me'] == 'on')
 			{
 				core_session::write_id_cookie();
 			}
 	
-			
 			
 			# figure out what the final hostname should be
 			$final_hostname = $core->session['hostname'];
@@ -304,7 +309,6 @@ class core_controller_auth extends core_controller
 		$core->session['buyer_type'] = $user['buyer_type'];
 		$core->session['allow_sell'] = $user['allow_sell'];
 		$core->session['is_active'] = $user['is_active'];
-		$core->session['time_offset'] = $user['offset_seconds'] + (3600 * $user['do_daylight_savings']);
 		$core->session['tz_name'] = $user['tz_name'];
 		$core->session['org_is_active'] = $user['org_is_active'];
 		$core->session['login_note_viewed'] = $user['login_note_viewed'];
@@ -312,6 +316,13 @@ class core_controller_auth extends core_controller
 		$core->session['org_payment_allow_paypal'] = $user['payment_allow_paypal'];
 		$core->session['org_payment_allow_ach'] = $user['payment_allow_ach'];
 		$core->session['org_purchase_order_count'] = $user['purchase_order_count'];
+		
+		// daylight_savings
+		if (date("I") == 0) {
+			$core->session['time_offset']= $user['offset_seconds'];
+		} else {
+			$core->session['time_offset']= $user['offset_seconds'] + (3600 * $user['do_daylight_savings']);
+		}
 		
 		$core->config['navstate'] = array();
 	

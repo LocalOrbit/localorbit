@@ -63,23 +63,32 @@ $to_be_invoiced_table->render_exporter = false;
 // default seach dates
 $start = Date('Y-m-d', strtotime("-30 days"));
 $end = Date('Y-m-d', strtotime("+2 days"));
-if(!isset($core->data[$to_be_invoiced_table->name.'__filter__receivables_createdat1'])){
-	$core->data[$to_be_invoiced_table->name.'__filter__receivables_createdat1'] = $start;
+if(!isset($core->data[$to_be_invoiced_table->name.'__filter__create_invoices_createdat1'])){
+	$core->data[$to_be_invoiced_table->name.'__filter__create_invoices_createdat1'] = $start;
 }
-if(!isset($core->data[$to_be_invoiced_table->name.'__filter__receivables_createdat2'])){
-	$core->data[$to_be_invoiced_table->name.'__filter__receivables_createdat2'] = $end;
+if(!isset($core->data[$to_be_invoiced_table->name.'__filter__create_invoices_createdat2'])){
+	$core->data[$to_be_invoiced_table->name.'__filter__create_invoices_createdat2'] = $end;
 }
 
 
 
 // filter box ********************************************************************************************************
-$to_be_invoiced_table->filter_html .= '<div style="float:right;width:410px;">'.get_inline_message('receivables',330).'</div>';
+$to_be_invoiced_table->filter_html .= '<div style="float:right;width:410px;">'.get_inline_message('create_invoices',330).'</div>';
 $to_be_invoiced_table->filter_html .= '<div style="float:left;width:490px;">';
 	// dates
-	$to_be_invoiced_table->add_filter(new core_datatable_filter('receivables_createdat1','lo_order.order_date','>','date',null));
-	$to_be_invoiced_table->add_filter(new core_datatable_filter('receivables_createdat2','lo_order.order_date','<','date',null));
-	$to_be_invoiced_table->filter_html .= core_datatable_filter::make_date($to_be_invoiced_table->name,'receivables_createdat1',core_format::date($start,'short'),'Ordered from ');
-	$to_be_invoiced_table->filter_html .= core_datatable_filter::make_date($to_be_invoiced_table->name,'receivables_createdat2',core_format::date($end,'short'),'Ordered to ');
+	$to_be_invoiced_table->add_filter(new core_datatable_filter('create_invoices_createdat1','lo_order.order_date','>','date',null));
+	$to_be_invoiced_table->add_filter(new core_datatable_filter('create_invoices_createdat2','lo_order.order_date','<','date',null));
+	$to_be_invoiced_table->filter_html .= core_datatable_filter::make_date($to_be_invoiced_table->name,'create_invoices_createdat1',core_format::date($start,'short'),'Ordered from ');
+	$to_be_invoiced_table->filter_html .= core_datatable_filter::make_date($to_be_invoiced_table->name,'create_invoices_createdat2',core_format::date($end),'Ordered to ');
+	
+
+	//echo "filter_states".$to_be_invoiced_table->filter_states[$to_be_invoiced_table->name.'__filter__create_invoices_createdat2']."<br>";
+	//echo "end ".$end."<br>";
+	//echo "make_date pass in end ".core_format::date($end)."<br>";
+	//echo "make_date pass in end ".core_format::date($end,'short')."<br>";
+
+	
+	
 	
 	// order number
 	$to_be_invoiced_table->add_filter(new core_datatable_filter('payable_info','lo3_order_nbr','~','search'));

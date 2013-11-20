@@ -526,11 +526,13 @@ function make_filter($datatable,$field,$options,$label,$all_label,$label_width=4
 		$datatable->add_filter(new core_datatable_filter($field));
 		
 
+	$data_index_name = str_replace('.','_',$field);  // clean it as some are lo_order.lo_id
+	
 	$datatable->filter_html .= '<div style="width:'.$label_width.'px;padding-top: 7px;padding-right: 5px;text-align: right;float:left;">'.$label.' </div>';
 	$datatable->filter_html .= core_datatable_filter::make_select(
 		$datatable->name,
-		$field,
-		$datatable->filter_states[$datatable->name.'__filter__'.$field],
+		$data_index_name,
+		$datatable->filter_states[$datatable->name.'__filter__'.$data_index_name],
 		$options,
 		'id',
 		'name',

@@ -22,7 +22,7 @@ class core_datatable_filter
 	function get_value()
 	{
 		global $core;
-		$data_index_name = str_replace('.','_',$this->parent->name.'__filter__'.$this->name);
+		$data_index_name = str_replace('.','_',$this->parent->name.'__filter__'.$this->name);	// clean it as some are lo_order.lo_id
 		
 		core::log('tryign to get filter value: '.$this->field);
 		if(!isset($this->parent->filter_states[$data_index_name]))

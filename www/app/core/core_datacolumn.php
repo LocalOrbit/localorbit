@@ -128,6 +128,19 @@ class core_datacolumn
 					$data[$this->dbname] = core_format::date($data[$this->dbname],'short');
 				}
 				break;
+			case 'date-short-highlight-past-with-days':
+				$time_diff = $data[$this->dbname] - time() - $core->session['time_offset'];
+				if ($time_diff < 0) {
+					$days_past_due = round(-1 * $time_diff/60/60/24); 
+					$data[$this->dbname] = '<div style="font-weight:bold;color: #c00;">'.core_format::date($data[$this->dbname],'short');
+						$data[$this->dbname] .= "<br>";
+						$data[$this->dbname] .= $days_past_due;
+						$data[$this->dbname] .= ($days_past_due == 1 ? " day" : " days")." past due";
+					$data[$this->dbname] .= '</div>';
+				} else {
+					$data[$this->dbname] = core_format::date($data[$this->dbname],'short');
+				}
+				break;
 		}
 		return $data;
 	}

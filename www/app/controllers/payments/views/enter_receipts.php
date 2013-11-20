@@ -52,7 +52,7 @@ $enter_receipts_table->add(new core_datacolumn('invoice_amount', 'Invoice Amount
 $enter_receipts_table->add(new core_datacolumn('invoice_num',array(core_ui::check_all('invoices'),'',''),false,'4%',core_ui::check_all('invoices','invoice_num'),' ',' '));
 
 $enter_receipts_table->columns[3]->autoformat='date-short';
-$enter_receipts_table->columns[4]->autoformat='date-short-highlight-past';
+$enter_receipts_table->columns[4]->autoformat='date-short-highlight-past-with-days';
 $enter_receipts_table->columns[5]->autoformat='price';
 $enter_receipts_table->render_exporter = false;
 
@@ -81,6 +81,8 @@ core_format::fix_unix_date_range(
 	$enter_receipts_table->name.'__filter__date2'
 );
 
+
+
 if(!isset($core->data[$enter_receipts_table->name.'__filter__date1'])){
 	$core->data[$enter_receipts_table->name.'__filter__date1'] = $start;
 }
@@ -101,10 +103,12 @@ $enter_receipts_table->filter_html .= '<div style="float:left;width:490px;">';
 	
 	// order number	and PO number
 	$enter_receipts_table->add_filter(new core_datatable_filter('payable_info','concat(lo3_order_nbr,payment_ref)','~','search'));
+	
+
 	$enter_receipts_table->filter_html .= core_datatable_filter::make_text($enter_receipts_table->name,'payable_info',$enter_receipts_table->filter_states[$enter_receipts_table->name.'__filter__payable_info'],'Search by Invoice or Purchase Order Number');
 	$enter_receipts_table->filter_html .= '<br /><div class="clearfix">&nbsp;</div>';
 
-	// buyer org
+	// buyer org	
 	make_filter($enter_receipts_table,'lo_order.org_id',$buyer_collection,'Buyer','All Organizations');
 
 	// markets
