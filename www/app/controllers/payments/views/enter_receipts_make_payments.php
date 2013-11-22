@@ -52,8 +52,8 @@ foreach($invoices_to_receive as $invoice_to_receive) {
 				<?php 
 					$sql = "
 						SELECT
-							invoices.invoice_num,
-							payables.amount,
+							invoices.invoice_num,				
+             				SUM(payables.amount) AS amount,
 							payables.payable_type,
 							group_concat(distinct(payables.payable_id) separator ',') as payable_ids
 						FROM payables INNER JOIN lo_order ON payables.lo_oid = lo_order.lo_oid
@@ -85,7 +85,6 @@ foreach($invoices_to_receive as $invoice_to_receive) {
 						}
 						
 						if ($payable['payable_type'] == 'buyer order') {
-	
 							$html = $html."<tr>";
 								$html = $html. "<td class='dt'>".$payable['invoice_num']."</td>";
 								$html = $html."<td class='dt' align='right'>".core_format::price($payable['amount'],false)."</td>";
