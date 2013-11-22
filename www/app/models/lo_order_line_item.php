@@ -310,6 +310,7 @@ class core_model_lo_order_line_item extends core_model_base_lo_order_line_item
 function determine_delivery_language($data)
 {
 	global $core;
+	
 	$data['buyer_formatted_deliv1'] ='Items ';
 	$data['buyer_formatted_deliv2'] ='Your order ';
 	// vvvvvvvvvvvvv changing delivery_start_time to pickup_start_time
@@ -330,7 +331,7 @@ function determine_delivery_language($data)
 	}
 	else
 	{
-		$prefix = (intval($data['pickup_address_id'])==0)?'delivery_':'pickup_';
+		$prefix = (intval($data['pickup_address_id'])<=0)?'delivery_':'pickup_';
 		$data['buyer_formatted_deliv1'] .= ' for pickup between '.core_format::date($data[$prefix.'start_time']).' and '.core_format::date($data[$prefix.'end_time']).' '.$core->session['tz_name'];
 		$data['buyer_formatted_deliv2'] .= ' can be picked up at <span id="lodelivinfo_'.$data['dd_id'].'">'.$data[$prefix.'address'].', '.$data[$prefix.'city'].', '.$data[$prefix.'state'].' '.$data[$prefix.'postal_code'].'</span>';
 	}
