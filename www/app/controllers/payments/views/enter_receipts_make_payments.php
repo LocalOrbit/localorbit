@@ -54,7 +54,6 @@ foreach($invoices_to_receive as $invoice_to_receive) {
 						SELECT
 							invoices.invoice_num,				
              				SUM(payables.amount) AS amount,
-							payables.payable_type,
 							group_concat(distinct(payables.payable_id) separator ',') as payable_ids
 						FROM payables INNER JOIN lo_order ON payables.lo_oid = lo_order.lo_oid
 							INNER JOIN invoices ON lo_order.lo_oid = invoices.lo_oid
@@ -74,22 +73,18 @@ foreach($invoices_to_receive as $invoice_to_receive) {
 					$html = $html."</tr>";
 					$html = $html."<tr>";
 						$html = $html."<th class='dt'>Invoice #</th>";
-						$html = $html."<th class='dt'>Amount Due</th>";
+						$html = $html."<th class='dt'>Amount Due".$payable['payable_type']."</th>";
 					$html = $html."</tr>";
 				
 					// invoices
 					foreach($payable_list as $payable){	
 						$payment_total += $payable['amount'];
-						if ($payable['payable_type'] == 'buyer order' || $payable['payable_type'] == 'delivery fee') {
-							$payable_ids[] = $payable['payable_ids'];
-						}
+						$payable_ids[] = $payable['payable_ids'];
 						
-						if ($payable['payable_type'] == 'buyer order') {
-							$html = $html."<tr>";
-								$html = $html. "<td class='dt'>".$payable['invoice_num']."</td>";
-								$html = $html."<td class='dt' align='right'>".core_format::price($payable['amount'],false)."</td>";
-							$html = $html."</tr>";
-						}
+						$html = $html."<tr>";
+							$html = $html. "<td class='dt'>".$payable['invoice_num']."</td>";
+							$html = $html."<td class='dt' align='right'>".core_format::price($payable['amount'],false)."</td>";
+						$html = $html."</tr>";
 					}
 					
 										
