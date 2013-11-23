@@ -106,6 +106,7 @@ class core_controller_orders extends core_controller
 					->filter('prod_id','=',$prod_id)
 					->row();
 				$order_item['qty_ordered'] = floatval($core->data['prod_'.$prod_id]);
+				$order_item['row_total'] = floatval($core->data['prod_'.$prod_id]) * $order_item['unit_price'];
 				$order_item->save();
 			}
 			else
@@ -324,6 +325,8 @@ class core_controller_orders extends core_controller
 
 		# finally, recalc the order totals for everything.
 		# this *should* reapply/distribute the discount code and such
+		$order->load_items();
+		core::model('lo_order_delivery_fees')->update_percent_fee($order['lo_oid']);
 		$order->rebuild_totals_payables(true);
 		#core::log('order totals rebuilt. grand total: '.$order['grand_total']);
 		
