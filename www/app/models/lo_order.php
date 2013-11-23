@@ -345,9 +345,11 @@ class core_model_lo_order extends core_model_lo_order___utility
 	
 	
 
-	function save_delivery_fees() {
+	function save_delivery_fees()
+	{
 		global $core;
 		$cart = core::model('lo_order')->get_cart();
+		$fee_model = core::model('lo_order_delivery_fees');
 		//core::log(print_r($cart->__data,true));
 	
 	
@@ -362,22 +364,10 @@ class core_model_lo_order extends core_model_lo_order___utility
 	
 	
 		// applied 1 time per delivery day
-		if ($flat_fee_exists > 0) {
-			core_db::query("INSERT INTO lo_order_delivery_fees
-			(lo_oid, devfee_id, dd_id, fee_type, fee_calc_type_id, amount, applied_amount)
-			SELECT DISTINCT lo_order_line_item.lo_oid,
-			  delivery_fees.devfee_id,
-			  delivery_fees.dd_id,
-			  'delivery' AS fee_type,
-			  2 AS fee_calc_type_id ,
-			delivery_fees.amount AS   amount,
-			delivery_fees.amount AS   applied_amount
-			FROM delivery_fees INNER JOIN lo_order_line_item ON delivery_fees.dd_id = lo_order_line_item.dd_id
-			WHERE delivery_fees.fee_calc_type_id = 2 /* flat amount */
-			AND lo_order_line_item.lo_oid=".$cart['lo_oid']);
+		if ($flat_fee_exists > 0)
+		{
+			$fee_model->insert_flat_fee($cart['lo_oid']);
 		}
-	
-	
 	
 		/* percentage delivery fee */
 		$percentage_fee_exists = core_db::num_rows("SELECT lo_order_line_item.lo_oid
@@ -385,19 +375,9 @@ class core_model_lo_order extends core_model_lo_order___utility
 			WHERE delivery_fees.fee_calc_type_id = 1 /* percentage amount */
 			AND lo_order_line_item.lo_oid=".$cart['lo_oid']);
 	
-		if ($percentage_fee_exists > 0) {
-			core_db::query("INSERT INTO lo_order_delivery_fees
-			(lo_oid, devfee_id, dd_id, fee_type, fee_calc_type_id, amount, applied_amount)
-			SELECT lo_order_line_item.lo_oid,
-			delivery_fees.devfee_id,
-			delivery_fees.dd_id,
-			'delivery' AS fee_type,
-			1 AS fee_calc_type_id ,
-			delivery_fees.amount AS amount,
-			Round(SUM(COALESCE(delivery_fees.amount / 100 * row_total,0)),2) AS applied_amount
-			FROM delivery_fees INNER JOIN lo_order_line_item ON delivery_fees.dd_id = lo_order_line_item.dd_id
-			WHERE delivery_fees.fee_calc_type_id = 1 /* percentage amount */
-			AND lo_order_line_item.lo_oid=".$cart['lo_oid']);
+		if ($percentage_fee_exists > 0)
+		{
+			$fee_model->insert_percent_fee($cart['lo_oid']);
 		}
 	}
 	
