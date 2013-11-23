@@ -272,6 +272,8 @@ class core_controller_orders extends core_controller
 			$b_payable['to_org_id'] = ($domain['buyer_invoicer'] == 'hub')?$domain['payable_org_id']:1;
 			$b_payable['amount'] = $item['row_total'];
 			$b_payable['creation_date'] = time();
+			$b_payable['lo_oid']    = $order['lo_oid'];
+			$b_payable['lo_liid']    = $item['lo_liid'];
 			$b_payable->save();
 			core::log('buyer payable saved: '.$b_payable['payable_id']);
 			
@@ -281,7 +283,8 @@ class core_controller_orders extends core_controller
 			$m_payable['domain_id'] = $order['domain_id'];
 			$m_payable['parent_obj_id'] = $item['lo_liid'];
 			$m_payable['creation_date'] = time();
-			
+			$m_payable['lo_oid']    = $order['lo_oid'];
+			$m_payable['lo_liid']    = $item['lo_liid'];
 			if($domain['buyer_invoicer'] == 'hub')
 			{
 				# if the hub is collecting the money, then they need to send LO our fees
@@ -304,6 +307,8 @@ class core_controller_orders extends core_controller
 			# create the seller payable
 			$s_payable = core::model('payables');
 			$s_payable['domain_id'] = $order['domain_id'];
+			$s_payable['lo_oid']    = $order['lo_oid'];
+			$s_payable['lo_liid']    = $item['lo_liid'];
 			$s_payable['parent_obj_id'] = $item['lo_liid'];
 			$s_payable['creation_date'] = time();
 			$s_payable['payable_type'] = 'seller order';
@@ -311,8 +316,8 @@ class core_controller_orders extends core_controller
 			$s_payable['amount'] = $item['row_total']  - (
 				$item['row_total'] * (($order['fee_percen_hub'] + $order['fee_percen_lo']) / 100)
 			);
-			$s_payable->save();
 			$s_payable['from_org_id'] = ($domain['seller_payer'] == 'hub')?$domain['payable_org_id']:1;
+			$s_payable->save();
 			core::log('seller payable saved: '.$s_payable['payable_id']);
 		}
 		
