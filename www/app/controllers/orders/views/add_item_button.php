@@ -18,7 +18,7 @@ if(lo3::is_market() || lo3::is_admin())
 	else if($order['payment_method'] == 'purchaseorder' && $order['lbps_id'] > 1)
 	{
 ?>
-	<div class="text-error"><strong>Buyer has already paid:</strong> Because the buyer has already paid for this order, you can no longer add items.</div>		
+	<div class="text-error"><strong>Buyer has already paid:</strong> Because the buyer has already paid for this order, you can no longer add items.</div>
 <?php
 	}
 	else if($order['payment_method'] == 'purchaseorder')
