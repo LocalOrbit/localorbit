@@ -187,6 +187,9 @@ class core_controller_orders extends core_controller
 					$fulfill['ldstat_id']  = 2;
 					$fulfill['lsps_id']    = 1;
 					$fulfill->save();
+					$fulfill['lo3_order_nbr'] = 'LFO-'.date('y').'-'.$order['domain_id'].'-'.str_pad($fulfill['lo_foid'],7,'0',STR_PAD_LEFT);
+					$fulfill->save();
+					
 					$lo_foid = $fulfill['lo_foid'];
 				}
 				
