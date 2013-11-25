@@ -7,10 +7,10 @@ $sql="
 		organizations.org_id,
 		concat(payables.from_org_id, '-', payables.to_org_id) as group_key,
 		group_concat(distinct(payables.payable_id) separator ',') as payable_ids
-	from payables
-		inner join organizations on organizations.org_id = payables.from_org_id
+	from payables inner join organizations on organizations.org_id = payables.to_org_id
 	where payables.payable_id in (". $payable_ids_string.")
 			and payables.from_org_id = ".$core->session['org_id']."
+	group by payables.from_org_id, payables.to_org_id  
 	order by organizations.name";
 
 $sellers = new core_collection($sql);
@@ -33,7 +33,7 @@ foreach($sellers as $seller) {
 							lo_order_line_item.product_name, 
 							lo_order_line_item.qty_delivered,
 							payables.amount
-						from payables inner join organizations on organizations.org_id = payables.from_org_id
+						from payables inner join organizations on organizations.org_id = payables.to_org_id
 							inner join lo_order on lo_order.lo_oid = payables.lo_oid
 							inner join lo_order_line_item on lo_order_line_item.lo_liid = payables.lo_liid
 						where payables.payable_id in (". $seller['payable_ids'].")
