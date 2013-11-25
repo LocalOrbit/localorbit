@@ -348,7 +348,7 @@ class core_controller_orders extends core_controller
 		}
 		
 		# tell the browser to reload all of the order info so that the new totals show up	
-		#core::js("core.doRequest('/orders/view_order',{'lo_oid':".$order['lo_oid']."});");
+		core::js("core.doRequest('/orders/view_order',{'lo_oid':".$order['lo_oid']."});");
 		core::deinit();
 	}
 	
