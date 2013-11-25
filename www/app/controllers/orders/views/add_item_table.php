@@ -213,14 +213,9 @@ function write_final_pricing_inventory_data()
 	core::js('core.checkout.allInventory='.json_encode($all_inventory).';');
 }
 $products->handler_onoutput = 'write_final_pricing_inventory_data';
+$this->add_items_confirm_buttons(1);
 $products->render();
-?>
-<div class="form-actions pull-right" style="margin-top: 0px;padding-top: 0px;">
-	<button class="btn btn-warning" onclick="core.checkout.cancelAddItemToOrder(<?=$core->data['lo_oid']?>,<?=$core->data['dd_id']?>);"><i class="icon icon-minus"></i>Cancel</button>
-	<button class="btn btn-primary" onclick="core.checkout.saveNewItems(<?=$core->data['lo_oid']?>,<?=$core->data['dd_id']?>);">Confirm Changes</button>
-</div>
-<div style="clear:both;">&nbsp;</div>
-<?php
+$this->add_items_confirm_buttons(2);
 
 # write the pricing/inventory data to JS
 
