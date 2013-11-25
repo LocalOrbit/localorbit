@@ -270,6 +270,8 @@ core.checkout.hideInvError=function(lo_oid,dd_id,prod_id,data){
 
 
 core.checkout.saveNewItems=function(lo_oid,dd_id){
+	$('#confirm_buttons_1,#confirm_buttons_2,#confirm_progress_1,#confirm_progress_2').toggle();
+	
 	var data = {};
 	var itemObjs = $('input.items_for_dd_id_'+dd_id);
 	var prod_ids = [];
