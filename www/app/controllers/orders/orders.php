@@ -76,6 +76,10 @@ class core_controller_orders extends core_controller
 		$order = core::model('lo_order')->load($core->data['lo_oid']);
 		$order->load_items();
 		
+		# this array stores the amount inventory needs to be adjusted by
+		# hashed by prod_id
+		$inv_adjusts = array();
+		
 		$existing_items = array();
 		foreach($order->items as $item)
 		{
@@ -105,6 +109,7 @@ class core_controller_orders extends core_controller
 					->filter('lo_oid','=',$order['lo_oid'])
 					->filter('prod_id','=',$prod_id)
 					->row();
+				$inv_adjusts[$prod_id] = floatval(floatval($core->data['prod_'.$prod_id]) - $order_item['qty_ordered']);
 				$order_item['qty_ordered'] = floatval($core->data['prod_'.$prod_id]);
 				$order_item['row_total'] = floatval($core->data['prod_'.$prod_id]) * $order_item['unit_price'];
 				$order_item->save();
@@ -112,6 +117,7 @@ class core_controller_orders extends core_controller
 			else
 			{
 				$to_add[$prod_id] = floatval($core->data['prod_'.$prod_id]);
+				$inv_adjusts[$prod_id] = $to_add[$prod_id];
 			}
 		}
 		
@@ -338,11 +344,11 @@ class core_controller_orders extends core_controller
 		$inv_model = core::model('product_inventory');
 		foreach($order->items as $item)
 		{
-			$inv_model->reduce_inventory($item);
+			$inv_model->reduce_inventory($item,$inv_adjusts[$item['prod_id']]);
 		}
 		
 		# tell the browser to reload all of the order info so that the new totals show up	
-		core::js("core.doRequest('/orders/view_order',{'lo_oid':".$order['lo_oid']."});");
+		#core::js("core.doRequest('/orders/view_order',{'lo_oid':".$order['lo_oid']."});");
 		core::deinit();
 	}
 	
