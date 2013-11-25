@@ -92,8 +92,14 @@ function in_page_ordering_formatter($data)
 		<div class="btn-group">
 			<button class="btn btn-info btn-mini" onclick="core.checkout.changeItemAmountInOrder('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',1);"><i class="icon icon-plus"></i></button>
 			<button class="btn btn-info btn-mini" onclick="core.checkout.changeItemAmountInOrder('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',-1);"><i class="icon icon-minus"></i></button>
-		</div>
-		<button class="btn btn-danger btn-mini" onclick="core.checkout.changeItemAmountInOrder('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',0);"><i class="icon icon-remove"></i></button>
+		</div>';
+		
+	if(floatval($amount) == 0)
+	{
+		$data['amount'] .= '<button class="btn btn-danger btn-mini" onclick="core.checkout.changeItemAmountInOrder('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',0);"><i class="icon icon-remove"></i></button>';
+	}
+		
+	$data['amount'] .= '
 		<div class="text-error" id="priceError-'.$core->data['dd_id'].'-'.$data['prod_id'].'" style="clear: both;display:none;"></div>
 		<div class="text-error" id="invError-'.$core->data['dd_id'].'-'.$data['prod_id'].'" style="clear: both;display:none;"></div>
 	';
