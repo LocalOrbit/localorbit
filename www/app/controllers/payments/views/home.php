@@ -40,6 +40,7 @@ if(lo3::is_admin() || lo3::is_market())
 	} else if(lo3::is_fully_managed()) {		
 		$tabs[] = 'View Payments to Vendors';
 	} else {
+		//$tabs[] = 'Record Payments to Vendors -old';
 		$tabs[] = 'Record Payments to Vendors';
 	}
 	
@@ -109,8 +110,11 @@ if($receivables) {
 	$this->receivables($tab_count);
 }
 if($payables) {
+	//$tab_count++;
+	//$this->review_orders($tab_count);
+	
 	$tab_count++;
-	$this->review_orders($tab_count);
+	$this->record_payments($tab_count);
 }
 
 

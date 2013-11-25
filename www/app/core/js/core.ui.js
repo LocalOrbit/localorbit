@@ -512,12 +512,17 @@ core.ui.checkAll=function(suffix,state){
 
 core.ui.getCheckallList=function(form,suffix){
 	var checkedList = [];
+	//console.log('getCheckallList length='+form.elements.length + ' suffix='+suffix);
 	for (var i = 0; i < form.elements.length; i++){
 		var elem = form.elements[i];
-		if(elem.type == 'checkbox'){
+		if(elem.type == 'checkbox'){			
 			//console.log('checking '+elem.name);
 			var name = new String(elem.name).split(/_/);
-			//console.log('name parts: '+name.join('-----'));
+			/*console.log('name parts: '+name.join('-----') 
+					+ ' name[0]=' + name[0] + '==checkall?' 
+					+ ' name[1]=' + name[1] + '==' + suffix + '?' 
+					+ name.length + '==3');*/
+			
 			if(name[0] == 'checkall' && name[1] == suffix && name.length == 3){
 				//console.log('got one. is it checked? '+((form.elements[i].checked)?'yes':'no'));
 				if(form.elements[i].checked)

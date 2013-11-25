@@ -463,7 +463,7 @@ class core_controller_payments extends core_controller
 		}
 		
 		core_datatable::js_reload('receivables');
-		core_datatable::js_reload('payables');
+		core_datatable::js_reload('record_payments');
 		core_datatable::js_reload('payments');
 		core_datatable::js_reload('enter_receipts');
 		core::js("$('#".$core->data['tab']."__area__".$core->data['group']."').hide();core.payments.checkAllPaymentsMade('".$core->data['tab']."');");

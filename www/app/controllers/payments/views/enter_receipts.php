@@ -21,7 +21,6 @@ $sql = "
 		organizations.name,
         lo_order.order_date,
 		invoices.due_date,
-		invoices.due_date,
         lo_order.grand_total AS invoice_amount,
 		lo_order.domain_id
 			
@@ -73,16 +72,12 @@ if(!isset($core->data[$enter_receipts_table->name.'__filter__date2'])){
 // default dates
 $base = mktime(0, 0, 0, date('n'), date('j'));
 $start =  $base - (86400*30) - intval($core->session['time_offset']);
-$end = $base + (86400*30) - intval($core->session['time_offset']) + 86399;
-
+$end = $base - intval($core->session['time_offset']) + 86399;
 // invoices.due_date is unix date
 core_format::fix_unix_date_range(
 	$enter_receipts_table->name.'__filter__date1',
 	$enter_receipts_table->name.'__filter__date2'
 );
-
-
-
 if(!isset($core->data[$enter_receipts_table->name.'__filter__date1'])){
 	$core->data[$enter_receipts_table->name.'__filter__date1'] = $start;
 }

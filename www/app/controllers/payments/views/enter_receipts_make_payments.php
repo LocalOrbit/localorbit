@@ -73,7 +73,7 @@ foreach($invoices_to_receive as $invoice_to_receive) {
 					$html = $html."</tr>";
 					$html = $html."<tr>";
 						$html = $html."<th class='dt'>Invoice #</th>";
-						$html = $html."<th class='dt'>Amount Due".$payable['payable_type']."</th>";
+						$html = $html."<th class='dt'>Amount Due</th>";
 					$html = $html."</tr>";
 				
 					// invoices
