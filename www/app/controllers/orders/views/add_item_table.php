@@ -10,6 +10,13 @@ foreach($order->items as $item)
 	$existing_items[$item['prod_id']] = $item['qty_ordered'];
 }
 
+if(!is_array($core->session['order-edit-updates']))
+	$core->session['order-edit-updates'] = array();
+if(!is_array($core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]))
+	$core->session['order-edit-updates']['lo-'.$core->data['lo_oid']] = array();
+if(!is_array($core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['dd-'.$core->data['dd_id']]))
+	$core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['dd-'.$core->data['dd_id']] = array();
+	
 
 #core::log('existing items: '.print_r($existing_items,true));
 #core::deinit();
@@ -85,8 +92,18 @@ function in_page_ordering_formatter($data)
 	}
 	$all_inventory['prod_'.$data['prod_id']] = $product['inventory_by_dd'][$core->data['dd_id']];
 	$data['stock'] = $product['inventory_by_dd'][$core->data['dd_id']];
+	
+	if(is_numeric($core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['dd-'.$core->data['dd_id']]['prod-'.$data['prod_id']]))
+	{
+		$qty = floatval($core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['dd-'.$core->data['dd_id']]['prod-'.$data['prod_id']]);
+	}
+	else
+	{
+		$qty = (($amount == 0)?'':$amount);
+	}
+	
 	$data['amount'] = '
-		<input type="text" class="items_for_dd_id_'.$core->data['dd_id'].'" onkeyup="core.checkout.verifyValidAmount('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',parseFloat($(this).val()));" size="3" style="width: 40px;margin-top: 7px;" id="item_'.$core->data['lo_oid'].'_'.$core->data['dd_id'].'_'.$data['prod_id'].'" value="'.(($amount == 0)?'':$amount).'" />
+		<input type="text" class="items_for_dd_id_'.$core->data['dd_id'].'" onkeyup="core.checkout.verifyValidAmount('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',parseFloat($(this).val()));" size="3" style="width: 40px;margin-top: 7px;" id="item_'.$core->data['lo_oid'].'_'.$core->data['dd_id'].'_'.$data['prod_id'].'" value="'.$qty.'" />
 	';
 	$data['amount'] .= '&nbsp;&nbsp;
 		<div class="btn-group">
@@ -94,10 +111,10 @@ function in_page_ordering_formatter($data)
 			<button class="btn btn-info btn-mini" onclick="core.checkout.changeItemAmountInOrder('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',-1);"><i class="icon icon-minus"></i></button>
 		</div>';
 		
-	if(floatval($amount) == 0)
-	{
+	#if(floatval($amount) == 0)
+	#{
 		$data['amount'] .= '<button class="btn btn-danger btn-mini" onclick="core.checkout.changeItemAmountInOrder('.$core->data['lo_oid'].','.$core->data['dd_id'].','.$data['prod_id'].',0);"><i class="icon icon-remove"></i></button>';
-	}
+	#}
 		
 	$data['amount'] .= '
 		<div class="text-error" id="priceError-'.$core->data['dd_id'].'-'.$data['prod_id'].'" style="clear: both;display:none;"></div>
@@ -222,5 +239,6 @@ $this->add_items_confirm_buttons(2);
 
 core::log('outputting to new_item_dd_id_'.$core->data['dd_id']);
 core::replace('new_item_dd_id_'.$core->data['dd_id']);
+
 
 ?>
