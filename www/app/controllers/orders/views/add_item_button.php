@@ -15,7 +15,7 @@ if(lo3::is_market() || lo3::is_admin())
 	<div class="text-error"><strong>Past delivery cutoff:</strong> Because the cutoff time has already passed for this delivery, you can no longer add items.</div>
 <?php
 	}
-	else if($order['payment_method'] == 'purchaseorder' && $order['lbps_id'] > 1)
+	else if($order['payment_method'] == 'purchaseorder' && $order['lbps_id'] > 1 && $order['lbps_id'] != 4)
 	{
 ?>
 	<div class="text-error"><strong>Buyer has already paid:</strong> Because the buyer has already paid for this order, you can no longer add items.</div>
