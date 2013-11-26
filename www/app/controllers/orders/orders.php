@@ -2,6 +2,16 @@
 
 class core_controller_orders extends core_controller
 {
+	
+	function save_edit_updates_to_session()
+	{
+		global $core;
+		$core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['dd-'.$core->data['dd_id']]['prod-'.$core->data['prod_id']] = $core->data['qty'];
+		core::log('saving edit data: '.print_r($core->data,true));
+		core::log('all edit data: '.print_r($core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['dd-'.$core->data['dd_id']],true));
+		exit('{};');
+	}
+	
 	function get_cached_catalog($domain_id,$dd_id,$org_id,$time)
 	{
 		global $core;
@@ -98,10 +108,12 @@ class core_controller_orders extends core_controller
 		# build an associative array of the new prods.
 		# key == prod_id,
 		# value == qty to add
-		$new_prod_ids = explode('_',$core->data['prod_ids']);
+		
+		
 		$to_add = array();
-		foreach($new_prod_ids as $prod_id)
+		foreach($core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['dd-'.$core->data['dd_id']] as $prod_key=>$qty)
 		{
+			list($label,$prod_id) = explode('-',$prod_key);
 			if(isset($existing_items[$prod_id]) && $existing_items[$prod_id] > 0)
 			{
 				$order_item = core::model('lo_order_line_item')
@@ -109,14 +121,18 @@ class core_controller_orders extends core_controller
 					->filter('lo_oid','=',$order['lo_oid'])
 					->filter('prod_id','=',$prod_id)
 					->row();
-				$inv_adjusts[$prod_id] = floatval(floatval($core->data['prod_'.$prod_id]) - $order_item['qty_ordered']);
-				$order_item['qty_ordered'] = floatval($core->data['prod_'.$prod_id]);
-				$order_item['row_total'] = floatval($core->data['prod_'.$prod_id]) * $order_item['unit_price'];
+				$inv_adjusts[$prod_id] = floatval(floatval($qty) - $order_item['qty_ordered']);
+				$order_item['qty_ordered'] = floatval($qty);
+				$order_item['row_total'] = floatval($qty) * $order_item['unit_price'];
+				if($qty == 0)
+				{
+					$order_item['ldstat_id'] = 3;
+				}
 				$order_item->save();
 			}
 			else
 			{
-				$to_add[$prod_id] = floatval($core->data['prod_'.$prod_id]);
+				$to_add[$prod_id] = floatval($qty);
 				$inv_adjusts[$prod_id] = $to_add[$prod_id];
 			}
 		}
@@ -238,97 +254,100 @@ class core_controller_orders extends core_controller
 		foreach($to_add as $prod_id=>$qty)
 		{
 			
-			$product = $catalog['products'][$catalog['prods_by_id'][$prod_id]];
-			core::log('adding '.$product['name'].' for real now');
-			
-			# determine best price
-			list($valid,$price_id,$amount,$error_type,$error_data) = $catalog_controller->determine_best_price(
-				$product,$qty,$catalog['prices'],array('dd_id'=>$core->data['dd_id'])
-			);
-			
-			core::log('final price: '.$amount.'. error received from pricing: '.$error_type);
-			
-			# insert into lo_order_line_item
-			$item = core::model('lo_order_line_item');
-			$item['lo_oid'] = $order['lo_oid'];
-			$item['lo_foid'] = $foids_by_org_id[$product['org_id']];
-			$item['product_name'] = $product['name'];
-			$item['qty_ordered'] = $qty;
-			$item['qty_adjusted'] = $qty;
-			$item['unit'] = $product['single_unit'];
-			$item['unit_price'] = $amount;
-			$item['row_total'] = $amount * $qty;
-			$item['unit_plural'] = $product['plural_unit'];
-			$item['prod_id'] = $product['prod_id'];
-			$item['addr_id'] = $product['addr_id'];
-			$item['dd_id'] = $product['name'];
-			$item['seller_org_id'] = $product['org_id'];
-			$item['seller_name'] = $product['org_name'];
-			$item['lodeliv_id'] = $deliveries_by_org_id[$prod['org_id']];
-			$item['lbps_id'] = 1;
-			$item['ldstat_id'] = 2;
-			$item['lsps_id'] = 1;
-			$item['category_ids'] = $product['category_ids'];
-			$item['final_cat_id'] = $product['final_cat_id'];
-			$item->save();
-			core::log('item saved: '.$item['lo_liid']);
-			
-			# create buyer payable
-			$b_payable = core::model('payables');
-			$b_payable['domain_id'] = $order['domain_id'];
-			$b_payable['parent_obj_id'] = $item['lo_liid'];
-			$b_payable['payable_type'] = 'buyer order';
-			$b_payable['from_org_id'] = $order['org_id'];
-			$b_payable['to_org_id'] = ($domain['buyer_invoicer'] == 'hub')?$domain['payable_org_id']:1;
-			$b_payable['amount'] = $item['row_total'];
-			$b_payable['creation_date'] = time();
-			$b_payable['lo_oid']    = $order['lo_oid'];
-			$b_payable['lo_liid']    = $item['lo_liid'];
-			$b_payable->save();
-			core::log('buyer payable saved: '.$b_payable['payable_id']);
-			
-			
-			# create market/lo payable
-			$m_payable = core::model('payables');
-			$m_payable['domain_id'] = $order['domain_id'];
-			$m_payable['parent_obj_id'] = $item['lo_liid'];
-			$m_payable['creation_date'] = time();
-			$m_payable['lo_oid']    = $order['lo_oid'];
-			$m_payable['lo_liid']    = $item['lo_liid'];
-			if($domain['buyer_invoicer'] == 'hub')
+			if($qty > 0)
 			{
-				# if the hub is collecting the money, then they need to send LO our fees
-				$m_payable['payable_type'] = 'lo fees';
-				$m_payable['from_org_id']  = $domain['payable_org_id'];
-				$m_payable['to_org_id']    = 1;
-				$m_payable['amount'] = $item['row_total'] * ($order['fee_percen_lo'] / 100);
+				$product = $catalog['products'][$catalog['prods_by_id'][$prod_id]];
+				core::log('adding '.$product['name'].' for real now');
+				
+				# determine best price
+				list($valid,$price_id,$amount,$error_type,$error_data) = $catalog_controller->determine_best_price(
+					$product,$qty,$catalog['prices'],array('dd_id'=>$core->data['dd_id'])
+				);
+				
+				core::log('final price: '.$amount.'. error received from pricing: '.$error_type);
+				
+				# insert into lo_order_line_item
+				$item = core::model('lo_order_line_item');
+				$item['lo_oid'] = $order['lo_oid'];
+				$item['lo_foid'] = $foids_by_org_id[$product['org_id']];
+				$item['product_name'] = $product['name'];
+				$item['qty_ordered'] = $qty;
+				$item['qty_adjusted'] = $qty;
+				$item['unit'] = $product['single_unit'];
+				$item['unit_price'] = $amount;
+				$item['row_total'] = $amount * $qty;
+				$item['unit_plural'] = $product['plural_unit'];
+				$item['prod_id'] = $product['prod_id'];
+				$item['addr_id'] = $product['addr_id'];
+				$item['dd_id'] = $product['name'];
+				$item['seller_org_id'] = $product['org_id'];
+				$item['seller_name'] = $product['org_name'];
+				$item['lodeliv_id'] = $deliveries_by_org_id[$prod['org_id']];
+				$item['lbps_id'] = 1;
+				$item['ldstat_id'] = 2;
+				$item['lsps_id'] = 1;
+				$item['category_ids'] = $product['category_ids'];
+				$item['final_cat_id'] = $product['final_cat_id'];
+				$item->save();
+				core::log('item saved: '.$item['lo_liid']);
+				
+				# create buyer payable
+				$b_payable = core::model('payables');
+				$b_payable['domain_id'] = $order['domain_id'];
+				$b_payable['parent_obj_id'] = $item['lo_liid'];
+				$b_payable['payable_type'] = 'buyer order';
+				$b_payable['from_org_id'] = $order['org_id'];
+				$b_payable['to_org_id'] = ($domain['buyer_invoicer'] == 'hub')?$domain['payable_org_id']:1;
+				$b_payable['amount'] = $item['row_total'];
+				$b_payable['creation_date'] = time();
+				$b_payable['lo_oid']    = $order['lo_oid'];
+				$b_payable['lo_liid']    = $item['lo_liid'];
+				$b_payable->save();
+				core::log('buyer payable saved: '.$b_payable['payable_id']);
+				
+				
+				# create market/lo payable
+				$m_payable = core::model('payables');
+				$m_payable['domain_id'] = $order['domain_id'];
+				$m_payable['parent_obj_id'] = $item['lo_liid'];
+				$m_payable['creation_date'] = time();
+				$m_payable['lo_oid']    = $order['lo_oid'];
+				$m_payable['lo_liid']    = $item['lo_liid'];
+				if($domain['buyer_invoicer'] == 'hub')
+				{
+					# if the hub is collecting the money, then they need to send LO our fees
+					$m_payable['payable_type'] = 'lo fees';
+					$m_payable['from_org_id']  = $domain['payable_org_id'];
+					$m_payable['to_org_id']    = 1;
+					$m_payable['amount'] = $item['row_total'] * ($order['fee_percen_lo'] / 100);
+				}
+				else
+				{
+					# if lo is collecting the money, we need to send the hub the hub fees
+					$m_payable['payable_type'] = 'hub fees';
+					$m_payable['from_org_id']    = 1;
+					$m_payable['to_org_id']  = $domain['payable_org_id'];
+					$m_payable['amount'] = $item['row_total'] * ($order['fee_percen_hub'] / 100);
+				}
+				$m_payable->save();
+				core::log('market/lo payable saved: '.$m_payable['payable_id']);
+							
+				# create the seller payable
+				$s_payable = core::model('payables');
+				$s_payable['domain_id'] = $order['domain_id'];
+				$s_payable['lo_oid']    = $order['lo_oid'];
+				$s_payable['lo_liid']    = $item['lo_liid'];
+				$s_payable['parent_obj_id'] = $item['lo_liid'];
+				$s_payable['creation_date'] = time();
+				$s_payable['payable_type'] = 'seller order';
+				$s_payable['to_org_id']  = $product['org_id'];
+				$s_payable['amount'] = $item['row_total']  - (
+					$item['row_total'] * (($order['fee_percen_hub'] + $order['fee_percen_lo']) / 100)
+				);
+				$s_payable['from_org_id'] = ($domain['seller_payer'] == 'hub')?$domain['payable_org_id']:1;
+				$s_payable->save();
+				core::log('seller payable saved: '.$s_payable['payable_id']);
 			}
-			else
-			{
-				# if lo is collecting the money, we need to send the hub the hub fees
-				$m_payable['payable_type'] = 'hub fees';
-				$m_payable['from_org_id']    = 1;
-				$m_payable['to_org_id']  = $domain['payable_org_id'];
-				$m_payable['amount'] = $item['row_total'] * ($order['fee_percen_hub'] / 100);
-			}
-			$m_payable->save();
-			core::log('market/lo payable saved: '.$m_payable['payable_id']);
-						
-			# create the seller payable
-			$s_payable = core::model('payables');
-			$s_payable['domain_id'] = $order['domain_id'];
-			$s_payable['lo_oid']    = $order['lo_oid'];
-			$s_payable['lo_liid']    = $item['lo_liid'];
-			$s_payable['parent_obj_id'] = $item['lo_liid'];
-			$s_payable['creation_date'] = time();
-			$s_payable['payable_type'] = 'seller order';
-			$s_payable['to_org_id']  = $product['org_id'];
-			$s_payable['amount'] = $item['row_total']  - (
-				$item['row_total'] * (($order['fee_percen_hub'] + $order['fee_percen_lo']) / 100)
-			);
-			$s_payable['from_org_id'] = ($domain['seller_payer'] == 'hub')?$domain['payable_org_id']:1;
-			$s_payable->save();
-			core::log('seller payable saved: '.$s_payable['payable_id']);
 		}
 		
 
@@ -346,6 +365,11 @@ class core_controller_orders extends core_controller
 		{
 			$inv_model->reduce_inventory($item,$inv_adjusts[$item['prod_id']]);
 		}
+		$order->update_status();
+		
+		# remove the cached list of items
+		unset($core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['dd-'.$core->data['dd_id']]);
+		$core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['dd-'.$core->data['dd_id']] = array();
 		
 		# tell the browser to reload all of the order info so that the new totals show up	
 		core::js("core.doRequest('/orders/view_order',{'lo_oid':".$order['lo_oid']."});");
