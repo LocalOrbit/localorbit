@@ -210,7 +210,18 @@ core.checkout.changeItemAmountInOrder=function(lo_oid,dd_id,prod_id,amount){
 	if(currentAmount < 0)
 		currentAmount = 0;
 	inputfield.val(currentAmount);
-	core.checkout.verifyValidAmount(lo_oid,dd_id,prod_id,currentAmount);
+	if(core.checkout.verifyValidAmount(lo_oid,dd_id,prod_id,currentAmount)){
+		core.checkout.sendQty(lo_oid,dd_id,prod_id,currentAmount);
+	}
+}
+
+core.checkout.sendQty=function(lo_oid,dd_id,prod_id,currentAmount){
+	core.doRequest('/orders/save_edit_updates_to_session',{
+		'lo_oid':lo_oid,
+		'dd_id':dd_id,
+		'prod_id':prod_id,
+		'qty':currentAmount
+	});
 }
 
 
@@ -268,11 +279,15 @@ core.checkout.hideInvError=function(lo_oid,dd_id,prod_id,data){
 	$('#invError-'+dd_id+'-'+prod_id).hide();
 }
 
-
 core.checkout.saveNewItems=function(lo_oid,dd_id){
 	$('#confirm_buttons_1,#confirm_buttons_2,#confirm_progress_1,#confirm_progress_2').toggle();
 	
 	var data = {};
+	data['dd_id'] = dd_id;
+	data['lo_oid'] = lo_oid;
+	core.doRequest('/orders/add_items_to_existing_order',data);
+	
+	/*
 	var itemObjs = $('input.items_for_dd_id_'+dd_id);
 	var prod_ids = [];
 	var hasProducts = false;
@@ -293,6 +308,7 @@ core.checkout.saveNewItems=function(lo_oid,dd_id){
 			}
 		}
 	}
+
 	if(hasProducts){
 		data['prod_ids'] = prod_ids.join('_');
 		data['dd_id'] = dd_id;
@@ -302,4 +318,5 @@ core.checkout.saveNewItems=function(lo_oid,dd_id){
 	}else{
 		core.validatePopup('You must add at least one product.');
 	}
+	*/
 }
