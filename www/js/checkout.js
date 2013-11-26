@@ -210,9 +210,8 @@ core.checkout.changeItemAmountInOrder=function(lo_oid,dd_id,prod_id,amount){
 	if(currentAmount < 0)
 		currentAmount = 0;
 	inputfield.val(currentAmount);
-	if(core.checkout.verifyValidAmount(lo_oid,dd_id,prod_id,currentAmount)){
-		core.checkout.sendQty(lo_oid,dd_id,prod_id,currentAmount);
-	}
+	core.checkout.verifyValidAmount(lo_oid,dd_id,prod_id,currentAmount);
+		
 }
 
 core.checkout.sendQty=function(lo_oid,dd_id,prod_id,currentAmount){
@@ -231,6 +230,7 @@ core.checkout.verifyValidAmount=function(lo_oid,dd_id,prod_id,amount){
 	if(amount == 0){
 		core.checkout.hideInvError(lo_oid,dd_id,prod_id);
 		core.checkout.hidePriceError(lo_oid,dd_id,prod_id);
+		core.checkout.sendQty(lo_oid,dd_id,prod_id,amount);
 		return true;
 	}else{
 	
@@ -261,7 +261,9 @@ core.checkout.verifyValidAmount=function(lo_oid,dd_id,prod_id,amount){
 			core.checkout.showInvError(lo_oid,dd_id,prod_id,core.checkout.allInventory['prod_'+prod_id]);
 		else
 			core.checkout.hideInvError(lo_oid,dd_id,prod_id);
-			
+		
+		if(hasPrice && hasInv)
+			core.checkout.sendQty(lo_oid,dd_id,prod_id,amount);
 		return (hasPrice && hasInv);
 	}
 }
