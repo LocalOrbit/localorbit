@@ -152,7 +152,7 @@ foreach($order->items as $item)
 		if(!is_null($dd_id))
 		{
 			echo('</tbody></table>');
-			$this->add_item_button($order['lo_oid'],$this_dd,$dd_start_time,$order);
+			$this->add_item_button($order['lo_oid'],$dd_id,$dd_start_time,$order);
 			echo('<input type="hidden" id="deliv_ids_'.$dd_id.'" name="deliv_ids_'.$dd_id.'" value="'.implode('-',$deliv_ids).'" />');			
 			$deliv_ids = array();
 		}
