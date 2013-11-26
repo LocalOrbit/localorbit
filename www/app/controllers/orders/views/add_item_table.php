@@ -7,7 +7,8 @@ global $existing_items;
 $existing_items = array();
 foreach($order->items as $item)
 {
-	$existing_items[$item['prod_id']] = $item['qty_ordered'];
+	if($item['dd_id'] == $core->data['dd_id'])
+		$existing_items[$item['prod_id']] = $item['qty_ordered'];
 }
 
 if(!is_array($core->session['order-edit-updates']))
