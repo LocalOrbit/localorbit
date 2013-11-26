@@ -92,7 +92,7 @@ class PayPalApi {
 		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT='.round($discount_total,2);
 		$rqParamString .= '&PAYMENTREQUEST_0_TAXAMT=0';
 		$rqParamString .= '&PAYMENTREQUEST_0_ITEMAMT='.round($items_total,2);
-		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.round($cart['grand_total'],2);
+		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.round($cart['grand_total'] + $discount_total,2); // $cart['grand_total'] is not correct and discount is not kept in cart on any refresh
 
 		core::log('paypal rqParamString: '.$rqParamString);
 		/* echo 'delivery_fee = '.$cart['delivery_fee']."<br>";
