@@ -5,10 +5,13 @@ $order->load_items();
 
 global $existing_items;
 $existing_items = array();
+$other_deliv_items = array();
 foreach($order->items as $item)
 {
 	if($item['dd_id'] == $core->data['dd_id'])
 		$existing_items[$item['prod_id']] = $item['qty_ordered'];
+	else
+		$other_deliv_items[$item['prod_id']] = $item['qty_ordered'];
 }
 
 if(!is_array($core->session['order-edit-updates']))
@@ -141,7 +144,8 @@ $col = core::model('products')
 		array('domains.name as market_name','domains.domain_id')
 	)
 	->collection()
-	->filter('prod_id','in',$prod_ids);
+	->filter('prod_id','in',$prod_ids)
+	->filter('prod_id','not in',array_keys($other_deliv_items));
 $col->add_formatter('in_page_ordering_formatter');
 
 # setup the table and columns
