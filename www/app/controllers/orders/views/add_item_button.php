@@ -6,19 +6,23 @@ if(lo3::is_market() || lo3::is_admin())
 	$start  = $core->view[2];
 	$order  = $core->view[3];
 	
+	$items_paid_in_dd = 0;
+	foreach($order->items as $item)
+	{
+		if($item['dd_id'] == $dd_id && ($item['lbps_id'] == 2 || $item['lbps_id'] == 4 || $item['lbps_id'] == 7))
+		{
+			$items_paid_in_dd++;
+		}
+	}
+	
 	$delivery = core::model('delivery_days')->load($dd_id);
 	$cutoff = $start - ($delivery['hours_due_before'] * 3600);
 	
-	if($core->config['time'] > $cutoff)
+	
+	if($order['payment_method'] == 'purchaseorder' && $items_paid_in_dd > 0)
 	{
 ?>
-	<div class="text-error"><strong>Past delivery cutoff:</strong> Because the cutoff time has already passed for this delivery, you can no longer add items.</div>
-<?php
-	}
-	else if($order['payment_method'] == 'purchaseorder' && $order['lbps_id'] > 1 && $order['lbps_id'] != 4)
-	{
-?>
-	<div class="text-error"><strong>Buyer has already paid:</strong> Because the buyer has already paid for this order, you can no longer add items.</div>
+	<div class="text-error"><strong>Buyer has already paid:</strong> Because the buyer has already paid for this delivery, you can no longer add items.</div><br />
 <?php
 	}
 	else if($order['payment_method'] == 'purchaseorder')
