@@ -19,7 +19,7 @@ if(!is_array($core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['
 	$core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['dd-'.$core->data['dd_id']] = array();
 	
 
-#core::log('existing items: '.print_r($existing_items,true));
+core::log('existing items: '.print_r($existing_items,true));
 #core::deinit();
 
 $core->session['org_id'] = $order['org_id'];
