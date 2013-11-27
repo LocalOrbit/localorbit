@@ -38,8 +38,11 @@ class core_controller_orders extends core_controller
 			$now = time();
 			
 			# toss it out if it's too old
-			#($catalog['time-generated'] - $now) > 120
-			if(true)
+			#
+			#echo('<h3>original generation: '.date('Y-m-d H:i:s',$catalog['time-generated']).'</h3>');
+			#echo('<h3>now generation: '.date('Y-m-d H:i:s',time()).'</h3>');
+			#echo('<h3>difference: '.($now - $catalog['time-generated']).'</h3>');
+			if(($now - $catalog['time-generated']) > 120)
 			{
 				core::log('Catalog in session was too old :(');
 				unset($core->session['catalog-'.$domain_id.'-'.$dd_id.'-'.$org_id]);
