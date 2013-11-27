@@ -25,7 +25,7 @@ if(!is_array($core->session['order-edit-updates']['lo-'.$core->data['lo_oid']]['
 $core->session['org_id'] = $order['org_id'];
 $dd_id=$core->data['dd_id'];
 $catalog = $this->get_cached_catalog($order['domain_id'],$dd_id,$order['org_id'],strftime($order['order_date']));
-
+#echo('<h2>catalog generated on '.date('Y-m-d H:i:s',$catalog['time-generated']).'</h2>');
 
 $prod_ids = array();
 $org_ids  = array();
