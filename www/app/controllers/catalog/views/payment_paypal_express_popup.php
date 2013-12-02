@@ -4,7 +4,8 @@
 	core::log('trying to load');
 
 	try {
-		$cart = $this->update_fees('yes');
+		$cart = core::model('lo_order')->get_cart();
+		$cart->load_items(true);
 		
 		include(__DIR__.'/../../../../../bin/paypal/PayPalApi.php');
 		$paypalUrl = $payPalApi->getExpressCheckoutRedirect($cart);

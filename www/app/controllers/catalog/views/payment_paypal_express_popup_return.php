@@ -3,7 +3,9 @@ include($_SERVER['DOCUMENT_ROOT'].'/../bin/paypal/PayPalApi.php');
 
 	
 try {
-	$cart = $this->update_fees('yes');
+	$cart = core::model('lo_order')->get_cart();
+	$cart->load_items(true);
+		
 	$transactionId = $payPalApi->confirmTransaction();		
 	$core->session['paypal_transaction_id'] = $transactionId;
 	$core->data['payment_method'] = 'paypal';
