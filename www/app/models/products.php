@@ -430,7 +430,7 @@ class core_model_products extends core_model_base_products
 			}
 			else
 			{
-				core::log('product not added because there are no valid dds');
+				//core::log('product not added because there are no valid dds');
 			}
 		}
 		
