@@ -68,13 +68,8 @@ class PayPalApi {
 		
 		
 		// Items
-		$items_total = 0;
-		$discount_total = 0;
 		$count = 0;
-		foreach($cart->items as $item) {			
-			$discount_total += $item['row_adjusted_total'] - $item['row_total'] ;
-			$items_total += $item['row_total'];
-
+		foreach($cart->items as $item) {
 			$rqParamString .= '&L_PAYMENTREQUEST_0_NAME'.$count.'='.urlencode($item['product_name']);
 			$rqParamString .= '&L_PAYMENTREQUEST_0_DESC'.$count.'='.urlencode('');
 			$rqParamString .= '&L_PAYMENTREQUEST_0_AMT'.$count.'='.round($item['unit_price'],2);
@@ -86,20 +81,24 @@ class PayPalApi {
 		$rqParamString .= '&PAYMENTREQUEST_0_PAYMENTACTION=Sale';
 		$rqParamString .= '&PAYMENTREQUEST_0_CURRENCYCODE=USD';
 		$rqParamString .= '&PAYMENTREQUEST_0_DESC='.urlencode('Local Orbit EC payment');
-		$delivery_fee = round($cart['grand_total'],2) - round($items_total,2);
+		$delivery_fee = round($cart['grand_total'],2) - round($cart['item_total'],2) + $cart['adjusted_total'];
 
 		$rqParamString .= '&PAYMENTREQUEST_0_SHIPPINGAMT='.round($delivery_fee,2); // $cart['delivery_fee'] not calculated yet
-		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT='.round($discount_total,2);
+		$rqParamString .= '&PAYMENTREQUEST_0_SHIPDISCAMT='.round(-1 * $cart['adjusted_total'],2);
 		$rqParamString .= '&PAYMENTREQUEST_0_TAXAMT=0';
-		$rqParamString .= '&PAYMENTREQUEST_0_ITEMAMT='.round($items_total,2);
-		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.round($cart['grand_total'] + $discount_total,2); // $cart['grand_total'] is not correct and discount is not kept in cart on any refresh
+		$rqParamString .= '&PAYMENTREQUEST_0_ITEMAMT='.round($cart['item_total'],2);
+		$rqParamString .= '&PAYMENTREQUEST_0_AMT='.round($cart['grand_total'],2); // $cart['grand_total'] is not correct and discount is not kept in cart on any refresh
 
 		core::log('paypal rqParamString: '.$rqParamString);
-		/* echo 'delivery_fee = '.$cart['delivery_fee']."<br>";
-		echo 'discount_total = '.$discount_total."<br>";
-		echo 'items_total = '.$items_total."<br>";
-		echo 'grand_total = '.$total."<br>"; */
 		
+		
+		/* echo 'delivery_fee = '.$delivery_fee."<br>";
+		echo 'discount_total = '.$cart['adjusted_total']."<br>";
+		echo 'items_total = '.round($cart['item_total'],2)."<br>";
+		echo 'grand_total = '.round($cart['grand_total'],2)."<br>"; 
+		echo 'PAYMENTREQUEST_0_AMT = '.round($cart['grand_total'],2)."<br>"; 	
+			
+		die();  */
 		
 		
 		$button = '';
@@ -203,48 +202,12 @@ class PayPalApi {
 $payPalApi = new PayPalApi();
 
 /* 
-Apps
-	https://developer.paypal.com/webapps/developer/applications/myapps#account/createApps
-		<a href="http://google.com" onclick="javascript:void window.open('http://google.com','1371801313845','width=400,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');return false;">Pop-up Window</a>
-		
-Paypal
-	https://www.paypal.com/webapps/customerprofile/summary.view
-	vavuljohn
-	1j2o3h4n
-	
-	RAGANERICKSON
-	gr0wnl0cally
-
-Customize Buyer Experience
-	https://cms.paypal.com/us/cgi-bin/marketingweb?cmd=_render-content&content_ID=acct_setup/Buyer_Experience_EC&fli=true
-
-
-API
-	Endpoint 	api.sandbox.paypal.com
-	Client 		ID Afvd9hDXcR8FFEkr1XYXQFQPNppS-ONHBkSiT_v2c9XNibtUOulEQzGzZOXQ
-	Secret 		EPvhehDAv8oqCXDDObNrPHiCPmSkfzOqX4ggB330VPizjidOQB4mEIBc-Rmp
-	
-Express Checkout as popup
-	https://paypalmanager.paypal.com/reskinning.do?reskinExternalUrlServiceKey=paypal&reskinSection=profile&reskinRelativeUrl=cgi-bin/webscr?cmd=_additional-payment-integration
-	https://developer.paypal.com/webapps/developer/docs/classic/express-checkout/integration-guide/ECGettingStarted/
-	
 
 Test accounts
 	https://developer.paypal.com/webapps/developer/applications/accounts
 	test-buyer@localorb.it
 	a1b2c3d4 
 
-Payment Page setttings
-	https://paypalmanager.paypal.com/settings.do
-	i dont have admin to that
-	
-	
-Adaptive Payments (nice popup)
-	http://paypal.github.io/ ***************
-	https://developer.paypal.com/webapps/developer/docs/classic/adaptive-payments/integration-guide/APIntro/	
-		section "Setting Up Web Pages to Invoke the Embedded Payment Flow Using a Lightbox"
-	https://developer.paypal.com/webapps/developer/docs/classic/adaptive-payments/gs_AdaptivePayments/	
-	
 */
 
 ?>
