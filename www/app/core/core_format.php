@@ -192,10 +192,12 @@ class core_format
 		}
 	}
 
-	public static function date($int,$format='long',$do_session_adjust=true)
+	public static function date($int,$format='long',$do_session_adjust=true,$do_daylight_savings_adjust=true)
 	{
 		global $core;
 		
+		//date_default_timezone_set($core->session['tz_code']);
+			
 		if($int == 0 || $int == '')
 			return '';
 		
@@ -207,14 +209,17 @@ class core_format
 			// 2013-09-16 22:37:48
 			} else {
 				$int = strtotime($int);
-			}			
-		}		
-		
-		//echo('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv original is '.date($core->config['formats']['dates']['long'],$int).'<br />');
-		//echo('adjusting '.$int.' by '.$core->session['time_offset'].': '.($int + intval($core->session['time_offset'])).'<br />');
-		
-		if($do_session_adjust)
-			$int += intval($core->session['time_offset']);
+			}
+		}
+
+		if($do_session_adjust) {
+			$int += intval($core->session['time_offset']);			
+		}
+		if($do_daylight_savings_adjust) {
+			if (date("I", $delivery_start_time) == 0) {
+				$int += 3600; 
+			}
+		}
 
 		#echo('adjusted is '.date($core->config['formats']['dates'][$format],$int).'<br />');
 		$format = (isset($core->config['formats']['dates'][$format]))?$core->config['formats']['dates'][$format]:$format;

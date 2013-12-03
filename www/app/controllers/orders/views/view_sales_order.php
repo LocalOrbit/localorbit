@@ -95,7 +95,7 @@ else
 		<h1>Order Info</h1>
 		<?=core_form::value('Order #','<b>'.$order['lo3_order_nbr'].'</b>')?>
 		<?=core_form::value('Buyer',$order['buyer_org_name'])?>
-		<?=core_form::value('Placed On',core_format::date($order['order_date'],'long'))?>
+		<?=core_form::value('Placed On',core_format::date($order['order_date'],'long', true, false))?>
 		<? if(!lo3::is_seller()){?>
 			<?=core_form::value('Item Total',core_format::price($item_total,false))?>
 		<?}?>

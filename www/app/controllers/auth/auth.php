@@ -133,6 +133,7 @@ class core_controller_auth extends core_controller
 			$core->session['buyer_type'] = $user['buyer_type'];
 			$core->session['allow_sell'] = $user['allow_sell'];			
 			$core->session['tz_name']    = $user['tz_name'];
+			$core->session['tz_code'] = $user['tz_code'];
 			$core->session['home_domain_id'] = $user['home_domain_id'];
 			$core->session['all_domains'] = $user['all_domains'];
 			$core->session['login_note_viewed'] = $user['login_note_viewed'];
@@ -148,7 +149,8 @@ class core_controller_auth extends core_controller
 			} else {
 				$core->session['time_offset']= $user['offset_seconds'] + (3600 * $user['do_daylight_savings']);
 			}
-			
+			$core->session['time_offset']= $user['offset_seconds'];
+				
 			
 			if($core->data['remember_me'] == 'on')
 			{
@@ -284,7 +286,7 @@ class core_controller_auth extends core_controller
 			'left',
 			'timezones',
 			'(domains.tz_id=timezones.tz_id)',
-			array('offset_seconds','tz_name')
+			array('offset_seconds','tz_name', 'tz_code')
 		);
 		$user->autojoin(
 				'left',
@@ -310,6 +312,7 @@ class core_controller_auth extends core_controller
 		$core->session['allow_sell'] = $user['allow_sell'];
 		$core->session['is_active'] = $user['is_active'];
 		$core->session['tz_name'] = $user['tz_name'];
+		$core->session['tz_code'] = $user['tz_code'];
 		$core->session['org_is_active'] = $user['org_is_active'];
 		$core->session['login_note_viewed'] = $user['login_note_viewed'];
 		$core->session['org_payment_allow_purchaseorder'] = $user['payment_allow_purchaseorder'];
@@ -323,7 +326,9 @@ class core_controller_auth extends core_controller
 		} else {
 			$core->session['time_offset']= $user['offset_seconds'] + (3600 * $user['do_daylight_savings']);
 		}
-		
+		$core->session['time_offset']= $user['offset_seconds'];
+
+				
 		$core->config['navstate'] = array();
 	
 		list(

@@ -65,7 +65,7 @@ else
 
 		<h1>Order Info</h1>
 		<?=core_form::value('Order #','<b>'.$order['lo3_order_nbr'].'</b>')?>
-		<?=core_form::value('Placed On',core_format::date($order['order_date'],'long'))?>
+		<?=core_form::value('Placed On',core_format::date($order['order_date'],'long', true, false))?>
 		<?=core_form::value('Item Total',core_format::price($order['item_total'],false))?>
 		<? if($order['discount_total'] != 0){?>
 			<?=core_form::value('Discounts',core_format::price($order['discount_total'],false))?>
