@@ -13,6 +13,7 @@ foreach($order->items as $item)
 	else
 		$other_deliv_items[$item['prod_id']] = $item['qty_ordered'];
 }
+$other_deliv_items[0] = 0;
 
 if(!is_array($core->session['order-edit-updates']))
 	$core->session['order-edit-updates'] = array();
