@@ -46,7 +46,7 @@ class core_controller_emails extends core_controller
 		return $src;
 	}
 	
-	public function send_email($subject,$to,$body='',$cc=array(),$from_email='',$from_name='')
+	public function send_email($subject,$to,$body='',$cc=array(),$from_email='',$from_name='',$merge_vars='')
 	{
 		global $core;
 		
@@ -77,53 +77,11 @@ class core_controller_emails extends core_controller
 		$email['from_email'] = $from_email;
 		$email['from_name']  = $from_name;
 		$email['emailstatus_id'] = 1;
+
+    if(is_array($merge_vars))
+      $email['merge_vars'] = serialize($merge_vars);
+
 		$email->save();
-
-
-		# load the lib, set all properties
-		# only use the parameters to override the from if needed.
-		// core::load_library('core_phpmailer');
-		// if($from_email=='')
-		// {
-		// 	$mail = new core_phpmailer(false);
-		// }
-		// else
-		// {
-		// 	$mail = new core_phpmailer(false,$from_email,$from_name);
-		// }
-		
-		
-		
-		// $mail->IsHTML(true);
-
-		// if(is_array($to))
-		// 	foreach($to as $to_address)
-		// 		$mail->AddAddress($to_address);
-		// else
-		// 	$mail->AddAddress($to);
-
-		// $mail->Subject = $subject;
-		// $mail->Body = $body;
-		
-		// if($from_name != '')
-		// {
-		// 	$mail->SetFrom('service@localorb.it',$from_name);
-		// }
-		
-		// # send out the email, check for errors, email the errors if they occur
-		// core::log('sending email to '.$to.': '.$subject);
-		// $mail->Send();
-		// if($mail->ErrorInfo != '')
-		// {
-		// 	core::log('email send failure: '.$mail->ErrorInfo);
-		// 	$body = 'Error while trying to send email to '.$to.' with subject '.$subject;
-		// 	$body .='<br />&nbsp;<br />'.$mail->ErrorInfo;
-		// 	core_phpmailer::send_email('Error sending e-mail',$body,'mike@localorb.it','Mike Thorn');
-		// }
-		// else
-		// {
-		// 	core::log('email sent');
-		// }
 	}
 	
 	function email_start()

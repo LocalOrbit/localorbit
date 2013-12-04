@@ -9,6 +9,7 @@ class core_model_sent_emails extends core_model_base_sent_emails
 		$subject = $this['subject'];
 		$body = $this['body'];
 		$attachment_file_location = $this['attachment_file_location'];
+		$merge_vars = unserialize($this['merge_vars']);
 		
 		$core::log('sending email to '.$to.': '.$subject . " with attachement? " . $attachment_file_location);
 
@@ -37,7 +38,14 @@ class core_model_sent_emails extends core_model_base_sent_emails
 			$mail->AddAttachment($attachment_file_location);
 		}
 		
-		
+    # Add Mandrill merge_var headers
+		if(is_array($merge_vars))
+    {
+      $mail->AddCustomHeader("X-MC-PreserveRecipients: false");
+      foreach($merge_vars as $merge_data)
+        $mail->AddCustomHeader("X-MC-MergeVars: ".json_encode($merge_data));
+    }
+
 		$mail->Send();
 		if($mail->ErrorInfo != '')
 		{
