@@ -26,7 +26,6 @@
 					<li><a id="users-list" href="#!users-list" onclick="core.go(this.href);"><i class="icon-users"></i><?=$core->i18n['nav2:marketadmin:users']?></a></li>
 					<li><a id="events-list" href="#!events-list" onclick="core.go(this.href);"><?=$core->i18n['nav2:marketadmin:usereventlog']?></a></li>
 					<li><a id="dictionaries-edit" href="#!dictionaries-edit" onclick="core.go(this.href);"><?=$core->i18n['nav2:marketadmin:dictionary']?></a></li>
-					<li><a href="https://us1.admin.mailchimp.com/campaigns/">Mailchimp Statistics</a></li>
 				</ul>
 			</li>
 		</ul>
