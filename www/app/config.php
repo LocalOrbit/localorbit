@@ -6,17 +6,6 @@ global $core;
 # base service configuration
 $core->config['mailer'] = array(
 	'SMTPAuth'=>true,
-	'SMTPSecure'=>'ssl',
-	'Host'=>'smtp.gmail.com',
-	'Port'=>465,
-	'Username'=>'service@localorb.it',
-	'Password'=>'gr0wnl0cally',
-	'From'=>'service@localorb.it',
-	'FromName'=>'Localorb.it',
-);
-
-$core->config['mandrill'] = array(
-	'SMTPAuth'=>true,
 	'SMTPSecure'=>'tls',
 	'Host'=>'smtp.mandrillapp.com',
 	'Port'=>587,

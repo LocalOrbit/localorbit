@@ -379,7 +379,7 @@ class core_phpmailer {
 	{
 		global $core;
 		$this->exceptions = ($exceptions == true);
-		foreach($core->config['mandrill'] as $param=>$value)
+		foreach($core->config['mailer'] as $param=>$value)
 		{
 			$this->$param = $value;
 		}
@@ -387,7 +387,7 @@ class core_phpmailer {
 		$this->IsSMTP(true); 
 		if($from_email == '')
 		{
-			$this->SetFrom($core->config['mandrill']['From'],$core->config['mandrill']['FromName']);
+			$this->SetFrom($core->config['mailer']['From'],$core->config['mailer']['FromName']);
 		}
 		else
 		{
