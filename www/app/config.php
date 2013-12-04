@@ -9,10 +9,9 @@ $core->config['mailer'] = array(
 	'SMTPSecure'=>'tls',
 	'Host'=>'smtp.mandrillapp.com',
 	'Port'=>587,
-	'Username'=>'localorbit.testing+mandrill.testing@gmail.com',
-	'Password'=>'oqvkDcp-1E6JBw92bZbL-w',
 	'From'=>'service@localorb.it',
 	'FromName'=>'Localorb.it',
+  # Username & Password set below per stage
 );
 
 $core->config['db'] = array(
@@ -325,5 +324,17 @@ if(is_dir("/Users")) {
 # finalize stage-specific settings
 $core->config['log_prefix']       = $core->config['stage'].'-';
 $core->config['mailchimp']['key'] = $core->config['mailchimp']['keys'][$core->config['stage']];
+
+# Stage-specific settings
+if ($core->config['stage'] == 'production') {
+	$core->config['mailer']['Username'] = 'localorbit.testing+mandrill.production@gmail.com';
+	$core->config['mailer']['Password'] = 'D7v0wX11lJlZxwmzf-IXMg';
+} else if ($core->config['stage'] == 'qa') {
+	$core->config['mailer']['Username'] = 'localorbit.testing+mandrill.qa@gmail.com';
+	$core->config['mailer']['Password'] = '-qSFbwbYpGtINtrhAqB6TA';
+} else {
+	$core->config['mailer']['Username'] = 'localorbit.testing+mandrill.testing@gmail.com';
+	$core->config['mailer']['Password'] = 'oqvkDcp-1E6JBw92bZbL-w';
+}
 
 ?>
