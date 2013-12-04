@@ -283,8 +283,7 @@ class core_controller_orders extends core_controller
 				$item['unit_plural'] = $product['plural_unit'];
 				$item['prod_id'] = $product['prod_id'];
 				$item['addr_id'] = $product['addr_id'];
-				$item['dd_id'] = $product['name'];
-				$item['seller_org_id'] = $product['org_id'];
+				$item['seller_org_id'] = $product['org_id'];	
 				$item['seller_name'] = $product['org_name'];
 				$item['lodeliv_id'] = $deliveries_by_org_id[$prod['org_id']];
 				$item['lbps_id'] = 1;
@@ -292,6 +291,7 @@ class core_controller_orders extends core_controller
 				$item['lsps_id'] = 1;
 				$item['category_ids'] = $product['category_ids'];
 				$item['final_cat_id'] = $product['final_cat_id'];
+				$item['dd_id'] = intval($core->data['dd_id']);
 				$item->save();
 				core::log('item saved: '.$item['lo_liid']);
 				
