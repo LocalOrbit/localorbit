@@ -12,6 +12,7 @@ class core_model_base_sent_emails extends core_model
 		$this->add_field(new core_model_field(6,'from_email','string',-4,'','sent_emails'));
 		$this->add_field(new core_model_field(7,'from_name','string',-4,'','sent_emails'));
 		$this->add_field(new core_model_field(8,'attachment_file_location','string',-4,'','sent_emails'));
+		$this->add_field(new core_model_field(9,'merge_vars','string',-4,'','sent_emails'));
 		$this->init_data();
 	}
 }
