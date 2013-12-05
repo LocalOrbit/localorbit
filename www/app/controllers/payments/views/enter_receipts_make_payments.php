@@ -46,7 +46,7 @@ foreach($invoices_to_receive as $invoice_to_receive) {
 	$payable_ids = array();	
 	$payment_total = 0;
 ?>
-	<div class="row" id="<?=$core->data['tab']?>__area__<?=$invoice_to_receive['group_key']?>">
+	<div class="row <?=$core->data['tab']?>_row" id="<?=$core->data['tab']?>__area__<?=$invoice_to_receive['group_key']?>">
 		<div class="span6">
 			<table class="dt" style="width:100%;" width="100%">
 				<?php 
@@ -73,16 +73,17 @@ foreach($invoices_to_receive as $invoice_to_receive) {
 					$html = $html."</tr>";
 					$html = $html."<tr>";
 						$html = $html."<th class='dt'>Invoice #</th>";
-						$html = $html."<th class='dt'>Amount Due</th>";
+						$html = $html."<th align='right'>Amount Due</th>";
 					$html = $html."</tr>";
 				
 					// invoices
-					foreach($payable_list as $payable){	
+					foreach($payable_list as $payable){
+						$pdf_preview_link = '<a target="_blank" href="/app/payments/view_invoice_pdf?invoice_num='.$payable['invoice_num'].'"><b>'.$payable['invoice_num'].'</b></a>';
 						$payment_total += $payable['amount'];
 						$payable_ids[] = $payable['payable_ids'];
 						
 						$html = $html."<tr>";
-							$html = $html. "<td class='dt'>".$payable['invoice_num']."</td>";
+							$html = $html. "<td class='dt'>".$pdf_preview_link."</td>";
 							$html = $html."<td class='dt' align='right'>".core_format::price($payable['amount'],false)."</td>";
 						$html = $html."</tr>";
 					}

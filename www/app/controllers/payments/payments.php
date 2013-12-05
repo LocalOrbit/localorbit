@@ -466,7 +466,8 @@ class core_controller_payments extends core_controller
 		core_datatable::js_reload('record_payments');
 		core_datatable::js_reload('payments');
 		core_datatable::js_reload('enter_receipts');
-		core::js("$('#".$core->data['tab']."__area__".$core->data['group']."').hide();core.payments.checkAllPaymentsMade('".$core->data['tab']."');");
+		core::js("$('#".$core->data['tab']."__area__".$core->data['group']."').hide();");
+		core::js("core.payments.checkAllPaymentsMade('".$core->data['tab']."');");
 		core_ui::notification('Payment Saved.');
 		core::deinit();
 	}
