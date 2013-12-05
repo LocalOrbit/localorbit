@@ -4,6 +4,7 @@ ul { list-style-image:url('http://testing.localorb.it/homepage/img/icon_rightarr
 li { list-style:inherit; }
 </style>
 <h1>Apply for Hub Camp</h1>
+<div style="float:right;width:377px; vertical-align:middle;">Partners<br /><a href="http://startgarden.com"><img src="http://startgarden.com/assets/img/logo.gif" width="147" height="53" /></a></div>
 <h2>The Nuts &amp; Bolts of Local Food Distribution</h2>
 <p style="font-weight:bold;">Grand Rapids, MI &nbsp; &bull; &nbsp; Thursday, January 30 – Saturday, February 1, 2014</p>
 <p>Practical training for the entrepreneurs and organizations building the New Food Economy.</p><br /><br />
@@ -24,6 +25,7 @@ li { list-style:inherit; }
 <h2>The Experience &amp; Advice to Get You Going</h2>
 <ul><li><strong>Noah Fulmer</strong>, founder and operator of Farm Fresh Rhode Island, a wholesale food hub that aggregates and delivers $2 million in produce from 60 local farmers to 120 buyers each year. </li>
   <li><strong>Erika Block</strong>, CEO of Local Orbit. Local Orbit supports diverse local distribution models across the country. Erika brings unique perspective on best practices and challenges within this emerging sector.</li>
+  <li><strong>Evan Smith</strong>, Chief of Operations of Cherry Capital Foods, which distributes food from Michigan farmers to dozens of schools, grocers and restaurants. Evan also brings a wealth of experience with  designing operations to maximize food safety.</li>
   <li><strong> Plus:</strong> Topic experts on finance, food safety &amp; legal issues.</li>
 </ul>
 <br /><br />
