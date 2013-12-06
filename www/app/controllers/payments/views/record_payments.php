@@ -1,6 +1,6 @@
 <?php
 
-$seller_collection = new core_collection('
+$sellers = new core_collection('
 	select DISTINCT organizations.org_id as id, organizations.name
 	from organizations INNER JOIN lo_order ON organizations.org_id = lo_order.org_id
 	     INNER JOIN payables ON payables.lo_oid = lo_order.lo_oid
@@ -15,18 +15,15 @@ $markets = new core_collection($markets_sql);
 
 
 $sql = "
-	select 
+	select distinct
 		organizations.name as seller_name,
 		lo_order.lo_oid,
 		lo_order.lo3_order_nbr,
-		lo_order_line_item.product_name,
-		lo_order_line_item.qty_delivered,
 		lo_order.order_date,
 	    if((lo_order_deliveries.pickup_end_time = 0),
 	    FROM_UNIXTIME(lo_order_deliveries.delivery_end_time),
 	    FROM_UNIXTIME(lo_order_deliveries.pickup_end_time)) AS delivery_end_time,
-		payables.amount,
-		payables.payable_id
+		group_concat(distinct(payables.payable_id) separator ',') as payable_id
 	from lo_order INNER JOIN lo_order_line_item ON lo_order_line_item.lo_oid = lo_order.lo_oid
 		INNER JOIN payables ON payables.lo_liid = lo_order_line_item.lo_liid 		
 		INNER JOIN organizations ON organizations.org_id = payables.to_org_id
@@ -38,20 +35,18 @@ $sql = "
 	    and lo_order_line_item.ldstat_id != 3 /*cancelled*/";
 
 $payments = new core_collection($sql);
-
-
+$payments->group('lo_order.lo3_order_nbr');
 
 $payments_table = new core_datatable('record_payments','payments/record_payments',$payments);
-$payments_table->add(new core_datacolumn('seller_name', 'Seller', true, '15%', '{seller_name}', '{seller_name}', '{seller_name}'));
-$payments_table->add(new core_datacolumn('lo3_order_nbr', 'Order Number', true, '20%', '<a href="#!orders-view_order--lo_oid-{lo_oid}"><b>{lo3_order_nbr}</b></a>', '{lo3_order_nbr}', '{lo3_order_nbr}'));
-$payments_table->add(new core_datacolumn('product_name', 'Description', true, '25%', '{product_name} ({qty_delivered})', '{product_name}', '{product_name}'));
-$payments_table->add(new core_datacolumn('order_date','Order Date',true,'12%','{order_date}','{order_date}','{order_date}'));
-$payments_table->add(new core_datacolumn('delivery_end_time','Delivery Date',true,'12%','{delivery_end_time}','{delivery_end_time}','{delivery_end_time}'));
-$payments_table->add(new core_datacolumn('amount', 'Amount', true, '12%', '{amount}', '{amount}', '{amount}'));
+$payments_table->add(new core_datacolumn('seller_name', 'Seller', true, '20%', '{seller_name}', '{seller_name}', '{seller_name}'));
+$payments_table->add(new core_datacolumn('lo3_order_nbr', 'Order Number', true, '25%', '<a href="#!orders-view_order--lo_oid-{lo_oid}"><b>{lo3_order_nbr}</b></a>', '{lo3_order_nbr}', '{lo3_order_nbr}'));
+$payments_table->add(new core_datacolumn('order_date','Order Date',true,'17%','{order_date}','{order_date}','{order_date}'));
+$payments_table->add(new core_datacolumn('delivery_end_time','Delivery Date',true,'17%','{delivery_end_time}','{delivery_end_time}','{delivery_end_time}'));
+$payments_table->add(new core_datacolumn('amount', 'Amount', true, '17%', '{amount}', '{amount}', '{amount}'));
 
+$payments_table->columns[2]->autoformat='date-short';
 $payments_table->columns[3]->autoformat='date-short';
-$payments_table->columns[4]->autoformat='date-short';
-$payments_table->columns[5]->autoformat='price';
+$payments_table->columns[4]->autoformat='price';
 $payments_table->render_exporter = false;
 
 $payments_table->add(new core_datacolumn('payable_id',array(core_ui::check_all('payments'),'',''),false,'4%',core_ui::check_all('payments','payable_id'),' ',' '));
@@ -90,7 +85,7 @@ $payments_table->filter_html .= core_datatable_filter::make_text($payments_table
 $payments_table->filter_html .= '<br /><div class="clearfix">&nbsp;</div>';
 
 // buyer org
-make_filter($payments_table,'lo_order.org_id',$seller_collection,'Seller','All Organizations');
+make_filter($payments_table,'lo_order.org_id',$sellers,'Seller','All Organizations');
 
 
 // markets

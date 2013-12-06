@@ -23,7 +23,7 @@ foreach($sellers as $seller) {
 ?>
 
 
-	<div class="row" id="<?=$core->data['tab']?>__area__<?=$seller['group_key']?>">
+	<div class="row <?=$core->data['tab']?>_row"" id="<?=$core->data['tab']?>__area__<?=$seller['group_key']?>">
 		<div class="span6">
 			<table class="dt" style="width:100%;" width="100%">
 				<?php 
