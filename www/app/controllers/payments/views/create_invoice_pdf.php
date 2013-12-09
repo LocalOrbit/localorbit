@@ -132,7 +132,7 @@
 		$html = $html."<td width='50%'>";
 			$html = $html."Invoice Number: ".$invoice_num."<br />";
 			$html = $html."Purchase Order Number: ".$orderInfo['payment_ref']."<br />";
-			$html = $html."Invoice Date: ".core_format::date(date("Y-m-d"),'short')."<br /><br /><br />";
+			$html = $html."Invoice Date: ".core_format::date(time(),'short', false, false)."<br /><br /><br />";
 
 			$due_date_unixtime = $orderInfo['order_date'] + 60 * 60 *24 * $orderInfo['po_due_within_days'];
 
