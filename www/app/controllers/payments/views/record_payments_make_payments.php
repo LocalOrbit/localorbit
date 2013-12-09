@@ -48,7 +48,7 @@ foreach($sellers as $seller) {
 						$html = $html."<td colspan='3'><h2><i class='icon-cart'>&nbsp;</i>".$seller['name']."</h2></td>";
 					$html = $html."</tr>";
 					$html = $html."<tr>";
-						$html = $html."<th class='dt'>Invoice #</th>";
+						$html = $html."<th class='dt'>Order Number</th>";
 						$html = $html."<th class='dt'>Description</th>";
 						$html = $html."<th class='dt'>Amount Paid</th>";
 					$html = $html."</tr>";
