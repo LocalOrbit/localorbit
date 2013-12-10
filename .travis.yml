@@ -1,0 +1,21 @@
+language: ruby
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+before_script:
+  - cp config/database.yml{.example,}
+  - bundle exec rake db:setup
+rvm:
+  - 2.0.0
+branches:
+  only:
+    - rails
+notifications:
+  campfire: collectiveidea:3c3f07431323f476b2fa69acb37c040ebe7f8f36@109379
+  webhooks:
+    urls:
+      - http://buildlight.collectiveidea.com/
+    on_start: true
+env:
+  - CODECLIMATE_REPO_TOKEN=63ea869c9e284a9f8bbb263d37311563622c81e60abce05573be6b752a98688d
+cache: bundler
