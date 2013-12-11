@@ -39,3 +39,7 @@ group :test do
   gem 'capybara'
   gem 'factory_girl_rails'
 end
+
+group :production, :staging do
+  gem 'rails_12factor'
+end
