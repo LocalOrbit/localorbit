@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-LocalOrbit::Application.config.secret_key_base = '4edd1c93887a120e04b118d93dc0dc0a79def610c8f3b04669891b7ce8b0c1cafbc0a3c5d6651f108e15257e1dc3fd689d049a4e23c648168ac432c3f03b9fe6'
+LocalOrbit::Application.config.secret_key_base = Figaro.env.secret_token!

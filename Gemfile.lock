@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/laserlemon/figaro.git
+  revision: 6533e165019b191dd2903f979a80f78931d82ad8
+  specs:
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -164,6 +172,7 @@ DEPENDENCIES
   debugger
   devise
   factory_girl_rails
+  figaro!
   jquery-rails
   pg
   rails (= 4.0.2)

@@ -14,9 +14,10 @@
 
 1. Clone the repo
 2. `bundle`
-3. `cp config/database.example.yml config/database.yml` and modify if needed
-4. `rake db:setup`
-5. `rails server`
+3. `cp config/application.yml{.example,}` and modify if needed
+4. `cp config/database.yml{.example,}` and modify if needed
+5. `rake db:setup`
+6. `rails server`
 
 ## Contributing
 
