@@ -1,0 +1,21 @@
+<div>
+  <h1>Markets</h1>
+  <%= link_to 'Add Market', new_admin_market_url %>
+</div>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Subdomain</th>
+    <th>Contact Name</th>
+    <th>Contact Phone</th>
+  </tr>
+  <% @markets.each do |market| %>
+  <tr>
+    <td><%= link_to market.name, [:admin, market] %></td>
+    <td><%= market.subdomain %></td>
+    <td><%= market.contact_name %></td>
+    <td><%= market.contact_phone %></td>
+  </tr>
+  <% end %>
+</table>

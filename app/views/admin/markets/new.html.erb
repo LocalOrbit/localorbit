@@ -1,0 +1,9 @@
+<h1>Add Market</h1>
+
+<%= form_for [:admin, @market] do |f| %>
+  <%= render 'form', {f: f} %>
+
+  <div>
+    <%= f.submit "Add Market" %>
+  </div>
+<% end %>

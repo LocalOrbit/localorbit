@@ -11,10 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131210171712) do
+ActiveRecord::Schema.define(version: 20131211193529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "markets", force: true do |t|
+    t.string   "name"
+    t.string   "subdomain"
+    t.string   "timezone"
+    t.boolean  "active",        default: false, null: false
+    t.string   "contact_name"
+    t.string   "contact_email"
+    t.string   "contact_phone"
+    t.string   "facebook"
+    t.string   "twitter"
+    t.text     "profile"
+    t.text     "policies"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

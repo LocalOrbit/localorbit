@@ -1,0 +1,62 @@
+<div>
+  <h1><%= @market.name %> Details</h1>
+  <%= link_to "Edit Market", [:edit, :admin, @market] %>
+  <%= form_for([:admin, @market]) do |f| %>
+    <%= f.hidden_field :active, value: !@market.active? %>
+    <%= f.submit @market.active? ? 'Deactivate' : 'Activate' %>
+  <% end %>
+</div>
+
+
+<table>
+  <tr>
+    <td>Name</td>
+    <td><%= @market.name %></td>
+  </tr>
+  <tr>
+    <td>Subdomain</td>
+    <td><%= @market.subdomain %></td>
+  </tr>
+  <tr>
+    <td>Timezone</td>
+    <td><%= @market.timezone %></td>
+  </tr>
+  <tr>
+    <td>Active?</td>
+    <td><%= @market.active? ? 'Yes' : 'No' %></td>
+  </tr>
+  <tr>
+    <td>Contact Name</td>
+    <td><%= @market.contact_name %></td>
+  </tr>
+  <tr>
+    <td>Contact Email</td>
+    <td><%= @market.contact_email %></td>
+  </tr>
+  <tr>
+    <td>Contact Phone</td>
+    <td><%= @market.contact_phone %></td>
+  </tr>
+  <tr>
+    <td>Facebook</td>
+    <td><%= link_to @market.facebook.to_s, @market.facebook.to_s %></td>
+  </tr>
+  <tr>
+    <td>Twitter</td>
+    <td><%= link_to @market.twitter, "https://twitter.com/#{@market.twitter.to_s.sub(/^\@/, '')}" %></td>
+  </tr>
+  <tr>
+    <td>Profile:</td>
+    <td></td>
+   </tr>
+   <tr>
+    <td colspan="2"><%= @market.profile %></td>
+  </tr>
+  <tr>
+    <td>Policies:</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="2"><%= @market.policies %></td>
+  </tr>
+</table>

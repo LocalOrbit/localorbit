@@ -4,6 +4,10 @@ LocalOrbit::Application.routes.draw do
     get "/login" => "devise/sessions#new"
   end
 
+  namespace :admin do
+    resources :markets
+  end
+
   resource :dashboard, controller: "dashboard"
 
   root to: redirect('/login')
