@@ -16,6 +16,7 @@ $sql = '
 	select 
 	loi.lo_liid,loi.product_name,loi.qty_ordered,loi.row_total,loi.row_adjusted_total,loi.row_total,loi.ldstat_id,loi.qty_delivered,
 	loi.unit_price,loi.seller_name,
+    pmt.payment_method as pmt_payment_method,COALESCE(pmt.processing_status,\'confirmed\') as processing_status,
 	o.name as buyer_name,o.org_id as buyer_org_id,d.name as domain_name,
 	ds.delivery_status,bps.buyer_payment_status,sps.seller_payment_status,
 	lo.fee_percen_lo,lo.fee_percen_hub,lo.paypal_processing_fee,lo.payment_method,UNIX_TIMESTAMP(lfo.order_date) as order_date,
@@ -28,6 +29,9 @@ $sql = '
 	inner join lo_delivery_statuses ds on (loi.ldstat_id=ds.ldstat_id)
 	inner join lo_buyer_payment_statuses bps on (loi.lbps_id=bps.lbps_id)
 	inner join lo_seller_payment_statuses sps on (loi.lsps_id=sps.lsps_id)
+    left join payables p on (p.parent_obj_id=loi.lo_liid and p.payable_type=\'buyer order\')
+    left join x_payables_payments xpp on (xpp.payable_id=p.payable_id)
+    left join payments pmt on (xpp.payment_id=pmt.payment_id)
 	
 ';
 $col = new core_collection($sql);
@@ -92,7 +96,16 @@ function sold_items_formatter($data)
 		$core->data['sold_items_data']['net'] += $data['row_adjusted_total'] - $lo - $hub - $proc;
 	}
 	
-
+    
+    if($data['pmt_payment_method'] == 'ACH')
+    {
+        $display_statuses = array(
+            'pending'=>'ACH Transfer Pending',
+            'confirmed'=>'ACH Transfer Confirmed',
+            'refunded'=>'ACH Refunded',
+        );
+        $data['buyer_payment_status'] .= '<br />'.$display_statuses[$data['processing_status']];
+    }
 	
 	$data['unit_price'] = core_format::price($data['unit_price']);
 	$data['row_total'] = core_format::price($data['row_total']);
@@ -206,6 +219,21 @@ $items->filter_html .= core_datatable_filter::make_select(
 	null,
 	null,
 	'All Seller Payment Statuses'
+);
+$items->add_filter(new core_datatable_filter('pmt.processing_status'));
+$items->filter_html .= core_datatable_filter::make_select(
+	'sold_items',
+	'pmt.processing_status',
+	$items->filter_states['sold_items__filter__pmt_processing_status'],
+	array(
+		'pending'=>'Pending',
+		'confirmed'=>'Confirmed',
+		'refunded'=>'Refunded',
+	),
+	null,
+	null,
+	'All Payment Processing Statuses',
+    'width: 230px;max-width:230px;'
 );
 
 $items->filter_html .= '</div>';
