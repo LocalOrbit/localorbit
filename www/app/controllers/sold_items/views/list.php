@@ -220,21 +220,25 @@ $items->filter_html .= core_datatable_filter::make_select(
 	null,
 	'All Seller Payment Statuses'
 );
-$items->add_filter(new core_datatable_filter('pmt.processing_status'));
-$items->filter_html .= core_datatable_filter::make_select(
-	'sold_items',
-	'pmt.processing_status',
-	$items->filter_states['sold_items__filter__pmt_processing_status'],
-	array(
-		'pending'=>'Pending',
-		'confirmed'=>'Confirmed',
-		'refunded'=>'Refunded',
-	),
-	null,
-	null,
-	'All Payment Processing Statuses',
-    'width: 230px;max-width:230px;'
-);
+
+if(lo3::is_admin())
+{
+    $items->add_filter(new core_datatable_filter('pmt.processing_status'));
+    $items->filter_html .= core_datatable_filter::make_select(
+        'sold_items',
+        'pmt.processing_status',
+        $items->filter_states['sold_items__filter__pmt_processing_status'],
+        array(
+            'pending'=>'Pending',
+            'confirmed'=>'Confirmed',
+            'refunded'=>'Refunded',
+        ),
+        null,
+        null,
+        'All Payment Processing Statuses',
+        'width: 230px;max-width:230px;'
+    );
+}
 
 $items->filter_html .= '</div>';
 $items->filter_html .= '<div class="clearfix">';
