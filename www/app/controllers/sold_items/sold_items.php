@@ -278,7 +278,7 @@ class core_controller_sold_items extends core_controller
 			->filter('lo_liid','in',explode(',',$core->data['id_list']));
 		
 		$oids = array();
-		$oids_to_notify = array();
+		$foids_to_notify = array();
 		foreach($items as $item)
 		{
 			if(isset($core->data['qty_delivered_'.$item['lo_liid']]))
@@ -294,23 +294,35 @@ class core_controller_sold_items extends core_controller
 					$item['qty_delivered'] = intval($core->data['qty_delivered_'.$item['lo_liid']]);
 					if($item['qty_delivered'] < $item['qty_ordered'])
 					{
-						$oids_to_notify[] = $item['lo_oid'];
+						if(!is_array($foids_to_notify[$item['lo_foid']]))
+							$foids_to_notify[$item['lo_foid']] = array('amount'=>0,'lo_oid'=>$item['lo_oid']);
+						
+						$foids_to_notify[$item['lo_foid']]['amount'] += (
+							($item['qty_ordered'] * $item['unit_price']) 
+							-
+							($item['qty_delivered'] * $item['unit_price'])
+						);
 					}
 				}
 				$item->save();
 			}
 		}
 		
-		$oids_to_notify = array_unique($oids_to_notify);
-		foreach($oids_to_notify as $oid)
+		$foids_to_notify = array_unique($foids_to_notify);
+		foreach($foids_to_notify as $foid=>$info)
 		{
-			$order = core::model('lo_order')->load($oid);
+			$order = core::model('lo_order')->load($info['oid']);
+			$fulfillment_order = core::model('lo_fulfillment_order')->load($foid);
+			$seller = core::model('organizations')->load($fulfillment_order['org_id']);
 			if($order['payment_method'] == 'ach' || $order['payment_method'] == 'paypal')
 			{
 				core::process_command('emails/mm_underdelivery',true,
 					$order['domain_id'],
 					$order['lo_oid'],
-					$order['lo3_order_nbr']
+					$order['lo3_order_nbr'],
+					$order['buyer_name'],
+					$seller['name'],
+					$info['amount']
 				);
 			}
 		}
