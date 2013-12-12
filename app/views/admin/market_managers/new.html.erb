@@ -1,0 +1,11 @@
+<h1>Add Market Manager to <%= @market.name %></h1>
+
+<%= form_tag admin_market_managers_path(@market) do %>
+  <div>
+    <%= label_tag :email %>
+    <%= email_field_tag :email %>
+  </div>
+  <div>
+    <%= submit_tag 'Add Market Manager' %>
+  </div>
+<% end %>

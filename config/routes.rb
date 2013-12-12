@@ -5,7 +5,9 @@ LocalOrbit::Application.routes.draw do
   end
 
   namespace :admin do
-    resources :markets
+    resources :markets do
+      resources :market_managers, as: :managers, path: :managers
+    end
   end
 
   resource :dashboard, controller: "dashboard"

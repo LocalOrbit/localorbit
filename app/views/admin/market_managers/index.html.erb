@@ -1,0 +1,20 @@
+<div>
+  <h1>Market Managers for <%= @market.name %></h1>
+  <%= link_to 'Add Manager', [:new, :admin, @market, :manager] %>
+
+<table>
+  <tr>
+    <th>Email</th>
+    <th></th>
+  </tr>
+  <% @market.managers.each do |user| %>
+  <tr id="<%= dom_id(user) %>">
+    <td><%= user.email %></td>
+    <td>
+      <%= form_tag admin_market_manager_path(@market, user.id), {method: :delete} do %>
+        <%= submit_tag 'Remove Manager' %>
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>

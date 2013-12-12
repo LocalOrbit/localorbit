@@ -5,6 +5,7 @@
     <%= f.hidden_field :active, value: !@market.active? %>
     <%= f.submit @market.active? ? 'Deactivate' : 'Activate' %>
   <% end %>
+  <%= link_to "Managers", [:admin, @market, :managers] if current_user.admin? %>
 </div>
 
 
