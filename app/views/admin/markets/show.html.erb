@@ -47,7 +47,7 @@
   <% if @market.twitter %>
   <tr>
     <td>Twitter</td>
-    <td><%= link_to @market.twitter, "https://twitter.com/#{@market.twitter.sub(/^\@/, '')}" %></td>
+    <td><%= link_to "@#{@market.twitter}", "https://twitter.com/#{@market.twitter}" %></td>
   </tr>
   <% end %>
   <tr>

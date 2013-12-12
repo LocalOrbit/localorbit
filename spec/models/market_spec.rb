@@ -20,4 +20,24 @@ describe Market do
       expect(market).to have(1).error_on(:subdomain)
     end
   end
+
+  describe 'before_save' do
+    let(:market) { FactoryGirl.build(:market) }
+
+    it 'remove @ from twitter slug' do
+      market.twitter = '@collectiveidea'
+
+      expect(market.save).to be_true
+      market.reload
+      expect(market.twitter).to eq('collectiveidea')
+    end
+
+    it "leaves the twitter slug alone if it doesn't start with @" do
+      market.twitter = 'collectiveidea'
+
+      expect(market.save).to be_true
+      market.reload
+      expect(market.twitter).to eq('collectiveidea')
+    end
+  end
 end
