@@ -38,14 +38,18 @@
     <td>Contact Phone</td>
     <td><%= @market.contact_phone %></td>
   </tr>
+  <% if @market.facebook %>
   <tr>
     <td>Facebook</td>
-    <td><%= link_to @market.facebook.to_s, @market.facebook.to_s %></td>
+    <td><%= link_to @market.facebook, @market.facebook %></td>
   </tr>
+  <% end %>
+  <% if @market.twitter %>
   <tr>
     <td>Twitter</td>
-    <td><%= link_to @market.twitter, "https://twitter.com/#{@market.twitter.to_s.sub(/^\@/, '')}" %></td>
+    <td><%= link_to @market.twitter, "https://twitter.com/#{@market.twitter.sub(/^\@/, '')}" %></td>
   </tr>
+  <% end %>
   <tr>
     <td>Profile:</td>
     <td></td>
