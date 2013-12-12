@@ -6,4 +6,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     dashboard_path
   end
+
+  def render_404
+    render file: Rails.root.join('public/404.html'), status: :not_found
+  end
 end

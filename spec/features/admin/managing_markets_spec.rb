@@ -1,94 +1,105 @@
 require "spec_helper"
 
 describe "Admin Managing Markets" do
-  let!(:user) { FactoryGirl.create(:user) }
+  describe 'as a normal user' do
+    it 'users can not manage markets' do
+      sign_in_as FactoryGirl.create(:user, role: 'user')
 
-  before :each do
-    sign_in_as user
+      visit '/admin/markets'
 
-    @market = FactoryGirl.create(:market)
+      expect(page).to have_text("page you were looking for doesn't exist")
+    end
   end
 
-  it 'only admins or market managers can manage markets'
+  describe 'as an admin' do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:market) { FactoryGirl.create(:market) }
 
-  it 'an admin can see a list of markets' do
-    @market2 = FactoryGirl.create(:market)
-    visit '/admin/markets'
+    before :each do
+      sign_in_as user
+    end
 
-    expect(page).to have_text('Markets')
-    expect(page).to have_text(@market.name)
-    expect(page).to have_text(@market2.name)
-  end
+    it 'only admins or market managers can manage markets'
 
-  it 'an admin can see details for a single market' do
-    @market2 = FactoryGirl.create(:market)
+    it 'an admin can see a list of markets' do
+      @market2 = FactoryGirl.create(:market)
+      visit '/admin/markets'
 
-    visit '/admin/markets'
+      expect(page).to have_text('Markets')
+      expect(page).to have_text(market.name)
+      expect(page).to have_text(@market2.name)
+    end
 
-    click_link @market.name
+    it 'an admin can see details for a single market' do
+      @market2 = FactoryGirl.create(:market)
 
-    expect(page).to have_text(@market.name)
-    expect(page).to_not have_text(@market2.name)
-  end
+      visit '/admin/markets'
 
-  it 'an admin can add a market' do
-    visit '/admin/markets'
+      click_link market.name
 
-    click_link 'Add Market'
+      expect(page).to have_text(market.name)
+      expect(page).to_not have_text(@market2.name)
+    end
 
-    fill_in 'Name',          with: 'Holland Farmers'
-    fill_in 'Subdomain',     with: 'holland-farmers'
-    select  '(GMT-05:00) Eastern Time (US & Canada)', from: 'Timezone'
-    fill_in 'Contact name',  with: 'Jill Smith'
-    fill_in 'Contact email', with: 'jill@smith.com'
-    fill_in 'Contact phone', with: '616-222-2222'
-    fill_in 'Facebook',      with: 'https://www.facebook.com/hollandfarmers'
-    fill_in 'Twitter',       with: '@hollandfarmers'
-    fill_in 'Profile',       with: 'Some interesting info about Holland Farmers'
-    fill_in 'Policies',      with: 'Something no one will pay attention to'
+    it 'an admin can add a market' do
+      visit '/admin/markets'
 
-    click_button 'Add Market'
+      click_link 'Add Market'
 
-    expect(page).to have_text('Holland Farmers')
-    expect(page).to have_text('Jill Smith')
-    expect(page).to have_text('@hollandfarmers')
-  end
+      fill_in 'Name',          with: 'Holland Farmers'
+      fill_in 'Subdomain',     with: 'holland-farmers'
+      select  '(GMT-05:00) Eastern Time (US & Canada)', from: 'Timezone'
+      fill_in 'Contact name',  with: 'Jill Smith'
+      fill_in 'Contact email', with: 'jill@smith.com'
+      fill_in 'Contact phone', with: '616-222-2222'
+      fill_in 'Facebook',      with: 'https://www.facebook.com/hollandfarmers'
+      fill_in 'Twitter',       with: '@hollandfarmers'
+      fill_in 'Profile',       with: 'Some interesting info about Holland Farmers'
+      fill_in 'Policies',      with: 'Something no one will pay attention to'
 
-  it 'an admin can modify a market' do
-    visit '/admin/markets'
-    click_link @market.name
+      click_button 'Add Market'
 
-    expect(page).to have_text('Jill Smith')
+      expect(page).to have_text('Holland Farmers')
+      expect(page).to have_text('Jill Smith')
+      expect(page).to have_text('@hollandfarmers')
+    end
 
-    click_link 'Edit Market'
+    it 'an admin can modify a market' do
+      visit '/admin/markets'
+      click_link market.name
 
-    fill_in 'Contact name', with: 'Jane Smith'
+      expect(page).to have_text('Jill Smith')
 
-    click_button 'Update Market'
+      click_link 'Edit Market'
 
-    expect(page).to have_text('Edit Market')
-    expect(page).to have_text('Jane Smith')
-  end
+      fill_in 'Contact name', with: 'Jane Smith'
 
-  it 'an admin can mark an active market as inactive' do
-    @market.update_attribute(:active, true)
+      click_button 'Update Market'
 
-    visit "/admin/markets/#{@market.id}"
+      expect(page).to have_text('Edit Market')
+      expect(page).to have_text('Jane Smith')
+    end
 
-    expect(page).to have_text('Active? Yes')
+    it 'an admin can mark an active market as inactive' do
+      market.update_attribute(:active, true)
 
-    click_button 'Deactivate'
+      visit "/admin/markets/#{market.id}"
 
-    expect(page).to have_text('Active? No')
-  end
+      expect(page).to have_text('Active? Yes')
 
-  it 'an admin can mark an inactive market as active' do
-    visit "/admin/markets/#{@market.id}"
+      click_button 'Deactivate'
 
-    expect(page).to have_text('Active? No')
+      expect(page).to have_text('Active? No')
+    end
 
-    click_button 'Activate'
+    it 'an admin can mark an inactive market as active' do
+      visit "/admin/markets/#{market.id}"
 
-    expect(page).to have_text('Active? Yes')
+      expect(page).to have_text('Active? No')
+
+      click_button 'Activate'
+
+      expect(page).to have_text('Active? Yes')
+    end
   end
 end
