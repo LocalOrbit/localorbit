@@ -1,6 +1,6 @@
 <div>
   <h1>Markets</h1>
-  <%= link_to 'Add Market', new_admin_market_url %>
+  <%= link_to 'Add Market', new_admin_market_url if current_user.admin? %>
 </div>
 
 <table>

@@ -1,10 +1,13 @@
 class Admin::MarketsController < AdminController
+  skip_before_action :require_admin, :except => [:new, :create]
+  before_action :require_admin_or_market_manager
+
   def index
-    @markets = Market.all
+    @markets = market_scope
   end
 
   def show
-    @market = Market.find(params[:id])
+    @market = market_scope.find(params[:id])
   end
 
   def new
@@ -21,11 +24,11 @@ class Admin::MarketsController < AdminController
   end
 
   def edit
-    @market = Market.find(params[:id])
+    @market = market_scope.find(params[:id])
   end
 
   def update
-    @market = Market.find(params[:id])
+    @market = market_scope.find(params[:id])
     if @market.update_attributes(market_params)
       redirect_to [:admin, @market]
     else
@@ -49,5 +52,15 @@ class Admin::MarketsController < AdminController
       :profile,
       :policies
     )
+  end
+
+  def market_scope
+    current_user.admin? ? Market.all : current_user.managed_markets
+  end
+
+  def require_admin_or_market_manager
+    return if current_user.admin?
+    return if current_user.managed_markets.any?
+    render_404
   end
 end
