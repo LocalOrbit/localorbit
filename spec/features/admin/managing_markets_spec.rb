@@ -7,7 +7,7 @@ describe "Admin Managing Markets" do
     it 'users can not manage markets' do
       sign_in_as FactoryGirl.create(:user, role: 'user')
 
-      visit '/admin/markets'
+      visit admin_markets_path
 
       expect(page).to have_text("page you were looking for doesn't exist")
     end
@@ -85,7 +85,7 @@ describe "Admin Managing Markets" do
 
       expect(page).to_not have_text(add_market_link_name)
 
-      visit '/admin/markets/new'
+      visit new_admin_market_path
 
       expect(page).to have_text("page you were looking for doesn't exist")
     end
@@ -100,13 +100,13 @@ describe "Admin Managing Markets" do
       end
 
       it 'I can not see the details for a market I am not managing' do
-        visit "/admin/markets/#{market3.id}"
+        visit admin_market_path(market3)
 
         expect(page).to have_text("page you were looking for doesn't exist")
       end
 
       it 'I can not modify a market I am not managing' do
-        visit "/admin/markets/#{market3.id}/edit"
+        visit edit_admin_market_path(market3)
 
         expect(page).to have_text("page you were looking for doesn't exist")
       end
