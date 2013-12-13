@@ -115,7 +115,12 @@ $actions = '
 ';
 
 #$users->add_filter(new core_datatable_filter('org_id'));
+
 $users->add(new core_datacolumn('first_name','Name',true,'25%','<a href="#!users-edit--entity_id-{entity_id}"><b>{first_name} {last_name}</b></a><br /><small><i class="icon-envelope"></i> <a href="mailTo:{email}">{email}</a></small>','{first_name} {last_name}','{first_name} {last_name}'));
+if($core->data['format'] == 'csv')
+{
+    $users->add(new core_datacolumn('email','Email',true,'25%','{email}','{email}','{email}'));
+}
 $users->add(new core_datacolumn('org_name','Organization',true,'20%','<b>{org_name}</b><br /><small>{domain_name}</small>','{org_name}','{org_name}'));
 $users->add(new core_datacolumn('created_at','Registered On',true,'15%','{created_at}','{created_at}','{created_at}'));
 $users->add(new core_datacolumn('role_label','Role',true,'10%','{role_label}','{role_label}','{role_label}'));
@@ -124,7 +129,7 @@ $users->add(new core_datacolumn('entity_id',' ',false,'30%',$actions,'  ','  '))
 $users->sort_column = 2;
 $users->sort_direction = 'desc';
 
-$users->columns[2]->autoformat='date-short';
+$users->columns[(($core->data['format'] == 'csv')?3:2)]->autoformat='date-short';
 
 
 page_header('Users','#!users-add_new','Add new user','button','icon-plus','users');
