@@ -4,6 +4,13 @@ try {
 	
 	global $core;
 
+	echo core_format::date(time(),'short');
+	echo "<br>";
+	echo core_format::date(date("Y-m-d"),'short', true, false);
+	echo "<br>";
+	echo core_format::date(date("Y-m-d"),'short', false, false);
+	echo "<br>";
+	
 	$int = 1386705600;	
 	echo "<br>";
 	echo date('Y-m-d H:i:s',time());
