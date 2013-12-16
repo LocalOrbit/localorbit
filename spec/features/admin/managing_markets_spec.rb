@@ -122,8 +122,10 @@ describe "Admin Managing Markets" do
     end
 
     it 'an admin can see a list of markets' do
+      visit '/dashboard'
+
       @market2 = FactoryGirl.create(:market)
-      visit '/admin/markets'
+      click_link 'Markets'
 
       expect(page).to have_text('Markets')
       expect(page).to have_text(market.name)
