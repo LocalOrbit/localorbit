@@ -8,29 +8,33 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-	
+
   <div class="page-content">
-  	<header>
+    <header>
       <div class="header-content">
+        <% if current_user %>
         <p>
           Farm Fresh Market
         </p>
         <ul>
           <li class="welcome">Welcome Erika!</li>
-          <li><a href="#">Dashboard</a></li>
+          <li><%= link_to 'Dashboard', dashboard_path %></li>
           <li><a href="#" class="cart">Cart  <span>3</span></a></li>
           <li><a href="#">Help</a></li>
-          <li><a href="#">Logout</a></li>
+          <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
         </ul>
+        <% else %>
+        <p></p>
+        <% end %>
       </div>
     </header>
-  	<div class="work-space">
-  		<p class="notice"><%= notice %></p>
-		  <p class="alert"><%= alert %></p>
-	  	<%= yield %>
-	  </div>
-  	<footer>Beep</footer>
+    <div class="work-space">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </div>
+    <footer>Beep</footer>
   </div>
-  
+
 </body>
 </html>
