@@ -16,6 +16,7 @@ gem 'devise_invitable'
 gem 'figaro',       github: 'laserlemon/figaro'
 gem 'newrelic_rpm'
 gem 'interactor-rails'
+gem 'compass-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'

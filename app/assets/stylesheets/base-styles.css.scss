@@ -1,0 +1,121 @@
+@import "compass/utilities/general/clearfix";
+@import "compass/css3/images";
+@import "compass/css3/text-shadow";
+@import "compass/css3/box-shadow";
+@import "compass/css3/border-radius";
+@import "compass/css3/opacity";
+
+.page-content {
+	height: 100%;
+	min-height: 100%;
+}
+
+header {
+	@include background-image(linear-gradient(#360D00, #701B00));
+	border-bottom: 1px solid black;
+}
+
+.header-content {
+	@include pie-clearfix;
+	width: 960px;
+	margin: 0 auto;
+	font-family: 'Open Sans', sans-serif;
+
+	
+
+	p {
+		display: inline-block;
+		width: 300px;
+		margin-top: 13px;
+		color: #eeeeee;
+		font-size: 0.75em;
+		font-weight: 400;
+	}
+
+	ul {
+		margin: 0;
+		float: right;
+		list-style: none;
+
+		li {
+			float: left;
+			margin: 5px;
+			font-size: 0.75em;
+			font-weight: 400;
+			color: #F1B79A;
+
+			a {
+				@include text-shadow(rgba(black, 0.2) 0 1px 0);
+				display: block;
+				font-weight: 600;
+				color: white;
+				padding: 3px 6px 5px;
+				margin-top: 5px;
+				text-decoration: none;
+			}
+
+			a:hover {
+				text-decoration: underline;
+			}
+
+			.cart {
+				@include border-radius(12px);
+				@include box-shadow(rgba(black, 0.75) 0 0 3px 1px inset);
+				background-color: #831E05;
+
+				span {
+					@include border-radius(6px);
+					background-color: white;
+					color: black;
+					font-size: .45em;
+					padding: 0 4px;
+				}
+			}
+
+			.cart:hover {
+				@include background-image(linear-gradient(#12A44F, #108B43));
+				text-decoration: none;
+			}		
+		}
+		.welcome {
+			margin: 13px 30px 0 0;
+		}
+	}
+}
+
+.work-space {
+	width: 920px;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #ffffff;
+	min-height: 90vh;
+  position: relative;
+  overflow: hidden;
+
+  h2 {
+  	margin-top: 0;
+  }
+
+  .notice {
+  	display: none;
+  }
+
+  .alert {
+  	@include border-radius(5px);
+  	border: 1px solid red;
+  	background-color: pink;
+  	padding: 20px;
+  	margin-top: -10px;
+  	display: none;
+  }
+}
+
+footer {
+	background-color: #360D00;
+	bottom: 0px;
+	height:5em;
+	padding: 10px;
+	position: absolute;
+	margin: 0px;
+	width: 100%;
+}

@@ -2,15 +2,35 @@
 <html>
 <head>
   <title>LocalOrbit</title>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-
-<%= yield %>
-
+	
+  <div class="page-content">
+  	<header>
+      <div class="header-content">
+        <p>
+          Farm Fresh Market
+        </p>
+        <ul>
+          <li class="welcome">Welcome Erika!</li>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#" class="cart">Cart  <span>3</span></a></li>
+          <li><a href="#">Help</a></li>
+          <li><a href="#">Logout</a></li>
+        </ul>
+      </div>
+    </header>
+  	<div class="work-space">
+  		<p class="notice"><%= notice %></p>
+		  <p class="alert"><%= alert %></p>
+	  	<%= yield %>
+	  </div>
+  	<footer>Beep</footer>
+  </div>
+  
 </body>
 </html>

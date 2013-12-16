@@ -11,3 +11,16 @@
  *= require_self
  *= require_tree .
  */
+@import "base-styles";
+@import "sign-in";
+
+
+body {
+	background-image: image-url('kale-bg.jpg');
+	background-size: cover;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	height: 100vh;
+	min-height: 100%;
+}
