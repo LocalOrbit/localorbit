@@ -39,13 +39,13 @@
     <td>Contact Phone</td>
     <td><%= @market.contact_phone %></td>
   </tr>
-  <% if @market.facebook %>
+  <% if @market.facebook.present? %>
   <tr>
     <td>Facebook</td>
     <td><%= link_to @market.facebook, @market.facebook %></td>
   </tr>
   <% end %>
-  <% if @market.twitter %>
+  <% if @market.twitter.present? %>
   <tr>
     <td>Twitter</td>
     <td><%= link_to "@#{@market.twitter}", "https://twitter.com/#{@market.twitter}" %></td>
