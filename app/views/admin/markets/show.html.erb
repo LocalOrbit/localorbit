@@ -6,6 +6,7 @@
     <%= f.submit @market.active? ? 'Deactivate' : 'Activate' %>
   <% end %>
   <%= link_to "Managers", [:admin, @market, :managers] if current_user.admin? %>
+  <%= link_to "Markets", admin_markets_path %>
 </div>
 
 
