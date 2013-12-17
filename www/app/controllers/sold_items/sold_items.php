@@ -26,7 +26,7 @@ class core_controller_sold_items extends core_controller
 			';
 		}
 		
-		if(lo3::is_market() || lo3::is_admin())
+		if(lo3::is_admin())
 		{
 			$html .= '
 
