@@ -2,19 +2,19 @@
 $v_payables = core::model('v_payables')
 	->collection()
 	->filter('delivery_status','<>','Canceled');
-$v_payables->add_formatter('format_payable_info');
+$v_payables->add_formatter('format_payable_info'); 
 if(lo3::is_admin())
 {
 	
 }
 else if(lo3::is_market())
 {
-	$v_payables->filter('from_org_id','in',array(1,$core->session['org_id']));
+	#$v_payables->filter('from_org_id','in',array(1,$core->session['org_id']));
 	$v_payables->filter('domain_id','in',$core->session['domains_by_orgtype_id'][2]);
 }
 else
 {
-	$v_payables->filter('from_org_id','=',$core->session['org_id']);
+	#$v_payables->filter('from_org_id','=',$core->session['org_id']);
 }
 $payables = new core_datatable('payables','payments/review_orders',$v_payables);
 payments__add_standard_filters($payables,'payables');
