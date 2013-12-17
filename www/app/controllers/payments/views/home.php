@@ -69,7 +69,7 @@ if (lo3::is_seller()) {
 if (lo3::is_market()) {
 	if ($core->config['domain']['buyer_invoicer'] == '' && $core->config['domain']['seller_payer'] == 'hub') {
 		#$tabs[] = 'Record Payments to Vendors';
-		#xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+		$tab_count++; $this->record_payments($tab_count);
 	}
 	if ($core->config['domain']['buyer_invoicer'] == '' && $core->config['domain']['seller_payer'] == 'lo') {
 		#$tabs[] = 'View Payments to Vendors';
