@@ -15,7 +15,7 @@ class core
 	function handle_error($errnbr,$error_string,$err_file,$err_line,$err_context)
 	{
 		#exit(__CORE_ERROR_OUTPUT__);
-		if(__CORE_ERROR_OUTPUT__ == 'jsdfson')
+		if(__CORE_ERROR_OUTPUT__ == 'json')
 		{
 			core::clear_response();
 			ob_clean();
@@ -292,8 +292,8 @@ class core
 			include($core->paths['libraries'].$file);
 		}
 		
-		#if(!defined('__NO_OVERRIDE_ERROR__'))
-		#	set_error_handler(array($core,'handle_error'),E_ALL & ~(E_STRICT|E_NOTICE));
+		if(!defined('__NO_OVERRIDE_ERROR__'))
+			set_error_handler(array($core,'handle_error'),E_ALL & ~(E_STRICT|E_NOTICE));
 		
 		# init things
 		core_logger::init();
