@@ -4,7 +4,7 @@ namespace :deploy do
     app = "localorbit-staging"
     remote = "git@heroku.com:#{app}.git"
 
-    system "git push #{remote} rails:master"
+    system "git push #{remote} master"
     Bundler.with_clean_env do
       system "heroku run --app #{app} rake db:migrate"
       system "heroku restart --app #{app}"
@@ -16,7 +16,7 @@ namespace :deploy do
     app = "localorbit"
     remote = "git@heroku.com:#{app}.git"
 
-    system "git push #{remote} rails:master"
+    system "git push #{remote} master"
     Bundler.with_clean_env do
       system "heroku run --app #{app} rake db:migrate"
       system "heroku restart --app #{app}"
