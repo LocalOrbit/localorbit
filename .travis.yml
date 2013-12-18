@@ -10,7 +10,7 @@ rvm:
   - 2.0.0
 branches:
   only:
-    - rails
+    - master
 notifications:
   campfire: collectiveidea:3c3f07431323f476b2fa69acb37c040ebe7f8f36@109379
   webhooks:
