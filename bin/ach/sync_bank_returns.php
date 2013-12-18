@@ -84,5 +84,16 @@ for($i=0; $i <= $myresult->TotalNumRecords; $i++)
 		core_db::query($sql);
 }
 
+mysql_query("
+    update lo_order_line_item set lbps_id=2 where lo_liid in (
+        select parent_obj_id 
+        from payables p
+        inner join x_payables_payments xpp on (xpp.payable_id=p.payable_id)
+        inner join payments py on (py.payment_id=xpp.payment_id)
+        where py.payment_method='ACH'
+        and   py.processing_status='confirmed'
+    );
+");
+
 exit("\nDONE\n");
 ?> 
