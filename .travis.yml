@@ -18,5 +18,5 @@ notifications:
       - http://buildlight.collectiveidea.com/
     on_start: true
 env:
-  - CODECLIMATE_REPO_TOKEN=63ea869c9e284a9f8bbb263d37311563622c81e60abce05573be6b752a98688d
+  - CODECLIMATE_REPO_TOKEN=d6c14655ddff198718ea2c98a73973c24ff1b9d812d06b822aa85018ebef547d
 cache: bundler
