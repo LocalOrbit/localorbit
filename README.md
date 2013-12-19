@@ -1,7 +1,7 @@
 # Local Orbit
 
 [![Build Status](https://magnum.travis-ci.com/collectiveidea/localorbit.png?token=bJRCSztHn61AphkJHARX&branch=rails)](https://magnum.travis-ci.com/collectiveidea/localorbit)
-[![Code Climate](https://codeclimate.com/repos/52a73cb289af7e754500955b/badges/642075ad612c37af61c9/gpa.png)](https://codeclimate.com/repos/52a73cb289af7e754500955b/feed)
+[![Code Climate](https://codeclimate.com/repos/52b30c60c7f3a3648e02206b/badges/2d672c7e68247d48df79/gpa.png)](https://codeclimate.com/repos/52b30c60c7f3a3648e02206b/feed)
 
 ## Running
 
