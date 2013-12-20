@@ -5,3 +5,43 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+#
+#
+
+
+Market.where(subdomain:"springfield").first || Market.create(
+  name:"Springfield Market",
+  subdomain:"springfield"
+)
+
+User.create!(
+  email: "erika@localorb.it",
+  password: "password1",
+  password_confirmation: "password1",
+  role: "admin",
+  name: "Erika Block"
+)
+
+User.create!(
+  email: "anna@localorb.it",
+  password: "password1",
+  password_confirmation: "password1",
+  role: "admin",
+  name: "Anna Richardson"
+)
+
+User.create!(
+  email: "ragan@localorb.it",
+  password: "password1",
+  password_confirmation: "password1",
+  role: "admin",
+  name: "Ragan Erickson"
+)
+
+User.create!(
+  email: "kate@localorb.it",
+  password: "password1",
+  password_confirmation: "password1",
+  role: "admin",
+  name: "Kate Barker"
+)
