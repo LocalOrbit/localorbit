@@ -9,45 +9,39 @@
 #
 
 
-lo_market = Market.where(subdomain:"springfield").first || Market.create(
+Market.where(subdomain:"springfield").first || Market.create(
   name:"Springfield Market",
   subdomain:"springfield"
 )
 
-erika = User.create!(
+User.create!(
   email: "erika@localorb.it",
-  password: "KKBz2yVKg2F",
-  password_confirmation: "KKBz2yVKg2F",
+  password: "password1",
+  password_confirmation: "password1",
   role: "admin",
   name: "Erika Block"
 )
 
-anna = User.create!(
+User.create!(
   email: "anna@localorb.it",
-  password: "Cau7t3vwW",
-  password_confirmation: "Cau7t3vwW",
+  password: "password1",
+  password_confirmation: "password1",
   role: "admin",
   name: "Anna Richardson"
 )
 
-ragan = User.create!(
+User.create!(
   email: "ragan@localorb.it",
-  password: "T8gKxCCc6k",
-  password_confirmation: "T8gKxCCc6k",
+  password: "password1",
+  password_confirmation: "password1",
   role: "admin",
   name: "Ragan Erickson"
 )
 
-kate = User.create!(
+User.create!(
   email: "kate@localorb.it",
-  password: "FH6sLbw2r",
-  password_confirmation: "FH6sLbw2r",
+  password: "password1",
+  password_confirmation: "password1",
   role: "admin",
   name: "Kate Barker"
 )
-
-
-[erika, anna, ragan, kate].each do |u|
-  u.managed_markets << lo_market
-  u.save!
-end
