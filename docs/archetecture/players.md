@@ -24,10 +24,12 @@
   * Add new products
   * Manage product inventory
   * Review orders
+    * Determine who owes money
   * See pick lists
   * See packing lists
 * Buy products
   * Review orders
+    * Determine who they owe money to
 
 ### Members of
 
