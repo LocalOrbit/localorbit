@@ -4,12 +4,14 @@ ul { list-style-image:url('http://testing.localorb.it/homepage/img/icon_rightarr
 li { list-style:inherit; }
 </style>
 <h1>Apply for Hub Camp</h1>
-<div style="float:right;width:377px; vertical-align:middle;">Partners<br /><a href="http://startgarden.com"><img src="img/hubcamp/startgarden.gif" width="147" height="53" style="margin:8px 0" /></a><br />
-<a href="http://cherrycapitalfoods.com"><img src="img/hubcamp/cherrycapital.gif" width="113" height="80" /></a></div>
+<div style="float:right;width:377px; vertical-align:middle;"></div>
 <h2>The Nuts &amp; Bolts of Local Food Distribution</h2>
-<p style="font-weight:bold;">Grand Rapids, MI &nbsp; &bull; &nbsp; Wednesday - Friday, January 29 - 31, 2014</p>
 <p>Practical training for the entrepreneurs and organizations building the New Food Economy.</p><br /><br />
-<p><a style="cursor:hand;cursor:pointer;" onclick="window.open('https://docs.google.com/forms/d/11-Llu9bSh3tbykH-4uGhrBc81Nzq70vSgDSZh-FNa6I/viewform', 'name','width=700,height=400')" class="btn btn_blue">Apply Now</a></p><br /><br />
+<p><a style="cursor:hand;cursor:pointer;width:320px;display:inline-block;" onclick="window.open('https://docs.google.com/forms/d/11-Llu9bSh3tbykH-4uGhrBc81Nzq70vSgDSZh-FNa6I/viewform', 'name','width=700,height=400')" class="btn btn_blue">Apply for Grand Rapids, MI</a> &nbsp; January 29 - 31, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://startgarden.com"><img src="img/hubcamp/startgarden.gif" width="115" height="41" style="vertical-align:middle;margin:0 15px" /></a> &nbsp;
+<a href="http://cherrycapitalfoods.com"><img src="img/hubcamp/cherrycapital.gif" width="85" height="60" style="vertical-align:middle;" /></a></p><br /><br />
+<p><a style="cursor:hand;cursor:pointer;width:320px;display:inline-block;" onclick="window.open('https://docs.google.com/forms/d/11-Llu9bSh3tbykH-4uGhrBc81Nzq70vSgDSZh-FNa6I/viewform', 'name','width=700,height=400')" class="btn btn_blue">Apply for Los Angeles, CA</a> &nbsp; March 16 - 18, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://www.uepi.oxy.edu"><img src="img/hubcamp/uepi.gif" width="112" height="60" style="vertical-align:middle;margin:0 15px" /></a></a></p><br /><br />
+More Hub Camps, helping more small-scale distribution start up in more corners of the country, coming Fall 2014!<br />
+<br /><br />
 <img src="/homepage/img/page_images/hubcamp.jpg" width="377" height="250" class="public_content_photo" style="margin-left:10px" align="right">
 
 <h2>Walk away from Hub Camp with a 6-month action plan to hit the ground running!</h2>
