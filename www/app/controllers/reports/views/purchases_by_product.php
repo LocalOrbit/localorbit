@@ -145,6 +145,10 @@ $items->filter_html .= core_datatable_filter::make_date('purchases_by_product','
 $items->add_filter(new core_datatable_filter('pbpcreatedat1','lo_fulfillment_order.order_date','>','date',core_format::date($start,'db')));
 $items->add_filter(new core_datatable_filter('pbpcreatedat2','lo_fulfillment_order.order_date','<','date',core_format::date($end,'db')));
 
+$items->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',lo_order.lo3_order_nbr,lo_fulfillment_order.lo3_order_nbr)','~','search'));
+$items->filter_html .= core_datatable_filter::make_text('purchases_by_product','searchables',$items->filter_states['purchases_by_product__filter__searchables'],'Search');
+
+
 	$items->add_filter(new core_datatable_filter('pbpprod_id','lo_order_line_item.prod_id'));
 	$items->filter_html .= core_datatable_filter::make_select(
 		'purchases_by_product',
