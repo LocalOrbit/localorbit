@@ -118,6 +118,11 @@ $items->add_filter(new core_datatable_filter('sbptcreatedat2','lo_fulfillment_or
 $items->filter_html .= core_datatable_filter::make_date('sales_by_payment_type','sbptcreatedat1',core_format::date($start,'short'),'Placed on or after ');
 $items->filter_html .= core_datatable_filter::make_date('sales_by_payment_type','sbptcreatedat2',core_format::date($end,'short'),'Placed on or before ');
 
+
+$items->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',lo_order.lo3_order_nbr,lo_fulfillment_order.lo3_order_nbr)','~','search'));
+$items->filter_html .= core_datatable_filter::make_text('sales_by_payment_type','searchables',$items->filter_states['sales_by_payment_type__filter__searchables'],'Search');
+
+
 $items->add_filter(new core_datatable_filter('sbptpayment_method','lo_order.payment_method'));
 $items->filter_html .= core_datatable_filter::make_select(
 	'sales_by_payment_type',
