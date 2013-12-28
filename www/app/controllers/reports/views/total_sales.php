@@ -99,6 +99,11 @@ $items->filter_html .= core_datatable_filter::make_date('total_sales','tscreated
 $items->filter_html .= core_datatable_filter::make_date('total_sales','tscreatedat2',core_format::date($end,'short'),'Placed on or before ');
 
 
+$items->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',lo_order.lo3_order_nbr,lo_fulfillment_order.lo3_order_nbr)','~','search'));
+$items->filter_html .= core_datatable_filter::make_text('total_sales','searchables',$items->filter_states['total_sales__filter__searchables'],'Search');
+
+
+
 if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 {	
 	$items->add_filter(new core_datatable_filter('lo_order.domain_id'));
