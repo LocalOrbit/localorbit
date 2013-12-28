@@ -91,7 +91,7 @@ if(lo3::is_customer())
 	$col->filter('lo_fulfillment_order.org_id',$core->session['org_id']);
 
 # setup the basic table
-$items = new core_datatable('sales_by_product','reports/sales_by_product',$col);
+$items = new core_datatable('discount_code_per_product','reports/discount_code_use_per_product',$col);
 # this does the totaling 
 function dcpp_formatter($data)
 {
@@ -154,9 +154,11 @@ $items->handler_onoutput = 'dcpp_output';
 core_format::fix_dates('discount_code_per_product__filter__dcppcreatedat1','discount_code_per_product__filter__dcppcreatedat2');
 $items->add_filter(new core_datatable_filter('dcppcreatedat1','lo_fulfillment_order.order_date','>','date',core_format::date($start,'db')));
 $items->add_filter(new core_datatable_filter('dcppcreatedat2','lo_fulfillment_order.order_date','<','date',core_format::date($end,'db')));
-$items->filter_html .= core_datatable_filter::make_date('sales_by_product','dcppcreatedat1',core_format::date($start,'short'),'Placed on or after ');
-$items->filter_html .= core_datatable_filter::make_date('sales_by_product','dcppcreatedat2',core_format::date($end,'short'),'Placed on or before ');
+$items->filter_html .= core_datatable_filter::make_date('discount_code_per_product','dcppcreatedat1',core_format::date($start,'short'),'Placed on or after ');
+$items->filter_html .= core_datatable_filter::make_date('discount_code_per_product','dcppcreatedat2',core_format::date($end,'short'),'Placed on or before ');
 
+$items->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',lo_order.lo3_order_nbr,lo_fulfillment_order.lo3_order_nbr)','~','search'));
+$items->filter_html .= core_datatable_filter::make_text('discount_code_per_product','searchables',$items->filter_states['discount_code_per_product__filter__searchables'],'Search');
 
 
 if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
