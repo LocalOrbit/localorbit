@@ -94,6 +94,9 @@ $items->filter_html .= core_datatable_filter::make_date('total_purchases','tpcre
 $items->add_filter(new core_datatable_filter('tpcreatedat1','lo_fulfillment_order.order_date','>','date',core_format::date($start,'db')));
 $items->add_filter(new core_datatable_filter('tpcreatedat2','lo_fulfillment_order.order_date','<','date',core_format::date($end,'db')));
 
+$items->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',lo_order.lo3_order_nbr,lo_fulfillment_order.lo3_order_nbr)','~','search'));
+$items->filter_html .= core_datatable_filter::make_text('total_purchases','searchables',$items->filter_states['total_purchases__filter__searchables'],'Search');
+
 
 if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 {	
