@@ -32,6 +32,7 @@ class core_controller_sold_items extends core_controller
 
 					<select name="actions_'.($idx+2).'" id="actions_menu_'.($idx+2).'" onchange="document.getElementById(\'actions_menu_3\').selectedIndex=this.selectedIndex;document.getElementById(\'actions_menu_6\').selectedIndex=this.selectedIndex;">
 						<option value="none">Set Buyer Payment Status</option>
+                        <option value="lbps_id:2">Paid</option>
 						<option value="lbps_id:4">Partially Paid</option>
 						<option value="lbps_id:5">Refunded</option>
 						<option value="lbps_id:6">Manual Review</option>
