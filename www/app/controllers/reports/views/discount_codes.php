@@ -71,6 +71,12 @@ $codes->filter_html .= core_datatable_filter::make_date('discount_codes','dccrea
 $codes->filter_html .= core_datatable_filter::make_date('discount_codes','dccreatedat2',core_format::date($end,'short'),'Placed on or before ');
 $codes->add_filter(new core_datatable_filter('dccreatedat1','lo_order.order_date','>','date',core_format::date($start,'db').' 00:00:00'));
 $codes->add_filter(new core_datatable_filter('dccreatedat2','lo_order.order_date','<','date',core_format::date($end,'db').' 23:59:59'));
+
+$codes->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',lo_order.lo3_order_nbr)','~','search'));
+$codes->filter_html .= core_datatable_filter::make_text('discount_codes','searchables',$items->filter_states['discount_codes__filter__searchables'],'Search');
+
+
+
 $codes->add_filter(new core_datatable_filter('dcorg_id','lo_order.org_id'));
 $hubs = core::model('domains')->collection();						
 if (lo3::is_market()) { 
