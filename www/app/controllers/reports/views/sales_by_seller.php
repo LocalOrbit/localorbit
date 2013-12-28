@@ -118,6 +118,8 @@ $items->filter_html .= core_datatable_filter::make_date('sales_by_seller','sbscr
 
 $items->add_filter(new core_datatable_filter('sbsorg_id','lo_fulfillment_order.org_id'));
 
+$items->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',lo_order.lo3_order_nbr,lo_fulfillment_order.lo3_order_nbr)','~','search'));
+$items->filter_html .= core_datatable_filter::make_text('sales_by_seller','searchables',$items->filter_states['sales_by_seller__filter__searchables'],'Search');
 
 # if we're an admin, add a filter for organizations
 if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
