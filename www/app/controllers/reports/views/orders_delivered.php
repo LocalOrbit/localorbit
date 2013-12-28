@@ -115,6 +115,10 @@ $orders->filter_html .= core_datatable_filter::make_date('orders_delivered','odc
 $orders->add_filter(new core_datatable_filter('odcreatedat1','lo_order_item_status_changes.creation_date','>','date',core_format::date($start,'db').' 00:00:00'));
 $orders->add_filter(new core_datatable_filter('odcreatedat2','lo_order_item_status_changes.creation_date','<','date',core_format::date($end,'db').' 23:59:59'));
 
+$orders->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',lo_order.lo3_order_nbr,lo_fulfillment_order.lo3_order_nbr)','~','search'));
+$orders->filter_html .= core_datatable_filter::make_text('orders_delivered','searchables',$items->filter_states['orders_delivered__filter__searchables'],'Search');
+
+
 if(lo3::is_admin() || count($core->session['domains_by_orgtype_id'][2])>1)
 {	
 	$orders->add_filter(new core_datatable_filter('lo_order.domain_id'));
