@@ -100,6 +100,8 @@ $items->add_filter(new core_datatable_filter('sbbcreatedat2','lo_fulfillment_ord
 $items->filter_html .= core_datatable_filter::make_date('sales_by_buyer','sbbcreatedat1',core_format::date($start,'short'),'Placed on or after ');
 $items->filter_html .= core_datatable_filter::make_date('sales_by_buyer','sbbcreatedat2',core_format::date($end,'short'),'Placed on or before ');
 
+$items->add_filter(new core_datatable_filter('searchables','concat_ws(\' \',lo_order.lo3_order_nbr,lo_fulfillment_order.lo3_order_nbr)','~','search'));
+$items->filter_html .= core_datatable_filter::make_text('sales_by_buyer','searchables',$items->filter_states['sales_by_buyer__filter__searchables'],'Search');
 
 
 if (lo3::is_admin()) {
