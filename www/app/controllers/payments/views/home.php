@@ -26,7 +26,7 @@ if (lo3::is_market()) {
 		$tabs[] = 'Record Payments to Vendors';		
 	}
 	if ($core->config['domain']['buyer_invoicer'] == '' && $core->config['domain']['seller_payer'] == 'lo') {
-		$tabs[] = 'View Payments to Vendors';	
+		$tabs[] = 'View Payments to Sellers';	
 	}
 	if ($core->config['domain']['buyer_invoicer'] == 'hub' && $core->config['domain']['seller_payer'] == 'hub') {
 		$tabs[] = 'Send Invoices';
@@ -36,7 +36,7 @@ if (lo3::is_market()) {
 	if ($core->config['domain']['buyer_invoicer'] == 'lo' && $core->config['domain']['seller_payer'] == 'lo') {
 		$tabs[] = 'Send Invoices';
 		$tabs[] = 'Enter Receipts';
-		$tabs[] = 'View Payments to Vendors';	
+		$tabs[] = 'View Payments to Sellers';	
 	}
 }
 
@@ -72,7 +72,7 @@ if (lo3::is_market()) {
 		$tab_count++; $this->record_payments($tab_count);
 	}
 	if ($core->config['domain']['buyer_invoicer'] == '' && $core->config['domain']['seller_payer'] == 'lo') {
-		#$tabs[] = 'View Payments to Vendors';
+		#$tabs[] = 'View Payments to Sellers';
 		$tab_count++; $this->view_payments_to_vendors($tab_count);
 	}
 	if ($core->config['domain']['buyer_invoicer'] == 'hub' && $core->config['domain']['seller_payer'] == 'hub') {

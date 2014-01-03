@@ -13,50 +13,41 @@ $markets_sql = 'select domain_id as id,name from domains
 		where domain_id in ('.implode(',',$core->session['domains_by_orgtype_id'][2]).') ';
 $markets = new core_collection($markets_sql);
 
-
-
 $sql = "
-	select distinct
-		organizations.name as seller_name,
-		lo_order.lo_oid,
-   		invoices.invoice_num,
-		lo_order.order_date,
-	    if((lo_order_deliveries.pickup_end_time = 0),
-	    FROM_UNIXTIME(lo_order_deliveries.delivery_end_time),
-	    FROM_UNIXTIME(lo_order_deliveries.pickup_end_time)) AS delivery_end_time,
-		SUM(payables.amount) AS amount
+		select distinct
+	    lo_order.lo_oid,
+	    lo_order.lo3_order_nbr,
+	    organizations.name as seller_name,
+	    lo_order.payment_ref,
+	    lo_order.order_date,
+	    SUM(payables.amount) as amount
 	from lo_order INNER JOIN lo_order_line_item ON lo_order_line_item.lo_oid = lo_order.lo_oid
-		INNER JOIN payables ON payables.lo_liid = lo_order_line_item.lo_liid 	
-		INNER JOIN invoices ON invoices.invoice_id = payables.invoice_id	
-		INNER JOIN organizations ON organizations.org_id = payables.to_org_id
-		INNER JOIN lo_order_deliveries ON lo_order_deliveries.lodeliv_id = lo_order_line_item.lodeliv_id
-		LEFT JOIN x_payables_payments ON x_payables_payments.payable_id = payables.payable_id
-  	where x_payables_payments.xpp_id IS NULL
-		and payables.from_org_id in (1,".$core->session['org_id'].")
-and lo_order.domain_id in ('30','19')				
+	    INNER JOIN payables ON payables.lo_liid = lo_order_line_item.lo_liid
+	    INNER JOIN organizations ON organizations.org_id = payables.to_org_id
+	where payables.from_org_id in (1,".$core->session['org_id'].")
+	    and lo_order.domain_id in (".implode(",", $core->session['domains_by_orgtype_id'][2]).")
 	    and payable_type = 'seller order'
-		and lo_order.lbps_id = 2 /* paid * /
+	    and lo_order_line_item.lsps_id in (2,3)  /* paid / partially paid */
 	    and lo_order_line_item.ldstat_id != 3 /*cancelled*/";
 
+
 $payments = new core_collection($sql);
-$payments->group('invoices.invoice_num');
+$payments->group('lo_order.lo3_order_nbr');
 
 
-$pdf_preview_link = '<a target="_blank" href="/app/payments/view_invoice_pdf?invoice_num={invoice_num}"><b>{invoice_num}</b></a>';
 $payments_table = new core_datatable('view_payments_to_vendors','payments/view_payments_to_vendors',$payments);
 
-$payments_table->add(new core_datacolumn('invoice_num', 'Invoice Number', true, '25%', $pdf_preview_link, '{invoice_num}', '{invoice_num}'));
+$payments_table->add(new core_datacolumn('lo3_order_nbr','Order Number',true,'25%','<a href="#!orders-view_order--lo_oid-{lo_oid}">{lo3_order_nbr}</a>'));
 $payments_table->add(new core_datacolumn('seller_name', 'Seller', true, '20%', '{seller_name}', '{seller_name}', '{seller_name}'));
+$payments_table->add(new core_datacolumn('payment_ref','Payment Reference',true,'17%','{payment_ref}','{payment_ref}','{payment_ref}'));
 $payments_table->add(new core_datacolumn('order_date','Order Date',true,'17%','{order_date}','{order_date}','{order_date}'));
-$payments_table->add(new core_datacolumn('delivery_end_time','Delivery Date',true,'17%','{delivery_end_time}','{delivery_end_time}','{delivery_end_time}'));
 $payments_table->add(new core_datacolumn('amount', 'Amount', true, '17%', '{amount}', '{amount}', '{amount}'));
 
-$payments_table->columns[2]->autoformat='date-short';
 $payments_table->columns[3]->autoformat='date-short';
 $payments_table->columns[4]->autoformat='price';
 $payments_table->render_exporter = false;
 
-$payments_table->sort_column = 2;
+$payments_table->sort_column = 3;
 $payments_table->sort_direction = 'desc';
 
 
