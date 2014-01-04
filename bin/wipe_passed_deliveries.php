@@ -39,7 +39,11 @@ $passed_orders = core_db::col($sql,'oids');
 
 if(isset($passed_orders) && $passed_orders != '')
 {
-    echo('need to delete '.substr_count($passed_orders,',')." orders.\n");
+    $count = substr_count($passed_orders,',');
+    if($count == 0)
+        $count++;
+
+    echo('need to delete '.$count." orders.\n");
     $queries = array();
     $queries[] = 'delete from lo_fulfillment_order where lo_foid in (select lo_foid from lo_order_line_item where lo_oid in ('.$passed_orders.'));';
     $queries[] = 'delete from lo_order_line_item where lo_oid in ('.$passed_orders.');';
