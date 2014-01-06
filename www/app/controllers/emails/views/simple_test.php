@@ -5,7 +5,8 @@ $values = array(
 );
 
 $body  = $this->email_start();
-$body .= $this->handle_source($core->session['i18n']['email:simple_test'],$values);
+$body .= $this->handle_source('<h1>{testname}</h1>
+<p><strong>This</strong> is a test. It is only a test.</p>',$values);
 $body .= $this->footer();
 $body .= $this->email_end();
 
