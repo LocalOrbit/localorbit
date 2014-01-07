@@ -11,8 +11,16 @@ $values['hub_name'] = core_db::col('select name from domains where domain_id='.$
 core::log('domain name is '.$values['hub_name']);
 
 
-$body  = $this->email_start();
-$body .= $this->handle_source($core->session['i18n']['email:email_change'],$values);
+$body  = $this->email_start($values['domain_id']);
+$body .= $this->handle_source('<h1>Account Email successfully changed.</h1>
+
+      <p>
+        This email is confirmation that you\'ve changed your email address in
+        {hub_name}. If you made this change just ignore this email, but if you
+        didn\'t, please call customer service at (734) 545-8100.
+      </p>
+
+      <p>Thank you! Have a great day.</p>',$values);
 $body .= $this->footer();
 $body .= $this->email_end();
 
