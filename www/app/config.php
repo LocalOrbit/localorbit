@@ -327,8 +327,8 @@ $core->config['mailchimp']['key'] = $core->config['mailchimp']['keys'][$core->co
 
 # Stage-specific settings
 if ($core->config['stage'] == 'production') {
-	$core->config['mailer']['Username'] = 'localorbit.testing+mandrill.production@gmail.com';
-	$core->config['mailer']['Password'] = 'D7v0wX11lJlZxwmzf-IXMg';
+	$core->config['mailer']['Username'] = 'accounts@localorb.it';
+	$core->config['mailer']['Password'] = 'w3kelKCORF5bnmnGhA8mjg';
 } else if ($core->config['stage'] == 'qa') {
 	$core->config['mailer']['Username'] = 'localorbit.testing+mandrill.qa@gmail.com';
 	$core->config['mailer']['Password'] = '-qSFbwbYpGtINtrhAqB6TA';
