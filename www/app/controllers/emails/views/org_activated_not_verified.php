@@ -19,8 +19,23 @@ $values['link'] = core::process_command(
 $values['hub_name'] = core_db::col('select name from domains where domain_id='.$values['domain_id'],'name');
 
 
-$body  = $this->email_start();
-$body .= $this->handle_source($core->session['i18n']['email:org_activated_not_verified'],$values);
+$body  = $this->email_start($values['domain_id']);
+$body .= $this->handle_source('<h1>Attention needed, please verify your account.</h1>
+      <p>
+        The {hub_name} Market Manager has activated your new account, but you
+        still must verify your email address before you can use the system.
+        Please click the link below to verify and you\'ll be all set.
+      </p>
+
+      <div class="lo_call_to_action">
+        <a href="{link}" class="lo_button lo_button_large">Verify Your Account</a>
+        <p>
+          If clicking the button doesn\'t work, right click it and copy the link.<br>
+          After you\'ve copied it, paste it into a new browser window.
+        </p>
+      </div>
+
+      <p>Thank you for supporting {hub_name} and your local food producers!</p>',$values);
 $body .= $this->footer();
 $body .= $this->email_end();
 
