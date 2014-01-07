@@ -20,7 +20,7 @@ $body .= $this->handle_source('<h1>Join {hub_name} today!</h1>
         </p>
       </div>
 
-      <p>Thank you for supporting Farm Fresh and your local food producers!</p>',$values);
+      <p>Thank you for supporting {hub_name} and your local food producers!</p>',$values);
 $body .= $this->footer();
 $body .= $this->email_end();
 
