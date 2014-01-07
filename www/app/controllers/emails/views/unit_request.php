@@ -11,7 +11,26 @@ $values = array(
 
 
 $body  = $this->email_start();
-$body .= $this->handle_source($core->session['i18n']['email:unit_request'],$values);
+$body .= $this->handle_source('<h1>New Unit Request Received</h1>
+<p><strong>{username}</strong> has requested the following new unit:</p>
+
+<dl>
+  <dt>Singular:</dt>
+  <dd>{unitsingle}</dd>
+</dl>
+<dl>
+  <dt>Plural:</dt>
+  <dd>{unitplural}</dd>
+</dl>
+<dl>
+  <dt>Additional Note:</dt>
+  <dd>{notes}</dd>
+</dl>
+<p>
+  This request was made while viewing the following product:
+  <strong>{prod_name}</strong>.
+</p>',$values);
+
 $body .= $this->footer();
 $body .= $this->email_end();
 
