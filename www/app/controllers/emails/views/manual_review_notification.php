@@ -9,7 +9,25 @@ $values = array(
 );
 
 $body  = $this->email_start();
-$body .= $this->handle_source($core->session['i18n']['email:manual_review_notification'],$values);
+$body .= $this->handle_source('<h1>You are almost there!</h1>
+      <p>
+        You have received this notification because an item ({product_name})
+        has been marked for manual review.
+      </p>
+      <p>
+        This action occured on order number <span class="lo_order_number">{lo3_order_nbr}</span>.
+      </p>
+
+      <div class="lo_call_to_action">
+        <a href="{order_link}" class="lo_button lo_button_large">View This Order</a>
+        <p>
+          If clicking the button doesn\'t work, right click it and copy the link.<br>
+          After you\'ve copied it, paste it into a new browser window.
+        </p>
+      </div>
+
+      <p>Ths cancelation was performed at {hub_name} by {canceled_by}.</p>
+',$values);
 $body .= $this->footer();
 $body .= $this->email_end();
 
