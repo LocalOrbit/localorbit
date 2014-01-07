@@ -10,9 +10,15 @@ $from_name=$core->view[4];
 
 
 $body  = $this->email_start();
-$body .= $this->handle_source($core->session['i18n']['email:product_request'],$values);
+$body .= $this->handle_source('<h1>New Product Request Received</h1>
+      <p><strong>{fullname}</strong> has requested a new product.</p>
+
+      <dl>
+        <dt>Product requested:</dt>
+        <dd>{product}</dd>
+      </dl>',$values);
 $body .= $this->footer();
 $body .= $this->email_end();
 
-$this->send_email('New product request',$to_email,$body,'',$from_email,$from_name);
+$this->send_email('New Product Request',$to_email,$body,'',$from_email,$from_name);
 ?>
