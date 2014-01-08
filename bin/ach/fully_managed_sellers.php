@@ -34,7 +34,7 @@ if($config['do-ach'] == 1)
 
 
 $sql = "
-	select p.to_org_id,p.to_org_name,p.payment_processing_statuses,
+	select p.to_org_id,p.to_org_name,p.payment_processing_statuses,p.parent_obj_id,
 	sum((p.amount - p.amount_paid)) as amount,opm.*,
 	group_concat(p.payable_id) as payables
 	from v_payables p
@@ -103,7 +103,7 @@ foreach($payments as $payment)
 		echo(" for payables: \n");
 		foreach($payables as $payable)
 		{
-			echo("\tpayment:".$payable['payment_processing_statuses']."|".$payable['payable_info'].' '.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_due']),2)))."\n");
+			echo("\tpayment:".$payable['payment_processing_statuses']."|parent:".$payable['parent_obj_id']."|".$payable['payable_info'].' '.core_format::price((round(floatval($payable['amount']),2) - round(floatval($payable['amount_due']),2)))."\n");
 		}
 	}
 	else
