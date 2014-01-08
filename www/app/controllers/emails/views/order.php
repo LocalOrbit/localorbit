@@ -115,14 +115,6 @@ if(count($mm_emails) > 0)
         </tr>
       </table>
 
-      <div class="lo_call_to_action">
-        <a href="#" class="lo_button lo_button_large">Check Order Status</a>
-        <p>
-          If clicking the button doesn\'t work, right click it and copy the link.<br>
-          After you\'ve copied it, paste it into a new browser window.
-        </p>
-      </div
-
       <table class="lo_order">
         <thead>
           <tr>
