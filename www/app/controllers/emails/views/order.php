@@ -92,7 +92,7 @@ $this->send_email(
 	$body,
 	array(),
 	$core->config['mailer']['From'],
-	$values['hubname']
+	$values['hub_name']
 );
 
 
@@ -100,19 +100,58 @@ $mm_emails = array();
 $mm_emails = core::model('domains')->get_mm_emails($values['domain_id']);
 if(count($mm_emails) > 0)
 {
-	# send the MM notification
-	$body  = $this->email_start();
-	$body .= $this->handle_source($core->session['i18n']['email:order_mm_notification'],$values);
-	$body .= $this->footer();
-	$body .= $this->email_end();
+  # send the MM notification
+  $body  = $this->email_start($values['domain_id']);
+  $body .= $this->handle_source('<h1>You\'ve received a new order.</h1>
 
-	$this->send_email(
-			'New order on '.$values['hubname'],
-			implode(',',$mm_emails),
-			$body,
-			array(),
-			$core->config['mailer']['From'],
-			$values['hubname']
-	);
+      <table>
+        <tr>
+          <td>
+            <span class="lo_order_number">Order Number: {lo_oid}</span>
+          </td>
+          <td class="lo_placed_by">
+            Order Placed By: <strong>{buyer_name}</strong>
+          </td>
+        </tr>
+      </table>
+
+      <div class="lo_call_to_action">
+        <a href="#" class="lo_button lo_button_large">Check Order Status</a>
+        <p>
+          If clicking the button doesn\'t work, right click it and copy the link.<br>
+          After you\'ve copied it, paste it into a new browser window.
+        </p>
+      </div
+
+      <table class="lo_order">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th class="lo_currency">Unit Price</th>
+            <th class="lo_currency">Subtotal</th>
+          </tr>
+        </thead>
+        '.$item_html.'
+        <tfoot>
+          <tr>
+            <th colspan="3">Total</th>
+            <td class="lo_currency">'.core_format::price("$total").'</td>
+          </tr>
+        </tfoot>
+
+      </table>
+      ',$values);
+  $body .= $this->footer();
+  $body .= $this->email_end();
+
+  $this->send_email(
+    'New order on '.$values['hub_name'],
+    implode(',',$mm_emails),
+    $body,
+    array(),
+    $core->config['mailer']['From'],
+    $values['hub_name']
+  );
 }
 ?>
