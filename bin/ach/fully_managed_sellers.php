@@ -15,6 +15,7 @@ $config = array(
 	'exclude-oids'=>0,
 	'exclude-foids'=>'9222,9223,9221',
 	'exclude-payables'=>0,
+    'exclude-parent-obj'=>0,
 );
 
 
@@ -69,6 +70,10 @@ if($config['exclude-foids'] !== 0)
 if($config['exclude-payables'] !== 0)
 {
 	$sql .= ' and p.payable_id not in ('.$config['exclude-payables'].') ';
+}
+if($config['exclude-parent-obj'] !== 0)
+{
+	$sql .= ' and p.parent_obj_id not in ('.$config['exclude-parent-obj'].') ';
 }
 
 
