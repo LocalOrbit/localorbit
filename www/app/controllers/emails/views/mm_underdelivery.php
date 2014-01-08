@@ -24,14 +24,21 @@ foreach($recips as $recip)
 {
 	$values['first_name'] = $recip['first_name'];
 	$values['last_name'] = $recip['last_name'];
-	
-	$body = $this->handle_source($core->session['i18n']['email:mm_underdelivery'],$values);
+
+	$body = $this->email_start($values['domain_id']);
+	$body .= $this->handle_source('<h1>Discount Code Required</h1>
+    <p>Hello {first_name}, Recently an item from order {order_nbr} was delivered
+  but the quantity delivered was less than the amount ordered.
+  Please issue a
+  <a href="https://localorbit.zendesk.com/entries/22434743-How-to-Create-Discount-Codes">discount code</a>
+  for {buyer_org_name} for a total of {amount_diff}, making sure the
+  discount only applies to products sold by {seller_org_name}.</p>',$values);
 
 	$body .= $this->footer();
 	$body .= $this->email_end();
 
 	$this->send_email(
-		$core->session['i18n']['email:mm_underdelivery:subject'],
+		'Discount Code Required',
 		$recip['email'],
 		$body,
 		array(),
