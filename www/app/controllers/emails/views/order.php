@@ -8,7 +8,7 @@ $values = array(
 	'payment_confirm_code'=>$core->view[5],
 	'domain_id'=>$core->view[6],
 	'hostname'=>$core->view[7],
-	'hubname'=>$core->view[8],
+	'hub_name'=>$core->view[8],
 	'logo'=>'<img src="http://'.$core->view[7].image('logo-email',$core->view[6]).'" />',
 	'buyer_name'=>$core->session['org_name']
 );
@@ -17,66 +17,71 @@ $values = array(
 $order_nbr = explode("-", $values['order_nbr']);
 $values['lo_oid'] = intval($order_nbr[3]);
 
-
-
-#core::log('email values: '.print_r($values,true));
-
-$body  = $this->email_start();
-
+$body  = $this->email_start($values['domain_id']);
 
 # we need to generate the html for the items table in the email
-$item_html = '	
-	<table class="dt">
-		
-';
-
-$counter = false;
+$item_html = '';
 $cur_seller = '';
-$is_first = true;
+$total = 0.0;
 foreach($values['items'] as $item)
 {
-	if($cur_seller != $item['seller_name'])
-	{
-		$cur_seller = $item['seller_name'];
-		$item_html .= '
-			<tr>
-				<th class="dt">'.$item['seller_name'].'</th>
-		';
-		
-		if($is_first)
-		{
-			$item_html .= '
-				<th class="dt">Quantity</th>
-				<th class="dt">Unit Price</th>
-				<th class="dt">Subtotal</th>
-			';
-		}
-		else
-		{
-			$item_html .= '
-				<th class="dt" colspan="3">&nbsp;</th>
-			';
-		}
-	
-		$item_html .= '</tr>';
-		
-		$is_first = false;
-	}
-	$item_html .= '
-		<tr class="dt'.$counter.'">
-			<td class="dt">'.$item['product_name'].'</td>
-			<td class="dt">'.$item['qty_ordered'].' '.$item['unit_plural'].'</td>
-			<td class="dt">'.core_format::price($item['unit_price']).'</td>
-			<td class="dt">'.core_format::price($item['row_total']).'</td>
-		</tr>
-	';
-	$counter = (!$counter);
+  if($cur_seller != $item['seller_name'])
+  {
+    $cur_seller = $item['seller_name'];
+    $item_html .= '
+        <tr>
+          <th colspan="4" class="lo_vendor">'.$item['seller_name'].'</th>
+        </tr>';
+  }
+  $item_html .= '
+    <tr>
+      <td>'.$item['product_name'].'</td>
+      <td>'.$item['qty_ordered'].' '.$item['unit_plural'].'</td>
+      <td class="lo_currency">'.core_format::price($item['unit_price']).'</td>
+      <td class="lo_currency">'.core_format::price($item['row_total']).'</td>
+    </tr>
+  ';
+  $total += floatval($item['row_total']);
 }
 
-$item_html .= '</table>';
+$body .= $this->handle_source('<h1>Your order has been placed.</h1>
+      <p>
+        <span class="lo_order_number">Order Number: {lo_oid}</span>
+      </p>
+      <p>
+        Thank you for your order through {hub_name}!<br>
+        You can check the status of your order by following the link above and
+        logging in to your account.
+      </p>
 
-$values['items'] = $item_html;
-$body .= $this->handle_source($core->session['i18n']['email:order'],$values);
+    <table class="lo_order">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th class="lo_currency">Unit Price</th>
+          <th class="lo_currency">Subtotal</th>
+        </tr>
+      </thead>
+      '.$item_html.'
+      <tfoot>
+        <tr>
+          <th colspan="3">Total</th>
+          <td class="lo_currency">'.core_format::price("$total").'</td>
+        </tr>
+      </tfoot>
+
+    </table>
+
+    <h2>Method of Payment</h2>
+    <dl>
+      <dt>{payment_type}:</dt>
+      <dd>{payment_confirm_code}</dd>
+    </dl>
+
+
+    <p>Thank your for supporting {hub_name}!</p>
+      ',$values);
 
 $body .= $this->footer();
 $body .= $this->email_end();
