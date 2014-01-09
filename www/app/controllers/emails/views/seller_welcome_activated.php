@@ -32,7 +32,7 @@ $body .= $this->handle_source('<h1>Welcome to Farm Fresh</h1>
             Update your details
             <span class="lo_hint">
               Log in to check your profile and make sure your contact details
-              are correct. Upload a farm photo, add your farm story, or change
+              are correct. Upload a photo, add your business story, or change
               your password.
             </span>
           </td>
@@ -51,7 +51,7 @@ $body .= $this->handle_source('<h1>Welcome to Farm Fresh</h1>
       </table>
 
       <p>
-        When you\'ve finished updating your farm details and adding your
+        When you\'ve finished updating your business details and adding your
         products, you\'re all set! Product additions and changes are visible to
         buyers almost instantly.
       </p>',$values);
