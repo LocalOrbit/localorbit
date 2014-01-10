@@ -15,7 +15,7 @@ $body  = $this->email_start($values['domain_id']);
 $body .= $this->handle_source('<h1>Welcome to Farm Fresh</h1>
 
       <p>
-        Thank you for Verifying your email address with {hub_name}. It\'s time
+        Thank you for verifying your email address with {hub_name}. It\'s time
         to get started selling! If you have questions, or need some help, feel
         free to reply to this email.
       </p>
@@ -43,7 +43,7 @@ $body .= $this->handle_source('<h1>Welcome to Farm Fresh</h1>
             Add Your Products
             <span class="lo_hint">
               On your Dashboard page, click "Add a new product" to begin adding
-              products to your inventory. Although adding photos and production
+              products to your inventory. Adding photos and production
               details for each product brings more sales. Buyers care!
             </span>
           </td>

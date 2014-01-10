@@ -41,7 +41,7 @@ foreach($items as $item) {
     $cur_deliv_time = $item['delivery_start_time'];
     $item_html .= '
         <tr>
-          <th colspan="4" class="lo_vendor">Items for delivery between '.core_format::date($item['delivery_start_time']).' '.core_format::date($item['delivery_end_time']).' '.$core->session['tz_name'].'</th>
+          <th colspan="4" class="lo_vendor">Items for delivery between '.core_format::date($item['delivery_start_time']).' and '.core_format::date($item['delivery_end_time']).' '.$core->session['tz_name'].'</th>
         </tr>';
   }
 
@@ -63,7 +63,7 @@ $body .= $this->handle_source('<h1>You have a new order!</h1>
     <p>
       An order was just placed by <strong>{buyer_name}</strong>.
       Your can check the details of this and all of your current orders by
-      following the link above and lokking in to your {hub_name} account.
+      following the link above and logging in to your {hub_name} account.
     </p>
 
   <table class="lo_order">
@@ -85,7 +85,7 @@ $body .= $this->handle_source('<h1>You have a new order!</h1>
 
   </table>
 
-  <p>Thank your for supporting {hub_name}!</p>',$values);
+  <p>Thank you for supporting {hub_name}!</p>',$values);
 
 $body .= $this->footer();
 $body .= $this->email_end();

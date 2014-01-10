@@ -17,14 +17,14 @@ $body .= $this->handle_source('<h1>Item Cancelation</h1>
       </p>
 
       <div class="lo_call_to_action">
-        <a href="{order_link}" class="lo_button lo_button_large">View Your Order</a>
+        <a href="{order_link}" class="lo_button lo_button_large">View This Order</a>
         <p>
           If clicking the button doesn\'t work, right click it and copy the link.<br>
           After you\'ve copied it, paste it into a new browser window.
         </p>
       </div>
 
-      <p>Ths cancelation was performed at {hub_name} by {canceled_by}.</p>',$values);
+      <p>This cancelation was performed at {hub_name} by {canceled_by}.</p>',$values);
 $body .= $this->footer();
 $body .= $this->email_end();
 
