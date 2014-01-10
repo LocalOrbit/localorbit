@@ -42,9 +42,9 @@ $body .= $this->handle_source('<h1>Welcome to Farm Fresh</h1>
           <td>
             Add Your Products
             <span class="lo_hint">
-              On your Dashboard page, click "Add a new product" to begin adding
-              products to your inventory. Adding photos and production
-              details for each product brings more sales. Buyers care!
+              On your Dashboard page, click "Products" to begin adding
+              products to your inventory. Adding photos and production details
+              for each product brings more sales. Buyers care!
             </span>
           </td>
         </tr>
