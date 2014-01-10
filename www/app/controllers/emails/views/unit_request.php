@@ -34,13 +34,6 @@ $body .= $this->handle_source('<h1>New Unit Request Received</h1>
 $body .= $this->footer();
 $body .= $this->email_end();
 
-if($core->config['stage'] == 'qa' || $core->config['stage'] == 'testing')
-{
-	$this->send_email('New Unit Request','localorbit.testing@gmail.com',$body);
-}
-else
-{
-	$this->send_email('New Unit Request','service@localorb.it',$body);
-}
+$this->send_email('New Unit Request','service@localorb.it',$body);
 
 ?>
