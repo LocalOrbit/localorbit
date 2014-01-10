@@ -15,35 +15,51 @@ $values['hub_name'] = core_db::col('select name from domains where domain_id='.$
 core::log('domain name is '.$values['hub_name']);	
 
 $body  = $this->email_start($values['domain_id']);
-$body .= $this->handle_source('<h1>Hooray!</h1>
+$body .= $this->handle_source('<h1>You\'re growing!</h1>
+      <p>A new organization has registered for your market!</p>
 
-<p>A new organization has registered for your market! Their contact info is below:
+      <dl>
+        <dt>Company:</dt>
+        <dd>{company}</dd>
+      </dl>
+      <dl>
+        <dt>Name:</dt>
+        <dd>{fullname}</dd>
+      </dl>
+      <dl>
+        <dt>Email:</dt>
+        <dd>{email}</dd>
+      </dl>
 
-<dl>
-  <dt>Company:</dt>
-  <dd>{company}</dd>
-</dl>
+      <p>Here is how to activate this new organization:</p>
 
-<dl>
-  <dt>Name:</dt>
-  <dd>{fullname}</dd>
-</dl>
-
-<dl>
-  <dt>Email:</dt>
-  <dd>{email}</dd>
-</dl>
-
-<p>To activate this organization:</p>
-
-<ul>
-  <li>log in to your market</li>
-  <li>click on Market Admin</li>
-  <li>click on Organizations - The new organization should be located near the top of the list.</li>
-  <li>click the Activate button</li>
-</ul>
-
-<p>Thank you!</p>',$values);
+      <table class="lo_steps">
+        <tr>
+          <td><span class="lo_step">1</span></td>
+          <td>
+            <a href="{dashboard}" class="lo_button">Log in to Your Market</a>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="lo_step">2</span></td>
+          <td>
+            Click on Market Admin
+          </td>
+        </tr>
+        <tr>
+          <td><span class="lo_step">3</span></td>
+          <td>
+            Click on Organizations<br>
+            <span class="lo_hint">The New Organization should be located near the top of the list.</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="lo_step">4</span></td>
+          <td>
+            Click the Activate button.
+          </td>
+        </tr>
+      </table>',$values);
 $body .= $this->footer();
 $body .= $this->email_end();
 
