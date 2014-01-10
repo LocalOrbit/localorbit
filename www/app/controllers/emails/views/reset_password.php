@@ -6,7 +6,11 @@ $values = array(
 );
 core::log('tryign to send email from domain '.$values['domain_id']);
 $values['hub_name'] = core_db::col('select name from domains where domain_id='.$values['domain_id'],'name');
+$values['hostname'] = core_db::col('select hostname from domains where domain_id='.$values['domain_id'],'hostname');
 core::log('domain name is '.$values['hub_name']);
+
+$values['login_link'] = "http://".$values['hostname']."/login.php";
+
 
 $body  = $this->email_start($values['domain_id']);
 $body .= $this->handle_source('<h1>Your New Password</h1>
@@ -21,7 +25,7 @@ $body .= $this->handle_source('<h1>Your New Password</h1>
       </p>
 
       <div class="lo_call_to_action">
-        <a href="{link}" class="lo_button lo_button_large">Log in to Your Account</a>
+        <a href="{login_link}" class="lo_button lo_button_large">Log in to Your Account</a>
         <p>
           If clicking the button doesn\'t work, right click it and copy the link.<br>
           After you\'ve copied it, paste it into a new browser window.
