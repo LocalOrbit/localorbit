@@ -278,7 +278,7 @@ if(strpos(__FILE__,'/branches/')) {
 	);
 }
 
-if($_SERVER['SERVER_ENV'] == 'jvavul') {
+if(isset($_SERVER['SERVER_ENV']) && $_SERVER['SERVER_ENV'] == 'jvavul') {
 	$core->config['stage'] = 'dev';
 	$core->config['default_hostname'] = 'dev.localorb.it';
 	$core->config['session_domain']   = '.localorb.it';

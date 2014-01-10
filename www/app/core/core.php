@@ -38,7 +38,7 @@ class core
 		$this->data =& $_REQUEST;
 		
 		$this->config = array(
-			'no_base64'=>$_REQUEST['no_base64'],
+			'no_base64'=>(isset($_REQUEST['no_base64']) ? $_REQUEST['no_base64'] : null),
 			'app_page'=>'index.php',
 			'page'=>'default',
 			'layout'=>'default',
@@ -633,6 +633,11 @@ class core
 		$p = func_get_args();
 		array_shift($p);
 		array_shift($p);
+		for ($i = 0; $i <= 11; $i++) {
+		  if (!isset($p[$i])) {
+		    $p[$i] = null;
+		  }
+		}
 		
 		$controller = core::controller($controller);
 		$data = $controller->$method($p[0],$p[1],$p[2],$p[3],$p[4],$p[5],$p[6],$p[7],$p[8],$p[9],$p[10],$p[11]);
