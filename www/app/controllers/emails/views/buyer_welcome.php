@@ -26,7 +26,7 @@ $body .= $this->footer();
 $body .= $this->email_end();
 
 $this->send_email(
-	'welcome to '.$values['hub_name'],
+	'Welcome to '.$values['hub_name'],
 	$to_email,
 	$body,
 	array(),
