@@ -339,6 +339,7 @@ class core_controller_emails extends core_controller
       }
   </style>
   <div class="lo_body">
+    <p class="lo_header">&nbsp;</p>
     <div class="lo_content">
     <!-- Content Header -->
       <a href="http://'.$core->config['domain']['hostname'].'/app.php#!dashboard-home" class="lo_visit_link">Visit the Market &#x2799;</a>
