@@ -72,7 +72,7 @@ class core_controller_emails extends core_controller
 
     if (!is_null($domain_id)) {
       $domain =  core::model('domains')->load($domain_id);
-      $tagline = '&#147'.$domain['custom_tagline'].'&#147';
+      $tagline = '&#147;'.$domain['custom_tagline'].'&#148;';
     } else {
       $tagline = '';
     }
@@ -208,12 +208,12 @@ class core_controller_emails extends core_controller
         div.lo_blockquote_wrapper:before {
           top: 0;
           left: 0;
-          content: "&#147";
+          content: "&#147;";
         }
         div.lo_blockquote_wrapper:after {
           right: 0;
           bottom: 0;
-          content: "&#148";
+          content: "&#148;";
         }
         div.lo_blockquote_wrapper blockquote {
           margin: 0;
