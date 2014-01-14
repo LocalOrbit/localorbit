@@ -3,7 +3,6 @@ $to_email = $core->view[0];
 $values = array(
 	'fullname'=>$core->view[1],
 	'order_nbr'=>$core->view[2],
-	'items'=>$core->view[3],
 	'payment_type'=>(($core->view[4] == 'purchaseorder')?'Purchase Order':'Credit Card'),
 	'payment_confirm_code'=>$core->view[5],
 	'domain_id'=>$core->view[6],
@@ -12,6 +11,8 @@ $values = array(
 	'logo'=>'<img src="http://'.$core->view[7].image('logo-email',$core->view[6]).'" />',
 	'buyer_name'=>$core->session['org_name']
 );
+
+$items = $core->view[3]
 
 //get order_id for use in email
 $order_nbr = explode("-", $values['order_nbr']);
@@ -23,7 +24,7 @@ $body  = $this->email_start($values['domain_id']);
 $item_html = '';
 $cur_seller = '';
 $total = 0.0;
-foreach($values['items'] as $item)
+foreach($items as $item)
 {
   if($cur_seller != $item['seller_name'])
   {

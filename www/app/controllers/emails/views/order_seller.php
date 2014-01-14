@@ -3,7 +3,6 @@ $to_email = $core->view[0];
 $values = array(
 	'fullname'=>$core->view[1],
 	'order_nbr'=>$core->view[2],
-	'items'=>$core->view[3],
 	'payment_type'=>(($values['payment_type'] == 'purchaseorder')?'Purchase Order':'Credit Card'),
 	'payment_confirm_code'=>$core->view[5],
 	'domain_id'=>$core->view[6],
