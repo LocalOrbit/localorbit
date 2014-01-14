@@ -29,7 +29,7 @@ else
 }
 
 $domain = core::model('domains')->load($domain_id);
-$values['hubname'] = $domain['name'];
+$values['hub_name'] = $domain['name'];
 $values['invoicenbr'] = 'LINV-'.str_pad($invoice,6,'0',STR_PAD_LEFT);
 $values['duedate'] = $due_date;
 $values['amount'] = core_format::price($amount);
@@ -95,6 +95,6 @@ $this->send_email(
 	$body,
 	array(),
 	$core->config['mailer']['From'],
-	$values['hubname']
+	$values['hub_name']
 );
 ?>

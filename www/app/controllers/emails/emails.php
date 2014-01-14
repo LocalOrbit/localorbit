@@ -17,8 +17,8 @@ class core_controller_emails extends core_controller
 		global $core;
 		
 		# add in more values
-		if(!isset($values['hubname']))
-			$values['hubname'] = $core->config['domain']['name'];
+		if(!isset($values['hub_name']))
+			$values['hub_name'] = $core->config['domain']['name'];
 		
 		foreach($values as $key=>$value)
 		{

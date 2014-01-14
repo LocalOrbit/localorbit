@@ -27,5 +27,5 @@ $body .= $this->email_end();
 $this->send_email('E-mail change confirmation',$to_email,$body,
 	array(),
 	$core->config['mailer']['From'],
-	$values['hubname']);
+	$values['hub_name']);
 ?>
