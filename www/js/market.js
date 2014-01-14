@@ -70,7 +70,9 @@ market.editDeliv=function(DelivId){
 		if(DelivId > 0){
 			for(var key in core.delivery_days[DelivId][0]){
 				$(document.marketForm[key]).val(core.delivery_days[DelivId][0][key]);
+				
 			}
+			$('#display_dd_id').html(DelivId);
 		}else{
 			core.ui.clearFields(document.marketForm,['day_ordinal','day_nbr','cycle','hours_due_before','delivery_start_time','delivery_end_time','pickup_start_time','pickup_end_time','fee_calc_type_id'],['deliv_address_id','hours_due_before','dd_id','pickup_address_id','devfee_id','amount']);
 		}

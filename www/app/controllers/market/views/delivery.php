@@ -53,6 +53,13 @@ echo('</div>');
 <fieldset id="editDeliv" style="display: none;">
 	<legend>Delivery Info</legend>
 	
+	<div class="control-group" style="<?=((lo3::is_admin())?'':'display:none;')?>">
+		<label class="control-label">Delivery ID</label>
+		<div class="controls" id="display_dd_id">
+			
+		</div>
+	</div>
+	
 	<div class="control-group">
 		<label class="control-label">Cycle</label>
 		<div class="controls">
