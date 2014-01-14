@@ -35,6 +35,7 @@ $sql = '
 ';
 $items = new core_collection($sql);
 $cur_deliv_time = 0;
+$total = 0.0;
 
 foreach($items as $item) {
   if($cur_deliv_time != $item['delivery_start_time']) {
