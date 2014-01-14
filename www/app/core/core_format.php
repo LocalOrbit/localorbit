@@ -215,12 +215,7 @@ class core_format
 		if($do_session_adjust) {
 			$int += intval($core->session['time_offset']);			
 		}
-		if($do_daylight_savings_adjust) {
-			if (date("I", $delivery_start_time) == 0) {
-				$int += 3600; 
-			}
-		}
-
+		
 		#echo('adjusted is '.date($core->config['formats']['dates'][$format],$int).'<br />');
 		$format = (isset($core->config['formats']['dates'][$format]))?$core->config['formats']['dates'][$format]:$format;
 		$date = date($format,$int);
