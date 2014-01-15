@@ -3,14 +3,15 @@
 ul { list-style-image:url('http://testing.localorb.it/homepage/img/icon_rightarrow.gif'); }
 li { list-style:inherit; }
 </style>
+<? if ($_GET['thanks']==1) { ?><div style="display:block;background-color:#670000;color:#fff;margin:0 0 20px 0;padding:10px;">Thank you for applying to Hub Camp! We will read your application and be in touch in a few days.</div><? } ?>
 <h1>Apply for Hub Camp</h1>
 <div style="float:right;width:377px; vertical-align:middle;"></div>
 <h2>The Nuts &amp; Bolts of Local Food Distribution</h2>
 <p>Practical training for the entrepreneurs and organizations building the New Food Economy.</p><br /><br />
 <p><a style="cursor:hand;cursor:pointer;width:320px;display:inline-block;" onclick="window.open('https://docs.google.com/forms/d/11-Llu9bSh3tbykH-4uGhrBc81Nzq70vSgDSZh-FNa6I/viewform', 'name','width=700,height=400')" class="btn btn_blue">Apply for Grand Rapids, MI</a> &nbsp; January 29 - 31, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://startgarden.com"><img src="img/hubcamp/startgarden.gif" width="115" height="41" style="vertical-align:middle;margin:0 15px" /></a> &nbsp;
 <a href="http://cherrycapitalfoods.com"><img src="img/hubcamp/cherrycapital.gif" width="85" height="60" style="vertical-align:middle;" /></a></p><br /><br />
-<p><a style="cursor:hand;cursor:pointer;width:320px;display:inline-block;" onclick="window.open('https://docs.google.com/forms/d/11-Llu9bSh3tbykH-4uGhrBc81Nzq70vSgDSZh-FNa6I/viewform', 'name','width=700,height=400')" class="btn btn_blue">Apply for Los Angeles, CA</a> &nbsp; March 16 - 18, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://www.uepi.oxy.edu"><img src="img/hubcamp/uepi.gif" width="112" height="60" style="vertical-align:middle;margin:0 15px" /></a></a></p><br /><br />
-More Hub Camps, helping more small-scale distribution start up in more corners of the country, coming Fall 2014!<br />
+<p><a style="cursor:hand;cursor:pointer;width:320px;display:inline-block;" href="hubcamp_apply.php" class="btn btn_blue">Apply for Los Angeles, CA</a> &nbsp; March 16 - 18, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://www.uepi.oxy.edu"><img src="img/hubcamp/uepi.gif" width="112" height="60" style="vertical-align:middle;margin:0 15px" /></a></a></p><br /><br />
+More Hub Camps, helping more small-scale distribution start up in more corners of the country, coming later in 2014!<br />
 <br /><br />
 <img src="/homepage/img/page_images/hubcamp.jpg" width="377" height="250" class="public_content_photo" style="margin-left:10px" align="right">
 
@@ -19,7 +20,7 @@ More Hub Camps, helping more small-scale distribution start up in more corners o
 
 <ul>
   <li>Business Model Mapping.</li>
-  <li>Service Design.</li>
+  <li>Operations &amp; Service Design.</li>
   <li>Work through your unique challenges with farmer development, buyer education, finance, food safety, logistics, operations and storytelling.</li>
   <li>Three hands-on days with experienced operators who have launched and managed supply chain businesses.</li>
   <li>To maximize impact attendance is limited to 15 participants.</li>
@@ -28,8 +29,8 @@ More Hub Camps, helping more small-scale distribution start up in more corners o
 <h2>The Experience &amp; Advice to Get You Going</h2>
 <ul><li><strong>Noah Fulmer</strong>, founder and operator of Farm Fresh Rhode Island, a wholesale food hub that aggregates and delivers $2 million in produce from 60 local farmers to 120 buyers each year. </li>
   <li><strong>Erika Block</strong>, CEO of Local Orbit. Local Orbit supports diverse local distribution models across the country. Erika brings unique perspective on best practices and challenges within this emerging sector.</li>
-  <li><strong>Evan Smith</strong>, Chief of Operations of Cherry Capital Foods, which distributes food from Michigan farmers to dozens of schools, grocers and restaurants. Evan also brings a wealth of experience with  designing operations to maximize food safety.</li>
-  <li><strong> Plus:</strong> Topic experts on finance &amp; legal issues.</li>
+  <li><strong> Plus:</strong> Topic experts on food safety, finance &amp; legal issues.</li>
+  <li>At the Michigan Hub Camp: <strong>Evan Smith</strong>, Chief of Operations of Cherry Capital Foods, which distributes food from Michigan farmers to dozens of schools, grocers and restaurants. Evan also brings a wealth of experience with  designing operations to maximize food safety.</li>
 </ul>
 <br /><br />
 <? /*

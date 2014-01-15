@@ -49,7 +49,7 @@ else
 	<head>
 		<title>Local Orbit: Re-linking the Food Chain<?=((isset($title))?' - '.$title:'')?></title>
 		<meta name="description" content="Local Orbit provides sales & business management tools for the entrepreneurs building the New Food Economy." />
-		<meta name="keywords" content="wholesale, food hub, institutional buying, local economies, technology, management tools, local food systems, transparency, supply chain, farm-to-school, local food, local food distribution, New Food Economy, software, business management, e-commerce, sales" />
+		<meta name="keywords" content="wholesale, food hub, institutional buying, local economies, technology, management tools, local food systems, transparency, supply chain, farm-to-school, local food, local food distribution, New Food Economy, software, business management, e-commerce, sales, Boot Camp, Hub Camp, Food Hub Training, Virtual Farmers Market, Online Farmers Market" />
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
 		<link rel="stylesheet" type="text/css" href="/css/reset.css" />
