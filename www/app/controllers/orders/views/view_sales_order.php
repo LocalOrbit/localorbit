@@ -181,6 +181,8 @@ foreach($order->items as $item)
 						<?}?>
 						<table style="display: none;" id="item_status_history_<?=$item['lo_liid']?>">
 							<?
+                            if(!is_array($order->item_history[$item['lo_liid']]))
+                                $order->item_history[$item['lo_liid']] = array();
 							foreach($order->item_history[$item['lo_liid']] as $history)
 							{
 								if(is_numeric($history['ldstat_id']))
