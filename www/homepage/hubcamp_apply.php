@@ -4,10 +4,10 @@
 li { list-style:inherit; }*/
 td { padding: 10px; }
 </style>
-<h1>Apply for Hub Camp LA</h1>
+<h1>Apply for Hub Camp LA</h1><br />
 <h2><a style="text-decoration:underline" href="https://www.localorb.it/homepage/hubcamp.php">Learn more about Hub Camp</a></h2>
-<p>DATES: Sunday - Tuesday, March 16 - 18, 2014<br />
-APPLY BY: Tuesday, February 25, 2014</p>
+<p style="font-size:110%">DATES: Sunday - Tuesday, March 16 - 18, 2014<br />
+APPLY BY: <span style="font-weight:bold">Tuesday, February 25, 2014</span></p>
 <p>&nbsp;</p>
 <p>Register early, as we only have 15 spots available!</p>
 <p>Location: Urban &amp; Environmental Policy Institute, Occidental College, Los Angeles, CA</p>
