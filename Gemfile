@@ -11,12 +11,14 @@ gem 'sass-rails',   '~> 4.0.0'
 gem 'uglifier',     '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
+gem 'compass-rails'
+
 gem 'devise'
 gem 'devise_invitable'
 gem 'figaro',       github: 'laserlemon/figaro'
-gem 'newrelic_rpm'
+gem 'honeybadger'
 gem 'interactor-rails'
-gem 'compass-rails'
+gem 'newrelic_rpm'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'

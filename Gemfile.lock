@@ -86,6 +86,8 @@ GEM
       railties (>= 3.0.0)
     fssm (0.2.10)
     hike (1.2.3)
+    honeybadger (1.10.1)
+      json
     i18n (0.6.9)
     interactor (2.1.0)
     interactor-rails (1.0.1)
@@ -203,6 +205,7 @@ DEPENDENCIES
   devise_invitable
   factory_girl_rails
   figaro!
+  honeybadger
   interactor-rails
   jquery-rails
   newrelic_rpm
