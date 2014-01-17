@@ -12,7 +12,7 @@ li { list-style:inherit; }
 <a href="http://cherrycapitalfoods.com"><img src="img/hubcamp/cherrycapital.gif" width="85" height="60" style="vertical-align:middle;;margin:0 8px" /></a> &nbsp;
 <a href="http://www.lawweathers.com"><img src="img/hubcamp/lawweathers.gif" width="187" height="22" style="vertical-align:middle;" /></a></p><br /><br />
 <p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php" class="btn btn_blue">Apply for Los Angeles, CA</a> &nbsp; March 16 - 18, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://www.uepi.oxy.edu"><img src="img/hubcamp/uepi.gif" width="112" height="60" style="vertical-align:middle;margin:0 15px" /></a></a></p><br /><br />
-More Hub Camps, helping more small-scale distribution startups in more corners of the country, coming later in 2014!<br />
+More Hub Camps, helping more small-scale distribution start-ups in more corners of the country, coming later in 2014!<br />
 <br /><br />
 <img src="/homepage/img/page_images/hubcamp.jpg" width="377" height="250" class="public_content_photo" style="margin-left:10px" align="right">
 
@@ -30,12 +30,12 @@ More Hub Camps, helping more small-scale distribution startups in more corners o
 <h2>The Experience &amp; Advice to Get You Going</h2>
 <ul>
   <li><strong>Noah Fulmer</strong>, the director of business development at Local Orbit, is the former operator and co-founder of Farm Fresh Rhode Island, a wholesale food hub that aggregates and delivers $2 million in produce from 60 local farmers to 120 buyers each year. </li>
-  <li><strong>Erika Block</strong>, CEO of Local Orbit. Local Orbit supports diverse local distribution models across the country. Erika brings unique perspective on best practices and challenges within this emerging sector.</li>
+  <li><strong>Erika Block</strong>, CEO of Local Orbit, which supports diverse local distribution models across the country. Erika brings unique perspective on best practices and challenges within this emerging sector, and she’s also built and managed two start-up businesses.</li>
   <li><strong> Plus:</strong> Topic experts on food safety, finance &amp; legal issues.</li>
   <li>At Hub Camp Grand Rapids: 
     <ul>
       <li><strong>Lee Michaels</strong>, Operations Manager at Cherry Capital Foods, which distributes food from Michigan farmers to dozens of schools, grocers and restaurants. Lee brings a wealth of experience managing operations to maximize food safety.</li>
-      <li><strong>Michael Daray</strong>, Attorney at Law Weathers.</li>
+      <li><strong>Michael Daray</strong>, Attorney at Law Weathers. Michael is a business law attorney representing clients across a broad range of industries from agriculture to transportation.  He regularly counsels both start-ups and mature companies on such matters as entity formation, financing, operational matters and regulatory issues.</li>
     </ul>
   </li>
 </ul>
