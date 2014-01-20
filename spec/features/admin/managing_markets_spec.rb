@@ -5,7 +5,7 @@ describe "Admin Managing Markets" do
 
   describe 'as a normal user' do
     it 'users can not manage markets' do
-      sign_in_as FactoryGirl.create(:user, role: 'user')
+      sign_in_as create(:user, role: 'user')
 
       visit admin_markets_path
 
@@ -14,9 +14,9 @@ describe "Admin Managing Markets" do
   end
 
   describe 'as a market manager' do
-    let!(:user) { FactoryGirl.create(:user, role: 'user') }
-    let!(:market1) { FactoryGirl.create(:market) }
-    let!(:market2) { FactoryGirl.create(:market) }
+    let!(:user) { create(:user, role: 'user') }
+    let!(:market1) { create(:market) }
+    let!(:market2) { create(:market) }
 
     before :each do
       sign_in_as user
@@ -91,7 +91,7 @@ describe "Admin Managing Markets" do
     end
 
     describe 'with additional markets' do
-      let!(:market3) { FactoryGirl.create(:market) }
+      let!(:market3) { create(:market) }
 
       it 'I do not see markets I am not managing in my list' do
         visit '/admin/markets'
@@ -114,8 +114,8 @@ describe "Admin Managing Markets" do
   end
 
   describe 'as an admin' do
-    let!(:user) { FactoryGirl.create(:user) }
-    let!(:market) { FactoryGirl.create(:market) }
+    let!(:user) { create(:user) }
+    let!(:market) { create(:market) }
 
     before :each do
       sign_in_as user
@@ -124,7 +124,7 @@ describe "Admin Managing Markets" do
     it 'an admin can see a list of markets' do
       visit '/dashboard'
 
-      @market2 = FactoryGirl.create(:market)
+      @market2 = create(:market)
       click_link 'Markets'
 
       expect(page).to have_text('Markets')
@@ -133,7 +133,7 @@ describe "Admin Managing Markets" do
     end
 
     it 'an admin can see details for a single market' do
-      @market2 = FactoryGirl.create(:market)
+      @market2 = create(:market)
 
       visit '/admin/markets'
 

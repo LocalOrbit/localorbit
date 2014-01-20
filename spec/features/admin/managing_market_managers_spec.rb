@@ -1,11 +1,11 @@
 require "spec_helper"
 
 describe "Admin Managing Market Managers" do
-  let(:market) { FactoryGirl.create(:market) }
+  let(:market) { create(:market) }
 
   describe 'as a normal user' do
     it 'I can not manage market managers' do
-      sign_in_as FactoryGirl.create(:user, role: 'user')
+      sign_in_as create(:user, role: 'user')
 
       visit admin_market_managers_path(market)
 
@@ -15,7 +15,7 @@ describe "Admin Managing Market Managers" do
 
   describe 'as a market manager' do
     it 'I can not manage market managers' do
-      user = FactoryGirl.create(:user, role: 'user')
+      user = create(:user, role: 'user')
       user.managed_markets << market
 
       sign_in_as user
@@ -27,8 +27,8 @@ describe "Admin Managing Market Managers" do
   end
 
   describe 'as an admin' do
-    let(:user) { FactoryGirl.create(:user) }
-    let(:user2) { FactoryGirl.create(:user, role: 'user') }
+    let(:user) { create(:user) }
+    let(:user2) { create(:user, role: 'user') }
 
     before(:each) do
       sign_in_as user

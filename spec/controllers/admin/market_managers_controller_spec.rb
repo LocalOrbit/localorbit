@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Admin::MarketManagersController do
-  let!(:market) { FactoryGirl.create(:market) }
+  let!(:market) { create(:market) }
 
   before(:each) do
-    sign_in FactoryGirl.create(:user)
+    sign_in create(:user)
   end
 
   describe '#create' do

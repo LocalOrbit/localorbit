@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Market do
   describe 'validates' do
-    let!(:original_market) { FactoryGirl.create(:market) }
+    let!(:original_market) { create(:market) }
 
     it 'name is unique' do
-      market = FactoryGirl.build(:market)
+      market = build(:market)
       market.name = original_market.name
 
       expect(market).to_not be_valid
@@ -13,7 +13,7 @@ describe Market do
     end
 
     it 'subdomain is unique' do
-      market = FactoryGirl.build(:market)
+      market = build(:market)
       market.subdomain = original_market.subdomain
 
       expect(market).to_not be_valid
@@ -22,7 +22,7 @@ describe Market do
   end
 
   describe 'before_save' do
-    let(:market) { FactoryGirl.build(:market) }
+    let(:market) { build(:market) }
 
     it 'remove @ from twitter slug' do
       market.twitter = '@collectiveidea'
