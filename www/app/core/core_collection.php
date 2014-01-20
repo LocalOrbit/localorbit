@@ -128,7 +128,7 @@ class core_collection implements Iterator,ArrayAccess
 		}
 		else
 		{
-			return false;
+			return null;
 		}
 	}
 	
