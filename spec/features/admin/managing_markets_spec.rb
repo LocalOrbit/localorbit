@@ -3,6 +3,14 @@ require "spec_helper"
 describe "Admin Managing Markets" do
   let(:add_market_link_name) { 'Add Market' }
 
+  describe "visiting the admin path without loggin in" do
+    it "redirects a user to the login pages" do
+      visit admin_markets_path
+
+      expect(page).to have_content("You need to sign in")
+    end
+  end
+
   describe 'as a normal user' do
     it 'users can not manage markets' do
       sign_in_as create(:user, role: 'user')

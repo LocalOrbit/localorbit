@@ -1,6 +1,6 @@
 class Admin::MarketsController < AdminController
-  skip_before_action :require_admin, :except => [:new, :create]
-  before_action :require_admin_or_market_manager
+  before_action :require_admin, only: [:new, :create]
+  before_action :require_admin_or_market_manager, except: [:new, :create]
 
   def index
     @markets = market_scope
@@ -56,11 +56,5 @@ class Admin::MarketsController < AdminController
 
   def market_scope
     current_user.admin? ? Market.all : current_user.managed_markets
-  end
-
-  def require_admin_or_market_manager
-    return if current_user.admin?
-    return if current_user.managed_markets.any?
-    render_404
   end
 end
