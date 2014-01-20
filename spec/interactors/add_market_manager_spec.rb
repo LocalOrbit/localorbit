@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe AddMarketManager do
-  let!(:market) { FactoryGirl.create(:market) }
+  let!(:market) { create(:market) }
 
   describe 'adding an existing user' do
-    let!(:user) { FactoryGirl.create(:user, role: 'user') }
+    let!(:user) { create(:user, role: 'user') }
 
     it "adds them to the market's managers list" do
       result = AddMarketManager.perform(market: market, email: user.email)

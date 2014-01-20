@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "User signin" do
-  let!(:user) { FactoryGirl.create(:user) }
+  let!(:user) { create(:user) }
 
   scenario "A user can signin" do
     visit "/"
