@@ -11,8 +11,8 @@ $core->config['mailer'] = array(
 	'Port'=>587,
 	'From'=>'service@localorb.it',
 	'FromName'=>'Localorb.it',
-	'Username' => 'accounts@localorb.it';
-	'Password' => 'w3kelKCORF5bnmnGhA8mjg';
+	'Username' => 'accounts@localorb.it',
+	'Password' => 'w3kelKCORF5bnmnGhA8mjg',
 );
 
 $core->config['db'] = array(
