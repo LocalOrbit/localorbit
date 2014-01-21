@@ -11,7 +11,8 @@ $core->config['mailer'] = array(
 	'Port'=>587,
 	'From'=>'service@localorb.it',
 	'FromName'=>'Localorb.it',
-  # Username & Password set below per stage
+	'Username' => 'accounts@localorb.it';
+	'Password' => 'w3kelKCORF5bnmnGhA8mjg';
 );
 
 $core->config['db'] = array(
@@ -324,17 +325,5 @@ if(is_dir("/Users")) {
 # finalize stage-specific settings
 $core->config['log_prefix']       = $core->config['stage'].'-';
 $core->config['mailchimp']['key'] = $core->config['mailchimp']['keys'][$core->config['stage']];
-
-# Stage-specific settings
-if ($core->config['stage'] == 'production') {
-	$core->config['mailer']['Username'] = 'accounts@localorb.it';
-	$core->config['mailer']['Password'] = 'w3kelKCORF5bnmnGhA8mjg';
-} else if ($core->config['stage'] == 'qa') {
-	$core->config['mailer']['Username'] = 'localorbit.testing+mandrill.qa@gmail.com';
-	$core->config['mailer']['Password'] = '-qSFbwbYpGtINtrhAqB6TA';
-} else {
-	$core->config['mailer']['Username'] = 'localorbit.testing+mandrill.testing@gmail.com';
-	$core->config['mailer']['Password'] = 'oqvkDcp-1E6JBw92bZbL-w';
-}
 
 ?>
