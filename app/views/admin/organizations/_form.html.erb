@@ -1,0 +1,34 @@
+
+<%= form_for [:admin, @organization] do |f| %>
+
+  <ul class="error">
+  <% @organization.errors.full_messages.each do |err| %>
+    <li>
+      <%= err %>
+    </li>
+  <% end %>
+  </ul>
+
+  <% if @organization.new_record? %>
+    <% if @markets.size > 1 %>
+      <%= f.label :market %>
+      <%= f.select :market, @markets.map {|m| [m.name, m.id] } %>
+    <% else %>
+      <%= f.hidden_field :market, {value: @markets.first.id} %>
+    <% end %>
+  <% end %>
+
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :can_sell, "Can sell product" %>
+    <%= f.check_box :can_sell %>
+  </div>
+
+  <div>
+    <%= f.submit "#{@organization.new_record? ? 'Add' : 'Save'} Organization" %>
+  </div>
+<% end %>
