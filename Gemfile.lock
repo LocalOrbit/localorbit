@@ -1,10 +1,10 @@
 GIT
   remote: git://github.com/laserlemon/figaro.git
-  revision: 6533e165019b191dd2903f979a80f78931d82ad8
+  revision: e16f2d47f6516e8420ce21c9de76785d9f244bae
   specs:
     figaro (0.7.0)
-      bundler (~> 1.0)
       rails (>= 3, < 5)
+      thor (~> 0.14)
 
 GEM
   remote: https://rubygems.org/
@@ -37,7 +37,7 @@ GEM
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
     builder (3.1.4)
-    capybara (2.2.0)
+    capybara (2.2.1)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
@@ -72,11 +72,11 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    devise_invitable (1.3.1)
+    devise_invitable (1.3.2)
       actionmailer (>= 3.2.6, < 5)
       devise (>= 3.1.0)
     diff-lcs (1.2.5)
-    docile (1.1.1)
+    docile (1.1.2)
     erubis (2.7.0)
     execjs (2.0.2)
     factory_girl (4.3.0)
@@ -104,8 +104,8 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.5.2)
     minitest (4.7.5)
-    multi_json (1.8.2)
-    newrelic_rpm (3.7.1.182)
+    multi_json (1.8.4)
+    newrelic_rpm (3.7.1.188)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     orm_adapter (0.5.0)
@@ -134,7 +134,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.12.0)
     rake (10.1.1)
-    rdoc (3.12.2)
+    rdoc (4.1.1)
       json (~> 1.4)
     rspec-core (2.14.7)
     rspec-expectations (2.14.4)
@@ -153,9 +153,9 @@ GEM
       railties (>= 4.0.0, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
-    sdoc (0.3.20)
-      json (>= 1.1.3)
-      rdoc (~> 3.10)
+    sdoc (0.4.0)
+      json (~> 1.8)
+      rdoc (~> 4.0, < 5.0)
     simplecov (0.8.2)
       docile (~> 1.1.0)
       multi_json
@@ -177,13 +177,13 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (2.1.0)
+    turbolinks (2.2.0)
       coffee-rails
     tzinfo (0.3.38)
     uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    unicorn (4.7.0)
+    unicorn (4.8.0)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
