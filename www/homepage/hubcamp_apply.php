@@ -10,7 +10,7 @@ td { padding: 10px; }
 APPLY BY: <span style="font-weight:bold">Tuesday, February 25, 2014</span></p>
 <p>&nbsp;</p>
 <p>Register early, as we only have 15 spots available!</p>
-<p>Location: Urban &amp; Environmental Policy Institute, Occidental College, Los Angeles, CA</p>
+<p>Hosted by: Urban &amp; Environmental Policy Institute, Occidental College, Los Angeles, CA</p>
 <p>&nbsp;</p>
 <p>We will share everyone&#39;s bio and contact info prior to Hub Camp, so that you&#39;ll have background on your Hub Camp peers.</p>
 <p>The cost is $295 per participant, with a $150 credit towards transaction fees on new or upgraded Local Orbit services.</p>
@@ -121,8 +121,8 @@ APPLY BY: <span style="font-weight:bold">Tuesday, February 25, 2014</span></p>
       Yes, I plan to commute daily.<br />
 <input type="radio" name="CUSTOMFIELD[Hub Camp applicant.Are you able to attend for all 3 days?]" value="Yes, I plan to stay at a hotel at least one night." />
      Yes, I plan to stay at a hotel at least one night.<br />
-<input type="radio" name="CUSTOMFIELD[Hub Camp applicant.Are you able to attend for all 3 days?]" value="Yes, I plan to commute daily." />
-     Yes, I plan to commute daily.</td>
+<input type="radio" name="CUSTOMFIELD[Hub Camp applicant.Are you able to attend for all 3 days?]" value="No, I can only attend some of the days." />
+     No, I can only attend some of the days. (Please describe below).</td>
   </tr>
   <tr>
     <td>Anything else we should know?</td>

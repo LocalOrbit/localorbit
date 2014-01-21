@@ -12,7 +12,7 @@ li { list-style:inherit; }
 <a href="http://cherrycapitalfoods.com"><img src="img/hubcamp/cherrycapital.gif" width="85" height="60" style="vertical-align:middle;;margin:0 8px" /></a> &nbsp;
 <a href="http://www.lawweathers.com"><img src="img/hubcamp/lawweathers.gif" width="187" height="22" style="vertical-align:middle;" /></a></p><br /><br />
 <p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php" class="btn btn_blue">Apply for Los Angeles, CA</a> &nbsp; March 16 - 18, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://www.uepi.oxy.edu"><img src="img/hubcamp/uepi.gif" width="112" height="60" style="vertical-align:middle;margin:0 15px" /></a></a></p><br /><br />
-More Hub Camps, helping more small-scale distribution start-ups in more corners of the country, coming later in 2014!<br />
+More Hub Camps, helping more people build local food distribution businesses, coming later in 2014!<br />
 <br /><br />
 <img src="/homepage/img/page_images/hubcamp.jpg" width="377" height="250" class="public_content_photo" style="margin-left:10px" align="right">
 
