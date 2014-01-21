@@ -1,4 +1,6 @@
 class Admin::MarketManagersController < AdminController
+  before_action :require_admin
+
   def index
     @market = Market.find(params[:market_id])
   end

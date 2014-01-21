@@ -8,6 +8,7 @@ LocalOrbit::Application.routes.draw do
     resources :markets do
       resources :market_managers, as: :managers, path: :managers
     end
+    resources :organizations
   end
 
   resource :dashboard, controller: "dashboard"

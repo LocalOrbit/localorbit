@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131216221432) do
+ActiveRecord::Schema.define(version: 20140120194044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 20131216221432) do
   create_table "managed_markets", force: true do |t|
     t.integer  "market_id"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "market_organizations", force: true do |t|
+    t.integer  "market_id"
+    t.integer  "organization_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,6 +47,20 @@ ActiveRecord::Schema.define(version: 20131216221432) do
   end
 
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
+
+  create_table "organizations", force: true do |t|
+    t.string   "name"
+    t.boolean  "can_sell"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_organizations", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
