@@ -30,4 +30,21 @@ class User < ActiveRecord::Base
       organizations
     end
   end
+
+  def markets
+    if admin?
+      Market.all
+    elsif market_manager?
+      Market.
+        joins("LEFT JOIN market_organizations ON market_organizations.market_id = markets.id
+               LEFT JOIN user_organizations ON user_organizations.organization_id = market_organizations.organization_id
+               LEFT JOIN managed_markets ON managed_markets.market_id = markets.id").
+        where(["user_organizations.user_id = ? OR managed_markets.user_id = ?", id, id]).uniq
+    else
+      Market.
+        joins("INNER JOIN market_organizations ON market_organizations.market_id = markets.id
+               INNER JOIN user_organizations ON user_organizations.organization_id = market_organizations.organization_id").
+        where("user_organizations.user_id" => id)
+    end
+  end
 end

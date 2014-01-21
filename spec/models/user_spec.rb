@@ -78,4 +78,67 @@ describe User do
       end
     end
   end
+
+  describe 'markets' do
+    context 'admin' do
+      let(:user) { create(:user) }
+
+      it 'returns all markets' do
+        expect(user.markets).to eq(Market.all)
+      end
+    end
+
+    context 'market manager' do
+      let(:user) { create(:user, :market_manager) }
+      let(:market1) { user.managed_markets.first }
+      let(:market2) { create(:market) }
+      let(:market3) { create(:market) }
+      let(:org) { create(:organization) }
+
+      before(:each) do
+        user.organizations << org
+        market2.organizations << org
+      end
+
+      it 'returns a relation object' do
+        expect(user.markets).to be_kind_of(ActiveRecord::Relation)
+      end
+
+      it 'belongs to the markets they manage' do
+        expect(user.markets).to include(market1)
+      end
+
+      it 'belongs to markets their organizations belong to' do
+        expect(user.markets).to include(market2)
+      end
+
+      it 'does not show markets for which they are not members' do
+        expect(user.markets).to_not include(market3)
+      end
+    end
+
+    context 'user' do
+      let(:user) { create(:user, role: 'user') }
+      let(:market1) { create(:market) }
+      let(:market2) { create(:market) }
+      let(:org) { create(:organization) }
+
+      before(:each) do
+        user.organizations << org
+        market1.organizations << org
+      end
+
+      it 'returns a relation object' do
+        expect(user.markets).to be_kind_of(ActiveRecord::Relation)
+      end
+
+      it 'belongs to markets their organizations belong to' do
+        expect(user.markets).to include(market1)
+      end
+
+      it 'does not show markets for which they are not members' do
+        expect(user.markets).to_not include(market2)
+      end
+    end
+  end
 end
