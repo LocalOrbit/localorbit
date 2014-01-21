@@ -13,5 +13,13 @@ FactoryGirl.define do
     password "password"
     password_confirmation "password"
     role 'admin'
+
+  factory :organization do
+    sequence(:name) {|n| "Organization #{n}" }
+    can_sell false
+
+    trait :seller do
+      can_sell true
+    end
   end
 end
