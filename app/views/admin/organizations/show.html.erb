@@ -1,0 +1,17 @@
+<div>
+  <h1><%= @organization.name %> Details</h1>
+  <%#= link_to "Edit Organization", [:edit, :admin, @organization] %>
+  <%= link_to "Organizations", admin_organizations_path %>
+</div>
+
+<table>
+  <tr>
+    <td>Name</td>
+    <td><%= @organization.name %></td>
+  </tr>
+
+  <tr>
+    <td>Can sell products?</td>
+    <td><%= @organization.can_sell %></td>
+  </tr>
+</trable>
