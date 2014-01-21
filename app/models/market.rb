@@ -6,6 +6,9 @@ class Market < ActiveRecord::Base
   has_many :managed_markets
   has_many :managers, through: :managed_markets, source: :user
 
+  has_many :market_organizations
+  has_many :organizations, through: :market_organizations
+
   def clean_twitter_slug
     if twitter && twitter.match(/^@/)
       self.twitter = twitter[1..-1]
