@@ -111,4 +111,81 @@ describe "A Market Manager" do
     end
 
   end
+
+  describe "Inviting a member to an org" do
+    let(:org) { create(:organization, name: "Holland Farms")}
+
+    before do
+      market.organizations << org
+    end
+
+    context "when the user is not yet a member" do
+      it "sends an email to a recipient inviting them to join an organization" do
+        click_link 'Organizations'
+        click_link "Holland Farms"
+        click_link "Users"
+
+        within("#new_user") do
+          fill_in "Email", with: "susan@example.com"
+          click_button "Invite a new member"
+        end
+
+        expect(page).to have_content("Sent invitation to susan@example.com")
+
+        open_last_email_for "susan@example.com"
+        expect(current_email).to have_subject("You have been invited to Local Orbit")
+      end
+    end
+
+    context "when the user is an active member of an organization" do
+      let(:user) { create(:user) }
+      before do
+        org.users << user
+      end
+
+      it "show an error message" do
+        click_link 'Organizations'
+        click_link "Holland Farms"
+        click_link "Users"
+
+        within("#new_user") do
+          fill_in "Email", with: user.email
+          click_button "Invite a new member"
+        end
+
+        expect(page).to have_content("You have already added this user")
+      end
+    end
+
+    context "when no email has been entered" do
+      it "show an error message" do
+        click_link 'Organizations'
+        click_link "Holland Farms"
+        click_link "Users"
+
+        within("#new_user") do
+          fill_in "Email", with:""
+          click_button "Invite a new member"
+        end
+
+        expect(page).to have_content("Email can't be blank")
+      end
+    end
+
+    context "when an invalid email address has been entered" do
+      it "show an error message" do
+        click_link 'Organizations'
+        click_link "Holland Farms"
+        click_link "Users"
+
+        within("#new_user") do
+          fill_in "Email", with:"asdfasdfasdfasdfasd"
+          click_button "Invite a new member"
+        end
+
+        expect(page).to have_content("Email is invalid")
+      end
+    end
+
+  end
 end

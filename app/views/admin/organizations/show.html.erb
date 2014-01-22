@@ -4,6 +4,10 @@
   <%= link_to "Organizations", admin_organizations_path %>
 </div>
 
+<nav>
+  <li><%= link_to "Users", [:admin, @organization, :users] %></li>
+</nav>
+
 <table>
   <tr>
     <td>Name</td>
