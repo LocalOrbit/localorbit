@@ -1,5 +1,8 @@
 module Admin
   class OrganizationsController < AdminController
+    before_action :require_admin_or_market_manager
+    before_action :find_organization, only: [:show, :edit, :update]
+
     def index
       @organizations = current_user.managed_organizations
     end
@@ -21,13 +24,30 @@ module Admin
     end
 
     def show
-      @organization = current_user.managed_organizations.find(params[:id])
     end
+
+    def edit
+    end
+
+    def update
+      # This lookup is due to the original find coming back read only
+      @organization = Organization.find(@organization.id)
+      if @organization.update_attributes(organization_params)
+        redirect_to [:admin, @organization], notice:"Saved #{@organization.name}"
+      else
+        render action: :edit
+      end
+    end
+
 
     private
 
     def organization_params
       params.require(:organization).permit(:name, :can_sell)
+    end
+
+    def find_organization
+      @organization = current_user.managed_organizations.find(params[:id])
     end
   end
 end

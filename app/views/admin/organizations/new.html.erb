@@ -1,33 +1,3 @@
 <h1>Add Organization</h1>
 
-<%= form_for [:admin, @organization] do |f| %>
-
-  <ul class="error">
-  <% @organization.errors.full_messages.each do |err| %>
-    <li>
-      <%= err %>
-    </li>
-  <% end %>
-  </ul>
-
-  <% if @markets.size > 1 %>
-    <%= f.label :market %>
-    <%= f.select :market, @markets.map {|m| [m.name, m.id] } %>
-  <% else %>
-    <%= f.hidden_field :market, {value: @markets.first.id} %>
-  <% end %>
-
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-
-  <div>
-    <%= f.label :can_sell, "Can sell product" %>
-    <%= f.check_box :can_sell %>
-  </div>
-
-  <div>
-    <%= f.submit "Add Organization" %>
-  </div>
-<% end %>
+<%= render "form" %>
