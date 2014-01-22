@@ -13,10 +13,6 @@ $values = array(
 	'buyer_name'=>$core->session['org_name']
 );
 
-//get order_id for use in email
-$order_nbr = explode("-", $values['order_nbr']);
-$values['lo_foid'] = intval($order_nbr[3]);
-
 $body = $this->email_start($values['domain_id']);
 
 # we need to generate the html for the items table in the email
@@ -28,7 +24,7 @@ $sql = '
   loi.row_total,lod.delivery_start_time,lod.delivery_end_time
   from lo_order_line_item loi
   inner join lo_order_deliveries lod on (lod.lodeliv_id=loi.lodeliv_id)
-  where loi.lo_foid='.$values['lo_foid'].'
+  where loi.lo_foid='.$values['order_nbr'].'
   
   order by lod.delivery_start_time
 ';
@@ -58,7 +54,7 @@ foreach($items as $item) {
 
 $body .= $this->handle_source('<h1>You have a new order!</h1>
     <p>
-      <span class="lo_order_number">Order Number: {lo_foid}</span>
+      <span class="lo_order_number">Order Number: {order_nbr}</span>
     </p>
     <p>
       An order was just placed by <strong>{buyer_name}</strong>.
