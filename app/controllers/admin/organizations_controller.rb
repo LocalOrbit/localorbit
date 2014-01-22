@@ -30,8 +30,6 @@ module Admin
     end
 
     def update
-      # This lookup is due to the original find coming back read only
-      @organization = Organization.find(@organization.id)
       if @organization.update_attributes(organization_params)
         redirect_to [:admin, @organization], notice:"Saved #{@organization.name}"
       else
