@@ -14,10 +14,6 @@ $values = array(
 
 $items = $core->view[3]
 
-//get order_id for use in email
-$order_nbr = explode("-", $values['order_nbr']);
-$values['lo_oid'] = intval($order_nbr[3]);
-
 $body  = $this->email_start($values['domain_id']);
 
 # we need to generate the html for the items table in the email
@@ -47,7 +43,7 @@ foreach($items as $item)
 
 $body .= $this->handle_source('<h1>Your order has been placed.</h1>
       <p>
-        <span class="lo_order_number">Order Number: {lo_oid}</span>
+        <span class="lo_order_number">Order Number: {order_nbr}</span>
       </p>
       <p>
         Thank you for your order through {hub_name}!<br>
@@ -108,7 +104,7 @@ if(count($mm_emails) > 0)
       <table>
         <tr>
           <td>
-            <span class="lo_order_number">Order Number: {lo_oid}</span>
+            <span class="lo_order_number">Order Number: {order_nbr}</span>
           </td>
           <td class="lo_placed_by">
             Order Placed By: <strong>{buyer_name}</strong>
