@@ -3,7 +3,6 @@ $to_email = $core->view[0];
 $values = array(
 	'fullname'=>$core->view[1],
 	'order_nbr'=>$core->view[2],
-	'payment_type'=>(($core->view[4] == 'purchaseorder')?'Purchase Order':'Credit Card'),
 	'payment_confirm_code'=>$core->view[5],
 	'domain_id'=>$core->view[6],
 	'hostname'=>$core->view[7],
@@ -11,6 +10,14 @@ $values = array(
 	'logo'=>'<img src="http://'.$core->view[7].image('logo-email',$core->view[6]).'" />',
 	'buyer_name'=>$core->session['org_name']
 );
+
+if ($core->view[4] == 'purchaseorder') {
+  $values['payment_type'] = 'Purchase Order';
+} else if ($core->view[4] == 'ach') {
+  $values['payment_type'] = 'ACH';
+} else {
+  $values['payment_type'] = 'Credit Card';
+}
 
 $items = $core->view[3]
 
