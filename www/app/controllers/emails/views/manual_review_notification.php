@@ -9,7 +9,7 @@ $values = array(
 );
 
 $body  = $this->email_start();
-$body .= $this->handle_source('<h1>You are almost there!</h1>
+$body .= $this->handle_source('
       <p>
         You have received this notification because an item ({product_name})
         has been marked for manual review.
@@ -26,7 +26,7 @@ $body .= $this->handle_source('<h1>You are almost there!</h1>
         </p>
       </div>
 
-      <p>Ths cancelation was performed at {hub_name} by {canceled_by}.</p>
+      <p>Ths action was performed at {hub_name} by {marked_by}.</p>
 ',$values);
 $body .= $this->footer();
 $body .= $this->email_end();
