@@ -2,6 +2,7 @@
 
 [![Build Status](https://magnum.travis-ci.com/collectiveidea/localorbit.png?token=bJRCSztHn61AphkJHARX&branch=master)](https://magnum.travis-ci.com/collectiveidea/localorbit)
 [![Code Climate](https://codeclimate.com/repos/52b30c60c7f3a3648e02206b/badges/2d672c7e68247d48df79/gpa.png)](https://codeclimate.com/repos/52b30c60c7f3a3648e02206b/feed)
+[![Test Coverage](https://codeclimate.com/repos/52b30c60c7f3a3648e02206b/badges/2d672c7e68247d48df79/coverage.png)](https://codeclimate.com/repos/52b30c60c7f3a3648e02206b/feed)
 [![Dependency Status](https://gemnasium.com/955bafc8985fbbc378ffd8d543d90a64.png)](https://gemnasium.com/collectiveidea/localorbit)
 
 ## Running
