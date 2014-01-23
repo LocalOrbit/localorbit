@@ -1,5 +1,6 @@
 <?
 $to_email = $core->view[0];
+$items = $core->view[3];
 $values = array(
 	'fullname'=>$core->view[1],
 	'order_nbr'=>$core->view[2],
@@ -18,8 +19,6 @@ if ($core->view[4] == 'purchaseorder') {
 } else {
   $values['payment_type'] = 'Credit Card';
 }
-
-$items = $core->view[3]
 
 $body  = $this->email_start($values['domain_id']);
 

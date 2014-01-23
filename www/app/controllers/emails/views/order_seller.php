@@ -20,6 +20,10 @@ if ($core->view[4] == 'purchaseorder') {
   $values['payment_type'] = 'Credit Card';
 }
 
+//get order_id for use in SQL
+$order_nbr = explode("-", $values['order_nbr']);
+$values['lo_foid'] = intval($order_nbr[3]);
+
 $body = $this->email_start($values['domain_id']);
 
 # we need to generate the html for the items table in the email
@@ -31,7 +35,7 @@ $sql = '
   loi.row_total,lod.delivery_start_time,lod.delivery_end_time
   from lo_order_line_item loi
   inner join lo_order_deliveries lod on (lod.lodeliv_id=loi.lodeliv_id)
-  where loi.lo_foid='.$values['order_nbr'].'
+  where loi.lo_foid='.$values['lo_foid'].'
   
   order by lod.delivery_start_time
 ';
