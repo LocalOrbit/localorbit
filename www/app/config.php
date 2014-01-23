@@ -300,10 +300,14 @@ if(isset($_SERVER['SERVER_ENV']) && $_SERVER['SERVER_ENV'] == 'jvavul') {
 }
 
 if(is_dir("/Users")) {
-	$core->config['stage'] = 'devcurrent';
-	$core->config['default_hostname'] = 'devcurrent.localorb.it';
+  if (strpos(exec('git symbolic-ref HEAD'),'branch')) {
+    $core->config['stage'] = 'devcurrent';
+  } else {
+    $core->config['stage'] = 'dev';
+  }
+	$core->config['default_hostname'] = $core->config['stage'].'.localorb.it';
 	$core->config['session_domain']   = '.localorb.it';
-	$core->config['session_name']    .= 'devcurrent';
+	$core->config['session_name']    .= $core->config['stage'];
 	$core->config['db']['username']   = 'localorb_www';
 	$core->config['db']['database']   = 'localorb_www_dev';
 	$core->config['db']['password']   = 'localorb_www_dev';
