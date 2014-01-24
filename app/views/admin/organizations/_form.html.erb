@@ -1,4 +1,3 @@
-
 <%= form_for [:admin, @organization] do |f| %>
 
   <ul class="error">
@@ -11,10 +10,10 @@
 
   <% if @organization.new_record? %>
     <% if @markets.size > 1 %>
-      <%= f.label :market %>
-      <%= f.select :market, @markets.map {|m| [m.name, m.id] } %>
+      <%= label_tag :initial_market_id, "Market" %>
+      <%= select_tag :initial_market_id, options_for_select(@markets.map {|m| [m.name, m.id] }), prompt: "Select a Market" %>
     <% else %>
-      <%= f.hidden_field :market, {value: @markets.first.id} %>
+      <%= hidden_field_tag :initial_market_id, @markets.first.id %>
     <% end %>
   <% end %>
 
