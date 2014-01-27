@@ -1,6 +1,6 @@
 module Admin
   class OrganizationsController < AdminController
-    before_action :require_admin_or_market_manager
+    before_action :require_admin_or_market_manager, only: [:new, :create]
     before_action :find_organization, only: [:show, :edit, :update]
 
     def index
