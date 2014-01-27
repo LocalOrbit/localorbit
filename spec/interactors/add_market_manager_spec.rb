@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe AddMarketManager do
-  let!(:inviter) { create(:user) }
+  let!(:inviter) { create(:user, :admin) }
   let!(:market) { create(:market) }
 
   describe 'adding an existing user' do

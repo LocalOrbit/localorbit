@@ -12,7 +12,7 @@ FactoryGirl.define do
     sequence(:email) {|n| "user#{n}@example.com" }
     password "password"
     password_confirmation "password"
-    role 'admin'
+    role 'user'
 
     trait :market_manager do
       role 'user'
@@ -20,6 +20,10 @@ FactoryGirl.define do
         m = create(:market)
         user.managed_markets << m
       end
+    end
+
+    trait :admin do
+      role 'admin'
     end
   end
 

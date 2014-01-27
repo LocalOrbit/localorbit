@@ -56,7 +56,7 @@ describe InviteUserToOrganization do
   end
 
   describe "an existing user" do
-    let(:user){ create(:user) }
+    let(:user){ create(:user, :admin) }
     let(:user_org) { create(:organization) }
     let(:interactor_args) {
       {email: user.email, inviter: inviter, organization: org }
@@ -94,7 +94,7 @@ describe InviteUserToOrganization do
   end
 
   describe "a user that's already in the organization" do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, :admin) }
     let(:org) { create(:organization) }
     let(:interactor_args) {
       {email: user.email, inviter: inviter, organization: org}

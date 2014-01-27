@@ -138,7 +138,7 @@ describe "A Market Manager" do
     end
 
     context "when the user is an active member of an organization" do
-      let(:user) { create(:user) }
+      let(:user) { create(:user, :admin) }
       before do
         org.users << user
       end

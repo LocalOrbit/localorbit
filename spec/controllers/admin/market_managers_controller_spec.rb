@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin::MarketManagersController do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, :admin) }
   let!(:market) { create(:market) }
   let(:interactor_context) { {market: market, email: 'a-user@example.com', inviter: user} }
 
