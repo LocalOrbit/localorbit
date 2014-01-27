@@ -11,7 +11,7 @@ class Admin::MarketManagersController < AdminController
 
   def create
     @market = Market.find(params[:market_id])
-    result = AddMarketManager.perform(market: @market, email: params.require(:email))
+    result = AddMarketManager.perform(market: @market, email: params.require(:email), inviter: current_user)
     if result.success?
       redirect_to [:admin, @market, :managers]
     else

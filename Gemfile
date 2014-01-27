@@ -47,6 +47,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'capybara'
   gem 'factory_girl_rails'
+  gem 'email_spec'
 end
 
 group :production, :staging do

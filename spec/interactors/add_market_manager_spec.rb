@@ -1,13 +1,14 @@
 require 'spec_helper'
 
 describe AddMarketManager do
+  let!(:inviter) { create(:user) }
   let!(:market) { create(:market) }
 
   describe 'adding an existing user' do
     let!(:user) { create(:user, role: 'user') }
 
     it "adds them to the market's managers list" do
-      result = AddMarketManager.perform(market: market, email: user.email)
+      result = AddMarketManager.perform(market: market, email: user.email, inviter: inviter)
 
       expect(result).to be_success
       expect(market.managers(true)).to include(user)
@@ -17,15 +18,15 @@ describe AddMarketManager do
   describe 'adding a new user' do
     it 'creates a new user' do
       expect {
-        result = AddMarketManager.perform(market: market, email: 'new-user@example.com')
+        result = AddMarketManager.perform(market: market, email: 'new-user@example.com', inviter: inviter)
         expect(result).to be_success
       }.to change {
         User.count
-      }.from(0).to(1)
+      }.from(1).to(2)
     end
 
     it 'sends the new user an invitation email' do
-      result = AddMarketManager.perform(market: market, email: 'new-user@example.com')
+      result = AddMarketManager.perform(market: market, email: 'new-user@example.com', inviter: inviter)
       expect(result).to be_success
 
       email = ActionMailer::Base.deliveries.last
@@ -33,7 +34,7 @@ describe AddMarketManager do
     end
 
     it "adds the new user to the market's managers list" do
-      result = AddMarketManager.perform(market: market, email: 'new-user@example.com')
+      result = AddMarketManager.perform(market: market, email: 'new-user@example.com', inviter: inviter)
       expect(result).to be_success
 
       new_user = User.where(email: 'new-user@example.com').first
