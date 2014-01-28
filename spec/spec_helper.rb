@@ -51,6 +51,11 @@ RSpec.configure do |config|
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
 
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+    ImportLegacyTaxonomy.run(Rails.root.join('db/taxonomy.csv'))
+  end
+
   config.before(:each) do
     ActionMailer::Base.deliveries.clear
   end

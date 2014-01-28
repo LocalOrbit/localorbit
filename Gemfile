@@ -48,6 +48,7 @@ group :test do
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'email_spec'
+  gem 'database_cleaner'
 end
 
 group :production, :staging do
