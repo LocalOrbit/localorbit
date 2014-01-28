@@ -45,3 +45,5 @@ User.where(email: "kate@localorb.it").exists? || User.create!(
   role: "admin",
   name: "Kate Barker"
 )
+
+ImportLegacyTaxonomy.run(File.expand_path('../taxonomy.csv', __FILE__))

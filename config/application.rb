@@ -21,6 +21,8 @@ module LocalOrbit
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
+    config.autoload_paths += %W(#{config.root}/lib)
+
     # Set this accordingly:
     # false:
     #   - want to skip the locale validation
