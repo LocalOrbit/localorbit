@@ -4,27 +4,31 @@
 li { list-style:inherit; }*/
 td { padding: 10px; }
 </style>
-<h1>Apply for Hub Camp LA</h1><br />
+<h1>Apply for Hub Camp</h1><br />
 <h2><a style="text-decoration:underline" href="https://www.localorb.it/homepage/hubcamp.php">Learn more about Hub Camp</a></h2>
-<p style="font-size:110%">DATES: Sunday - Tuesday, March 16 - 18, 2014<br />
-APPLY BY: <span style="font-weight:bold">Tuesday, February 25, 2014</span></p>
-<p>&nbsp;</p>
-<p>Register early, as we only have 15 spots available!</p>
-<p>Hosted by: Urban &amp; Environmental Policy Institute, Occidental College, Los Angeles, CA</p>
-<p>&nbsp;</p>
+
 <p>We will share everyone&#39;s bio and contact info prior to Hub Camp, so that you&#39;ll have background on your Hub Camp peers.</p>
-<p>The cost is $295 per participant, with a $150 credit towards transaction fees on new or upgraded Local Orbit services.</p>
+<p>The cost is $295 per participant for the 3 days, with a $150 credit towards transaction fees on new or upgraded Local Orbit services.</p>
+<p>&nbsp;</p>
+<p>Register early, as we only have 15 spots available per Hub Camp!</p>
 <p>&nbsp;</p>
 * All Fields are Required
 <p>&nbsp;</p>
-<form action="https://service.capsulecrm.com/service/newlead" method="post">
+<p>&nbsp;</p>
+<form id="form1" action="https://service.capsulecrm.com/service/newlead" method="post">
 <input type="hidden" name="FORM_ID" value="9d7d59e5-7f09-445f-a0b5-a5a4c8f6d80e">
 <input type="hidden" name="COMPLETE_URL" value="https://www.localorb.it/homepage/hubcamp.php?thanks=1">
 <input type="hidden" name="REVIEW_ID" value="159458"/>
 <input type="hidden" name="TAG" value="Hub Camp applicant">
-<input type="hidden" name="TAG" value="Hub Camp LA">
 <!--<input type="hidden" name="DEVELOPER" value="TRUE"/>-->
 <table width="900" border="0" cellspacing="0" cellpadding="15">
+  <tr>
+    <td width="25%">Hub Camp location</td>
+    <td width="75%"><input type="radio" name="TAG" value="Hub Camp LA"<? if ($_GET['location']=='LA') { ?> checked="checked"<? } ?> /> <span style="font-weight:bold">Los Angeles, CA</span> &mdash; Sunday - Tuesday, March 16 - 18, 2014<br />
+APPLY BY: <span style="font-weight:bold">Tuesday, February 25</span><br /><br />
+    <input type="radio" name="TAG" value="Hub Camp Davis"<? if ($_GET['location']=='Davis') { ?> checked="checked"<? } ?> /> <span style="font-weight:bold">Davis, CA</span> &mdash; Sunday - Tuesday, April 27 - 29, 2014<br />
+APPLY BY: <span style="font-weight:bold">Tuesday, April 8</span></td>
+  </tr>
   <tr>
     <td width="25%">First name</td>
     <td width="75%"><input type="text" name="FIRST_NAME" /></td>
@@ -50,12 +54,12 @@ APPLY BY: <span style="font-weight:bold">Tuesday, February 25, 2014</span></p>
     <td><input type="text" name="CITY[OFFICE]" /></td>
   </tr>
   <tr>
-    <td>Business State</td>
+    <td>Business State / Province</td>
     <td><input type="text" name="STATE[OFFICE]" size="2" /></td>
   </tr>
   <tr>
     <td>Business Zip Code</td>
-    <td><input type="text" name="ZIP[OFFICE]" size="5" /></td>
+    <td><input type="text" name="ZIP[OFFICE]" size="6" /></td>
   </tr>
   <tr>
     <td>Dietary Preferences</td>
@@ -130,11 +134,11 @@ APPLY BY: <span style="font-weight:bold">Tuesday, February 25, 2014</span></p>
   </tr>
   <tr>
     <td>How did you hear about Hub Camp?</td>
-    <td><textarea name="CUSTOMFIELD[Hub Camp applicant.How did you hear about Hub Camp?]" cols="45" rows="5"></textarea></td>
+    <td><input type="text" name="CUSTOMFIELD[Hub Camp applicant.How did you hear about Hub Camp?]" /></td>
   </tr>
   <tr>
     <td align="right">&nbsp;</td>
-    <td><input type="submit" value="Submit"/></td>
+    <td><a style="cursor:hand;cursor:pointer;width:210px;display:inline-block;" onclick="form1.submit();" class="btn btn_blue">Submit</a></td>
   </tr>
 </table>
 </form>

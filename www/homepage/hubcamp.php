@@ -1,21 +1,25 @@
 <? $title='Hub Camp'; include('includes/page_start.php'); ?>	
 <style type="text/css">
 ul { list-style-image:url('http://testing.localorb.it/homepage/img/icon_rightarrow.gif'); }
+ul.speakers { list-style:circle; }
 li { list-style:inherit; }
 </style>
 <? if ($_GET['thanks']==1) { ?><div style="display:block;background-color:#670000;color:#fff;margin:0 0 20px 0;padding:10px;">Thank you for applying to Hub Camp! We will read your application and be in touch in a few days.</div><? } ?>
-<h1>Apply for Hub Camp</h1>
-<div style="float:right;width:377px; vertical-align:middle;"></div>
+<h1>Hub Camp</h1>
 <h2>The Nuts &amp; Bolts of Local Food Distribution</h2>
 <p>Practical training for the entrepreneurs and organizations building the New Food Economy.</p><br /><br />
-<p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" onclick="window.open('https://docs.google.com/forms/d/11-Llu9bSh3tbykH-4uGhrBc81Nzq70vSgDSZh-FNa6I/viewform', 'name','width=700,height=400')" class="btn btn_blue">Apply for Grand Rapids, MI</a> &nbsp; January 29 - 31, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://startgarden.com"><img src="img/hubcamp/startgarden.gif" width="115" height="41" style="vertical-align:middle;margin:0 8px" /></a> &nbsp;
+
+<? /*<p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" onclick="window.open('https://docs.google.com/forms/d/11-Llu9bSh3tbykH-4uGhrBc81Nzq70vSgDSZh-FNa6I/viewform', 'name','width=700,height=400')" class="btn btn_blue">Apply for Grand Rapids, MI</a> &nbsp; January 29 - 31, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://startgarden.com"><img src="img/hubcamp/startgarden.gif" width="115" height="41" style="vertical-align:middle;margin:0 8px" /></a> &nbsp;
 <a href="http://cherrycapitalfoods.com"><img src="img/hubcamp/cherrycapital.gif" width="85" height="60" style="vertical-align:middle;;margin:0 8px" /></a> &nbsp;
-<a href="http://www.lawweathers.com"><img src="img/hubcamp/lawweathers.gif" width="187" height="22" style="vertical-align:middle;" /></a></p><br /><br />
-<p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php" class="btn btn_blue">Apply for Los Angeles, CA</a> &nbsp; March 16 - 18, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://www.uepi.oxy.edu"><img src="img/hubcamp/uepi.gif" width="112" height="60" style="vertical-align:middle;margin:0 15px" /></a></a></p><br /><br />
+<a href="http://www.lawweathers.com"><img src="img/hubcamp/lawweathers.gif" width="187" height="22" style="vertical-align:middle;" /></a></p><br /><br /> */ ?>
+
+<p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php?location=LA" class="btn btn_blue">Apply for Los Angeles, CA</a> &nbsp; March 16 - 18, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://www.uepi.oxy.edu"><img src="img/hubcamp/uepi.gif" width="112" height="60" style="vertical-align:middle;margin:0 15px" /></a> <a href="http://www.seedstock.com"><img src="img/hubcamp/seedstock.png" width="158" height="35" style="vertical-align:middle;margin:0 15px" /></a></p><br /><br />
+
+<p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php?location=Davis" class="btn btn_blue">Apply for Davis, CA</a> &nbsp; April 27 - 29, 2014</p><br /><br />
+
 More Hub Camps, helping more people build local food distribution businesses, coming later in 2014!<br />
 <br /><br />
 <img src="/homepage/img/page_images/hubcamp.jpg" width="377" height="250" class="public_content_photo" style="margin-left:10px" align="right">
-
 <h2>Walk away from Hub Camp with a 6-month action plan to hit the ground running!</h2>
 <p>An action-oriented approach to learning, launching and adapting as you grow your local food system.</p>
 
@@ -29,16 +33,22 @@ More Hub Camps, helping more people build local food distribution businesses, co
 <br /><br />
 <h2>The Experience &amp; Advice to Get You Going</h2>
 <ul>
-  <li><strong>Noah Fulmer</strong>, the director of business development at Local Orbit, is the former operator and co-founder of Farm Fresh Rhode Island, a wholesale food hub that aggregates and delivers $2 million in produce from 60 local farmers to 120 buyers each year. </li>
+  <li><strong>Noah Fulmer</strong>, the director of training and capacity building at Local Orbit, is the former operator and co-founder of Farm Fresh Rhode Island, a wholesale food hub that aggregates and delivers $2 million in produce from 60 local farmers to 120 buyers each year. </li>
   <li><strong>Erika Block</strong>, CEO of Local Orbit, which supports diverse local distribution models across the country. Erika brings unique perspective on best practices and challenges within this emerging sector, and she’s also built and managed two start-up businesses.</li>
   <li><strong> Plus:</strong> Topic experts on food safety, finance &amp; legal issues.</li>
-  <li>At Hub Camp Grand Rapids: 
-    <ul>
-      <li><strong>Lee Michaels</strong>, Operations Manager at Cherry Capital Foods, which distributes food from Michigan farmers to dozens of schools, grocers and restaurants. Lee brings a wealth of experience managing operations to maximize food safety.</li>
-      <li><strong>Michael Daray</strong>, Attorney at Law Weathers. Michael is a business law attorney representing clients across a broad range of industries from agriculture to transportation.  He regularly counsels both start-ups and mature companies on such matters as entity formation, financing, operational matters and regulatory issues.</li>
-    </ul>
-  </li>
 </ul>
+<br /><br />
+<h2>Past Hub Camps</h2>
+<h3>Grand Rapids, Michigan - January 29 - 31, 2014</h3>
+<p> In partnership with: &nbsp; <a href="http://startgarden.com"><img src="img/hubcamp/startgarden.gif" width="115" height="41" style="vertical-align:middle;margin:0 8px" /></a> &nbsp;
+<a href="http://cherrycapitalfoods.com"><img src="img/hubcamp/cherrycapital.gif" width="85" height="60" style="vertical-align:middle;;margin:0 8px" /></a> &nbsp;
+<a href="http://www.lawweathers.com"><img src="img/hubcamp/lawweathers.gif" width="187" height="22" style="vertical-align:middle;" /></a></p>
+    <ul>
+      <li>Evan Smith, Chief of Operations at Cherry Capital Foods, which distributes food from Michigan farmers to dozens of schools, grocers and restaurants. Evan brings a wealth of experience designing and managing operations to maximize food safety.</li>
+      <li>Michael Daray, Attorney at Law Weathers. Michael is a business law attorney representing clients across a broad range of industries from agriculture to transportation.  He regularly counsels both start-ups and mature companies on such matters as entity formation, financing, operational matters and regulatory issues.</li>
+      <li>Adam Watts, Executive Chef at Grand Rapids Brewing Co, brings a farm-to-table menu to this popular brewery, the only certified organic brewery in Michigan.</li>
+      <li>Sheri Rop, Founder and Owner at Nourish Organic Market &amp; Deli, enjoys the endless challenges of running a successful food retail business. Her favorite part is working with the local farmers and artisans who produce food that nourishes and restores soil, health and community.</li>
+    </ul>
 <br /><br />
 <? /*
 <h2>Agenda in Brief</h2>
