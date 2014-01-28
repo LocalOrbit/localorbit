@@ -3,9 +3,10 @@ require 'csv'
 # Import the taxonomy tree from a csv export
 # of the legacy taxonomy data
 module ImportLegacyTaxonomy
-  def self.run(filename)
+  def self.run(filename, opts={})
     flattened  = {}
     base_nodes = []
+    original_count = Category.count
 
     CSV.foreach(filename, headers: true) do |row|
       next if row['cat_id'] == '1' || row['parent_id'] == '1'
@@ -22,6 +23,12 @@ module ImportLegacyTaxonomy
     end
 
     store_tree(base_nodes)
+
+    if opts[:verbose]
+      puts "#{original_count} Exisiting Categories"
+      puts "Created #{Category.count - original_count} new Categories."
+      puts "There were #{flattened.size} rows detected in the import file"
+    end
   end
 
   def self.store_tree(nodes, parent = nil)
