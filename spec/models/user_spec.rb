@@ -2,6 +2,48 @@ require 'spec_helper'
 
 describe User do
   describe 'roles' do
+
+    describe "#can_manage_organization?" do
+      let(:org) { create(:organization) }
+
+      context "when user is an admin" do
+        let(:user) { create(:user, role: 'admin') }
+
+        it "returns true" do
+          expect(user.can_manage_organization?(org)).to be_true
+        end
+      end
+
+      context "when the user is a market manager" do
+        let(:market_manager) { create(:user, :market_manager) }
+        let(:market) { market_manager.managed_markets.first }
+
+        context "and the org is in their managed market" do
+          before do
+            market.organizations << org
+          end
+
+          it "returns true" do
+            expect(market_manager.can_manage_organization?(org)).to be_true
+          end
+        end
+
+        context "and the org is not in their managed market" do
+          it "returns false" do
+            expect(market_manager.can_manage_organization?(org)).to be_false
+          end
+        end
+      end
+
+      context "user does not manage any market" do
+        let(:user) { create(:user, role: 'user') }
+
+        it "returns false" do
+          expect(user.can_manage_organization?(org)).to be_false
+        end
+      end
+    end
+
     it 'admin? returns true if role is "admin"' do
       user = build(:user)
       user.role = 'admin'

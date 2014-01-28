@@ -5,13 +5,21 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :managed_markets_join, class_name: 'ManagedMarket'
-  has_many :managed_markets, through: :managed_markets_join, source: :market
+  has_many :managed_markets, through: :managed_markets_join, source: :market do
+    def can_manage_organization?(org)
+      joins(:organizations).where({organizations: {id: org.id}}).exists?
+    end
+  end
 
   has_many :user_organizations
   has_many :organizations, through: :user_organizations
 
   def admin?
     role == 'admin'
+  end
+
+  def can_manage_organization?(org)
+    admin? || managed_markets.can_manage_organization?(org)
   end
 
   def market_manager?

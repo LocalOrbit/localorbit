@@ -22,10 +22,12 @@
     <%= f.text_field :name %>
   </div>
 
-  <div>
-    <%= f.label :can_sell, "Can sell product" %>
-    <%= f.check_box :can_sell %>
-  </div>
+  <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
+    <div>
+      <%= f.label :can_sell, "Can sell product" %>
+      <%= f.check_box :can_sell %>
+    </div>
+  <% end %>
 
   <div>
     <%= f.submit "#{@organization.new_record? ? 'Add' : 'Save'} Organization" %>
