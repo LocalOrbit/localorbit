@@ -27,7 +27,7 @@ describe "Admin Managing Market Managers" do
   end
 
   describe 'as an admin' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, :admin) }
     let(:user2) { create(:user, role: 'user') }
 
     before(:each) do

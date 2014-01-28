@@ -24,7 +24,7 @@ describe User do
   describe 'managed_organizations' do
 
     context 'for an admin' do
-      let(:user) { create(:user) }
+      let(:user) { create(:user, :admin) }
 
       it 'returns a scope with all organizations' do
         expect(user.managed_organizations).to eq(Organization.all)
@@ -81,7 +81,7 @@ describe User do
 
   describe 'markets' do
     context 'admin' do
-      let(:user) { create(:user) }
+      let(:user) { create(:user, :admin) }
 
       it 'returns all markets' do
         expect(user.markets).to eq(Market.all)

@@ -122,7 +122,7 @@ describe "Admin Managing Markets" do
   end
 
   describe 'as an admin' do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, :admin) }
     let!(:market) { create(:market) }
 
     before :each do
