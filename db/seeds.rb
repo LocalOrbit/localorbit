@@ -9,12 +9,12 @@
 #
 
 
-Market.where(subdomain:"springfield").first || Market.create(
+Market.where(subdomain:"springfield").exists? || Market.create(
   name:"Springfield Market",
   subdomain:"springfield"
 )
 
-User.create!(
+User.where(email: "erika@localorb.it").exists? || User.create!(
   email: "erika@localorb.it",
   password: "password1",
   password_confirmation: "password1",
@@ -22,7 +22,7 @@ User.create!(
   name: "Erika Block"
 )
 
-User.create!(
+User.where(email: "anna@localorb.it").exists? || User.create!(
   email: "anna@localorb.it",
   password: "password1",
   password_confirmation: "password1",
@@ -30,7 +30,7 @@ User.create!(
   name: "Anna Richardson"
 )
 
-User.create!(
+User.where(email: "ragan@localorb.it").exists? || User.create!(
   email: "ragan@localorb.it",
   password: "password1",
   password_confirmation: "password1",
@@ -38,7 +38,7 @@ User.create!(
   name: "Ragan Erickson"
 )
 
-User.create!(
+User.where(email: "kate@localorb.it").exists? || User.create!(
   email: "kate@localorb.it",
   password: "password1",
   password_confirmation: "password1",
