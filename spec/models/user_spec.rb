@@ -183,4 +183,71 @@ describe User do
       end
     end
   end
+
+  describe 'managed_products' do
+    subject { user.managed_products }
+
+    context 'for an admin' do
+      let(:user) { create(:user, :admin) }
+
+      it 'returns all products' do
+        expect(subject).to eq(Product.all)
+      end
+    end
+
+    context 'for a market manager' do
+      let(:user) { create(:user, :market_manager) }
+      let(:market1) { user.managed_markets.first }
+      let(:market2) { create(:market) }
+      let(:org1) { create(:organization) }
+      let(:org2) { create(:organization) }
+      let(:prod1) { create(:product, organization: org1) }
+      let(:prod2) { create(:product, organization: org2) }
+
+      before do
+        market1.organizations << org1
+        market2.organizations << org2
+      end
+
+      it "returns a scope" do
+        expect(subject).to be_kind_of(ActiveRecord::Relation)
+      end
+
+      it "returned scope includes products for organizations in markets they manage" do
+        expect(subject).to include(prod1)
+      end
+
+      it "returned scope does not include products for organizations in markets they do not manage" do
+        expect(subject).to_not include(prod2)
+      end
+    end
+
+    context 'for a user' do
+      let(:user) { create(:user) }
+      let(:market1) { create(:market) }
+      let(:org1) { create(:organization) }
+      let(:org2) { create(:organization) }
+      let(:prod1) { create(:product, organization: org1) }
+      let(:prod2) { create(:product, organization: org2) }
+
+      before do
+        market1.organizations << org1
+        market1.organizations << org2
+        org1.users << user
+      end
+
+      it "returns a scope" do
+        expect(subject).to be_kind_of(ActiveRecord::Relation)
+      end
+
+      it "returned scope includes products for organizations they belong to" do
+        expect(subject).to include(prod1)
+      end
+
+      it "returned scope does not include products for organization they do not belong to" do
+        expect(subject).to_not include(prod2)
+      end
+
+    end
+  end
 end
