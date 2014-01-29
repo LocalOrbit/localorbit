@@ -1,0 +1,21 @@
+<%= render "shared/errors", {resource: @product} %>
+
+<% if current_user.managed_organizations.count > 1 %>
+<div>
+  <%= f.label :organization_id, "Product Organization" %>
+  <%= f.collection_select :organization_id, current_user.managed_organizations, :id, :name, {include_blank: "Select an organization"} %>
+</div>
+
+<% else %>
+  <%= f.hidden_field :organization_id, {value: current_user.managed_organizations.first.id} %>
+<% end %>
+
+<div>
+  <%= f.label :name, "Product Name" %>
+  <%= f.text_field :name %>
+</div>
+
+<div>
+  <%= f.label :category_id %>
+  <%= f.select :category_id, Category.for_select, {include_blank: "Select a category"} %>
+</div>

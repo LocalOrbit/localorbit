@@ -39,5 +39,6 @@ FactoryGirl.define do
   factory :product do
     sequence(:name) {|n| "Product #{n}" }
     category { Category.first }
+    organization
   end
 end
