@@ -35,4 +35,9 @@ FactoryGirl.define do
       can_sell true
     end
   end
+
+  factory :product do
+    sequence(:name) {|n| "Product #{n}" }
+    category { Category.first }
+  end
 end
