@@ -4,7 +4,7 @@ class Category < ActiveRecord::Base
   has_many :products
 
   def self.for_select(list = nil, parent_str = nil)
-    list ||= where(parent_id: nil)
+    list ||= where(parent_id: nil).includes(:children => {:children => {:children => {:children => :children}}})
     output = []
     list.each do |item|
       name = [parent_str, item.name].compact.join(" > ")
