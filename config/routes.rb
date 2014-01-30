@@ -1,4 +1,5 @@
 LocalOrbit::Application.routes.draw do
+
   devise_for :users
   devise_scope :user do
     get "/login" => "devise/sessions#new"
@@ -13,6 +14,7 @@ LocalOrbit::Application.routes.draw do
       resources :users
     end
 
+    resources :products
   end
 
   resource :dashboard, controller: "dashboard"

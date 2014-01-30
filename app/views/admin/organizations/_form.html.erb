@@ -1,12 +1,6 @@
 <%= form_for [:admin, @organization] do |f| %>
 
-  <ul class="error">
-  <% @organization.errors.full_messages.each do |err| %>
-    <li>
-      <%= err %>
-    </li>
-  <% end %>
-  </ul>
+  <%= render "shared/errors", { resource: @organization } %>
 
   <% if @organization.new_record? %>
     <% if @markets.size > 1 %>

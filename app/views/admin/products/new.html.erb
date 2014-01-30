@@ -1,0 +1,11 @@
+<h1>Add Product</h1>
+
+<%= product_listing_disclaimer %>
+
+<%= form_for [:admin, @product] do |f| %>
+  <%= render "fields", {f: f} %>
+
+  <div>
+    <%= f.submit "Add Product" %>
+  </div>
+<% end %>

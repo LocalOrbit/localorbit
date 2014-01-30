@@ -58,4 +58,13 @@ class User < ActiveRecord::Base
         where("user_organizations.user_id" => id)
     end
   end
+
+  def managed_products
+    if admin?
+      Product.all
+    else
+      org_ids = managed_organizations.pluck(:id).uniq
+      Product.where(organization_id: org_ids)
+    end
+  end
 end

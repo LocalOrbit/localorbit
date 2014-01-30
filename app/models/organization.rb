@@ -5,5 +5,7 @@ class Organization < ActiveRecord::Base
   has_many :users, through: :user_organizations
   has_many :markets, through: :market_organizations
 
+  has_many :products
+
   validates :name, presence: true
 end
