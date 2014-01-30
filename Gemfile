@@ -48,6 +48,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'email_spec'
   gem 'database_cleaner'
+  gem 'poltergeist'
 end
 
 group :production, :staging do
