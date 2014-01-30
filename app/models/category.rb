@@ -11,6 +11,6 @@ class Category < ActiveRecord::Base
       output << [name, item.id]
       output.concat(for_select(item.children, name))
     end
-    output
+    output.sort {|a,b| a[0] <=> b[0] }
   end
 end
