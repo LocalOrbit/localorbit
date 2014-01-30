@@ -7,7 +7,7 @@ class Category < ActiveRecord::Base
     list ||= where(parent_id: nil).includes(:children => {:children => {:children => {:children => :children}}})
     output = []
     list.each do |item|
-      name = [parent_str, item.name].compact.join(" > ")
+      name = [parent_str, item.name].compact.join(" / ")
       output << [name, item.id]
       output.concat(for_select(item.children, name))
     end
