@@ -1,17 +1,17 @@
 RSpec.configure do |config|
-  config.around(:each) do |example|
+  config.before(:each) do
     DatabaseCleaner.strategy = :transaction
-
-    DatabaseCleaner.start
-    example.run
-    DatabaseCleaner.clean
   end
 
-  config.around(:each, js: true) do |example|
-    DatabaseCleaner.strategy = :truncation, {:except => %w(categories)}
+  config.before(:each, js: true) do
+    DatabaseCleaner.strategy = :truncation, {except: %w(categories)}
+  end
 
+  config.before(:each) do
     DatabaseCleaner.start
-    example.run
+  end
+
+  config.after(:each) do
     DatabaseCleaner.clean
   end
 end
