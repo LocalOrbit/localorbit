@@ -20,7 +20,7 @@ describe "Adding a product" do
         expect(page).to_not have_content(organization_label)
 
         fill_in "Product Name", with: "Macintosh Apples"
-        select "Fruits > Apples > Macintosh Apples", from: "Category"
+        select "Fruits / Apples / Macintosh Apples", from: "Category"
 
         click_button "Add Product"
 
@@ -54,7 +54,7 @@ describe "Adding a product" do
         expect(page).to have_content(stub_warning)
         select org2.name, from: organization_label
         fill_in "Product Name", with: "Macintosh Apples"
-        select "Fruits > Apples > Macintosh Apples", from: "Category"
+        select "Fruits / Apples / Macintosh Apples", from: "Category"
 
         click_button "Add Product"
 
@@ -67,7 +67,7 @@ describe "Adding a product" do
     context "When no organization has been chosen" do
       it "does not create the product" do
         fill_in "Product Name", with: "Macintosh Apples"
-        select "Fruits > Apples > Macintosh Apples", from: "Category"
+        select "Fruits / Apples / Macintosh Apples", from: "Category"
 
         click_button "Add Product"
         expect(page).to have_content("Organization can't be blank")
@@ -93,7 +93,7 @@ describe "Adding a product" do
       expect(page).to have_content(stub_warning)
       select org2.name, from: organization_label
       fill_in "Product Name", with: "Macintosh Apples"
-      select "Fruits > Apples > Macintosh Apples", from: "Category"
+      select "Fruits / Apples / Macintosh Apples", from: "Category"
 
       click_button "Add Product"
 

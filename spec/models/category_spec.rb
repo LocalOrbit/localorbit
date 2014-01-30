@@ -9,10 +9,10 @@ describe Category do
 
     it "categories should include parent info" do
       id = Category.where(name: 'Apples').first.id
-      expect(subject).to include(["Fruits > Apples", id])
+      expect(subject).to include(["Fruits / Apples", id])
 
       id = Category.where(name: 'Macintosh Apples').first.id
-      expect(subject).to include(["Fruits > Apples > Macintosh Apples", id])
+      expect(subject).to include(["Fruits / Apples / Macintosh Apples", id])
     end
 
     it "includes the root categories" do
