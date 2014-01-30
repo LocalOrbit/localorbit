@@ -2,6 +2,6 @@
 
 <% @products.each do |product| %>
   <div>
-    <%= link_to product.name, [:admin, @product] %>
+    <%= link_to product.name, [:admin, product] %>
   </div>
 <% end %>
