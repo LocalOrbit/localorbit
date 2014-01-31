@@ -44,7 +44,13 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    chosen-rails (1.0.2)
+      coffee-rails (>= 3.2)
+      compass-rails (>= 1.1.2)
+      railties (>= 3.0)
+      sass-rails (>= 3.2)
     chunky_png (1.2.9)
+    cliver (0.3.2)
     codeclimate-test-reporter (0.3.0)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -80,6 +86,8 @@ GEM
       devise (>= 3.1.0)
     diff-lcs (1.2.5)
     docile (1.1.2)
+    domino (0.5.0)
+      capybara (>= 0.4.0)
     email_spec (1.5.0)
       launchy (~> 2.1)
       mail (~> 2.2)
@@ -119,6 +127,11 @@ GEM
       mini_portile (~> 0.5.0)
     orm_adapter (0.5.0)
     pg (0.17.1)
+    poltergeist (1.5.0)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
     polyglot (0.3.3)
     pry (0.9.12.4)
       coderay (~> 1.0)
@@ -191,8 +204,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (2.2.0)
-      coffee-rails
     tzinfo (0.3.38)
     uglifier (2.4.0)
       execjs (>= 0.3.0)
@@ -203,6 +214,7 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.3)
       rack (>= 1.0)
+    websocket-driver (0.3.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -211,6 +223,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  chosen-rails
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
   compass-rails
@@ -218,6 +231,7 @@ DEPENDENCIES
   debugger
   devise
   devise_invitable
+  domino
   email_spec
   factory_girl_rails
   figaro!
@@ -227,12 +241,12 @@ DEPENDENCIES
   launchy
   newrelic_rpm
   pg
+  poltergeist
   pry
   rails (= 4.0.2)
   rails_12factor
   rspec-rails (~> 2.14.0)
   sass-rails (~> 4.0.0)
   sdoc
-  turbolinks
   uglifier (>= 1.3.0)
   unicorn

@@ -12,6 +12,7 @@ gem 'uglifier',     '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'compass-rails'
+gem 'chosen-rails'
 
 gem 'devise'
 gem 'devise_invitable'
@@ -21,7 +22,6 @@ gem 'interactor-rails'
 gem 'newrelic_rpm'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -46,9 +46,11 @@ end
 group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'capybara'
+  gem 'domino'
   gem 'factory_girl_rails'
   gem 'email_spec'
   gem 'database_cleaner'
+  gem 'poltergeist'
 end
 
 group :production, :staging do
