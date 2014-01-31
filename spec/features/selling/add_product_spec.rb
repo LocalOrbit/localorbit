@@ -17,18 +17,21 @@ describe "Adding a product" do
     context "using the choose category typeahead", js: true do
       it "can quickly drill down to a result" do
         fill_in "Product Name", with: "Red Grapes"
-        page.find("a", text: "Select a Category").click
-        expect(page).to have_content("Macintosh Apples")
-        expect(page).to have_content("Turnips")
 
-        page.find("#product_category_id_chosen .chosen-search").native.send_keys("grapes")
+        category_select = Dom::CategorySelect.first
+        category_select.click
 
-        expect(page).to have_content("Red Grapes")
-        expect(page).to have_content("Green Grapes")
-        expect(page).to_not have_content("Macintosh Apples")
-        expect(page).to_not have_content("Turnips")
+        expect(category_select.visible_options).to have_text("Macintosh Apples")
+        expect(category_select.visible_options).to have_text("Turnips")
 
-        page.find("li", text: "Fruits / Grapes / Red Grapes").click
+        category_select.type_search("grapes")
+
+        expect(category_select.visible_options).to have_text("Red Grapes")
+        expect(category_select.visible_options).to have_text("Green Grapes")
+        expect(category_select.visible_options).to_not have_text("Turnips")
+        expect(category_select.visible_options).to_not have_text("Macintosh Apples")
+
+        category_select.visible_option("Fruits / Grapes / Red Grapes").click
 
         click_button "Add Product"
 

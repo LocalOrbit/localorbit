@@ -86,6 +86,8 @@ GEM
       devise (>= 3.1.0)
     diff-lcs (1.2.5)
     docile (1.1.2)
+    domino (0.5.0)
+      capybara (>= 0.4.0)
     email_spec (1.5.0)
       launchy (~> 2.1)
       mail (~> 2.2)
@@ -229,6 +231,7 @@ DEPENDENCIES
   debugger
   devise
   devise_invitable
+  domino
   email_spec
   factory_girl_rails
   figaro!
