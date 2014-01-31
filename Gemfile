@@ -46,6 +46,7 @@ end
 group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'capybara'
+  gem 'domino'
   gem 'factory_girl_rails'
   gem 'email_spec'
   gem 'database_cleaner'
