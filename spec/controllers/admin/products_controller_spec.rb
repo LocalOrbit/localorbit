@@ -35,4 +35,21 @@ describe Admin::ProductsController do
       expect(assigns(:product)).to have(1).errors_on(:organization_id)
     end
   end
+
+  describe "/update" do
+    let(:user) { create(:user) }
+    let(:org1) { create(:organization) }
+    let(:product) { create(:product)}
+
+    before do
+      org1.users << user
+      sign_in(user)
+    end
+
+    it 'should not let a user update a product that does not belong to their organization' do
+      put :update, {id: product.id, product: {organization_id: org1.id, name: "Apple", category_id: 1}}
+
+      expect(response).to be_not_found
+    end
+  end
 end
