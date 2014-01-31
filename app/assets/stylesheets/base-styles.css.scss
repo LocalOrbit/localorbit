@@ -95,17 +95,20 @@ header {
     margin-top: 0;
   }
 
-  .notice {
-    display: none;
-  }
-
   .alert {
     @include border-radius(5px);
     border: 1px solid red;
     background-color: pink;
     padding: 20px;
     margin-top: -10px;
-    display: none;
+  }
+
+  .notice{
+    @include border-radius(5px);
+    border: 1px solid green;
+    background-color: PaleGreen;
+    padding: 20px;
+    margin-top: -10px;
   }
 }
 
