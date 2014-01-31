@@ -2,27 +2,27 @@
 @import "compass/css3/box-shadow";
 
 .devise-forms {
-	@include border-radius(20px);
-	@include box-shadow(rgba(black, 0.35) 0 2px 3px 0);
-	width: 520px;
-	margin: 10px auto 0;
-	padding: 40px;
-	background-color: #eeeeee;
-	text-align: center;
-	font-family: 'Open Sans', sans-serif;
+  @include border-radius(20px);
+  @include box-shadow(rgba(black, 0.35) 0 2px 3px 0);
+  width: 520px;
+  margin: 10px auto 0;
+  padding: 40px;
+  background-color: #eeeeee;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
 
-	input {
-		padding: 10px;
-		font-size: 1.1em;
-		margin-bottom: 10px;
-	}
+  input {
+    padding: 10px;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+ }
 
-	a {
-		color: #831E05;
-		text-decoration: none;
-	}
+ a {
+   color: #831E05;
+   text-decoration: none;
+ }
 
-	a:hover {
-		text-decoration: underline;
-	}
+ a:hover {
+   text-decoration: underline;
+ }
 }
