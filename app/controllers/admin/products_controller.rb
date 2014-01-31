@@ -23,6 +23,16 @@ module Admin
       @product = current_user.managed_products.find(params[:id])
     end
 
+    def update
+      @product = current_user.managed_products.find(params[:id])
+
+      if @product.update_attributes(product_params)
+        redirect_to [:admin, @product], notice: "Saved #{@product.name}"
+      else
+        render :show
+      end
+    end
+
     private
 
     def product_params
