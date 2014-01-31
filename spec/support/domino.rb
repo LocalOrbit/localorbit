@@ -1,9 +1,11 @@
 module Dom
-  class CategorySelect < Domino
-    selector "#product_category_id_chosen"
+  class TypeAhead < Domino
+    def select_text
+      raise "Implement in subclass"
+    end
 
     def click
-      page.find("a", text: "Select a Category").click
+      node.find("a", text: select_text).click
     end
 
     def visible_options
@@ -14,8 +16,21 @@ module Dom
       node.find("li", text: text)
     end
 
+    def search_field
+      node.find(".chosen-search input")
+    end
+
     def type_search(term)
-      node.find(".chosen-search input").set(term)
+      search_field.set(term)
+    end
+
+  end
+
+  class CategorySelect < TypeAhead
+    selector "#product_category_id_chosen"
+
+    def select_text
+      "Select a Category"
     end
   end
 end
