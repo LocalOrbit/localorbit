@@ -33,4 +33,40 @@ module Dom
       "Click and type to search for a Category"
     end
   end
+
+  class LotRow < Domino
+    selector "#inventory_table tr.lot"
+
+    def number
+      node.find(".number").text
+    end
+
+    def good_from
+      node.find(".good_from").text
+    end
+
+    def expires_at
+      node.find(".expires_at").text
+    end
+
+    def quantity
+      node.find(".quantity").text
+    end
+  end
+
+  class ProductForm < Domino
+    selector "form.edit_product"
+
+    def organization_field
+      node.find('#product_organization_id')
+    end
+
+    def name
+      node.find('#product_name')
+    end
+
+    def category
+      node.find('#product_category_id')
+    end
+  end
 end

@@ -1,6 +1,8 @@
+<%= product_listing_disclaimer %>
+
 <h1>Update Product</h1>
 
-<%= product_listing_disclaimer %>
+<%= render "tabs" %>
 
 <%= form_for [:admin, @product] do |f| %>
   <%= render "fields", {f: f} %>

@@ -1,0 +1,36 @@
+<%= render "admin/products/tabs" %>
+<%= form_for [:admin, @product, @lot] do |f| %>
+
+<%= render "shared/errors", {resource: @lot} %>
+
+<table border="0" id="inventory_table">
+  <thead>
+    <th>Date Added</th>
+    <th>Lot #</th>
+    <th>Good From</th>
+    <th>Expires On</th>
+    <th>Quantity</th>
+    <th></th>
+  </thead>
+
+  <tr>
+    <td><%= Time.current.strftime('%m/%d/%Y') %></td>
+    <td><%= f.text_field :number  %></td>
+    <td><%= f.datetime_field :good_from, class: 'datepicker' %></td>
+    <td><%= f.datetime_field :expires_at, class: 'datepicker', data: {'min-date' => 0} %></td>
+    <td><%= f.number_field :quantity %></td>
+    <td><%= f.submit "Save" %></td>
+  </tr>
+
+  <% @product.lots.select(&:persisted?).each do |lot| %>
+    <%= content_tag_for :tr, lot do %>
+      <td class="created_at"><%= lot.created_at.strftime('%m/%d/%Y') %></td>
+      <td class="number"><%= lot.number %></td>
+      <td class="good_from"><%= lot.good_from.try(:strftime, '%m/%d/%Y') %></td>
+      <td class="expires_at"><%= lot.expires_at.try(:strftime, '%m/%d/%Y') %></td>
+      <td class="quantity"><%= lot.quantity %></td>
+      <td></td>
+    <% end %>
+  <% end %>
+</table>
+<% end %>
