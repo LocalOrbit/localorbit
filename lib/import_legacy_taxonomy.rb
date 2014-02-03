@@ -22,6 +22,8 @@ module ImportLegacyTaxonomy
       end
     end
 
+    base_nodes.reject! {|node| node[:parent_id] != "2" }
+
     store_tree(base_nodes)
 
     if opts[:verbose]
