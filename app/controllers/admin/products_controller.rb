@@ -1,5 +1,5 @@
 module Admin
-  class ProductsController < ApplicationController
+  class ProductsController < AdminController
     def index
       @products = current_user.managed_products
     end

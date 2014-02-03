@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe Admin::ProductsController do
+  describe "/index" do
+    it 'redirects to login if the user is not logged in' do
+      get :index
+
+      expect(response).to redirect_to(new_user_session_path)
+    end
+  end
+
   describe "/show" do
     let(:user) { create(:user) }
     let(:product1) { create(:product) }
