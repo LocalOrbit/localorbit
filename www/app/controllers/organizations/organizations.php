@@ -373,7 +373,7 @@ class core_controller_organizations extends core_controller
 			$url  = 'http://'.$org['hostname'].'/app.php#!registration-invite--org_id-'.$core->data['org_id'];
 			$url .= '-email-'.urlencode($core->data['email']);
 			$url .= '-key-'.substr(md5($core->config['registration_secret_key'] . $core->data['org_id'] . $core->data['email']),0,10);
-			core::process_command('emails/registration_invite',false,$core->data['email'],$url,$org['domain_name']);
+			core::process_command('emails/registration_invite',false,$core->data['email'],$url,$org['domain_name'], $core->config['domain']['domain_id']);
 			core::model('events')->add_record('Invite Sent',$core->data['org_id'],0,$core->data['email']);
 			core::js('document.organizationsForm.invite_email.value=\'\';');
 			core_ui::notification('invite sent');

@@ -89,13 +89,15 @@ $body .= $this->handle_source('<h1>Your order has been placed.</h1>
 $body .= $this->footer();
 $body .= $this->email_end();
 
+$market_manager = core::model('domains')->get_domain_info($values['domain_id']);
+
 $this->send_email(
 	'Thank you for your order!',
 	$to_email,
 	$body,
 	array(),
-	$core->config['mailer']['From'],
-	$values['hub_name']
+	$market_manager['email'],
+	$market_manager['name']
 );
 
 
@@ -145,8 +147,8 @@ if(count($mm_emails) > 0)
     implode(',',$mm_emails),
     $body,
     array(),
-    $core->config['mailer']['From'],
-    $values['hub_name']
+    $market_manager['email'],
+    $market_manager['name']
   );
 }
 ?>

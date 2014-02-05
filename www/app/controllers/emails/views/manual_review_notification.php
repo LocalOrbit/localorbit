@@ -6,6 +6,7 @@ $values = array(
 	'product_name'=>$core->view[3],
 	'hub_name'=>$core->view[4],
 	'marked_by'=>$core->view[5],
+	'domain_id'=>$core->view[6],
 );
 
 $body  = $this->email_start();
@@ -31,12 +32,14 @@ $body .= $this->handle_source('
 $body .= $this->footer();
 $body .= $this->email_end();
 
+$market_manager = core::model('domains')->get_domain_info($values['domain_id']);
+
 $this->send_email(
 	'Manual Review Notification',
 	$to_email,
 	$body,
 	array(),
-	$core->config['mailer']['From'],
-	$values['hub_name']
+	$market_manager['email'],
+	$market_manager['name']
 );
 ?>

@@ -56,13 +56,15 @@ if ($auto_activate) {
 $body .= $this->footer();
 $body .= $this->email_end();
 
+$market_manager = core::model('domains')->get_domain_info($values['domain_id']);
+
 core::log('final subject is '.$subject);
 $this->send_email(
 	$subject,
 	$to_email,
 	$body,
 	array(),
-	$core->config['mailer']['From'],
-	$values['hub_name']
+	$market_manager['email'],
+	$market_manager['name']
 );
 ?>

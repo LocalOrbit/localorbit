@@ -390,7 +390,8 @@ class core_controller_emails extends core_controller
 				$this->registration_invite(
 					$core->data['force_email'],
 					'http://testing.foodhubresource.com/#!registration-invite--org_id-653-email-iq.mthorn%2B2323423%40gmail.com-key-8bae9c3114',
-					'Puget Sound Food Network'
+					'Puget Sound Food Network',
+					6
 				);
 				break;
 
@@ -547,7 +548,8 @@ class core_controller_emails extends core_controller
 					'https://testingannarbor-mi.localorb.it/app.php#!orders-view_order--lo_oid-1734',
 					'Scrapple, Gluten Free',
 					'Local Orbit',
-					'Mike Thorn'
+					'Mike Thorn',
+					6
 				);
 				break;
 		}

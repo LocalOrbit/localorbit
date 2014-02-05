@@ -26,6 +26,7 @@ $this->send_email(
 	$to_email,
 	$body,
 	array(),
-	$core->config['mailer']['From'],
-	$values['hub_name']);
+	$market_manager['email'],
+	$market_manager['name']
+);
 ?>

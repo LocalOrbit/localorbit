@@ -87,14 +87,13 @@ $body .= $this->handle_source($core->i18n['email:payments:new_invoice_body'],$va
 $body .= $this->footer(null,$domain_id);
 $body .= $this->email_end();
 
-#core::log($body);
-#core::log($emails);
+$market_manager = core::model('domains')->get_domain_info($domain_id);
 
 $this->send_email(
 	$core->i18n['email:payments:new_invoice_subject'],$emails,
 	$body,
 	array(),
-	$core->config['mailer']['From'],
-	$values['hub_name']
+	$market_manager['email'],
+	$market_manager['name']
 );
 ?>

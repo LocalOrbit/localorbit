@@ -3,7 +3,8 @@ $to_email = $core->view[0];
 $values = array(
 	'hostname'=>$core->config['domain']['hostname'],
 	'link'=>$core->view[1],
-	'hub_name'=>$core->view[2]
+	'hub_name'=>$core->view[2],
+	'domain_id'=>$core->view[3]
 );
 
 $body  = $this->email_start();
@@ -24,5 +25,10 @@ $body .= $this->handle_source('<h1>Join {hub_name} today!</h1>
 $body .= $this->footer();
 $body .= $this->email_end();
 
-$this->send_email('Join '.$values['hub_name'].' today!',$to_email,$body);
+$market_manager = core::model('domains')->get_domain_info($values['domain_id']);
+
+$this->send_email('Join '.$values['hub_name'].' today!',$to_email,$body,
+  $market_manager['email'],
+  $market_manager['name']
+);
 ?>

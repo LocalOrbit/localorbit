@@ -171,7 +171,8 @@ class core_controller_sold_items extends core_controller
 						'https://'.$core->config['domain']['hostname'].'/app.php#!orders-view_order--lo_oid-'.$order['lo_oid'],
 						$item['product_name'],
 						$core->config['domain']['name'],
-						$core->session['first_name'].' '.$core->session['last_name']
+						$core->session['first_name'].' '.$core->session['last_name'],
+						$core->config['domain']['domain_id']
 					);
 				}
 				

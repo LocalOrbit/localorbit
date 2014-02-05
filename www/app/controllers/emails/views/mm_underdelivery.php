@@ -20,6 +20,8 @@ $recips = new core_collection('
 	and   otd.domain_id='.$values['domain_id'].'
 ');
 
+$market_manager = core::model('domains')->get_domain_info($values['domain_id']);
+
 foreach($recips as $recip)
 {
 	$values['first_name'] = $recip['first_name'];
@@ -42,8 +44,8 @@ foreach($recips as $recip)
 		$recip['email'],
 		$body,
 		array(),
-		$core->config['mailer']['From'],
-		$recip['hub_name']
+		$market_manager['email'],
+		$market_manager['name']
 	);
 }
 
