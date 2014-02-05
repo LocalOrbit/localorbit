@@ -160,10 +160,11 @@ class core_model_domains extends core_model_base_domains
 	
 	function get_domain_info($domain_id) {
 		global $core;
-		$sql = 'select secondary_contact_email, secondary_contact_phone
+		$sql = 'select secondary_contact_email as email, secondary_contact_phone as phone, secondary_contact_name as name
 			from domains
-			where domain_id = '.$domain_id;
-		return new core_collection($sql);
+			where domain_id = '.$domain_id.'
+			limit 1';
+		return core_db::row($sql);
 	}
 	
 	function get_sellers($store_id=0)
