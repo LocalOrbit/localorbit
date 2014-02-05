@@ -45,7 +45,7 @@ popupWindow = window.open(url,winName,settings)
 										<ul class="footer">
 											<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
 												<li class="footer"><a class="footer" href="/homepage/pricing.php">Pricing</a></li>
-												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Register', 'Demo Registration']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a></li>
+												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Register', 'Demo Registration']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Schedule a Demo</a></li>
 												<li class="footer"><a class="footer" href="/homepage/hubcamp.php">Hub Camp</a></li>
 										</ul>
 									</td>

@@ -1,5 +1,6 @@
 <? $title='Features'; include('includes/page_start.php'); ?>	
 
+<? if ($_GET['thanks']==1) { ?><div class="jobs_area" style="height:43px;"><h3>Thank you for registering for a demo!</h3>We will be in touch shortly with more information and a link to join the demo.</div><? } ?>
 <table style="margin-top: 28px;">
 	
 		

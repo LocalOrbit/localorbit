@@ -19,7 +19,7 @@ li { list-style:inherit; }
 
 More Hub Camps, helping more people build local food distribution businesses, coming later in 2014!<br />
 <br /><br />
-<img src="/homepage/img/page_images/hubcamp.jpg" width="377" height="250" class="public_content_photo" style="margin-left:10px" align="right">
+<img src="/homepage/img/page_images/hubcamp.jpg" width="377" height="250" class="public_content_photo" style="margin:0 0 50px 10px" align="right">
 <h2>Walk away from Hub Camp with a 6-month action plan to hit the ground running!</h2>
 <p>An action-oriented approach to learning, launching and adapting as you grow your local food system.</p>
 
@@ -29,6 +29,7 @@ More Hub Camps, helping more people build local food distribution businesses, co
   <li>Work through your unique challenges with farmer development, buyer education, finance, food safety, logistics, operations and storytelling.</li>
   <li>Three hands-on days with experienced operators who have launched and managed supply chain businesses.</li>
   <li>To maximize impact attendance is limited to 15 participants.</li>
+  <li>Note: Hub Camp is focused on operating a local food distribution business, and will not focus on technology. If you are looking for more information about Local Orbit’s technology services, we have <a href="demo.php">weekly live demos</a> you can attend.</li>
 </ul>
 <br /><br />
 <h2>The Experience &amp; Advice to Get You Going</h2>
