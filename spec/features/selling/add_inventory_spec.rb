@@ -3,6 +3,7 @@ require "spec_helper"
 describe "Adding advanced inventory" do
   let(:user) { create(:user) }
   let(:product){ create(:product) }
+  let(:empty_inventory_message) { "You don't have any inventory" }
 
   before do
     Timecop.freeze(Date.parse("February 24, 2014"))
@@ -18,6 +19,8 @@ describe "Adding advanced inventory" do
   end
 
   it "adds the inventory lot to the table" do
+    expect(page).to have_content(empty_inventory_message)
+
     within("#new_lot") do
       fill_in "lot_number", with: "3"
       fill_in "lot_good_from", with: "Tue, 25 Feb 2014"
@@ -27,6 +30,7 @@ describe "Adding advanced inventory" do
     end
 
     expect(page).to have_content("Successfully added a new lot")
+    expect(page).to_not have_content(empty_inventory_message)
 
     lot_row = Dom::LotRow.first
     expect(lot_row).to_not be_nil

@@ -1,7 +1,14 @@
+<h1>Update Product</h1>
+
 <%= render "admin/products/tabs" %>
 <%= form_for [:admin, @product, @lot] do |f| %>
-
 <%= render "shared/errors", {resource: @lot} %>
+
+<h2>Add Your Inventory</h2>
+
+<% if @product.lots.select { |lot| lot.persisted? }.empty? %>
+  <p>You don't have any inventory yet! Get started by adding your first lot.</p>
+<% end %>
 
 <table border="0" id="inventory_table">
   <thead>
