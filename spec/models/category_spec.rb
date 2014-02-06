@@ -4,20 +4,23 @@ describe Category do
   describe "#for_select" do
     subject { Category.for_select }
     it "returns a list of categories for select options" do
-      expect(subject.count).to eql(69)
+      expect(subject.count).to eql(2)
     end
 
     it "categories should include parent info" do
-      id = Category.where(name: 'Apples').first.id
-      expect(subject).to include(["Fruits / Apples", id])
+      id = Category.where(name: 'Bananas').first.id
+      expect(subject["Fruits"]).to include(["Bananas", id])
 
       id = Category.where(name: 'Macintosh Apples').first.id
-      expect(subject).to include(["Fruits / Apples / Macintosh Apples", id])
+      expect(subject["Fruits"]).to include(["Apples / Macintosh Apples", id])
     end
 
     it "includes the root categories" do
-      id = Category.where(name: 'Fruits').first.id
-      expect(subject).to include(["Fruits", id])
+      expect(subject).to include("Fruits")
+    end
+
+    it "returns keys in sorted order" do
+      expect(subject.keys).to eq(["Fruits", "Vegetables"])
     end
   end
 end
