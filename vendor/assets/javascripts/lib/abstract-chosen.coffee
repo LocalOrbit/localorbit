@@ -150,8 +150,14 @@ class AbstractChosen
                 
         unless option.group and not @group_search
 
-          option.search_text = if option.group then option.label else option.html
+          if option.group_array_index? && @results_data[option.group_array_index]
+            results_group = @results_data[option.group_array_index]
+            option.search_text = "#{results_group.label} #{option.html}"
+          else
+            option.search_text = if option.group then option.label else option.html
           option.search_match = this.search_string_match(option.search_text, words)
+          # Reset the search text to not include the group name
+          option.search_text = if option.group then option.label else option.html
           results += 1 if option.search_match and not option.group
 
           if option.search_match
@@ -188,12 +194,25 @@ class AbstractChosen
   highlight_search_text: (text, words) ->
     # sort the query words to highlight the longest first
     words.sort (a, b) -> b.length - a.length
-    highlight_offset = 14  # 1 + '<mark></mark>'.length
+    highlight_offset = 10  # 1 + '<mark></mark>'.length
+    positions = []
     for word in words
       startpos = text.toLowerCase().indexOf word
       while startpos >= 0
-        text = text.substr(0, startpos) + '<mark>' + text.substr(startpos, word.length) + '</mark>' + text.substr(startpos + word.length)
-        startpos = text.toLowerCase().indexOf(word, startpos + highlight_offset + word.length)
+        positions.push([startpos, word.length])
+        startpos = text.toLowerCase().indexOf(word, startpos + word.length)
+    positions.sort (a,b)-> a[0] - b[0]
+    $.each positions, (idx, pos)->
+      return unless pos?
+      nextPos = positions[idx + 1]
+      nextPos = [] unless nextPos?
+      if nextPos[0] < (pos[0] + pos[1])
+        if (nextPos[0] + nextPos[1]) > (pos[0] + pos[1])
+          pos[1] = nextPos[0] + nextPos[1] - pos[0]
+        positions.splice(idx + 1, 1)
+
+      text = text.substr(0, pos[0] + highlight_offset * idx) + '<em>' + text.substr(pos[0] + highlight_offset * idx, pos[1]) + '</em>' + text.substr(pos[0] + highlight_offset * idx + pos[1])
+
     return text
 
   choices_count: ->
