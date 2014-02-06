@@ -70,7 +70,7 @@ describe "Adding advanced inventory" do
       click_button "Save"
     end
 
-    expect(page).to have_content("Good from cannot be after 'expires at'")
+    expect(page).to have_content("Good from cannot be after expires at date")
   end
 
   it "user can navigate back to product from the inventory page" do
