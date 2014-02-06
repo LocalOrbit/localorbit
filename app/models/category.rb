@@ -3,13 +3,19 @@ class Category < ActiveRecord::Base
   has_many :children, class_name: 'Category', foreign_key: 'parent_id'
   has_many :products
 
-  def self.for_select(list = nil, parent_str = nil)
-    list ||= where(parent_id: nil).includes(:children => {:children => {:children => {:children => :children}}})
+  # Returns select list options with root Categories as option groups
+  def self.for_select
+    list = where(parent_id: nil).order(:name).includes(:children => {:children => {:children => {:children => :children}}})
+    list.inject({}) {|out,item| out[item.name] = for_select_children(item.children); out }
+  end
+
+  # Returns select list options for the given list of categories
+  def self.for_select_children(list, parent_str = nil)
     output = []
     list.each do |item|
       name = [parent_str, item.name].compact.join(" / ")
-      output << [name, item.id]
-      output.concat(for_select(item.children, name))
+      output << [name, item.id] if item.children.empty?
+      output.concat(for_select_children(item.children, name))
     end
     output.sort {|a,b| a[0] <=> b[0] }
   end

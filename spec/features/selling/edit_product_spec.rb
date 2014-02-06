@@ -6,6 +6,7 @@ describe "Editing a product" do
   let(:stub_warning) {"Your product will not appear in the Shop until all of these actions are complete"}
   let(:organization_label) { "Product Organization" }
   let(:product) { create(:product, name: "Canned Pears") }
+  let!(:category_id) { product.category.id }
 
   describe "as a seller belonging to one organization" do
     before do
@@ -20,7 +21,7 @@ describe "Editing a product" do
         fill_in "Product Name", with: "Canned Peaches"
         click_button "Save Product"
         expect(find_field('Product Name').value).to eq("Canned Peaches")
-        expect(find_field('Category').value).to eq("1")
+        expect(find_field('Category').value).to eq(category_id.to_s)
       end
     end
 
