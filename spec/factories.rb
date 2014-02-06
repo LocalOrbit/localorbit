@@ -38,7 +38,7 @@ FactoryGirl.define do
 
   factory :product do
     sequence(:name) {|n| "Product #{n}" }
-    category { Category.first }
+    category { Category.find_by(name: "Empire Apples") }
     organization
   end
 end
