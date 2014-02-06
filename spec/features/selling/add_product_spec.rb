@@ -14,6 +14,47 @@ describe "Adding a product" do
       click_link "Add a product"
     end
 
+    context "using the choose category typeahead", js: true do
+      let(:category_select) { Dom::CategorySelect.first }
+
+      it "can quickly drill down to a result" do
+        category_select.click
+
+        expect(category_select.visible_options).to have_text("Macintosh Apples")
+        expect(category_select.visible_options).to have_text("Turnips")
+
+        category_select.type_search("grapes")
+
+        expect(category_select.visible_options).to have_text("Red Grapes")
+        expect(category_select.visible_options).to have_text("Green Grapes")
+        expect(category_select.visible_options).to_not have_text("Turnips")
+        expect(category_select.visible_options).to_not have_text("Macintosh Apples")
+
+        category_select.visible_option("Grapes / Red Grapes").click
+
+        # Set the product name so we have a valid product
+        fill_in "Product Name", with: "Red Grapes"
+        click_button "Add Product"
+
+        expect(page).to have_content("Added Red Grapes")
+        expect(page).to have_content("Grapes / Red Grapes")
+      end
+
+      it "fuzzy searches across top-level categories" do
+        category_select.click
+
+        expect(category_select.visible_options).to have_text("Macintosh Apples")
+        expect(category_select.visible_options).to have_text("Turnips")
+
+        category_select.type_search("fruit apples mac")
+
+        expect(category_select.visible_options).to_not have_text("Turnips")
+        expect(category_select.visible_options).to have_text("Macintosh Apples")
+
+        category_select.visible_option("Apples / Macintosh Apples").click
+      end
+    end
+
     context "when all input is valid" do
       it "saves the product stub" do
         expect(page).to have_content(stub_warning)

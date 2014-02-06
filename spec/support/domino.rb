@@ -30,7 +30,7 @@ module Dom
     selector "#product_category_id_chosen"
 
     def select_text
-      "Select a Category"
+      "Click and type to search for a Category"
     end
   end
 end
