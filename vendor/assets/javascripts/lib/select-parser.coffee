@@ -29,7 +29,7 @@ class SelectParser
           array_index: @parsed.length
           options_index: @options_index
           value: option.value
-          text: option.text
+          text: if group_position then "#{option.parentNode.label} / #{option.text}" else option.text
           html: option.innerHTML
           selected: option.selected
           disabled: if group_disabled is true then group_disabled else option.disabled
