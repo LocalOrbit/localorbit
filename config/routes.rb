@@ -21,5 +21,9 @@ LocalOrbit::Application.routes.draw do
 
   resource :dashboard, controller: "dashboard"
 
+  resources :organizations, only: [] do
+    resources :locations, only: [:index]
+  end
+
   root to: redirect('/login')
 end

@@ -13,6 +13,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'compass-rails'
 
+gem "active_model_serializers"
 gem "countries"
 gem 'devise'
 gem 'devise_invitable'
