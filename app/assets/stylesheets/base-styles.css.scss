@@ -10,7 +10,7 @@
   min-height: 100%;
 }
 
-header {
+header#top {
   @include background-image(linear-gradient(#360D00, #701B00));
   border-bottom: 1px solid black;
 }
