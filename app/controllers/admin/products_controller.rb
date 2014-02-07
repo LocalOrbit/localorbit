@@ -13,7 +13,7 @@ module Admin
       @product = Product.new(product_params.merge(organization_id: @organization.try(:id)))
 
       if @product.save
-        redirect_to [:admin, @product], notice: "Added #{@product.name}"
+        redirect_to [:admin, @product, :lots], notice: "Added #{@product.name}"
       else
         render :new
       end

@@ -37,8 +37,9 @@ describe "Adding a product" do
         # Set the product name so we have a valid product
         fill_in "Product Name", with: "Red Grapes"
         click_button "Add Product"
-
         expect(page).to have_content("Added Red Grapes")
+
+        click_link "Product Info"
         expect(page).to have_content("Grapes / Red Grapes")
       end
 
@@ -70,7 +71,10 @@ describe "Adding a product" do
         click_button "Add Product"
 
         expect(page).to have_content("Added Macintosh Apples")
+
         expect(page).to have_content(stub_warning)
+
+        expect(current_path).to eql(admin_product_lots_path(Product.last))
       end
     end
 
