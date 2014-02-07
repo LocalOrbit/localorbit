@@ -13,6 +13,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'compass-rails'
 
+gem "countries"
 gem 'devise'
 gem 'devise_invitable'
 gem 'figaro',       github: 'laserlemon/figaro'

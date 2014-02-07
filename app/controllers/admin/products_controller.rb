@@ -36,7 +36,9 @@ module Admin
     private
 
     def product_params
-      params.require(:product).permit(:name, :category_id)
+      params.require(:product).permit([
+        :name, :category_id, :who_story, :how_story
+      ])
     end
   end
 end

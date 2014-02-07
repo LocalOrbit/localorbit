@@ -68,6 +68,11 @@ describe "Adding a product" do
         fill_in "Product Name", with: "Macintosh Apples"
         select "Apples / Macintosh Apples", from: "Category"
 
+        uncheck :seller_info
+
+        fill_in "Who",      with: "The farmers down the road."
+        fill_in "How",      with: "With water, earth, and time."
+
         click_button "Add Product"
 
         expect(page).to have_content("Added Macintosh Apples")

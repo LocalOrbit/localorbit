@@ -19,3 +19,39 @@
   <%= f.label :category_id %>
   <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}} %>
 </div>
+
+<div>
+  <h2>More info about this product (where, when, how)</h2>
+  <%= check_box_tag :seller_info, "", true %>
+  <%= label_tag :seller_info, "Use seller info from my account" %>
+  <%= content_tag :span, "Uncheck this to customize your seller information for this product", class: "hint" %>
+
+  <div class="hidden seller_info_fields">
+    <section>
+      <header>
+        <h1>Product Location</h1>
+        <h2>This address comes from the My Account page.</h2>
+      </header>
+    </section>
+
+    <section>
+      <header>
+        <h1>Who</h1>
+        <h2>This description comes from the My Organization page.</h2>
+      </header>
+
+      <%= f.label :who_story %>
+      <%= f.text_area :who_story %>
+    </section>
+
+    <section>
+      <header>
+        <h1>How</h1>
+        <h2>This description comes from the My Organization page.</h2>
+      </header>
+
+      <%= f.label :how_story %>
+      <%= f.text_area :how_story %>
+    </section>
+  </div>
+</div>
