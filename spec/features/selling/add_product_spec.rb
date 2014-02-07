@@ -32,6 +32,8 @@ describe "Adding a product" do
 
         category_select.visible_option("Grapes / Red Grapes").click
 
+        expect(page).to have_content("Fruits / Grapes / Red Grapes")
+
         # Set the product name so we have a valid product
         fill_in "Product Name", with: "Red Grapes"
         click_button "Add Product"
@@ -52,6 +54,8 @@ describe "Adding a product" do
         expect(category_select.visible_options).to have_text("Macintosh Apples")
 
         category_select.visible_option("Apples / Macintosh Apples").click
+
+        expect(page).to have_content("Fruits / Apples / Macintosh Apples")
       end
     end
 
