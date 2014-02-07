@@ -7,5 +7,7 @@ class Organization < ActiveRecord::Base
 
   has_many :products
 
+  has_many :locations
+
   validates :name, presence: true
 end

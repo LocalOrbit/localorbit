@@ -41,4 +41,12 @@ FactoryGirl.define do
     category { Category.find_by(name: "Empire Apples") }
     organization
   end
+
+  factory :location do
+    sequence(:name) {|n| "Location #{n}" }
+    address "500 S. State Street"
+    city "Ann Arbor"
+    state "Michigan"
+    zip "48109"
+  end
 end
