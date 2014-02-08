@@ -14,7 +14,9 @@ LocalOrbit::Application.routes.draw do
       resources :users
     end
 
-    resources :products
+    resources :products do
+      resources :lots
+    end
   end
 
   resource :dashboard, controller: "dashboard"

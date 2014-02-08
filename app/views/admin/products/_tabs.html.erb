@@ -1,0 +1,11 @@
+<div class="tabs">
+<ul>
+  <% if @product.persisted? %>
+    <li class="completed"><%= link_to "Product Info", admin_product_path(@product) %></li>
+    <li class="last"><%= link_to "Set Inventory", admin_product_lots_path(@product) %></li>
+  <% else %>
+    <li>Product Info</li>
+    <li class="last">Set Inventory</li>
+  <% end %>
+</ul>
+</div>

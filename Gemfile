@@ -19,6 +19,7 @@ gem 'figaro',       github: 'laserlemon/figaro'
 gem 'honeybadger'
 gem 'interactor-rails'
 gem 'newrelic_rpm'
+gem 'jquery-ui-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 
@@ -50,6 +51,7 @@ group :test do
   gem 'email_spec'
   gem 'database_cleaner'
   gem 'poltergeist'
+  gem 'timecop'
 end
 
 group :production, :staging do
