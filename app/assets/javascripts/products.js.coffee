@@ -18,15 +18,15 @@ $ ->
 
     # Users with multiple managed organizations have a dropdown where as users
     # with a single managed organization have a single value hidden field.
-    organization_id = $("#product_organization_id option:selected").val() ||
+    organizationId = $("#product_organization_id option:selected").val() ||
                       $("#product_organization_id").val()
 
-    $.get("/organizations/#{organization_id}/locations.json").done (json) ->
+    $.get("/organizations/#{organizationId}/locations.json").done (json) ->
 
-      product_location = $("#product_location_id")
-      product_location.empty()
+      productLocation = $("#product_location_id")
+      productLocation.empty()
 
       $.each json.locations, (_, location) ->
         $("<option/>").attr("value", location.id)
                       .text(location.name)
-                      .appendTo(product_location)
+                      .appendTo(productLocation)
