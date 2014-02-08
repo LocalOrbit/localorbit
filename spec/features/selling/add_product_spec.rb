@@ -60,18 +60,23 @@ describe "Adding a product" do
       end
     end
 
-    context "when all input is valid" do
+    context "when all input is valid", js: true, chosen_js: true do
       it "saves the product stub" do
+        create(:location, name: "Location 1", organization: org)
+        create(:location, name: "Location 2", organization: org)
+
         expect(page).to have_content(stub_warning)
         expect(page).to_not have_content(organization_label)
 
         fill_in "Product Name", with: "Macintosh Apples"
-        select "Apples / Macintosh Apples", from: "Category"
+        select_from_chosen "Apples / Macintosh Apples", from: "Category"
 
         uncheck :seller_info
 
-        fill_in "Who",      with: "The farmers down the road."
-        fill_in "How",      with: "With water, earth, and time."
+        select "Location 2", from: "Location"
+
+        fill_in "Who", with: "The farmers down the road."
+        fill_in "How", with: "With water, earth, and time."
 
         click_button "Add Product"
 

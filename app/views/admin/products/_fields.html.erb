@@ -27,31 +27,23 @@
   <%= content_tag :span, "Uncheck this to customize your seller information for this product", class: "hint" %>
 
   <div class="hidden seller_info_fields">
-    <section>
-      <header>
-        <h1>Product Location</h1>
-        <h2>This address comes from the My Account page.</h2>
-      </header>
-    </section>
+    <div>
+      <%= f.label :location_id, "Product Location" %>
+      <%= f.select :location_id, loaded_on_demand = [] %>
+      <%= content_tag :span, "This address comes from the My Account page" %>
+      <%= content_tag :span, "Select an organization above to select an organization", class: "hint" %>
+    </div>
 
-    <section>
-      <header>
-        <h1>Who</h1>
-        <h2>This description comes from the My Organization page.</h2>
-      </header>
-
-      <%= f.label :who_story %>
+    <div>
+      <%= f.label :who_story, "Who" %>
       <%= f.text_area :who_story %>
-    </section>
+      <%= content_tag :span, "This description comes from the My Organization page" %>
+    </div>
 
-    <section>
-      <header>
-        <h1>How</h1>
-        <h2>This description comes from the My Organization page.</h2>
-      </header>
-
-      <%= f.label :how_story %>
+    <div>
+      <%= f.label :how_story, "How" %>
       <%= f.text_area :how_story %>
-    </section>
+      <%= content_tag :span, "This description comes from the My Organization page" %>
+    </div>
   </div>
 </div>

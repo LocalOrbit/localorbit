@@ -50,6 +50,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
+  config.include ChosenJs::Helpers, chosen_js: true
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

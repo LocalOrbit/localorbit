@@ -37,7 +37,7 @@ module Admin
 
     def product_params
       params.require(:product).permit([
-        :name, :category_id, :who_story, :how_story
+        :name, :category_id, :who_story, :how_story, :location_id
       ])
     end
   end
