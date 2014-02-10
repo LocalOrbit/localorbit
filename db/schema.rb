@@ -25,18 +25,6 @@ ActiveRecord::Schema.define(version: 20140207212430) do
 
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
 
-  create_table "lots", force: true do |t|
-    t.integer  "product_id"
-    t.datetime "good_from"
-    t.datetime "expires_at"
-    t.integer  "quantity"
-    t.string   "number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "lots", ["product_id"], name: "index_lots_on_product_id", using: :btree
-
   create_table "locations", force: true do |t|
     t.string   "name",            null: false
     t.string   "address",         null: false
@@ -49,6 +37,18 @@ ActiveRecord::Schema.define(version: 20140207212430) do
   end
 
   add_index "locations", ["organization_id"], name: "index_locations_on_organization_id", using: :btree
+
+  create_table "lots", force: true do |t|
+    t.integer  "product_id"
+    t.datetime "good_from"
+    t.datetime "expires_at"
+    t.integer  "quantity"
+    t.string   "number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lots", ["product_id"], name: "index_lots_on_product_id", using: :btree
 
   create_table "managed_markets", force: true do |t|
     t.integer  "market_id"
