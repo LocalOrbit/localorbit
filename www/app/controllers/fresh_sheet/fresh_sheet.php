@@ -31,7 +31,6 @@ class core_controller_fresh_sheet extends core_controller
     $html = core_email::header($core->data['domain_id']);
 		$html .= '
 			<h1>See what\'s fresh at '.$domain['name'].'</h1>
-			<p>Order by 5pm Tuesday, 11/15 for Pickup on Thursday, 11/17.</p>
 			<p>
 			  Hi! Welcome to this week\'s new Fresh Sheet.
 			</p>';
