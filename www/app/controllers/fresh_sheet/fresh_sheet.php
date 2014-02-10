@@ -26,14 +26,11 @@ class core_controller_fresh_sheet extends core_controller
 			lo3::require_orgtype('admin');
 		}
 
-//$core->data['domain_id'] = 26;
 		$domain =  core::model('domains')->load($core->data['domain_id']);
 		
 		core::load_library('mailchimp');
 		$mc = new core_mailchimp();
 
-		
-		
 		$html = $this->generate_html($core->data['domain_id']);
 		// dont let anyone override template with doamin_id 
 		$template_id = $mc->get_template_id('Weekly Fresh Sheet',0);
@@ -100,18 +97,6 @@ class core_controller_fresh_sheet extends core_controller
 			core::js("$('#tf1,#tf2').hide();$('#bs1,#bs2').show();");
 			$mc->campaignSendTest($camp_id,array('jvavul@gmail.com',$core->data['email']));
 
-			/* echo 'test sent ' . $mc->api->errorMessage. '<br>';
-			echo "list_id" . $list_id . " template_id" . $template_id .
-				"domain['hostname'] " . $domain['hostname'].
-				"domain['market_profile'] " . $domain['market_profile'];
-			echo '<br><br><br><br>';
-			print_r($core->data['email']);
-			echo '<br><br>logo = '.$logo;
-			echo '<br><br>logo_image = '.$logo_image;
-			echo '<br><br>shop_now_button = '.$shop_now_button;
-			print_r($camp_id);
-			echo $html;
-			die();  */
 			core_ui::notification('test sent ' . $mc->api->errorMessage);
 		}
 		else
@@ -141,14 +126,9 @@ class core_controller_fresh_sheet extends core_controller
 		
 		$prods = $prods->to_array();
 		
-		#echo('<pre>');
-		#print_r($prods);
-		#return;
-		
 		# first, arrange the products into a hash using the 2/3 category as the key
 		# we ignore the first category because it is simply the 'root' category
 		# of the catalog, and isn't actually used/displayed/relevant.
-		
 		
 		$prods_by_catid_hash = array();
 		$cats_to_lookup      = array();
@@ -157,8 +137,6 @@ class core_controller_fresh_sheet extends core_controller
 			$cat_ids = explode(',',$prod['category_ids']);
 			$new_key = $cat_ids[1].'-'.$cat_ids[2];
 			if(!is_array($prods_by_catid_hash[$new_key]))
-				//echo "adding new key ".$new_key."<br>";
-							
 				$prods_by_catid_hash[$new_key] = array();
 				
 			$prods_by_catid_hash[$new_key][] = $prod;
@@ -188,23 +166,11 @@ class core_controller_fresh_sheet extends core_controller
 		{			
 			$cat_ids = explode('-',$cat_ids);
 			$new_key = $cat_order_by[$cat_ids[0]].' : '.$cat_names[$cat_ids[0]].' : '.$cat_names[$cat_ids[1]];
-			//echo('found a new_key: '.$new_key.' === '.$cat_ids[0].' ======== '. $cat_order_by[$cat_ids[0]].' ======== '. $cat_order_by[$cat_ids[1]].'<br />');
 			$prods_by_catname_hash[$new_key] = $prods;			
 		}
 		
 		# finally, sorry the product hash by key
 		ksort($prods_by_catname_hash, SORT_NUMERIC);
-		/* foreach($prods_by_catname_hash as $category => $prods) {
-			echo('found a new_key: '.$category.'<br />');
-		} */
-		
-		
-		#echo('<pre>');
-		#print_r($prods);
-
-		
-		
-		
 
 		$has_prods = false;
 		$drew_hr = false;
@@ -212,7 +178,6 @@ class core_controller_fresh_sheet extends core_controller
 		$last_sub_cat = "";
 		foreach($prods_by_catname_hash as $category => $prods) {
 			$cur_cat = explode(":", $category);
-			
 			
 			// new cat 1
 			if($last_cat != trim($cur_cat[1])) {
@@ -248,11 +213,6 @@ class core_controller_fresh_sheet extends core_controller
 			}
 				
 			$drew_hr = false;
-			
-			// double row
-			/* $html .= '<tr>';
-				$html .= '<td'.(($show_edit_links)?' colspan="3"':' colspan="2"').'><hr style="border: 1px solid #e5dbd1; height:5px;"></td>';
-			$html .= '</tr>'; */
 			
 			foreach($prods as $prod)
 			{
