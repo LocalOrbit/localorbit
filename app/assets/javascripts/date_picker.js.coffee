@@ -8,5 +8,7 @@ $ ->
     options.minDate = field.data('min-date')
     options.maxDate = field.data('max-date')
 
-    field.datepicker(options)
+    picker = field.datepicker(options)
+    picker.datepicker('setDate', Date.parse(field.val())) if field.val()
+
     field.prop('readonly', true)
