@@ -18,7 +18,6 @@ $body .= $this->handle_source('<h1>You\'re all set!</h1>
       </p>
 
       <p>Thank you for supporting your local food producers.</p>',$values);
-$body .= $this->footer();
 $body .= $this->email_end();
 
 $this->send_email(

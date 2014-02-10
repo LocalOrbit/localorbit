@@ -25,7 +25,6 @@ $body .= $this->handle_source('<h1>Item Cancelation</h1>
       </div>
 
       <p>This cancelation was performed at {hub_name} by {canceled_by}.</p>',$values);
-$body .= $this->footer();
 $body .= $this->email_end();
 
 $market_manager = core::model('domains')->get_domain_info($values['domain_id']);

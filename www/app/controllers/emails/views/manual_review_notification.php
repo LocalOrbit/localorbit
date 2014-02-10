@@ -29,7 +29,6 @@ $body .= $this->handle_source('
 
       <p>Ths action was performed at {hub_name} by {marked_by}.</p>
 ',$values);
-$body .= $this->footer();
 $body .= $this->email_end();
 
 $market_manager = core::model('domains')->get_domain_info($values['domain_id']);

@@ -72,7 +72,6 @@ $emails = core_db::col('
 
 $body  = $this->email_start();
 $body .= $this->handle_source($core->i18n['email:payments:payment_made_body'],$values);
-$body .= $this->footer();
 $body .= $this->email_end();
 
 $this->send_email(
@@ -106,7 +105,6 @@ else
 
 $body  = $this->email_start();
 $body .= $this->handle_source($core->i18n['email:payments:payment_received_body'],$values);
-$body .= $this->footer();
 $body .= $this->email_end();
 #echo($body);
 

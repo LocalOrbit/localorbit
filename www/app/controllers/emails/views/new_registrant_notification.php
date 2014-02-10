@@ -60,7 +60,6 @@ $body .= $this->handle_source('<h1>You\'re growing!</h1>
           </td>
         </tr>
       </table>',$values);
-$body .= $this->footer();
 $body .= $this->email_end();
 
 $market_manager = core::model('domains')->get_domain_info($values['domain_id']);

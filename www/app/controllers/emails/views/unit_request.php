@@ -31,7 +31,6 @@ $body .= $this->handle_source('<h1>New Unit Request Received</h1>
   <strong>{prod_name}</strong>.
 </p>',$values);
 
-$body .= $this->footer();
 $body .= $this->email_end();
 
 $this->send_email('New Unit Request','service@localorb.it',$body);

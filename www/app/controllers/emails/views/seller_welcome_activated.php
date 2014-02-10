@@ -55,7 +55,6 @@ $body .= $this->handle_source('<h1>Welcome to Farm Fresh</h1>
         products, you\'re all set! Product additions and changes are visible to
         buyers almost instantly.
       </p>',$values);
-$body .= $this->footer();
 $body .= $this->email_end();
 
 $market_manager = core::model('domains')->get_domain_info($values['domain_id']);

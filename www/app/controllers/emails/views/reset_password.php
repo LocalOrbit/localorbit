@@ -31,7 +31,6 @@ $body .= $this->handle_source('<h1>Your New Password</h1>
           After you\'ve copied it, paste it into a new browser window.
         </p>
       </div>',$values);
-$body .= $this->footer();
 $body .= $this->email_end();
 
 $market_manager = core::model('domains')->get_domain_info($values['domain_id']);

@@ -84,7 +84,6 @@ $values['payables'] .='</table>';
 
 $body  = $this->email_start();
 $body .= $this->handle_source($core->i18n['email:payments:new_invoice_body'],$values);
-$body .= $this->footer(null,$domain_id);
 $body .= $this->email_end();
 
 $market_manager = core::model('domains')->get_domain_info($domain_id);

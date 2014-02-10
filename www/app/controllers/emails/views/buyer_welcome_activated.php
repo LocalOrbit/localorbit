@@ -32,7 +32,6 @@ $body .= $this->handle_source('<h1>Welcome to {hub_name}. You are all set.</h1>
       </div>
 
       <p>Thank you for supporting your local food economy!</p>',$values);
-$body .= $this->footer();
 $body .= $this->email_end();
 
 $market_manager = core::model('domains')->get_domain_info($values['domain_id']);

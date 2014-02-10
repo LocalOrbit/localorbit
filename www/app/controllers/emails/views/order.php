@@ -86,7 +86,6 @@ $body .= $this->handle_source('<h1>Your order has been placed.</h1>
     <p>Thank your for supporting {hub_name}!</p>
       ',$values);
 
-$body .= $this->footer();
 $body .= $this->email_end();
 
 $market_manager = core::model('domains')->get_domain_info($values['domain_id']);
@@ -139,7 +138,6 @@ if(count($mm_emails) > 0)
 
       </table>
       ',$values);
-  $body .= $this->footer();
   $body .= $this->email_end();
 
   $this->send_email(

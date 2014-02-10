@@ -94,7 +94,6 @@ $body .= $this->handle_source('<h1>You have a new order!</h1>
 
   <p>Thank you for supporting {hub_name}!</p>',$values);
 
-$body .= $this->footer();
 $body .= $this->email_end();
 
 $market_manager = core::model('domains')->get_domain_info($values['domain_id']);

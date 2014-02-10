@@ -36,7 +36,6 @@ foreach($recips as $recip)
   for {buyer_org_name} for a total of {amount_diff}, making sure the
   discount only applies to products sold by {seller_org_name}.</p>',$values);
 
-	$body .= $this->footer();
 	$body .= $this->email_end();
 
 	$this->send_email(
