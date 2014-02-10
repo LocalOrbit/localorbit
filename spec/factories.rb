@@ -40,6 +40,12 @@ FactoryGirl.define do
     sequence(:name) {|n| "Product #{n}" }
     category { Category.find_by(name: "Empire Apples") }
     organization
+
+    trait :decorated do
+      initialize_with do
+        ProductDecorator.new(new)
+      end
+    end
   end
 
   factory :location do

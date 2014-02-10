@@ -17,6 +17,7 @@ gem "active_model_serializers"
 gem "countries"
 gem 'devise'
 gem 'devise_invitable'
+gem 'draper'
 gem 'figaro',       github: 'laserlemon/figaro'
 gem 'honeybadger'
 gem 'interactor-rails'

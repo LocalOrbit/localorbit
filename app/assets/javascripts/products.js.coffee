@@ -10,6 +10,9 @@ $ ->
   $("#seller_info").change ->
     $(".seller_info_fields").toggleClass("hidden")
 
+  unless $("#seller_info").prop("checked")
+    $(".seller_info_fields").toggleClass("hidden")
+
   $("#product_organization_id, #seller_info").change ->
     # Only trigger the locations load when the user is
     # dealing with customizing location data to avoid
