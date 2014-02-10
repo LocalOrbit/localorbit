@@ -1,4 +1,4 @@
-class LocationsController < AdminController
+class LocationsController < ApplicationController
   before_action :find_organization
 
   def index
