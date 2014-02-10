@@ -89,7 +89,6 @@ header {
   background-color: #ffffff;
   min-height: 90vh;
   position: relative;
-  overflow: hidden;
 
   h2 {
     margin-top: 0;
@@ -117,7 +116,7 @@ footer {
   bottom: 0px;
   height:5em;
   padding: 10px;
-  position: absolute;
   margin: 0px;
   width: 100%;
+  display: none;
 }
