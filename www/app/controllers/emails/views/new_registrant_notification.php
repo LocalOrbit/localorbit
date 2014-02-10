@@ -19,7 +19,7 @@ $body .= $this->handle_source('<h1>You\'re growing!</h1>
       <p>A new organization has registered for your market!</p>
 
       <dl>
-        <dt>Company:</dt>
+        <dt>Organization</dt>
         <dd>{company}</dd>
       </dl>
       <dl>
