@@ -12,6 +12,11 @@ describe Lot do
         expect(subject).to_not be_valid
         expect(subject).to have(1).errors_on(:quantity)
       end
+
+      it "has errors if the quantity is negative" do
+        subject.quantity = -3
+        expect(subject.errors_on(:quantity)).to include("must be greater than or equal to 0")
+      end
     end
 
     describe "number:" do
