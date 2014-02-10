@@ -12,3 +12,9 @@ $ ->
     picker.datepicker('setDate', Date.parse(field.val())) if field.val()
 
     field.prop('readonly', true)
+
+    clearLink = $("<a href='javascript:void(0)'>x</a>")
+    field.after(clearLink)
+    clearLink.on 'click', ()->
+      field.val('')
+
