@@ -3,13 +3,24 @@ class Product < ActiveRecord::Base
   belongs_to :organization
   belongs_to :location
 
-  has_many :lots
+  has_many :lots, lambda { order('created_at') }, autosave: true
 
   validates :name, presence: true
   validates :category_id, presence: true
   validates :organization_id, presence: true
 
   validate :ensure_organization_can_sell
+
+  def simple_inventory
+    lots.last.try(:available_quantity) || 0
+  end
+
+  def simple_inventory=(val)
+    return val unless use_simple_inventory?
+
+    lot = lots.to_a.last || lots.build
+    lot.quantity = val
+  end
 
   private
 

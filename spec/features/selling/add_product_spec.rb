@@ -14,6 +14,31 @@ describe "Adding a product" do
       click_link "Add a product"
     end
 
+    it "defaults to simple inventory" do
+      simple_inventory_checkbox = page.find_field("Use simple inventory management")
+      inventory_quantity = page.find_field("Your current inventory")
+
+      expect(simple_inventory_checkbox).to be_checked
+      expect(inventory_quantity.value).to eql("0")
+    end
+
+    context "adding simple inventory for the first time", js: true, chosen_js: true do
+      it "creates a new lot for the product" do
+        fill_in "Product Name", with: "Red Grapes"
+        select_from_chosen "Grapes / Red Grapes", from: 'Category'
+        fill_in("Your current inventory", with: 33)
+
+        click_button "Add Product"
+        expect(page).to have_content("Added Red Grapes")
+
+        simple_inventory_checkbox = page.find_field("Use simple inventory management")
+        inventory_quantity        = page.find_field("Your current inventory")
+
+        expect(simple_inventory_checkbox).to be_checked
+        expect(inventory_quantity.value).to eql("33")
+      end
+    end
+
     context "using the choose category typeahead", js: true do
       let(:category_select) { Dom::CategorySelect.first }
 
@@ -71,6 +96,8 @@ describe "Adding a product" do
         fill_in "Product Name", with: "Macintosh Apples"
         select_from_chosen "Apples / Macintosh Apples", from: "Category"
 
+        uncheck "Use simple inventory management"
+
         uncheck :seller_info
 
         select "Location 2", from: "Location"
@@ -88,8 +115,11 @@ describe "Adding a product" do
       end
     end
 
-    context "when the product information is invalid" do
+    context "when the product information is invalid", js: true do
       it "does not create the product" do
+        expect(page).to have_content("Your current inventory")
+        uncheck 'Use simple inventory management'
+
         click_button "Add Product"
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Category can't be blank")

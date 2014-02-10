@@ -75,4 +75,74 @@ describe Lot do
     end
   end
 
+  describe "#available_inventory" do
+    before do
+      subject.quantity = 42
+    end
+
+    context 'without expiration' do
+      it 'returns the set quantity' do
+        expect(subject.available_quantity).to eq(42)
+      end
+    end
+
+    context 'with a current good from date' do
+      it 'returns the set quantity' do
+        subject.good_from = 1.day.ago
+        expect(subject.available_quantity).to eq(42)
+      end
+    end
+
+    context 'with a future good from date' do
+      it 'returns 0' do
+        subject.good_from = 1.day.from_now
+        expect(subject.available_quantity).to eq(0)
+      end
+    end
+
+    context 'with a future expiration date' do
+      it 'returns the given quantity' do
+        subject.expires_at = 1.day.from_now
+        expect(subject.available_quantity).to eq(42)
+      end
+    end
+
+    context 'with a past expiration date' do
+      it 'returns 0' do
+        subject.expires_at = 1.day.ago
+        expect(subject.available_quantity).to eq(0)
+      end
+    end
+  end
+
+  describe "#available?" do
+    it 'is true if good_from and expires_at are nil or appropriate values' do
+      subject.good_from = nil
+      subject.expires_at = nil
+      expect(subject).to be_available
+
+      subject.good_from = 1.day.ago
+      expect(subject).to be_available
+
+      subject.expires_at = 1.day.from_now
+      expect(subject).to be_available
+
+      subject.good_from = nil
+      expect(subject).to be_available
+    end
+
+    it 'is false if good_from is in the future' do
+      subject.good_from = 1.day.from_now
+      subject.expires_at = nil
+      expect(subject).to_not be_available
+
+      subject.expires_at = 2.days.from_now
+      expect(subject).to_not be_available
+    end
+
+    it 'is false if expires at is in the past' do
+      subject.expires_at = 1.day.ago
+      expect(subject).to_not be_available
+    end
+  end
 end

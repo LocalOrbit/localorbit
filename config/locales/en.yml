@@ -26,3 +26,5 @@ en:
         number: "Lot #"
         good_from: Good From
         expires_at: Expires On
+      product/lots:
+        quantity: Simple inventory quantity

@@ -3,6 +3,7 @@ require "spec_helper"
 describe "Adding advanced inventory" do
   let(:user) { create(:user) }
   let(:product){ create(:product) }
+
   let(:empty_inventory_message) { "You don't have any inventory" }
 
   context "without js" do
