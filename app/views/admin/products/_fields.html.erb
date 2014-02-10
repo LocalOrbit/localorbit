@@ -24,26 +24,27 @@
   <h2>More info about this product (where, when, how)</h2>
   <%= check_box_tag :seller_info, "", !@product.has_custom_seller_info? %>
   <%= label_tag :seller_info, "Use seller info from my account" %>
-  <%= content_tag :span, "Uncheck this to customize your seller information for this product", class: "hint" %>
+  <span class="hint">Uncheck this to customize your seller information for this product</span>
 
   <div class="hidden seller_info_fields">
     <div>
       <%= f.label :location_id, "Product Location" %>
       <%= f.select :location_id, @product.location_options_for_select, include_blank: true %>
-      <%= content_tag :span, "This address comes from the My Account page" %>
-      <%= content_tag :span, "Select an organization above to select an organization", class: "hint" %>
+      <span>This address comes from the My Account page</span>
+      <span class="hint">Select an organization above to load location options</span>
     </div>
 
     <div>
       <%= f.label :who_story, "Who" %>
       <%= f.text_area :who_story %>
-      <%= content_tag :span, "This description comes from the My Organization page" %>
+      <span>This description comes from the My Organization page</span>
     </div>
 
     <div>
       <%= f.label :how_story, "How" %>
       <%= f.text_area :how_story %>
       <%= content_tag :span, "This description comes from the My Organization page" %>
+      <span>This description comes from the My Organization page</span>
     </div>
   </div>
 </div>
