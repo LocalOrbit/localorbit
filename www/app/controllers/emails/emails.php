@@ -41,10 +41,6 @@ class core_controller_emails extends core_controller
 	function email_end($text=null)
 	{
 		global $core;
-		if(is_null($text))
-		{
-			$text = 'For customer service please reply to this email or call 734.545.8100 ';
-		}
     return core_email::footer($text);
 	}
 

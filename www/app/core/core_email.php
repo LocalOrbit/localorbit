@@ -330,6 +330,10 @@ class core_email
   public static function footer($text)
   {
     global $core;
+    if(is_null($text))
+    {
+      $text = 'For customer service please reply to this email or call 734.545.8100 ';
+    }
     return '<p class="lo_note"><em>'.$text.'</em></p>
           </div>
 
