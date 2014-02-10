@@ -48,7 +48,7 @@ describe "Adding advanced inventory" do
     end
 
     expect(page).to have_content("Could not save lot")
-    expect(page).to have_content("Quantity can't be blank")
+    expect(page).to have_content("Quantity is not a number")
 
     expect(Dom::LotRow.first).to be_nil
   end
