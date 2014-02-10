@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140203215914) do
+ActiveRecord::Schema.define(version: 20140207212430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,19 @@ ActiveRecord::Schema.define(version: 20140203215914) do
   end
 
   add_index "lots", ["product_id"], name: "index_lots_on_product_id", using: :btree
+
+  create_table "locations", force: true do |t|
+    t.string   "name",            null: false
+    t.string   "address",         null: false
+    t.string   "city",            null: false
+    t.string   "state",           null: false
+    t.string   "zip",             null: false
+    t.integer  "organization_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locations", ["organization_id"], name: "index_locations_on_organization_id", using: :btree
 
   create_table "managed_markets", force: true do |t|
     t.integer  "market_id"
@@ -82,9 +95,13 @@ ActiveRecord::Schema.define(version: 20140203215914) do
     t.integer  "organization_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "who_story"
+    t.text     "how_story"
+    t.integer  "location_id"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
+  add_index "products", ["location_id"], name: "index_products_on_location_id", using: :btree
   add_index "products", ["organization_id"], name: "index_products_on_organization_id", using: :btree
 
   create_table "user_organizations", force: true do |t|
