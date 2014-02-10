@@ -11,7 +11,7 @@ describe "Adding advanced inventory" do
     sign_in_as(user)
     click_link "Products"
     click_link product.name
-    click_link "Set Inventory"
+    click_link "Inventory"
   end
 
   after do
