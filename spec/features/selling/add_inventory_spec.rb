@@ -11,7 +11,7 @@ describe "Adding advanced inventory" do
     sign_in_as(user)
     click_link "Products"
     click_link product.name
-    click_link "Set Inventory"
+    click_link "Inventory"
   end
 
   after do
@@ -48,7 +48,7 @@ describe "Adding advanced inventory" do
     end
 
     expect(page).to have_content("Could not save lot")
-    expect(page).to have_content("Quantity can't be blank")
+    expect(page).to have_content("Quantity is not a number")
 
     expect(Dom::LotRow.first).to be_nil
   end

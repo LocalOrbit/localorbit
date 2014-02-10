@@ -1,7 +1,7 @@
 class Lot < ActiveRecord::Base
   belongs_to :product
 
-  validates :quantity, presence: true
+  validates :quantity, numericality: { greater_than_or_equal_to: 0 }
   validates :number, presence: {message: "can't be blank when 'Expiration Date' is present"}, if: lambda { |obj| obj.expires_at.present? }
   validate :expires_at_is_in_future
   validate :good_from_before_expires_at
