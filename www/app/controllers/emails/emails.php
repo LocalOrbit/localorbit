@@ -30,45 +30,12 @@ class core_controller_emails extends core_controller
 	
 	public function send_email($subject,$to,$body='',$cc=array(),$from_email='',$from_name='',$merge_vars='')
 	{
-		global $core;
-		
-		# check to see if we're forcing this email to go to a particular address
-		if(isset($core->data['force_email']) && $core->data['force_email']!='')
-			$to = $core->data['force_email'];
-
-		if($from_email == '')
-		{
-			$from_email = $core->config['mailer']['From'];
-		}
-		if($from_name == '')
-		{
-			$from_name = $core->config['mailer']['FromName'];
-		}
-		
-		# Previously this functionality used phpmailer. 
-		# Now we're just going to write it to the db
-		$email = core::model('sent_emails');
-		$email['subject'] = $subject;
-		$email['body'] = $body;
-
-		if(is_array($to))
-			$email['to_address'] = implode(',',$to);
-		else
-			$email['to_address'] = $to;
-
-		$email['from_email'] = $from_email;
-		$email['from_name']  = $from_name;
-		$email['emailstatus_id'] = 1;
-
-    if(is_array($merge_vars))
-      $email['merge_vars'] = serialize($merge_vars);
-
-		$email->save();
+    core_email::send($subject,$to,$body='',$cc=array(),$from_email='',$from_name='',$merge_vars='');
 	}
 	
 	function email_start($domain_id=null)
 	{
-    return $core_email::header($domain_id);
+    return core_email::header($domain_id);
 	}
 
 	function email_end($text=null)
@@ -78,7 +45,7 @@ class core_controller_emails extends core_controller
 		{
 			$text = 'For customer service please reply to this email or call 734.545.8100 ';
 		}
-    return $core_email::footer($text);
+    return core_email::footer($text);
 	}
 
 	function send_test()
