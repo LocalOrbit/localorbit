@@ -327,7 +327,7 @@ class core_email
       </table>';
   }
 
-  public static function footer($text)
+  public static function footer($text=null)
   {
     global $core;
     if(is_null($text))
