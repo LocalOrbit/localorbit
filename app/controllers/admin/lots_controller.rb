@@ -1,5 +1,6 @@
 class Admin::LotsController < AdminController
-  before_filter :find_product
+  before_action :find_product
+  before_action :redirect_simple_inventory
 
   def index
     @lot = @product.lots.build
@@ -23,5 +24,11 @@ class Admin::LotsController < AdminController
 
   def find_product
     @product = current_user.managed_products.find(params[:product_id])
+  end
+
+  def redirect_simple_inventory
+    if @product.use_simple_inventory?
+      redirect_to [:admin, @product]
+    end
   end
 end
