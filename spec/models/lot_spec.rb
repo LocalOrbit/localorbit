@@ -59,7 +59,7 @@ describe Lot do
         it "has errors when expires_at occurs before created_at" do
           subject.expires_at = 2.days.ago
           expect(subject).to be_invalid
-          expect(subject.errors_on(:expires_at)).to include("must be after #{Time.now.strftime("%m/%d/%Y")}")
+          expect(subject.errors_on(:expires_at)).to include("must be after #{Time.zone.now.strftime("%m/%d/%Y")}")
         end
       end
     end
