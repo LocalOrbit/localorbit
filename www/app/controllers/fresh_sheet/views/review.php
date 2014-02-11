@@ -75,16 +75,6 @@ if($domain_id > 0)
 		<input type="submit" class="button_primary" value="send test" />
 	</form>
 	
-	
-	
-	
-	<style>
-		.fresh_sheet_review th, .fresh_sheet_review td {
-			line-height: 1;
-    		padding: 3px;
-    		border-top: 0px;
-		}
-	</style> 
 	<div class="fresh_sheet_review">
 		<?=$fs_html?>
 	</div>

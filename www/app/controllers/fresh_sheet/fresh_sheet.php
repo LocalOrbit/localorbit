@@ -27,15 +27,8 @@ class core_controller_fresh_sheet extends core_controller
 		}
 
 		$domain =  core::model('domains')->load($core->data['domain_id']);
-		
-    $html = core_email::header($core->data['domain_id']);
-		$html .= '
-			<h1>See what\'s fresh at '.$domain['name'].'</h1>
-			<p>
-			  Hi! Welcome to this week\'s new Fresh Sheet.
-			</p>';
-		$html .= $this->generate_html($core->data['domain_id']);
-		$html .= core_email::footer();
+
+		$html = $this->generate_html($core->data['domain_id']);
 		
 		if($core->data['test_only'] == '1')
 		{ 
@@ -63,6 +56,15 @@ class core_controller_fresh_sheet extends core_controller
 	function generate_html($domain_id, $show_edit_links=false)
 	{
 		global $core;
+
+		# Start HTML
+		$html = core_email::header($core->data['domain_id']);
+		$html .= '
+			<h1>See what\'s fresh at '.$domain['name'].'</h1>
+			<p>
+			  Hi! Welcome to this week\'s new Fresh Sheet.
+			</p>';
+
 		$domain =  core::model('domains')->load($core->data['domain_id']);
 		$prods = core::model('products')->get_catalog($domain_id,0)->sort('name');
 		$prods = $prods->to_array();
@@ -155,6 +157,7 @@ class core_controller_fresh_sheet extends core_controller
 			}
 			$html .='</table>';
 		}
+		$html .= core_email::footer();
 		
 		if($has_prods)
 		{
