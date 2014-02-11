@@ -8,4 +8,8 @@ class Location < ActiveRecord::Base
   def self.alphabetical_by_name
     order(name: :asc)
   end
+
+  def self.default_billing
+    find_by(default_billing: true)
+  end
 end
