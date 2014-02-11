@@ -64,10 +64,7 @@ class core_controller_fresh_sheet extends core_controller
 	{
 		global $core;
 		$domain =  core::model('domains')->load($core->data['domain_id']);
-		
-		$html = '<table class="table table-hover" style="font-family:Helvectica, Trebuchet MS, Arial" width="100%">';
 		$prods = core::model('products')->get_catalog($domain_id,0)->sort('name');
-		
 		$prods = $prods->to_array();
 		
 		# first, arrange the products into a hash using the 2/3 category as the key
