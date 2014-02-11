@@ -2,26 +2,66 @@
 
   <%= render "shared/errors", { resource: @organization } %>
 
-  <% if @organization.new_record? %>
-    <% if @markets.size > 1 %>
-      <%= label_tag :initial_market_id, "Market" %>
-      <%= select_tag :initial_market_id, options_for_select(@markets.map {|m| [m.name, m.id] }), prompt: "Select a Market" %>
-    <% else %>
-      <%= hidden_field_tag :initial_market_id, @markets.first.id %>
+  <fieldset id="organization-info">
+    <legend>Organization Info</legend>
+
+    <% if @organization.new_record? %>
+      <% if @markets.size > 1 %>
+        <%= label_tag :initial_market_id, "Market" %>
+        <%= select_tag :initial_market_id, options_for_select(@markets.map {|m| [m.name, m.id] }), prompt: "Select a Market" %>
+      <% else %>
+        <%= hidden_field_tag :initial_market_id, @markets.first.id %>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-
-  <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
     <div>
-      <%= f.label :can_sell, "Can sell product" %>
-      <%= f.check_box :can_sell %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
     </div>
-  <% end %>
+
+    <div>
+      <%= f.label :who_story, "Who" %>
+      <%= f.text_field :who_story %>
+    </div>
+
+    <div>
+      <%= f.label :how_story, "How" %>
+      <%= f.text_field :how_story %>
+    </div>
+
+    <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
+      <div>
+        <%= f.label :can_sell, "Can sell product" %>
+        <%= f.check_box :can_sell %>
+      </div>
+    <% end %>
+  </fieldset>
+
+  <fieldset id="organization-locations">
+    <%= f.fields_for :locations do |l| %>
+      <legend>Locations</legend>
+      <div>
+        <%= l.label :name %>
+        <%= l.text_field :name %>
+      </div>
+      <div>
+        <%= l.label :address %>
+        <%= l.text_field :address %>
+      </div>
+      <div>
+        <%= l.label :city %>
+        <%= l.text_field :city %>
+      </div>
+      <div>
+        <%= l.label :state %>
+        <%= l.select :state, us_states %>
+      </div>
+      <div>
+        <%= l.label :zip %>
+        <%= l.text_field :zip %>
+      </div>
+    <% end %>
+  </fieldset>
 
   <div>
     <%= f.submit "#{@organization.new_record? ? 'Add' : 'Save'} Organization" %>

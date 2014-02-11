@@ -7,9 +7,11 @@ class Organization < ActiveRecord::Base
 
   has_many :products
 
-  has_many :locations
+  has_many :locations, inverse_of: :organization
 
   validates :name, presence: true
+
+  accepts_nested_attributes_for :locations
 
   scope :selling, lambda { where(can_sell: true) }
 end
