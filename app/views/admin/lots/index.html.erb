@@ -28,7 +28,7 @@
     <td><%= f.text_field :number  %></td>
     <td><%= f.datetime_field :good_from, class: 'datepicker' %></td>
     <td><%= f.datetime_field :expires_at, class: 'datepicker', data: {'min-date' => 0} %></td>
-    <td><%= f.number_field :quantity %></td>
+    <td><%= f.number_field :quantity, min: 0 %></td>
     <td><%= f.submit "Save" %></td>
   </tr>
 
