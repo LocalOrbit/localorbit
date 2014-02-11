@@ -58,5 +58,9 @@ FactoryGirl.define do
     city "Ann Arbor"
     state "Michigan"
     zip "48109"
+
+    trait :default_billing do
+      default_billing true
+    end
   end
 end
