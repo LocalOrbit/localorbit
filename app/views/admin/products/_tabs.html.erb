@@ -1,11 +1,11 @@
 <div class="tabs">
 <ul>
   <% if @product.persisted? %>
-    <li class="completed"><%= link_to "Product Info", admin_product_path(@product) %></li>
-    <li class="last"><%= link_to "Inventory", admin_product_lots_path(@product) %></li>
+    <%= content_tag(:li, link_to("Product Info", [:admin, @product]), class: "completed") %>
+    <%= content_tag(:li, link_to("Inventory", [:admin, @product, :lots]), class: "last") unless @product.use_simple_inventory? %>
   <% else %>
     <li>Product Info</li>
-    <li class="last">Inventory</li>
+    <li class="last hidden">Inventory</li>
   <% end %>
 </ul>
 </div>

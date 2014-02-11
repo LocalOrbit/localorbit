@@ -36,6 +36,10 @@ describe "Adding a product" do
 
         expect(simple_inventory_checkbox).to be_checked
         expect(inventory_quantity.value).to eql("33")
+
+        within(".tabs") do
+          expect(page).to_not have_content("Inventory")
+        end
       end
     end
 
