@@ -24,7 +24,7 @@ describe Lot do
         it "has errors when number is not given" do
           subject.expires_at = 2.days.from_now
           expect(subject).to_not be_valid
-          expect(subject.errors_on(:number)).to include("can't be blank when 'Expiration Date' is present")
+          expect(subject.errors.full_messages).to include("Lot # can't be blank when 'Expiration Date' is present")
         end
       end
     end
@@ -44,7 +44,7 @@ describe Lot do
         it "has errors when expires_at is in the past" do
           subject.expires_at = 2.days.ago
           expect(subject).to be_invalid
-          expect(subject.errors_on(:expires_at)).to include("must be in the future")
+          expect(subject.errors.full_messages).to include("Expires On must be in the future")
         end
       end
 
@@ -70,7 +70,7 @@ describe Lot do
         subject.good_from = 3.days.from_now
 
         expect(subject).to be_invalid
-        expect(subject.errors_on(:good_from)).to include("cannot be after expires at date")
+        expect(subject.errors.full_messages).to include("Good From cannot be after expires at date")
       end
     end
   end
