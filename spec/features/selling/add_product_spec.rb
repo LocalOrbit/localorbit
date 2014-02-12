@@ -43,6 +43,28 @@ describe "Adding a product" do
       end
     end
 
+    context "adding a product with advanced inventory", js: true, chosen_js: true do
+      it "hides the simple inventory field" do
+        expect(page).to have_content("Your current inventory")
+
+        uncheck "Use simple inventory management"
+
+        expect(page).to_not have_content("Your current inventory")
+      end
+
+      it "enables the inventory tab" do
+        within(".tabs") do
+          expect(page).to_not have_content("Inventory")
+        end
+
+        uncheck "Use simple inventory management"
+
+        within(".tabs") do
+          expect(page).to have_content("Inventory")
+        end
+      end
+    end
+
     context "using the choose category typeahead", js: true do
       let(:category_select) { Dom::CategorySelect.first }
 
@@ -100,6 +122,7 @@ describe "Adding a product" do
         fill_in "Product Name", with: "Macintosh Apples"
         select_from_chosen "Apples / Macintosh Apples", from: "Category"
 
+        fill_in "Your current inventory", with: "12"
         uncheck "Use simple inventory management"
 
         uncheck :seller_info
@@ -116,6 +139,9 @@ describe "Adding a product" do
         expect(page).to have_content(stub_warning)
 
         expect(current_path).to eql(admin_product_lots_path(Product.last))
+
+        lot_rows = Dom::LotRow.all
+        expect(lot_rows.count).to eq(0)
       end
     end
 
