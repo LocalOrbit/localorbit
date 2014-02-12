@@ -41,7 +41,7 @@
     <%= f.fields_for :locations do |l| %>
       <legend>Locations</legend>
       <div>
-        <%= l.label :name %>
+        <%= l.label :name, "Location Name" %>
         <%= l.text_field :name %>
       </div>
       <div>

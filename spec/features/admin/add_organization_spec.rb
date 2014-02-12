@@ -19,11 +19,11 @@ describe "Admin adds an organization" do
     end
 
     within("#organization-locations") do
-      fill_in "Name",     with: "University of Michigan"
-      fill_in "Address",  with: "500 S. State Street"
-      fill_in "City",     with: "Ann Arbor"
-      select  "Michigan", from: "State"
-      fill_in "Zip",      with: "34599"
+      fill_in "Location Name", with: "University of Michigan"
+      fill_in "Address",       with: "500 S. State Street"
+      fill_in "City",          with: "Ann Arbor"
+      select  "Michigan",      from: "State"
+      fill_in "Zip",           with: "34599"
     end
 
     click_button "Add Organization"
