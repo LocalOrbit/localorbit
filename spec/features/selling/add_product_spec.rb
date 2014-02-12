@@ -37,6 +37,8 @@ describe "Adding a product" do
         expect(simple_inventory_checkbox).to be_checked
         expect(inventory_quantity.value).to eql("33")
 
+        expect(page).to have_content("Uncheck this to use advanced inventory tracking with lots and expirations dates")
+
         within(".tabs") do
           expect(page).to_not have_content("Inventory")
         end
@@ -153,6 +155,10 @@ describe "Adding a product" do
         click_button "Add Product"
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Category can't be blank")
+        expect(page).to_not have_content("Your current inventory")
+        within('.tabs') do
+          expect(page).to have_content("Inventory")
+        end
       end
     end
   end

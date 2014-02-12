@@ -5,7 +5,7 @@
     <%= content_tag(:li, link_to("Inventory", [:admin, @product, :lots]), class: "last") unless @product.use_simple_inventory? %>
   <% else %>
     <li>Product Info</li>
-    <li class="last hidden" id="product-inventory-nav">Inventory</li>
+    <%= content_tag :li, 'Inventory', id: 'product-inventory-nav', class: (@product.use_simple_inventory? ? 'hidden' : nil) %>
   <% end %>
 </ul>
 </div>

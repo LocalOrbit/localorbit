@@ -153,4 +153,67 @@ describe Product do
       end
     end
   end
+
+  describe '#available_inventory' do
+    context 'using simple inventory' do
+      context 'with no inventory set' do
+        subject { create(:product, use_simple_inventory: true) }
+
+        it 'returns 0' do
+          expect(subject.available_inventory).to eq(0)
+        end
+      end
+
+      context 'with inventory set' do
+        subject { create(:product, use_simple_inventory: true, simple_inventory: 42) }
+
+        it 'returns simple inventory quantity' do
+          expect(subject.available_inventory).to eq(42)
+        end
+      end
+    end
+
+    context 'using advanced inventory' do
+      subject { create(:product, use_simple_inventory: false) }
+
+      context 'with no inventory set' do
+        it 'returns 0' do
+          expect(subject.available_inventory).to eq(0)
+        end
+      end
+
+      context 'with available inventory lots' do
+        before do
+          subject.lots.create!(quantity: 42)
+          subject.lots.create!(quantity: 24)
+        end
+
+        it 'returns the sum of the available lot inventory' do
+          expect(subject.available_inventory).to eq(66)
+        end
+
+        context 'that are expired' do
+          before do
+            lot = subject.lots.create!(created_at: 2.days.ago, number: '1', expires_at: 1.minute.from_now, quantity: 50)
+            lot.update_attribute(:expires_at, 1.day.ago)
+          end
+
+          it 'returns the sum of the available lot inventory' do
+            expect(subject.available_inventory).to eq(66)
+          end
+        end
+
+        context 'that have not reached their good_from date' do
+
+          before do
+            lot = subject.lots.create!(created_at: 2.days.ago, number: '1', good_from: 2.days.from_now, expires_at: 1.week.from_now, quantity: 50)
+          end
+
+          it 'returns the sum of the available lot inventory' do
+            expect(subject.available_inventory).to eq(66)
+          end
+        end
+      end
+    end
+  end
 end

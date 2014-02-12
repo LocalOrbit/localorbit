@@ -75,6 +75,38 @@ describe Lot do
     end
   end
 
+  describe "available scope" do
+    let(:product) { create(:product) }
+
+    it "returns current lots" do
+      expect {
+        product.lots.create!(quantity: 12)
+        product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
+        product.lots.create!(quantity: 12, number: '2', good_from: 1.day.ago)
+        product.lots.create!(quantity: 12, number: '3', good_from: 1.day.ago, expires_at: 1.day.from_now)
+      }.to change {
+        Lot.available.count
+      }.from(0).to(4)
+    end
+
+    it "excludes expired lots" do
+      expect {
+        lot = product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
+        lot.update_attribute(:expires_at, 1.day.ago)
+      }.to_not change {
+        Lot.available.count
+      }
+    end
+
+    it "excludes lots from the future" do
+      expect {
+        lot = product.lots.create!(quantity: 12, number: '1', good_from: 1.day.from_now, expires_at: 2.day.from_now)
+      }.to_not change {
+        Lot.available.count
+      }
+    end
+  end
+
   describe "#available_inventory" do
     before do
       subject.quantity = 42

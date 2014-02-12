@@ -22,6 +22,10 @@ class Product < ActiveRecord::Base
     lot.quantity = val
   end
 
+  def available_inventory
+    lots.available.sum(:quantity)
+  end
+
   private
 
   def ensure_organization_can_sell
