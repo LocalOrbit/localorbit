@@ -9,7 +9,10 @@ $ ->
     options.maxDate = field.data('max-date')
 
     picker = field.datepicker(options)
-    picker.datepicker('setDate', Date.parse(field.val())) if field.val()
+    if field.val()
+      # JS parses "2014-02-15" different than "2014/02/15"
+      date_str = field.val().substr(0,10).replace(/-/g, "/")
+      picker.datepicker('setDate', new Date(date_str))
 
     field.prop('readonly', true)
 
