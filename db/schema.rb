@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 20140211170048) do
     t.boolean  "can_sell"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "who_story",  null: false
-    t.text     "how_story",  null: false
+    t.text     "who_story"
+    t.text     "how_story"
   end
 
   create_table "products", force: true do |t|
