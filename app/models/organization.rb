@@ -10,4 +10,6 @@ class Organization < ActiveRecord::Base
   has_many :locations
 
   validates :name, presence: true
+
+  scope :selling, -> { where(can_sell: true) }
 end
