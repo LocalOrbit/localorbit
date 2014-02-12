@@ -11,5 +11,5 @@ class Organization < ActiveRecord::Base
 
   validates :name, presence: true
 
-  scope :selling, -> { where(can_sell: true) }
+  scope :selling, lambda { where(can_sell: true) }
 end
