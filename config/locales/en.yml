@@ -20,4 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      lot:
+        number: "Lot #"
+        good_from: Good From
+        expires_at: Expires On
