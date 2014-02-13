@@ -79,6 +79,7 @@ describe "Adding advanced inventory" do
     end
 
     it "user can navigate back to product from the inventory page" do
+
       click_link "Product Info"
       product_form = Dom::ProductForm.first
 
