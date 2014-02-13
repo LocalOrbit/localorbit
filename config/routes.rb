@@ -12,6 +12,11 @@ LocalOrbit::Application.routes.draw do
 
     resources :organizations do
       resources :users
+      resources :locations, except: :destroy do
+        collection do
+          delete :destroy
+        end
+      end
     end
 
     resources :products do

@@ -69,4 +69,37 @@ module Dom
       node.find('#product_category_id')
     end
   end
+
+  module Admin
+    class OrganizationLocation < Domino
+      selector "tbody tr"
+
+      def name_and_address
+        cells[0].text
+      end
+
+      def telephone
+        cells[1].text
+      end
+
+      def default_billing
+        cells[2].find("input")
+      end
+
+      def default_shipping
+        cells[3].find("input")
+      end
+
+      def remove!
+        cells[4].find("input").set(true)
+        click_button "Remove Checked"
+      end
+
+      private
+
+      def cells
+        @cells ||= @node.all("td")
+      end
+    end
+  end
 end
