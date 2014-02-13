@@ -11,6 +11,10 @@ class Product < ActiveRecord::Base
 
   validate :ensure_organization_can_sell
 
+  def can_use_simple_inventory?
+    use_simple_inventory? || !lots.where('(expires_at IS NULL OR expires_at > ?) AND quantity > 0', Time.current).exists?
+  end
+
   def simple_inventory
     lots.last.try(:available_quantity) || 0
   end
