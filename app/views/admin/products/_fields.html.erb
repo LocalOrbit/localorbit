@@ -1,13 +1,18 @@
 <%= render "shared/errors", {resource: @product} %>
 
-<% if current_user.managed_organizations.count > 1 %>
-<div>
-  <%= f.label :organization_id, "Product Organization" %>
-  <%= f.collection_select :organization_id, current_user.managed_organizations.selling, :id, :name, {include_blank: "Select an organization"} %>
-</div>
-
+<% if @product.persisted? %>
+    <%= f.label :organization_id, "Product Organization" %>
+    <%= link_to @product.organization.name, [:admin, @product.organization] %>
 <% else %>
-  <%= f.hidden_field :organization_id, {value: current_user.managed_organizations.selling.first.id} %>
+  <% if current_user.managed_organizations.count > 1 %>
+  <div>
+    <%= f.label :organization_id, "Product Organization" %>
+    <%= f.collection_select :organization_id, current_user.managed_organizations.selling, :id, :name, {include_blank: "Select an organization"} %>
+  </div>
+
+  <% else %>
+    <%= f.hidden_field :organization_id, {value: current_user.managed_organizations.selling.first.id} %>
+  <% end %>
 <% end %>
 
 <div>
