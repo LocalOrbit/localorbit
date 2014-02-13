@@ -14,8 +14,8 @@
         <tr>
           <td><%= location.name_and_address %></td>
           <td></td>
-          <td><%= check_box_tag :location, :default_billing, location.default_billing, disabled: true %></td>
-          <td><%= check_box_tag :location, :default_shipping, false, disabled: true %></td>
+          <td><%= radio_button_tag :default_billing, true, location.default_billing %></td>
+          <td><%= radio_button_tag :default_shipping, true, location.default_shipping %></td>
           <td><%= check_box_tag "location_ids[]", location.id %></td>
         </tr>
       <% end %>
