@@ -76,7 +76,7 @@ describe User do
     context 'for a market manager' do
       let(:user) { create(:user, :market_manager) }
       let(:market1) { user.managed_markets.first }
-      let(:market2) { user.managed_markets.create(attributes_for(:market)) }
+      let(:market2) { user.managed_markets.create!(attributes_for(:market)) }
       let(:market3) { create(:market) }
 
       let(:org1) { create(:organization, name: 'Org 1') }

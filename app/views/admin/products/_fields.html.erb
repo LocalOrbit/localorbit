@@ -26,6 +26,21 @@
 </div>
 
 <div>
+  <h2>Inventory</h2>
+  <%= f.check_box :use_simple_inventory, disabled: !@product.use_simple_inventory? && @product.available_inventory > 0 %>
+  <%= f.label :use_simple_inventory, 'Use simple inventory management.' %>
+  <% if !@product.use_simple_inventory? && @product.available_inventory > 0 %>
+  <span class="warning">To use simple inventory management you must clear out your current available inventory</span>
+  <% else %>
+  <span class="hint">Uncheck this to use advanced inventory tracking with lots and expirations dates</span>
+  <% end %>
+  <%= content_tag :div, id: "simple-inventory", class: (@product.use_simple_inventory? ? nil : 'hidden') do %>
+    <%= f.text_field :simple_inventory %>
+    <%= f.label :simple_inventory, 'Your current inventory' %>
+  <% end %>
+</div>
+
+<div>
   <h2>More info about this product (where, when, how)</h2>
   <%= check_box_tag :seller_info, "", !@product.has_custom_seller_info? %>
   <%= label_tag :seller_info, "Use seller info from my account" %>

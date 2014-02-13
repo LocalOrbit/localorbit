@@ -13,7 +13,7 @@ module Admin
       @product = Product.new(product_params.merge(organization_id: @organization.try(:id))).decorate
 
       if @product.save
-        redirect_to [:admin, @product, :lots], notice: "Added #{@product.name}"
+        redirect_to after_create_page, notice: "Added #{@product.name}"
       else
         render :new
       end
@@ -37,8 +37,12 @@ module Admin
 
     def product_params
       params.require(:product).permit([
-        :name, :category_id, :who_story, :how_story, :location_id
+        :name, :category_id, :who_story, :how_story, :location_id, :use_simple_inventory, :simple_inventory
       ])
+    end
+
+    def after_create_page
+      @product.use_simple_inventory? ? [:admin, @product] : [:admin, @product, :lots]
     end
   end
 end

@@ -6,6 +6,16 @@ class Lot < ActiveRecord::Base
   validate :expires_at_is_in_future
   validate :good_from_before_expires_at
 
+  scope :available, lambda { where('good_from IS NULL OR good_from < ?', Time.current).where('expires_at IS NULL OR expires_at > ?', Time.current) }
+
+  def available?
+    (expires_at.nil? || expires_at.future?) && (good_from.nil? || good_from.past?)
+  end
+
+  def available_quantity
+    available? ? quantity : 0
+  end
+
   private
 
   def expires_at_is_in_future
