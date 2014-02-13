@@ -27,7 +27,7 @@ describe Market do
     it 'remove @ from twitter slug' do
       market.twitter = '@collectiveidea'
 
-      expect(market.save).to be_true
+      expect(market.save!).to be_true
       market.reload
       expect(market.twitter).to eq('collectiveidea')
     end
@@ -35,7 +35,7 @@ describe Market do
     it "leaves the twitter slug alone if it doesn't start with @" do
       market.twitter = 'collectiveidea'
 
-      expect(market.save).to be_true
+      expect(market.save!).to be_true
       market.reload
       expect(market.twitter).to eq('collectiveidea')
     end

@@ -49,7 +49,7 @@ describe Lot do
       end
 
       context "when updating the lot" do
-        before { subject.save }
+        before { subject.save! }
 
         it "is valid when expires_at occurs after created_at" do
           subject.expires_at = 2.days.from_now

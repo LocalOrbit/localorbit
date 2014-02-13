@@ -60,7 +60,7 @@ describe Product do
 
         it "creates a new lot with the assigned quantity" do
           expect {
-            subject.save
+            subject.save!
           }.to change {
             Lot.where(product_id: subject.id).count
           }.from(0).to(1)
@@ -89,7 +89,7 @@ describe Product do
         it "create a new lot if one doesn't exist" do
           subject.simple_inventory = 42
           expect {
-            subject.save
+            subject.save!
           }.to change {
             Lot.where(product_id: subject.id).count
           }.from(0).to(1)
@@ -97,7 +97,7 @@ describe Product do
 
         it "sets the quantity on the new lot to the assigned quantity" do
           subject.simple_inventory = 42
-          subject.save
+          subject.save!
           expect(subject.lots(true).last.quantity).to eq(42)
         end
       end
@@ -114,7 +114,7 @@ describe Product do
         it "does not create a new lot" do
           subject.simple_inventory = '6'
           expect {
-            subject.save
+            subject.save!
           }.to_not change{
             Lot.count
           }
@@ -128,7 +128,7 @@ describe Product do
           it "does not create a new lot" do
             subject.simple_inventory = '6'
             expect {
-              subject.save
+              subject.save!
             }.to_not change{
               Lot.count
             }
@@ -137,7 +137,7 @@ describe Product do
 
         context "with existing lots" do
           before do
-            subject.lots.create(quantity: 12)
+            subject.lots.create!(quantity: 12)
             subject.simple_inventory = '6'
             subject.save!
           end
