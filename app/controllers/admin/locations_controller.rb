@@ -22,6 +22,21 @@ module Admin
       end
     end
 
+    def edit
+      @location = @organization.locations.find(params[:id])
+    end
+
+    def update
+      @location = @organization.locations.find(params[:id])
+
+      if @location.update_attributes(location_params)
+        redirect_to [:admin, @organization, :locations], notice: "Successfully updated address #{@location.name}"
+      else
+        flash.now[:alert] = "Could not update address"
+        render :new
+      end
+    end
+
     def update_defaults
       @organization.locations.update_all(default_billing: false, default_shipping: false)
       @organization.locations.find(params[:default_billing_id]).update_attributes(default_billing: true)

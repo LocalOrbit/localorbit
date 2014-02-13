@@ -111,6 +111,14 @@ module Dom
         default_shipping.set(true)
       end
 
+      def name
+        cells[0].find("a").text
+      end
+
+      def edit
+        click_link name
+      end
+
       private
 
       def cells

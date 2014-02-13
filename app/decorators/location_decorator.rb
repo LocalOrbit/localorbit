@@ -5,7 +5,7 @@ class LocationDecorator < Draper::Decorator
 
   def name_and_address
     h.capture do
-      concat content_tag(:span, name)
+      concat link_to(name, edit_admin_organization_location_path(organization, location))
       concat "#{address}, #{city}, #{state} #{zip}"
     end
   end

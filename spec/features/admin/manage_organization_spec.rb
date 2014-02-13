@@ -58,8 +58,6 @@ describe "admin manange organization" do
       select  "Michigan",      from: "State"
       fill_in "Zip",           with: "34599"
 
-      check "Default Billing?"
-
       click_button "Add Address"
 
       locations = Dom::Admin::OrganizationLocation.all
@@ -67,7 +65,7 @@ describe "admin manange organization" do
       expect(locations.size).to eq(1)
       expect(locations.first.name_and_address).to include("University of Michigan")
       expect(locations.first.name_and_address).to include("500 S. State Street, Ann Arbor, Michigan 34599")
-      expect(locations.first.default_billing).to be_checked
+      expect(locations.first.default_billing).not_to be_checked
       expect(locations.first.default_shipping).not_to be_checked
 
       expect(page).to have_content("Successfully added address University of Michigan")
@@ -138,6 +136,26 @@ describe "admin manange organization" do
       expect(locations.last).to  be_default_billing
       expect(locations.first).to be_default_shipping
       expect(page).to have_content("Successfully updated default addresses")
+    end
+
+    it "update location information" do
+      create(:location, :default_billing, organization: organization, name: "Original Name")
+
+      click_link "Organizations"
+      click_link "University of Michigan Farmers"
+
+      click_link "Addresses"
+
+      location = Dom::Admin::OrganizationLocation.first
+      location.edit
+
+      fill_in "Location Name", with: "University of Michigan"
+      click_button "Save Address"
+
+      location = Dom::Admin::OrganizationLocation.first
+
+      expect(location.name).to eq("University of Michigan")
+      expect(page).to have_content("Successfully updated address University of Michigan")
     end
   end
 end

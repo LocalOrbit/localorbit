@@ -1,0 +1,25 @@
+<%= form_for [:admin, @organization, @location] do |f| %>
+  <div>
+    <%= f.label :name, "Location Name" %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :address %>
+    <%= f.text_field :address %>
+  </div>
+  <div>
+    <%= f.label :city %>
+    <%= f.text_field :city %>
+  </div>
+  <div>
+    <%= f.label :state %>
+    <%= f.select :state, us_states %>
+  </div>
+  <div>
+    <%= f.label :zip %>
+    <%= f.text_field :zip %>
+  </div>
+  <div>
+    <%= f.submit "#{@location.new_record? ? 'Add' : 'Save'} Address" %>
+  </div>
+<% end %>
