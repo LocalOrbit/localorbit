@@ -23,6 +23,6 @@ class ProductDecorator < Draper::Decorator
   end
 
   def location
-    location_id ? Location.find(location_id) : organization.locations.default_billing
+    location_id ? Location.find(location_id) : organization.locations.default_shipping
   end
 end

@@ -13,4 +13,8 @@ class Location < ActiveRecord::Base
   def self.default_billing
     find_by(default_billing: true)
   end
+
+  def self.default_shipping
+    find_by(default_shipping: true)
+  end
 end
