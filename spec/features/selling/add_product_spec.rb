@@ -99,13 +99,21 @@ describe "Adding a product" do
 
   describe "as a seller belonging to multiple organizations" do
     let(:org2) { create(:organization) }
+    let(:buying_org) { create(:organization, :buyer) }
 
     before do
       org.users << user
       org2.users << user
+      buying_org.users << user
+
       sign_in_as(user)
       click_link "Products"
       click_link "Add a product"
+    end
+
+    it "does not offer non-selling organizations as options for the Organization select" do
+      product_form = Dom::ProductForm.first
+      expect(product_form.organization_field).to_not have_content(buying_org.name)
     end
 
     context "when product information is valid" do

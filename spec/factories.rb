@@ -29,10 +29,14 @@ FactoryGirl.define do
 
   factory :organization do
     sequence(:name) {|n| "Organization #{n}" }
-    can_sell false
+    can_sell true
 
     trait :seller do
       can_sell true
+    end
+
+    trait :buyer do
+      can_sell false
     end
   end
 
