@@ -33,17 +33,4 @@ class Product < ActiveRecord::Base
       errors.add(:organization, "must be able to sell products")
     end
   end
-
-  def who_story
-    self[:who_story] || organization.who_story
-  end
-
-  def how_story
-    self[:how_story] || organization.how_story
-  end
-
-  alias_method :original_location, :location
-  def location
-    original_location || organization.locations.default_billing
-  end
 end
