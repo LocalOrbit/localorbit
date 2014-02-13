@@ -82,9 +82,7 @@ describe "Adding advanced inventory" do
 
       click_link "Product Info"
       product_form = Dom::ProductForm.first
-
-      organization_link = page.find_link(product.organization.name)
-      expect(organization_link).to_not be_nil
+      expect(product_form).to have_link(product.organization.name)
 
       expect(product_form.name.value).to eql(product.name.to_s)
       expect(product_form.category.value).to eql(product.category.id.to_s)
