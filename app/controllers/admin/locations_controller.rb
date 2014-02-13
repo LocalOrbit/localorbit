@@ -1,6 +1,5 @@
 module Admin
   class LocationsController < AdminController
-    before_action :require_admin_or_market_manager, only: [:new, :create, :destroy]
     before_action :find_organization
 
     def index
