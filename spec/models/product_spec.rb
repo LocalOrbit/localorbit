@@ -144,6 +144,21 @@ describe Product do
           subject.save!
           expect(subject.lots(true).last.quantity).to eq(42)
         end
+
+        it "does not use a lot with a future good from date" do
+          subject.lots.create!(number: '1', created_at: 1.minute.ago, good_from: 1.day.from_now, expires_at: 2.days.from_now, quantity: 0)
+
+          expect {
+            subject.simple_inventory = 42
+            subject.save!
+          }.to change {
+            Lot.where(product_id: subject.id).count
+          }.by(1)
+
+          lot = subject.lots(true).last
+          expect(lot.quantity).to eq(42)
+          expect(lot.number).to be_nil
+        end
       end
     end
 

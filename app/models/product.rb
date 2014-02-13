@@ -22,7 +22,8 @@ class Product < ActiveRecord::Base
   def simple_inventory=(val)
     return val unless use_simple_inventory?
 
-    lot = lots.to_a.last || lots.build
+    lot = lots.to_a.last
+    lot = lots.build unless lot.try(:simple?)
     lot.quantity = val
   end
 
