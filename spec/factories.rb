@@ -63,6 +63,10 @@ FactoryGirl.define do
       default_billing true
     end
 
+    trait :default_shipping do
+      default_shipping true
+    end
+
     trait :decorated do
       initialize_with do
         LocationDecorator.new(new)
