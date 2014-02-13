@@ -95,6 +95,22 @@ module Dom
         click_button "Remove Checked"
       end
 
+      def default_billing?
+        default_billing["checked"]
+      end
+
+      def default_shipping?
+        default_shipping["checked"]
+      end
+
+      def mark_default_billing
+        default_billing.set(true)
+      end
+
+      def mark_default_shipping
+        default_shipping.set(true)
+      end
+
       private
 
       def cells

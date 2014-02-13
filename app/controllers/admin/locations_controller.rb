@@ -4,7 +4,7 @@ module Admin
     before_action :find_organization
 
     def index
-      @locations = @organization.locations.decorate
+      @locations = @organization.locations.alphabetical_by_name.decorate
     end
 
     def new
@@ -20,6 +20,14 @@ module Admin
         flash.now[:alert] = "Could not save address"
         render :new
       end
+    end
+
+    def update_defaults
+      @organization.locations.update_all(default_billing: false, default_shipping: false)
+      @organization.locations.find(params[:default_billing_id]).update_attributes(default_billing: true)
+      @organization.locations.find(params[:default_shipping_id]).update_attributes(default_shipping: true)
+
+      redirect_to [:admin, @organization, :locations], notice: "Successfully updated default addresses"
     end
 
     def destroy

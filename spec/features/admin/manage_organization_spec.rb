@@ -86,7 +86,7 @@ describe "admin manange organization" do
 
       expect(locations.size).to eq(2)
 
-      locations.first.remove!
+      locations.last.remove!
 
       locations = Dom::Admin::OrganizationLocation.all
 
@@ -112,6 +112,32 @@ describe "admin manange organization" do
 
       expect(Dom::Admin::OrganizationLocation.count).to eq(0)
       expect(page).to have_content("Successfully removed the address(es) #{location_2.name} and #{location_1.name}")
+    end
+
+    it "updates default address settings", js: true do
+      create(:location, :default_billing,  organization: organization)
+      create(:location, :default_shipping, organization: organization)
+
+      click_link "Organizations"
+      click_link "University of Michigan Farmers"
+
+      click_link "Addresses"
+
+      locations = Dom::Admin::OrganizationLocation.all
+
+      expect(locations.first).to be_default_billing
+      expect(locations.last).to  be_default_shipping
+
+      locations.first.mark_default_shipping
+      locations.last.mark_default_billing
+
+      click_link "Save & Continue Editing"
+
+      locations = Dom::Admin::OrganizationLocation.all
+
+      expect(locations.last).to  be_default_billing
+      expect(locations.first).to be_default_shipping
+      expect(page).to have_content("Successfully updated default addresses")
     end
   end
 end

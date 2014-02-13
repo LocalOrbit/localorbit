@@ -15,6 +15,7 @@ LocalOrbit::Application.routes.draw do
       resources :locations, except: :destroy do
         collection do
           delete :destroy
+          put :update_defaults, as: :update_default
         end
       end
     end

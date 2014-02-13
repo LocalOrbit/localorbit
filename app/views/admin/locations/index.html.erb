@@ -14,8 +14,8 @@
         <tr>
           <td><%= location.name_and_address %></td>
           <td></td>
-          <td><%= radio_button_tag :default_billing, true, location.default_billing %></td>
-          <td><%= radio_button_tag :default_shipping, true, location.default_shipping %></td>
+          <td><%= radio_button_tag :default_billing_id, location.id, location.default_billing %></td>
+          <td><%= radio_button_tag :default_shipping_id, location.id, location.default_shipping %></td>
           <td><%= check_box_tag "location_ids[]", location.id %></td>
         </tr>
       <% end %>
@@ -23,5 +23,6 @@
   </table>
 
   <%= link_to "Add New Address", new_admin_organization_location_path(@organization) %>
+  <%= link_to "Save & Continue Editing", update_default_admin_organization_locations_path(@organization), id: "save-update-defaults" %>
   <%= submit_tag "Remove Checked" %>
 <% end %>
