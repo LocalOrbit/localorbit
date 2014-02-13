@@ -11,7 +11,5 @@ class Organization < ActiveRecord::Base
 
   validates :name, presence: true
 
-  accepts_nested_attributes_for :locations
-
   scope :selling, lambda { where(can_sell: true) }
 end

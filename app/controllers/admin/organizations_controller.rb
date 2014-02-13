@@ -9,7 +9,6 @@ module Admin
 
     def new
       @organization = Organization.new
-      @organization.locations.build
       @markets      = current_user.markets
     end
 
@@ -49,11 +48,7 @@ module Admin
 
     def organization_params
       params.require(:organization).permit([
-        :name, :can_sell, :who_story, :how_story,
-
-        locations_attributes: [
-          :name, :address, :city, :state, :zip
-        ]
+        :name, :can_sell, :who_story, :how_story
       ])
     end
 
