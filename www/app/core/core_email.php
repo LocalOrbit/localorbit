@@ -314,11 +314,11 @@ class core_email
     <p class="lo_header">&nbsp;</p>
     <div class="lo_content">
     <!-- Content Header -->
-      <a href="http://'.$core->config['domain']['hostname'].'/app.php#!dashboard-home" class="lo_visit_link">Visit the Market &#x2799;</a>
+      <a href="http://'.$domain['hostname'].'/app.php#!dashboard-home" class="lo_visit_link">Visit the Market &#x2799;</a>
       <table class="lo_content_header">
         <tr>
           <td>
-            <a href="http://'.$core->config['domain']['hostname'].'"><img src="http://'.$core->config['domain']['hostname'].image('logo-large', $domain_id).'" alt="" class="lo_org_logo"></a>
+            <a href="http://'.$domain['hostname'].'"><img src="http://'.$domain['hostname'].image('logo-large', $domain_id).'" alt="" class="lo_org_logo"></a>
           </td>
           <td>
             <p class="lo_slogan">'.$tagline.'</p>
