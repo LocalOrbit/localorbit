@@ -233,6 +233,17 @@ class core_controller_newsletters extends core_controller
 		}
 	}
 
+  function generate_html()
+  {
+    global $core;
+    $newsletter = core::model('newsletter_content')->load($core->data['cont_id']);
+    $html = core_email::header($newsletter['domain_id']);
+    $html .= '<h1>'.$newsletter['header'].'</h1>';
+    $html .= $newsletter['body'];
+    $html .= core_email::footer();
+    return $html;
+  }
+
 	function save_image()
 	{
 		global $core;
