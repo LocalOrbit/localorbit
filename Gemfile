@@ -33,7 +33,7 @@ group :development, :test do
 
   # Use debugger
   gem 'debugger'
-  gem 'pry'
+  gem 'pry-rails'
   gem 'launchy'
 end
 
