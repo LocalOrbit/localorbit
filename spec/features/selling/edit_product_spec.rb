@@ -34,13 +34,13 @@ describe "Editing a product" do
       end
     end
 
-    context "and switching to simple inventory management" do
+    context "and switching to simple inventory management", js: true do
       let(:product) { create(:product, name: "Canned Pears", use_simple_inventory: false) }
 
       context "with available inventory" do
         before do
           product.lots.create!(quantity: 42)
-          visit url_for([:admin, product])
+          visit admin_product_path(product)
         end
 
         it "user sees a warning message" do
@@ -62,6 +62,22 @@ describe "Editing a product" do
 
           expect(page).to have_content("Saved Canned Pears")
           expect(find_field("Your current inventory").value).to eq('42')
+        end
+      end
+    end
+
+    context "and switching to advanced inventory management", js: true do
+      it "toggles display of inventory tab" do
+        expect(page).to have_content("Your current inventory")
+        within(".tabs") do
+          expect(page).to_not have_content("Inventory")
+        end
+
+        uncheck "Use simple inventory management"
+
+        expect(page).to_not have_content("Your current inventory")
+        within(".tabs") do
+          expect(page).to have_content("Inventory")
         end
       end
     end

@@ -16,6 +16,10 @@ class Lot < ActiveRecord::Base
     available? ? quantity : 0
   end
 
+  def simple?
+    number.nil? && good_from.nil? && expires_at.nil?
+  end
+
   private
 
   def expires_at_is_in_future

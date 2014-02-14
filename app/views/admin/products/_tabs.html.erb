@@ -2,7 +2,7 @@
 <ul>
   <% if @product.persisted? %>
     <%= content_tag(:li, link_to("Product Info", [:admin, @product]), class: "completed") %>
-    <%= content_tag(:li, link_to("Inventory", [:admin, @product, :lots]), class: "last") unless @product.use_simple_inventory? %>
+    <%= content_tag(:li, link_to("Inventory", [:admin, @product, :lots]), id: 'product-inventory-nav', class: (@product.use_simple_inventory? ? 'hidden' : nil)) %>
   <% else %>
     <li>Product Info</li>
     <%= content_tag :li, 'Inventory', id: 'product-inventory-nav', class: (@product.use_simple_inventory? ? 'hidden' : nil) %>

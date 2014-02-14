@@ -27,12 +27,12 @@
 
 <div>
   <h2>Inventory</h2>
-  <%= f.check_box :use_simple_inventory, disabled: !@product.use_simple_inventory? && @product.available_inventory > 0 %>
+  <%= f.check_box :use_simple_inventory, disabled: !@product.can_use_simple_inventory? %>
   <%= f.label :use_simple_inventory, 'Use simple inventory management.' %>
-  <% if !@product.use_simple_inventory? && @product.available_inventory > 0 %>
-  <span class="warning">To use simple inventory management you must clear out your current available inventory</span>
-  <% else %>
+  <% if @product.can_use_simple_inventory? %>
   <span class="hint">Uncheck this to use advanced inventory tracking with lots and expirations dates</span>
+  <% else%>
+  <span class="warning">To use simple inventory management you must clear out your current available inventory</span>
   <% end %>
   <%= content_tag :div, id: "simple-inventory", class: (@product.use_simple_inventory? ? nil : 'hidden') do %>
     <%= f.text_field :simple_inventory %>

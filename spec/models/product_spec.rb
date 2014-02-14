@@ -21,6 +21,50 @@ describe Product do
     end
   end
 
+  describe '#can_use_simple_inventory?' do
+    let(:product) { create(:product, use_simple_inventory: false) }
+
+    it "is true if they are using simple inventory" do
+      product.use_simple_inventory = true
+      product.lots.create!(quantity: 10)
+
+      expect(product.can_use_simple_inventory?).to be_true
+    end
+
+    it "is true if all lots have expired" do
+      lot = product.lots.create!(quantity: 2, number: '1')
+      lot.update_attribute(:expires_at, 1.day.ago)
+
+      expect(product.can_use_simple_inventory?).to be_true
+    end
+
+    it "is true if all non-expired lots have no quantity" do
+      product.lots.create!(quantity: 0, number: '1')
+      product.lots.create!(quantity: 0, number: '1', expires_at: 2.days.from_now)
+      product.lots.create!(quantity: 0, number: '1', good_from: 1.day.from_now, expires_at: 2.days.from_now)
+
+      expect(product.can_use_simple_inventory?).to be_true
+    end
+
+    it "is false if any lots with quantity have not expired" do
+      product.lots.create!(quantity: 10, number: '1', expires_at: 2.days.from_now)
+
+      expect(product.can_use_simple_inventory?).to be_false
+    end
+
+    it "is false if any lots have a quantity" do
+      product.lots.create!(quantity: 10, number: '1')
+
+      expect(product.can_use_simple_inventory?).to be_false
+    end
+
+    it "is false if any future lots have a quantity" do
+      product.lots.create!(quantity: 10, number: '1', good_from: 1.day.from_now)
+
+      expect(product.can_use_simple_inventory?).to be_false
+    end
+  end
+
   describe '#simple_inventory' do
     before do
       subject.use_simple_inventory = true
@@ -99,6 +143,21 @@ describe Product do
           subject.simple_inventory = 42
           subject.save!
           expect(subject.lots(true).last.quantity).to eq(42)
+        end
+
+        it "does not use a lot with a future good from date" do
+          subject.lots.create!(number: '1', created_at: 1.minute.ago, good_from: 1.day.from_now, expires_at: 2.days.from_now, quantity: 0)
+
+          expect {
+            subject.simple_inventory = 42
+            subject.save!
+          }.to change {
+            Lot.where(product_id: subject.id).count
+          }.by(1)
+
+          lot = subject.lots(true).last
+          expect(lot.quantity).to eq(42)
+          expect(lot.number).to be_nil
         end
       end
     end

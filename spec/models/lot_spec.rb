@@ -177,4 +177,34 @@ describe Lot do
       expect(subject).to_not be_available
     end
   end
+
+  describe "#simple?" do
+    it "is true if number, good_from, and expires_at are not set" do
+      subject.number = nil
+      subject.good_from = nil
+      subject.expires_at = nil
+
+      expect(subject).to be_simple
+    end
+
+    it "is false if number, good_from, or expires_at are set" do
+      subject.number = '1'
+      subject.good_from = nil
+      subject.expires_at = nil
+      expect(subject).to_not be_simple
+
+      subject.number = nil
+      subject.good_from = 1.day.from_now
+      expect(subject).to_not be_simple
+
+      subject.good_from = nil
+      subject.expires_at = 1.day.from_now
+      expect(subject).to_not be_simple
+
+      subject.number = '1'
+      subject.good_from = 1.day.from_now
+      subject.expires_at = 2.days.from_now
+      expect(subject).to_not be_simple
+    end
+  end
 end
