@@ -62,14 +62,16 @@ describe Admin::ProductsController do
   end
 
   describe "/new" do
-    it "redirects to the add organization page when no organizations exist" do
+    it "redirects to the add organization page when no selling organizations exist" do
+      create(:organization, :buyer)
+
       admin = create(:user, :admin)
       sign_in admin
 
       get :new
 
       expect(response).to redirect_to(new_admin_organization_path)
-      expect(flash[:alert]).to eq("You must add an organization before adding any products")
+      expect(flash[:alert]).to eq("You must add an organization that can sell before adding any products")
     end
   end
 end
