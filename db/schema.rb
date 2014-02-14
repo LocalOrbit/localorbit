@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140210211350) do
+ActiveRecord::Schema.define(version: 20140213151323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,14 +26,16 @@ ActiveRecord::Schema.define(version: 20140210211350) do
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
 
   create_table "locations", force: true do |t|
-    t.string   "name",            null: false
-    t.string   "address",         null: false
-    t.string   "city",            null: false
-    t.string   "state",           null: false
-    t.string   "zip",             null: false
-    t.integer  "organization_id", null: false
+    t.string   "name",                             null: false
+    t.string   "address",                          null: false
+    t.string   "city",                             null: false
+    t.string   "state",                            null: false
+    t.string   "zip",                              null: false
+    t.integer  "organization_id",                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "default_billing",  default: false, null: false
+    t.boolean  "default_shipping", default: false, null: false
   end
 
   add_index "locations", ["organization_id"], name: "index_locations_on_organization_id", using: :btree
@@ -87,6 +89,8 @@ ActiveRecord::Schema.define(version: 20140210211350) do
     t.boolean  "can_sell"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "who_story"
+    t.text     "how_story"
   end
 
   create_table "products", force: true do |t|

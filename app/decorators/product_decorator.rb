@@ -13,4 +13,16 @@ class ProductDecorator < Draper::Decorator
       [location.name, location.id]
     end
   end
+
+  def who_story
+    self[:who_story].presence || organization.who_story
+  end
+
+  def how_story
+    self[:how_story].presence || organization.how_story
+  end
+
+  def location
+    location_id ? Location.find(location_id) : organization.locations.default_shipping
+  end
 end

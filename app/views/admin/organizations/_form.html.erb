@@ -16,6 +16,16 @@
     <%= f.text_field :name %>
   </div>
 
+  <div>
+    <%= f.label :who_story, "Who" %>
+    <%= f.text_field :who_story %>
+  </div>
+
+  <div>
+    <%= f.label :how_story, "How" %>
+    <%= f.text_field :how_story %>
+  </div>
+
   <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
     <div>
       <%= f.label :can_sell, "Can sell product" %>

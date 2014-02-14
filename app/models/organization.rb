@@ -7,7 +7,7 @@ class Organization < ActiveRecord::Base
 
   has_many :products
 
-  has_many :locations
+  has_many :locations, inverse_of: :organization
 
   validates :name, presence: true
 
