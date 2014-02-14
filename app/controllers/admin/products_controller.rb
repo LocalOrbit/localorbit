@@ -5,6 +5,7 @@ module Admin
     end
 
     def new
+      ensure_organization!
       @product = Product.new.decorate
     end
 
@@ -43,6 +44,13 @@ module Admin
 
     def after_create_page
       @product.use_simple_inventory? ? [:admin, @product] : [:admin, @product, :lots]
+    end
+
+    def ensure_organization!
+      unless current_user.managed_organizations.any?
+        flash[:alert] = "You must add an organization before adding any products"
+        redirect_to new_admin_organization_path
+      end
     end
   end
 end
