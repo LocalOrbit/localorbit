@@ -36,7 +36,9 @@ More Hub Camps, helping more people build local food distribution businesses, co
 <ul>
   <li><strong>Noah Fulmer</strong>, the director of training and capacity building at Local Orbit, is the former operator and co-founder of Farm Fresh Rhode Island, a wholesale food hub that aggregates and delivers $2 million in produce from 60 local farmers to 120 buyers each year. </li>
   <li><strong>Erika Block</strong>, CEO of Local Orbit, which supports diverse local distribution models across the country. Erika brings unique perspective on best practices and challenges within this emerging sector, and she’s also built and managed two start-up businesses.</li>
-  <li><strong> Plus:</strong> Topic experts on food safety, finance &amp; legal issues.</li>
+	<li>LA: <strong>Amy Andrews Muñoz</strong> is associate vice president for hospitality services at Occidental College in Los Angeles. She is responsible for auxiliary departments, including campus dining. She oversees food purchases exceeding $3.5 million annually, of which approximately 25% represent good food purchasing practices – local, ecologically sound, humane and/or fair trade.  Amy has been with Occidental for 29 years.</li>
+	<li>LA: <strong>Chef Theresa Wahl</strong> is the owner of Auntie Em's Kitchen, Catering and Marketplace in Los Angeles. She also runs a CSA delivery program out of Auntie Em's. All of these ventures source directly from producers at local farmers markets. Look for her cookbook coming out in June called "Auntie Em's Kitchen Cookbook".</li>
+  <li><strong> Plus:</strong> Topic experts on food safety, finance &amp; legal issues</li>
 </ul>
 <br /><br />
 <h2>Past Hub Camps</h2>

@@ -24,9 +24,9 @@ td { padding: 10px; }
 <table width="900" border="0" cellspacing="0" cellpadding="15">
   <tr>
     <td width="25%">Hub Camp location</td>
-    <td width="75%"><input type="radio" name="TAG" value="Hub Camp LA"<? if ($_GET['location']=='LA') { ?> checked="checked"<? } ?> /> <span style="font-weight:bold">Los Angeles, CA</span> &mdash; Sunday - Tuesday, March 16 - 18, 2014<br />
+    <td width="75%"><input type="radio" name="TAG" value="Hub Camp LA"<? if ($_GET['location']=='LA') { ?> checked="checked"<? } ?> /> <span style="font-weight:bold">Los Angeles, CA</span> at Occidental College &mdash; Sunday - Tuesday, March 16 - 18, 2014<br />
 APPLY BY: <span style="font-weight:bold">Thursday, February 27</span><br /><br />
-    <input type="radio" name="TAG" value="Hub Camp Davis"<? if ($_GET['location']=='Davis') { ?> checked="checked"<? } ?> /> <span style="font-weight:bold">Davis, CA</span> &mdash; Sunday - Tuesday, April 27 - 29, 2014<br />
+    <input type="radio" name="TAG" value="Hub Camp Davis"<? if ($_GET['location']=='Davis') { ?> checked="checked"<? } ?> /> <span style="font-weight:bold">Davis, CA</span>  at N Street Common House &mdash; Sunday - Tuesday, April 27 - 29, 2014<br />
 APPLY BY: <span style="font-weight:bold">Tuesday, April 8</span></td>
   </tr>
   <tr>
