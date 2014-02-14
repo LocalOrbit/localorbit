@@ -71,78 +71,14 @@ class core_controller_newsletters extends core_controller
 		core::js("$('#img_upload_row').show();$('#img_msg_row').hide();");
 		$core->data['cont_id'] = $nl['cont_id'];
 
-		# this line was used by mike to verify the mc key being used, ignore pleas
-		#$nl['body'] = $core->config['mailchimp']['key'].$nl['body'];
-
 		if($core->data['do_test'] == 1 || $core->data['do_send'] == 1)
 		{
-			core::load_library('mailchimp');
-			$mc = new core_mailchimp();
-
-			# get the plaintext body
-			$content = new html2text($nl['body']);
-			$content = $content->get_text();
-
-			# see if there's a header image. if there is, add it.
-			list($has_image,$webpath,$filepath) = $nl->get_image();
-			if($has_image)
-			{
-				$body  = '<br /><div style="text-align: center;"><img src="http://'.core::model('domains')->get_value('hostname',$nl['domain_id']).''.$webpath.'" /></div><br />'.$nl['body'];
-			}
-			else
-			{
-				$body  = '<br />'.$nl['body'];
-			}
-
+			$html = $this->generate_html($nl);
+  		$market_manager = core::model('domains')->get_domain_info($nl['domain_id']);
 			if($core->data['do_test'] == 1)
 			{
-				# create the campaign
-				$domain =  core::model('domains')->load($core->data['domain_id']);
-				$template_id = $mc->get_template_id('NewsletterTemplate',$core->data['domain_id']);
-				$list_id     = $mc->get_list_id('Newsletter');
-				$title       = 'newsletter-'.$nl['cont_id'].'-'.date('YmdHms');
-				core::log('creating a newsletter with info: '.$title.':'.$template_id.':'.$list_id);
-
-				$camp_id = $mc->api->campaignCreate(
-					'regular',
-					array(
-						'subject'=>$nl['title'],
-						'from_email'=>'service@localorb.it',
-						'from_name'=>$domain['name'],
-						'title'=>$title,
-						'list_id'=>$list_id,
-						'template_id'=>$template_id,
-					),
-					array(
-						'html'=>$body,
-						'html_MAIN'=>$body,
-						'html_HEADER'=>$nl['header'],
-						'html_FOOTER'=>'',
-						'html_SIDECOLUMN'=>'',
-						'text'=>$content,
-					)
-				);
-				if ($mc->api->errorCode){
-					core::log("Unable to Create New Campaign!");
-					core::log("\n\tCode=".$mc->api->errorCode);
-					core::log("\n\tMsg=".$mc->api->errorMessage."\n");
-					core::deinit();
-				} else {
-					core::log("New Campaign ID:".$camp_id."\n");
-				}
-
-				# perform the test and delete the campaign
-				$success = $mc->api->campaignSendTest($camp_id,array('mthorn@iqguys.com',$core->data['test_email']));
-				core::log("success val: ".$success);
-				if ($mc->api->errorCode){
-					core::log("Unable to send test Campaign!");
-					core::log("\n\tCode=".$mc->api->errorCode);
-					core::log("\n\tMsg=".$mc->api->errorMessage."\n");
-					core_ui::notification('test send failed: '.$mc->api->errorMessage);
-				} else {
-					core::log("Successfully sent test:".$camp_id."\n");
-				}
-				#	$mc->api->campaignDelete($camp_id);
+				core_email::send("[TEST] ".$nl['title'],$core->data['test_email'],$html,array(),$market_manager['email'],$market_manager['name']);        
+				core::log("Successfully sent test\n");
 				core_ui::notification('test sent');
 			}
 
@@ -151,79 +87,19 @@ class core_controller_newsletters extends core_controller
 			{
 				$groups = array();
 				if($core->data['send_buyer'] == 1)
-					$groups[] = 2;
+					$groups[] = 0;
 				if($core->data['send_seller'] == 1)
 					$groups[] = 1;
 
-
-				$domain_id = intval($core->data['domain_id']);
-
-
-				# always segment on domain_id
-				$seg_opts = array(
-					'match'=>'all',
-					'conditions'=>array(
-						array(
-							'field'=>'DOMAIN_ID',
-							'op'=>'eq',
-							'value'=>$domain_id,
-						),
-					),
-				);
-
-				#only add a segmentation rule by account type if only one is checked
-				if(count($groups) < 2)
-				{
-					$seg_opts['conditions'][] = array(
-						'field'=>'ACC_TYPE',
-						'op'=>'eq',
-						'value'=>$groups[0],
-					);
+				$customers = $this->customers($nl['domain_id'], $groups);
+				$emails = array();
+				foreach($customers as $customer) {
+					$emails[] = $customer['email'];
 				}
-
-				# create the campain now
-				$camp_id = $mc->api->campaignCreate(
-					'regular',
-					array(
-						'subject'=>$nl['title'],
-						'from_email'=>'service@localorb.it',
-						'from_name'=>'Local Orbit',
-						'title'=>'newsletter-'.$nl['cont_id'].'-'.date('YmdHms'),
-						'list_id'=>$mc->get_list_id('Newsletter'),
-						'template_id'=>$mc->get_template_id('NewsletterTemplate',$domain_id),
-					),
-					array(
-						'html'=>$body,
-						'html_MAIN'=>$body,
-						'html_HEADER'=>$nl['header'],
-						'html_FOOTER'=>'',
-						'html_SIDECOLUMN'=>'',
-						'text'=>$content,
-					),
-					$seg_opts
-				);
-				if ($mc->api->errorCode){
-					core::log("Unable to Create New Campaign!");
-					core::log("\n\tCode=".$mc->api->errorCode);
-					core::log("\n\tMsg=".$mc->api->errorMessage."\n");
-					core::deinit();
-				} else {
-					core::log("New Campaign ID:".$camp_id."\n");
-				}
-
-				#actually send now
-				$mc->api->campaignSendNow($camp_id);
-				if ($mc->api->errorCode){
-					core::log("Unable to send real Campaign!");
-					core::log("\n\tCode=".$mc->api->errorCode);
-					core::log("\n\tMsg=".$mc->api->errorMessage."\n");
-					core_ui::notification('newsletter send failed: '.$mc->api->errorMessage);
-				} else {
-					core::log("Successfully sent real campaign:".$camp_id."\n");
-				}
+				core_email::send($emails,$html,array(),$market_manager['email'],$market_manager['name']);
+				core::log("Successfully sent real campaign\n");
 				core_ui::notification('newsletter sent');
 			}
-
 		}
 		else
 		{
@@ -233,12 +109,18 @@ class core_controller_newsletters extends core_controller
 		}
 	}
 
-  function generate_html()
+  function generate_html($newsletter)
   {
     global $core;
-    $newsletter = core::model('newsletter_content')->load($core->data['cont_id']);
     $html = core_email::header($newsletter['domain_id']);
     $html .= '<h1>'.$newsletter['header'].'</h1>';
+
+    # see if there's a header image. if there is, add it.
+    list($has_image,$webpath,$filepath) = $newsletter->get_image();
+    if($has_image) {
+      $html .= '<div style="text-align: center;"><img src="http://'.core::model('domains')->get_value('hostname',$newsletter['domain_id']).''.$webpath.'" /></div><br />';
+    }
+
     $html .= $newsletter['body'];
     $html .= core_email::footer();
     return $html;
@@ -297,6 +179,44 @@ class core_controller_newsletters extends core_controller
 		core::js("$('#removenlimage').fadeOut('fast');");
 		core::deinit();
 	}
+
+  # Allow sell is an array of allowed values in organizations.allow_sell
+  # 0 is buyer, 1 is seller
+  function customers($domain_id, $allow_sell) {
+    $customers = core::model('customer_entity')
+    	->autojoin(
+    		'left',
+    		'organizations',
+    		'(customer_entity.org_id=organizations.org_id)',
+    		array('organizations.name as ORG_NAME','allow_sell')
+    	)
+    	->autojoin(
+    		'left',
+    		'organizations_to_domains',
+    		'(organizations.org_id=organizations_to_domains.org_id and organizations_to_domains.is_home=1)',
+    		array()
+    	)
+    	->autojoin(
+    		'left',
+    		'domains',
+    		'(organizations_to_domains.domain_id=domains.domain_id)',
+    		array('domains.domain_id','secondary_contact_name','secondary_contact_email','secondary_contact_phone','domains.name as website_name','hostname')
+    	)
+    	->autojoin(
+    		'left',
+    		'addresses',
+    		'(addresses.org_id=organizations.org_id and addresses.default_billing=1)',
+    		array('address','city','postal_code')
+    	)->autojoin(
+    		'left',
+    		'directory_country_region dcr',
+    		'(addresses.region_id=dcr.region_id)',
+    		array('code as state')
+    	)->collection()->filter('organizations.is_deleted', '=', 0)->filter('customer_entity.is_deleted', '=', 0)
+      ->filter('domains.domain_id', '=', $domain_id)
+      ->filter('customer_entity.allow_sell', 'IN', '['.implode(',', $allow_sell).']');
+    return $customers;
+  }
 }
 
 
