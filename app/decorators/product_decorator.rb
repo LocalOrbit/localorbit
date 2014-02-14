@@ -15,14 +15,15 @@ class ProductDecorator < Draper::Decorator
   end
 
   def who_story
-    self[:who_story].presence || organization.who_story
+    self[:who_story].presence || (organization ? organization.who_story : nil)
   end
 
   def how_story
-    self[:how_story].presence || organization.how_story
+    self[:how_story].presence || (organization ? organization.how_story : nil)
   end
 
   def location
-    location_id ? Location.find(location_id) : organization.locations.default_shipping
+    return Location.find(location_id) if location_id
+    return organization.locations.default_shipping if organization
   end
 end

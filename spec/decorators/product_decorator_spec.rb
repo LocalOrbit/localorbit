@@ -66,6 +66,12 @@ describe ProductDecorator do
 
         expect(product.who_story).to eq("org-who")
       end
+
+      it "returns nil when the product has no organization" do
+        product = build(:product, :decorated)
+
+        expect(product.who_story).to be_nil
+      end
     end
 
     describe "#how_story" do
@@ -79,6 +85,12 @@ describe ProductDecorator do
         product = build(:product, :decorated, organization: organization, how_story: nil)
 
         expect(product.how_story).to eq("org-how")
+      end
+
+      it "returns nil when the product has no organization" do
+        product = build(:product, :decorated)
+
+        expect(product.how_story).to be_nil
       end
     end
 
@@ -97,6 +109,12 @@ describe ProductDecorator do
         product = build(:product, :decorated, organization: organization, location: nil)
 
         expect(product.location).to eq(organization_default_location)
+      end
+
+      it "returns nil when the product has no organization" do
+        product = build(:product, :decorated)
+
+        expect(product.location).to be_nil
       end
     end
   end
