@@ -29,6 +29,7 @@ class core_controller_fresh_sheet extends core_controller
 		$domain =  core::model('domains')->load($core->data['domain_id']);
 
 		$html = $this->generate_html($core->data['domain_id']);
+		$market_manager = core::model('domains')->get_domain_info($core->data['domain_id']);
 		
 		if($core->data['test_only'] == '1')
 		{ 
@@ -39,7 +40,6 @@ class core_controller_fresh_sheet extends core_controller
 		else
 		{
 			# Actually send
-      $market_manager = core::model('domains')->get_domain_info($core->data['domain_id']);
       $customers = $this->customers($core->data['domain_id']);
       $emails = array();
       
