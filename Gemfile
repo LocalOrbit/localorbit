@@ -24,25 +24,16 @@ gem 'interactor-rails'
 gem 'newrelic_rpm'
 gem 'jquery-ui-rails'
 
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-
 group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
-
-# Use unicorn as the app server
-# gem 'unicorn'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.0'
 
   # Use debugger
   gem 'debugger'
-  gem 'pry'
+  gem 'pry-rails'
   gem 'launchy'
 end
 
