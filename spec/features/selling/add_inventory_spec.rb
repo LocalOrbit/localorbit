@@ -100,18 +100,17 @@ describe "Adding advanced inventory" do
     end
 
     it "populates the correct date on validation errors" do
-      expected_date = Time.now.change(day: 15).strftime("%a, %e %b %Y")
-      field = page.find_field('lot_expires_at')
+      expected_date = 1.month.from_now.change(day: 15).strftime("%a, %e %b %Y")
+      datepicker = Dom::DatePicker.open('lot_expires_at')
+      datepicker.click_next
+      datepicker.click_day('15')
 
-      field.click
-      click_link "15"
-
-      expect(field.value).to eq(expected_date)
+      expect(find_field('lot_expires_at').value).to eq(expected_date)
 
       click_button "Save"
 
       expect(page).to have_content("Lot # can't be blank when 'Expiration Date' is present")
-      expect(field.value).to eq(expected_date)
+      expect(find_field('lot_expires_at').value).to eq(expected_date)
     end
   end
 end
