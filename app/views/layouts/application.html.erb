@@ -3,32 +3,33 @@
 <head>
   <meta charset="utf-8">
   <title>LocalOrbit</title>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>
   <%= stylesheet_link_tag "application", media: "all" %>
+  <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300|Open+Sans+Condensed:700' rel='stylesheet' type='text/css'>
+  
   <%= csrf_meta_tags %>
 </head>
 <body>
 
   <div class="page-content">
-    <header id="top">
-      <div class="header-content">
+    <header class="l-app-header" id="top">
+      <div class="l-constraint">
         <% if current_user %>
-        <p>
-          Farm Fresh Market
+        <p class="header header--welcome">
+          Farm Fresh Market — Connecting Farm to Market
+          <span class="welcome-user">Welcome Erika</span>
         </p>
-        <ul>
-          <li class="welcome">Welcome Erika!</li>
-          <li><%= link_to 'Dashboard', dashboard_path %></li>
-          <li><a href="#" class="cart">Cart  <span>3</span></a></li>
-          <li><a href="#">Help</a></li>
-          <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+        <ul class="l-inline-list nav nav--app">
+          <li><%= link_to 'Dashboard', dashboard_path %></li
+          ><li><a href="#" class="cart">Cart <span class="counter">3</span></a></li
+          ><li><a href="#">Help</a></li
+          ><li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
         </ul>
         <% else %>
         <p></p>
         <% end %>
       </div>
     </header>
-    <div class="work-space">
+    <div class="l-constraint l-main">
       <% if notice %>
         <p class="notice"><%= notice %></p>
       <% end %>
@@ -37,9 +38,30 @@
         <p class="alert"><%= alert %></p>
       <% end %>
 
+      <%= link_to_unless_current "Logo", "/", class: "logo pull-left" %>
+
+      <div class="nav nav--main pull-right">
+        <%= link_to_unless_current "Shop", "#", class: "" %>
+        <%= link_to_unless_current "Sellers", "#", class: "" %>
+        <%= link_to_unless_current "Market Info", "#", class: "" %>
+      </div>
+
+      <ul class="l-inline-list nav nav--primary clear-before">
+        <li><a href="#" class="caretted"><i class="font-icon icon-large" data-icon="&#xe054;"></i>Market Admin</a></li>
+        <li><a href="#"><i class="font-icon icon-large" data-icon="&#xe00f;"></i>Financials</a></li>
+        <li><a href="#" class="caretted"><i class="font-icon icon-large" data-icon="&#xe024;"></i>Products &amp; Delivery</a></li>
+        <li><a href="#" class="caretted"><i class="font-icon icon-large" data-icon="&#xe005;"></i>Marketing</a></li>
+        <li><a href="#" class="caretted"><i class="font-icon icon-large" data-icon="&#xe01e;"></i>Reports</a></li>
+        <li><a href="#" class="caretted"><i class="font-icon icon-large" data-icon="&#xe011;"></i>Account</a></li>
+      </ul>
+
       <%= yield %>
     </div>
-    <footer>Beep</footer>
+    <footer class="l-app-footer">
+      <div class="l-constraint">
+        Beep
+      </div>
+    </footer>
   </div>
 
   <%= javascript_include_tag "application" %>

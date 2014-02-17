@@ -1,0 +1,47 @@
+@import "mixins.css.scss";
+
+.clear-before {
+  clear: both;
+}
+
+.pull-right {
+  float: right;
+}
+
+.pull-left {
+  float: left;
+}
+
+.l-constraint,
+.column,
+.row {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.l-constraint {
+  max-width: 960px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.l-app-header {
+  color: #fff;
+  @include gradient(#3f5d99, #4567aa);
+  font-size: 14px;
+}
+
+.l-main {
+  min-height: 95vh;
+  padding: 20px;
+  background: #fff;
+}
+
+.l-inline-list {
+  padding: 0;
+
+  > li {
+    display: inline-block;
+  }
+}
