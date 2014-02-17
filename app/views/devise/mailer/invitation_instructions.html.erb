@@ -1,8 +1,13 @@
-<p>Hello!</p>
+<%= organization_name = @resource.organizations.first.try(:name) || "Local Orbit" %>
+<h1>Join <%= organization_name %> today!</h1>
+<p>
+  Hello! You have been invited to join <%= organization_name %> by a member of your organization.
+</p>
 
-<p><%= @resource.invited_by.name %> has invited you to join <%= @resource.organizations.first.try(:name) || "Local Orbit" %> on Local Orbit, you can accept this invitation through the link below.</p>
-
-<p><%= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @token) %></p>
-
-<p>If you don't want to accept the invitation, please ignore this email.<br />
-Your account won't be created until you access the link above and set your password.</p>
+<div class="lo_call_to_action">
+  <%= link_to "Join #{organization_name}", accept_invitation_url(@resource, :invitation_token => @token) %>
+  <p>
+    If clicking the button doesn't work, right click it and copy the link.<br>
+    After you've copied it, paste it into a new browser window.
+  </p>
+</div>
