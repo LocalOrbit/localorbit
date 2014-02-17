@@ -70,6 +70,23 @@ module Dom
     end
   end
 
+  class DatePicker < Domino
+    selector ".ui-datepicker"
+
+    def self.open(field_id)
+      Capybara.current_session.find_field(field_id).click
+      first
+    end
+
+    def click_next
+      node.find('a[title="Next"]').click
+    end
+
+    def click_day(day)
+      node.find('.ui-datepicker-calendar').click_link(day)
+    end
+  end
+
   module Admin
     class OrganizationLocation < Domino
       selector "tbody tr"
