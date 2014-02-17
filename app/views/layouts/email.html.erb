@@ -265,7 +265,7 @@
     <div class="lo_content">
     <!-- Content Header -->
       <% if @market %>
-      <a href="#" class="lo_visit_link">Visit the Market ➙</a>
+      <a href="<%= root_url %>" class="lo_visit_link">Visit the Market ➙</a>
       <table class="lo_content_header">
         <tr>
           <td>
@@ -276,6 +276,15 @@
           </td>
         </tr>
       </table>
+      <% else %>
+      <a href="<%= root_url %>" class="lo_visit_link">Visit Local Orbit ➙</a>
+      <table class="lo_content_header">
+        <tr>
+          <td>
+            <a href="<%= root_url %>"><%= image_tag 'logo.png', alt: "Local Orbit", class: "lo_org_logo" %></a>
+          </td>
+        </tr>
+      </table> 
       <% end %>
 
       <%= yield %>
