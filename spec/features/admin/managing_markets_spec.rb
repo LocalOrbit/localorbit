@@ -133,7 +133,7 @@ describe "Admin Managing Markets" do
       visit '/dashboard'
 
       @market2 = create(:market)
-      click_link 'Markets'
+      click_link 'Markets', match: :first
 
       expect(page).to have_text('Markets')
       expect(page).to have_text(market.name)

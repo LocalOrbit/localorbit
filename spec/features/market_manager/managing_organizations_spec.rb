@@ -11,7 +11,7 @@ describe "A Market Manager" do
 
   describe "Adding an organization" do
     it "with valid information" do
-      click_link 'Organizations'
+      click_link 'Organizations', match: :first
       click_link 'Add Organization'
 
       fill_in 'Name', with: 'Famous Farm'
@@ -28,7 +28,7 @@ describe "A Market Manager" do
       end
 
       it "with valid information" do
-        click_link 'Organizations'
+        click_link 'Organizations', match: :first
         click_link 'Add Organization'
 
         fill_in 'Name', with: 'Famous Farm'
@@ -41,7 +41,7 @@ describe "A Market Manager" do
 
       context "without selecting a market" do
         it "doesn't add the new organization" do
-          click_link 'Organizations'
+          click_link 'Organizations', match: :first
           click_link 'Add Organization'
           fill_in 'Name', with: 'Dairy Farms Co-op'
           click_button 'Add Organization'
@@ -72,7 +72,7 @@ describe "A Market Manager" do
     end
 
     it "allows updating all attributes" do
-      click_link 'Organizations'
+      click_link "Organizations", match: :first
       click_link "Fresh Pumpkin Patch"
       click_link "Edit Organization"
 
@@ -86,7 +86,7 @@ describe "A Market Manager" do
     end
 
     it "does not allow updates with a blank organization name" do
-      click_link 'Organizations'
+      click_link "Organizations", match: :first
       click_link "Fresh Pumpkin Patch"
       click_link "Edit Organization"
 
@@ -102,7 +102,7 @@ describe "A Market Manager" do
       end
 
       it "cannot change the market of an organizaiton" do
-        click_link 'Organizations'
+        click_link "Organizations", match: :first
         click_link "Fresh Pumpkin Patch"
         click_link "Edit Organization"
 
@@ -121,9 +121,9 @@ describe "A Market Manager" do
 
     context "when the user is not yet a member" do
       it "sends an email to a recipient inviting them to join an organization" do
-        click_link 'Organizations'
+        click_link "Organizations", match: :first
         click_link "Holland Farms"
-        click_link "Users"
+        click_link "Users", match: :first
 
         within("#new_user") do
           fill_in "Email", with: "susan@example.com"
@@ -144,9 +144,9 @@ describe "A Market Manager" do
       end
 
       it "show an error message" do
-        click_link 'Organizations'
+        click_link "Organizations", match: :first
         click_link "Holland Farms"
-        click_link "Users"
+        click_link "Users", match: :first
 
         within("#new_user") do
           fill_in "Email", with: user.email
@@ -159,9 +159,9 @@ describe "A Market Manager" do
 
     context "when no email has been entered" do
       it "show an error message" do
-        click_link 'Organizations'
+        click_link "Organizations", match: :first
         click_link "Holland Farms"
-        click_link "Users"
+        click_link "Users", match: :first
 
         within("#new_user") do
           fill_in "Email", with:""
@@ -174,9 +174,9 @@ describe "A Market Manager" do
 
     context "when an invalid email address has been entered" do
       it "show an error message" do
-        click_link 'Organizations'
+        click_link "Organizations", match: :first
         click_link "Holland Farms"
-        click_link "Users"
+        click_link "Users", match: :first
 
         within("#new_user") do
           fill_in "Email", with:"asdfasdfasdfasdfasd"
