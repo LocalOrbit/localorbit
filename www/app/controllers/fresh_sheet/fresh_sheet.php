@@ -201,6 +201,7 @@ class core_controller_fresh_sheet extends core_controller
     		'(addresses.region_id=dcr.region_id)',
     		array('code as state')
     	)->collection()->filter('organizations.is_deleted', '=', 0)->filter('customer_entity.is_deleted', '=', 0)
+      ->filter('customer_entity.send_freshsheet', '=', 1)
       ->filter('domains.domain_id', '=', $domain_id);
     return $customers;
   }
