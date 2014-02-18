@@ -157,7 +157,7 @@ class core_controller_fresh_sheet extends core_controller
 			}
 			$html .='</table>';
 		}
-		$html .= core_email::footer();
+		$html .= core_email::footer("");
 		
 		if($has_prods)
 		{

@@ -122,7 +122,7 @@ class core_controller_newsletters extends core_controller
     }
 
     $html .= $newsletter['body'];
-    $html .= core_email::footer();
+    $html .= core_email::footer("");
     return $html;
   }
 
