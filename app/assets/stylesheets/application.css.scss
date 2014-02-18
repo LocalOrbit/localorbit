@@ -30,6 +30,10 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+
+  img {
+    border: 0;
+  }
 }
 
 .hidden {

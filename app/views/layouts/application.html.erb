@@ -38,7 +38,7 @@
         <p class="alert"><%= alert %></p>
       <% end %>
 
-      <%= link_to_unless_current "Logo", "/", class: "logo pull-left" %>
+      <%= link_to_unless_current image_tag(asset_path('logo-farm-to-fork.png'), class: "logo"), "/", class: "logo-link pull-left" %>
 
       <div class="nav nav--main pull-right">
         <%= link_to_unless_current "Shop", "#", class: "" %>
