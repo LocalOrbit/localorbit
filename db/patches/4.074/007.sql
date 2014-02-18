@@ -1,5 +1,5 @@
 
-INSERT INTO migrations (tag, version_id, pt_ticket_no) VALUES ('4.074', '001', '65824692');
+INSERT INTO migrations (tag, version_id, pt_ticket_no) VALUES ('4.074', '007', '65824692');
 
 alter table customer_entity add send_newsletter tinyint(1) default 1;
 alter table customer_entity add send_freshsheet tinyint(1) default 1;
