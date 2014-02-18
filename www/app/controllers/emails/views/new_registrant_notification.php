@@ -13,6 +13,7 @@ $values = array(
 core::log('tryign to send email from domain '.$values['domain_id']);
 $values['hub_name'] = core_db::col('select name from domains where domain_id='.$values['domain_id'],'name');
 core::log('domain name is '.$values['hub_name']);	
+$auto_activate = core_db::col('SELECT autoactivate_organization FROM domains where domain_id='.$values['domain_id'],'autoactivate_organization');
 
 $body  = $this->email_start($values['domain_id']);
 $body .= $this->handle_source('<h1>You\'re growing!</h1>
@@ -29,9 +30,11 @@ $body .= $this->handle_source('<h1>You\'re growing!</h1>
       <dl>
         <dt>Email:</dt>
         <dd>{email}</dd>
-      </dl>
+      </dl>',$values);
 
-      <p>Here is how to activate this new organization:</p>
+if (!$auto_activate) {
+  $body .= $this->handle_source(
+      '<p>Here is how to activate this new organization:</p>
 
       <table class="lo_steps">
         <tr>
@@ -60,6 +63,7 @@ $body .= $this->handle_source('<h1>You\'re growing!</h1>
           </td>
         </tr>
       </table>',$values);
+}
 $body .= $this->email_end();
 
 $market_manager = core::model('domains')->get_domain_info($values['domain_id']);
