@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.1.0'
 
-gem 'rails', '4.0.2'
+gem 'rails', '4.1.0.rc1'
 
 gem 'pg'
 
@@ -26,6 +26,10 @@ gem 'jquery-ui-rails'
 
 group :doc do
   gem 'sdoc', require: false
+end
+
+group :development do
+  gem 'spring'
 end
 
 group :development, :test do

@@ -1,15 +1,10 @@
 require File.expand_path('../boot', __FILE__)
 
-# Pick the frameworks you want:
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "sprockets/railtie"
-# require "rails/test_unit/railtie"
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env)
+Bundler.require(*Rails.groups)
 
 module LocalOrbit
   class Application < Rails::Application
@@ -22,16 +17,6 @@ module LocalOrbit
     # config.time_zone = 'Central Time (US & Canada)'
 
     config.autoload_paths += %W(#{config.root}/lib)
-
-    # Set this accordingly:
-    # false:
-    #   - want to skip the locale validation
-    #   - don't care about locales
-    # true:
-    #   - want the application to raise an error if an invalid locale is passed
-    #   - want to default to the new Rails behaviors
-    #   - care about locale validation
-    config.i18n.enforce_available_locales = false
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
