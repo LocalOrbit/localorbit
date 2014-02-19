@@ -8,7 +8,7 @@
   
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body style="background-image: url(<%= asset_url 'backgrounds/kale.jpg' %>);">
 
   <div class="page-content">
     <header class="l-app-header" id="top">
@@ -66,7 +66,7 @@
             <ul class="dropdown with-anchor top-anchor" id="products-dropdown">
               <li><a href="#"><i class="font-icon" data-icon="&#xe025;"></i>Orders</a></li>
               <li><a href="#"><i class="font-icon" data-icon="&#xe02d;"></i>Sold Items</a></li>
-              <li><a href="#"><i class="font-icon" data-icon="&#xe01f;"></i>Products</a></li>
+              <li><%= link_to raw('<i class="font-icon" data-icon="&#xe01f;"></i>Products</a>'), admin_products_path %></li>
               <li><a href="#"><i class="font-icon" data-icon="&#xe035;"></i>Units</a></li>
             </ul>
           </li>
