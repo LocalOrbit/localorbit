@@ -144,7 +144,7 @@ class core_controller_fresh_sheet extends core_controller
 							<dl>
 								<dt>'.$prod['name'].'</dt>
 								<dd>'.$prod['single_unit'].'</dd>
-								<dd>'.$prod['org_name'].'</dd>
+								<dd>&nbsp;&nbsp;&nbsp;&nbsp;<em>'.$prod['org_name'].'</em></dd>
 							</dl>
 						</th>
 						<td>
