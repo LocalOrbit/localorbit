@@ -134,12 +134,14 @@ class core_controller_fresh_sheet extends core_controller
 				$html .= '<h3>'.$cur_cat[2].'</h3>';
 			}
 			
+			$cycle = "odd";
 			$html .= '<table class="lo_fresh_sheet">';
 			foreach($prods as $prod)
 			{
 				$product_url = 'https://'.$domain['hostname'].'/app.php#!catalog-view_product--prod_id-'.$prod['prod_id'];
+
 				$html .= '
-					<tr>
+					<tr class="'.$cycle.'">
 						<th scope="row">
 							<dl>
 								<dt>'.$prod['name'].'</dt>
@@ -156,6 +158,7 @@ class core_controller_fresh_sheet extends core_controller
 				$html .= '</td>
 					</tr>';
 				
+				$cycle = ($cycle == "odd" ? "even" : "odd");
 				$has_prods = true;
 			}
 			$html .='</table>';

@@ -234,7 +234,7 @@ class core_email
       border-collapse: collapse;
       margin: 0 0 25px;
     }
-      table.lo_fresh_sheet tr:nth-child(odd) {
+      table.lo_fresh_sheet tr.odd {
         background: #eee;
       }
       table.lo_fresh_sheet td,
@@ -264,7 +264,7 @@ class core_email
         font-weight: bold;
         line-height: 1.7;
       }
-      table.lo_order tbody tr:nth-child(odd) {
+      table.lo_order tbody tr.odd {
         background: #f7f7f7;
       }
       th.lo_vendor {
