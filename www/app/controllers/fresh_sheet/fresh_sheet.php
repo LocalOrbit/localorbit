@@ -149,8 +149,11 @@ class core_controller_fresh_sheet extends core_controller
 						</th>
 						<td>
 							<span class="lo_availability">'.intval($prod['inventory']).' Available</span><br>
-							<a href="'.$product_url.'" class="lo_add_link">Add to Order</a>
-						</td>
+							<a href="'.$product_url.'" class="lo_add_link">Add to Order</a>';
+				if($show_edit_links) {
+					$html .= '<br><a href="#!products-edit--prod_id-'.$prod['prod_id'].'" class="lo_button">Edit Product</a>';
+				}
+				$html .= '</td>
 					</tr>';
 				
 				$has_prods = true;
