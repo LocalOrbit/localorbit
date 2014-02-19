@@ -14,17 +14,26 @@
  *= require jquery.ui.datepicker
  */
 
-@import "base-styles";
-@import "sign-in";
-
 
 body {
-  background-image: image-url('kale-bg.jpg');
-  background-size: cover;
-  margin: 0;
-  padding: 0;
   height: 100vh;
   min-height: 100%;
+  padding: 0;
+  margin: 0;
+  background-image: image-url('kale-bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: OpenSans, "Open Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  img {
+    border: 0;
+  }
 }
 
 .hidden {

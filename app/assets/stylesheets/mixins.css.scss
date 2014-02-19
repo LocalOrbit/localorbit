@@ -1,0 +1,21 @@
+
+@mixin border-radius($rtl, $rtr, $rbr, $rbl) {
+  -webkit-border-radius: $rtl, $rtr, $rbr, $rbl;
+     -moz-border-radius: $rtl, $rtr, $rbr, $rbl;
+          border-radius: $rtl, $rtr, $rbr, $rbl;
+}
+
+@mixin border-radius($r) {
+  -webkit-border-radius: $r;
+     -moz-border-radius: $r;
+          border-radius: $r;
+}
+
+@mixin gradient($top, $bottom) {
+  background: #2f4789;
+  background:   -moz-linear-gradient(top, $top, $bottom);
+  background:-webkit-linear-gradient(top, $top, $bottom);
+  background:     -o-linear-gradient(top, $top, $bottom);
+  background:    -ms-linear-gradient(top, $top, $bottom);
+  background:        linear-gradient(top, $top, $bottom);
+}

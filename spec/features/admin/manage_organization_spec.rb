@@ -11,7 +11,7 @@ describe "admin manange organization" do
     create(:market, name: "Market 1")
     create(:market, name: "Market 2")
 
-    click_link "Organizations"
+    click_link "Organizations", match: :first
     click_link "Add Organization"
 
     select "Market 2", from: "Market"
@@ -32,7 +32,7 @@ describe "admin manange organization" do
     it "lists locations" do
       location = create(:location, :default_billing, :decorated, organization: organization)
 
-      click_link "Organizations"
+      click_link "Organizations", match: :first
       click_link "University of Michigan Farmers"
 
       click_link "Addresses"
@@ -46,7 +46,7 @@ describe "admin manange organization" do
     end
 
     it "add new location" do
-      click_link "Organizations"
+      click_link "Organizations", match: :first
       click_link "University of Michigan Farmers"
 
       click_link "Addresses"
@@ -75,7 +75,7 @@ describe "admin manange organization" do
       create(:location, organization: organization)
       location_2 = create(:location, organization: organization)
 
-      click_link "Organizations"
+      click_link "Organizations", match: :first
       click_link "University of Michigan Farmers"
 
       click_link "Addresses"
@@ -96,7 +96,7 @@ describe "admin manange organization" do
       location_1 = create(:location, organization: organization)
       location_2 = create(:location, organization: organization)
 
-      click_link "Organizations"
+      click_link "Organizations", exact: false
       click_link "University of Michigan Farmers"
 
       click_link "Addresses"
@@ -141,7 +141,7 @@ describe "admin manange organization" do
     it "update location information" do
       create(:location, :default_billing, organization: organization, name: "Original Name")
 
-      click_link "Organizations"
+      click_link "Organizations", match: :first
       click_link "University of Michigan Farmers"
 
       click_link "Addresses"

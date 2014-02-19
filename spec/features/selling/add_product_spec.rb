@@ -218,7 +218,7 @@ describe "Adding a product" do
       market.organizations << org2
 
       sign_in_as(user)
-      click_link "Products"
+      click_link "Products", match: :first
       click_link "Add a product"
     end
 
