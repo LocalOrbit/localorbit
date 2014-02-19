@@ -13,9 +13,9 @@ li { list-style:inherit; }
 <a href="http://cherrycapitalfoods.com"><img src="img/hubcamp/cherrycapital.gif" width="85" height="60" style="vertical-align:middle;;margin:0 8px" /></a> &nbsp;
 <a href="http://www.lawweathers.com"><img src="img/hubcamp/lawweathers.gif" width="187" height="22" style="vertical-align:middle;" /></a></p><br /><br /> */ ?>
 
-<p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php?location=LA" class="btn btn_blue">Apply for Los Angeles, CA</a> &nbsp; March 16 - 18, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://www.uepi.oxy.edu"><img src="img/hubcamp/uepi.gif" width="112" height="60" style="vertical-align:middle;margin:0 15px" /></a> <a href="http://www.seedstock.com"><img src="img/hubcamp/seedstock.png" width="158" height="35" style="vertical-align:middle;margin:0 15px" /></a></p><br /><br />
+<p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php?location=LA" class="btn btn_blue">Apply for Los Angeles, CA</a> &nbsp; March 16 - 18, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://www.uepi.oxy.edu"><img src="img/hubcamp/uepi.gif" width="112" height="60" style="vertical-align:middle;margin:0 15px" /></a> <a href="http://www.seedstock.com"><img src="img/hubcamp/seedstock.png" width="158" height="35" style="vertical-align:middle;margin:0 15px" /></a><br />The training will be at Occidental College. Apply by February 27. Only a few spots left!</p><br /><br />
 
-<p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php?location=Davis" class="btn btn_blue">Apply for Davis, CA</a> &nbsp; April 27 - 29, 2014</p><br /><br />
+<p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php?location=Davis" class="btn btn_blue">Apply for Davis, CA</a> &nbsp; April 27 - 29, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://ucanr.edu/sites/BFRSOCO/Beginning_Farmer_Rancher_Program/"><img src="img/hubcamp/ucce.png" width="270" height="58" style="vertical-align:middle;margin:0 15px" /></a><br />The training will be at N Street Common House. Apply by April 8.</p><br /><br />
 
 More Hub Camps, helping more people build local food distribution businesses, coming later in 2014!<br />
 <br /><br />
@@ -29,16 +29,16 @@ More Hub Camps, helping more people build local food distribution businesses, co
   <li>Work through your unique challenges with farmer development, buyer education, finance, food safety, logistics, operations and storytelling.</li>
   <li>Three hands-on days with experienced operators who have launched and managed supply chain businesses.</li>
   <li>To maximize impact attendance is limited to 15 participants.</li>
-  <li>Note: Hub Camp is focused on operating a local food distribution business, and will not focus on technology. If you are looking for more information about Local Orbit’s technology services, we have <a href="demo.php">weekly live demos</a> you can attend.</li>
+  <li>Note: Hub Camp is focused on operating a local food distribution business, and will not focus on technology. If you are looking for more information about Local Orbit’s technology services, we have <a href="https://www.localorb.it/field-notes/schedule-a-demo/">weekly live demos</a> you can attend.</li>
 </ul>
 <br /><br />
 <h2>The Experience &amp; Advice to Get You Going</h2>
 <ul>
-  <li><strong>Noah Fulmer</strong>, the director of training and capacity building at Local Orbit, is the former operator and co-founder of Farm Fresh Rhode Island, a wholesale food hub that aggregates and delivers $2 million in produce from 60 local farmers to 120 buyers each year. </li>
+  <li><strong>Noah Fulmer</strong>, the director of training and capacity building at Local Orbit, is the former operator and co-founder of Farm Fresh Rhode Island, a wholesale food hub that aggregates and delivers  produce, dairy, meat and dry goods from 60 local farmers and producers to 100 buyers each week. </li>
   <li><strong>Erika Block</strong>, CEO of Local Orbit, which supports diverse local distribution models across the country. Erika brings unique perspective on best practices and challenges within this emerging sector, and she’s also built and managed two start-up businesses.</li>
 	<li>LA: <strong>Dwight Detter and Kimberly Albright</strong> lead Whole Foods' local sourcing initiatives in Southern California. They have a wealth of experience developing regional supply chains and working with local producers to meet the quality and food safety standards of a major grocery store.</li>
-	<li>LA: <strong>Amy Andrews Muñoz</strong> is associate vice president for hospitality services at Occidental College in Los Angeles. She is responsible for auxiliary departments, including campus dining. She oversees food purchases exceeding $3.5 million annually, of which approximately 25% represent good food purchasing practices – local, ecologically sound, humane and/or fair trade.  Amy has been with Occidental for 29 years.</li>
-	<li>LA: <strong>Chef Theresa Wahl</strong> is the owner of Auntie Em's Kitchen, Catering and Marketplace in Los Angeles. She also runs a CSA delivery program out of Auntie Em's. All of these ventures source directly from producers at local farmers markets. Look for her cookbook coming out in June called "Auntie Em's Kitchen Cookbook".</li>
+    <li>LA: <strong>Amy Andrews Muñoz</strong> is associate vice president for hospitality services at Occidental College in Los Angeles. Amy is responsible for auxiliary departments, including campus dining. She oversees food purchases exceeding $3.5 million annually, of which approximately 25% represent good food purchasing practices – local, ecologically sound, humane and/or fair trade.  Amy has been with Occidental for 29 years.</li>
+	<li>LA: <strong>Chef Theresa Wahl</strong> is the owner of Auntie Em's Kitchen, Catering and Marketplace in Los Angeles. Theresa also runs a CSA delivery program out of Auntie Em's. All of these ventures source directly from producers at local farmers markets. Look for her cookbook coming out in June called "Auntie Em's Kitchen Cookbook".</li>
   <li><strong> Plus:</strong> Topic experts on food safety, finance &amp; legal issues</li>
 </ul>
 <br /><br />
