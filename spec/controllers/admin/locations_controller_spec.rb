@@ -34,8 +34,8 @@ module Admin
 
     describe "#create" do
       before do
-        Location.any_instance.stub(:save) { true }
-        controller.stub(:location_params)
+        allow_any_instance_of(Location).to receive(:save) { true }
+        allow(controller).to receive(:location_params)
       end
 
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
@@ -51,8 +51,8 @@ module Admin
 
     describe "#update" do
       before do
-        Location.any_instance.stub(:update_attributes) { true }
-        controller.stub(:location_params)
+        allow_any_instance_of(Location).to receive(:update_attributes) { true }
+        allow(controller).to receive(:location_params)
       end
 
       it_behaves_like "an action restricted to admin, market manager, member", lambda {

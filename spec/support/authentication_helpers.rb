@@ -1,7 +1,7 @@
 module AuthenticationHelpers
   def sign_in_as(user, password = 'password')
 
-    case example.metadata[:type]
+    case RSpec.current_example.metadata[:type]
     when :request
       post user_session_path, user: {email: user.email, password: password}
     when :feature
