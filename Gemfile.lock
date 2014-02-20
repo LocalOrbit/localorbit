@@ -1,4 +1,23 @@
 GIT
+  remote: git://github.com/bmabey/email-spec.git
+  revision: b21a2b340a92e89f993121bcfe74b4f9b885e918
+  specs:
+    email_spec (1.5.0)
+      launchy (~> 2.1)
+      mail (~> 2.2)
+
+GIT
+  remote: git://github.com/jnicklas/capybara.git
+  revision: 77320df5b5d8b64581afe07b5033d2aa6a66d22c
+  specs:
+    capybara (2.2.0)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
+
+GIT
   remote: git://github.com/laserlemon/figaro.git
   revision: e16f2d47f6516e8420ce21c9de76785d9f244bae
   specs:
@@ -42,12 +61,6 @@ GEM
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
     builder (3.2.2)
-    capybara (2.2.1)
-      mime-types (>= 1.16)
-      nokogiri (>= 1.3.3)
-      rack (>= 1.0.0)
-      rack-test (>= 0.5.4)
-      xpath (~> 2.0)
     chunky_png (1.3.0)
     cliver (0.3.2)
     codeclimate-test-reporter (0.3.0)
@@ -94,9 +107,6 @@ GEM
       activemodel (>= 3.0)
       activesupport (>= 3.0)
       request_store (~> 1.0.3)
-    email_spec (1.5.0)
-      launchy (~> 2.1)
-      mail (~> 2.2)
     erubis (2.7.0)
     execjs (2.0.2)
     factory_girl (4.4.0)
@@ -246,7 +256,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  capybara
+  capybara!
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
   compass-rails
@@ -257,7 +267,7 @@ DEPENDENCIES
   devise_invitable
   domino
   draper
-  email_spec
+  email_spec!
   factory_girl_rails
   figaro!
   honeybadger
