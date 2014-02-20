@@ -113,6 +113,15 @@
         font-weight: bold;
         text-align: right;
       }
+      h2.pull-left {
+        float: left;
+      }
+      h3.clear {
+        clear: both;
+      }
+      a.pull-right {
+        float: right;
+      }
       div.lo_blockquote_wrapper {
         position: relative;
         padding: 25px;
@@ -183,7 +192,7 @@
       border-collapse: collapse;
       margin: 0 0 25px;
     }
-      table.lo_fresh_sheet tr:nth-child(odd) {
+      table.lo_fresh_sheet tr.odd {
         background: #eee;
       }
       table.lo_fresh_sheet td,
@@ -213,7 +222,7 @@
         font-weight: bold;
         line-height: 1.7;
       }
-      table.lo_order tbody tr:nth-child(odd) {
+      table.lo_order tbody tr.odd {
         background: #f7f7f7;
       }
       th.lo_vendor {
@@ -286,13 +295,13 @@
         mustard. Sierra leone bologi brussels sprout epazote.
       </p>
 
-      <h2>Fruits</h2>
-      <a href="#" class="lo_button">Shop Now</a>
+      <h2 class="pull-left">Fruits</h2>
+      <a href="#" class="lo_button pull-right">Shop Now</a>
 
-      <h3>Strawberries</h3>
+      <h3 class="clear">Strawberries</h3>
 
       <table class="lo_fresh_sheet">
-        <tr>
+        <tr class="odd">
           <th scope="row">
             <dl>
               <dt>Heirloom Stawberries</dt>
@@ -310,7 +319,7 @@
       <h3>Citrus Fruit</h3>
 
       <table class="lo_fresh_sheet">
-        <tr>
+        <tr class="odd">
           <th scope="row">
             <dl>
               <dt>Grapefruit</dt>
@@ -338,14 +347,14 @@
         </tr>
       </table>
 
-      <h2>Vegetables</h2>
+      <h2 class="pull-left">Vegetables</h2>
 
-      <a href="#" class="lo_button">Shop Now</a>
+      <a href="#" class="lo_button pull-right">Shop Now</a>
 
-      <h3>Root Vegetables</h3>
+      <h3 class="clear">Root Vegetables</h3>
 
       <table class="lo_fresh_sheet">
-        <tr>
+        <tr class="odd">
           <th scope="row">
             <dl>
               <dt>Beets (Red)</dt>
@@ -371,7 +380,7 @@
             <a href="#" class="lo_add_link">Add to Order</a>
           </td>
         </tr>
-        <tr>
+        <tr class="odd">
           <th scope="row">
             <dl>
               <dt>Potatoes (Red)</dt>
