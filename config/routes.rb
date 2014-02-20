@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :dashboard, controller: "dashboard"
+  resource :dashboard
 
   resources :organizations, only: [] do
     resources :locations, only: [:index]
