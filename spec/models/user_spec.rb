@@ -10,7 +10,7 @@ describe User do
         let(:user) { create(:user, role: 'admin') }
 
         it "returns true" do
-          expect(user.can_manage_organization?(org)).to be_true
+          expect(user.can_manage_organization?(org)).to be true
         end
       end
 
@@ -24,13 +24,13 @@ describe User do
           end
 
           it "returns true" do
-            expect(market_manager.can_manage_organization?(org)).to be_true
+            expect(market_manager.can_manage_organization?(org)).to be true
           end
         end
 
         context "and the org is not in their managed market" do
           it "returns false" do
-            expect(market_manager.can_manage_organization?(org)).to be_false
+            expect(market_manager.can_manage_organization?(org)).to be false
           end
         end
       end
@@ -39,7 +39,7 @@ describe User do
         let(:user) { create(:user, role: 'user') }
 
         it "returns false" do
-          expect(user.can_manage_organization?(org)).to be_false
+          expect(user.can_manage_organization?(org)).to be false
         end
       end
     end
@@ -47,19 +47,19 @@ describe User do
     it 'admin? returns true if role is "admin"' do
       user = build(:user)
       user.role = 'admin'
-      expect(user.admin?).to be_true
+      expect(user.admin?).to be true
     end
 
     it 'admin? returns false if role is not "admin"' do
       user = build(:user)
       user.role = 'user'
-      expect(user.admin?).to be_false
+      expect(user.admin?).to be false
 
       user.role = 'manager'
-      expect(user.admin?).to be_false
+      expect(user.admin?).to be false
 
       user.role = 'something else'
-      expect(user.admin?).to be_false
+      expect(user.admin?).to be false
     end
   end
 

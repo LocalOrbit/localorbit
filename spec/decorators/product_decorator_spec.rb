@@ -5,25 +5,25 @@ describe ProductDecorator do
     it "returns false if the product has no custom seller info" do
       product = build(:product, :decorated)
 
-      expect(product.has_custom_seller_info?).to be_false
+      expect(product.has_custom_seller_info?).to be false
     end
 
     it "returns true if the product has a custom who story" do
       product = build(:product, :decorated, who_story: "who")
 
-      expect(product.has_custom_seller_info?).to be_true
+      expect(product.has_custom_seller_info?).to be true
     end
 
     it "returns true if the product has a custom how story" do
       product = build(:product, :decorated, how_story: "how")
 
-      expect(product.has_custom_seller_info?).to be_true
+      expect(product.has_custom_seller_info?).to be true
     end
 
     it "returns true if the product has a custom location" do
       product = build(:product, :decorated, location_id: 1)
 
-      expect(product.has_custom_seller_info?).to be_true
+      expect(product.has_custom_seller_info?).to be true
     end
   end
 
