@@ -96,7 +96,7 @@ class core_controller_newsletters extends core_controller
 				foreach($customers as $customer) {
 					$emails[] = $customer['email'];
 				}
-				core_email::send($emails,$html,array(),$market_manager['email'],$market_manager['name']);
+				core_email::send($nl['title'], $emails,$html,array(),$market_manager['email'],$market_manager['name']);
 				core::log("Successfully sent real campaign\n");
 				core_ui::notification('newsletter sent');
 			}
@@ -215,7 +215,7 @@ class core_controller_newsletters extends core_controller
     	)->collection()->filter('organizations.is_deleted', '=', 0)->filter('customer_entity.is_deleted', '=', 0)
       ->filter('customer_entity.send_newsletter', '=', 1)
       ->filter('domains.domain_id', '=', $domain_id)
-      ->filter('customer_entity.allow_sell', 'IN', '['.implode(',', $allow_sell).']');
+      ->filter('organizations.allow_sell', 'in', $allow_sell);
     return $customers;
   }
 }
