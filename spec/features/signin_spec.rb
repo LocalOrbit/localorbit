@@ -24,7 +24,7 @@ feature "User signin" do
     jar = Capybara.current_session.driver.browser.current_session.instance_variable_get(:@rack_mock_session).cookie_jar
     jar.delete('_local_orbit_session')
 
-    visit "/"
+    visit new_user_session_path
     expect(page).to have_text("Dashboard")
     expect(page).to have_text("You are already signed in.")
   end
