@@ -164,6 +164,15 @@ class core_email
         font-weight: bold;
         text-align: right;
       }
+      h2.pull-left {
+        float: left;
+      }
+      h3.clear {
+        clear: both;
+      }
+      a.pull-right {
+        float: right;
+      }
       div.lo_blockquote_wrapper {
         position: relative;
         padding: 25px;

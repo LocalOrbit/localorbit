@@ -125,13 +125,13 @@ class core_controller_fresh_sheet extends core_controller
 			if($last_cat != trim($cur_cat[1])) {
 				$last_cat = trim($cur_cat[1]);
 				$cat_url = 'https://'.$domain['hostname'].'/app.php#!catalog-shop--cat1-'.$cat_names_by_name[$last_cat];
-				$html .='<h2>'.$cur_cat[1].'</h2><a href="'.$cat_url.'" class="lo_button">Shop Now</a>';
+				$html .='<h2 class="pull-left">'.$cur_cat[1].'</h2><a href="'.$cat_url.'" class="lo_button pull-right">Shop Now</a>';
 			}
 
 			// new cat 2
 			if($last_sub_cat != trim($cur_cat[2])) {
 				$last_sub_cat = trim($cur_cat[2]);
-				$html .= '<h3>'.$cur_cat[2].'</h3>';
+				$html .= '<h3 class="clear">'.$cur_cat[2].'</h3>';
 			}
 			
 			$cycle = "odd";
