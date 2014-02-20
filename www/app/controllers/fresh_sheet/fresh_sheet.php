@@ -56,6 +56,7 @@ class core_controller_fresh_sheet extends core_controller
 	function generate_html($domain_id, $show_edit_links=false)
 	{
 		global $core;
+		$domain =  core::model('domains')->load($core->data['domain_id']);
 
 		# Start HTML
 		$html = core_email::header($core->data['domain_id']);
@@ -65,7 +66,6 @@ class core_controller_fresh_sheet extends core_controller
 			  Hi! Welcome to this week\'s new Fresh Sheet.
 			</p>';
 
-		$domain =  core::model('domains')->load($core->data['domain_id']);
 		$prods = core::model('products')->get_catalog($domain_id,0)->sort('name');
 		$prods = $prods->to_array();
 		
