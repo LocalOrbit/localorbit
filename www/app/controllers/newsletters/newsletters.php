@@ -113,7 +113,7 @@ class core_controller_newsletters extends core_controller
   {
     global $core;
     $html = core_email::header($newsletter['domain_id']);
-    $html .= '<h1>'.$newsletter['header'].'</h1>';
+    $html .= '<h1 style="text-align: center;">'.$newsletter['header'].'</h1>';
 
     # see if there's a header image. if there is, add it.
     list($has_image,$webpath,$filepath) = $newsletter->get_image();
