@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  devise_scope :user do
-    get "/login" => "devise/sessions#new"
-  end
 
   namespace :admin do
     resources :markets do
@@ -25,11 +22,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :dashboard, controller: "dashboard"
+  resource :dashboard
 
   resources :organizations, only: [] do
     resources :locations, only: [:index]
   end
 
-  root to: redirect('/login')
+  root to: redirect('/dashboard')
 end

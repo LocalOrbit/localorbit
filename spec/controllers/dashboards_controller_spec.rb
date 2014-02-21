@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DashboardController do
+describe DashboardsController do
   it 'redirects to login if the user is not logged in' do
     get :show
 
