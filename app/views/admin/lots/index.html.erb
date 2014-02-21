@@ -38,6 +38,8 @@
     </tr>
   </thead>
 
+  <tbody>
+    
   <% @product.lots.select(&:persisted?).each do |lot| %>
     <%= content_tag_for :tr, lot do %>
       <td class="created_at"><%= lot.created_at.strftime('%m/%d/%Y') %></td>
@@ -59,7 +61,7 @@
         <td><%= link_to "Cancel", "javascript:void(0);", class:"cancel" %><%= f.submit "Save" %></td>
       <% end %>
     <% end %>
-  </thead>
+  </tbody>
   <% end %>
 </table>
 <% end %>
