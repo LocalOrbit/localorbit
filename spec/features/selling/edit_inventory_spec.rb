@@ -126,6 +126,15 @@ describe "Editing advanced inventory" do
           quantity_field = lot_row.node.find("#lot_#{lot.id}_quantity")
           expect(quantity_field.value).to eql("9999")
         end
+
+        it "allows the user cancel editing multiple times" do
+          click_link "Cancel"
+          expect(Dom::LotRow.first).not_to be_editable
+          Dom::LotRow.first.click
+          expect(Dom::LotRow.first).to be_editable
+          click_link "Cancel"
+          expect(Dom::LotRow.first).not_to be_editable
+        end
       end
 
     end

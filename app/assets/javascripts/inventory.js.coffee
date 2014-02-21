@@ -57,7 +57,7 @@ $ ->
 
     enableEditForRow($(this).attr('id').replace(/lot_/, ""))
 
-  $("#inventory_table tbody tr.fields_lot .cancel").on "click", ()->
+  $("#inventory_table tbody").on "click", 'tr.fields_lot .cancel', ()->
     # get the first 'tr' parent
     row = $(this).parents("tr")[0]
 
@@ -66,6 +66,8 @@ $ ->
     setFormActionAndMethod(newFormAction, "post")
 
     $(hiddenRow).show()
+    hiddenRow = null
+
     disableFields($(row).find("input"))
     $(row).hide()
     $(row).replaceWith(originalRowState)
