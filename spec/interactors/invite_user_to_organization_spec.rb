@@ -37,7 +37,7 @@ describe InviteUserToOrganization do
       open_email("frank@example.com")
 
       expect(current_email).to have_subject("You have been invited to Local Orbit")
-      expect(current_email).to have_body_text(/#{inviter.name} has invited you to join #{org.name} on Local Orbit./)
+      expect(current_email).to have_body_text("You have been invited to join #{org.name} by a member of your organization.")
     end
 
     it "Fails on an invalid email address" do
@@ -81,7 +81,7 @@ describe InviteUserToOrganization do
 
       open_email(user.email)
       expect(current_email).to have_subject("You have been added to an organization")
-      expect(current_email).to have_body_text(/#{inviter.name} has invited you to join #{org.name} on Local Orbit./)
+      expect(current_email).to have_body_text("You have been invited to join #{org.name} by a member of your organization.")
     end
 
     it "associates the user with the new organization" do
