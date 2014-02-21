@@ -4,6 +4,7 @@ describe "Editing advanced inventory" do
   let(:user) { create(:user) }
   let(:product){ create(:product, use_simple_inventory: false) }
   let!(:lot) { create(:lot, product:product, quantity: 93) }
+  let!(:lot2) { create(:lot, product:product, quantity: 88) }
 
   before do
     product.organization.users << user
@@ -39,6 +40,15 @@ describe "Editing advanced inventory" do
 
       expect(form['action']).to eql("/admin/products/#{product.id}/lots/#{lot.id}")
       expect(hidden_method.value).to eql("put")
+    end
+
+    describe "then clicking on another lot row" do
+      it "will not open the other lot row" do
+        Dom::LotRow.all.last.click
+
+        expect(Dom::LotRow.first).to be_editable
+        expect(Dom::LotRow.all.last).to_not be_editable
+      end
     end
 
     describe "then canceling" do
@@ -102,14 +112,21 @@ describe "Editing advanced inventory" do
           expect(page).to have_content("Successfully saved lot")
         end
 
-        it "hides the form"
-        it "shows the new lot form"
+        it "hides the form" do
+          expect(Dom::LotRow.first).to_not be_editable
+        end
+
+        it "shows the new lot form" do
+          expect(Dom::NewLotForm.first).to be_editable
+        end
       end
 
       context "lot is invalid" do
+        let(:expires_at_date) { 1.week.from_now }
+
         before do
           fill_in("lot_#{lot.id}_quantity", with: "9999")
-          fill_in("lot_#{lot.id}_expires_at", with:1.week.from_now)
+          fill_in("lot_#{lot.id}_expires_at", with:expires_at_date)
 
           click_button "Save"
         end
@@ -141,6 +158,11 @@ describe "Editing advanced inventory" do
           expect(Dom::LotRow.first).to be_editable
           click_link "Cancel"
           expect(Dom::LotRow.first).not_to be_editable
+        end
+
+        it "fills in date fields with the correct format" do
+          expires_at = Dom::LotRow.first.find("#lot_#{lot.id}_expires_at").value
+          expect(expires_at).to eql(expires_at_date.strftime("%a, %e %b %Y"))
         end
       end
 

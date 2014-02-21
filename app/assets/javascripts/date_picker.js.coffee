@@ -1,10 +1,9 @@
-$ ->
-  dateFormat = 'D, dd M yy'
-
-  $(".datepicker").each (idx, field)->
+class @DatePicker
+  @format: 'D, dd M yy'
+  @setup: (field) ->
     field = $(field)
 
-    options = {dateFormat: dateFormat}
+    options = {dateFormat: @format}
     options.minDate = field.data('min-date')
     options.maxDate = field.data('max-date')
 
@@ -16,8 +15,16 @@ $ ->
 
     field.prop('readonly', true)
 
-    clearLink = $("<a href='javascript:void(0)'>x</a>")
+    unless field.siblings(".clear-link").length
+      @appendClearLink(field)
+
+  @appendClearLink: (field)->
+    clearLink = $("<a href='#' class='clear-link'>x</a>")
     field.after(clearLink)
-    clearLink.on 'click', ()->
+    clearLink.on 'click', (event)->
+      event.preventDefault()
       field.val('')
 
+$ ->
+  $(".datepicker").each (idx, field)->
+    DatePicker.setup(field)

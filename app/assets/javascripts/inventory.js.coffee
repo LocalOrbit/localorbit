@@ -3,6 +3,7 @@ $ ->
   newFormAction = $("#new_lot").attr('action')
   errorPayload = $("#inventory_table").data("error-payload")
 
+  editableRow = null
   hiddenRow = null
   originalRowState = null
 
@@ -29,9 +30,13 @@ $ ->
   applyErrorValues = (id, data)->
     fieldsRow = $("#fields_#{hiddenRow.attr('id')}")
     $.each data, (item) ->
-      $(fieldsRow).find("#lot_#{id}_#{item}").val(errorPayload[item])
+      field = $(fieldsRow).find("#lot_#{id}_#{item}")
+      field.val(errorPayload[item])
+      if field.hasClass("datepicker")
+        DatePicker.setup(field)
 
   enableEditForRow = (id)->
+    return if editableRow
     hiddenRow = $("#lot_#{id}")
     fieldsRow = $("#fields_#{hiddenRow.attr('id')}")
 
@@ -45,6 +50,8 @@ $ ->
 
     $(hiddenRow).hide()
     $(fieldsRow).show()
+    editableRow = fieldsRow
+
 
   if errorPayload
     enableEditForRow(errorPayload.id)
@@ -72,3 +79,4 @@ $ ->
     $(row).hide()
     $(row).replaceWith(originalRowState)
     originalRowState = null
+    editableRow = null
