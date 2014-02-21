@@ -69,6 +69,14 @@ module Dom
 
   class NewLotForm < LotRow
     selector "#inventory_table thead tr.lot"
+
+    def quantity
+      node.find("#lot_quantity")
+    end
+
+    def expires_at
+      node.find("#lot_expires_at")
+    end
   end
 
   class ProductForm < Domino

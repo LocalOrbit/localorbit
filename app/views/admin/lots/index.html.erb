@@ -6,7 +6,10 @@
 <%= render "admin/products/tabs" %>
 
 <%= form_for [:admin, @product, @lot] do |f| %>
+
 <%= render "shared/errors", {resource: @lot} %>
+
+<%= render "shared/errors", {resource: @lot_with_errors} if @lot_with_errors %>
 
 <h2>Add Your Inventory</h2>
 
@@ -14,10 +17,7 @@
   <p>You don't have any inventory yet! Get started by adding your first lot.</p>
 <% end %>
 
-<%= content_tag :div, data: { :"error-payload" => @lot} do %>
-<% end %>
-
-<table border="0" id="inventory_table" data-error-payload="<%= @lot.to_json if @lot.persisted? %>">
+<table border="0" id="inventory_table" data-error-payload="<%= @lot_with_errors.to_json if @lot_with_errors %>">
   <thead>
     <tr>
       <th>Date Added</th>

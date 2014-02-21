@@ -17,11 +17,13 @@ class Admin::LotsController < AdminController
   end
 
   def update
-    @lot = @product.lots.find(params[:id])
-    params[:lot] = params[:lot][@lot.id.to_s]
-    if @lot.update lot_params
+    lot = @product.lots.find(params[:id])
+    params[:lot] = params[:lot][lot.id.to_s]
+    if lot.update lot_params
       redirect_to [:admin, @product, :lots], notice: "Successfully saved lot"
     else
+      @lot_with_errors = lot
+      @lot = @product.lots.build
       flash.now[:alert] = "Could not save lot"
       render :index
     end

@@ -114,6 +114,13 @@ describe "Editing advanced inventory" do
           click_button "Save"
         end
 
+        it "does not fill in the new lot fields" do
+          new_lot_form = Dom::NewLotForm.first
+
+          expect(new_lot_form.expires_at.value).to be_blank
+          expect(new_lot_form.quantity.value).to be_blank
+        end
+
         it "responds with an error message" do
           expect(page).to have_content("Could not save lot")
           expect(page).to have_content("Lot # can't be blank when 'Expiration Date' is present")
