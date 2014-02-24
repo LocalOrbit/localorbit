@@ -162,7 +162,7 @@ describe "Editing advanced inventory" do
 
         it "fills in date fields with the correct format" do
           expires_at = Dom::LotRow.first.find("#lot_#{lot.id}_expires_at").value
-          expect(expires_at).to eql(expires_at_date.strftime("%a, %e %b %Y"))
+          expect(expires_at).to eql(expires_at_date.strftime("%a, %0e %b %Y"))
         end
       end
 
