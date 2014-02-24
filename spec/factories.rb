@@ -52,6 +52,17 @@ FactoryGirl.define do
     end
   end
 
+  factory :lot do
+    product
+    quantity 15
+
+    trait :with_expiration do
+      sequence(:number) {|n| "lot-#{n}"}
+      good_from Time.current
+      expires_at 1.week.from_now
+    end
+  end
+
   factory :location do
     sequence(:name) {|n| "Location #{n}" }
     address "500 S. State Street"

@@ -34,8 +34,17 @@ module Dom
     end
   end
 
+
   class LotRow < Domino
-    selector "#inventory_table tr.lot"
+    selector "#inventory_table tbody tr.lot"
+
+    def editable?
+      node.all("input").present?
+    end
+
+    def click
+      node.click
+    end
 
     def number
       node.find(".number").text
@@ -51,6 +60,22 @@ module Dom
 
     def quantity
       node.find(".quantity").text
+    end
+
+    def inputs
+      node.all("input")
+    end
+  end
+
+  class NewLotForm < LotRow
+    selector "#inventory_table thead tr.lot"
+
+    def quantity
+      node.find("#lot_quantity")
+    end
+
+    def expires_at
+      node.find("#lot_expires_at")
     end
   end
 

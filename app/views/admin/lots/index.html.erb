@@ -4,8 +4,12 @@
 </div>
 
 <%= render "admin/products/tabs" %>
+
 <%= form_for [:admin, @product, @lot] do |f| %>
+
 <%= render "shared/errors", {resource: @lot} %>
+
+<%= render "shared/errors", {resource: @lot_with_errors} if @lot_with_errors %>
 
 <h2>Add Your Inventory</h2>
 
@@ -13,25 +17,29 @@
   <p>You don't have any inventory yet! Get started by adding your first lot.</p>
 <% end %>
 
-<table border="0" id="inventory_table">
+<table border="0" id="inventory_table" data-error-payload="<%= @lot_with_errors.to_json if @lot_with_errors %>">
   <thead>
-    <th>Date Added</th>
-    <th>Lot #</th>
-    <th>Good From</th>
-    <th>Expires On</th>
-    <th>Quantity</th>
-    <th></th>
+    <tr>
+      <th>Date Added</th>
+      <th>Lot #</th>
+      <th>Good From</th>
+      <th>Expires On</th>
+      <th>Quantity</th>
+      <th></th>
+    </tr>
+
+    <tr class="lot">
+      <td><%= Time.current.strftime('%m/%d/%Y') %></td>
+      <td><%= f.text_field :number  %></td>
+      <td><%= f.datetime_field :good_from, class: 'datepicker' %></td>
+      <td><%= f.datetime_field :expires_at, class: 'datepicker', data: {'min-date' => 0} %></td>
+      <td><%= f.number_field :quantity, min: 0 %></td>
+      <td><%= f.submit "Save" %></td>
+    </tr>
   </thead>
 
-  <tr>
-    <td><%= Time.current.strftime('%m/%d/%Y') %></td>
-    <td><%= f.text_field :number  %></td>
-    <td><%= f.datetime_field :good_from, class: 'datepicker' %></td>
-    <td><%= f.datetime_field :expires_at, class: 'datepicker', data: {'min-date' => 0} %></td>
-    <td><%= f.number_field :quantity, min: 0 %></td>
-    <td><%= f.submit "Save" %></td>
-  </tr>
-
+  <tbody>
+    
   <% @product.lots.select(&:persisted?).each do |lot| %>
     <%= content_tag_for :tr, lot do %>
       <td class="created_at"><%= lot.created_at.strftime('%m/%d/%Y') %></td>
@@ -41,6 +49,19 @@
       <td class="quantity"><%= lot.quantity %></td>
       <td></td>
     <% end %>
+
+    <%= content_tag_for :tr, lot, :fields, {class: 'lot', style:"display:none;", data: {"form-url" => url_for([:admin, lot.product, lot]) }} do %>
+      <td><%= lot.created_at.strftime('%m/%d/%Y') %></td>
+      <%= fields_for :lot, lot, index: lot.id do |lot_in_table| %>
+        <td><%= lot_in_table.text_field :number  %></td>
+        <td><%= lot_in_table.datetime_field :good_from, class: 'datepicker' %></td>
+        <td><%= lot_in_table.datetime_field :expires_at, class: 'datepicker', data: {'min-date' => 0} %></td>
+        <td><%= lot_in_table.number_field :quantity, min: 0 %></td>
+
+        <td><%= link_to "Cancel", "javascript:void(0);", class:"cancel" %><%= f.submit "Save" %></td>
+      <% end %>
+    <% end %>
+  </tbody>
   <% end %>
 </table>
 <% end %>
