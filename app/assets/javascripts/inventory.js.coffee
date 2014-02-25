@@ -1,82 +1,106 @@
-$ ->
-  return unless $("#inventory_table").length
-  newFormAction = $("#new_lot").attr('action')
-  errorPayload = $("#inventory_table").data("error-payload")
+class EditTable
+  @build: (opts={})->
+    table = new EditTable(opts={})
+    table.bindActions()
+    table
 
-  editableRow = null
-  hiddenRow = null
-  originalRowState = null
+  constructor: ()->
+    @selectedRow = null
+    @hiddenRow = null
+    @originalFields = null
+    @editing = false
+    @initialAction = $("#new_lot").attr('action')
+    @errorPayload = $("#inventory_table").data("error-payload")
 
-  disableFields = (sel)->
-    $(sel).each ()->
+    if @errorPayload
+      row = $("#lot_" + @errorPayload.id)
+      @enableEditForRow(row)
+      @applyErrorValues(row, @errorPayload)
+
+  form: ()->
+    $("#new_lot")
+
+  hiddenPutMethod:  ()->
+    $('<input name="_method" type="hidden" value="put">')
+
+  headerFieldsRow: ()->
+    $("#inventory_table thead tr.lot")
+
+  # Helpers
+  disableFields: (el)->
+    $(el).find("input").each ()->
       $(this).attr("readonly", true)
       $(this).attr("disabled", true)
 
-  enableFields = (sel)->
-    $(sel).each ()->
+  enableFields: (el)->
+    $(el).find("input").each ()->
       $(this).removeAttr("readonly")
       $(this).removeAttr("disabled")
 
-  setFormActionAndMethod = (action, method)->
-    form = $("#new_lot")
-    form.attr('action', action)
+  setFormActionAndMethod: (action, method)->
+    @form().attr('action', action)
 
     if method.toLowerCase() == "put"
-      methodField = $('<input name="_method" type="hidden" value="put">')
-      $("#new_lot").append(methodField)
+      @form().append(@hiddenPutMethod())
     else
       $("[name=_method]").remove()
 
-  applyErrorValues = (id, data)->
-    fieldsRow = $("#fields_#{hiddenRow.attr('id')}")
+  # TODO: Rename to applyModelValues
+  applyErrorValues: (el, data)->
+    # TODO: pull into a helper
+    # TODO: Move fieldsRow to a rel tag
+    fieldsRow = $("#fields_#{@hiddenRow.attr('id')}")
     $.each data, (item) ->
-      field = $(fieldsRow).find("#lot_#{id}_#{item}")
-      field.val(errorPayload[item])
+      id = "#lot_#{data.id}_#{item}"
+      field = $(fieldsRow).find(id)
+      field.val(data[item])
       if field.hasClass("datepicker")
         DatePicker.setup(field)
 
-  enableEditForRow = (id)->
-    return if editableRow
-    hiddenRow = $("#lot_#{id}")
-    fieldsRow = $("#fields_#{hiddenRow.attr('id')}")
+  enableEditForRow: (row)->
+    return if @editing
+    fieldsRowId = $(row).attr('rel')
+    fieldsRow = $("#"+fieldsRowId)
 
-    originalRowState = $(fieldsRow).clone(true)
+    @originalFields = fieldsRow.clone(true)
+
     action = fieldsRow.data('form-url')
+    @setFormActionAndMethod(action, 'put')
 
-    setFormActionAndMethod(action, "put")
+    @disableFields(@headerFieldsRow())
+    @enableFields(fieldsRow)
 
-    disableFields("#inventory_table thead tr.lot input")
-    enableFields($(fieldsRow).find("input"))
+    @hiddenRow = row
 
-    $(hiddenRow).hide()
-    $(fieldsRow).show()
-    editableRow = fieldsRow
-
-
-  if errorPayload
-    enableEditForRow(errorPayload.id)
-    applyErrorValues(errorPayload.id, errorPayload)
-
-  # Events
-  $("#inventory_table tbody tr.lot").on "click", ()->
-    if $(this).hasClass('fields_lot')
-      return
-
-    enableEditForRow($(this).attr('id').replace(/lot_/, ""))
-
-  $("#inventory_table tbody").on "click", 'tr.fields_lot .cancel', ()->
-    # get the first 'tr' parent
-    row = $(this).parents("tr")[0]
-
-    enableFields("#inventory_table thead tr.lot input")
-
-    setFormActionAndMethod(newFormAction, "post")
-
-    $(hiddenRow).show()
-    hiddenRow = null
-
-    disableFields($(row).find("input"))
     $(row).hide()
-    $(row).replaceWith(originalRowState)
-    originalRowState = null
-    editableRow = null
+    $(fieldsRow).show()
+
+    @editing = true
+
+  bindActions: ()->
+    context = this
+    $("#inventory_table tbody tr.lot").on "click", ()->
+      if $(this).hasClass('fields_lot')
+        return
+
+      context.enableEditForRow(this)
+
+    $("#inventory_table tbody").on "click", 'tr.fields_lot .cancel', ()->
+      # get the first 'tr' parent
+      row = $(this).parents("tr")[0]
+      context.enableFields("#inventory_table thead tr.lot")
+
+      context.setFormActionAndMethod(context.initialAction, "post")
+
+      $(context.hiddenRow).show()
+      context.hiddenRow = null
+
+      context.disableFields(row)
+      $(row).hide()
+      $(row).replaceWith(context.originalFields)
+      context.originalFields = null
+      context.editing = false
+
+$ ->
+  return unless $("#inventory_table").length
+  editTable = EditTable.build()
