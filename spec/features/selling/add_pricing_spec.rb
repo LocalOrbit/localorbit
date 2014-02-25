@@ -19,15 +19,15 @@ describe 'Adding advanced pricing' do
   end
 
   it 'completes successfully given valid information' do
-    fill_in 'price_sale_price', with: '1.99'
+    fill_in 'price_sale_price', with: '1.90'
     click_button 'Add'
 
     record = Dom::PricingRow.first
     expect(record.market).to eq('All Markets')
     expect(record.buyer).to eq('All Buyers')
     expect(record.min_quantity).to eq('1')
-    expect(record.net_price).to eq('1.93')
-    expect(record.sale_price).to eq('1.99')
+    expect(record.net_price).to eq('$1.84')
+    expect(record.sale_price).to eq('$1.90')
   end
 
   describe "invalid input" do
@@ -79,8 +79,8 @@ describe 'Adding advanced pricing' do
       expect(record.market).to eq('All Markets')
       expect(record.buyer).to eq(organization.name)
       expect(record.min_quantity).to eq('1')
-      expect(record.net_price).to eq('1.93')
-      expect(record.sale_price).to eq('1.99')
+      expect(record.net_price).to eq('$1.93')
+      expect(record.sale_price).to eq('$1.99')
     end
   end
 end

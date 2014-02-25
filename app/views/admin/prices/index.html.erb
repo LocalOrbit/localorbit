@@ -28,8 +28,8 @@
       <td><%= f.object.market_name %></td>
       <td><%= f.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %></td>
       <td><%= f.number_field :min_quantity, min: 0 %></td>
-      <td><%= f.number_field :net_price, min: 0 %></td>
-      <td><%= f.number_field :sale_price, min: 0 %></td>
+      <td><%= f.number_field :net_price, min: 0, step: 0.01, data: {"net-percent" => "0.97"} %></td>
+      <td><%= f.number_field :sale_price, min: 0, step: 0.01 %></td>
       <td><%= f.submit "Add" %></td>
     </tr>
   </thead>
@@ -40,8 +40,8 @@
       <td class="market"><%= price.market_name %></td>
       <td class="buyer"><%= price.organization_name %></td>
       <td class="min-qty"><%= price.min_quantity %></td>
-      <td class="net-price"><%= price.net_price %></td>
-      <td class="sale-price"><%= price.sale_price %></td>
+      <td class="net-price">$<%= "%.02f" % price.net_price %></td>
+      <td class="sale-price">$<%= "%.02f" % price.sale_price %></td>
       <td></td>
     <% end %>
   <% end %>
