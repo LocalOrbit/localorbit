@@ -168,4 +168,10 @@ module Dom
       end
     end
   end
+
+  class Product < Domino
+    selector ".product"
+
+    attribute :name
+  end
 end

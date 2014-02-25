@@ -1,0 +1,17 @@
+<table id="products">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @products.each do |product| %>
+    <tr class="product">
+      <td class="name"><%= product.name %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

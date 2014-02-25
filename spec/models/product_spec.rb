@@ -21,6 +21,25 @@ describe Product do
     end
   end
 
+  describe ".available_for_market" do
+    let(:product1) { create(:product) }
+    let(:product2) { create(:product) }
+    let(:product3) { create(:product) }
+
+    let(:market) { double("Market", organization_ids: [product1.organization_id, product2.organization_id]) }
+
+    it "returns products in the user's market" do
+      expect(Product.available_for_market(market)).to match_array([product1, product2])
+    end
+
+    it "returns empty active record relation if market is nil" do
+      results = Product.available_for_market(nil)
+
+      expect(results).to be_a(ActiveRecord::Relation)
+      expect(results).to be_empty
+    end
+  end
+
   describe '#can_use_simple_inventory?' do
     let(:product) { create(:product, use_simple_inventory: false) }
 
