@@ -7,7 +7,7 @@
 <%= render "tabs" %>
 
 <div class="row row--partial">
-  <%= form_for [:admin, @product], html: { class: "column column--three-fourths" } do |f| %>
+  <%= form_for [:admin, @product], html: { class: "product column column--three-fourths" } do |f| %>
     <%= render "fields", {f: f} %>
 
     <div class="row form-actions">

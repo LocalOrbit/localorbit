@@ -80,7 +80,7 @@ module Dom
   end
 
   class ProductForm < Domino
-    selector "form.edit_product, form.new_product"
+    selector "form.product"
 
     def organization_field
       node.find('#product_organization_id')
