@@ -26,5 +26,10 @@ feature "Viewing products" do
 
     expect(products).to have(6).products
     expect(products.map(&:name)).to match_array(available_products.map(&:name))
+
+    product = available_products.first
+    dom_product = Dom::Product.find_by_name(product.name)
+
+    expect(dom_product.organization_name).to eq(product.organization_name)
   end
 end

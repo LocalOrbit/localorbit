@@ -173,5 +173,6 @@ module Dom
     selector ".product"
 
     attribute :name
+    attribute :organization_name
   end
 end

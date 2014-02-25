@@ -11,6 +11,8 @@ class Product < ActiveRecord::Base
 
   validate :ensure_organization_can_sell
 
+  delegate :name, to: :organization, prefix: true
+
   def self.available_for_market(market)
     return none unless market
 
