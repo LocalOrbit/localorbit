@@ -15,6 +15,7 @@
 .l-constraint,
 .column,
 .row {
+  position: relative;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
@@ -38,6 +39,30 @@
   background: #fff;
 }
 
+.l-page-header {
+  font-size: 0.1px;
+  text-align: justify;
+
+  &:after {
+    display: inline-block;
+    width: 100%;
+    content: '';
+  }
+
+  a, h1, span {
+    vertical-align: top;
+  }
+
+  > a {
+    font-size: 14px;
+  }
+
+  > h1 {
+    display: inline-block;
+    font-size: 32px;
+  }
+}
+
 .l-inline-list {
   padding: 0;
 
@@ -45,3 +70,33 @@
     display: inline-block;
   }
 }
+
+.row {
+  clear: both;
+}
+.row--partial {
+  text-align: center;
+}
+
+.column {
+  display: inline-block;
+  text-align: left;
+}
+  .column--fourth {
+    width: 25%;
+  }
+  .column--third {
+    width: 33%;
+  }
+  .column--half {
+    width: 50%;
+  }
+  .column--two-thirds {
+    width: 66%;
+  }
+  .column--three-fourths {
+    width: 75%;
+  }
+  .column--full {
+    width: 100%;
+  }

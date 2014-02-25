@@ -1,21 +1,26 @@
-
-@mixin border-radius($rtl, $rtr, $rbr, $rbl) {
-  -webkit-border-radius: $rtl, $rtr, $rbr, $rbl;
-     -moz-border-radius: $rtl, $rtr, $rbr, $rbl;
-          border-radius: $rtl, $rtr, $rbr, $rbl;
-}
-
 @mixin border-radius($r) {
   -webkit-border-radius: $r;
      -moz-border-radius: $r;
           border-radius: $r;
 }
 
-@mixin gradient($top, $bottom) {
-  background: #2f4789;
-  background:   -moz-linear-gradient(top, $top, $bottom);
-  background:-webkit-linear-gradient(top, $top, $bottom);
-  background:     -o-linear-gradient(top, $top, $bottom);
-  background:    -ms-linear-gradient(top, $top, $bottom);
-  background:        linear-gradient(top, $top, $bottom);
+@mixin box-shadow($shadows...) {
+  -webkit-box-shadow: $shadows;
+     -moz-box-shadow: $shadows;
+          box-shadow: $shadows;
 }
+
+@mixin box-sizing($sizing) {
+  -webkit-box-sizing: $sizing;
+     -moz-box-sizing: $sizing;
+          box-sizing: $sizing;
+}
+
+@mixin gradient($top, $bottom) {
+  background-image:   -moz-linear-gradient(top, $top, $bottom);
+  background-image:-webkit-linear-gradient(top, $top, $bottom);
+  background-image:     -o-linear-gradient(top, $top, $bottom);
+  background-image:    -ms-linear-gradient(top, $top, $bottom);
+  background-image:        linear-gradient(top, $top, $bottom);
+}
+

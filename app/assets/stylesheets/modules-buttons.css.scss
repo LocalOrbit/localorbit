@@ -1,0 +1,25 @@
+@import "mixins";
+
+button,
+input[type=button],
+input[type=reset],
+input[type=submit] {
+  display: inline-block;
+  padding: 12px 18px;
+  border: solid 1px #b0b0b0;
+  @include border-radius(3px);
+  @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.2));
+  color: #fff;
+  font-size: 17px;
+  -webkit-appearance: none;
+  -webkit-font-smoothing: antialiased;
+
+  &:disabled {
+    opacity: 0.15;
+  }
+}
+
+input[type=submit] {
+  background-color: #43639f;
+}
+

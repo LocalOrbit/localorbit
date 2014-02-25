@@ -1,4 +1,4 @@
-<%= form_for [:admin, @organization] do |f| %>
+<%= form_for [:admin, @organization], html: {class: "column column--three-fourths"} do |f| %>
 
   <%= render "shared/errors", { resource: @organization } %>
 
@@ -11,29 +11,29 @@
     <% end %>
   <% end %>
 
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+  <div class="row">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, class: "column column--three-fourths" %>
   </div>
 
-  <div>
-    <%= f.label :who_story, "Who" %>
-    <%= f.text_field :who_story %>
+  <div class="row">
+    <%= f.label :who_story, "Who" %><br>
+    <%= f.text_field :who_story, class: "column column--three-fourths" %>
   </div>
 
-  <div>
-    <%= f.label :how_story, "How" %>
-    <%= f.text_field :how_story %>
+  <div class="row">
+    <%= f.label :how_story, "How" %><br>
+    <%= f.text_field :how_story, class: "column column--three-fourths" %>
   </div>
 
   <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
-    <div>
-      <%= f.label :can_sell, "Can sell product" %>
+    <div class="row">
       <%= f.check_box :can_sell %>
+      <%= f.label :can_sell, "Can sell product" %>
     </div>
   <% end %>
 
-  <div>
+  <div class="row form-actions">
     <%= f.submit "#{@organization.new_record? ? 'Add' : 'Save'} Organization" %>
   </div>
 <% end %>

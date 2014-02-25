@@ -1,14 +1,17 @@
-<div>
+<div class="l-page-header">
   <h1>Update Product</h1>
   <%= product_listing_disclaimer %>
+  <a href="#" class="cancel">Cancel</a>
 </div>
 
 <%= render "tabs" %>
 
-<%= form_for [:admin, @product] do |f| %>
-  <%= render "fields", {f: f} %>
+<div class="row row--partial">
+  <%= form_for [:admin, @product], html: { class: "column column--three-fourths" } do |f| %>
+    <%= render "fields", {f: f} %>
 
-  <div>
-    <%= f.submit "Save Product" %>
-  </div>
-<% end %>
+    <div class="form-actions">
+      <%= f.submit "Save Product" %>
+    </div>
+  <% end %>
+</div>

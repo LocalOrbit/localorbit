@@ -35,5 +35,5 @@ $ ->
                       .appendTo(productLocation)
 
   $('#product_use_simple_inventory').change ->
-    $('#simple-inventory').toggle()
-    $('#product-inventory-nav').toggle()
+    $('#simple-inventory').toggleClass('is-hidden')
+    $('#product-inventory-nav').toggleClass('is-hidden')

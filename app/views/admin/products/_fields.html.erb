@@ -1,13 +1,13 @@
 <%= render "shared/errors", {resource: @product} %>
 
 <% if @product.persisted? %>
-    <%= f.label :organization_id, "Product Organization" %>
+    <h2>Product Organization</h2>
     <%= link_to @product.organization.name, [:admin, @product.organization] %>
 <% else %>
   <% if current_user.managed_organizations.count > 1 %>
-  <div>
-    <%= f.label :organization_id, "Product Organization" %>
-    <%= f.collection_select :organization_id, current_user.managed_organizations.selling, :id, :name, {include_blank: "Select an organization"} %>
+  <div class="field">
+    <%= f.label :organization_id, "Product Organization" %><br>
+    <%= f.collection_select :organization_id, current_user.managed_organizations.selling, :id, :name, {include_blank: "Select an organization"}, class: "column--three-fourths" %>
   </div>
 
   <% else %>
@@ -15,18 +15,18 @@
   <% end %>
 <% end %>
 
-<div>
-  <%= f.label :name, "Product Name" %>
-  <%= f.text_field :name %>
+<div class="field">
+  <%= f.label :name, "Product Name" %><br>
+  <%= f.text_field :name, class: "column column--three-fourths" %>
 </div>
 
-<div>
-  <%= f.label :category_id %>
+<div class="field">
+  <%= f.label :category_id %><br>
   <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}} %>
 </div>
 
-<div>
-  <h2>Inventory</h2>
+<fieldset>
+  <legend>Inventory</legend>
   <%= f.check_box :use_simple_inventory, disabled: !@product.can_use_simple_inventory? %>
   <%= f.label :use_simple_inventory, 'Use simple inventory management.' %>
   <% if @product.can_use_simple_inventory? %>
@@ -34,36 +34,36 @@
   <% else%>
   <span class="warning">To use simple inventory management you must clear out your current available inventory</span>
   <% end %>
-  <%= content_tag :div, id: "simple-inventory", class: (@product.use_simple_inventory? ? nil : 'hidden') do %>
+  <%= content_tag :div, id: "simple-inventory", class: (@product.use_simple_inventory? ? nil : 'is-hidden') do %>
     <%= f.text_field :simple_inventory %>
     <%= f.label :simple_inventory, 'Your current inventory' %>
   <% end %>
-</div>
+</fieldset>
 
-<div>
-  <h2>More info about this product (where, when, how)</h2>
+<fieldset>
+  <legend>More info about this product (where, when, how)</legend>
   <%= check_box_tag :seller_info, "", !@product.has_custom_seller_info? %>
   <%= label_tag :seller_info, "Use seller info from my account" %>
   <span class="hint">Uncheck this to customize your seller information for this product</span>
 
   <div class="hidden seller_info_fields">
-    <div>
-      <%= f.label :location_id, "Product Location" %>
+    <div class="field">
+      <%= f.label :location_id, "Product Location" %><br>
       <%= f.select :location_id, @product.location_options_for_select, include_blank: true %>
-      <span>This address comes from the My Account page</span>
+      <span class="hint">This address comes from the My Account page</span>
       <span class="hint">Select an organization above to load location options</span>
     </div>
 
-    <div>
+    <div class="field">
       <%= f.label :who_story, "Who" %>
       <%= f.text_area :who_story %>
-      <span>This description comes from the My Organization page</span>
+      <span class="hint">This description comes from the My Organization page</span>
     </div>
 
-    <div>
+    <div class="field">
       <%= f.label :how_story, "How" %>
       <%= f.text_area :how_story %>
-      <span>This description comes from the My Organization page</span>
+      <span class="hint">This description comes from the My Organization page</span>
     </div>
   </div>
-</div>
+</fieldset>
