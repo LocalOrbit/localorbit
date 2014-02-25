@@ -16,17 +16,17 @@
 <% end %>
 
 <div>
-  <%= f.label :name, "Product Name" %>
-  <%= f.text_field :name %>
+  <%= f.label :name, "Product Name" %><br>
+  <%= f.text_field :name, class: "column column--three-fourths" %>
 </div>
 
-<div>
-  <%= f.label :category_id %>
+<div class="column column--three-fourths">
+  <%= f.label :category_id %><br>
   <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}} %>
 </div>
 
-<div>
-  <h2>Inventory</h2>
+<fieldset>
+  <legend>Inventory</legend>
   <%= f.check_box :use_simple_inventory, disabled: !@product.can_use_simple_inventory? %>
   <%= f.label :use_simple_inventory, 'Use simple inventory management.' %>
   <% if @product.can_use_simple_inventory? %>
@@ -38,10 +38,10 @@
     <%= f.text_field :simple_inventory %>
     <%= f.label :simple_inventory, 'Your current inventory' %>
   <% end %>
-</div>
+</fieldset>
 
-<div>
-  <h2>More info about this product (where, when, how)</h2>
+<fieldset>
+  <legend>More info about this product (where, when, how)</legend>
   <%= check_box_tag :seller_info, "", !@product.has_custom_seller_info? %>
   <%= label_tag :seller_info, "Use seller info from my account" %>
   <span class="hint">Uncheck this to customize your seller information for this product</span>
@@ -66,4 +66,4 @@
       <span>This description comes from the My Organization page</span>
     </div>
   </div>
-</div>
+</fieldset>

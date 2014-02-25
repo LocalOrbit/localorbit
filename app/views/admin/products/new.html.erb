@@ -5,10 +5,12 @@
 
 <%= render "tabs" %>
 
-<%= form_for [:admin, @product] do |f| %>
-  <%= render "fields", {f: f} %>
+<div class="row row--partial">
+  <%= form_for [:admin, @product], html: { class: "column column--three-fourths" } do |f| %>
+    <%= render "fields", {f: f} %>
 
-  <div>
-    <%= f.submit "Add Product" %>
-  </div>
-<% end %>
+    <div class="row form-actions">
+      <%= f.submit "Add Product" %>
+    </div>
+  <% end %>
+</div>
