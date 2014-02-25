@@ -188,7 +188,7 @@ module Dom
     end
 
     def self.current_seller
-      first.find("#product-filter-organization-name > .current").text
+      first.find("#product-filter-organization > .current").text
     end
 
     def self.current_category

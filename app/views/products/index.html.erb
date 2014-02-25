@@ -1,15 +1,6 @@
 <div id="product-filter">
-  <ul id="product-filter-organization-name">
-    <% current_market.organizations.each do |organization| %>
-      <%= filter_link(organization, :organization) %>
-    <% end %>
-  </ul>
-
-  <ul id="product-filter-category">
-    <% @categories.each do |category| %>
-      <%= filter_link(category, :category) %>
-    <% end %>
-  </ul>
+  <%= filter_list(current_market.organizations, :organization) %>
+  <%= filter_list(@categories, :category) %>
 </div>
 
 <table id="products">
