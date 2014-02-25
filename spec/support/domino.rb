@@ -183,8 +183,16 @@ module Dom
       first.click_link(org.name)
     end
 
+    def self.filter_by_category(category)
+      first.click_link(category.name)
+    end
+
     def self.current_seller
       first.find("#product-filter-organization-name > .current").text
+    end
+
+    def self.current_category
+      first.find("#product-filter-category > .current").text
     end
   end
 end

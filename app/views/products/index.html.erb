@@ -4,6 +4,12 @@
       <%= filter_link(organization.name, products_path(organization: organization.id)) %>
     <% end %>
   </ul>
+
+  <ul id="product-filter-category">
+    <% @categories.each do |category| %>
+      <%= filter_link(category.name, products_path(category: category.id)) %>
+    <% end %>
+  </ul>
 </div>
 
 <table id="products">
