@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
     resources :products do
       resources :lots
+      resources :prices
     end
   end
 

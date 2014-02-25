@@ -3,9 +3,11 @@
   <% if @product.persisted? %>
     <%= content_tag(:li, link_to("Product Info", [:admin, @product]), class: "completed tab") %>
     <%= content_tag(:li, link_to("Inventory", [:admin, @product, :lots]), id: 'product-inventory-nav', class: (@product.use_simple_inventory? ? 'is-hidden tab' : 'tab')) %>
+    <%= content_tag(:li, link_to("Pricing", [:admin, @product, :prices]), id: 'product-pricing-nav', class: 'tab') %>
   <% else %>
     <li class="current tab">Product Info</li>
     <%= content_tag :li, 'Inventory', id: 'product-inventory-nav', class: (@product.use_simple_inventory? ? 'is-hidden tab' : 'tab') %>
+    <%= content_tag :li, 'Pricing', id: 'product-pricing-nav', class: 'tab' %>
   <% end %>
 </ul>
 </div>

@@ -79,6 +79,30 @@ module Dom
     end
   end
 
+  class PricingRow < Domino
+    selector "#pricing_table tr.price"
+
+    def market
+      node.find(".market").text
+    end
+
+    def buyer
+      node.find(".buyer").text
+    end
+
+    def min_quantity
+      node.find(".min-qty").text
+    end
+
+    def net_price
+      node.find(".net-price").text
+    end
+
+    def sale_price
+      node.find(".sale-price").text
+    end
+  end
+
   class ProductForm < Domino
     selector "form.product"
 

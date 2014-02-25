@@ -1,0 +1,50 @@
+<div>
+  <h1>Update Product</h1>
+  <%= product_listing_disclaimer %>
+</div>
+
+<%= render "admin/products/tabs" %>
+<%= form_for [:admin, @product, @price] do |f| %>
+<%= render "shared/errors", {resource: @price} %>
+
+<h2>Add Prices</h2>
+
+<% if @product.prices.any?(&:persisted?) %>
+  <p>You don't have any prices yet! We've gone ahead and started the entry for you.</p>
+<% end %>
+
+<table border="0" id="pricing_table">
+  <thead>
+    <tr>
+      <th>Market</th>
+      <th>Buyer</th>
+      <th>Min Qty</th>
+      <th>Net Price</th>
+      <th>Sale Price</th>
+      <th></th>
+    </tr>
+
+    <tr>
+      <td><%= f.object.market_name %></td>
+      <td><%= f.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %></td>
+      <td><%= f.number_field :min_quantity, min: 0 %></td>
+      <td><%= f.number_field :net_price, min: 0 %></td>
+      <td><%= f.number_field :sale_price, min: 0 %></td>
+      <td><%= f.submit "Add" %></td>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @product.prices.view_sorted.decorate.each do |price| %>
+    <%= content_tag_for :tr, price do %>
+      <td class="market"><%= price.market_name %></td>
+      <td class="buyer"><%= price.organization_name %></td>
+      <td class="min-qty"><%= price.min_quantity %></td>
+      <td class="net-price"><%= price.net_price %></td>
+      <td class="sale-price"><%= price.sale_price %></td>
+      <td></td>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+<% end %>

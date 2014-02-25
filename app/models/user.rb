@@ -67,4 +67,13 @@ class User < ActiveRecord::Base
       Product.where(organization_id: org_ids)
     end
   end
+
+  def buyers_for_select
+    for_select = []
+    markets.each do |m|
+      by_market = m.organizations.map {|o| [o.name, o.id] }
+      for_select.concat(by_market)
+    end
+    for_select.sort {|a,b| a[0] <=> b[0] }
+  end
 end
