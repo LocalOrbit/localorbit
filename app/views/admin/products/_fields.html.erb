@@ -1,7 +1,7 @@
 <%= render "shared/errors", {resource: @product} %>
 
 <% if @product.persisted? %>
-    <%= f.label :organization_id, "Product Organization" %>
+    <h2>Product Organization</h2>
     <%= link_to @product.organization.name, [:admin, @product.organization] %>
 <% else %>
   <% if current_user.managed_organizations.count > 1 %>
@@ -50,20 +50,20 @@
     <div>
       <%= f.label :location_id, "Product Location" %>
       <%= f.select :location_id, @product.location_options_for_select, include_blank: true %>
-      <span>This address comes from the My Account page</span>
+      <span class="hint">This address comes from the My Account page</span>
       <span class="hint">Select an organization above to load location options</span>
     </div>
 
     <div>
       <%= f.label :who_story, "Who" %>
       <%= f.text_area :who_story %>
-      <span>This description comes from the My Organization page</span>
+      <span class="hint">This description comes from the My Organization page</span>
     </div>
 
     <div>
       <%= f.label :how_story, "How" %>
       <%= f.text_area :how_story %>
-      <span>This description comes from the My Organization page</span>
+      <span class="hint">This description comes from the My Organization page</span>
     </div>
   </div>
 </fieldset>

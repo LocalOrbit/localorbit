@@ -204,3 +204,56 @@
     display: block;
   }
 }
+.product-status-alert {
+  display: inline-block;
+  max-width: 40%;
+  color: #a90d0d;
+  font-size: 12px;
+  font-weight: lighter;
+  text-align: center;
+}
+
+.tabs-wrapper {
+  padding: 0 20px;
+  border-bottom: solid 1px #cbcbcb;
+  margin: 0 -20px 30px;
+}
+.tabs {
+  position: relative;
+  z-index: 10;
+  padding: 0;
+  margin: 0 0 -1px;
+  color: #777;
+  font-size: 18px;
+  text-align: center;
+  list-style: none;
+
+  a, .current {
+    padding: 22px 24px; 
+  }
+  a {
+    display: block;
+  }
+  .current {
+    border-bottom-color: #fff;
+    background: #fff;
+  }
+
+  > .completed:after {
+    position: absolute;
+    top: 5px;
+    right: 7px;
+    width: 14px;
+    height: 15px;
+    content: '';
+    background: asset_url('icons/circled-check.png') center no-repeat;
+    background: asset_url('icons/circled-check@2x.png') center / cover no-repeat;
+  }
+}
+.tab {
+    position: relative;
+    display: inline-block;
+    border: solid 1px #cbcbcb;
+    @include border-radius(5px 5px 0 0);
+    background: #f4f4f4;
+}

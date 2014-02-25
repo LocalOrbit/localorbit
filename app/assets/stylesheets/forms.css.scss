@@ -18,9 +18,6 @@ input[type=checkbox] {
       color: #000;
       font-size: 14px;
     }
-    & ~ .hint {
-      display: block;
-    }
 }
 
 input[type=email],
@@ -32,7 +29,6 @@ input[type=url],
 input[type=password],
 textarea {
   @include box-sizing(border-box);
-  height: 42px;
   padding-right: 12px;
   padding-left: 12px;
   border: solid 2px #f1f1f1;
@@ -40,6 +36,24 @@ textarea {
   @include box-shadow(inset 0 0 0 1px #aaa, inset 0 1px 5px #aaa);
   margin: 4px 0 25px;
   font-size: 14px;
+}
+
+input[type=email],
+input[type=search],
+input[type=tel],
+input[type=text],
+input[type=number],
+input[type=url],
+input[type=password] {
+  height: 42px;
+}
+
+input,
+select,
+textarea {
+  & ~ .hint {
+    display: block;
+  }
 }
 
 label,
@@ -53,8 +67,14 @@ legend {
   margin-left: -20px;
 }
 
+select,
+.chosen-container {
+  margin-top: 4px;
+}
+
 textarea {
   display: block;
+  width: 100%;
 }
 
 .form-actions {

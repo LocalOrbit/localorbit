@@ -39,6 +39,22 @@
   background: #fff;
 }
 
+.l-page-header {
+    font-size: 0.1px;
+  text-align: justify;
+
+  &:after {
+    display: inline-block;
+    width: 100%;
+    content: '';
+  }
+
+  > h1 {
+    display: inline-block;
+    font-size: 32px;
+  }
+}
+
 .l-inline-list {
   padding: 0;
 
