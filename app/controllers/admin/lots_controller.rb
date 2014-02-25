@@ -1,5 +1,6 @@
 class Admin::LotsController < AdminController
-  before_action :find_product
+  include ProductLookup
+
   before_action :redirect_simple_inventory
 
   def index
@@ -33,10 +34,6 @@ class Admin::LotsController < AdminController
 
   def lot_params
     params.require(:lot).permit(:number, :good_from, :expires_at, :quantity)
-  end
-
-  def find_product
-    @product = current_user.managed_products.find(params[:product_id])
   end
 
   def redirect_simple_inventory
