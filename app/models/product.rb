@@ -11,6 +11,14 @@ class Product < ActiveRecord::Base
 
   validate :ensure_organization_can_sell
 
+  delegate :name, to: :organization, prefix: true
+
+  def self.available_for_market(market)
+    return none unless market
+
+    where(organization: market.organization_ids)
+  end
+
   def can_use_simple_inventory?
     use_simple_inventory? || !lots.where('(expires_at IS NULL OR expires_at > ?) AND quantity > 0', Time.current).exists?
   end

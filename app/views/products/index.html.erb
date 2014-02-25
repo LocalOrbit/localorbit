@@ -1,0 +1,43 @@
+<table id="products">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @products.each do |product| %>
+    <tr class="product">
+      <td class="info">
+        <h3 class="name"><%= product.name %></h3>
+        <p class="description">This tart variety is great for applesauce, but
+        also perfect for pies or snacking.</p>
+        <ul class="meta">
+          <li class="organization-name"><%= product.organization_name %></li>
+          <li class="how-story"><%= link_to "How", "#" %></li>
+          <li class="where"><%= link_to "Where", "#" %></li>
+        </ul>
+      </td>
+      <td class="pricing">
+        <ul>
+          <li>$20.00 per Bushel</li>
+          <li>$15.00 5+ Bushels</li>
+          <li>$12.00 10+ Bushels</li>
+          <li class="negotiated">$9.00 100+ Bushels</li>
+        </ul>
+      </td>
+      <td class="quantity">
+        <label>
+          <input type="number">
+          <span class="price-for-quantity">$15.00</span>
+        </label>
+      </td>
+      <td class="total">$75.00</td>
+      <td class="product-clear"><%= link_to "", "#", class: "icon-clear" %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
