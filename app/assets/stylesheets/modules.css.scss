@@ -38,6 +38,10 @@
   vertical-align: middle;
 }
 
+.cancel {
+  color: #43639f;
+}
+
 .counter {
   padding: 0 15px;
   border: solid 1px #1e2e4e;
@@ -160,7 +164,7 @@
 
 .nav--admin {
   position: relative;
-  z-index: 10;
+  z-index: 50;
   height: 39px;
   padding: 0 20px;
   border-bottom: solid 1px #d4d4d4;

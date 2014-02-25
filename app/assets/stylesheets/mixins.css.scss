@@ -17,10 +17,10 @@
 }
 
 @mixin gradient($top, $bottom) {
-  background: #2f4789;
-  background:   -moz-linear-gradient(top, $top, $bottom);
-  background:-webkit-linear-gradient(top, $top, $bottom);
-  background:     -o-linear-gradient(top, $top, $bottom);
-  background:    -ms-linear-gradient(top, $top, $bottom);
-  background:        linear-gradient(top, $top, $bottom);
+  background-image:   -moz-linear-gradient(top, $top, $bottom);
+  background-image:-webkit-linear-gradient(top, $top, $bottom);
+  background-image:     -o-linear-gradient(top, $top, $bottom);
+  background-image:    -ms-linear-gradient(top, $top, $bottom);
+  background-image:        linear-gradient(top, $top, $bottom);
 }
+

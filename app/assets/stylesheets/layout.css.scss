@@ -40,13 +40,21 @@
 }
 
 .l-page-header {
-    font-size: 0.1px;
+  font-size: 0.1px;
   text-align: justify;
 
   &:after {
     display: inline-block;
     width: 100%;
     content: '';
+  }
+
+  a, h1, span {
+    vertical-align: top;
+  }
+
+  > a {
+    font-size: 14px;
   }
 
   > h1 {
