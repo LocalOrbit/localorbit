@@ -1,9 +1,10 @@
 class ProductsController < ApplicationController
-  def index
-    @products = Product.available_for_market(current_market)
-  end
+  helper_method :current_market
 
-  private
+  def index
+    @products = Product.available_for_market(current_market).
+      periscope(request.query_parameters)
+  end
 
   def current_market
     current_user.markets.first

@@ -175,4 +175,12 @@ module Dom
     attribute :name
     attribute :organization_name
   end
+
+  class ProductFilter < Domino
+    selector "#product-filter"
+
+    def self.filter_by_seller(org)
+      first.click_link(org.name)
+    end
+  end
 end
