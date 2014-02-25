@@ -182,5 +182,9 @@ module Dom
     def self.filter_by_seller(org)
       first.click_link(org.name)
     end
+
+    def self.current_seller
+      first.find("#product-filter-organization-name > .current").text
+    end
   end
 end

@@ -1,7 +1,7 @@
 <div id="product-filter">
   <ul id="product-filter-organization-name">
     <% current_market.organizations.each do |organization| %>
-      <li><%= link_to organization.name, products_path(organization: organization.id) %></li>
+      <%= filter_link(organization.name, products_path(organization: organization.id)) %>
     <% end %>
   </ul>
 </div>

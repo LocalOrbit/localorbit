@@ -22,11 +22,13 @@ feature "Filtering Products List" do
 
     Dom::ProductFilter.filter_by_seller(org1)
 
+    expect(Dom::ProductFilter.current_seller).to eq(org1.name)
     expect(Dom::Product.count).to eq(1)
     expect(Dom::Product.first.name).to eq(product1.name)
 
     Dom::ProductFilter.filter_by_seller(org2)
 
+    expect(Dom::ProductFilter.current_seller).to eq(org2.name)
     expect(Dom::Product.count).to eq(1)
     expect(Dom::Product.first.name).to eq(product2.name)
   end
