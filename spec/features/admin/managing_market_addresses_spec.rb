@@ -32,16 +32,32 @@ describe "Admin Managing Markets" do
       sign_in_as user
 
       user.managed_markets << market1
+      
+      visit admin_market_addresses_path(market1)
     end
 
     it 'I can see a markets addresses' do
-      visit admin_market_addresses_path(market1)
-
       expect(page).to have_text(address1.name)
       expect(page).to have_text(address1.address)
       expect(page).to have_text(address1.city)
       expect(page).to have_text(address1.state)
       expect(page).to have_text(address1.zip)
+    end
+
+    it 'I can add a new address' do
+      expect(page).to have_text 'Add Address'
+
+      click_link 'Add Address'
+
+      fill_in 'Name', with: 'New Address'
+      fill_in 'Address', with: '123 Apple'
+      fill_in 'City', with: 'Holland'
+      fill_in 'State', with: 'MI'
+      fill_in 'Zip', with: '49423'
+
+      click_button 'Add Address'
+
+      expect(page).to have_text('New Address')
     end
   end
 

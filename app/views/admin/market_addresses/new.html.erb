@@ -1,0 +1,8 @@
+<h1>Add Market Address</h1>
+
+<%= form_for [:admin, @market, @address] do |f| %>
+  <%= render 'form', {f: f} %>
+  <div>
+    <%= f.submit "Add Address" %>
+  </div>
+<% end %>
