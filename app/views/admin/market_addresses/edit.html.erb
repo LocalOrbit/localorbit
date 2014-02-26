@@ -1,5 +1,7 @@
 <h1>Edit <%= @address.name %></h1>
 
+<%= render 'shared/errors', { resource: @address } %>
+
 <%= form_for @address, url: admin_market_address_path(@market, @address) do |f| %>
   <%= render 'form', {f: f} %>
   <div>
