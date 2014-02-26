@@ -25,7 +25,6 @@ describe "Admin Managing Markets" do
     let!(:user) { create(:user, role: 'user') }
     let!(:market1) { create(:market) }
     let!(:market2) { create(:market) }
-    let!(:address1) { create(:market_address, market: market1) }
 
     before :each do
       sign_in_as user
@@ -49,19 +48,6 @@ describe "Admin Managing Markets" do
 
       expect(page).to have_text(market1.name)
       expect(page).to_not have_text(market2.name)
-    end
-
-    it 'I can see a markets addresses' do
-      visit '/admin/markets'
-
-      click_link market1.name
-      click_link 'Addresses'
-
-      expect(page).to have_text(address1.name)
-      expect(page).to have_text(address1.address)
-      expect(page).to have_text(address1.city)
-      expect(page).to have_text(address1.state)
-      expect(page).to have_text(address1.zip)
     end
 
     it 'I can modify a market' do
@@ -225,19 +211,5 @@ describe "Admin Managing Markets" do
 
       expect(page).to have_text('Active? Yes')
     end
-    
-    it 'I can see a markets addresses' do
-      visit '/admin/markets'
-
-      click_link market1.name
-      click_link 'Addresses'
-
-      expect(page).to have_text(address1.name)
-      expect(page).to have_text(address1.address)
-      expect(page).to have_text(address1.city)
-      expect(page).to have_text(address1.state)
-      expect(page).to have_text(address1.zip)
-    end
-
   end
 end
