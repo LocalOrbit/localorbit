@@ -1,29 +1,29 @@
 class EditTable
   @build: (opts={})->
-    table = new EditTable(opts={})
+    table = new EditTable(opts)
     table.bindActions()
     table
 
-  constructor: ()->
+  constructor: (opts)->
+    @form = $(opts.selector)
+    @modelPrefix = opts.modelPrefix
+
     @hiddenRow = null
     @originalFields = null
     @editing = false
-    @initialAction = $("#new_lot").attr('action')
-    @errorPayload = $("#inventory_table").data("error-payload")
+    @initialAction = @form.attr('action')
+    @errorPayload = @form.find("table").data("error-payload")
 
     if @errorPayload
-      row = $("#lot_" + @errorPayload.id)
+      row = $("#" + "#{@modelPrefix}_" + @errorPayload.id)
       @enableEditForRow(row)
       @applyErrorValues(row, @errorPayload)
-
-  form: ()->
-    $("#new_lot")
 
   hiddenPutMethod:  ()->
     $('<input name="_method" type="hidden" value="put">')
 
   headerFieldsRow: ()->
-    $("#inventory_table thead tr.lot")
+    @form.find("table thead tr")
 
   # Helpers
   disableFields: (el)->
@@ -37,10 +37,10 @@ class EditTable
       $(this).removeAttr("disabled")
 
   setFormActionAndMethod: (action, method)->
-    @form().attr('action', action)
+    @form.attr('action', action)
 
     if method.toLowerCase() == "put"
-      @form().append(@hiddenPutMethod())
+      @form.append(@hiddenPutMethod())
     else
       $("[name=_method]").remove()
 
@@ -51,8 +51,8 @@ class EditTable
   applyErrorValues: (el, data)->
     fieldsRow = @relatedRow(el)
 
-    $.each data, (item) ->
-      field = $(fieldsRow).find("#lot_#{data.id}_#{item}")
+    $.each data, (item)=>
+      field = $(fieldsRow).find($("input[name='#{@modelPrefix}[#{data.id}][#{item}]']"))
       $(field).val(data[item])
 
       if field.hasClass("datepicker")
@@ -80,16 +80,15 @@ class EditTable
 
   bindActions: ()->
     context = this
-    $("#inventory_table tbody tr.lot").on "click", ()->
+    @form.find("table tbody tr").on "click", ()->
       if $(this).hasClass('fields_lot')
         return
 
       context.enableEditForRow(this)
 
-    $("#inventory_table tbody").on "click", 'tr.fields_lot .cancel', ()->
-      # get the first 'tr' parent
+    @form.find("table tbody").on "click", 'tr.fields_lot .cancel', ()->
       row = $(this).parents("tr")[0]
-      context.enableFields("#inventory_table thead tr.lot")
+      context.enableFields(context.form.find("table thead tr.lot"))
 
       context.setFormActionAndMethod(context.initialAction, "post")
 
@@ -104,4 +103,7 @@ class EditTable
 
 $ ->
   return unless $("#inventory_table").length
-  editTable = EditTable.build()
+
+  EditTable.build
+    selector: "#new_lot"
+    modelPrefix: "lot"
