@@ -16,6 +16,19 @@ class Admin::PricesController < AdminController
     end
   end
 
+  def update
+    price = @product.prices.find(params[:id])
+    params[:price] = params[:price][price.id.to_s]
+    if price.update price_params
+      redirect_to [:admin, @product, :prices], notice: "Successfully saved price"
+    else
+      @price_with_errors = price
+      @price = @product.prices.build.decorate
+      flash.now[:alert] = "Could not save price"
+      render :index
+    end
+  end
+
   private
 
   def price_params

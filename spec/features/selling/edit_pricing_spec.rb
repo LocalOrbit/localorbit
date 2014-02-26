@@ -1,0 +1,173 @@
+require "spec_helper"
+
+describe "Editing advanced pricing" do
+  let(:user)    { create(:user) }
+  let(:market)  { create(:market) }
+  let!(:organization) { create(:organization, markets: [market]) }
+  let!(:product) do
+    create(:product).tap do |p|
+      p.organization.users << user
+      market.organizations << p.organization
+    end
+  end
+
+  let!(:price) { create(:price, product: product, sale_price: 3) }
+  let!(:price2) { create(:price, product: product, sale_price: 2, min_quantity: 100) }
+
+  before do
+    sign_in_as(user)
+    click_link 'Products'
+    click_link product.name
+    click_link 'Pricing'
+  end
+
+  describe "clicking on a price row", js: true do
+    before do
+      Dom::PricingRow.first.click
+    end
+
+    it "disables the #new_price form fields" do
+      new_price_form = Dom::NewPricingForm.first
+
+      new_price_form.inputs.each do |input|
+        expect(input['disabled']).to eql('disabled')
+        expect(input['readonly']).to eql('readonly')
+      end
+    end
+
+    it "opens the clicked on price row to editing" do
+      edit_price_form = Dom::PricingRow.first
+
+      expect(edit_price_form).to be_editable
+    end
+
+    it "changes the action and method for the form" do
+      form = page.find("#new_price")
+      hidden_method = page.find("[name=_method]", visible: false)
+
+      expect(form['action']).to eql("/admin/products/#{product.id}/prices/#{price.id}")
+      expect(hidden_method.value).to eql("put")
+    end
+
+    describe "then clicking on another price row" do
+      it "will not open the other price row" do
+        Dom::PricingRow.all.last.click
+
+        expect(Dom::PricingRow.first).to be_editable
+        expect(Dom::PricingRow.all.last).to_not be_editable
+      end
+    end
+
+    describe "then canceling" do
+      let(:price_row) { Dom::PricingRow.first }
+
+      before do
+        price_row.node.find_link("Cancel").click
+      end
+
+      it "replaces the open field with the previous table row" do
+        price_row = Dom::PricingRow.first
+        expect(price_row).to_not be_editable
+      end
+
+      it "enables the new price form" do
+        new_price_form = Dom::NewPricingForm.first
+
+        new_price_form.inputs.each do |input|
+          expect(input['disabled']).to be_nil
+          expect(input['readonly']).to be_nil
+        end
+      end
+
+      it "sets the form url back" do
+        form = page.find("#new_price")
+        expect(form['action']).to eql("/admin/products/#{product.id}/prices")
+        expect(form['method']).to eql("post")
+      end
+
+      it "restores the fields to their original state" do
+        price_row = Dom::PricingRow.first
+        price_row.click
+
+        price_row.inputs.each do |input|
+          expect(input['disabled']).to be_nil
+          expect(input['readonly']).to be_nil
+        end
+
+        fill_in("price_#{price.id}_sale_price", with: 55)
+        fill_in("price_#{price.id}_min_quantity", with: 66)
+
+        click_link "Cancel"
+
+        Dom::PricingRow.first.click
+
+        expect(page.find("#price_#{price.id}_sale_price").value).to eql("3.00")
+        expect(page.find("#price_#{price.id}_min_quantity").value).to eql("1")
+      end
+    end
+
+    describe "submitting the form" do
+      context "price is valid" do
+        before do
+          fill_in("price_#{price.id}_sale_price", with: 66)
+          click_button "Save"
+        end
+
+        it "saves the price" do
+          price_row = Dom::PricingRow.first
+          expect(price_row.sale_price).to eql("66.00")
+          expect(page).to have_content("Successfully saved price")
+        end
+
+        it "hides the form" do
+          expect(Dom::PricingRow.first).to_not be_editable
+        end
+
+        it "shows the new price form" do
+          expect(Dom::NewPricingForm.first).to be_editable
+        end
+      end
+
+      context "sale_price is invalid" do
+        before do
+          fill_in("price_#{price.id}_sale_price", with: "-10")
+          fill_in("price_#{price.id}_min_quantity", with:"-2")
+
+          click_button "Save"
+        end
+
+        it "does not fill in the new price fields" do
+          new_price_form = Dom::NewPricingForm.first
+
+          expect(new_price_form.min_quantity.value).to eql("1")
+          expect(new_price_form.sale_price.value).to be_blank
+        end
+
+        it "responds with an error message" do
+          expect(page).to have_content("Could not save price")
+          expect(page).to have_content("Min quantity must be greater than 0")
+        end
+
+        it "opens the price row for editing" do
+          price_row = Dom::PricingRow.first
+          expect(price_row).to be_editable
+
+          sale_price_field = price_row.node.find("#price_#{price.id}_sale_price")
+          expect(sale_price_field.value).to eql("-10.00")
+        end
+
+        it "allows the user cancel editing multiple times" do
+          click_link "Cancel"
+          expect(Dom::PricingRow.first).not_to be_editable
+          Dom::PricingRow.first.click
+          expect(Dom::PricingRow.first).to be_editable
+          click_link "Cancel"
+          expect(Dom::PricingRow.first).not_to be_editable
+        end
+
+        it "fills in the net pricing with the appropriate values"
+      end
+
+    end
+  end
+end

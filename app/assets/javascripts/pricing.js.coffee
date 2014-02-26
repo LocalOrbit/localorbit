@@ -1,4 +1,6 @@
 $ ->
+  return unless $("#pricing_table").length
+
   $('#price_sale_price').change ->
     net_price = $('#price_net_price')
     val = parseFloat($(this).val())
@@ -16,3 +18,7 @@ $ ->
 
   $('#price_net_price').on 'keyup', ->
     $(this).trigger('change')
+
+  EditTable.build
+    selector: "#new_price"
+    modelPrefix: "price"

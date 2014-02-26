@@ -55,6 +55,7 @@ class @EditTable
       field = $(fieldsRow).find($("input[name='#{@modelPrefix}[#{data.id}][#{item}]']"))
       $(field).val(data[item])
 
+      # Apply Any Client-side formatting for fields
       if field.hasClass("datepicker")
         DatePicker.setup(field)
 
@@ -81,14 +82,14 @@ class @EditTable
   bindActions: ()->
     context = this
     @form.find("table tbody tr").on "click", ()->
-      if $(this).hasClass('fields_lot')
+      if $(this).data('form-url')?
         return
 
       context.enableEditForRow(this)
 
-    @form.find("table tbody").on "click", 'tr.fields_lot .cancel', ()->
+    @form.find("table tbody").on "click", 'tr .cancel', ()->
       row = $(this).parents("tr")[0]
-      context.enableFields(context.form.find("table thead tr.lot"))
+      context.enableFields(context.headerFieldsRow())
 
       context.setFormActionAndMethod(context.initialAction, "post")
 
