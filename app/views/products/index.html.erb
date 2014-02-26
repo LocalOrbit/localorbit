@@ -1,3 +1,8 @@
+<div id="product-filter">
+  <%= filter_list(current_market.organizations, :organization) %>
+  <%= filter_list(@categories, :category) %>
+</div>
+
 <table id="products">
   <thead>
     <tr>

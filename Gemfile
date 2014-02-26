@@ -24,6 +24,7 @@ gem 'honeybadger'
 gem 'interactor-rails'
 gem 'newrelic_rpm'
 gem 'jquery-ui-rails'
+gem 'periscope-activerecord'
 
 group :doc do
   gem 'sdoc', require: false

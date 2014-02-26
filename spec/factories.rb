@@ -63,6 +63,10 @@ FactoryGirl.define do
     end
   end
 
+  factory :category do
+    sequence(:name) {|n| "Category #{n}" }
+  end
+
   factory :location do
     sequence(:name) {|n| "Location #{n}" }
     address "500 S. State Street"

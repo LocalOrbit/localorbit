@@ -40,6 +40,15 @@ describe Product do
     end
   end
 
+  describe ".for_organization_id" do
+    let(:product1) { create(:product) }
+    let(:product2) { create(:product) }
+
+    it "returns products sold by organization" do
+      expect(Product.for_organization_id(product1.organization_id)).to match_array([product1])
+    end
+  end
+
   describe '#can_use_simple_inventory?' do
     let(:product) { create(:product, use_simple_inventory: false) }
 

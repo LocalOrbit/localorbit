@@ -13,10 +13,21 @@ class Product < ActiveRecord::Base
 
   delegate :name, to: :organization, prefix: true
 
+  scope_accessible :organization, method: :for_organization_id, ignore_blank: true
+  scope_accessible :category, method: :for_category_id, ignore_blank: true
+
   def self.available_for_market(market)
     return none unless market
 
     where(organization: market.organization_ids)
+  end
+
+  def self.for_organization_id(organization_id)
+    where(organization_id: organization_id)
+  end
+
+  def self.for_category_id(category_id)
+    where(category_id: category_id)
   end
 
   def can_use_simple_inventory?
