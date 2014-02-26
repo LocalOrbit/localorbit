@@ -1,0 +1,8 @@
+<h1>Edit <%= @address.name %></h1>
+
+<%= form_for @address, url: admin_market_address_path(@market, @address) do |f| %>
+  <%= render 'form', {f: f} %>
+  <div>
+    <%= f.submit "Update Address" %>
+  </div>
+<% end %>

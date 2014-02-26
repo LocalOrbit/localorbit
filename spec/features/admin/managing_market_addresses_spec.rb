@@ -59,6 +59,18 @@ describe "Admin Managing Markets" do
 
       expect(page).to have_text('New Address')
     end
+
+    it 'I can edit an existing address' do
+      expect(page).to have_text(address1.name)
+
+      click_link address1.name
+
+      fill_in 'Name', with: 'Edited Address'
+
+      click_button 'Update Address'
+
+      expect(page).to have_text('Edited Address')
+    end
   end
 
   describe 'as an admin' do

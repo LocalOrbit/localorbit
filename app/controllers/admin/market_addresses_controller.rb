@@ -6,7 +6,7 @@ class Admin::MarketAddressesController < AdminController
   end
 
   def new
-    @address = MarketAddress.new(market: @market)
+    @address = MarketAddress.new(market: current_market)
   end
 
   def create
@@ -16,6 +16,21 @@ class Admin::MarketAddressesController < AdminController
     else
       redirect_to admin_market_addresses_path(current_market)
     end
+  end
+
+  def edit
+    current_market
+    @address = MarketAddress.where(id: params[:id]).first
+  end
+
+  def update
+    @address = MarketAddress.where(id: params[:id]).first
+    if @address.update_attributes(market_address_params)
+      redirect_to admin_market_addresses_path(current_market)
+    else
+      render :edit
+    end
+
   end
 
   private
