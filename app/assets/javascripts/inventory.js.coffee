@@ -5,7 +5,6 @@ class EditTable
     table
 
   constructor: ()->
-    @selectedRow = null
     @hiddenRow = null
     @originalFields = null
     @editing = false
@@ -45,22 +44,24 @@ class EditTable
     else
       $("[name=_method]").remove()
 
-  # TODO: Rename to applyModelValues
+  relatedRow: (el)->
+    idFromRel = $(el).attr("rel")
+    $("#"+idFromRel)
+
   applyErrorValues: (el, data)->
-    # TODO: pull into a helper
-    # TODO: Move fieldsRow to a rel tag
-    fieldsRow = $("#fields_#{@hiddenRow.attr('id')}")
+    fieldsRow = @relatedRow(el)
+
     $.each data, (item) ->
-      id = "#lot_#{data.id}_#{item}"
-      field = $(fieldsRow).find(id)
-      field.val(data[item])
+      field = $(fieldsRow).find("#lot_#{data.id}_#{item}")
+      $(field).val(data[item])
+
       if field.hasClass("datepicker")
         DatePicker.setup(field)
 
   enableEditForRow: (row)->
     return if @editing
-    fieldsRowId = $(row).attr('rel')
-    fieldsRow = $("#"+fieldsRowId)
+
+    fieldsRow = @relatedRow(row)
 
     @originalFields = fieldsRow.clone(true)
 
