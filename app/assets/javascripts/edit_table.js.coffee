@@ -7,6 +7,7 @@ class @EditTable
   constructor: (opts)->
     @form = $(opts.selector)
     @modelPrefix = opts.modelPrefix
+    @applyErrorValuesCallback = opts.applyErrorValuesCallback
 
     @hiddenRow = null
     @originalFields = null
@@ -48,6 +49,20 @@ class @EditTable
     idFromRel = $(el).attr("rel")
     $("#"+idFromRel)
 
+  storeOriginalValues: (fieldsRow)->
+    return if $(fieldsRow.find('input')[0]).data('original-value')?
+
+    fieldsRow.find('input').each ->
+      field = $(this)
+      field.data('orginal-value', field.val())
+
+  restoreOriginalValues: (fieldsRow)->
+    $(fieldsRow).find('input').each ->
+      field = $(this)
+      field.val(field.data('orginal-value'))
+      if field.attr('step') == '0.01'
+        field.val(parseFloat(field.val()).toFixed(2))
+
   applyErrorValues: (el, data)->
     fieldsRow = @relatedRow(el)
 
@@ -59,12 +74,15 @@ class @EditTable
       if field.hasClass("datepicker")
         DatePicker.setup(field)
 
+      if field.length && @applyErrorValuesCallback
+        @applyErrorValuesCallback(field)
+
   enableEditForRow: (row)->
     return if @editing
 
     fieldsRow = @relatedRow(row)
 
-    @originalFields = fieldsRow.clone(true)
+    @storeOriginalValues(fieldsRow)
 
     action = fieldsRow.data('form-url')
     @setFormActionAndMethod(action, 'put')
@@ -98,7 +116,6 @@ class @EditTable
 
       context.disableFields(row)
       $(row).hide()
-      $(row).replaceWith(context.originalFields)
-      context.originalFields = null
+      context.restoreOriginalValues(row)
       context.editing = false
 

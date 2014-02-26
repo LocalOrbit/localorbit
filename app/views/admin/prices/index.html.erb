@@ -29,8 +29,8 @@
       <td><%= f.object.market_name %></td>
       <td><%= f.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %></td>
       <td><%= f.number_field :min_quantity, min: 0 %></td>
-      <td><%= f.number_field :net_price, min: 0, step: 0.01, data: {"net-percent" => "0.97"} %></td>
-      <td><%= f.number_field :sale_price, min: 0, step: 0.01 %></td>
+      <td><%= f.number_field :net_price, min: 0, step: 0.01, class: 'net-price', data: {"net-percent" => "0.97"} %></td>
+      <td><%= f.number_field :sale_price, min: 0, step: 0.01, class: 'sale-price' %></td>
       <td><%= f.submit "Add" %></td>
     </tr>
   </thead>
@@ -52,8 +52,8 @@
         <td><%= price.created_at.strftime('%m/%d/%Y') %></td>
         <td><%= price_in_table.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %></td>
         <td><%= price_in_table.number_field :min_quantity, min: 0 %></td>
-        <td><%= price_in_table.number_field :net_price, min: 0, step: 0.01, data: {"net-percent" => "0.97"} %></td>
-        <td><%= price_in_table.number_field :sale_price, min: 0, step: 0.01 %></td>
+        <td><%= price_in_table.number_field :net_price,  min: 0, step: 0.01, data: {"net-percent" => "0.97"}, class: "net-price"%></td>
+        <td><%= price_in_table.number_field :sale_price,  min: 0, step: 0.01, class: "sale-price" %></td>
         <td><%= link_to "Cancel", "javascript:void(0);", class:"cancel" %><%= f.submit "Save" %></td>
       <% end %>
     <% end %>

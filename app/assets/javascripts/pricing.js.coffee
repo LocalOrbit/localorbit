@@ -1,24 +1,49 @@
 $ ->
   return unless $("#pricing_table").length
 
-  $('#price_sale_price').change ->
-    net_price = $('#price_net_price')
-    val = parseFloat($(this).val())
-    net_percent = parseFloat(net_price.data('net-percent'))
-    net_price.val((val * net_percent).toFixed(2))
+  formatFieldAsMoney = (field)->
+    field.val(parseFloat(field.val()).toFixed(2))
 
-  $('#price_sale_price').on 'keyup', ->
-    $(this).trigger('change')
+  bindCalculator = (el)->
+    salePrice = $(el)
 
-  $('#price_net_price').change ->
-    sale_price = $('#price_sale_price')
-    val = parseFloat($(this).val())
-    net_percent = parseFloat($(this).data('net-percent'))
-    sale_price.val((val / net_percent).toFixed(2))
+    netPrice = salePrice.parent().parent().find('.net-price')
 
-  $('#price_net_price').on 'keyup', ->
-    $(this).trigger('change')
+    salePrice.change ->
+      val = parseFloat($(this).val())
+      netPercent = parseFloat(netPrice.data('net-percent'))
+      netPrice.val((val * netPercent).toFixed(2))
+
+    salePrice.on 'keyup', ->
+      $(this).trigger('change')
+
+    salePrice.on 'blur', ->
+      formatFieldAsMoney($(this))
+
+    salePrice.trigger('blur')
+
+    netPrice.change ->
+      val = parseFloat($(this).val())
+      netPercent = parseFloat($(this).data('net-percent'))
+      salePrice.val((val / netPercent).toFixed(2))
+
+    netPrice.on 'keyup', ->
+      $(this).trigger('change')
+
+    netPrice.on 'blur', ->
+      formatFieldAsMoney($(this))
+
+    netPrice.trigger('blur')
+
+  $('input.sale-price').each ->
+    bindCalculator(this)
 
   EditTable.build
     selector: "#new_price"
     modelPrefix: "price"
+    applyErrorValuesCallback: (field)->
+      val = $(field).val()
+      if val? && (field.hasClass('sale-price') || field.hasClass('net-price'))
+        formatFieldAsMoney($(field))
+      if field.hasClass('sale-price')
+        $(field).trigger('change')

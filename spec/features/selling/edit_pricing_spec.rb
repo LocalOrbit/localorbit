@@ -107,7 +107,7 @@ describe "Editing advanced pricing" do
     end
 
     describe "submitting the form" do
-      context "price is valid" do
+      context "sale price is valid" do
         before do
           fill_in("price_#{price.id}_sale_price", with: 66)
           click_button "Save"
@@ -115,7 +115,7 @@ describe "Editing advanced pricing" do
 
         it "saves the price" do
           price_row = Dom::PricingRow.first
-          expect(price_row.sale_price).to eql("66.00")
+          expect(price_row.sale_price).to eql("$66.00")
           expect(page).to have_content("Successfully saved price")
         end
 
@@ -165,7 +165,11 @@ describe "Editing advanced pricing" do
           expect(Dom::PricingRow.first).not_to be_editable
         end
 
-        it "fills in the net pricing with the appropriate values"
+        it "calculates and formats the net price" do
+          price_row = Dom::PricingRow.first
+          net_price = price_row.node.find("#price_#{price.id}_net_price")
+          expect(net_price.value).to eql("-9.70")
+        end
       end
 
     end
