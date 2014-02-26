@@ -41,7 +41,7 @@
   <tbody>
     
   <% @product.lots.select(&:persisted?).each do |lot| %>
-    <%= content_tag_for :tr, lot do %>
+    <%= content_tag_for :tr, lot, rel: "fields_lot_#{lot.id}" do %>
       <td class="created_at"><%= lot.created_at.strftime('%m/%d/%Y') %></td>
       <td class="number"><%= lot.number %></td>
       <td class="good_from"><%= lot.good_from.try(:strftime, '%m/%d/%Y') %></td>
