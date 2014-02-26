@@ -1,7 +1,7 @@
 class Admin::MarketAddressesController < AdminController
   before_action :require_admin_or_market_manager
   before_action :find_current_market
-  before_action :find_address, only: [:edit, :update]
+  before_action :find_address, only: [:edit, :update, :destroy]
   
   def index
     @addresses = @market.addresses 
@@ -29,6 +29,11 @@ class Admin::MarketAddressesController < AdminController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @address.destroy
+    redirect_to admin_market_addresses_path(@market)
   end
 
   private

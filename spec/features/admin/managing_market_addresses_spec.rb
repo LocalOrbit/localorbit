@@ -71,6 +71,16 @@ describe "Admin Managing Markets" do
 
       expect(page).to have_text('Edited Address')
     end
+
+    it 'I can remove an existing address' do
+      expect(page).to have_text(address1.name)
+
+      click_link address1.name
+
+      click_link "Delete Address"
+
+      expect(page).to_not have_text(address1.name)
+    end
   end
 
   describe 'as an admin' do
