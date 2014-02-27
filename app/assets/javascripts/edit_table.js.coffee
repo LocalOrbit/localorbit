@@ -40,7 +40,7 @@ class @EditTable
     if method.toLowerCase() == "put"
       @form.append(@hiddenPutMethod())
     else
-      $("[name=_method]").remove()
+      @form.children("[name=_method]").remove()
 
   relatedRow: (el)->
     idFromRel = $(el).attr("rel")
