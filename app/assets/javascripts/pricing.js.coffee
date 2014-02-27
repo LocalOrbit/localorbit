@@ -40,7 +40,6 @@ $ ->
 
   EditTable.build
     selector: "#new_price"
-    modelPrefix: "price"
     applyErrorValuesCallback: (field)->
       val = $(field).val()
       if val? && (field.hasClass('sale-price') || field.hasClass('net-price'))

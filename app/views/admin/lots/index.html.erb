@@ -17,7 +17,7 @@
   <p>You don't have any inventory yet! Get started by adding your first lot.</p>
 <% end %>
 
-<table border="0" id="inventory_table" data-error-payload="<%= @lot_with_errors.to_json if @lot_with_errors %>">
+<%= content_tag :table, border: 0, id: 'inventory_table', data: edit_table_error_payload(@lot_with_errors) do %>
   <thead>
     <tr>
       <th>Date Added</th>
@@ -52,7 +52,7 @@
     <%= content_tag_for :tr, lot, :fields, {class: 'lot', style:"display:none;", data: {"form-url" => url_for([:admin, lot.product, lot]) }} do %>
       <%= fields_for :lot, lot, index: lot.id do |lot_in_table| %>
         <td><%= lot.created_at.strftime('%m/%d/%Y') %></td>
-        <td><%= lot_in_table.text_field :number  %></td>
+        <td><%= lot_in_table.text_field :number %></td>
         <td><%= lot_in_table.datetime_field :good_from, class: 'datepicker' %></td>
         <td><%= lot_in_table.datetime_field :expires_at, class: 'datepicker', data: {'min-date' => 0} %></td>
         <td><%= lot_in_table.number_field :quantity, min: 0 %></td>
@@ -62,5 +62,5 @@
     <% end %>
   <% end %>
   </tbody>
-</table>
-<% end %>
+<% end # table %>
+<% end # form %>

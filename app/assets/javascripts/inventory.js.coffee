@@ -3,4 +3,3 @@ $ ->
 
   EditTable.build
     selector: "#new_lot"
-    modelPrefix: "lot"

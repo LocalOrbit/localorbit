@@ -5,22 +5,21 @@ class @EditTable
     table
 
   constructor: (opts)->
-    @form = $(opts.selector)
-    @modelPrefix = opts.modelPrefix
+    @form  = $(opts.selector)
+    @table = @form.find("table")
     @applyErrorValuesCallback = opts.applyErrorValuesCallback
 
     @hiddenRow = null
-    @originalFields = null
-    @editing = false
+    @editing   = false
     @initialAction = @form.attr('action')
-    @errorPayload = @form.find("table").data("error-payload")
+    @errorPayload  = @table.data("error-payload")
 
     if @errorPayload
-      row = $("#" + "#{@modelPrefix}_" + @errorPayload.id)
+      row = $("\##{@table.data("id-prefix")}_#{@errorPayload.id}")
       @enableEditForRow(row)
       @applyErrorValues(row, @errorPayload)
 
-  hiddenPutMethod:  ()->
+  hiddenPutMethod: ()->
     $('<input name="_method" type="hidden" value="put">')
 
   headerFieldsRow: ()->
@@ -67,7 +66,7 @@ class @EditTable
     fieldsRow = @relatedRow(el)
 
     $.each data, (item)=>
-      field = $(fieldsRow).find($("input[name='#{@modelPrefix}[#{data.id}][#{item}]']"))
+      field = $(fieldsRow).find($("input[name$='[#{item}]']"))
       $(field).val(data[item])
 
       # Apply Any Client-side formatting for fields
