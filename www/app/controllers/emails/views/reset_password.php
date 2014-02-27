@@ -39,4 +39,5 @@ $this->send_email('Your New Password',$to_email,$body,
 	array(),
 	$market_manager['email'],
 	$market_manager['name']
+);
 ?>
