@@ -22,16 +22,35 @@
         also perfect for pies or snacking.</p>
         <ul class="meta">
           <li class="organization-name">
-            <%= link_to product.organization_name, '#', class: 'popup', data: { popup: 'who-info' } %>
-            <div class="who-info is-hidden"><%= product.who_story %></div>
+            <%= link_to product.organization_name, '#', class: 'popup-toggle', data: { popup: 'who-info' } %>
+            <div class="who-info is-hidden with-anchor top-anchor popup">
+              <div class="popup-header">
+                Who <button>X</button>
+              </div>
+              <div class="popup-body">
+                <%= product.who_story %>
+              </div>
+            </div>
           </li>
           <li class="how-story">
-            <%= link_to "How", "#", class: 'popup', data: { popup: 'how-info' } %>
-            <div class="how-info is-hidden"><%= product.how_story %></div>
+            <%= link_to "How", "#", class: 'popup-toggle', data: { popup: 'how-info' } %>
+            <div class="how-info is-hidden with-anchor top-anchor popup">
+              <div class="popup-header">
+                How <button>X</button>
+              </div>
+              <div class="popup-body">
+                <%= product.how_story %>
+              </div>
+            </div>
           </li>
           <li class="where">
-            <%= link_to "Where", "#", class: 'popup', data: { popup: 'where-info' } %>
-            <div class="where-info is-hidden"><%= product.location.try(:name) %></div>
+            <%= link_to "Where", "#", class: 'popup-toggle', data: { popup: 'where-info' } %>
+            <div class="where-info is-hidden with-anchor top-anchor popup">
+              <div class="popup-header">
+                Holland, MI     <button>X</button>
+              </div>
+              <img class="location-map" alt="" src="<%= product.location_map%>" />
+            </div>
           </li>
         </ul>
       </td>

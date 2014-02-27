@@ -38,6 +38,6 @@ $ ->
     $('#simple-inventory').toggleClass('is-hidden')
     $('#product-inventory-nav').toggleClass('is-hidden')
 
-  $('.popup').click ->
+  $('.popup-toggle').click ->
     destination = $(this).data('popup')
     $(this).parent().find("."+destination).toggleClass('is-hidden')

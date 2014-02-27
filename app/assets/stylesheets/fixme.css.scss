@@ -1,0 +1,52 @@
+@import "mixins";
+
+.product {
+
+  .meta {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: inline-block;
+    }
+  }
+}
+
+.popup {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid #ccc;
+  background: #fff;
+  @include border-radius(5px);
+  @include box-shadow(0 0 5px rgba(0,0,0,0.2));
+
+  &.with-anchor:after {
+    border-bottom-color: #F2F2F2;
+  }
+}
+
+.popup-header {
+  padding: 0 10px;
+  text-align: center;
+  font-weight: bold;
+  line-height: 2.5;
+  background: #F2F2F2;
+  @include border-radius(5px 5px 0 0);
+
+  button {
+    float: right;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: #000;
+  }
+}
+
+.popup-body {
+  padding: 10px;
+}
+
+.location-map {
+  display: block;
+}
