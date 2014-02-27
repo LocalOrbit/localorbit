@@ -2,10 +2,16 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
+  table a {
+    color: #4162A1;
+  }
 
 th {
   color: #777;
   text-align: left;
+  &[scope=row] {
+    font-weight: normal;
+  }
 }
 
 .lot {
@@ -15,10 +21,18 @@ th {
 
   > td {
     vertical-align: middle;
-
-    &:first-child {
-      vertical-align: middle;
-    }
+    white-space: nowrap
   }
 
+}
+
+.pricing {
+  font-size: 12px;
+
+  .price {
+    display: inline-block;
+    padding: .1em .2em;
+    border: solid 1px #d7d7d7;
+    margin: 0 0 .4em;
+  }
 }

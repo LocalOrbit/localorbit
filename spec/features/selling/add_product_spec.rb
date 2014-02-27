@@ -92,7 +92,6 @@ describe "Adding a product" do
         click_button "Add Product"
         expect(page).to have_content("Added Red Grapes")
 
-        click_link "Product Info"
         expect(page).to have_content("Grapes / Red Grapes")
       end
 

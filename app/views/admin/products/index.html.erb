@@ -1,7 +1,20 @@
-<%= link_to "Add a product", new_admin_product_path %>
+<h1>Products</h1>
 
+<%= link_to "Add a product", new_admin_product_path, class: "btn" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Pricing</th>
+      <th>In Stock</th>
+    </tr>
+  </thead>
 <% @products.each do |product| %>
-  <div>
-    <%= link_to product.name, [:admin, product] %>
-  </div>
+  <tr class="product-row">
+    <th scope="row"><%= link_to product.name, [:admin, product] %></th>
+    <td></td>
+    <td></td>
+  </tr>
 <% end %>
+</table>

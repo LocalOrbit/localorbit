@@ -19,4 +19,12 @@ module ApplicationHelper
     return nil unless obj
     {"error-payload" => obj.to_json, "id-prefix" => obj.class.to_s.downcase}
   end
+
+  def link_to_or_span(name, options = {}, html_options = {}, &block)
+    if current_page?(options)
+      content_tag(:span, name, html_options, &block)
+    else
+      link_to name, options, html_options, &block
+    end
+  end
 end

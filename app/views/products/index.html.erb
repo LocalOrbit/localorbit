@@ -15,10 +15,10 @@
   </thead>
   <tbody>
   <% @products.each do |product| %>
-    <tr class="product">
+    <tr class="product product-row">
       <td class="info">
         <h3 class="name"><%= product.name %></h3>
-        <p class="description">This tart variety is great for applesauce, but
+        <p class="description is-hidden">This tart variety is great for applesauce, but
         also perfect for pies or snacking.</p>
         <ul class="meta">
           <li class="organization-name">
@@ -55,11 +55,11 @@
         </ul>
       </td>
       <td class="pricing">
-        <ul>
-          <li>$20.00 per Bushel</li>
-          <li>$15.00 5+ Bushels</li>
-          <li>$12.00 10+ Bushels</li>
-          <li class="negotiated">$9.00 100+ Bushels</li>
+        <ul class="l-inline-list">
+          <li><a href="#" class="price">$20.00</a></li>
+          <li><a href="#" class="price">$15.00 5+ Bushels</a></li>
+          <li><a href="#" class="price">$12.00 10+ Bushels</a></li>
+          <li class="negotiated"><a href="#" class="price">$9.00 100+ Bushels</a></li>
         </ul>
       </td>
       <td class="quantity">
