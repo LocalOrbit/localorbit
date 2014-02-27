@@ -1,6 +1,17 @@
 require 'spec_helper'
 
 describe Price do
+  describe 'validations' do
+    it 'allows multiple products to have the same price' do
+      prod1 = create(:product)
+      prod2 = create(:product)
+      prod1.prices.create!(min_quantity: 1, sale_price: 2)
+
+      price = prod2.prices.build(min_quantity: 1, sale_price: 2)
+      expect(price).to have(0).errors_on(:min_quantity)
+    end
+  end
+
   describe '#net_price' do
     it "returns the adjusted sale_price for fees" do
       expect(subject.net_price).to eq(0)
