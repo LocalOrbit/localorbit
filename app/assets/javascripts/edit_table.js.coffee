@@ -11,7 +11,7 @@ class @EditTable
 
     @hiddenRow = null
     @editing   = false
-    @initialAction = @form.attr('action')
+    @initialAction = @form.attr("action")
     @errorPayload  = @table.data("error-payload")
 
     if @errorPayload
@@ -40,7 +40,7 @@ class @EditTable
       $(this).removeAttr("readonly").removeAttr("disabled")
 
   setFormActionAndMethod: (action, method)->
-    @form.attr('action', action)
+    @form.attr("action", action)
 
     if method.toLowerCase() != "get" && method.toLowerCase() != "post"
       @form.append(@hiddenFormMethod(method))
@@ -48,16 +48,16 @@ class @EditTable
       @form.children("[name=_method]").remove()
 
   storeOriginalValues: (fieldsRow)->
-    fieldsRow.find('input').each ->
+    fieldsRow.find("input").each ->
       field = $(this)
-      if !field.data('orginal-value')?
-        field.data('orginal-value', field.val())
+      if !field.data("orginal-value")?
+        field.data("orginal-value", field.val())
 
   restoreOriginalValues: (fieldsRow)->
-    $(fieldsRow).find('input').each ->
+    $(fieldsRow).find("input").each ->
       field = $(this)
-      field.val(field.data('orginal-value'))
-      if field.attr('step') == '0.01'
+      field.val(field.data("orginal-value"))
+      if field.attr("step") == "0.01"
         field.val(parseFloat(field.val()).toFixed(2))
 
   applyErrorValues: (el, data)->
@@ -82,8 +82,8 @@ class @EditTable
 
     @storeOriginalValues(fieldsRow)
 
-    action = fieldsRow.data('form-url')
-    @setFormActionAndMethod(action, 'put')
+    action = fieldsRow.data("form-url")
+    @setFormActionAndMethod(action, "put")
 
     @disableFields(@headerFieldsRow())
     @enableFields(fieldsRow)
@@ -112,12 +112,12 @@ class @EditTable
   bindActions: ()->
     context = this
     @form.find("table tbody tr").on "click", ()->
-      if $(this).data('form-url')?
+      if $(this).data("form-url")?
         return
 
       context.openEditRow(this)
 
-    @form.find("table tbody").on "click", 'tr .cancel', ()->
+    @form.find("table tbody").on "click", "tr .cancel", ()->
       row = $(this).parents("tr")[0]
       context.closeEditRow(row, true)
 
