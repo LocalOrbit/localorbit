@@ -23,7 +23,6 @@ module Dom
     def type_search(term)
       search_field.set(term)
     end
-
   end
 
   class CategorySelect < TypeAhead
@@ -34,10 +33,7 @@ module Dom
     end
   end
 
-
-  class LotRow < Domino
-    selector "#inventory_table tbody tr.lot"
-
+  class EditableTableRow < Domino
     def editable?
       node.all("input").present?
     end
@@ -45,6 +41,14 @@ module Dom
     def click
       node.click
     end
+
+    def inputs
+      node.all("input")
+    end
+  end
+
+  class LotRow < EditableTableRow
+    selector "#inventory_table tbody tr.lot"
 
     def number
       node.find(".number").text
@@ -61,10 +65,6 @@ module Dom
     def quantity
       node.find(".quantity").text
     end
-
-    def inputs
-      node.all("input")
-    end
   end
 
   class NewLotForm < LotRow
@@ -76,6 +76,42 @@ module Dom
 
     def expires_at
       node.find("#lot_expires_at")
+    end
+  end
+
+  class PricingRow < EditableTableRow
+    selector "#pricing_table tbody tr.price"
+
+    def market
+      node.find(".market").text
+    end
+
+    def buyer
+      node.find(".buyer").text
+    end
+
+    def min_quantity
+      node.find(".min-qty").text
+    end
+
+    def net_price
+      node.find(".net-price").text
+    end
+
+    def sale_price
+      node.find(".sale-price").text
+    end
+  end
+
+  class NewPricingForm < PricingRow
+    selector "#pricing_table thead tr.price"
+
+    def min_quantity
+      node.find("#price_min_quantity")
+    end
+
+    def sale_price
+      node.find("#price_sale_price")
     end
   end
 

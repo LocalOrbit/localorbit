@@ -4,6 +4,7 @@ class Product < ActiveRecord::Base
   belongs_to :location
 
   has_many :lots, lambda { order('created_at') }, autosave: true
+  has_many :prices, autosave: true
 
   validates :name, presence: true
   validates :category_id, presence: true

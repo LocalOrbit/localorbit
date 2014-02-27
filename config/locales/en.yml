@@ -28,3 +28,9 @@ en:
         expires_at: Expires On
       product/lots:
         quantity: Simple inventory quantity
+    errors:
+      models:
+        price:
+          attributes:
+            min_quantity:
+              taken: must be unique

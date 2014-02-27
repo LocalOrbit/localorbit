@@ -7,6 +7,7 @@ class @EditTable
   constructor: (opts)->
     @form = $(opts.selector)
     @modelPrefix = opts.modelPrefix
+    @applyErrorValuesCallback = opts.applyErrorValuesCallback
 
     @hiddenRow = null
     @originalFields = null
@@ -48,6 +49,20 @@ class @EditTable
     idFromRel = $(el).attr("rel")
     $("#"+idFromRel)
 
+  storeOriginalValues: (fieldsRow)->
+    return if $(fieldsRow.find('input')[0]).data('original-value')?
+
+    fieldsRow.find('input').each ->
+      field = $(this)
+      field.data('orginal-value', field.val())
+
+  restoreOriginalValues: (fieldsRow)->
+    $(fieldsRow).find('input').each ->
+      field = $(this)
+      field.val(field.data('orginal-value'))
+      if field.attr('step') == '0.01'
+        field.val(parseFloat(field.val()).toFixed(2))
+
   applyErrorValues: (el, data)->
     fieldsRow = @relatedRow(el)
 
@@ -55,15 +70,19 @@ class @EditTable
       field = $(fieldsRow).find($("input[name='#{@modelPrefix}[#{data.id}][#{item}]']"))
       $(field).val(data[item])
 
+      # Apply Any Client-side formatting for fields
       if field.hasClass("datepicker")
         DatePicker.setup(field)
+
+      if field.length && @applyErrorValuesCallback
+        @applyErrorValuesCallback(field)
 
   enableEditForRow: (row)->
     return if @editing
 
     fieldsRow = @relatedRow(row)
 
-    @originalFields = fieldsRow.clone(true)
+    @storeOriginalValues(fieldsRow)
 
     action = fieldsRow.data('form-url')
     @setFormActionAndMethod(action, 'put')
@@ -81,14 +100,14 @@ class @EditTable
   bindActions: ()->
     context = this
     @form.find("table tbody tr").on "click", ()->
-      if $(this).hasClass('fields_lot')
+      if $(this).data('form-url')?
         return
 
       context.enableEditForRow(this)
 
-    @form.find("table tbody").on "click", 'tr.fields_lot .cancel', ()->
+    @form.find("table tbody").on "click", 'tr .cancel', ()->
       row = $(this).parents("tr")[0]
-      context.enableFields(context.form.find("table thead tr.lot"))
+      context.enableFields(context.headerFieldsRow())
 
       context.setFormActionAndMethod(context.initialAction, "post")
 
@@ -97,7 +116,6 @@ class @EditTable
 
       context.disableFields(row)
       $(row).hide()
-      $(row).replaceWith(context.originalFields)
-      context.originalFields = null
+      context.restoreOriginalValues(row)
       context.editing = false
 

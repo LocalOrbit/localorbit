@@ -63,6 +63,12 @@ FactoryGirl.define do
     end
   end
 
+  factory :price do
+    product
+    min_quantity 1
+    sale_price 3.00
+  end
+
   factory :category do
     sequence(:name) {|n| "Category #{n}" }
   end

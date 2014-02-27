@@ -106,6 +106,20 @@ ActiveRecord::Schema.define(version: 20140226163733) do
     t.text     "how_story"
   end
 
+  create_table "prices", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "market_id"
+    t.integer  "organization_id"
+    t.integer  "min_quantity",                             default: 1, null: false
+    t.decimal  "sale_price",      precision: 10, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
+  add_index "prices", ["organization_id"], name: "index_prices_on_organization_id", using: :btree
+  add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
+
   create_table "products", force: true do |t|
     t.text     "name"
     t.integer  "category_id"
