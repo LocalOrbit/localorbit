@@ -19,8 +19,8 @@ class @EditTable
       @enableEditForRow(row)
       @applyErrorValues(row, @errorPayload)
 
-  hiddenPutMethod: ()->
-    $('<input name="_method" type="hidden" value="put">')
+  hiddenFormMethod: (method)->
+    $("<input name=\"_method\" type=\"hidden\" value=\"#{method}\">")
 
   headerFieldsRow: ()->
     @form.find("table thead tr")
@@ -37,8 +37,8 @@ class @EditTable
   setFormActionAndMethod: (action, method)->
     @form.attr('action', action)
 
-    if method.toLowerCase() == "put"
-      @form.append(@hiddenPutMethod())
+    if method.toLowerCase() != "get" && method.toLowerCase() != "post"
+      @form.append(@hiddenFormMethod(method))
     else
       @form.children("[name=_method]").remove()
 
