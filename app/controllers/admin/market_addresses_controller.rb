@@ -2,9 +2,9 @@ class Admin::MarketAddressesController < AdminController
   before_action :require_admin_or_market_manager
   before_action :find_current_market
   before_action :find_address, only: [:edit, :update, :destroy]
-  
+
   def index
-    @addresses = @market.addresses 
+    @addresses = @market.addresses
   end
 
   def new
@@ -12,11 +12,11 @@ class Admin::MarketAddressesController < AdminController
   end
 
   def create
-    @address = MarketAddress.create(market_address_params)
-    if @address.errors.any?
-      render :new
-    else
+    @address = @market.addresses.build(market_address_params)
+    if @address.save
       redirect_to admin_market_addresses_path(@market)
+    else
+      render :new
     end
   end
 
@@ -45,14 +45,14 @@ class Admin::MarketAddressesController < AdminController
       :city,
       :state,
       :zip
-    ).merge(market_id: params[:market_id])
+    )
   end
-  
+
   def find_current_market
     @market = Market.where(id: params[:market_id]).first
   end
 
-  def find_address 
+  def find_address
     @address = MarketAddress.where(id: params[:id]).first
   end
 end
