@@ -1,0 +1,11 @@
+<h1>Edit <%= @address.name %></h1>
+
+<%= render 'shared/errors', { resource: @address } %>
+
+<%= form_for @address, url: admin_market_address_path(@market, @address) do |f| %>
+  <%= render 'form', {f: f} %>
+  <div>
+    <%= f.submit "Update Address" %>
+    <%= link_to "Delete Address", admin_market_address_path(@market, @address), method: :delete %>
+  </div>
+<% end %>

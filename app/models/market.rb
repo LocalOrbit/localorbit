@@ -8,6 +8,7 @@ class Market < ActiveRecord::Base
 
   has_many :market_organizations
   has_many :organizations, through: :market_organizations
+  has_many :addresses, class_name: MarketAddress
 
   def clean_twitter_slug
     if twitter && twitter.match(/^@/)

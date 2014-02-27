@@ -88,4 +88,12 @@ FactoryGirl.define do
       end
     end
   end
+
+  factory :market_address do
+    sequence(:name) {|n| "Location #{n}" }
+    address "500 S. State Street"
+    city "Ann Arbor"
+    state "Michigan"
+    zip "48109"
+  end
 end

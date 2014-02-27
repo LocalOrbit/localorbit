@@ -1,0 +1,9 @@
+<%= link_to 'Add Address', new_admin_market_address_path(@market) %>
+
+<% @addresses.each do |address| %>
+  <div>
+    <div><%= link_to address.name, edit_admin_market_address_path(@market, address) %></div>
+    <div><%= address.address %></div>
+    <div><%= address.city %>, <%= address.state %> <%= address.zip %></div>
+  </div>
+<% end %>
