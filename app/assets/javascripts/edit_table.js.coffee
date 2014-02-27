@@ -27,14 +27,12 @@ class @EditTable
 
   # Helpers
   disableFields: (el)->
-    $(el).find("input").each ()->
-      $(this).attr("readonly", true)
-      $(this).attr("disabled", true)
+    $(el).find("input,select").each ()->
+      $(this).attr("readonly", true).attr("disabled", true)
 
   enableFields: (el)->
-    $(el).find("input").each ()->
-      $(this).removeAttr("readonly")
-      $(this).removeAttr("disabled")
+    $(el).find("input,select").each ()->
+      $(this).removeAttr("readonly").removeAttr("disabled")
 
   setFormActionAndMethod: (action, method)->
     @form.attr('action', action)
