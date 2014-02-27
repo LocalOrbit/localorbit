@@ -16,7 +16,7 @@ class @EditTable
 
     if @errorPayload
       row = $("\##{@table.data("id-prefix")}_#{@errorPayload.id}")
-      @enableEditForRow(row)
+      @openEditRow(row)
       @applyErrorValues(row, @errorPayload)
 
   hiddenFormMethod: (method)->
@@ -74,7 +74,7 @@ class @EditTable
       if field.length && @applyErrorValuesCallback
         @applyErrorValuesCallback(field)
 
-  enableEditForRow: (row)->
+  openEditRow: (row)->
     return if @editing
 
     fieldsRow = @relatedRow(row)
@@ -94,25 +94,29 @@ class @EditTable
 
     @editing = true
 
+  closeEditRow: (row)->
+    @disableFields(row)
+    $(row).hide()
+
+    @restoreOriginalValues(row)
+    @editing = false
+
+    @enableFields(@headerFieldsRow())
+
+    @setFormActionAndMethod(@initialAction, "post")
+
+    $(@hiddenRow).show()
+    @hiddenRow = null
+
   bindActions: ()->
     context = this
     @form.find("table tbody tr").on "click", ()->
       if $(this).data('form-url')?
         return
 
-      context.enableEditForRow(this)
+      context.openEditRow(this)
 
     @form.find("table tbody").on "click", 'tr .cancel', ()->
       row = $(this).parents("tr")[0]
-      context.enableFields(context.headerFieldsRow())
-
-      context.setFormActionAndMethod(context.initialAction, "post")
-
-      $(context.hiddenRow).show()
-      context.hiddenRow = null
-
-      context.disableFields(row)
-      $(row).hide()
-      context.restoreOriginalValues(row)
-      context.editing = false
+      context.closeEditRow(row)
 
