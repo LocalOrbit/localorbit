@@ -19,11 +19,16 @@ class @EditTable
       @openEditRow(row)
       @applyErrorValues(row, @errorPayload)
 
+  # Lookups
   hiddenFormMethod: (method)->
     $("<input name=\"_method\" type=\"hidden\" value=\"#{method}\">")
 
   headerFieldsRow: ()->
     @form.find("table thead tr")
+
+  relatedRow: (el)->
+    idFromRel = $(el).attr("rel")
+    $("#"+idFromRel)
 
   # Helpers
   disableFields: (el)->
@@ -41,10 +46,6 @@ class @EditTable
       @form.append(@hiddenFormMethod(method))
     else
       @form.children("[name=_method]").remove()
-
-  relatedRow: (el)->
-    idFromRel = $(el).attr("rel")
-    $("#"+idFromRel)
 
   storeOriginalValues: (fieldsRow)->
     fieldsRow.find('input').each ->
@@ -73,6 +74,7 @@ class @EditTable
       if field.length && @applyErrorValuesCallback
         @applyErrorValuesCallback(field)
 
+  # Main actions
   openEditRow: (row)->
     @closeEditRow(@editing, false) if @editing
 
