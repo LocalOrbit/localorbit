@@ -1,0 +1,24 @@
+<div class="row">
+  <%= form.label :name, "Location Name" %><br>
+  <%= form.text_field :name, class: "column column--three-fourths" %>
+</div>
+
+<div class="row">
+  <%= form.label :address %><br>
+  <%= form.text_field :address, class: "column column--three-fourths" %>
+</div>
+
+<div class="row">
+  <%= form.label :city %><br>
+  <%= form.text_field :city, class: "column column--three-fourths"  %>
+</div>
+
+<div class="row">
+  <%= form.label :state %><br>
+  <%= form.select :state, us_states, {include_blank: true} %>
+</div>
+
+<div class="row">
+  <%= form.label :zip, "Postal Code" %><br>
+  <%= form.text_field :zip, class: "column column--three-fourths"  %>
+</div>

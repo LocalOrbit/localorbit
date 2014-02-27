@@ -1,36 +1,54 @@
-<%= form_for [:admin, @organization], html: {class: "column column--three-fourths"} do |f| %>
+<%= form_for [:admin, @organization], html: {class: "organization column column--three-fourths"} do |f| %>
 
   <%= render "shared/errors", { resource: @organization } %>
 
-  <% if @organization.new_record? %>
-    <% if @markets.size > 1 %>
-      <%= label_tag :initial_market_id, "Market" %>
-      <%= select_tag :initial_market_id, options_for_select(@markets.map {|m| [m.name, m.id] }), prompt: "Select a Market" %>
-    <% else %>
-      <%= hidden_field_tag :initial_market_id, @markets.first.id %>
+  <fieldset name="organization-info">
+    <legend>Organization Information</legend>
+    <% if @organization.new_record? %>
+      <% if @markets.size > 1 %>
+        <%= label_tag :initial_market_id, "Market" %>
+        <%= select_tag :initial_market_id, options_for_select(@markets.map {|m| [m.name, m.id] }), prompt: "Select a Market" %>
+      <% else %>
+        <%= hidden_field_tag :initial_market_id, @markets.first.id %>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <div class="row">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, class: "column column--three-fourths" %>
-  </div>
-
-  <div class="row">
-    <%= f.label :who_story, "Who" %><br>
-    <%= f.text_field :who_story, class: "column column--three-fourths" %>
-  </div>
-
-  <div class="row">
-    <%= f.label :how_story, "How" %><br>
-    <%= f.text_field :how_story, class: "column column--three-fourths" %>
-  </div>
-
-  <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
     <div class="row">
-      <%= f.check_box :can_sell %>
-      <%= f.label :can_sell, "Can sell product" %>
+      <%= f.label :name %><br>
+      <%= f.text_field :name, class: "column column--three-fourths" %>
     </div>
+
+    <div class="row">
+      <%= f.label :who_story, "Who" %><br>
+      <%= f.text_field :who_story, class: "column column--three-fourths" %>
+    </div>
+
+    <div class="row">
+      <%= f.label :how_story, "How" %><br>
+      <%= f.text_field :how_story, class: "column column--three-fourths" %>
+    </div>
+
+    <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
+      <div class="row">
+        <%= f.check_box :can_sell %>
+        <%= f.label :can_sell, "Can sell product" %>
+      </div>
+    <% end %>
+
+  </fieldset>
+
+  <% if @organization.new_record? %>
+    <% if @organization.locations.empty? %>
+      <% @organization.locations.build %>
+    <% end %>
+
+    <fieldset>
+      <legend>Location Info</legend>
+      <%= f.fields_for :locations do |location|  %>
+
+        <%= render "admin/locations/fields", form: location %>
+      <% end %>
+    </fieldset>
   <% end %>
 
   <div class="row form-actions">

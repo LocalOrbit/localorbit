@@ -19,6 +19,12 @@ describe "admin manange organization" do
     fill_in "Who",  with: "Who Story"
     fill_in "How",  with: "How Story"
 
+    fill_in "Location Name", with: "Warehouse 1"
+    fill_in "Address", with: "1021 Burton St."
+    fill_in "City", with: "Orleans Twp."
+    select "Michigan", from: "State"
+    fill_in "Postal Code", with: "49883"
+
     click_button "Add Organization"
 
     expect(page).to have_content("University of Michigan Farmers has been created")
@@ -56,7 +62,7 @@ describe "admin manange organization" do
       fill_in "Address",       with: "500 S. State Street"
       fill_in "City",          with: "Ann Arbor"
       select  "Michigan",      from: "State"
-      fill_in "Zip",           with: "34599"
+      fill_in "Postal Code",   with: "34599"
 
       click_button "Add Address"
 

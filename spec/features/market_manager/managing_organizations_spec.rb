@@ -10,19 +10,47 @@ describe "A Market Manager" do
   end
 
   describe "Adding an organization" do
-    it "with valid information" do
-      click_link 'Organizations', match: :first
-      click_link 'Add Organization'
+    context "with valid information" do
+      before do
+        click_link 'Organizations', match: :first
+        click_link 'Add Organization'
 
-      fill_in 'Name', with: 'Famous Farm'
-      check 'Can sell product'
-      click_button 'Add Organization'
+        fill_in 'Name', with: 'Famous Farm'
+        fill_in "Location Name", with: "Warehouse 1"
+        fill_in "Address", with: "1021 Burton St."
+        fill_in "City", with: "Orleans Twp."
+        select "Michigan", from: "State"
+        fill_in "Postal Code", with: "49883"
 
+        check 'Can sell product'
+        click_button 'Add Organization'
+      end
+
+    it "creates the organization" do
       expect(page).to have_content('Famous Farm has been created')
+      click_link "Edit"
+
+      org_form = Dom::OrganizationForm.first
+      expect(org_form.name).to eql("Famous Farm")
+      #click_link "Cancel"
     end
 
-    context "when the market manager manages multiple markets" do
+    it "creates a default locaiton for the organization" do
+      click_link "Addresses"
 
+      click_link "Warehouse 1"
+
+      location = Dom::Admin::LocationForm.first
+
+      expect(location.location_name.value).to eql("Warehouse 1")
+      expect(location.address.value).to eql("1021 Burton St.")
+      expect(location.city.value).to eql("Orleans Twp.")
+      expect(location.selected_state.value).to eql("Michigan")
+      expect(location.zip.value).to eql("49883")
+    end
+  end
+
+    context "when the market manager manages multiple markets" do
       before do
         market_manager.managed_markets << market2
       end
@@ -34,6 +62,13 @@ describe "A Market Manager" do
         fill_in 'Name', with: 'Famous Farm'
         select market2.name, from: "Market"
         check 'Can sell product'
+
+        fill_in "Location Name", with: "Warehouse 1"
+        fill_in "Address", with: "1021 Burton St."
+        fill_in "City", with: "Orleans Twp."
+        select "Michigan", from: "State"
+        fill_in "Postal Code", with: "49883"
+
         click_button 'Add Organization'
 
         expect(page).to have_content("Famous Farm has been created")
@@ -69,6 +104,18 @@ describe "A Market Manager" do
 
     before do
       market.organizations << organization
+    end
+
+    it "doesn't show the location fields" do
+      click_link "Organizations", match: :first
+      click_link "Fresh Pumpkin Patch"
+      click_link "Edit Organization"
+
+      expect(page).not_to have_content("Location Name")
+      expect(page).not_to have_content("Address")
+      expect(page).not_to have_content("City")
+      expect(page).not_to have_content("State")
+      expect(page).not_to have_content("Postal Code")
     end
 
     it "allows updating all attributes" do

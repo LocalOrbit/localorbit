@@ -47,9 +47,13 @@ module Admin
     private
 
     def organization_params
-      params.require(:organization).permit([
-        :name, :can_sell, :who_story, :how_story
-      ])
+      params.require(:organization).permit(
+        :name,
+        :can_sell,
+        :who_story,
+        :how_story,
+        locations_attributes: [:name, :address, :city, :state, :zip]
+      )
     end
 
     def find_organization
