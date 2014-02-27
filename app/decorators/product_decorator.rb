@@ -26,4 +26,9 @@ class ProductDecorator < Draper::Decorator
     return Location.find(location_id) if location_id
     return organization.locations.default_shipping if organization
   end
+
+  def location_map
+    location_string = [location.address, location.city, location.state].join(',').gsub(' ', '+')
+    "http://maps.googleapis.com/maps/api/staticmap?center=#{location_string}&zoom=14&size=300x200&sensor=false"
+  end
 end
