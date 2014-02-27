@@ -50,11 +50,15 @@ describe "Editing advanced pricing" do
     end
 
     describe "then clicking on another price row" do
-      it "will not open the other price row" do
+      it "will change the row being edited" do
+        fill_in("price_#{price.id}_sale_price", with: 55)
         Dom::PricingRow.all.last.click
 
-        expect(Dom::PricingRow.first).to be_editable
-        expect(Dom::PricingRow.all.last).to_not be_editable
+        expect(Dom::PricingRow.first).to_not be_editable
+        expect(Dom::PricingRow.all.last).to be_editable
+
+        Dom::PricingRow.first.click
+        expect(find_field("price_#{price.id}_sale_price").value).to eq("55.00")
       end
     end
 

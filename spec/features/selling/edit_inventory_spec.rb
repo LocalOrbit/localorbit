@@ -43,11 +43,15 @@ describe "Editing advanced inventory" do
     end
 
     describe "then clicking on another lot row" do
-      it "will not open the other lot row" do
+      it "will change the row being edited" do
+        fill_in("lot_#{lot.id}_number", with: 55)
         Dom::LotRow.all.last.click
 
-        expect(Dom::LotRow.first).to be_editable
-        expect(Dom::LotRow.all.last).to_not be_editable
+        expect(Dom::LotRow.first).to_not be_editable
+        expect(Dom::LotRow.all.last).to be_editable
+
+        Dom::LotRow.first.click
+        expect(find_field("lot_#{lot.id}_number").value).to eq("55")
       end
     end
 

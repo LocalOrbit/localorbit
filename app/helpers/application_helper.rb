@@ -14,4 +14,9 @@ module ApplicationHelper
       end
     end
   end
+
+  def edit_table_error_payload(obj)
+    return nil unless obj
+    {"error-payload" => obj.to_json, "id-prefix" => obj.class.to_s.downcase}
+  end
 end

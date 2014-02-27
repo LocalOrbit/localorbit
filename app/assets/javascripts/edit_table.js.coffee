@@ -1,73 +1,70 @@
 class @EditTable
-  @build: (opts={})->
-    table = new EditTable(opts)
+  @build: (selector, opts={})->
+    table = new EditTable(selector, opts)
     table.bindActions()
     table
 
-  constructor: (opts)->
-    @form = $(opts.selector)
-    @modelPrefix = opts.modelPrefix
+  constructor: (selector, opts)->
+    @form  = $(selector)
+    @table = @form.find("table")
     @applyErrorValuesCallback = opts.applyErrorValuesCallback
 
     @hiddenRow = null
-    @originalFields = null
-    @editing = false
-    @initialAction = @form.attr('action')
-    @errorPayload = @form.find("table").data("error-payload")
+    @editing   = false
+    @initialAction = @form.attr("action")
+    @errorPayload  = @table.data("error-payload")
 
     if @errorPayload
-      row = $("#" + "#{@modelPrefix}_" + @errorPayload.id)
-      @enableEditForRow(row)
+      row = $("\##{@table.data("id-prefix")}_#{@errorPayload.id}")
+      @openEditRow(row)
       @applyErrorValues(row, @errorPayload)
 
-  hiddenPutMethod:  ()->
-    $('<input name="_method" type="hidden" value="put">')
+  # Lookups
+  hiddenFormMethod: (method)->
+    $("<input name=\"_method\" type=\"hidden\" value=\"#{method}\">")
 
   headerFieldsRow: ()->
     @form.find("table thead tr")
-
-  # Helpers
-  disableFields: (el)->
-    $(el).find("input").each ()->
-      $(this).attr("readonly", true)
-      $(this).attr("disabled", true)
-
-  enableFields: (el)->
-    $(el).find("input").each ()->
-      $(this).removeAttr("readonly")
-      $(this).removeAttr("disabled")
-
-  setFormActionAndMethod: (action, method)->
-    @form.attr('action', action)
-
-    if method.toLowerCase() == "put"
-      @form.append(@hiddenPutMethod())
-    else
-      $("[name=_method]").remove()
 
   relatedRow: (el)->
     idFromRel = $(el).attr("rel")
     $("#"+idFromRel)
 
-  storeOriginalValues: (fieldsRow)->
-    return if $(fieldsRow.find('input')[0]).data('original-value')?
+  # Helpers
+  disableFields: (el)->
+    $(el).find("input,select").each ()->
+      $(this).attr("readonly", true).attr("disabled", true)
 
-    fieldsRow.find('input').each ->
+  enableFields: (el)->
+    $(el).find("input,select").each ()->
+      $(this).removeAttr("readonly").removeAttr("disabled")
+
+  setFormActionAndMethod: (action, method)->
+    @form.attr("action", action)
+
+    if method.toLowerCase() != "get" && method.toLowerCase() != "post"
+      @form.append(@hiddenFormMethod(method))
+    else
+      @form.children("[name=_method]").remove()
+
+  storeOriginalValues: (fieldsRow)->
+    fieldsRow.find("input").each ->
       field = $(this)
-      field.data('orginal-value', field.val())
+      if !field.data("orginal-value")?
+        field.data("orginal-value", field.val())
 
   restoreOriginalValues: (fieldsRow)->
-    $(fieldsRow).find('input').each ->
+    $(fieldsRow).find("input").each ->
       field = $(this)
-      field.val(field.data('orginal-value'))
-      if field.attr('step') == '0.01'
+      field.val(field.data("orginal-value"))
+      if field.attr("step") == "0.01"
         field.val(parseFloat(field.val()).toFixed(2))
 
   applyErrorValues: (el, data)->
     fieldsRow = @relatedRow(el)
 
     $.each data, (item)=>
-      field = $(fieldsRow).find($("input[name='#{@modelPrefix}[#{data.id}][#{item}]']"))
+      field = $(fieldsRow).find($("input[name$='[#{item}]']"))
       $(field).val(data[item])
 
       # Apply Any Client-side formatting for fields
@@ -77,15 +74,16 @@ class @EditTable
       if field.length && @applyErrorValuesCallback
         @applyErrorValuesCallback(field)
 
-  enableEditForRow: (row)->
-    return if @editing
+  # Main actions
+  openEditRow: (row)->
+    @closeEditRow(@editing, false) if @editing
 
     fieldsRow = @relatedRow(row)
 
     @storeOriginalValues(fieldsRow)
 
-    action = fieldsRow.data('form-url')
-    @setFormActionAndMethod(action, 'put')
+    action = fieldsRow.data("form-url")
+    @setFormActionAndMethod(action, "put")
 
     @disableFields(@headerFieldsRow())
     @enableFields(fieldsRow)
@@ -95,27 +93,31 @@ class @EditTable
     $(row).hide()
     $(fieldsRow).show()
 
-    @editing = true
+    @editing = fieldsRow
+
+  closeEditRow: (row, cancel)->
+    @disableFields(row)
+    $(row).hide()
+
+    @restoreOriginalValues(row) if cancel
+    @editing = false
+
+    @enableFields(@headerFieldsRow())
+
+    @setFormActionAndMethod(@initialAction, "post")
+
+    $(@hiddenRow).show()
+    @hiddenRow = null
 
   bindActions: ()->
     context = this
     @form.find("table tbody tr").on "click", ()->
-      if $(this).data('form-url')?
+      if $(this).data("form-url")?
         return
 
-      context.enableEditForRow(this)
+      context.openEditRow(this)
 
-    @form.find("table tbody").on "click", 'tr .cancel', ()->
+    @form.find("table tbody").on "click", "tr .cancel", ()->
       row = $(this).parents("tr")[0]
-      context.enableFields(context.headerFieldsRow())
-
-      context.setFormActionAndMethod(context.initialAction, "post")
-
-      $(context.hiddenRow).show()
-      context.hiddenRow = null
-
-      context.disableFields(row)
-      $(row).hide()
-      context.restoreOriginalValues(row)
-      context.editing = false
+      context.closeEditRow(row, true)
 
