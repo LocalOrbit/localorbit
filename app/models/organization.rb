@@ -12,4 +12,8 @@ class Organization < ActiveRecord::Base
   validates :name, presence: true
 
   scope :selling, lambda { where(can_sell: true) }
+
+  def default_location
+    locations.first || locations.build
+  end
 end
