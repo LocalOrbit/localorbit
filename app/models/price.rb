@@ -9,7 +9,7 @@ class Price < ActiveRecord::Base
   }
 
   validates :min_quantity, :sale_price, numericality: { greater_than: 0 }
-  validates :min_quantity, uniqueness: { scope: [:market_id, :organization_id] }
+  validates :min_quantity, uniqueness: { scope: [:product_id, :market_id, :organization_id] }
 
   def net_price
     ((sale_price || 0) * net_percent).round(2)
