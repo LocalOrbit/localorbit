@@ -1,11 +1,11 @@
 class @EditTable
-  @build: (opts={})->
-    table = new EditTable(opts)
+  @build: (selector, opts={})->
+    table = new EditTable(selector, opts)
     table.bindActions()
     table
 
-  constructor: (opts)->
-    @form  = $(opts.selector)
+  constructor: (selector, opts)->
+    @form  = $(selector)
     @table = @form.find("table")
     @applyErrorValuesCallback = opts.applyErrorValuesCallback
 

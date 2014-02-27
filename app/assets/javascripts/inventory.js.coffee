@@ -1,5 +1,4 @@
 $ ->
   return unless $("#inventory_table").length
 
-  EditTable.build
-    selector: "#new_lot"
+  EditTable.build "#new_lot"

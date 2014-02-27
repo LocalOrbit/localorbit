@@ -38,8 +38,7 @@ $ ->
   $('input.sale-price').each ->
     bindCalculator(this)
 
-  EditTable.build
-    selector: "#new_price"
+  EditTable.build "#new_price",
     applyErrorValuesCallback: (field)->
       val = $(field).val()
       if val? && (field.hasClass('sale-price') || field.hasClass('net-price'))
