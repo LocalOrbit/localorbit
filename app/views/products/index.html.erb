@@ -21,9 +21,18 @@
         <p class="description">This tart variety is great for applesauce, but
         also perfect for pies or snacking.</p>
         <ul class="meta">
-          <li class="organization-name"><%= product.organization_name %></li>
-          <li class="how-story"><%= link_to "How", "#" %></li>
-          <li class="where"><%= link_to "Where", "#" %></li>
+          <li class="organization-name">
+            <%= link_to product.organization_name, '#', class: 'popup', data: { popup: 'who-info' } %>
+            <div class="who-info is-hidden"><%= product.who_story %></div>
+          </li>
+          <li class="how-story">
+            <%= link_to "How", "#", class: 'popup', data: { popup: 'how-info' } %>
+            <div class="how-info is-hidden"><%= product.how_story %></div>
+          </li>
+          <li class="where">
+            <%= link_to "Where", "#", class: 'popup', data: { popup: 'where-info' } %>
+            <div class="where-info is-hidden"><%= product.location.try(:name) %></div>
+          </li>
         </ul>
       </td>
       <td class="pricing">

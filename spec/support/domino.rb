@@ -174,17 +174,25 @@ module Dom
 
     attribute :name
     attribute :organization_name
+
+    def open_who_story
+      node.click_link organization_name
+    end
+
+    def open_how_story
+      node.click_link "How"
+    end
   end
 
   class ProductFilter < Domino
     selector "#product-filter"
 
     def self.filter_by_seller(org)
-      first.click_link(org.name)
+      first.find("#product-filter-organization").click_link(org.name)
     end
 
     def self.filter_by_category(category)
-      first.click_link(category.name)
+      first.find("#product-filter-category").click_link(category.name)
     end
 
     def self.current_seller

@@ -37,3 +37,7 @@ $ ->
   $('#product_use_simple_inventory').change ->
     $('#simple-inventory').toggleClass('is-hidden')
     $('#product-inventory-nav').toggleClass('is-hidden')
+
+  $('.popup').click ->
+    destination = $(this).data('popup')
+    $(this).parent().find("."+destination).toggleClass('is-hidden')

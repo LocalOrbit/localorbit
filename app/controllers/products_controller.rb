@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
     products = Product.available_for_market(current_market)
     @categories = products.map(&:category).uniq
 
-    @products = products.periscope(request.query_parameters)
+    @products = products.periscope(request.query_parameters).decorate
   end
 
   def current_market
