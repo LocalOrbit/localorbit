@@ -47,11 +47,10 @@ class @EditTable
     $("#"+idFromRel)
 
   storeOriginalValues: (fieldsRow)->
-    return if $(fieldsRow.find('input')[0]).data('original-value')?
-
     fieldsRow.find('input').each ->
       field = $(this)
-      field.data('orginal-value', field.val())
+      if !field.data('orginal-value')?
+        field.data('orginal-value', field.val())
 
   restoreOriginalValues: (fieldsRow)->
     $(fieldsRow).find('input').each ->
@@ -75,7 +74,7 @@ class @EditTable
         @applyErrorValuesCallback(field)
 
   openEditRow: (row)->
-    return if @editing
+    @closeEditRow(@editing, false) if @editing
 
     fieldsRow = @relatedRow(row)
 
@@ -92,13 +91,13 @@ class @EditTable
     $(row).hide()
     $(fieldsRow).show()
 
-    @editing = true
+    @editing = fieldsRow
 
-  closeEditRow: (row)->
+  closeEditRow: (row, cancel)->
     @disableFields(row)
     $(row).hide()
 
-    @restoreOriginalValues(row)
+    @restoreOriginalValues(row) if cancel
     @editing = false
 
     @enableFields(@headerFieldsRow())
@@ -118,5 +117,5 @@ class @EditTable
 
     @form.find("table tbody").on "click", 'tr .cancel', ()->
       row = $(this).parents("tr")[0]
-      context.closeEditRow(row)
+      context.closeEditRow(row, true)
 
