@@ -2,6 +2,7 @@ require "spec_helper"
 
 feature "View a products story" do
   let!(:org1) { create(:organization, name: "Funny Farm", who_story: "Chevy Chase", how_story: "Magic") }
+  let!(:location) { create(:location, organization: org1, default_shipping: true) }
   let!(:category1) { create(:category, name: "Vegetables") }
   let!(:category2) { create(:category, name: "Fruits") }
 
