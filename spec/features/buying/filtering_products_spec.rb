@@ -3,8 +3,8 @@ require "spec_helper"
 feature "Filtering Products List" do
   let!(:org1) { create(:organization, name: "Schrute Farms") }
   let!(:org2) { create(:organization, name: "Funny Farm") }
-  let!(:category1) { create(:category, name: "Vegetables") }
-  let!(:category2) { create(:category, name: "Fruits") }
+  let!(:category1) { Category.find_by!(name: "Corn") }
+  let!(:category2) { Category.find_by!(name: "Macintosh Apples") }
 
   let!(:product1) { create(:product, organization: org1, category: category1) }
   let!(:product2) { create(:product, organization: org1, category: category2) }

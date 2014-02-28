@@ -8,10 +8,10 @@ describe Category do
     end
 
     it "categories should include parent info" do
-      id = Category.where(name: 'Bananas').first.id
+      id = Category.find_by!(name: 'Bananas').id
       expect(subject["Fruits"]).to include(["Bananas", id])
 
-      id = Category.where(name: 'Macintosh Apples').first.id
+      id = Category.find_by!(name: 'Macintosh Apples').id
       expect(subject["Fruits"]).to include(["Apples / Macintosh Apples", id])
     end
 
