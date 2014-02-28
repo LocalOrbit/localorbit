@@ -113,6 +113,10 @@ module Dom
     def sale_price
       node.find("#price_sale_price")
     end
+
+    def net_price
+      node.find("#price_net_price")
+    end
   end
 
   class ProductForm < Domino

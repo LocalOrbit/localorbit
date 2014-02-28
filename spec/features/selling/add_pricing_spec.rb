@@ -18,6 +18,10 @@ describe 'Adding advanced pricing' do
     click_link 'Pricing'
   end
 
+  it "shows there are no prices for the selected product" do
+    expect(page).to have_content("You don't have any prices yet!")
+  end
+
   it 'completes successfully given valid information' do
     fill_in 'price_sale_price', with: '1.90'
     click_button 'Add'
@@ -28,16 +32,27 @@ describe 'Adding advanced pricing' do
     expect(record.min_quantity).to eq('1')
     expect(record.net_price).to eq('$1.84')
     expect(record.sale_price).to eq('$1.90')
+
+    expect(page).to_not have_content("You don't have any prices yet!")
   end
 
   describe "invalid input" do
-    it "shows error messages" do
+    before do
       fill_in 'price_sale_price', with: '0'
       fill_in 'price_min_quantity', with: '0'
       click_button 'Add'
+    end
 
+    it "shows error messages" do
       expect(page).to have_content("Sale price must be greater than 0")
       expect(page).to have_content("Min quantity must be greater than 0")
+    end
+
+    it "re-enables the net pricing calculator for the new form", js: true do
+      fill_in 'price_sale_price', with: '12'
+
+      new_price_form = Dom::NewPricingForm.first
+      expect(new_price_form.net_price.value).to eql("11.64")
     end
   end
 
