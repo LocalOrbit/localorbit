@@ -6,6 +6,11 @@ describe "Adding a product" do
   let(:stub_warning) {"Your product will not appear in the Shop until all of these actions are complete"}
   let(:organization_label) { "Product Organization" }
 
+  before do
+    Unit.create! singular: "Pound", plural: "Pounds"
+    Unit.create! singular: "Bushel", plural: "Bushels"
+  end
+
   describe "as a seller belonging to one organization" do
     before do
       org.users << user
@@ -26,6 +31,7 @@ describe "Adding a product" do
       it "creates a new lot for the product" do
         fill_in "Product Name", with: "Red Grapes"
         select_from_chosen "Grapes / Red Grapes", from: 'Category'
+        select_from_chosen "Pounds", from: "Unit"
         fill_in("Your current inventory", with: 33)
 
         click_button "Add Product"
@@ -38,6 +44,7 @@ describe "Adding a product" do
         expect(inventory_quantity.value).to eql("33")
 
         expect(page).to have_content("Uncheck this to use advanced inventory tracking with lots and expirations dates")
+        expect(page).to have_content("Pounds")
 
         within(".tabs") do
           expect(page).to_not have_content("Inventory")
@@ -123,6 +130,7 @@ describe "Adding a product" do
 
         fill_in "Product Name", with: "Macintosh Apples"
         select_from_chosen "Apples / Macintosh Apples", from: "Category"
+        select_from_chosen "Bushels", from: "Unit"
 
         fill_in "Your current inventory", with: "12"
         uncheck "Use simple inventory management"

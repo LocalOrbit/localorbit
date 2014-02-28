@@ -47,3 +47,11 @@ User.where(email: "kate@localorb.it").exists? || User.create!(
 )
 
 ImportLegacyTaxonomy.run(File.expand_path('../taxonomy.csv', __FILE__))
+
+
+Unit.find_or_create_by!(singular: 'Pound', plural: 'Pounds')
+Unit.find_or_create_by!(singular: 'Bushel', plural: 'Bushels')
+Unit.find_or_create_by!(singular: 'Crate', plural: 'Crates')
+Unit.find_or_create_by!(singular: 'Bunch', plural: 'Bunches')
+Unit.find_or_create_by!(singular: 'Box', plural: 'Boxes')
+

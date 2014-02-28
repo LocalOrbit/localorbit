@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140226163733) do
+ActiveRecord::Schema.define(version: 20140228213942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,11 +130,19 @@ ActiveRecord::Schema.define(version: 20140226163733) do
     t.text     "how_story"
     t.integer  "location_id"
     t.boolean  "use_simple_inventory", default: true, null: false
+    t.integer  "unit_id"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
   add_index "products", ["location_id"], name: "index_products_on_location_id", using: :btree
   add_index "products", ["organization_id"], name: "index_products_on_organization_id", using: :btree
+
+  create_table "units", force: true do |t|
+    t.string   "singular"
+    t.string   "plural"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_organizations", force: true do |t|
     t.integer  "user_id"
