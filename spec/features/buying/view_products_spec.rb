@@ -20,7 +20,7 @@ feature "Viewing products" do
   end
 
   scenario "list of products" do
-    visit products_path
+    click_link "Shop"
 
     products = Dom::Product.all
 
