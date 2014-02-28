@@ -10,7 +10,7 @@
 
 <h2>Add Prices</h2>
 
-<% if @product.prices.any?(&:persisted?) %>
+<% if !@product.prices.any?(&:persisted?) %>
   <p>You don't have any prices yet! We've gone ahead and started the entry for you.</p>
 <% end %>
 
