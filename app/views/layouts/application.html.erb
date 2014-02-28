@@ -5,7 +5,7 @@
   <title>LocalOrbit</title>
   <%= stylesheet_link_tag "application", media: "all" %>
   <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300|Open+Sans+Condensed:700' rel='stylesheet' type='text/css'>
-  
+
   <%= csrf_meta_tags %>
 </head>
 <body style="background-image: url(<%= asset_url 'backgrounds/kale.jpg' %>);">
@@ -41,7 +41,7 @@
       <%= link_to_unless_current image_tag(asset_path('logo-farm-to-fork.png'), class: "logo"), "/", class: "logo-link pull-left" %>
 
       <div class="nav nav--main pull-right">
-        <%= link_to_unless_current "Shop", "#", class: "" %>
+        <%= link_to_unless_current "Shop", products_path, class: "" %>
         <%= link_to_unless_current "Sellers", "#", class: "" %>
         <%= link_to_unless_current "Market Info", "#", class: "" %>
       </div>
