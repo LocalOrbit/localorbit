@@ -15,6 +15,12 @@ input[type=submit] {
   -webkit-appearance: none;
   -webkit-font-smoothing: antialiased;
 
+
+  &.btn--small {
+    padding: 6px 18px;
+    font-size: 14px;
+  }
+
   &:disabled {
     opacity: 0.15;
   }

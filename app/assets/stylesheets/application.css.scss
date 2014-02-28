@@ -20,9 +20,11 @@ body {
   min-height: 100%;
   padding: 0;
   margin: 0;
+  color: #777;
   background-image: image-url('kale-bg.jpg');
   background-size: cover;
   background-attachment: fixed;
+  font-size: 14px;
   font-family: OpenSans, "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -41,10 +43,8 @@ h1 {
   font-family: 'OpenSans-Light', OpenSans, "Open Sans", sans-serif;
   font-weight: lighter;
   font-weight: 300;
-  color: #777;
 }
 
 h2 {
-  color: #777;
   font-weight: normal;
 }
