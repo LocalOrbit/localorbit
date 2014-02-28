@@ -66,7 +66,7 @@ describe "Editing advanced pricing" do
       let(:price_row) { Dom::PricingRow.first }
 
       before do
-        price_row.node.find_link("Cancel").click
+        price_row.node.find_button("Cancel").click
       end
 
       it "replaces the open field with the previous table row" do
@@ -101,7 +101,7 @@ describe "Editing advanced pricing" do
         fill_in("price_#{price.id}_sale_price", with: 55)
         fill_in("price_#{price.id}_min_quantity", with: 66)
 
-        click_link "Cancel"
+        click_button "Cancel"
 
         Dom::PricingRow.first.click
 
@@ -161,11 +161,11 @@ describe "Editing advanced pricing" do
         end
 
         it "allows the user cancel editing multiple times" do
-          click_link "Cancel"
+          click_button "Cancel"
           expect(Dom::PricingRow.first).not_to be_editable
           Dom::PricingRow.first.click
           expect(Dom::PricingRow.first).to be_editable
-          click_link "Cancel"
+          click_button "Cancel"
           expect(Dom::PricingRow.first).not_to be_editable
         end
 

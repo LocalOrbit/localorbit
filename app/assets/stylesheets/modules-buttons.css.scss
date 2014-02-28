@@ -24,6 +24,22 @@ input[type=submit] {
   &:disabled {
     opacity: 0.15;
   }
+  &:active {
+    @include gradient(rgba(0,0,0,0.2), rgba(0,0,0,0));
+  }
+}
+
+button,
+.btn,
+input[type=reset] {
+  &.cancel {
+    padding: 0;
+    border: 0;
+    @include border-radius(0);
+    color: #43639F;
+    background: none;
+    font-size: inherit;
+  }
 }
 
 input[type=submit] {

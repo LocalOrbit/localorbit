@@ -13,57 +13,49 @@
 
 <table>
   <tr>
-    <td>Name</td>
+    <th scope="row">Name</th>
     <td><%= @market.name %></td>
   </tr>
   <tr>
-    <td>Subdomain</td>
+    <th scope="row">Subdomain</th>
     <td><%= @market.subdomain %></td>
   </tr>
   <tr>
-    <td>Timezone</td>
+    <th scope="row">Timezone</th>
     <td><%= @market.timezone %></td>
   </tr>
   <tr>
-    <td>Active?</td>
+    <th scope="row">Active?</th>
     <td><%= @market.active? ? 'Yes' : 'No' %></td>
   </tr>
   <tr>
-    <td>Contact Name</td>
+    <th scope="row">Contact Name</th>
     <td><%= @market.contact_name %></td>
   </tr>
   <tr>
-    <td>Contact Email</td>
+    <th scope="row">Contact Email</th>
     <td><%= @market.contact_email %></td>
   </tr>
   <tr>
-    <td>Contact Phone</td>
+    <th scope="row">Contact Phone</th>
     <td><%= @market.contact_phone %></td>
   </tr>
   <% if @market.facebook.present? %>
   <tr>
-    <td>Facebook</td>
+    <th scope="row">Facebook</th>
     <td><%= link_to @market.facebook, @market.facebook %></td>
   </tr>
   <% end %>
   <% if @market.twitter.present? %>
   <tr>
-    <td>Twitter</td>
+    <th scope="row">Twitter</th>
     <td><%= link_to "@#{@market.twitter}", "https://twitter.com/#{@market.twitter}" %></td>
   </tr>
   <% end %>
-  <tr>
-    <td>Profile:</td>
-    <td></td>
-   </tr>
-   <tr>
-    <td colspan="2"><%= @market.profile %></td>
-  </tr>
-  <tr>
-    <td>Policies:</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td colspan="2"><%= @market.policies %></td>
-  </tr>
 </table>
+
+<h2>Profile:</h2>
+<%= @market.profile %>
+
+<h2>Policies:</h2>
+<%= @market.policies %>

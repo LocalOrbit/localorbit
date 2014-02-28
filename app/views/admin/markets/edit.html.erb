@@ -1,9 +1,11 @@
 <h1>Edit <%= @market.name %></h1>
 
-<%= form_for [:admin, @market] do |f| %>
-  <%= render 'form', {f: f} %>
+<div class="row row--partial">
+  <%= form_for [:admin, @market], html: { class: "column column--three-fourths" } do |f| %>
+    <%= render 'form', {f: f} %>
 
-  <div>
-    <%= f.submit "Update Market" %>
-  </div>
-<% end %>
+    <div class="form-actions">
+      <%= f.submit "Update Market" %>
+    </div>
+  <% end %>
+</div>

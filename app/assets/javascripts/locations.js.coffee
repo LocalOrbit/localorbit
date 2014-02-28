@@ -10,6 +10,6 @@ $ ->
     method = $("input[name='_method']")
     method.prop("value", "put")
 
-    form = link.parent("form")
+    form = $(link).closest("form")
     form.prop("action", link.prop("href"))
     form.submit()

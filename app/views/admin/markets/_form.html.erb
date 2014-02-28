@@ -1,40 +1,40 @@
-<div>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+<div class="field">
+  <%= f.label :name %><br>
+  <%= f.text_field :name, class: "column--three-fourths" %>
 </div>
-<div>
-  <%= f.label :subdomain %>
+<div class="field">
+  <%= f.label :subdomain %><br>
   <%= f.text_field :subdomain %>
 </div>
-<div>
-  <%= f.label :timezone %>
+<div class="field">
+  <%= f.label :timezone %><br>
   <%= f.time_zone_select :timezone %>
 </div>
-<div>
-  <%= f.label :contact_name %>
-  <%= f.text_field :contact_name %>
+<div class="field">
+  <%= f.label :contact_name %><br>
+  <%= f.text_field :contact_name, class: "column--three-fourths"  %>
 </div>
-<div>
-  <%= f.label :contact_email %>
+<div class="field">
+  <%= f.label :contact_email %><br>
   <%= f.text_field :contact_email %>
 </div>
-<div>
-  <%= f.label :contact_phone %>
-  <%= f.text_field :contact_phone %>
+<div class="field">
+  <%= f.label :contact_phone %><br>
+  <%= f.text_field :contact_phone, size: 17 %>
 </div>
-<div>
-  <%= f.label :facebook %>
+<div class="field">
+  <%= f.label :facebook %><br>
   <%= f.text_field :facebook %>
 </div>
-<div>
-  <%= f.label :twitter %>
+<div class="field">
+  <%= f.label :twitter %><br>
   <%= f.text_field :twitter %>
 </div>
-<div>
-  <%= f.label :profile %>
-  <%= f.text_area :profile %>
+<div class="field">
+  <%= f.label :profile %><br>
+  <%= f.text_area :profile, class: "column--three-fourths" %>
 </div>
-<div>
-  <%= f.label :policies %>
-  <%= f.text_area :policies %>
+<div class="field">
+  <%= f.label :policies %><br>
+  <%= f.text_area :policies, class: "column--three-fourths"  %>
 </div>
