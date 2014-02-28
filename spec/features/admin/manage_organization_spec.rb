@@ -19,6 +19,12 @@ describe "admin manange organization" do
     fill_in "Who",  with: "Who Story"
     fill_in "How",  with: "How Story"
 
+    fill_in "Location Name", with: "Warehouse 1"
+    fill_in "Address", with: "1021 Burton St."
+    fill_in "City", with: "Orleans Twp."
+    select "Michigan", from: "State"
+    fill_in "Postal Code", with: "49883"
+
     click_button "Add Organization"
 
     expect(page).to have_content("University of Michigan Farmers has been created")
@@ -45,30 +51,50 @@ describe "admin manange organization" do
       expect(locations.first.default_shipping).not_to be_checked
     end
 
-    it "add new location" do
-      click_link "Organizations", match: :first
-      click_link "University of Michigan Farmers"
+    describe "Adding a new location" do
+      it "saves the location" do
+        click_link "Organizations", match: :first
+        click_link "University of Michigan Farmers"
 
-      click_link "Addresses"
-      click_link "Add New Address"
+        click_link "Addresses"
+        click_link "Add New Address"
 
-      fill_in "Location Name", with: "University of Michigan"
-      fill_in "Address",       with: "500 S. State Street"
-      fill_in "City",          with: "Ann Arbor"
-      select  "Michigan",      from: "State"
-      fill_in "Zip",           with: "34599"
+        fill_in "Location Name", with: "University of Michigan"
+        fill_in "Address",       with: "500 S. State Street"
+        fill_in "City",          with: "Ann Arbor"
+        select  "Michigan",      from: "State"
+        fill_in "Postal Code",   with: "34599"
 
-      click_button "Add Address"
+        click_button "Add Address"
 
-      locations = Dom::Admin::OrganizationLocation.all
+        locations = Dom::Admin::OrganizationLocation.all
 
-      expect(locations.size).to eq(1)
-      expect(locations.first.name_and_address).to include("University of Michigan")
-      expect(locations.first.name_and_address).to include("500 S. State Street, Ann Arbor, Michigan 34599")
-      expect(locations.first.default_billing).not_to be_checked
-      expect(locations.first.default_shipping).not_to be_checked
+        expect(locations.size).to eq(1)
+        expect(locations.first.name_and_address).to include("University of Michigan")
+        expect(locations.first.name_and_address).to include("500 S. State Street, Ann Arbor, Michigan 34599")
+        expect(locations.first.default_billing).not_to be_checked
+        expect(locations.first.default_shipping).not_to be_checked
 
-      expect(page).to have_content("Successfully added address University of Michigan")
+        expect(page).to have_content("Successfully added address University of Michigan")
+      end
+
+      context "with invalid information" do
+        it "shows error messages" do
+          click_link "Organizations", match: :first
+          click_link "University of Michigan Farmers"
+
+          click_link "Addresses"
+          click_link "Add New Address"
+
+          click_button "Add Address"
+
+          expect(page).to have_content("Location name can't be blank")
+          expect(page).to have_content("Address can't be blank")
+          expect(page).to have_content("City can't be blank")
+          expect(page).to have_content("State can't be blank")
+          expect(page).to have_content("Postal code can't be blank")
+        end
+      end
     end
 
     it "removes a location" do

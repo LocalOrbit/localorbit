@@ -203,6 +203,34 @@ module Dom
         @cells ||= @node.all("td")
       end
     end
+
+    class LocationForm < Domino
+      selector ".edit_location, .new_location"
+
+      def location_name
+        node.find("#location_name")
+      end
+
+      def address
+        node.find("#location_address")
+      end
+
+      def city
+        node.find("#location_city")
+      end
+
+      def state
+        node.find("#location_state")
+      end
+
+      def selected_state
+        state.find('option[selected]')
+      end
+
+      def zip
+        node.find("#location_zip")
+      end
+    end
   end
 
   class Product < Domino
@@ -229,6 +257,14 @@ module Dom
 
     def self.current_category
       first.find("#product-filter-category > .current").text
+    end
+  end
+
+  class OrganizationForm < Domino
+    selector "form.organization"
+
+    def name
+      node.find("#organization_name").value
     end
   end
 end
