@@ -26,6 +26,12 @@ en:
         number: "Lot #"
         good_from: Good From
         expires_at: Expires On
+      organization/locations:
+        zip: Postal code
+        name: Location name
+        address: Address
+        city: City
+        state: State
       product/lots:
         quantity: Simple inventory quantity
     errors:

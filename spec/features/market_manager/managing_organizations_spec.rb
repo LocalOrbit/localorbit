@@ -97,6 +97,22 @@ describe "A Market Manager" do
         expect(page).to have_content("Name can't be blank")
       end
     end
+
+    context "with a blank location" do
+      it "shows error messages" do
+        click_link 'Organizations'
+        click_link 'Add Organization'
+
+        fill_in 'Name', with: ''
+        click_button 'Add Organization'
+
+        expect(page).to have_content("Location name can't be blank")
+        expect(page).to have_content("Address can't be blank")
+        expect(page).to have_content("City can't be blank")
+        expect(page).to have_content("State can't be blank")
+        expect(page).to have_content("Postal code can't be blank")
+      end
+    end
   end
 
   describe "Editing an organization" do
