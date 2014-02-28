@@ -117,7 +117,8 @@ class @EditTable
 
       context.openEditRow(this)
 
-    @form.find("table tbody").on "click", "tr .cancel", ()->
+    @form.find("table tbody").on "click", "tr .cancel", (e)->
+      e.preventDefault()
       row = $(this).parents("tr")[0]
       context.closeEditRow(row, true)
 
