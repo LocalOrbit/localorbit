@@ -46,3 +46,6 @@ $ ->
       $element.toggleClass('is-hidden')
     else
       $element.addClass('is-hidden')
+
+  $('.popup .popup-header button').click ->
+    $(this).parent().parent().addClass('is-hidden')
