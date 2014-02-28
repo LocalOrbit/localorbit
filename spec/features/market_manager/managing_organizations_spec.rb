@@ -82,9 +82,15 @@ describe "A Market Manager" do
           click_button 'Add Organization'
 
           expect(page).to have_content("Markets can't be blank")
+          expect(page).to have_content("Location name can't be blank")
+          expect(page).to have_content("Address can't be blank")
+          expect(page).to have_content("City can't be blank")
+          expect(page).to have_content("State can't be blank")
+          expect(page).to have_content("Postal code can't be blank")
         end
       end
     end
+
 
     context "with a blank name" do
       it "doesn't add the new organization" do

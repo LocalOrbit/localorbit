@@ -15,6 +15,7 @@ module Admin
     def create
       if params[:initial_market_id].blank?
         @organization = Organization.new(organization_params)
+        @organization.valid?
         @organization.errors.add(:markets, :blank)
       else
         @market = current_user.markets.find(params[:initial_market_id])
