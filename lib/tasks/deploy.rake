@@ -9,7 +9,7 @@ namespace :deploy do
       system "heroku run --app #{app} rake db:migrate"
       system "heroku restart --app #{app}"
 
-      version = `heroku releases --app #{app} -n 1 | grep -o 'v[0-9]*'`
+      version = `heroku releases --app #{app} -n 1 | grep -o '^v[0-9]*'`
       system "git tag #{version}"
       system "git push --tags"
     end
@@ -25,7 +25,7 @@ namespace :deploy do
       system "heroku run --app #{app} rake db:migrate"
       system "heroku restart --app #{app}"
 
-      version = `heroku releases --app #{app} -n 1 | grep -o 'v[0-9]*'`
+      version = `heroku releases --app #{app} -n 1 | grep -o '^v[0-9]*'`
       system "git tag #{version}"
       system "git push --tags"
     end
