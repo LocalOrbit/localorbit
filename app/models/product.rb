@@ -2,6 +2,7 @@ class Product < ActiveRecord::Base
   belongs_to :category
   belongs_to :organization
   belongs_to :location
+  belongs_to :unit
 
   has_many :lots, lambda { order('created_at') }, autosave: true
   has_many :prices, autosave: true

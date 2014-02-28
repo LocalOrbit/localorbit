@@ -103,4 +103,5 @@ FactoryGirl.define do
     state "Michigan"
     zip "48109"
   end
+
 end
