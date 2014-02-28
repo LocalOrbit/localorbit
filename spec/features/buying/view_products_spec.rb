@@ -30,6 +30,6 @@ feature "Viewing products" do
     product = available_products.first
     dom_product = Dom::Product.find_by_name(product.name)
 
-    expect(dom_product.organization_name).to eq(product.organization_name)
+    expect(dom_product.organization_name).to have_text(product.organization_name)
   end
 end
