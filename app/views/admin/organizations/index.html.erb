@@ -1,6 +1,5 @@
 <div>
   <h1>Organizations</h1>
-  <%= link_to 'Dashboard', dashboard_path %>
   <%= link_to 'Add Organization', new_admin_organization_path if current_user.admin? || current_user.market_manager? %>
 </div>
 
