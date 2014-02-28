@@ -40,12 +40,9 @@ $ ->
 
   $('.popup-toggle').click ->
     destination = $(this).data('popup')
-    $element = $(this).parent().find("."+destination)
-    if $element.hasClass('is-hidden')
-      $(".popup").addClass("is-hidden");
-      $element.toggleClass('is-hidden')
-    else
-      $element.addClass('is-hidden')
+    $element = $(this).parent().find(".#{destination}")
+    $element.toggleClass('is-hidden')
+    $(".popup").not($element).addClass('is-hidden')
 
   $('.popup .popup-header button').click ->
-    $(this).parent().parent().addClass('is-hidden')
+    $(this).closest('.popup').addClass('is-hidden')
