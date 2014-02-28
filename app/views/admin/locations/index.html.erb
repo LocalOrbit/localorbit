@@ -1,3 +1,8 @@
+<div>
+  <h1>Addresses for <%= @organization.name %></h1>
+  <%= link_to "Add New Address", new_admin_organization_location_path(@organization) %>
+</div>
+
 <%= form_tag admin_organization_locations_path(@organization), method: :delete do %>
   <table>
     <thead>
@@ -22,7 +27,6 @@
     </tbody>
   </table>
 
-  <%= link_to "Add New Address", new_admin_organization_location_path(@organization) %>
   <%= link_to "Save & Continue Editing", update_default_admin_organization_locations_path(@organization), id: "save-update-defaults" %>
   <%= submit_tag "Remove Checked" %>
 <% end %>
