@@ -2,10 +2,53 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
+  table a {
+    color: #4162A1;
+  }
+
+td,
+th {
+  padding: 4px 0 4px 10px;
+  font-size: 14px;
+}
+
+td {
+  > input[type=submit] {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  > input[type=datetime],
+  > input[type=email],
+  > input[type=search],
+  > input[type=tel],
+  > input[type=text],
+  > input[type=number],
+  > input[type=url],
+  > input[type=password] {
+    height: 24px;
+    padding-right: 7px;
+    padding-left: 7px;
+    border-width: 0;
+    margin: 2px 0;
+    font-size: 14px;
+
+    &:focus {
+      height: 28px;
+      border-width: 2px;
+      margin: 0;
+    }
+  }
+
+}
 
 th {
-  color: #777;
+  font-weight: bolder;
+  font-weight: 600;
   text-align: left;
+  &[scope=row] {
+    font-weight: normal;
+  }
 }
 
 .lot {
@@ -15,10 +58,23 @@ th {
 
   > td {
     vertical-align: middle;
-
-    &:first-child {
-      vertical-align: middle;
-    }
+    white-space: nowrap
   }
+}
+.price {
+  &.odd,
+  &.odd + .fields_price {
+    background: #f4f4f4;
+  }
+}
 
+.pricing {
+  font-size: 12px;
+
+  .price-toggle {
+    display: inline-block;
+    padding: .1em .2em;
+    border: solid 1px #d7d7d7;
+    margin: 0 0 .4em;
+  }
 }

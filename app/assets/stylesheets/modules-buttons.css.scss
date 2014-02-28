@@ -1,6 +1,7 @@
 @import "mixins";
 
 button,
+.btn,
 input[type=button],
 input[type=reset],
 input[type=submit] {
@@ -14,8 +15,30 @@ input[type=submit] {
   -webkit-appearance: none;
   -webkit-font-smoothing: antialiased;
 
+
+  &.btn--small {
+    padding: 6px 18px;
+    font-size: 14px;
+  }
+
   &:disabled {
     opacity: 0.15;
+  }
+  &:active {
+    @include gradient(rgba(0,0,0,0.2), rgba(0,0,0,0));
+  }
+}
+
+button,
+.btn,
+input[type=reset] {
+  &.cancel {
+    padding: 0;
+    border: 0;
+    @include border-radius(0);
+    color: #43639F;
+    background: none;
+    font-size: inherit;
   }
 }
 

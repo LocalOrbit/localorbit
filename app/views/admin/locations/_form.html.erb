@@ -1,12 +1,13 @@
-<%= form_for [:admin, @organization, @location] do |f| %>
+<h1>Address Information</h1>
+
+<div class="row row--partial">
+<%= form_for [:admin, @organization, @location], html: { class: "edit_location column column--three-fourths" } do |f| %>
   <%= render "shared/errors", { resource: @location} %>
 
-  <fieldset name="address-info">
-    <legend>Address Information</legend>
-    <%= render "fields", form: f %>
-  </fieldset>
+  <%= render "fields", form: f %>
 
-  <div>
+  <div class="form-actions">
     <%= f.submit "#{@location.new_record? ? 'Add' : 'Save'} Address" %>
   </div>
 <% end %>
+</div>

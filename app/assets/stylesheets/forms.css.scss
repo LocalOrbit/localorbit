@@ -37,6 +37,11 @@ textarea {
   @include box-shadow(inset 0 0 0 1px #aaa, inset 0 1px 5px #aaa);
   margin: 4px 0;
   font-size: 14px;
+
+  &:focus {
+    border-color: #bfd9ad;
+    outline: none;
+  }
 }
 
 input[type=datetime],
@@ -48,6 +53,10 @@ input[type=number],
 input[type=url],
 input[type=password] {
   height: 42px;
+
+  &[size="4"] {
+    width: 6em;
+  }
 }
 
 input,
@@ -60,7 +69,6 @@ textarea {
 
 label,
 legend {
-  color: #777;
   margin: 0 0 4px;
   font-size: 18px;
 }

@@ -28,14 +28,14 @@ describe "A Market Manager" do
 
     it "creates the organization" do
       expect(page).to have_content('Famous Farm has been created')
-      click_link "Edit"
+      click_link "Edit Organization"
 
       org_form = Dom::OrganizationForm.first
       expect(org_form.name).to eql("Famous Farm")
       #click_link "Cancel"
     end
 
-    it "creates a default locaiton for the organization" do
+    it "creates a default location for the organization" do
       click_link "Addresses"
 
       click_link "Warehouse 1"

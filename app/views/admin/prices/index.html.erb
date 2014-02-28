@@ -1,63 +1,77 @@
-<div>
+<div class="l-page-header">
   <h1>Update Product</h1>
   <%= product_listing_disclaimer %>
+  <a href="#" class="cancel">Cancel</a>
 </div>
 
 <%= render "admin/products/tabs" %>
-<%= form_for [:admin, @product, @price] do |f| %>
+<%= form_for [:admin, @product, @price], html: { class: "row row--partial" } do |f| %>
 <%= render "shared/errors", {resource: @price} %>
 <%= render "shared/errors", {resource: @price_with_errors} if @price_with_errors %>
 
-<h2>Add Prices</h2>
+  <div class="column column--three-fourths">
+    <h2>Add Prices</h2>
 
-<% if !@product.prices.any?(&:persisted?) %>
-  <p>You don't have any prices yet! We've gone ahead and started the entry for you.</p>
-<% end %>
-
-<%= content_tag :table, border: 0, id: 'pricing_table', data: edit_table_error_payload(@price_with_errors) do %>
-  <thead>
-    <tr>
-      <th>Market</th>
-      <th>Buyer</th>
-      <th>Min Qty</th>
-      <th>Net Price</th>
-      <th>Sale Price</th>
-      <th></th>
-    </tr>
-
-    <tr class="price">
-      <td><%= f.object.market_name %></td>
-      <td><%= f.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %></td>
-      <td><%= f.number_field :min_quantity, min: 0 %></td>
-      <td><%= f.number_field :net_price, min: 0, step: 0.01, class: 'net-price', data: {"net-percent" => "0.97"} %></td>
-      <td><%= f.number_field :sale_price, min: 0, step: 0.01, class: 'sale-price' %></td>
-      <td><%= f.submit "Add" %></td>
-    </tr>
-  </thead>
-
-  <tbody>
-
-  <% @product.prices.view_sorted.decorate.each do |price| %>
-    <%= content_tag_for :tr, price, rel: "fields_price_#{price.id}" do %>
-      <td class="market"><%= price.market_name %></td>
-      <td class="buyer"><%= price.organization_name %></td>
-      <td class="min-qty"><%= price.min_quantity %></td>
-      <td class="net-price">$<%= "%.02f" % price.net_price %></td>
-      <td class="sale-price">$<%= "%.02f" % price.sale_price %></td>
-      <td></td>
+    <% if !@product.prices.any?(&:persisted?) %>
+      <p>You don't have any prices yet! We've gone ahead and started the entry for you.</p>
     <% end %>
 
-    <%= content_tag_for :tr, price, :fields, {class: 'price', style:"display:none;", data: {"form-url" => url_for([:admin, @product, price]) }} do %>
-      <%= fields_for :price, price, index: price.id do |price_in_table| %>
-        <td><%= price.created_at.strftime('%m/%d/%Y') %></td>
-        <td><%= price_in_table.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %></td>
-        <td><%= price_in_table.number_field :min_quantity, min: 0 %></td>
-        <td><%= price_in_table.number_field :net_price,  min: 0, step: 0.01, data: {"net-percent" => "0.97"}, class: "net-price"%></td>
-        <td><%= price_in_table.number_field :sale_price,  min: 0, step: 0.01, class: "sale-price" %></td>
-        <td><%= link_to "Cancel", "#", class:"cancel" %><%= f.submit "Save" %></td>
+    <%= content_tag :table, border: 0, id: 'pricing_table', data: edit_table_error_payload(@price_with_errors) do %>
+      <thead>
+        <tr>
+          <th>Market</th>
+          <th>Buyer</th>
+          <th>Min Qty</th>
+          <th>Net Price</th>
+          <th>Sale Price</th>
+          <th></th>
+        </tr>
+
+        <tr class="price">
+          <td><%= f.object.market_name %></td>
+          <td><%= f.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %></td>
+          <td><%= f.number_field :min_quantity, min: 0, size: 4 %></td>
+          <td><%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price', data: {"net-percent" => "0.97"} %></td>
+          <td><%= f.number_field :sale_price, min: 0, step: 0.01, size: 4, class: 'sale-price' %></td>
+          <td><%= f.submit "Add", class: "btn--small" %></td>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      <% @product.prices.view_sorted.decorate.each do |price| %>
+        <%= content_tag_for :tr, price, rel: "fields_price_#{price.id}" do %>
+          <td class="market"><%= price.market_name %></td>
+          <td class="buyer"><%= price.organization_name %></td>
+          <td class="min-qty"><%= price.min_quantity %></td>
+          <td class="net-price">$<%= "%.02f" % price.net_price %></td>
+          <td class="sale-price">$<%= "%.02f" % price.sale_price %></td>
+          <td></td>
+        <% end %>
+
+        <%= content_tag_for :tr, price, :fields, {class: 'price', style:"display:none;", data: {"form-url" => url_for([:admin, @product, price]) }} do %>
+          <%= fields_for :price, price, index: price.id do |price_in_table| %>
+            <td><%= price.created_at.strftime('%m/%d/%Y') %></td>
+            <td><%= price_in_table.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %></td>
+            <td><%= price_in_table.number_field :min_quantity, min: 0, size: 4 %></td>
+            <td><%= price_in_table.number_field :net_price,  min: 0, step: 0.01, size: 4, data: {"net-percent" => "0.97"}, class: "net-price"%></td>
+            <td><%= price_in_table.number_field :sale_price,  min: 0, step: 0.01, size: 4, class: "sale-price" %></td>
+            <td>
+                <button class="cancel">Cancel</button>
+                <%= f.submit "Save", class: "btn--small" %>
+            </td>
+          <% end %>
+        <% end %>
       <% end %>
+      </tbody>
+    <% end # table %>
+    <% if !@product.prices.any?(&:persisted?) %>
+      <p>
+        When entering a price with advanced pricing, you are able to set prices for specific buyers. Before you do that
+        though, you should have a base price that everyone will pay. We have prefilled the information to get you started.
+        Set a sale price and click add to add this price. You will notice that the Net Price updates when you enter a Sale
+        Price. You can play with these numbers to get the Net Price that you want to receive per unit.
+      </p>
     <% end %>
-  <% end %>
-  </tbody>
-<% end # table %>
+    </div>
 <% end # form %>

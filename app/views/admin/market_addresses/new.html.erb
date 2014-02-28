@@ -2,9 +2,11 @@
 
 <%= render 'shared/errors', { resource: @address } %>
 
-<%= form_for [:admin, @address] do |f| %>
-  <%= render 'form', {f: f} %>
-  <div>
-    <%= f.submit "Add Address" %>
-  </div>
-<% end %>
+<div class="row row--partial">
+  <%= form_for [:admin, @address], html: { class: "column column--three-fourths" } do |f| %>
+    <%= render 'form', {f: f} %>
+    <div class="form-actions">
+      <%= f.submit "Add Address" %>
+    </div>
+  <% end %>
+</div>
