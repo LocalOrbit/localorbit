@@ -104,4 +104,11 @@ FactoryGirl.define do
     zip "48109"
   end
 
+  factory :delivery_schedule do
+    day 2
+    order_cutoff 6
+    seller_fulfillment_location_id 0
+    seller_delivery_start '7:00 AM'
+    seller_delivery_end   '11:00 AM'
+  end
 end

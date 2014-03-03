@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140228213942) do
+ActiveRecord::Schema.define(version: 20140303161017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,27 @@ ActiveRecord::Schema.define(version: 20140228213942) do
   end
 
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+
+  create_table "delivery_schedules", force: true do |t|
+    t.integer  "market_id"
+    t.integer  "day"
+    t.decimal  "fee"
+    t.string   "fee_type"
+    t.integer  "order_cutoff",                   default: 24, null: false
+    t.boolean  "require_delivery"
+    t.boolean  "require_cross_sell_delivery"
+    t.integer  "seller_fulfillment_location_id"
+    t.string   "seller_delivery_start"
+    t.string   "seller_delivery_end"
+    t.integer  "buyer_pickup_location_id"
+    t.string   "buyer_pickup_start"
+    t.string   "buyer_pickup_end"
+    t.boolean  "market_pickup"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delivery_schedules", ["market_id"], name: "index_delivery_schedules_on_market_id", using: :btree
 
   create_table "locations", force: true do |t|
     t.string   "name",                             null: false
