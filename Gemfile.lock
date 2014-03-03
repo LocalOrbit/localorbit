@@ -165,6 +165,9 @@ GEM
     pry-rails (0.3.2)
       pry (>= 0.9.10)
     rack (1.5.2)
+    rack-canonical-host (0.0.8)
+      addressable
+      rack (~> 1.0)
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.1.0.rc1)
@@ -287,6 +290,7 @@ DEPENDENCIES
   pg
   poltergeist
   pry-rails
+  rack-canonical-host
   rails (= 4.1.0.rc1)
   rails_12factor
   rspec-rails (~> 3.0.0.beta2)
