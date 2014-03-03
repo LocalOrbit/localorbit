@@ -2,4 +2,4 @@
 
 Rails.application.config.session_store :cookie_store,
   key: '_local_orbit_session',
-  domain: Rails.env.test? ? :all : ".#{Figaro.env.domain}"
+  domain: (Rails.env.test? || Figaro.env.domain == 'localhost') ? :all : ".#{Figaro.env.domain}"
