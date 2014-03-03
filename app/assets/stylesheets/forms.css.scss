@@ -54,6 +54,9 @@ input[type=url],
 input[type=password] {
   height: 42px;
 
+  &[size="3"] {
+    width: 4em;
+  }
   &[size="4"] {
     width: 6em;
   }

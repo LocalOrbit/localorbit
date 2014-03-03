@@ -2,7 +2,7 @@ module ApplicationHelper
   def filter_list(collection, param_name)
     params = request.query_parameters
 
-    content_tag(:ul, id: "product-filter-#{param_name}") do
+    content_tag(:ul, class: "filter-list", id: "product-filter-#{param_name}") do
       collection.each do |object|
         class_name = params[param_name] == object.id.to_s ? "current" : ""
 

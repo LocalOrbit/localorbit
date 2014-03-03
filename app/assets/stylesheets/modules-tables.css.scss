@@ -78,3 +78,68 @@ th {
     margin: 0 0 .4em;
   }
 }
+.product-row {
+  color: #000;
+
+  > td,
+  > th {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    vertical-align: top;
+  }
+  .description {
+    max-width: 250px;
+    font-size: 12px; 
+  }
+  .meta a {
+    color: #666;
+    font-size: 11px;
+  }
+  .name {
+    margin: 0;
+    font-size: 16px;
+    font-weight: lighter;
+    font-weight: 300;
+  }
+  .negotiated:after {
+    padding: 0 5px;
+    color: #3e8300;
+    background: #deebd2;
+    content: "Your price";
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .price {
+    padding: 0 0 0 11px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .quantity {
+    text-align: center;
+  }
+    .price-for-quantity {
+      display: block;
+      font-size: 10px;
+      -webkit-font-smoothing: initial;
+
+      &:before {
+        content: "×";
+      }
+    }
+  .tiers {
+    display: inline-block;
+    padding: 0;
+    list-style: none;
+
+    > li:nth-child(even) {
+      background: #f3f3f3;
+    }
+  }
+    .tier {
+      padding: 0 11px 0 0;
+      font-size: 10px;
+    }
+  .total {
+    font-weight: bold;
+  }
+}

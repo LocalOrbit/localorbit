@@ -83,10 +83,20 @@
   }
 
 }
-.is-open > .dropdown {
-  display: block;
-}
 
+  .is-open > .dropdown {
+    display: block;
+  }
+
+.filter-list {
+  padding-left: 0;
+  list-style: none;
+
+  > .current:before {
+    color: #1a7408;
+    content: "✓ ";
+  }
+}
 .header {
   font-weight: bold;
 }
