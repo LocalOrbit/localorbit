@@ -25,6 +25,7 @@ gem 'interactor-rails'
 gem 'newrelic_rpm'
 gem 'jquery-ui-rails'
 gem 'periscope-activerecord'
+gem 'rack-canonical-host'
 
 group :doc do
   gem 'sdoc', require: false
