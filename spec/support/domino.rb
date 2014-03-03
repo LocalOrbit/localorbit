@@ -145,6 +145,30 @@ module Dom
     def category
       node.find('#product_category_id')
     end
+
+    def who_story
+      node.find('#product_who_story').value
+    end
+
+    def how_story
+      node.find('#product_how_story').value
+    end
+
+    def locations
+      node.all("#product_location_id option").map(&:text)
+    end
+
+    def selected_location
+      node.find("#product_location_id").value
+    end
+
+    def location
+      node.find('#product_location_id')
+    end
+
+    def seller_info
+      node.find('#seller_info')
+    end
   end
 
   class DatePicker < Domino

@@ -3,15 +3,15 @@
 <% if @product.persisted? %>
     <h2>Product Organization</h2>
     <%= link_to @product.organization.name, [:admin, @product.organization] %>
+    <%= f.hidden_field :organization_id %>
 <% else %>
-  <% if current_user.managed_organizations.count > 1 %>
-  <div class="field">
-    <%= f.label :organization_id, "Product Organization" %><br>
-    <%= f.collection_select :organization_id, current_user.managed_organizations.selling, :id, :name, {include_blank: "Select an organization"}, class: "column--three-fourths" %>
-  </div>
-
+  <% if @organizations.count > 1 %>
+    <div class="field">
+      <%= f.label :organization_id, "Product Organization" %><br>
+      <%= f.collection_select :organization_id, @organizations, :id, :name, {include_blank: "Select an organization"}, class: "column--three-fourths" %>
+    </div>
   <% else %>
-    <%= f.hidden_field :organization_id, {value: current_user.managed_organizations.selling.first.id} %>
+    <%= f.hidden_field :organization_id, {value: @organizations.first.id} %>
   <% end %>
 <% end %>
 

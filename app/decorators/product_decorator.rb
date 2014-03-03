@@ -23,7 +23,7 @@ class ProductDecorator < Draper::Decorator
   end
 
   def location
-    return Location.find(location_id) if location_id
+    return Location.find(location_id) unless location_id.to_i.zero?
     return organization.locations.default_shipping if organization
   end
 
