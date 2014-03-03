@@ -110,12 +110,13 @@ describe "admin manange organization" do
 
       expect(locations.size).to eq(2)
 
-      locations.last.remove!
+      location = locations.last
+      location.remove!
 
       locations = Dom::Admin::OrganizationLocation.all
 
       expect(locations.size).to eq(1)
-      expect(page).to have_content("Successfully removed the address(es) #{location_2.name}")
+      expect(page).to have_content("Successfully removed the address(es) #{location.name}")
     end
 
     it "removes all locations", js: true do
