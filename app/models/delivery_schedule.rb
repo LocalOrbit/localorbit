@@ -10,8 +10,8 @@ class DeliverySchedule < ActiveRecord::Base
   validates :buyer_pickup_end,         presence: true, unless: :direct_to_customer?
   validates :buyer_pickup_start,       presence: true, unless: :direct_to_customer?
 
-  validate :buyer_pickup_end_after_start
-  validate :buyer_pickup_start_after_seller_fulfillment_start
+  validate :buyer_pickup_end_after_start,                      unless: :direct_to_customer?
+  validate :buyer_pickup_start_after_seller_fulfillment_start, unless: :direct_to_customer?
   validate :seller_delivery_end_after_start
 
   protected

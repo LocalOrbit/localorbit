@@ -4,8 +4,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :markets do
-      resources :market_addresses, as: :addresses, path: :addresses
-      resources :market_managers, as: :managers, path: :managers
+      resources :market_addresses,   as: :addresses,  path: :addresses
+      resources :market_managers,    as: :managers,   path: :managers
+      resources :delivery_schedules, path: :deliveries
     end
 
     resources :organizations do

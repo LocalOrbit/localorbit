@@ -22,6 +22,9 @@
 en:
   activerecord:
     attributes:
+      delivery_schedule:
+        seller_fulfillment_location_id: Fulfillment method
+        buyer_pickup_location_id: Buyer pickup location
       lot:
         number: "Lot #"
         good_from: Good From

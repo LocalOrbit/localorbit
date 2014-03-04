@@ -40,4 +40,21 @@ describe Market do
       expect(market.twitter).to eq('collectiveidea')
     end
   end
+
+  describe '#fulfillment_locations' do
+    let!(:market) { create(:market) }
+    let!(:address1) { create(:market_address, market: market) }
+    let!(:address2) { create(:market_address, market: market) }
+    let(:default_name) { 'Direct to seller' }
+    subject { market.fulfillment_locations(default_name) }
+
+    it 'accepts a parameter as default option name' do
+      expect(subject).to include([default_name, 0])
+    end
+
+    it 'has market address names' do
+      expect(subject).to include([address1.name, address1.id])
+      expect(subject).to include([address2.name, address2.id])
+    end
+  end
 end

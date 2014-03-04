@@ -16,4 +16,8 @@ class Market < ActiveRecord::Base
       self.twitter = twitter[1..-1]
     end
   end
+
+  def fulfillment_locations(default_name)
+    addresses.order(:name).map {|a| [a.name, a.id] }.unshift([default_name, 0])
+  end
 end

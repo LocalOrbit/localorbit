@@ -1,0 +1,71 @@
+<div class="field">
+  <%= f.label :day %>
+  <%= f.select :day, weekday_options %>
+</div>
+
+<div class="field">
+  <%= f.label :fee %>
+  <%= f.number_field :fee, min: 0, step: "0.01" %>
+</div>
+
+<div class="field">
+  <%= f.label :fee_type %>
+  <%= f.select :fee_type, ['Percentage', 'Dollar Amount'] %>
+</div>
+
+<div class="field">
+  <%= f.label :order_cutoff %>
+  <%= f.number_field :order_cutoff, min: 6, max: 504 %>
+</div>
+
+<div class="field">
+  <%= f.check_box :require_delivery %>
+  <%= f.label :require_delivery, 'All products from sellers on this market will deliver on this cycle.' %>
+</div>
+
+<div class="field">
+  <%= f.check_box :require_cross_sell_delivery %>
+  <%= f.label :require_cross_sell_delivery, 'All cross-sell products from sellers on this market will deliver on this cycle.' %>
+</div>
+
+<h2>Seller drop off or delivery info</h2>
+
+<div class="field">
+  <%= f.label :seller_fulfillment_location_id %>
+  <%= f.select :seller_fulfillment_location_id, @market.fulfillment_locations('Direct to customer') %>
+</div>
+
+<div class="field">
+  <%= f.check_box :market_pickup %>
+  <%= f.label :market_pickup, 'Market will pickup from seller location.' %>
+</div>
+
+<div class="field">
+  <%= f.label :seller_delivery_start %>
+  <%= f.select :seller_delivery_start, quarter_hour_select_options %>
+</div>
+
+<div class="field">
+  <%= f.label :seller_delivery_end %>
+  <%= f.select :seller_delivery_end, quarter_hour_select_options %>
+</div>
+
+
+<div id="buyer_order_receipt" class="is-hidden">
+  <h2>Buyer order receipt</h2>
+
+  <div class="field">
+    <%= f.label :buyer_pickup_location_id %>
+    <%= f.select :buyer_pickup_location_id, @market.fulfillment_locations('Delivered to Buyer from Market') %>
+  </div>
+
+  <div class="field">
+    <%= f.label :buyer_pickup_start %>
+    <%= f.select :buyer_pickup_start, quarter_hour_select_options %>
+  </div>
+
+  <div class="field">
+    <%= f.label :buyer_pickup_end %>
+    <%= f.select :buyer_pickup_end, quarter_hour_select_options %>
+  </div>
+</div>
