@@ -179,6 +179,10 @@ module Dom
       def pickup_time
         node.find('.pickup-time').text
       end
+
+      def click_delete
+        node.find_link('Delete').click
+      end
     end
 
     class OrganizationLocation < Domino

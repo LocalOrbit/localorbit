@@ -6,7 +6,7 @@ module Admin
     end
 
     def index
-      @delivery_schedules = @market.delivery_schedules.order(:day)
+      @delivery_schedules = @market.delivery_schedules.visible.order(:day)
     end
 
     def new
@@ -23,17 +23,22 @@ module Admin
     end
 
     def edit
-      @delivery_schedule = @market.delivery_schedules.find(params[:id])
+      @delivery_schedule = @market.delivery_schedules.visible.find(params[:id])
       render :new
     end
 
     def update
-      @delivery_schedule = @market.delivery_schedules.find(params[:id])
+      @delivery_schedule = @market.delivery_schedules.visible.find(params[:id])
       if @delivery_schedule.update_attributes(delivery_schedule_params)
         redirect_to [:admin, @market, :delivery_schedules], notice: 'Saved delivery schedule.'
       else
         render :new
       end
+    end
+
+    def destroy
+      @market.delivery_schedules.soft_delete(params[:id])
+      redirect_to [:admin, @market, :delivery_schedules], notice: 'Deleted delivery schedule.'
     end
 
     private

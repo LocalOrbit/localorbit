@@ -68,5 +68,14 @@ describe 'Market Manager managing delivery schedules' do
       expect(schedule.delivery_time).to include("3:00 AM - #{delivery1.seller_delivery_end}")
     end
 
+    it 'deletes a delivery schedule' do
+      click_link "Deliveries"
+
+      schedule = Dom::Admin::DeliverySchedule.first
+      schedule.click_delete
+
+      expect(page).to have_content("Deleted delivery schedule.")
+      expect(page).to_not have_content(delivery1.weekday)
+    end
   end
 end
