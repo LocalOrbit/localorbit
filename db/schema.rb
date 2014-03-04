@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20140306200929) do
     t.text     "policies"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "logo_uid"
   end
 
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree

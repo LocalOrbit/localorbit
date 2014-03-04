@@ -11,6 +11,8 @@ class Market < ActiveRecord::Base
   has_many :addresses, class_name: MarketAddress
   has_many :delivery_schedules, inverse_of: :market
 
+  dragonfly_accessor :logo
+
   def clean_twitter_slug
     if twitter && twitter.match(/^@/)
       self.twitter = twitter[1..-1]
