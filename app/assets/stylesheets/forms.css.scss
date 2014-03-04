@@ -62,6 +62,10 @@ input[type=password] {
   }
 }
 
+input[type=number][size] {
+  padding-right: 0
+}
+
 input,
 select,
 textarea {

@@ -10,9 +10,8 @@
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
-.font-icon[data-icon]:before {
+.font-icon:before {
   font-family: 'icomoon-ultimate88910';
-  content: attr(data-icon);
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -20,6 +19,26 @@
   text-transform: none;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
+}
+
+.font-icon[data-icon]:before {
+  content: attr(data-icon);
+}
+
+.icon-archive:before {
+  content: "\e02b";
+}
+.icon-close:before {
+  content: "\e030";
+}
+.icon-clear:before {
+  content: "\e044";
+}
+.icon-credit:before {
+  content: "\e01a";
+}
+.icon-direction:before {
+  content: "\e04c";
 }
 
 /* Use the following CSS code if you want to have a class per icon */
@@ -114,9 +133,7 @@ you can use the generic selector below, but it's slower:
 .icon-share:before {
   content: "\e043";
 }
-.icon-close-2:before {
-  content: "\e044";
-}
+
 .icon-stack-list:before {
   content: "\e045";
 }
@@ -207,9 +224,6 @@ you can use the generic selector below, but it's slower:
 .icon-cart-remove:before {
   content: "\e019";
 }
-.icon-credit:before {
-  content: "\e01a";
-}
 .icon-coins:before {
   content: "\e01b";
 }
@@ -243,9 +257,7 @@ you can use the generic selector below, but it's slower:
 .icon-compass:before {
   content: "\e04d";
 }
-.icon-direction:before {
-  content: "\e04c";
-}
+
 .icon-clock:before {
   content: "\e04e";
 }
@@ -263,9 +275,6 @@ you can use the generic selector below, but it's slower:
 }
 .icon-tablet:before {
   content: "\e02a";
-}
-.icon-archive:before {
-  content: "\e02b";
 }
 .icon-database:before {
   content: "\e04a";

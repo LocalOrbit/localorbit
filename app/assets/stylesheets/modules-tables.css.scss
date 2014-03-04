@@ -1,3 +1,5 @@
+@import 'mixins';
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -91,9 +93,15 @@ th {
     max-width: 250px;
     font-size: 12px; 
   }
-  .meta a {
-    color: #666;
-    font-size: 11px;
+  .meta {
+    a {
+      color: #666;
+      margin-right: .4em;
+      font-size: 11px;
+    }
+    .font-icon {
+      font-size: 14px;
+    }
   }
   .name {
     margin: 0;
@@ -113,6 +121,21 @@ th {
     padding: 0 0 0 11px;
     font-size: 12px;
     font-weight: bold;
+  }
+  .product-clear {
+    padding-top: 30px;
+    font-size: 15px;
+    > a {
+      color: #ddd;
+    }
+  }
+  .product-image {
+    padding-right: 20px;
+    > img {
+      display: block;
+      width: 60px;
+      @include border-radius(3px);
+    }
   }
   .quantity {
     text-align: center;
@@ -140,6 +163,7 @@ th {
       font-size: 10px;
     }
   .total {
+    padding-top: 30px;
     font-weight: bold;
   }
 }

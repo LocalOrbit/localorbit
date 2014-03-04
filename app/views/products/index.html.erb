@@ -1,11 +1,13 @@
 <div class="column column--fourth" id="product-filter">
   <h2>Filter the Shop</h2>
+  <%= link_to "Reset", products_path, class: "reset" %>
   <%= filter_list(current_market.organizations, :organization) %>
   <%= filter_list(@categories, :category) %>
 </div
 ><table class="column column--three-fourths" id="products">
   <thead>
     <tr>
+      <th></th>
       <th></th>
       <th>Price</th>
       <th>Quantity</th>
@@ -16,16 +18,18 @@
   <tbody>
   <% @products.each do |product| %>
     <tr class="product product-row">
+      <td class="product-image">
+      </td>
       <td class="info">
         <h3 class="name"><%= product.name %></h3>
         <p class="description">This tart variety is great for applesauce, but
         also perfect for pies or snacking.</p>
         <ul class="meta">
           <li class="organization-name">
-            <%= link_to product.organization_name, '#', class: 'popup-toggle', data: { popup: 'who-info' } %>
-            <div class="who-info is-hidden with-anchor top-anchor popup">
+            <%= link_to raw("<i class=\"font-icon icon-credit\"></i> #{product.organization_name}"), "#product-#{product.id}-who", class: "popup-toggle" %>
+            <div class="who-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-who">
               <div class="popup-header">
-                Who <button>X</button>
+                Who <button><i class="font-icon icon-close"></i></button>
               </div>
               <div class="popup-body">
                 <%= product.who_story %>
@@ -33,10 +37,10 @@
             </div>
           </li>
           <li class="how-story">
-            <%= link_to "How", "#", class: 'popup-toggle', data: { popup: 'how-info' } %>
-            <div class="how-info is-hidden with-anchor top-anchor popup">
+            <%= link_to raw('<i class="font-icon icon-archive"></i> How'), "#product-#{product.id}-how", class: "popup-toggle" %>
+            <div class="how-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-how">
               <div class="popup-header">
-                How <button>X</button>
+                How <button><i class="font-icon icon-close"></i></button>
               </div>
               <div class="popup-body">
                 <%= product.how_story %>
@@ -44,10 +48,10 @@
             </div>
           </li>
           <li class="where">
-            <%= link_to "Where", "#", class: 'popup-toggle', data: { popup: 'where-info' } %>
-            <div class="where-info is-hidden with-anchor top-anchor popup">
+            <%= link_to raw('<i class="font-icon icon-direction"></i> Where'), "#product-#{product.id}-where", class: "popup-toggle" %>
+            <div class="where-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-where">
               <div class="popup-header">
-                Holland, MI     <button>X</button>
+                Holland, MI     <button><i class="font-icon icon-close"></i></button>
               </div>
               <img class="location-map" alt="" src="<%= product.location_map%>" />
             </div>
@@ -69,7 +73,7 @@
         </label>
       </td>
       <td class="total">$75.00</td>
-      <td class="product-clear"><%= link_to "", "#", class: "icon-clear" %></td>
+      <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
     </tr>
   <% end %>
   </tbody>
