@@ -51,7 +51,7 @@
 </div>
 
 
-<div id="buyer_order_receipt" class="is-hidden">
+<%= content_tag :div, id: "buyer_order_receipt", class: (f.object.buyer_pickup? ? '' : 'is-hidden') do %>
   <h2>Buyer order receipt</h2>
 
   <div class="field">
@@ -68,4 +68,4 @@
     <%= f.label :buyer_pickup_end %>
     <%= f.select :buyer_pickup_end, quarter_hour_select_options %>
   </div>
-</div>
+<% end %>

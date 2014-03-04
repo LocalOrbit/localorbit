@@ -27,6 +27,29 @@ describe 'Market Manager managing delivery schedules' do
     expect(page).to have_content('Saved delivery schedule')
   end
 
+  it 'adding a new schedule with market fulfillment', js: true do
+    click_link 'Deliveries'
+    click_link 'Add Delivery'
+
+    expect(page).to_not have_content("Buyer pickup start")
+
+    select 'Tuesday', from: 'Day'
+    fill_in 'Order cutoff', with: '6'
+    select address.name, from: 'Fulfillment method'
+    select '7:15 AM', from: 'Seller delivery start'
+    select '11:30 AM', from: 'Seller delivery end'
+
+    expect(page).to have_content("Buyer pickup start")
+
+    select '12:00 PM', from: 'Buyer pickup start'
+    select '11:00 AM', from: 'Buyer pickup end'
+
+    click_button 'Save Delivery'
+
+    expect(page).to have_content('Buyer pickup end must be after buyer pickup start')
+    expect(page).to have_content('Buyer pickup start')
+  end
+
   context 'list' do
     let!(:delivery1) { create(:delivery_schedule, market: market) }
     let!(:delivery2) { create(:delivery_schedule, day: 5, order_cutoff: 12, seller_fulfillment_location: address, market: market, buyer_pickup_location_id: 0, buyer_pickup_start: '1:00 PM', buyer_pickup_end: '4:00 PM') }
