@@ -15,11 +15,11 @@ class Admin::MarketsController < AdminController
   end
 
   def create
-    @market = Market.create(market_params)
-    if @market.errors.any?
-      render :new
-    else
+    @market = Market.new(market_params)
+    if @market.save
       redirect_to [:admin, @market]
+    else
+      render :new
     end
   end
 

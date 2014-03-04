@@ -32,7 +32,7 @@ module Admin
       }
     end
 
-    describe "#create" do
+    describe "#create succeeds" do
       before do
         allow_any_instance_of(Location).to receive(:save) { true }
         allow(controller).to receive(:location_params)
@@ -43,13 +43,27 @@ module Admin
       }
     end
 
+    describe "#create fails" do
+      before do
+        sign_in admin
+        allow_any_instance_of(Location).to receive(:save) { false }
+        allow(controller).to receive(:location_params)
+      end
+
+      it "renders the new page" do
+        post :create, organization_id: organization.id
+        expect(response).to be_success
+        expect(flash[:alert]).to eq("Could not save address")
+      end
+    end
+
     describe "#edit" do
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
         get :edit, organization_id: organization.id, id: location.id
       }
     end
 
-    describe "#update" do
+    describe "#update succeeds" do
       before do
         allow_any_instance_of(Location).to receive(:update_attributes) { true }
         allow(controller).to receive(:location_params)
@@ -58,6 +72,20 @@ module Admin
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
         patch :update, organization_id: organization.id, id: location.id
       }
+    end
+
+    describe "#update fails" do
+      before do
+        sign_in admin
+        allow_any_instance_of(Location).to receive(:update_attributes) { false }
+        allow(controller).to receive(:location_params)
+      end
+
+      it "renders the new page" do
+        patch :update, organization_id: organization.id, id: location.id
+        expect(response).to be_success
+        expect(flash[:alert]).to eq("Could not update address")
+      end
     end
 
     describe "#update_defaults" do
