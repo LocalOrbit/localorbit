@@ -1,0 +1,56 @@
+unit_id,name,plural
+1,Pound,Pounds
+2,Ounce,Ounces
+3,Bunch,Bunches
+4,Pint,Pints
+5,Quart,Quarts
+6,Bushel,Bushels
+7,Dozen,Dozen
+8,Gallon,Gallons
+9,Case,Cases
+10,Piece,Pieces
+18,Box,Boxes
+17,Loaf,Loaves
+16,Bag,Bags
+23,Head,Heads
+22,Bucket,Buckets
+25,Lug,Lugs
+26,Half Gallon,Half Gallons
+27,Half Bushel,Half Bushels
+28,Liter,Liters
+29,Bottle\, Large,Bottles\, Large
+30,Bottle\, Small,Bottles\, Small
+31,Jar,Jars
+32,Wedge,Wedges
+33,Standard,Standard
+34,Queen,Queen
+35,King,King
+36,Tub,Tubs
+37,Small,Small
+38,Medium,Medium
+39,Large,Large
+40,Bundle,Bundles
+41,Pot,Pots
+42,Each,Each
+43,Bin,Bins
+44,Wheel,Wheels
+45,Half Wheel,Half Wheels
+46,Peck,Pecks
+47,Half Dozen,Half Dozens
+48,Fingerling,Fingerlings
+49,Half Pint,Half Pints
+50,Half Flat,Half Flats
+51,Flat,Flats
+52,Clamshell,Clamshells
+53,Stalk,Stalks
+54,18 - Pack,18 - Packs
+55,Half Pound,Half Pounds
+56,Basket,Baskets
+57,Package,Packages
+58,Quarter Pound,Quarter Pounds
+59,3/4 Pound,3/4 Pounds
+60,Bale,Bales
+61,Yard,Yards
+62,Bouquet,Bouquets
+63,Chub,Chubs
+64,1.5 Gallon,1.5 Gallons
