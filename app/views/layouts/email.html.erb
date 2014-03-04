@@ -265,11 +265,11 @@
     <div class="lo_content">
     <!-- Content Header -->
       <% if @market %>
-      <a href="<%= root_url %>" class="lo_visit_link">Visit the Market ➙</a>
+      <a href="<%= root_url(host: @market.domain) %>" class="lo_visit_link">Visit the Market ➙</a>
       <table class="lo_content_header">
         <tr>
           <td>
-            <a href="#"><%= image_tag @market.logo.remote_url, alt: @market.name class: "lo_org_logo" %></a>
+            <a href="<%= root_url(host: @market.domain) %>"><%= image_tag @market.logo.remote_url, alt: @market.name, class: "lo_org_logo" %></a>
           </td>
           <td>
             <p class="lo_slogan">“Where freshness is what we strive for every day.”</p>
