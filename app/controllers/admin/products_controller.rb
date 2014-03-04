@@ -41,9 +41,11 @@ module Admin
     private
 
     def product_params
-      params.require(:product).permit([
-        :name, :category_id, :unit_id, :who_story, :how_story, :location_id, :use_simple_inventory, :simple_inventory
-      ])
+      params.require(:product).permit(
+        :name, :image, :category_id, :unit_id, :location_id,
+        :who_story, :how_story,
+        :use_simple_inventory, :simple_inventory,
+      )
     end
 
     def after_create_page

@@ -108,6 +108,19 @@ describe "Adding a product" do
       end
     end
 
+    context "attaching an image" do
+      it "uploads an image when provided" do
+        click_link "Products"
+        click_link "Add a product"
+
+        fill_in "Product Name", with: "Red Grapes"
+        attach_file("Image", 'app/assets/images/backgrounds/kale.jpg')
+
+        click_button "Add Product"
+        expect(page).to have_css("img[alt='Red Grapes']")
+      end
+    end
+
     context "adding simple inventory for the first time", js: true, chosen_js: true do
       it "creates a new lot for the product" do
         click_link "Products"
