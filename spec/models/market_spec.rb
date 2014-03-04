@@ -57,4 +57,12 @@ describe Market do
       expect(subject).to include([address2.name, address2.id])
     end
   end
+
+  describe "domain" do
+    let(:market) { build(:market) }
+
+    it "is is the subdomain with the canonical domain" do
+      expect(market.domain).to eq("#{market.subdomain}.#{Figaro.env.domain!}")
+    end
+  end
 end

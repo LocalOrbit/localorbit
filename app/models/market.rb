@@ -22,4 +22,8 @@ class Market < ActiveRecord::Base
   def fulfillment_locations(default_name)
     addresses.order(:name).map {|a| [a.name, a.id] }.unshift([default_name, 0])
   end
+
+  def domain
+    "#{subdomain}.#{Figaro.env.domain!}"
+  end
 end
