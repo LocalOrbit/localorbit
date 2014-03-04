@@ -1,5 +1,10 @@
 class DeliverySchedule < ActiveRecord::Base
+  WEEKDAYS = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
+
   belongs_to :market, inverse_of: :delivery_schedules
+
+  belongs_to :seller_fulfillment_location, class: MarketAddress
+  belongs_to :buyer_pickup_location,       class: MarketAddress
 
   validates :day,          presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 6,   allow_nil: true}
   validates :order_cutoff, presence: true, numericality: {greater_than_or_equal_to: 6, less_than_or_equal_to: 504, allow_nil: true}
@@ -13,6 +18,22 @@ class DeliverySchedule < ActiveRecord::Base
   validate :buyer_pickup_end_after_start,                      unless: :direct_to_customer?
   validate :buyer_pickup_start_after_seller_fulfillment_start, unless: :direct_to_customer?
   validate :seller_delivery_end_after_start
+
+  def buyer_pickup?
+    seller_fulfillment_location.present?
+  end
+
+  def seller_fulfillment_address
+    if address = seller_fulfillment_location
+      "#{address.address}, #{address.city}, #{address.state} #{address.zip}"
+    else
+      'Direct to customer'
+    end
+  end
+
+  def weekday
+    WEEKDAYS[day]
+  end
 
   protected
 

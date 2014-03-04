@@ -1,7 +1,7 @@
 module Admin
   module DeliverySchedulesHelper
     def weekday_options
-      %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday).each_with_index.to_a
+      DeliverySchedule::WEEKDAYS.each_with_index.to_a
     end
 
     def quarter_hour_select_options
@@ -10,7 +10,7 @@ module Admin
         t_end = 24.hours.from_now(t)
         options = []
         while(t < t_end)
-          options << t.strftime('%I:%M %p')
+          options << t.strftime('%_I:%M %p').strip
           t = 15.minutes.from_now(t)
         end
         options
