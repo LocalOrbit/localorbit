@@ -1,6 +1,5 @@
 <div>
-  <h1>Market Managers for <%= @market.name %></h1>
-  <%= link_to 'Market', [:admin, @market] %>
+  <%= render 'admin/markets/header' %>
   <%= link_to 'Add Manager', [:new, :admin, @market, :manager] %>
 </div>
 
