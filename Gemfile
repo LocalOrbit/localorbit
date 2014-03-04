@@ -18,6 +18,7 @@ gem "balanced"
 gem "countries"
 gem 'devise'
 gem 'devise_invitable'
+gem 'dragonfly-s3_data_store'
 gem 'draper'
 gem 'figaro',       github: 'laserlemon/figaro'
 gem 'honeybadger'
