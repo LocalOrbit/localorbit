@@ -50,7 +50,8 @@ class Admin::MarketsController < AdminController
       :facebook,
       :twitter,
       :profile,
-      :policies
+      :policies,
+      :logo,
     )
   end
 

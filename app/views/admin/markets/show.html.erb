@@ -16,6 +16,10 @@
     <td><%= @market.name %></td>
   </tr>
   <tr>
+    <th scope="row">Logo</th>
+    <td><%= image_tag @market.logo.remote_url, alt: "#{@market.name} Logo" if @market.logo %></td>
+  </tr>
+  <tr>
     <th scope="row">Subdomain</th>
     <td><%= @market.subdomain %></td>
   </tr>

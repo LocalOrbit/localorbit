@@ -7,6 +7,10 @@
   <%= f.text_field :subdomain %>
 </div>
 <div class="field">
+  <%= f.label :logo %><br>
+  <%= f.file_field :logo %>
+</div>
+<div class="field">
   <%= f.label :timezone %><br>
   <%= f.time_zone_select :timezone %>
 </div>
