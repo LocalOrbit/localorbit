@@ -14,6 +14,6 @@ module AuthenticationHelpers
 end
 
 RSpec.configure do |config|
-  config.include AuthenticationHelpers, :type => :feature
-  config.include AuthenticationHelpers, :type => :request
+  config.include AuthenticationHelpers, type: :feature
+  config.include AuthenticationHelpers, type: :request
 end
