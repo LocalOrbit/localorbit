@@ -41,7 +41,6 @@ describe "Admin Managing Market Managers" do
 
       click_link "Managers"
 
-      expect(page).to have_text("Market Managers for #{market.name}")
       expect(page).to have_text(user2.email)
     end
 
@@ -53,7 +52,6 @@ describe "Admin Managing Market Managers" do
       fill_in 'Email', with: 'new-user@example.com'
       click_button 'Add Market Manager'
 
-      expect(page).to have_text("Market Managers for #{market.name}")
       expect(page).to have_text('new-user@example.com')
     end
 
@@ -64,7 +62,6 @@ describe "Admin Managing Market Managers" do
 
       click_button 'Remove Manager'
 
-      expect(page).to have_text("Market Managers for #{market.name}")
       expect(page).to_not have_text(user2.email)
     end
   end

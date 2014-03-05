@@ -1,13 +1,12 @@
 <div>
-  <h1><%= @market.name %> Details</h1>
-  <%= link_to "Edit Market", [:edit, :admin, @market] %>
-  <%= form_for([:admin, @market]) do |f| %>
-    <%= f.hidden_field :active, value: !@market.active? %>
-    <%= f.submit @market.active? ? 'Deactivate' : 'Activate' %>
-  <% end %>
-  <%= link_to "Managers", [:admin, @market, :managers] if current_user.admin? %>
-  <%= link_to "Markets", admin_markets_path %>
-  <%= link_to "Addresses", admin_market_addresses_path(@market) %>
+  <%= render 'header' %>
+  <div>
+    <%= link_to "Edit Market", [:edit, :admin, @market] %>
+    <%= form_for([:admin, @market]) do |f| %>
+      <%= f.hidden_field :active, value: !@market.active? %>
+      <%= f.submit @market.active? ? 'Deactivate' : 'Activate' %>
+    <% end %>
+  </div>
 </div>
 
 

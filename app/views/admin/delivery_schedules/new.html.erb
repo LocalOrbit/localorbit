@@ -1,0 +1,9 @@
+<%= render 'admin/markets/header' %>
+
+<%= render 'shared/errors', resource: @delivery_schedule %>
+
+<%= form_for [:admin, @market, @delivery_schedule] do |f| %>
+  <%= render 'form', {f: f} %>
+
+  <%= f.submit "Save Delivery" %>
+<% end %>

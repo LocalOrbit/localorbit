@@ -153,6 +153,38 @@ module Dom
   end
 
   module Admin
+    class DeliverySchedule < Domino
+      selector "tbody tr"
+
+      def weekday
+        delivery_text[/^[^,]+/]
+      end
+
+      def cutoff
+        delivery_text[/order cutoff ([0-9]+) hours before delivery/]
+      end
+
+      def delivery_text
+        node.find('.delivery-text').text
+      end
+
+      def delivery_address
+        node.find('.address').text
+      end
+
+      def delivery_time
+        node.find('.delivery-time').text
+      end
+
+      def pickup_time
+        node.find('.pickup-time').text
+      end
+
+      def click_delete
+        node.find_link('Delete').click
+      end
+    end
+
     class OrganizationLocation < Domino
       selector "tbody tr"
 

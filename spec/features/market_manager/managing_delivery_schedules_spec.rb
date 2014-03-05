@@ -1,0 +1,104 @@
+require 'spec_helper'
+
+describe 'Market Manager managing delivery schedules' do
+  let!(:user) { create(:user, :market_manager) }
+  let!(:market) { user.managed_markets.first }
+  let!(:address) { create(:market_address, market: market) }
+
+
+  before do
+    sign_in_as user
+    click_link 'Markets'
+    click_link market.name
+  end
+
+  it 'adding a new schedule' do
+    click_link 'Deliveries'
+    click_link 'Add Delivery'
+
+    select 'Tuesday', from: 'Day'
+    fill_in 'Order cutoff', with: '6'
+    select 'Direct to customer', from: 'Fulfillment method'
+    select '7:15 AM', from: 'Seller delivery start'
+    select '11:30 AM', from: 'Seller delivery end'
+
+    click_button 'Save Delivery'
+
+    expect(page).to have_content('Saved delivery schedule')
+  end
+
+  it 'adding a new schedule with market fulfillment', js: true do
+    click_link 'Deliveries'
+    click_link 'Add Delivery'
+
+    expect(page).to_not have_content("Buyer pickup start")
+
+    select 'Tuesday', from: 'Day'
+    fill_in 'Order cutoff', with: '6'
+    select address.name, from: 'Fulfillment method'
+    select '7:15 AM', from: 'Seller delivery start'
+    select '11:30 AM', from: 'Seller delivery end'
+
+    expect(page).to have_content("Buyer pickup start")
+
+    select '12:00 PM', from: 'Buyer pickup start'
+    select '11:00 AM', from: 'Buyer pickup end'
+
+    click_button 'Save Delivery'
+
+    expect(page).to have_content('Buyer pickup end must be after buyer pickup start')
+    expect(page).to have_content('Buyer pickup start')
+  end
+
+  context 'list' do
+    let!(:delivery1) { create(:delivery_schedule, market: market) }
+    let!(:delivery2) { create(:delivery_schedule, day: 5, order_cutoff: 12, seller_fulfillment_location: address, market: market, buyer_pickup_location_id: 0, buyer_pickup_start: '1:00 PM', buyer_pickup_end: '4:00 PM') }
+
+    it 'shows a list of delivery schedules' do
+      click_link 'Deliveries'
+
+      delivery_schedules = Dom::Admin::DeliverySchedule.all
+
+      expect(delivery_schedules.size).to eq(2)
+
+      first_schedule = delivery_schedules.first
+      expect(first_schedule.weekday).to eq("Tuesday")
+      expect(first_schedule.cutoff).to match(/ #{delivery1.order_cutoff} /)
+      expect(first_schedule.delivery_address).to match(/Direct to customer/)
+      expect(first_schedule.delivery_time).to include("#{delivery1.seller_delivery_start} - #{delivery1.seller_delivery_end}")
+      expect(first_schedule.pickup_time).to be_blank
+
+      last_schedule = delivery_schedules.last
+      expect(last_schedule.weekday).to eq("Friday")
+      expect(last_schedule.cutoff).to match(/ #{delivery2.order_cutoff} /)
+      expect(last_schedule.delivery_address).to include("#{address.address}, #{address.city}, #{address.state} #{address.zip}")
+      expect(last_schedule.delivery_time).to include("#{delivery2.seller_delivery_start} - #{delivery2.seller_delivery_end}")
+      expect(last_schedule.pickup_time).to include("#{delivery2.buyer_pickup_start} - #{delivery2.buyer_pickup_end}")
+    end
+
+    it 'edits a delivery schedule' do
+      click_link 'Deliveries'
+
+      click_link delivery1.weekday
+
+      select '3:00 AM', from: 'Seller delivery start'
+
+      click_button 'Save Delivery'
+
+      expect(page.body).to have_content("Saved delivery schedule");
+
+      schedule = Dom::Admin::DeliverySchedule.first
+      expect(schedule.delivery_time).to include("3:00 AM - #{delivery1.seller_delivery_end}")
+    end
+
+    it 'deletes a delivery schedule' do
+      click_link "Deliveries"
+
+      schedule = Dom::Admin::DeliverySchedule.first
+      schedule.click_delete
+
+      expect(page).to have_content("Deleted delivery schedule.")
+      expect(page).to_not have_content(delivery1.weekday)
+    end
+  end
+end

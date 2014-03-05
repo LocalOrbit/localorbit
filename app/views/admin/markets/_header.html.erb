@@ -1,0 +1,9 @@
+<h1><%= @market.name %></h1>
+<div class="tabs-wrapper">
+  <ul class="tabs">
+    <%= content_tag(:li, link_to_or_span("Market Info", [:admin, @market]), class: 'tab') %>
+    <%= content_tag(:li, link_to_or_span("Managers", [:admin, @market, :managers]), class: 'tab') if current_user.admin? %>
+    <%= content_tag(:li, link_to_or_span("Addresses", admin_market_addresses_path(@market)), class: 'tab') %>
+    <%= content_tag(:li, link_to_or_span("Deliveries", [:admin, @market, :delivery_schedules]), class: 'tab') %>
+  </ul>
+</div>
