@@ -1,11 +1,16 @@
 <div class="column column--fourth" id="product-filter">
-  <h2>Filter the Shop</h2>
-  <%= link_to "Reset", products_path, class: "reset" %>
+  <div class="header header--column">
+    <h2 class="heading heading--sidebar">Filter the Shop</h2>
+    <% if request.query_parameters.present? %>
+      <%= link_to "Reset", products_path, class: "btn reset" %>
+    <% end %>
+  </div>
 
-  <a href="#product-filter-organization" class="filter-toggle caretted">Seller</a>
+
+  <a href="#product-filter-organization" class="filter-toggle caretted caretted--right">Seller</a>
   <%= filter_list(current_market.organizations, :organization) %>
 
-  <a href="#product-filter-category" class="filter-toggle caretted">Category</a>
+  <a href="#product-filter-category" class="filter-toggle caretted caretted--right">Category</a>
   <%= filter_list(@categories, :category) %>
 </div
 ><table class="column column--three-fourths" id="products">
