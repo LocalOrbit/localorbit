@@ -52,6 +52,14 @@ class Product < ActiveRecord::Base
     lots.available.sum(:quantity)
   end
 
+  def unit_plural
+    unit.try(:plural)
+  end
+
+  def unit_singular
+    unit.try(:singular)
+  end
+
   private
 
   def ensure_organization_can_sell
