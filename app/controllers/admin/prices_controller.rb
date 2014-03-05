@@ -29,6 +29,11 @@ class Admin::PricesController < AdminController
     end
   end
 
+  def destroy
+    Price.destroy(params[:id])
+    redirect_to [:admin, @product, :prices], notice: "Successfully removed price"
+  end
+
   private
 
   def price_params

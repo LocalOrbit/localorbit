@@ -50,6 +50,10 @@ module Dom
   class LotRow < EditableTableRow
     selector "#inventory_table tbody tr.lot"
 
+    def click_number
+      node.find(".number").click
+    end
+
     def number
       node.find(".number").text
     end
@@ -82,6 +86,10 @@ module Dom
   class PricingRow < EditableTableRow
     selector "#pricing_table tbody tr.price"
 
+    def click_market
+      node.find(".market").click
+    end
+
     def market
       node.find(".market").text
     end
@@ -100,6 +108,10 @@ module Dom
 
     def sale_price
       node.find(".sale-price").text
+    end
+
+    def click_delete
+      node.find_link("Delete").click
     end
   end
 

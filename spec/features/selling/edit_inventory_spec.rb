@@ -16,7 +16,7 @@ describe "Editing advanced inventory" do
 
   describe "clicking on a lot row", js:true do
     before do
-      Dom::LotRow.first.click
+      Dom::LotRow.first.click_number
     end
 
     it "disables the new_lot form fields" do
@@ -45,12 +45,12 @@ describe "Editing advanced inventory" do
     describe "then clicking on another lot row" do
       it "will change the row being edited" do
         fill_in("lot_#{lot.id}_number", with: 55)
-        Dom::LotRow.all.last.click
+        Dom::LotRow.all.last.click_number
 
         expect(Dom::LotRow.first).to_not be_editable
         expect(Dom::LotRow.all.last).to be_editable
 
-        Dom::LotRow.first.click
+        Dom::LotRow.first.click_number
         expect(find_field("lot_#{lot.id}_number").value).to eq("55")
       end
     end
@@ -84,7 +84,7 @@ describe "Editing advanced inventory" do
 
       it "restores the fields to their original state" do
         lot_row = Dom::LotRow.first
-        lot_row.click
+        lot_row.click_number
 
         lot_row.inputs.each do |input|
           expect(input['disabled']).to be_nil
@@ -96,7 +96,7 @@ describe "Editing advanced inventory" do
 
         click_link "Cancel"
 
-        Dom::LotRow.first.click
+        Dom::LotRow.first.click_number
 
         expect(page.find("#lot_#{lot.id}_number").value).to be_blank
         expect(page.find("#lot_#{lot.id}_quantity").value).to eql("93")
@@ -158,7 +158,7 @@ describe "Editing advanced inventory" do
         it "allows the user cancel editing multiple times" do
           click_link "Cancel"
           expect(Dom::LotRow.first).not_to be_editable
-          Dom::LotRow.first.click
+          Dom::LotRow.first.click_number
           expect(Dom::LotRow.first).to be_editable
           click_link "Cancel"
           expect(Dom::LotRow.first).not_to be_editable
