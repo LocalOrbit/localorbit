@@ -39,7 +39,7 @@ module Dom
     end
 
     def click
-      node.click
+      node.trigger("click")
     end
 
     def inputs

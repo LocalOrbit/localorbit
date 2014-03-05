@@ -13,7 +13,14 @@
 <% @products.each do |product| %>
   <tr class="product-row">
     <th scope="row"><%= link_to product.name, [:admin, product] %></th>
-    <td></td>
+    <td class="pricing">
+      <ul class="l-inline-list">
+        <li><a href="#" class="price-toggle">$20.00</a></li>
+        <li><a href="#" class="price-toggle">$15.00 5+ Bushels</a></li>
+        <li><a href="#" class="price-toggle">$12.00 10+ Bushels</a></li>
+        <li><a href="#" class="price-toggle">$9.00 100+ Bushels</a></li>
+      </ul>
+    </td>
     <td></td>
   </tr>
 <% end %>
