@@ -6,8 +6,15 @@ module SoftDelete
   end
 
   module ClassMethods
-    def soft_delete(id)
-      find(id).update_attribute(:deleted_at, Time.current)
+    def soft_delete(*ids)
+      time = Time.current
+      records = where(id: ids)
+
+      unless records.empty?
+        records.update_all(deleted_at: time)
+      end
+
+      return records
     end
   end
 end
