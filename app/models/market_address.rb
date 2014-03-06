@@ -1,4 +1,6 @@
 class MarketAddress < ActiveRecord::Base
+  include SoftDelete
+
   belongs_to :market, inverse_of: :addresses
 
   validates :name, presence: true, uniqueness: { scope: :market_id }

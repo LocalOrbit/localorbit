@@ -49,4 +49,9 @@ describe MarketAddress do
     expect(subject.errors.messages.keys.count).to eq(1)
     expect(subject.errors.messages).to have_key(:market)
   end
+
+  describe "soft_delete" do
+    subject { create(:market_address, market: market) }
+    it_behaves_like "a soft deleted model"
+  end
 end

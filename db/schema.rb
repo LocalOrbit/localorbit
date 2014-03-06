@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20140306200929) do
     t.datetime "updated_at"
     t.boolean  "default_billing",  default: false, null: false
     t.boolean  "default_shipping", default: false, null: false
+    t.datetime "deleted_at"
   end
 
   add_index "locations", ["organization_id"], name: "index_locations_on_organization_id", using: :btree
@@ -90,6 +91,7 @@ ActiveRecord::Schema.define(version: 20140306200929) do
     t.integer  "market_id",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   add_index "market_addresses", ["market_id"], name: "index_market_addresses_on_market_id", using: :btree
