@@ -1,5 +1,6 @@
 class Product < ActiveRecord::Base
   belongs_to :category
+  belongs_to :top_level_category, class: Category
   belongs_to :organization
   belongs_to :location
   belongs_to :unit
@@ -18,6 +19,8 @@ class Product < ActiveRecord::Base
   scope_accessible :organization, method: :for_organization_id, ignore_blank: true
   scope_accessible :category, method: :for_category_id, ignore_blank: true
 
+  before_save :update_top_level_category
+
   def self.available_for_market(market)
     return none unless market
 
@@ -29,7 +32,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.for_category_id(category_id)
-    where(category_id: category_id)
+    where(top_level_category_id: category_id)
   end
 
   def can_use_simple_inventory?
@@ -65,6 +68,12 @@ class Product < ActiveRecord::Base
   def ensure_organization_can_sell
     unless organization.present? && organization.can_sell?
       errors.add(:organization, "must be able to sell products")
+    end
+  end
+
+  def update_top_level_category
+    if category_id_changed?
+      top_level_category = category.top_level_category
     end
   end
 end
