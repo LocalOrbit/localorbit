@@ -1,15 +1,10 @@
 require "spec_helper"
 
 describe "Remove advanced pricing" do
-  let(:user)    { create(:user) }
-  let(:market)  { create(:market) }
+  let(:market)        { create(:market) }
   let!(:organization) { create(:organization, markets: [market]) }
-  let!(:product) do
-    create(:product).tap do |p|
-      p.organization.users << user
-      market.organizations << p.organization
-    end
-  end
+  let!(:user)         { create(:user, organizations: [organization]) }
+  let!(:product)      { create(:product, organization: organization) }
 
   let!(:price) { create(:price, product: product, sale_price: 3) }
   let!(:price2) { create(:price, product: product, sale_price: 2, min_quantity: 100) }
