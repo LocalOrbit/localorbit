@@ -19,4 +19,8 @@ class Category < ActiveRecord::Base
     end
     output.sort {|a,b| a[0] <=> b[0] }
   end
+
+  def top_level_category
+    parent.try(:top_level_category) || self
+  end
 end

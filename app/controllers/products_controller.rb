@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
 
   def index
     products = Product.available_for_market(current_market)
-    @categories = products.map(&:category).uniq
+    @categories = products.map {|p| p.category.top_level_category }.uniq
 
     @products = products.periscope(request.query_parameters).decorate
   end

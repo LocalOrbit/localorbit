@@ -43,6 +43,9 @@ FactoryGirl.define do
   factory :product do
     sequence(:name) {|n| "Product #{n}" }
     category { Category.find_by(name: "Empire Apples") }
+
+    # We need to set this in the factory because FactoryGirl doesn't trigger before_save
+    top_level_category { category.top_level_category }
     organization
 
     trait :decorated do

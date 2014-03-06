@@ -7,7 +7,9 @@ module ApplicationHelper
         class_name = params[param_name] == object.id.to_s ? "current" : ""
 
         item = content_tag(:li, class: class_name) do
-          link_to object.name, url_for(params.merge(param_name => object.id))
+          concat link_to(object.name, url_for(params.merge(param_name => object.id)))
+          concat " "
+          concat link_to("[clear]", params.reject {|k, v| k == param_name.to_s }, class: 'clear-filter hide-when-open')
         end
 
         concat(item)
