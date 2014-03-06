@@ -28,6 +28,7 @@
 <div class="field">
   <%= f.label :unit_id %><br>
   <%= f.select :unit_id, Unit.all.map { |u| [u.plural, u.id] } , {include_blank: ""}, {data: {placeholder: "Click and type to search for a Unit"}, class: "chosen"} %>
+  <span class="hint">Not seeing what you need? <%= link_to "Request a new unit", "#", class: "modal-toggle", data: { modal: "request-new-unit" } %></span>
 </div>
 
 <fieldset>
