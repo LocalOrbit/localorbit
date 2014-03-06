@@ -23,7 +23,7 @@ describe "Editing advanced pricing" do
 
   describe "clicking on a price row", js: true do
     before do
-      Dom::PricingRow.first.click
+      Dom::PricingRow.first.click_market
     end
 
     it "disables the #new_price form fields" do
@@ -52,12 +52,12 @@ describe "Editing advanced pricing" do
     describe "then clicking on another price row" do
       it "will change the row being edited" do
         fill_in("price_#{price.id}_sale_price", with: 55)
-        Dom::PricingRow.all.last.click
+        Dom::PricingRow.all.last.click_market
 
         expect(Dom::PricingRow.first).to_not be_editable
         expect(Dom::PricingRow.all.last).to be_editable
 
-        Dom::PricingRow.first.click
+        Dom::PricingRow.first.click_market
         expect(find_field("price_#{price.id}_sale_price").value).to eq("55.00")
       end
     end
@@ -91,7 +91,7 @@ describe "Editing advanced pricing" do
 
       it "restores the fields to their original state" do
         price_row = Dom::PricingRow.first
-        price_row.click
+        price_row.click_market
 
         price_row.inputs.each do |input|
           expect(input['disabled']).to be_nil
@@ -103,7 +103,7 @@ describe "Editing advanced pricing" do
 
         click_button "Cancel"
 
-        Dom::PricingRow.first.click
+        Dom::PricingRow.first.click_market
 
         expect(page.find("#price_#{price.id}_sale_price").value).to eql("3.00")
         expect(page.find("#price_#{price.id}_min_quantity").value).to eql("1")
@@ -163,7 +163,7 @@ describe "Editing advanced pricing" do
         it "allows the user cancel editing multiple times" do
           click_button "Cancel"
           expect(Dom::PricingRow.first).not_to be_editable
-          Dom::PricingRow.first.click
+          Dom::PricingRow.first.click_market
           expect(Dom::PricingRow.first).to be_editable
           click_button "Cancel"
           expect(Dom::PricingRow.first).not_to be_editable

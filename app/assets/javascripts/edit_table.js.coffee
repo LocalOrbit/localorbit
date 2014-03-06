@@ -111,14 +111,13 @@ class @EditTable
 
   bindActions: ()->
     context = this
-    @form.find("table tbody tr").on "click", ()->
-      if $(this).data("form-url")?
+    @form.find("table tbody td").not(".delete").on "click", ()->
+      if $(this).parent().data("form-url")?
         return
 
-      context.openEditRow(this)
+      context.openEditRow($(this).parent())
 
     @form.find("table tbody").on "click", "tr .cancel", (e)->
       e.preventDefault()
       row = $(this).parents("tr")[0]
       context.closeEditRow(row, true)
-
