@@ -3,7 +3,7 @@ module Admin
     before_action :find_organization
 
     def index
-      @locations = @organization.locations.alphabetical_by_name.decorate
+      @locations = @organization.locations.visible.alphabetical_by_name.decorate
     end
 
     def new
@@ -45,7 +45,7 @@ module Admin
     end
 
     def destroy
-      @locations = @organization.locations.destroy(*params[:location_ids])
+      @locations = @organization.locations.soft_delete(*params[:location_ids])
       redirect_to [:admin, @organization, :locations], notice: "Successfully removed the address(es) #{location_names}"
     end
 
