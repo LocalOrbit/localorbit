@@ -8,14 +8,11 @@ module ApplicationHelper
 
         item = content_tag(:li, class: class_name) do
           concat link_to(object.name, url_for(params.merge(param_name => object.id)))
-          unless class_name.blank?
-            concat " "
-            concat link_to("[clear]", params.reject {|k, v| k == param_name.to_s }, class: 'clear-filter hide-when-open')
-          end
+          concat " "
+          concat link_to("[clear]", params.reject {|k, v| k == param_name.to_s }, class: 'clear-filter hide-when-open')
         end
 
         concat(item)
-
       end
     end
   end
