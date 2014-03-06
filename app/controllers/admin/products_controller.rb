@@ -7,6 +7,7 @@ module Admin
     def new
       ensure_selling_organization!
       @product = Product.new.decorate
+      find_selling_organizations
     end
 
     def create
@@ -16,12 +17,14 @@ module Admin
       if @product.save
         redirect_to after_create_page, notice: "Added #{@product.name}"
       else
+        find_selling_organizations
         render :new
       end
     end
 
     def show
       @product = current_user.managed_products.find(params[:id]).decorate
+      @organizations = [@product.organization]
     end
 
     def update
@@ -30,6 +33,7 @@ module Admin
       if @product.update_attributes(product_params)
         redirect_to [:admin, @product], notice: "Saved #{@product.name}"
       else
+        @organizations = [@product.organization]
         render :show
       end
     end
@@ -51,6 +55,10 @@ module Admin
         flash[:alert] = "You must add an organization that can sell before adding any products"
         redirect_to new_admin_organization_path
       end
+    end
+
+    def find_selling_organizations
+      @organizations = current_user.managed_organizations.selling.includes(:locations)
     end
   end
 end

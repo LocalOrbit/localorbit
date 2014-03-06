@@ -2,7 +2,8 @@ require "spec_helper"
 
 describe "Adding a product" do
   let(:user) { create(:user) }
-  let(:org) { create(:organization) }
+  let(:org) { create(:organization, :seller) }
+  let(:loc1) {create(:location) }
   let(:stub_warning) {"Your product will not appear in the Shop until all of these actions are complete"}
   let(:organization_label) { "Product Organization" }
 
@@ -12,14 +13,22 @@ describe "Adding a product" do
   end
 
   describe "as a seller belonging to one organization" do
+    let(:location){ create(:location) }
+
     before do
       org.users << user
+      org.who_story = "We sell products"
+      org.how_story = "We sell products very carefully"
+      org.locations << location
+      org.save!
+
       sign_in_as(user)
-      click_link "Products"
-      click_link "Add a product"
     end
 
     it "defaults to simple inventory" do
+      click_link "Products"
+      click_link "Add a product"
+
       simple_inventory_checkbox = page.find_field("Use simple inventory management")
       inventory_quantity = page.find_field("Your current inventory")
 
@@ -27,8 +36,83 @@ describe "Adding a product" do
       expect(inventory_quantity.value).to eql("0")
     end
 
+    context "filling in who/where/how", js: true, chosen_js: true do
+      let(:product_form) { Dom::ProductForm.first }
+
+      it "pre-populates the fields from the organization" do
+        click_link "Products"
+        click_link "Add a product"
+
+        uncheck "seller_info"
+
+        expect(page).to have_content("Who")
+
+        expect(product_form.who_story).to eq("We sell products")
+        expect(product_form.how_story).to eq("We sell products very carefully")
+        expect(product_form.selected_location).to eq("Select a location")
+      end
+
+      it "saves changes made to fields if checked and unchecked" do
+        location2 = create(:location, name: "Good Place")
+        org.locations << location2
+        org.save!
+
+        click_link "Products"
+        click_link "Add a product"
+
+        uncheck "seller_info"
+        expect(page).to have_content("Who")
+        product_form = Dom::ProductForm.first
+
+        fill_in "product_who_story", with: "We sell other stuff"
+        fill_in "product_how_story", with: "By selling stuff"
+        select "Good Place", from: "product_location_id"
+
+        check "seller_info"
+        expect(page).not_to have_content("Who")
+
+        uncheck "seller_info"
+        expect(page).to have_content("Who")
+
+        expect(product_form.seller_info).to_not be_checked
+        expect(product_form.who_story).to eq("We sell other stuff")
+        expect(product_form.how_story).to eq("By selling stuff")
+        expect(product_form.location.value.to_i).to eq(location2.id)
+      end
+
+      it "does not save the product who/where/how information if checked after updating who/how/where" do
+        click_link "Products"
+        click_link "Add a product"
+
+        fill_in "Product Name", with: "Good food"
+        select_from_chosen "Grapes / Red Grapes", from: "Category"
+        select_from_chosen "Pounds", from: "Unit"
+
+        uncheck "seller_info"
+        expect(page).to have_content("Who")
+
+        fill_in "product_who_story", with: "We sell other stuff"
+
+        check "seller_info"
+        expect(page).not_to have_content("Who")
+
+        click_button "Add Product"
+
+        expect(page).to_not have_content("Who")
+
+        product = Product.last.decorate
+
+        expect(product.who_story).to eql(org.who_story)
+        expect(product.how_story).to eql(org.how_story)
+        expect(product.location).to eql(org.locations.default_shipping)
+      end
+    end
+
     context "adding simple inventory for the first time", js: true, chosen_js: true do
       it "creates a new lot for the product" do
+        click_link "Products"
+        click_link "Add a product"
+
         fill_in "Product Name", with: "Red Grapes"
         select_from_chosen "Grapes / Red Grapes", from: 'Category'
         select_from_chosen "Pounds", from: "Unit"
@@ -54,6 +138,9 @@ describe "Adding a product" do
 
     context "adding a product with advanced inventory", js: true, chosen_js: true do
       it "hides the simple inventory field" do
+        click_link "Products"
+        click_link "Add a product"
+
         expect(page).to have_content("Your current inventory")
 
         uncheck "Use simple inventory management"
@@ -62,6 +149,9 @@ describe "Adding a product" do
       end
 
       it "enables the inventory tab" do
+        click_link "Products"
+        click_link "Add a product"
+
         within(".tabs") do
           expect(page).to_not have_content("Inventory")
         end
@@ -78,6 +168,9 @@ describe "Adding a product" do
       let(:category_select) { Dom::CategorySelect.first }
 
       it "can quickly drill down to a result" do
+        click_link "Products"
+        click_link "Add a product"
+
         category_select.click
 
         expect(category_select.visible_options).to have_text("Macintosh Apples")
@@ -103,6 +196,9 @@ describe "Adding a product" do
       end
 
       it "fuzzy searches across top-level categories" do
+        click_link "Products"
+        click_link "Add a product"
+
         category_select.click
 
         expect(category_select.visible_options).to have_text("Macintosh Apples")
@@ -120,9 +216,12 @@ describe "Adding a product" do
     end
 
     context "when all input is valid", js: true, chosen_js: true do
+      let!(:loc1) { create(:location, organization: org)}
+      let!(:loc2) { create(:location, organization: org)}
+
       it "saves the product stub" do
-        create(:location, name: "Location 1", organization: org)
-        create(:location, name: "Location 2", organization: org)
+        click_link "Products"
+        click_link "Add a product"
 
         expect(page).to have_content(stub_warning)
         expect(page).to_not have_content(organization_label)
@@ -136,7 +235,7 @@ describe "Adding a product" do
 
         uncheck :seller_info
 
-        select "Location 2", from: "Location"
+        select loc1.name, from: "Location"
 
         fill_in "Who", with: "The farmers down the road."
         fill_in "How", with: "With water, earth, and time."
@@ -156,6 +255,9 @@ describe "Adding a product" do
 
     context "when the product information is invalid", js: true do
       it "does not create the product" do
+        click_link "Products"
+        click_link "Add a product"
+
         expect(page).to have_content("Your current inventory")
         uncheck 'Use simple inventory management'
 
@@ -170,18 +272,76 @@ describe "Adding a product" do
     end
   end
 
-  describe "as a seller belonging to multiple organizations" do
-    let(:org2) { create(:organization) }
+  describe "a seller belonging to multiple organizations" do
+    let(:org2) { create(:organization, who_story: "who org2", how_story: "how org2", locations: [create(:location)]) }
     let(:buying_org) { create(:organization, :buyer) }
+    let(:loc1) { create(:location) }
+    let(:loc2) { create(:location) }
 
     before do
+      org.locations << loc1
       org.users << user
       org2.users << user
+      org2.locations << loc2
+
       buying_org.users << user
 
       sign_in_as(user)
       click_link "Products"
       click_link "Add a product"
+    end
+
+    it "is prevented from unchecking 'Use seller info from my account' until organization is selected", js: true do
+      seller_info = page.find("#seller_info")
+      expect(seller_info).to be_disabled
+
+      select org2.name, from: "Product Organization"
+
+      seller_info = page.find("#seller_info")
+      expect(seller_info).not_to be_disabled
+    end
+
+    context "Uncheck 'use seller info'", js: true do
+      before do
+        select org2.name, from: "Product Organization"
+        uncheck "seller_info"
+      end
+
+      it "pre-populates who/where/how fields from the organization" do
+        expect(page).to have_content("Who")
+
+        product_form = Dom::ProductForm.first
+        expect(product_form.who_story).to eq("who org2")
+        expect(product_form.how_story).to eq("how org2")
+
+        expect(product_form.locations).to include(*org2.locations.map(&:name))
+        expect(product_form.locations).to_not include(*org.locations.map(&:name))
+      end
+
+      context "select a different organiztion" do
+
+        before do
+          select org2.locations.first.name, from: "product_location_id"
+          expect(Dom::ProductForm.first.selected_location).to eql(org2.locations.first.id.to_s)
+          select org.name, from: "Product Organization"
+        end
+
+        it "populates the locations list" do
+          product_form = Dom::ProductForm.first
+          expect(product_form.locations).to include(*org.locations.map(&:name))
+        end
+      end
+
+      context "select the blank organization option" do
+        before do
+          select "Select an organization", from: "Product Organization"
+        end
+
+        it "disables seller info" do
+          form = Dom::ProductForm.first
+          expect(form.seller_info).to be_disabled
+        end
+      end
     end
 
     it "does not offer non-selling organizations as options for the Organization select" do
