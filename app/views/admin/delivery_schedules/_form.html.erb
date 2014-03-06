@@ -35,7 +35,7 @@
   <%= f.select :seller_fulfillment_location_id, @market.fulfillment_locations('Direct to customer') %>
 </div>
 
-<div class="field">
+<div class="field<%= ' is-hidden' unless f.object.buyer_pickup? %>" id="market_pickup_option">
   <%= f.check_box :market_pickup %>
   <%= f.label :market_pickup, 'Market will pickup from seller location.' %>
 </div>
