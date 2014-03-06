@@ -50,3 +50,7 @@
 .location-map {
   display: block;
 }
+
+.is-open .hide-when-open {
+  display: none;
+}
