@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       resources :lots
       resources :prices
     end
+
+    post "/units/request", to: "units#request_new", as: :request_units
   end
 
   resource :dashboard
