@@ -1,4 +1,5 @@
 class Location < ActiveRecord::Base
+  include SoftDelete
   belongs_to :organization, inverse_of: :locations
 
   validates :name, presence: true, uniqueness: { scope: :organization_id }
