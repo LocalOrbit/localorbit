@@ -28,13 +28,13 @@ feature "Filtering Products List" do
 
     Dom::ProductFilter.filter_by_seller(org1)
 
-    expect(Dom::ProductFilter.current_seller).to eq(org1.name)
+    expect(Dom::ProductFilter.current_seller).to start_with(org1.name)
     expect(Dom::Product.count).to eq(2)
     expect(Dom::Product.all.map(&:name)).to match_array([product1.name, product2.name])
 
     Dom::ProductFilter.filter_by_seller(org2)
 
-    expect(Dom::ProductFilter.current_seller).to eq(org2.name)
+    expect(Dom::ProductFilter.current_seller).to start_with(org2.name)
     expect(Dom::Product.count).to eq(2)
     expect(Dom::Product.all.map(&:name)).to match_array([product3.name, product4.name])
   end
@@ -47,14 +47,14 @@ feature "Filtering Products List" do
     top_level_category = category1.top_level_category
     Dom::ProductFilter.filter_by_category(top_level_category)
 
-    expect(Dom::ProductFilter.current_category).to eq(top_level_category.name)
+    expect(Dom::ProductFilter.current_category).to start_with(top_level_category.name)
     expect(Dom::Product.count).to eq(2)
     expect(Dom::Product.all.map(&:name)).to match_array([product1.name, product3.name])
 
     top_level_category = category2.top_level_category
     Dom::ProductFilter.filter_by_category(top_level_category)
 
-    expect(Dom::ProductFilter.current_category).to eq(top_level_category.name)
+    expect(Dom::ProductFilter.current_category).to start_with(top_level_category.name)
     expect(Dom::Product.count).to eq(2)
     expect(Dom::Product.all.map(&:name)).to match_array([product2.name, product4.name])
   end
@@ -68,8 +68,8 @@ feature "Filtering Products List" do
     Dom::ProductFilter.filter_by_category(top_level_category)
     Dom::ProductFilter.filter_by_seller(org1)
 
-    expect(Dom::ProductFilter.current_seller).to eq(org1.name)
-    expect(Dom::ProductFilter.current_category).to eq(top_level_category.name)
+    expect(Dom::ProductFilter.current_seller).to start_with(org1.name)
+    expect(Dom::ProductFilter.current_category).to start_with(top_level_category.name)
     expect(Dom::Product.count).to eq(1)
     expect(Dom::Product.first.name).to eq(product1.name)
 
@@ -77,8 +77,8 @@ feature "Filtering Products List" do
     Dom::ProductFilter.filter_by_category(top_level_category)
     Dom::ProductFilter.filter_by_seller(org1)
 
-    expect(Dom::ProductFilter.current_seller).to eq(org1.name)
-    expect(Dom::ProductFilter.current_category).to eq(top_level_category.name)
+    expect(Dom::ProductFilter.current_seller).to start_with(org1.name)
+    expect(Dom::ProductFilter.current_category).to start_with(top_level_category.name)
     expect(Dom::Product.count).to eq(1)
     expect(Dom::Product.first.name).to eq(product2.name)
   end
