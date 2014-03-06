@@ -1,5 +1,6 @@
+<%= render 'admin/organizations/header' %>
+
 <%= form_for [:admin, @organization, User.new] do |f|%>
   <%= f.email_field :email, placeholder: "Email" %>
   <%= f.submit "Invite a new member" %>
 <% end %>
-

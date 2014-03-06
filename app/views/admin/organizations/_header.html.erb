@@ -1,0 +1,10 @@
+<div>
+  <%= link_to "Edit Organization", [:edit, :admin, @organization], class: 'btn pull-right' %>
+  <h1><%= @organization.name %> Details</h1>
+  <div class="tabs-wrapper">
+    <ul class="tabs">
+      <%= content_tag(:li, link_to_or_span("Users", [:admin, @organization, :users]), class: 'tab') %>
+      <%= content_tag(:li, link_to_or_span("Addresses", [:admin, @organization, :locations]), class: 'tab')%></li>
+    </ul>
+  </div>
+</div>

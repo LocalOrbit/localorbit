@@ -1,3 +1,5 @@
+<%= render 'admin/organizations/header' %>
+
 <div class="l-page-header">
   <h1>Addresses for <%= @organization.name %></h1>
   <%= link_to "Add New Address", new_admin_organization_location_path(@organization), class: "btn" %>
