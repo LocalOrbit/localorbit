@@ -4,7 +4,7 @@ class Admin::MarketAddressesController < AdminController
   before_action :find_address, only: [:edit, :update, :destroy]
 
   def index
-    @addresses = @market.addresses
+    @addresses = @market.addresses.visible
   end
 
   def new
@@ -32,7 +32,7 @@ class Admin::MarketAddressesController < AdminController
   end
 
   def destroy
-    @address.destroy
+    MarketAddress.soft_delete(params[:id])
     redirect_to admin_market_addresses_path(@market)
   end
 
