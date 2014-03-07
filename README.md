@@ -21,6 +21,21 @@
 5. `rake db:setup`
 6. `rails server`
 
+### Test Accounts
+Running _rake db:seed_ makes the following test accounts available
+
+*Selling Organization*
+Email: seller@example.com
+Password: password1
+
+*Buying Organization*
+Email: buyer@example.com
+Password: password1
+
+*Market Manager*
+Email: mm@example.com
+Password: password1
+
 ## Contributing
 
 1. Clone repository. `git clone git@github.com:collectiveidea/localorbit.git`
