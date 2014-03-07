@@ -452,8 +452,8 @@ describe "Adding a product" do
           user.email, user.name, "Goop"
         ).and_return(double(:mailer, deliver: true))
 
-        fill_in "Product", with: "Goop"
-        click_button "Request Product"
+        fill_in "Product Category", with: "Goop"
+        click_button "Request Category"
 
         expect(page).to have_content("Add Product")
       end
