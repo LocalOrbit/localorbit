@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       resources :prices
     end
 
-    post "/units/request", to: "units#request_new", as: :request_units
+    resource :unit_request, only: :create
   end
 
   resource :dashboard

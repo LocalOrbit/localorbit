@@ -8,11 +8,10 @@
     have added. We'll have it added for you
     within 24 hours.</p>
 
-    <%= form_tag admin_request_units_path do %>
+    <%= form_tag admin_unit_request_path do %>
       <div class="inline-field">
         <%= label_tag :singular, "Singular" %><br>
-        <%= text_field_tag "singular" %>
-      </div>
+        <%= text_field_tag "singular" %> </div>
 
       <div class="inline-field">
         <%= label_tag :plural, "Plural" %><br>

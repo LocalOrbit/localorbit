@@ -1,6 +1,6 @@
 module Admin
-  class UnitsController < AdminController
-    def request_new
+  class UnitRequestsController < AdminController
+    def create
       ZendeskMailer.request_unit(current_user.email, current_user.name, new_unit_params)
                    .deliver
 
