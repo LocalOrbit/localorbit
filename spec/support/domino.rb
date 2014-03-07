@@ -310,6 +310,7 @@ module Dom
 
     attribute :name
     attribute :organization_name
+    attribute :pricing
 
     def open_who_story
       node.click_link organization_name

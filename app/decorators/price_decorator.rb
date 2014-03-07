@@ -10,11 +10,16 @@ class PriceDecorator < Draper::Decorator
   end
 
   def quick_info
-    str = "$%.2f" % sale_price
-    if min_quantity > 1
-      str += " %d+" % min_quantity
-      str += " #{product.unit_plural}"
-    end
+    str = formatted_price
+    str +=" %d+ #{product.unit_plural}" % min_quantity if min_quantity > 1
     str
+  end
+
+  def formatted_price
+    "$%.2f" % sale_price
+  end
+
+  def formatted_units
+    min_quantity > 1 ? " %d+ #{product.unit_plural}" % min_quantity : "per #{product.unit_singular}"
   end
 end

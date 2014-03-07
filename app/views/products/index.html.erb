@@ -69,10 +69,9 @@
       </td>
       <td class="pricing">
         <ul class="tiers">
-          <li><span class="price">$20.00</span></li>
-          <li><span class="price">$15.00</span> <span class="tier">5+ Bushels</span></li>
-          <li><span class="price">$12.00</span> <span class="tier">10+ Bushels</span></li>
-          <li class="negotiated"><span class="price">$9.00</span> <span class="tier">100+ Bushels</span></li>
+          <% product.prices.view_sorted.decorate.each do |price| %>
+            <li><span class="price"><%= price.formatted_price %></span> <span class="tier"><%= price.formatted_units %></span></li>
+          <% end %>
         </ul>
       </td>
       <td class="quantity">
