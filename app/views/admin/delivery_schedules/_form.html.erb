@@ -1,4 +1,9 @@
 <div class="field">
+  <%= f.label :cycle %>
+  <span>Weekly</span>
+</div>
+
+<div class="field">
   <%= f.label :day %>
   <%= f.select :day, weekday_options %>
 </div>
@@ -15,7 +20,7 @@
 
 <div class="field">
   <%= f.label :order_cutoff %>
-  <%= f.number_field :order_cutoff, min: 6, max: 504 %>
+  <%= f.number_field :order_cutoff, min: 6, max: 504 %> hours before delivery
 </div>
 
 <div class="field">
