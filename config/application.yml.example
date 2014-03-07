@@ -3,3 +3,4 @@ SECRET_TOKEN: 4edd1c93887a120e04b118d93dc0dc0a79def610c8f3b04669891b7ce8b0c1cafb
 GOOGLE_MAPS_KEY: "AIzaSyC53bcCZ3PiakJ9gcYcr1pyet5pbIR56-g"
 ASSET_HOST: "http://localhost:3000"
 DOMAIN: "localhost"
+ZENDESK_EMAIL: "service@localorb.it"

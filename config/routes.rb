@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       resources :lots
       resources :prices
     end
+
+    resource :unit_request, only: :create
   end
 
   resource :dashboard

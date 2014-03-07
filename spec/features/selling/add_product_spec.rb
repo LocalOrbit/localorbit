@@ -402,4 +402,29 @@ describe "Adding a product" do
       expect(Product.last.organization).to eql(org2)
     end
   end
+
+  describe "a user can request a new inventory unit" do
+    it "allows the user to request a new unit" do
+      org.users << user
+      sign_in_as(user)
+
+      click_link "Products"
+      click_link "Add a product"
+
+      click_link "Request a new unit"
+
+      expect(ZendeskMailer).to receive(:request_unit).with(user.email, user.name, {
+        "singular" => "fathom",
+        "plural" => "fathoms",
+        "additional_notes" => "See more notes"
+      }).and_return(double(:mailer, deliver: true))
+
+      fill_in "Singular", with: "fathom"
+      fill_in "Plural", with: "fathoms"
+      fill_in "Additional Notes", with: "See more notes"
+      click_button "Send"
+
+      expect(page).to have_content("Add Product")
+    end
+  end
 end
