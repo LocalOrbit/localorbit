@@ -166,12 +166,14 @@ describe "Admin Managing Markets" do
       fill_in 'Twitter',       with: '@hollandfarmers'
       fill_in 'Profile',       with: 'Some interesting info about Holland Farmers'
       fill_in 'Policies',      with: 'Something no one will pay attention to'
+      attach_file 'Logo', 'app/assets/images/logo.png'
 
       click_button 'Add Market'
 
       expect(page).to have_text('Holland Farmers')
       expect(page).to have_text('Jill Smith')
       expect(page).to have_text('@hollandfarmers')
+      expect(page).to have_css("img[alt='Holland Farmers Logo']")
     end
 
     it 'an admin can modify a market' do

@@ -4,3 +4,7 @@ GOOGLE_MAPS_KEY: "AIzaSyC53bcCZ3PiakJ9gcYcr1pyet5pbIR56-g"
 ASSET_HOST: "http://localhost:3000"
 DOMAIN: "localhost"
 ZENDESK_EMAIL: "service@localorb.it"
+UPLOADS_BUCKET: "localorbit-fake"
+UPLOADS_ACCESS_KEY_ID: 'fakety-fake'
+UPLOADS_SECRET_ACCESS_KEY: 'fakety-fake'
+UPLOADS_REGION: 'us-west-1'

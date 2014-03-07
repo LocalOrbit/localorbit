@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20140306200929) do
     t.text     "policies"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "logo_uid"
   end
 
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
@@ -156,6 +157,7 @@ ActiveRecord::Schema.define(version: 20140306200929) do
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
     t.integer  "top_level_category_id"
+    t.string   "image_uid"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

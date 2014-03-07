@@ -8,6 +8,8 @@ class Product < ActiveRecord::Base
   has_many :lots, lambda { order('created_at') }, autosave: true
   has_many :prices, autosave: true
 
+  dragonfly_accessor :image
+
   validates :name, presence: true
   validates :category_id, presence: true
   validates :organization_id, presence: true

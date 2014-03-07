@@ -5,7 +5,7 @@ class Category < ActiveRecord::Base
 
   # Returns select list options with root Categories as option groups
   def self.for_select
-    list = where(parent_id: nil).order(:name).includes(:children => {:children => {:children => {:children => :children}}})
+    list = where(parent_id: nil).order(:name).includes(children: {children: {children: {children: :children}}})
     list.inject({}) {|out,item| out[item.name] = for_select_children(item.children); out }
   end
 

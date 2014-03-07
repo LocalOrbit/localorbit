@@ -21,6 +21,12 @@
 </div>
 
 <div class="field">
+  <%= f.label :image %><br>
+  <%= f.file_field :image, class: "column column--three-fourths" %>
+  <%= image_tag f.object.image.remote_url, alt: f.object.name if f.object.image %>
+</div>
+
+<div class="field">
   <%= f.label :category_id %><br>
   <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>
 </div>
