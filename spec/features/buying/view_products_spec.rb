@@ -46,6 +46,8 @@ feature "Viewing products" do
     expect(dom_product.pricing).to have_text(expected_price)
     expect(dom_product.quantity).to have_text(expected_price)
   end
+
+  scenario "make a delivery schedule the default"
   scenario "shopping without an existing shopping cart" do
     address = market.addresses.first
     address.name = "Market Place"
@@ -66,5 +68,17 @@ feature "Viewing products" do
     click_link "Shop"
 
     expect(page).to have_content("Please choose a pick up or delivery date.")
+
+    delivery_list = Dom::Buying::DeliveryChoice.first
+    expect(delivery_list).not_to be_nil
+
+    expect(delivery_list.type).to eql("Pick Up:")
+    expect(delivery_list.date).to eql("October 12, 2014")
+    expect(delivery_list.time_range).to eql("Between 7AM and 12PM")
+    expect(delivery_list.location).to eql("Market Place 123 Street Ave. Town, MI 33983")
+
   end
+
+  scenario "shopping after already having a cart"
+
 end

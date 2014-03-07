@@ -403,4 +403,10 @@ module Dom
       node.find("#organization_name").value
     end
   end
+
+  module Buying
+    class DeliveryChoice < Domino
+      selector "#delivery_schedules .delivery_schedule"
+    end
+  end
 end
