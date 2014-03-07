@@ -7,7 +7,9 @@ feature "View a products story", js: true do
   let!(:category2) { Category.find_by!(name: "Macintosh Apples") }
 
   let!(:product1) { create(:product, organization: org1, category: category1) }
+  let!(:price1)   { create(:price, product: product1) }
   let!(:product2) { create(:product, organization: org1, category: category2, who_story: "Dan Akroid", how_story: "Science") }
+  let!(:price2)   { create(:price, product: product2) }
 
   let!(:buyer_org) { create(:organization, :buyer) }
   let!(:user) { create(:user, organizations: [buyer_org]) }
