@@ -8,6 +8,10 @@ FactoryGirl.define do
     contact_phone '616-222-2222'
     policies      'Do no harm...'
     profile       'Market profile...'
+
+    trait :with_addresses do
+      after(:create) { |m| create_list(:market_address, 2, market: m) }
+    end
   end
 
   factory :user do

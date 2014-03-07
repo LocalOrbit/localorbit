@@ -19,7 +19,7 @@ feature "Viewing products" do
   let!(:buyer_org) { create(:organization, :buyer) }
   let!(:user) { create(:user, organizations: [buyer_org]) }
 
-  let!(:market) { create(:market, organizations: [org1, org2, buyer_org]) }
+  let!(:market) { create(:market, :with_addresses, organizations: [org1, org2, buyer_org]) }
 
   before do
     other_products.each do |prod|
@@ -45,5 +45,26 @@ feature "Viewing products" do
     expected_price = "$%.2f" % product.prices.first.sale_price
     expect(dom_product.pricing).to have_text(expected_price)
     expect(dom_product.quantity).to have_text(expected_price)
+  end
+  scenario "shopping without an existing shopping cart" do
+    address = market.addresses.first
+    address.name = "Market Place"
+    address.address = "123 Street Ave."
+    address.city = "Town"
+    address.state = "MI"
+    address.zip = "32339"
+    address.save!
+
+    ds = create(:delivery_schedule,
+      day: 2,
+      order_cutoff: 24,
+      seller_fulfillment_location_id: 0,
+      seller_delivery_start: '7:00 AM',
+      seller_delivery_end:   '11:00 AM'
+    )
+
+    click_link "Shop"
+
+    expect(page).to have_content("Please choose a pick up or delivery date.")
   end
 end

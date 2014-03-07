@@ -1,0 +1,7 @@
+<h1>Welcome to <%= current_market %></h1>
+
+<p>Please choose a pick up or delivery date.</p>
+
+<%= form_tag [:sessions, :delivery_schedules], method: :post do |f| %>
+  <%= submit_tag "Start Shopping"%>
+<% end %>

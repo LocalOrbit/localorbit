@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
+  helper_method :current_market
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -15,8 +17,12 @@ class ApplicationController < ActionController::Base
     render file: Rails.root.join('public/404.html'), status: :not_found
   end
 
+  def current_organization
+    return nil unless current_user
+    current_user.managed_organizations.find_by_id(session[:current_organization_id])
+  end
+
   def current_market
-    # FIXME: Change this later to be based off the subdomain.
     current_user.markets.first
   end
 
