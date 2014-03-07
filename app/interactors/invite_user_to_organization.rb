@@ -2,7 +2,7 @@ class InviteUserToOrganization
   include Interactor
 
   def perform
-    if context[:user] = User.find_by(email: email)
+    if context[:user] = User.find_for_authentication(email: email)
       add_to_organization_and_notify
     else
       create_user_and_send_app_invitation

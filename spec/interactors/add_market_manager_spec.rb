@@ -13,6 +13,14 @@ describe AddMarketManager do
       expect(result).to be_success
       expect(market.managers(true)).to include(user)
     end
+
+    it "lookup is case case insensitive" do
+      result = AddMarketManager.perform(market: market, email: user.email.upcase, inviter: inviter)
+
+      expect(result).to be_success
+      expect(market.managers(true)).to include(user)
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
   end
 
   describe 'adding a new user' do
