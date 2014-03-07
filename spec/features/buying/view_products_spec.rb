@@ -33,6 +33,8 @@ feature "Viewing products" do
     dom_product = Dom::Product.find_by_name(product.name)
 
     expect(dom_product.organization_name).to have_text(product.organization_name)
-    expect(dom_product.pricing).to have_text(product.prices.first.sale_price.to_s)
+    expected_price = "$%.2f" % product.prices.first.sale_price
+    expect(dom_product.pricing).to have_text(expected_price)
+    expect(dom_product.quantity).to have_text(expected_price)
   end
 end

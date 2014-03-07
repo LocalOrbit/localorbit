@@ -77,10 +77,10 @@
       <td class="quantity">
         <label>
           <input type="number" size="3">
-          <span class="price-for-quantity">$15.00</span>
+          <span class="price-for-quantity"><%= product.initial_price.formatted_price %></span>
         </label>
       </td>
-      <td class="total">$75.00</td>
+      <td class="total">$0.00</td>
       <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
     </tr>
   <% end %>
