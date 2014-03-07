@@ -2,10 +2,24 @@
 
 <%= link_to 'Add Address', new_admin_market_address_path(@market) %>
 
-<% @addresses.each do |address| %>
-  <div>
-    <div><%= link_to address.name, edit_admin_market_address_path(@market, address) %></div>
-    <div><%= address.address %></div>
-    <div><%= address.city %>, <%= address.state %> <%= address.zip %></div>
-  </div>
-<% end %>
+<table>
+  <thead>
+    <tr>
+      <td>Address</td>
+      <td>Phone</td>
+    </tr>
+  </thead>
+  <tbody>
+  <% @addresses.each do |address| %>
+    <tr>
+      <td>
+        <div><%= link_to address.name, edit_admin_market_address_path(@market, address) %></div>
+        <div><%= address.address %>, <%= address.city %>, <%= address.state %> <%= address.zip %></div>
+      </td>
+      <td>
+        <%= address.phone %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
