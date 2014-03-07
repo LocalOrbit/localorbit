@@ -21,6 +21,7 @@ Dragonfly.app.configure do
     secret_access_key: Figaro.env.uploads_secret_access_key,
     region:            Figaro.env.uploads_region,
     url_scheme:        "https",
+    url_host:          Figaro.env.uploads_host,
     headers:           s3_headers
 
   Fog.mock! if Rails.env.test?
