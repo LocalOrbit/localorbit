@@ -7,10 +7,14 @@ feature "Filtering Products List" do
   let!(:category2) { Category.find_by!(name: "Macintosh Apples") }
 
   let!(:product1) { create(:product, organization: org1, category: category1) }
+  let!(:price1)   { create(:price, product: product1) }
   let!(:product2) { create(:product, organization: org1, category: category2) }
+  let!(:price2)   { create(:price, product: product2) }
 
   let!(:product3) { create(:product, organization: org2, category: category1) }
+  let!(:price3)   { create(:price, product: product3) }
   let!(:product4) { create(:product, organization: org2, category: category2) }
+  let!(:price4)   { create(:price, product: product4) }
 
   let!(:buyer_org) { create(:organization, :buyer) }
   let!(:user) { create(:user, organizations: [buyer_org]) }

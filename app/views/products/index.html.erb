@@ -69,19 +69,18 @@
       </td>
       <td class="pricing">
         <ul class="tiers">
-          <li><span class="price">$20.00</span></li>
-          <li><span class="price">$15.00</span> <span class="tier">5+ Bushels</span></li>
-          <li><span class="price">$12.00</span> <span class="tier">10+ Bushels</span></li>
-          <li class="negotiated"><span class="price">$9.00</span> <span class="tier">100+ Bushels</span></li>
+          <% product.prices.view_sorted.decorate.each do |price| %>
+            <li><span class="price"><%= price.formatted_price %></span> <span class="tier"><%= price.formatted_units %></span></li>
+          <% end %>
         </ul>
       </td>
       <td class="quantity">
         <label>
-          <input type="number" size="3">
-          <span class="price-for-quantity">$15.00</span>
+          <input type="number" size="3" min="0" max="<%= product.available_inventory %>">
+          <span class="price-for-quantity"><%= product.initial_price.formatted_price %></span>
         </label>
       </td>
-      <td class="total">$75.00</td>
+      <td class="total">$0.00</td>
       <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
     </tr>
   <% end %>
