@@ -6,6 +6,8 @@ FactoryGirl.define do
     contact_name  'Jill Smith'
     contact_email 'jill@smith.com'
     contact_phone '616-222-2222'
+    policies      'Do no harm...'
+    profile       'Market profile...'
   end
 
   factory :user do

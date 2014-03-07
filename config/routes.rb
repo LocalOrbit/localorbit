@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   end
 
   resources :products, only: [:index]
+  resources :markets, only: [:index]
 
   root to: redirect('/dashboard')
 end
