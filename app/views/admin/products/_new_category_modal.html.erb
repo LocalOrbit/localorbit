@@ -1,0 +1,19 @@
+<div class="request-new-category is-hidden modal popup">
+  <div class="popup-header">
+    Add new product category <button>X</button>
+  </div>
+  <div class="popup-body">
+  <p>Adding new product categories to the system requires approval.
+  Please enter the product category you'd like to have added. We'll
+  have it added for you within 24 hours.</p>
+
+    <%= form_tag admin_category_request_path do %>
+      <div>
+        <%= label_tag :product_category, "Product" %><br>
+        <%= text_area_tag "product_category" %>
+      </div>
+
+      <%= submit_tag "Request Product" %>
+    <% end %>
+  </div>
+</div>

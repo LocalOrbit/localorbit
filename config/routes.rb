@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     end
 
     resource :unit_request, only: :create
+    resource :category_request, only: :create
   end
 
   resource :dashboard

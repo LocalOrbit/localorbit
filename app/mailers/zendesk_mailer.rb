@@ -10,4 +10,14 @@ class ZendeskMailer < ActionMailer::Base
       subject: "A new unit has been requested"
     )
   end
+
+  def request_category(user_email, user_name, category)
+    @user_name = user_name
+    @category = category
+
+    mail(
+      from: user_email,
+      subject: "A new category has been requested"
+    )
+  end
 end

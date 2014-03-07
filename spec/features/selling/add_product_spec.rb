@@ -442,8 +442,21 @@ describe "Adding a product" do
 
         expect(page).to have_content("Add Product")
       end
+    end
 
-      expect(page).to have_content("Add Product")
+    describe "a user can request a new category" do
+      it "allows the user to request a new category" do
+        click_link "Request a new category"
+
+        expect(ZendeskMailer).to receive(:request_category).with(
+          user.email, user.name, "Goop"
+        ).and_return(double(:mailer, deliver: true))
+
+        fill_in "Product", with: "Goop"
+        click_button "Request Product"
+
+        expect(page).to have_content("Add Product")
+      end
     end
   end
 end

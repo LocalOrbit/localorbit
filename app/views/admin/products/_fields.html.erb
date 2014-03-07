@@ -29,6 +29,7 @@
 <div class="field">
   <%= f.label :category_id %><br>
   <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>
+  <span class="hint">Not seeing what you need? <%= link_to "Request a new category", "#", class: "modal-toggle", data: { modal: "request-new-category" } %></span>
 </div>
 
 <div class="field">
