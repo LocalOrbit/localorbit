@@ -416,28 +416,47 @@ describe "Adding a product" do
     end
   end
 
-  describe "a user can request a new inventory unit" do
-    it "allows the user to request a new unit" do
+  describe "additional taxonomy requests" do
+    before do
       org.users << user
       sign_in_as(user)
 
       click_link "Products"
       click_link "Add a product"
+    end
 
-      click_link "Request a new unit"
+    describe "a user can request a new inventory unit" do
+      it "allows the user to request a new unit" do
+        click_link "Request a new unit"
 
-      expect(ZendeskMailer).to receive(:request_unit).with(user.email, user.name, {
-        "singular" => "fathom",
-        "plural" => "fathoms",
-        "additional_notes" => "See more notes"
-      }).and_return(double(:mailer, deliver: true))
+        expect(ZendeskMailer).to receive(:request_unit).with(user.email, user.name, {
+          "singular" => "fathom",
+          "plural" => "fathoms",
+          "additional_notes" => "See more notes"
+        }).and_return(double(:mailer, deliver: true))
 
-      fill_in "Singular", with: "fathom"
-      fill_in "Plural", with: "fathoms"
-      fill_in "Additional Notes", with: "See more notes"
-      click_button "Send"
+        fill_in "Singular", with: "fathom"
+        fill_in "Plural", with: "fathoms"
+        fill_in "Additional Notes", with: "See more notes"
+        click_button "Request Unit"
 
-      expect(page).to have_content("Add Product")
+        expect(page).to have_content("Add Product")
+      end
+    end
+
+    describe "a user can request a new category" do
+      it "allows the user to request a new category" do
+        click_link "Request a new category"
+
+        expect(ZendeskMailer).to receive(:request_category).with(
+          user.email, user.name, "Goop"
+        ).and_return(double(:mailer, deliver: true))
+
+        fill_in "Product Category", with: "Goop"
+        click_button "Request Category"
+
+        expect(page).to have_content("Add Product")
+      end
     end
   end
 end
