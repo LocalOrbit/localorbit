@@ -19,10 +19,11 @@
 3. `cp config/application.yml{.example,}` and modify if needed
 4. `cp config/database.yml{.example,}` and modify if needed
 5. `rake db:setup`
-6. `rails server`
+6. `rake db:seed:development`
+7. `rails server`
 
 ### Test Accounts
-Running _rake db:seed_ makes the following test accounts available
+Running _rake db:seed:development_ makes the following test accounts available
 
 *Selling Organization*
 Email: seller@example.com
