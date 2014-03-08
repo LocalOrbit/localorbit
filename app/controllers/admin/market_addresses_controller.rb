@@ -1,6 +1,6 @@
 class Admin::MarketAddressesController < AdminController
   before_action :require_admin_or_market_manager
-  before_action :find_current_market
+  before_action :find_market
   before_action :find_address, only: [:edit, :update, :destroy]
 
   def index
@@ -46,10 +46,6 @@ class Admin::MarketAddressesController < AdminController
       :state,
       :zip
     )
-  end
-
-  def find_current_market
-    @market = Market.where(id: params[:market_id]).first
   end
 
   def find_address

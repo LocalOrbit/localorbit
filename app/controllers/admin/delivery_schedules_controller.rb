@@ -1,9 +1,7 @@
 module Admin
   class DeliverySchedulesController < AdminController
     before_action :require_admin_or_market_manager
-    before_action do
-      @market = current_user.markets.find(params[:market_id])
-    end
+    before_action :find_market
 
     def index
       @delivery_schedules = @market.delivery_schedules.visible.order(:day)
