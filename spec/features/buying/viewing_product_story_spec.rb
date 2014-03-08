@@ -8,7 +8,7 @@ feature "View a products story", js: true do
 
   let!(:product1) { create(:product, organization: org1, category: category1) }
   let!(:price1)   { create(:price, product: product1) }
-  let!(:product2) { create(:product, organization: org1, category: category2, who_story: "Dan Akroid", how_story: "Science") }
+  let!(:product2) { create(:product, organization: org1, category: category2, who_story: "Dan Akroid", how_story: "Science", location: org1.locations.first) }
   let!(:price2)   { create(:price, product: product2) }
 
   let!(:buyer_org) { create(:organization, :buyer) }
