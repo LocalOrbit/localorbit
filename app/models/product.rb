@@ -14,6 +14,8 @@ class Product < ActiveRecord::Base
   validates :category_id, presence: true
   validates :organization_id, presence: true
 
+  validates :location, presence: true, if: :overrides_organization?
+
   validate :ensure_organization_can_sell
 
   delegate :name, to: :organization, prefix: true
@@ -77,5 +79,9 @@ class Product < ActiveRecord::Base
     if category_id_changed?
       top_level_category = category.top_level_category
     end
+  end
+
+  def overrides_organization?
+    who_story.present? || how_story.present?
   end
 end

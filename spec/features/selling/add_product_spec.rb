@@ -106,6 +106,23 @@ describe "Adding a product" do
         expect(product.how_story).to eql(org.how_story)
         expect(product.location).to eql(org.locations.default_shipping)
       end
+
+      it "it requires an address if using who/how" do
+        click_link "Products"
+        click_link "Add a product"
+
+        fill_in "Product Name", with: "Good food"
+        select_from_chosen "Grapes / Red Grapes", from: "Category"
+        select_from_chosen "Pounds", from: "Unit"
+
+        uncheck "seller_info"
+        expect(page).to have_content("Who")
+
+        fill_in "product_who_story", with: "We sell other stuff"
+        click_button "Add Product"
+
+        expect(page).to have_content("Location can't be blank")
+      end
     end
 
     context "attaching an image" do
