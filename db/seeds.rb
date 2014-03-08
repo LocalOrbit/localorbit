@@ -82,7 +82,7 @@ if Rails.env.development?
   buy_loc = Location.find_or_create_by!(name: "Downtown Location") {|loc| 
     loc.address = "1234 Perl St."
     loc.city = "Grand Rapids"
-    loc.state = "Michigan"
+    loc.state = "MI"
     loc.organization_id = buy_org.id
     loc.zip = "49546"
   }
@@ -106,7 +106,7 @@ if Rails.env.development?
   sell_loc = Location.find_or_create_by!(name: "Default Location") {|loc| 
     loc.address = "32 Boynton Rd."
     loc.city = "Alto"
-    loc.state = "Michigan"
+    loc.state = "MI"
     loc.zip = "48846"
     loc.organization_id = sell_org.id
   }
@@ -136,7 +136,7 @@ if Rails.env.development?
   market_address = MarketAddress.find_or_create_by!(name: "Default Marketplace") {|addr|
     addr.address = "89 Niles Rd."
     addr.city = "Rockford"
-    addr.state = "Michigan"
+    addr.state = "MI"
     addr.zip = "48836"
     addr.market_id = market.id
   }

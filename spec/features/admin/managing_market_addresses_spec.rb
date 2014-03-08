@@ -52,7 +52,7 @@ describe "Admin Managing Markets" do
       fill_in 'Name', with: 'New Address'
       fill_in 'Address', with: '123 Apple'
       fill_in 'City', with: 'Holland'
-      fill_in 'State', with: 'MI'
+      select "Michigan", from: "State"
       fill_in 'Zip', with: '49423'
 
       click_button 'Add Address'
