@@ -1,0 +1,51 @@
+<div class="market-info">
+  <aside class="pull-left">
+    <h2>Contact</h2>
+    <ul>
+      <li><%= @market.contact_name %></li>
+      <li><%= @market.contact_email %></li>
+      <li>
+        <div><%= @market.first_address.address %></div>
+        <div><%= @market.first_address.city %>, <%=@market.first_address.state %> <%= @market.first_address.zip %></div>
+      </li>
+      <li><%= @market.contact_phone %></li>
+    </ul>
+
+    <h2>Pickup/Delivery</h2>
+    <% @market.delivery_schedules.order(:day).decorate.each do |delivery| %>
+      <div>
+        <%= "#{delivery.plural_weekday}, #{delivery.pickup_or_dropoff} #{delivery.time_window}" %>
+      </div>
+    <% end %>
+  </aside>
+
+  <div>
+    <h1><%= @market.name %></h1>
+
+    <div class="row">
+      <div class="about">
+        <h2>About</h2>
+        <%= @market.profile %>
+      </div>
+      <div class="policies">
+        <h2>Policies</h2>
+        <%= @market.policies %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="where">
+        <h2>Where</h2>
+        <img class="location-map" alt="" src="<%= @market.seller_locations_map %>" />
+      </div>
+      <div class="market-sellers">
+        <h2>Sellers</h2>
+        <ul>
+        <% @market.organizations.selling.each do |seller| %>
+          <%= content_tag :li, link_to(seller.name, "#") %>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

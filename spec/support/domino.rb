@@ -71,6 +71,14 @@ module Dom
     end
   end
 
+  class MarketSellers < Domino
+    selector ".market-sellers li"
+
+    def name
+      node.find("a").text
+    end
+  end
+
   class NewLotForm < LotRow
     selector "#inventory_table thead tr.lot"
 
