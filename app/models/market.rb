@@ -14,6 +14,7 @@ class Market < ActiveRecord::Base
   has_many :addresses, class_name: MarketAddress
   has_many :delivery_schedules, inverse_of: :market
   has_many :orders
+  has_many :newsletters
 
   has_many :bank_accounts, as: :bankable
 
