@@ -7,8 +7,3 @@ $ ->
       $('.overlay').addClass('is-open')
     else
       $('.overlay').removeClass('is-open')
-
-
-  $('.overlay').click (e) ->
-    $('.overlay').removeClass('is-open')
-    $('.is-open .dropdown').parent().removeClass('is-open')

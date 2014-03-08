@@ -11,6 +11,3 @@ $ ->
       $('.overlay').removeClass('is-open')
 
 
-  $('.overlay').click (e) ->
-    $('.overlay').removeClass('is-open')
-    $('.filter-list, .filter-toggle').removeClass('is-open')

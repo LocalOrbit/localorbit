@@ -7,6 +7,11 @@ $ ->
     $element = $(this.hash)
     $element.toggleClass('is-hidden')
     $(".popup").not($element).addClass('is-hidden')
+    if $(".popup").not(".is-hidden").length
+      $('.overlay').addClass('.is-open');
+    else
+      $('.overlay').addClass('.is-open');
+
 
   $('.modal-toggle').click ->
     destination = $(this).data('modal')
