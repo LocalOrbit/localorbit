@@ -243,6 +243,23 @@ ActiveRecord::Schema.define(version: 20140429193559) do
 
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
 
+  create_table "newsletters", force: true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.integer  "market_id"
+    t.string   "image_uid"
+    t.string   "header"
+    t.boolean  "draft"
+    t.date     "sent_on"
+    t.boolean  "buyers"
+    t.boolean  "sellers"
+    t.boolean  "market_managers"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "newsletters", ["market_id"], name: "index_newsletters_on_market_id", using: :btree
+
   create_table "order_item_lots", force: true do |t|
     t.integer  "order_item_id"
     t.integer  "lot_id"
