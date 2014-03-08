@@ -80,7 +80,7 @@ FactoryGirl.define do
     sequence(:name) {|n| "Location #{n}" }
     address "500 S. State Street"
     city "Ann Arbor"
-    state "Michigan"
+    state "MI"
     zip "48109"
     organization
 
@@ -103,7 +103,7 @@ FactoryGirl.define do
     sequence(:name) {|n| "Location #{n}" }
     address "500 S. State Street"
     city "Ann Arbor"
-    state "Michigan"
+    state "MI"
     zip "48109"
   end
 

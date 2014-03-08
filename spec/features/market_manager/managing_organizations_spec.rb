@@ -45,7 +45,7 @@ describe "A Market Manager" do
       expect(location.location_name.value).to eql("Warehouse 1")
       expect(location.address.value).to eql("1021 Burton St.")
       expect(location.city.value).to eql("Orleans Twp.")
-      expect(location.selected_state.value).to eql("Michigan")
+      expect(location.selected_state.value).to eql("MI")
       expect(location.zip.value).to eql("49883")
     end
   end

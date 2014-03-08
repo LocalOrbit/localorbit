@@ -71,7 +71,7 @@ describe "admin manange organization" do
 
         expect(locations.size).to eq(1)
         expect(locations.first.name_and_address).to include("University of Michigan")
-        expect(locations.first.name_and_address).to include("500 S. State Street, Ann Arbor, Michigan 34599")
+        expect(locations.first.name_and_address).to include("500 S. State Street, Ann Arbor, MI 34599")
         expect(locations.first.default_billing).not_to be_checked
         expect(locations.first.default_shipping).not_to be_checked
 
