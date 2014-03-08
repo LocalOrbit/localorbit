@@ -11,4 +11,8 @@ class AdminController < ApplicationController
     return if current_user.managed_markets.any?
     render_404
   end
+
+  def find_market
+    @market = current_user.markets.find(params[:market_id])
+  end
 end
