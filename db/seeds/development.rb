@@ -61,6 +61,12 @@ product = Product.find_or_create_by!(name: "Grapes") {|prod|
   prod.organization_id = sell_org.id
 }
 
+price = Price.find_or_create_by!(
+  product_id: product.id,
+  min_quantity: 1,
+  sale_price: 3.00
+)
+
 seller_user = User.find_or_create_by!(email: "seller@example.com"){ |user|
   user.password = "password1"
   user.password_confirmation = "password1"
