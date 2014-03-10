@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :market do
     sequence(:name)      {|n| "Market #{n}" }
     sequence(:subdomain) {|n| "market-#{n}" }
-    timezone      'EST'
+    timezone      'US/Eastern'
     contact_name  'Jill Smith'
     contact_email 'jill@smith.com'
     contact_phone '616-222-2222'
@@ -161,5 +161,14 @@ FactoryGirl.define do
     seller_fulfillment_location_id 0
     seller_delivery_start '7:00 AM'
     seller_delivery_end   '11:00 AM'
+
+    trait :with_delivery do
+      
+    end
+  end
+
+  factory :delivery do
+    delivery_schedule
+    deliver_on Date.today
   end
 end

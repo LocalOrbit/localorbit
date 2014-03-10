@@ -65,6 +65,8 @@ feature "Viewing products" do
       seller_delivery_end:   '11:00 AM'
     )
 
+    create(:delivery, delivery_schedule: ds)
+
     click_link "Shop"
 
     expect(page).to have_content("Please choose a pick up or delivery date.")

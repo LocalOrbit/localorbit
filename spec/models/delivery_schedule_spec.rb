@@ -124,4 +124,80 @@ describe DeliverySchedule do
       end
     end
   end
+
+  describe "#current" do
+    let(:market) { create(:market, timezone: "US/Eastern") }
+    let(:schedule) { 
+      create(:delivery_schedule, market: market,
+             order_cutoff: 6, seller_delivery_start: "6:00 am", seller_delivery_end: "10:00 am", day:4)
+    }
+
+    before do
+      Timecop.freeze(Time.parse "May 10, 2014 06:00")
+    end
+
+    after do
+      Timecop.return
+    end
+
+    describe "delivery with short cutoff" do
+      it "creates a delivery for the next delivery time" do
+        delivery = schedule.next_delivery()
+        expected_time = Time.parse("2014-05-15 06:00:00 EDT")
+
+        expect(delivery).to be_a(Delivery)
+        expect(delivery.deliver_on).to eql(expected_time)
+      end
+    end
+
+    describe "when the delivery cutoff is weeks before the current time" do
+      before do
+        schedule.order_cutoff = 3*7*24
+        schedule.save!
+      end
+
+      it "creates a delivery for the next delivery time" do
+        delivery = schedule.next_delivery()
+        expected_time = Time.parse("2014-06-05 06:00:00 EDT")
+
+        expect(delivery).to be_a(Delivery)
+        expect(delivery.deliver_on).to eql(expected_time)
+      end
+    end
+
+    context "the next delivery already exists" do
+      let(:deliver_on_date) { Time.parse("2014-05-15 06:00:00 EDT") }
+      let!(:delivery) { create(:delivery, delivery_schedule: schedule, deliver_on: deliver_on_date) }
+
+      it "returns the found deilvery" do
+        expect(schedule.next_delivery).to eql(delivery)
+      end
+    end
+
+    context "no deliveries exist associated with it"
+    context "delivery for schedule does not exist"
+    context "devlivery time is in"
+    context "given a delivery whos delivery time is in future which has a cutoff that occurs in the future"
+    context "given a delivery "
+  end
+
+
+  describe "#create_delivery" do
+    it "creates the next valid delivery in the future for the present date" do
+      date = Date.parse "Wednesday March 5, 2014"
+
+      Timecop.freeze(date)
+
+      deliver = subject.create_delivery(date)
+
+      subject.day = 2
+      delivery = subject.create_delivery_for_week(Time.now)
+
+      expect(delivery.deliver_on.inspect).to eql("Tue March 4, 2014")
+
+      expect(delivery.delivery_schedule).to eq(subject)
+
+      Timecop.return
+    end
+  end
 end
