@@ -40,6 +40,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def multi_organization_membership?
+    managed_organizations.count > 1
+  end
+
   def markets
     if admin?
       Market.all
@@ -57,6 +61,10 @@ class User < ActiveRecord::Base
                INNER JOIN user_organizations ON user_organizations.organization_id = market_organizations.organization_id").
         where("user_organizations.user_id" => id)
     end
+  end
+
+  def multi_market_membership?
+    markets.count > 1
   end
 
   def managed_products

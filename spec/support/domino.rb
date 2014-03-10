@@ -350,6 +350,17 @@ module Dom
     end
   end
 
+  class ProductRow < Domino
+    selector ".product-row"
+
+    attribute :market
+    attribute :name
+    attribute :pricing
+    attribute :seller
+    attribute :stock
+
+  end
+
   class OrganizationForm < Domino
     selector "form.organization"
 

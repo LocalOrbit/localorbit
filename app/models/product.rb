@@ -59,6 +59,14 @@ class Product < ActiveRecord::Base
     lots.available.sum(:quantity)
   end
 
+  def market_name
+    organization.markets.first.name
+  end
+
+  def organization_name
+    organization.name
+  end
+
   def unit_plural
     unit.try(:plural)
   end
