@@ -42,7 +42,7 @@
         <h2>Sellers</h2>
         <ul>
         <% @market.organizations.selling.each do |seller| %>
-          <%= content_tag :li, link_to(seller.name, "#") %>
+          <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>
         <% end %>
         </ul>
       </div>
