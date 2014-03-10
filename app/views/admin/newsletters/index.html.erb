@@ -6,10 +6,12 @@
 <table>
   <tr>
     <th>Subject</th>
+    <th></th>
   </tr>
   <% @newsletters.each do |newsletter| %>
   <tr>
     <td><%= link_to newsletter.subject, [:edit, :admin, @market, newsletter] %></td>
+    <td><%= button_to "Delete", [:admin, @market, newsletter], method: :delete %></td>
   </tr>
   <% end %>
 </table>

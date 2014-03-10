@@ -69,4 +69,21 @@ describe "A Market Manager managing Newsletters" do
       end
     end
   end
+
+  describe "Deleting a newsletter" do
+    let!(:newsletter) { create :newsletter, market: market }
+
+    before do
+      # TODO use navigation
+      # click_link 'Newsletters'
+      visit admin_market_newsletters_path(market)
+    end
+
+    it "deletes the newsletter" do
+      expect(page).to have_content(newsletter.subject)
+      click_button "Delete"
+      expect(page).not_to have_content(newsletter.subject)
+    end
+  end
+
 end
