@@ -19,6 +19,19 @@ class Admin::NewslettersController < AdminController
     end
   end
 
+  def edit
+    @newsletter = @market.newsletters.find(params[:id])
+  end
+
+  def update
+    @newsletter = @market.newsletters.find(params[:id])
+    if @newsletter.update(newsletter_params)
+      redirect_to [:admin, @market, :newsletters]
+    else
+      render 'edit'
+    end
+  end
+
   private
 
   def find_market

@@ -9,7 +9,7 @@
   </tr>
   <% @newsletters.each do |newsletter| %>
   <tr>
-    <td><%= link_to newsletter.subject, [:admin, @market, newsletter] %></td>
+    <td><%= link_to newsletter.subject, [:edit, :admin, @market, newsletter] %></td>
   </tr>
   <% end %>
 </table>
