@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/jnicklas/capybara.git
-  revision: 595cd4a89bc5c7873e74a3b05761d27c30cc198a
+  revision: a94dfbc4d07dcfe53bbea334f7f47f584737a0c0
   specs:
     capybara (2.2.0)
       mime-types (>= 1.16)
@@ -78,10 +78,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
-    compass (0.12.2)
+    compass (0.12.3)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
-      sass (~> 3.1)
+      sass (= 3.2.14)
     compass-rails (1.1.3)
       compass (>= 0.12.2)
     countries (0.9.3)
@@ -158,12 +158,12 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.5.2)
     minitest (5.3.0)
-    multi_json (1.8.4)
+    multi_json (1.9.0)
     multipart-post (1.2.0)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.8.0)
-    newrelic_rpm (3.7.2.195)
+    newrelic_rpm (3.7.3.199)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     orm_adapter (0.5.0)
