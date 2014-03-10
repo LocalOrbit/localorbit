@@ -32,7 +32,7 @@ describe "Admin Managing Markets" do
       sign_in_as user
 
       user.managed_markets << market1
-      
+
       visit admin_market_addresses_path(market1)
     end
 
@@ -54,10 +54,17 @@ describe "Admin Managing Markets" do
       fill_in 'City', with: 'Holland'
       select "Michigan", from: "State"
       fill_in 'Zip', with: '49423'
+      fill_in 'Phone', with: '616-123-4567'
+      fill_in 'Fax', with: '616-321-3214'
 
       click_button 'Add Address'
 
       expect(page).to have_text('New Address')
+      expect(page).to have_text('123 Apple')
+      expect(page).to have_text('Holland')
+      expect(page).to have_text('MI')
+      expect(page).to have_text('49423')
+      expect(page).to have_text('616-123-4567')
     end
 
     it 'I can edit an existing address' do
@@ -108,7 +115,7 @@ describe "Admin Managing Markets" do
     before :each do
       sign_in_as user
     end
-    
+
     it 'I can see a markets addresses' do
       visit admin_market_addresses_path(market1)
 
