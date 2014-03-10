@@ -74,4 +74,21 @@ describe Admin::ProductsController do
       expect(flash[:alert]).to eq("You must add an organization that can sell before adding any products")
     end
   end
+
+  describe "destroy" do
+    let(:organization)              { create(:organization) }
+    let(:product)                   { create(:product, organization: organization) }
+    let(:admin)                     { create(:user, :admin) }
+    let(:non_member)                { create(:user) }
+    let(:market_manager_non_member) { create(:user, :market_manager) }
+    let(:member)                    { create(:user, organizations: [organization]) }
+
+    let(:market_manager_member) do
+      create(:user, :market_manager).tap do |market_manager|
+        market_manager.organizations << organization
+      end
+    end
+
+    it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, id: product.id }
+  end
 end
