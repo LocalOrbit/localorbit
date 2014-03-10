@@ -1,7 +1,7 @@
 module Admin
   class ProductsController < AdminController
     def index
-      @products = current_user.managed_products.visible
+      @products = current_user.managed_products.visible.page(params[:page]).per(params[:per_page])
     end
 
     def new

@@ -26,6 +26,18 @@ describe "Viewing products" do
       expect(product.seller).to be_blank
       expect(product.market).to be_blank
     end
+
+    it "shows a paginated list of products" do
+      create_list(:product, 2, organization: org1)
+
+      visit admin_products_path(per_page: 2)
+
+      expect(Dom::ProductRow.count).to eq(2)
+
+      click_link "Next"
+
+      expect(Dom::ProductRow.count).to eq(1)
+    end
   end
 
   context "market manager" do
@@ -43,5 +55,4 @@ describe "Viewing products" do
       expect(product.stock).to have_content(lot1.quantity + lot2.quantity)
     end
   end
-
 end
