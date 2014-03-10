@@ -21,6 +21,9 @@ describe "A Market Manager managing Newsletters" do
         fill_in "Subject", with: 'Big News'
         fill_in "Header", with: "Some really exciting stuff"
         fill_in "Body", with: "bla bla bla"
+        check "Buyers"
+        check "Sellers"
+        check "Market Managers"
         attach_file 'Image', 'app/assets/images/backgrounds/kale.jpg'
         click_button "Add Newsletter"
         expect(page).to have_content("Big News")

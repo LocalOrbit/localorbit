@@ -27,6 +27,25 @@
 
   </fieldset>
 
+  <fieldset name="send-to-info">
+    <legend>Send To</legend>
+
+    <div class="row">
+      <%= f.check_box :buyers %>
+      <%= f.label :buyers %><br>
+    </div>
+
+    <div class="row">
+      <%= f.check_box :sellers %>
+      <%= f.label :sellers %><br>
+    </div>
+
+    <div class="row">
+      <%= f.check_box :market_managers %>
+      <%= f.label :market_managers, "Market Managers" %><br>
+    </div>
+  </fieldset>
+
   <div class="row form-actions">
     <%= f.submit "#{@newsletter.new_record? ? 'Add' : 'Save'} Newsletter" %>
   </div>
