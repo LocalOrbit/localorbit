@@ -12,6 +12,8 @@ feature "Viewing products" do
   let!(:other_org) { create(:organization, :seller) }
   let!(:other_products) { create_list(:product, 3, organization: other_org) }
 
+  let!(:org2_product_deleted) { create(:product, organization: org2, deleted_at: 1.day.ago) }
+
   let!(:buyer_org) { create(:organization, :buyer) }
   let!(:user) { create(:user, organizations: [buyer_org]) }
 

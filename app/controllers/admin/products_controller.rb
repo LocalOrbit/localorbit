@@ -1,7 +1,7 @@
 module Admin
   class ProductsController < AdminController
     def index
-      @products = current_user.managed_products
+      @products = current_user.managed_products.visible
     end
 
     def new
@@ -36,6 +36,12 @@ module Admin
         @organizations = [@product.organization]
         render :show
       end
+    end
+
+    def destroy
+      product = current_user.managed_products.find(params[:id])
+      product.soft_delete
+      redirect_to [:admin, :products], notice: "Successfully deleted #{product.name}"
     end
 
     private

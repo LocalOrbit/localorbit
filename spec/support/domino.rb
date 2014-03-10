@@ -359,6 +359,9 @@ module Dom
     attribute :seller
     attribute :stock
 
+    def click_delete
+      node.click_link "Delete"
+    end
   end
 
   class OrganizationForm < Domino

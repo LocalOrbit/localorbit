@@ -10,6 +10,7 @@
       <th>Name</th>
       <th>Pricing</th>
       <th>In Stock</th>
+      <th></th>
     </tr>
   </thead>
 <% @products.each do |product| %>
@@ -27,6 +28,7 @@
     <td class="stock">
       <%= product.available_inventory %>
     </td>
+    <td><%= link_to "Delete", [:admin, product], method: :delete, data: { confirm: "Are you sure you want to delete this product?" } %></td>
   </tr>
 <% end %>
 </table>
