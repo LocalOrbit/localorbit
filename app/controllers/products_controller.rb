@@ -7,8 +7,4 @@ class ProductsController < ApplicationController
 
     @products = products.periscope(request.query_parameters).decorate
   end
-
-  def current_market
-    current_user.markets.first
-  end
 end

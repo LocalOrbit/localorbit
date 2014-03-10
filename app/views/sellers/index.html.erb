@@ -28,3 +28,8 @@
     <%= @current_seller.how_story %>
   </div>
 </div>
+
+<div>
+  <h2>Currently Selling</h2>
+  <%= render "products/table", products: @current_seller.products.decorate %>
+</div>

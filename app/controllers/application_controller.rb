@@ -17,6 +17,6 @@ class ApplicationController < ActionController::Base
 
   def current_market
     # FIXME: Change this later to be based off the subdomain.
-    Market.first
+    current_user.markets.first
   end
 end
