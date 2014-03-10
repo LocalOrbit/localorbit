@@ -7,6 +7,15 @@
     <td><%= @organization.name %></td>
   </tr>
 
+  <% if @organization.photo.present? %>
+  <tr>
+    <th scope="row">Profile photo</th>
+    <td>
+      <%= image_tag @organization.photo.remote_url, alt: "Profile photo" %>
+    </td>
+  </tr>
+  <% end %>
+
   <tr>
     <th scope="row">Can sell products?</th>
     <td><%= @organization.can_sell %></td>

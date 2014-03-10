@@ -53,6 +53,7 @@ module Admin
         :can_sell,
         :who_story,
         :how_story,
+        :photo,
         locations_attributes: [:name, :address, :city, :state, :zip]
       )
     end

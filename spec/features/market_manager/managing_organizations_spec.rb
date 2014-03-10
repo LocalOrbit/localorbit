@@ -21,6 +21,7 @@ describe "A Market Manager" do
         fill_in "City", with: "Orleans Twp."
         select "Michigan", from: "State"
         fill_in "Postal Code", with: "49883"
+        attach_file 'Profile photo', 'app/assets/images/logo.png'
 
         check 'Can sell product'
         click_button 'Add Organization'
@@ -47,6 +48,10 @@ describe "A Market Manager" do
       expect(location.city.value).to eql("Orleans Twp.")
       expect(location.selected_state.value).to eql("MI")
       expect(location.zip.value).to eql("49883")
+    end
+
+    it "attaches a profile photo" do
+      expect(page).to have_css("img[alt='Profile photo']")
     end
   end
 
