@@ -27,6 +27,7 @@ gem 'newrelic_rpm'
 gem 'jquery-ui-rails'
 gem 'periscope-activerecord'
 gem 'rack-canonical-host'
+gem 'kaminari'
 
 group :doc do
   gem 'sdoc', require: false
