@@ -14,4 +14,9 @@ class ApplicationController < ActionController::Base
   def render_404
     render file: Rails.root.join('public/404.html'), status: :not_found
   end
+
+  def current_market
+    # FIXME: Change this later to be based off the subdomain.
+    Market.first
+  end
 end
