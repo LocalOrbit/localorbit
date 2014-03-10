@@ -28,6 +28,11 @@
       <%= f.text_field :how_story, class: "column column--three-fourths" %>
     </div>
 
+    <div class="row">
+      <%= f.label :photo, "Profile photo" %><br>
+      <%= f.file_field :photo %>
+    </div>
+
     <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
       <div class="row">
         <%= f.check_box :can_sell %>

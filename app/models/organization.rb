@@ -15,6 +15,8 @@ class Organization < ActiveRecord::Base
 
   accepts_nested_attributes_for :locations
 
+  dragonfly_accessor :photo
+
   def default_location
     locations.first || locations.build
   end

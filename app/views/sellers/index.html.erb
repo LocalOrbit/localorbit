@@ -10,7 +10,9 @@
 <div class="row">
   <div class="profile-image">
     <h2><%= @current_seller.name %></h2>
-    <img alt="profile" src="">
+    <% if @current_seller.photo.present? %>
+      <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo" %>
+    <% end %>
   </div>
   <div class="map">
     <h2></h2>

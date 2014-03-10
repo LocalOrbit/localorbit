@@ -15,14 +15,20 @@ Dragonfly.app.configure do
   }
   s3_headers['x-amz-storage-class'] = 'REDUCED_REDUNDANCY' unless Rails.env.production?
 
-  datastore :s3,
-    bucket_name:       Figaro.env.uploads_bucket,
-    access_key_id:     Figaro.env.uploads_access_key_id,
-    secret_access_key: Figaro.env.uploads_secret_access_key,
-    region:            Figaro.env.uploads_region,
-    url_scheme:        "https",
-    url_host:          Figaro.env.uploads_host,
-    headers:           s3_headers
+  if Rails.env.development?
+    datastore :file,
+      root_path: Rails.root.join('public/system/dragonfly', Rails.env),
+      server_root: Rails.root.join('public')
+  else
+    datastore :s3,
+      bucket_name:       Figaro.env.uploads_bucket,
+      access_key_id:     Figaro.env.uploads_access_key_id,
+      secret_access_key: Figaro.env.uploads_secret_access_key,
+      region:            Figaro.env.uploads_region,
+      url_scheme:        "https",
+      url_host:          Figaro.env.uploads_host,
+      headers:           s3_headers
+  end
 
   Fog.mock! if Rails.env.test?
 end
