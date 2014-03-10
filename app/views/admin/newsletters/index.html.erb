@@ -1,0 +1,15 @@
+<div class="l-page-header">
+  <h1>Newsletters</h1>
+  <%= link_to 'Add Newsletter', new_admin_market_newsletter_path(@market), class: "btn" %>
+</div>
+
+<table>
+  <tr>
+    <th>Subject</th>
+  </tr>
+  <% @newsletters.each do |newsletter| %>
+  <tr>
+    <td><%= link_to newsletter.subject, [:admin, @market, newsletter] %></td>
+  </tr>
+  <% end %>
+</table>

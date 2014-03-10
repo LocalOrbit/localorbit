@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :market_addresses,   as: :addresses,  path: :addresses
       resources :market_managers,    as: :managers,   path: :managers
       resources :delivery_schedules, path: :deliveries
+      resources :newsletters
       resource  :fees, only: [:show, :update]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
       get :defaults

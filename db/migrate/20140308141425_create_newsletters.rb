@@ -1,10 +1,10 @@
 class CreateNewsletters < ActiveRecord::Migration
   def change
     create_table :newsletters do |t|
-      t.string :title
+      t.string :subject
       t.text :body
       t.references :market, index: true
-      t.string :image
+      t.string :image_uid
       t.string :header
       t.boolean :draft
       t.date :sent_on
