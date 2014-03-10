@@ -5,6 +5,8 @@
 <table>
   <thead>
     <tr>
+      <%= content_tag(:th, 'Seller') if current_user.multi_organization_membership? %>
+      <%= content_tag(:th, 'Hub') if current_user.multi_market_membership? %>
       <th>Name</th>
       <th>Pricing</th>
       <th>In Stock</th>
@@ -12,7 +14,9 @@
   </thead>
 <% @products.each do |product| %>
   <tr class="product-row">
-    <th scope="row"><%= link_to product.name, [:admin, product] %></th>
+    <%= content_tag(:td, product.organization_name, class: 'seller') if current_user.multi_organization_membership? %>
+    <%= content_tag(:td, product.market_name, class: 'market') if current_user.multi_market_membership? %>
+    <td class="name"><%= link_to product.name, [:admin, product] %></td>
     <td class="pricing">
       <ul class="l-inline-list">
         <% product.prices.view_sorted.decorate.each do |price| %>
@@ -20,7 +24,9 @@
         <% end %>
       </ul>
     </td>
-    <td></td>
+    <td class="stock">
+      <%= product.available_inventory %>
+    </td>
   </tr>
 <% end %>
 </table>
