@@ -9,5 +9,5 @@ module DeliveryHelpers
 end
 
 RSpec.configure do |config|
-  config.include DeliveryScheduleHelpers
+  config.include DeliveryHelpers
 end
