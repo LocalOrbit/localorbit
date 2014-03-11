@@ -21,4 +21,8 @@ class Organization < ActiveRecord::Base
   def default_location
     locations.first || locations.build
   end
+
+  def shipping_location
+    locations.default_shipping || default_location
+  end
 end
