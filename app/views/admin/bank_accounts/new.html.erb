@@ -1,0 +1,38 @@
+<%= form_for [:admin, @organization, @bank_account] do |f| %>
+  <fieldset>
+    <input type="hidden" name="bank_account[account_type]" data-balanced-attribute="type">
+    <input type="hidden" name="bank_account[last_four]" data-balanced-attribute="last_four">
+    <input type="hidden" name="bank_account[bank_name]" data-balanced-attribute="bank_name">
+    <input type="hidden" name="bank_account[balanced_uri]" data-balanced-attribute="uri">
+  </fieldset>
+<% end %>
+
+<form id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-target-form="new_bank_account" data-balanced-object-type="bankAccount">
+  <label>
+    <span>Account Name</span>
+    <input type="text" name="name">
+  </label>
+
+  <label>
+    <span>Checking</span>
+    <input type="radio" name="type" value="checking">
+  </label>
+
+  <label>
+    <span>Savings</span>
+    <input type="radio" name="type" value="savings">
+  </label>
+
+  <label>
+    <span>Routing Number</span>
+    <input type="text" name="routing_number">
+  </label>
+
+  <label>
+    <span>Account Number</span>
+    <input type="text" name="account_number">
+  </label>
+
+  <input type="submit" value="Save">
+</form>
+
