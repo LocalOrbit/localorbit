@@ -229,6 +229,15 @@ module Dom
       end
     end
 
+    class OrderRow < Domino
+      selector ".order-row"
+      
+      attribute :order_number
+      attribute :amount_owed
+      attribute :delivery_status
+      attribute :buyer_status
+    end
+
     class OrganizationLocation < Domino
       selector "tbody tr"
 

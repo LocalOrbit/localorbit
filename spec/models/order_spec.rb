@@ -107,4 +107,54 @@ describe Order do
       expect(subject).to have(1).error_on(:payment_method)
     end
   end
+
+  describe ".orders_for_user" do
+    context "admin" do
+      let(:market)       { create(:market) }
+      let(:organization) { create(:organization, markets: [market]) }
+      let!(:user)        { create(:user, :admin) }
+      let!(:order)       { create(:order, organization: organization, market: market) }
+      let!(:other_order) { create(:order, organization_id: 0, market: market) }
+
+      it "returns all orders" do
+        orders = Order.orders_for_user(user)
+
+        expect(orders).to eq(Order.all)
+      end
+    end
+
+    context "market manager" do
+      let!(:user)        { create(:user, :market_manager) }
+      let(:market)       { user.managed_markets.first }
+      let(:other_market) { create(:market) }
+      let(:organization) { create(:organization, markets: [market]) }
+      let(:org2)         { create(:organization, markets: [other_market], users: [user])}
+      let!(:order)       { create(:order, organization: organization, market: market) }
+      let!(:other_order) { create(:order, organization_id: 0, market: market) }
+      let!(:other_market_order) { create(:order, organization_id: 0, market: other_market) }
+      let!(:valid_other_market_order) { create(:order, organization: org2, market: other_market) }
+
+      it "returns only managed markets orders" do
+        orders = Order.orders_for_user(user)
+
+        expect(orders.count).to eq(3)
+        expect(orders).to include(order, other_order, valid_other_market_order)
+      end
+    end
+
+    context "user" do
+      let(:market)       { create(:market) }
+      let(:organization) { create(:organization, markets: [market]) }
+      let!(:user)        { create(:user, organizations:[organization]) }
+      let!(:order)       { create(:order, organization: organization, market: market) }
+      let!(:other_order) { create(:order, organization_id: 0, market: market) }
+
+      it 'returns only the organizations orders' do
+        orders = Order.orders_for_user(user)
+
+        expect(orders.count).to eq(1)
+        expect(orders).to include(order)
+      end
+    end
+  end
 end

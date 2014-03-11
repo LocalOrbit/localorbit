@@ -4,6 +4,7 @@ class Organization < ActiveRecord::Base
 
   has_many :users, through: :user_organizations
   has_many :markets, through: :market_organizations
+  has_many :orders, inverse_of: :organization
 
   has_many :products
 
