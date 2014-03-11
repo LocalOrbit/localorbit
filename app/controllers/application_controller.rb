@@ -19,4 +19,9 @@ class ApplicationController < ActionController::Base
     # FIXME: Change this later to be based off the subdomain.
     current_user.markets.first
   end
+
+  def current_organization
+    # FIXME: Change this after we have organization selection.
+    @current_organization ||= current_user.managed_organizations.first
+  end
 end

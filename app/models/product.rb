@@ -33,6 +33,13 @@ class Product < ActiveRecord::Base
     visible.where(organization: market.organization_ids)
   end
 
+  def self.available_for_sale(market, buyer)
+    available_for_market(market).
+      joins(:lots, :prices).select('DISTINCT(products.*)').
+      where('(lots.good_from IS NULL OR lots.good_from < :now) AND (lots.expires_at IS NULL OR lots.expires_at > :now) AND quantity > 0', now: Time.current).
+      where('(prices.market_id = ? OR prices.market_id IS NULL) AND (prices.organization_id = ? OR prices.organization_id IS NULL)', market.id, buyer.id)
+  end
+
   def self.for_organization_id(organization_id)
     where(organization_id: organization_id)
   end
