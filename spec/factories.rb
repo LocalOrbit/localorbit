@@ -12,6 +12,12 @@ FactoryGirl.define do
     trait :with_addresses do
       after(:create) { |m| create_list(:market_address, 2, market: m) }
     end
+
+    trait :with_delivery_schedule do
+      after(:create) do |m|
+        create(:delivery_schedule, market: m)
+      end
+    end
   end
 
   factory :user do

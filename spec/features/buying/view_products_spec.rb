@@ -48,7 +48,6 @@ feature "Viewing products" do
     expect(dom_product.quantity).to have_text(expected_price)
   end
 
-  scenario "make a delivery schedule the default"
   scenario "shopping without an existing shopping cart" do
     address = market.addresses.first
     address.name = "Market Place"
@@ -73,7 +72,6 @@ feature "Viewing products" do
 
     expect(page).to have_content("Please choose a pick up or delivery date.")
 
-    binding.pry
     delivery_list = Dom::Buying::DeliveryChoice.first
     expect(delivery_list).not_to be_nil
 

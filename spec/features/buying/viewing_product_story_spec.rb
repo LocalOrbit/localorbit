@@ -16,9 +16,10 @@ feature "View a products story", js: true do
   let!(:buyer_org) { create(:organization, :buyer) }
   let!(:user)      { create(:user, organizations: [buyer_org]) }
 
-  let!(:market) { create(:market, organizations: [org1, buyer_org]) }
+  let!(:market) { create(:market, :with_delivery_schedule, organizations: [org1, buyer_org]) }
 
   before do
+    switch_to_subdomain market.subdomain
     sign_in_as(user)
     visit products_path
     choose_delivery

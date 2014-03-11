@@ -408,16 +408,27 @@ module Dom
     class DeliveryChoice < Domino
       selector "#deliveries .delivery"
 
+      def self.submit
+        within("#deliveries") do
+          click_button "Start Shopping"
+        end
+      end
+
+      def choose!
+        node.find("input[type=radio]").set(:checked)
+        self.class.submit
+      end
+
       def type
-        node.find(".type")
+        node.find(".type").text
       end
 
       def date
-        node.find(".date")
+        node.find(".date").text
       end
 
       def time_range
-        node.find(".time_range")
+        node.find(".time_range").text
       end
 
       def location

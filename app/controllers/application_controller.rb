@@ -19,7 +19,11 @@ class ApplicationController < ActionController::Base
 
   def current_organization
     return nil unless current_user
-    current_user.managed_organizations.find_by_id(session[:current_organization_id])
+    if current_user.managed_organizations.count > 1
+      current_user.managed_organizations.find_by_id(session[:current_organization_id])
+    else
+      current_user.managed_organizations.first
+    end
   end
 
   def current_market

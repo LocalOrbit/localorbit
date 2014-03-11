@@ -23,16 +23,16 @@ feature "Filtering Products List" do
   let!(:buyer_org) { create(:organization, :buyer) }
   let!(:user) { create(:user, organizations: [buyer_org]) }
 
-  let!(:market) { create(:market, organizations: [org1, org2, buyer_org]) }
+  let!(:market) { create(:market, :with_addresses, :with_delivery_schedule, organizations: [org1, org2, buyer_org]) }
 
   before do
+    switch_to_subdomain market.subdomain
     sign_in_as(user)
+    visit products_path
     choose_delivery
   end
 
   scenario "by seller" do
-    visit products_path
-
     expect(Dom::Product.count).to eq(4)
 
     Dom::ProductFilter.filter_by_seller(org1)
@@ -49,7 +49,6 @@ feature "Filtering Products List" do
   end
 
   scenario "by category" do
-    visit products_path
 
     expect(Dom::Product.count).to eq(4)
 
@@ -69,7 +68,6 @@ feature "Filtering Products List" do
   end
 
   scenario "by both category and seller" do
-    visit products_path
 
     expect(Dom::Product.count).to eq(4)
 
