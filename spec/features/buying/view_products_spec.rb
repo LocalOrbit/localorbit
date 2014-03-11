@@ -5,8 +5,10 @@ feature "Viewing products" do
   let!(:org2) { create(:organization, :seller) }
   let!(:org1_product) { create(:product, organization: org1) }
   let!(:product1_price) { create(:price, product: org1_product) }
+  let!(:product1_lot) { create(:lot, product: org1_product) }
   let!(:org2_product) { create(:product, organization: org2) }
   let!(:product2_price) { create(:price, product: org2_product) }
+  let!(:product2_lot) { create(:lot, product: org2_product) }
   let(:available_products) { [org1_product, org2_product] }
 
   let!(:other_org) { create(:organization, :seller) }
@@ -20,6 +22,11 @@ feature "Viewing products" do
   let!(:market) { create(:market, organizations: [org1, org2, buyer_org]) }
 
   before do
+    other_products.each do |prod|
+      create(:price, product: prod)
+      create(:lot, product: prod)
+    end
+
     sign_in_as(user)
   end
 
