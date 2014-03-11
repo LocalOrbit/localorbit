@@ -21,6 +21,7 @@ feature "View a products story", js: true do
   before do
     sign_in_as(user)
     visit products_path
+    choose_delivery
   end
 
   context "fall through to organization stories" do

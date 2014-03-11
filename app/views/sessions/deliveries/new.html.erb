@@ -1,0 +1,23 @@
+<h1>Welcome to <%= current_market.name %></h1>
+
+<p>Please choose a pick up or delivery date.</p>
+
+<%= form_tag [:sessions, :deliveries], method: :post, id: "deliveries" do |f| %>
+
+
+  <%= content_tag_for :div, @deliveries do |d| %>
+    <%= radio_button_tag "delivery[id]", d.id %>
+    <div class="type"><%= d.type %></div>
+    <div class="date"><%= d.display_date %></div>
+    <div class="time_range"><%= d.time_range %></div>
+
+    <div class="location">
+      <div class="address"><%= d.location.address %></div>
+      <div class="city"><%= d.location.city %></div>
+      <div class="state"><%= d.location.state %></div>
+      <div class="zip"><%= d.location.zip %></div>
+    </div>
+  <% end %>
+
+  <%= submit_tag "Start Shopping"%>
+<% end %>

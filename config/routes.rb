@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   namespace :sessions do
     resources :organizations
-    resources :delivery_schedules
+    resources :deliveries
   end
 
   resources :products, only: [:index]

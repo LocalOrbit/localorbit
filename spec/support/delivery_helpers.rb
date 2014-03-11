@@ -1,0 +1,13 @@
+module DeliveryHelpers
+  def choose_delivery(schedule_id=nil)
+    unless schedule_id
+      schedule = Dom::Buying::DeliveryChoice.first
+      raise "No delivery schedules in view" if schedule.nil?
+      schedule.choose!
+    end
+  end
+end
+
+RSpec.configure do |config|
+  config.include DeliveryScheduleHelpers
+end

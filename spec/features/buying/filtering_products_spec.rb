@@ -27,6 +27,7 @@ feature "Filtering Products List" do
 
   before do
     sign_in_as(user)
+    choose_delivery
   end
 
   scenario "by seller" do
