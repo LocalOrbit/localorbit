@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_market
-    current_user.markets.first
+    Market.find_by(subdomain: request.subdomain)
   end
 
   def current_organization

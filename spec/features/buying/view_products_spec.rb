@@ -22,6 +22,7 @@ feature "Viewing products" do
   let!(:market) { create(:market, :with_addresses, organizations: [org1, org2, buyer_org]) }
 
   before do
+    switch_to_subdomain market.subdomain
     other_products.each do |prod|
       create(:price, product: prod)
       create(:lot, product: prod)
@@ -62,7 +63,8 @@ feature "Viewing products" do
       order_cutoff: 24,
       seller_fulfillment_location_id: 0,
       seller_delivery_start: '7:00 AM',
-      seller_delivery_end:   '11:00 AM'
+      seller_delivery_end:   '11:00 AM',
+      market: market
     )
 
     create(:delivery, delivery_schedule: ds)
