@@ -231,11 +231,34 @@ module Dom
 
     class OrderRow < Domino
       selector ".order-row"
-      
+
       attribute :order_number
       attribute :amount_owed
       attribute :delivery_status
       attribute :buyer_status
+    end
+
+    class OrderItemRow < Domino
+      selector ".order-item-row"
+
+      attribute :name
+      attribute :quantity
+      attribute :price
+      attribute :discount
+      attribute :total
+      attribute :payment_status
+    end
+
+    class OrderSummaryRow < Domino
+      selector ".order-summary-row"
+
+      attribute :gross_total
+      attribute :discount
+      attribute :transaction_fees
+      attribute :payment_processing
+      attribute :net_sale
+      attribute :delivery_status
+      attribute :payment_status
     end
 
     class OrganizationLocation < Domino

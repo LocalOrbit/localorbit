@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe OrderItem do
   context "validations" do
-    it "requires a order_id" do
+    it "requires a order" do
       expect(subject).to be_invalid
-      expect(subject).to have(1).error_on(:order_id)
+      expect(subject).to have(1).error_on(:order)
     end
 
     it "requires a name" do

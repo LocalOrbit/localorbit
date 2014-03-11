@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Base
   belongs_to :market
   belongs_to :organization
-  has_many :items, inverse_of: :order
+  has_many :items, inverse_of: :order, class: OrderItem
 
   validates :billing_address, presence: true
   validates :billing_city, presence: true
@@ -25,7 +25,7 @@ class Order < ActiveRecord::Base
   validates :placed_at, presence: true
   validates :total_cost, presence: true
 
-  def self.orders_for_user(user)
+  def self.orders_for_buyer(user)
     if user.admin?
       all
     elsif user.market_manager?
@@ -36,6 +36,25 @@ class Order < ActiveRecord::Base
     else
       select('orders.*').joins("INNER JOIN user_organizations ON user_organizations.organization_id = orders.organization_id").
         where('user_organizations.user_id = ?', user.id)
+    end
+  end
+
+  def self.orders_for_seller(user)
+    if user.admin?
+      all
+    elsif user.market_manager?
+      select('orders.*').
+      joins("INNER JOIN order_items ON order_items.order_id = orders.id
+             INNER JOIN products ON products.id = order_items.product_id
+             LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id
+             LEFT JOIN managed_markets ON managed_markets.market_id = orders.market_id").
+      where("user_organizations.user_id = :user_id OR managed_markets.user_id = :user_id", user_id: user.id)
+    else
+      select('orders.*').
+      joins("INNER JOIN order_items ON order_items.order_id = orders.id
+             INNER JOIN products ON products.id = order_items.product_id
+             LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id").
+      where("user_organizations.user_id = :user_id", user_id: user.id)
     end
   end
 end
