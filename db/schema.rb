@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140311145237) do
+ActiveRecord::Schema.define(version: 20140311150008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,24 @@ ActiveRecord::Schema.define(version: 20140311145237) do
   end
 
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
+
+  create_table "order_items", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "product_id"
+    t.string   "name"
+    t.string   "seller_name"
+    t.integer  "quantity"
+    t.string   "unit"
+    t.decimal  "discount",               precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "market_fees",            precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "localorbit_seller_fees", precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "localorbit_market_fees", precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "payment_seller_fees",    precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "payment_market_fees",    precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "unit_price",             precision: 10, scale: 2, default: 0.0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "orders", force: true do |t|
     t.integer  "organization_id"
