@@ -406,7 +406,23 @@ module Dom
 
   module Buying
     class DeliveryChoice < Domino
-      selector "#delivery_schedules .delivery_schedule"
+      selector "#deliveries .delivery"
+
+      def type
+        node.find(".type")
+      end
+
+      def date
+        node.find(".date")
+      end
+
+      def time_range
+        node.find(".time_range")
+      end
+
+      def location
+        node.find(".location")
+      end
     end
   end
 end

@@ -2,6 +2,27 @@
 
 <p>Please choose a pick up or delivery date.</p>
 
-<%= form_tag [:sessions, :delivery_schedules], method: :post do |f| %>
+<%= form_tag [:sessions, :delivery_schedules], method: :post, id: "delivery_schedules" do |f| %>
+
+  <%= @deliveries.each do |d| %>
+    <%= content_tag_for(:div, d) do %>
+      <div class="type">
+        <%= d.delivery_schedule.market_pickup ? "Pick up" : "Delivery" %>:
+      </div>
+
+      <div class="date">
+        <%= d.deliver_on.long_ordinal %>
+      </div>
+
+      <div class="time_range">
+        Between <%= %> and <%=  %>
+      </div>
+
+      <div class="location">
+      </div>
+
+    <% end %>
+  <% end %>
+
   <%= submit_tag "Start Shopping"%>
 <% end %>

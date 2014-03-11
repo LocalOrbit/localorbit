@@ -73,6 +73,7 @@ feature "Viewing products" do
 
     expect(page).to have_content("Please choose a pick up or delivery date.")
 
+    binding.pry
     delivery_list = Dom::Buying::DeliveryChoice.first
     expect(delivery_list).not_to be_nil
 

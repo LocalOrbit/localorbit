@@ -182,22 +182,4 @@ describe DeliverySchedule do
   end
 
 
-  describe "#create_delivery" do
-    it "creates the next valid delivery in the future for the present date" do
-      date = Date.parse "Wednesday March 5, 2014"
-
-      Timecop.freeze(date)
-
-      deliver = subject.create_delivery(date)
-
-      subject.day = 2
-      delivery = subject.create_delivery_for_week(Time.now)
-
-      expect(delivery.deliver_on.inspect).to eql("Tue March 4, 2014")
-
-      expect(delivery.delivery_schedule).to eq(subject)
-
-      Timecop.return
-    end
-  end
 end
