@@ -10,7 +10,7 @@ class Admin::BankAccountsController < AdminController
   end
 
   def create
-    results = AddBankAccountToOrganization.perform(organization: @organization, bank_account_params: bank_account_params, representative_params: representative_params)
+    results = AddBankAccountToOrganization.perform(organization: @organization, bank_account_params: bank_account_params)
 
     if results.success?
       redirect_to admin_organization_bank_accounts_path(@organization)
@@ -34,16 +34,6 @@ class Admin::BankAccountsController < AdminController
       :last_four,
       :balanced_uri,
       :account_type
-    )
-  end
-
-  def representative_params
-    params.require(:representative).permit(
-      :name,
-      :dob,
-      :ssn_last_4,
-      :address_line1,
-      :address_postal_code
     )
   end
 end
