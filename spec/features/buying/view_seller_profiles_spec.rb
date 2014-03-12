@@ -27,12 +27,9 @@ feature "View Seller Profiles" do
   end
 
   context "available products" do
-    let!(:product1)       { create(:product, organization: seller1) }
-    let!(:product1_price) { create(:price, product: product1) }
+    let!(:product1)       { create(:product, :sellable, organization: seller1) }
     let!(:product2)       { create(:product, organization: seller1) }
-    let!(:product2_price) { create(:price, product: product2) }
-    let!(:product3)       { create(:product, organization: seller2) }
-    let!(:product3_price) { create(:price, product: product3) }
+    let!(:product3)       { create(:product, :sellable, organization: seller2) }
 
     scenario "view a sellers offerings" do
       visit seller_path(seller1)
@@ -40,8 +37,8 @@ feature "View Seller Profiles" do
       expect(page).to have_content ("Currently Selling")
 
       products = Dom::Product.all
-      expect(products.count).to eq(2)
-      expect(products.map(&:name)).to match_array([product1.name, product2.name])
+      expect(products.count).to eq(1)
+      expect(products.map(&:name)).to match_array([product1.name])
     end
   end
 

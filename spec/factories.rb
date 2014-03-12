@@ -55,6 +55,13 @@ FactoryGirl.define do
         ProductDecorator.new(new)
       end
     end
+
+    trait :sellable do
+      after(:create) do |product|
+        create(:price, product: product)
+        create(:lot, product: product)
+      end
+    end
   end
 
   factory :lot do

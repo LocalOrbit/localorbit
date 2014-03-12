@@ -3,10 +3,12 @@ class SellersController < ApplicationController
 
   def index
     @current_seller = @sellers.order("RANDOM()").first.decorate
+    @products = Product.available_for_sale(current_market, current_organization).where(organization_id: @current_seller.id).decorate
   end
 
   def show
     @current_seller = @sellers.find(params[:id]).decorate
+    @products = Product.available_for_sale(current_market, current_organization).where(organization_id: @current_seller.id).decorate
     render :index
   end
 
