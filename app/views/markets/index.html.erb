@@ -4,11 +4,13 @@
     <ul>
       <li><%= @market.contact_name %></li>
       <li><%= @market.contact_email %></li>
+      <% if @market.first_address.present? %>
       <li>
         <div><%= @market.first_address.address %></div>
         <div><%= @market.first_address.city %>, <%=@market.first_address.state %> <%= @market.first_address.zip %></div>
       </li>
       <li><%= @market.contact_phone %></li>
+      <% end %>
     </ul>
 
     <h2>Pickup/Delivery</h2>
