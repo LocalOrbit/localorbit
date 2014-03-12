@@ -4,7 +4,7 @@
     <ul>
       <li><%= @market.contact_name %></li>
       <li><%= @market.contact_email %></li>
-      <% if @market.first_address.present? %>
+      <% if @market.first_address %>
       <li>
         <div><%= @market.first_address.address %></div>
         <div><%= @market.first_address.city %>, <%=@market.first_address.state %> <%= @market.first_address.zip %></div>
