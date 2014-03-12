@@ -1,6 +1,352 @@
-<? $title='About'; include('includes/page_start.php'); ?>	
+<!doctype html>
+<html>
+	<head>
+		<title>Local Orbit: Re-linking the Food Chain - About</title>
+		<meta name="description" content="Local Orbit provides sales & business management tools for the entrepreneurs building the New Food Economy." />
+		<meta name="keywords" content="wholesale, food hub, institutional buying, local economies, technology, management tools, local food systems, transparency, supply chain, farm-to-school, local food, local food distribution, New Food Economy, software, business management, e-commerce, sales, Boot Camp, Hub Camp, Food Hub Training, Virtual Farmers Market, Online Farmers Market" />
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+		<link rel="stylesheet" type="text/css" href="/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="/homepage/includes/homepage.css?_v=4.0.6.1" />
+		<link rel="stylesheet" type="text/css" href="/homepage/includes/footer.css?_v=4.0.6.1" />
+		<link rel="stylesheet" type="text/css" href="/homepage/includes/popup.css?_v=4.0.6.1" />
+		<link rel="stylesheet" type="text/css" href="/homepage/includes/nav.css?_v=4.0.6.1" />
+		<link rel="stylesheet" type="text/css" href="/homepage/includes/tour.css?_v=4.0.6.1" />
+		<script language="Javascript" type="text/javascript" src="/js/jquery.min.js"></script>
+		<script language="Javascript" type="text/javascript" src="/js/wysihtml5-0.3.0.min.js"></script>
+		<script language="Javascript" type="text/javascript" src="js/bootstrap-wysihtml5.js"></script>
+		
+		<script language="Javascript" type="text/javascript" src="/app/core/js/core.js?time=1394661395"></script>
+		<script language="Javascript" type="text/javascript" src="/app/core/js/core.validator.js?time=1394661395"></script>
+		<script language="Javascript" type="text/javascript" src="/app/core/js/core.format.js?time=1394661395"></script>
+		<script language="Javascript" type="text/javascript" src="/app/core/js/core.ui.js?time=1394661395"></script>
+		<script language="Javascript" type="text/javascript" src="/app/core/js/jquery.datePicker.js?time=1394661395"></script>
+		<script language="Javascript" type="text/javascript" src="/app/core/js/jquery.tabset.js?time=1394661395"></script>
+		<script language="Javascript" type="text/javascript" src="/js/jquery.rte.js?time=1394661395"></script>
+		<script language="Javascript" type="text/javascript" src="/js/lo3.js?time=1394661395"></script>
+		<script language="Javascript" type="text/javascript" src="/js/slides.jquery.js"></script>
+		<script language="Javascript" type="text/javascript" src="/homepage/includes/features.js?_v=4.0.6.1"></script>
+		<script language="Javascript" type="text/javascript">
+		<!--
+		//
+		core.hostname = 'www.localorb.it';
+		core.baseUrl  = '/homepage/company.php';
+		core.user_id  = '780';
+		core.unauth_controller = '#!misc-home';
+		core.authed_controller = '#!dashboard-view';
+		$.fn.datePicker.format = 'M d,y';
+		//-->
+		</script>
+		<style type="text/css" media="screen, projection">
+			@import url(//assets.zendesk.com/external/zenbox/v2.5/zenbox.css); 
+		</style>
+<script type="text/javascript">
+var fb_param = {};
+fb_param.pixel_id = '6008232512301';
+fb_param.value = '0.00';
+(function(){
+  var fpw = document.createElement('script');
+  fpw.async = true;
+  fpw.src = '//connect.facebook.net/en_US/fp.js';
+  var ref = document.getElementsByTagName('script')[0];
+  ref.parentNode.insertBefore(fpw, ref);
+})();
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/offsite_event.php?id=6008232512301&amp;value=0" /></noscript>
 
-	<div id="totem-press-page" data-url="http://www.totemapp.com/projects/2211/embed">&nbsp;</div>
-	<script src="http://da851okaa2bjp.cloudfront.net/widget_resource/widgets/iframe_press_page.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<div style="position: fixed;top:0px;left:0px;right:0px;z-index:1001;background-image: url(/homepage/includes/header_bg.png);background-repeat: repeat-x;">
+			<table id="main_layout_homepage" width="100%">
+				<col />
+				<col width="1100" />
+				<col />
+				<tr>
+					<td><img src="/img/blank.png" width="1" height="120" /></td>
+					<td style="position: relative;">
+						<div style="position: relative;width:1100px;height: 120px;">
+							<a href="/" class="logo"><img width="112" height="111" src="/homepage/includes/logo5.png" /></a>
+							<div id="nav1">
+								<a class="nav1" style="font-size: 125%;" href="/homepage/features.php">Features</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/customers.php">Customers</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/pricing.php">Pricing</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/company.php">About</a>
+								<a class="nav1" style="font-size: 125%;" href="/field-notes/">Field Notes</a>
+							</div>
+							<div id="nav2">
+								<a href="/homepage/contact.php" class="nav2" >contact</a>
+								&nbsp;&nbsp;|&nbsp;&nbsp;
+																<a class="nav2" href="/app.php#!dashboard-home">dashboard</a>
+															</div>
+							
+							<div id="tagline">
+								re-linking the food chain&#153;
+							</div>
+						</div>
+					</td>
+					<td><img src="/img/blank.png" width="1" height="120" /></td>
+				</tr>
+			</table>
+		</div>
+		
+		<table id="main_layout_homepage" width="100%" style="margin-top: 120px;">
+			<col />
+			<col width="1100" />
+			<col />
+			
+			<tr>
+				<td><img src="/img/blank.png" width="1" height="400" /></td>
+				<td id="main_content_homepage">
+					<div id="popup_closer"><a href="#" onclick="$('#overlay,.popup,#popup_closer').fadeOut(100);"><img src="/homepage/img/icon_popup_close.png" /></a></div>
+					<div id="overlay"></div>
+					<div class="popup" id="popup3">
+						<div class="popup_content">
+							<iframe height="942" allowTransparency="true" frameborder="0" scrolling="no" style="width:100%;border:none" src="http://localorbit.wufoo.com/embed/z7x3k1/"><a href="http://localorbit.wufoo.com/forms/z7x3k1/">Submit</a></iframe>
+						</div>
+					</div>	
+<table>
+	<col width="580" />
+	<col width="40" />
+	<col width="470" />
+	<tr>
+		<td>
+			<h2>Re-linking the Food Chain</h2>
+			People are hungry for food that's produced by farmers, ranchers and artisans they know and trust. They want to spend a larger share of their food dollars in their own communities. Local Orbit's services create stronger, more efficient food networks that can meet the demand for the food produced closer to where we live.
+			<br />&nbsp;<br />
+			Our flexible, localized tools are designed to support the businesses and organizations that are rebuilding local and regional supply chains.
+			<br />&nbsp;<br />
+			Local Orbit has evolved through two years of conversations with farmers, food producers, chefs, eaters and people working to solve food distribution challenges. We've heard countless stories about disconnected markets and inefficient communications. 
+			<br />&nbsp;<br />
+			We serve every link in this food chain beautifully, by providing an elegant platform for multi-channel sales, streamlined purchasing and efficient business management.
+			
+
+ 
+			<br />&nbsp;<br />
+			
+		</td>
+		<td rowspan="2">&nbsp;</td>
+		<td>
+		<div>
+			<img src="/homepage/img/page_images/company_reduced_15.jpg" class="public_content_photo" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+		<!-- TEMP COMMENT OUT TEAM & JOBS	
+		
+			<h2>Management Team</h2>
+			<table width="940">
+				<col width="340" />
+				<col width="20" />
+				<col width="580" />
+				<tr>
+					<td>
+						<div>
+							<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Erika Block | Founder &amp; CEO</div>
+							<div class="faq_answer">
+								
+			<a href="mailto:erika@localorb.it">erika@localorb.it</a> <br><br>
+
+			Erika Block founded and ran an entrepreneurial arts organization for 12 years, overseeing programming, board development, marketing and financial management. She managed cross-sector non-profit, educational and commercial partnerships in the US, Great Britain and South Africa. Erika also raised $2 million and led the renovation of a vacant building in Detroit into a theater, gallery and bar, working with vendors to source local food for events. Throughout her career, Erika has created collaborative environments that facilitate learning and action.
+
+			She is a PopTech Social Innovation Fellow. Other awards include Crain's Detroit Business 40 Under 40 and the GLEQ Spirit of Entrepreneurship Award. Erika has a BGS from University of Michigan, an MFA from Columbia University, and did graduate work in Interactive Technology at New York University. She comes from a family of fruit peddlers, meat processors, restaurant owners and wholesalers.<br><br>
+
+			Check out Erika's <a href="http://poptech.org/erika_block" target="_blank">PopTech talk</a>
+							</div>
+						</div>
+					</td>
+					<td>&nbsp;</td>
+					<td>
+						<div>
+							<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Mike Thorn | Lead Developer</div>
+							<div class="faq_answer">
+								
+			<a href="mailto:mike@localorb.it">mike@localorb.it</a> <br><br>
+
+			Mike Thorn has been fostering business change and efficiency through software development for more than 10 years. He has led the development of projects including an online Laboratory Information Management system used by The Dow Chemical Company; a comprehensive business to business e-Marketplace solution used by Rohm & Haas; a custom built content management system used by the United States Council for Automotive Research; a HIPPA compliant Electronic Medical Records system; and a customer insights search tool for Disney. Mike also led the development of Therapy Charts, a start-up Electronic Health Records SaaS for therapists.
+
+			As lead developer for Local Orbit, Mike is excited to see his work provide a platform for farmers to grow stronger, more efficient businesses. “I’d like to bring the resources and tools that create advantages for big agriculture and huge retail chains to 10-acre farms and 10-table restaurants alike,” says Mike. <br> <br>
+
+			Learn more about <a href="http://www.localorb.it/field-notes/food-values-a-software-developers-contribution-to-the-food-value-chain/" target="_blank">Mike.</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr>
+					<td>
+						<div>
+							<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Ragan Erickson | Director of Product</div>
+							<div class="faq_answer">
+								
+			<a href="mailto:ragan@localorb.it">ragan@localorb.it</a> <br><br>
+
+			Ragan Erickson's backyard is filled with chickens and seasonal crops, which makes her a perfect Local Orbit evangelist to the local food haven of Southern California. Prior to joining Local Orbit, Ragan spent 10 years working for the region's only sustainable winery and restaurant. As Direct Sales and Marketing Manager, she created a wine club and launched one of the first online wine store in Southern California. She also managed customer service procedures and standards for 100 employees.
+
+			Ragan spent much of her early career working in her family's restaurant business, and she joined Local Orbit because the company intersects her passions for slow food and new media. "Working with a company that helps people build healthier communities through local food is a dream come true," she said. <br> <br>
+
+			Learn more about <a href="http://www.localorb.it/field-notes/local-orbit-welcomes-two-new-community-managers/" target="_blank"> Ragan.</a>
+							</div>
+						</div>
+					</td>
+					<td>&nbsp;</td>
+					<td>
+						<div>
+							<div class="faq_question" onclick="$(this).toggleClass('faq_question_expanded').parent().children('.faq_answer').toggle(300);">Cory Van Horn | Director of Marketing & Communications</div>
+							<div class="faq_answer">
+								<a href="mailto:cory@localorb.it">cory@localorb.it</a> <br><br>
+								Cory brings a unique blend of food systems, marketing and tech start-up experiences to Local Orbit. Early in his career, Cory served as a District Marketing Manager at Aramark where he grew market penetration and sales 12% year-over-year. He later held various positions focused on developing company-wide marketing and communications initiatives for companies in industrial real estate, wireless power, and the gift and home industry. Most recently, Cory was the Marketing Director at SnapRetail, a wholesale e-commerce platform for local retailers.
+
+			Cory earned a B.S. in Hospitality and Tourism Management from Grand Valley State University and a M.A. in Food Studies from the School of Sustainability and the Environment at Chatham University. He is an avid food writer, educator and traveler. His website, CulinaryCory.com, was a Webby Award Honoree in 2012.<br> <br>
+								
+								Learn more about <a href="http://www.localorb.it/field-notes/meet-cory-marketing-through-storytelling/" target="_blank">Cory.</a>
+			<br><br>
+						
+							</div>
+						</div>	
+					</td>
+				</tr>
+			</table>
+			<br />&nbsp;<br />
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<div class="jobs_area">
+				<div style="width: 750px; float: left;">
+					<h3>Work with Us!</h3>
+					We're looking for talented sales/business development leaders and web developers to join us. Are you rigorous, driven and a great communicator? Do you have a track record of making things happen? Are you passionate about building the New Food Economy? We'd love to hear from you.
+				</div>
+				<div style="width: 250px; float: left;">
+					<a href=”mailto:eblock.5472e190@status.hr.localorbit.podio.com?
+					subject=Candidate&body=In no more than 140 characters: What makes you unique? %0A%0
+					Why do you want to work with Local Orbit?%0A%0Please include your a cover letter in the body of this email," 
+					style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Jobs</a>
+				</div>
+			</div>
+		</td>
+	</tr>
+	END COMMENT -->
+</table>
+<br />&nbsp;<br />
+
+
+
+					</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan="3" id="footer">
+						<br />
+						<table width="100%">
+							<colgroup>
+								<col width="4%">
+								<col width="16%">
+								<col width="20%">
+								<col width="20%">
+								<col width="20%">
+								<col width="20%">
+							</colgroup>
+							<tbody>
+<script language="javascript">
+var popupWindow = null;
+function centeredPopup(url,winName,w,h,scroll){
+LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+settings =
+'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable'
+popupWindow = window.open(url,winName,settings)
+}
+</script>
+
+								<tr>
+									<td>&nbsp;</td>
+									<td><a href="/index.php"><img src="/img/default/logo_gray.png"></a></td>
+									<td>
+										<img src="/img/default/footer/tools_gray.png"><br>
+										<b class="footer">Local Orbit</b>
+										<ul class="footer">
+											<li class="footer"><a class="footer" href="/homepage/company.php">Company</a></li>
+											<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
+											<li class="footer"><a class="footer" href="/field-notes/">Field Notes: Our Blog</a></li>
+										<!--	<li class="footer"><a class="footer" href="#">Press</a></li> -->
+											<li class="footer"><a class="footer" href="/login.php">Customer Log In</a></li>
+										</ul>
+									</td>
+									<td>
+										<img src="/img/default/footer/scarecrow_gray.png"><br>
+										<b class="footer">Dig Deeper</b>
+										<ul class="footer">
+											<li class="footer"><a class="footer" href="/homepage/features.php">Features	</a></li>
+												<li class="footer"><a class="footer" href="/homepage/pricing.php">Pricing</a></li>
+												<li class="footer"><a class="footer" href="http://www.localorb.it/field-notes/schedule-a-demo/" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Register', 'Demo Registration']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a></li>
+												<li class="footer"><a class="footer" href="/homepage/hubcamp.php">Hub Camp</a></li>
+										</ul>
+									</td>
+									<td>
+										<img src="/img/default/footer/thumbsup_gray.png"><br>
+										
+										<b class="footer">Connect</b>
+										<ul class="footer">
+											<li class="footer"><a class="footer" target="_blank" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=bad2d7741d" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Sign Up', 'Newsletter Sign Up']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Our Newsletter</a></li>
+											<li class="footer"><a class="footer" target="_blank" href="http://www.facebook.com/localorbit">Facebook</a></li>
+											<li class="footer"><a class="footer" target="_blank" href="http://www.twitter.com/localorbit">Twitter</a></li>
+											<li class="footer"><a class="footer" target="_blank" href="http://www.linkedin.com/company/local-orbit">LinkedIn</a></li>
+										</ul>
+									</td>
+								
+									<td>
+									<img src="/img/default/footer/phone_gray.png"><br>
+									<b class="footer">Contact</b>
+									<ul class="footer">
+										<li class="footer" style="font-size: 12px;"> Call 734.545.8100</a></li>
+					
+										<li class="footer"><a href="http://myaccount.zendesk.com/account/dropboxes/20147973" onclick="script: Zenbox.show(); return false;" class="footer">Ask a Question</a></li>
+                                        <li class="footer"><a class="footer" href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Get Started</a></li>
+									</ul>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br />
+					<div class="footer">&nbsp; &nbsp; &nbsp; © 2013 | 
+					<a class="footer" style="font-size: 100%;" href="/homepage/tos.php" onclick="core.go(this.href);">Terms of Service</a> | 
+					<a style="font-size: 100%;" class="footer" href="/homepage/privacy.php" onclick="core.go(this.href);">Privacy</a> | 
+					<a class="footer" style="font-size: 100%;" href="https://localorbit.zendesk.com/anonymous_requests/new" onclick="script: Zenbox.show(); return false;">Help</a>
+				<br>&nbsp; &nbsp; &nbsp;
+					<a class="footer" style="font-size: 80%;" href="http://jasonhouston.com" onclick="core.go(this.href);"target="_blank">site photos by Jason Houston</a></div>
+				 
+				
+				</td>
+			</tr>
+		</table>
+		
+	<script type="text/javascript" src="//assets.zendesk.com/external/zenbox/v2.5/zenbox.js"></script>
+
 	
-<? include('includes/page_end.php'); ?>
+		<script type="text/javascript">
+		  if (typeof(Zenbox) !== "undefined") {
+		    Zenbox.init({
+		      dropboxID:   "20147973",
+		      url:         "https://localorbit.zendesk.com",
+		      tabID:       "Support",
+		      tabColor:    "black",
+		      tabPosition: "Left",
+		      hide_tab: "true"
+		    });
+		  }
+		</script>
+		<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-42056273-1', 'localorb.it');
+		ga('send', 'pageview');
+
+		</script>
+	</body>
+</html>
