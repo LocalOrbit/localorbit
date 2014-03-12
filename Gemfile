@@ -15,7 +15,6 @@ gem 'compass-rails'
 
 gem "active_model_serializers"
 gem "balanced"
-gem "chronic"
 gem "countries"
 gem 'devise'
 gem 'devise_invitable'
