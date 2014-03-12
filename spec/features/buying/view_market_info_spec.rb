@@ -7,9 +7,8 @@ feature "Viewing Market Info" do
   let!(:user) { create(:user, organizations: [buyer]) }
 
   let!(:market) { create(:market, organizations: [buyer, seller1, seller2]) }
-  let!(:address) { create(:market_address, market: market) }
-  let!(:tuesday_deliveries) { create(:delivery_schedule, market: market) }
-  let!(:thursday_deliveries) { create(:delivery_schedule, market: market, day: 4) }
+
+
 
   before do
     sign_in_as(user)
@@ -26,8 +25,30 @@ feature "Viewing Market Info" do
 
     sellers = Dom::MarketSellers.all
     expect(sellers.map(&:name)).to match_array([seller1.name, seller2.name])
+  end
 
-    expect(page).to have_content(tuesday_deliveries.weekday)
-    expect(page).to have_content(thursday_deliveries.weekday)
+  context "market address" do
+    let!(:address) { create(:market_address, market: market) }
+
+    scenario "is displayed on the page" do
+      click_link "Market Info"
+
+      expect(page).to have_content(address.address)
+      expect(page).to have_content(address.city)
+      expect(page).to have_content(address.state)
+      expect(page).to have_content(address.zip)
+    end
+  end
+
+  context "delivery_schedules" do
+    let!(:tuesday_deliveries) { create(:delivery_schedule, market: market) }
+    let!(:thursday_deliveries) { create(:delivery_schedule, market: market, day: 4) }
+
+    scenario "are displayed on the page" do
+      click_link "Market Info"
+
+      expect(page).to have_content(tuesday_deliveries.weekday)
+      expect(page).to have_content(thursday_deliveries.weekday)
+    end
   end
 end
