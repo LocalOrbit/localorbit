@@ -125,7 +125,7 @@ describe DeliverySchedule do
     end
   end
 
-  describe "#current" do
+  describe "#next_delivery" do
     let(:market) { create(:market, timezone: "US/Eastern") }
     let(:schedule) { 
       create(:delivery_schedule, market: market,
@@ -142,7 +142,7 @@ describe DeliverySchedule do
 
     describe "delivery with short cutoff" do
       it "creates a delivery for the next delivery time" do
-        delivery = schedule.next_delivery()
+        delivery = schedule.next_delivery
         expected_time = Time.parse("2014-05-15 06:00:00 EDT")
 
         expect(delivery).to be_a(Delivery)
@@ -173,13 +173,6 @@ describe DeliverySchedule do
         expect(schedule.next_delivery).to eql(delivery)
       end
     end
-
-    context "no deliveries exist associated with it"
-    context "delivery for schedule does not exist"
-    context "devlivery time is in"
-    context "given a delivery whos delivery time is in future which has a cutoff that occurs in the future"
-    context "given a delivery "
   end
-
 
 end
