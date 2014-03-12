@@ -19,6 +19,16 @@ describe Sessions::DeliveriesController do
   describe "/create" do
     let!(:delivery) { schedule.next_delivery }
 
+    context "empty submission" do
+      before do
+        post :create, {delivery:{id:""}}, {current_organization_id: org.id }
+      end
+
+      it "assigns a flash message" do
+        expect(flash[:alert]).to eql("Please select a delivery")
+      end
+    end
+
     context "current_organization has one location" do
       before do
         post :create, {delivery: { id: delivery.id }}, {current_organization_id: org.id }

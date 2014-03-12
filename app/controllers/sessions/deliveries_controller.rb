@@ -5,6 +5,11 @@ module Sessions
     end
 
     def create
+      unless params[:delivery] && params[:delivery][:id].present?
+        flash[:alert] = "Please select a delivery"
+        return render :new
+      end
+
       if params[:location] && params[:location][:id]
         location = current_organization.locations.find_by(id: params[:location][:id].to_i)
 
