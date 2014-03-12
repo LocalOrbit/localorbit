@@ -41,6 +41,8 @@ class DeliverySchedule < ActiveRecord::Base
 
 
   def next_delivery_date
+    return @next_delivery_date if defined?(@next_delivery_date)
+
     timezone = market.timezone || Time.zone
 
     Time.use_zone timezone do
@@ -53,7 +55,7 @@ class DeliverySchedule < ActiveRecord::Base
         d += 1.week
       end
 
-      return d
+      return @next_delivery_date = d
     end
   end
 
