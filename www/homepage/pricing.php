@@ -111,7 +111,7 @@ popupWindow = window.open(url,winName,settings)
 				<br />
 				$19/month + 2% of sales
 				
-				<hr style="width: 80%;" />
+				<hr style="width: 40%;" />
 				<ul style="text-align: left;">
 					<li>Everything you need to<br />manage marketing, sales, order fulfillment &amp; finances</li>
 				</ul>
@@ -128,7 +128,7 @@ popupWindow = window.open(url,winName,settings)
 				<span class="pricing">Grow</span>
 				<br />$49/month + 3% of sales
 				
-				<hr style="width: 80%;" />
+				<hr style="width: 40%;" />
 				<ul style="text-align: left;">
 					<li>Customizable branding</li>
 					<li>Cross-selling &amp; multi-channel sales</li>
@@ -144,7 +144,7 @@ popupWindow = window.open(url,winName,settings)
 			<div class="pricing">
 				<span class="pricing">Automate</span>
 				<br />$99/month + 4% of sales
-				<hr style="width: 80%;" />
+				<hr style="width: 40%;" />
 				<ul style="text-align: left;">
 					<li>Save time with automated payments to your sellers</li>
 					<li>Advanced reporting</li>
@@ -156,9 +156,10 @@ popupWindow = window.open(url,winName,settings)
 					<em>save $200 if paid annually</em>
 				</div>
 			</div>
+			
 			<a name="learn_more"></a>
-			<h3 style="clear:both;text-align: center;">	<br /><br>30-day guarantee. No risks. No start-up costs.<br /></h3>
-			<br><br>
+			<h3 style="clear:both;text-align: center;">	<br /><br>30-day guarantee. No risks. No start-up costs.<br /><br>Talk to us about high volume, flat rate pricing options.</h3>
+			<br><br>	
 		</td>
 	</tr>
 	<tr>
@@ -167,9 +168,12 @@ popupWindow = window.open(url,winName,settings)
 				
 				<div style="width: 750px; float: left;">
 					<h3>Local Sourcing at Institutional Scale</h3>
-					Interested in even more services to simplify local sourcing for your institution or restaurant group? 
+					Interested in even more services to simplify local sourcing for your institution or restaurant group?<br> 
+					Looking for help with invoicing and payments? We've got a solution.
 					<br />
-					Looking for help with invoicing and payments? We've got a solution. 
+				
+				
+				
 				</div>
 				<div style="width: 250px; float: left;">
 					<a href="/homepage/managed-services.php"  style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Learn More</a>
