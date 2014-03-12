@@ -30,10 +30,6 @@ Rails.application.routes.draw do
 
   resource :dashboard
 
-  resources :organizations, only: [] do
-    resources :locations, only: [:index]
-  end
-
   resources :products, only: [:index]
   resources :markets, only: [:index]
   resources :sellers, only: [:index, :show]
