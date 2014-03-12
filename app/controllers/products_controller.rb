@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :require_current_organization
-  before_action :require_current_delivery
+  before_action :require_shopping_cart_dependencies
 
   def index
     products = Product.available_for_sale(current_market, current_organization)
@@ -12,21 +11,19 @@ class ProductsController < ApplicationController
 
   private
 
-  def require_current_organization
-    orgs = current_user.managed_organizations
 
-    if orgs.count > 1
-      unless session[:current_organization_id].present?
-        redirect_to [:new, :sessions, :organization]
-      end
-    else
-      session[:current_organization_id] = orgs.first.id
-    end
-  end
+  def require_shopping_cart_dependencies
+    # Before shopping for a product, the session needs the following
+    # 1) current_user
+    # 2) current_market
+    # 3) current_organization_id
+    # 4) current_delivery_id
+    # 5) current_location_id
+    # 6) a shopping cart
 
-  def require_current_delivery
-    unless session[:current_delivery].present?
-      redirect_to [:new, :sessions, :delivery]
-    end
+    redirect_to [:new, :user, :session] if current_user.nil?
+    #redirect_to [:new, :market, :session] if current_market.nil?
+    redirect_to [:new, :sessions, :organization] if current_organization.nil?
+    redirect_to [:new, :sessions, :delivery] if current_delivery.nil?
   end
 end

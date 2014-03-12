@@ -16,7 +16,7 @@ feature "Viewing products" do
 
   let!(:org2_product_deleted) { create(:product, organization: org2, deleted_at: 1.day.ago) }
 
-  let!(:buyer_org) { create(:organization, :buyer) }
+  let!(:buyer_org) { create(:organization, :multiple_locations, :buyer) }
   let!(:user) { create(:user, organizations: [buyer_org]) }
 
   let!(:market) { create(:market, :with_addresses, organizations: [org1, org2, buyer_org]) }
@@ -57,7 +57,7 @@ feature "Viewing products" do
     address.zip = "32339"
     address.save!
 
-    ds = create(:delivery_schedule,
+    ds = create(:delivery_schedule, :buyer_pickup,
       day: 2,
       order_cutoff: 24,
       seller_fulfillment_location_id: 0,
@@ -83,5 +83,4 @@ feature "Viewing products" do
   end
 
   scenario "shopping after already having a cart"
-
 end

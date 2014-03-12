@@ -24,11 +24,11 @@ class DeliveryDecorator < Draper::Decorator
     "Between #{start_time} and #{end_time}"
   end
 
-  def location
+  def display_locations
     if is_pickup?
-      delivery_schedule.buyer_pickup_location
+      [delivery_schedule.buyer_pickup_location]
     else
-      context[:current_organization].shipping_location
+      context[:current_organization].locations
     end
   end
 

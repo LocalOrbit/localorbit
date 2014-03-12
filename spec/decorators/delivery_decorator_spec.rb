@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe DeliveryDecorator do
   let(:delivery_schedule) { create( :delivery_schedule ) }
-  let(:current_org) { create(:organization, :with_locations, markets: [delivery_schedule.market]) }
+  let(:current_org) { create(:organization, :single_location, markets: [delivery_schedule.market]) }
   let(:draper_context) { {context: {current_organization: current_org}} }
 
   subject { create(:delivery, delivery_schedule: delivery_schedule).decorate }
@@ -56,15 +56,16 @@ describe DeliveryDecorator do
     end
   end
 
-  describe "#location" do
+  describe "#display_display_locations" do
     subject { create(:delivery, delivery_schedule: delivery_schedule).decorate(draper_context) }
 
     context "delivery is pickup" do
       let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup)}
 
       it "should return the address of the pickup location" do
-        expect(subject.location).not_to be_nil
-        expect(subject.location).to eql(delivery_schedule.buyer_pickup_location)
+        expect(subject.display_locations).not_to be_nil
+        expect(subject.display_locations.count).to eql(1)
+        expect(subject.display_locations.first).to eql(delivery_schedule.buyer_pickup_location)
       end
     end
 
@@ -73,8 +74,18 @@ describe DeliveryDecorator do
       let(:location) { create(:location, :default_shipping) }
 
       it "should return the address of the buyers selected organization" do
-        expect(subject.location).not_to be_nil
-        expect(subject.location).to eql(current_org.default_location)
+        expect(subject.display_locations).not_to be_nil
+        expect(subject.display_locations.count).to eql(1)
+        expect(subject.display_locations.first).to eql(current_org.default_location)
+      end
+
+      context "and the selected organziation has multiple locations" do
+          let(:current_org) { create(:organization, :multiple_locations, markets: [delivery_schedule.market]) }
+
+        it "returns a list of display_locations" do
+          expect(subject.display_locations.count).to eql(2)
+          expect(subject.display_locations).to eql(current_org.locations)
+        end
       end
     end
   end

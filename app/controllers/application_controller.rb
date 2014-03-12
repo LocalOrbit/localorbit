@@ -18,20 +18,27 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organization
-    return nil unless current_user
-    if current_user.managed_organizations.count > 1
-      current_user.managed_organizations.find_by_id(session[:current_organization_id])
-    else
-      current_user.managed_organizations.first
+    #TODO: Memoize
+    return nil unless current_user.present?
+
+    if current_user.managed_organizations.count == 1
+      session[:current_organization_id] = current_user.managed_organizations.first.id
     end
+
+    current_user.managed_organizations.find_by(id: session[:current_organization_id])
   end
 
   def current_market
     Market.find_by(subdomain: request.subdomain)
   end
 
-  def current_organization
-    # FIXME: Change this after we have organization selection.
-    @current_organization ||= current_user.managed_organizations.first
+  def current_delivery
+    return nil unless current_user.present?
+    return nil unless current_market.present?
+    return nil unless current_organization.present?
+
+    #TODO: Scope deliveries to current_market
+    Delivery.find_by(id: session[:delivery_id])
   end
+
 end

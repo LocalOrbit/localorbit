@@ -11,12 +11,16 @@
     <div class="date"><%= d.display_date %></div>
     <div class="time_range"><%= d.time_range %></div>
 
-    <div class="location">
-      <div class="address"><%= d.location.address %></div>
-      <div class="city"><%= d.location.city %></div>
-      <div class="state"><%= d.location.state %></div>
-      <div class="zip"><%= d.location.zip %></div>
-    </div>
+    <% if d.display_locations.count > 1 %>
+      <%= select_tag "location_id[#{d.id}]", options_from_collection_for_select(d.display_locations, "id", "address"), prompt: "Select a location for this delivery." %>
+    <% else %>
+      <%= content_tag_for :div, d.display_locations.first do |location| %>
+        <div class="address"><%= location.address %></div>
+        <div class="city"><%= location.city %></div>
+        <div class="state"><%= location.state %></div>
+        <div class="zip"><%= location.zip %></div>
+      <% end %>
+    <% end %>
   <% end %>
 
   <%= submit_tag "Start Shopping"%>

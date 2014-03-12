@@ -86,7 +86,13 @@ FactoryGirl.define do
       can_sell false
     end
 
-    trait :with_locations do
+    trait :single_location do
+      after(:create) do |org|
+        create_list(:location, 1, organization: org)
+      end
+    end
+
+    trait :multiple_locations do
       after(:create) do |org|
         create_list(:location, 2, organization: org)
       end
