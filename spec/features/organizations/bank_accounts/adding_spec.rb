@@ -6,6 +6,10 @@ feature "Adding a bank account to an organization", js: true, vcr: {cassette_nam
   let!(:org) { create(:organization, markets: [market]) }
   let!(:member) { create(:user, :admin, organizations: [org]) }
 
+  before do
+    CreateBalancedCustomerForOrganization.perform(organization: org)
+  end
+
   scenario "as a market manager" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(market_manager)
@@ -18,7 +22,7 @@ feature "Adding a bank account to an organization", js: true, vcr: {cassette_nam
     fill_in "Account Number", with: "9900000002"
 
     click_button "Save"
-    sleep 2
+    sleep 4
 
     bank_account = Dom::BankAccount.first
     expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")

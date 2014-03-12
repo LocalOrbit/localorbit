@@ -1,7 +1,9 @@
 class AddBankAccountToOrganization
-  include Interactor
+  include Interactor::Organizer
 
-  def perform
-    context[:bank_account] = organization.bank_accounts.create!(bank_account_params)
+  def setup
+    context[:balanced_customer_uri] = organization.balanced_customer_uri
   end
+
+  organize CreateBankAccount, AddBankAccountToBalancedCustomer
 end
