@@ -8,12 +8,13 @@ describe Sessions::DeliveriesController do
   }
 
   let(:user) { create(:user, role: 'user') }
-  let(:org) {create(:organization, :multiple_locations)}
+  let(:org) { create(:organization, :multiple_locations) }
 
   before do
     org.users << user
     org.save!
     sign_in(user)
+    switch_to_subdomain current_market.subdomain
   end
 
   describe "/create" do
@@ -21,7 +22,7 @@ describe Sessions::DeliveriesController do
 
     context "empty submission" do
       before do
-        post :create, {delivery:{id:""}}, {current_organization_id: org.id }
+        post :create, {delivery_id: ""}, {current_organization_id: org.id }
       end
 
       it "assigns a flash message" do
@@ -30,8 +31,14 @@ describe Sessions::DeliveriesController do
     end
 
     context "current_organization has one location" do
+      let(:org) { create(:organization, :single_location) }
+
       before do
-        post :create, {delivery: { id: delivery.id }}, {current_organization_id: org.id }
+        post :create,
+             {
+               delivery_id: delivery.id,
+               location_id: {delivery.id.to_s => org.locations.first.id}
+             }, {current_organization_id: org.id }
       end
 
       it "assigns the delivery" do
@@ -49,10 +56,10 @@ describe Sessions::DeliveriesController do
 
     context "an organization_location is also passed as a parameter" do
       before do
-        post :create, 
+        post :create,
              {
-                delivery: {id: delivery.id},
-                location: {id: org.locations.last.id}
+                delivery_id: delivery.id,
+                location_id: {delivery.id.to_s => org.locations.last.id}
              },
              {current_organization_id: org.id }
       end
@@ -75,17 +82,17 @@ describe Sessions::DeliveriesController do
 
       context "and the location is not valid" do
         before do
-          post :create, 
+          post :create,
               {
-                  delivery: {id: delivery.id},
-                  location: {id: 999}
+                  delivery_id: delivery.id,
+                  location_id: {delivery.id.to_s => 999}
               },
               {current_organization_id: org.id }
         end
 
         it "assigns an error message and redirects" do
-          expect(flash[:alert]).to eql("Please select a different location")
-          expect(response).to redirect_to([:sessions, :deliveries])
+          expect(flash[:alert]).to eql("Please select a delivery")
+          expect(response).to be_success
         end
       end
     end

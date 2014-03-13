@@ -2,7 +2,7 @@ class DeliveryDecorator < Draper::Decorator
   delegate_all
 
   def type
-    is_pickup? ? "Pick Up:" : "Delivery:"
+    buyer_pickup? ? "Pick Up:" : "Delivery:"
   end
 
   def display_date
@@ -10,7 +10,7 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def time_range
-    if is_pickup? 
+    if buyer_pickup?
       start_time = delivery_schedule.buyer_pickup_start
       end_time = delivery_schedule.buyer_pickup_end
     else
@@ -25,16 +25,14 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def display_locations
-    if is_pickup?
+    if buyer_pickup?
       [delivery_schedule.buyer_pickup_location]
     else
       context[:current_organization].locations
     end
   end
 
-  private
-
-  def is_pickup?
-    delivery_schedule.buyer_pickup_location.present?
+  def buyer_pickup?
+    delivery_schedule.buyer_pickup?
   end
 end
