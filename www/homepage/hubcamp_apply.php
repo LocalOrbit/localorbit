@@ -25,7 +25,7 @@ td { padding: 10px; }
   <tr>
     <td width="25%">Hub Camp location</td>
     <td width="75%"><input type="radio" name="TAG" value="Hub Camp LA"<? if ($_GET['location']=='LA') { ?> checked="checked"<? } ?> /> <span style="font-weight:bold">Los Angeles, CA</span> at Occidental College &mdash; Sunday - Tuesday, March 16 - 18, 2014<br /> 
-      APPLY TODAY: <strong>2 spots left! </strong><br /><br />
+      APPLY TODAY: <strong>Wait List Only! </strong><br /><br />
     <input type="radio" name="TAG" value="Hub Camp Davis"<? if ($_GET['location']=='Davis') { ?> checked="checked"<? } ?> /> <span style="font-weight:bold">Davis, CA</span>  at N Street Common House &mdash; Sunday - Tuesday, April 27 - 29, 2014<br />
 APPLY BY: <span style="font-weight:bold">Tuesday, April 8</span></td>
   </tr>
