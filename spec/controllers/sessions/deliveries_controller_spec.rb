@@ -51,7 +51,7 @@ describe Sessions::DeliveriesController do
 
     context "an organization_location is also passed as a parameter" do
       before do
-        post :create, 
+        post :create,
              {
                 delivery: {id: delivery.id},
                 location: {id: org.locations.last.id}
@@ -77,7 +77,7 @@ describe Sessions::DeliveriesController do
 
       context "and the location is not valid" do
         before do
-          post :create, 
+          post :create,
               {
                   delivery: {id: delivery.id},
                   location: {id: 999}
@@ -86,7 +86,7 @@ describe Sessions::DeliveriesController do
         end
 
         it "assigns an error message and redirects" do
-          expect(flash[:alert]).to eql("Please select a different location")
+          expect(flash[:alert]).to eql("Please select a location")
           expect(response).to redirect_to([:sessions, :deliveries])
         end
       end
