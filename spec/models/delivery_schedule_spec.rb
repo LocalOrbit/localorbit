@@ -124,4 +124,55 @@ describe DeliverySchedule do
       end
     end
   end
+
+  describe "#next_delivery" do
+    let(:market) { create(:market, timezone: "US/Eastern") }
+    let(:schedule) { 
+      create(:delivery_schedule, market: market,
+             order_cutoff: 6, seller_delivery_start: "6:00 am", seller_delivery_end: "10:00 am", day:4)
+    }
+
+    before do
+      Timecop.freeze(Time.parse "May 10, 2014 06:00")
+    end
+
+    after do
+      Timecop.return
+    end
+
+    describe "delivery with short cutoff" do
+      it "creates a delivery for the next delivery time" do
+        delivery = schedule.next_delivery
+        expected_time = Time.parse("2014-05-15 06:00:00 EDT")
+
+        expect(delivery).to be_a(Delivery)
+        expect(delivery.deliver_on).to eql(expected_time)
+      end
+    end
+
+    describe "when the delivery cutoff is weeks before the current time" do
+      before do
+        schedule.order_cutoff = 3*7*24
+        schedule.save!
+      end
+
+      it "creates a delivery for the next delivery time" do
+        delivery = schedule.next_delivery()
+        expected_time = Time.parse("2014-06-05 06:00:00 EDT")
+
+        expect(delivery).to be_a(Delivery)
+        expect(delivery.deliver_on).to eql(expected_time)
+      end
+    end
+
+    context "the next delivery already exists" do
+      let(:deliver_on_date) { Time.parse("2014-05-15 06:00:00 EDT") }
+      let!(:delivery) { create(:delivery, delivery_schedule: schedule, deliver_on: deliver_on_date) }
+
+      it "returns the found deilvery" do
+        expect(schedule.next_delivery).to eql(delivery)
+      end
+    end
+  end
+
 end

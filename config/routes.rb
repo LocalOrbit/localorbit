@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   devise_for :users
 
   namespace :admin do
@@ -34,6 +33,11 @@ Rails.application.routes.draw do
   end
 
   resource :dashboard
+
+  namespace :sessions do
+    resources :organizations
+    resources :deliveries
+  end
 
   resources :products, only: [:index]
   resources :markets, only: [:index]

@@ -2,12 +2,22 @@ FactoryGirl.define do
   factory :market do
     sequence(:name)      {|n| "Market #{n}" }
     sequence(:subdomain) {|n| "market-#{n}" }
-    timezone      'EST'
+    timezone      'US/Eastern'
     contact_name  'Jill Smith'
     contact_email 'jill@smith.com'
     contact_phone '616-222-2222'
     policies      'Do no harm...'
     profile       'Market profile...'
+
+    trait :with_addresses do
+      after(:create) { |m| create_list(:market_address, 2, market: m) }
+    end
+
+    trait :with_delivery_schedule do
+      after(:create) do |m|
+        create(:delivery_schedule, market: m)
+      end
+    end
   end
 
   factory :user do
@@ -74,6 +84,18 @@ FactoryGirl.define do
 
     trait :buyer do
       can_sell false
+    end
+
+    trait :single_location do
+      after(:create) do |org|
+        create_list(:location, 1, organization: org)
+      end
+    end
+
+    trait :multiple_locations do
+      after(:create) do |org|
+        create_list(:location, 2, organization: org)
+      end
     end
   end
 
@@ -157,5 +179,17 @@ FactoryGirl.define do
     seller_fulfillment_location_id 0
     seller_delivery_start '7:00 AM'
     seller_delivery_end   '11:00 AM'
+    association :market, factory: [:market, :with_addresses]
+
+    trait :buyer_pickup do
+      buyer_pickup_start '10:00 AM'
+      buyer_pickup_end '12:00 PM'
+      buyer_pickup_location { market.addresses.first }
+    end
+  end
+
+  factory :delivery do
+    delivery_schedule
+    deliver_on Date.today
   end
 end

@@ -8,6 +8,8 @@ class DeliverySchedule < ActiveRecord::Base
   belongs_to :seller_fulfillment_location, class: MarketAddress
   belongs_to :buyer_pickup_location,       class: MarketAddress
 
+  has_many :deliveries
+
   validates :day,          presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 6,   allow_nil: true}
   validates :order_cutoff, presence: true, numericality: {greater_than_or_equal_to: 6, less_than_or_equal_to: 504, allow_nil: true}
   validates :seller_fulfillment_location_id, presence: true
@@ -35,6 +37,32 @@ class DeliverySchedule < ActiveRecord::Base
 
   def weekday
     WEEKDAYS[day]
+  end
+
+
+  def next_delivery_date
+    return @next_delivery_date if defined?(@next_delivery_date)
+
+    timezone = market.timezone || Time.zone
+
+    Time.use_zone timezone do
+      current_time = Time.current
+      beginning = current_time.beginning_of_week(:sunday) - 1.week
+      date = (beginning + day.days).to_date
+      d = Time.zone.parse("#{date} #{seller_delivery_start}")
+
+      while (d - order_cutoff.hours) < current_time
+        d += 1.week
+      end
+
+      return @next_delivery_date = d
+    end
+  end
+
+  def next_delivery
+    delivery = deliveries.find_by(deliver_on: next_delivery_date)
+
+    delivery || deliveries.create!(deliver_on: next_delivery_date, cutoff_time: next_delivery_date - order_cutoff.hours)
   end
 
   protected

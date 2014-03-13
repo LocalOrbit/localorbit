@@ -1,0 +1,8 @@
+<h1>Organizations#index</h1>
+
+<p>Select an organization</p>
+
+<%= form_tag [:sessions, :organizations], method: :post do |f| %>
+  <%= select_tag(:org_id, options_from_collection_for_select(@organizations, 'id', 'name')) %>
+  <%= submit_tag "Select Organization"%>
+<% end %>

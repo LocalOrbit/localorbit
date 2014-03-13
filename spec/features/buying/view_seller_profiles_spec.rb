@@ -8,6 +8,7 @@ feature "View Seller Profiles" do
   let!(:market)  { create(:market, organizations: [buyer, seller1, seller2]) }
 
   before do
+    switch_to_subdomain(market.subdomain)
     sign_in_as(user)
   end
 

@@ -1,8 +1,7 @@
 require "spec_helper"
 
 feature "View a products story", js: true do
-  let!(:org1)      { create(:organization, name: "Funny Farm", who_story: "Chevy Chase", how_story: "Magic") }
-  let!(:location)  { create(:location, organization: org1, default_shipping: true) }
+  let!(:org1)      { create(:organization, :single_location, name: "Funny Farm", who_story: "Chevy Chase", how_story: "Magic") }
   let!(:category1) { Category.find_by!(name: "Corn") }
   let!(:category2) { Category.find_by!(name: "Macintosh Apples") }
 
@@ -13,14 +12,16 @@ feature "View a products story", js: true do
   let!(:price2)   { create(:price, product: product2) }
   let!(:lot2)     { create(:lot, product: product2) }
 
-  let!(:buyer_org) { create(:organization, :buyer) }
+  let!(:buyer_org) { create(:organization, :single_location, :buyer) }
   let!(:user)      { create(:user, organizations: [buyer_org]) }
 
-  let!(:market) { create(:market, organizations: [org1, buyer_org]) }
+  let!(:market) { create(:market, :with_delivery_schedule, organizations: [org1, buyer_org]) }
 
   before do
+    switch_to_subdomain market.subdomain
     sign_in_as(user)
     visit products_path
+    choose_delivery
   end
 
   context "fall through to organization stories" do
