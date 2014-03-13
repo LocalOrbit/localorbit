@@ -27,7 +27,7 @@
           <th></th>
         </tr>
 
-        <tr class="price">
+        <tr class="price odd">
           <td><%= f.object.market_name %></td>
           <td><%= f.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %></td>
           <td><%= f.number_field :min_quantity, min: 0, size: 4 %></td>
@@ -40,7 +40,7 @@
       <tbody>
 
       <% @product.prices.view_sorted.decorate.each do |price| %>
-        <%= content_tag_for :tr, price, rel: "fields_price_#{price.id}" do %>
+        <%= content_tag_for :tr, price, rel: "fields_price_#{price.id}", class: cycle('even', 'odd') do %>
           <td class="market"><%= price.market_name %></td>
           <td class="buyer"><%= price.organization_name %></td>
           <td class="min-qty"><%= price.min_quantity %></td>

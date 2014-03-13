@@ -370,6 +370,11 @@
     padding: 22px 24px 18px;
     border: solid 1px #cbcbcb;
     @include border-radius(5px 5px 0 0);
+  }
+
+  > a,
+  .is-disabled {
+    border-bottom-color: #cbcbcb;
     background: #f4f4f4;
   }
 

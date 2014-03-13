@@ -15,19 +15,19 @@ th {
 }
 
 td {
-  > input[type=submit] {
+  input[type=submit] {
     margin-top: 0;
     margin-bottom: 0;
   }
 
-  > input[type=datetime],
-  > input[type=email],
-  > input[type=search],
-  > input[type=tel],
-  > input[type=text],
-  > input[type=number],
-  > input[type=url],
-  > input[type=password] {
+  input[type=datetime],
+  input[type=email],
+  input[type=search],
+  input[type=tel],
+  input[type=text],
+  input[type=number],
+  input[type=url],
+  input[type=password] {
     height: 24px;
     padding-right: 7px;
     padding-left: 7px;
@@ -78,6 +78,9 @@ th {
     padding: .1em .2em;
     border: solid 1px #d7d7d7;
     margin: 0 0 .4em;
+  }
+  > ul {
+    margin-top: 0;
   }
 }
 .product-row {
