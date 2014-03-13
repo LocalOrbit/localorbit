@@ -31,6 +31,8 @@ describe Sessions::DeliveriesController do
 
     context "current_organization has one location" do
       before do
+        org.locations.last.destroy
+        org.locations(true)
         post :create, {delivery: { id: delivery.id }}, {current_organization_id: org.id }
       end
 
