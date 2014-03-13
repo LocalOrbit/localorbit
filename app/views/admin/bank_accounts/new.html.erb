@@ -1,5 +1,39 @@
 <%= form_for [:admin, @organization, @bank_account] do |f| %>
   <fieldset>
+    <legend>Personal Information</legend>
+    <p>In order to setup your account, we will need your full legal name, DOB, last 4 of your SSN, and personal address.</p>
+
+    <div class="row">
+      <label for="representative_ein">Organization <abbr title="Employer Identification Number">EIN</abbr></label><br>
+      <input id="representative_ein" type="text" name="representative[ein]">
+      <span class="hint">EIN is optional. However it is recommended if available for account underwritting purposes.</span>
+    </div>
+
+    <div class="row">
+      <label for="representative_name">Full Legal Name</label><br>
+      <input id="representative_name" type="text" name="representative[name]">
+    </div>
+
+    <div class="row">
+      <label>Date of Birth</label><br>
+      <%= select_date 18.years.ago.beginning_of_year, start_year: 100.years.ago.year, end_year: 18.years.ago.year, use_short_month: true, order: [:month, :day, :year], prefix: "representative[dob]" %>
+    </div>
+
+    <div class="row">
+      <label for="representative_ssn_last4">Last 4 of SSN</label><br>
+      <input id="representative_ssn_last4" type="text" name="representative[ssn_last4]" size="4">
+    </div>
+
+    <div class="row">
+      <label for="representative_address_line1">Street Address (Personal)</label><br>
+      <input id="representative_address_line1" type="text" name="representative[address][line1]">
+    </div>
+
+    <div class="row">
+      <label for="representative_address_postal_code">Zip Code (Personal)</label><br>
+      <input id="representative_address_postal_code" type="text" name="representative[address][postal_code]">
+    </div>
+
     <input type="hidden" name="bank_account[account_type]" data-balanced-attribute="type">
     <input type="hidden" name="bank_account[last_four]" data-balanced-attribute="last_four">
     <input type="hidden" name="bank_account[bank_name]" data-balanced-attribute="bank_name">
@@ -8,30 +42,30 @@
 <% end %>
 
 <form id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-target-form="new_bank_account" data-balanced-object-type="bankAccount">
-  <label>
-    <span>Account Name</span>
-    <input type="text" name="name">
-  </label>
+  <div class="row">
+    <label for="balanced_account_name">Account Name</label><br>
+    <input id="balanced_account_name" type="text" name="name">
+  </div>
 
-  <label>
-    <span>Checking</span>
-    <input type="radio" name="type" value="checking">
-  </label>
+  <div class="row">
+    <label for="balanced_type_checking">Checking</label><br>
+    <input id="balanced_type_checking" type="radio" name="type" value="checking">
+  </div>
 
-  <label>
-    <span>Savings</span>
-    <input type="radio" name="type" value="savings">
-  </label>
+  <div class="row">
+    <label for="balanced_type_savings">Savings</label><br>
+    <input id="balanced_type_savings" type="radio" name="type" value="savings">
+  </div>
 
-  <label>
-    <span>Routing Number</span>
-    <input type="text" name="routing_number">
-  </label>
+  <div class="row">
+    <label for="balanced_routing_number">Routing Number</label><br>
+    <input id="balanced_routing_number" type="text" name="routing_number">
+  </div>
 
-  <label>
-    <span>Account Number</span>
-    <input type="text" name="account_number">
-  </label>
+  <div class="row">
+    <label for="balanced_account_number">Account Number</label><br>
+    <input id="balanced_account_number" type="text" name="account_number">
+  </div>
 
   <input type="submit" value="Save">
 </form>

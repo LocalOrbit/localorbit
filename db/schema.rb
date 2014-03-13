@@ -228,6 +228,7 @@ ActiveRecord::Schema.define(version: 20140316163044) do
     t.text     "how_story"
     t.string   "photo_uid"
     t.string   "balanced_customer_uri"
+    t.boolean  "balanced_underwritten", default: false, null: false
   end
 
   create_table "prices", force: true do |t|

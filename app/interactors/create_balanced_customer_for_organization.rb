@@ -9,9 +9,9 @@ class CreateBalancedCustomerForOrganization
   def balanced_customer_info
     {
       name: organization.name,
-      business_name: organization.name,
       meta: {
-        organization_id: organization.id
+        organization_id: organization.id,
+        organization_name: organization.name
       }
     }
   end
