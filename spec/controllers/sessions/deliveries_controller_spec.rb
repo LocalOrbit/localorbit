@@ -8,7 +8,7 @@ describe Sessions::DeliveriesController do
   }
 
   let(:user) { create(:user, role: 'user') }
-  let(:org) {create(:organization, :multiple_locations)}
+  let(:org) { create(:organization, :multiple_locations) }
 
   before do
     org.users << user
@@ -31,9 +31,9 @@ describe Sessions::DeliveriesController do
     end
 
     context "current_organization has one location" do
+      let(:org) { create(:organization, :single_location) }
+
       before do
-        org.locations.last.destroy
-        org.locations(true)
         post :create,
              {
                delivery_id: delivery.id,

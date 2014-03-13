@@ -88,7 +88,7 @@ FactoryGirl.define do
 
     trait :single_location do
       after(:create) do |org|
-        create_list(:location, 1, organization: org)
+        create(:location, organization: org)
       end
     end
 
