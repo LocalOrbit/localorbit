@@ -26,10 +26,17 @@ module Admin
     end
 
     def update
-      @delivery_schedule = @market.delivery_schedules.visible.find(params[:id])
-      if @delivery_schedule.update_attributes(delivery_schedule_params)
+      delivery_schedule = @market.delivery_schedules.visible.find(params[:id])
+
+      interactor = UpdateDeliveryScheduleAndCurrentDelivery.perform(
+        params: delivery_schedule_params,
+        delivery_schedule: delivery_schedule
+      )
+
+      if interactor.success?
         redirect_to [:admin, @market, :delivery_schedules], notice: 'Saved delivery schedule.'
       else
+        @delivery_schedule = interactor.delivery_schedule
         render :new
       end
     end
