@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
     return nil unless current_organization.present?
 
     #TODO: Scope deliveries to current_market
-    Delivery.find_by(id: session[:delivery_id])
+    Delivery.find_by(id: session[:current_delivery_id])
   end
 
 end

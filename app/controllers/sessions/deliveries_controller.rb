@@ -22,7 +22,7 @@ module Sessions
         session[:current_location] = current_organization.locations.first.id
       end
 
-      session[:current_delivery] = params[:delivery][:id].to_i
+      session[:current_delivery_id] = params[:delivery][:id].to_i
       redirect_to :products
     end
   end

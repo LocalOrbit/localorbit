@@ -20,7 +20,7 @@ feature "Filtering Products List" do
   let!(:price4)   { create(:price, product: product4) }
   let!(:lot4)     { create(:lot, product: product4) }
 
-  let!(:buyer_org) { create(:organization, :buyer) }
+  let!(:buyer_org) { create(:organization, :single_location, :buyer) }
   let!(:user) { create(:user, organizations: [buyer_org]) }
 
   let!(:market) { create(:market, :with_addresses, :with_delivery_schedule, organizations: [org1, org2, buyer_org]) }

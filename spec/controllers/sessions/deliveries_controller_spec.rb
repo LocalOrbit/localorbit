@@ -35,7 +35,7 @@ describe Sessions::DeliveriesController do
       end
 
       it "assigns the delivery" do
-        expect(session[:current_delivery]).to eql(delivery.id)
+        expect(session[:current_delivery_id]).to eql(delivery.id)
       end
 
       it "redirects to the products listing" do
@@ -60,7 +60,7 @@ describe Sessions::DeliveriesController do
       context "and the location is valid" do
 
         it "assigns the delivery" do
-          expect(session[:current_delivery]).to eql(delivery.id)
+          expect(session[:current_delivery_id]).to eql(delivery.id)
         end
 
         it "redirects to the products listing" do

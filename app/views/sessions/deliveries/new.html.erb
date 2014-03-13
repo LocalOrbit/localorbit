@@ -4,21 +4,21 @@
 
 <%= form_tag [:sessions, :deliveries], method: :post, id: "deliveries" do |f| %>
 
-
   <%= content_tag_for :div, @deliveries do |d| %>
     <%= radio_button_tag "delivery[id]", d.id %>
     <div class="type"><%= d.type %></div>
     <div class="date"><%= d.display_date %></div>
     <div class="time_range"><%= d.time_range %></div>
 
+
     <% if d.display_locations.count > 1 %>
       <%= select_tag "location_id[#{d.id}]", options_from_collection_for_select(d.display_locations, "id", "address"), prompt: "Select a location for this delivery." %>
     <% else %>
-      <%= content_tag_for :div, d.display_locations.first do |location| %>
+      <%= content_tag_for :div, d.display_locations.first, class:"location" do |location| %>
         <div class="address"><%= location.address %></div>
-        <div class="city"><%= location.city %></div>
-        <div class="state"><%= location.state %></div>
-        <div class="zip"><%= location.zip %></div>
+        <div class="city">
+          <%= location.city %> <%= location.state %>, <%= location.zip %>
+        </div>
       <% end %>
     <% end %>
   <% end %>
