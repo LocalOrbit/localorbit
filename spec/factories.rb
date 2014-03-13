@@ -182,6 +182,7 @@ FactoryGirl.define do
     association :market, factory: [:market, :with_addresses]
 
     trait :buyer_pickup do
+      seller_fulfillment_location { market.addresses.first }
       buyer_pickup_start '10:00 AM'
       buyer_pickup_end '12:00 PM'
       buyer_pickup_location { market.addresses.first }
