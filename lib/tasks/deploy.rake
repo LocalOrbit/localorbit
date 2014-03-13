@@ -10,14 +10,14 @@ namespace :deploy do
       system "heroku restart --app #{app}"
 
       version = `heroku releases --app #{app} -n 1 | grep -o '^v[0-9]*'`
-      system "git tag #{version}"
+      system "git tag staging-#{version}"
       system "git push --tags"
     end
   end
 
   desc "Deploy localorbit to production"
   task :production do
-    app = "localorbit"
+    app = "localorbit-production"
     remote = "git@heroku.com:#{app}.git"
 
     system "git push #{remote} master"
