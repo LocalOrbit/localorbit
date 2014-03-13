@@ -7,4 +7,6 @@ class Cart < ActiveRecord::Base
   validates :organization, presence:true
   validates :market, presence:true
   validates :delivery, presence:true
+
+  has_many :items, class_name: :CartItem
 end

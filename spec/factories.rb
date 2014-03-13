@@ -205,4 +205,9 @@ FactoryGirl.define do
     market
     delivery
   end
+
+  factory :cart_item do
+    product
+    cart
+  end
 end

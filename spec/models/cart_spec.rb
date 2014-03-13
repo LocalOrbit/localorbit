@@ -14,6 +14,10 @@ describe Cart do
     expect(subject).to have(1).error_on(:delivery)
   end
 
+  it "has no items" do
+    expect(subject.items).to be_empty
+  end
+
   describe "default factory" do
     subject { create(:cart) }
 
