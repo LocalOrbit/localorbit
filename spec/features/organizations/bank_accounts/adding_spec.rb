@@ -32,7 +32,8 @@ feature "Adding a bank account to an organization", js: true do
     fill_in "Account Number", with: "9900000002"
 
     click_button "Save"
-    sleep 8
+
+    expect(page).to have_content("Bank Accounts")
 
     bank_account = Dom::BankAccount.first
     expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")

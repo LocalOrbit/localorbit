@@ -6,9 +6,11 @@ class UnderwriteOrganization
   end
 
   def perform
-    update_balanced_customer_info
+    unless organization.balanced_underwritten?
+      update_balanced_customer_info
 
-    organization.update_attribute(:balanced_underwritten, balanced_customer.is_identity_verified?)
+      organization.update_attribute(:balanced_underwritten, balanced_customer.is_identity_verified?)
+    end
   end
 
   private
