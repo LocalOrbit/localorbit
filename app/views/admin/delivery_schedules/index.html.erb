@@ -19,7 +19,7 @@
           <%= delivery.seller_delivery_start %> - <%= delivery.seller_delivery_end %>
         </td>
         <td class="pickup-time">
-          <%= "#{delivery.buyer_pickup_start} - #{delivery.buyer_pickup_end}" if delivery.buyer_pickup? %>
+          <%= "#{delivery.buyer_pickup_start} - #{delivery.buyer_pickup_end}" if delivery.seller_fulfillment_location %>
         </td>
         <td><%= link_to 'Delete', [:admin, @market, delivery], method: :delete, data: {confirm: 'Are you sure you want to delete this delivery'} %></td>
       </tr>

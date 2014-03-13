@@ -127,7 +127,7 @@ describe DeliverySchedule do
 
   describe "#next_delivery" do
     let(:market) { create(:market, timezone: "US/Eastern") }
-    let(:schedule) { 
+    let(:schedule) {
       create(:delivery_schedule, market: market,
              order_cutoff: 6, seller_delivery_start: "6:00 am", seller_delivery_end: "10:00 am", day:4)
     }
@@ -172,6 +172,29 @@ describe DeliverySchedule do
       it "returns the found deilvery" do
         expect(schedule.next_delivery).to eql(delivery)
       end
+    end
+  end
+
+  describe "#buyer_pickup?" do
+    it 'is true if both the seller fulfillment location and buyer pickup location are set' do
+      ds = create(:delivery_schedule, :buyer_pickup)
+      expect(ds.seller_fulfillment_location).to_not be_nil
+      expect(ds.buyer_pickup_location).to_not be_nil
+
+      expect(ds.buyer_pickup?).to eq(true)
+    end
+
+    it 'is false if either location is nil' do
+      ds = create(:delivery_schedule, :buyer_pickup)
+      ds.seller_fulfillment_location = nil
+      expect(ds.buyer_pickup?).to eq(false)
+
+      ds.seller_fulfillment_location = ds.buyer_pickup_location
+      ds.buyer_pickup_location = nil
+      expect(ds.buyer_pickup?).to eq(false)
+
+      ds.seller_fulfillment_location = nil
+      expect(ds.buyer_pickup?).to eq(false)
     end
   end
 

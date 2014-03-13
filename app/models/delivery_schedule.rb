@@ -24,7 +24,7 @@ class DeliverySchedule < ActiveRecord::Base
   validate :seller_delivery_end_after_start
 
   def buyer_pickup?
-    seller_fulfillment_location.present?
+    seller_fulfillment_location.present? && buyer_pickup_location.present?
   end
 
   def seller_fulfillment_address
