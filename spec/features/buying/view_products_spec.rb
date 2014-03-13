@@ -3,18 +3,14 @@ require "spec_helper"
 feature "Viewing products" do
   let!(:org1) { create(:organization, :seller) }
   let!(:org2) { create(:organization, :seller) }
-  let!(:org1_product) { create(:product, organization: org1) }
-  let!(:product1_price) { create(:price, product: org1_product) }
-  let!(:product1_lot) { create(:lot, product: org1_product) }
-  let!(:org2_product) { create(:product, organization: org2) }
-  let!(:product2_price) { create(:price, product: org2_product) }
-  let!(:product2_lot) { create(:lot, product: org2_product) }
+  let!(:org1_product) { create(:product, :sellable, organization: org1) }
+  let!(:org2_product) { create(:product, :sellable, organization: org2) }
   let(:available_products) { [org1_product, org2_product] }
 
   let!(:other_org) { create(:organization, :seller) }
   let!(:other_products) { create_list(:product, 3, organization: other_org) }
 
-  let!(:org2_product_deleted) { create(:product, organization: org2, deleted_at: 1.day.ago) }
+  let!(:org2_product_deleted) { create(:product, :sellable, organization: org2, deleted_at: 1.day.ago) }
 
   let!(:buyer_org) { create(:organization, :multiple_locations, :buyer) }
   let!(:user) { create(:user, organizations: [buyer_org]) }
@@ -38,7 +34,7 @@ feature "Viewing products" do
 
   scenario "list of products" do
     #TODO: Filter products based on delivery
-    #      Since adding the delivery selection, 
+    #      Since adding the delivery selection,
     #      this spec is broken. We're not yet filtering
     #      based on the current delivery
     #click_link "Shop"
@@ -69,7 +65,6 @@ feature "Viewing products" do
     ds = create(:delivery_schedule, :buyer_pickup,
       day: 2,
       order_cutoff: 24,
-      seller_fulfillment_location_id: 0,
       seller_delivery_start: "7:00 AM",
       seller_delivery_end:  "11:00 AM",
       buyer_pickup_start: "12:00 PM",
@@ -92,7 +87,75 @@ feature "Viewing products" do
     expect(delivery_list.location.text).to eql("123 Street Ave. Town MI, 32339")
 
     click_button "Start Shopping"
-    expect(page).to have_content("Please select a delivery")
+    within('p.alert') do
+      expect(page).to have_content("Please select a delivery")
+    end
+
+    delivery = Dom::Buying::DeliveryChoice.first
+    delivery.choose!
+
+    expect(page).to have_content(org1_product.name)
+  end
+
+  scenario "selecting a direct to buyer delivery with multiple organization locations" do
+    ds = create(:delivery_schedule,
+      day: 2,
+      order_cutoff: 24,
+      seller_fulfillment_location_id: 0,
+      seller_delivery_start: "7:00 AM",
+      seller_delivery_end:  "11:00 AM",
+      market: market
+    )
+
+    create(:delivery, delivery_schedule: ds)
+
+    click_link "Shop"
+
+    expect(page).to have_content("Please choose a pick up or delivery date.")
+
+    delivery = Dom::Buying::DeliveryChoice.first
+    expect(delivery).not_to be_nil
+
+    expect(delivery.type).to eql("Delivery:")
+    expect(delivery.date).to eql("October 14, 2014")
+    expect(delivery.time_range).to eql("Between 7:00AM and 11:00AM")
+
+    delivery.choose!
+
+    expect(page).to have_content(org1_product.name)
+  end
+
+  scenario "selecting a direct to buyer delivery with one organization location" do
+    while buyer_org.locations.size > 1
+      buyer_org.locations.last.destroy
+      buyer_org.locations(true)
+    end
+
+    ds = create(:delivery_schedule,
+      day: 2,
+      order_cutoff: 24,
+      seller_fulfillment_location_id: 0,
+      seller_delivery_start: "7:00 AM",
+      seller_delivery_end:  "11:00 AM",
+      market: market
+    )
+
+    create(:delivery, delivery_schedule: ds)
+
+    click_link "Shop"
+
+    expect(page).to have_content("Please choose a pick up or delivery date.")
+
+    delivery = Dom::Buying::DeliveryChoice.first
+    expect(delivery).not_to be_nil
+
+    expect(delivery.type).to eql("Delivery:")
+    expect(delivery.date).to eql("October 14, 2014")
+    expect(delivery.time_range).to eql("Between 7:00AM and 11:00AM")
+
+    delivery.choose!
+
+    expect(page).to have_content(org1_product.name)
   end
 
   scenario "shopping after already having a cart"

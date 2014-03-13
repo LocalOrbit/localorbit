@@ -14,6 +14,7 @@ describe Sessions::DeliveriesController do
     org.users << user
     org.save!
     sign_in(user)
+    switch_to_subdomain current_market.subdomain
   end
 
   describe "/create" do
@@ -21,7 +22,7 @@ describe Sessions::DeliveriesController do
 
     context "empty submission" do
       before do
-        post :create, {delivery:{id:""}}, {current_organization_id: org.id }
+        post :create, {delivery_id: ""}, {current_organization_id: org.id }
       end
 
       it "assigns a flash message" do
@@ -33,7 +34,11 @@ describe Sessions::DeliveriesController do
       before do
         org.locations.last.destroy
         org.locations(true)
-        post :create, {delivery: { id: delivery.id }}, {current_organization_id: org.id }
+        post :create,
+             {
+               delivery_id: delivery.id,
+               location_id: {delivery.id.to_s => org.locations.first.id}
+             }, {current_organization_id: org.id }
       end
 
       it "assigns the delivery" do
@@ -53,8 +58,8 @@ describe Sessions::DeliveriesController do
       before do
         post :create,
              {
-                delivery: {id: delivery.id},
-                location: {id: org.locations.last.id}
+                delivery_id: delivery.id,
+                location_id: {delivery.id.to_s => org.locations.last.id}
              },
              {current_organization_id: org.id }
       end
@@ -79,15 +84,15 @@ describe Sessions::DeliveriesController do
         before do
           post :create,
               {
-                  delivery: {id: delivery.id},
-                  location: {id: 999}
+                  delivery_id: delivery.id,
+                  location_id: {delivery.id.to_s => 999}
               },
               {current_organization_id: org.id }
         end
 
         it "assigns an error message and redirects" do
-          expect(flash[:alert]).to eql("Please select a location")
-          expect(response).to redirect_to([:sessions, :deliveries])
+          expect(flash[:alert]).to eql("Please select a delivery")
+          expect(response).to be_success
         end
       end
     end

@@ -5,24 +5,27 @@ module Sessions
     end
 
     def create
-      if id = params[:delivery].try(:[], :id).presence
-        session[:current_delivery_id] = id.to_i
-      else
-        flash.now[:alert] = "Please select a delivery"
-        return render :new
-      end
+      session[:current_delivery_id] = params[:delivery_id].to_i
+      return invalid_delivery_selection if current_delivery.nil?
 
-      if current_organization.locations.size > 1
-        if location = current_organization.locations.find_by(id: params[:location].try(:[], :id).to_i)
+      if current_delivery.requires_location?
+        location_id = params[:location_id][params[:delivery_id]]
+        if location = current_organization.locations.find_by(id: location_id)
           session[:current_location] = location.id
         else
-          return redirect_to [:sessions, :deliveries], alert: "Please select a location"
+          return invalid_delivery_selection
         end
-      else
-        session[:current_location] = current_organization.locations.first.id
       end
 
       redirect_to :products
+    end
+
+    protected
+
+    def invalid_delivery_selection
+      flash.now[:alert] = "Please select a delivery"
+      self.new
+      return render :new
     end
   end
 end
