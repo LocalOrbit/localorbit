@@ -26,7 +26,7 @@ feature "Adding a bank account to an organization", js: true do
     fill_in "Street Address (Personal)", with: "6789 Fake Dr"
     fill_in "Zip Code (Personal)", with: "12345"
 
-    fill_in "Account Name", with: "Org Bank Account"
+    fill_in "Name", with: "Org Bank Account"
     choose "Checking"
     fill_in "Routing Number", with: "021000021"
     fill_in "Account Number", with: "9900000002"
