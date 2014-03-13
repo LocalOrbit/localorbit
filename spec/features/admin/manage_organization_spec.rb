@@ -140,8 +140,8 @@ describe "admin manange organization" do
     end
 
     it "updates default address settings", js: true do
-      create(:location, :default_billing,  organization: organization)
-      create(:location, :default_shipping, organization: organization)
+      billing  = create(:location, :default_billing,  organization: organization)
+      shipping = create(:location, :default_shipping, organization: organization)
 
       click_link "Organizations"
       click_link "University of Michigan Farmers"
@@ -149,19 +149,39 @@ describe "admin manange organization" do
       click_link "Addresses"
 
       locations = Dom::Admin::OrganizationLocation.all
+      locations.each do |location|
+        if location.name == billing.name
+          expect(location).to be_default_billing
+        elsif location.name == shipping.name
+          expect(location).to be_default_shipping
+        else
+          fail("Unmatched address")
+        end
+      end
 
-      expect(locations.first).to be_default_billing
-      expect(locations.last).to  be_default_shipping
-
-      locations.first.mark_default_shipping
-      locations.last.mark_default_billing
+      locations.each do |location|
+        if location.name == billing.name
+          location.mark_default_shipping
+        elsif location.name == shipping.name
+          location.mark_default_billing
+        else
+          fail("Unmatched address")
+        end
+      end
 
       click_link "Save & Continue Editing"
 
       locations = Dom::Admin::OrganizationLocation.all
+      locations.each do |location|
+        if location.name == billing.name
+          expect(location).to be_default_shipping
+        elsif location.name == shipping.name
+          expect(location).to be_default_billing
+        else
+          fail("Unmatched address")
+        end
+      end
 
-      expect(locations.last).to  be_default_billing
-      expect(locations.first).to be_default_shipping
       expect(page).to have_content("Successfully updated default addresses")
     end
 

@@ -29,6 +29,41 @@ FactoryGirl.define do
     end
   end
 
+  factory :order do
+    sequence(:order_number) {|n| "LO-#{n}"}
+    placed_at        Time.current
+
+    billing_organization_name "Collective Idea"
+    billing_address  "44 E. 8th St"
+    billing_city     "Holland"
+    billing_state    "Michigan"
+    billing_zip      "49423"
+    billing_phone    "(616) 555-1212"
+
+    delivery_address "123 Main"
+    delivery_city    "Holland"
+    delivery_state   "Michigan"
+    delivery_zip     "49423"
+    delivery_phone   "(616) 555-1222"
+    delivery_status  "Pending"
+
+    delivery_fees    0.00
+    delivery_id      0
+
+    payment_method   "Purchase Order"
+    payment_status   "Unpaid"
+
+    total_cost       100.99
+  end
+
+  factory :order_item do
+    sequence(:name) {|n| "Order Item #{n}"}
+    seller_name "Old McDonald"
+    quantity    1
+    unit        "per box"
+    unit_price  6.99
+  end
+
   factory :organization do
     sequence(:name) {|n| "Organization #{n}" }
     can_sell true

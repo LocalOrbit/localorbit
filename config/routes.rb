@@ -9,6 +9,11 @@ Rails.application.routes.draw do
       resources :delivery_schedules, path: :deliveries
     end
 
+    get "financials" => "financials#index"
+    namespace :financials do
+      resources :orders
+    end
+
     resources :organizations do
       resources :users
       resources :locations, except: :destroy do

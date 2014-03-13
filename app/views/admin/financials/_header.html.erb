@@ -1,0 +1,6 @@
+<div class="tabs-wrapper">
+  <ul class="tabs">
+    <%= content_tag(:li, link_to_or_span("Overview", [:admin, :financials]), class: 'tab') %>
+    <%= content_tag(:li, link_to_or_span("Review Orders", [:admin, :financials, :orders]), class: 'tab') %>
+  </ul>
+</div>
