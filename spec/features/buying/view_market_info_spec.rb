@@ -11,6 +11,7 @@ feature "Viewing Market Info" do
 
 
   before do
+    switch_to_subdomain market.subdomain
     sign_in_as(user)
   end
 

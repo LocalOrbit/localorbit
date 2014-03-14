@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_market
-    @current_market ||= Market.find_by(subdomain: application_subdomain)
+    @current_market ||= current_user.markets.find_by!(subdomain: application_subdomain)
   end
 
   def current_delivery
