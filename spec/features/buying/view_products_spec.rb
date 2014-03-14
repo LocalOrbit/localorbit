@@ -87,7 +87,7 @@ feature "Viewing products" do
     expect(delivery_list.location.text).to eql("123 Street Ave. Town MI, 32339")
 
     click_button "Start Shopping"
-    within('p.alert') do
+    within('.flash--alert') do
       expect(page).to have_content("Please select a delivery")
     end
 

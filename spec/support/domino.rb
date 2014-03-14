@@ -35,7 +35,7 @@ module Dom
 
   class EditableTableRow < Domino
     def editable?
-      node.all("input").present?
+      node.all('input[type="submit"]').present?
     end
 
     def click
@@ -121,10 +121,14 @@ module Dom
     def click_delete
       node.find_link("Delete").click
     end
+
+    def click_edit
+      node.find_link("Edit").click
+    end
   end
 
   class NewPricingForm < PricingRow
-    selector "#pricing_table thead tr.price"
+    selector "#add-price"
 
     def min_quantity
       node.find("#price_min_quantity")

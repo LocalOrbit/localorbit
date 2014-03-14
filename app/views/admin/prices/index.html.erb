@@ -12,7 +12,7 @@
   <div class="column column--three-fourths">
 
     <% if @product.prices.any?(&:persisted?) %>
-      <%= link_to "Add Price", "#add-price", class: "btn btn--small pull-right", id: "add-price-toggle" %> 
+      <%= link_to "Add Price", "#add-price", class: "btn btn--small pull-right", id: "add-price-toggle" %>
       <h2 class="clear-after">Add Prices</h2>
       <p>These are your prices. Click on a field to edit it.</p>
       <p>
@@ -67,15 +67,10 @@
           <td class="min-qty"><%= price.min_quantity %></td>
           <td class="net-price">$<%= "%.02f" % price.net_price %></td>
           <td class="sale-price">$<%= "%.02f" % price.sale_price %></td>
-          <% if @product.prices.any?(&:persisted?) %>
-            <td class="edit">
-              <%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#fields_price_#{price.id}", class: "edit-price" %>
-            </td>
-          <% else %>
-            <td class="delete">
-              <%= link_to "Delete", [:admin, @product, price], method: :delete, data: {confirm: 'Are you sure you want to delete this price'} %>
-            </td>
-          <% end %>
+          <td class="edit">
+            <%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#fields_price_#{price.id}", class: "edit-price" %>
+            <%= link_to "Delete", [:admin, @product, price], method: :delete, data: {confirm: 'Are you sure you want to delete this price'} %>
+          </td>
         <% end %>
 
         <%= content_tag_for :tr, price, :fields, {class: 'price', style:"display:none;", data: {"form-url" => url_for([:admin, @product, price]) }} do %>

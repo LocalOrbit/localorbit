@@ -25,16 +25,7 @@ describe "Editing advanced pricing" do
 
   describe "clicking on a price row", js: true do
     before do
-      Dom::PricingRow.first.click_market
-    end
-
-    it "disables the #new_price form fields" do
-      new_price_form = Dom::NewPricingForm.first
-
-      new_price_form.inputs.each do |input|
-        expect(input['disabled']).to eql('disabled')
-        expect(input['readonly']).to eql('readonly')
-      end
+      Dom::PricingRow.first.click_edit
     end
 
     it "opens the clicked on price row to editing" do
@@ -74,15 +65,6 @@ describe "Editing advanced pricing" do
       it "replaces the open field with the previous table row" do
         price_row = Dom::PricingRow.first
         expect(price_row).to_not be_editable
-      end
-
-      it "enables the new price form" do
-        new_price_form = Dom::NewPricingForm.first
-
-        new_price_form.inputs.each do |input|
-          expect(input['disabled']).to be_nil
-          expect(input['readonly']).to be_nil
-        end
       end
 
       it "sets the form url back" do
@@ -128,10 +110,6 @@ describe "Editing advanced pricing" do
         it "hides the form" do
           expect(Dom::PricingRow.first).to_not be_editable
         end
-
-        it "shows the new price form" do
-          expect(Dom::NewPricingForm.first).to be_editable
-        end
       end
 
       context "sale_price is invalid" do
@@ -143,6 +121,8 @@ describe "Editing advanced pricing" do
         end
 
         it "does not fill in the new price fields" do
+          click_link 'Add Price'
+
           new_price_form = Dom::NewPricingForm.first
 
           expect(new_price_form.min_quantity.value).to eql("1")
