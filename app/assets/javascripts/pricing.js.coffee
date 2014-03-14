@@ -38,6 +38,11 @@ $ ->
   $('input.sale-price').each ->
     bindCalculator(this)
 
+  $('#add-price-toggle').click (e) ->
+    e.preventDefault()
+    $(this).hide()
+    $('#add-price').show()
+
   EditTable.build "#new_price",
     applyErrorValuesCallback: (field)->
       val = $(field).val()

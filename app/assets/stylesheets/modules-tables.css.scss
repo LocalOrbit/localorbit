@@ -64,9 +64,17 @@ th {
   }
 }
 .price {
+  > td:last-child {
+    padding-right: 10px;
+    text-align: right;
+  }
+
   &.odd,
   &.odd + .fields_price {
     background: #f4f4f4;
+  }
+  .edit-price > .font-icon {
+    font-size: smaller;
   }
 }
 

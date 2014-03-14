@@ -8,7 +8,7 @@
   <% if @organizations.count > 1 %>
     <div class="field">
       <%= f.label :organization_id, "Product Organization" %><br>
-      <%= f.collection_select :organization_id, @organizations, :id, :name, {include_blank: "Select an organization"}, class: "column--three-fourths" %>
+      <%= f.collection_select :organization_id, @organizations, :id, :name, {include_blank: "Select an organization"}, class: "column--full" %>
     </div>
   <% else %>
     <%= f.hidden_field :organization_id, {value: @organizations.first.id} %>
@@ -17,12 +17,12 @@
 
 <div class="field">
   <%= f.label :name, "Product Name" %><br>
-  <%= f.text_field :name, class: "column column--three-fourths" %>
+  <%= f.text_field :name, class: "column column--full" %>
 </div>
 
 <div class="field">
   <%= f.label :image %><br>
-  <%= f.file_field :image, class: "column column--three-fourths" %>
+  <%= f.file_field :image, class: "column column--full" %>
   <%= image_tag f.object.image.remote_url, alt: f.object.name if f.object.image %>
 </div>
 
@@ -38,15 +38,17 @@
 </div>
 
 <div class="field">
-  <%= f.label :category_id %><br>
-  <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>
+  <%= f.label :category_id %>
   <span class="hint">Not seeing what you need? <%= link_to "Request a new category", "#", class: "modal-toggle", data: { modal: "request-new-category" } %></span>
+  <br>
+  <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>
 </div>
 
 <div class="field">
-  <%= f.label :unit_id %><br>
-  <%= f.select :unit_id, Unit.all.map { |u| [u.plural, u.id] } , {include_blank: ""}, {data: {placeholder: "Click and type to search for a Unit"}, class: "chosen"} %>
+  <%= f.label :unit_id %>
   <span class="hint">Not seeing what you need? <%= link_to "Request a new unit", "#", class: "modal-toggle", data: { modal: "request-new-unit" } %></span>
+  <br>
+  <%= f.select :unit_id, Unit.all.map { |u| [u.plural, u.id] } , {include_blank: ""}, {data: {placeholder: "Click and type to search for a Unit"}, class: "chosen"} %>
 </div>
 
 <fieldset>
@@ -59,7 +61,7 @@
   <span class="warning">To use simple inventory management you must clear out your current available inventory</span>
   <% end %>
   <%= content_tag :div, id: "simple-inventory", class: (@product.use_simple_inventory? ? nil : 'is-hidden') do %>
-    <%= f.text_field :simple_inventory %>
+    <%= f.text_field :simple_inventory, size: 4 %>
     <%= f.label :simple_inventory, 'Your current inventory' %>
   <% end %>
 </fieldset>

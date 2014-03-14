@@ -10,24 +10,42 @@
 <%= render "shared/errors", {resource: @price_with_errors} if @price_with_errors %>
 
   <div class="column column--three-fourths">
-    <h2>Add Prices</h2>
 
-    <% if !@product.prices.any?(&:persisted?) %>
+    <% if @product.prices.any?(&:persisted?) %>
+      <%= link_to "Add Price", "#add-price", class: "btn btn--small pull-right", id: "add-price-toggle" %> 
+      <h2 class="clear-after">Add Prices</h2>
+      <p>These are your prices. Click on a field to edit it.</p>
+      <p>
+        <% # TODO: Do things when this is clicked %>
+        <%= link_to "Delete Selected Prices", "/404", class: "btn delete" %>
+      </p>
+    <% else %>
+      <h2>Add Prices</h2>
       <p>You don't have any prices yet! We've gone ahead and started the entry for you.</p>
     <% end %>
 
     <%= content_tag :table, border: 0, id: 'pricing_table', data: edit_table_error_payload(@price_with_errors) do %>
       <thead>
         <tr>
-          <th>Market</th>
-          <th>Buyer</th>
-          <th>Min Qty</th>
-          <th>Net Price</th>
-          <th>Sale Price</th>
-          <th></th>
+          <% if @product.prices.any?(&:persisted?) %>
+            <th></th>
+            <th>Market</th>
+            <th>Buyer</th>
+            <th>Min Qty</th>
+            <th>Net Price</th>
+            <th>Sale Price</th>
+          <% else %>
+            <th>Market</th>
+            <th>Buyer</th>
+            <th>Min Qty</th>
+            <th>Net Price</th>
+            <th>Sale Price</th>
+            <th></th>
+          <% end %>
         </tr>
 
-        <tr class="price odd">
+        <tr class="price odd <%= @product.prices.any?(&:persisted?) ? "is-hidden" : "" %>" id="add-price">
+          <td></td>
           <td><%= f.object.market_name %></td>
           <td><%= f.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %></td>
           <td><%= f.number_field :min_quantity, min: 0, size: 4 %></td>
@@ -36,22 +54,34 @@
           <td><%= f.submit "Add", class: "btn--small" %></td>
         </tr>
       </thead>
-
       <tbody>
 
       <% @product.prices.view_sorted.decorate.each do |price| %>
         <%= content_tag_for :tr, price, rel: "fields_price_#{price.id}", class: cycle('even', 'odd') do %>
+          <% if @product.prices.any?(&:persisted?) %>
+            <% # TODO: Make this do things in conjunction with the button on line 20 %>
+            <td class="delete"><input type="checkbox"></td>
+          <% end %>
           <td class="market"><%= price.market_name %></td>
           <td class="buyer"><%= price.organization_name %></td>
           <td class="min-qty"><%= price.min_quantity %></td>
           <td class="net-price">$<%= "%.02f" % price.net_price %></td>
           <td class="sale-price">$<%= "%.02f" % price.sale_price %></td>
-          <td class="delete"><%= link_to "Delete", [:admin, @product, price], method: :delete, data: {confirm: 'Are you sure you want to delete this price'} %></td>
+          <% if @product.prices.any?(&:persisted?) %>
+            <td class="edit">
+              <%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#fields_price_#{price.id}", class: "edit-price" %>
+            </td>
+          <% else %>
+            <td class="delete">
+              <%= link_to "Delete", [:admin, @product, price], method: :delete, data: {confirm: 'Are you sure you want to delete this price'} %>
+            </td>
+          <% end %>
         <% end %>
 
         <%= content_tag_for :tr, price, :fields, {class: 'price', style:"display:none;", data: {"form-url" => url_for([:admin, @product, price]) }} do %>
           <%= fields_for :price, price, index: price.id do |price_in_table| %>
-            <td><%= price.created_at.strftime('%m/%d/%Y') %></td>
+            <td></td>
+            <td></td>
             <td><%= price_in_table.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %></td>
             <td><%= price_in_table.number_field :min_quantity, min: 0, size: 4 %></td>
             <td><%= price_in_table.number_field :net_price,  min: 0, step: 0.01, size: 4, data: {"net-percent" => "0.97"}, class: "net-price"%></td>
@@ -73,5 +103,8 @@
         Price. You can play with these numbers to get the Net Price that you want to receive per unit.
       </p>
     <% end %>
+    <div class="form-actions">
+    <%= link_to "Return to Products List", admin_products_path, disabled: @product.prices.any? ? nil : "disabled", class: "btn btn--save" %>
     </div>
+  </div>
 <% end # form %>
