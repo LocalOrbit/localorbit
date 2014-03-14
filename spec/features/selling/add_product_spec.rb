@@ -1,5 +1,19 @@
 require "spec_helper"
 
+def fill_in_required_fields(select=:without_chosen)
+  fill_in "Product Name", with: "Red Grapes"
+  fill_in "Short description", with: "Grapes are yummy!"
+
+  case select
+  when :without_chosen
+    select "Apples / Macintosh Apples", from: "Category"
+  when :with_chosen
+    select_from_chosen "Grapes / Red Grapes", from: "Category"
+  end
+end
+
+
+
 describe "Adding a product" do
   let(:user) { create(:user) }
   let(:org) { create(:organization, :seller) }
@@ -84,9 +98,7 @@ describe "Adding a product" do
         click_link "Products"
         click_link "Add a product"
 
-        fill_in "Product Name", with: "Good food"
-        select_from_chosen "Grapes / Red Grapes", from: "Category"
-        select_from_chosen "Pounds", from: "Unit"
+        fill_in_required_fields(:with_chosen)
 
         uncheck "seller_info"
         expect(page).to have_content("Who")
@@ -143,8 +155,7 @@ describe "Adding a product" do
         click_link "Products"
         click_link "Add a product"
 
-        fill_in "Product Name", with: "Red Grapes"
-        select_from_chosen "Grapes / Red Grapes", from: 'Category'
+        fill_in_required_fields(:with_chosen)
         select_from_chosen "Pounds", from: "Unit"
         fill_in("Your current inventory", with: 33)
 
@@ -219,6 +230,8 @@ describe "Adding a product" do
 
         # Set the product name so we have a valid product
         fill_in "Product Name", with: "Red Grapes"
+        fill_in "Short description", with: "Apples are yummy!"
+
         click_button "Add Product"
         expect(page).to have_content("Added Red Grapes")
 
@@ -256,9 +269,10 @@ describe "Adding a product" do
         expect(page).to have_content(stub_warning)
         expect(page).to_not have_content(organization_label)
 
-        fill_in "Product Name", with: "Macintosh Apples"
-        select_from_chosen "Apples / Macintosh Apples", from: "Category"
+        fill_in_required_fields(:with_chosen)
+
         select_from_chosen "Bushels", from: "Unit"
+        fill_in "Long description", with: "There are many kinds of apples."
 
         fill_in "Your current inventory", with: "12"
         uncheck "Use simple inventory management"
@@ -272,7 +286,7 @@ describe "Adding a product" do
 
         click_button "Add Product"
 
-        expect(page).to have_content("Added Macintosh Apples")
+        expect(page).to have_content("Added Red Grapes")
 
         expect(page).to have_content(stub_warning)
 
@@ -383,12 +397,11 @@ describe "Adding a product" do
       it "makes the user choose an organization to add the product for" do
         expect(page).to have_content(stub_warning)
         select org2.name, from: organization_label
-        fill_in "Product Name", with: "Macintosh Apples"
-        select "Apples / Macintosh Apples", from: "Category"
+        fill_in_required_fields
 
         click_button "Add Product"
 
-        expect(page).to have_content("Added Macintosh Apples")
+        expect(page).to have_content("Added Red Grapes")
         expect(page).to have_content(stub_warning)
         expect(Product.last.organization).to eql(org2)
       end
@@ -422,12 +435,11 @@ describe "Adding a product" do
     it "makes the user choose an organization to add the product for" do
       expect(page).to have_content(stub_warning)
       select org2.name, from: organization_label
-      fill_in "Product Name", with: "Macintosh Apples"
-      select "Apples / Macintosh Apples", from: "Category"
+      fill_in_required_fields
 
       click_button "Add Product"
 
-      expect(page).to have_content("Added Macintosh Apples")
+      expect(page).to have_content("Added Red Grapes")
       expect(page).to have_content(stub_warning)
       expect(Product.last.organization).to eql(org2)
     end
