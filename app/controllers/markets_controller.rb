@@ -1,5 +1,5 @@
 class MarketsController < ApplicationController
-  def index
-    @market = current_user.markets.first.decorate
+  def show
+    @market = current_market.decorate
   end
 end

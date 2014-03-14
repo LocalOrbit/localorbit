@@ -1,18 +1,16 @@
 require 'spec_helper'
 
 describe Sessions::DeliveriesController do
-  let(:current_market) { create(:market, timezone: "US/Eastern") }
-  let(:schedule) {
+  let!(:current_market) { create(:market, timezone: "US/Eastern") }
+  let!(:schedule) {
     create(:delivery_schedule, market: current_market,
             order_cutoff: 6, seller_delivery_start: "6:00 am", seller_delivery_end: "10:00 am", day:4)
   }
 
-  let(:user) { create(:user, role: 'user') }
-  let(:org) { create(:organization, :multiple_locations) }
+  let!(:user) { create(:user, role: 'user') }
+  let!(:org) { create(:organization, :multiple_locations, markets: [current_market], users: [user]) }
 
   before do
-    org.users << user
-    org.save!
     sign_in(user)
     switch_to_subdomain current_market.subdomain
   end
@@ -31,7 +29,7 @@ describe Sessions::DeliveriesController do
     end
 
     context "current_organization has one location" do
-      let(:org) { create(:organization, :single_location) }
+      let!(:org) { create(:organization, :single_location, markets: [current_market], users: [user]) }
 
       before do
         post :create,
