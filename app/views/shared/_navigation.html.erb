@@ -1,7 +1,7 @@
 <div class="nav nav--main pull-right">
   <%= link_to_or_span "Shop", products_path, class: "" %>
   <%= link_to_or_span "Sellers", sellers_path, class: "" %>
-  <%= link_to_or_span "Market Info", markets_path, class: "" %>
+  <%= link_to_or_span "Market Info", market_path, class: "" %>
 </div>
 
 <% if current_user && !@hide_admin_nav %>
@@ -20,7 +20,6 @@
           <li><%= link_to raw('<i class="font-icon" data-icon="&#xe017;"></i> All Users'), admin_users_path %></li>
           <% end %>
           <li><a href="#"><i class="font-icon" data-icon="&#xe025;"></i> User Event Log</a></li>
-          <li><a href="#"><i class="font-icon" data-icon="&#xe008;"></i> Dictionary</a></li>
         </ul>
       </li>
       <li><a href="/admin/financials"><i class="font-icon" data-icon="&#xe00f;"></i>Financials</a></li>
