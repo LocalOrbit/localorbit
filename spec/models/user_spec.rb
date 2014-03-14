@@ -61,6 +61,18 @@ describe User do
       user.role = 'something else'
       expect(user.admin?).to be false
     end
+
+    context "#seller?" do
+      it 'returns true if the user is a member of any selling organizations' do
+        user = create(:user, organizations: [create(:organization, can_sell: true)])
+        expect(user).to be_seller
+      end
+
+      it 'returns false if the user is not a member of any selling organizations' do
+        user = create(:user, organizations: [create(:organization, can_sell: false)])
+        expect(user).not_to be_seller
+      end
+    end
   end
 
   describe 'managed_organizations' do

@@ -26,6 +26,14 @@ class User < ActiveRecord::Base
     managed_markets.any?
   end
 
+  def seller?
+    organizations.selling.any?
+  end
+
+  def buyer?
+    !seller?
+  end
+
   def managed_organizations
     if admin?
       Organization.all
