@@ -416,7 +416,7 @@ module Dom
       selector "header .cart .counter"
 
       def item_count
-        node.text
+        node.text.to_i
       end
     end
 
@@ -451,8 +451,17 @@ module Dom
       end
     end
 
-    class ProductListing < Domino
-      def self.named(name)
+    class ProductRow < Domino
+      selector ".product"
+      attribute :name
+      attribute :description
+
+      def quantity_field
+        node.find_field "quantity"
+      end
+
+      def set_quantity(n)
+        quantity_field.set n.to_s
       end
     end
   end
