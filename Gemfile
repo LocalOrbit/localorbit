@@ -26,7 +26,7 @@ gem 'interactor-rails'
 gem 'newrelic_rpm'
 gem 'jquery-ui-rails'
 gem 'periscope-activerecord'
-gem 'rack-canonical-host', github: 'tylerhunt/rack-canonical-host'
+gem 'rack-canonical-host'
 gem 'kaminari'
 
 group :doc do
