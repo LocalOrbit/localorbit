@@ -30,8 +30,8 @@ class User < ActiveRecord::Base
     organizations.selling.any?
   end
 
-  def buyer?
-    !seller?
+  def buyer_only?
+    !admin? && !market_manager? && !seller?
   end
 
   def managed_organizations
