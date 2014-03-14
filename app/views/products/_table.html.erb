@@ -16,8 +16,7 @@
       </td>
       <td class="info">
         <h3 class="name"><%= product.name %></h3>
-        <p class="description">This tart variety is great for applesauce, but
-        also perfect for pies or snacking.</p>
+        <p class="short_description"><%= product.short_description %></p>
         <ul class="meta">
           <li class="organization-name">
             <%= link_to raw("<i class=\"font-icon icon-credit\"></i> #{product.organization_name}"), "#product-#{product.id}-who", class: "popup-toggle" %>
