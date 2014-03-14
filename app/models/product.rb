@@ -15,6 +15,7 @@ class Product < ActiveRecord::Base
   validates :name, presence: true
   validates :category_id, presence: true
   validates :organization_id, presence: true
+  validates :short_description, presence: true
 
   validates :location, presence: true, if: :overrides_organization?
 
