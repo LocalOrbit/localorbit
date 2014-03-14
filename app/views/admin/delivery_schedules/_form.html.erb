@@ -1,26 +1,26 @@
 <div class="field">
-  <%= f.label :cycle %>
+  <%= f.label :cycle %><br>
   <span>Weekly</span>
 </div>
 
 <div class="field">
-  <%= f.label :day %>
+  <%= f.label :day %><br>
   <%= f.select :day, weekday_options %>
 </div>
 
 <div class="field">
-  <%= f.label :fee %>
-  <%= f.number_field :fee, min: 0, step: "0.01" %>
+  <%= f.label :fee %><br>
+  <%= f.number_field :fee, min: 0, step: "0.01", size: 6 %>
 </div>
 
 <div class="field">
-  <%= f.label :fee_type %>
+  <%= f.label :fee_type %><br>
   <%= f.select :fee_type, ['Percentage', 'Dollar Amount'] %>
 </div>
 
 <div class="field">
-  <%= f.label :order_cutoff %>
-  <%= f.number_field :order_cutoff, min: 6, max: 504 %> hours before delivery
+  <%= f.label :order_cutoff %><br>
+  <%= f.number_field :order_cutoff, min: 6, max: 504, size: 3 %> hours before delivery
 </div>
 
 <div class="field">
@@ -36,22 +36,22 @@
 <h2>Seller drop off or delivery info</h2>
 
 <div class="field">
-  <%= f.label :seller_fulfillment_location_id %>
+  <%= f.label :seller_fulfillment_location_id %><br>
   <%= f.select :seller_fulfillment_location_id, @market.fulfillment_locations('Direct to customer') %>
 </div>
 
 <div class="field<%= ' is-hidden' unless f.object.seller_fulfillment_location %>" id="market_pickup_option">
-  <%= f.check_box :market_pickup %>
+  <%= f.check_box :market_pickup %><br>
   <%= f.label :market_pickup, 'Market will pickup from seller location.' %>
 </div>
 
 <div class="field">
-  <%= f.label :seller_delivery_start %>
+  <%= f.label :seller_delivery_start %><br>
   <%= f.select :seller_delivery_start, quarter_hour_select_options %>
 </div>
 
 <div class="field">
-  <%= f.label :seller_delivery_end %>
+  <%= f.label :seller_delivery_end %><br>
   <%= f.select :seller_delivery_end, quarter_hour_select_options %>
 </div>
 

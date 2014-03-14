@@ -7,3 +7,4 @@ $ ->
       $('.overlay').addClass('is-open')
     else
       $('.overlay').removeClass('is-open')
+

@@ -1,8 +1,13 @@
-<h1>Organizations#index</h1>
+<h1>Organizations</h1>
 
-<p>Select an organization</p>
-
-<%= form_tag [:sessions, :organizations], method: :post do |f| %>
-  <%= select_tag(:org_id, options_from_collection_for_select(@organizations, 'id', 'name')) %>
-  <%= submit_tag "Select Organization"%>
-<% end %>
+<div class="row row--partial">
+  <%= form_tag [:sessions, :organizations], method: :post, class: "column column--half" do |f| %>
+    <div class="field">
+      <%= label_tag :org_id, "Select an organization" %><br>
+      <%= select_tag(:org_id, options_from_collection_for_select(@organizations, 'id', 'name'), class: "column column--full") %>
+    </div>
+    <div class="form-actions">
+      <%= submit_tag "Select Organization"%>
+    </div>
+  <% end %>
+</div>

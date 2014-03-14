@@ -68,15 +68,15 @@ describe 'Market Manager managing delivery schedules' do
       expect(first_schedule.weekday).to eq("Tuesday")
       expect(first_schedule.cutoff).to match(/ #{delivery1.order_cutoff} /)
       expect(first_schedule.delivery_address).to match(/Direct to customer/)
-      expect(first_schedule.delivery_time).to include("#{delivery1.seller_delivery_start} - #{delivery1.seller_delivery_end}")
+      expect(first_schedule.delivery_time).to include("#{delivery1.seller_delivery_start} – #{delivery1.seller_delivery_end}")
       expect(first_schedule.pickup_time).to be_blank
 
       last_schedule = delivery_schedules.last
       expect(last_schedule.weekday).to eq("Friday")
       expect(last_schedule.cutoff).to match(/ #{delivery2.order_cutoff} /)
       expect(last_schedule.delivery_address).to include("#{address.address}, #{address.city}, #{address.state} #{address.zip}")
-      expect(last_schedule.delivery_time).to include("#{delivery2.seller_delivery_start} - #{delivery2.seller_delivery_end}")
-      expect(last_schedule.pickup_time).to include("#{delivery2.buyer_pickup_start} - #{delivery2.buyer_pickup_end}")
+      expect(last_schedule.delivery_time).to include("#{delivery2.seller_delivery_start} – #{delivery2.seller_delivery_end}")
+      expect(last_schedule.pickup_time).to include("#{delivery2.buyer_pickup_start} – #{delivery2.buyer_pickup_end}")
     end
 
     it 'edits a delivery schedule' do
@@ -91,7 +91,7 @@ describe 'Market Manager managing delivery schedules' do
       expect(page.body).to have_content("Saved delivery schedule");
 
       schedule = Dom::Admin::DeliverySchedule.first
-      expect(schedule.delivery_time).to include("3:00 AM - #{delivery1.seller_delivery_end}")
+      expect(schedule.delivery_time).to include("3:00 AM – #{delivery1.seller_delivery_end}")
     end
 
     it 'deletes a delivery schedule' do

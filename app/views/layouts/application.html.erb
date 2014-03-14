@@ -31,11 +31,11 @@
     </header>
     <div class="l-constraint l-main">
       <% if notice %>
-        <p class="notice"><%= notice %></p>
+        <p class="flash flash--notice"><%= notice %></p>
       <% end %>
 
       <% if alert %>
-        <p class="alert"><%= alert %></p>
+        <p class="flash flash--alert"><%= alert %></p>
       <% end %>
 
       <%= link_to_unless_current image_tag(asset_path('logo-farm-to-fork.png'), class: "logo"), "/", class: "logo-link pull-left" %>
