@@ -159,4 +159,42 @@ feature "Viewing products" do
   end
 
   scenario "shopping after already having a cart"
+
+  context "belonging to multiple organizations" do
+    let!(:buyer_org2) { create(:organization, :buyer, users: [user]) }
+
+    scenario "selecting an organization to shop for" do
+      ds = create(:delivery_schedule,
+        day: 2,
+        order_cutoff: 24,
+        seller_fulfillment_location_id: 0,
+        seller_delivery_start: "7:00 AM",
+        seller_delivery_end:  "11:00 AM",
+        market: market
+      )
+
+      create(:delivery, delivery_schedule: ds)
+
+      click_link "Shop"
+
+      expect(page).to have_content("Select an organization")
+
+      select buyer_org.name, from: 'org_id'
+
+      click_button 'Select Organization'
+
+      expect(page).to have_content("Please choose a pick up or delivery date.")
+
+      delivery = Dom::Buying::DeliveryChoice.first
+      expect(delivery).not_to be_nil
+
+      expect(delivery.type).to eql("Delivery:")
+      expect(delivery.date).to eql("October 14, 2014")
+      expect(delivery.time_range).to eql("Between 7:00AM and 11:00AM")
+
+      delivery.choose!
+
+      expect(page).to have_content(org1_product.name)
+    end
+  end
 end

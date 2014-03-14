@@ -16,7 +16,7 @@ describe Sessions::OrganizationsController do
 
   context "when no organization has been submitted" do
     before do
-      post :create, { organization: {id: ""}}, valid_session
+      post :create, {org_id: ""}, valid_session
     end
 
     it "displays an error message" do
@@ -26,17 +26,17 @@ describe Sessions::OrganizationsController do
 
   context "given an invalid organization" do
     before do
-      post :create, { organization: {id: org2.id}}, valid_session
+      post :create, {org_id: org2.id}, valid_session
     end
 
     it "displays an error message" do
-      expect(flash[:alert]).to eql("Please select a different organization")
+      expect(flash[:alert]).to eql("Please select an organization")
     end
   end
 
   context "submitting an organization the user manages" do
     before do
-      post :create, { organization: {id: org.id}}, valid_session
+      post :create, {org_id: org.id}, valid_session
     end
 
     it "assigns the organization_id in session" do
