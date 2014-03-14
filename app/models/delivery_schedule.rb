@@ -60,9 +60,18 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def next_delivery
-    delivery = deliveries.find_by(deliver_on: next_delivery_date)
+    find_next_delivery || deliveries.create!(
+      deliver_on: next_delivery_date,
+      cutoff_time: next_order_cutoff_time
+    )
+  end
 
-    delivery || deliveries.create!(deliver_on: next_delivery_date, cutoff_time: next_delivery_date - order_cutoff.hours)
+  def find_next_delivery
+    deliveries.find_by(deliver_on: next_delivery_date)
+  end
+
+  def next_order_cutoff_time
+    next_delivery_date - order_cutoff.hours
   end
 
   protected
