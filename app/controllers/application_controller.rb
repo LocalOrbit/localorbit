@@ -14,6 +14,11 @@ class ApplicationController < ActionController::Base
     dashboard_path
   end
 
+  def application_subdomain
+    @@main_domain_subdomains = ActionDispatch::Http::URL.extract_subdomains(Figaro.env.domain, 1) unless defined?(@@main_domain_subdomains)
+    (request.subdomains - @@main_domain_subdomains).last
+  end
+
   def render_404
     render file: Rails.root.join('public/404.html'), status: :not_found
   end
@@ -30,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_market
-    @current_market ||= Market.find_by(subdomain: request.subdomain)
+    @current_market ||= Market.find_by(subdomain: application_subdomain)
   end
 
   def current_delivery
