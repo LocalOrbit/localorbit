@@ -3,6 +3,13 @@
 .clear-before {
   clear: both;
 }
+.clear-after:after {
+  clear: both;
+  display: block;
+  width: 0;
+  height: 0;
+  content: '';
+}
 
 .pull-right {
   float: right;

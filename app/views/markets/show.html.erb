@@ -1,17 +1,17 @@
-<div class="market-info">
-  <aside class="pull-left">
+<div class="market-info row vcard">
+  <aside class="column column--third">
     <h2>Contact</h2>
-    <ul>
-      <li><%= @market.contact_name %></li>
-      <li><%= @market.contact_email %></li>
+    <p>
+      <span class="fn"><%= @market.contact_name %></span><br>
+      <span class="email"><%= @market.contact_email %></span><br>
       <% if @market.first_address %>
-      <li>
-        <div><%= @market.first_address.address %></div>
-        <div><%= @market.first_address.city %>, <%=@market.first_address.state %> <%= @market.first_address.zip %></div>
-      </li>
-      <li><%= @market.contact_phone %></li>
+      <span class="adr">
+        <span class="street-address"><%= @market.first_address.address %></span><br>
+        <span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%=@market.first_address.state %></span> <span class="postal-code"><%= @market.first_address.zip %></span>
+      </span><br>
+      <span class="tel"><%= @market.contact_phone %></span>
       <% end %>
-    </ul>
+    </p>
 
     <h2>Pickup/Delivery</h2>
     <% @market.delivery_schedules.order(:day).decorate.each do |delivery| %>
@@ -19,10 +19,9 @@
         <%= "#{delivery.plural_weekday}, #{delivery.pickup_or_dropoff} #{delivery.time_window}" %>
       </div>
     <% end %>
-  </aside>
-
-  <div>
-    <h1><%= @market.name %></h1>
+  </aside
+  ><div class="column column--two-thirds">
+    <h1 class="org"><%= @market.name %></h1>
 
     <div class="row">
       <div class="about">

@@ -7,7 +7,7 @@
   <% else %>
     <li class="tab"><span>Product Info</span></li>
     <%= content_tag :li, 'Inventory', id: 'product-inventory-nav', class: (@product.use_simple_inventory? ? 'is-hidden tab' : 'tab') %>
-    <%= content_tag :li, 'Pricing', id: 'product-pricing-nav', class: 'tab' %>
+    <%= content_tag :li, raw('<span class="is-disabled">Pricing</span>'), id: 'product-pricing-nav', class: 'tab' %>
   <% end %>
 </ul>
 </div>

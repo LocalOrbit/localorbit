@@ -1,28 +1,37 @@
-<h1>Welcome to <%= current_market.name %></h1>
+<h1 class="clear-before">Welcome to <%= current_market.name %></h1>
 
-<p>Please choose a pick up or delivery date.</p>
+<div class="row row--partial">
 
-<%= form_tag [:sessions, :deliveries], method: :post, id: "deliveries" do |f| %>
+  <div class="column column--half">
+    <p>Please choose a pick up or delivery date.</p>
 
-  <%= content_tag_for :div, @deliveries do |d| %>
-    <%= radio_button_tag "delivery_id", d.id %>
-    <div class="type"><%= d.type %></div>
-    <div class="date"><%= d.display_date %></div>
-    <div class="time_range"><%= d.time_range %></div>
+    <%= form_tag [:sessions, :deliveries], method: :post, id: "deliveries" do |f| %>
+
+      <%= content_tag_for :fieldset, @deliveries do |d| %>
+        <%= radio_button_tag "delivery_id", d.id %>
+        <label for="delivery_id_<%= d.id %>">
+          <span class="type"><%= d.type %></span>
+          <span class="date"><%= d.display_date %></span>
+          <span class="time_range"><%= d.time_range %></span>
+        </label>
 
 
-    <% if d.display_locations.count > 1 %>
-      <%= select_tag "location_id[#{d.id}]", options_from_collection_for_select(d.display_locations, "id", "address", current_organization.shipping_location.id) %>
-    <% else %>
-      <%= content_tag_for :div, d.display_locations.first, class: "location" do |location| %>
-        <%= hidden_field_tag "location_id[#{d.id}]", location.id unless d.buyer_pickup? %>
-        <div class="address"><%= location.address %></div>
-        <div class="city">
-          <%= location.city %> <%= location.state %>, <%= location.zip %>
-        </div>
+        <% if d.display_locations.count > 1 %>
+          <%= select_tag "location_id[#{d.id}]", options_from_collection_for_select(d.display_locations, "id", "address", current_organization.shipping_location.id) %>
+        <% else %>
+          <%= content_tag_for :div, d.display_locations.first, class: "location" do |location| %>
+            <%= hidden_field_tag "location_id[#{d.id}]", location.id unless d.buyer_pickup? %>
+            <div class="address"><%= location.address %></div>
+            <div class="city">
+              <%= location.city %> <%= location.state %>, <%= location.zip %>
+            </div>
+          <% end %>
+        <% end %>
       <% end %>
-    <% end %>
-  <% end %>
 
-  <%= submit_tag "Start Shopping"%>
-<% end %>
+      <div class="form-actions">
+        <%= submit_tag "Start Shopping"%>
+      </div>
+    <% end %>
+  </div>
+</div>

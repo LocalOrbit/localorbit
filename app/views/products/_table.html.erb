@@ -13,6 +13,9 @@
   <% products.each do |product| %>
     <tr class="product product-row">
       <td class="product-image">
+      <% if product.image_uid.present? %>
+        <%= image_tag Dragonfly.app.remote_url_for(product.image_uid) %>
+      <% end %>
       </td>
       <td class="info">
         <h3 class="name"><%= product.name %></h3>
