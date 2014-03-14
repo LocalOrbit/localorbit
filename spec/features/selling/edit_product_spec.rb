@@ -12,7 +12,9 @@ describe "Editing a product" do
     before do
       product.organization.users << user
       sign_in_as(user)
-      click_link "Products"
+      within '#admin-nav' do
+        click_link 'Products'
+      end
       click_link "Canned Pears"
     end
 
@@ -88,7 +90,9 @@ describe "Editing a product" do
       product.organization.users << user
       sign_in_as(user)
 
-      click_link "Products"
+      within '#admin-nav' do
+        click_link 'Products'
+      end
       click_link "Canned Pears"
     end
 

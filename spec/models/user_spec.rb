@@ -61,6 +61,43 @@ describe User do
       user.role = 'something else'
       expect(user.admin?).to be false
     end
+
+    context "#seller?" do
+      it 'returns true if the user is a member of any selling organizations' do
+        user = create(:user, organizations: [create(:organization, can_sell: true)])
+        expect(user).to be_seller
+      end
+
+      it 'returns false if the user is not a member of any selling organizations' do
+        user = create(:user, organizations: [create(:organization, can_sell: false)])
+        expect(user).not_to be_seller
+      end
+    end
+
+    context "#buyer_only?" do
+      it 'returns true if the user is only a buyer' do
+        user = build(:user)
+        expect(user).to be_buyer_only
+      end
+
+      it 'returns false if the user is a seller' do
+        user = build(:user)
+        allow(user).to receive(:seller?).and_return(true)
+        expect(user).not_to be_buyer_only
+      end
+
+      it 'returns false if the user is a market manager' do
+        user = build(:user)
+        allow(user).to receive(:market_manager?).and_return(true)
+        expect(user).not_to be_buyer_only
+      end
+
+      it 'returns false if the user is an admin' do
+        user = build(:user)
+        allow(user).to receive(:admin?).and_return(true)
+        expect(user).not_to be_buyer_only
+      end
+    end
   end
 
   describe 'managed_organizations' do

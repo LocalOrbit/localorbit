@@ -5,10 +5,7 @@ feature "Viewing Market Info" do
   let!(:seller1) { create(:organization, :seller) }
   let!(:seller2) { create(:organization, :seller) }
   let!(:user) { create(:user, organizations: [buyer]) }
-
   let!(:market) { create(:market, organizations: [buyer, seller1, seller2]) }
-
-
 
   before do
     switch_to_subdomain market.subdomain
@@ -23,6 +20,7 @@ feature "Viewing Market Info" do
     expect(page).to have_content(market.contact_email)
     expect(page).to have_content(market.policies)
     expect(page).to have_content(market.profile)
+    expect(page).not_to have_css('#admin-nav')
 
     sellers = Dom::MarketSellers.all
     expect(sellers.map(&:name)).to match_array([seller1.name, seller2.name])

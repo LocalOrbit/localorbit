@@ -50,4 +50,7 @@ class ApplicationController < ActionController::Base
       find_by(id: session[:current_delivery_id])
   end
 
+  def hide_admin_navigation
+    @hide_admin_nav = true
+  end
 end

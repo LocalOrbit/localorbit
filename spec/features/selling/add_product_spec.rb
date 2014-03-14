@@ -40,7 +40,9 @@ describe "Adding a product" do
     end
 
     it "defaults to simple inventory" do
-      click_link "Products"
+      within '#admin-nav' do
+        click_link 'Products'
+      end
       click_link "Add a product"
 
       simple_inventory_checkbox = page.find_field("Use simple inventory management")
@@ -54,7 +56,9 @@ describe "Adding a product" do
       let(:product_form) { Dom::ProductForm.first }
 
       it "pre-populates the fields from the organization" do
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         uncheck "seller_info"
@@ -71,7 +75,9 @@ describe "Adding a product" do
         org.locations << location2
         org.save!
 
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         uncheck "seller_info"
@@ -95,7 +101,9 @@ describe "Adding a product" do
       end
 
       it "does not save the product who/where/how information if checked after updating who/how/where" do
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         fill_in_required_fields(:with_chosen)
@@ -120,7 +128,9 @@ describe "Adding a product" do
       end
 
       it "it requires an address if using who/how" do
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         fill_in "Product Name", with: "Good food"
@@ -139,7 +149,9 @@ describe "Adding a product" do
 
     context "attaching an image" do
       it "uploads an image when provided" do
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         fill_in "Product Name", with: "Red Grapes"
@@ -152,7 +164,9 @@ describe "Adding a product" do
 
     context "adding simple inventory for the first time", js: true, chosen_js: true do
       it "creates a new lot for the product" do
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         fill_in_required_fields(:with_chosen)
@@ -179,7 +193,9 @@ describe "Adding a product" do
 
     context "adding a product with advanced inventory", js: true, chosen_js: true do
       it "hides the simple inventory field" do
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         expect(page).to have_content("Your current inventory")
@@ -190,7 +206,9 @@ describe "Adding a product" do
       end
 
       it "enables the inventory tab" do
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         within(".tabs") do
@@ -209,7 +227,9 @@ describe "Adding a product" do
       let(:category_select) { Dom::CategorySelect.first }
 
       it "can quickly drill down to a result" do
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         category_select.click
@@ -239,7 +259,9 @@ describe "Adding a product" do
       end
 
       it "fuzzy searches across top-level categories" do
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         category_select.click
@@ -263,7 +285,9 @@ describe "Adding a product" do
       let!(:loc2) { create(:location, organization: org)}
 
       it "saves the product stub" do
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         expect(page).to have_content(stub_warning)
@@ -299,7 +323,9 @@ describe "Adding a product" do
 
     context "when the product information is invalid", js: true do
       it "does not create the product" do
-        click_link "Products"
+        within '#admin-nav' do
+          click_link 'Products'
+        end
         click_link "Add a product"
 
         expect(page).to have_content("Your current inventory")
@@ -331,7 +357,9 @@ describe "Adding a product" do
       buying_org.users << user
 
       sign_in_as(user)
-      click_link "Products"
+      within '#admin-nav' do
+        click_link 'Products'
+      end
       click_link "Add a product"
     end
 
@@ -428,7 +456,9 @@ describe "Adding a product" do
       market.organizations << org2
 
       sign_in_as(user)
-      click_link "Products", match: :first
+      within '#admin-nav' do
+        click_link 'Products'
+      end
       click_link "Add a product"
     end
 
@@ -450,7 +480,9 @@ describe "Adding a product" do
       org.users << user
       sign_in_as(user)
 
-      click_link "Products"
+      within '#admin-nav' do
+        click_link 'Products'
+      end
       click_link "Add a product"
     end
 

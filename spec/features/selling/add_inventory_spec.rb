@@ -11,7 +11,9 @@ describe "Adding advanced inventory" do
       Timecop.freeze(Date.parse("February 24, 2014"))
       product.organization.users << user
       sign_in_as(user)
-      click_link "Products"
+      within '#admin-nav' do
+        click_link 'Products'
+      end
       click_link product.name
       click_link "Inventory"
     end
@@ -94,7 +96,9 @@ describe "Adding advanced inventory" do
     before do
       product.organization.users << user
       sign_in_as(user)
-      click_link "Products"
+      within '#admin-nav' do
+        click_link 'Products'
+      end
       click_link product.name
       click_link "Inventory"
     end
