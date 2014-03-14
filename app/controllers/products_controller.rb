@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :require_shopping_cart_dependencies
+  before_action :hide_admin_navigation
 
   def index
     products = Product.available_for_sale(current_market, current_organization)

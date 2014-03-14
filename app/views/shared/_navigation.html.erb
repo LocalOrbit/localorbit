@@ -4,7 +4,7 @@
   <%= link_to_or_span "Market Info", markets_path, class: "" %>
 </div>
 
-<% if current_user %>
+<% if current_user && !@hide_admin_nav %>
   <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before">
     <% if current_user.buyer_only? %>
       <li><a href="#"><i class="font-icon" data-icon=""></i>Purchase History</a></li>

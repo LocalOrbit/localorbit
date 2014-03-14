@@ -17,6 +17,7 @@ feature "View Seller Profiles" do
 
     expect(page).to have_content(seller1.name)
     expect(page).to have_content(seller1.name)
+    expect(page).not_to have_css('#admin-nav')
   end
 
   scenario "view a sellers profile" do
@@ -25,6 +26,7 @@ feature "View Seller Profiles" do
 
     expect(page).to have_content(seller1.who_story)
     expect(page).to have_content(seller1.how_story)
+    expect(page).not_to have_css('#admin-nav')
   end
 
   context "available products" do
