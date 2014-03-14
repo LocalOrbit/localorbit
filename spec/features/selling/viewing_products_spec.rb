@@ -18,7 +18,9 @@ describe "Viewing products" do
     end
 
     it "shows a list of products which the owner manages" do
-      click_link "Products"
+      within '#admin-nav' do
+        click_link 'Products'
+      end
 
       product = Dom::ProductRow.first
       expect(product.name).to have_content(product.name)
@@ -46,7 +48,9 @@ describe "Viewing products" do
     end
 
     it "shows a list of products which the owner manages" do
-      click_link "Products"
+      within '#admin-nav' do
+        click_link 'Products'
+      end
 
       product = Dom::ProductRow.first
       expect(product.name).to have_content(product.name)

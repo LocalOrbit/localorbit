@@ -1,0 +1,84 @@
+<div class="nav nav--main pull-right">
+  <%= link_to_or_span "Shop", products_path, class: "" %>
+  <%= link_to_or_span "Sellers", sellers_path, class: "" %>
+  <%= link_to_or_span "Market Info", markets_path, class: "" %>
+</div>
+
+<% if current_user %>
+  <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before">
+    <% if current_user.buyer_only? %>
+      <li><a href="#"><i class="font-icon" data-icon=""></i>Purchase History</a></li>
+    <% end %>
+
+    <% if current_user.admin? %>
+      <li>
+        <a href="#market-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe054;"></i>Market Admin</a>
+        <ul class="dropdown with-anchor top-anchor" id="market-dropdown">
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe000;"></i>Markets'), admin_markets_path %></li>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe027;"></i>Organizations'), admin_organizations_path %></li>
+          <% if defined? admin_users_path %>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe017;"></i>All Users'), admin_users_path %></li>
+          <% end %>
+          <li><a href="#">User Event Log</a></li>
+          <li><a href="#">Dictionary</a></li>
+        </ul>
+      </li>
+      <li><a href="/admin/financials"><i class="font-icon" data-icon="&#xe00f;"></i>Financials</a></li>
+    <% elsif current_user.seller? %>
+      <li><a href="#"><i class="font-icon" data-icon=""></i>Sales Information</a></li>
+      <li><a href="#"><i class="font-icon" data-icon="&#xe00f;"></i>Financials</a></li>
+    <% elsif current_user.buyer_only? %>
+      <li><a href="#"><i class="font-icon" data-icon="&#xe00f;"></i>Financials</a></li>
+    <% end %>
+
+    <% if current_user.admin? || current_user.market_manager? %>
+      <li>
+        <a href="#orders-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe024;"></i>Orders &amp; Delivery</a>
+        <ul class="dropdown with-anchor top-anchor" id="orders-dropdown">
+          <li><a href="#"><i class="font-icon" data-icon="&#xe025;"></i>Orders</a></li>
+          <li><a href="#"><i class="font-icon" data-icon="&#xe02d;"></i>Sold Items</a></li>
+          <li><a href="#"><i class="font-icon" data-icon="&#xe035;"></i>Units</a></li>
+        </ul>
+      </li>
+    <% end %>
+
+    <% if current_user.admin? || current_user.market_manager? || current_user.seller? %>
+      <li>
+        <%= link_to raw('<i class="font-icon" data-icon="&#xe01f;"></i>Products</a>'), admin_products_path %>
+      </li>
+    <% end %>
+
+    <% if current_user.admin? || current_user.market_manager? %>
+      <li>
+        <a href="#marketing-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe005;"></i>Marketing</a>
+        <ul class="dropdown with-anchor top-anchor" id="marketing-dropdown">
+          <li><a href="#"><i class="font-icon" data-icon="&#xe023;"></i>Fresh Sheet</a></li>
+          <li><a href="#"><i class="font-icon" data-icon="&#xe00a;"></i>Newsletters</a></li>
+          <li><a href="#"><i class="font-icon" data-icon="&#xe003;"></i>Market News</a></li>
+          <li><a href="#"><i class="font-icon" data-icon="&#xf000;"></i>Featured Promotions</a></li>
+          <li><a href="#"><i class="font-icon" data-icon="&#xe00b;"></i>Discount Codes</a></li>
+          <li><a href="#"><i class="font-icon" data-icon="&#xe022;"></i>Upcoming Deliveries</a></li>
+          <li><a href="#"><i class="font-icon" data-icon="&#xe012;"></i>Sent Emails</a></li>
+          <li><a href="#"><i class="font-icon" data-icon="&#xf000;"></i>Email Testing</a></li>
+        </ul>
+      </li>
+    <% end %>
+
+    <li>
+      <a href="#reports-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe01e;"></i>Reports</a>
+      <ul class="dropdown with-anchor top-anchor" id="reports-dropdown">
+        <li><a href="#">Reports</a></li>
+        <li><a href="#">Referrals</a></li>
+        <li><a href="#">Metrics</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="#account-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe011;"></i>Account</a>
+      <ul class="dropdown with-anchor top-anchor" id="account-dropdown">
+        <li><a href="#"><i class="font-icon" data-icon="&#xe018;"></i>E-mail &amp; Password</a></li>
+        <li><a href="#"><i class="font-icon" data-icon="&#xe027;"></i>Your Organization</a></li>
+      </ul>
+    </li>
+  </ul>
+<% end %>

@@ -11,7 +11,9 @@ describe "Remove advanced pricing" do
 
   before do
     sign_in_as(user)
-    click_link 'Products'
+    within '#admin-nav' do
+      click_link 'Products'
+    end
     click_link product.name
     click_link 'Pricing'
   end
