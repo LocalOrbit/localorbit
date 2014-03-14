@@ -32,7 +32,7 @@ describe "A Market Manager" do
       expect(page).to have_content('Famous Farm has been created')
       click_link "Edit Organization"
 
-      org_form = Dom::OrganizationForm.first
+      org_form = Dom::Admin::OrganizationForm.first
       expect(org_form.name).to eql("Famous Farm")
       #click_link "Cancel"
     end

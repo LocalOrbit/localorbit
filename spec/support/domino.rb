@@ -143,45 +143,6 @@ module Dom
     end
   end
 
-  class ProductForm < Domino
-    selector "form.product"
-
-    def organization_field
-      node.find('#product_organization_id')
-    end
-
-    def name
-      node.find('#product_name')
-    end
-
-    def category
-      node.find('#product_category_id')
-    end
-
-    def who_story
-      node.find('#product_who_story').value
-    end
-
-    def how_story
-      node.find('#product_how_story').value
-    end
-
-    def locations
-      node.all("#product_location_id option").map(&:text)
-    end
-
-    def selected_location
-      node.find("#product_location_id").value
-    end
-
-    def location
-      node.find('#product_location_id')
-    end
-
-    def seller_info
-      node.find('#seller_info')
-    end
-  end
 
   class DatePicker < Domino
     selector ".ui-datepicker"
@@ -230,6 +191,14 @@ module Dom
 
       def click_delete
         node.find_link('Delete').click
+      end
+    end
+
+    class OrganizationForm < Domino
+      selector "form.organization"
+
+      def name
+        node.find("#organization_name").value
       end
     end
 
@@ -320,6 +289,46 @@ module Dom
       end
     end
 
+    class ProductForm < Domino
+      selector "form.product"
+
+      def organization_field
+        node.find('#product_organization_id')
+      end
+
+      def name
+        node.find('#product_name')
+      end
+
+      def category
+        node.find('#product_category_id')
+      end
+
+      def who_story
+        node.find('#product_who_story').value
+      end
+
+      def how_story
+        node.find('#product_how_story').value
+      end
+
+      def locations
+        node.all("#product_location_id option").map(&:text)
+      end
+
+      def selected_location
+        node.find("#product_location_id").value
+      end
+
+      def location
+        node.find('#product_location_id')
+      end
+
+      def seller_info
+        node.find('#seller_info')
+      end
+    end
+
     class LocationForm < Domino
       selector ".edit_location, .new_location"
 
@@ -400,15 +409,17 @@ module Dom
     end
   end
 
-  class OrganizationForm < Domino
-    selector "form.organization"
-
-    def name
-      node.find("#organization_name").value
-    end
-  end
+  
 
   module Buying
+    class CartCounter< Domino
+      selector "header .cart .counter"
+
+      def item_count
+        node.text
+      end
+    end
+
     class DeliveryChoice < Domino
       selector "#deliveries .delivery"
 
@@ -437,6 +448,11 @@ module Dom
 
       def location
         node.find(".location")
+      end
+    end
+
+    class ProductListing < Domino
+      def self.named(name)
       end
     end
   end
