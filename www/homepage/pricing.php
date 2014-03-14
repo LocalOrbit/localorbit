@@ -46,7 +46,6 @@
 						<li>Fresh Sheets</li>
 						<li>Newsletters</li>
 						<li>Featured Promotions</li>
-						<li>Micro-blogs</li>
 						<li>Twitter &amp; Facebook integration</li>
 						<li>Rich product and producer stories</li>
 						<br>
@@ -90,6 +89,9 @@
 						<br>
 					</ul>
 				</div>
+				<br>
+		
+				</div>				
 			</div>
 
 
@@ -104,7 +106,11 @@ settings =
 popupWindow = window.open(url,winName,settings)
 }
 </script>
+
+							
 		<td>&nbsp;</td>
+		
+		
 		<td>
 			<div class="pricing">
 				<span class="pricing">Start Up</span>
@@ -158,8 +164,12 @@ popupWindow = window.open(url,winName,settings)
 			</div>
 			
 			<a name="learn_more"></a>
-			<h3 style="clear:both;text-align: center;">	<br /><br>30-day guarantee. No risks. No start-up costs.<br /><br>Talk to us about high volume, flat rate pricing options.</h3>
-			<br><br>	
+			<br />
+			<a href="mailto:service@localorbit.com?Subject=Local Orbit Flat Rate" target="_top"  style="margin-left: 95px;height:23px;margin-top:260px;margin-bottom:10px;padding-top:8px;width:550px;" class="btn btn_green btn_pricing">Looking for high volume, flate rate pricing? Talk to us.</a>
+        
+            <h3 style="clear:both;text-align: center;">30-day guarantee. No risks. No start-up costs.</h3>	
+									
+            
 		</td>
 	</tr>
 	<tr>
@@ -170,10 +180,7 @@ popupWindow = window.open(url,winName,settings)
 					<h3>Local Sourcing at Institutional Scale</h3>
 					Interested in even more services to simplify local sourcing for your institution or restaurant group?<br> 
 					Looking for help with invoicing and payments? We've got a solution.
-					<br />
-				
-				
-				
+					<br />							
 				</div>
 				<div style="width: 250px; float: left;">
 					<a href="/homepage/managed-services.php"  style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Learn More</a>
