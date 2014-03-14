@@ -21,9 +21,14 @@ class ProductsController < ApplicationController
     # 5) current_location_id
     # 6) a shopping cart
 
-    redirect_to [:new, :user, :session] if current_user.nil?
-    #redirect_to [:new, :market, :session] if current_market.nil?
-    redirect_to [:new, :sessions, :organization] if current_organization.nil?
-    redirect_to [:new, :sessions, :delivery] if current_delivery.nil?
+    # TODO: Maybe handle naked domain requests.
+    # This is not something the production app will need.
+    # if current_market.nil?
+    #  redirect_to [:new, :market, :session]
+    if current_organization.nil?
+      redirect_to [:new, :sessions, :organization]
+    elsif current_delivery.nil?
+      redirect_to [:new, :sessions, :delivery]
+    end
   end
 end
