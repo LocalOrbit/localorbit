@@ -1,7 +1,7 @@
 module SubdomainHelpers
   def switch_to_subdomain(subdomain)
     # lvh.me always resolves to 127.0.0.1
-    hostname = subdomain ? "#{subdomain}.lvh.me" : "lvh.me"
+    hostname = [subdomain, Figaro.env.domain].compact.join('.')
     if @request
       @request.env['HTTP_HOST'] = hostname
     else

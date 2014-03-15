@@ -10,13 +10,10 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
+  private
+
   def after_sign_in_path_for(resource)
     dashboard_path
-  end
-
-  def application_subdomain
-    @@main_domain_subdomains = ActionDispatch::Http::URL.extract_subdomains(Figaro.env.domain, 1) unless defined?(@@main_domain_subdomains)
-    (request.subdomains - @@main_domain_subdomains).last
   end
 
   def render_404
@@ -35,7 +32,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_market
-    @current_market ||= current_user.markets.find_by!(subdomain: application_subdomain)
+    subdomain = request.subdomains(Figaro.env.domain.count('.'))
+    @current_market ||= current_user.markets.find_by!(subdomain: subdomain)
   end
 
   def current_delivery
