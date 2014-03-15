@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get '*path', constraints: NonMarketDomain.new, format: false,
+    to: redirect {|params, request|
+      "#{request.protocol}#{Figaro.env.domain}/#{params[:path]}"
+    }
+
   devise_for :users
 
   namespace :admin do

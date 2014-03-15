@@ -16,7 +16,7 @@ module LocalOrbit
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/lib/constraints)
 
     config.assets.precompile += %w(chosen-sprite.png chosen-sprite@2x.png)
 
