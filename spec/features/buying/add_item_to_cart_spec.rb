@@ -1,16 +1,16 @@
 require "spec_helper"
 
-feature "Add item to cart", js:true do
+feature "Add item to cart", js: true do
   let(:user) { create(:user) }
-  let(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
+  let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
 
-  let(:seller) {create(:organization, :seller) }
+  let!(:seller) {create(:organization, :seller) }
 
   let(:market) { create(:market, :with_addresses, organizations: [buyer, seller]) }
   let!(:pickup) { create(:delivery_schedule, :buyer_pickup, market: market) }
   let!(:delivery) { create(:delivery_schedule, market: market) }
 
-  # Producsts
+  # Products
   let(:bananas) { create(:product, name: "Bananas", organization: seller) }
   let!(:bananas_lot) { create(:lot, product: bananas) }
   let!(:bananas_price_buyer_base) {
@@ -41,9 +41,14 @@ feature "Add item to cart", js:true do
     product = Dom::Buying::ProductRow.find_by_name("Bananas")
     product.set_quantity(12)
 
-    cart_counter.item_count.should
     expect(Dom::Buying::CartCounter.first.item_count).to eql(1)
-  end
+    save_and_open_page
 
-  scenario "cart already has items in it"
+    # Refreshing the page should retain the state of the cart
+    click_link "Shop"
+
+    expect(Dom::Buying::CartCounter.first.item_count).to eql(1)
+    product = Dom::Buying::ProductRow.find_by_name("Bananas")
+    expect(product.quantity_field.value).to eql("12")
+  end
 end

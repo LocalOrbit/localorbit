@@ -1,4 +1,4 @@
-<table class="column column--three-fourths" id="products">
+<table class="column column--three-fourths" id="products" data-cart-url="<%= cart_path %>">
   <thead>
     <tr>
       <th></th>
@@ -11,7 +11,7 @@
   </thead>
   <tbody>
   <% products.each do |product| %>
-    <tr class="product product-row">
+    <tr class="product product-row" data-id="<%= product.id %>">
       <td class="product-image">
       <% if product.image_uid.present? %>
         <%= image_tag Dragonfly.app.remote_url_for(product.image_uid) %>

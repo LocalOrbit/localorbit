@@ -461,7 +461,9 @@ module Dom
       end
 
       def set_quantity(n)
-        quantity_field.set n.to_s
+        id = node[:id]
+        quantity_field.set(n)
+        #page.execute_script("$('#{id} input[name=quantity]').trigger('change');")
       end
     end
   end
