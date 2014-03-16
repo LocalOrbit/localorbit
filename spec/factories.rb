@@ -18,6 +18,10 @@ FactoryGirl.define do
         create(:delivery_schedule, market: m)
       end
     end
+
+    trait :with_logo do
+      logo File.open(Rails.root.join('app/assets/images/logo-farm-to-fork.png'))
+    end
   end
 
   factory :user do

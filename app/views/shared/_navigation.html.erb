@@ -1,3 +1,12 @@
+<%
+if current_market && current_market.logo
+  logo = current_market.logo.remote_url
+else
+  logo = asset_path('logo.png')
+end
+%>
+<%= link_to_unless_current image_tag(logo, class: "logo"), root_path, class: "logo-link pull-left" %>
+
 <div class="nav nav--main pull-right">
   <%= link_to_or_span "Shop", products_path, class: "" %>
   <%= link_to_or_span "Sellers", sellers_path, class: "" %>
