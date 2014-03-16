@@ -16,7 +16,7 @@
 </div>
 <div class="field">
   <%= f.label :timezone %><br>
-  <%= f.time_zone_select :timezone %>
+  <%= f.time_zone_select :timezone, ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)" %>
 </div>
 <div class="field">
   <%= f.label :contact_name %><br>
