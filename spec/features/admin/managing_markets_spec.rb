@@ -3,8 +3,9 @@ require "spec_helper"
 describe "Admin Managing Markets" do
   let(:add_market_link_name) { 'Add Market' }
 
-  describe "visiting the admin path without loggin in" do
+  describe "visiting the admin path without siging in" do
     it "redirects a user to the login pages" do
+      switch_to_main_domain
       visit admin_markets_path
 
       expect(page).to have_content("You need to sign in")
@@ -13,10 +14,10 @@ describe "Admin Managing Markets" do
 
   describe 'as a normal user' do
     it 'users can not manage markets' do
+      switch_to_main_domain
       sign_in_as create(:user, role: 'user')
 
       visit admin_markets_path
-
       expect(page).to have_text("page you were looking for doesn't exist")
     end
   end
@@ -26,11 +27,11 @@ describe "Admin Managing Markets" do
     let!(:market1) { create(:market) }
     let!(:market2) { create(:market) }
 
-    before :each do
-      sign_in_as user
-
+    before do
       user.managed_markets << market1
       user.managed_markets << market2
+      switch_to_subdomain market1.subdomain
+      sign_in_as user
     end
 
     it 'I can see my markets' do
@@ -126,6 +127,7 @@ describe "Admin Managing Markets" do
     let!(:market) { create(:market) }
 
     before :each do
+      switch_to_subdomain market.subdomain
       sign_in_as user
     end
 

@@ -1,16 +1,15 @@
 require 'spec_helper'
 
 describe Sessions::OrganizationsController do
-  let(:user) { create(:user) }
   let!(:org) { create(:organization) }
   let!(:org2) {create(:organization) }
+  let(:market) { create(:market, organizations: [org]) }
+  let(:user) { create(:user, organizations: [org]) }
 
   let(:valid_session) {}
-  let(:user) { create(:user) }
 
   before do
-    org.users << user
-    org.save!
+    switch_to_subdomain market.subdomain
     sign_in(user)
   end
 

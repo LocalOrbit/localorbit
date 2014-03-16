@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 describe Admin::LotsController do
-  let(:user) { create(:user) }
-  let(:user2) { create(:user) }
   let(:product) { create(:product, use_simple_inventory: false) }
+  let(:market) { create(:market, organizations: [product.organization]) }
+  let(:user) { create(:user, organizations: [product.organization]) }
+  let(:user2) { create(:user) }
 
   before do
-    user.organizations << product.organization
+    switch_to_subdomain market.subdomain
   end
 
   describe "/index" do

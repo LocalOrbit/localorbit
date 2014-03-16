@@ -1,5 +1,5 @@
 class SellersController < ApplicationController
-  before_filter :find_market_sellers
+  before_action :find_market_sellers
   before_action :hide_admin_navigation
 
   def index

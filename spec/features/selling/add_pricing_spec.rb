@@ -12,6 +12,7 @@ describe 'Adding advanced pricing' do
   end
 
   before do
+    switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     within '#admin-nav' do
       click_link 'Products'

@@ -10,6 +10,10 @@ describe "Viewing products" do
   let!(:lot1)  { create(:lot, product: product) }
   let!(:lot2)  { create(:lot, product: product) }
 
+  before do
+    switch_to_subdomain(market.subdomain)
+  end
+
   context "seller" do
     let!(:user) { create(:user, organizations: [org1]) }
 

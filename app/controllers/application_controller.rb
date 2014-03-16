@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  before_action :ensure_market_affiliation
 
   helper_method :current_market
   helper_method :current_organization
@@ -32,8 +33,21 @@ class ApplicationController < ActionController::Base
   end
 
   def current_market
+    @current_market ||= market_for_current_subdomain
+  end
+
+  # a before_action to ensure the current_user is affiliated with the market in
+  # some capacity. 404 if not.
+  def ensure_market_affiliation
+    return if current_user.admin?
+    if current_market.nil? || current_market != market_for_current_subdomain(current_user.markets)
+      render_404
+    end
+  end
+
+  def market_for_current_subdomain(scope = Market)
     subdomain = request.subdomains(Figaro.env.domain.count('.'))
-    @current_market ||= current_user.markets.find_by!(subdomain: subdomain)
+    scope.find_by(subdomain: subdomain)
   end
 
   def current_delivery

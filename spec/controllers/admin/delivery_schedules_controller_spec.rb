@@ -13,6 +13,10 @@ describe Admin::DeliverySchedulesController do
     end
   end
 
+  before do
+    switch_to_subdomain market.subdomain
+  end
+
   it_behaves_like 'an action restricted to admin or market manager', lambda { get :index, market_id: market.id }
   it_behaves_like 'an action restricted to admin or market manager', lambda { get :new, market_id: market.id }
   it_behaves_like 'an action restricted to admin or market manager', lambda { post :create, market_id: market.id, delivery_schedule: attributes_for(:delivery_schedule) }

@@ -1,6 +1,5 @@
 module SubdomainHelpers
   def switch_to_subdomain(subdomain)
-    # lvh.me always resolves to 127.0.0.1
     hostname = [subdomain, Figaro.env.domain].compact.join('.')
     if @request
       @request.env['HTTP_HOST'] = hostname
@@ -16,6 +15,9 @@ end
 
 RSpec.configure do |config|
   config.include SubdomainHelpers
+  config.before(:each) do
+    switch_to_main_domain # clear out between tests
+  end
 end
 
 Capybara.configure do |config|

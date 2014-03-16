@@ -15,6 +15,7 @@ describe "Editing advanced pricing" do
   let!(:price2) { create(:price, product: product, sale_price: 2, min_quantity: 100) }
 
   before do
+    switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     within '#admin-nav' do
       click_link 'Products'

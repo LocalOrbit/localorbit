@@ -20,10 +20,12 @@ describe "Adding a product" do
   let(:loc1) {create(:location) }
   let(:stub_warning) {"Your product will not appear in the Shop until all of these actions are complete"}
   let(:organization_label) { "Product Organization" }
+  let(:market) { create(:market, organizations: [org]) }
 
   before do
     Unit.create! singular: "Pound", plural: "Pounds"
     Unit.create! singular: "Bushel", plural: "Bushels"
+    switch_to_subdomain(market.subdomain)
   end
 
   describe "as a seller belonging to one organization" do

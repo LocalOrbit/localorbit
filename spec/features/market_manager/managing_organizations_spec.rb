@@ -6,6 +6,7 @@ describe "A Market Manager" do
   let(:market2) { create(:market) }
 
   before(:each) do
+    switch_to_subdomain(market.subdomain)
     sign_in_as market_manager
   end
 

@@ -1,12 +1,16 @@
 require 'spec_helper'
 
 describe Admin::OrganizationsController do
+  let(:org) { create(:organization) }
+  let(:market) { create(:market, organizations: [org]) }
+  let(:user) { create(:user, role: 'user') }
+
+  before do
+    switch_to_subdomain market.subdomain
+  end
+
   describe "/show" do
-    let(:org) { create(:organization) }
-
     describe "a normal user" do
-      let(:user) { create(:user, role: 'user') }
-
       before do
         sign_in user
       end
@@ -26,8 +30,6 @@ describe Admin::OrganizationsController do
 
   describe "/new" do
     describe "a normal user" do
-      let(:user) { create(:user, role: 'user') }
-
       before do
         sign_in user
       end
@@ -40,11 +42,7 @@ describe Admin::OrganizationsController do
   end
 
   describe "/edit" do
-    let(:org) { create(:organization) }
-
     describe "a normal user" do
-      let(:user) { create(:user, role: 'user') }
-
       before do
         sign_in user
       end

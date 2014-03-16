@@ -5,8 +5,10 @@ describe "Editing advanced inventory" do
   let(:product){ create(:product, use_simple_inventory: false) }
   let!(:lot) { create(:lot, product:product, quantity: 93) }
   let!(:lot2) { create(:lot, product:product, quantity: 88) }
+  let(:market)  { create(:market, organizations: [product.organization]) }
 
   before do
+    switch_to_subdomain(market.subdomain)
     product.organization.users << user
     sign_in_as(user)
     within '#admin-nav' do
