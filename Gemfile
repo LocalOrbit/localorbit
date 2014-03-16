@@ -35,6 +35,7 @@ end
 
 group :development do
   gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'pry-remote'
 end
 
