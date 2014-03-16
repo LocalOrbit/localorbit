@@ -30,7 +30,7 @@ $ ->
   model = new CartModel
     url: $("#products").data("cart-url")
     view: view
-    items: {}
+    items: $("#products").data("cart-items")
 
   $(".product .quantity input").change ()->
     productId = $(this).closest(".product").data("id")
