@@ -158,8 +158,6 @@ feature "Viewing products" do
     expect(page).to have_content(org1_product.name)
   end
 
-  scenario "shopping after already having a cart"
-
   context "belonging to multiple organizations" do
     let!(:buyer_org2) { create(:organization, :buyer, users: [user]) }
 
