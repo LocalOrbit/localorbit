@@ -15,7 +15,11 @@
       <div class="l-constraint">
         <% if current_user %>
         <p class="header header--welcome">
-          Farm Fresh Market — Connecting Farm to Market
+          <% if current_market %>
+            <%= current_market.name %> — Connecting Farm to Market
+          <% else %>
+            Local Orbit
+          <% end %>
           <span class="welcome-user">Welcome <%= current_user.email %></span>
         </p>
         <ul class="l-inline-list nav nav--app">

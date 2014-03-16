@@ -7,6 +7,11 @@ describe "Editing a product" do
   let(:organization_label) { "Product Organization" }
   let(:product) { create(:product, name: "Canned Pears") }
   let!(:category_id) { product.category.id }
+  let(:market)  { create(:market, organizations: [product.organization]) }
+
+  before do
+    switch_to_subdomain(market.subdomain)
+  end
 
   describe "as a seller belonging to one organization" do
     before do

@@ -1,6 +1,17 @@
 require 'spec_helper'
 
 describe Admin::ProductsController do
+  let(:product1) { create(:product) }
+  let(:product2) { create(:product) }
+  let(:market) { create(:market, organizations: [product1.organization]) }
+  let(:user) { create(:user, organizations: [product1.organization]) }
+  let(:org1) { create(:organization) }
+  let(:org2) { create(:organization) }
+
+  before do
+    switch_to_subdomain market.subdomain
+  end
+
   describe "/index" do
     it 'redirects to login if the user is not logged in' do
       get :index
@@ -10,12 +21,7 @@ describe Admin::ProductsController do
   end
 
   describe "/show" do
-    let(:user) { create(:user) }
-    let(:product1) { create(:product) }
-    let(:product2) { create(:product) }
-
     before do
-      user.organizations << product1.organization
       sign_in(user)
     end
 
@@ -27,10 +33,6 @@ describe Admin::ProductsController do
   end
 
   describe "/create" do
-    let(:user) { create(:user) }
-    let(:org1) { create(:organization) }
-    let(:org2) { create(:organization) }
-
     before do
       org1.users << user
       sign_in(user)
@@ -45,8 +47,6 @@ describe Admin::ProductsController do
   end
 
   describe "/update" do
-    let(:user) { create(:user) }
-    let(:org1) { create(:organization) }
     let(:product) { create(:product)}
 
     before do
@@ -63,7 +63,7 @@ describe Admin::ProductsController do
 
   describe "/new" do
     it "redirects to the add organization page when no selling organizations exist" do
-      create(:organization, :buyer)
+      Organization.destroy_all
 
       admin = create(:user, :admin)
       sign_in admin
@@ -76,16 +76,15 @@ describe Admin::ProductsController do
   end
 
   describe "destroy" do
-    let(:organization)              { create(:organization) }
-    let(:product)                   { create(:product, organization: organization) }
+    let(:product)                   { create(:product, organization: product1.organization) }
     let(:admin)                     { create(:user, :admin) }
     let(:non_member)                { create(:user) }
     let(:market_manager_non_member) { create(:user, :market_manager) }
-    let(:member)                    { create(:user, organizations: [organization]) }
+    let(:member)                    { create(:user, organizations: [product1.organization]) }
 
     let(:market_manager_member) do
-      create(:user, :market_manager).tap do |market_manager|
-        market_manager.organizations << organization
+      create(:user, :market_manager, managed_markets: [market]).tap do |market_manager|
+        market_manager.organizations << product1.organization
       end
     end
 

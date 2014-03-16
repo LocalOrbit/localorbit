@@ -5,8 +5,8 @@ describe 'Market Manager managing delivery schedules' do
   let!(:market) { user.managed_markets.first }
   let!(:address) { create(:market_address, market: market) }
 
-
   before do
+    switch_to_subdomain(market.subdomain)
     sign_in_as user
     click_link 'Markets'
     click_link market.name

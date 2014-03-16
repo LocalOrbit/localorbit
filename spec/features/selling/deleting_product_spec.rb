@@ -10,6 +10,7 @@ feature "Deleting a product from the product list" do
   let!(:user) { create(:user, organizations: [org1]) }
 
   before do
+    switch_to_subdomain(market.subdomain)
     sign_in_as(user)
   end
 

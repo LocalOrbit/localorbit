@@ -4,6 +4,7 @@ describe "admin manange organization" do
   let(:admin) { create(:user, :admin) }
 
   before do
+    switch_to_main_domain
     sign_in_as(admin)
   end
 

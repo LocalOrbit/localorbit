@@ -5,6 +5,11 @@ describe "Adding advanced inventory" do
   let(:product){ create(:product, use_simple_inventory: false) }
 
   let(:empty_inventory_message) { "You don't have any inventory" }
+  let(:market)  { create(:market, organizations: [product.organization]) }
+
+  before do
+    switch_to_subdomain(market.subdomain)
+  end
 
   context "without js" do
     before do

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  before_action :ensure_market_affiliation
 
   helper_method :current_market
   helper_method :current_organization
@@ -10,13 +11,10 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
+  private
+
   def after_sign_in_path_for(resource)
     dashboard_path
-  end
-
-  def application_subdomain
-    @@main_domain_subdomains = ActionDispatch::Http::URL.extract_subdomains(Figaro.env.domain, 1) unless defined?(@@main_domain_subdomains)
-    (request.subdomains - @@main_domain_subdomains).last
   end
 
   def render_404
@@ -35,7 +33,21 @@ class ApplicationController < ActionController::Base
   end
 
   def current_market
-    @current_market ||= current_user.markets.find_by!(subdomain: application_subdomain)
+    @current_market ||= market_for_current_subdomain
+  end
+
+  # a before_action to ensure the current_user is affiliated with the market in
+  # some capacity. 404 if not.
+  def ensure_market_affiliation
+    return if current_user.admin?
+    if current_market.nil? || current_market != market_for_current_subdomain(current_user.markets)
+      render_404
+    end
+  end
+
+  def market_for_current_subdomain(scope = Market)
+    subdomain = request.subdomains(Figaro.env.domain.count('.'))
+    scope.find_by(subdomain: subdomain)
   end
 
   def current_delivery

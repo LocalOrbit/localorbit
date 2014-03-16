@@ -3,10 +3,11 @@ require 'spec_helper'
 
 describe "An organization member" do
   let(:member) { create(:user, role: 'user') }
-  let(:org) { create(:organization) }
+  let(:org) { create(:organization, users: [member]) }
+  let(:market)  { create(:market, organizations: [org]) }
 
-  before(:each) do
-    org.users << member
+  before do
+    switch_to_subdomain(market.subdomain)
     sign_in_as member
   end
 

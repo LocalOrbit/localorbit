@@ -4,6 +4,7 @@ module Admin
   describe LocationsController do
     let(:organization)              { create(:organization) }
     let(:location)                  { create(:location, organization: organization) }
+    let(:market)                    { create(:market, organizations: [organization]) }
     let(:admin)                     { create(:user, :admin) }
     let(:non_member)                { create(:user) }
     let(:market_manager_non_member) { create(:user, :market_manager) }
@@ -18,6 +19,10 @@ module Admin
       create(:user, :market_manager).tap do |market_manager|
         market_manager.organizations << organization
       end
+    end
+
+    before do
+      switch_to_subdomain market.subdomain
     end
 
     describe "#index" do

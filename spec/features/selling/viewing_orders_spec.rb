@@ -21,6 +21,7 @@ feature "Viewing orders" do
   let!(:order_item4) { create(:order_item, order: order3, product: product2) }
 
   before do
+    switch_to_subdomain(market.subdomain)
     sign_in_as(user)
   end
 

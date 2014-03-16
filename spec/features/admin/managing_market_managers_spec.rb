@@ -3,9 +3,16 @@ require "spec_helper"
 describe "Admin Managing Market Managers" do
   let(:market) { create(:market) }
 
+  before do
+    switch_to_subdomain(market.subdomain)
+  end
+
   describe 'as a normal user' do
+    let!(:normal_user) { create(:user, role: 'user') }
+    let!(:org) { create(:organization, markets: [market], users: [normal_user])}
+
     it 'I can not manage market managers' do
-      sign_in_as create(:user, role: 'user')
+      sign_in_as normal_user
 
       visit admin_market_managers_path(market)
 
