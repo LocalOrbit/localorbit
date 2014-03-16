@@ -175,12 +175,6 @@ feature "Viewing products" do
 
       click_link "Shop"
 
-      expect(page).to have_content("Select an organization")
-
-      select buyer_org.name, from: 'org_id'
-
-      click_button 'Select Organization'
-
       expect(page).to have_content("Please choose a pick up or delivery date.")
 
       delivery = Dom::Buying::DeliveryChoice.first
