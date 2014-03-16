@@ -1,6 +1,6 @@
-puts "development got loaded..."
 # Market
-market = Market.find_or_create_by!(name: "Fulton St. Farmer's Maket") {|m|
+market = Market.find_or_create_by!(name: "Fulton Market") {|m|
+  m.subdomain = "fulton"
   m.timezone = "EST"
   m.contact_name =  'Jill Smith'
   m.contact_email = 'jill@smith.com'
@@ -13,9 +13,30 @@ market_manager = User.find_or_create_by!(email: "mm@example.com") {|mm|
   mm.role = "user"
 }
 
+market_address = MarketAddress.find_or_create_by!(
+  name: "Rockford Location",
+  address: "1238f First St.",
+  city: "Rockford",
+  state: "MI",
+  zip: "93228",
+  market_id: market.id
+)
+
 unless market_manager.managed_markets.include?(market_manager)
   market_manager.managed_markets << market
 end
+
+delivery_schedule = DeliverySchedule.find_or_create_by!(
+  day: 2, 
+  order_cutoff: 6, 
+  seller_fulfillment_location_id: market.addresses.first.id,
+  seller_delivery_start: "7:00 AM",
+  seller_delivery_end: "11:00 AM", 
+  market_id: market.id,
+  buyer_pickup_start: "12:00 PM",
+  buyer_pickup_end: "3:00PM",
+  buyer_pickup_location: market.addresses.first
+)
 
 
 # Buyer
@@ -56,6 +77,7 @@ sell_loc = Location.find_or_create_by!(name: "Default Location") {|loc|
 }
 
 product = Product.find_or_create_by!(name: "Grapes") {|prod|
+  prod.short_description = "These grapes are amazing!"
   prod.name = "Grapes"
   prod.category_id = Category.last.id
   prod.organization_id = sell_org.id
@@ -65,6 +87,11 @@ price = Price.find_or_create_by!(
   product_id: product.id,
   min_quantity: 1,
   sale_price: 3.00
+)
+
+price = Lot.find_or_create_by!(
+  product_id: product.id,
+  quantity: 12
 )
 
 seller_user = User.find_or_create_by!(email: "seller@example.com"){ |user|
@@ -82,6 +109,7 @@ market_manager.save!
 
 market.organizations << buy_org unless market.organizations.include?(buy_org)
 market.organizations << sell_org unless market.organizations.include?(sell_org)
+market.save!
 
 market_address = MarketAddress.find_or_create_by!(name: "Default Marketplace") {|addr|
   addr.address = "89 Niles Rd."
