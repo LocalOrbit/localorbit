@@ -29,4 +29,9 @@ module ApplicationHelper
       link_to name, options, html_options, &block
     end
   end
+
+  def background_options
+    files = Dir.glob(Rails.root.join('app/assets/images/backgrounds/*.jpg'))
+    files.map{|name| [name.split(/[\/\.]/)[-2].titleize, name.split('/')[-1]] }
+  end
 end
