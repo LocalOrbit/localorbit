@@ -21,6 +21,19 @@ describe Product do
     end
   end
 
+  describe "default values" do
+    describe "#top_level_category_id" do
+      let(:org) { create(:organization) }
+      let(:top_level) { create(:category) }
+      let!(:category) { create(:category, parent: top_level) }
+      subject { Product.create!(short_description: "desc", name: "New Product", organization: org, category: category) }
+
+      it "assigns the top level based on category" do
+        expect(subject.top_level_category).to eql(top_level)
+      end
+    end
+  end
+
   describe ".available_for_market" do
     let(:product1) { create(:product) }
     let(:product2) { create(:product) }
