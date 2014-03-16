@@ -1,11 +1,11 @@
 <%
 if current_market && current_market.logo
-  logo = current_market.logo.remote_url
+  logo = image_tag(current_market.logo.remote_url, alt: "#{current_market.name} logo", class: "logo")
 else
-  logo = asset_path('logo.png')
+  logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "logo")
 end
 %>
-<%= link_to_unless_current image_tag(logo, class: "logo"), root_path, class: "logo-link pull-left" %>
+<%= link_to_unless_current logo, root_path, class: "logo-link pull-left" %>
 
 <% if current_market %>
   <div class="nav nav--main pull-right">
