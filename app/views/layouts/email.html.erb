@@ -273,7 +273,7 @@
             <a href="<%= root_url(host: @market.domain) %>"><%= image_tag logo, alt: @market.name, class: "lo_org_logo" %></a>
           </td>
           <td>
-            <p class="lo_slogan">“Where freshness is what we strive for every day.”</p>
+            <p class="lo_slogan">“<%= @market.tagline %>”</p>
           </td>
         </tr>
       </table>

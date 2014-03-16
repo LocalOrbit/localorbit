@@ -26,6 +26,7 @@ feature "A user navagating markets" do
       host = URI.parse(page.current_host).host
       expect(host).to eq(market.domain)
       # expect(page).to have_content(market.name)
+      # expect(page).to have_content(market.tagline)
       expect(page).to have_css("img[src='#{market.logo.remote_url}']")
     end
   end
@@ -47,6 +48,7 @@ feature "A user navagating markets" do
 
       sign_in_as(user)
       expect(page).to have_content(market.name)
+      expect(page).to have_content(market.tagline)
       expect(page).to have_content("Welcome")
       expect(page).to have_css("img[src='#{market.logo.remote_url}']")
     end

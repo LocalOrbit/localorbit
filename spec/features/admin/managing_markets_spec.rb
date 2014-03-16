@@ -160,6 +160,7 @@ describe "Admin Managing Markets" do
 
       fill_in 'Name',          with: 'Holland Farmers'
       fill_in 'Subdomain',     with: 'holland-farmers'
+      fill_in 'Tagline',       with: 'Dutch People, Dutch Prices!'
       select  '(GMT-05:00) Eastern Time (US & Canada)', from: 'Timezone'
       fill_in 'Contact name',  with: 'Jill Smith'
       fill_in 'Contact email', with: 'jill@smith.com'
@@ -173,6 +174,7 @@ describe "Admin Managing Markets" do
       click_button 'Add Market'
 
       expect(page).to have_text('Holland Farmers')
+      expect(page).to have_text('Dutch People, Dutch Prices!')
       expect(page).to have_text('Jill Smith')
       expect(page).to have_text('@hollandfarmers')
       expect(page).to have_css("img[alt='Holland Farmers Logo']")

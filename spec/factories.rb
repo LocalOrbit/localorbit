@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :market do
     sequence(:name)      {|n| "Market #{n}" }
     sequence(:subdomain) {|n| "market-#{n}" }
+    tagline       'Connecting Farm to Market'
     timezone      'US/Eastern'
     contact_name  'Jill Smith'
     contact_email 'jill@smith.com'
