@@ -1,14 +1,10 @@
 class CartsController < ApplicationController
   def update
-    puts "This pry should happen"
-    binding.pry
-    puts "Session...."
-
-    puts session[:product_id]
-    puts session[:current_organization]
+    product = Product.find(item_params[:product_id])
 
     item = current_cart.items.find_or_initialize_by(product_id: item_params[:product_id])
     item.quantity = item_params[:quantity]
+    item.product = product
 
     if item.save
       render json: item

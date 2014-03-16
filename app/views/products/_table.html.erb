@@ -63,7 +63,7 @@
       </td>
       <td class="quantity">
         <label>
-          <input name="quantity" type="number" size="3" min="0" max="<%= product.available_inventory %>">
+          <input name="quantity" type="number" size="3" min="0" value="<%= product.cart_quantity %>" max="<%= product.available_inventory %>">
           <span class="price-for-quantity"><%= product.initial_price.formatted_price %></span>
         </label>
       </td>

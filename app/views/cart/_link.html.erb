@@ -1,5 +1,5 @@
 <% if current_cart.present? %>
-<a href="#" class="cart">Cart <span class="counter"><%= current_cart.items.count %></span></a>
+  <a href="#" class="cart">Cart <span class="counter"><%= current_cart.items.count %></span></a>
 <% else %>
-<a href="#" class="cart">Cart <span class="counter">0</span></a>
+  <a href="#" class="cart">Cart <span class="counter">0</span></a>
 <% end %>

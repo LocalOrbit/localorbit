@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Add item to cart", js: true do
+describe "Add item to cart", js: true do
   let(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
 
@@ -27,28 +27,60 @@ feature "Add item to cart", js: true do
     create(:price, market: market, product: kale, min_quantity: 1)
   }
 
-  before do
-    switch_to_subdomain(market.subdomain)
-    sign_in_as(user)
-    click_link "Shop"
-    choose_delivery
+  context "with an empty cart" do
+    it "updates the item count" do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+      find(:link, "Shop").trigger("click")
+      choose_delivery
+
+      expect(Dom::CartLink.first).to have_content("0")
+
+      bananas = Dom::Buying::ProductRow.find_by_name("Bananas")
+      kale = Dom::Buying::ProductRow.find_by_name("kale")
+
+      bananas.set_quantity(12)
+      kale.quantity_field.click
+      expect(Dom::CartLink.first).to have_content("1")
+
+      kale.set_quantity(9)
+      bananas.quantity_field.click
+      expect(Dom::CartLink.first).to have_content("2")
+      sleep 1
+      # Refreshing the page should retain the state of the cart
+      visit "/products"
+
+      bananas = Dom::Buying::ProductRow.find_by_name("Bananas")
+      kale = Dom::Buying::ProductRow.find_by_name("kale")
+
+      expect(Dom::CartLink.first).to have_content("2")
+      expect(bananas.quantity_field.value).to eql("12")
+      expect(kale.quantity_field.value).to eql("9")
+    end
   end
 
-  scenario "with an empty cart" do
-    cart_counter = Dom::Buying::CartCounter.first
-    expect(cart_counter.item_count).to eql(0)
+  context "with a partially filled cart" do
+    let(:cart) { create(:cart, market: market, organization: buyer, delivery: pickup.next_delivery) }
+    let!(:item) { create(:cart_item, cart: cart, product: bananas, quantity: 19) }
 
-    product = Dom::Buying::ProductRow.find_by_name("Bananas")
-    product.set_quantity(12)
+    it "initializes the client cart code" do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+      find(:link, "Shop").trigger("click")
+      choose_delivery
 
-    expect(Dom::Buying::CartCounter.first.item_count).to eql(1)
-    save_and_open_page
+      bananas = Dom::Buying::ProductRow.find_by_name("Bananas")
+      kale = Dom::Buying::ProductRow.find_by_name("kale")
 
-    # Refreshing the page should retain the state of the cart
-    click_link "Shop"
+      expect(bananas.quantity_field.value).to eql("19")
+      expect(kale.quantity_field.value).to be_blank
 
-    expect(Dom::Buying::CartCounter.first.item_count).to eql(1)
-    product = Dom::Buying::ProductRow.find_by_name("Bananas")
-    expect(product.quantity_field.value).to eql("12")
+      expect(Dom::CartLink.first).to have_content("1")
+
+      kale.quantity_field.set("10")
+      bananas.quantity_field.click
+
+      expect(Dom::CartLink.first).to have_content("2")
+    end
   end
 end

@@ -324,7 +324,6 @@ DEPENDENCIES
   pry-rails
   pry-remote
   rack-canonical-host
-  pry-remote
   rails (= 4.1.0.rc1)
   rails_12factor
   rspec-rails (~> 3.0.0.beta2)

@@ -409,17 +409,15 @@ module Dom
     end
   end
 
-  
+  class CartLink < Domino
+    selector "header .cart .counter"
+
+    def has_count?(count)
+      expect(node).to have_content(count.to_s)
+    end
+  end
 
   module Buying
-    class CartCounter< Domino
-      selector "header .cart .counter"
-
-      def item_count
-        node.text.to_i
-      end
-    end
-
     class DeliveryChoice < Domino
       selector "#deliveries .delivery"
 
