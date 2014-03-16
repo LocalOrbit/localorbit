@@ -95,7 +95,7 @@ class Product < ActiveRecord::Base
 
   def update_top_level_category
     if category_id_changed?
-      top_level_category = category.top_level_category
+      self.top_level_category = category.top_level_category
     end
   end
 

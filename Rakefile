@@ -13,4 +13,11 @@ namespace :db do
       require File.join Rails.root, "db", "seeds", "development"
     end
   end
+
+  namespace :rebuild do
+    desc "Re-creates the development database from the db/seeds/development.rb file"
+    task :development => [:reset, "seed:development"] do
+      puts "Rebuilt the development database..."
+    end
+  end
 end
