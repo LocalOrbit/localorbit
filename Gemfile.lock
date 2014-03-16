@@ -188,6 +188,9 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     rack (1.5.2)
     rack-canonical-host (0.0.9)
       addressable
@@ -317,6 +320,7 @@ DEPENDENCIES
   pg
   poltergeist
   pry-rails
+  pry-remote
   rack-canonical-host
   rails (= 4.1.0.rc1)
   rails_12factor

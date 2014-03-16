@@ -35,6 +35,7 @@ end
 
 group :development do
   gem 'spring'
+  gem 'pry-remote'
 end
 
 group :development, :test do
