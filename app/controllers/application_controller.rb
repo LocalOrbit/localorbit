@@ -25,7 +25,6 @@ class ApplicationController < ActionController::Base
 
   def current_organization
     #TODO: Memoize
-    return nil unless current_user.present?
 
     if current_user.managed_organizations.count == 1
       session[:current_organization_id] = current_user.managed_organizations.first.id
@@ -57,7 +56,6 @@ class ApplicationController < ActionController::Base
   end
 
   def current_delivery
-    return nil unless current_user.present?
     return nil unless current_market.present?
     return nil unless current_organization.present?
     return @current_delivery if defined?(@current_delivery)
@@ -76,7 +74,6 @@ class ApplicationController < ActionController::Base
     @hide_admin_nav = true
   end
   def current_cart
-    return nil unless current_user.present?
     return nil unless current_market.present?
     return nil unless current_organization.present?
     current_organization.carts.find_by(id: session[:cart_id])
