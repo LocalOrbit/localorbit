@@ -84,10 +84,26 @@
 .row--partial {
   text-align: center;
 }
+.row--justified {
+  font-size: 0.1px;
+  text-align: justify;
+
+  &:after {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    content: ' ';
+  }
+
+  .column:last-child {
+    text-align: right;
+  }
+}
 
 .column {
   display: inline-block;
   text-align: left;
+  font-size: 14px;
   vertical-align: top;
 }
   .column--fourth {

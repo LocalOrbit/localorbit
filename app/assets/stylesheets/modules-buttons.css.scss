@@ -53,9 +53,15 @@ input[type=reset] {
   text-transform: uppercase;
 }
 
+.btn--add,
 .btn--save,
 input[type=submit] {
   color: #fff;
   background-color: #43639f;
 }
 
+
+.btn--add:before {
+  font-size: 120%;
+  content: "✚ "
+}

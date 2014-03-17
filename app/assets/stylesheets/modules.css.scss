@@ -123,6 +123,37 @@
     display: block;
   }
 
+.edit-toggle {
+  display: inline-block;
+  padding: .1em .2em;
+  border: solid 1px #d7d7d7;
+  margin: 0 0 .4em;
+  background: #fff;
+
+  &:after {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 4px;
+    background: asset_url('wrench-edit.png') center no-repeat;
+    background: asset_url('wrench-edit@2x.png') center / 100% no-repeat;
+    content: '';
+    vertical-align: center;
+  }
+
+  &:hover {
+    @include box-shadow(0 0 1px rgba(0,0,0,0.4));
+  }
+}
+.export {
+  display: inline-block;
+  min-height: 10px;
+  padding-left: 20px;
+  color: #43639f;
+  background: asset_url('icon-export.png') left center no-repeat;
+  background: asset_url('icon-export@2x.png') left center / 13px 10px no-repeat;
+}
+
 .filter-list {
   width: 100%;
   padding-left: 14px;

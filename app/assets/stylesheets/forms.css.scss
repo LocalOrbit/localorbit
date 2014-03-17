@@ -62,6 +62,20 @@ input[type=password] {
   }
 }
 
+input[type=search] {
+  height: 25px;
+  padding-left: 20px;
+  border: solid 1px #b0b0b0;
+  @include border-radius(0);
+  @include box-shadow(none);
+  background: asset_url('magnify-search.png') 6px center no-repeat #fff;
+  background: asset_url('magnify-search@2x.png') 6px center / 13px 13px no-repeat #fff;
+
+  + .btn {
+    margin-left: 10px;
+  }
+}
+
 input[type=number][size] {
   padding-right: 0
 }
