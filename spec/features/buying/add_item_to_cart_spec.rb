@@ -44,18 +44,18 @@ describe "Add item to cart", js: true do
 
       expect(page).to have_content("Filter the Shop")
 
-      expect(Dom::CartLink.first).to have_content("0")
+      expect(Dom::CartLink.first.node).to have_content("0")
 
       bananas = Dom::Buying::ProductRow.find_by_name("Bananas")
       kale = Dom::Buying::ProductRow.find_by_name("kale")
 
       bananas.set_quantity(12)
       kale.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("1")
+      expect(Dom::CartLink.first.node).to have_content("1")
 
       kale.set_quantity(9)
       bananas.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("2")
+      expect(Dom::CartLink.first.node).to have_content("2")
       sleep 1
       # Refreshing the page should retain the state of the cart
       visit "/products"
@@ -63,7 +63,7 @@ describe "Add item to cart", js: true do
       bananas = Dom::Buying::ProductRow.find_by_name("Bananas")
       kale = Dom::Buying::ProductRow.find_by_name("kale")
 
-      expect(Dom::CartLink.first).to have_content("2")
+      expect(Dom::CartLink.first.node).to have_content("2")
       expect(bananas.quantity_field.value).to eql("12")
       expect(kale.quantity_field.value).to eql("9")
     end
@@ -87,12 +87,12 @@ describe "Add item to cart", js: true do
       expect(bananas.quantity_field.value).to eql("19")
       expect(kale.quantity_field.value).to be_blank
 
-      expect(Dom::CartLink.first).to have_content("1")
+      expect(Dom::CartLink.first.node).to have_content("1")
 
       kale.quantity_field.set("10")
       bananas.quantity_field.click
 
-      expect(Dom::CartLink.first).to have_content("2")
+      expect(Dom::CartLink.first.node).to have_content("2")
     end
   end
 end

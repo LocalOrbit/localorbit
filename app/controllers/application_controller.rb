@@ -24,13 +24,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organization
-    #TODO: Memoize
+    return @current_organization if defined?(@current_organization)
 
-    if current_user.managed_organizations.count == 1
-      session[:current_organization_id] = current_user.managed_organizations.first.id
+    @current_organization = if current_user.managed_organizations.count == 1
+      current_user.managed_organizations.first
+    else
+      current_user.managed_organizations.find_by(id: session[:current_organization_id])
     end
-
-    current_user.managed_organizations.find_by(id: session[:current_organization_id])
   end
 
   def current_location

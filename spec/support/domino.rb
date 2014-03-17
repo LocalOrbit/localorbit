@@ -25,6 +25,14 @@ module Dom
     end
   end
 
+  class Select < Domino
+    selector "select"
+
+    def has_option?(text)
+      all("option").map(&:text).include?(text)
+    end
+  end
+
   class CategorySelect < TypeAhead
     selector "#product_category_id_chosen"
 
@@ -411,10 +419,6 @@ module Dom
 
   class CartLink < Domino
     selector "header .cart .counter"
-
-    def has_count?(count)
-      expect(node).to have_content(count.to_s)
-    end
   end
 
   module Buying
