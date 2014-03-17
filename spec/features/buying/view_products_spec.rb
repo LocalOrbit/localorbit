@@ -78,13 +78,9 @@ feature "Viewing products" do
 
     expect(page).to have_content("Please choose a pick up or delivery date.")
 
-    delivery_list = Dom::Buying::DeliveryChoice.first
-    expect(delivery_list).not_to be_nil
-
-    expect(delivery_list.type).to eql("Pick Up:")
-    expect(delivery_list.date).to eql("October 14, 2014")
-    expect(delivery_list.time_range).to eql("Between 12:00PM and 2:00PM")
-    expect(delivery_list.location.text).to eql("123 Street Ave. Town MI, 32339")
+    delivery_choice = Dom::Buying::DeliveryChoice.first
+    expect(delivery_choice.node.text).to match(/Pick Up: October 14, 2014 Between 12:00PM and 2:00PM/)
+    expect(delivery_choice.node.text).to match(/123 Street Ave. Town MI, 32339/)
 
     click_button "Start Shopping"
     within('.flash--alert') do
@@ -114,11 +110,7 @@ feature "Viewing products" do
     expect(page).to have_content("Please choose a pick up or delivery date.")
 
     delivery = Dom::Buying::DeliveryChoice.first
-    expect(delivery).not_to be_nil
-
-    expect(delivery.type).to eql("Delivery:")
-    expect(delivery.date).to eql("October 14, 2014")
-    expect(delivery.time_range).to eql("Between 7:00AM and 11:00AM")
+    expect(delivery.node.text).to match(/Delivery: October 14, 2014 Between 7:00AM and 11:00AM/)
 
     delivery.choose!
 
@@ -148,10 +140,8 @@ feature "Viewing products" do
 
     delivery = Dom::Buying::DeliveryChoice.first
     expect(delivery).not_to be_nil
-
-    expect(delivery.type).to eql("Delivery:")
-    expect(delivery.date).to eql("October 14, 2014")
-    expect(delivery.time_range).to eql("Between 7:00AM and 11:00AM")
+  
+    expect(delivery.node.text).to match(/Delivery: October 14, 2014 Between 7:00AM and 11:00AM/)
 
     delivery.choose!
 
@@ -180,9 +170,7 @@ feature "Viewing products" do
       delivery = Dom::Buying::DeliveryChoice.first
       expect(delivery).not_to be_nil
 
-      expect(delivery.type).to eql("Delivery:")
-      expect(delivery.date).to eql("October 14, 2014")
-      expect(delivery.time_range).to eql("Between 7:00AM and 11:00AM")
+      expect(delivery.node.text).to match(/Delivery: October 14, 2014 Between 7:00AM and 11:00AM/)
 
       delivery.choose!
 

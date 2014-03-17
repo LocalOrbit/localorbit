@@ -27,12 +27,22 @@ describe "Add item to cart", js: true do
     create(:price, market: market, product: kale, min_quantity: 1)
   }
 
+  before do
+    Timecop.travel("May 8, 2014")
+  end
+
+  after do
+    Timecop.return
+  end
+
   context "with an empty cart" do
     it "updates the item count" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
       find(:link, "Shop").trigger("click")
       choose_delivery
+
+      expect(page).to have_content("Filter the Shop")
 
       expect(Dom::CartLink.first).to have_content("0")
 
@@ -60,14 +70,16 @@ describe "Add item to cart", js: true do
   end
 
   context "with a partially filled cart" do
-    let(:cart) { create(:cart, market: market, organization: buyer, delivery: pickup.next_delivery) }
+    let!(:cart) { create(:cart, market: market, organization: buyer, delivery: pickup.next_delivery) }
     let!(:item) { create(:cart_item, cart: cart, product: bananas, quantity: 19) }
 
     it "initializes the client cart code" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
       find(:link, "Shop").trigger("click")
-      choose_delivery
+      choose_delivery("Pick Up: May 13, 2014 Between 10:00AM and 12:00PM")
+
+      expect(page).to have_content("Filter the Shop")
 
       bananas = Dom::Buying::ProductRow.find_by_name("Bananas")
       kale = Dom::Buying::ProductRow.find_by_name("kale")
