@@ -32,12 +32,12 @@
     <td class="pricing">
       <ul class="l-inline-list">
         <% product.prices.view_sorted.decorate.each do |price| %>
-        <%= content_tag(:li, link_to(price.quick_info, '#', class: 'edit-toggle')) %>
+        <%= content_tag(:li, link_to(price.quick_info, [:admin, product, :prices], class: 'edit-toggle')) %>
         <% end %>
       </ul>
     </td>
     <td class="stock">
-      <%= link_to product.available_inventory, "#", class: "edit-toggle todo" %>
+      <%= link_to product.available_inventory, [:admin, product, :lots], class: "edit-toggle" %>
     </td>
     <td><%= link_to "Delete", [:admin, product], method: :delete, data: { confirm: "Are you sure you want to delete this product?" } %></td>
   </tr>

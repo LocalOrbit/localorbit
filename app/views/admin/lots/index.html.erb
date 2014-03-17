@@ -34,7 +34,7 @@
       <td><%= f.datetime_field :good_from, class: 'datepicker' %></td>
       <td><%= f.datetime_field :expires_at, class: 'datepicker', data: {'min-date' => 0} %></td>
       <td><%= f.number_field :quantity, min: 0 %></td>
-      <td><%= f.submit "Save" %></td>
+      <td><%= f.submit "Save", class: "btn--small" %></td>
     </tr>
   </thead>
 
@@ -57,7 +57,7 @@
         <td><%= lot_in_table.datetime_field :expires_at, class: 'datepicker', data: {'min-date' => 0} %></td>
         <td><%= lot_in_table.number_field :quantity, min: 0 %></td>
 
-        <td><%= link_to "Cancel", "#", class:"cancel" %><%= f.submit "Save" %></td>
+        <td><%= link_to "Cancel", "#", class:"cancel" %><%= f.submit "Save", class: "btn--small" %></td>
       <% end %>
     <% end %>
   <% end %>
