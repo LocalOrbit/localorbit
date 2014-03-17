@@ -5,19 +5,20 @@
 
 <%= render "admin/products/tabs" %>
 
-<%= form_for [:admin, @product, @lot] do |f| %>
+<%= form_for [:admin, @product, @lot], html: { class: "row row--partial" } do |f| %>
 
 <%= render "shared/errors", {resource: @lot} %>
 
 <%= render "shared/errors", {resource: @lot_with_errors} if @lot_with_errors %>
 
-<h2>Add Your Inventory</h2>
+<div class="column column--three-fourths">
+<h2>Add Inventory</h2>
 
 <% if @product.lots.select { |lot| lot.persisted? }.empty? %>
   <p>You don't have any inventory yet! Get started by adding your first lot.</p>
 <% end %>
 
-<%= content_tag :table, border: 0, id: 'inventory_table', data: edit_table_error_payload(@lot_with_errors) do %>
+<%= content_tag :table, id: 'inventory_table', data: edit_table_error_payload(@lot_with_errors) do %>
   <thead>
     <tr>
       <th>Date Added</th>
@@ -30,11 +31,15 @@
 
     <tr class="lot">
       <td><%= Time.current.strftime('%m/%d/%Y') %></td>
-      <td><%= f.text_field :number  %></td>
-      <td><%= f.datetime_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a></td>
-      <td><%= f.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a></td>
-      <td><%= f.number_field :quantity, min: 0 %></td>
-      <td><%= f.submit "Save", class: "btn--small" %></td>
+      <td><%= f.text_field :number, size: 10  %></td>
+      <td>
+          <%= f.datetime_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+      </td>
+      <td>
+          <%= f.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+      </td>
+      <td><%= f.number_field :quantity, min: 0, size: 4 %></td>
+      <td><%= f.submit "Add", class: "btn--small" %></td>
     </tr>
   </thead>
 
@@ -43,8 +48,12 @@
     <%= content_tag_for :tr, lot, rel: "fields_lot_#{lot.id}" do %>
       <td class="created_at"><%= lot.created_at.strftime('%m/%d/%Y') %></td>
       <td class="number"><%= lot.number %></td>
-      <td class="good_from"><%= lot.good_from.try(:strftime, '%m/%d/%Y') %></td>
-      <td class="expires_at"><%= lot.expires_at.try(:strftime, '%m/%d/%Y') %></td>
+      <td class="good_from">
+        <%= lot.good_from.try(:strftime, '%m/%d/%Y') %>
+      </td>
+      <td class="expires_at">
+        <%= lot.expires_at.try(:strftime, '%m/%d/%Y') %>
+      </td>
       <td class="quantity"><%= lot.quantity %></td>
       <td></td>
     <% end %>
@@ -52,10 +61,14 @@
     <%= content_tag_for :tr, lot, :fields, {class: 'lot', style:"display:none;", data: {"form-url" => url_for([:admin, lot.product, lot]) }} do %>
       <%= fields_for :lot, lot, index: lot.id do |lot_in_table| %>
         <td><%= lot.created_at.strftime('%m/%d/%Y') %></td>
-        <td><%= lot_in_table.text_field :number %></td>
-        <td><%= lot_in_table.datetime_field :good_from, class: 'datepicker' %></td>
-        <td><%= lot_in_table.datetime_field :expires_at, class: 'datepicker', data: {'min-date' => 0} %></td>
-        <td><%= lot_in_table.number_field :quantity, min: 0 %></td>
+        <td><%= lot_in_table.text_field :number, size: 10 %></td>
+        <td>
+          <%= lot_in_table.datetime_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_<%= lot.id %>_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+        </td>
+        <td>
+          <%= lot_in_table.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_<%= lot.id %>_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+        </td>
+        <td><%= lot_in_table.number_field :quantity, min: 0, size: 4 %></td>
 
         <td><%= link_to "Cancel", "#", class:"cancel" %><%= f.submit "Save", class: "btn--small" %></td>
       <% end %>
@@ -63,4 +76,5 @@
   <% end %>
   </tbody>
 <% end # table %>
+</div>
 <% end # form %>
