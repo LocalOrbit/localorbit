@@ -13,7 +13,7 @@ describe "A Market Manager" do
   describe "Adding an organization" do
     context "with valid information" do
       before do
-        click_link 'Organizations', match: :first
+        visit "/admin/organizations"
         click_link 'Add Organization'
 
         fill_in 'Name', with: 'Famous Farm'
@@ -62,7 +62,7 @@ describe "A Market Manager" do
       end
 
       it "with valid information" do
-        click_link 'Organizations', match: :first
+        visit "/admin/organizations"
         click_link 'Add Organization'
 
         fill_in 'Name', with: 'Famous Farm'
@@ -82,7 +82,7 @@ describe "A Market Manager" do
 
       context "without selecting a market" do
         it "doesn't add the new organization" do
-          click_link 'Organizations', match: :first
+          visit "/admin/organizations"
           click_link 'Add Organization'
           fill_in 'Name', with: 'Dairy Farms Co-op'
           click_button 'Add Organization'
@@ -100,9 +100,7 @@ describe "A Market Manager" do
 
     context "with a blank name" do
       it "doesn't add the new organization" do
-        within("#admin-nav") do
-          click_link 'Organizations'
-        end
+        visit "/admin/organizations"
         click_link 'Add Organization'
 
         fill_in 'Name', with: ''
@@ -114,9 +112,7 @@ describe "A Market Manager" do
 
     context "with a blank location" do
       it "shows error messages" do
-        within("#admin-nav") do
-          click_link 'Organizations'
-        end
+        visit "/admin/organizations"
         click_link 'Add Organization'
 
         fill_in 'Name', with: ''
@@ -139,7 +135,7 @@ describe "A Market Manager" do
     end
 
     it "doesn't show the location fields" do
-      click_link "Organizations", match: :first
+      visit "/admin/organizations"
       click_link "Fresh Pumpkin Patch"
       click_link "Edit Organization"
 
@@ -151,7 +147,7 @@ describe "A Market Manager" do
     end
 
     it "allows updating all attributes" do
-      click_link "Organizations", match: :first
+      visit "/admin/organizations"
       click_link "Fresh Pumpkin Patch"
       click_link "Edit Organization"
 
@@ -165,7 +161,7 @@ describe "A Market Manager" do
     end
 
     it "does not allow updates with a blank organization name" do
-      click_link "Organizations", match: :first
+      visit "/admin/organizations"
       click_link "Fresh Pumpkin Patch"
       click_link "Edit Organization"
 
@@ -181,7 +177,7 @@ describe "A Market Manager" do
       end
 
       it "cannot change the market of an organizaiton" do
-        click_link "Organizations", match: :first
+        visit "/admin/organizations"
         click_link "Fresh Pumpkin Patch"
         click_link "Edit Organization"
 
@@ -200,7 +196,7 @@ describe "A Market Manager" do
 
     context "when the user is not yet a member" do
       it "sends an email to a recipient inviting them to join an organization" do
-        click_link "Organizations", match: :first
+        visit "/admin/organizations"
         click_link "Holland Farms"
         click_link "Users", match: :first
 
@@ -223,7 +219,7 @@ describe "A Market Manager" do
       end
 
       it "show an error message" do
-        click_link "Organizations", match: :first
+        visit "/admin/organizations"
         click_link "Holland Farms"
         click_link "Users", match: :first
 
@@ -238,7 +234,7 @@ describe "A Market Manager" do
 
     context "when no email has been entered" do
       it "show an error message" do
-        click_link "Organizations", match: :first
+        visit "/admin/organizations"
         click_link "Holland Farms"
         click_link "Users", match: :first
 
@@ -253,7 +249,7 @@ describe "A Market Manager" do
 
     context "when an invalid email address has been entered" do
       it "show an error message" do
-        click_link "Organizations", match: :first
+        visit "/admin/organizations"
         click_link "Holland Farms"
         click_link "Users", match: :first
 

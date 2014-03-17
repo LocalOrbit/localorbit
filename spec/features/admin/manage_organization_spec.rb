@@ -12,7 +12,7 @@ describe "admin manange organization" do
     create(:market, name: "Market 1")
     create(:market, name: "Market 2")
 
-    click_link "Organizations", match: :first
+    visit "/admin/organizations"
     click_link "Add Organization"
 
     select "Market 2", from: "Market"
@@ -39,7 +39,7 @@ describe "admin manange organization" do
     it "lists locations" do
       location = create(:location, :decorated, organization: organization)
 
-      click_link "Organizations", match: :first
+      visit "/admin/organizations"
       click_link "University of Michigan Farmers"
 
       click_link "Addresses"
@@ -54,7 +54,7 @@ describe "admin manange organization" do
 
     describe "Adding a new location" do
       it "saves the location" do
-        click_link "Organizations", match: :first
+        visit "/admin/organizations"
         click_link "University of Michigan Farmers"
 
         click_link "Addresses"
@@ -81,7 +81,7 @@ describe "admin manange organization" do
 
       context "with invalid information" do
         it "shows error messages" do
-          click_link "Organizations", match: :first
+          visit "/admin/organizations"
           click_link "University of Michigan Farmers"
 
           click_link "Addresses"
@@ -102,7 +102,7 @@ describe "admin manange organization" do
       create(:location, organization: organization)
       location_2 = create(:location, organization: organization)
 
-      click_link "Organizations", match: :first
+      visit "/admin/organizations"
       click_link "University of Michigan Farmers"
 
       click_link "Addresses"
@@ -124,7 +124,7 @@ describe "admin manange organization" do
       location_1 = create(:location, organization: organization)
       location_2 = create(:location, organization: organization)
 
-      click_link "Organizations", exact: false
+      visit "/admin/organizations"
       click_link "University of Michigan Farmers"
 
       click_link "Addresses"
@@ -145,7 +145,7 @@ describe "admin manange organization" do
       billing  = create(:location, organization: organization)
       shipping = create(:location, organization: organization)
 
-      click_link "Organizations"
+      visit "/admin/organizations"
       click_link "University of Michigan Farmers"
 
       click_link "Addresses"
@@ -176,7 +176,7 @@ describe "admin manange organization" do
     it "update location information" do
       create(:location, :default_billing, organization: organization, name: "Original Name")
 
-      click_link "Organizations", match: :first
+      visit "/admin/organizations"
       click_link "University of Michigan Farmers"
 
       click_link "Addresses"
