@@ -140,7 +140,7 @@ feature "Viewing products" do
 
     delivery = Dom::Buying::DeliveryChoice.first
     expect(delivery).not_to be_nil
-  
+
     expect(delivery.node.text).to match(/Delivery: October 14, 2014 Between 7:00AM and 11:00AM/)
 
     delivery.choose!
@@ -176,5 +176,26 @@ feature "Viewing products" do
 
       expect(page).to have_content(org1_product.name)
     end
+  end
+
+  scenario "trying to shop without an address" do
+    buyer_org.locations.destroy_all
+
+    ds = create(:delivery_schedule,
+      day: 2,
+      order_cutoff: 24,
+      seller_fulfillment_location_id: 0,
+      seller_delivery_start: "7:00 AM",
+      seller_delivery_end:  "11:00 AM",
+      market: market
+    )
+
+    create(:delivery, delivery_schedule: ds)
+
+    click_link "Shop"
+
+    expect(page).to have_content("You must enter an address for this organization before you can shop")
+
+    expect(page).to have_content("Create new address")
   end
 end
