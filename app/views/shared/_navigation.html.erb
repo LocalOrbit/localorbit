@@ -18,7 +18,7 @@ end
 <% if current_user && !@hide_admin_nav %>
   <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before">
     <% if current_user.buyer_only? %>
-      <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon=""></i> Purchase History</a></li>
+      <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xf000;"></i> Purchase History</a></li>
     <% end %>
 
     <% if current_user.admin? || current_user.market_manager? %>

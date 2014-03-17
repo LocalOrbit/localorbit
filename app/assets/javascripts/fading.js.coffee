@@ -8,12 +8,11 @@ $ ->
     events = ["transitionend", "transitionend", "oTransitionEnd", "webkitTransitionEnd", "transitionend"]
 
     for p in styles
+      ext = events.shift()
       if sandbox.style[ p + "ransition"] != undefined
-        ext = events[p]
         $('body').addClass('transitions')
+        features.transitions = ext
         break
-
-      features.transitions = ext
 
   detect_transitions()
 
