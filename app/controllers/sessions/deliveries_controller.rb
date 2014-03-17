@@ -1,5 +1,8 @@
 module Sessions
   class DeliveriesController < ApplicationController
+    before_action :require_organization
+    before_action :require_organization_location
+
     def new
       @deliveries = current_market.delivery_schedules.map { |ds| ds.next_delivery.decorate(context: {current_organization: current_organization}) }
     end
@@ -32,6 +35,16 @@ module Sessions
       flash.now[:alert] = "Please select a delivery"
       self.new
       return render :new
+    end
+
+    def require_organization
+      redirect_to new_sessions_organization_path unless current_organization
+    end
+
+    def require_organization_location
+      if current_organization.locations.none?
+        redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
+      end
     end
   end
 end
