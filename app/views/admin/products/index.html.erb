@@ -17,7 +17,7 @@
   <thead>
     <tr>
       <%= content_tag(:th, 'Seller') if current_user.multi_organization_membership? %>
-      <%= content_tag(:th, 'Hub') if current_user.multi_market_membership? %>
+      <%= content_tag(:th, 'Market') if current_user.multi_market_membership? %>
       <th>Name</th>
       <th>Pricing</th>
       <th>In Stock</th>
