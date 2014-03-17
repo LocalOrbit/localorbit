@@ -38,6 +38,15 @@
   @include gradient(#3f5d99, #4567aa);
   font-size: 14px;
 }
+.l-app-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  color: #fff;
+  background: #3f5d99;
+}
 
 .l-main {
   min-height: 95vh;

@@ -29,7 +29,6 @@
           ><li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
         </ul>
         <% else %>
-        <p></p>
         <% end %>
       </div>
     </header>
@@ -48,7 +47,21 @@
     </div>
     <footer class="l-app-footer">
       <div class="l-constraint">
-        Beep
+        <% if current_market %>
+          <div class="pull-right market-manager-contact">
+            <a href="mailto:<%= current_market.managers.first.email %>" class="email"><%= current_market.managers.first.name %></a>, Market Manager<br>
+            <% if current_market.addresses.count > 0 && current_market.addresses.first.phone.present? %>
+              Phone <%= number_to_phone current_market.addresses.first.phone %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="copyright">
+          <a href="http://localorb.id">
+            Powered by <span class="org">Local Orbit</span><br>
+            &#169; 2014
+          </a>
+        </div>
       </div>
     </footer>
   </div>

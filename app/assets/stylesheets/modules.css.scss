@@ -72,6 +72,19 @@
   color: #43639f;
 }
 
+.copyright {
+
+  .org {
+    font-weight: bolder;
+  }
+  > a {
+    display: inline-block;
+    min-height: 40px;
+    padding-left: 50px;
+    background: asset_url('footer-logo.png') left center no-repeat;
+    background: asset_url('footer-logo@2x.png') left center / 38px 40px no-repeat;
+  }
+}
 .counter {
   padding: 0 15px;
   border: solid 1px #1e2e4e;
@@ -307,6 +320,13 @@
   > .logo {
     max-width: 100%;
     max-height: 100%;
+  }
+}
+
+.market-manager-contact {
+  text-align: right;
+  > .email {
+    font-weight: bold;
   }
 }
 
