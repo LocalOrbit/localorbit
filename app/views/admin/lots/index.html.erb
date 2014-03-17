@@ -31,8 +31,8 @@
     <tr class="lot">
       <td><%= Time.current.strftime('%m/%d/%Y') %></td>
       <td><%= f.text_field :number  %></td>
-      <td><%= f.datetime_field :good_from, class: 'datepicker' %></td>
-      <td><%= f.datetime_field :expires_at, class: 'datepicker', data: {'min-date' => 0} %></td>
+      <td><%= f.datetime_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a></td>
+      <td><%= f.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a></td>
       <td><%= f.number_field :quantity, min: 0 %></td>
       <td><%= f.submit "Save", class: "btn--small" %></td>
     </tr>
