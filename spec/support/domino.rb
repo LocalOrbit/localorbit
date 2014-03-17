@@ -25,6 +25,14 @@ module Dom
     end
   end
 
+  class Select < Domino
+    selector "select"
+
+    def has_option?(text)
+      all("option").map(&:text).include?(text)
+    end
+  end
+
   class CategorySelect < TypeAhead
     selector "#product_category_id_chosen"
 

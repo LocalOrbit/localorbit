@@ -149,7 +149,8 @@ feature "Viewing products" do
   end
 
   context "belonging to multiple organizations" do
-    let!(:buyer_org2) { create(:organization, :buyer, users: [user]) }
+    let!(:buyer_org2)               { create(:organization, :buyer, users: [user], markets: [market]) }
+    let!(:buyer_org_outside_market) { create(:organization, :buyer, users: [user]) }
 
     scenario "selecting an organization to shop for" do
       ds = create(:delivery_schedule,
@@ -164,6 +165,16 @@ feature "Viewing products" do
       create(:delivery, delivery_schedule: ds)
 
       click_link "Shop"
+
+      select = Dom::Select.first
+
+      expect(select).to have_option(buyer_org.name)
+      expect(select).to have_option(buyer_org2.name)
+      expect(select).to_not have_option(buyer_org_outside_market.name)
+
+      select buyer_org.name, from: "Select an organization"
+
+      click_button 'Select Organization'
 
       expect(page).to have_content("Please choose a pick up or delivery date.")
 
