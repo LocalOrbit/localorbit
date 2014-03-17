@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
     @cart_items = {}
 
     current_cart.items.each do |item|
-      @cart_items[item.id] = item
+      @cart_items[item.id.to_s] = item
     end
   end
 end
