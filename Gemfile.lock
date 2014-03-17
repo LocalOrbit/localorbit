@@ -58,7 +58,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.5)
     arel (5.0.0)
-    atomic (1.1.15)
+    atomic (1.1.16)
     balanced (1.0.1)
       addressable (~> 2.3.5)
       faraday (~> 0.8.6)
