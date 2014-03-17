@@ -94,5 +94,29 @@ describe "Add item to cart", js: true do
 
       expect(Dom::CartLink.first.node).to have_content("2")
     end
+
+    it "does not update the counter when an item quantity is updated" do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+      find(:link, "Shop").trigger("click")
+      choose_delivery("Pick Up: May 13, 2014 Between 10:00AM and 12:00PM")
+      expect(Dom::CartLink.first.node).to have_content("1")
+
+      bananas = Dom::Buying::ProductRow.find_by_name("Bananas")
+      kale = Dom::Buying::ProductRow.find_by_name("kale")
+
+      bananas.set_quantity(8)
+      kale.quantity_field.click
+      expect(Dom::CartLink.first.node).to have_content("1")
+
+      bananas.set_quantity(9)
+      kale.quantity_field.click
+      expect(Dom::CartLink.first.node).to have_content("1")
+
+      visit "/products"
+      bananas = Dom::Buying::ProductRow.find_by_name("Bananas")
+      expect(bananas.quantity_field.value).to eql("9")
+      expect(Dom::CartLink.first).to have_content("1")
+    end
   end
 end

@@ -16,7 +16,7 @@ $ ->
       {@url, @items, @view} = opts
 
     objectWasAdded: (data)->
-      @items[data.product_id] = data
+      @items[data.product_id.toString()] = data
       @view.updateCounter(Object.keys(@items).length)
 
     addItem: (productId, quantity)->
