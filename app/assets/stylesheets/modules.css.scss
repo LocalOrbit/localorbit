@@ -232,31 +232,36 @@
 
 .flash {
   position: absolute;
-  left: 12.5%;
   z-index: 1;
-  display: block;
-  width: 75%;
-  padding: 1em 2em;
-  border-style: solid;
-  border-width: 1px;
-  @include border-radius(30px);
-  @include box-shadow(0 2px 3px rgba(0,0,0,0.2));
-  margin: 0 auto 1em;
+  top: 2px;
+  width: 100%;
   text-align: center;
   @include transition(opacity .5s linear 3s);
 
   &.is-fading {
     opacity: 0;
   }
+
+  > p {
+    display: inline-block;
+    padding: .5em 2em;
+    border-style: solid;
+    border-width: 1px;
+    @include border-radius(30px);
+    @include box-shadow(0 2px 3px rgba(0,0,0,0.2));
+    color: #000;
+  }
 }
-  .flash--alert {
+  .flash--alert > p {
     border-color: #ebd217;
     background-color: #f1e05d;
+    background-color: rgba(241, 224 ,93, 0.9);
   }
 
-  .flash--notice {
+  .flash--notice > p {
     border-color: #99eb17;
     background-color: #b8f15d;
+    background-color: rgba(184, 241, 93, 0.9);
   }
 
 .header {

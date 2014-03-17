@@ -34,11 +34,11 @@
     </header>
     <div class="l-constraint l-main">
       <% if notice %>
-        <p class="flash flash--notice"><%= notice %></p>
+        <div class="flash flash--notice"><p><%= notice %></p></div>
       <% end %>
 
       <% if alert %>
-        <p class="flash flash--alert"><%= alert %></p>
+        <div class="flash flash--alert"><p><%= alert %></div>
       <% end %>
 
       <%= render 'shared/navigation' %>
