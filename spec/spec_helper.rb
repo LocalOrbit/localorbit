@@ -37,7 +37,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
-    ImportLegacyTaxonomy.run(Rails.root.join('db/taxonomy.csv'))
+    ImportLegacyTaxonomy.run(Rails.root.join('db/taxonomy_truncated.csv'))
   end
 
   config.before(:each) do
