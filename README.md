@@ -21,6 +21,7 @@
 5. `rake db:setup`
 6. `rake db:seed:development`
 7. `rails server`
+8. Go to http://lvh.me:3000 in a browser (we use lvh.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
 
 ### Test Accounts
 Running _rake db:seed:development_ makes the following test accounts available
