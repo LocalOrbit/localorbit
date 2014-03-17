@@ -49,8 +49,10 @@
       <div class="l-constraint">
         <% if current_market %>
           <div class="pull-right market-manager-contact">
-            <a href="mailto:<%= current_market.managers.first.email %>" class="email"><%= current_market.managers.first.name %></a>, Market Manager<br>
-            <% if current_market.addresses.count > 0 && current_market.addresses.first.phone.present? %>
+            <% if current_market.managers.any? %>
+              <a href="mailto:<%= current_market.managers.first.email %>" class="email"><%= current_market.managers.first.name %></a>, Market Manager<br>
+            <% end %>
+            <% if current_market.addresses.any? && current_market.addresses.first.phone.present? %>
               Phone <%= number_to_phone current_market.addresses.first.phone %>
             <% end %>
           </div>
