@@ -7,6 +7,7 @@ class Organization < ActiveRecord::Base
   has_many :orders, inverse_of: :organization
 
   has_many :products
+  has_many :carts
 
   has_many :locations, inverse_of: :organization
 

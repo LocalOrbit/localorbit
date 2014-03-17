@@ -143,45 +143,6 @@ module Dom
     end
   end
 
-  class ProductForm < Domino
-    selector "form.product"
-
-    def organization_field
-      node.find('#product_organization_id')
-    end
-
-    def name
-      node.find('#product_name')
-    end
-
-    def category
-      node.find('#product_category_id')
-    end
-
-    def who_story
-      node.find('#product_who_story').value
-    end
-
-    def how_story
-      node.find('#product_how_story').value
-    end
-
-    def locations
-      node.all("#product_location_id option").map(&:text)
-    end
-
-    def selected_location
-      node.find("#product_location_id").value
-    end
-
-    def location
-      node.find('#product_location_id')
-    end
-
-    def seller_info
-      node.find('#seller_info')
-    end
-  end
 
   class DatePicker < Domino
     selector ".ui-datepicker"
@@ -230,6 +191,14 @@ module Dom
 
       def click_delete
         node.find_link('Delete').click
+      end
+    end
+
+    class OrganizationForm < Domino
+      selector "form.organization"
+
+      def name
+        node.find("#organization_name").value
       end
     end
 
@@ -320,6 +289,46 @@ module Dom
       end
     end
 
+    class ProductForm < Domino
+      selector "form.product"
+
+      def organization_field
+        node.find('#product_organization_id')
+      end
+
+      def name
+        node.find('#product_name')
+      end
+
+      def category
+        node.find('#product_category_id')
+      end
+
+      def who_story
+        node.find('#product_who_story').value
+      end
+
+      def how_story
+        node.find('#product_how_story').value
+      end
+
+      def locations
+        node.all("#product_location_id option").map(&:text)
+      end
+
+      def selected_location
+        node.find("#product_location_id").value
+      end
+
+      def location
+        node.find('#product_location_id')
+      end
+
+      def seller_info
+        node.find('#seller_info')
+      end
+    end
+
     class LocationForm < Domino
       selector ".edit_location, .new_location"
 
@@ -400,17 +409,26 @@ module Dom
     end
   end
 
-  class OrganizationForm < Domino
-    selector "form.organization"
+  class CartLink < Domino
+    selector "header .cart .counter"
 
-    def name
-      node.find("#organization_name").value
+    def has_count?(count)
+      expect(node).to have_content(count.to_s)
     end
   end
 
   module Buying
     class DeliveryChoice < Domino
       selector "#deliveries .delivery"
+
+      attribute :type
+      attribute :date
+      attribute :time_range
+      attribute :location
+
+      def description
+        "#{type} #{date} #{time_range}"
+      end
 
       def self.submit
         within("#deliveries") do
@@ -422,21 +440,21 @@ module Dom
         node.find("input[type=radio]").set(:checked)
         self.class.submit
       end
+    end
 
-      def type
-        node.find(".type").text
+    class ProductRow < Domino
+      selector ".product"
+      attribute :name
+      attribute :description
+
+      def quantity_field
+        node.find_field "quantity"
       end
 
-      def date
-        node.find(".date").text
-      end
-
-      def time_range
-        node.find(".time_range").text
-      end
-
-      def location
-        node.find(".location")
+      def set_quantity(n)
+        id = node[:id]
+        quantity_field.set(n)
+        #page.execute_script("$('#{id} input[name=quantity]').trigger('change');")
       end
     end
   end

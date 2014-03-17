@@ -24,7 +24,7 @@
         </p>
         <ul class="l-inline-list nav nav--app">
           <li><%= link_to 'Dashboard', dashboard_path %></li
-          ><li><a href="#" class="cart">Cart <span class="counter">3</span></a></li
+          ><li><%= render "cart/link" %></li
           ><li><a href="#">Help</a></li
           ><li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
         </ul>

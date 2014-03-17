@@ -17,6 +17,12 @@ module Sessions
         end
       end
 
+      cart = Cart.find_or_create_by!(organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
+        c.location_id = location.id if location.present?
+      end
+
+      session[:cart_id] = cart.id
+
       redirect_to :products
     end
 

@@ -55,7 +55,7 @@ describe "Adding a product" do
     end
 
     context "filling in who/where/how", js: true, chosen_js: true do
-      let(:product_form) { Dom::ProductForm.first }
+      let(:product_form) { Dom::Admin::ProductForm.first }
 
       it "pre-populates the fields from the organization" do
         within '#admin-nav' do
@@ -84,7 +84,7 @@ describe "Adding a product" do
 
         uncheck "seller_info"
         expect(page).to have_content("Who")
-        product_form = Dom::ProductForm.first
+        product_form = Dom::Admin::ProductForm.first
 
         fill_in "product_who_story", with: "We sell other stuff"
         fill_in "product_how_story", with: "By selling stuff"
@@ -384,7 +384,7 @@ describe "Adding a product" do
       it "pre-populates who/where/how fields from the organization" do
         expect(page).to have_content("Who")
 
-        product_form = Dom::ProductForm.first
+        product_form = Dom::Admin::ProductForm.first
         expect(product_form.who_story).to eq("who org2")
         expect(product_form.how_story).to eq("how org2")
 
@@ -396,12 +396,12 @@ describe "Adding a product" do
 
         before do
           select org2.locations.first.name, from: "product_location_id"
-          expect(Dom::ProductForm.first.selected_location).to eql(org2.locations.first.id.to_s)
+          expect(Dom::Admin::ProductForm.first.selected_location).to eql(org2.locations.first.id.to_s)
           select org.name, from: "Product Organization"
         end
 
         it "populates the locations list" do
-          product_form = Dom::ProductForm.first
+          product_form = Dom::Admin::ProductForm.first
           expect(product_form.locations).to include(*org.locations.map(&:name))
         end
       end
@@ -412,14 +412,14 @@ describe "Adding a product" do
         end
 
         it "disables seller info" do
-          form = Dom::ProductForm.first
+          form = Dom::Admin::ProductForm.first
           expect(form.seller_info).to be_disabled
         end
       end
     end
 
     it "does not offer non-selling organizations as options for the Organization select" do
-      product_form = Dom::ProductForm.first
+      product_form = Dom::Admin::ProductForm.first
       expect(product_form.organization_field).to_not have_content(buying_org.name)
     end
 

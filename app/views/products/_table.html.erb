@@ -1,4 +1,4 @@
-<table class="column column--three-fourths" id="products">
+<table class="column column--three-fourths" id="products" data-cart-url="<%= cart_path %>" data-cart-items="<%= @cart_items.to_json %>">
   <thead>
     <tr>
       <th></th>
@@ -11,7 +11,7 @@
   </thead>
   <tbody>
   <% products.each do |product| %>
-    <tr class="product product-row">
+    <tr class="product product-row" data-id="<%= product.id %>">
       <td class="product-image">
       <% if product.image_uid.present? %>
         <%= image_tag Dragonfly.app.remote_url_for(product.image_uid) %>
@@ -63,7 +63,7 @@
       </td>
       <td class="quantity">
         <label>
-          <input type="number" size="3" min="0" max="<%= product.available_inventory %>">
+          <input name="quantity" type="number" size="3" min="0" value="<%= product.cart_quantity %>" max="<%= product.available_inventory %>">
           <span class="price-for-quantity"><%= product.initial_price.formatted_price %></span>
         </label>
       </td>

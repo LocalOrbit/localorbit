@@ -89,7 +89,7 @@ describe "Adding advanced inventory" do
     it "user can navigate back to product from the inventory page" do
 
       click_link "Product Info"
-      product_form = Dom::ProductForm.first
+      product_form = Dom::Admin::ProductForm.first
       expect(product_form).to have_link(product.organization.name)
 
       expect(product_form.name.value).to eql(product.name.to_s)

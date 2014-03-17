@@ -199,4 +199,15 @@ FactoryGirl.define do
     delivery_schedule
     deliver_on Date.today
   end
+
+  factory :cart do
+    organization
+    market
+    delivery
+  end
+
+  factory :cart_item do
+    product
+    cart
+  end
 end
