@@ -6,8 +6,12 @@ module Admin
 
     def create
       @organization = current_user.managed_organizations.find(params[:organization_id])
-
-      @invite_user = InviteUserToOrganization.perform(inviter: current_user, email: user_params[:email], organization: @organization)
+      market = current_market || @organization.markets.first
+      @invite_user = InviteUserToOrganization.perform(
+        inviter: current_user,
+        email: user_params[:email],
+        organization: @organization,
+        market: market)
 
       if @invite_user.success?
         redirect_to [:admin, @organization, :users], notice: "Sent invitation to #{@invite_user.user.email}"

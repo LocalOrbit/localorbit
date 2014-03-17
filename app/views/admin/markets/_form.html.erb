@@ -11,8 +11,12 @@
   <%= f.file_field :logo %>
 </div>
 <div class="field">
+  <%= f.label :tagline %><br>
+  <%= f.text_field :tagline %>
+</div>
+<div class="field">
   <%= f.label :timezone %><br>
-  <%= f.time_zone_select :timezone %>
+  <%= f.time_zone_select :timezone, ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)" %>
 </div>
 <div class="field">
   <%= f.label :contact_name %><br>
@@ -41,4 +45,8 @@
 <div class="field">
   <%= f.label :policies %><br>
   <%= f.text_area :policies, class: "column--three-fourths"  %>
+</div>
+<div class="field">
+  <%= f.label :background %><br>
+  <%= f.select :background, background_options %>
 </div>

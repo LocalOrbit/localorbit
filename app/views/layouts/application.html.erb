@@ -8,7 +8,7 @@
 
   <%= csrf_meta_tags %>
 </head>
-<body style="background-image: url(<%= asset_url 'backgrounds/kale.jpg' %>);">
+<body style="<%= "background-image: url(#{asset_url "backgrounds/#{current_market.background}"});" if current_market && current_market.background.present? %>">
 
   <div class="page-content">
     <header class="l-app-header" id="top">
@@ -16,7 +16,7 @@
         <% if current_user %>
         <p class="header header--welcome">
           <% if current_market %>
-            <%= current_market.name %> — Connecting Farm to Market
+            <%= current_market.name %> <%= "— #{current_market.tagline}" unless current_market.tagline.blank? %>
           <% else %>
             Local Orbit
           <% end %>
@@ -41,8 +41,6 @@
       <% if alert %>
         <p class="flash flash--alert"><%= alert %></p>
       <% end %>
-
-      <%= link_to_unless_current image_tag(asset_path('logo-farm-to-fork.png'), class: "logo"), "/", class: "logo-link pull-left" %>
 
       <%= render 'shared/navigation' %>
 

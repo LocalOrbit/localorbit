@@ -260,7 +260,7 @@
       }
   </style>
   <div class="lo_body">
-    <p class="lo_header">Is this email not displaying correctly? <a href="">View it in your browser.</a></p>
+<!--     <p class="lo_header">Is this email not displaying correctly? <a href="">View it in your browser.</a></p> -->
 
     <div class="lo_content">
     <!-- Content Header -->
@@ -269,10 +269,11 @@
       <table class="lo_content_header">
         <tr>
           <td>
-            <a href="<%= root_url(host: @market.domain) %>"><%= image_tag @market.logo.remote_url, alt: @market.name, class: "lo_org_logo" %></a>
+            <% logo = @market.logo ? market.logo.remote_url : 'logo.png' %>
+            <a href="<%= root_url(host: @market.domain) %>"><%= image_tag logo, alt: @market.name, class: "lo_org_logo" %></a>
           </td>
           <td>
-            <p class="lo_slogan">“Where freshness is what we strive for every day.”</p>
+            <p class="lo_slogan">“<%= @market.tagline %>”</p>
           </td>
         </tr>
       </table>

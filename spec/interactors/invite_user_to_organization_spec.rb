@@ -59,7 +59,7 @@ describe InviteUserToOrganization do
     let(:user){ create(:user, :admin) }
     let(:user_org) { create(:organization) }
     let(:interactor_args) {
-      {email: user.email.upcase, inviter: inviter, organization: org }
+      {email: user.email.upcase, inviter: inviter, organization: org, market: market }
     }
 
     before do

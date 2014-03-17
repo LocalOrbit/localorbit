@@ -42,6 +42,7 @@ class Admin::MarketsController < AdminController
     params.require(:market).permit(
       :name,
       :subdomain,
+      :tagline,
       :timezone,
       :active,
       :contact_name,
@@ -52,6 +53,7 @@ class Admin::MarketsController < AdminController
       :profile,
       :policies,
       :logo,
+      :background,
     )
   end
 

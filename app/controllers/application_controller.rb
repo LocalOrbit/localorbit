@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :ensure_market_affiliation
+  before_action :set_timezone
 
   helper_method :current_market
   helper_method :current_organization
@@ -60,6 +61,10 @@ class ApplicationController < ActionController::Base
       joins(:delivery_schedule).
       where('delivery_schedules.market_id = ? AND deliveries.cutoff_time > ?', current_market.id, Time.current).
       find_by(id: session[:current_delivery_id])
+  end
+
+  def set_timezone
+    Time.zone = current_market.timezone if current_market
   end
 
   def hide_admin_navigation

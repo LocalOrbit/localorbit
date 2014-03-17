@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :market do
     sequence(:name)      {|n| "Market #{n}" }
     sequence(:subdomain) {|n| "market-#{n}" }
+    tagline       'Connecting Farm to Market'
     timezone      'US/Eastern'
     contact_name  'Jill Smith'
     contact_email 'jill@smith.com'
@@ -17,6 +18,10 @@ FactoryGirl.define do
       after(:create) do |m|
         create(:delivery_schedule, market: m)
       end
+    end
+
+    trait :with_logo do
+      logo File.open(Rails.root.join('app/assets/images/logo-farm-to-fork.png'))
     end
   end
 

@@ -1,8 +1,19 @@
-<div class="nav nav--main pull-right">
-  <%= link_to_or_span "Shop", products_path, class: "" %>
-  <%= link_to_or_span "Sellers", sellers_path, class: "" %>
-  <%= link_to_or_span "Market Info", market_path, class: "" %>
-</div>
+<%
+if current_market && current_market.logo
+  logo = image_tag(current_market.logo.remote_url, alt: "#{current_market.name} logo", class: "logo")
+else
+  logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "logo")
+end
+%>
+<%= link_to_unless_current logo, root_path, class: "logo-link pull-left" %>
+
+<% if current_market %>
+  <div class="nav nav--main pull-right">
+    <%= link_to_or_span "Shop", products_path, class: "" %>
+    <%= link_to_or_span "Sellers", sellers_path, class: "" %>
+    <%= link_to_or_span "Market Info", market_path, class: "" %>
+  </div>
+<% end %>
 
 <% if current_user && !@hide_admin_nav %>
   <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before">
