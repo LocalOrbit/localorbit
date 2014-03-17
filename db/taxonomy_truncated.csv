@@ -1,0 +1,72 @@
+cat_id,parent_id,cat_name,order_by
+1,NULL,"Root Catalog",100
+2,1,"Default Category",100
+121,2,Fruits,1
+122,121,"Tropical & Specialty",100
+123,121,"Stone Fruit",100
+124,121,Pears,100
+125,121,Melons,100
+1027,125,Watermelon,100
+128,121,Grapes,100
+129,128,"Red Grapes",100
+130,128,"Green Grapes",100
+131,121,Citrus,100
+132,131,"Oranges & Tangerines",100
+133,132,Satsumas,100
+134,131,Limes,100
+135,131,Lemons,100
+136,131,Grapefruit,100
+137,121,"Berries & Cherries",100
+138,137,"Yellow Raspberries",100
+139,137,"Tart Cherries",100
+140,137,"Red Raspberries",100
+141,137,"Red Currants",100
+142,137,"Rainer Cherries",100
+143,137,Gooseberries,100
+144,137,"Dark Red Cherries",100
+145,137,Cranberries,100
+146,137,Blueberries,100
+147,137,Blackberries,100
+148,137,"Black Currants",100
+149,121,Bananas,100
+150,121,Apples,100
+151,150,"Macintosh Apples",100
+152,150,"Jonagold Apples",100
+153,150,"Gala Apples",100
+154,150,"Empire Apples",100
+155,122,"Paw Paw",100
+156,123,Pluots,100
+157,123,Plums,100
+158,123,Peaches,100
+159,123,Nectarines,100
+160,123,Apricots,100
+161,125,"Honeyrock Melon",100
+162,125,"Honeydew Melon",100
+163,125,"Casaba Melon",100
+164,125,"Canteloupe (Muskmelon)",100
+165,128,"Champagne Grapes",100
+166,128,"Black Grapes",100
+167,132,"Navel Oranges",100
+227,2,Vegetables,2
+228,227,Tomatoes,100
+229,237,"Sprouts & Microgreens",100
+230,229,"Sunflower Sprouts",100
+231,227,"Specialty Vegetables",100
+232,227,"Potatoes & Root Vegetables",100
+233,232,Turnips,100
+234,227,"Onions & Garlic",100
+1041,234,Scallions,100
+236,227,Mushrooms,100
+237,227,"Lettuces, Leafy Greens & Sprouts",100
+238,237,"Leafy Greens",100
+239,227,"Fresh Herbs",100
+240,227,"Eggplants, Peppers & Okra",100
+241,227,"Cucumbers, Squash & Pumpkins",100
+242,241,"Winter Squash",100
+243,227,Corn,100
+245,227,"Carrots & Celery",100
+246,245,Celery,100
+247,227,"Broccoli, Cauliflower & Cabbage",100
+248,247,Cabbage,100
+1049,150,"Golden Delicious Apples",100
+254,227,"Beans & Peas",100
