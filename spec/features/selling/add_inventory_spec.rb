@@ -35,7 +35,7 @@ describe "Adding advanced inventory" do
         fill_in "lot_good_from", with: "Tue, 25 Feb 2014"
         fill_in "lot_expires_at", with: "Wed, 10 Dec 2014"
         fill_in "lot_quantity", with: "12"
-        click_button "Save"
+        click_button "Add"
       end
 
       expect(page).to have_content("Successfully added a new lot")
@@ -53,7 +53,7 @@ describe "Adding advanced inventory" do
       within("#new_lot") do
         fill_in "lot_number", with: ""
         fill_in "lot_quantity", with: ""
-        click_button "Save"
+        click_button "Add"
       end
 
       expect(page).to have_content("Could not save lot")
@@ -68,7 +68,7 @@ describe "Adding advanced inventory" do
         fill_in "lot_good_from", with: "Tue, 25 Feb 2014"
         fill_in "lot_expires_at", with: "Wed, 10 Dec 2012"
         fill_in "lot_quantity", with: "12"
-        click_button "Save"
+        click_button "Add"
       end
 
       expect(page).to have_content("Expires On must be in the future")
@@ -80,7 +80,7 @@ describe "Adding advanced inventory" do
         fill_in "lot_good_from", with: "Tue, 25 Feb 2015"
         fill_in "lot_expires_at", with: "Tue, 25 Dec 2012"
         fill_in "lot_quantity", with: "12"
-        click_button "Save"
+        click_button "Add"
       end
 
       expect(page).to have_content("Good From cannot be after expires at date")
@@ -109,14 +109,14 @@ describe "Adding advanced inventory" do
     end
 
     it "populates the correct date on validation errors" do
-      expected_date = 1.month.from_now.change(day: 15).strftime("%a, %e %b %Y")
+      expected_date = 1.month.from_now.change(day: 15).strftime("%m/%d/%Y")
       datepicker = Dom::DatePicker.open('lot_expires_at')
       datepicker.click_next
       datepicker.click_day('15')
 
       expect(find_field('lot_expires_at').value).to eq(expected_date)
 
-      click_button "Save"
+      click_button "Add"
 
       expect(page).to have_content("Lot # can't be blank when 'Expiration Date' is present")
       expect(find_field('lot_expires_at').value).to eq(expected_date)
