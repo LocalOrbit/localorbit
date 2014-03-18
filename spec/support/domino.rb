@@ -415,6 +415,10 @@ module Dom
 
   class CartLink < Domino
     selector "header .cart .counter"
+
+    def has_count?(num)
+      node.has_content? num.to_s
+    end
   end
 
   class BankAccount < Domino
