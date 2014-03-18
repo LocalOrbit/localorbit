@@ -8,7 +8,10 @@ describe 'Market Manager managing delivery schedules' do
   before do
     switch_to_subdomain(market.subdomain)
     sign_in_as user
-    click_link 'Markets'
+    within('#admin-nav') do
+      click_link 'Market Admin'
+      click_link 'Markets'
+    end
     click_link market.name
   end
 
