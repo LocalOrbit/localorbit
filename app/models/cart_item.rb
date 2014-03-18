@@ -5,6 +5,11 @@ class CartItem < ActiveRecord::Base
   validates :cart, presence: true
   validates :product, presence: true
 
+  def unit_prices
+    product.prices.where('min_quantity < ?', quantity).where(organization_id: cart.organization.id).order(:min_quantity) || product.prices.where('min_quantity < ?', quantity).where(organization_id: nil).order(:min_quantity)
+
+  end
+
   def unit_price
     price = product.prices.where('min_quantity < ?', quantity).where(organization_id: cart.organization.id).order(:min_quantity).last || product.prices.where('min_quantity < ?', quantity).where(organization_id: nil).order(:min_quantity).last
 
