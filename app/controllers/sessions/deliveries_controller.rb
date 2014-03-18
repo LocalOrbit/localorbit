@@ -4,7 +4,9 @@ module Sessions
     before_action :require_organization_location
 
     def new
-      @deliveries = current_market.delivery_schedules.map { |ds| ds.next_delivery.decorate(context: {current_organization: current_organization}) }
+      @deliveries = current_market.delivery_schedules.
+                      map {|ds| ds.next_delivery.decorate(context: {current_organization: current_organization}) }.
+                      sort_by {|d| d.deliver_on }
     end
 
     def create
@@ -20,12 +22,6 @@ module Sessions
         end
       end
 
-      cart = Cart.find_or_create_by!(organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
-        c.location_id = location.id if location.present?
-      end
-
-      session[:cart_id] = cart.id
-
       redirect_to :products
     end
 
@@ -39,12 +35,6 @@ module Sessions
 
     def require_organization
       redirect_to new_sessions_organization_path unless current_organization
-    end
-
-    def require_organization_location
-      if current_organization.locations.none?
-        redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
-      end
     end
   end
 end

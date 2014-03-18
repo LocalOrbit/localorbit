@@ -51,28 +51,6 @@ describe Sessions::DeliveriesController do
       it "assigns the default organization id" do
         expect(session[:current_location]).to eql(org.locations.first.id)
       end
-
-      it "sets the cart_id in session" do
-        cart = Cart.last
-        expect(session[:cart_id]).to eql(cart.id)
-      end
-    end
-
-    context "a cart already exists" do
-      let!(:cart) { create(:cart, organization: org, market: current_market, delivery: delivery, location: org.locations.first )}
-
-      before do
-        post :create,
-             {
-               delivery_id: delivery.id,
-               location_id: {delivery.id.to_s => org.locations.first.id}
-             }, {current_organization_id: org.id }
-      end
-
-      it "sets the existing cart id in session" do
-        expect(session[:cart_id]).to eql(cart.id)
-      end
-
     end
 
     context "an organization_location is also passed as a parameter" do

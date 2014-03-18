@@ -29,7 +29,6 @@ feature "Filtering Products List" do
     switch_to_subdomain market.subdomain
     sign_in_as(user)
     visit products_path
-    choose_delivery
   end
 
   scenario "by seller" do

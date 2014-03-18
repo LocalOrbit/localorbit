@@ -7,7 +7,6 @@ describe "Add item to cart", js: true do
   let!(:seller) {create(:organization, :seller) }
 
   let(:market) { create(:market, :with_addresses, organizations: [buyer, seller]) }
-  let!(:pickup) { create(:delivery_schedule, :buyer_pickup, market: market) }
   let!(:delivery) { create(:delivery_schedule, market: market) }
 
   # Products
@@ -49,7 +48,6 @@ describe "Add item to cart", js: true do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
       find(:link, "Shop").trigger("click")
-      choose_delivery
 
       expect(page).to have_content("Filter the Shop")
 
@@ -75,6 +73,7 @@ describe "Add item to cart", js: true do
   context "with a partially filled cart" do
     let!(:cart) { create(:cart, market: market, organization: buyer, delivery: pickup.next_delivery) }
     let!(:item) { create(:cart_item, cart: cart, product: bananas, quantity: 19) }
+    let!(:pickup) { create(:delivery_schedule, :buyer_pickup, market: market) }
 
     it "initializes the client cart code" do
       switch_to_subdomain(market.subdomain)

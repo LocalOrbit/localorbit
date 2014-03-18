@@ -20,7 +20,7 @@ class Organization < ActiveRecord::Base
   dragonfly_accessor :photo
 
   def default_location
-    locations.first || locations.build
+    locations.first
   end
 
   def shipping_location

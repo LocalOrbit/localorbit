@@ -22,16 +22,6 @@ describe Organization do
   end
 
   describe ".default_location" do
-    context "organization has no saved locations" do
-      let(:org) { Organization.new }
-      subject { org.default_location }
-
-      it "builds a location" do
-        expect(subject).to be_a(Location)
-        expect(subject).not_to be_persisted
-      end
-    end
-
     context "organization has one saved location" do
       let!(:location) { create(:location) }
       let!(:org) { location.organization }
