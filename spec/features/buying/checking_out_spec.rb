@@ -90,5 +90,55 @@ describe "Checking Out", js: true do
       expect(potatoes_item.unit_price).to have_content("$3.00")
       expect(potatoes_item.price).to have_content("$15.00")
     end
+
+    context "delivery" do
+      context "is pickup" do
+        # delivery is pickup by default
+        it "displays market address" do
+          within("#address") do
+            expect(page).to have_content("Delivery Address")
+            expect(page).to have_content("Pickup on")
+            expect(page).to have_content(market.addresses.first.address)
+            expect(page).to have_content(market.addresses.first.city)
+            expect(page).to have_content(market.addresses.first.state)
+            expect(page).to have_content(market.addresses.first.zip)
+          end
+        end
+      end
+
+      context "is dropoff" do
+        it "displays organization location address"
+      end
+    end
+
+    context "delivery fees" do
+      context "are present" do
+        it "displays the fee"
+        it "modifies the total"
+      end
+
+      context "are not present" do
+        it "does not modify the total"
+        it "displays as Free!"
+      end
+    end
+  end
+
+  context "updating quantity" do
+    it "updates the per-unit price based on the pricing tier it fits in"
+    it "updates the overall price"
+    it "updates item subtotal"
+    it "updates total based on discounts and delivery fees"
+  end
+
+
+  context "discounts" do
+    context "are present" do
+      it "modifies the total"
+    end
+
+    context "are not present" do
+      it "does not modify the total"
+    end
   end
 end
