@@ -1,0 +1,34 @@
+<h1>Cart</h1>
+<h2>Your Order</h2>
+
+<% @grouped_items.each_pair do |seller_name, items| %>
+  <div class="item-group">
+    <h3 class="seller"><%= seller_name %></h3>
+
+    <table>
+      <%= content_tag_for(:tr, items, id: "cart_item_#") do |item| %>
+        <td class="name"><%= item.product.name %></td>
+        <td class="quantity"><%= item.quantity %></td>
+        <td class="unit_price"><%= item.unit_price.formatted_price %></td>
+        <td class="price"><%= item.total_price %></td>
+      <% end %>
+    </table>
+  </div>
+<% end %>
+
+<div id="items">
+</div>
+
+<div id="additional-information">
+  <div id="address">
+    <h2>Delivery Address</h2>
+  </div>
+
+  <div id="payment-info">
+    <h2>Payment Information</h2>
+  </div>
+
+  <fieldset disabled>
+    <legend>Select Payment Method</legend>
+  </fieldset>
+</div>
