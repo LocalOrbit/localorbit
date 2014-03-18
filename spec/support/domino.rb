@@ -362,6 +362,35 @@ module Dom
     end
   end
 
+  module Cart
+    class SellerGroup < Domino
+      selector ".item-group"
+      attribute :seller
+
+      def has_product_row?(content)
+        node.has_selector?(".cart_item", text: content)
+      end
+    end
+
+    class Item < Domino
+      selector ".item-group .cart_item"
+
+      attribute :name
+
+      def quantity
+        node.find(".quantity")
+      end
+
+      def unit_price
+        node.find(".unit_price")
+      end
+
+      def price
+        node.find(".price")
+      end
+    end
+  end
+
   class Product < Domino
     selector ".product"
 
@@ -473,9 +502,7 @@ module Dom
       end
 
       def set_quantity(n)
-        id = node[:id]
         quantity_field.set(n)
-        #page.execute_script("$('#{id} input[name=quantity]').trigger('change');")
       end
     end
   end
