@@ -71,24 +71,6 @@ describe "Editing a product" do
         end
       end
     end
-
-    context "and switching to advanced inventory management", js: true do
-      it "toggles display of inventory tab" do
-        expect(page).to have_content("Your current inventory")
-        within(".tabs") do
-          expect(page).to_not have_content("Inventory")
-        end
-
-        uncheck "Use simple inventory management"
-
-        expect(page).to_not have_content("Your current inventory")
-        within(".tabs") do
-          expect(page).to have_content("Inventory")
-        end
-
-        expect(page).not_to have_selector(:link_or_button, "Inventory")
-      end
-    end
   end
 
   describe "additional taxonomy requests" do
