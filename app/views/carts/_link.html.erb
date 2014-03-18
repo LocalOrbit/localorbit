@@ -1,0 +1,7 @@
+<% if current_cart.present? %>
+  <%= link_to [:cart], class: "cart" do %>
+  Cart <span class="counter"><%= current_cart.items.count %></span>
+  <% end %>
+<% else %>
+  <a href="#" class="cart">Cart <span class="counter">0</span></a>
+<% end %>
