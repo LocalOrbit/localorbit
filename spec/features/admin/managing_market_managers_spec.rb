@@ -60,6 +60,14 @@ describe "Admin Managing Market Managers" do
       click_button 'Add Market Manager'
 
       expect(page).to have_text('new-user@example.com')
+
+      click_link 'Sign Out'
+
+      open_last_email
+
+      visit_in_email("Join Local Orbit")
+
+      expect(page).to have_content("Set your password")
     end
 
     it 'I can remove a current market manager' do

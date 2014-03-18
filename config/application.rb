@@ -29,7 +29,7 @@ module LocalOrbit
 
     config.to_prepare do
       Devise::Mailer.layout "email"
-      Devise::SessionsController.skip_before_action :ensure_market_affiliation
+      DeviseController.skip_before_action :ensure_market_affiliation
     end
   end
 end
