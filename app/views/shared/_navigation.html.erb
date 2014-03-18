@@ -21,7 +21,7 @@ end
       <li><a href="#"><i class="font-icon" data-icon=""></i> Purchase History</a></li>
     <% end %>
 
-    <% if current_user.admin? %>
+    <% if current_user.admin? || current_user.market_manager? %>
       <li>
         <a href="#market-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe054;"></i>Market Admin</a>
         <ul class="dropdown with-anchor top-anchor" id="market-dropdown">

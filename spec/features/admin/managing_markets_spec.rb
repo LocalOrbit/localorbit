@@ -23,18 +23,20 @@ describe "Admin Managing Markets" do
   end
 
   describe 'as a market manager' do
-    let!(:user) { create(:user, role: 'user') }
     let!(:market1) { create(:market) }
     let!(:market2) { create(:market) }
+    let!(:user) { create(:user, role: 'user', managed_markets: [market1, market2]) }
 
     before do
-      user.managed_markets << market1
-      user.managed_markets << market2
       switch_to_subdomain market1.subdomain
       sign_in_as user
     end
 
     it 'I can see my markets' do
+      within('#admin-nav') do
+        expect(page).to have_content("Market Admin")
+      end
+
       visit '/admin/markets'
 
       expect(page).to have_text('Markets')

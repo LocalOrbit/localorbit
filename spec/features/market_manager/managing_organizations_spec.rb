@@ -100,7 +100,9 @@ describe "A Market Manager" do
 
     context "with a blank name" do
       it "doesn't add the new organization" do
-        click_link 'Organizations'
+        within("#admin-nav") do
+          click_link 'Organizations'
+        end
         click_link 'Add Organization'
 
         fill_in 'Name', with: ''
@@ -112,7 +114,9 @@ describe "A Market Manager" do
 
     context "with a blank location" do
       it "shows error messages" do
-        click_link 'Organizations'
+        within("#admin-nav") do
+          click_link 'Organizations'
+        end
         click_link 'Add Organization'
 
         fill_in 'Name', with: ''
