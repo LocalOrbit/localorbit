@@ -180,6 +180,10 @@ $ ->
   ########################################
   # Events
   ########################################
+  if $('#product_use_simple_inventory').is(':checked')
+    inventoryTab = $('#product-inventory-nav a').contents()
+    inventoryTab.unwrap().wrap('<span></span>')
+
   $("#seller_info").change ->
     val = $(this).prop("checked")
     formModel.changeSellerInfo(val)

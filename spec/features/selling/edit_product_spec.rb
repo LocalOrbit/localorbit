@@ -1,4 +1,3 @@
-
 require "spec_helper"
 
 describe "Editing a product" do
@@ -86,6 +85,8 @@ describe "Editing a product" do
         within(".tabs") do
           expect(page).to have_content("Inventory")
         end
+
+        expect(page).not_to have_selector(:link_or_button, "Inventory")
       end
     end
   end
