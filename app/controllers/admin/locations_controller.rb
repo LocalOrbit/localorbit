@@ -38,8 +38,8 @@ module Admin
 
     def update_default
       @organization.locations.update_all(default_billing: false, default_shipping: false)
-      @organization.locations.find(params[:default_billing_id]).update_attributes(default_billing: true)
-      @organization.locations.find(params[:default_shipping_id]).update_attributes(default_shipping: true)
+      @organization.locations.find(params[:default_billing_id]).update_attributes(default_billing: true) if params[:default_billing_id]
+      @organization.locations.find(params[:default_shipping_id]).update_attributes(default_shipping: true) if params[:default_shipping_id]
 
       redirect_to [:admin, @organization, :locations], notice: "Successfully updated default addresses"
     end

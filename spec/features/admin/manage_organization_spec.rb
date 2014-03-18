@@ -37,7 +37,7 @@ describe "admin manange organization" do
     end
 
     it "lists locations" do
-      location = create(:location, :default_billing, :decorated, organization: organization)
+      location = create(:location, :decorated, organization: organization)
 
       click_link "Organizations", match: :first
       click_link "University of Michigan Farmers"
@@ -49,7 +49,7 @@ describe "admin manange organization" do
       expect(locations.size).to eq(1)
       expect(locations.first.name_and_address).to include(location.name)
       expect(locations.first.default_billing).to be_checked
-      expect(locations.first.default_shipping).not_to be_checked
+      expect(locations.first.default_shipping).to be_checked
     end
 
     describe "Adding a new location" do
@@ -73,8 +73,8 @@ describe "admin manange organization" do
         expect(locations.size).to eq(1)
         expect(locations.first.name_and_address).to include("University of Michigan")
         expect(locations.first.name_and_address).to include("500 S. State Street, Ann Arbor, MI 34599")
-        expect(locations.first.default_billing).not_to be_checked
-        expect(locations.first.default_shipping).not_to be_checked
+        expect(locations.first.default_billing).to be_checked
+        expect(locations.first.default_shipping).to be_checked
 
         expect(page).to have_content("Successfully added address University of Michigan")
       end
@@ -141,8 +141,9 @@ describe "admin manange organization" do
     end
 
     it "updates default address settings", js: true do
-      billing  = create(:location, :default_billing,  organization: organization)
-      shipping = create(:location, :default_shipping, organization: organization)
+      create(:location, organization: organization)
+      billing  = create(:location, organization: organization)
+      shipping = create(:location, organization: organization)
 
       click_link "Organizations"
       click_link "University of Michigan Farmers"
@@ -152,21 +153,9 @@ describe "admin manange organization" do
       locations = Dom::Admin::OrganizationLocation.all
       locations.each do |location|
         if location.name == billing.name
-          expect(location).to be_default_billing
-        elsif location.name == shipping.name
-          expect(location).to be_default_shipping
-        else
-          fail("Unmatched address")
-        end
-      end
-
-      locations.each do |location|
-        if location.name == billing.name
-          location.mark_default_shipping
-        elsif location.name == shipping.name
           location.mark_default_billing
-        else
-          fail("Unmatched address")
+        elsif location.name == shipping.name
+          location.mark_default_shipping
         end
       end
 
@@ -175,11 +164,9 @@ describe "admin manange organization" do
       locations = Dom::Admin::OrganizationLocation.all
       locations.each do |location|
         if location.name == billing.name
-          expect(location).to be_default_shipping
-        elsif location.name == shipping.name
           expect(location).to be_default_billing
-        else
-          fail("Unmatched address")
+        elsif location.name == shipping.name
+          expect(location).to be_default_shipping
         end
       end
 

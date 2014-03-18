@@ -38,7 +38,7 @@ describe Organization do
       subject { org.default_location }
 
       it "returns the only location" do
-        expect(subject).to eql(location)
+        expect(subject.name).to eql(location.name)
       end
     end
 
@@ -50,8 +50,16 @@ describe Organization do
       subject { org.default_location }
 
       it "returns the first location" do
-        expect(subject).to eql(loc1)
+        expect(subject.name).to eql(loc1.name)
       end
+    end
+  end
+
+  context "factory" do
+    it "has a location" do
+      organization = create(:organization, :single_location)
+
+      expect(organization.locations.count).to eq(1)
     end
   end
 end
