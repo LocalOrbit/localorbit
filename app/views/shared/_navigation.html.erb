@@ -5,7 +5,7 @@ else
   logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "logo")
 end
 %>
-<%= link_to_unless_current logo, root_path, class: "logo-link pull-left" %>
+<%= link_to_or_span logo, root_path, class: "logo-link pull-left" %>
 
 <% if current_market %>
   <div class="nav nav--main pull-right">

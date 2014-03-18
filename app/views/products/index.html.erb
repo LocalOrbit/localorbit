@@ -14,5 +14,7 @@
     <a href="#product-filter-category" class="filter-toggle caretted caretted--right">Category</a>
     <%= filter_list(@categories, :category) %>
   </div
-  ><%= render "table", products: @products %>
+  ><div class="column column--three-fourths">
+    <%= render "table", products: @products %>
+  </div>
 </div>

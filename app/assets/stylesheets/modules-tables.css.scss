@@ -177,9 +177,12 @@ th {
       font-size: 10px;
     }
   .total {
-    padding-top: 30px;
     font-weight: bold;
   }
+}
+
+.info > .name {
+  margin-top: 0
 }
 
 .product-table {
