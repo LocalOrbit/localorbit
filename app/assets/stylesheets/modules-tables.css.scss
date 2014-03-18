@@ -44,6 +44,7 @@ td {
 
 }
 
+
 th {
   font-weight: bolder;
   font-weight: 600;
@@ -75,6 +76,9 @@ th {
   }
   .edit-price > .font-icon {
     font-size: smaller;
+  }
+  .edit-price + .delete {
+    margin-left: 1.5em;
   }
 }
 
