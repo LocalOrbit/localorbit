@@ -204,23 +204,6 @@ describe "Adding a product" do
 
         expect(page).to_not have_content("Your current inventory")
       end
-
-      it "enables the inventory tab" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add a product"
-
-        within(".tabs") do
-          expect(page).to_not have_content("Inventory")
-        end
-
-        uncheck "Use simple inventory management"
-
-        within(".tabs") do
-          expect(page).to have_content("Inventory")
-        end
-      end
     end
 
     context "using the choose category typeahead", js: true do

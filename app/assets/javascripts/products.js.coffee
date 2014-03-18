@@ -180,9 +180,6 @@ $ ->
   ########################################
   # Events
   ########################################
-  if $('#product_use_simple_inventory').is(':checked')
-    inventoryTab = $('#product-inventory-nav a').contents()
-    inventoryTab.unwrap().wrap('<span></span>')
 
   $("#seller_info").change ->
     val = $(this).prop("checked")
@@ -202,4 +199,3 @@ $ ->
 
   $('#product_use_simple_inventory').change ->
     $('#simple-inventory').toggleClass('is-hidden')
-    $('#product-inventory-nav').toggleClass('is-hidden')
