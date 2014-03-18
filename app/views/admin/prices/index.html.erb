@@ -1,13 +1,14 @@
 <div class="l-page-header">
   <h1>Update Product</h1>
-  <%= product_listing_disclaimer %>
-  <a href="#" class="cancel">Cancel</a>
+  <a href="#" class="delete todo">Delete</a>
 </div>
 
 <%= render "admin/products/tabs" %>
 <%= form_for [:admin, @product, @price], html: { class: "row row--partial" } do |f| %>
 <%= render "shared/errors", {resource: @price} %>
 <%= render "shared/errors", {resource: @price_with_errors} if @price_with_errors %>
+
+  <%= product_listing_disclaimer %>
 
   <div class="column column--three-fourths">
 
@@ -17,7 +18,7 @@
       <p>These are your prices. Click on a field to edit it.</p>
       <p>
         <% # TODO: Do things when this is clicked %>
-        <%= link_to "Delete Selected Prices", "/404", class: "btn delete" %>
+        <%= link_to "Delete Selected Prices", "/404", class: "btn delete todo" %>
       </p>
     <% else %>
       <h2>Add Prices</h2>
@@ -99,7 +100,11 @@
       </p>
     <% end %>
     <div class="form-actions">
-    <%= link_to "Return to Products List", admin_products_path, disabled: @product.prices.any? ? nil : "disabled", class: "btn btn--save" %>
+    <%= link_to "Return to Products List", admin_products_path, disabled: @product.prices.count > 0 ? nil : "disabled", class: "btn" %>
+
+    <% if !@product.prices.any?(&:persisted?) %>
+      <%= link_to "Add Another product", new_admin_product_path, class: "btn btn--add" %>
+    <% end %>
     </div>
   </div>
 <% end # form %>

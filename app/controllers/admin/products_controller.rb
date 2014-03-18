@@ -56,7 +56,7 @@ module Admin
     end
 
     def after_create_page
-      @product.use_simple_inventory? ? [:admin, @product] : [:admin, @product, :lots]
+      @product.use_simple_inventory? ? [:admin, @product, :prices] : [:admin, @product, :lots]
     end
 
     def ensure_selling_organization!
