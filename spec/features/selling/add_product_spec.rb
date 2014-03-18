@@ -73,9 +73,7 @@ describe "Adding a product" do
       end
 
       it "saves changes made to fields if checked and unchecked" do
-        location2 = create(:location, name: "Good Place")
-        org.locations << location2
-        org.save!
+        location2 = create(:location, name: "Good Place", organization: org)
 
         within '#admin-nav' do
           click_link 'Products'
@@ -347,14 +345,12 @@ describe "Adding a product" do
   describe "a seller belonging to multiple organizations" do
     let(:org2) { create(:organization, who_story: "who org2", how_story: "how org2", locations: [create(:location)]) }
     let(:buying_org) { create(:organization, :buyer) }
-    let(:loc1) { create(:location) }
-    let(:loc2) { create(:location) }
+    let(:loc1) { create(:location, organization: org) }
+    let(:loc2) { create(:location, organization: org2) }
 
     before do
-      org.locations << loc1
       org.users << user
       org2.users << user
-      org2.locations << loc2
 
       buying_org.users << user
 
