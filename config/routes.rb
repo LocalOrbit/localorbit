@@ -37,7 +37,9 @@ Rails.application.routes.draw do
     resource :category_request, only: :create
   end
 
-  resource :dashboard
+  resource :dashboard do
+    get "/coming_soon" => "dashboards#coming_soon"
+  end
 
   namespace :sessions do
     resources :organizations
