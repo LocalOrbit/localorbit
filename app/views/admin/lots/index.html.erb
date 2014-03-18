@@ -55,7 +55,7 @@
         <%= lot.expires_at.try(:strftime, '%m/%d/%Y') %>
       </td>
       <td class="quantity"><%= lot.quantity %></td>
-      <td></td>
+      <td><%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#lot_#{lot.id}", class: "edit-price" %></td>
     <% end %>
 
     <%= content_tag_for :tr, lot, :fields, {class: 'lot', style:"display:none;", data: {"form-url" => url_for([:admin, lot.product, lot]) }} do %>
