@@ -426,7 +426,7 @@ module Dom
     attribute :verified
 
     def verfied?
-      verified == "true"
+      verified == "Verified"
     end
   end
 
