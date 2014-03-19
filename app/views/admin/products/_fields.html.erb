@@ -1,8 +1,10 @@
 <%= render "shared/errors", {resource: @product} %>
 
 <% if @product.persisted? %>
-    <h2>Product Organization</h2>
-    <%= link_to @product.organization.name, [:admin, @product.organization] %>
+    <h2>
+      Product Organization<br>
+      <%= link_to @product.organization.name, [:admin, @product.organization] %>
+    </h2>
     <%= f.hidden_field :organization_id %>
 <% else %>
   <% if @organizations.count > 1 %>
@@ -28,25 +30,25 @@
 
 <div class="field">
   <%= f.label :short_description %><br>
-  <%= f.text_area :short_description, rows: 2 %><br>
+  <%= f.text_area :short_description, rows: 2 %>
 </div>
 
 <div class="field">
   <%= f.label :long_description %>
   <span class="hint">(optional but recommended)</span>
-  <%= f.text_area :long_description, rows: 4 %><br>
+  <%= f.text_area :long_description, rows: 4 %>
 </div>
 
 <div class="field">
   <%= f.label :category_id %>
-  <span class="hint">Not seeing what you need? <%= link_to "Request a new category", "#", class: "modal-toggle", data: { modal: "request-new-category" } %></span>
+  <span class="hint">Not seeing what you need? <%= link_to "Request a New Category", "#", class: "modal-toggle", data: { modal: "request-new-category" } %></span>
   <br>
   <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>
 </div>
 
 <div class="field">
   <%= f.label :unit_id %>
-  <span class="hint">Not seeing what you need? <%= link_to "Request a new unit", "#", class: "modal-toggle", data: { modal: "request-new-unit" } %></span>
+  <span class="hint">Not seeing what you need? <%= link_to "Request a New Unit", "#", class: "modal-toggle", data: { modal: "request-new-unit" } %></span>
   <br>
   <%= f.select :unit_id, Unit.all.map { |u| [u.plural, u.id] } , {include_blank: ""}, {data: {placeholder: "Click and type to search for a Unit"}, class: "chosen"} %>
 </div>
@@ -56,9 +58,9 @@
   <%= f.check_box :use_simple_inventory, disabled: !@product.can_use_simple_inventory? %>
   <%= f.label :use_simple_inventory, 'Use simple inventory management.' %>
   <% if @product.can_use_simple_inventory? %>
-  <span class="hint">Uncheck this to use advanced inventory tracking with lots and expirations dates</span>
+  <span class="hint">Uncheck this to use advanced inventory tracking with lots and expirations dates.</span>
   <% else%>
-  <span class="warning">To use simple inventory management you must clear out your current available inventory</span>
+  <span class="warning">To use simple inventory management you must clear out your current available inventory.</span>
   <% end %>
   <%= content_tag :div, id: "simple-inventory", class: (@product.use_simple_inventory? ? nil : 'is-hidden') do %>
     <%= f.text_field :simple_inventory, size: 4 %>
@@ -67,29 +69,29 @@
 </fieldset>
 
 <fieldset class="conditional">
-  <legend>More info about this product (where, when, how)</legend>
+  <legend>More info about this product (Where, Who, How)</legend>
   <%= check_box_tag :seller_info, "", !@product.has_custom_seller_info? %>
   <%= label_tag :seller_info, "Use seller info from my account" %>
-  <span class="hint">Uncheck this to customize your seller information for this product</span>
+  <span class="hint">Uncheck this to customize your seller information for this product.</span>
 
   <div class="hidden seller_info_fields">
     <div class="field">
-      <%= f.label :location_id, "Product Location" %><br>
-      <%= f.select :location_id, @product.location_options_for_select, include_blank: true %>
-      <span class="hint">This address comes from the My Account page</span>
-      <span class="hint">Select an organization above to load location options</span>
+      <%= f.label :location_id, "Where" %>
+      <span class="hint">Select the location this product is produced.</span><br>
+      <%= f.select :location_id, @product.location_options_for_select, {include_blank: true}, {class: "column column--full"} %>
+      <span class="hint">These come from the Organization area under Account. Edit them <%= link_to "here", [:admin, @product.organization, :locations] %>.</span>
     </div>
 
     <div class="field">
       <%= f.label :who_story, "Who" %>
-      <%= f.text_area :who_story %>
-      <span class="hint">This description comes from the My Organization page</span>
+      <span class="hint">A description of who you are.</span>
+      <%= f.text_area :who_story, size: 2 %>
     </div>
 
     <div class="field">
       <%= f.label :how_story, "How" %>
-      <%= f.text_area :how_story %>
-      <span class="hint">This description comes from the My Organization page</span>
+      <span class="hint">A description of how you produce your products.</span>
+      <%= f.text_area :how_story, size: 2 %>
     </div>
   </div>
 </fieldset>

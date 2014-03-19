@@ -63,8 +63,10 @@
     content: '';
   }
 
-  a, h1, span {
+  a, h1, span, i {
+    display: inline-block;
     vertical-align: top;
+    text-align: left;
   }
 
   > a {
