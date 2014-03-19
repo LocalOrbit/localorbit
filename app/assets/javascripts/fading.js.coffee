@@ -8,19 +8,18 @@ $ ->
     events = ["transitionend", "transitionend", "oTransitionEnd", "webkitTransitionEnd", "transitionend"]
 
     for p in styles
+      ext = events.shift()
       if sandbox.style[ p + "ransition"] != undefined
-        ext = events[p]
         $('body').addClass('transitions')
+        features.transitions = ext
         break
-
-      features.transitions = ext
 
   detect_transitions()
 
   if $('body').hasClass('transitions')
     $('.flash').addClass('is-fading')
     $('.flash').on features.transitions, (e) ->
-      e.target.remove()
+      $(e.target).remove()
   else
     window.setTimeout ->
         $('.flash').fadeOut(500)

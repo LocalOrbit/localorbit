@@ -12,7 +12,7 @@ describe "An organization member" do
   end
 
   it "can edit an organization they belong to" do
-    click_link "Organizations"
+    visit "/admin/organizations"
     click_link org.name
     click_link "Edit Organization"
 

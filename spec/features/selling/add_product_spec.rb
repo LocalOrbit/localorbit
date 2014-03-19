@@ -176,6 +176,8 @@ describe "Adding a product" do
         click_button "Add Product"
         expect(page).to have_content("Added Red Grapes")
 
+        click_link "Product Info"
+
         simple_inventory_checkbox = page.find_field("Use simple inventory management")
         inventory_quantity        = page.find_field("Your current inventory")
 
@@ -238,6 +240,8 @@ describe "Adding a product" do
         click_button "Add Product"
         expect(page).to have_content("Added Red Grapes")
 
+        click_link "Product Info"
+
         expect(page).to have_content("Grapes / Red Grapes")
       end
 
@@ -273,7 +277,7 @@ describe "Adding a product" do
         end
         click_link "Add a product"
 
-        expect(page).to have_content(stub_warning)
+        expect(page).to_not have_content(stub_warning)
         expect(page).to_not have_content(organization_label)
 
         fill_in_required_fields(:with_chosen)
@@ -404,7 +408,7 @@ describe "Adding a product" do
 
     context "when product information is valid" do
       it "makes the user choose an organization to add the product for" do
-        expect(page).to have_content(stub_warning)
+        expect(page).to_not have_content(stub_warning)
         select org2.name, from: organization_label
         fill_in_required_fields
 
@@ -444,7 +448,7 @@ describe "Adding a product" do
     end
 
     it "makes the user choose an organization to add the product for" do
-      expect(page).to have_content(stub_warning)
+      expect(page).to_not have_content(stub_warning)
       select org2.name, from: organization_label
       fill_in_required_fields
 

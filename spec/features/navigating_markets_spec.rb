@@ -61,9 +61,12 @@ feature "A user navagating markets" do
       it "shows me the dashboard" do
         switch_to_subdomain market.subdomain
         sign_in_as(user)
-        within "h1" do
-          expect(page).to have_content("Dashboard")
+
+        within(".header") do
+          expect(page).to have_content(market.name)
         end
+
+        expect(current_path).to eql("/dashboard")
       end
     end
 
@@ -71,9 +74,12 @@ feature "A user navagating markets" do
       it "redirects to the dashboard if the user has only 1 market" do
         switch_to_main_domain
         sign_in_as(user)
-        within "h1" do
-          expect(page).to have_content("Dashboard")
+
+        within(".header") do
+          expect(page).to have_content(market.name)
         end
+
+        expect(current_path).to eql("/dashboard")
       end
 
       it "shows something to let me pick a market if the user has multiple markets"

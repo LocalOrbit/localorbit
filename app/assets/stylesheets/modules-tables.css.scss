@@ -44,6 +44,7 @@ td {
 
 }
 
+
 th {
   font-weight: bolder;
   font-weight: 600;
@@ -76,26 +77,28 @@ th {
   .edit-price > .font-icon {
     font-size: smaller;
   }
+  .edit-price + .delete {
+    margin-left: 1.5em;
+  }
 }
 
 .pricing {
   font-size: 12px;
 
-  .price-toggle {
-    display: inline-block;
-    padding: .1em .2em;
-    border: solid 1px #d7d7d7;
-    margin: 0 0 .4em;
-  }
   > ul {
-    margin-top: 0;
+    margin: 0;
   }
 }
 .product-row {
   color: #000;
 
+  &.odd {
+    background: #f4f4f4;
+  }
+
   > td,
   > th {
+    position: relative;
     padding-top: 15px;
     padding-bottom: 15px;
     vertical-align: top;
@@ -114,7 +117,7 @@ th {
       font-size: 14px;
     }
   }
-  .name {
+  a.name {
     margin: 0;
     font-size: 16px;
     font-weight: lighter;
@@ -174,7 +177,19 @@ th {
       font-size: 10px;
     }
   .total {
-    padding-top: 30px;
     font-weight: bold;
   }
 }
+
+.info > .name {
+  margin-top: 0
+}
+
+.product-table {
+  margin: 30px 0;
+}
+  .product-table--admin {
+    td {
+      font-size: 12px;
+    }
+  }

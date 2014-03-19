@@ -62,6 +62,49 @@ input[type=password] {
   }
 }
 
+input[type=datetime],
+input[type=text] {
+  ~ .btn--end {
+    display: none;
+  }
+  &.hasDatepicker {
+    width: 8em;
+    @include border-radius(2px 0 0 2px);
+    vertical-align: top;
+
+    + .clear-link {
+      position: absolute;
+      margin: .4em 0 0 -1.2em;
+    }
+    ~ .btn--end {
+      display: inline-block;
+      padding: 3px 3px 2px;
+      @include border-radius(0 2px 2px 0);
+      margin: 2px 0 2px -1px;
+      font-size: smaller;
+      vertical-align: top;
+    }
+  }
+}
+
+input[type=file] + img {
+  margin-top: 1em;
+}
+
+input[type=search] {
+  height: 25px;
+  padding-left: 20px;
+  border: solid 1px #b0b0b0;
+  @include border-radius(0);
+  @include box-shadow(none);
+  background: asset_url('magnify-search.png') 6px center no-repeat #fff;
+  background: asset_url('magnify-search@2x.png') 6px center / 13px 13px no-repeat #fff;
+
+  + .btn {
+    margin-left: 10px;
+  }
+}
+
 input[type=number][size] {
   padding-right: 0
 }
@@ -94,6 +137,7 @@ textarea {
   width: 100%;
   padding-top: 12px;
   padding-bottom: 12px;
+  resize: vertical;
 }
 
 .field {
@@ -102,8 +146,8 @@ textarea {
 .field_with_errors {
   > input,
   > textarea {
-    border-color: #911;
-    @include box-shadow(inset 0 0 0 1px #911, inset 0 1px 5px #aaa);
+    border-color: $alert_text;
+    @include box-shadow(inset 0 0 0 1px $alert_text, inset 0 1px 5px #aaa);
   }
 }
 

@@ -1,37 +1,35 @@
-<aside>
-  <h2>Sellers</h2>
-  <ul>
-    <% @sellers.each do |seller| %>
-      <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>
-    <% end %>
-  </ul>
-</aside>
-
 <div class="row">
-  <div class="profile-image">
-    <h2><%= @current_seller.name %></h2>
-    <% if @current_seller.photo.present? %>
-      <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo" %>
-    <% end %>
-  </div>
-  <div class="map">
-    <h2></h2>
-    <img alt="map" src="<%= @current_seller.locations_map %>">
-  </div>
-</div>
+  <aside class="column column--third">
+    <h2>Sellers</h2>
+    <ul>
+      <% @sellers.each do |seller| %>
+        <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>
+      <% end %>
+    </ul>
+  </aside
+  ><div class="column column--two-thirds">
 
-<div class="row">
-  <div class="who-story">
-    <h2>Who We Are</h2>
-    <%= @current_seller.who_story %>
-  </div>
-  <div class="how-story">
-    <h2>How We Do It</h2>
-    <%= @current_seller.how_story %>
-  </div>
-</div>
+    <div class="profile-image">
+      <h2><%= @current_seller.name %></h2>
+      <% if @current_seller.photo.present? %>
+        <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo" %>
+      <% end %>
+    </div>
 
-<div>
-  <h2>Currently Selling</h2>
-  <%= render "products/table", products: @products %>
+    <div class="map">
+      <img alt="map" src="<%= @current_seller.locations_map %>">
+    </div>
+
+    <div class="who-story">
+      <h2>Who We Are</h2>
+      <%= @current_seller.who_story %>
+    </div>
+    <div class="how-story">
+      <h2>How We Do It</h2>
+      <%= @current_seller.how_story %>
+    </div>
+
+    <h2>Currently Selling</h2>
+    <%= render "products/table", products: @products %>
+  </div>
 </div>

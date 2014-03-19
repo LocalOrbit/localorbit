@@ -8,9 +8,9 @@ $ ->
     $element.toggleClass('is-hidden')
     $(".popup").not($element).addClass('is-hidden')
     if $(".popup").not(".is-hidden").length
-      $('.overlay').addClass('.is-open');
+      $('.overlay').addClass('is-open');
     else
-      $('.overlay').addClass('.is-open');
+      $('.overlay').addClass('is-open');
 
 
   $('.modal-toggle').click ->
@@ -21,4 +21,3 @@ $ ->
 
   $('.popup .popup-header button').click ->
     $(this).closest('.popup').addClass('is-hidden')
-

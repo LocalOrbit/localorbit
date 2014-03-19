@@ -1,3 +1,10 @@
+$alert_text:   #c43205;
+$alert_bg:     #ffe9e1;
+$notice_text:  #58a406;
+$notice_bg:    #eaf9db;
+$warning_text: #de8007;
+$warning_bg:   #fff8e1;
+
 @mixin border-radius($r) {
   -webkit-border-radius: $r;
      -moz-border-radius: $r;

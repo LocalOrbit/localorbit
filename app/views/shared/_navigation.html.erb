@@ -5,7 +5,7 @@ else
   logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "logo")
 end
 %>
-<%= link_to_unless_current logo, root_path, class: "logo-link pull-left" %>
+<%= link_to_or_span logo, root_path, class: "logo-link pull-left" %>
 
 <% if current_market %>
   <div class="nav nav--main pull-right">
@@ -18,7 +18,7 @@ end
 <% if current_user && !@hide_admin_nav %>
   <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before">
     <% if current_user.buyer_only? %>
-      <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon=""></i> Purchase History</a></li>
+      <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xf000;"></i> Purchase History</a></li>
     <% end %>
 
     <% if current_user.admin? || current_user.market_manager? %>
@@ -35,7 +35,7 @@ end
       </li>
       <li><a href="/admin/financials"><i class="font-icon" data-icon="&#xe00f;"></i>Financials</a></li>
     <% elsif current_user.seller? %>
-      <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon=""></i> Sales Information</a></li>
+      <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xf000;"></i> Sales Information</a></li>
       <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe00f;"></i> Financials</a></li>
     <% elsif current_user.buyer_only? %>
       <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe00f;"></i> Financials</a></li>
@@ -54,28 +54,28 @@ end
 
     <% if current_user.admin? || current_user.market_manager? || current_user.seller? %>
       <li>
-        <%= link_to raw('<i class="font-icon" data-icon="&#xe01f;"></i>Products</a>'), admin_products_path %>
+        <%= link_to raw('<i class="font-icon" data-icon="&#xe01f;"></i> Products</a>'), admin_products_path %>
       </li>
     <% end %>
 
     <% if current_user.admin? || current_user.market_manager? %>
       <li>
-        <a href="#marketing-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe005;"></i>Marketing</a>
+        <a href="#marketing-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe005;"></i> Marketing</a>
         <ul class="dropdown with-anchor top-anchor" id="marketing-dropdown">
-          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe023;"></i>Fresh Sheet</a></li>
-          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe00a;"></i>Newsletters</a></li>
-          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe003;"></i>Market News</a></li>
-          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe005;"></i>Featured Promotions</a></li>
-          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe00b;"></i>Discount Codes</a></li>
-          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe022;"></i>Upcoming Deliveries</a></li>
-          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe012;"></i>Sent Emails</a></li>
-          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe051;"></i>Email Testing</a></li>
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe023;"></i> Fresh Sheet</a></li>
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe00a;"></i> Newsletters</a></li>
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe003;"></i> Market News</a></li>
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe005;"></i> Featured Promotions</a></li>
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe00b;"></i> Discount Codes</a></li>
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries</a></li>
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe012;"></i> Sent Emails</a></li>
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe051;"></i> Email Testing</a></li>
         </ul>
       </li>
     <% end %>
 
     <li>
-      <a href="#reports-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe01e;"></i>Reports</a>
+      <a href="#reports-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe01e;"></i> Reports</a>
       <ul class="dropdown with-anchor top-anchor" id="reports-dropdown">
         <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe006;"></i> Reports</a></li>
         <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe04f;"></i> Referrals</a></li>
@@ -86,8 +86,8 @@ end
     <li>
       <a href="#account-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe011;"></i>Account</a>
       <ul class="dropdown with-anchor top-anchor" id="account-dropdown">
-        <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe018;"></i>E-mail &amp; Password</a></li>
-        <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe027;"></i>Your Organization</a></li>
+        <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe018;"></i> E-mail &amp; Password</a></li>
+        <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe027;"></i> Your Organization</a></li>
       </ul>
     </li>
   </ul>

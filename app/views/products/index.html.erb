@@ -1,16 +1,20 @@
-<div class="column column--fourth" id="product-filter">
-  <div class="header header--column">
-    <h2 class="heading heading--sidebar">Filter the Shop</h2>
-    <% if request.query_parameters.present? %>
-      <%= link_to "Reset", products_path, class: "btn reset" %>
-    <% end %>
+<div class="row">
+  <div class="column column--fourth" id="product-filter">
+    <div class="header header--column">
+      <h2 class="heading heading--sidebar">Filter the Shop</h2>
+      <% if request.query_parameters.present? %>
+        <%= link_to "Reset", products_path, class: "btn reset" %>
+      <% end %>
+    </div>
+
+
+    <a href="#product-filter-organization" class="filter-toggle caretted caretted--right">Seller</a>
+    <%= filter_list(current_market.organizations, :organization) %>
+
+    <a href="#product-filter-category" class="filter-toggle caretted caretted--right">Category</a>
+    <%= filter_list(@categories, :category) %>
+  </div
+  ><div class="column column--three-fourths">
+    <%= render "table", products: @products %>
   </div>
-
-
-  <a href="#product-filter-organization" class="filter-toggle caretted caretted--right">Seller</a>
-  <%= filter_list(current_market.organizations, :organization) %>
-
-  <a href="#product-filter-category" class="filter-toggle caretted caretted--right">Category</a>
-  <%= filter_list(@categories, :category) %>
-</div
-><%= render "table", products: @products %>
+</div>

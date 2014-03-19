@@ -1,13 +1,15 @@
 <div class="l-page-header">
   <h1>Update Product</h1>
-  <%= product_listing_disclaimer %>
-  <a href="#" class="cancel">Cancel</a>
+  <a href="#" class="delete todo">Delete</a>
 </div>
 
 <%= render "tabs" %>
 
 <div class="row row--partial">
+  <%= product_listing_disclaimer %>
   <%= form_for [:admin, @product], html: { class: "product column column--half", data: { organizations: @organizations.to_json(include: :locations), type: "edit"}} do |f| %>
+
+
     <%= render "fields", {f: f} %>
 
     <div class="form-actions">

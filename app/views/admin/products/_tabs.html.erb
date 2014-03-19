@@ -3,7 +3,7 @@
   <% if @product.persisted? %>
     <%= content_tag(:li, link_to_or_span("Product Info", [:admin, @product]), class: "completed tab") %>
     <%= content_tag(:li, link_to_or_span("Inventory", [:admin, @product, :lots]), id: 'product-inventory-nav', class: (@product.use_simple_inventory? ? 'is-hidden tab' : 'tab')) %>
-    <%= content_tag(:li, link_to_or_span("Pricing", [:admin, @product, :prices]), id: 'product-pricing-nav', class: 'tab') %>
+    <%= content_tag(:li, link_to_or_span("Pricing", [:admin, @product, :prices]), id: 'product-pricing-nav', class: (@product.prices.count > 0 ? 'completed tab' : 'tab')) %>
   <% else %>
     <li class="tab"><span>Product Info</span></li>
     <%= content_tag :li, 'Inventory', id: 'product-inventory-nav', class: (@product.use_simple_inventory? ? 'is-hidden tab' : 'tab') %>

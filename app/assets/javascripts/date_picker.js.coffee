@@ -1,5 +1,5 @@
 class @DatePicker
-  @format: 'D, dd M yy'
+  @format: 'dd M yy'
   @setup: (field) ->
     field = $(field)
 
@@ -19,7 +19,7 @@ class @DatePicker
       @appendClearLink(field)
 
   @appendClearLink: (field)->
-    clearLink = $("<a href='#' class='clear-link'>x</a>")
+    clearLink = $("<a href='#' class='clear-link'><i class='font-icon icon-clear'></i></a>")
     field.after(clearLink)
     clearLink.on 'click', (event)->
       event.preventDefault()

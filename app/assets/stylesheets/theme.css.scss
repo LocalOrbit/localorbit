@@ -1,0 +1,65 @@
+.debugging {
+  .fixme, .todo {
+    -webkit-animation-name: blink;
+    -moz-animation-name: blink;
+    animation-name: blink;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+  }
+  .fixme {
+    -webkit-animation-duration: 2s;
+    -moz-animation-duration: 2s;
+    animation-duration: 2s;
+    color: #911 !important;
+  }
+  .todo {
+    -webkit-animation-duration: 3s;
+    -moz-animation-duration: 3s;
+    animation-duration: 3s;
+    color: #991 !important;
+  }
+}
+
+@-webkit-keyframes blink {
+  0% {
+    opacity: 1;
+    font-weight: normal;
+  }
+  50% {
+    opacity: 0;
+    font-weight: bold;
+  }
+  100% {
+    opacity: 1;
+    font-weight: normal;
+  }
+}
+@-moz-keyframes blink {
+  0% {
+    opacity: 1;
+    font-weight: normal;
+  }
+  50% {
+    opacity: 0;
+    font-weight: bold;
+  }
+  100% {
+    opacity: 1;
+    font-weight: normal;
+  }
+}
+@keyframes blink {
+  0% {
+    opacity: 1;
+    font-weight: normal;
+  }
+  50% {
+    opacity: 0;
+    font-weight: bold;
+  }
+  100% {
+    opacity: 1;
+    font-weight: normal;
+  }
+}

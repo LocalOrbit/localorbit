@@ -24,7 +24,8 @@
     content: "";
   }
 
-  &.top-anchor {
+}
+  .top-anchor {
     &:before {
       top: -7px;
       left: 10px;
@@ -38,15 +39,7 @@
       border-top: 0;
     }
 
-    &:last-child {
-      &:before,
-      &:after {
-        left: auto;
-        right: 10px;
-      }
-    }
   }
-}
 .caretted:after {
   display: inline-block;
   width: 0;
@@ -72,6 +65,19 @@
   color: #43639f;
 }
 
+.copyright {
+
+  .org {
+    font-weight: bolder;
+  }
+  > a {
+    display: inline-block;
+    min-height: 40px;
+    padding-left: 50px;
+    background: asset_url('footer-logo.png') left center no-repeat;
+    background: asset_url('footer-logo@2x.png') left center / 38px 40px no-repeat;
+  }
+}
 .counter {
   padding: 0 15px;
   border: solid 1px #1e2e4e;
@@ -122,6 +128,37 @@
   .is-open > .dropdown {
     display: block;
   }
+
+.edit-toggle {
+  display: inline-block;
+  padding: .1em .2em;
+  border: solid 1px #d7d7d7;
+  margin: 0 0 .4em;
+  background: #fff;
+
+  &:after {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 4px;
+    background: asset_url('wrench-edit.png') center no-repeat;
+    background: asset_url('wrench-edit@2x.png') center / 100% no-repeat;
+    content: '';
+    vertical-align: center;
+  }
+
+  &:hover {
+    @include box-shadow(0 0 1px rgba(0,0,0,0.4));
+  }
+}
+.export {
+  display: inline-block;
+  min-height: 10px;
+  padding-left: 20px;
+  color: #43639f;
+  background: asset_url('icon-export.png') left center no-repeat;
+  background: asset_url('icon-export@2x.png') left center / 13px 10px no-repeat;
+}
 
 .filter-list {
   width: 100%;
@@ -185,36 +222,6 @@
   }
 }
 
-
-.flash {
-  position: absolute;
-  left: 12.5%;
-  z-index: 1;
-  display: block;
-  width: 75%;
-  padding: 1em 2em;
-  border-style: solid;
-  border-width: 1px;
-  @include border-radius(30px);
-  @include box-shadow(0 2px 3px rgba(0,0,0,0.2));
-  margin: 0 auto 1em;
-  text-align: center;
-  @include transition(opacity .5s linear 3s);
-
-  &.is-fading {
-    opacity: 0;
-  }
-}
-  .flash--alert {
-    border-color: #ebd217;
-    background-color: #f1e05d;
-  }
-
-  .flash--notice {
-    border-color: #99eb17;
-    background-color: #b8f15d;
-  }
-
 .header {
   font-weight: bold;
 }
@@ -266,16 +273,17 @@
   }
 }
 
-.logo-link {
-  position: relative;
-  display: block;
-  width: 100px;
-  max-height: 100px;
-  margin: 0 0 20px 5px;
+.map {
+  > img {
+    display: block;
+    height: 300px;
+  }
+}
 
-  > .logo {
-    max-width: 100%;
-    max-height: 100%;
+.market-manager-contact {
+  text-align: right;
+  > .email {
+    font-weight: bold;
   }
 }
 
@@ -353,6 +361,13 @@
     &.is-open > a {
       background: #e6e6e6;
     }
+    &:last-child {
+      .top-anchor:before,
+      .top-anchor:after {
+        left: auto;
+        right: 10px;
+      }
+    }
   }
   .font-icon {
     padding-right: 10px;
@@ -370,14 +385,6 @@
   &.is-open {
     display: block;
   }
-}
-.product-status-alert {
-  display: inline-block;
-  max-width: 40%;
-  color: #a90d0d;
-  font-size: 12px;
-  font-weight: lighter;
-  text-align: center;
 }
 
 .tabs-wrapper {
@@ -431,3 +438,85 @@
   } 
 }
 
+/** Errors and messages */
+
+.flash {
+  position: absolute;
+  z-index: 1;
+  top: 2px;
+  width: 100%;
+  text-align: center;
+  @include transition(opacity .5s linear 3s);
+
+  &.is-fading {
+    opacity: 0;
+  }
+
+  > p {
+    display: inline-block;
+    padding: .5em 2em;
+    border-style: solid;
+    border-width: 1px;
+    @include border-radius(30px);
+    @include box-shadow(0 2px 3px rgba(0,0,0,0.2));
+    color: #000;
+  }
+}
+  .flash--alert > p {
+    border-color: $alert_text;
+    background-color: $alert_bg;
+  }
+
+  .flash--notice > p {
+    border-color: $notice_text;
+    background-color: $notice_bg;
+  }
+
+.form-errors {
+  padding: 0;
+  margin: 0 0 2em;
+  color: $alert_text;
+  text-align: left;
+  list-style: none;
+
+  > li:before {
+    display: inline-block;
+    width: 1em;
+    @include border-radius(50%);
+    margin-right: .4em;
+    color: #fff;
+    background: $alert_text;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+    content: '!';
+  }
+}
+.product-status-alert {
+  max-width: 75%;
+  padding: 1em 2em;
+  margin: 0 auto 2em;
+  color: $alert_text;
+  background: $alert_bg;
+  font-size: 16px;
+  font-weight: lighter;
+  text-align: center;
+}
+
+/** Links */
+.clear-link {
+  color: #ccc;
+}
+
+.logo-link {
+  position: relative;
+  display: block;
+  max-width: 100px;
+  height: 100px;
+  margin: 0 0 20px 5px;
+
+  > .logo {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}

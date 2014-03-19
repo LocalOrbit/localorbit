@@ -3,14 +3,14 @@
 <head>
   <title>We're sorry, but something went wrong (500)</title>
   <style>
-  body {
+  .error-page {
     background-color: #EFEFEF;
     color: #2E2F30;
     text-align: center;
     font-family: arial, sans-serif;
   }
 
-  div.dialog {
+  .error-page div.dialog {
     width: 25em;
     margin: 4em auto 0 auto;
     border: 1px solid #CCC;
@@ -24,13 +24,13 @@
     padding: 7px 4em 0 4em;
   }
 
-  h1 {
+  .error-page h1 {
     font-size: 100%;
     color: #730E15;
     line-height: 1.5em;
   }
 
-  body > p {
+  .error-page > p {
     width: 33em;
     margin: 0 auto 1em;
     padding: 1em 0;
@@ -49,9 +49,11 @@
 
 <body>
   <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <h1>We're sorry, but something went wrong.</h1>
+  <div class="error-page">
+    <div class="dialog">
+      <h1>We're sorry, but something went wrong.</h1>
+    </div>
+    <p>If you are the application owner check the logs for more information.</p>
   </div>
-  <p>If you are the application owner check the logs for more information.</p>
 </body>
 </html>

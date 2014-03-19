@@ -31,13 +31,20 @@
 .l-constraint {
   max-width: 960px;
   margin: 0 auto;
-  overflow: hidden;
 }
 
 .l-app-header {
   color: #fff;
   @include gradient(#3f5d99, #4567aa);
   font-size: 14px;
+}
+.l-app-footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  color: #fff;
+  background: #3f5d99;
 }
 
 .l-main {
@@ -84,10 +91,26 @@
 .row--partial {
   text-align: center;
 }
+.row--justified {
+  font-size: 0.1px;
+  text-align: justify;
+
+  &:after {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    content: ' ';
+  }
+
+  .column:last-child {
+    text-align: right;
+  }
+}
 
 .column {
   display: inline-block;
   text-align: left;
+  font-size: 14px;
   vertical-align: top;
 }
   .column--fourth {
