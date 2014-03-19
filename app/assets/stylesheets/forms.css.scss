@@ -144,7 +144,9 @@ textarea {
   }
   > legend {
     margin-left: -20px;
-    font: normal 18px inherit;
+    font-weight: normal;
+    font-size: 18px;
+    font-family: inherit;
   }
 }
 
@@ -152,6 +154,7 @@ textarea {
   margin: 15px 0;
 }
 .field_with_errors {
+  display:inline;
   > input,
   > textarea {
     border-color: $alert_text;
