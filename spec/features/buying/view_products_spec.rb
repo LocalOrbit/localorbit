@@ -225,7 +225,7 @@ feature "Viewing products" do
       expect(page).to have_content("Please choose a pick up or delivery date.")
 
       delivery = Dom::Buying::DeliveryChoice.first
-      expect(delivery.node.text).to match(/Delivery: October 10, 2014 Between 7:00AM and 11:00AM/)
+      expect(delivery.node.text).to match(/Delivery: October 10, 2014 between 7:00AM and 11:00AM/)
 
       delivery.choose!
 
@@ -267,7 +267,7 @@ feature "Viewing products" do
       delivery = Dom::Buying::DeliveryChoice.first
       expect(delivery).not_to be_nil
 
-      expect(delivery.node.text).to match(/Delivery: October 10, 2014 Between 7:00AM and 11:00AM/)
+      expect(delivery.node.text).to match(/Delivery: October 10, 2014 between 7:00AM and 11:00AM/)
 
       delivery.choose!
 
@@ -318,7 +318,7 @@ feature "Viewing products" do
         delivery = Dom::Buying::DeliveryChoice.first
         expect(delivery).not_to be_nil
 
-        expect(delivery.node.text).to match(/Delivery: October 10, 2014 Between 7:00AM and 11:00AM/)
+        expect(delivery.node.text).to match(/Delivery: October 10, 2014 between 7:00AM and 11:00AM/)
 
         delivery.choose!
 

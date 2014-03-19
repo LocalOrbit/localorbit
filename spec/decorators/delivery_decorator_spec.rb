@@ -40,7 +40,7 @@ describe DeliveryDecorator do
 
     context "schedule is a delivery" do
       it "returns the seller delivery times" do
-        expect(subject.time_range).to eq("Between 4:00PM and 7:00PM")
+        expect(subject.time_range).to eq("between 4:00PM and 7:00PM")
       end
     end
 
@@ -51,7 +51,7 @@ describe DeliveryDecorator do
         delivery_schedule.buyer_pickup_end = "8:00 PM"
         delivery_schedule.save!
 
-        expect(subject.time_range).to eq("Between 7:00PM and 8:00PM")
+        expect(subject.time_range).to eq("between 7:00PM and 8:00PM")
       end
     end
   end

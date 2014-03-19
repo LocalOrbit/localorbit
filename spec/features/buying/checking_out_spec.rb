@@ -31,97 +31,124 @@ describe "Checking Out", js: true do
     Timecop.return
   end
 
-  context "with an empty cart" do
-    before do
-      switch_to_subdomain(market.subdomain)
-      sign_in_as(user)
-      find(:link, "Shop").trigger("click")
-      choose_delivery
 
-      expect(page).to have_content("Filter the Shop")
-      expect(Dom::CartLink.first.node).to have_content("0")
+  def cart_link
+    Dom::CartLink.first
+  end
 
-      # Bananas Price for this buyer: 7.00
-      # Total: 10 * 7.00 = 70.00
-      Dom::Buying::ProductRow.find_by_name("Bananas").set_quantity("10")
+  def sign_in_and_choose_delivery(delivery)
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(user)
+    find(:link, "Shop").trigger("click")
+    choose_delivery(delivery)
+  end
 
-      # Potatoes Price for this everyone: 3.00
-      # Total: 5 * 3.00 = 15.00
-      Dom::Buying::ProductRow.find_by_name("Potatoes").set_quantity("5")
+  def add_items
+    # Bananas Price for this buyer: 7.00
+    # Total: 10 * 7.00 = 70.00
+    Dom::Buying::ProductRow.find_by_name("Bananas").set_quantity("10")
 
-      # Kale Price for this everyone: 3.00
-      # Total: 20 * 3.00 = 60.00
-      Dom::Buying::ProductRow.find_by_name("Kale").set_quantity("20")
-      Dom::Buying::ProductRow.find_by_name("Bananas").node.click
+    # Potatoes Price for this everyone: 3.00
+    # Total: 5 * 3.00 = 15.00
+    Dom::Buying::ProductRow.find_by_name("Potatoes").set_quantity("5")
 
-      cart_link = Dom::CartLink.first
-      expect(cart_link).to have_count(3)
+    # Kale Price for this everyone: 3.00
+    # Total: 20 * 3.00 = 60.00
+    Dom::Buying::ProductRow.find_by_name("Kale").set_quantity("20")
+    Dom::Buying::ProductRow.find_by_name("Bananas").node.click
+  end
 
-      # NOTE: the behavior of clicking the cart link will change
-      # once the cart preview has been built. See 
-      # https://www.pivotaltracker.com/story/show/67553382
-      cart_link.node.click # This behavior will change once the cart preview is implemented
-      expect(page).to have_content("Your Order")
-    end
+  context "delivery" do
+    context "is a pickup" do
+      before do
+        sign_in_and_choose_delivery "Pick Up: May 13, 2014 between 10:00AM and 12:00PM"
+        add_items
 
-    it "lists products grouped by organization" do
-      fulton_farms = Dom::Cart::SellerGroup.find_by_seller("Fulton St. Farms")
-      ada_farms = Dom::Cart::SellerGroup.find_by_seller("Ada Farms")
+        # NOTE: the behavior of clicking the cart link will change
+        # once the cart preview has been built. See 
+        # https://www.pivotaltracker.com/story/show/67553382
+        cart_link.node.click # This behavior will change once the cart preview is implemented
+        expect(page).to have_content("Your Order")
+      end
 
-      expect(fulton_farms).to have_product_row("Bananas")
-      expect(fulton_farms).to have_product_row("Kale")
-      expect(ada_farms).to have_product_row("Potatoes")
-    end
+      it "lists products grouped by organization" do
+        fulton_farms = Dom::Cart::SellerGroup.find_by_seller("Fulton St. Farms")
+        ada_farms = Dom::Cart::SellerGroup.find_by_seller("Ada Farms")
 
-    it "lists the values for the product" do
-      bananas_item = Dom::Cart::Item.find_by_name("Bananas")
-      kale_item = Dom::Cart::Item.find_by_name("Kale")
-      potatoes_item = Dom::Cart::Item.find_by_name("Potatoes")
+        expect(fulton_farms).to have_product_row("Bananas")
+        expect(fulton_farms).to have_product_row("Kale")
+        expect(ada_farms).to have_product_row("Potatoes")
+      end
 
-      expect(bananas_item.quantity).to have_content("10")
-      expect(bananas_item.unit_price).to have_content("$7.00")
-      expect(bananas_item.price).to have_content("$70.00")
+      it "lists the values for the product" do
+        bananas_item = Dom::Cart::Item.find_by_name("Bananas")
+        kale_item = Dom::Cart::Item.find_by_name("Kale")
+        potatoes_item = Dom::Cart::Item.find_by_name("Potatoes")
 
-      expect(kale_item.quantity).to have_content("20")
-      expect(kale_item.unit_price).to have_content("$3.00")
-      expect(kale_item.price).to have_content("$60.00")
+        expect(bananas_item.quantity).to have_content("10")
+        expect(bananas_item.unit_price).to have_content("$7.00")
+        expect(bananas_item.price).to have_content("$70.00")
 
-      expect(potatoes_item.quantity).to have_content("5")
-      expect(potatoes_item.unit_price).to have_content("$3.00")
-      expect(potatoes_item.price).to have_content("$15.00")
-    end
+        expect(kale_item.quantity).to have_content("20")
+        expect(kale_item.unit_price).to have_content("$3.00")
+        expect(kale_item.price).to have_content("$60.00")
 
-    context "delivery" do
-      context "is pickup" do
-        # delivery is pickup by default
-        it "displays market address" do
-          within("#address") do
-            expect(page).to have_content("Delivery Address")
-            expect(page).to have_content("Pickup on")
-            expect(page).to have_content(market.addresses.first.address)
-            expect(page).to have_content(market.addresses.first.city)
-            expect(page).to have_content(market.addresses.first.state)
-            expect(page).to have_content(market.addresses.first.zip)
-          end
+        expect(potatoes_item.quantity).to have_content("5")
+        expect(potatoes_item.unit_price).to have_content("$3.00")
+        expect(potatoes_item.price).to have_content("$15.00")
+      end
+
+      it "displays market address" do
+        within("#address") do
+          expect(page).to have_content("Delivery Address")
+          expect(page).to have_content("Pickup on May 13, 2014 between 10:00AM and 12:00PM")
+          expect(page).to have_content(market.addresses.first.address)
+          expect(page).to have_content(market.addresses.first.city)
+          expect(page).to have_content(market.addresses.first.state)
+          expect(page).to have_content(market.addresses.first.zip)
         end
       end
 
-      context "is dropoff" do
-        it "displays organization location address"
+
+      context "delivery fees" do
+        context "are present" do
+          it "displays the fee"
+          it "modifies the total"
+        end
+
+        context "are not present" do
+          it "does not modify the total"
+          it "displays as Free!"
+        end
       end
     end
 
-    context "delivery fees" do
-      context "are present" do
-        it "displays the fee"
-        it "modifies the total"
+    context "is dropoff" do
+      before do
+        sign_in_and_choose_delivery "Delivery: May 13, 2014 between 7:00AM and 11:00AM"
+        add_items
+
+        # NOTE: the behavior of clicking the cart link will change
+        # once the cart preview has been built. See 
+        # https://www.pivotaltracker.com/story/show/67553382
+        cart_link.node.click # This behavior will change once the cart preview is implemented
+        expect(page).to have_content("Your Order")
       end
 
-      context "are not present" do
-        it "does not modify the total"
-        it "displays as Free!"
+      it "displays organization location address" do
+        within("#address") do
+          expect(page).to have_content("Delivery Address")
+          expect(page).to have_content("Delivery on May 13, 2014 between 7:00AM and 11:00AM")
+          expect(page).to have_content(market.addresses.first.address)
+          expect(page).to have_content(market.addresses.first.city)
+          expect(page).to have_content(market.addresses.first.state)
+          expect(page).to have_content(market.addresses.first.zip)
+        end
       end
     end
+  end
+
+  context "with an empty cart" do
   end
 
   context "updating quantity" do
