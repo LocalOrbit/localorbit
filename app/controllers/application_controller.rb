@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_market
   helper_method :current_organization
   helper_method :current_cart
+  helper_method :current_location
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.

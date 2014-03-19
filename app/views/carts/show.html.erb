@@ -22,6 +22,13 @@
 <div id="additional-information">
   <div id="address">
     <h2>Delivery Address</h2>
+    <div>
+      <%= raw(current_cart.delivery.decorate.checkout_date) %>
+    </div>
+    <address>
+      <%= current_location.address %><br />
+      <%= current_location.city %>, <%= current_location.state %> <%= current_location.zip %>
+    </address>
   </div>
 
   <div id="payment-info">

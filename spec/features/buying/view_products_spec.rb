@@ -159,6 +159,16 @@ feature "Viewing products" do
         delivery.choose!
 
         expect(page).to have_content(org1_product.name)
+        
+
+        expect(page).to have_content("Please choose a pick up or delivery date.")
+
+        delivery = Dom::Buying::DeliveryChoice.first
+        expect(delivery.node.text).to match(/Delivery: October 10, 2014 between 7:00AM and 11:00AM/)
+
+        delivery.choose!
+
+        expect(page).to have_content(org1_product.name)
       end
 
       scenario "selecting a direct to buyer delivery with one organization location" do
@@ -212,8 +222,28 @@ feature "Viewing products" do
 
           delivery.choose!
 
-          expect(page).to have_content(org1_product.name)
-        end
+        click_link "Shop"
+
+        select = Dom::Select.first
+
+        expect(select).to have_option(buyer_org.name)
+        expect(select).to have_option(buyer_org2.name)
+        expect(select).to_not have_option(buyer_org_outside_market.name)
+
+        select buyer_org.name, from: "Select an organization"
+
+        click_button 'Select Organization'
+
+        expect(page).to have_content("Please choose a pick up or delivery date.")
+
+        delivery = Dom::Buying::DeliveryChoice.first
+        expect(delivery).not_to be_nil
+
+        expect(delivery.node.text).to match(/Delivery: October 10, 2014 between 7:00AM and 11:00AM/)
+
+        delivery.choose!
+
+        expect(page).to have_content(org1_product.name)
       end
     end
   end
