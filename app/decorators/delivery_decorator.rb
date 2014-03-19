@@ -24,6 +24,21 @@ class DeliveryDecorator < Draper::Decorator
     "Between #{start_time} and #{end_time}"
   end
 
+  def buyer_time_range
+    if delivery_schedule.direct_to_customer?
+      start_time = delivery_schedule.seller_delivery_start
+      end_time   = delivery_schedule.seller_delivery_end
+    else
+      start_time = delivery_schedule.buyer_pickup_start
+      end_time   = delivery_schedule.buyer_pickup_end
+    end
+
+    start_time.gsub!(" ", "")
+    end_time.gsub!(" ", "")
+
+    "Between #{start_time} and #{end_time}"
+  end
+
   def display_locations
     if buyer_pickup?
       [delivery_schedule.buyer_pickup_location]

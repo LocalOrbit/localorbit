@@ -449,6 +449,10 @@ module Dom
         end
       end
 
+      def has_location_select?
+        node.all('select').size == 1
+      end
+
       def choose!
         node.find("input[type=radio]").set(:checked)
         self.class.submit

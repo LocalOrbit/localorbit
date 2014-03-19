@@ -27,6 +27,10 @@ class DeliverySchedule < ActiveRecord::Base
     seller_fulfillment_location.present? && buyer_pickup_location.present?
   end
 
+  def direct_to_customer?
+    seller_fulfillment_location_id == 0
+  end
+
   def seller_fulfillment_address
     if address = seller_fulfillment_location
       "#{address.address}, #{address.city}, #{address.state} #{address.zip}"
@@ -82,10 +86,6 @@ class DeliverySchedule < ActiveRecord::Base
 
   def buyer_pickup_start_after_seller_fulfillment_start
     validate_time_after(:buyer_pickup_start, buyer_pickup_start, seller_delivery_start, 'must be after delivery start')
-  end
-
-  def direct_to_customer?
-    seller_fulfillment_location_id == 0
   end
 
   def seller_delivery_end_after_start
