@@ -21,9 +21,19 @@
     <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
       <div class="field">
         <%= f.check_box :can_sell %>
-        <%= f.label :can_sell, "Can sell product" %>
+        <%= f.label :can_sell, "Can sell products" %>
       </div>
     <% end %>
+
+    <div class="field">
+      <%= f.label :facebook %><br>
+      <%= f.text_field :facebook, class: "column column--full" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :twitter %><br>
+      <%= f.text_field :twitter, class: "column column--full" %>
+    </div>
 
     <div class="field">
       <%= f.label :who_story, "Who" %><br>
@@ -38,6 +48,7 @@
     <div class="field">
       <%= f.label :photo, "Profile photo" %><br>
       <%= f.file_field :photo %>
+      <%= image_tag @organization.photo.remote_url, alt: "Profile photo", class: "org-profile-photo" if @organization.photo %>
     </div>
 
   </fieldset>

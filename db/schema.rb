@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140318205851) do
+ActiveRecord::Schema.define(version: 20140319184312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -229,6 +229,8 @@ ActiveRecord::Schema.define(version: 20140318205851) do
     t.string   "photo_uid"
     t.string   "balanced_customer_uri"
     t.boolean  "balanced_underwritten", default: false, null: false
+    t.string   "facebook"
+    t.string   "twitter"
   end
 
   create_table "prices", force: true do |t|

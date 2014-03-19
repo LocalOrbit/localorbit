@@ -1,24 +1,7 @@
-
 <%= render 'header' %>
 
 <div class="row row--partial">
   <div class="column column--half">
-    <%= link_to "Edit Organization", [:edit, :admin, @organization], class: 'btn pull-right' %>
-    <h2>Name</h2>
-    <%= simple_format @organization.name %>
-    <% if @organization.photo.present? %>
-
-    <h2>Profile photo</h2>
-    <%= image_tag @organization.photo.remote_url, alt: "Profile photo", class: "org-profile-photo" %>
-    <% end %>
-
-    <h2>Can sell products?</h2>
-    <%= simple_format @organization.can_sell ? "Yes" : "No" %>
-
-    <h2>Who</h2>
-    <%= simple_format @organization.who_story %>
-
-    <h2>How</h2>
-    <%= simple_format @organization.how_story %>
+    <%= render "form"%>
   </div>
 </div>

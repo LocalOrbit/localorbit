@@ -28,14 +28,11 @@ module Admin
     def show
     end
 
-    def edit
-    end
-
     def update
       if @organization.update_attributes(organization_params)
         redirect_to [:admin, @organization], notice:"Saved #{@organization.name}"
       else
-        render action: :edit
+        render action: :show
       end
     end
 
@@ -46,6 +43,8 @@ module Admin
       params.require(:organization).permit(
         :name,
         :can_sell,
+        :facebook,
+        :twitter,
         :who_story,
         :how_story,
         :photo,
