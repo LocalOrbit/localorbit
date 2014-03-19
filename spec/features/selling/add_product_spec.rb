@@ -83,7 +83,7 @@ describe "Adding a product" do
         click_link "Add a product"
 
         uncheck "seller_info"
-        expect(page).to have_content("Who")
+        expect(page.find('.seller_info_fields', visible: false)).to be_visible
         product_form = Dom::Admin::ProductForm.first
 
         fill_in "product_who_story", with: "We sell other stuff"
@@ -91,10 +91,10 @@ describe "Adding a product" do
         select "Good Place", from: "product_location_id"
 
         check "seller_info"
-        expect(page).not_to have_content("Who")
+        expect(page.find('.seller_info_fields', visible: false)).to_not be_visible
 
         uncheck "seller_info"
-        expect(page).to have_content("Who")
+        expect(page.find('.seller_info_fields', visible: false)).to be_visible
 
         expect(product_form.seller_info).to_not be_checked
         expect(product_form.who_story).to eq("We sell other stuff")
@@ -111,16 +111,18 @@ describe "Adding a product" do
         fill_in_required_fields(:with_chosen)
 
         uncheck "seller_info"
-        expect(page).to have_content("Who")
+        expect(page.find('.seller_info_fields', visible: false)).to be_visible
 
         fill_in "product_who_story", with: "We sell other stuff"
 
         check "seller_info"
-        expect(page).not_to have_content("Who")
+        expect(page.find('.seller_info_fields', visible: false)).to_not be_visible
 
         click_button "Add Product"
 
-        expect(page).to_not have_content("Who")
+        click_link "Product Info"
+
+        expect(page.find('.seller_info_fields', visible: false)).to_not be_visible
 
         product = Product.last.decorate
 
