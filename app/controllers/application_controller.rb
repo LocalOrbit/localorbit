@@ -60,10 +60,19 @@ class ApplicationController < ActionController::Base
     return nil unless current_organization.present?
     return @current_delivery if defined?(@current_delivery)
 
-    @current_delivery = Delivery.
-      joins(:delivery_schedule).
-      where('delivery_schedules.market_id = ? AND deliveries.cutoff_time > ?', current_market.id, Time.current).
-      find_by(id: session[:current_delivery_id])
+    @current_delivery = if session[:current_delivery_id]
+      Delivery.
+        joins(:delivery_schedule).
+        where('delivery_schedules.market_id = ? AND deliveries.cutoff_time > ?', current_market.id, Time.current).
+        find_by(id: session[:current_delivery_id])
+    elsif current_market.delivery_schedules.count == 1
+      current_market.delivery_schedules.first.next_delivery.tap do |delivery|
+        session[:current_delivery_id] = delivery.id
+        if delivery.requires_location?
+          session[:current_location] = current_organization.shipping_location.try(:id)
+        end
+      end
+    end
   end
 
   def set_timezone
@@ -73,10 +82,25 @@ class ApplicationController < ActionController::Base
   def hide_admin_navigation
     @hide_admin_nav = true
   end
+
   def current_cart
     return nil unless current_market.present?
     return nil unless current_organization.present?
-    current_organization.carts.find_by(id: session[:cart_id])
+    return nil unless current_delivery
+
+    @current_cart ||= current_organization.carts.find_by(id: session[:cart_id])
   end
 
+  def require_cart
+    @current_cart = Cart.find_or_create_by!(organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
+      c.location_id = current_location.id if current_delivery.requires_location?
+    end
+    session[:cart_id] = @current_cart.id
+  end
+
+  def require_organization_location
+    if current_organization.locations.none?
+      redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
+    end
+  end
 end
