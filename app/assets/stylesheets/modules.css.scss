@@ -392,8 +392,14 @@
   height: 100%;
   display: none;
 
+  &.is-dim {
+    background: rgba(0,0,0,0.4);
+  }
   &.is-open {
     display: block;
+  }
+  &.is-modal {
+    z-index: 50;
   }
 }
 

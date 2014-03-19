@@ -1,6 +1,6 @@
 <div class="request-new-unit is-hidden modal popup">
   <div class="popup-header">
-    Request a New Unit <button>X</button>
+    Request a New Unit <button class="close"><i class="font-icon icon-close"></i></button>
   </div>
   <div class="popup-body">
     <p>Adding new units to the system requires
@@ -9,22 +9,24 @@
     within 24 hours.</p>
 
     <%= form_tag admin_unit_request_path do %>
-      <div class="inline-field">
+      <div class="field">
         <%= label_tag :singular, "Singular" %><br>
-        <%= text_field_tag "singular" %>
+        <%= text_field_tag "singular", nil, class: "column--full" %>
       </div>
 
-      <div class="inline-field">
+      <div class="field">
         <%= label_tag :plural, "Plural" %><br>
-        <%= text_field_tag "plural" %>
+        <%= text_field_tag "plural", nil, class: "column--full" %>
       </div>
 
       <div>
         <%= label_tag :additional_notes, "Additional Notes" %><br>
-        <%= text_area_tag "additional_notes" %>
+        <%= text_area_tag "additional_notes", nil,  size: 2 %>
       </div>
 
-      <%= submit_tag "Request Unit" %>
+      <div class="form-actions">
+        <%= submit_tag "Request Unit" %>
+      </div>
     <% end %>
   </div>
 </div>
