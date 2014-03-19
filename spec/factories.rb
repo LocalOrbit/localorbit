@@ -210,4 +210,7 @@ FactoryGirl.define do
     product
     cart
   end
+
+  factory :bank_account do
+  end
 end

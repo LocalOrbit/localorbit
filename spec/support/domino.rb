@@ -423,6 +423,11 @@ module Dom
     attribute :bank_name
     attribute :account_number
     attribute :account_type
+    attribute :verified
+
+    def verfied?
+      verified == "Verified"
+    end
   end
 
   module Buying

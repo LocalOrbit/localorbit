@@ -5,5 +5,10 @@ class AddBankAccountToOrganization
     context[:balanced_customer_uri] = organization.balanced_customer_uri
   end
 
-  organize CreateBankAccount, UnderwriteOrganization, AddBankAccountToBalancedCustomer
+  organize [
+    CreateBankAccount,
+    UnderwriteOrganization,
+    AddBankAccountToBalancedCustomer,
+    CreateBalancedBankAccountVerification
+  ]
 end

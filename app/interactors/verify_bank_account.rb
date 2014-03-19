@@ -1,0 +1,22 @@
+class VerifyBankAccount
+  include Interactor
+
+  def setup
+    context[:verification] ||= Balanced::Verification.find(bank_account.balanced_verification_uri)
+  end
+
+  def perform
+    verification.amount_1 = verification_params[:amount_1]
+    verification.amount_2 = verification_params[:amount_2]
+
+    verification.save
+
+    fail! unless verified?
+
+    bank_account.update_attribute(:verified, verified?)
+  end
+
+  def verified?
+    verification.state == "verified"
+  end
+end
