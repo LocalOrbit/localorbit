@@ -13,7 +13,7 @@
   <div class="column column--three-fourths">
 
     <% if @product.prices.any?(&:persisted?) %>
-      <%= link_to "Add Price", "#add-price", class: "btn btn--small pull-right", id: "add-price-toggle" %>
+      <%= link_to "Add Price", "#add-price", class: "btn btn--add btn--small pull-right", id: "add-price-toggle" %>
       <h2 class="clear-after">Add Prices</h2>
       <p>These are your prices. Click on a field to edit it.</p>
       <p>

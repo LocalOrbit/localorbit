@@ -18,6 +18,11 @@ $ ->
     $element = $(".#{destination}")
     $element.toggleClass('is-hidden')
     $(".modal").not($element).addClass('is-hidden')
+    if $(".popup").not(".is-hidden").length
+      $('.overlay').addClass('is-open is-dim is-modal');
+    else
+      $('.overlay').addClass('is-open is-dim is-modal');
 
   $('.popup .popup-header button').click ->
     $(this).closest('.popup').addClass('is-hidden')
+    $('.overlay').removeClass('is-open is-dim is-modal');

@@ -35,12 +35,9 @@
   background: #F2F2F2;
   @include border-radius(5px 5px 0 0);
 
-  button {
+  .close {
     float: right;
-    padding: 0;
-    background: none;
-    border: 0;
-    color: #000;
+    line-height: inherit;
   }
 }
 
@@ -50,4 +47,10 @@
 
 .location-map {
   display: block;
+}
+
+.modal {
+  .form-actions {
+    margin: 20px 0 0;
+  }
 }

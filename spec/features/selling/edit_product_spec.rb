@@ -86,7 +86,7 @@ describe "Editing a product" do
 
     describe "a user can request a new inventory unit" do
       it "allows the user to request a new unit" do
-        click_link "Request a new unit"
+        click_link "Request a New Unit"
 
         expect(ZendeskMailer).to receive(:request_unit).with(user.email, user.name, {
           "singular" => "fathom",
@@ -105,7 +105,7 @@ describe "Editing a product" do
 
     describe "a user can request a new category" do
       it "allows the user to request a new category" do
-        click_link "Request a new category"
+        click_link "Request a New Category"
 
         expect(ZendeskMailer).to receive(:request_category).with(
           user.email, user.name, "Goop"

@@ -18,7 +18,9 @@ describe "Adding a product" do
   let(:user) { create(:user) }
   let(:org) { create(:organization, :seller) }
   let(:loc1) {create(:location) }
-  let(:stub_warning) {"Your product will not appear in the Shop until all of these actions are complete"}
+  let(:stub_warning_pricing) {"Your product will not appear in the Shop until you add pricing"}
+  let(:stub_warning_inventory) {"Your product will not appear in the Shop until you add inventory"}
+  let(:stub_warning_both) {"Your product will not appear in the Shop until you add inventory and pricing"}
   let(:organization_label) { "Product Organization" }
   let(:market) { create(:market, organizations: [org]) }
 
@@ -81,7 +83,7 @@ describe "Adding a product" do
         click_link "Add a product"
 
         uncheck "seller_info"
-        expect(page).to have_content("Who")
+        expect(page.find('.seller_info_fields', visible: false)).to be_visible
         product_form = Dom::Admin::ProductForm.first
 
         fill_in "product_who_story", with: "We sell other stuff"
@@ -89,10 +91,10 @@ describe "Adding a product" do
         select "Good Place", from: "product_location_id"
 
         check "seller_info"
-        expect(page).not_to have_content("Who")
+        expect(page.find('.seller_info_fields', visible: false)).to_not be_visible
 
         uncheck "seller_info"
-        expect(page).to have_content("Who")
+        expect(page.find('.seller_info_fields', visible: false)).to be_visible
 
         expect(product_form.seller_info).to_not be_checked
         expect(product_form.who_story).to eq("We sell other stuff")
@@ -109,16 +111,18 @@ describe "Adding a product" do
         fill_in_required_fields(:with_chosen)
 
         uncheck "seller_info"
-        expect(page).to have_content("Who")
+        expect(page.find('.seller_info_fields', visible: false)).to be_visible
 
         fill_in "product_who_story", with: "We sell other stuff"
 
         check "seller_info"
-        expect(page).not_to have_content("Who")
+        expect(page.find('.seller_info_fields', visible: false)).to_not be_visible
 
         click_button "Add Product"
 
-        expect(page).to_not have_content("Who")
+        click_link "Product Info"
+
+        expect(page.find('.seller_info_fields', visible: false)).to_not be_visible
 
         product = Product.last.decorate
 
@@ -277,7 +281,7 @@ describe "Adding a product" do
         end
         click_link "Add a product"
 
-        expect(page).to_not have_content(stub_warning)
+        expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
 
         fill_in_required_fields(:with_chosen)
@@ -290,7 +294,7 @@ describe "Adding a product" do
 
         uncheck :seller_info
 
-        select loc1.name, from: "Location"
+        select loc1.name, from: "Where"
 
         fill_in "Who", with: "The farmers down the road."
         fill_in "How", with: "With water, earth, and time."
@@ -299,7 +303,7 @@ describe "Adding a product" do
 
         expect(page).to have_content("Added Red Grapes")
 
-        expect(page).to have_content(stub_warning)
+        expect(page).to have_content(stub_warning_both)
 
         expect(current_path).to eql(admin_product_lots_path(Product.last))
 
@@ -408,14 +412,14 @@ describe "Adding a product" do
 
     context "when product information is valid" do
       it "makes the user choose an organization to add the product for" do
-        expect(page).to_not have_content(stub_warning)
+        expect(page).to_not have_content(stub_warning_both)
         select org2.name, from: organization_label
         fill_in_required_fields
 
         click_button "Add Product"
 
         expect(page).to have_content("Added Red Grapes")
-        expect(page).to have_content(stub_warning)
+        expect(page).to have_content(stub_warning_pricing)
         expect(Product.last.organization).to eql(org2)
       end
     end
@@ -448,14 +452,14 @@ describe "Adding a product" do
     end
 
     it "makes the user choose an organization to add the product for" do
-      expect(page).to_not have_content(stub_warning)
+      expect(page).to_not have_content(stub_warning_both)
       select org2.name, from: organization_label
       fill_in_required_fields
 
       click_button "Add Product"
 
       expect(page).to have_content("Added Red Grapes")
-      expect(page).to have_content(stub_warning)
+      expect(page).to have_content(stub_warning_pricing)
       expect(Product.last.organization).to eql(org2)
     end
   end
@@ -473,7 +477,7 @@ describe "Adding a product" do
 
     describe "a user can request a new inventory unit" do
       it "allows the user to request a new unit" do
-        click_link "Request a new unit"
+        click_link "Request a New Unit"
 
         expect(ZendeskMailer).to receive(:request_unit).with(user.email, user.name, {
           "singular" => "fathom",
@@ -492,7 +496,7 @@ describe "Adding a product" do
 
     describe "a user can request a new category" do
       it "allows the user to request a new category" do
-        click_link "Request a new category"
+        click_link "Request a New Category"
 
         expect(ZendeskMailer).to receive(:request_category).with(
           user.email, user.name, "Goop"
