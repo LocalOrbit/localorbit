@@ -48,6 +48,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def managed_organizations_within_market(market)
+    if admin? || managed_markets.include?(market)
+      market.organizations
+    else
+      organizations.select('organizations.*').joins(:market_organizations).where('market_organizations.market_id' => market.id)
+    end
+  end
+
   def multi_organization_membership?
     managed_organizations.count > 1
   end

@@ -1,7 +1,7 @@
 module Sessions
   class OrganizationsController < ApplicationController
     def new
-      @organizations = current_user.managed_organizations.joins(:market_organizations).where('market_organizations.market_id' => current_market.id)
+      @organizations = current_user.managed_organizations_within_market(current_market)
     end
 
     def create
