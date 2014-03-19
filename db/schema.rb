@@ -16,6 +16,18 @@ ActiveRecord::Schema.define(version: 20140316163044) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "bank_accounts", force: true do |t|
+    t.string   "bank_name"
+    t.string   "last_four"
+    t.string   "account_type"
+    t.string   "balanced_uri"
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "bank_accounts", ["organization_id"], name: "index_bank_accounts_on_organization_id", using: :btree
+
   create_table "cart_items", force: true do |t|
     t.integer  "cart_id"
     t.integer  "product_id"
@@ -40,18 +52,6 @@ ActiveRecord::Schema.define(version: 20140316163044) do
   add_index "carts", ["location_id"], name: "index_carts_on_location_id", using: :btree
   add_index "carts", ["market_id"], name: "index_carts_on_market_id", using: :btree
   add_index "carts", ["organization_id"], name: "index_carts_on_organization_id", using: :btree
-
-  create_table "bank_accounts", force: true do |t|
-    t.string   "bank_name"
-    t.string   "last_four"
-    t.string   "account_type"
-    t.string   "balanced_uri"
-    t.integer  "organization_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "bank_accounts", ["organization_id"], name: "index_bank_accounts_on_organization_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.integer  "parent_id"
