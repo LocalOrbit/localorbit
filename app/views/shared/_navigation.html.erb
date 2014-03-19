@@ -27,9 +27,7 @@ end
         <ul class="dropdown with-anchor top-anchor" id="market-dropdown">
           <li><%= link_to raw('<i class="font-icon" data-icon="&#xe000;"></i> Markets'), admin_markets_path %></li>
           <li><%= link_to raw('<i class="font-icon" data-icon="&#xe027;"></i> Organizations'), admin_organizations_path %></li>
-          <% if defined? admin_users_path %>
-          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe017;"></i> All Users'), admin_users_path %></li>
-          <% end %>
+          <li><%= link_to raw('<i class="font-icon" data-icon="&#xe017;"></i> All Users'), coming_soon_dashboard_path %></li>
           <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe025;"></i> User Event Log</a></li>
         </ul>
       </li>
