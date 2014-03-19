@@ -51,7 +51,7 @@
   <%= f.select :unit_id, Unit.all.map { |u| [u.plural, u.id] } , {include_blank: ""}, {data: {placeholder: "Click and type to search for a Unit"}, class: "chosen"} %>
 </div>
 
-<fieldset>
+<fieldset class="conditional">
   <legend>Inventory</legend>
   <%= f.check_box :use_simple_inventory, disabled: !@product.can_use_simple_inventory? %>
   <%= f.label :use_simple_inventory, 'Use simple inventory management.' %>
@@ -66,7 +66,7 @@
   <% end %>
 </fieldset>
 
-<fieldset>
+<fieldset class="conditional">
   <legend>More info about this product (where, when, how)</legend>
   <%= check_box_tag :seller_info, "", !@product.has_custom_seller_info? %>
   <%= label_tag :seller_info, "Use seller info from my account" %>

@@ -11,7 +11,7 @@
     <th>Contact Phone</th>
   </tr>
   <% @markets.each do |market| %>
-  <tr>
+  <tr class="<%= cycle "odd", "even" %>>
     <td><%= link_to market.name, [:admin, market] %></td>
     <td><%= market.subdomain %></td>
     <td><%= market.contact_name %></td>

@@ -1,36 +1,36 @@
 <%= render 'admin/organizations/header' %>
 
-<div class="l-page-header">
-  <h1>Addresses for <%= @organization.name %></h1>
-  <%= link_to "Add New Address", new_admin_organization_location_path(@organization), class: "btn" %>
-</div>
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+      <%= link_to "Add New Address", new_admin_organization_location_path(@organization), class: "btn btn--add btn--small pull-right" %>
 
-<%= form_tag admin_organization_locations_path(@organization), method: :delete do %>
-  <table>
-    <thead>
-      <tr>
-        <th>Address</th>
-        <th>Telephone</th>
-        <th>Default Billing</th>
-        <th>Default Shipping</th>
-        <th><input type="checkbox" class="check-all"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @locations.each do |location| %>
-        <tr>
-          <td><%= location.name_and_address %></td>
-          <td></td>
-          <td><%= radio_button_tag :default_billing_id, location.id, location.default_billing? %></td>
-          <td><%= radio_button_tag :default_shipping_id, location.id, location.default_shipping? %></td>
-          <td><%= check_box_tag "location_ids[]", location.id %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <%= form_tag admin_organization_locations_path(@organization), method: :delete, class: "clear-before" do %>
+      <%= submit_tag "Remove Checked", class: "delete" %>
 
-  <div class="form-actions">
-    <%= link_to "Save & Continue Editing", update_default_admin_organization_locations_path(@organization), id: "save-update-defaults" %>
-    <%= submit_tag "Remove Checked" %>
+      <table>
+        <thead>
+          <tr>
+            <th><input type="checkbox" class="check-all"></th>
+            <th>Address</th>
+            <th>Default Billing</th>
+            <th>Default Shipping</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @locations.each do |location| %>
+            <tr class="<%= cycle "odd", "even" %>">
+              <td><%= check_box_tag "location_ids[]", location.id %></td>
+              <td><%= location.name_and_address %></td>
+              <td><%= radio_button_tag :default_billing_id, location.id, location.default_billing? %></td>
+              <td><%= radio_button_tag :default_shipping_id, location.id, location.default_shipping? %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="form-actions">
+        <%= link_to "Save", update_default_admin_organization_locations_path(@organization), class: "btn btn--save", id: "save-update-defaults" %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
