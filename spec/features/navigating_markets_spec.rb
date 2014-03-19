@@ -53,4 +53,30 @@ feature "A user navagating markets" do
       expect(page).to have_css("img[src='#{market.logo.remote_url}']")
     end
   end
+
+  context "signing in" do
+    let!(:market) { create(:market, organizations: [seller_org, buyer_org]) }
+
+    context "on a subdomain" do
+      it "shows me the dashboard" do
+        switch_to_subdomain market.subdomain
+        sign_in_as(user)
+        within "h1" do
+          expect(page).to have_content("Dashboard")
+        end
+      end
+    end
+
+    context "on the main domain" do
+      it "redirects to the dashboard if the user has only 1 market" do
+        switch_to_main_domain
+        sign_in_as(user)
+        within "h1" do
+          expect(page).to have_content("Dashboard")
+        end
+      end
+
+      it "shows something to let me pick a market if the user has multiple markets"
+    end
+  end
 end

@@ -16,7 +16,11 @@ class ApplicationController < ActionController::Base
   private
 
   def after_sign_in_path_for(resource)
-    dashboard_path
+    if on_main_domain? && current_user.markets.any?
+      dashboard_url(host: current_user.markets.first.domain)
+    else
+      dashboard_path
+    end
   end
 
   def render_404
@@ -53,6 +57,10 @@ class ApplicationController < ActionController::Base
   def market_for_current_subdomain(scope = Market)
     subdomain = request.subdomains(Figaro.env.domain.count('.'))
     scope.find_by(subdomain: subdomain)
+  end
+
+  def on_main_domain?
+    request.host == Figaro.env.domain
   end
 
   def current_delivery
