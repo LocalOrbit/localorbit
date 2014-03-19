@@ -11,6 +11,8 @@ class Organization < ActiveRecord::Base
 
   has_many :locations, inverse_of: :organization
 
+  has_many :bank_accounts
+
   validates :name, presence: true
 
   scope :selling, lambda { where(can_sell: true) }

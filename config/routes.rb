@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
     resources :organizations do
       resources :users
+      resources :bank_accounts, only: [:index, :new, :create]
       resources :locations, except: :destroy do
         collection do
           delete :destroy

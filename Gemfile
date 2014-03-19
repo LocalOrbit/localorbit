@@ -14,7 +14,7 @@ gem 'jquery-rails'
 gem 'compass-rails'
 
 gem "active_model_serializers"
-gem "balanced"
+gem "balanced", "~> 0.7"
 gem "countries"
 gem 'devise'
 gem 'devise_invitable'

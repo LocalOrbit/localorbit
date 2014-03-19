@@ -13,19 +13,14 @@ module Admin
     end
 
     def create
-      if params[:initial_market_id].blank?
-        @organization = Organization.new(organization_params)
-        @organization.valid?
-        @organization.errors.add(:markets, :blank)
-      else
-        @market = current_user.markets.find(params[:initial_market_id])
-        @organization =  @market.organizations.create(organization_params)
-      end
+      result = RegisterOrganization.perform(organization_params: organization_params, user: current_user, market_id: params[:initial_market_id])
 
-      if @organization.errors.none?
-        redirect_to [:admin, @organization], notice:"#{@organization.name} has been created"
+      if result.success?
+        organization = result.organization
+        redirect_to [:admin, organization], notice:"#{organization.name} has been created"
       else
         @markets = current_user.markets
+        @organization = result.organization
         render action: :new
       end
     end

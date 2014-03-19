@@ -421,6 +421,14 @@ module Dom
     selector "header .cart .counter"
   end
 
+  class BankAccount < Domino
+    selector ".bank-account"
+
+    attribute :bank_name
+    attribute :account_number
+    attribute :account_type
+  end
+
   module Buying
     class DeliveryChoice < Domino
       selector "#deliveries .delivery"
