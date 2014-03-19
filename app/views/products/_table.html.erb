@@ -19,7 +19,22 @@
       </td>
       <td class="info">
         <h3 class="name"><%= product.name %></h3>
-        <p class="short_description"><%= product.short_description %></p>
+        <p class="short_description"><%= product.short_description %> 
+
+        <% if product.long_description.present? %>
+          <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{product.id}-long-description", class: "popup-toggle" %>
+          <div class="long-description-info is-hidden with-anchor left-anchor popup" id="product-<%= product.id %>-long-description">
+            <div class="popup-header">
+              Details <button><i class="font-icon icon-close"></i></button>
+            </div>
+            <div class="popup-body">
+              <%= product.long_description %><br><br>
+              <%= link_to "Learn More", coming_soon_dashboard_path %>
+            </div>
+          </div>
+        <% end %>
+
+        </p>
         <ul class="meta">
           <li class="organization-name">
             <%= link_to raw("<i class=\"font-icon icon-credit\"></i> #{product.organization_name}"), "#product-#{product.id}-who", class: "popup-toggle" %>
