@@ -19,7 +19,7 @@ $ ->
   if $('body').hasClass('transitions')
     $('.flash').addClass('is-fading')
     $('.flash').on features.transitions, (e) ->
-      e.target.remove()
+      $(e.target).remove()
   else
     window.setTimeout ->
         $('.flash').fadeOut(500)
