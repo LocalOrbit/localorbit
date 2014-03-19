@@ -1,5 +1,5 @@
 class Admin::BankAccountsController < AdminController
-  before_filter :check_user_authorized_to_manage_organization
+  before_filter :find_organization
 
   def index
     @bank_accounts = @organization.bank_accounts
@@ -22,10 +22,8 @@ class Admin::BankAccountsController < AdminController
 
   private
 
-  def check_user_authorized_to_manage_organization
-    @organization = Organization.find(params[:organization_id])
-
-    head :unauthorized unless current_user.can_manage_organization?(@organization)
+  def find_organization
+    @organization = current_user.managed_organizations.find(params[:organization_id])
   end
 
   def bank_account_params
@@ -40,6 +38,7 @@ class Admin::BankAccountsController < AdminController
   def representative_params
     params.require(:representative).permit(
       :name,
+      :ein,
       {dob: [:year, :month, :day]},
       :ssn_last4,
       {address: [:line1, :postal_code]}
