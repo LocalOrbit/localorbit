@@ -1,5 +1,5 @@
 class @DatePicker
-  @format: 'mm/dd/y'
+  @format: 'dd M yy'
   @setup: (field) ->
     field = $(field)
 

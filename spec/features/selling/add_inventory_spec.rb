@@ -44,8 +44,8 @@ describe "Adding advanced inventory" do
       lot_row = Dom::LotRow.first
       expect(lot_row).to_not be_nil
       expect(lot_row.number).to eql("3")
-      expect(lot_row.good_from).to eql("02/25/2014")
-      expect(lot_row.expires_at).to eql("12/10/2014")
+      expect(lot_row.good_from).to eql("25 Feb 2014")
+      expect(lot_row.expires_at).to eql("10 Dec 2014")
       expect(lot_row.quantity).to eql("12")
     end
 
@@ -109,7 +109,7 @@ describe "Adding advanced inventory" do
     end
 
     it "populates the correct date on validation errors" do
-      expected_date = 1.month.from_now.change(day: 15).strftime("%m/%d/%Y")
+      expected_date = 1.month.from_now.change(day: 15).strftime("%d %b %Y")
       datepicker = Dom::DatePicker.open('lot_expires_at')
       datepicker.click_next
       datepicker.click_day('15')

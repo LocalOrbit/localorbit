@@ -49,10 +49,10 @@
       <td class="created_at"><%= lot.created_at.strftime('%m/%d/%Y') %></td>
       <td class="number"><%= lot.number %></td>
       <td class="good_from">
-        <%= lot.good_from.try(:strftime, '%m/%d/%Y') %>
+        <%= lot.good_from.try(:strftime, '%d %b %Y') %>
       </td>
       <td class="expires_at">
-        <%= lot.expires_at.try(:strftime, '%m/%d/%Y') %>
+        <%= lot.expires_at.try(:strftime, '%d %b %Y') %>
       </td>
       <td class="quantity"><%= lot.quantity %></td>
       <td><%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#lot_#{lot.id}", class: "edit-price" %></td>
