@@ -159,7 +159,7 @@ describe "admin manange organization" do
         end
       end
 
-      click_link "Save & Continue Editing"
+      click_link "Save"
 
       locations = Dom::Admin::OrganizationLocation.all
       locations.each do |location|
