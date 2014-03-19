@@ -30,7 +30,6 @@ describe "A Market Manager" do
 
     it "creates the organization" do
       expect(page).to have_content('Famous Farm has been created')
-      click_link "Edit Organization"
 
       org_form = Dom::Admin::OrganizationForm.first
       expect(org_form.name).to eql("Famous Farm")
@@ -137,7 +136,6 @@ describe "A Market Manager" do
     it "doesn't show the location fields" do
       visit "/admin/organizations"
       click_link "Fresh Pumpkin Patch"
-      click_link "Edit Organization"
 
       within("fieldset:last") do
         expect(page).not_to have_content("Location Name")
@@ -151,21 +149,19 @@ describe "A Market Manager" do
     it "allows updating all attributes" do
       visit "/admin/organizations"
       click_link "Fresh Pumpkin Patch"
-      click_link "Edit Organization"
 
       fill_in "Name", with: "SXSW Farmette"
       uncheck "Can sell product"
       click_button "Save Organization"
 
       expect(page).to have_content("Saved SXSW Farmette")
-      expect(page).to have_content("Name SXSW Farmette")
-      expect(page).to have_content("Can sell products? No")
+      expect(find_field("Name").value).to eq("SXSW Farmette")
+      expect(find_field("Can sell products")).to_not be_checked
     end
 
     it "does not allow updates with a blank organization name" do
       visit "/admin/organizations"
       click_link "Fresh Pumpkin Patch"
-      click_link "Edit Organization"
 
       fill_in "Name", with: ""
       click_button "Save Organization"
@@ -181,7 +177,6 @@ describe "A Market Manager" do
       it "cannot change the market of an organizaiton" do
         visit "/admin/organizations"
         click_link "Fresh Pumpkin Patch"
-        click_link "Edit Organization"
 
         expect(page).to_not have_selector("organization_market_ids")
       end

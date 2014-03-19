@@ -40,23 +40,4 @@ describe Admin::OrganizationsController do
       end
     end
   end
-
-  describe "/edit" do
-    describe "a normal user" do
-      before do
-        sign_in user
-      end
-
-      it "cannot access an organization they don't belong to" do
-        get :edit, {id: org.id}
-        expect(response).to be_not_found
-      end
-
-      it "can edit their organization" do
-        user.organizations << org
-        get :edit, {id: org.id}
-        expect(response).to be_success
-      end
-    end
-  end
 end
