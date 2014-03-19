@@ -112,7 +112,7 @@ feature "Viewing products" do
       address.zip = "32339"
       address.save!
 
-      ds = create(:delivery_schedule, :buyer_pickup,
+      create(:delivery_schedule, :buyer_pickup,
         day: 5,
         order_cutoff: 24,
         seller_delivery_start: "7:00 AM",
@@ -122,27 +122,59 @@ feature "Viewing products" do
         market: market
       )
 
-      create(:delivery, delivery_schedule: ds)
-
-      ds2 = create(:delivery_schedule, :buyer_pickup,
+      create(:delivery_schedule,
         day: 2,
         order_cutoff: 24,
+        seller_fulfillment_location_id: 0,
         seller_delivery_start: "7:00 AM",
         seller_delivery_end:  "11:00 AM",
-        buyer_pickup_start: "12:00 PM",
-        buyer_pickup_end: "2:00 PM",
         market: market
       )
 
-      create(:delivery, delivery_schedule: ds2)
+      create(:delivery_schedule,
+        day: 3,
+        order_cutoff: 24,
+        seller_fulfillment_location: address,
+        seller_delivery_start: "7:00 AM",
+        seller_delivery_end:  "11:00 AM",
+        buyer_pickup_start: "12:00 PM",
+        buyer_pickup_end: "3:00 PM",
+        buyer_pickup_location_id: 0,
+        market: market
+      )
+
+      create(:delivery_schedule,
+        day: 2,
+        order_cutoff: 24,
+        seller_fulfillment_location_id: 0,
+        seller_delivery_start: "6:00 AM",
+        seller_delivery_end:  "11:00 AM",
+        market: market,
+        deleted_at: 1.minute.ago
+      )
 
       click_link "Shop"
 
       expect(page).to have_content("Please choose a pick up or delivery date.")
 
-      delivery_choice = Dom::Buying::DeliveryChoice.first
-      expect(delivery_choice.node.text).to match(/Pick Up: October 10, 2014 Between 12:00PM and 2:00PM/)
-      expect(delivery_choice.node.text).to match(/123 Street Ave. Town MI, 32339/)
+      delivery_choices = Dom::Buying::DeliveryChoice.all
+      expect(delivery_choices.size).to eq(3)
+
+      # This order does matter
+      expect(delivery_choices[0].type).to eq("Delivery:")
+      expect(delivery_choices[0].date).to eq("October 8, 2014")
+      expect(delivery_choices[0].time_range).to eq("Between 12:00PM and 3:00PM")
+      expect(delivery_choices[0]).to have_location_select
+
+      expect(delivery_choices[1].type).to eq("Pick Up:")
+      expect(delivery_choices[1].date).to eq("October 10, 2014")
+      expect(delivery_choices[1].time_range).to eq("Between 12:00PM and 2:00PM")
+      expect(delivery_choices[1].location).to eq("123 Street Ave. Town, MI 32339")
+
+      expect(delivery_choices[2].type).to eq("Delivery:")
+      expect(delivery_choices[2].date).to eq("October 14, 2014")
+      expect(delivery_choices[2].time_range).to eq("Between 7:00AM and 11:00AM")
+      expect(delivery_choices[2]).to have_location_select
 
       click_button "Start Shopping"
       within('.flash--alert') do
