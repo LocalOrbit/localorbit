@@ -46,6 +46,9 @@
 .icon-delete:before {
   content: "\e04a";
 }
+.icon-plus-circle:before {
+  content: "\e02e";
+}
 
 /* Use the following CSS code if you want to have a class per icon */
 /*
@@ -72,9 +75,6 @@ you can use the generic selector below, but it's slower:
 }
 .icon-stack-checkmark:before {
   content: "\e02d";
-}
-.icon-plus-circle:before {
-  content: "\e02e";
 }
 .icon-minus-circle:before {
   content: "\e02f";
