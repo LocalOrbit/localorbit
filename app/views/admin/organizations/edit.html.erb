@@ -1,3 +1,9 @@
-<h1>Edit <%= @organization.name %></h1>
+<%= render 'header' %>
 
-<%= render "form"%>
+<div class="row row--partial">
+  <div class="column column--half">
+    <h1>Edit <%= @organization.name %></h1>
+
+    <%= render "form"%>
+  </div>
+</div>

@@ -139,11 +139,13 @@ describe "A Market Manager" do
       click_link "Fresh Pumpkin Patch"
       click_link "Edit Organization"
 
-      expect(page).not_to have_content("Location Name")
-      expect(page).not_to have_content("Address")
-      expect(page).not_to have_content("City")
-      expect(page).not_to have_content("State")
-      expect(page).not_to have_content("Postal Code")
+      within("fieldset:last") do
+        expect(page).not_to have_content("Location Name")
+        expect(page).not_to have_content("Address")
+        expect(page).not_to have_content("City")
+        expect(page).not_to have_content("State")
+        expect(page).not_to have_content("Postal Code")
+      end
     end
 
     it "allows updating all attributes" do
@@ -157,7 +159,7 @@ describe "A Market Manager" do
 
       expect(page).to have_content("Saved SXSW Farmette")
       expect(page).to have_content("Name SXSW Farmette")
-      expect(page).to have_content("Can sell products? false")
+      expect(page).to have_content("Can sell products? No")
     end
 
     it "does not allow updates with a blank organization name" do

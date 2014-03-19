@@ -40,7 +40,8 @@ input[type=submit] {
 
 button,
 .btn,
-input[type=reset] {
+input[type=reset],
+input[type=submit] {
   &.reset,
   &.cancel,
   &.close,

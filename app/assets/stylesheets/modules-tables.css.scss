@@ -44,6 +44,10 @@ td {
 
 }
 
+tr.odd {
+  background: #f4f4f4;
+}
+
 
 th {
   font-weight: bolder;
@@ -91,10 +95,6 @@ th {
 }
 .product-row {
   color: #000;
-
-  &.odd {
-    background: #f4f4f4;
-  }
 
   > td,
   > th {

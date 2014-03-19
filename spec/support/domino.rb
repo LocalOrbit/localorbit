@@ -246,10 +246,6 @@ module Dom
       selector "tbody tr"
 
       def name_and_address
-        cells[0].text
-      end
-
-      def telephone
         cells[1].text
       end
 
@@ -262,7 +258,7 @@ module Dom
       end
 
       def remove!
-        cells[4].find("input").set(true)
+        cells[0].find("input").set(true)
         click_button "Remove Checked"
       end
 
@@ -283,7 +279,7 @@ module Dom
       end
 
       def name
-        cells[0].find("a").text
+        cells[1].find("a").text
       end
 
       def edit

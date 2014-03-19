@@ -1,23 +1,24 @@
 
 <%= render 'header' %>
 
-<table>
-  <tr>
-    <th scope="row">Name</th>
-    <td><%= @organization.name %></td>
-  </tr>
+<div class="row row--partial">
+  <div class="column column--half">
+    <%= link_to "Edit Organization", [:edit, :admin, @organization], class: 'btn pull-right' %>
+    <h2>Name</h2>
+    <%= simple_format @organization.name %>
+    <% if @organization.photo.present? %>
 
-  <% if @organization.photo.present? %>
-  <tr>
-    <th scope="row">Profile photo</th>
-    <td>
-      <%= image_tag @organization.photo.remote_url, alt: "Profile photo" %>
-    </td>
-  </tr>
-  <% end %>
+    <h2>Profile photo</h2>
+    <%= image_tag @organization.photo.remote_url, alt: "Profile photo", class: "org-profile-photo" %>
+    <% end %>
 
-  <tr>
-    <th scope="row">Can sell products?</th>
-    <td><%= @organization.can_sell %></td>
-  </tr>
-</table>
+    <h2>Can sell products?</h2>
+    <%= simple_format @organization.can_sell ? "Yes" : "No" %>
+
+    <h2>Who</h2>
+    <%= simple_format @organization.who_story %>
+
+    <h2>How</h2>
+    <%= simple_format @organization.how_story %>
+  </div>
+</div>
