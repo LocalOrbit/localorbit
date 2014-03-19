@@ -20,7 +20,10 @@ Rails.application.routes.draw do
 
     resources :organizations do
       resources :users
-      resources :bank_accounts, only: [:index, :new, :create]
+      resources :bank_accounts, only: [:index, :new, :create] do
+        get "verify"
+        put "verify" => "bank_accounts#verification"
+      end
       resources :locations, except: :destroy do
         collection do
           delete :destroy

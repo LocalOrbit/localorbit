@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20140319184312) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "balanced_verification_uri"
+    t.boolean  "verified",                  default: false, null: false
   end
 
   add_index "bank_accounts", ["organization_id"], name: "index_bank_accounts_on_organization_id", using: :btree

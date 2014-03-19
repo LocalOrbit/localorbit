@@ -9,6 +9,8 @@
         <th>Bank Name</th>
         <th>Account Number</th>
         <th>Type</th>
+        <th>Verified</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -17,6 +19,8 @@
         <td class="bank-name"><%= bank_account.bank_name %></td>
         <td class="account-number">******<%= bank_account.last_four %></td>
         <td class="account-type"><%= bank_account.account_type %></td>
+        <td class="verified"><%= bank_account.verified? %></td>
+        <td class="controls"><%= link_to "Verify", admin_organization_bank_account_verify_path(@organization, bank_account) %></td>
       </tr>
     <% end %>
     </tbody>

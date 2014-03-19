@@ -1,0 +1,20 @@
+<%= form_tag nil, method: :put do %>
+  <ul>
+    <li><%= @bank_account.bank_name %></li>
+    <li><%= @bank_account.account_type %></li>
+    <li><%= @bank_account.last_four %></li>
+  </ul>
+  <p>Please confirm the two micro deposits made to your account above.</p>
+
+  <div class="row">
+    <%= label_tag "verification[amount_1]", "Amount 1" %>
+    <%= text_field_tag "verification[amount_1]" %>
+  </div>
+
+  <div class="row">
+    <%= label_tag "verification[amount_2]", "Amount 2" %>
+    <%= text_field_tag "verification[amount_2]" %>
+  </div>
+
+  <%= submit_tag "Verify" %>
+<% end %>
