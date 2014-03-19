@@ -198,7 +198,9 @@ describe "A Market Manager" do
       it "sends an email to a recipient inviting them to join an organization" do
         visit "/admin/organizations"
         click_link "Holland Farms"
-        click_link "Users", match: :first
+        within(".tabs") do
+          click_link "Users"
+        end
 
         within("#new_user") do
           fill_in "Email", with: "susan@example.com"
@@ -221,7 +223,9 @@ describe "A Market Manager" do
       it "show an error message" do
         visit "/admin/organizations"
         click_link "Holland Farms"
-        click_link "Users", match: :first
+        within(".tabs") do
+          click_link "Users"
+        end
 
         within("#new_user") do
           fill_in "Email", with: user.email
@@ -236,7 +240,9 @@ describe "A Market Manager" do
       it "show an error message" do
         visit "/admin/organizations"
         click_link "Holland Farms"
-        click_link "Users", match: :first
+        within(".tabs") do
+          click_link "Users"
+        end
 
         within("#new_user") do
           fill_in "Email", with:""
@@ -251,7 +257,9 @@ describe "A Market Manager" do
       it "show an error message" do
         visit "/admin/organizations"
         click_link "Holland Farms"
-        click_link "Users", match: :first
+        within(".tabs") do
+          click_link "Users"
+        end
 
         within("#new_user") do
           fill_in "Email", with:"asdfasdfasdfasdfasd"
