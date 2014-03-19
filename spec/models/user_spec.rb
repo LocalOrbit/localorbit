@@ -158,6 +158,54 @@ describe User do
     end
   end
 
+  describe 'managed_organizations_within_market' do
+    let(:org1) { create(:organization, name: 'Org 1') }
+    let(:org2) { create(:organization, name: 'Org 2') }
+    let(:org3) { create(:organization, name: 'Org 3') }
+    let(:org4) { create(:organization, name: 'Org 4') }
+    let(:org5) { create(:organization, name: 'Org 5') }
+
+    let!(:market1) { create(:market, organizations: [org1, org5]) }
+    let!(:market2) { create(:market, organizations: [org2]) }
+    let!(:market3) { create(:market, organizations: [org3, org4]) }
+
+    context 'for an admin' do
+      let(:user) { create(:user, :admin) }
+
+      it 'returns a scope with all organizations for the market' do
+        expect(user.managed_organizations_within_market(market1)).to include(org1, org5)
+        expect(user.managed_organizations_within_market(market1)).to_not include(org2, org3, org4)
+      end
+    end
+
+    context 'for a market manager' do
+      let(:user) { create(:user, managed_markets: [market1, market2], organizations: [org4, org5]) }
+
+      it 'returns a chainable scope' do
+        expect(user.managed_organizations_within_market(market1)).to be_a_kind_of(ActiveRecord::Relation)
+      end
+
+      it "includes organizations in the market they manage" do
+        expect(user.managed_organizations_within_market(market1)).to include(org1, org5)
+        expect(user.managed_organizations_within_market(market1)).to_not include(org2, org3, org4)
+      end
+
+      it "includes their organizations in the market they do not manage" do
+        expect(user.managed_organizations_within_market(market3)).to include(org4)
+        expect(user.managed_organizations_within_market(market3)).to_not include(org1, org2, org3, org5)
+      end
+    end
+
+    context 'for a user' do
+      let(:user) { create(:user, role: 'user', organizations: [org1]) }
+
+      it 'returns a scope for the organization memberships within the market' do
+        expect(user.managed_organizations_within_market(market1)).to include(org1)
+        expect(user.managed_organizations_within_market(market1)).to_not include(org2, org3, org4, org5)
+      end
+    end
+  end
+
   describe 'markets' do
     context 'admin' do
       let(:user) { create(:user, :admin) }

@@ -13,7 +13,7 @@ feature "Viewing products" do
   let!(:org2_product_deleted) { create(:product, :sellable, organization: org2, deleted_at: 1.day.ago) }
 
   let!(:buyer_org) { create(:organization, :multiple_locations, :buyer) }
-  let!(:user) { create(:user, organizations: [buyer_org]) }
+  let(:user) { create(:user, organizations: [buyer_org]) }
 
   let!(:market) { create(:market, :with_addresses, organizations: [org1, org2, buyer_org]) }
 
@@ -60,15 +60,7 @@ feature "Viewing products" do
 
     context "single location" do
       scenario "shopping without an existing shopping cart" do
-        address = market.addresses.first
-        address.name = "Market Place"
-        address.address = "123 Street Ave."
-        address.city = "Town"
-        address.state = "MI"
-        address.zip = "32339"
-        address.save!
-
-        ds = create(:delivery_schedule, :buyer_pickup,
+        create(:delivery_schedule, :buyer_pickup,
           day: 5,
           order_cutoff: 24,
           seller_delivery_start: "7:00 AM",
@@ -78,11 +70,33 @@ feature "Viewing products" do
           market: market
         )
 
-        create(:delivery, delivery_schedule: ds)
-
         click_link "Shop"
 
         expect(page).to have_content(org1_product.name)
+      end
+
+      context "as a market manager" do
+        let(:user) { create(:user, managed_markets: [market]) }
+
+        scenario "has to select an organization to shop as" do
+          create(:delivery_schedule, :buyer_pickup,
+            day: 5,
+            order_cutoff: 24,
+            seller_delivery_start: "7:00 AM",
+            seller_delivery_end:  "11:00 AM",
+            buyer_pickup_start: "12:00 PM",
+            buyer_pickup_end: "2:00 PM",
+            market: market
+          )
+
+          click_link "Shop"
+
+          select buyer_org.name, from: 'Select an organization'
+
+          click_button 'Select Organization'
+
+          expect(page).to have_content(org1_product.name)
+        end
       end
     end
   end
