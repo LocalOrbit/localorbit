@@ -2,6 +2,7 @@ require "spec_helper"
 
 feature "User signing in" do
   let!(:user) { create(:user, :admin) }
+  let(:cookie_name) { "_local_orbit_session_test" }
 
   scenario "A user can sign in" do
     visit "/"
@@ -22,7 +23,7 @@ feature "User signing in" do
 
     # Hack to remove a cookie from the cookie jar
     jar = Capybara.current_session.driver.browser.current_session.instance_variable_get(:@rack_mock_session).cookie_jar
-    jar.delete('_local_orbit_session')
+    jar.delete(cookie_name)
 
     visit new_user_session_path
     expect(page).to have_text("Dashboard")
@@ -38,7 +39,7 @@ feature "User signing in" do
 
     # Hack to remove a cookie from the cookie jar
     jar = Capybara.current_session.driver.browser.current_session.instance_variable_get(:@rack_mock_session).cookie_jar
-    jar.delete('_local_orbit_session')
+    jar.delete(cookie_name)
 
     visit "/"
     expect(page).to_not have_text("Dashboard")
