@@ -33,7 +33,13 @@ end
       </li>
       <li><a href="/admin/financials"><i class="font-icon" data-icon="&#xe00f;"></i>Financials</a></li>
     <% elsif current_user.seller? %>
-      <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xf000;"></i> Sales Information</a></li>
+      <li>
+        <a href="#sales-dropdown" class="caretted" href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xf000;"></i> Sales Information</a>
+        <ul class="dropdown with-anchor top-anchor" id="sales-dropdown">
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries</a></li>
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe024;"></i> Current Sales</a></li>
+        </ul>
+      </li>
       <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe00f;"></i> Financials</a></li>
     <% elsif current_user.buyer_only? %>
       <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe00f;"></i> Financials</a></li>
@@ -73,12 +79,16 @@ end
     <% end %>
 
     <li>
-      <a href="#reports-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe01e;"></i> Reports</a>
-      <ul class="dropdown with-anchor top-anchor" id="reports-dropdown">
-        <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe006;"></i> Reports</a></li>
-        <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe04f;"></i> Referrals</a></li>
-        <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe01e;"></i> Metrics</a></li>
-      </ul>
+      <% if current_user.buyer_only? %>
+        <a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe01e;"></i> Reports</a>
+      <% else %>
+        <a href="#reports-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe01e;"></i> Reports</a>
+        <ul class="dropdown with-anchor top-anchor" id="reports-dropdown">
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe006;"></i> Reports</a></li>
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe04f;"></i> Referrals</a></li>
+          <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe01e;"></i> Metrics</a></li>
+        </ul>
+      <% end %>
     </li>
 
     <li>
