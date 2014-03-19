@@ -373,12 +373,13 @@ module Dom
     end
 
     class Item < Domino
-      selector ".item-group .cart_item"
+      selector ".cart_item"
 
       attribute :name
+      attribute :description
 
       def quantity
-        node.find(".quantity")
+        node.find_field("quantity")
       end
 
       def unit_price
@@ -387,6 +388,14 @@ module Dom
 
       def price
         node.find(".price")
+      end
+
+      def quantity_field
+        node.find_field "quantity"
+      end
+
+      def set_quantity(n)
+        quantity_field.set(n)
       end
     end
   end
@@ -492,18 +501,7 @@ module Dom
       end
     end
 
-    class ProductRow < Domino
-      selector ".product"
-      attribute :name
-      attribute :description
-
-      def quantity_field
-        node.find_field "quantity"
-      end
-
-      def set_quantity(n)
-        quantity_field.set(n)
-      end
+    class CartItem < Domino
     end
   end
 end

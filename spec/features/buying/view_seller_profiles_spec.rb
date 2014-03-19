@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 feature "View Seller Profiles" do
-  let!(:buyer)   { create(:organization, :buyer) }
-  let!(:seller1) { create(:organization, :seller, who_story: "Funny Farm", how_story: "Via a wagon") }
-  let!(:seller2) { create(:organization, :seller) }
+  let!(:buyer)   { create(:organization, :buyer, :single_location) }
+  let!(:seller1) { create(:organization, :seller, :single_location, who_story: "Funny Farm", how_story: "Via a wagon") }
+  let!(:seller2) { create(:organization, :seller, :single_location) }
   let!(:user)    { create(:user, organizations: [buyer]) }
-  let!(:market)  { create(:market, organizations: [buyer, seller1, seller2]) }
+  let!(:market)  { create(:market, :with_addresses, organizations: [buyer, seller1, seller2]) }
+  let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
 
   before do
     switch_to_subdomain(market.subdomain)

@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require jquery.ui.datepicker
 //= require chosen-jquery
+//= require underscore
+//= require accountingjs
 //= require_tree .
