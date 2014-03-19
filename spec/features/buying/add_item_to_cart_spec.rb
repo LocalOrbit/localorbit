@@ -27,11 +27,11 @@ describe "Add item to cart", js: true do
   }
 
   def bananas_row
-    Dom::Buying::ProductRow.find_by_name("Bananas")
+    Dom::Cart::Item.find_by_name("Bananas")
   end
 
   def kale_row
-    Dom::Buying::ProductRow.find_by_name("kale")
+    Dom::Cart::Item.find_by_name("kale")
   end
 
 

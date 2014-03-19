@@ -1,20 +1,26 @@
 <h1>Cart</h1>
 <h2>Your Order</h2>
 
-<% @grouped_items.each_pair do |seller_name, items| %>
-  <div class="item-group">
-    <h3 class="seller"><%= seller_name %></h3>
+<div class="cart_items" data-cart-url="<%= cart_path %>" data-cart-items="<%= @cart_items.to_json %>">
+  <% @grouped_items.each_pair do |seller_name, items| %>
+    <div class="item-group">
+      <h3 class="seller"><%= seller_name %></h3>
 
-    <table>
-      <%= content_tag_for(:tr, items, id: "cart_item_#") do |item| %>
-        <td class="name"><%= item.product.name %></td>
-        <td class="quantity"><%= item.quantity %></td>
-        <td class="unit_price"><%= item.unit_price.formatted_price %></td>
-        <td class="price"><%= item.total_price %></td>
-      <% end %>
-    </table>
-  </div>
-<% end %>
+      <table>
+        <% items.each do |item| %>
+          <%= content_tag_for(:tr, item, id: "cart_item_#", data: {id: item.product.id, prices: item.prices.to_json}) do %>
+            <td class="name"><%= item.product.name %></td>
+            <td class="quantity">
+              <input name="quantity" type="number" size="3" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>">
+            </td>
+            <td class="unit_price"><%= item.unit_price.formatted_price %></td>
+            <td class="price"><%= item.total_price %></td>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+</div>
 
 <div id="items">
 </div>

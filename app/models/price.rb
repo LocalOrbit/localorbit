@@ -8,6 +8,10 @@ class Price < ActiveRecord::Base
     order('markets.name NULLS FIRST, organizations.name NULLS FIRST, min_quantity')
   }
 
+  scope :for_market_and_org, lambda { |market, organization|
+    where("market_id IS NULL OR market_id = ?", market.id).where("organization_id IS NULL OR organization_id = ?", organization.id)
+  }
+
   validates :min_quantity, :sale_price, numericality: { greater_than: 0 }
   validates :min_quantity, uniqueness: { scope: [:product_id, :market_id, :organization_id] }
 

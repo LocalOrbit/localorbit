@@ -1,4 +1,4 @@
-<table id="products" data-cart-url="<%= cart_path %>" data-cart-items="<%= @cart_items.to_json %>">
+<table class="cart_items" id="products" data-cart-url="<%= cart_path %>" data-cart-items="<%= @cart_items.to_json %>">
   <thead>
     <tr>
       <th></th>
@@ -10,8 +10,9 @@
     </tr>
   </thead>
   <tbody>
+
   <% products.each do |product| %>
-    <tr class="product product-row" data-id="<%= product.id %>">
+    <tr class="product product-row cart_item" data-id="<%= product.id %>" data-prices="<%= product.display_prices.to_json %>">
       <td class="product-image">
       <% if product.image_uid.present? %>
         <%= image_tag Dragonfly.app.remote_url_for(product.image_uid) %>
