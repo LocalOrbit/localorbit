@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_location
-    Location.find_by(id: session[:current_location]) || current_delivery.delivery_schedule.buyer_pickup_location
+    current_organization.locations.visible.find_by(id: session[:current_location]) || current_delivery.delivery_schedule.buyer_pickup_location
   end
 
   def current_market
