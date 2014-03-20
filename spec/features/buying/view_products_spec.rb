@@ -89,6 +89,16 @@ feature "Viewing products" do
             market: market
           )
 
+          create(:delivery_schedule,
+            day: 2,
+            order_cutoff: 24,
+            seller_fulfillment_location_id: 0,
+            seller_delivery_start: "6:00 AM",
+            seller_delivery_end:  "11:00 AM",
+            market: market,
+            deleted_at: 1.minute.ago
+          )
+
           click_link "Shop"
 
           select buyer_org.name, from: 'Select an organization'

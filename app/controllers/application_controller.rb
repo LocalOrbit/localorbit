@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
         joins(:delivery_schedule).
         where('delivery_schedules.market_id = ? AND deliveries.cutoff_time > ?', current_market.id, Time.current).
         find_by(id: session[:current_delivery_id])
-    elsif current_market.delivery_schedules.count == 1
+    elsif current_market.delivery_schedules.visible.count == 1
       current_market.delivery_schedules.first.next_delivery.tap do |delivery|
         session[:current_delivery_id] = delivery.id
         if delivery.requires_location?
