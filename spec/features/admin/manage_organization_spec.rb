@@ -31,6 +31,20 @@ describe "admin manange organization" do
     expect(page).to have_content("University of Michigan Farmers has been created")
   end
 
+  it "maintains market selection on form errors" do
+    m1 = create(:market, name: "Market 1")
+    m2 = create(:market, name: "Market 2")
+
+    visit "/admin/organizations"
+    click_link "Add Organization"
+
+    select "Market 2", from: "Market"
+    click_button "Add Organization"
+
+    expect(page).to have_content("Name can't be blank")
+    expect(find_field('Market').value).to eq(m2.id.to_s)
+  end
+
   describe "locations" do
     let!(:organization) do
       create(:organization, name: "University of Michigan Farmers")
