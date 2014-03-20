@@ -137,14 +137,14 @@ th {
     font-weight: bold;
   }
   .product-clear {
-    padding-top: 30px;
     font-size: 15px;
+    line-height: 28px;
     > a {
       color: #ddd;
     }
   }
   .product-image {
-    padding-right: 20px;
+    padding-right: 10px;
     > img {
       display: block;
       width: 60px;
@@ -164,7 +164,6 @@ th {
       }
     }
   .tiers {
-    display: inline-block;
     padding: 0;
     list-style: none;
 
@@ -178,6 +177,7 @@ th {
     }
   .total {
     font-weight: bold;
+    line-height: 28px;
   }
 }
 
@@ -191,5 +191,29 @@ th {
   .product-table--admin {
     td {
       font-size: 12px;
+    }
+  }
+  .product-table--user {
+    width: auto;
+    margin-left: 20px;
+
+    th {
+      font-size: 12px;
+    }
+
+    tr {
+      border-bottom: solid 1px #eee;
+    }
+
+    .info {
+      width: 37%;
+    }
+
+    .name {
+      font-weight: normal;
+    } 
+
+    .pricing {
+      width: 30%;
     }
   }
