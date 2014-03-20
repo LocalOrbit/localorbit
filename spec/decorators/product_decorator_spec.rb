@@ -105,7 +105,8 @@ describe ProductDecorator do
       end
 
       it "returns the organization's default location when custom location unavailable" do
-        organization_default_location = create(:location, :default_shipping, organization: organization)
+        create(:location, organization: organization, deleted_at: 1.minute.ago)
+        organization_default_location = create(:location, organization: organization)
 
         product = build(:product, :decorated, organization: organization, location: nil)
 
