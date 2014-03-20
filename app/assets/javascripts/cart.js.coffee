@@ -2,57 +2,80 @@ $ ->
   return unless $(".cart_item").length
   selector = $('.cart_item')
 
+  class CartItem
+    constructor: (opts)->
+      {@data, @el} = opts
+
+    @buildWithElement: (el)->
+      new CartItem
+        data: $(el).data("cart-item")
+        el: $(el)
+
+    update: (data)->
+      @data = data
+      @updateView()
+
+    updateView: ->
+      if @el?
+        @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
+        @el.find(".price").text(accounting.formatMoney(@data.total_price))
+
   class CartView
     constructor: (opts)->
       {@counter} = opts
-
-    # selectors
 
     #actions
     updateCounter: (count)->
       @counter.text(count.toString())
 
-    updateUnitPrice: (cartId, price)->
-      cartItem = $("#cart_item_#{cartId}")
-      cartItem.find(".unit_price").text(accounting.formatMoney(price))
+    updateSubtotal: (subtotal)->
+      totals = $("#totals")
+      totals.find(".subtotal").text(accounting.formatMoney(subtotal))
 
-    updatePrice: (cartId, price, quantity)->
-      cartItem = $("#cart_item_#{cartId}")
-      cartItem.find(".price").text(accounting.formatMoney(price*quantity))
 
   class CartModel
     constructor: (opts)->
-      {@url, @items, @view, @prices} = opts
+      {@url, @view} = opts
 
-    priceForQuantity: (prices, quantity)->
-      sorted_prices = _.sortBy prices, (p)->
-        parseFloat(p.sale_price)
+      itemsOnPage = _.map opts.items, (el)->
+        CartItem.buildWithElement(el)
 
-      if quantity == 0
-        return parseFloat(_.last(sorted_prices).sale_price)
+      @items = _.filter itemsOnPage, (item)->
+        item.data.id?
 
-      matching_prices = _.filter sorted_prices, (p)->
-        p.min_quantity <= quantity
+    itemAt: (id)->
+      _.find @items, (item)->
+        item.data.id == id
 
-      parseFloat(_.first(matching_prices).sale_price)
+    updateOrAddItem: (data)->
+      item = @itemAt(data.id)
 
-    subTotal: ()->
-      # How can I get at the prices with only a productId?
-      # TODO: Map and reduce
+      if item?
+        item.update(data)
 
-    objectWasAdded: (data, prices)->
-      @items[data.id.toString()] = data
+      else
+        # TODO: This will need an element even f it's on the
+        # products listing page
+        item = new CartItem(data: data)
+        @items.push(item)
 
-      @view.updateCounter(Object.keys(@items).length)
+      return item
 
-      price = @priceForQuantity(prices, data.quantity)
-      @view.updateUnitPrice(data.id, price)
-      @view.updatePrice(data.id, price, data.quantity)
+    subtotal: ()->
+      _.reduce(@items, (memo, item)->
+        memo += parseFloat(item.data.total_price)
+      , 0)
 
-    addItem: (productId, prices, quantity)->
+    saveItem: (productId, quantity)->
+      # TODO: Add validation for maximum input to prevent
+      #       users from entering numbers greater than available
+      #       quantities
       $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
         .done (data)=>
-          @objectWasAdded(data, prices)
+          item = @updateOrAddItem(data)
+
+          @view.updateCounter(@items.length)
+          @view.updateSubtotal(@subtotal())
 
   view = new CartView
     counter: $("header .cart .counter")
@@ -60,10 +83,10 @@ $ ->
   model = new CartModel
     url: selector.closest(".cart_items").data("cart-url")
     view: view
-    items: selector.closest(".cart_items").data("cart-items")
+    items: $(".cart_item")
 
-  selector.find(".quantity input").change ()->
-    productId = $(this).closest(".cart_item").data("id")
-    prices = $(this).closest(".cart_item").data("prices")
 
-    model.addItem(productId, prices, $(this).val())
+  $(".cart_item .quantity input").change ->
+    data = $(this).closest(".cart_item").data("cart-item")
+    quantity = $(this).val()
+    model.saveItem(data.product_id, quantity)

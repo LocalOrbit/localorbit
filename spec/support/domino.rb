@@ -382,8 +382,8 @@ module Dom
         node.find_field("quantity")
       end
 
-      def unit_price
-        node.find(".unit_price")
+      def price_for_quantity
+        node.find(".price-for-quantity")
       end
 
       def price
@@ -396,6 +396,14 @@ module Dom
 
       def set_quantity(n)
         quantity_field.set(n)
+      end
+    end
+
+    class Totals < Domino
+      selector "#totals"
+
+      def subtotal
+        node.find(".subtotal")
       end
     end
   end
@@ -452,10 +460,10 @@ module Dom
   end
 
   class CartLink < Domino
-    selector "header .cart .counter"
+    selector "header .cart"
 
-    def has_count?(num)
-      node.has_content? num.to_s
+    def count
+      node.find(".counter")
     end
   end
 

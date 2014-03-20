@@ -1,4 +1,4 @@
-<table class="cart_items" id="products" data-cart-url="<%= cart_path %>" data-cart-items="<%= @cart_items.to_json %>">
+<table class="cart_items" id="products" data-cart-url="<%= cart_path %>">
   <thead>
     <tr>
       <th></th>
@@ -12,7 +12,7 @@
   <tbody>
 
   <% products.each do |product| %>
-    <tr class="product product-row cart_item" data-id="<%= product.id %>" data-prices="<%= product.display_prices.to_json %>">
+    <tr class="product product-row cart_item" data-cart-item="<%= product.cart_item.to_json %>">
       <td class="product-image">
       <% if product.image_uid.present? %>
         <%= image_tag Dragonfly.app.remote_url_for(product.image_uid) %>
@@ -73,17 +73,17 @@
       <td class="pricing">
         <ul class="tiers">
           <% product.prices.view_sorted.decorate.each do |price| %>
-            <li><span class="price"><%= price.formatted_price %></span> <span class="tier"><%= price.formatted_units %></span></li>
+            <li><span class="unit-price"><%= price.formatted_price %></span> <span class="tier"><%= price.formatted_units %></span></li>
           <% end %>
         </ul>
       </td>
       <td class="quantity">
         <label>
-          <input name="quantity" type="number" size="3" min="0" value="<%= product.cart_quantity %>" max="<%= product.available_inventory %>">
-          <span class="price-for-quantity"><%= product.initial_price.formatted_price %></span>
+          <input name="quantity" type="number" size="3" min="0" value="<%= product.cart_item.quantity %>" max="<%= product.available_inventory %>">
+          <span class="price-for-quantity"><%= number_to_currency(product.cart_item.unit_price.sale_price) %></span>
         </label>
       </td>
-      <td class="total">$0.00</td>
+      <td class="total price">$0.00</td>
       <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
     </tr>
   <% end %>

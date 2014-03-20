@@ -14,7 +14,7 @@ describe "Checking Out", js: true do
   # Fulton St. Farms (seller)
   let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: seller) }
   let!(:bananas_price_buyer_base) {
-    create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 7.00)
+    create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
   }
 
   let!(:kale) { create(:product, :sellable, name: "Kale", organization: seller) }
@@ -51,18 +51,22 @@ describe "Checking Out", js: true do
   end
 
   def add_items
-    # Bananas Price for this buyer: 7.00
-    # Total: 10 * 7.00 = 70.00
+    # Bananas Price for this buyer: 0.50
+    # Total: 10 * 0.50 = 5.00
     Dom::Cart::Item.find_by_name("Bananas").set_quantity("10")
+    Dom::Cart::Item.find_by_name("Kale").node.click
 
     # Potatoes Price for this everyone: 3.00
     # Total: 5 * 3.00 = 15.00
     Dom::Cart::Item.find_by_name("Potatoes").set_quantity("5")
+    Dom::Cart::Item.find_by_name("Kale").node.click
 
-    # Kale Price for this everyone: 3.00
+    # Kale Price for this at >6 everyone: 1.00
     # Total: 20 * 1.00 (>6) = 20.00
     Dom::Cart::Item.find_by_name("Kale").set_quantity("20")
     Dom::Cart::Item.find_by_name("Bananas").node.click
+
+    sleep(1)
   end
 
   context "common functionality" do
@@ -169,6 +173,10 @@ describe "Checking Out", js: true do
       Dom::Cart::Item.find_by_name("Bananas")
     end
 
+    def cart_totals
+      Dom::Cart::Totals.first
+    end
+
     before do
       sign_in_and_choose_delivery
       add_items
@@ -185,27 +193,27 @@ describe "Checking Out", js: true do
     end
 
     it "updates the per-unit price based on the pricing tier it fits in" do
-      expect(kale_item.unit_price).to have_content("$2.50")
+      expect(kale_item.price_for_quantity).to have_content("$2.50")
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
-      expect(kale_item.unit_price).to have_content("$1.00")
+      expect(kale_item.price_for_quantity).to have_content("$1.00")
 
       kale_item.set_quantity(4)
       bananas_item.quantity_field.click
-      expect(kale_item.unit_price).to have_content("$2.50")
+      expect(kale_item.price_for_quantity).to have_content("$2.50")
 
       kale_item.set_quantity(5)
       bananas_item.quantity_field.click
-      expect(kale_item.unit_price).to have_content("$2.50")
+      expect(kale_item.price_for_quantity).to have_content("$2.50")
 
       kale_item.set_quantity(1)
       bananas_item.quantity_field.click
-      expect(kale_item.unit_price).to have_content("$3.00")
+      expect(kale_item.price_for_quantity).to have_content("$3.00")
 
       kale_item.set_quantity(0)
       bananas_item.quantity_field.click
-      expect(kale_item.unit_price).to have_content("$3.00")
+      expect(kale_item.price_for_quantity).to have_content("$3.00")
     end
 
     it "updates the overall price" do
@@ -232,7 +240,15 @@ describe "Checking Out", js: true do
       expect(kale_item.price).to have_content("$0.00")
     end
 
-    it "updates item subtotal"
+    it "updates item subtotal" do
+      expect(cart_totals.subtotal).to have_content("$30.00")
+
+      kale_item.set_quantity(98)
+      bananas_item.quantity_field.click
+
+      expect(cart_totals.subtotal).to have_content("$118.00")
+    end
+
     it "updates total based on discounts and delivery fees"
   end
 

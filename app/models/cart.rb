@@ -15,4 +15,8 @@ class Cart < ActiveRecord::Base
       end
     end
   end
+
+  def subtotal
+    items.inject(0){ |sum, item| sum += item.total_price }
+  end
 end
