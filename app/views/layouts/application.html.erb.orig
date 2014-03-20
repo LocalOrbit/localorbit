@@ -24,21 +24,27 @@
         </p>
         <ul class="l-inline-list nav nav--app">
           <li><%= link_to 'Dashboard', dashboard_path %></li
-          ><li><%= render "carts/link" %></li
+<<<<<<< HEAD
+          ><li><%= render "cart/link" %></li
           ><li><%= link_to 'Help', coming_soon_dashboard_path %></li
+=======
+          ><li><%= render "carts/link" %></li
+          ><li><a href="#">Help</a></li
+>>>>>>> Moves cart link to live under "carts"
           ><li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
         </ul>
         <% else %>
+        <p></p>
         <% end %>
       </div>
     </header>
     <div class="l-constraint l-main">
       <% if notice %>
-        <div class="flash flash--notice"><p><%= notice %></p></div>
+        <p class="flash flash--notice"><%= notice %></p>
       <% end %>
 
       <% if alert %>
-        <div class="flash flash--alert"><p><%= alert %></div>
+        <p class="flash flash--alert"><%= alert %></p>
       <% end %>
 
       <%= render 'shared/navigation' %>
@@ -47,23 +53,7 @@
     </div>
     <footer class="l-app-footer">
       <div class="l-constraint">
-        <% if current_market %>
-          <div class="pull-right market-manager-contact">
-            <% if current_market.managers.any? %>
-              <a href="mailto:<%= current_market.managers.first.email %>" class="email"><%= current_market.managers.first.name %></a>, Market Manager<br>
-            <% end %>
-            <% if current_market.addresses.any? && current_market.addresses.first.phone.present? %>
-              Phone <%= number_to_phone current_market.addresses.first.phone %>
-            <% end %>
-          </div>
-        <% end %>
-
-        <div class="copyright">
-          <a href="http://localorb.id">
-            Powered by <span class="org">Local Orbit</span><br>
-            &#169; 2014
-          </a>
-        </div>
+        Beep
       </div>
     </footer>
   </div>

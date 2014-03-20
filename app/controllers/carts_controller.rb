@@ -1,4 +1,10 @@
 class CartsController < ApplicationController
+  include CartItems
+
+  def show
+    @grouped_items = current_cart.items.for_checkout
+  end
+
   def update
     product = Product.find(item_params[:product_id])
 

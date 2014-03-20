@@ -173,17 +173,17 @@ feature "Viewing products" do
       # This order does matter
       expect(delivery_choices[0].type).to eq("Delivery:")
       expect(delivery_choices[0].date).to eq("October 8, 2014")
-      expect(delivery_choices[0].time_range).to eq("Between 12:00PM and 3:00PM")
+      expect(delivery_choices[0].time_range).to eq("between 12:00PM and 3:00PM")
       expect(delivery_choices[0]).to have_location_select
 
       expect(delivery_choices[1].type).to eq("Pick Up:")
       expect(delivery_choices[1].date).to eq("October 10, 2014")
-      expect(delivery_choices[1].time_range).to eq("Between 12:00PM and 2:00PM")
+      expect(delivery_choices[1].time_range).to eq("between 12:00PM and 2:00PM")
       expect(delivery_choices[1].location).to eq("123 Street Ave. Town, MI 32339")
 
       expect(delivery_choices[2].type).to eq("Delivery:")
       expect(delivery_choices[2].date).to eq("October 14, 2014")
-      expect(delivery_choices[2].time_range).to eq("Between 7:00AM and 11:00AM")
+      expect(delivery_choices[2].time_range).to eq("between 7:00AM and 11:00AM")
       expect(delivery_choices[2]).to have_location_select
 
       click_button "Start Shopping"
@@ -225,7 +225,7 @@ feature "Viewing products" do
       expect(page).to have_content("Please choose a pick up or delivery date.")
 
       delivery = Dom::Buying::DeliveryChoice.first
-      expect(delivery.node.text).to match(/Delivery: October 10, 2014 Between 7:00AM and 11:00AM/)
+      expect(delivery.node.text).to match(/Delivery: October 10, 2014 between 7:00AM and 11:00AM/)
 
       delivery.choose!
 
@@ -267,7 +267,7 @@ feature "Viewing products" do
       delivery = Dom::Buying::DeliveryChoice.first
       expect(delivery).not_to be_nil
 
-      expect(delivery.node.text).to match(/Delivery: October 10, 2014 Between 7:00AM and 11:00AM/)
+      expect(delivery.node.text).to match(/Delivery: October 10, 2014 between 7:00AM and 11:00AM/)
 
       delivery.choose!
 
@@ -318,7 +318,7 @@ feature "Viewing products" do
         delivery = Dom::Buying::DeliveryChoice.first
         expect(delivery).not_to be_nil
 
-        expect(delivery.node.text).to match(/Delivery: October 10, 2014 Between 7:00AM and 11:00AM/)
+        expect(delivery.node.text).to match(/Delivery: October 10, 2014 between 7:00AM and 11:00AM/)
 
         delivery.choose!
 

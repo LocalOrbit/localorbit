@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_market
   helper_method :current_organization
   helper_method :current_cart
+  helper_method :current_location
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -109,6 +110,14 @@ class ApplicationController < ActionController::Base
   def require_organization_location
     if current_organization && current_organization.locations.visible.none?
       redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
+    end
+  end
+
+  def require_shopping_cart_dependencies
+    if current_organization.nil?
+      redirect_to [:new, :sessions, :organization]
+    elsif current_delivery.nil?
+      redirect_to [:new, :sessions, :delivery]
     end
   end
 end

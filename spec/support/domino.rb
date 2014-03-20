@@ -362,6 +362,44 @@ module Dom
     end
   end
 
+  module Cart
+    class SellerGroup < Domino
+      selector ".item-group"
+      attribute :seller
+
+      def has_product_row?(content)
+        node.has_selector?(".cart_item", text: content)
+      end
+    end
+
+    class Item < Domino
+      selector ".cart_item"
+
+      attribute :name
+      attribute :description
+
+      def quantity
+        node.find_field("quantity")
+      end
+
+      def unit_price
+        node.find(".unit_price")
+      end
+
+      def price
+        node.find(".price")
+      end
+
+      def quantity_field
+        node.find_field "quantity"
+      end
+
+      def set_quantity(n)
+        quantity_field.set(n)
+      end
+    end
+  end
+
   class Product < Domino
     selector ".product"
 
@@ -415,6 +453,10 @@ module Dom
 
   class CartLink < Domino
     selector "header .cart .counter"
+
+    def has_count?(num)
+      node.has_content? num.to_s
+    end
   end
 
   class BankAccount < Domino
@@ -459,20 +501,7 @@ module Dom
       end
     end
 
-    class ProductRow < Domino
-      selector ".product"
-      attribute :name
-      attribute :description
-
-      def quantity_field
-        node.find_field "quantity"
-      end
-
-      def set_quantity(n)
-        id = node[:id]
-        quantity_field.set(n)
-        #page.execute_script("$('#{id} input[name=quantity]').trigger('change');")
-      end
+    class CartItem < Domino
     end
   end
 end
