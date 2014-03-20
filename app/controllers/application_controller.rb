@@ -111,4 +111,17 @@ class ApplicationController < ActionController::Base
       redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
     end
   end
+
+  def require_current_organization
+    if current_organization.nil?
+      session[:redirect_back_to] = request.fullpath
+      redirect_to [:new, :sessions, :organization], alert: "You must first select an organization"
+    end
+  end
+
+  def require_current_delivery
+    if current_delivery.nil?
+      redirect_to [:new, :sessions, :delivery]
+    end
+  end
 end
