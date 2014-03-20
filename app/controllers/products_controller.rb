@@ -1,8 +1,9 @@
 class ProductsController < ApplicationController
+  before_action :require_current_organization
   before_action :require_organization_location
-  before_action :require_shopping_cart_dependencies
-  before_action :hide_admin_navigation
+  before_action :require_current_delivery
   before_action :require_cart
+  before_action :hide_admin_navigation
   before_action :load_cart_items
 
   def index
@@ -13,15 +14,6 @@ class ProductsController < ApplicationController
   end
 
   private
-
-
-  def require_shopping_cart_dependencies
-    if current_organization.nil?
-      redirect_to [:new, :sessions, :organization]
-    elsif current_delivery.nil?
-      redirect_to [:new, :sessions, :delivery]
-    end
-  end
 
   # The CartModel JavaScript expects items in the format
   #  { item_id: item_object }
