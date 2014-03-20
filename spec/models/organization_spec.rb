@@ -21,30 +21,6 @@ describe Organization do
     end
   end
 
-  describe "#default_location" do
-    context "organization has one saved location" do
-      let!(:location) { create(:location) }
-      let!(:org) { location.organization }
-      subject { org.default_location }
-
-      it "returns the only location" do
-        expect(subject.name).to eql(location.name)
-      end
-    end
-
-    context "organization has many saved locations" do
-      let!(:org) { create(:organization) }
-      let!(:loc1) { create(:location, organization: org) }
-      let!(:loc2) { create(:location, organization: org) }
-
-      subject { org.default_location }
-
-      it "returns the first location" do
-        expect(subject.name).to eql(loc1.name)
-      end
-    end
-  end
-
   describe "#shipping_location" do
     let(:org) { create(:organization) }
 
