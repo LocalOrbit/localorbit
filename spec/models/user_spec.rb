@@ -273,26 +273,24 @@ describe User do
     subject { user.managed_products }
 
     context 'for an admin' do
-      let(:user) { create(:user, :admin) }
+      let!(:user) { create(:user, :admin) }
 
       it 'returns all products' do
-        expect(subject).to eq(Product.all)
+        Timecop.freeze do
+          expect(subject).to eq(Product.visible)
+        end
       end
     end
 
     context 'for a market manager' do
-      let(:user) { create(:user, :market_manager) }
-      let(:market1) { user.managed_markets.first }
-      let(:market2) { create(:market) }
-      let(:org1) { create(:organization) }
-      let(:org2) { create(:organization) }
-      let(:prod1) { create(:product, organization: org1) }
-      let(:prod2) { create(:product, organization: org2) }
-
-      before do
-        market1.organizations << org1
-        market2.organizations << org2
-      end
+      let!(:user) { create(:user, :market_manager) }
+      let!(:market1) { user.managed_markets.first }
+      let!(:market2) { create(:market) }
+      let!(:org1) { create(:organization, markets: [market1]) }
+      let!(:org2) { create(:organization, markets: [market2]) }
+      let!(:prod1) { create(:product, organization: org1) }
+      let!(:prod2) { create(:product, organization: org2) }
+      let!(:deleted_prod) { create(:product, organization: org1, deleted_at: 1.minute.ago) }
 
       it "returns a scope" do
         expect(subject).to be_kind_of(ActiveRecord::Relation)
@@ -305,21 +303,20 @@ describe User do
       it "returned scope does not include products for organizations in markets they do not manage" do
         expect(subject).to_not include(prod2)
       end
+
+      it "returned scope does not include deleted products" do
+        expect(subject).to_not include(deleted_prod)
+      end
     end
 
     context 'for a user' do
-      let(:user) { create(:user) }
-      let(:market1) { create(:market) }
-      let(:org1) { create(:organization) }
-      let(:org2) { create(:organization) }
-      let(:prod1) { create(:product, organization: org1) }
-      let(:prod2) { create(:product, organization: org2) }
-
-      before do
-        market1.organizations << org1
-        market1.organizations << org2
-        org1.users << user
-      end
+      let!(:user) { create(:user) }
+      let!(:market1) { create(:market) }
+      let!(:org1) { create(:organization, markets: [market1], users: [user]) }
+      let!(:org2) { create(:organization, markets: [market1]) }
+      let!(:prod1) { create(:product, organization: org1) }
+      let!(:prod2) { create(:product, organization: org2) }
+      let!(:deleted_prod) { create(:product, organization: org1, deleted_at: 1.minute.ago) }
 
       it "returns a scope" do
         expect(subject).to be_kind_of(ActiveRecord::Relation)
@@ -333,6 +330,9 @@ describe User do
         expect(subject).to_not include(prod2)
       end
 
+      it "returned scope does not include deleted products" do
+        expect(subject).to_not include(deleted_prod)
+      end
     end
   end
 end

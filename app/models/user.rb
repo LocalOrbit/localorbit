@@ -85,10 +85,10 @@ class User < ActiveRecord::Base
 
   def managed_products
     if admin?
-      Product.all
+      Product.visible
     else
       org_ids = managed_organizations.pluck(:id).uniq
-      Product.where(organization_id: org_ids)
+      Product.visible.where(organization_id: org_ids)
     end
   end
 
