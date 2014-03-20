@@ -107,7 +107,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_organization_location
-    if current_organization.locations.none?
+    if current_organization && current_organization.locations.visible.none?
       redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
     end
   end
