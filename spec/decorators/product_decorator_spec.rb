@@ -37,6 +37,7 @@ describe ProductDecorator do
     it "returns the product's organization's locations for an existing product" do
       organization = create(:organization)
 
+      create(:location, name: "Deleted Location", id: 3, organization: organization, deleted_at: 1.minute.ago)
       create(:location, name: "Location 1", id: 1, organization: organization)
       create(:location, name: "Location 2", id: 2, organization: organization)
 
