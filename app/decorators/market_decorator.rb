@@ -9,7 +9,7 @@ class MarketDecorator < Draper::Decorator
 
   def seller_locations_map
     addresses = organizations.selling.map do |seller|
-      location = seller.locations.first
+      location = seller.shipping_location
       URI::escape "#{location.address}, #{location.city} #{location.state}" if location
     end.compact
 
