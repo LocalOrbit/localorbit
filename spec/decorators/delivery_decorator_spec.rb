@@ -79,11 +79,14 @@ describe DeliveryDecorator do
       end
 
       context "and the selected organziation has multiple locations" do
-          let(:current_org) { create(:organization, :multiple_locations, markets: [delivery_schedule.market]) }
+        let!(:current_org) { create(:organization, :multiple_locations, markets: [delivery_schedule.market]) }
 
         it "returns a list of display_locations" do
+          deleted = create(:location, organization: current_org, deleted_at: 1.minute.ago)
+
           expect(subject.display_locations.count).to eql(2)
-          expect(subject.display_locations).to eql(current_org.locations)
+          expect(subject.display_locations).to include(*current_org.locations.visible)
+          expect(subject.display_locations).to_not include(deleted)
         end
       end
     end
