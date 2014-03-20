@@ -1,4 +1,5 @@
 class SellersController < ApplicationController
+  before_action :require_current_organization
   before_action :find_market_sellers
   before_action :hide_admin_navigation
 

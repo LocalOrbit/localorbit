@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "View Seller Profiles" do
-  let!(:buyer)   { create(:organization, :buyer) }
+  let!(:buyer)   { create(:organization, :single_location, :buyer) }
   let!(:seller1) { create(:organization, :seller, who_story: "Funny Farm", how_story: "Via a wagon") }
   let!(:seller2) { create(:organization, :seller) }
   let!(:user)    { create(:user, organizations: [buyer]) }
@@ -12,11 +12,28 @@ feature "View Seller Profiles" do
     sign_in_as(user)
   end
 
+  context "when user has multiple organizations" do
+    before do
+      user.organizations << create(:organization, :single_location, :buyer)
+      user.save
+    end
+
+    scenario "redirects to organization select page" do
+      click_link "Sellers"
+
+      expect(page).to have_content("Select an organization")
+      select buyer.name, from: "org_id"
+      click_button "Select Organization"
+
+      expect(page).to have_content(seller1.name)
+    end
+  end
+
   scenario "view list of sellers" do
     click_link "Sellers"
 
     expect(page).to have_content(seller1.name)
-    expect(page).to have_content(seller1.name)
+    expect(page).to have_content(seller2.name)
     expect(page).not_to have_css('#admin-nav')
   end
 

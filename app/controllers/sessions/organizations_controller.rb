@@ -7,12 +7,19 @@ module Sessions
     def create
       if org = current_user.managed_organizations.find_by(id: params[:org_id])
         session[:current_organization_id] = org.id
-        redirect_to [:products]
+        redirect_back
       else
         flash[:alert] = "Please select an organization"
         self.new
         render :new
       end
+    end
+
+    private
+
+    def redirect_back
+      redirect_to session[:redirect_back_to] || [:products]
+      session[:redirect_back_to] = nil
     end
   end
 end
