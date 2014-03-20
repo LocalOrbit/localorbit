@@ -15,10 +15,12 @@ class Admin::MarketsController < AdminController
   end
 
   def create
-    @market = Market.new(market_params)
-    if @market.save
-      redirect_to [:admin, @market]
+    results = RegisterMarket.perform(market_params: market_params)
+
+    if results.success?
+      redirect_to [:admin, results.market]
     else
+      @market = results.market
       render :new
     end
   end
