@@ -95,5 +95,19 @@ describe Sessions::DeliveriesController do
         end
       end
     end
+
+    it 'does not allow you to select a deleted location' do
+      loc = org.locations.first
+      loc.soft_delete
+
+      post :create,
+           {
+             delivery_id: delivery.id,
+             location_id: {delivery.id.to_s => loc.id}
+           }, {current_organization_id: org.id }
+
+      expect(response).to be_success
+      expect(response).to render_template('sessions/deliveries/new')
+    end
   end
 end

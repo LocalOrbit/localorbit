@@ -15,7 +15,7 @@ module Sessions
 
       if current_delivery.requires_location?
         location_id = params[:location_id][params[:delivery_id]]
-        if location = current_organization.locations.find_by(id: location_id)
+        if location = current_organization.locations.visible.find_by(id: location_id)
           session[:current_location] = location.id
         else
           return invalid_delivery_selection

@@ -4,7 +4,7 @@ class OrganizationDecorator < Draper::Decorator
   delegate_all
 
   def locations_map
-    addresses = locations.map do |location|
+    addresses = locations.visible.map do |location|
       URI::escape "#{location.address}, #{location.city} #{location.state}" if location
     end.compact
 

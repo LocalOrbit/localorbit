@@ -70,21 +70,23 @@ describe DeliveryDecorator do
     end
 
     context "delivery is dropoff" do
-      let(:delivery_schedule) { create( :delivery_schedule ) }
-      let(:location) { create(:location, :default_shipping) }
+      let!(:delivery_schedule) { create( :delivery_schedule ) }
 
       it "should return the address of the buyers selected organization" do
         expect(subject.display_locations).not_to be_nil
         expect(subject.display_locations.count).to eql(1)
-        expect(subject.display_locations.first).to eql(current_org.default_location)
+        expect(subject.display_locations.first).to eql(current_org.shipping_location)
       end
 
       context "and the selected organziation has multiple locations" do
-          let(:current_org) { create(:organization, :multiple_locations, markets: [delivery_schedule.market]) }
+        let!(:current_org) { create(:organization, :multiple_locations, markets: [delivery_schedule.market]) }
 
         it "returns a list of display_locations" do
+          deleted = create(:location, organization: current_org, deleted_at: 1.minute.ago)
+
           expect(subject.display_locations.count).to eql(2)
-          expect(subject.display_locations).to eql(current_org.locations)
+          expect(subject.display_locations).to include(*current_org.locations.visible)
+          expect(subject.display_locations).to_not include(deleted)
         end
       end
     end

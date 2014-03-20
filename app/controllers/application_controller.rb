@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_location
-    Location.find_by(id: session[:current_location]) || current_delivery.delivery_schedule.buyer_pickup_location
+    current_organization.locations.visible.find_by(id: session[:current_location]) || current_delivery.delivery_schedule.buyer_pickup_location
   end
 
   def current_market
@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
         where('delivery_schedules.market_id = ? AND deliveries.cutoff_time > ?', current_market.id, Time.current).
         find_by(id: session[:current_delivery_id])
     elsif current_market.delivery_schedules.visible.count == 1
-      current_market.delivery_schedules.first.next_delivery.tap do |delivery|
+      current_market.delivery_schedules.visible.first.next_delivery.tap do |delivery|
         session[:current_delivery_id] = delivery.id
         if delivery.requires_location?
           session[:current_location] = current_organization.shipping_location.try(:id)
@@ -107,7 +107,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_organization_location
-    if current_organization.locations.none?
+    if current_organization && current_organization.locations.visible.none?
       redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
     end
   end

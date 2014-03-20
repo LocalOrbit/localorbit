@@ -21,27 +21,27 @@ describe Organization do
     end
   end
 
-  describe ".default_location" do
-    context "organization has one saved location" do
-      let!(:location) { create(:location) }
-      let!(:org) { location.organization }
-      subject { org.default_location }
+  describe "#shipping_location" do
+    let(:org) { create(:organization) }
 
-      it "returns the only location" do
-        expect(subject.name).to eql(location.name)
-      end
+    it 'returns nil if we have no locations' do
+      expect(org.shipping_location).to be_nil
     end
 
-    context "organization has many saved locations" do
-      let!(:org) { create(:organization) }
-      let!(:loc1) { create(:location, organization: org) }
-      let!(:loc2) { create(:location, organization: org) }
+    it 'returns the location marked default_shipping' do
+      loc = create(:location, organization: org, default_shipping: true)
+      expect(org.shipping_location).to eq(loc)
+    end
 
-      subject { org.default_location }
+    it 'does not return a deleted location' do
+      loc = create(:location, organization: org, default_shipping: true, deleted_at: 1.minute.ago)
+      expect(org.shipping_location).to be_nil
+    end
 
-      it "returns the first location" do
-        expect(subject.name).to eql(loc1.name)
-      end
+    it 'returns the right location' do
+      create(:location, organization: org, default_shipping: true, deleted_at: 1.minute.ago)
+      loc = create(:location, organization: org, default_shipping: true)
+      expect(org.shipping_location).to eq(loc)
     end
   end
 

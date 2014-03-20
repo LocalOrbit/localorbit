@@ -43,7 +43,7 @@ class DeliveryDecorator < Draper::Decorator
     if buyer_pickup?
       [delivery_schedule.buyer_pickup_location]
     else
-      context[:current_organization].locations
+      context[:current_organization].locations.visible
     end
   end
 

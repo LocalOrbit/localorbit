@@ -14,7 +14,7 @@
     </p>
 
     <h2>Pickup/Delivery</h2>
-    <% @market.delivery_schedules.order(:day).decorate.each do |delivery| %>
+    <% @market.delivery_schedules.visible.order(:day).decorate.each do |delivery| %>
       <div>
         <%= "#{delivery.plural_weekday}, #{delivery.pickup_or_dropoff} #{delivery.time_window}" %>
       </div>
