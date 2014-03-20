@@ -26,6 +26,6 @@ class Organization < ActiveRecord::Base
   end
 
   def shipping_location
-    locations.default_shipping || default_location
+    locations.visible.default_shipping
   end
 end
