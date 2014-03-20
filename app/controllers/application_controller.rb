@@ -112,4 +112,12 @@ class ApplicationController < ActionController::Base
       redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
     end
   end
+
+  def require_shopping_cart_dependencies
+    if current_organization.nil?
+      redirect_to [:new, :sessions, :organization]
+    elsif current_delivery.nil?
+      redirect_to [:new, :sessions, :delivery]
+    end
+  end
 end
