@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140319184312) do
+ActiveRecord::Schema.define(version: 20140320201239) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 20140319184312) do
     t.string   "name"
     t.string   "subdomain"
     t.string   "timezone"
-    t.boolean  "active",        default: false, null: false
+    t.boolean  "active",                default: false, null: false
     t.string   "contact_name"
     t.string   "contact_email"
     t.string   "contact_phone"
@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(version: 20140319184312) do
     t.string   "logo_uid"
     t.string   "tagline"
     t.string   "background"
+    t.string   "balanced_customer_uri"
   end
 
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree

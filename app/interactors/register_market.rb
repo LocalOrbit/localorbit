@@ -1,7 +1,5 @@
 class RegisterMarket
-  include Interactor
+  include Interactor::Organizer
 
-  def perform
-    context[:market] = Market.create!(market_params)
-  end
+  organize CreateMarket, CreateBalancedCustomerForMarket
 end
