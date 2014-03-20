@@ -1,29 +1,44 @@
-<h1 class="clear-before">Sign In</h1>
-<div class="row row--partial devise-forms">
+<h1 class="clear-before page-title">Sign In</h1>
+<div class="row devise-forms">
 
-  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: "column column--half" }) do |f| %>
-    <div class="field">
-      <%= f.label :email %><br>
-      <%= f.email_field :email, :autofocus => true, class: "column--three-fourths" %>
-    </div>
+<div class="column column--half">
+  <div class="row row--partial">
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: "column column--three-fourths" }) do |f| %>
+      <div class="field">
+        <%= f.label :email %><br>
+        <%= f.email_field :email, :autofocus => true, class: "column--full" %>
+      </div>
 
-    <div class="field">
-      <%= f.label :password %><br>
-      <%= f.password_field :password, class: "column--three-fourths" %><br>
-      <%= render "devise/shared/links" %>
-    </div>
+      <div class="field">
+        <%= f.label :password %><br>
+        <%= f.password_field :password, class: "column--full" %><br>
+        <%= render "devise/shared/links" %>
+      </div>
 
-    <% if devise_mapping.rememberable? -%>
-      <fieldset>
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
-      </fieldset>
+      <% if devise_mapping.rememberable? -%>
+        <fieldset class="conditional">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </fieldset>
+      <% end -%>
+
+
+      <div class="form-actions">
+        <%= f.submit "Sign In" %>
+      </div>
     <% end -%>
+  </div>
+</div
+><div class="column column--half">
+  <div class="row row--partial">
+    <div class="column column--three-fourths">
+      <p>If you are registered on any Local Orbit powered market, please log in using the box on the left.</p>
 
+      <p>If you are looking for a particular market, please send us a note with the market name and we'll get you there.</p>
 
-    <div class="form-actions">
-      <%= f.submit "Sign in" %>
+      <p>If you're interested in learning more about Local Orbit's platform, please get in touch.</p>
     </div>
-  <% end %>
+  </div>
+</div>
 
 </div>

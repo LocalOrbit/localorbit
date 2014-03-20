@@ -455,6 +455,12 @@
   } 
 }
 
+.signed-out {
+  .page-title {
+    text-align: center;
+  }
+}
+
 /** Errors and messages */
 
 .flash {
@@ -535,6 +541,10 @@
     max-width: 100%;
     max-height: 100%;
   }
+}
+.signed-out .logo-link {
+  float: none;
+  margin: 0 auto 20px;
 }
 .redundent-nav {
   font-size: smaller;

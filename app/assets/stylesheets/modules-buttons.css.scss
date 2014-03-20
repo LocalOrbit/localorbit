@@ -11,6 +11,7 @@ input[type=submit] {
   @include border-radius(3px);
   @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.2));
   color: #777;
+  font-family: inherit;
   font-size: 17px;
   -webkit-appearance: none;
   -webkit-font-smoothing: antialiased;

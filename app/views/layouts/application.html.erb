@@ -8,7 +8,7 @@
 
   <%= csrf_meta_tags %>
 </head>
-<body style="<%= "background-image: url(#{asset_url "backgrounds/#{current_market.background}"});" if current_market && current_market.background.present? %>">
+<body class="<%= current_user.present? ? "" : "signed-out" %>" style="<%= "background-image: url(#{asset_url "backgrounds/#{current_market.background}"});" if current_market && current_market.background.present? %>">
 
   <div class="page-content">
     <header class="l-app-header" id="top">
