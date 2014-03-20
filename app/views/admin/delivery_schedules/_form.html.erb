@@ -23,12 +23,12 @@
   <%= f.number_field :order_cutoff, min: 6, max: 504, size: 3 %> hours before delivery
 </div>
 
-<div class="field">
+<div class="field conditional">
   <%= f.check_box :require_delivery %>
   <%= f.label :require_delivery, 'All products from sellers on this market will deliver on this cycle.' %>
 </div>
 
-<div class="field">
+<div class="field conditional">
   <%= f.check_box :require_cross_sell_delivery %>
   <%= f.label :require_cross_sell_delivery, 'All cross-sell products from sellers on this market will deliver on this cycle.' %>
 </div>
@@ -40,8 +40,8 @@
   <%= f.select :seller_fulfillment_location_id, @market.fulfillment_locations('Direct to customer') %>
 </div>
 
-<div class="field<%= ' is-hidden' unless f.object.seller_fulfillment_location %>" id="market_pickup_option">
-  <%= f.check_box :market_pickup %><br>
+<div class="field conditional<%= ' is-hidden' unless f.object.seller_fulfillment_location %>" id="market_pickup_option">
+  <%= f.check_box :market_pickup %>
   <%= f.label :market_pickup, 'Market will pickup from seller location.' %>
 </div>
 

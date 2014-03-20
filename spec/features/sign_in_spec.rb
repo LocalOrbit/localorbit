@@ -9,7 +9,7 @@ feature "User signing in" do
 
     fill_in "Email", with: user.email
     fill_in "Password", with: "password"
-    click_button "Sign in"
+    click_button "Sign In"
 
     expect(page).to have_text("Dashboard")
   end
@@ -19,7 +19,7 @@ feature "User signing in" do
     fill_in "Email", with: user.email
     fill_in "Password", with: "password"
     check "Remember me"
-    click_button "Sign in"
+    click_button "Sign In"
 
     # Hack to remove a cookie from the cookie jar
     jar = Capybara.current_session.driver.browser.current_session.instance_variable_get(:@rack_mock_session).cookie_jar
@@ -35,7 +35,7 @@ feature "User signing in" do
     visit "/"
     fill_in "Email", with: user.email
     fill_in "Password", with: "password"
-    click_button "Sign in"
+    click_button "Sign In"
 
     # Hack to remove a cookie from the cookie jar
     jar = Capybara.current_session.driver.browser.current_session.instance_variable_get(:@rack_mock_session).cookie_jar
