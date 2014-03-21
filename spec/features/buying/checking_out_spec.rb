@@ -51,6 +51,7 @@ describe "Checking Out", js: true do
   end
 
   def add_items
+    sleep(0.5)
     # Bananas Price for this buyer: 0.50
     # Total: 10 * 0.50 = 5.00
     Dom::Cart::Item.find_by_name("Bananas").set_quantity("10")

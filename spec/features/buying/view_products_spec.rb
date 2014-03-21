@@ -153,18 +153,8 @@ feature "Viewing products" do
         delivery = Dom::Buying::DeliveryChoice.first
         expect(delivery.type).to eq("Delivery:")
         expect(delivery.date).to eq("October 8, 2014")
-        expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
+        expect(delivery.time_range).to eq("between 12:00PM and 3:00PM")
         expect(delivery).to have_location_select
-
-        delivery.choose!
-
-        expect(page).to have_content(org1_product.name)
-        
-
-        expect(page).to have_content("Please choose a pick up or delivery date.")
-
-        delivery = Dom::Buying::DeliveryChoice.first
-        expect(delivery.node.text).to match(/Delivery: October 10, 2014 between 7:00AM and 11:00AM/)
 
         delivery.choose!
 
@@ -184,7 +174,7 @@ feature "Viewing products" do
         delivery = Dom::Buying::DeliveryChoice.first
         expect(delivery.type).to eq("Delivery:")
         expect(delivery.date).to eq("October 8, 2014")
-        expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
+        expect(delivery.time_range).to eq("between 12:00PM and 3:00PM")
         expect(delivery).to_not have_location_select
         expect(delivery.location).to eq("500 S. State Street Ann Arbor, MI 48109")
 
@@ -217,33 +207,13 @@ feature "Viewing products" do
           delivery = Dom::Buying::DeliveryChoice.first
           expect(delivery.type).to eq("Delivery:")
           expect(delivery.date).to eq("October 8, 2014")
-          expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
+          expect(delivery.time_range).to eq("between 12:00PM and 3:00PM")
           expect(delivery).to have_location_select
 
           delivery.choose!
 
-        click_link "Shop"
-
-        select = Dom::Select.first
-
-        expect(select).to have_option(buyer_org.name)
-        expect(select).to have_option(buyer_org2.name)
-        expect(select).to_not have_option(buyer_org_outside_market.name)
-
-        select buyer_org.name, from: "Select an organization"
-
-        click_button 'Select Organization'
-
-        expect(page).to have_content("Please choose a pick up or delivery date.")
-
-        delivery = Dom::Buying::DeliveryChoice.first
-        expect(delivery).not_to be_nil
-
-        expect(delivery.node.text).to match(/Delivery: October 10, 2014 between 7:00AM and 11:00AM/)
-
-        delivery.choose!
-
-        expect(page).to have_content(org1_product.name)
+          expect(page).to have_content(org1_product.name)
+        end
       end
     end
   end

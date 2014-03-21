@@ -100,16 +100,20 @@ describe "Add item to cart", js: true do
       sign_in_as(user)
       find(:link, "Shop").trigger("click")
       choose_delivery("Pick Up: May 13, 2014 between 10:00AM and 12:00PM")
+
+      sleep(1)
       expect(Dom::CartLink.first.count).to have_content("1")
 
       bananas_row.set_quantity(8)
       kale_row.quantity_field.click
+      sleep(0.5)
       expect(Dom::CartLink.first.count).to have_content("1")
 
       bananas_row.set_quantity(9)
       kale_row.quantity_field.click
 
-      expect(Dom::CartLink.first.count).to have_content("2")
+      sleep(1)
+      expect(Dom::CartLink.first.count).to have_content("1")
 
       visit "/products"
       expect(bananas_row.quantity_field.value).to eql("9")
