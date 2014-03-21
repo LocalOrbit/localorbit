@@ -1,8 +1,8 @@
 require "spec_helper"
 require "ostruct"
 
-describe UnderwriteOrganization do
-  subject(:interactor) { UnderwriteOrganization.new(balanced_customer: balanced_customer, representative_params: representative_params, organization: org) }
+describe UnderwriteEntity do
+  subject(:interactor) { UnderwriteEntity.new(balanced_customer: balanced_customer, representative_params: representative_params, entity: org) }
 
   let(:org) { create(:organization, name: "Our Org") }
 

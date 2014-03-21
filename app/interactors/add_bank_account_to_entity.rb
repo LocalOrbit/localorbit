@@ -1,13 +1,13 @@
-class AddBankAccountToOrganization
+class AddBankAccountToEntity
   include Interactor::Organizer
 
   def setup
-    context[:balanced_customer_uri] = organization.balanced_customer_uri
+    context[:balanced_customer_uri] = entity.balanced_customer_uri
   end
 
   organize [
     CreateBankAccount,
-    UnderwriteOrganization,
+    UnderwriteEntity,
     AddBankAccountToBalancedCustomer,
     CreateBalancedBankAccountVerification
   ]

@@ -1,6 +1,6 @@
-<%= form_for [:admin, @organization, @bank_account] do |f| %>
+<%= form_for [:admin, @entity, @bank_account] do |f| %>
   <fieldset>
-    <% unless @organization.balanced_underwritten? %>
+    <% unless @entity.balanced_underwritten? %>
       <legend>Personal Information</legend>
       <p>In order to setup your account, we will need your full legal name, DOB, last 4 of your SSN, and personal address.</p>
 

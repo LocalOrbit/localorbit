@@ -1,19 +1,19 @@
 class Admin::BankAccountsController < AdminController
-  before_filter :find_organization
+  before_filter :find_entity
 
   def index
-    @bank_accounts = @organization.bank_accounts
+    @bank_accounts = @entity.bank_accounts
   end
 
   def new
-    @bank_account = @organization.bank_accounts.build
+    @bank_account = @entity.bank_accounts.build
   end
 
   def create
-    results = AddBankAccountToOrganization.perform(organization: @organization, bank_account_params: bank_account_params, representative_params: representative_params)
+    results = AddBankAccountToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
 
     if results.success?
-      redirect_to admin_organization_bank_accounts_path(@organization)
+      redirect_to polymorphic_path([:admin, @entity, :bank_accounts])
     else
       @bank_account = results.bank_account
       render :new
@@ -21,16 +21,16 @@ class Admin::BankAccountsController < AdminController
   end
 
   def verify
-    @bank_account = @organization.bank_accounts.find(params[:bank_account_id])
+    @bank_account = @entity.bank_accounts.find(params[:bank_account_id])
   end
 
   def verification
-    @bank_account = @organization.bank_accounts.find(params[:bank_account_id])
+    @bank_account = @entity.bank_accounts.find(params[:bank_account_id])
 
     results = VerifyBankAccount.perform(bank_account: @bank_account, verification_params: verification_params)
 
     if results.success?
-      redirect_to admin_organization_bank_accounts_path(@organization)
+      redirect_to polymorphic_path([:admin, @entity, :bank_accounts])
     else
       flash.now[:alert] = "Could not verify bank account."
       render :verify
@@ -39,8 +39,8 @@ class Admin::BankAccountsController < AdminController
 
   private
 
-  def find_organization
-    @organization = current_user.managed_organizations.find(params[:organization_id])
+  def find_entity
+    @entity = current_user.managed_organizations.find(params[:organization_id])
   end
 
   def bank_account_params
