@@ -33,6 +33,13 @@
     <%= filter_list(@categories, :category) %>
   </div
   ><div class="column column--three-fourths">
-    <%= render "table", products: @products %>
+    <div class="products--user">
+      <h2>Products Available on <%= current_delivery.deliver_on.strftime("%B %-d") %></h2>
+      <p>
+        Complete your order by <%= current_delivery.cutoff_time.strftime("%B %-d at %l%p") %>.
+        Pick up begins <%= current_delivery.deliver_on.strftime("%B %-d") %> at <%= schedule.buyer_pickup_start %> and ends at <%= schedule.buyer_pickup_end %>. 
+      </p>
+      <%= render "table", products: @products %>
+    </div>
   </div>
 </div>
