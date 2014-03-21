@@ -13,7 +13,7 @@ class Admin::BankAccountsController < AdminController
     results = AddBankAccountToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
 
     if results.success?
-      redirect_to polymorphic_path([:admin, @entity, :bank_accounts])
+      redirect_to [:admin, @entity, :bank_accounts]
     else
       @bank_account = results.bank_account
       render :new
@@ -30,7 +30,7 @@ class Admin::BankAccountsController < AdminController
     results = VerifyBankAccount.perform(bank_account: @bank_account, verification_params: verification_params)
 
     if results.success?
-      redirect_to polymorphic_path([:admin, @entity, :bank_accounts])
+      redirect_to [:admin, @entity, :bank_accounts]
     else
       flash.now[:alert] = "Could not verify bank account."
       render :verify
