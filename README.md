@@ -23,6 +23,9 @@
 7. `rails server`
 8. Go to http://lvh.me:3000 in a browser (we use lvh.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
 
+### Production Setup
+* At least one Market must be created before creating Organizations
+
 ### Test Accounts
 Running _rake db:seed:development_ makes the following test accounts available
 
