@@ -4,9 +4,6 @@ class ProductsController < ApplicationController
   before_action :require_current_delivery
   before_action :require_cart
   before_action :hide_admin_navigation
-  before_action :load_cart_items
-
-  include CartItems
 
   def index
     products = Product.available_for_sale(current_market, current_organization)
