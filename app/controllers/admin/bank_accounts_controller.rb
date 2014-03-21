@@ -1,5 +1,5 @@
 class Admin::BankAccountsController < AdminController
-  before_filter :find_entity
+  before_filter :load_entity
 
   def index
     @bank_accounts = @entity.bank_accounts
@@ -39,9 +39,8 @@ class Admin::BankAccountsController < AdminController
 
   private
 
-  def find_entity
-    entity_type = params[:market_id].present? ? :market : :organization
-    @entity = send("find_#{entity_type}".to_sym)
+  def load_entity
+    @entity = params[:market_id].present? ? find_market : find_organization
   end
 
   def find_market
