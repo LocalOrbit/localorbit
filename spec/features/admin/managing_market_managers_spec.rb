@@ -21,15 +21,31 @@ describe "Admin Managing Market Managers" do
   end
 
   describe 'as a market manager' do
-    it 'I can not manage market managers' do
-      user = create(:user, role: 'user')
-      user.managed_markets << market
+    let(:user) { create(:user, managed_markets: [market]) }
 
+    before do
       sign_in_as user
+    end
 
-      visit admin_market_managers_path(market)
+    it 'I can see the current market managers' do
+      visit "/admin/markets/#{market.id}"
 
-      expect(page).to have_text("page you were looking for doesn't exist")
+      click_link "Managers"
+
+      within('.market-managers') do
+        expect(page).to have_text(user.email)
+      end
+    end
+
+    it 'I can add a market manager by email' do
+      visit "/admin/markets/#{market.id}/managers"
+
+      click_link 'Add Manager'
+
+      fill_in 'Email', with: 'new-user@example.com'
+      click_button 'Add Market Manager'
+
+      expect(page).to have_text('new-user@example.com')
     end
   end
 
