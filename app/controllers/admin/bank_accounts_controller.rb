@@ -74,4 +74,3 @@ class Admin::BankAccountsController < AdminController
     params.require(:verification).permit(:amount_1, :amount_2)
   end
 end
-
