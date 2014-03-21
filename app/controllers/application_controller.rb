@@ -92,6 +92,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_cart
+    return nil unless session[:cart_id]
     return nil unless current_market.present?
     return nil unless current_organization.present?
     return nil unless current_delivery

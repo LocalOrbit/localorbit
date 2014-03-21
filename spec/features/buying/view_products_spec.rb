@@ -8,7 +8,7 @@ feature "Viewing products" do
   let(:available_products) { [org1_product, org2_product] }
 
   let!(:other_org) { create(:organization, :seller) }
-  let!(:other_products) { create_list(:product, 3, organization: other_org) }
+  let!(:other_products) { create_list(:product, 3, :sellable, organization: other_org) }
 
   let!(:org2_product_deleted) { create(:product, :sellable, organization: org2, deleted_at: 1.day.ago) }
 
@@ -17,12 +17,10 @@ feature "Viewing products" do
 
   let!(:market) { create(:market, :with_addresses, organizations: [org1, org2, buyer_org]) }
 
-  before do
-    other_products.each do |prod|
-      create(:price, product: prod)
-      create(:lot, product: prod)
-    end
+  let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, order_cutoff: 24, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
+  let!(:delivery_schedule2) { create(:delivery_schedule, market: market, deleted_at: Time.parse('2013-03-21')) }
 
+  before do
     Timecop.travel(DateTime.parse("October 7 2014"))
     switch_to_subdomain market.subdomain
     sign_in_as(user)
@@ -59,17 +57,9 @@ feature "Viewing products" do
     end
 
     context "single location" do
-      scenario "shopping without an existing shopping cart" do
-        create(:delivery_schedule, :buyer_pickup,
-          day: 5,
-          order_cutoff: 24,
-          seller_delivery_start: "7:00 AM",
-          seller_delivery_end:  "11:00 AM",
-          buyer_pickup_start: "12:00 PM",
-          buyer_pickup_end: "2:00 PM",
-          market: market
-        )
+      let!(:buyer_org) { create(:organization, :single_location, :buyer) }
 
+      scenario "shopping without an existing shopping cart" do
         click_link "Shop"
 
         expect(page).to have_content(org1_product.name)
@@ -79,26 +69,6 @@ feature "Viewing products" do
         let(:user) { create(:user, managed_markets: [market]) }
 
         scenario "has to select an organization to shop as" do
-          create(:delivery_schedule, :buyer_pickup,
-            day: 5,
-            order_cutoff: 24,
-            seller_delivery_start: "7:00 AM",
-            seller_delivery_end:  "11:00 AM",
-            buyer_pickup_start: "12:00 PM",
-            buyer_pickup_end: "2:00 PM",
-            market: market
-          )
-
-          create(:delivery_schedule,
-            day: 2,
-            order_cutoff: 24,
-            seller_fulfillment_location_id: 0,
-            seller_delivery_start: "6:00 AM",
-            seller_delivery_end:  "11:00 AM",
-            market: market,
-            deleted_at: 1.minute.ago
-          )
-
           click_link "Shop"
 
           select buyer_org.name, from: 'Select an organization'
@@ -112,6 +82,26 @@ feature "Viewing products" do
   end
 
   context "multiple delivery schedules" do
+    let!(:ds3) { create(:delivery_schedule,
+      day: 2,
+      order_cutoff: 24,
+      seller_fulfillment_location_id: 0,
+      seller_delivery_start: "7:00 AM",
+      seller_delivery_end:  "11:00 AM",
+      market: market
+    ) }
+
+    let!(:ds4) { create(:delivery_schedule,
+      day: 3,
+      order_cutoff: 24,
+      seller_fulfillment_location: market.addresses.first,
+      seller_delivery_start: "7:00 AM",
+      seller_delivery_end:  "11:00 AM",
+      buyer_pickup_start: "12:00 PM",
+      buyer_pickup_end: "3:00 PM",
+      buyer_pickup_location_id: 0,
+      market: market
+    ) }
 
     scenario "shopping without an existing shopping cart" do
       address = market.addresses.first
@@ -121,47 +111,6 @@ feature "Viewing products" do
       address.state = "MI"
       address.zip = "32339"
       address.save!
-
-      create(:delivery_schedule, :buyer_pickup,
-        day: 5,
-        order_cutoff: 24,
-        seller_delivery_start: "7:00 AM",
-        seller_delivery_end:  "11:00 AM",
-        buyer_pickup_start: "12:00 PM",
-        buyer_pickup_end: "2:00 PM",
-        market: market
-      )
-
-      create(:delivery_schedule,
-        day: 2,
-        order_cutoff: 24,
-        seller_fulfillment_location_id: 0,
-        seller_delivery_start: "7:00 AM",
-        seller_delivery_end:  "11:00 AM",
-        market: market
-      )
-
-      create(:delivery_schedule,
-        day: 3,
-        order_cutoff: 24,
-        seller_fulfillment_location: address,
-        seller_delivery_start: "7:00 AM",
-        seller_delivery_end:  "11:00 AM",
-        buyer_pickup_start: "12:00 PM",
-        buyer_pickup_end: "3:00 PM",
-        buyer_pickup_location_id: 0,
-        market: market
-      )
-
-      create(:delivery_schedule,
-        day: 2,
-        order_cutoff: 24,
-        seller_fulfillment_location_id: 0,
-        seller_delivery_start: "6:00 AM",
-        seller_delivery_end:  "11:00 AM",
-        market: market,
-        deleted_at: 1.minute.ago
-      )
 
       click_link "Shop"
 
@@ -197,132 +146,74 @@ feature "Viewing products" do
       expect(page).to have_content(org1_product.name)
     end
 
-    scenario "selecting a direct to buyer delivery with multiple organization locations" do
-      ds = create(:delivery_schedule,
-        day: 2,
-        order_cutoff: 24,
-        seller_fulfillment_location_id: 0,
-        seller_delivery_start: "7:00 AM",
-        seller_delivery_end:  "11:00 AM",
-        market: market
-      )
-
-      create(:delivery, delivery_schedule: ds)
-
-      ds2 = create(:delivery_schedule, :buyer_pickup,
-        day: 5,
-        order_cutoff: 24,
-        seller_fulfillment_location_id: 0,
-        seller_delivery_start: "7:00 AM",
-        seller_delivery_end:  "11:00 AM",
-        market: market
-      )
-
-      create(:delivery, delivery_schedule: ds2)
-
-      click_link "Shop"
-
-      expect(page).to have_content("Please choose a pick up or delivery date.")
-
-      delivery = Dom::Buying::DeliveryChoice.first
-      expect(delivery.node.text).to match(/Delivery: October 10, 2014 Between 7:00AM and 11:00AM/)
-
-      delivery.choose!
-
-      expect(page).to have_content(org1_product.name)
-    end
-
-    scenario "selecting a direct to buyer delivery with one organization location" do
-      while buyer_org.locations.size > 1
-        buyer_org.locations.last.destroy
-        buyer_org.locations(true)
-      end
-
-      ds = create(:delivery_schedule,
-        day: 2,
-        order_cutoff: 24,
-        seller_fulfillment_location_id: 0,
-        seller_delivery_start: "7:00 AM",
-        seller_delivery_end:  "11:00 AM",
-        market: market
-      )
-
-      create(:delivery, delivery_schedule: ds)
-
-      ds2 = create(:delivery_schedule, :buyer_pickup,
-        day: 5,
-        order_cutoff: 24,
-        seller_fulfillment_location_id: 0,
-        seller_delivery_start: "7:00 AM",
-        seller_delivery_end:  "11:00 AM",
-        market: market
-      )
-
-      create(:delivery, delivery_schedule: ds2)
-
-      click_link "Shop"
-
-      expect(page).to have_content("Please choose a pick up or delivery date.")
-
-      delivery = Dom::Buying::DeliveryChoice.first
-      expect(delivery).not_to be_nil
-
-      expect(delivery.node.text).to match(/Delivery: October 10, 2014 Between 7:00AM and 11:00AM/)
-
-      delivery.choose!
-
-      expect(page).to have_content(org1_product.name)
-    end
-
-    context "belonging to multiple organizations" do
-      let!(:buyer_org2)               { create(:organization, :buyer, users: [user], markets: [market]) }
-      let!(:buyer_org_outside_market) { create(:organization, :buyer, users: [user]) }
-
-      scenario "selecting an organization to shop for" do
-        ds = create(:delivery_schedule,
-          day: 2,
-          order_cutoff: 24,
-          seller_fulfillment_location_id: 0,
-          seller_delivery_start: "7:00 AM",
-          seller_delivery_end:  "11:00 AM",
-          market: market
-        )
-
-        create(:delivery, delivery_schedule: ds)
-
-        ds2 = create(:delivery_schedule, :buyer_pickup,
-          day: 5,
-          order_cutoff: 24,
-          seller_fulfillment_location_id: 0,
-          seller_delivery_start: "7:00 AM",
-          seller_delivery_end:  "11:00 AM",
-          market: market
-        )
-
-        create(:delivery, delivery_schedule: ds2)
-
+    context "direct to buyer" do
+      scenario "selecting a direct to buyer delivery with multiple organization locations" do
         click_link "Shop"
-
-        select = Dom::Select.first
-
-        expect(select).to have_option(buyer_org.name)
-        expect(select).to have_option(buyer_org2.name)
-        expect(select).to_not have_option(buyer_org_outside_market.name)
-
-        select buyer_org.name, from: "Select an organization"
-
-        click_button 'Select Organization'
 
         expect(page).to have_content("Please choose a pick up or delivery date.")
 
         delivery = Dom::Buying::DeliveryChoice.first
-        expect(delivery).not_to be_nil
-
-        expect(delivery.node.text).to match(/Delivery: October 10, 2014 Between 7:00AM and 11:00AM/)
+        expect(delivery.type).to eq("Delivery:")
+        expect(delivery.date).to eq("October 8, 2014")
+        expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
+        expect(delivery).to have_location_select
 
         delivery.choose!
 
         expect(page).to have_content(org1_product.name)
+      end
+
+      scenario "selecting a direct to buyer delivery with one organization location" do
+        while buyer_org.locations.size > 1
+          buyer_org.locations.last.destroy
+          buyer_org.locations(true)
+        end
+
+        click_link "Shop"
+
+        expect(page).to have_content("Please choose a pick up or delivery date.")
+
+        delivery = Dom::Buying::DeliveryChoice.first
+        expect(delivery.type).to eq("Delivery:")
+        expect(delivery.date).to eq("October 8, 2014")
+        expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
+        expect(delivery).to_not have_location_select
+        expect(delivery.location).to eq("500 S. State Street Ann Arbor, MI 48109")
+
+        delivery.choose!
+
+        expect(page).to have_content(org1_product.name)
+      end
+
+      context "belonging to multiple organizations" do
+        let!(:buyer_org2)               { create(:organization, :buyer, users: [user], markets: [market]) }
+        let!(:buyer_org_outside_market) { create(:organization, :buyer, users: [user]) }
+
+        scenario "selecting an organization to shop for" do
+          click_link "Shop"
+
+          select = Dom::Select.first
+
+          expect(select).to have_option(buyer_org.name)
+          expect(select).to have_option(buyer_org2.name)
+          expect(select).to_not have_option(buyer_org_outside_market.name)
+
+          select buyer_org.name, from: "Select an organization"
+
+          click_button 'Select Organization'
+
+          expect(page).to have_content("Please choose a pick up or delivery date.")
+
+          delivery = Dom::Buying::DeliveryChoice.first
+          expect(delivery.type).to eq("Delivery:")
+          expect(delivery.date).to eq("October 8, 2014")
+          expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
+          expect(delivery).to have_location_select
+
+          delivery.choose!
+
+          expect(page).to have_content(org1_product.name)
+        end
       end
     end
   end
