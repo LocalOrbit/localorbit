@@ -47,7 +47,6 @@ describe "Add item to cart", js: true do
     it "updates the item count" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
-      find(:link, "Shop").trigger("click")
 
       expect(page).to have_content("Filter the Shop")
 
@@ -78,7 +77,6 @@ describe "Add item to cart", js: true do
     it "initializes the client cart code" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
-      find(:link, "Shop").trigger("click")
       choose_delivery("Pick Up: May 13, 2014 Between 10:00AM and 12:00PM")
 
       expect(page).to have_content("Filter the Shop")
@@ -97,7 +95,6 @@ describe "Add item to cart", js: true do
     it "does not update the counter when an item quantity is updated" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
-      find(:link, "Shop").trigger("click")
       choose_delivery("Pick Up: May 13, 2014 Between 10:00AM and 12:00PM")
       expect(Dom::CartLink.first.node).to have_content("1")
 

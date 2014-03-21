@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature "A user navagating markets" do
   let(:seller_org) { create(:organization, :seller) }
-  let(:buyer_org) { create(:organization, :buyer) }
+  let(:buyer_org) { create(:organization, :buyer, :single_location) }
   let(:user) { create(:user, organizations: [buyer_org]) }
 
   context "without a market" do
@@ -56,30 +56,31 @@ feature "A user navagating markets" do
 
   context "signing in" do
     let!(:market) { create(:market, organizations: [seller_org, buyer_org]) }
+    let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
 
     context "on a subdomain" do
-      it "shows me the dashboard" do
+      it "shows me the products page" do
         switch_to_subdomain market.subdomain
         sign_in_as(user)
 
-        within(".header") do
+        within(".header", match: :first) do
           expect(page).to have_content(market.name)
         end
 
-        expect(current_path).to eql("/dashboard")
+        expect(current_path).to eql("/products")
       end
     end
 
     context "on the main domain" do
-      it "redirects to the dashboard if the user has only 1 market" do
+      it "redirects to the products page if the user has only 1 market" do
         switch_to_main_domain
         sign_in_as(user)
 
-        within(".header") do
+        within(".header", match: :first) do
           expect(page).to have_content(market.name)
         end
 
-        expect(current_path).to eql("/dashboard")
+        expect(current_path).to eql("/products")
       end
 
       it "shows something to let me pick a market if the user has multiple markets"

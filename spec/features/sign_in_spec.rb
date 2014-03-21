@@ -52,4 +52,69 @@ feature "User signing in" do
     expect(page).not_to have_text("Dashboard")
     expect(page).to have_text("You need to sign in or sign up before continuing.")
   end
+
+  scenario "After logging in an admin should be on the dashboard" do
+    visit "/"
+
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "password"
+    click_button "Sign in"
+
+    expect(page.current_path).to eq(dashboard_path)
+  end
+
+  scenario "After logging in a market manager should be on the dashboard" do
+    user = create(:user, :market_manager)
+    visit "/"
+
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "password"
+    click_button "Sign in"
+
+    expect(page.current_path).to eq(dashboard_path)
+  end
+
+  scenario "After logging in a seller should be on the dashboard" do
+    org = create(:organization, :seller)
+    user = create(:user, organizations: [org])
+    visit "/"
+
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "password"
+    click_button "Sign in"
+
+    expect(page.current_path).to eq(dashboard_path)
+  end
+
+  scenario "After logging in at the naked domain a buyer should be on the shop page" do
+    market = create(:market)
+    create(:delivery_schedule, market: market)
+    org = create(:organization, :buyer, :single_location, markets: [market])
+    user = create(:user, organizations: [org])
+
+    visit "/"
+
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "password"
+    click_button "Sign in"
+
+    expect(page.current_path).to eq(products_path)
+  end
+
+  scenario "After logging in a buyer should be on the shop page" do
+    market = create(:market)
+    create(:delivery_schedule, market: market)
+    org = create(:organization, :buyer, :single_location, markets: [market])
+    user = create(:user, organizations: [org])
+
+    switch_to_subdomain market.subdomain
+
+    visit "/"
+
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "password"
+    click_button "Sign in"
+
+    expect(page.current_path).to eq(products_path)
+  end
 end
