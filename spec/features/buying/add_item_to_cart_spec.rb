@@ -54,13 +54,14 @@ describe "Add item to cart", js: true do
 
       bananas_row.set_quantity(12)
       kale_row.quantity_field.click
+      sleep 0.5
       expect(Dom::CartLink.first.count).to have_content("1")
 
       kale_row.set_quantity(9)
       bananas_row.quantity_field.click
-      expect(Dom::CartLink.first.count).to have_content("1")
+      sleep 0.5
+      expect(Dom::CartLink.first.count).to have_content("2")
 
-      sleep 1
 
       # Refreshing the page should retain the state of the cart
       visit "/products"
