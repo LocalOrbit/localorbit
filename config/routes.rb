@@ -11,6 +11,10 @@ Rails.application.routes.draw do
       resources :market_addresses,   as: :addresses,  path: :addresses
       resources :market_managers,    as: :managers,   path: :managers
       resources :delivery_schedules, path: :deliveries
+      resources :bank_accounts, only: [:index, :new, :create] do
+        get "verify"
+        put "verify" => "bank_accounts#verification"
+      end
     end
 
     get "financials" => "financials#index"

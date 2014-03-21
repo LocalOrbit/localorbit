@@ -11,6 +11,8 @@ class Market < ActiveRecord::Base
   has_many :addresses, class_name: MarketAddress
   has_many :delivery_schedules, inverse_of: :market
 
+  has_many :bank_accounts, as: :bankable
+
   dragonfly_accessor :logo
 
   def clean_twitter_slug

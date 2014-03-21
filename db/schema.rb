@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140321135922) do
+ActiveRecord::Schema.define(version: 20140321141806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20140321135922) do
     t.string   "tagline"
     t.string   "background"
     t.string   "balanced_customer_uri"
+    t.boolean  "balanced_underwritten", default: false, null: false
   end
 
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree

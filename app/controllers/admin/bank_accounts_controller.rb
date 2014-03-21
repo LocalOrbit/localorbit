@@ -40,7 +40,16 @@ class Admin::BankAccountsController < AdminController
   private
 
   def find_entity
-    @entity = current_user.managed_organizations.find(params[:organization_id])
+    entity_type = params[:market_id].present? ? :market : :organization
+    @entity = send("find_#{entity_type}".to_sym)
+  end
+
+  def find_market
+    current_user.managed_markets.find(params[:market_id])
+  end
+
+  def find_organization
+    current_user.managed_organizations.find(params[:organization_id])
   end
 
   def bank_account_params
