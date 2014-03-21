@@ -1,6 +1,7 @@
 class SellersController < ApplicationController
-  before_action :require_shopping_cart_dependencies
+  before_action :require_current_organization
   before_action :require_organization_location
+  before_action :require_current_delivery
   before_action :require_cart
 
   before_action :hide_admin_navigation
