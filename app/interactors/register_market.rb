@@ -1,5 +1,5 @@
 class RegisterMarket
   include Interactor::Organizer
 
-  organize CreateMarket, CreateBalancedCustomerForMarket
+  organize CreateMarket, CreateBalancedCustomerForEntity
 end

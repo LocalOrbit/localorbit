@@ -8,7 +8,7 @@ feature "Adding bank account to a market", js: true do
   let!(:non_member) { create(:user) }
 
   before do
-    CreateBalancedCustomerForMarket.perform(market: market)
+    CreateBalancedCustomerForEntity.perform(market: market)
   end
 
   scenario "as a market manager" do

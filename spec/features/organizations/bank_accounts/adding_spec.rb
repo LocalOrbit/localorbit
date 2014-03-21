@@ -8,7 +8,7 @@ feature "Adding a bank account to an organization", js: true do
   let!(:non_member) { create(:user) }
 
   before do
-    CreateBalancedCustomerForOrganization.perform(organization: org)
+    CreateBalancedCustomerForEntity.perform(organization: org)
   end
 
   scenario "as a market manager" do
