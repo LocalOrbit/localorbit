@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140320201239) do
+ActiveRecord::Schema.define(version: 20140321135922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,14 +21,15 @@ ActiveRecord::Schema.define(version: 20140320201239) do
     t.string   "last_four"
     t.string   "account_type"
     t.string   "balanced_uri"
-    t.integer  "organization_id"
+    t.integer  "bankable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "balanced_verification_uri"
     t.boolean  "verified",                  default: false, null: false
+    t.string   "bankable_type"
   end
 
-  add_index "bank_accounts", ["organization_id"], name: "index_bank_accounts_on_organization_id", using: :btree
+  add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
 
   create_table "cart_items", force: true do |t|
     t.integer  "cart_id"
@@ -261,8 +262,8 @@ ActiveRecord::Schema.define(version: 20140320201239) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.integer  "top_level_category_id"
     t.string   "image_uid"
+    t.integer  "top_level_category_id"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"

@@ -1,3 +1,3 @@
 class BankAccount < ActiveRecord::Base
-  belongs_to :organization
+  belongs_to :bankable, polymorphic: true
 end
