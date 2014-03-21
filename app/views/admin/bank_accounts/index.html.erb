@@ -22,7 +22,7 @@
           <% if bank_account.verified? %>
             Verified
           <% else %>
-            <%= link_to "Verify", admin_organization_bank_account_verify_path(@organization, bank_account) %></td>
+            <%= link_to "Verify", [:admin, @entity, bank_account, :verify] %></td>
           <% end %>
         </td>
       </tr>

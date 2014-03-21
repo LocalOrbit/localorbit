@@ -1,15 +1,15 @@
-class UnderwriteOrganization
+class UnderwriteEntity
   include Interactor
 
   def setup
-    context[:balanced_customer] ||= Balanced::Customer.find(organization.balanced_customer_uri)
+    context[:balanced_customer] ||= Balanced::Customer.find(entity.balanced_customer_uri)
   end
 
   def perform
-    unless organization.balanced_underwritten?
+    unless entity.balanced_underwritten?
       update_balanced_customer_info
 
-      organization.update_attribute(:balanced_underwritten, balanced_customer.is_identity_verified?)
+      entity.update_attribute(:balanced_underwritten, balanced_customer.is_identity_verified?)
     end
   end
 
@@ -23,7 +23,7 @@ class UnderwriteOrganization
 
     if representative_params[:ein].present?
       balanced_customer.ein = representative_params[:ein]
-      balanced_customer.business_name = organization.name
+      balanced_customer.business_name = entity.name
     end
 
     context[:balanced_customer] = balanced_customer.save

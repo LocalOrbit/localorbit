@@ -11,7 +11,7 @@ class Organization < ActiveRecord::Base
 
   has_many :locations, inverse_of: :organization
 
-  has_many :bank_accounts
+  has_many :bank_accounts, as: :bankable
 
   validates :name, presence: true
 

@@ -6,7 +6,7 @@ feature "Verifying a bank account", js: true do
   let!(:org) { create(:organization, markets: [market]) }
 
   before do
-    CreateBalancedCustomerForOrganization.perform(organization: org)
+    CreateBalancedCustomerForEntity.perform(organization: org)
   end
 
   scenario "as a market manager" do

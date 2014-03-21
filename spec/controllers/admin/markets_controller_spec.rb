@@ -12,28 +12,37 @@ describe Admin::MarketsController do
     it_behaves_like "admin only action", lambda { get :new }
   end
 
-  describe "#create succeeds" do
-    before do
-      allow_any_instance_of(Market).to receive(:save) { true }
-      allow(controller).to receive(:market_params)
+  describe "#create" do
+    context "when not signed in" do
+      it_behaves_like "admin only action", lambda {
+        post :create
+      }
     end
 
-    it_behaves_like "admin only action", lambda {
-      post :create
-    }
-  end
+    context "when signed in" do
+      before do
+        sign_in admin
+        allow(controller).to receive(:market_params)
+      end
 
-  describe "#create fails" do
-    before do
-      sign_in admin
-      allow_any_instance_of(Market).to receive(:save) { false }
-      allow(controller).to receive(:market_params)
-    end
+      context "success" do
+        it "redirects to admin market page" do
+          allow(RegisterMarket).to receive(:perform) { double("Results", success?: true, market: market) }
 
-    it "renders the new page" do
-      post :create
-      expect(response).to be_success
-      expect(response).to render_template('new')
+          post :create
+          expect(response).to redirect_to(admin_market_path(market))
+        end
+      end
+
+      context "failure" do
+        it "renders the new page" do
+          allow(RegisterMarket).to receive(:perform) { double("Results", success?: false, market: market) }
+
+          post :create
+          expect(response).to be_success
+          expect(response).to render_template('new')
+        end
+      end
     end
   end
 
