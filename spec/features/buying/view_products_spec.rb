@@ -23,7 +23,6 @@ feature "Viewing products" do
   before do
     Timecop.travel(DateTime.parse("October 7 2014"))
     switch_to_subdomain market.subdomain
-    sign_in_as(user)
   end
 
   after do
@@ -31,27 +30,27 @@ feature "Viewing products" do
   end
 
   scenario "list of products" do
-    #TODO: Filter products based on delivery
-    #      Since adding the delivery selection,
-    #      this spec is broken. We're not yet filtering
-    #      based on the current delivery
-    #click_link "Shop"
+    sign_in_as(user)
 
-    #products = Dom::Product.all
+    products = Dom::Product.all
 
-    #expect(products).to have(2).products
-    #expect(products.map(&:name)).to match_array(available_products.map(&:name))
+    expect(products).to have(2).products
+    expect(products.map(&:name)).to match_array(available_products.map(&:name))
 
-    #product = available_products.first
-    #dom_product = Dom::Product.find_by_name(product.name)
+    product = available_products.first
+    dom_product = Dom::Product.find_by_name(product.name)
 
-    #expect(dom_product.organization_name).to have_text(product.organization_name)
-    #expected_price = "$%.2f" % product.prices.first.sale_price
-    #expect(dom_product.pricing).to have_text(expected_price)
-    #expect(dom_product.quantity).to have_text(expected_price)
+    expect(dom_product.organization_name).to have_text(product.organization_name)
+    expected_price = "$%.2f" % product.prices.first.sale_price
+    expect(dom_product.pricing).to have_text(expected_price)
+    expect(dom_product.quantity).to have_text(expected_price)
   end
 
   context "single delivery schedule" do
+    before do
+      sign_in_as(user)
+    end
+
     context "multiple locations" do
       scenario "change delivery location after the fact"
     end
@@ -60,7 +59,6 @@ feature "Viewing products" do
       let!(:buyer_org) { create(:organization, :single_location, :buyer) }
 
       scenario "shopping without an existing shopping cart" do
-        click_link "Shop"
 
         expect(page).to have_content(org1_product.name)
       end
@@ -112,7 +110,7 @@ feature "Viewing products" do
       address.zip = "32339"
       address.save!
 
-      click_link "Shop"
+      sign_in_as(user)
 
       expect(page).to have_content("Please choose a pick up or delivery date.")
 
@@ -148,7 +146,7 @@ feature "Viewing products" do
 
     context "direct to buyer" do
       scenario "selecting a direct to buyer delivery with multiple organization locations" do
-        click_link "Shop"
+        sign_in_as(user)
 
         expect(page).to have_content("Please choose a pick up or delivery date.")
 
@@ -169,7 +167,7 @@ feature "Viewing products" do
           buyer_org.locations(true)
         end
 
-        click_link "Shop"
+        sign_in_as(user)
 
         expect(page).to have_content("Please choose a pick up or delivery date.")
 
@@ -189,9 +187,11 @@ feature "Viewing products" do
         let!(:buyer_org2)               { create(:organization, :buyer, users: [user], markets: [market]) }
         let!(:buyer_org_outside_market) { create(:organization, :buyer, users: [user]) }
 
-        scenario "selecting an organization to shop for" do
-          click_link "Shop"
+        before(:each) do
+          sign_in_as(user)
+        end
 
+        scenario "selecting an organization to shop for" do
           select = Dom::Select.first
 
           expect(select).to have_option(buyer_org.name)
@@ -232,7 +232,7 @@ feature "Viewing products" do
 
     create(:delivery, delivery_schedule: ds)
 
-    click_link "Shop"
+    sign_in_as(user)
 
     expect(page).to have_content("You must enter an address for this organization before you can shop")
 
