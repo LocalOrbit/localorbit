@@ -61,5 +61,5 @@ group :production, :staging do
   gem 'unicorn', require: false
   gem 'rails_12factor'
   gem 'pgbackups-archive'
-  gem 'heroku-api', github: 'heroku/heroku.rb' # remove line once gem > 0.3.17
+  gem 'heroku-api'
 end

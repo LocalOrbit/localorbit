@@ -1,18 +1,10 @@
 GIT
   remote: git://github.com/bmabey/email-spec.git
-  revision: b21a2b340a92e89f993121bcfe74b4f9b885e918
+  revision: 8f862c22413fe4cb220a8dac6b9206b8b46d1148
   specs:
     email_spec (1.5.0)
       launchy (~> 2.1)
       mail (~> 2.2)
-
-GIT
-  remote: git://github.com/heroku/heroku.rb.git
-  revision: 231bc2c54f7e315079286997349f194ff39031e2
-  specs:
-    heroku-api (0.3.17)
-      excon (~> 0.27)
-      multi_json (~> 1.8)
 
 GIT
   remote: git://github.com/jnicklas/capybara.git
@@ -84,10 +76,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
-    compass (0.12.3)
+    compass (0.12.4)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
-      sass (= 3.2.14)
+      sass (~> 3.2.17)
     compass-rails (1.1.7)
       compass (>= 0.12.2)
       sprockets (<= 2.11.0)
@@ -155,6 +147,9 @@ GEM
       netrc (~> 0.7.7)
       rest-client (~> 1.6.1)
       rubyzip
+    heroku-api (0.3.18)
+      excon (~> 0.27)
+      multi_json (~> 1.8)
     hike (1.2.3)
     honeybadger (1.11.2)
       json
@@ -271,7 +266,7 @@ GEM
       rspec-support (= 3.0.0.beta2)
     rspec-support (3.0.0.beta2)
     rubyzip (1.1.2)
-    sass (3.2.14)
+    sass (3.2.17)
     sass-rails (4.0.2)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.2.0)
@@ -298,7 +293,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     thor (0.18.1)
-    thread_safe (0.2.0)
+    thread_safe (0.3.1)
       atomic (>= 1.1.7, < 2)
     tilt (1.4.1)
     timecop (0.7.1)
@@ -340,7 +335,7 @@ DEPENDENCIES
   email_spec!
   factory_girl_rails
   figaro!
-  heroku-api!
+  heroku-api
   honeybadger
   interactor-rails
   jquery-rails
