@@ -1,15 +1,13 @@
 <div class="row">
   <div class="column column--fourth" id="product-filter">
     <h2 class="heading--sidebar">Pick Up Date</h2>
-    <% #FIXME This belongs elsewhere. %>
-    <% current_delivery = Delivery.find(session[:current_delivery_id]) %> 
-    <% schedule = current_delivery.delivery_schedule %>
+    <% schedule = @delivery.delivery_schedule %>
 
     <div class="sidebar-box">
       <h3 class="subheading--sidebar">When</h3>
       <p>
-        <strong><%= current_delivery.deliver_on.strftime("%B %-d") %></strong><br>
-        from <%= schedule.buyer_pickup_start %> – <%= schedule.buyer_pickup_end %>
+        <strong><%= @delivery.display_date %></strong><br>
+        <%= @delivery.time_range %>
       </p>
 
       <h3 class="subheading--sidebar">Where</h3>
@@ -34,10 +32,10 @@
   </div
   ><div class="column column--three-fourths">
     <div class="products--user">
-      <h2>Products Available on <%= current_delivery.deliver_on.strftime("%B %-d") %></h2>
+      <h2>Products Available on <%= @delivery.display_date %></h2>
       <p>
-        Complete your order by <%= current_delivery.cutoff_time.strftime("%B %-d at %l%p") %>.
-        Pick up begins <%= current_delivery.deliver_on.strftime("%B %-d") %> at <%= schedule.buyer_pickup_start %> and ends at <%= schedule.buyer_pickup_end %>. 
+        Complete your order by <%= @delivery.cutoff_time.strftime("%B %-d at %l%p") %>.
+        Pick up is <%= @delivery.display_date %> <%= @delivery.time_range.to_s.downcase %>. 
       </p>
       <%= render "table", products: @products %>
     </div>
