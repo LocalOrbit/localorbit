@@ -203,6 +203,27 @@ describe "Checking Out", js: true do
     end
   end
 
+  context "total" do
+    it "is the subtotal plus delivery fees" do
+      sign_in_and_choose_delivery "Delivery: May 13, 2014 between 7:00AM and 11:00AM"
+      cart_link.node.click
+
+      expect(Dom::Cart::Totals.first.total).to have_content("$0.00")
+
+      click_link "Shop"
+      add_items
+
+      cart_link.node.click
+      expect(Dom::Cart::Totals.first.total).to have_content("$50.00")
+
+      kale_item.set_quantity(98)
+      bananas_item.quantity_field.click
+      sleep(0.5)
+
+      expect(Dom::Cart::Totals.first.total).to have_content("$147.50")
+    end
+  end
+
   context "updating quantity" do
     def cart_totals
       Dom::Cart::Totals.first
@@ -279,10 +300,7 @@ describe "Checking Out", js: true do
 
       expect(cart_totals.subtotal).to have_content("$118.00")
     end
-
-    it "updates total based on discounts and delivery fees"
   end
-
 
   context "discounts" do
     context "are present" do

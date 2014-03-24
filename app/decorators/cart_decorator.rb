@@ -1,6 +1,10 @@
 class CartDecorator < Draper::Decorator
   delegate_all
 
+  def display_total
+    "$%.2f" % total
+  end
+
   def display_subtotal
     "$%.2f" % subtotal
   end

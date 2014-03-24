@@ -11,7 +11,7 @@ class CartsController < ApplicationController
     item.product = product
 
     if item.save
-      render json: { item: item, delivery_fees: current_cart.decorate.display_delivery_fees }
+      render json: { item: item, total: current_cart.decorate.display_total, delivery_fees: current_cart.decorate.display_delivery_fees }
     else
       render status: :unprocessable_entity, json: {error: "Could not add item!"}
     end
