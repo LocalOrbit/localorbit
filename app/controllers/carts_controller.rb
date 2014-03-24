@@ -11,7 +11,13 @@ class CartsController < ApplicationController
     item.product = product
 
     if item.save
-      render json: { item: item, total: current_cart.decorate.display_total, delivery_fees: current_cart.decorate.display_delivery_fees }
+      payload = Jbuilder.encode do |json|
+        json.item item
+        json.total current_cart.decorate.display_total
+        json.delivery_fees current_cart.decorate.display_delivery_fees
+      end
+
+      render json: payload
     else
       render status: :unprocessable_entity, json: {error: "Could not add item!"}
     end
