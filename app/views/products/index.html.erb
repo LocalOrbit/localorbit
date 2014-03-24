@@ -11,7 +11,10 @@
       </p>
 
       <h3 class="subheading--sidebar">Where</h3>
-      <%= schedule.buyer_pickup_location %>
+      <%= current_organization.shipping_location.address %><br>
+      <%= current_organization.shipping_location.city %>,
+      <%= current_organization.shipping_location.state %>
+      <%= current_organization.shipping_location.zip %>
     </div>
 
 
@@ -32,8 +35,8 @@
   </div
   ><div class="column column--three-fourths">
     <div class="products--user">
-      <h2>Products Available on <%= @delivery.display_date %></h2>
-      <p>
+      <h2 class="table-heading">Products Available on <%= @delivery.display_date %></h2>
+      <p class="table-summary">
         Complete your order by <%= @delivery.cutoff_time.strftime("%B %-d at %l%p") %>.
         Pick up is <%= @delivery.display_date %> <%= @delivery.time_range.to_s.downcase %>. 
       </p>

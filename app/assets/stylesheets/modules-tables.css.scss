@@ -1,5 +1,17 @@
 @import 'mixins';
 
+.table-heading {
+  margin-bottom: .1em;
+  color: #000;
+  font: bold 20px "Open Sans Condensed", sans-serif;
+}
+
+.table-summary {
+  margin-bottom: 1em;
+  color: #000;
+  font-size: 12px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -7,6 +19,12 @@ table {
   table a {
     color: #4162A1;
   }
+
+caption {
+  color: #000;
+  font: normal 28px "Open Sans Condensed", sans-serif;
+  text-align: left;
+}
 
 td,
 th {
@@ -200,6 +218,7 @@ th {
   }
   .product-table--user {
     width: auto;
+    margin-top: 0;
 
     th, td {
       &:first-child {
