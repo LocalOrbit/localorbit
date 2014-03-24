@@ -1,0 +1,3 @@
+<%= link_to [:cart], class: "cart" do %>
+  Cart <span class="counter"><%= current_cart.present? ? current_cart.items.count : 0 %></span>
+<% end %>

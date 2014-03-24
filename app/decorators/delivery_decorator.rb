@@ -9,6 +9,11 @@ class DeliveryDecorator < Draper::Decorator
     deliver_on.strftime("%B %e, %Y")
   end
 
+  def checkout_date
+    action = buyer_pickup? ? "Pickup on" : "Delivery on"
+    "#{action} #{h.content_tag(:time, datetime: deliver_on) { display_date + ' ' + time_range}}"
+  end
+
   def time_range
     if buyer_pickup?
       start_time = delivery_schedule.buyer_pickup_start
@@ -21,7 +26,7 @@ class DeliveryDecorator < Draper::Decorator
     start_time.gsub!(" ", "")
     end_time.gsub!(" ", "")
 
-    "Between #{start_time} and #{end_time}"
+    "between #{start_time} and #{end_time}"
   end
 
   def buyer_time_range
@@ -36,7 +41,7 @@ class DeliveryDecorator < Draper::Decorator
     start_time.gsub!(" ", "")
     end_time.gsub!(" ", "")
 
-    "Between #{start_time} and #{end_time}"
+    "between #{start_time} and #{end_time}"
   end
 
   def display_locations

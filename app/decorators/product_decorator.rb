@@ -39,13 +39,17 @@ class ProductDecorator < Draper::Decorator
     end
   end
 
-  def cart_quantity
+  def cart_item
     return unless context[:current_cart]
 
-    if p = context[:current_cart].items.find_by(product_id: id)
-      p.quantity
+    if i = context[:current_cart].items.find_by(product_id: id)
+      return i
     else
-      nil
+      return CartItem.new(product_id: id, quantity: 0, cart: context[:current_cart])
     end
+  end
+
+  def display_prices
+    prices.for_market_and_org(context[:current_cart].market, context[:current_cart].organization)
   end
 end
