@@ -1,38 +1,39 @@
-<%= form_for [:admin, @entity, @bank_account] do |f| %>
+<div class="row row--partial">
+<%= form_for [:admin, @entity, @bank_account], html: { class: "column column--half" } do |f| %>
   <fieldset>
     <% unless @entity.balanced_underwritten? %>
       <legend>Personal Information</legend>
       <p>In order to setup your account, we will need your full legal name, DOB, last 4 of your SSN, and personal address.</p>
 
-      <div class="row">
+      <div class="field">
         <label for="representative_ein">Organization <abbr title="Employer Identification Number">EIN</abbr></label><br>
-        <input id="representative_ein" type="text" name="representative[ein]">
-        <span class="hint">EIN is optional. However it is recommended if available for account underwritting purposes.</span>
+        <span class="hint">EIN is optional. However it is recommended if available for account underwritting purposes.</span><br>
+        <input id="representative_ein" type="text" name="representative[ein]" size="9">
       </div>
 
-      <div class="row">
+      <div class="field">
         <label for="representative_name">Full Legal Name</label><br>
-        <input id="representative_name" type="text" name="representative[name]">
+        <input id="representative_name" type="text" name="representative[name]" class="column--full">
       </div>
 
-      <div class="row">
+      <div class="field">
         <label>Date of Birth</label><br>
         <%= select_date 18.years.ago.beginning_of_year, start_year: 100.years.ago.year, end_year: 18.years.ago.year, use_short_month: true, order: [:month, :day, :year], prefix: "representative[dob]" %>
       </div>
 
-      <div class="row">
+      <div class="field">
         <label for="representative_ssn_last4">Last 4 of SSN</label><br>
         <input id="representative_ssn_last4" type="text" name="representative[ssn_last4]" size="4">
       </div>
 
-      <div class="row">
+      <div class="field">
         <label for="representative_address_line1">Street Address (Personal)</label><br>
-        <input id="representative_address_line1" type="text" name="representative[address][line1]">
+        <input id="representative_address_line1" type="text" name="representative[address][line1]" class="column--full">
       </div>
 
-      <div class="row">
+      <div class="field">
         <label for="representative_address_postal_code">Zip Code (Personal)</label><br>
-        <input id="representative_address_postal_code" type="text" name="representative[address][postal_code]">
+        <input id="representative_address_postal_code" type="text" name="representative[address][postal_code]" size="10">
       </div>
     <% end %>
 
@@ -41,35 +42,43 @@
     <input type="hidden" name="bank_account[bank_name]" data-balanced-attribute="bank_name">
     <input type="hidden" name="bank_account[balanced_uri]" data-balanced-attribute="uri">
   </fieldset>
-<% end %>
 
-<form id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-target-form="new_bank_account" data-balanced-object-type="bankAccount">
-  <div class="row">
-    <label for="balanced_account_name">Name</label><br>
-    <input id="balanced_account_name" type="text" name="name">
-    <span class="hint">Name on the account</span>
-  </div>
+<% end -%>
 
-  <div class="row">
-    <label for="balanced_type_checking">Checking</label><br>
-    <input id="balanced_type_checking" type="radio" name="type" value="checking">
-  </div>
+<form class="column column--half" id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-target-form="new_bank_account" data-balanced-object-type="bankAccount">
+  <fieldset>
+    <legend>Account Information</legend>
+    <div class="field">
+      <label for="balanced_account_name">Name</label>
+      <span class="hint">Name on the account</span>
+      <br>
+      <input id="balanced_account_name" type="text" name="name" class="column--full">
+    </div>
 
-  <div class="row">
-    <label for="balanced_type_savings">Savings</label><br>
-    <input id="balanced_type_savings" type="radio" name="type" value="savings">
-  </div>
+    <fieldset class="conditional">
+      <legend>Account Type</legend>
+      <input id="balanced_type_checking" type="radio" name="type" value="checking">
+      <label for="balanced_type_checking">Checking</label>
 
-  <div class="row">
-    <label for="balanced_routing_number">Routing Number</label><br>
-    <input id="balanced_routing_number" type="text" name="routing_number">
-  </div>
+      <br>
 
-  <div class="row">
-    <label for="balanced_account_number">Account Number</label><br>
-    <input id="balanced_account_number" type="text" name="account_number">
-  </div>
+      <input id="balanced_type_savings" type="radio" name="type" value="savings">
+      <label for="balanced_type_savings">Savings</label>
+    </fieldset>
 
-  <input type="submit" value="Save">
+    <div class="field">
+      <label for="balanced_routing_number">Routing Number</label><br>
+      <input id="balanced_routing_number" type="text" name="routing_number">
+    </div>
+
+    <div class="field">
+      <label for="balanced_account_number">Account Number</label><br>
+      <input id="balanced_account_number" type="text" name="account_number">
+    </div>
+
+    <div class="form-actions">
+      <input type="submit" value="Save">
+    </div>
+  </fieldset>
 </form>
-
+</div>
