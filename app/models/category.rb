@@ -23,6 +23,6 @@ class Category < ActiveRecord::Base
   end
 
   def top_level_category
-    parent.try(:top_level_category) || self
+    self_and_ancestors.find_by(depth: 1)
   end
 end
