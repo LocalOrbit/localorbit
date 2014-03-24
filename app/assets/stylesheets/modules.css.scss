@@ -262,27 +262,6 @@
 }
 
 
-.heading--sidebar {
-  color: #000;
-  font: lighter 20px "Open Sans Condensed", sans-serif;
-  font-weight: 300;
-
-  + .reset {
-    font-size: 9px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-}
-
-.subheading--sidebar {
-  margin: 0;
-  font-size: 10px;
-  font-weight: normal;
-
-  + p {
-    margin-top: 0;
-  }
-}
 
 .map {
   > img {
@@ -415,12 +394,34 @@
   }
 }
 /** Sidebar Stuff */
+.heading--sidebar {
+  color: #000;
+  font: lighter 20px "Open Sans Condensed", sans-serif;
+  font-weight: 300;
+
+  + .reset {
+    font-size: 9px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
+
+.subheading--sidebar {
+  margin: 0;
+  font-size: 10px;
+  font-weight: normal;
+
+  + p {
+    margin-top: 0;
+  }
+}
+
 .sidebar-box {
   padding: 10px;
   border-top: solid 1px #4162a1;
   @include border-radius(0 0 5px 5px);
   @include box-shadow(inset 0 2px 1px #c0c0c0);
-  margin: 0 0 24px;
+  margin: 5px 0 24px;
   color: #666;
   background: #f9f9f9;
   font-size: 12px;
