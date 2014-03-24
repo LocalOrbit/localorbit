@@ -9,6 +9,10 @@ describe "Checking Out", js: true do
     Dom::Cart::Item.find_by_name("Bananas")
   end
 
+  def potatoes_item
+    Dom::Cart::Item.find_by_name("Potatoes")
+  end
+
   let(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
 
@@ -101,10 +105,6 @@ describe "Checking Out", js: true do
     end
 
     it "lists the values for the product" do
-      bananas_item = Dom::Cart::Item.find_by_name("Bananas")
-      kale_item = Dom::Cart::Item.find_by_name("Kale")
-      potatoes_item = Dom::Cart::Item.find_by_name("Potatoes")
-
       expect(bananas_item.quantity.value).to eql("10")
       expect(kale_item.quantity.value).to eql("20")
       expect(potatoes_item.quantity.value).to eql("5")
