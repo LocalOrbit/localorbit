@@ -64,7 +64,10 @@ describe "Checking Out", js: true do
   end
 
   def add_items
-    sleep(0.5)
+    expect(page).to have_content("Bananas")
+    expect(page).to have_content("Kale")
+    expect(page).to have_content("Potatoes")
+
     # Bananas Price for this buyer: 0.50
     # Total: 10 * 0.50 = 5.00
     Dom::Cart::Item.find_by_name("Bananas").set_quantity("10")
