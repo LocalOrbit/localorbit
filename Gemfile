@@ -16,6 +16,7 @@ gem 'underscore-rails'
 gem 'accountingjs-rails'
 
 gem "active_model_serializers"
+gem 'awesome_nested_set', github: 'collectiveidea/awesome_nested_set'
 gem "balanced", "~> 0.7"
 gem "countries"
 gem 'devise'
