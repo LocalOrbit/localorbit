@@ -31,6 +31,7 @@ gem 'jquery-ui-rails'
 gem 'periscope-activerecord'
 gem 'rack-canonical-host'
 gem 'kaminari'
+gem 'simpleidn'
 
 group :doc do
   gem 'sdoc', require: false
