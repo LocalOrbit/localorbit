@@ -18,7 +18,7 @@ class ImportLegacyTaxonomy
   def run
     load_taxonomy
     build_tree
-    store_tree(@base_nodes)
+    store_tree(@base_nodes, Category.root || Category.create!(name: "All"))
 
     if @verbose
       puts "#{@original_count} Exisiting Categories"
@@ -49,9 +49,10 @@ class ImportLegacyTaxonomy
 
   def store_tree(nodes, parent = nil)
     nodes.each do |node|
-      scope = Category.where(name: node[:name], parent_id: parent.try(:id))
-      obj = scope.first || scope.create
+      obj = parent.children.find_or_initialize_by(name: node[:name])
+      obj.save!
       store_tree(node[:children], obj)
     end
+    Category.rebuild! # needed to set proper depths
   end
 end

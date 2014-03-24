@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140321141806) do
+ActiveRecord::Schema.define(version: 20140324174337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,9 +61,16 @@ ActiveRecord::Schema.define(version: 20140321141806) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
   end
 
+  add_index "categories", ["lft"], name: "index_categories_on_lft", using: :btree
+  add_index "categories", ["parent_id", "lft", "rgt"], name: "index_categories_on_parent_id_and_lft_and_rgt", using: :btree
+  add_index "categories", ["parent_id", "lft"], name: "index_categories_on_parent_id_and_lft", using: :btree
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+  add_index "categories", ["rgt"], name: "index_categories_on_rgt", using: :btree
 
   create_table "deliveries", force: true do |t|
     t.integer  "delivery_schedule_id"
