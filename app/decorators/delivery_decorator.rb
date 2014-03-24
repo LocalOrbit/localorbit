@@ -55,4 +55,18 @@ class DeliveryDecorator < Draper::Decorator
   def buyer_pickup?
     delivery_schedule.buyer_pickup?
   end
+
+  # Display methods for currently selected delivery
+
+  def selected_location
+    if buyer_pickup?
+      delivery_schedule.buyer_pickup_location
+    else
+      context[:current_organization].locations.visible.find_by(id: context[:location_id])
+    end
+  end
+
+  def selected_type
+    buyer_pickup? ? "Pick Up Date" : "Delivery Date"
+  end
 end

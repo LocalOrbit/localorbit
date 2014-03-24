@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_organization
   helper_method :current_cart
   helper_method :current_location
+  helper_method :current_delivery
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -83,6 +84,7 @@ class ApplicationController < ActionController::Base
         end
       end
     end
+    @current_delivery = @current_delivery.decorate(context: {current_organization: current_organization, location_id: session[:current_location]}) if @current_delivery
   end
 
   def set_timezone

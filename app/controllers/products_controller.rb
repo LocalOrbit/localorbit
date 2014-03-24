@@ -10,6 +10,5 @@ class ProductsController < ApplicationController
     # TODO: Optimize this lookup. It just got much more expensive
     @categories = products.unscope(:select).select("DISTINCT (products.top_level_category_id)").map(&:top_level_category)
     @products = products.periscope(request.query_parameters).decorate( context: {current_cart: current_cart})
-    @delivery = current_delivery.decorate
   end
 end
