@@ -15,7 +15,7 @@
 
 <div class="field">
   <%= f.label :fee_type %><br>
-  <%= f.select :fee_type, ['Percentage', 'Dollar Amount'] %>
+  <%= f.select :fee_type, [["Percentage", "percent"], ["Dollar Amount", "fixed"]] %>
 </div>
 
 <div class="field">

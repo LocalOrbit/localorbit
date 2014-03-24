@@ -26,4 +26,38 @@ describe Cart do
     end
   end
 
+  describe "#delivery_fees" do
+    let(:delivery_schedule) { create(:delivery_schedule) }
+    let(:delivery) { delivery_schedule.next_delivery }
+    let(:cart) { create(:cart, delivery: delivery) }
+    let!(:product1) { create(:product, :sellable) }
+    let!(:product2) { create(:product, :sellable) }
+    # 1 item at $3.00
+    let!(:cart_item1) { create(:cart_item, cart: cart, product: product1, quantity: 1) }
+    # 1 item at $3.00
+    let!(:cart_item2) { create(:cart_item, cart: cart, product: product2, quantity: 1) }
+
+    context "no delivery fee" do
+      it "returns $0.00" do
+        expect(cart.delivery_fees).to eq(0.0)
+      end
+    end
+
+    context "percentage" do
+      let(:delivery_schedule) { create(:delivery_schedule, :percent_fee) }
+
+      it "returns $1.50" do
+        expect(cart.delivery_fees).to eq(1.50)
+      end
+    end
+
+    context "dollar amount" do
+      let(:delivery_schedule) { create(:delivery_schedule, :fixed_fee) }
+
+      it "returns $1.00" do
+        expect(cart.delivery_fees).to eq(1.00)
+      end
+    end
+  end
+
 end

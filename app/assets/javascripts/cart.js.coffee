@@ -32,6 +32,10 @@ $ ->
       totals = $("#totals")
       totals.find(".subtotal").text(accounting.formatMoney(subtotal))
 
+    updateDeliveryFees: (fees) ->
+      totals = $("#totals")
+      totals.find(".delivery_fees").text(fees)
+
 
   class CartModel
     constructor: (opts)->
@@ -72,10 +76,11 @@ $ ->
       #       quantities
       $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
         .done (data)=>
-          item = @updateOrAddItem(data)
+          item = @updateOrAddItem(data.item)
 
           @view.updateCounter(@items.length)
           @view.updateSubtotal(@subtotal())
+          @view.updateDeliveryFees(data.delivery_fees)
 
   view = new CartView
     counter: $("header .cart .counter")

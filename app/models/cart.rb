@@ -19,4 +19,15 @@ class Cart < ActiveRecord::Base
   def subtotal
     items.inject(0){ |sum, item| sum += item.total_price }
   end
+
+  def delivery_fees
+    case delivery.delivery_schedule.fee_type
+    when "fixed"
+      delivery.delivery_schedule.fee
+    when "percent"
+      (subtotal * delivery.delivery_schedule.fee)
+    else
+      0.0
+    end
+  end
 end
