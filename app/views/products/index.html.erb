@@ -40,7 +40,7 @@
       <h2 class="table-heading">Products Available on <%= @delivery.display_date %></h2>
       <p class="table-summary">
         Complete your order by <%= @delivery.cutoff_time.strftime("%B %-d at %l%p") %>.
-        Pick up is <%= @delivery.display_date %> <%= @delivery.time_range.to_s.downcase %>. 
+        Pick up is <%= @delivery.display_date %> <%= @delivery.time_range %>.
       </p>
       <%= render "table", products: @products %>
     </div>
