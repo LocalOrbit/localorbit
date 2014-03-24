@@ -78,6 +78,10 @@ class DeliverySchedule < ActiveRecord::Base
     next_delivery_date - order_cutoff.hours
   end
 
+  def free_delivery?
+    (fee_type == "fixed" && fee == 0) || fee.nil?
+  end
+
   protected
 
   def buyer_pickup_end_after_start

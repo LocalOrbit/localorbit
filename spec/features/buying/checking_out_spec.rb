@@ -1,6 +1,14 @@
 require "spec_helper"
 
 describe "Checking Out", js: true do
+  def kale_item
+    Dom::Cart::Item.find_by_name("Kale")
+  end
+
+  def bananas_item
+    Dom::Cart::Item.find_by_name("Bananas")
+  end
+
   let(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
 
@@ -9,7 +17,7 @@ describe "Checking Out", js: true do
 
   let(:market) { create(:market, :with_addresses, organizations: [buyer, seller, seller2]) }
   let!(:pickup) { create(:delivery_schedule, :buyer_pickup, market: market) }
-  let!(:delivery) { create(:delivery_schedule, market: market) }
+  let!(:delivery) { create(:delivery_schedule, :percent_fee,  market: market) }
 
   # Fulton St. Farms (seller)
   let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: seller) }
@@ -47,6 +55,7 @@ describe "Checking Out", js: true do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     find(:link, "Shop").trigger("click")
+    sleep(0.5)
     choose_delivery(delivery)
   end
 
@@ -125,18 +134,6 @@ describe "Checking Out", js: true do
           expect(page).to have_content(market.addresses.first.zip)
         end
       end
-
-      context "delivery fees" do
-        context "are present" do
-          it "displays the fee"
-          it "modifies the total"
-        end
-
-        context "are not present" do
-          it "does not modify the total"
-          it "displays as Free!"
-        end
-      end
     end
 
     context "is dropoff" do
@@ -164,16 +161,49 @@ describe "Checking Out", js: true do
     end
   end
 
+  context "delivery fees" do
+    it "show in the totals" do
+      sign_in_and_choose_delivery "Delivery: May 13, 2014 between 7:00AM and 11:00AM"
+      cart_link.node.click
+
+      expect(Dom::Cart::Totals.first.delivery_fees).to have_content("$0.00")
+
+      click_link "Shop"
+      add_items
+
+      cart_link.node.click
+      expect(Dom::Cart::Totals.first.delivery_fees).to have_content("$10.00")
+
+      kale_item.set_quantity(98)
+      bananas_item.quantity_field.click
+      sleep(0.5)
+
+      expect(Dom::Cart::Totals.first.delivery_fees).to have_content("$29.50")
+    end
+
+    context "when there are no delivery fees" do
+      it "displays as 'Free!'" do
+        sign_in_and_choose_delivery "Pick Up: May 13, 2014 between 10:00AM and 12:00PM"
+        cart_link.node.click
+
+        expect(Dom::Cart::Totals.first.delivery_fees).to have_content("Free!")
+
+        click_link "Shop"
+        add_items
+
+        cart_link.node.click
+        expect(Dom::Cart::Totals.first.delivery_fees).to have_content("Free!")
+
+        kale_item.set_quantity(98)
+        bananas_item.quantity_field.click
+        sleep(0.5)
+
+        expect(Dom::Cart::Totals.first.delivery_fees).to have_content("Free!")
+      end
+    end
+  end
+
   context "updating quantity" do
-
-    def kale_item
-      Dom::Cart::Item.find_by_name("Kale")
-    end
-
-    def bananas_item
-      Dom::Cart::Item.find_by_name("Bananas")
-    end
-
     def cart_totals
       Dom::Cart::Totals.first
     end

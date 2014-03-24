@@ -193,6 +193,16 @@ FactoryGirl.define do
       buyer_pickup_end '12:00 PM'
       buyer_pickup_location { market.addresses.first }
     end
+
+    trait :fixed_fee do
+      fee_type "fixed"
+      fee 1.00
+    end
+
+    trait :percent_fee do
+      fee_type "percent"
+      fee 0.25
+    end
   end
 
   factory :delivery do

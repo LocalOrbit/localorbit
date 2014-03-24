@@ -405,6 +405,10 @@ module Dom
       def subtotal
         node.find(".subtotal")
       end
+
+      def delivery_fees
+        node.find(".delivery_fees")
+      end
     end
   end
 
