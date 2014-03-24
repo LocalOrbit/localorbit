@@ -54,6 +54,11 @@ input[type=submit] {
     color: #43639F;
     background: none;
     font-size: inherit;
+    &:active {
+      color: #666;
+      @include box-shadow(none);
+      background: none;
+    }
   }
   &.close {
     color: #000;

@@ -129,7 +129,6 @@ th {
   }
   .meta {
     a {
-      color: #666;
       margin-right: .4em;
       font-size: 11px;
     }
@@ -235,14 +234,22 @@ th {
     }
 
     .info {
-      width: 37%;
+      width: 45%;
+
+      a {
+        color: #666;
+      }
     }
 
     .name {
       font-weight: normal;
     } 
 
+    .total {
+      padding-top: 15px;
+    }
+
     .pricing {
-      width: 30%;
+      width: 23%;
     }
   }
