@@ -26,7 +26,7 @@ class DeliveryDecorator < Draper::Decorator
     start_time.gsub!(" ", "")
     end_time.gsub!(" ", "")
 
-    "between #{start_time} and #{end_time}"
+    "between #{start_time} and #{end_time}"
   end
 
   def buyer_time_range
@@ -41,7 +41,7 @@ class DeliveryDecorator < Draper::Decorator
     start_time.gsub!(" ", "")
     end_time.gsub!(" ", "")
 
-    "between #{start_time} and #{end_time}"
+    "between #{start_time} and #{end_time}"
   end
 
   def display_locations

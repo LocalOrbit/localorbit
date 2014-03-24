@@ -1,5 +1,17 @@
 @import 'mixins';
 
+.table-heading {
+  margin-bottom: .1em;
+  color: #000;
+  font: bold 20px "Open Sans Condensed", sans-serif;
+}
+
+.table-summary {
+  margin-bottom: 1em;
+  color: #000;
+  font-size: 12px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -8,6 +20,12 @@ table {
     color: #4162A1;
   }
 
+caption {
+  color: #000;
+  font: normal 28px "Open Sans Condensed", sans-serif;
+  text-align: left;
+}
+
 td,
 th {
   padding: 4px 0 4px 10px;
@@ -15,6 +33,8 @@ th {
 }
 
 td {
+  vertical-align: top;
+
   input[type=submit] {
     margin-top: 0;
     margin-bottom: 0;
@@ -137,14 +157,14 @@ th {
     font-weight: bold;
   }
   .product-clear {
-    padding-top: 30px;
     font-size: 15px;
+    line-height: 28px;
     > a {
       color: #ddd;
     }
   }
   .product-image {
-    padding-right: 20px;
+    padding-right: 10px;
     > img {
       display: block;
       width: 60px;
@@ -164,7 +184,6 @@ th {
       }
     }
   .tiers {
-    display: inline-block;
     padding: 0;
     list-style: none;
 
@@ -178,6 +197,7 @@ th {
     }
   .total {
     font-weight: bold;
+    line-height: 28px;
   }
 }
 
@@ -185,11 +205,44 @@ th {
   margin-top: 0
 }
 
+.products--user {
+  padding-left: 30px;
+}
 .product-table {
   margin: 30px 0;
 }
   .product-table--admin {
     td {
       font-size: 12px;
+    }
+  }
+  .product-table--user {
+    width: auto;
+    margin-top: 0;
+
+    th, td {
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+
+    th {
+      font-size: 12px;
+    }
+
+    tr {
+      border-bottom: solid 1px #eee;
+    }
+
+    .info {
+      width: 37%;
+    }
+
+    .name {
+      font-weight: normal;
+    } 
+
+    .pricing {
+      width: 30%;
     }
   }

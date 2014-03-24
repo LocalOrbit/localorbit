@@ -1,6 +1,6 @@
 <%= render 'admin/markets/header' %>
 
-<%= link_to 'Add Address', new_admin_market_address_path(@market) %>
+<%= link_to 'Add Address', new_admin_market_address_path(@market), class: "btn btn--small btn--add pull-right" %>
 
 <table>
   <thead>
@@ -11,7 +11,7 @@
   </thead>
   <tbody>
   <% @addresses.each do |address| %>
-    <tr>
+    <tr class="<%= cycle "odd", "even" %>">
       <td>
         <div><%= link_to address.name, edit_admin_market_address_path(@market, address) %></div>
         <div><%= address.address %>, <%= address.city %>, <%= address.state %> <%= address.zip %></div>

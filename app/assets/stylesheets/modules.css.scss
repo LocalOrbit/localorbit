@@ -74,6 +74,7 @@
     display: inline-block;
     min-height: 40px;
     padding-left: 50px;
+    color: inherit;
     background: asset_url('footer-logo.png') left center no-repeat;
     background: asset_url('footer-logo@2x.png') left center / 38px 40px no-repeat;
   }
@@ -261,17 +262,6 @@
 }
 
 
-.heading--sidebar {
-  color: #000;
-  font: lighter 20px "Open Sans Condensed", sans-serif;
-  font-weight: 300;
-
-  + .reset {
-    font-size: 9px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-}
 
 .map {
   > img {
@@ -283,6 +273,7 @@
 .market-manager-contact {
   text-align: right;
   > .email {
+    color: inherit;
     font-weight: bold;
   }
 }
@@ -402,7 +393,41 @@
     z-index: 50;
   }
 }
+/** Sidebar Stuff */
+.heading--sidebar {
+  color: #000;
+  font: lighter 20px "Open Sans Condensed", sans-serif;
+  font-weight: 300;
 
+  + .reset {
+    font-size: 9px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
+
+.subheading--sidebar {
+  margin: 0;
+  font-size: 10px;
+  font-weight: normal;
+
+  + p {
+    margin-top: 0;
+  }
+}
+
+.sidebar-box {
+  padding: 10px;
+  border-top: solid 1px #4162a1;
+  @include border-radius(0 0 5px 5px);
+  @include box-shadow(inset 0 2px 1px #c0c0c0);
+  margin: 5px 0 24px;
+  color: #666;
+  background: #f9f9f9;
+  font-size: 12px;
+}
+
+/** Tabs */
 .tabs-wrapper {
   padding: 0 20px;
   border-bottom: solid 1px #cbcbcb;
@@ -453,6 +478,12 @@
     @include box-shadow(0 -2px 3px rgba(0,0,0,0.1));
     background: #fff;
   } 
+}
+
+.signed-out {
+  .page-title {
+    text-align: center;
+  }
 }
 
 /** Errors and messages */
@@ -535,6 +566,10 @@
     max-width: 100%;
     max-height: 100%;
   }
+}
+.signed-out .logo-link {
+  float: none;
+  margin: 0 auto 20px;
 }
 .redundent-nav {
   font-size: smaller;

@@ -1,6 +1,27 @@
 <div class="row">
   <div class="column column--fourth" id="product-filter">
     <div class="header header--column">
+      <h2 class="heading heading--sidebar">Pick Up Date</h2>
+    </div>
+    <% schedule = @delivery.delivery_schedule %>
+
+    <div class="sidebar-box">
+      <h3 class="subheading--sidebar">When</h3>
+      <p>
+        <strong><%= @delivery.display_date %></strong><br>
+        <%= @delivery.time_range %>
+      </p>
+
+      <h3 class="subheading--sidebar">Where</h3>
+      <%= current_organization.shipping_location.address %><br>
+      <%= current_organization.shipping_location.city %>,
+      <%= current_organization.shipping_location.state %>
+      <%= current_organization.shipping_location.zip %>
+    </div>
+
+
+
+    <div class="header header--column">
       <h2 class="heading heading--sidebar">Filter the Shop</h2>
       <% if request.query_parameters.present? %>
         <%= link_to "Reset", products_path, class: "btn reset" %>
@@ -15,6 +36,13 @@
     <%= filter_list(@categories, :category) %>
   </div
   ><div class="column column--three-fourths">
-    <%= render "table", products: @products %>
+    <div class="products--user">
+      <h2 class="table-heading">Products Available on <%= @delivery.display_date %></h2>
+      <p class="table-summary">
+        Complete your order by <%= @delivery.cutoff_time.strftime("%B %-d at %l%p") %>.
+        Pick up is <%= @delivery.display_date %> <%= @delivery.time_range %>.
+      </p>
+      <%= render "table", products: @products %>
+    </div>
   </div>
 </div>

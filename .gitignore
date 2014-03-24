@@ -20,3 +20,4 @@
 # Ignore application configuration
 /config/application.yml
 /dragonfly
+public/system/dragonfly/development
