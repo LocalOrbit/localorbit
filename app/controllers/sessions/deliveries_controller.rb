@@ -24,7 +24,7 @@ module Sessions
         end
       end
 
-      redirect_to :products
+      redirect_to params[:redirect_back_to] || [:products]
     end
 
     protected

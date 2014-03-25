@@ -6,6 +6,7 @@
     <p>Please choose a pick up or delivery date.</p>
 
     <%= form_tag [:sessions, :deliveries], method: :post, id: "deliveries" do |f| %>
+      <%= hidden_field_tag :redirect_back_to, params[:redirect_back_to] %>
 
       <%= content_tag_for :fieldset, @deliveries do |d| %>
         <%= radio_button_tag "delivery_id", d.id %>
