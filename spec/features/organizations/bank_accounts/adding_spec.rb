@@ -28,7 +28,7 @@ feature "Adding a bank account to an organization", js: true do
     fill_in "Zip Code (Personal)", with: "12345"
 
     fill_in "Name", with: "Org Bank Account"
-    choose "Checking"
+    select("Checking", from: "Account Type")
     fill_in "Routing Number", with: "021000021"
     fill_in "Account Number", with: "9900000002"
 
@@ -61,7 +61,7 @@ feature "Adding a bank account to an organization", js: true do
     fill_in "Zip Code (Personal)", with: "12345"
 
     fill_in "Name", with: "Org Bank Account"
-    choose "Checking"
+    select("Checking", from: "Account Type")
     fill_in "Routing Number", with: "021000021"
     fill_in "Account Number", with: "9900000002"
 
