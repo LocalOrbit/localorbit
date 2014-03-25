@@ -1,33 +1,40 @@
-<h2>Bank Accounts</h2>
+<% @organization = @entity %>
+<%= render "admin/organizations/header" %>
 
-<% if @bank_accounts.empty? %>
-  <p>No Bank Accounts</p>
-<% else %>
-  <table id="bank-accounts">
-    <thead>
-      <tr>
-        <th>Bank Name</th>
-        <th>Account Number</th>
-        <th>Type</th>
-        <th>Verified</th>
-      </tr>
-    </thead>
-    <tbody>
-    <% @bank_accounts.each do |bank_account| %>
-      <tr class="bank-account">
-        <td class="bank-name"><%= bank_account.bank_name %></td>
-        <td class="account-number">******<%= bank_account.last_four %></td>
-        <td class="account-type"><%= bank_account.account_type %></td>
-        <td class="verified">
-          <% if bank_account.verified? %>
-            Verified
-          <% else %>
-            <%= link_to "Verify", [:admin, @entity, bank_account, :verify] %></td>
-          <% end %>
-        </td>
-      </tr>
+<div class="row row--partial">
+
+  <div class="column column--half">
+    <%= link_to "Add Bank Account", new_admin_organization_bank_account_path, class: "btn btn--add btn--small pull-right" %>
+    <h2>Bank Accounts</h2>
+    <% if @bank_accounts.empty? %>
+      <p>No Bank Accounts</p>
+    <% else %>
+      <table id="bank-accounts">
+        <thead>
+          <tr>
+            <th>Bank Name</th>
+            <th>Account Number</th>
+            <th>Type</th>
+            <th>Verified</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @bank_accounts.each do |bank_account| %>
+          <tr class="bank-account">
+            <td class="bank-name"><%= bank_account.bank_name %></td>
+            <td class="account-number">******<%= bank_account.last_four %></td>
+            <td class="account-type"><%= bank_account.account_type %></td>
+            <td class="verified">
+              <% if bank_account.verified? %>
+                Verified
+              <% else %>
+                <%= link_to "Verify", [:admin, @entity, bank_account, :verify] %></td>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
     <% end %>
-    </tbody>
-  </table>
-<% end %>
-
+  </div>
+</div>

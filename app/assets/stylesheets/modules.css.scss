@@ -579,3 +579,19 @@
 .redundent-nav {
   font-size: smaller;
 }
+.slide {
+  overflow: hidden;
+  &.is-up > .slide-content {
+    -webkit-transform-origin: 0,0;
+       -moz-transform-origin: 0,0;
+            transform-origin: 0,0;
+    @include transform(translateY(-110%));
+  }
+}
+  .slide-content {
+    position: relative;
+    @include transform(translateY(0));
+    -webkit-transition:-webkit-transform .4s linear;
+       -moz-transition:   -moz-transform .4s linear;
+            transition:        transform .4s linear;
+  }

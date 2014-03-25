@@ -65,6 +65,14 @@ input[type=submit] {
   }
 }
 
+.btn.cancel {
+  + .btn--add,
+  + .btn--save,
+  + input[type=submit] {
+    margin-left: 1em;
+  }
+}
+
 .btn.reset {
   font-size: 9px;
   font-weight: bold;
