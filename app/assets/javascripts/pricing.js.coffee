@@ -43,6 +43,18 @@ $ ->
     $(this).hide()
     $('#add-price').show()
 
+  $('#add-price .cancel').click (e) ->
+    e.preventDefault()
+    $('#add-price').hide()
+    $('#add-price-toggle').show()
+
+    $('#add-price input').each ->
+      field = $(this)
+      field.val(field.attr("value"))
+
+    $('#add-price select').each ->
+      $(this).val("")
+
   EditTable.build "#new_price",
     applyErrorValuesCallback: (field)->
       val = $(field).val()

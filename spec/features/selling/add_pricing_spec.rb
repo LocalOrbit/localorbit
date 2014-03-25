@@ -3,13 +3,8 @@ require 'spec_helper'
 describe 'Adding advanced pricing' do
   let(:user)    { create(:user) }
   let(:market)  { create(:market) }
-  let!(:organization) { create(:organization, markets: [market]) }
-  let!(:product) do
-    create(:product).tap do |p|
-      p.organization.users << user
-      market.organizations << p.organization
-    end
-  end
+  let!(:organization) { create(:organization, markets: [market], users: [user]) }
+  let!(:product) { create(:product, organization: organization) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -100,5 +95,18 @@ describe 'Adding advanced pricing' do
       expect(record.net_price).to eq('$1.93')
       expect(record.sale_price).to eq('$1.99')
     end
+  end
+
+  it "canceling adding a price", js: true do
+    fill_in 'price_min_quantity', with: '2'
+    fill_in 'price_sale_price', with: '1.99'
+    click_button 'Add'
+
+    click_link "Add Price"
+    fill_in 'price_sale_price', with: '1.90'
+    click_button 'Cancel'
+
+    click_link "Add Price"
+    expect(find_field('price_sale_price').value).to eq("")
   end
 end
