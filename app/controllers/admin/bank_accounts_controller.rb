@@ -13,7 +13,7 @@ class Admin::BankAccountsController < AdminController
     results = AddBankAccountToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
 
     if results.success?
-      redirect_to [:admin, @entity, :bank_accounts]
+      redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully added a bank account"
     else
       @bank_account = results.bank_account
       render :new

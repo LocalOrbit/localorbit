@@ -34,7 +34,7 @@ feature "Adding a bank account to an organization", js: true do
 
     click_button "Save"
 
-    expect(page).to have_content("Bank Accounts")
+    expect(page).to have_content("Successfully added a bank account")
 
     bank_account = Dom::BankAccount.first
     expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")
@@ -67,7 +67,7 @@ feature "Adding a bank account to an organization", js: true do
 
     click_button "Save"
 
-    expect(page).to have_content("Bank Accounts")
+    expect(page).to have_content("Successfully added a bank account")
 
     bank_account = Dom::BankAccount.first
     expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")

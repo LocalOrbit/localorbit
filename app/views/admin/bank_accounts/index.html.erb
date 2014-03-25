@@ -1,10 +1,9 @@
-<% @organization = @entity %>
-<%= render "admin/organizations/header" %>
+<%= render "admin/bank_accounts/header" %>
 
 <div class="row row--partial">
 
   <div class="column column--half">
-    <%= link_to "Add Bank Account", new_admin_organization_bank_account_path, class: "btn btn--add btn--small pull-right" %>
+    <%= link_to "Add Bank Account", [:new, :admin, @entity, :bank_account], class: "btn btn--add btn--small pull-right" %>
     <h2>Bank Accounts</h2>
     <% if @bank_accounts.empty? %>
       <p>No Bank Accounts</p>
