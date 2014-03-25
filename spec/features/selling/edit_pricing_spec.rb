@@ -43,6 +43,16 @@ describe "Editing advanced pricing" do
       expect(hidden_method.value).to eql("put")
     end
 
+    it "then adding a price cancels the edit" do
+      expect(Dom::PricingRow.first).to be_editable
+
+      click_link "Add Price"
+
+      expect(Dom::PricingRow.first).to_not be_editable
+
+      fill_in 'price_sale_price', with: '1.90'
+    end
+
     describe "then clicking on another price row" do
       it "will change the row being edited" do
         fill_in("price_#{price.id}_sale_price", with: 55)

@@ -40,8 +40,26 @@ $ ->
 
   $('#add-price-toggle').click (e) ->
     e.preventDefault()
+    $('tr .cancel').trigger("click")
     $(this).hide()
     $('#add-price').show()
+
+  cancelAdd = (e) ->
+    e.preventDefault()
+    $('#add-price').hide()
+    $('#add-price-toggle').show()
+
+    $('#add-price input').each ->
+      field = $(this)
+      field.val(field.attr("value"))
+
+    $('#add-price select').each ->
+      $(this).val("")
+
+  $('#add-price .cancel').click cancelAdd
+  $('#new_price tbody td').click (e) ->
+    if $(this).parent().find('input').not('input[type="checkbox"]').length == 0
+      cancelAdd(e)
 
   EditTable.build "#new_price",
     applyErrorValuesCallback: (field)->
