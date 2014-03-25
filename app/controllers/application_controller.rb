@@ -58,8 +58,8 @@ class ApplicationController < ActionController::Base
   end
 
   def market_for_current_subdomain(scope = Market)
-    subdomain = request.subdomains(Figaro.env.domain.count('.'))
-    scope.find_by(subdomain: subdomain)
+    subdomain = request.subdomains(Figaro.env.domain.count('.')).first
+    scope.find_by(subdomain: SimpleIDN.to_unicode(subdomain))
   end
 
   def on_main_domain?

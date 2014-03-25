@@ -54,6 +54,21 @@ feature "A user navagating markets" do
     end
   end
 
+  context "a user with one market on a unicode domain" do
+    let!(:market) { create(:market, subdomain: "👍", organizations: [seller_org, buyer_org]) }
+
+    scenario "a user navigating to their market" do
+      switch_to_subdomain SimpleIDN.to_ascii(market.subdomain)
+      visit '/'
+      # expect(page).to have_content(market.name)
+
+      sign_in_as(user)
+      expect(page).to have_content(market.name)
+      expect(page).to have_content(market.tagline)
+      expect(page).to have_content("Welcome")
+    end
+  end
+
   context "signing in" do
     let!(:market) { create(:market, organizations: [seller_org, buyer_org]) }
     let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
