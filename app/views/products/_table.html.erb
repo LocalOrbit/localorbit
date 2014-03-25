@@ -1,9 +1,11 @@
 <table class="product-table product-table--user cart_items" data-cart-url="<%= cart_path %>">
-  <caption>Category</caption>
+  <% if @previous_top_level_category != category.top_level_category %>
+    <% @previous_top_level_category = category.top_level_category %>
+    <caption><%= category.top_level_category.name %></caption>
+  <% end %>
   <thead>
     <tr>
-      <th></th>
-      <th></th>
+      <th colspan="2"><%= category.name %></th>
       <th>Price</th>
       <th>Quantity</th>
       <th>Total</th>

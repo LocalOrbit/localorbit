@@ -15,7 +15,7 @@
     <%= filter_list(current_market.organizations, :organization) %>
 
     <a href="#product-filter-category" class="filter-toggle caretted caretted--right">Category</a>
-    <%= filter_list(@categories, :category) %>
+    <%= filter_list(@filter_categories, :category) %>
   </div
   ><div class="column column--three-fourths">
     <div class="products--user">
@@ -24,7 +24,12 @@
         Complete your order by <%= current_delivery.cutoff_time.strftime("%B %-d at %l%p") %>.
         Pick up is <%= current_delivery.display_date %> <%= current_delivery.time_range %>.
       </p>
-      <%= render "table", products: @products %>
+
+      <% @categories.each do |category| %>
+        <% if @product_groups[category.id].present? %>
+          <%= render "table", products: @product_groups[category.id], category: category %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>
