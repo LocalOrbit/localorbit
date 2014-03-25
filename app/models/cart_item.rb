@@ -10,8 +10,6 @@ class CartItem < ActiveRecord::Base
   end
 
   def unit_price
-    # NOTE: Use underscore.js to filter the client-side prices list
-    # to do the min_quantity check
     if quantity.nil? || quantity == 0
       prices.order('min_quantity ASC').first.decorate
     else
