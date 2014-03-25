@@ -187,8 +187,10 @@
     @include box-shadow(0 1px 5px rgba(0,0,0,0.2));
     margin: 0;
     background: #eee;
+    white-space: nowrap;
 
     a {
+      display: block;
       padding: 0 15px;
       color: #4162A1;
     }
