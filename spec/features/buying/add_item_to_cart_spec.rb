@@ -4,7 +4,7 @@ describe "Add item to cart", js: true do
   let(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
 
-  let!(:seller) {create(:organization, :seller) }
+  let!(:seller) {create(:organization, :seller, :single_location) }
 
   let(:market) { create(:market, :with_addresses, organizations: [buyer, seller]) }
   let!(:delivery) { create(:delivery_schedule, market: market) }
@@ -20,7 +20,7 @@ describe "Add item to cart", js: true do
     create(:price, market: market, product: bananas, min_quantity: 1)
   }
 
-  let(:kale) { create(:product, name: "kale", organization: seller) }
+  let(:kale) { create(:product, name: "Kale", organization: seller) }
   let!(:kale_lot) { create(:lot, product: kale) }
   let!(:kale_price_buyer_base) {
     create(:price, market: market, product: kale, min_quantity: 1)
@@ -31,7 +31,7 @@ describe "Add item to cart", js: true do
   end
 
   def kale_row
-    Dom::Cart::Item.find_by_name("kale")
+    Dom::Cart::Item.find_by_name("Kale")
   end
 
 
@@ -49,6 +49,11 @@ describe "Add item to cart", js: true do
       sign_in_as(user)
 
       expect(page).to have_content("Filter the Shop")
+      expect(page).to have_content("Bananas")
+      expect(page).to have_content("Kale")
+
+      expect(bananas_row.price).to have_content("$0.00")
+      expect(kale_row.price).to have_content("$0.00")
 
       expect(Dom::CartLink.first.count).to have_content("0")
 
@@ -67,57 +72,45 @@ describe "Add item to cart", js: true do
       visit "/products"
 
       expect(Dom::CartLink.first.node).to have_content("2")
+
       expect(bananas_row.quantity_field.value).to eql("12")
+      expect(bananas_row.price).to have_content("$36.00")
+
       expect(kale_row.quantity_field.value).to eql("9")
+      expect(kale_row.price).to have_content("$27.00")
     end
   end
 
   context "with a partially filled cart" do
-    let!(:cart) { create(:cart, market: market, organization: buyer, delivery: pickup.next_delivery) }
-    let!(:item) { create(:cart_item, cart: cart, product: bananas, quantity: 19) }
-    let!(:pickup) { create(:delivery_schedule, :buyer_pickup, market: market) }
+    let!(:cart) { create(:cart, market: market, organization: buyer, delivery: delivery.next_delivery) }
+    let!(:cart_item) { create(:cart_item, product: bananas, cart: cart, quantity: 1) }
 
-    it "initializes the client cart code" do
+    before do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
-      choose_delivery("Pick Up: May 13, 2014 between 10:00AM and 12:00PM")
-
-      expect(page).to have_content("Filter the Shop")
-
-      expect(bananas_row.quantity_field.value).to eql("19")
-      expect(kale_row.quantity_field.value).to eql("0")
-
-      expect(Dom::CartLink.first.count).to have_content("1")
-
-      kale_row.quantity_field.set("10")
-      bananas_row.quantity_field.click
-
-      expect(Dom::CartLink.first.count).to have_content("2")
     end
 
     it "does not update the counter when an item quantity is updated" do
-      switch_to_subdomain(market.subdomain)
-      sign_in_as(user)
-      find(:link, "Shop").trigger("click")
-      choose_delivery("Pick Up: May 13, 2014 between 10:00AM and 12:00PM")
-
-      sleep(1)
-      expect(Dom::CartLink.first.count).to have_content("1")
+      expect(Dom::CartLink.first).to have_content("1")
+      expect(bananas_row.price).to have_content("$3.00")
 
       bananas_row.set_quantity(8)
       kale_row.quantity_field.click
       sleep(0.5)
       expect(Dom::CartLink.first.count).to have_content("1")
+      expect(bananas_row.price).to have_content("$24.00")
 
       bananas_row.set_quantity(9)
       kale_row.quantity_field.click
 
       sleep(1)
       expect(Dom::CartLink.first.count).to have_content("1")
+      expect(bananas_row.price).to have_content("$27.00")
 
       visit "/products"
       expect(bananas_row.quantity_field.value).to eql("9")
       expect(Dom::CartLink.first.count).to have_content("1")
+      expect(bananas_row.price).to have_content("$27.00")
     end
   end
 end

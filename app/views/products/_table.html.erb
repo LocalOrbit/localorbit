@@ -84,7 +84,7 @@
           <span class="price-for-quantity"><%= number_to_currency(product.cart_item.unit_price.sale_price) %></span>
         </label>
       </td>
-      <td class="total price">$0.00</td>
+      <td class="total price"><%= product.cart_item.decorate.display_total_price %></td>
       <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
     </tr>
   <% end %>
