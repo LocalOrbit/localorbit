@@ -1,39 +1,47 @@
+<%= render "admin/bank_accounts/header" %>
+
 <div class="row row--partial">
-<%= form_for [:admin, @entity, @bank_account], html: { class: "column column--half" } do |f| %>
+<%= form_for [:admin, @entity, @bank_account], html: { class: "column column--three-fourths" } do |f| %>
   <fieldset>
     <% unless @entity.balanced_underwritten? %>
       <legend>Personal Information</legend>
       <p>In order to setup your account, we will need your full legal name, DOB, last 4 of your SSN, and personal address.</p>
 
-      <div class="field">
-        <label for="representative_ein">Organization <abbr title="Employer Identification Number">EIN</abbr></label><br>
-        <span class="hint">EIN is optional. However it is recommended if available for account underwritting purposes.</span><br>
-        <input id="representative_ein" type="text" name="representative[ein]" size="9">
+      <div class="row">
+        <div class="field column column--half column--guttered">
+          <label for="representative_ein">Organization <abbr title="Employer Identification Number">EIN</abbr></label><br>
+          <input class="column--full" id="representative_ein" type="text" name="representative[ein]" size="9">
+          <span class="hint">EIN is optional. However it is recommended if available for account underwritting purposes.</span>
+        </div
+        ><div class="field column column--half column--guttered">
+          <label for="representative_name">Full Legal Name</label><br>
+          <input id="representative_name" type="text" name="representative[name]" class="column--full">
+        </div>
       </div>
 
-      <div class="field">
-        <label for="representative_name">Full Legal Name</label><br>
-        <input id="representative_name" type="text" name="representative[name]" class="column--full">
+      <div class="row">
+        <div class="column column--half">
+          <div class="field field--inline">
+            <label>Date of Birth</label><br>
+            <%= select_date 18.years.ago.beginning_of_year, start_year: 100.years.ago.year, end_year: 18.years.ago.year, use_short_month: true, order: [:month, :day, :year], prefix: "representative[dob]" %>
+          </div>
+
+          <div class="field field--inline">
+            <label for="representative_ssn_last4">Last 4 of SSN</label><br>
+            <input id="representative_ssn_last4" type="text" name="representative[ssn_last4]" size="4">
+          </div>
+        </div>
       </div>
 
-      <div class="field">
-        <label>Date of Birth</label><br>
-        <%= select_date 18.years.ago.beginning_of_year, start_year: 100.years.ago.year, end_year: 18.years.ago.year, use_short_month: true, order: [:month, :day, :year], prefix: "representative[dob]" %>
-      </div>
-
-      <div class="field">
-        <label for="representative_ssn_last4">Last 4 of SSN</label><br>
-        <input id="representative_ssn_last4" type="text" name="representative[ssn_last4]" size="4">
-      </div>
-
-      <div class="field">
-        <label for="representative_address_line1">Street Address (Personal)</label><br>
-        <input id="representative_address_line1" type="text" name="representative[address][line1]" class="column--full">
-      </div>
-
-      <div class="field">
-        <label for="representative_address_postal_code">Zip Code (Personal)</label><br>
-        <input id="representative_address_postal_code" type="text" name="representative[address][postal_code]" size="10">
+      <div class="row">
+        <div class="field column column--half column--guttered">
+          <label for="representative_address_line1">Street Address (Personal)</label><br>
+          <input id="representative_address_line1" type="text" name="representative[address][line1]" class="column--full">
+        </div
+        ><div class="field column column--half column--guttered">
+          <label for="representative_address_postal_code">Zip Code (Personal)</label><br>
+          <input id="representative_address_postal_code" type="text" name="representative[address][postal_code]" size="10">
+        </div>
       </div>
     <% end %>
 
@@ -45,39 +53,46 @@
 
 <% end -%>
 
-<form class="column column--half" id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-target-form="new_bank_account" data-balanced-object-type="bankAccount">
+<form class="column column--three-fourths" id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-target-form="new_bank_account" data-balanced-object-type="bankAccount">
   <fieldset>
     <legend>Account Information</legend>
-    <div class="field">
-      <label for="balanced_account_name">Name</label>
-      <span class="hint">Name on the account</span>
-      <br>
-      <input id="balanced_account_name" type="text" name="name" class="column--full">
+    <div class="row">
+      <div class="field column column--half column--guttered">
+        <label for="balanced_account_name">Name</label>
+        <span class="hint">Name on the account</span>
+        <br>
+        <input id="balanced_account_name" type="text" name="name" class="column--full">
+      </div
+      ><div class="field column column--half column--guttered">
+        <label for="balanced_account_type">Account Type</label><br>
+        <select id="balanced_account_type" class="column--full" name="type">
+          <option></option>
+          <option value="checking">Checking</option>
+          <option claue="savings">Savings</option>
+        </select>
+      </div>
     </div>
 
-    <fieldset class="conditional">
-      <legend>Account Type</legend>
-      <input id="balanced_type_checking" type="radio" name="type" value="checking">
-      <label for="balanced_type_checking">Checking</label>
-
-      <br>
-
-      <input id="balanced_type_savings" type="radio" name="type" value="savings">
-      <label for="balanced_type_savings">Savings</label>
-    </fieldset>
-
-    <div class="field">
-      <label for="balanced_routing_number">Routing Number</label><br>
-      <input id="balanced_routing_number" type="text" name="routing_number">
+    <div class="row">
+      <div class="field column column--half column--guttered">
+        <label for="balanced_routing_number">Routing Number</label><br>
+        <input class="column--full" id="balanced_routing_number" type="text" name="routing_number">
+      </div
+      ><div class="field column column--half column--guttered">
+        <label for="balanced_account_number">Account Number</label><br>
+        <input class="column--full" id="balanced_account_number" type="text" name="account_number">
+      </div>
     </div>
-
-    <div class="field">
-      <label for="balanced_account_number">Account Number</label><br>
-      <input id="balanced_account_number" type="text" name="account_number">
-    </div>
+    <h3>About Our Security Assurance</h3>
+    <p>Adding a bank account to your Local Orbit powered market is safe and secure. Here's how we protect you:</p>
+     <ul>
+       <li>No one from Local Orbit, your market or the payment processor can view or access your bank account information at any time. Account information is stored using the strictest security standards and transmitted securely by our payments provider.</li>
+       <li>You will receive a receipt each time you make an online payment so you can monitor your account activity.</li>
+     </ul>
 
     <div class="form-actions">
-      <input type="submit" value="Save">
+      <%= link_to "Cancel", [:admin, @entity, @bank_account], class: "btn cancel" %>
+      <input type="submit" value="Save This Bank Account">
     </div>
   </fieldset>
 </form>

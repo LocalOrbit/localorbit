@@ -1,0 +1,7 @@
+<% if @entity.is_a? Market %>
+  <% @market = @entity %>
+  <%= render "admin/markets/header" %>
+<% else %>
+  <% @organization = @entity %>
+  <%= render "admin/organizations/header" %>
+<% end %>

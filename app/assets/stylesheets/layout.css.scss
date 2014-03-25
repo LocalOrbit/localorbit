@@ -133,3 +133,13 @@
   .column--full {
     width: 100%;
   }
+
+  .column--guttered {
+    padding: 0 10px;
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+  }

@@ -28,13 +28,13 @@ feature "Adding bank account to a market", js: true do
     fill_in "Zip Code (Personal)", with: "12345"
 
     fill_in "Name", with: "Market Bank Account"
-    choose "Checking"
+    select("Checking", from: 'Account Type')
     fill_in "Routing Number", with: "021000021"
     fill_in "Account Number", with: "9900000002"
 
     click_button "Save"
 
-    expect(page).to have_content("Bank Accounts")
+    expect(page).to have_content("Successfully added a bank account")
 
     bank_account = Dom::BankAccount.first
     expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")

@@ -162,6 +162,13 @@ textarea {
 .field {
   margin: 15px 0;
 }
+  .field--inline {
+    display: inline-block;
+    vertical-align: top;
+    + .field--inline {
+      margin-left: 1em;
+    }
+  }
 .field_with_errors {
   display:inline;
   > input,

@@ -20,7 +20,16 @@ $ ->
     $('.flash').addClass('is-fading')
     $('.flash').on features.transitions, (e) ->
       $(e.target).remove()
+
+    $('.toggle-slide').on 'click', (e) ->
+      e.preventDefault()
+      $(e.target.hash).toggleClass('is-up')
+
   else
+    $('.toggle-slide').on 'click', (e) ->
+      e.preventDefault()
+      $(e.target.hash).toggleClass('is-up').slide()
+
     window.setTimeout ->
         $('.flash').fadeOut(500)
       , 3000
