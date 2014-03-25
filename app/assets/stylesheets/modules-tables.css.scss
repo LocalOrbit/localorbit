@@ -98,6 +98,9 @@ th {
   &.odd + .fields_price {
     background: #f4f4f4;
   }
+  .edit {
+    white-space: nowrap;
+  }
   .edit-price > .font-icon {
     font-size: smaller;
   }
@@ -227,6 +230,10 @@ th {
 
     th {
       font-size: 12px;
+
+      &:first-child {
+        font-size: 16px;
+      }
     }
 
     tr {

@@ -1,16 +1,16 @@
 <div class="l-page-header">
-  <h1>Update Product</h1>
+  <h1>Update <%= @product.name %></h1>
   <a href="#" class="delete todo">Delete</a>
 </div>
 
 <%= render "admin/products/tabs" %>
 <%= form_for [:admin, @product, @price], html: { class: "row row--partial" } do |f| %>
-<%= render "shared/errors", {resource: @price} %>
-<%= render "shared/errors", {resource: @price_with_errors} if @price_with_errors %>
 
   <%= product_listing_disclaimer %>
 
   <div class="column column--three-fourths">
+    <%= render "shared/errors", {resource: @price} %>
+    <%= render "shared/errors", {resource: @price_with_errors} if @price_with_errors %>
 
     <% if @product.prices.any?(&:persisted?) %>
       <%= link_to "Add Price", "#add-price", class: "btn btn--add btn--small pull-right", id: "add-price-toggle" %>
@@ -45,7 +45,7 @@
           <% end %>
         </tr>
 
-        <tr class="price odd <%= @product.prices.any?(&:persisted?) ? "is-hidden" : "" %>" id="add-price">
+        <tr class="price even <%= @product.prices.any?(&:persisted?) ? "is-hidden" : "" %>" id="add-price">
           <% if @product.prices.any?(&:persisted?) %>
             <td></td>
           <% end %>
@@ -65,7 +65,7 @@
       <tbody>
 
       <% @product.prices.view_sorted.decorate.each do |price| %>
-        <%= content_tag_for :tr, price, rel: "fields_price_#{price.id}", class: cycle('even', 'odd') do %>
+        <%= content_tag_for :tr, price, rel: "fields_price_#{price.id}", class: cycle('odd', 'even') do %>
           <% if @product.prices.any?(&:persisted?) %>
             <% # TODO: Make this do things in conjunction with the button on line 20 %>
             <td class="delete"><input type="checkbox" class="todo"></td>
