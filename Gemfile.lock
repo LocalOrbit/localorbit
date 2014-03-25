@@ -7,6 +7,13 @@ GIT
       mail (~> 2.2)
 
 GIT
+  remote: git://github.com/collectiveidea/awesome_nested_set.git
+  revision: e647673be6731fdf741cb3e72d7e2b647f59ab39
+  specs:
+    awesome_nested_set (3.0.0.rc.3)
+      activerecord (>= 4.0.0, < 5)
+
+GIT
   remote: git://github.com/jnicklas/capybara.git
   revision: 88da2cdc4c2356bdf43f3cc6370ae23a4aa743cc
   specs:
@@ -326,6 +333,7 @@ PLATFORMS
 DEPENDENCIES
   accountingjs-rails
   active_model_serializers
+  awesome_nested_set!
   balanced (~> 0.7)
   capybara!
   codeclimate-test-reporter

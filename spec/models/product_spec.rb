@@ -24,7 +24,7 @@ describe Product do
   describe "default values" do
     describe "#top_level_category_id" do
       let(:org) { create(:organization) }
-      let(:top_level) { create(:category) }
+      let(:top_level) { create(:category, parent: Category.root) }
       let!(:category) { create(:category, parent: top_level) }
       subject { Product.create!(short_description: "desc", name: "New Product", organization: org, category: category) }
 

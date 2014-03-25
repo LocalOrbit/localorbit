@@ -1,9 +1,11 @@
 <table class="product-table product-table--user cart_items" data-cart-url="<%= cart_path %>">
-  <caption>Category</caption>
+  <% if @previous_top_level_category != category.top_level_category %>
+    <% @previous_top_level_category = category.top_level_category %>
+    <caption><%= category.top_level_category.name %></caption>
+  <% end %>
   <thead>
     <tr>
-      <th></th>
-      <th></th>
+      <th colspan="2"><%= category.name %></th>
       <th>Price</th>
       <th>Quantity</th>
       <th>Total</th>
@@ -17,6 +19,8 @@
       <td class="product-image">
       <% if product.image_uid.present? %>
         <%= image_tag Dragonfly.app.remote_url_for(product.image_uid) %>
+      <% else %>
+        <%= image_tag 'default-product-image.png' %>
       <% end %>
       </td>
       <td class="info">

@@ -32,6 +32,10 @@
     </div>
 
     <h2>Currently Selling</h2>
-    <%= render "products/table", products: @products %>
+    <% @categories.each do |category| %>
+      <% if @product_groups[category.id].present? %>
+        <%= render "products/table", products: @product_groups[category.id], category: category %>
+      <% end %>
+    <% end %>
   </div>
 </div>

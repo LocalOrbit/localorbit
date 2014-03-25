@@ -80,4 +80,25 @@ feature "View Seller Profiles" do
     end
   end
 
+  context "product categories" do
+    let!(:product1) { create(:product, :sellable, organization: seller1, category: Category.find_by(name: "Empire Apples")) }
+    let!(:product2) { create(:product, :sellable, organization: seller1, category: Category.find_by(name: "Macintosh Apples")) }
+    let!(:product3) { create(:product, :sellable, organization: seller1, category: Category.find_by(name: "Macintosh Apples")) }
+    let!(:product2) { create(:product, :sellable, organization: seller1, category: Category.find_by(name: "Bananas")) }
+
+    scenario "viewing the products with their categories" do
+      visit seller_path(seller1)
+
+      expect(page).to have_content ("Currently Selling")
+
+      products = Dom::Product.all
+      expect(products.count).to eq(3)
+      # 2 top headers (Fruits)
+      expect(page).to have_css('caption', count: 1)
+      # two inner headers (apples/bananas)
+      expect(page).to have_css('th:contains("Apples")', count: 1)
+      expect(page).to have_css('th:contains("Bananas")', count: 1)
+    end
+  end
+
 end
