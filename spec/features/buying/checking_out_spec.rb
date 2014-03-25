@@ -43,7 +43,7 @@ describe "Checking Out", js: true do
   let!(:beans) { create(:product, :sellable, name: "Beans", organization: seller2) }
 
   before do
-    Timecop.travel("May 8, 2014")
+    Timecop.travel("2014-05-08 00:00:00")
   end
 
   after do
@@ -92,7 +92,7 @@ describe "Checking Out", js: true do
       add_items
 
       # NOTE: the behavior of clicking the cart link will change
-      # once the cart preview has been built. See 
+      # once the cart preview has been built. See
       # https://www.pivotaltracker.com/story/show/67553382
       cart_link.node.click # This behavior will change once the cart preview is implemented
       expect(page).to have_content("Your Order")
@@ -121,7 +121,7 @@ describe "Checking Out", js: true do
         add_items
 
         # NOTE: the behavior of clicking the cart link will change
-        # once the cart preview has been built. See 
+        # once the cart preview has been built. See
         # https://www.pivotaltracker.com/story/show/67553382
         cart_link.node.click # This behavior will change once the cart preview is implemented
         expect(page).to have_content("Your Order")
