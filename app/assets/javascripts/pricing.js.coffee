@@ -40,6 +40,7 @@ $ ->
 
   $('#add-price-toggle').click (e) ->
     e.preventDefault()
+    $('tr .cancel').trigger("click")
     $(this).hide()
     $('#add-price').show()
 
