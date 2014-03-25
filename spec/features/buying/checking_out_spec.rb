@@ -304,14 +304,4 @@ describe "Checking Out", js: true do
       expect(cart_totals.subtotal).to have_content("$118.00")
     end
   end
-
-  context "discounts" do
-    context "are present" do
-      it "modifies the total"
-    end
-
-    context "are not present" do
-      it "does not modify the total"
-    end
-  end
 end
