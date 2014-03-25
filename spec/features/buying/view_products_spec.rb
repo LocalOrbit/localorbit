@@ -3,7 +3,7 @@ require "spec_helper"
 feature "Viewing products" do
   let!(:org1) { create(:organization, :seller) }
   let!(:org2) { create(:organization, :seller) }
-  let!(:org1_product) { create(:product, :sellable, organization: org1) }
+  let!(:org1_product) { create(:product, :sellable, name: "celery", organization: org1) }
   let!(:org2_product) { create(:product, :sellable, organization: org2) }
   let(:available_products) { [org1_product, org2_product] }
 
@@ -44,6 +44,83 @@ feature "Viewing products" do
     expected_price = "$%.2f" % product.prices.first.sale_price
     expect(dom_product.pricing).to have_text(expected_price)
     expect(dom_product.quantity).to have_text(expected_price)
+  end
+
+  context "pick up or delivery date" do
+    before do
+      create(:delivery_schedule, market: market, day: 3, seller_delivery_start: "4:00 PM", seller_delivery_end: "8:00 PM")
+
+      sign_in_as(user)
+    end
+
+    it "displays selected pick up date and location" do
+      Dom::Buying::DeliveryChoice.all.last.choose!
+
+      selected_delivery = Dom::Buying::SelectedDelivery.first
+      location = market.addresses.first
+
+      expect(selected_delivery.delivery_type).to eq("Pick Up Date")
+      expect(selected_delivery.display_date).to eq("October 10, 2014")
+      expect(selected_delivery.time_range).to eq("between 12:00PM and 2:00PM")
+      expect(selected_delivery.location_name).to eq(location.name)
+      expect(selected_delivery.location_address).to eq("#{location.address} #{location.city}, #{location.state} #{location.zip}")
+    end
+
+    it "displays selected delivery date and location" do
+      Dom::Buying::DeliveryChoice.first.choose!
+
+      selected_delivery = Dom::Buying::SelectedDelivery.first
+      location = buyer_org.locations.first
+
+      expect(selected_delivery.delivery_type).to eq("Delivery Date")
+      expect(selected_delivery.display_date).to eq("October 8, 2014")
+      expect(selected_delivery.time_range).to eq("between 4:00PM and 8:00PM")
+      expect(selected_delivery.location_name).to eq(location.name)
+      expect(selected_delivery.location_address).to eq("#{location.address} #{location.city}, #{location.state} #{location.zip}")
+    end
+
+    context "when changing selected delivery" do
+      it "allows user to change" do
+        Dom::Buying::DeliveryChoice.all.last.choose!
+
+        selected_delivery = Dom::Buying::SelectedDelivery.first
+        expect(selected_delivery.delivery_type).to eq("Pick Up Date")
+        expect(selected_delivery.display_date).to eq("October 10, 2014")
+        expect(selected_delivery.time_range).to eq("between 12:00PM and 2:00PM")
+
+        Dom::Buying::SelectedDelivery.first.click_change
+
+        expect(page).to have_content("Please choose a pick up or delivery date")
+        Dom::Buying::DeliveryChoice.first.choose!
+
+        selected_delivery = Dom::Buying::SelectedDelivery.first
+        expect(selected_delivery.delivery_type).to eq("Delivery Date")
+        expect(selected_delivery.display_date).to eq("October 8, 2014")
+        expect(selected_delivery.time_range).to eq("between 4:00PM and 8:00PM")
+      end
+
+      it "warns user if cart has any items", js: true do
+        Dom::Buying::DeliveryChoice.first.choose!
+
+        product = Dom::Cart::Item.find_by_name("celery")
+        product.set_quantity(3)
+        product.price.click
+        expect(Dom::CartLink.first.count).to have_content("1")
+
+        Dom::Buying::SelectedDelivery.first.click_change
+        expect(page).to have_content("Date Change Confirmation")
+        click_link("Empty Cart and Change Date")
+
+        Dom::Buying::DeliveryChoice.all.last.choose!
+        expect(Dom::CartLink.first.count).to have_content("0")
+
+        Dom::Buying::SelectedDelivery.first.click_change
+        expect(page).not_to have_content("Date Change Confirmation")
+
+        Dom::Buying::DeliveryChoice.first.choose!
+        expect(Dom::CartLink.first.count).to have_content("0")
+      end
+    end
   end
 
   context "single delivery schedule" do

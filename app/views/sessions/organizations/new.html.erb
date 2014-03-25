@@ -2,6 +2,8 @@
 
 <div class="row row--partial">
   <%= form_tag [:sessions, :organizations], method: :post, class: "column column--half" do |f| %>
+    <%= hidden_field_tag :redirect_back_to, params[:redirect_back_to] %>
+
     <div class="field">
       <%= label_tag :org_id, "Select an organization" %><br>
       <%= select_tag(:org_id, options_from_collection_for_select(@organizations, 'id', 'name'), class: "column column--full") %>

@@ -519,5 +519,19 @@ module Dom
 
     class CartItem < Domino
     end
+    
+    class SelectedDelivery < Domino
+      selector ".selected-delivery"
+      
+      attribute :display_date
+      attribute :time_range
+      attribute :delivery_type
+      attribute :location_name
+      attribute :location_address
+      
+      def click_change
+        click_link "Change"
+      end
+    end
   end
 end

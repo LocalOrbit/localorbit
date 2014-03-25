@@ -1,25 +1,7 @@
 <div class="row">
   <div class="column column--fourth" id="product-filter">
-    <div class="header header--column">
-      <h2 class="heading heading--sidebar">Pick Up Date</h2>
-    </div>
-    <% schedule = @delivery.delivery_schedule %>
 
-    <div class="sidebar-box">
-      <h3 class="subheading--sidebar">When</h3>
-      <p>
-        <strong><%= @delivery.display_date %></strong><br>
-        <%= @delivery.time_range %>
-      </p>
-
-      <h3 class="subheading--sidebar">Where</h3>
-      <%= current_organization.shipping_location.address %><br>
-      <%= current_organization.shipping_location.city %>,
-      <%= current_organization.shipping_location.state %>
-      <%= current_organization.shipping_location.zip %>
-    </div>
-
-
+    <%= render "selected_delivery" %>
 
     <div class="header header--column">
       <h2 class="heading heading--sidebar">Filter the Shop</h2>
@@ -37,10 +19,10 @@
   </div
   ><div class="column column--three-fourths">
     <div class="products--user">
-      <h2 class="table-heading">Products Available on <%= @delivery.display_date %></h2>
+      <h2 class="table-heading">Products Available on <%= current_delivery.display_date %></h2>
       <p class="table-summary">
-        Complete your order by <%= @delivery.cutoff_time.strftime("%B %-d at %l%p") %>.
-        Pick up is <%= @delivery.display_date %> <%= @delivery.time_range %>.
+        Complete your order by <%= current_delivery.cutoff_time.strftime("%B %-d at %l%p") %>.
+        Pick up is <%= current_delivery.display_date %> <%= current_delivery.time_range %>.
       </p>
       <%= render "table", products: @products %>
     </div>

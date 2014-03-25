@@ -61,6 +61,23 @@ feature "View Seller Profiles" do
       expect(products.count).to eq(1)
       expect(products.map(&:name)).to match_array([product1.name])
     end
+
+    scenario "changing selected delivery" do
+      visit seller_path(seller1)
+
+      Dom::Buying::SelectedDelivery.first.click_change
+      expect(page).to have_content("Please choose a pick up or delivery date")
+
+      Dom::Buying::DeliveryChoice.first.choose!
+
+      expect(page).to have_content ("Currently Selling")
+      expect(page).to have_content(seller1.who_story)
+      expect(page).to have_content(seller1.how_story)
+
+      products = Dom::Product.all
+      expect(products.count).to eq(1)
+      expect(products.map(&:name)).to match_array([product1.name])
+    end
   end
 
 end

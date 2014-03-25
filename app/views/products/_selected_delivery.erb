@@ -1,0 +1,39 @@
+<div class="selected-delivery">
+  <div class="header header--column ">
+    <h2 class="heading heading--sidebar delivery-type"><%= current_delivery.selected_type %></h2>
+    <span class="change-delivery">
+      <%= link_to "Change", new_sessions_delivery_path(redirect_back_to: request.fullpath), id: "change-delivery-date", class: "reset btn modal-toggle", data: { modal: "change-delivery-warning" } %>
+    </span>
+  </div>
+
+  <div class="sidebar-box">
+    <h3 class="subheading--sidebar">When</h3>
+    <p>
+      <strong class="display-date"><%= current_delivery.display_date %></strong><br>
+      <span class="time-range"><%= current_delivery.buyer_time_range %></span>
+    </p>
+
+    <h3 class="subheading--sidebar">Where</h3>
+    <strong class="location-name"><%= current_delivery.selected_location.name %></strong><br>
+    <span class="location-address">
+      <%= current_delivery.selected_location.address %><br>
+      <%= current_delivery.selected_location.city %>,
+      <%= current_delivery.selected_location.state %>
+      <%= current_delivery.selected_location.zip %>
+    </span>
+  </div>
+</div>
+
+<div class="change-delivery-warning is-hidden modal popup">
+  <div class="popup-body">
+    <h2>Date Change Confirmation</h2>
+    <p>
+      <strong>Changing your delivery date will remove the items you have in your cart!</strong>
+      You can only order for one delivery date at a time. If you would like to purchase the
+      items that are in your cart, please do that before changing your delivery date. You
+      can access your cart right now by clicking Cart in your navigation above.
+    </p>
+
+    <%= link_to "Empty Cart and Change Date", new_sessions_delivery_path(redirect_back_to: request.fullpath), class: "btn" %>
+  </div>
+</div>
