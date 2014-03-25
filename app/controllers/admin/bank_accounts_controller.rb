@@ -44,7 +44,11 @@ class Admin::BankAccountsController < AdminController
   end
 
   def find_market
-    current_user.managed_markets.find(params[:market_id])
+    if current_user.admin?
+      current_user.markets.find(params[:market_id])
+    else
+      current_user.managed_markets.find(params[:market_id])
+    end
   end
 
   def find_organization
