@@ -13,8 +13,8 @@
             <td class="quantity">
               <input name="quantity" type="number" size="3" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>">
             </td>
-            <td class="price-for-quantity"><%= item.unit_price.formatted_price %></td>
-            <td class="price"><%= item.decorate.display_total_price %></td>
+            <td class="price-for-quantity"><%= number_to_currency(item.unit_price.sale_price) %></td>
+            <td class="price"><%= number_to_currency(item.total_price)%></td>
           <% end %>
         <% end %>
       </table>
@@ -31,7 +31,7 @@
       </tr>
       <tr>
         <td>Delivery Fees</td>
-        <td class="delivery_fees"><%= current_cart.decorate.display_delivery_fees %></td>
+        <td class="delivery_fees"><%= current_cart.decorate.display_delivery_fees%></td>
       </tr>
 
       <tr>

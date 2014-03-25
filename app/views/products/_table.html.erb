@@ -74,7 +74,7 @@
       <td class="pricing">
         <ul class="tiers">
           <% product.prices.view_sorted.decorate.each do |price| %>
-            <li><span class="unit-price"><%= price.formatted_price %></span> <span class="tier"><%= price.formatted_units %></span></li>
+            <li><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span></li>
           <% end %>
         </ul>
       </td>
