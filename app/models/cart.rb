@@ -30,4 +30,8 @@ class Cart < ActiveRecord::Base
       0.0
     end
   end
+
+  def total
+    subtotal + delivery_fees
+  end
 end

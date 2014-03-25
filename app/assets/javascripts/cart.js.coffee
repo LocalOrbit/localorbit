@@ -36,6 +36,10 @@ $ ->
       totals = $("#totals")
       totals.find(".delivery_fees").text(fees)
 
+    updateTotal: (total) ->
+      totals = $("#totals")
+      totals.find(".total").text(total)
+
 
   class CartModel
     constructor: (opts)->
@@ -81,6 +85,7 @@ $ ->
           @view.updateCounter(@items.length)
           @view.updateSubtotal(@subtotal())
           @view.updateDeliveryFees(data.delivery_fees)
+          @view.updateTotal(data.total)
 
   view = new CartView
     counter: $("header .cart .counter")

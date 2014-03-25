@@ -1,4 +1,5 @@
 class PriceDecorator < Draper::Decorator
+  include ActiveSupport::NumberHelper
   delegate_all
 
   def organization_name
@@ -16,7 +17,7 @@ class PriceDecorator < Draper::Decorator
   end
 
   def formatted_price
-    "$%.2f" % sale_price
+    number_to_currency sale_price
   end
 
   def formatted_units

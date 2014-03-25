@@ -9,6 +9,10 @@ describe "Checking Out", js: true do
     Dom::Cart::Item.find_by_name("Bananas")
   end
 
+  def potatoes_item
+    Dom::Cart::Item.find_by_name("Potatoes")
+  end
+
   let(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
 
@@ -60,7 +64,10 @@ describe "Checking Out", js: true do
   end
 
   def add_items
-    sleep(0.5)
+    expect(page).to have_content("Bananas")
+    expect(page).to have_content("Kale")
+    expect(page).to have_content("Potatoes")
+
     # Bananas Price for this buyer: 0.50
     # Total: 10 * 0.50 = 5.00
     Dom::Cart::Item.find_by_name("Bananas").set_quantity("10")
@@ -101,10 +108,6 @@ describe "Checking Out", js: true do
     end
 
     it "lists the values for the product" do
-      bananas_item = Dom::Cart::Item.find_by_name("Bananas")
-      kale_item = Dom::Cart::Item.find_by_name("Kale")
-      potatoes_item = Dom::Cart::Item.find_by_name("Potatoes")
-
       expect(bananas_item.quantity.value).to eql("10")
       expect(kale_item.quantity.value).to eql("20")
       expect(potatoes_item.quantity.value).to eql("5")
@@ -203,6 +206,27 @@ describe "Checking Out", js: true do
     end
   end
 
+  context "total" do
+    it "is the subtotal plus delivery fees" do
+      sign_in_and_choose_delivery "Delivery: May 13, 2014 between 7:00AM and 11:00AM"
+      cart_link.node.click
+
+      expect(Dom::Cart::Totals.first.total).to have_content("$0.00")
+
+      click_link "Shop"
+      add_items
+
+      cart_link.node.click
+      expect(Dom::Cart::Totals.first.total).to have_content("$50.00")
+
+      kale_item.set_quantity(98)
+      bananas_item.quantity_field.click
+      sleep(0.5)
+
+      expect(Dom::Cart::Totals.first.total).to have_content("$147.50")
+    end
+  end
+
   context "updating quantity" do
     def cart_totals
       Dom::Cart::Totals.first
@@ -279,10 +303,7 @@ describe "Checking Out", js: true do
 
       expect(cart_totals.subtotal).to have_content("$118.00")
     end
-
-    it "updates total based on discounts and delivery fees"
   end
-
 
   context "discounts" do
     context "are present" do

@@ -60,4 +60,36 @@ describe Cart do
     end
   end
 
+  describe "#total" do
+    let(:delivery_schedule) { create(:delivery_schedule) }
+    let(:delivery) { delivery_schedule.next_delivery }
+    let(:cart) { create(:cart, delivery: delivery) }
+    let!(:product1) { create(:product, :sellable) }
+    let!(:product2) { create(:product, :sellable) }
+    # 1 item at $3.00
+    let!(:cart_item1) { create(:cart_item, cart: cart, product: product1, quantity: 1) }
+    # 1 item at $3.00
+    let!(:cart_item2) { create(:cart_item, cart: cart, product: product2, quantity: 1) }
+    context "without delivery fees" do
+      it "returns the subtotal" do
+        expect(cart.total).to eql(6.0)
+      end
+    end
+
+    context "with delivery fees" do
+      context "fixe fee" do
+        let(:delivery_schedule) { create(:delivery_schedule, :fixed_fee) }
+        it "returns the subtotal plus delivery fees" do
+          expect(cart.total).to eql(7.0)
+        end
+      end
+
+      context "percent fee" do
+        let(:delivery_schedule) { create(:delivery_schedule, :percent_fee) }
+        it "returns the subtotal plus delivery fees" do
+          expect(cart.total).to eql(7.50)
+        end
+      end
+    end
+  end
 end
