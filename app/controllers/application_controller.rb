@@ -119,14 +119,13 @@ class ApplicationController < ActionController::Base
 
   def require_current_organization
     if current_organization.nil?
-      session[:redirect_back_to] = request.fullpath
-      redirect_to [:new, :sessions, :organization], alert: "You must first select an organization"
+      redirect_to new_sessions_organization_path(redirect_back_to: request.fullpath), alert: "You must first select an organization"
     end
   end
 
   def require_current_delivery
     if current_delivery.nil?
-      redirect_to [:new, :sessions, :delivery]
+      redirect_to new_sessions_delivery_path(redirect_back_to: request.fullpath)
     end
   end
 end
