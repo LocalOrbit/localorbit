@@ -218,5 +218,21 @@ describe "Checking Out", js: true do
 
       expect(cart_totals.subtotal).to have_content("$118.00")
     end
+
+    context "when updated quantity is greater than available products" do
+      before do
+        kale_item.set_quantity(101)
+        bananas_item.quantity_field.click
+      end
+
+      it "resets the quantity to the entire available quantity" do
+        sleep(0.5)
+        expect(kale_item.quantity.value).to eql("100")
+      end
+
+      it "shows an error message" do
+        expect(page).to have_content("There are only 100 bananas available")
+      end
+    end
   end
 end

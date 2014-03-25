@@ -5,6 +5,8 @@ class CartItem < ActiveRecord::Base
   validates :cart, presence: true
   validates :product, presence: true
 
+  validate :quantity_is_available
+
   def prices
     product.prices.for_market_and_org(cart.market, cart.organization)
   end
@@ -27,5 +29,13 @@ class CartItem < ActiveRecord::Base
 
   def as_json(opts=nil)
     super(methods: [:total_price, :unit_sale_price])
+  end
+
+  protected
+
+  def quantity_is_available
+    if product && product.available_inventory < quantity
+      errors.add(:quantity, "available for purchase: #{product.available_inventory}")
+    end
   end
 end

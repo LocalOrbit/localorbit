@@ -19,6 +19,7 @@ $ ->
       if @el?
         @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
         @el.find(".price").text(accounting.formatMoney(@data.total_price))
+        @el.find(".quantity input").val(@data.quantity)
 
   class CartView
     constructor: (opts)->
@@ -39,6 +40,9 @@ $ ->
     updateTotal: (total) ->
       totals = $("#totals")
       totals.find(".total").text(total)
+
+    showError: (error)->
+      
 
 
   class CartModel
@@ -80,12 +84,16 @@ $ ->
       #       quantities
       $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
         .done (data)=>
+          error = data.error
           item = @updateOrAddItem(data.item)
 
           @view.updateCounter(@items.length)
           @view.updateSubtotal(@subtotal())
           @view.updateDeliveryFees(data.delivery_fees)
           @view.updateTotal(data.total)
+
+          if error
+            @view.showError(error)
 
   view = new CartView
     counter: $("header .cart .counter")
