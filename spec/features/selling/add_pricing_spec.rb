@@ -109,4 +109,17 @@ describe 'Adding advanced pricing' do
     click_link "Add Price"
     expect(find_field('price_sale_price').value).to eq("")
   end
+
+  it "is canceled if you start editing a price", js: true do
+    fill_in 'price_min_quantity', with: '2'
+    fill_in 'price_sale_price', with: '1.99'
+    click_button 'Add'
+
+    click_link "Add Price"
+    fill_in 'price_sale_price', with: '1.90'
+    Dom::PricingRow.first.click_edit
+
+    click_link "Add Price"
+    expect(find_field('price_sale_price').value).to eq("")
+  end
 end
