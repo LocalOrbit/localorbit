@@ -18,7 +18,8 @@ class ImportLegacyTaxonomy
   def run
     load_taxonomy
     build_tree
-    store_tree(@base_nodes, Category.root || Category.create!(name: "All"))
+    store_tree(@base_nodes.sort_by {|n| n[:order_by].to_i }, Category.root || Category.create!(name: "All"))
+    finish
 
     if @verbose
       puts "#{@original_count} Exisiting Categories"
@@ -31,7 +32,7 @@ class ImportLegacyTaxonomy
     CSV.foreach(@filename, headers: true) do |row|
       next if row['cat_id'] == '1' || row['parent_id'] == '1'
 
-      @by_cat_id[row['cat_id']] = {name: row['cat_name'], children: [], parent_id: row['parent_id']}
+      @by_cat_id[row['cat_id']] = {name: row['cat_name'], children: [], parent_id: row['parent_id'], order_by: row['order_by']}
     end
   end
 
@@ -51,8 +52,13 @@ class ImportLegacyTaxonomy
     nodes.each do |node|
       obj = parent.children.find_or_initialize_by(name: node[:name])
       obj.save!
-      store_tree(node[:children], obj)
+      print '.' if @verbose
+      store_tree(node[:children].sort_by {|n| n[:name] }, obj)
     end
+  end
+
+  def finish
     Category.rebuild! # needed to set proper depths
+    puts "" if @verbose
   end
 end
