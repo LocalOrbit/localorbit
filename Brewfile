@@ -1,0 +1,2 @@
+install postgresql
+install phantomjs
