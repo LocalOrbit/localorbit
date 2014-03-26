@@ -9,19 +9,21 @@
 
 ### Requirements
 
-* Ruby 2.1.0
+* Ruby 2.1.1
 * PostgreSQL
+* PhantomJS (for running tests)
 
 ### Setup
 
 1. Clone the repo
-2. `bundle`
-3. `cp config/application.yml{.example,}` and modify if needed
-4. `cp config/database.yml{.example,}` and modify if needed
-5. `rake db:setup`
-6. `rake db:seed:development`
-7. `rails server`
-8. Go to http://lvh.me:3000 in a browser (we use lvh.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
+2. `brew bundle` (on OS X. Install Requirements above for other platforms)
+3. `bundle`
+4. `cp config/application.yml{.example,}` and modify if needed
+5. `cp config/database.yml{.example,}` and modify if needed
+6. `rake db:setup`
+7. `rake db:seed:development`
+8. `rails server`
+9. Go to http://lvh.me:3000 in a browser (we use lvh.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
 
 ### Production Setup
 * At least one Market must be created before creating Organizations
