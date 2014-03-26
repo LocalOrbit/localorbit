@@ -126,6 +126,10 @@ module Dom
       node.find(".sale-price").text
     end
 
+    def check_delete
+      node.find('.delete input').set(true)
+    end
+
     def click_delete
       node.find_link("Delete").click
     end

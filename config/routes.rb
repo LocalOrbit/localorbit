@@ -38,7 +38,11 @@ Rails.application.routes.draw do
 
     resources :products do
       resources :lots
-      resources :prices
+      resources :prices do
+        collection do
+          delete :destroy
+        end
+      end
     end
 
     resource :unit_request, only: :create

@@ -13,12 +13,12 @@
     <%= render "shared/errors", {resource: @price_with_errors} if @price_with_errors %>
 
     <% if @product.prices.any?(&:persisted?) %>
-      <%= link_to "Add Price", "#add-row", class: "btn btn--add btn--small pull-right add-toggle" %>
+      <%= link_to "Add Price", "#add-row", class: "btn btn--add btn--small pull-right add-toggle#{" is-hidden" if @price.errors.any?}" %>
       <h2 class="clear-after">Add Prices</h2>
       <p>These are your prices. Click on a field to edit it.</p>
       <p>
         <% # TODO: Do things when this is clicked %>
-        <%= link_to "Delete Selected Prices", "/404", class: "btn delete todo" %>
+        <%= button_tag "Delete Selected Prices", class: "btn delete delete-selected" %>
       </p>
     <% else %>
       <h2>Add Prices</h2>
@@ -45,7 +45,7 @@
           <% end %>
         </tr>
 
-        <tr class="add-price price even <%= @product.prices.any?(&:persisted?) ? "is-hidden" : "" %>" id="add-row">
+        <tr class="add-price price even <%= @product.prices.any?(&:persisted?) && @price.errors.none? ? "is-hidden" : "open-row" %>" id="add-row">
           <% if @product.prices.any?(&:persisted?) %>
             <td></td>
           <% end %>
@@ -67,8 +67,7 @@
       <% @product.prices.view_sorted.decorate.each do |price| %>
         <%= content_tag_for :tr, price, rel: "fields_price_#{price.id}", class: cycle('odd', 'even') do %>
           <% if @product.prices.any?(&:persisted?) %>
-            <% # TODO: Make this do things in conjunction with the button on line 20 %>
-            <td class="delete"><input type="checkbox" class="todo"></td>
+            <td class="delete"><input type="checkbox" name="id[]" value="<%= price.id %>"></td>
           <% end %>
           <td class="market edit-trigger"><%= price.market_name %></td>
           <td class="buyer edit-trigger"><%= price.organization_name %></td>

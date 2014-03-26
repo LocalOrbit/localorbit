@@ -1,18 +1,12 @@
 require "spec_helper"
 
-describe "Editing advanced pricing" do
-  let(:user)    { create(:user) }
-  let(:market)  { create(:market) }
+describe "Editing advanced pricing", js: true do
+  let!(:market)       { create(:market) }
   let!(:organization) { create(:organization, markets: [market]) }
-  let!(:product) do
-    create(:product).tap do |p|
-      p.organization.users << user
-      market.organizations << p.organization
-    end
-  end
-
-  let!(:price) { create(:price, product: product, sale_price: 3) }
-  let!(:price2) { create(:price, product: product, sale_price: 2, min_quantity: 100) }
+  let!(:user)         { create(:user, organizations: [organization]) }
+  let!(:product)      { create(:product, organization: organization) }
+  let!(:price)        { create(:price, product: product, sale_price: 3) }
+  let!(:price2)       { create(:price, product: product, sale_price: 2, min_quantity: 100) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -24,7 +18,7 @@ describe "Editing advanced pricing" do
     click_link 'Pricing'
   end
 
-  describe "clicking on a price row", js: true do
+  describe "clicking on a price row" do
     before do
       Dom::PricingRow.first.click_edit
     end
@@ -169,6 +163,16 @@ describe "Editing advanced pricing" do
         end
       end
 
+    end
+  end
+
+  describe "deleting a price" do
+    it "allows the user to delete multiple prices" do
+      Dom::PricingRow.all.each {|p| p.check_delete }
+      click_button "Delete Selected Prices"
+
+      expect(page).to have_content("Successfully removed prices")
+      expect(Dom::PricingRow.all).to be_empty
     end
   end
 end

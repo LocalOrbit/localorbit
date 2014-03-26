@@ -10,7 +10,6 @@ class @EditTable
     @applyErrorValuesCallback = opts.applyErrorValuesCallback
 
     @hiddenRow = null
-    @editing   = false
     @initialAction = @form.attr("action")
     @errorPayload  = @table.data("error-payload")
 
@@ -72,7 +71,7 @@ class @EditTable
 
   # Main actions
   openEditRow: (row)->
-    @closeEditRow(@editing, false) if @editing
+    @closeEditRow(@form.find('.open-row'), false)
 
     fieldsRow = @relatedRow(row)
 
@@ -84,35 +83,35 @@ class @EditTable
 
     @hiddenRow = row
 
-    $(row).hide()
+    row.hide()
     fieldsRow.show()
-
-    @editing = fieldsRow
+    fieldsRow.addClass('open-row')
 
   openAddRow: ()->
-    @closeEditRow(@editing, false) if @editing
+    @closeEditRow(@form.find('.open-row'), false)
 
     fieldsRow = $("#add-row")
 
     @enableFields(fieldsRow)
 
     fieldsRow.show()
-
-    @editing = fieldsRow
+    fieldsRow.addClass('open-row')
 
   closeEditRow: (row, cancel)->
+    return if row.length == 0
+
     @disableFields(row)
-    $(row).hide()
+    row.hide()
+    row.removeClass('open-row')
     $(".add-toggle").show() if row.attr("id") == "add-row"
 
     @restoreOriginalValues(row) if cancel
-    @editing = false
 
     @enableFields(@headerFieldsRow())
 
     @setFormActionAndMethod(@initialAction, "post")
 
-    $(@hiddenRow).show()
+    @hiddenRow.show() if @hiddenRow != null
     @hiddenRow = null
 
   bindActions: ()->
@@ -130,3 +129,8 @@ class @EditTable
       e.preventDefault()
       $(this).hide()
       context.openAddRow()
+
+    @form.on "click", ".delete-selected", (e) ->
+      e.preventDefault()
+      context.setFormActionAndMethod(@initialAction, "delete")
+      context.form.submit()
