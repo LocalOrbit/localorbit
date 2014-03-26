@@ -5,9 +5,23 @@ describe UnderwriteEntity do
   subject(:interactor) { UnderwriteEntity.new(balanced_customer: balanced_customer, representative_params: representative_params, entity: org) }
 
   let(:org) { create(:organization, name: "Our Org") }
+  let(:balanced_customer) { OpenStruct.new }
+
+  describe "#setup" do
+    let(:representative_params) do
+      {
+        name: "",
+        ssn_last4: "",
+      }
+    end
+
+    it "clears nil values in representative_params" do
+      expect(interactor.representative_params[:name]).to be_nil
+      expect(interactor.representative_params[:ssn_last_4]).to be_nil
+    end
+  end
 
   describe "#perform" do
-    let(:balanced_customer) { OpenStruct.new }
     let(:representative_params) do
       {
         name: "John Doe",
