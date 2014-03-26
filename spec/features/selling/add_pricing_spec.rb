@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe 'Adding advanced pricing' do
-  let(:user)    { create(:user) }
-  let(:market)  { create(:market) }
+  let(:user)          { create(:user) }
+  let(:market)        { create(:market) }
   let!(:organization) { create(:organization, markets: [market], users: [user]) }
-  let!(:product) { create(:product, organization: organization) }
+  let!(:product)      { create(:product, organization: organization) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -110,16 +110,20 @@ describe 'Adding advanced pricing' do
     expect(find_field('price_sale_price').value).to eq("")
   end
 
-  it "is canceled if you start editing a price", js: true do
+  it "hides the new form if you start editing a price but retains entered values", js: true do
     fill_in 'price_min_quantity', with: '2'
     fill_in 'price_sale_price', with: '1.99'
     click_button 'Add'
 
     click_link "Add Price"
+    expect(Dom::NewPricingForm.first).not_to be_nil
     fill_in 'price_sale_price', with: '1.90'
     Dom::PricingRow.first.click_edit
 
+    expect(Dom::NewPricingForm.first).to be_nil
+
     click_link "Add Price"
-    expect(find_field('price_sale_price').value).to eq("")
+    expect(Dom::NewPricingForm.first).not_to be_nil
+    expect(find_field('price_sale_price').value).to eq("1.90")
   end
 end
