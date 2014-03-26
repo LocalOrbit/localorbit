@@ -71,10 +71,13 @@ class ApplicationController < ActionController::Base
     return nil unless current_organization.present?
     return @current_delivery if defined?(@current_delivery)
 
-    @current_delivery = if session[:current_delivery_id]
-      Delivery.
-        joins(:delivery_schedule).
-        where('delivery_schedules.market_id = ? AND deliveries.cutoff_time > ?', current_market.id, Time.current).
+    @current_delivery = find_or_build_current_delivery
+    @current_delivery = @current_delivery.decorate(context: {current_organization: current_organization, location_id: session[:current_location]}) if @current_delivery
+  end
+
+  def find_or_build_current_delivery
+    if session[:current_delivery_id]
+      Delivery.upcoming.for_market(current_market).
         find_by(id: session[:current_delivery_id])
     elsif current_market.delivery_schedules.visible.count == 1
       current_market.delivery_schedules.visible.first.next_delivery.tap do |delivery|
@@ -84,7 +87,6 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    @current_delivery = @current_delivery.decorate(context: {current_organization: current_organization, location_id: session[:current_location]}) if @current_delivery
   end
 
   def set_timezone
