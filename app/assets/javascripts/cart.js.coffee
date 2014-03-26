@@ -19,6 +19,12 @@ $ ->
       if @el?
         @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
         @el.find(".price").text(accounting.formatMoney(@data.total_price))
+        if @data.quantity
+          @el.find(".quantity input").val(@data.quantity)
+        if @data["valid?"]
+          @el.find(".quantity").removeClass("field_with_errors")
+        else
+          @el.find(".quantity").addClass("field_with_errors")
 
   class CartView
     constructor: (opts)->
@@ -40,6 +46,14 @@ $ ->
       totals = $("#totals")
       totals.find(".total").text(total)
 
+    showError: (error)->
+      notice = $("<div>").addClass("flash").addClass("flash--alert").append($("<p>").text(error))
+      $("#flash-messages").append(notice)
+      # TODO: Not sure how to re-create fading out
+      # as per fading.js.coffee
+      window.setTimeout ->
+        notice.fadeOut(500)
+      , 3000
 
   class CartModel
     constructor: (opts)->
@@ -80,12 +94,16 @@ $ ->
       #       quantities
       $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
         .done (data)=>
+          error = data.error
           item = @updateOrAddItem(data.item)
 
           @view.updateCounter(@items.length)
           @view.updateSubtotal(@subtotal())
           @view.updateDeliveryFees(data.delivery_fees)
           @view.updateTotal(data.total)
+
+          if error
+            @view.showError(error)
 
   view = new CartView
     counter: $("header .cart .counter")

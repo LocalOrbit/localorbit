@@ -16,8 +16,13 @@ class CartsController < ApplicationController
     @item.quantity = item_params[:quantity]
     @item.product = product
 
+    if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory
+      @error = "Quantity available for purchase: #{product.available_inventory}"
+      @item.quantity = product.available_inventory
+    end
+
     if !@item.save
-      render status: :unprocessable_entity, json: {error: "Could not add item!"}
+      @error = @item.errors.full_messages.join(". ")
     end
   end
 

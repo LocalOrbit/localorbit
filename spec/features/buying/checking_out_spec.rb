@@ -218,5 +218,51 @@ describe "Checking Out", js: true do
 
       expect(cart_totals.subtotal).to have_content("$118.00")
     end
+
+    context "when updated quantity is greater than available products" do
+      before do
+        kale_item.set_quantity(101)
+        bananas_item.quantity_field.click
+        sleep(0.5)
+      end
+
+      it "resets the quantity to the entire available quantity" do
+        expect(kale_item.quantity.value).to eql("100")
+      end
+
+      it "shows an error message" do
+        expect(page).to have_content("Quantity available for purchase: 100")
+      end
+    end
+
+    context "when entering an invalid quantity" do
+      before do
+        kale_item.set_quantity("bad")
+        bananas_item.quantity_field.click
+      end
+
+      it "marks the quantity field as being an error" do
+        expect(kale_item.node).to have_css(".field_with_errors")
+      end
+
+      it "displays an error messages" do
+        expect(page).to have_content("Quantity is not a number")
+      end
+    end
+
+    context "when entering a negative quantity" do
+      before do
+        kale_item.set_quantity(-3)
+        bananas_item.quantity_field.click
+      end
+
+      it "marks the quantity field as being an error" do
+        expect(kale_item.node).to have_css(".field_with_errors")
+      end
+
+      it "displays an error messages" do
+        expect(page).to have_content("Quantity must be greater than or equal to 0")
+      end
+    end
   end
 end
