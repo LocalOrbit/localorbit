@@ -70,13 +70,13 @@
             <% # TODO: Make this do things in conjunction with the button on line 20 %>
             <td class="delete"><input type="checkbox" class="todo"></td>
           <% end %>
-          <td class="market"><%= price.market_name %></td>
-          <td class="buyer"><%= price.organization_name %></td>
-          <td class="min-qty"><%= price.min_quantity %></td>
-          <td class="net-price">$<%= "%.02f" % price.net_price %></td>
-          <td class="sale-price">$<%= "%.02f" % price.sale_price %></td>
+          <td class="market edit-trigger"><%= price.market_name %></td>
+          <td class="buyer edit-trigger"><%= price.organization_name %></td>
+          <td class="min-qty edit-trigger"><%= price.min_quantity %></td>
+          <td class="net-price edit-trigger">$<%= "%.02f" % price.net_price %></td>
+          <td class="sale-price edit-trigger">$<%= "%.02f" % price.sale_price %></td>
           <td class="edit">
-            <%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#fields_price_#{price.id}", class: "edit-price" %>
+            <%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#fields_price_#{price.id}", class: "edit-trigger edit-price" %>
             <%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), [:admin, @product, price], method: :delete, data: {confirm: 'Are you sure you want to delete this price'}, class: " delete" %>
           </td>
         <% end %>

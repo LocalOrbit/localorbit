@@ -117,19 +117,16 @@ class @EditTable
 
   bindActions: ()->
     context = this
-    @form.find("tbody td").not(".delete").on "click", (e)->
-      if $(this).parent().data("form-url")?
-        return
-
+    @form.on "click", ".edit-trigger", (e)->
       e.preventDefault()
-      context.openEditRow($(this).parent())
+      context.openEditRow($($(this).parents("tr")[0]))
 
     @form.on "click", "tr .cancel", (e)->
       e.preventDefault()
       row = $($(this).parents("tr")[0])
       context.closeEditRow(row, true)
 
-    @form.find('.add-toggle').click (e) ->
+    @form.on "click", ".add-toggle", (e) ->
       e.preventDefault()
       $(this).hide()
       context.openAddRow()
