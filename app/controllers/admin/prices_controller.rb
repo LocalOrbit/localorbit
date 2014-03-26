@@ -30,8 +30,8 @@ class Admin::PricesController < AdminController
   end
 
   def destroy
-    Price.destroy(params[:id])
-    redirect_to [:admin, @product, :prices], notice: "Successfully removed price"
+    removed = Price.destroy(Array.wrap(params[:id]))
+    redirect_to [:admin, @product, :prices], notice: "Successfully removed price".pluralize(removed.size)
   end
 
   private
