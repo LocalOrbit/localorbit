@@ -99,7 +99,7 @@ end
       <a href="#account-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe011;"></i>Account</a>
       <ul class="dropdown with-anchor top-anchor" id="account-dropdown">
         <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe018;"></i> E-mail &amp; Password</a></li>
-        <li><a href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xe027;"></i> Your Organization</a></li>
+        <li><a href="<%= path_to_my_orgainzation %>"><i class="font-icon" data-icon="&#xe027;"></i> My <%= "Organization".pluralize(current_user.managed_organizations.count) %></a></li>
       </ul>
     </li>
   </ul>
