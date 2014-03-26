@@ -19,7 +19,12 @@ $ ->
       if @el?
         @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
         @el.find(".price").text(accounting.formatMoney(@data.total_price))
-        @el.find(".quantity input").val(@data.quantity)
+        if @data.quantity
+          @el.find(".quantity input").val(@data.quantity)
+        if @data["valid?"]
+          @el.find(".quantity").removeClass("field_with_errors")
+        else
+          @el.find(".quantity").addClass("field_with_errors")
 
   class CartView
     constructor: (opts)->
@@ -44,7 +49,7 @@ $ ->
     showError: (error)->
       notice = $("<div>").addClass("flash").addClass("flash--alert").append($("<p>").text(error))
       $("#flash-messages").append(notice)
-      # TODO: Not sure how to re-create fading out 
+      # TODO: Not sure how to re-create fading out
       # as per fading.js.coffee
       window.setTimeout ->
         notice.fadeOut(500)
