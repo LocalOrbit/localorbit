@@ -19,10 +19,10 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     extra = on_main_domain? && current_user.markets.any? ? {host: current_user.markets.first.domain} : {}
-    if current_user.admin? || current_user.managed_markets.any? || current_user.managed_organizations.where(can_sell: true).exists?
-      dashboard_url(extra)
-    else
+    if current_user.buyer_only?
       products_url(extra)
+    else
+      dashboard_url(extra)
     end
   end
 
