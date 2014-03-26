@@ -47,18 +47,14 @@ class @EditTable
     else
       @form.children("[name=_method]").remove()
 
-  storeOriginalValues: (fieldsRow)->
-    fieldsRow.find("input").each ->
-      field = $(this)
-      if !field.data("orginal-value")?
-        field.data("orginal-value", field.val())
-
   restoreOriginalValues: (fieldsRow)->
     $(fieldsRow).find("input").each ->
       field = $(this)
-      field.val(field.data("orginal-value"))
-      if field.attr("step") == "0.01"
-        field.val(parseFloat(field.val()).toFixed(2))
+      field.val(field.attr("value"))
+
+    $(fieldsRow).find("select").each ->
+      field = $(this)
+      field.val(field.find('option[selected=selected]').attr('value'))
 
   applyErrorValues: (el, data)->
     fieldsRow = @relatedRow(el)
@@ -80,8 +76,6 @@ class @EditTable
 
     fieldsRow = @relatedRow(row)
 
-    @storeOriginalValues(fieldsRow)
-
     action = fieldsRow.data("form-url")
     @setFormActionAndMethod(action, "put")
 
@@ -91,13 +85,25 @@ class @EditTable
     @hiddenRow = row
 
     $(row).hide()
-    $(fieldsRow).show()
+    fieldsRow.show()
+
+    @editing = fieldsRow
+
+  openAddRow: ()->
+    @closeEditRow(@editing, false) if @editing
+
+    fieldsRow = $("#add-row")
+
+    @enableFields(fieldsRow)
+
+    fieldsRow.show()
 
     @editing = fieldsRow
 
   closeEditRow: (row, cancel)->
     @disableFields(row)
     $(row).hide()
+    $(".add-toggle").show() if row.attr("id") == "add-row"
 
     @restoreOriginalValues(row) if cancel
     @editing = false
@@ -111,13 +117,19 @@ class @EditTable
 
   bindActions: ()->
     context = this
-    @form.find("table tbody td").not(".delete").on "click", ()->
+    @form.find("tbody td").not(".delete").on "click", (e)->
       if $(this).parent().data("form-url")?
         return
 
+      e.preventDefault()
       context.openEditRow($(this).parent())
 
-    @form.find("table tbody").on "click", "tr .cancel", (e)->
+    @form.on "click", "tr .cancel", (e)->
       e.preventDefault()
-      row = $(this).parents("tr")[0]
+      row = $($(this).parents("tr")[0])
       context.closeEditRow(row, true)
+
+    @form.find('.add-toggle').click (e) ->
+      e.preventDefault()
+      $(this).hide()
+      context.openAddRow()

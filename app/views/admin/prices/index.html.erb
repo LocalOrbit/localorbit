@@ -13,7 +13,7 @@
     <%= render "shared/errors", {resource: @price_with_errors} if @price_with_errors %>
 
     <% if @product.prices.any?(&:persisted?) %>
-      <%= link_to "Add Price", "#add-price", class: "btn btn--add btn--small pull-right", id: "add-price-toggle" %>
+      <%= link_to "Add Price", "#add-row", class: "btn btn--add btn--small pull-right add-toggle" %>
       <h2 class="clear-after">Add Prices</h2>
       <p>These are your prices. Click on a field to edit it.</p>
       <p>
@@ -45,7 +45,7 @@
           <% end %>
         </tr>
 
-        <tr class="price even <%= @product.prices.any?(&:persisted?) ? "is-hidden" : "" %>" id="add-price">
+        <tr class="add-price price even <%= @product.prices.any?(&:persisted?) ? "is-hidden" : "" %>" id="add-row">
           <% if @product.prices.any?(&:persisted?) %>
             <td></td>
           <% end %>
