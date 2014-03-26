@@ -231,7 +231,7 @@ describe "Checking Out", js: true do
       end
 
       it "shows an error message" do
-        expect(page).to have_content("There are only 100 bananas available")
+        expect(page).to have_content("Quantity available for purchase: 100")
       end
     end
   end

@@ -17,7 +17,7 @@ class CartsController < ApplicationController
     @item.product = product
 
     if @item.quantity > product.available_inventory
-      @error = "Some error"
+      @error = "Quantity available for purchase: #{product.available_inventory}"
       @item.quantity = product.available_inventory
     end
 

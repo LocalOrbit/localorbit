@@ -42,8 +42,13 @@ $ ->
       totals.find(".total").text(total)
 
     showError: (error)->
-      
-
+      notice = $("<div>").addClass("flash").addClass("flash--alert").append($("<p>").text(error))
+      $("#flash-messages").append(notice)
+      # TODO: Not sure how to re-create fading out 
+      # as per fading.js.coffee
+      window.setTimeout ->
+        notice.fadeOut(500)
+      , 3000
 
   class CartModel
     constructor: (opts)->
