@@ -1,4 +1,14 @@
 module ApplicationHelper
+  # Used in navigation to get to the users organization(s)
+  def path_to_my_orgainzation
+    organizations = current_user.managed_organizations
+    if organizations.count == 1
+      admin_organization_path(organizations.first)
+    else
+      admin_organizations_path
+    end
+  end
+
   def filter_list(collection, param_name)
     params = request.query_parameters
 
