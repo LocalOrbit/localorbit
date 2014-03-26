@@ -9,6 +9,10 @@ class DeliveryDecorator < Draper::Decorator
     deliver_on.strftime("%B %e, %Y")
   end
 
+  def display_date_with_time
+    deliver_on.strftime("%B %e, %Y %H:%M %P")
+  end
+
   def checkout_date
     action = buyer_pickup? ? "Pickup on" : "Delivery on"
     "#{action} #{h.content_tag(:time, datetime: deliver_on) { display_date + ' ' + time_range}}"

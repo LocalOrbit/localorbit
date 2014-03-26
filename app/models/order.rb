@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
   belongs_to :market
   belongs_to :organization
+  belongs_to :delivery
   has_many :items, inverse_of: :order, class: OrderItem
 
   validates :billing_address, presence: true
@@ -56,5 +57,41 @@ class Order < ActiveRecord::Base
              LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id").
       where("user_organizations.user_id = :user_id", user_id: user.id)
     end
+  end
+
+  def self.create_from_cart(cart)
+    billing = cart.organization.locations.default_billing
+
+    order = Order.create(
+      order_number: "LO-14-0-00000",
+      organization: cart.organization,
+      market: cart.market,
+      delivery: cart.delivery,
+      delivery_address: cart.location.address,
+      delivery_city: cart.location.city,
+      delivery_state: cart.location.state,
+      delivery_zip: cart.location.zip,
+      delivery_status: "Pending",
+      delivery_phone: "(CHA) NGE-ME!!",
+      billing_organization_name: cart.organization.name,
+      billing_address: billing.address,
+      billing_city: billing.city,
+      billing_state: billing.state,
+      billing_zip: billing.zip,
+      billing_phone: "(CHA) NGE-ME!!",
+      payment_status: "Not Paid",
+      payment_method: "Purchase Order",
+      delivery_fees: cart.delivery_fees,
+      total_cost: cart.total,
+      placed_at: DateTime.current
+    )
+
+    if order.valid?
+      cart.items.each do |item|
+        OrderItem.create_from_cart_item_for_order(item, order)
+      end
+    end
+
+    order
   end
 end

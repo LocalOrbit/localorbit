@@ -211,4 +211,67 @@ describe Order do
       end
     end
   end
+
+  describe "self.create_from_cart" do
+    let(:location) { create(:location) }
+    let(:organization) { create(:organization, :single_location) }
+    let(:billing_address) { organization.locations.default_billing }
+    let(:cart)     { create(:cart, :with_items, organization: organization, location: location) }
+    let(:delivery) { cart.delivery }
+
+    subject { Order.create_from_cart(cart) }
+
+    context "given an invalid cart" do
+      it "has errors"
+    end
+
+    it "assigns the cart references" do
+      expect(subject.organization).to eql(cart.organization)
+      expect(subject.market).to eql(cart.market)
+      expect(subject.delivery).to eql(cart.delivery)
+    end
+
+    it "captures delivery information" do
+      expect(subject.delivery_address).to eql(location.address)
+      expect(subject.delivery_city).to eql(location.city)
+      expect(subject.delivery_state).to eql(location.state)
+      expect(subject.delivery_zip).to eql(location.zip)
+      #expect(subject.delivery_phone).to eql(location.phone)
+      expect(subject.delivery_status).to eql("Pending")
+    end
+
+    it "captures billing information" do
+      expect(subject.billing_organization_name).to eql(organization.name)
+      expect(subject.billing_address).to eql(billing_address.address)
+      expect(subject.billing_city).to eql(billing_address.city)
+      expect(subject.billing_state).to eql(billing_address.state)
+      expect(subject.billing_zip).to eql(billing_address.zip)
+      #expect(subject.delivery_phone).to eql(billing_address.phone)
+    end
+
+
+    it "captures payment information" do
+      expect(subject.payment_status).to eql("Not Paid")
+    end
+
+    it "captures order items" do
+      expect(subject.items.count).to eql(cart.items.count)
+    end
+
+    # TODO: is this the same as created_at?  REMOVE IT!
+    it "captures the placed at time" do
+      expect(subject.placed_at).to_not be_nil
+    end
+
+    it "captures the delivery fees" do
+      expect(subject.delivery_fees).to eql(cart.delivery_fees)
+    end
+
+    it "captures the total cost" do
+      expect(subject.total_cost).to eql(cart.total)
+    end
+
+    it "has an order number sequential to the market"
+
+  end
 end

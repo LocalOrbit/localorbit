@@ -120,6 +120,8 @@ FactoryGirl.define do
     end
 
     trait :sellable do
+      unit
+      
       after(:create) do |product|
         create(:price, product: product)
         create(:lot, product: product)
@@ -214,13 +216,26 @@ FactoryGirl.define do
     organization
     market
     delivery
+
+    trait :with_items do
+      after(:create) do |cart|
+        create_list(:cart_item, 2, cart: cart)
+      end
+    end
   end
 
   factory :cart_item do
-    product
+    product { create(:product, :sellable) }
     cart
+    quantity 1
+
   end
 
   factory :bank_account do
+  end
+
+  factory :unit do
+    singular "box"
+    plural   "boxes"
   end
 end

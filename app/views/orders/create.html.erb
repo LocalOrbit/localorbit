@@ -1,0 +1,36 @@
+<h1>Thank you for your order</h1>
+
+<h2>
+  Items for delivery between <%= @order.delivery.decorate.display_date_with_time %> and
+</h2>
+
+<div id="address">
+  Your order will be delivered to <%= "#{@order.delivery_address}, #{@order.delivery_city}, #{@order.delivery_state} #{@order.delivery_zip}" %>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Discount</th>
+      <th>Total</th>
+      <th>Payment Status</th>
+      <th>Delivery Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.items.each do |item| %>
+    <tr class="order-item-row">
+      <td class="name"><%= item.name %></td>
+      <td class="quantity"><%= item.quantity %></td>
+      <td class="price"><%= number_to_currency item.unit_price %></td>
+      <td class="discount"><%= number_to_currency item.discount %></td>
+      <td class="total"><%= number_to_currency item.gross_total %></td>
+      <td class="payment-status"><%= @order.payment_status %></td>
+      <td class="delivery-status"><%= @order.delivery_status %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
