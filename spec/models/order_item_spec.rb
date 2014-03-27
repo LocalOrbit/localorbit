@@ -57,6 +57,7 @@ describe OrderItem do
     end
 
     it "captures the unit" do
+      expect(subject.quantity).to eql(1)
       expect(subject.unit).to eql(product.unit.singular)
     end
 
