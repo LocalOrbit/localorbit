@@ -59,12 +59,12 @@ describe "Add item to cart", js: true do
 
       bananas_row.set_quantity(12)
       kale_row.quantity_field.click
-      sleep 0.5
+      expect(bananas_row.node).to have_css(".updated.finished")
       expect(Dom::CartLink.first.count).to have_content("1")
 
       kale_row.set_quantity(9)
       bananas_row.quantity_field.click
-      sleep 0.5
+      expect(kale_row.node).to have_css(".updated.finished")
       expect(Dom::CartLink.first.count).to have_content("2")
 
 
@@ -96,14 +96,15 @@ describe "Add item to cart", js: true do
 
       bananas_row.set_quantity(8)
       kale_row.quantity_field.click
-      sleep(0.5)
+      expect(bananas_row.node).to have_css(".updated.finished")
+
       expect(Dom::CartLink.first.count).to have_content("1")
       expect(bananas_row.price).to have_content("$24.00")
 
       bananas_row.set_quantity(9)
       kale_row.quantity_field.click
+      expect(bananas_row.node).to have_css(".updated.finished")
 
-      sleep(1)
       expect(Dom::CartLink.first.count).to have_content("1")
       expect(bananas_row.price).to have_content("$27.00")
 
