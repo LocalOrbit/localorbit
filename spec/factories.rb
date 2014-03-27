@@ -121,7 +121,7 @@ FactoryGirl.define do
 
     trait :sellable do
       unit
-      
+
       after(:create) do |product|
         create(:price, product: product)
         create(:lot, product: product)
@@ -174,11 +174,12 @@ FactoryGirl.define do
   end
 
   factory :market_address do
-    sequence(:name) {|n| "Location #{n}" }
-    address "500 S. State Street"
-    city "Ann Arbor"
+    sequence(:name) {|n| "Market Address #{n}" }
+    address "44 E. 8th St"
+    city "Holland"
     state "MI"
-    zip "48109"
+    zip "49423"
+    phone "(616) 555-1212"
   end
 
   factory :delivery_schedule do
