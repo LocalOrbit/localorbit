@@ -33,6 +33,14 @@ class CartItem < ActiveRecord::Base
     super(methods: [:total_price, :unit_sale_price, :valid?])
   end
 
+  def unit
+    if quantity == 0 || quantity > 1
+      product.unit.plural
+    else
+      product.unit.singular
+    end
+  end
+
   protected
 
   def quantity_is_available
