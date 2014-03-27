@@ -1,3 +1,5 @@
+require "spec_helper"
+
 describe "Viewing the cart", js: true do
   let!(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
@@ -100,29 +102,32 @@ describe "Viewing the cart", js: true do
 
   context "delivery information" do
     context "for dropoff" do
+      let(:address) { buyer.locations.first }
+
       it "shows delivery address" do
         within("#address") do
           expect(page).to have_content("Delivery Address")
           expect(page).to have_content("Delivery on May 9, 2014 between 7:00AM and 11:00AM")
-          expect(page).to have_content(market.addresses.first.address)
-          expect(page).to have_content(market.addresses.first.city)
-          expect(page).to have_content(market.addresses.first.state)
-          expect(page).to have_content(market.addresses.first.zip)
+          expect(page).to have_content(address.address)
+          expect(page).to have_content(address.city)
+          expect(page).to have_content(address.state)
+          expect(page).to have_content(address.zip)
         end
       end
     end
 
     context "for pickup" do
       let!(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup,  market: market, day: 5) }
+      let(:address) { market.addresses.first }
 
       it "shows pickup address" do
         within("#address") do
           expect(page).to have_content("Delivery Address")
           expect(page).to have_content("Pickup on May 9, 2014 between 10:00AM and 12:00PM")
-          expect(page).to have_content(market.addresses.first.address)
-          expect(page).to have_content(market.addresses.first.city)
-          expect(page).to have_content(market.addresses.first.state)
-          expect(page).to have_content(market.addresses.first.zip)
+          expect(page).to have_content(address.address)
+          expect(page).to have_content(address.city)
+          expect(page).to have_content(address.state)
+          expect(page).to have_content(address.zip)
         end
       end
     end

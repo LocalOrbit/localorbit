@@ -52,10 +52,10 @@ feature "Viewing orders" do
     expect(page).to have_content("$9.98")
     expect(page).to have_content("Purchase Order")
 
-    items = Dom::Admin::OrderItemRow.all
+    items = Dom::Order::ItemRow.all
     expect(items.count).to eq(1)
 
-    item = Dom::Admin::OrderItemRow.first
+    item = Dom::Order::ItemRow.first
     expect(item.name).to eq(order_item1.name)
     expect(item.quantity).to eq(order_item1.quantity.to_s)
     expect(item.price).to eq("$#{order_item1.unit_price}")
