@@ -1,7 +1,7 @@
 <h1>Thank you for your order</h1>
 
 <h2>
-  Items for delivery between <%= @order.delivery.decorate.display_date_with_time %> and
+  Items for <%= raw @order.delivery.decorate.checkout_date %> <%= @order.market.timezone %>
 </h2>
 
 <div id="address">
