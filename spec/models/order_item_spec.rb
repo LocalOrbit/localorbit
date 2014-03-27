@@ -68,4 +68,21 @@ describe OrderItem do
       expect(subject.quantity).to eql(cart_item.quantity)
     end
   end
+
+  context "product inventory" do
+    let(:lot)           { create(:lot, number: 1, quantity: 10) }
+    let(:product)       { create(:product, :sellable, lots: [lot]) }
+    let(:market)        { create(:market) }
+    let(:organization)  { create(:organization) }
+    let(:order)         { create(:order, market: market, organization: organization) }
+
+    it "decrements on OrderItem creation" do
+      order_item = OrderItem.create_for_product(order, product, 5)
+
+      expect(order_item.lots.count).to eq(1)
+      expect(order_item.lots.first.lot_number).to eq(lot.lot_number)
+      expect(order_item.lots.first.quantity).to eq(5)
+      expect(lot.reload.amount).to eq(5)
+    end
+  end
 end

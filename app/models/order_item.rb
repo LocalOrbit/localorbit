@@ -1,6 +1,7 @@
 class OrderItem < ActiveRecord::Base
   belongs_to :order, inverse_of: :items, autosave: true
   belongs_to :product
+  has_many :lots, inverse_of: :order_item
 
   validates :name, presence: true
   validates :order, presence: true
