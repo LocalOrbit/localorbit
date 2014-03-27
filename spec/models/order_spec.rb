@@ -213,11 +213,14 @@ describe Order do
   end
 
   describe "self.create_from_cart" do
-    let(:location) { create(:location) }
-    let(:organization) { create(:organization, :single_location) }
-    let(:billing_address) { organization.locations.default_billing }
-    let(:cart)     { create(:cart, :with_items, organization: organization, location: location) }
-    let(:delivery) { cart.delivery }
+    let(:market)            { create(:market) }
+    let(:delivery_location) { create(:location) }
+    let(:pickup_location)   { create(:market_address, market: market) }
+    let(:delivery_schedule) { create(:delivery_schedule) }
+    let(:delivery)          { delivery_schedule.next_delivery }
+    let(:organization)      { create(:organization, :single_location) }
+    let(:billing_address)   { organization.locations.default_billing }
+    let(:cart)              { create(:cart, :with_items, organization: organization, delivery: delivery, location: delivery_location) }
 
     subject { Order.create_from_cart(cart) }
 
@@ -231,13 +234,29 @@ describe Order do
       expect(subject.delivery).to eql(cart.delivery)
     end
 
-    it "captures delivery information" do
-      expect(subject.delivery_address).to eql(location.address)
-      expect(subject.delivery_city).to eql(location.city)
-      expect(subject.delivery_state).to eql(location.state)
-      expect(subject.delivery_zip).to eql(location.zip)
-      #expect(subject.delivery_phone).to eql(location.phone)
-      expect(subject.delivery_status).to eql("Pending")
+    context "delivery information" do
+      context "for dropoff" do
+        let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup) }
+        it "captures location" do
+          expect(subject.delivery_address).to eql(pickup_location.address)
+          expect(subject.delivery_city).to eql(pickup_location.city)
+          expect(subject.delivery_state).to eql(pickup_location.state)
+          expect(subject.delivery_zip).to eql(pickup_location.zip)
+          #expect(subject.delivery_phone).to eql(location.phone)
+          expect(subject.delivery_status).to eql("Pending")
+        end
+      end
+
+      context "for delivery" do
+        it "captures location" do
+          expect(subject.delivery_address).to eql(delivery_location.address)
+          expect(subject.delivery_city).to eql(delivery_location.city)
+          expect(subject.delivery_state).to eql(delivery_location.state)
+          expect(subject.delivery_zip).to eql(delivery_location.zip)
+          #expect(subject.delivery_phone).to eql(location.phone)
+          expect(subject.delivery_status).to eql("Pending")
+        end
+      end
     end
 
     it "captures billing information" do

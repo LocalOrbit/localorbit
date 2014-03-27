@@ -62,17 +62,11 @@ class Order < ActiveRecord::Base
   def self.create_from_cart(cart)
     billing = cart.organization.locations.default_billing
 
-    order = Order.create(
+    order = Order.new(
       order_number: "LO-14-0-00000",
       organization: cart.organization,
       market: cart.market,
       delivery: cart.delivery,
-      delivery_address: cart.location.address,
-      delivery_city: cart.location.city,
-      delivery_state: cart.location.state,
-      delivery_zip: cart.location.zip,
-      delivery_status: "Pending",
-      delivery_phone: "(CHA) NGE-ME!!",
       billing_organization_name: cart.organization.name,
       billing_address: billing.address,
       billing_city: billing.city,
@@ -86,7 +80,17 @@ class Order < ActiveRecord::Base
       placed_at: DateTime.current
     )
 
-    if order.valid?
+    address = cart.delivery.delivery_schedule.buyer_pickup? ?
+      cart.delivery.delivery_schedule.buyer_pickup_location : cart.location
+
+    order.delivery_address = address.address
+    order.delivery_city    = address.city
+    order.delivery_state   = address.state
+    order.delivery_zip     = address.zip
+    order.delivery_status  =  "Pending"
+    order.delivery_phone   = "(CHA) NGE-ME!!"
+
+    if order.save
       cart.items.each do |item|
         OrderItem.create_from_cart_item_for_order(item, order)
       end
