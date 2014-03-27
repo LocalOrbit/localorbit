@@ -156,6 +156,7 @@ FactoryGirl.define do
     city "Ann Arbor"
     state "MI"
     zip "48109"
+    phone "(616) 555-1212"
     organization
 
     trait :default_billing do

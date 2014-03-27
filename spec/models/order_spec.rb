@@ -224,10 +224,6 @@ describe Order do
 
     subject { Order.create_from_cart(cart) }
 
-    context "given an invalid cart" do
-      it "has errors"
-    end
-
     it "assigns the cart references" do
       expect(subject.organization).to eql(cart.organization)
       expect(subject.market).to eql(cart.market)
@@ -242,7 +238,7 @@ describe Order do
           expect(subject.delivery_city).to eql(pickup_location.city)
           expect(subject.delivery_state).to eql(pickup_location.state)
           expect(subject.delivery_zip).to eql(pickup_location.zip)
-          #expect(subject.delivery_phone).to eql(location.phone)
+          expect(subject.delivery_phone).to eql(pickup_location.phone)
           expect(subject.delivery_status).to eql("Pending")
         end
       end
@@ -253,7 +249,7 @@ describe Order do
           expect(subject.delivery_city).to eql(delivery_location.city)
           expect(subject.delivery_state).to eql(delivery_location.state)
           expect(subject.delivery_zip).to eql(delivery_location.zip)
-          #expect(subject.delivery_phone).to eql(location.phone)
+          expect(subject.delivery_phone).to eql(delivery_location.phone)
           expect(subject.delivery_status).to eql("Pending")
         end
       end
@@ -265,7 +261,7 @@ describe Order do
       expect(subject.billing_city).to eql(billing_address.city)
       expect(subject.billing_state).to eql(billing_address.state)
       expect(subject.billing_zip).to eql(billing_address.zip)
-      #expect(subject.delivery_phone).to eql(billing_address.phone)
+      expect(subject.billing_phone).to eql(billing_address.phone)
     end
 
 

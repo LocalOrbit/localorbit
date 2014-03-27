@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140324174337) do
+ActiveRecord::Schema.define(version: 20140327183414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,8 @@ ActiveRecord::Schema.define(version: 20140324174337) do
     t.boolean  "default_billing",  default: false, null: false
     t.boolean  "default_shipping", default: false, null: false
     t.datetime "deleted_at"
+    t.string   "phone"
+    t.string   "fax"
   end
 
   add_index "locations", ["organization_id"], name: "index_locations_on_organization_id", using: :btree

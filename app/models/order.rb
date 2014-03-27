@@ -72,7 +72,7 @@ class Order < ActiveRecord::Base
       billing_city: billing.city,
       billing_state: billing.state,
       billing_zip: billing.zip,
-      billing_phone: "(CHA) NGE-ME!!",
+      billing_phone: billing.phone,
       payment_status: "Not Paid",
       payment_method: "Purchase Order",
       delivery_fees: cart.delivery_fees,
@@ -88,7 +88,7 @@ class Order < ActiveRecord::Base
     order.delivery_state   = address.state
     order.delivery_zip     = address.zip
     order.delivery_status  =  "Pending"
-    order.delivery_phone   = "(CHA) NGE-ME!!"
+    order.delivery_phone   = address.phone
 
     if order.save
       cart.items.each do |item|
