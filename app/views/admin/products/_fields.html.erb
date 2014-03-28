@@ -78,7 +78,7 @@
     <div class="field">
       <%= f.label :location_id, "Where" %>
       <span class="hint">Select the location this product is produced.</span><br>
-      <%= f.select :location_id, @product.location_options_for_select, {}, {class: "column column--full"} %>
+      <%= f.select :location_id, @product.location_options_for_select, {include_blank: "Select a location"}, {class: "column column--full"} %>
       <% if @product.organization.present? %>
         <span class="hint">These come from the Organization area under Account. Edit them <%= link_to "here", [:admin, @product.organization, :locations] %>.</span>
       <% end %>

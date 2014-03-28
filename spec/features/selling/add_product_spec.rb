@@ -71,7 +71,7 @@ describe "Adding a product" do
 
         expect(product_form.who_story).to eq("We sell products")
         expect(product_form.how_story).to eq("We sell products very carefully")
-        expect(product_form.selected_location).to eq("Select a location")
+        expect(product_form.selected_location).to eq(org.locations.default_shipping.to_param)
       end
 
       it "saves changes made to fields if checked and unchecked" do
@@ -131,7 +131,7 @@ describe "Adding a product" do
         expect(product.location).to eql(org.locations.default_shipping)
       end
 
-      it "it requires an address if using who/how" do
+      it "it uses a default address if using who/how" do
         within '#admin-nav' do
           click_link 'Products'
         end
@@ -147,7 +147,8 @@ describe "Adding a product" do
         fill_in "product_who_story", with: "We sell other stuff"
         click_button "Add Product"
 
-        expect(page).to have_content("Location can't be blank")
+        expect(page).not_to have_content("Location can't be blank")
+        expect(product_form.selected_location).to eq(org.locations.default_shipping.to_param)
       end
     end
 
