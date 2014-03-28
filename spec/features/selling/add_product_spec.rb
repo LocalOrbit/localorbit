@@ -20,7 +20,7 @@ describe "Adding a product" do
   let(:loc1) {create(:location) }
   let(:stub_warning_pricing) {"Your product will not appear in the Shop until you add pricing"}
   let(:stub_warning_inventory) {"Your product will not appear in the Shop until you add inventory"}
-  let(:stub_warning_both) {"Your product will not appear in the Shop until you add inventory and pricing"}
+  let(:stub_warning_both) {"Your product will not appear in the Shop until you add inventory, and add pricing"}
   let(:organization_label) { "Product Organization" }
   let(:market) { create(:market, organizations: [org]) }
 

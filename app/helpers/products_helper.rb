@@ -14,7 +14,7 @@ module ProductsHelper
     end
 
     if condition.length > 0
-      content_tag(:div, "Your product will not appear in the Shop until your #{condition.join(', and ')}".html_safe, class: "product-status-alert")
+      content_tag(:div, "Your product will not appear in the Shop until you #{condition.join(', and ')}".html_safe, class: "product-status-alert")
     end
   end
 
