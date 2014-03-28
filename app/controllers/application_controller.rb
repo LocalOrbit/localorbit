@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_filter :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
   before_action :ensure_market_affiliation
   before_action :set_timezone
@@ -24,6 +25,10 @@ class ApplicationController < ActionController::Base
     else
       dashboard_url(extra)
     end
+  end
+
+  def after_update_path_for(resource)
+    dashboard_path
   end
 
   def render_404
@@ -129,5 +134,10 @@ class ApplicationController < ActionController::Base
     if current_delivery.nil?
       redirect_to new_sessions_delivery_path(redirect_back_to: request.fullpath)
     end
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:accept_invitation).concat [:name, :email]
+    devise_parameter_sanitizer.for(:account_update).concat [:name]
   end
 end

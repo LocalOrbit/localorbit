@@ -4,7 +4,11 @@ Rails.application.routes.draw do
       "#{request.protocol}#{Figaro.env.domain}/#{params[:path]}"
     }
 
-  devise_for :users
+  devise_for :users, skip: [:registrations]
+  devise_scope :user do
+    get 'account' => 'devise/registrations#edit', as: :edit_user_registration
+    put 'account' => 'devise/registrations#update', as: :user_registration
+  end
 
   namespace :admin do
     resources :markets do

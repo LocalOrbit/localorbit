@@ -83,7 +83,7 @@ describe "Admin Managing Market Managers" do
 
       visit_in_email("Join Local Orbit")
 
-      expect(page).to have_content("Set your password")
+      expect(page).to have_content("Set up your account")
     end
 
     it 'I can remove a current market manager' do
