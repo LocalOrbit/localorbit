@@ -141,6 +141,6 @@ class @EditTable
 
     @form.on "change", "td:first-child input", (e) ->
       if $(this).prop('checked')
-        context.form.find('.delete-selected').show()
+        context.form.find('.delete-selected').removeClass('is-invisible')
       else
-        context.form.find('.delete-selected').hide()
+        context.form.find('.delete-selected').addClass('is-invisible')
