@@ -16,7 +16,7 @@
       <%= link_to "Add Price", "#add-row", class: "btn btn--add btn--small pull-right add-toggle#{" is-hidden" if @price.errors.any?}" %>
       <h2 class="clear-after">Add Prices</h2>
       <p>These are your prices. Click on a field to edit it.</p>
-      <p><%= button_tag "Delete Selected Prices", class: "btn delete delete-selected" %></p>
+      <p><%= button_tag "Delete Selected Prices", class: "btn delete delete-selected is-invisible" %></p>
     <% else %>
       <h2>Add Prices</h2>
       <p>You don't have any prices yet! We've gone ahead and started the entry for you.</p>
