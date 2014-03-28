@@ -41,10 +41,9 @@ describe OrderItem do
     let(:order) { create(:order, market: market, organization: organization) }
     let(:cart_item) { create(:cart_item, product: product) }
 
-    subject { OrderItem.create_from_cart_item_for_order(cart_item, order)}
+    subject { OrderItem.build_from_cart_item(cart_item)}
 
     it "captures associations" do
-      expect(subject.order).to eql(order)
       expect(subject.product).to eql(product)
     end
 

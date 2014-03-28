@@ -90,12 +90,11 @@ class Order < ActiveRecord::Base
     order.delivery_status  =  "Pending"
     order.delivery_phone   = address.phone
 
-    if order.save
-      cart.items.each do |item|
-        OrderItem.create_from_cart_item_for_order(item, order)
-      end
+    cart.items.each do |item|
+      order.items << OrderItem.build_from_cart_item(item)
     end
 
+    order.save
     order
   end
 end

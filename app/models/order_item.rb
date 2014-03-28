@@ -1,5 +1,5 @@
 class OrderItem < ActiveRecord::Base
-  belongs_to :order, inverse_of: :items
+  belongs_to :order, inverse_of: :items, autosave: true
   belongs_to :product
 
   validates :name, presence: true
@@ -9,9 +9,8 @@ class OrderItem < ActiveRecord::Base
   validates :unit, presence: true
   validates :unit_price, presence: true
 
-  def self.create_from_cart_item_for_order(item, order)
-    OrderItem.create(
-      order: order,
+  def self.build_from_cart_item(item)
+    OrderItem.new(
       product: item.product,
       name: item.product.name,
       quantity: item.quantity,
