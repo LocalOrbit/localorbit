@@ -9,7 +9,7 @@ class ProductDecorator < Draper::Decorator
     # NOTE: Location options for new products are loaded on demand
     return [] unless organization
 
-    organization.locations.visible.alphabetical_by_name.map do |location|
+    organization.locations.visible.order("locations.default_shipping DESC").alphabetical_by_name.map do |location|
       [location.name, location.id]
     end
   end
