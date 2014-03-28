@@ -7,7 +7,7 @@ class Lot < ActiveRecord::Base
   validate :good_from_before_expires_at
 
   scope :available, lambda { |time=Time.current|
-    where('(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND quantity > 0', time: time)
+    where('(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND quantity > 0', time: time).order("created_at")
   }
 
   def available?

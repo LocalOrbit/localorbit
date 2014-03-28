@@ -91,7 +91,7 @@ class Order < ActiveRecord::Base
     order.delivery_phone   = address.phone
 
     cart.items.each do |item|
-      order.items << OrderItem.build_from_cart_item(item)
+      order.items << OrderItem.build_from_cart_item(item, cart.delivery.deliver_on)
     end
 
     order.save

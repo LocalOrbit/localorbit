@@ -213,14 +213,14 @@ describe Order do
   end
 
   describe "self.create_from_cart" do
-    let(:market)            { create(:market) }
-    let(:delivery_location) { create(:location) }
-    let(:pickup_location)   { create(:market_address, market: market) }
-    let(:delivery_schedule) { create(:delivery_schedule) }
-    let(:delivery)          { delivery_schedule.next_delivery }
-    let(:organization)      { create(:organization, :single_location) }
-    let(:billing_address)   { organization.locations.default_billing }
-    let(:cart)              { create(:cart, :with_items, organization: organization, delivery: delivery, location: delivery_location) }
+    let!(:market)            { create(:market) }
+    let!(:delivery_location) { create(:location) }
+    let!(:pickup_location)   { create(:market_address, market: market) }
+    let!(:delivery_schedule) { create(:delivery_schedule) }
+    let!(:delivery)          { delivery_schedule.next_delivery }
+    let!(:organization)      { create(:organization, :single_location) }
+    let!(:billing_address)   { organization.locations.default_billing }
+    let!(:cart)              { create(:cart, :with_items, organization: organization, delivery: delivery, location: delivery_location) }
 
     subject { Order.create_from_cart(cart) }
 
