@@ -55,6 +55,16 @@ $ ->
         notice.fadeOut(500)
       , 3000
 
+    showUpdate: (el)->
+      $(el).closest(".quantity").addClass("updated")
+      window.setTimeout ->
+        $(el).closest(".quantity").addClass("finished")
+      , 500
+
+      window.setTimeout ->
+        $(el).closest(".quantity").removeClass("updated").removeClass("finished")
+      , 700
+
   class CartModel
     constructor: (opts)->
       {@url, @view} = opts
@@ -88,7 +98,7 @@ $ ->
         memo += parseFloat(item.data.total_price)
       , 0)
 
-    saveItem: (productId, quantity)->
+    saveItem: (productId, quantity, elToUpdate)->
       # TODO: Add validation for maximum input to prevent
       #       users from entering numbers greater than available
       #       quantities
@@ -104,6 +114,8 @@ $ ->
 
           if error
             @view.showError(error)
+          else
+            @view.showUpdate(elToUpdate)
 
   view = new CartView
     counter: $("header .cart .counter")
@@ -117,4 +129,4 @@ $ ->
   $(".cart_item .quantity input").change ->
     data = $(this).closest(".cart_item").data("cart-item")
     quantity = $(this).val()
-    model.saveItem(data.product_id, quantity)
+    model.saveItem(data.product_id, quantity, this)

@@ -1,0 +1,12 @@
+@import "mixins";
+
+.updated input {
+  background-color: #bfd9ad;
+  @include transition(background-color 0.1s ease-in);
+}
+
+.updated.finished input {
+  background-color: white;
+  @include transition(background-color 0.1s ease-out);
+}
+

@@ -137,7 +137,7 @@ describe "Checking Out", js: true do
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
-      sleep(0.5)
+      expect(kale_item.node).to have_css(".updated.finished")
 
       expect(cart_totals.delivery_fees).to have_content("$29.50")
     end
@@ -150,7 +150,7 @@ describe "Checking Out", js: true do
 
         kale_item.set_quantity(98)
         bananas_item.quantity_field.click
-        sleep(0.5)
+        expect(kale_item.node).to have_css(".updated.finished")
 
         expect(cart_totals.delivery_fees).to have_content("Free!")
       end
@@ -163,7 +163,7 @@ describe "Checking Out", js: true do
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
-      sleep(0.5)
+      expect(kale_item.node).to have_css(".updated.finished")
 
       expect(cart_totals.total).to have_content("$147.50")
     end
@@ -239,9 +239,6 @@ describe "Checking Out", js: true do
       before do
         kale_item.set_quantity("bad")
         bananas_item.quantity_field.click
-      end
-
-      it "marks the quantity field as being an error" do
         expect(kale_item.node).to have_css(".field_with_errors")
       end
 
