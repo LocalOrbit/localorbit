@@ -137,4 +137,10 @@ class @EditTable
 
     @form.on "click", ".select-all", (e) ->
       checked = $(this).prop('checked')
-      context.form.find('tbody td:first-child input').prop('checked', checked)
+      context.form.find('td:first-child input').prop('checked', checked).trigger('change')
+
+    @form.on "change", "td:first-child input", (e) ->
+      if $(this).prop('checked')
+        context.form.find('.delete-selected').show()
+      else
+        context.form.find('.delete-selected').hide()
