@@ -26,6 +26,7 @@ describe "Add item to cart", js: true do
     create(:price, market: market, product: kale, min_quantity: 1)
   }
 
+
   def bananas_row
     Dom::Cart::Item.find_by_name("Bananas")
   end
@@ -112,6 +113,32 @@ describe "Add item to cart", js: true do
       expect(bananas_row.quantity_field.value).to eql("9")
       expect(Dom::CartLink.first.count).to have_content("1")
       expect(bananas_row.price).to have_content("$27.00")
+    end
+  end
+
+  context "purchasing less product than required minimum" do
+    let(:tomatoes) { create(:product, name: "Tomatoes", organization: seller) }
+    let!(:tomatoes_lot) { create(:lot, product: tomatoes) }
+    let!(:tomatoes_price_buyer_base) {
+      create(:price, market: market, product: tomatoes, min_quantity: 5)
+    }
+
+    def tomatoes_row
+      Dom::Cart::Item.find_by_name("Tomatoes")
+    end
+
+    it "shows an error message" do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+
+      expect(page).to have_content("Filter the Shop")
+      expect(page).to have_content("Bananas")
+      expect(page).to have_content("Kale")
+
+      tomatoes_row.set_quantity(3)
+      kale_row.quantity_field.click
+      sleep(0.5)
+      expect(page).to have_content("You must order at least 5")
     end
   end
 end

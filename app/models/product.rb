@@ -69,6 +69,10 @@ class Product < ActiveRecord::Base
     lots.available.sum(:quantity)
   end
 
+  def minimum_quantity_for_purchase(opts={})
+    prices.for_market_and_org(opts[:market], opts[:organization]).minimum("min_quantity")
+  end
+
   def market_name
     organization.markets.first.name
   end
