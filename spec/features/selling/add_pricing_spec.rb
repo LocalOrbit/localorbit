@@ -3,7 +3,8 @@ require 'spec_helper'
 describe 'Adding advanced pricing' do
   let(:user)          { create(:user) }
   let(:market)        { create(:market) }
-  let!(:organization) { create(:organization, markets: [market], users: [user]) }
+  let(:market2)        { create(:market) }
+  let!(:organization) { create(:organization, markets: [market, market2], users: [user]) }
   let!(:product)      { create(:product, organization: organization) }
 
   before do

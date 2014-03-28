@@ -26,7 +26,7 @@
       <thead>
         <tr>
           <%= content_tag :th, raw('<input type="checkbox" class="select-all">') if @product.prices.view_sorted.any? %>
-          <th>Market</th>
+          <%= content_tag(:th, 'Market') if current_user.multi_market_membership? %>
           <th>Buyer</th>
           <th>Min Qty</th>
           <th>Net Price</th>
@@ -43,7 +43,7 @@
       <% @product.prices.view_sorted.decorate.each do |price| %>
         <%= content_tag_for :tr, price, rel: "fields_price_#{price.id}", class: cycle('odd', 'even') do %>
           <td class="delete"><input type="checkbox" name="id[]" value="<%= price.id %>"></td>
-          <td class="market edit-trigger"><%= price.market_name %></td>
+          <%= content_tag(:td, price.market_name, class: "market edit-trigger") if current_user.multi_market_membership? %>
           <td class="buyer edit-trigger"><%= price.organization_name %></td>
           <td class="min-qty edit-trigger"><%= price.min_quantity %></td>
           <td class="net-price edit-trigger"><%= number_to_currency price.net_price %></td>

@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
     for_select = []
     markets.each do |m|
       by_market = m.organizations.map {|o| [o.name, o.id] }
-      for_select.concat(by_market)
+      for_select |= (by_market)
     end
     for_select.sort {|a,b| a[0] <=> b[0] }
   end
