@@ -250,8 +250,8 @@
 
 .header--welcome {
   float: left;
-  margin: 14px 0 12px;
-  margin: 1em 0 .85714em;
+  margin: 14px 0 12px 20px;
+  margin: 1em 0 .85714em 20px;
   line-height: 1.1875;
 
   > .welcome-user {
@@ -553,6 +553,11 @@
   font-size: 16px;
   font-weight: lighter;
   text-align: center;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
 }
 
 /** Links */

@@ -1,23 +1,20 @@
 module ProductsHelper
   def product_listing_disclaimer
-    if @product.prices.count < 1 and @product.lots.count < 1
-      condition = "you add inventory and pricing"
-    elsif @product.lots.count < 1
-      condition = "you add inventory"
-    elsif @product.prices.count < 1
-      condition = "you add pricing"
+    condition = []
+    if @product.lots.count < 1
+      condition.push link_to_unless_current "add inventory", [:admin, @product, :lots]
+    end
+
+    if @product.prices.count < 1
+      condition.push link_to_unless_current "add pricing", [:admin, @product, :prices]
     end
 
     if @product.errors.full_messages.present?
-      errors = "you fix the following errors:"
+      condition.push "fix the following errors:"
     end
 
-    if condition.present? && errors.present?
-      content_tag(:div, "Your product will not appear in the Shop until #{condition}, and #{errors}", class: "product-status-alert")
-    elsif errors.present?
-      content_tag(:div, "Your product will not appear in the Shop until #{errors}", class: "product-status-alert")
-    elsif condition.present?
-      content_tag(:div, "Your product will not appear in the Shop until #{condition}.", class: "product-status-alert")
+    if condition.length > 0
+      content_tag(:div, "Your product will not appear in the Shop until your #{condition.join(', and ')}".html_safe, class: "product-status-alert")
     end
   end
 
