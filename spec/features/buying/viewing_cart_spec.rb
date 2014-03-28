@@ -140,7 +140,7 @@ describe "Viewing the cart", js: true do
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
-      sleep(0.5)
+      expect(kale_item).to have_css(".updated.finished")
 
       expect(cart_totals.delivery_fees).to have_content("$29.50")
     end
@@ -153,7 +153,7 @@ describe "Viewing the cart", js: true do
 
         kale_item.set_quantity(98)
         bananas_item.quantity_field.click
-        sleep(0.5)
+        expect(kale_item).to have_css(".updated.finished")
 
         expect(cart_totals.delivery_fees).to have_content("Free!")
       end
@@ -166,7 +166,7 @@ describe "Viewing the cart", js: true do
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
-      sleep(0.5)
+      expect(kale_item).to have_css(".updated.finished")
 
       expect(cart_totals.total).to have_content("$147.50")
     end
@@ -218,6 +218,7 @@ describe "Viewing the cart", js: true do
 
       kale_item.set_quantity(98)
       bananas_item.quantity_field.click
+      expect(kale_item).to have_css(".updated.finished")
 
       expect(cart_totals.subtotal).to have_content("$118.00")
     end
@@ -226,15 +227,11 @@ describe "Viewing the cart", js: true do
       before do
         kale_item.set_quantity(101)
         bananas_item.quantity_field.click
-        sleep(0.5)
+        expect(page).to have_content("Quantity available for purchase: 100")
       end
 
       it "resets the quantity to the entire available quantity" do
         expect(kale_item.quantity.value).to eql("100")
-      end
-
-      it "shows an error message" do
-        expect(page).to have_content("Quantity available for purchase: 100")
       end
     end
 
