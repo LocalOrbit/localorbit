@@ -101,6 +101,21 @@ describe "Editing a product" do
 
         expect(page).to have_content("Add Product")
       end
+
+      it "does not refresh the page", js: true do
+        fill_in "Product Name", with: "Canned Peaches"
+        click_link "Request a New Unit"
+
+        expect(ZendeskMailer).to receive(:request_unit).and_return(double(:mailer, deliver: true))
+
+        fill_in "Singular", with: "fathom"
+        fill_in "Plural", with: "fathoms"
+        fill_in "Additional Notes", with: "See more notes"
+        click_button "Request Unit"
+
+        expect(page).to have_field("Product Name", with: "Canned Peaches")
+        expect(page).not_to have_field("Singular")
+      end
     end
 
     describe "a user can request a new category" do
@@ -115,6 +130,19 @@ describe "Editing a product" do
         click_button "Request Category"
 
         expect(page).to have_content("Add Product")
+      end
+
+      it "does not refresh the page", js: true do
+        fill_in "Product Name", with: "Canned Peaches"
+        click_link "Request a New Category"
+
+        expect(ZendeskMailer).to receive(:request_category).and_return(double(:mailer, deliver: true))
+
+        fill_in "Product Category", with: "Goop"
+        click_button "Request Category"
+
+        expect(page).to have_field("Product Name", with: "Canned Peaches")
+        expect(page).not_to have_field("Product Category")
       end
     end
   end

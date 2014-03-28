@@ -7,7 +7,7 @@ $ ->
     $element = $(this.hash)
     $element.toggleClass('is-hidden')
     $(".popup").not($element).addClass('is-hidden')
-    $('.overlay').addClass('is-open');
+    $('.overlay').addClass('is-open')
 
 
   $('.modal-toggle').click ->
@@ -15,8 +15,12 @@ $ ->
     $element = $(".#{destination}")
     $element.toggleClass('is-hidden')
     $(".modal").not($element).addClass('is-hidden')
-    $('.overlay').addClass('is-open is-dim is-modal');
+    $('.overlay').addClass('is-open is-dim is-modal')
 
   $('.popup .popup-header button').click ->
     $(this).closest('.popup').addClass('is-hidden')
-    $('.overlay').removeClass('is-open is-dark is-dim is-modal');
+    $('.overlay').removeClass('is-open is-dark is-dim is-modal')
+
+  $('.popup form[data-remote]').on 'ajax:success', (event, xhr, status) ->
+    $(this).closest('.popup').addClass('is-hidden')
+    $('.overlay').removeClass('is-open is-dark is-dim is-modal')

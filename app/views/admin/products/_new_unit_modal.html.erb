@@ -8,7 +8,7 @@
     have added. We'll have it added for you
     within 24 hours.</p>
 
-    <%= form_tag admin_unit_request_path do %>
+    <%= form_tag admin_unit_request_path, remote: true do %>
       <div class="field">
         <%= label_tag :singular, "Singular" %><br>
         <%= text_field_tag "singular", nil, class: "column--full" %>
