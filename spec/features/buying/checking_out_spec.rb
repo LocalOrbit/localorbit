@@ -82,6 +82,7 @@ describe "Checking Out" do
 
   context "for delivery" do
     it "displays the address" do
+      expect(page).to have_content("be delivered to")
       expect(page).to have_content("500 S. State Street, Ann Arbor, MI 48109")
     end
 
@@ -98,6 +99,7 @@ describe "Checking Out" do
     let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup,  market: market, day: 5) }
 
     it "displays the address" do
+      expect(page).to have_content("available for pickup at")
       expect(page).to have_content("44 E. 8th St, Holland, MI 49423")
     end
 

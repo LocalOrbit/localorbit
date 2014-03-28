@@ -5,7 +5,7 @@
 </h2>
 
 <div id="address">
-  Your order will be delivered to <%= "#{@order.delivery_address}, #{@order.delivery_city}, #{@order.delivery_state} #{@order.delivery_zip}" %>
+  Your order will <%= @order.display_delivery_or_pickup %> <%= @order.display_delivery_address %>
 </div>
 
 <table>
