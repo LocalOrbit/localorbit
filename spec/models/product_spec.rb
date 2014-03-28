@@ -346,4 +346,52 @@ describe Product do
       end
     end
   end
+
+  describe "#minimum_quantity_for_purchase" do
+    let(:product) { create(:product) }
+    let(:market) { create(:market) }
+    let(:buyer) { create(:organization, :buyer, markets: [market]) }
+    let(:minimum) {
+      product.minimum_quantity_for_purchase(organization: buyer, market: market)
+    }
+
+    context "general pricing" do
+      before do
+        product.prices << create(:price, min_quantity: 1)
+        product.prices << create(:price, min_quantity: 3)
+        product.save!
+      end
+
+      it "finds the minimum quantity required to purchase" do
+        expect(minimum).to eql(1)
+      end
+    end
+
+    context "organization specific pricing" do
+      let(:special_buyer) { create(:organization, markets:[market]) }
+      let(:special_minimum) {
+        product.minimum_quantity_for_purchase(organization: special_buyer, market: market)
+      }
+
+      before do
+        product.prices << create(:price, min_quantity: 50, organization: special_buyer)
+        product.prices << create(:price, min_quantity: 87)
+        product.prices << create(:price, min_quantity: 100)
+        product.save!
+      end
+
+      it "finds the minimum quantity require to purchase" do
+        expect(minimum).to eql(87)
+        expect(special_minimum).to eql(50)
+      end
+    end
+
+    context "product has no prices" do
+
+      it "is nil" do
+        quantity = product.minimum_quantity_for_purchase(market: market, organization:buyer)
+        expect(quantity).to be_nil
+      end
+    end
+  end
 end
