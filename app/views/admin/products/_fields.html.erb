@@ -41,6 +41,7 @@
 
 <div class="field">
   <%= f.label :category_id %>
+  <span class="tooltip pull-right" data-tooltip="Type in your product name and choose the matching category from the list">?</span>
   <span class="hint">Not seeing what you need? <%= link_to "Request a New Category", "#", class: "modal-toggle", data: { modal: "request-new-category" } %></span>
   <br>
   <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>

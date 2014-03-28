@@ -600,3 +600,48 @@
        -moz-transition:   -moz-transform .4s linear;
             transition:        transform .4s linear;
   }
+
+/** Tooltips */
+label ~ .tooltip {
+  margin-top: .5em;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  width: 1.3em;
+  height: 1.2em;
+  @include border-radius(50%);
+  color: #fff;
+  background: #ccc;
+  font-size: .9em;
+  font-weight: bold;
+  line-height: 1em;
+  text-align: center;
+  cursor: pointer;
+
+  &:after {
+    position: absolute;
+    right: 50%;
+    bottom: 50%;
+    display: none;
+    z-index: 1000;
+    width: 300px;
+    padding: .5em 1em;
+    border: solid 1px #ccc;
+    @include border-radius(5px);
+    @include box-shadow(2px 2px 5px rgba(0,0,0,0.3));
+    content: attr(data-tooltip);
+    color: #777;
+    background: #fff;
+    font-weight: normal;
+    line-height: 1.1;
+    text-align: left;
+  }
+  &:hover,
+  &:active,
+  &:focus {
+    &:after {
+      display: block;
+    }
+  }
+}
