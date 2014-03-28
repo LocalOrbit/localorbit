@@ -1,0 +1,23 @@
+require "spec_helper"
+
+feature "A user can edit their account" do
+  let(:user) { create(:user, password: "password") }
+
+  scenario "A user can change their account details" do
+    sign_in_as(user)
+    click_link "Account"
+    click_link "E-mail & Password"
+
+    fill_in "Name", with: "Amy Body"
+    fill_in "Email", with: "amy@example.com"
+    fill_in "Password", with: "abcd1234"
+    fill_in "Password confirmation", with: "abcd1234"
+    fill_in "Current password", with: "password"
+    click_button "Update"
+
+    expect(page).to have_content("You updated your account successfully")
+    user.reload
+    expect(user.name).to eq("Amy Body")
+    expect(user.email).to eq("amy@example.com")
+  end
+end

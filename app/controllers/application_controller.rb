@@ -27,6 +27,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def after_update_path_for(resource)
+    dashboard_path
+  end
+
   def render_404
     render file: Rails.root.join('public/404.html'), status: :not_found
   end
@@ -134,5 +138,6 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:accept_invitation).concat [:name, :email]
+    devise_parameter_sanitizer.for(:account_update).concat [:name]
   end
 end
