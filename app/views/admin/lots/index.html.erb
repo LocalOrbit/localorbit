@@ -1,17 +1,19 @@
 <div class="l-page-header">
   <h1>Update Product</h1>
-  <%= product_listing_disclaimer %>
 </div>
 
 <%= render "admin/products/tabs" %>
 
 <%= form_for [:admin, @product, @lot], html: { class: "row row--partial" } do |f| %>
 
+<div class="column column--three-fourths">
+<%= product_listing_disclaimer %>
+
 <%= render "shared/errors", {resource: @lot} %>
 
 <%= render "shared/errors", {resource: @lot_with_errors} if @lot_with_errors %>
 
-<div class="column column--three-fourths">
+<%= link_to "Add Lot", '#add-lot', class: @product.lots.count > 0 ? 'pull-right btn btn--add btn--small add-toggle' : 'is-hidden'  %>
 <h2>Add Inventory</h2>
 
 <% if @product.lots.select { |lot| lot.persisted? }.empty? %>
@@ -29,7 +31,7 @@
       <th></th>
     </tr>
 
-    <tr class="lot">
+    <tr class="lot add-row <%= @product.lots.count > 0 ? 'is-hidden' : '' %>" id="add-row">
       <td><%= Time.current.strftime('%m/%d/%Y') %></td>
       <td><%= f.text_field :number, size: 10  %></td>
       <td>
@@ -45,7 +47,7 @@
 
   <tbody>
   <% @product.lots.select(&:persisted?).each do |lot| %>
-    <%= content_tag_for :tr, lot, rel: "fields_lot_#{lot.id}" do %>
+    <%= content_tag_for :tr, lot, rel: "fields_lot_#{lot.id}", class: cycle("odd", "even") do %>
       <td class="created_at edit-trigger"><%= lot.created_at.strftime('%m/%d/%Y') %></td>
       <td class="number edit-trigger"><%= lot.number %></td>
       <td class="good_from edit-trigger">
@@ -76,5 +78,8 @@
   <% end %>
   </tbody>
 <% end # table %>
+<div class="form-actions">
+  <%= link_to "Continue to Pricing", [:admin, @product, :prices], class: "btn btn--save" %>
+</div>
 </div>
 <% end # form %>

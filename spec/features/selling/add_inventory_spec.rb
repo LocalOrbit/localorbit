@@ -47,6 +47,7 @@ describe "Adding advanced inventory" do
       expect(lot_row.good_from).to eql("25 Feb 2014")
       expect(lot_row.expires_at).to eql("10 Dec 2014")
       expect(lot_row.quantity).to eql("12")
+      expect('#add-row.is-hidden').to be
     end
 
     it "shows an error when adding incomplete information" do

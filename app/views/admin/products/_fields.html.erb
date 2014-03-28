@@ -41,6 +41,7 @@
 
 <div class="field">
   <%= f.label :category_id %>
+  <span class="tooltip pull-right" data-tooltip="Type in your product name and choose the matching category from the list">?</span>
   <span class="hint">Not seeing what you need? <%= link_to "Request a New Category", "#", class: "modal-toggle", data: { modal: "request-new-category" } %></span>
   <br>
   <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>
@@ -58,7 +59,7 @@
   <%= f.check_box :use_simple_inventory, disabled: !@product.can_use_simple_inventory? %>
   <%= f.label :use_simple_inventory, 'Use simple inventory management.' %>
   <% if @product.can_use_simple_inventory? %>
-  <span class="hint">Uncheck this to use advanced inventory tracking with lots and expirations dates.</span>
+  <span class="hint">Uncheck this to use advanced inventory tracking with lots and expirations dates.</span>
   <% else%>
   <span class="warning">To use simple inventory management you must clear out your current available inventory.</span>
   <% end %>
@@ -71,7 +72,7 @@
 <fieldset class="conditional">
   <legend>More info about this product (Where, Who, How)</legend>
   <%= check_box_tag :seller_info, "", !@product.has_custom_seller_info? %>
-  <%= label_tag :seller_info, "Use seller info from my account" %>
+  <%= label_tag :seller_info, "Use seller info from my profile." %>
   <span class="hint">Uncheck this to customize your seller information for this product.</span>
 
   <div class="hidden seller_info_fields">

@@ -95,14 +95,14 @@ class @EditTable
     @enableFields(fieldsRow)
 
     fieldsRow.show()
-    fieldsRow.addClass('open-row')
+    fieldsRow.removeClass('is-hidden').addClass('open-row')
 
   closeEditRow: (row, cancel)->
     return if row.length == 0
 
     @disableFields(row)
     row.hide()
-    row.removeClass('open-row')
+    row.removeClass('open-row').addClass('is-hidden')
     $(".add-toggle").show() if row.attr("id") == "add-row"
 
     @restoreOriginalValues(row) if cancel
