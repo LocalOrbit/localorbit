@@ -37,13 +37,17 @@ describe ProductDecorator do
     it "returns the product's organization's locations for an existing product" do
       organization = create(:organization)
 
-      create(:location, name: "Deleted Location", id: 3, organization: organization, deleted_at: 1.minute.ago)
+      create(:location, name: "Deleted Location", id: 4, organization: organization, deleted_at: 1.minute.ago)
       create(:location, name: "Location 1", id: 1, organization: organization)
       create(:location, name: "Location 2", id: 2, organization: organization)
+      create(:location, name: "Location 3", id: 3, organization: organization)
+      organization.locations.update_all(default_billing: false, default_shipping: false)
+      organization.locations.find(3).update!(default_shipping: true)
 
       product = create(:product, :decorated, organization: organization)
 
       expect(product.location_options_for_select).to eq([
+        ["Location 3", 3],
         ["Location 1", 1],
         ["Location 2", 2]
       ])

@@ -6,9 +6,6 @@ $ ->
       productLocation = $("#product_location_id")
       productLocation.empty()
 
-      $("<option/>").text("Select a location")
-                    .appendTo(productLocation)
-
       $.each locations, (_, location) ->
         $("<option/>").attr("value", location.id)
                       .text(location.name)
@@ -28,8 +25,10 @@ $ ->
 
     hideFields: ->
       $(".seller_info_fields").addClass("hidden")
+      @addBlankLocation()
 
     showFields: ->
+      @removeBlankLocation()
       $(".seller_info_fields").removeClass("hidden")
 
     clearFields: ->
@@ -51,6 +50,13 @@ $ ->
 
     isCheckboxEnabledAndChecked: ->
       !$("#seller_info").prop("disabled") && $("#seller_info").prop("checked")
+
+    removeBlankLocation: ->
+      $("#blank-location-option").remove()
+
+    addBlankLocation: ->
+      $("<option id='blank-location-option' value='' selected/>").text("Select a location")
+                    .prependTo($("#product_location_id"))
 
   class window.FormModel
     @sanitizeOpts: (opts)->

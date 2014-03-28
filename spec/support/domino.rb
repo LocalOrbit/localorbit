@@ -102,8 +102,8 @@ module Dom
   class PricingRow < EditableTableRow
     selector "#pricing_table tbody tr.price"
 
-    def click_market
-      node.find(".market").click
+    def click_buyer
+      node.find(".buyer").click
     end
 
     def market
