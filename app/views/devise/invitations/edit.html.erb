@@ -4,10 +4,16 @@
   <%= devise_error_messages! %>
   <%= f.hidden_field :invitation_token %>
 
-  <p><%= f.label :password %><br />
+  <p><%= f.label :name %><br>
+  <%= f.text_field :name %></p>
+
+  <p><%= f.label :email %><br>
+  <%= f.email_field :email %></p>
+
+  <p><%= f.label :password %><br>
   <%= f.password_field :password %></p>
 
-  <p><%= f.label :password_confirmation %><br />
+  <p><%= f.label :password_confirmation %><br>
   <%= f.password_field :password_confirmation %></p>
 
   <p><%= f.submit t("devise.invitations.edit.submit_button") %></p>

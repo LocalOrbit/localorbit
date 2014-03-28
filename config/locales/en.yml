@@ -49,3 +49,8 @@ en:
           attributes:
             min_quantity:
               taken: must be unique
+  devise:
+    invitations:
+      edit:
+        header: "Set up your account"
+        submit_button: "Save"
