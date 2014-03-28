@@ -58,7 +58,7 @@
   <%= f.check_box :use_simple_inventory, disabled: !@product.can_use_simple_inventory? %>
   <%= f.label :use_simple_inventory, 'Use simple inventory management.' %>
   <% if @product.can_use_simple_inventory? %>
-  <span class="hint">Uncheck this to use advanced inventory tracking with lots and expirations dates.</span>
+  <span class="hint">Uncheck this to use advanced inventory tracking with lots and expirations dates.</span>
   <% else%>
   <span class="warning">To use simple inventory management you must clear out your current available inventory.</span>
   <% end %>
@@ -71,7 +71,7 @@
 <fieldset class="conditional">
   <legend>More info about this product (Where, Who, How)</legend>
   <%= check_box_tag :seller_info, "", !@product.has_custom_seller_info? %>
-  <%= label_tag :seller_info, "Use seller info from my account" %>
+  <%= label_tag :seller_info, "Use seller info from my profile." %>
   <span class="hint">Uncheck this to customize your seller information for this product.</span>
 
   <div class="hidden seller_info_fields">
