@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Checking Out", js: true do
+describe "Checking Out" do
   let!(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
 
@@ -46,32 +46,16 @@ describe "Checking Out", js: true do
   let!(:cart_potatoes) { create(:cart_item, cart: cart, product: potatoes, quantity: 5) }
   let!(:cart_kale) { create(:cart_item, cart: cart, product: kale, quantity: 20) }
 
+  def cart_link
+    Dom::CartLink.first
+  end
+
   before do
     Timecop.travel("May 5, 2014")
   end
 
   after do
     Timecop.return
-  end
-
-  def bananas_item
-    Dom::Cart::Item.find_by_name("Bananas")
-  end
-
-  def cart_link
-    Dom::CartLink.first
-  end
-
-  def cart_totals
-    Dom::Cart::Totals.first
-  end
-
-  def kale_item
-    Dom::Cart::Item.find_by_name("Kale")
-  end
-
-  def potatoes_item
-    Dom::Cart::Item.find_by_name("Potatoes")
   end
 
   before do
@@ -81,185 +65,54 @@ describe "Checking Out", js: true do
     # NOTE: the behavior of clicking the cart link will change
     # once the cart preview has been built. See
     # https://www.pivotaltracker.com/story/show/67553382
-    cart_link.node.click # This behavior will change once the cart preview is implemented
+    cart_link.node.click
     expect(page).to have_content("Your Order")
+    expect(page).to have_content("Bananas")
+    expect(page).to have_content("Kale")
+    expect(page).to have_content("Potatoes")
+
+    click_link "Checkout"
+    expect(page).to have_content("Thank you for your order")
   end
 
-  it "lists products grouped by organization" do
-    fulton_farms_group = Dom::Cart::SellerGroup.find_by_seller("Fulton St. Farms")
-    ada_farms_group = Dom::Cart::SellerGroup.find_by_seller("Ada Farms")
-
-    expect(fulton_farms_group).to have_product_row("Bananas")
-    expect(fulton_farms_group).to have_product_row("Kale")
-    expect(ada_farms_group).to have_product_row("Potatoes")
+  it "displays the ordered products" do
+    items = Dom::Order::ItemRow.all
+    expect(items.map(&:name)).to include("Bananas", "Potatoes", "Kale")
   end
 
-  it "displays the current cart item quantities" do
-    expect(bananas_item.quantity.value).to eql("10")
-    expect(kale_item.quantity.value).to eql("20")
-    expect(potatoes_item.quantity.value).to eql("5")
-  end
-
-  context "delivery information" do
-    context "for dropoff" do
-      it "shows delivery address" do
-        within("#address") do
-          expect(page).to have_content("Delivery Address")
-          expect(page).to have_content("Delivery on May 9, 2014 between 7:00AM and 11:00AM")
-          expect(page).to have_content(market.addresses.first.address)
-          expect(page).to have_content(market.addresses.first.city)
-          expect(page).to have_content(market.addresses.first.state)
-          expect(page).to have_content(market.addresses.first.zip)
-        end
-      end
+  context "for delivery" do
+    it "displays the address" do
+      expect(page).to have_content("be delivered to")
+      expect(page).to have_content("500 S. State Street, Ann Arbor, MI 48109")
     end
 
-    context "for pickup" do
-      let!(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup,  market: market, day: 5) }
+    it "displays the delivery times" do
+      expect(page).to have_content("Delivery on")
+      expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
 
-      it "shows pickup address" do
-        within("#address") do
-          expect(page).to have_content("Delivery Address")
-          expect(page).to have_content("Pickup on May 9, 2014 between 10:00AM and 12:00PM")
-          expect(page).to have_content(market.addresses.first.address)
-          expect(page).to have_content(market.addresses.first.city)
-          expect(page).to have_content(market.addresses.first.state)
-          expect(page).to have_content(market.addresses.first.zip)
-        end
-      end
+      #TODO: What does Rails show this as?
+      expect(page).to have_content("US/Eastern")
     end
   end
 
+  context "for pickup" do
+    let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup,  market: market, day: 5) }
 
-  context "delivery fees" do
-    it "show in the totals" do
-      expect(cart_totals.delivery_fees).to have_content("$10.00")
-
-      kale_item.set_quantity(98)
-      bananas_item.quantity_field.click
-      expect(kale_item.node).to have_css(".updated.finished")
-
-      expect(cart_totals.delivery_fees).to have_content("$29.50")
+    it "displays the address" do
+      expect(page).to have_content("available for pickup at")
+      expect(page).to have_content("44 E. 8th St, Holland, MI 49423")
     end
 
-    context "when there are no delivery fees" do
-      let!(:delivery_schedule) { create(:delivery_schedule, :fixed_fee, fee: 0, market: market, day: 5) }
+    it "displays the delivery times" do
+      expect(page).to have_content("Pickup on")
+      expect(page).to have_content("May 9, 2014 between 10:00AM and 12:00PM")
 
-      it "displays as 'Free!'" do
-        expect(cart_totals.delivery_fees).to have_content("Free!")
-
-        kale_item.set_quantity(98)
-        bananas_item.quantity_field.click
-        expect(kale_item.node).to have_css(".updated.finished")
-
-        expect(cart_totals.delivery_fees).to have_content("Free!")
-      end
+      #TODO: What does Rails show this as?
+      expect(page).to have_content("US/Eastern")
     end
   end
 
-  context "total" do
-    it "is the subtotal plus delivery fees" do
-      expect(cart_totals.total).to have_content("$50.00")
-
-      kale_item.set_quantity(98)
-      bananas_item.quantity_field.click
-      expect(kale_item.node).to have_css(".updated.finished")
-
-      expect(cart_totals.total).to have_content("$147.50")
-    end
-  end
-
-  context "updating quantity" do
-    it "updates the per-unit price based on the pricing tier it fits in" do
-      expect(kale_item.price_for_quantity).to have_content("$1.00")
-
-      kale_item.set_quantity(4)
-      bananas_item.quantity_field.click
-      expect(kale_item.price_for_quantity).to have_content("$2.50")
-
-      kale_item.set_quantity(1)
-      bananas_item.quantity_field.click
-      expect(kale_item.price_for_quantity).to have_content("$3.00")
-
-      kale_item.set_quantity(5)
-      bananas_item.quantity_field.click
-      expect(kale_item.price_for_quantity).to have_content("$2.50")
-
-      kale_item.set_quantity(0)
-      bananas_item.quantity_field.click
-      expect(kale_item.price_for_quantity).to have_content("$3.00")
-    end
-
-    it "updates the overall price" do
-      expect(kale_item.price).to have_content("$20.00")
-
-      kale_item.set_quantity(4)
-      bananas_item.quantity_field.click
-      expect(kale_item.price).to have_content("$10.00")
-
-      kale_item.set_quantity(5)
-      bananas_item.quantity_field.click
-      expect(kale_item.price).to have_content("$12.50")
-
-      kale_item.set_quantity(1)
-      bananas_item.quantity_field.click
-      expect(kale_item.price).to have_content("$3.00")
-
-      kale_item.set_quantity(0)
-      bananas_item.quantity_field.click
-      expect(kale_item.price).to have_content("$0.00")
-    end
-
-    it "updates item subtotal" do
-      expect(cart_totals.subtotal).to have_content("$40.00")
-
-      kale_item.set_quantity(98)
-      bananas_item.quantity_field.click
-
-      expect(cart_totals.subtotal).to have_content("$118.00")
-    end
-
-    context "when updated quantity is greater than available products" do
-      before do
-        kale_item.set_quantity(101)
-        bananas_item.quantity_field.click
-        sleep(0.5)
-      end
-
-      it "resets the quantity to the entire available quantity" do
-        expect(kale_item.quantity.value).to eql("100")
-      end
-
-      it "shows an error message" do
-        expect(page).to have_content("Quantity available for purchase: 100")
-      end
-    end
-
-    context "when entering an invalid quantity" do
-      before do
-        kale_item.set_quantity("bad")
-        bananas_item.quantity_field.click
-        expect(kale_item.node).to have_css(".field_with_errors")
-      end
-
-      it "displays an error messages" do
-        expect(page).to have_content("Quantity is not a number")
-      end
-    end
-
-    context "when entering a negative quantity" do
-      before do
-        kale_item.set_quantity(-3)
-        bananas_item.quantity_field.click
-      end
-
-      it "marks the quantity field as being an error" do
-        expect(kale_item.node).to have_css(".field_with_errors")
-      end
-
-      it "displays an error messages" do
-        expect(page).to have_content("Quantity must be greater than or equal to 0")
-      end
-    end
+  it "clears out the cart" do
+    expect(cart_link.count).to have_content(0)
   end
 end

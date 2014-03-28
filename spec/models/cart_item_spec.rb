@@ -39,4 +39,27 @@ describe CartItem do
       expect(subject).to have(1).error_on(:quantity)
     end
   end
+
+  describe "#unit" do
+    let(:product) { create(:product, :sellable, name: "Bananas") } # lot w/ quantity 15
+    let(:cart_item) { create(:cart_item, product: product) }
+
+    it "returns the singular unit for a quantity of 1" do
+      cart_item.quantity = 1
+
+      expect(cart_item.unit).to eql(product.unit.singular)
+    end
+
+    it "returns the plural unit for a quantity greater than 1" do
+      cart_item.quantity = 2
+
+      expect(cart_item.unit).to eql(product.unit.plural)
+    end
+
+    it "returns the plural unit for a quantity of 0" do
+      cart_item.quantity = 0
+
+      expect(cart_item.unit).to eql(product.unit.plural)
+    end
+  end
 end

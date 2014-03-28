@@ -223,17 +223,6 @@ module Dom
       attribute :buyer_status
     end
 
-    class OrderItemRow < Domino
-      selector ".order-item-row"
-
-      attribute :name
-      attribute :quantity
-      attribute :price
-      attribute :discount
-      attribute :total
-      attribute :payment_status
-    end
-
     class OrderSummaryRow < Domino
       selector ".order-summary-row"
 
@@ -536,6 +525,20 @@ module Dom
       def click_change
         click_link "Change"
       end
+    end
+  end
+
+  module Order
+    class ItemRow < Domino
+      selector ".order-item-row"
+
+      attribute :name
+      attribute :quantity
+      attribute :price
+      attribute :discount
+      attribute :total
+      attribute :payment_status
+      attribute :delivery_status
     end
   end
 end

@@ -120,6 +120,8 @@ FactoryGirl.define do
     end
 
     trait :sellable do
+      unit
+
       after(:create) do |product|
         create(:price, product: product)
         create(:lot, product: product)
@@ -154,6 +156,7 @@ FactoryGirl.define do
     city "Ann Arbor"
     state "MI"
     zip "48109"
+    phone "(616) 555-1212"
     organization
 
     trait :default_billing do
@@ -172,11 +175,12 @@ FactoryGirl.define do
   end
 
   factory :market_address do
-    sequence(:name) {|n| "Location #{n}" }
-    address "500 S. State Street"
-    city "Ann Arbor"
+    sequence(:name) {|n| "Market Address #{n}" }
+    address "44 E. 8th St"
+    city "Holland"
     state "MI"
-    zip "48109"
+    zip "49423"
+    phone "(616) 555-1212"
   end
 
   factory :delivery_schedule do
@@ -214,13 +218,26 @@ FactoryGirl.define do
     organization
     market
     delivery
+
+    trait :with_items do
+      after(:create) do |cart|
+        create_list(:cart_item, 2, cart: cart)
+      end
+    end
   end
 
   factory :cart_item do
-    product
+    product { create(:product, :sellable) }
     cart
+    quantity 1
+
   end
 
   factory :bank_account do
+  end
+
+  factory :unit do
+    singular "box"
+    plural   "boxes"
   end
 end

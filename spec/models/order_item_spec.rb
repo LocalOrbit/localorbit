@@ -32,6 +32,40 @@ describe OrderItem do
       expect(subject).to be_invalid
       expect(subject).to have(1).error_on(:quantity)
     end
+  end
 
+  describe "self.create_from_cart_item_for_order" do
+    let(:market) { create(:market) }
+    let(:organization) { create(:organization) }
+    let(:product) { create(:product, :sellable) }
+    let(:order) { create(:order, market: market, organization: organization) }
+    let(:cart_item) { create(:cart_item, product: product) }
+
+    subject { OrderItem.build_from_cart_item(cart_item)}
+
+    it "captures associations" do
+      expect(subject.product).to eql(product)
+    end
+
+    it "captures the product name" do
+      expect(subject.name).to eq(product.name)
+    end
+
+    it "captures the seller name" do
+      expect(subject.seller_name).to eql(product.organization.name)
+    end
+
+    it "captures the unit" do
+      expect(subject.quantity).to eql(1)
+      expect(subject.unit).to eql(product.unit.singular)
+    end
+
+    it "captures the unit price" do
+      expect(subject.unit_price).to eql(cart_item.unit_price.sale_price)
+    end
+
+    it "captures the quantity" do
+      expect(subject.quantity).to eql(cart_item.quantity)
+    end
   end
 end

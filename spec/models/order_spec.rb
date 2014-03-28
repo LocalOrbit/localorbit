@@ -211,4 +211,82 @@ describe Order do
       end
     end
   end
+
+  describe "self.create_from_cart" do
+    let(:market)            { create(:market) }
+    let(:delivery_location) { create(:location) }
+    let(:pickup_location)   { create(:market_address, market: market) }
+    let(:delivery_schedule) { create(:delivery_schedule) }
+    let(:delivery)          { delivery_schedule.next_delivery }
+    let(:organization)      { create(:organization, :single_location) }
+    let(:billing_address)   { organization.locations.default_billing }
+    let(:cart)              { create(:cart, :with_items, organization: organization, delivery: delivery, location: delivery_location) }
+
+    subject { Order.create_from_cart(cart) }
+
+    it "assigns the cart references" do
+      expect(subject.organization).to eql(cart.organization)
+      expect(subject.market).to eql(cart.market)
+      expect(subject.delivery).to eql(cart.delivery)
+    end
+
+    context "delivery information" do
+      context "for dropoff" do
+        let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup) }
+        it "captures location" do
+          expect(subject.delivery_address).to eql(pickup_location.address)
+          expect(subject.delivery_city).to eql(pickup_location.city)
+          expect(subject.delivery_state).to eql(pickup_location.state)
+          expect(subject.delivery_zip).to eql(pickup_location.zip)
+          expect(subject.delivery_phone).to eql(pickup_location.phone)
+          expect(subject.delivery_status).to eql("Pending")
+        end
+      end
+
+      context "for delivery" do
+        it "captures location" do
+          expect(subject.delivery_address).to eql(delivery_location.address)
+          expect(subject.delivery_city).to eql(delivery_location.city)
+          expect(subject.delivery_state).to eql(delivery_location.state)
+          expect(subject.delivery_zip).to eql(delivery_location.zip)
+          expect(subject.delivery_phone).to eql(delivery_location.phone)
+          expect(subject.delivery_status).to eql("Pending")
+        end
+      end
+    end
+
+    it "captures billing information" do
+      expect(subject.billing_organization_name).to eql(organization.name)
+      expect(subject.billing_address).to eql(billing_address.address)
+      expect(subject.billing_city).to eql(billing_address.city)
+      expect(subject.billing_state).to eql(billing_address.state)
+      expect(subject.billing_zip).to eql(billing_address.zip)
+      expect(subject.billing_phone).to eql(billing_address.phone)
+    end
+
+
+    it "captures payment information" do
+      expect(subject.payment_status).to eql("Not Paid")
+    end
+
+    it "captures order items" do
+      expect(subject.items.count).to eql(cart.items.count)
+    end
+
+    # TODO: is this the same as created_at?  REMOVE IT!
+    it "captures the placed at time" do
+      expect(subject.placed_at).to_not be_nil
+    end
+
+    it "captures the delivery fees" do
+      expect(subject.delivery_fees).to eql(cart.delivery_fees)
+    end
+
+    it "captures the total cost" do
+      expect(subject.total_cost).to eql(cart.total)
+    end
+
+    it "has an order number sequential to the market"
+
+  end
 end
