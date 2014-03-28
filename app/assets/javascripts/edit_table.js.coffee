@@ -134,3 +134,7 @@ class @EditTable
       e.preventDefault()
       context.setFormActionAndMethod(@initialAction, "delete")
       context.form.submit()
+
+    @form.on "click", ".select-all", (e) ->
+      checked = $(this).prop('checked')
+      context.form.find('tbody td:first-child input').prop('checked', checked)

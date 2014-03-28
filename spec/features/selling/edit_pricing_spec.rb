@@ -174,5 +174,18 @@ describe "Editing advanced pricing", js: true do
       expect(page).to have_content("Successfully removed prices")
       expect(Dom::PricingRow.all).to be_empty
     end
+
+    it "selecting all prices" do
+      find('.select-all').click
+
+      all('td:first-child input').each do |field|
+        expect(field).to be_checked
+      end
+
+      click_button "Delete Selected Prices"
+
+      expect(page).to have_content("Successfully removed prices")
+      expect(Dom::PricingRow.all).to be_empty
+    end
   end
 end
