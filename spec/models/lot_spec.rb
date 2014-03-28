@@ -84,9 +84,32 @@ describe Lot do
         product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
         product.lots.create!(quantity: 12, number: '2', good_from: 1.day.ago)
         product.lots.create!(quantity: 12, number: '3', good_from: 1.day.ago, expires_at: 1.day.from_now)
+        product.lots.create!(quantity: 12, number: '4', good_from: 1.day.ago, expires_at: 2.days.from_now)
       }.to change {
         Lot.available.count
-      }.from(0).to(4)
+      }.from(0).to(5)
+    end
+
+    it "returns lots available at the requested date" do
+      expect {
+        product.lots.create!(quantity: 12)
+        product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
+        product.lots.create!(quantity: 12, number: '2', good_from: 1.day.ago)
+        product.lots.create!(quantity: 12, number: '3', good_from: 1.day.ago, expires_at: 1.day.from_now)
+        product.lots.create!(quantity: 12, number: '4', good_from: 1.day.ago, expires_at: 2.days.from_now)
+      }.to change {
+        Lot.available(1.day.from_now).count
+      }.from(0).to(3)
+    end
+
+    it "returns available lots, oldest first" do
+      product.lots.create!(quantity: 12)
+      product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
+      product.lots.create!(quantity: 12, number: '2', good_from: 1.day.ago)
+      product.lots.create!(quantity: 12, number: '3', good_from: 1.day.ago, expires_at: 1.day.from_now)
+      product.lots.create!(quantity: 12, number: '4', good_from: 1.day.ago, expires_at: 2.days.from_now)
+
+      expect(product.lots.available(1.day.from_now).first.number).to eql('4')
     end
 
     it "excludes expired lots" do
