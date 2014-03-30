@@ -39,6 +39,10 @@ class ProductDecorator < Draper::Decorator
     end
   end
 
+  def location_label
+    "#{location.city}, #{location.state}" if location
+  end
+
   def cart_item
     return unless context[:current_cart]
 
