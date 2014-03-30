@@ -47,7 +47,7 @@ describe "Adding a product" do
       within '#admin-nav' do
         click_link 'Products'
       end
-      click_link "Add a product"
+      click_link "Add New Product"
 
       simple_inventory_checkbox = page.find_field("Use simple inventory management")
       inventory_quantity = page.find_field("Your current inventory")
@@ -63,7 +63,7 @@ describe "Adding a product" do
         within '#admin-nav' do
           click_link 'Products'
         end
-        click_link "Add a product"
+        click_link "Add New Product"
 
         uncheck "seller_info"
 
@@ -80,7 +80,7 @@ describe "Adding a product" do
         within '#admin-nav' do
           click_link 'Products'
         end
-        click_link "Add a product"
+        click_link "Add New Product"
 
         uncheck "seller_info"
         expect(page.find('.seller_info_fields', visible: false)).to be_visible
@@ -106,7 +106,7 @@ describe "Adding a product" do
         within '#admin-nav' do
           click_link 'Products'
         end
-        click_link "Add a product"
+        click_link "Add New Product"
 
         fill_in_required_fields(:with_chosen)
 
@@ -135,7 +135,7 @@ describe "Adding a product" do
         within '#admin-nav' do
           click_link 'Products'
         end
-        click_link "Add a product"
+        click_link "Add New Product"
 
         fill_in "Product Name", with: "Good food"
         select_from_chosen "Grapes / Red Grapes", from: "Category"
@@ -157,7 +157,7 @@ describe "Adding a product" do
         within '#admin-nav' do
           click_link 'Products'
         end
-        click_link "Add a product"
+        click_link "Add New Product"
 
         fill_in "Product Name", with: "Red Grapes"
         attach_file("Image", 'app/assets/images/backgrounds/kale.jpg')
@@ -172,7 +172,7 @@ describe "Adding a product" do
         within '#admin-nav' do
           click_link 'Products'
         end
-        click_link "Add a product"
+        click_link "Add New Product"
 
         fill_in_required_fields(:with_chosen)
         select_from_chosen "Pounds", from: "Unit"
@@ -203,7 +203,7 @@ describe "Adding a product" do
         within '#admin-nav' do
           click_link 'Products'
         end
-        click_link "Add a product"
+        click_link "Add New Product"
 
         expect(page).to have_content("Your current inventory")
 
@@ -220,7 +220,7 @@ describe "Adding a product" do
         within '#admin-nav' do
           click_link 'Products'
         end
-        click_link "Add a product"
+        click_link "Add New Product"
 
         category_select.click
 
@@ -254,7 +254,7 @@ describe "Adding a product" do
         within '#admin-nav' do
           click_link 'Products'
         end
-        click_link "Add a product"
+        click_link "Add New Product"
 
         category_select.click
 
@@ -280,7 +280,7 @@ describe "Adding a product" do
         within '#admin-nav' do
           click_link 'Products'
         end
-        click_link "Add a product"
+        click_link "Add New Product"
 
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
@@ -318,7 +318,7 @@ describe "Adding a product" do
         within '#admin-nav' do
           click_link 'Products'
         end
-        click_link "Add a product"
+        click_link "Add New Product"
 
         expect(page).to have_content("Your current inventory")
         uncheck 'Use simple inventory management'
@@ -350,7 +350,7 @@ describe "Adding a product" do
       within '#admin-nav' do
         click_link 'Products'
       end
-      click_link "Add a product"
+      click_link "Add New Product"
     end
 
     it "is prevented from unchecking 'Use seller info from my account' until organization is selected", js: true do
@@ -449,7 +449,7 @@ describe "Adding a product" do
       within '#admin-nav' do
         click_link 'Products'
       end
-      click_link "Add a product"
+      click_link "Add New Product"
     end
 
     it "makes the user choose an organization to add the product for" do
@@ -473,7 +473,7 @@ describe "Adding a product" do
       within '#admin-nav' do
         click_link 'Products'
       end
-      click_link "Add a product"
+      click_link "Add New Product"
     end
 
     describe "a user can request a new inventory unit" do
