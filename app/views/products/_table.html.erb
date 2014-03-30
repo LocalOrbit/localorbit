@@ -68,7 +68,7 @@
             <%= link_to raw('<i class="font-icon icon-direction"></i> Where'), "#product-#{product.id}-where", class: "popup-toggle" %>
             <div class="where-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-where">
               <div class="popup-header">
-                Holland, MI     <button class="close"><i class="font-icon icon-close"></i></button>
+                <%= product.location_label %>     <button class="close"><i class="font-icon icon-close"></i></button>
               </div>
               <img class="location-map" alt="" src="<%= product.location_map%>" />
             </div>
