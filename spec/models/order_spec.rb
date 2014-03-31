@@ -221,8 +221,21 @@ describe Order do
     let!(:organization)      { create(:organization, :single_location) }
     let!(:billing_address)   { organization.locations.default_billing }
     let!(:cart)              { create(:cart, :with_items, organization: organization, delivery: delivery, location: delivery_location) }
+    let(:params)             { { payment_method: "purchase order"} }
 
-    subject { Order.create_from_cart(cart) }
+    subject { Order.create_from_cart( params,cart) }
+
+
+    context "purchase order" do
+      let(:params) { { payment_method: "purchase order", payment_note: "1234" } }
+      it "sets the payment type" do
+        expect(subject.payment_method).to eql("purchase order")
+      end
+
+      it "sets the payment note" do
+        expect(subject.payment_note).to eql("1234")
+      end
+    end
 
     it "assigns the cart references" do
       expect(subject.organization).to eql(cart.organization)

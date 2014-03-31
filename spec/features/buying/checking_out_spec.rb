@@ -71,7 +71,9 @@ describe "Checking Out" do
     expect(page).to have_content("Kale")
     expect(page).to have_content("Potatoes")
 
-    click_link "Checkout"
+    fill_in "PO Number", with: "12345"
+
+    click_button "Checkout"
     expect(page).to have_content("Thank you for your order")
   end
 

@@ -59,7 +59,7 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def self.create_from_cart(cart)
+  def self.create_from_cart(params, cart)
     billing = cart.organization.locations.default_billing
 
     order = Order.new(
@@ -74,11 +74,13 @@ class Order < ActiveRecord::Base
       billing_zip: billing.zip,
       billing_phone: billing.phone,
       payment_status: "Not Paid",
-      payment_method: "Purchase Order",
+      payment_method: params[:payment_method],
       delivery_fees: cart.delivery_fees,
       total_cost: cart.total,
       placed_at: DateTime.current
     )
+
+    order.payment_note = params[:payment_note] if params[:payment_note]
 
     address = cart.delivery.delivery_schedule.buyer_pickup? ?
       cart.delivery.delivery_schedule.buyer_pickup_location : cart.location
