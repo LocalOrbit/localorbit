@@ -1,0 +1,38 @@
+<%= render "admin/markets/header" %>
+
+<%= render 'shared/errors', resource: @market %>
+
+<div class="row row--partial">
+  <%= form_for @market, url: [:admin, @market, :fees], html: { class: "column column--half" } do |f| %>
+    <h2>Fees</h2>
+
+    <div class="field">
+      <%= f.label :local_orbit_seller_fee, "Local Orbit % paid by seller" %><br>
+      <%= f.number_field :local_orbit_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :local_orbit_market_fee, "Local Orbit % paid by market" %><br>
+      <%= f.number_field :local_orbit_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :market_seller_fee, "Market % paid by seller" %><br>
+      <%= f.number_field :market_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :transaction_seller_fee, "Transaction fee paid by seller" %><br>
+      <%= f.number_field :transaction_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :transaction_market_fee, "Transaction fee paid by market" %><br>
+      <%= f.number_field :transaction_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "Update Fees" %>
+    </div>
+  <% end %>
+</div>
