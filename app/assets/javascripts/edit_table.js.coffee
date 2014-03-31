@@ -96,6 +96,7 @@ class @EditTable
 
     fieldsRow.show()
     fieldsRow.removeClass('is-hidden').addClass('open-row')
+    $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled')
 
   closeEditRow: (row, cancel)->
     return if row.length == 0
