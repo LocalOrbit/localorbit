@@ -22,6 +22,7 @@ describe "A Market Manager" do
         fill_in "City", with: "Orleans Twp."
         select "Michigan", from: "State"
         fill_in "Postal Code", with: "49883"
+        fill_in "Phone", with: "616-555-9983"
         attach_file 'Profile photo', 'app/assets/images/logo.png'
 
         check 'Can sell product'
@@ -73,6 +74,7 @@ describe "A Market Manager" do
         fill_in "City", with: "Orleans Twp."
         select "Michigan", from: "State"
         fill_in "Postal Code", with: "49883"
+        fill_in "Phone", with: "616-555-9983"
 
         click_button 'Add Organization'
 

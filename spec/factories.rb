@@ -124,7 +124,7 @@ FactoryGirl.define do
 
       after(:create) do |product|
         create(:price, product: product)
-        create(:lot, product: product)
+        create(:lot, product: product) if product.lots.empty?
       end
     end
   end
