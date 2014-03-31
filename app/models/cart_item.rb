@@ -4,9 +4,9 @@ class CartItem < ActiveRecord::Base
 
   validates :cart, presence: true
   validates :product, presence: true
-  validates :quantity, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+  validates :quantity, numericality: { greater_than_or_equal_to: 0, less_than: 2147483647, only_integer: true }
 
-  validate :validate_minimum_quantity
+  validate :validate_minimum_quantity, unless: "errors.has_key? :quantity"
   validate :quantity_is_available, unless: "errors.has_key? :quantity"
 
   def prices
