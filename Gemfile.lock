@@ -204,7 +204,8 @@ GEM
     minitest (5.3.3)
     multi_json (1.9.2)
     multipart-post (1.2.0)
-    net-scp (1.2.0)
+    mysql2 (0.3.15)
+    net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.8.0)
     netrc (0.7.7)
@@ -389,6 +390,7 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   launchy
+  mysql2
   newrelic_rpm
   periscope-activerecord
   pg
