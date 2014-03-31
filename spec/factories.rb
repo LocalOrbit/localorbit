@@ -240,4 +240,9 @@ FactoryGirl.define do
     singular "box"
     plural   "boxes"
   end
+
+  factory :sequence do
+    name "stuff"
+    value 0
+  end
 end
