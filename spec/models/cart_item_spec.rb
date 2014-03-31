@@ -13,6 +13,12 @@ describe CartItem do
     expect(subject.quantity).to eql(0)
   end
 
+  it "can not have more then 2 Trillion" do
+    subject.quantity = 2147483647
+
+    expect(subject).to have(1).error_on(:quantity)
+  end
+
   context "default factory" do
     it "is valid" do
       expect(create(:cart_item)).to be_valid
