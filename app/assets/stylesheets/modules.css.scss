@@ -647,4 +647,7 @@ label ~ .tooltip {
       display: block;
     }
   }
+  &.pull-right + .pull-right {
+    margin-right: .5em;
+  }
 }

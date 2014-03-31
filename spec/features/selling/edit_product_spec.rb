@@ -60,14 +60,14 @@ describe "Editing a product" do
 
       context "with no available inventory", js: true do
         it "user can select simple inventory and set a simple inventory value" do
-          expect(page).to_not have_content("Your current inventory")
+          expect(page).to_not have_content("Current inventory")
 
           check 'Use simple inventory'
-          fill_in 'Your current inventory', with: '42'
+          fill_in 'Current inventory', with: '42'
           click_button 'Save Product'
 
           expect(page).to have_content("Saved Canned Pears")
-          expect(find_field("Your current inventory").value).to eq('42')
+          expect(find_field("Current inventory").value).to eq('42')
         end
       end
     end

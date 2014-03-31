@@ -50,7 +50,7 @@ describe "Adding a product" do
       click_link "Add New Product"
 
       simple_inventory_checkbox = page.find_field("Use simple inventory management")
-      inventory_quantity = page.find_field("Your current inventory")
+      inventory_quantity = page.find_field("Current inventory")
 
       expect(simple_inventory_checkbox).to be_checked
       expect(inventory_quantity.value).to eql("0")
@@ -176,7 +176,7 @@ describe "Adding a product" do
 
         fill_in_required_fields(:with_chosen)
         select_from_chosen "Pounds", from: "Unit"
-        fill_in("Your current inventory", with: 33)
+        fill_in("Current inventory", with: 33)
 
         click_button "Add Product"
         expect(page).to have_content("Added Red Grapes")
@@ -184,12 +184,12 @@ describe "Adding a product" do
         click_link "Product Info"
 
         simple_inventory_checkbox = page.find_field("Use simple inventory management")
-        inventory_quantity        = page.find_field("Your current inventory")
+        inventory_quantity        = page.find_field("Current inventory")
 
         expect(simple_inventory_checkbox).to be_checked
         expect(inventory_quantity.value).to eql("33")
 
-        expect(page).to have_content("Uncheck this to use advanced inventory tracking with lots and expirations dates")
+        expect(page).to have_content("Uncheck this to use advanced inventory tracking with lot numbers and expiration dates.")
         expect(page).to have_content("Pounds")
 
         within(".tabs") do
@@ -205,11 +205,11 @@ describe "Adding a product" do
         end
         click_link "Add New Product"
 
-        expect(page).to have_content("Your current inventory")
+        expect(page).to have_content("Current inventory")
 
         uncheck "Use simple inventory management"
 
-        expect(page).to_not have_content("Your current inventory")
+        expect(page).to_not have_content("Current inventory")
       end
     end
 
@@ -290,7 +290,7 @@ describe "Adding a product" do
         select_from_chosen "Bushels", from: "Unit"
         fill_in "Long description", with: "There are many kinds of apples."
 
-        fill_in "Your current inventory", with: "12"
+        fill_in "Current inventory", with: "12"
         uncheck "Use simple inventory management"
 
         uncheck :seller_info
@@ -320,13 +320,13 @@ describe "Adding a product" do
         end
         click_link "Add New Product"
 
-        expect(page).to have_content("Your current inventory")
+        expect(page).to have_content("Current inventory")
         uncheck 'Use simple inventory management'
 
         click_button "Add Product"
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Category can't be blank")
-        expect(page).to_not have_content("Your current inventory")
+        expect(page).to_not have_content("Current inventory")
         within('.tabs') do
           expect(page).to have_content("Inventory")
         end

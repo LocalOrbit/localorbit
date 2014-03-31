@@ -31,6 +31,7 @@ textarea {
   @include border-radius(2px);
   @include box-shadow(inset 0 0 0 1px #aaa, inset 0 1px 5px #aaa);
   margin: 4px 0;
+  font-family: inherit;
   font-size: 14px;
 
   &:focus {
@@ -121,9 +122,22 @@ legend {
   font: bold 24px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", OpenSans, sans-serif;
 }
 
+label {
+  ~ .hint.pull-right,
+  ~ .warning.pull-right {
+    margin-top: 7px;
+  }
+}
+
 select,
 .chosen-container {
   margin-top: 4px;
+
+  + .hint,
+  + .warning {
+    display: inline-block;
+    margin-top: .4em;
+  }
 }
 
 textarea {
@@ -185,6 +199,11 @@ textarea {
 
 form.form-actions {
   margin-top: 0;
+}
+
+.form-footer {
+  margin-top: 2em;
+  color: #000;
 }
 
 .hint,
