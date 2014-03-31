@@ -1,7 +1,4 @@
-<div class="l-page-header">
-  <h1>Update Product</h1>
-</div>
-
+<%= render "admin/products/header" %>
 <%= render "admin/products/tabs" %>
 
 <%= form_for [:admin, @product, @lot], html: { class: "row row--partial" } do |f| %>

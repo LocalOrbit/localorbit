@@ -1,8 +1,4 @@
-<div class="l-page-header">
-  <h1>Update <%= @product.name %></h1>
-  <a href="#" class="delete todo">Delete</a>
-</div>
-
+<%= render "admin/products/header" %>
 <%= render "admin/products/tabs" %>
 <%= form_for [:admin, @product, @price], html: { class: "row row--partial" } do |f| %>
 
