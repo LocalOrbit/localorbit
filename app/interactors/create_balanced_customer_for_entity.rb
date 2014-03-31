@@ -2,7 +2,7 @@ class CreateBalancedCustomerForEntity
   include Interactor
 
   def setup
-    context[:entity] = context[:market] || context[:organization]
+    context[:entity] ||= context[:market] || context[:organization]
   end
 
   def perform
