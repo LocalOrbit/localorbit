@@ -8,7 +8,7 @@ feature "A user navagating markets" do
   context "without a market" do
     scenario "a visitor sees the base domain" do
       visit '/'
-      expect(page).not_to have_content("Welcome")
+      expect(page).to have_content("Please Sign In")
       expect(page).to have_css("img[src='/assets/logo.png']")
     end
 
@@ -37,19 +37,19 @@ feature "A user navagating markets" do
     scenario "a user navigating to their market" do
       visit '/'
       expect(page).not_to have_content(market.name)
-      expect(page).not_to have_content("Welcome")
+      expect(page).to have_content("Please Sign In")
       expect(page).to have_css("img[src='/assets/logo.png']")
 
       switch_to_subdomain market.subdomain
       visit '/'
       # expect(page).to have_content(market.name)
-      expect(page).not_to have_content("Welcome")
+      expect(page).to have_content("Please Sign In")
       expect(page).to have_css("img[src='#{market.logo.remote_url}']")
 
       sign_in_as(user)
       expect(page).to have_content(market.name)
       expect(page).to have_content(market.tagline)
-      expect(page).to have_content("Welcome")
+      expect(page).to have_content("Welcome #{user.email}")
       expect(page).to have_css("img[src='#{market.logo.remote_url}']")
     end
   end

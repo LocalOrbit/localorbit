@@ -1,9 +1,10 @@
-<h1 class="clear-before page-title">Sign In</h1>
-<div class="row devise-forms">
+<h1 class="clear-before page-title">Welcome to Local Orbit</h1>
+<div class="row devise-forms center-rule">
 
 <div class="column column--half">
   <div class="row row--partial">
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: "column column--three-fourths" }) do |f| %>
+      <h2>Please Sign In</h2>
       <div class="field">
         <%= f.label :email %><br>
         <%= f.email_field :email, :autofocus => true, class: "column--full" %>
@@ -12,26 +13,26 @@
       <div class="field">
         <%= f.label :password %><br>
         <%= f.password_field :password, class: "column--full" %><br>
-        <%= render "devise/shared/links" %>
       </div>
+
+      <%= f.submit "Sign In", class: "pull-right" %>
 
       <% if devise_mapping.rememberable? -%>
         <fieldset class="conditional">
           <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
+          <%= f.label :remember_me,  "Keep me signed in." %>
+         <span class="tooltip" data-tooltip="This is not recommended for shared computers. Unless you log out, anyone using this computer will be able to access your account.">?</span><br>
         </fieldset>
       <% end -%>
+      <%= render "devise/shared/links" %>
 
-
-      <div class="form-actions">
-        <%= f.submit "Sign In" %>
-      </div>
     <% end -%>
   </div>
 </div
 ><div class="column column--half">
   <div class="row row--partial">
     <div class="column column--three-fourths">
+      <h2>Market Info</h2>
       <p>If you are registered on any Local Orbit powered market, please log in using the box on the left.</p>
 
       <p>If you are looking for a particular market, please send us a note with the market name and we'll get you there.</p>
