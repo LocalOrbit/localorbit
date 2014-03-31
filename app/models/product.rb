@@ -91,6 +91,13 @@ class Product < ActiveRecord::Base
     unit.try(:singular)
   end
 
+  def prices_for_organization(organization)
+    everyone_prices = prices.where(organization_id: nil).order(:min_quantity).group_by { |price| price.min_quantity }
+    organization_prices = prices.where(organization_id: organization.id).order(:min_quantity).group_by { |price| price.min_quantity }
+
+    everyone_prices.merge(organization_prices).values.flatten
+  end
+
   private
 
   def ensure_organization_can_sell
