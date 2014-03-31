@@ -16,4 +16,5 @@
 //= require chosen-jquery
 //= require underscore
 //= require accountingjs
+//= require jquery.tablesorter.min
 //= require_tree .
