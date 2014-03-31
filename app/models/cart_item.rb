@@ -10,14 +10,14 @@ class CartItem < ActiveRecord::Base
   validate :quantity_is_available, unless: "errors.has_key? :quantity"
 
   def prices
-    product.prices.for_market_and_org(cart.market, cart.organization)
+    product.prices_for_market_and_organization(cart.market, cart.organization)
   end
 
   def unit_price
     if quantity.nil? || quantity <= 0
-      prices.order('min_quantity ASC').first
+      prices.first
     else
-      prices.where('min_quantity <= ?', quantity).order('sale_price ASC').first
+      prices.select {|p| p.min_quantity <= quantity }.last
     end
   end
 
