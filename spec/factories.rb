@@ -45,6 +45,8 @@ FactoryGirl.define do
   end
 
   factory :order do
+    organization
+
     sequence(:order_number) {|n| "LO-#{n}"}
     placed_at        Time.current
 
