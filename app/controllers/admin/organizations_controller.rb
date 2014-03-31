@@ -48,7 +48,7 @@ module Admin
         :who_story,
         :how_story,
         :photo,
-        locations_attributes: [:name, :address, :city, :state, :zip]
+        locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax]
       )
     end
 

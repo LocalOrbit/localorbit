@@ -25,6 +25,8 @@ describe "admin manange organization" do
     fill_in "City", with: "Orleans Twp."
     select "Michigan", from: "State"
     fill_in "Postal Code", with: "49883"
+    fill_in "Phone", with: "616-555-9983"
+    fill_in "Fax", with: "616-555-9984"
 
     click_button "Add Organization"
 
@@ -79,6 +81,8 @@ describe "admin manange organization" do
         fill_in "City",          with: "Ann Arbor"
         select  "Michigan",      from: "State"
         fill_in "Postal Code",   with: "34599"
+        fill_in "Phone", with: "616-555-9983"
+        fill_in "Fax", with: "616-555-9984"
 
         click_button "Add Address"
 
@@ -108,6 +112,7 @@ describe "admin manange organization" do
           expect(page).to have_content("City can't be blank")
           expect(page).to have_content("State can't be blank")
           expect(page).to have_content("Postal code can't be blank")
+          expect(page).to have_content("Phone can't be blank")
         end
       end
     end

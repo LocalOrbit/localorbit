@@ -113,6 +113,6 @@ describe "Checking Out" do
   end
 
   it "clears out the cart" do
-    expect(cart_link.count).to have_content(0)
+    expect(cart_link.count.text).to eql("0")
   end
 end
