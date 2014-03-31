@@ -18,7 +18,7 @@ feature "User signing in" do
     visit "/"
     fill_in "Email", with: user.email
     fill_in "Password", with: "password"
-    check "Remember me"
+    check "Keep me signed in."
     click_button "Sign In"
 
     # Hack to remove a cookie from the cookie jar
