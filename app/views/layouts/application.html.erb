@@ -49,7 +49,7 @@
     </div>
     <footer class="l-app-footer">
       <div class="l-constraint">
-        <% if current_market %>
+        <% if current_market.present? %>
           <div class="pull-right market-manager-contact">
             <% if current_market.managers.any? %>
               <a href="mailto:<%= current_market.managers.first.email %>" class="email"><%= current_market.managers.first.name %></a>, Market Manager<br>
