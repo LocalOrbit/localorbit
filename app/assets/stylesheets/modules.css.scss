@@ -162,7 +162,7 @@
 }
 
 .filter-list {
-  width: 100%;
+  min-width: 100%;
   padding-left: 14px;
   list-style: none;
 
@@ -196,6 +196,9 @@
     }
     > li {
       display: block;
+    }
+    .hide-when-open {
+      display: none;
     }
     > .current {
       background: #dedede;
