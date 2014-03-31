@@ -3,25 +3,6 @@ require "spec_helper"
 describe "Admin Managing Markets" do
   let(:add_market_link_name) { 'Add Market' }
 
-  describe "visiting the admin path without siging in" do
-    it "redirects a user to the login pages" do
-      switch_to_main_domain
-      visit admin_markets_path
-
-      expect(page).to have_content("You need to sign in")
-    end
-  end
-
-  describe 'as a normal user' do
-    it 'users can not manage markets' do
-      switch_to_main_domain
-      sign_in_as create(:user, role: 'user')
-
-      visit admin_markets_path
-      expect(page).to have_text("page you were looking for doesn't exist")
-    end
-  end
-
   describe 'as a market manager' do
     let!(:market1) { create(:market) }
     let!(:market2) { create(:market) }
@@ -133,7 +114,7 @@ describe "Admin Managing Markets" do
       sign_in_as user
     end
 
-    it 'an admin can see a list of markets' do
+    it 'can see a list of markets' do
       @market2 = create(:market)
       visit "/admin/markets"
 
@@ -142,7 +123,7 @@ describe "Admin Managing Markets" do
       expect(page).to have_text(@market2.name)
     end
 
-    it 'an admin can see details for a single market' do
+    it 'can see details for a single market' do
       @market2 = create(:market)
 
       visit '/admin/markets'
@@ -153,7 +134,7 @@ describe "Admin Managing Markets" do
       expect(page).to_not have_text(@market2.name)
     end
 
-    it 'an admin can add a market' do
+    it 'can add a market' do
       visit '/admin/markets'
 
       click_link add_market_link_name
@@ -180,7 +161,7 @@ describe "Admin Managing Markets" do
       expect(page).to have_css("img[alt='Holland Farmers Logo']")
     end
 
-    it 'an admin can modify a market' do
+    it 'can modify a market' do
       visit '/admin/markets'
       click_link market.name
 
@@ -196,7 +177,7 @@ describe "Admin Managing Markets" do
       expect(page).to have_text('Jane Smith')
     end
 
-    it 'an admin can mark an active market as inactive' do
+    it 'can mark an active market as inactive' do
       market.update_attribute(:active, true)
 
       visit "/admin/markets/#{market.id}"
@@ -208,7 +189,7 @@ describe "Admin Managing Markets" do
       expect(page).to have_text('Active? No')
     end
 
-    it 'an admin can mark an inactive market as active' do
+    it 'can mark an inactive market as active' do
       visit "/admin/markets/#{market.id}"
 
       expect(page).to have_text('Active? No')
@@ -216,6 +197,22 @@ describe "Admin Managing Markets" do
       click_button 'Activate'
 
       expect(page).to have_text('Active? Yes')
+    end
+
+    it 'can update the market fee structure' do
+      visit "/admin/markets/#{market.id}"
+      click_link "Fees"
+
+      fill_in 'Local Orbit % paid by seller',   with: '2.0'
+      fill_in 'Market % paid by seller',        with: '3.0'
+      fill_in 'Transaction fee paid by seller', with: '2.5'
+
+      click_button 'Update Fees'
+
+      expect(page).to have_content("#{market.name} fees successfully updated")
+      expect(find_field('Local Orbit % paid by seller').value).to   eq('2.000')
+      expect(find_field('Market % paid by seller').value).to        eq('3.000')
+      expect(find_field('Transaction fee paid by seller').value).to eq('2.500')
     end
   end
 end

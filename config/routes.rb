@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :market_addresses,   as: :addresses,  path: :addresses
       resources :market_managers,    as: :managers,   path: :managers
       resources :delivery_schedules, path: :deliveries
+      resource  :fees, only: [:show, :update]
       resources :bank_accounts, only: [:index, :new, :create] do
         get "verify"
         put "verify" => "bank_accounts#verification"

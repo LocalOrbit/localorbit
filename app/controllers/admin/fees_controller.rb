@@ -1,0 +1,27 @@
+module Admin
+  class FeesController < AdminController
+    before_action :require_admin
+    before_action :lookup_market
+
+    def show
+    end
+
+    def update
+      if @market.update_attributes(fee_params)
+        redirect_to [:admin, @market, :fees], notice: "#{@market.name} fees successfully updated"
+      else
+        render :show
+      end
+    end
+
+    protected
+
+    def lookup_market
+      @market = current_user.markets.find(params[:market_id])
+    end
+
+    def fee_params
+      params.require(:market).permit(:local_orbit_seller_fee, :local_orbit_market_fee, :market_seller_fee, :transaction_seller_fee, :transaction_market_fee)
+    end
+  end
+end
