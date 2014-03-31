@@ -67,7 +67,7 @@
       </p>
     <% end %>
     <div class="form-actions">
-    <%= link_to "Return to Products List", admin_products_path, disabled: @product.prices.view_sorted.any? ? nil : "disabled", class: "btn" %>
+    <%= link_to "Return to Products List", admin_products_path, disabled: @product.prices.view_sorted.any? ? nil : "disabled", class: "btn btn--save" %>
 
     <%= link_to "Add Another product", new_admin_product_path, class: "btn btn--add" if @product.prices.view_sorted.none? %>
     </div>

@@ -96,7 +96,8 @@ class @EditTable
 
     fieldsRow.show()
     fieldsRow.removeClass('is-hidden').addClass('open-row')
-    $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled')
+    $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled').on 'click', (e) ->
+      e.preventDefault()
 
   closeEditRow: (row, cancel)->
     return if row.length == 0
@@ -104,7 +105,10 @@ class @EditTable
     @disableFields(row)
     row.hide()
     row.removeClass('open-row').addClass('is-hidden')
-    $(".add-toggle").show() if row.attr("id") == "add-row"
+
+    if row.attr("id") == "add-row"
+      $(".add-toggle").show()
+      $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', null).removeClass('disabled').off 'click'
 
     @restoreOriginalValues(row) if cancel
 

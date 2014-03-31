@@ -38,7 +38,10 @@
           <%= f.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
       </td>
       <td><%= f.number_field :quantity, min: 0, size: 4 %></td>
-      <td><%= f.submit "Add", class: "btn--small" %></td>
+      <td>
+        <button class="cancel">Cancel</button>
+        <%= f.submit "Add", class: "btn--small" %>
+      </td>
     </tr>
   </thead>
 
