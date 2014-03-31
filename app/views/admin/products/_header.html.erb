@@ -1,0 +1,10 @@
+<%= link_to "< Return to Products List", admin_products_path, class: "redundent-nav" %>
+<div class="l-page-header">
+  <% if @product.persisted? %>
+    <h1>Update <%= @product.name %></h1>
+    <%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), [:admin, @product], class: "delete",
+      data: {method: :delete, confirm: "Are you sure you want to permanently delete this product?"} %>
+  <% else %>
+    <h1>Add Product</h1>
+  <% end %>
+</div>

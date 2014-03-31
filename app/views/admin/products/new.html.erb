@@ -1,9 +1,4 @@
-<%= link_to "< Return to Products List", admin_products_path, class: "redundent-nav" %>
-<div class="l-page-header">
-  <h1>Add Product</h1>
-  <a href="#" class="delete todo">Delete</a>
-</div>
-
+<%= render "admin/products/header" %>
 <%= render "tabs" %>
 <div class="row row--partial">
   <%= form_for [:admin, @product], html: { class: "product column column--half", data: { organizations: @organizations.to_json(include: :locations), type: 'new'}} do |f| %>
