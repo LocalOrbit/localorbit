@@ -19,7 +19,7 @@ class Order < ActiveRecord::Base
   validates :delivery_status, presence: true
   validates :delivery_zip, presence: true
   validates :market_id, presence: true
-  validates :order_number, presence: true
+  validates :order_number, presence: true, uniqueness: true
   validates :organization_id, presence: true
   validates :payment_method, presence: true
   validates :payment_status, presence: true
@@ -61,9 +61,10 @@ class Order < ActiveRecord::Base
 
   def self.create_from_cart(params, cart)
     billing = cart.organization.locations.default_billing
+    order_number = OrderNumber.new(cart.market)
 
     order = Order.new(
-      order_number: "LO-14-0-00000",
+      order_number: order_number.id,
       organization: cart.organization,
       market: cart.market,
       delivery: cart.delivery,
