@@ -18,7 +18,7 @@
       <p>You don't have any prices yet! We've gone ahead and started the entry for you.</p>
     <% end %>
 
-    <%= content_tag :table, border: 0, id: 'pricing_table', data: edit_table_error_payload(@price_with_errors) do %>
+    <%= content_tag :table, border: 0, id: 'pricing_table', data: edit_table_error_payload(@price_with_errors), class: "sortable" do %>
       <thead>
         <tr>
           <%= content_tag :th, raw('<input type="checkbox" class="select-all">') if @product.prices.view_sorted.any? %>

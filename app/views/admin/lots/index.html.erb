@@ -17,7 +17,7 @@
   <p>You don't have any inventory yet! Get started by adding your first lot.</p>
 <% end %>
 
-<%= content_tag :table, id: 'inventory_table', data: edit_table_error_payload(@lot_with_errors) do %>
+<%= content_tag :table, id: 'inventory_table', data: edit_table_error_payload(@lot_with_errors), class: "sortable" do %>
   <thead>
     <tr>
       <th>Date Added</th>

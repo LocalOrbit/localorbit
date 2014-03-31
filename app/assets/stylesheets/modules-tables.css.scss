@@ -260,3 +260,23 @@ th {
       width: 23%;
     }
   }
+
+.sortable {
+  .headerSortDown:before,
+  .headerSortUp:before {
+    display: inline-block;
+    width: 8px;
+    height: 4px;
+    padding-right: .4em;
+    content: '';
+    background: asset_url('sort.png') 0 0 no-repeat;
+    background: asset_url('sort@2x.png') 0 0 / 8px 10px no-repeat;
+    vertical-align: middle;
+  }
+  .headerSortDown:before {
+    background-position: 0 -6px;
+  }
+  .headerSortUp:before {
+    background-position: 0 0;
+  }
+}
