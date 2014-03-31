@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: git://github.com/laserlemon/figaro.git
-  revision: e16f2d47f6516e8420ce21c9de76785d9f244bae
+  revision: 7261234e1415f429bd2c972b568e89d639127b46
   specs:
     figaro (0.7.0)
       rails (>= 3, < 5)
@@ -250,7 +250,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
-    rake (10.2.1)
+    rake (10.2.2)
     rdoc (4.1.1)
       json (~> 1.4)
     request_store (1.0.5)
