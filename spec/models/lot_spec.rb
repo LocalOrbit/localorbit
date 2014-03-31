@@ -102,16 +102,6 @@ describe Lot do
       }.from(0).to(3)
     end
 
-    it "returns available lots, oldest first" do
-      product.lots.create!(quantity: 12)
-      product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
-      product.lots.create!(quantity: 12, number: '2', good_from: 1.day.ago)
-      product.lots.create!(quantity: 12, number: '3', good_from: 1.day.ago, expires_at: 1.day.from_now)
-      product.lots.create!(quantity: 12, number: '4', good_from: 1.day.ago, expires_at: 2.days.from_now)
-
-      expect(product.lots.available(1.day.from_now).first.number).to eql('4')
-    end
-
     it "excludes expired lots" do
       expect {
         lot = product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
@@ -128,6 +118,17 @@ describe Lot do
         Lot.available.count
       }
     end
+
+    it "returns available lots, oldest first" do
+      product.lots.create!(quantity: 12)
+      product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
+      product.lots.create!(quantity: 12, number: '2', good_from: 1.day.ago)
+      product.lots.create!(quantity: 12, number: '3', good_from: 1.day.ago, expires_at: 1.day.from_now)
+      product.lots.create!(quantity: 12, number: '4', good_from: 1.day.ago, expires_at: 2.days.from_now)
+
+      expect(product.lots_by_expiration.available(1.day.from_now).first.number).to eql('4')
+    end
+
   end
 
   describe "#available_inventory" do

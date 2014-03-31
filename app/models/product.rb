@@ -7,7 +7,9 @@ class Product < ActiveRecord::Base
   belongs_to :location
   belongs_to :unit
 
-  has_many :lots, lambda { order('expires_at') }, autosave: true
+  has_many :lots, lambda { order('created_at') }, inverse_of: :product, autosave: true
+  has_many :lots_by_expiration, lambda { order('expires_at, good_from, created_at') }, class_name: Lot, foreign_key: :product_id
+
   has_many :prices, autosave: true, inverse_of: :product
 
   dragonfly_accessor :image

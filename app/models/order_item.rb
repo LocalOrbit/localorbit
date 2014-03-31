@@ -21,7 +21,7 @@ class OrderItem < ActiveRecord::Base
     )
 
     quantity_remaining = item.quantity
-    item.product.lots.available(deliver_on_date).each do |lot|
+    item.product.lots_by_expiration.available(deliver_on_date).each do |lot|
       break unless quantity_remaining
       if lot.quantity >= quantity_remaining
         order_item.lots << OrderItemLot.new(
