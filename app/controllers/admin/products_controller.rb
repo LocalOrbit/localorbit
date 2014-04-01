@@ -1,11 +1,12 @@
 module Admin
   class ProductsController < AdminController
+    before_action :ensure_selling_organization
+
     def index
       @products = current_user.managed_products.page(params[:page]).per(params[:per_page])
     end
 
     def new
-      ensure_selling_organization!
       @product = Product.new.decorate
       find_selling_organizations
     end
@@ -59,7 +60,7 @@ module Admin
       @product.use_simple_inventory? ? [:admin, @product, :prices] : [:admin, @product, :lots]
     end
 
-    def ensure_selling_organization!
+    def ensure_selling_organization
       unless current_user.managed_organizations.selling.any?
         flash[:alert] = "You must add an organization that can sell before adding any products"
         redirect_to new_admin_organization_path
