@@ -58,34 +58,48 @@ describe Product do
     end
   end
 
-  it ".available_for_sale contains the correct products" do
-    market      = create(:market)
-    market2     = create(:market)
-    org_in      = create(:organization, markets: [market])
-    org_out     = create(:organization)
-    buyer       = create(:organization, markets: [market])
-    other_buyer = create(:organization, markets: [market])
+  describe ".available_for_sale" do
+    let(:market)      { create(:market) }
+    let(:market2)     { create(:market) }
+    let(:org_in)      { create(:organization, markets: [market]) }
+    let(:org_out)     { create(:organization) }
+    let(:buyer)       { create(:organization, markets: [market]) }
+    let(:other_buyer) { create(:organization, markets: [market]) }
 
-    product_in                    = create(:product, organization: org_in)
-    product_out                   = create(:product, organization: org_out)
-    product_in_no_price           = create(:product, organization: org_in)
-    product_in_no_lot             = create(:product, organization: org_in)
-    product_in_other_buyer_price  = create(:product, organization: org_in)
-    product_in_other_market_price = create(:product, organization: org_in)
+    let(:product_in)                    { create(:product, organization: org_in) }
+    let(:product_out)                   { create(:product, organization: org_out) }
+    let(:product_in_no_price)           { create(:product, organization: org_in) }
+    let(:product_in_no_lot)             { create(:product, organization: org_in) }
+    let(:product_in_other_buyer_price)  { create(:product, organization: org_in) }
+    let(:product_in_other_market_price) { create(:product, organization: org_in) }
+    let(:product_in_for_buyer)          { create(:product, organization: org_in) }
 
-    create(:price, product: product_in)
-    create(:price, product: product_out)
-    create(:price, product: product_in_no_lot)
-    create(:price, product: product_in_other_buyer_price, organization: other_buyer)
-    create(:price, product: product_in_other_market_price, market: market2)
+    before do
+      create(:price, product: product_in)
+      create(:price, product: product_out)
+      create(:price, product: product_in_no_lot)
+      create(:price, product: product_in_other_buyer_price, organization: other_buyer)
+      create(:price, product: product_in_other_market_price, market: market2)
+      create(:price, product: product_in_for_buyer, organization: buyer)
 
-    create(:lot, product: product_in)
-    create(:lot, product: product_out)
-    create(:lot, product: product_in_no_price)
-    create(:lot, product: product_in_other_buyer_price)
-    create(:lot, product: product_in_other_market_price)
+      create(:lot, product: product_in)
+      create(:lot, product: product_out)
+      create(:lot, product: product_in_no_price)
+      create(:lot, product: product_in_other_buyer_price)
+      create(:lot, product: product_in_other_market_price)
+      create(:lot, product: product_in_for_buyer)
+    end
 
-    expect(Product.available_for_sale(market, buyer)).to eq([product_in])
+    context "with an organization" do
+      it "contains the correct products" do
+        expect(Product.available_for_sale(market, buyer)).to eq([product_in, product_in_for_buyer])
+      end
+    end
+    context "without an organization" do
+      it "contains the correct products" do
+        expect(Product.available_for_sale(market)).to eq([product_in])
+      end
+    end
   end
 
   describe ".for_organization_id" do
