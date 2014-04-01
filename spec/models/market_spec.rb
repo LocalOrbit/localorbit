@@ -67,7 +67,7 @@ describe Market do
   end
 
   describe "#seller_net_percent" do
-    let(:market) { build(:market, local_orbit_seller_fee: "1", local_orbit_market_fee: "2", market_seller_fee: "3", transaction_seller_fee: "4", transaction_market_fee: "5") }
+    let(:market) { build(:market, local_orbit_seller_fee: "1", local_orbit_market_fee: "2", market_seller_fee: "3", credit_card_seller_fee: "4", credit_card_market_fee: "5", ach_seller_fee: "6", ach_market_fee: "7") }
 
     it "includes the local_orbit_seller_fee and market_seller_fee" do
       expect(market.seller_net_percent).to eq(BigDecimal.new("0.96"))

@@ -227,6 +227,7 @@ describe Order do
 
     context "purchase order" do
       let(:params) { { payment_method: "purchase order", payment_note: "1234" } }
+
       it "sets the payment type" do
         expect(subject.payment_method).to eql("purchase order")
       end

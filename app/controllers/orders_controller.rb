@@ -2,11 +2,10 @@ class OrdersController < ApplicationController
   before_action :hide_admin_navigation
 
   def create
-    @order = Order.create_from_cart(order_params, current_cart).decorate
-    if @order.persisted?
-      current_cart.destroy
-      session.delete(:cart_id)
-    end
+    @placed_order = PlaceOrder.perform(order_params: order_params, cart: current_cart)
+    @order = @placed_order.order.decorate
+
+    session.delete(:cart_id) if @placed_order.success?
   end
 
   protected

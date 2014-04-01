@@ -12,8 +12,11 @@ FactoryGirl.define do
     local_orbit_seller_fee 2
     local_orbit_market_fee 0
     market_seller_fee      1
-    transaction_seller_fee 2
-    transaction_market_fee 0
+    credit_card_seller_fee 3
+    credit_card_market_fee 0
+    ach_seller_fee         1.3
+    ach_market_fee         0
+    ach_fee_cap            8
 
     trait :with_addresses do
       after(:create) { |m| create_list(:market_address, 2, market: m) }

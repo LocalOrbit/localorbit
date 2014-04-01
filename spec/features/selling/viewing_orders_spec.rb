@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Viewing orders" do
-  let!(:market)      { create(:market)}
+  let!(:market)      { create(:market, market_seller_fee: 5, local_orbit_seller_fee: 4)}
   let!(:seller_org1) { create(:organization, :seller, markets: [market]) }
   let!(:seller_org2) { create(:organization, :seller, markets: [market]) }
   let!(:buyer_org)   { create(:organization, :buyer,  markets: [market]) }
