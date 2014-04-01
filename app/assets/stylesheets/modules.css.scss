@@ -109,12 +109,6 @@
   list-style: none;
   white-space: nowrap;
 
-  &:last-child {
-    left: auto;
-    right: 0;
-  }
-
-
   > li {
     padding: 0;
     margin: 0;
@@ -128,6 +122,13 @@
 
   .is-open > .dropdown {
     display: block;
+  }
+
+  li:last-child {
+    > .dropdown {
+      left: auto;
+      right: 0;
+    }
   }
 
 .edit-toggle {
