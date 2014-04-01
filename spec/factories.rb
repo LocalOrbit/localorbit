@@ -45,6 +45,8 @@ FactoryGirl.define do
   end
 
   factory :order do
+    organization
+
     sequence(:order_number) {|n| "LO-#{n}"}
     placed_at        Time.current
 
@@ -238,5 +240,10 @@ FactoryGirl.define do
   factory :unit do
     singular "box"
     plural   "boxes"
+  end
+
+  factory :sequence do
+    name "stuff"
+    value 0
   end
 end

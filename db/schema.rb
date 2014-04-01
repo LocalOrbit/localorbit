@@ -296,6 +296,13 @@ ActiveRecord::Schema.define(version: 20140401150441) do
   add_index "products", ["location_id"], name: "index_products_on_location_id", using: :btree
   add_index "products", ["organization_id"], name: "index_products_on_organization_id", using: :btree
 
+  create_table "sequences", force: true do |t|
+    t.string  "name"
+    t.integer "value", default: 0, null: false
+  end
+
+  add_index "sequences", ["name"], name: "index_sequences_on_name", unique: true, using: :btree
+
   create_table "units", force: true do |t|
     t.string   "singular"
     t.string   "plural"
