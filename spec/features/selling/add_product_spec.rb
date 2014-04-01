@@ -7,8 +7,10 @@ def fill_in_required_fields(select=:without_chosen)
   case select
   when :without_chosen
     select "Apples / Macintosh Apples", from: "Category"
+    select "Pound", from: "Unit"
   when :with_chosen
     select_from_chosen "Grapes / Red Grapes", from: "Category"
+    select_from_chosen "Pound", from: "Unit"
   end
 end
 
@@ -213,7 +215,7 @@ describe "Adding a product" do
       end
     end
 
-    context "using the choose category typeahead", js: true do
+    context "using the choose category typeahead", js: true, chosen_js: true do
       let(:category_select) { Dom::CategorySelect.first }
 
       it "can quickly drill down to a result" do
@@ -241,6 +243,7 @@ describe "Adding a product" do
         # Set the product name so we have a valid product
         fill_in "Product Name", with: "Red Grapes"
         fill_in "Short description", with: "Apples are yummy!"
+        select_from_chosen "Pound", from: "Unit"
 
         click_button "Add Product"
         expect(page).to have_content("Added Red Grapes")

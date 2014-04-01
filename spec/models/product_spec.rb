@@ -19,14 +19,19 @@ describe Product do
         expect(subject.errors[:organization]).to include("must be able to sell products")
       end
     end
+
+    it "requires a unit type" do
+      expect(subject).to have(1).error_on(:unit)
+    end
   end
 
   describe "default values" do
     describe "#top_level_category_id" do
       let(:org) { create(:organization) }
+      let(:unit) { create(:unit) }
       let(:top_level) { create(:category, parent: Category.root) }
       let!(:category) { create(:category, parent: top_level) }
-      subject { Product.create!(short_description: "desc", name: "New Product", organization: org, category: category) }
+      subject { Product.create!(short_description: "desc", name: "New Product", organization: org, category: category, unit: unit) }
 
       it "assigns the top level based on category" do
         expect(subject.top_level_category).to eql(top_level)

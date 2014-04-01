@@ -112,6 +112,7 @@ FactoryGirl.define do
     # We need to set this in the factory because FactoryGirl doesn't trigger before_save
     top_level_category { category.top_level_category }
     organization
+    unit
 
     trait :decorated do
       initialize_with do
@@ -120,8 +121,6 @@ FactoryGirl.define do
     end
 
     trait :sellable do
-      unit
-
       after(:create) do |product|
         create(:price, product: product)
         create(:lot, product: product) if product.lots.empty?
