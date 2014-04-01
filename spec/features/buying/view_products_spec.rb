@@ -20,6 +20,10 @@ feature "Viewing products" do
   let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, order_cutoff: 24, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
   let!(:delivery_schedule2) { create(:delivery_schedule, market: market, deleted_at: Time.parse('2013-03-21')) }
 
+  def celery_item
+    Dom::Cart::Item.find_by_name("celery")
+  end
+
   before do
     Timecop.travel(DateTime.parse("October 7 2014"))
     switch_to_subdomain market.subdomain
@@ -44,6 +48,30 @@ feature "Viewing products" do
     expected_price = "$%.2f" % product.prices.first.sale_price
     expect(dom_product.pricing).to have_text(expected_price)
     expect(dom_product.quantity).to have_text(expected_price)
+  end
+
+  scenario "changing the quantity for a listed product", js: true do
+    create(:price, product: org1_product, sale_price: 1.50, min_quantity: 5)
+
+    sign_in_as(user)
+
+    # See prices for the item
+    expect(celery_item.unit_prices.count).to eql(2)
+    expect(celery_item.unit_prices).to include("$3.00")
+    expect(celery_item.unit_prices).to include("$1.50")
+
+    # See the initial totals
+    expect(celery_item.price_for_quantity).to have_content("$3.00")
+    expect(celery_item.node.find(".total")).to have_content("$0.00")
+
+    # See updated
+    celery_item.set_quantity(5)
+    celery_item.price.click
+    expect(celery_item).to have_css(".updated.finished")
+
+    # Ensure the totals update when the products update
+    expect(celery_item.price_for_quantity).to have_content("$1.50")
+    expect(celery_item.node.find(".total")).to have_content("$7.50")
   end
 
   context "pick up or delivery date" do
