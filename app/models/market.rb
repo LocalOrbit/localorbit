@@ -28,4 +28,8 @@ class Market < ActiveRecord::Base
   def domain
     "#{subdomain}.#{Figaro.env.domain!}"
   end
+
+  def seller_net_percent
+    BigDecimal("1") - (local_orbit_seller_fee + market_seller_fee) / 100
+  end
 end

@@ -65,4 +65,18 @@ describe Market do
       expect(market.domain).to eq("#{market.subdomain}.#{Figaro.env.domain!}")
     end
   end
+
+  describe "#seller_net_percent" do
+    let(:market) { build(:market, local_orbit_seller_fee: "1", local_orbit_market_fee: "2", market_seller_fee: "3", transaction_seller_fee: "4", transaction_market_fee: "5") }
+
+    it "includes the local_orbit_seller_fee and market_seller_fee" do
+      expect(market.seller_net_percent).to eq(BigDecimal.new("0.96"))
+
+      market.local_orbit_seller_fee = "3"
+      expect(market.seller_net_percent).to eq(BigDecimal.new("0.94"))
+
+      market.market_seller_fee = "6"
+      expect(market.seller_net_percent).to eq(BigDecimal.new("0.91"))
+    end
+  end
 end

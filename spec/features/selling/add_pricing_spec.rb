@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Adding advanced pricing' do
   let(:user)          { create(:user) }
   let(:market)        { create(:market) }
-  let(:market2)        { create(:market) }
+  let(:market2)       { create(:market) }
   let!(:organization) { create(:organization, markets: [market, market2], users: [user]) }
   let!(:product)      { create(:product, organization: organization) }
 
@@ -126,5 +126,24 @@ describe 'Adding advanced pricing' do
     click_link "Add Price"
     expect(Dom::NewPricingForm.first).not_to be_nil
     expect(find_field('price_sale_price').value).to eq("1.90")
+  end
+
+  describe "with different fees", js: true do
+    let(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
+
+    it "shows updated net sale information" do
+      fill_in 'price_sale_price', with: '12.90'
+      expect(find_field("price_net_price").value).to eq("11.61")
+      click_button 'Add'
+
+      expect(page).to have_content("Successfully added a new price")
+
+      record = Dom::PricingRow.first
+      expect(record.market).to eq('All Markets')
+      expect(record.buyer).to eq('All Buyers')
+      expect(record.min_quantity).to eq('1')
+      expect(record.net_price).to eq('$11.61')
+      expect(record.sale_price).to eq('$12.90')
+    end
   end
 end

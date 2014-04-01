@@ -19,8 +19,7 @@ class Price < ActiveRecord::Base
     ((sale_price || 0) * net_percent).round(2)
   end
 
-  # TODO: Implement with real per market fee structure
   def net_percent
-    BigDecimal.new("0.97")
+    (market || product.organization.markets.first).seller_net_percent
   end
 end

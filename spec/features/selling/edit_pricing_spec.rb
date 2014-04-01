@@ -188,4 +188,23 @@ describe "Editing advanced pricing", js: true do
       expect(Dom::PricingRow.all).to be_empty
     end
   end
+
+  describe "with different fees", js: true do
+    let(:market) { create(:market, local_orbit_seller_fee: 4, market_seller_fee: 6) }
+
+    it "shows updated net sale information" do
+      Dom::PricingRow.first.click_edit
+      fill_in "price_#{price.id}_sale_price", with: '12.90'
+      expect(find_field("price_#{price.id}_net_price").value).to eq("11.61")
+      click_button 'Save'
+
+      expect(page).to have_content("Successfully saved price")
+
+      record = Dom::PricingRow.first
+      expect(record.buyer).to eq('All Buyers')
+      expect(record.min_quantity).to eq('1')
+      expect(record.net_price).to eq('$11.61')
+      expect(record.sale_price).to eq('$12.90')
+    end
+  end
 end

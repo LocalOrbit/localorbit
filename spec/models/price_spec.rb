@@ -13,6 +13,10 @@ describe Price do
   end
 
   describe '#net_price' do
+    subject { build(:price, sale_price: nil) }
+
+    let!(:market) { create(:market, organizations: [subject.product.organization]) }
+
     it "returns the adjusted sale_price for fees" do
       expect(subject.net_price).to eq(0)
 

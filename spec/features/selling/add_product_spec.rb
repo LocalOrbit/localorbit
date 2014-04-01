@@ -338,7 +338,7 @@ describe "Adding a product" do
   end
 
   describe "a seller belonging to multiple organizations" do
-    let(:org2) { create(:organization, who_story: "who org2", how_story: "how org2", locations: [create(:location)]) }
+    let(:org2) { create(:organization, :single_location, markets: [market], who_story: "who org2", how_story: "how org2") }
     let(:buying_org) { create(:organization, :buyer) }
     let(:loc1) { create(:location, organization: org) }
     let(:loc2) { create(:location, organization: org2) }
