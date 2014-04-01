@@ -14,29 +14,42 @@ $ ->
     update: (data)->
       @data = data
       @updateView()
+      @showUpdate()
 
     updateView: ->
       if @el?
         @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
         @el.find(".price").text(accounting.formatMoney(@data.total_price))
+        @el.find(".quantity input").val(@data.quantity)
         if @data.quantity
           @el.find(".icon-clear").removeClass("is-hidden")
-          @el.find(".quantity input").val(@data.quantity)
-        if @data["valid?"]
+
+        if !@data["valid?"] && !@data["destroyed?"]
           @showError()
         else
           @clearError()
 
     remove: ->
       @el.find(".icon-clear").addClass("is-hidden")
+      @showUpdate()
       unless @el.hasClass("product-row")
-        $(@el).remove()
+        @el.remove()
 
     showError: ->
-      @el.find(".quantity").removeClass("field_with_errors")
+      @el.find(".quantity").addClass("field_with_errors")
 
     clearError: ->
-      @el.find(".quantity").addClass("field_with_errors")
+      @el.find(".quantity").removeClass("field_with_errors")
+
+    showUpdate: ->
+      @el.find(".quantity").addClass("updated")
+      window.setTimeout =>
+        @el.find(".quantity").addClass("finished")
+      , 500
+
+      window.setTimeout =>
+        @el.find(".quantity").removeClass("updated").removeClass("finished")
+      , 700
 
 
   class CartView
@@ -68,33 +81,22 @@ $ ->
         notice.fadeOut(500)
       , 3000
 
-    showUpdate: (el)->
-      $(el).closest(".quantity").addClass("updated")
-      window.setTimeout ->
-        $(el).closest(".quantity").addClass("finished")
-      , 500
 
-      window.setTimeout ->
-        $(el).closest(".quantity").removeClass("updated").removeClass("finished")
-      , 700
 
 
   class CartModel
     constructor: (opts)->
       {@url, @view} = opts
 
-      itemsOnPage = _.map opts.items, (el)->
+      @items = _.map opts.items, (el)->
         CartItem.buildWithElement(el)
-
-      @items = _.filter itemsOnPage, (item)->
-        item.data.id?
 
     itemAt: (id)->
       _.find @items, (item)->
-        item.data.id == id
+        item.data.product_id == id
 
     updateOrAddItem: (data, element)->
-      item = @itemAt(data.id)
+      item = @itemAt(data.product_id)
 
       if item?
         item.update(data)
@@ -109,8 +111,10 @@ $ ->
       return item
 
     removeItem: (data)->
-      item = @itemAt(data.id)
-      @items = _.without @items, item
+      item = @itemAt(data.product_id)
+      item.update(data)
+
+      item.data.id = null
       item.remove()
 
     subtotal: ()->
@@ -118,8 +122,15 @@ $ ->
         memo += parseFloat(item.data.total_price)
       , 0)
 
+    itemCount: ()->
+      filteredItems = _.filter @items, (item)->
+        item.data.id?
+
+      filteredItems.length
+
+
     updateTotals: (data) ->
-      @view.updateCounter(@items.length)
+      @view.updateCounter(@itemCount())
       @view.updateSubtotal(@subtotal())
       @view.updateDeliveryFees(data.delivery_fees)
       @view.updateTotal(data.total)
@@ -141,7 +152,7 @@ $ ->
           .done (data)=>
 
             error = data.error
-            if data.destroyed
+            if data.item["destroyed?"]
               @removeItem(data.item)
             else
               @updateOrAddItem(data.item)
@@ -150,8 +161,6 @@ $ ->
 
             if error
               @view.showErrorMessage(error)
-            else
-              @view.showUpdate(elToUpdate)
 
   view = new CartView
     counter: $("header .cart .counter")

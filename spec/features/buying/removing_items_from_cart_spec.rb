@@ -129,9 +129,9 @@ describe "Removing items" do
 
     it "by clicking an items delete link" do
       kale_item.remove_link.trigger("click")
-      expect(kale_item.quantity).to have_css(".updated.finished")
+      expect(kale_item).to have_css(".updated.finished")
 
-      expect(kale_item.quantity_field.value).to eql(0)
+      expect(kale_item.quantity_field.value).to eql("0")
       expect(cart_link.count).to have_content("2")
     end
 

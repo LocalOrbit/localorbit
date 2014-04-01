@@ -26,6 +26,7 @@ class CartsController < ApplicationController
         @error = @item.errors.full_messages.join(". ")
       end
     else
+      @item.update(quantity: 0)
       @item.destroy
     end
   end
