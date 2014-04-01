@@ -1,4 +1,7 @@
 $ ->
+  $('.product-table--admin .delete > a').hover (e) ->
+    $(this).closest('tr').toggleClass('destructive')
+
   return unless $("form.product").length
 
   formView =
@@ -205,3 +208,4 @@ $ ->
 
   $('#product_use_simple_inventory').change ->
     $('#simple-inventory').toggleClass('is-hidden')
+

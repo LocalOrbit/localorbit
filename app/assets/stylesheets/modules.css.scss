@@ -152,14 +152,6 @@
     @include box-shadow(0 0 1px rgba(0,0,0,0.4));
   }
 }
-.export {
-  display: inline-block;
-  min-height: 10px;
-  padding-left: 20px;
-  color: #43639f;
-  background: asset_url('icon-export.png') left center no-repeat;
-  background: asset_url('icon-export@2x.png') left center / 13px 10px no-repeat;
-}
 
 .filter-list {
   min-width: 100%;
@@ -568,6 +560,18 @@
 .clear-link {
   color: #ccc;
 }
+
+.export {
+  display: inline-block;
+  min-height: 10px;
+  padding-left: 20px;
+  color: #43639f;
+  background: asset_url('icon-export.png') left center no-repeat;
+  background: asset_url('icon-export@2x.png') left center / 13px 10px no-repeat;
+}
+  .nav--admin + .export {
+    margin-top: 6px;
+  }
 
 .logo-link {
   position: relative;
