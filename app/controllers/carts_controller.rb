@@ -26,6 +26,12 @@ class CartsController < ApplicationController
     end
   end
 
+  def destroy
+    current_cart.destroy
+    session.delete(:cart_id)
+    redirect_to [:products]
+  end
+
   private
 
   def item_params

@@ -76,3 +76,4 @@
     <%= f.submit "Checkout", class: 'btn btn--small' %>
   </div>
 <% end %>
+<%= link_to "Clear Cart", [:cart], data: { method: :delete, comfirm: "Are you sure you want to clear the cart?"} %>
