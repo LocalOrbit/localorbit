@@ -376,7 +376,7 @@ module Dom
       end
 
       def quantity
-        node.find_field("quantity")
+        node.find(".quantity")
       end
 
       def price_for_quantity
@@ -393,6 +393,10 @@ module Dom
 
       def set_quantity(n)
         quantity_field.set(n)
+      end
+
+      def remove_link
+        node.find(".icon-clear")
       end
     end
 

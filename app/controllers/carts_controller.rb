@@ -11,19 +11,30 @@ class CartsController < ApplicationController
 
   def update
     product = Product.find(item_params[:product_id])
-
     @item = current_cart.items.find_or_initialize_by(product_id: item_params[:product_id])
-    @item.quantity = item_params[:quantity]
-    @item.product = product
 
-    if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory
-      @error = "Quantity available for purchase: #{product.available_inventory}"
-      @item.quantity = product.available_inventory
-    end
+    if item_params[:quantity].to_i > 0
+      @item.quantity = item_params[:quantity]
+      @item.product = product
 
-    if !@item.save
-      @error = @item.errors.full_messages.join(". ")
+      if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory
+        @error = "Quantity available for purchase: #{product.available_inventory}"
+        @item.quantity = product.available_inventory
+      end
+
+      if !@item.save
+        @error = @item.errors.full_messages.join(". ")
+      end
+    else
+      @item.update(quantity: 0)
+      @item.destroy
     end
+  end
+
+  def destroy
+    current_cart.destroy
+    session.delete(:cart_id)
+    redirect_to [:products]
   end
 
   private

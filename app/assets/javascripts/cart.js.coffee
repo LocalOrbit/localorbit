@@ -14,17 +14,43 @@ $ ->
     update: (data)->
       @data = data
       @updateView()
+      @showUpdate()
 
     updateView: ->
       if @el?
         @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
         @el.find(".price").text(accounting.formatMoney(@data.total_price))
+        @el.find(".quantity input").val(@data.quantity)
         if @data.quantity
-          @el.find(".quantity input").val(@data.quantity)
-        if @data["valid?"]
-          @el.find(".quantity").removeClass("field_with_errors")
+          @el.find(".icon-clear").removeClass("is-hidden")
+
+        if !@data["valid?"] && !@data["destroyed?"]
+          @showError()
         else
-          @el.find(".quantity").addClass("field_with_errors")
+          @clearError()
+
+    remove: ->
+      @el.find(".icon-clear").addClass("is-hidden")
+      @showUpdate()
+      unless @el.hasClass("product-row")
+        @el.remove()
+
+    showError: ->
+      @el.find(".quantity").addClass("field_with_errors")
+
+    clearError: ->
+      @el.find(".quantity").removeClass("field_with_errors")
+
+    showUpdate: ->
+      @el.find(".quantity").addClass("updated")
+      window.setTimeout =>
+        @el.find(".quantity").addClass("finished")
+      , 500
+
+      window.setTimeout =>
+        @el.find(".quantity").removeClass("updated").removeClass("finished")
+      , 700
+
 
   class CartView
     constructor: (opts)->
@@ -46,7 +72,7 @@ $ ->
       totals = $("#totals")
       totals.find(".total").text(total)
 
-    showError: (error)->
+    showErrorMessage: (error)->
       notice = $("<div>").addClass("flash").addClass("flash--alert").append($("<p>").text(error))
       $("#flash-messages").append(notice)
       # TODO: Not sure how to re-create fading out
@@ -55,32 +81,22 @@ $ ->
         notice.fadeOut(500)
       , 3000
 
-    showUpdate: (el)->
-      $(el).closest(".quantity").addClass("updated")
-      window.setTimeout ->
-        $(el).closest(".quantity").addClass("finished")
-      , 500
 
-      window.setTimeout ->
-        $(el).closest(".quantity").removeClass("updated").removeClass("finished")
-      , 700
+
 
   class CartModel
     constructor: (opts)->
       {@url, @view} = opts
 
-      itemsOnPage = _.map opts.items, (el)->
+      @items = _.map opts.items, (el)->
         CartItem.buildWithElement(el)
-
-      @items = _.filter itemsOnPage, (item)->
-        item.data.id?
 
     itemAt: (id)->
       _.find @items, (item)->
-        item.data.id == id
+        item.data.product_id == id
 
     updateOrAddItem: (data, element)->
-      item = @itemAt(data.id)
+      item = @itemAt(data.product_id)
 
       if item?
         item.update(data)
@@ -94,29 +110,57 @@ $ ->
 
       return item
 
+    removeItem: (data)->
+      item = @itemAt(data.product_id)
+      item.update(data)
+
+      item.data.id = null
+      item.remove()
+
     subtotal: ()->
       _.reduce(@items, (memo, item)->
         memo += parseFloat(item.data.total_price)
       , 0)
 
+    itemCount: ()->
+      filteredItems = _.filter @items, (item)->
+        item.data.id?
+
+      filteredItems.length
+
+
+    updateTotals: (data) ->
+      @view.updateCounter(@itemCount())
+      @view.updateSubtotal(@subtotal())
+      @view.updateDeliveryFees(data.delivery_fees)
+      @view.updateTotal(data.total)
+
     saveItem: (productId, quantity, elToUpdate)->
       # TODO: Add validation for maximum input to prevent
       #       users from entering numbers greater than available
       #       quantities
-      $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
-        .done (data)=>
-          error = data.error
-          item = @updateOrAddItem(data.item, $(elToUpdate).closest(".cart_item"))
+      if _.isNaN(quantity)
+        errorMessage = "Quantity is not a number"
+        @view.showErrorMessage(errorMessage)
+        $(elToUpdate).closest(".quantity").addClass("field_with_errors")
+      else if quantity < 0
+        errorMessage = "Quantity must be greater than or equal to 0"
+        @view.showErrorMessage(errorMessage)
+        $(elToUpdate).closest(".quantity").addClass("field_with_errors")
+      else
+        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
+          .done (data)=>
 
-          @view.updateCounter(@items.length)
-          @view.updateSubtotal(@subtotal())
-          @view.updateDeliveryFees(data.delivery_fees)
-          @view.updateTotal(data.total)
+            error = data.error
+            if data.item["destroyed?"]
+              @removeItem(data.item)
+            else
+              @updateOrAddItem(data.item)
 
-          if error
-            @view.showError(error)
-          else
-            @view.showUpdate(elToUpdate)
+            @updateTotals(data)
+
+            if error
+              @view.showErrorMessage(error)
 
   view = new CartView
     counter: $("header .cart .counter")
@@ -129,5 +173,10 @@ $ ->
 
   $(".cart_item .quantity input").change ->
     data = $(this).closest(".cart_item").data("cart-item")
-    quantity = $(this).val()
+    quantity = parseInt($(this).val())
     model.saveItem(data.product_id, quantity, this)
+
+  $(".cart_item .icon-clear").click (e)->
+    e.preventDefault()
+    data = $(this).closest(".cart_item").data("cart-item")
+    model.saveItem(data.product_id, 0)

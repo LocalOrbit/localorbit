@@ -16,6 +16,7 @@
               </td>
               <td class="price-for-quantity"><%= number_to_currency(item.unit_price.sale_price) %></td>
               <td class="price"><%= number_to_currency(item.total_price)%></td>
+              <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
             <% end %>
           <% end %>
         </table>
@@ -76,3 +77,4 @@
     <%= f.submit "Checkout", class: 'btn btn--small' %>
   </div>
 <% end %>
+<%= link_to "Clear Cart", [:cart], data: { method: :delete, confirm: "Are you sure you want to clear the cart?"} %>

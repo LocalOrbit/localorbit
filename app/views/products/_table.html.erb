@@ -89,7 +89,7 @@
         </label>
       </td>
       <td class="total price"><%= product.cart_item.decorate.display_total_price %></td>
-      <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
+      <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear #{' is-hidden' unless product.cart_item.persisted?}" %></td>
     </tr>
   <% end %>
   </tbody>

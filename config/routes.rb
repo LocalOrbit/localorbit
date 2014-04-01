@@ -66,7 +66,7 @@ Rails.application.routes.draw do
   resources :products, only: [:index]
   resource  :market, only: [:show]
   resources :sellers, only: [:index, :show]
-  resource :cart, only: [:update, :show]
+  resource :cart, only: [:update, :show, :destroy]
   resource :orders
 
   root to: redirect('/dashboard')
