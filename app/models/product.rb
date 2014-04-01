@@ -80,6 +80,10 @@ class Product < ActiveRecord::Base
     organization.markets.first.name
   end
 
+  def net_percent
+    organization.markets.first.seller_net_percent
+  end
+
   def organization_name
     organization.name
   end

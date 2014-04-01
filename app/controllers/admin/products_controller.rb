@@ -12,7 +12,7 @@ module Admin
 
     def create
       @organization = current_user.managed_organizations.find_by_id(params[:product][:organization_id])
-      @product = Product.new(product_params.merge(organization_id: @organization.try(:id))).decorate
+      @product = Product.new(product_params.merge(organization: @organization)).decorate
 
       if @product.save
         redirect_to after_create_page, notice: "Added #{@product.name}"

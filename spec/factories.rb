@@ -2,13 +2,18 @@ FactoryGirl.define do
   factory :market do
     sequence(:name)      {|n| "Market #{n}" }
     sequence(:subdomain) {|n| "market-#{n}" }
-    tagline       'Connecting Farm to Market'
-    timezone      'US/Eastern'
-    contact_name  'Jill Smith'
-    contact_email 'jill@smith.com'
-    contact_phone '616-222-2222'
-    policies      'Do no harm...'
-    profile       'Market profile...'
+    tagline                'Connecting Farm to Market'
+    timezone               'US/Eastern'
+    contact_name           'Jill Smith'
+    contact_email          'jill@smith.com'
+    contact_phone          '616-222-2222'
+    policies               'Do no harm...'
+    profile                'Market profile...'
+    local_orbit_seller_fee 2
+    local_orbit_market_fee 0
+    market_seller_fee      1
+    transaction_seller_fee 2
+    transaction_market_fee 0
 
     trait :with_addresses do
       after(:create) { |m| create_list(:market_address, 2, market: m) }
