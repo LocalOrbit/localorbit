@@ -11,7 +11,7 @@ module Admin
     end
 
     def create
-      @organization = current_user.managed_organizations.find_by_id(params[:product][:organization_id])
+      @organization = current_user.managed_organizations.selling.find_by_id(params[:product][:organization_id])
       @product = Product.new(product_params.merge(organization: @organization)).decorate
 
       if @product.save

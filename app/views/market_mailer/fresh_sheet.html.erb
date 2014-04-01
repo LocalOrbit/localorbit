@@ -1,0 +1,38 @@
+<h1>See what's fresh at <%= @market.name %></h1>
+<p>Order by <%= @delivery.cutoff_time.strftime("%B %-d at %l%p") %>
+   for Pickup <%= @delivery.display_date %> <%= @delivery.time_range %>.</p>
+<p>
+  Hi! Welcome to this week's new Fresh Sheet.
+</p>
+
+<% @categories.select{|c| @product_groups[c.id].present?}.each do |category| %>
+  <% if @previous_top_level_category != category.top_level_category %>
+    <% @previous_top_level_category = category.top_level_category %>
+    <h2 class="pull-left"><%= category.top_level_category.name %></h2>
+    <a href="#" class="lo_button pull-right">Shop Now</a>
+  <% end %>
+
+  <h3 class="clear"><%= category.name %></h3>
+
+  <table class="lo_fresh_sheet">
+    <% @product_groups[category.id].each do |product| %>
+      <tr class="<%= cycle('odd', 'even') %>">
+        <th scope="row">
+          <dl>
+            <dt><%= product.name %></dt>
+            <dd><%= product.unit_singular %></dd>
+            <dd>&nbsp;&nbsp;&nbsp;&nbsp;<em><%= product.organization_name %></em></dd>
+          </dl>
+        </th>
+        <td>
+          <span class="lo_availability"><%= product.available_inventory %> Available</span><br>
+          <%= link_to "Add to Order", products_url(host: @market.domain), class: "lo_add_link" %>
+          <% if @preview %>
+            <br>
+            <%= link_to "Edit Product", admin_product_url(product, host: @market.domain), class: 'lo_button' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
