@@ -499,14 +499,20 @@
     border-bottom-color: #cbcbcb;
     background: #f4f4f4;
   }
-  .is-disabled {
-    cursor: not-allowed;
+
+  > a:hover {
+    @include box-shadow(0 -2px 3px rgba(0,0,0,0.04));
+    background: #fafafa;
   }
 
   > span {
     border-bottom-color: #fff;
     @include box-shadow(0 -2px 3px rgba(0,0,0,0.1));
     background: #fff;
+
+    &.is-disabled {
+      @include box-shadow(none);
+    }
   }
 }
 
@@ -584,6 +590,10 @@
     color: inherit;
     text-decoration: underline;
   }
+}
+
+.tab-error {
+  top: 25px;
 }
 
 /** Links */

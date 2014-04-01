@@ -1,3 +1,8 @@
+.is-disabled,
+.is-disabled a {
+  cursor: not-allowed;
+}
+
 .hidden,
 .is-hidden {
   display: none;
