@@ -6,6 +6,12 @@
 		
 	<tr>
 		<td colspan="3">
+			<div class="homepage_title" style="text-align: center;">
+				Thoughtfully designed sales &amp; business management tools to help
+				any size organization work more efficiently, with room to grow.
+			</div>
+			<br />&nbsp;<br />
+		
 			<table width="1100" style="table-layout: fixed;">
 				<col width="20%" />
 				<col width="4%" />
@@ -21,19 +27,15 @@
 						<img style="margin-left: 60px;" src="/homepage/img/icon_pitchfork_shovel_blue.png" />
 						<br />&nbsp;<br />
 					
-						<h2 style="margin-top: 10px;">Smart. Secure. Efficient. </h2> 
+						<h2 style="margin-top: 10px;">Smart. Secure. Flexible. </h2> 
 			
 						<span style="font-size:100%;">
-							
-							Thoughtfully designed, flexible tools save you time and 
-							help grow your business. 
-							<br />&nbsp;<br />
+						
 							Our cloud-based technology is scalable, reliable and worry-free,
 							so you can focus on what's most important.  
 									
 							<br />&nbsp;<br />
-							We offer live demos. Reserve your place today.
-							<br />&nbsp;<br /> 
+						
 			<script language="javascript">
 var popupWindow = null;
 function centeredPopup(url,winName,w,h,scroll){
@@ -48,10 +50,11 @@ popupWindow = window.open(url,winName,settings)
 							<a href="http://www.localorb.it/field-notes/schedule-a-demo/" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Register', 'Demo Registration']);" class="btn btn_blue" onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">Sign Up for a Demo</a>
 								</div>	
 						
-					<!-- <br />&nbsp;<br />
-						<a class="btn btn_green" href="http://localorb.us6.list-manage.com/subscribe?u=e0dc0b51636060c0278e6c377&id=9bfb25868c">Get Started</a>
+					<br />&nbsp;<br />
+				
+						<a class="btn btn_blue" href="https://localorb.it/homepage/pricing.php">Pricing</a>
 						
-					</td> -->
+					</td> 
 					<td rowspan="2">&nbsp;</td>
 					<td>
 						<img src="/homepage/img/icon_cart.png" class="home_icon" /><h3 class="home_header">Streamlined Ordering</h3>
@@ -100,7 +103,7 @@ popupWindow = window.open(url,winName,settings)
 					<td>
 						<img src="/homepage/img/icon_megaphone.png" class="home_icon" /><h3 class="home_header">Integrated Marketing</h3>
 						 <div class="home_paragraph" style="height: 115px;">
-						 Manage everything in one place: create discounts, promotions, <br>micro-blogs, newsletters and Fresh Sheets 
+						 Manage everything in one place: create discounts, promotions, <br>newsletters and Fresh Sheets 
 						 in minutes. Integrate your facebook or twitter feeds.<br />&nbsp;<br />
 						</div>
 				

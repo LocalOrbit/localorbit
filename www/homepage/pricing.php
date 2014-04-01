@@ -115,33 +115,36 @@ popupWindow = window.open(url,winName,settings)
 			<div class="pricing">
 				<span class="pricing">Start Up</span>
 				<br />
-				$19/month + 2% of sales
+				$250 per year
 				
 				<hr style="width: 40%;" />
 				<ul style="text-align: left;">
-					<li>Everything you need to<br />manage marketing, sales, order fulfillment &amp; finances</li>
+					<li>Everything you need to manage marketing, sales, fulfillment &amp; finances for your early-stage business.</li>
+					
 				</ul>
 				<div class="pricing_footer">
 
-					<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA"onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);" 
+					<a href="https://docs.google.com/spreadsheet/viewform?formkey=dE52MGtQbVFhMDhoSFc5MlNtVzVsMFE6MA&theme=0AX42CRMsmRFbUy04NmYzYTk2OC1hYzhjLTQ1NTAtOTRiNS0zZWI4YWM2MmI4Njk&ifq"onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);" 
 					class="btn btn_green btn_pricing"onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">
 					Get Started</a>
-					save $40 if paid annually
+					talk to us for details!
+					
 				</div>
 			</div>
 			
 			<div class="pricing pricing_emphasis">
 				<span class="pricing">Grow</span>
-				<br />$49/month + 3% of sales
+				<br />$49/month + 2% of sales
 				
 				<hr style="width: 40%;" />
 				<ul style="text-align: left;">
 					<li>Customizable branding</li>
 					<li>Cross-selling &amp; multi-channel sales</li>
 					<li>Flexible discount codes</li>
+					<li>Advanced reporting</li>
 				</ul>
 				<div class="pricing_footer">
-					<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);" 
+					<a href="https://docs.google.com/spreadsheet/viewform?formkey=dE52MGtQbVFhMDhoSFc5MlNtVzVsMFE6MA&theme=0AX42CRMsmRFbUy04NmYzYTk2OC1hYzhjLTQ1NTAtOTRiNS0zZWI4YWM2MmI4Njk&ifq" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);" 
 					class="btn btn_green btn_pricing"onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">
 					Get Started</a>
 					save $100 if paid annually
@@ -152,11 +155,11 @@ popupWindow = window.open(url,winName,settings)
 				<br />$99/month + 4% of sales
 				<hr style="width: 40%;" />
 				<ul style="text-align: left;">
-					<li>Save time with automated payments to your sellers</li>
-					<li>Advanced reporting</li>
+					<li>Save time and bookkeeping costs with secure, quick automated payments to your sellers.</li>
+				
 				</ul>
 				<div class="pricing_footer">
-					<a href="https://docs.google.com/a/localorb.it/spreadsheet/viewform?formkey=dEg5eU5PWm1WTDlxa2ZaVEg1UnRzamc6MA" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);"
+					<a href="https://docs.google.com/spreadsheet/viewform?formkey=dE52MGtQbVFhMDhoSFc5MlNtVzVsMFE6MA&theme=0AX42CRMsmRFbUy04NmYzYTk2OC1hYzhjLTQ1NTAtOTRiNS0zZWI4YWM2MmI4Njk&ifq" onClick="_gaq.push(['_trackEvent', 'Call to Action', 'Get Started', 'Pricing Page']);"
 					class="btn btn_green btn_pricing"onclick="centeredPopup(this.href,'myWindow','860','860','yes');return false">
 					Get Started</a>
 					<em>save $200 if paid annually</em>
@@ -165,9 +168,14 @@ popupWindow = window.open(url,winName,settings)
 			
 			<a name="learn_more"></a>
 			<br />
-			<a href="mailto:service@localorbit.com?Subject=Local Orbit Flat Rate" target="_top"  style="margin-left: 95px;height:23px;margin-top:260px;margin-bottom:10px;padding-top:8px;width:550px;" class="btn btn_green btn_pricing">Looking for high volume, flate rate pricing? Talk to us.</a>
+			<br>
+			<a href="mailto:service@localorbit.com?Subject=Local Orbit Flat Rate" target="_top"  style="margin-left: 95px;height:23px;margin-top:260px;margin-bottom:10px;padding-top:8px;width:550px;" class="btn btn_green btn_pricing">
+			Looking for high volume, flat rate pricing? Talk to us.</a>
+			<br>
         
-            <h3 style="clear:both;text-align: center;">30-day guarantee. No risks. No start-up costs.</h3>	
+            <h3 style="clear:both;text-align: center;">30-day guarantee. No risks. No start-up costs.</h3>
+      
+            <br>	
 									
             
 		</td>
@@ -177,13 +185,17 @@ popupWindow = window.open(url,winName,settings)
 			<div class="jobs_area">
 				
 				<div style="width: 750px; float: left;">
-					<h3>Local Sourcing at Institutional Scale</h3>
-					Interested in even more services to simplify local sourcing for your institution or restaurant group?<br> 
-					Looking for help with invoicing and payments? We've got a solution.
+					<h3>Vendor Management Solutions for Institutions </h3>
+					Are you interested in purchasing from your favorite farms and local vendors without the hassle 
+					of dozens of weekly emails, calls and invoices? Do you need detailed procurement reports with complete traceability? 
+					
+					
 					<br />							
 				</div>
 				<div style="width: 250px; float: left;">
-					<a href="/homepage/managed-services.php"  style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Learn More</a>
+				
+					<a href="mailto:erika@localorb.it?subject=Interested in Vendor Managment Services"  
+					style="margin-top: 20px;margin-left: 20px;" class="btn btn_blue">Let Us Know</a>
 		
 				</div>
 			</div>

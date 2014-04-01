@@ -49,7 +49,10 @@ else
 	<head>
 		<title>Local Orbit: Re-linking the Food Chain<?=((isset($title))?' - '.$title:'')?></title>
 		<meta name="description" content="Local Orbit provides sales & business management tools for the entrepreneurs building the New Food Economy." />
-		<meta name="keywords" content="wholesale, food hub, institutional buying, local economies, technology, management tools, local food systems, transparency, supply chain, farm-to-school, local food, local food distribution, New Food Economy, software, business management, e-commerce, sales, Boot Camp, Hub Camp, Food Hub Training, Virtual Farmers Market, Online Farmers Market" />
+		<meta name="keywords" content="wholesale, food hub, institutional buying, local economies, technology, management 
+		tools, local food systems, transparency, supply chain, farm-to-school, local food, local food distribution, 
+		New Food Economy, software, business management, e-commerce, sales, Boot Camp, Hub Camp, Food Hub Training, 
+		Virtual Farmers Market, Online Farmers Market, Local Food Marketplace, Local Food Market" />
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
 		<link rel="stylesheet" type="text/css" href="/css/reset.css" />
@@ -113,11 +116,10 @@ fb_param.value = '0.00';
 						<div style="position: relative;width:1100px;height: 120px;">
 							<a href="/" class="logo"><img width="112" height="111" src="/homepage/includes/logo5.png" /></a>
 							<div id="nav1">
-								<a class="nav1" style="font-size: 125%;" href="/homepage/features.php">Features</a>
-								<a class="nav1" style="font-size: 125%;" href="/homepage/customers.php">Customers</a>
-								<a class="nav1" style="font-size: 125%;" href="/homepage/pricing.php">Pricing</a>
-								<a class="nav1" style="font-size: 125%;" href="/homepage/company.php">About</a>
-								<a class="nav1" style="font-size: 125%;" href="/field-notes/">Field Notes</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/features.php">&nbsp;&nbsp;Software Services  </a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/hubcamp.php">&nbsp;&nbsp;Hub Camp</a>
+								<a class="nav1" style="font-size: 125%;" href="/homepage/customers.php">&nbsp;&nbsp;Customers </a>				
+								<a class="nav1" style="font-size: 125%;" href="/field-notes/">&nbsp;&nbsp;Field Notes </a>
 							</div>
 							<div id="nav2">
 								<a href="/homepage/contact.php" class="nav2" >contact</a>
