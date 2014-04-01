@@ -37,16 +37,6 @@ describe "Editing advanced pricing", js: true do
       expect(hidden_method.value).to eql("put")
     end
 
-    it "then adding a price cancels the edit" do
-      expect(Dom::PricingRow.first).to be_editable
-
-      click_link "Add Price"
-
-      expect(Dom::PricingRow.first).to_not be_editable
-
-      fill_in 'price_sale_price', with: '1.90'
-    end
-
     describe "then clicking on another price row" do
       it "will change the row being edited" do
         fill_in("price_#{price.id}_sale_price", with: 55)
@@ -123,15 +113,6 @@ describe "Editing advanced pricing", js: true do
           fill_in("price_#{price.id}_min_quantity", with:"-2")
 
           click_button "Save"
-        end
-
-        it "does not fill in the new price fields" do
-          click_link 'Add Price'
-
-          new_price_form = Dom::NewPricingForm.first
-
-          expect(new_price_form.min_quantity.value).to eql("1")
-          expect(new_price_form.sale_price.value).to be_blank
         end
 
         it "responds with an error message" do

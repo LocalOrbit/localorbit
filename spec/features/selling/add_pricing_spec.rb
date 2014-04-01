@@ -123,6 +123,7 @@ describe 'Adding advanced pricing' do
 
     expect(Dom::NewPricingForm.first).to be_nil
 
+    click_button 'Cancel'
     click_link "Add Price"
     expect(Dom::NewPricingForm.first).not_to be_nil
     expect(find_field('price_sale_price').value).to eq("1.90")

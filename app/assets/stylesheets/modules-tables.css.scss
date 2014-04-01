@@ -30,6 +30,9 @@ td,
 th {
   padding: 4px 0 4px 10px;
   font-size: 14px;
+  &:last-child {
+    padding-right: 5px;
+  }
 }
 
 td {
@@ -68,14 +71,18 @@ tr.odd {
   background: #f9f9f9;
 }
 
-tr:hover {
-  background: #D8EED2;
-}
-tr.destructive {
-  background: #fdd;
+tbody {
+  tr{
+    &:hover {
+      background: #D8EED2;
+    }
+  }
+  .destructive {
+    background: #fdd;
 
-  > .delete a {
-    color: $alert_text;
+    > .delete a {
+      color: $alert_text;
+    }
   }
 }
 

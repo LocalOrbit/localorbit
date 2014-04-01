@@ -85,7 +85,10 @@ class @EditTable
 
     row.hide()
     fieldsRow.show()
-    fieldsRow.addClass('open-row')
+    fieldsRow.removeClass('is-hidden').addClass('open-row')
+    $('.add-toggle').addClass('is-hidden')
+    $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled').on 'click', (e) ->
+      e.preventDefault()
 
   openAddRow: ()->
     @closeEditRow(@form.find('.open-row'), false)
@@ -96,6 +99,7 @@ class @EditTable
 
     fieldsRow.show()
     fieldsRow.removeClass('is-hidden').addClass('open-row')
+    $('.add-toggle').addClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled').on 'click', (e) ->
       e.preventDefault()
 
@@ -106,9 +110,8 @@ class @EditTable
     row.hide()
     row.removeClass('open-row').addClass('is-hidden')
 
-    if row.attr("id") == "add-row"
-      $(".add-toggle").show()
-      $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', null).removeClass('disabled').off 'click'
+    $(".add-toggle").removeClass('is-hidden')
+    $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', null).removeClass('disabled').off 'click'
 
     @restoreOriginalValues(row) if cancel
 
@@ -132,7 +135,7 @@ class @EditTable
 
     @form.on "click", ".add-toggle", (e) ->
       e.preventDefault()
-      $(this).hide()
+      $(this).addClass('is-hidden')
       context.openAddRow()
 
     @form.on "click", ".delete-selected", (e) ->

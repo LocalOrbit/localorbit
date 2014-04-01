@@ -40,6 +40,11 @@ input[type=submit] {
     padding: 6px 18px;
     font-size: 14px;
   }
+  &.prevent-delete {
+    position: absolute;
+    height: 0;
+    width: 0;
+  }
 }
 
 button,

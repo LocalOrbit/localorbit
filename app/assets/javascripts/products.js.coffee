@@ -208,4 +208,10 @@ $ ->
 
   $('#product_use_simple_inventory').change ->
     $('#simple-inventory').toggleClass('is-hidden')
+    $('#product-inventory-nav').toggleClass('is-hidden pulsed')
 
+  $('#product-inventory-nav > .is-disabled').click (e) ->
+    $('<div class="tab-error flash flash--alert"><p>' + $(this).attr('data-error') + '</p></div>').appendTo('.tab-header')
+    window.setTimeout ->
+        window.fade_flash()
+      , 10
