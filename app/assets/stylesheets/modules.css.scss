@@ -152,14 +152,6 @@
     @include box-shadow(0 0 1px rgba(0,0,0,0.4));
   }
 }
-.export {
-  display: inline-block;
-  min-height: 10px;
-  padding-left: 20px;
-  color: #43639f;
-  background: asset_url('icon-export.png') left center no-repeat;
-  background: asset_url('icon-export@2x.png') left center / 13px 10px no-repeat;
-}
 
 .filter-list {
   min-width: 100%;
@@ -320,7 +312,7 @@
 }
 
 .nav--main {
-  margin: 20px 0 30px;
+  margin: 30px 0 0;
   font-family: "HelveticaNeue-CondensedBold", "Open Sans Condensed", sans-serif;
   font-size: 36px;
   font-weight: bold;
@@ -330,7 +322,11 @@
   }
 
   a {
-    color: #4162a1;
+    color: #7393d1;
+
+    &:hover {
+      color: #4162a1;
+    }
   }
 }
 
@@ -462,6 +458,29 @@
     background: asset_url('icons/circled-check@2x.png') center / cover no-repeat;
   }
 }
+.tab-header {
+  width: 100%;
+
+  &.js-positioned {
+    position: absolute;
+    left: 0;
+    z-index: 3;
+    padding: 0 20px;
+    @include box-sizing(border-box);
+
+    > .l-constraint {
+      padding-top: 20px;
+    }
+  }
+  &.js-fixed {
+    position: fixed;
+
+    > .l-constraint {
+      padding: 20px 20px 0;
+      background: #fff;
+    }
+  }
+}
 .tab {
   position: relative;
   display: inline-block;
@@ -479,6 +498,9 @@
   .is-disabled {
     border-bottom-color: #cbcbcb;
     background: #f4f4f4;
+  }
+  .is-disabled {
+    cursor: not-allowed;
   }
 
   > span {
@@ -569,12 +591,24 @@
   color: #ccc;
 }
 
+.export {
+  display: inline-block;
+  min-height: 10px;
+  padding-left: 20px;
+  color: #43639f;
+  background: asset_url('icon-export.png') left center no-repeat;
+  background: asset_url('icon-export@2x.png') left center / 13px 10px no-repeat;
+}
+  .nav--admin + .export {
+    margin-top: 6px;
+  }
+
 .logo-link {
   position: relative;
   display: block;
   max-width: 100px;
   height: 100px;
-  margin: 0 0 20px 5px;
+  margin: 0 0 20px 0;
 
   > .logo {
     max-width: 100%;

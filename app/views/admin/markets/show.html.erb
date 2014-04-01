@@ -1,7 +1,7 @@
 <div>
   <%= render 'header' %>
   <div>
-    <%= link_to "Edit Market", [:edit, :admin, @market] %>
+    <%= link_to "Edit Market", [:edit, :admin, @market], class: "btn btn--small pull-right" %>
     <%= form_for([:admin, @market]) do |f| %>
       <%= f.hidden_field :active, value: !@market.active? %>
       <%= f.submit @market.active? ? 'Deactivate' : 'Activate' %>

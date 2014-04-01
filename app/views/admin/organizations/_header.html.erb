@@ -1,12 +1,13 @@
-<div>
-  <h1><%= @organization.name %> Details</h1>
-  <div class="tabs-wrapper">
-    <ul class="tabs">
-      <%= content_tag(:li, link_to_or_span("Info", [:admin, @organization]), class: 'tab') %>
-      <%= content_tag(:li, link_to_or_span("Users", [:admin, @organization, :users]), class: 'tab') %>
-      <%= content_tag(:li, link_to_or_span("Addresses", [:admin, @organization, :locations]), class: 'tab')%>
-      <%= content_tag(:li, link_to_or_span("Bank Accounts", [:admin, @organization, :bank_accounts]), class: 'tab')%>
-    </ul>
+<div class="tab-header">
+  <div class="l-constraint">
+    <h1><%= @organization.name %> Details</h1>
+    <div class="tabs-wrapper">
+      <ul class="tabs">
+        <%= content_tag(:li, link_to_or_span("Info", [:admin, @organization]), class: 'tab') %>
+        <%= content_tag(:li, link_to_or_span("Users", [:admin, @organization, :users]), class: 'tab') %>
+        <%= content_tag(:li, link_to_or_span("Addresses", [:admin, @organization, :locations]), class: 'tab')%>
+        <%= content_tag(:li, link_to_or_span("Bank Accounts", [:admin, @organization, :bank_accounts]), class: 'tab')%>
+      </ul>
+    </div>
   </div>
 </div>
-

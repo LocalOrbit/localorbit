@@ -34,10 +34,16 @@
 }
 
 .l-app-header {
+  width: 100%;
   min-height: 57px;
   color: #fff;
   @include gradient(#3f5d99, #4567aa);
   font-size: 14px;
+  &.js-positioned {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+  }
 }
 .l-app-footer {
   bottom: 0;
