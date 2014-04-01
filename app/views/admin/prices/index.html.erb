@@ -12,7 +12,10 @@
       <%= link_to "Add Price", "#add-row", class: "btn btn--add btn--small pull-right add-toggle#{" is-hidden" if @price.errors.any?}" %>
       <h2 class="clear-after">Add Prices</h2>
       <p>You can set a single universal price, or individual prices for certain Markets (if applicable), certain Buyers, as well as prices for certain quantities.</p>
-      <p><%= button_tag "Delete Selected Prices", class: "btn delete delete-selected is-invisible" %></p>
+      <p>
+        <%= button_tag "Save", class: "btn is-invisible prevent-delete" %>
+        <%= button_tag "Delete Selected Prices", class: "btn delete delete-selected is-invisible" %>
+      </p>
     <% else %>
       <h2>Add Prices</h2>
       <p>You don't have any prices yet! We've gone ahead and started the entry for you.</p>
@@ -67,8 +70,6 @@
       </p>
     <% end %>
     <div class="form-actions">
-    <%= link_to "Return to Products List", admin_products_path, disabled: @product.prices.view_sorted.any? ? nil : "disabled", class: "btn btn--save" %>
-
     <%= link_to "Add Another product", new_admin_product_path, class: "btn btn--add" if @product.prices.view_sorted.none? %>
     </div>
   </div>
