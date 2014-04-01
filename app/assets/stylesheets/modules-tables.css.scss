@@ -68,14 +68,18 @@ tr.odd {
   background: #f9f9f9;
 }
 
-tr:hover {
-  background: #D8EED2;
-}
-tr.destructive {
-  background: #fdd;
+tbody {
+  tr{
+    &:hover {
+      background: #D8EED2;
+    }
+  }
+  .destructive {
+    background: #fdd;
 
-  > .delete a {
-    color: $alert_text;
+    > .delete a {
+      color: $alert_text;
+    }
   }
 }
 
