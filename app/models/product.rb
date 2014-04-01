@@ -91,6 +91,11 @@ class Product < ActiveRecord::Base
     unit.try(:singular)
   end
 
+  def prices_for_market_and_organization(market, organization)
+    ids = [organization.id, nil]
+    prices.where(market_id: [market.id, nil]).where(organization_id: ids).order("min_quantity, organization_id desc nulls first").index_by {|price| price.min_quantity}.values
+  end
+
   private
 
   def ensure_organization_can_sell

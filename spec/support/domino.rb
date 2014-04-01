@@ -424,6 +424,12 @@ module Dom
     def open_how_story
       node.click_link "How"
     end
+
+    def prices
+      node.all(".tiers li").map do |tier|
+        tier.find(".unit-price").text
+      end
+    end
   end
 
   class ProductFilter < Domino

@@ -394,4 +394,19 @@ describe Product do
       end
     end
   end
+
+  describe "#prices_for_organization" do
+    let(:market)             { create(:market) }
+    let(:other_market)       { create(:market) }
+    let(:org)                { create(:organization) }
+    let(:everyone_price)     { create(:price, sale_price: 10.00) }
+    let(:overridden_price)   { create(:price, min_quantity: 5, sale_price: 9.00) }
+    let(:org_price)          { create(:price, min_quantity: 5, sale_price: 8.00, market: market, organization: org) }
+    let(:other_market_price) { create(:price, min_quantity: 2, sale_price: 5.00, market: other_market) }
+    let(:product)            { create(:product, prices: [everyone_price, overridden_price, org_price, other_market_price]) }
+
+    it "returns the correct prices" do
+      expect(product.prices_for_market_and_organization(market, org)).to eql([everyone_price, org_price])
+    end
+  end
 end

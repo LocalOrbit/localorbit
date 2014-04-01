@@ -315,4 +315,18 @@ feature "Viewing products" do
 
     expect(page).to have_content("Create new address")
   end
+
+  context "organization specific pricing" do
+    let!(:everyone_price_1) { org1_product.prices.first.update(sale_price: 10.00) }
+    let!(:everyone_price_2) { create(:price, product: org1_product, sale_price: 8.00, min_quantity: 5) }
+    let!(:org_price_1)      { create(:price, product: org1_product, organization: buyer_org, sale_price: 5.00, min_quantity: 5) }
+
+    scenario "organization only sees pricing relavent to them" do
+      sign_in_as(user)
+
+      product = Dom::Product.find_by_name(org1_product.name)
+      expect(product.prices).to include("$10.00", "$5.00")
+      expect(product.prices).to_not include("$8.00")
+    end
+  end
 end
