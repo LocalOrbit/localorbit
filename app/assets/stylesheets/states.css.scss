@@ -5,3 +5,55 @@
 .is-invisible {
   visibility: hidden;
 }
+
+.is-pulsing {
+  -webkit-animation: pulse 3s infinite;
+     -moz-animation: pulse 3s infinite;
+          animation: pulse 3s infinite;
+}
+
+.pulsed {
+  -webkit-animation: reverse_pulse 3s 1;
+     -moz-animation: reverse_pulse 3s 1;
+          animation: reverse_pulse 3s 1;}
+
+@-webkit-keyframes reverse_pulse {
+  0%   { opacity: 0; }
+  20%  { opacity: 0.8; }
+  40%  { opacity: 0.4; }
+  60%  { opacity: 0.8; }
+  80%  { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes reverse_pulse {
+  0%   { opacity: 0; }
+  20%  { opacity: 0.8; }
+  40%  { opacity: 0.4; }
+  60%  { opacity: 0.8; }
+  80%  { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+@keyframes reverse_pulse {
+  0%   { opacity: 0; }
+  20%  { opacity: 0.4; }
+  40%  { opacity: 0.05; }
+  60%  { opacity: 0.8; }
+  80%  { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}

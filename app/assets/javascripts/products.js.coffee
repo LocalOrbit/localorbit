@@ -208,4 +208,5 @@ $ ->
 
   $('#product_use_simple_inventory').change ->
     $('#simple-inventory').toggleClass('is-hidden')
+    $('#product-inventory-nav').toggleClass('is-hidden pulsed')
 
