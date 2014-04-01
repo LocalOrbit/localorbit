@@ -79,7 +79,7 @@ $ ->
       _.find @items, (item)->
         item.data.id == id
 
-    updateOrAddItem: (data)->
+    updateOrAddItem: (data, element)->
       item = @itemAt(data.id)
 
       if item?
@@ -88,7 +88,8 @@ $ ->
       else
         # TODO: This will need an element even f it's on the
         # products listing page
-        item = new CartItem(data: data)
+        item = new CartItem(data: data, el: element)
+        item.updateView()
         @items.push(item)
 
       return item
@@ -105,7 +106,7 @@ $ ->
       $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
         .done (data)=>
           error = data.error
-          item = @updateOrAddItem(data.item)
+          item = @updateOrAddItem(data.item, $(elToUpdate).closest(".cart_item"))
 
           @view.updateCounter(@items.length)
           @view.updateSubtotal(@subtotal())

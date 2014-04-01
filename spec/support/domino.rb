@@ -371,6 +371,10 @@ module Dom
       attribute :name
       attribute :description
 
+      def unit_prices
+        node.all(".unit-price").map(&:text)
+      end
+
       def quantity
         node.find_field("quantity")
       end
