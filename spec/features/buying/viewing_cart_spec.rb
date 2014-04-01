@@ -95,9 +95,9 @@ describe "Viewing the cart", js: true do
   end
 
   it "displays the current cart item quantities" do
-    expect(bananas_item.quantity.value).to eql("10")
-    expect(kale_item.quantity.value).to eql("20")
-    expect(potatoes_item.quantity.value).to eql("5")
+    expect(bananas_item.quantity_field.value).to eql("10")
+    expect(kale_item.quantity_field.value).to eql("20")
+    expect(potatoes_item.quantity_field.value).to eql("5")
   end
 
   context "delivery information" do
@@ -187,10 +187,6 @@ describe "Viewing the cart", js: true do
       kale_item.set_quantity(5)
       bananas_item.quantity_field.click
       expect(kale_item.price_for_quantity).to have_content("$2.50")
-
-      kale_item.set_quantity(0)
-      bananas_item.quantity_field.click
-      expect(kale_item.price_for_quantity).to have_content("$3.00")
     end
 
     it "updates the overall price" do
@@ -207,10 +203,6 @@ describe "Viewing the cart", js: true do
       kale_item.set_quantity(1)
       bananas_item.quantity_field.click
       expect(kale_item.price).to have_content("$3.00")
-
-      kale_item.set_quantity(0)
-      bananas_item.quantity_field.click
-      expect(kale_item.price).to have_content("$0.00")
     end
 
     it "updates item subtotal" do
@@ -231,7 +223,7 @@ describe "Viewing the cart", js: true do
       end
 
       it "resets the quantity to the entire available quantity" do
-        expect(kale_item.quantity.value).to eql("100")
+        expect(kale_item.quantity_field.value).to eql("100")
       end
     end
 

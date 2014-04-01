@@ -20,11 +20,24 @@ $ ->
         @el.find(".price-for-quantity").text(accounting.formatMoney(@data.unit_sale_price))
         @el.find(".price").text(accounting.formatMoney(@data.total_price))
         if @data.quantity
+          @el.find(".icon-clear").removeClass("is-hidden")
           @el.find(".quantity input").val(@data.quantity)
         if @data["valid?"]
-          @el.find(".quantity").removeClass("field_with_errors")
+          @showError()
         else
-          @el.find(".quantity").addClass("field_with_errors")
+          @clearError()
+
+    remove: ->
+      @el.find(".icon-clear").addClass("is-hidden")
+      unless @el.hasClass("product-row")
+        $(@el).remove()
+
+    showError: ->
+      @el.find(".quantity").removeClass("field_with_errors")
+
+    clearError: ->
+      @el.find(".quantity").addClass("field_with_errors")
+
 
   class CartView
     constructor: (opts)->
@@ -46,7 +59,7 @@ $ ->
       totals = $("#totals")
       totals.find(".total").text(total)
 
-    showError: (error)->
+    showErrorMessage: (error)->
       notice = $("<div>").addClass("flash").addClass("flash--alert").append($("<p>").text(error))
       $("#flash-messages").append(notice)
       # TODO: Not sure how to re-create fading out
@@ -64,6 +77,7 @@ $ ->
       window.setTimeout ->
         $(el).closest(".quantity").removeClass("updated").removeClass("finished")
       , 700
+
 
   class CartModel
     constructor: (opts)->
@@ -94,29 +108,50 @@ $ ->
 
       return item
 
+    removeItem: (data)->
+      item = @itemAt(data.id)
+      @items = _.without @items, item
+      item.remove()
+
     subtotal: ()->
       _.reduce(@items, (memo, item)->
         memo += parseFloat(item.data.total_price)
       , 0)
 
+    updateTotals: (data) ->
+      @view.updateCounter(@items.length)
+      @view.updateSubtotal(@subtotal())
+      @view.updateDeliveryFees(data.delivery_fees)
+      @view.updateTotal(data.total)
+
     saveItem: (productId, quantity, elToUpdate)->
       # TODO: Add validation for maximum input to prevent
       #       users from entering numbers greater than available
       #       quantities
-      $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
-        .done (data)=>
-          error = data.error
-          item = @updateOrAddItem(data.item, $(elToUpdate).closest(".cart_item"))
+      if _.isNaN(quantity)
+        errorMessage = "Quantity is not a number"
+        @view.showErrorMessage(errorMessage)
+        $(elToUpdate).closest(".quantity").addClass("field_with_errors")
+      else if quantity < 0
+        errorMessage = "Quantity must be greater than or equal to 0"
+        @view.showErrorMessage(errorMessage)
+        $(elToUpdate).closest(".quantity").addClass("field_with_errors")
+      else
+        $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
+          .done (data)=>
 
-          @view.updateCounter(@items.length)
-          @view.updateSubtotal(@subtotal())
-          @view.updateDeliveryFees(data.delivery_fees)
-          @view.updateTotal(data.total)
+            error = data.error
+            if data.destroyed
+              @removeItem(data.item)
+            else
+              @updateOrAddItem(data.item)
 
-          if error
-            @view.showError(error)
-          else
-            @view.showUpdate(elToUpdate)
+            @updateTotals(data)
+
+            if error
+              @view.showErrorMessage(error)
+            else
+              @view.showUpdate(elToUpdate)
 
   view = new CartView
     counter: $("header .cart .counter")
@@ -129,5 +164,10 @@ $ ->
 
   $(".cart_item .quantity input").change ->
     data = $(this).closest(".cart_item").data("cart-item")
-    quantity = $(this).val()
+    quantity = parseInt($(this).val())
     model.saveItem(data.product_id, quantity, this)
+
+  $(".cart_item .icon-clear").click (e)->
+    e.preventDefault()
+    data = $(this).closest(".cart_item").data("cart-item")
+    model.saveItem(data.product_id, 0)

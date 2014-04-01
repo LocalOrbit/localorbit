@@ -46,8 +46,16 @@ describe "Removing items" do
   let!(:cart_potatoes) { create(:cart_item, cart: cart, product: potatoes, quantity: 5) }
   let!(:cart_kale) { create(:cart_item, cart: cart, product: kale, quantity: 20) }
 
+  def bananas_item
+    Dom::Cart::Item.find_by_name("Bananas")
+  end
+
   def cart_link
     Dom::CartLink.first
+  end
+
+  def kale_item
+    Dom::Cart::Item.find_by_name("Kale")
   end
 
   before do
@@ -58,7 +66,7 @@ describe "Removing items" do
     Timecop.return
   end
 
-  context "on the checkout view" do
+  context "on the checkout view", js: true do
     before do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
@@ -80,6 +88,54 @@ describe "Removing items" do
       expect(cart_link.count).to have_content("0")
     end
 
-    it "by clicking an items delete link"
+    it "by clicking an items delete link" do
+      kale_item.remove_link.trigger("click")
+      sleep(0.5)
+
+      expect(cart_link.count).to have_content("2")
+      expect(kale_item).to be_nil
+    end
+  end
+
+  context "on products view", js: true do
+    before do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+
+      expect(page).to have_content("Bananas")
+      expect(page).to have_content("Kale")
+      expect(page).to have_content("Potatoes")
+      expect(cart_link.count).to have_content("3")
+    end
+
+    context "when no cart item exists for the product" do
+      before do
+        CartItem.destroy_all
+        visit products_path
+      end
+
+      it "does not show the remove link" do
+        expect(kale_item).to_not have_css(".icon-clear")
+      end
+
+      it "shows the remove link once a cart item exists" do
+        kale_item.set_quantity(1)
+        bananas_item.quantity_field.click
+        expect(kale_item).to have_css(".updated.finished")
+
+        expect(kale_item.node).to have_css(".icon-clear")
+      end
+    end
+
+    it "by clicking an items delete link" do
+      kale_item.remove_link.trigger("click")
+      expect(kale_item.quantity).to have_css(".updated.finished")
+
+      expect(kale_item.quantity_field.value).to eql(0)
+      expect(cart_link.count).to have_content("2")
+    end
+
+    it "by setting the quantity to 0" do
+    end
   end
 end
