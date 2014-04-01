@@ -1,4 +1,4 @@
-class SetupBalancedForExistingData < ActiveRecord::Migration
+class SetupBalancedForExistingDataAgain < ActiveRecord::Migration
   class Organization < ActiveRecord::Base
   end
   class Market < ActiveRecord::Base
