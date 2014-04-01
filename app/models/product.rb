@@ -15,6 +15,7 @@ class Product < ActiveRecord::Base
   dragonfly_accessor :image
 
   validates :name, presence: true
+  validates :unit, presence: true
   validates :category_id, presence: true
   validates :organization_id, presence: true
   validates :short_description, presence: true
