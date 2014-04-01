@@ -312,7 +312,7 @@
 }
 
 .nav--main {
-  margin: 20px 0 30px;
+  margin: 30px 0 0;
   font-family: "HelveticaNeue-CondensedBold", "Open Sans Condensed", sans-serif;
   font-size: 36px;
   font-weight: bold;
@@ -322,7 +322,11 @@
   }
 
   a {
-    color: #4162a1;
+    color: #7393d1;
+
+    &:hover {
+      color: #4162a1;
+    }
   }
 }
 
@@ -604,7 +608,7 @@
   display: block;
   max-width: 100px;
   height: 100px;
-  margin: 0 0 20px 5px;
+  margin: 0 0 20px 0;
 
   > .logo {
     max-width: 100%;
