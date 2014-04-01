@@ -46,8 +46,14 @@
 .icon-delete:before {
   content: "\e04a";
 }
+.icon-facebook:before {
+  content: "\e042";
+}
 .icon-plus-circle:before {
   content: "\e02e";
+}
+.icon-twitter:before {
+  content: "\e040";
 }
 
 /* Use the following CSS code if you want to have a class per icon */
@@ -127,14 +133,8 @@ you can use the generic selector below, but it's slower:
 .icon-mail-2:before {
   content: "\e03f";
 }
-.icon-twitter:before {
-  content: "\e040";
-}
 .icon-feed:before {
   content: "\e041";
-}
-.icon-facebook:before {
-  content: "\e042";
 }
 .icon-share:before {
   content: "\e043";

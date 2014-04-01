@@ -75,8 +75,6 @@ input[type=text] {
     ~ .btn--end {
       display: inline-block;
       padding: 3px 3px 2px;
-      @include border-radius(0 2px 2px 0);
-      margin: 2px 0 2px -1px;
       font-size: smaller;
       vertical-align: top;
     }

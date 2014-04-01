@@ -472,6 +472,9 @@
     border-bottom-color: #cbcbcb;
     background: #f4f4f4;
   }
+  .is-disabled {
+    cursor: not-allowed;
+  }
 
   > span {
     border-bottom-color: #fff;
