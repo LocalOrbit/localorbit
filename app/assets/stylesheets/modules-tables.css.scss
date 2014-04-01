@@ -30,6 +30,9 @@ td,
 th {
   padding: 4px 0 4px 10px;
   font-size: 14px;
+  &:last-child {
+    padding-right: 5px;
+  }
 }
 
 td {

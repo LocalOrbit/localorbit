@@ -29,14 +29,14 @@
 
     <tr class="lot add-row <%= @product.lots.count > 0 ? 'is-hidden' : '' %>" id="add-row">
       <td><%= Time.current.strftime('%m/%d/%Y') %></td>
-      <td><%= f.text_field :number, size: 10  %></td>
+      <td><%= f.text_field :number, size: 8  %></td>
       <td>
           <%= f.datetime_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
       </td>
       <td>
           <%= f.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
       </td>
-      <td><%= f.number_field :quantity, min: 0, size: 4 %></td>
+      <td><%= f.number_field :quantity, min: 0, size: 3 %></td>
       <td>
         <button class="cancel">Cancel</button>
         <%= f.submit "Add", class: "btn--small" %>
@@ -62,14 +62,14 @@
     <%= content_tag_for :tr, lot, :fields, {class: 'lot', style:"display:none;", data: {"form-url" => url_for([:admin, lot.product, lot]) }} do %>
       <%= fields_for :lot, lot, index: lot.id do |lot_in_table| %>
         <td><%= lot.created_at.strftime('%m/%d/%Y') %></td>
-        <td><%= lot_in_table.text_field :number, size: 10 %></td>
+        <td><%= lot_in_table.text_field :number, size: 8 %></td>
         <td>
           <%= lot_in_table.datetime_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_<%= lot.id %>_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
         </td>
         <td>
           <%= lot_in_table.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_<%= lot.id %>_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
         </td>
-        <td><%= lot_in_table.number_field :quantity, min: 0, size: 4 %></td>
+        <td><%= lot_in_table.number_field :quantity, min: 0, size: 3 %></td>
 
         <td><%= link_to "Cancel", "#", class:"cancel" %><%= f.submit "Save", class: "btn--small" %></td>
       <% end %>
