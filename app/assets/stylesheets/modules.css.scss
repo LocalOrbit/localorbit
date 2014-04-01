@@ -454,6 +454,29 @@
     background: asset_url('icons/circled-check@2x.png') center / cover no-repeat;
   }
 }
+.tab-header {
+  width: 100%;
+
+  &.js-positioned {
+    position: absolute;
+    left: 0;
+    z-index: 3;
+    padding: 0 20px;
+    @include box-sizing(border-box);
+
+    > .l-constraint {
+      padding-top: 20px;
+    }
+  }
+  &.js-fixed {
+    position: fixed;
+
+    > .l-constraint {
+      padding: 20px 20px 0;
+      background: #fff;
+    }
+  }
+}
 .tab {
   position: relative;
   display: inline-block;
