@@ -1,4 +1,5 @@
 $ ->
+  return unless $('.tab-header').length
   app_header = $(".l-app-header").height()
   $tab_header = $(".tab-header")
   absolute_top = $tab_header.offset().top - app_header - 20
@@ -15,7 +16,6 @@ $ ->
       return (document.documentElement || document.body.parentNode || document.body).scrollTop
 
   $(window).scroll ->
-    console.log $tab_header.offset().top, find_scrolly()
     if absolute_top <= find_scrolly()
       $tab_header.addClass('js-fixed').css('top', app_header)
     else

@@ -1,10 +1,29 @@
-<%= link_to "< Return to Products List", admin_products_path, class: "redundent-nav" %>
-<div class="l-page-header">
-  <% if @product.persisted? %>
-    <h1>Update <%= @product.name %></h1>
-    <%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), [:admin, @product], class: "delete",
-      data: {method: :delete, confirm: "Are you sure you want to permanently delete this product?"} %>
-  <% else %>
-    <h1>Add Product</h1>
-  <% end %>
+<div class="tab-header">
+  <div class="l-constraint">
+    <%= link_to "< Return to Products List", admin_products_path, class: "redundent-nav" %>
+    <div class="l-page-header">
+      <% if @product.persisted? %>
+        <h1>Update <%= @product.name %></h1>
+        <%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), [:admin, @product], class: "delete",
+          data: {method: :delete, confirm: "Are you sure you want to permanently delete this product?"} %>
+      <% else %>
+        <h1>Add Product</h1>
+      <% end %>
+    </div>
+
+    <div class="tabs-wrapper">
+      <ul class="tabs">
+        <% if @product.persisted? %>
+          <%= content_tag(:li, link_to_or_span("Product Info", [:admin, @product]), class: "completed tab") %>
+          <%= content_tag(:li, link_to_or_span("Inventory", [:admin, @product, :lots]), id: 'product-inventory-nav', class: (@product.use_simple_inventory? ? 'is-hidden tab' : @product.lots.count > 0 ? 'completed tab' : 'tab')) %>
+          <%= content_tag(:li, link_to_or_span("Pricing", [:admin, @product, :prices]), id: 'product-pricing-nav', class: (@product.prices.count > 0 ? 'completed tab' : 'tab')) %>
+        <% else %>
+          <li class="tab"><span>Product Info</span></li>
+          <%= content_tag :li, 'Inventory', id: 'product-inventory-nav', class: (@product.use_simple_inventory? ? 'is-hidden tab' : 'tab') %>
+          <%= content_tag :li, raw('<span class="is-disabled">Pricing</span>'), id: 'product-pricing-nav', class: 'tab' %>
+        <% end %>
+      </ul>
+    </div>
+ 
+  </div>
 </div>
