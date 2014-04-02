@@ -10,6 +10,11 @@ describe Price do
       price = prod2.prices.build(min_quantity: 1, sale_price: 2)
       expect(price).to have(0).errors_on(:min_quantity)
     end
+
+    it 'requires the price to be less then 2 trillion' do
+      price = Price.new(sale_price: 2147483648)
+      expect(price).to have(1).error_on(:sale_price)
+    end
   end
 
   describe '#net_price' do
