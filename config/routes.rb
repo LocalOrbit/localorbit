@@ -50,6 +50,10 @@ Rails.application.routes.draw do
       end
     end
 
+    resource :fresh_sheet, only: [:show, :update] do
+      get :preview
+    end
+
     resource :unit_request, only: :create
     resource :category_request, only: :create
   end

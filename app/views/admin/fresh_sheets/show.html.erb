@@ -1,0 +1,13 @@
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+    <div class="l-page-header">
+      <h1>Fresh Sheet</h1>
+      <%= form_tag [:admin, :fresh_sheet], method: :put do %>
+        <%= submit_tag 'Send Test', class: "btn btn--small" %>
+        <%= submit_tag 'Send Now', class: "btn btn--small", data: {confirm: "Are you ready to send the Fresh Sheet?"} %>
+      <% end %>
+    </div>
+
+    <iframe width="600" height="1000" src="<%= preview_admin_fresh_sheet_path %>"></iframe>
+  </div>
+</div>
