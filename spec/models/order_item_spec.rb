@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe OrderItem do
+  let(:order) { create(:order) }
+
   context "validations" do
     it "requires a order" do
       expect(subject).to be_invalid
@@ -34,14 +36,14 @@ describe OrderItem do
     end
   end
 
-  describe "self.build_from_cart_item" do
+  describe "self.create_and_consume_inventory" do
     let(:market) { create(:market) }
     let(:organization) { create(:organization) }
     let(:product) { create(:product, :sellable) }
     let(:order) { create(:order, market: market, organization: organization) }
     let(:cart_item) { create(:cart_item, product: product) }
 
-    subject { OrderItem.build_from_cart_item(cart_item, Date.today) }
+    subject { OrderItem.create_and_consume_inventory(order: order, item: cart_item, deliver_on_date: Date.today) }
 
     it "captures associations" do
       expect(subject.product).to eql(product)
@@ -67,6 +69,20 @@ describe OrderItem do
     it "captures the quantity" do
       expect(subject.quantity).to eql(cart_item.quantity)
     end
+
+    context "order item is not valid" do
+      before do
+        cart_item.product.update_attribute(:name, nil)
+      end
+
+      it "does not consume inventory" do
+        expect {
+          subject
+        }.not_to change {
+          Lot.find(cart_item.product.lots.map &:id).map &:quantity
+        }
+      end
+    end
   end
 
   context "product inventory" do
@@ -78,7 +94,7 @@ describe OrderItem do
     let(:deliver_on)     { Date.today }
 
     subject do
-      order_item = OrderItem.build_from_cart_item(cart_item, deliver_on)
+      order_item = OrderItem.create_and_consume_inventory(order: order, item:cart_item, deliver_on_date: deliver_on )
       order_item.order = order
       order_item.save
       order_item

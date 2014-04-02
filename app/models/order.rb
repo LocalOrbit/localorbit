@@ -94,11 +94,13 @@ class Order < ActiveRecord::Base
     order.delivery_phone   = address.phone
 
     if order.valid?
-      cart.items.each do |item|
-        order.items << OrderItem.build_from_cart_item(item, cart.delivery.deliver_on)
-      end
+      ActiveRecord::Base.transaction do
+          cart.items.each do |item|
+            OrderItem.create_and_consume_inventory(order:order, item: item, deliver_on_date: cart.delivery.deliver_on)
+          end
 
-      order.save
+        order.save
+      end
     end
 
     order
