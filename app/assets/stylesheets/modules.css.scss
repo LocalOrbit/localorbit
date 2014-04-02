@@ -673,6 +673,18 @@
             transition:        transform .4s linear;
   }
 
+/** Pagination */
+.pagination {
+  width: 300px;
+  padding: 5px;
+  border: 1px solid #e7e7e7;
+  @include border-radius(100px);
+  margin: 0 auto;
+  background-color: #F9F7F7;
+  font-size: .85em; 
+  text-align: center;
+}
+
 /** Tooltips */
 label ~ .tooltip {
   margin-top: .5em;
