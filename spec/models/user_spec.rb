@@ -277,7 +277,7 @@ describe User do
 
       it 'returns all products' do
         Timecop.freeze do
-          expect(subject).to eq(Product.visible)
+          expect(subject).to eq(Product.visible.seller_can_sell)
         end
       end
     end
