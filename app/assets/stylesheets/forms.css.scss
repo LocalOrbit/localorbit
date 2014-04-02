@@ -91,12 +91,18 @@ input[type=search] {
   border: solid 1px #b0b0b0;
   @include border-radius(0);
   @include box-shadow(none);
+  margin: 0;
   background: asset_url('magnify-search.png') 6px center no-repeat #fff;
   background: asset_url('magnify-search@2x.png') 6px center / 13px 13px no-repeat #fff;
+  vertical-align: middle;
   -webkit-appearance: textfield;
+  &::-webkit-search-cancel-button {
+    display: none
+  }
 
-  + .btn {
-    margin-left: 10px;
+  ~ .btn,
+  ~ button {
+    vertical-align: middle
   }
 }
 

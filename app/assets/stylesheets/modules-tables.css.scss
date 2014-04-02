@@ -38,6 +38,10 @@ th {
 td {
   vertical-align: top;
 
+  &.delete {
+    white-space: nowrap
+  }
+
   input[type=submit] {
     margin-top: 0;
     margin-bottom: 0;
@@ -67,14 +71,14 @@ td {
 
 }
 
-tr.odd {
-  background: #f9f9f9;
-}
 
 tbody {
   tr{
     &:hover {
       background: #D8EED2;
+    }
+    &:nth-child(odd) {
+      background: #f9f9f9;
     }
   }
   .destructive {

@@ -110,6 +110,7 @@ input[type=submit] {
 .btn--end {
   @include border-radius(0 2px 2px 0);
   margin: 2px 0 2px -1px;
+  font-size: smaller;
 }
 .btn--start {
   position: relative;
@@ -121,6 +122,14 @@ input[type=submit] {
   margin: 4px -3px 2px 0;
   background-color: #fff;
 }
+
+input[type=search] + .btn--end {
+  padding: 3px 10px;
+  margin: 0 10px 0 0;
+  color: #eee;
+  vertical-align: middle;
+}
+
 input[type=submit].popup-submit {
   background-color: #2ca20d;
 }
