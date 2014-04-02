@@ -4,8 +4,11 @@ class OrdersController < ApplicationController
   def create
     @placed_order = PlaceOrder.perform(order_params: order_params, cart: current_cart)
     @order = @placed_order.order.decorate
-
-    session.delete(:cart_id) if @placed_order.success?
+    if @placed_order.success?
+      session.delete(:cart_id)
+    else
+      redirect_to [current_cart], alert: @order.errors.full_messages.join(". ")
+    end
   end
 
   protected
