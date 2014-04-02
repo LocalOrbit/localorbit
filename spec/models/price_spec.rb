@@ -11,9 +11,28 @@ describe Price do
       expect(price).to have(0).errors_on(:min_quantity)
     end
 
-    it 'requires the price to be less then 2 trillion' do
-      price = Price.new(sale_price: 2147483648)
-      expect(price).to have(1).error_on(:sale_price)
+    describe 'price' do
+      it 'is required' do
+        price = Price.new
+        expect(price).to have(1).error_on(:sale_price)
+      end
+
+      it 'is less than a million' do
+        price = Price.new(sale_price: 1_000_000)
+        expect(price).to have(1).error_on(:sale_price)
+      end
+    end
+
+    describe 'min quantity' do
+      it 'is required' do
+        price = Price.new(min_quantity: nil)
+        expect(price).to have(1).error_on(:min_quantity)
+      end
+
+      it 'is less than a million' do
+        price = Price.new(min_quantity: 1_000_000)
+        expect(price).to have(1).error_on(:min_quantity)
+      end
     end
   end
 

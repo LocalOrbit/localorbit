@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Product do
   describe "validations" do
     describe "organization" do
-      let!(:buyer) { build(:organization, :buyer) }
-      let!(:seller) { build(:organization, :seller) }
+      let(:buyer) { build(:organization, :buyer) }
+      let(:seller) { build(:organization, :seller) }
 
       it "is valid if the organization is a seller" do
         subject.organization = seller
@@ -18,6 +18,14 @@ describe Product do
 
         expect(subject.errors[:organization]).to include("must be able to sell products")
       end
+    end
+
+    it "category is required" do
+      expect(subject).to have(1).error_on(:category_id)
+    end
+
+    it "name is required" do
+      expect(subject).to have(1).error_on(:name)
     end
 
     it "requires a unit type" do
@@ -92,7 +100,9 @@ describe Product do
 
     context "with an organization" do
       it "contains the correct products" do
-        expect(Product.available_for_sale(market, buyer)).to eq([product_in, product_in_for_buyer])
+        products = Product.available_for_sale(market, buyer)
+        expect(products.size).to eq(2)
+        expect(products).to include(product_in, product_in_for_buyer)
       end
     end
     context "without an organization" do

@@ -2,10 +2,20 @@ require 'spec_helper'
 
 describe Organization do
 
-  it 'requires a name' do
-    org = Organization.new
-    expect(org).to_not be_valid
-    expect(org).to have(1).error_on(:name)
+  describe 'validates' do
+    describe 'name' do
+      it 'is required' do
+        org = Organization.new
+        expect(org).to_not be_valid
+        expect(org).to have(1).error_on(:name)
+      end
+
+      it 'is at most 255 characters long' do
+        org = Organization.new(name: 'a' * 256)
+        expect(org).to_not be_valid
+        expect(org).to have(1).error_on(:name)
+      end
+    end
   end
 
   describe "Scopes:" do

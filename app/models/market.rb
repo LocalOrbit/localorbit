@@ -1,5 +1,8 @@
 class Market < ActiveRecord::Base
-  validates :name, :subdomain, uniqueness: true
+  validates :name, :subdomain, uniqueness: true, length: {maximum: 255, allow_blank: true}
+  validates :tagline, length: {maximum: 255, allow_blank: true}
+  validates :local_orbit_seller_fee, :local_orbit_market_fee, :market_seller_fee, :credit_card_seller_fee, :credit_card_market_fee, :ach_seller_fee, :ach_market_fee, presence: true, numericality: { greater_than_or_equal_to: 0, less_than: 100, allow_blank: true }
+  validates :ach_fee_cap, presence: true, numericality: { greater_than_or_equal_to: 0, less_than: 10_000, allow_blank: true }
 
   before_save :clean_twitter_slug
 

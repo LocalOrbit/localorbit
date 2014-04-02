@@ -13,7 +13,7 @@ class Organization < ActiveRecord::Base
 
   has_many :bank_accounts, as: :bankable
 
-  validates :name, presence: true
+  validates :name, presence: true, length: {maximum: 255, allow_blank: true}
 
   scope :selling, lambda { where(can_sell: true) }
   scope :buying,  lambda { where(can_sell: false) } # needs a new boolean
