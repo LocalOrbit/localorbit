@@ -67,7 +67,7 @@ Rails.application.routes.draw do
     resources :deliveries
   end
 
-  resources :products, only: [:index]
+  resources :products, only: [:index, :show]
   resource  :market, only: [:show]
   resources :sellers, only: [:index, :show]
   resource :cart, only: [:update, :show, :destroy]

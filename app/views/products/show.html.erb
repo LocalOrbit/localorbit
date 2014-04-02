@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="column column--fourth" id="product-filter">
+
+    <%= render "selected_delivery" %>
+  </div
+  ><div class="column column--three-fourths">
+    <h1><%= @product.name %></h1>
+
+    <% if @product.image_uid.present? %>
+      <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid) %>
+    <% else %>
+      <%= image_tag 'default-product-image.png' %>
+    <% end %>
+
+    <p class="short_description"><%= @product.short_description %>
+
+    <% if @product.long_description.present? %>
+      <div class="long-description-info is-hidden with-anchor left-anchor popup" id="product-<%= @product.id %>-long-description">
+        <div class="popup-header">
+          Details <button class="close"><i class="font-icon icon-close"></i></button>
+        </div>
+        <div class="popup-body">
+          <%= simple_format @product.long_description %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

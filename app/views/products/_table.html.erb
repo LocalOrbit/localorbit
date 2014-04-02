@@ -24,7 +24,7 @@
       <% end %>
       </td>
       <td class="info">
-        <h3 class="name"><%= product.name %></h3>
+        <h3 class="name"><%= link_to product.name, product %></h3>
         <p class="short_description"><%= product.short_description %>
 
         <% if product.long_description.present? %>

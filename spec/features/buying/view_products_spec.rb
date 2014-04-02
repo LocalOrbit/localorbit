@@ -50,6 +50,13 @@ feature "Viewing products" do
     expect(dom_product.quantity).to have_text(expected_price)
   end
 
+  scenario "an individual product" do
+    sign_in_as(user)
+    product = available_products.first
+    click_link product.name
+    expect(page).to have_text(product.name)
+  end
+
   scenario "changing the quantity for a listed product", js: true do
     create(:price, product: org1_product, sale_price: 1.50, min_quantity: 5)
 
