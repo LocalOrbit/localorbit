@@ -237,6 +237,21 @@ describe Order do
       end
     end
 
+    context "when the order is invalid" do
+      before do
+        billing_org = cart.organization.locations.default_billing
+        billing_org.update_attribute(:phone, nil)
+      end
+
+      it "will not consume inventory" do
+        expect {
+          subject
+        }.not_to change{
+          cart.items.map{|item| Lot.find_by(product_id: item.product.id).quantity }
+        }
+      end
+    end
+
     it "assigns the cart references" do
       expect(subject.organization).to eql(cart.organization)
       expect(subject.market).to eql(cart.market)
