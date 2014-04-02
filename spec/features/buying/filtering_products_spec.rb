@@ -3,8 +3,9 @@ require "spec_helper"
 feature "Filtering Products List" do
   let!(:org1) { create(:organization, name: "Schrute Farms") }
   let!(:org2) { create(:organization, name: "Funny Farm") }
-  let!(:category1) { Category.find_by!(name: "Corn") }
-  let!(:category2) { Category.find_by!(name: "Macintosh Apples") }
+  let(:category1) { Category.find_by!(name: "Corn") }
+  let(:category2) { Category.find_by!(name: "Macintosh Apples") }
+  let(:category3) { Category.find_by!(name: "Vegetable Juice") }
 
   let!(:product1) { create(:product, organization: org1, category: category1) }
   let!(:price1)   { create(:price, product: product1) }
@@ -47,8 +48,13 @@ feature "Filtering Products List" do
     expect(Dom::Product.all.map(&:name)).to match_array([product3.name, product4.name])
   end
 
-  scenario "by category" do
+  scenario "category filters show for only applicable categories" do
+    expect(Dom::ProductFilter).to have_content(category1.top_level_category.name)
+    expect(Dom::ProductFilter).to have_content(category2.top_level_category.name)
+    expect(Dom::ProductFilter).not_to have_content(category3.top_level_category.name)
+  end
 
+  scenario "by category" do
     expect(Dom::Product.count).to eq(4)
 
     top_level_category = category1.top_level_category
@@ -67,7 +73,6 @@ feature "Filtering Products List" do
   end
 
   scenario "by both category and seller" do
-
     expect(Dom::Product.count).to eq(4)
 
     top_level_category = category1.top_level_category

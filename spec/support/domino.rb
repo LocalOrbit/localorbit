@@ -448,7 +448,11 @@ module Dom
     end
 
     def self.filter_by_category(category)
-      first.find("#product-filter-category").click_link(category.name)
+      categories.click_link(category.name)
+    end
+
+    def self.categories
+      first.find("#product-filter-category")
     end
 
     def self.current_seller

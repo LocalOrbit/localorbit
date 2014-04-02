@@ -26,8 +26,8 @@
       </p>
 
       <% @categories.each do |category| %>
-        <% if @product_groups[category.id].present? %>
-          <%= render "table", products: @product_groups[category.id], category: category %>
+        <% if @product_groups[category].present? %>
+          <%= render "table", products: @product_groups[category], category: category %>
         <% end %>
       <% end %>
     </div>
