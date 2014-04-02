@@ -32,6 +32,7 @@ gem 'kaminari'
 gem 'newrelic_rpm'
 gem 'periscope-activerecord'
 gem 'rack-canonical-host'
+gem 'rack-cors', require: 'rack/cors'
 gem 'simpleidn'
 
 group :doc do

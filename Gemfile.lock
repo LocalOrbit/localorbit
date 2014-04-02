@@ -227,6 +227,7 @@ GEM
     rack-canonical-host (0.0.9)
       addressable
       rack (~> 1.0)
+    rack-cors (0.2.9)
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.1.0.rc2)
@@ -366,6 +367,7 @@ DEPENDENCIES
   pry-rails
   pry-remote
   rack-canonical-host
+  rack-cors
   rails (= 4.1.0.rc2)
   rails_12factor
   rspec-rails (~> 3.0.0.beta2)
