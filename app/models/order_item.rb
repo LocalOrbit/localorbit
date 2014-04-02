@@ -10,8 +10,13 @@ class OrderItem < ActiveRecord::Base
   validates :unit, presence: true
   validates :unit_price, presence: true
 
-  def self.build_from_cart_item(item, deliver_on_date)
-    order_item = OrderItem.new(
+  def self.create_and_consume_inventory(opts={})
+    item = opts[:item]
+    deliver_on_date = opts[:deliver_on_date]
+    order = opts[:order]
+
+    order_item = new(
+      order: order,
       product: item.product,
       name: item.product.name,
       quantity: item.quantity,
@@ -20,25 +25,29 @@ class OrderItem < ActiveRecord::Base
       seller_name: item.product.organization.name
     )
 
-    quantity_remaining = item.quantity
-    item.product.lots_by_expiration.available(deliver_on_date).each do |lot|
-      break unless quantity_remaining
-      if lot.quantity >= quantity_remaining
-        order_item.lots << OrderItemLot.new(
-          lot: lot,
-          quantity: quantity_remaining
-        )
-        lot.update(quantity: lot.quantity - quantity_remaining)
-        break
-      else
-        order_item.lots << OrderItemLot.new(
-          lot: lot,
-          quantity: lot.quantity
-        )
+    if order_item.valid?
+      quantity_remaining = item.quantity
+      item.product.lots_by_expiration.available(deliver_on_date).each do |lot|
+        break unless quantity_remaining
+        if lot.quantity >= quantity_remaining
+          order_item.lots << OrderItemLot.new(
+            lot: lot,
+            quantity: quantity_remaining
+          )
+          lot.update(quantity: lot.quantity - quantity_remaining)
+          break
+        else
+          order_item.lots << OrderItemLot.new(
+            lot: lot,
+            quantity: lot.quantity
+          )
 
-        quantity_remaining -= lot.quantity
-        lot.update(quantity: 0)
+          quantity_remaining -= lot.quantity
+          lot.update(quantity: 0)
+        end
       end
+
+      order.items << order_item
     end
 
     order_item

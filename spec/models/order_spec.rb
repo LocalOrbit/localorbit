@@ -252,6 +252,31 @@ describe Order do
       end
     end
 
+    context "when an exception occurs when creating cart items", truncate: true do
+      let(:problem_product) { cart.items[1].product }
+      subject { expect{ Order.create_from_cart(params, cart) }.to raise_exception }
+
+      before do
+        expect(problem_product).to receive(:lots_by_expiration).and_raise
+      end
+
+      it "will not create OrderItems" do
+        expect {
+          subject
+        }.not_to change {
+          OrderItem.count
+        }
+      end
+
+      it "will not consume inventory" do
+        expect {
+          subject
+        }.not_to change {
+          cart.items.map{|item| Lot.find_by(product_id: item.product.id).quantity }
+        }
+      end
+    end
+
     it "assigns the cart references" do
       expect(subject.organization).to eql(cart.organization)
       expect(subject.market).to eql(cart.market)
@@ -291,7 +316,6 @@ describe Order do
       expect(subject.billing_zip).to eql(billing_address.zip)
       expect(subject.billing_phone).to eql(billing_address.phone)
     end
-
 
     it "captures payment information" do
       expect(subject.payment_status).to eql("Not Paid")
