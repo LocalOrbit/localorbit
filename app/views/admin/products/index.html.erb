@@ -8,19 +8,19 @@
   </div>
 
   <div class="column">
-    <input type="search" placeholder="Search">
+    <input type="search"><button type="submit" class="btn btn--end">Search</button>
     <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small" %>
   </div>
 </div>
 
-<table class="product-table product-table--admin">
+<table class="product-table product-table--admin sortable">
   <thead>
     <tr>
       <%= content_tag(:th, 'Seller') if current_user.multi_organization_membership? %>
       <%= content_tag(:th, 'Market') if current_user.multi_market_membership? %>
       <th>Name</th>
       <th>Pricing</th>
-      <th>In Stock</th>
+      <th>In Stock</th>
       <th></th>
     </tr>
   </thead>
