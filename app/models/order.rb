@@ -95,9 +95,14 @@ class Order < ActiveRecord::Base
 
     if order.valid?
       ActiveRecord::Base.transaction do
+        begin
           cart.items.each do |item|
             OrderItem.create_and_consume_inventory(order:order, item: item, deliver_on_date: cart.delivery.deliver_on)
           end
+        rescue OrderItem::InsufficientInventoryError => e
+          order.errors.add(:inventory, "only #{e.remaining} #{e.product.name.pluralize(e.remaining)} left")
+          raise ActiveRecord::Rollback
+        end
 
         order.save
       end

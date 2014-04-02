@@ -10,6 +10,15 @@ class OrderItem < ActiveRecord::Base
   validates :unit, presence: true
   validates :unit_price, presence: true
 
+  class InsufficientInventoryError < RuntimeError
+    attr_accessor :product, :remaining, :required
+    def initialize(product, remaining, required)
+      @product = product
+      @remaining = remaining
+      @required = required
+    end
+  end
+
   def self.create_and_consume_inventory(opts={})
     item = opts[:item]
     deliver_on_date = opts[:deliver_on_date]
@@ -26,7 +35,10 @@ class OrderItem < ActiveRecord::Base
     )
 
     if order_item.valid?
+      total_available = item.product.lots_by_expiration.available(deliver_on_date).map(&:quantity).sum
       quantity_remaining = item.quantity
+      raise InsufficientInventoryError.new(item.product, total_available, item.quantity) if quantity_remaining > total_available
+
       item.product.lots_by_expiration.available(deliver_on_date).each do |lot|
         break unless quantity_remaining
         if lot.quantity >= quantity_remaining
@@ -46,6 +58,7 @@ class OrderItem < ActiveRecord::Base
           lot.update(quantity: 0)
         end
       end
+
 
       order.items << order_item
     end
