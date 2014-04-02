@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: git://github.com/jnicklas/capybara.git
-  revision: 88da2cdc4c2356bdf43f3cc6370ae23a4aa743cc
+  revision: 0d70095b5f73de326987a17cf957edf27fae6be3
   specs:
     capybara (2.2.0)
       mime-types (>= 1.16)
