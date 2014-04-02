@@ -122,10 +122,6 @@ th {
 }
 
 .lot {
-  &:nth-child(even) {
-    background: #f4f4f4;
-  }
-
   > td {
     vertical-align: middle;
     white-space: nowrap
@@ -398,6 +394,16 @@ th {
       }
     }
   }
+
+.edit-cell {
+  display: none;
+}
+.editing .edit-cell {
+  display: block;
+}
+.editing .view-cell {
+  display: none;
+}
 
 .math {
   text-align: right;
