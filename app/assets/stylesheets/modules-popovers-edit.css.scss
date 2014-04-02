@@ -51,7 +51,36 @@
 }
 
 .modal {
+  position: fixed;
+  top: 10em;
+  left: 50%;
+  width: 40%;
+  margin: 0 0 0 -20%;
+  z-index: 100;
+
   .form-actions {
     margin: 20px 0 0;
   }
+
+  .inline-field {
+    display: inline-block;
+  }
 }
+
+.modal--stealth {
+  width: 46%;
+  border: 0;
+  margin-left: -26%;
+  color: #fff;
+  background: none;
+
+  .btn {
+    border: 0;
+    margin-top: 1em;
+  }
+  .close {
+    color: #fff;
+    font-size: larger;
+  }
+}
+

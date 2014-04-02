@@ -1,18 +1,5 @@
 @import "mixins.css.scss";
 
-.modal {
-  position: fixed;
-  top: 10em;
-  left: 50%;
-  width: 40%;
-  margin: 0 0 0 -20%;
-  z-index: 100;
-
-  .inline-field {
-    display: inline-block;
-  }
-}
-
 .with-anchor {
   &:before,
   &:after {
