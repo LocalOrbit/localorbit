@@ -34,7 +34,7 @@ module LocalOrbit
 
     config.middleware.use Rack::Cors do
       allow do
-        origins Figaro.env.domain, "*.#{Figaro.env.domain}"
+        origins "*"
         resource '/assets/*', headers: :any, methods: :get
       end
     end
