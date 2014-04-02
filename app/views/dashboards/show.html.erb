@@ -1,18 +1,7 @@
 <% if current_user.admin? %>
-  <h1>Dashboard</h1>
-
-  <ul>
-    <li><%= link_to 'Markets', admin_markets_path %></li>
-    <li><%= link_to 'Organizations', admin_organizations_path %></li>
-    <li><%= link_to 'Products', admin_products_path %></li>
-  </ul>
+  <%= render "admin" %>
+<% elsif current_user.market_manager? %>
+  <%= render "market_manager" %>
 <% elsif current_user.seller? %>
-  <div class="row">
-    <div class="column column--half">
-      <h1>Pending Orders</h1>
-    </div
-    ><div class="column column--half">
-      <h1>Upcoming Deliveries</h1>
-    </div>
-  </div>
+  <%= render "seller" %>
 <% end %>

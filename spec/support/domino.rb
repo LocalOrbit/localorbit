@@ -559,4 +559,25 @@ module Dom
       attribute :delivery_status
     end
   end
+
+  module Dashboard
+    class CurrentSaleRow < Domino
+      selector ".order-row"
+
+      attribute :order_number
+      attribute :placed_on
+      attribute :total
+      attribute :delivery
+      attribute :payment
+    end
+
+    class ProductRow < Domino
+      selector ".product-row"
+
+      attribute :seller
+      attribute :name
+      attribute :pricing
+      attribute :stock
+    end
+  end
 end
