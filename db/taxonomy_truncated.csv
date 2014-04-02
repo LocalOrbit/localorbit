@@ -70,3 +70,6 @@ cat_id,parent_id,cat_name,order_by
 248,247,Cabbage,100
 1049,150,"Golden Delicious Apples",100
 254,227,"Beans & Peas",100
+3,2,"Beverages",16
+7,3,"Cider & Juice",100
+8,7,"Vegetable Juice",100

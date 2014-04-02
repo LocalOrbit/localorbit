@@ -4,7 +4,7 @@ describe Category do
   describe "#for_select" do
     subject { Category.for_select }
     it "returns a list of categories for select options" do
-      expect(subject.count).to eql(2)
+      expect(subject.count).to eql(3)
     end
 
     it "categories should include parent info" do
@@ -20,7 +20,7 @@ describe Category do
     end
 
     it "returns keys in sorted order" do
-      expect(subject.keys).to eq(["Fruits", "Vegetables"])
+      expect(subject.keys).to eq(["Fruits", "Vegetables", "Beverages"])
     end
   end
 end
