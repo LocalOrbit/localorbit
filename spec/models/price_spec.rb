@@ -10,6 +10,30 @@ describe Price do
       price = prod2.prices.build(min_quantity: 1, sale_price: 2)
       expect(price).to have(0).errors_on(:min_quantity)
     end
+
+    describe 'price' do
+      it 'is required' do
+        price = Price.new
+        expect(price).to have(1).error_on(:sale_price)
+      end
+
+      it 'is less than a million' do
+        price = Price.new(sale_price: 1_000_000)
+        expect(price).to have(1).error_on(:sale_price)
+      end
+    end
+
+    describe 'min quantity' do
+      it 'is required' do
+        price = Price.new(min_quantity: nil)
+        expect(price).to have(1).error_on(:min_quantity)
+      end
+
+      it 'is less than a million' do
+        price = Price.new(min_quantity: 1_000_000)
+        expect(price).to have(1).error_on(:min_quantity)
+      end
+    end
   end
 
   describe '#net_price' do

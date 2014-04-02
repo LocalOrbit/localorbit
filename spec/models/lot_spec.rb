@@ -17,6 +17,11 @@ describe Lot do
         subject.quantity = -3
         expect(subject.errors_on(:quantity)).to include("must be greater than or equal to 0")
       end
+
+      it 'requires the quantity to be less than a million' do
+        subject.quantity = 1_000_000
+        expect(subject).to have(1).error_on(:quantity)
+      end
     end
 
     describe "number:" do

@@ -12,7 +12,7 @@ class Price < ActiveRecord::Base
     where("market_id IS NULL OR market_id = ?", market.id).where("organization_id IS NULL OR organization_id = ?", organization.id)
   }
 
-  validates :min_quantity, :sale_price, numericality: { greater_than: 0 }
+  validates :min_quantity, :sale_price, presence: true, numericality: { greater_than: 0, less_than: 1_000_000, allow_blank: true }
   validates :min_quantity, uniqueness: { scope: [:product_id, :market_id, :organization_id] }
 
   def net_price
