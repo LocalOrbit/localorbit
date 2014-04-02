@@ -32,11 +32,6 @@ module LocalOrbit
       DeviseController.skip_before_action :ensure_market_affiliation
     end
 
-    config.middleware.use Rack::Cors do
-      allow do
-        origins "*"
-        resource '/assets/*', headers: :any, methods: :get
-      end
-    end
+    config.font_assets.origin = "*"
   end
 end
