@@ -31,5 +31,12 @@ module LocalOrbit
       Devise::Mailer.layout "email"
       DeviseController.skip_before_action :ensure_market_affiliation
     end
+
+    config.middleware.use Rack::Cors do
+      allow do
+        origins Figaro.env.domain, "*.#{Figaro.env.domain}"
+        resource '/assets/*', headers: :any, methods: :get
+      end
+    end
   end
 end
