@@ -93,11 +93,14 @@ class Order < ActiveRecord::Base
     order.delivery_status  =  "Pending"
     order.delivery_phone   = address.phone
 
-    cart.items.each do |item|
-      order.items << OrderItem.build_from_cart_item(item, cart.delivery.deliver_on)
+    if order.valid?
+      cart.items.each do |item|
+        order.items << OrderItem.build_from_cart_item(item, cart.delivery.deliver_on)
+      end
+
+      order.save
     end
 
-    order.save
     order
   end
 end
