@@ -359,13 +359,20 @@
   font-size: 0.1px;
   line-height: 1;
 
-  a {
+  a, .current {
     display: block;
     padding: 1em 1.1538em .93em;
 
     &:hover {
       background: #e6e6e6;
     }
+    &:active {
+      background: #d6d6d6;
+    }
+  }
+  .current {
+    color: #fff;
+    background: #a6a6a6;
   }
   > li {
     position: relative;

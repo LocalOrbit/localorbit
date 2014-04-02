@@ -34,6 +34,11 @@ module ApplicationHelper
 
   def link_to_or_span(name, options = {}, html_options = {}, &block)
     if current_page?(options)
+      if html_options[:class].present?
+        html_options[:class] += " current"
+      else
+        html_options[:class] = "current"
+      end
       content_tag(:span, name, html_options, &block)
     else
       link_to name, options, html_options, &block
