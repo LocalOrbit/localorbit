@@ -45,7 +45,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def seller_net_total
-    unit_price * quantity - market_fees - localorbit_seller_fees - payment_seller_fees
+    unit_price * quantity - market_seller_fee - local_orbit_seller_fee - payment_seller_fee
   end
 
   def gross_total

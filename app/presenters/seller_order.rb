@@ -45,9 +45,9 @@ class SellerOrder
     @totals ||= items.inject({discount: 0, gross: 0, net: 0, payment: 0, transaction: 0}) do |totals, item|
       totals[:discount]    += item.discount
       totals[:gross]       += item.quantity * item.unit_price
-      totals[:transaction] += item.localorbit_seller_fees + item.market_fees
+      totals[:transaction] += item.local_orbit_seller_fee + item.market_seller_fee
       totals[:net]         += item.seller_net_total
-      totals[:payment]     += item.payment_seller_fees
+      totals[:payment]     += item.payment_seller_fee
       totals
     end
   end

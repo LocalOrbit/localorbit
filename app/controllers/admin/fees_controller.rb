@@ -21,7 +21,7 @@ module Admin
     end
 
     def fee_params
-      params.require(:market).permit(:local_orbit_seller_fee, :local_orbit_market_fee, :market_seller_fee, :transaction_seller_fee, :transaction_market_fee)
+      params.require(:market).permit(:local_orbit_seller_fee, :local_orbit_market_fee, :market_seller_fee, :credit_card_seller_fee, :credit_card_market_fee, :ach_seller_fee, :ach_market_fee, :ach_fee_cap)
     end
   end
 end
