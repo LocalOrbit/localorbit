@@ -12,6 +12,7 @@ class OrderItem < ActiveRecord::Base
   validates :quantity, presence: true
   validates :unit, presence: true
   validates :unit_price, presence: true
+  validates :delivery_status, presence: true
 
   validate  :product_availability, on: :create
 
@@ -29,7 +30,8 @@ class OrderItem < ActiveRecord::Base
       quantity: item.quantity,
       unit: item.unit,
       unit_price: item.unit_price.sale_price,
-      seller_name: item.product.organization.name
+      seller_name: item.product.organization.name,
+      delivery_status: "pending"
     )
   end
 

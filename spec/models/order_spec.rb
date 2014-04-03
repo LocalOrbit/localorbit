@@ -32,11 +32,6 @@ describe Order do
       expect(subject).to have(1).error_on(:delivery_fees)
     end
 
-    it "requires a delivery status" do
-      expect(subject).to be_invalid
-      expect(subject).to have(1).error_on(:delivery_status)
-    end
-
     it "requires a total cost" do
       expect(subject).to be_invalid
       expect(subject).to have(1).error_on(:total_cost)
@@ -280,7 +275,7 @@ describe Order do
           expect(subject.delivery_state).to eql(pickup_location.state)
           expect(subject.delivery_zip).to eql(pickup_location.zip)
           expect(subject.delivery_phone).to eql(pickup_location.phone)
-          expect(subject.delivery_status).to eql("Pending")
+          expect(subject.delivery_status).to eql("pending")
         end
       end
 
@@ -291,7 +286,7 @@ describe Order do
           expect(subject.delivery_state).to eql(delivery_location.state)
           expect(subject.delivery_zip).to eql(delivery_location.zip)
           expect(subject.delivery_phone).to eql(delivery_location.phone)
-          expect(subject.delivery_status).to eql("Pending")
+          expect(subject.delivery_status).to eql("pending")
         end
       end
     end

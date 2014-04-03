@@ -77,7 +77,6 @@ FactoryGirl.define do
     delivery_state   "Michigan"
     delivery_zip     "49423"
     delivery_phone   "(616) 555-1222"
-    delivery_status  "Pending"
 
     delivery_fees    0.00
     delivery_id      0
@@ -90,10 +89,11 @@ FactoryGirl.define do
 
   factory :order_item do
     sequence(:name) {|n| "Order Item #{n}"}
-    seller_name "Old McDonald"
-    quantity    1
-    unit        "per box"
-    unit_price  6.99
+    seller_name     "Old McDonald"
+    quantity        1
+    unit            "per box"
+    unit_price      6.99
+    delivery_status "Pending"
   end
 
   factory :organization do

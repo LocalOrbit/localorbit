@@ -1,6 +1,8 @@
 class SellerOrder
+  include DeliveryStatus
+
   attr_reader :items
-  delegate :delivery_fees, :delivery_status, :order_number, :organization, :payment_method, :payment_note, :placed_at, to: :@order
+  delegate :delivery_fees, :order_number, :organization, :payment_method, :payment_note, :placed_at, to: :@order
 
   def self.find(seller, id)
     order = Order.orders_for_seller(seller).find(id)

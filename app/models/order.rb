@@ -1,4 +1,6 @@
 class Order < ActiveRecord::Base
+  include DeliveryStatus
+
   belongs_to :market
   belongs_to :organization
   belongs_to :delivery
@@ -14,7 +16,6 @@ class Order < ActiveRecord::Base
   validates :delivery_fees, presence: true
   validates :delivery_id, presence: true
   validates :delivery_state, presence: true
-  validates :delivery_status, presence: true
   validates :delivery_zip, presence: true
   validates :market_id, presence: true
   validates :order_number, presence: true, uniqueness: true
@@ -90,7 +91,6 @@ class Order < ActiveRecord::Base
     order.delivery_city    = address.city
     order.delivery_state   = address.state
     order.delivery_zip     = address.zip
-    order.delivery_status  =  "Pending"
     order.delivery_phone   = address.phone
 
     ActiveRecord::Base.transaction do
