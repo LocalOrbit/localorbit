@@ -74,18 +74,18 @@ td {
 
 tbody {
   tr{
-    &:hover {
-      background: #D8EED2;
-    }
     &:nth-child(odd) {
       background: #f9f9f9;
     }
-  }
-  .destructive {
-    background: #fdd;
+    &:hover {
+      background: #D8EED2;
+    }
+    &.destructive {
+      background: #fdd;
 
-    > .delete a {
-      color: $alert_text;
+      > .delete a {
+        color: $alert_text;
+      }
     }
   }
 }
