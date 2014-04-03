@@ -31,6 +31,9 @@
 .icon-calendar:before {
   content: "\e013";
 }
+.icon-checkmark:before {
+  content: "\e031";
+}
 .icon-close:before {
   content: "\e030";
 }
@@ -87,9 +90,6 @@ you can use the generic selector below, but it's slower:
 }
 .icon-close:before {
   content: "\e030";
-}
-.icon-checkmark:before {
-  content: "\e031";
 }
 .icon-arrow-right:before {
   content: "\e032";

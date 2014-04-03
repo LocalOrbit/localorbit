@@ -72,7 +72,7 @@
     content: '';
   }
 
-  a, h1, span, i {
+  a, h1, h2, span, i {
     display: inline-block;
     vertical-align: baseline;
     text-align: left;
@@ -82,7 +82,8 @@
     font-size: 14px;
   }
 
-  > h1 {
+  > h1,
+  > h2{
     display: inline-block;
     font-size: 32px;
   }

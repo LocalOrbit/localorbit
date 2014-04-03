@@ -1,5 +1,14 @@
 @import "mixins.css.scss";
 
+.bank-info {
+  padding: 1em 2em;
+  border: solid 1px $notice_text;
+  @include border-radius(5px);
+  margin: 0 0 1em;
+  color: $notice_text;
+  background: $notice_bg;
+  list-style: none;
+}
 .with-anchor {
   &:before,
   &:after {

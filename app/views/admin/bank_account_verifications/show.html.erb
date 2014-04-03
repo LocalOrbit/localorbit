@@ -1,22 +1,28 @@
-<%= form_for [:admin, @entity, @verification.bank_account, @verification] do |f| %>
-  <%= render "shared/errors", { resource: @verification } %>
+<div class="row row--partial">
+  <%= form_for [:admin, @entity, @verification.bank_account, @verification], html: { class: "column column--half" } do |f| %>
+    <h1>Verify Your Account</h1>
+    <%= render "shared/errors", { resource: @verification } %>
+    <p>Please confirm the two micro deposits made to the following account.</p>
 
-  <ul>
-    <li><%= @verification.bank_account.bank_name %></li>
-    <li><%= @verification.bank_account.account_type %></li>
-    <li><%= @verification.bank_account.last_four %></li>
-  </ul>
-  <p>Please confirm the two micro deposits made to your account above.</p>
+    <ul class="bank-info">
+      <li><strong><%= @verification.bank_account.bank_name %></strong></li>
+      <li><%= @verification.bank_account.account_type %></li>
+      <li>******<%= @verification.bank_account.last_four %></li>
+    </ul>
 
-  <div class="row">
-    <%= f.label :amount_1, "Amount 1 (in cents)" %>
-    <%= f.text_field :amount_1 %>
-  </div>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :amount_1, "Amount 1 (in cents)" %><br>
+        <%= f.text_field :amount_1, class: "column--full" %>
+      </div
+      ><div class="field column column--half column--guttered">
+        <%= f.label :amount_2, "Amount 2 (in cents)" %><br>
+        <%= f.text_field :amount_2, class: "column--full" %>
+      </div>
+    </div>
 
-  <div class="row">
-    <%= f.label :amount_2, "Amount 2 (in cents)" %>
-    <%= f.text_field :amount_2 %>
-  </div>
-
-  <%= f.submit "Verify" %>
-<% end %>
+    <div class="form-actions">
+      <%= f.submit "Verify Account" %>
+    </div>
+  <% end %>
+</div>
