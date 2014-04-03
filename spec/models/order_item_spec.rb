@@ -144,14 +144,14 @@ describe OrderItem do
     end
   end
 
-  describe "self.build_with_order_and_item" do
+  describe "self.create_with_order_and_item" do
     let(:market) { create(:market) }
     let(:organization) { create(:organization) }
     let(:product) { create(:product, :sellable) }
     let(:order) { create(:order, market: market, organization: organization) }
     let(:cart_item) { create(:cart_item, product: product) }
 
-    subject { OrderItem.build_with_order_and_item(order: order, item: cart_item, deliver_on_date: Date.today) }
+    subject { OrderItem.create_with_order_and_item(order: order, item: cart_item, deliver_on_date: Date.today) }
 
     it "captures associations" do
       expect(subject.product).to eql(product)
@@ -202,7 +202,7 @@ describe OrderItem do
     let(:deliver_on)     { Date.today }
 
     subject do
-      order_item = OrderItem.build_with_order_and_item(order: order, item:cart_item, deliver_on_date: deliver_on )
+      order_item = OrderItem.create_with_order_and_item(order: order, item:cart_item, deliver_on_date: deliver_on )
       order_item.order = order
       order_item.save
       order_item

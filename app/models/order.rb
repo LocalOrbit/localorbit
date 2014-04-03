@@ -95,7 +95,7 @@ class Order < ActiveRecord::Base
 
     ActiveRecord::Base.transaction do
       cart.items.each do |item|
-        order.items << OrderItem.build_with_order_and_item(order:order, item: item, deliver_on_date: cart.delivery.deliver_on)
+        order.items << OrderItem.create_with_order_and_item(order:order, item: item, deliver_on_date: cart.delivery.deliver_on)
       end
 
       raise ActiveRecord::Rollback unless order.save

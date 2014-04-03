@@ -17,7 +17,7 @@ class OrderItem < ActiveRecord::Base
 
   before_create :consume_inventory
 
-  def self.build_with_order_and_item(opts={})
+  def self.create_with_order_and_item(opts={})
     item = opts[:item]
     deliver_on_date = opts[:deliver_on_date]
     order = opts[:order]
