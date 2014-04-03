@@ -1,0 +1,23 @@
+<%= render 'admin/organizations/header' %>
+
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+    <%= form_for [:admin, @organization, User.new], html: { class: "form-actions" } do |f|%>
+      <%= f.email_field :email, placeholder: "Email" %>
+      <%= f.submit "Invite a new member" %>
+    <% end %>
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>E-mail</th>
+      </tr>
+      <% @organization.users.each do |user| %>
+      <tr class="<%= cycle "odd", "even" %>">
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

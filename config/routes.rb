@@ -10,15 +10,18 @@ Rails.application.routes.draw do
     put 'account' => 'devise/registrations#update', as: :user_registration
   end
 
+  concern :bank_account do
+    resources :bank_accounts, only: [:index, :new, :create] do
+      resource :bank_account_verification, only: [:show, :update], path: :verify
+    end
+  end
+
   namespace :admin do
-    resources :markets do
+    resources :markets, concerns: :bank_account do
       resources :market_addresses,   as: :addresses,  path: :addresses
       resources :market_managers,    as: :managers,   path: :managers
       resources :delivery_schedules, path: :deliveries
       resource  :fees, only: [:show, :update]
-      resources :bank_accounts, only: [:index, :new, :create] do
-        resource :bank_account_verification, only: [:show, :update], path: :verify
-      end
     end
 
     get "financials" => "financials#index"
@@ -26,11 +29,8 @@ Rails.application.routes.draw do
       resources :orders
     end
 
-    resources :organizations do
-      resources :users
-      resources :bank_accounts, only: [:index, :new, :create] do
-        resource :bank_account_verification, only: [:show, :update], path: :verify
-      end
+    resources :organizations, concerns: :bank_account do
+      resources :organization_users, as: :users, path: :users
       resources :locations, except: :destroy do
         collection do
           delete :destroy
@@ -47,6 +47,8 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    resources :users, only: :index
 
     resource :fresh_sheet, only: [:show, :update] do
       get :preview
