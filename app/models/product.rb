@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
   include SoftDelete
 
+
   belongs_to :category
   belongs_to :top_level_category, class: Category
   belongs_to :organization
