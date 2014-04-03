@@ -27,9 +27,9 @@ describe CartItem do
 
 
   context "quantity is greater than the available product" do
-    let(:product) { create(:product, :sellable, name: "Bananas") } # lot w/ quantity 15
+    let(:product) { create(:product, :sellable, name: "Bananas") } # lot w/ quantity 150
 
-    subject { build(:cart_item, product: product, quantity: 99) }
+    subject { build(:cart_item, product: product, quantity: 151) }
 
     it "has an error" do
       expect(subject).to have(1).error_on(:quantity)
@@ -37,7 +37,7 @@ describe CartItem do
   end
 
   context "quantity is nil" do
-    let(:product) { create(:product, :sellable, name: "Bananas") } # lot w/ quantity 15
+    let(:product) { create(:product, :sellable, name: "Bananas") } # lot w/ quantity 150
 
     subject { build(:cart_item, product: product, quantity: nil) }
 
@@ -47,7 +47,7 @@ describe CartItem do
   end
 
   describe "#unit" do
-    let(:product) { create(:product, :sellable, name: "Bananas") } # lot w/ quantity 15
+    let(:product) { create(:product, :sellable, name: "Bananas") } # lot w/ quantity 150
     let(:cart_item) { create(:cart_item, product: product) }
 
     it "returns the singular unit for a quantity of 1" do
