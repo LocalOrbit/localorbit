@@ -17,7 +17,8 @@ input[type=submit] {
   -webkit-font-smoothing: antialiased;
 
   &:hover {
-    background-image: none
+    background-image: none;
+    text-decoration: none;
   }
 
   &:disabled,

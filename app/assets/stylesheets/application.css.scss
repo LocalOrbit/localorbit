@@ -33,6 +33,10 @@ a {
   color: #4162A1;
   text-decoration: none;
 
+  &:hover {
+    text-decoration: underline;
+  }
+
   img {
     border: 0;
   }
