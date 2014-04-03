@@ -17,8 +17,7 @@ Rails.application.routes.draw do
       resources :delivery_schedules, path: :deliveries
       resource  :fees, only: [:show, :update]
       resources :bank_accounts, only: [:index, :new, :create] do
-        get "verify"
-        put "verify" => "bank_accounts#verification"
+        resource :bank_account_verification, only: [:show, :update], path: :verify
       end
     end
 
@@ -30,8 +29,7 @@ Rails.application.routes.draw do
     resources :organizations do
       resources :users
       resources :bank_accounts, only: [:index, :new, :create] do
-        get "verify"
-        put "verify" => "bank_accounts#verification"
+        resource :bank_account_verification, only: [:show, :update], path: :verify
       end
       resources :locations, except: :destroy do
         collection do
