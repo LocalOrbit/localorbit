@@ -37,7 +37,7 @@ describe "Checking Out" do
 
   # Ada Farms
   let!(:potatoes) { create(:product, :sellable, name: "Potatoes", organization: ada_farms) }
-  let!(:pototoes_lot) { create(:lot, product: potatoes, quantity: 100) }
+  let!(:potatoes_lot) { create(:lot, product: potatoes, quantity: 100) }
 
   let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms) }
 
@@ -58,6 +58,10 @@ describe "Checking Out" do
     Timecop.return
   end
 
+  def checkout
+    click_button "Checkout"
+  end
+
   before do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
@@ -72,23 +76,26 @@ describe "Checking Out" do
     expect(page).to have_content("Potatoes")
 
     fill_in "PO Number", with: "12345"
-
-    click_button "Checkout"
-    expect(page).to have_content("Thank you for your order")
   end
 
   it "displays the ordered products" do
+    checkout
+    expect(page).to have_content("Thank you for your order")
     items = Dom::Order::ItemRow.all
     expect(items.map(&:name)).to include("Bananas", "Potatoes", "Kale")
   end
 
   context "for delivery" do
     it "displays the address" do
+      checkout
+      expect(page).to have_content("Thank you for your order")
       expect(page).to have_content("be delivered to")
       expect(page).to have_content("500 S. State Street, Ann Arbor, MI 48109")
     end
 
     it "displays the delivery times" do
+      checkout
+      expect(page).to have_content("Thank you for your order")
       expect(page).to have_content("Delivery on")
       expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
 
@@ -101,11 +108,17 @@ describe "Checking Out" do
     let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup,  market: market, day: 5) }
 
     it "displays the address" do
+      checkout
+      expect(page).to have_content("Thank you for your order")
+
       expect(page).to have_content("available for pickup at")
       expect(page).to have_content("44 E. 8th St, Holland, MI 49423")
     end
 
     it "displays the delivery times" do
+      checkout
+      expect(page).to have_content("Thank you for your order")
+
       expect(page).to have_content("Pickup on")
       expect(page).to have_content("May 9, 2014 between 10:00AM and 12:00PM")
 
@@ -115,6 +128,20 @@ describe "Checking Out" do
   end
 
   it "clears out the cart" do
+    checkout
     expect(cart_link.count.text).to eql("0")
+  end
+
+  it "inventory has been exhausted since placing product in cart" do
+    kale.lots.first.update_attribute(:quantity, 1)
+    potatoes.lots.each {|lot| lot.update(quantity: 1) }
+
+    checkout
+
+    expect(cart_link.count.text).to eql("3")
+    expect(page).to have_content("Your order could not be completed.")
+
+    expect(page).to have_content("Unfortunately, there are only 2 Potatoes available")
+    expect(page).to have_content("Unfortunately, there are only 1 Kale available")
   end
 end

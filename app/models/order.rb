@@ -2,7 +2,7 @@ class Order < ActiveRecord::Base
   belongs_to :market
   belongs_to :organization
   belongs_to :delivery
-  has_many :items, inverse_of: :order, class: OrderItem
+  has_many :items, inverse_of: :order, class: OrderItem, autosave: true
 
   validates :billing_address, presence: true
   validates :billing_city, presence: true
@@ -93,11 +93,14 @@ class Order < ActiveRecord::Base
     order.delivery_status  =  "Pending"
     order.delivery_phone   = address.phone
 
-    cart.items.each do |item|
-      order.items << OrderItem.build_from_cart_item(item, cart.delivery.deliver_on)
+    ActiveRecord::Base.transaction do
+      cart.items.each do |item|
+        order.items << OrderItem.create_with_order_and_item_and_deliver_on_date(order: order, item: item, deliver_on_date: cart.delivery.deliver_on)
+      end
+
+      raise ActiveRecord::Rollback unless order.save
     end
 
-    order.save
     order
   end
 end
