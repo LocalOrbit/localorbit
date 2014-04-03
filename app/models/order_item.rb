@@ -1,5 +1,5 @@
 class OrderItem < ActiveRecord::Base
-  attr :inventory, :deliver_on_date
+  attr_accessor :deliver_on_date
 
   belongs_to :order, inverse_of: :items
   belongs_to :product
@@ -17,12 +17,12 @@ class OrderItem < ActiveRecord::Base
 
   before_create :consume_inventory
 
-  def self.create_with_order_and_item(opts={})
+  def self.create_with_order_and_item_and_deliver_on_date(opts={})
     item = opts[:item]
-    deliver_on_date = opts[:deliver_on_date]
     order = opts[:order]
 
     create(
+      deliver_on_date: opts[:deliver_on_date],
       order: order,
       product: item.product,
       name: item.product.name,
@@ -54,16 +54,13 @@ class OrderItem < ActiveRecord::Base
 
   private
   def consume_inventory
-    return unless valid?
-
     quantity_remaining = quantity
 
-    product.lots_by_expiration.available.each do |lot|
+    product.lots_by_expiration.available(deliver_on_date).each do |lot|
       break unless quantity_remaining
 
       num_to_consume = [lot.quantity, quantity_remaining].min
-      lot.decrement(:quantity, num_to_consume)
-      lot.save
+      lot.decrement!(:quantity, num_to_consume)
 
       lots.build(lot: lot, quantity: num_to_consume)
       quantity_remaining -= num_to_consume
