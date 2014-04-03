@@ -6,14 +6,16 @@
     <legend>Organization Information</legend>
     <% if @organization.new_record? %>
       <% if @markets.size > 1 %>
+      <div class="field column column--half">
         <%= label_tag :initial_market_id, "Market" %><br>
         <%= select_tag :initial_market_id, options_for_select(@markets.map {|m| [m.name, m.id] }, selected: params[:initial_market_id]), prompt: "Select a Market", class: "column--full" %>
+      </div>
       <% else %>
         <%= hidden_field_tag :initial_market_id, @markets.first.id %>
       <% end %>
     <% end %>
 
-    <div class="field">
+    <div class="field column--half">
       <%= f.label :name %><br>
       <%= f.text_field :name, class: "column column--full" %>
     </div>
@@ -25,14 +27,14 @@
       </div>
     <% end %>
 
-    <div class="field">
+    <div class="field field--inline">
       <%= f.label :facebook %><br>
       <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
     </div>
 
-    <div class="field">
+    <div class="field field--inline">
       <%= f.label :twitter %><br>
-      <span class="btn btn--start">@</span><%= f.text_field :twitter %>
+      <span class="btn btn--start">@</span><%= f.text_field :twitter, maxlength: 15 %>
     </div>
 
     <div class="field">
