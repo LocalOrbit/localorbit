@@ -1,12 +1,14 @@
 <%= render 'admin/users/header' %>
 
 <div class="row row--partial">
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>E-mail</th>
-        <th>Affiliations</th>
-      </tr>
+    <table class="sortable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>E-mail</th>
+          <th>Affiliations</th>
+        </tr>
+      </thead>
       <% @users.each do |user| %>
       <tr class="<%= cycle "odd", "even" %>">
         <td><%= user.name %></td>
