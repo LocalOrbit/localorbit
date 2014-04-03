@@ -1,27 +1,23 @@
-<div class="row row--partial">
-  <div class="column column--three-fourths">
-    <div class="l-page-header">
-      <h1>Organizations</h1>
-      <%= link_to 'Add Organization', new_admin_organization_path, class: "btn btn--add btn--small" if current_user.admin? || current_user.market_manager? %>
-    </div>
-
-    <table class="sortable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Market</th>
-          <th>Registered On</th>
-          <th>Can Sell</th>
-        </tr>
-      </thead>
-      <% @organizations.each do |organization| %>
-      <tr>
-        <td><%= link_to organization.name, [:admin, organization] %></td>
-        <td><% organization.markets.each do |m| %><%= m.name %><% end %></td>
-        <td><%= organization.created_at.strftime("%b, %d %Y") %></td>
-        <td><%= organization.can_sell? ? "Yes" : "No" %></td>
-      </tr>
-      <% end %>
-    </table>
+  <div class="l-page-header">
+    <h1>Organizations</h1>
+    <%= link_to 'Add Organization', new_admin_organization_path, class: "btn btn--add btn--small" if current_user.admin? || current_user.market_manager? %>
   </div>
-</div>
+
+  <table class="sortable organization-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Market</th>
+        <th>Registered On</th>
+        <th>Can Sell</th>
+      </tr>
+    </thead>
+    <% @organizations.each do |organization| %>
+    <tr>
+      <td><%= link_to organization.name, [:admin, organization] %></td>
+      <td><% organization.markets.each do |m| %><%= m.name %><% end %></td>
+      <td><%= organization.created_at.strftime("%b, %d %Y") %></td>
+      <td><%= organization.can_sell? ? "Yes" : "No" %></td>
+    </tr>
+    <% end %>
+  </table>
