@@ -7,14 +7,12 @@ class Order < ActiveRecord::Base
   validates :billing_address, presence: true
   validates :billing_city, presence: true
   validates :billing_organization_name, presence: true
-  validates :billing_phone, presence: true
   validates :billing_state, presence: true
   validates :billing_zip, presence: true
   validates :delivery_address, presence: true
   validates :delivery_city, presence: true
   validates :delivery_fees, presence: true
   validates :delivery_id, presence: true
-  validates :delivery_phone, presence: true
   validates :delivery_state, presence: true
   validates :delivery_status, presence: true
   validates :delivery_zip, presence: true

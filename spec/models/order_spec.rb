@@ -62,11 +62,6 @@ describe Order do
       expect(subject).to have(1).error_on(:delivery_zip)
     end
 
-    it "requires a delivery phone" do
-      expect(subject).to be_invalid
-      expect(subject).to have(1).error_on(:delivery_phone)
-    end
-
     it "requires a billing organization name" do
       expect(subject).to be_invalid
       expect(subject).to have(1).error_on(:billing_organization_name)
@@ -92,10 +87,6 @@ describe Order do
       expect(subject).to have(1).error_on(:billing_zip)
     end
 
-    it "requires a billing phone" do
-      expect(subject).to be_invalid
-      expect(subject).to have(1).error_on(:billing_phone)
-    end
 
     it "requires a payment status" do
       expect(subject).to be_invalid
@@ -238,10 +229,7 @@ describe Order do
     end
 
     context "when the order is invalid", truncate: true do
-      before do
-        billing_org = cart.organization.locations.default_billing
-        billing_org.update_attribute(:phone, nil)
-      end
+      let(:params) { { payment_method: nil, payment_note: "1234" } }
 
       it "will not consume inventory" do
         expect {

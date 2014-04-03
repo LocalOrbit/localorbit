@@ -112,7 +112,6 @@ describe "admin manange organization" do
           expect(page).to have_content("City can't be blank")
           expect(page).to have_content("State can't be blank")
           expect(page).to have_content("Postal code can't be blank")
-          expect(page).to have_content("Phone can't be blank")
         end
       end
     end
