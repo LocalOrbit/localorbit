@@ -33,8 +33,9 @@ class Market < ActiveRecord::Base
     "#{subdomain}.#{Figaro.env.domain!}"
   end
 
+  # TODO: exclude fees for payment types not available on the market
   def seller_net_percent
-    BigDecimal("1") - (local_orbit_seller_fee + market_seller_fee) / 100
+    BigDecimal("1") - (local_orbit_seller_fee + market_seller_fee + [ach_seller_fee, credit_card_seller_fee].max) / 100
   end
 
   def products
