@@ -237,7 +237,7 @@ describe Order do
       end
     end
 
-    context "when the order is invalid" do
+    context "when the order is invalid", truncate: true do
       before do
         billing_org = cart.organization.locations.default_billing
         billing_org.update_attribute(:phone, nil)

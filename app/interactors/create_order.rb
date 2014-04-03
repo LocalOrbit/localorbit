@@ -3,6 +3,6 @@ class CreateOrder
 
   def perform
     context[:order] = Order.create_from_cart(order_params, cart)
-    context.fail! unless context[:order].persisted?
+    context.fail! if context[:order].errors.any?
   end
 end

@@ -13,7 +13,7 @@ class OrderItem < ActiveRecord::Base
   validates :unit, presence: true
   validates :unit_price, presence: true
 
-  validate  :product_availability, if: 'product.present?'
+  validate  :product_availability, on: :create
 
   before_create :consume_inventory
 
@@ -43,6 +43,8 @@ class OrderItem < ActiveRecord::Base
   end
 
   def product_availability
+    return unless product.present?
+
     quantity_available = product.lots_by_expiration.available.sum(:quantity)
 
     if quantity_available < quantity
