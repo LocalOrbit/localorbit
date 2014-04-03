@@ -13,6 +13,7 @@ class Market < ActiveRecord::Base
   has_many :organizations, through: :market_organizations
   has_many :addresses, class_name: MarketAddress
   has_many :delivery_schedules, inverse_of: :market
+  has_many :orders
 
   has_many :bank_accounts, as: :bankable
 
@@ -34,5 +35,9 @@ class Market < ActiveRecord::Base
 
   def seller_net_percent
     BigDecimal("1") - (local_orbit_seller_fee + market_seller_fee) / 100
+  end
+
+  def products
+    Product.where(organization_id: (organizations.map &:id))
   end
 end

@@ -1,0 +1,27 @@
+<table class="products-table <%= cycle "odd", "even" %>">
+  <thead>
+    <tr>
+      <th>Seller</th>
+      <th>Name</th>
+      <th>Pricing</th>
+      <th>In Stock</th>
+    </tr>
+  </thead>
+<% current_market.products.limit(15).order("created_at DESC").each do |product| %>
+  <tr class="product-row">
+    <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]), class: 'seller') %>
+    <td class="name"><%= link_to product.name, [:admin, product] %></td>
+    <td class="pricing">
+      <ul class="l-inline-list">
+        <% product.prices.view_sorted.decorate.each do |price| %>
+        <%= content_tag(:li, link_to(price.quick_info, [:admin, product, :prices], class: 'edit-toggle')) %>
+        <% end %>
+      </ul>
+    </td>
+    <td class="stock">
+      <%= link_to product.available_inventory, [:admin, product, :lots], class: "edit-toggle" %>
+    </td>
+  </tr>
+<% end %>
+</table>
+<%= link_to "All Products", admin_products_path %>

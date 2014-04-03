@@ -1,0 +1,17 @@
+<h2>Current Sales</h2>
+
+<% if current_market.orders.present? %>
+  <%= render "current_sales" %>
+<% else %>
+  No orders have yet been created
+<% end %>
+
+<hr>
+
+<h2>Products</h2>
+<% if current_market.products.present? %>
+  <%= render "products" %>
+<% else %>
+  No products have yet been created
+<% end %>
+

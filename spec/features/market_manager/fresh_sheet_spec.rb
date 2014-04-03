@@ -50,3 +50,23 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
     end
   end
 end
+
+feature "an Admin with more then one market sends a weekly Fresh Sheet" do
+  let!(:user) { create(:user, :admin) }
+  let!(:markets) { create_list(:market, 2) }
+
+  before do
+    user.markets << markets
+  end
+
+  scenario "selecting a market" do
+    switch_to_main_domain
+    sign_in_as(user)
+
+    visit admin_fresh_sheet_path
+    expect(page).to have_content("Please Select a Market")
+    click_link markets.first.name
+    expect(page).to have_content("Fresh Sheet")
+    expect(page).to have_css("iframe[src='#{preview_admin_fresh_sheet_path}']")
+  end
+end
