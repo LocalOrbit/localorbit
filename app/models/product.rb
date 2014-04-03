@@ -35,6 +35,12 @@ class Product < ActiveRecord::Base
   before_save :update_top_level_category
   before_save :update_delivery_schedules, if: "use_all_deliveries?"
 
+  def self.available_for_market(market)
+    return none unless market
+
+    visible.seller_can_sell.where(organization: market.organization_ids)
+  end
+
   def self.available_for_sale(market, buyer = nil)
     visible.seller_can_sell.
       joins(:lots, :prices).select('DISTINCT(products.*)').

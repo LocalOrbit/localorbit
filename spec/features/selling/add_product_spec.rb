@@ -488,7 +488,8 @@ describe "Adding a product" do
     context "when product information is valid" do
       it "makes the user choose an organization to add the product for" do
         expect(page).to_not have_content(stub_warning_both)
-        select org2.name, from: organization_label
+      
+        select org2.name, from: "Seller Organization"
         fill_in_required_fields
 
         click_button "Add Product"
@@ -528,7 +529,7 @@ describe "Adding a product" do
 
     it "makes the user choose an organization to add the product for" do
       expect(page).to_not have_content(stub_warning_both)
-      select org2.name, from: organization_label
+      select org2.name, from: "Seller Organization"
       fill_in_required_fields
 
       click_button "Add Product"

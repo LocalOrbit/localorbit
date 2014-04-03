@@ -213,7 +213,7 @@ feature "Viewing products" do
       market: market
     ) }
 
-    let!(:ds3_product) { create(:product, :sellable, organization: org1, delivery_schedules: [ds3]) }
+    let!(:ds3_product) { create(:product, :sellable, organization: org1, use_all_deliveries: false, delivery_schedules: [ds3]) }
 
     before do
       org1_product.delivery_schedules << ds4
