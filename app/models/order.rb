@@ -98,9 +98,7 @@ class Order < ActiveRecord::Base
         order.items << OrderItem.build_with_order_and_item(order:order, item: item, deliver_on_date: cart.delivery.deliver_on)
       end
 
-      unless order.save
-        raise ActiveRecord::Rollback unless order.save
-      end
+      raise ActiveRecord::Rollback unless order.save
     end
 
     order
