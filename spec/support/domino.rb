@@ -587,7 +587,7 @@ module Dom
   end
 
   module Dashboard
-    class CurrentSaleRow < Domino
+    class OrderRow < Domino
       selector ".order-row"
 
       attribute :order_number
@@ -604,6 +604,14 @@ module Dom
       attribute :name
       attribute :pricing
       attribute :stock
+    end
+
+    class UpcomingDelivery < Domino
+      selector ".upcoming-delivery"
+
+      attribute :delivery_date
+      attribute :location
+      attribute :number_of_orders
     end
   end
 end

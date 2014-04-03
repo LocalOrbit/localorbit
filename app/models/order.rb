@@ -24,6 +24,8 @@ class Order < ActiveRecord::Base
   validates :placed_at, presence: true
   validates :total_cost, presence: true
 
+  scope :pending, -> { where(payment_status: "Pending") }
+
   def self.orders_for_buyer(user)
     if user.admin?
       all

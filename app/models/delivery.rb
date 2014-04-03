@@ -12,6 +12,11 @@ class Delivery < ActiveRecord::Base
     where(delivery_schedules: {market_id: market.id})
   end
 
+  def self.for_seller(seller)
+    joins(:delivery_schedule).
+    where(delivery_schedules: {market_id: [seller.markets.map(&:id)]})
+  end
+
   def requires_location?
     !delivery_schedule.buyer_pickup?
   end
