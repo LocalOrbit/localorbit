@@ -16,6 +16,8 @@ module Admin
       @product = Product.new(product_params.merge(organization: @organization)).decorate
 
       if @product.save
+        @product.delivery_schedule_ids = params[:delivery_schedule_ids]
+        
         redirect_to after_create_page, notice: "Added #{@product.name}"
       else
         find_selling_organizations
@@ -32,6 +34,8 @@ module Admin
       @product = current_user.managed_products.find(params[:id]).decorate
 
       if @product.update_attributes(product_params)
+        @product.delivery_schedule_ids = params[:delivery_schedule_ids]
+
         redirect_to [:admin, @product], notice: "Saved #{@product.name}"
       else
         @organizations = [@product.organization]

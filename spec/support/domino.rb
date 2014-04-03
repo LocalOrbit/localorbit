@@ -338,6 +338,14 @@ module Dom
       def checked?
         node.find("input").checked? || false
       end
+
+      def check!
+        node.find("input").set(true)
+      end
+
+      def uncheck!
+        node.find("input").set(false)
+      end
     end
 
     class LocationForm < Domino

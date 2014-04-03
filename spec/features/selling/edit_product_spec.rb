@@ -170,7 +170,19 @@ describe "Editing a product" do
       expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
 
       expect(page).to have_content("Mondays from 7:00 AM to 11:00 AM direct to customer")
-      expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at Market Address 1")
+      expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at Market Address")
+    end
+
+    it "persists changes" do
+      mondays = Dom::Admin::ProductDelivery.find_by_weekday("Mondays")
+      mondays.uncheck!
+      tuesdays = Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")
+      tuesdays.check!
+
+      click_button "Save Product"
+
+      expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
+      expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
     end
   end
 end
