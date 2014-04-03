@@ -59,7 +59,7 @@ module Dom
     selector "#inventory_table tbody tr.lot"
 
     def click_number
-      node.find(".number").click
+      node.find(".number .edit-trigger").trigger(:click)
     end
 
     def number
