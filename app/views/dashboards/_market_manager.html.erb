@@ -1,53 +1,17 @@
 <h2>Current Sales</h2>
 
-<table class="current-sales-table <%= cycle "odd", "even" %>">
-  <thead>
-    <tr>
-      <th>Order #</th>
-      <th>Placed On</th>
-      <th>Total</th>
-      <th>Delivery</th>
-      <th>Payment</th>
-    </tr>
-  </thead>
-<% current_market.orders.each do |order| %>
-  <tr class="order-row">
-    <td class="order-number"><%= order.order_number %></td>
-    <td class="placed-on"><%= order.placed_at.strftime("%b %e, %Y") %></td>
-    <td class="total"><%= number_to_currency(order.total_cost) %></td>
-    <td class="delivery"><%= order.delivery_status %></td>
-    <td class="payment"><%= order.payment_status %></td>
-  </tr>
+<% if current_market.orders.present? %>
+  <%= render "current_sales" %>
+<% else %>
+  No orders have yet been created
 <% end %>
-</table>
 
 <hr>
 
 <h2>Products</h2>
-
-<table class="products-table <%= cycle "odd", "even" %>">
-  <thead>
-    <tr>
-      <th>Seller</th>
-      <th>Name</th>
-      <th>Pricing</th>
-      <th>In Stock</th>
-    </tr>
-  </thead>
-<% current_market.products.each do |product| %>
-  <tr class="product-row">
-    <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]), class: 'seller') %>
-    <td class="name"><%= link_to product.name, [:admin, product] %></td>
-    <td class="pricing">
-      <ul class="l-inline-list">
-        <% product.prices.view_sorted.decorate.each do |price| %>
-        <%= content_tag(:li, link_to(price.quick_info, [:admin, product, :prices], class: 'edit-toggle')) %>
-        <% end %>
-      </ul>
-    </td>
-    <td class="stock">
-      <%= link_to product.available_inventory, [:admin, product, :lots], class: "edit-toggle" %>
-    </td>
-  </tr>
+<% if current_market.products.present? %>
+  <%= render "products" %>
+<% else %>
+  No products have yet been created
 <% end %>
-</table>
+
