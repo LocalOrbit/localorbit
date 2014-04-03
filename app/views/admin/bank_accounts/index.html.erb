@@ -27,7 +27,7 @@
               <% if bank_account.verified? %>
                 Verified
               <% else %>
-                <%= link_to "Verify", [:admin, @entity, bank_account, :verify] %></td>
+                <%= link_to "Verify", [:admin, @entity, bank_account, BankAccountVerification.new] %></td>
               <% end %>
             </td>
           </tr>

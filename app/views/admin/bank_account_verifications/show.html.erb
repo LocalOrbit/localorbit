@@ -1,0 +1,22 @@
+<%= form_for [:admin, @entity, @verification.bank_account, @verification] do |f| %>
+  <%= render "shared/errors", { resource: @verification } %>
+
+  <ul>
+    <li><%= @verification.bank_account.bank_name %></li>
+    <li><%= @verification.bank_account.account_type %></li>
+    <li><%= @verification.bank_account.last_four %></li>
+  </ul>
+  <p>Please confirm the two micro deposits made to your account above.</p>
+
+  <div class="row">
+    <%= f.label :amount_1, "Amount 1 (in cents)" %>
+    <%= f.text_field :amount_1 %>
+  </div>
+
+  <div class="row">
+    <%= f.label :amount_2, "Amount 2 (in cents)" %>
+    <%= f.text_field :amount_2 %>
+  </div>
+
+  <%= f.submit "Verify" %>
+<% end %>
