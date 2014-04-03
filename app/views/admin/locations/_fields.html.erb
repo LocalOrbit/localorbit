@@ -1,29 +1,27 @@
 <div class="row row--field">
   <div class="field column column--half column--guttered">
     <%= form.label :name, "Location Name" %><br>
-    <%= form.text_field :name, class: "column column--full" %>
+    <%= form.text_field :name, placeholder: "Give your organization a location name", class: "column column--full" %>
+  </div
+  ><div class="field column column--half column--guttered">
+    <%= form.label :address %><br>
+    <%= form.text_field :address, class: "column column--full" %>
   </div>
+
 </div>
 
-<div class="field">
-  <%= form.label :address %><br>
-  <%= form.text_field :address, class: "column column--full" %>
-</div>
-
-<div class="row">
-  <div class="field field--inline">
+<div class="row row--field">
+  <div class="field column column--half column--guttered">
     <%= form.label :city %><br>
-    <%= form.text_field :city %>
-  </div>
-
-  <div class="field field--inline">
+    <%= form.text_field :city, class: "column--full" %>
+  </div
+  ><div class="field column column--fourth column--guttered">
     <%= form.label :state %><br>
-    <%= form.select :state, us_states, {include_blank: true} %>
-  </div>
-
-  <div class="field field--inline">
+    <%= form.select :state, us_states, {include_blank: true}, class: "column--full" %>
+  </div
+  ><div class="field column column--fourth column--guttered">
     <%= form.label :zip, "Postal Code" %><br>
-    <%= form.text_field :zip, size: 10  %>
+    <%= form.text_field :zip, size: 10, class: "column--full"  %>
   </div>
 </div>
 
