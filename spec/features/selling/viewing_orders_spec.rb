@@ -6,8 +6,8 @@ feature "Viewing orders" do
   let!(:seller_org2) { create(:organization, :seller, markets: [market]) }
   let!(:buyer_org)   { create(:organization, :buyer,  markets: [market]) }
   let!(:user)        { create(:user, organizations: [seller_org1]) }
-  let!(:product1)    { create(:product, organization: seller_org1) }
-  let!(:product2)    { create(:product, organization: seller_org2) }
+  let!(:product1)    { create(:product, :sellable, organization: seller_org1) }
+  let!(:product2)    { create(:product, :sellable, organization: seller_org2) }
 
   let!(:order1)      { create(:order, organization: buyer_org, market: market, total_cost: 27.96) }
   let!(:order_item1) { create(:order_item, order: order1, product: product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40) }
