@@ -89,7 +89,8 @@ tbody {
     &.destructive {
       background: #fdd;
 
-      > .delete a {
+      > .delete a,
+      > .delete button {
         color: $alert_text;
       }
     }
