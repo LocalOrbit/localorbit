@@ -16,8 +16,6 @@ module Admin
       @product = Product.new(product_params.merge(organization: @organization)).decorate
 
       if @product.save
-        attach_to_delivery_schedules
-
         redirect_to after_create_page, notice: "Added #{@product.name}"
       else
         find_selling_organizations
@@ -34,8 +32,6 @@ module Admin
       @product = current_user.managed_products.find(params[:id]).decorate
 
       if @product.update_attributes(product_params)
-        attach_to_delivery_schedules
-
         redirect_to [:admin, @product], notice: "Saved #{@product.name}"
       else
         @organizations = [@product.organization]
@@ -56,7 +52,8 @@ module Admin
         :name, :image, :category_id, :unit_id, :location_id,
         :short_description, :long_description,
         :who_story, :how_story,
-        :use_simple_inventory, :simple_inventory, :use_all_deliveries
+        :use_simple_inventory, :simple_inventory, :use_all_deliveries,
+        :delivery_schedule_ids => []
       )
     end
 
@@ -73,16 +70,6 @@ module Admin
 
     def find_selling_organizations
       @organizations = current_user.managed_organizations.selling.includes(:locations)
-    end
-
-    def attach_to_delivery_schedules
-      @product.delivery_schedule_ids = if @product.use_all_deliveries
-        @product.organization.markets.map do |market|
-          market.delivery_schedules.all.map(&:id)
-        end.flatten
-      else
-        params[:delivery_schedule_ids]
-      end
     end
   end
 end

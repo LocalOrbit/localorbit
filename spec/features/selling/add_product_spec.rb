@@ -28,6 +28,7 @@ describe "Adding a product" do
 
   let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1) }
   let!(:tuesdays_schedule) { create(:delivery_schedule, market: market, day: 2) }
+  let!(:deleted_schedule) { create(:delivery_schedule, market: market, day: 2, deleted_at: Time.current) }
 
   before do
     Unit.create! singular: "Pound", plural: "Pounds"

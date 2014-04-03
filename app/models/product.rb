@@ -32,6 +32,7 @@ class Product < ActiveRecord::Base
   scope_accessible :category, method: :for_category_id, ignore_blank: true
 
   before_save :update_top_level_category
+  before_save :update_delivery_schedules, if: "use_all_deliveries?"
 
   def self.available_for_sale(market, buyer = nil)
     visible.seller_can_sell.
@@ -126,5 +127,11 @@ class Product < ActiveRecord::Base
 
   def overrides_organization?
     who_story.present? || how_story.present?
+  end
+
+  def update_delivery_schedules
+    self.delivery_schedule_ids = organization.markets.map do |market|
+      market.delivery_schedules.visible.map(&:id)
+    end.flatten
   end
 end

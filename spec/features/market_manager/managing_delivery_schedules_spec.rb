@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 describe 'Market Manager managing delivery schedules' do
-  let!(:user) { create(:user, :market_manager) }
-  let!(:market) { user.managed_markets.first }
-  let!(:address) { create(:market_address, market: market) }
+  let!(:user)         { create(:user, :market_manager) }
+  let!(:market)       { user.managed_markets.first }
+  let!(:address)      { create(:market_address, market: market) }
+  let!(:organization) { create(:organization, :seller, markets: [market])}
+  let!(:all_deliveries_product)    { create(:product, :sellable, organization: organization) }
+  let!(:select_deliveries_product) { create(:product, :sellable, organization: organization, use_all_deliveries: false) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -13,6 +16,9 @@ describe 'Market Manager managing delivery schedules' do
   end
 
   it 'adding a new schedule' do
+    expect(all_deliveries_product.reload.delivery_schedules.count).to eql(0)
+    expect(select_deliveries_product.reload.delivery_schedules.count).to eql(0)
+
     click_link 'Deliveries'
     click_link 'Add Delivery'
 
@@ -25,6 +31,8 @@ describe 'Market Manager managing delivery schedules' do
     click_button 'Save Delivery'
 
     expect(page).to have_content('Saved delivery schedule')
+    expect(all_deliveries_product.reload.delivery_schedules.count).to eql(1)
+    expect(select_deliveries_product.reload.delivery_schedules.count).to eql(0)
   end
 
   it 'adding a new schedule with market fulfillment', js: true do
