@@ -679,11 +679,12 @@ label ~ .tooltip {
 .tooltip {
   position: relative;
   display: inline-block;
-  width: 1.3em;
-  height: 1.2em;
+  width: 14px;
+  height: 14px;
   @include border-radius(50%);
   color: #fff;
-  background: #ccc;
+  background: asset_url('tooltip-icon.png') center no-repeat;
+  background: asset_url('tooltip-icon@2x.png') center / 100% no-repeat;
   font-size: .9em;
   font-weight: bold;
   line-height: 1em;
