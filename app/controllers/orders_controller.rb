@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
       session.delete(:cart_id)
     else
       @grouped_items = current_cart.items.for_checkout
-      flash[:alert] = "Your order could not be completed."
+      flash.now[:alert] = "Your order could not be completed."
       render "carts/show"
     end
   end
