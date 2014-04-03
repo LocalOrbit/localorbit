@@ -12,7 +12,7 @@
 
 
     <a href="#product-filter-organization" class="filter-toggle caretted caretted--right">Seller</a>
-    <%= filter_list(current_market.organizations, :organization) %>
+    <%= filter_list(@filter_organizations, :organization) %>
 
     <a href="#product-filter-category" class="filter-toggle caretted caretted--right">Category</a>
     <%= filter_list(@filter_categories, :category) %>

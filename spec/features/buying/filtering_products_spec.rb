@@ -3,6 +3,7 @@ require "spec_helper"
 feature "Filtering Products List" do
   let!(:org1) { create(:organization, name: "Schrute Farms") }
   let!(:org2) { create(:organization, name: "Funny Farm") }
+  let!(:org3) { create(:organization, name: "Abandoned Farm") }
   let(:category1) { Category.find_by!(name: "Corn") }
   let(:category2) { Category.find_by!(name: "Macintosh Apples") }
   let(:category3) { Category.find_by!(name: "Vegetable Juice") }
@@ -24,12 +25,18 @@ feature "Filtering Products List" do
   let!(:buyer_org) { create(:organization, :single_location, :buyer) }
   let!(:user) { create(:user, organizations: [buyer_org]) }
 
-  let!(:market) { create(:market, :with_addresses, :with_delivery_schedule, organizations: [org1, org2, buyer_org]) }
+  let!(:market) { create(:market, :with_addresses, :with_delivery_schedule, organizations: [org1, org2, org3, buyer_org]) }
 
   before do
     switch_to_subdomain market.subdomain
     sign_in_as(user)
     visit products_path
+  end
+
+  scenario "seller filters only for sellers with products" do
+    expect(Dom::ProductFilter).to have_content(org1.name)
+    expect(Dom::ProductFilter).not_to have_content(buyer_org.name)
+    expect(Dom::ProductFilter).not_to have_content(org3.name)
   end
 
   scenario "by seller" do
