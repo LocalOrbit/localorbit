@@ -6,7 +6,7 @@ describe "Editing a product" do
   let(:organization_label) { "Product Organization" }
   let(:product) { create(:product, name: "Canned Pears") }
   let!(:category_id) { product.category.id }
-  let(:market)  { create(:market, organizations: [product.organization]) }
+  let(:market)  { create(:market, :with_addresses, organizations: [product.organization]) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -144,6 +144,33 @@ describe "Editing a product" do
         expect(page).to have_field("Product Name", with: "Canned Peaches")
         expect(page).not_to have_field("Product Category")
       end
+    end
+  end
+
+  describe "delivery schedules" do
+    let!(:monday_delivery) { create(:delivery_schedule, market: market, day: 1) }
+    let!(:tuesday_delivery) { create(:delivery_schedule, :buyer_pickup, market: market, day: 2) }
+
+    before do
+      product.organization.users << user
+      product.delivery_schedule_ids = [monday_delivery.id]
+      sign_in_as(user)
+      within '#admin-nav' do
+        click_link 'Products'
+      end
+      click_link "Canned Pears"
+    end
+
+    it "displays the market delivery options for the product" do
+      expect(page).to have_content("Delivery Times")
+
+      product_deliveries = Dom::Admin::ProductDelivery.all
+      expect(product_deliveries.count).to eql(2)
+      expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
+      expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+
+      expect(page).to have_content("Mondays from 7:00 AM to 11:00 AM direct to customer")
+      expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at Market Address 1")
     end
   end
 end

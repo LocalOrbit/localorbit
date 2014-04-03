@@ -111,6 +111,20 @@
 
 </fieldset>
 
+<fieldset>
+  <h2>Delivery Times</h2>
+  <ul>
+    <% current_market.delivery_schedules.order(:day).each do |ds| %>
+      <li class="product-delivery-schedule">
+        <label>
+        <%= check_box_tag "delivery_schedule_ids[]", ds.id, ds.decorate.attached_to_product(@product) %>
+          <span class="weekday"><%= ds.weekday.pluralize %></span> <%= ds.decorate.human_description %>
+        </label>
+      </li>
+    <% end %>
+  </ul>
+</fieldset>
+
 <% if @product.lots.count < 1 %>
 <p class="form-footer">
   At this point your product is complete but won't be listed until you have added inventory and set pricing.
