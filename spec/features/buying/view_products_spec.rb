@@ -1,24 +1,24 @@
 require "spec_helper"
 
 feature "Viewing products" do
-  let!(:org1) { create(:organization, :seller) }
-  let!(:org2) { create(:organization, :seller) }
-  let!(:org1_product) { create(:product, :sellable, name: "celery", organization: org1) }
-  let!(:org2_product) { create(:product, :sellable, organization: org2) }
-  let(:available_products) { [org1_product, org2_product] }
+  let!(:market) { create(:market, :with_addresses) }
+  let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, order_cutoff: 24, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
+  let!(:delivery_schedule2) { create(:delivery_schedule, market: market, deleted_at: Time.parse('2013-03-21')) }
+
+  let!(:org1) { create(:organization, :seller, markets: [market]) }
+  let!(:org1_product) { create(:product, :sellable, name: "celery", organization: org1, delivery_schedules: [delivery_schedule1]) }
+
+  let!(:org2) { create(:organization, :seller, markets: [market]) }
+  let!(:org2_product) { create(:product, :sellable, organization: org2, delivery_schedules: [delivery_schedule1]) }
+  let!(:org2_product_deleted) { create(:product, :sellable, organization: org2, deleted_at: 1.day.ago) }
 
   let!(:other_org) { create(:organization, :seller) }
   let!(:other_products) { create_list(:product, 3, :sellable, organization: other_org) }
 
-  let!(:org2_product_deleted) { create(:product, :sellable, organization: org2, deleted_at: 1.day.ago) }
-
-  let!(:buyer_org) { create(:organization, :multiple_locations, :buyer) }
+  let!(:buyer_org) { create(:organization, :multiple_locations, :buyer, markets: [market]) }
   let(:user) { create(:user, organizations: [buyer_org]) }
 
-  let!(:market) { create(:market, :with_addresses, organizations: [org1, org2, buyer_org]) }
-
-  let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, order_cutoff: 24, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
-  let!(:delivery_schedule2) { create(:delivery_schedule, market: market, deleted_at: Time.parse('2013-03-21')) }
+  let(:available_products) { [org1_product, org2_product] }
 
   def celery_item
     Dom::Cart::Item.find_by_name("celery")
@@ -82,9 +82,10 @@ feature "Viewing products" do
   end
 
   context "pick up or delivery date" do
-    before do
-      create(:delivery_schedule, market: market, day: 3, seller_delivery_start: "4:00 PM", seller_delivery_end: "8:00 PM")
+    let!(:delivery_schedule) { create(:delivery_schedule, market: market, day: 3, seller_delivery_start: "4:00 PM", seller_delivery_end: "8:00 PM") }
 
+    before do
+      org1_product.delivery_schedules << delivery_schedule
       sign_in_as(user)
     end
 
@@ -168,10 +169,9 @@ feature "Viewing products" do
     end
 
     context "single location" do
-      let!(:buyer_org) { create(:organization, :single_location, :buyer) }
+      let!(:buyer_org) { create(:organization, :single_location, :buyer, markets: [market]) }
 
       scenario "shopping without an existing shopping cart" do
-
         expect(page).to have_content(org1_product.name)
       end
 
@@ -212,6 +212,12 @@ feature "Viewing products" do
       buyer_pickup_location_id: 0,
       market: market
     ) }
+
+    let!(:ds3_product) { create(:product, :sellable, organization: org1, delivery_schedules: [ds3]) }
+
+    before do
+      org1_product.delivery_schedules << ds4
+    end
 
     scenario "shopping without an existing shopping cart" do
       address = market.addresses.first
@@ -254,6 +260,7 @@ feature "Viewing products" do
       delivery.choose!
 
       expect(page).to have_content(org1_product.name)
+      expect(page).to_not have_content(ds3_product.name)
     end
 
     context "direct to buyer" do
