@@ -19,6 +19,6 @@ class ProductsController < ApplicationController
   private
 
   def products
-    current_delivery.delivery_schedule.products
+    current_delivery.delivery_schedule.products.available_for_sale(current_market, current_organization)
   end
 end

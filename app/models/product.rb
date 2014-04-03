@@ -33,14 +33,8 @@ class Product < ActiveRecord::Base
 
   before_save :update_top_level_category
 
-  def self.available_for_market(market)
-    return none unless market
-
-    visible.seller_can_sell.where(organization: market.organization_ids)
-  end
-
   def self.available_for_sale(market, buyer = nil)
-    available_for_market(market).
+    visible.seller_can_sell.
       joins(:lots, :prices).select('DISTINCT(products.*)').
       where('(lots.good_from IS NULL OR lots.good_from < :now) AND (lots.expires_at IS NULL OR lots.expires_at > :now) AND quantity > 0', now: Time.current).
       where('prices.market_id = ? OR prices.market_id IS NULL', market.id).
