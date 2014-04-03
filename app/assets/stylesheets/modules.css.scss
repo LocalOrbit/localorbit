@@ -349,7 +349,8 @@
   a, .current {
     display: block;
     padding: 1em 1.1538em .93em;
-
+  }
+  a {
     &:hover {
       background: #e6e6e6;
     }
@@ -360,6 +361,7 @@
   .current {
     color: #fff;
     background: #a6a6a6;
+    cursor: default;
   }
   > li {
     position: relative;

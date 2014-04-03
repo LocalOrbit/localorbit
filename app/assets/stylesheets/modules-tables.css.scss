@@ -20,6 +20,12 @@ table {
     color: #4162A1;
   }
 
+thead {
+  th {
+    color: #000;
+  }
+}
+
 caption {
   color: #000;
   font: normal 28px "Open Sans Condensed", sans-serif;
@@ -284,6 +290,9 @@ th {
   }
 
 .sortable {
+  th {
+    cursor: pointer;
+  }
   .headerSortDown:before,
   .headerSortUp:before {
     display: inline-block;
