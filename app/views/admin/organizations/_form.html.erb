@@ -30,11 +30,23 @@
     <div class="field field--inline">
       <%= f.label :facebook %><br>
       <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
+      <% if @organization.persisted? %>
+        <div class="todo">
+          <input type="checkbox">
+          <label>Display Feed on Profile Page</label>
+        </div>
+      <% end %>
     </div>
 
     <div class="field field--inline">
       <%= f.label :twitter %><br>
       <span class="btn btn--start">@</span><%= f.text_field :twitter, maxlength: 15 %>
+      <% if @organization.persisted? %>
+        <div class="todo">
+          <input type="checkbox">
+          <label>Display Feed on Profile Page</label>
+        </div>
+      <% end %>
     </div>
 
     <div class="field">
@@ -70,6 +82,7 @@
   <% end %>
 
   <div class="field form-actions">
+    <%= link_to "Cancel", (@organization.new_record? ? admin_organizations_path : admin_organization_path(@organization)), class: "btn cancel" %>
     <%= f.submit "#{@organization.new_record? ? 'Add' : 'Save'} Organization" %>
   </div>
 <% end %>
