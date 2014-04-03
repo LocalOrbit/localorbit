@@ -26,7 +26,8 @@ describe "Adding a product" do
   let(:stub_warning_both) {"Your product will not appear in the Shop until you add inventory, and add pricing"}
   let(:organization_label) { "Product Organization" }
 
-  let!(:delivery_schedule) { create(:delivery_schedule, market: market, day: 1) }
+  let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1) }
+  let!(:tuesdays_schedule) { create(:delivery_schedule, market: market, day: 2) }
 
   before do
     Unit.create! singular: "Pound", plural: "Pounds"
@@ -67,7 +68,7 @@ describe "Adding a product" do
 
       click_link "Add New Product"
 
-      expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
+      expect(find_field("Make product available on all market delivery dates")).to be_checked
     end
 
     context "filling in who/where/how", js: true, chosen_js: true do
@@ -327,7 +328,7 @@ describe "Adding a product" do
         expect(lot_rows.count).to eq(0)
       end
 
-      it "saves the opted-in deliveries" do
+      it "selects all delivery schedules by default" do
         within '#admin-nav' do
           click_link 'Products'
         end
@@ -349,8 +350,39 @@ describe "Adding a product" do
 
         click_link "Product Info"
 
-        expect(Dom::Admin::ProductDelivery.count).to eql(1)
+        expect(Dom::Admin::ProductDelivery.count).to eql(2)
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
+      end
+
+      it "allows the user to select delivery schedules" do
+        within '#admin-nav' do
+          click_link 'Products'
+        end
+        click_link "Add New Product"
+
+        expect(page).to_not have_content(stub_warning_both)
+        expect(page).to_not have_content(organization_label)
+
+        fill_in_required_fields(:with_chosen)
+
+        select_from_chosen "Bushels", from: "Unit"
+        fill_in "Long description", with: "There are many kinds of apples."
+
+        fill_in "Current inventory", with: "12"
+
+        uncheck "Make product available on all market delivery dates"
+        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
+
+        click_button "Add Product"
+
+        expect(page).to have_content("Added Red Grapes")
+
+        click_link "Product Info"
+
+        expect(Dom::Admin::ProductDelivery.count).to eql(2)
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
       end
     end
 

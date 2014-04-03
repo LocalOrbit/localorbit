@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403133450) do
+ActiveRecord::Schema.define(version: 20140403183152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -298,6 +298,7 @@ ActiveRecord::Schema.define(version: 20140403133450) do
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"
+    t.boolean  "use_all_deliveries",    default: true
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

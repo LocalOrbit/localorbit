@@ -147,13 +147,15 @@ describe "Editing a product" do
     end
   end
 
-  describe "delivery schedules" do
+  describe "delivery schedules", js: true do
     let!(:monday_delivery) { create(:delivery_schedule, market: market, day: 1) }
     let!(:tuesday_delivery) { create(:delivery_schedule, :buyer_pickup, market: market, day: 2) }
 
     before do
       product.organization.users << user
       product.delivery_schedule_ids = [monday_delivery.id]
+      product.update(use_all_deliveries: false)
+
       sign_in_as(user)
       within '#admin-nav' do
         click_link 'Products'
@@ -166,6 +168,7 @@ describe "Editing a product" do
 
       product_deliveries = Dom::Admin::ProductDelivery.all
       expect(product_deliveries.count).to eql(2)
+      expect(find_field("Make product available on all market delivery dates")).to_not be_checked
       expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
       expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
 
@@ -174,10 +177,10 @@ describe "Editing a product" do
     end
 
     it "persists changes" do
-      mondays = Dom::Admin::ProductDelivery.find_by_weekday("Mondays")
-      mondays.uncheck!
-      tuesdays = Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")
-      tuesdays.check!
+      uncheck "Make product available on all market delivery dates"
+
+      Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
+      Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").check!
 
       click_button "Save Product"
 

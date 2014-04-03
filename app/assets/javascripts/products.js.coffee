@@ -145,6 +145,12 @@ $ ->
         formView.showFields()
         formView.applyFormValues(@display())
 
+    changeDeliveries: (checked)->
+      if checked
+        $(".product-delivery-schedule input").prop("disabled", true).prop("checked", true)
+      else
+        $(".product-delivery-schedule input").prop("disabled", false)
+
     display: ->
       if @defaultsToOrg() && !!@selectedOrg
         org = @getOrg(@selectedOrg)
@@ -196,6 +202,10 @@ $ ->
 
   $("#product_organization_id").change ->
     formModel.changeOrg($(this).val())
+
+  $("#product_use_all_deliveries").change ->
+    val = $(this).prop("checked")
+    formModel.changeDeliveries(val)
 
   formModel.setupStateForOrg($("#product_organization_id").val())
 

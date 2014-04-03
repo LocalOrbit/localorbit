@@ -113,11 +113,15 @@
 
 <fieldset>
   <h2>Delivery Times</h2>
+  <div class="field">
+    <%= f.check_box :use_all_deliveries %>
+    <%= f.label :use_all_deliveries, "Make product available on all market delivery dates" %>
+  </div>
   <ul>
     <% current_market.delivery_schedules.order(:day).each do |ds| %>
       <li class="product-delivery-schedule">
         <label>
-        <%= check_box_tag "delivery_schedule_ids[]", ds.id, ds.decorate.attached_to_product(@product) %>
+        <%= check_box_tag "delivery_schedule_ids[]", ds.id, ds.decorate.attached_to_product(@product), disabled: @product.use_all_deliveries? %>
           <span class="weekday"><%= ds.weekday.pluralize %></span> <%= ds.decorate.human_description %>
         </label>
       </li>
