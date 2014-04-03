@@ -1,29 +1,15 @@
 module Admin
   class UsersController < AdminController
     def index
-      @organization = current_user.managed_organizations.find(params[:organization_id])
-    end
-
-    def create
-      @organization = current_user.managed_organizations.find(params[:organization_id])
-      market = current_market || @organization.markets.first
-      @invite_user = InviteUserToOrganization.perform(
-        inviter: current_user,
-        email: user_params[:email],
-        organization: @organization,
-        market: market)
-
-      if @invite_user.success?
-        redirect_to [:admin, @organization, :users], notice: "Sent invitation to #{@invite_user.user.email}"
+      if current_user.admin?
+        @users = User.all
       else
-        redirect_to [:admin, @organization, :users], alert: @invite_user.message
+        ids = current_user.markets.map{|m| m.managers.pluck(:id)}.flatten &
+          current_user.managed_organizations.map{|o| o.users.pluck(:id) }
+        @users = User.where(id: ids)
       end
-    end
 
-    private
-
-    def user_params
-      params.require(:user).permit(:email)
+      @users.includes(:managed_markets, :organizations)
     end
   end
 

@@ -27,10 +27,10 @@ Rails.application.routes.draw do
     end
 
     resources :organizations do
-      resources :users
       resources :bank_accounts, only: [:index, :new, :create] do
         resource :bank_account_verification, only: [:show, :update], path: :verify
       end
+      resources :organization_users, as: :users, path: :users
       resources :locations, except: :destroy do
         collection do
           delete :destroy

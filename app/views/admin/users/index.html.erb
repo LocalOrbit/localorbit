@@ -1,21 +1,26 @@
-<%= render 'admin/organizations/header' %>
+<%= render 'admin/users/header' %>
 
 <div class="row row--partial">
-  <div class="column column--three-fourths">
-    <%= form_for [:admin, @organization, User.new], html: { class: "form-actions" } do |f|%>
-      <%= f.email_field :email, placeholder: "Email" %>
-      <%= f.submit "Invite a new member" %>
-    <% end %>
-
     <table>
       <tr>
         <th>Name</th>
         <th>E-mail</th>
+        <th>Affiliations</th>
       </tr>
-      <% @organization.users.each do |user| %>
+      <% @users.each do |user| %>
       <tr class="<%= cycle "odd", "even" %>">
         <td><%= user.name %></td>
         <td><%= user.email %></td>
+        <td>
+          <ul>
+            <% user.managed_markets.each do |market| %>
+              <li><%= market.name %>, Market Manager</li>
+            <% end %>
+            <% user.organizations.each do |organization| %>
+              <li><%= organization.markets.pluck(:name).to_sentence %>: <%= organization.name %>, <%= organization.can_sell? ? "Seller" : "Buyer" %></li>
+            <% end %>
+          </ul>
+        </td>
       </tr>
       <% end %>
     </table>
