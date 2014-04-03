@@ -46,7 +46,7 @@ class OrderItem < ActiveRecord::Base
     quantity_available = product.lots_by_expiration.available.sum(:quantity)
 
     if quantity_available < quantity
-      errors[:inventory] = "The product #{product.name} only has #{quantity_available} available"
+      errors[:inventory] = "there are only #{quantity_available} #{product.name.pluralize(quantity_available)} available."
     end
   end
 
