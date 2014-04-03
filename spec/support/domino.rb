@@ -111,19 +111,19 @@ module Dom
     end
 
     def buyer
-      node.find(".buyer").text
+      node.find(".buyer .view-cell").text
     end
 
     def min_quantity
-      node.find(".min-qty").text
+      node.find(".min-qty .view-cell").text
     end
 
     def net_price
-      node.find(".net-price").text
+      node.find(".net-price .view-cell").text
     end
 
     def sale_price
-      node.find(".sale-price").text
+      node.find(".sale-price .view-cell").text
     end
 
     def check_delete
