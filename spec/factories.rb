@@ -18,8 +18,12 @@ FactoryGirl.define do
     ach_market_fee         0
     ach_fee_cap            8
 
+    trait :with_address do
+      after(:create) {|m| create(:market_address, market: m) }
+    end
+
     trait :with_addresses do
-      after(:create) { |m| create_list(:market_address, 2, market: m) }
+      after(:create) {|m| create_list(:market_address, 2, market: m) }
     end
 
     trait :with_delivery_schedule do
@@ -141,7 +145,7 @@ FactoryGirl.define do
 
   factory :lot do
     product
-    quantity 15
+    quantity 150
 
     trait :with_expiration do
       sequence(:number) {|n| "lot-#{n}"}
