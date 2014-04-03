@@ -179,8 +179,8 @@ describe Order do
       let!(:market2) { create(:market) }
       let!(:org1)    { create(:organization, users: [user], markets: [market2]) }
       let!(:org2)    { create(:organization, markets: [market2]) }
-      let!(:product1) { create(:product, organization: org1) }
-      let!(:product2) { create(:product, organization: org2) }
+      let!(:product1) { create(:product, :sellable, organization: org1) }
+      let!(:product2) { create(:product, :sellable, organization: org2) }
 
       let!(:managed_order) { create(:order, market: market1, organization_id: 0, items: [build(:order_item, product: product2)]) }
       let!(:org_order)     { create(:order, market: market2, organization_id: 0, items: [build(:order_item, product: product1)]) }
@@ -197,7 +197,7 @@ describe Order do
     context "seller" do
       let(:market)       { create(:market) }
       let(:organization) { create(:organization, markets: [market]) }
-      let(:product)      { create(:product, organization: organization) }
+      let(:product)      { create(:product, :sellable, organization: organization)}
       let!(:user)        { create(:user, organizations:[organization]) }
       let!(:order)       { create(:order, organization: organization, market: market) }
       let!(:order_item)  { create(:order_item, order: order, product: product) }

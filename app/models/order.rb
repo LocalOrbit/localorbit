@@ -2,7 +2,7 @@ class Order < ActiveRecord::Base
   belongs_to :market
   belongs_to :organization
   belongs_to :delivery
-  has_many :items, inverse_of: :order, class: OrderItem
+  has_many :items, inverse_of: :order, class: OrderItem, autosave: true
 
   validates :billing_address, presence: true
   validates :billing_city, presence: true
@@ -93,18 +93,13 @@ class Order < ActiveRecord::Base
     order.delivery_status  =  "Pending"
     order.delivery_phone   = address.phone
 
-    if order.valid?
-      ActiveRecord::Base.transaction do
-        begin
-          cart.items.each do |item|
-            OrderItem.create_and_consume_inventory(order:order, item: item, deliver_on_date: cart.delivery.deliver_on)
-          end
-        rescue OrderItem::InsufficientInventoryError => e
-          order.errors.add(:inventory, "only #{e.remaining} #{e.product.name.pluralize(e.remaining)} left")
-          raise ActiveRecord::Rollback
-        end
+    ActiveRecord::Base.transaction do
+      cart.items.each do |item|
+        order.items << OrderItem.build_with_order_and_item(order:order, item: item, deliver_on_date: cart.delivery.deliver_on)
+      end
 
-        order.save
+      unless order.save
+        raise ActiveRecord::Rollback unless order.save
       end
     end
 
