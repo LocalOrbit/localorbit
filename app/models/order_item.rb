@@ -1,8 +1,11 @@
 class OrderItem < ActiveRecord::Base
-  belongs_to :order, inverse_of: :items, autosave: true
-  belongs_to :product
-  has_many :lots, inverse_of: :order_item, class: OrderItemLot
+  attr :inventory, :deliver_on_date
 
+  belongs_to :order, inverse_of: :items
+  belongs_to :product
+  has_many :lots, inverse_of: :order_item, class: OrderItemLot, autosave: true
+
+  validates :product, presence: true
   validates :name, presence: true
   validates :order, presence: true
   validates :seller_name, presence: true
@@ -10,21 +13,16 @@ class OrderItem < ActiveRecord::Base
   validates :unit, presence: true
   validates :unit_price, presence: true
 
-  class InsufficientInventoryError < RuntimeError
-    attr_accessor :product, :remaining, :required
-    def initialize(product, remaining, required)
-      @product = product
-      @remaining = remaining
-      @required = required
-    end
-  end
+  validate  :product_availability, if: 'product.present?'
 
-  def self.create_and_consume_inventory(opts={})
+  before_create :consume_inventory
+
+  def self.build_with_order_and_item(opts={})
     item = opts[:item]
     deliver_on_date = opts[:deliver_on_date]
     order = opts[:order]
 
-    order_item = new(
+    create(
       order: order,
       product: item.product,
       name: item.product.name,
@@ -33,38 +31,8 @@ class OrderItem < ActiveRecord::Base
       unit_price: item.unit_price.sale_price,
       seller_name: item.product.organization.name
     )
-
-    if order_item.valid?
-      total_available = item.product.lots_by_expiration.available(deliver_on_date).map(&:quantity).sum
-      quantity_remaining = item.quantity
-      raise InsufficientInventoryError.new(item.product, total_available, item.quantity) if quantity_remaining > total_available
-
-      item.product.lots_by_expiration.available(deliver_on_date).each do |lot|
-        break unless quantity_remaining
-        if lot.quantity >= quantity_remaining
-          order_item.lots << OrderItemLot.new(
-            lot: lot,
-            quantity: quantity_remaining
-          )
-          lot.update(quantity: lot.quantity - quantity_remaining)
-          break
-        else
-          order_item.lots << OrderItemLot.new(
-            lot: lot,
-            quantity: lot.quantity
-          )
-
-          quantity_remaining -= lot.quantity
-          lot.update(quantity: 0)
-        end
-      end
-
-
-      order.items << order_item
-    end
-
-    order_item
   end
+
 
   def seller_net_total
     unit_price * quantity - market_seller_fee - local_orbit_seller_fee - payment_seller_fee
@@ -72,5 +40,31 @@ class OrderItem < ActiveRecord::Base
 
   def gross_total
     unit_price * quantity
+  end
+
+  def product_availability
+    quantity_available = product.lots_by_expiration.available.sum(:quantity)
+
+    if quantity_available < quantity
+      errors[:inventory] = "The product #{product.name} only has #{quantity_available} available"
+    end
+  end
+
+  private
+  def consume_inventory
+    return unless valid?
+
+    quantity_remaining = quantity
+
+    product.lots_by_expiration.available.each do |lot|
+      break unless quantity_remaining
+
+      num_to_consume = [lot.quantity, quantity_remaining].min
+      lot.decrement(:quantity, num_to_consume)
+      lot.save
+
+      lots.build(lot: lot, quantity: num_to_consume)
+      quantity_remaining -= num_to_consume
+    end
   end
 end
