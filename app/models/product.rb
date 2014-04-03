@@ -34,7 +34,7 @@ class Product < ActiveRecord::Base
   def self.available_for_market(market)
     return none unless market
 
-    visible.where(organization: market.organization_ids)
+    visible.seller_can_sell.where(organization: market.organization_ids)
   end
 
   def self.available_for_sale(market, buyer = nil)
@@ -51,6 +51,10 @@ class Product < ActiveRecord::Base
     else
       where('prices.organization_id IS NULL')
     end
+  end
+
+  def self.seller_can_sell
+    joins(:organization).where(organizations: {can_sell: true})
   end
 
   def self.for_organization_id(organization_id)

@@ -104,6 +104,12 @@ describe Product do
         expect(products.size).to eq(2)
         expect(products).to include(product_in, product_in_for_buyer)
       end
+      
+      it "excludes products from organizations who cannot sell" do
+        org_in.update!(can_sell: false)
+        products = Product.available_for_sale(market, buyer)
+        expect(products.size).to eq(0)
+      end
     end
     context "without an organization" do
       it "contains the correct products" do

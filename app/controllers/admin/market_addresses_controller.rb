@@ -4,7 +4,7 @@ class Admin::MarketAddressesController < AdminController
   before_action :find_address, only: [:edit, :update, :destroy]
 
   def index
-    @addresses = @market.addresses.visible
+    @addresses = @market.addresses.visible.alphabetical_by_name
   end
 
   def new
