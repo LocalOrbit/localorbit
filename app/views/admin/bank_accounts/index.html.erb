@@ -2,9 +2,10 @@
 
 <div class="row row--partial">
 
-  <div class="column column--half">
-    <%= link_to "Add Bank Account", [:new, :admin, @entity, :bank_account], class: "btn btn--add btn--small pull-right" %>
-    <h2>Bank Accounts</h2>
+  <div class="column column--three-fourths">
+    <div class="l-page-header">
+      <%= link_to "Add Bank Account", [:new, :admin, @entity, :bank_account], class: "btn btn--add btn--small pull-right" %>
+    </div>
     <% if @bank_accounts.empty? %>
       <p>No Bank Accounts</p>
     <% else %>
@@ -25,7 +26,7 @@
             <td class="account-type"><%= bank_account.account_type %></td>
             <td class="verified">
               <% if bank_account.verified? %>
-                Verified
+                <i class="font-icon icon-checkmark"></i> Verified
               <% else %>
                 <%= link_to "Verify", [:admin, @entity, bank_account, BankAccountVerification.new] %></td>
               <% end %>

@@ -243,16 +243,16 @@ module Dom
       end
 
       def default_billing
-        cells[2].find("input")
+        cells[3].find("input")
       end
 
       def default_shipping
-        cells[3].find("input")
+        cells[4].find("input")
       end
 
       def remove!
         cells[0].find("input").set(true)
-        click_button "Remove Checked"
+        click_button "Delete Checked"
       end
 
       def default_billing?

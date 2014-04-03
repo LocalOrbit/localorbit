@@ -23,7 +23,7 @@ describe "Adding a product" do
   let(:stub_warning_pricing) {"Your product will not appear in the Shop until you add pricing"}
   let(:stub_warning_inventory) {"Your product will not appear in the Shop until you add inventory"}
   let(:stub_warning_both) {"Your product will not appear in the Shop until you add inventory, and add pricing"}
-  let(:organization_label) { "Product Organization" }
+  let(:organization_label) { "Seller Organization" }
   let(:market) { create(:market, organizations: [org]) }
 
   before do
@@ -360,7 +360,7 @@ describe "Adding a product" do
       seller_info = page.find("#seller_info")
       expect(seller_info).to be_disabled
 
-      select org2.name, from: "Product Organization"
+      select org2.name, from: "Seller Organization"
 
       seller_info = page.find("#seller_info")
       expect(seller_info).not_to be_disabled
@@ -368,7 +368,7 @@ describe "Adding a product" do
 
     context "Uncheck 'use seller info'", js: true do
       before do
-        select org2.name, from: "Product Organization"
+        select org2.name, from: "Seller Organization"
         uncheck "seller_info"
       end
 
@@ -388,7 +388,7 @@ describe "Adding a product" do
         before do
           select org2.locations.first.name, from: "product_location_id"
           expect(Dom::Admin::ProductForm.first.selected_location).to eql(org2.locations.first.id.to_s)
-          select org.name, from: "Product Organization"
+          select org.name, from: "Seller Organization"
         end
 
         it "populates the locations list" do
@@ -399,7 +399,7 @@ describe "Adding a product" do
 
       context "select the blank organization option" do
         before do
-          select "Select an organization", from: "Product Organization"
+          select "Select an organization", from: "Seller Organization"
         end
 
         it "disables seller info" do

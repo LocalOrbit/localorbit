@@ -1,5 +1,14 @@
 @import "mixins.css.scss";
 
+.bank-info {
+  padding: 1em 2em;
+  border: solid 1px $notice_text;
+  @include border-radius(5px);
+  margin: 0 0 1em;
+  color: $notice_text;
+  background: $notice_bg;
+  list-style: none;
+}
 .with-anchor {
   &:before,
   &:after {
@@ -349,7 +358,8 @@
   a, .current {
     display: block;
     padding: 1em 1.1538em .93em;
-
+  }
+  a {
     &:hover {
       background: #e6e6e6;
     }
@@ -360,6 +370,7 @@
   .current {
     color: #fff;
     background: #a6a6a6;
+    cursor: default;
   }
   > li {
     position: relative;
@@ -448,6 +459,9 @@
   border-bottom: solid 1px #cbcbcb;
   margin: 0 -20px 30px;
 }
+  .js-fixed .tabs-wrapper {
+    margin-bottom: 0;
+  }
 .tabs {
   position: relative;
   z-index: 1;
@@ -679,11 +693,12 @@ label ~ .tooltip {
 .tooltip {
   position: relative;
   display: inline-block;
-  width: 1.3em;
-  height: 1.2em;
+  width: 14px;
+  height: 14px;
   @include border-radius(50%);
   color: #fff;
-  background: #ccc;
+  background: asset_url('tooltip-icon.png') center no-repeat;
+  background: asset_url('tooltip-icon@2x.png') center / 100% no-repeat;
   font-size: .9em;
   font-weight: bold;
   line-height: 1em;

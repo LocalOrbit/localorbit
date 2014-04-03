@@ -20,6 +20,12 @@ table {
     color: #4162A1;
   }
 
+thead {
+  th {
+    color: #000;
+  }
+}
+
 caption {
   color: #000;
   font: normal 28px "Open Sans Condensed", sans-serif;
@@ -74,18 +80,19 @@ td {
 
 tbody {
   tr{
-    &:hover {
-      background: #D8EED2;
-    }
     &:nth-child(odd) {
       background: #f9f9f9;
     }
-  }
-  .destructive {
-    background: #fdd;
+    &:hover {
+      background: #D8EED2;
+    }
+    &.destructive {
+      background: #fdd;
 
-    > .delete a {
-      color: $alert_text;
+      > .delete a,
+      > .delete button {
+        color: $alert_text;
+      }
     }
   }
 }
@@ -284,6 +291,9 @@ th {
   }
 
 .sortable {
+  th {
+    cursor: pointer;
+  }
   .headerSortDown:before,
   .headerSortUp:before {
     display: inline-block;

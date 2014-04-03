@@ -2,14 +2,14 @@
 
 <% if @product.persisted? %>
     <h2>
-      Product Organization<br>
+      Seller Organization<br>
       <%= link_to @product.organization.name, [:admin, @product.organization] %>
     </h2>
     <%= f.hidden_field :organization_id %>
 <% else %>
   <% if @organizations.count > 1 %>
     <div class="field">
-      <%= f.label :organization_id, "Product Organization" %><br>
+      <%= f.label :organization_id, "Seller Organization" %><br>
       <%= f.collection_select :organization_id, @organizations, :id, :name, {include_blank: "Select an organization"}, class: "column--full" %>
     </div>
   <% else %>
@@ -19,13 +19,14 @@
 
 <div class="field">
   <%= f.label :name, "Product Name" %>
-  <span class="tooltip pull-right" data-tooltip="Only list the product name here. Quantity, sizes and units should be included in the short description section.">?</span>
+  <span class="tooltip pull-right" data-tooltip="Only list the product name here. Quantity, sizes and units should be included in the short description section."></span>
   <br>
   <%= f.text_field :name, class: "column column--full" %>
 </div>
 
 <div class="field">
   <%= f.label :category_id %>
+  <span class="tooltip pull-right" data-tooltip="Type in your product name and choose the matching category from the list."></span>
   <br>
   <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>
   <span class="hint">Not seeing what you need? <%= link_to "Request a New Category", "#", class: "modal-toggle", data: { modal: "request-new-category" } %></span>
@@ -40,7 +41,7 @@
 <div class="field">
   <%= f.label :short_description %>
   <span class="hint">Up to 50 characters</span>
-  <span class="tooltip pull-right" data-tooltip="This is the first opportunity for a buyer to learn about the product. Include additional explanation about the quantity, size or unit here, if needed.">?</span>
+  <span class="tooltip pull-right" data-tooltip="This is the first opportunity for a buyer to learn about the product. Include additional explanation about the quantity, size or unit here, if needed."></span>
   <br>
   <%= f.text_area :short_description, rows: 2 %>
 </div>
@@ -48,7 +49,7 @@
 <div class="field">
   <%= f.label :long_description %>
   <span class="hint">Up to 500 characters</span>
-  <span class="tooltip pull-right" data-tooltip="Buyers want to know how you grow or prepare your products. Tell them how you do it!">?</span>
+  <span class="tooltip pull-right" data-tooltip="Buyers want to know how you grow or prepare your products. Tell them how you do it!"></span>
   <span class="warning pull-right">(Recommended)</span>
   <%= f.text_area :long_description, rows: 4 %>
 </div>
@@ -86,7 +87,7 @@
     <div class="field">
       <%= f.label :location_id, "Where" %>
       <span class="hint">Select the location this product is produced.</span>
-      <span class="tooltip pull-right" data-tooltip="Make sure to save changes before editing addresses. Use your browser's back arrow to return to editing this product">?</span>
+      <span class="tooltip pull-right" data-tooltip="Make sure to save changes before editing addresses. Use your browser's back arrow to return to editing this product"></span>
       <%= f.select :location_id, @product.location_options_for_select, {include_blank: "Select a location"}, {class: "column column--full"} %>
       <% if @product.organization.present? %>
         <span class="hint">These come from the Organization area under Account. Edit them <%= link_to "here", [:admin, @product.organization, :locations] %>.</span>
@@ -96,14 +97,14 @@
     <div class="field">
       <%= f.label :who_story, "Who" %>
       <span class="hint">A description of who you are.</span>
-      <span class="tooltip pull-right" data-tooltip="This field is pre-populated with the `Who` from your Organization page. Feel free to edit to relate the story to your product.">?</span>
+      <span class="tooltip pull-right" data-tooltip="This field is pre-populated with the `Who` from your Organization page. Feel free to edit to relate the story to your product."></span>
       <%= f.text_area :who_story, size: 2 %>
     </div>
 
     <div class="field">
       <%= f.label :how_story, "How" %>
       <span class="hint">A description of how you produce your products.</span>
-      <span class="tooltip pull-right" data-tooltip="This field is pre-populated with the `How` from your Organization page. Feel free to edit to relate the story to your product.">?</span>
+      <span class="tooltip pull-right" data-tooltip="This field is pre-populated with the `How` from your Organization page. Feel free to edit to relate the story to your product."></span>
       <%= f.text_area :how_story, size: 2 %>
     </div>
   </div>

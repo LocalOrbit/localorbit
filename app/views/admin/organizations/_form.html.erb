@@ -6,14 +6,16 @@
     <legend>Organization Information</legend>
     <% if @organization.new_record? %>
       <% if @markets.size > 1 %>
+      <div class="field column column--half">
         <%= label_tag :initial_market_id, "Market" %><br>
         <%= select_tag :initial_market_id, options_for_select(@markets.map {|m| [m.name, m.id] }, selected: params[:initial_market_id]), prompt: "Select a Market", class: "column--full" %>
+      </div>
       <% else %>
         <%= hidden_field_tag :initial_market_id, @markets.first.id %>
       <% end %>
     <% end %>
 
-    <div class="field">
+    <div class="field column--half">
       <%= f.label :name %><br>
       <%= f.text_field :name, class: "column column--full" %>
     </div>
@@ -25,14 +27,32 @@
       </div>
     <% end %>
 
-    <div class="field">
+    <div class="field field--inline">
       <%= f.label :facebook %><br>
       <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
+      <% if @organization.persisted? %>
+        <div class="todo">
+          <input type="checkbox">
+          <label>Display Feed on Profile Page</label>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="field field--inline">
+      <%= f.label :twitter %><br>
+      <span class="btn btn--start">@</span><%= f.text_field :twitter, maxlength: 15 %>
+      <% if @organization.persisted? %>
+        <div class="todo">
+          <input type="checkbox">
+          <label>Display Feed on Profile Page</label>
+        </div>
+      <% end %>
     </div>
 
     <div class="field">
-      <%= f.label :twitter %><br>
-      <span class="btn btn--start">@</span><%= f.text_field :twitter %>
+      <%= f.label :photo, "Profile photo" %><br>
+      <%= f.file_field :photo %>
+      <%= image_tag @organization.photo.remote_url, alt: "Profile photo", class: "org-profile-photo" if @organization.photo %>
     </div>
 
     <div class="field">
@@ -43,12 +63,6 @@
     <div class="field">
       <%= f.label :how_story, "How" %><br>
       <%= f.text_area :how_story, class: "column column--full", rows: 4 %>
-    </div>
-
-    <div class="field">
-      <%= f.label :photo, "Profile photo" %><br>
-      <%= f.file_field :photo %>
-      <%= image_tag @organization.photo.remote_url, alt: "Profile photo", class: "org-profile-photo" if @organization.photo %>
     </div>
 
   </fieldset>
@@ -68,6 +82,7 @@
   <% end %>
 
   <div class="field form-actions">
+    <%= link_to "Cancel", (@organization.new_record? ? admin_organizations_path : admin_organization_path(@organization)), class: "btn cancel" %>
     <%= f.submit "#{@organization.new_record? ? 'Add' : 'Save'} Organization" %>
   </div>
 <% end %>

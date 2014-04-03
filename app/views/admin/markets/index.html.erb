@@ -4,12 +4,14 @@
 </div>
 
 <table>
-  <tr>
-    <th>Name</th>
-    <th>Subdomain</th>
-    <th>Contact Name</th>
-    <th>Contact Phone</th>
-  </tr>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Subdomain</th>
+      <th>Contact Name</th>
+      <th>Contact Phone</th>
+    </tr>
+  </thead>
   <% @markets.each do |market| %>
   <tr class="<%= cycle "odd", "even" %>">
     <td><%= link_to market.name, [:admin, market] %></td>

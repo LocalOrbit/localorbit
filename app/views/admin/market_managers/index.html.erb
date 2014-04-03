@@ -4,10 +4,12 @@
 </div>
 
 <table class="market-managers">
-  <tr>
-    <th>Email</th>
-    <th></th>
-  </tr>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th></th>
+    </tr>
+  </thead>
   <% @market.managers.each do |user| %>
   <tr id="<%= dom_id(user) %>">
     <td><%= user.email %></td>

@@ -1,6 +1,8 @@
-<div class="field">
-  <%= form.label :name, "Location Name" %><br>
-  <%= form.text_field :name, class: "column column--full" %>
+<div class="row row--field">
+  <div class="field column column--half column--guttered">
+    <%= form.label :name, "Location Name" %><br>
+    <%= form.text_field :name, class: "column column--full" %>
+  </div>
 </div>
 
 <div class="field">
@@ -8,27 +10,30 @@
   <%= form.text_field :address, class: "column column--full" %>
 </div>
 
-<div class="field">
-  <%= form.label :city %><br>
-  <%= form.text_field :city, class: "column column--full"  %>
+<div class="row">
+  <div class="field field--inline">
+    <%= form.label :city %><br>
+    <%= form.text_field :city %>
+  </div>
+
+  <div class="field field--inline">
+    <%= form.label :state %><br>
+    <%= form.select :state, us_states, {include_blank: true} %>
+  </div>
+
+  <div class="field field--inline">
+    <%= form.label :zip, "Postal Code" %><br>
+    <%= form.text_field :zip, size: 10  %>
+  </div>
 </div>
 
-<div class="field">
-  <%= form.label :state %><br>
-  <%= form.select :state, us_states, {include_blank: true} %>
-</div>
-
-<div class="field">
-  <%= form.label :zip, "Postal Code" %><br>
-  <%= form.text_field :zip, class: "column column--full"  %>
-</div>
-
-<div class="field">
-  <%= form.label :phone %><br>
-  <%= form.text_field :phone, class: "column--three-fourths" %>
-</div>
-
-<div class="field">
-  <%= form.label :fax %><br>
-  <%= form.text_field :fax, class: "column--three-fourths" %>
+<div class="row row--field">
+  <div class="field column column--guttered column--half">
+    <%= form.label :phone %><br>
+    <%= form.text_field :phone, maxlength: 18, size: 18, class: "column--full" %>
+  </div
+  ><div class="field column column--guttered column--half">
+    <%= form.label :fax %><br>
+    <%= form.text_field :fax, maxlength: 18, size: 18, class: "column--full" %>
+  </div>
 </div>

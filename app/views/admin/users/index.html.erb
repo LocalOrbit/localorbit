@@ -1,28 +1,34 @@
 <%= render 'admin/users/header' %>
 
 <div class="row row--partial">
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>E-mail</th>
-        <th>Affiliations</th>
-      </tr>
-      <% @users.each do |user| %>
-      <tr class="<%= cycle "odd", "even" %>">
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td>
-          <ul>
-            <% user.managed_markets.each do |market| %>
-              <li><%= market.name %>, Market Manager</li>
-            <% end %>
-            <% user.organizations.each do |organization| %>
-              <li><%= organization.markets.pluck(:name).to_sentence %>: <%= organization.name %>, <%= organization.can_sell? ? "Seller" : "Buyer" %></li>
-            <% end %>
-          </ul>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+  <div class="column column--three-fourths">
+
+    <% if @users.any? %>
+      <table class="sortable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>Affiliations</th>
+          </tr>
+        </thead>
+        <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td>
+            <ul>
+              <% user.managed_markets.each do |market| %>
+                <li><%= market.name %>, Market Manager</li>
+              <% end %>
+              <% user.organizations.each do |organization| %>
+                <li><%= organization.markets.pluck(:name).to_sentence %>: <%= organization.name %>, <%= organization.can_sell? ? "Seller" : "Buyer" %></li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    <% end %>
   </div>
 </div>

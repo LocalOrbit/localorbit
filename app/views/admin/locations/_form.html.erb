@@ -1,13 +1,10 @@
-
-
-<div class="row row--partial">
-<%= form_for [:admin, @organization, @location], html: { class: "edit_location column column--three-fourths" } do |f| %>
+<%= form_for [:admin, @organization, @location], html: { class: "edit_location" } do |f| %>
   <%= render "shared/errors", { resource: @location} %>
 
   <%= render "fields", form: f %>
 
   <div class="form-actions">
+    <%= link_to "Cancel", [:admin, @organization, :locations], class: "btn cancel" %>
     <%= f.submit "#{@location.new_record? ? 'Add' : 'Save'} Address" %>
   </div>
 <% end %>
-</div>

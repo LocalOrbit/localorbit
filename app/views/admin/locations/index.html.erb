@@ -4,32 +4,35 @@
   <div class="column column--three-fourths">
       <%= link_to "Add New Address", new_admin_organization_location_path(@organization), class: "btn btn--add btn--small pull-right" %>
 
-    <%= form_tag admin_organization_locations_path(@organization), method: :delete, class: "clear-before" do %>
-      <%= submit_tag "Remove Checked", class: "delete" %>
+    <%= form_tag admin_organization_locations_path(@organization), method: :delete, class: "clear-before", id: "edit_addresses" do %>
+      <%= submit_tag "Delete Checked", class: "delete delete-selected is-invisible" %>
 
-      <table>
+      <table class="sortable">
         <thead>
           <tr>
-            <th><input type="checkbox" class="check-all"></th>
+            <td><input type="checkbox" class="check-all"></td>
             <th>Address</th>
+            <th>Telephone</th>
             <th>Default Billing</th>
             <th>Default Shipping</th>
           </tr>
         </thead>
         <tbody>
           <% @locations.each do |location| %>
-            <tr class="<%= cycle "odd", "even" %>">
+            <tr>
               <td><%= check_box_tag "location_ids[]", location.id %></td>
               <td><%= location.name_and_address %></td>
+              <td><%= number_to_phone location.phone %></td>
               <td><%= radio_button_tag :default_billing_id, location.id, location.default_billing? %></td>
               <td><%= radio_button_tag :default_shipping_id, location.id, location.default_shipping? %></td>
+              <td class="delete"><button class="delete delete-location"><i class="font-icon icon-delete"></i> Delete</button>
             </tr>
           <% end %>
         </tbody>
       </table>
 
       <div class="form-actions">
-        <%= link_to "Save", update_default_admin_organization_locations_path(@organization), class: "btn btn--save", id: "save-update-defaults" %>
+        <%= link_to "Save Changes", update_default_admin_organization_locations_path(@organization), class: "btn btn--save", id: "save-update-defaults" %>
       </div>
     <% end %>
   </div>
