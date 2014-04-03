@@ -29,7 +29,7 @@ describe 'Adding advanced pricing' do
     expect(record.market).to eq('All Markets')
     expect(record.buyer).to eq('All Buyers')
     expect(record.min_quantity).to eq('1')
-    expect(record.net_price).to eq('$1.84')
+    expect(record.net_price).to eq('$1.79')
     expect(record.sale_price).to eq('$1.90')
 
     expect(page).to_not have_content("You don't have any prices yet!")
@@ -51,7 +51,7 @@ describe 'Adding advanced pricing' do
       fill_in 'price_sale_price', with: '12'
 
       new_price_form = Dom::NewPricingForm.first
-      expect(new_price_form.net_price.value).to eql("11.64")
+      expect(new_price_form.net_price.value).to eql("11.28")
     end
   end
 
@@ -93,7 +93,7 @@ describe 'Adding advanced pricing' do
       expect(record.market).to eq('All Markets')
       expect(record.buyer).to eq(organization.name)
       expect(record.min_quantity).to eq('1')
-      expect(record.net_price).to eq('$1.93')
+      expect(record.net_price).to eq('$1.87')
       expect(record.sale_price).to eq('$1.99')
     end
   end
@@ -134,7 +134,7 @@ describe 'Adding advanced pricing' do
 
     it "shows updated net sale information" do
       fill_in 'price_sale_price', with: '12.90'
-      expect(find_field("price_net_price").value).to eq("11.61")
+      expect(find_field("price_net_price").value).to eq("11.22")
       click_button 'Add'
 
       expect(page).to have_content("Successfully added a new price")
@@ -143,7 +143,7 @@ describe 'Adding advanced pricing' do
       expect(record.market).to eq('All Markets')
       expect(record.buyer).to eq('All Buyers')
       expect(record.min_quantity).to eq('1')
-      expect(record.net_price).to eq('$11.61')
+      expect(record.net_price).to eq('$11.22')
       expect(record.sale_price).to eq('$12.90')
     end
   end

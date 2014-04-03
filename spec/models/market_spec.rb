@@ -305,14 +305,30 @@ describe Market do
   describe "#seller_net_percent" do
     let(:market) { build(:market, local_orbit_seller_fee: "1", local_orbit_market_fee: "2", market_seller_fee: "3", credit_card_seller_fee: "4", credit_card_market_fee: "5", ach_seller_fee: "6", ach_market_fee: "7") }
 
-    it "includes the local_orbit_seller_fee and market_seller_fee" do
-      expect(market.seller_net_percent).to eq(BigDecimal.new("0.96"))
+    it "includes appropriate seller fees" do
+      expect(market.seller_net_percent).to eq(BigDecimal.new("0.90"))
 
       market.local_orbit_seller_fee = "3"
-      expect(market.seller_net_percent).to eq(BigDecimal.new("0.94"))
+      expect(market.seller_net_percent).to eq(BigDecimal.new("0.88"))
 
       market.market_seller_fee = "6"
-      expect(market.seller_net_percent).to eq(BigDecimal.new("0.91"))
+      expect(market.seller_net_percent).to eq(BigDecimal.new("0.85"))
+
+      market.ach_seller_fee = "8"
+      expect(market.seller_net_percent).to eq(BigDecimal.new("0.83"))
+    end
+
+    it "only includes the highest payment processing fee" do
+      expect(market.seller_net_percent).to eq(BigDecimal.new("0.90"))
+
+      market.ach_seller_fee = "1"
+      expect(market.seller_net_percent).to eq(BigDecimal.new("0.92"))
+
+      market.credit_card_seller_fee = "7"
+      expect(market.seller_net_percent).to eq(BigDecimal.new("0.89"))
+
+      market.ach_seller_fee = "8"
+      expect(market.seller_net_percent).to eq(BigDecimal.new("0.88"))
     end
   end
 end

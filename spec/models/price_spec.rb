@@ -46,11 +46,11 @@ describe Price do
 
       subject.sale_price = 1.99
 
-      expect(subject.net_price).to eq(1.93) # 3% fees
+      expect(subject.net_price).to eq(1.87) # 6% fees
 
       subject.sale_price = 3.99
 
-      expect(subject.net_price).to eq(3.87) # 3% fees
+      expect(subject.net_price).to eq(3.75) # 6% fees
     end
   end
 

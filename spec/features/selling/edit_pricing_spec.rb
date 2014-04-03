@@ -140,7 +140,7 @@ describe "Editing advanced pricing", js: true do
         it "calculates and formats the net price" do
           price_row = Dom::PricingRow.first
           net_price = price_row.node.find("#price_#{price.id}_net_price")
-          expect(net_price.value).to eql("-9.70")
+          expect(net_price.value).to eql("-9.40")
         end
       end
 
@@ -176,7 +176,7 @@ describe "Editing advanced pricing", js: true do
     it "shows updated net sale information" do
       Dom::PricingRow.first.click_edit
       fill_in "price_#{price.id}_sale_price", with: '12.90'
-      expect(find_field("price_#{price.id}_net_price").value).to eq("11.61")
+      expect(find_field("price_#{price.id}_net_price").value).to eq("11.22")
       click_button 'Save'
 
       expect(page).to have_content("Successfully saved price")
@@ -184,7 +184,7 @@ describe "Editing advanced pricing", js: true do
       record = Dom::PricingRow.first
       expect(record.buyer).to eq('All Buyers')
       expect(record.min_quantity).to eq('1')
-      expect(record.net_price).to eq('$11.61')
+      expect(record.net_price).to eq('$11.22')
       expect(record.sale_price).to eq('$12.90')
     end
   end
