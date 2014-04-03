@@ -2,6 +2,8 @@
 <h2>Your Order</h2>
 
 <%= form_for :order, url: [:orders] do |f| %>
+  <%= render "shared/errors", {resource: @order} if @order %>
+
   <div class="cart_items" data-cart-url="<%= cart_path %>">
     <% @grouped_items.each_pair do |seller_name, items| %>
       <div class="item-group">

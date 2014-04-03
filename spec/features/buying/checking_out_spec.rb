@@ -37,7 +37,7 @@ describe "Checking Out" do
 
   # Ada Farms
   let!(:potatoes) { create(:product, :sellable, name: "Potatoes", organization: ada_farms) }
-  let!(:pototoes_lot) { create(:lot, product: potatoes, quantity: 100) }
+  let!(:potatoes_lot) { create(:lot, product: potatoes, quantity: 100) }
 
   let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms) }
 
@@ -132,19 +132,16 @@ describe "Checking Out" do
     expect(cart_link.count.text).to eql("0")
   end
 
-  context "inventory has been exhausted since placing product in cart" do
-    before do
-      potatoes.lots.first.update(quantity: 0)
-      pototoes_lot.update(quantity: 3)
-      checkout
-    end
+  it "inventory has been exhausted since placing product in cart" do
+    kale.lots.first.update_attribute(:quantity, 1)
+    potatoes.lots.each {|lot| lot.update(quantity: 1) }
 
-    it "does not clear the cart item count" do
-      expect(cart_link.count.text).to eql("3")
-    end
+    checkout
 
-    it "shows an error message" do
-      expect(page).to have_content("Inventory only 3 Potatoes left")
-    end
+    expect(cart_link.count.text).to eql("3")
+    expect(page).to have_content("Your order could not be completed.")
+
+    expect(page).to have_content("The product Potatoes only has 2 available")
+    expect(page).to have_content("The product Kale only has 1 available")
   end
 end

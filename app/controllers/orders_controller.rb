@@ -7,7 +7,9 @@ class OrdersController < ApplicationController
     if @placed_order.success?
       session.delete(:cart_id)
     else
-      redirect_to [current_cart], alert: @order.errors.full_messages.join(". ")
+      @grouped_items = current_cart.items.for_checkout
+      flash[:alert] = "Your order could not be completed."
+      render "carts/show"
     end
   end
 
