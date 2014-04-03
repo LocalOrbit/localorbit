@@ -141,7 +141,7 @@ describe "Checking Out" do
     expect(cart_link.count.text).to eql("3")
     expect(page).to have_content("Your order could not be completed.")
 
-    expect(page).to have_content("The product Potatoes only has 2 available")
-    expect(page).to have_content("The product Kale only has 1 available")
+    expect(page).to have_content("Unfortunately, there are only 2 Potatoes available")
+    expect(page).to have_content("Unfortunately, there are only 1 Kale available")
   end
 end
