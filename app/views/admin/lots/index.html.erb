@@ -61,7 +61,7 @@
             <%= lot_in_table.text_field :number, size: 8 %>
           </div>
         </td>
-        <td class="good_from ">
+        <td class="good_from">
           <div class="edit-trigger view-cell">
             <%= lot.good_from.try(:strftime, '%d %b %Y') %>
           </div>
@@ -69,7 +69,7 @@
             <%= lot_in_table.datetime_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_<%= lot.id %>_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
            </div>
         </td>
-        <td class="expires_at ">
+        <td class="expires_at">
           <div class="edit-trigger view-cell">
             <%= lot.expires_at.try(:strftime, '%d %b %Y') %>
           </div>
@@ -77,7 +77,7 @@
             <%= lot_in_table.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_<%= lot.id %>_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
           </div>
         </td>
-        <td class="quantity ">
+        <td class="quantity">
           <div class="edit-trigger view-cell">
             <%= lot.quantity %>
           </div>
