@@ -9,7 +9,8 @@
 <hr>
 
 <h2>Products</h2>
-<% if current_market.products.present? %>
+<% @products = Product.available_for_market(current_market) %>
+<% if @products.any? %>
   <%= render "products" %>
 <% else %>
   No products have yet been created
