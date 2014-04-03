@@ -38,6 +38,12 @@
     </div>
 
     <div class="field">
+      <%= f.label :photo, "Profile photo" %><br>
+      <%= f.file_field :photo %>
+      <%= image_tag @organization.photo.remote_url, alt: "Profile photo", class: "org-profile-photo" if @organization.photo %>
+    </div>
+
+    <div class="field">
       <%= f.label :who_story, "Who" %><br>
       <%= f.text_area :who_story, class: "column column--full", rows: 2 %>
     </div>
@@ -45,12 +51,6 @@
     <div class="field">
       <%= f.label :how_story, "How" %><br>
       <%= f.text_area :how_story, class: "column column--full", rows: 4 %>
-    </div>
-
-    <div class="field">
-      <%= f.label :photo, "Profile photo" %><br>
-      <%= f.file_field :photo %>
-      <%= image_tag @organization.photo.remote_url, alt: "Profile photo", class: "org-profile-photo" if @organization.photo %>
     </div>
 
   </fieldset>
