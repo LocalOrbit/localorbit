@@ -14,10 +14,11 @@ class DashboardPresenter
   end
 
   def pending_orders
-    @pending_orders ||= Order.orders_for_seller(@user).order("placed_at DESC").pending
+    # TODO: Should scope by pending seller payment once payments are implemented
+    @pending_orders ||= Order.orders_for_seller(@user).order("placed_at DESC").limit(15)
   end
 
   def upcoming_deliveries
-    @upcoming_deliveries ||= Delivery.for_seller().upcoming
+    @upcoming_deliveries ||= Delivery.upcoming_for_seller(@user).decorate
   end
 end

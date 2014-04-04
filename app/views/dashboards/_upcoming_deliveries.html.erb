@@ -1,6 +1,19 @@
-<h1>Upcoming Deliveries</h1>
-
 <% if @presenter.upcoming_deliveries.present? %>
+
+  <% @presenter.upcoming_deliveries.each do |delivery| %>
+    <div class="upcoming-delivery">
+      <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading %></h2>
+      Deliver to:
+      <div class="location-name"><%= delivery.deliver_to_name %></div>
+      <div class="location"><%= delivery.deliver_to_location %></div>
+
+      <div class="seller-tools">
+        <div><%= link_to "Pick List", coming_soon_dashboard_path %></div>
+        <div><%= link_to "Individual\nPacking Slips", coming_soon_dashboard_path %></div>
+        <div><%= link_to "Order Summary", coming_soon_dashboard_path %></div>
+      </div>
+    </div>
+  <% end %>
 
 <% else %>
   There are currently no upcoming deliveries

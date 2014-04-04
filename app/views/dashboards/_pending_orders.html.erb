@@ -1,11 +1,11 @@
-<h1>Pending Orders</h1>
+<h1>Recent Orders</h1>
 <%= link_to "View All Orders", admin_financials_orders_path %><br>
 
 <% if @presenter.pending_orders.present? %>
   <table class="pending-orders-table <%= cycle "odd", "even" %>">
     <thead>
       <tr>
-        <th>Order $</th>
+        <th>Order #</th>
         <th>Placed On</th>
         <th>Delivery</th>
         <th>Total</th>
@@ -16,7 +16,7 @@
     <tr class="order-row">
       <td class="order-number"><%= link_to order.order_number, admin_financials_order_path(order) %></td>
       <td class="placed-on"><%= order.placed_at.strftime("%-m/%-d/%Y") %></td>
-      <td class="delivery"><%= order.delivery_status %></td>
+      <td class="delivery"><%= order.delivery_status.titleize %></td>
       <td class="total"><%= number_to_currency(SellerOrder.new(order, current_user).net_total) %></td>
     </tr>
   <% end %>

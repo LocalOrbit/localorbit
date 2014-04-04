@@ -13,16 +13,18 @@ feature "a market manager viewing their dashboard" do
 
   describe "Current Sales tables" do
     it "lists all sales for the currently managed market ordered by creation date" do
-      create(:order, order_number: "LO-14-TEST-2", market: market)
-      create(:order, total_cost: 50, market: market, placed_at: DateTime.parse("2014-04-01 12:00:00"), order_number: "LO-14-TEST")
+      order1 = create(:order, order_number: "LO-14-TEST-2", market: market)
+      order2 = create(:order, total_cost: 50, market: market, placed_at: DateTime.parse("2014-04-01 12:00:00"), order_number: "LO-14-TEST")
+      create(:order_item, order: order1, delivery_status: "pending")
+      create(:order_item, order: order2, delivery_status: "pending")
       create(:order)
 
       visit dashboard_path
 
       expect(page).to have_content("Current Sales")
 
-      expect(Dom::Dashboard::CurrentSaleRow.all.count).to eq(2)
-      order_row = Dom::Dashboard::CurrentSaleRow.first
+      expect(Dom::Dashboard::OrderRow.all.count).to eq(2)
+      order_row = Dom::Dashboard::OrderRow.first
 
       expect(order_row.order_number).to eq("LO-14-TEST")
       expect(order_row.placed_on).to eq("Apr 1, 2014")
@@ -30,7 +32,7 @@ feature "a market manager viewing their dashboard" do
       expect(order_row.delivery).to eq("Pending")
       expect(order_row.payment).to eq("Unpaid")
 
-      expect(Dom::Dashboard::CurrentSaleRow.all.last.order_number).to eq("LO-14-TEST-2")
+      expect(Dom::Dashboard::OrderRow.all.last.order_number).to eq("LO-14-TEST-2")
     end
 
     it "displays a message if there are no orders" do

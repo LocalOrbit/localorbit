@@ -609,9 +609,9 @@ module Dom
     class UpcomingDelivery < Domino
       selector ".upcoming-delivery"
 
-      attribute :delivery_date
+      attribute :upcoming_delivery_date
+      attribute :location_name
       attribute :location
-      attribute :number_of_orders
     end
   end
 end

@@ -69,4 +69,17 @@ class DeliveryDecorator < Draper::Decorator
   def selected_type
     buyer_pickup? ? "Pick Up Date" : "Delivery Date"
   end
+
+  # Display for upcoming delivery
+  def upcoming_delivery_date_heading
+    "Deliveries for #{display_date} #{delivery_schedule.seller_delivery_start}"
+  end
+
+  def deliver_to_name
+    delivery_schedule.seller_fulfillment_location.try(:name)
+  end
+
+  def deliver_to_location
+    delivery_schedule.seller_fulfillment_address
+  end
 end

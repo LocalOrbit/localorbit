@@ -56,6 +56,14 @@ FactoryGirl.define do
     trait :admin do
       role 'admin'
     end
+
+    trait :seller do
+      after(:create) do |user|
+        m = create(:market)
+        o = create(:organization, :seller, markets: [m])
+        user.organizations << o
+      end
+    end
   end
 
   factory :order do

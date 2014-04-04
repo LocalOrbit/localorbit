@@ -25,7 +25,8 @@ class Order < ActiveRecord::Base
   validates :placed_at, presence: true
   validates :total_cost, presence: true
 
-  scope :pending, -> { where(payment_status: "Pending") }
+  scope :recent, -> { order("created_at DESC").limit(15) }
+  scope :upcoming_delivery, -> { joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
 
   def self.orders_for_buyer(user)
     if user.admin?
@@ -58,6 +59,12 @@ class Order < ActiveRecord::Base
              LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id").
       where("user_organizations.user_id = :user_id", user_id: user.id)
     end
+  end
+
+  def self.undelivered_orders_for_seller(user)
+    scope = orders_for_seller(user)
+    scope = scope.joins(:order_items) if user.admin?
+    scope.where(order_items: {delivery_status: 'pending'})
   end
 
   def self.create_from_cart(params, cart)
