@@ -202,8 +202,8 @@ describe "A Market Manager" do
         end
 
         within("#new_user") do
-          fill_in "Email", with: "susan@example.com"
-          click_button "Invite a new member"
+          fill_in "Email address", with: "susan@example.com"
+          click_button "Invite New User"
         end
 
         expect(page).to have_content("Sent invitation to susan@example.com")
@@ -227,8 +227,8 @@ describe "A Market Manager" do
         end
 
         within("#new_user") do
-          fill_in "Email", with: user.email
-          click_button "Invite a new member"
+          fill_in "Email address", with: user.email
+          click_button "Invite New User"
         end
 
         expect(page).to have_content("You have already added this user")
@@ -244,8 +244,8 @@ describe "A Market Manager" do
         end
 
         within("#new_user") do
-          fill_in "Email", with:""
-          click_button "Invite a new member"
+          fill_in "Email address", with:""
+          click_button "Invite New User"
         end
 
         expect(page).to have_content("Email can't be blank")
@@ -261,8 +261,8 @@ describe "A Market Manager" do
         end
 
         within("#new_user") do
-          fill_in "Email", with:"asdfasdfasdfasdfasd"
-          click_button "Invite a new member"
+          fill_in "Email address", with:"asdfasdfasdfasdfasd"
+          click_button "Invite New User"
         end
 
         expect(page).to have_content("Email is invalid")

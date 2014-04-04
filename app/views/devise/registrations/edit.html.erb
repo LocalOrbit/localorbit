@@ -52,7 +52,7 @@
       <% resource.managed_markets.each do |market| %>
         <tr>
           <td><%= market.name %></td>
-          <td><%= market.organization.name %></td>
+          <td><%= market.organizations.pluck(:name).to_sentence %></td>
           <td>Market Manager</td>
         </tr>
       <% end %>

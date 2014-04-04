@@ -25,7 +25,7 @@ describe "Editing a product" do
     context "when the product information is valid" do
       it "saves the product" do
         fill_in "Product Name", with: "Canned Peaches"
-        click_button "Save Product"
+        click_button "Save and Continue"
         expect(find_field('Product Name').value).to eq("Canned Peaches")
         expect(find_field('Category').value).to eq(category_id.to_s)
       end
@@ -34,7 +34,7 @@ describe "Editing a product" do
     context "when the product information is not valid" do
       it "shows an error" do
         fill_in "Product Name", with: ""
-        click_button "Save Product"
+        click_button "Save and Continue"
 
         expect(page).to have_content("Name can't be blank")
       end
@@ -64,7 +64,7 @@ describe "Editing a product" do
 
           check 'Use simple inventory'
           fill_in 'Current inventory', with: '42'
-          click_button 'Save Product'
+          click_button 'Save and Continue'
 
           expect(page).to have_content("Saved Canned Pears")
           expect(find_field("Current inventory").value).to eq('42')
@@ -182,7 +182,7 @@ describe "Editing a product" do
       Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
       Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").check!
 
-      click_button "Save Product"
+      click_button "Save and Continue"
 
       expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
       expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked

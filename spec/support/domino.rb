@@ -252,7 +252,7 @@ module Dom
 
       def remove!
         cells[0].find("input").set(true)
-        click_button "Delete Checked"
+        click_button "Delete Selected"
       end
 
       def default_billing?
