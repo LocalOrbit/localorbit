@@ -566,7 +566,7 @@ describe "Adding a product" do
         fill_in "Additional Notes", with: "See more notes"
         click_button "Request Unit"
 
-        expect(page).to have_content("Save and Continue")
+        expect(page).to have_content("Add Product")
       end
     end
 
@@ -581,7 +581,7 @@ describe "Adding a product" do
         fill_in "Product Category", with: "Goop"
         click_button "Request Category"
 
-        expect(page).to have_content("Save and Continue")
+        expect(page).to have_content("Add Product")
       end
     end
   end
