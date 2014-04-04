@@ -5,6 +5,7 @@
     <%= render 'form', {f: f} %>
 
     <div class="form-actions">
+      <%= link_to "Cancel", admin_markets_path, class: "btn cancel" %>
       <%= f.submit "Update Market" %>
     </div>
   <% end %>

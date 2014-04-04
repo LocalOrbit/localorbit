@@ -75,7 +75,7 @@
     content: '';
   }
 
-  a, h1, h2, span, i, .field {
+  a, h1, h2, div, span, i, .field {
     display: inline-block;
     vertical-align: baseline;
     text-align: left;
@@ -85,7 +85,8 @@
     margin-top: 0;
   }
 
-  > a {
+  > a,
+  .header-actions {
     font-size: 14px;
   }
 
@@ -93,6 +94,9 @@
   > h2{
     display: inline-block;
     font-size: 32px;
+  }
+  .header-actions a {
+    margin-left: 10px;
   }
 }
 
