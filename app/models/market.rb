@@ -41,4 +41,8 @@ class Market < ActiveRecord::Base
   def products
     Product.where(organization_id: (organizations.map &:id))
   end
+
+  def deliveries
+    Delivery.joins(:delivery_schedule).where(delivery_schedules: {market_id: id})
+  end
 end

@@ -1,8 +1,11 @@
 class Admin::DeliveryToolsController < AdminController
   def index
-    @upcoming_deliveries = current_market.delivery_schedules.map do |ds|
-      ds.deliveries.where("deliver_on > :time", time: Time.current).
-      joins(orders: {items: :product}).where(products: {organization_id: current_organization.id})
-    end.flatten
+    @upcoming_deliveries = if current_user.market_manager? || current_user.admin?
+      current_market.deliveries.future.with_orders.order("deliver_on")
+    else
+      current_market.deliveries.future.
+        with_orders_for_organization(current_organization).
+        order("deliver_on")
+    end
   end
 end
