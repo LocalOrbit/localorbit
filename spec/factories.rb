@@ -104,6 +104,10 @@ FactoryGirl.define do
     delivery_status "Pending"
   end
 
+  factory :order_item_lot do
+    quantity        1
+  end
+
   factory :organization do
     sequence(:name) {|n| "Organization #{n}" }
     can_sell true

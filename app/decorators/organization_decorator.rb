@@ -10,4 +10,9 @@ class OrganizationDecorator < Draper::Decorator
 
     "http://maps.google.com/maps/api/staticmap?size=340x300&markers=#{addresses.join('|')}&sensor=false&maptype=terrain&key=#{Figaro.env.google_maps_key}"
   end
+
+  def ship_from_address
+    address = shipping_location
+    raw "#{address.address}<br/>#{address.city}, #{address.state} #{address.zip}"
+  end
 end
