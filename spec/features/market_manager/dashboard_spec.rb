@@ -15,8 +15,11 @@ feature "a market manager viewing their dashboard" do
     it "lists all sales for the currently managed market ordered by creation date" do
       order1 = create(:order, order_number: "LO-14-TEST-2", market: market)
       order2 = create(:order, total_cost: 50, market: market, placed_at: DateTime.parse("2014-04-01 12:00:00"), order_number: "LO-14-TEST")
-      create(:order_item, order: order1, delivery_status: "pending")
-      create(:order_item, order: order2, delivery_status: "pending")
+      product = create(:product, :sellable)
+      product.organization.markets << market
+
+      create(:order_item, product: product, order: order1, delivery_status: "pending")
+      create(:order_item, product: product, order: order2, delivery_status: "pending")
       create(:order)
 
       visit dashboard_path
@@ -50,7 +53,7 @@ feature "a market manager viewing their dashboard" do
 
       create(:price, product: product, market: market, organization: organization, sale_price: 20)
       create(:lot, product: product, quantity: 123)
-      create(:product, name: "Last Thing", organization: organization, created_at: 1.day.ago)
+      create(:product, :sellable, name: "Last Thing", organization: organization, created_at: 1.day.ago)
       create(:product)
 
       visit dashboard_path

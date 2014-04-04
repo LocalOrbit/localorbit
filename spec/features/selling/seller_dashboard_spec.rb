@@ -20,7 +20,7 @@ feature "seller views their dashboard" do
   let!(:organization) { create(:organization, :seller, markets: [market]) }
   let!(:user) { create(:user, organizations: [organization]) }
 
-  let!(:product) { create(:product, organization: organization) }
+  let!(:product) { create(:product, :sellable, organization: organization) }
   let!(:order) do create(:order,
                           delivery: delivery,
                           market: market,
@@ -63,7 +63,7 @@ feature "seller views their dashboard" do
 
   it "displays a list of upcoming deliveries with information" do
     market.addresses.first.update_attributes(name: "Idea Market")
-    create(:order_item, product: create(:product, organization: organization), order: order, delivery_status: "pending")
+    create(:order_item, product: create(:product, :sellable, organization: organization), order: order, delivery_status: "pending")
     create(:order_item, product: product, order: extra_order, delivery_status: "pending")
 
     extra_order.delivery = create(:delivery_schedule, market: market, day: 6, seller_delivery_start: '8:00 AM').next_delivery
