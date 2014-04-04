@@ -39,8 +39,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :delivery_tools do
-
+    resource :delivery_tools, only: :show do
     end
 
     resources :products do

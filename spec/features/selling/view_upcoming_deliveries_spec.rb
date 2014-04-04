@@ -52,6 +52,28 @@ describe "Upcoming Deliveries" do
       end
     end
 
+    context "shows deliveries only once" do
+      let!(:order_with_seller_product1) { create(:order, organization: sellers, market: market, delivery: thursday_delivery) }
+      let!(:order_item_for_seller_product1) { create(:order_item, order: order_with_seller_product1, product: product, quantity: 1)}
+
+      let!(:order_with_seller_product2) { create(:order, organization: sellers, market: market, delivery: thursday_delivery) }
+      let!(:order_item_for_seller_product2) { create(:order_item, order: order_with_seller_product2, product: product, quantity: 1)}
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        visit admin_delivery_tools_path
+      end
+
+      it "shows a list of the upcoming deliveries that have orders" do
+        expect(page).to have_content("Delivery Tools")
+
+        deliveries = Dom::Admin::UpcomingDelivery.all
+        expect(deliveries.count).to eql(1)
+        expect(deliveries.first.node).to have_content("May 8, 2014")
+      end
+    end
+
     context "without orders" do
       before do
         switch_to_subdomain(market.subdomain)
@@ -92,6 +114,28 @@ describe "Upcoming Deliveries" do
       end
     end
 
+    context "shows deliveries only once" do
+      let!(:order_with_seller_product1) { create(:order, organization: sellers, market: market, delivery: thursday_delivery) }
+      let!(:order_item_for_seller_product1) { create(:order_item, order: order_with_seller_product1, product: product, quantity: 1)}
+
+      let!(:order_with_seller_product2) { create(:order, organization: sellers, market: market, delivery: thursday_delivery) }
+      let!(:order_item_for_seller_product2) { create(:order_item, order: order_with_seller_product2, product: product, quantity: 1)}
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        visit admin_delivery_tools_path
+      end
+
+      it "shows a list of the upcoming deliveries that have orders" do
+        expect(page).to have_content("Delivery Tools")
+
+        deliveries = Dom::Admin::UpcomingDelivery.all
+        expect(deliveries.count).to eql(1)
+        expect(deliveries.first.node).to have_content("May 8, 2014")
+      end
+    end
+
     context "without orders" do
       before do
         switch_to_subdomain(market.subdomain)
@@ -129,6 +173,28 @@ describe "Upcoming Deliveries" do
         expect(deliveries.count).to eql(2)
         expect(deliveries.first.node).to have_content("May 8, 2014")
         expect(deliveries.last.node).to have_content("May 9, 2014")
+      end
+    end
+
+    context "shows deliveries only once" do
+      let!(:order_with_seller_product1) { create(:order, organization: sellers, market: market, delivery: thursday_delivery) }
+      let!(:order_item_for_seller_product1) { create(:order_item, order: order_with_seller_product1, product: product, quantity: 1)}
+
+      let!(:order_with_seller_product2) { create(:order, organization: sellers, market: market, delivery: thursday_delivery) }
+      let!(:order_item_for_seller_product2) { create(:order_item, order: order_with_seller_product2, product: product, quantity: 1)}
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        visit admin_delivery_tools_path
+      end
+
+      it "shows a list of the upcoming deliveries that have orders" do
+        expect(page).to have_content("Delivery Tools")
+
+        deliveries = Dom::Admin::UpcomingDelivery.all
+        expect(deliveries.count).to eql(1)
+        expect(deliveries.first.node).to have_content("May 8, 2014")
       end
     end
 

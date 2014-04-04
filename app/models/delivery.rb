@@ -4,7 +4,7 @@ class Delivery < ActiveRecord::Base
 
   scope :upcoming, lambda { where("deliveries.cutoff_time > ?", Time.current) }
   scope :future, lambda { where("deliveries.deliver_on > ?", Time.current) }
-  scope :with_orders, lambda { joins(orders: {items: :product}) }
+  scope :with_orders, lambda { joins(orders: {items: :product}).group("deliveries.id") }
   scope :with_orders_for_organization, lambda { |organization| with_orders.where(products: {organization_id: organization.id}) }
 
   def self.for_market(market)
