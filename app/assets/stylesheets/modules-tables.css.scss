@@ -9,12 +9,12 @@
 .table-summary {
   margin-bottom: 1em;
   color: #000;
-  font-size: 12px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 12px;
 }
   table a {
     color: #4162A1;
@@ -35,7 +35,7 @@ caption {
 td,
 th {
   padding: 4px 0 4px 10px;
-  font-size: 14px;
+  font-size: 12px;
   &:last-child {
     padding-right: 5px;
   }
@@ -104,6 +104,12 @@ th {
   text-align: left;
   &[scope=row] {
     font-weight: normal;
+  }
+}
+
+.market-managers {
+  td.delete:last-child {
+    text-align: right;
   }
 }
 
