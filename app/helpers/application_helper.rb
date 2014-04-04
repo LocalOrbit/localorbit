@@ -48,7 +48,7 @@ module ApplicationHelper
   # a matcher similar to current_page?(options) but crazier!
   # See also http://rubular.com/r/PVc6MLd5mL
   def similar_base_url_for_tab?(options)
-    base_url = url_for.sub(/\/?\d*(\?.*)?$/, '')
+    base_url = url_for.sub(/\/?(\d*|new)?(\?.*)?$/, '')
     regexp = /#{Regexp.escape(base_url)}(\/(new|\d+(\/edit)?)|)$/
     regexp =~ url_for(options)
   end
