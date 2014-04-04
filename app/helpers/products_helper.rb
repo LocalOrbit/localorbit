@@ -1,4 +1,12 @@
 module ProductsHelper
+  def inventory_tab_complete?
+    @product.available_inventory > 0
+  end
+
+  def pricing_tab_complete?
+    @product.prices.count > 0
+  end
+
   def product_listing_disclaimer
     condition = []
     if @product.lots.count < 1

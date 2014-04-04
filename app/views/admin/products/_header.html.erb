@@ -18,9 +18,9 @@
           <% if @product.use_simple_inventory %>
             <li class="tab is-hidden" id="product-inventory-nav"><span class="is-disabled" data-error="Save this product to add inventory.">Inventory</span></li>
           <% else %>
-            <%= content_tag(:li, link_to_or_span("Inventory", [:admin, @product, :lots]), id: 'product-inventory-nav', class:  (@product.lots.count > 0 ? 'completed tab' : 'tab')) %>
+            <%= content_tag(:li, link_to_or_span("Inventory", [:admin, @product, :lots]), id: 'product-inventory-nav', class:  (inventory_tab_complete? ? 'completed tab' : 'tab')) %>
           <% end %>
-          <%= content_tag(:li, link_to_or_span("Pricing", [:admin, @product, :prices]), id: 'product-pricing-nav', class: (@product.prices.count > 0 ? 'completed tab' : 'tab')) %>
+          <%= content_tag(:li, link_to_or_span("Pricing", [:admin, @product, :prices]), id: 'product-pricing-nav', class: (pricing_tab_complete? ? 'completed tab' : 'tab')) %>
         <% else %>
           <li class="tab"><span>Product Info</span></li>
           <%= content_tag :li, raw('<span class="is-disabled" data-error="Save this product to add inventory.">Inventory</span>'), id: 'product-inventory-nav', class: (@product.use_simple_inventory? ? 'is-hidden tab' : 'tab') %>
