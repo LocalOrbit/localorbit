@@ -2,7 +2,7 @@ class OrderDecorator < Draper::Decorator
   delegate_all
 
   def display_delivery_or_pickup
-    delivery.delivery_schedule.buyer_pickup? ? "be available for pickup at" : "be delivered to"
+    delivery.delivery_schedule.buyer_pickup? ? "can be picked up at:" : "will be delivered to:"
   end
 
   def display_delivery_address
