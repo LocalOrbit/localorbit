@@ -1,5 +1,4 @@
-<h1>Edit <%= @market.name %></h1>
-
+<%= render "header" %>
 <div class="row row--partial">
   <%= form_for [:admin, @market], html: { class: "column column--three-fourths" } do |f| %>
     <%= render 'form', {f: f} %>

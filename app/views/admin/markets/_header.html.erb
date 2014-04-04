@@ -1,9 +1,15 @@
 <div class="tab-header">
   <div class="l-constraint">
+
+    <%= form_for [:admin, @market], html: { class: "pull-right" } do |f| %>
+      <%= f.hidden_field :active, value: !@market.active? %>
+      <%= f.submit (@market.active? ? 'Deactivate' : 'Activate'), class: "btn--small" %>
+    <% end %>
+
     <h1><%= @market.name %></h1>
     <div class="tabs-wrapper">
       <ul class="tabs">
-        <%= content_tag(:li, link_to_or_span("Market Info",   [:admin, @market]), class: 'tab') %>
+        <%= content_tag(:li, link_to_or_span("Market Info",   [:edit, :admin, @market]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Managers",      [:admin, @market, :managers]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Addresses",     [:admin, @market, :addresses]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Deliveries",    [:admin, @market, :delivery_schedules]), class: 'tab') %>
