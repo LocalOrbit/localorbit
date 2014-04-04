@@ -3,6 +3,11 @@
 <p>You will receive a confirmation email with details of your order and a link to track its progress.</p>
 <p>If you have any questions, <%= link_to "please let us know.", "http://localorbit.zendesk.com/anonymous_requests/new" %></p>
 
+<div class="actions">
+  <%= link_to "Review Order", [:organization, :financials, @order] %>
+  <%= link_to "Print Order Confirmation", [:coming_soon, :dashboard] %>
+</div>
+
 <div class="delivery-time">
   Items for <%=  @order.delivery.decorate.checkout_type %>:
   <strong><%= raw @order.delivery.decorate.checkout_date %></strong>
