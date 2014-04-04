@@ -206,6 +206,10 @@ module Dom
       end
     end
 
+    class UpcomingDelivery < Domino
+      selector ".upcoming-delivery"
+    end
+
     class OrganizationForm < Domino
       selector "form.organization"
 

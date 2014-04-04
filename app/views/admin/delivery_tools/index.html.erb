@@ -1,0 +1,26 @@
+<h1>Delivery Tools</h1>
+
+<% if @upcoming_deliveries.empty? %>
+  <h2>You currently have no upcoming deliveries.</h2>
+<% else %>
+  <% @upcoming_deliveries.each do |delivery| %>
+  <div class="upcoming-delivery">
+    <h2><%= delivery.decorate.display_date %> <%= delivery.decorate.time_range %></h2>
+    <div>Deliver to:</div>
+    <div class="delivery-location">
+      <%= delivery.delivery_schedule.seller_fulfillment_location.try(:name) %>
+      <address>
+        <%= delivery.delivery_schedule.seller_fulfillment_address %>
+      </address>
+    </div>
+    <table>
+      <tr>
+        <td>Pick list</td>
+        <td>Master packing slips</td>
+        <td>Individal packing slips</td>
+        <td>Order Summary</td>
+      </tr>
+    </table>
+  </div>
+  <% end %>
+<% end %>

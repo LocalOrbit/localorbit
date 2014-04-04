@@ -38,7 +38,7 @@ end
       <li>
         <a href="#sales-dropdown" class="caretted" href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xf000;"></i> Sales Information</a>
         <ul class="dropdown with-anchor top-anchor" id="sales-dropdown">
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), coming_soon_dashboard_path %></li>
+          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), admin_delivery_tools_path %></li>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe024;"></i> Current Sales'), coming_soon_dashboard_path %></li>
         </ul>
       </li>
@@ -52,7 +52,7 @@ end
         <a href="#orders-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe024;"></i>Orders &amp; Delivery</a>
         <ul class="dropdown with-anchor top-anchor" id="orders-dropdown">
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe025;"></i> Orders'), coming_soon_dashboard_path %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), coming_soon_dashboard_path %></li>
+          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), admin_delivery_tools_path %></li>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe02d;"></i> Sold Items'), coming_soon_dashboard_path %></li>
           <% if current_user.admin? %>
             <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe035;"></i> Units'), coming_soon_dashboard_path %></li>

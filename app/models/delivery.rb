@@ -1,5 +1,6 @@
 class Delivery < ActiveRecord::Base
   belongs_to :delivery_schedule
+  has_many :orders, inverse_of: :delivery
 
   scope :upcoming, lambda { where("deliveries.cutoff_time > ?", Time.current) }
 
