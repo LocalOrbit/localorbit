@@ -71,6 +71,9 @@ input[type=submit] {
   &.close {
     color: #000;
   }
+  &.btn--test {
+    background-color: #ccc;
+  }
 }
 
 .btn.cancel {

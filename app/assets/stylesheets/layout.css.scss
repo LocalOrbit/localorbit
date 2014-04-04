@@ -72,10 +72,14 @@
     content: '';
   }
 
-  a, h1, h2, span, i {
+  a, h1, h2, span, i, .field {
     display: inline-block;
     vertical-align: baseline;
     text-align: left;
+  }
+
+  .field {
+    margin-top: 0;
   }
 
   > a {

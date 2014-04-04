@@ -38,6 +38,11 @@ textarea {
     border-color: #bfd9ad;
     outline: none;
   }
+  &.input--short {
+    height: 35px;
+    border-width: 1px;
+    margin: 0;
+  }
 }
 
 input[type=datetime],

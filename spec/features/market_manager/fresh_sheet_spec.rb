@@ -42,10 +42,18 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
       expect(page).to have_content("Successfully sent a test to #{user.email}")
     end
 
+    scenario "sending a test to a different email" do
+      expect(MarketMailer).to receive(:fresh_sheet).with(market, "foo@example.com").and_return(double(:mailer, deliver: true))
+      visit admin_fresh_sheet_path
+      fill_in "email", with: "foo@example.com"
+      click_button "Send Test"
+      expect(page).to have_content("Successfully sent a test to foo@example.com")
+    end
+
     scenario "sending to everyone" do
       expect(MarketMailer).to receive(:fresh_sheet).with(market).and_return(double(:mailer, deliver: true))
       visit admin_fresh_sheet_path
-      click_button "Send Now"
+      click_button "Send to Everyone Now"
       expect(page).to have_content("Successfully sent the Fresh Sheet")
     end
   end
