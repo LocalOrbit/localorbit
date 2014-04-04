@@ -12,6 +12,16 @@ class Delivery < ActiveRecord::Base
     where(delivery_schedules: {market_id: market.id})
   end
 
+  def self.for_seller(seller)
+    joins(:delivery_schedule).
+    where(delivery_schedules: {market_id: [seller.markets.map(&:id)]})
+  end
+
+  def self.upcoming_for_seller(seller)
+    ids = Order.undelivered_orders_for_seller(seller).upcoming_delivery.pluck(:delivery_id).uniq
+    where(id: ids)
+  end
+
   def requires_location?
     !delivery_schedule.buyer_pickup?
   end

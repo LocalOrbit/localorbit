@@ -1,4 +1,6 @@
 class Order < ActiveRecord::Base
+  include DeliveryStatus
+
   belongs_to :market
   belongs_to :organization
   belongs_to :delivery
@@ -14,7 +16,6 @@ class Order < ActiveRecord::Base
   validates :delivery_fees, presence: true
   validates :delivery_id, presence: true
   validates :delivery_state, presence: true
-  validates :delivery_status, presence: true
   validates :delivery_zip, presence: true
   validates :market_id, presence: true
   validates :order_number, presence: true, uniqueness: true
@@ -23,6 +24,9 @@ class Order < ActiveRecord::Base
   validates :payment_status, presence: true
   validates :placed_at, presence: true
   validates :total_cost, presence: true
+
+  scope :recent, -> { order("created_at DESC").limit(15) }
+  scope :upcoming_delivery, -> { joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
 
   def self.orders_for_buyer(user)
     if user.admin?
@@ -57,6 +61,12 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def self.undelivered_orders_for_seller(user)
+    scope = orders_for_seller(user)
+    scope = scope.joins(:order_items) if user.admin?
+    scope.where(order_items: {delivery_status: 'pending'})
+  end
+
   def self.create_from_cart(params, cart)
     billing = cart.organization.locations.default_billing
     order_number = OrderNumber.new(cart.market)
@@ -88,7 +98,6 @@ class Order < ActiveRecord::Base
     order.delivery_city    = address.city
     order.delivery_state   = address.state
     order.delivery_zip     = address.zip
-    order.delivery_status  =  "Pending"
     order.delivery_phone   = address.phone
 
     ActiveRecord::Base.transaction do

@@ -100,6 +100,7 @@ describe OrderItem do
         unit: create(:unit),
         order: order,
         product: product,
+        delivery_status: "pending",
         quantity: 7
       )
     end
@@ -134,6 +135,7 @@ describe OrderItem do
           unit: create(:unit),
           order: order,
           product: product2,
+          delivery_status: "pending",
           quantity: 8
         )
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403183152) do
+ActiveRecord::Schema.define(version: 20140403184058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,6 +217,7 @@ ActiveRecord::Schema.define(version: 20140403183152) do
     t.decimal  "unit_price",             precision: 10, scale: 2, default: 0.0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "delivery_status"
   end
 
   create_table "orders", force: true do |t|
@@ -228,7 +229,6 @@ ActiveRecord::Schema.define(version: 20140403183152) do
     t.datetime "invoiced_at"
     t.datetime "invoice_due_date"
     t.decimal  "delivery_fees",             precision: 10, scale: 2
-    t.string   "delivery_status"
     t.decimal  "total_cost",                precision: 10, scale: 2
     t.string   "delivery_address"
     t.string   "delivery_city"
@@ -293,8 +293,8 @@ ActiveRecord::Schema.define(version: 20140403183152) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.string   "image_uid"
     t.integer  "top_level_category_id"
+    t.string   "image_uid"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"

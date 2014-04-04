@@ -1,7 +1,1 @@
-<% if current_user.admin? %>
-  <%= render "admin" %>
-<% elsif current_user.market_manager? %>
-  <%= render "market_manager" %>
-<% elsif current_user.seller? %>
-  <%= render "seller" %>
-<% end %>
+<%= render @presenter.template %>
