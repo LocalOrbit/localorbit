@@ -2,7 +2,9 @@
 
 <div class="row row--partial">
   <div class="column column--three-fourths">
-    <%= link_to 'Add Manager', [:new, :admin, @market, :manager], class: "btn btn--add btn--small pull-right" %>
+    <div class="l-page-header">
+      <%= link_to 'Add Manager', [:new, :admin, @market, :manager], class: "btn btn--add btn--small pull-right" %>
+    </div>
     <table class="market-managers">
       <thead>
         <tr>

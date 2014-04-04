@@ -1,25 +1,36 @@
 <%= render 'admin/markets/header' %>
 
-<%= link_to 'Add Address', new_admin_market_address_path(@market), class: "btn btn--small btn--add pull-right" %>
-
-<table>
-  <thead>
-    <tr>
-      <td>Address</td>
-      <td>Phone</td>
-    </tr>
-  </thead>
-  <tbody>
-  <% @addresses.each do |address| %>
-    <tr class="<%= cycle "odd", "even" %>">
-      <td>
-        <div><%= link_to address.name, edit_admin_market_address_path(@market, address) %></div>
-        <div><%= address.address %>, <%= address.city %>, <%= address.state %> <%= address.zip %></div>
-      </td>
-      <td>
-        <%= address.phone %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+    <div class="l-page-header">
+      <%= link_to 'Add Address', new_admin_market_address_path(@market), class: "btn btn--small btn--add pull-right" %>
+    </div>
+    <form class="clear-before">
+      <table class="sortable market-addresses">
+        <thead>
+          <tr>
+            <th>Address</th>
+            <th>Phone</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @addresses.each do |address| %>
+          <tr class="<%= cycle "odd", "even" %>">
+            <td>
+              <div><%= link_to address.name, edit_admin_market_address_path(@market, address) %></div>
+              <div><%= address.address %>, <%= address.city %>, <%= address.state %> <%= address.zip %></div>
+            </td>
+            <td>
+              <%= address.phone %>
+            </td>
+            <td class="delete todo">
+              <button type="submit" class="delete"><i class="font-icon icon-delete"></i> Delete</button>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>

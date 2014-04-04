@@ -1,29 +1,35 @@
 <%= render 'admin/markets/header' %>
 
-<%= link_to 'Add Delivery', new_admin_market_delivery_schedule_path(@market), class: "btn btn--small pull-right" %>
 <div class="row row--partial">
-  <table class="column column--three-fourths sortable">
-    <thead>
-      <th>Schedule</th>
-      <th>Delivery</th>
-      <th>Pickup</th>
-    </thead>
-    <tbody>
-      <% @delivery_schedules.each do |delivery| %>
-        <tr>
-          <td class="delivery-text">
-            <strong><%= link_to "#{delivery.weekday}, order cutoff #{delivery.order_cutoff} hours before delivery.", [:edit, :admin, @market, delivery] %></strong><br>
-            <span class="address">Deliver to: <%= delivery.seller_fulfillment_address %></span>
-          </td>
-          <td class="delivery-time">
-            <%= delivery.seller_delivery_start %> – <%= delivery.seller_delivery_end %>
-          </td>
-          <td class="pickup-time">
-            <%= "#{delivery.buyer_pickup_start} – #{delivery.buyer_pickup_end}" if delivery.seller_fulfillment_location %>
-          </td>
-          <td><%= link_to 'Delete', [:admin, @market, delivery], method: :delete, data: {confirm: 'Are you sure you want to delete this delivery'} %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div class="column column--three-fourths">
+    <div class="l-page-header">
+      <%= link_to 'Add Delivery', new_admin_market_delivery_schedule_path(@market), class: "btn btn--add btn--small pull-right" %>
+    </div>
+    <table class="sortable">
+      <thead>
+        <th>Schedule</th>
+        <th>Delivery</th>
+        <th>Pickup</th>
+      </thead>
+      <tbody>
+        <% @delivery_schedules.each do |delivery| %>
+          <tr>
+            <td class="delivery-text">
+              <strong><%= link_to "#{delivery.weekday}, order cutoff #{delivery.order_cutoff} hours before delivery.", [:edit, :admin, @market, delivery] %></strong><br>
+              <span class="address">Deliver to: <%= delivery.seller_fulfillment_address %></span>
+            </td>
+            <td class="delivery-time">
+              <%= delivery.seller_delivery_start %> – <%= delivery.seller_delivery_end %>
+            </td>
+            <td class="pickup-time">
+              <%= "#{delivery.buyer_pickup_start} – #{delivery.buyer_pickup_end}" if delivery.seller_fulfillment_location %>
+            </td>
+            <td class="delete">
+              <%= link_to '<i class="font-icon icon-delete"></i> Delete'.html_safe, [:admin, @market, delivery], method: :delete, data: {confirm: 'Are you sure you want to delete this delivery'} %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
