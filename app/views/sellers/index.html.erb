@@ -1,35 +1,47 @@
 <div class="row">
-  <aside class="column column--third">
+  <aside class="column column--fourth column--guttered">
+
     <%= render "products/selected_delivery" %>
 
-    <h2>Sellers</h2>
+    <h2 class="heading heading--sidebar">Sellers</h2>
     <ul>
       <% @sellers.each do |seller| %>
         <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>
       <% end %>
     </ul>
+
   </aside
-  ><div class="column column--two-thirds">
+  ><div class="column column--three-fourths column--guttered">
 
-    <div class="profile-image">
-      <h2><%= @current_seller.name %></h2>
-      <% if @current_seller.photo.present? %>
-        <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo" %>
-      <% end %>
+    <h1><%= @current_seller.name %></h1>
+
+    <div class="row">
+
+      <div class="column column--half">
+
+        <div class="who-story">
+          <h2>Who We Are</h2>
+          <%= @current_seller.who_story %>
+        </div>
+        <div class="how-story">
+          <h2>How We Do It</h2>
+          <%= @current_seller.how_story %>
+        </div>
+
+      </div
+      ><div class="column column--half">
+        <div class="profile-image">
+          <% if @current_seller.photo.present? %>
+            <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo" %>
+          <% end %>
+        </div>
+
+        <div class="map">
+          <img alt="map" src="<%= @current_seller.locations_map %>">
+        </div>
+      </div>
     </div>
 
-    <div class="map">
-      <img alt="map" src="<%= @current_seller.locations_map %>">
-    </div>
-
-    <div class="who-story">
-      <h2>Who We Are</h2>
-      <%= @current_seller.who_story %>
-    </div>
-    <div class="how-story">
-      <h2>How We Do It</h2>
-      <%= @current_seller.how_story %>
-    </div>
 
     <h2>Currently Selling</h2>
     <% @categories.each do |category| %>
