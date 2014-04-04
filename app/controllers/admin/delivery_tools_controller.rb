@@ -1,5 +1,5 @@
 class Admin::DeliveryToolsController < AdminController
-  def index
+  def show
     @upcoming_deliveries = if current_user.market_manager? || current_user.admin?
       current_market.deliveries.future.with_orders.order("deliver_on")
     else
