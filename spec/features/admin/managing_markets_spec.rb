@@ -38,38 +38,36 @@ describe "Admin Managing Markets" do
       visit '/admin/markets'
       click_link market1.name
 
-      expect(page).to have_text('Jill Smith')
-
-      click_link 'Edit Market'
+      expect(find_field("market_contact_name").value).to eq('Jill Smith')
 
       fill_in 'Contact name', with: 'Jane Smith'
 
       click_button 'Update Market'
 
-      expect(page).to have_text('Edit Market')
-      expect(page).to have_text('Jane Smith')
+      expect(page).to have_text('Market Information')
+      expect(find_field("market_contact_name").value).to eq('Jane Smith')
     end
 
     it 'I can activate a market' do
       market1.update_attribute(:active, true)
 
-      visit "/admin/markets/#{market1.id}"
+      visit "/admin/markets/#{market1.id}/edit"
 
-      expect(page).to have_text('Active? Yes')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq('false')
 
       click_button 'Deactivate'
 
-      expect(page).to have_text('Active? No')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq('true')
     end
 
     it 'I can deactivate a market' do
-      visit "/admin/markets/#{market1.id}"
+      visit "/admin/markets/#{market1.id}/edit"
 
-      expect(page).to have_text('Active? No')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq('true')
 
       click_button 'Activate'
 
-      expect(page).to have_text('Active? Yes')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq('false')
     end
 
     it 'I can not add a market' do
@@ -165,42 +163,40 @@ describe "Admin Managing Markets" do
       visit '/admin/markets'
       click_link market.name
 
-      expect(page).to have_text('Jill Smith')
-
-      click_link 'Edit Market'
+      expect(find_field("market_contact_name").value).to eq('Jill Smith')
 
       fill_in 'Contact name', with: 'Jane Smith'
 
       click_button 'Update Market'
 
-      expect(page).to have_text('Edit Market')
-      expect(page).to have_text('Jane Smith')
+      expect(page).to have_text('Market Information')
+      expect(find_field("market_contact_name").value).to eq('Jane Smith')
     end
 
     it 'can mark an active market as inactive' do
       market.update_attribute(:active, true)
 
-      visit "/admin/markets/#{market.id}"
+      visit "/admin/markets/#{market.id}/edit"
 
-      expect(page).to have_text('Active? Yes')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq('false')
 
       click_button 'Deactivate'
 
-      expect(page).to have_text('Active? No')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq('true')
     end
 
     it 'can mark an inactive market as active' do
-      visit "/admin/markets/#{market.id}"
+      visit "/admin/markets/#{market.id}/edit"
 
-      expect(page).to have_text('Active? No')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq('true')
 
       click_button 'Activate'
 
-      expect(page).to have_text('Active? Yes')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq('false')
     end
 
     it 'can update the market fee structure' do
-      visit "/admin/markets/#{market.id}"
+      visit "/admin/markets/#{market.id}/edit"
       click_link "Fees"
 
       fill_in 'Local Orbit % paid by seller',   with: '2.0'
