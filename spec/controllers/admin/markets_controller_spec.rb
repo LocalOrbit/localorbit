@@ -30,7 +30,7 @@ describe Admin::MarketsController do
           allow(RegisterMarket).to receive(:perform) { double("Results", success?: true, market: market) }
 
           post :create
-          expect(response).to redirect_to(admin_market_path(market))
+          expect(response).to redirect_to(edit_admin_market_path(market))
         end
       end
 
