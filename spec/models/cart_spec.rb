@@ -49,6 +49,12 @@ describe Cart do
       it "returns $1.50" do
         expect(cart.delivery_fees).to eq(1.50)
       end
+
+      it "returns 0 if fee is nil" do
+        delivery_schedule.fee = nil
+
+        expect(cart.delivery_fees).to eq(0)
+      end
     end
 
     context "dollar amount" do
