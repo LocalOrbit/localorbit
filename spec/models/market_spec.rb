@@ -38,6 +38,14 @@ describe Market do
         expect(market).to_not be_valid
         expect(market).to have(1).error_on(:subdomain)
       end
+      
+      it "cannot be a reserved name" do
+        market = build(:market)
+        market.subdomain = "app"
+
+        expect(market).to_not be_valid
+        expect(market).to have(1).error_on(:subdomain)
+      end
     end
 
     it 'tagline can be at most 255 characters' do
