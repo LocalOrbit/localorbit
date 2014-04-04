@@ -68,7 +68,7 @@ class ApplicationController < ActionController::Base
   end
 
   def on_main_domain?
-    request.host == Figaro.env.domain
+    request.host == Figaro.env.domain || request.host == "app.#{Figaro.env.domain}"
   end
 
   def current_delivery

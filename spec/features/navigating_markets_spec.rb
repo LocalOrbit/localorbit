@@ -11,15 +11,22 @@ feature "A user navagating markets" do
       expect(page).to have_content("Please Sign In")
       expect(page).to have_css("img[src='/assets/logo.png']")
     end
+    
+    scenario "a visitor sees the 'app' domain" do
+      switch_to_subdomain "app"
+      visit '/'
+      expect(page).to have_content("Please Sign In")
+      expect(page).to have_css("img[src='/assets/logo.png']")
+    end
 
-    scenario "a visitor to a non-existant subdomain is redirected to the base domain" do
+    scenario "a visitor to a non-existant subdomain is redirected to the 'app' domain" do
       switch_to_subdomain "not-real-ever"
       visit '/'
       host = URI.parse(page.current_host).host
-      expect(host).to eq(Figaro.env.domain)
+      expect(host).to eq("app.#{Figaro.env.domain}")
     end
 
-    scenario "a visitor to a subdomain sees the sign in page" do
+    scenario "a visitor to a market subdomain sees the sign in page" do
       market = create(:market, :with_logo)
       switch_to_subdomain market.subdomain
       visit '/'
