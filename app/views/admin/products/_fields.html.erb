@@ -111,6 +111,24 @@
 
 </fieldset>
 
+<fieldset>
+  <h2>Delivery Times</h2>
+  <div class="field">
+    <%= f.check_box :use_all_deliveries %>
+    <%= f.label :use_all_deliveries, "Make product available on all market delivery dates" %>
+  </div>
+  <ul>
+    <% current_market.delivery_schedules.visible.order(:day).each do |ds| %>
+      <li class="product-delivery-schedule">
+        <label>
+        <%= check_box_tag "product[delivery_schedule_ids][]", ds.id, ds.decorate.attached_to_product(@product), disabled: @product.use_all_deliveries? %>
+          <span class="weekday"><%= ds.weekday.pluralize %></span> <%= ds.decorate.human_description %>
+        </label>
+      </li>
+    <% end %>
+  </ul>
+</fieldset>
+
 <% if @product.lots.count < 1 %>
 <p class="form-footer">
   At this point your product is complete but won't be listed until you have added inventory and set pricing.

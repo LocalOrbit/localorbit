@@ -8,6 +8,7 @@ describe "Removing items" do
   let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms") }
 
   let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms]) }
+
   let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
   let(:delivery_day) { DateTime.parse("May 9, 2014, 11:00:00") }
   let(:delivery) {
@@ -19,13 +20,13 @@ describe "Removing items" do
   }
 
   # Fulton St. Farms
-  let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms) }
+  let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms, delivery_schedules: [delivery_schedule]) }
   let!(:bananas_lot) { create(:lot, product: bananas, quantity: 100) }
   let!(:bananas_price_buyer_base) {
     create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
   }
 
-  let!(:kale) { create(:product, :sellable, name: "Kale", organization: fulton_farms) }
+  let!(:kale) { create(:product, :sellable, name: "Kale", organization: fulton_farms, delivery_schedules: [delivery_schedule]) }
   let!(:kale_lot) { kale.lots.first.update_attribute(:quantity, 100) }
   let!(:kale_price_tier1) {
     create(:price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
@@ -36,10 +37,10 @@ describe "Removing items" do
   }
 
   # Ada Farms
-  let!(:potatoes) { create(:product, :sellable, name: "Potatoes", organization: ada_farms) }
+  let!(:potatoes) { create(:product, :sellable, name: "Potatoes", organization: ada_farms, delivery_schedules: [delivery_schedule]) }
   let!(:pototoes_lot) { create(:lot, product: potatoes, quantity: 100) }
 
-  let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms) }
+  let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms, delivery_schedules: [delivery_schedule]) }
 
   let!(:cart) { create(:cart, market: market, organization: buyer, location: buyer.locations.first, delivery: delivery) }
   let!(:cart_bananas) { create(:cart_item, cart: cart, product: bananas, quantity: 10) }

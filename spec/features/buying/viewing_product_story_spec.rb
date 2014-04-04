@@ -1,21 +1,23 @@
 require "spec_helper"
 
 feature "View a products story", js: true do
-  let!(:org1)      { create(:organization, :single_location, name: "Funny Farm", who_story: "Chevy Chase", how_story: "Magic") }
   let!(:category1) { Category.find_by!(name: "Corn") }
   let!(:category2) { Category.find_by!(name: "Macintosh Apples") }
+  let!(:market) { create(:market, :with_delivery_schedule) }
+  let!(:delivery_schedule) { market.delivery_schedules.first }
 
-  let!(:product1) { create(:product, organization: org1, category: category1) }
+  let!(:org1)      { create(:organization, :single_location, markets: [market], name: "Funny Farm", who_story: "Chevy Chase", how_story: "Magic") }
+
+  let!(:product1) { create(:product, organization: org1, category: category1, delivery_schedules: [delivery_schedule]) }
   let!(:price1)   { create(:price, product: product1) }
   let!(:lot1)     { create(:lot, product: product1) }
-  let!(:product2) { create(:product, organization: org1, category: category2, who_story: "Dan Akroid", how_story: "Science", location: org1.locations.first) }
+
+  let!(:product2) { create(:product, organization: org1, category: category2, delivery_schedules: [delivery_schedule], who_story: "Dan Akroid", how_story: "Science", location: org1.locations.first) }
   let!(:price2)   { create(:price, product: product2) }
   let!(:lot2)     { create(:lot, product: product2) }
 
-  let!(:buyer_org) { create(:organization, :single_location, :buyer) }
+  let!(:buyer_org) { create(:organization, :single_location, :buyer, markets: [market]) }
   let!(:user)      { create(:user, organizations: [buyer_org]) }
-
-  let!(:market) { create(:market, :with_delivery_schedule, organizations: [org1, buyer_org]) }
 
   before do
     switch_to_subdomain market.subdomain

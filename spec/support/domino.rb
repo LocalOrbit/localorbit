@@ -326,6 +326,28 @@ module Dom
       end
     end
 
+    class ProductDelivery < Domino
+      selector ".product-delivery-schedule"
+
+      attribute :weekday
+
+      def description
+        node.find("label").text
+      end
+
+      def checked?
+        node.find("input").checked? || false
+      end
+
+      def check!
+        node.find("input").set(true)
+      end
+
+      def uncheck!
+        node.find("input").set(false)
+      end
+    end
+
     class LocationForm < Domino
       selector ".edit_location, .new_location"
 

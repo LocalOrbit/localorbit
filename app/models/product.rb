@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
   include SoftDelete
 
+
   belongs_to :category
   belongs_to :top_level_category, class: Category
   belongs_to :organization
@@ -10,6 +11,8 @@ class Product < ActiveRecord::Base
   has_many :lots, lambda { order('created_at') }, inverse_of: :product, autosave: true
   has_many :lots_by_expiration, lambda { order('expires_at, good_from, created_at') }, class_name: Lot, foreign_key: :product_id
 
+  has_many :product_deliveries
+  has_many :delivery_schedules, through: :product_deliveries
   has_many :prices, autosave: true, inverse_of: :product
 
   dragonfly_accessor :image
@@ -30,6 +33,7 @@ class Product < ActiveRecord::Base
   scope_accessible :category, method: :for_category_id, ignore_blank: true
 
   before_save :update_top_level_category
+  before_save :update_delivery_schedules, if: "use_all_deliveries?"
 
   def self.available_for_market(market)
     return none unless market
@@ -38,7 +42,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.available_for_sale(market, buyer = nil)
-    available_for_market(market).
+    visible.seller_can_sell.
       joins(:lots, :prices).select('DISTINCT(products.*)').
       where('(lots.good_from IS NULL OR lots.good_from < :now) AND (lots.expires_at IS NULL OR lots.expires_at > :now) AND quantity > 0', now: Time.current).
       where('prices.market_id = ? OR prices.market_id IS NULL', market.id).
@@ -130,5 +134,11 @@ class Product < ActiveRecord::Base
 
   def overrides_organization?
     who_story.present? || how_story.present?
+  end
+
+  def update_delivery_schedules
+    self.delivery_schedule_ids = organization.markets.map do |market|
+      market.delivery_schedules.visible.map(&:id)
+    end.flatten
   end
 end

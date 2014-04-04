@@ -4,28 +4,34 @@ feature "Filtering Products List" do
   let!(:org1) { create(:organization, name: "Schrute Farms") }
   let!(:org2) { create(:organization, name: "Funny Farm") }
   let!(:org3) { create(:organization, name: "Abandoned Farm") }
+  let!(:buyer_org) { create(:organization, :single_location, :buyer) }
+
+  let!(:market) { create(:market, :with_addresses, :with_delivery_schedule, organizations: [org1, org2, buyer_org]) }
+
+  let!(:delivery_schedule) { market.delivery_schedules.first }
+
   let(:category1) { Category.find_by!(name: "Corn") }
   let(:category2) { Category.find_by!(name: "Macintosh Apples") }
   let(:category3) { Category.find_by!(name: "Vegetable Juice") }
 
-  let!(:product1) { create(:product, organization: org1, category: category1) }
+  let!(:product1) { create(:product, organization: org1, category: category1, delivery_schedules: [delivery_schedule]) }
   let!(:price1)   { create(:price, product: product1) }
   let!(:lot1)     { create(:lot, product: product1) }
-  let!(:product2) { create(:product, organization: org1, category: category2) }
+  let!(:product2) { create(:product, organization: org1, category: category2, delivery_schedules: [delivery_schedule]) }
   let!(:price2)   { create(:price, product: product2) }
   let!(:lot2)     { create(:lot, product: product2) }
 
-  let!(:product3) { create(:product, organization: org2, category: category1) }
+  let!(:product3) { create(:product, organization: org2, category: category1, delivery_schedules: [delivery_schedule]) }
   let!(:price3)   { create(:price, product: product3) }
   let!(:lot3)     { create(:lot, product: product3) }
-  let!(:product4) { create(:product, organization: org2, category: category2) }
+  let!(:product4) { create(:product, organization: org2, category: category2, delivery_schedules: [delivery_schedule]) }
   let!(:price4)   { create(:price, product: product4) }
   let!(:lot4)     { create(:lot, product: product4) }
 
-  let!(:buyer_org) { create(:organization, :single_location, :buyer) }
+
   let!(:user) { create(:user, organizations: [buyer_org]) }
 
-  let!(:market) { create(:market, :with_addresses, :with_delivery_schedule, organizations: [org1, org2, org3, buyer_org]) }
+
 
   before do
     switch_to_subdomain market.subdomain

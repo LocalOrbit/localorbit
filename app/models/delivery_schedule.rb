@@ -9,6 +9,8 @@ class DeliverySchedule < ActiveRecord::Base
   belongs_to :buyer_pickup_location,       class: MarketAddress
 
   has_many :deliveries
+  has_many :product_deliveries
+  has_many :products, through: :product_deliveries
 
   validates :day,          presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 6,   allow_nil: true}
   validates :order_cutoff, presence: true, numericality: {greater_than_or_equal_to: 6, less_than_or_equal_to: 504, allow_nil: true}

@@ -18,13 +18,17 @@ end
 
 describe "Adding a product" do
   let(:user) { create(:user) }
-  let(:org) { create(:organization, :seller) }
+  let(:market) { create(:market, :with_addresses) }
+  let(:org) { create(:organization, :seller, markets: [market]) }
   let(:loc1) {create(:location) }
   let(:stub_warning_pricing) {"Your product will not appear in the Shop until you add pricing"}
   let(:stub_warning_inventory) {"Your product will not appear in the Shop until you add inventory"}
   let(:stub_warning_both) {"Your product will not appear in the Shop until you add inventory, and add pricing"}
-  let(:organization_label) { "Seller Organization" }
-  let(:market) { create(:market, organizations: [org]) }
+  let(:organization_label) { "Product Organization" }
+
+  let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1) }
+  let!(:tuesdays_schedule) { create(:delivery_schedule, market: market, day: 2) }
+  let!(:deleted_schedule) { create(:delivery_schedule, market: market, day: 2, deleted_at: Time.current) }
 
   before do
     Unit.create! singular: "Pound", plural: "Pounds"
@@ -56,6 +60,16 @@ describe "Adding a product" do
 
       expect(simple_inventory_checkbox).to be_checked
       expect(inventory_quantity.value).to eql("0")
+    end
+
+    it "defaults to using all delivery schedules" do
+      within '#admin-nav' do
+        click_link 'Products'
+      end
+
+      click_link "Add New Product"
+
+      expect(find_field("Make product available on all market delivery dates")).to be_checked
     end
 
     context "filling in who/where/how", js: true, chosen_js: true do
@@ -314,6 +328,63 @@ describe "Adding a product" do
         lot_rows = Dom::LotRow.all
         expect(lot_rows.count).to eq(0)
       end
+
+      it "selects all delivery schedules by default" do
+        within '#admin-nav' do
+          click_link 'Products'
+        end
+        click_link "Add New Product"
+
+        expect(page).to_not have_content(stub_warning_both)
+        expect(page).to_not have_content(organization_label)
+
+        fill_in_required_fields(:with_chosen)
+
+        select_from_chosen "Bushels", from: "Unit"
+        fill_in "Long description", with: "There are many kinds of apples."
+
+        fill_in "Current inventory", with: "12"
+
+        click_button "Add Product"
+
+        expect(page).to have_content("Added Red Grapes")
+
+        click_link "Product Info"
+
+        expect(Dom::Admin::ProductDelivery.count).to eql(2)
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
+      end
+
+      it "allows the user to select delivery schedules" do
+        within '#admin-nav' do
+          click_link 'Products'
+        end
+        click_link "Add New Product"
+
+        expect(page).to_not have_content(stub_warning_both)
+        expect(page).to_not have_content(organization_label)
+
+        fill_in_required_fields(:with_chosen)
+
+        select_from_chosen "Bushels", from: "Unit"
+        fill_in "Long description", with: "There are many kinds of apples."
+
+        fill_in "Current inventory", with: "12"
+
+        uncheck "Make product available on all market delivery dates"
+        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
+
+        click_button "Add Product"
+
+        expect(page).to have_content("Added Red Grapes")
+
+        click_link "Product Info"
+
+        expect(Dom::Admin::ProductDelivery.count).to eql(2)
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+      end
     end
 
     context "when the product information is invalid", js: true do
@@ -417,7 +488,8 @@ describe "Adding a product" do
     context "when product information is valid" do
       it "makes the user choose an organization to add the product for" do
         expect(page).to_not have_content(stub_warning_both)
-        select org2.name, from: organization_label
+      
+        select org2.name, from: "Seller Organization"
         fill_in_required_fields
 
         click_button "Add Product"
@@ -457,7 +529,7 @@ describe "Adding a product" do
 
     it "makes the user choose an organization to add the product for" do
       expect(page).to_not have_content(stub_warning_both)
-      select org2.name, from: organization_label
+      select org2.name, from: "Seller Organization"
       fill_in_required_fields
 
       click_button "Add Product"

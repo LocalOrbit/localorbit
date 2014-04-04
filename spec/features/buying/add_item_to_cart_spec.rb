@@ -3,14 +3,13 @@ require "spec_helper"
 describe "Add item to cart", js: true do
   let(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
-
   let!(:seller) {create(:organization, :seller, :single_location) }
 
   let(:market) { create(:market, :with_addresses, organizations: [buyer, seller]) }
   let!(:delivery) { create(:delivery_schedule, market: market) }
 
   # Products
-  let(:bananas) { create(:product, name: "Bananas", organization: seller) }
+  let(:bananas) { create(:product, name: "Bananas", organization: seller, delivery_schedules: [delivery]) }
   let!(:bananas_lot) { create(:lot, product: bananas) }
   let!(:bananas_price_buyer_base) {
     create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer)
@@ -20,7 +19,7 @@ describe "Add item to cart", js: true do
     create(:price, market: market, product: bananas, min_quantity: 1)
   }
 
-  let(:kale) { create(:product, name: "Kale", organization: seller) }
+  let(:kale) { create(:product, name: "Kale", organization: seller, delivery_schedules: [delivery]) }
   let!(:kale_lot) { create(:lot, product: kale) }
   let!(:kale_price_buyer_base) {
     create(:price, market: market, product: kale, min_quantity: 1)
@@ -117,7 +116,7 @@ describe "Add item to cart", js: true do
   end
 
   context "purchasing less product than required minimum" do
-    let(:tomatoes) { create(:product, name: "Tomatoes", organization: seller) }
+    let(:tomatoes) { create(:product, name: "Tomatoes", organization: seller, delivery_schedules: [delivery]) }
     let!(:tomatoes_lot) { create(:lot, product: tomatoes) }
     let!(:tomatoes_price_buyer_base) {
       create(:price, market: market, product: tomatoes, min_quantity: 5)

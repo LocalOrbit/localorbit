@@ -52,7 +52,8 @@ module Admin
         :name, :image, :category_id, :unit_id, :location_id,
         :short_description, :long_description,
         :who_story, :how_story,
-        :use_simple_inventory, :simple_inventory,
+        :use_simple_inventory, :simple_inventory, :use_all_deliveries,
+        :delivery_schedule_ids => []
       )
     end
 

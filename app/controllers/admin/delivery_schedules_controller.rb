@@ -14,6 +14,8 @@ module Admin
     def create
       @delivery_schedule = @market.delivery_schedules.build(delivery_schedule_params)
       if @delivery_schedule.save
+        AddDeliveryScheduleToProducts.perform(delivery_schedule: @delivery_schedule, market: @market)
+
         redirect_to [:admin, @market, :delivery_schedules], notice: 'Saved delivery schedule.'
       else
         render :new

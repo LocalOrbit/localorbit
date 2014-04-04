@@ -47,35 +47,14 @@ describe Product do
     end
   end
 
-  describe ".available_for_market" do
-    let(:product1) { create(:product) }
-    let(:product2) { create(:product) }
-    let(:product3) { create(:product) }
-
-    let(:market) { double("Market", organization_ids: [product1.organization_id, product2.organization_id]) }
-
-    it "returns products in the user's market" do
-      expect(Product.available_for_market(market)).to match_array([product1, product2])
-    end
-
-    it "returns empty active record relation if market is nil" do
-      results = Product.available_for_market(nil)
-
-      expect(results).to be_a(ActiveRecord::Relation)
-      expect(results).to be_empty
-    end
-  end
-
   describe ".available_for_sale" do
     let(:market)      { create(:market) }
     let(:market2)     { create(:market) }
     let(:org_in)      { create(:organization, markets: [market]) }
-    let(:org_out)     { create(:organization) }
     let(:buyer)       { create(:organization, markets: [market]) }
     let(:other_buyer) { create(:organization, markets: [market]) }
 
     let(:product_in)                    { create(:product, organization: org_in) }
-    let(:product_out)                   { create(:product, organization: org_out) }
     let(:product_in_no_price)           { create(:product, organization: org_in) }
     let(:product_in_no_lot)             { create(:product, organization: org_in) }
     let(:product_in_other_buyer_price)  { create(:product, organization: org_in) }
@@ -84,14 +63,12 @@ describe Product do
 
     before do
       create(:price, product: product_in)
-      create(:price, product: product_out)
       create(:price, product: product_in_no_lot)
       create(:price, product: product_in_other_buyer_price, organization: other_buyer)
       create(:price, product: product_in_other_market_price, market: market2)
       create(:price, product: product_in_for_buyer, organization: buyer)
 
       create(:lot, product: product_in)
-      create(:lot, product: product_out)
       create(:lot, product: product_in_no_price)
       create(:lot, product: product_in_other_buyer_price)
       create(:lot, product: product_in_other_market_price)

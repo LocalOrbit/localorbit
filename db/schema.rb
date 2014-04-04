@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140401185222) do
+ActiveRecord::Schema.define(version: 20140403183152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,6 +277,11 @@ ActiveRecord::Schema.define(version: 20140401185222) do
   add_index "prices", ["organization_id"], name: "index_prices_on_organization_id", using: :btree
   add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
 
+  create_table "product_deliveries", force: true do |t|
+    t.integer "product_id"
+    t.integer "delivery_schedule_id"
+  end
+
   create_table "products", force: true do |t|
     t.text     "name"
     t.integer  "category_id"
@@ -293,6 +298,7 @@ ActiveRecord::Schema.define(version: 20140401185222) do
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"
+    t.boolean  "use_all_deliveries",    default: true
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
