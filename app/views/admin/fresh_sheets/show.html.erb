@@ -4,7 +4,7 @@
       <h1>Fresh Sheet Preview</h1>
       <%= form_tag [:admin, :fresh_sheet], method: :put, class: "l-page-header" do %>
         <div class="field field--inline">
-          <input type="email" placeholder="Email address" class="input--short" value="<%= current_user.email %>">
+          <input name="email" type="email" placeholder="Email address" class="input--short" value="<%= current_user.email %>">
           <%= submit_tag 'Send Test', class: "btn btn--small btn--test" %>
         </div>
         <%= submit_tag 'Send to Everyone Now', class: "btn btn--small pull-right", data: {confirm: "Are you ready to send the Fresh Sheet?"} %>
