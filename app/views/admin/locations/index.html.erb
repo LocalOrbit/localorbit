@@ -5,7 +5,7 @@
       <%= link_to "Add New Address", new_admin_organization_location_path(@organization), class: "btn btn--add btn--small pull-right" %>
 
     <%= form_tag admin_organization_locations_path(@organization), method: :delete, class: "clear-before", id: "edit_addresses" do %>
-      <%= submit_tag "Delete Checked", class: "delete delete-selected is-invisible" %>
+      <%= submit_tag "Delete Selected", class: "delete delete-selected is-invisible" %>
 
       <table class="sortable">
         <thead>

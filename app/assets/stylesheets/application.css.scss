@@ -30,8 +30,12 @@ body {
 }
 
 a {
-  color: #4162A1;
+  color: #1769C2;
   text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 
   img {
     border: 0;

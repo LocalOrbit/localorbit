@@ -152,7 +152,7 @@ describe "admin manange organization" do
       expect(locations.size).to eq(2)
 
       first(".check-all").set(true)
-      click_button "Delete Checked"
+      click_button "Delete Selected"
 
       expect(Dom::Admin::OrganizationLocation.count).to eq(0)
       expect(page).to have_content("Successfully removed the address(es) #{location_2.name} and #{location_1.name}")

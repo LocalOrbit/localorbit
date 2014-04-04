@@ -1,37 +1,76 @@
-<div class="devise-forms">
-  <h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="devise-forms row row--partial">
 
-  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "column column--two-thirds" }) do |f| %>
+    <h1>Editing User<%= ": #{@user.name}" if @user.name.present? %></h1>
+
+
     <%= devise_error_messages! %>
 
-    <div><%= f.label :name %><br />
-    <%= f.email_field :name, :autofocus => true %></div>
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name, class: "column--full" %>
+    </div>
 
-    <div><%= f.label :email %><br />
-    <%= f.email_field :email %></div>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :email %><br>
+        <%= f.email_field :email, class: "column--full" %>
+      </div>
+    </div>
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
 
-    <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, :autocomplete => "off" %></div>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :password, "New Password" %><br>
+        <%= f.password_field :password, :autocomplete => "off", class: "column--full" %>
+      </div
+      ><div class="field column column--half column--guttered">
+        <%= f.label :password_confirmation, "Confirm Password" %><br>
+        <%= f.password_field :password_confirmation, class: "column--full" %>
+      </div>
+    </div>
 
-    <div><%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %></div>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :current_password %><br> 
+        <%= f.password_field :current_password, class: "column--full" %>
+      </div><br>
+      <span class="note clear-before">(we need your current password to confirm your changes)</span>
+    </div>
 
-    <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password %></div>
+    <table class="sortable">
+      <thead>
+        <tr>
+          <th>Market</th>
+          <th>Organization</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <% resource.managed_markets.each do |market| %>
+        <tr>
+          <td><%= market.name %></td>
+          <td><%= market.organizations.pluck(:name).to_sentence %></td>
+          <td>Market Manager</td>
+        </tr>
+      <% end %>
 
-    <div><%= f.submit "Update" %></div>
+      <% resource.organizations.each do |organization| %>
+      <tr>
+        <td><%= organization.markets.pluck(:name).to_sentence %></td>
+        <td><%= organization.name %></td>
+        <td><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
+      </tr>
+      <% end %>
+    </table>
+
+    <div class="form-actions">
+      <%= link_to "Clear Changes", edit_user_registration_path, class: "btn cancel" %>
+      <%= f.submit "Save Changes" %>
+    </div>
+
   <% end %>
 
-  <ul>
-    <% resource.managed_markets.each do |market| %>
-      <li><%= market.name %>, Market Manager</li>
-    <% end %>
-    <% resource.organizations.each do |organization| %>
-      <li><%= organization.markets.pluck(:name).to_sentence %>: <%= organization.name %>, <%= organization.can_sell? ? "Seller" : "Buyer" %></li>
-    <% end %>
-  </ul>
 </div>

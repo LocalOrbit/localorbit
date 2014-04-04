@@ -3,8 +3,8 @@
 <div class="row row--partial">
   <div class="column column--three-fourths">
     <%= form_for [:admin, @organization, User.new], html: { class: "form-actions" } do |f|%>
-      <%= f.email_field :email, placeholder: "Email" %>
-      <%= f.submit "Invite a new member" %>
+      <%= f.email_field :email, placeholder: "Email address" %>
+      <button type="submit" class="btn--add btn--small">Invite New User</button>
     <% end %>
 
     <table class="sortable">

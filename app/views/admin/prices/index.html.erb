@@ -70,7 +70,8 @@
       </p>
     <% end %>
     <div class="form-actions">
-    <%= link_to "Add Another product", new_admin_product_path, class: "btn btn--add" if @product.prices.view_sorted.none? %>
+      <p class="action-helper">Now that pricing is complete <%= link_to "return to product list", admin_products_path %> or <%= link_to "Add Another Product", new_admin_product_path, class: "btn btn--add btn--small" %></p>
+
     </div>
   </div>
 <% end # form %>

@@ -10,10 +10,10 @@ feature "A user can edit their account" do
 
     fill_in "Name", with: "Amy Body"
     fill_in "Email", with: "amy@example.com"
-    fill_in "Password", with: "abcd1234"
-    fill_in "Password confirmation", with: "abcd1234"
+    fill_in "Password", match: :first, with: "abcd1234"
+    fill_in "Confirm Password", with: "abcd1234"
     fill_in "Current password", with: "password"
-    click_button "Update"
+    click_button "Save Changes"
 
     expect(page).to have_content("You updated your account successfully")
     user.reload

@@ -134,7 +134,7 @@ describe "Adding a product" do
         check "seller_info"
         expect(page.find('.seller_info_fields', visible: false)).to_not be_visible
 
-        click_button "Add Product"
+        click_button "Save and Continue"
 
         click_link "Product Info"
 
@@ -161,7 +161,7 @@ describe "Adding a product" do
         expect(page).to have_content("Who")
 
         fill_in "product_who_story", with: "We sell other stuff"
-        click_button "Add Product"
+        click_button "Save and Continue"
 
         expect(page).not_to have_content("Location can't be blank")
         expect(product_form.selected_location).to eq(org.locations.default_shipping.to_param)
@@ -178,7 +178,7 @@ describe "Adding a product" do
         fill_in "Product Name", with: "Red Grapes"
         attach_file("Image", 'app/assets/images/backgrounds/kale.jpg')
 
-        click_button "Add Product"
+        click_button "Save and Continue"
         expect(page).to have_css("img[alt='Red Grapes']")
       end
     end
@@ -194,7 +194,7 @@ describe "Adding a product" do
         select_from_chosen "Pounds", from: "Unit"
         fill_in("Current inventory", with: 33)
 
-        click_button "Add Product"
+        click_button "Save and Continue"
         expect(page).to have_content("Added Red Grapes")
 
         click_link "Product Info"
@@ -259,7 +259,7 @@ describe "Adding a product" do
         fill_in "Short description", with: "Apples are yummy!"
         select_from_chosen "Pound", from: "Unit"
 
-        click_button "Add Product"
+        click_button "Save and Continue"
         expect(page).to have_content("Added Red Grapes")
 
         click_link "Product Info"
@@ -317,7 +317,7 @@ describe "Adding a product" do
         fill_in "Who", with: "The farmers down the road."
         fill_in "How", with: "With water, earth, and time."
 
-        click_button "Add Product"
+        click_button "Save and Continue"
 
         expect(page).to have_content("Added Red Grapes")
 
@@ -345,7 +345,7 @@ describe "Adding a product" do
 
         fill_in "Current inventory", with: "12"
 
-        click_button "Add Product"
+        click_button "Save and Continue"
 
         expect(page).to have_content("Added Red Grapes")
 
@@ -375,7 +375,7 @@ describe "Adding a product" do
         uncheck "Make product available on all market delivery dates"
         Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
 
-        click_button "Add Product"
+        click_button "Save and Continue"
 
         expect(page).to have_content("Added Red Grapes")
 
@@ -397,7 +397,7 @@ describe "Adding a product" do
         expect(page).to have_content("Current inventory")
         uncheck 'Use simple inventory management'
 
-        click_button "Add Product"
+        click_button "Save and Continue"
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Category can't be blank")
         expect(page).to_not have_content("Current inventory")
@@ -492,7 +492,7 @@ describe "Adding a product" do
         select org2.name, from: "Seller Organization"
         fill_in_required_fields
 
-        click_button "Add Product"
+        click_button "Save and Continue"
 
         expect(page).to have_content("Added Red Grapes")
         expect(page).to have_content(stub_warning_pricing)
@@ -505,7 +505,7 @@ describe "Adding a product" do
         fill_in "Product Name", with: "Macintosh Apples"
         select "Apples / Macintosh Apples", from: "Category"
 
-        click_button "Add Product"
+        click_button "Save and Continue"
         expect(page).to have_content("Organization can't be blank")
       end
     end
@@ -532,7 +532,7 @@ describe "Adding a product" do
       select org2.name, from: "Seller Organization"
       fill_in_required_fields
 
-      click_button "Add Product"
+      click_button "Save and Continue"
 
       expect(page).to have_content("Added Red Grapes")
       expect(page).to have_content(stub_warning_pricing)
