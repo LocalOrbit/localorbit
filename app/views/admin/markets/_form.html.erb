@@ -1,52 +1,65 @@
-<div class="field">
-  <%= f.label :name %><br>
-  <%= f.text_field :name, class: "column--three-fourths" %>
-</div>
-<div class="field">
-  <%= f.label :subdomain %><br>
-  <%= f.text_field :subdomain %>
-</div>
-<div class="field">
-  <%= f.label :logo %><br>
-  <%= f.file_field :logo %>
-</div>
-<div class="field">
-  <%= f.label :tagline %><br>
-  <%= f.text_field :tagline %>
-</div>
-<div class="field">
-  <%= f.label :timezone %><br>
-  <%= f.time_zone_select :timezone, ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)" %>
-</div>
-<div class="field">
-  <%= f.label :contact_name %><br>
-  <%= f.text_field :contact_name, class: "column--three-fourths"  %>
-</div>
-<div class="field">
-  <%= f.label :contact_email %><br>
-  <%= f.text_field :contact_email %>
-</div>
-<div class="field">
-  <%= f.label :contact_phone %><br>
-  <%= f.text_field :contact_phone, size: 17 %>
-</div>
-<div class="field">
-  <%= f.label :facebook %><br>
-  <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
-</div>
-<div class="field">
-  <%= f.label :twitter %><br>
-  <span class="btn btn--start">@</span><%= f.text_field :twitter %>
-</div>
-<div class="field">
-  <%= f.label :profile %><br>
-  <%= f.text_area :profile, class: "column--three-fourths" %>
-</div>
-<div class="field">
-  <%= f.label :policies %><br>
-  <%= f.text_area :policies, class: "column--three-fourths"  %>
-</div>
-<div class="field">
-  <%= f.label :background %><br>
-  <%= f.select :background, background_options %>
-</div>
+<fieldset>
+  <legend>Market Information</legend>
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <%= f.label :name %><br>
+      <%= f.text_field :name, class: "column--full" %>
+    </div
+    ><div class="field column column--half column--guttered">
+      <%= f.label :subdomain %><br>
+      <%= f.text_field :subdomain, class: "column--full" %>
+    </div>
+  </div>
+
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <%= f.label :logo %><br>
+      <%= f.file_field :logo %>
+    </div
+    ><div class="field column column--half column--guttered">
+      <%= f.label :background %><br>
+      <%= f.select :background, background_options %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :tagline %><br>
+    <%= f.text_field :tagline, class: "column--full" %>
+  </div>
+  <div class="field">
+    <%= f.label :timezone %><br>
+    <%= f.time_zone_select :timezone, ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)" %>
+  </div>
+  <div class="field">
+    <%= f.label :contact_name %><br>
+    <%= f.text_field :contact_name, class: "column--full"  %>
+  </div>
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <%= f.label :contact_email %><br>
+      <%= f.text_field :contact_email, class: "column--full" %>
+    </div
+    ><div class="field column column--half column--guttered">
+      <%= f.label :contact_phone %><br>
+      <%= f.text_field :contact_phone, size: 18, class: "column--full" %>
+    </div>
+  </div>
+
+  <div class="field field--inline">
+    <%= f.label :facebook %><br>
+    <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
+  </div
+  ><div class="field field--inline">
+    <%= f.label :twitter %><br>
+    <span class="btn btn--start">@</span><%= f.text_field :twitter, maxlength: 15, size: 15 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :profile %><br>
+    <%= f.text_area :profile, rows: 4, class: "column--full" %>
+  </div>
+  <div class="field">
+    <%= f.label :policies %><br>
+    <%= f.text_area :policies, rows: 4, class: "column--full"  %>
+  </div>
+</fieldset>

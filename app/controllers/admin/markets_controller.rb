@@ -18,7 +18,7 @@ class Admin::MarketsController < AdminController
     results = RegisterMarket.perform(market_params: market_params)
 
     if results.success?
-      redirect_to [:admin, results.market]
+      redirect_to [:edit, :admin, results.market]
     else
       @market = results.market
       render :new
@@ -32,7 +32,7 @@ class Admin::MarketsController < AdminController
   def update
     @market = market_scope.find(params[:id])
     if @market.update_attributes(market_params)
-      redirect_to [:admin, @market]
+      redirect_to [:edit, :admin, @market]
     else
       render :edit
     end

@@ -1,23 +1,29 @@
-<div>
   <%= render 'admin/markets/header' %>
-  <%= link_to 'Add Manager', [:new, :admin, @market, :manager] %>
-</div>
 
-<table class="market-managers">
-  <thead>
-    <tr>
-      <th>Email</th>
-      <th></th>
-    </tr>
-  </thead>
-  <% @market.managers.each do |user| %>
-  <tr id="<%= dom_id(user) %>">
-    <td><%= user.email %></td>
-    <td>
-      <%= form_tag admin_market_manager_path(@market, user.id), {method: :delete} do %>
-        <%= submit_tag 'Remove Manager' %>
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+    <div class="l-page-header">
+      <%= link_to 'Add Manager', [:new, :admin, @market, :manager], class: "btn btn--add btn--small pull-right" %>
+    </div>
+    <table class="market-managers">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+      </thead>
+      <% @market.managers.each do |user| %>
+      <tr id="<%= dom_id(user) %>">
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td class="delete">
+          <%= form_tag admin_market_manager_path(@market, user.id), {method: :delete} do %>
+            <button class="delete" type="submit"><i class="font-icon icon-delete"></i> Remove Manager</button>
+          <% end %>
+        </td>
+      </tr>
       <% end %>
-    </td>
-  </tr>
-  <% end %>
-</table>
+    </table>
+  </div>
+</div>

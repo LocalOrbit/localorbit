@@ -1,9 +1,11 @@
-<h1>Add Market</h1>
+<div class="row row--partial">
+  <%= form_for [:admin, @market], html: { class: "column column--two-thirds" } do |f| %>
+    <h1>Add Market</h1>
+    <%= render 'form', {f: f} %>
 
-<%= form_for [:admin, @market] do |f| %>
-  <%= render 'form', {f: f} %>
-
-  <div>
-    <%= f.submit "Add Market" %>
-  </div>
-<% end %>
+    <div class="form-actions">
+      <%= link_to "Cancel", admin_markets_path, class: "btn cancel" %>
+      <%= f.submit "Add Market" %>
+    </div>
+  <% end %>
+</div>
