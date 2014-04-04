@@ -3,48 +3,62 @@
 <%= render 'shared/errors', resource: @market %>
 
 <div class="row row--partial">
-  <%= form_for @market, url: [:admin, @market, :fees], html: { class: "column column--half" } do |f| %>
-    <h2>Fees</h2>
+  <%= form_for @market, url: [:admin, @market, :fees], html: { class: "column column--two-thirds" } do |f| %>
 
-    <div class="field">
-      <%= f.label :local_orbit_seller_fee, "Local Orbit % paid by seller" %><br>
-      <%= f.number_field :local_orbit_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
-    </div>
+    <fieldset>
+      <legend>Local Orbit Fees</legend>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= f.label :local_orbit_seller_fee, "Local Orbit % paid by seller" %><br>
+          <%= f.number_field :local_orbit_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= f.label :local_orbit_market_fee, "Local Orbit % paid by market" %><br>
+          <%= f.number_field :local_orbit_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+        </div>
+      </div>
+    </fieldset>
 
-    <div class="field">
-      <%= f.label :local_orbit_market_fee, "Local Orbit % paid by market" %><br>
-      <%= f.number_field :local_orbit_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
-    </div>
+    <fieldset>
+      <legend>Market Fees</legend>
+      <div class="field">
+        <%= f.label :market_seller_fee, "Market % paid by seller" %><br>
+        <%= f.number_field :market_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+      </div>
+    </fieldset>
 
-    <div class="field">
-      <%= f.label :market_seller_fee, "Market % paid by seller" %><br>
-      <%= f.number_field :market_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
-    </div>
+    <fieldset>
+      <legend>Credit Card Fees</legend>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= f.label :credit_card_seller_fee, "Credit Card fee paid by seller" %><br>
+          <%= f.number_field :credit_card_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= f.label :credit_card_market_fee, "Credit Card fee paid by market" %><br>
+          <%= f.number_field :credit_card_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+        </div>
+      </div>
+    </fieldset>
 
-    <div class="field">
-      <%= f.label :credit_card_seller_fee, "Credit Card fee paid by seller" %><br>
-      <%= f.number_field :credit_card_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
-    </div>
+    <fieldset>
+      <legend>ACH Fees</legend>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <%= f.label :ach_seller_fee, "ACH fee paid by seller" %><br>
+          <%= f.number_field :ach_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+        </div
+        ><div class="field column column--half column--guttered">
+          <%= f.label :ach_market_fee, "ACH fee paid by market" %><br>
+          <%= f.number_field :ach_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
+        </div>
+      </div>
 
-    <div class="field">
-      <%= f.label :credit_card_market_fee, "Credit Card fee paid by market" %><br>
-      <%= f.number_field :credit_card_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
-    </div>
-
-    <div class="field">
-      <%= f.label :ach_seller_fee, "ACH fee paid by seller" %><br>
-      <%= f.number_field :ach_seller_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
-    </div>
-
-    <div class="field">
-      <%= f.label :ach_market_fee, "ACH fee paid by market" %><br>
-      <%= f.number_field :ach_market_fee, min: 0, max: 99.999, step: "0.001", size: 6 %>%
-    </div>
-
-    <div class="field">
-      <%= f.label :ach_fee_cap, "ACH fee cap" %><br>
-      $<%= f.number_field :ach_fee_cap, min: 0, max: 9999.99, step: "0.01", size: 6 %>
-    </div>
+      <div class="field">
+        <%= f.label :ach_fee_cap, "ACH fee cap" %><br>
+        $<%= f.number_field :ach_fee_cap, min: 0, max: 9999.99, step: "0.01", size: 6 %>
+      </div>
+    </fieldset>
 
     <div class="form-actions">
       <%= f.submit "Update Fees" %>
