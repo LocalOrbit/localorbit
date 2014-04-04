@@ -18,7 +18,7 @@ class Admin::MarketsController < AdminController
     results = RegisterMarket.perform(market_params: market_params)
 
     if results.success?
-      redirect_to [:admin, results.market]
+      redirect_to [:edit, :admin, results.market]
     else
       @market = results.market
       render :new

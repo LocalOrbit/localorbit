@@ -152,11 +152,10 @@ describe "Admin Managing Markets" do
 
       click_button 'Add Market'
 
-      expect(page).to have_text('Holland Farmers')
-      expect(page).to have_text('Dutch People, Dutch Prices!')
-      expect(page).to have_text('Jill Smith')
-      expect(page).to have_text('@hollandfarmers')
-      expect(page).to have_css("img[alt='Holland Farmers Logo']")
+      expect(find_field("Name").value).to eq('Holland Farmers')
+      expect(find_field("Tagline").value).to eq('Dutch People, Dutch Prices!')
+      expect(find_field("Contact name").value).to eq('Jill Smith')
+      expect(find_field("Twitter").value).to eq('hollandfarmers')
     end
 
     it 'can modify a market' do
