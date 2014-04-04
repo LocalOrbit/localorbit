@@ -27,11 +27,11 @@ unless market_manager.managed_markets.include?(market_manager)
 end
 
 delivery_schedule = DeliverySchedule.find_or_create_by!(
-  day: 2, 
-  order_cutoff: 6, 
+  day: 2,
+  order_cutoff: 6,
   seller_fulfillment_location_id: market.addresses.first.id,
   seller_delivery_start: "7:00 AM",
-  seller_delivery_end: "11:00 AM", 
+  seller_delivery_end: "11:00 AM",
   market_id: market.id,
   buyer_pickup_start: "12:00 PM",
   buyer_pickup_end: "3:00PM",
@@ -44,7 +44,7 @@ buy_org = Organization.find_or_create_by!(name: "Farm to Table Cafe") {|org|
   org.can_sell = false
 }
 
-buy_loc = Location.find_or_create_by!(name: "Downtown Location") {|loc| 
+buy_loc = Location.find_or_create_by!(name: "Downtown Location") {|loc|
   loc.address = "1234 Perl St."
   loc.city = "Grand Rapids"
   loc.state = "Michigan"
@@ -68,7 +68,7 @@ sell_org = Organization.find_or_create_by!(name: "Alto Valley Farms") {|org|
   org.can_sell = true
 }
 
-sell_loc = Location.find_or_create_by!(name: "Default Location") {|loc| 
+sell_loc = Location.find_or_create_by!(name: "Default Location") {|loc|
   loc.address = "32 Boynton Rd."
   loc.city = "Alto"
   loc.state = "Michigan"
@@ -81,6 +81,7 @@ product = Product.find_or_create_by!(name: "Grapes") {|prod|
   prod.name = "Grapes"
   prod.category_id = Category.last.id
   prod.organization_id = sell_org.id
+  prod.unit_id = Unit.last.id
 }
 
 price = Price.find_or_create_by!(

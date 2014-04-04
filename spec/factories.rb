@@ -46,8 +46,10 @@ FactoryGirl.define do
     trait :market_manager do
       role 'user'
       after(:create) do |user|
-        m = create(:market)
-        user.managed_markets << m
+        if user.managed_markets.empty?
+          m = create(:market)
+          user.managed_markets << m
+        end
       end
     end
 
