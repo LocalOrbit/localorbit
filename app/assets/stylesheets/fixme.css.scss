@@ -10,3 +10,17 @@
   clear: both;
   page-break-after: always;
 }
+
+.delivery-schedule-options ul {
+  list-style: none;
+  padding: 0 0 0 20px;
+  margin: 5px 0 0 0;
+}
+
+.delivery-schedule-options label {
+  font-size: 14px;
+}
+
+.delivery-schedule-options b {
+  padding-left: 22px;
+}

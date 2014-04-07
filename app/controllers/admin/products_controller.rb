@@ -1,6 +1,7 @@
 module Admin
   class ProductsController < AdminController
     before_action :ensure_selling_organization
+    before_action :find_delivery_schedules, except: [:index, :destroy]
 
     def index
       @products = current_user.managed_products.page(params[:page]).per(params[:per_page])
@@ -70,6 +71,13 @@ module Admin
 
     def find_selling_organizations
       @organizations = current_user.managed_organizations.selling.includes(:locations)
+    end
+
+    def find_delivery_schedules
+      @delivery_schedules = current_user.markets.inject({}) do |result, market|
+        result[market.name] = market.delivery_schedules.visible.order(:day)
+        result
+      end
     end
   end
 end
