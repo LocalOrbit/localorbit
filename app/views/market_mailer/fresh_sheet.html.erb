@@ -29,7 +29,7 @@
           <%= link_to "Add to Order", products_url(host: @market.domain), class: "lo_add_link" %>
           <% if @preview %>
             <br>
-            <%= link_to "Edit Product", admin_product_url(product, host: @market.domain), target: '_top', class: 'lo_button' %>
+            <%= link_to "Edit", admin_product_url(product, host: @market.domain), target: '_top', class: 'lo_button' %>
           <% end %>
         </td>
       </tr>
