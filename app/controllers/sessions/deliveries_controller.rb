@@ -2,6 +2,7 @@ module Sessions
   class DeliveriesController < ApplicationController
     before_action :require_organization
     before_action :require_organization_location
+    before_action :hide_admin_navigation
 
     def new
       current_organization.carts.find_by(id: session[:cart_id]).try(:destroy)
