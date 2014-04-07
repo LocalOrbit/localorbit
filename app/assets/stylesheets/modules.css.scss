@@ -758,6 +758,18 @@
             transition:        transform .4s linear;
   }
 
+.delivery {
+  .date {
+    color: $notice_text;
+    font-size: larger;
+    font-weight: bold;
+  }
+  .time-range {
+    display: inline-block;
+    margin: 0 0 .5em;
+  }
+}
+
 /** Pagination */
 .pagination {
   width: 300px;
