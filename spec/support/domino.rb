@@ -538,7 +538,11 @@ module Dom
       attribute :type
       attribute :date
       attribute :time_range
-      attribute :location
+      attribute :fn
+      attribute :street_address
+      attribute :locality
+      attribute :region
+      attribute :postal_code
 
       def description
         "#{type} #{date} #{time_range}"
