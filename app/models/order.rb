@@ -110,4 +110,17 @@ class Order < ActiveRecord::Base
 
     order
   end
+
+  def self.joining_products
+    joins(items: :product).includes(:items)
+  end
+
+  def self.order_items_by_product
+    joining_products.map {|order| order.items }.flatten.group_by(&:product)
+  end
+
+  def self.order_items_by_product_for_organization(organization)
+    joining_products.where( products: { organization_id: organization.id }).
+      map(&:items).flatten.group_by(&:product)
+  end
 end
