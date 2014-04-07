@@ -11,11 +11,12 @@
     <div class="location"><%= delivery.deliver_to_location %></div>
 
     <div class="seller-tools">
-      <div><%= link_to "Pick List", coming_soon_dashboard_path %></div>
+      <div><%= link_to "Pick List", admin_delivery_tools_pick_list_path(delivery) %></div>
       <div><%= link_to "Master packing slips", coming_soon_dashboard_path %></div>
       <div><%= link_to "Individual Packing Slips", coming_soon_dashboard_path %></div>
       <div><%= link_to "Order Summary", coming_soon_dashboard_path %></div>
     </div>
+
   </div>
   <% end %>
 <% end %>

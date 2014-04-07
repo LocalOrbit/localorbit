@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     end
 
     resource :delivery_tools, only: :show do
+      resources :pick_lists, only: :show
     end
 
     resources :products do

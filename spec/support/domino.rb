@@ -286,6 +286,16 @@ module Dom
       end
     end
 
+    class PickListItem < Domino
+      selector ".pick-list-item"
+
+      attribute :name
+      attribute :total_sold
+      attribute :buyer
+      attribute :breakdown
+    
+    end
+
     class ProductForm < Domino
       selector "form.product"
 
