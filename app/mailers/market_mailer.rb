@@ -7,7 +7,7 @@ class MarketMailer < ActionMailer::Base
     @market = market
     @delivery = market.delivery_schedules.visible.first.next_delivery.decorate
     @categories = Category.where(depth: 2)
-    @product_groups = Product.available_for_sale(market).
+    @product_groups = Product.available_for_market(market).available_for_sale(market).
       group_by{|p| p.category.self_and_ancestors.find_by(depth: 2).id }
 
     recipients ||= market.organizations.buying.joins(:users).

@@ -41,6 +41,7 @@ class Product < ActiveRecord::Base
     visible.seller_can_sell.where(organization: market.organization_ids)
   end
 
+  # Does not explicitly scope to the market. Use in conjunction with available_for_market.
   def self.available_for_sale(market, buyer = nil)
     visible.seller_can_sell.
       joins(:lots, :prices).select('DISTINCT(products.*)').
