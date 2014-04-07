@@ -2,7 +2,7 @@
 
   <% @presenter.upcoming_deliveries.each do |delivery| %>
     <div class="upcoming-delivery">
-      <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading %></h2>
+      <h2 class="upcoming-delivery-date">Deliveries for <%= delivery.upcoming_delivery_date_heading %></h2>
       Deliver to:
       <div class="location-name"><%= delivery.deliver_to_name %></div>
       <div class="location"><%= delivery.deliver_to_location %></div>

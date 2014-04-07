@@ -71,7 +71,7 @@ feature "seller views their dashboard" do
 
     visit dashboard_path
 
-    delivery_rows = Dom::Dashboard::UpcomingDelivery.all
+    delivery_rows = Dom::UpcomingDelivery.all
 
     expect(delivery_rows.count).to eq(2)
 

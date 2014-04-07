@@ -46,9 +46,9 @@ describe "Upcoming Deliveries" do
       it "shows a list of the upcoming deliveries that have ordered products for a seller" do
         expect(page).to have_content("Delivery Tools")
 
-        deliveries = Dom::Admin::UpcomingDelivery.all
+        deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
-        expect(deliveries.first.node).to have_content("May 8, 2014")
+        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
       end
     end
 
@@ -68,9 +68,9 @@ describe "Upcoming Deliveries" do
       it "shows a list of the upcoming deliveries that have orders" do
         expect(page).to have_content("Delivery Tools")
 
-        deliveries = Dom::Admin::UpcomingDelivery.all
+        deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
-        expect(deliveries.first.node).to have_content("May 8, 2014")
+        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
       end
     end
 
@@ -107,10 +107,10 @@ describe "Upcoming Deliveries" do
       it "shows a list of the upcoming deliveries that have orders" do
         expect(page).to have_content("Delivery Tools")
 
-        deliveries = Dom::Admin::UpcomingDelivery.all
+        deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(2)
-        expect(deliveries.first.node).to have_content("May 8, 2014")
-        expect(deliveries.last.node).to have_content("May 9, 2014")
+        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+        expect(deliveries.last.upcoming_delivery_date).to eq("May 9, 2014 7:00 AM")
       end
     end
 
@@ -130,9 +130,9 @@ describe "Upcoming Deliveries" do
       it "shows a list of the upcoming deliveries that have orders" do
         expect(page).to have_content("Delivery Tools")
 
-        deliveries = Dom::Admin::UpcomingDelivery.all
+        deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
-        expect(deliveries.first.node).to have_content("May 8, 2014")
+        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
       end
     end
 
@@ -169,10 +169,10 @@ describe "Upcoming Deliveries" do
       it "shows a list of the upcoming deliveries that have orders" do
         expect(page).to have_content("Delivery Tools")
 
-        deliveries = Dom::Admin::UpcomingDelivery.all
+        deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(2)
-        expect(deliveries.first.node).to have_content("May 8, 2014")
-        expect(deliveries.last.node).to have_content("May 9, 2014")
+        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+        expect(deliveries.last.upcoming_delivery_date).to eq("May 9, 2014 7:00 AM")
       end
     end
 
@@ -192,9 +192,9 @@ describe "Upcoming Deliveries" do
       it "shows a list of the upcoming deliveries that have orders" do
         expect(page).to have_content("Delivery Tools")
 
-        deliveries = Dom::Admin::UpcomingDelivery.all
+        deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
-        expect(deliveries.first.node).to have_content("May 8, 2014")
+        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
       end
     end
 
