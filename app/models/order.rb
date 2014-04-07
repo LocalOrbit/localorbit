@@ -4,6 +4,8 @@ class Order < ActiveRecord::Base
   belongs_to :market
   belongs_to :organization
   belongs_to :delivery
+  belongs_to :placed_by, class: User
+
   has_many :items, inverse_of: :order, class: OrderItem, autosave: true
 
   validates :billing_address, presence: true
@@ -72,6 +74,7 @@ class Order < ActiveRecord::Base
     order_number = OrderNumber.new(cart.market)
 
     order = Order.new(
+      placed_by: params[:current_user],
       order_number: order_number.id,
       organization: cart.organization,
       market: cart.market,

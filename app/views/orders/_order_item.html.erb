@@ -1,0 +1,6 @@
+<tr class="order-item-row">
+  <td class="name"><%= item.name %></td>
+  <td class="quantity"><%= item.decorate.quantity_with_unit %></td>
+  <td class="price lo_currency"><%= number_to_currency item.unit_price %></td>
+  <td class="item-total lo_currency"><%= number_to_currency item.gross_total %></td>
+</tr>

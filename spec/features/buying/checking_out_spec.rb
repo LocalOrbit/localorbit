@@ -95,6 +95,13 @@ describe "Checking Out" do
     expect(page).to have_content("Kale")
   end
 
+  it "sends the buyer an email about the order" do
+    checkout
+    open_email(user.email)
+
+    expect(current_email).to have_subject("Thank you for your order")
+    expect(current_email).to have_body_text("Thank you for your order through #{market.name}")
+  end
   it "displays the ordered products" do
     checkout
     expect(page).to have_content("Thank you for your order")

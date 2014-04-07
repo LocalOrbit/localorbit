@@ -1,0 +1,20 @@
+<h1>Your order has been placed.</h1>
+<p>
+  <span class="lo_order_number">Order Number: <%= @order.order_number %></span>
+</p>
+
+<p>
+Thank you for your order through <%= @order.market.name %>!<br>
+You can check the status of your order by following the link above and
+logging in to your account.
+</p>
+
+<%= render "order" %>
+
+<% if @order.payment_method && @order.payment_method == "purchase order"%>
+  <h2>Method of Payment</h2>
+  <dl>
+    <dt>Purchase Order:</dt>
+    <dd><%= @order.payment_note %></dd>
+  </dl>
+<% end %>
