@@ -7,7 +7,8 @@ describe "Checking Out" do
   let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users:[create(:user), create(:user)]) }
   let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms") }
 
-  let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms]) }
+  let(:market_manager) { create(:user) }
+  let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager]) }
   let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
   let(:delivery_day) { DateTime.parse("May 9, 2014, 11:00:00") }
   let(:delivery) {
@@ -103,7 +104,7 @@ describe "Checking Out" do
     expect(current_email).to have_body_text("Thank you for your order through #{market.name}")
   end
 
-  it "sends an email to sellers about the order" do
+  it "sends the seller email about the order" do
     checkout
     open_email(fulton_farms.users[0].email)
 
@@ -115,6 +116,25 @@ describe "Checking Out" do
     expect(current_email).to_not have_body_text("Potatoes")
 
     expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+  end
+
+  it "sends the market manager an email about the order" do
+    checkout
+
+    sign_out
+    sign_in_as(market_manager)
+    open_email(market.managers[0].email)
+
+    expect(current_email.body).to have_content("You've received a new order.")
+    expect(current_email.body).to have_content("Order Placed By: #{buyer.name}")
+
+    expect(current_email).to have_body_text("Kale")
+    expect(current_email).to have_body_text("Bananas")
+    expect(current_email).to have_body_text("Potatoes")
+
+    visit_in_email "Check Order Status"
+    expect(page).to have_content("Order info")
+    expect(page).to have_content("Items for delivery...")
   end
 
   it "displays the ordered products" do

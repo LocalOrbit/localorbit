@@ -15,11 +15,21 @@ class OrderMailer < ActionMailer::Base
 
   def seller_confirmation(order, seller)
     @market = order.market
-    @order = SellerOrder.new(order, seller)
+    @order = SellerOrder.new(order, seller) # Selling users organizations only see 
 
     mail(
       to: seller.email,
       subject: "You have a new order!"
+    )
+  end
+
+  def market_manager_confirmation(order, manager)
+    @market = order.market
+    @order = BuyerOrder.new(order) # Market Managers should see all items
+
+    mail(
+      to: manager.email,
+      subject: "Thank you for your order"
     )
   end
 end

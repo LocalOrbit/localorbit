@@ -2,7 +2,7 @@ module OrderPresenter
   def self.included(base)
     base.class_eval do
       attr_reader :items
-      delegate :delivery_fees, :delivery_status, :order_number, :organization, :payment_method, :payment_note, :placed_at, :market, to: :@order
+      delegate :delivery_fees, :delivery_status, :order_number, :organization, :payment_method, :payment_note, :placed_at, :market, :id, to: :@order
     end
   end
 
