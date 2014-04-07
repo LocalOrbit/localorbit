@@ -141,7 +141,6 @@ input[type=submit] {
 .btn--end {
   @include border-radius(0 2px 2px 0);
   margin: 2px 0 2px -1px;
-  font-size: smaller;
 }
 .btn--start {
   position: relative;
