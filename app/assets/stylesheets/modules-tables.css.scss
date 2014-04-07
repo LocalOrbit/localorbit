@@ -16,9 +16,6 @@ table {
   border-collapse: collapse;
   font-size: 12px;
 }
-  table a {
-    color: #4162A1;
-  }
 
 thead {
   th {
@@ -167,6 +164,10 @@ th {
     a {
       margin-right: .4em;
       font-size: 11px;
+
+      &:hover {
+        color: #999;
+      }
     }
     .font-icon {
       font-size: 14px;
@@ -178,13 +179,18 @@ th {
     font-weight: lighter;
     font-weight: 300;
   }
-  .negotiated:after {
-    padding: 0 5px;
-    color: #3e8300;
-    background: #deebd2;
-    content: "Your price";
-    white-space: nowrap;
-    text-transform: uppercase;
+  .negotiated {
+    color: #3E8212;
+
+    &:after {
+      padding: 0 5px;
+      color: #3e8300;
+      background: #deebd2;
+      content: "Your price";
+      font-size: 10px;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
   }
   .price {
     padding: 0 0 0 11px;
@@ -200,10 +206,11 @@ th {
   }
   .product-image {
     padding-right: 10px;
+
     > img {
       display: block;
       width: 60px;
-      @include border-radius(3px);
+      @include border-radius(5px);
     }
   }
   .quantity {
@@ -246,6 +253,11 @@ th {
 .product-table {
   margin: 30px 0;
 }
+  .product .meta {
+    clear: both;
+    padding: 0;
+    margin: 0;
+  }
   .product-table--admin {
     td {
       font-size: 12px;
@@ -270,19 +282,38 @@ th {
     }
 
     tr {
-      border-bottom: solid 1px #eee;
+      border-bottom: solid 1px #ccc;
+
+      &:nth-child(odd) {
+        background: #fff;
+      }
+      &:hover {
+        background: #fff;
+      }
     }
 
     .info {
       width: 45%;
 
-      a {
+      .popup-toggle { 
         color: #666;
       }
+
     }
 
     .name {
+      margin-bottom: .2em;
       font-weight: normal;
+
+      + .short_description {
+        > p {
+          margin-top: .5em;
+        }
+        > .popup-toggle {
+          display: inline-block;
+          margin: .5em 0 0 .5em;
+        }
+      }
     } 
 
     .total {
@@ -290,7 +321,11 @@ th {
     }
 
     .pricing {
-      width: 23%;
+      min-width: 23%;
+      white-space: nowrap;
+    }
+    .unit-price {
+      font-weight: bold;
     }
   }
 

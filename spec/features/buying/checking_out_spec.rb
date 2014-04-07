@@ -87,10 +87,8 @@ describe "Checking Out" do
 
   it "links to the order to review", js: true do
     checkout
-    save_screenshot "tables.png"
 
     click_link "Review Order"
-    save_screenshot "order_review.png"
     expect(page).to have_content("Order info")
     expect(page).to have_content("Bananas")
     expect(page).to have_content("Potatoes")

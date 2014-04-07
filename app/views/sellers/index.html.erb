@@ -1,37 +1,84 @@
 <div class="row">
-  <aside class="column column--third">
+  <aside class="column column--fourth column--guttered">
+
     <%= render "products/selected_delivery" %>
 
-    <h2>Sellers</h2>
-    <ul>
+    <h2 class="heading heading--sidebar">Sellers</h2>
+    <ul class="list-naked">
       <% @sellers.each do |seller| %>
         <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>
       <% end %>
     </ul>
+
   </aside
-  ><div class="column column--two-thirds">
+  ><div class="column column--three-fourths column--guttered vcard">
 
-    <div class="profile-image">
-      <h2><%= @current_seller.name %></h2>
-      <% if @current_seller.photo.present? %>
-        <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo" %>
-      <% end %>
+
+    <div class="row">
+
+      <div class="column column--half column--guttered">
+
+        <h1 class="fn heading-seller"><%= @current_seller.name %></h1>
+        <% if @current_seller.billing_location.present? %>
+          <p class="adr">
+            <span class="locality"><%= @current_seller.billing_location.city %></span>, <span class="region"><%= @current_seller.billing_location.state %></span>
+          </p>
+        <% end %>
+
+        <div class="who-story">
+          <h2 class="story-header">Who We Are</h2>
+          <%= simple_format @current_seller.who_story %>
+        </div>
+        <div class="how-story">
+          <h2 class="story-header">How We Do It</h2>
+          <%= simple_format @current_seller.how_story %>
+        </div>
+
+      </div
+      ><div class="column column--half column--guttered">
+        <div class="tab-box">
+
+          <div class="tabbed-item map" id="map-tab">
+            <img alt="map" src="<%= @current_seller.locations_map %>">
+          </div>
+
+          <div class="tabbed-item feed-item" id="twitter-tab">
+            <h2>Twitter</h2>
+          </div>
+
+          <div class="tabbed-item feed-item" id="facebook-tab">
+            <h2>Facebook</h2>
+          </div>
+
+          <div class="tabbed-item profile-image" id="profile-image-tab">
+            <% if @current_seller.photo.present? %>
+              <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo", class: "photo" %>
+            <% end %>
+          </div>
+
+          <% if @current_seller.photo.present? %>
+          <ul class="tabs tabs--bottom tabs--small">
+            <li class="tab">
+              <a href="#profile-image-tab">Photo</a>
+            </li>
+            <li class="tab">
+              <a href="#map-tab" class="inactive">Map</a>
+            </li>
+            <li class="tab">
+              <a href="#facebook-tab" class="inactive">Facebook</a>
+            </li>
+            <li class="tab">
+              <a href="#twitter-tab" class="inactive">Twitter</a>
+            </li>
+          </ul>
+          <% end %>
+
+        </div>
+      </div>
     </div>
 
-    <div class="map">
-      <img alt="map" src="<%= @current_seller.locations_map %>">
-    </div>
 
-    <div class="who-story">
-      <h2>Who We Are</h2>
-      <%= @current_seller.who_story %>
-    </div>
-    <div class="how-story">
-      <h2>How We Do It</h2>
-      <%= @current_seller.how_story %>
-    </div>
-
-    <h2>Currently Selling</h2>
+    <h2 class="heading-section">Currently Selling</h2>
     <% @categories.each do |category| %>
       <% if @product_groups[category.id].present? %>
         <%= render "products/table", products: @product_groups[category.id], category: category %>
