@@ -50,6 +50,10 @@ class DeliveryDecorator < Draper::Decorator
 
     "between #{start_time} and #{end_time}"
   end
+  
+  def buyer_time_range_capitalized
+    buyer_time_range.sub("between", "Between")
+  end
 
   def display_locations
     if buyer_pickup?

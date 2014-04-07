@@ -14,7 +14,7 @@
             <label for="delivery_id_<%= d.id %>">
               <span class="type"><%= d.type %></span><br>
               <span class="date"><%= d.display_date %></span><br>
-              <span class="time-range"><%= d.buyer_time_range.to_s.capitalize %></span>
+              <span class="time-range"><%= d.buyer_time_range_capitalized %></span>
             </label>
 
             <% if d.display_locations.count > 1 %>
