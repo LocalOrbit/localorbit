@@ -4,7 +4,7 @@ describe "Checking Out" do
   let!(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
 
-  let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms") }
+  let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users:[create(:user), create(:user)]) }
   let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms") }
 
   let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms]) }
@@ -102,11 +102,24 @@ describe "Checking Out" do
     expect(current_email).to have_subject("Thank you for your order")
     expect(current_email).to have_body_text("Thank you for your order through #{market.name}")
   end
+
+  it "sends an email to sellers about the order" do
+    checkout
+    open_email(fulton_farms.users[0].email)
+
+    expect(current_email).to have_subject("You have a new order!")
+    expect(current_email.body).to have_content("You have a new order!")
+    # It does not include content from other sellers
+    expect(current_email).to have_body_text("Kale")
+    expect(current_email).to have_body_text("Bananas")
+    expect(current_email).to_not have_body_text("Potatoes")
+
+    expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+  end
+
   it "displays the ordered products" do
     checkout
     expect(page).to have_content("Thank you for your order")
-    #items = Dom::Order::ItemRow.all
-    #expect(items.map(&:name)).to include("Bananas", "Potatoes", "Kale")
 
     bananas_row = Dom::Order::ItemRow.find_by_name("Bananas")
     expect(bananas_row.node).to have_content("10 boxes")

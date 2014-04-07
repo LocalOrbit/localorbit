@@ -114,6 +114,10 @@ class Order < ActiveRecord::Base
     order
   end
 
+  def sellers
+    items.map{|item| item.seller }.uniq
+  end
+
   def self.joining_products
     joins(items: :product).includes(:items)
   end
