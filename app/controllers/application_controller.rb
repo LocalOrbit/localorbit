@@ -136,7 +136,7 @@ class ApplicationController < ActionController::Base
 
   def require_current_organization
     if current_organization.nil?
-      redirect_to new_sessions_organization_path(redirect_back_to: request.fullpath), alert: "You must first select an organization"
+      redirect_to new_sessions_organization_path(redirect_back_to: request.fullpath)
     end
   end
 

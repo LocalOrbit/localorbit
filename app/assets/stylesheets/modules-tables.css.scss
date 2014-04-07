@@ -200,9 +200,6 @@ th {
   .product-clear {
     font-size: 15px;
     line-height: 28px;
-    > a {
-      color: #ddd;
-    }
   }
   .product-image {
     padding-right: 10px;
@@ -264,7 +261,6 @@ th {
     }
   }
   .product-table--user {
-    width: auto;
     margin-top: 0;
 
     th, td {
