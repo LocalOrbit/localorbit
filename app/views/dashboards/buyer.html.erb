@@ -1,0 +1,24 @@
+<h1>Purchase History</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Order #</th>
+      <th>Placed On</th>
+      <th>Delivery</th>
+      <th>Payment</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @presenter.buyer_orders.each do |order| %>
+    <tr class="order-row">
+      <td class="order-number"><%= order.order_number %></td>
+      <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
+      <td class="delivery-status"><%= order.delivery_status.titleize %></td>
+      <td class="payment-status"><%= order.payment_status.titleize %></td>
+      <td class="total"><%= number_to_currency(order.total_cost) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

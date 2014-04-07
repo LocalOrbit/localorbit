@@ -11,7 +11,13 @@ class DashboardPresenter
       "market_manager"
     elsif @user.seller?
       "seller"
+    else
+      "buyer"
     end
+  end
+
+  def buyer_orders
+    @buyer_orders ||= Order.orders_for_buyer(@user).order("placed_at DESC").limit(25)
   end
 
   def pending_orders

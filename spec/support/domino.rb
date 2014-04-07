@@ -293,7 +293,7 @@ module Dom
       attribute :total_sold
       attribute :buyer
       attribute :breakdown
-    
+
     end
 
     class ProductForm < Domino
@@ -605,6 +605,9 @@ module Dom
       attribute :total
       attribute :delivery
       attribute :payment
+      attribute :order_date
+      attribute :delivery_status
+      attribute :payment_status
     end
 
     class ProductRow < Domino
