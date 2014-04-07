@@ -1,18 +1,5 @@
 @import "mixins";
 
-.product {
-
-  .meta {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    li {
-      display: inline-block;
-    }
-  }
-}
-
 
 .is-open .hide-when-open {
   display: none;

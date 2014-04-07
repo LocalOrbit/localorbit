@@ -1,4 +1,4 @@
-<table class="product-table product-table--user cart_items sortable" data-cart-url="<%= cart_path %>">
+<table class="product-table product-table--user cart_items" data-cart-url="<%= cart_path %>">
   <% if @previous_top_level_category != category.top_level_category %>
     <% @previous_top_level_category = category.top_level_category %>
     <caption><%= category.top_level_category.name %></caption>
@@ -25,23 +25,24 @@
       </td>
       <td class="info">
         <h3 class="name"><%= link_to product.name, product %></h3>
-        <p class="short_description"><%= product.short_description %>
+        <div class="short_description">
+          <%= simple_format product.short_description, class: "pull-left" %>
 
-        <% if product.long_description.present? %>
-          <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{product.id}-long-description", class: "popup-toggle" %>
-          <div class="long-description-info is-hidden with-anchor left-anchor popup" id="product-<%= product.id %>-long-description">
-            <div class="popup-header">
-              Details <button class="close"><i class="font-icon icon-close"></i></button>
+          <% if product.long_description.present? %>
+            <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{product.id}-long-description", class: "popup-toggle" %>
+            <div class="long-description-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-long-description">
+              <div class="popup-header">
+                Details <button class="close"><i class="font-icon icon-close"></i></button>
+              </div>
+              <div class="popup-body">
+                <%= simple_format product.long_description %>
+                <%= link_to "Learn More", coming_soon_dashboard_path %>
+              </div>
             </div>
-            <div class="popup-body">
-              <%= simple_format product.long_description %>
-              <%= link_to "Learn More", coming_soon_dashboard_path %>
-            </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
 
-        </p>
-        <ul class="meta">
+        <ul class="meta list-naked l-inline-list">
           <li class="organization-name">
             <%= link_to raw("<i class=\"font-icon icon-credit\"></i> #{product.organization_name}"), "#product-#{product.id}-who", class: "popup-toggle" %>
             <div class="who-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-who">

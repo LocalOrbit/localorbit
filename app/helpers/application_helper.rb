@@ -1,6 +1,6 @@
 module ApplicationHelper
   # Used in navigation to get to the users organization(s)
-  def path_to_my_orgainzation
+  def path_to_my_organization
     organizations = current_user.managed_organizations
     if organizations.count == 1
       admin_organization_path(organizations.first)

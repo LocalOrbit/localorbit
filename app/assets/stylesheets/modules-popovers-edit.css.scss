@@ -1,5 +1,8 @@
 @import "mixins";
 
+.popup-toggle:hover {
+    text-decoration: none;
+}
 .popup {
   position: absolute;
   z-index: 1;
@@ -37,6 +40,7 @@
 
   .close {
     float: right;
+    color: #666;
     line-height: inherit;
   }
 }

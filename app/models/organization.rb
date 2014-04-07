@@ -25,4 +25,8 @@ class Organization < ActiveRecord::Base
   def shipping_location
     locations.visible.default_shipping
   end
+
+  def billing_location
+    locations.visible.default_billing
+  end
 end

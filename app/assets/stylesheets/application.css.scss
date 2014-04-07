@@ -42,9 +42,13 @@ a {
   }
 }
 
+h1, h2, h3, h4, h5, h6 {
+color: #000;
+}
+
 h1 {
   margin: 0 0 14px;
-  font-family: 'OpenSans-Light', OpenSans, "Open Sans", sans-serif;
+  font: lighter 2em 'OpenSans-Light', OpenSans, "Open Sans", sans-serif;
   font-weight: lighter;
   font-weight: 300;
 }
