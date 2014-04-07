@@ -79,7 +79,7 @@ class DeliveryDecorator < Draper::Decorator
 
   # Display for upcoming delivery
   def upcoming_delivery_date_heading
-    "Deliveries for #{display_date} #{delivery_schedule.seller_delivery_start}"
+    "#{display_date} #{delivery_schedule.seller_delivery_start}"
   end
 
   def deliver_to_name

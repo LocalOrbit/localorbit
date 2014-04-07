@@ -206,10 +206,6 @@ module Dom
       end
     end
 
-    class UpcomingDelivery < Domino
-      selector ".upcoming-delivery"
-    end
-
     class OrganizationForm < Domino
       selector "form.organization"
 
@@ -605,13 +601,13 @@ module Dom
       attribute :pricing
       attribute :stock
     end
+  end
 
-    class UpcomingDelivery < Domino
-      selector ".upcoming-delivery"
+  class UpcomingDelivery < Domino
+    selector ".upcoming-delivery"
 
-      attribute :upcoming_delivery_date
-      attribute :location_name
-      attribute :location
-    end
+    attribute :upcoming_delivery_date
+    attribute :location_name
+    attribute :location
   end
 end

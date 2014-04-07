@@ -1,6 +1,7 @@
 class DashboardPresenter
-  def initialize(user)
-    @user = user
+  def initialize(user, market)
+    @user   = user
+    @market = market
   end
 
   def template
@@ -19,6 +20,6 @@ class DashboardPresenter
   end
 
   def upcoming_deliveries
-    @upcoming_deliveries ||= Delivery.upcoming_for_seller(@user).decorate
+    @upcoming_deliveries ||= @market.upcoming_deliveries_for_user(@user).decorate
   end
 end

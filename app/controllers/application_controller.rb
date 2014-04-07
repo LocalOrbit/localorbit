@@ -67,6 +67,16 @@ class ApplicationController < ActionController::Base
     scope.find_by(subdomain: SimpleIDN.to_unicode(subdomain))
   end
 
+  def require_selected_market
+    return if current_market
+
+    if current_user.markets.size == 1
+      redirect_to url_for(host: current_user.markets.first.domain)
+    else
+      render 'shared/select_market'
+    end
+  end
+
   def on_main_domain?
     request.host == Figaro.env.domain || request.host == "app.#{Figaro.env.domain}"
   end

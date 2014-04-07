@@ -44,6 +44,12 @@ class Market < ActiveRecord::Base
   end
 
   def deliveries
-    Delivery.joins(:delivery_schedule).where(delivery_schedules: {market_id: id})
+    Delivery.for_market(self)
+  end
+
+  def upcoming_deliveries_for_user(user)
+    scope = deliveries.future.with_orders.order("deliver_on")
+    scope = scope.with_orders_for_user(user) unless user.market_manager? || user.admin?
+    scope
   end
 end
