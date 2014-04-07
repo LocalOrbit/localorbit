@@ -30,14 +30,28 @@
 
       </div
       ><div class="column column--half">
-        <div class="profile-image">
-          <% if @current_seller.photo.present? %>
-            <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo" %>
-          <% end %>
-        </div>
+        <div class="tab-box">
+          <div class="tabbed-item profile-image" id="profile-image-tab">
+            <% if @current_seller.photo.present? %>
+              <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo" %>
+            <% end %>
+          </div>
 
-        <div class="map">
-          <img alt="map" src="<%= @current_seller.locations_map %>">
+          <div class="tabbed-item map" id="map-tab">
+            <img alt="map" src="<%= @current_seller.locations_map %>">
+          </div>
+
+          <% if @current_seller.photo.present? %>
+          <ul class="tabs tabs--bottom tabs--small">
+            <li class="tab">
+              <a href="#profile-image-tab" class="inactive">Photo</a>
+            </li>
+            <li class="tab">
+              <a href="#map-tab">Map</a>
+            </li>
+          </ul>
+          <% end %>
+
         </div>
       </div>
     </div>
