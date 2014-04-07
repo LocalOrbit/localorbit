@@ -89,4 +89,8 @@ class DeliveryDecorator < Draper::Decorator
   def deliver_to_location
     delivery_schedule.seller_fulfillment_address
   end
+
+  def available_to_order?
+    Time.current < cutoff_time
+  end
 end

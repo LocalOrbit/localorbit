@@ -3,6 +3,9 @@
 
 <h2>Delivery</h2>
 <%= @delivery.display_date %> <%= @delivery.time_range %>
+<% if @delivery.available_to_order? %>
+  <h4>Ordering has not yet closed for this delivery</h4>
+<% end %>
 
 <h2>Seller</h2>
 <address>

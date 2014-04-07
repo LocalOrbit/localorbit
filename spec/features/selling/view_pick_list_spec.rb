@@ -6,7 +6,7 @@ describe "Pick list" do
   let!(:product1) { create(:product, :sellable, organization: sellers) }
 
   let!(:friday_schedule_schedule) { create(:delivery_schedule, market: market, day: 5) }
-  let!(:friday_delivery) { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"))}
+  let!(:friday_delivery) { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014"))}
 
   let!(:buyer1) { create(:organization, :buyer, :single_location, markets: [market]) }
   let!(:buyer2) { create(:organization, :buyer, :single_location, markets: [market]) }
@@ -19,6 +19,37 @@ describe "Pick list" do
 
   after do
     Timecop.return
+  end
+
+  context "before the delivery cutoff" do
+    before do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+      visit admin_delivery_tools_pick_list_path(friday_delivery.id)
+    end
+
+    it "shows the pick list" do
+      expect(page).to have_content("Pick List")
+      expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
+      expect(page).to have_content("Ordering has not yet closed for this delivery")
+      expect(page).to have_content(sellers.name)
+    end
+  end
+
+  context "after the delivery cutoff" do
+    before do
+      Timecop.travel("May 9, 2014")
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+      visit admin_delivery_tools_pick_list_path(friday_delivery.id)
+    end
+
+    it "shows the pick list" do
+      expect(page).to have_content("Pick List")
+      expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
+      expect(page).to_not have_content("Ordering has not yet closed for this delivery")
+      expect(page).to have_content(sellers.name)
+    end
   end
 
   context "single order" do
@@ -115,7 +146,7 @@ describe "Pick list" do
 
       it "shows the pick list" do
         line = Dom::Admin::PickListItem.first
-        
+
         expect(line.name).to have_content(product1.name)
         expect(line.total_sold).to have_content("18")
         expect(line.breakdown).to have_content("Lot #123: 15")
