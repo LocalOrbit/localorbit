@@ -61,6 +61,13 @@ Rails.application.routes.draw do
     resource :category_request, only: :create
   end
 
+  namespace :organization do
+    get "financials" => "financials#index"
+    namespace :financials do
+      resources :orders, only: [:show]
+    end
+  end
+
   resource :dashboard do
     get "/coming_soon" => "dashboards#coming_soon"
   end

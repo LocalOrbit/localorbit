@@ -70,6 +70,7 @@ describe "Checking Out" do
     # once the cart preview has been built. See
     # https://www.pivotaltracker.com/story/show/67553382
     cart_link.node.click
+
     expect(page).to have_content("Your Order")
     expect(page).to have_content("Bananas")
     expect(page).to have_content("Kale")
@@ -78,29 +79,60 @@ describe "Checking Out" do
     fill_in "PO Number", with: "12345"
   end
 
+  it "displays copy about the order" do
+    checkout
+    expect(page).to have_content("You will receive a confirmation email with details of your order and a link to track its progress")
+    expect(page).to have_content("If you have any questions, please let us know")
+  end
+
+  it "links to the order to review", js: true do
+    checkout
+    save_screenshot "tables.png"
+
+    click_link "Review Order"
+    save_screenshot "order_review.png"
+    expect(page).to have_content("Order info")
+    expect(page).to have_content("Bananas")
+    expect(page).to have_content("Potatoes")
+    expect(page).to have_content("Kale")
+  end
+
   it "displays the ordered products" do
     checkout
     expect(page).to have_content("Thank you for your order")
-    items = Dom::Order::ItemRow.all
-    expect(items.map(&:name)).to include("Bananas", "Potatoes", "Kale")
+    #items = Dom::Order::ItemRow.all
+    #expect(items.map(&:name)).to include("Bananas", "Potatoes", "Kale")
+
+    bananas_row = Dom::Order::ItemRow.find_by_name("Bananas")
+    expect(bananas_row.node).to have_content("10 boxes")
+    expect(bananas_row.node).to have_content("$0.50")
+    expect(bananas_row.node).to have_content("$5.00")
+
+    kale_row = Dom::Order::ItemRow.find_by_name("Kale")
+    expect(kale_row.node).to have_content("20 boxes")
+    expect(kale_row.node).to have_content("$1.00")
+    expect(kale_row.node).to have_content("$20.00")
+
+    potatoes_row = Dom::Order::ItemRow.find_by_name("Potatoes")
+    expect(potatoes_row.node).to have_content("5 boxes")
+    expect(potatoes_row.node).to have_content("$3.00")
+    expect(potatoes_row.node).to have_content("$15.00")
   end
 
   context "for delivery" do
     it "displays the address" do
       checkout
       expect(page).to have_content("Thank you for your order")
-      expect(page).to have_content("be delivered to")
-      expect(page).to have_content("500 S. State Street, Ann Arbor, MI 48109")
+      expect(page).to have_content("Your order will be delivered to:")
+      expect(page).to have_content("500 S. State Street")
+      expect(page).to have_content("Ann Arbor, MI 48109")
     end
 
     it "displays the delivery times" do
       checkout
       expect(page).to have_content("Thank you for your order")
-      expect(page).to have_content("Delivery on")
+      expect(page).to have_content("Items for delivery on:")
       expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
-
-      #TODO: What does Rails show this as?
-      expect(page).to have_content("US/Eastern")
     end
   end
 
@@ -111,19 +143,17 @@ describe "Checking Out" do
       checkout
       expect(page).to have_content("Thank you for your order")
 
-      expect(page).to have_content("available for pickup at")
-      expect(page).to have_content("44 E. 8th St, Holland, MI 49423")
+      expect(page).to have_content("Your order can be picked up at")
+      expect(page).to have_content("44 E. 8th St")
+      expect(page).to have_content("Holland, MI 49423")
     end
 
     it "displays the delivery times" do
       checkout
       expect(page).to have_content("Thank you for your order")
 
-      expect(page).to have_content("Pickup on")
+      expect(page).to have_content("Items for pickup on:")
       expect(page).to have_content("May 9, 2014 between 10:00AM and 12:00PM")
-
-      #TODO: What does Rails show this as?
-      expect(page).to have_content("US/Eastern")
     end
   end
 

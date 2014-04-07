@@ -18,7 +18,7 @@ describe DeliveryDecorator do
       let(:delivery_schedule) { create( :delivery_schedule, :buyer_pickup) }
 
       it "displays as a pickup" do
-        expect(subject.type).to eq("Pick Up:")
+        expect(subject.type).to eq("Pick up:")
       end
     end
   end

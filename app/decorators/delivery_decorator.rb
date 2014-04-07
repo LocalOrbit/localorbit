@@ -2,7 +2,15 @@ class DeliveryDecorator < Draper::Decorator
   delegate_all
 
   def type
-    buyer_pickup? ? "Pick Up:" : "Delivery:"
+    buyer_pickup? ? "Pick up:" : "Delivery:"
+  end
+
+  def cart_type
+    buyer_pickup? ? "Pickup on" : "Delivery on"
+  end
+
+  def checkout_type
+    buyer_pickup? ? "pickup on" : "delivery on"
   end
 
   def display_date
@@ -10,8 +18,7 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def checkout_date
-    action = buyer_pickup? ? "Pickup on" : "Delivery on"
-    "#{action} #{h.content_tag(:time, datetime: deliver_on) { display_date + ' ' + time_range}}"
+    "#{h.content_tag(:time, datetime: deliver_on) { display_date + ' ' + time_range}}"
   end
 
   def time_range
