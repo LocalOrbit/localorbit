@@ -72,7 +72,13 @@ td {
     padding-right: 7px;
     padding-left: 7px;
     margin: 2px 0;
-    font-size: 14px;
+    font-size: 12px;
+
+    &:focus {
+      height: 28px;
+      border-width: 2px;
+      margin: 0;
+    }
   }
 
 }
