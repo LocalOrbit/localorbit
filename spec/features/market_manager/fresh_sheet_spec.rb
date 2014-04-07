@@ -14,6 +14,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
   end
 
   scenario "selecting a market" do
+    create(:market, managers: [user])
     switch_to_main_domain
     sign_in_as(create(:user, :admin))
     visit admin_fresh_sheet_path

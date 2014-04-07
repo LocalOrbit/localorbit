@@ -20,13 +20,4 @@ class Admin::FreshSheetsController < AdminController
     email = MarketMailer.fresh_sheet(current_market, current_user.email, true)
     render html: email.body.to_s.html_safe
   end
-
-  private
-
-  def require_selected_market
-    unless current_market
-      render 'shared/select_market'
-    end
-  end
-
 end
