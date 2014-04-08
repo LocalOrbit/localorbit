@@ -19,7 +19,6 @@
     border: 7px solid transparent;
     content: "";
   }
-
 }
   .top-anchor {
     &:before {
@@ -34,8 +33,25 @@
       border-bottom-color: #fff;
       border-top: 0;
     }
-
   }
+
+  .top-centered-anchor {
+    &:before {
+      top: -7px;
+      left: 50%;
+      border-bottom-color: #ccc;
+      border-top: 0;
+      margin-left: -3px;
+    }
+    &:after {
+      top: -6px;
+      left: 50%;
+      border-bottom-color: #fff;
+      border-top: 0;
+      margin-left: -3px;
+    }
+  }
+
 .caretted:after {
   display: inline-block;
   width: 0;
@@ -61,6 +77,9 @@
   color: #43639f;
 }
 
+.cart-page {
+  color: #000;
+}
 .copyright {
 
   .org {
@@ -350,6 +369,7 @@
     }
   }
   > li {
+    position: relative;
     border: 0;
     border-left-color: #3f5d97;
     border-left: solid 1px rgba(0,0,0,0.25);
@@ -470,6 +490,13 @@
 }
 
 /** Headings */
+
+.heading-cart {
+  font-weight: bold;
+}
+  .subheading-cart {
+    font: lighter 21px 'OpenSans-Light', OpenSans, "Open Sans", sans-serif;
+  }
 
 .heading-conditionals {
   color: #333;
