@@ -79,6 +79,7 @@ describe "Checking Out" do
     fill_in "PO Number", with: "12345"
   end
 
+
   it "displays copy about the order" do
     checkout
     expect(page).to have_content("You will receive a confirmation email with details of your order and a link to track its progress")
