@@ -20,6 +20,7 @@ class Admin::MarketsController < AdminController
     if results.success?
       redirect_to [:edit, :admin, results.market]
     else
+      flash.now.alert = "Could not create market"
       @market = results.market
       render :new
     end
