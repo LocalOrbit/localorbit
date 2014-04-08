@@ -205,22 +205,6 @@ th {
       @include border-radius(5px);
     }
   }
-  .quantity {
-    text-align: center;
-
-    input {
-      text-align: center;
-    }
-  }
-    .price-for-quantity {
-      display: block;
-      font-size: 10px;
-      -webkit-font-smoothing: initial;
-
-      &:before {
-        content: "×";
-      }
-    }
   .total {
     min-width: 60px;
     font-weight: bold;
@@ -239,9 +223,25 @@ th {
       padding: 0 11px 0 0;
       font-size: 10px;
     }
+  .price-for-quantity {
+    display: block;
+    font-size: 10px;
+    -webkit-font-smoothing: initial;
+
+    &:before {
+      content: "×";
+    }
+  }
   .product-clear {
     font-size: 15px;
     line-height: 28px;
+  }
+  .quantity {
+    text-align: center;
+
+    input {
+      text-align: center;
+    }
   }
 
 .info > .name {
@@ -274,6 +274,9 @@ th {
     .unit-price {
       font-size: 14px;
       font-weight: bold;
+    }
+    .price {
+      padding-top: 15px;
     }
     .tiers {
       padding-top: 0;

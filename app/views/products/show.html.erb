@@ -20,13 +20,15 @@
         <h1 class="heading-product"><%= @product.name %></h1>
         <p class="producer">Produced by <%= link_to @product.organization.name, seller_path(current_organization) %></p>
 
-        <table class="product product-table product-table--mini">
+        <table class="product-table product-table--mini cart_items" data-cart-url="<%= cart_path %>">
           <thead>
             <tr>
               <th>Pricing</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
-          <tr>
+          <tr class="product-row cart_item" data-cart-item="<%= @product.cart_item.to_json %>">
             <td class="pricing">
               <ul class="tiers">
                 <% @product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
@@ -34,6 +36,13 @@
                 <% end %>
               </ul>
             </td>
+            <td class="quantity">
+              <label>
+                <input name="quantity" type="number" size="3" min="0" value="<%= @product.cart_item.quantity %>" max="<%= @product.available_inventory %>">
+                <span class="price-for-quantity"><%= number_to_currency(@product.cart_item.unit_price.sale_price) %></span>
+              </label>
+            </td>
+            <td class="total price"><%= @product.cart_item.decorate.display_total_price %></td>
           </tr>
         </table>
 
