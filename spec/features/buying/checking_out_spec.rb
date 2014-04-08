@@ -5,7 +5,7 @@ describe "Checking Out" do
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
 
   let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users:[create(:user), create(:user)]) }
-  let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms") }
+  let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
 
   let(:market_manager) { create(:user) }
   let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager]) }
@@ -106,16 +106,32 @@ describe "Checking Out" do
 
   it "sends the seller email about the order" do
     checkout
-    open_email(fulton_farms.users[0].email)
 
-    expect(current_email).to have_subject("You have a new order!")
-    expect(current_email.body).to have_content("You have a new order!")
-    # It does not include content from other sellers
-    expect(current_email).to have_body_text("Kale")
-    expect(current_email).to have_body_text("Bananas")
-    expect(current_email).to_not have_body_text("Potatoes")
+    fulton_farms.users.each do |user|
+      open_email(user.email)
 
-    expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+      expect(current_email).to have_subject("You have a new order!")
+      expect(current_email.body).to have_content("You have a new order!")
+      # It does not include content from other sellers
+      expect(current_email).to have_body_text("Kale")
+      expect(current_email).to have_body_text("Bananas")
+      expect(current_email).to_not have_body_text("Potatoes")
+
+      expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+    end
+
+    ada_farms.users.each do |user|
+      open_email(user.email)
+
+      expect(current_email).to have_subject("You have a new order!")
+      expect(current_email.body).to have_content("You have a new order!")
+      # It does not include content from other sellers
+      expect(current_email).not_to have_body_text("Kale")
+      expect(current_email).not_to have_body_text("Bananas")
+      expect(current_email).to have_body_text("Potatoes")
+
+      expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+    end
   end
 
   it "sends the market manager an email about the order" do

@@ -4,8 +4,7 @@ class SendOrderEmails
   def perform
     OrderMailer.buyer_confirmation(order).deliver
 
-    order_seller_users = order.sellers.map(&:users).flatten.uniq
-    order_seller_users.each do |seller|
+    order.sellers.each do |seller|
       OrderMailer.seller_confirmation(order, seller).deliver
     end
 

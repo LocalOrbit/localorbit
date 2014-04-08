@@ -18,7 +18,7 @@ class OrderMailer < ActionMailer::Base
     @order = SellerOrder.new(order, seller) # Selling users organizations only see 
 
     mail(
-      to: seller.email,
+      to: seller.users.pluck(:email),
       subject: "You have a new order!"
     )
   end
