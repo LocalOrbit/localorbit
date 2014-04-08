@@ -12,7 +12,7 @@
       <%= image_tag 'default-product-image.png' %>
     <% end %>
 
-    <p class="short_description"><%= @product.short_description %>
+    <p class="short_description"><%= simple_format @product.short_description %></p>
 
     <% if @product.long_description.present? %>
       <div class="long-description-info is-hidden with-anchor left-anchor popup" id="product-<%= @product.id %>-long-description">
@@ -24,5 +24,20 @@
         </div>
       </div>
     <% end %>
+
+
+
+    <%= @product.who_story %>
+
+    <%= @product.how_story %>
+
+    <%= @product.location_label %>
+    <img class="location-map" alt="" src="<%= @product.location_map %>">
+
+    <ul class="tiers">
+      <% @product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
+        <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
+      <% end %>
+    </ul>
   </div>
 </div>
