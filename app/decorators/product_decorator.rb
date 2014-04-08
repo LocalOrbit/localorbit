@@ -43,6 +43,10 @@ class ProductDecorator < Draper::Decorator
     "#{location.city}, #{location.state}" if location
   end
 
+  def location_address
+    "<p class='adr'><span class='street-address'>#{location.address}</span> <span class='locality'>#{location.city}</span>, <span class='region'>#{location.state}</span></p>".html_safe if location
+  end
+
   def cart_item
     return unless context[:current_cart]
 

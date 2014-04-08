@@ -446,6 +446,15 @@
 
 /** Headings */
 
+.heading-product {
+  margin: 20px 0 0;
+  font-weight: bold;
+
+  + .producer-link {
+    margin: 0 0 1em;
+  }
+}
+
 .heading-section {
   margin: .5em 0 .2em;
   font: lighter 2em 'OpenSans-Light', OpenSans, "Open Sans", sans-serif;

@@ -7,7 +7,7 @@
       <th>In Stock</th>
     </tr>
   </thead>
-<% @products.limit(15).order("created_at DESC").each do |product| %>
+<% @products.limit(10).order("created_at DESC").each do |product| %>
   <tr class="product-row">
     <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]), class: 'seller') %>
     <td class="name"><%= link_to product.name, [:admin, product] %></td>

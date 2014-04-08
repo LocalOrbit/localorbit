@@ -1,43 +1,41 @@
 <div class="row">
-  <div class="column column--fourth" id="product-filter">
+  <div class="column column--fourth column--guttered" id="product-filter">
 
     <%= render "selected_delivery" %>
   </div
-  ><div class="column column--three-fourths">
-    <h1><%= @product.name %></h1>
+  ><div class="column column--three-fourths column--guttered">
+  <%= link_to "Return to Shop Home", market_path(current_market) %>
+    <div class="row">
+      <div class="column column--half column--guttered">
+        <h1 class="heading-product"><%= @product.name %></h1>
+        <p class="producer">Produced by <%= link_to @product.organization.name, seller_path(current_organization) %></p>
 
-    <% if @product.image_uid.present? %>
-      <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid) %>
-    <% else %>
-      <%= image_tag 'default-product-image.png' %>
-    <% end %>
+        <h2>Prices</h2>
+        <ul class="tiers">
+          <% @product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
+            <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
+          <% end %>
+        </ul>
 
-    <p class="short_description"><%= simple_format @product.short_description %></p>
+        <h2>What</h2>
+        <%= simple_format @product.short_description %>
 
-    <% if @product.long_description.present? %>
-      <div class="long-description-info is-hidden with-anchor left-anchor popup" id="product-<%= @product.id %>-long-description">
-        <div class="popup-header">
-          Details <button class="close"><i class="font-icon icon-close"></i></button>
-        </div>
-        <div class="popup-body">
-          <%= simple_format @product.long_description %>
-        </div>
+        <h2>How</h2>
+
+        <%= simple_format @product.long_description %>
+
+      </div
+      ><div class="column column--half column--guttered">
+        <% if @product.image_uid.present? %>
+          <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid) %>
+        <% else %>
+          <%= image_tag 'default-product-image.png' %>
+        <% end %>
+
+        <h2><%= @product.location.name %></h2> 
+        <img class="location-map" alt="" src="<%= @product.location_map %>">
+        <%= @product.location_address %>
       </div>
-    <% end %>
-
-
-
-    <%= @product.who_story %>
-
-    <%= @product.how_story %>
-
-    <%= @product.location_label %>
-    <img class="location-map" alt="" src="<%= @product.location_map %>">
-
-    <ul class="tiers">
-      <% @product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
-        <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
-      <% end %>
-    </ul>
+    </div>
   </div>
 </div>
