@@ -11,7 +11,7 @@
 
   </div
   ><div class="column column--three-fourths column--guttered">
-    <%= link_to "Shop Home", market_path %>
+    <%= link_to "Shop Home",  products_path %>
     / <%= link_to @breadcrumbs.first.name, "#{products_path}?category=#{@breadcrumbs.first.id}" %>
 
     <div class="row">
@@ -24,11 +24,11 @@
           <thead>
             <tr>
               <th>Pricing</th>
-              <th></th>
-              <th></th>
+              <th>Quantity</th>
+              <th>Total</th>
             </tr>
           </thead>
-          <tr class="product-row cart_item" data-cart-item="<%= @product.cart_item.to_json %>">
+          <tr class="product product-row cart_item" data-cart-item="<%= @product.cart_item.to_json %>">
             <td class="pricing">
               <ul class="tiers">
                 <% @product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
@@ -37,10 +37,10 @@
               </ul>
             </td>
             <td class="quantity">
-              <label>
-                <input name="quantity" type="number" size="3" min="0" value="<%= @product.cart_item.quantity %>" max="<%= @product.available_inventory %>">
+              <span>
+                <input name="quantity" type="number" size="3" min="0" value="<%= @product.cart_item.quantity %>" max="<%= @product.available_inventory %>"><br>
                 <span class="price-for-quantity"><%= number_to_currency(@product.cart_item.unit_price.sale_price) %></span>
-              </label>
+              </span>
             </td>
             <td class="total price"><%= @product.cart_item.decorate.display_total_price %></td>
           </tr>
@@ -56,9 +56,9 @@
       </div
       ><div class="column column--half column--guttered">
         <% if @product.image_uid.present? %>
-          <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid), alt: "", class: "product-image" %>
+          <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid), alt: "", class: "product-image product-image--large" %>
         <% else %>
-          <%= image_tag 'default-product-image.png', alt: "", class: "product-image" %>
+          <%= image_tag 'default-product-image.png', alt: "", class: "product-image product-image--large" %>
         <% end %>
 
         <img class="location-map" alt="" src="<%= @product.location_map %>">

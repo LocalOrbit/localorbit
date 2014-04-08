@@ -193,7 +193,6 @@ th {
   }
   .price {
     padding: 0 0 0 11px;
-    font-size: 12px;
     font-weight: bold;
   }
   .product-image {
@@ -207,8 +206,6 @@ th {
   }
   .total {
     min-width: 60px;
-    font-weight: bold;
-    line-height: 28px;
   }
 }
   .tiers {
@@ -221,11 +218,9 @@ th {
   }
     .tier {
       padding: 0 11px 0 0;
-      font-size: 10px;
     }
   .price-for-quantity {
-    display: block;
-    font-size: 10px;
+    font-size: 12px;
     -webkit-font-smoothing: initial;
 
     &:before {
@@ -237,11 +232,18 @@ th {
     line-height: 28px;
   }
   .quantity {
-    text-align: center;
+    span {
+      display: inline-block;
+      text-align: center;
+    }
 
     input {
       text-align: center;
     }
+  }
+  .unit-price {
+    font-size: 14px;
+    font-weight: bold;
   }
 
 .info > .name {
@@ -277,28 +279,31 @@ th {
         background: #fff;
       }
     }
+    .tiers {
+      padding-top: 3px;
+      line-height: 22px;
+    }
     .total {
-      padding-top: 15px;
+      padding-top: 20px;
+      line-height: 22px;
+      font-size: 14px;
     }
   }
+
   .product-table--mini {
     margin: 20px 0;
 
     th {
-      padding-left: 0;
       font-weight: normal;
     }
-    .unit-price {
-      font-size: 14px;
-      font-weight: bold;
+    tr {
+      border: 0;
     }
-    .tiers {
-      padding-top: 0;
+    .tier {
+      font-size: 12px;
     }
-      .tier {
-        font-size: 12px;
-      }
   }
+
   .product-table--user {
     margin-top: 0;
 
@@ -342,9 +347,6 @@ th {
     .pricing {
       min-width: 23%;
       white-space: nowrap;
-    }
-    .unit-price {
-      font-weight: bold;
     }
   }
 
