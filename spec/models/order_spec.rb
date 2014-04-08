@@ -167,9 +167,10 @@ describe Order do
       let!(:org2)    { create(:organization, markets: [market2]) }
       let!(:product1) { create(:product, :sellable, organization: org1) }
       let!(:product2) { create(:product, :sellable, organization: org2) }
+      let!(:product3) { create(:product, :sellable, organization: org1) }
 
       let!(:managed_order) { create(:order, market: market1, organization_id: 0, items: [build(:order_item, product: product2)]) }
-      let!(:org_order)     { create(:order, market: market2, organization_id: 0, items: [build(:order_item, product: product1)]) }
+      let!(:org_order)     { create(:order, market: market2, organization_id: 0, items: [build(:order_item, product: product1),build(:order_item, product: product3)]) }
       let!(:not_order)     { create(:order, market: market2, organization_id: 0, items: [build(:order_item, product: product2)]) }
 
       it "returns only managed markets orders" do
@@ -184,9 +185,11 @@ describe Order do
       let(:market)       { create(:market) }
       let(:organization) { create(:organization, markets: [market]) }
       let(:product)      { create(:product, :sellable, organization: organization)}
+      let(:product2)     { create(:product, :sellable, organization: organization)}
       let!(:user)        { create(:user, organizations:[organization]) }
       let!(:order)       { create(:order, organization: organization, market: market) }
       let!(:order_item)  { create(:order_item, order: order, product: product) }
+      let!(:order_item2) { create(:order_item, order: order, product: product2) }
       let!(:other_order) { create(:order, organization_id: 0, market: market) }
 
       it 'returns only the organizations orders' do

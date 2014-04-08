@@ -48,14 +48,14 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     elsif user.market_manager?
-      select('orders.*').
+      select('DISTINCT orders.*').
       joins("INNER JOIN order_items ON order_items.order_id = orders.id
              INNER JOIN products ON products.id = order_items.product_id
              LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id
              LEFT JOIN managed_markets ON managed_markets.market_id = orders.market_id").
       where("user_organizations.user_id = :user_id OR managed_markets.user_id = :user_id", user_id: user.id)
     else
-      select('orders.*').
+      select('DISTINCT orders.*').
       joins("INNER JOIN order_items ON order_items.order_id = orders.id
              INNER JOIN products ON products.id = order_items.product_id
              LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id").
