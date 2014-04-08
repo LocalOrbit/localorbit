@@ -1,0 +1,20 @@
+<h1>You have a new order!</h1>
+<p>
+  <span class="lo_order_number">Order Number: 90123</span>
+</p>
+
+<p>
+An order was just placed by <strong><%= @market.name %></strong>.
+Your can check the details of this and all of your current orders by
+following the link above and lokking in to your Farm Fresh account.
+</p>
+
+<div class="lo_call_to_action">
+  <%= link_to "Check Order Status", admin_financials_order_url(@order.id, host: @market.domain), class: "lo_button lo_button_large"%>
+  <p>
+    If clicking the button doesn't work, right click it and copy the link.<br>
+    After you've copied it, paste it into a new browser window.
+  </p>
+</div>
+
+<%= render "order" %>

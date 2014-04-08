@@ -35,7 +35,6 @@ class OrderItem < ActiveRecord::Base
     )
   end
 
-
   def seller_net_total
     unit_price * quantity - market_seller_fee - local_orbit_seller_fee - payment_seller_fee
   end
@@ -52,6 +51,10 @@ class OrderItem < ActiveRecord::Base
     if quantity_available < quantity
       errors[:inventory] = "there are only #{quantity_available} #{product.name.pluralize(quantity_available)} available."
     end
+  end
+
+  def seller
+    product.organization
   end
 
   private

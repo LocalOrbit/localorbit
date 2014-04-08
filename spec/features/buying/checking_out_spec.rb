@@ -4,10 +4,11 @@ describe "Checking Out" do
   let!(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
 
-  let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms") }
-  let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms") }
+  let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users:[create(:user), create(:user)]) }
+  let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
 
-  let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms]) }
+  let(:market_manager) { create(:user) }
+  let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager]) }
   let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
   let(:delivery_day) { DateTime.parse("May 9, 2014, 11:00:00") }
   let(:delivery) {
@@ -95,11 +96,82 @@ describe "Checking Out" do
     expect(page).to have_content("Kale")
   end
 
+  it "sends the buyer an email about the order" do
+    checkout
+    open_email(user.email)
+
+    expect(current_email).to have_subject("Thank you for your order")
+    expect(current_email).to have_body_text("Thank you for your order through #{market.name}")
+
+    visit_in_email "Review Order"
+    expect(page).to have_content("Order info")
+    expect(page).to have_content("Items for delivery...")
+  end
+
+  it "sends the seller email about the order" do
+    checkout
+
+    fulton_farms.users.each do |user|
+      sign_out
+      sign_in_as(user)
+      open_email(user.email)
+
+      expect(current_email).to have_subject("You have a new order!")
+      expect(current_email.body).to have_content("You have a new order!")
+      # It does not include content from other sellers
+      expect(current_email).to have_body_text("Kale")
+      expect(current_email).to have_body_text("Bananas")
+      expect(current_email).to_not have_body_text("Potatoes")
+
+      expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+
+      visit_in_email "Check Order Status"
+      expect(page).to have_content("Order info")
+      expect(page).to have_content("Items for delivery...")
+    end
+
+    ada_farms.users.each do |user|
+      sign_out
+      sign_in_as(user)
+      open_email(user.email)
+
+      expect(current_email).to have_subject("You have a new order!")
+      expect(current_email.body).to have_content("You have a new order!")
+      # It does not include content from other sellers
+      expect(current_email).not_to have_body_text("Kale")
+      expect(current_email).not_to have_body_text("Bananas")
+      expect(current_email).to have_body_text("Potatoes")
+
+      expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+
+      visit_in_email "Check Order Status"
+      expect(page).to have_content("Order info")
+      expect(page).to have_content("Items for delivery...")
+    end
+  end
+
+  it "sends the market manager an email about the order" do
+    checkout
+
+    sign_out
+    sign_in_as(market_manager)
+    open_email(market.managers[0].email)
+
+    expect(current_email.body).to have_content("You've received a new order.")
+    expect(current_email.body).to have_content("Order Placed By: #{buyer.name}")
+
+    expect(current_email).to have_body_text("Kale")
+    expect(current_email).to have_body_text("Bananas")
+    expect(current_email).to have_body_text("Potatoes")
+
+    visit_in_email "Check Order Status"
+    expect(page).to have_content("Order info")
+    expect(page).to have_content("Items for delivery...")
+  end
+
   it "displays the ordered products" do
     checkout
     expect(page).to have_content("Thank you for your order")
-    #items = Dom::Order::ItemRow.all
-    #expect(items.map(&:name)).to include("Bananas", "Potatoes", "Kale")
 
     bananas_row = Dom::Order::ItemRow.find_by_name("Bananas")
     expect(bananas_row.node).to have_content("10 boxes")

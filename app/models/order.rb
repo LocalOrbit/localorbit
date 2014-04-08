@@ -4,6 +4,8 @@ class Order < ActiveRecord::Base
   belongs_to :market
   belongs_to :organization
   belongs_to :delivery
+  belongs_to :placed_by, class: User
+
   has_many :items, inverse_of: :order, class: OrderItem, autosave: true
 
   validates :billing_address, presence: true
@@ -67,11 +69,12 @@ class Order < ActiveRecord::Base
     scope.where(order_items: {delivery_status: 'pending'})
   end
 
-  def self.create_from_cart(params, cart)
+  def self.create_from_cart(params, cart, buyer)
     billing = cart.organization.locations.default_billing
     order_number = OrderNumber.new(cart.market)
 
     order = Order.new(
+      placed_by: buyer,
       order_number: order_number.id,
       organization: cart.organization,
       market: cart.market,
@@ -109,6 +112,10 @@ class Order < ActiveRecord::Base
     end
 
     order
+  end
+
+  def sellers
+    items.map{|item| item.seller }.uniq
   end
 
   def self.joining_products

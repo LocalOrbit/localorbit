@@ -199,6 +199,7 @@ describe Order do
   end
 
   describe "self.create_from_cart" do
+    let(:buyer)             { create(:user) }
     let(:market)            { create(:market, subdomain: "ada") }
     let(:delivery_location) { create(:location) }
     let(:pickup_location)   { create(:market_address, market: market) }
@@ -209,7 +210,7 @@ describe Order do
     let(:cart)              { create(:cart, :with_items, organization: organization, delivery: delivery, location: delivery_location, market: market) }
     let(:params)            { { payment_method: "purchase order"} }
 
-    subject { Order.create_from_cart(params, cart) }
+    subject { Order.create_from_cart(params, cart, buyer) }
 
     context "purchase order" do
       let(:params) { { payment_method: "purchase order", payment_note: "1234" } }
@@ -237,7 +238,7 @@ describe Order do
 
     context "when an exception occurs when creating cart items", truncate: true do
       let(:problem_product) { cart.items[1].product }
-      subject { expect{ Order.create_from_cart(params, cart) }.to raise_exception }
+      subject { expect{ Order.create_from_cart(params, cart, create(:user)) }.to raise_exception }
 
       before do
         expect(problem_product).to receive(:lots_by_expiration).and_raise
@@ -325,6 +326,45 @@ describe Order do
       Timecop.freeze(Date.parse("2014-03-01"))
       expect(subject.order_number).to eq("LO-14-ADA-0000001")
       Timecop.return
+    end
+
+    it "saves the user" do
+      expect(subject.placed_by).to eql(buyer)
+    end
+  end
+
+  describe "#sellers" do
+    context "no order items" do
+      it "returns an empty array" do
+        order = create(:order)
+        expect(order.sellers).to eql([])
+      end
+    end
+
+    context "with order_items" do
+      let(:ada_farms) { create(:organization, :seller) }
+      let(:fulton_farms) { create(:organization, :seller) }
+      let(:not_included_farms) { create(:organization, :seller) }
+
+
+      let(:kale) { create(:product, :sellable, organization: ada_farms) }
+      let(:bananas) { create(:product, :sellable, organization: ada_farms) }
+      let(:peas) { create(:product, :sellable, organization: fulton_farms) }
+      let!(:tomatoes) { create(:product, :sellable, organization: not_included_farms) }
+
+      it "returns sellers involved in order" do
+        order = create(:order)
+        order_items = [
+          create(:order_item, order: order, product: kale),
+          create(:order_item, order: order, product: bananas),
+          create(:order_item, order: order, product: peas)
+        ]
+
+        expect(order.sellers.count).to eql(2)
+        expect(order.sellers).to include(ada_farms)
+        expect(order.sellers).to include(fulton_farms)
+        expect(order.sellers).not_to include(not_included_farms)
+      end
     end
   end
 end
