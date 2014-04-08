@@ -27,15 +27,14 @@ textarea {
   @include box-sizing(border-box);
   padding-right: 12px;
   padding-left: 12px;
-  border: solid 2px #f1f1f1;
-  @include border-radius(2px);
-  @include box-shadow(inset 0 0 0 1px #aaa, inset 0 1px 5px #aaa);
+  border: solid 1px #aaa;
+  @include border-radius(3px);
   margin: 4px 0;
   font-family: inherit;
   font-size: 14px;
 
   &:focus {
-    border-color: #bfd9ad;
+    @include box-shadow(0 0 0 2px #bfd9ad);
     outline: none;
   }
   &.input--short {
@@ -201,10 +200,11 @@ textarea {
   select,
   textarea {
     border-color: $alert_text;
-    @include box-shadow(inset 0 0 0 1px $alert_text, inset 0 1px 5px $alert_text);
-  }
-  input[type=number] {
-    @include box-shadow(inset 0 0 0 1px $warning_text, inset 0 1px 5px $warning_text);
+
+    &:active,
+    &:focus {
+      @include box-shadow(0 0 2px $warning_text);
+    }
   }
 }
 div.field_with_errors {

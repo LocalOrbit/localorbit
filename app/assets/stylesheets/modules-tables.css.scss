@@ -65,15 +65,8 @@ td {
     height: 24px;
     padding-right: 7px;
     padding-left: 7px;
-    border-width: 0;
     margin: 2px 0;
     font-size: 14px;
-
-    &:focus {
-      height: 28px;
-      border-width: 2px;
-      margin: 0;
-    }
   }
 
 }
@@ -270,8 +263,14 @@ th {
 
   .product-table--mini,
   .product-table--user {
+    th {
+      font-weight: normal;
+    }
+    thead tr {
+      border-bottom: double 3px #FBF2EA;
+    }
     tr {
-      border-bottom: solid 1px #ccc;
+      border-bottom: solid 1px #fbf2ea;
 
       &:nth-child(odd) {
         background: #fff;
@@ -318,6 +317,7 @@ th {
       font-size: 12px;
 
       &:first-child {
+        color: #9f7b51;
         font-size: 16px;
       }
     }
