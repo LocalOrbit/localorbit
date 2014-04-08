@@ -102,6 +102,10 @@ describe "Checking Out" do
 
     expect(current_email).to have_subject("Thank you for your order")
     expect(current_email).to have_body_text("Thank you for your order through #{market.name}")
+
+    visit_in_email "Review Order"
+    expect(page).to have_content("Order info")
+    expect(page).to have_content("Items for delivery...")
   end
 
   it "sends the seller email about the order" do
@@ -121,6 +125,8 @@ describe "Checking Out" do
     end
 
     ada_farms.users.each do |user|
+      sign_out
+      sign_in_as(user)
       open_email(user.email)
 
       expect(current_email).to have_subject("You have a new order!")
