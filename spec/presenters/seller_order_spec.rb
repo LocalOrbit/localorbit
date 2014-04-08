@@ -5,7 +5,7 @@ describe SellerOrder do
   let!(:product) { create(:product, :sellable, organization: seller.organizations.first) }
   let!(:order) { create(:order, organization: seller.organizations.first, market: seller.markets.first) }
   let!(:seller_order) { SellerOrder.new(order, seller) }
-  let!(:items) { create_list(:order_item, 3, product: product, order: order, delivery_status: "Pending") }
+  let!(:items) { create_list(:order_item, 3, product: product, order: order, delivery_status: "pending") }
 
   describe "#delivery_status" do
     subject { seller_order.delivery_status }
@@ -36,8 +36,8 @@ describe SellerOrder do
 
     context "when at least one item is contested, delivered, and pending" do
       before do
-        items.first.update_attributes(delivery_status: "Contested")
-        items.last.update_attributes(delivery_status: "Delivered")
+        items.first.update_attributes(delivery_status: "contested")
+        items.last.update_attributes(delivery_status: "delivered")
       end
 
       it { should eq("contested, partially delivered") }

@@ -396,6 +396,27 @@ module Dom
         node.find("#location_zip")
       end
     end
+
+    class SoldItemRow < Domino
+      selector ".sold-item"
+
+      attribute :order_number
+      attribute :order_date
+      attribute :buyer
+      attribute :seller
+      attribute :product
+      attribute :market
+      attribute :quantity
+      attribute :total_price
+      attribute :unit_price
+      attribute :delivery_status
+      attribute :buyer_payment_status
+      attribute :seller_payment_status
+
+      def select
+        node.find("input").set(true)
+      end
+    end
   end
 
   module Cart
