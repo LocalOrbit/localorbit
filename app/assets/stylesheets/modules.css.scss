@@ -280,6 +280,14 @@
   list-style: none;
 }
 
+.location-map {
+  display: block;
+  width: 100%;
+
+  + .adr {
+    margin-top: 0;
+  }
+}
 .map {
   > img {
     display: block;
@@ -295,6 +303,11 @@
   }
 }
 
+.product-image {
+  margin: 0 0 20px;
+}
+
+/** Nav */
 .nav {
   a {
     color: inherit;
@@ -416,6 +429,15 @@
   }
 }
 
+.nav--sidebar {
+  a {
+    color: $link;
+  }
+  > li {
+    margin: .4em 0;
+    font-size: smaller;
+  }
+}
 .org-profile-photo {
   display: block;
   width: 300px;
@@ -450,7 +472,7 @@
   margin: 20px 0 0;
   font-weight: bold;
 
-  + .producer-link {
+  + .producer {
     margin: 0 0 1em;
   }
 }
@@ -460,6 +482,16 @@
   font: lighter 2em 'OpenSans-Light', OpenSans, "Open Sans", sans-serif;
   font-weight: 300;
 }
+  .heading-section--product {
+    margin-bottom: 0;
+    font-size: 1.7em;
+    line-height: 1.1;
+
+    + p {
+      margin-top: 0;
+    }
+  }
+
 
 .heading-seller {
   margin-bottom: 0;

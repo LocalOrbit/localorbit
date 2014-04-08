@@ -2,37 +2,56 @@
   <div class="column column--fourth column--guttered" id="product-filter">
 
     <%= render "selected_delivery" %>
+
+    <ul class="list-naked nav nav--sidebar">
+      <li><%= link_to "Continue Shopping",  products_path %></li>
+      <li><%= link_to "More Products from This Seller", seller_path(current_organization) %></li>
+      <li><%= link_to "More Products in #{@breadcrumbs.first.name}", "#{products_path}?category=#{@breadcrumbs.first.id}" %></li>
+    </ul>
+
   </div
   ><div class="column column--three-fourths column--guttered">
-  <%= link_to "Return to Shop Home", market_path(current_market) %>
+    <%= link_to "Shop Home", market_path %>
+    / <%= link_to @breadcrumbs.first.name, "#{products_path}?category=#{@breadcrumbs.first.id}" %>
+
     <div class="row">
       <div class="column column--half column--guttered">
+
         <h1 class="heading-product"><%= @product.name %></h1>
         <p class="producer">Produced by <%= link_to @product.organization.name, seller_path(current_organization) %></p>
 
-        <h2>Prices</h2>
-        <ul class="tiers">
-          <% @product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
-            <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
-          <% end %>
-        </ul>
+        <table class="product product-table product-table--mini">
+          <thead>
+            <tr>
+              <th>Pricing</th>
+            </tr>
+          </thead>
+          <tr>
+            <td class="pricing">
+              <ul class="tiers">
+                <% @product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
+                  <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
+                <% end %>
+              </ul>
+            </td>
+          </tr>
+        </table>
 
-        <h2>What</h2>
+        <h2 class="heading-section heading-section--product">What</h2>
         <%= simple_format @product.short_description %>
 
-        <h2>How</h2>
+        <h2 class="heading-section heading-section--product">How</h2>
 
         <%= simple_format @product.long_description %>
 
       </div
       ><div class="column column--half column--guttered">
         <% if @product.image_uid.present? %>
-          <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid) %>
+          <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid), alt: "", class: "product-image" %>
         <% else %>
-          <%= image_tag 'default-product-image.png' %>
+          <%= image_tag 'default-product-image.png', alt: "", class: "product-image" %>
         <% end %>
 
-        <h2><%= @product.location.name %></h2> 
         <img class="location-map" alt="" src="<%= @product.location_map %>">
         <%= @product.location_address %>
       </div>

@@ -264,6 +264,24 @@ th {
       font-size: 12px;
     }
   }
+  .product-table--mini {
+    margin: 20px 0;
+
+    th {
+      padding-left: 0;
+      font-weight: normal;
+    }
+    .unit-price {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .tiers {
+      padding-top: 0;
+    }
+      .tier {
+        font-size: 12px;
+      }
+  }
   .product-table--user {
     margin-top: 0;
 
