@@ -112,6 +112,8 @@ describe "Checking Out" do
     checkout
 
     fulton_farms.users.each do |user|
+      sign_out
+      sign_in_as(user)
       open_email(user.email)
 
       expect(current_email).to have_subject("You have a new order!")
@@ -122,6 +124,10 @@ describe "Checking Out" do
       expect(current_email).to_not have_body_text("Potatoes")
 
       expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+
+      visit_in_email "Check Order Status"
+      expect(page).to have_content("Order info")
+      expect(page).to have_content("Items for delivery...")
     end
 
     ada_farms.users.each do |user|
@@ -137,6 +143,10 @@ describe "Checking Out" do
       expect(current_email).to have_body_text("Potatoes")
 
       expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+
+      visit_in_email "Check Order Status"
+      expect(page).to have_content("Order info")
+      expect(page).to have_content("Items for delivery...")
     end
   end
 
