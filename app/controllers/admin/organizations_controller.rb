@@ -1,7 +1,7 @@
 module Admin
   class OrganizationsController < AdminController
     before_action :require_admin_or_market_manager, only: [:new, :create]
-    before_action :find_organization, only: [:show, :edit, :update]
+    before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules]
 
     def index
       @organizations = current_user.managed_organizations
@@ -36,6 +36,9 @@ module Admin
       end
     end
 
+    def delivery_schedules
+      render partial: "delivery_schedules", locals: {delivery_schedules: find_delivery_schedules, product: nil}
+    end
 
     private
 
@@ -54,6 +57,10 @@ module Admin
 
     def find_organization
       @organization = current_user.managed_organizations.find(params[:id])
+    end
+
+    def find_delivery_schedules
+      @organization.decorate.delivery_schedules
     end
   end
 end

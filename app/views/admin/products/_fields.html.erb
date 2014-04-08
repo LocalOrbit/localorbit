@@ -117,21 +117,14 @@
     <%= f.check_box :use_all_deliveries %>
     <%= f.label :use_all_deliveries, "Make product available on all market delivery dates" %>
   </div>
-  <% @delivery_schedules.keys.each do |key| %>
-  <div class="delivery-schedule-options">
-    <b><%= key %></b>
-    <ul>
-      <% @delivery_schedules[key].decorate.each do |schedule| %>
-        <li class="product-delivery-schedule">
-          <label>
-          <%= check_box_tag "product[delivery_schedule_ids][]", schedule.id, schedule.attached_to_product(@product), disabled: @product.use_all_deliveries? %>
-            <span class="weekday"><%= schedule.weekday.pluralize %></span> <%= schedule.human_description %>
-          </label>
-        </li>
-      <% end %>
-    </ul>
+
+  <div id="delivery-schedules">
+    <% if @organizations.count > 1 %>
+      <b>No Organization Selected</b>
+    <% else %>
+      <%= render partial: "admin/organizations/delivery_schedules", locals: {delivery_schedules: @delivery_schedules, product: @product} %>
+    <% end %>
   </div>
-  <% end %>
 </fieldset>
 
 <% if @product.lots.count < 1 %>

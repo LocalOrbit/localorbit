@@ -37,6 +37,8 @@ Rails.application.routes.draw do
           put :update_default
         end
       end
+
+      get :delivery_schedules, on: :member
     end
 
     resource :delivery_tools, only: :show do

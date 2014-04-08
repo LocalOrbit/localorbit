@@ -1,0 +1,15 @@
+<% delivery_schedules.keys.each do |key| %>
+<div class="delivery-schedule-options">
+  <b><%= key.name %></b>
+  <ul>
+    <% delivery_schedules[key].decorate.each do |schedule| %>
+      <li class="product-delivery-schedule">
+        <label>
+          <%= check_box_tag "product[delivery_schedule_ids][]", schedule.id, schedule.attached_to_product(product), disabled: product.nil? || product.use_all_deliveries? %>
+          <span class="weekday"><%= schedule.weekday.pluralize %></span> <%= schedule.human_description %>
+        </label>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
