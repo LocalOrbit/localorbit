@@ -50,6 +50,15 @@ feature "Viewing products" do
     expect(dom_product.quantity).to have_text(expected_price)
   end
 
+  scenario "a product with less inventory than required to purchase" do
+    org1_product.prices.first.update(min_quantity: 200) #there are only 150
+    sign_in_as(user)
+
+    expect(Dom::Product.all.count).to eql(1)
+    expect(Dom::Product.find_by_name(org1_product.name)).to be_nil
+    expect(Dom::Product.find_by_name(org2_product.name)).to_not be_nil
+  end
+
   scenario "an individual product" do
     sign_in_as(user)
     product = available_products.first
