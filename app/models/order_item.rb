@@ -1,4 +1,6 @@
 class OrderItem < ActiveRecord::Base
+  DELIVERY_STATUSES = %w(pending canceled delivered contested)
+
   attr_accessor :deliver_on_date
 
   belongs_to :order, inverse_of: :items
@@ -12,7 +14,7 @@ class OrderItem < ActiveRecord::Base
   validates :quantity, presence: true
   validates :unit, presence: true
   validates :unit_price, presence: true
-  validates :delivery_status, presence: true
+  validates :delivery_status, presence: true, inclusion: {in: DELIVERY_STATUSES}
 
   validate  :product_availability, on: :create
 
@@ -37,6 +39,10 @@ class OrderItem < ActiveRecord::Base
       seller_name: item.product.organization.name,
       delivery_status: "pending"
     )
+  end
+
+  def self.for_user(user)
+    joins(:product).where(products: {organization_id: user.managed_organizations.pluck(:id).uniq})
   end
 
   def seller_net_total
