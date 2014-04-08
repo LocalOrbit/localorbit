@@ -686,6 +686,18 @@
     background-color: $notice_bg;
   }
 
+  .flash--warning > p {
+    border-color: $warning_text;
+    background-color: $warning_bg;
+  }
+  td.flash--warning {
+    border-color: $warning_text;
+    background-color: $warning_bg;
+    color: $warning_text;
+    text-align: center;
+    font-weight: bold;
+  }
+
 .form-errors {
   padding: 0;
   margin: 0 0 2em;
