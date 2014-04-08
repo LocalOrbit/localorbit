@@ -18,16 +18,16 @@ describe 'Buyer viewing dashboard' do
   # Ada Farms
   let!(:potatoes) { create(:product, :sellable, name: "Potatoes", organization: ada_farms) }
 
-  let!(:order1)      { create(:order, organization: buyer, placed_at: Time.parse('2014-04-02')) }
+  let!(:order1)      { create(:order, organization: buyer, placed_at: Time.zone.parse('2014-04-02')) }
   let!(:order_item1) { create(:order_item, order: order1, product: bananas) }
 
-  let!(:order2)      { create(:order, organization: buyer, placed_at: Time.parse('2014-04-03')) }
+  let!(:order2)      { create(:order, organization: buyer, placed_at: Time.zone.parse('2014-04-03')) }
   let!(:order_item2) { create(:order_item, order: order2, product: kale) }
 
-  let!(:order3)      { create(:order, organization: buyer, placed_at: Time.parse('2014-04-04')) }
+  let!(:order3)      { create(:order, organization: buyer, placed_at: Time.zone.parse('2014-04-04')) }
   let!(:order_item3) { create(:order_item, order: order3, product: potatoes) }
 
-  let!(:order4)      { create(:order, organization: buyer2, placed_at: Time.parse('2014-04-03')) }
+  let!(:order4)      { create(:order, organization: buyer2, placed_at: Time.zone.parse('2014-04-03')) }
   let!(:order_item4) { create(:order_item, order: order4, product: potatoes) }
 
   it 'shows their order history' do
