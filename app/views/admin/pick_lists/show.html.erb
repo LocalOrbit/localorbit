@@ -1,5 +1,10 @@
 <%= link_to "Back to delivery tools", admin_delivery_tools_path %>
-<% @pick_list.keys.each do |organization| %>
+<% @pick_list.keys.each_with_index do |organization, index| %>
+
+  <% if index != 0 %>
+    <div class="pdf-page-break"></div>
+  <% end %>
+
   <h1>Pick List</h1>
 
   <h2>Delivery</h2>
@@ -65,5 +70,4 @@
       <% end %>
     <% end %>
   </table>
-
 <% end %>

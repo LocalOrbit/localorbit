@@ -4,3 +4,9 @@
 .is-open .hide-when-open {
   display: none;
 }
+
+.pdf-page-break {
+  display:block;
+  clear: both;
+  page-break-after: always;
+}
