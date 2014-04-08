@@ -78,7 +78,6 @@ td {
 
 }
 
-
 tbody {
   tr{
     &:nth-child(odd) {
@@ -197,21 +196,21 @@ th {
     font-size: 12px;
     font-weight: bold;
   }
-  .product-clear {
-    font-size: 15px;
-    line-height: 28px;
-  }
   .product-image {
-    padding-right: 10px;
+    padding-right: 0;
 
     > img {
       display: block;
-      width: 60px;
+      width: 75px;
       @include border-radius(5px);
     }
   }
   .quantity {
     text-align: center;
+
+    input {
+      text-align: center;
+    }
   }
     .price-for-quantity {
       display: block;
@@ -223,7 +222,7 @@ th {
       }
     }
   .tiers {
-    padding: 0;
+    padding: 5px 0 0 0;
     list-style: none;
 
     > li:nth-child(even) {
@@ -235,10 +234,15 @@ th {
       font-size: 10px;
     }
   .total {
+    min-width: 60px;
     font-weight: bold;
     line-height: 28px;
   }
 }
+  .product-clear {
+    font-size: 15px;
+    line-height: 28px;
+  }
 
 .info > .name {
   margin-top: 0

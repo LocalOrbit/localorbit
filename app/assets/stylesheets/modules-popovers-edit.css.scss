@@ -37,6 +37,7 @@
   line-height: 2.5;
   background: #F2F2F2;
   @include border-radius(5px 5px 0 0);
+  overflow: hidden;
 
   .close {
     float: right;
