@@ -13,9 +13,8 @@ describe "Viewing an empty cart" do
       switch_to_subdomain(market.subdomain)
       expect(Dom::CartLink.first.node).to have_content("0")
       click_link "Cart", match: :first
-      within "h1" do
-        expect(page).to have_content("Cart")
-      end
+      expect(page).to have_content("Your cart is empty.")
+      expect(page).to have_content("Add items to your cart to see them here and make a purchase.")
     end
   end
 
@@ -25,9 +24,8 @@ describe "Viewing an empty cart" do
       switch_to_subdomain(market.subdomain)
       expect(Dom::CartLink.first.node).to have_content("0")
       click_link "Cart"
-      within "h1" do
-        expect(page).to have_content("Cart")
-      end
+      expect(page).to have_content("Your cart is empty.")
+      expect(page).to have_content("Add items to your cart to see them here and make a purchase.")
     end
   end
 

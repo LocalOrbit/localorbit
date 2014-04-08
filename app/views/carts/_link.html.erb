@@ -1,3 +1,21 @@
-<%= link_to [:cart], class: (current_page?([:cart]) ? "current cart" : "cart" ) do %>
-  Cart <span class="counter"><%= current_cart.present? ? current_cart.items.count : 0 %></span>
+<% cart_class_base = (current_page?([:cart]) ? "current cart" : "cart" ) %>
+
+<% if current_cart.present? && (current_cart.items.count > 0) %>
+  <%= link_to [:cart], class: cart_class_base  do %>
+    Cart <span class="counter"><%= current_cart.items.count %></span>
+  <% end %>
+<% else %>
+  <%= link_to "#empty-cart", class: "#{cart_class_base} popup-toggle" do %>
+    Cart <span class="counter">0</span>
+  <% end %>
 <% end %>
+
+<div id="empty-cart" class="popup is-hidden">
+  <div class="popup-header">
+    Your cart is empty.
+  </div>
+
+  <div class="popup-body">
+    <p>Add items to your cart to see them here and make a purchase.</p>
+  </div>
+</div>
