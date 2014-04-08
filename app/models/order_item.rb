@@ -18,6 +18,10 @@ class OrderItem < ActiveRecord::Base
 
   before_create :consume_inventory
 
+  def self.for_delivery(delivery)
+    joins(order: :delivery).where(orders: { delivery_id: delivery.id })
+  end
+
   def self.create_with_order_and_item_and_deliver_on_date(opts={})
     item = opts[:item]
     order = opts[:order]

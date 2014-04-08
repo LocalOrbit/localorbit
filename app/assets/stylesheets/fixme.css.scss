@@ -24,3 +24,17 @@
 .delivery-schedule-options b {
   padding-left: 22px;
 }
+
+.half-block {
+  display: inline-block;
+  width: 49%;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 5px 0 2px 0;
+  }
+}
+
+.delivery-tools {
+  margin: 50px 0 100px 0;
+}
