@@ -25,6 +25,7 @@ $ ->
     balanced.init($form.data("balanced-marketplace-uri"))
     type = $form.data("balanced-object-type")
 
+    $(".field_with_errors :input").unwrap()
     $('input[type="submit"]').attr("disabled", "disabled")
     tokenize(type, getFormData($form))
       .done (payment_object) ->
@@ -35,6 +36,6 @@ $ ->
         $realForm.submit()
       .fail (error) ->
         for key of error
-          $form.find("[name^=#{key}]").addClass("error")
+          $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
       .always ->
           $('input[type="submit"]').removeAttr("disabled")
