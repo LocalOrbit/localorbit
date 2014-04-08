@@ -162,7 +162,7 @@ th {
   .meta {
     a {
       margin-right: .4em;
-      font-size: 11px;
+      font-size: 12px;
 
       &:hover {
         color: #999;
@@ -201,6 +201,7 @@ th {
     > img {
       display: block;
       width: 75px;
+      max-width: none;
       @include border-radius(5px);
     }
   }
@@ -322,31 +323,31 @@ th {
     }
 
     .info {
-      width: 45%;
-
       .popup-toggle { 
         color: #666;
+
       }
     }
 
     .name {
-      margin-bottom: .2em;
+      margin-bottom: 0;
       font-weight: normal;
-
-      + .short_description {
-        > p {
-          margin-top: .5em;
-        }
-        > .popup-toggle {
-          display: inline-block;
-          margin: .5em 0 0 .5em;
-        }
-      }
     } 
 
     .pricing {
       min-width: 23%;
       white-space: nowrap;
+    }
+
+    .short_description {
+      > p {
+        margin-top: 0;
+        font-size: 13px;
+      }
+      > .popup-toggle {
+        display: inline-block;
+        margin: 0 0 0 .5em;
+      }
     }
   }
 

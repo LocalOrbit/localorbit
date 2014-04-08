@@ -521,7 +521,9 @@
 
 .subheading--sidebar {
   margin: 0;
-  font-size: 10px;
+  color: inherit;
+  font-family: OpenSans, "Open Sans", sans-serif;
+  font-size: 12px;
   font-weight: normal;
 
   + p {
@@ -538,6 +540,12 @@
   color: #666;
   background: #f9f9f9;
   font-size: 12px;
+
+  .display-date,
+  .location-name {
+    color: #000;
+    font-size: 14px;
+  }
 }
 
 /** Tabs */
