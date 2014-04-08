@@ -296,6 +296,17 @@ module Dom
 
     end
 
+    class PackListItem < Domino
+      selector ".pack-list-item"
+
+      attribute :name
+      attribute :quantity
+      attribute :units
+      attribute :seller
+      attribute :total_price
+    end
+
+
     class ProductForm < Domino
       selector "form.product"
 

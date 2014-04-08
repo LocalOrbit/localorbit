@@ -5,7 +5,39 @@ class OrderDecorator < Draper::Decorator
     delivery.delivery_schedule.buyer_pickup? ? "can be picked up at:" : "will be delivered to:"
   end
 
+  def display_fulfillment_info
+    delivery.delivery_schedule.buyer_pickup? ? "Buyer picks up from market on" : "Market delivers to buyer on"
+  end
+
   def display_delivery_address
     "#{delivery_address}, #{delivery_city}, #{delivery_state} #{delivery_zip}"
+  end
+
+  def display_delivery_street
+    billing_address
+  end
+
+  def display_delivery_city_state_zip
+    "#{billing_city}, #{billing_state} #{billing_zip}"
+  end
+
+  def display_delivery_phone
+    billing_phone
+  end
+
+  def display_market_street
+    market_address.address
+  end
+
+  def display_market_city_state_zip
+    "#{market_address.city}, #{market_address.state} #{market_address.zip}"
+  end
+
+  def display_market_phone
+    market_address.phone
+  end
+
+  def market_address
+    market.addresses.first
   end
 end
