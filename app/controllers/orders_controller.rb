@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   before_action :hide_admin_navigation
 
   def create
-    @placed_order = PlaceOrder.perform(order_params: order_params.merge(current_user: current_user), cart: current_cart)
+    @placed_order = PlaceOrder.perform(buyer: current_user, order_params: order_params, cart: current_cart)
     @order = @placed_order.order.decorate
     if @placed_order.success?
       session.delete(:cart_id)
@@ -16,6 +16,6 @@ class OrdersController < ApplicationController
   protected
 
   def order_params
-    params.require(:order).permit(:payment_method, :payment_note, :current_user)
+    params.require(:order).permit(:payment_method, :payment_note)
   end
 end

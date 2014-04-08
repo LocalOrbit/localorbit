@@ -69,12 +69,12 @@ class Order < ActiveRecord::Base
     scope.where(order_items: {delivery_status: 'pending'})
   end
 
-  def self.create_from_cart(params, cart)
+  def self.create_from_cart(params, cart, buyer)
     billing = cart.organization.locations.default_billing
     order_number = OrderNumber.new(cart.market)
 
     order = Order.new(
-      placed_by: params[:current_user],
+      placed_by: buyer,
       order_number: order_number.id,
       organization: cart.organization,
       market: cart.market,
