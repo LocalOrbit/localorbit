@@ -1,24 +1,29 @@
-<h1>Delivery Tools</h1>
+<div class="row row--partial">
+  <div class="column column--eleven-twelfths">
+    <h1>Upcoming Deliveries</h1>
 
-<% if @upcoming_deliveries.empty? %>
-  <h2>You currently have no upcoming deliveries.</h2>
-<% else %>
-  <% @upcoming_deliveries.each do |delivery| %>
-  <div class="upcoming-delivery">
-    <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading %></h2>
-    Deliver to:
-    <div class="location-name"><%= delivery.deliver_to_name %></div>
-    <div class="location"><%= delivery.deliver_to_location %></div>
+    <% if @upcoming_deliveries.empty? %>
+      <h2>You currently have no upcoming deliveries.</h2>
+    <% else %>
+      <% @upcoming_deliveries.each do |delivery| %>
+      <div class="upcoming-delivery">
+        <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading %></h2>
+        Deliver to:
+        <%= content_tag :div, delivery.deliver_to_name, class: "location-name" if delivery.deliver_to_name.present? %>
+        <div class="location"><%= delivery.deliver_to_location %></div>
 
-    <div class="seller-tools">
-      <div><%= link_to "Pick List", admin_delivery_tools_pick_list_path(delivery) %></div>
-      <% if current_user.market_manager? || current_user.admin? %>
-        <div><%= link_to "Master packing slips", admin_delivery_tools_pack_list_path(delivery) %></div>
+        <div class="seller-tools toolbar" data-tools="<%= current_user.market_manager? || current_user.admin? ? "4" : "3" %>">
+          <div class="tool"><%= link_to "Pick List", admin_delivery_tools_pick_list_path(delivery) %></div>
+          <% if current_user.market_manager? || current_user.admin? %>
+            <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, admin_delivery_tools_pack_list_path(delivery) %></div>
+          <% end %>
+          <div class="tool"><%= link_to "Individual Packing Slips <span class='note'>per seller</span>".html_safe, admin_delivery_tools_individual_pack_list_path(delivery) %></div>
+          <div class="tool"><%= link_to "Order Summary", coming_soon_dashboard_path %></div>
+        </div>
+        <hr>
+
+      </div>
       <% end %>
-      <div><%= link_to "Individual Packing Slips", admin_delivery_tools_individual_pack_list_path(delivery) %></div>
-      <div><%= link_to "Order Summary", coming_soon_dashboard_path %></div>
-    </div>
-
+    <% end %>
   </div>
-  <% end %>
-<% end %>
+</div>

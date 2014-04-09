@@ -8,6 +8,8 @@
 //= depend_on_asset "icon-export@2x.png"
 //= depend_on_asset "tooltip-icon.png"
 //= depend_on_asset "tooltip-icon@2x.png"
+//= depend_on_asset "center-rule.png"
+//= depend_on_asset "center-rule@2x.png"
 
 @import "mixins.css.scss";
 
@@ -934,6 +936,63 @@
   color: #000;
 }
 
+/** Toolbar */
+.toolbar {
+  width: 100%;
+  height: 80px;
+  @include border-radius(5px);
+  background: #f2f2f2;
+  font-size: 0.1px;
+  text-align: justify;
+
+  &:after {
+    display: inline-block;
+    width: 100%;
+    content: "";
+  }
+  .note {
+    display: block;
+    color: #000;
+    font-size: smaller;
+  }
+  &[data-tools="4"] {
+    > .tool {
+      width: 24.9%;
+    }
+  }
+  &[data-tools="3"] {
+    > .tool {
+      width: 33%;
+    }
+  }
+}
+  .tool {
+    display: inline-block;
+    height: 80px;
+    background: asset_url('center-rule.png') left top repeat-y;
+    background: asset_url('center-rule@2x.png') left top / 1px auto repeat-y;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    &:first-child {
+      background-image: none;
+    }
+    &:after {
+      display: inline-block;
+      height: 80px;
+      width: 0;
+      content: "";
+      vertical-align: middle;
+    }
+    &:last-child:after {
+      margin: 0;
+      border: 0;
+    }
+    > a {
+      display:inline-block;
+      vertical-align: middle;
+    }
+  }
 
 /** Tooltips */
 label ~ .tooltip {
@@ -981,5 +1040,24 @@ label ~ .tooltip {
   }
   &.pull-right + .pull-right {
     margin-right: .5em;
+  }
+}
+
+/** Upcoming Delivery */
+.upcoming-delivery {
+  color: #000;
+
+  hr {
+    margin: 30px 0;
+  }
+
+  > .upcoming-delivery-date {
+    margin-bottom: .5em;
+    font: bold 24px 'Open Sans Condensed', 'Open Sans', OpenSans, sans-serif;
+  }
+
+  > .location {
+    margin: 0 0 1em;
+    font: bold 20px 'Open Sans Condensed', 'Open Sans', OpenSans, sans-serif;
   }
 }
