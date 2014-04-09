@@ -53,6 +53,12 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :order_items, only: :index, path: :sold_items do
+      collection do
+        post :set_status
+      end
+    end
+
     resources :users, only: :index
 
     resource :fresh_sheet, only: [:show, :update] do

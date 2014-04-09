@@ -1,0 +1,60 @@
+<div>
+  <div class="l-page-header">
+    <h1>Sold Items</h1>
+    <div class="header-actions">
+      <%= link_to 'Export CSV', coming_soon_dashboard_path, class: "export todo" %>
+    </div>
+  </div>
+</div>
+
+<%= form_tag set_status_admin_order_items_path, id: "sold-items" do %>
+  <div class="actions">
+    <h4>Actions</h4>
+    <%= select_tag :delivery_status, options_for_select(OrderItem::DELIVERY_STATUSES.map {|s| [s.titleize, s] }, include_blank: 'Set Delivery Status') %>
+    <input type="submit" class="btn btn--small" value="Apply Action">
+    <span>This will be applied to any selected rows.</span>
+  </div>
+
+  <table class="sortable">
+    <thead>
+      <tr>
+        <th><input class="select-all" type="checkbox"></th>
+        <th>Order #</th>
+        <th>Buyer</th>
+        <th>Seller</th>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Total</th>
+        <th>Delivery</th>
+        <th>Buyer $</th>
+        <th>Seller $</th>
+      </tr>
+    </thead>
+
+    <% @order_items.decorate.each do |order_item| %>
+    <tr class="<%= cycle "odd", "even" %> sold-item">
+      <td><%= check_box_tag "order_item_ids[]", order_item.id %></td>
+      <td>
+        <%= content_tag "span", order_item.placed_at, class: "order-date" %><br>
+        <%= link_to order_item.order.order_number, coming_soon_dashboard_path, class: "order-number" %>
+      </td>
+      <td><%= link_to order_item.seller_name, [:admin, order_item.product.organization], class: "seller" %></td>
+      <td>
+        <%= link_to order_item.order.organization.name, [:admin, order_item.order.organization], class: "buyer" %><br>
+        <%= content_tag "span", order_item.order.market.name, class: "market" %>
+      </td>
+      <td><%= link_to order_item.name, [:admin, order_item.product], class: "product" %></td>
+      <td class="quantity"><%= order_item.quantity %></td>
+      <td>
+        <%= content_tag "span", number_to_currency(order_item.gross_total), class: "total-price" %><br>
+        <%= content_tag "span", order_item.price_per_unit, class: "unit-price" %>
+      </td>
+      <td class="delivery-status"><%= order_item.delivery_status.titleize %></td>
+      <td class="buyer-payment-status"><%= order_item.order.payment_status.titleize %></td>
+      <td class="seller-payment-status">Not Yet Implemented</td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<%= paginate @order_items %>
