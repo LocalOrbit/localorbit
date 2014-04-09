@@ -132,17 +132,16 @@ describe "Pick list" do
         visit admin_delivery_tools_pick_list_path(friday_delivery.id)
       end
 
-      it "shows the pick list" do
+      it "shows the pick list", js: true do
         expect(page).to have_content("Pick List")
         expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
         expect(page).to have_content(sellers.name)
 
-        lines = Dom::Admin::PickListItem.all
-        expect(lines.count).to eql(1)
+        expect(Dom::Admin::PickListItem.count).to eql(1)
 
         line = Dom::Admin::PickListItem.find_by_name(sellers_product.name)
         expect(line.total_sold).to have_content("2")
-        expect(line.buyer).to have_content(buyer1.name)
+        expect(line.buyer).to have_content(buyer2.name)
         expect(line.breakdown).to have_content("1")
 
         expect(page).to_not have_content(others_product.name)
