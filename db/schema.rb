@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140405021321) do
+ActiveRecord::Schema.define(version: 20140409143854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,7 @@ ActiveRecord::Schema.define(version: 20140405021321) do
     t.decimal  "ach_seller_fee",         precision: 5, scale: 3, default: 0.0,   null: false
     t.decimal  "ach_market_fee",         precision: 5, scale: 3, default: 0.0,   null: false
     t.decimal  "ach_fee_cap",            precision: 6, scale: 2, default: 8.0,   null: false
+    t.integer  "po_payment_term"
   end
 
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
@@ -219,6 +220,16 @@ ActiveRecord::Schema.define(version: 20140405021321) do
     t.datetime "updated_at"
     t.string   "delivery_status"
   end
+
+  create_table "order_payments", force: true do |t|
+    t.integer  "payment_id"
+    t.integer  "order_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_payments", ["order_id"], name: "index_order_payments_on_order_id", using: :btree
+  add_index "order_payments", ["payment_id"], name: "index_order_payments_on_payment_id", using: :btree
 
   create_table "orders", force: true do |t|
     t.integer  "organization_id"
@@ -264,6 +275,16 @@ ActiveRecord::Schema.define(version: 20140405021321) do
     t.string   "twitter"
   end
 
+  create_table "payments", force: true do |t|
+    t.integer  "payee_id"
+    t.string   "payee_type"
+    t.string   "payment_type"
+    t.decimal  "amount",       precision: 10, scale: 2, default: 0.0, null: false
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "prices", force: true do |t|
     t.integer  "product_id"
     t.integer  "market_id"
@@ -294,8 +315,8 @@ ActiveRecord::Schema.define(version: 20140405021321) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.string   "image_uid"
     t.integer  "top_level_category_id"
+    t.string   "image_uid"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"

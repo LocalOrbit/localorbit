@@ -9,6 +9,8 @@ class Order < ActiveRecord::Base
   belongs_to :placed_by, class: User
 
   has_many :items, inverse_of: :order, class: OrderItem, autosave: true
+  has_many :order_payments, inverse_of: :order
+  has_many :payments, through: :order_payments, inverse_of: :orders
 
   validates :billing_address, presence: true
   validates :billing_city, presence: true
