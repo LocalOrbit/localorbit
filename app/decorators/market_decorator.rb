@@ -27,4 +27,12 @@ class MarketDecorator < Draper::Decorator
   def phone_number
     first_address.phone
   end
+
+  def header
+    if name.blank?
+      self.changes[:name].first
+    else
+      name
+    end
+  end
 end

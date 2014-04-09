@@ -185,6 +185,22 @@ describe "Admin Managing Markets" do
       expect(find_field("market_contact_name").value).to eq('Jane Smith')
     end
 
+    describe "modifying a market without valid infirmation", js: true do
+      it "shows an error message" do
+        visit '/admin/markets'
+        click_link market.name
+
+        fill_in 'Name', with: ''
+        click_button 'Update Market'
+        expect(page).to have_content("Could not update market")
+        expect(page).to have_content("Name can't be blank")
+
+        within("h1") do
+          expect(page).to have_content(market.name)
+        end
+      end
+    end
+
     it 'can mark an active market as inactive' do
       market.update_attribute(:active, true)
 
