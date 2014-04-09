@@ -1,6 +1,5 @@
 class PickListPresenter
   def self.build(order_items)
-
     pick_list_tree = order_items.keys.inject({}) do |result, key|
       result[key.organization] = result[key.organization] || {}
       result[key.organization][key] = order_items[key]

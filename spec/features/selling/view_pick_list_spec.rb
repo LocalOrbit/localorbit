@@ -45,7 +45,7 @@ describe "Pick list" do
         lines = Dom::Admin::PickListItem.all
         expect(lines.count).to eql(2)
 
-        line = lines.first
+        line = Dom::Admin::PickListItem.find_by_name(sellers_product.name)
         expect(line.name).to have_content(sellers_product.name)
         expect(line.total_sold).to have_content("1")
         expect(line.buyer).to have_content(buyer1.name)
@@ -53,7 +53,7 @@ describe "Pick list" do
 
         expect(page).to have_content(others.name)
 
-        line = lines.last
+        line = Dom::Admin::PickListItem.find_by_name(others_product.name)
         expect(line.name).to have_content(others_product.name)
         expect(line.total_sold).to have_content("2")
         expect(line.buyer).to have_content(buyer2.name)

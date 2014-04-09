@@ -119,7 +119,7 @@ class Order < ActiveRecord::Base
   end
 
   def self.joining_products
-    joins(items: :product).includes(:items)
+    joins(items: :product).includes(:items).group("orders.id")
   end
 
   def self.order_items_by_product
