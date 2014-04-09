@@ -1,3 +1,6 @@
+//= depend_on_asset "center-rule.png"
+//= depend_on_asset "center-rule@2x.png"
+
 @import "mixins.css.scss";
 
 .clear-before {
@@ -31,6 +34,10 @@
 .l-constraint {
   max-width: 960px;
   margin: 0 auto;
+}
+
+.l-flush-top {
+  margin-top: 0;
 }
 
 .l-app-header {
