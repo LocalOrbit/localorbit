@@ -1,5 +1,4 @@
 class AdminController < ApplicationController
-
   protected
 
   def require_admin
