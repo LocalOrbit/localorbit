@@ -1,4 +1,6 @@
 class Order < ActiveRecord::Base
+  PAYMENT_METHODS = ['purchase order', 'credit card', 'ach'].freeze
+
   include DeliveryStatus
 
   belongs_to :market
@@ -22,7 +24,7 @@ class Order < ActiveRecord::Base
   validates :market_id, presence: true
   validates :order_number, presence: true, uniqueness: true
   validates :organization_id, presence: true
-  validates :payment_method, presence: true
+  validates :payment_method, presence: true, inclusion: {in: PAYMENT_METHODS, allow_blank: true}
   validates :payment_status, presence: true
   validates :placed_at, presence: true
   validates :total_cost, presence: true

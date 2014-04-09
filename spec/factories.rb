@@ -89,7 +89,7 @@ FactoryGirl.define do
     delivery_fees    0.00
     delivery_id      0
 
-    payment_method   "Purchase Order"
+    payment_method   "purchase order"
     payment_status   "Unpaid"
 
     total_cost       100.99
