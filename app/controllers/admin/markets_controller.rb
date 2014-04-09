@@ -35,6 +35,7 @@ class Admin::MarketsController < AdminController
     if @market.update_attributes(market_params)
       redirect_to [:edit, :admin, @market]
     else
+      flash.now.alert = "Could not update market"
       render :edit
     end
   end

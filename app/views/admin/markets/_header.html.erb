@@ -6,7 +6,7 @@
       <%= f.submit (@market.active? ? 'Deactivate' : 'Activate'), class: "btn--small" %>
     <% end %>
 
-    <h1><%= @market.name %></h1>
+    <h1><%= @market.decorate.header %></h1>
     <div class="tabs-wrapper">
       <ul class="tabs">
         <%= content_tag(:li, link_to_or_span("Market Info",   [:edit, :admin, @market]), class: 'tab') %>
