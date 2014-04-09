@@ -1,6 +1,8 @@
 <div class="tab-header">
   <div class="l-constraint">
 
+    <%= link_to "< Return to Markets List", admin_markets_path, class: "redundant-nav" %>
+
     <%= form_for [:admin, @market], html: { class: "pull-right" } do |f| %>
       <%= f.hidden_field :active, value: !@market.active? %>
       <%= f.submit (@market.active? ? 'Deactivate' : 'Activate'), class: "btn--small" %>
