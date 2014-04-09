@@ -33,6 +33,7 @@ class Order < ActiveRecord::Base
 
   scope :recent, -> { order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
+  scope :uninvoiced, -> { where(payment_method: 'purchase order', invoiced_at: nil) }
 
   def self.orders_for_buyer(user)
     if user.admin?
@@ -133,5 +134,11 @@ class Order < ActiveRecord::Base
   def self.order_items_by_product_for_organization(organization)
     joining_products.where(products: {organization_id: organization.id}).
       map(&:items).flatten.group_by(&:product)
+  end
+
+  def invoice!
+    self.invoiced_at = Time.current
+    self.invoice_due_date = market.po_payment_term.days.from_now(invoiced_at)
+    save
   end
 end
