@@ -153,7 +153,7 @@ $ ->
             @updateTotals(data)
 
             if error
-              @view.showErrorMessage(error)
+              @view.showErrorMessage(error, $(elToUpdate).closest('.product'))
 
   view = new CartView
     counter: $("header .cart .counter")

@@ -136,7 +136,6 @@ describe "Add item to cart", js: true do
 
       tomatoes_row.set_quantity(3)
       kale_row.quantity_field.click
-      sleep(0.5)
       expect(page).to have_content("You must order at least 5")
     end
   end
