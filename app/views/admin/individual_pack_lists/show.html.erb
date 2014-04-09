@@ -1,5 +1,6 @@
 <%= link_to "Back to delivery tools", admin_delivery_tools_path, class: 'back-button' %>
 <%= link_to "Print", "#", class: "btn btn--small pull-right", id: "print-button" %>
+
 <% @pack_lists.keys.each_with_index do |seller, org_index| %>
   <% @pack_lists[seller].each_with_index do |(order, items), index| %>
     <% if index != 0 %>
@@ -7,9 +8,8 @@
     <% end %>
 
     <h2>Individual Packing Slips</h2>
-    <p><%= index + 1 %> of <%= @delivery.orders.count %><p>
 
-    <b>Buyer Name</b>
+    <strong>Buyer Name</strong>
     <h1><%= order.organization.name %></h1>
 
     <div class="half-block">
@@ -18,12 +18,12 @@
     </div>
 
     <div class="half-block">
-      <b>Order Number</b>
+      <strong>Order Number</strong>
       <h2><%= order.order_number %></h2>
     </div>
 
     <div class="half-block">
-      <b>From Seller</b>
+      <strong>From Seller</strong>
       <h2><%= seller.name %></h2>
       <div class="street"><%= seller.decorate.shipping_address %></div>
       <div class="city-state-zip"><%= seller.decorate.shipping_city_state_zip %></div>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="half-block">
-      <b>To Buyer</b>
+      <strong>To Buyer</strong>
       <h2><%= order.organization.name %></h2>
       <div class="street"><%= order.decorate.display_delivery_street %></div>
       <div class="city-state-zip"><%= order.decorate.display_delivery_city_state_zip %></div>

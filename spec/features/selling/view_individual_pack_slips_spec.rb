@@ -36,6 +36,20 @@ describe "Individual pack slips" do
       visit admin_delivery_tools_individual_pack_list_path(friday_delivery.id)
     end
 
+    it "shows a packing slip for the seller to the buyer" do
+      expect(page).to have_content("Individual Packing Slips")
+      expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
+
+      expect(Dom::Admin::IndividualPackListItem.count).to eql(2)
+
+      line = Dom::Admin::IndividualPackListItem.find_by_name(sellers_product.name)
+      expect(line.total_sold).to have_content(1)
+      expect(line.units).to have_content(sellers_product.unit.singular)
+
+      line = Dom::Admin::IndividualPackListItem.find_by_name(others_product.name)
+      expect(line.total_sold).to have_content(2)
+      expect(line.units).to have_content(others_product.unit.singular)
+    end
   end
 
   context "as a seller" do
