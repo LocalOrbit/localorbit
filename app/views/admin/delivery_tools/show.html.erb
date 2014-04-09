@@ -15,7 +15,7 @@
       <% if current_user.market_manager? || current_user.admin? %>
         <div><%= link_to "Master packing slips", admin_delivery_tools_pack_list_path(delivery) %></div>
       <% end %>
-      <div><%= link_to "Individual Packing Slips", coming_soon_dashboard_path %></div>
+      <div><%= link_to "Individual Packing Slips", admin_delivery_tools_individual_pack_list_path(delivery) %></div>
       <div><%= link_to "Order Summary", coming_soon_dashboard_path %></div>
     </div>
 

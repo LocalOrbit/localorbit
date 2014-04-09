@@ -22,4 +22,16 @@ class OrganizationDecorator < Draper::Decorator
       result
     end
   end
+
+  def shipping_address
+    shipping_location.address
+  end
+
+  def shipping_city_state_zip
+    "#{shipping_location.city}, #{shipping_location.state} #{shipping_location.zip}"
+  end
+
+  def shipping_phone
+    shipping_location.phone
+  end
 end

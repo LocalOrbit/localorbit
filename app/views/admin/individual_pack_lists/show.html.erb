@@ -1,0 +1,63 @@
+<%= link_to "Back to delivery tools", admin_delivery_tools_path, class: 'back-button' %>
+<%= link_to "Print", "#", class: "btn btn--small pull-right", id: "print-button" %>
+<% @pack_lists.keys.each_with_index do |seller, org_index| %>
+  <% @pack_lists[seller].each_with_index do |(order, items), index| %>
+    <% if index != 0 %>
+      <div class="pdf-page-break"></div>
+    <% end %>
+
+    <h2>Individual Packing Slips</h2>
+    <p><%= index + 1 %> of <%= @delivery.orders.count %><p>
+
+    <b>Buyer Name</b>
+    <h1><%= order.organization.name %></h1>
+
+    <div class="half-block">
+      <strong>Seller Delivers to Market on</strong>
+      <h2><%= @delivery.display_date %> <%= @delivery.buyer_time_range %></h2>
+    </div>
+
+    <div class="half-block">
+      <b>Order Number</b>
+      <h2><%= order.order_number %></h2>
+    </div>
+
+    <div class="half-block">
+      <b>From Seller</b>
+      <h2><%= seller.name %></h2>
+      <div class="street"><%= seller.decorate.shipping_address %></div>
+      <div class="city-state-zip"><%= seller.decorate.shipping_city_state_zip %></div>
+      <div class="phone"><%= seller.decorate.shipping_phone %></div>
+    </div>
+
+    <div class="half-block">
+      <b>To Buyer</b>
+      <h2><%= order.organization.name %></h2>
+      <div class="street"><%= order.decorate.display_delivery_street %></div>
+      <div class="city-state-zip"><%= order.decorate.display_delivery_city_state_zip %></div>
+      <div class="phone"><%= order.decorate.display_delivery_phone %></div>
+    </div>
+
+    <table class="delivery-tools">
+      <tr>
+        <th>Item</th>
+        <th>Total Sold</th>
+        <th>Units</th>
+        <th>Delivery</th>
+        <th>Initials</th>
+        <th>Notes</th>
+      </tr>
+      <% items.each do |item| %>
+        <tr class="individual-pack-list-item">
+          <td class="name"><%= item.product.name %></td>
+          <td class="total-sold"><%= item.quantity %></td>
+          <td class="units"><%= item.unit %></td>
+          <td class="delivery"></td>
+          <td class="initials"></td>
+          <td class="notes"></td>
+        </tr>
+      <% end %>
+    </table>
+
+  <% end %>
+<% end %>
