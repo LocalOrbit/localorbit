@@ -147,7 +147,7 @@ $ ->
 
     changeVisibleDeliveries: (org) ->
       if org == ""
-        $("#delivery-schedules").html("<b>No Organization Selected</b>")
+        $("#delivery-schedules").html("<h3 class='header-conditionals'>No Organization Selected</h3>")
       else
         $.get "/admin/organizations/#{org}/delivery_schedules", (response) ->
           $("#delivery-schedules").html(response)

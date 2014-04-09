@@ -1,0 +1,33 @@
+.order-page {
+  color: #000;
+}
+.order-heading {
+  margin-bottom: 0;
+  font: bold 14px "Open Sans Condensed", sans-serif;
+}
+.order-subheading {
+  margin: 0;
+  font: bold 20px "Open Sans Condensed", sans-serif; 
+
+  + .adr {
+    margin: 0 0 3em;
+    color: #000;
+  }
+}
+
+.delivery-time {
+  margin: 2em 0;
+}
+
+.order-summary {
+
+  tfoot {
+    th, td {
+      padding-top: 1.5em;
+      font-size: 18px
+    }
+    th {
+      font-weight: bold;
+    }
+  }
+}

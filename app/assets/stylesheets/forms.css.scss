@@ -1,3 +1,6 @@
+//= depend_on_asset "magnify-search.png"
+//= depend_on_asset "magnify-search@2x.png"
+
 @import "mixins";
 
 fieldset {
@@ -167,6 +170,11 @@ textarea {
   & > input[type=checkbox] {
     position: absolute;
     margin: 6px 0 0 -20px;
+    &:disabled {
+      ~ label {
+        color: #aaa;
+      }
+    }
   }
   label {
     color: #000;
@@ -220,7 +228,7 @@ div.field_with_errors {
   text-align: right;
 }
   .action-helper {
-    font-size: larger;
+    font-size: 15px;
   }
 
 form.form-actions {
@@ -244,6 +252,15 @@ form.form-actions {
   font-style: italic;
 }
 
+.negation:checked ~ .delivery-schedules {
+  color: #aaa;
+
+  .heading-conditionals {
+    color: #aaa;
+  }
+}
+
 .organization-info {
   margin-top: 0;
 }
+
