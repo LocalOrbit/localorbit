@@ -58,7 +58,8 @@ $ ->
 
     #actions
     updateCounter: (count)->
-      @counter.text(count.toString())
+      @counter.find(".counter").text(count.toString())
+      @counter.data('count', count)
 
     updateSubtotal: (subtotal)->
       totals = $("#totals")
@@ -95,8 +96,6 @@ $ ->
         item.update(data)
 
       else
-        # TODO: This will need an element even f it's on the
-        # products listing page
         item = new CartItem(data: data, el: element)
         item.updateView()
         @items.push(item)
@@ -156,7 +155,7 @@ $ ->
               @view.showErrorMessage(error, $(elToUpdate).closest('.product'))
 
   view = new CartView
-    counter: $("header .cart .counter")
+    counter: $("header a.cart")
 
   model = new CartModel
     url: selector.closest(".cart_items").data("cart-url")
