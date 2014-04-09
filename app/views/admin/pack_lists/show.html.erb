@@ -1,9 +1,12 @@
+<%= link_to "Print", "#", class: "btn btn--small pull-right", id: "print-button" %> 
+
 <% @delivery.orders.decorate.each_with_index do |order, index| %>
   <% if index != 0 %>
     <div class="pdf-page-break"></div>
   <% end %>
 
   <h2>Packing Slip</h2>
+  <p><%= index + 1 %> of <%= @delivery.orders.count %><p>
 
   <b>Buyer Name</b>
   <h1><%= order.organization.name %></h1>
