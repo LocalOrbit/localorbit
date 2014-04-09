@@ -16,7 +16,8 @@ li { list-style:inherit; }
 <p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php?location=LA" class="btn btn_blue">Apply for Los Angeles, CA</a> &nbsp; March 16 - 18, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://www.uepi.oxy.edu"><img src="img/hubcamp/uepi.gif" width="112" height="60" style="vertical-align:middle;margin:0 15px" /></a> <a href="http://www.tuckerellis.com"><img src="img/hubcamp/tuckerellis.png" width="88" height="50" style="vertical-align:middle;margin:0 15px" /></a> <a href="http://www.seedstock.com"><img src="img/hubcamp/seedstock.png" width="158" height="35" style="vertical-align:middle;margin:0 15px" /></a><br />
 The training will be at Occidental College.</p><br /><br />
 
-<p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php?location=Davis" class="btn btn_blue">Apply for Davis, CA</a> &nbsp; April 27 - 29, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://ucanr.edu/sites/BFRSOCO/Beginning_Farmer_Rancher_Program/"><img src="img/hubcamp/ucce.png" width="270" height="58" style="vertical-align:middle;margin:0 15px" /></a> <a href="http://www.bernoullifinance.com"><img src="img/hubcamp/bernoulli.png" width="131" height="58" style="vertical-align:middle;margin:0 15px" /></a><br />The training will be at N Street Common House. Apply by April 8.</p><br /><br />
+<p><a style="cursor:hand;cursor:pointer;width:310px;display:inline-block;" href="hubcamp_apply.php?location=Davis" class="btn btn_blue">Apply for Davis, CA</a> &nbsp; April 27 - 29, 2014 &nbsp; &bull; &nbsp; In partnership with: &nbsp; <a href="http://ucanr.edu/sites/BFRSOCO/Beginning_Farmer_Rancher_Program/"><img src="img/hubcamp/ucce.png" width="270" height="58" style="vertical-align:middle;margin:0 15px" /></a> <a href="http://www.bernoullifinance.com"><img src="img/hubcamp/bernoulli.png" width="131" height="58" style="vertical-align:middle;margin:0 15px" /></a><br />
+The training will be at N Street Common House.</p><br /><br />
 
 More Hub Camps, helping more people build local food distribution businesses, coming later in 2014!<br />
 <br /><br />
@@ -29,7 +30,7 @@ More Hub Camps, helping more people build local food distribution businesses, co
   <li>Operations &amp; Service Design.</li>
   <li>Work through your unique challenges with farmer development, buyer education, finance, food safety, logistics, operations and storytelling.</li>
   <li>Three hands-on days with experienced operators who have launched and managed supply chain businesses.</li>
-  <li>To maximize impact attendance is limited to 15 participants.</li>
+  <li>To maximize impact attendance is limited to 20 participants.</li>
   <li>Note: Hub Camp is focused on operating a local food distribution business, and will not focus on technology. If you are looking for more information about Local Orbit’s technology services, we have <a href="https://www.localorb.it/field-notes/schedule-a-demo/">weekly live demos</a> you can attend.</li>
 </ul>
 <br /><br />
@@ -42,6 +43,8 @@ More Hub Camps, helping more people build local food distribution businesses, co
     <li>LA: <strong>Amy Andrews Muñoz</strong> is associate vice president for hospitality services at Occidental College in Los Angeles. Amy is responsible for auxiliary departments, including campus dining. She oversees food purchases exceeding $3.5 million annually, of which approximately 25% represent good food purchasing practices – local, ecologically sound, humane and/or fair trade.  Amy has been with Occidental for 29 years.</li>
 	<li>LA: <strong>Chef Theresa Wahl</strong> is the owner of Auntie Em's Kitchen, Catering and Marketplace in Los Angeles. Theresa also runs a CSA delivery program out of Auntie Em's. All of these ventures source directly from producers at local farmers markets. Look for her cookbook coming out in June called "Auntie Em's Kitchen Cookbook".</li>
 	<li>Davis: <strong>Anjali Oberoi</strong> is the founder and principal of Bernoulli Finance. Anjali works with food entrepreneurs to plan smart bookkeeping, accounting, cash flow, budgeting and financial metrics that scale as their businesses grow.</li>
+	<li>Davis: <strong>Jenny Loda</strong> is an attorney who runs her own law practice in Oakland, California, providing legal advice and support for individuals, social entrepreneurs, nonprofit organizations, cooperatives, and micro-entrepreneurs.  Jenny is also a Legal Fellow at the Sustainable Economies Law Center and provides free legal advice at their Resilient Communities Legal Cafe.</li>
+	<li>Davis: <strong>Shermain Hardesty</strong> is the leader of the University of California Small Farms Program. An agricultural economist by training, her research interests frequently focus on collaborative structures to enhance returns to producers. She also has a background in  food safety requirements and implementation for local food enterprises.</li>
 </ul>
 <br /><br />
 <h2>Past Hub Camps</h2>
