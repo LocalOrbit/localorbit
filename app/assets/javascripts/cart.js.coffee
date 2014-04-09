@@ -72,16 +72,9 @@ $ ->
       totals = $("#totals")
       totals.find(".total").text(total)
 
-    showErrorMessage: (error)->
-      notice = $("<div>").addClass("flash").addClass("flash--alert").append($("<p>").text(error))
-      $("#flash-messages").append(notice)
-      # TODO: Not sure how to re-create fading out
-      # as per fading.js.coffee
-      window.setTimeout ->
-        notice.fadeOut(500)
-      , 3000
-
-
+    showErrorMessage: (error, el)->
+      notice = $("<tr>").append($("<td>").addClass('flash--warning').attr('colspan', '6').text(error))
+      $(notice).insertAfter(el)
 
 
   class CartModel
@@ -141,11 +134,11 @@ $ ->
       #       quantities
       if _.isNaN(quantity)
         errorMessage = "Quantity is not a number"
-        @view.showErrorMessage(errorMessage)
+        @view.showErrorMessage(errorMessage, $(elToUpdate).closest('.product'))
         $(elToUpdate).closest(".quantity").addClass("field_with_errors")
       else if quantity < 0
         errorMessage = "Quantity must be greater than or equal to 0"
-        @view.showErrorMessage(errorMessage)
+        @view.showErrorMessage(errorMessage, $(elToUpdate).closest('.product'))
         $(elToUpdate).closest(".quantity").addClass("field_with_errors")
       else
         $.post(@url, {"_method": "put", product_id: productId, quantity: quantity} )
@@ -160,7 +153,7 @@ $ ->
             @updateTotals(data)
 
             if error
-              @view.showErrorMessage(error)
+              @view.showErrorMessage(error, $(elToUpdate).closest('.product'))
 
   view = new CartView
     counter: $("header .cart .counter")

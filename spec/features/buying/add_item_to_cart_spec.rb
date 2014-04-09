@@ -115,7 +115,7 @@ describe "Add item to cart", js: true do
     end
   end
 
-  context "purchasing less product than required minimum" do
+  context "purchasing less product than required minimum", js: true do
     let(:tomatoes) { create(:product, name: "Tomatoes", organization: seller, delivery_schedules: [delivery]) }
     let!(:tomatoes_lot) { create(:lot, product: tomatoes) }
     let!(:tomatoes_price_buyer_base) {
@@ -126,7 +126,7 @@ describe "Add item to cart", js: true do
       Dom::Cart::Item.find_by_name("Tomatoes")
     end
 
-    it "shows an error message" do
+    it "shows an error message", js: true do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
 
@@ -136,7 +136,6 @@ describe "Add item to cart", js: true do
 
       tomatoes_row.set_quantity(3)
       kale_row.quantity_field.click
-      sleep(0.5)
       expect(page).to have_content("You must order at least 5")
     end
   end

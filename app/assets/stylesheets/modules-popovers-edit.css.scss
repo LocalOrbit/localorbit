@@ -8,9 +8,13 @@
   z-index: 1;
   min-width: 200px;
   border: 1px solid #ccc;
+  text-shadow: none;
+  color: #000;
   background: #fff;
   @include border-radius(5px);
   @include box-shadow(0 0 10px rgba(0,0,0,0.2));
+  font-weight: normal;
+  text-align: left;
 
   &.with-anchor:after {
     border-bottom-color: #F2F2F2;
@@ -30,13 +34,18 @@
     }
   }
 
+  .popup--centered {
+    left: 50%;
+    @include transform(translateX(-50%));
+  }
+
 .popup-header {
-  padding: 0 10px;
+  padding: 5px 10px;
   text-align: center;
   font-weight: bold;
-  line-height: 2.5;
   background: #F2F2F2;
   @include border-radius(5px 5px 0 0);
+  overflow: hidden;
 
   .close {
     float: right;
@@ -88,3 +97,19 @@
   }
 }
 
+
+.nav--app {
+  .popup {
+    width: 200px;
+    margin-top: -10px;
+    background: #F2F2F2;
+  }
+  .popup-header {
+    padding-bottom: 0;
+    text-align: left;
+  }
+  .popup-body {
+    padding-top: 0;
+    background: #F2F2F2;
+  }
+}

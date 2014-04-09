@@ -1,28 +1,69 @@
 <div class="row">
-  <div class="column column--fourth" id="product-filter">
+  <div class="column column--fourth column--guttered" id="product-filter">
 
     <%= render "selected_delivery" %>
+
+    <ul class="list-naked nav nav--sidebar">
+      <li><%= link_to "Continue Shopping",  products_path %></li>
+      <li><%= link_to "More Products from This Seller", seller_path(current_organization) %></li>
+      <li><%= link_to "More Products in #{@breadcrumbs.first.name}", "#{products_path}?category=#{@breadcrumbs.first.id}" %></li>
+    </ul>
+
   </div
-  ><div class="column column--three-fourths">
-    <h1><%= @product.name %></h1>
+  ><div class="column column--three-fourths column--guttered">
+    <%= link_to "Shop Home",  products_path %>
+    / <%= link_to @breadcrumbs.first.name, "#{products_path}?category=#{@breadcrumbs.first.id}" %>
 
-    <% if @product.image_uid.present? %>
-      <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid) %>
-    <% else %>
-      <%= image_tag 'default-product-image.png' %>
-    <% end %>
+    <div class="row">
+      <div class="column column--half column--guttered">
 
-    <p class="short_description"><%= @product.short_description %>
+        <h1 class="heading-product"><%= @product.name %></h1>
+        <p class="producer">Produced by <%= link_to @product.organization.name, seller_path(current_organization) %></p>
 
-    <% if @product.long_description.present? %>
-      <div class="long-description-info is-hidden with-anchor left-anchor popup" id="product-<%= @product.id %>-long-description">
-        <div class="popup-header">
-          Details <button class="close"><i class="font-icon icon-close"></i></button>
-        </div>
-        <div class="popup-body">
-          <%= simple_format @product.long_description %>
-        </div>
+        <table class="product-table product-table--mini cart_items" data-cart-url="<%= cart_path %>">
+          <thead>
+            <tr>
+              <th>Pricing</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tr class="product product-row cart_item" data-cart-item="<%= @product.cart_item.to_json %>">
+            <td class="pricing">
+              <ul class="tiers">
+                <% @product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
+                  <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
+                <% end %>
+              </ul>
+            </td>
+            <td class="quantity">
+              <span>
+                <input name="quantity" type="number" size="3" min="0" value="<%= @product.cart_item.quantity %>" max="<%= @product.available_inventory %>"><br>
+                <span class="price-for-quantity"><%= number_to_currency(@product.cart_item.unit_price.sale_price) %></span>
+              </span>
+            </td>
+            <td class="total price"><%= @product.cart_item.decorate.display_total_price %></td>
+          </tr>
+        </table>
+
+        <h2 class="heading-section heading-section--product">What</h2>
+        <%= simple_format @product.short_description %>
+
+        <h2 class="heading-section heading-section--product">How</h2>
+
+        <%= simple_format @product.long_description %>
+
+      </div
+      ><div class="column column--half column--guttered">
+        <% if @product.image_uid.present? %>
+          <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid), alt: "", class: "product-image product-image--large" %>
+        <% else %>
+          <%= image_tag 'default-product-image.png', alt: "", class: "product-image product-image--large" %>
+        <% end %>
+
+        <img class="location-map" alt="" src="<%= @product.location_map %>">
+        <%= @product.location_address %>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>

@@ -9,7 +9,7 @@
       <th>Price</th>
       <th>Quantity</th>
       <th>Total</th>
-      <th></th>
+      <th><i class="font-icon icon-clear product-clear is-invisible"></i></th>
     </tr>
   </thead>
   <tbody>
@@ -26,19 +26,19 @@
       <td class="info">
         <h3 class="name"><%= link_to product.name, product %></h3>
         <div class="short_description">
-          <%= simple_format product.short_description, class: "pull-left" %>
 
           <% if product.long_description.present? %>
-            <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{product.id}-long-description", class: "popup-toggle" %>
+           <%= simple_format (product.short_description + " " + link_to(raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{product.id}-long-description", class: "popup-toggle")) %>
             <div class="long-description-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-long-description">
               <div class="popup-header">
                 Details <button class="close"><i class="font-icon icon-close"></i></button>
               </div>
               <div class="popup-body">
                 <%= simple_format product.long_description %>
-                <%= link_to "Learn More", coming_soon_dashboard_path %>
               </div>
             </div>
+          <% else %>
+            <%= simple_format product.short_description  %>
           <% end %>
         </div>
 
@@ -84,10 +84,10 @@
         </ul>
       </td>
       <td class="quantity">
-        <label>
-          <input name="quantity" type="number" size="3" min="0" value="<%= product.cart_item.quantity %>" max="<%= product.available_inventory %>">
+        <span>
+          <input name="quantity" type="number" size="3" min="0" value="<%= product.cart_item.quantity %>" max="<%= product.available_inventory %>"><br>
           <span class="price-for-quantity"><%= number_to_currency(product.cart_item.unit_price.sale_price) %></span>
-        </label>
+        </span>
       </td>
       <td class="total price"><%= product.cart_item.decorate.display_total_price %></td>
       <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear #{' is-hidden' unless product.cart_item.persisted?}" %></td>

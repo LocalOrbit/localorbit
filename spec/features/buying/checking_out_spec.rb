@@ -60,7 +60,7 @@ describe "Checking Out" do
   end
 
   def checkout
-    click_button "Checkout"
+    click_button "Place Order"
   end
 
   before do

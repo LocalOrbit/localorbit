@@ -65,19 +65,11 @@ td {
     height: 24px;
     padding-right: 7px;
     padding-left: 7px;
-    border-width: 0;
     margin: 2px 0;
     font-size: 14px;
-
-    &:focus {
-      height: 28px;
-      border-width: 2px;
-      margin: 0;
-    }
   }
 
 }
-
 
 tbody {
   tr{
@@ -163,7 +155,7 @@ th {
   .meta {
     a {
       margin-right: .4em;
-      font-size: 11px;
+      font-size: 12px;
 
       &:hover {
         color: #999;
@@ -194,36 +186,24 @@ th {
   }
   .price {
     padding: 0 0 0 11px;
-    font-size: 12px;
     font-weight: bold;
   }
-  .product-clear {
-    font-size: 15px;
-    line-height: 28px;
-  }
   .product-image {
-    padding-right: 10px;
+    padding-right: 0;
 
     > img {
       display: block;
-      width: 60px;
+      width: 75px;
+      max-width: none;
       @include border-radius(5px);
     }
   }
-  .quantity {
-    text-align: center;
+  .total {
+    min-width: 60px;
   }
-    .price-for-quantity {
-      display: block;
-      font-size: 10px;
-      -webkit-font-smoothing: initial;
-
-      &:before {
-        content: "×";
-      }
-    }
+}
   .tiers {
-    padding: 0;
+    padding: 5px 0 0 0;
     list-style: none;
 
     > li:nth-child(even) {
@@ -232,13 +212,34 @@ th {
   }
     .tier {
       padding: 0 11px 0 0;
-      font-size: 10px;
     }
-  .total {
-    font-weight: bold;
+  span.price-for-quantity {
+    font-size: 12px;
+    -webkit-font-smoothing: initial;
+
+    &:before {
+      content: "×";
+    }
+  }
+  .product-clear {
+    width: 1em;
+    font-size: 15px;
     line-height: 28px;
   }
-}
+  .quantity {
+    span {
+      display: inline-block;
+      text-align: center;
+    }
+
+    input {
+      text-align: center;
+    }
+  }
+  .unit-price {
+    font-size: 14px;
+    font-weight: bold;
+  }
 
 .info > .name {
   margin-top: 0
@@ -260,6 +261,50 @@ th {
       font-size: 12px;
     }
   }
+
+  .product-table--mini,
+  .product-table--user {
+    th {
+      font-weight: normal;
+    }
+    thead tr {
+      border-bottom: double 3px #FBF2EA;
+    }
+    tr {
+      border-bottom: solid 1px #fbf2ea;
+
+      &:nth-child(odd) {
+        background: #fff;
+      }
+      &:hover {
+        background: #fff;
+      }
+    }
+    .tiers {
+      padding-top: 3px;
+      line-height: 22px;
+    }
+    .total {
+      padding-top: 20px;
+      line-height: 22px;
+      font-size: 14px;
+    }
+  }
+
+  .product-table--mini {
+    margin: 20px 0;
+
+    th {
+      font-weight: normal;
+    }
+    tr {
+      border: 0;
+    }
+    .tier {
+      font-size: 12px;
+    }
+  }
+
   .product-table--user {
     margin-top: 0;
 
@@ -270,6 +315,7 @@ th {
     }
 
     th {
+      color: #9f7b51;
       font-size: 12px;
 
       &:first-child {
@@ -277,54 +323,42 @@ th {
       }
     }
 
-    tr {
-      border-bottom: solid 1px #ccc;
-
-      &:nth-child(odd) {
-        background: #fff;
-      }
-      &:hover {
-        background: #fff;
-      }
-    }
-
     .info {
-      width: 45%;
-
       .popup-toggle { 
         color: #666;
-      }
 
+      }
     }
 
     .name {
-      margin-bottom: .2em;
+      margin-bottom: 0;
       font-weight: normal;
-
-      + .short_description {
-        > p {
-          margin-top: .5em;
-        }
-        > .popup-toggle {
-          display: inline-block;
-          margin: .5em 0 0 .5em;
-        }
-      }
     } 
-
-    .total {
-      padding-top: 15px;
-    }
 
     .pricing {
       min-width: 23%;
       white-space: nowrap;
     }
-    .unit-price {
-      font-weight: bold;
+
+    .short_description {
+      > p {
+        margin-top: 0;
+        font-size: 13px;
+      }
+      > .popup-toggle {
+        display: inline-block;
+        margin: 0 0 0 .5em;
+      }
     }
   }
 
+.math {
+  text-align: right;
+
+  th[scope] {
+    text-align: right;
+  }
+}
 .sortable {
   th {
     cursor: pointer;
@@ -347,3 +381,41 @@ th {
     background-position: 0 0;
   }
 }
+.cart {
+
+  &:first-child {
+    border-top: 0;
+  }
+
+  th, td {
+    vertical-align: baseline;
+  }
+  .name, .price, .price-for-quantity {
+    padding-top: 10px;
+  }
+  .quantity {
+    padding-top: 2px;
+  }
+  thead tr:first-child {
+    display: none;
+    th {
+      padding-bottom: 10px;
+      color: #aaa;
+
+      &:first-child {
+        color: #000;
+      }
+    }
+
+  }
+  &:first-child {
+    thead tr:first-child {
+      display: table-row;
+    }
+  }
+  tbody tr:hover,
+  tbody tr:nth-child(odd) {
+    background: #fff;
+  }
+}
+

@@ -33,7 +33,7 @@ class ProductDecorator < Draper::Decorator
   def location_map
     if location
       location_string = [location.address, location.city, location.state].join(',').gsub(' ', '+')
-      "http://maps.googleapis.com/maps/api/staticmap?zoom=14&size=300x200&sensor=false&markers=color:red%7C#{location_string}&key=#{Figaro.env.google_maps_key}"
+      "http://maps.googleapis.com/maps/api/staticmap?zoom=7&size=300x200&sensor=false&markers=color:red%7C#{location_string}&key=#{Figaro.env.google_maps_key}"
     else
       ""
     end
@@ -41,6 +41,10 @@ class ProductDecorator < Draper::Decorator
 
   def location_label
     "#{location.city}, #{location.state}" if location
+  end
+
+  def location_address
+    "<p class='adr'><span class='street-address'>#{location.address}</span> <span class='locality'>#{location.city}</span>, <span class='region'>#{location.state}</span></p>".html_safe if location
   end
 
   def cart_item

@@ -14,6 +14,15 @@ class ProductsController < ApplicationController
 
   def show
     @product = products.find(params[:id]).decorate(context: {current_cart: current_cart})
+
+    cat = @product.category
+    @breadcrumbs = [cat]
+    while cat.parent_id.present?
+      @breadcrumbs.push cat.parent
+      cat = cat.parent
+    end
+    @breadcrumbs.pop
+    @breadcrumbs.reverse!
   end
 
   private

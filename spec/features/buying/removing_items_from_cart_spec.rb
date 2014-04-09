@@ -116,7 +116,7 @@ describe "Removing items" do
       end
 
       it "does not show the remove link" do
-        expect(kale_item).to_not have_css(".icon-clear")
+        expect(kale_item).to_not have_css("a.icon-clear")
       end
 
       it "shows the remove link once a cart item exists" do
