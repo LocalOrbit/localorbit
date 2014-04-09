@@ -34,6 +34,9 @@ describe "Add item to cart", js: true do
     Dom::Cart::Item.find_by_name("Kale")
   end
 
+  def cart_link
+    Dom::CartLink.first
+  end
 
   before do
     Timecop.travel("May 8, 2014")
@@ -41,6 +44,26 @@ describe "Add item to cart", js: true do
 
   after do
     Timecop.return
+  end
+
+  it "enables/disbales the ability depending on how many items are in your cart", js: true do
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(user)
+
+    # Empty cart
+    expect(cart_link.node).to have_content("0")
+
+    cart_link.node.click
+    expect(page).to have_content("Your cart is empty")
+    page.find(".overlay").click
+    expect(page).not_to have_content("Your cart is empty")
+
+    bananas_row.set_quantity(12)
+    kale_row.quantity_field.trigger('click')
+    expect(bananas_row.node).to have_css(".updated.finished")
+
+    cart_link.node.click
+    expect(page).not_to have_content("Your cart is empty")
   end
 
   context "with an empty cart" do

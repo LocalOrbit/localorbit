@@ -1,13 +1,13 @@
 <% cart_class_base = (current_page?([:cart]) ? "current cart" : "cart" ) %>
 
-<% if current_cart.present? && (current_cart.items.count > 0) %>
-  <%= link_to [:cart], class: cart_class_base  do %>
-    Cart <span class="counter"><%= current_cart.items.count %></span>
-  <% end %>
+<% if current_cart.present? %>
+  <% cart_count = current_cart.items.count %>
 <% else %>
-  <%= link_to "#empty-cart", class: "#{cart_class_base} popup-toggle" do %>
-    Cart <span class="counter">0</span>
-  <% end %>
+  <% cart_count = 0 %>
+<% end %>
+
+<%= link_to [:cart], class: cart_class_base, data: {count: cart_count}  do %>
+  Cart <span class="counter"><%= cart_count %></span>
 <% end %>
 
 <div id="empty-cart" class="popup popup--centered with-anchor top-centered-anchor is-hidden">
