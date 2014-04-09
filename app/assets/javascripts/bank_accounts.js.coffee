@@ -35,7 +35,17 @@ $ ->
         updateInputs(payment_object, $realForm)
         $realForm.submit()
       .fail (error) ->
-        for key of error
+        # (re-)set up error container
+        if $("#balanced-js-errors").length
+          $("#balanced-js-errors").html("")
+        else
+          $form.prepend('<ul id="balanced-js-errors" class="form-errors">')
+
+        messages = if error.extras? then error.extras else error
+        for key of messages
+          field_name = key.replace(/_/g, " ")
+          field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
           $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
+          $("#balanced-js-errors").append("<li>#{field_name}: #{messages[key]}</li>")
       .always ->
           $('input[type="submit"]').removeAttr("disabled")
