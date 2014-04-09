@@ -1,4 +1,5 @@
 class Market < ActiveRecord::Base
+  validates :name, presence: true
   validates :name, :subdomain, uniqueness: true, length: {maximum: 255, allow_blank: true}
   validates :subdomain, exclusion: { in: %w(app www mail ftp smtp imap docs calendar community service support)}
   validates :tagline, length: {maximum: 255, allow_blank: true}

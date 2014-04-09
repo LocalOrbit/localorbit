@@ -158,6 +158,19 @@ describe "Admin Managing Markets" do
       expect(find_field("Twitter").value).to eq('hollandfarmers')
     end
 
+    describe "adding a market without valid infirmation" do
+      it "shows an error message" do
+        visit '/admin/markets'
+
+        click_link add_market_link_name
+
+        fill_in 'Name', with: ''
+        click_button 'Add Market'
+        expect(page).to have_content("Could not create market")
+        expect(page).to have_content("Name can't be blank")
+      end
+    end
+
     it 'can modify a market' do
       visit '/admin/markets'
       click_link market.name
