@@ -145,6 +145,13 @@ $ ->
         formView.showFields()
         formView.applyFormValues(@display())
 
+    changeVisibleDeliveries: (org) ->
+      if org == ""
+        $("#delivery-schedules").html("<b>No Organization Selected</b>")
+      else
+        $.get "/admin/organizations/#{org}/delivery_schedules", (response) ->
+          $("#delivery-schedules").html(response)
+
     changeDeliveries: (checked)->
       if checked
         $(".product-delivery-schedule input").prop("disabled", true).prop("checked", true)
@@ -201,7 +208,9 @@ $ ->
     formModel.changeSellerInfo(val)
 
   $("#product_organization_id").change ->
-    formModel.changeOrg($(this).val())
+    val = $(this).val()
+    formModel.changeOrg(val)
+    formModel.changeVisibleDeliveries(val)
 
   $("#product_use_all_deliveries").change ->
     val = $(this).prop("checked")

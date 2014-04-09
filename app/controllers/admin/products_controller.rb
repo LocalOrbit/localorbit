@@ -1,7 +1,6 @@
 module Admin
   class ProductsController < AdminController
     before_action :ensure_selling_organization
-    before_action :find_delivery_schedules, except: [:index, :destroy]
 
     def index
       @products = current_user.managed_products.page(params[:page]).per(params[:per_page])
@@ -10,6 +9,7 @@ module Admin
     def new
       @product = Product.new.decorate
       find_selling_organizations
+      find_delivery_schedules
     end
 
     def create
@@ -20,6 +20,7 @@ module Admin
         redirect_to after_create_page, notice: "Added #{@product.name}"
       else
         find_selling_organizations
+        find_delivery_schedules
         render :new
       end
     end
@@ -27,6 +28,8 @@ module Admin
     def show
       @product = current_user.managed_products.find(params[:id]).decorate
       @organizations = [@product.organization]
+
+      find_delivery_schedules(@product)
     end
 
     def update
@@ -36,6 +39,7 @@ module Admin
         redirect_to [:admin, @product], notice: "Saved #{@product.name}"
       else
         @organizations = [@product.organization]
+        find_delivery_schedules(@product)
         render :show
       end
     end
@@ -73,10 +77,13 @@ module Admin
       @organizations = current_user.managed_organizations.selling.includes(:locations)
     end
 
-    def find_delivery_schedules
-      @delivery_schedules = current_user.markets.inject({}) do |result, market|
-        result[market.name] = market.delivery_schedules.visible.order(:day)
-        result
+    def find_delivery_schedules(product = nil)
+      @delivery_schedules = if product
+        product.organization.decorate.delivery_schedules
+      elsif current_user.organizations.count == 1
+        current_user.organizations.first.decorate.delivery_schedules
+      else
+        {}
       end
     end
   end

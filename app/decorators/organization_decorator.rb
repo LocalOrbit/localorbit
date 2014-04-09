@@ -15,4 +15,11 @@ class OrganizationDecorator < Draper::Decorator
     address = shipping_location
     raw "#{address.address}<br/>#{address.city}, #{address.state} #{address.zip}"
   end
+
+  def delivery_schedules
+    markets.inject({}) do |result, market|
+      result[market] = market.delivery_schedules.visible.order(:day)
+      result
+    end
+  end
 end
