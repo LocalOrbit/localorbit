@@ -50,6 +50,7 @@ describe "Master Pack List" do
           expect(page).to have_content(order1.order_number)
           expect(page).to have_content(buyer1.name)
           expect(page).to have_content(market.name)
+          expect(page).to have_content("1 of 1")
 
           line_items = Dom::Admin::PackListItem.all
           expect(line_items.count).to eql(2)
@@ -109,6 +110,8 @@ describe "Master Pack List" do
       it "shows packing slips for the buyers" do
         expect(page).to have_content(buyer1.name)
         expect(page).to have_content(buyer2.name)
+        expect(page).to have_content("1 of 2")
+        expect(page).to have_content("2 of 2")
       end
     end
   end
