@@ -48,6 +48,11 @@ input[type=submit] {
   }
 }
 
+.btn--gray {
+  color: #000;
+  background-color: #e4e4e4;
+}
+
 button,
 .btn,
 input[type=reset],
@@ -72,8 +77,18 @@ input[type=submit] {
   &.close {
     color: #000;
   }
+  &.destructive {
+    padding-right: 0;
+    padding-left: 0;
+    border-color: transparent;
+    color: $alert_text;
+    background: none;
+  }
   &.btn--test {
     background-color: #ccc;
+  }
+  + .note {
+    color: #999;
   }
 }
 
@@ -96,6 +111,10 @@ input[type=submit] {
 input[type=submit] {
   color: #fff;
   background-color: #43639f;
+  
+  &.btn--money {
+    background-color: #349D1C;
+  }
 }
 .btn--add.btn--small {
   padding-right: 8px;

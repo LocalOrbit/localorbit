@@ -1,3 +1,6 @@
+//= depend_on_asset "sort.png"
+//= depend_on_asset "sort@2x.png"
+
 @import 'mixins';
 
 .table-heading {
@@ -389,6 +392,10 @@ th {
 
   th, td {
     vertical-align: baseline;
+
+    &:first-child {
+      padding-left: 0;
+    }
   }
   .name, .price, .price-for-quantity {
     padding-top: 10px;

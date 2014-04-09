@@ -84,7 +84,7 @@ describe "Removing items" do
     end
 
     it "by clear the entire cart" do
-      click_link "Clear Cart"
+      click_link "Cancel Order"
 
       expect(cart_link.count).to have_content("0")
     end

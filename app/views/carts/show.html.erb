@@ -85,17 +85,21 @@
 
                 <div class="field">
                   <%= f.label :payment_note, "PO Number" %><br>
-                  <%= f.text_field :payment_note %>
+                  <%= f.text_field :payment_note, class: "input--short" %>
                 </div>
               </fieldset>
 
-               <div class="form-actions">
-                <%= f.submit "Place Order", class: 'btn btn--small' %>
-              </div>
             </div>
           </div>
+          <div class="form-actions">
+            <span class="pull-left">
+              <%= link_to "Cancel Order", [:cart], data: { method: :delete, confirm: "Are you sure you want to clear the cart?"}, class: "btn btn--small destructive" %>
+              <span class="note">(Clear Cart)</span>
+            </span>
+            <%= link_to "Continue Shopping", products_path %>  
+            <%= f.submit "Place Order", class: 'btn btn--small btn--money' %>
+          </div>
         </div>
-        <%= link_to "Clear Cart", [:cart], data: { method: :delete, confirm: "Are you sure you want to clear the cart?"} %>
       <% end %>
     </div>
   </div>

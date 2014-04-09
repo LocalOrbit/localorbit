@@ -111,16 +111,14 @@
 
 </fieldset>
 
-<fieldset>
-  <h2>Delivery Times</h2>
-  <div class="field">
-    <%= f.check_box :use_all_deliveries %>
-    <%= f.label :use_all_deliveries, "Make product available on all market delivery dates" %>
-  </div>
+<fieldset class="conditional">
+  <legend>Delivery Times</legend>
+  <%= f.check_box :use_all_deliveries, class: "negation" %>
+  <%= f.label :use_all_deliveries, "Make product available on all market delivery dates" %>
 
-  <div id="delivery-schedules">
+  <div id="delivery-schedules" class="delivery-schedules">
     <% if @organizations.count > 1 %>
-      <b>No Organization Selected</b>
+      <h3 class="heading-conditionals">No Organization Selected</h3>
     <% else %>
       <%= render partial: "admin/organizations/delivery_schedules", locals: {delivery_schedules: @delivery_schedules, product: @product} %>
     <% end %>
