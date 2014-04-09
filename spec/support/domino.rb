@@ -306,6 +306,15 @@ module Dom
       attribute :total_price
     end
 
+    class IndividualPackListItem < Domino
+      selector ".individual-pack-list-item"
+      
+      attribute :name
+      attribute :total_sold
+      attribute :units
+      attribute :delivery
+    end
+
 
     class ProductForm < Domino
       selector "form.product"
