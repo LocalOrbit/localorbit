@@ -44,7 +44,7 @@ describe "Upcoming Deliveries" do
       end
 
       it "shows a list of the upcoming deliveries that have ordered products for a seller" do
-        expect(page).to have_content("Delivery Tools")
+        expect(page).to have_content("Upcoming Deliveries")
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
@@ -66,7 +66,7 @@ describe "Upcoming Deliveries" do
       end
 
       it "shows a list of the upcoming deliveries that have orders" do
-        expect(page).to have_content("Delivery Tools")
+        expect(page).to have_content("Upcoming Deliveries")
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
@@ -82,7 +82,7 @@ describe "Upcoming Deliveries" do
       end
 
       it "shows a message when there are no upcoming deliveries for the seller" do
-        expect(page).to have_content("Delivery Tools")
+        expect(page).to have_content("Upcoming Deliveries")
         expect(page).to have_content("You currently have no upcoming deliveries.")
       end
     end
@@ -105,7 +105,7 @@ describe "Upcoming Deliveries" do
       end
 
       it "shows a list of the upcoming deliveries that have orders" do
-        expect(page).to have_content("Delivery Tools")
+        expect(page).to have_content("Upcoming Deliveries")
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(2)
@@ -128,7 +128,7 @@ describe "Upcoming Deliveries" do
       end
 
       it "shows a list of the upcoming deliveries that have orders" do
-        expect(page).to have_content("Delivery Tools")
+        expect(page).to have_content("Upcoming Deliveries")
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
@@ -144,7 +144,7 @@ describe "Upcoming Deliveries" do
       end
 
       it "shows a message when there are no upcoming deliveries for the seller" do
-        expect(page).to have_content("Delivery Tools")
+        expect(page).to have_content("Upcoming Deliveries")
         expect(page).to have_content("You currently have no upcoming deliveries.")
       end
     end
@@ -167,7 +167,7 @@ describe "Upcoming Deliveries" do
       end
 
       it "shows a list of the upcoming deliveries that have orders" do
-        expect(page).to have_content("Delivery Tools")
+        expect(page).to have_content("Upcoming Deliveries")
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(2)
@@ -190,7 +190,7 @@ describe "Upcoming Deliveries" do
       end
 
       it "shows a list of the upcoming deliveries that have orders" do
-        expect(page).to have_content("Delivery Tools")
+        expect(page).to have_content("Upcoming Deliveries")
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
@@ -206,7 +206,7 @@ describe "Upcoming Deliveries" do
       end
 
       it "shows a message when there are no upcoming deliveries for the seller" do
-        expect(page).to have_content("Delivery Tools")
+        expect(page).to have_content("Upcoming Deliveries")
         expect(page).to have_content("You currently have no upcoming deliveries.")
       end
     end

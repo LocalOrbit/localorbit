@@ -63,6 +63,9 @@ input[type=password] {
   &[size="4"] {
     width: 6em;
   }
+  &[size="6"] {
+    width: 8em;
+  }
 }
 
 input[type=datetime],
