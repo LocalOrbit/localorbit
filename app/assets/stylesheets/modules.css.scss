@@ -923,7 +923,7 @@
 
 /** Story stuff */
 .story-header {
-  margin-bottom: 0;
+  margin-bottom: 10px;
   font: normal 28px "Open Sans Condensed", sans-serif;
 
   + p {
@@ -1041,6 +1041,12 @@ label ~ .tooltip {
   &.pull-right + .pull-right {
     margin-right: .5em;
   }
+}
+
+/** Seller Profiles */
+.seller-map,
+.seller-photo {
+  margin-bottom: 2em;
 }
 
 /** Upcoming Delivery */
