@@ -19,7 +19,7 @@ feature "Accepting an invitation to an organization" do
     fill_in "Password confirmation", with: "abcd1234"
     click_button "Save"
 
-    expect(page).to have_content("Welcome sam@example.com")
+    expect(page).to have_content("Welcome Sam Body")
     user.reload
     expect(user.name).to eq("Sam Body")
     expect(user.email).to eq("sam@example.com")
