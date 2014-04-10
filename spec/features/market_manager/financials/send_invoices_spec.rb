@@ -4,8 +4,10 @@ feature "sending invoices" do
   let(:market) { create(:market, po_payment_term: 14) }
   let!(:market_manager) { create :user, managed_markets: [market] }
 
+  let!(:buyer_user) { create :user }
+
   let!(:seller) { create(:organization, :seller, name: "Better Farms", markets: [market]) }
-  let!(:buyer)  { create(:organization, :buyer, name: "Money Bags", markets: [market]) }
+  let!(:buyer)  { create(:organization, :buyer, name: "Money Bags", markets: [market], users: [buyer_user]) }
 
   let!(:product) { create(:product, :sellable, organization: seller) }
 
@@ -44,6 +46,12 @@ feature "sending invoices" do
 
     expect(page).to have_content("Invoice sent for order number LO-001")
     expect(Dom::Admin::Financials::UnsentInvoiceRow.all.size).to eq(1)
+
+    open_email(buyer_user.email)
+
+    expect(current_email).to have_subject("New Invoice")
+    expect(current_email).to have_body_text("Invoice")
+    expect(current_email).to have_body_text("Reference Number: LO-001")
   end
 
   scenario "sending selected invoices", js: true do

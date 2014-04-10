@@ -136,9 +136,13 @@ class Order < ActiveRecord::Base
       map(&:items).flatten.group_by(&:product)
   end
 
-  def invoice!
-    self.invoiced_at = Time.current
+  def invoice
+    self.invoiced_at      = Time.current
     self.invoice_due_date = market.po_payment_term.days.from_now(invoiced_at)
-    save
+  end
+
+  def invoice!
+    invoice
+    save && OrderMailer.invoice(BuyerOrder.new(self)).deliver
   end
 end
