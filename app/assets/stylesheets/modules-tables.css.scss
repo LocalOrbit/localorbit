@@ -10,8 +10,11 @@
 }
 
 .table-summary {
+  padding: .5em 1em;
+  @include border-radius(5px);
   margin-bottom: 1em;
   color: #000;
+  background: $notice_bg;
 }
 
 table {
