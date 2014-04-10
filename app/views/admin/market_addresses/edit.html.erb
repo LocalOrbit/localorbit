@@ -1,11 +1,11 @@
 <%= render 'admin/markets/header' %>
 
-<h1>Edit <%= @address.name %></h1>
-
-<%= render 'shared/errors', { resource: @address } %>
-
 <div class="row row--partial">
   <%= form_for @address, url: admin_market_address_path(@market, @address), html: { class: "column column--three-fourths" } do |f| %>
+
+  <h1>Update address</h1>
+
+  <%= render 'shared/errors', { resource: @address } %>
     <%= render 'form', {f: f} %>
     <div class="form-actions">
       <%= f.submit "Update Address" %>
