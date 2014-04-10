@@ -32,8 +32,8 @@ module Sessions
 
     def invalid_delivery_selection
       flash.now[:alert] = "Please select a delivery"
-      self.new
-      return render :new
+      new
+      render :new
     end
 
     def require_organization

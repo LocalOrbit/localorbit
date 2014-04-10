@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 # Import the taxonomy tree from a csv export
 # of the legacy taxonomy data
@@ -7,7 +7,7 @@ class ImportLegacyTaxonomy
     new(filename, opts).run
   end
 
-  def initialize(filename, opts = {})
+  def initialize(filename, opts={})
     @filename       = filename
     @by_cat_id      = {}
     @base_nodes     = []
@@ -30,9 +30,9 @@ class ImportLegacyTaxonomy
 
   def load_taxonomy
     CSV.foreach(@filename, headers: true) do |row|
-      next if row['cat_id'] == '1' || row['parent_id'] == '1'
+      next if row["cat_id"] == "1" || row["parent_id"] == "1"
 
-      @by_cat_id[row['cat_id']] = {name: row['cat_name'], children: [], parent_id: row['parent_id'], order_by: row['order_by']}
+      @by_cat_id[row["cat_id"]] = {name: row["cat_name"], children: [], parent_id: row["parent_id"], order_by: row["order_by"]}
     end
   end
 
@@ -48,11 +48,11 @@ class ImportLegacyTaxonomy
     @base_nodes.reject! {|node| node[:parent_id] != "2" }
   end
 
-  def store_tree(nodes, parent = nil)
+  def store_tree(nodes, parent=nil)
     nodes.each do |node|
       obj = parent.children.find_or_initialize_by(name: node[:name])
       obj.save!
-      print '.' if @verbose
+      print "." if @verbose
       store_tree(node[:children].sort_by {|n| n[:name] }, obj)
     end
   end

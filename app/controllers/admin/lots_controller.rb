@@ -37,8 +37,6 @@ class Admin::LotsController < AdminController
   end
 
   def redirect_simple_inventory
-    if @product.use_simple_inventory?
-      redirect_to [:admin, @product]
-    end
+    redirect_to [:admin, @product] if @product.use_simple_inventory?
   end
 end

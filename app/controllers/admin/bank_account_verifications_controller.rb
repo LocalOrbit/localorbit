@@ -19,7 +19,7 @@ class Admin::BankAccountVerificationsController < AdminController
   end
 
   private
-  
+
   def find_bank_account
     @entity.bank_accounts.find(params[:bank_account_id])
   end

@@ -4,9 +4,9 @@ class Cart < ActiveRecord::Base
   belongs_to :delivery
   belongs_to :location
 
-  validates :organization, presence:true
-  validates :market, presence:true
-  validates :delivery, presence:true
+  validates :organization, presence: true
+  validates :market, presence: true
+  validates :delivery, presence: true
 
   has_many :items, class_name: :CartItem do
     def for_checkout
@@ -17,7 +17,7 @@ class Cart < ActiveRecord::Base
   end
 
   def subtotal
-    items.inject(0){ |sum, item| sum += item.total_price }
+    items.inject(0) {|sum, item| sum + item.total_price }
   end
 
   def delivery_fees

@@ -34,7 +34,7 @@ module OrderPresenter
 
   def seller_payment_status
     # TODO: Make work after Payments exists
-    'Unpaid'
+    "Unpaid"
   end
 
   def transaction_fees
@@ -42,7 +42,7 @@ module OrderPresenter
   end
 
   def totals
-    @totals ||= items.inject({discount: 0, gross: 0, net: 0, payment: 0, transaction: 0}) do |totals, item|
+    @totals ||= items.inject(discount: 0, gross: 0, net: 0, payment: 0, transaction: 0) do |totals, item|
       totals[:discount]    += item.discount
       totals[:gross]       += item.quantity * item.unit_price
       totals[:transaction] += item.local_orbit_seller_fee + item.market_seller_fee

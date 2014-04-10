@@ -1,15 +1,14 @@
 class Product < ActiveRecord::Base
   include SoftDelete
 
-
   belongs_to :category
   belongs_to :top_level_category, class: Category
   belongs_to :organization
   belongs_to :location
   belongs_to :unit
 
-  has_many :lots, lambda { order('created_at') }, inverse_of: :product, autosave: true
-  has_many :lots_by_expiration, lambda { order('expires_at, good_from, created_at') }, class_name: Lot, foreign_key: :product_id
+  has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true
+  has_many :lots_by_expiration, -> { order("expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
 
   has_many :product_deliveries
   has_many :delivery_schedules, through: :product_deliveries
@@ -42,20 +41,20 @@ class Product < ActiveRecord::Base
   end
 
   # Does not explicitly scope to the market. Use in conjunction with available_for_market.
-  def self.available_for_sale(market, buyer = nil)
+  def self.available_for_sale(market, buyer=nil)
     visible.seller_can_sell.
-      joins(:lots, :prices).select('DISTINCT(products.*)').
-      where('(lots.good_from IS NULL OR lots.good_from < :now) AND (lots.expires_at IS NULL OR lots.expires_at > :now) AND quantity > 0', now: Time.current).
-      where('prices.market_id = ? OR prices.market_id IS NULL', market.id).
+      joins(:lots, :prices).select("DISTINCT(products.*)").
+      where("(lots.good_from IS NULL OR lots.good_from < :now) AND (lots.expires_at IS NULL OR lots.expires_at > :now) AND quantity > 0", now: Time.current).
+      where("prices.market_id = ? OR prices.market_id IS NULL", market.id).
       available_for_sale_price_conditions_for_buyer(buyer).
-      having('SUM(lots.quantity) >= MIN(prices.min_quantity)').group('products.id')
+      having("SUM(lots.quantity) >= MIN(prices.min_quantity)").group("products.id")
   end
 
-  def self.available_for_sale_price_conditions_for_buyer(buyer = nil)
+  def self.available_for_sale_price_conditions_for_buyer(buyer=nil)
     if buyer
-      where('prices.organization_id = ? OR prices.organization_id IS NULL', buyer.id)
+      where("prices.organization_id = ? OR prices.organization_id IS NULL", buyer.id)
     else
-      where('prices.organization_id IS NULL')
+      where("prices.organization_id IS NULL")
     end
   end
 
@@ -72,7 +71,7 @@ class Product < ActiveRecord::Base
   end
 
   def can_use_simple_inventory?
-    use_simple_inventory? || !lots.where('(expires_at IS NULL OR expires_at > ?) AND quantity > 0', Time.current).exists?
+    use_simple_inventory? || !lots.where("(expires_at IS NULL OR expires_at > ?) AND quantity > 0", Time.current).exists?
   end
 
   def simple_inventory
@@ -117,7 +116,7 @@ class Product < ActiveRecord::Base
 
   def prices_for_market_and_organization(market, organization)
     ids = [organization.id, nil]
-    prices.where(market_id: [market.id, nil]).where(organization_id: ids).order("min_quantity, organization_id desc nulls first").index_by {|price| price.min_quantity}.values
+    prices.where(market_id: [market.id, nil]).where(organization_id: ids).order("min_quantity, organization_id desc nulls first").index_by {|price| price.min_quantity }.values
   end
 
   private
