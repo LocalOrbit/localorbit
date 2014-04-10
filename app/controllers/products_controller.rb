@@ -28,6 +28,7 @@ class ProductsController < ApplicationController
   private
 
   def products
-    current_delivery.delivery_schedule.products.available_for_sale(current_market, current_organization)
+    deliver_on_date = current_delivery.deliver_on
+    current_delivery.delivery_schedule.products.available_for_sale(current_market, current_organization, deliver_on_date)
   end
 end

@@ -59,6 +59,15 @@ feature "Viewing products" do
     expect(Dom::Product.find_by_name(org2_product.name)).to_not be_nil
   end
 
+  scenario "a product with inventory that expires before the delivery" do
+    org1_product.lots.first.update(number: "1", expires_at: DateTime.parse("October 8, 2014 00:00"))
+    sign_in_as(user)
+
+    expect(Dom::Product.all.count).to eql(1)
+    expect(Dom::Product.find_by_name(org1_product.name)).to be_nil
+    expect(Dom::Product.find_by_name(org2_product.name)).to_not be_nil
+  end
+
   scenario "an individual product" do
     sign_in_as(user)
     product = available_products.first

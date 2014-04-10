@@ -42,10 +42,10 @@ class Product < ActiveRecord::Base
   end
 
   # Does not explicitly scope to the market. Use in conjunction with available_for_market.
-  def self.available_for_sale(market, buyer = nil)
+  def self.available_for_sale(market, buyer = nil, deliver_on_date = Time.current)
     visible.seller_can_sell.
       joins(:lots, :prices).select('DISTINCT(products.*)').
-      where('(lots.good_from IS NULL OR lots.good_from < :now) AND (lots.expires_at IS NULL OR lots.expires_at > :now) AND quantity > 0', now: Time.current).
+      where('(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND quantity > 0', time: deliver_on_date).
       where('prices.market_id = ? OR prices.market_id IS NULL', market.id).
       available_for_sale_price_conditions_for_buyer(buyer).
       having('SUM(lots.quantity) >= MIN(prices.min_quantity)').group('products.id')
@@ -87,8 +87,8 @@ class Product < ActiveRecord::Base
     lot.quantity = val
   end
 
-  def available_inventory
-    lots.available.sum(:quantity)
+  def available_inventory(deliver_on_date = DateTime.current)
+    lots.available(deliver_on_date).sum(:quantity)
   end
 
   def minimum_quantity_for_purchase(opts={})
