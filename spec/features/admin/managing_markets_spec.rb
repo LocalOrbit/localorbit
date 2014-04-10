@@ -25,7 +25,7 @@ describe "Admin Managing Markets" do
       end
 
       it "by navigating directly to the market" do
-        visit "/admin/markets/#{market1.id}/edit"
+        visit "/admin/markets/#{market1.id}"
 
         expect(page).to have_text(market1.name)
         expect(page).to_not have_text(market2.name)
@@ -54,7 +54,7 @@ describe "Admin Managing Markets" do
     it 'I can activate a market' do
       market1.update_attribute(:active, true)
 
-      visit "/admin/markets/#{market1.id}/edit"
+      visit "/admin/markets/#{market1.id}"
 
       expect(find(:xpath, "//input[@id='market_active']").value).to eq('false')
 
@@ -64,7 +64,7 @@ describe "Admin Managing Markets" do
     end
 
     it 'I can deactivate a market' do
-      visit "/admin/markets/#{market1.id}/edit"
+      visit "/admin/markets/#{market1.id}"
 
       expect(find(:xpath, "//input[@id='market_active']").value).to eq('true')
 
@@ -99,7 +99,7 @@ describe "Admin Managing Markets" do
       end
 
       it 'I can not modify a market I am not managing' do
-        visit edit_admin_market_path(market3)
+        visit admin_market_path(market3)
 
         expect(page).to have_text("page you were looking for doesn't exist")
       end
@@ -207,7 +207,7 @@ describe "Admin Managing Markets" do
     it 'can mark an active market as inactive' do
       market.update_attribute(:active, true)
 
-      visit "/admin/markets/#{market.id}/edit"
+      visit "/admin/markets/#{market.id}"
 
       expect(find(:xpath, "//input[@id='market_active']").value).to eq('false')
 
@@ -217,7 +217,7 @@ describe "Admin Managing Markets" do
     end
 
     it 'can mark an inactive market as active' do
-      visit "/admin/markets/#{market.id}/edit"
+      visit "/admin/markets/#{market.id}"
 
       expect(find(:xpath, "//input[@id='market_active']").value).to eq('true')
 
@@ -227,7 +227,7 @@ describe "Admin Managing Markets" do
     end
 
     it 'can update the market fee structure' do
-      visit "/admin/markets/#{market.id}/edit"
+      visit "/admin/markets/#{market.id}"
       click_link "Fees"
 
       fill_in 'Local Orbit % paid by seller',   with: '2.0'

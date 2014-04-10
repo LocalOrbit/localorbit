@@ -30,7 +30,7 @@ describe Admin::MarketsController do
           allow(RegisterMarket).to receive(:perform) { double("Results", success?: true, market: market) }
 
           post :create
-          expect(response).to redirect_to(edit_admin_market_path(market))
+          expect(response).to redirect_to(admin_market_path(market))
         end
       end
 
@@ -67,7 +67,7 @@ describe Admin::MarketsController do
     it "renders the new page" do
       patch :update, id: market.id
       expect(response).to be_success
-      expect(response).to render_template('edit')
+      expect(response).to render_template('show')
     end
   end
 end

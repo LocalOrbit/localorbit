@@ -11,7 +11,7 @@
     <h1><%= @market.decorate.header %></h1>
     <div class="tabs-wrapper">
       <ul class="tabs">
-        <%= content_tag(:li, link_to_or_span("Market Info",   [:edit, :admin, @market]), class: 'tab') %>
+        <%= content_tag(:li, link_to_or_span("Market Info",   [:admin, @market]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Managers",      [:admin, @market, :managers]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Addresses",     [:admin, @market, :addresses]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Deliveries",    [:admin, @market, :delivery_schedules]), class: 'tab') %>

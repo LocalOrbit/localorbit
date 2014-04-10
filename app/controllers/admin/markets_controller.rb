@@ -1,14 +1,13 @@
 class Admin::MarketsController < AdminController
   before_action :require_admin, only: [:new, :create]
   before_action :require_admin_or_market_manager, except: [:new, :create]
-  before_action :find_scoped_market, only: [:show, :edit, :update]
+  before_action :find_scoped_market, only: [:show, :update]
 
   def index
     @markets = market_scope
   end
 
   def show
-    render :edit
   end
 
   def new
@@ -19,7 +18,7 @@ class Admin::MarketsController < AdminController
     results = RegisterMarket.perform(market_params: market_params)
 
     if results.success?
-      redirect_to [:edit, :admin, results.market]
+      redirect_to [:admin, results.market]
     else
       flash.now.alert = "Could not create market"
       @market = results.market
@@ -27,15 +26,12 @@ class Admin::MarketsController < AdminController
     end
   end
 
-  def edit
-  end
-
   def update
     if @market.update_attributes(market_params)
-      redirect_to [:edit, :admin, @market]
+      redirect_to [:admin, @market]
     else
       flash.now.alert = "Could not update market"
-      render :edit
+      render :show
     end
   end
 
