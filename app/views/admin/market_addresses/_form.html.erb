@@ -1,28 +1,34 @@
-<div class="field">
-  <%= f.label :name %><br>
-  <%= f.text_field :name, class: "column--three-fourths" %>
+<div class="row row--field">
+  <div class="field column column--half column--guttered">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, class: "column--full" %>
+  </div
+  ><div class="field column column--half column--guttered">
+    <%= f.label :address %><br>
+    <%= f.text_field :address, class: "column--full" %>
+  </div>
 </div>
-<div class="field">
-  <%= f.label :address %><br>
-  <%= f.text_field :address, class: "column--three-fourths" %>
+<div class="row row--field">
+  <div class="field column column--half column--guttered">
+    <%= f.label :city %><br>
+    <%= f.text_field :city, class: "column--full" %>
+  </div
+  ><div class="field column column--fourth column--guttered">
+    <%= f.label :state %><br>
+    <%= f.select :state, us_states, {include_blank: true}, class: "column--full" %>
+  </div
+  ><div class="field column column--fourth column--guttered">
+    <%= f.label :zip %><br>
+    <%= f.text_field :zip, size: 11, class: "column--full" %>
+  </div>
 </div>
-<div class="field">
-  <%= f.label :city %><br>
-  <%= f.text_field :city, class: "column--three-fourths" %>
-</div>
-<div class="field">
-  <%= f.label :state %><br>
-  <%= f.select :state, us_states %>
-</div>
-<div class="field">
-  <%= f.label :zip %><br>
-  <%= f.text_field :zip, size: 11 %>
-</div>
-<div class="field">
-  <%= f.label :phone %><br>
-  <%= f.text_field :phone, class: "column--three-fourths" %>
-</div>
-<div class="field">
-  <%= f.label :fax %><br>
-  <%= f.text_field :fax, class: "column--three-fourths" %>
+<div class="row row--field">
+  <div class="field column column--half column--guttered">
+    <%= f.label :phone %><br>
+    <%= f.text_field :phone, class: "column--full" %>
+  </div
+  ><div class="field column column--half column--guttered">
+    <%= f.label :fax %><br>
+    <%= f.text_field :fax, class: "column--full" %>
+  </div>
 </div>

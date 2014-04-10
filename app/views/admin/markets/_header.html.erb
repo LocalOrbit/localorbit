@@ -15,7 +15,7 @@
         <%= content_tag(:li, link_to_or_span("Managers",      [:admin, @market, :managers]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Addresses",     [:admin, @market, :addresses]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Deliveries",    [:admin, @market, :delivery_schedules]), class: 'tab') %>
-        <%= content_tag(:li, link_to_or_span("Bank Accounts", [:admin, @market, :bank_accounts]), class: 'tab') %>
+        <%= content_tag(:li, link_to_or_span("Payment Methods", [:admin, @market, :bank_accounts]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Fees",          [:admin, @market, :fees]), class: 'tab') if current_user.admin? %>
       </ul>
     </div>

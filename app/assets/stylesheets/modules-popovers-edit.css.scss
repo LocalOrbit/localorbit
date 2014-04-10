@@ -52,16 +52,19 @@
     color: #666;
     line-height: inherit;
   }
+
+  ~ .location-map {
+    display: block;
+    width: 260px;
+    max-width: none;
+  }
 }
 
 .popup-body {
   padding: 10px;
+
 }
 
-.location-map {
-  display: block;
-  max-width: none;
-}
 
 .modal {
   position: fixed;
