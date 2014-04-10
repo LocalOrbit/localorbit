@@ -16,7 +16,7 @@ module Admin
       if @delivery_schedule.save
         AddDeliveryScheduleToProducts.perform(delivery_schedule: @delivery_schedule, market: @market)
 
-        redirect_to [:admin, @market, :delivery_schedules], notice: 'Saved delivery schedule.'
+        redirect_to [:admin, @market, :delivery_schedules], notice: "Saved delivery schedule."
       else
         render :new
       end
@@ -36,7 +36,7 @@ module Admin
       )
 
       if interactor.success?
-        redirect_to [:admin, @market, :delivery_schedules], notice: 'Saved delivery schedule.'
+        redirect_to [:admin, @market, :delivery_schedules], notice: "Saved delivery schedule."
       else
         @delivery_schedule = interactor.delivery_schedule
         render :new
@@ -45,7 +45,7 @@ module Admin
 
     def destroy
       @market.delivery_schedules.soft_delete(params[:id])
-      redirect_to [:admin, @market, :delivery_schedules], notice: 'Deleted delivery schedule.'
+      redirect_to [:admin, @market, :delivery_schedules], notice: "Deleted delivery schedule."
     end
 
     private

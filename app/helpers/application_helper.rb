@@ -19,7 +19,7 @@ module ApplicationHelper
         item = content_tag(:li, class: class_name) do
           concat link_to(object.name, params.merge(param_name => object.id))
           concat " "
-          concat link_to('<i class="font-icon icon-clear pull-right"></i>'.html_safe, params.merge(param_name.to_s => nil), class: 'clear-filter hide-when-open')
+          concat link_to('<i class="font-icon icon-clear pull-right"></i>'.html_safe, params.merge(param_name.to_s => nil), class: "clear-filter hide-when-open")
         end
 
         concat(item)
@@ -32,7 +32,7 @@ module ApplicationHelper
     {"error-payload" => obj.to_json, "id-prefix" => obj.class.to_s.downcase}
   end
 
-  def link_to_or_span(name, options = {}, html_options = {}, &block)
+  def link_to_or_span(name, options={}, html_options={}, &block)
     if similar_base_url_for_tab?(options)
       if html_options[:class].present?
         html_options[:class] += " current"
@@ -48,13 +48,13 @@ module ApplicationHelper
   # a matcher similar to current_page?(options) but crazier!
   # See also http://rubular.com/r/PVc6MLd5mL
   def similar_base_url_for_tab?(options)
-    base_url = url_for.sub(/\/?(\d*|new)?(\?.*)?$/, '')
-    regexp = /#{Regexp.escape(base_url)}(\/(new|\d+(\/edit)?)|)$/
+    base_url = url_for.sub(/\/?(\d*|new)?(\?.*)?$/, "")
+    regexp = %r{#{Regexp.escape(base_url)}(/(new|\d+(/edit)?)|)$}
     regexp =~ url_for(options)
   end
 
   def background_options
-    files = Dir.glob(Rails.root.join('app/assets/images/backgrounds/*.jpg'))
-    files.map{|name| [name.split(/[\/\.]/)[-2].titleize, name.split('/')[-1]] }
+    files = Dir.glob(Rails.root.join("app/assets/images/backgrounds/*.jpg"))
+    files.map {|name| [name.split(/[\/\.]/)[-2].titleize, name.split("/")[-1]] }
   end
 end

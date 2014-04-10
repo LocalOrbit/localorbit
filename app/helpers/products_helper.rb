@@ -28,7 +28,7 @@ module ProductsHelper
 
   def us_states
     Country["US"].states.map do |key, state|
-      next if %w[AA AK AE AP AS GU MP PR UM VI].include?(key)
+      next if %w(AA AK AE AP AS GU MP PR UM VI).include?(key)
       [state["name"], key]
     end.compact
   end

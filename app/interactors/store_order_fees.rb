@@ -4,7 +4,7 @@ class StoreOrderFees
   def perform
     calculate_fees
 
-    if order.payment_method == 'ach'
+    if order.payment_method == "ach"
       cap_market_fees
       cap_seller_fees
     end
@@ -57,8 +57,8 @@ class StoreOrderFees
   def payment_seller_fee
     @payment_seller_fee ||=
       case order.payment_method
-      when 'credit card' then market.credit_card_seller_fee
-      when 'ach'         then market.ach_seller_fee
+      when "credit card" then market.credit_card_seller_fee
+      when "ach"         then market.ach_seller_fee
       else
         0
       end
@@ -67,8 +67,8 @@ class StoreOrderFees
   def payment_market_fee
     @payment_market_fee ||=
       case order.payment_method
-      when 'credit card' then market.credit_card_market_fee
-      when 'ach'         then market.ach_market_fee
+      when "credit card" then market.credit_card_market_fee
+      when "ach"         then market.ach_market_fee
       else
         0
       end

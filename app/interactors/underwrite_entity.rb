@@ -3,7 +3,7 @@ class UnderwriteEntity
 
   def setup
     context[:balanced_customer] ||= Balanced::Customer.find(entity.balanced_customer_uri)
-    representative_params.delete_if {|k,v| v.blank?}
+    representative_params.delete_if {|k, v| v.blank? }
   end
 
   def perform

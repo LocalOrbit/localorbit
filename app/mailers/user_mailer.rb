@@ -13,5 +13,4 @@ class UserMailer < ActionMailer::Base
       subject: "You have been added to an organization"
     )
   end
-
 end

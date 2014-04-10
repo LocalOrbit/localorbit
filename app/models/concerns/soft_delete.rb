@@ -2,7 +2,7 @@ module SoftDelete
   extend ActiveSupport::Concern
 
   included do
-    scope :visible, lambda { where('deleted_at IS NULL OR deleted_at > ?', Time.current) }
+    scope :visible, -> { where("deleted_at IS NULL OR deleted_at > ?", Time.current) }
   end
 
   def soft_delete
@@ -11,14 +11,10 @@ module SoftDelete
 
   module ClassMethods
     def soft_delete(*ids)
-      time = Time.current
       records = where(id: ids)
+      records.update_all(deleted_at: Time.current) if records.any?
 
-      unless records.empty?
-        records.update_all(deleted_at: time)
-      end
-
-      return records
+      records
     end
   end
 end

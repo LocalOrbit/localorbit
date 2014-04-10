@@ -4,7 +4,7 @@ class CartItem < ActiveRecord::Base
 
   validates :cart, presence: true
   validates :product, presence: true
-  validates :quantity, numericality: { greater_than_or_equal_to: 0, less_than: 2147483647, only_integer: true }
+  validates :quantity, numericality: {greater_than_or_equal_to: 0, less_than: 2_147_483_647, only_integer: true}
 
   validate :validate_minimum_quantity, unless: "errors.has_key? :quantity"
   validate :quantity_is_available, unless: "errors.has_key? :quantity"
@@ -47,7 +47,7 @@ class CartItem < ActiveRecord::Base
 
   def validate_minimum_quantity
     if product && quantity
-      min_purchase_quantity = product.minimum_quantity_for_purchase(organization:cart.organization, market:cart.market)
+      min_purchase_quantity = product.minimum_quantity_for_purchase(organization: cart.organization, market: cart.market)
       if min_purchase_quantity > quantity
         errors.add(:quantity, ": You must order at least #{min_purchase_quantity}")
       end
@@ -59,5 +59,4 @@ class CartItem < ActiveRecord::Base
       errors.add(:quantity, "available for purchase: #{product.available_inventory}")
     end
   end
-
 end

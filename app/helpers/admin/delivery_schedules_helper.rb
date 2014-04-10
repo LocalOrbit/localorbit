@@ -6,11 +6,11 @@ module Admin
 
     def quarter_hour_select_options
       @quarter_hour_select_options ||= begin
-        t = Time.parse('2014-02-02 12:00 AM')
+        t = Time.parse("2014-02-02 12:00 AM")
         t_end = 24.hours.from_now(t)
         options = []
-        while(t < t_end)
-          options << t.strftime('%_I:%M %p').strip
+        while t < t_end
+          options << t.strftime("%_I:%M %p").strip
           t = 15.minutes.from_now(t)
         end
         options

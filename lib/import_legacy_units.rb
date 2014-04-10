@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 # Import the units from a csv export
 # of the legacy units
@@ -7,7 +7,7 @@ class ImportLegacyUnits
     new(filename, opts).run
   end
 
-  def initialize(filename, opts = {})
+  def initialize(filename, opts={})
     @filename       = filename
     @units          = []
     @verbose        = opts[:verbose]
@@ -27,7 +27,7 @@ class ImportLegacyUnits
 
   def load_csv
     CSV.foreach(@filename, headers: true) do |row|
-      unit = {singular: row['name'], plural: row['plural']}
+      unit = {singular: row["name"], plural: row["plural"]}
       @units << unit
       if @verbose
         if unit[:singular].pluralize != unit[:plural] || unit[:plural].singularize != unit[:singular]

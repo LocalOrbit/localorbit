@@ -24,9 +24,7 @@ class CartsController < ApplicationController
         @item.quantity = product.available_inventory(delivery_date)
       end
 
-      if !@item.save
-        @error = @item.errors.full_messages.join(". ")
-      end
+      @error = @item.errors.full_messages.join(". ") unless @item.save
     else
       @item.update(quantity: 0)
       @item.destroy
