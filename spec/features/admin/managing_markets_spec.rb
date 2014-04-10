@@ -13,25 +13,28 @@ describe "Admin Managing Markets" do
       sign_in_as user
     end
 
-    it 'I can see my markets' do
-      within('#admin-nav') do
-        expect(page).to have_content("Market Admin")
+
+    context "I can see the details for each of my markets" do
+      it "through the market listing" do
+        visit '/admin/markets'
+
+        click_link market1.name
+
+        expect(page).to have_text(market1.name)
+        expect(page).to_not have_text(market2.name)
       end
 
-      visit '/admin/markets'
+      it "by navigating directly to the market" do
+        visit "/admin/markets/#{market1.id}/edit"
 
-      expect(page).to have_text('Markets')
-      expect(page).to have_text(market1.name)
-      expect(page).to have_text(market2.name)
-    end
+        expect(page).to have_text(market1.name)
+        expect(page).to_not have_text(market2.name)
 
-    it 'I can see the details for each of my markets' do
-      visit '/admin/markets'
+        visit "/admin/markets/#{market1.id}"
 
-      click_link market1.name
-
-      expect(page).to have_text(market1.name)
-      expect(page).to_not have_text(market2.name)
+        expect(page).to have_text(market1.name)
+        expect(page).to_not have_text(market2.name)
+      end
     end
 
     it 'I can modify a market' do
