@@ -29,7 +29,7 @@ feature "Verifying a bank account", js: true do
 
       click_button "Save"
 
-      expect(page).to have_content("Bank Accounts")
+      expect(page).to have_content("Payment Methods")
 
       click_link "Verify"
     end
@@ -40,7 +40,7 @@ feature "Verifying a bank account", js: true do
 
       click_button "Verify"
 
-      expect(page).to have_content("Bank Accounts")
+      expect(page).to have_content("Payment Methods")
       expect(Dom::BankAccount.first).to be_verfied
     end
 

@@ -8,7 +8,7 @@
         <%= content_tag(:li, link_to_or_span("Info", [:admin, @organization]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Users", [:admin, @organization, :users]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Addresses", [:admin, @organization, :locations]), class: 'tab')%>
-        <%= content_tag(:li, link_to_or_span("Bank Accounts", [:admin, @organization, :bank_accounts]), class: 'tab')%>
+        <%= content_tag(:li, link_to_or_span("Payment Methods", [:admin, @organization, :bank_accounts]), class: 'tab')%>
       </ul>
     </div>
   </div>
