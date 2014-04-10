@@ -404,15 +404,26 @@
   font-weight: bold;
 
   a, span {
-    margin-left: 35px;
+    padding: 4px 14px;
   }
 
   a {
-    color: #7393d1;
+    color: #3F5D99;
 
     &:hover {
-      color: #4162a1;
+      color: #fff;
+      @include border-radius(6px);
+      background: #0A3078;
+      @include gradient(#A6B1CE,#5A6D9F);
     }
+  }
+  span {
+    @include border-radius(6px);
+    color: #fff;
+    background: #0a3078;
+    background-color: rgba(10,48,120,0.48);
+    @include gradient(#0a3078, rgba(10,48,120,0.3));
+    text-decoration: none;
   }
 }
 
