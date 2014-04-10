@@ -1,14 +1,16 @@
 <%= render 'admin/markets/header' %>
 
-<h1>Add Market Address</h1>
-
-<%= render 'shared/errors', { resource: @address } %>
-
 <div class="row row--partial">
-  <%= form_for [:admin, @address], html: { class: "column column--three-fourths" } do |f| %>
-    <%= render 'form', {f: f} %>
-    <div class="form-actions">
-      <%= f.submit "Add Address" %>
-    </div>
-  <% end %>
+  <div class="column column--three-fourths">
+    <h1>Add Market Address</h1>
+
+    <%= render 'shared/errors', { resource: @address } %>
+
+    <%= form_for [:admin, @address] do |f| %>
+      <%= render 'form', {f: f} %>
+      <div class="form-actions">
+        <%= f.submit "Add Address" %>
+      </div>
+    <% end %>
+  </div>
 </div>
