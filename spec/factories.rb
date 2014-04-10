@@ -184,7 +184,7 @@ FactoryGirl.define do
     city "Ann Arbor"
     state "MI"
     zip "48109"
-    phone "(616) 555-1212"
+    sequence(:phone) {|n| "(616) 555-#{'%04d' % n}"}
     organization
 
     trait :default_billing do
