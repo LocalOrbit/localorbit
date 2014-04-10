@@ -87,8 +87,8 @@ class Product < ActiveRecord::Base
     lot.quantity = val
   end
 
-  def available_inventory
-    lots.available.sum(:quantity)
+  def available_inventory(deliver_on_date = DateTime.current)
+    lots.available(deliver_on_date).sum(:quantity)
   end
 
   def minimum_quantity_for_purchase(opts={})

@@ -27,6 +27,7 @@ describe "Viewing the cart", js: true do
 
   let!(:kale) { create(:product, :sellable, name: "Kale", organization: fulton_farms) }
   let!(:kale_lot) { kale.lots.first.update_attribute(:quantity, 100) }
+  let!(:kale_lot_expired) { create(:lot, product: kale, number: 1, quantity: 25, expires_at: DateTime.parse("May 8, 2014")) }
   let!(:kale_price_tier1) {
     create(:price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
   }

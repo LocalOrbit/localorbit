@@ -60,6 +60,7 @@ describe Product do
     let(:product_in_other_buyer_price)  { create(:product, organization: org_in) }
     let(:product_in_other_market_price) { create(:product, organization: org_in) }
     let(:product_in_for_buyer)          { create(:product, organization: org_in) }
+    let(:product_in_expiring_lot)        { create(:product, organization: org_in) }
 
     before do
       create(:price, product: product_in)
@@ -67,31 +68,38 @@ describe Product do
       create(:price, product: product_in_other_buyer_price, organization: other_buyer)
       create(:price, product: product_in_other_market_price, market: market2)
       create(:price, product: product_in_for_buyer, organization: buyer)
+      create(:price, product: product_in_expiring_lot)
 
       create(:lot, product: product_in)
       create(:lot, product: product_in_no_price)
       create(:lot, product: product_in_other_buyer_price)
       create(:lot, product: product_in_other_market_price)
       create(:lot, product: product_in_for_buyer)
+      create(:lot, product: product_in_expiring_lot, number: "1", expires_at: DateTime.parse("May 6, 2014"))
     end
 
     context "with an organization" do
       it "contains the correct products" do
-        products = Product.available_for_sale(market, buyer)
-        expect(products.to_a.size).to eq(2)
-        expect(products).to include(product_in, product_in_for_buyer)
+        products = Product.available_for_sale(market, buyer, DateTime.parse("May 5, 2014"))
+        expect(products.to_a.size).to eq(3)
+        expect(products).to include(product_in, product_in_for_buyer, product_in_expiring_lot)
+      end
+
+      it "excludes products that do not have unexpired inventory" do
+        products = Product.available_for_sale(market, buyer, DateTime.parse("May 9, 2014"))
+        expect(products.to_a.count).to eq(2)
       end
 
       it "excludes products from organizations who cannot sell" do
         org_in.update!(can_sell: false)
-        products = Product.available_for_sale(market, buyer)
+        products = Product.available_for_sale(market, buyer, DateTime.parse("May 5, 2014"))
         expect(products.to_a.count).to eq(0)
       end
     end
 
     context "without an organization" do
       it "contains the correct products" do
-        expect(Product.available_for_sale(market)).to eq([product_in])
+        expect(Product.available_for_sale(market)).to include(product_in, product_in_expiring_lot)
       end
     end
   end
@@ -317,7 +325,9 @@ describe Product do
     end
 
     context 'using advanced inventory' do
-      subject { create(:product, use_simple_inventory: false) }
+      let!(:product) { create(:product, use_simple_inventory: false) }
+
+      subject { product }
 
       context 'with no inventory set' do
         it 'returns 0' do
@@ -326,31 +336,25 @@ describe Product do
       end
 
       context 'with available inventory lots' do
-        before do
-          subject.lots.create!(quantity: 42)
-          subject.lots.create!(quantity: 24)
-        end
+        let!(:lot1) { create(:lot, product: product, quantity: 42) }
+        let!(:lot2) { create(:lot, product: product, quantity: 24) }
 
         it 'returns the sum of the available lot inventory' do
           expect(subject.available_inventory).to eq(66)
         end
 
         context 'that are expired' do
-          before do
-            lot = subject.lots.create!(created_at: 2.days.ago, number: '1', expires_at: 1.minute.from_now, quantity: 50)
-            lot.update_attribute(:expires_at, 1.day.ago)
-          end
+          let!(:expired_lot) { create(:lot, created_at: 2.days.ago, number: '1', expires_at: 1.minute.from_now, quantity: 50) }
 
           it 'returns the sum of the available lot inventory' do
+            expired_lot.update_attribute(:expires_at, 1.day.ago)
+
             expect(subject.available_inventory).to eq(66)
           end
         end
 
         context 'that have not reached their good_from date' do
-
-          before do
-            lot = subject.lots.create!(created_at: 2.days.ago, number: '1', good_from: 2.days.from_now, expires_at: 1.week.from_now, quantity: 50)
-          end
+          let!(:not_good_yet) { create(:lot, created_at: 2.days.ago, number: '1', good_from: 2.days.from_now, expires_at: 1.week.from_now, quantity: 50) }
 
           it 'returns the sum of the available lot inventory' do
             expect(subject.available_inventory).to eq(66)

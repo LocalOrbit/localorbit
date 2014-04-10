@@ -11,15 +11,17 @@ class CartsController < ApplicationController
 
   def update
     product = Product.find(item_params[:product_id])
+    delivery_date = current_delivery.deliver_on
+
     @item = current_cart.items.find_or_initialize_by(product_id: item_params[:product_id])
 
     if item_params[:quantity].to_i > 0
       @item.quantity = item_params[:quantity]
       @item.product = product
 
-      if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory
-        @error = "Quantity available for purchase: #{product.available_inventory}"
-        @item.quantity = product.available_inventory
+      if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date)
+        @error = "Quantity available for purchase: #{product.available_inventory(delivery_date)}"
+        @item.quantity = product.available_inventory(delivery_date)
       end
 
       if !@item.save
