@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :markets, concerns: :bank_account do
+    resources :markets, concerns: :bank_account, except: [:edit] do
       resources :market_addresses,   as: :addresses,  path: :addresses
       resources :market_managers,    as: :managers,   path: :managers
       resources :delivery_schedules, path: :deliveries

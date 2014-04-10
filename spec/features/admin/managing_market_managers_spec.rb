@@ -28,7 +28,7 @@ describe "Admin Managing Market Managers" do
     end
 
     it 'I can see the current market managers' do
-      visit "/admin/markets/#{market.id}/edit"
+      visit "/admin/markets/#{market.id}"
 
       click_link "Managers"
 
@@ -60,7 +60,7 @@ describe "Admin Managing Market Managers" do
     end
 
     it 'I can see the current market managers' do
-      visit "/admin/markets/#{market.id}/edit"
+      visit "/admin/markets/#{market.id}"
 
       click_link "Managers"
 
