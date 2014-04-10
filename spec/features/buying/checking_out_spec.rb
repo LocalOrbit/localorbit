@@ -117,7 +117,7 @@ describe "Checking Out" do
       sign_in_as(user)
       open_email(user.email)
 
-      expect(current_email).to have_subject("You have a new order!")
+      expect(current_email).to have_subject("New order on #{market.name}")
       expect(current_email.body).to have_content("You have a new order!")
       # It does not include content from other sellers
       expect(current_email).to have_body_text("Kale")
@@ -136,7 +136,7 @@ describe "Checking Out" do
       sign_in_as(user)
       open_email(user.email)
 
-      expect(current_email).to have_subject("You have a new order!")
+      expect(current_email).to have_subject("New order on #{market.name}")
       expect(current_email.body).to have_content("You have a new order!")
       # It does not include content from other sellers
       expect(current_email).not_to have_body_text("Kale")
@@ -158,6 +158,7 @@ describe "Checking Out" do
     sign_in_as(market_manager)
     open_email(market.managers[0].email)
 
+    expect(current_email).to have_subject("New order on #{market.name}")
     expect(current_email.body).to have_content("You've received a new order.")
     expect(current_email.body).to have_content("Order Placed By: #{buyer.name}")
 

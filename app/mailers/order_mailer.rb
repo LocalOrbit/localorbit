@@ -19,7 +19,7 @@ class OrderMailer < ActionMailer::Base
 
     mail(
       to: seller.users.pluck(:email),
-      subject: "You have a new order!"
+      subject: "New order on #{@market.name}"
     )
   end
 
@@ -29,7 +29,7 @@ class OrderMailer < ActionMailer::Base
 
     mail(
       to: manager.email,
-      subject: "Thank you for your order"
+      subject: "New order on #{@market.name}"
     )
   end
 end
