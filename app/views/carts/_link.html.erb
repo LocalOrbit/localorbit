@@ -7,7 +7,7 @@
 <% end %>
 
 <%= link_to [:cart], class: cart_class_base, data: {count: cart_count}  do %>
-  Cart <span class="counter"><%= cart_count %></span>
+  <i class="font-icon icon-cart"></i> Cart <span class="counter"><%= cart_count %></span>
 <% end %>
 
 <div id="empty-cart" class="popup popup--centered with-anchor top-centered-anchor is-hidden">

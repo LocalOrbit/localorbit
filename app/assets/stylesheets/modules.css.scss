@@ -295,7 +295,7 @@
 .header--welcome {
   float: left;
   margin: 14px 0 12px 20px;
-  margin: 1em 0 .85714em 20px;
+  margin: .5em 0 .4em 20px;
   line-height: 1.1875;
 
   > .welcome-user {
@@ -350,35 +350,25 @@
   }
 }
 .nav--app {
-  border-right: solid 1px rgba(0,0,0,0.25);
+  border-right: solid 1px rgba(0,0,0,0.05);
   margin: 0;
-  font-weight: bold;
+  font-size: 13px;
   text-align: right;
-  text-shadow: 0 1px #000;
+  text-shadow: 0 -1px rgba(0,0,0,0.25);
+  -webkit-font-smoothing: initial;
 
   a {
     display: block;
-    padding: 17px 25px;
-    background:    -moz-linear-gradient(left,  rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 2%, rgba(255,255,255,0) 98%, rgba(255,255,255,0.1) 100%);
-    background: -webkit-linear-gradient(left,  rgba(255,255,255,0.1) 0%,rgba(255,255,255,0) 2%,rgba(255,255,255,0) 98%,rgba(255,255,255,0.1) 100%);
-    background:      -o-linear-gradient(left,  rgba(255,255,255,0.1) 0%,rgba(255,255,255,0) 2%,rgba(255,255,255,0) 98%,rgba(255,255,255,0.1) 100%);
-    background:     -ms-linear-gradient(left,  rgba(255,255,255,0.1) 0%,rgba(255,255,255,0) 2%,rgba(255,255,255,0) 98%,rgba(255,255,255,0.1) 100%);
-    background:         linear-gradient(to right,  rgba(255,255,255,0.1) 0%,rgba(255,255,255,0) 2%,rgba(255,255,255,0) 98%,rgba(255,255,255,0.1) 100%);
+    padding: 10px 25px;
 
-    &:hover {
-      @include box-shadow(inset 0 1px 3px rgba(255,255,255,0.8));
-      background-color: #637494;
-      background-color: rgba(255,255,255,0.2);
-    }
-    &:active {
-      @include box-shadow(inset 0 0 10px rgba(0,0,0,0.35));
-      background: #283e69;
-      background: rgba(0,0,0,0.15);
-    }
+    &:hover,
+    &:active,
     &.current {
-      @include box-shadow(inset 0 0 10px rgba(0,0,0,0.35));
-      background: #283e69;
-      background: rgba(0,0,0,0.3);
+      color: #8CB0F5;
+
+      .counter {
+        color: #fff;
+      }
     }
   }
   > li {
@@ -386,12 +376,11 @@
     border: 0;
     border-left-color: #3f5d97;
     border-left: solid 1px rgba(0,0,0,0.25);
-    border-image:    -moz-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.25) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
-    border-image: -webkit-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.25) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
-    border-image:      -o-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.25) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
-    border-image:     -ms-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.25) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
-    border-image:         linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.25) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
-    background-color: #3c5179;
+    border-image:    -moz-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
+    border-image: -webkit-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
+    border-image:      -o-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
+    border-image:     -ms-linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
+    border-image:         linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.05) 90%, rgba(0,0,0,0) 100%) 1 1 stretch;
     line-height: 1.6428;
     text-align: center;
   }
@@ -404,15 +393,26 @@
   font-weight: bold;
 
   a, span {
-    margin-left: 35px;
+    padding: 4px 14px;
   }
 
   a {
-    color: #7393d1;
+    color: #3F5D99;
 
     &:hover {
-      color: #4162a1;
+      color: #fff;
+      @include border-radius(6px);
+      background: #0A3078;
+      @include gradient(#A6B1CE,#5A6D9F);
     }
+  }
+  span {
+    @include border-radius(6px);
+    color: #fff;
+    background: #0a3078;
+    background-color: rgba(10,48,120,0.48);
+    @include gradient(#0a3078, rgba(10,48,120,0.3));
+    text-decoration: none;
   }
 }
 
