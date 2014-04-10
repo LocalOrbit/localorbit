@@ -14,7 +14,7 @@ describe "Viewing an empty cart" do
       expect(Dom::CartLink.first.node).to have_content("0")
       click_link "Cart", match: :first
       expect(page).to have_content("Your cart is empty.")
-      expect(page).to have_content("Add items to your cart to see them here and make a purchase.")
+      expect(page).to have_content("Please add items to your cart to see them here and make a purchase.")
     end
   end
 
@@ -25,7 +25,7 @@ describe "Viewing an empty cart" do
       expect(Dom::CartLink.first.node).to have_content("0")
       click_link "Cart"
       expect(page).to have_content("Your cart is empty.")
-      expect(page).to have_content("Add items to your cart to see them here and make a purchase.")
+      expect(page).to have_content("Please add items to your cart to see them here and make a purchase.")
     end
   end
 
