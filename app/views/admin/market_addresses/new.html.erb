@@ -9,6 +9,7 @@
     <%= form_for [:admin, @address] do |f| %>
       <%= render 'form', {f: f} %>
       <div class="form-actions">
+        <%= link_to "Cancel", admin_market_addresses_path(@market), class: "btn cancel" %>
         <%= f.submit "Add Address" %>
       </div>
     <% end %>

@@ -19,6 +19,10 @@ updateInputs = (object, $form) ->
     $el.val(object[$el.data("balanced-attribute")])
 
 $ ->
+  $("#submit-bank-account").click (e) ->
+    e.preventDefault()
+    $("#balanced-payments-uri").trigger "submit"
+
   $("#balanced-payments-uri").submit (event) ->
     event.preventDefault()
     $form = $(event.target)

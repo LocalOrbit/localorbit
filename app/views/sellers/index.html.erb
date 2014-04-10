@@ -13,68 +13,34 @@
 
   </aside
   ><div class="column column--three-fourths column--guttered vcard">
-
-
     <div class="row">
-
       <div class="column column--half column--guttered">
+        <h1 class="fn story-header"><%= @current_seller.name %></h1>
 
-        <h1 class="fn heading-seller"><%= @current_seller.name %></h1>
-        <% if @current_seller.billing_location.present? %>
-          <p class="adr">
-            <span class="locality"><%= @current_seller.billing_location.city %></span>, <span class="region"><%= @current_seller.billing_location.state %></span>
-          </p>
+        <% if @current_seller.photo.present? %>
+          <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo", class: "photo seller-photo" %>
         <% end %>
-
-        <div class="who-story">
-          <h2 class="story-header">Who We Are</h2>
-          <%= simple_format @current_seller.who_story %>
-        </div>
-        <div class="how-story">
-          <h2 class="story-header">How We Do It</h2>
-          <%= simple_format @current_seller.how_story %>
-        </div>
 
       </div
       ><div class="column column--half column--guttered">
-        <div class="tab-box">
-
-          <div class="tabbed-item map" id="map-tab">
-            <img alt="map" src="<%= @current_seller.locations_map %>">
-          </div>
-
-          <div class="tabbed-item feed-item" id="twitter-tab">
-            <h2>Twitter</h2>
-          </div>
-
-          <div class="tabbed-item feed-item" id="facebook-tab">
-            <h2>Facebook</h2>
-          </div>
-
-          <div class="tabbed-item profile-image" id="profile-image-tab">
-            <% if @current_seller.photo.present? %>
-              <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo", class: "photo" %>
-            <% end %>
-          </div>
-
-          <% if @current_seller.photo.present? %>
-          <ul class="tabs tabs--bottom tabs--small">
-            <li class="tab">
-              <a href="#profile-image-tab">Photo</a>
-            </li>
-            <li class="tab">
-              <a href="#map-tab" class="inactive">Map</a>
-            </li>
-            <li class="tab">
-              <a href="#facebook-tab" class="inactive">Facebook</a>
-            </li>
-            <li class="tab">
-              <a href="#twitter-tab" class="inactive">Twitter</a>
-            </li>
-          </ul>
+        <h1 class="story-header adr">
+          <% if @current_seller.billing_location.present? %>
+            <span class="locality"><%= @current_seller.billing_location.city %></span>, <span class="region"><%= @current_seller.billing_location.state %></span>
           <% end %>
+        </h1>
+        <img alt="map" src="<%= @current_seller.locations_map %>" class="seller-map">
+      </div>
+    </div>
 
-        </div>
+    <div class="row">
+
+      <div class="who-story column column--half column--guttered">
+        <h2 class="story-header">Who We Are</h2>
+        <%= simple_format @current_seller.who_story %>
+      </div
+      ><div class="how-story column column--half column--guttered">
+        <h2 class="story-header">How We Do It</h2>
+        <%= simple_format @current_seller.how_story %>
       </div>
     </div>
 

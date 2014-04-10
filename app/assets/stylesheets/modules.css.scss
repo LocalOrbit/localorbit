@@ -577,17 +577,17 @@
 
 .sidebar-box {
   padding: 10px;
-  border-top: solid 1px #4162a1;
+  border: solid 1px #4162a1;
+  border-top-width: 3px;
   @include border-radius(0 0 5px 5px);
-  @include box-shadow(inset 0 2px 1px #c0c0c0);
   margin: 5px 0 24px;
-  color: #666;
-  background: #f9f9f9;
+  color: #000;
   font-size: 12px;
+  font-weight: 500;
+  -webkit-font-smoothing: auto;
 
   .display-date,
   .location-name {
-    color: #000;
     font-size: 14px;
   }
 }
@@ -923,7 +923,7 @@
 
 /** Story stuff */
 .story-header {
-  margin-bottom: 0;
+  margin-bottom: 10px;
   font: normal 28px "Open Sans Condensed", sans-serif;
 
   + p {
@@ -1041,6 +1041,12 @@ label ~ .tooltip {
   &.pull-right + .pull-right {
     margin-right: .5em;
   }
+}
+
+/** Seller Profiles */
+.seller-map,
+.seller-photo {
+  margin-bottom: 2em;
 }
 
 /** Upcoming Delivery */
