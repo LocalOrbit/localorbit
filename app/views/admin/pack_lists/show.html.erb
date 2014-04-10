@@ -1,4 +1,5 @@
-<%= link_to "Print", "#", class: "btn btn--small pull-right", id: "print-button" %> 
+<%= link_to "Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
+<%= link_to "Print", "#", class: "btn btn--small pull-right", id: "print-button" %>
 
 <% @delivery.orders.decorate.each_with_index do |order, index| %>
   <% if index != 0 %>
