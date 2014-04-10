@@ -14,7 +14,7 @@ class Admin::BankAccountVerificationsController < AdminController
       redirect_to [:admin, @entity, :bank_accounts]
     else
       flash.now[:alert] = "Could not verify bank account."
-      render :verify
+      render :show
     end
   end
 
