@@ -36,6 +36,9 @@
 .icon-calendar:before {
   content: "\e013";
 }
+.icon-cart:before {
+  content: "\e00d";
+}
 .icon-checkmark:before {
   content: "\e031";
 }
@@ -198,9 +201,6 @@ you can use the generic selector below, but it's slower:
 }
 .icon-profile:before {
   content: "\e00c";
-}
-.icon-file:before {
-  content: "\e00d";
 }
 .icon-file-2:before {
   content: "\e00e";
