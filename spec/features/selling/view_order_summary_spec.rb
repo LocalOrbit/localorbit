@@ -1,7 +1,9 @@
 require "spec_helper"
 
 describe "Order summary" do
-  let!(:market)  { create(:market, :with_addresses) }
+  let!(:admin) { create(:user, :admin) }
+  let!(:market_manager) { create(:user) }
+  let!(:market)  { create(:market, :with_addresses, managers:[market_manager]) }
   let!(:sellers) { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:others) { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:sellers_product1) { create(:product, :sellable, organization: sellers) }
@@ -42,8 +44,9 @@ describe "Order summary" do
       visit admin_delivery_tools_order_summary_path(friday_delivery.id)
     end
 
-    it "displays an order summary for the delivery" do
+    it "displays an order summary for the delivery", js: true do
       expect(page).to have_content("Order Summary")
+
       expect(page).to have_content(sellers.name)
       expect(page).to have_content(sellers.shipping_location.address)
       expect(page).to have_content(sellers.shipping_location.phone)
@@ -56,6 +59,48 @@ describe "Order summary" do
       expect(page).to have_content(buyer2.name)
       expect(page).to have_content(sellers_order2.order_number)
       expect(page).to have_content(sellers_order2_item.name)
+      expect(page).not_to have_content(others_order.order_number)
+      expect(page).not_to have_content(others_order_item.name)
+    end
+  end
+
+  context "display  a list of order summaries for a delivery" do
+    def see_orders_for_entire_market
+      expect(page).to have_content("Order Summary")
+
+      expect(page).to have_content(sellers.name)
+      expect(page).to have_content(sellers.shipping_location.address)
+      expect(page).to have_content(sellers.shipping_location.phone)
+
+      expect(page).to have_content(buyer1.name)
+      expect(page).to have_content(sellers_order1.order_number)
+      expect(page).to have_content(sellers_order1_item1.name)
+      expect(page).to have_content(sellers_order1_item2.name)
+
+      expect(page).to have_content(buyer2.name)
+      expect(page).to have_content(sellers_order2.order_number)
+      expect(page).to have_content(sellers_order2_item.name)
+
+      expect(page).to have_content(others.name)
+      expect(page).to have_content(others.shipping_location.address)
+      expect(page).to have_content(others.shipping_location.phone)
+
+      expect(page).to have_content(others_order.order_number)
+      expect(page).to have_content(others_order_item.name)
+    end
+
+    it "as a market manager" do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(market_manager)
+      visit admin_delivery_tools_order_summary_path(friday_delivery.id)
+      see_orders_for_entire_market
+    end
+
+    it "as an admin" do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(admin)
+      visit admin_delivery_tools_order_summary_path(friday_delivery.id)
+      see_orders_for_entire_market
     end
   end
 end
