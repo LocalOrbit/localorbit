@@ -13,6 +13,10 @@ class DeliveryDecorator < Draper::Decorator
     buyer_pickup? ? "pickup on" : "delivery on"
   end
 
+  def display_dropoff_location_type
+    buyer_pickup? ? "Market" : "Customer"
+  end
+
   def display_date
     deliver_on.strftime("%B %e, %Y")
   end
@@ -50,7 +54,17 @@ class DeliveryDecorator < Draper::Decorator
 
     "between #{start_time} and #{end_time}"
   end
-  
+
+  def fulfillment_time_range
+    start_time = delivery_schedule.seller_delivery_start
+    end_time   = delivery_schedule.seller_delivery_end
+
+    start_time.gsub!(" ", "")
+    end_time.gsub!(" ", "")
+
+    "between #{start_time} and #{end_time}"
+  end
+
   def buyer_time_range_capitalized
     buyer_time_range.sub("between", "Between")
   end

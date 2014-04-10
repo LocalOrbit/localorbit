@@ -13,8 +13,11 @@
     <h1><%= order.organization.name %></h1>
 
     <div class="half-block">
-      <strong>Seller Delivers to Market on</strong>
-      <h2><%= @delivery.display_date %> <%= @delivery.buyer_time_range %></h2>
+      <strong>Seller Delivers to <%= @delivery.display_dropoff_location_type %> on</strong>
+      <h2><%= @delivery.display_date %> <%= @delivery.fulfillment_time_range %></h2>
+      <% if @delivery.buyer_pickup? %>
+      <p>For pickup on <%= @delivery.display_date %> <%= @delivery.buyer_time_range %></p>
+      <% end %>
     </div>
 
     <div class="half-block">
