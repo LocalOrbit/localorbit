@@ -23,6 +23,7 @@ $ ->
         option.prop("selected", false)
 
     applyFormValues: (opts)->
+      @selectLocation(opts.location)
       $("#product_who_story").val(opts.who)
       $("#product_how_story").val(opts.how)
 
@@ -85,9 +86,9 @@ $ ->
     update: (opts={})->
       opts = FormModel.sanitizeOpts(opts)
 
-      @who = opts.who
-      @how = opts.how
-      @location = opts.location
+      @who = opts.who if opts.who
+      @how = opts.how if opts.how
+      @location = opts.location if opts.location
 
     setupStateForSellerInfo: ->
       if @defaultsToOrg()
@@ -222,6 +223,11 @@ $ ->
     formModel.update(
       who: $("#product_who_story").val(),
       how: $("#product_how_story").val(),
+      location: $("#product_location_id").val()
+    )
+
+  $("#product_location_id").change ->
+    formModel.update(
       location: $("#product_location_id").val()
     )
 
