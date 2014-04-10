@@ -34,13 +34,13 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     elsif user.market_manager?
-      select('orders.*').
+      select("orders.*").
       joins("LEFT JOIN user_organizations ON user_organizations.organization_id = orders.organization_id
              LEFT JOIN managed_markets ON managed_markets.market_id = orders.market_id").
       where("user_organizations.user_id = :user_id OR managed_markets.user_id = :user_id", user_id: user.id)
     else
-      select('orders.*').joins("INNER JOIN user_organizations ON user_organizations.organization_id = orders.organization_id").
-        where('user_organizations.user_id = ?', user.id)
+      select("orders.*").joins("INNER JOIN user_organizations ON user_organizations.organization_id = orders.organization_id").
+        where("user_organizations.user_id = ?", user.id)
     end
   end
 
@@ -48,14 +48,14 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     elsif user.market_manager?
-      select('DISTINCT orders.*').
+      select("DISTINCT orders.*").
       joins("INNER JOIN order_items ON order_items.order_id = orders.id
              INNER JOIN products ON products.id = order_items.product_id
              LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id
              LEFT JOIN managed_markets ON managed_markets.market_id = orders.market_id").
       where("user_organizations.user_id = :user_id OR managed_markets.user_id = :user_id", user_id: user.id)
     else
-      select('DISTINCT orders.*').
+      select("DISTINCT orders.*").
       joins("INNER JOIN order_items ON order_items.order_id = orders.id
              INNER JOIN products ON products.id = order_items.product_id
              LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id").
@@ -66,7 +66,7 @@ class Order < ActiveRecord::Base
   def self.undelivered_orders_for_seller(user)
     scope = orders_for_seller(user)
     scope = scope.joins(:order_items) if user.admin?
-    scope.where(order_items: {delivery_status: 'pending'})
+    scope.where(order_items: {delivery_status: "pending"})
   end
 
   def self.create_from_cart(params, cart, buyer)
@@ -115,7 +115,7 @@ class Order < ActiveRecord::Base
   end
 
   def sellers
-    items.map{|item| item.seller }.uniq
+    items.map {|item| item.seller }.uniq
   end
 
   def self.joining_products
@@ -127,7 +127,7 @@ class Order < ActiveRecord::Base
   end
 
   def self.order_items_by_product_for_organization(organization)
-    joining_products.where( products: { organization_id: organization.id }).
+    joining_products.where(products: {organization_id: organization.id}).
       map(&:items).flatten.group_by(&:product)
   end
 end

@@ -14,7 +14,7 @@ class InviteUserToOrganization
       user.organizations << organization
       UserMailer.organization_invitation(user, organization, inviter, market).deliver
     elsif user.accepted_or_not_invited?
-      fail!(message: 'You have already added this user')
+      fail!(message: "You have already added this user")
     else
       # User may be trying to resend an invitation
       user.deliver_invitation
@@ -22,7 +22,7 @@ class InviteUserToOrganization
   end
 
   def create_user_and_send_app_invitation
-    context[:user] = User.invite!({ email: email }, inviter) do |u|
+    context[:user] = User.invite!({email: email}, inviter) do |u|
       u.skip_invitation = true
     end
 

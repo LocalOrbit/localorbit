@@ -7,7 +7,7 @@ class Admin::PickListsController < AdminController
     else
       @delivery.orders.order_items_by_product_for_organization(current_organization)
     end
-    
+
     @pick_list = PickListPresenter.build(order_line_items)
   end
 end

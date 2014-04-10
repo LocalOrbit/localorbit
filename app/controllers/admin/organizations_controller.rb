@@ -17,7 +17,7 @@ module Admin
 
       if result.success?
         organization = result.organization
-        redirect_to [:admin, organization], notice:"#{organization.name} has been created"
+        redirect_to [:admin, organization], notice: "#{organization.name} has been created"
       else
         @markets = current_user.markets
         @organization = result.organization
@@ -30,7 +30,7 @@ module Admin
 
     def update
       if @organization.update_attributes(organization_params)
-        redirect_to [:admin, @organization], notice:"Saved #{@organization.name}"
+        redirect_to [:admin, @organization], notice: "Saved #{@organization.name}"
       else
         render action: :show
       end

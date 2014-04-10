@@ -18,7 +18,7 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def checkout_date
-    "#{h.content_tag(:time, datetime: deliver_on) { display_date + ' ' + time_range}}"
+    "#{h.content_tag(:time, datetime: deliver_on) { display_date + ' ' + time_range }}"
   end
 
   def time_range
@@ -50,7 +50,7 @@ class DeliveryDecorator < Draper::Decorator
 
     "between #{start_time} and #{end_time}"
   end
-  
+
   def buyer_time_range_capitalized
     buyer_time_range.sub("between", "Between")
   end

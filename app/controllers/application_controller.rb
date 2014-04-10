@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_404
-    render file: Rails.root.join('public/404.html'), status: :not_found
+    render file: Rails.root.join("public/404.html"), status: :not_found
   end
 
   def current_organization
@@ -62,8 +62,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def market_for_current_subdomain(scope = Market)
-    subdomain = request.subdomains(Figaro.env.domain.count('.')).first
+  def market_for_current_subdomain(scope=Market)
+    subdomain = request.subdomains(Figaro.env.domain.count(".")).first
     scope.find_by(subdomain: SimpleIDN.to_unicode(subdomain))
   end
 
@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
     if current_user.markets.size == 1
       redirect_to url_for(host: current_user.markets.first.domain)
     else
-      render 'shared/select_market'
+      render "shared/select_market"
     end
   end
 

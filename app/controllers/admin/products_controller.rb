@@ -58,7 +58,7 @@ module Admin
         :short_description, :long_description,
         :who_story, :how_story,
         :use_simple_inventory, :simple_inventory, :use_all_deliveries,
-        :delivery_schedule_ids => []
+        delivery_schedule_ids: []
       )
     end
 
@@ -77,7 +77,7 @@ module Admin
       @organizations = current_user.managed_organizations.selling.includes(:locations)
     end
 
-    def find_delivery_schedules(product = nil)
+    def find_delivery_schedules(product=nil)
       @delivery_schedules = if product
         product.organization.decorate.delivery_schedules
       elsif current_user.organizations.count == 1

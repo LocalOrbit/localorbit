@@ -1,0 +1,113 @@
+BracesAroundHashParameters:
+  EnforcedStyle: no_braces
+  SupportedStyles:
+    - braces
+    - no_braces
+
+ClassLength:
+  CountComments: false  # count full line comments?
+  Max: 100
+
+# Align with the style guide.
+CollectionMethods:
+  # Mapping from undesired method to desired_method
+  # e.g. to use `detect` over `find`:
+  #
+  # CollectionMethods:
+  #   PreferredMethods:
+  #     find: detect
+  PreferredMethods:
+    collect: 'map'
+    collect!: 'map!'
+    reduce: 'inject'
+    find_all: 'select'
+
+# Checks formatting of special comments
+CommentAnnotation:
+  Keywords:
+    - TODO
+    - FIXME
+    - OPTIMIZE
+    - HACK
+    - REVIEW
+
+# Avoid complex methods.
+CyclomaticComplexity:
+  Max: 6
+
+# Multi-line method chaining should be done with leading dots.
+DotPosition:
+  EnforcedStyle: trailing
+  SupportedStyles:
+    - leading
+    - trailing
+
+# Enforce the method used for string formatting.
+FormatString:
+  EnforcedStyle: sprintf
+  SupportedStyles:
+    - format
+    - sprintf
+    - percent
+
+HashSyntax:
+  EnforcedStyle: ruby19
+  SupportedStyles:
+    - ruby19
+    - hash_rockets
+
+IfUnlessModifier:
+  MaxLineLength: 200
+
+LineLength:
+  Max: 200
+
+MethodLength:
+  CountComments: false  # count full line comments?
+  Max: 10
+
+Semicolon:
+  # Allow ; to separate several expressions on the same line.
+  AllowAsExpressionSeparator: true
+
+SignalException:
+  EnforcedStyle: only_raise
+  SupportedStyles:
+    - only_raise
+    - only_fail
+    - semantic
+
+SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+  SupportedStyles:
+    - space
+    - no_space
+
+SpaceInsideBlockBraces:
+  EnforcedStyle: space
+  SupportedStyles:
+    - space
+    - no_space
+  # Valid values are: space, no_space
+  EnforcedStyleForEmptyBraces: no_space
+  # Space between { and |. Overrides EnforcedStyle if there is a conflict.
+  SpaceBeforeBlockParameters: false
+
+SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+  EnforcedStyleForEmptyBraces: no_space
+  SupportedStyles:
+    - space
+    - no_space
+
+StringLiterals:
+  EnforcedStyle: double_quotes
+  SupportedStyles:
+    - single_quotes
+    - double_quotes
+
+TrailingComma:
+  EnforcedStyleForMultiline: no_comma
+  SupportedStyles:
+    - comma
+    - no_comma

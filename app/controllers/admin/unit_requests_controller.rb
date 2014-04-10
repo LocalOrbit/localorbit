@@ -1,8 +1,8 @@
 module Admin
   class UnitRequestsController < AdminController
     def create
-      ZendeskMailer.request_unit(current_user.email, current_user.name, new_unit_params)
-                   .deliver
+      ZendeskMailer.request_unit(current_user.email, current_user.name, new_unit_params).
+                    deliver
 
       redirect_to new_admin_product_path
     end

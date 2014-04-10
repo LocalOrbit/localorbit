@@ -39,7 +39,7 @@ class Admin::MarketAddressesController < AdminController
   private
 
   def market_address_params
-    params.require('market_address').permit(
+    params.require("market_address").permit(
       :name,
       :address,
       :city,

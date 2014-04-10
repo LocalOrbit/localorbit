@@ -10,7 +10,7 @@ class Category < ActiveRecord::Base
   #    ["Beer, Wine, & Spirits / Wine / Red Wine", 2523],
   #  ]}
   def self.for_select
-    hash = Hash.new {|h,k| h[k] = [] } # default keys to []
+    hash = Hash.new {|h, k| h[k] = [] } # default keys to []
     names = []
     each_with_level(root.descendants) do |category, depth|
       names[depth] = category.name

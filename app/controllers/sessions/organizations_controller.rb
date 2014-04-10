@@ -12,7 +12,7 @@ module Sessions
         redirect_to params[:redirect_back_to] || [:products]
       else
         flash[:alert] = "Please select an organization"
-        self.new
+        new
         render :new
       end
     end

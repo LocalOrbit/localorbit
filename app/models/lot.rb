@@ -1,13 +1,13 @@
 class Lot < ActiveRecord::Base
   belongs_to :product, inverse_of: :lots
 
-  validates :quantity, numericality: { greater_than_or_equal_to: 0, less_than: 1_000_000 }
-  validates :number, presence: {message: "can't be blank when 'Expiration Date' is present"}, if: lambda { |obj| obj.expires_at.present? }
+  validates :quantity, numericality: {greater_than_or_equal_to: 0, less_than: 1_000_000}
+  validates :number, presence: {message: "can't be blank when 'Expiration Date' is present"}, if: -> {|obj| obj.expires_at.present? }
   validate :expires_at_is_in_future
   validate :good_from_before_expires_at
 
-  scope :available, lambda { |time=Time.current|
-    where('(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND quantity > 0', time: time)
+  scope :available, -> { |time=Time.current|
+    where("(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND quantity > 0", time: time)
   }
 
   def available?

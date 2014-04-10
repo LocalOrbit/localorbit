@@ -37,14 +37,13 @@ class DeliverySchedule < ActiveRecord::Base
     if address = seller_fulfillment_location
       "#{address.address}, #{address.city}, #{address.state} #{address.zip}"
     else
-      'Direct to customer'
+      "Direct to customer"
     end
   end
 
   def weekday
     WEEKDAYS[day]
   end
-
 
   def next_delivery_date
     return @next_delivery_date if defined?(@next_delivery_date)
@@ -87,15 +86,15 @@ class DeliverySchedule < ActiveRecord::Base
   protected
 
   def buyer_pickup_end_after_start
-    validate_time_after(:buyer_pickup_end, buyer_pickup_end, buyer_pickup_start, 'must be after buyer pickup start')
+    validate_time_after(:buyer_pickup_end, buyer_pickup_end, buyer_pickup_start, "must be after buyer pickup start")
   end
 
   def buyer_pickup_start_after_seller_fulfillment_start
-    validate_time_after(:buyer_pickup_start, buyer_pickup_start, seller_delivery_start, 'must be after delivery start')
+    validate_time_after(:buyer_pickup_start, buyer_pickup_start, seller_delivery_start, "must be after delivery start")
   end
 
   def seller_delivery_end_after_start
-    validate_time_after(:seller_delivery_end, seller_delivery_end, seller_delivery_start, 'must be after delivery start')
+    validate_time_after(:seller_delivery_end, seller_delivery_end, seller_delivery_start, "must be after delivery start")
   end
 
   def validate_time_after(field, before, after, message)

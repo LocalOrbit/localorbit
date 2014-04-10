@@ -4,10 +4,10 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :managed_markets_join, class_name: 'ManagedMarket'
+  has_many :managed_markets_join, class_name: "ManagedMarket"
   has_many :managed_markets, through: :managed_markets_join, source: :market do
     def can_manage_organization?(org)
-      joins(:organizations).where({organizations: {id: org.id}}).exists?
+      joins(:organizations).where(organizations: {id: org.id}).exists?
     end
   end
 
@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_many :organizations, through: :user_organizations
 
   def admin?
-    role == 'admin'
+    role == "admin"
   end
 
   def can_manage_organization?(org)
@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
     if admin? || managed_markets.include?(market)
       market.organizations
     else
-      organizations.select('organizations.*').joins(:market_organizations).where('market_organizations.market_id' => market.id)
+      organizations.select("organizations.*").joins(:market_organizations).where("market_organizations.market_id" => market.id)
     end
   end
 
@@ -98,6 +98,6 @@ class User < ActiveRecord::Base
       by_market = m.organizations.map {|o| [o.name, o.id] }
       for_select |= (by_market)
     end
-    for_select.sort {|a,b| a[0] <=> b[0] }
+    for_select.sort {|a, b| a[0] <=> b[0] }
   end
 end
