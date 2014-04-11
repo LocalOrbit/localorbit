@@ -86,7 +86,9 @@ Rails.application.routes.draw do
 
   namespace :sessions do
     resources :organizations
-    resources :deliveries
+    resource :deliveries do
+      get :reset
+    end
   end
 
   resources :products, only: [:index, :show]

@@ -142,7 +142,7 @@ class ApplicationController < ActionController::Base
 
   def require_current_delivery
     if current_delivery.nil?
-      redirect_to new_sessions_delivery_path(redirect_back_to: request.fullpath)
+      redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath)
     end
   end
 
