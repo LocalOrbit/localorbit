@@ -6,7 +6,11 @@ class CartsController < ApplicationController
   before_action :hide_admin_navigation
 
   def show
-    @grouped_items = current_cart.items.for_checkout
+    if current_cart.items.empty?
+      redirect_to [:products], alert: "Your cart is empty. Please add items to your cart before checking out."
+    else
+      @grouped_items = current_cart.items.for_checkout
+    end
   end
 
   def update
