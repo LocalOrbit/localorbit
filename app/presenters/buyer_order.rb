@@ -10,4 +10,8 @@ class BuyerOrder
     order = Order.orders_for_buyer(buyer).find(id)
     new(order)
   end
+
+  def total_cost
+    @order.total_cost
+  end
 end

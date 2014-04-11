@@ -109,6 +109,10 @@ describe "Checking Out" do
       expect(current_email).to have_subject("Thank you for your order")
       expect(current_email).to have_body_text("Thank you for your order through #{market.name}")
 
+      expect(current_email).to have_body_text("Product Total")
+      expect(current_email).to have_body_text("Delivery Fee")
+      expect(current_email).not_to have_body_text("Discount")
+
       visit_in_email "Review Order"
       expect(page).to have_content("Order info")
       expect(page).to have_content("Items for delivery...")
@@ -130,6 +134,10 @@ describe "Checking Out" do
       expect(current_email).to have_body_text("Bananas")
       expect(current_email).to_not have_body_text("Potatoes")
 
+      expect(current_email).not_to have_body_text("Product Total")
+      expect(current_email).not_to have_body_text("Delivery Fee")
+      expect(current_email).not_to have_body_text("Discount")
+
       expect(current_email.body).to have_content("An order was just placed by #{market.name}")
 
       visit_in_email "Check Order Status"
@@ -148,6 +156,10 @@ describe "Checking Out" do
       expect(current_email).not_to have_body_text("Kale")
       expect(current_email).not_to have_body_text("Bananas")
       expect(current_email).to have_body_text("Potatoes")
+
+      expect(current_email).not_to have_body_text("Product Total")
+      expect(current_email).not_to have_body_text("Delivery Fee")
+      expect(current_email).not_to have_body_text("Discount")
 
       expect(current_email.body).to have_content("An order was just placed by #{market.name}")
 
@@ -171,6 +183,10 @@ describe "Checking Out" do
     expect(current_email).to have_body_text("Kale")
     expect(current_email).to have_body_text("Bananas")
     expect(current_email).to have_body_text("Potatoes")
+
+    expect(current_email).to have_body_text("Product Total")
+    expect(current_email).to have_body_text("Delivery Fee")
+    expect(current_email).not_to have_body_text("Discount")
 
     visit_in_email "Check Order Status"
     expect(page).to have_content("Order info")
