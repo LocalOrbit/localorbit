@@ -22,7 +22,7 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def checkout_date
-    "#{h.content_tag(:time, datetime: deliver_on) { display_date + ' ' + time_range}}"
+    "#{h.content_tag(:time, datetime: deliver_on) { display_date + ' ' + time_range }}"
   end
 
   def time_range

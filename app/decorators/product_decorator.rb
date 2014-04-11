@@ -30,9 +30,9 @@ class ProductDecorator < Draper::Decorator
     Location.visible.find_by(id: location_id) || organization.shipping_location
   end
 
-def location_map(w=300, h=200)
+  def location_map(w=300, h=200)
     if location
-      location_string = [location.address, location.city, location.state].join(',').gsub(' ', '+')
+      location_string = [location.address, location.city, location.state].join(",").gsub(" ", "+")
       "http://maps.googleapis.com/maps/api/staticmap?zoom=7&size=#{w}x#{h}&sensor=false&markers=color:red%7C#{location_string}&key=#{Figaro.env.google_maps_key}"
     else
       ""

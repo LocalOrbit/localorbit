@@ -2,10 +2,10 @@ class Location < ActiveRecord::Base
   include SoftDelete
   belongs_to :organization, inverse_of: :locations
 
-  validates :name, presence: true, uniqueness: { scope: :organization_id }
+  validates :name, presence: true, uniqueness: {scope: :organization_id}
   validates :address, :city, :state, :zip, :organization, presence: true
-  validates :default_billing,  uniqueness: { scope: [:organization_id, :deleted_at] }, if: "!!default_billing"
-  validates :default_shipping, uniqueness: { scope: [:organization_id, :deleted_at] }, if: "!!default_shipping"
+  validates :default_billing,  uniqueness: {scope: [:organization_id, :deleted_at]}, if: "!!default_billing"
+  validates :default_shipping, uniqueness: {scope: [:organization_id, :deleted_at]}, if: "!!default_shipping"
 
   before_create :set_defaults_if_necessary
   after_update :set_new_defaults

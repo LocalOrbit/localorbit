@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
 
   def index
     @categories = Category.where(depth: 2)
-    @product_groups = products.periscope(request.query_parameters).decorate( context: {current_cart: current_cart}).group_by{|p| p.category.self_and_ancestors.find_by(depth: 2) }
+    @product_groups = products.periscope(request.query_parameters).decorate(context: {current_cart: current_cart}).group_by {|p| p.category.self_and_ancestors.find_by(depth: 2) }
     @filter_categories = Category.where(id: products.pluck(:top_level_category_id).uniq)
     @filter_organizations = current_market.organizations.selling.where(id: products.pluck(:organization_id).uniq)
   end

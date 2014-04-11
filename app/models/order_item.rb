@@ -16,12 +16,12 @@ class OrderItem < ActiveRecord::Base
   validates :unit_price, presence: true
   validates :delivery_status, presence: true, inclusion: {in: DELIVERY_STATUSES}
 
-  validate  :product_availability, on: :create
+  validate :product_availability, on: :create
 
   before_create :consume_inventory
 
   def self.for_delivery(delivery)
-    joins(order: :delivery).where(orders: { delivery_id: delivery.id })
+    joins(order: :delivery).where(orders: {delivery_id: delivery.id})
   end
 
   def self.create_with_order_and_item_and_deliver_on_date(opts={})
@@ -73,6 +73,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   private
+
   def consume_inventory
     quantity_remaining = quantity
 

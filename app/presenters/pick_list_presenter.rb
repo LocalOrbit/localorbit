@@ -13,7 +13,7 @@ class PickListPresenter
         order_items = pick_list_tree[organization][product]
 
         total = order_items.inject(0) do |memo, line|
-         memo += line.quantity
+          memo + line.quantity
         end
 
         OpenStruct.new(

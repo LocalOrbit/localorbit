@@ -12,13 +12,13 @@ class SellersController < ApplicationController
   def index
     @current_seller = @sellers.order("RANDOM()").first.decorate
     @categories = Category.where(depth: 2)
-    @product_groups = products_for_seller(@current_seller).group_by{|p| p.category.self_and_ancestors.find_by(depth: 2).id }
+    @product_groups = products_for_seller(@current_seller).group_by {|p| p.category.self_and_ancestors.find_by(depth: 2).id }
   end
 
   def show
     @current_seller = @sellers.find(params[:id]).decorate
     @categories = Category.where(depth: 2)
-    @product_groups = products_for_seller(@current_seller).group_by{|p| p.category.self_and_ancestors.find_by(depth: 2).id }
+    @product_groups = products_for_seller(@current_seller).group_by {|p| p.category.self_and_ancestors.find_by(depth: 2).id }
     render :index
   end
 
