@@ -141,7 +141,8 @@
     padding: 0;
     margin: 0;
 
-    > a {
+    > a,
+    > .current {
       padding: .3em 1.1538em;
     }
   }
