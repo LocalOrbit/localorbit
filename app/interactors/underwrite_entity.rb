@@ -17,16 +17,19 @@ class UnderwriteEntity
   private
 
   def update_balanced_customer_info
-    balanced_customer.name = representative_params[:name]
-    balanced_customer.ssn_last4 = representative_params[:ssn_last4]
-    balanced_customer.dob = "#{representative_params[:dob][:year]}-#{representative_params[:dob][:month]}"
-    balanced_customer.address = representative_params[:address]
+    if representative_params
+      balanced_customer.name = representative_params[:name]
+      balanced_customer.ssn_last4 = representative_params[:ssn_last4]
+      if representative_params[:dob].present?
+        balanced_customer.dob = "#{representative_params[:dob][:year]}-#{representative_params[:dob][:month]}"
+      end
+      balanced_customer.address = representative_params[:address]
 
-    if representative_params[:ein].present?
-      balanced_customer.ein = representative_params[:ein]
-      balanced_customer.business_name = entity.name
+      if representative_params[:ein].present?
+        balanced_customer.ein = representative_params[:ein]
+        balanced_customer.business_name = entity.name
+      end
     end
-
     context[:balanced_customer] = balanced_customer.save
   end
 end
