@@ -127,7 +127,7 @@ input[type=submit] {
 .btn--end,
 .btn--start {
   display: inline-block;
-  padding: 8px 10px 7px;
+  padding: 9px 10px 8px;
   vertical-align: top;
 }
 .btn--end {
@@ -138,10 +138,9 @@ input[type=submit] {
 .btn--start {
   position: relative;
   z-index: 2;
-  border: solid 2px #F1F1F1;
-  border-right: 0;
+  border: solid 1px #aaa;
   @include border-radius(3px 0 0 3px);
-  @include box-shadow(inset 0 0 0 1px #b0b0b0);
+  @include box-shadow(none);
   margin: 4px -3px 2px 0;
   background-color: #fff;
 }
@@ -158,7 +157,6 @@ input[type=submit].popup-submit {
 }
 
 span.btn {
-  @include box-shadow(inset 0 0 0 1px #b0b0b0);
   color: #aaa;
   text-shadow: 0 1px 0 #fff;
   @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.1));
