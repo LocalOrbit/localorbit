@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_cart
   helper_method :current_location
   helper_method :current_delivery
+  helper_method :redirect_to_url
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -149,5 +150,9 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:accept_invitation).concat [:name, :email]
     devise_parameter_sanitizer.for(:account_update).concat [:name]
+  end
+
+  def redirect_to_url
+    params[:redirect_back_to] || [:products]
   end
 end

@@ -46,9 +46,5 @@ module Sessions
     def require_organization
       redirect_to new_sessions_organization_path(redirect_back_to: redirect_to_url) unless current_organization
     end
-
-    def redirect_to_url
-      params[:redirect_back_to] || [:products]
-    end
   end
 end
