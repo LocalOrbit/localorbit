@@ -2,7 +2,8 @@ require "spec_helper"
 
 describe "Checking Out" do
   let!(:user) { create(:user) }
-  let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
+  let!(:other_buying_user) {  create(:user) }
+  let!(:buyer) { create(:organization, :single_location, :buyer, users: [user, other_buying_user]) }
 
   let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users:[create(:user), create(:user)]) }
   let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
@@ -99,14 +100,19 @@ describe "Checking Out" do
 
   it "sends the buyer an email about the order" do
     checkout
-    open_email(user.email)
 
-    expect(current_email).to have_subject("Thank you for your order")
-    expect(current_email).to have_body_text("Thank you for your order through #{market.name}")
+    [user, other_buying_user].each do |user|
+      sign_out
+      sign_in_as(user)
+      open_email(user.email)
 
-    visit_in_email "Review Order"
-    expect(page).to have_content("Order info")
-    expect(page).to have_content("Items for delivery...")
+      expect(current_email).to have_subject("Thank you for your order")
+      expect(current_email).to have_body_text("Thank you for your order through #{market.name}")
+
+      visit_in_email "Review Order"
+      expect(page).to have_content("Order info")
+      expect(page).to have_content("Items for delivery...")
+    end
   end
 
   it "sends the seller email about the order" do
@@ -117,7 +123,7 @@ describe "Checking Out" do
       sign_in_as(user)
       open_email(user.email)
 
-      expect(current_email).to have_subject("You have a new order!")
+      expect(current_email).to have_subject("New order on #{market.name}")
       expect(current_email.body).to have_content("You have a new order!")
       # It does not include content from other sellers
       expect(current_email).to have_body_text("Kale")
@@ -136,7 +142,7 @@ describe "Checking Out" do
       sign_in_as(user)
       open_email(user.email)
 
-      expect(current_email).to have_subject("You have a new order!")
+      expect(current_email).to have_subject("New order on #{market.name}")
       expect(current_email.body).to have_content("You have a new order!")
       # It does not include content from other sellers
       expect(current_email).not_to have_body_text("Kale")
@@ -158,6 +164,7 @@ describe "Checking Out" do
     sign_in_as(market_manager)
     open_email(market.managers[0].email)
 
+    expect(current_email).to have_subject("New order on #{market.name}")
     expect(current_email.body).to have_content("You've received a new order.")
     expect(current_email.body).to have_content("Order Placed By: #{buyer.name}")
 

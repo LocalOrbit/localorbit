@@ -4,11 +4,10 @@ class OrderMailer < ActionMailer::Base
 
   def buyer_confirmation(order)
     @market = order.market
-    @user = order.placed_by
     @order = BuyerOrder.new(order)
 
     mail(
-      to: @user.email,
+      to: order.organization.users.pluck(:email),
       subject: "Thank you for your order"
     )
   end
@@ -19,7 +18,7 @@ class OrderMailer < ActionMailer::Base
 
     mail(
       to: seller.users.pluck(:email),
-      subject: "You have a new order!"
+      subject: "New order on #{@market.name}"
     )
   end
 
@@ -29,7 +28,7 @@ class OrderMailer < ActionMailer::Base
 
     mail(
       to: manager.email,
-      subject: "Thank you for your order"
+      subject: "New order on #{@market.name}"
     )
   end
 end
