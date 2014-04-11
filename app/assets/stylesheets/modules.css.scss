@@ -1,7 +1,5 @@
 //= depend_on_asset "footer-logo.png"
 //= depend_on_asset "footer-logo@2x.png"
-//= depend_on_asset "wrench-edit.png"
-//= depend_on_asset "wrench-edit@2x.png"
 //= depend_on_asset "icons/circled-check.png"
 //= depend_on_asset "icons/circled-check@2x.png"
 //= depend_on_asset "icon-export.png"
@@ -167,19 +165,9 @@
   margin: 0 0 .4em;
   background: #fff;
 
-  &:after {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin-left: 4px;
-    background: asset_url('wrench-edit.png') center no-repeat;
-    background: asset_url('wrench-edit@2x.png') center / 100% no-repeat;
-    content: '';
-    vertical-align: center;
-  }
-
   &:hover {
     @include box-shadow(0 0 1px rgba(0,0,0,0.4));
+    text-decoration: none;
   }
 }
 
