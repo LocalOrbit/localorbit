@@ -153,6 +153,51 @@ describe "Upcoming Deliveries" do
   context "as an admin" do
     let!(:user) { create(:user, :admin) }
 
+    context "without a selected market" do
+      let!(:order_with_seller_product) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
+      let!(:order_item_for_seller_product) { create(:order_item, order: order_with_seller_product, product: product, quantity: 1)}
+
+      let!(:other_order) { create(:order, organization: seller2, market: market, delivery: friday_delivery) }
+      let!(:other_order_item) { create(:order_item, order: other_order, product: seller2_product, quantity: 1)}
+
+      context "multiple markets available" do
+        let!(:other_market) { create(:market) }
+
+        before do
+          sign_in_as(user)
+          visit admin_delivery_tools_path
+        end
+
+        it "shows a list of the upcoming deliveries that have orders" do
+          expect(page).to have_content("Please Select a Market")
+          click_link market.name
+
+          expect(page).to have_content("Upcoming Deliveries")
+
+          deliveries = Dom::UpcomingDelivery.all
+          expect(deliveries.count).to eql(2)
+          expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+          expect(deliveries.last.upcoming_delivery_date).to eq("May 9, 2014 7:00 AM")
+        end
+      end
+
+      context "single market available" do
+        before do
+          sign_in_as(user)
+          visit admin_delivery_tools_path
+        end
+
+        it "shows a list of the upcoming deliveries that have orders" do
+          expect(page).to have_content("Upcoming Deliveries")
+
+          deliveries = Dom::UpcomingDelivery.all
+          expect(deliveries.count).to eql(2)
+          expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+          expect(deliveries.last.upcoming_delivery_date).to eq("May 9, 2014 7:00 AM")
+        end
+      end
+    end
+
     context "with orders" do
       let!(:order_with_seller_product) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
       let!(:order_item_for_seller_product) { create(:order_item, order: order_with_seller_product, product: product, quantity: 1)}
