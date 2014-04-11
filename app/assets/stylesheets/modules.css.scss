@@ -238,6 +238,7 @@
     .hide-when-open {
       display: none;
     }
+    a:hover,
     > .current {
       background: #dedede;
 
@@ -253,7 +254,7 @@
   padding: 14px 14px 14px 10px;
   @include border-radius(4px);
   margin-top: 18px;
-  color: #666;
+  color: #000;
   background: #f9f9f9;
   font-size: 14px;
   font-weight: bolder;
