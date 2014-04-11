@@ -85,14 +85,13 @@ class @EditTable
       e.preventDefault()
 
   openAddRow: ()->
-    @closeEditRow(@form.find('.open-row'), false)
+    @closeEditRow(@form.find('.editing'), false)
 
     fieldsRow = $("#add-row")
 
     @enableFields(fieldsRow)
 
-    fieldsRow.show()
-    fieldsRow.removeClass('is-hidden').addClass('open-row')
+    fieldsRow.removeClass('is-hidden').addClass('editing')
     $('.add-toggle').addClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled').on 'click', (e) ->
       e.preventDefault()
