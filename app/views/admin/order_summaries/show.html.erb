@@ -1,0 +1,78 @@
+<%= link_to "Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
+<%= link_to "Print", "#", class: "btn btn--small pull-right", id: "print-button" %>
+
+<% @summaries.sellers.each_with_index do |(seller, orders), index| %>
+  <% if index != 0 %>
+    <div class="pdf-page-break"></div>
+  <% end %>
+
+  <h1>Order Summary</h1>
+
+  <div>
+    <h3>Seller</h3>
+    <h2><%= seller.name %></h2>
+    <div><%= seller.decorate.shipping_address %></div>
+    <div><%= seller.decorate.shipping_city_state_zip %></div>
+    <div><%= seller.decorate.shipping_phone %></div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Buyer</th>
+        <th>Items</th>
+        <th>Units</th>
+        <th>Qty</th>
+        <th>Item Total Price</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% orders.each do |order, items| %>
+        <% min_rowspan = 5 %>
+        <tr>
+          <th scope="row" rowspan="<%= [min_rowspan, items.count].max %>">
+            <strong><%= order.organization.name %></strong>
+            <div><%= order.decorate.display_delivery_street %></div>
+            <div><%= order.decorate.display_delivery_city_state_zip %></div>
+            <div><%= order.decorate.display_delivery_phone %></div>
+            <div>Order #:<%= order.order_number %></div>
+          </th>
+          <% first_item = items.shift %>
+          <td><%= first_item.name %></td>
+          <td><%= first_item.unit %></td>
+          <td><%= first_item.quantity %></td>
+          <td><%= number_to_currency first_item.seller_net_total %></td>
+          <td></td>
+        </tr>
+
+        <% items.each do |item| %>
+          <tr>
+            <td><%= item.name %></td>
+            <td><%= item.unit %></td>
+            <td><%= item.quantity %></td>
+            <td><%= number_to_currency item.seller_net_total %></td>
+            <td></td>
+          </tr>
+        <% end %>
+
+        <% (min_rowspan - (items.size + 1)).times do %>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div>
+    <h3>Total</h3>
+    <h2><%= number_to_currency @summaries.totals[seller] %></h2>
+  </div>
+
+<% end %>

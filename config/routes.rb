@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       resources :pick_lists, only: :show
       resources :pack_lists, only: :show
       resources :individual_pack_lists, only: :show
+      resources :order_summaries, only: :show
     end
 
     resources :products do

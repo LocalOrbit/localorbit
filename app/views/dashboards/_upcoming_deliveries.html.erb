@@ -10,7 +10,7 @@
       <div class="seller-tools">
         <div><%= link_to "Pick List", coming_soon_dashboard_path %></div>
         <div><%= link_to "Individual\nPacking Slips", coming_soon_dashboard_path %></div>
-        <div><%= link_to "Order Summary", coming_soon_dashboard_path %></div>
+        <div><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery) %></div>
       </div>
     </div>
   <% end %>

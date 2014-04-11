@@ -18,7 +18,7 @@
             <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, admin_delivery_tools_pack_list_path(delivery) %></div>
           <% end %>
           <div class="tool"><%= link_to "Individual Packing Slips <span class='note'>per seller</span>".html_safe, admin_delivery_tools_individual_pack_list_path(delivery) %></div>
-          <div class="tool"><%= link_to "Order Summary", coming_soon_dashboard_path %></div>
+          <div class="tool"><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery)%></div>
         </div>
         <hr>
 
