@@ -25,7 +25,14 @@ module Sessions
         end
       end
 
-      redirect_to params[:redirect_back_to] || [:products]
+      redirect_to redirect_to_url
+    end
+
+    def reset
+      session.delete(:current_delivery_id)
+      session.delete(:current_organization_id)
+
+      redirect_to new_sessions_deliveries_path(redirect_back_to: redirect_to_url)
     end
 
     protected
@@ -37,7 +44,7 @@ module Sessions
     end
 
     def require_organization
-      redirect_to new_sessions_organization_path unless current_organization
+      redirect_to new_sessions_organization_path(redirect_back_to: redirect_to_url) unless current_organization
     end
   end
 end

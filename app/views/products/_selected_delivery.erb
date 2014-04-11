@@ -2,7 +2,7 @@
   <div class="header header--column ">
     <h2 class="heading heading--sidebar delivery-type"><%= current_delivery.selected_type %></h2>
     <span class="change-delivery">
-      <%= link_to "Change", new_sessions_delivery_path(redirect_back_to: request.fullpath), id: "change-delivery-date", class: "reset btn modal-toggle", data: { modal: "change-delivery-warning" } %>
+      <%= link_to "Change", reset_sessions_deliveries_path(redirect_back_to: request.fullpath), id: "change-delivery-date", class: "reset btn modal-toggle", data: { modal: "change-delivery-warning"} %>
     </span>
   </div>
 
@@ -42,6 +42,6 @@
       can access your cart right now by clicking Cart in your navigation above.
     </p>
 
-    <%= link_to "Empty Cart and Change Date", new_sessions_delivery_path(redirect_back_to: request.fullpath), class: "btn btn--save btn--small" %>
+    <%= link_to "Empty Cart and Change Date", reset_sessions_deliveries_path(redirect_back_to: request.fullpath), class: "btn btn--save btn--small" %>
   </div>
 </div>

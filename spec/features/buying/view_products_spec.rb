@@ -327,7 +327,7 @@ feature "Viewing products" do
       end
 
       context "belonging to multiple organizations" do
-        let!(:buyer_org2)               { create(:organization, :buyer, users: [user], markets: [market]) }
+        let!(:buyer_org2)               { create(:organization, :buyer, :single_location, users: [user], markets: [market]) }
         let!(:buyer_org_outside_market) { create(:organization, :buyer, users: [user]) }
 
         before(:each) do
@@ -358,6 +358,50 @@ feature "Viewing products" do
           expect(page).to have_content(buyer_org.name)
           expect(page).to have_content(org1_product.name)
         end
+
+        scenario "changing organization to shop for after creating a cart" do
+          select = Dom::Select.first
+
+          expect(select).to have_option(buyer_org.name)
+          expect(select).to have_option(buyer_org2.name)
+          expect(select).to_not have_option(buyer_org_outside_market.name)
+
+          select buyer_org.name, from: "Select an organization"
+
+          click_button 'Select Organization'
+
+          expect(page).to have_content("Please choose a pick up or delivery date.")
+
+          delivery = Dom::Buying::DeliveryChoice.first
+          expect(delivery.type).to eq("Delivery:")
+          expect(delivery.date).to eq("October 8, 2014")
+          expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
+          expect(delivery).to have_location_select
+
+          delivery.choose!
+
+          expect(page).to have_content(org1_product.name)
+
+          within ".change-delivery" do
+            click_link "Change"
+          end
+
+          select buyer_org2.name, from: "Select an organization"
+
+          click_button 'Select Organization'
+
+          expect(page).to have_content("Please choose a pick up or delivery date.")
+
+          delivery = Dom::Buying::DeliveryChoice.first
+          expect(delivery.type).to eq("Delivery:")
+          expect(delivery.date).to eq("October 8, 2014")
+          expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
+
+          delivery.choose!
+
+          expect(page).to have_content(org1_product.name)
+        end
+
       end
     end
   end
