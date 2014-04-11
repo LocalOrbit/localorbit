@@ -175,7 +175,7 @@ module Dom
 
   module Admin
     module Financials
-      class UnsentInvoiceRow < Domino
+      class InvoiceRow < Domino
         selector ".invoice-row"
 
         def self.select_all
@@ -185,6 +185,7 @@ module Dom
         attribute :order_number
         attribute :buyer
         attribute :order_date
+        attribute :due_date
         attribute :amount
 
         def send_invoice
@@ -193,6 +194,10 @@ module Dom
 
         def check_row
           node.find('input[type="checkbox"]').set(true)
+        end
+
+        def enter_receipt
+          node.click_link("Enter Receipt")
         end
       end
     end
@@ -331,7 +336,7 @@ module Dom
 
     class IndividualPackListItem < Domino
       selector ".individual-pack-list-item"
-      
+
       attribute :name
       attribute :total_sold
       attribute :units

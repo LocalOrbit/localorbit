@@ -33,7 +33,9 @@ class Order < ActiveRecord::Base
 
   scope :recent, -> { order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
-  scope :uninvoiced, -> { where(payment_method: 'purchase order', invoiced_at: nil) }
+  scope :uninvoiced, -> { where(payment_method: "purchase order", invoiced_at: nil) }
+  scope :invoiced, -> { where(payment_method: "purchase order").where.not(invoiced_at: nil) }
+  scope :unpaid, -> { where(payment_status: "unpaid") }
 
   def self.orders_for_buyer(user)
     if user.admin?
@@ -90,7 +92,7 @@ class Order < ActiveRecord::Base
       billing_state: billing.state,
       billing_zip: billing.zip,
       billing_phone: billing.phone,
-      payment_status: "Not Paid",
+      payment_status: "unpaid",
       payment_method: params[:payment_method],
       delivery_fees: cart.delivery_fees,
       total_cost: cart.total,
