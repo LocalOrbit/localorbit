@@ -32,6 +32,7 @@ class Admin::BankAccountsController < AdminController
   end
 
   def representative_params
+    return {} if params[:representative].blank?
     params.require(:representative).permit(
       :name,
       :ein,
