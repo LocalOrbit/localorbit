@@ -28,10 +28,7 @@ feature "Filtering Products List" do
   let!(:price4)   { create(:price, product: product4) }
   let!(:lot4)     { create(:lot, product: product4) }
 
-
   let!(:user) { create(:user, organizations: [buyer_org]) }
-
-
 
   before do
     switch_to_subdomain market.subdomain
@@ -40,9 +37,10 @@ feature "Filtering Products List" do
   end
 
   scenario "seller filters only for sellers with products" do
-    expect(Dom::ProductFilter).to have_content(org1.name)
-    expect(Dom::ProductFilter).not_to have_content(buyer_org.name)
-    expect(Dom::ProductFilter).not_to have_content(org3.name)
+    filters = Dom::ProductFilter.first.node
+    expect(filters).to have_content(org1.name)
+    expect(filters).not_to have_content(buyer_org.name)
+    expect(filters).not_to have_content(org3.name)
   end
 
   scenario "by seller" do

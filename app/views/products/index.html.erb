@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="column column--fourth" id="product-filter">
+  <div class="column column--fourth">
 
     <%= render "selected_delivery" %>
 
@@ -10,12 +10,13 @@
       <% end %>
     </div>
 
+    <div id="product-filter">
+      <a href="#product-filter-organization" class="filter-toggle caretted caretted--right">Seller</a>
+      <%= filter_list(@filter_organizations, :organization) %>
 
-    <a href="#product-filter-organization" class="filter-toggle caretted caretted--right">Seller</a>
-    <%= filter_list(@filter_organizations, :organization) %>
-
-    <a href="#product-filter-category" class="filter-toggle caretted caretted--right">Category</a>
-    <%= filter_list(@filter_categories, :category) %>
+      <a href="#product-filter-category" class="filter-toggle caretted caretted--right">Category</a>
+      <%= filter_list(@filter_categories, :category) %>
+    </div>
   </div
   ><div class="column column--three-fourths">
     <div class="products--user">
