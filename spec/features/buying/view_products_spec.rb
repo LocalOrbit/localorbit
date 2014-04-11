@@ -355,6 +355,7 @@ feature "Viewing products" do
 
           delivery.choose!
 
+          expect(page).to have_content(buyer_org.name)
           expect(page).to have_content(org1_product.name)
         end
       end
