@@ -1,0 +1,32 @@
+<%= render "admin/financials/header" %>
+
+<h1>Unsent Invoices</h1>
+<div>These invoices need your attention</div>
+
+<%= form_tag admin_financials_invoices_path, method: :post do %>
+  <table>
+    <thead>
+      <tr>
+        <th><input type="checkbox" class="select-all"></th>
+        <th>Order #</th>
+        <th>Buyer</th>
+        <th>Order Date</th>
+        <th>Amount</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+      <tr class="invoice-row">
+        <td><%= check_box_tag "order_id[]", order.id %></td>
+        <td class="order-number"><%= link_to order.order_number, admin_financials_order_path(order) %></td>
+        <td class="buyer"><%= order.organization.name %></td>
+        <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
+        <td class="amount"><%= number_to_currency(order.total_cost) %></td>
+        <td><%= link_to 'Send Invoice', admin_financials_invoices_path(order_id: order.id), method: :post, class: 'btn btn--small' %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <input type="submit" value="Send Selected Invoices">
+<% end %>

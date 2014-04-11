@@ -1,4 +1,6 @@
 class Order < ActiveRecord::Base
+  PAYMENT_METHODS = ['purchase order', 'credit card', 'ach'].freeze
+
   include DeliveryStatus
 
   belongs_to :market
@@ -7,6 +9,8 @@ class Order < ActiveRecord::Base
   belongs_to :placed_by, class: User
 
   has_many :items, inverse_of: :order, class: OrderItem, autosave: true
+  has_many :order_payments, inverse_of: :order
+  has_many :payments, through: :order_payments, inverse_of: :orders
 
   validates :billing_address, presence: true
   validates :billing_city, presence: true
@@ -22,13 +26,14 @@ class Order < ActiveRecord::Base
   validates :market_id, presence: true
   validates :order_number, presence: true, uniqueness: true
   validates :organization_id, presence: true
-  validates :payment_method, presence: true
+  validates :payment_method, presence: true, inclusion: {in: PAYMENT_METHODS, allow_blank: true}
   validates :payment_status, presence: true
   validates :placed_at, presence: true
   validates :total_cost, presence: true
 
   scope :recent, -> { order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
+  scope :uninvoiced, -> { where(payment_method: 'purchase order', invoiced_at: nil) }
 
   def self.orders_for_buyer(user)
     if user.admin?
@@ -129,5 +134,15 @@ class Order < ActiveRecord::Base
   def self.order_items_by_product_for_organization(organization)
     joining_products.where(products: {organization_id: organization.id}).
       map(&:items).flatten.group_by(&:product)
+  end
+
+  def invoice
+    self.invoiced_at      = Time.current
+    self.invoice_due_date = market.po_payment_term.days.from_now(invoiced_at)
+  end
+
+  def invoice!
+    invoice
+    save && OrderMailer.invoice(BuyerOrder.new(self)).deliver
   end
 end

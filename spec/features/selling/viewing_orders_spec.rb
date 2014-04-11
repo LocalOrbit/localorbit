@@ -33,13 +33,13 @@ feature "Viewing orders" do
 
     order = Dom::Admin::OrderRow.find_by_order_number(order1.order_number)
     expect(order.amount_owed).to eq("$9.08")
-    expect(order.delivery_status).to eq(order1.delivery_status)
-    expect(order.buyer_status).to eq(order1.payment_status)
+    expect(order.delivery_status).to eq('Pending')
+    expect(order.buyer_status).to eq('Unpaid')
 
     order = Dom::Admin::OrderRow.find_by_order_number(order2.order_number)
     expect(order.amount_owed).to eq("$16.36")
-    expect(order.delivery_status).to eq(order1.delivery_status)
-    expect(order.buyer_status).to eq(order1.payment_status)
+    expect(order.delivery_status).to eq('Pending')
+    expect(order.buyer_status).to eq('Unpaid')
   end
 
   scenario "order details" do

@@ -14,4 +14,8 @@ class BuyerOrder
   def total_cost
     @order.total_cost
   end
+
+  def invoice_due_date
+    @order.invoice_due_date
+  end
 end

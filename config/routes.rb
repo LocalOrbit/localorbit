@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     get "financials" => "financials#index"
     namespace :financials do
       resources :orders
+      resources :invoices
     end
 
     resources :organizations, concerns: :bank_account do

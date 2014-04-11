@@ -31,4 +31,15 @@ class OrderMailer < ActionMailer::Base
       subject: "New order on #{@market.name}"
     )
   end
+
+  # TODO: Attach invoice PDF
+  def invoice(order)
+    @order = BuyerOrder.new(order)
+    @email_addresses = @order.organization.users.map(&:email).join(", ")
+
+    mail(
+      to: @email_addresses,
+      subject: "New Invoice"
+    )
+  end
 end

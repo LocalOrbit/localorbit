@@ -174,6 +174,29 @@ module Dom
   end
 
   module Admin
+    module Financials
+      class UnsentInvoiceRow < Domino
+        selector ".invoice-row"
+
+        def self.select_all
+          page.find('.select-all').click
+        end
+
+        attribute :order_number
+        attribute :buyer
+        attribute :order_date
+        attribute :amount
+
+        def send_invoice
+          node.click_link("Send Invoice")
+        end
+
+        def check_row
+          node.find('input[type="checkbox"]').set(true)
+        end
+      end
+    end
+
     class DeliverySchedule < Domino
       selector "tbody tr"
 

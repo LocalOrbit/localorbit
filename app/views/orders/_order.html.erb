@@ -52,6 +52,21 @@
       <td class="total"><%= number_to_currency @order.total_cost %></td>
     </tr>
 
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Payment status</td>
+      <td class="payment-status"><%= @order.payment_status.titleize %></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Delivery status</td>
+      <td class="delivery-status"><%= @order.delivery_status.titleize %></td>
+    </tr>
   </tfoot>
 
 </table>
