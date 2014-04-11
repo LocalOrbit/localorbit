@@ -8,7 +8,7 @@ class OrganizationDecorator < Draper::Decorator
       URI.escape "#{location.address}, #{location.city} #{location.state}" if location
     end.compact
 
-    "http://maps.google.com/maps/api/staticmap?size=340x300&markers=#{addresses.join('|')}&sensor=false&maptype=terrain&key=#{Figaro.env.google_maps_key}"
+    "http://maps.google.com/maps/api/staticmap?size=340x300&markers=#{addresses.join('|')}&sensor=false&maptype=terrain&#{ locations.visible.count > 1 ? "" : "zoom=8&" }key=#{Figaro.env.google_maps_key}"
   end
 
   def ship_from_address
