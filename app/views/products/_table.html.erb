@@ -79,7 +79,11 @@
       <td class="pricing">
         <ul class="tiers">
           <% product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
-            <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
+            <% if price.organization_id.present? %> 
+              <li class="negotiated"><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span><span class="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i class="font-icon" data-icon="&#xe01f;"></i></span></li>
+            <% else %>
+              <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
+            <% end %>
           <% end %>
         </ul>
       </td>

@@ -1017,10 +1017,11 @@ label ~ .tooltip {
   &:after {
     position: absolute;
     right: 50%;
-    bottom: 50%;
+    bottom: 120%;
     display: none;
     z-index: 1000;
-    width: 300px;
+    min-width: 210px;
+    max-width: 300px;
     padding: .5em 1em;
     border: solid 1px #ccc;
     @include border-radius(5px);
@@ -1041,6 +1042,18 @@ label ~ .tooltip {
   }
   &.pull-right + .pull-right {
     margin-right: .5em;
+  }
+}
+.tooltip--naked {
+  color: inherit;
+  background: none;
+
+}
+.tooltip--notice {
+  &:after {
+    border-color: $notice_text;
+    color: $notice-text;
+    background: $notice_bg;
   }
 }
 
