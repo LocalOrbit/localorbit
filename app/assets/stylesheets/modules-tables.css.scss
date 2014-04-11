@@ -184,7 +184,8 @@ th {
     padding: 0 0 0 11px;
     font-weight: bold;
   }
-  .product-image {
+  > .product-image {
+    width: 75px;
     padding-right: 0;
 
     > img {
@@ -195,7 +196,7 @@ th {
     }
   }
   .total {
-    min-width: 60px;
+    width: 70px;
   }
 }
   .tiers {
@@ -333,6 +334,11 @@ th {
     } 
 
     .pricing {
+      width: 145px;
+    }
+
+    .quantity {
+      width: 61px;
     }
 
     .short_description {
