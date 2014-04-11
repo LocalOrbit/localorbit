@@ -1,6 +1,7 @@
 //= depend_on_asset "sort.png"
 //= depend_on_asset "sort@2x.png"
 
+
 @import 'mixins';
 
 .table-heading {
@@ -165,7 +166,7 @@ th {
   }
   .description {
     max-width: 250px;
-    font-size: 12px; 
+    font-size: 12px;
   }
   .meta {
     a {
@@ -334,7 +335,7 @@ th {
     }
 
     .info {
-      .popup-toggle { 
+      .popup-toggle {
         color: #666;
 
       }
@@ -343,7 +344,7 @@ th {
     .name {
       margin-bottom: 0;
       font-weight: normal;
-    } 
+    }
 
     .pricing {
       width: 145px;
@@ -467,4 +468,3 @@ th {
     width: 60px;
   }
 }
-
