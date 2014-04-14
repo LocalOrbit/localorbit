@@ -499,6 +499,10 @@ module Dom
       def remove_link
         node.find(".icon-clear")
       end
+
+      def remove!
+        node.find(".icon-clear").trigger("click")
+      end
     end
 
     class Totals < Domino
