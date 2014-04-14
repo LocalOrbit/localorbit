@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     namespace :financials do
       resources :orders
       resources :invoices
+      resources :receipts, only: [:index, :edit, :update]
     end
 
     resources :organizations, concerns: :bank_account do

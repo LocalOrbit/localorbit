@@ -305,7 +305,7 @@ describe Order do
     end
 
     it "captures payment information" do
-      expect(subject.payment_status).to eql("Not Paid")
+      expect(subject.payment_status).to eql("unpaid")
     end
 
     it "captures order items" do

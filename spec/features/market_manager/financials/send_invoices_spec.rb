@@ -30,7 +30,7 @@ feature "sending invoices" do
 
   scenario "seeing a list of unsent invoices" do
     # Orders paid with PO payment type, that have no invoiced_at time
-    invoice_rows = Dom::Admin::Financials::UnsentInvoiceRow.all
+    invoice_rows = Dom::Admin::Financials::InvoiceRow.all
     expect(invoice_rows.size).to eq(2)
 
     invoice = invoice_rows.first
@@ -42,10 +42,10 @@ feature "sending invoices" do
   end
 
   scenario "sending a invoice" do
-    Dom::Admin::Financials::UnsentInvoiceRow.first.send_invoice
+    Dom::Admin::Financials::InvoiceRow.first.send_invoice
 
     expect(page).to have_content("Invoice sent for order number LO-001")
-    expect(Dom::Admin::Financials::UnsentInvoiceRow.all.size).to eq(1)
+    expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(1)
 
     open_email(buyer_user.email)
 
@@ -55,10 +55,10 @@ feature "sending invoices" do
   end
 
   scenario "sending selected invoices", js: true do
-    Dom::Admin::Financials::UnsentInvoiceRow.select_all
+    Dom::Admin::Financials::InvoiceRow.select_all
     click_button 'Send Selected Invoices'
 
     expect(page).to have_content("Invoice sent for order numbers LO-001, LO-005")
-    expect(Dom::Admin::Financials::UnsentInvoiceRow.all.size).to eq(0)
+    expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(0)
   end
 end
