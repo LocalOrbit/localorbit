@@ -2,6 +2,10 @@ class OrdersController < ApplicationController
   before_action :hide_admin_navigation
 
   def create
+    if current_cart.items.empty?
+      redirect_to [:products], alert: "Your cart is empty. Please add items to your cart before checking out."
+    end
+
     @placed_order = PlaceOrder.perform(buyer: current_user, order_params: order_params, cart: current_cart)
     @order = @placed_order.order.decorate
     if @placed_order.success?

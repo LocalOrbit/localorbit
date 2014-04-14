@@ -81,7 +81,6 @@ describe "Checking Out" do
     fill_in "PO Number", with: "12345"
   end
 
-
   it "displays copy about the order" do
     checkout
     expect(page).to have_content("You will receive a confirmation email with details of your order and a link to track its progress")
@@ -267,5 +266,16 @@ describe "Checking Out" do
 
     expect(page).to have_content("Unfortunately, there are only 2 Potatoes available")
     expect(page).to have_content("Unfortunately, there are only 1 Kale available")
+  end
+
+  it "clearing the cart during checkout preview", js: true do
+    Dom::Cart::Item.all.each do |item|
+      item.remove!
+    end
+
+    sleep(3)
+
+    click_button "Place Order"
+    expect(page).to have_content("Your cart is empty. Please add items to your cart before checking out.")
   end
 end
