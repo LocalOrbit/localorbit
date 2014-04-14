@@ -5,7 +5,7 @@
 
     <ul class="list-naked nav nav--sidebar">
       <li><%= link_to "Continue Shopping",  products_path %></li>
-      <li><%= link_to "More Products from This Seller", seller_path(current_organization) %></li>
+      <li><%= link_to "More Products from This Seller", seller_path(@product.organization) %></li>
       <li><%= link_to "More Products in #{@breadcrumbs.first.name}", "#{products_path}?category=#{@breadcrumbs.first.id}" %></li>
     </ul>
 
@@ -18,7 +18,7 @@
       <div class="column column--half column--guttered">
 
         <h1 class="heading-product"><%= @product.name %></h1>
-        <p class="producer">Produced by <%= link_to @product.organization.name, seller_path(current_organization) %></p>
+        <p class="producer">Produced by <%= link_to @product.organization.name, seller_path(@product.organization) %></p>
 
         <table class="product-table product-table--mini cart_items" data-cart-url="<%= cart_path %>">
           <thead>
