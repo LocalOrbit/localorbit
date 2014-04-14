@@ -6,7 +6,7 @@
     <% if current_user.admin? %>
       <%= form_for [:admin, @market], html: { class: "pull-right" } do |f| %>
         <%= f.hidden_field :active, value: !@market.active? %>
-        <%= f.submit (@market.active? ? 'Deactivate' : 'Activate'), class: "btn--small" %>
+        <%= f.submit (@market.active? ? 'Deactivate' : 'Activate'), class: "btn--small btn--activate" %>
       <% end %>
     <% end %>
 

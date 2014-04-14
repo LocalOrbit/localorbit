@@ -40,6 +40,8 @@ input[type=submit] {
   &.btn--small {
     padding: 4px 18px;
     font-size: 14px;
+  }
+  &.btn--activate {
     margin-top: 38px;
   }
   &.prevent-delete {
