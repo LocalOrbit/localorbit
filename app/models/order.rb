@@ -142,9 +142,4 @@ class Order < ActiveRecord::Base
     self.invoiced_at      = Time.current
     self.invoice_due_date = market.po_payment_term.days.from_now(invoiced_at)
   end
-
-  def invoice!
-    invoice
-    save && OrderMailer.invoice(BuyerOrder.new(self)).deliver
-  end
 end

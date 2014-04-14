@@ -8,6 +8,7 @@ feature "sending invoices" do
 
   let!(:seller) { create(:organization, :seller, name: "Better Farms", markets: [market]) }
   let!(:buyer)  { create(:organization, :buyer, name: "Money Bags", markets: [market], users: [buyer_user]) }
+  let!(:buyer2) { create(:organization, :buyer, name: "Money Satchels", markets: [market]) }
 
   let!(:product) { create(:product, :sellable, organization: seller) }
 
@@ -21,6 +22,8 @@ feature "sending invoices" do
   let!(:order_item4) { create(:order_item, order: order4, product: product) }
   let!(:order5) { create(:order, market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-005", total_cost: 420, placed_at: Time.zone.parse("2014-04-02")) }
   let!(:order_item5) { create(:order_item, order: order5, product: product) }
+  let!(:order6) { create(:order, market: market, organization: buyer2, payment_method: 'purchase order', order_number: "LO-006", total_cost: 310, placed_at: Time.zone.parse("2014-04-03")) }
+  let!(:order_item6) { create(:order_item, order: order6, product: product) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -31,7 +34,7 @@ feature "sending invoices" do
   scenario "seeing a list of unsent invoices" do
     # Orders paid with PO payment type, that have no invoiced_at time
     invoice_rows = Dom::Admin::Financials::InvoiceRow.all
-    expect(invoice_rows.size).to eq(2)
+    expect(invoice_rows.size).to eq(3)
 
     invoice = invoice_rows.first
 
@@ -45,7 +48,7 @@ feature "sending invoices" do
     Dom::Admin::Financials::InvoiceRow.first.send_invoice
 
     expect(page).to have_content("Invoice sent for order number LO-001")
-    expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(1)
+    expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(2)
 
     open_email(buyer_user.email)
 
@@ -54,11 +57,20 @@ feature "sending invoices" do
     expect(current_email).to have_body_text("Reference Number: LO-001")
   end
 
+  scenario "sending an invoice to an organization with no users" do
+    Dom::Admin::Financials::InvoiceRow.all.last.send_invoice
+
+    expect(page).to have_content("Invoice sent for order number LO-006")
+    expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(2)
+
+    expect(ActionMailer::Base.deliveries.size).to eq(0)
+  end
+
   scenario "sending selected invoices", js: true do
     Dom::Admin::Financials::InvoiceRow.select_all
     click_button 'Send Selected Invoices'
 
-    expect(page).to have_content("Invoice sent for order numbers LO-001, LO-005")
+    expect(page).to have_content("Invoice sent for order numbers LO-001, LO-005, LO-006")
     expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(0)
   end
 end
