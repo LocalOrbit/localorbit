@@ -60,6 +60,14 @@
       </div>
     </fieldset>
 
+    <fieldset>
+      <legend>Payment Methods</legend>
+      <div class="field">
+        <%= f.label :po_payment_term, "PO Payment Terms" %><br>
+        <%= f.number_field :po_payment_term, min: 0, max: 365, size: 6 %> Days
+      </div>
+    </fieldset>
+
     <div class="form-actions">
       <%= f.submit "Update Fees" %>
     </div>

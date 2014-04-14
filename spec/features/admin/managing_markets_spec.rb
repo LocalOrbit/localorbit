@@ -238,6 +238,7 @@ describe "Admin Managing Markets" do
       fill_in 'ACH fee paid by seller',         with: '3.5'
       fill_in 'ACH fee paid by market',         with: '5.5'
       fill_in 'ACH fee cap',                    with: '10.00'
+      fill_in 'PO Payment Terms',               with: '18'
 
       click_button 'Update Fees'
 
@@ -250,6 +251,7 @@ describe "Admin Managing Markets" do
       expect(find_field('ACH fee paid by seller').value).to         eq('3.500')
       expect(find_field('ACH fee paid by market').value).to         eq('5.500')
       expect(find_field('ACH fee cap').value).to                    eq('10.00')
+      expect(find_field('PO Payment Terms').value).to               eq('18')
     end
   end
 end
