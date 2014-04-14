@@ -18,8 +18,8 @@
       <%= f.file_field :logo %>
     </div
     ><div class="field column column--half column--guttered">
-      <%= f.label :background %><br>
-      <%= f.select :background, background_options %>
+      <%= f.label :photo %><br>
+      <%= f.file_field :photo %>
     </div>
   </div>
 
@@ -28,7 +28,7 @@
     <%= f.text_field :tagline, class: "column--full" %>
   </div>
   <div class="field">
-    <%= f.label :timezone %><br>
+    <%= f.label :time_zone %><br>
     <%= f.time_zone_select :timezone, ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)" %>
   </div>
   <div class="field">
@@ -62,5 +62,17 @@
   <div class="field">
     <%= f.label :policies %><br>
     <%= f.text_area :policies, rows: 4, class: "column--full"  %>
+  </div>
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <%= f.label :open_or_closed %><br>
+      <input checked="checked" id="this_market_is_open" name="market_open" type="checkbox" value="1">
+      <label for="product_use_simple_inventory">This market is open.</label>
+    </div
+    ><div class="field column column--half column--guttered">
+      <%= f.label :auto_activation %><br>
+      <input checked="unchecked" id="this_market_is_open" name="market_open" type="checkbox" value="0">
+      <label for="product_use_simple_inventory">Auto activate organizations.</label>
+    </div>
   </div>
 </fieldset>

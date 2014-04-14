@@ -22,7 +22,7 @@ body {
   min-height: 100%;
   padding: 0;
   margin: 0;
-  color: #777;
+  color: #333;
   background: asset_url('backgrounds/brown-paper.jpg') center repeat #fff;
   background-size: cover;
   background-attachment: fixed;
@@ -57,7 +57,7 @@ color: #000;
 
 h1 {
   margin: 0 0 14px;
-  font: lighter 2em 'OpenSans-Light', OpenSans, "Open Sans", sans-serif;
+  font: lighter 2.25em 'OpenSans-CondensedLight', OpenSans, "Open Sans", sans-serif;
   font-weight: lighter;
   font-weight: 300;
 }

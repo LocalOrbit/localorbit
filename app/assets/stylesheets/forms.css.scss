@@ -55,7 +55,7 @@ input[type=text],
 input[type=number],
 input[type=url],
 input[type=password] {
-  height: 42px;
+  height: 36px;
 
   &[size="3"] {
     width: 4em;
@@ -207,8 +207,9 @@ textarea {
   .field--inline {
     display: inline-block;
     vertical-align: top;
+    margin: 0;
     + .field--inline {
-      margin-left: 1em;
+      margin: 0 0 0 1em;
     }
   }
 .field_with_errors {

@@ -597,7 +597,7 @@
   z-index: 1;
   padding: 0;
   margin: 0 0 -1px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.166;
   text-align: center;
   list-style: none;
@@ -605,7 +605,7 @@
   .tab {
     > a,
     > span {
-      padding: 22px 24px 18px;
+      padding: 12px;
       @include border-radius(5px 5px 0 0);
     }
   }
@@ -660,14 +660,14 @@
     @include box-sizing(border-box);
 
     > .l-constraint {
-      padding-top: 20px;
+      padding-top: 10px;
     }
   }
   &.js-fixed {
     position: fixed;
 
     > .l-constraint {
-      padding: 20px 20px 0;
+      padding: 10px 20px 0;
       background: #fff;
     }
   }
@@ -866,6 +866,7 @@
 }
 .redundant-nav {
   font-size: smaller;
+  line-height: 30px;
 }
 .slide {
   overflow: hidden;
