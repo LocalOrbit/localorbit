@@ -2,14 +2,18 @@ class SendOrderEmails
   include Interactor
 
   def perform
-    OrderMailer.buyer_confirmation(order).deliver
-
-    order.sellers.each do |seller|
-      OrderMailer.seller_confirmation(order, seller).deliver
+    unless order.organization.users.empty?
+     OrderMailer.buyer_confirmation(order).deliver
     end
 
-    order.market.managers.each do |manager|
-      OrderMailer.market_manager_confirmation(order, manager).deliver
+    order.sellers.each do |seller|
+      unless seller.users.empty?
+        OrderMailer.seller_confirmation(order, seller).deliver
+      end
+    end
+
+    unless order.market.managers.empty?
+      OrderMailer.market_manager_confirmation(order).deliver
     end
   end
 end

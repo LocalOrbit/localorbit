@@ -22,12 +22,12 @@ class OrderMailer < ActionMailer::Base
     )
   end
 
-  def market_manager_confirmation(order, manager)
+  def market_manager_confirmation(order)
     @market = order.market
     @order = BuyerOrder.new(order) # Market Managers should see all items
 
     mail(
-      to: manager.email,
+      to: order.market.managers.pluck(:email),
       subject: "New order on #{@market.name}"
     )
   end
