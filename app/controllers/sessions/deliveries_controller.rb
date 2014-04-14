@@ -1,5 +1,6 @@
 module Sessions
   class DeliveriesController < ApplicationController
+    before_action :require_selected_market
     before_action :require_organization
     before_action :require_organization_location
     before_action :hide_admin_navigation
