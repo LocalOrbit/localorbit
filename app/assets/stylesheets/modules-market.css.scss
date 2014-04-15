@@ -40,6 +40,22 @@
     opacity: 0.6;
   }
 
+.market-sidebar {
+  color: #777;
+  font-size: 12px;
+  .story-header {
+    margin-top: 1em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  .story-header,
+  .vcard {
+    padding-left: 10px;
+  }
+}
+
 .seller-list {
   font-size: 12px;
   > li {

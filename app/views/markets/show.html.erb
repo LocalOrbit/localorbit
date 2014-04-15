@@ -4,10 +4,10 @@
     <h1 class="photo-header-txt"><span><%= @market.name %></span></h1>
   </div>
 </div>
-<div class="row">
+<div class="row three-fourths-rule">
   <div class="column column--three-fourths column--guttered">
     <div class="tab-box">
-      <ul class="tabs tabs--small">
+      <ul class="tabs tabs--small unguttered-right">
         <li class="tab">
           <a href="#market-about" class="active">About</a>
         </li>
@@ -43,34 +43,28 @@
     <% end %>
     </ul>
   </div
-  ><aside class="column column--fourth column-guttered">
-    <div class="header header--column">
-      <h2 class="heading heading--sidebar">Contact</h2>
-    </div>
-    <div class="sidebar-box">
-    <p class="vcard">
-      <% if @market.contact_name.present? %><span class="fn"><%= @market.contact_name %></span><br><% end %>
-      <% if @market.contact_email.present? %><span class="email"><%= @market.contact_email %></span><br><% end %>
+  ><aside class="column column--fourth column-guttered market-sidebar">
+    <h2 class="story-header">Contact</h2>
+    <div class="vcard">
+      <% if @market.contact_name.present? %><strong class="fn"><%= @market.contact_name %></strong><br><% end %>
+      <% if @market.contact_email.present? %><%= link_to @market.contact_email, @market.contact_email, class: "email" %><br><% end %>
       <% if @market.first_address %>
-      <span class="adr">
+      <p class="adr">
         <span class="street-address"><%= @market.first_address.address %></span><br>
         <span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%=@market.first_address.state %></span> <span class="postal-code"><%= @market.first_address.zip %></span>
-      </span>
+      </p>
       <% end %>
-      <% if @market.contact_phone.present? %><br><span class="tel"><%= @market.contact_phone %></span><% end %>
-    </p>
+      <% if @market.contact_phone.present? %><span class="tel"><%= @market.contact_phone %></span><% end %>
     </div>
 
-    <div class="header header--column">
-      <h2 class="heading heading--sidebar">Pickup/Delivery</h2>
-    </div>
-    <div class="sidebar-box">
+    <h2 class="story-header">Pickup/Delivery</h2>
+    <ul class="list-naked list-zebra deliveries-list">
     <% @market.delivery_schedules.visible.order(:day).decorate.each do |delivery| %>
-      <p>
-        <span class="display-date"><%= delivery.plural_weekday %></span><br>
-        <span class="time-range"><%= delivery.pickup_or_dropoff %><br><%= delivery.time_window %></span>
-      </p>
+      <li>
+        <strong class="display-date"><%= delivery.plural_weekday %></strong> — <%= delivery.time_window %><br>
+        <span class="time-range"><%= delivery.pickup_or_dropoff %><br></span>
+      </li>
     <% end %>
-    </div>
+    </ul>
   </aside>
 </div>

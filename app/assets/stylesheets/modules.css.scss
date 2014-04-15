@@ -303,6 +303,15 @@
   margin-top: 10px;
   list-style: none;
 }
+.list-zebra {
+  color: #777;
+  > li {
+    padding: 10px;
+    &:nth-child(odd) {
+      background: #f4f4f4;
+    }
+  }
+}
 
 .location-map {
   display: block;
@@ -703,8 +712,6 @@
 
 .tab-box {
   position: relative;
-  min-height: 300px;
-  overflow: hidden;
 
   img {
     min-width: 100%;
@@ -713,6 +720,10 @@
     background: asset_url('horizontal-rule.png') left bottom repeat-x;
     background: asset_url('horizontal-rule@2x.png') left bottom / auto 1px repeat-x;
     text-align: left;
+    &.unguttered-right {
+      width: 100%;
+      padding-right: 10px;
+    }
   }
   .tab {
     border-bottom: 0;
