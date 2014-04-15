@@ -21,13 +21,6 @@
         <p class="producer">Produced by <%= link_to @product.organization.name, seller_path(@product.organization) %></p>
 
         <table class="product-table product-table--mini cart_items" data-cart-url="<%= cart_path %>">
-          <thead>
-            <tr>
-              <th>Pricing</th>
-              <th>Quantity</th>
-              <th>Total</th>
-            </tr>
-          </thead>
           <tr class="product product-row cart_item" data-cart-item="<%= @product.cart_item.to_json %>">
             <td class="pricing">
               <ul class="tiers">
