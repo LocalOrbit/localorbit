@@ -8,6 +8,8 @@
 //= depend_on_asset "tooltip-icon@2x.png"
 //= depend_on_asset "center-rule.png"
 //= depend_on_asset "center-rule@2x.png"
+//= depend_on_asset "horizontal-rule.png"
+//= depend_on_asset "horizontal-rule@2x.png"
 
 @import "mixins.css.scss";
 
@@ -707,8 +709,21 @@
   img {
     min-width: 100%;
   }
-  > .tabs {
-    margin-top: 300px;
+  .tabs {
+    background: asset_url('horizontal-rule.png') left bottom repeat-x;
+    background: asset_url('horizontal-rule@2x.png') left bottom / auto 1px repeat-x;
+    text-align: left;
+  }
+  .tab {
+    border-bottom: 0;
+  }
+  .active {
+    border-bottom: solid 1px #fff;
+    margin-bottom: -1px;
+    background: #fff;
+  }
+  .inactive {
+    background: #f4f4f4;
   }
 }
   .tabbed-item {
@@ -716,8 +731,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 300px;
-    background: #f4f4f4;
+    background: #fff;
     overflow: hidden;
 
     &.active {

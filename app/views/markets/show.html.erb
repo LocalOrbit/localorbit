@@ -6,22 +6,32 @@
 </div>
 <div class="row">
   <div class="column column--three-fourths column--guttered">
-    <div class="about row">
-     <% if @market.photo.present? %>
-      <div class="column column--guttered column--two-thirds">
+    <div class="tab-box">
+      <ul class="tabs tabs--small">
+        <li class="tab">
+          <a href="#market-about" class="active">About</a>
+        </li>
+        <li class="tab">
+          <a href="#market-policies" class="inactive">Policies</a>
+        </li>
+      </ul>
+      <div class="policies tabbed-item" id="market-policies">
+        <h2 class="story-header">Policies</h2>
+        <%= simple_format @market.policies %>
+      </div>
+      <div class="about row tabbed-item" id="market-about">
+       <% if @market.photo.present? %>
+        <div class="column column--guttered column--two-thirds">
+          <h2 class="story-header">About</h2>
+          <%= simple_format @market.profile %>
+        </div><div class="column column--guttered column--third">
+          <%= image_tag Dragonfly.app.remote_url_for(@market.photo_uid) %>
+        </div>
+      <% else %>
         <h2 class="story-header">About</h2>
         <%= simple_format @market.profile %>
-      </div><div class="column column--guttered column--third">
-        <%= image_tag Dragonfly.app.remote_url_for(@market.photo_uid) %>
+      <% end %>
       </div>
-    <% else %>
-      <h2 class="story-header">About</h2>
-      <%= simple_format @market.profile %>
-    <% end %>
-    </div>
-    <div class="policies">
-      <h2 class="story-header">Policies</h2>
-      <%= simple_format @market.policies %>
     </div>
 
 
