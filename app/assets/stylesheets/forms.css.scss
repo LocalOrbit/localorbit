@@ -279,3 +279,16 @@ form.form-actions {
   margin-bottom: 40px;
 }
 
+.invite-form {
+  width: 300px;
+  margin: 0 auto;
+
+  h1 {
+    text-align: center;
+  }
+
+  .submit-button {
+    float: right;
+  }
+}
+
