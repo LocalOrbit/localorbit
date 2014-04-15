@@ -19,6 +19,7 @@ class Market < ActiveRecord::Base
   has_many :bank_accounts, as: :bankable
 
   dragonfly_accessor :logo
+  dragonfly_accessor :photo
 
   def clean_twitter_slug
     self.twitter = twitter[1..-1] if twitter && twitter.match(/^@/)
