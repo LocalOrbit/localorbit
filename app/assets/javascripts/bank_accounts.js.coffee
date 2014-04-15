@@ -14,11 +14,45 @@ tokenize = (type, info) ->
   deferred.promise()
 
 updateInputs = (object, $form) ->
-  $form.find("[data-balanced-attribute]").each (index, el) ->
-    $el = $(el)
-    $el.val(object[$el.data("balanced-attribute")])
+  fields = {
+    "card" : {
+      "brand" : "bank_account[bank_name]",
+      "last_four" : "bank_account[last_four]",
+      "uri" : "bank_account[balanced_uri]",
+      "card_type" : "bank_account[account_type]"
+    },
+    "bank_account" : {
+      "bank_name" : "bank_account[bank_name]",
+      "last_four" : "bank_account[last_four]",
+      "uri" : "bank_account[balanced_uri]",
+      "type" : "bank_account[account_type]"
+    }
+  }
+
+  for key, field of fields[object["_type"]]
+    $("<input>").attr(
+      type: 'hidden',
+      name: field,
+      value: object[key]
+    ).appendTo($form)
 
 $ ->
+  $("#balanced_account_type").change (e)->
+    val = $(this).val()
+    if val == "card"
+      $("#balanced-payments-uri").data("balanced-object-type", "card")
+      $("#bank-account-fields").addClass('is-hidden').prop('disabled', true)
+      $("#credit-card-fields").removeClass('is-hidden').prop('disabled', false)
+      $("#new_bank_account").addClass('is-hidden')
+      $("#account_type").val(val)
+    else
+      $("#balanced-payments-uri").data("balanced-object-type", "bankAccount")
+      $("#bank-account-fields").removeClass('is-hidden').prop('disabled', false)
+      $("#credit-card-fields").addClass('is-hidden').prop('disabled', true)
+      $("#new_bank_account").removeClass('is-hidden')
+      $("#account_type").val(val)
+
+
   $("#submit-bank-account").click (e) ->
     e.preventDefault()
     $("#balanced-payments-uri").trigger "submit"

@@ -10,7 +10,11 @@ class Admin::BankAccountsController < AdminController
   end
 
   def create
-    results = AddBankAccountToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
+    results = if params[:type] == "card"
+      AddCreditCardToEntity.perform(entity: @entity, bank_account_params: bank_account_params)
+    else
+      AddBankAccountToEntity.perform(entity: @entity, bank_account_params: bank_account_params, representative_params: representative_params)
+    end
 
     if results.success?
       redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully added a bank account"
