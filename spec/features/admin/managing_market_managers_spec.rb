@@ -45,6 +45,15 @@ describe "Admin Managing Market Managers" do
 
       expect(page).to have_text('new-user@example.com')
     end
+
+    it 'requries an email address to invite' do
+      visit "/admin/markets/#{market.id}/managers"
+
+      fill_in 'email', with: ''
+      click_button 'Add Market Manager'
+
+      expect(page).to have_text('Email address is required.')
+    end
   end
 
   describe 'as an admin' do
@@ -80,6 +89,15 @@ describe "Admin Managing Market Managers" do
       visit_in_email("Join Local Orbit")
 
       expect(page).to have_content("Set up your account")
+    end
+
+    it 'requries an email address to invite' do
+      visit "/admin/markets/#{market.id}/managers"
+
+      fill_in 'email', with: ''
+      click_button 'Add Market Manager'
+
+      expect(page).to have_text('Email address is required.')
     end
 
     it 'I can remove a current market manager' do
