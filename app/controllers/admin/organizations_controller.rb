@@ -48,6 +48,8 @@ module Admin
         :can_sell,
         :facebook,
         :twitter,
+        :display_facebook,
+        :display_twitter,
         :who_story,
         :how_story,
         :photo,

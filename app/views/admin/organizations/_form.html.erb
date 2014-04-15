@@ -32,8 +32,8 @@
       <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
       <% if @organization.persisted? %>
         <div class="todo">
-          <input type="checkbox">
-          <label>Display Feed on Profile Page</label>
+          <%= f.check_box :display_facebook %>
+          <%= f.label :display_facebook, "Display Feed on Profile Page" %>
         </div>
       <% end %>
     </div>
@@ -43,8 +43,8 @@
       <span class="btn btn--start">@</span><%= f.text_field :twitter, maxlength: 15 %>
       <% if @organization.persisted? %>
         <div class="todo">
-          <input type="checkbox">
-          <label>Display Feed on Profile Page</label>
+          <%= f.check_box :display_twitter %>
+          <%= f.label :display_twitter, "Display Feed on Profile Page" %>
         </div>
       <% end %>
     </div>
