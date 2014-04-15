@@ -1,29 +1,27 @@
-<fieldset class="l-flush-top">
-  <div class="row row--field">
-    <div class="field column column--half column--guttered">
-      <%= f.label :cycle %><br>
-      <span>Weekly</span>
-    </div
-    ><div class="field column column--half column--guttered">
-      <%= f.label :day %><br>
-      <%= f.select :day, weekday_options %>
-    </div>
+<fieldset class="l-flush-top primary-delivery-info">
+  <legend>Add a new Delivery</legend>
+  <div class="field">
+    <%= f.label :cycle %><br>
+    <span>Weekly</span>
+  </div
+  ><div class="field">
+    <%= f.label :day %><br>
+    <%= f.select :day, weekday_options %>
   </div>
-
-  <div class="row row--field">
-    <div class="field column column--half column--guttered">
-      <%= f.label :fee, 'Delivery fee' %><br>
-      <%= f.number_field :fee, min: 0, step: "0.01", size: 6 %>
-    </div
-    ><div class="field column column--half column--guttered">
-      <%= f.label :fee_type %><br>
-      <%= f.select :fee_type, [["Percentage", "percent"], ["Dollar Amount", "fixed"]] %>
-    </div>
+  
+  <div class="field">
+    <%= f.label :fee, 'Delivery fee' %><br>
+    <%= f.number_field :fee, min: 0, step: "0.01", size: 4 %>
+  </div
+  ><div class="field">
+    <%= f.label :fee_type %><br>
+    <%= f.select :fee_type, [["Percentage", "percent"], ["Dollar Amount", "fixed"]]  %>
   </div>
+  
 
   <div class="field">
     <%= f.label :order_cutoff %><br>
-    <%= f.number_field :order_cutoff, min: 6, max: 504, size: 3 %> hours before delivery
+    <%= f.number_field :order_cutoff, min: 6, max: 504, size: 4 %> hours before delivery
   </div>
 
   <div class="field conditional">
@@ -63,20 +61,19 @@
 </fieldset>
 
 <%= content_tag :div, id: "buyer_order_receipt", class: (f.object.seller_fulfillment_location ? '' : 'is-hidden') do %>
-  <h2>Buyer order receipt</h2>
 
   <div class="field">
-    <%= f.label :buyer_pickup_location_id %>
+    <%= f.label :buyer_pickup_location_id, "Buyer pick up/delivery location" %><br>
     <%= f.select :buyer_pickup_location_id, @market.fulfillment_locations('Delivered to Buyer from Market') %>
   </div>
-
-  <div class="field">
-    <%= f.label :buyer_pickup_start %>
-    <%= f.select :buyer_pickup_start, quarter_hour_select_options %>
-  </div>
-
-  <div class="field">
-    <%= f.label :buyer_pickup_end %>
-    <%= f.select :buyer_pickup_end, quarter_hour_select_options %>
-  </div>
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <%= f.label :buyer_pickup_start, "Buyer pick up/delivery start" %><br>
+      <%= f.select :buyer_pickup_start, quarter_hour_select_options %>
+    </div
+    ><div class="field column column--half column--guttered">
+      <%= f.label :buyer_pickup_end, "Buyer pick up/delivery end" %><br>
+      <%= f.select :buyer_pickup_end, quarter_hour_select_options %>
+    </div>
+   </div> 
 <% end %>

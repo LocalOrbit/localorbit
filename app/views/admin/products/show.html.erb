@@ -8,7 +8,8 @@
     <%= render "fields", {f: f} %>
 
     <div class="form-actions">
-      <p class="action-helper">When the product info is complete <%= f.submit "Save and Continue" %></p>
+      <p class="action-helper">When you're finished with product info <%= f.submit "Save and Continue" %></p>
+      <p class="return-list">or <%= link_to "Save & Go to the Product List", admin_products_path %></p>
     </div>
   <% end %>
 </div>

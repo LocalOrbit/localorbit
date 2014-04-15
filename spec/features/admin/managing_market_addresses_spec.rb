@@ -52,7 +52,7 @@ describe "Admin Managing Markets" do
 
       click_link 'Add Address'
 
-      fill_in 'Name', with: 'New Address'
+      fill_in 'Address Label', with: 'New Address'
       fill_in 'Address', with: '123 Apple'
       fill_in 'City', with: 'Holland'
       select "Michigan", from: "State"
@@ -75,7 +75,7 @@ describe "Admin Managing Markets" do
 
       click_link address1.name
 
-      fill_in 'Name', with: 'Edited Address'
+      fill_in 'Address Label', with: 'Edited Address'
 
       click_button 'Update Address'
 
@@ -103,7 +103,7 @@ describe "Admin Managing Markets" do
     it 'displays errors when trying to create a new address' do
       click_link address1.name
 
-      fill_in 'Name', with: ''
+      fill_in 'Address Label', with: ''
 
       click_button 'Update Address'
 

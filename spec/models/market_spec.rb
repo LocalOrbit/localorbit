@@ -5,6 +5,14 @@ describe Market do
     let(:original_market) { create(:market) }
 
     describe "name" do
+      it 'must be present' do
+        market = build(:market)
+        market.name = nil
+
+        expect(market).to_not be_valid
+        expect(market).to have(1).error_on(:name)
+      end
+
       it 'is unique' do
         market = build(:market)
         market.name = original_market.name
@@ -23,6 +31,14 @@ describe Market do
     end
 
     describe "subdomain" do
+      it 'must be present' do
+        market = build(:market)
+        market.subdomain = nil
+
+        expect(market).to_not be_valid
+        expect(market).to have(1).error_on(:subdomain)
+      end
+
       it 'is unique' do
         market = build(:market)
         market.subdomain = original_market.subdomain

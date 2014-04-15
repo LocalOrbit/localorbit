@@ -38,8 +38,11 @@ input[type=submit] {
     margin-right: 0;
   }
   &.btn--small {
-    padding: 6px 18px;
+    padding: 4px 18px;
     font-size: 14px;
+  }
+  &.btn--activate {
+    margin-top: 38px;
   }
   &.prevent-delete {
     position: absolute;
@@ -127,7 +130,7 @@ input[type=submit] {
 .btn--end,
 .btn--start {
   display: inline-block;
-  padding: 9px 10px 8px;
+  padding: 6px 10px 5px;
   vertical-align: top;
 }
 .btn--end {

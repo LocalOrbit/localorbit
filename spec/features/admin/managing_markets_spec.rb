@@ -131,7 +131,7 @@ describe "Managing Markets" do
       fill_in 'Name',          with: 'Holland Farmers'
       fill_in 'Subdomain',     with: 'holland-farmers'
       fill_in 'Tagline',       with: 'Dutch People, Dutch Prices!'
-      select  '(GMT-05:00) Eastern Time (US & Canada)', from: 'Timezone'
+      select  '(GMT-05:00) Eastern Time (US & Canada)', from: 'Time zone'
       fill_in 'Contact name',  with: 'Jill Smith'
       fill_in 'Contact email', with: 'jill@smith.com'
       fill_in 'Contact phone', with: '616-222-2222'
@@ -140,6 +140,7 @@ describe "Managing Markets" do
       fill_in 'Profile',       with: 'Some interesting info about Holland Farmers'
       fill_in 'Policies',      with: 'Something no one will pay attention to'
       attach_file 'Logo', 'app/assets/images/logo.png'
+      attach_file 'Photo', 'app/assets/images/backgrounds/lentils.jpg'
 
       click_button 'Add Market'
 

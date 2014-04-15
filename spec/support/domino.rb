@@ -165,7 +165,7 @@ module Dom
     end
 
     def click_next
-      node.find('a[title="Next"]').click
+      node.find('a[title="Next"]').trigger("click")
     end
 
     def click_day(day)

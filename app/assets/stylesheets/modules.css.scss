@@ -107,10 +107,9 @@
 }
 .counter {
   padding: 0 15px;
-  border: solid 1px #1e2e4e;
   @include border-radius(12px);
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
-  background: rgba(255,255,255,0.36);
+  background: #999999;
   font-size: 92.85%;
   font-weight: bold;
   line-height: 1.769;
@@ -307,7 +306,7 @@
   width: 100%;
 
   + .adr {
-    margin-top: 0;
+    margin-top: 10px;
   }
 }
 .map {
@@ -329,7 +328,7 @@
   margin: 0 0 20px;
 }
   .product-image--large {
-    margin: 20px 0;
+    margin: 13px 0;
   }
 
 /** Nav */
@@ -460,8 +459,7 @@
     color: $link;
   }
   > li {
-    margin: .4em 0;
-    font-size: smaller;
+    margin: .8em 0;
   }
 }
 .org-profile-photo {
@@ -506,8 +504,10 @@
   font: bold 14px OpenSans, "Open Sans", sans-serif;
 }
 .heading-product {
-  margin: 20px 0 0;
-  font-weight: bold;
+  font-family: 'OpenSans-CondensedBold', OpenSans, "Open Sans", sans-serif;
+  margin: 6px 0 0;
+  line-height: 36px;
+  padding-bottom: 10px;
 
   + .producer {
     margin: 0 0 1em;
@@ -516,12 +516,11 @@
 
 .heading-section {
   margin: .5em 0 .2em;
-  font: lighter 2em 'OpenSans-Light', OpenSans, "Open Sans", sans-serif;
+  font: lighter 2em 'OpenSans-CondensedLight', OpenSans, "Open Sans", sans-serif;
   font-weight: 300;
 }
   .heading-section--product {
     margin-bottom: 0;
-    font-size: 1.7em;
     line-height: 1.1;
 
     + p {
@@ -566,9 +565,8 @@
 }
 
 .sidebar-box {
-  padding: 10px;
-  border: solid 1px #4162a1;
-  border-top-width: 3px;
+  padding: 7px 10px 0 0;
+  border-top: solid 3px #4162a1;
   @include border-radius(0 0 5px 5px);
   margin: 5px 0 24px;
   color: #000;
@@ -597,7 +595,7 @@
   z-index: 1;
   padding: 0;
   margin: 0 0 -1px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.166;
   text-align: center;
   list-style: none;
@@ -605,16 +603,16 @@
   .tab {
     > a,
     > span {
-      padding: 22px 24px 18px;
+      padding: 12px;
       @include border-radius(5px 5px 0 0);
     }
   }
   > .completed:after {
     position: absolute;
-    top: 5px;
-    right: 7px;
-    width: 14px;
-    height: 15px;
+    top: 4px;
+    right: 4px;
+    width: 10px;
+    height: 11px;
     content: '';
     background: asset_url('icons/circled-check.png') center no-repeat;
     background: asset_url('icons/circled-check@2x.png') center / cover no-repeat;
@@ -660,14 +658,14 @@
     @include box-sizing(border-box);
 
     > .l-constraint {
-      padding-top: 20px;
+      padding-top: 10px;
     }
   }
   &.js-fixed {
     position: fixed;
 
     > .l-constraint {
-      padding: 20px 20px 0;
+      padding: 10px 20px 0;
       background: #fff;
     }
   }
@@ -740,6 +738,10 @@
 }
 
 /** Errors and messages */
+
+.message {
+  margin-top: 0;
+}
 
 .flash {
   position: absolute;
@@ -866,6 +868,7 @@
 }
 .redundant-nav {
   font-size: smaller;
+  line-height: 30px;
 }
 .slide {
   overflow: hidden;
@@ -1013,11 +1016,11 @@ label ~ .tooltip {
     min-width: 210px;
     max-width: 300px;
     padding: .5em 1em;
-    border: solid 1px #ccc;
+    border: solid 1px #aaa;
     @include border-radius(5px);
     @include box-shadow(2px 2px 5px rgba(0,0,0,0.3));
     content: attr(data-tooltip);
-    color: #777;
+    color: #333;
     background: #fff;
     font-weight: normal;
     line-height: 1.1;

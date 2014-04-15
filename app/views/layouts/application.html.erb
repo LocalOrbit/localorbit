@@ -7,7 +7,7 @@
   <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300|Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
   <%= csrf_meta_tags %>
 </head>
-<body class="<%= current_user.present? ? "" : "signed-out" %>" style="<%= "background-image: url(#{asset_url "backgrounds/#{current_market.background}"});" if current_market && current_market.background.present? %>">
+<body class="<%= current_user.present? ? "" : "signed-out" %>">
 
   <div class="page-content">
     <header class="l-app-header" id="top">

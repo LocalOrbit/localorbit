@@ -1,10 +1,10 @@
 <%= render "shared/errors", {resource: @product} %>
 
 <% if @product.persisted? %>
-    <h2>
+    <label>
       Seller Organization<br>
       <%= link_to @product.organization.name, [:admin, @product.organization] %>
-    </h2>
+    </label>
     <%= f.hidden_field :organization_id %>
 <% else %>
   <% if @organizations.count > 1 %>

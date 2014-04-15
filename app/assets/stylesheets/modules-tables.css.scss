@@ -45,7 +45,7 @@ th {
 }
 
 td {
-  vertical-align: top;
+  vertical-align: center;
 
   &.delete {
     white-space: nowrap;
@@ -78,7 +78,13 @@ td {
 }
 
 tbody {
+  a {
+    font-weight: 700;
+  }
   tr{
+    height: 40px;
+    border-top: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
     &:nth-child(odd) {
       background: #f9f9f9;
     }
@@ -293,7 +299,7 @@ th {
   }
 
   .product-table--mini {
-    margin: 20px 0;
+    margin: 20px 0 0 0;
 
     th {
       font-weight: normal;

@@ -3,10 +3,11 @@
 <%= render 'shared/errors', resource: @delivery_schedule %>
 
 <div class="row row--partial">
-  <%= form_for [:admin, @market, @delivery_schedule], html: { class: "column column--half" } do |f| %>
+  <%= form_for [:admin, @market, @delivery_schedule], html: { class: "column" } do |f| %>
     <%= render 'form', {f: f} %>
 
     <div class="form-actions">
+      <%= link_to "Cancel", admin_market_delivery_schedules_path(@market), class: "btn cancel" %>
       <%= f.submit "Save Delivery" %>
     </div>
   <% end %>

@@ -17,7 +17,7 @@ describe "A Market Manager" do
         click_link 'Add Organization'
 
         fill_in 'Name', with: 'Famous Farm'
-        fill_in "Location Name", with: "Warehouse 1"
+        fill_in "Address Label", with: "Warehouse 1"
         fill_in "Address", with: "1021 Burton St."
         fill_in "City", with: "Orleans Twp."
         select "Michigan", from: "State"
@@ -69,7 +69,7 @@ describe "A Market Manager" do
         select market2.name, from: "Market"
         check 'Can sell product'
 
-        fill_in "Location Name", with: "Warehouse 1"
+        fill_in "Address Label", with: "Warehouse 1"
         fill_in "Address", with: "1021 Burton St."
         fill_in "City", with: "Orleans Twp."
         select "Michigan", from: "State"
@@ -140,7 +140,7 @@ describe "A Market Manager" do
       click_link "Fresh Pumpkin Patch"
 
       within("fieldset:last") do
-        expect(page).not_to have_content("Location Name")
+        expect(page).not_to have_content("Address Label")
         expect(page).not_to have_content("Address")
         expect(page).not_to have_content("City")
         expect(page).not_to have_content("State")

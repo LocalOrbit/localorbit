@@ -55,7 +55,7 @@ input[type=text],
 input[type=number],
 input[type=url],
 input[type=password] {
-  height: 42px;
+  height: 36px;
 
   &[size="3"] {
     width: 4em;
@@ -135,10 +135,11 @@ label,
 legend,
 .faux-label {
   margin: 0 0 4px;
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 600;
 }
 legend {
-  font: bold 24px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", OpenSans, sans-serif;
+  font: 28px "Open Sans Condensed Light", OpenSans-CondensedLight, "Open Sans", OpenSans, sans-serif;
 }
 
 label {
@@ -207,8 +208,9 @@ textarea {
   .field--inline {
     display: inline-block;
     vertical-align: top;
+    margin: 0;
     + .field--inline {
-      margin-left: 1em;
+      margin: 0 0 0 1em;
     }
   }
 .field_with_errors {
@@ -233,6 +235,11 @@ div.field_with_errors {
 }
   .action-helper {
     font-size: 15px;
+  }
+
+  .return-list {
+    font-size: 12px;
+    margin-top: -10px;
   }
 
 form.form-actions {
@@ -266,5 +273,9 @@ form.form-actions {
 
 .organization-info {
   margin-top: 0;
+}
+
+.primary-delivery-info {
+  margin-bottom: 40px;
 }
 

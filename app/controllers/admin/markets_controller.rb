@@ -52,7 +52,7 @@ class Admin::MarketsController < AdminController
       :profile,
       :policies,
       :logo,
-      :background,
+      :photo,
     )
   end
 

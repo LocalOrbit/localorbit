@@ -1,6 +1,5 @@
 class Market < ActiveRecord::Base
-  validates :name, presence: true
-  validates :name, :subdomain, uniqueness: true, length: {maximum: 255, allow_blank: true}
+  validates :name, :subdomain, presence: true, uniqueness: true, length: {maximum: 255, allow_blank: true}
   validates :subdomain, exclusion: {in: %w(app www mail ftp smtp imap docs calendar community service support)}
   validates :tagline, length: {maximum: 255, allow_blank: true}
   validates :local_orbit_seller_fee, :local_orbit_market_fee, :market_seller_fee, :credit_card_seller_fee, :credit_card_market_fee, :ach_seller_fee, :ach_market_fee, presence: true, numericality: {greater_than_or_equal_to: 0, less_than: 100, allow_blank: true}
@@ -20,6 +19,7 @@ class Market < ActiveRecord::Base
   has_many :bank_accounts, as: :bankable
 
   dragonfly_accessor :logo
+  dragonfly_accessor :photo
 
   def clean_twitter_slug
     self.twitter = twitter[1..-1] if twitter && twitter.match(/^@/)
