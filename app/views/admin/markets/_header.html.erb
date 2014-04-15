@@ -3,9 +3,11 @@
 
     <%= link_to "< Return to Markets List", admin_markets_path, class: "redundant-nav" %>
 
-    <%= form_for [:admin, @market], html: { class: "pull-right" } do |f| %>
-      <%= f.hidden_field :active, value: !@market.active? %>
-      <%= f.submit (@market.active? ? 'Deactivate' : 'Activate'), class: "btn--small" %>
+    <% if current_user.admin? %>
+      <%= form_for [:admin, @market], html: { class: "pull-right" } do |f| %>
+        <%= f.hidden_field :active, value: !@market.active? %>
+        <%= f.submit (@market.active? ? 'Deactivate' : 'Activate'), class: "btn--small" %>
+      <% end %>
     <% end %>
 
     <h1><%= @market.decorate.header %></h1>

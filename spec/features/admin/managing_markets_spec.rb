@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Admin Managing Markets" do
+describe "Managing Markets" do
   let(:add_market_link_name) { 'Add Market' }
 
   describe 'as a market manager' do
@@ -12,7 +12,6 @@ describe "Admin Managing Markets" do
       switch_to_subdomain market1.subdomain
       sign_in_as user
     end
-
 
     context "I can see the details for each of my markets" do
       it "through the market listing" do
@@ -51,26 +50,15 @@ describe "Admin Managing Markets" do
       expect(find_field("market_contact_name").value).to eq('Jane Smith')
     end
 
-    it 'I can activate a market' do
+    it 'I cannot activate a market' do
       market1.update_attribute(:active, true)
-
       visit "/admin/markets/#{market1.id}"
-
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq('false')
-
-      click_button 'Deactivate'
-
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq('true')
+      expect(page).not_to have_content('Deactivate')
     end
 
-    it 'I can deactivate a market' do
+    it 'I cannot deactivate a market' do
       visit "/admin/markets/#{market1.id}"
-
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq('true')
-
-      click_button 'Activate'
-
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq('false')
+      expect(page).not_to have_content('Deactivate')
     end
 
     it 'I can not add a market' do
