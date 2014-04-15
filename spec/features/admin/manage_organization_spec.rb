@@ -20,7 +20,7 @@ describe "admin manange organization" do
     fill_in "Who",  with: "Who Story"
     fill_in "How",  with: "How Story"
 
-    fill_in "Location Name", with: "Warehouse 1"
+    fill_in "Address Label", with: "Warehouse 1"
     fill_in "Address", with: "1021 Burton St."
     fill_in "City", with: "Orleans Twp."
     select "Michigan", from: "State"
@@ -76,7 +76,7 @@ describe "admin manange organization" do
         click_link "Addresses"
         click_link "Add New Address"
 
-        fill_in "Location Name", with: "University of Michigan"
+        fill_in "Address Label", with: "University of Michigan"
         fill_in "Address",       with: "500 S. State Street"
         fill_in "City",          with: "Ann Arbor"
         select  "Michigan",      from: "State"
@@ -202,7 +202,7 @@ describe "admin manange organization" do
       location = Dom::Admin::OrganizationLocation.first
       location.edit
 
-      fill_in "Location Name", with: "University of Michigan"
+      fill_in "Address Label", with: "University of Michigan"
       click_button "Save Address"
 
       location = Dom::Admin::OrganizationLocation.first
