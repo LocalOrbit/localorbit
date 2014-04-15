@@ -12,6 +12,15 @@ $ ->
         el: $(el)
 
     update: (data)->
+      if (this.data.quantity == 0) && (data.quantity > 0)
+        CartLink.showMessage("Added to cart!")
+
+      if (this.data.quantity > 0) && (data.quantity == 0)
+        CartLink.showMessage("Removed from cart!")
+
+      if (this.data.quantity > 0) && (data.quantity > 0)
+        CartLink.showMessage("Quantity updated!")
+
       @data = data
       @updateView()
       @showUpdate()
