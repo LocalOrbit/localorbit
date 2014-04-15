@@ -91,7 +91,7 @@ describe OrderItem do
       end
     end
 
-    let!(:future_good_from_lot) { create(:lot, number: 2, quantity: 10, product: product, good_from: Time.now + 3.days) }
+    let!(:future_good_from_lot) { create(:lot, number: 3, quantity: 10, product: product, good_from: Time.now + 3.days) }
 
     def create_valid_order_item
       OrderItem.create!(
