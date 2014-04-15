@@ -90,8 +90,11 @@ $ ->
         $(info).insertAfter(el)
 
     showErrorMessage: (error, el)->
-      notice = $("<tr>").append($("<td>").addClass('flash--warning').attr('colspan', '6').text(error))
+      notice = $("<tr>").addClass("warning").append($("<td>").addClass('flash--warning').attr('colspan', '6').text(error))
       $(notice).insertAfter(el)
+
+    removeErrorMessage: (el)->
+      el.siblings(".warning").remove()
 
 
   class CartModel
@@ -135,7 +138,6 @@ $ ->
         item.data.id?
 
       filteredItems.length
-
 
     updateTotals: (data) ->
       @view.updateCounter(@itemCount())

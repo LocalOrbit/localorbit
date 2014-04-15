@@ -24,7 +24,6 @@ $ ->
       @timer = setTimeout(@hideMessage, window.CartNotificationDuration)
 
     hideMessage: =>
-      console.log @messageContainer
       @messageContainer.addClass('is-hidden')
       @messageContainer.text("")
 
