@@ -38,7 +38,8 @@ describe Admin::MarketManagersController do
 
         post :create, market_id: market.id, email: 'a-user@example.com'
 
-        expect(request).to render_template("admin/market_managers/new")
+        expect(request).to redirect_to("/admin/markets/#{market.id}/managers")
+        expect(flash[:alert]).to eq("a-user@example.com could not be invited.")
       end
     end
   end

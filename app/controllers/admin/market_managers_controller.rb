@@ -11,11 +11,12 @@ class Admin::MarketManagersController < AdminController
 
   def create
     @market = current_user.markets.find(params[:market_id])
-    result = AddMarketManager.perform(market: @market, email: params.require(:email), inviter: current_user)
+    email = params.require(:email)
+    result = AddMarketManager.perform(market: @market, email: email, inviter: current_user)
     if result.success?
-      redirect_to [:admin, @market, :managers]
+      redirect_to [:admin, @market, :managers], notice: "Sent invitation to #{email}"
     else
-      render :new
+      redirect_to [:admin, @market, :managers], alert: "#{email} could not be invited."
     end
   end
 
