@@ -35,7 +35,7 @@ feature "Adding bank account to a market", js: true do
 
     click_button "Save"
 
-    expect(page).to have_content("Successfully added a bank account")
+    expect(page).to have_content("Successfully added a payment method")
 
     bank_account = Dom::BankAccount.first
     expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")
@@ -68,7 +68,7 @@ feature "Adding bank account to a market", js: true do
 
     click_button "Save"
 
-    expect(page).to have_content("Successfully added a bank account")
+    expect(page).to have_content("Successfully added a payment method")
 
     bank_account = Dom::BankAccount.first
     expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")
