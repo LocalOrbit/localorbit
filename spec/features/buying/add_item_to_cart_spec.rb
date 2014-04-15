@@ -60,7 +60,7 @@ describe "Add item to cart", js: true do
 
     bananas_row.set_quantity(12)
     kale_row.quantity_field.trigger('click')
-    expect(bananas_row.node).to have_css(".updated.finished")
+    expect(Dom::CartLink.first).to have_content("Added to cart!")
 
     cart_link.node.click
     expect(page).not_to have_content("Your cart is empty")
@@ -82,12 +82,13 @@ describe "Add item to cart", js: true do
 
       bananas_row.set_quantity(12)
       kale_row.quantity_field.click
-      expect(bananas_row.node).to have_css(".updated.finished")
+
+      expect(Dom::CartLink.first).to have_content("Added to cart!")
       expect(Dom::CartLink.first.count).to have_content("1")
 
       kale_row.set_quantity(9)
       bananas_row.quantity_field.click
-      expect(kale_row.node).to have_css(".updated.finished")
+      expect(Dom::CartLink.first).to have_content("Added to cart!")
       expect(Dom::CartLink.first.count).to have_content("2")
 
 
@@ -119,14 +120,14 @@ describe "Add item to cart", js: true do
 
       bananas_row.set_quantity(8)
       kale_row.quantity_field.click
-      expect(bananas_row.node).to have_css(".updated.finished")
+      expect(Dom::CartLink.first).to have_content("Quantity updated!")
 
       expect(Dom::CartLink.first.count).to have_content("1")
       expect(bananas_row.price).to have_content("$24.00")
 
       bananas_row.set_quantity(9)
       kale_row.quantity_field.click
-      expect(bananas_row.node).to have_css(".updated.finished")
+      expect(Dom::CartLink.first).to have_content("Quantity updated!")
 
       expect(Dom::CartLink.first.count).to have_content("1")
       expect(bananas_row.price).to have_content("$27.00")
