@@ -10,9 +10,13 @@ class SellersController < ApplicationController
   before_action :hide_admin_navigation
 
   def index
-    @current_seller = @sellers.order("RANDOM()").first.decorate
-    @categories = Category.where(depth: 2)
-    @product_groups = products_for_seller(@current_seller).group_by {|p| p.category.self_and_ancestors.find_by(depth: 2).id }
+    if @sellers.empty?
+      @empty_message = "#{current_market.name} has no sellers at this time."
+    else
+      @current_seller = @sellers.order("RANDOM()").first.decorate
+      @categories = Category.where(depth: 2)
+      @product_groups = products_for_seller(@current_seller).group_by {|p| p.category.self_and_ancestors.find_by(depth: 2).id }
+    end
   end
 
   def show
