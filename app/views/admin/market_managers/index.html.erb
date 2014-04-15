@@ -3,7 +3,11 @@
 <div class="row row--partial">
   <div class="column column--three-fourths">
     <div class="l-page-header">
-      <%= link_to 'Add Manager', [:new, :admin, @market, :manager], class: "btn btn--add btn--small pull-right" %>
+      <%= form_for admin_market_managers_path(@market), html: { class: "form-actions" } do |f|%>
+        <%= email_field_tag :email, nil, placeholder: "Email address" %>
+        <button type="submit" class="btn--add btn--small">Add Market Manager</button>
+      <% end %>
+        
     </div>
     <table class="market-managers">
       <thead>

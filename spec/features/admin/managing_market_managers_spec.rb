@@ -40,9 +40,7 @@ describe "Admin Managing Market Managers" do
     it 'I can add a market manager by email' do
       visit "/admin/markets/#{market.id}/managers"
 
-      click_link 'Add Manager'
-
-      fill_in 'Email', with: 'new-user@example.com'
+      fill_in 'email', with: 'new-user@example.com'
       click_button 'Add Market Manager'
 
       expect(page).to have_text('new-user@example.com')
@@ -70,9 +68,7 @@ describe "Admin Managing Market Managers" do
     it 'I can add a market manager by email' do
       visit "/admin/markets/#{market.id}/managers"
 
-      click_link 'Add Manager'
-
-      fill_in 'Email', with: 'new-user@example.com'
+      fill_in 'email', with: 'new-user@example.com'
       click_button 'Add Market Manager'
 
       expect(page).to have_text('new-user@example.com')
