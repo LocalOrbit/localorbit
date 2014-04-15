@@ -32,6 +32,28 @@ describe Lot do
           expect(subject.errors.full_messages).to include("Lot # can't be blank when 'Expiration Date' is present")
         end
       end
+
+      it 'unique across a product' do
+        product1 = create(:product)
+        product2 = create(:product)
+
+        create(:lot, product: product1, number: 'ABC')
+
+        lot = build(:lot, product: product1, number: 'ABC')
+        expect(lot).to have(1).errors_on(:number)
+
+        lot = build(:lot, product: product2, number: 'ABC')
+        expect(lot).to have(0).errors_on(:number)
+      end
+
+      it 'allows muliple unnamed lots' do
+        product1 = create(:product)
+
+        create(:lot, product: product1, number: nil)
+
+        lot = build(:lot, product: product1, number: nil)
+        expect(lot).to have(0).errors_on(:number)
+      end
     end
 
     describe "expires_at:" do

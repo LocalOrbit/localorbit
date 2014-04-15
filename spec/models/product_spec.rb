@@ -132,8 +132,8 @@ describe Product do
 
     it "is true if all non-expired lots have no quantity" do
       product.lots.create!(quantity: 0, number: '1')
-      product.lots.create!(quantity: 0, number: '1', expires_at: 2.days.from_now)
-      product.lots.create!(quantity: 0, number: '1', good_from: 1.day.from_now, expires_at: 2.days.from_now)
+      product.lots.create!(quantity: 0, number: '2', expires_at: 2.days.from_now)
+      product.lots.create!(quantity: 0, number: '3', good_from: 1.day.from_now, expires_at: 2.days.from_now)
 
       expect(product.can_use_simple_inventory?).to be true
     end
