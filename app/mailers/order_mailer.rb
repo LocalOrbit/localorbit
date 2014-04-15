@@ -1,7 +1,4 @@
-class OrderMailer < ActionMailer::Base
-  layout "email"
-  default from: "service@localorb.it"
-
+class OrderMailer < BaseMailer
   def buyer_confirmation(order)
     @market = order.market
     @order = BuyerOrder.new(order)
@@ -34,6 +31,7 @@ class OrderMailer < ActionMailer::Base
 
   # TODO: Attach invoice PDF
   def invoice(order, addresses)
+    @market = order.market
     @order = order
 
     mail(

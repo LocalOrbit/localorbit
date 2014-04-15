@@ -1,7 +1,4 @@
-class UserMailer < ActionMailer::Base
-  layout "email"
-  default from: "service@localorb.it"
-
+class UserMailer < BaseMailer
   def organization_invitation(user, organization, inviter, market)
     @user = user
     @organization = organization
