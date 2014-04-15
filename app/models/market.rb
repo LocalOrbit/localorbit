@@ -46,6 +46,10 @@ class Market < ActiveRecord::Base
     Delivery.for_market(self)
   end
 
+  def next_delivery
+    delivery_schedules.map(&:next_delivery).min {|a,b| a.deliver_on <=> b.deliver_on }
+  end
+
   def upcoming_deliveries_for_user(user)
     scope = deliveries.future.with_orders.order("deliver_on")
     scope = scope.with_orders_for_user(user) unless user.market_manager? || user.admin?
