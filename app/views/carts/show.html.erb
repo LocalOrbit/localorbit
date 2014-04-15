@@ -1,5 +1,5 @@
 <div class="row row--partial cart-page">
-  <div class="column column--eleven-twelfths">
+  <div>
     <h1 class="heading-cart">Cart</h1>
     <%= form_for :order, url: [:orders] do |f| %>
       <%= render "shared/errors", {resource: @order} if @order %>
