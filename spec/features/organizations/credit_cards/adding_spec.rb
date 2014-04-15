@@ -29,7 +29,7 @@ feature "Adding a credit card to an organization", js: true do
 
       click_button "Save"
 
-      expect(page).to have_content("Successfully added a bank account")
+      expect(page).to have_content("Successfully added a payment method")
 
       bank_account = Dom::BankAccount.first
       expect(bank_account.bank_name).to eq("MasterCard")
@@ -52,7 +52,7 @@ feature "Adding a credit card to an organization", js: true do
       select "2014", from: "expiration_year"
 
       click_button "Save"
-      expect(page).not_to have_content("Successfully added a credit card")
+      expect(page).not_to have_content("Successfully added a payment method")
       expect(page).to have_css(".field_with_errors")
       expect(page).to have_content("is not a valid credit card number")
     end
@@ -76,7 +76,7 @@ feature "Adding a credit card to an organization", js: true do
 
       click_button "Save"
 
-      expect(page).to have_content("Successfully added a bank account")
+      expect(page).to have_content("Successfully added a payment method")
 
       bank_account = Dom::BankAccount.first
       expect(bank_account.bank_name).to eq("MasterCard")

@@ -37,7 +37,7 @@ feature "Adding a bank account to an organization", js: true do
 
       click_button "Save"
 
-      expect(page).to have_content("Successfully added a bank account")
+      expect(page).to have_content("Successfully added a payment method")
 
       bank_account = Dom::BankAccount.first
       expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")
@@ -49,7 +49,7 @@ feature "Adding a bank account to an organization", js: true do
 
     scenario "failing to enter a valid account" do
       click_button "Save"
-      expect(page).not_to have_content("Successfully added a bank account")
+      expect(page).not_to have_content("Successfully added a payment method")
       expect(page).to have_css('.field_with_errors')
       expect(page).to have_content("Name: Missing field")
 
@@ -59,7 +59,7 @@ feature "Adding a bank account to an organization", js: true do
       fill_in "Account Number", with: "8887776665555"
 
       click_button "Save"
-      expect(page).not_to have_content("Successfully added a bank account")
+      expect(page).not_to have_content("Successfully added a payment method")
       expect(page).to have_css(".field_with_errors")
       expect(page).to have_content("Routing number is invalid.")
     end
@@ -91,7 +91,7 @@ feature "Adding a bank account to an organization", js: true do
 
       click_button "Save"
 
-      expect(page).to have_content("Successfully added a bank account")
+      expect(page).to have_content("Successfully added a payment method")
 
       bank_account = Dom::BankAccount.first
       expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")
