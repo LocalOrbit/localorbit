@@ -1,5 +1,39 @@
-<div class="market-info row vcard">
-  <aside class="column column--fourth column-guttered">
+<div class="row">
+  <div class="photo-header">
+    <%= image_tag Dragonfly.app.remote_url_for(@market.photo_uid), class: "photo-header-bg" if @market.photo.present? %>
+    <h1 class="photo-header-txt"><span><%= @market.name %></span></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="column column--three-fourths column--guttered">
+    <div class="about row">
+     <% if @market.photo.present? %>
+      <div class="column column--guttered column--two-thirds">
+        <h2 class="story-header">About</h2>
+        <%= simple_format @market.profile %>
+      </div><div class="column column--guttered column--third">
+        <%= image_tag Dragonfly.app.remote_url_for(@market.photo_uid) %>
+      </div>
+    <% else %>
+      <h2 class="story-header">About</h2>
+      <%= simple_format @market.profile %>
+    <% end %>
+    </div>
+    <div class="policies">
+      <h2 class="story-header">Policies</h2>
+      <%= simple_format @market.policies %>
+    </div>
+
+
+    <h2 class="story-header">Sellers</h2>
+    <img class="location-map" alt="" src="<%= @market.seller_locations_map 680, 400 %>">
+    <ul class="l-inline-list seller-list">
+    <% @market.organizations.selling.each do |seller| %>
+      <%= content_tag :li, link_to(seller.name, seller_path(seller)), class: "column--fourth" %>
+    <% end %>
+    </ul>
+  </div
+  ><aside class="column column--fourth column-guttered">
     <div class="header header--column">
       <h2 class="heading heading--sidebar">Contact</h2>
     </div>
@@ -28,38 +62,5 @@
       </p>
     <% end %>
     </div>
-  </aside
-  ><div class="column column--three-fourths column--guttered">
-    <h1 class="org"><%= @market.name %></h1>
-
-    <hr>
-
-    <div class="row">
-      <div class="about column column--seven-twelfths column--guttered">
-        <h2>About</h2>
-        <%= simple_format @market.profile %>
-      </div
-      ><div class="policies column column--five-twelfths column--guttered">
-        <h2>Policies</h2>
-        <%= simple_format @market.policies %>
-      </div>
-    </div>
-
-    <hr>
-
-    <div class="row">
-      <div class="where column column--seven-twelfths column--guttered">
-        <h2>Where</h2>
-        <img class="location-map" alt="" src="<%= @market.seller_locations_map %>" />
-      </div
-      ><div class="market-sellers column column--five-twelfths column--guttered">
-        <h2>Sellers</h2>
-        <ul class="list-naked">
-        <% @market.organizations.selling.each do |seller| %>
-          <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>
-        <% end %>
-        </ul>
-      </div>
-    </div>
-  </div>
+  </aside>
 </div>
