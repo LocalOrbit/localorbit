@@ -21,6 +21,10 @@ describe "An organization member" do
     fill_in 'Name', with: 'Famous Farm'
     fill_in 'Facebook', with: 'localorbit_fb'
     fill_in 'Twitter',  with: 'localorbit_twtr'
+
+    check "organization[display_facebook]"
+    check "organization[display_twitter]"
+
     click_button 'Save Organization'
 
     expect(page).to have_content("Saved Famous Farm")
@@ -28,5 +32,8 @@ describe "An organization member" do
 
     expect(find_field('Facebook').value).to eq("localorbit_fb")
     expect(find_field('Twitter').value).to eq("localorbit_twtr")
+
+    expect(find_field('organization[display_facebook]')).to be_checked
+    expect(find_field('organization[display_twitter]')).to be_checked
   end
 end
