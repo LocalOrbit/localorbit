@@ -204,7 +204,7 @@
     @include border-radius(4px);
     @include box-shadow(0 1px 5px rgba(0,0,0,0.2));
     margin: 0;
-    background: #eee;
+    background: #e3e3e3;
     white-space: nowrap;
 
     &[data-count="0"],
@@ -227,7 +227,7 @@
     }
     a:hover,
     > .current {
-      background: #dedede;
+      background: #d3d3d3;
 
       &:before {
         content: none;
@@ -242,7 +242,7 @@
   @include border-radius(4px);
   margin-top: 18px;
   color: #000;
-  background: #f9f9f9;
+  background: #e9e9e9;
   font-size: 14px;
   font-weight: bolder;
   font-weight: 600;
@@ -254,7 +254,7 @@
   &.is-open {
     z-index: 11;
     @include border-radius(4px 0 0 4px);
-    background: #eee;
+    background: #e3e3e3;
   }
 }
 
@@ -298,6 +298,7 @@
 
 .list-naked {
   padding-left: 0;
+  margin-top: 10px;
   list-style: none;
 }
 
@@ -550,6 +551,13 @@
     font-weight: bold;
     text-transform: uppercase;
   }
+}
+
+.heading--underline {
+  width: 100%;
+  margin-bottom: 0;
+  padding-bottom: 5px;
+  border-bottom: 3px solid #4162A1;
 }
 
 .subheading--sidebar {
