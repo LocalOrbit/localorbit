@@ -1,5 +1,6 @@
 <div class="tabs-wrapper">
-  <ul class="tabs tabs--small">
+  <h1><i class="font-icon" data-icon="&#xe00f;">&nbsp; </i>Financials</h1>
+  <ul class="tabs">
     <%= content_tag(:li, link_to_or_span("Overview", [:admin, :financials]), class: 'tab') %>
     <% if current_user.admin? || current_user.market_manager? %>
     <%= content_tag(:li, link_to_or_span("Send Invoices", [:admin, :financials, :invoices]), class: 'tab') %>

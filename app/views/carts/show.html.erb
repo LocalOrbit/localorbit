@@ -33,19 +33,19 @@
             <div id="totals">
               <table class="cart math">
                 <tbody>
-                  <tr>
+                  <tr class="cart_total">
                     <th scope="row" colspan="3">Item Subtotal</th>
                     <td class="subtotal"><%= current_cart.decorate.display_subtotal %></td>
                     <td></td>
                   </tr>
 
-                  <tr>
+                  <tr class="cart_total">
                     <th scope="row" colspan="3">Delivery Fees</th>
                     <td class="delivery_fees"><%= current_cart.decorate.display_delivery_fees%></td>
                     <td></td>
                   </tr>
 
-                  <tr>
+                  <tr class="cart_total">
                     <th scope="row" colspan="3">Total</th>
                     <td class="total"><strong><%= current_cart.decorate.display_total %></strong></td>
                     <td></td>

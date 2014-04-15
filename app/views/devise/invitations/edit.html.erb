@@ -1,20 +1,21 @@
-<h2><%= t 'devise.invitations.edit.header' %></h2>
+<div class="invite-form">
+  <h1><%= t 'devise.invitations.edit.header' %></h1>
+  <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
+    <%= devise_error_messages! %>
+    <%= f.hidden_field :invitation_token %>
 
-<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :invitation_token %>
+    <p><%= f.label :name %><br>
+    <%= f.text_field :name, size:32 %></p>
 
-  <p><%= f.label :name %><br>
-  <%= f.text_field :name %></p>
+    <p><%= f.label :email %><br>
+    <%= f.email_field :email, size:32 %></p>
 
-  <p><%= f.label :email %><br>
-  <%= f.email_field :email %></p>
+    <p><%= f.label :password %><br>
+    <%= f.password_field :password, size:32 %></p>
 
-  <p><%= f.label :password %><br>
-  <%= f.password_field :password %></p>
+    <p><%= f.label :password_confirmation %><br>
+    <%= f.password_field :password_confirmation, size:32 %></p>
 
-  <p><%= f.label :password_confirmation %><br>
-  <%= f.password_field :password_confirmation %></p>
-
-  <p><%= f.submit t("devise.invitations.edit.submit_button") %></p>
-<% end %>
+    <p class="submit-button"><%= f.submit t("devise.invitations.edit.submit_button"), value: "Save and Join Now" %></p>
+  <% end %>
+</div>
