@@ -1,5 +1,5 @@
 worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
-timeout 15
+timeout 25
 preload_app true
 listen ENV['PORT'], backlog: Integer(ENV['UNICORN_BACKLOG'] || 20)
 
