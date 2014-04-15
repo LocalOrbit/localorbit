@@ -83,8 +83,9 @@ tbody {
   }
   tr{
     height: 40px;
-    border-top: 1px solid #DDDDDD;
-    border-bottom: 1px solid #DDDDDD;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+
     &:nth-child(odd) {
       background: #f9f9f9;
     }
@@ -431,5 +432,12 @@ th {
   tbody tr:nth-child(odd) {
     background: #fff;
   }
+}
+.cart_item,
+.cart_total {
+  border: 0;
+}
+.cart_total {
+  height: auto;
 }
 
