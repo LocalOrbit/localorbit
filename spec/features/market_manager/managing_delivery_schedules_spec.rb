@@ -48,17 +48,17 @@ describe 'Market Manager managing delivery schedules' do
     select '7:15 AM', from: 'Seller delivery start'
     select '11:30 AM', from: 'Seller delivery end'
 
-    expect(page).to have_content("Buyer pickup start")
+    expect(page).to have_content("Buyer pick up/delivery start")
     expect(page).to have_content("Market will pickup from seller location")
 
-    select '12:00 PM', from: 'Buyer pickup start'
-    select '11:00 AM', from: 'Buyer pickup end'
+    select '12:00 PM', from: 'Buyer pick up/delivery start'
+    select '11:00 AM', from: 'Buyer pick up/delivery end'
 
     click_button 'Save Delivery'
 
     expect(page).to have_content("Market will pickup from seller location")
     expect(page).to have_content('Buyer pickup end must be after buyer pickup start')
-    expect(page).to have_content('Buyer pickup start')
+    expect(page).to have_content('Buyer pick up/delivery start')
   end
 
   context 'list' do
