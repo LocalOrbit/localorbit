@@ -3,6 +3,9 @@ require "spec_helper"
 feature "A Market Manager sending a weekly Fresh Sheet" do
   let!(:user) { create(:user, :market_manager) }
   let!(:market) { user.managed_markets.first }
+  let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+  let!(:seller) { create(:organization, :seller, markets: [market]) }
+  let!(:product) { create(:product, :sellable, organization: seller) }
 
   scenario "navigating to the page" do
     switch_to_subdomain(market.subdomain)
@@ -30,10 +33,18 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
       sign_in_as user
     end
 
-    scenario "previewing" do
-      visit admin_fresh_sheet_path
-      expect(page).to have_content("Fresh Sheet")
-      expect(page).to have_css("iframe[src='#{preview_admin_fresh_sheet_path}']")
+    context "previewing" do
+      scenario "shows a page with the preview in an iframe" do
+        visit admin_fresh_sheet_path
+        expect(page).to have_content("Fresh Sheet")
+        expect(page).to have_css("iframe[src='#{preview_admin_fresh_sheet_path}']")
+      end
+
+      scenario "iframe contains to the email preview" do
+        visit preview_admin_fresh_sheet_path
+
+        expect(page).to have_content("See what's fresh at #{market.name}")
+      end
     end
 
     scenario "sending a test" do
@@ -63,6 +74,9 @@ end
 feature "an Admin with more then one market sends a weekly Fresh Sheet" do
   let!(:user) { create(:user, :admin) }
   let!(:markets) { create_list(:market, 2) }
+  let!(:delivery_schedule) { create(:delivery_schedule, market: markets.first) }
+  let!(:seller) { create(:organization, :seller, markets: [markets.first]) }
+  let!(:product) { create(:product, :sellable, organization: seller) }
 
   before do
     user.markets << markets
