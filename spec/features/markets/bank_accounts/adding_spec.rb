@@ -40,7 +40,7 @@ feature "Adding bank account to a market", js: true do
     bank_account = Dom::BankAccount.first
     expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")
     expect(bank_account.account_number).to eq("******0002")
-    expect(bank_account.account_type).to eq("checking")
+    expect(bank_account.account_type).to eq("Checking")
 
     expect(market.reload).to be_balanced_underwritten
   end
@@ -73,7 +73,7 @@ feature "Adding bank account to a market", js: true do
     bank_account = Dom::BankAccount.first
     expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")
     expect(bank_account.account_number).to eq("******0002")
-    expect(bank_account.account_type).to eq("checking")
+    expect(bank_account.account_type).to eq("Checking")
 
     expect(market.reload).to be_balanced_underwritten
   end

@@ -1,0 +1,6 @@
+<tr class="bank-account">
+  <td class="bank-name"><%= card.bank_name %></td>
+  <td class="account-number">**** **** **** <%= card.last_four %></td>
+  <td class="account-type">Credit Card</td>
+  <td class="verified">Expires <%= "%02d" % card.expiration_month %>/<%= card.expiration_year %></td>
+</tr>

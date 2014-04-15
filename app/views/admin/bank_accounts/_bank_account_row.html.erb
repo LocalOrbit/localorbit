@@ -1,0 +1,12 @@
+<tr class="bank-account">
+  <td class="bank-name"><%= bank_account.bank_name %></td>
+  <td class="account-number">******<%= bank_account.last_four %></td>
+  <td class="account-type"><%= bank_account.account_type.titleize %></td>
+  <td class="verified">
+    <% if bank_account.verified? %>
+      <i class="font-icon icon-checkmark"></i> Verified
+    <% else %>
+      <%= link_to "Verify", [:admin, @entity, bank_account, BankAccountVerification.new] %></td>
+    <% end %>
+  </td>
+</tr>

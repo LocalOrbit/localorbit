@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20140415154038) do
     t.string   "balanced_verification_uri"
     t.boolean  "verified",                  default: false, null: false
     t.string   "bankable_type"
+    t.integer  "expiration_month"
+    t.integer  "expiration_year"
   end
 
   add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
@@ -316,8 +318,8 @@ ActiveRecord::Schema.define(version: 20140415154038) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.integer  "top_level_category_id"
     t.string   "image_uid"
+    t.integer  "top_level_category_id"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"
