@@ -22,7 +22,7 @@
     <div class="products--user">
       <h2 class="table-heading">Products Available on <%= current_delivery.display_date %></h2>
       <p class="table-summary">
-        Complete your order by <%= current_delivery.cutoff_time.strftime("%B %-d at %l%p") %>.
+        Please complete your order by <%= current_delivery.cutoff_time.strftime("%B %-d at %l%p") %>.<br>
         Pick up is <%= current_delivery.display_date %> <%= current_delivery.time_range %>.
       </p>
 
