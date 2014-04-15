@@ -40,8 +40,6 @@ describe "Admin Managing Market Managers" do
     it 'I can add a market manager by email' do
       visit "/admin/markets/#{market.id}/managers"
 
-      click_link 'Add Manager'
-
       fill_in 'Email', with: 'new-user@example.com'
       click_button 'Add Market Manager'
 
@@ -69,8 +67,6 @@ describe "Admin Managing Market Managers" do
 
     it 'I can add a market manager by email' do
       visit "/admin/markets/#{market.id}/managers"
-
-      click_link 'Add Manager'
 
       fill_in 'Email', with: 'new-user@example.com'
       click_button 'Add Market Manager'
