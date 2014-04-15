@@ -11,7 +11,7 @@ $ ->
     constructor: ->
       @timer = null
       @el = $("a.cart")
-      @messageContainer = $("<div>").addClass('is-hidden')
+      @messageContainer = $("<div>").addClass('is-hidden').addClass('message').text("Quantity updated!")
       @el.append(@messageContainer)
 
     showMessage: (message)->
