@@ -13,6 +13,7 @@ $ ->
         $("<option/>").attr("value", location.id)
                       .text(location.name)
                       .appendTo(productLocation)
+      @addBlankLocation()
 
     selectLocation: (locId)->
       if !!locId
@@ -56,10 +57,10 @@ $ ->
       !$("#seller_info").prop("disabled") && $("#seller_info").prop("checked")
 
     removeBlankLocation: ->
-      $("#blank-location-option").remove()
+      $("#product_location_id option[value='']").remove()
 
     addBlankLocation: ->
-      $("<option id='blank-location-option' value='' selected/>").text("Select a location")
+      $("<option value='' selected/>").text("Select a location")
                     .prependTo($("#product_location_id"))
 
   class window.FormModel

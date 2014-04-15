@@ -401,6 +401,8 @@ describe "Adding a product" do
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Category can't be blank")
         expect(page).to_not have_content("Current inventory")
+        expect(find_field("Use seller info from my account.")).to be_checked
+
         within('.tabs') do
           expect(page).to have_content("Inventory")
         end
@@ -435,6 +437,9 @@ describe "Adding a product" do
 
       seller_info = page.find("#seller_info")
       expect(seller_info).not_to be_disabled
+
+      # Wait for AJAX to finish
+      expect(page).not_to have_content("No Organization Selected")
     end
 
     context "Uncheck 'use seller info'", js: true do
@@ -465,6 +470,9 @@ describe "Adding a product" do
         it "populates the locations list" do
           product_form = Dom::Admin::ProductForm.first
           expect(product_form.locations).to include(*org.locations.map(&:name))
+
+          # Wait for AJAX to finish
+          expect(page).not_to have_content("No Organization Selected")
         end
       end
 
@@ -507,6 +515,23 @@ describe "Adding a product" do
 
         click_button "Save and Continue"
         expect(page).to have_content("Organization can't be blank")
+      end
+    end
+
+    it "does not save a product with invalid product info", js: true do
+      expect(page).to have_content("Current inventory")
+      select org2.name, from: "Seller Organization"
+      uncheck 'Use simple inventory management'
+
+      click_button "Save and Continue"
+      expect(page).to have_content("Name can't be blank")
+      expect(page).to have_content("Category can't be blank")
+      expect(page).to_not have_content("Current inventory")
+      expect(find_field("Use seller info from my account.")).to be_checked
+      expect(page).not_to have_content("No Organization Selected")
+
+      within('.tabs') do
+        expect(page).to have_content("Inventory")
       end
     end
   end

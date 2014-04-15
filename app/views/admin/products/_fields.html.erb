@@ -117,7 +117,7 @@
   <%= f.label :use_all_deliveries, "Make product available on all market delivery dates" %>
 
   <div id="delivery-schedules" class="delivery-schedules">
-    <% if @organizations.count > 1 %>
+    <% if @organizations.count > 1 && @product.organization.blank? %>
       <h3 class="heading-conditionals">No Organization Selected</h3>
     <% else %>
       <%= render partial: "admin/organizations/delivery_schedules", locals: {delivery_schedules: @delivery_schedules, product: @product} %>
