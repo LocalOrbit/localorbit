@@ -19,7 +19,17 @@ describe AddMarketManager do
 
       expect(result).to be_success
       expect(market.managers(true)).to include(user)
-      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+
+    it "sends an email" do
+      result = AddMarketManager.perform(market: market, email: user.email, inviter: inviter)
+
+      expect(result).to be_success
+
+      open_email(user.email)
+      expect(current_email).to have_subject("You have been added to a market")
+      expect(current_email).to have_body_text("You have been added as a market manager for #{market.name}")
+      expect(current_email).to have_body_text("View #{market.name}")
     end
   end
 
