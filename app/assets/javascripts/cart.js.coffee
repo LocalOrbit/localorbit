@@ -73,6 +73,11 @@ $ ->
       totals = $("#totals")
       totals.find(".total").text(total)
 
+    showMessage: (info, el)->
+      if el.length
+        $(el).next('.message').remove()
+        $(info).insertAfter(el)
+
     showErrorMessage: (error, el)->
       notice = $("<tr>").append($("<td>").addClass('flash--warning').attr('colspan', '6').text(error))
       $(notice).insertAfter(el)
@@ -153,6 +158,8 @@ $ ->
 
             if error
               @view.showErrorMessage(error, $(elToUpdate).closest('.product'))
+            else
+              @view.showMessage($('<p class="message">Finished with this product? <a href="/products">Continue Shopping</a></p>'), $(elToUpdate).closest('.product-table--mini'))
 
   view = new CartView
     counter: $("header a.cart")
