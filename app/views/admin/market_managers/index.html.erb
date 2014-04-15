@@ -4,7 +4,7 @@
   <div class="column column--three-fourths">
     <div class="l-page-header">
       <%= form_for admin_market_managers_path(@market), html: { class: "form-actions" } do |f|%>
-        <%= f.email_field :email, placeholder: "Email address" %>
+        <%= email_field_tag :email, nil, placeholder: "Email address" %>
         <button type="submit" class="btn--add btn--small">Add Market Manager</button>
       <% end %>
         
