@@ -28,7 +28,7 @@
     <%= f.text_field :tagline, class: "column--full" %>
   </div>
   <div class="field">
-    <%= f.label :time_zone %><br>
+    <%= f.label :timezone, "Time zone" %><br>
     <%= f.time_zone_select :timezone, ActiveSupport::TimeZone.us_zones, default: "Pacific Time (US & Canada)" %>
   </div>
   <div class="field">
