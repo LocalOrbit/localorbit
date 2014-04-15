@@ -1,47 +1,60 @@
 <div class="market-info row vcard">
-  <aside class="column column--third">
-    <h2>Contact</h2>
-    <p>
-      <span class="fn"><%= @market.contact_name %></span><br>
-      <span class="email"><%= @market.contact_email %></span><br>
+  <aside class="column column--fourth column-guttered">
+    <div class="header header--column">
+      <h2 class="heading heading--sidebar">Contact</h2>
+    </div>
+    <div class="sidebar-box">
+    <p class="vcard">
+      <% if @market.contact_name.present? %><span class="fn"><%= @market.contact_name %></span><br><% end %>
+      <% if @market.contact_email.present? %><span class="email"><%= @market.contact_email %></span><br><% end %>
       <% if @market.first_address %>
       <span class="adr">
         <span class="street-address"><%= @market.first_address.address %></span><br>
         <span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%=@market.first_address.state %></span> <span class="postal-code"><%= @market.first_address.zip %></span>
-      </span><br>
-      <span class="tel"><%= @market.contact_phone %></span>
+      </span>
       <% end %>
+      <% if @market.contact_phone.present? %><br><span class="tel"><%= @market.contact_phone %></span><% end %>
     </p>
+    </div>
 
-    <h2>Pickup/Delivery</h2>
+    <div class="header header--column">
+      <h2 class="heading heading--sidebar">Pickup/Delivery</h2>
+    </div>
+    <div class="sidebar-box">
     <% @market.delivery_schedules.visible.order(:day).decorate.each do |delivery| %>
-      <div>
-        <%= "#{delivery.plural_weekday}, #{delivery.pickup_or_dropoff} #{delivery.time_window}" %>
-      </div>
+      <p>
+        <span class="display-date"><%= delivery.plural_weekday %></span><br>
+        <span class="time-range"><%= delivery.pickup_or_dropoff %><br><%= delivery.time_window %></span>
+      </p>
     <% end %>
+    </div>
   </aside
-  ><div class="column column--two-thirds">
+  ><div class="column column--three-fourths column--guttered">
     <h1 class="org"><%= @market.name %></h1>
 
+    <hr>
+
     <div class="row">
-      <div class="about">
+      <div class="about column column--seven-twelfths column--guttered">
         <h2>About</h2>
-        <%= @market.profile %>
-      </div>
-      <div class="policies">
+        <%= simple_format @market.profile %>
+      </div
+      ><div class="policies column column--five-twelfths column--guttered">
         <h2>Policies</h2>
-        <%= @market.policies %>
+        <%= simple_format @market.policies %>
       </div>
     </div>
 
+    <hr>
+
     <div class="row">
-      <div class="where">
+      <div class="where column column--seven-twelfths column--guttered">
         <h2>Where</h2>
         <img class="location-map" alt="" src="<%= @market.seller_locations_map %>" />
-      </div>
-      <div class="market-sellers">
+      </div
+      ><div class="market-sellers column column--five-twelfths column--guttered">
         <h2>Sellers</h2>
-        <ul>
+        <ul class="list-naked">
         <% @market.organizations.selling.each do |seller| %>
           <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>
         <% end %>
