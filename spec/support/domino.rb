@@ -200,6 +200,15 @@ module Dom
           node.click_link("Enter Receipt")
         end
       end
+
+      class PaymentRow < Domino
+        selector ".payment-row"
+
+        attribute :date
+        attribute :order_number
+        attribute :payment_method
+        attribute :amount
+      end
     end
 
     class DeliverySchedule < Domino

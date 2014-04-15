@@ -43,7 +43,7 @@ end
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe024;"></i> Current Sales'), coming_soon_dashboard_path %></li>
         </ul>
       </li>
-      <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), coming_soon_dashboard_path %></li>
+      <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), admin_financials_path %></li>
     <% elsif current_user.buyer_only? %>
       <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), coming_soon_dashboard_path %></li>
     <% end %>

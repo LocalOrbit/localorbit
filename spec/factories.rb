@@ -133,6 +133,12 @@ FactoryGirl.define do
     end
   end
 
+  factory :payment do
+    payee        { Market.first }
+    payment_type "Purchase Order"
+    amount       199.99
+  end
+
   factory :product do
     sequence(:name) {|n| "Product #{n}" }
     category { Category.find_by(name: "Empire Apples") }
