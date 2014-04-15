@@ -13,4 +13,15 @@ class UserMailer < ActionMailer::Base
       subject: "You have been added to an organization"
     )
   end
+
+  def market_invitation(user, inviter, market)
+    @user = user
+    @inviter = inviter
+    @market = market
+
+    mail(
+      to: @user.email,
+      subject: "You have been added to a market"
+    )
+  end
 end
