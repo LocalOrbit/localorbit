@@ -1,6 +1,4 @@
-class MarketMailer < ActionMailer::Base
-  layout "email"
-  default from: "service@localorb.it"
+class MarketMailer < BaseMailer
 
   def fresh_sheet(market, recipients=nil, preview=false)
     @preview        = preview
