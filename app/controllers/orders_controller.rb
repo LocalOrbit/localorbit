@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :require_cart
   before_action :hide_admin_navigation
 
   def create
