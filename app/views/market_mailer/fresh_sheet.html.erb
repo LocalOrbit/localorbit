@@ -5,7 +5,7 @@
   Hi! Welcome to this week's new Fresh Sheet.
 </p>
 
-<% @categories.select{|c| @product_groups[c.id].present?}.each do |category| %>
+<% @categories.each do |category| %>
   <% if @previous_top_level_category != category.top_level_category %>
     <% @previous_top_level_category = category.top_level_category %>
     <h2 class="pull-left"><%= category.top_level_category.name %></h2>
