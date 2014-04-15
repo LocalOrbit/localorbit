@@ -48,7 +48,7 @@ describe "Removing items" do
   let!(:cart_kale) { create(:cart_item, cart: cart, product: kale, quantity: 20) }
 
   def bananas_item
-    Dom::Cart::Item.find_by_name("Bananas")
+    Dom::Cart::Item.find_by_name(/\ABananas/)
   end
 
   def cart_link
@@ -56,7 +56,7 @@ describe "Removing items" do
   end
 
   def kale_item
-    Dom::Cart::Item.find_by_name("Kale")
+    Dom::Cart::Item.find_by_name(/\AKale/)
   end
 
   before do

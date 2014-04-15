@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def help_path
+    "https://localorbit.zendesk.com/home"
+  end
+
   # Used in navigation to get to the users organization(s)
   def path_to_my_organization
     organizations = current_user.managed_organizations

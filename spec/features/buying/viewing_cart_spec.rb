@@ -56,7 +56,7 @@ describe "Viewing the cart", js: true do
   end
 
   def bananas_item
-    Dom::Cart::Item.find_by_name("Bananas")
+    Dom::Cart::Item.find_by_name(/\ABananas/)
   end
 
   def cart_link
@@ -68,11 +68,11 @@ describe "Viewing the cart", js: true do
   end
 
   def kale_item
-    Dom::Cart::Item.find_by_name("Kale")
+    Dom::Cart::Item.find_by_name(/\AKale/)
   end
 
   def potatoes_item
-    Dom::Cart::Item.find_by_name("Potatoes")
+    Dom::Cart::Item.find_by_name(/\APotatoes/)
   end
 
   before do
