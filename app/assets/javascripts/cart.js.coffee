@@ -1,6 +1,8 @@
 $ ->
   return unless $(".cart_item").length
   selector = $('.cart_item')
+  
+  window.CartNotificationDuration = 2000
 
   class CartItem
     constructor: (opts)->
@@ -12,6 +14,15 @@ $ ->
         el: $(el)
 
     update: (data)->
+      if (this.data.quantity == 0) && (data.quantity > 0)
+        CartLink.showMessage("Added to cart!")
+
+      if (this.data.quantity > 0) && (data.quantity == 0)
+        CartLink.showMessage("Removed from cart!")
+
+      if (this.data.quantity > 0) && (data.quantity > 0)
+        CartLink.showMessage("Quantity updated!")
+
       @data = data
       @updateView()
       @showUpdate()
@@ -45,11 +56,11 @@ $ ->
       @el.find(".quantity").addClass("updated")
       window.setTimeout =>
         @el.find(".quantity").addClass("finished")
-      , 500
+      , window.CartNotificationDuration
 
       window.setTimeout =>
         @el.find(".quantity").removeClass("updated").removeClass("finished")
-      , 700
+      , (window.CartNotificationDuration + 200)
 
 
   class CartView
@@ -79,8 +90,11 @@ $ ->
         $(info).insertAfter(el)
 
     showErrorMessage: (error, el)->
-      notice = $("<tr>").append($("<td>").addClass('flash--warning').attr('colspan', '6').text(error))
+      notice = $("<tr>").addClass("warning").append($("<td>").addClass('flash--warning').attr('colspan', '6').text(error))
       $(notice).insertAfter(el)
+
+    removeErrorMessage: (el)->
+      el.siblings(".warning").remove()
 
 
   class CartModel
@@ -124,7 +138,6 @@ $ ->
         item.data.id?
 
       filteredItems.length
-
 
     updateTotals: (data) ->
       @view.updateCounter(@itemCount())

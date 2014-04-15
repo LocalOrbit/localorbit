@@ -92,7 +92,7 @@ feature "Viewing products" do
     # See updated
     celery_item.set_quantity(5)
     celery_item.price.click
-    expect(celery_item).to have_css(".updated.finished")
+    expect(Dom::CartLink.first).to have_content("Added to cart!")
 
     # Ensure the totals update when the products update
     expect(celery_item.price_for_quantity).to have_content("$1.50")
