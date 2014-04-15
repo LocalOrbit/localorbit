@@ -17,7 +17,7 @@ class Admin::BankAccountsController < AdminController
     end
 
     if results.success?
-      redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully added a bank account"
+      redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully added a payment method"
     else
       @bank_account = results.bank_account
       render :new

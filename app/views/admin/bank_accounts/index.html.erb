@@ -7,7 +7,7 @@
       <%= link_to "Add Payment Method", [:new, :admin, @entity, :bank_account], class: "btn btn--add btn--small pull-right" %>
     </div>
     <% if @bank_accounts.empty? %>
-      <p>No Bank Accounts</p>
+      <p>No Payment Methods</p>
     <% else %>
       <table class="sortable" id="bank-accounts">
         <thead>
