@@ -78,7 +78,7 @@ module Admin
     end
 
     def find_delivery_schedules(product=nil)
-      @delivery_schedules = if product
+      @delivery_schedules = if product.try(:organization)
         product.organization.decorate.delivery_schedules
       elsif current_user.organizations.count == 1
         current_user.organizations.first.decorate.delivery_schedules
