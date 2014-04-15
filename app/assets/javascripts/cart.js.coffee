@@ -1,6 +1,8 @@
 $ ->
   return unless $(".cart_item").length
   selector = $('.cart_item')
+  
+  window.CartNotificationDuration = 2000
 
   class CartItem
     constructor: (opts)->
@@ -54,11 +56,11 @@ $ ->
       @el.find(".quantity").addClass("updated")
       window.setTimeout =>
         @el.find(".quantity").addClass("finished")
-      , 500
+      , window.CartNotificationDuration
 
       window.setTimeout =>
         @el.find(".quantity").removeClass("updated").removeClass("finished")
-      , 700
+      , (window.CartNotificationDuration + 200)
 
 
   class CartView

@@ -11,7 +11,7 @@ $ ->
     constructor: ->
       @timer = null
       @el = $("a.cart")
-      @messageContainer = $("<div>").addClass('is-hidden').addClass('message').text("Quantity updated!")
+      @messageContainer = $("<div>").addClass('is-hidden').addClass('message')
       @el.append(@messageContainer)
 
     showMessage: (message)->
@@ -21,7 +21,7 @@ $ ->
       @messageContainer.text(message)
       @messageContainer.removeClass('is-hidden')
 
-      @timer = setTimeout(@hideMessage, 5000)
+      @timer = setTimeout(@hideMessage, window.CartNotificationDuration)
 
     hideMessage: =>
       console.log @messageContainer
