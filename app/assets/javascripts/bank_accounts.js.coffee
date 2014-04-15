@@ -19,7 +19,9 @@ updateInputs = (object, $form) ->
       "brand" : "bank_account[bank_name]",
       "last_four" : "bank_account[last_four]",
       "uri" : "bank_account[balanced_uri]",
-      "card_type" : "bank_account[account_type]"
+      "card_type" : "bank_account[account_type]",
+      "expiration_month" : "bank_account[expiration_month]",
+      "expiration_year" : "bank_account[expiration_year]",
     },
     "bank_account" : {
       "bank_name" : "bank_account[bank_name]",

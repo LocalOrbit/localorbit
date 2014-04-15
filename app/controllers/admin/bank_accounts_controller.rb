@@ -31,7 +31,9 @@ class Admin::BankAccountsController < AdminController
       :bank_name,
       :last_four,
       :balanced_uri,
-      :account_type
+      :account_type,
+      :expiration_month,
+      :expiration_year
     )
   end
 

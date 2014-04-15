@@ -35,6 +35,7 @@ feature "Adding a credit card to an organization", js: true do
       expect(bank_account.bank_name).to eq("MasterCard")
       expect(bank_account.account_number).to eq("**** **** **** 5100")
       expect(bank_account.account_type).to eq("Credit Card")
+      expect(bank_account.verified).to eq("Expires 05/2014")
     end
 
     scenario "failing to enter a valid card number" do
@@ -81,6 +82,7 @@ feature "Adding a credit card to an organization", js: true do
       expect(bank_account.bank_name).to eq("MasterCard")
       expect(bank_account.account_number).to eq("**** **** **** 5100")
       expect(bank_account.account_type).to eq("Credit Card")
+      expect(bank_account.verified).to eq("Expires 05/2014")
     end
   end
 
