@@ -5,7 +5,7 @@ $ ->
 
   stick_tabs = ->
     $tab_header = $(".tab-header")
-    absolute_top = $tab_header.offset().top - app_header - 20
+    absolute_top = $tab_header.offset().top - app_header - 10
 
     $tab_header.next().css("margin-top", $tab_header.height() + 50);
     $tab_header.addClass("js-positioned").css('top', absolute_top)
