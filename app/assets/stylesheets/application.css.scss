@@ -32,7 +32,7 @@ body {
 }
 
 a {
-  color: #1769C2;
+  color: #3F5D98;
   text-decoration: none;
 
   &:hover {
@@ -46,7 +46,9 @@ a {
 
 address {
   padding: .5em 1em;
-  border: solid 1px #ccc;
+  border-radius: 5px;
+  background: #f9f9f9;
+  font-weight: 600;
   margin: 1em 0 2em;
   font-style: normal;
 }

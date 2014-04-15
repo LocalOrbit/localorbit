@@ -4,7 +4,7 @@
 
     <%= render "products/selected_delivery" %>
 
-    <h2 class="heading heading--sidebar heading--underline">Sellers</h2>
+    <h2 class="heading heading--sidebar">Sellers</h2>
     <ul class="list-naked">
       <% @sellers.each do |seller| %>
         <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>

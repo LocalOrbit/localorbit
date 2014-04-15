@@ -494,11 +494,12 @@
 /** Headings */
 
 .heading-cart {
-  font-weight: bold;
+  text-align: left;
 }
-  .subheading-cart {
-    font: lighter 21px 'OpenSans-Light', OpenSans, "Open Sans", sans-serif;
-  }
+
+.subheading-cart {
+  font: lighter 24px 'OpenSans-CondensedLight', OpenSans, "Open Sans", sans-serif;
+}
 
 .heading-conditionals {
   color: #333;
@@ -551,13 +552,6 @@
     font-weight: bold;
     text-transform: uppercase;
   }
-}
-
-.heading--underline {
-  width: 100%;
-  margin-bottom: 0;
-  padding-bottom: 5px;
-  border-bottom: 3px solid #4162A1;
 }
 
 .subheading--sidebar {

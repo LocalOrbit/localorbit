@@ -38,7 +38,7 @@ caption {
 td,
 th {
   padding: 4px 0 4px 10px;
-  font-size: 12px;
+  font-size: 13px;
   &:last-child {
     padding-right: 5px;
   }
@@ -324,7 +324,7 @@ th {
 
     th {
       color: #9f7b51;
-      font-size: 12px;
+      font-size: 14px;
 
       &:first-child {
         font-size: 16px;
@@ -439,5 +439,12 @@ th {
 }
 .cart_total {
   height: auto;
+
+  th {
+    width: 155px;
+  }
+  .subtotal, .delivery_fees, .total {
+    width: 60px;
+  }
 }
 
