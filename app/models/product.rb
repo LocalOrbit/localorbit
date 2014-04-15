@@ -20,7 +20,8 @@ class Product < ActiveRecord::Base
   validates :unit, presence: true
   validates :category_id, presence: true
   validates :organization_id, presence: true
-  validates :short_description, presence: true
+  validates :short_description, presence: true, length: {maximum: 50}
+  validates :long_description, length: {maximum: 500}
 
   validates :location, presence: true, if: :overrides_organization?
 
