@@ -140,7 +140,7 @@ describe "Managing Markets" do
       fill_in 'Profile',       with: 'Some interesting info about Holland Farmers'
       fill_in 'Policies',      with: 'Something no one will pay attention to'
       attach_file 'Logo', 'app/assets/images/logo.png'
-      attach_file 'Photo', 'app/assets/images/backgrounds/kale.jpg'
+      attach_file 'Photo', 'app/assets/images/backgrounds/lentils.jpg'
 
       click_button 'Add Market'
 
