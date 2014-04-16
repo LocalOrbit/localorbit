@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: git://github.com/laserlemon/figaro.git
-  revision: 818045c96c053b3f1c8f16f50655d0afe040c783
+  revision: 311883ef7d7ecdfe695ce1198e7e3b8293887e21
   specs:
     figaro (1.0.0.rc1)
       rails (>= 3, < 5)
@@ -257,7 +257,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
     raindrops (0.13.0)
-    rake (10.2.2)
+    rake (10.3.0)
     rdoc (4.1.1)
       json (~> 1.4)
     request_store (1.0.5)
@@ -307,7 +307,7 @@ GEM
     simpleidn (0.0.5)
     slop (3.5.0)
     spring (1.1.2)
-    spring-commands-rspec (1.0.1)
+    spring-commands-rspec (1.0.2)
       spring (>= 0.9.1)
     sprockets (2.11.0)
       hike (~> 1.2)
