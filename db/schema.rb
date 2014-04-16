@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140415192310) do
+ActiveRecord::Schema.define(version: 20140416160155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,37 @@ ActiveRecord::Schema.define(version: 20140415192310) do
   end
 
   add_index "delivery_schedules", ["market_id"], name: "index_delivery_schedules_on_market_id", using: :btree
+
+  create_table "geocodes", force: true do |t|
+    t.decimal "latitude",    precision: 15, scale: 12
+    t.decimal "longitude",   precision: 15, scale: 12
+    t.string  "query"
+    t.string  "street"
+    t.string  "locality"
+    t.string  "region"
+    t.string  "postal_code"
+    t.string  "country"
+    t.string  "precision"
+  end
+
+  add_index "geocodes", ["country"], name: "geocodes_country_index", using: :btree
+  add_index "geocodes", ["latitude"], name: "geocodes_latitude_index", using: :btree
+  add_index "geocodes", ["locality"], name: "geocodes_locality_index", using: :btree
+  add_index "geocodes", ["longitude"], name: "geocodes_longitude_index", using: :btree
+  add_index "geocodes", ["postal_code"], name: "geocodes_postal_code_index", using: :btree
+  add_index "geocodes", ["precision"], name: "geocodes_precision_index", using: :btree
+  add_index "geocodes", ["query"], name: "geocodes_query_index", unique: true, using: :btree
+  add_index "geocodes", ["region"], name: "geocodes_region_index", using: :btree
+
+  create_table "geocodings", force: true do |t|
+    t.integer "geocodable_id"
+    t.integer "geocode_id"
+    t.string  "geocodable_type"
+  end
+
+  add_index "geocodings", ["geocodable_id"], name: "geocodings_geocodable_id_index", using: :btree
+  add_index "geocodings", ["geocodable_type"], name: "geocodings_geocodable_type_index", using: :btree
+  add_index "geocodings", ["geocode_id"], name: "geocodings_geocode_id_index", using: :btree
 
   create_table "locations", force: true do |t|
     t.string   "name",                             null: false
