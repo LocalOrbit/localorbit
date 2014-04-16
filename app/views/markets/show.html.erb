@@ -3,7 +3,9 @@
     <h1 class="photo-header-txt">
       <span class="vertical-centerer">
         <span class="fn org"><%= @market.name %></span>
-        <span class="adr"><span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%=@market.first_address.state %></span></span>
+        <% if @market.first_address.present? %>
+          <span class="adr"><span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%=@market.first_address.state %></span></span>
+        <% end %>
         
       </span>
     </h1>
