@@ -91,7 +91,7 @@ describe "Removing items" do
 
     it "by clicking an items delete link" do
       kale_item.remove_link.trigger("click")
-      sleep(0.5)
+      expect(Dom::CartLink.first).to have_content("Removed from cart!")
 
       expect(cart_link.count).to have_content("2")
       expect(kale_item).to be_nil

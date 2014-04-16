@@ -273,7 +273,7 @@ describe "Checking Out" do
       item.remove!
     end
 
-    sleep(3)
+    expect(Dom::CartLink.first).to have_content("Removed from cart!")
 
     click_button "Place Order"
     expect(page).to have_content("Your cart is empty. Please add items to your cart before checking out.")
