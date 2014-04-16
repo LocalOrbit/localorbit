@@ -40,7 +40,6 @@ feature "View Seller Profiles" do
       switch_to_subdomain(market.subdomain)
 
       click_link "Sellers"
-      save_and_open_page
       expect(page).to have_content("#{market.name} has no sellers at this time.")
     end
 
