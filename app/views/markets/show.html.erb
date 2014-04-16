@@ -1,6 +1,5 @@
 <div class="row">
-  <div class="photo-header">
-    <%= image_tag Dragonfly.app.remote_url_for(@market.photo_uid), class: "photo-header-bg" if @market.photo.present? %>
+  <div class="photo-header" <%= "style=\"background-image: url(#{Dragonfly.app.remote_url_for(@market.photo_uid)});\"".html_safe if @market.photo.present? %>>
     <h1 class="photo-header-txt"><span><%= @market.name %></span></h1>
   </div>
 </div>

@@ -3,8 +3,11 @@
   height: 0;
   padding: 0 0 40%;
   margin: 0 0 30px;
-  background: #000;
+  background-color: #000;
+  background-position: center;
+  background-size: cover;
   overflow: hidden;
+
   > .photo-header-txt {
     position: absolute;
     left: 0;
@@ -30,15 +33,6 @@
 
   }
 }
-  .photo-header-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    min-height: 100%;
-    max-width: none;
-    opacity: 0.6;
-  }
 
 .market-sidebar {
   color: #777;
