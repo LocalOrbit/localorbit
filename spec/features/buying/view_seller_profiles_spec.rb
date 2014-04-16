@@ -30,6 +30,22 @@ feature "View Seller Profiles" do
     end
   end
 
+  context "when no sellers are in the market" do
+    before do
+      market.organizations = [buyer]
+      market.save!
+    end
+
+    scenario "no sellers in market" do
+      switch_to_subdomain(market.subdomain)
+
+      click_link "Sellers"
+      save_and_open_page
+      expect(page).to have_content("#{market.name} has no sellers at this time.")
+    end
+
+  end
+
   scenario "view list of sellers" do
     click_link "Sellers"
 

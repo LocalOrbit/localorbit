@@ -4,15 +4,22 @@
 
     <%= render "products/selected_delivery" %>
 
+    <% unless @sellers.empty? %>
     <h2 class="heading heading--sidebar">Sellers</h2>
     <ul class="list-naked">
       <% @sellers.each do |seller| %>
         <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>
       <% end %>
     </ul>
+    <% end %>
 
   </aside
   ><div class="column column--three-fourths column--guttered vcard">
+    <% if @sellers.empty? %>
+      <div class="blank-state">
+        <h2><%= "#{current_market.name} has no sellers at this time." %></h2>
+      </div>
+    <% else %>
     <div class="row">
       <div class="column column--half column--guttered">
         <h1 class="fn story-header"><%= @current_seller.name %></h1>
@@ -50,6 +57,7 @@
       <% if @product_groups[category.id].present? %>
         <%= render "products/table", products: @product_groups[category.id], category: category %>
       <% end %>
+    <% end %>
     <% end %>
   </div>
 </div>
