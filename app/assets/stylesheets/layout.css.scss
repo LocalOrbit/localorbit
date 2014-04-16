@@ -121,6 +121,10 @@
     background: asset_url('center-rule.png') center top repeat-y;
     background: asset_url('center-rule@2x.png') center top / 1px auto repeat-y;
   }
+  &.three-fourths-rule {
+    background: asset_url('center-rule.png') 75% top repeat-y;
+    background: asset_url('center-rule@2x.png') 75% top / 1px auto repeat-y;
+  }
 }
 .row--partial {
   text-align: center;
@@ -152,6 +156,9 @@
   }
   .column--third {
     width: 33%;
+  }
+  .column--five-twelfths {
+    width: 41.6666%;
   }
   .column--half {
     width: 50%;

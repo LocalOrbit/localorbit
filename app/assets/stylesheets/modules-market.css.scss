@@ -1,0 +1,62 @@
+.photo-header {
+  position: relative;
+  height: 0;
+  padding: 0 0 40%;
+  margin: 0 0 30px;
+  background-color: #000;
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+
+  > .photo-header-txt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    text-align: center;
+
+    &:after {
+      position: relative;
+      display: inline-block;
+      width: 0;
+      height: 100%;
+      content: ' ';
+      vertical-align: middle;
+    }
+
+    span {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+  }
+}
+
+.seller-map-toggle {
+  color: #425fa3;
+  font-size: 12px;
+}
+.market-sidebar {
+  color: #777;
+  font-size: 12px;
+  .story-header {
+    margin-top: 1em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  .story-header,
+  .vcard {
+    padding-left: 10px;
+  }
+}
+
+.seller-list {
+  font-size: 12px;
+  > li {
+    vertical-align: top;
+  }
+}

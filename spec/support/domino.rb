@@ -80,7 +80,7 @@ module Dom
   end
 
   class MarketSellers < Domino
-    selector ".market-sellers li"
+    selector ".seller-list li"
 
     def name
       node.find("a").text

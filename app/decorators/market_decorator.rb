@@ -7,13 +7,13 @@ class MarketDecorator < Draper::Decorator
     addresses.first
   end
 
-  def seller_locations_map
+  def seller_locations_map(w=400, h=400)
     addresses = organizations.selling.map do |seller|
       location = seller.shipping_location
       URI.escape "#{location.address}, #{location.city} #{location.state}" if location
     end.compact
 
-    "http://maps.google.com/maps/api/staticmap?size=400x400&markers=#{addresses.join('|')}&sensor=false&maptype=terrain&key=#{Figaro.env.google_maps_key}"
+    "http://maps.google.com/maps/api/staticmap?size=#{w}x#{h}&markers=#{addresses.join('|')}&sensor=false&maptype=terrain&key=#{Figaro.env.google_maps_key}"
   end
 
   def street_address
