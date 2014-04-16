@@ -1,6 +1,12 @@
 <div class="row">
   <div class="photo-header" <%= "style=\"background-image: url(#{Dragonfly.app.remote_url_for(@market.photo_uid)});\"".html_safe if @market.photo.present? %>>
-    <h1 class="photo-header-txt"><span><%= @market.name %></span></h1>
+    <h1 class="photo-header-txt">
+      <span class="vertical-centerer">
+        <span class="fn org"><%= @market.name %></span>
+        <span class="adr"><span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%=@market.first_address.state %></span></span>
+        
+      </span>
+    </h1>
   </div>
 </div>
 <div class="row three-fourths-rule">
@@ -27,7 +33,7 @@
           <%= image_tag Dragonfly.app.remote_url_for(@market.photo_uid) %>
         </div>
       <% else %>
-        <h2 class="story-header">About</h2>
+        <h2 class="story-header">About Us</h2>
         <%= simple_format @market.profile %>
       <% end %>
       </div>
@@ -49,7 +55,7 @@
     </ul>
   </div
   ><aside class="column column--fourth column-guttered market-sidebar">
-    <h2 class="story-header">Contact</h2>
+    <h2 class="story-header">Contact Us</h2>
     <div class="vcard">
       <% if @market.contact_name.present? %><strong class="fn"><%= @market.contact_name %></strong><br><% end %>
       <% if @market.contact_email.present? %><%= link_to @market.contact_email, @market.contact_email, class: "email" %><br><% end %>
@@ -62,7 +68,7 @@
       <% if @market.contact_phone.present? %><span class="tel"><%= @market.contact_phone %></span><% end %>
     </div>
 
-    <h2 class="story-header">Pickup/Delivery</h2>
+    <h2 class="story-header">Pickups &amp; Deliveries</h2>
     <ul class="list-naked list-zebra deliveries-list">
     <% @market.delivery_schedules.visible.order(:day).decorate.each do |delivery| %>
       <li>
