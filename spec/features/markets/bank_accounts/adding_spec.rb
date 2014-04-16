@@ -18,6 +18,8 @@ feature "Adding bank account to a market", js: true do
 
     visit new_admin_market_bank_account_path(market)
 
+    select "Checking", from: "balanced_account_type"
+
     fill_in "EIN", with: "20-1234567"
     fill_in "Full Legal Name", with: "John Patrick Doe"
     select "Sep", from: "representative_dob_month"
@@ -50,6 +52,8 @@ feature "Adding bank account to a market", js: true do
     sign_in_as(market_manager)
 
     visit new_admin_market_bank_account_path(market)
+
+    select "Checking", from: "balanced_account_type"
 
     fill_in "EIN", with: "20-1234567"
     fill_in "Full Legal Name", with: "John Patrick Doe"
