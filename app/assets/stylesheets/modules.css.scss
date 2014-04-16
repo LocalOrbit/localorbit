@@ -891,8 +891,10 @@
   line-height: 30px;
 }
 .slide {
+  position: relative;
   overflow: hidden;
   &.is-up > .slide-content {
+    max-height: 0;
     -webkit-transform-origin: 0,0;
        -moz-transform-origin: 0,0;
             transform-origin: 0,0;
@@ -901,10 +903,11 @@
 }
   .slide-content {
     position: relative;
+    max-height: 100%;
     @include transform(translateY(0));
-    -webkit-transition:-webkit-transform .4s linear;
-       -moz-transition:   -moz-transform .4s linear;
-            transition:        transform .4s linear;
+    -webkit-transition:-webkit-transform .4s linear, max-height .4s linear;
+       -moz-transition:   -moz-transform .4s linear, max-height .4s linear;
+            transition:        transform .4s linear, max-height .4s linear;
   }
 
 .delivery {

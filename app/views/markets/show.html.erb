@@ -34,8 +34,14 @@
     </div>
 
 
-    <h2 class="story-header">Sellers</h2>
-    <img class="location-map" alt="" src="<%= @market.seller_locations_map 680, 400 %>">
+    <div class="header--column">
+      <h2 class="heading story-header">Sellers</h2>
+      <a href="#seller-map" class="toggle-slide seller-map-toggle">Hide Map</a>
+    </div>
+    <div class="slide" id="seller-map">
+      <img class="location-map slide-content" alt="" src="<%= @market.seller_locations_map 680, 400 %>">
+    </div>
+
     <ul class="l-inline-list seller-list">
     <% @market.organizations.selling.each do |seller| %>
       <%= content_tag :li, link_to(seller.name, seller_path(seller)), class: "column--fourth" %>
