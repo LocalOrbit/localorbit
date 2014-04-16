@@ -49,13 +49,12 @@ feature "Adding a credit card to an organization", js: true do
     end
 
     scenario "failing to enter a valid card number" do
-      select "Credit Card", from: "balanced_account_type"
       click_button "Save"
 
       expect(page).not_to have_content("Successfully added a credit card")
-      expect(page).to have_css('.field_with_errors')
-      expect(page).to have_content("is not a valid credit card number")
+      expect(page).to have_content("Account type: Please select an account type.")
 
+      select "Credit Card", from: "balanced_account_type"
       fill_in "Card Number", with: "5105105105105"
       fill_in "Security Code", with: "123"
       select "5", from: "expiration_month"
