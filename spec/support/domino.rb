@@ -606,6 +606,7 @@ module Dom
     attribute :bank_name
     attribute :account_number
     attribute :account_type
+    attribute :expiration
     attribute :verified
 
     def verfied?

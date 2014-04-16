@@ -25,6 +25,16 @@ feature "Adding credit card to a market", js: true do
     select "5", from: "expiration_month"
     select "2014", from: "expiration_year"
 
+    fill_in "Organization EIN", with: "20-1234567"
+    fill_in "Full Legal Name", with: "John Patrick Doe"
+    select "Sep", from: "representative_dob_month"
+    select "17", from: "representative_dob_day"
+    select "1990", from: "representative_dob_year"
+
+    fill_in "Last 4 of SSN", with: "1234"
+    fill_in "Street Address (Personal)", with: "6789 Fake Dr"
+    fill_in "Zip Code (Personal)", with: "49423"
+
     click_button "Save"
 
     expect(page).to have_content("Successfully added a payment method")
@@ -33,7 +43,7 @@ feature "Adding credit card to a market", js: true do
     expect(bank_account.bank_name).to eq("MasterCard")
     expect(bank_account.account_number).to eq("**** **** **** 5100")
     expect(bank_account.account_type).to eq("Credit Card")
-    expect(bank_account.verified).to eq("Expires 05/2014")
+    expect(bank_account.expiration).to eq("Expires 05/2014")
   end
 
   scenario "as a market manager" do
@@ -49,6 +59,16 @@ feature "Adding credit card to a market", js: true do
     select "5", from: "expiration_month"
     select "2014", from: "expiration_year"
 
+    fill_in "Organization EIN", with: "20-1234567"
+    fill_in "Full Legal Name", with: "John Patrick Doe"
+    select "Sep", from: "representative_dob_month"
+    select "17", from: "representative_dob_day"
+    select "1990", from: "representative_dob_year"
+
+    fill_in "Last 4 of SSN", with: "1234"
+    fill_in "Street Address (Personal)", with: "6789 Fake Dr"
+    fill_in "Zip Code (Personal)", with: "49423"
+
     click_button "Save"
 
     expect(page).to have_content("Successfully added a payment method")
@@ -57,7 +77,7 @@ feature "Adding credit card to a market", js: true do
     expect(bank_account.bank_name).to eq("MasterCard")
     expect(bank_account.account_number).to eq("**** **** **** 5100")
     expect(bank_account.account_type).to eq("Credit Card")
-    expect(bank_account.verified).to eq("Expires 05/2014")
+    expect(bank_account.expiration).to eq("Expires 05/2014")
   end
 
   scenario "as a organization member" do

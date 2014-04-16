@@ -45,13 +45,11 @@ $ ->
       $("#balanced-payments-uri").data("balanced-object-type", "card")
       $("#bank-account-fields").addClass('is-hidden').prop('disabled', true)
       $("#credit-card-fields").removeClass('is-hidden').prop('disabled', false)
-      $("#new_bank_account").addClass('is-hidden')
       $("#account_type").val(val)
     else
       $("#balanced-payments-uri").data("balanced-object-type", "bankAccount")
       $("#bank-account-fields").removeClass('is-hidden').prop('disabled', false)
       $("#credit-card-fields").addClass('is-hidden').prop('disabled', true)
-      $("#new_bank_account").removeClass('is-hidden')
       $("#account_type").val(val)
 
 
