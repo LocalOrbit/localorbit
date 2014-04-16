@@ -15,7 +15,7 @@ $ ->
     e.preventDefault()
     $container = $(this).closest('.tab-box')
     $(this).removeClass('inactive').addClass('active')
-    $container.find('a').not(this).removeClass('active').addClass('inactive')
+    $container.find('.tabs a').not(this).removeClass('active').addClass('inactive')
 
     $(e.target.hash).addClass('active')
     $container.find('.tabbed-item').not(e.target.hash).removeClass('active')
