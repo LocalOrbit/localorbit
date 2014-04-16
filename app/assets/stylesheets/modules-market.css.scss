@@ -45,6 +45,7 @@
   color: #425fa3;
   font-size: 12px;
 }
+
 .market-sidebar {
   color: #777;
   font-size: 12px;
@@ -62,8 +63,10 @@
 }
 
 .seller-list {
+  margin-top: 1em;
   font-size: 12px;
   > li {
+    margin: .5em 0;
     vertical-align: top;
   }
 }

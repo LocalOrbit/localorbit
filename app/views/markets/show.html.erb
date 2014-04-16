@@ -12,7 +12,7 @@
 <div class="row three-fourths-rule">
   <div class="column column--three-fourths column--guttered">
     <div class="tab-box">
-      <ul class="tabs tabs--small unguttered-right">
+      <ul class="tabs tabs--small unguttered">
         <li class="tab">
           <a href="#market-about" class="active">About</a>
         </li>
@@ -24,35 +24,36 @@
         <h2 class="story-header">Policies</h2>
         <%= simple_format @market.policies %>
       </div>
-      <div class="about row tabbed-item" id="market-about">
-       <% if @market.photo.present? %>
-        <div class="column column--guttered column--two-thirds">
-          <h2 class="story-header">About</h2>
+      <div class="about tabbed-item" id="market-about">
+        <div class="row">
+         <% if @market.photo.present? %>
+          <div class="column column--guttered column--two-thirds">
+            <h2 class="story-header">About</h2>
+            <%= simple_format @market.profile %>
+          </div><div class="column column--guttered column--third">
+            <%= image_tag Dragonfly.app.remote_url_for(@market.photo_uid) %>
+          </div>
+        <% else %>
+          <h2 class="story-header">About Us</h2>
           <%= simple_format @market.profile %>
-        </div><div class="column column--guttered column--third">
-          <%= image_tag Dragonfly.app.remote_url_for(@market.photo_uid) %>
+        <% end %>
         </div>
-      <% else %>
-        <h2 class="story-header">About Us</h2>
-        <%= simple_format @market.profile %>
-      <% end %>
+
+        <div class="header--column">
+          <h2 class="heading story-header">Sellers</h2>
+          <a href="#seller-map" class="toggle-slide seller-map-toggle" data-toggle-open="Hide Map" data-toggle-closed="Show Map">Hide Map</a>
+        </div>
+        <div class="slide" id="seller-map">
+          <img class="location-map slide-content" alt="" src="<%= @market.seller_locations_map 680, 400 %>" height="400">
+        </div>
+
+        <ul class="l-inline-list seller-list">
+        <% @market.organizations.selling.each do |seller| %>
+          <%= content_tag :li, link_to(seller.name, seller_path(seller)), class: "column--fourth" %>
+        <% end %>
+        </ul>
       </div>
     </div>
-
-
-    <div class="header--column">
-      <h2 class="heading story-header">Sellers</h2>
-      <a href="#seller-map" class="toggle-slide seller-map-toggle">Hide Map</a>
-    </div>
-    <div class="slide" id="seller-map">
-      <img class="location-map slide-content" alt="" src="<%= @market.seller_locations_map 680, 400 %>">
-    </div>
-
-    <ul class="l-inline-list seller-list">
-    <% @market.organizations.selling.each do |seller| %>
-      <%= content_tag :li, link_to(seller.name, seller_path(seller)), class: "column--fourth" %>
-    <% end %>
-    </ul>
   </div
   ><aside class="column column--fourth column-guttered market-sidebar">
     <h2 class="story-header">Contact Us</h2>
