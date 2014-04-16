@@ -720,9 +720,12 @@
     background: asset_url('horizontal-rule.png') left bottom repeat-x;
     background: asset_url('horizontal-rule@2x.png') left bottom / auto 1px repeat-x;
     text-align: left;
-    &.unguttered-right {
+
+    &.unguttered {
       width: 100%;
       padding-right: 10px;
+      padding-left: 20px;
+      margin-left: -20px;
     }
   }
   .tab {
@@ -737,7 +740,14 @@
     background: #f4f4f4;
   }
 }
-  .tabbed-item {
+.tabbed-item {
+  position: relative;
+
+  > .header--column {
+    margin-top: 25px;
+  }
+}
+.js-sized > .tabbed-item {
     position: absolute;
     top: 0;
     left: 0;

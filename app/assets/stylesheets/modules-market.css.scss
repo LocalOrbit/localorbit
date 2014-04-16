@@ -1,12 +1,17 @@
 .photo-header {
   position: relative;
   height: 0;
-  padding: 0 0 40%;
+  padding: 0 0 21.7%;
   margin: 0 0 30px;
   background-color: #000;
   background-position: center;
   background-size: cover;
   overflow: hidden;
+  
+  .adr {
+    display: block;
+    font-size: 18px;
+  }
 
   > .photo-header-txt {
     position: absolute;
@@ -15,6 +20,8 @@
     width: 100%;
     height: 100%;
     color: #fff;
+    background: rgba(0,0,0,0.7);
+    font-size: 48px;
     text-align: center;
 
     &:after {
@@ -26,7 +33,7 @@
       vertical-align: middle;
     }
 
-    span {
+    .vertical-centerer {
       display: inline-block;
       vertical-align: middle;
     }
@@ -38,6 +45,7 @@
   color: #425fa3;
   font-size: 12px;
 }
+
 .market-sidebar {
   color: #777;
   font-size: 12px;
@@ -55,8 +63,10 @@
 }
 
 .seller-list {
+  margin-top: 1em;
   font-size: 12px;
   > li {
+    margin: .5em 0;
     vertical-align: top;
   }
 }

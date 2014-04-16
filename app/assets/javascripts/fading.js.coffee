@@ -22,7 +22,13 @@ $ ->
 
       $('.toggle-slide').on 'click', (e) ->
         e.preventDefault()
+        $toggle = $(e.target)
         $(e.target.hash).toggleClass('is-up')
+        if $toggle.attr('data-toggle-open') && $toggle.attr('data-toggle-closed')
+          if $toggle.text() == $toggle.attr('data-toggle-open')
+            $toggle.text($toggle.attr('data-toggle-closed'))
+          else
+            $toggle.text($toggle.attr('data-toggle-open'))
 
     else
       $('.toggle-slide').on 'click', (e) ->
