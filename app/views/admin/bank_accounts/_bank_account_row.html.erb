@@ -2,6 +2,7 @@
   <td class="bank-name"><%= bank_account.bank_name %></td>
   <td class="account-number">******<%= bank_account.last_four %></td>
   <td class="account-type"><%= bank_account.account_type.titleize %></td>
+  <td class="expiration"></td>
   <td class="verified">
     <% if bank_account.verified? %>
       <i class="font-icon icon-checkmark"></i> Verified
