@@ -20,6 +20,8 @@ feature "Adding a bank account to an organization", js: true do
     end
 
     scenario "successfully adding a bank account" do
+      select "Checking", from: "balanced_account_type"
+
       fill_in "Organization EIN", with: "20-1234567"
       fill_in "Full Legal Name", with: "John Patrick Doe"
       select "Sep", from: "representative_dob_month"
@@ -50,8 +52,9 @@ feature "Adding a bank account to an organization", js: true do
     scenario "failing to enter a valid account" do
       click_button "Save"
       expect(page).not_to have_content("Successfully added a payment method")
-      expect(page).to have_css('.field_with_errors')
-      expect(page).to have_content("Name: Missing field")
+      expect(page).to have_content("Account type: Please select an account type.")
+
+      select "Checking", from: "balanced_account_type"
 
       fill_in "Name", with: "Org Bank Account"
       select("Checking", from: "Account Type")
@@ -74,6 +77,8 @@ feature "Adding a bank account to an organization", js: true do
     end
 
     scenario "successfully adding a bank account" do
+      select "Checking", from: "balanced_account_type"
+
       fill_in "Organization EIN", with: "20-1234567"
       fill_in "Full Legal Name", with: "John Patrick Doe"
       select "Sep", from: "representative_dob_month"
