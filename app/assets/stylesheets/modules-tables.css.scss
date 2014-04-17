@@ -394,10 +394,6 @@ th {
 }
 .cart {
 
-  &:first-child {
-    border-top: 0;
-  }
-
   th, td {
     vertical-align: baseline;
 
@@ -411,26 +407,31 @@ th {
   .quantity {
     padding-top: 2px;
   }
-  thead tr:first-child {
-    display: none;
-    th {
-      padding: 0 0 10px 0;
-      color: #aaa;
+  th {
+    padding: 0 0 10px 0;
+    color: #aaa;
 
-      &:first-child {
-        color: #000;
-      }
-    }
-
-  }
-  &:first-child {
-    thead tr:first-child {
-      display: table-row;
+    &:first-child {
+      color: #000;
     }
   }
-  tbody tr:hover,
-  tbody tr:nth-child(odd) {
-    background: #fff;
+  tr {
+    border: 0;
+
+    &:hover,
+    &:nth-child(odd) {
+      background: #fff;
+    }
+  }
+}
+.item-group {
+  border-bottom: solid 1px #ddd;
+
+  .seller {
+    padding-top: 10px;
+  }
+  .subheading-cart {
+    padding-bottom: 0;
   }
 }
 .cart_item,
