@@ -1,5 +1,6 @@
 language: ruby
 before_install:
+  - sudo apt-get install libxslt-dev libxml2-dev
   - gem install bundler
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
