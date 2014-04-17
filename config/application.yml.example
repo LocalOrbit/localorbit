@@ -9,3 +9,4 @@ UPLOADS_BUCKET: "localorbit-fake"
 UPLOADS_ACCESS_KEY_ID: 'fakety-fake'
 UPLOADS_SECRET_ACCESS_KEY: 'fakety-fake'
 UPLOADS_REGION: 'us-west-1'
+MAPBOX_API_KEY: 'localorbit.i0ao0akd'

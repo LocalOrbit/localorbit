@@ -1,14 +1,15 @@
 class OrganizationDecorator < Draper::Decorator
   include Draper::LazyHelpers
+  include MapHelper
 
   delegate_all
 
-  def locations_map
+  def locations_map(w=340, h=300)
     addresses = locations.visible.map do |location|
-      URI.escape "#{location.address}, #{location.city} #{location.state}" if location
+      location.geocode if location
     end.compact
 
-    "http://maps.google.com/maps/api/staticmap?size=340x300&markers=#{addresses.join('|')}&sensor=false&maptype=terrain&#{ locations.visible.count > 1 ? "" : "zoom=8&" }key=#{Figaro.env.google_maps_key}"
+    static_map(addresses, addresses.first, w, h)
   end
 
   def ship_from_address

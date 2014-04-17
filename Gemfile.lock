@@ -7,11 +7,28 @@ GIT
       mail (~> 2.2)
 
 GIT
+  remote: git://github.com/collectiveidea/acts_as_geocodable.git
+  revision: dc880018ab82a0d9fb2b0f950683907ce1e2cc58
+  specs:
+    acts_as_geocodable (2.0.3)
+      graticule (>= 2.0.0)
+
+GIT
   remote: git://github.com/collectiveidea/awesome_nested_set.git
   revision: f315efb81fdeacbac13ec319cbf22f9fca91db4c
   specs:
     awesome_nested_set (3.0.0.rc.3)
       activerecord (>= 4.0.0, < 5)
+
+GIT
+  remote: git://github.com/collectiveidea/graticule.git
+  revision: b18ba3d02812ca8d39fdf5e1f40828c5366ec150
+  specs:
+    graticule (2.4.0)
+      activesupport
+      happymapper (>= 0.3.0)
+      i18n
+      json
 
 GIT
   remote: git://github.com/jnicklas/capybara.git
@@ -151,6 +168,8 @@ GEM
       rack
     formatador (0.2.4)
     fssm (0.2.10)
+    happymapper (0.4.1)
+      libxml-ruby (~> 2.0)
     heroku (3.6.0)
       heroku-api (~> 0.3.17)
       launchy (>= 0.3.2)
@@ -183,6 +202,7 @@ GEM
     kgio (2.9.2)
     launchy (2.4.2)
       addressable (~> 2.3)
+    libxml-ruby (2.7.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -347,6 +367,7 @@ PLATFORMS
 DEPENDENCIES
   accountingjs-rails
   active_model_serializers
+  acts_as_geocodable!
   awesome_nested_set!
   balanced (~> 0.7)
   capybara!
@@ -364,6 +385,7 @@ DEPENDENCIES
   factory_girl_rails
   figaro!
   font_assets
+  graticule!
   heroku-api
   honeybadger
   interactor-rails

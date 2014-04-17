@@ -6,8 +6,8 @@ $ ->
     items_height = 0
 
     $(box).children('.tabbed-item').each (i, item) ->
-      if $(item).outerHeight() > items_height
-        items_height = $(item).outerHeight()
+      if $(item).height() > items_height
+        items_height = $(item).height()
     $(box).css('height': tabs_height + items_height).addClass('js-sized').children('.tabbed-item').css({'height': items_height, 'top': tabs_height})
     $('.seller-map-toggle').trigger "click"
 

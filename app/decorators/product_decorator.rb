@@ -1,4 +1,6 @@
 class ProductDecorator < Draper::Decorator
+  include MapHelper
+
   delegate_all
 
   def has_custom_seller_info?
@@ -31,9 +33,8 @@ class ProductDecorator < Draper::Decorator
   end
 
   def location_map(w=300, h=200)
-    if location
-      location_string = [location.address, location.city, location.state].join(",").gsub(" ", "+")
-      "http://maps.googleapis.com/maps/api/staticmap?zoom=7&size=#{w}x#{h}&sensor=false&markers=color:red%7C#{location_string}&key=#{Figaro.env.google_maps_key}"
+    if location && location.geocode
+      static_map([location.geocode], location.geocode, w, h)
     else
       ""
     end
@@ -51,9 +52,9 @@ class ProductDecorator < Draper::Decorator
     return unless context[:current_cart]
 
     if i = context[:current_cart].items.find_by(product_id: id)
-      return i
+      i
     else
-      return CartItem.new(product_id: id, quantity: 0, cart: context[:current_cart])
+      CartItem.new(product_id: id, quantity: 0, cart: context[:current_cart])
     end
   end
 

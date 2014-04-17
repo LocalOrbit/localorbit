@@ -17,6 +17,7 @@ gem 'compass-rails'
 gem 'underscore-rails'
 
 gem "active_model_serializers"
+gem "acts_as_geocodable", github: 'collectiveidea/acts_as_geocodable'
 gem 'awesome_nested_set', github: 'collectiveidea/awesome_nested_set'
 gem "balanced", "~> 0.7"
 gem "countries"
@@ -26,6 +27,7 @@ gem 'dragonfly-s3_data_store'
 gem 'draper'
 gem 'figaro',       github: 'laserlemon/figaro'
 gem 'font_assets'
+gem "graticule", github: 'collectiveidea/graticule'
 gem 'honeybadger'
 gem 'interactor-rails'
 gem 'jbuilder'

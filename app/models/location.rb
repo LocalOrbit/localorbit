@@ -10,6 +10,8 @@ class Location < ActiveRecord::Base
   before_create :set_defaults_if_necessary
   after_update :set_new_defaults
 
+  acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip}
+
   def self.alphabetical_by_name
     order(name: :asc)
   end
