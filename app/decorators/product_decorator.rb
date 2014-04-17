@@ -34,7 +34,7 @@ class ProductDecorator < Draper::Decorator
 
   def location_map(w=300, h=200)
     if location && location.geocode
-      static_map([location.geocode, location.geocode, w, h])
+      static_map([location.geocode], location.geocode, w, h)
     else
       ""
     end
