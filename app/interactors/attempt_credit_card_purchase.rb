@@ -15,7 +15,7 @@ class AttemptCreditCardPurchase
           payment_type: 'credit card',
           amount: cart.total,
           status: "pending",
-          payment_uri: hold.uri
+          balanced_uri: hold.uri
         )
 
         if !context[:payment].persisted?
@@ -25,6 +25,7 @@ class AttemptCreditCardPurchase
 
       rescue
         context[:order] = Order.new(credit_card: order_params["credit_card"])
+        context[:order].errors.add(:credit_card, "Payment processor error.")
         context.fail!
       end
     end

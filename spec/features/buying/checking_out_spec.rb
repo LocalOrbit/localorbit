@@ -291,14 +291,32 @@ describe "Checking Out", js: true do
       allow(Balanced::Card).to receive(:find).and_return(balanced_card)
     end
 
-    it "uses a stored credit card" do
-      choose "Pay by Credit Card"
-      select "Visa", from: "Saved credit cards"
+    context "successful payment processing" do
+      it "uses a stored credit card" do
+        choose "Pay by Credit Card"
+        select "Visa", from: "Saved credit cards"
 
-      checkout
+        checkout
 
-      expect(page).to have_content("Thank you for your order")
-      expect(page).to have_content("Credit Card")
+        expect(page).to have_content("Thank you for your order")
+        expect(page).to have_content("Credit Card")
+      end
+    end
+
+    context "payment processor error" do
+      before do
+        expect(balanced_card).to receive(:hold).and_raise(RuntimeError)
+      end
+
+      it "uses a stored credit card" do
+        choose "Pay by Credit Card"
+        select "Visa", from: "Saved credit cards"
+
+        checkout
+
+        expect(page).to have_content("Your order could not be completed.")
+        expect(page).to have_content("Payment processor error")
+      end
     end
   end
 end
