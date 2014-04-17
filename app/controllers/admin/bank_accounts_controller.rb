@@ -29,11 +29,13 @@ class Admin::BankAccountsController < AdminController
   def bank_account_params
     params.require(:bank_account).permit(
       :bank_name,
+      :name,
       :last_four,
       :balanced_uri,
       :account_type,
       :expiration_month,
-      :expiration_year
+      :expiration_year,
+      :notes
     )
   end
 
