@@ -4,7 +4,7 @@ class OrganizationDecorator < Draper::Decorator
 
   delegate_all
 
-  def locations_map(w=400, h=400)
+  def locations_map(w=340, h=300)
     addresses = locations.visible.map do |location|
       location.geocode if location
     end.compact
