@@ -4,6 +4,16 @@
 <form class="column column--three-fourths" id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-target-form="new_bank_account" data-balanced-object-type="bankAccount">
   <fieldset>
     <legend>Account Information</legend>
+    <%= link_to "Our Security Assurance", "#security-assurance", class: "popup-toggle" %>
+    <div class="is-hidden popup with-anchor top-anchor" id="security-assurance">
+      <h3>About Our Security Assurance</h3>
+      <p>Adding a payment method to your Local Orbit powered market is safe and secure. Here's how we protect you:</p>
+       <ul>
+         <li>No one from Local Orbit, your market or the payment processor can view or access your bank account or credit card information at any time. Account information is stored using the strictest security standards and transmitted securely by our payments provider.</li>
+         <li>You will receive a receipt each time you make an online payment so you can monitor your account activity.</li>
+       </ul>
+     </div>
+
     <div class="row">
       <div class="field column column--half column--guttered">
         <label for="balanced_account_name">Name</label>
@@ -22,7 +32,7 @@
       </div>
     </div>
 
-    <fieldset id="bank-account-fields">
+    <fieldset id="bank-account-fields" class="is-hidden" disabled>
       <div class="row">
         <div class="field column column--half column--guttered">
           <label for="balanced_routing_number">Routing Number</label><br>
@@ -31,6 +41,12 @@
         ><div class="field column column--half column--guttered">
           <label for="balanced_account_number">Account Number</label><br>
           <input class="column--full" id="balanced_account_number" type="text" name="account_number">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field column column--half column--guttered">
+          <label for="bank-account-notes">Notes</label><br>
+          <input class="column--full" id="bank-account-notes" type="text" name="notes">
         </div>
       </div>
     </fieldset>
@@ -47,13 +63,17 @@
         </div>
       </div>
       <div class="row">
-        <div class="field column column--quarter column--guttered">
+        <div class="field column column--fourth column--guttered">
           <label for="expiration_month">Month</label><br>
-          <%= select_tag(:expiration_month, options_for_select(expiration_month_options)) %>
+          <%= select_tag(:expiration_month, options_for_select(expiration_month_options), class: "column--full") %>
         </div
-        ><div class="field column column--quarter column--guttered">
+        ><div class="field column column--fourth column--guttered">
           <label for="expiration_year">Year</label><br>
-          <%= select_tag(:expiration_year, options_for_select(expiration_year_options)) %>
+          <%= select_tag(:expiration_year, options_for_select(expiration_year_options), class: "column--full") %>
+        </div
+        ><div class="field column column--half column--guttered">
+          <label for="credit-card-notes">Notes</label><br>
+          <input class="column--full" id="credit-card-notes" type="text" name="notes">
         </div>
       </div>
     </fieldset>
@@ -67,7 +87,7 @@
 
       <fieldset>
         <legend>Account Verification Information</legend>
-        <p>Please provide as much of the following information as you can to help us verify your account with our payment processor. The more you provide, the easier it is to verify your account.</p>
+        <p>Please provide as much of the following information as you can to help us verify your account with our payment processor.</p>
         <div class="row">
          <div class="field column column--half column--guttered">
           <label for="representative_ein">Organization <abbr title="Employer Identification Number">EIN</abbr></label><br>
@@ -109,18 +129,12 @@
     <% end %>
 
     <input type="hidden" name="type" value="checking" id="account_type">
+    <input type="hidden" name="bank_account[notes]" value="" id="notes">
   </fieldset>
 
 <% end -%>
 
   <div class="column column--three-fourths">
-    <h3>About Our Security Assurance</h3>
-    <p>Adding a payment method to your Local Orbit powered market is safe and secure. Here's how we protect you:</p>
-     <ul>
-       <li>No one from Local Orbit, your market or the payment processor can view or access your bank account or credit card information at any time. Account information is stored using the strictest security standards and transmitted securely by our payments provider.</li>
-       <li>You will receive a receipt each time you make an online payment so you can monitor your account activity.</li>
-     </ul>
-
     <div class="form-actions">
       <%= link_to "Cancel", [:admin, @entity, @bank_account], class: "btn cancel" %>
       <input type="submit" value="Save This Payment Method" id="submit-bank-account">

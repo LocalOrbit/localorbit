@@ -608,6 +608,7 @@ module Dom
     attribute :account_number
     attribute :account_type
     attribute :verified
+    attribute :expiration
     attribute :notes
 
     def verfied?

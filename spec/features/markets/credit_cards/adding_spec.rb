@@ -44,7 +44,7 @@ feature "Adding credit card to a market", js: true do
     expect(bank_account.name).to eq("John Doe")
     expect(bank_account.account_number).to eq("**** **** **** 5100")
     expect(bank_account.account_type).to eq("Credit Card")
-    expect(bank_account.verified).to eq("Expires 05/2014")
+    expect(bank_account.expiration).to eq("Expires 05/2014")
   end
 
   scenario "as a market manager" do
@@ -79,7 +79,7 @@ feature "Adding credit card to a market", js: true do
     expect(bank_account.name).to eq("John Doe")
     expect(bank_account.account_number).to eq("**** **** **** 5100")
     expect(bank_account.account_type).to eq("Credit Card")
-    expect(bank_account.verified).to eq("Expires 05/2014")
+    expect(bank_account.expiration).to eq("Expires 05/2014")
   end
 
   scenario "as a organization member" do

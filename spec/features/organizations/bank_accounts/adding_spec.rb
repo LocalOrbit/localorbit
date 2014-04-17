@@ -36,6 +36,7 @@ feature "Adding a bank account to an organization", js: true do
       select("Checking", from: "Account Type")
       fill_in "Routing Number", with: "021000021"
       fill_in "Account Number", with: "9900000002"
+      fill_in "Notes", with: "primary"
 
       click_button "Save"
 
@@ -46,6 +47,7 @@ feature "Adding a bank account to an organization", js: true do
       expect(bank_account.name).to eq("Org Bank Account")
       expect(bank_account.account_number).to eq("******0002")
       expect(bank_account.account_type).to eq("Checking")
+      expect(bank_account.notes).to eq("primary")
 
       expect(org.reload).to be_balanced_underwritten
     end
@@ -94,6 +96,7 @@ feature "Adding a bank account to an organization", js: true do
       select("Checking", from: "Account Type")
       fill_in "Routing Number", with: "021000021"
       fill_in "Account Number", with: "9900000002"
+      fill_in "Notes", with: "primary"
 
       click_button "Save"
 
@@ -104,6 +107,7 @@ feature "Adding a bank account to an organization", js: true do
       expect(bank_account.name).to eq("Org Bank Account")
       expect(bank_account.account_number).to eq("******0002")
       expect(bank_account.account_type).to eq("Checking")
+      expect(bank_account.notes).to eq("primary")
 
       expect(org.reload).to be_balanced_underwritten
     end

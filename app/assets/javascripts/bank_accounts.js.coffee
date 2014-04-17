@@ -40,6 +40,11 @@ updateInputs = (object, $form) ->
       value: object[key]
     ).appendTo($form)
 
+  $("#notes").val if object["_type"] == "card"
+    value = $("#credit-card-notes").val()
+  else
+    value = $("#bank-account-notes").val()
+
 displayErrors = ($form, errors)->
   # (re-)set up error container
   if $("#balanced-js-errors").length
