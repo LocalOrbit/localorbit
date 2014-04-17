@@ -1,102 +1,95 @@
-<div class="row row--partial cart-page">
-  <div>
-    <h1 class="heading-cart">Cart</h1>
-    <%= form_for :order, url: [:orders] do |f| %>
-      <%= render "shared/errors", {resource: @order} if @order %>
-      <div class="row">
-        <div class="column column--half column--guttered">
-          <div class="cart_items" data-cart-url="<%= cart_path %>">
-            <% @grouped_items.each_pair do |seller_name, items| %>
-              <table class="cart item-group">
-                <thead>
-                  <tr>
-                    <th class="subheading-cart">Your Order</th>
-                  </tr>
-                  <tr>
-                    <th colspan="6" class="seller"><%= seller_name %></th>
-                  </tr>
-                </thead>
-                <% items.each do |item| %>
-                  <%= content_tag_for(:tr, item, id: "cart_item_#", class: "product", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
-                    <td class="name"><%= item.product.name %> (<%= item.product.unit.plural %>)</td>
-                    <td class="quantity"><input name="quantity" type="number" size="3" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>"></td>
-                    <td class="price-for-quantity"><%= number_to_currency(item.unit_price.sale_price) %></td>
-                    <td class="price"><%= number_to_currency(item.total_price)%></td>
-                    <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
-                  <% end %>
+<div class="cart-page">
+  <h1 class="heading-cart">Cart</h1>
+  <%= form_for :order, url: [:orders] do |f| %>
+    <%= render "shared/errors", {resource: @order} if @order %>
+    <div class="row">
+      <div class="column column--half column--guttered">
+        <div class="cart_items" data-cart-url="<%= cart_path %>">
+          <table class="cart">
+          <% @grouped_items.each.with_index do |(seller_name, items), index| %>
+          
+            <tbody class="item-group">
+              <tr class="<%= index == 0 ? "" : "is-hidden" %>">
+                <th class="subheading-cart">Your Order</th>
+              </tr>
+              <tr>
+                <th colspan="6" class="seller"><%= seller_name %></th>
+              </tr>
+              <% items.each do |item| %>
+                <%= content_tag_for(:tr, item, id: "cart_item_#", class: "product", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
+                  <td class="name"><%= item.product.name %> (<%= item.product.unit.plural %>)</td>
+                  <td class="quantity"><input name="quantity" type="number" size="3" min="0" value="<%= item.quantity %>" max="<%= item.product.available_inventory %>"></td>
+                  <td class="price-for-quantity math"><%= number_to_currency(item.unit_price.sale_price) %></td>
+                  <td class="price math"><%= number_to_currency(item.total_price)%></td>
+                  <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear" %></td>
                 <% end %>
-              </table>
-              <hr>
-            <% end %>
-          </div>
+              <% end %>
+            </tbody>
+          <% end %>
+            <tbody class="math" id="totals">
+              <tr class="cart_total">
+                <th scope="row" colspan="3">Item Subtotal</th>
+                <td class="subtotal"><%= current_cart.decorate.display_subtotal %></td>
+                <td></td>
+              </tr>
 
-            <div id="totals">
-              <table class="cart math">
-                <tbody>
-                  <tr class="cart_total">
-                    <th scope="row" colspan="3">Item Subtotal</th>
-                    <td class="subtotal"><%= current_cart.decorate.display_subtotal %></td>
-                    <td></td>
-                  </tr>
+              <tr class="cart_total">
+                <th scope="row" colspan="3">Delivery Fees</th>
+                <td class="delivery_fees"><%= current_cart.decorate.display_delivery_fees%></td>
+                <td></td>
+              </tr>
 
-                  <tr class="cart_total">
-                    <th scope="row" colspan="3">Delivery Fees</th>
-                    <td class="delivery_fees"><%= current_cart.decorate.display_delivery_fees%></td>
-                    <td></td>
-                  </tr>
-
-                  <tr class="cart_total">
-                    <th scope="row" colspan="3">Total</th>
-                    <td class="total"><strong><%= current_cart.decorate.display_total %></strong></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div
-          ><div class="column column--half column--guttered">
-            <div id="additional-information">
-              <div id="address">
-                <h2 class="subheading-cart">Delivery Address</h2>
-                <div class="when-deliver">
-                  <%= current_cart.delivery.decorate.cart_type %> <%= raw(current_cart.delivery.decorate.checkout_date) %>
-                </div>
-                <address class="adr">
-                  <span classs="street-address"><%= current_location.address %></span><br />
-                  <span class="locality"><%= current_location.city %></span>, <span class="region"><%= current_location.state %></span> <span class="postal-code"><%= current_location.zip %></span>
-                </address>
-              </div>
-
-              <div id="payment-info">
-                <h2 class="subheading-cart">Payment Information</h2>
-              </div>
-
-              <fieldset class="conditional">
-                <legend class="haiku">Select Payment Method</legend>
-
-                <%= f.radio_button :payment_method, "purchase order", checked: true %>
-                <label for="payment_method">
-                  Purchase Order
-                </label>
-
-                <div class="field">
-                  <%= f.label :payment_note, "PO Number" %><br>
-                  <%= f.text_field :payment_note, class: "input--short" %>
-                </div>
-              </fieldset>
-
-            </div>
-          </div>
-          <div class="form-actions">
-            <span class="pull-left">
-              <%= link_to "Cancel Order", [:cart], data: { method: :delete, confirm: "Are you sure you want to clear the cart?"}, class: "btn btn--small destructive" %>
-              <span class="note">(Clear Cart)</span>
-            </span>
-            <%= link_to "Continue Shopping", products_path %>  
-            <%= f.submit "Place Order", class: 'btn btn--small btn--money' %>
-          </div>
+              <tr class="cart_total">
+                <th scope="row" colspan="3">Total</th>
+                <td class="total"><strong><%= current_cart.decorate.display_total %></strong></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      <% end %>
+      </div
+      ><div class="column column--half column--guttered">
+        <div id="additional-information">
+          <div id="address">
+            <h2 class="subheading-cart">Delivery Address</h2>
+            <div class="when-deliver">
+              <%= current_cart.delivery.decorate.cart_type %> <%= raw(current_cart.delivery.decorate.checkout_date) %>
+            </div>
+            <address class="adr">
+              <span classs="street-address"><%= current_location.address %></span><br />
+              <span class="locality"><%= current_location.city %></span>, <span class="region"><%= current_location.state %></span> <span class="postal-code"><%= current_location.zip %></span>
+            </address>
+          </div>
+
+          <div id="payment-info">
+            <h2 class="subheading-cart">Payment Information</h2>
+          </div>
+
+          <fieldset class="conditional">
+            <legend class="haiku">Select Payment Method</legend>
+
+            <%= f.radio_button :payment_method, "purchase order", checked: true %>
+            <label for="payment_method">
+              Purchase Order
+            </label>
+
+            <div class="field">
+              <%= f.label :payment_note, "PO Number" %><br>
+              <%= f.text_field :payment_note, class: "input--short" %>
+            </div>
+          </fieldset>
+
+        </div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <span class="pull-left">
+        <%= link_to "Cancel Order", [:cart], data: { method: :delete, confirm: "Are you sure you want to clear the cart?"}, class: "btn btn--small destructive" %>
+        <span class="note">(Clear Cart)</span>
+      </span>
+      <%= link_to "Continue Shopping", products_path %>  
+      <%= f.submit "Place Order", class: 'btn btn--small btn--money' %>
     </div>
   </div>
+<% end %>
 </div>
