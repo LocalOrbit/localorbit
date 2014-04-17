@@ -518,7 +518,8 @@
   font: bold 14px OpenSans, "Open Sans", sans-serif;
 }
 .heading-product {
-  font-family: 'OpenSans-CondensedBold', OpenSans, "Open Sans", sans-serif;
+  font: "Open Sans Condensed", OpenSans-Condensed, "Open Sans", OpenSans, sans-serif;
+  font-weight: 700;
   margin: 6px 0 0;
   line-height: 36px;
   padding-bottom: 10px;
