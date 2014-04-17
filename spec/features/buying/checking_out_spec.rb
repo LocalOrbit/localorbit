@@ -1,9 +1,10 @@
 require "spec_helper"
 
-describe "Checking Out" do
+describe "Checking Out", js: true do
   let!(:user) { create(:user) }
   let!(:other_buying_user) {  create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user, other_buying_user]) }
+  let!(:credit_card) { create(:bank_account, :credit_card, bankable: buyer) }
 
   let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users:[create(:user), create(:user)]) }
   let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
@@ -65,6 +66,8 @@ describe "Checking Out" do
   end
 
   before do
+    CreateBalancedCustomerForEntity.perform(organization: buyer)
+
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
 
@@ -78,6 +81,7 @@ describe "Checking Out" do
     expect(page).to have_content("Kale")
     expect(page).to have_content("Potatoes")
 
+    choose "Pay by Purchase Order"
     fill_in "PO Number", with: "12345"
   end
 
@@ -87,7 +91,7 @@ describe "Checking Out" do
     expect(page).to have_content("If you have any questions, please let us know")
   end
 
-  it "links to the order to review", js: true do
+  it "links to the order to review" do
     checkout
 
     click_link "Review Order"
@@ -268,7 +272,7 @@ describe "Checking Out" do
     expect(page).to have_content("Unfortunately, there are only 1 Kale available")
   end
 
-  it "clearing the cart during checkout preview", js: true do
+  it "clearing the cart during checkout preview" do
     Dom::Cart::Item.all.each do |item|
       item.remove!
     end
@@ -277,5 +281,24 @@ describe "Checking Out" do
 
     click_button "Place Order"
     expect(page).to have_content("Your cart is empty. Please add items to your cart before checking out.")
+  end
+
+  context "via credit card" do
+    let(:balanced_hold)  { double("balanced hold", uri: '/balanced-hold-uri') }
+    let!(:balanced_card) { double("balanced card", hold: balanced_hold) }
+
+    before do
+      allow(Balanced::Card).to receive(:find).and_return(balanced_card)
+    end
+
+    it "uses a stored credit card" do
+      choose "Pay by Credit Card"
+      select "Visa", from: "Saved credit cards"
+
+      checkout
+
+      expect(page).to have_content("Thank you for your order")
+      expect(page).to have_content("Credit Card")
+    end
   end
 end

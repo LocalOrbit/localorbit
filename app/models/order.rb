@@ -3,6 +3,8 @@ class Order < ActiveRecord::Base
 
   include DeliveryStatus
 
+  attr_accessor :credit_card
+
   belongs_to :market
   belongs_to :organization
   belongs_to :delivery

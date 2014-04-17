@@ -35,4 +35,10 @@ class OrganizationDecorator < Draper::Decorator
   def shipping_phone
     shipping_location.phone
   end
+
+  def credit_card_options
+    bank_accounts.where("account_type not in (?)", %w(savings checking)).map do |card|
+      [card.bank_name, card.id]
+    end
+  end
 end

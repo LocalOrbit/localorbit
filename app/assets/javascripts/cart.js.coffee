@@ -1,7 +1,7 @@
 $ ->
   return unless $(".cart_item").length
   selector = $('.cart_item')
-  
+
   window.CartNotificationDuration = 2000
 
   class CartItem
@@ -192,3 +192,8 @@ $ ->
     e.preventDefault()
     data = $(this).closest(".cart_item").data("cart-item")
     model.saveItem(data.product_id, 0)
+
+  $("input[type=radio]").click (e) ->
+    $("#place-order-button").attr("disabled", false)
+    $(".payment-fields").addClass("is-hidden")
+    $(this).parents(".field").find(".payment-fields").removeClass("is-hidden")

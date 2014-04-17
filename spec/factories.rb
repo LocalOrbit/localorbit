@@ -268,6 +268,13 @@ FactoryGirl.define do
   end
 
   factory :bank_account do
+    trait :credit_card do
+      bank_name        "Visa"
+      account_type     "visa"
+      last_four        0001
+      expiration_month 5
+      expiration_year  2014
+    end
   end
 
   factory :unit do
