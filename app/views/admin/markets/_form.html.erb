@@ -3,11 +3,15 @@
   <legend>Market Information</legend>
   <div class="row row--field">
     <div class="field column column--half column--guttered">
-      <%= f.label :name %><br>
+      <%= f.label :name %>
+      <span class="tooltip pull-right" data-tooltip="Don't forget to double check your spelling."></span>
+      <br>
       <%= f.text_field :name, class: "column--full" %>
     </div
     ><div class="field column column--half column--guttered">
-      <%= f.label :subdomain %><br>
+      <%= f.label :subdomain %>
+      <span class="tooltip pull-right" data-tooltip="This is your unique text for your Local Orbit URL."></span>
+      <br>
       <%= f.text_field :subdomain, class: "column--full" %>
     </div>
   </div>
@@ -24,7 +28,9 @@
   </div>
 
   <div class="field">
-    <%= f.label :tagline %><br>
+    <%= f.label :tagline %>
+    <span class="tooltip pull-right" data-tooltip="Located directly below the logo at the top of the page."></span>
+    <br>
     <%= f.text_field :tagline, class: "column--full" %>
   </div>
   <div class="field">
@@ -56,11 +62,15 @@
   </div>
 
   <div class="field">
-    <%= f.label :profile %><br>
+    <%= f.label :profile %>
+    <span class="tooltip pull-right" data-tooltip="Here is your opportunity to tell your market's story. Why is your market the best source for local food? What makes your market unique?"></span>
+    <br>
     <%= f.text_area :profile, rows: 4, class: "column--full" %>
   </div>
   <div class="field">
-    <%= f.label :policies %><br>
+    <%= f.label :policies %>
+    <span class="tooltip pull-right" data-tooltip="This information appears on the Market info page."></span>
+    <br>
     <%= f.text_area :policies, rows: 4, class: "column--full"  %>
   </div>
   <div class="row row--field">

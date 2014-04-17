@@ -22,6 +22,7 @@
 
     <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
       <div class="field">
+        <span class="tooltip pull-right" data-tooltip="This allows a customer to be a Seller and a Buyer."></span>
         <%= f.check_box :can_sell %>
         <%= f.label :can_sell, "Can sell products" %>
       </div>
@@ -50,18 +51,24 @@
     </div>
 
     <div class="field">
-      <%= f.label :photo, "Profile photo" %><br>
+      <%= f.label :photo, "Profile photo" %>
+      <span class="tooltip pull-right" data-tooltip="This image will appear on the Market info page."></span>
+      <br>
       <%= f.file_field :photo %>
       <%= image_tag @organization.photo.remote_url, alt: "Profile photo", class: "org-profile-photo" if @organization.photo %>
     </div>
 
     <div class="field">
-      <%= f.label :who_story, "Who" %><br>
+      <%= f.label :who_story, "Who" %>
+      <span class="tooltip pull-right" data-tooltip="A description of your organization."></span>
+      <br>
       <%= f.text_area :who_story, class: "column column--full", rows: 2 %>
     </div>
 
     <div class="field">
-      <%= f.label :how_story, "How" %><br>
+      <%= f.label :how_story, "How" %>
+      <span class="tooltip pull-right" data-tooltip="A description of how you produce your products."></span>
+      <br>
       <%= f.text_area :how_story, class: "column column--full", rows: 4 %>
     </div>
 
