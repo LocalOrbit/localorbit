@@ -21,7 +21,6 @@ class AddGeocodableTables < ActiveRecord::Migration
     add_index "geocodes", ["country"], :name => "geocodes_country_index"
     add_index "geocodes", ["precision"], :name => "geocodes_precision_index"
 
-
     create_table "geocodings" do |t|
       t.column "geocodable_id", :integer
       t.column "geocode_id", :integer

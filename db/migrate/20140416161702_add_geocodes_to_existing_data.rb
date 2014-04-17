@@ -23,7 +23,7 @@ class AddGeocodesToExistingData < ActiveRecord::Migration
     Geocoding.where(geocodable_type: "AddGeocodesToExistingData::MarketAddress").update_all(geocodable_type: "MarketAddress")
     Geocoding.where(geocodable_type: "AddGeocodesToExistingData::Location").update_all(geocodable_type: "Location")
   end
-  
+
   def down
     # nothing to do
   end
