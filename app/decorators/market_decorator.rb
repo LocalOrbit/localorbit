@@ -1,5 +1,6 @@
 class MarketDecorator < Draper::Decorator
   include Draper::LazyHelpers
+  include MapHelper
 
   delegate_all
 
@@ -9,11 +10,14 @@ class MarketDecorator < Draper::Decorator
 
   def seller_locations_map(w=400, h=400)
     addresses = organizations.selling.map do |seller|
-      location = seller.shipping_location
-      URI.escape "#{location.address}, #{location.city} #{location.state}" if location
+      seller.shipping_location.geocode if seller.shipping_location
     end.compact
 
-    "http://maps.google.com/maps/api/staticmap?size=#{w}x#{h}&markers=#{addresses.join('|')}&sensor=false&maptype=terrain&key=#{Figaro.env.google_maps_key}"
+    if center = first_address.geocode
+      static_map(addresses, center, w, h)
+    else
+      ""
+    end
   end
 
   def street_address
