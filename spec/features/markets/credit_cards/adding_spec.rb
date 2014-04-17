@@ -41,6 +41,7 @@ feature "Adding credit card to a market", js: true do
 
     bank_account = Dom::BankAccount.first
     expect(bank_account.bank_name).to eq("MasterCard")
+    expect(bank_account.name).to eq("John Doe")
     expect(bank_account.account_number).to eq("**** **** **** 5100")
     expect(bank_account.account_type).to eq("Credit Card")
     expect(bank_account.expiration).to eq("Expires 05/2014")
@@ -75,6 +76,7 @@ feature "Adding credit card to a market", js: true do
 
     bank_account = Dom::BankAccount.first
     expect(bank_account.bank_name).to eq("MasterCard")
+    expect(bank_account.name).to eq("John Doe")
     expect(bank_account.account_number).to eq("**** **** **** 5100")
     expect(bank_account.account_type).to eq("Credit Card")
     expect(bank_account.expiration).to eq("Expires 05/2014")

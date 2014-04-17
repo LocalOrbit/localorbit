@@ -17,6 +17,7 @@ updateInputs = (object, $form) ->
   fields = {
     "card" : {
       "brand" : "bank_account[bank_name]",
+      "name" : "bank_account[name]",
       "last_four" : "bank_account[last_four]",
       "uri" : "bank_account[balanced_uri]",
       "card_type" : "bank_account[account_type]",
@@ -25,6 +26,7 @@ updateInputs = (object, $form) ->
     },
     "bank_account" : {
       "bank_name" : "bank_account[bank_name]",
+      "name" : "bank_account[name]",
       "last_four" : "bank_account[last_four]",
       "uri" : "bank_account[balanced_uri]",
       "type" : "bank_account[account_type]"
@@ -37,6 +39,11 @@ updateInputs = (object, $form) ->
       name: field,
       value: object[key]
     ).appendTo($form)
+
+  $("#notes").val if object["_type"] == "card"
+    value = $("#credit-card-notes").val()
+  else
+    value = $("#bank-account-notes").val()
 
 displayErrors = ($form, errors)->
   # (re-)set up error container

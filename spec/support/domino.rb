@@ -604,10 +604,12 @@ module Dom
     selector ".bank-account"
 
     attribute :bank_name
+    attribute :name
     attribute :account_number
     attribute :account_type
-    attribute :expiration
     attribute :verified
+    attribute :expiration
+    attribute :notes
 
     def verfied?
       verified == "Verified"
