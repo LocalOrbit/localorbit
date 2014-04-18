@@ -8,8 +8,13 @@ module Admin
     end
 
     def new
-      @organization = Organization.new
       @markets      = current_user.markets
+      first_market  = @markets.first
+
+      @organization = Organization.new(
+        allow_purchase_orders: first_market.default_allow_purchase_orders,
+        allow_credit_cards: first_market.default_allow_credit_cards
+      )
     end
 
     def create

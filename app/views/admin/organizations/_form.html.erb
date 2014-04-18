@@ -74,12 +74,16 @@
 
     <% if current_user.admin? || current_user.market_manager? %>
       <div class="row row--field">
-        <div class="field column column--half column--guttered">
+        <div class="field column column--half column--guttered" id="allowed-payment-methods">
           <label>Allowed payment methods</label><br>
-          <%= f.check_box :allow_purchase_orders %>
-          <%= f.label :allow_purchase_orders %><br>
-          <%= f.check_box :allow_credit_cards %>
-          <%= f.label :allow_credit_cards %><br>
+          <% if @markets && @markets.size > 1 %>
+            <p>Select a market to see payment options</p>
+          <% else %>
+            <%= f.check_box :allow_purchase_orders %>
+            <%= f.label :allow_purchase_orders %><br>
+            <%= f.check_box :allow_credit_cards %>
+            <%= f.label :allow_credit_cards %><br>
+          <% end %>
         </div>
       </div>
     <% end %>

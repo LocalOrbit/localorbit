@@ -19,6 +19,8 @@ FactoryGirl.define do
     ach_fee_cap            8
     allow_purchase_orders  true
     allow_credit_cards     true
+    default_allow_purchase_orders false
+    default_allow_credit_cards    true
 
     trait :with_address do
       after(:create) {|m| create(:market_address, market: m) }

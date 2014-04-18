@@ -65,6 +65,8 @@ describe "Managing Markets" do
       visit admin_market_path(market1)
 
       expect(page).to_not have_content("Allowed payment methods")
+      expect(page).to_not have_content("Default organization payment methods")
+
       expect(page).to_not have_content("Allow purchase orders")
       expect(page).to_not have_content("Allow credit cards")
     end
@@ -192,17 +194,28 @@ describe "Managing Markets" do
 
       it 'can see payment options' do
         expect(page).to have_content("Allowed payment methods")
+        expect(page).to have_content("Default organization payment methods")
+
         expect(page).to have_content("Allow purchase orders")
         expect(page).to have_content("Allow credit cards")
       end
 
       it 'can modify payment options' do
-        uncheck "Allow purchase orders"
+        within("#allowed-payment-options") do
+          uncheck "Allow purchase orders"
+        end
+
+        within("#default-payment-options") do
+          check "Allow purchase orders"
+        end
 
         click_button "Update Market"
 
         expect(find('#market_allow_purchase_orders')).to_not be_checked
         expect(find('#market_allow_credit_cards')).to be_checked
+
+        expect(find('#market_default_allow_purchase_orders')).to be_checked
+        expect(find('#market_default_allow_credit_cards')).to be_checked
       end
     end
 
