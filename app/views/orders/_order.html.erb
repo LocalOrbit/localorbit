@@ -1,8 +1,8 @@
 
 <div class="delivery-time">
   <div class="actions pull-right">
-    <%= link_to "Review Order", [:organization, :financials, @order], class: "btn btn--small btn--gray" %>
-    <%= link_to "Print Order Confirmation", [:coming_soon, :dashboard], class: "btn btn--small btn--gray" %>
+    <%= link_to "Review Order", [:organization, :financials, @order] %> &nbsp;
+    <%= link_to "Print Order Confirmation", [:coming_soon, :dashboard], class: "btn btn--small btn--blue" %>
   </div>
 
   <h2 class="order-heading">Items for <%=  @order.delivery.decorate.checkout_type %>:</h2>
@@ -50,32 +50,21 @@
       <td></td>
       <td></td>
       <th scope="row">Order Total</th>
-      <td class="total"><%= number_to_currency @order.total_cost %></td>
-    </tr>
-
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>Payment method</td>
-      <td class="payment-status"><%= @order.payment_method.titleize %></td>
-    </tr>
-
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>Payment status</td>
-      <td class="payment-status"><%= @order.payment_status.titleize %></td>
-    </tr>
-
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>Delivery status</td>
-      <td class="delivery-status"><%= @order.delivery_status.titleize %></td>
+      <td class="total"><strong><%= number_to_currency @order.total_cost %></strong></td>
     </tr>
   </tfoot>
-
 </table>
+
+<div class="order-status">
+  <div>
+    <p><strong>Payment Status</strong>  &nbsp; <%= @order.payment_status.titleize %></p>
+  </div>
+
+  <div>
+    <p><strong>Payment Method</strong>  &nbsp; <%= @order.payment_method.titleize %></p>
+  </div>
+
+  <div>
+    <p><strong>Delivery Status</strong> &nbsp; <%= @order.delivery_status.titleize %></p>
+  </div>
+</div>

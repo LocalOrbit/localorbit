@@ -775,11 +775,12 @@
 
 .flash {
   position: absolute;
-  z-index: 1;
-  top: 2px;
+  z-index: 4;
+  top: 180px;
+  margin-left: -20px;
   width: 100%;
   text-align: center;
-  @include transition(opacity .5s linear 3s);
+  @include transition(opacity .5s linear 4s);
 
   &.is-fading {
     opacity: 0;
