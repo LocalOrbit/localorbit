@@ -217,6 +217,12 @@ th {
     > li:nth-child(even) {
       background: #f3f3f3;
     }
+
+    li {
+      padding: 3px;
+      line-height: 13px;
+      margin-bottom: 10px;
+    }
   }
     .tier {
       padding: 0 11px 0 0;
