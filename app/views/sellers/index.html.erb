@@ -25,7 +25,7 @@
           <h1 class="fn story-header"><%= @current_seller.name %></h1>
 
           <% if @current_seller.photo.present? %>
-            <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo", class: "photo seller-photo" %>
+            <div class="seller-photo"><%= image_tag @current_seller.photo.remote_url, alt: "Profile photo", class: "photo" %></div>
           <% end %>
 
         </div
@@ -35,7 +35,7 @@
               <span class="locality"><%= @current_seller.billing_location.city %></span>, <span class="region"><%= @current_seller.billing_location.state %></span>
             <% end %>
           </h1>
-          <img alt="map" src="<%= @current_seller.locations_map %>" class="seller-map">
+          <div class="seller-map"><img alt="map" src="<%= @current_seller.locations_map %>"></div>
         </div>
       </div>
 
