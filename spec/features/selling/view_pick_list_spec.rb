@@ -13,10 +13,10 @@ describe "Pick list" do
   let!(:buyer1) { create(:organization, :buyer, :single_location, markets: [market]) }
   let!(:buyer2) { create(:organization, :buyer, :single_location, markets: [market]) }
 
-  let!(:sellers_order)      { create(:order, organization: buyer1, market: market, delivery: friday_delivery) }
+  let!(:sellers_order)      { create(:order, organization: buyer1, market: market, delivery: friday_delivery, items:[sellers_order_item]) }
   let!(:sellers_order_item) { create(:order_item, order: sellers_order, product: sellers_product, quantity: 1)}
 
-  let!(:others_order)      { create(:order, organization: buyer2, market: market, delivery: friday_delivery) }
+  let!(:others_order)      { create(:order, organization: buyer2, market: market, delivery: friday_delivery, items:[others_order_item]) }
   let!(:others_order_item) { create(:order_item, order: others_order, product: others_product, quantity: 2)}
 
   before do
