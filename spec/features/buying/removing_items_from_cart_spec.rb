@@ -121,7 +121,6 @@ describe "Removing items" do
 
       it "shows the remove link once a cart item exists" do
         kale_item.set_quantity(1)
-        bananas_item.quantity_field.click
         expect(Dom::CartLink.first).to have_content("Added to cart!")
 
         expect(kale_item.node).to have_css(".icon-clear")
