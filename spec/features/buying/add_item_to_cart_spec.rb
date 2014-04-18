@@ -46,7 +46,7 @@ describe "Add item to cart", js: true do
     Timecop.return
   end
 
-  it "enables/disbales the ability depending on how many items are in your cart", js: true do
+  it "enables/disbales the ability depending on how many items are in your cart" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
 
@@ -59,8 +59,7 @@ describe "Add item to cart", js: true do
     expect(page).not_to have_content("Your cart is empty")
 
     bananas_row.set_quantity(12)
-    kale_row.quantity_field.trigger('click')
-    expect(Dom::CartLink.first).to have_content("Added to cart!")
+    expect(page).to have_content("Added to cart!")
 
     cart_link.node.click
     expect(page).not_to have_content("Your cart is empty")
@@ -81,14 +80,12 @@ describe "Add item to cart", js: true do
       expect(Dom::CartLink.first.count).to have_content("0")
 
       bananas_row.set_quantity(12)
-      kale_row.quantity_field.click
 
-      expect(Dom::CartLink.first).to have_content("Added to cart!")
+      expect(page).to have_content("Added to cart!")
       expect(Dom::CartLink.first.count).to have_content("1")
 
       kale_row.set_quantity(9)
-      bananas_row.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Added to cart!")
+      expect(page).to have_content("Added to cart!")
       expect(Dom::CartLink.first.count).to have_content("2")
 
 
@@ -119,15 +116,13 @@ describe "Add item to cart", js: true do
       expect(bananas_row.price).to have_content("$3.00")
 
       bananas_row.set_quantity(8)
-      kale_row.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Quantity updated!")
+      expect(page).to have_content("Quantity updated!")
 
       expect(Dom::CartLink.first.count).to have_content("1")
       expect(bananas_row.price).to have_content("$24.00")
 
       bananas_row.set_quantity(9)
-      kale_row.quantity_field.click
-      expect(Dom::CartLink.first).to have_content("Quantity updated!")
+      expect(page).to have_content("Quantity updated!")
 
       expect(Dom::CartLink.first.count).to have_content("1")
       expect(bananas_row.price).to have_content("$27.00")
@@ -159,7 +154,6 @@ describe "Add item to cart", js: true do
       expect(page).to have_content("Kale")
 
       tomatoes_row.set_quantity(3)
-      kale_row.quantity_field.click
       expect(page).to have_content("You must order at least 5")
     end
   end

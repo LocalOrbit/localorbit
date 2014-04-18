@@ -7,6 +7,15 @@ $ ->
   class CartItem
     constructor: (opts)->
       {@data, @el} = opts
+      @timer = null
+
+
+      $(opts.el).find(".quantity input").keyup ->
+        window.clearTimeout(@timer)
+
+        @timer = window.setTimeout =>
+          $(this).trigger("cart.inputFinished")
+        , 250
 
     @buildWithElement: (el)->
       new CartItem
@@ -90,12 +99,16 @@ $ ->
         $(info).insertAfter(el)
 
     showErrorMessage: (error, el)->
+      @removeErrorMessage(el)
+
       notice = $("<tr>").addClass("warning").append($("<td>").addClass('flash--warning').attr('colspan', '6').text(error))
       $(notice).insertAfter(el)
 
     removeErrorMessage: (el)->
-      el.siblings(".warning").remove()
-
+      parent = $(el).parents("tr")
+      siblings = parent.siblings(".warning")
+      siblings.each ->
+        this.remove()
 
   class CartModel
     constructor: (opts)->
@@ -149,6 +162,8 @@ $ ->
       # TODO: Add validation for maximum input to prevent
       #       users from entering numbers greater than available
       #       quantities
+
+      @view.removeErrorMessage($(elToUpdate))
       if _.isNaN(quantity)
         errorMessage = "Quantity is not a number"
         @view.showErrorMessage(errorMessage, $(elToUpdate).closest('.product'))
@@ -162,6 +177,7 @@ $ ->
           .done (data)=>
 
             error = data.error
+
             if data.item["destroyed?"]
               @removeItem(data.item)
             else
@@ -183,8 +199,9 @@ $ ->
     items: $(".cart_item")
 
 
-  $(".cart_item .quantity input").change ->
+  $(".cart_item .quantity input").on 'cart.inputFinished', ->
     data = $(this).closest(".cart_item").data("cart-item")
+
     quantity = parseInt($(this).val())
     model.saveItem(data.product_id, quantity, this)
 
