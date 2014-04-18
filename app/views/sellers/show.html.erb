@@ -35,7 +35,7 @@
               <span class="locality"><%= @current_seller.billing_location.city %></span>, <span class="region"><%= @current_seller.billing_location.state %></span>
             <% end %>
           </h1>
-          <div class="seller-map"><img alt="map" src="<%= @current_seller.locations_map %>"></div>
+          <div class="seller-map"><img alt="map" src="<%= @current_seller.locations_map(330, 240) %>"></div>
         </div>
       </div>
 
