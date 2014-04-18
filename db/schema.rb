@@ -355,8 +355,8 @@ ActiveRecord::Schema.define(version: 20140418140723) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.string   "image_uid"
     t.integer  "top_level_category_id"
+    t.string   "image_uid"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"
