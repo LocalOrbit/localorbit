@@ -31,7 +31,7 @@ thead {
 
 caption {
   color: #000;
-  font: normal 28px "Open Sans Condensed", sans-serif;
+  font: bold 24px "Open Sans Condensed", sans-serif;
   text-align: left;
 }
 
@@ -196,7 +196,7 @@ th {
     width: 75px;
     height: 75px;
     padding-right: 0;
-    margin-right: 10px;
+    margin: 0 10px 0 0;
 
     > img {
       display: block;
@@ -230,7 +230,7 @@ th {
     }
   }
   .product-clear {
-    width: 1em;
+    width: 15px;
     font-size: 15px;
     line-height: 28px;
   }
@@ -288,11 +288,16 @@ th {
         background: #fff;
       }
     }
+    .name {
+      line-height: 25px;
+      padding-bottom: 5px;
+    }
     .tiers {
       padding-top: 3px;
       line-height: 22px;
     }
     .total {
+      width: 60px;
       padding-top: 20px;
       line-height: 22px;
       font-size: 14px;
@@ -332,9 +337,16 @@ th {
     }
 
     .info {
+      width: 400px;
+      p {
+        margin-left: 75px;
+        overflow: hidden;
+      }
+      ul {
+        margin-left: 85px;
+      }
       .popup-toggle { 
         color: #666;
-
       }
     }
 
@@ -344,11 +356,11 @@ th {
     } 
 
     .pricing {
-      width: 145px;
+      width: 125px;
     }
 
     .quantity {
-      width: 61px;
+      width: 60px;
     }
 
     .short_description {

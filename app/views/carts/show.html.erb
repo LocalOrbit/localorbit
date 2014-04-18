@@ -7,10 +7,12 @@
         <div class="cart_items" data-cart-url="<%= cart_path %>">
           <table class="cart">
           <% @grouped_items.each.with_index do |(seller_name, items), index| %>
-          
             <tbody class="item-group">
               <tr class="<%= index == 0 ? "" : "is-hidden" %>">
                 <th class="subheading-cart">Your Order</th>
+                <td>Quantity</td>
+                <td>Price</td>
+                <td>Total</td>
               </tr>
               <tr>
                 <th colspan="6" class="seller"><%= seller_name %></th>
@@ -40,7 +42,7 @@
               </tr>
 
               <tr class="cart_total">
-                <th scope="row" colspan="3">Total</th>
+                <th scope="row" colspan="3"><strong>Total</strong></th>
                 <td class="total"><strong><%= current_cart.decorate.display_total %></strong></td>
                 <td></td>
               </tr>
@@ -78,7 +80,6 @@
               <%= f.text_field :payment_note, class: "input--short" %>
             </div>
           </fieldset>
-
         </div>
       </div>
     </div>
@@ -88,7 +89,7 @@
         <span class="note">(Clear Cart)</span>
       </span>
       <%= link_to "Continue Shopping", products_path %>  
-      <%= f.submit "Place Order", class: 'btn btn--small btn--money' %>
+      <%= f.submit "Place Order", class: 'btn btn--money' %>
     </div>
   </div>
 <% end %>
