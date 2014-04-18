@@ -53,6 +53,8 @@ class Admin::MarketsController < AdminController
       :policies,
       :logo,
       :photo,
+      :allow_purchase_orders,
+      :allow_credit_cards
     )
   end
 

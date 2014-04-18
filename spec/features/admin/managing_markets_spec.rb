@@ -61,6 +61,14 @@ describe "Managing Markets" do
       expect(page).not_to have_content('Deactivate')
     end
 
+    it 'I cannot see payment options' do
+      visit admin_market_path(market1)
+
+      expect(page).to_not have_content("Allowed payment methods")
+      expect(page).to_not have_content("Allow purchase orders")
+      expect(page).to_not have_content("Allow credit cards")
+    end
+
     it 'I can not add a market' do
       visit '/admin/markets'
 
@@ -175,6 +183,27 @@ describe "Managing Markets" do
 
       expect(page).to have_text('Market Information')
       expect(find_field("market_contact_name").value).to eq('Jane Smith')
+    end
+
+    context "payment options" do
+      before do
+        visit admin_market_path(market)
+      end
+
+      it 'can see payment options' do
+        expect(page).to have_content("Allowed payment methods")
+        expect(page).to have_content("Allow purchase orders")
+        expect(page).to have_content("Allow credit cards")
+      end
+
+      it 'can modify payment options' do
+        uncheck "Allow purchase orders"
+
+        click_button "Update Market"
+
+        expect(find('#market_allow_purchase_orders')).to_not be_checked
+        expect(find('#market_allow_credit_cards')).to be_checked
+      end
     end
 
     describe "modifying a market without valid infirmation", js: true do

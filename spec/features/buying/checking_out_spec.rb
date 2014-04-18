@@ -80,207 +80,211 @@ describe "Checking Out", js: true do
     expect(page).to have_content("Bananas")
     expect(page).to have_content("Kale")
     expect(page).to have_content("Potatoes")
-
-    choose "Pay by Purchase Order"
-    fill_in "PO Number", with: "12345"
   end
 
-  it "displays copy about the order" do
-    checkout
-    expect(page).to have_content("You will receive a confirmation email with details of your order and a link to track its progress")
-    expect(page).to have_content("If you have any questions, please let us know")
-  end
+  context "via purchase order" do
+    before do
+      choose "Pay by Purchase Order"
+      fill_in "PO Number", with: "12345"
+    end
 
-  it "links to the order to review" do
-    checkout
+    it "displays copy about the order" do
+      checkout
+      expect(page).to have_content("You will receive a confirmation email with details of your order and a link to track its progress")
+      expect(page).to have_content("If you have any questions, please let us know")
+    end
 
-    click_link "Review Order"
-    expect(page).to have_content("Order info")
-    expect(page).to have_content("Bananas")
-    expect(page).to have_content("Potatoes")
-    expect(page).to have_content("Kale")
-  end
+    it "links to the order to review" do
+      checkout
 
-  it "sends the buyer an email about the order" do
-    checkout
+      click_link "Review Order"
+      expect(page).to have_content("Order info")
+      expect(page).to have_content("Bananas")
+      expect(page).to have_content("Potatoes")
+      expect(page).to have_content("Kale")
+    end
 
-    [user, other_buying_user].each do |user|
+    it "sends the buyer an email about the order" do
+      checkout
+
+      [user, other_buying_user].each do |user|
+        sign_out
+        sign_in_as(user)
+        open_email(user.email)
+
+        expect(current_email).to have_subject("Thank you for your order")
+        expect(current_email).to have_body_text("Thank you for your order through #{market.name}")
+
+        expect(current_email).to have_body_text("Product Total")
+        expect(current_email).to have_body_text("Delivery Fee")
+        expect(current_email).not_to have_body_text("Discount")
+
+        visit_in_email "Review Order"
+        expect(page).to have_content("Order info")
+        expect(page).to have_content("Items for delivery...")
+      end
+    end
+
+    it "sends the seller email about the order" do
+      checkout
+
+      fulton_farms.users.each do |user|
+        sign_out
+        sign_in_as(user)
+        open_email(user.email)
+
+        expect(current_email).to have_subject("New order on #{market.name}")
+        expect(current_email.body).to have_content("You have a new order!")
+        # It does not include content from other sellers
+        expect(current_email).to have_body_text("Kale")
+        expect(current_email).to have_body_text("Bananas")
+        expect(current_email).to_not have_body_text("Potatoes")
+
+        expect(current_email).not_to have_body_text("Product Total")
+        expect(current_email).not_to have_body_text("Delivery Fee")
+        expect(current_email).not_to have_body_text("Discount")
+
+        expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+
+        visit_in_email "Check Order Status"
+        expect(page).to have_content("Order info")
+        expect(page).to have_content("Items for delivery...")
+      end
+
+      ada_farms.users.each do |user|
+        sign_out
+        sign_in_as(user)
+        open_email(user.email)
+
+        expect(current_email).to have_subject("New order on #{market.name}")
+        expect(current_email.body).to have_content("You have a new order!")
+        # It does not include content from other sellers
+        expect(current_email).not_to have_body_text("Kale")
+        expect(current_email).not_to have_body_text("Bananas")
+        expect(current_email).to have_body_text("Potatoes")
+
+        expect(current_email).not_to have_body_text("Product Total")
+        expect(current_email).not_to have_body_text("Delivery Fee")
+        expect(current_email).not_to have_body_text("Discount")
+
+        expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+
+        visit_in_email "Check Order Status"
+        expect(page).to have_content("Order info")
+        expect(page).to have_content("Items for delivery...")
+      end
+    end
+
+    it "sends the market manager an email about the order" do
+      checkout
+
       sign_out
-      sign_in_as(user)
-      open_email(user.email)
+      sign_in_as(market_manager)
+      open_email(market.managers[0].email)
 
-      expect(current_email).to have_subject("Thank you for your order")
-      expect(current_email).to have_body_text("Thank you for your order through #{market.name}")
+      expect(current_email).to have_subject("New order on #{market.name}")
+      expect(current_email.body).to have_content("You've received a new order.")
+      expect(current_email.body).to have_content("Order Placed By: #{buyer.name}")
+
+      expect(current_email).to have_body_text("Kale")
+      expect(current_email).to have_body_text("Bananas")
+      expect(current_email).to have_body_text("Potatoes")
 
       expect(current_email).to have_body_text("Product Total")
       expect(current_email).to have_body_text("Delivery Fee")
       expect(current_email).not_to have_body_text("Discount")
 
-      visit_in_email "Review Order"
-      expect(page).to have_content("Order info")
-      expect(page).to have_content("Items for delivery...")
-    end
-  end
-
-  it "sends the seller email about the order" do
-    checkout
-
-    fulton_farms.users.each do |user|
-      sign_out
-      sign_in_as(user)
-      open_email(user.email)
-
-      expect(current_email).to have_subject("New order on #{market.name}")
-      expect(current_email.body).to have_content("You have a new order!")
-      # It does not include content from other sellers
-      expect(current_email).to have_body_text("Kale")
-      expect(current_email).to have_body_text("Bananas")
-      expect(current_email).to_not have_body_text("Potatoes")
-
-      expect(current_email).not_to have_body_text("Product Total")
-      expect(current_email).not_to have_body_text("Delivery Fee")
-      expect(current_email).not_to have_body_text("Discount")
-
-      expect(current_email.body).to have_content("An order was just placed by #{market.name}")
-
       visit_in_email "Check Order Status"
       expect(page).to have_content("Order info")
       expect(page).to have_content("Items for delivery...")
     end
 
-    ada_farms.users.each do |user|
-      sign_out
-      sign_in_as(user)
-      open_email(user.email)
-
-      expect(current_email).to have_subject("New order on #{market.name}")
-      expect(current_email.body).to have_content("You have a new order!")
-      # It does not include content from other sellers
-      expect(current_email).not_to have_body_text("Kale")
-      expect(current_email).not_to have_body_text("Bananas")
-      expect(current_email).to have_body_text("Potatoes")
-
-      expect(current_email).not_to have_body_text("Product Total")
-      expect(current_email).not_to have_body_text("Delivery Fee")
-      expect(current_email).not_to have_body_text("Discount")
-
-      expect(current_email.body).to have_content("An order was just placed by #{market.name}")
-
-      visit_in_email "Check Order Status"
-      expect(page).to have_content("Order info")
-      expect(page).to have_content("Items for delivery...")
-    end
-  end
-
-  it "sends the market manager an email about the order" do
-    checkout
-
-    sign_out
-    sign_in_as(market_manager)
-    open_email(market.managers[0].email)
-
-    expect(current_email).to have_subject("New order on #{market.name}")
-    expect(current_email.body).to have_content("You've received a new order.")
-    expect(current_email.body).to have_content("Order Placed By: #{buyer.name}")
-
-    expect(current_email).to have_body_text("Kale")
-    expect(current_email).to have_body_text("Bananas")
-    expect(current_email).to have_body_text("Potatoes")
-
-    expect(current_email).to have_body_text("Product Total")
-    expect(current_email).to have_body_text("Delivery Fee")
-    expect(current_email).not_to have_body_text("Discount")
-
-    visit_in_email "Check Order Status"
-    expect(page).to have_content("Order info")
-    expect(page).to have_content("Items for delivery...")
-  end
-
-  it "displays the ordered products" do
-    checkout
-    expect(page).to have_content("Thank you for your order")
-
-    bananas_row = Dom::Order::ItemRow.find_by_name("Bananas")
-    expect(bananas_row.node).to have_content("10 boxes")
-    expect(bananas_row.node).to have_content("$0.50")
-    expect(bananas_row.node).to have_content("$5.00")
-
-    kale_row = Dom::Order::ItemRow.find_by_name("Kale")
-    expect(kale_row.node).to have_content("20 boxes")
-    expect(kale_row.node).to have_content("$1.00")
-    expect(kale_row.node).to have_content("$20.00")
-
-    potatoes_row = Dom::Order::ItemRow.find_by_name("Potatoes")
-    expect(potatoes_row.node).to have_content("5 boxes")
-    expect(potatoes_row.node).to have_content("$3.00")
-    expect(potatoes_row.node).to have_content("$15.00")
-  end
-
-  context "for delivery" do
-    it "displays the address" do
-      checkout
-      expect(page).to have_content("Thank you for your order")
-      expect(page).to have_content("Your order will be delivered to:")
-      expect(page).to have_content("500 S. State Street")
-      expect(page).to have_content("Ann Arbor, MI 48109")
-    end
-
-    it "displays the delivery times" do
-      checkout
-      expect(page).to have_content("Thank you for your order")
-      expect(page).to have_content("Items for delivery on:")
-      expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
-    end
-  end
-
-  context "for pickup" do
-    let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup,  market: market, day: 5) }
-
-    it "displays the address" do
+    it "displays the ordered products" do
       checkout
       expect(page).to have_content("Thank you for your order")
 
-      expect(page).to have_content("Your order can be picked up at")
-      expect(page).to have_content("44 E. 8th St")
-      expect(page).to have_content("Holland, MI 49423")
+      bananas_row = Dom::Order::ItemRow.find_by_name("Bananas")
+      expect(bananas_row.node).to have_content("10 boxes")
+      expect(bananas_row.node).to have_content("$0.50")
+      expect(bananas_row.node).to have_content("$5.00")
+
+      kale_row = Dom::Order::ItemRow.find_by_name("Kale")
+      expect(kale_row.node).to have_content("20 boxes")
+      expect(kale_row.node).to have_content("$1.00")
+      expect(kale_row.node).to have_content("$20.00")
+
+      potatoes_row = Dom::Order::ItemRow.find_by_name("Potatoes")
+      expect(potatoes_row.node).to have_content("5 boxes")
+      expect(potatoes_row.node).to have_content("$3.00")
+      expect(potatoes_row.node).to have_content("$15.00")
     end
 
-    it "displays the delivery times" do
+    context "for delivery" do
+      it "displays the address" do
+        checkout
+        expect(page).to have_content("Thank you for your order")
+        expect(page).to have_content("Your order will be delivered to:")
+        expect(page).to have_content("500 S. State Street")
+        expect(page).to have_content("Ann Arbor, MI 48109")
+      end
+
+      it "displays the delivery times" do
+        checkout
+        expect(page).to have_content("Thank you for your order")
+        expect(page).to have_content("Items for delivery on:")
+        expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
+      end
+    end
+
+    context "for pickup" do
+      let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup,  market: market, day: 5) }
+
+      it "displays the address" do
+        checkout
+        expect(page).to have_content("Thank you for your order")
+
+        expect(page).to have_content("Your order can be picked up at")
+        expect(page).to have_content("44 E. 8th St")
+        expect(page).to have_content("Holland, MI 49423")
+      end
+
+      it "displays the delivery times" do
+        checkout
+        expect(page).to have_content("Thank you for your order")
+
+        expect(page).to have_content("Items for pickup on:")
+        expect(page).to have_content("May 9, 2014 between 10:00AM and 12:00PM")
+      end
+    end
+
+    it "clears out the cart" do
       checkout
-      expect(page).to have_content("Thank you for your order")
-
-      expect(page).to have_content("Items for pickup on:")
-      expect(page).to have_content("May 9, 2014 between 10:00AM and 12:00PM")
-    end
-  end
-
-  it "clears out the cart" do
-    checkout
-    expect(cart_link.count.text).to eql("0")
-  end
-
-  it "inventory has been exhausted since placing product in cart" do
-    kale.lots.first.update_attribute(:quantity, 1)
-    potatoes.lots.each {|lot| lot.update(quantity: 1) }
-
-    checkout
-
-    expect(cart_link.count.text).to eql("3")
-    expect(page).to have_content("Your order could not be completed.")
-
-    expect(page).to have_content("Unfortunately, there are only 2 Potatoes available")
-    expect(page).to have_content("Unfortunately, there are only 1 Kale available")
-  end
-
-  it "clearing the cart during checkout preview" do
-    Dom::Cart::Item.all.each do |item|
-      item.remove!
+      expect(cart_link.count.text).to eql("0")
     end
 
-    expect(Dom::CartLink.first).to have_content("Removed from cart!")
+    it "inventory has been exhausted since placing product in cart" do
+      kale.lots.first.update_attribute(:quantity, 1)
+      potatoes.lots.each {|lot| lot.update(quantity: 1) }
 
-    click_button "Place Order"
-    expect(page).to have_content("Your cart is empty. Please add items to your cart before checking out.")
+      checkout
+
+      expect(cart_link.count.text).to eql("3")
+      expect(page).to have_content("Your order could not be completed.")
+
+      expect(page).to have_content("Unfortunately, there are only 2 Potatoes available")
+      expect(page).to have_content("Unfortunately, there are only 1 Kale available")
+    end
+
+    it "clearing the cart during checkout preview" do
+      Dom::Cart::Item.all.each do |item|
+        item.remove!
+      end
+
+      expect(Dom::CartLink.first).to have_content("Removed from cart!")
+
+      click_button "Place Order"
+      expect(page).to have_content("Your cart is empty. Please add items to your cart before checking out.")
+    end
   end
 
   context "via credit card" do
@@ -316,6 +320,37 @@ describe "Checking Out", js: true do
 
         expect(page).to have_content("Your order could not be completed.")
         expect(page).to have_content("Payment processor error")
+      end
+    end
+  end
+
+  context "payment method availability" do
+    context "enabled at market" do
+      before do
+        visit cart_path
+      end
+
+      it "should show purchase order payment option on the checkout page" do
+        expect(page).to have_content("Pay by Purchase Order")
+      end
+
+      it "should show credit card payment option on the checkout page" do
+        expect(page).to have_content("Pay by Credit Card")
+      end
+    end
+
+    context "disabled at market" do
+      before do
+        market.update(allow_credit_cards: false, allow_purchase_orders: false)
+        visit cart_path
+      end
+
+      it "should not show purchase order payment option on the checkout page" do
+        expect(page).to_not have_content("Pay by Purchase Order")
+      end
+
+      it "should not show credit card payment option on the checkout page" do
+        expect(page).to_not have_content("Pay by Credit Card")
       end
     end
   end
