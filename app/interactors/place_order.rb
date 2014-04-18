@@ -1,5 +1,5 @@
 class PlaceOrder
   include Interactor::Organizer
 
-  organize CreateOrder, StoreOrderFees, SendOrderEmails, DeleteCart
+  organize AttemptPurchaseOrderPurchase, AttemptCreditCardPurchase, CreateOrder, StoreOrderFees, SendOrderEmails, DeleteCart
 end

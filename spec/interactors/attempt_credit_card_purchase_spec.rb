@@ -1,0 +1,83 @@
+require 'spec_helper'
+
+describe AttemptCreditCardPurchase do
+  let!(:user)        { create(:user) }
+  let!(:buyer)       { create(:organization) }
+  let!(:product)     { create(:product, :sellable, organization: buyer) }
+  let!(:credit_card) { create(:bank_account, :credit_card, bankable: buyer) }
+  let!(:cart)        { create(:cart, organization: buyer) }
+  let!(:cart_item)   { create(:cart_item, product: product, cart: cart, quantity: 10)}
+  let(:params)       { { "payment_method" => "purchase order"} }
+
+  let(:balanced_hold)  { double("balanced hold", uri: '/balanced-hold-uri') }
+  let!(:balanced_card) { double("balanced card", hold: balanced_hold) }
+
+  subject {
+    class OrganizerWrapper
+      include Interactor::Organizer
+      organize [AttemptCreditCardPurchase]
+    end
+
+    OrganizerWrapper.perform(buyer: user, order_params: params, cart: cart)
+  }
+
+  context "purchase order" do
+    let(:params) { { "payment_method" => "purchase order" } }
+    it "noop's" do
+      expect(subject).to be_success
+    end
+  end
+
+  context "credit card" do
+    let!(:params) { { "payment_method" => "credit card", "credit_card" => "#{credit_card.id}" } }
+
+    before do
+      allow(Balanced::Card).to receive(:find).and_return(balanced_card)
+    end
+
+    context "valid credit card" do
+      context "successfully holds payment" do
+        it "sets the payment method on the order" do
+          expect {
+            subject
+          }.to change {
+            Payment.all.count
+          }.from(0).to(1)
+        end
+
+        it "creates a hold for the order amount" do
+          expect(subject).to be_success
+          expect(balanced_card).to have_received(:hold).with(amount: (cart.total*100).to_i, description: "LocalOrbit market purchase")
+        end
+      end
+
+      context "fails to hold payment" do
+        before do
+          expect(balanced_card).to receive(:hold).and_raise(RuntimeError)
+        end
+
+        it "returns as a failure" do
+          expect(subject).to be_failure
+        end
+
+        it "does not modify the order" do
+          subject
+
+          expect(Payment.all.count).to eql(0)
+        end
+      end
+    end
+
+    context "invalid credit card" do
+      let!(:params) { { "payment_method" => "credit card", "credit_card" => "0" } }
+
+      before do
+        allow(Balanced::Card).to receive(:find).and_raise(Exception)
+      end
+
+      it "returns as a failure" do
+        expect(subject).to be_failure
+      end
+    end
+  end
+end

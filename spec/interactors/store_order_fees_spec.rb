@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe StoreOrderFees do
+  let!(:user)              { create(:user) }
   let!(:market)            { create(:market, :with_address, subdomain: "ada", local_orbit_seller_fee: "1.5", local_orbit_market_fee: "1", market_seller_fee: "10", credit_card_seller_fee: "4", credit_card_market_fee: "4.5", ach_seller_fee: "2", ach_market_fee: "3", ach_fee_cap: "10") }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
   let!(:delivery)          { delivery_schedule.next_delivery }
@@ -17,12 +18,17 @@ describe StoreOrderFees do
   let!(:cart_item1)        { create(:cart_item, cart: cart, product: product1, quantity: 20) }
   let!(:cart_item2)        { create(:cart_item, cart: cart, product: product2, quantity: 15) }
   let!(:cart_item3)        { create(:cart_item, cart: cart, product: product3, quantity: 10) }
-  let!(:params)            { {payment_method: "purchase order"} }
+  let(:params)            { {payment_method: "purchase order"} }
 
-  subject { StoreOrderFees.perform(order_params: params, cart: cart, order: Order.create_from_cart(params, cart, create(:user))).order.reload.items.index_by {|item| item.product_id } }
+  subject do
+    order = Order.create_from_cart(params, cart, user)
+    order.update(payment_method: params[:payment_method])
+    StoreOrderFees.perform(order_params: params, cart: cart, order: order).order.reload.items.index_by {|item| item.product_id }
+  end
+
 
   context "purchase order" do
-    let(:params) { { payment_method: "purchase order", payment_note: "1234" } }
+    let!(:params) { { payment_method: "purchase order", payment_note: "1234" } }
 
     it "captures the fees at order creation" do
       item = subject[product1.id] # 100
@@ -50,7 +56,7 @@ describe StoreOrderFees do
 
   context "credit card" do
     # TODO: Determine the actual payment note
-    let(:params) { { payment_method: "credit card", payment_note: "ref-1234" } }
+    let!(:params) { { payment_method: "credit card", payment_note: "ref-1234" } }
 
     it "captures the fees at order creation" do
       item = subject[product1.id] # 100
@@ -78,7 +84,7 @@ describe StoreOrderFees do
 
   context "ach" do
     # TODO: Determine the actual payment note
-    let(:params) { { payment_method: "ach", payment_note: "ref-1234" } }
+    let!(:params) { { payment_method: "ach", payment_note: "ref-1234" } }
 
     it "captures the fees at order creation" do
       item = subject[product1.id] # 100
