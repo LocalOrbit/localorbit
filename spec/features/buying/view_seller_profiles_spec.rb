@@ -95,6 +95,14 @@ feature "View Seller Profiles" do
     end
   end
 
+  context "no available products" do
+    scenario "no offerings" do
+      visit seller_path(seller1)
+
+      expect(page).to_not have_content("Currently Selling")
+    end
+  end
+
   context "product categories" do
     let!(:product1) { create(:product, :sellable, organization: seller1, category: Category.find_by(name: "Empire Apples")) }
     let!(:product2) { create(:product, :sellable, organization: seller1, category: Category.find_by(name: "Macintosh Apples")) }

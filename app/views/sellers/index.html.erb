@@ -20,44 +20,45 @@
         <h2><%= "#{current_market.name} has no sellers at this time." %></h2>
       </div>
     <% else %>
-    <div class="row">
-      <div class="column column--half column--guttered">
-        <h1 class="fn story-header"><%= @current_seller.name %></h1>
+      <div class="row">
+        <div class="column column--half column--guttered">
+          <h1 class="fn story-header"><%= @current_seller.name %></h1>
 
-        <% if @current_seller.photo.present? %>
-          <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo", class: "photo seller-photo" %>
-        <% end %>
-
-      </div
-      ><div class="column column--half column--guttered">
-        <h1 class="story-header adr">
-          <% if @current_seller.billing_location.present? %>
-            <span class="locality"><%= @current_seller.billing_location.city %></span>, <span class="region"><%= @current_seller.billing_location.state %></span>
+          <% if @current_seller.photo.present? %>
+            <%= image_tag @current_seller.photo.remote_url, alt: "Profile photo", class: "photo seller-photo" %>
           <% end %>
-        </h1>
-        <img alt="map" src="<%= @current_seller.locations_map %>" class="seller-map">
+
+        </div
+        ><div class="column column--half column--guttered">
+          <h1 class="story-header adr">
+            <% if @current_seller.billing_location.present? %>
+              <span class="locality"><%= @current_seller.billing_location.city %></span>, <span class="region"><%= @current_seller.billing_location.state %></span>
+            <% end %>
+          </h1>
+          <img alt="map" src="<%= @current_seller.locations_map %>" class="seller-map">
+        </div>
       </div>
-    </div>
 
-    <div class="row">
+      <div class="row">
 
-      <div class="who-story column column--half column--guttered">
-        <h2 class="story-header">Who We Are</h2>
-        <%= simple_format @current_seller.who_story %>
-      </div
-      ><div class="how-story column column--half column--guttered">
-        <h2 class="story-header">How We Do It</h2>
-        <%= simple_format @current_seller.how_story %>
+        <div class="who-story column column--half column--guttered">
+          <h2 class="story-header">Who We Are</h2>
+          <%= simple_format @current_seller.who_story %>
+        </div
+        ><div class="how-story column column--half column--guttered">
+          <h2 class="story-header">How We Do It</h2>
+          <%= simple_format @current_seller.how_story %>
+        </div>
       </div>
-    </div>
 
-
-    <h2 class="heading-section">Currently Selling</h2>
-    <% @categories.each do |category| %>
-      <% if @product_groups[category.id].present? %>
-        <%= render "products/table", products: @product_groups[category.id], category: category %>
+      <% if !@product_groups.empty? %>
+        <h2 class="heading-section">Currently Selling</h2>
+        <% @categories.each do |category| %>
+          <% if @product_groups[category.id].present? %>
+            <%= render "products/table", products: @product_groups[category.id], category: category %>
+          <% end %>
+        <% end %>
       <% end %>
-    <% end %>
     <% end %>
   </div>
 </div>
