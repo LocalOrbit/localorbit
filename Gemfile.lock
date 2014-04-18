@@ -22,13 +22,13 @@ GIT
 
 GIT
   remote: git://github.com/collectiveidea/graticule.git
-  revision: 58e242f49d136e75d35e39e99af7e9e32bf9c7bf
+  revision: dc70dda0b411cb56ad9b688469455742a42f1763
   specs:
     graticule (2.4.0)
       activesupport
-      happymapper (>= 0.3.0)
       i18n
       json
+      nokogiri-happymapper (>= 0.5.9)
 
 GIT
   remote: git://github.com/jnicklas/capybara.git
@@ -119,7 +119,7 @@ GEM
     dragonfly (1.0.4)
       multi_json (~> 1.0)
       rack
-    dragonfly-s3_data_store (1.0.3)
+    dragonfly-s3_data_store (1.0.4)
       dragonfly (~> 1.0)
       fog
     draper (1.3.0)
@@ -163,8 +163,6 @@ GEM
       rack
     formatador (0.2.4)
     fssm (0.2.10)
-    happymapper (0.4.1)
-      libxml-ruby (~> 2.0)
     heroku (3.6.0)
       heroku-api (~> 0.3.17)
       launchy (>= 0.3.2)
@@ -197,7 +195,6 @@ GEM
     kgio (2.9.2)
     launchy (2.4.2)
       addressable (~> 2.3)
-    libxml-ruby (2.7.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -214,6 +211,8 @@ GEM
     newrelic_rpm (3.7.3.204)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    nokogiri-happymapper (0.5.9)
+      nokogiri (~> 1.5)
     orm_adapter (0.5.0)
     parser (2.1.8)
       ast (~> 1.1)
@@ -272,7 +271,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
     raindrops (0.13.0)
-    rake (10.3.0)
+    rake (10.3.1)
     rdoc (4.1.1)
       json (~> 1.4)
     request_store (1.0.5)
