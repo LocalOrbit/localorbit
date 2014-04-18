@@ -53,6 +53,8 @@ module Admin
         :who_story,
         :how_story,
         :photo,
+        :allow_purchase_orders,
+        :allow_credit_cards,
         locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax]
       )
     end

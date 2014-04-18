@@ -326,31 +326,68 @@ describe "Checking Out", js: true do
 
   context "payment method availability" do
     context "enabled at market" do
-      before do
-        visit cart_path
+      context "enabled at organization" do
+        before do
+          visit cart_path
+        end
+
+        it "should show purchase order payment option on the checkout page" do
+          expect(page).to have_content("Pay by Purchase Order")
+        end
+
+        it "should show credit card payment option on the checkout page" do
+          expect(page).to have_content("Pay by Credit Card")
+        end
       end
 
-      it "should show purchase order payment option on the checkout page" do
-        expect(page).to have_content("Pay by Purchase Order")
-      end
+      context "disabled at organization" do
+        before do
+          buyer.update(allow_credit_cards: false, allow_purchase_orders: false)
+          visit cart_path
+        end
 
-      it "should show credit card payment option on the checkout page" do
-        expect(page).to have_content("Pay by Credit Card")
+        it "should not show purchase order payment option on the checkout page" do
+          expect(page).to_not have_content("Pay by Purchase Order")
+        end
+
+        it "should not show credit card payment option on the checkout page" do
+          expect(page).to_not have_content("Pay by Credit Card")
+        end
       end
     end
 
     context "disabled at market" do
       before do
         market.update(allow_credit_cards: false, allow_purchase_orders: false)
-        visit cart_path
       end
 
-      it "should not show purchase order payment option on the checkout page" do
-        expect(page).to_not have_content("Pay by Purchase Order")
+      context "enabled at organization" do
+        before do
+          visit cart_path
+        end
+
+        it "should not show purchase order payment option on the checkout page" do
+          expect(page).to_not have_content("Pay by Purchase Order")
+        end
+
+        it "should not show credit card payment option on the checkout page" do
+          expect(page).to_not have_content("Pay by Credit Card")
+        end
       end
 
-      it "should not show credit card payment option on the checkout page" do
-        expect(page).to_not have_content("Pay by Credit Card")
+      context "disabled at organization" do
+        before do
+          buyer.update(allow_credit_cards: false, allow_purchase_orders: false)
+          visit cart_path
+        end
+
+        it "should not show purchase order payment option on the checkout page" do
+          expect(page).to_not have_content("Pay by Purchase Order")
+        end
+
+        it "should not show credit card payment option on the checkout page" do
+          expect(page).to_not have_content("Pay by Credit Card")
+        end
       end
     end
   end

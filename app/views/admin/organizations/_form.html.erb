@@ -72,6 +72,18 @@
       <%= f.text_area :how_story, class: "column column--full", rows: 4 %>
     </div>
 
+    <% if current_user.admin? || current_user.market_manager? %>
+      <div class="row row--field">
+        <div class="field column column--half column--guttered">
+          <label>Allowed payment methods</label><br>
+          <%= f.check_box :allow_purchase_orders %>
+          <%= f.label :allow_purchase_orders %><br>
+          <%= f.check_box :allow_credit_cards %>
+          <%= f.label :allow_credit_cards %><br>
+        </div>
+      </div>
+    <% end %>
+
   </fieldset>
 
   <% if @organization.new_record? %>
