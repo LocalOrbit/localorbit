@@ -17,6 +17,10 @@ FactoryGirl.define do
     ach_seller_fee         1.3
     ach_market_fee         0
     ach_fee_cap            8
+    allow_purchase_orders  true
+    allow_credit_cards     true
+    default_allow_purchase_orders false
+    default_allow_credit_cards    true
 
     trait :with_address do
       after(:create) {|m| create(:market_address, market: m) }
@@ -111,6 +115,9 @@ FactoryGirl.define do
   factory :organization do
     sequence(:name) {|n| "Organization #{n}" }
     can_sell true
+    allow_purchase_orders true
+    allow_credit_cards    true
+    allow_ach             true
 
     trait :seller do
       can_sell true

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       resources :market_managers,    as: :managers,   path: :managers
       resources :delivery_schedules, path: :deliveries
       resource  :fees, only: [:show, :update]
+      get :defaults
     end
 
     get "financials" => "financials#index"

@@ -154,11 +154,15 @@ describe "A Market Manager" do
 
       fill_in "Name", with: "SXSW Farmette"
       uncheck "Can sell product"
+      uncheck "Allow purchase orders"
       click_button "Save Organization"
 
       expect(page).to have_content("Saved SXSW Farmette")
       expect(find_field("Name").value).to eq("SXSW Farmette")
       expect(find_field("Can sell products")).to_not be_checked
+
+      expect(find_field("Allow purchase orders")).to_not be_checked
+      expect(find_field("Allow credit cards")).to be_checked
     end
 
     it "does not allow updates with a blank organization name" do

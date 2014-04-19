@@ -8,12 +8,19 @@ describe "admin manange organization" do
     sign_in_as(admin)
   end
 
-  it "create new organization" do
-    create(:market, name: "Market 1")
-    create(:market, name: "Market 2")
+  it "create new organization with multiple markets available", js: true do
+    create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: false)
+    create(:market, name: "Market 2", default_allow_purchase_orders: false, default_allow_credit_cards: true)
 
     visit "/admin/organizations"
     click_link "Add Organization"
+
+    expect(page).to have_content("Select a market to see payment options")
+
+    select "Market 1", from: "Market"
+
+    expect(find("#organization_allow_purchase_orders")).to be_checked
+    expect(find("#organization_allow_credit_cards")).to_not be_checked
 
     select "Market 2", from: "Market"
     fill_in "Name", with: "University of Michigan Farmers"
@@ -27,6 +34,35 @@ describe "admin manange organization" do
     fill_in "Postal Code", with: "49883"
     fill_in "Phone", with: "616-555-9983"
     fill_in "Fax", with: "616-555-9984"
+
+    expect(find("#organization_allow_purchase_orders")).to_not be_checked
+    expect(find("#organization_allow_credit_cards")).to be_checked
+
+    click_button "Add Organization"
+
+    expect(page).to have_content("University of Michigan Farmers has been created")
+  end
+
+  it "create new organization", js: true do
+    create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: false)
+
+    visit "/admin/organizations"
+    click_link "Add Organization"
+
+    fill_in "Name", with: "University of Michigan Farmers"
+    fill_in "Who",  with: "Who Story"
+    fill_in "How",  with: "How Story"
+
+    fill_in "Address Label", with: "Warehouse 1"
+    fill_in "Address", with: "1021 Burton St."
+    fill_in "City", with: "Orleans Twp."
+    select "Michigan", from: "State"
+    fill_in "Postal Code", with: "49883"
+    fill_in "Phone", with: "616-555-9983"
+    fill_in "Fax", with: "616-555-9984"
+
+    expect(find("#organization_allow_purchase_orders")).to be_checked
+    expect(find("#organization_allow_credit_cards")).to_not be_checked
 
     click_button "Add Organization"
 

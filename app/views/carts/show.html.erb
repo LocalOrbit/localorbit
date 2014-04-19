@@ -69,33 +69,37 @@
 
           <fieldset class="conditional">
             <legend class="haiku">Select Payment Method</legend>
-              <div class="field">
-                <label>
-                  <%= f.radio_button :payment_method, "purchase order" %>
-                  Pay by Purchase Order
-                </label>
-                <fieldset id="purchase-order-fields" class="payment-fields is-hidden">
-                  <div class="field">
-                    <%= f.label :payment_note, "PO Number" %><br>
-                    <%= f.text_field :payment_note, class: "input--short" %>
-                  </div>
-                </fieldset>
-              </div>
+              <% if allow_payment_option?(:allow_purchase_orders) %>
+                <div class="field">
+                  <label>
+                    <%= f.radio_button :payment_method, "purchase order" %>
+                    Pay by Purchase Order
+                  </label>
+                  <fieldset id="purchase-order-fields" class="payment-fields is-hidden">
+                    <div class="field">
+                      <%= f.label :payment_note, "PO Number" %><br>
+                      <%= f.text_field :payment_note, class: "input--short" %>
+                    </div>
+                  </fieldset>
+                </div>
+              <% end %>
 
-              <div class="field">
-                <label>
-                  <%= f.radio_button :payment_method, "credit card" %>
-                  Pay by Credit Card
-                </label>
-                <fieldset id="credit-card-fields" class="payment-fields is-hidden">
-                  <div class="field">
-                    <%= f.label :credit_card, "Saved credit cards" %><br>
-                    <%= f.select :credit_card, options_for_select(current_organization.decorate.credit_card_options) %>
-                  </div>
-                </fieldset>
-              </div>
+              <% if allow_payment_option?(:allow_credit_cards) %>
+                <div class="field">
+                  <label>
+                    <%= f.radio_button :payment_method, "credit card" %>
+                    Pay by Credit Card
+                  </label>
+                  <fieldset id="credit-card-fields" class="payment-fields is-hidden">
+                    <div class="field">
+                      <%= f.label :credit_card, "Saved credit cards" %><br>
+                      <%= f.select :credit_card, options_for_select(current_organization.decorate.credit_card_options) %>
+                    </div>
+                  </fieldset>
+                </div>
+              <% end %>
             </fieldset>
-          </fieldset>
+          </div>
         </div>
         <div class="form-actions">
           <span class="pull-left">

@@ -1,7 +1,7 @@
 class Admin::MarketsController < AdminController
   before_action :require_admin, only: [:new, :create]
   before_action :require_admin_or_market_manager, except: [:new, :create]
-  before_action :find_scoped_market, only: [:show, :update]
+  before_action :find_scoped_market, only: [:show, :update, :defaults]
 
   def index
     @markets = market_scope
@@ -35,6 +35,10 @@ class Admin::MarketsController < AdminController
     end
   end
 
+  def defaults
+    render partial: 'defaults'
+  end
+
   protected
 
   def market_params
@@ -53,7 +57,12 @@ class Admin::MarketsController < AdminController
       :policies,
       :logo,
       :photo,
+      :allow_purchase_orders,
+      :allow_credit_cards,
+      :default_allow_purchase_orders,
+      :default_allow_credit_cards
     )
+
   end
 
   def market_scope
@@ -61,6 +70,6 @@ class Admin::MarketsController < AdminController
   end
 
   def find_scoped_market
-    @market = market_scope.find(params[:id])
+    @market = market_scope.find(params[:id ] || params[:market_id])
   end
 end
