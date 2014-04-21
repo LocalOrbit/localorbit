@@ -304,6 +304,7 @@ th {
     }
     .total {
       width: 60px;
+      max-width: 60px;
       padding-top: 20px;
       line-height: 22px;
       font-size: 14px;
@@ -363,10 +364,12 @@ th {
 
     .pricing {
       width: 125px;
+      max-width: 125px;
     }
 
     .quantity {
       width: 60px;
+      max-width: 60px;
     }
 
     .short_description {
