@@ -2,7 +2,7 @@ module MapHelper
   def static_map(geocodes, center, width, height, zoom = 9)
     markers = "/"
     unless geocodes.empty?
-      markers += geocodes.map {|g| "pin-s-grocery(#{g.longitude},#{g.latitude})" }.join(",")
+      markers += geocodes.map {|g| "pin-s-circle(#{g.longitude},#{g.latitude})" }.join(",")
     end
     width = width > 640 ? 640 : width
     height = height > 640 ? 640 : height
