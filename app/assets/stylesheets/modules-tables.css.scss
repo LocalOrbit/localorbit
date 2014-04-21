@@ -304,6 +304,7 @@ th {
     }
     .total {
       width: 60px;
+      max-width: 60px;
       padding-top: 20px;
       line-height: 22px;
       font-size: 14px;
@@ -343,9 +344,9 @@ th {
     }
 
     .info {
-      width: 400px;
+      width: 366px;
+      max-width: 366px;
       p {
-        margin-left: 75px;
         overflow: hidden;
       }
       ul {
@@ -363,16 +364,21 @@ th {
 
     .pricing {
       width: 125px;
+      max-width: 125px;
     }
 
     .quantity {
       width: 60px;
+      max-width: 60px;
     }
 
     .short_description {
+      margin-left: 75px;
+
       > p {
         margin-top: 0;
         font-size: 13px;
+        word-wrap: break-word;
       }
       > .popup-toggle {
         display: inline-block;
