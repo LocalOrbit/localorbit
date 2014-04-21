@@ -343,9 +343,9 @@ th {
     }
 
     .info {
-      width: 400px;
+      width: 366px;
+      max-width: 366px;
       p {
-        margin-left: 75px;
         overflow: hidden;
       }
       ul {
@@ -370,9 +370,12 @@ th {
     }
 
     .short_description {
+      margin-left: 75px;
+
       > p {
         margin-top: 0;
         font-size: 13px;
+        word-wrap: break-word;
       }
       > .popup-toggle {
         display: inline-block;
