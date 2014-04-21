@@ -13,7 +13,7 @@
   <h2 class="order-heading">Your order <%= @order.display_delivery_or_pickup %></h2>
   <!-- <h3 class="fn order-subheading">Delivery Location Name</h3> -->
   <p class="adr">
-    <%#= link_to @product.organization.name, seller_path(@product.organization) %><br>
+    <%#= link_to @product.organization.name, seller_path(@product.organization) %>
     <span class="street-address"><%= @order.delivery_address %></span><br>
     <span class="locality"><%= @order.delivery_city %></span>, <span class="region"><%= @order.delivery_state %></span> <span class="postal-code"><%= @order.delivery_zip %></span>
   <% if @order.delivery_phone.present? %>
@@ -65,6 +65,5 @@
   </div>
 
   <div>
-    <p><strong>Delivery Status</strong> &nbsp; <%= @order.delivery_status.titleize %></p>
   </div>
 </div>
