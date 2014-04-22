@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
 
     @placed_order = PlaceOrder.perform(buyer: current_user, order_params: order_params, cart: current_cart)
     @order = @placed_order.order.decorate
-    
+
     if @placed_order.success?
       session.delete(:cart_id)
     else
