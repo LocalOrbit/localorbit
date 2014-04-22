@@ -1,4 +1,4 @@
-<h2>Current Sales</h2>
+<h1>Current Sales</h1>
 
 <% if current_market.orders.present? %>
   <%= render "current_sales" %>
@@ -8,7 +8,7 @@
 
 <hr>
 
-<h2>Products</h2>
+<h1>Products</h1>
 <% @products = Product.available_for_market(current_market) %>
 <% if @products.any? %>
   <%= render "products" %>

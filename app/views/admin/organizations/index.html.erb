@@ -3,7 +3,7 @@
     <%= link_to 'Add Organization', new_admin_organization_path, class: "btn btn--add btn--small" if current_user.admin? || current_user.market_manager? %>
   </div>
 
-  <table class="sortable organization-table">
+  <table class="sortable organization-table market-org-list">
     <thead>
       <tr>
         <th>Name</th>
