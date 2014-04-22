@@ -1,6 +1,6 @@
-<h1><i class="font-icon" data-icon="&#xe025;"></i>&nbsp; Recent Orders</h1>
-<%= link_to "View All Orders", admin_financials_orders_path %><br>
-
+<h2 class="dashboard-titles"><i class="font-icon" data-icon="&#xe025;"></i>&nbsp; Recent Orders</h2>
+<span class="supporting-text-mini">Displaying the 15 most recent orders.</span>
+<span class="dashboard-link"> <%= link_to "View All Orders", admin_financials_orders_path %></span>
 <% if @presenter.pending_orders.present? %>
   <table class="pending-orders-table <%= cycle "odd", "even" %>">
     <thead>
