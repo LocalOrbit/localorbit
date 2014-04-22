@@ -6,7 +6,7 @@ class Organization < ActiveRecord::Base
   has_many :markets, through: :market_organizations
   has_many :orders, inverse_of: :organization
 
-  has_many :products
+  has_many :products, inverse_of: :organization, autosave: true
   has_many :carts
 
   has_many :locations, inverse_of: :organization

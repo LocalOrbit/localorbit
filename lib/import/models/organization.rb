@@ -29,9 +29,7 @@ class Import::Organization < Import::Base
       organization.display_twitter = true
     end
 
-    products.each do |product|
-      organization.products << product.import
-    end
+    #products.each {|product| organization.products << product.import }
 
     organization
   end

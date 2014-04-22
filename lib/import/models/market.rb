@@ -4,10 +4,12 @@ class Import::Market < Import::Base
   self.primary_key = "domain_id"
 
   has_many :organizations, class_name: "::Import::Organization"
+  has_many :delivery_schedules, class_name: "Import::DeliverySchedule", foreign_key: :domain_id
   belongs_to :timezone, class_name: "Import::Timezone", foreign_key: :tz_id
 
   has_many :market_organizations, class_name: "Import::MarketOrganization", foreign_key: "domain_id"
-  has_many :organizations, through: :market_organizations, class_name: "Import::Organization"
+  has_many :organizations, -> { where("organizations_to_domains.orgtype_id = 3") }, through: :market_organizations, class_name: "Import::Organization"
+  has_many :market_org, -> { where("organizations_to_domains.orgtype_id = 2") }, through: :market_organizations, class_name: "Import::Organization", source: :organization
 
   def import
     market = ::Market.new(
@@ -34,8 +36,12 @@ class Import::Market < Import::Base
       market_seller_fee: fee_percen_hub
     )
 
-    organizations.each do |org|
-      puts org.name
+    organizations.each {|org| market.organizations << org.import }
+
+    market_org.each do |org|
+      org.addresses.each do |address|
+        market.addresses << address.import
+      end
     end
 
     market

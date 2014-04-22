@@ -10,4 +10,25 @@ class Import::Address < Import::Base
   def region_code
     region.code
   end
+
+  def import
+    imported = ::MarketAddress.new(
+      name: label,
+      address: address,
+      city: city,
+      state: region_code,
+      zip: zipcode,
+      phone: telephone,
+      fax: fax,
+      deleted_at: is_deleted == 1 ? DateTime.current : nil
+    )
+
+    puts imported
+
+    imported
+  end
+
+  def zipcode
+    postal_code.present? ? postal_code : "00000"
+  end
 end

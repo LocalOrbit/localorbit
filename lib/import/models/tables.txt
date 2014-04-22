@@ -86,7 +86,7 @@
 | product_delivery_cross_sells               |
 | product_images                             |
 | product_inventory                          | lots
-| product_prices                             |
+| product_prices                             | prices
 | products                                   | products
 | report_event                               |
 | report_event_types                         |
