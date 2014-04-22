@@ -101,6 +101,8 @@ class @EditTable
 
     @disableFields($row)
     $row.removeClass('editing')
+    if $row.attr('id') == "add-row"
+      $row.addClass('is-hidden')
 
     $(".add-toggle").removeClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', null).removeClass('disabled').off 'click'

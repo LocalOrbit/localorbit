@@ -404,6 +404,10 @@ th {
 .edit-cell {
   display: none;
 }
+.lot .edit-trigger {
+  min-width: 1em;
+  height: 1em;
+}
 .editing {
 
   .edit-cell {

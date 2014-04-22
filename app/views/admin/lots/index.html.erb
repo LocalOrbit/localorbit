@@ -27,7 +27,7 @@
       <th></th>
     </tr>
 
-    <tr class="lot add-row <%= @product.lots.count > 0 ? 'is-hidden' : '' %>" id="add-row">
+    <tr class="lot add-row <%= @product.lots.count > 0 ? 'is-hidden' : 'editing' %>" id="add-row">
       <td class="edit-cell"><%= Time.current.strftime('%m/%d/%Y') %></td>
       <td class="edit-cell"><%= f.text_field :number, size: 8  %></td>
       <td class="edit-cell">
