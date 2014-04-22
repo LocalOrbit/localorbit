@@ -1,17 +1,18 @@
-<h1><i class="font-icon" data-icon="&#xe022;"></i>&nbsp; Upcoming Deliveries</h1>
+<h2 class="dashboard-titles"><i class="font-icon" data-icon="&#xe022;"></i>&nbsp; Upcoming Deliveries</h2>
+<span class="supporting-text-mini">These orders are ready to be delivered.</span><br>
 <% if @presenter.upcoming_deliveries.present? %>
 
   <% @presenter.upcoming_deliveries.each do |delivery| %>
-    <div class="upcoming-delivery">
+    <div class="upcoming-delivery upcoming-delivery-mini">
       <h2 class="upcoming-delivery-date">Deliveries for <%= delivery.upcoming_delivery_date_heading %></h2>
       Deliver to:
       <div class="location-name"><%= delivery.deliver_to_name %></div>
       <div class="location"><%= delivery.deliver_to_location %></div>
 
-      <div class="seller-tools">
-        <div><%= link_to "Pick List", coming_soon_dashboard_path %></div>
-        <div><%= link_to "Individual\nPacking Slips", coming_soon_dashboard_path %></div>
-        <div><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery) %></div>
+      <div class="seller-tools-mini">
+        <%= link_to "Pick List", coming_soon_dashboard_path %>
+        <%= link_to "Individual\nPacking Slips", coming_soon_dashboard_path %>
+        <%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery) %>
       </div>
     </div>
   <% end %>
