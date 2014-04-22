@@ -523,3 +523,23 @@ th {
   }
 }
 
+.sold-table {
+  td {
+    font-size: 12px;
+    vertical-align: top;
+    padding-right: 5px;
+  }
+  .unit-price, .market {
+    font-size: 11px;
+    font-weight: 300;
+  }
+  .total-price {
+    font-weight: 700;
+  }
+  .order-number {
+    max-width: 130px;
+  }
+  .buyer-payment-status {
+    min-width: 50px;
+  }
+}

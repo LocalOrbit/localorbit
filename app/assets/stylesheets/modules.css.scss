@@ -1120,3 +1120,16 @@ label ~ .tooltip {
 .blank-state {
   text-align: center;
 }
+
+/** Apply Action Box **/
+
+.actions {
+  background: #D9F6F9;
+  @include border-radius(5px);
+  padding: 10px;
+  margin: -10px 0 20px 0;
+
+  h4 {
+    margin: 0;
+  }
+}

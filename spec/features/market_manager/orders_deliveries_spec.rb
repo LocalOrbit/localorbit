@@ -35,7 +35,7 @@ context "Viewing sold items" do
 
       sold_item = Dom::Admin::SoldItemRow.first
 
-      expect(sold_item.order_number).to eq("LO-ADA-0000001")
+      expect(sold_item.order_number).to have_content("LO-ADA-0000001")
       expect(sold_item.order_date).to eq("03/15/2014")
       expect(sold_item.buyer).to eq("Big Money")
       expect(sold_item.seller).to eq("Better foodz")
@@ -45,7 +45,7 @@ context "Viewing sold items" do
       expect(sold_item.unit_price).to eq("$2.00/Heads")
       expect(sold_item.delivery_status).to eq("Pending")
       expect(sold_item.buyer_payment_status).to eq("Unpaid")
-      expect(sold_item.seller_payment_status).to eq("Not Yet Implemented")
+      expect(sold_item.seller_payment_status).to eq("Unpaid (WIP)")
     end
 
     it "sets item delivery status" do
@@ -85,7 +85,7 @@ context "Viewing sold items" do
 
       sold_item = Dom::Admin::SoldItemRow.first
 
-      expect(sold_item.order_number).to eq("LO-ADA-0000001")
+      expect(sold_item.order_number).to have_content("LO-ADA-0000001")
       expect(sold_item.order_date).to eq("03/15/2014")
       expect(sold_item.buyer).to eq("Big Money")
       expect(sold_item.seller).to eq("Good foodz")
@@ -95,7 +95,7 @@ context "Viewing sold items" do
       expect(sold_item.unit_price).to eq("$6.50/Bushels")
       expect(sold_item.delivery_status).to eq("Pending")
       expect(sold_item.buyer_payment_status).to eq("Unpaid")
-      expect(sold_item.seller_payment_status).to eq("Not Yet Implemented")
+      expect(sold_item.seller_payment_status).to eq("Unpaid (WIP)")
     end
   end
 end
