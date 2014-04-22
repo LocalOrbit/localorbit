@@ -55,13 +55,13 @@
 | lo_delivery_statuses                       |
 | lo_fulfillment_order                       |
 | lo_fulfillment_order_status_changes        |
-| lo_order                                   |
+| lo_order                                   | orders
 | lo_order_address                           |
 | lo_order_deliveries                        |
 | lo_order_delivery_fees                     |
 | lo_order_discount_codes                    |
 | lo_order_item_status_changes               |
-| lo_order_line_item                         |
+| lo_order_line_item                         | order_items
 | lo_order_line_item_inventory               |
 | lo_order_modifiers                         |
 | lo_order_status_changes                    |
@@ -80,14 +80,14 @@
 | organizations_to_domains                   |
 | payables                                   |
 | payment_methods                            |
-| payments                                   |
+| payments                                   | payments
 | payments_ach_history                       |
 | product_alert_price                        |
 | product_delivery_cross_sells               |
 | product_images                             |
-| product_inventory                          |
+| product_inventory                          | lots
 | product_prices                             |
-| products                                   |
+| products                                   | products
 | report_event                               |
 | report_event_types                         |
 | service_fee_schedules                      |
