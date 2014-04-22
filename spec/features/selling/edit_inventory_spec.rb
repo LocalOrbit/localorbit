@@ -130,7 +130,7 @@ describe "Editing advanced inventory" do
 
         before do
           fill_in("lot_#{lot.id}_quantity", with: "9999")
-          fill_in("lot_#{lot.id}_expires_at", with: :expires_at_date)
+          fill_in("lot_#{lot.id}_expires_at", with:expires_at_date)
 
           click_button "Save"
         end
@@ -142,16 +142,14 @@ describe "Editing advanced inventory" do
 
         it "opens the lot row for editing" do
           lot_row = Dom::LotRow.first
-          lot_row.click_number
           expect(lot_row).to be_editable
 
           quantity_field = lot_row.node.find("#lot_#{lot.id}_quantity")
-          expect(quantity_field.value).to eql("93")
+          expect(quantity_field.value).to eql("9999")
         end
 
         it "allows the user cancel editing multiple times" do
           lot_row = Dom::LotRow.first
-          lot_row.click_number
           click_button "Cancel"
           expect(lot_row).not_to be_editable
           lot_row.click_number

@@ -1,6 +1,6 @@
 <%= render "admin/products/header" %>
 
-<%= form_for [:admin, @product, @price], html: { class: "row row--partial" } do |f| %>
+<%= form_for [:admin, @product, @price], html: { class: "row row--partial", novalidate: "novalidate" } do |f| %>
 
   <%= product_listing_disclaimer %>
 
@@ -40,7 +40,7 @@
       <tbody>
 
       <% @product.prices.view_sorted.decorate.each do |price| %>
-        <%= content_tag_for :tr, price, rel: "fields_price_#{price.id}", data: {"form-url" => url_for([:admin, @product, price]) } do %>
+        <%= content_tag_for :tr, price, rel: "price_#{price.id}", data: {"form-url" => url_for([:admin, @product, price]) } do %>
           <%= fields_for :price, price, index: price.id do |f| %>
             <td class="delete">
               <input type="checkbox" name="id[]" value="<%= price.id %>">

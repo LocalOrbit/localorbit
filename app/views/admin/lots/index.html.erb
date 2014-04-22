@@ -46,7 +46,7 @@
 
   <tbody>
   <% @product.lots.select(&:persisted?).each do |lot| %>
-    <%= content_tag_for :tr, lot, :fields, {class: 'lot', data: {"form-url" => url_for([:admin, lot.product, lot]) }} do %>
+    <%= content_tag_for :tr, lot, {class: 'lot', data: {"form-url" => url_for([:admin, lot.product, lot]) }, rel: "lot_#{lot.id}"} do %>
       <%= fields_for :lot, lot, index: lot.id do |lot_in_table| %>
         <td class="created_at">
           <div class="edit-trigger">
