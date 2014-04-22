@@ -92,6 +92,12 @@ describe Order do
       expect(subject).to be_invalid
       expect(subject).to have(1).error_on(:payment_method)
     end
+
+    it "reuirese items to be present" do
+      subject.items = []
+      expect(subject).to be_invalid
+      expect(subject).to have(1).error_on(:items)
+    end
   end
 
   describe ".orders_for_buyer" do

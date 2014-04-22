@@ -32,6 +32,7 @@ class Order < ActiveRecord::Base
   validates :payment_status, presence: true
   validates :placed_at, presence: true
   validates :total_cost, presence: true
+  validate :validate_items
 
   scope :recent, -> { order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
@@ -143,5 +144,11 @@ class Order < ActiveRecord::Base
   def invoice
     self.invoiced_at      = Time.current
     self.invoice_due_date = market.po_payment_term.days.from_now(invoiced_at)
+  end
+
+  private
+
+  def validate_items
+    errors.add(:items, "must be present") if items.empty?
   end
 end

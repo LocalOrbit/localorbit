@@ -214,3 +214,6 @@ $ ->
     $("#place-order-button").attr("disabled", false)
     $(".payment-fields").addClass("is-hidden")
     $(this).parents(".field").find(".payment-fields").removeClass("is-hidden")
+
+  $(".cart-page form").submit (e)->
+    $("#place-order-button").prop("disabled", true)
