@@ -36,7 +36,7 @@
       <td><%= check_box_tag "order_item_ids[]", order_item.id %></td>
       <td class="order-number">
         <%= content_tag "span", order_item.placed_at, class: "order-date" %><br>
-        <%= link_to order_item.order.order_number, coming_soon_dashboard_path, class: "order-number" %>
+        <%= link_to order_item.order.order_number, coming_soon_dashboard_path %>
       </td>
       <td class="order-seller"><%= link_to order_item.seller_name, [:admin, order_item.product.organization], class: "seller" %></td>
       <td class="order-buyer">
