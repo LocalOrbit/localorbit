@@ -70,50 +70,44 @@ class @EditTable
         @applyErrorValuesCallback(field)
 
   # Main actions
-  openEditRow: (row)->
-    @closeEditRow(@form.find('.open-row'), false)
+  openEditRow: ($row)->
+    @closeEditRow(@form.find('.editing'), false)
 
-    fieldsRow = @relatedRow(row)
-
-    action = fieldsRow.data("form-url")
+    action = $row.data("form-url")
     @setFormActionAndMethod(action, "put")
 
     @disableFields(@headerFieldsRow())
-    @enableFields(fieldsRow)
+    @enableFields($row)
 
-    @hiddenRow = row
-
-    row.hide()
-    fieldsRow.show()
-    fieldsRow.removeClass('is-hidden').addClass('open-row')
+    $row.addClass('editing')
     $('.add-toggle').addClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled').on 'click', (e) ->
       e.preventDefault()
 
   openAddRow: ()->
-    @closeEditRow(@form.find('.open-row'), false)
+    @closeEditRow(@form.find('.editing'), false)
 
     fieldsRow = $("#add-row")
 
     @enableFields(fieldsRow)
 
-    fieldsRow.show()
-    fieldsRow.removeClass('is-hidden').addClass('open-row')
+    fieldsRow.removeClass('is-hidden').addClass('editing')
     $('.add-toggle').addClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled').on 'click', (e) ->
       e.preventDefault()
 
-  closeEditRow: (row, cancel)->
-    return if row.length == 0
+  closeEditRow: ($row, cancel)->
+    return if $row.length == 0
 
-    @disableFields(row)
-    row.hide()
-    row.removeClass('open-row').addClass('is-hidden')
+    @disableFields($row)
+    $row.removeClass('editing')
+    if $row.attr('id') == "add-row"
+      $row.addClass('is-hidden')
 
     $(".add-toggle").removeClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', null).removeClass('disabled').off 'click'
 
-    @restoreOriginalValues(row) if cancel
+    @restoreOriginalValues($row) if cancel
 
     @enableFields(@headerFieldsRow())
 
@@ -126,12 +120,12 @@ class @EditTable
     context = this
     @form.on "click", ".edit-trigger", (e)->
       e.preventDefault()
-      context.openEditRow($($(this).parents("tr")[0]))
+      context.openEditRow($(this).parents("tr"))
 
     @form.on "click", "tr .cancel", (e)->
       e.preventDefault()
-      row = $($(this).parents("tr")[0])
-      context.closeEditRow(row, true)
+      $row = $(this).parents("tr")
+      context.closeEditRow($row, true)
 
     @form.on "click", ".add-toggle", (e) ->
       e.preventDefault()

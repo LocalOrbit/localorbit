@@ -72,7 +72,13 @@ td {
     padding-right: 7px;
     padding-left: 7px;
     margin: 2px 0;
-    font-size: 14px;
+    font-size: 12px;
+
+    &:focus {
+      height: 28px;
+      border-width: 2px;
+      margin: 0;
+    }
   }
 
 }
@@ -122,10 +128,6 @@ th {
 }
 
 .lot {
-  &:nth-child(even) {
-    background: #f4f4f4;
-  }
-
   > td {
     vertical-align: middle;
     white-space: nowrap
@@ -398,6 +400,27 @@ th {
       }
     }
   }
+
+.edit-cell {
+  display: none;
+}
+.lot .edit-trigger {
+  min-width: 1em;
+  height: 1em;
+}
+.editing {
+
+  .edit-cell {
+    display: block;
+  }
+  td.edit-cell {
+    display: table-cell;
+  }
+
+  .view-cell {
+    display: none;
+  }
+}
 
 .math {
   text-align: right;

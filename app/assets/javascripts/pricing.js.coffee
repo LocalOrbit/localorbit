@@ -7,7 +7,7 @@ $ ->
   bindCalculator = (el)->
     salePrice = $(el)
 
-    netPrice = salePrice.parents('tr').first().find('.net-price')
+    netPrice = salePrice.parents('tr').first().find('input.net-price')
 
     salePrice.change ->
       val = parseFloat($(this).val())

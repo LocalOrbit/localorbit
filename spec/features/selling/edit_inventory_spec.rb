@@ -68,7 +68,7 @@ describe "Editing advanced inventory" do
       let(:lot_row) { Dom::LotRow.first }
 
       before do
-        lot_row.node.find_link("Cancel").click
+        click_button("Cancel")
       end
 
       it "replaces the open field with the previous table row" do
@@ -94,7 +94,7 @@ describe "Editing advanced inventory" do
         fill_in("lot_#{lot.id}_number", with: 55)
         fill_in("lot_#{lot.id}_quantity", with: 66)
 
-        click_link "Cancel"
+        click_button "Cancel"
 
         Dom::LotRow.first.click_number
 
@@ -149,12 +149,13 @@ describe "Editing advanced inventory" do
         end
 
         it "allows the user cancel editing multiple times" do
-          click_link "Cancel"
-          expect(Dom::LotRow.first).not_to be_editable
-          Dom::LotRow.first.click_number
-          expect(Dom::LotRow.first).to be_editable
-          click_link "Cancel"
-          expect(Dom::LotRow.first).not_to be_editable
+          lot_row = Dom::LotRow.first
+          click_button "Cancel"
+          expect(lot_row).not_to be_editable
+          lot_row.click_number
+          expect(lot_row).to be_editable
+          click_button "Cancel"
+          expect(lot_row).not_to be_editable
         end
 
         it "fills in date fields with the correct format" do
