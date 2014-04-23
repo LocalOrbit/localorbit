@@ -21,23 +21,30 @@ feature "seller views their dashboard" do
   let!(:user) { create(:user, organizations: [organization]) }
 
   let!(:product) { create(:product, :sellable, organization: organization) }
+  let!(:order_item) { create(:order_item, product: product, delivery_status: "delivered") }
   let!(:order) do create(:order,
+                         items: [order_item],
                           delivery: delivery,
                           market: market,
                           placed_at: DateTime.parse("2014-03-30 12:00:00"),
                           order_number: "First Order"
                         )
   end
-  let!(:order_item) { create(:order_item, product: product, order: order, delivery_status: "delivered") }
-  let!(:extra_order) { create(:order, market: market, placed_at: DateTime.parse("2014-03-31 12:00:00"), order_number: "Extra Order") }
+
+  let!(:extra_order) {
+    create(:order,
+           items: create_list(:order_item, 1, product: product, delivery_status: "pending"),
+           market: market,
+           placed_at: DateTime.parse("2014-03-31 12:00:00"),
+           order_number: "Extra Order"
+          )
+  }
 
   after do
     Timecop.return
   end
 
   it "displays all recent orders" do
-    create(:order_item, product: product, order: extra_order, delivery_status: "canceled")
-
     visit dashboard_path
 
     expect(page).to have_content("Recent Orders")
@@ -50,7 +57,7 @@ feature "seller views their dashboard" do
 
     expect(first_row.order_number).to eq("Extra Order")
     expect(first_row.placed_on).to eq("3/31/2014")
-    expect(first_row.delivery).to eq("Canceled")
+    expect(first_row.delivery).to eq("Pending")
     expect(first_row.total).to eq("$6.99")
 
     second_row = order_rows.last

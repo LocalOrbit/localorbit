@@ -13,14 +13,14 @@ feature "a market manager viewing their dashboard" do
 
   describe "Current Sales tables" do
     it "lists all sales for the currently managed market ordered by creation date" do
-      order1 = create(:order, order_number: "LO-14-TEST-2", market: market)
-      order2 = create(:order, total_cost: 50, market: market, placed_at: DateTime.parse("2014-04-01 12:00:00"), order_number: "LO-14-TEST")
       product = create(:product, :sellable)
+
+      create(:order, :with_items, order_number: "LO-14-TEST-2", market: market)
+      create(:order, :with_items, total_cost: 50, market: market, placed_at: DateTime.parse("2014-04-01 12:00:00"), order_number: "LO-14-TEST")
+
       product.organization.markets << market
 
-      create(:order_item, product: product, order: order1, delivery_status: "pending")
-      create(:order_item, product: product, order: order2, delivery_status: "pending")
-      create(:order)
+      create(:order, :with_items)
 
       visit dashboard_path
 

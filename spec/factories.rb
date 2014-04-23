@@ -97,6 +97,13 @@ FactoryGirl.define do
     payment_status   "unpaid"
 
     total_cost       100.99
+
+    trait :with_items do
+      before(:create) do |order|
+        order.items = create_list(:order_item, 1, product: create(:product, :sellable))
+      end
+    end
+
   end
 
   factory :order_item do

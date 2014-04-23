@@ -12,18 +12,12 @@ feature "sending invoices" do
 
   let!(:product) { create(:product, :sellable, organization: seller) }
 
-  let!(:order1) { create(:order, market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-001", total_cost: 210, placed_at: Time.zone.parse("2014-04-01")) }
-  let!(:order_item1) { create(:order_item, order: order1, product: product) }
-  let!(:order2) { create(:order, market: market, organization: buyer, invoiced_at: 1.day.ago, invoice_due_date: 13.days.from_now) }
-  let!(:order_item2) { create(:order_item, order: order2, product: product) }
-  let!(:order3) { create(:order, market: market, organization: buyer, payment_method: 'credit card') }
-  let!(:order_item3) { create(:order_item, order: order3, product: product) }
-  let!(:order4) { create(:order, market: market, organization: buyer, payment_method: 'ach') }
-  let!(:order_item4) { create(:order_item, order: order4, product: product) }
-  let!(:order5) { create(:order, market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-005", total_cost: 420, placed_at: Time.zone.parse("2014-04-02")) }
-  let!(:order_item5) { create(:order_item, order: order5, product: product) }
-  let!(:order6) { create(:order, market: market, organization: buyer2, payment_method: 'purchase order', order_number: "LO-006", total_cost: 310, placed_at: Time.zone.parse("2014-04-03")) }
-  let!(:order_item6) { create(:order_item, order: order6, product: product) }
+  let!(:order1) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-001", total_cost: 210, placed_at: Time.zone.parse("2014-04-01")) }
+  let!(:order2) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer, invoiced_at: 1.day.ago, invoice_due_date: 13.days.from_now) }
+  let!(:order3) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: 'credit card') }
+  let!(:order4) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: 'ach') }
+  let!(:order5) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-005", total_cost: 420, placed_at: Time.zone.parse("2014-04-02")) }
+  let!(:order6) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer2, payment_method: 'purchase order', order_number: "LO-006", total_cost: 310, placed_at: Time.zone.parse("2014-04-03")) }
 
   before do
     switch_to_subdomain(market.subdomain)

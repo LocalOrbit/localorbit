@@ -22,11 +22,11 @@ describe "Individual pack slips" do
     let!(:friday_schedule_schedule) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5) }
     let!(:friday_delivery) { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014"))}
 
-    let!(:sellers_order)      { create(:order, organization: buyer1, market: market, delivery: friday_delivery) }
-    let!(:sellers_order_item) { create(:order_item, order: sellers_order, product: sellers_product, quantity: 1)}
+    let!(:sellers_order_item) { create(:order_item, product: sellers_product, quantity: 1)}
+    let!(:sellers_order)      { create(:order, items:[sellers_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
 
-    let!(:others_order)      { create(:order, organization: buyer2, market: market, delivery: friday_delivery) }
-    let!(:others_order_item) { create(:order_item, order: others_order, product: others_product, quantity: 2)}
+    let!(:others_order_item) { create(:order_item, product: others_product, quantity: 2)}
+    let!(:others_order)      { create(:order, items: [others_order_item], organization: buyer2, market: market, delivery: friday_delivery) }
 
     context "as a market manager" do
       let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
@@ -97,11 +97,11 @@ describe "Individual pack slips" do
     let!(:friday_schedule_schedule) { create(:delivery_schedule, market: market, day: 5) }
     let!(:friday_delivery) { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014"))}
 
-    let!(:sellers_order)      { create(:order, organization: buyer1, market: market, delivery: friday_delivery) }
-    let!(:sellers_order_item) { create(:order_item, order: sellers_order, product: sellers_product, quantity: 1)}
+    let!(:sellers_order_item) { create(:order_item, product: sellers_product, quantity: 1)}
+    let!(:sellers_order)      { create(:order, items:[sellers_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
 
-    let!(:others_order)      { create(:order, organization: buyer2, market: market, delivery: friday_delivery) }
-    let!(:others_order_item) { create(:order_item, order: others_order, product: others_product, quantity: 2)}
+    let!(:others_order_item) { create(:order_item, product: others_product, quantity: 2)}
+    let!(:others_order)      { create(:order, items: [others_order_item], organization: buyer2, market: market, delivery: friday_delivery) }
 
     context "as a market manager" do
       let!(:user) { create(:user, :market_manager, managed_markets: [market]) }

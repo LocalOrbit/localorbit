@@ -18,15 +18,15 @@ describe "Order summary" do
   let!(:friday_schedule_schedule) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5) }
   let!(:friday_delivery) { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014"))}
 
-  let!(:sellers_order1)      { create(:order, organization: buyer1, market: market, delivery: friday_delivery) }
-  let!(:sellers_order1_item1) { create(:order_item, order: sellers_order1, product: sellers_product1, quantity: 3)}
-  let!(:sellers_order1_item2) { create(:order_item, order: sellers_order1, product: sellers_product3, quantity: 9)}
+  let!(:sellers_order1_item1) { create(:order_item, product: sellers_product1, quantity: 3)}
+  let!(:sellers_order1_item2) { create(:order_item, product: sellers_product3, quantity: 9)}
+  let!(:sellers_order1)      { create(:order, items: [sellers_order1_item1, sellers_order1_item2], organization: buyer1, market: market, delivery: friday_delivery) }
 
-  let!(:sellers_order2)      { create(:order, organization: buyer2, market: market, delivery: friday_delivery) }
-  let!(:sellers_order2_item) { create(:order_item, order: sellers_order2, product: sellers_product2, quantity: 6)}
+  let!(:sellers_order2_item) { create(:order_item, product: sellers_product2, quantity: 6)}
+  let!(:sellers_order2)      { create(:order, items:[sellers_order2_item], organization: buyer2, market: market, delivery: friday_delivery) }
 
-  let!(:others_order)      { create(:order, organization: buyer2, market: market, delivery: friday_delivery) }
-  let!(:others_order_item) { create(:order_item, order: others_order, product: others_product, quantity: 2)}
+  let!(:others_order_item) { create(:order_item, product: others_product, quantity: 2)}
+  let!(:others_order)      { create(:order, items: [others_order_item], organization: buyer2, market: market, delivery: friday_delivery) }
 
   before do
     Timecop.travel("May 5, 2014")

@@ -9,16 +9,16 @@ feature "Viewing orders" do
   let!(:product1)    { create(:product, :sellable, organization: seller_org1) }
   let!(:product2)    { create(:product, :sellable, organization: seller_org2) }
 
-  let!(:order1)      { create(:order, organization: buyer_org, market: market, total_cost: 27.96) }
-  let!(:order_item1) { create(:order_item, order: order1, product: product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40) }
-  let!(:order_item2) { create(:order_item, order: order1, product: product2, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
+  let!(:order_item1) { create(:order_item, product: product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40) }
+  let!(:order_item2) { create(:order_item, product: product2, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
+  let!(:order1)      { create(:order, items: [order_item1, order_item2], organization: buyer_org, market: market, total_cost: 27.96) }
 
-  let!(:order2)      { create(:order, organization: buyer_org, market: market, total_cost: 41.95) }
-  let!(:order_item3) { create(:order_item, order: order2, product: product1, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
-  let!(:order_item4) { create(:order_item, order: order2, product: product2, quantity: 3, unit_price: 7.99, market_seller_fee: 1.20, local_orbit_seller_fee: 0.96) }
+  let!(:order_item3) { create(:order_item, product: product1, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
+  let!(:order_item4) { create(:order_item, product: product2, quantity: 3, unit_price: 7.99, market_seller_fee: 1.20, local_orbit_seller_fee: 0.96) }
+  let!(:order2)      { create(:order, items: [order_item3, order_item4], organization: buyer_org, market: market, total_cost: 41.95) }
 
-  let!(:order3)      { create(:order, organization: buyer_org, market: market) }
-  let!(:order_item4) { create(:order_item, order: order3, product: product2) }
+  let!(:order_item5) { create(:order_item, product: product2) }
+  let!(:order3)      { create(:order, items: [order_item5], organization: buyer_org, market: market) }
 
   before do
     switch_to_subdomain(market.subdomain)
