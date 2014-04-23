@@ -175,6 +175,7 @@ module Dom
 
   module Admin
     module Financials
+
       class InvoiceRow < Domino
         selector ".invoice-row"
 
@@ -199,6 +200,13 @@ module Dom
         def enter_receipt
           node.click_link("Enter Receipt")
         end
+      end
+
+      class OverviewStat < Domino
+        selector ".overview tr"
+
+        attribute :title
+        attribute :amount
       end
 
       class PaymentRow < Domino
@@ -322,6 +330,7 @@ module Dom
         @cells ||= @node.all("td")
       end
     end
+
 
     class PickListItem < Domino
       selector ".pick-list-item"

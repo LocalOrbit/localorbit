@@ -40,6 +40,16 @@ class Order < ActiveRecord::Base
   scope :invoiced, -> { where(payment_method: "purchase order").where.not(invoiced_at: nil) }
   scope :unpaid, -> { where(payment_status: "unpaid") }
 
+  scope :with_items, lambda { joins("LEFT JOIN order_items on orders.id = order_items.order_id") }
+  scope :payable_on, lambda { |time|
+    with_items.having("MAX(order_items.delivered_at) >=?", time + 2.days)
+      .group("orders.id")
+  }
+
+  scope :paid_before, lambda { |time|
+    with_items.having()
+  }
+
   def self.orders_for_buyer(user)
     if user.admin?
       all
@@ -71,6 +81,12 @@ class Order < ActiveRecord::Base
              LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id").
       where("user_organizations.user_id = :user_id", user_id: user.id)
     end
+  end
+
+  def self.undelivered_orders_for_seller(user)
+    scope = orders_for_seller(user)
+    scope = scope.joins(:order_items) if user.admin?
+    scope.where(order_items: {delivery_status: "pending"})
   end
 
   def self.undelivered_orders_for_seller(user)
