@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140421152156) do
+ActiveRecord::Schema.define(version: 20140423192833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20140421152156) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.integer  "legacy_id"
   end
 
   add_index "delivery_schedules", ["market_id"], name: "index_delivery_schedules_on_market_id", using: :btree
@@ -151,6 +152,7 @@ ActiveRecord::Schema.define(version: 20140421152156) do
     t.datetime "deleted_at"
     t.string   "phone"
     t.string   "fax"
+    t.integer  "legacy_id"
   end
 
   add_index "locations", ["organization_id"], name: "index_locations_on_organization_id", using: :btree
@@ -163,6 +165,7 @@ ActiveRecord::Schema.define(version: 20140421152156) do
     t.string   "number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "legacy_id"
   end
 
   add_index "lots", ["product_id"], name: "index_lots_on_product_id", using: :btree
@@ -186,6 +189,7 @@ ActiveRecord::Schema.define(version: 20140421152156) do
     t.datetime "deleted_at"
     t.string   "phone"
     t.string   "fax"
+    t.integer  "legacy_id"
   end
 
   add_index "market_addresses", ["market_id"], name: "index_market_addresses_on_market_id", using: :btree
@@ -232,6 +236,7 @@ ActiveRecord::Schema.define(version: 20140421152156) do
     t.boolean  "default_allow_purchase_orders",                         default: false
     t.boolean  "default_allow_credit_cards",                            default: true
     t.boolean  "default_allow_ach",                                     default: true
+    t.integer  "legacy_id"
   end
 
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
@@ -320,6 +325,7 @@ ActiveRecord::Schema.define(version: 20140421152156) do
     t.boolean  "allow_purchase_orders"
     t.boolean  "allow_credit_cards"
     t.boolean  "allow_ach"
+    t.integer  "legacy_id"
   end
 
   create_table "payments", force: true do |t|
@@ -332,6 +338,7 @@ ActiveRecord::Schema.define(version: 20140421152156) do
     t.datetime "updated_at"
     t.string   "status"
     t.string   "balanced_uri"
+    t.integer  "legacy_id"
   end
 
   create_table "prices", force: true do |t|
@@ -342,6 +349,7 @@ ActiveRecord::Schema.define(version: 20140421152156) do
     t.decimal  "sale_price",      precision: 10, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "legacy_id"
   end
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
@@ -364,12 +372,13 @@ ActiveRecord::Schema.define(version: 20140421152156) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.integer  "top_level_category_id"
     t.string   "image_uid"
+    t.integer  "top_level_category_id"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"
     t.boolean  "use_all_deliveries",    default: true
+    t.integer  "legacy_id"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

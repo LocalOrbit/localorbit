@@ -10,26 +10,31 @@ class Import::Organization < Import::Base
   has_many :markets, through: :market_organizations, class_name: "Import::Market", foreign_key: "org_id"
 
   def import
-    organization = ::Organization.new(
-      name: name,
-      can_sell: !!allow_sell,
-      who_story: profile,
-      how_story: product_how,
-      facebook: facebook,
-      twitter: twitter,
-      allow_ach: payment_allow_ach,
-      allow_purchase_orders: payment_allow_purchaseorder,
-      allow_credit_cards: payment_allow_paypal
-    )
+    organization = ::Organization.where(legacy_id: org_id).first
 
-    case social_option_id
-    when 1
-      organization.display_facebook = true
-    when 2
-      organization.display_twitter = true
+    if organization.nil?
+      organization = ::Organization.new(
+        legacy_id: org_id,
+        name: name,
+        can_sell: !!allow_sell,
+        who_story: profile,
+        how_story: product_how,
+        facebook: facebook,
+        twitter: twitter,
+        allow_ach: payment_allow_ach,
+        allow_purchase_orders: payment_allow_purchaseorder,
+        allow_credit_cards: payment_allow_paypal
+      )
+
+      case social_option_id
+      when 1
+        organization.display_facebook = true
+      when 2
+        organization.display_twitter = true
+      end
+
+      #products.each {|product| organization.products << product.import }
     end
-
-    #products.each {|product| organization.products << product.import }
 
     organization
   end

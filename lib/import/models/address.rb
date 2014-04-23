@@ -12,19 +12,21 @@ class Import::Address < Import::Base
   end
 
   def import
-    imported = ::MarketAddress.new(
-      name: label,
-      address: address,
-      city: city,
-      state: region_code,
-      zip: zipcode,
-      phone: telephone,
-      fax: fax,
-      deleted_at: is_deleted == 1 ? DateTime.current : nil
-    )
-
-    puts imported
-
+    imported = ::MarketAddress.where(legacy_id: address_id).first
+    if imported.nil?
+      imported = ::MarketAddress.new(
+        legacy_id: address_id,
+        name: label,
+        address: address,
+        city: city,
+        state: region_code,
+        zip: zipcode,
+        phone: telephone,
+        fax: fax,
+        deleted_at: is_deleted == 1 ? DateTime.current : nil
+      )
+    end
+    
     imported
   end
 
