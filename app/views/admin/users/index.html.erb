@@ -1,7 +1,7 @@
 <%= render 'admin/users/header' %>
 
 <div class="row row--partial">
-  <div class="column column--three-fourths">
+  <div class="column column--full">
 
     <% if @users.any? %>
       <table class="sortable">
@@ -13,11 +13,11 @@
           </tr>
         </thead>
         <% @users.each do |user| %>
-        <tr>
-          <td><%= user.name %></td>
+        <tr class="user-row">
+          <td class="user-list-name"><%= user.name %></td>
           <td><%= user.email %></td>
           <td>
-            <ul>
+            <ul class="affiliations">
               <% user.managed_markets.each do |market| %>
                 <li><%= market.name %>, Market Manager</li>
               <% end %>
