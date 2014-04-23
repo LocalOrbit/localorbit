@@ -5,6 +5,7 @@ class Import::Organization < Import::Base
 
   has_many :products, class_name: "Import::Product", foreign_key: "org_id"
   has_many :addresses, class_name: "Import::Address", foreign_key: "org_id"
+  has_many :users, class_name: "Import::User", foreign_key: "org_id"
 
   has_many :market_organizations, class_name: "Import::MarketOrganization", foreign_key: "org_id"
   has_many :markets, through: :market_organizations, class_name: "Import::Market", foreign_key: "org_id"
@@ -34,6 +35,13 @@ class Import::Organization < Import::Base
       end
 
       #products.each {|product| organization.products << product.import }
+    end
+
+    users.each do |user|
+      if user.is_deleted == 0
+        imported_user = user.import
+        organization.users << imported_user if imported_user
+      end
     end
 
     organization

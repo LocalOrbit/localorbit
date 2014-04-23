@@ -4,4 +4,18 @@ class Import::User < Import::Base
   self.primary_key = "entity_id"
 
   belongs_to :organization, class_name: "Import::Organization", foreign_key: :org_id
+
+  def import
+    user = ::User.where(email: email).first
+
+    if user.nil? && email =~ /\A\S+@.+\.\S+\z/
+      user = ::User.create(
+        email: email,
+        password: 'imported1',
+        password_confirmation: 'imported1'
+      )
+    end
+
+    user
+  end
 end

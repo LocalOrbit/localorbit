@@ -47,6 +47,13 @@ class Import::Market < Import::Base
         org.addresses.each do |address|
           market.addresses << address.import
         end
+
+        org.users.each do |user|
+          if user.is_deleted == 0
+            imported_user = user.import
+            market.managers << imported_user if imported_user
+          end
+        end
       end
 
       market.save
