@@ -73,6 +73,12 @@ Rails.application.routes.draw do
       get :preview
     end
 
+    resources :invoices, only: :show do
+      member do
+        get "invoice" => "invoices#show"
+      end
+    end
+
     resource :unit_request, only: :create
     resource :category_request, only: :create
   end

@@ -35,9 +35,11 @@ gem 'interactor-rails'
 gem 'jbuilder'
 gem 'kaminari'
 gem 'newrelic_rpm'
+gem 'pdfkit'
 gem 'periscope-activerecord'
 gem 'rack-canonical-host'
 gem 'simpleidn'
+gem 'wkhtmltopdf-binary'
 
 group :doc do
   gem 'sdoc', require: false
