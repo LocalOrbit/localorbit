@@ -16,6 +16,7 @@
 
 //= depend_on_asset "backgrounds/brown-paper.jpg"
 
+@import "mixins";
 
 body {
   height: 100vh;
@@ -32,7 +33,7 @@ body {
 }
 
 a {
-  color: #3F5D98;
+  color: $link;
   text-decoration: none;
 
   &:hover {

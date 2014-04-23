@@ -219,7 +219,6 @@
     a {
       display: block;
       padding: 0 15px;
-      color: #4162A1;
     }
     > li {
       display: block;
@@ -399,7 +398,7 @@
   }
 
   a {
-    color: #3F5D99;
+    color: $link;
 
     &:hover {
       color: #fff;
@@ -569,7 +568,6 @@
 
 .subheading--sidebar {
   margin: 0;
-  color: inherit;
   font-family: OpenSans, "Open Sans", sans-serif;
   font-size: 12px;
   font-weight: normal;
@@ -874,7 +872,6 @@
   display: inline-block;
   min-height: 10px;
   padding-left: 20px;
-  color: #43639f;
   background: asset_url('icon-export.png') left center no-repeat;
   background: asset_url('icon-export@2x.png') left center / 13px 10px no-repeat;
 }
@@ -1080,7 +1077,7 @@ label ~ .tooltip {
 .tooltip--notice {
   &:after {
     border-color: $notice_text;
-    color: $notice-text;
+    color: $notice_text;
     background: $notice_bg;
   }
 }
