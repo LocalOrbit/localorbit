@@ -5,7 +5,7 @@
       <th>Placed On</th>
       <th>Total</th>
       <th>Delivery</th>
-      <th>Payment</th>
+      <th>Buyer Payment</th>
     </tr>
   </thead>
 <% current_market.orders.limit(15).order("created_at DESC").each do |order| %>
