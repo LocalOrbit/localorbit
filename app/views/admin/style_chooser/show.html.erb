@@ -1,0 +1,27 @@
+<%= render "admin/markets/header" %>
+
+<%= render "shared/errors", resource: @market %>
+
+<div class="row row--partial">
+  <%= form_for @market, url: [:admin, @market, :style_chooser], html: { class: "column column--two-thirds" } do |f| %>
+    <fieldset>
+      <legend>Style Chooser</legend>
+      <div class="field">
+        <%= f.label :text_color %><br>
+        <%= f.color_field :text_color %>
+      </div>
+      <div class="field">
+        <%= f.label :background_color %><br>
+        <%= f.color_field :background_color %>
+      </div>
+      <div class="field">
+        <%= f.label :background_image %><br>
+        <%= f.select :background_image, background_options, include_blank: 'Solid Color' %>
+      </div>
+    </fieldset>
+
+    <div class="form-actions">
+      <%= f.submit "Update Styles" %>
+    </div>
+  <% end %>
+</div>
