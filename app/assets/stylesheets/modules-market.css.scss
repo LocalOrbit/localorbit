@@ -1,3 +1,5 @@
+@import "mixins";
+
 .photo-header {
   position: relative;
   height: 0;
@@ -42,7 +44,7 @@
 }
 
 .seller-map-toggle {
-  color: #425fa3;
+  color: $link;
   font-size: 12px;
 }
 

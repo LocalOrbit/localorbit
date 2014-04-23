@@ -11,15 +11,15 @@
 }
 
 a.cart .message {
-  width: 140px;
-  margin-top: 4px;
-  margin-left: -34px;
   position: absolute;
   z-index: 1;
-  text-shadow: 0 -1px rgba(0,0,0,0.10);
-  background: #eaf9db;
-  color: #2B8604;
+  width: 140px;
   padding: 5px 5px;
-  font-weight: bold;
   border: 1px solid #B9B9BA;
+  margin-top: 4px;
+  margin-left: -34px;
+  color: #3E8212;
+  background: #eaf9db;
+  font-weight: bold;
+  text-shadow: 0 -1px rgba(0,0,0,0.10);
 }
