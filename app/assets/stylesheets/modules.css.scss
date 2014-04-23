@@ -1130,3 +1130,25 @@ label ~ .tooltip {
     margin: 0;
   }
 }
+
+/** Password Reset Pages **/
+
+.password-reset {
+  margin: 0 auto;
+  width: 300px;
+
+  .email-address-reset {
+    input {
+      width: 100%;
+    }
+  } 
+
+  .sign-in {
+    margin-top: 25px;
+    float: left;
+  }
+  .send-instructions {
+    margin-top: 10px;
+    float: right;
+  }
+}
