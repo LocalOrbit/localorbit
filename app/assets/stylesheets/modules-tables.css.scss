@@ -524,6 +524,7 @@ th {
 }
 
 .sold-table {
+  margin-bottom: 20px;
   td {
     font-size: 12px;
     vertical-align: top;
@@ -538,6 +539,9 @@ th {
   }
   .order-number {
     max-width: 130px;
+    .order-number-bold {
+      font-weight: 700;
+    }
   }
   .buyer-payment-status {
     min-width: 50px;
