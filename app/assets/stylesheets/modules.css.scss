@@ -1085,14 +1085,30 @@ label ~ .tooltip {
 /** Seller Profiles */
 .seller-map,
 .seller-photo {
+  position: relative;
   height: 240px;
-  width: 330px;
   overflow: hidden;
   margin-bottom: 2em;
 
-  img {
-    max-width: 100%;
+}
+.seller-map {
+  > img {
+    width: 100%;
+  }
+}
+.seller-photo {
+  > img {
+    position: relative;
   } 
+}
+.transforms {
+  .seller-photo > img {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+  }
 }
 
 /** Upcoming Delivery */
