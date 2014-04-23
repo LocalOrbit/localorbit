@@ -2,6 +2,15 @@ $ ->
   sandbox = document.createElement('div')
   window.features = {}
 
+  window.detect_transforms = ->
+    ext = false
+    styles = ["t", "msT", "OT", "WebkitT", "MozT"]
+    for p in styles
+      if sandbox.style[ p + "ransform"] != undefined
+        $('body').addClass('transforms')
+        features.transforms = true
+        break
+
   window.detect_transitions = ->
     ext = false
     styles = ["t", "msT", "OT", "WebkitT", "MozT"]
@@ -39,5 +48,6 @@ $ ->
           $('.flash').fadeOut(500)
         , 3000
 
+  window.detect_transforms()
   window.detect_transitions()
   window.fade_flash()
