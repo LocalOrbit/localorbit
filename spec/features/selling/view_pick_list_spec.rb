@@ -13,11 +13,11 @@ describe "Pick list" do
   let!(:buyer1) { create(:organization, :buyer, :single_location, markets: [market]) }
   let!(:buyer2) { create(:organization, :buyer, :single_location, markets: [market]) }
 
-  let!(:sellers_order)      { create(:order, organization: buyer1, market: market, delivery: friday_delivery) }
-  let!(:sellers_order_item) { create(:order_item, order: sellers_order, product: sellers_product, quantity: 1)}
+  let!(:sellers_order_item) { create(:order_item, product: sellers_product, quantity: 1)}
+  let!(:sellers_order)      { create(:order, items: [sellers_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
 
-  let!(:others_order)      { create(:order, organization: buyer2, market: market, delivery: friday_delivery) }
-  let!(:others_order_item) { create(:order_item, order: others_order, product: others_product, quantity: 2)}
+  let!(:others_order_item) { create(:order_item, product: others_product, quantity: 2)}
+  let!(:others_order)      { create(:order, items: [others_order_item], organization: buyer2, market: market, delivery: friday_delivery) }
 
   before do
     Timecop.travel("May 5, 2014")
@@ -123,8 +123,8 @@ describe "Pick list" do
     end
 
     context "multiple orders" do
-      let!(:order2)      { create(:order, organization: buyer2, market: market, delivery: friday_delivery) }
-      let!(:order_item2) { create(:order_item, order: order2, product: sellers_product, quantity: 1)}
+      let!(:order_item2) { create(:order_item, product: sellers_product, quantity: 1)}
+      let!(:order2)      { create(:order, items: [order_item2], organization: buyer2, market: market, delivery: friday_delivery) }
 
       before do
         switch_to_subdomain(market.subdomain)

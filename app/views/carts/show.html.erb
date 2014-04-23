@@ -107,7 +107,7 @@
             <span class="note">(Clear Cart)</span>
           </span>
           <%= link_to "Continue Shopping", products_path %>  
-          <%= f.submit "Place Order", class: 'btn btn btn--money', id: 'place-order-button', disabled: true%>
+          <%= f.submit "Place Order", class: 'btn btn btn--money', id: 'place-order-button', disabled: true, data: { disable_with: "Please wait..."}%>
         </div>
       </div>
     </div>

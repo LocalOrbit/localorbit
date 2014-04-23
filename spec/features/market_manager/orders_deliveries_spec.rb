@@ -11,10 +11,15 @@ context "Viewing sold items" do
   let!(:product3) { create(:product, :sellable, name: "Brocolli", organization: seller2) }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
   let!(:delivery) { create(:delivery, delivery_schedule: delivery_schedule) }
-  let!(:order) { create(:order, organization: buyer, market: market, delivery: delivery, order_number: "LO-ADA-0000001", placed_at: Time.zone.parse("2014-03-15")) }
-  let!(:order_item1) { create(:order_item, order: order, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, unit: "Bushels") }
-  let!(:order_item2) { create(:order_item, order: order, product: product2, seller_name: seller.name, name: product2.name, unit_price: 5.00, quantity: 10, unit: "Lots") }
-  let!(:order_item3) { create(:order_item, order: order, product: product3, seller_name: seller2.name, name: product3.name, unit_price: 2.00, quantity: 12, unit: "Heads") }
+  let!(:order_items) {
+    [
+      create(:order_item, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, unit: "Bushels"),
+      create(:order_item, product: product2, seller_name: seller.name, name: product2.name, unit_price: 5.00, quantity: 10, unit: "Lots"),
+      create(:order_item, product: product3, seller_name: seller2.name, name: product3.name, unit_price: 2.00, quantity: 12, unit: "Heads")
+    ]
+  }
+
+  let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: "LO-ADA-0000001", placed_at: Time.zone.parse("2014-03-15")) }
 
   before(:each) do
     switch_to_subdomain(market.subdomain)

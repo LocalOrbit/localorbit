@@ -3,19 +3,23 @@ class OrdersController < ApplicationController
   before_action :hide_admin_navigation
 
   def create
-    if current_cart.items.empty?
-      redirect_to [:products], alert: "Your cart is empty. Please add items to your cart before checking out."
+    @placed_order = PlaceOrder.perform(buyer: current_user, order_params: order_params, cart: current_cart)
+
+    if @placed_order.context.has_key?(:order)
+      @order = @placed_order.order.decorate
     end
 
-    @placed_order = PlaceOrder.perform(buyer: current_user, order_params: order_params, cart: current_cart)
-    @order = @placed_order.order.decorate
-    
     if @placed_order.success?
       session.delete(:cart_id)
     else
       @grouped_items = current_cart.items.for_checkout
-      flash.now[:alert] = "Your order could not be completed."
-      render "carts/show"
+
+      if @placed_order.context.has_key?(:cart_is_empty)
+        redirect_to [:products], alert: @placed_order.message
+      else
+        flash.now[:alert] = "Your order could not be completed."
+        render "carts/show"
+      end
     end
   end
 

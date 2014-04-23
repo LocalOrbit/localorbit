@@ -6,8 +6,7 @@ describe SendOrderEmails do
   let(:market) { create(:market, managers: [create(:user)]) }
 
   let(:product) { create(:product, :sellable, organization: seller) }
-  let(:order)  { create(:order, market: market, organization: buyer) }
-  let!(:order_item) {create(:order_item, product: product, order: order) }
+  let(:order)  { create(:order, items: [create(:order_item, product: product)], market: market, organization: buyer) }
 
   context "when a seller has no users" do
     let(:seller) { create(:organization, :seller) }

@@ -3,9 +3,9 @@ require "spec_helper"
 describe SellerOrder do
   let!(:seller) { create(:user, :seller) }
   let!(:product) { create(:product, :sellable, organization: seller.organizations.first) }
-  let!(:order) { create(:order, organization: seller.organizations.first, market: seller.markets.first) }
+  let!(:items) { create_list(:order_item, 3, product: product, delivery_status: "pending") }
+  let!(:order) { create(:order, items: items, organization: seller.organizations.first, market: seller.markets.first) }
   let!(:seller_order) { SellerOrder.new(order, seller) }
-  let!(:items) { create_list(:order_item, 3, product: product, order: order, delivery_status: "pending") }
 
   describe "#delivery_status" do
     subject { seller_order.delivery_status }

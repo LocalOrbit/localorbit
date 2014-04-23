@@ -9,7 +9,6 @@ class OrderItem < ActiveRecord::Base
 
   validates :product, presence: true
   validates :name, presence: true
-  validates :order, presence: true
   validates :seller_name, presence: true
   validates :quantity, presence: true
   validates :unit, presence: true

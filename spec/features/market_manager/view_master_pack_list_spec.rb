@@ -16,12 +16,12 @@ describe "Master Pack List" do
 
   let!(:buyer1)             { create(:organization, :buyer, :single_location, markets: [market]) }
 
-  let!(:order1)             { create(:order, delivery: thursday_delivery, market: market, organization: buyer1) }
-  let!(:order1_item1)       { create(:order_item, order: order1, product: product1, quantity: 2, unit_price: 3.00)}
-  let!(:order1_item2)       { create(:order_item, order: order1, product: product3, quantity: 5, unit_price: 3.00)}
+  let!(:order1_item1)       { create(:order_item, product: product1, quantity: 2, unit_price: 3.00)}
+  let!(:order1_item2)       { create(:order_item, product: product3, quantity: 5, unit_price: 3.00)}
+  let!(:order1)             { create(:order, items: [order1_item1, order1_item2], delivery: thursday_delivery, market: market, organization: buyer1) }
 
-  let!(:order_other)        { create(:order, delivery: friday_delivery, market: market, organization: buyer1) }
-  let!(:order_other_item1)  { create(:order_item, order: order_other, product: product2, quantity: 8, unit_price: 3.00)}
+  let!(:order_other_item1)  { create(:order_item, product: product2, quantity: 8, unit_price: 3.00)}
+  let!(:order_other)        { create(:order, items: [order_other_item1], delivery: friday_delivery, market: market, organization: buyer1) }
 
 
   before do
@@ -98,8 +98,8 @@ describe "Master Pack List" do
 
     context "multiple orders" do
       let!(:buyer2)             { create(:organization, :buyer, :single_location, markets: [market]) }
-      let!(:order2)             { create(:order, delivery: thursday_delivery, market: market, organization: buyer2) }
-      let!(:order2_item1)       { create(:order_item, order: order2, product: product2, quantity: 2, unit_price: 3.00)}
+      let!(:order2_item1)       { create(:order_item, product: product2, quantity: 2, unit_price: 3.00)}
+      let!(:order2)             { create(:order, items: [order2_item1], delivery: thursday_delivery, market: market, organization: buyer2) }
 
       before do
         switch_to_subdomain(market.subdomain)

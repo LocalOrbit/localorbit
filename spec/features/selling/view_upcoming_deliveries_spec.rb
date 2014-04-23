@@ -31,11 +31,11 @@ describe "Upcoming Deliveries" do
     let!(:user) { create(:user, organizations: [seller]) }
 
     context "with orders" do
-      let!(:order_with_seller_product) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
-      let!(:order_item_for_seller_product) { create(:order_item, order: order_with_seller_product, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_with_seller_product) { create(:order, items: [order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:other_order) { create(:order, organization: seller2, market: market, delivery: friday_delivery) }
-      let!(:other_order_item) { create(:order_item, order: other_order, product: seller2_product, quantity: 1)}
+      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1)}
+      let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -53,11 +53,11 @@ describe "Upcoming Deliveries" do
     end
 
     context "shows deliveries only once" do
-      let!(:order_with_seller_product1) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
-      let!(:order_item_for_seller_product1) { create(:order_item, order: order_with_seller_product1, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product1) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_with_seller_product1) { create(:order, items: [order_item_for_seller_product1], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:order_with_seller_product2) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
-      let!(:order_item_for_seller_product2) { create(:order_item, order: order_with_seller_product2, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product2) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_with_seller_product2) { create(:order, items: [order_item_for_seller_product2], organization: seller, market: market, delivery: thursday_delivery) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -92,11 +92,11 @@ describe "Upcoming Deliveries" do
     let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
     context "with orders" do
-      let!(:order_with_seller_product) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
-      let!(:order_item_for_seller_product) { create(:order_item, order: order_with_seller_product, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_with_seller_product) { create(:order, items:[order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:other_order) { create(:order, organization: seller2, market: market, delivery: friday_delivery) }
-      let!(:other_order_item) { create(:order_item, order: other_order, product: seller2_product, quantity: 1)}
+      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1)}
+      let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -115,11 +115,11 @@ describe "Upcoming Deliveries" do
     end
 
     context "shows deliveries only once" do
-      let!(:order_with_seller_product1) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
-      let!(:order_item_for_seller_product1) { create(:order_item, order: order_with_seller_product1, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product1) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_with_seller_product1) { create(:order, items: [order_item_for_seller_product1], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:order_with_seller_product2) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
-      let!(:order_item_for_seller_product2) { create(:order_item, order: order_with_seller_product2, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product2) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_with_seller_product2) { create(:order, items: [order_item_for_seller_product2], organization: seller, market: market, delivery: thursday_delivery) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -154,11 +154,11 @@ describe "Upcoming Deliveries" do
     let!(:user) { create(:user, :admin) }
 
     context "without a selected market" do
-      let!(:order_with_seller_product) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
-      let!(:order_item_for_seller_product) { create(:order_item, order: order_with_seller_product, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_with_seller_product) { create(:order, items:[order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:other_order) { create(:order, organization: seller2, market: market, delivery: friday_delivery) }
-      let!(:other_order_item) { create(:order_item, order: other_order, product: seller2_product, quantity: 1)}
+      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1)}
+      let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
 
       context "multiple markets available" do
         let!(:other_market) { create(:market) }
@@ -199,11 +199,11 @@ describe "Upcoming Deliveries" do
     end
 
     context "with orders" do
-      let!(:order_with_seller_product) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
-      let!(:order_item_for_seller_product) { create(:order_item, order: order_with_seller_product, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product) { create(:order_item,  product: product, quantity: 1)}
+      let!(:order_with_seller_product) { create(:order, items: [order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:other_order) { create(:order, organization: seller2, market: market, delivery: friday_delivery) }
-      let!(:other_order_item) { create(:order_item, order: other_order, product: seller2_product, quantity: 1)}
+      let!(:other_order_item) { create(:order_item,  product: seller2_product, quantity: 1)}
+      let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -222,11 +222,11 @@ describe "Upcoming Deliveries" do
     end
 
     context "shows deliveries only once" do
-      let!(:order_with_seller_product1) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
-      let!(:order_item_for_seller_product1) { create(:order_item, order: order_with_seller_product1, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product1) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_with_seller_product1) { create(:order, items: [order_item_for_seller_product1], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:order_with_seller_product2) { create(:order, organization: seller, market: market, delivery: thursday_delivery) }
-      let!(:order_item_for_seller_product2) { create(:order_item, order: order_with_seller_product2, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product2) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_with_seller_product2) { create(:order, items: [order_item_for_seller_product2], organization: seller, market: market, delivery: thursday_delivery) }
 
       before do
         switch_to_subdomain(market.subdomain)

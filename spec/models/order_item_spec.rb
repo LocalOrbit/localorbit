@@ -7,15 +7,9 @@ describe OrderItem do
       ]
   )}
 
-  let(:order) { create(:order, market: create(:market)) }
+  let(:order) { build(:order, market: create(:market)) }
 
   context "validations" do
-    it "requires a order" do
-      expect(subject).to be_invalid
-      expect(subject).to have(1).error_on(:order)
-    end
-
-
     it "requires a name" do
       expect(subject).to be_invalid
       expect(subject).to have(1).error_on(:name)
@@ -151,7 +145,7 @@ describe OrderItem do
     let(:market) { create(:market) }
     let(:organization) { create(:organization) }
     let(:product) { create(:product, :sellable) }
-    let(:order) { create(:order, market: market, organization: organization) }
+    let(:order) { build(:order, market: market, organization: organization) }
     let(:cart_item) { create(:cart_item, product: product) }
 
     subject { OrderItem.create_with_order_and_item_and_deliver_on_date(order: order, item: cart_item, deliver_on_date: Date.today) }
@@ -201,7 +195,7 @@ describe OrderItem do
     let!(:product)       { create(:product, :sellable, lots: [lot1]) }
     let!(:market)        { create(:market) }
     let!(:organization)  { create(:organization) }
-    let!(:order)         { create(:order, market: market, organization: organization) }
+    let!(:order)         { build(:order, market: market, organization: organization) }
     let(:deliver_on)     { Date.today }
 
     subject do

@@ -6,9 +6,9 @@ describe "Payment history" do
   let!(:user)   { create(:user, organizations: [seller]) }
 
   context "with payments" do
-    let!(:order2)   { create(:order) }
+    let!(:order2)   { create(:order, :with_items) }
     let!(:payment2) { create(:payment, payee: seller, payment_type: "Cash", amount: 42.00, updated_at: DateTime.parse("May 1, 2014 12:00"), orders: [order2])}
-    let!(:order1)   { create(:order) }
+    let!(:order1)   { create(:order, :with_items) }
     let!(:payment1) { create(:payment, payee: seller, amount: 100.00, updated_at: DateTime.parse("May 5, 2014 12:00"), orders: [order1])}
 
     before do
