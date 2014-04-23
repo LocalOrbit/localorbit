@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
   def create
     if current_cart.items.empty?
       redirect_to [:products], alert: "Your cart is empty. Please add items to your cart before checking out."
+      return
     end
 
     @placed_order = PlaceOrder.perform(buyer: current_user, order_params: order_params, cart: current_cart)

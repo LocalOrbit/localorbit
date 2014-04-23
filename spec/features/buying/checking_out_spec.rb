@@ -282,7 +282,11 @@ describe "Checking Out", js: true do
 
       expect(Dom::CartLink.first).to have_content("Removed from cart!")
 
-      click_button "Place Order"
+      expect{
+        click_button "Place Order"
+      }.to_not change{
+        Order.count
+      }
       expect(page).to have_content("Your cart is empty. Please add items to your cart before checking out.")
     end
   end
