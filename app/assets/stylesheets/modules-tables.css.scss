@@ -543,3 +543,19 @@ th {
     min-width: 50px;
   }
 }
+
+
+
+.affiliations {
+  list-style: none;
+  padding: 0;
+}
+
+.user-row {
+  td {
+    padding: 0 0 0 10px;
+  }
+  .user-list-name {
+    min-width: 160px;
+  }
+}
