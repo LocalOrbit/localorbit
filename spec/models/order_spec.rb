@@ -330,6 +330,12 @@ describe Order do
       expect(subject.total_cost).to eql(cart.total)
     end
 
+    describe "#subtotal" do
+      it "calculates the sum of the gross totals for all items" do
+        expect(subject.subtotal.to_f).to eql(6.0)
+      end
+    end
+
     it "has an order number sequential to the market" do
       Timecop.freeze(Date.parse("2014-03-01"))
       expect(subject.order_number).to eq("LO-14-ADA-0000001")
