@@ -6,6 +6,7 @@ $ ->
   }
 
   color_range = $('<div class="color-picker"/>').append($('<span class="spectrum"/>')).append($('<input class="range-picker" type="range" min="0" max="359" step="1"/>'))
+  jqui_slider = $('<div class="color-picker"/>').append($('<span class="spectrum"/>')).append($('<div class="slider"/>'))
 
   hsl_to_hex = (h, s, l) ->
     h = 360-h
@@ -147,15 +148,32 @@ $ ->
           'rel': $(e).attr('id')
         })
       $(picker).insertAfter(e)
-      $(e).parents('form').first().addClass('range-colors')
       $(e).attr('type', 'hidden')
 
     $('.range-picker').change (e) ->
-        console.log e.target.value
         hex = hsl_to_hex(parseInt(e.target.value, 10), 100, 50)
         inp = $('#' + e.target.getAttribute('rel')) 
         $(inp).val("#" + hex)
         $(inp).trigger("change")
+
+  jquery_fallback = ->
+    $('input.color').each (i, e) ->
+      hue = (hex_to_hsl($(e).val().toString()))[0]
+      picker = $(jqui_slider).clone()
+      $(picker).insertAfter(e).find('.slider').attr({
+          'rel': $(e).attr('id')
+        }).slider({
+          min: 0, 
+          max: 359, 
+          step: 1, 
+          value: hue,
+          change: (event, ui) ->
+            hex = hsl_to_hex(parseInt(ui.value, 10), 100, 50)
+            inp = $('#' + e.targetparentNode.getAttribute('rel')) 
+            $(inp).val("#" + hex)
+            $(inp).trigger("change")
+      })
+      $(e).attr('type', 'hidden')
 
 
   update_swatch = ->
@@ -165,9 +183,11 @@ $ ->
 
   if features.color_input == false and features.range_input == true
     range_fallback()
+  else if features.range_input == false
+    jquery_fallback()
 
 
-  range_fallback()
+  jquery_fallback()
   update_swatch()
 
   $('#market_background_color').change ->
