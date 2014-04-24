@@ -6,8 +6,6 @@ class Market < ActiveRecord::Base
   validates :ach_fee_cap, presence: true, numericality: {greater_than_or_equal_to: 0, less_than: 10_000, allow_blank: true}
   validates :contact_name, :contact_email, presence: true
 
-  before_save :clean_twitter_slug
-
   has_many :managed_markets
   has_many :managers, through: :managed_markets, source: :user
 
@@ -19,12 +17,10 @@ class Market < ActiveRecord::Base
 
   has_many :bank_accounts, as: :bankable
 
+  serialize :twitter, TwitterUser
+
   dragonfly_accessor :logo
   dragonfly_accessor :photo
-
-  def clean_twitter_slug
-    self.twitter = twitter[1..-1] if twitter && twitter.match(/^@/)
-  end
 
   def fulfillment_locations(default_name)
     addresses.order(:name).map {|a| [a.name, a.id] }.unshift([default_name, 0])
