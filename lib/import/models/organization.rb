@@ -41,7 +41,9 @@ class Import::Organization < Import::Base
     users.each do |user|
       if user.is_deleted == 0
         imported_user = user.import
-        organization.users << imported_user if imported_user
+        if imported_user && !organization.users.include?(imported_user)
+          organization.users << imported_user
+        end
       end
     end
 

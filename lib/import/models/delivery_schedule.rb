@@ -1,4 +1,8 @@
 require 'import/models/base'
+class DeliverySchedule < ActiveRecord::Base
+  belongs_to :market
+end
+
 class Import::DeliverySchedule < Import::Base
   self.table_name = "delivery_days"
   self.primary_key = "dd_id"

@@ -51,7 +51,9 @@ class Import::Market < Import::Base
         org.users.each do |user|
           if user.is_deleted == 0
             imported_user = user.import
-            market.managers << imported_user if imported_user
+            if imported_user && !market.managers.include?(imported_user)
+              market.managers << imported_user
+            end
           end
         end
       end
