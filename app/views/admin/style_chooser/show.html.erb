@@ -8,18 +8,11 @@
       <legend>Style Chooser</legend>
       <div class="field">
         <%= f.label :text_color %><br>
-        <%= f.color_field :text_color %>
+        <%= f.color_field :text_color, class: "color" %>
       </div>
       <div class="field">
         <%= f.label :background_color %><br>
-        <%= f.color_field :background_color %>
-        <br>
-      </div>
-      <div class="field">
-        <div class="color-picker">
-          <span class="spectrum"></span>
-          <input type="range" min="0" max="359" step="1">
-        </div>
+        <%= f.color_field :background_color, class: "color" %>
       </div>
       <div class="field ">
         <%= f.label :background_image %><br>

@@ -5,6 +5,8 @@ $ ->
     range_input: false
   }
 
+  color_range = $('<div class="color-picker"/>').append($('<span class="spectrum"/>')).append($('<input class="range-picker" type="range" min="0" max="359" step="1"/>'))
+
   hsl_to_hex = (h, s, l) ->
     h = h/360
     s = s/100
@@ -75,53 +77,55 @@ $ ->
     min = 255
     max = 0
 
-    if hex.length ==7
-      hex = hex.substr(1,6)
+    if hex.length != 0
+      if hex.length ==7
+        hex = hex.substr(1,6)
 
-    rgb = [
-      parseInt(hex.substr(0,2), 16)/255,
-      parseInt(hex.substr(2,2), 16)/255,
-      parseInt(hex.substr(4,6), 16)/255
-    ]
-   
-    while i < 3
-      if rgb[i] < min
-        min = rgb[i]
+      rgb = [
+        parseInt(hex.substr(0,2), 16)/255,
+        parseInt(hex.substr(2,2), 16)/255,
+        parseInt(hex.substr(4,6), 16)/255
+      ]
+     
+      while i < 3
+        if rgb[i] < min
+          min = rgb[i]
 
-      if rgb[i] > max
-        max = rgb[i];
-      i++
-   
-    delta = max - min
-    l = (max + min) / 2
-   
-    if delta != 0
-      if l < 0.5
-        s = delta / (max + min)
-      else
-        s = delta / ( 2.0 - max - min)
-   
-      delta_r = (((max - rgb[0]) / 6.0) + (max / 2)) / delta
-      delta_g = (((max - rgb[1]) / 6.0) + (max / 2)) / delta
-      delta_b = (((max - rgb[2]) / 6.0) + (max / 2)) / delta
-   
-      if rgb[0] == max
-        h = delta_b - delta_g
-      else if rgb[1] == max
-        h = (1.0 / 3.0) + delta_r - delta_b
-      else if rgb[2] == max
-        h = (2.0 / 3.0) + delta_g - delta_r
+        if rgb[i] > max
+          max = rgb[i];
+        i++
+     
+      delta = max - min
+      l = (max + min) / 2
+     
+      if delta != 0
+        if l < 0.5
+          s = delta / (max + min)
+        else
+          s = delta / ( 2.0 - max - min)
+     
+        delta_r = (((max - rgb[0]) / 6.0) + (max / 2)) / delta
+        delta_g = (((max - rgb[1]) / 6.0) + (max / 2)) / delta
+        delta_b = (((max - rgb[2]) / 6.0) + (max / 2)) / delta
+     
+        if rgb[0] == max
+          h = delta_b - delta_g
+        else if rgb[1] == max
+          h = (1.0 / 3.0) + delta_r - delta_b
+        else if rgb[2] == max
+          h = (2.0 / 3.0) + delta_g - delta_r
 
-      while h < 0.0
-        h = h + 1.0
-      while h > 1.0
-        h = h - 1.0
+        while h < 0.0
+          h = h + 1.0
+        while h > 1.0
+          h = h - 1.0
 
-      h = Math.round(h * 360)
-      s = Math.round(s)
-      l = parseInt(l * 100, 10)
+        h = Math.round(h * 360)
+        s = Math.round(s)
+        l = parseInt(l * 100, 10)
 
-      return [h, s, l]
+        return [h, s, l]
+      return [0, 0, 0]
 
   detect_inputs = ->
     field = document.createElement('input')
@@ -132,20 +136,40 @@ $ ->
     if field.type != "text"
       features.color_input = true
 
+
   range_fallback = ->
     $('input.color').each (i, e) ->
+      hue = 360 - (hex_to_hsl($(e).val().toString()))[0]
+      picker = $(color_range).clone()
+      $(picker).find('input').attr({
+          'value': hue,
+          'rel': $(e).attr('id')
+        })
+      $(picker).insertAfter(e)
+      $(e).parents('form').first().addClass('range-colors')
+      $(e).attr('type', 'hidden')
+
+    $('.range-picker').change (e) ->
+        console.log e
+        hex = hsl_to_hex(parseInt(e.target.value, 10), 100, 50)
+        inp = $('#' + e.target.getAttribute('rel')) 
+        $(inp).val("#" + hex)
+        $(inp).trigger("change")
 
 
   update_swatch = ->
-    $('#background_swatch').css('background-color', $('#market_background_color').val())
-
-  update_swatch()
+      $('#background_swatch').css('background-color', $('#market_background_color').val())
 
   detect_inputs()
+
+  if features.color_input == false and features.range_input == true
+    range_fallback()
+
+
+  range_fallback()
+  update_swatch()
 
   $('#market_background_color').change ->
     update_swatch()
 
-  if features.color_input == false and features.range_input == true
-    range_fallback()
     
