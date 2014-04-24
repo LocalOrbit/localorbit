@@ -146,6 +146,10 @@ class Order < ActiveRecord::Base
     self.invoice_due_date = market.po_payment_term.days.from_now(invoiced_at)
   end
 
+  def subtotal
+    items.inject(0) {|sum, item| sum + item.gross_total}
+  end
+
   private
 
   def validate_items

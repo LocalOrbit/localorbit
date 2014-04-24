@@ -49,6 +49,20 @@
       <td></td>
       <td></td>
       <td></td>
+      <th scope="row">Item Subtotal</th>
+      <td class="delivery-fees"><strong><%= number_to_currency @order.subtotal %></strong></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th scope="row">Delivery Fees</th>
+      <td class="delivery-fees"><strong><%= number_to_currency @order.delivery_fees %></strong></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
       <th scope="row">Order Total</th>
       <td class="total"><strong><%= number_to_currency @order.total_cost %></strong></td>
     </tr>
