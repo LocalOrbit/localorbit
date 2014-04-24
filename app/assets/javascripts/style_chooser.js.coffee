@@ -8,6 +8,7 @@ $ ->
   color_range = $('<div class="color-picker"/>').append($('<span class="spectrum"/>')).append($('<input class="range-picker" type="range" min="0" max="359" step="1"/>'))
 
   hsl_to_hex = (h, s, l) ->
+    h = 360-h
     h = h/360
     s = s/100
     l = l/100
@@ -139,7 +140,7 @@ $ ->
 
   range_fallback = ->
     $('input.color').each (i, e) ->
-      hue = 360 - (hex_to_hsl($(e).val().toString()))[0]
+      hue = (hex_to_hsl($(e).val().toString()))[0]
       picker = $(color_range).clone()
       $(picker).find('input').attr({
           'value': hue,
@@ -150,7 +151,7 @@ $ ->
       $(e).attr('type', 'hidden')
 
     $('.range-picker').change (e) ->
-        console.log e
+        console.log e.target.value
         hex = hsl_to_hex(parseInt(e.target.value, 10), 100, 50)
         inp = $('#' + e.target.getAttribute('rel')) 
         $(inp).val("#" + hex)
