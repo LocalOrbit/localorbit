@@ -14,6 +14,23 @@ class User < ActiveRecord::Base
   has_many :user_organizations
   has_many :organizations, through: :user_organizations
 
+  def self.for_auth_token(token)
+    return if token.blank?
+
+    hsh = auth_token_verifier.verify(token)
+    User.find_by(id: hsh[:id]) if hsh[:expires] > Time.now.to_i
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    nil
+  end
+
+  def self.auth_token_verifier
+    Rails.application.message_verifier(:user_auth_token)
+  end
+
+  def auth_token(expires_in = 1.hour)
+    self.class.auth_token_verifier.generate(a: rand(100), id: id, expires: expires_in.from_now.to_i, b: rand(100))
+  end
+
   def admin?
     role == "admin"
   end

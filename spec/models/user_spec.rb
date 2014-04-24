@@ -335,4 +335,33 @@ describe User do
       end
     end
   end
+
+  describe 'token authentication' do
+    let!(:user) { create(:user) }
+
+    describe '#auth_token' do
+      it 'returns a token string' do
+        expect(user.auth_token).to be_a(String)
+      end
+    end
+
+    describe '.for_auth_token' do
+      it 'returns the user for a valid token' do
+        expect(User.for_auth_token(user.auth_token)).to eq(user)
+      end
+
+      it 'returns nil for a blank token' do
+        expect(User.for_auth_token(nil)).to be_nil
+        expect(User.for_auth_token("")).to be_nil
+      end
+
+      it 'returns nil for an expired token' do
+        expect(User.for_auth_token(user.auth_token(-10.minutes))).to be_nil
+      end
+
+      it 'return nil for an invalid token' do
+        expect(User.for_auth_token("not-gonna-do-it")).to be_nil
+      end
+    end
+  end
 end
