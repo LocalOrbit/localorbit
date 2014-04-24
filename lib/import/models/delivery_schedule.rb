@@ -24,7 +24,7 @@ class Import::DeliverySchedule < Import::Base
   end
 
   def day_of_week
-    day_nbr - 1
+    day_nbr > 6 ? 0 : day_nbr
   end
 
   def parse_time(value)
@@ -32,11 +32,11 @@ class Import::DeliverySchedule < Import::Base
   end
 
   def fulfillment_location_id
-    MarketAddress.where(legacy_id: deliv_address_id).first.try(:id) || 0
+    ::MarketAddress.where(legacy_id: deliv_address_id).first.try(:id) || 0
   end
 
   def pickup_location_id(market)
-    pickup_address_id == 0 ? 0 : MarketAddress.where(legacy_id: pickup_address_id).first.try(:id)
+    pickup_address_id == 0 ? 0 : ::MarketAddress.where(legacy_id: pickup_address_id).first.try(:id)
   end
 
 end

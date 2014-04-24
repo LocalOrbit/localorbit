@@ -1,4 +1,8 @@
 require 'import/models/base'
+class Price < ActiveRecord::Base
+  belongs_to :product, inverse_of: :prices
+end
+
 class Import::Price < Import::Base
   self.table_name = "product_prices"
   self.primary_key = "price_id"
@@ -6,9 +10,17 @@ class Import::Price < Import::Base
   belongs_to :product, class_name: "Import::Product", foreign_key: "prod_id"
 
   def import
-    ::Price.create(
-      min_quantity: min_qty,
-      sale_price: price
+    ::Price.new(
+      min_quantity: imported_quantity,
+      sale_price: imported_price
     )
+  end
+
+  def imported_quantity
+    min_qty.nil? || min_qty == 0 ? 1 : min_qty
+  end
+
+  def imported_price
+    price == 0 ? 1.00 : price
   end
 end

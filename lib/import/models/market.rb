@@ -44,7 +44,7 @@ class Import::Market < Import::Base
       organizations.each {|org| market.organizations << org.import }
 
       market_org.each do |org|
-        org.addresses.each do |address|
+        org.market_addresses.each do |address|
           market.addresses << address.import
         end
 

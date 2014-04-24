@@ -4,6 +4,7 @@ class Import::Organization < Import::Base
   self.primary_key = "org_id"
 
   has_many :products, class_name: "Import::Product", foreign_key: "org_id"
+  has_many :market_addresses, class_name: "Import::MarketAddress", foreign_key: "org_id"
   has_many :addresses, class_name: "Import::Address", foreign_key: "org_id"
   has_many :users, class_name: "Import::User", foreign_key: "org_id"
 
@@ -33,15 +34,19 @@ class Import::Organization < Import::Base
       when 2
         organization.display_twitter = true
       end
-
-      #products.each {|product| organization.products << product.import }
     end
+
+    addresses.each {|address| organization.locations << address.import }
 
     users.each do |user|
       if user.is_deleted == 0
         imported_user = user.import
         organization.users << imported_user if imported_user
       end
+    end
+
+    if organization.save
+      products.each {|product| organization.products << product.import(organization) }
     end
 
     organization

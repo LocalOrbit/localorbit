@@ -1,10 +1,10 @@
 require 'import/models/base'
-class Location < ActiveRecord::Base
-  belongs_to :organization, inverse_of: :locations
+class MarketAddress < ActiveRecord::Base
+  belongs_to :market, inverse_of: :addresses
   acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip}
 end
 
-class Import::Address < Import::Base
+class Import::MarketAddress < Import::Base
   self.table_name = "addresses"
   self.primary_key = "address_id"
 
@@ -17,9 +17,9 @@ class Import::Address < Import::Base
   end
 
   def import
-    imported = ::Location.where(legacy_id: address_id).first
+    imported = ::MarketAddress.where(legacy_id: address_id).first
     if imported.nil?
-      imported = ::Location.new(
+      imported = ::MarketAddress.new(
         legacy_id: address_id,
         name: label,
         address: address,
@@ -28,9 +28,7 @@ class Import::Address < Import::Base
         zip: zipcode,
         phone: telephone,
         fax: fax,
-        deleted_at: is_deleted == 1 ? DateTime.current : nil,
-        default_billing: default_billing == 1,
-        default_shipping: default_shipping == 1
+        deleted_at: is_deleted == 1 ? DateTime.current : nil
       )
     end
 
