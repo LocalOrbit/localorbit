@@ -69,7 +69,7 @@
   </div>
   <div class="overlay"></div>
 
-  <%= javascript_include_tag "https://js.balancedpayments.com/v1/balanced.js" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "balanced" if @balanced %>
 </body>
 </html>
