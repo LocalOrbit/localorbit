@@ -281,26 +281,6 @@ describe Market do
     end
   end
 
-  describe '#twitter=' do
-    let(:market) { build(:market) }
-
-    it 'remove @ from twitter slug' do
-      market.twitter = '@collectiveidea'
-
-      expect(market.save!).to be true
-      market.reload
-      expect(market.twitter).to eq('collectiveidea')
-    end
-
-    it "leaves the twitter slug alone if it doesn't start with @" do
-      market.twitter = 'collectiveidea'
-
-      expect(market.save!).to be true
-      market.reload
-      expect(market.twitter).to eq('collectiveidea')
-    end
-  end
-
   describe '#fulfillment_locations' do
     let!(:market) { create(:market) }
     let!(:address1) { create(:market_address, market: market) }
