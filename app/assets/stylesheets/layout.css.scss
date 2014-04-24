@@ -144,9 +144,14 @@
     text-align: right;
   }
 }
+.row--squash {
+  font-size: 0.1px;
+}
 
 .column {
   display: inline-block;
+  margin-right: 0;
+  margin-left: 0;
   text-align: left;
   font-size: 14px;
   vertical-align: top;

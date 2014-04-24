@@ -1,4 +1,5 @@
 $ ->
+  images = document.getElementsByName('market[background_image]')
   features = {
     color_input: false,
     range_input: false
@@ -135,8 +136,15 @@ $ ->
     $('input.color').each (i, e) ->
 
 
+  update_swatch = ->
+    $('#background_swatch').css('background-color', $('#market_background_color').val())
+
+  update_swatch()
 
   detect_inputs()
+
+  $('#market_background_color').change ->
+    update_swatch()
 
   if features.color_input == false and features.range_input == true
     range_fallback()
