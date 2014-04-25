@@ -6,10 +6,12 @@ $ ->
     items_height = 0
 
     $(box).children('.tabbed-item').each (i, item) ->
-      if $(item).height() > items_height
-        items_height = $(item).height()
+      height = $(item).height()
+      if $(item).find("#seller-map").length
+        height = height + 400
+      if height > items_height
+        items_height = height
     $(box).css('height': tabs_height + items_height).addClass('js-sized').children('.tabbed-item').css({'height': items_height, 'top': tabs_height})
-    $('.seller-map-toggle').trigger "click"
 
   $('.tab-box .tab > a').click (e) ->
     e.preventDefault()
