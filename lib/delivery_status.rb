@@ -14,6 +14,10 @@ module DeliveryStatus
     end
   end
 
+  def delivered?
+    delivery_status == "delivered"
+  end
+
   private
 
   def statuses_within(statuses, query)

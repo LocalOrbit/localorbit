@@ -347,6 +347,52 @@ describe Order do
     end
   end
 
+  describe "#delivered_at" do
+    subject{ create(:order, items: items) }
+    let(:items) { create_list(:order_item, 2, product: create(:product, :sellable)) }
+
+    def set_delivered(item, date)
+      Timecop.freeze(date) do
+        item.delivery_status = "delivered"
+        item.save!
+      end
+    end
+
+    context "no delivered order items" do
+      it "returns nil" do
+        expect(subject.delivered_at).to be_nil
+      end
+    end
+
+    context "some delivered order items" do
+      let(:delivered_at) { 1.week.ago }
+
+      before do
+        set_delivered(items.first, delivered_at)
+      end
+
+      it "returns nil" do
+        expect(subject.delivered_at).to be_nil
+      end
+    end
+
+    context "all delivered order items" do
+      let(:delivered_at) { Time.current - 1.week }
+      let(:latest_delivered_at) { Time.current - 2.days}
+      let(:items) { create_list(:order_item, 2, product: create(:product, :sellable)) }
+
+      before do
+        set_delivered(items[0], delivered_at)
+        set_delivered(items[1], latest_delivered_at)
+      end
+
+      it "returns the delivered_at date of the last order item delivered" do
+        expect(subject.delivered_at).not_to be_nil
+        expect(subject.delivered_at.to_i).to eq(items[1].delivered_at.to_i)
+      end
+    end
+  end
+
   describe "#sellers" do
     context "no order items" do
       it "returns an empty array" do
