@@ -1,5 +1,6 @@
 class Admin::BankAccountsController < AdminController
   include BankAccountEntity
+  before_action :set_balanced_flag
 
   def index
     @bank_accounts = @entity.bank_accounts
@@ -48,5 +49,9 @@ class Admin::BankAccountsController < AdminController
       :ssn_last4,
       {address: [:line1, :postal_code]}
     )
+  end
+
+  def set_balanced_flag
+    @balanced = true
   end
 end

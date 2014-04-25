@@ -54,7 +54,7 @@ describe Market do
         expect(market).to_not be_valid
         expect(market).to have(1).error_on(:subdomain)
       end
-      
+
       it "cannot be a reserved name" do
         market = build(:market)
         market.subdomain = "app"
@@ -278,26 +278,6 @@ describe Market do
         expect(market).to_not be_valid
         expect(market).to have(1).error_on(:ach_fee_cap)
       end
-    end
-  end
-
-  describe 'before_save' do
-    let(:market) { build(:market) }
-
-    it 'remove @ from twitter slug' do
-      market.twitter = '@collectiveidea'
-
-      expect(market.save!).to be true
-      market.reload
-      expect(market.twitter).to eq('collectiveidea')
-    end
-
-    it "leaves the twitter slug alone if it doesn't start with @" do
-      market.twitter = 'collectiveidea'
-
-      expect(market.save!).to be true
-      market.reload
-      expect(market.twitter).to eq('collectiveidea')
     end
   end
 

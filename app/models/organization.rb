@@ -18,6 +18,8 @@ class Organization < ActiveRecord::Base
   scope :selling, -> { where(can_sell: true) }
   scope :buying,  -> { where(can_sell: false) } # needs a new boolean
 
+  serialize :twitter, TwitterUser
+
   accepts_nested_attributes_for :locations
 
   dragonfly_accessor :photo
