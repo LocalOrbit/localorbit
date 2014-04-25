@@ -3,7 +3,7 @@ class Product < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :top_level_category, class: Category
-  belongs_to :organization
+  belongs_to :organization, inverse_of: :products
   belongs_to :location
   belongs_to :unit
 
