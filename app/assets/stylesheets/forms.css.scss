@@ -68,10 +68,14 @@ input[type=password] {
   }
 }
 
-input[type=datetime],
-input[type=text] {
+.datepicker {
   ~ .btn--end {
     display: none;
+    padding: 3px 3px 2px;
+    margin-top: 2px;
+    margin-left: -1px;
+    font-size: 12px;
+    vertical-align: top;
   }
   &.hasDatepicker {
     width: 8em;
@@ -84,10 +88,6 @@ input[type=text] {
     }
     ~ .btn--end {
       display: inline-block;
-      padding: 3px 3px 2px;
-      background-color: #fff;
-      font-size: 12px;
-      vertical-align: top;
     }
   }
 }
