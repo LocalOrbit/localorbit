@@ -8,12 +8,12 @@ class Organization < ActiveRecord::Base
   has_many :cross_sells, -> { where(market_organizations: { cross_sell: true }) }, through: :market_organizations, source: :market, after_add: :update_product_delivery_schedules, after_remove: :update_product_delivery_schedules
   has_many :orders, inverse_of: :organization
 
-  has_many :products, inverse_of: :organization, autosave: true
+  has_many :products, inverse_of: :organization, autosave: true, dependent: :destroy
   has_many :carts
 
-  has_many :locations, inverse_of: :organization
+  has_many :locations, inverse_of: :organization, dependent: :destroy
 
-  has_many :bank_accounts, as: :bankable
+  has_many :bank_accounts, as: :bankable, dependent: :destroy
 
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
 

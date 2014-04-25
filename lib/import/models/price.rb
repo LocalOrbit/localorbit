@@ -1,18 +1,24 @@
 require 'import/models/base'
-class Price < ActiveRecord::Base
-  belongs_to :product, inverse_of: :prices
+
+module Imported
+  class Price < ActiveRecord::Base
+    self.table_name = "prices"
+
+    belongs_to :product, class_name: "Imported::Product", inverse_of: :prices
+  end
 end
 
-class Import::Price < Import::Base
+class Legacy::Price < Legacy::Base
+
   self.table_name = "product_prices"
   self.primary_key = "price_id"
 
-  belongs_to :product, class_name: "Import::Product", foreign_key: "prod_id"
+  belongs_to :product, class_name: "Legacy::Product", foreign_key: "prod_id"
 
   def import
-    imported = ::Price.where(legacy_id: price_id).first
+    imported = Imported::Price.where(legacy_id: price_id).first
     if imported.nil?
-      imported = ::Price.new(
+      imported = Imported::Price.new(
         min_quantity: imported_quantity,
         sale_price: imported_price,
         legacy_id: price_id

@@ -1,18 +1,36 @@
 require 'import/models/base'
-class DeliverySchedule < ActiveRecord::Base
-  belongs_to :market
+
+module Imported
+  class ProductDelivery < ActiveRecord::Base
+    self.table_name = "product_deliveries"
+
+    belongs_to :product, class_name: "Imported::Product"
+    belongs_to :delivery_schedule, class_name: "Imported::DeliverySchedule"
+  end
+
+  class DeliverySchedule < ActiveRecord::Base
+    include SoftDelete
+    self.table_name = "delivery_schedules"
+
+    belongs_to :market, class_name: "Imported::Market"
+
+    has_many :product_deliveries, class_name: "Imported::ProductDelivery"
+    has_many :products, through: :product_deliveries
+  end
 end
 
-class Import::DeliverySchedule < Import::Base
+class Legacy::DeliverySchedule < Legacy::Base
   self.table_name = "delivery_days"
   self.primary_key = "dd_id"
 
-  belongs_to :market, class_name: "Import::Market", foreign_key: :domain_id
+  belongs_to :market, class_name: "Legacy::Market", foreign_key: :domain_id
 
   def import(market)
-    imported = ::DeliverySchedule.where(legacy_id: dd_id).first
+    imported = Imported::DeliverySchedule.where(legacy_id: dd_id).first
+
     if imported.nil?
-      imported = ::DeliverySchedule.new(
+      puts "- Creating delivery schedule..."
+      imported = Imported::DeliverySchedule.new(
         legacy_id: dd_id,
         day: day_of_week,
         order_cutoff: hours_due_before,
@@ -23,7 +41,10 @@ class Import::DeliverySchedule < Import::Base
         buyer_pickup_start: parse_time(pickup_start_time),
         buyer_pickup_end: parse_time(pickup_end_time)
       )
+    else
+      puts "- Existing delivery schedule"
     end
+
     imported
   end
 
@@ -36,11 +57,11 @@ class Import::DeliverySchedule < Import::Base
   end
 
   def fulfillment_location_id
-    ::MarketAddress.where(legacy_id: deliv_address_id).first.try(:id) || 0
+    Imported::MarketAddress.where(legacy_id: deliv_address_id).first.try(:id) || 0
   end
 
   def pickup_location_id(market)
-    pickup_address_id == 0 ? 0 : ::MarketAddress.where(legacy_id: pickup_address_id).first.try(:id)
+    pickup_address_id == 0 ? 0 : Imported::MarketAddress.where(legacy_id: pickup_address_id).first.try(:id)
   end
 
 end

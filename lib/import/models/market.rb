@@ -1,25 +1,51 @@
 require 'import/models/base'
-class Import::Market < Import::Base
+
+module Imported
+  class Market < ActiveRecord::Base
+    self.table_name = "markets"
+
+    has_many :addresses, class_name: "Imported::MarketAddress"
+    has_many :delivery_schedules, class_name: "Imported::DeliverySchedule", inverse_of: :market
+    has_many :managed_markets
+    has_many :managers, through: :managed_markets, source: :user
+    has_many :market_organizations, class_name: "Imported::MarketOrganization"
+    has_many :orders, class_name: "Imported::Order"
+    has_many :organizations, class_name: "Imported::Organization", through: :market_organizations
+  end
+end
+
+class Legacy::Market < Legacy::Base
+  TIMEZONES = {
+    "Eastern Standard Time" => "Eastern Time (US & Canada)",
+    "Central Standard Time" => "Central Time (US & Canada)",
+    "Mountain Standard Time" => "Mountain Time (US & Canada)",
+    "Pacific Standard Time" => "Pacific Time (US & Canada)",
+  }
+
   self.table_name = "domains"
   self.primary_key = "domain_id"
 
-  has_many :organizations, class_name: "::Import::Organization"
-  has_many :delivery_schedules, class_name: "Import::DeliverySchedule", foreign_key: :domain_id
-  belongs_to :timezone, class_name: "Import::Timezone", foreign_key: :tz_id
+  has_one  :brand, class_name: "Legacy::Brand", foreign_key: :domain_id
 
-  has_many :market_organizations, class_name: "Import::MarketOrganization", foreign_key: "domain_id"
-  has_many :organizations, -> { where("organizations_to_domains.orgtype_id = 3") }, through: :market_organizations, class_name: "Import::Organization"
-  has_many :market_org, -> { where("organizations_to_domains.orgtype_id = 2") }, through: :market_organizations, class_name: "Import::Organization", source: :organization
+  has_many :organizations, class_name: "::Legacy::Organization"
+  has_many :delivery_schedules, class_name: "Legacy::DeliverySchedule", foreign_key: :domain_id
+  has_many :orders, class_name: "Legacy::Order", foreign_key: :domain_id
+
+  has_many :market_organizations, class_name: "Legacy::MarketOrganization", foreign_key: "domain_id"
+  has_many :organizations, -> { where("organizations_to_domains.orgtype_id = 3") }, through: :market_organizations, class_name: "Legacy::Organization"
+  has_many :market_org, -> { where("organizations_to_domains.orgtype_id = 2") }, through: :market_organizations, class_name: "Legacy::Organization", source: :organization
+
+  belongs_to :timezone, class_name: "Legacy::Timezone", foreign_key: :tz_id
 
   def import
-    market = ::Market.where(legacy_id: domain_id).first
+    market = Imported::Market.where(legacy_id: domain_id).first
     if market.nil?
-      market = ::Market.new(
+      market = Imported::Market.new(
         legacy_id: domain_id,
         name: name,
         subdomain: parse_subdomain,
         active: is_live,
-        timezone: timezone.tz_code,
+        timezone: TIMEZONES[timezone.tz_name],
         profile: market_profile,
         policies: market_policies,
         tagline: custom_tagline,
@@ -36,18 +62,28 @@ class Import::Market < Import::Base
         allow_credit_cards: payment_allow_paypal,
         allow_ach: payment_allow_ach,
         local_orbit_seller_fee: fee_percen_lo,
-        market_seller_fee: fee_percen_hub
+        market_seller_fee: fee_percen_hub,
+        background_image: imported_background,
+        background_color: imported_background_color,
+        text_color: imported_text_color
       )
     end
+    puts "Importing market: #{market.name}"
 
     if market.valid?
-      organizations.each {|org| market.organizations << org.import }
+      organizations.each_with_index do |org, index|
+        puts "Importing organization #{index + 1} of #{organizations.count}"
+        imported_organization = org.import
+        market.organizations << imported_organization if !market.organizations.include?(imported_organization)
+      end
 
       market_org.each do |org|
+        puts "Importing market addresses..."
         org.market_addresses.each do |address|
           market.addresses << address.import
         end
 
+        puts "Importing market managers..."
         org.users.each do |user|
           if user.is_deleted == 0
             imported_user = user.import
@@ -58,10 +94,40 @@ class Import::Market < Import::Base
         end
       end
 
+      puts "Importing market logo..."
+      %w(jpg gif png).each do |extension|
+        begin
+          logo = Dragonfly.app.fetch_url("http://app.localorb.it/img/#{domain_id}/logo-large.#{extension}")
+          if logo.image?
+            market.logo_uid = logo.store
+            break
+          end
+        rescue
+        end
+      end
+
+      puts "Importing market profile photo..."
+      %w(jpg gif png).each do |extension|
+        begin
+          logo = Dragonfly.app.fetch_url("http://app.localorb.it/img/#{domain_id}/profile.#{extension}")
+          if logo.image?
+            market.photo_uid = logo.store
+            break
+          end
+        rescue
+        end
+      end
+
       market.save
 
-      delivery_schedules.each do |ds|
+      puts "Importing #{delivery_schedules.count} delivery schedules..."
+      delivery_schedules.each_with_index do |ds|
         market.delivery_schedules << ds.import(market)
+      end
+
+      puts "Setting market product delivery schedules..."
+      market.organizations.each do |organization|
+        organization.products.each {|p| p.update_delivery_schedules }
       end
     end
 
@@ -71,5 +137,19 @@ class Import::Market < Import::Base
 
   def parse_subdomain
     hostname.split('.').first
+  end
+
+  def imported_background
+    if brand && brand.background
+      brand.background.file_name
+    end
+  end
+
+  def imported_text_color
+    "#%06X" % brand.text_color if brand
+  end
+
+  def imported_background_color
+    "#%06X" % brand.background_color if brand
   end
 end
