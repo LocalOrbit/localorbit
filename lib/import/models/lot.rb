@@ -10,11 +10,18 @@ class Import::Lot < Import::Base
   belongs_to :product, class_name: "Import::Product", foreign_key: "prod_id"
 
   def import
-    ::Lot.new(
-      number: lot_id,
-      good_from: good_from,
-      expires_at: expires_on,
-      quantity: qty
-    )
+    imported = ::Lot.where(legacy_id: inv_id).first
+
+    if imported.nil?
+      imported = ::Lot.new(
+        number: lot_id,
+        good_from: good_from,
+        expires_at: expires_on,
+        quantity: qty,
+        legacy_id: inv_id
+      )
+    end
+
+    imported
   end
 end

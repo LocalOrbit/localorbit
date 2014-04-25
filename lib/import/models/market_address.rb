@@ -22,7 +22,7 @@ class Import::MarketAddress < Import::Base
       imported = ::MarketAddress.new(
         legacy_id: address_id,
         name: label,
-        address: address,
+        address: address.gsub(";","\n"),
         city: city,
         state: region_code,
         zip: zipcode,

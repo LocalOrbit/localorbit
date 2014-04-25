@@ -10,10 +10,16 @@ class Import::Price < Import::Base
   belongs_to :product, class_name: "Import::Product", foreign_key: "prod_id"
 
   def import
-    ::Price.new(
-      min_quantity: imported_quantity,
-      sale_price: imported_price
-    )
+    imported = ::Price.where(legacy_id: price_id).first
+    if imported.nil?
+      imported = ::Price.new(
+        min_quantity: imported_quantity,
+        sale_price: imported_price,
+        legacy_id: price_id
+      )
+    end
+
+    imported
   end
 
   def imported_quantity
