@@ -6,6 +6,54 @@
   <%= stylesheet_link_tag "application", media: "all" %>
   <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300|Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
   <%= csrf_meta_tags %>
+  <% if current_market.present? %>
+    <style>
+    <% if current_market.background_color.present? -%>
+      body {
+        background-color: <%= current_market.background_color -%>;
+      }
+    <% end -%>
+    <% if !current_market.background_image.blank? -%>
+      body {
+        background-image: url(<%= asset_path "backgrounds/#{current_market.background_image}" -%>);
+      }
+    <% else %>
+      body {
+        background-image: none;
+      }
+    <% end -%>
+    <% if current_market.text_color.present? -%>
+      a,
+      button.reset, button.cancel, button.close, button.delete,
+      .btn.reset,
+      .btn.cancel,
+      .btn.close,
+      .btn.delete,
+      input[type=reset].reset,
+      input[type=reset].cancel,
+      input[type=reset].close,
+      input[type=reset].delete,
+      input[type=submit].reset,
+      input[type=submit].cancel,
+      input[type=submit].close,
+      input[type=submit].delete,
+      .seller-map-toggle,
+      .nav--sidebar a {
+        color: <%= current_market.text_color -%>;
+      }
+      .l-app-header,
+      .l-app-footer,
+      .nav--main > a:hover,
+      .nav--main > span,
+      .btn--add,
+      .btn--save,
+      input[type=submit] {
+        background-color: <%= current_market.text_color -%>;
+      }
+    <% end %>
+
+    </style>
+  <% end %>
 </head>
 <body class="<%= current_user.present? ? "" : "signed-out" %>">
 

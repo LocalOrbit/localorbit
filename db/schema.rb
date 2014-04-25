@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140423192833) do
+ActiveRecord::Schema.define(version: 20140423201701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(version: 20140423192833) do
     t.datetime "updated_at"
     t.string   "logo_uid"
     t.string   "tagline"
-    t.string   "background"
+    t.string   "background_image"
     t.string   "balanced_customer_uri"
     t.boolean  "balanced_underwritten",                                 default: false, null: false
     t.decimal  "local_orbit_seller_fee",        precision: 5, scale: 3, default: 0.0,   null: false
@@ -237,6 +237,8 @@ ActiveRecord::Schema.define(version: 20140423192833) do
     t.boolean  "default_allow_credit_cards",                            default: true
     t.boolean  "default_allow_ach",                                     default: true
     t.integer  "legacy_id"
+    t.string   "background_color"
+    t.string   "text_color"
   end
 
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
