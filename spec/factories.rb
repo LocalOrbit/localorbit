@@ -113,6 +113,7 @@ FactoryGirl.define do
     unit            "per box"
     unit_price      6.99
     delivery_status "pending"
+    delivered_at Time.current
   end
 
   factory :order_item_lot do
