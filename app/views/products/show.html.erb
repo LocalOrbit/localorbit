@@ -50,9 +50,9 @@
       </div
       ><div class="column column--half column--guttered">
         <% if @product.image_uid.present? %>
-          <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid), alt: "", class: "product-image product-image--large" %>
-        <% else %>
-          <%= image_tag 'default-product-image.png', alt: "", class: "product-image product-image--large" %>
+          <div class="product-image product-image--large vc-wrapper">
+            <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid), alt: "", class: "vertical-centerer" %>
+          </div>
         <% end %>
 
         <img class="location-map" alt="" src="<%= @product.location_map %>">
