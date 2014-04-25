@@ -43,8 +43,8 @@
   width: 100%;
   min-height: 44px;
   color: #fff;
-  background-color: #3f5d99;
-  @include gradient(#3f5d99, #4567aa);
+  background-color: $link;
+  @include gradient($link, #4567aa);
   font-size: 14px;
   &.js-positioned {
     position: fixed;

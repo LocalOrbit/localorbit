@@ -41,11 +41,20 @@
       .nav--sidebar a {
         color: <%= current_market.text_color -%>;
       }
+      .l-app-header,
+      .l-app-footer {
+        background: <%= current_market.text_color -%>;
+      }
       .nav--main > a:hover {
         background: <%= current_market.text_color -%>;
       }
       .nav--main > span {
         background: <%= current_market.text_color -%>;
+      }
+      .btn--add,
+      .btn--save,
+      input[type=submit] {
+        background-color: <%= current_market.text_color -%>;
       }
     <% end %>
 
