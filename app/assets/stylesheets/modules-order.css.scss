@@ -22,11 +22,13 @@
 .order-summary {
 
   tfoot {
-    th, td {
-      padding-top: 1.5em;
-      font-size: 18px
+    .line-item {
+      font-size: 14px;
+      font-weight: 300;
     }
-    th {
+
+    .review-order-total {
+      font-size: 18px;
       font-weight: bold;
     }
   }

@@ -45,14 +45,14 @@
   </tbody>
 
   <tfoot class="math">
-    <tr>
+    <tr class="line-item">
       <td></td>
       <td></td>
       <td></td>
       <th scope="row">Item Subtotal</th>
       <td class="delivery-fees"><strong><%= number_to_currency @order.subtotal %></strong></td>
     </tr>
-    <tr>
+    <tr class="line-item">
       <td></td>
       <td></td>
       <td></td>
@@ -63,8 +63,8 @@
       <td></td>
       <td></td>
       <td></td>
-      <th scope="row">Order Total</th>
-      <td class="total"><strong><%= number_to_currency @order.total_cost %></strong></td>
+      <th scope="row" class="review-order-total">Order Total</th>
+      <td class="total review-order-total"><strong><%= number_to_currency @order.total_cost %></strong></td>
     </tr>
   </tfoot>
 </table>
