@@ -61,7 +61,7 @@ end
 
     <% if current_user.admin? || current_user.market_manager? || current_user.seller? %>
       <li>
-        <%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe01f;"></i> Products</a>'), admin_products_path %>
+        <%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe01f;"></i> Products'), admin_products_path %>
       </li>
     <% end %>
 

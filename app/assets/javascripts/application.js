@@ -38,5 +38,6 @@
 //= require select_all
 //= require shop
 //= require sticky-headers
+//= require style_chooser
 //= require tab-box
 //= require tablesorter
