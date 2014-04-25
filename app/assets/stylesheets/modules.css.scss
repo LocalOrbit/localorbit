@@ -400,8 +400,8 @@
     &:hover {
       color: #fff;
       @include border-radius(6px);
-      background: #0A3078;
-      @include gradient(#A6B1CE,#5A6D9F);
+      background: $link;
+      @include gradient(rgba(0,0,0,0.3), rgba(0,0,0,0));
     }
   }
   > span {
@@ -409,7 +409,7 @@
     color: #fff;
     background: #0a3078;
     background-color: rgba(10,48,120,0.48);
-    @include gradient(#0a3078, rgba(10,48,120,0.3));
+    @include gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.25));
     text-decoration: none;
   }
 }
