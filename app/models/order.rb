@@ -124,6 +124,12 @@ class Order < ActiveRecord::Base
     order
   end
 
+  def delivered_at
+    if self.delivered?
+      return items.maximum(:delivered_at)
+    end
+  end
+
   def sellers
     items.map {|item| item.seller }.uniq
   end
