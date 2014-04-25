@@ -13,12 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.datepicker
-//= require jquery.ui.slider
 //= require chosen-jquery
 //= require underscore
 //= require accountingjs
 //= require jquery.tablesorter.min
 //= require_tree ./cart
+//= require bootstrap-colorpicker
 //= require chosen
 //= require date_picker
 //= require delivery_schedule

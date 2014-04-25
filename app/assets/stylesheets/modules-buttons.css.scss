@@ -136,11 +136,12 @@ input[type=submit] {
 .btn--start {
   display: inline-block;
   padding: 6px 10px 5px;
+  background-color: #fff;
   vertical-align: top;
 }
 .btn--end {
   @include border-radius(0 2px 2px 0);
-  margin: 2px 0 2px -1px;
+  margin: 4px 0 2px -4px;
 }
 .btn--start {
   position: relative;
