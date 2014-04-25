@@ -169,7 +169,7 @@ $ ->
           value: hue,
           change: (event, ui) ->
             hex = hsl_to_hex(parseInt(ui.value, 10), 100, 50)
-            inp = $('#' + e.targetparentNode.getAttribute('rel')) 
+            inp = $('#' + event.target.getAttribute('rel')) 
             $(inp).val("#" + hex)
             $(inp).trigger("change")
       })
@@ -186,8 +186,6 @@ $ ->
   else if features.range_input == false
     jquery_fallback()
 
-
-  jquery_fallback()
   update_swatch()
 
   $('#market_background_color').change ->
