@@ -29,10 +29,16 @@ class OrderMailer < BaseMailer
     )
   end
 
-  # TODO: Attach invoice PDF
   def invoice(order, addresses)
     @market = order.market
     @order = order
+
+    user = User.find_by(email: addresses)
+
+    scheme = Rails.env.production? || Rails.env.staging? ? "https://" : "http://"
+    uri = URI("#{scheme}#{order.market.subdomain}.#{Figaro.env.domain}/admin/invoices/#{order.id}/invoice.pdf?auth_token=#{user.auth_token}")
+
+    attachments["invoice.pdf"] = {mime_type: "application/pdf", content: Net::HTTP.get(uri)}
 
     mail(
       to: addresses,

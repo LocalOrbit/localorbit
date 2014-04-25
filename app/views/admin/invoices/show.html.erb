@@ -79,7 +79,7 @@
       <th class="ar">Amount</th>
     </tr>
     <% @invoice.items.each do |item| %>
-    <tr>
+    <tr class="line-item">
       <td class="al"><%= item.name %></td>
       <td><%= item.unit %></td>
       <td><%= number_to_currency item.unit_price %></td>

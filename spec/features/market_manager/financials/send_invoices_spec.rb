@@ -49,6 +49,11 @@ feature "sending invoices" do
     expect(current_email).to have_subject("New Invoice")
     expect(current_email).to have_body_text("Invoice")
     expect(current_email).to have_body_text("Reference Number: LO-001")
+    expect(current_email.attachments.size).to eq(1)
+
+    attachment = current_email.attachments.first
+    expect(attachment.filename).to eq("invoice.pdf")
+    expect(attachment.content_type).to eq("application/pdf; charset=UTF-8")
   end
 
   scenario "sending an invoice to an organization with no users" do
