@@ -1,11 +1,11 @@
 <%
 if current_market && current_market.logo
-  logo = image_tag(current_market.logo.remote_url, alt: "#{current_market.name} logo", class: "logo")
+  logo = image_tag(current_market.logo.remote_url, alt: "#{current_market.name} logo", class: "vertical-centerer logo")
 else
-  logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "logo")
+  logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "vertical-centerer logo")
 end
 %>
-<%= link_to_or_span logo, root_path, class: "logo-link pull-left" %>
+<%= link_to_or_span logo, root_path, class: "logo-link vc-wrapper pull-left" %>
 
 <% if current_market && current_user %>
   <div class="nav nav--main pull-right">

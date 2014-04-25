@@ -890,9 +890,10 @@
 .logo-link {
   position: relative;
   display: block;
-  max-width: 100px;
+  max-width: 300px;
   height: 100px;
   margin: 0 0 20px 0;
+  text-align: center;
 
   > .logo {
     max-width: 100%;
@@ -1176,3 +1177,23 @@ label ~ .tooltip {
     float: right;
   }
 }
+
+/** Vertical Centerer */
+.vc-wrapper {
+  position: relative;
+
+  &:after {
+    position: relative;
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    content: ' ';
+    vertical-align: middle;
+  }
+
+  .vertical-centerer {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
