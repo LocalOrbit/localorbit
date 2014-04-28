@@ -8,7 +8,7 @@
       <legend>Style Chooser</legend>
       <div class="field">
         <%= f.label :text_color, "Market Color" %>
-        <span class="tooltip" data-tooltip="This will be the color of the main navigation and headers on your site. It will also be used for your Fresh Sheet, Newsletter and transactional email templates.Enter a hex color from your brand or click on the color swatch to select from the color picker, which will automatically update the code."></span>
+        <span class="tooltip" data-tooltip="This will be the color of the main navigation and headers on your site. It will also be used for your Fresh Sheet, Newsletter and transactional email templates. Enter a hex color from your brand or click on the color swatch to select from the color picker, which will automatically update the code."></span>
         <div class="input-append color" data-color="<%= @market.text_color.present? ? @market.text_color : "#3f5d98" %>">
           <%= f.text_field :text_color, size: "7", class: "input-hex", value: (@market.text_color.present? ? @market.text_color : "#3f5d98") -%><button class="add-on btn btn--end" type="button"><i class="swatch"></i></button>
         </div>
