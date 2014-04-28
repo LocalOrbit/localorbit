@@ -25,7 +25,7 @@
         <%= f.label :background_image %><br>
 
         <div class="row row--squash">
-          <label class="column column--guttered column--third">
+          <label class="column column--guttered column--third background-choice">
             <div class="background_swatch" id="background_swatch"></div>
             <%= f.radio_button :background_image, "", {:checked => (current_market.background_image.blank? ? "checked" : false)} %> Solid Color
           </label>

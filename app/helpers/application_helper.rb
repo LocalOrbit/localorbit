@@ -61,4 +61,18 @@ module ApplicationHelper
     files = Dir.glob(Rails.root.join("app/assets/images/backgrounds/*.jpg"))
     files.map {|name| [name.split(/[\/\.]/)[-2].titleize, name.split("/")[-1]] }
   end
+
+  def color_mix (color_a = "#000000", color_b = "#ffffff")
+    color_a.reverse!.chomp!('#').reverse!
+    color_b.reverse!.chomp!('#').reverse!
+    if color_a.length == 6 && color_b.length == 6
+
+      r = (((color_a[0..1].hex - color_b[0..1].hex).abs / 2 ) + color_a[0..1].hex).to_s(16)
+      g = (((color_a[2..3].hex - color_b[2..3].hex).abs / 2 ) + color_a[2..3].hex).to_s(16)
+      b = (((color_a[4..5].hex - color_b[4..5].hex).abs / 2 ) + color_a[4..5].hex).to_s(16)
+      return "##{r}#{g}#{b}"
+    end
+    return "##{color_a}"
+
+  end
 end
