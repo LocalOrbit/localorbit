@@ -3,3 +3,5 @@
 <label for="organization_allow_purchase_orders">Allow purchase orders<label><br>
 <input type="checkbox" name="organization[allow_credit_cards]" id="organization_allow_credit_cards" <%= 'checked' if @market.default_allow_credit_cards? %>>
 <label for="organization_allow_credit_cards">Allow credit cards<label><br>
+<input type="checkbox" name="organization[allow_ach]" id="organization_allow_ach" <%= 'checked' if @market.default_allow_ach? %>>
+<label for="organization_allow_ach">Allow ACH<label><br>

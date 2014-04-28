@@ -59,8 +59,10 @@ class Admin::MarketsController < AdminController
       :photo,
       :allow_purchase_orders,
       :allow_credit_cards,
+      :allow_ach,
       :default_allow_purchase_orders,
-      :default_allow_credit_cards
+      :default_allow_credit_cards,
+      :default_allow_ach
     )
 
   end

@@ -37,6 +37,7 @@ describe "admin manange organization" do
 
     expect(find("#organization_allow_purchase_orders")).to_not be_checked
     expect(find("#organization_allow_credit_cards")).to be_checked
+    expect(find("#organization_allow_ach")).to be_checked
 
     click_button "Add Organization"
 
@@ -44,7 +45,7 @@ describe "admin manange organization" do
   end
 
   it "create new organization", js: true do
-    create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: false)
+    create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: false, default_allow_ach: false)
 
     visit "/admin/organizations"
     click_link "Add Organization"
@@ -63,6 +64,7 @@ describe "admin manange organization" do
 
     expect(find("#organization_allow_purchase_orders")).to be_checked
     expect(find("#organization_allow_credit_cards")).to_not be_checked
+    expect(find("#organization_allow_ach")).to_not be_checked
 
     click_button "Add Organization"
 
