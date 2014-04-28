@@ -39,7 +39,7 @@ class Order < ActiveRecord::Base
   scope :uninvoiced, -> { where(payment_method: "purchase order", invoiced_at: nil) }
   scope :invoiced, -> { where(payment_method: "purchase order").where.not(invoiced_at: nil) }
   scope :unpaid, -> { where(payment_status: "unpaid") }
-  scope :delivered, -> { joins(:items).where("order_items.delivery_status = ?", "delivered").group('orders.id') }
+  scope :delivered, -> { where("order_items.delivery_status = ?", "delivered").group('orders.id') }
 
   scope :with_items, lambda { joins("LEFT JOIN order_items on orders.id = order_items.order_id") }
   scope :payable_on, lambda { |time|

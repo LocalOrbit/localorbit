@@ -1,21 +1,67 @@
 require 'spec_helper'
 
 feature "Seller Financial Overview" do
-  let!(:market)  { create(:market) }
+  let!(:market)  { create(:market, po_payment_term: 30) }
   let!(:seller)  { create(:organization, markets: [market]) }
+  let!(:seller2)  { create(:organization, markets: [market]) }
+
   let!(:user)    { create(:user, organizations: [seller]) }
-  let!(:kale) { create(:product, :sellable, name: "Kale") }
-  let!(:peas) { create(:product, :sellable, name: "Peas") }
+
+  let!(:kale) { create(:product, :sellable, organization: seller, name: "Kale") }
+  let!(:peas) { create(:product, :sellable, organization: seller, name: "Peas") }
+  let!(:from_different_seller) { create(:product, :sellable, name: "Apples") }
 
   let!(:buyer1) { create(:organization) }
   let!(:buyer2) { create(:organization) }
 
-  # Order that pays out today
-  # Buyer paid 7 days ago
-  # Delivered up to 9 days ago
-  let(:order_today) { crate(:order) }
-  let(:order_item1) { create(:order_item, product: peas, order: order_today) }
-  let(:order_item2) { create(:order_item, product: peas, order: order_today) }
+  describe "Overdue" do
+    context "no overdue payments for seller" do
+      it "has a value of $0.00" do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        click_link "Financials"
+
+        expect(financial_row("Overdue").amount).to eql("$0.00")
+      end
+    end
+
+    context "overdue orders in the system" do
+      before do
+        # Overdue Order
+        Timecop.travel 32.days.ago do
+          create(:order, payment_method: "purchase order", items:[
+            create(:order_item, quantity: 5, product: peas, delivery_status: "delivered"),
+            create(:order_item, quantity: 7, product: kale, delivery_status: "delivered"),
+            create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
+          ])
+        end
+
+        # Order that's not overdue
+        create(:order, payment_method: "purchase order", items:[
+          create(:order_item, quantity: 1, product: peas, delivery_status: "delivered")
+        ])
+      end
+
+      it "shows a sum of overdue payments for the seller" do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        click_link "Financials"
+
+        expect(financial_row("Overdue").amount).to eql("$83.88")
+      end
+    end
+
+    context "Market manager has not yet set PO terms for the market" do
+      let!(:market) { create(:market) }
+      it "displays as $0.00" do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        click_link "Financials"
+
+        expect(financial_row("Overdue").amount).to eql("$0.00")
+      end
+    end
+  end
 
   scenario "Seller navigates to their financial overview" do
     switch_to_subdomain(market.subdomain)
