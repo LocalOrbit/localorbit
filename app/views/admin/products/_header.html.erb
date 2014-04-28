@@ -1,5 +1,6 @@
 <div class="tab-header">
   <div class="l-constraint">
+    <%= link_to "< Return to Products List", admin_products_path, class: "redundant-nav" %>
     <div class="l-page-header">
       <% if @product.persisted? %>
         <h1>Update <%= @product.name %></h1>
