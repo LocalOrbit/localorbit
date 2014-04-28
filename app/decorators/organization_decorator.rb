@@ -45,4 +45,14 @@ class OrganizationDecorator < Draper::Decorator
       ["#{card.bank_name} ending in #{card.last_four}", card.id]
     end
   end
+
+  def ach_available?
+    bank_accounts.where("verified = ? and account_type in (?)", true, %w(savings checking)).count > 0
+  end
+
+  def ach_options
+    bank_accounts.where("verified = ? and account_type in (?)", true, %w(savings checking)).map do |bank_account|
+      ["ACH: #{bank_account.bank_name} - *********#{bank_account.last_four}", bank_account.id]
+    end
+  end
 end

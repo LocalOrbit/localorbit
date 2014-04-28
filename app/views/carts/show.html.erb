@@ -101,6 +101,26 @@
                   </fieldset>
                 </div>
               <% end %>
+
+              <% if allow_payment_option?(:allow_ach) %>
+                <div class="field">
+                  <label>
+                    <%= f.radio_button :payment_method, "ach" %>
+                    Pay by ACH
+                  </label>
+                  <fieldset id="ach-fields" class="payment-fields is-hidden">
+                    <div class="field">
+                      <% if current_organization.decorate.ach_available? %>
+                        <%= f.label :bank_account, "Account" %><br>
+                        <%= f.select :bank_account, options_for_select(current_organization.decorate.ach_options) %>
+                      <% else %>
+                        You currently do not have any verified bank accounts.<br>
+                        Please <%= link_to "create and/or verify one", new_admin_organization_bank_account_path(current_organization) %> to use ACH.
+                      <% end %>
+                    </div>
+                  </fieldset>
+                </div>
+              <% end %>
             </fieldset>
           </div>
         </div>
