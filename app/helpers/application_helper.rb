@@ -61,4 +61,28 @@ module ApplicationHelper
     files = Dir.glob(Rails.root.join("app/assets/images/backgrounds/*.jpg"))
     files.map {|name| [name.split(/[\/\.]/)[-2].titleize, name.split("/")[-1]] }
   end
+
+  def color_mix (color_a = "#000000", color_b = "#ffffff")
+    color_a.reverse!.chomp!('#').reverse!
+    color_b.reverse!.chomp!('#').reverse!
+    if color_a.length == 6 && color_b.length == 6
+
+      r = (((color_a[0..1].hex - color_b[0..1].hex).abs / 2 ) + color_a[0..1].hex).to_s(16)
+      g = (((color_a[2..3].hex - color_b[2..3].hex).abs / 2 ) + color_a[2..3].hex).to_s(16)
+      b = (((color_a[4..5].hex - color_b[4..5].hex).abs / 2 ) + color_a[4..5].hex).to_s(16)
+      return "##{r}#{g}#{b}"
+    end
+    return "##{color_a}"
+  end
+
+  def svg_icon
+    svg = "<svg class='icon' width='100%' height='100%' viewBox='0 0 513 395' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
+        <g stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'>
+            <path d='M237.816115,36.6541111 L197.922377,78.7431616 L40.4270465,78.7431616 L40.2069509,355.476693 L394.699128,355.818123 L394.730167,236.791553 L432.885715,217.846401 L432.97601,394.066788 L1.31775185,394.255844 L0.753404161,40.1953928 L237.816115,36.6541111 Z M198.023963,198.503381 C144.162619,237.172479 81.6272494,313.940703 81.6272494,313.940703 C81.6272494,313.940703 102.812873,165.934885 179.194502,119.790994 C255.576132,73.6471038 335.724795,78.683905 335.724795,78.683905 L336.478199,0.70516348 L512.255573,119.790991 L336.348399,235.719292 L336.537456,159.834281 C336.537456,159.834281 251.885306,159.834283 198.023963,198.503381 Z'></path>
+        </g>
+    </svg>"
+
+    svg
+  end
+
 end
