@@ -321,6 +321,7 @@ GEM
     simplecov-html (0.7.1)
     simpleidn (0.0.5)
     slop (3.5.0)
+    snitcher (0.2.0)
     spring (1.1.2)
     spring-commands-rspec (1.0.2)
       spring (>= 0.9.1)
@@ -407,6 +408,7 @@ DEPENDENCIES
   sdoc
   simplecov (~> 0.7.1)
   simpleidn
+  snitcher
   spring
   spring-commands-rspec
   timecop
