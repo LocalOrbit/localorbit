@@ -1,15 +1,21 @@
-<div class="tabs-wrapper">
-  <h1><i class="font-icon" data-icon="&#xe00f;">&nbsp; </i>Financials</h1>
-  <ul class="tabs">
-    <%= content_tag(:li, link_to_or_span("Overview", [:admin, :financials]), class: 'tab') %>
-    <% if current_user.admin? || current_user.market_manager? %>
-    <%= content_tag(:li, link_to_or_span("Send Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
-    <%= content_tag(:li, link_to_or_span("Enter Receipts", [:admin, :financials, :receipts]), class: 'tab') %>
-    <%= content_tag(:li, link_to_or_span("Record Payments to Vendors", coming_soon_dashboard_path), class: 'tab') %>
-    <%= content_tag(:li, link_to_or_span("Review Payment History", coming_soon_dashboard_path), class: 'tab') %>
-    <% else %>
-    <%= content_tag(:li, link_to_or_span("Review Orders", [:admin, :financials, :orders]), class: 'tab') %>
-    <%= content_tag(:li, link_to_or_span("Review Payment History", coming_soon_dashboard_path), class: 'tab') %>
-    <% end %>
-  </ul>
+<div class="tab-header">
+  <div class="l-constraint">
+    <div class="l-page-header">
+     <h1><i class="font-icon" data-icon="&#xe00f;">&nbsp; </i>Financials</h1>
+    </div>
+    <div class="tabs-wrapper">
+      <ul class="tabs">
+        <%= content_tag(:li, link_to_or_span("Overview", [:admin, :financials]), class: 'tab') %>
+        <% if current_user.admin? || current_user.market_manager? %>
+        <%= content_tag(:li, link_to_or_span("Send Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
+        <%= content_tag(:li, link_to_or_span("Enter Receipts", [:admin, :financials, :receipts]), class: 'tab') %>
+        <%= content_tag(:li, link_to_or_span("Record Payments to Vendors", coming_soon_dashboard_path), class: 'tab') %>
+        <%= content_tag(:li, link_to_or_span("Review Payment History", coming_soon_dashboard_path), class: 'tab') %>
+        <% else %>
+        <%= content_tag(:li, link_to_or_span("Review Orders", [:admin, :financials, :orders]), class: 'tab') %>
+        <%= content_tag(:li, link_to_or_span("Review Payment History", coming_soon_dashboard_path), class: 'tab') %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 </div>

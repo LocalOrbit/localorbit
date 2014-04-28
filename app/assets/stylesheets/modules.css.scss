@@ -261,6 +261,10 @@
   font-weight: bold;
 }
 
+.product-header {
+  height: 40px;
+}
+
 .header--column {
   overflow: hidden;
   font-size: 0.1px;
@@ -663,19 +667,16 @@
     }
   }
   
-.tab-header {
+.tab-header,
+.sticky-table-header {
   width: 100%;
 
   &.js-positioned {
     position: absolute;
     left: 0;
     z-index: 3;
-    padding: 0 20px;
     @include box-sizing(border-box);
 
-    > .l-constraint {
-      padding-top: 10px;
-    }
   }
   &.js-fixed {
     position: fixed;
@@ -686,6 +687,26 @@
     }
   }
 }
+  .tab-header {
+    &.js-positioned {
+      padding: 0 20px;
+
+      > .l-constraint {
+        padding-top: 10px;
+      }
+    }
+  }
+
+  .sticky-table-header {
+    overflow: hidden;
+
+    &.js-fixed {
+      > .l-constraint {
+        overflow: hidden;
+      }
+    }
+  }
+
 .tab {
   position: relative;
   display: inline-block;
@@ -1154,14 +1175,18 @@ label ~ .tooltip {
 
 /** Apply Action Box **/
 
-.actions {
+.action-header {
   background: #D9F6F9;
   @include border-radius(5px);
-  padding: 10px;
-  margin: -10px 0 20px 0;
+  margin: 0;
+  width: 100%;
 
   h4 {
     margin: 0;
+  }
+
+  .actions {
+    padding: 10px;
   }
 }
 

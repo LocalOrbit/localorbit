@@ -1,17 +1,23 @@
-<%= link_to "#{svg_icon} Export CSV".html_safe, coming_soon_dashboard_path, class: "export todo pull-right" %>
-<h1><i class="font-icon" data-icon="&#xe01f;"></i>&nbsp; Products</h1>
+<div class="tab-header">
+  <div class="l-constraint">
+    <%= link_to "#{svg_icon} Export CSV".html_safe, coming_soon_dashboard_path, class: "export todo pull-right" %>
+    <h1><i class="font-icon" data-icon="&#xe01f;"></i>&nbsp; Products</h1>
 
-<div class="row row--justified">
-  <div class="column">
-    <select><option>Show from all Markets</option></select>
-    <select><option>Show from all Sellers</option></select>
-  </div>
+    <div class="row row--justified product-header">
+      <div class="column">
+        <select><option>Show from all Markets</option></select>
+        <select><option>Show from all Sellers</option></select>
+      </div>
 
-  <div class="column">
-    <input type="search" disabled><button type="submit" class="btn btn--end">Search</button>
-    <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small" %>
+      <div class="column">
+        <input type="search" disabled><button type="submit" class="btn btn--end">Search</button>
+        <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small" %>
+      </div>
+    </div>
   </div>
 </div>
+
+
 
 <table class="product-table product-table--admin sortable">
   <thead>
