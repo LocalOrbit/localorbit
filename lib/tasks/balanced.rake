@@ -13,6 +13,8 @@ namespace :balanced do
       end
 
     end
+    
+    Snitcher.snitch("d159854152")
   end
 
 end

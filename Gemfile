@@ -38,6 +38,7 @@ gem 'newrelic_rpm'
 gem 'periscope-activerecord'
 gem 'rack-canonical-host'
 gem 'simpleidn'
+gem 'snitcher'
 
 group :doc do
   gem 'sdoc', require: false
