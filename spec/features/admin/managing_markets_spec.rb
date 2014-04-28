@@ -133,7 +133,7 @@ describe "Managing Markets" do
       expect(page).to_not have_text(@market2.name)
     end
 
-    it 'can add a market' do
+    it 'can add a market', :vcr do
       visit '/admin/markets'
 
       click_link add_market_link_name

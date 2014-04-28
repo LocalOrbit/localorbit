@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "A Market Manager" do
+describe "A Market Manager", :vcr do
   let(:market_manager) { create :user, :market_manager }
   let(:market) { market_manager.managed_markets.first }
   let(:market2) { create(:market) }

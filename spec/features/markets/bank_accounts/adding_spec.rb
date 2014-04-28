@@ -1,12 +1,16 @@
 require "spec_helper"
 
-feature "Adding bank account to a market", js: true do
-  let!(:admin) { create(:user, :admin) }
-  let!(:market_manager) { create(:user, :market_manager) }
-  let!(:market) { market_manager.managed_markets.first }
-  let!(:org) { create(:organization, markets: [market]) }
-  let!(:member) { create(:user, organizations: [org]) }
-  let!(:non_member) { create(:user) }
+feature "Adding bank account to a market", :js do
+  let!(:market) { create(:market, name: 'Marketville') }
+  let(:org)     { create(:organization, markets: [market]) }
+
+  before :all do
+    VCR.turn_off!
+  end
+
+  after :all do
+    VCR.turn_on!
+  end
 
   before do
     CreateBalancedCustomerForEntity.perform(market: market)
@@ -14,7 +18,7 @@ feature "Adding bank account to a market", js: true do
 
   scenario "as an admin" do
     switch_to_subdomain(market.subdomain)
-    sign_in_as(admin)
+    sign_in_as(create(:user, :admin))
 
     visit new_admin_market_bank_account_path(market)
 
@@ -50,7 +54,7 @@ feature "Adding bank account to a market", js: true do
 
   scenario "as a market manager" do
     switch_to_subdomain(market.subdomain)
-    sign_in_as(market_manager)
+    sign_in_as(create(:user, managed_markets: [market]))
 
     visit new_admin_market_bank_account_path(market)
 
@@ -86,7 +90,7 @@ feature "Adding bank account to a market", js: true do
 
   scenario "as a organization member" do
     switch_to_subdomain(market.subdomain)
-    sign_in_as(member)
+    sign_in_as(create(:user, organizations: [org]))
 
     visit new_admin_market_bank_account_path(org)
 
@@ -96,7 +100,7 @@ feature "Adding bank account to a market", js: true do
 
   scenario "as a non member" do
     switch_to_subdomain(market.subdomain)
-    sign_in_as(non_member)
+    sign_in_as(create(:user))
 
     visit new_admin_market_bank_account_path(org)
 

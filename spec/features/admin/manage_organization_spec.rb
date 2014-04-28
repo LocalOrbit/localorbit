@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "admin manange organization" do
+describe "admin manange organization", :vcr do
   let(:admin) { create(:user, :admin) }
 
   before do

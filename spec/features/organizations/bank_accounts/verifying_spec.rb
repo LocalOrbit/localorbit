@@ -5,6 +5,14 @@ feature "Verifying a bank account", js: true do
   let!(:market) { market_manager.managed_markets.first }
   let!(:org) { create(:organization, markets: [market]) }
 
+  before :all do
+    VCR.turn_off!
+  end
+
+  after :all do
+    VCR.turn_on!
+  end
+
   context "as a market manager" do
     before do
       CreateBalancedCustomerForEntity.perform(organization: org)

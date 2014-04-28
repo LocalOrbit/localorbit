@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Adding credit card to a market", js: true do
+feature "Adding credit card to a market", :js, :vcr do
   let!(:admin) { create(:user, :admin) }
   let!(:market_manager) { create(:user, :market_manager) }
   let!(:market) { market_manager.managed_markets.first }

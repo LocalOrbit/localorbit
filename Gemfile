@@ -68,6 +68,8 @@ group :test do
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'timecop'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :production, :staging do
