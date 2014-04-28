@@ -5,7 +5,7 @@ describe "Checking Out", js: true do
   let!(:other_buying_user) {  create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user, other_buying_user]) }
   let!(:credit_card)  { create(:bank_account, :credit_card, bankable: buyer) }
-  let!(:bank_account) { create(:bank_account, :checking, bankable: buyer) }
+  let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: buyer) }
 
   let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users:[create(:user), create(:user)]) }
   let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
@@ -354,6 +354,11 @@ describe "Checking Out", js: true do
 
         expect(page).to have_content("Thank you for your order")
         expect(page).to have_content("ACH")
+
+        order = Order.last
+        expect(order.payment_status).to eql("pending")
+        expect(order.payments.count).to eql(1)
+        expect(order.payments.first.status).to eql("pending")
       end
     end
 
@@ -370,6 +375,9 @@ describe "Checking Out", js: true do
 
         expect(page).to have_content("Your order could not be completed.")
         expect(page).to have_content("Payment processor error")
+
+        expect(Order.all.count).to eql(0)
+        expect(Payment.all.count).to eql(0)
       end
     end
   end

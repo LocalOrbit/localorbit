@@ -295,6 +295,10 @@ FactoryGirl.define do
       account_type     "checking"
       sequence(:last_four) {|n| "#{'%04d' % n}"}
     end
+
+    trait :verified do
+      verified true
+    end
   end
 
   factory :unit do
