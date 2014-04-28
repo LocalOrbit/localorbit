@@ -51,6 +51,7 @@ module Admin
       params.require(:organization).permit(
         :name,
         :can_sell,
+        :show_profile,
         :facebook,
         :twitter,
         :display_facebook,

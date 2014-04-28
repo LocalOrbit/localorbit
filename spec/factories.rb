@@ -122,6 +122,7 @@ FactoryGirl.define do
   factory :organization do
     sequence(:name) {|n| "Organization #{n}" }
     can_sell true
+    show_profile true
     allow_purchase_orders true
     allow_credit_cards    true
     allow_ach             true
