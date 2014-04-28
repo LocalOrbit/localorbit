@@ -3,6 +3,7 @@ class CreateOrder
 
   def perform
     context[:order] = Order.create_from_cart(order_params, cart, buyer)
+    context[:order].payments << payment if context[:payment]
     context.fail! if context[:order].errors.any?
   end
 end
