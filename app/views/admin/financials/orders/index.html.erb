@@ -15,7 +15,10 @@
   <tbody>
     <% @orders.each do |order| %>
     <tr class="order-row">
-      <td class="order-number"><%= link_to order.order_number, admin_financials_order_path(order) %></td>
+      <td class="order-number">
+        <%= link_to order.order_number, admin_financials_order_path(order) %>
+        <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
+      </td>
       <td class="description"></td>
       <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
       <td class="amount-owed"><%= number_to_currency(SellerOrder.new(order, current_user).net_total) %></td>

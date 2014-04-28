@@ -27,14 +27,14 @@ feature "entering receipts" do
     expect(rows.size).to eq(2)
 
     row = rows[0]
-    expect(row.order_number).to eq("LO-001")
+    expect(row.order_number).to eq("LO-001 PDF")
     expect(row.buyer).to eq("Money Bags")
     expect(row.order_date).to eq(19.days.ago.strftime("%m/%d/%Y"))
     expect(row.due_date).to eq("4 Days Overdue")
     expect(row.amount).to eq("$210.00")
 
     row = rows[1]
-    expect(row.order_number).to eq("LO-003")
+    expect(row.order_number).to eq("LO-003 PDF")
     expect(row.buyer).to eq("Money Bags")
     expect(row.order_date).to eq(2.days.ago.strftime("%m/%d/%Y"))
     expect(row.due_date).to eq(12.days.from_now.strftime("%m/%d/%Y"))
@@ -52,7 +52,7 @@ feature "entering receipts" do
     expect(page).to have_content("Payment recorded for order LO-001")
 
     row = Dom::Admin::Financials::InvoiceRow.first
-    expect(row.order_number).to eq("LO-003")
+    expect(row.order_number).to eq("LO-003 PDF")
     expect(row.buyer).to eq("Money Bags")
     expect(row.order_date).to eq(2.days.ago.strftime("%m/%d/%Y"))
     expect(row.due_date).to eq(12.days.from_now.strftime("%m/%d/%Y"))
