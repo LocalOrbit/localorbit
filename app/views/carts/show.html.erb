@@ -93,7 +93,10 @@
                   <fieldset id="credit-card-fields" class="payment-fields is-hidden">
                     <div class="field">
                       <%= f.label :credit_card, "Saved credit cards" %><br>
-                      <%= f.select :credit_card, options_for_select(current_organization.decorate.credit_card_options) %>
+                      <% if current_organization.decorate.credit_cards_available? %>
+                        <%= f.select :credit_card, options_for_select(current_organization.decorate.credit_card_options) %><br>
+                      <% end %>
+                      Add a <%= link_to "credit card", new_admin_organization_bank_account_path(current_organization) %> to your account.
                     </div>
                   </fieldset>
                 </div>
