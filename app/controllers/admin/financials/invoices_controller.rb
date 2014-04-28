@@ -9,7 +9,7 @@ module Admin::Financials
       # TODO: Figure out what to do if the save fails
       # The order would have to become invalid after being placed.
       orders.each {|order| SendInvoice.perform(order: order) }
-      message = "Invoice sent for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(', ')}"
+      message = "Invoice sent for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(', ')}. Invoices can be downloaded on the Enter Receipts page"
       redirect_to admin_financials_invoices_path, notice: message
     end
   end

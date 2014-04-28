@@ -1,8 +1,16 @@
 require "spec_helper"
 
-feature "Verifying a bank account", js: true do
-  let!(:market_manager) { create(:user, :admin, :market_manager) }
-  let!(:market) { market_manager.managed_markets.first }
+feature "Verifying a market bank account", :js do
+  let!(:market) { create(:market, name: 'Funville') }
+  let!(:market_manager) { create(:user, managed_markets: [market]) }
+
+  before :all do
+    VCR.turn_off!
+  end
+
+  after :all do
+    VCR.turn_on!
+  end
 
   context "as a market manager" do
     before do

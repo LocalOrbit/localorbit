@@ -9,7 +9,7 @@ class SendInvoice
   end
 
   def send_email
-    addresses = order.organization.users.map(&:email).join(", ")
+    addresses = order.organization.users.map(&:email)
     OrderMailer.invoice(BuyerOrder.new(order), addresses).deliver unless addresses.blank?
   end
 end

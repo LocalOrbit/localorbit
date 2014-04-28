@@ -282,7 +282,9 @@
             <a href="<%= root_url(host: @market.domain) %>"><%= image_tag logo, alt: @market.name, class: "lo_org_logo" %></a>
           </td>
           <td>
+            <% if @market.tagline.present? %>
             <p class="lo_slogan">“<%= @market.tagline %>”</p>
+            <% end %>
           </td>
         </tr>
       </table>

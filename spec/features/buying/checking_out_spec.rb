@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Checking Out", js: true do
+describe "Checking Out", :js, :vcr do
   let!(:user) { create(:user) }
   let!(:other_buying_user) {  create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user, other_buying_user]) }

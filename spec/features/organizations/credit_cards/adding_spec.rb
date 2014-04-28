@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Adding a credit card to an organization", js: true do
+feature "Adding a credit card to an organization", :js, :vcr do
   let!(:market_manager) { create(:user, :market_manager) }
   let!(:market) { market_manager.managed_markets.first }
   let(:org) { create(:organization, markets: [market]) }

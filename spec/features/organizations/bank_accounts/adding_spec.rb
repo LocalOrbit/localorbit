@@ -7,6 +7,14 @@ feature "Adding a bank account to an organization", js: true do
   let(:member) { create(:user, organizations: [org]) }
   let(:non_member) { create(:user) }
 
+  before :all do
+    VCR.turn_off!
+  end
+
+  after :all do
+    VCR.turn_on!
+  end
+
   before do
     CreateBalancedCustomerForEntity.perform(organization: org)
   end

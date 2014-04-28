@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "sending invoices" do
-  let(:market) { create(:market, po_payment_term: 14) }
+  let(:market) { create(:market, subdomain: 'betterest', po_payment_term: 14) }
   let!(:market_manager) { create :user, managed_markets: [market] }
 
   let!(:buyer_user) { create :user }
@@ -18,6 +18,11 @@ feature "sending invoices" do
   let!(:order4) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: 'ach') }
   let!(:order5) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-005", total_cost: 420, placed_at: Time.zone.parse("2014-04-02")) }
   let!(:order6) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer2, payment_method: 'purchase order', order_number: "LO-006", total_cost: 310, placed_at: Time.zone.parse("2014-04-03")) }
+
+  invoice_auth_matcher = lambda {|r1, r2|
+    matcher = %r{/admin/invoices/[0-9]+/invoice\.pdf\?auth_token=}
+    matcher.match(r1.uri) && matcher.match(r2.uri)
+  }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -38,7 +43,7 @@ feature "sending invoices" do
     expect(invoice.amount).to eq("$210.00")
   end
 
-  scenario "sending a invoice" do
+  scenario "sending a invoice", vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
     Dom::Admin::Financials::InvoiceRow.first.send_invoice
 
     expect(page).to have_content("Invoice sent for order number LO-001")
@@ -49,6 +54,11 @@ feature "sending invoices" do
     expect(current_email).to have_subject("New Invoice")
     expect(current_email).to have_body_text("Invoice")
     expect(current_email).to have_body_text("Reference Number: LO-001")
+    expect(current_email.attachments.size).to eq(1)
+
+    attachment = current_email.attachments.first
+    expect(attachment.filename).to eq("invoice.pdf")
+    expect(attachment.content_type).to eq("application/pdf; charset=UTF-8")
   end
 
   scenario "sending an invoice to an organization with no users" do
@@ -60,7 +70,7 @@ feature "sending invoices" do
     expect(ActionMailer::Base.deliveries.size).to eq(0)
   end
 
-  scenario "sending selected invoices", js: true do
+  scenario "sending selected invoices", :js, vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
     Dom::Admin::Financials::InvoiceRow.select_all
     click_button 'Send Selected Invoices'
 

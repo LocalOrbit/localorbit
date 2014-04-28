@@ -16,7 +16,10 @@
   <tbody>
     <% @orders.each do |order| %>
     <tr class="invoice-row<%= " past-due" if order.invoice_due_date < Time.current %>">
-      <td class="order-number"><%= link_to order.order_number, admin_financials_order_path(order) %></td>
+      <td class="order-number">
+        <%= link_to order.order_number, admin_financials_order_path(order) %>
+        <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
+      </td>
       <td class="buyer"><%= order.organization.name %></td>
       <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
       <td class="due-date"><%= display_due_date(order.invoice_due_date) %></td>

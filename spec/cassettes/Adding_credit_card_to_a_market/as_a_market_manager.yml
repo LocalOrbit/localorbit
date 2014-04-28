@@ -1,0 +1,485 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: '{"name":"Market 61","meta":{"entity_id":1,"entity_name":"Market 61","entity_type":"market"}}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Apr 2014 16:31:19 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM86cb7ddecef211e39beb02a1fe52a36c
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.0.132
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9QC1BVDgRYXlMBBwFTVlADBxtGXQMaE0BUVQYJVQoHDAhSAQAHCwBTQx9CAldbEgM+
+      Content-Length:
+      - '1698'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "1",
+            "entity_name": "Market 61",
+            "entity_type": "market"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/bank_accounts",
+          "id": "CU46nDtYvQ6x4RwLaaLRq1Jf",
+          "credits_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/credits",
+          "cards_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/cards",
+          "holds_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/holds",
+          "name": "Market 61",
+          "refunds_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/refunds",
+          "dob": null,
+          "created_at": "2014-04-28T16:31:19.037562Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/debits",
+          "transactions_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Mon, 28 Apr 2014 16:31:14 GMT
+- request:
+    method: get
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Apr 2014 16:31:22 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM88de79c8cef211e38d4506429171ffad
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.0.132
+      Content-Length:
+      - '485'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "1",
+            "entity_name": "Market 61",
+            "entity_type": "market"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/bank_accounts",
+          "id": "CU46nDtYvQ6x4RwLaaLRq1Jf",
+          "credits_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/credits",
+          "cards_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/cards",
+          "holds_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/holds",
+          "name": "Market 61",
+          "refunds_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/refunds",
+          "dob": null,
+          "created_at": "2014-04-28T16:31:19.037562Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/debits",
+          "transactions_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Mon, 28 Apr 2014 16:31:17 GMT
+- request:
+    method: put
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf
+    body:
+      encoding: UTF-8
+      string: '{"_type":"customer","twitter":null,"reversals_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/reversals","phone":null,"meta":{"entity_id":"1","entity_name":"Market
+        61","entity_type":"market"},"facebook":null,"address":{"line1":"6789 Fake
+        Dr","postal_code":"49423"},"business_name":"Market 61","bank_accounts_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/bank_accounts","id":"CU46nDtYvQ6x4RwLaaLRq1Jf","credits_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/credits","cards_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/cards","holds_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/holds","name":"John
+        Patrick Doe","refunds_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/refunds","dob":"1990-9","created_at":"2014-04-28T16:31:19.037562Z","destination":null,"is_identity_verified":false,"source":null,"_uris":{"transactions_uri":{"_type":"page","key":"transactions"},"bank_accounts_uri":{"_type":"page","key":"bank_accounts"},"refunds_uri":{"_type":"page","key":"refunds"},"debits_uri":{"_type":"page","key":"debits"},"holds_uri":{"_type":"page","key":"holds"},"reversals_uri":{"_type":"page","key":"reversals"},"credits_uri":{"_type":"page","key":"credits"},"cards_uri":{"_type":"page","key":"cards"}},"debits_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/debits","transactions_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/transactions","ssn_last4":"1234","email":null,"ein":"20-1234567"}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Apr 2014 16:31:23 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM89375962cef211e390b902a1fe53e539
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.0.132
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNF0AGWRZdGhgSA0kZUR9TBFddAwdYVlsOBQBcWVoBBhtGVQIBB05GQQRUWgxSCAoGVFZUXFgDAwRASBZRAAoQXW4=
+      Content-Length:
+      - '552'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "1",
+            "entity_name": "Market 61",
+            "entity_type": "market"
+          },
+          "facebook": null,
+          "address": {
+            "postal_code": "49423",
+            "country_code": "USA",
+            "line1": "6789 Fake Dr"
+          },
+          "business_name": "Market 61",
+          "bank_accounts_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/bank_accounts",
+          "id": "CU46nDtYvQ6x4RwLaaLRq1Jf",
+          "credits_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/credits",
+          "cards_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/cards",
+          "holds_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/holds",
+          "name": "John Patrick Doe",
+          "refunds_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/refunds",
+          "dob": "1990-09",
+          "created_at": "2014-04-28T16:31:19.037562Z",
+          "destination": null,
+          "is_identity_verified": true,
+          "uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/debits",
+          "transactions_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/transactions",
+          "ssn_last4": "xxxx",
+          "email": null,
+          "ein": "201234567"
+        }
+    http_version: 
+  recorded_at: Mon, 28 Apr 2014 16:31:18 GMT
+- request:
+    method: put
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf
+    body:
+      encoding: UTF-8
+      string: '{"_type":"customer","twitter":null,"reversals_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/reversals","phone":null,"meta":{"entity_id":"1","entity_name":"Market
+        61","entity_type":"market"},"facebook":null,"address":{"postal_code":"49423","country_code":"USA","line1":"6789
+        Fake Dr"},"business_name":"Market 61","bank_accounts_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/bank_accounts","id":"CU46nDtYvQ6x4RwLaaLRq1Jf","credits_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/credits","cards_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/cards","holds_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/holds","name":"John
+        Patrick Doe","refunds_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/refunds","dob":"1990-09","created_at":"2014-04-28T16:31:19.037562Z","destination":null,"is_identity_verified":true,"source":null,"_uris":{"transactions_uri":{"_type":"page","key":"transactions"},"bank_accounts_uri":{"_type":"page","key":"bank_accounts"},"refunds_uri":{"_type":"page","key":"refunds"},"debits_uri":{"_type":"page","key":"debits"},"holds_uri":{"_type":"page","key":"holds"},"reversals_uri":{"_type":"page","key":"reversals"},"credits_uri":{"_type":"page","key":"credits"},"cards_uri":{"_type":"page","key":"cards"}},"debits_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/debits","transactions_uri":"/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/transactions","ssn_last4":"xxxx","email":null,"ein":"201234567","card_uri":"/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/cards/CC49x1pTY2ohLWyBrPwQwT33"}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 28 Apr 2014 16:31:24 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM8a03cea2cef211e390b902a1fe53e539
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.0.132
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNF0AGWRZdGhgSA0kZUR9VC1VQAwBYX1MOBwZXV1AEHRdXUAkDH0JEBVcJVABQWlpVUQVXXVEHVBFORFBWDRUGZQ==
+      Content-Length:
+      - '596'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "1",
+            "entity_name": "Market 61",
+            "entity_type": "market"
+          },
+          "facebook": null,
+          "address": {
+            "postal_code": "49423",
+            "country_code": "USA",
+            "line1": "6789 Fake Dr"
+          },
+          "source_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/cards/CC49x1pTY2ohLWyBrPwQwT33",
+          "business_name": "Market 61",
+          "bank_accounts_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/bank_accounts",
+          "id": "CU46nDtYvQ6x4RwLaaLRq1Jf",
+          "credits_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/credits",
+          "cards_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/cards",
+          "holds_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/holds",
+          "name": "John Patrick Doe",
+          "dob": "1990-09",
+          "created_at": "2014-04-28T16:31:19.037562Z",
+          "destination": null,
+          "is_identity_verified": true,
+          "uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf",
+          "refunds_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/refunds",
+          "_uris": {
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "source_uri": {
+              "_type": "card",
+              "key": "source"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/debits",
+          "transactions_uri": "/v1/customers/CU46nDtYvQ6x4RwLaaLRq1Jf/transactions",
+          "ssn_last4": "xxxx",
+          "email": null,
+          "ein": "201234567"
+        }
+    http_version: 
+  recorded_at: Mon, 28 Apr 2014 16:31:20 GMT
+recorded_with: VCR 2.9.0
