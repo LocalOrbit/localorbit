@@ -4,8 +4,9 @@ feature "View Seller Profiles" do
   let!(:buyer)   { create(:organization, :buyer, :single_location) }
   let!(:seller1) { create(:organization, :seller, :single_location, who_story: "Funny Farm", how_story: "Via a wagon") }
   let!(:seller2) { create(:organization, :seller, :single_location) }
+  let!(:hidden_seller) { create(:organization, :seller, :single_location, show_profile: false) }
   let!(:user)    { create(:user, organizations: [buyer]) }
-  let!(:market)  { create(:market, :with_addresses, organizations: [buyer, seller1, seller2]) }
+  let!(:market)  { create(:market, :with_addresses, organizations: [buyer, seller1, seller2, hidden_seller]) }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
 
   before do
@@ -50,6 +51,7 @@ feature "View Seller Profiles" do
 
     expect(page).to have_content(seller1.name)
     expect(page).to have_content(seller2.name)
+    expect(page).to_not have_content(hidden_seller.name)
     expect(page).not_to have_css('#admin-nav')
   end
 

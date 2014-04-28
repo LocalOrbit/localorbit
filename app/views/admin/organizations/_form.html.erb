@@ -21,10 +21,17 @@
     </div>
 
     <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
-      <div class="field">
+      <div class="row row--field">
+      <div class="field column column--half column--guttered">
         <%= f.check_box :can_sell %>
         <%= f.label :can_sell, "Can sell products" %>
         <span class="tooltip" data-tooltip="This allows a customer to be a Seller and a Buyer."></span>
+      </div
+      ><div class="field field column column--half column--guttered">
+        <%= f.check_box :show_profile %>
+        <%= f.label :show_profile, "Show on Our Sellers page" %>
+        <span class="tooltip" data-tooltip="Show or hide this customer from the Our Sellers page."></span>
+      </div>
       </div>
     <% end %>
 

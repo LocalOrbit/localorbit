@@ -33,6 +33,6 @@ class SellersController < ApplicationController
   end
 
   def find_market_sellers
-    @sellers = current_market.organizations.selling
+    @sellers = current_market.organizations.visible.selling
   end
 end
