@@ -1,18 +1,22 @@
-<div>
-  <div class="l-page-header">
-    <h1><i class="font-icon" data-icon="&#xe02d;"></i>&nbsp; Sold Items</h1>
-    <div class="header-actions">
-      <%= link_to "#{svg_icon} Export CSV".html_safe, coming_soon_dashboard_path, class: "export todo pull-right" %>
-    </div>
-  </div>
-</div>
-
 <%= form_tag set_status_admin_order_items_path, id: "sold-items" do %>
-  <div class="actions">
-    <h4>Actions</h4>
-    <%= select_tag :delivery_status, options_for_select([['Set Delivery Status', nil]] + OrderItem::DELIVERY_STATUSES.map {|s| [s.titleize, s] }) %>
-    <input type="submit" class="btn btn--small" value="Apply Action">
-    <span>This will be applied to any selected rows.</span>
+  <div class="tab-header">
+    <div class="l-constraint">
+        <div class="l-page-header">
+          <h1><i class="font-icon" data-icon="&#xe02d;"></i>&nbsp; Sold Items</h1>
+          <div class="header-actions">
+            <%= link_to "#{svg_icon} Export CSV".html_safe, coming_soon_dashboard_path, class: "export todo pull-right" %>
+          </div>
+          <div class="action-header">
+            <div class="actions">
+              <h4>Actions</h4>
+              <%= select_tag :delivery_status, options_for_select([['Set Delivery Status', nil]] + OrderItem::DELIVERY_STATUSES.map {|s| [s.titleize, s] }) %>
+              <input type="submit" class="btn btn--small" value="Apply Action">
+              <span>This will be applied to any selected rows.</span>
+            </div>
+          </div>
+        </div>
+   
+    </div>
   </div>
 
   <table class="sortable sold-table">

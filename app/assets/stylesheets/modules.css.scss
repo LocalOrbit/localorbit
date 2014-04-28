@@ -261,6 +261,10 @@
   font-weight: bold;
 }
 
+.product-header {
+  height: 40px;
+}
+
 .header--column {
   overflow: hidden;
   font-size: 0.1px;
@@ -1154,14 +1158,18 @@ label ~ .tooltip {
 
 /** Apply Action Box **/
 
-.actions {
+.action-header {
   background: #D9F6F9;
   @include border-radius(5px);
-  padding: 10px;
-  margin: -10px 0 20px 0;
+  margin: 0;
+  width: 100%;
 
   h4 {
     margin: 0;
+  }
+
+  .actions {
+    padding: 10px;
   }
 }
 

@@ -159,11 +159,17 @@ input[type=submit] {
 }
 
 input[type=search] + .btn--end {
-  padding: 3px 10px;
-  margin: 0 10px 0 0;
-  color: #eee;
+  padding: 2px 10px;
+  margin: 0 10px 0 -1px;
+  color: #666;
   vertical-align: middle;
+  font-size: 14px;
 }
+input[type=search] + .btn--end:hover {
+  color: #333;
+  background-color: #eee;
+}
+
 
 input[type=submit].popup-submit {
   background-color: #2ca20d;
