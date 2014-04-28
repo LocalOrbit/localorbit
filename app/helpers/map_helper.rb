@@ -1,5 +1,6 @@
 module MapHelper
   def static_map(geocodes, center, width, height, zoom = 9)
+    return "" unless center
     markers = "/"
     unless geocodes.empty?
       markers += geocodes.map {|g| "pin-s-circle(#{g.longitude},#{g.latitude})" }.join(",")
