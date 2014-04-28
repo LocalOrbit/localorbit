@@ -76,7 +76,7 @@
                     Pay by Purchase Order
                   </label>
                   <fieldset id="purchase-order-fields" class="payment-fields is-hidden">
-                    <div class="field">
+                    <div class="payment-field">
                       <%= f.label :payment_note, "PO Number" %><br>
                       <%= f.text_field :payment_note, class: "input--short" %>
                     </div>
@@ -91,7 +91,7 @@
                     Pay by Credit Card
                   </label>
                   <fieldset id="credit-card-fields" class="payment-fields is-hidden">
-                    <div class="field">
+                    <div class="payment-field">
                       <%= f.label :credit_card, "Saved credit cards" %><br>
                       <% if current_organization.decorate.credit_cards_available? %>
                         <%= f.select :credit_card, options_for_select(current_organization.decorate.credit_card_options) %><br>
@@ -109,7 +109,7 @@
                     Pay by ACH
                   </label>
                   <fieldset id="ach-fields" class="payment-fields is-hidden">
-                    <div class="field">
+                    <div class="payment-field">
                       <% if current_organization.decorate.ach_available? %>
                         <%= f.label :bank_account, "Account" %><br>
                         <%= f.select :bank_account, options_for_select(current_organization.decorate.ach_options) %>
@@ -134,6 +134,5 @@
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 </div>
