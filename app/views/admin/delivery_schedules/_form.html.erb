@@ -20,7 +20,9 @@
   
 
   <div class="field">
-    <%= f.label :order_cutoff %><br>
+    <%= f.label :order_cutoff %>
+    <span class="tooltip" data-tooltip="The order cutoff is the latest time a buyer can place an order for that delivery cycle. If your delivery starts at 6 am on Wednesday and you have a 24 hour cutoff, the last time an order can be placed for delivery in the current cycle is 5:59 am on Tuesday morning."></span>
+    <br>
     <%= f.number_field :order_cutoff, min: 6, max: 504, size: 4 %> hours before delivery
   </div>
 
