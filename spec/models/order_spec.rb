@@ -428,4 +428,22 @@ describe Order do
       end
     end
   end
+
+  describe ".delivered" do
+    let(:product) { create(:product, :sellable) }
+    let(:product2) { create(:product, :sellable) }
+
+    let(:delivered_item1) { create(:order_item, product: product, delivery_status: "delivered") }
+    let(:delivered_item2) { create(:order_item, product: product2, delivery_status: "delivered") }
+    let!(:delivered_order) { create(:order, items: [delivered_item1, delivered_item2]) }
+
+    let(:undelivered_item1) { create(:order_item, product: product) }
+    let(:undelivered_item2) { create(:order_item, product: product2) }
+    let!(:undelivered_order) { create(:order, items: [undelivered_item1, undelivered_item2]) }
+
+    it "returns orders where all items have deivered" do
+      expect(Order.delivered).to include(delivered_order)
+      expect(Order.delivered).not_to include(undelivered_order)
+    end
+  end
 end
