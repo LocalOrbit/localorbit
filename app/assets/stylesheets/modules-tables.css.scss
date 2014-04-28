@@ -83,6 +83,12 @@ td {
 
 }
 
+table {
+  .order-number {
+    font-weight: 700;
+  }
+}
+
 tbody {
 
   td {
@@ -218,6 +224,10 @@ th {
   .total {
     width: 70px; 
   }
+}
+
+.product-name {
+  font-weight: 700;
 }
   .tiers {
     padding: 5px 0 0 0;
