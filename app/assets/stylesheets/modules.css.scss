@@ -667,19 +667,16 @@
     }
   }
   
-.tab-header {
+.tab-header,
+.sticky-table-header {
   width: 100%;
 
   &.js-positioned {
     position: absolute;
     left: 0;
     z-index: 3;
-    padding: 0 20px;
     @include box-sizing(border-box);
 
-    > .l-constraint {
-      padding-top: 10px;
-    }
   }
   &.js-fixed {
     position: fixed;
@@ -690,6 +687,26 @@
     }
   }
 }
+  .tab-header {
+    &.js-positioned {
+      padding: 0 20px;
+
+      > .l-constraint {
+        padding-top: 10px;
+      }
+    }
+  }
+
+  .sticky-table-header {
+    overflow: hidden;
+
+    &.js-fixed {
+      > .l-constraint {
+        overflow: hidden;
+      }
+    }
+  }
+
 .tab {
   position: relative;
   display: inline-block;
