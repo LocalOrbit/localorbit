@@ -1,16 +1,17 @@
 require 'spec_helper'
 
 describe AttemptCreditCardPurchase do
+  let!(:market)      { create(:market) }
   let!(:user)        { create(:user) }
   let!(:buyer)       { create(:organization) }
   let!(:product)     { create(:product, :sellable, organization: buyer) }
-  let!(:credit_card) { create(:bank_account, :credit_card, bankable: buyer) }
-  let!(:cart)        { create(:cart, organization: buyer) }
+  let!(:credit_card) { create(:bank_account, :credit_card, bankable: buyer, balanced_uri: "/balanced-credit-card-uri") }
+  let!(:cart)        { create(:cart, organization: buyer, market: market) }
   let!(:cart_item)   { create(:cart_item, product: product, cart: cart, quantity: 10)}
   let(:params)       { { "payment_method" => "purchase order"} }
 
-  let(:balanced_hold)  { double("balanced hold", uri: '/balanced-hold-uri') }
-  let!(:balanced_card) { double("balanced card", hold: balanced_hold) }
+  let!(:balanced_customer) { double("balanced customer", debit: balanced_debit) }
+  let!(:balanced_debit)    { double("balanced debit", uri: "/balanced-debit-uri") }
 
   subject {
     class OrganizerWrapper
@@ -32,35 +33,37 @@ describe AttemptCreditCardPurchase do
     let!(:params) { { "payment_method" => "credit card", "credit_card" => "#{credit_card.id}" } }
 
     before do
-      allow(Balanced::Card).to receive(:find).and_return(balanced_card)
+      allow(Balanced::Customer).to receive(:find).and_return(balanced_customer)
     end
 
     context "valid credit card" do
-      context "successfully holds payment" do
-        it "sets the payment method on the order" do
+      context "successfully creates a debit" do
+        it "creates a payment record" do
           expect {
             subject
           }.to change {
             Payment.all.count
           }.from(0).to(1)
+
+          expect(subject.context).to include(:payment)
         end
 
         it "creates a hold for the order amount" do
           expect(subject).to be_success
-          expect(balanced_card).to have_received(:hold).with(amount: (cart.total*100).to_i, description: "LocalOrbit market purchase")
+          expect(balanced_customer).to have_received(:debit).with(amount: (cart.total*100).to_i, description: "#{market.name} purchase", source_uri: credit_card.balanced_uri)
         end
       end
 
-      context "fails to hold payment" do
+      context "fails to create a debit" do
         before do
-          expect(balanced_card).to receive(:hold).and_raise(RuntimeError)
+          expect(balanced_customer).to receive(:debit).and_raise(RuntimeError)
         end
 
         it "returns as a failure" do
           expect(subject).to be_failure
         end
 
-        it "does not modify the order" do
+        it "does not create a payment record" do
           subject
 
           expect(Payment.all.count).to eql(0)
@@ -72,7 +75,7 @@ describe AttemptCreditCardPurchase do
       let!(:params) { { "payment_method" => "credit card", "credit_card" => "0" } }
 
       before do
-        allow(Balanced::Card).to receive(:find).and_raise(Exception)
+        allow(Balanced::Customer).to receive(:find).and_raise(Exception)
       end
 
       it "returns as a failure" do

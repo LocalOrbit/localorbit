@@ -292,11 +292,11 @@ describe "Checking Out", js: true do
   end
 
   context "via credit card" do
-    let(:balanced_hold)  { double("balanced hold", uri: '/balanced-hold-uri') }
-    let!(:balanced_card) { double("balanced card", hold: balanced_hold) }
+    let(:balanced_debit)  { double("balanced debit", uri: '/balanced-debit-uri') }
+    let!(:balanced_customer) { double("balanced customer", debit: balanced_debit) }
 
     before do
-      allow(Balanced::Card).to receive(:find).and_return(balanced_card)
+      allow(Balanced::Customer).to receive(:find).and_return(balanced_customer)
     end
 
     context "successful payment processing" do
@@ -308,12 +308,17 @@ describe "Checking Out", js: true do
 
         expect(page).to have_content("Thank you for your order")
         expect(page).to have_content("Credit Card")
+
+        order = Order.last
+        expect(order.payment_status).to eql("paid")
+        expect(order.payments.count).to eql(1)
+        expect(order.payments.first.status).to eql("paid")
       end
     end
 
     context "payment processor error" do
       before do
-        expect(balanced_card).to receive(:hold).and_raise(RuntimeError)
+        expect(balanced_customer).to receive(:debit).and_raise(RuntimeError)
       end
 
       it "uses a stored credit card" do
@@ -324,6 +329,9 @@ describe "Checking Out", js: true do
 
         expect(page).to have_content("Your order could not be completed.")
         expect(page).to have_content("Payment processor error")
+
+        expect(Order.all.count).to eql(0)
+        expect(Payment.all.count).to eql(0)
       end
     end
   end
