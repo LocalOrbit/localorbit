@@ -9,6 +9,23 @@ describe OrderItem do
 
   let(:order) { build(:order, market: create(:market)) }
 
+  context "changing deliver status" do
+    subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 8) }
+
+    it "sets delivered_at date when changed to 'delivered'" do
+      expect(subject.delivery_status).to be_nil
+      expect(subject.delivered_at).to be_nil
+
+      Timecop.freeze do
+        subject.delivery_status = "delivered"
+        subject.save!
+
+        expect(subject.delivered_at).to eql(Time.current)
+      end
+
+    end
+  end
+
   context "validations" do
     it "requires a name" do
       expect(subject).to be_invalid
