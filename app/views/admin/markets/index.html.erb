@@ -2,13 +2,7 @@
   <div class="l-page-header">
     <h1><i class="font-icon" data-icon="&#xe000;"></i>&nbsp; Markets</h1>
     <div class="header-actions">
-      <% svg = "<svg class='icon' width='100%' height='100%' viewBox='0 0 513 395' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
-          <g stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'>
-              <path d='M237.816115,36.6541111 L197.922377,78.7431616 L40.4270465,78.7431616 L40.2069509,355.476693 L394.699128,355.818123 L394.730167,236.791553 L432.885715,217.846401 L432.97601,394.066788 L1.31775185,394.255844 L0.753404161,40.1953928 L237.816115,36.6541111 Z M198.023963,198.503381 C144.162619,237.172479 81.6272494,313.940703 81.6272494,313.940703 C81.6272494,313.940703 102.812873,165.934885 179.194502,119.790994 C255.576132,73.6471038 335.724795,78.683905 335.724795,78.683905 L336.478199,0.70516348 L512.255573,119.790991 L336.348399,235.719292 L336.537456,159.834281 C336.537456,159.834281 251.885306,159.834283 198.023963,198.503381 Z'></path>
-          </g>
-      </svg>" %>
-
-      <%= link_to "#{svg} Export CSV".html_safe, coming_soon_dashboard_path, class: "export todo pull-right" %>
+      <%= link_to "#{svg_icon} Export CSV".html_safe, coming_soon_dashboard_path, class: "export todo pull-right" %>
       <%= link_to 'Add Market', new_admin_market_url, class: "btn btn--add btn--small" if current_user.admin? %>
     </div>
   </div>
