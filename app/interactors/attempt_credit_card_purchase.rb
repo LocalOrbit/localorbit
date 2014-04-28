@@ -5,25 +5,30 @@ class AttemptCreditCardPurchase
     if order_params["payment_method"] == 'credit card'
       begin
         card = cart.organization.bank_accounts.find(order_params["credit_card"])
-        balanced_card = Balanced::Card.find(card.balanced_uri)
+        balanced_customer = Balanced::Customer.find(cart.organization.balanced_customer_uri)
 
         amount = (cart.total * 100).to_i #USD in cents
 
-        hold = balanced_card.hold(amount: amount, description: "LocalOrbit market purchase")
+        debit = balanced_customer.debit(
+          amount: amount,
+          source_uri: card.balanced_uri,
+          description: "#{cart.market.name} purchase"
+        )
 
         context[:payment] = Payment.create(
           payment_type: 'credit card',
           amount: cart.total,
-          status: "pending",
-          balanced_uri: hold.uri
+          status: "paid",
+          balanced_uri: debit.uri
         )
 
         if !context[:payment].persisted?
-          hold.void
+          debit.void
           context.fail!
         end
 
-      rescue
+      rescue Exception => e
+
         context[:order] = Order.new(credit_card: order_params["credit_card"])
         context[:order].errors.add(:credit_card, "Payment processor error.")
         context.fail!

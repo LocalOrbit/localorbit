@@ -36,9 +36,13 @@ class OrganizationDecorator < Draper::Decorator
     shipping_location.phone
   end
 
+  def credit_cards_available?
+    bank_accounts.where("account_type not in (?)", %w(savings checking)).count > 0
+  end
+
   def credit_card_options
     bank_accounts.where("account_type not in (?)", %w(savings checking)).map do |card|
-      [card.bank_name, card.id]
+      ["#{card.bank_name} ending in #{card.last_four}", card.id]
     end
   end
 end
