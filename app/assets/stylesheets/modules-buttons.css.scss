@@ -128,9 +128,14 @@ input[type=submit] {
   padding-right: 8px;
   padding-left: 8px;
 }
-  .btn--add:before {
-    content: "✚  "
-  }
+.btn--add:before {
+  content: "✚  "
+}
+
+.btn--right {
+  float: right;
+  margin-top: 50px;
+}
 
 .btn--end,
 .btn--start {
@@ -176,3 +181,7 @@ span.btn {
   }
 }
 
+.action-link {
+  font-weight: 700;
+  float: right;
+}

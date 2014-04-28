@@ -1,9 +1,11 @@
 <%= render "admin/financials/header" %>
 
+<div class="tab-title">
 <h1>Unsent Invoices</h1>
 <div>These invoices need your attention</div>
-
+</div>
 <%= form_tag admin_financials_invoices_path, method: :post do %>
+  <input type="submit" value="Send Selected Invoices" class="btn btn--small btn--right">
   <table>
     <thead>
       <tr>
@@ -23,10 +25,9 @@
         <td class="buyer"><%= order.organization.name %></td>
         <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
         <td class="amount"><%= number_to_currency(order.total_cost) %></td>
-        <td><%= link_to 'Send Invoice', admin_financials_invoices_path(order_id: order.id), method: :post, class: 'btn btn--small' %></td>
+        <td><%= link_to 'Send Invoice', admin_financials_invoices_path(order_id: order.id), method: :post, class: 'action-link' %></td>
       </tr>
       <% end %>
     </tbody>
   </table>
-  <input type="submit" value="Send Selected Invoices">
 <% end %>
