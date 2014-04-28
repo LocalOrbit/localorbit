@@ -282,9 +282,11 @@
 
 .header--welcome {
   float: left;
+  max-width: 50%;
   margin: 14px 0 12px 20px;
   margin: .5em 0 .4em 20px;
   line-height: 1.1875;
+  word-wrap: break-word;
 
   > .welcome-user {
     display: block;

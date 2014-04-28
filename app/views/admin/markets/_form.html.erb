@@ -31,7 +31,7 @@
     <%= f.label :tagline %>
     <span class="tooltip pull-right" data-tooltip="Located directly below the logo at the top of the page."></span>
     <br>
-    <%= f.text_field :tagline, class: "column--full" %>
+    <%= f.text_field :tagline, maxlength: 60, class: "column--full" %>
   </div>
   <div class="field">
     <%= f.label :timezone, "Time zone" %><br>
