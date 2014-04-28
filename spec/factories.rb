@@ -289,6 +289,16 @@ FactoryGirl.define do
       expiration_month 5
       expiration_year  2014
     end
+
+    trait :checking do
+      bank_name        "LMCU"
+      account_type     "checking"
+      sequence(:last_four) {|n| "#{'%04d' % n}"}
+    end
+
+    trait :verified do
+      verified true
+    end
   end
 
   factory :unit do

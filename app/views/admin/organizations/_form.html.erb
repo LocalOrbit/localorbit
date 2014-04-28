@@ -51,12 +51,12 @@
     </div>
 
     <div class="field">
-      <%= f.label :photo, "Profile photo" %> 
+      <%= f.label :photo, "Profile photo" %>
       <span class="tooltip" data-tooltip="This image will appear on the Market info page."></span>
       <br>
       <%= f.file_field :photo %>
       <%= image_tag @organization.photo.remote_url, alt: "Profile photo", class: "org-profile-photo" if @organization.photo %>
-      
+
     </div>
 
     <div class="field">
@@ -84,6 +84,8 @@
             <%= f.label :allow_purchase_orders %><br>
             <%= f.check_box :allow_credit_cards %>
             <%= f.label :allow_credit_cards %><br>
+            <%= f.check_box :allow_ach %>
+            <%= f.label :allow_ach, "Allow ACH" %><br>
           <% end %>
         </div>
       </div>

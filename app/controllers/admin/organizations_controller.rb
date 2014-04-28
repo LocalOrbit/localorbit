@@ -60,6 +60,7 @@ module Admin
         :photo,
         :allow_purchase_orders,
         :allow_credit_cards,
+        :allow_ach,
         locations_attributes: [:name, :address, :city, :state, :zip, :phone, :fax]
       )
     end

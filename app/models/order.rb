@@ -3,7 +3,7 @@ class Order < ActiveRecord::Base
 
   include DeliveryStatus
 
-  attr_accessor :credit_card
+  attr_accessor :credit_card, :bank_account
 
   belongs_to :market
   belongs_to :organization

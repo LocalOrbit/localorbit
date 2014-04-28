@@ -69,6 +69,7 @@ describe "Managing Markets" do
 
       expect(page).to_not have_content("Allow purchase orders")
       expect(page).to_not have_content("Allow credit cards")
+      expect(page).to_not have_content("Allow ACH")
     end
 
     it 'I can not add a market' do
@@ -198,24 +199,29 @@ describe "Managing Markets" do
 
         expect(page).to have_content("Allow purchase orders")
         expect(page).to have_content("Allow credit cards")
+        expect(page).to have_content("Allow ACH")
       end
 
       it 'can modify payment options' do
         within("#allowed-payment-options") do
           uncheck "Allow purchase orders"
+          uncheck "Allow ACH"
         end
 
         within("#default-payment-options") do
           check "Allow purchase orders"
+          uncheck "Allow ACH"
         end
 
         click_button "Update Market"
 
         expect(find('#market_allow_purchase_orders')).to_not be_checked
         expect(find('#market_allow_credit_cards')).to be_checked
+        expect(find('#market_allow_ach')).to_not be_checked
 
         expect(find('#market_default_allow_purchase_orders')).to be_checked
         expect(find('#market_default_allow_credit_cards')).to be_checked
+        expect(find('#market_default_allow_ach')).to_not be_checked
       end
     end
 
