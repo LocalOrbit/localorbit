@@ -1,5 +1,5 @@
 <div class="cart-page">
-  <h1 class="heading-cart">Cart</h1>
+  <h1 class="heading-cart"><i class="font-icon icon-cart"></i> Cart</h1>
   <%= form_for :order, url: [:orders] do |f| %>
     <%= render "shared/errors", {resource: @order} if @order %>
     <div class="row">
@@ -53,7 +53,7 @@
       ><div class="column column--half column--guttered">
         <div id="additional-information">
           <div id="address">
-            <h2 class="subheading-cart">Delivery Address</h2>
+            <h2 class="subheading-cart"><i class="font-icon icon-truck"></i> Delivery Address</h2>
             <div class="when-deliver">
               <%= current_cart.delivery.decorate.cart_type %> <%= raw(current_cart.delivery.decorate.checkout_date) %>
             </div>
@@ -64,7 +64,7 @@
           </div>
 
           <div id="payment-info">
-            <h2 class="subheading-cart">Payment Information</h2>
+            <h2 class="subheading-cart"><i class="font-icon icon-coins"></i> Payment Information</h2>
           </div>
 
           <fieldset class="conditional">
