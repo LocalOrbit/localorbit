@@ -176,7 +176,7 @@ describe "Adding a product" do
         click_link "Add New Product"
 
         fill_in "Product Name", with: "Red Grapes"
-        attach_file("Image", 'app/assets/images/backgrounds/lentils.jpg')
+        attach_file("Photo", 'app/assets/images/backgrounds/lentils.jpg')
 
         click_button "Save and Continue"
         expect(page).to have_css("img[alt='Red Grapes']")

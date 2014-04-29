@@ -33,7 +33,7 @@
 </div>
 
 <div class="field">
-  <%= f.label :image %><br>
+  <%= f.label :image, "Photo" %><br>
   <%= f.file_field :image, class: "column column--full" %>
   <%= image_tag f.object.image.remote_url, alt: f.object.name if f.object.image %>
 </div>
@@ -78,7 +78,7 @@
 </fieldset>
 
 <fieldset class="conditional">
-  <legend>More info about this product (Where, Who, How)</legend>
+  <legend>More product info (Where, Who, How)</legend>
   <%= check_box_tag :seller_info, "", !@product.has_custom_seller_info? %>
   <%= label_tag :seller_info, "Use seller info from my account." %>
   <span class="hint">Uncheck this to customize your seller information for this product.</span>
@@ -87,7 +87,7 @@
     <div class="field">
       <%= f.label :location_id, "Where" %>
       <span class="hint">Select the location this product is produced.</span>
-      <span class="tooltip pull-right" data-tooltip="Make sure to save changes before editing addresses. Use your browser's back arrow to return to editing this product"></span>
+      <span class="tooltip pull-right" data-tooltip="Select the production location of this item."></span>
       <%= f.select :location_id, @product.location_options_for_select, {include_blank: "Select a location"}, {class: "column column--full"} %>
       <% if @product.organization.present? %>
         <span class="hint">These come from the Organization area under Account. Edit them <%= link_to "here", [:admin, @product.organization, :locations] %>.</span>
