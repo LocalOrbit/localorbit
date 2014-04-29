@@ -16,7 +16,6 @@
     <% if !current_market.background_image.blank? -%>
       body {
         background-image: url(<%= asset_path "backgrounds/#{current_market.background_image}" -%>);
-        background-size: cover;
       }
     <% else %>
       body {

@@ -17,6 +17,7 @@
 //= require underscore
 //= require accountingjs
 //= require jquery.tablesorter.min
+//= require sticky-footer
 //= require_tree ./cart
 //= require bootstrap-colorpicker
 //= require chosen
