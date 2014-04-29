@@ -4,7 +4,7 @@ module Admin
 
     def index
       @products = current_user.managed_products.periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
-      @selling_organizations = Organization.with_products.inject([["Show from all Sellers", 0]]) {|result, org| result << [org.name, org.id] }
+      @selling_organizations = current_user.managed_organizations.order(:name).inject([["Show from all Sellers", 0]]) {|result, org| result << [org.name, org.id] }
       find_selling_markets
     end
 
@@ -80,7 +80,8 @@ module Admin
     end
 
     def find_selling_markets
-      @selling_markets = Market.with_products.inject([["Show from all Markets", 0]]) {|result, market| result << [market.name, market.id] }
+      markets = current_user.admin? ? current_user.markets : current_user.managed_markets
+      @selling_markets = markets.order(:name).inject([["Show from all Markets", 0]]) {|result, market| result << [market.name, market.id] }
     end
 
     def find_delivery_schedules(product=nil)
