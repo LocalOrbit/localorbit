@@ -190,4 +190,20 @@ span.btn {
 .action-link {
   font-weight: 700;
   float: right;
+  padding-right: 10px;
 }
+
+.pdf-download {
+  @include border-radius(3px);
+  font-size: 10px;
+  padding: 0 3px;
+  margin-left: 10px;
+  border: solid 1px;
+}
+
+.pdf-download:hover {
+  @include box-shadow(inset 0 0 2px 1px #b0b0b0);
+  text-decoration: none;
+}
+
+
