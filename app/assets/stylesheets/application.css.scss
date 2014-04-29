@@ -22,9 +22,8 @@ body {
   padding: 0;
   margin: 0;
   color: #333;
-  background: asset_url('backgrounds/brown-paper.jpg') center repeat #fff;
-  background-size: cover;
-  background-attachment: fixed;
+  background: asset_url('backgrounds/brown-paper.jpg') center repeat fixed #fff;
+  background: asset_url('backgrounds/brown-paper.jpg') center / cover no-repeat fixed #fff;
   font-size: 14px;
   font-family: OpenSans, "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
