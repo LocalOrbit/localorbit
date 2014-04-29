@@ -64,7 +64,7 @@ describe UnderwriteEntity do
         expect(balanced_customer.ssn_last4).to eq("1234")
         expect(balanced_customer.dob).to eq("1982-09")
         expect(balanced_customer.address).to eq({line1: "1234 Fake St", postal_code: "12345"})
-        expect(balanced_customer.ein).to eq("20-1234567")
+        expect(balanced_customer.ein).to eq("201234567")
         expect(balanced_customer.business_name).to eq("Our Org")
       end
 
