@@ -4,9 +4,11 @@
         <h1><i class="font-icon" data-icon="&#xe027;"></i>&nbsp; Organizations</h1>
         <%= link_to 'Add Organization', new_admin_organization_path, class: "btn btn--add btn--small" if current_user.admin? || current_user.market_manager? %>
       </div>
-   
+
     </div>
   </div>
+
+  <%= select_tag :filter_market, options_for_select(@selling_markets, selected: params[:market]), class: 'filter-dropdown', data: { parameter: "market"} %>
 
   <table class="sortable organization-table market-org-list">
     <thead>

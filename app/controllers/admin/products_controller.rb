@@ -3,7 +3,9 @@ module Admin
     before_action :ensure_selling_organization
 
     def index
-      @products = current_user.managed_products.page(params[:page]).per(params[:per_page])
+      @products = current_user.managed_products.periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
+      @selling_organizations = Organization.with_products.inject([["Show from all Sellers", 0]]) {|result, org| result << [org.name, org.id] }
+      find_selling_markets
     end
 
     def new
@@ -75,6 +77,10 @@ module Admin
 
     def find_selling_organizations
       @organizations = current_user.managed_organizations.selling.includes(:locations)
+    end
+
+    def find_selling_markets
+      @selling_markets = Market.with_products.inject([["Show from all Markets", 0]]) {|result, market| result << [market.name, market.id] }
     end
 
     def find_delivery_schedules(product=nil)
