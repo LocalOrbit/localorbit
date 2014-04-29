@@ -7,13 +7,11 @@ class Admin::FreshSheetsController < AdminController
   end
 
   def update
-    if params.require(:commit) == "Send Test"
-      email = params.require(:email)
-      MarketMailer.fresh_sheet(current_market, email).deliver
-      redirect_to [:admin, :fresh_sheet], notice: "Successfully sent a test to #{email}"
-    elsif params.require(:commit) == "Send to Everyone Now"
-      MarketMailer.fresh_sheet(current_market).deliver
-      redirect_to [:admin, :fresh_sheet], notice: "Successfully sent the Fresh Sheet"
+    sent_fresh_sheet = SendFreshSheet.perform(market: current_market, commit: params[:commit], email: params[:email])
+    if sent_fresh_sheet.success?
+      redirect_to [:admin, :fresh_sheet], notice: sent_fresh_sheet.notice
+    else
+      redirect_to [:admin, :fresh_sheet], alert: sent_fresh_sheet.error
     end
   end
 

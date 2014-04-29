@@ -7,6 +7,10 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
   let!(:seller) { create(:organization, :seller, markets: [market]) }
   let!(:product) { create(:product, :sellable, organization: seller) }
 
+  # Intentionally not let! changing that will break tests
+  let(:buyer_org) { create(:organization, :buyer, markets: [market]) }
+  let(:buyer_user) { create(:user, organizations: [buyer_org]) }
+
   scenario "navigating to the page" do
     switch_to_subdomain(market.subdomain)
     sign_in_as user
@@ -63,7 +67,14 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
     end
 
     scenario "sending to everyone" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market).and_return(double(:mailer, deliver: true))
+      expect(MarketMailer).to receive(:fresh_sheet).with(market, ["#{buyer_org.name} <#{buyer_user.email}>"]).and_return(double(:mailer, deliver: true))
+      visit admin_fresh_sheet_path
+      click_button "Send to Everyone Now"
+      expect(page).to have_content("Successfully sent the Fresh Sheet")
+    end
+
+    scenario "sending to everyone without any buyers" do
+      expect(MarketMailer).not_to receive(:fresh_sheet)
       visit admin_fresh_sheet_path
       click_button "Send to Everyone Now"
       expect(page).to have_content("Successfully sent the Fresh Sheet")
