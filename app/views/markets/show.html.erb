@@ -6,7 +6,7 @@
         <% if @market.first_address.present? %>
           <span class="adr"><span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%=@market.first_address.state %></span></span>
         <% end %>
-        
+
       </span>
     </h1>
   </div>
@@ -50,7 +50,7 @@
         </div>
 
         <ul class="l-inline-list seller-list">
-        <% @market.organizations.selling.each do |seller| %>
+        <% @market.organizations.visible.selling.each do |seller| %>
           <%= content_tag :li, link_to(seller.name, seller_path(seller)), class: "column--fourth" %>
         <% end %>
         </ul>
