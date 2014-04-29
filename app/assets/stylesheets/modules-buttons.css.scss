@@ -192,3 +192,11 @@ span.btn {
   float: right;
   padding-right: 10px;
 }
+
+.pdf-download {
+  @include border-radius(3px);
+  font-size: 10px;
+  padding: 0 3px;
+  margin-left: 10px;
+  border: solid 1px;
+}
