@@ -10,4 +10,26 @@ $ ->
     else
       $('.overlay').removeClass('is-open')
 
+  $('.filter-dropdown').change ->
+    value = $(this).val()
+    key = $(this).data("parameter")
 
+    params = parseSearchString()
+    if value == "0"
+      delete params[key]
+    else
+      params[key] = value
+
+    window.location.search = $.param(params)
+
+
+
+  parseSearchString = () ->
+    list = window.location.search.substr(1).split("&")
+    params = {}
+    for param in list
+      tokens = param.split("=")
+      if tokens.length == 2
+        params[tokens[0]] = tokens[1]
+
+    params

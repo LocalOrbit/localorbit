@@ -17,6 +17,8 @@ class Market < ActiveRecord::Base
 
   has_many :bank_accounts, as: :bankable
 
+  scope :with_products, -> { joins(market_organizations: { organization: :products}).select("DISTINCT markets.*").order("markets.name") }
+
   serialize :twitter, TwitterUser
 
   dragonfly_accessor :logo

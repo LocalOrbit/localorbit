@@ -29,6 +29,7 @@ class Product < ActiveRecord::Base
 
   delegate :name, to: :organization, prefix: true
 
+  scope_accessible :market, method: :for_market_id, ignore_blank: true
   scope_accessible :organization, method: :for_organization_id, ignore_blank: true
   scope_accessible :category, method: :for_category_id, ignore_blank: true
 
@@ -61,6 +62,10 @@ class Product < ActiveRecord::Base
 
   def self.seller_can_sell
     joins(:organization).where(organizations: {can_sell: true})
+  end
+
+  def self.for_market_id(market_id)
+    joins(organization: :market_organizations).where(market_organizations: {market_id: market_id})
   end
 
   def self.for_organization_id(organization_id)

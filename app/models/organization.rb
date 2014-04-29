@@ -18,12 +18,19 @@ class Organization < ActiveRecord::Base
   scope :selling, -> { where(can_sell: true) }
   scope :buying,  -> { where(can_sell: false) } # needs a new boolean
   scope :visible, -> { where(show_profile: true) }
+  scope :with_products, -> { joins(:products).select("DISTINCT organizations.*").order(name: :asc) }
 
   serialize :twitter, TwitterUser
 
   accepts_nested_attributes_for :locations
 
   dragonfly_accessor :photo
+
+  scope_accessible :market, method: :for_market_id, ignore_blank: true
+
+  def self.for_market_id(market_id)
+    joins(:market_organizations).where(market_organizations: { market_id: [market_id] })
+  end
 
   def shipping_location
     locations.visible.default_shipping

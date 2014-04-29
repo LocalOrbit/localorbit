@@ -4,7 +4,8 @@ module Admin
     before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules]
 
     def index
-      @organizations = current_user.managed_organizations
+      @organizations = current_user.managed_organizations.periscope(request.query_parameters)
+      find_selling_markets
     end
 
     def new
@@ -72,6 +73,10 @@ module Admin
 
     def find_delivery_schedules
       @organization.decorate.delivery_schedules
+    end
+
+    def find_selling_markets
+      @selling_markets = Market.with_products.inject([["Show from all Markets", 0]]) {|result, market| result << [market.name, market.id] }
     end
   end
 end

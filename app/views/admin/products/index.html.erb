@@ -5,8 +5,12 @@
 
     <div class="row row--justified product-header">
       <div class="column">
-        <select><option>Show from all Markets</option></select>
-        <select><option>Show from all Sellers</option></select>
+        <% if current_user.multi_market_membership? %>
+          <%= select_tag :filter_market, options_for_select(@selling_markets, selected: params[:market]), class: 'filter-dropdown', data: { parameter: "market"} %>
+        <% end %>
+        <% if current_user.multi_organization_membership? %>
+          <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: params[:organization]), class: 'filter-dropdown', data: { parameter: "organization"} %>
+        <% end %>
       </div>
 
       <div class="column">
