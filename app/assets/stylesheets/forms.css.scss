@@ -4,10 +4,14 @@
 @import "mixins";
 
 fieldset {
-  position: relative;
+  position: static;
   padding: 0;
   border: 0;
   margin: 15px 0;
+  > .fieldset-fix {
+    position: relative;
+    width: 100%;
+  }
 }
 
 input[type=radio],
@@ -209,6 +213,13 @@ textarea {
 
 .field {
   margin: 10px 0;
+
+  > .market-logo,
+  > .market-photo {
+    max-width: 330px;
+    max-height: 120px;
+  }
+
 }
 
 .payment-field {
