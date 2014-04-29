@@ -47,7 +47,7 @@
     <div class="market-info column column--half">
       <%=
       if @market.logo
-        image_tag(@market.logo.remote_url, alt: "#{@market.name} logo", class: "logo")
+        image_tag(@market.logo.thumb('200x150>').url, alt: "#{@market.name} logo", class: "logo")
       else
         image_tag(asset_url("logo.png"), alt: "Local Orbit logo", class: "logo")
       end
