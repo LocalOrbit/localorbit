@@ -154,7 +154,7 @@ describe "A Market Manager", :vcr do
 
       fill_in "Name", with: "SXSW Farmette"
       uncheck "Can sell product"
-      uncheck "Show on Our Sellers page"
+      uncheck "Show on Profile page"
       uncheck "Allow purchase orders"
       uncheck "Allow ACH"
       click_button "Save Organization"
@@ -162,7 +162,7 @@ describe "A Market Manager", :vcr do
       expect(page).to have_content("Saved SXSW Farmette")
       expect(find_field("Name").value).to eq("SXSW Farmette")
       expect(find_field("Can sell products")).to_not be_checked
-      expect(find_field("Show on Our Sellers page")).to_not be_checked
+      expect(find_field("Show on Profile page")).to_not be_checked
       expect(find_field("Allow purchase orders")).to_not be_checked
       expect(find_field("Allow credit cards")).to be_checked
       expect(find_field("Allow ACH")).to_not be_checked
