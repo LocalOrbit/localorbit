@@ -41,17 +41,10 @@ class Order < ActiveRecord::Base
   scope :uninvoiced, -> { where(payment_method: "purchase order", invoiced_at: nil) }
   scope :invoiced, -> { where(payment_method: "purchase order").where.not(invoiced_at: nil) }
   scope :unpaid, -> { where(payment_status: "unpaid") }
+  scope :paid, -> { where(payment_status: "paid") }
   scope :delivered, -> { where("order_items.delivery_status = ?", "delivered").group('orders.id') }
-
-  scope :with_items, lambda { joins("LEFT JOIN order_items on orders.id = order_items.order_id") }
-  scope :payable_on, lambda { |time|
-    with_items.having("MAX(order_items.delivered_at) >=?", time + 2.days)
-      .group("orders.id")
-  }
-
-  scope :paid_before, lambda { |time|
-    with_items.having()
-  }
+  scope :paid_with, lambda { |method| where(payment_method: method) }
+  scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", Time.current) }
 
   def self.orders_for_buyer(user)
     if user.admin?
