@@ -38,7 +38,11 @@ class OrderMailer < BaseMailer
     scheme = Rails.env.production? || Rails.env.staging? ? "https://" : "http://"
     uri = URI("#{scheme}#{order.market.subdomain}.#{Figaro.env.domain}/admin/invoices/#{order.id}/invoice.pdf?auth_token=#{user.auth_token}")
 
-    attachments["invoice.pdf"] = {mime_type: "application/pdf", content: Net::HTTP.get(uri)}
+    res = Net::HTTP.start(uri.host, uri.port, use_ssl: (uri.scheme == 'https'), verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
+      http.request Net::HTTP::Get.new(uri)
+    end
+
+    attachments["invoice.pdf"] = {mime_type: "application/pdf", content: res.body}
 
     mail(
       to: addresses,
