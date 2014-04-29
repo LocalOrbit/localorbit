@@ -76,6 +76,14 @@ h1 .font-icon {
 .icon-coins:before {
   content: "\e00f";
 }
+.icon-stack-list:before {
+  content: "\e045";
+  padding-right: 2px;
+}
+.icon-mail-send:before {
+  content: "\e012";
+  padding-right: 2px;
+}
 
 /* Use the following CSS code if you want to have a class per icon */
 /*
