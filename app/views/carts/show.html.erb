@@ -10,9 +10,9 @@
             <tbody class="item-group">
               <tr class="<%= index == 0 ? "" : "is-hidden" %>">
                 <th class="subheading-cart">Your Order</th>
-                <td>Quantity</td>
-                <td>Price</td>
-                <td>Total</td>
+                <td class="cart-quantity-column">Quantity</td>
+                <td class="cart-price-column">Price</td>
+                <td class="cart-total-column">Total</td>
               </tr>
               <tr>
                 <th colspan="6" class="seller"><%= seller_name %></th>
@@ -125,7 +125,7 @@
           </div>
         </div>
         <div class="form-actions">
-          <span class="pull-left">
+          <span class="pull-left cancel-link">
             <%= link_to "Cancel Order", [:cart], data: { method: :delete, confirm: "Are you sure you want to clear the cart?"}, class: "btn btn--small destructive" %>
             <span class="note">(Clear Cart)</span>
           </span>
