@@ -200,3 +200,10 @@ span.btn {
   margin-left: 10px;
   border: solid 1px;
 }
+
+.pdf-download:hover {
+  @include box-shadow(inset 0 0 2px 1px #b0b0b0);
+  text-decoration: none;
+}
+
+
