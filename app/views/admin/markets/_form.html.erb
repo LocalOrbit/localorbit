@@ -18,12 +18,16 @@
 
   <div class="row row--field">
     <div class="field column column--half column--guttered">
-      <%= f.label :logo %><br>
+      <%= f.label :logo %>
+      <span class="tooltip pull-right" data-tooltip="This logo appears in the header of every page and email."></span>
+      <br>
       <%= f.file_field :logo %><br>
       <%= image_tag @market.logo.remote_url, height: 120 if @market.logo %>
     </div
     ><div class="field column column--half column--guttered">
-      <%= f.label :photo %><br>
+      <%= f.label :photo %>
+      <span class="tooltip pull-right" data-tooltip="This photo appears on the Market Info page."></span>
+      <br>
       <%= f.file_field :photo %><br>
       <%= image_tag @market.photo.remote_url, height: 120 if @market.photo %>
     </div>

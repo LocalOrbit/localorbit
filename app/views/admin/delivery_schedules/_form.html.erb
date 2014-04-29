@@ -8,16 +8,18 @@
     <%= f.label :day %><br>
     <%= f.select :day, weekday_options %>
   </div>
-  
+
   <div class="field">
-    <%= f.label :fee, 'Delivery fee' %><br>
+    <%= f.label :fee, 'Delivery fee' %>
+    <span class="tooltip" data-tooltip="This fee is charged to the buyer."></span>
+    <br>
     <%= f.number_field :fee, min: 0, step: "0.01", size: 4 %>
   </div
   ><div class="field">
     <%= f.label :fee_type %><br>
     <%= f.select :fee_type, [["Percentage", "percent"], ["Dollar Amount", "fixed"]]  %>
   </div>
-  
+
 
   <div class="field">
     <%= f.label :order_cutoff %>
@@ -77,5 +79,5 @@
       <%= f.label :buyer_pickup_end, "Buyer pick up/delivery end" %><br>
       <%= f.select :buyer_pickup_end, quarter_hour_select_options %>
     </div>
-   </div> 
+   </div>
 <% end %>
