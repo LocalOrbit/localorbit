@@ -393,6 +393,33 @@ describe Order do
     end
   end
 
+  describe "#paid_at" do
+    subject{ create(:order, items: items) }
+    let(:items) { create_list(:order_item, 2, product: create(:product, :sellable)) }
+
+    def set_payment_status(item, date)
+      Timecop.freeze(date) do
+        item.payment_status = "paid"
+        item.save!
+      end
+    end
+
+    context "setting payment_status to 'paid'" do
+      it "saves the time the order was paid for" do
+        time = Time.zone.parse("Januray 4, 2014")
+        expect(subject.paid_at).to be_nil
+
+        Timecop.freeze(time) do
+          subject.payment_status = "paid"
+          subject.save!
+        end
+
+        subject.reload
+        expect(subject.paid_at).to eql(time)
+      end
+    end
+  end
+
   describe "#sellers" do
     context "no order items" do
       it "returns an empty array" do

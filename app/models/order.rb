@@ -34,6 +34,8 @@ class Order < ActiveRecord::Base
   validates :total_cost, presence: true
   validate :validate_items
 
+  before_save :update_paid_at
+
   scope :recent, -> { order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
   scope :uninvoiced, -> { where(payment_method: "purchase order", invoiced_at: nil) }
@@ -180,6 +182,12 @@ class Order < ActiveRecord::Base
   def validate_items
     if items.empty?
       errors.add(:items, "cannot be empty")
+    end
+  end
+
+  def update_paid_at
+    if changes[:payment_status] && changes[:payment_status][1] == "paid"
+      self.paid_at = Time.current
     end
   end
 end
