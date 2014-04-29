@@ -26,7 +26,7 @@ class UnderwriteEntity
       balanced_customer.address = representative_params[:address]
 
       if representative_params[:ein].present?
-        balanced_customer.ein = representative_params[:ein]
+        balanced_customer.ein = representative_params[:ein].gsub(/[^\d]/, '')
         balanced_customer.business_name = entity.name
       end
     end
