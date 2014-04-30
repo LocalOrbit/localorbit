@@ -64,12 +64,12 @@ $.getScript "https://js.balancedpayments.com/v1/balanced.js", ->
       val = $(this).val()
       if val == "card"
         $("#balanced-payments-uri").data("balanced-object-type", "card")
-        $("#bank-account-fields").addClass('is-hidden').prop('disabled', true)
+        $("#bank-account-fields, #underwriting-fields").addClass('is-hidden').prop('disabled', true)
         $("#credit-card-fields").removeClass('is-hidden').prop('disabled', false)
         $("#account_type").val(val)
       else
         $("#balanced-payments-uri").data("balanced-object-type", "bankAccount")
-        $("#bank-account-fields").removeClass('is-hidden').prop('disabled', false)
+        $("#bank-account-fields, #underwriting-fields").removeClass('is-hidden').prop('disabled', false)
         $("#credit-card-fields").addClass('is-hidden').prop('disabled', true)
         $("#account_type").val(val)
 

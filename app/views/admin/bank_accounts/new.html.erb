@@ -82,7 +82,7 @@
 </form>
 
 <%= form_for [:admin, @entity, @bank_account], html: { class: "column column--three-fourths" } do |f| %>
-  <fieldset>
+  <fieldset id="underwriting-fields" class="is-hidden" disabled>
     <% unless @entity.balanced_underwritten? %>
 
       <fieldset>
