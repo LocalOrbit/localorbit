@@ -3,15 +3,15 @@ require 'spec_helper'
 describe 'Filter products', :js do
   let!(:market1) { create(:market) }
   let!(:org1) { create(:organization, :seller, markets: [market1]) }
-  let!(:org1_product) { create(:product, :sellable, organization: org1) }
+  let!(:org1_product) { create(:product, organization: org1) }
   let!(:org2) { create(:organization, :seller, markets: [market1]) }
-  let!(:org2_product) { create(:product, :sellable, organization: org2) }
+  let!(:org2_product) { create(:product, organization: org2) }
 
   let!(:market2) { create(:market) }
   let!(:org3) { create(:organization, :seller, markets: [market2]) }
-  let!(:org3_product) { create(:product, :sellable, organization: org3) }
+  let!(:org3_product) { create(:product, organization: org3) }
   let!(:org4) { create(:organization, :seller, markets: [market2]) }
-  let!(:org4_product) { create(:product, :sellable, organization: org4) }
+  let!(:org4_product) { create(:product, organization: org4) }
 
   context 'as admin' do
     let!(:user) { create(:user, role: 'admin') }
@@ -29,20 +29,14 @@ describe 'Filter products', :js do
         expect(page).to have_content(org4_product.name)
       end
 
-      it 'shows products for selected market' do
+      it 'shows products for only the selected market' do
         select market1.name, from: "filter_market"
 
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
-      end
-
-      it 'does not show products not in the selected market' do
-        select market1.name, from: "filter_market"
-
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
       end
-
     end
 
     context 'by organization' do
@@ -53,14 +47,10 @@ describe 'Filter products', :js do
         expect(page).to have_content(org4_product.name)
       end
 
-      it 'shows products for selected market' do
+      it 'shows products for only the selected organization' do
         select org1.name, from: "filter_organization"
 
         expect(page).to have_content(org1_product.name)
-      end
-
-      it 'does not show products not in the selected market' do
-        select org1.name, from: "filter_organization"
 
         expect(page).to_not have_content(org2_product.name)
         expect(page).to_not have_content(org3_product.name)
@@ -86,15 +76,11 @@ describe 'Filter products', :js do
         expect(page).to have_content(org4_product.name)
       end
 
-      it 'shows products for selected market' do
+      it 'shows products for only the selected market' do
         select market1.name, from: "filter_market"
 
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
-      end
-
-      it 'does not show products not in the selected market' do
-        select market1.name, from: "filter_market"
 
         expect(page).to_not have_content(org3_product.name)
         expect(page).to_not have_content(org4_product.name)
@@ -109,14 +95,10 @@ describe 'Filter products', :js do
         expect(page).to have_content(org4_product.name)
       end
 
-      it 'shows products for selected market' do
+      it 'shows products for only the selected organization' do
         select org1.name, from: "filter_organization"
 
         expect(page).to have_content(org1_product.name)
-      end
-
-      it 'does not show products not in the selected market' do
-        select org1.name, from: "filter_organization"
 
         expect(page).to_not have_content(org2_product.name)
         expect(page).to_not have_content(org3_product.name)
@@ -149,14 +131,10 @@ describe 'Filter products', :js do
         expect(page).to have_content(org2_product.name)
       end
 
-      it 'shows products for selected market' do
+      it 'shows products for only the selected organization' do
         select org1.name, from: "filter_organization"
 
         expect(page).to have_content(org1_product.name)
-      end
-
-      it 'does not show products not in the selected market' do
-        select org1.name, from: "filter_organization"
 
         expect(page).to_not have_content(org2_product.name)
       end
@@ -187,14 +165,10 @@ describe 'Filter products', :js do
         expect(page).to have_content(org2_product.name)
       end
 
-      it 'shows products for selected market' do
+      it 'shows products for only the selected organization' do
         select org1.name, from: "filter_organization"
 
         expect(page).to have_content(org1_product.name)
-      end
-
-      it 'does not show products not in the selected market' do
-        select org1.name, from: "filter_organization"
 
         expect(page).to_not have_content(org2_product.name)
       end
