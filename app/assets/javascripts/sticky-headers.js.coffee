@@ -28,12 +28,17 @@ $ ->
       })
 
   stick_table = (index, sticky) ->
-    $sticky = $(sticky)
-    $stuck  = $sticky.clone().removeClass('sticky').addClass('stuck')
+    $sticky = $(sticky).removeClass('stickable')
+    $stuck = $sticky.clone()
     $stuck.find('th').each((i, e) ->
         original_th = $sticky.find('th')[i]
-        $(e).css('width', $(original_th).width())
+        $(e).css({
+          'width': $(original_th).width()
+          })
       )
+    $stuck.insertBefore($sticky.parent())
+    $stuck.wrap('<table class="js-sticky stickable"></table>')
+    $stuck.parent().css('width', $sticky.parent().width())
 
   $('.stickable').each (i, e) ->
     stick_points.push($(e).offset().top)
@@ -44,7 +49,6 @@ $ ->
     else
       stick_table(i, e)
 
-  console.log stick_points, stick_heights
   $(window).scroll (event) ->
     affix i, point for point, i in stick_points
     

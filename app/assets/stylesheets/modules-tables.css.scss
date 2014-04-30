@@ -575,3 +575,15 @@ th {
   width: 180px;
   margin-right: 10px;
 }
+
+/** Sticky tables (like other sticky things, but sillier */
+.js-sticky {
+  position: absolute;
+  z-index: 2;
+  background: #fff;
+
+  &.js-fixed {
+    position: fixed;
+  }
+}
+
