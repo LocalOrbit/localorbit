@@ -109,7 +109,7 @@ class Product < ActiveRecord::Base
   end
 
   def organization_name
-    organization.name
+    organization.try(:name)
   end
 
   def unit_plural

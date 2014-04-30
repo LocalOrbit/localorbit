@@ -4,8 +4,8 @@ module Admin
 
     def index
       @products = current_user.managed_products.periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
-      @selling_organizations = current_user.managed_organizations.order(:name).inject([["Show from all Sellers", 0]]) {|result, org| result << [org.name, org.id] }
-      find_selling_markets
+      find_organizations_for_filtering
+      find_markets_for_filtering
     end
 
     def new
@@ -76,10 +76,17 @@ module Admin
     end
 
     def find_selling_organizations
-      @organizations = current_user.managed_organizations.selling.includes(:locations)
+      @organizations = current_user.managed_organizations.selling.order(:name).includes(:locations)
     end
 
-    def find_selling_markets
+    def find_organizations_for_filtering
+      @selling_organizations = current_user.managed_organizations.periscope(request.query_parameters).
+        order(:name).inject([["Show from all Sellers", 0]]) do |result, org|
+        result << [org.name, org.id]
+      end
+    end
+
+    def find_markets_for_filtering
       markets = current_user.admin? ? current_user.markets : current_user.managed_markets
       @selling_markets = markets.order(:name).inject([["Show from all Markets", 0]]) {|result, market| result << [market.name, market.id] }
     end
