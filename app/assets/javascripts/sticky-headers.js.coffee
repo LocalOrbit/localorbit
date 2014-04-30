@@ -39,6 +39,8 @@ $ ->
     $stuck.insertBefore($sticky.parent())
     $stuck.wrap('<table class="js-sticky stickable"></table>')
     $stuck.parent().css('width', $sticky.parent().width())
+    $stuck.find('.select-all').click ->
+      $sticky.find('.select-all').trigger "click"
 
   $('.stickable').each (i, e) ->
     stick_points.push($(e).offset().top)
@@ -51,4 +53,5 @@ $ ->
 
   $(window).scroll (event) ->
     affix i, point for point, i in stick_points
-    
+
+  $(window).trigger "scroll"
