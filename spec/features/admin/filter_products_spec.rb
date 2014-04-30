@@ -1,17 +1,18 @@
 require 'spec_helper'
 
 describe 'Filter products', :js do
-  let!(:market1) { create(:market) }
-  let!(:org1) { create(:organization, :seller, markets: [market1]) }
-  let!(:org1_product) { create(:product, organization: org1) }
-  let!(:org2) { create(:organization, :seller, markets: [market1]) }
-  let!(:org2_product) { create(:product, organization: org2) }
+  let!(:empty_market) { create(:market) }
+  let!(:market1)      { create(:market) }
+  let!(:org1)         { create(:organization, :seller, markets: [market1]) }
+  let!(:org1_product) { create(:product, :sellable, organization: org1) }
+  let!(:org2)         { create(:organization, :seller, markets: [market1]) }
+  let!(:org2_product) { create(:product, :sellable, organization: org2) }
 
-  let!(:market2) { create(:market) }
-  let!(:org3) { create(:organization, :seller, markets: [market2]) }
-  let!(:org3_product) { create(:product, organization: org3) }
-  let!(:org4) { create(:organization, :seller, markets: [market2]) }
-  let!(:org4_product) { create(:product, organization: org4) }
+  let!(:market2)      { create(:market) }
+  let!(:org3)         { create(:organization, :seller, markets: [market2]) }
+  let!(:org3_product) { create(:product, :sellable, organization: org3) }
+  let!(:org4)         { create(:organization, :seller, markets: [market2]) }
+  let!(:org4_product) { create(:product, :sellable, organization: org4) }
 
   context 'as admin' do
     let!(:user) { create(:user, role: 'admin') }
@@ -22,6 +23,12 @@ describe 'Filter products', :js do
     end
 
     context 'by market' do
+      it 'shows an empty state' do
+        select empty_market.name, from: "filter_market"
+
+        expect(page).to have_content("No Result")
+      end
+
       it 'shows all products when unfiltered' do
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
@@ -60,7 +67,7 @@ describe 'Filter products', :js do
   end
 
   context 'as multi-market manager' do
-    let!(:user) { create(:user, role: 'user', managed_markets: [market1, market2]) }
+    let!(:user) { create(:user, role: 'user', managed_markets: [market1, market2, empty_market]) }
 
     before do
       switch_to_subdomain(market1.subdomain)
@@ -69,6 +76,12 @@ describe 'Filter products', :js do
     end
 
     context 'by market' do
+      it 'shows an empty state' do
+        select empty_market.name, from: "filter_market"
+
+        expect(page).to have_content("No Result")
+      end
+
       it 'shows all products when unfiltered' do
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
@@ -108,11 +121,9 @@ describe 'Filter products', :js do
   end
 
   context 'as single market manager' do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, managed_markets: [market1]) }
 
     before do
-      user.managed_markets << market1
-
       switch_to_subdomain(market1.subdomain)
       sign_in_as(user)
 

@@ -9,6 +9,7 @@
   </div>
 
   <%= select_tag :filter_market, options_for_select(@selling_markets, selected: params[:market]), class: 'filter-dropdown', data: { parameter: "market"} %>
+  <%= select_tag :filter_can_sell, options_for_select(seller_status_options, selected: params[:can_sell]), class: 'filter-dropdown', data: { parameter: "can_sell"} %>
 
   <table class="sortable organization-table market-org-list">
     <thead>
@@ -22,9 +23,16 @@
     <% @organizations.each do |organization| %>
     <tr>
       <td><%= link_to organization.name, [:admin, organization] %></td>
-      <td><% organization.markets.each do |m| %><%= m.name %><% end %></td>
+      <td><%= organization.markets.map {|m| m.name }.join(', ') %></td>
       <td><%= organization.created_at.strftime("%b, %d %Y") %></td>
       <td><%= organization.can_sell? ? "Yes" : "No" %></td>
     </tr>
     <% end %>
   </table>
+
+  <% if @organizations.none? %>
+    <div class="empty-results">
+      <h2>No Results</h2>
+      This table is empty, either because there is no data, or because the filter you've applied is hiding it.
+    </div>
+  <% end %>

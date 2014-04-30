@@ -15,7 +15,7 @@ $ ->
     key = $(this).data("parameter")
 
     params = parseSearchString()
-    if value == "0"
+    if value == "0" || value == ""
       delete params[key]
     else
       params[key] = value

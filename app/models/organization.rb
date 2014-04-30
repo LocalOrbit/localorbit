@@ -27,10 +27,15 @@ class Organization < ActiveRecord::Base
   dragonfly_accessor :photo
 
   scope_accessible :market, method: :for_market_id, ignore_blank: true
+  scope_accessible :can_sell, method: :for_can_sell, ignore_blank: true
 
   def self.for_market_id(market_id)
     orgs = !all.to_sql.include?('market_organizations') ? joins(:market_organizations) : all
     orgs.where(market_organizations: { market_id: [market_id] })
+  end
+
+  def self.for_can_sell(can_sell)
+    where(can_sell: can_sell)
   end
 
   def shipping_location

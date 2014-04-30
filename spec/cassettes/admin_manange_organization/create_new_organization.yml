@@ -120,4 +120,124 @@ http_interactions:
         }
     http_version: 
   recorded_at: Mon, 28 Apr 2014 16:30:07 GMT
+- request:
+    method: post
+    uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: '{"name":"University of Michigan Farmers","meta":{"entity_id":3,"entity_name":"University
+        of Michigan Farmers","entity_type":"organization"}}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 30 Apr 2014 14:47:37 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU2TK7xEh3xLhumz1lF2PH5f
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM5f3d47aed07611e3a82802a1fe52a36c
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP1EOzr67FEqkfTYGTJxxYsV
+      X-Balanced-Merchant:
+      - TEST-MR1UDDuhujWiJKH04gyn92gO
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.0.140
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9TAlZUDg5ZUVMMBgJcWVIPBxtGVQUGH0JEUQQJUQhQDg0FB1UEAVgDBBFORFBWDRUGZQ==
+      Content-Length:
+      - '1746'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU2TK7xEh3xLhumz1lF2PH5f/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "3",
+            "entity_name": "University of Michigan Farmers",
+            "entity_type": "organization"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU2TK7xEh3xLhumz1lF2PH5f/bank_accounts",
+          "id": "CU2TK7xEh3xLhumz1lF2PH5f",
+          "credits_uri": "/v1/customers/CU2TK7xEh3xLhumz1lF2PH5f/credits",
+          "cards_uri": "/v1/customers/CU2TK7xEh3xLhumz1lF2PH5f/cards",
+          "holds_uri": "/v1/customers/CU2TK7xEh3xLhumz1lF2PH5f/holds",
+          "name": "University of Michigan Farmers",
+          "refunds_uri": "/v1/customers/CU2TK7xEh3xLhumz1lF2PH5f/refunds",
+          "dob": null,
+          "created_at": "2014-04-30T14:47:37.409722Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU2TK7xEh3xLhumz1lF2PH5f",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU2TK7xEh3xLhumz1lF2PH5f/debits",
+          "transactions_uri": "/v1/customers/CU2TK7xEh3xLhumz1lF2PH5f/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Wed, 30 Apr 2014 14:47:39 GMT
 recorded_with: VCR 2.9.0
