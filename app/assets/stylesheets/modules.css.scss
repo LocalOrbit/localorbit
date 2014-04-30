@@ -668,11 +668,22 @@
     }
   }
   
+.nav--admin + .tab-header {
+  padding-top: 20px;
+  margin-top: -20px;
+}
 .tab-header {
   position: relative;
   width: 100%;
-  margin-top: 20px;
   overflow: hidden;
+
+  > .l-constraint {
+    padding-bottom: 30px;
+
+    .tabs-wrapper {
+      margin-bottom: 0;
+    }
+  }
 
   &.js-positioned {
     padding: 0 20px;
