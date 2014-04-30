@@ -671,20 +671,16 @@
 .tab-header {
   position: relative;
   width: 100%;
+  margin-top: 20px;
   overflow: hidden;
 
   &.js-positioned {
-    position: absolute;
-    left: 0;
-    z-index: 3;
-    @include box-sizing(border-box);
     padding: 0 20px;
+    margin-top: 0;
   }
   &.js-fixed {
-    position: fixed;
 
     > .l-constraint {
-      padding: 0 20px 0;
       background: #fff;
     }
   }
@@ -1217,3 +1213,39 @@ label ~ .tooltip {
   }
 }
 
+
+/** Sticky things */
+.tab-header,
+.sub-header {
+  &.stickable {
+    &.js-positioned {
+      position: absolute;
+      left: 0;
+      z-index: 3;
+      @include box-sizing(border-box);
+      width: 100%;
+    }
+    &.js-fixed {
+      position: fixed;
+
+      > .l-constraint {
+        background: #fff;
+        padding: 0 20px;
+        margin: -20 auto;
+      }
+    }
+  }
+}
+.tab-header.stickable {
+  &.js-positioned {
+    > .l-constraint {
+      padding-bottom: 30px;
+    }
+  }
+}
+.sub-header.stickable {
+  &.js-positioned {
+    > .l-constraint {
+    }
+  }
+}

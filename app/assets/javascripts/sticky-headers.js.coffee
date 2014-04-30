@@ -23,7 +23,8 @@ $ ->
   stick_absolutely = (i, e) ->
     $(e).addClass('js-positioned').next().css({
         'position': 'relative',
-        'margin-top': "+=" + stick_heights[i] + "px"
+        'margin-top': "+=" + stick_heights[i] + "px",
+        'overflow': 'hidden'
       })
 
   stick_table = (index, sticky) ->
@@ -37,6 +38,7 @@ $ ->
   $('.stickable').each (i, e) ->
     stick_points.push($(e).offset().top)
     stick_heights.push($(e).outerHeight())
+    $(e).attr({'data-height': stick_heights[i], 'data-offset': stick_points[i]})
     if e.tagName != "THEAD"
       stick_absolutely(i, e)
     else
