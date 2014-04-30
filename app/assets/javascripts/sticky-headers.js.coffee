@@ -4,6 +4,14 @@ $ ->
   $(".l-app-header").addClass("js-positioned")
   sub_header = $('.sticky-table-header').length > 0 ? true : false
 
+
+  stick_tables = ->
+    $sticky = $('thead.sticky')
+    $stuck  = $sticky.clone().removeClass('sticky').addClass('stuck')
+    $stuck.find('th').each((i, e) ->
+        original_th = $sticky.find('th')[i]
+        $(e).css('width', $(original_th).width()) 
+  
   stick_tabs = ->
     $tab_header = $(".tab-header")
     absolute_top = $tab_header.offset().top - app_header - 10
@@ -38,3 +46,4 @@ $ ->
 
   return unless $('.tab-header').length
   stick_tabs()
+
