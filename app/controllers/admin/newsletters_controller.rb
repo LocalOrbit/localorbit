@@ -1,6 +1,6 @@
 class Admin::NewslettersController < AdminController
   before_action :require_admin_or_market_manager
-  before_action :find_market
+  before_action :require_selected_market
   before_action :find_newsletter, only: [:edit, :update, :destroy]
 
   def index
@@ -14,7 +14,7 @@ class Admin::NewslettersController < AdminController
   def create
     @newsletter = @market.newsletters.build(newsletter_params)
     if @newsletter.save
-      redirect_to [:admin, @market, :newsletters]
+      redirect_to [:admin, :newsletters]
     else
       render 'new'
     end
@@ -25,7 +25,7 @@ class Admin::NewslettersController < AdminController
 
   def update
     if @newsletter.update(newsletter_params)
-      redirect_to [:admin, @market, :newsletters]
+      redirect_to [:admin, :newsletters]
     else
       render 'edit'
     end
@@ -33,14 +33,10 @@ class Admin::NewslettersController < AdminController
 
   def destroy
     @newsletter.destroy
-    redirect_to [:admin, @market, :newsletters]
+    redirect_to [:admin, :newsletters]
   end
 
   private
-
-  def find_market
-    @market = current_user.managed_markets.find(params[:market_id])
-  end
 
   def find_newsletter
     @newsletter = @market.newsletters.find(params[:id])
