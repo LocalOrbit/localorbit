@@ -25,15 +25,8 @@ feature "Adding credit card to a market", :js, :vcr do
     select "5", from: "expiration_month"
     select "2014", from: "expiration_year"
 
-    fill_in "Organization EIN", with: "20-1234567"
-    fill_in "Full Legal Name", with: "John Patrick Doe"
-    select "Sep", from: "representative_dob_month"
-    select "17", from: "representative_dob_day"
-    select "1990", from: "representative_dob_year"
-
-    fill_in "Last 4 of SSN", with: "1234"
-    fill_in "Street Address (Personal)", with: "6789 Fake Dr"
-    fill_in "Zip Code (Personal)", with: "49423"
+    expect(page).not_to have_content("EIN")
+    expect(page).not_to have_content("Full Legal Name")
 
     click_button "Save"
 
@@ -60,15 +53,8 @@ feature "Adding credit card to a market", :js, :vcr do
     select "5", from: "expiration_month"
     select "2014", from: "expiration_year"
 
-    fill_in "Organization EIN", with: "20-1234567"
-    fill_in "Full Legal Name", with: "John Patrick Doe"
-    select "Sep", from: "representative_dob_month"
-    select "17", from: "representative_dob_day"
-    select "1990", from: "representative_dob_year"
-
-    fill_in "Last 4 of SSN", with: "1234"
-    fill_in "Street Address (Personal)", with: "6789 Fake Dr"
-    fill_in "Zip Code (Personal)", with: "49423"
+    expect(page).not_to have_content("EIN")
+    expect(page).not_to have_content("Full Legal Name")
 
     click_button "Save"
 

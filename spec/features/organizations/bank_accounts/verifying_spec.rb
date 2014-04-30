@@ -20,6 +20,7 @@ feature "Verifying a bank account", js: true do
       sign_in_as(market_manager)
 
       visit new_admin_organization_bank_account_path(org)
+      select "Checking", from: "balanced_account_type"
 
       fill_in "Organization EIN", with: "20-1234567"
       fill_in "Full Legal Name", with: "John Patrick Doe"
