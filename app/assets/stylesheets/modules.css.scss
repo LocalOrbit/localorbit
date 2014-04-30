@@ -668,45 +668,30 @@
     }
   }
   
-.tab-header,
-.sticky-table-header {
+.tab-header {
+  position: relative;
   width: 100%;
+  overflow: hidden;
 
   &.js-positioned {
     position: absolute;
     left: 0;
     z-index: 3;
     @include box-sizing(border-box);
-
+    padding: 0 20px;
   }
   &.js-fixed {
     position: fixed;
 
     > .l-constraint {
-      padding: 10px 20px 0;
+      padding: 0 20px 0;
       background: #fff;
     }
   }
+  .l-page-header {
+    margin: 0;
+  }
 }
-  .tab-header {
-    &.js-positioned {
-      padding: 0 20px;
-
-      > .l-constraint {
-        padding-top: 10px;
-      }
-    }
-  }
-
-  .sticky-table-header {
-    overflow: hidden;
-
-    &.js-fixed {
-      > .l-constraint {
-        overflow: hidden;
-      }
-    }
-  }
 
 .tab {
   position: relative;
