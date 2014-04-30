@@ -29,7 +29,8 @@ class ProductDecorator < Draper::Decorator
   end
 
   def location
-    Location.visible.find_by(id: location_id) || organization.shipping_location
+    return @location if defined?(@location)
+    @location = Location.visible.find_by(id: location_id) || organization.shipping_location
   end
 
   def location_map(w=300, h=200)
@@ -51,7 +52,7 @@ class ProductDecorator < Draper::Decorator
   def cart_item
     return unless context[:current_cart]
 
-    if i = context[:current_cart].items.find_by(product_id: id)
+    if i = context[:current_cart].items.detect {|i| i.product_id == id }
       i
     else
       CartItem.new(product_id: id, quantity: 0, cart: context[:current_cart])
