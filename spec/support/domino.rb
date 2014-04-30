@@ -179,7 +179,7 @@ module Dom
         selector ".invoice-row"
 
         def self.select_all
-          page.find('.select-all').click
+          page.first('.select-all').click
         end
 
         attribute :order_number

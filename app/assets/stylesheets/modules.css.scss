@@ -668,45 +668,37 @@
     }
   }
   
-.tab-header,
-.sticky-table-header {
+.nav--admin + .tab-header {
+  padding-top: 20px;
+  margin-top: -20px;
+}
+.tab-header {
+  position: relative;
   width: 100%;
+  overflow: hidden;
+
+  > .l-constraint {
+    padding-bottom: 30px;
+
+    .tabs-wrapper {
+      margin-bottom: 0;
+    }
+  }
 
   &.js-positioned {
-    position: absolute;
-    left: 0;
-    z-index: 3;
-    @include box-sizing(border-box);
-
+    padding: 0 20px;
+    margin-top: 0;
   }
   &.js-fixed {
-    position: fixed;
 
     > .l-constraint {
-      padding: 10px 20px 0;
       background: #fff;
     }
   }
+  .l-page-header {
+    margin: 0;
+  }
 }
-  .tab-header {
-    &.js-positioned {
-      padding: 0 20px;
-
-      > .l-constraint {
-        padding-top: 10px;
-      }
-    }
-  }
-
-  .sticky-table-header {
-    overflow: hidden;
-
-    &.js-fixed {
-      > .l-constraint {
-        overflow: hidden;
-      }
-    }
-  }
 
 .tab {
   position: relative;
@@ -1232,3 +1224,38 @@ label ~ .tooltip {
   }
 }
 
+
+/** Sticky things */
+.tab-header,
+.sub-header {
+  &.stickable {
+    &.js-positioned {
+      position: absolute;
+      left: 0;
+      z-index: 3;
+      @include box-sizing(border-box);
+      width: 100%;
+    }
+    &.js-fixed {
+      position: fixed;
+
+      > .l-constraint {
+        background: #fff;
+        padding: 0 20px;
+      }
+    }
+  }
+}
+.tab-header.stickable {
+  &.js-positioned {
+    > .l-constraint {
+      padding-bottom: 30px;
+    }
+  }
+}
+.sub-header.stickable {
+  &.js-positioned {
+    > .l-constraint {
+    }
+  }
+}
