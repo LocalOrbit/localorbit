@@ -27,6 +27,8 @@
     .al { text-align: left; }
     .ac { text-align: center; }
 
+    .left-padded { padding-left: 20px; }
+
     table {
       width: 100%;
       border-top: 2px solid black;
@@ -87,6 +89,14 @@
       <td class="ac"><%= item.quantity %></td>
       <td class="ar"><%= number_to_currency item.gross_total %></td>
     </tr>
+    <% item.lots.select {|lot| lot.number.present? }.each do |lot| %>
+    <tr class="line-item-lot">
+      <td class="al left-padded" colspan="3">Lot #: <%= lot.number %></td>
+      <td class="ac"><%= lot.quantity %></td>
+      <td class="ac"><%= lot.quantity %></td>
+      <td></td>
+    </td>
+    <% end %>
     <% end %>
     <tr>
       <td colspan="5" align="right">Discounts</td>

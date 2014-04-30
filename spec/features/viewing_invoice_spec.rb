@@ -40,6 +40,40 @@ feature "Viewing invoices" do
     # There should be one line item
     expect(all('.line-item').size).to eq(1)
 
+    # There should be no lot lists
+    expect(all('.line-item-lot').size).to eq(0)
+
+    # Line items total
+    expect(find('tr:last-child td:last-child')).to have_content("$210.00")
+  end
+
+  scenario "html content with lots" do
+    p2 = create(:product, :sellable, organization: seller, lots: [create(:lot, number: '123')])
+    order.items << create(:order_item, product: p2, quantity: 4)
+
+    visit admin_invoice_path(order.id)
+
+    within('.invoice-top') do
+      expect(page).to have_content(market.name)
+
+      address = market.addresses.first
+      expect(page).to have_content(address.address)
+      expect(page).to have_content(address.city)
+      expect(page).to have_content(address.state)
+      expect(page).to have_content(address.zip)
+
+      expect(page).to have_content("Invoice Number: LO-001")
+      expect(page).to have_content("Invoice Date: April 02, 2014")
+      expect(page).to have_content("Payment Due: April 16, 2014")
+      expect(page).to have_content("Amount Due: $210.00")
+    end
+
+    # There should be one line item
+    expect(all('.line-item').size).to eq(2)
+
+    # There should be no lot lists
+    expect(all('.line-item-lot').size).to eq(1)
+
     # Line items total
     expect(find('tr:last-child td:last-child')).to have_content("$210.00")
   end
