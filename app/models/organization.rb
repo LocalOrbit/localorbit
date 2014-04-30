@@ -29,7 +29,8 @@ class Organization < ActiveRecord::Base
   scope_accessible :market, method: :for_market_id, ignore_blank: true
 
   def self.for_market_id(market_id)
-    joins(:market_organizations).where(market_organizations: { market_id: [market_id] })
+    orgs = !all.to_sql.include?('market_organizations') ? joins(:market_organizations) : all
+    orgs.where(market_organizations: { market_id: [market_id] })
   end
 
   def shipping_location
