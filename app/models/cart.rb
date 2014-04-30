@@ -8,9 +8,9 @@ class Cart < ActiveRecord::Base
   validates :market, presence: true
   validates :delivery, presence: true
 
-  has_many :items, class_name: :CartItem do
+  has_many :items, -> { includes(product: :organization) }, class_name: :CartItem, inverse_of: :cart do
     def for_checkout
-      includes(product: :organization).joins(product: :organization).order("organizations.name, products.name").group_by do |item|
+      joins(product: :organization).order("organizations.name, products.name").group_by do |item|
         item.product.organization.name
       end
     end
