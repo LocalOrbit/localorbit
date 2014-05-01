@@ -5,13 +5,16 @@
     </div>
     <div class="tabs-wrapper">
       <ul class="tabs">
+        <% unless current_user.admin? %>
+        <%= content_tag(:li, link_to_or_span("Overview", [:admin, :financials, :overview]), class: 'tab') %>
+        <% end %>
+
         <% if current_user.admin? || current_user.market_manager? %>
         <%= content_tag(:li, link_to_or_span("Send Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Enter Receipts", [:admin, :financials, :receipts]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Record Payments to Vendors", coming_soon_dashboard_path), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %>
         <% else %>
-        <%= content_tag(:li, link_to_or_span("Overview", [:admin, :financials, :overview]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Review Orders", [:admin, :financials, :orders]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %>
         <% end %>
