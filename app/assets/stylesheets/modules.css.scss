@@ -1229,6 +1229,9 @@ label ~ .tooltip {
 
 
 /** Sticky things */
+.cling-wrap {
+  overflow: hidden;
+}
 .tab-header,
 .sub-header {
   &.stickable {
