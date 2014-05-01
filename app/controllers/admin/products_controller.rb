@@ -38,7 +38,7 @@ module Admin
       @product = current_user.managed_products.find(params[:id]).decorate
 
       if @product.update_attributes(product_params)
-        redirect_to [:admin, @product], notice: "Saved #{@product.name}"
+        redirect_to after_create_page, notice: "Saved #{@product.name}"
       else
         @organizations = [@product.organization]
         find_delivery_schedules(@product)
