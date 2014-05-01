@@ -1250,6 +1250,7 @@ label ~ .tooltip {
 .tab-header.stickable {
   &.js-positioned {
     > .l-constraint {
+      padding-top: 20px;
       padding-bottom: 30px;
     }
   }

@@ -33,7 +33,8 @@ $ ->
     $stuck.find('th').each((i, e) ->
         original_th = $sticky.find('th')[i]
         $(e).css({
-          'width': $(original_th).width()
+          'width': $(original_th).width(),
+          'max-width': $(original_th).width()
           })
       )
     $stuck.insertBefore($sticky.parent())
