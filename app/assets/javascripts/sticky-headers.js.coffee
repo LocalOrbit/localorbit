@@ -42,6 +42,8 @@ $ ->
     $stuck.parent().css('width', $sticky.parent().width())
     $stuck.find('.select-all').click ->
       $sticky.find('.select-all').trigger "click"
+    $stuck.find('th').click (e) ->
+      $($sticky.find('th')[e.target.cellIndex]).trigger "click"
 
   $('.stickable').each (i, e) ->
     stick_points.push($(e).offset().top)
