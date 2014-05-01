@@ -8,11 +8,11 @@ class Admin::NewslettersController < AdminController
   end
 
   def new
-    @newsletter = @market.newsletters.build
+    @newsletter = current_market.newsletters.build
   end
 
   def create
-    @newsletter = @market.newsletters.build(newsletter_params)
+    @newsletter = current_market.newsletters.build(newsletter_params)
     if @newsletter.save
       redirect_to [:admin, :newsletters]
     else
@@ -39,7 +39,7 @@ class Admin::NewslettersController < AdminController
   private
 
   def find_newsletter
-    @newsletter = @market.newsletters.find(params[:id])
+    @newsletter = current_market.newsletters.find(params[:id])
   end
 
   def newsletter_params

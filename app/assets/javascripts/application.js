@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require jquery.ui.datepicker
 //= require chosen-jquery
+//= require parser_rules/simple
+//= require wysihtml5
 //= require underscore
 //= require accountingjs
 //= require jquery.tablesorter.min
@@ -42,3 +44,4 @@
 //= require style_chooser
 //= require tab-box
 //= require tablesorter
+//= require newsletter
