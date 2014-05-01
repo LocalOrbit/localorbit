@@ -291,6 +291,7 @@ th {
     margin: 0;
   }
   .product-table--admin {
+    margin-top: 0;
     td {
       font-size: 12px;
     }
@@ -578,7 +579,7 @@ th {
 /** Sticky tables (like other sticky things, but sillier */
 .js-sticky {
   position: absolute;
-  z-index: 2;
+  z-index: 6;
   background: #fff;
 
   &.js-fixed {

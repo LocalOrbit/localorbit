@@ -27,20 +27,34 @@ $ ->
         'overflow': 'hidden'
       })
 
+  clone_header_attr = (original, prime) ->
+    $(prime).css({
+      'width': $(original).width(),
+      }).attr('class', original.getAttribute('class'))
+    
+  
   stick_table = (index, sticky) ->
     $sticky = $(sticky).removeClass('stickable')
     $stuck = $sticky.clone()
+    if $sticky.parent().hasClass('sortable')
+      $stuck.addClass('sortable')
     $stuck.find('th').each((i, e) ->
-        original_th = $sticky.find('th')[i]
-        $(e).css({
-          'width': $(original_th).width()
-          })
+       clone_header_attr($sticky.find('th')[i], e)
       )
     $stuck.insertBefore($sticky.parent())
     $stuck.wrap('<table class="js-sticky stickable"></table>')
     $stuck.parent().css('width', $sticky.parent().width())
     $stuck.find('.select-all').click ->
       $sticky.find('.select-all').trigger "click"
+    $stuck.find('th').click (e) ->
+      original = $sticky.find('th')[e.target.cellIndex]
+      $(original).trigger "click"
+      window.setTimeout ->
+          $stuck.find('th').each (i, header) ->
+            original = $sticky.find('th')[i]
+            clone_header_attr(original, header)
+        , 5
+
 
   $('.stickable').each (i, e) ->
     stick_points.push($(e).offset().top)
