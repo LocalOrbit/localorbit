@@ -345,11 +345,7 @@
   position: relative;
   margin: 0 0 20px;
 }
-  img {
-    position: relative;
-    max-height: 100%;
-    max-width: 100%;
-  }
+
   .product-image--large {
     margin: 13px 0;
     width: 100%;
@@ -1122,7 +1118,7 @@ label ~ .tooltip {
   margin-bottom: 2em;
 
 }
-.seller-map {
+.seller-map, .seller-photo  {
   > img {
     width: 100%;
   }
