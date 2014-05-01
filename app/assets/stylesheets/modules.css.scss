@@ -898,6 +898,9 @@
   min-height: 10px;
   padding-left: 20px;
   
+  path {
+    fill: $link;
+  }
   > .icon {
     display: inline-block;
     width: 13px;
@@ -1226,6 +1229,9 @@ label ~ .tooltip {
 
 
 /** Sticky things */
+.cling-wrap {
+  overflow: hidden;
+}
 .tab-header,
 .sub-header {
   &.stickable {

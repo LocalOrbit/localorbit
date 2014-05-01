@@ -122,6 +122,7 @@ input[type=search] {
 }
 
 input[type=number] {
+  -moz-appearance: textfield;
   &::-webkit-inner-spin-button {
     display: none;
   }

@@ -26,8 +26,8 @@ describe "Editing a product" do
       it "saves the product" do
         fill_in "Product Name", with: "Canned Peaches"
         click_button "Save and Continue"
-        expect(find_field('Product Name').value).to eq("Canned Peaches")
-        expect(find_field('Category').value).to eq(category_id.to_s)
+        expect(page).to have_content("Saved Canned Peaches")
+        expect(page).to have_content("Add Prices")
       end
     end
 
@@ -67,7 +67,7 @@ describe "Editing a product" do
           click_button 'Save and Continue'
 
           expect(page).to have_content("Saved Canned Pears")
-          expect(find_field("Current inventory").value).to eq('42')
+          expect(page).to have_content("Your product will not appear in the Shop until you add pricing")
         end
       end
     end
@@ -183,6 +183,7 @@ describe "Editing a product" do
       Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").check!
 
       click_button "Save and Continue"
+      click_link "Product Info"
 
       expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
       expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
