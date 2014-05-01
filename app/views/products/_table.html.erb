@@ -16,7 +16,7 @@
       <td class="info">
       <div class="product-image">
       <% if product.image_uid.present? %>
-        <%= image_tag Dragonfly.app.remote_url_for(product.image_uid) %>
+        <%= image_tag product.image.thumb('75x').url %>
       <% else %>
         <%= image_tag 'default-product-image.png' %>
       <% end %>

@@ -49,7 +49,7 @@
     <td class="stock">
       <%= link_to product.available_inventory, [:admin, product, :lots], class: "edit-toggle" %>
     </td>
-    <td class="delete"><%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), [:admin, product], method: :delete, data: { confirm: "Are you sure you want to delete this product?" } %></td>
+    <td class="delete action-link"><%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), [:admin, product], method: :delete, data: { confirm: "Are you sure you want to delete this product?" } %></td>
   </tr>
 <% end %>
 </table>
