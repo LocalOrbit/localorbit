@@ -14,7 +14,7 @@ describe "Payment history" do
     before do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
-      visit admin_financials_path
+      visit admin_financials_payments_path
     end
 
     it "displays the latest payment history" do
@@ -39,7 +39,7 @@ describe "Payment history" do
     before do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
-      visit admin_financials_path
+      visit admin_financials_payments_path
     end
 
     it "displays the payment history with a placeholder" do

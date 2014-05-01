@@ -1,0 +1,142 @@
+require 'spec_helper'
+
+feature "Seller Financial Overview" do
+  let!(:market)  { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:seller)  { create(:organization, markets: [market]) }
+  let!(:seller2) { create(:organization, markets: [market]) }
+
+  let!(:user)    { create(:user, organizations: [seller]) }
+
+  let!(:kale) { create(:product, :sellable, organization: seller, name: "Kale") }
+  let!(:peas) { create(:product, :sellable, organization: seller, name: "Peas") }
+  let!(:from_different_seller) { create(:product, :sellable, organization: seller2, name: "Apples") }
+
+  def deliver_order(order)
+    order.items.each do |item|
+      item.delivery_status = "delivered"
+      order.save!
+    end
+  end
+
+  def pay_order(order)
+    order.payment_status = "paid"
+    order.save!
+  end
+
+  before do
+    # Overdue Order
+    # Total for seller: (5*6.99) + (7*6.99) = 83.88
+    Time.zone = "Eastern Time (US & Canada)"
+    Timecop.travel(Time.current - 32.days) do
+      order = create(:order, payment_method: "purchase order", market: market, items:[
+        create(:order_item, quantity: 5, product: peas),
+        create(:order_item, quantity: 7, product: kale),
+        create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
+      ])
+
+      order.invoice
+      deliver_order(order)
+      order.save!
+    end
+
+    # Payments for "Today" calculation
+    # Credit Card
+    # 13.98
+    Timecop.travel(Time.current - 7.days) do
+      order = create(:order, payment_method: "credit card", market: market, items:[
+        create(:order_item, quantity: 1, product: peas),
+        create(:order_item, quantity: 1, product: kale),
+        create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
+      ])
+
+      deliver_order(order)
+      pay_order(order)
+    end
+
+    # ACH
+    # 27.96
+    Timecop.travel(Time.current - 7.days) do
+      order = create(:order, payment_method: "ach", market: market, items:[
+        create(:order_item, quantity: 2, product: peas),
+        create(:order_item, quantity: 2, product: kale),
+        create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
+      ])
+
+      deliver_order(order)
+      pay_order(order)
+    end
+
+    # Purchase order
+    # 90.87
+    Timecop.travel(Time.current - 7.days) do
+      order = create(:order, payment_method: "purchase order", market: market, items:[
+        create(:order_item, quantity: 3, product: peas),
+        create(:order_item, quantity: 10, product: kale),
+        create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
+      ])
+
+      deliver_order(order)
+      pay_order(order)
+    end
+
+    # Payments for the next 7 days
+    # 10*6.99 + 9*6.99 = $132.81
+    Timecop.travel(Time.current - 1.days) do
+      order = create(:order, payment_method: "credit card", market: market, items:[
+        create(:order_item, quantity: 10, product: peas),
+        create(:order_item, quantity: 9, product: kale),
+        create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
+      ])
+
+      deliver_order(order)
+      pay_order(order)
+    end
+
+    # 66*6.99 + 92*6.99 = $1104.42
+    Timecop.travel(Time.current - 6.days) do
+      order = create(:order, payment_method: "purchase order", market: market, items:[
+        create(:order_item, quantity: 66, product: peas),
+        create(:order_item, quantity: 92, product: kale),
+        create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
+      ])
+
+      deliver_order(order)
+      pay_order(order)
+    end
+  end
+
+  scenario "Seller checks their financial overview" do
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(user)
+    click_link "Financials"
+
+    expect(financial_row("Overdue").amount).to eql("$83.88")
+    expect(financial_row("Today").amount).to eql("$132.81")
+    expect(financial_row("Next 7 Days").amount).to eql("$1,237.23")
+  end
+
+  scenario "Seller navigates to their financial overview" do
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(user)
+    click_link "Financials"
+
+    expect(page).to have_content("Money In")
+    expect(page).to have_content("This is a snapshot")
+  end
+
+  def visit_financials
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(user)
+    visit "/admin/financials"
+  end
+
+  def financial_row(title)
+    Dom::Admin::Financials::OverviewStat.find_by_title(title)
+  end
+
+  scenario "Seller navigates directly to their financial overview" do
+    visit_financials
+    expect(page).to have_content("Money In")
+    expect(page).to have_content("This is a snapshot")
+  end
+end

@@ -18,7 +18,7 @@ class OrderItem < ActiveRecord::Base
   validate :product_availability, on: :create
 
   before_create :consume_inventory
-  before_save :update_delivered_on
+  before_save :update_delivered_at
 
   def self.for_delivery(delivery)
     joins(order: :delivery).where(orders: {delivery_id: delivery.id})
@@ -88,7 +88,7 @@ class OrderItem < ActiveRecord::Base
     end
   end
 
-  def update_delivered_on
+  def update_delivered_at
     if changes[:delivery_status] && changes[:delivery_status][1] == "delivered"
       self.delivered_at = Time.current
     end

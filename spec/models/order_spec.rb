@@ -393,6 +393,33 @@ describe Order do
     end
   end
 
+  describe "#paid_at" do
+    subject{ create(:order, items: items) }
+    let(:items) { create_list(:order_item, 2, product: create(:product, :sellable)) }
+
+    def set_payment_status(item, date)
+      Timecop.freeze(date) do
+        item.payment_status = "paid"
+        item.save!
+      end
+    end
+
+    context "setting payment_status to 'paid'" do
+      it "saves the time the order was paid for" do
+        time = Time.zone.parse("Januray 4, 2014")
+        expect(subject.paid_at).to be_nil
+
+        Timecop.freeze(time) do
+          subject.payment_status = "paid"
+          subject.save!
+        end
+
+        subject.reload
+        expect(subject.paid_at).to eql(time)
+      end
+    end
+  end
+
   describe "#sellers" do
     context "no order items" do
       it "returns an empty array" do
@@ -426,6 +453,24 @@ describe Order do
         expect(order.sellers).to include(fulton_farms)
         expect(order.sellers).not_to include(not_included_farms)
       end
+    end
+  end
+
+  describe ".delivered" do
+    let(:product) { create(:product, :sellable) }
+    let(:product2) { create(:product, :sellable) }
+
+    let(:delivered_item1) { create(:order_item, product: product, delivery_status: "delivered") }
+    let(:delivered_item2) { create(:order_item, product: product2, delivery_status: "delivered") }
+    let!(:delivered_order) { create(:order, items: [delivered_item1, delivered_item2]) }
+
+    let(:undelivered_item1) { create(:order_item, product: product) }
+    let(:undelivered_item2) { create(:order_item, product: product2) }
+    let!(:undelivered_order) { create(:order, items: [undelivered_item1, undelivered_item2]) }
+
+    it "returns orders where all items have deivered" do
+      expect(Order.joins(:items).delivered).to include(delivered_order)
+      expect(Order.joins(:items).delivered).not_to include(undelivered_order)
     end
   end
 end
