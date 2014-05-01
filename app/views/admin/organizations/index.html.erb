@@ -30,6 +30,8 @@
     <% end %>
   </table>
 
+  <%= paginate @organizations %>
+
   <% if @organizations.none? %>
     <div class="empty-results">
       <h2>No Results</h2>
