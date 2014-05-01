@@ -13,6 +13,7 @@ describe 'Filter products', :js do
   let!(:org3_product) { create(:product, :sellable, organization: org3) }
   let!(:org4)         { create(:organization, :seller, markets: [market2]) }
   let!(:org4_product) { create(:product, :sellable, organization: org4) }
+  let!(:org5)         { create(:organization, :buyer, markets: [market2]) }
 
   context 'as admin' do
     let!(:user) { create(:user, role: 'admin') }
@@ -47,6 +48,10 @@ describe 'Filter products', :js do
     end
 
     context 'by organization' do
+      it 'only show sellers for filtering' do
+        expect(page).to_not have_select("filter_organization", with_options: [org5.name])
+      end
+
       it 'shows all products when unfiltered' do
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
