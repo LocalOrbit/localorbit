@@ -1,4 +1,4 @@
-class Admin::Financials::OrdersController < AdminController
+class Admin::OrdersController < AdminController
   def index
     @orders = Order.orders_for_seller(current_user)
   end

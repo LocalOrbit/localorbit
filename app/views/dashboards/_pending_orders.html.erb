@@ -1,6 +1,6 @@
 <h2 class="dashboard-titles"><i class="font-icon" data-icon="&#xe025;"></i>&nbsp; Recent Orders</h2>
 <span class="supporting-text-mini">Displaying the 15 most recent orders.</span>
-<span class="dashboard-link"> <%= link_to "View All Orders", admin_financials_orders_path %></span>
+<span class="dashboard-link"> <%= link_to "View All Orders", admin_orders_path %></span>
 <% if @presenter.pending_orders.present? %>
   <table class="pending-orders-table <%= cycle "odd", "even" %>">
     <thead>
@@ -14,7 +14,7 @@
 
   <% @presenter.pending_orders.each do |order| %>
     <tr class="order-row">
-      <td class="order-number"><%= link_to order.order_number, admin_financials_order_path(order) %></td>
+      <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %></td>
       <td class="placed-on"><%= order.placed_at.strftime("%-m/%-d/%Y") %></td>
       <td class="delivery"><%= order.delivery_status.titleize %></td>
       <td class="total"><%= number_to_currency(SellerOrder.new(order, current_user).net_total) %></td>
@@ -24,4 +24,3 @@
 <% else %>
   There are currently no pending orders
 <% end %>
-
