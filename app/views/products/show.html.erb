@@ -51,7 +51,7 @@
       ><div class="column column--half column--guttered">
         <% if @product.image_uid.present? %>
           <div class="product-image product-image--large vc-wrapper">
-            <%= image_tag Dragonfly.app.remote_url_for(@product.image_uid), alt: "", class: "vertical-centerer" %>
+            <%= image_tag @product.image.thumb('330x').url, alt: "", class: "vertical-centerer" %>
           </div>
         <% end %>
 
