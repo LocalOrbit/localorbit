@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20140502202318) do
     t.datetime "cutoff_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "legacy_id"
   end
 
   create_table "delivery_schedules", force: true do |t|
@@ -275,6 +276,7 @@ ActiveRecord::Schema.define(version: 20140502202318) do
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "legacy_id"
   end
 
   create_table "order_items", force: true do |t|
@@ -295,6 +297,7 @@ ActiveRecord::Schema.define(version: 20140502202318) do
     t.datetime "updated_at"
     t.string   "delivery_status"
     t.datetime "delivered_at"
+    t.integer  "legacy_id"
   end
 
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
@@ -337,6 +340,7 @@ ActiveRecord::Schema.define(version: 20140502202318) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "placed_by_id"
+    t.integer  "legacy_id"
     t.datetime "paid_at"
   end
 
@@ -409,8 +413,8 @@ ActiveRecord::Schema.define(version: 20140502202318) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.integer  "top_level_category_id"
     t.string   "image_uid"
+    t.integer  "top_level_category_id"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"
@@ -470,6 +474,7 @@ ActiveRecord::Schema.define(version: 20140502202318) do
     t.integer  "invitations_count",      default: 0
     t.boolean  "send_freshsheet",        default: true, null: false
     t.boolean  "send_newsletter",        default: true, null: false
+    t.integer  "legacy_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

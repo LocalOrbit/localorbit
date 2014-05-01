@@ -27,7 +27,7 @@ class Legacy::Market < Legacy::Base
 
   has_one  :brand, class_name: "Legacy::Brand", foreign_key: :domain_id
 
-  has_many :organizations, class_name: "::Legacy::Organization"
+  has_many :organizations, class_name: "Legacy::Organization"
   has_many :delivery_schedules, class_name: "Legacy::DeliverySchedule", foreign_key: :domain_id
   has_many :orders, class_name: "Legacy::Order", foreign_key: :domain_id
 
@@ -74,7 +74,13 @@ class Legacy::Market < Legacy::Base
       organizations.each_with_index do |org, index|
         puts "Importing organization #{index + 1} of #{organizations.count}"
         imported_organization = org.import
-        market.organizations << imported_organization if !market.organizations.include?(imported_organization)
+        market.organizations << imported_organization if imported_organization && !market.organizations.include?(imported_organization)
+      end
+
+      market_org.each_with_index do |org, index|
+        puts "Importing market organization #{index + 1} of #{market_org.count}"
+        imported_organization = org.import
+        market.organizations << imported_organization if imported_organization && !market.organizations.include?(imported_organization)
       end
 
       market_org.each do |org|
@@ -124,6 +130,12 @@ class Legacy::Market < Legacy::Base
       delivery_schedules.each_with_index do |ds|
         market.delivery_schedules << ds.import(market)
       end
+
+      # puts "Importing #{orders.count} orders..."
+      # orders.each do |order|
+      #   imported = order.import
+      #   market.orders << imported if imported.present?
+      # end
 
       puts "Setting market product delivery schedules..."
       market.organizations.each do |organization|

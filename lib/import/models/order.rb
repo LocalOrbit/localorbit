@@ -5,12 +5,27 @@ module Imported
     self.table_name = "orders"
 
     has_many :items, class_name: "Imported::OrderItem", inverse_of: :order
+    belongs_to :organization, class_name: "Imported::Organization", inverse_of: :orders
+    belongs_to :market, class_name: "Imported::market", inverse_of: :orders
   end
 end
+
+class Legacy::DeliveryStatus < Legacy::Base
+  self.table_name = "lo_delivery_statuses"
+  self.primary_key = "ldstat_id"
+end
+
+class Legacy::OrderPaymentStatus < Legacy::Base
+  self.table_name = "lo_buyer_payment_statuses"
+  self.primary_key = "lbps_id"
+end
+
 
 class Legacy::Order < Legacy::Base
   self.table_name = "lo_order"
   self.primary_key = "lo_oid"
+
+  has_one :buyer_payment_status, class_name: "Legacy::OrderPaymentStatus", foreign_key: :lbps_id
 
   has_many :items, class_name: "Legacy::OrderItem", foreign_key: :lo_oid
   has_many :shipping_addresses, -> { where(address_type: "Shipping") }, class_name: "Legacy::OrderAddress", foreign_key: :lo_oid
@@ -20,20 +35,32 @@ class Legacy::Order < Legacy::Base
   belongs_to :market, class_name: "Legacy::Market", foreign_key: :domain_id
 
   def import
-    order = Imported::Order.where(legacy_id: lo_oid).first
-    if order.nil?
-      order = Imported::Order.new(
-        order_number: lo3_order_number,
-        billing_organization_name: buyer_name,
-        placed_at: order_date,
-        total_cost: grand_total,
-        payment_method: payment_method,
-        payment_note: payment_ref,
-        notes: admin_notes,
-      )
-    end
+    if order_date.present?
+      order = Imported::Order.where(legacy_id: lo_oid).first
+      if order.nil?
+        puts "- Creating order #{lo3_order_nbr}"
+        order = Imported::Order.new(
+          organization: imported_organization,
+          order_number: lo3_order_nbr,
+          billing_organization_name: buyer_name,
+          placed_at: order_date,
+          total_cost: grand_total,
+          payment_method: payment_method,
+          payment_status: imported_payment_status,
+          payment_note: payment_ref,
+          notes: admin_notes,
+        )
+      else
+        puts "- Existing order #{order.order_number}"
+      end
 
-    order
+      items.each do |item|
+        imported = item.import
+        order.items << imported if imported.present?
+      end
+
+      order
+    end
   end
 
   def shipping
@@ -42,5 +69,13 @@ class Legacy::Order < Legacy::Base
 
   def billing
     billing_addresses.first
+  end
+
+  def imported_organization
+    Imported::Organization.where(legacy_id: organization.org_id).first
+  end
+
+  def imported_payment_status
+    buyer_payment_status.try(:buyer_payment_status) || "unpaid"
   end
 end
