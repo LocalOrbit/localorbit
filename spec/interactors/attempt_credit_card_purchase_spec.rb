@@ -8,6 +8,7 @@ describe AttemptCreditCardPurchase do
   let!(:credit_card) { create(:bank_account, :credit_card, bankable: buyer, balanced_uri: "/balanced-credit-card-uri") }
   let!(:cart)        { create(:cart, organization: buyer, market: market) }
   let!(:cart_item)   { create(:cart_item, product: product, cart: cart, quantity: 10)}
+  let!(:order)       { create(:order, :with_items) }
   let(:params)       { { "payment_method" => "purchase order"} }
 
   let!(:balanced_customer) { double("balanced customer", debit: balanced_debit) }
