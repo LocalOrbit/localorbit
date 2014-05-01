@@ -5,14 +5,21 @@ describe "A Market Manager managing Newsletters" do
   let(:market) { market_manager.managed_markets.first }
 
   before(:each) do
+    switch_to_subdomain(market.subdomain)
     sign_in_as market_manager
+  end
+
+  it "getting there" do
+    click_link "Marketing"
+    click_link "Newsletters"
+    within "h1" do
+      expect(page).to have_content('Newsletters')
+    end
   end
 
   describe "Adding a newsletter" do
     before do
-      # TODO use navigation
-      # click_link 'Newsletters'
-      visit admin_market_newsletters_path(market)
+      visit admin_newsletters_path
       click_link 'Add Newsletter'
     end
 
@@ -24,7 +31,7 @@ describe "A Market Manager managing Newsletters" do
         check "Buyers"
         check "Sellers"
         check "Market Managers"
-        attach_file 'Image', 'app/assets/images/backgrounds/kale.jpg'
+        attach_file 'Image', 'app/assets/images/logo.png'
         click_button "Add Newsletter"
         expect(page).to have_content("Big News")
       end
@@ -45,9 +52,7 @@ describe "A Market Manager managing Newsletters" do
     let!(:newsletter) { create :newsletter, market: market }
 
     before do
-      # TODO use navigation
-      # click_link 'Newsletters'
-      visit admin_market_newsletters_path(market)
+      visit admin_newsletters_path
       click_link newsletter.subject
     end
 
@@ -56,7 +61,7 @@ describe "A Market Manager managing Newsletters" do
         fill_in "Subject", with: 'Big News'
         fill_in "Header", with: "Some really exciting stuff"
         fill_in "Body", with: "bla bla bla"
-        attach_file 'Image', 'app/assets/images/backgrounds/kale.jpg'
+        attach_file 'Image', 'app/assets/images/logo.png'
         click_button "Save Newsletter"
         expect(page).to have_content("Big News")
       end
@@ -77,9 +82,7 @@ describe "A Market Manager managing Newsletters" do
     let!(:newsletter) { create :newsletter, market: market }
 
     before do
-      # TODO use navigation
-      # click_link 'Newsletters'
-      visit admin_market_newsletters_path(market)
+      visit admin_newsletters_path
     end
 
     it "deletes the newsletter" do
