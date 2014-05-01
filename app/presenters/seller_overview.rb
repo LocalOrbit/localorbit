@@ -16,7 +16,7 @@ class SellerOverview
 
   def today
     orders = []
-    start_of_day = @time.beginning_of_day - 7.days
+    start_of_day = 7.days.ago(@time).beginning_of_day
     end_of_day = @time.end_of_day - 7.days
 
     orders += @cc_ach_orders.delivered.paid.having("MAX(order_items.delivered_at) >= ?", start_of_day).having("MAX(order_items.delivered_at) < ?", end_of_day)
