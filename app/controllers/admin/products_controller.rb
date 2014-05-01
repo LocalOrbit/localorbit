@@ -80,7 +80,7 @@ module Admin
     end
 
     def find_organizations_for_filtering
-      @selling_organizations = current_user.managed_organizations.periscope(request.query_parameters).
+      @selling_organizations = current_user.managed_organizations.selling.periscope(request.query_parameters).
         order(:name).inject([["Show from all Sellers", 0]]) do |result, org|
         result << [org.name, org.id]
       end
