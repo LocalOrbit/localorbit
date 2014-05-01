@@ -1,6 +1,6 @@
 module Admin::Financials
-  class OverviewController < AdminController
-    def index
+  class OverviewsController < AdminController
+    def show
       @overview = SellerOverview.new(seller: current_user, market: current_market)
     end
   end

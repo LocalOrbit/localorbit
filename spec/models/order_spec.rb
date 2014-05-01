@@ -469,8 +469,8 @@ describe Order do
     let!(:undelivered_order) { create(:order, items: [undelivered_item1, undelivered_item2]) }
 
     it "returns orders where all items have deivered" do
-      expect(Order.delivered).to include(delivered_order)
-      expect(Order.delivered).not_to include(undelivered_order)
+      expect(Order.joins(:items).delivered).to include(delivered_order)
+      expect(Order.joins(:items).delivered).not_to include(undelivered_order)
     end
   end
 end
