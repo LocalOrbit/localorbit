@@ -32,6 +32,7 @@ class Product < ActiveRecord::Base
   scope_accessible :market, method: :for_market_id, ignore_blank: true
   scope_accessible :organization, method: :for_organization_id, ignore_blank: true
   scope_accessible :category, method: :for_category_id, ignore_blank: true
+  scope_accessible :order_by, method: :for_order_by, ignore_blank: true
 
   before_save :update_top_level_category
   before_save :update_delivery_schedules
@@ -74,6 +75,21 @@ class Product < ActiveRecord::Base
 
   def self.for_category_id(category_id)
     where(top_level_category_id: category_id)
+  end
+
+  def self.for_order_by(column)
+    case column
+    when "price"
+      joins(:prices).select("products.*, MAX(prices.sale_price) as price").
+        group("products.id").order("price DESC")
+    when "stock"
+      joins(:lots).select("products.*, SUM(lots.quantity) as stock").
+        group("products.id").order("stock DESC")
+    when "seller"
+      order("organizations.name")
+    else "name"
+      order(column)
+    end
   end
 
   def can_use_simple_inventory?
