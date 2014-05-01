@@ -1,6 +1,6 @@
 <div class="tab-header stickable">
   <div class="l-constraint">
-    <%= link_to "< Return to Organizations List", admin_organizations_path, class: "redundant-nav" %>
+    <%= link_to "< Return to Organizations List", admin_organizations_path, class: "redundant-nav" unless current_user.buyer_only? %>
 
     <h1>Editing Organization: <%= @organization.name %></h1>
     <div class="tabs-wrapper">
