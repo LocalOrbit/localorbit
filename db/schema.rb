@@ -244,9 +244,9 @@ ActiveRecord::Schema.define(version: 20140502185535) do
     t.boolean  "default_allow_purchase_orders",                         default: false
     t.boolean  "default_allow_credit_cards",                            default: true
     t.boolean  "default_allow_ach",                                     default: true
-    t.integer  "legacy_id"
     t.string   "background_color"
     t.string   "text_color"
+    t.integer  "legacy_id"
     t.boolean  "allow_cross_sell",                                      default: false
   end
 
@@ -371,6 +371,8 @@ ActiveRecord::Schema.define(version: 20140502185535) do
     t.string   "balanced_uri"
     t.integer  "legacy_id"
   end
+
+  add_index "payments", ["payee_id", "payee_type"], name: "index_payments_on_payee_id_and_payee_type", using: :btree
 
   create_table "prices", force: true do |t|
     t.integer  "product_id"
