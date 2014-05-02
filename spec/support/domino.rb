@@ -107,7 +107,7 @@ module Dom
     end
 
     def market
-      node.find(".market").text
+      node.find(".market .view-cell").text
     end
 
     def buyer
