@@ -684,12 +684,6 @@
     padding: 0 20px;
     margin-top: 0;
   }
-  &.js-fixed {
-
-    > .l-constraint {
-      background: #fff;
-    }
-  }
   .l-page-header {
     margin: 0;
   }
@@ -1229,6 +1223,9 @@ label ~ .tooltip {
 }
 .tab-header,
 .sub-header {
+  > .l-constraint {
+    background: #fff;
+  }
   &.stickable {
     &.js-positioned {
       position: absolute;
@@ -1236,14 +1233,14 @@ label ~ .tooltip {
       z-index: 3;
       @include box-sizing(border-box);
       width: 100%;
+      padding: 0;
+      > .l-constraint {
+        padding-right: 20px;
+        padding-left: 20px;
+      }
     }
     &.js-fixed {
       position: fixed;
-
-      > .l-constraint {
-        background: #fff;
-        padding: 0 20px;
-      }
     }
   }
 }
@@ -1252,12 +1249,6 @@ label ~ .tooltip {
     > .l-constraint {
       padding-top: 20px;
       padding-bottom: 30px;
-    }
-  }
-}
-.sub-header.stickable {
-  &.js-positioned {
-    > .l-constraint {
     }
   }
 }
