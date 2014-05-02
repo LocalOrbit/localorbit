@@ -217,6 +217,48 @@ module Dom
         attribute :payment_method
         attribute :amount
       end
+
+      class VendorPaymentRow < Domino
+        selector ".vendor-payment"
+
+        def review
+          node.click_link('Review')
+        end
+
+        def name
+          node.find('h2')
+        end
+
+        def order_count
+          node.find('.order-count')
+        end
+
+        def owed
+          node.find('.owed')
+        end
+
+        def selected_owed
+          node.find('.total-owed')
+        end
+      end
+
+      class VendorPaymentOrderRow < Domino
+        selector ".payment-order"
+
+        attribute :order_number
+
+        def click_check
+          node.find('input[type=checkbox]').click
+        end
+
+        def placed_at
+          node.all('td')[2]
+        end
+
+        def total
+          node.all('td').last
+        end
+      end
     end
 
     class CrossSell < Domino
