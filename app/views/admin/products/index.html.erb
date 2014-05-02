@@ -21,37 +21,35 @@
   </div>
 </div>
 
-
-
 <table class="product-table product-table--admin sortable">
   <thead class="stickable">
     <tr>
-      <%= content_tag(:th, 'Seller') if current_user.multi_organization_membership? %>
-      <%= content_tag(:th, 'Market') if current_user.multi_market_membership? %>
-      <th>Name</th>
-      <th>Pricing</th>
-      <th>In Stock</th>
+      <%= content_tag(:th, 'Seller', data: {column: 'seller'}) if current_user.multi_organization_membership? %>
+      <%= content_tag(:th, 'Market', data: {column: 'market'}) if current_user.multi_market_membership? %>
+      <th data-column="name">Name</th>
+      <th data-column="price:desc">Pricing</th>
+      <th data-column="stock:desc">In Stock</th>
       <th></th>
     </tr>
   </thead>
-<% @products.each do |product| %>
-  <tr class="product-row <%= cycle "odd", "even" %>">
-    <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]), class: 'seller') if current_user.multi_organization_membership? %>
-    <%= content_tag(:td, link_to_if(current_user.can_manage_market?(product.organization.markets.first), product.market_name, [:admin, product.organization.markets.first]), class: 'market') if current_user.multi_market_membership? %>
-    <td class="name product-name"><%= link_to product.name, [:admin, product] %></td>
-    <td class="pricing">
-      <ul class="l-inline-list">
-        <% product.prices.view_sorted.decorate.each do |price| %>
-        <%= content_tag(:li, link_to(price.quick_info, [:admin, product, :prices], class: 'edit-toggle')) %>
-        <% end %>
-      </ul>
-    </td>
-    <td class="stock">
-      <%= link_to product.available_inventory, [:admin, product, :lots], class: "edit-toggle" %>
-    </td>
-    <td class="delete action-link"><%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), [:admin, product], method: :delete, data: { confirm: "Are you sure you want to delete this product?" } %></td>
-  </tr>
-<% end %>
+  <% @products.each do |product| %>
+    <tr class="product-row <%= cycle "odd", "even" %>">
+      <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]), class: 'seller') if current_user.multi_organization_membership? %>
+      <%= content_tag(:td, link_to(product.market_name, [:admin, product.organization.markets.first]), class: 'market') if current_user.multi_market_membership? %>
+      <td class="name product-name"><%= link_to product.name, [:admin, product] %></td>
+      <td class="pricing">
+        <ul class="l-inline-list">
+          <% product.prices.view_sorted.decorate.each do |price| %>
+          <%= content_tag(:li, link_to(price.quick_info, [:admin, product, :prices], class: 'edit-toggle')) %>
+          <% end %>
+        </ul>
+      </td>
+      <td class="stock">
+        <%= link_to product.available_inventory, [:admin, product, :lots], class: "edit-toggle" %>
+      </td>
+      <td class="delete action-link"><%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), [:admin, product], method: :delete, data: { confirm: "Are you sure you want to delete this product?" } %></td>
+    </tr>
+  <% end %>
 </table>
 
 <%= paginate @products %>
