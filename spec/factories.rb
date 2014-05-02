@@ -162,7 +162,7 @@ FactoryGirl.define do
     # We need to set this in the factory because FactoryGirl doesn't trigger before_save
     top_level_category { category.top_level_category }
     organization
-    unit
+    unit { Unit.first || create(:unit) }
 
     trait :decorated do
       initialize_with do
