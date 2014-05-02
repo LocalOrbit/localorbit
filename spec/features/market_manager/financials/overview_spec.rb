@@ -124,9 +124,9 @@ feature "Market Manager Financial Overview" do
     sign_in_as(market_manager)
     click_link "Financials"
 
-    expect(financial_row("Overdue").amount).to eql("$132.81")
-    expect(financial_row("Today").amount).to eql("$279.60")
-    expect(financial_row("Next 7 Days").amount).to eql("$1,335.09")
+    expect(money_in_row("Overdue").amount).to eql("$132.81")
+    expect(money_in_row("Today").amount).to eql("$279.60")
+    expect(money_in_row("Next 7 Days").amount).to eql("$1,335.09")
   end
 
   scenario "Seller navigates to their financial overview" do
@@ -144,9 +144,14 @@ feature "Market Manager Financial Overview" do
     visit "/admin/financials"
   end
 
-  def financial_row(title)
-    Dom::Admin::Financials::OverviewStat.find_by_title(title)
+  def money_in_row(title)
+    Dom::Admin::Financials::MoneyIn.find_by_title(title)
   end
+
+  def money_out_row(title)
+    Dom::Admin::Financials::MoneyOut.find_by_title(title)
+  end
+
 
   scenario "Seller navigates directly to their financial overview" do
     visit_financials

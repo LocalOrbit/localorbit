@@ -202,8 +202,15 @@ module Dom
         end
       end
 
-      class OverviewStat < Domino
-        selector ".overview tr"
+      class MoneyOut < Domino
+        selector ".money-out tr"
+
+        attribute :title
+        attribute :amount
+      end
+
+      class MoneyIn < Domino
+        selector ".money-in tr"
 
         attribute :title
         attribute :amount

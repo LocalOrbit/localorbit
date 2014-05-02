@@ -131,7 +131,7 @@ feature "Seller Financial Overview" do
   end
 
   def financial_row(title)
-    Dom::Admin::Financials::OverviewStat.find_by_title(title)
+    Dom::Admin::Financials::MoneyIn.find_by_title(title)
   end
 
   scenario "Seller navigates directly to their financial overview" do
