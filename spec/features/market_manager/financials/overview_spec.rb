@@ -135,7 +135,22 @@ feature "Market Manager Financial Overview" do
     click_link "Financials"
 
     expect(page).to have_content("Money In")
+    expect(page).to have_content("Money Out")
     expect(page).to have_content("This is a snapshot")
+
+    within(".money-in") do
+      click_link "Send Invoices"
+    end
+
+    expect(page).to have_content("Unsent Invoices")
+
+    click_link "Financials"
+
+    within(".money-out") do
+      click_link "Record Payments"
+    end
+
+    expect(page).to have_content("Coming Soon")
   end
 
   def visit_financials

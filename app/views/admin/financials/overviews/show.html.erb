@@ -1,7 +1,35 @@
 <%= render "admin/financials/header" %>
 
 <div class="money-in">
+
   <h2>Money In</h2>
+  <table>
+    <tr>
+      <td class="title">Overdue</td>
+      <td class="amount"><%= number_to_currency @overview.overdue %></td>
+    </tr>
+    <tr>
+      <td class="title">Today</td>
+      <td class="amount"><%= number_to_currency @overview.today %></td>
+    </tr>
+    <tr>
+      <td class="title">Next 7 Days</td>
+      <td class="amount"><%= number_to_currency @overview.next_seven_days %></td>
+    </tr>
+    <tr>
+      <td class="title">Next 30 Days</td>
+      <td class="amount">$0.00</td>
+    </tr>
+  </table>
+
+  <% if current_user.can_manage_market?(current_market) %>
+  <%= link_to "Send Invoices", [:admin, :financials, :invoices], class: "btn btn--blue btn--small" %>
+ <% end %>
+</div>
+
+<% if current_user.can_manage_market?(current_market) %>
+<div class="money-out">
+  <h2>Money Out</h2>
 
   <table>
     <tr>
@@ -21,7 +49,9 @@
       <td class="amount">$0.00</td>
     </tr>
   </table>
+  <%= link_to "Record Payments", coming_soon_dashboard_path, class: "btn btn--blue btn--small" %>
 </div>
+<% end %>
 
 <div>
   <p>
