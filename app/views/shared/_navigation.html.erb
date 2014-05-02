@@ -36,23 +36,16 @@ end
       </li>
       <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i>Financials'), admin_financials_path %></li>
     <% elsif current_user.seller? %>
-      <li>
-        <a href="#sales-dropdown" class="caretted" href="<%= coming_soon_dashboard_path %>"><i class="font-icon" data-icon="&#xf000;"></i> Sales Information</a>
-        <ul class="dropdown with-anchor top-anchor" id="sales-dropdown">
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), admin_delivery_tools_path %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe024;"></i> Current Sales'), coming_soon_dashboard_path %></li>
-        </ul>
-      </li>
       <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), admin_financials_path %></li>
     <% elsif current_user.buyer_only? %>
       <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), coming_soon_dashboard_path %></li>
     <% end %>
 
-    <% if current_user.admin? || current_user.market_manager? %>
+    <% if !current_user.buyer_only? %>
       <li>
         <a href="#orders-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe024;"></i>Orders &amp; Delivery</a>
         <ul class="dropdown with-anchor top-anchor" id="orders-dropdown">
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe025;"></i> Orders'), coming_soon_dashboard_path %></li>
+          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe025;"></i> Orders'), admin_orders_path %></li>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe022;"></i> Upcoming Deliveries'), admin_delivery_tools_path %></li>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe02d;"></i> Sold Items'), admin_order_items_path %></li>
         </ul>
@@ -71,7 +64,6 @@ end
         <ul class="dropdown with-anchor top-anchor" id="marketing-dropdown">
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe023;"></i> Fresh Sheet'), [:admin, :fresh_sheet] %></li>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00a;"></i> Newsletters'), coming_soon_dashboard_path %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe003;"></i> Market News'), coming_soon_dashboard_path %></li>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe005;"></i> Featured Promotions'), coming_soon_dashboard_path %></li>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00b;"></i> Discount Codes'), coming_soon_dashboard_path %></li>
           <% if current_user.admin? %>

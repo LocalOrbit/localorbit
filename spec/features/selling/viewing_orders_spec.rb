@@ -26,7 +26,7 @@ feature "Viewing orders" do
   end
 
   scenario "list of orders" do
-    visit admin_financials_orders_path
+    visit admin_orders_path
 
     orders = Dom::Admin::OrderRow.all
     expect(orders.count).to eq(2)
@@ -43,7 +43,7 @@ feature "Viewing orders" do
   end
 
   scenario "order details" do
-    visit admin_financials_orders_path
+    visit admin_orders_path
 
     click_link order1.order_number
 

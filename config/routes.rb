@@ -30,10 +30,11 @@ Rails.application.routes.draw do
     namespace :financials do
       resource  :overview, only: [:show]
       resources :payments, only: [:index]
-      resources :orders
       resources :invoices
       resources :receipts, only: [:index, :edit, :update]
     end
+
+    resources :orders
 
     resources :organizations, concerns: :bank_account do
       resources :organization_users, as: :users, path: :users
