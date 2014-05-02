@@ -4,7 +4,7 @@ module Admin
     before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules]
 
     def index
-      @organizations = current_user.managed_organizations.order(:name).periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
+      @organizations = current_user.managed_organizations.periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
       find_selling_markets
     end
 

@@ -30,6 +30,7 @@ class Organization < ActiveRecord::Base
 
   scope_accessible :market, method: :for_market_id, ignore_blank: true
   scope_accessible :can_sell, method: :for_can_sell, ignore_blank: true
+  scope_accessible :order_by, method: :for_order_by, ignore_blank: true
 
   def self.for_market_id(market_id)
     orgs = !all.to_sql.include?('market_organizations') ? joins(:market_organizations) : all
@@ -38,6 +39,18 @@ class Organization < ActiveRecord::Base
 
   def self.for_can_sell(can_sell)
     where(can_sell: can_sell)
+  end
+
+  def self.for_order_by(column)
+    tokens = column.split(":")
+    case tokens.first
+    when "can_sell"
+      order("can_sell #{tokens[1]}")
+    when "registered"
+        order("created_at #{tokens[1]}")
+    else
+      order("name #{tokens[1]}")
+    end
   end
 
   def shipping_location
