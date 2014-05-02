@@ -1,4 +1,4 @@
-class SellerOverview
+class MarketManagerOverview
   def initialize(opts={})
     @seller = opts[:seller]
     @market = opts[:market]
@@ -40,7 +40,7 @@ class SellerOverview
 
   def sum_seller_items(orders)
     orders.inject(0) do |total, order|
-      total + order.items.for_user(@seller).map(&:seller_net_total).reduce(:+)
+      total + order.items.for_user(@seller).map(&:gross_total).reduce(:+)
     end
   end
 end
