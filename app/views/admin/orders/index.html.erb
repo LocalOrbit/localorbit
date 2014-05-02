@@ -1,31 +1,36 @@
-<h1>Review Orders</h1>
+<div class="tab-header stickable">
+  <div class="l-constraint">
+    <div class="tab-title">
+      <h1>Review Orders</h1>
+    </div>
+  </div>
+</div>
+<div>
+  <table>
+    <thead class="stickable">
+      <th>Order #</th>
+      <th>Order Date</th>
+      <th>Amount Owed</th>
+      <th>Delivery</th>
+      <th>Buyer</th>
+      <th>Seller</th>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+      <tr class="order-row">
+        <td class="order-number">
+          <%= link_to order.order_number, admin_order_path(order) %>
+          <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
+        </td>
+        <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
+        <td class="amount-owed"><%= number_to_currency(SellerOrder.new(order, current_user).net_total) %></td>
+        <td class="delivery-status"><%= order.delivery_status.titleize %></td>
+        <td class="buyer-status"><%= order.payment_status.titleize %></td>
+        <td class="seller-status"></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<table>
-  <thead>
-    <th>Order #</th>
-    <th>Description</th>
-    <th>Order Date</th>
-    <th>Amount Owed</th>
-    <th>Delivery</th>
-    <th>Buyer</th>
-    <th>Seller</th>
-  </thead>
-  <tbody>
-    <% @orders.each do |order| %>
-    <tr class="order-row">
-      <td class="order-number">
-        <%= link_to order.order_number, admin_order_path(order) %>
-        <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
-      </td>
-      <td class="description"></td>
-      <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
-      <td class="amount-owed"><%= number_to_currency(SellerOrder.new(order, current_user).net_total) %></td>
-      <td class="delivery-status"><%= order.delivery_status.titleize %></td>
-      <td class="buyer-status"><%= order.payment_status.titleize %></td>
-      <td class="seller-status"></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= paginate @orders %>
+  <%= paginate @orders %>
+</div>

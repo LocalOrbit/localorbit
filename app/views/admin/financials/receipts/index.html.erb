@@ -1,31 +1,38 @@
 <%= render "admin/financials/header" %>
 
-<h1>Enter Receipts for Paid Invoices</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Invoice #</th>
-      <th>Buyer (Name)</th>
-      <th>Order Date</th>
-      <th>Due Date</th>
-      <th>Amount</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @orders.each do |order| %>
-    <tr class="invoice-row<%= " past-due" if order.invoice_due_date < Time.current %>">
-      <td class="order-number">
-        <%= link_to order.order_number, admin_order_path(order) %>
-        <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
-      </td>
-      <td class="buyer"><%= order.organization.name %></td>
-      <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
-      <td class="due-date"><%= display_due_date(order.invoice_due_date) %></td>
-      <td class="amount"><%= number_to_currency(order.total_cost) %></td>
-      <td><%= link_to 'Enter Receipt', edit_admin_financials_receipt_path(id: order.id), class: 'action-link font-icon icon-stack-list' %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="sub-header stickable">
+  <div class="l-constraint">
+    <div class="tab-title">
+      <h1>Enter Receipts for Paid Invoices</h1>
+    </div>
+  </div>
+</div>
+<div>
+  <table>
+    <thead class="stickable">
+      <tr>
+        <th>Invoice #</th>
+        <th>Buyer (Name)</th>
+        <th>Order Date</th>
+        <th>Due Date</th>
+        <th>Amount</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+      <tr class="invoice-row<%= " past-due" if order.invoice_due_date < Time.current %>">
+        <td class="order-number">
+          <%= link_to order.order_number, admin_order_path(order) %>
+          <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
+        </td>
+        <td class="buyer"><%= order.organization.name %></td>
+        <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
+        <td class="due-date"><%= display_due_date(order.invoice_due_date) %></td>
+        <td class="amount"><%= number_to_currency(order.total_cost) %></td>
+        <td><%= link_to 'Enter Receipt', edit_admin_financials_receipt_path(id: order.id), class: 'action-link font-icon icon-stack-list' %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

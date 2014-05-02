@@ -4,15 +4,15 @@
         <h1><i class="font-icon" data-icon="&#xe027;"></i>&nbsp; Organizations</h1>
         <%= link_to 'Add Organization', new_admin_organization_path, class: "btn btn--add btn--small" if current_user.admin? || current_user.market_manager? %>
       </div>
-
+      <%= select_tag :filter_market, options_for_select(@selling_markets, selected: params[:market]), class: 'filter-dropdown', data: { parameter: "market"} %>
+      <%= select_tag :filter_can_sell, options_for_select(seller_status_options, selected: params[:can_sell]), class: 'filter-dropdown', data: { parameter: "can_sell"} %>
     </div>
   </div>
 
-  <%= select_tag :filter_market, options_for_select(@selling_markets, selected: params[:market]), class: 'filter-dropdown', data: { parameter: "market"} %>
-  <%= select_tag :filter_can_sell, options_for_select(seller_status_options, selected: params[:can_sell]), class: 'filter-dropdown', data: { parameter: "can_sell"} %>
-
+  
+<div>
   <table class="sortable organization-table market-org-list">
-    <thead>
+    <thead class="stickable">
       <tr>
         <th>Name</th>
         <th>Market</th>
@@ -29,7 +29,6 @@
     </tr>
     <% end %>
   </table>
-
   <%= paginate @organizations %>
 
   <% if @organizations.none? %>
@@ -38,3 +37,5 @@
       This table is empty, either because there is no data, or because the filter you've applied is hiding it.
     </div>
   <% end %>
+</div>
+  

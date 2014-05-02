@@ -9,22 +9,23 @@
     </div>
   </div>
 </div>
-
-<table class="sortable market-org-list">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Subdomain</th>
-      <th>Contact Name</th>
-      <th>Contact Phone</th>
+<div>
+  <table class="sortable market-org-list">
+    <thead class="stickable">
+      <tr>
+        <th>Name</th>
+        <th>Subdomain</th>
+        <th>Contact Name</th>
+        <th>Contact Phone</th>
+      </tr>
+    </thead>
+    <% @markets.each do |market| %>
+    <tr class="<%= cycle "odd", "even" %>">
+      <td><%= link_to market.name, [:admin, market] %></td>
+      <td><%= link_to market.subdomain, root_url(host: market.domain) %></td>
+      <td><%= market.contact_name %></td>
+      <td><%= market.contact_phone %></td>
     </tr>
-  </thead>
-  <% @markets.each do |market| %>
-  <tr class="<%= cycle "odd", "even" %>">
-    <td><%= link_to market.name, [:admin, market] %></td>
-    <td><%= link_to market.subdomain, root_url(host: market.domain) %></td>
-    <td><%= market.contact_name %></td>
-    <td><%= market.contact_phone %></td>
-  </tr>
-  <% end %>
-</table>
+    <% end %>
+  </table>
+</div>
