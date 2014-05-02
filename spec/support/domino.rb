@@ -219,6 +219,25 @@ module Dom
       end
     end
 
+    class CrossSell < Domino
+      selector "#cross-sell-with tr"
+
+      attribute :name
+      attribute :accept_products
+
+      def checked?
+        node.find("input").checked? || false
+      end
+
+      def check
+        node.find("input").set(true)
+      end
+
+      def uncheck
+        node.find("input").set(false)
+      end
+    end
+
     class DeliverySchedule < Domino
       selector "tbody tr"
 

@@ -91,6 +91,15 @@
       <label for="product_use_simple_inventory">Auto activate organizations.</label>
     </div>
   </div>
+
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <label>Cross Selling</label><br>
+      <%= f.check_box :allow_cross_sell %>
+      <%= f.label :allow_cross_sell, "Allow Cross Selling" %>
+    </div>
+  </div>
+
   <% if current_user.admin? %>
     <div class="row row--field">
       <div class="field column column--half column--guttered" id="allowed-payment-options">

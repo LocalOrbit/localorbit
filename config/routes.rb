@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       resources :delivery_schedules, path: :deliveries
       resource  :fees, only: [:show, :update]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
+      resource  :cross_sell, only: [:show, :update]
       get :defaults
     end
 

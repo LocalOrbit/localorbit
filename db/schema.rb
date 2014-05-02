@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140502150234) do
+ActiveRecord::Schema.define(version: 20140502163806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,6 +194,13 @@ ActiveRecord::Schema.define(version: 20140502150234) do
   end
 
   add_index "market_addresses", ["market_id"], name: "index_market_addresses_on_market_id", using: :btree
+
+  create_table "market_cross_sells", force: true do |t|
+    t.integer  "source_market_id"
+    t.integer  "destination_market_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "market_organizations", force: true do |t|
     t.integer  "market_id"

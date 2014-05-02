@@ -57,6 +57,7 @@ class Admin::MarketsController < AdminController
       :policies,
       :logo,
       :photo,
+      :allow_cross_sell,
       :allow_purchase_orders,
       :allow_credit_cards,
       :allow_ach,
