@@ -78,17 +78,18 @@ class Product < ActiveRecord::Base
   end
 
   def self.for_order_by(column)
-    case column
+    tokens = column.split(":")
+    case tokens[0]
     when "price"
       joins(:prices).select("products.*, MAX(prices.sale_price) as price").
-        group("products.id").order("price DESC")
+        group("products.id").order("price #{tokens[1]}")
     when "stock"
       joins(:lots).select("products.*, SUM(lots.quantity) as stock").
-        group("products.id").order("stock DESC")
+        group("products.id").order("stock #{tokens[1]}")
     when "seller"
-      order("organizations.name")
+      order("organizations.name #{tokens[1]}")
     else "name"
-      order(column)
+      order("#{tokens[0]} #{tokens[1]}")
     end
   end
 
