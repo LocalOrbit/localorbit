@@ -10,32 +10,30 @@
   </div>
 
   
-<div>
-  <table class="sortable organization-table market-org-list">
-    <thead class="stickable">
-      <tr>
-        <th>Name</th>
-        <th>Market</th>
-        <th>Registered On</th>
-        <th>Can Sell</th>
-      </tr>
-    </thead>
-    <% @organizations.each do |organization| %>
+<table class="sortable organization-table market-org-list">
+  <thead class="stickable">
     <tr>
-      <td><%= link_to organization.name, [:admin, organization] %></td>
-      <td><%= organization.markets.map {|m| m.name }.join(', ') %></td>
-      <td><%= organization.created_at.strftime("%b, %d %Y") %></td>
-      <td><%= organization.can_sell? ? "Yes" : "No" %></td>
+      <th>Name</th>
+      <th>Market</th>
+      <th>Registered On</th>
+      <th>Can Sell</th>
     </tr>
-    <% end %>
-  </table>
-  <%= paginate @organizations %>
-
-  <% if @organizations.none? %>
-    <div class="empty-results">
-      <h2>No Results</h2>
-      This table is empty, either because there is no data, or because the filter you've applied is hiding it.
-    </div>
+  </thead>
+  <% @organizations.each do |organization| %>
+  <tr>
+    <td><%= link_to organization.name, [:admin, organization] %></td>
+    <td><%= organization.markets.map {|m| m.name }.join(', ') %></td>
+    <td><%= organization.created_at.strftime("%b, %d %Y") %></td>
+    <td><%= organization.can_sell? ? "Yes" : "No" %></td>
+  </tr>
   <% end %>
-</div>
-  
+</table>
+<%= paginate @organizations %>
+
+<% if @organizations.none? %>
+  <div class="empty-results">
+    <h2>No Results</h2>
+    This table is empty, either because there is no data, or because the filter you've applied is hiding it.
+  </div>
+<% end %>
+
