@@ -3,6 +3,7 @@ class Organization < ActiveRecord::Base
   has_many :user_organizations
 
   has_many :users, through: :user_organizations
+  has_many :all_markets, through: :market_organizations, source: :market
   has_many :markets, -> { where(market_organizations: { cross_sell: false }) }, through: :market_organizations
   has_many :cross_sells, -> { where(market_organizations: { cross_sell: true }) }, through: :market_organizations, source: :market
   has_many :orders, inverse_of: :organization

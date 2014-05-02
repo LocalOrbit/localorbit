@@ -144,7 +144,7 @@ class Product < ActiveRecord::Base
   end
 
   def update_delivery_schedules
-    self.delivery_schedule_ids = organization.markets.map do |market|
+    self.delivery_schedule_ids = organization.all_markets.map do |market|
       market.delivery_schedules.visible.map(&:id)
     end.flatten
   end
