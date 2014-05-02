@@ -1,0 +1,26 @@
+<%= render "admin/organizations/header" %>
+
+<%= render "shared/errors", resource: @organization %>
+
+<div class="row row--partial">
+  <div class="column column--three-fourths">
+    <h2>Cross Selling with Markets</h2>
+    <%= form_tag [:admin, @organization, :cross_sell], method: :put do %>
+      <table id="cross-sell-with">
+        <thead>
+          <tr>
+            <th>Sell Products</th>
+            <th>Market</th>
+          </tr>
+        </thead>
+        <% @cross_selling_markets.each do |market| %>
+          <tr>
+            <td class="accept-products"><%= check_box_tag("organization[cross_sell_ids][]", market.id, @organization.cross_sell_ids.include?(market.id)) %></td>
+            <td class="name"><%= market.name %></td>
+          </tr>
+        <% end %>
+      </table>
+      <%= submit_tag "Save Changes", class: "pull-right" %>
+    <% end %>
+  </div>
+</div>

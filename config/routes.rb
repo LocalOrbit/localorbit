@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       resources :delivery_schedules, path: :deliveries
       resource  :fees, only: [:show, :update]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
-      resource  :cross_sell, only: [:show, :update]
+      resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
       get :defaults
     end
 
@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 
     resources :organizations, concerns: :bank_account do
       resources :organization_users, as: :users, path: :users
+      resource :cross_sell, controller: :organization_cross_sells, only: [:show, :update]
       resources :locations, except: :destroy do
         collection do
           delete :destroy
