@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "A Market Manager managing Newsletters" do
-  let(:market_manager) { create :user, :market_manager }
+  let(:market_manager) { create :user, :market_manager, send_newsletter: true }
   let(:market) { market_manager.managed_markets.first }
 
   before(:each) do
@@ -92,4 +92,36 @@ describe "A Market Manager managing Newsletters" do
     end
   end
 
+  describe "Sending" do
+    let!(:newsletter) { create :newsletter, market: market }
+
+    before do
+      visit admin_newsletter_path(newsletter)
+    end
+
+    describe "a test" do
+      it "sends a test" do
+        expect(MarketMailer).to receive(:newsletter).with(newsletter, market, market_manager.email).and_return(double(:mailer, deliver: true))
+        click_button "Send Test"
+        expect(page).to have_content("Successfully sent a test to #{market_manager.email}")
+      end
+
+      it "allows sending a test to a different email" do
+        expect(MarketMailer).to receive(:newsletter).with(newsletter, market, "foo@example.com").and_return(double(:mailer, deliver: true))
+        fill_in "email", with: "foo@example.com"
+        click_button "Send Test"
+        expect(page).to have_content("Successfully sent a test to foo@example.com")
+      end
+    end
+
+    describe "to groups" do
+      it "sends to specific groups" do
+        emails = ["#{market_manager.name} <#{market_manager.email}>"]
+        expect(MarketMailer).to receive(:newsletter).with(newsletter, market, emails).and_return(double(:mailer, deliver: true))
+        check "Market Managers"
+        click_button "Send Now"
+        expect(page).to have_content("Successfully sent this Newsletter")
+      end
+    end
+  end
 end

@@ -13,4 +13,14 @@ class MarketMailer < BaseMailer
       subject: "See what's fresh this week!"
     )
   end
+
+  def newsletter(newsletter, market, recipients=nil)
+    @newsletter     = newsletter
+    @market         = market
+
+    mail(
+      to: recipients,
+      subject: @newsletter.subject
+    )
+  end
 end

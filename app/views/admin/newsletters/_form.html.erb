@@ -1,9 +1,39 @@
-<%= form_for [:admin, @market, @newsletter], html: {class: "newsletter column column--three-fourths"} do |f| %>
+<%= form_for [:admin, @newsletter], html: {class: "newsletter column column--three-fourths"} do |f| %>
 
   <%= render "shared/errors", { resource: @newsletter } %>
 
+  <div class="field field--inline">
+    <input name="email" type="email" placeholder="Email address" class="input--short" value="<%= current_user.email %>">
+    <%= f.submit 'Send Test', class: "btn btn--small btn--test" %>
+  </div>
+  <%= f.submit 'Send Now', class: "btn btn--small pull-right", data: {confirm: "Are you ready to send this Newsletter?"} %>
+
+  <fieldset name="send-to-info">
+    <legend>Send To</legend>
+
+    <div class="row">
+      <%= f.check_box :buyers %>
+      <%= f.label :buyers %><br>
+    </div>
+
+    <div class="row">
+      <%= f.check_box :sellers %>
+      <%= f.label :sellers %><br>
+    </div>
+
+    <div class="row">
+      <%= f.check_box :market_managers %>
+      <%= f.label :market_managers, "Market Managers" %><br>
+    </div>
+  </fieldset>
+
   <fieldset name="newsletter-info">
     <legend>Newsletter Information</legend>
+
+    <div class="row">
+      <%= f.label :image %><br>
+      <%= f.file_field :image, class: "column column--three-fourths" %>
+    </div>
 
     <div class="row">
       <%= f.label :subject %><br>
@@ -41,30 +71,6 @@
       <%= f.text_area :body, rows: 15, class: "column column--three-fourths", id: "wysihtml5-textarea" %>
     </div>
 
-    <div class="row">
-      <%= f.label :image %><br>
-      <%= f.file_field :image, class: "column column--three-fourths" %>
-    </div>
-
-  </fieldset>
-
-  <fieldset name="send-to-info">
-    <legend>Send To</legend>
-
-    <div class="row">
-      <%= f.check_box :buyers %>
-      <%= f.label :buyers %><br>
-    </div>
-
-    <div class="row">
-      <%= f.check_box :sellers %>
-      <%= f.label :sellers %><br>
-    </div>
-
-    <div class="row">
-      <%= f.check_box :market_managers %>
-      <%= f.label :market_managers, "Market Managers" %><br>
-    </div>
   </fieldset>
 
   <div class="row form-actions">
