@@ -53,7 +53,8 @@ class Admin::NewslettersController < AdminController
 
   def newsletter_params
     params.require(:newsletter).permit(
-      :subject, :header, :body, :image,
+      :subject, :header, :body,
+      :image, :retained_image, :remove_image,
       :buyers, :sellers, :market_managers
     )
   end

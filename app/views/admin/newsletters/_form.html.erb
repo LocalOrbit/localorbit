@@ -33,6 +33,11 @@
     <div class="row">
       <%= f.label :image %><br>
       <%= f.file_field :image, class: "column column--three-fourths" %>
+      <%= f.hidden_field :retained_image %>
+      <% if f.object.image %>
+        <%= image_tag f.object.image.thumb('600x300>').url %>
+        <%= f.check_box :remove_image %> <%= f.label "Remove Image" %>
+      <% end %>
     </div>
 
     <div class="row">
