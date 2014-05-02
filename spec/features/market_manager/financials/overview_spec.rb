@@ -43,9 +43,9 @@ feature "Market Manager Financial Overview" do
     Time.zone = "Eastern Time (US & Canada)"
     Timecop.travel(Time.current - 32.days) do
       order = create(:order, payment_method: "purchase order", market: market, items:[
-        create(:order_item, quantity: 5, product: peas),
-        create(:order_item, quantity: 7, product: kale),
-        create(:order_item, quantity: 7, product: from_different_seller)
+        create(:order_item, quantity: 5, product: peas, market_seller_fee: 2.00, payment_seller_fee: 1.00),
+        create(:order_item, quantity: 7, product: kale, market_seller_fee: 9.00, local_orbit_seller_fee: 8.00),
+        create(:order_item, quantity: 7, product: from_different_seller, market_seller_fee: 12, local_orbit_seller_fee: 10) # Not included in overdue total
       ])
 
       order.invoice
@@ -58,8 +58,8 @@ feature "Market Manager Financial Overview" do
     # 6.99 + 6.99 + 7*6.99 = 62.91
     Timecop.travel(Time.current - 7.days) do
       order = create(:order, payment_method: "credit card", market: market, items:[
-        create(:order_item, quantity: 1, product: peas),
-        create(:order_item, quantity: 1, product: kale),
+        create(:order_item, quantity: 1, product: peas, payment_seller_fee: 1.00),
+        create(:order_item, quantity: 1, product: kale, market_seller_fee: 3.00),
         create(:order_item, quantity: 7, product: from_different_seller)
       ])
 
@@ -71,8 +71,8 @@ feature "Market Manager Financial Overview" do
     # 2*6.99 + 2*6.99 + 7*6.99 = 76.89
     Timecop.travel(Time.current - 7.days) do
       order = create(:order, payment_method: "ach", market: market, items:[
-        create(:order_item, quantity: 2, product: peas),
-        create(:order_item, quantity: 2, product: kale),
+        create(:order_item, quantity: 2, product: peas, payment_seller_fee: 1.00),
+        create(:order_item, quantity: 2, product: kale, local_orbit_seller_fee: 2.00),
         create(:order_item, quantity: 7, product: from_different_seller)
       ])
 
@@ -84,8 +84,8 @@ feature "Market Manager Financial Overview" do
     # (3 + 10 + 7)*6.99 = 139.8
     Timecop.travel(Time.current - 7.days) do
       order = create(:order, payment_method: "purchase order", market: market, items:[
-        create(:order_item, quantity: 3, product: peas),
-        create(:order_item, quantity: 10, product: kale),
+        create(:order_item, quantity: 3, product: peas, market_seller_fee: 20.00, local_orbit_seller_fee: 1.00),
+        create(:order_item, quantity: 10, product: kale, local_orbit_seller_fee: 1.00),
         create(:order_item, quantity: 7, product: from_different_seller)
       ])
 
@@ -97,8 +97,8 @@ feature "Market Manager Financial Overview" do
     # (10+9+7)*6.99 = 181.74
     Timecop.travel(Time.current - 1.days) do
       order = create(:order, payment_method: "credit card", market: market, items:[
-        create(:order_item, quantity: 10, product: peas),
-        create(:order_item, quantity: 9, product: kale),
+        create(:order_item, quantity: 10, product: peas, local_orbit_seller_fee: 12.00),
+        create(:order_item, quantity: 9, product: kale, market_seller_fee: 9),
         create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
       ])
 
@@ -109,8 +109,8 @@ feature "Market Manager Financial Overview" do
     # (66+92+7)*6.99 = 1153.35
     Timecop.travel(Time.current - 6.days) do
       order = create(:order, payment_method: "purchase order", market: market, items:[
-        create(:order_item, quantity: 66, product: peas),
-        create(:order_item, quantity: 92, product: kale),
+        create(:order_item, quantity: 66, product: peas, local_orbit_seller_fee: 1.00),
+        create(:order_item, quantity: 92, product: kale, market_seller_fee: 3.00),
         create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
       ])
 
