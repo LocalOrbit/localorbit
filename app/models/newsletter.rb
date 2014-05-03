@@ -9,17 +9,11 @@ class Newsletter < ActiveRecord::Base
     recipients = Set.new
 
     if buyers?
-      recipients += User.joins(:organizations).where(
-        organizations: {id: market.organizations.buying.pluck(:id)},
-        users: {send_newsletter: true}
-      ).pluck(:name, :email)
+      recipients += recipients_for_organizations(market.organizations.buying)
     end
 
     if sellers?
-      recipients += User.joins(:organizations).where(
-        organizations: {id: market.organizations.selling.pluck(:id)},
-        users: {send_newsletter: true}
-      ).pluck(:name, :email)
+      recipients += recipients_for_organizations(market.organizations.selling)
     end
 
     if market_managers?
@@ -27,5 +21,14 @@ class Newsletter < ActiveRecord::Base
     end
 
     recipients
+  end
+
+  private
+
+  def recipients_for_organizations(organizations)
+    User.joins(:organizations).where(
+      organizations: {id: organizations.pluck(:id)},
+      users: {send_newsletter: true}
+    ).pluck(:name, :email)
   end
 end
