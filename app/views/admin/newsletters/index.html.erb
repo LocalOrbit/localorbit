@@ -1,0 +1,17 @@
+<div class="l-page-header">
+  <h1>Newsletters</h1>
+  <%= link_to 'Add Newsletter', new_admin_newsletter_path, class: "btn" %>
+</div>
+
+<table>
+  <tr>
+    <th>Subject</th>
+    <th></th>
+  </tr>
+  <% @newsletters.each do |newsletter| %>
+  <tr>
+    <td><%= link_to newsletter.subject, [:admin, newsletter] %></td>
+    <td><%= button_to "Delete", [:admin, newsletter], method: :delete %></td>
+  </tr>
+  <% end %>
+</table>

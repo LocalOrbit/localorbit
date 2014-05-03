@@ -75,6 +75,7 @@ Rails.application.routes.draw do
     resource :fresh_sheet, only: [:show, :update] do
       get :preview
     end
+    resources :newsletters
 
     resources :invoices, only: :show do
       member do

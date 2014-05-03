@@ -1,0 +1,7 @@
+<h1 style="text-align: center;"><%= @newsletter.header %></h1>
+
+<% if @newsletter.image %>
+  <div style="text-align: center;"><%= image_tag @newsletter.image.thumb('600x300>').url %></div><br>
+<% end %>
+
+<%= sanitize @newsletter.body %>

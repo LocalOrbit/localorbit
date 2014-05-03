@@ -311,4 +311,11 @@ FactoryGirl.define do
     name "stuff"
     value 0
   end
+
+  factory :newsletter do
+    subject "Some News"
+    header "Some Exciting News"
+    body "news goes here"
+    market
+  end
 end

@@ -1,0 +1,84 @@
+<%= form_for [:admin, @newsletter], html: {class: "newsletter column column--three-fourths"} do |f| %>
+
+  <%= render "shared/errors", { resource: @newsletter } %>
+
+  <div class="field field--inline">
+    <input name="email" type="email" placeholder="Email address" class="input--short" value="<%= current_user.email %>">
+    <%= f.submit 'Send Test', class: "btn btn--small btn--test" %>
+  </div>
+  <%= f.submit 'Send Now', class: "btn btn--small pull-right", data: {confirm: "Are you ready to send this Newsletter?"} %>
+
+  <fieldset name="send-to-info">
+    <legend>Send To</legend>
+
+    <div class="row">
+      <%= f.check_box :buyers %>
+      <%= f.label :buyers %><br>
+    </div>
+
+    <div class="row">
+      <%= f.check_box :sellers %>
+      <%= f.label :sellers %><br>
+    </div>
+
+    <div class="row">
+      <%= f.check_box :market_managers %>
+      <%= f.label :market_managers, "Market Managers" %><br>
+    </div>
+  </fieldset>
+
+  <fieldset name="newsletter-info">
+    <legend>Newsletter Information</legend>
+
+    <div class="row">
+      <%= f.label :image %><br>
+      <%= f.file_field :image, class: "column column--three-fourths" %>
+      <%= f.hidden_field :retained_image %>
+      <% if f.object.image %>
+        <%= image_tag f.object.image.thumb('600x300>').url %>
+        <%= f.check_box :remove_image %> <%= f.label "Remove Image" %>
+      <% end %>
+    </div>
+
+    <div class="row">
+      <%= f.label :subject %><br>
+      <%= f.text_field :subject, class: "column column--three-fourths" %>
+    </div>
+
+    <div class="row">
+      <%= f.label :header %><br>
+      <%= f.text_field :header, class: "column column--three-fourths" %>
+    </div>
+
+    <div class="row">
+      <div id="wysihtml5-toolbar" style="display: none;">
+        <a data-wysihtml5-command="bold">bold</a>
+        <a data-wysihtml5-command="italic">italic</a>
+        <a data-wysihtml5-command="underline">underline</a>
+
+        <a data-wysihtml5-command="insertOrderedList">insert ordered list</a>
+        <a data-wysihtml5-command="insertUnorderedList">insert unordered list</a>
+
+        <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red">red</a>
+        <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green">green</a>
+        <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue">blue</a>
+
+        <a data-wysihtml5-command="createLink">insert link</a>
+        <div data-wysihtml5-dialog="createLink" style="display: none;">
+          <label>
+            Link: <input data-wysihtml5-dialog-field="href" value="http://" class="text">
+          </label>
+          <a data-wysihtml5-dialog-action="save">OK</a>
+          <a data-wysihtml5-dialog-action="cancel">Cancel</a>
+        </div>
+      </div>
+      <label for="wysihtml5-textarea">Body</label><br>
+      <%= f.text_area :body, rows: 15, class: "column column--three-fourths", id: "wysihtml5-textarea" %>
+    </div>
+
+  </fieldset>
+
+  <div class="row form-actions">
+    <%= f.submit "#{@newsletter.new_record? ? 'Add' : 'Save'} Newsletter" %>
+  </div>
+<% end %>

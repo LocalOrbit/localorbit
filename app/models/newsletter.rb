@@ -1,0 +1,34 @@
+class Newsletter < ActiveRecord::Base
+  belongs_to :market
+
+  validates :subject, :header, :body, presence: true
+
+  dragonfly_accessor :image
+
+  def recipients
+    recipients = Set.new
+
+    if buyers?
+      recipients += recipients_for_organizations(market.organizations.buying)
+    end
+
+    if sellers?
+      recipients += recipients_for_organizations(market.organizations.selling)
+    end
+
+    if market_managers?
+      recipients += market.managers.where(send_newsletter: true).pluck(:name, :email)
+    end
+
+    recipients
+  end
+
+  private
+
+  def recipients_for_organizations(organizations)
+    User.joins(:organizations).where(
+      organizations: {id: organizations.pluck(:id)},
+      users: {send_newsletter: true}
+    ).pluck(:name, :email)
+  end
+end

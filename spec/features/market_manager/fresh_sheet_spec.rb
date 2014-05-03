@@ -67,7 +67,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
     end
 
     scenario "sending to everyone" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market, ["#{buyer_org.name} <#{buyer_user.email}>"]).and_return(double(:mailer, deliver: true))
+      expect(MarketMailer).to receive(:fresh_sheet).with(market, ["#{buyer_user.name} <#{buyer_user.email}>"]).and_return(double(:mailer, deliver: true))
       visit admin_fresh_sheet_path
       click_button "Send to Everyone Now"
       expect(page).to have_content("Successfully sent the Fresh Sheet")

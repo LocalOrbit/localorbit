@@ -16,6 +16,7 @@ gem 'jquery-ui-rails'
 gem 'accountingjs-rails'
 gem 'compass-rails'
 gem 'underscore-rails'
+gem 'wysihtml5-rails'
 
 gem "active_model_serializers"
 gem "acts_as_geocodable", github: 'collectiveidea/acts_as_geocodable'

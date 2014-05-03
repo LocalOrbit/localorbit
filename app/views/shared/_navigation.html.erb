@@ -63,7 +63,7 @@ end
         <a href="#marketing-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe005;"></i> Marketing</a>
         <ul class="dropdown with-anchor top-anchor" id="marketing-dropdown">
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe023;"></i> Fresh Sheet'), [:admin, :fresh_sheet] %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00a;"></i> Newsletters'), coming_soon_dashboard_path %></li>
+          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00a;"></i> Newsletters'), [:admin, :newsletters] %></li>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe005;"></i> Featured Promotions'), coming_soon_dashboard_path %></li>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00b;"></i> Discount Codes'), coming_soon_dashboard_path %></li>
           <% if current_user.admin? %>
