@@ -62,4 +62,63 @@ describe Organization do
       expect(organization.locations.count).to eq(1)
     end
   end
+
+  describe "#cross_sells" do
+    let!(:cross_sell_market)  { create(:market, allow_cross_sell: true) }
+    let!(:wednesday_delivery) { create(:delivery_schedule, market: cross_sell_market, day: 3) }
+
+    let!(:market)             { create(:market, allow_cross_sell: true, cross_sells: [cross_sell_market]) }
+    let!(:monday_delivery)    { create(:delivery_schedule, market: market, day: 1) }
+    let!(:organization)       { create(:organization, :seller, markets: [market]) }
+
+    context "using all deliveries" do
+      let!(:product) { create(:product, :sellable, organization: organization) }
+
+      it 'adds a markets delivery schedules to products on adding to #cross_sells' do
+        expect {
+          organization.cross_sell_ids = [cross_sell_market.id]
+          organization.market_organizations.where(market_id: [cross_sell_market.id]).update_all(cross_sell: true)
+        }.to change {
+          product.reload.delivery_schedules.count
+        }.from(1).to(2)
+      end
+
+      it 'removes a markets delivery schedules from a product on removing from #cross_sells' do
+        organization.cross_sell_ids = [cross_sell_market.id]
+        organization.market_organizations.where(market_id: [cross_sell_market.id]).update_all(cross_sell: true)
+
+        expect {
+          organization.cross_sell_ids = []
+        }.to change {
+          product.reload.delivery_schedules.count
+        }.from(2).to(1)
+      end
+    end
+
+    context "manually managing deliveries" do
+      let!(:product) { create(:product, :sellable, use_all_deliveries: false, organization: organization) }
+
+      it 'adding a markets to #cross_sells does not add its delivery schedules to products' do
+        expect {
+          organization.cross_sell_ids = [cross_sell_market.id]
+          organization.market_organizations.where(market_id: [cross_sell_market.id]).update_all(cross_sell: true)
+        }.to_not change {
+          product.reload.delivery_schedules.count
+        }.from(0)
+      end
+
+      it 'removing a markets from #cross_sells removes its delivery schedules' do
+        organization.cross_sell_ids = [cross_sell_market.id]
+        organization.market_organizations.where(market_id: [cross_sell_market.id]).update_all(cross_sell: true)
+
+        product.delivery_schedules << wednesday_delivery
+
+        expect {
+          organization.cross_sell_ids = []
+        }.to change {
+          product.reload.delivery_schedules.count
+        }.from(1).to(0)
+      end
+    end
+  end
 end

@@ -34,7 +34,7 @@ class Product < ActiveRecord::Base
   scope_accessible :category, method: :for_category_id, ignore_blank: true
 
   before_save :update_top_level_category
-  before_save :update_delivery_schedules, if: "use_all_deliveries?"
+  before_save :update_delivery_schedules
 
   def self.available_for_market(market)
     return none unless market
@@ -144,8 +144,13 @@ class Product < ActiveRecord::Base
   end
 
   def update_delivery_schedules
-    self.delivery_schedule_ids = organization.all_markets.map do |market|
-      market.delivery_schedules.visible.map(&:id)
-    end.flatten
+    if use_all_deliveries?
+      self.delivery_schedule_ids = organization.reload.all_markets.map do |market|
+        market.delivery_schedules.visible.map(&:id)
+      end.flatten
+    else
+      ids = organization.reload.all_markets.map(&:id)
+      self.delivery_schedules = self.delivery_schedules.select {|ds| ids.include?(ds.market.id) }
+    end
   end
 end

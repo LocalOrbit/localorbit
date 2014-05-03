@@ -81,6 +81,20 @@ describe 'Adding advanced pricing' do
       expect(page).to_not have_content("Min quantity must be unique")
       expect(page).to have_content("Successfully added a new price")
     end
+
+    it "allowed for different markets" do
+      fill_in 'price_min_quantity', with: '2'
+      fill_in 'price_sale_price', with: '1.99'
+      click_button 'Add'
+
+      select market2.name, from: 'price_market_id'
+      fill_in 'price_min_quantity', with: '2'
+      fill_in 'price_sale_price', with: '1.50'
+      click_button 'Add'
+
+      expect(page).to_not have_content("Min quantity must be unique")
+      expect(page).to have_content("Successfully added a new price")
+    end
   end
 
   describe "pricing for a specific buyer" do

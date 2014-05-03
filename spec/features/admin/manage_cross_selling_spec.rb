@@ -63,7 +63,7 @@ describe "Manage cross selling" do
         within ".tabs" do
           click_link "Cross Sell"
         end
-        
+
         market_row = Dom::Admin::CrossSell.find_by_name(cross_selling_market.name)
         expect(market_row).to_not be_checked
 

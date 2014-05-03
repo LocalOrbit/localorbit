@@ -151,42 +151,90 @@ describe "Editing a product" do
     let!(:monday_delivery) { create(:delivery_schedule, market: market, day: 1) }
     let!(:tuesday_delivery) { create(:delivery_schedule, :buyer_pickup, market: market, day: 2) }
 
-    before do
-      product.organization.users << user
-      product.delivery_schedule_ids = [monday_delivery.id]
-      product.update(use_all_deliveries: false)
+    context 'single market membership' do
+      before do
+        product.organization.users << user
+        product.delivery_schedule_ids = [monday_delivery.id]
+        product.update(use_all_deliveries: false)
 
-      sign_in_as(user)
-      within '#admin-nav' do
-        click_link 'Products'
+        sign_in_as(user)
+        within '#admin-nav' do
+          click_link 'Products'
+        end
+        click_link "Canned Pears"
       end
-      click_link "Canned Pears"
+
+      it "displays the market delivery options for the product" do
+        expect(page).to have_content("Delivery Times")
+
+        product_deliveries = Dom::Admin::ProductDelivery.all
+        expect(product_deliveries.count).to eql(2)
+        expect(find_field("Make product available on all market delivery dates")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+
+        expect(page).to have_content("Mondays from 7:00 AM to 11:00 AM direct to customer")
+        expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at Market Address")
+      end
+
+      it "persists changes" do
+        uncheck "Make product available on all market delivery dates"
+
+        Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").check!
+
+        click_button "Save and Continue"
+        click_link "Product Info"
+
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
+      end
     end
 
-    it "displays the market delivery options for the product" do
-      expect(page).to have_content("Delivery Times")
+    context 'multi-market membership' do
+      let!(:second_market) { create(:market, :with_addresses, organizations: [product.organization]) }
+      let!(:wednesday_delivery) { create(:delivery_schedule, market: second_market, day: 3) }
 
-      product_deliveries = Dom::Admin::ProductDelivery.all
-      expect(product_deliveries.count).to eql(2)
-      expect(find_field("Make product available on all market delivery dates")).to_not be_checked
-      expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
-      expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+      before do
+        product.organization.users << user
+        product.delivery_schedule_ids = [monday_delivery.id]
+        product.update(use_all_deliveries: false)
 
-      expect(page).to have_content("Mondays from 7:00 AM to 11:00 AM direct to customer")
-      expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at Market Address")
-    end
+        sign_in_as(user)
+        within '#admin-nav' do
+          click_link 'Products'
+        end
+        click_link "Canned Pears"
+      end
 
-    it "persists changes" do
-      uncheck "Make product available on all market delivery dates"
+      it "displays the market delivery options for the product" do
+        expect(page).to have_content("Delivery Times")
 
-      Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
-      Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").check!
+        product_deliveries = Dom::Admin::ProductDelivery.all
+        expect(product_deliveries.count).to eql(3)
+        expect(find_field("Make product available on all market delivery dates")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
 
-      click_button "Save and Continue"
-      click_link "Product Info"
+        expect(page).to have_content("Mondays from 7:00 AM to 11:00 AM direct to customer")
+        expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at Market Address")
+        expect(page).to have_content("Wednesdays from 7:00 AM to 11:00 AM direct to customer")
+      end
 
-      expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
-      expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
+      it "persists changes" do
+        uncheck "Make product available on all market delivery dates"
+
+        Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").check!
+        Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays").uncheck!
+
+        click_button "Save and Continue"
+        click_link "Product Info"
+
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to_not be_checked
+      end
     end
   end
 end
