@@ -226,6 +226,10 @@ GEM
       activerecord (>= 3, < 5)
       periscope (~> 2.1.0)
     pg (0.17.1)
+    pg_search (0.7.3)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     pgbackups-archive (0.2.1)
       bundler (>= 1.2.3)
       fog (>= 1.4.0)
@@ -406,6 +410,7 @@ DEPENDENCIES
   pdfkit
   periscope-activerecord
   pg
+  pg_search
   pgbackups-archive
   poltergeist
   pry-rails
