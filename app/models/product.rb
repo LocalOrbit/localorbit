@@ -1,5 +1,6 @@
 class Product < ActiveRecord::Base
   include SoftDelete
+  include PgSearch
 
   belongs_to :category
   belongs_to :top_level_category, class: Category
@@ -33,6 +34,9 @@ class Product < ActiveRecord::Base
   scope_accessible :organization, method: :for_organization_id, ignore_blank: true
   scope_accessible :category, method: :for_category_id, ignore_blank: true
   scope_accessible :order_by, method: :for_order_by, ignore_blank: true
+  scope_accessible :search, method: :for_search_by, ignore_blank: true
+
+  pg_search_scope :search_by_name, against: :name, using: { tsearch: { prefix: true }}
 
   before_save :update_top_level_category
   before_save :update_delivery_schedules
@@ -88,9 +92,15 @@ class Product < ActiveRecord::Base
         group("products.id").order("stock #{tokens[1]}")
     when "seller"
       order("organizations.name #{tokens[1]}")
+    when "market"
+      joins(organization: { market_organizations: :market}).order("markets.name #{tokens[1]}")
     else "name"
       order("#{tokens[0]} #{tokens[1]}")
     end
+  end
+
+  def self.for_search_by(query)
+    search_by_name(query)
   end
 
   def can_use_simple_inventory?
