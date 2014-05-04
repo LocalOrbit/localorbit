@@ -33,8 +33,8 @@ class Product < ActiveRecord::Base
   scope_accessible :market, method: :for_market_id, ignore_blank: true
   scope_accessible :organization, method: :for_organization_id, ignore_blank: true
   scope_accessible :category, method: :for_category_id, ignore_blank: true
-  scope_accessible :order_by, method: :for_order_by, ignore_blank: true
-  scope_accessible :search, method: :for_search_by, ignore_blank: true
+  scope_accessible :sort, method: :for_sort, ignore_blank: true
+  scope_accessible :search, method: :for_search, ignore_blank: true
 
   pg_search_scope :search_by_name, against: :name, using: { tsearch: { prefix: true }}
 
@@ -81,25 +81,25 @@ class Product < ActiveRecord::Base
     where(top_level_category_id: category_id)
   end
 
-  def self.for_order_by(column)
-    tokens = column.split(":")
-    case tokens[0]
+  def self.for_sort(order)
+    column, direction = order.split(":")
+    case column
     when "price"
       joins(:prices).select("products.*, MAX(prices.sale_price) as price").
-        group("products.id").order("price #{tokens[1]}")
+        group("products.id").order("price #{direction}")
     when "stock"
       joins(:lots).select("products.*, SUM(lots.quantity) as stock").
-        group("products.id").order("stock #{tokens[1]}")
+        group("products.id").order("stock #{direction}")
     when "seller"
-      order("organizations.name #{tokens[1]}")
+      order("organizations.name #{direction}")
     when "market"
-      joins(organization: { market_organizations: :market}).order("markets.name #{tokens[1]}")
+      joins(organization: { market_organizations: :market}).order("markets.name #{direction}")
     else "name"
-      order("#{tokens[0]} #{tokens[1]}")
+      order("#{column} #{direction}")
     end
   end
 
-  def self.for_search_by(query)
+  def self.for_search(query)
     search_by_name(query)
   end
 

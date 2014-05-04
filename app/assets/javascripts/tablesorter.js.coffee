@@ -4,10 +4,11 @@ $ ->
       e.preventDefault()
       column = $(this).data("column")
 
-      params = parseSearchString()
-      params["order_by"] = column
+      if column
+        params = parseSearchString()
+        params["sort"] = column
 
-      window.location.search = $.param(params)
+        window.location.search = $.param(params)
 
   parseSearchString = () ->
     list = window.location.search.substr(1).split("&")
