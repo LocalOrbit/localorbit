@@ -26,6 +26,18 @@ class Market < ActiveRecord::Base
   dragonfly_accessor :logo
   dragonfly_accessor :photo
 
+  scope_accessible :sort, method: :for_sort, ignore_blank: true
+
+  def self.for_sort(order)
+    column, direction = order.split(":")
+    case column
+    when "contact"
+      order("contact_name #{direction}")
+    else
+      order("#{column} #{direction}")
+    end
+  end
+
   def fulfillment_locations(default_name)
     addresses.order(:name).map {|a| [a.name, a.id] }.unshift([default_name, 0])
   end

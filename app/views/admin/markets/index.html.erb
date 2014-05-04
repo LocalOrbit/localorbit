@@ -12,9 +12,9 @@
 <table class="sortable market-org-list">
   <thead class="stickable">
     <tr>
-      <th>Name</th>
-      <th>Subdomain</th>
-      <th>Contact Name</th>
+      <th data-column="name">Name</th>
+      <th data-column="subdomain">Subdomain</th>
+      <th data-column="contact">Contact Name</th>
       <th>Contact Phone</th>
     </tr>
   </thead>
@@ -27,3 +27,5 @@
   </tr>
   <% end %>
 </table>
+
+<%= paginate @markets %>
