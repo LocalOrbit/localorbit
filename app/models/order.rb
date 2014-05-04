@@ -46,6 +46,20 @@ class Order < ActiveRecord::Base
   scope :paid_with, lambda { |method| where(payment_method: method) }
   scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", Time.current) }
 
+  scope_accessible :sort, method: :for_sort, ignore_blank: true
+
+  def self.for_sort(order)
+    column, direction = order.split(":")
+    case column
+    when "date"
+      order("placed_at #{direction}")
+    when "buyer"
+      order("payment_status #{direction}")
+    else
+      order("order_number #{direction}")
+    end
+  end
+
   def self.orders_for_buyer(user)
     if user.admin?
       all

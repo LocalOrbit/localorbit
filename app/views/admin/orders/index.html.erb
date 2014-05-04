@@ -3,14 +3,16 @@
     <h1>Review Orders</h1>
   </div>
 </div>
-<table>
+
+<table class="sortable">
   <thead class="stickable">
-    <th>Order #</th>
-    <th>Order Date</th>
-    <th>Amount Owed</th>
-    <th>Delivery</th>
-    <th>Buyer</th>
-    <th>Seller</th>
+    <th data-column="number">Order #</th>
+    <th>Description</th>
+    <th data-column="date">Order Date</th>
+    <th data-column="owed">Amount Owed</th>
+    <th data-column="delivery">Delivery</th>
+    <th data-column="buyer">Buyer</th>
+    <th data-column="seller">Seller</th>
   </thead>
   <tbody>
     <% @orders.each do |order| %>
@@ -19,6 +21,7 @@
         <%= link_to order.order_number, admin_order_path(order) %>
         <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
       </td>
+      <td class="description"></td>
       <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
       <td class="amount-owed"><%= number_to_currency(SellerOrder.new(order, current_user).net_total) %></td>
       <td class="delivery-status"><%= order.delivery_status.titleize %></td>
@@ -29,4 +32,4 @@
   </tbody>
 </table>
 
-  <%= paginate @orders %>
+<%= paginate @orders %>
