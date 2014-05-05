@@ -230,15 +230,15 @@ module Dom
         end
 
         def order_count
-          node.find('.order-count')
+          node.find('td.order-count')
         end
 
         def owed
-          node.find('.owed')
+          node.find('td.owed')
         end
 
         def selected_owed
-          node.find('.total-owed')
+          node.find('td.total-owed')
         end
       end
 

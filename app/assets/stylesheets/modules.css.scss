@@ -1256,3 +1256,72 @@ label ~ .tooltip {
     }
   }
 }
+
+.vendor-payment {
+  margin-top: 20px;
+  h2 {
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+  .buyer-payment-status {
+    width: 100px;
+    text-align: right;
+  }
+  .delivery-status {
+    width: 200px;
+    text-align: right;
+  }
+  .individual-delivery-status {
+    width: 74px;
+    text-align: right;
+  }
+  .individual-payment-status {
+    width: 100px;
+    text-align: right;
+  }
+  .make-payment {
+    background-color: #fff;
+    border: none;
+  }
+  .line-total {
+    padding-right: 210px;
+    text-align: right;
+  }
+  .math {
+    font-size: 16px;
+  }
+  .order-count {
+    width: 293px;
+  }
+  .order-number {
+    width: 275px;
+  }
+  .order-placed-on {
+    width: 100px;
+  }
+  .owed, .pay-now {
+    padding-right: 10px;
+    text-align: right;
+  }
+  .owed {
+    font-weight: 700;
+  }
+  .pay-now {
+    font-weight: 700;
+  }
+  .pay-selected {
+    margin-top: -100px;
+  }
+  .review-orders {
+    padding-left: 10px;
+  }
+  .table-header {
+    background: none;
+    border: none;
+    padding-top: 0;
+  }
+  .total-owed {
+    font-size: 16px;
+    font-weight: 700;
+  }
+}
