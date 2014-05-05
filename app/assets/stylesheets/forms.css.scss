@@ -315,3 +315,107 @@ form.form-actions {
 .receipt-price {
   font-size: 24px;
 }
+
+.newsletter-field {
+  margin-top: 20px;
+}
+.newsletter-image-container {
+  @include border-radius(5px);
+  padding: 10px;
+  margin-top: 5px;
+  background: #eee;
+  text-align: center;
+
+  .newsletter-image-chooser {
+    float: left;
+  }
+  .newsletter-remove {
+    float: right;
+    label {
+      margin-right: 0;
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+}
+.wys-toolbar {
+  margin-top: -10px;
+}
+.wys-headline {
+  margin-bottom: 4px;
+}
+.wys-tools {
+  @include border-radius(5px 5px 0 0);
+  width: 650px;
+  height: 30px;
+  margin-bottom: -5px;
+  padding: 0;
+  background: #eee;
+  border: 1px solid #AAAAAA;
+  a {
+    color: #666666;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  .wys-text-format, .wys-text-lists, .wys-text-colors, .wys-links {
+    display: inline-block;
+    float: left;
+    padding: 4px 10px 0 10px;
+  }
+  .wys-tools-icon {
+    padding: 0 5px;
+
+    span {
+      font-size: 12px;
+    }
+  }
+  .text-bold {
+    font-weight: 700;
+  }
+  .text-italic {
+    font-style: italic;
+  }
+  .text-underline {
+    text-decoration: underline;
+  }
+  .text-red {
+    font-weight: 700;
+    color: #9A0500;
+  }
+  .text-green {
+    font-weight: 700;
+    color: green;
+  }
+  .text-blue {
+    font-weight: 700;
+    color: #10509A;
+  }
+
+  .wys-divider {
+    width: 2px;
+    height: 30px;
+    float: left;
+    background: #dddddd;
+  }
+}
+.wys-create-link {
+  width: 250px;
+  float: right;
+  margin-top: -22px;
+
+  a {
+    cursor: pointer;
+  }
+  label {
+    margin-right: 3px;
+  }
+  .cancel-link {
+    color: #9A0500;
+    font-size: 12px;
+    padding-left: 20px;
+  }
+}
+.newsletter-body {
+  @include border-radius(0 0 5px 5px);
+}

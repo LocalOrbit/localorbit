@@ -1,9 +1,8 @@
 <div class="row row--partial">
-  <%= link_to "< Return to Newsletter List", admin_newsletters_path, class: "redundant-nav" %>
-
-  <div class="column column--three-fourths">
-    <div class="l-page-header">
-      <h1>&nbsp; Edit <%= @newsletter.subject %></h1>
+  <div class="column">
+  	<%= link_to "< Return to Newsletter List", admin_newsletters_path, class: "redundant-nav" %>
+    <div>
+      <h1><i class="font-icon" data-icon="&#xe00a;"></i>&nbsp; Edit <%= @newsletter.subject %></h1>
     </div>
     <%= render "form" %>
   </div>
