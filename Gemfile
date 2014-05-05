@@ -27,7 +27,6 @@ gem 'devise'
 gem 'devise_invitable'
 gem 'dragonfly-s3_data_store'
 gem 'draper'
-gem 'faraday', '< 0.9.0' # 0.9.0 does not work with balanced 0.8.1
 gem 'figaro', '~> 1.0.0.rc1'
 gem 'font_assets'
 gem "graticule", github: 'collectiveidea/graticule'

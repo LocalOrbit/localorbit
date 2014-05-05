@@ -90,7 +90,7 @@ class OrderItem < ActiveRecord::Base
 
   def update_delivered_at
     if changes[:delivery_status] && changes[:delivery_status][1] == "delivered"
-      self.delivered_at = Time.current
+      self.delivered_at ||= Time.current
     end
   end
 end

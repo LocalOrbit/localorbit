@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140502185535) do
+ActiveRecord::Schema.define(version: 20140502202318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,9 +244,9 @@ ActiveRecord::Schema.define(version: 20140502185535) do
     t.boolean  "default_allow_purchase_orders",                         default: false
     t.boolean  "default_allow_credit_cards",                            default: true
     t.boolean  "default_allow_ach",                                     default: true
-    t.integer  "legacy_id"
     t.string   "background_color"
     t.string   "text_color"
+    t.integer  "legacy_id"
     t.boolean  "allow_cross_sell",                                      default: false
   end
 
@@ -297,6 +297,8 @@ ActiveRecord::Schema.define(version: 20140502185535) do
     t.datetime "delivered_at"
   end
 
+  add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
+
   create_table "order_payments", force: true do |t|
     t.integer  "payment_id"
     t.integer  "order_id"
@@ -338,6 +340,8 @@ ActiveRecord::Schema.define(version: 20140502185535) do
     t.datetime "paid_at"
   end
 
+  add_index "orders", ["market_id"], name: "index_orders_on_market_id", using: :btree
+
   create_table "organizations", force: true do |t|
     t.string   "name"
     t.boolean  "can_sell"
@@ -371,6 +375,8 @@ ActiveRecord::Schema.define(version: 20140502185535) do
     t.string   "balanced_uri"
     t.integer  "legacy_id"
   end
+
+  add_index "payments", ["payee_id", "payee_type"], name: "index_payments_on_payee_id_and_payee_type", using: :btree
 
   create_table "prices", force: true do |t|
     t.integer  "product_id"

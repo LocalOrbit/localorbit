@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       resources :payments, only: [:index]
       resources :invoices
       resources :receipts, only: [:index, :edit, :update]
+      resources :vendor_payments
     end
 
     resources :orders

@@ -113,6 +113,11 @@ FactoryGirl.define do
     unit            "per box"
     unit_price      6.99
     delivery_status "pending"
+
+    trait :payable do
+      delivery_status 'delivered'
+      delivered_at 50.hours.ago
+    end
   end
 
   factory :order_item_lot do
@@ -162,7 +167,7 @@ FactoryGirl.define do
     # We need to set this in the factory because FactoryGirl doesn't trigger before_save
     top_level_category { category.top_level_category }
     organization
-    unit
+    unit { Unit.first || create(:unit) }
 
     trait :decorated do
       initialize_with do
