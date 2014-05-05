@@ -25,10 +25,10 @@
         <td class="pay-now action-link"><%= link_to raw('<i class="font-icon icon-money"></i> Pay All Now'), "#", class: 'pay-all-now' %></td>
       </tr>
     </table>
-    <table class="is-hidden">
+    <table class="order-details is-hidden">
       <% seller.orders.each do |order| %>
         <tr class="payment-order">
-          <td><%= check_box_tag 'order_ids[]', order.id, true, class: 'seller-order-id', data: {owed: order.net_total} %></td>
+          <td><%= check_box_tag 'payment[order_ids][]', order.id, true, class: 'seller-order-id', data: {owed: order.net_total} %></td>
           <td class="order-number">
             <%= link_to order.order_number, admin_order_path(order) %>
             <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
@@ -44,9 +44,29 @@
         <td class="total-owed line-total"><%= number_to_currency seller.owed %></td>
       </tr>
       <tr class="make-payment">
-        <td colspan="6" class="math pay-selected"><%= submit_tag 'Pay Selected Now', class: 'btn--small' %></td>
+        <td colspan="6" class="math pay-selected"><%= link_to "Pay Selected Now", "#", class: "pay-selected-now btn btn--save btn--small" %></td>
       </tr>
     </table>
+    <div class="payment-details is-hidden">
+       <b>Payment Type</b>
+       <div class="payment-types">
+         <label><%= radio_button_tag "payment[payment_type]", "cash" %> Cash</label>
+         <label><%= radio_button_tag "payment[payment_type]", "check" %> Check</label>
+       </div>
+       <div>
+         <span class="cash is-hidden">
+           <%= label_tag "payment[note]", "Note" %>
+           <%= text_field_tag "payment[note]", "", disabled: true %>
+         </span>
+         <span class="check is-hidden">
+           <%= label_tag "payment[note]", "Check #" %>
+           <%= text_field_tag "payment[note]", "", disabled: true %>
+         </span>
+         <span class="record-payment is-hidden">
+           <%= submit_tag "Record Payment", class: "btn--small" %>
+         </span>
+       </div>
+    </div>
   <% end %>
 </div>
 <% end %>
