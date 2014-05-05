@@ -16,10 +16,6 @@
       <td class="title">Next 7 Days</td>
       <td class="amount"><%= number_to_currency @overview.money_in_next_seven %></td>
     </tr>
-    <tr>
-      <td class="title">Next 30 Days</td>
-      <td class="amount">$0.00</td>
-    </tr>
   </table>
 
   <% if current_user.can_manage_market?(current_market) %>
@@ -34,7 +30,12 @@
   <table>
     <tr>
       <td class="title">Next 7 Days</td>
-      <td class="amount">$0.00</td>
+      <td class="amount"><%= number_to_currency @overview.money_out_next_seven_days %></td>
+    </tr>
+
+    <tr>
+      <td class="title">LO Fees</td>
+      <td class="amount"><%= number_to_currency @overview.lo_fees_next_seven_days %></td>
     </tr>
   </table>
   <%= link_to "Record Payments", coming_soon_dashboard_path, class: "btn btn--blue btn--small" %>
