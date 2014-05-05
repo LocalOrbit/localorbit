@@ -137,7 +137,7 @@ feature "Market Manager Financial Overview" do
     expect(money_in_row("Next 7 Days").amount).to eql("$1,335.09")
 
     expect(money_out_row("Next 7 Days").amount).to eql("$1,310.09")
-    expect(money_out_row("LO Fees").amount).to eql("$21.00")
+    expect(Dom::Admin::Financials::MoneyOut.all[1].amount).to eql("$21.00")
   end
 
   scenario "Seller navigates to their financial overview" do
