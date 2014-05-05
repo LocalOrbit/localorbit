@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Payments to vendors" do
-  let(:market) { create(:market, po_payment_term: 14) }
+  let(:market) { create(:market, name: "Baskerville Co-op", po_payment_term: 14) }
   let!(:market_manager) { create :user, managed_markets: [market] }
 
   let!(:seller1) { create(:organization, :seller, name: "Better Farms", markets: [market]) }
@@ -31,15 +31,15 @@ feature "Payments to vendors" do
 
     expect(seller_rows.size).to eq(3)
     expect(seller_rows[0].name).to have_content("Better Farms")
-    expect(seller_rows[0].order_count).to have_content(/\A1 order Review/)
+    expect(seller_rows[0].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
     expect(seller_rows[0].owed).to have_content("$27.96")
 
     expect(seller_rows[1].name).to have_content("Betterest Farms")
-    expect(seller_rows[1].order_count).to have_content(/\A1 order Review/)
+    expect(seller_rows[1].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
     expect(seller_rows[1].owed).to have_content("$48.93")
 
     expect(seller_rows[2].name).to have_content("Great Farms")
-    expect(seller_rows[2].order_count).to have_content(/\A3 orders Review/)
+    expect(seller_rows[2].order_count).to have_content(/\A3 orders from Baskerville Co-op Review/)
     expect(seller_rows[2].owed).to have_content("$223.68")
   end
 
@@ -107,7 +107,7 @@ feature "Payments to vendors" do
 
     # With 1 order
     expect(seller_rows[2].name).to have_content("Great Farms")
-    expect(seller_rows[2].order_count).to have_content(/\A1 order Review/)
+    expect(seller_rows[2].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
     expect(seller_rows[2].owed).to have_content("$41.94")
   end
 end
