@@ -41,6 +41,10 @@ input[type=submit] {
     padding: 4px 18px;
     font-size: 14px;
   }
+  &.btn--tiny {
+    padding: 1px 6px;
+    font-size: 12px;
+  }
   &.btn--activate {
     margin-top: 38px;
   }
