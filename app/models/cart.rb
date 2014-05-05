@@ -23,7 +23,7 @@ class Cart < ActiveRecord::Base
   def delivery_fees
     case delivery.delivery_schedule.fee_type
     when "fixed"
-      delivery.delivery_schedule.fee
+      delivery.delivery_schedule.fee || 0
     when "percent"
       (subtotal * (delivery.delivery_schedule.fee || 0))
     else

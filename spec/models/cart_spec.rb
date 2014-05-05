@@ -41,6 +41,20 @@ describe Cart do
       it "returns $0.00" do
         expect(cart.delivery_fees).to eq(0.0)
       end
+
+      it "returns 0 if fixed fee is nil" do
+        delivery_schedule.fee_type = "fixed"
+        delivery_schedule.save
+
+        expect(cart.delivery_fees).to eq(0.0)
+      end
+
+      it "returns 0 if fixed fee is nil" do
+        delivery_schedule.fee_type = "percent"
+        delivery_schedule.save
+
+        expect(cart.delivery_fees).to eq(0.0)
+      end
     end
 
     context "percentage" do
