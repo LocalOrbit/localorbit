@@ -1,6 +1,6 @@
 <%
 if current_market && current_market.logo
-  logo = image_tag(current_market.logo.remote_url, alt: "#{current_market.name} logo", class: "vertical-centerer logo")
+  logo = image_tag(current_market.logo.thumb("600x200>").url, alt: "#{current_market.name} logo", class: "vertical-centerer logo")
 else
   logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "vertical-centerer logo")
 end

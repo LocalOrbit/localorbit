@@ -11,7 +11,7 @@ feature "A user navagating markets" do
       expect(page).to have_content("Please Sign In")
       expect(page).to have_css("img[src='/assets/logo.png']")
     end
-    
+
     scenario "a visitor sees the 'app' domain" do
       switch_to_subdomain "app"
       visit '/'
@@ -34,7 +34,7 @@ feature "A user navagating markets" do
       expect(host).to eq(market.domain)
       # expect(page).to have_content(market.name)
       # expect(page).to have_content(market.tagline)
-      expect(page).to have_css("img[src='#{market.logo.remote_url}']")
+      expect(page).to have_css("img[src='#{market.logo.thumb("600x200>").url}']")
     end
   end
 
@@ -51,13 +51,13 @@ feature "A user navagating markets" do
       visit '/'
       # expect(page).to have_content(market.name)
       expect(page).to have_content("Please Sign In")
-      expect(page).to have_css("img[src='#{market.logo.remote_url}']")
+      expect(page).to have_css("img[src='#{market.logo.thumb("600x200>").url}']")
 
       sign_in_as(user)
       expect(page).to have_content(market.name)
       expect(page).to have_content(market.tagline)
       expect(page).to have_content("Welcome #{user.email}")
-      expect(page).to have_css("img[src='#{market.logo.remote_url}']")
+      expect(page).to have_css("img[src='#{market.logo.thumb("600x200>").url}']")
     end
   end
 
