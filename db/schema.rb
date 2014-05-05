@@ -82,7 +82,6 @@ ActiveRecord::Schema.define(version: 20140502185535) do
     t.datetime "cutoff_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "legacy_id"
   end
 
   create_table "delivery_schedules", force: true do |t|
@@ -276,7 +275,6 @@ ActiveRecord::Schema.define(version: 20140502185535) do
     t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "legacy_id"
   end
 
   create_table "order_items", force: true do |t|
@@ -297,7 +295,6 @@ ActiveRecord::Schema.define(version: 20140502185535) do
     t.datetime "updated_at"
     t.string   "delivery_status"
     t.datetime "delivered_at"
-    t.integer  "legacy_id"
   end
 
   create_table "order_payments", force: true do |t|
@@ -338,7 +335,6 @@ ActiveRecord::Schema.define(version: 20140502185535) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "placed_by_id"
-    t.integer  "legacy_id"
     t.datetime "paid_at"
   end
 
@@ -468,7 +464,6 @@ ActiveRecord::Schema.define(version: 20140502185535) do
     t.integer  "invitations_count",      default: 0
     t.boolean  "send_freshsheet",        default: true, null: false
     t.boolean  "send_newsletter",        default: true, null: false
-    t.integer  "legacy_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
