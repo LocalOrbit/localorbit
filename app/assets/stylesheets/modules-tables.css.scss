@@ -164,7 +164,7 @@ th {
     margin: 0;
   }
 }
-.product-row {
+.product-row, .user-row {
   color: #000;
 
   > td,
@@ -178,6 +178,20 @@ th {
     max-width: 250px;
     font-size: 12px; 
   }
+
+  .user-list-name {
+    min-width: 160px;
+  }
+
+  .user-list-email {
+  }
+
+  .user-list-affiliations {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
   .meta {
     a {
       margin-right: .4em;
@@ -552,22 +566,6 @@ th {
   }
   .buyer-payment-status {
     min-width: 50px;
-  }
-}
-
-
-
-.affiliations {
-  list-style: none;
-  padding: 0;
-}
-
-.user-row {
-  td {
-    padding: 0 0 0 10px;
-  }
-  .user-list-name {
-    min-width: 160px;
   }
 }
 

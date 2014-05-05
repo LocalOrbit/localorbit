@@ -4,7 +4,7 @@
   <div class="column column--full">
 
     <% if @users.any? %>
-      <table class="sortable">
+      <table class="product-table product-table--admin sortable">
         <thead class="stickable">
           <tr>
             <th>Name</th>
@@ -13,11 +13,11 @@
           </tr>
         </thead>
         <% @users.each do |user| %>
-        <tr class="user-row">
+        <tr class="product-row">
           <td class="user-list-name"><%= user.name %></td>
-          <td><%= user.email %></td>
+          <td class="user-list-email"><%= user.email %></td>
           <td>
-            <ul class="affiliations">
+            <ul class="user-list-affiliations">
               <% user.managed_markets.each do |market| %>
                 <li><%= market.name %>, Market Manager</li>
               <% end %>
@@ -25,6 +25,9 @@
                 <li><%= organization.markets.pluck(:name).to_sentence %>: <%= organization.name %>, <%= organization.can_sell? ? "Seller" : "Buyer" %></li>
               <% end %>
             </ul>
+          </td>
+          <td class="delete action-link">
+            <%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), method: :delete, data: { confirm: "Are you sure you want to delete this user?" } %>
           </td>
         </tr>
         <% end %>
