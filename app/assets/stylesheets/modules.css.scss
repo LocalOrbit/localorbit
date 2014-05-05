@@ -1048,7 +1048,8 @@
 label ~ .tooltip {
   margin-top: .5em;
 }
-.tooltip {
+
+@mixin tooltip-icon {
   position: relative;
   display: inline-block;
   width: 14px;
@@ -1062,6 +1063,14 @@ label ~ .tooltip {
   line-height: 1em;
   text-align: center;
   cursor: pointer;
+}
+
+.tooltip-popup {
+  @include tooltip-icon;
+}
+
+.tooltip {
+  @include tooltip-icon;
 
   &:after {
     position: absolute;

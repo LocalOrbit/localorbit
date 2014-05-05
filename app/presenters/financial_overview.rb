@@ -10,28 +10,38 @@ class FinancialOverview
     @po_orders = base_order_scope.paid_with("purchase order")
   end
 
+  def next_seven_days
+    range_start = (@time + 1.day).beginning_of_day - 7.days
+    range_end = (range_start + 6.days).end_of_day
+
+    range_start..range_end
+  end
+
+  def today
+    start_of_day = 7.days.ago(@time).beginning_of_day
+    end_of_day = @time.end_of_day - 7.days
+
+    start_of_day..end_of_day
+  end
+
   def overdue
     sum_seller_items(@po_orders.delivered.payment_overdue)
   end
 
-  def today
+  def money_in_today
     orders = []
-    start_of_day = 7.days.ago(@time).beginning_of_day
-    end_of_day = @time.end_of_day - 7.days
 
-    orders += @cc_ach_orders.delivered.paid.having("MAX(order_items.delivered_at) >= ?", start_of_day).having("MAX(order_items.delivered_at) < ?", end_of_day)
-    orders += @po_orders.delivered.paid.where(paid_at: start_of_day..end_of_day)
+    orders += @cc_ach_orders.delivered.paid.having("MAX(order_items.delivered_at) >= ?", today.begin).having("MAX(order_items.delivered_at) < ?", today.end)
+    orders += @po_orders.delivered.paid.where(paid_at: today)
 
     sum_seller_items(orders)
   end
 
-  def next_seven_days
+  def money_in_next_seven
     orders = []
-    range_start = (@time + 1.day).beginning_of_day - 7.days
-    range_end = (range_start + 6.days).end_of_day
 
-    orders += @cc_ach_orders.delivered.paid.having("MAX(order_items.delivered_at) >= ?", range_start).having("MAX(order_items.delivered_at) < ?", range_end)
-    orders += @po_orders.delivered.paid.where(paid_at: range_start..range_end)
+    orders += @cc_ach_orders.delivered.paid.having("MAX(order_items.delivered_at) >= ?", next_seven_days.begin).having("MAX(order_items.delivered_at) < ?", next_seven_days.end)
+    orders += @po_orders.delivered.paid.where(paid_at: next_seven_days.begin..next_seven_days.end)
 
     sum_seller_items(orders)
   end

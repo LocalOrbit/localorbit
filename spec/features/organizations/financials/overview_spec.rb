@@ -110,6 +110,9 @@ feature "Seller Financial Overview" do
     sign_in_as(user)
     click_link "Financials"
 
+    # Sellers will not see the money-out section
+    expect(Dom::Admin::Financials::MoneyOut.all).to be_empty
+
     expect(financial_row("Overdue").amount).to eql("$63.88")
     expect(financial_row("Today").amount).to eql("$103.81")
     expect(financial_row("Next 7 Days").amount).to eql("$1,212.23")
@@ -122,6 +125,9 @@ feature "Seller Financial Overview" do
 
     expect(page).to have_content("Money In")
     expect(page).to have_content("This is a snapshot")
+
+    expect(page).not_to have_content("Send Invoices")
+    expect(page).not_to have_content("Record Payments")
   end
 
   def visit_financials
@@ -131,7 +137,7 @@ feature "Seller Financial Overview" do
   end
 
   def financial_row(title)
-    Dom::Admin::Financials::OverviewStat.find_by_title(title)
+    Dom::Admin::Financials::MoneyIn.find_by_title(title)
   end
 
   scenario "Seller navigates directly to their financial overview" do
