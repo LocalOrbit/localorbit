@@ -47,7 +47,7 @@
       <th>Item Total Price</th>
       <th>Notes</th>
     </tr>
-    <% order.items.each do |item| %>
+    <% order.items.includes(:product => :organization).order('products.name').each do |item| %>
       <tr class="pack-list-item">
         <td class="name"><%= item.product.name %></td>
         <td class="quantity"><%= item.quantity %></td>
