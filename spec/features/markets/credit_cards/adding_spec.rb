@@ -1,12 +1,12 @@
 require "spec_helper"
 
 feature "Adding credit card to a market", :js, :vcr do
-  let!(:admin) { create(:user, :admin) }
-  let!(:market_manager) { create(:user, :market_manager) }
-  let!(:market) { market_manager.managed_markets.first }
-  let!(:org) { create(:organization, markets: [market]) }
-  let!(:member) { create(:user, organizations: [org]) }
-  let!(:non_member) { create(:user) }
+  let!(:market)         { create(:market, name: "Fake Market")}
+  let!(:admin)          { create(:user, :admin) }
+  let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
+  let!(:org)            { create(:organization, name: 'Fake Organization', markets: [market]) }
+  let!(:member)         { create(:user, organizations: [org]) }
+  let!(:non_member)     { create(:user) }
 
   before do
     CreateBalancedCustomerForEntity.perform(market: market)

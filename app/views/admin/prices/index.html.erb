@@ -45,7 +45,16 @@
             <td class="delete">
               <input type="checkbox" name="id[]" value="<%= price.id %>">
             </td>
-            <%= content_tag(:td, price.market_name, class: "market edit-trigger") if current_user.multi_market_membership? %>
+            <% if current_user.multi_market_membership? %>
+            <td class="market">
+              <div class="edit-trigger view-cell">
+                <%= price.market_name %>
+              </div>
+              <div class="edit-cell">
+                <%= f.select :market_id, current_user.markets_for_select, include_blank: 'All Markets' %>
+              </div>
+            </td>
+            <% end %>
             <td class="buyer">
               <div class="edit-trigger view-cell">
                 <%= price.organization_name %>

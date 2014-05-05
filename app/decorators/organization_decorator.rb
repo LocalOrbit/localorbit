@@ -18,7 +18,7 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def delivery_schedules
-    markets.inject({}) do |result, market|
+    all_markets.inject({}) do |result, market|
       result[market] = market.delivery_schedules.visible.order(:day)
       result
     end

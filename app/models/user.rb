@@ -121,4 +121,11 @@ class User < ActiveRecord::Base
     end
     for_select.sort {|a, b| a[0] <=> b[0] }
   end
+
+  def markets_for_select
+    for_select = markets.map do |m|
+      [m.name, m.id]
+    end
+    for_select.sort {|a, b| a[0] <=> b[0] }
+  end
 end

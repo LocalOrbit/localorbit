@@ -9,6 +9,9 @@ class Market < ActiveRecord::Base
   has_many :managed_markets
   has_many :managers, through: :managed_markets, source: :user
 
+  has_many :market_cross_sells, class_name: "MarketCrossSells", foreign_key: :source_market_id
+  has_many :cross_sells, through: :market_cross_sells
+
   has_many :market_organizations
   has_many :organizations, through: :market_organizations
   has_many :addresses, class_name: MarketAddress

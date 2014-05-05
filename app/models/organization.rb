@@ -3,7 +3,9 @@ class Organization < ActiveRecord::Base
   has_many :user_organizations
 
   has_many :users, through: :user_organizations
-  has_many :markets, through: :market_organizations
+  has_many :all_markets, through: :market_organizations, source: :market
+  has_many :markets, -> { where(market_organizations: { cross_sell: false }) }, through: :market_organizations
+  has_many :cross_sells, -> { where(market_organizations: { cross_sell: true }) }, through: :market_organizations, source: :market, after_add: :update_product_delivery_schedules, after_remove: :update_product_delivery_schedules
   has_many :orders, inverse_of: :organization
 
   has_many :products, inverse_of: :organization, autosave: true
@@ -44,5 +46,13 @@ class Organization < ActiveRecord::Base
 
   def billing_location
     locations.visible.default_billing
+  end
+
+  def can_cross_sell?
+    markets.where(allow_cross_sell: true).any?
+  end
+
+  def update_product_delivery_schedules(market)
+    reload.products.each(&:save)
   end
 end

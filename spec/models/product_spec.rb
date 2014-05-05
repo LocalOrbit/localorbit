@@ -426,4 +426,66 @@ describe Product do
       expect(product.prices_for_market_and_organization(market, org)).to eql([everyone_price, org_price])
     end
   end
+
+  describe "#update_delivery_schedules" do
+    let!(:market)             { create(:market) }
+    let!(:monday_delivery)    { create(:delivery_schedule, market: market, day: 1) }
+
+    let!(:market2)            { create(:market) }
+    let!(:wednesday_delivery) { create(:delivery_schedule, market: market2, day: 3) }
+
+    context "using all deliveries" do
+      context "single market membership" do
+        let!(:organization) { create(:organization, :seller, markets: [market]) }
+        let!(:product) { create(:product, organization: organization) }
+
+        it 'adds all deliveries' do
+          expect(product.delivery_schedules.count).to eql(1)
+          expect(product.delivery_schedules).to include(monday_delivery)
+        end
+      end
+
+      context "multi-market membership" do
+        let!(:organization) { create(:organization, :seller, markets: [market, market2]) }
+        let!(:product) { create(:product, organization: organization) }
+
+        it 'adds all deliveries' do
+          expect(product.delivery_schedules.count).to eql(2)
+          expect(product.delivery_schedules).to include(monday_delivery, wednesday_delivery)
+        end
+      end
+    end
+
+    context "manually managing deliveries" do
+      context "single market membership" do
+        let!(:organization) { create(:organization, :seller, markets: [market]) }
+        let!(:product) { create(:product, use_all_deliveries: false, organization: organization) }
+
+        it 'does not automatically add delivery schedules' do
+          expect(product.delivery_schedules.count).to eql(0)
+        end
+      end
+
+      context "multi-market membership" do
+        let!(:organization) { create(:organization, :seller, markets: [market, market2]) }
+        let!(:product) { create(:product, use_all_deliveries: false, organization: organization) }
+
+        it 'does not automatically add delivery schedules' do
+          expect(product.delivery_schedules.count).to eql(0)
+        end
+
+        it 'removes delivery schedules from markets that are not part of the organization' do
+          product.delivery_schedules = [monday_delivery, wednesday_delivery]
+          expect(product.delivery_schedules.count).to eql(2)
+
+          organization.markets = [market]
+          product.save
+
+          expect(product.delivery_schedules.count).to eql(1)
+          expect(product.delivery_schedules).to include(monday_delivery)
+          expect(product.delivery_schedules).to_not include(wednesday_delivery)
+        end
+      end
+    end
+  end
 end
