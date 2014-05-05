@@ -54,7 +54,9 @@ $ ->
     $stuck.find('.select-all').click ->
       $sticky.find('.select-all').trigger "click"
     $stuck.find('th').click (e) ->
-      original = $sticky.find('th')[e.target.cellIndex]
+      return if $(e.target).is("input")
+      i = e.target.cellIndex
+      original = $sticky.find('th')[i]
       $(original).trigger "click"
       window.setTimeout ->
          clone_header_attr($original_headers[i], e, i, $original_headers.length)
