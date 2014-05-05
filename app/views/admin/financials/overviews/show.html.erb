@@ -10,11 +10,11 @@
     </tr>
     <tr>
       <td class="title">Today</td>
-      <td class="amount"><%= number_to_currency @overview.today %></td>
+      <td class="amount"><%= number_to_currency @overview.money_in_today %></td>
     </tr>
     <tr>
       <td class="title">Next 7 Days</td>
-      <td class="amount"><%= number_to_currency @overview.next_seven_days %></td>
+      <td class="amount"><%= number_to_currency @overview.money_in_next_seven %></td>
     </tr>
     <tr>
       <td class="title">Next 30 Days</td>
@@ -33,19 +33,7 @@
 
   <table>
     <tr>
-      <td class="title">Overdue</td>
-      <td class="amount"><%= number_to_currency @overview.overdue %></td>
-    </tr>
-    <tr>
-      <td class="title">Today</td>
-      <td class="amount"><%= number_to_currency @overview.today %></td>
-    </tr>
-    <tr>
       <td class="title">Next 7 Days</td>
-      <td class="amount"><%= number_to_currency @overview.next_seven_days %></td>
-    </tr>
-    <tr>
-      <td class="title">Next 30 Days</td>
       <td class="amount">$0.00</td>
     </tr>
   </table>
