@@ -1,15 +1,18 @@
 $ ->
   $('.vendor-payment .review-orders').click (e)->
     e.preventDefault()
-    form = $(this).parents('form')
+    link = $(this)
+    form = link.parents('form')
     form.find('.order-details').toggleClass('is-hidden')
     form.find('.pay-all-now').toggleClass('is-invisible')
     form.find('.pay-selected-now').removeClass('is-invisible')
 
     if form.find('.order-details.is-hidden').length == 0
       form.find('.pay-all-now').addClass('is-invisible')
+      link.html('Hide Orders')
     else
       form.find('.pay-all-now').removeClass('is-invisible')
+      link.html('Review')
 
     paymentFields = form.find('.payment-details').not('.is-hidden')
     if paymentFields.length != 0
