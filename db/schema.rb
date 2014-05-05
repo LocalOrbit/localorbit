@@ -244,9 +244,9 @@ ActiveRecord::Schema.define(version: 20140502202318) do
     t.boolean  "default_allow_purchase_orders",                         default: false
     t.boolean  "default_allow_credit_cards",                            default: true
     t.boolean  "default_allow_ach",                                     default: true
+    t.integer  "legacy_id"
     t.string   "background_color"
     t.string   "text_color"
-    t.integer  "legacy_id"
     t.boolean  "allow_cross_sell",                                      default: false
   end
 
@@ -409,8 +409,8 @@ ActiveRecord::Schema.define(version: 20140502202318) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.string   "image_uid"
     t.integer  "top_level_category_id"
+    t.string   "image_uid"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"
