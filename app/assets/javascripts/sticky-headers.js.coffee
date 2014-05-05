@@ -29,19 +29,23 @@ $ ->
         'overflow': 'hidden'
       })
 
-  clone_header_attr = (original, prime) ->
-    $(prime).css({
-      'width': $(original).width(),
-      }).attr('class', original.getAttribute('class'))
-    
-  
+  clone_header_attr = (original, prime, current, last) ->
+    if current == last - 1
+      $(prime).attr('class', original.getAttribute('class'))
+    else
+      $(prime).css({
+        'width': $(original).width(),
+        }).attr('class', original.getAttribute('class'))
+
   stick_table = (index, sticky) ->
     $sticky = $(sticky).removeClass('stickable')
     $stuck = $sticky.clone()
     if $sticky.parent().hasClass('sortable')
       $stuck.addClass('sortable')
-    $stuck.find('th').each((i, e) ->
-       clone_header_attr($sticky.find('th')[i], e)
+    $original_headers = $sticky.find('th')
+    $prime_headers = $stuck.find('th')
+    $prime_headers.each((i, e) ->
+       clone_header_attr($original_headers[i], e, i, $original_headers.length)
       )
     $stuck.insertBefore($sticky.parent())
     $stuck.wrap('<table class="js-sticky stickable"></table>')
@@ -52,9 +56,7 @@ $ ->
       original = $sticky.find('th')[e.target.cellIndex]
       $(original).trigger "click"
       window.setTimeout ->
-          $stuck.find('th').each (i, header) ->
-            original = $sticky.find('th')[i]
-            clone_header_attr(original, header)
+         clone_header_attr($original_headers[i], e, i, $original_headers.length)
         , 5
 
 
