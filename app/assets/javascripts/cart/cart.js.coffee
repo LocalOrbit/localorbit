@@ -202,8 +202,9 @@ $ ->
   $(".cart_item .quantity input").on 'cart.inputFinished', ->
     data = $(this).closest(".cart_item").data("cart-item")
 
-    quantity = parseInt($(this).val())
-    model.saveItem(data.product_id, quantity, this)
+    if this.value.length > 0
+      quantity = parseInt($(this).val())
+      model.saveItem(data.product_id, quantity, this)
 
   $(".cart_item .icon-clear").click (e)->
     e.preventDefault()

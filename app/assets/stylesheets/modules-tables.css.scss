@@ -42,7 +42,6 @@ th {
 }
 
 td {
-  vertical-align: center;
 
   &.delete {
     white-space: nowrap;
@@ -544,6 +543,16 @@ th {
   }
 }
 
+.pricing-table {
+  .market,
+  .buyer {
+    width: 135px;
+  }
+  .price_market_id,
+  .price_buyer_id {
+    width: 100%;
+  }
+}
 .sold-table {
   margin-bottom: 20px;
   td {
