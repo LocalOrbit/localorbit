@@ -5,7 +5,7 @@ $ ->
     form = link.parents('form')
     form.find('.order-details').toggleClass('is-hidden')
     form.find('.pay-all-now').toggleClass('is-invisible')
-    form.find('.pay-selected-now').removeClass('is-invisible')
+    form.find('.pay-selected-now').removeClass('is-hidden')
 
     if form.find('.order-details.is-hidden').length == 0
       form.find('.pay-all-now').addClass('is-invisible')
@@ -27,9 +27,9 @@ $ ->
 
   $('.vendor-payment .pay-selected-now').click (e)->
     e.preventDefault()
-    form = $(this).parents('form')
-    form.find('.pay-selected-now').addClass('is-invisible')
-    form.find('.payment-details').removeClass('is-hidden')
+    element = $(this)
+    element.addClass('is-hidden')
+    element.parents('form').find('.payment-details').removeClass('is-hidden')
 
   $('.vendor-payment .seller-order-id').change (e)->
     form = $(this).parents('form')

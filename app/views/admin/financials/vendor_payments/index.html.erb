@@ -45,12 +45,11 @@
         <td colspan="5" class="math">Total Selected</td>
         <td class="total-owed line-total"><%= number_to_currency seller.owed %></td>
       </tr>
-      <tr class="make-payment">
-        <td colspan="6" class="math pay-selected"><%= link_to "Pay Selected Now", "#", class: "pay-selected-now btn btn--save btn--small" %></td>
+      <tr class="make-payment pay-selected-now">
+        <td colspan="6" class="math pay-selected"><%= link_to "Pay Selected Now", "#", class: "btn btn--save btn--small" %></td>
       </tr>
     </table>
     <div class="payment-details is-hidden">
-       
        <div class="payment-types">
           <b>Payment Type</b>
          <label><%= radio_button_tag "payment[payment_type]", "cash" %> Cash</label>
