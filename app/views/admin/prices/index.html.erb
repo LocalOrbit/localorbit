@@ -21,7 +21,7 @@
       <p>You don't have any prices yet! We've gone ahead and started the entry for you.</p>
     <% end %>
 
-    <%= content_tag :table, border: 0, id: 'pricing_table', data: edit_table_error_payload(@price_with_errors), class: "sortable" do %>
+    <%= content_tag :table, border: 0, id: 'pricing_table', data: edit_table_error_payload(@price_with_errors), class: "sortable pricing-table" do %>
       <thead>
         <tr>
           <%= content_tag :th, raw('<input type="checkbox" class="select-all">') if @product.prices.view_sorted.any? %>
@@ -51,7 +51,7 @@
                 <%= price.market_name %>
               </div>
               <div class="edit-cell">
-                <%= f.select :market_id, current_user.markets_for_select, include_blank: 'All Markets' %>
+                <%= f.select :market_id, current_user.markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
               </div>
             </td>
             <% end %>
@@ -60,7 +60,7 @@
                 <%= price.organization_name %>
               </div>
               <div class="edit-cell">
-                <%= f.select :organization_id, current_user.buyers_for_select, include_blank: 'All Buyers' %>
+                <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
               </div>
             </td>
             <td class="min-qty">
