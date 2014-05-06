@@ -24,11 +24,11 @@
 <table class="product-table product-table--admin sortable">
   <thead class="stickable">
     <tr>
-      <%= content_tag(:th, 'Seller', data: {column: 'seller'}) if current_user.multi_organization_membership? %>
-      <%= content_tag(:th, 'Market', data: {column: 'market'}) if current_user.multi_market_membership? %>
-      <th data-column="name">Name</th>
-      <th data-column="price:desc">Pricing</th>
-      <th data-column="stock:desc">In Stock</th>
+      <%= content_tag(:th, 'Seller', data: {column: 'seller'}, class: column_sort_classes("seller")) if current_user.multi_organization_membership? %>
+      <%= content_tag(:th, 'Market', data: {column: 'market'}, class: column_sort_classes("market")) if current_user.multi_market_membership? %>
+      <th data-column="name" class="<%= column_sort_classes("name") %>">Name</th>
+      <th data-column="price:desc" class="<%= column_sort_classes("price") %>">Pricing</th>
+      <th data-column="stock:desc" class="<%= column_sort_classes("stock") %>">In Stock</th>
       <th></th>
     </tr>
   </thead>

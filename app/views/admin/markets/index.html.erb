@@ -9,12 +9,13 @@
     </div>
   </div>
 </div>
+
 <table class="sortable market-org-list">
   <thead class="stickable">
     <tr>
-      <th data-column="name">Name</th>
-      <th data-column="subdomain">Subdomain</th>
-      <th data-column="contact">Contact Name</th>
+      <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
+      <th data-column="subdomain" class="<%= column_sort_classes("subdomain")%>">Subdomain</th>
+      <th data-column="contact" class="<%= column_sort_classes("contact")%>">Contact Name</th>
       <th>Contact Phone</th>
     </tr>
   </thead>
