@@ -268,6 +268,15 @@ module Dom
       end
     end
 
+    class UserRow < Domino
+      selector "tbody tr"
+      attribute :email
+
+      def remove!
+        node.click_button "Delete"
+      end
+    end
+
     class CrossSell < Domino
       selector "#cross-sell-with tr"
 

@@ -1,11 +1,11 @@
 module Admin
   class OrganizationUsersController < AdminController
+    before_action :find_organization
+
     def index
-      @organization = current_user.managed_organizations.find(params[:organization_id])
     end
 
     def create
-      @organization = current_user.managed_organizations.find(params[:organization_id])
       market = current_market || @organization.markets.first
       @invite_user = InviteUserToOrganization.perform(
         inviter: current_user,
@@ -20,10 +20,21 @@ module Admin
       end
     end
 
+    def destroy
+      @user = @organization.users.find(params[:id])
+      @organization.users.delete(@user)
+
+      redirect_to [:admin, @organization, :users], notice: "Successfully removed #{@user.email}."
+    end
+
     private
 
     def user_params
       params.require(:user).permit(:email)
+    end
+
+    def find_organization
+      @organization = current_user.managed_organizations.find(params[:organization_id])
     end
   end
 end

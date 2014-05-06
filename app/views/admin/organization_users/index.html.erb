@@ -13,13 +13,20 @@
           <th>Name</th>
           <th>E-mail</th>
           <th>Registered On</th>
+          <th></th>
         </tr>
       </thead>
       <% @organization.users.each do |user| %>
       <tr class="<%= cycle "odd", "even" %>">
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
+        <td class="name"><%= user.name %></td>
+        <td class="email"><%= user.email %></td>
         <td><%= user.invitation_accepted_at.present? ? user.invitation_accepted_at.strftime("%b %-d, %Y") : "" %>
+
+        <td class="delete">
+          <%= form_tag admin_organization_user_path(@organization, user), {method: :delete} do %>
+            <button class="delete" type="submit"><i class="font-icon icon-delete"></i> Delete</button>
+          <% end %>
+        </td>
       </tr>
       <% end %>
     </table>
