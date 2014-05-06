@@ -31,6 +31,16 @@ $ ->
     element.addClass('is-hidden')
     element.parents('form').find('.payment-details').removeClass('is-hidden')
 
+  $('.vendor-payment .cancel').click (e)->
+    e.preventDefault()
+    element = $(this)
+    form = element.parents('form')
+    form.find('.payment-details').addClass('is-hidden')
+    if form.find('.order-details.is-hidden').length == 0
+      form.find('.pay-selected-now').removeClass('is-hidden')
+    else
+      form.find('.pay-all-now').removeClass('is-invisible')
+
   $('.vendor-payment .seller-order-id').change (e)->
     form = $(this).parents('form')
     items = form.find('.seller-order-id')
