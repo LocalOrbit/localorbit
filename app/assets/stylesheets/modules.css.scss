@@ -1266,6 +1266,8 @@ label ~ .tooltip {
   }
 }
 
+//** Vendor Payment Tab **//
+
 .vendor-payment {
   margin-top: 20px;
   h2 {
@@ -1333,4 +1335,37 @@ label ~ .tooltip {
     font-size: 16px;
     font-weight: 700;
   }
+}
+
+//** Financial Overview **//
+
+.overview-area {
+  width: 70%;
+  margin: 0 auto;
+}
+.overview-intro {
+  background: #fefefe;
+  padding: 0 0 20px 0;
+}
+.money-in, .money-out {
+  width: 48%;
+
+  td, th, tr {
+    font-size: 14px;
+  }
+  a {
+    margin-top: 10px;
+    float: right;
+  }
+  .amount {
+    padding-right: 10px;
+    text-align: right;
+    font-weight: 700;
+  }
+}
+.money-in {
+  float: left;
+}
+.money-out {
+  float: right;
 }

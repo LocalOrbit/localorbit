@@ -1,60 +1,55 @@
 <%= render "admin/financials/header" %>
-
-<div class="money-in">
-
-  <h2>Money In</h2>
-  <table>
-    <tr>
-      <td class="title">Overdue</td>
-      <td class="amount"><%= number_to_currency @overview.overdue %></td>
-    </tr>
-    <tr>
-      <td class="title">Today</td>
-      <td class="amount"><%= number_to_currency @overview.money_in_today %></td>
-    </tr>
-    <tr>
-      <td class="title">Next 7 Days</td>
-      <td class="amount"><%= number_to_currency @overview.money_in_next_seven %></td>
-    </tr>
-  </table>
-
+<div class="overview-area">
+  <div class="overview-intro">
+    <p>
+      This is a snapshot of all money currently owed to your organization. (If you're allowed to purchase on your market and pay by Purchase Order, it will also show what you owe to other organizations.)
+    </p>
+  </div>
+  <div class="money-in">
+    <h2>Money In</h2>
+    <table>
+      <tr>
+        <td class="title">Overdue</td>
+        <td class="amount"><%= number_to_currency @overview.overdue %></td>
+      </tr>
+      <tr>
+        <td class="title">Today</td>
+        <td class="amount"><%= number_to_currency @overview.money_in_today %></td>
+      </tr>
+      <tr>
+        <td class="title">Next 7 Days</td>
+        <td class="amount"><%= number_to_currency @overview.money_in_next_seven %></td>
+      </tr>
+    </table>
+    <% if current_user.can_manage_market?(current_market) %>
+    <%= link_to "Send Invoices", [:admin, :financials, :invoices], class: "btn btn--blue btn--small" %>
+   <% end %>
+  </div>
   <% if current_user.can_manage_market?(current_market) %>
-  <%= link_to "Send Invoices", [:admin, :financials, :invoices], class: "btn btn--blue btn--small" %>
- <% end %>
-</div>
-
-<% if current_user.can_manage_market?(current_market) %>
-<div class="money-out">
-  <h2>Money Out</h2>
-
-  <table>
-    <tr>
-      <td class="title">Next 7 Days</td>
-      <td class="amount"><%= number_to_currency @overview.money_out_next_seven_days %></td>
-    </tr>
-
-    <tr>
-      <td class="title">
-        LO Fees
-        <%= link_to raw('<i class="tooltip-popup"></i>'), "#lo-fees", class: "popup-toggle" %>
-        <div class="is-hidden with-anchor top-anchor popup" id="lo-fees">
-          <div class="popup-header">
-            What are LO Fees? <button class="close"><i class="font-icon icon-close"></i></button>
+  <div class="money-out">
+    <h2>Money Out</h2>
+    <table>
+      <tr>
+        <td class="title">Next 7 Days</td>
+        <td class="amount"><%= number_to_currency @overview.money_out_next_seven_days %></td>
+      </tr>
+      <tr>
+        <td class="title">
+          LO Fees
+          <%= link_to raw('<i class="tooltip-popup"></i>'), "#lo-fees", class: "popup-toggle" %>
+          <div class="is-hidden with-anchor top-anchor popup" id="lo-fees">
+            <div class="popup-header">
+              What are LO Fees? <button class="close"><i class="font-icon icon-close"></i></button>
+            </div>
+            <div class="popup-body">
+              These fees are applied for purchases not made with credit cards or ACH.
+            </div>
           </div>
-          <div class="popup-body">
-            These fees are applied for purchases not made with credit cards or ACH.
-          </div>
-        </div>
-      </td>
-      <td class="amount"><%= number_to_currency @overview.lo_fees_next_seven_days %></td>
-    </tr>
-  </table>
-  <%= link_to "Record Payments", coming_soon_dashboard_path, class: "btn btn--blue btn--small" %>
+        </td>
+        <td class="amount"><%= number_to_currency @overview.lo_fees_next_seven_days %></td>
+      </tr>
+    </table>
+    <%= link_to "Record Payments", coming_soon_dashboard_path, class: "btn btn--blue btn--small" %>
+  </div>
 </div>
 <% end %>
-
-<div>
-  <p>
-    This is a snapshot of all money currently owed to your organization. (If you're allowed to purchase on your market and pay by Purchase Order, it will also show what you owe to other organizations.)
-  </p>
-</div>
