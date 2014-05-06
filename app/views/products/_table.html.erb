@@ -21,7 +21,7 @@
         <%= image_tag 'default-product-image.png' %>
       <% end %>
       </div>
-        <h3 class="name"><%= link_to product.name, product %></h3>
+        <h3 class="name"><%= link_to product.name, product, tabindex: -1 %></h3>
         <div class="short_description">
 
           <% if product.long_description.present? %>
@@ -41,7 +41,7 @@
 
         <ul class="meta list-naked l-inline-list">
           <li class="organization-name">
-            <%= link_to raw("<i class=\"font-icon icon-credit\"></i> #{product.organization_name}"), "#product-#{product.id}-who", class: "popup-toggle" %>
+            <%= link_to raw("<i class=\"font-icon icon-credit\"></i> #{product.organization_name}"), "#product-#{product.id}-who", class: "popup-toggle", tabindex: -1 %>
             <div class="who-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-who">
               <div class="popup-header">
                 Who <button class="close"><i class="font-icon icon-close"></i></button>
@@ -52,7 +52,7 @@
             </div>
           </li>
           <li class="how-story">
-            <%= link_to raw('<i class="font-icon icon-archive"></i> How'), "#product-#{product.id}-how", class: "popup-toggle" %>
+            <%= link_to raw('<i class="font-icon icon-archive"></i> How'), "#product-#{product.id}-how", class: "popup-toggle", tabindex: -1 %>
             <div class="how-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-how">
               <div class="popup-header">
                 How <button class="close"><i class="font-icon icon-close"></i></button>
@@ -63,7 +63,7 @@
             </div>
           </li>
           <li class="where">
-            <%= link_to raw('<i class="font-icon icon-direction"></i> Where'), "#product-#{product.id}-where", class: "popup-toggle" %>
+            <%= link_to raw('<i class="font-icon icon-direction"></i> Where'), "#product-#{product.id}-where", class: "popup-toggle", tabindex: -1 %>
             <div class="where-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-where">
               <div class="popup-header">
                 <%= product.location_label %>     <button class="close"><i class="font-icon icon-close"></i></button>
@@ -91,7 +91,7 @@
         </span>
       </td>
       <td class="total price"><%= product.cart_item.decorate.display_total_price %></td>
-      <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear #{' is-hidden' unless product.cart_item.persisted?}" %></td>
+      <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear #{' is-hidden' unless product.cart_item.persisted?}", tabindex: -1%></td>
     </tr>
   <% end %>
   </tbody>
