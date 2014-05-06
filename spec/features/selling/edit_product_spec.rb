@@ -189,6 +189,19 @@ describe "Editing a product" do
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
       end
+
+      it "allows all delivery schedules to be unselected" do
+        uncheck "Make product available on all market delivery dates"
+
+        Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
+
+        click_button "Save and Continue"
+        click_link "Product Info"
+
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+      end
     end
 
     context 'multi-market membership' do
@@ -233,6 +246,21 @@ describe "Editing a product" do
 
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to_not be_checked
+      end
+
+      it "allows all delivery schedules to be unselected" do
+        uncheck "Make product available on all market delivery dates"
+
+        Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays").uncheck!
+
+        click_button "Save and Continue"
+        click_link "Product Info"
+
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to_not be_checked
       end
     end
