@@ -1,15 +1,20 @@
 require 'import/models/base'
-class Location < ActiveRecord::Base
-  belongs_to :organization, inverse_of: :locations
-  acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip}
+
+module Imported
+  class Location < ActiveRecord::Base
+    self.table_name = "locations"
+
+    belongs_to :organization, class_name: "Imported::Organization", inverse_of: :locations
+    acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip}
+  end
 end
 
-class Import::Address < Import::Base
+class Legacy::Address < Legacy::Base
   self.table_name = "addresses"
   self.primary_key = "address_id"
 
-  belongs_to :organization, class_name: "Import::Organization", foreign_key: :org_id
-  belongs_to :region, class_name: "Import::Region", foreign_key: :region_id
+  belongs_to :organization, class_name: "Legacy::Organization", foreign_key: :org_id
+  belongs_to :region, class_name: "Legacy::Region", foreign_key: :region_id
 
   # 2-letter region/state code. Example: "MI"
   def region_code
@@ -17,13 +22,14 @@ class Import::Address < Import::Base
   end
 
   def import
-    imported = ::Location.where(legacy_id: address_id).first
+    imported = Imported::Location.where(legacy_id: address_id).first
     if imported.nil?
-      imported = ::Location.new(
+      puts "- Creating organization address: #{label}"
+      imported = Imported::Location.new(
         legacy_id: address_id,
-        name: label,
-        address: address.gsub(";","\n"),
-        city: city,
+        name: imported_name,
+        address: imported_address,
+        city: imported_city,
         state: region_code,
         zip: zipcode,
         phone: telephone,
@@ -32,9 +38,23 @@ class Import::Address < Import::Base
         default_billing: default_billing == 1,
         default_shipping: default_shipping == 1
       )
+    else
+      puts "- Existing organization address: #{imported.name}"
     end
 
     imported
+  end
+
+  def imported_name
+    label.blank? ? "Default Location Name" : label
+  end
+
+  def imported_address
+    address.blank? ? "TBD" : address.gsub(";","\n")
+  end
+
+  def imported_city
+    city.blank? ? "TBD" : city
   end
 
   def zipcode

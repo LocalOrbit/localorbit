@@ -7,12 +7,12 @@ class Product < ActiveRecord::Base
   belongs_to :location
   belongs_to :unit
 
-  has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true
+  has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true, dependent: :destroy
   has_many :lots_by_expiration, -> { order("expires_at, good_from, created_at") }, class_name: Lot, foreign_key: :product_id
 
-  has_many :product_deliveries
+  has_many :product_deliveries, dependent: :destroy
   has_many :delivery_schedules, through: :product_deliveries
-  has_many :prices, autosave: true, inverse_of: :product
+  has_many :prices, autosave: true, inverse_of: :product, dependent: :destroy
 
   dragonfly_accessor :image
 

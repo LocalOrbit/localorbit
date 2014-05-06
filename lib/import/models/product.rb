@@ -1,30 +1,49 @@
 require 'import/models/base'
-class Product < ActiveRecord::Base
-  belongs_to :category
-  belongs_to :location
-  belongs_to :unit
-  belongs_to :organization, inverse_of: :products
+module Imported
+  class Product < ActiveRecord::Base
+    self.table_name = "products"
 
-  has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true
-  has_many :prices, autosave: true, inverse_of: :product
+    belongs_to :category, class: ::Category
+    belongs_to :top_level_category, class: Category
+    belongs_to :location, class_name: "Imported::Location"
+    belongs_to :unit
+    belongs_to :organization, class_name: "Imported::Organization", inverse_of: :products
+
+    has_many :product_deliveries, dependent: :destroy
+    has_many :delivery_schedules, through: :product_deliveries
+
+    has_many :lots, -> { order("created_at") }, inverse_of: :product, autosave: true
+    has_many :prices, autosave: true, inverse_of: :product
+
+    def update_top_level_category
+      self.top_level_category = category.top_level_category
+    end
+
+    def update_delivery_schedules
+      self.delivery_schedule_ids = organization.markets.map do |market|
+        market.delivery_schedules.visible.map(&:id)
+      end.flatten
+    end
+  end
 end
 
-class Import::Product < Import::Base
+class Legacy::Product < Legacy::Base
   self.table_name = "products"
   self.primary_key = "prod_id"
 
-  has_many :lots, class_name: "Import::Lot", foreign_key: :prod_id
-  has_many :prices, class_name: "Import::Price", foreign_key: :prod_id
-  has_many :images, class_name: "Import::ProductImage", foreign_key: :prod_id
+  has_many :lots, class_name: "Legacy::Lot", foreign_key: :prod_id
+  has_many :prices, class_name: "Legacy::Price", foreign_key: :prod_id
+  has_many :images, class_name: "Legacy::ProductImage", foreign_key: :prod_id
 
-  belongs_to :organization, class_name: "Import::Organization", foreign_key: :org_id
-  belongs_to :unit, class_name: "Import::Unit", foreign_key: :unit_id
+  belongs_to :organization, class_name: "Legacy::Organization", foreign_key: :org_id
+  belongs_to :unit, class_name: "Legacy::Unit", foreign_key: :unit_id
 
   def import(organization)
-    product = ::Product.where(legacy_id: prod_id).first
+    product = Imported::Product.where(legacy_id: prod_id).first
 
     if product.nil?
-      product = ::Product.new(
+      puts "  - Creating product: #{name}"
+      product = Imported::Product.new(
         name: name,
         unit: imported_unit,
         category: imported_category,
@@ -36,6 +55,9 @@ class Import::Product < Import::Base
         deleted_at: is_deleted == 1 ? DateTime.current : nil,
         legacy_id: prod_id
       )
+
+    else
+      puts "  - Existing product: #{product.name}"
     end
 
     lots.each {|lot| product.lots << lot.import }
@@ -44,6 +66,8 @@ class Import::Product < Import::Base
     prices.each {|price| product.prices << price.import }
 
     product.image_uid = import_image
+
+    product.update_top_level_category
 
     product
   end
@@ -58,7 +82,7 @@ class Import::Product < Import::Base
     ids = category_ids.split(',').reverse
     categories = ids.map do |id|
       begin
-        Import::Category.find(id)
+        Legacy::Category.find(id)
       rescue
       end
     end.compact
@@ -71,7 +95,6 @@ class Import::Product < Import::Base
 
       new_category.each do |category|
         str = category_string(category.id)
-        puts "#{old_category} == #{str}"
         if old_category = str
           return category
         end
@@ -93,18 +116,14 @@ class Import::Product < Import::Base
 
   def imported_location(organization)
     if who || how
-      addr_id.nil? || addr_id == 0 ? organization.locations.first : ::Location.where(legacy_id: addr_id).first
+      addr_id.nil? || addr_id == 0 ? organization.locations.first : Imported::Location.where(legacy_id: addr_id).first
     else
       nil
     end
   end
 
   def imported_short_description
-    if short_description.blank?
-      "[imported as blank]"
-    else
-      short_description[0...50]
-    end
+    short_description
   end
 
   def imported_long_description
@@ -113,9 +132,12 @@ class Import::Product < Import::Base
 
   def import_image
     if images.present?
-      img = images.first
-      image = Dragonfly.app.fetch_url("http://app.localorb.it/img/products/cache/#{img.pimg_id}.#{img.width}.#{img.height}.#{img.width}.#{img.height}.#{img.extension}")
-      image.store
+      begin
+        img = images.first
+        image = Dragonfly.app.fetch_url("http://app.localorb.it/img/products/cache/#{img.pimg_id}.#{img.width}.#{img.height}.#{img.width}.#{img.height}.#{img.extension}")
+        image.store
+      rescue
+      end
     end
   end
 end
