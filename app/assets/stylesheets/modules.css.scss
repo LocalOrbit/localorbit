@@ -1339,14 +1339,9 @@ label ~ .tooltip {
         font-size: 14px;
       }
     }
-    .check {
+    .check, .cash {
       input {
         width: 200px;
-      }
-    }
-    .cash {
-      input {
-        width: 380px;
       }
     }
     .record-payment {
