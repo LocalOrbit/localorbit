@@ -32,7 +32,7 @@
         <tr class="payment-order">
           <td><%= check_box_tag 'payment[order_ids][]', order.id, true, class: 'seller-order-id', data: {owed: order.net_total} %></td>
           <td class="order-number">
-            <%= link_to order.order_number, admin_order_path(order) %>
+            <%= link_to order.order_number, admin_order_path(order.id) %>
             <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
           </td>
           <td class="order-placed-on"><%= order.placed_at.strftime("%b %d, %Y") %></td>
