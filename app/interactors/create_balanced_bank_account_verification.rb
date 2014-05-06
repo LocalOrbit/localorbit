@@ -6,7 +6,9 @@ class CreateBalancedBankAccountVerification
   end
 
   def perform
-    verification = balanced_bank_account.verify
-    bank_account.update_attributes(balanced_verification_uri: verification.uri)
+    if balanced_bank_account && balanced_bank_account.verification_uri.nil?
+      verification = balanced_bank_account.verify
+      bank_account.update_attributes(balanced_verification_uri: verification.uri)
+    end
   end
 end
