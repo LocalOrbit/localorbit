@@ -100,6 +100,4 @@ $.getScript "https://js.balancedpayments.com/v1/balanced.js", ->
         .fail (error) ->
           messages = if error.extras? then error.extras else error
           displayErrors($form, messages)
-
-        .always ->
-            $('input[type="submit"]').removeAttr("disabled")
+          $('input[type="submit"]').removeAttr("disabled")

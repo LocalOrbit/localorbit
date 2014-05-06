@@ -6,8 +6,10 @@ class CreateBalancedCustomerForEntity
   end
 
   def perform
-    customer = Balanced::Customer.new(balanced_customer_info).save
-    entity.update_attribute(:balanced_customer_uri, customer.uri)
+    if entity.balanced_customer_uri.nil?
+      customer = Balanced::Customer.new(balanced_customer_info).save
+      entity.update_attribute(:balanced_customer_uri, customer.uri)
+    end
   end
 
   def balanced_customer_info

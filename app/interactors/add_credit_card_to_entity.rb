@@ -6,6 +6,7 @@ class AddCreditCardToEntity
   end
 
   organize [
+    CreateBalancedCustomerForEntity,
     CreateBankAccount,
     UnderwriteEntity,
     AddCreditCardToBalancedCustomer
