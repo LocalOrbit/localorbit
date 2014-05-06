@@ -75,24 +75,24 @@ describe Product do
       create(:lot, product: product_in_other_buyer_price)
       create(:lot, product: product_in_other_market_price)
       create(:lot, product: product_in_for_buyer)
-      create(:lot, product: product_in_expiring_lot, number: "1", expires_at: DateTime.parse("May 6, 2014"))
+      create(:lot, product: product_in_expiring_lot, number: "1", expires_at: 3.days.from_now)
     end
 
     context "with an organization" do
       it "contains the correct products" do
-        products = Product.available_for_sale(market, buyer, DateTime.parse("May 5, 2014"))
+        products = Product.available_for_sale(market, buyer, 2.days.from_now)
         expect(products.to_a.size).to eq(3)
         expect(products).to include(product_in, product_in_for_buyer, product_in_expiring_lot)
       end
 
       it "excludes products that do not have unexpired inventory" do
-        products = Product.available_for_sale(market, buyer, DateTime.parse("May 9, 2014"))
+        products = Product.available_for_sale(market, buyer, 6.days.from_now)
         expect(products.to_a.count).to eq(2)
       end
 
       it "excludes products from organizations who cannot sell" do
         org_in.update!(can_sell: false)
-        products = Product.available_for_sale(market, buyer, DateTime.parse("May 5, 2014"))
+        products = Product.available_for_sale(market, buyer, 2.days.from_now)
         expect(products.to_a.count).to eq(0)
       end
     end
