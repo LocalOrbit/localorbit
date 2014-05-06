@@ -100,7 +100,7 @@ describe "Admin Managing Market Managers" do
       expect(page).to have_text('Email address is required.')
     end
 
-    it 'I can remove a current market manager' do
+    it 'I can remove a current market manager', :js do
       visit "/admin/markets/#{market.id}/managers"
 
       expect(page).to have_text(user2.email)

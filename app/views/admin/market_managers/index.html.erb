@@ -22,8 +22,8 @@
         <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td class="delete">
-          <%= form_tag admin_market_manager_path(@market, user.id), {method: :delete} do %>
-            <button class="delete" type="submit"><i class="font-icon icon-delete"></i> Remove Manager</button>
+          <%= button_to admin_market_manager_path(@market, user), {method: :delete, class: "delete", data: {confirm: "Are you sure you want to delete #{user.email} from #{@market.name}?"}} do%>
+            <i class="font-icon icon-delete"></i> Remove Manager
           <% end %>
         </td>
       </tr>
