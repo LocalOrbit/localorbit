@@ -653,7 +653,7 @@
       }
     }
     .inactive {
-      background-color: #e6e6e6; 
+      background-color: #e6e6e6;
       background-image:    -moz-linear-gradient(top,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 25%); /* FF3.6+ */
       background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.2)), color-stop(25%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
       background-image: -webkit-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 25%); /* Chrome10+,Safari5.1+ */
@@ -662,7 +662,7 @@
       background-image:  linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 25%); /* W3C */
     }
   }
-  
+
 .nav--admin + .tab-header {
   padding-top: 20px;
   margin-top: -20px;
@@ -886,7 +886,7 @@
   display: inline-block;
   min-height: 10px;
   padding-left: 20px;
-  
+
   path {
     fill: $link;
   }
@@ -963,7 +963,7 @@
   @include border-radius(100px);
   margin: 0 auto;
   background-color: #F9F7F7;
-  font-size: .85em; 
+  font-size: .85em;
   text-align: center;
 
   .current {
@@ -1132,7 +1132,7 @@ label ~ .tooltip {
 .seller-photo {
   > img {
     position: relative;
-  } 
+  }
 }
 .transforms {
   .seller-photo > img {
@@ -1194,7 +1194,7 @@ label ~ .tooltip {
     input {
       width: 100%;
     }
-  } 
+  }
 
   .sign-in {
     margin-top: 25px;
@@ -1269,7 +1269,13 @@ label ~ .tooltip {
 //** Vendor Payment Tab **//
 
 .vendor-payment {
-  margin-top: 20px;
+  .table-header th {
+    padding-top: 30px;
+  }
+  .total tr {
+    background-color: inherit;
+    border-top: none;
+  }
   h2 {
     margin-bottom: 5px;
     font-weight: 700;
@@ -1323,6 +1329,9 @@ label ~ .tooltip {
   .pay-selected {
     margin-top: -100px;
   }
+  .pay-selected-now {
+    border-bottom: 1px  solid #DDDDDD;
+  }
   .payment-details {
     padding: 10px;
     background: #EFFFEC;
@@ -1361,7 +1370,6 @@ label ~ .tooltip {
   }
   .table-header {
     background: none;
-    border: none;
     padding-top: 0;
   }
   .total-owed {
