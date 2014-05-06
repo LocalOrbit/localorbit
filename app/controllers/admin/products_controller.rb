@@ -55,13 +55,16 @@ module Admin
     private
 
     def product_params
-      params.require(:product).permit(
+      results = params.require(:product).permit(
         :name, :image, :category_id, :unit_id, :location_id,
         :short_description, :long_description,
         :who_story, :how_story,
         :use_simple_inventory, :simple_inventory, :use_all_deliveries,
         delivery_schedule_ids: []
       )
+      
+      results.merge!(delivery_schedule_ids:[] ) unless results[:delivery_schedule_ids]
+      results
     end
 
     def after_create_page

@@ -464,6 +464,16 @@ describe Product do
         it 'does not automatically add delivery schedules' do
           expect(product.delivery_schedules.count).to eql(0)
         end
+
+        it 'allows unselecting all delivery schedules' do
+          product.delivery_schedules = [monday_delivery]
+          expect(product.delivery_schedules.count).to eql(1)
+
+          product.delivery_schedule_ids = []
+          product.save
+
+          expect(product.reload.delivery_schedules.count).to eql(0)
+        end
       end
 
       context "multi-market membership" do
@@ -484,6 +494,16 @@ describe Product do
           expect(product.delivery_schedules.count).to eql(1)
           expect(product.delivery_schedules).to include(monday_delivery)
           expect(product.delivery_schedules).to_not include(wednesday_delivery)
+        end
+
+        it 'allows unselecting all delivery schedules' do
+          product.delivery_schedules = [monday_delivery, wednesday_delivery]
+          expect(product.delivery_schedules.count).to eql(2)
+
+          product.delivery_schedule_ids = []
+          product.save
+
+          expect(product.reload.delivery_schedules.count).to eql(0)
         end
       end
     end
