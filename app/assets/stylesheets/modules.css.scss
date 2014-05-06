@@ -1323,6 +1323,44 @@ label ~ .tooltip {
   .pay-selected {
     margin-top: -100px;
   }
+  .payment-details {
+    padding: 10px;
+    background: #EFFFEC;
+    border: 1px  solid #DDDDDD;
+  }
+  .payment-notes {
+    display: inline-block;
+    float: right;
+    text-align: right;
+
+    .check, .cash {
+      input {
+        padding: 1px 5px;
+        font-size: 14px;
+      }
+    }
+    .check {
+      input {
+        width: 200px;
+      }
+    }
+    .cash {
+      input {
+        width: 380px;
+      }
+    }
+    .record-payment {
+      input {
+        padding: 7px 15px;
+      }
+    }
+  }
+  .payment-types {
+    display: inline-block;
+    height: 33px;
+    padding-top: 12px;
+    float: left;
+  }
   .review-orders {
     padding-left: 10px;
   }

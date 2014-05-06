@@ -50,12 +50,13 @@
       </tr>
     </table>
     <div class="payment-details is-hidden">
-       <b>Payment Type</b>
+       
        <div class="payment-types">
+          <b>Payment Type</b>
          <label><%= radio_button_tag "payment[payment_type]", "cash" %> Cash</label>
          <label><%= radio_button_tag "payment[payment_type]", "check" %> Check</label>
        </div>
-       <div>
+       <div class="payment-notes">
          <span class="cash is-hidden">
            <%= label_tag "payment[note]", "Note" %>
            <%= text_field_tag "payment[note]", "", disabled: true %>
@@ -66,8 +67,11 @@
          </span>
          <span class="record-payment is-hidden">
            <%= submit_tag "Record Payment", class: "btn--small" %>
+           <a>Cancel</a>
          </span>
+
        </div>
+       <div class="clearfix"></div>
     </div>
   <% end %>
 </div>
