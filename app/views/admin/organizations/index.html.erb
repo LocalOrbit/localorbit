@@ -8,7 +8,6 @@
       <%= select_tag :filter_can_sell, options_for_select(seller_status_options, selected: params[:can_sell]), class: 'filter-dropdown', data: { parameter: "can_sell"} %>
     </div>
   </div>
-
   
 <table class="sortable organization-table market-org-list">
   <thead class="stickable">
@@ -36,4 +35,3 @@
     This table is empty, either because there is no data, or because the filter you've applied is hiding it.
   </div>
 <% end %>
-

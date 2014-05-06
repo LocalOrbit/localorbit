@@ -23,25 +23,30 @@ $ ->
   stick_absolutely = (i, e) ->
     if !$(e).hasClass('l-app-header')
       $('<div class="teflon"></div>').insertAfter(e)
+      $(e).parent().css('overflow', 'hidden')
     $(e).addClass('js-positioned').next().css({
         'position': 'relative',
         'margin-top': "+=" + stick_heights[i] + "px",
         'overflow': 'hidden'
       })
 
-  clone_header_attr = (original, prime) ->
-    $(prime).css({
-      'width': $(original).width(),
-      }).attr('class', original.getAttribute('class'))
-    
-  
+  clone_header_attr = (original, prime, current, last) ->
+    if current == last - 1
+      $(prime).attr('class', original.getAttribute('class'))
+    else
+      $(prime).css({
+        'width': $(original).width(),
+        }).attr('class', original.getAttribute('class'))
+
   stick_table = (index, sticky) ->
     $sticky = $(sticky).removeClass('stickable')
     $stuck = $sticky.clone()
     if $sticky.parent().hasClass('sortable')
       $stuck.addClass('sortable')
-    $stuck.find('th').each((i, e) ->
-       clone_header_attr($sticky.find('th')[i], e)
+    $original_headers = $sticky.find('th')
+    $prime_headers = $stuck.find('th')
+    $prime_headers.each((i, e) ->
+       clone_header_attr($original_headers[i], e, i, $original_headers.length)
       )
     $stuck.insertBefore($sticky.parent())
     $stuck.wrap('<table class="js-sticky stickable"></table>')
@@ -49,12 +54,12 @@ $ ->
     $stuck.find('.select-all').click ->
       $sticky.find('.select-all').trigger "click"
     $stuck.find('th').click (e) ->
-      original = $sticky.find('th')[e.target.cellIndex]
+      return if $(e.target).is("input")
+      i = e.target.cellIndex
+      original = $sticky.find('th')[i]
       $(original).trigger "click"
       window.setTimeout ->
-          $stuck.find('th').each (i, header) ->
-            original = $sticky.find('th')[i]
-            clone_header_attr(original, header)
+         clone_header_attr($original_headers[i], e, i, $original_headers.length)
         , 5
 
 
