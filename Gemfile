@@ -40,6 +40,7 @@ gem 'periscope-activerecord'
 gem 'rack-canonical-host'
 gem 'simpleidn'
 gem 'wkhtmltopdf-binary'
+gem 'pg_search'
 
 group :doc do
   gem 'sdoc', require: false

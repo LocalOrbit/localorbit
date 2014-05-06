@@ -13,6 +13,18 @@ module ApplicationHelper
     end
   end
 
+  def column_sort_classes(column)
+    if request.query_parameters["sort"]
+      col, dir = request.query_parameters["sort"].downcase.split(":")
+      result = []
+      if column == col
+        result << "sorted"
+        result << (dir == "desc" ? "headerSortDown" : "headerSortUp")
+      end
+      result.join(" ")
+    end
+  end
+
   def filter_list(collection, param_name)
     params = request.query_parameters
 

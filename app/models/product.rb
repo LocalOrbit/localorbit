@@ -1,5 +1,6 @@
 class Product < ActiveRecord::Base
   include SoftDelete
+  include PgSearch
 
   belongs_to :category
   belongs_to :top_level_category, class: Category
@@ -32,6 +33,10 @@ class Product < ActiveRecord::Base
   scope_accessible :market, method: :for_market_id, ignore_blank: true
   scope_accessible :organization, method: :for_organization_id, ignore_blank: true
   scope_accessible :category, method: :for_category_id, ignore_blank: true
+  scope_accessible :sort, method: :for_sort, ignore_blank: true
+  scope_accessible :search, method: :for_search, ignore_blank: true
+
+  pg_search_scope :search_by_name, against: :name, using: { tsearch: { prefix: true }}
 
   before_save :update_top_level_category
   before_save :update_delivery_schedules
@@ -74,6 +79,28 @@ class Product < ActiveRecord::Base
 
   def self.for_category_id(category_id)
     where(top_level_category_id: category_id)
+  end
+
+  def self.for_sort(order)
+    column, direction = order.split(":")
+    case column
+    when "price"
+      joins(:prices).select("products.*, MAX(prices.sale_price) as price").
+        group("products.id").order("price #{direction}")
+    when "stock"
+      joins(:lots).select("products.*, SUM(lots.quantity) as stock").
+        group("products.id").order("stock #{direction}")
+    when "seller"
+      order("organizations.name #{direction}")
+    when "market"
+      joins(organization: { market_organizations: :market}).order("markets.name #{direction}")
+    else "name"
+      order("#{column} #{direction}")
+    end
+  end
+
+  def self.for_search(query)
+    search_by_name(query)
   end
 
   def can_use_simple_inventory?

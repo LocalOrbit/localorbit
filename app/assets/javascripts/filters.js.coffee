@@ -11,18 +11,17 @@ $ ->
       $('.overlay').removeClass('is-open')
 
   $('.filter-dropdown').change ->
-    value = $(this).val()
+    value = parseInt($(this).val())
     key = $(this).data("parameter")
+    addQueryStringParameter(key, value)
 
-    params = parseSearchString()
-    if value == "0" || value == ""
-      delete params[key]
-    else
-      params[key] = value
+  $("#search-btn").click (e) ->
+    e.preventDefault()
+    addQueryStringParameter "search", $("#search").val()
 
-    window.location.search = $.param(params)
-
-
+  $("#search").keypress (e) ->
+    if (e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)
+      $("#search-btn").click()
 
   parseSearchString = () ->
     list = window.location.search.substr(1).split("&")
@@ -33,3 +32,12 @@ $ ->
         params[tokens[0]] = tokens[1]
 
     params
+
+  addQueryStringParameter = (key, value) ->
+    params = parseSearchString()
+    if value == 0 || value == ""
+      delete params[key]
+    else
+      params[key] = value
+
+    window.location.search = $.param(params)

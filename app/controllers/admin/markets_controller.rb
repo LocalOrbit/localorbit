@@ -4,7 +4,7 @@ class Admin::MarketsController < AdminController
   before_action :find_scoped_market, only: [:show, :update, :defaults]
 
   def index
-    @markets = market_scope
+    @markets = market_scope.periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
   end
 
   def show

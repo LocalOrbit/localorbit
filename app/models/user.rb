@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include PgSearch
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
@@ -13,6 +14,23 @@ class User < ActiveRecord::Base
 
   has_many :user_organizations
   has_many :organizations, through: :user_organizations
+
+  pg_search_scope :search_by_name_and_email,
+                    against: {name: 'A', email: 'B'},
+                    using: { tsearch: { prefix: true } }
+
+  scope_accessible :sort, method: :for_sort, ignore_blank: true
+  scope_accessible :search, method: :for_search, ignore_blank: true
+
+  def self.for_sort(order)
+    column, direction = order.split(':')
+
+    order("#{column} #{direction}")
+  end
+
+  def self.for_search(query)
+    search_by_name_and_email(query)
+  end
 
   def self.for_auth_token(token)
     return if token.blank?

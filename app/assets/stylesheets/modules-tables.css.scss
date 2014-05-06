@@ -115,6 +115,8 @@ tbody {
 }
 
 .market-org-list {
+  margin: 30px 0;
+
   a {
     font-weight: 700;
   }
@@ -175,7 +177,7 @@ th {
   }
   .description {
     max-width: 250px;
-    font-size: 12px; 
+    font-size: 12px;
   }
 
   .user-list-name {
@@ -231,7 +233,7 @@ th {
     }
   }
   .total {
-    width: 70px; 
+    width: 70px;
   }
 }
 
@@ -386,7 +388,7 @@ th {
       ul {
         margin-left: 85px;
       }
-      .popup-toggle { 
+      .popup-toggle {
         color: #666;
       }
     }
@@ -394,7 +396,7 @@ th {
     .name {
       margin-bottom: 0;
       font-weight: normal;
-    } 
+    }
 
     .pricing {
       width: 125px;
@@ -593,4 +595,3 @@ th {
     position: fixed;
   }
 }
-
