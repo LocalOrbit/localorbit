@@ -19,7 +19,7 @@ module ApplicationHelper
       result = []
       if column == col
         result << "sorted"
-        result << (dir == "desc" ? "sorted--descending" : "sorted--ascending")
+        result << (dir == "desc" ? "headerSortDown" : "headerSortUp")
       end
       result.join(" ")
     end
