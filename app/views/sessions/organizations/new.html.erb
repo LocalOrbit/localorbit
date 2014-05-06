@@ -2,10 +2,12 @@
 <div class="row row--partial">
   <%= form_tag [:sessions, :organizations], method: :post, class: "column column--seven-twelfths" do |f| %>
     <%= hidden_field_tag :redirect_back_to, params[:redirect_back_to] %>
-    <h1>Organizations</h1>
+
+    <h1>Select an Organization</h1>
+    <div class="info-note column">You manage multiple organizations, which one would you like to shop as?</div>
 
     <div class="field">
-      <%= label_tag :org_id, "Select an organization" %><br>
+      <%= label_tag :org_id, "Organization" %><br>
       <%= select_tag(:org_id, options_from_collection_for_select(@organizations, 'id', 'name'), class: "column column--full") %>
     </div>
     <div class="form-actions">
