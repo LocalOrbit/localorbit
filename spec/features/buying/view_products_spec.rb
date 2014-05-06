@@ -199,7 +199,7 @@ feature "Viewing products" do
         scenario "has to select an organization to shop as" do
           click_link "Shop"
 
-          select buyer_org.name, from: 'Select an organization'
+          select buyer_org.name, from: 'Organization'
 
           click_button 'Select Organization'
 
@@ -341,7 +341,7 @@ feature "Viewing products" do
           expect(select).to have_option(buyer_org2.name)
           expect(select).to_not have_option(buyer_org_outside_market.name)
 
-          select buyer_org.name, from: "Select an organization"
+          select buyer_org.name, from: "Organization"
 
           click_button 'Select Organization'
 
@@ -366,7 +366,7 @@ feature "Viewing products" do
           expect(select).to have_option(buyer_org2.name)
           expect(select).to_not have_option(buyer_org_outside_market.name)
 
-          select buyer_org.name, from: "Select an organization"
+          select buyer_org.name, from: "Organization"
 
           click_button 'Select Organization'
 
@@ -386,7 +386,7 @@ feature "Viewing products" do
             click_link "Change"
           end
 
-          select buyer_org2.name, from: "Select an organization"
+          select buyer_org2.name, from: "Organization"
 
           click_button 'Select Organization'
 

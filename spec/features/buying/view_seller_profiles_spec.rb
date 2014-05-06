@@ -23,7 +23,7 @@ feature "View Seller Profiles" do
     scenario "redirects to organization select page" do
       click_link "Sellers"
 
-      expect(page).to have_content("Select an organization")
+      expect(page).to have_content("Select an Organization")
       select buyer.name, from: "org_id"
       click_button "Select Organization"
 
