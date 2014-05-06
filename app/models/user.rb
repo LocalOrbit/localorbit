@@ -23,9 +23,9 @@ class User < ActiveRecord::Base
   scope_accessible :search, method: :for_search, ignore_blank: true
 
   def self.for_sort(order)
-    column, direction = order.split(':')
+    column, direction = order.split(':').map(&:to_sym)
 
-    order("#{column} #{direction}")
+    order(column => direction)
   end
 
   def self.for_search(query)

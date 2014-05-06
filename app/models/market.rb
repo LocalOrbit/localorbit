@@ -29,12 +29,12 @@ class Market < ActiveRecord::Base
   scope_accessible :sort, method: :for_sort, ignore_blank: true
 
   def self.for_sort(order)
-    column, direction = order.split(":")
+    column, direction = order.split(":").map(&:to_sym)
     case column
-    when "contact"
-      order("contact_name #{direction}")
+    when :contact
+      order(contact_name: direction)
     else
-      order("#{column} #{direction}")
+      order(column => direction)
     end
   end
 

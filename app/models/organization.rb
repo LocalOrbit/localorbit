@@ -42,14 +42,14 @@ class Organization < ActiveRecord::Base
   end
 
   def self.for_sort(order)
-    column, direction = order.split(":")
+    column, direction = order.split(":").map(&:to_sym)
     case column
-    when "can_sell"
-      order("can_sell #{direction}")
-    when "registered"
-      order("created_at #{direction}")
+    when :can_sell
+      order(can_sell: direction)
+    when :registered
+      order(created_at: direction)
     else
-      order("name #{direction}")
+      order(name: direction)
     end
   end
 
