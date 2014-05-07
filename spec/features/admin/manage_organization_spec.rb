@@ -42,6 +42,7 @@ describe "admin manange organization", :vcr do
     click_button "Add Organization"
 
     expect(page).to have_content("University of Michigan Farmers has been created")
+    expect(find_field("Organization is active")).to be_checked
   end
 
   it "create new organization", js: true do
@@ -69,6 +70,7 @@ describe "admin manange organization", :vcr do
     click_button "Add Organization"
 
     expect(page).to have_content("University of Michigan Farmers has been created")
+    expect(find_field("Organization is active")).to be_checked
   end
 
   it "maintains market selection on form errors" do

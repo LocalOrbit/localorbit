@@ -54,6 +54,10 @@ describe "A Market Manager", :vcr do
     it "attaches a profile photo" do
       expect(page).to have_css("img[alt='Profile photo']")
     end
+
+    it "creates the organization as active" do
+      expect(find_field("Organization is active")).to be_checked
+    end
   end
 
     context "when the market manager manages multiple markets" do
@@ -157,6 +161,7 @@ describe "A Market Manager", :vcr do
       uncheck "Show on Profile page"
       uncheck "Allow purchase orders"
       uncheck "Allow ACH"
+      uncheck "Organization is active"
       click_button "Save Organization"
 
       expect(page).to have_content("Saved SXSW Farmette")
@@ -166,6 +171,7 @@ describe "A Market Manager", :vcr do
       expect(find_field("Allow purchase orders")).to_not be_checked
       expect(find_field("Allow credit cards")).to be_checked
       expect(find_field("Allow ACH")).to_not be_checked
+      expect(find_field("Organization is active")).to_not be_checked
     end
 
     it "does not allow updates with a blank organization name" do
