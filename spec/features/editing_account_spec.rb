@@ -1,10 +1,14 @@
 require "spec_helper"
 
 feature "A user can edit their account" do
-  let(:user) { create(:user, password: "password") }
+  let(:market)       { create(:market)}
+  let(:organization) { create(:organization, markets: [market])}
+  let(:user)         { create(:user, password: "password", organizations: [organization]) }
 
   scenario "A user can change their account details" do
+    switch_to_subdomain(market.subdomain)
     sign_in_as(user)
+
     click_link "Account"
     click_link "E-mail & Password"
 

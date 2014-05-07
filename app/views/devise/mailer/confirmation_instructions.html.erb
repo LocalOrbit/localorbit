@@ -1,6 +1,18 @@
+<%= market_name = @resource.markets.first.try(:name) || "Local Orbit" %>
 
-<p>Welcome <%= @email %>!</p>
+<h1>Attention needed, please verify your account.</h1>
+<p>
+  Thank you for registering with <%= market_name %>. To shop or sell online, you
+  must verify your email address. Once the <%= market_name %> Market Manager
+  activates your account, you'll be all set!
+</p>
 
-<p>You can confirm your account email through the link below:</p>
+<div class="lo_call_to_action">
+  <a href="<%= user_confirmation_url(@resource, :confirmation_token => @token) %>" class="lo_button lo_button_large">Verify Email Address</a>
+  <p>
+    If clicking the button doesn't work, right click it and copy the link.<br>
+    After you've copied it, paste it into a new browser window.
+  </p>
+</div>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @token) %></p>
+<p>Thank you for supporting <%= market_name %> and your local food producers!</p>

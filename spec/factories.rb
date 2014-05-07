@@ -46,6 +46,7 @@ FactoryGirl.define do
     password "password"
     password_confirmation "password"
     role 'user'
+    confirmed_at Time.current
 
     trait :market_manager do
       role 'user'

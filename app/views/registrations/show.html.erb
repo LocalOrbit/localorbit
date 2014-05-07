@@ -1,0 +1,95 @@
+<h1>Registration: Step One</h1>
+<%= form_for @registration, url: registration_path do |f| %>
+
+  <%= render "shared/errors", { resource: @registration } %>
+
+  <fieldset class="organization-info">
+    <legend>Organization Information</legend>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.check_box :buyer %>
+        <%= f.label :buyer, "Would like to buy products" %>
+      </div
+      ><div class="field field column column--half column--guttered">
+        <%= f.check_box :seller %>
+        <%= f.label :seller, "Would like to sell products" %>
+      </div>
+    </div>
+
+    <div class="field column--half">
+      <%= f.label :name, "Organization Name" %><br>
+      <%= f.text_field :name, class: "column column--full" %>
+    </div>
+
+    <div class="field column--half">
+      <%= f.label :contact_name, "Contact Name" %><br>
+      <%= f.text_field :contact_name, class: "column column--full" %>
+    </div>
+
+    <div class="field column--half">
+      <%= f.label :contact_email, "Contact Email" %><br>
+      <%= f.text_field :contact_email, class: "column column--full" %>
+    </div>
+
+    <div class="row row--field">
+      <div class="field column column--quarter column--guttered">
+
+        <%= f.label :password, "Password" %><br>
+        <%= f.password_field :password  %>
+      </div
+      ><div class="field field column column--quarter column--guttered">
+
+        <%= f.label :password_confirmation, "Retype Password" %><br>
+        <%= f.password_field :password_confirmation %>
+      </div>
+    </div>
+
+  </fieldset>
+
+  <fieldset>
+    <legend>Primary Address</legend>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :address_label, "Address Label" %><br>
+        <%= f.text_field :address_label, placeholder: "Give your organization a location name", class: "column column--full" %>
+      </div
+      ><div class="field column column--half column--guttered">
+        <%= f.label :address %><br>
+        <%= f.text_field :address, class: "column column--full" %>
+      </div>
+
+    </div>
+
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <%= f.label :city %><br>
+        <%= f.text_field :city, class: "column--full" %>
+      </div
+      ><div class="field column column--fourth column--guttered">
+        <%= f.label :state %><br>
+        <%= f.select :state, us_states, {include_blank: true}, class: "column--full" %>
+      </div
+      ><div class="field column column--fourth column--guttered">
+        <%= f.label :zip, "Postal Code" %><br>
+        <%= f.text_field :zip, size: 10, class: "column--full"  %>
+      </div>
+    </div>
+
+    <div class="row row--field">
+      <div class="field column column--guttered column--half">
+        <%= f.label :phone %><br>
+        <%= f.text_field :phone, maxlength: 18, size: 18, class: "column--full" %>
+      </div
+      ><div class="field column column--guttered column--half">
+        <%= f.label :fax %><br>
+        <%= f.text_field :fax, maxlength: 18, size: 18, class: "column--full" %>
+      </div>
+    </div>
+  </fieldset>
+
+
+  <div class="field form-actions">
+    <%= f.submit "Sign Up" %>
+  </div>
+
+<% end %>
