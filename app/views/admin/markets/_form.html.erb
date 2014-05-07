@@ -86,9 +86,9 @@
       <label for="product_use_simple_inventory">This market is open.</label>
     </div
     ><div class="field column column--half column--guttered">
-      <%= f.label :auto_activation %><br>
-      <input checked="unchecked" id="this_market_is_open" name="market_open" type="checkbox" value="0" disabled>
-      <label for="product_use_simple_inventory">Auto activate organizations.</label>
+      <label>Organization registration</label><br>
+      <%= f.check_box :auto_activate_organizations %>
+      <%= f.label :auto_activate_organizations, "Auto-activate organizations" %>
     </div>
   </div>
 
