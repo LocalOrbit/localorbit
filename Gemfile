@@ -74,7 +74,7 @@ group :test do
 end
 
 group :production, :staging do
-  gem 'unicorn', require: false
+  gem "passenger"
   gem 'rails_12factor'
   gem 'pgbackups-archive'
   gem 'heroku-api'
