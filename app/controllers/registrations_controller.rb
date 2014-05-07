@@ -20,7 +20,7 @@ class RegistrationsController < ApplicationController
   protected
 
   def registration_params
-    params.require(:registration).permit(
+    results = params.require(:registration).permit(
       :name,
       :contact_name,
       :contact_email,
@@ -36,5 +36,6 @@ class RegistrationsController < ApplicationController
       :phone,
       :fax
     )
+    results.merge!(market: current_market)
   end
 end

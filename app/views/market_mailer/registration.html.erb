@@ -1,0 +1,45 @@
+<h1>You’re growing!</h1>
+<p>A new organization has registered for your market!</p>
+
+<dl>
+  <dt>Company:</dt>
+  <dd><%= @organization.name %></dd>
+</dl>
+<dl>
+  <dt>Name:</dt>
+  <dd><%= @organization.users.first.name %></dd>
+</dl>
+<dl>
+  <dt>Email:</dt>
+  <dd><%= @organization.users.first.email %></dd>
+</dl>
+
+<p>Here is how to activate this new organization:</p>
+
+<table class="lo_steps">
+  <tr>
+    <td><span class="lo_step">1</span></td>
+    <td>
+      <a href="#" class="lo_button">Log in to Your Market</a>
+    </td>
+  </tr>
+  <tr>
+    <td><span class="lo_step">2</span></td>
+    <td>
+      Click on Market Admin
+    </td>
+  </tr>
+  <tr>
+    <td><span class="lo_step">3</span></td>
+    <td>
+      Click on Organizations<br>
+      <span class="lo_hint">The New Organization should be located near the top of the list.</span>
+    </td>
+  </tr>
+  <tr>
+    <td><span class="lo_step">4</span></td>
+    <td>
+      Click the Activate button.
+    </td>
+  </tr>
+</table>
