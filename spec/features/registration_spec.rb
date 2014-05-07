@@ -11,7 +11,7 @@ describe "Register" do
           switch_to_subdomain market.subdomain
           visit root_path
 
-          click_link "Register an account"
+          click_link "Request an Account"
 
           expect(page).to have_content("Registration: Step One")
 
@@ -55,7 +55,7 @@ describe "Register" do
           switch_to_subdomain market.subdomain
           visit root_path
 
-          click_link "Register an account"
+          click_link "Request an Account"
 
           expect(page).to have_content("Registration: Step One")
 
