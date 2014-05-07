@@ -256,6 +256,8 @@ GEM
       pry (~> 0.9)
       slop (~> 3.0)
     rack (1.5.2)
+    rack-cache (1.2)
+      rack (>= 0.4)
     rack-canonical-host (0.1.0)
       addressable
       rack (~> 1.0)
@@ -414,6 +416,7 @@ DEPENDENCIES
   poltergeist
   pry-rails
   pry-remote
+  rack-cache
   rack-canonical-host
   rails (= 4.1.0)
   rails_12factor

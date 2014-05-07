@@ -75,6 +75,7 @@ end
 
 group :production, :staging do
   gem "passenger"
+  gem 'rack-cache', require: 'rack/cache'
   gem 'rails_12factor'
   gem 'pgbackups-archive'
   gem 'heroku-api'
