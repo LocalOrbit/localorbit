@@ -83,6 +83,14 @@
     <% if current_user.admin? || current_user.market_manager? %>
       <div class="row row--field">
         <div class="field column column--half column--guttered" id="allowed-payment-methods">
+          <label>Organization Status</label><br>
+          <%= f.check_box :active %>
+          <%= f.label :active, "Organization is active" %>
+        </div>
+      </div>
+
+      <div class="row row--field">
+        <div class="field column column--half column--guttered" id="allowed-payment-methods">
           <label>Allowed payment methods</label><br>
           <% if @markets && @markets.size > 1 %>
             <p>Select a market to see payment options</p>
