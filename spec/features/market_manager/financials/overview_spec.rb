@@ -125,6 +125,18 @@ feature "Market Manager Financial Overview" do
       deliver_order(order)
       pay_order(order)
     end
+
+    # (20 + 9 + 7)*6.99 = 251.64
+    Timecop.travel(Time.current - 29.day) do
+      order = create(:order, payment_method: "purchase order", market: market, items:[
+        create(:order_item, quantity: 20, product: peas, local_orbit_seller_fee: 1.00, local_orbit_market_fee: 9.00),
+        create(:order_item, quantity: 9, product: kale, market_seller_fee: 3.00, local_orbit_market_fee: 12.00),
+        create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
+      ])
+
+      deliver_order(order)
+      pay_order(order)
+    end
   end
 
   scenario "Seller checks their financial overview" do
@@ -135,6 +147,8 @@ feature "Market Manager Financial Overview" do
     expect(money_in_row("Overdue").amount).to eql("$132.81")
     expect(money_in_row("Today").amount).to eql("$279.60")
     expect(money_in_row("Next 7 Days").amount).to eql("$1,335.09")
+    expect(money_in_row("Next 30 Days").amount).to eql("$1,726.53")
+    expect(money_in_row("Purchase Orders").amount).to eql("$1,544.79")
 
     expect(money_out_row("Next 7 Days").amount).to eql("$1,310.09")
     expect(Dom::Admin::Financials::MoneyOut.all[1].amount).to eql("$21.00")

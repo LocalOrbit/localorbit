@@ -20,6 +20,17 @@
         <td class="title">Next 7 Days</td>
         <td class="amount"><%= number_to_currency @overview.money_in_next_seven %></td>
       </tr>
+
+      <% if current_user.can_manage_market?(current_market) %>
+      <tr>
+        <td class="title">Next 30 Days</td>
+        <td class="amount"><%= number_to_currency @overview.money_in_next_thirty %></td>
+      </tr>
+      <tr>
+        <td class="title">Purchase Orders</td>
+        <td class="amount"><%= number_to_currency @overview.money_in_purchase_orders %></td>
+      </tr>
+      <% end %>
     </table>
     <% if current_user.can_manage_market?(current_market) %>
     <%= link_to "Send Invoices", [:admin, :financials, :invoices], class: "btn btn--blue btn--small" %>
@@ -31,7 +42,7 @@
     <table>
       <tr>
         <td class="title">Next 7 Days</td>
-        <td class="amount"><%= number_to_currency @overview.money_out_next_seven_days %></td>
+        <td class="amount"><%= number_to_currency @overview.money_out_next_seven %></td>
       </tr>
       <tr>
         <td class="title">
