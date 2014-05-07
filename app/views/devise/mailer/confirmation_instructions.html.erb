@@ -1,9 +1,10 @@
-<%= market_name = @resource.markets.first.try(:name) || "Local Orbit" %>
+<%# gets the market for the email layout. Isn't ideal, but works well. %>
+<% @market = @resource.organizations.last.markets.first %>
 
 <h1>Attention needed, please verify your account.</h1>
 <p>
-  Thank you for registering with <%= market_name %>. To shop or sell online, you
-  must verify your email address. Once the <%= market_name %> Market Manager
+  Thank you for registering with <%= @market.name %>. To shop or sell online, you
+  must verify your email address. Once the <%= @market.name %> Market Manager
   activates your account, you'll be all set!
 </p>
 
@@ -15,4 +16,4 @@
   </p>
 </div>
 
-<p>Thank you for supporting <%= market_name %> and your local food producers!</p>
+<p>Thank you for supporting <%= @market.name %> and your local food producers!</p>

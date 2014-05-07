@@ -28,9 +28,13 @@ class Registration
       self.organization = Organization.new(organization_params)
       self.organization.markets = [market]
       self.organization.locations.build(location_params)
-      self.user = organization.users.build(user_params)
-      self.organization.save
+      self.organization.save!
 
+      # create the user second so we have the organization available
+      # to the confirmation email
+      self.user = User.new(user_params)
+      self.user.organizations << organization
+      self.user.save!
     else
       false
     end
