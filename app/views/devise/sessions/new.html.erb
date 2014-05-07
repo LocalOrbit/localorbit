@@ -1,4 +1,4 @@
-<h1 class="clear-before page-title">Welcome to Local Orbit</h1>
+<h1 class="clear-before page-title">Welcome to <%= current_market ? current_market.name : "Local Orbit" %></h1>
 <div class="row devise-forms center-rule">
 
 <div class="column column--half">
@@ -26,6 +26,7 @@
       <% end -%>
       <%= render "devise/shared/links" %>
 
+      <%#= link_to "Request an Account", coming_soon_dashboard_path, class: 'account-request' if current_market %>
     <% end -%>
   </div>
 </div
@@ -33,11 +34,15 @@
   <div class="row row--partial">
     <div class="column column--three-fourths">
       <h2>Market Info</h2>
-      <p>If you are registered on any Local Orbit powered market, please log in using your email and password.</p>
+      <% if current_market %>
+        <%= simple_format current_market.profile %>
+      <% else %>
+        <p>If you are registered on any Local Orbit powered market, please sign in using your email and password.</p>
 
-      <p>If you are looking for a particular market, please <a href="mailto:service@localorb.it">send us a note</a> with the market name and we'll get you there.</p>
+        <p>If you are looking for a particular market, please <a href="mailto:service@localorb.it">send us a note</a> with the market name and we'll get you there.</p>
 
-      <p>If you are interested in learning more about Local Orbit's platform, please <a href="mailto:service@localorb.it">get in touch</a>.</p>
+        <p>If you are interested in learning more about Local Orbit's platform, please <a href="mailto:service@localorb.it">get in touch</a>.</p>
+      <% end %>
     </div>
   </div>
 </div>
