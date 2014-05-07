@@ -36,4 +36,8 @@ describe "An organization member" do
     expect(find_field('organization[display_facebook]')).to be_checked
     expect(find_field('organization[display_twitter]')).to be_checked
   end
+
+  it "can not change their active status" do
+    expect(page).to_not have_field("Organization is active")
+  end
 end

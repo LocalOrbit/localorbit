@@ -12,6 +12,9 @@ feature "Viewing products" do
   let!(:org2_product) { create(:product, :sellable, organization: org2, delivery_schedules: [delivery_schedule1]) }
   let!(:org2_product_deleted) { create(:product, :sellable, organization: org2, deleted_at: 1.day.ago) }
 
+  let!(:inactive_org) { create(:organization, :seller, active: false, markets: [market]) }
+  let!(:inactive_org_product) { create(:product, :sellable, organization: inactive_org, delivery_schedules: [delivery_schedule1])}
+
   let!(:other_org) { create(:organization, :seller) }
   let!(:other_products) { create_list(:product, 3, :sellable, organization: other_org) }
 

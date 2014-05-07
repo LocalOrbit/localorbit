@@ -21,6 +21,7 @@ FactoryGirl.define do
     allow_credit_cards     true
     default_allow_purchase_orders false
     default_allow_credit_cards    true
+    auto_activate_organizations   false
 
     trait :with_address do
       after(:create) {|m| create(:market_address, market: m) }

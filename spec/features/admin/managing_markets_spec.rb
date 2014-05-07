@@ -188,6 +188,17 @@ describe "Managing Markets" do
       expect(find_field("market_contact_name").value).to eq('Jane Smith')
     end
 
+    it 'can set the auto-activation flag for organization registrations' do
+      visit admin_market_path(market)
+
+      expect(find_field("Auto-activate organizations")).to_not be_checked
+      
+      check "Auto-activate organizations"
+      click_button 'Update Market'
+
+      expect(find_field("Auto-activate organizations")).to be_checked
+    end
+
     context "payment options" do
       before do
         visit admin_market_path(market)
