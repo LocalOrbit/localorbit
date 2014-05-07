@@ -21,7 +21,9 @@ class DeliveryScheduleDecorator < Draper::Decorator
   end
 
   def location_name
-    if buyer_pickup? && buyer_pickup_location.present?
+    if seller_fulfillment_location.present?
+      "at #{seller_fulfillment_location.name}"
+    elsif buyer_pickup? && buyer_pickup_location.present?
       "at #{buyer_pickup_location.name}"
     else
       "direct to customer"

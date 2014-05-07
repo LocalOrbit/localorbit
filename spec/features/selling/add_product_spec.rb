@@ -19,6 +19,7 @@ end
 describe "Adding a product" do
   let(:user) { create(:user) }
   let(:market) { create(:market, :with_addresses) }
+  let(:aggregation_point) { create(:market_address, market: market, name: "Aggregation Point", address:"1123 Grand Rd.", city:"Appleton", state:"WI", zip:"83992") }
   let(:org) { create(:organization, :seller, markets: [market]) }
   let(:loc1) {create(:location) }
   let(:stub_warning_pricing) {"Your product will not appear in the Shop until you add pricing"}
@@ -27,7 +28,9 @@ describe "Adding a product" do
   let(:organization_label) { "Product Organization" }
 
   let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1) }
-  let!(:tuesdays_schedule) { create(:delivery_schedule, market: market, day: 2) }
+  # This is the schedule we'll model after the Appleton bug
+  # Seller fulfillment location is what will show for the seller
+  let!(:tuesdays_schedule) { create(:delivery_schedule, market: market, day: 2, buyer_pickup_location_id: 0, seller_fulfillment_location: aggregation_point, buyer_pickup_start: "8:30 AM", buyer_pickup_end: "10:00 AM") }
   let!(:deleted_schedule) { create(:delivery_schedule, market: market, day: 2, deleted_at: Time.current) }
 
   before do
@@ -364,6 +367,8 @@ describe "Adding a product" do
 
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
+
+        expect(page).to have_content("Tuesdays from 7:00 AM to 11:00 AM at Aggregation Point")
 
         fill_in_required_fields(:with_chosen)
 
