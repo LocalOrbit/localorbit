@@ -13,16 +13,16 @@ class MarketManagerOverview < FinancialOverview
 
   def money_out_next_seven
     orders = []
-    orders += @cc_ach_orders.delivered.paid.having("MAX(order_items.delivered_at) >= ?", next_seven_days.begin).having("MAX(order_items.delivered_at) < ?", next_seven_days.end)
-    orders += @po_orders.delivered.paid.where(paid_at: next_seven_days.begin..next_seven_days.end)
+    orders += @cc_ach_orders.paid.delivered_between(next_seven_days)
+    orders += @po_orders.delivered.paid_between(next_seven_days)
 
     sum_money_to_sellers(orders)
   end
 
   def money_in_next_thirty
     orders = []
-    orders += @cc_ach_orders.delivered.paid.having("MAX(order_items.delivered_at) >= ?", next_seven_days.begin).having("MAX(order_items.delivered_at) < ?", next_seven_days.end)
-    orders += @po_orders.delivered.paid.having("MAX(order_items.delivered_at) >= ?", next_thirty_days.begin).having("MAX(order_items.delivered_at) < ?", next_thirty_days.end)
+    orders += @cc_ach_orders.delivered.paid.delivered_between(next_seven_days)
+    orders += @po_orders.delivered.paid.delivered_between(next_thirty_days)
 
     sum_seller_items(orders)
   end
@@ -34,7 +34,7 @@ class MarketManagerOverview < FinancialOverview
   end
 
   def lo_fees_next_seven_days
-    orders = @po_orders.delivered.paid.where(paid_at: next_seven_days.begin..next_seven_days.end)
+    orders = @po_orders.delivered.paid_between(next_seven_days)
     sum_local_orbit_fees(orders)
   end
 
