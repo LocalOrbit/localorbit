@@ -33,6 +33,9 @@ describe "Register" do
 
         expect(Organization.count).to eql(1)
         expect(Organization.last.name).to eql("Collective Idea")
+
+        open_email("daniel@collectiveidea.com")
+        expect(current_email.body).to have_content("Verify Email Address")
       end
 
       it 'is shows error messages' do

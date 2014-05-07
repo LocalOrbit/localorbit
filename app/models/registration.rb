@@ -14,7 +14,9 @@ class Registration
                 :phone,
                 :fax,
                 :buyer,
-                :seller
+                :seller,
+                :user,
+                :organization
 
   validates :name, :contact_name, :contact_email, :password,
             :password_confirmation, :address_label, :address,
@@ -24,7 +26,7 @@ class Registration
     if valid?
       organization = Organization.new(organization_params)
       organization.locations.build(location_params)
-      organization.users.build(user_params)
+      self.user = organization.users.build(user_params)
       organization.save
     else
       false

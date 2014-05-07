@@ -9,7 +9,9 @@ class RegistrationsController < ApplicationController
   def create
     @registration = Registration.new(registration_params)
 
-    if !@registration.save
+    if @registration.save
+      SendEmailConfirmationRequest.perform(user: @registration.user)
+    else
       flash.now[:alert] = "Unable to complete registration..."
       render :show
     end

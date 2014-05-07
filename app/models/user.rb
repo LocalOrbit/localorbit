@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
   include PgSearch
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  # :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :confirmable
 
   has_many :managed_markets_join, class_name: "ManagedMarket"
   has_many :managed_markets, through: :managed_markets_join, source: :market do
