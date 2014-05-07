@@ -82,20 +82,20 @@ class Product < ActiveRecord::Base
   end
 
   def self.for_sort(order)
-    column, direction = order.split(":")
+    column, direction = order.split(":").map(&:to_sym)
     case column
-    when "price"
+    when :price
       joins(:prices).select("products.*, MAX(prices.sale_price) as price").
-        group("products.id").order("price #{direction}")
-    when "stock"
+        group("products.id").order(price: direction)
+    when :stock
       joins(:lots).select("products.*, SUM(lots.quantity) as stock").
-        group("products.id").order("stock #{direction}")
-    when "seller"
-      order("organizations.name #{direction}")
-    when "market"
-      joins(organization: { market_organizations: :market}).order("markets.name #{direction}")
-    else "name"
-      order("#{column} #{direction}")
+        group("products.id").order(stock: direction)
+    when :seller
+      order("organizations.name" => direction)
+    when :market
+      joins(organization: { market_organizations: :market}).order("markets.name" => direction)
+    else
+      order(name: :direction)
     end
   end
 

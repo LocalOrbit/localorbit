@@ -49,14 +49,14 @@ class Order < ActiveRecord::Base
   scope_accessible :sort, method: :for_sort, ignore_blank: true
 
   def self.for_sort(order)
-    column, direction = order.split(":")
+    column, direction = order.split(":").map(&:to_sym)
     case column
-    when "date"
-      order("placed_at #{direction}")
-    when "buyer"
-      order("payment_status #{direction}")
+    when :date
+      order(placed_at: direction)
+    when :buyer
+      order(payment_status: direction)
     else
-      order("order_number #{direction}")
+      order(order_number: direction)
     end
   end
 
