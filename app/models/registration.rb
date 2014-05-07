@@ -4,7 +4,7 @@ class Registration
   attr_accessor :market,
                 :name,
                 :contact_name,
-                :contact_email,
+                :email,
                 :password,
                 :password_confirmation,
                 :address_label,
@@ -19,8 +19,7 @@ class Registration
                 :user,
                 :organization
 
-  validates :market, :name, :contact_name, :contact_email, :password,
-            :password_confirmation, :address_label, :address,
+  validates :market, :name, :contact_name, :address_label, :address,
             :city, :state, :zip, presence: true
 
   def save
@@ -53,7 +52,7 @@ class Registration
   def user_params
     {
       name: contact_name,
-      email: contact_email,
+      email: email,
       password: password,
       password_confirmation: password_confirmation
     }
@@ -70,4 +69,15 @@ class Registration
       fax: fax
     }
   end
+
+  # Stub methods for Devise::Model::Validatable
+  def self.validates_uniqueness_of(*args)
+    true
+  end
+
+  def email_changed?
+    true
+  end
+
+  include Devise::Models::Validatable
 end

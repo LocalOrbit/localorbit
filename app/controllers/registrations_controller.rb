@@ -23,7 +23,7 @@ class RegistrationsController < ApplicationController
     results = params.require(:registration).permit(
       :name,
       :contact_name,
-      :contact_email,
+      :email,
       :password,
       :password_confirmation,
       :buyer,
