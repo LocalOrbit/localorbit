@@ -11,6 +11,7 @@ class RegistrationsController < ApplicationController
 
     if @registration.save
       MarketMailer.registration(current_market, @registration.organization).deliver
+      redirect_to dashboard_path if @registration.user.confirmed?
     else
       flash.now[:alert] = "Unable to complete registration..."
       render :show

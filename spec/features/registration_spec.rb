@@ -53,6 +53,52 @@ describe "Register" do
         # end
       end
 
+      context "happy path with an existing email" do
+        let!(:user) { create(:user) }
+
+        before do
+          switch_to_subdomain market.subdomain
+          visit root_path
+
+          click_link "Request an Account"
+
+          expect(page).to have_content("Registration: Step One")
+
+          fill_in "Organization Name", with: "Collective Idea"
+          fill_in "Contact Name", with: "Daniel Morrison"
+          fill_in "Contact Email", with: user.email
+          fill_in "Password", with: "password1"
+          fill_in "Retype Password", with: "password1"
+
+          fill_in "Address Label", with: "Main Location"
+          fill_in "Address", with: "44 E. 8th St"
+          fill_in "City", with: "Holland"
+          select "Michigan", from: "State"
+          fill_in "Postal Code", with: "49423"
+          fill_in "Phone", with: "616-555-1963"
+
+          click_button "Sign Up"
+        end
+
+        it 'creates a new organization' do
+          expect(page).to have_content("You need to sign in or sign up before continuing.")
+
+          expect(Organization.count).to eql(1)
+          expect(Organization.last.name).to eql("Collective Idea")
+          expect(Organization.last.active).to eql(true)
+          expect(Organization.last.can_sell?).to eql(false)
+        end
+
+        it 'does not send a confirmation email' do
+          expect(mailbox_for("daniel@collectiveidea.com")).to be_empty
+        end
+
+        # it 'sends the market managers a notification' do
+        #   open_email(manager.email)
+        #   expect(current_email.body).to have_content("A new organization has registered for your market!")
+        # end
+      end
+
       context "sad path" do
         it 'is shows error messages' do
           switch_to_subdomain market.subdomain

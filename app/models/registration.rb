@@ -31,7 +31,7 @@ class Registration
 
       # create the user second so we have the organization available
       # to the confirmation email
-      self.user = User.new(user_params)
+      self.user = User.find_by(email: email) || User.new(user_params)
       self.user.organizations << organization
       self.user.save!
     else
