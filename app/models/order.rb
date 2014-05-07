@@ -45,6 +45,12 @@ class Order < ActiveRecord::Base
   scope :delivered, -> { where("order_items.delivery_status = ?", "delivered").group('orders.id') }
   scope :paid_with, lambda { |method| where(payment_method: method) }
   scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", Time.current) }
+  scope :delivered_between, lambda { |range|
+    delivered
+      .having("MAX(order_items.delivered_at) >= ?", range.begin)
+      .having("MAX(order_items.delivered_at) < ?", range.end)
+  }
+  scope :paid_between, lambda { |range| paid.where(paid_at: range) }
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
 

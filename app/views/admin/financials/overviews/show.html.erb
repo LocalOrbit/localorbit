@@ -20,6 +20,17 @@
         <td class="title">Next 7 Days</td>
         <td class="amount"><%= number_to_currency @overview.money_in_next_seven %></td>
       </tr>
+
+      <% if current_user.can_manage_market?(current_market) %>
+      <tr>
+        <td class="title">Next 30 Days</td>
+        <td class="amount"><%= number_to_currency @overview.money_in_next_thirty %></td>
+      </tr>
+      <tr>
+        <td class="title">Purchase Orders</td>
+        <td class="amount"><%= number_to_currency @overview.money_in_purchase_orders %></td>
+      </tr>
+      <% end %>
     </table>
     <% if current_user.can_manage_market?(current_market) %>
     <%= link_to "Send Invoices", [:admin, :financials, :invoices], class: "btn btn--blue btn--small" %>
@@ -31,20 +42,12 @@
     <table>
       <tr>
         <td class="title">Next 7 Days</td>
-        <td class="amount"><%= number_to_currency @overview.money_out_next_seven_days %></td>
+        <td class="amount"><%= number_to_currency @overview.money_out_next_seven %></td>
       </tr>
       <tr>
         <td class="title">
           LO Fees
-          <%= link_to raw('<i class="tooltip-popup"></i>'), "#lo-fees", class: "popup-toggle" %>
-          <div class="is-hidden with-anchor top-anchor popup" id="lo-fees">
-            <div class="popup-header">
-              What are LO Fees? <button class="close"><i class="font-icon icon-close"></i></button>
-            </div>
-            <div class="popup-body">
-              These fees are applied for purchases not made with credit cards or ACH.
-            </div>
-          </div>
+          <span class="tooltip" data-tooltip="These fees are applied for purchases not made with credit cards or ACH."></span>
         </td>
         <td class="amount"><%= number_to_currency @overview.lo_fees_next_seven_days %></td>
       </tr>

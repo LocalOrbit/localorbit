@@ -31,8 +31,8 @@ class FinancialOverview
   def money_in_today
     orders = []
 
-    orders += @cc_ach_orders.delivered.paid.having("MAX(order_items.delivered_at) >= ?", today.begin).having("MAX(order_items.delivered_at) < ?", today.end)
-    orders += @po_orders.delivered.paid.where(paid_at: today)
+    orders += @cc_ach_orders.paid.delivered_between(today)
+    orders += @po_orders.delivered.paid_between(today)
 
     sum_seller_items(orders)
   end
@@ -40,8 +40,8 @@ class FinancialOverview
   def money_in_next_seven
     orders = []
 
-    orders += @cc_ach_orders.delivered.paid.having("MAX(order_items.delivered_at) >= ?", next_seven_days.begin).having("MAX(order_items.delivered_at) < ?", next_seven_days.end)
-    orders += @po_orders.delivered.paid.where(paid_at: next_seven_days.begin..next_seven_days.end)
+    orders += @cc_ach_orders.paid.delivered_between(next_seven_days)
+    orders += @po_orders.delivered.paid_between(next_seven_days)
 
     sum_seller_items(orders)
   end
