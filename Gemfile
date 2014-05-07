@@ -23,6 +23,8 @@ gem "acts_as_geocodable", github: 'collectiveidea/acts_as_geocodable'
 gem 'awesome_nested_set', github: 'collectiveidea/awesome_nested_set'
 gem "balanced", "~> 0.7"
 gem "countries"
+gem "delayed_job"
+gem "delayed_job_active_record"
 gem 'devise'
 gem 'devise_invitable'
 gem 'dragonfly-s3_data_store'
