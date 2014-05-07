@@ -66,7 +66,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.seller_can_sell
-    joins(:organization).where(organizations: {can_sell: true})
+    joins(:organization).where(organizations: {can_sell: true, active: true})
   end
 
   def self.for_market_id(market_id)
