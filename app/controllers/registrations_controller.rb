@@ -10,7 +10,7 @@ class RegistrationsController < ApplicationController
     @registration = Registration.new(registration_params)
 
     if @registration.save
-      SendEmailConfirmationRequest.perform(user: @registration.user)
+      MarketMailer.registration(current_market, @registration.organization).deliver
     else
       flash.now[:alert] = "Unable to complete registration..."
       render :show

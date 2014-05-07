@@ -27,10 +27,13 @@ class MarketMailer < BaseMailer
   def registration(market, organization)
     @market = market
     @organization = organization
+    recipients = market.managers.map(&:email)
 
-    mail(
-      to: recipients = nil,
-      subject: "New organization registration"
-    )
+    if recipients.any?
+      mail(
+        to: recipients,
+        subject: "New organization registration"
+      )
+    end
   end
 end
