@@ -39,6 +39,7 @@ describe "Register" do
           expect(Organization.count).to eql(1)
           expect(Organization.last.name).to eql("Collective Idea")
           expect(Organization.last.active).to eql(true)
+          expect(Organization.last.can_sell?).to eql(false)
         end
 
         it 'sends a confirmation email' do
