@@ -42,6 +42,7 @@ describe "Register" do
         it 'sends a confirmation email' do
           open_email("daniel@collectiveidea.com")
           expect(current_email.body).to have_content("Verify Email Address")
+          expect(current_email.body).to have_content(market.name)
         end
 
         # it 'sends the market managers a notification' do

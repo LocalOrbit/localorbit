@@ -4,7 +4,7 @@ class Registration
   attr_accessor :market,
                 :name,
                 :contact_name,
-                :contact_email,
+                :email,
                 :password,
                 :password_confirmation,
                 :address_label,
@@ -19,8 +19,7 @@ class Registration
                 :user,
                 :organization
 
-  validates :market, :name, :contact_name, :contact_email, :password,
-            :password_confirmation, :address_label, :address,
+  validates :market, :name, :contact_name, :address_label, :address,
             :city, :state, :zip, presence: true
 
   def save
@@ -28,9 +27,13 @@ class Registration
       self.organization = Organization.new(organization_params)
       self.organization.markets = [market]
       self.organization.locations.build(location_params)
-      self.user = organization.users.build(user_params)
-      self.organization.save
+      self.organization.save!
 
+      # create the user second so we have the organization available
+      # to the confirmation email
+      self.user = User.new(user_params)
+      self.user.organizations << organization
+      self.user.save!
     else
       false
     end
@@ -49,7 +52,7 @@ class Registration
   def user_params
     {
       name: contact_name,
-      email: contact_email,
+      email: email,
       password: password,
       password_confirmation: password_confirmation
     }
@@ -66,4 +69,15 @@ class Registration
       fax: fax
     }
   end
+
+  # Stub methods for Devise::Model::Validatable
+  def self.validates_uniqueness_of(*args)
+    true
+  end
+
+  def email_changed?
+    true
+  end
+
+  include Devise::Models::Validatable
 end
