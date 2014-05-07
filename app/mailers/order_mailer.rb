@@ -29,14 +29,14 @@ class OrderMailer < BaseMailer
     )
   end
 
-  def invoice(order, addresses)
-    @market = order.market
-    @order = order
+  def invoice(order_id, addresses)
+    @order  = BuyerOrder.new(Order.find(order_id))
+    @market = @order.market
 
     user = User.find_by(email: addresses)
 
     scheme = Rails.env.production? || Rails.env.staging? ? "https://" : "http://"
-    uri = URI("#{scheme}#{order.market.subdomain}.#{Figaro.env.domain}/admin/invoices/#{order.id}/invoice.pdf?auth_token=#{user.auth_token}")
+    uri = URI("#{scheme}#{@order.market.subdomain}.#{Figaro.env.domain}/admin/invoices/#{@order.id}/invoice.pdf?auth_token=#{user.auth_token}")
 
     res = Net::HTTP.start(uri.host, uri.port, use_ssl: (uri.scheme == 'https'), verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
       http.request Net::HTTP::Get.new(uri)

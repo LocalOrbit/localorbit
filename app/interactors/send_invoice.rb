@@ -10,6 +10,6 @@ class SendInvoice
 
   def send_email
     addresses = order.organization.users.map(&:email)
-    OrderMailer.invoice(BuyerOrder.new(order), addresses).deliver unless addresses.blank?
+    OrderMailer.delay.invoice(order.id, addresses) unless addresses.blank?
   end
 end
