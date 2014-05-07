@@ -14,13 +14,13 @@ class CartsController < ApplicationController
   end
 
   def update
-    product = Product.find(item_params[:product_id])
+    product = Product.find(params[:product_id])
     delivery_date = current_delivery.deliver_on
 
-    @item = current_cart.items.find_or_initialize_by(product_id: item_params[:product_id])
+    @item = current_cart.items.find_or_initialize_by(product_id: product.id)
 
-    if item_params[:quantity].to_i > 0
-      @item.quantity = item_params[:quantity]
+    if params[:quantity].to_i > 0
+      @item.quantity = params[:quantity]
       @item.product = product
 
       if @item.quantity && @item.quantity > 0 && @item.quantity > product.available_inventory(delivery_date)
@@ -39,11 +39,5 @@ class CartsController < ApplicationController
     current_cart.destroy
     session.delete(:cart_id)
     redirect_to [:products]
-  end
-
-  private
-
-  def item_params
-    params.permit(:product_id, :quantity)
   end
 end

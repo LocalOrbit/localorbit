@@ -6,31 +6,33 @@
 
 <% @sellers.each do |seller| %>
 <div class="vendor-payment">
-  <h2><%= seller.name %></h2>
   <%= form_tag [:admin, :financials, :vendor_payments] do %>
     <%= hidden_field_tag :seller_id, seller.id %>
     <table class="total">
+      <% if @last_seller != seller.organization %>
+      <% @last_seller = seller.organization %>
       <tr class="table-header">
-        <th class="order-count"></th>
+        <th class="order-count"><h2><%= seller.name %></h2></th>
         <th class="delivery-status">Delivery</th>
         <th class="buyer-payment-status">Payment</th>
         <th class="owed">Total</th>
         <th class="pay-now"></th>
       </tr>
+      <% end %>
       <tr class="product-row">
-        <td class="order-count"><%= pluralize(seller.order_count, "order") %> <%= link_to "Review", "#", class: "review-orders" %></td>
+        <td class="order-count"><%= pluralize(seller.order_count, "order") %> from <b><%= seller.market_name %></b> <%= link_to "Review", "#", class: "review-orders" %></td>
         <td class="delivery-status">All Delivered</td>
         <td class="buyer-payment-status"><%= seller.unpaid_count == 0 ? "All paid" : "#{seller.unpaid_count} unpaid" %></td>
         <td class="owed"><%= number_to_currency seller.owed %></td>
         <td class="pay-now action-link"><%= link_to raw('<i class="font-icon icon-money"></i> Pay All Now'), "#", class: 'pay-all-now' %></td>
       </tr>
     </table>
-    <table class="is-hidden">
+    <table class="order-details is-hidden">
       <% seller.orders.each do |order| %>
         <tr class="payment-order">
-          <td><%= check_box_tag 'order_ids[]', order.id, true, class: 'seller-order-id', data: {owed: order.net_total} %></td>
+          <td><%= check_box_tag 'payment[order_ids][]', order.id, true, class: 'seller-order-id', data: {owed: order.net_total} %></td>
           <td class="order-number">
-            <%= link_to order.order_number, admin_order_path(order) %>
+            <%= link_to order.order_number, admin_order_path(order.id) %>
             <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
           </td>
           <td class="order-placed-on"><%= order.placed_at.strftime("%b %d, %Y") %></td>
@@ -43,10 +45,33 @@
         <td colspan="5" class="math">Total Selected</td>
         <td class="total-owed line-total"><%= number_to_currency seller.owed %></td>
       </tr>
-      <tr class="make-payment">
-        <td colspan="6" class="math pay-selected"><%= submit_tag 'Pay Selected Now', class: 'btn--small' %></td>
+      <tr class="make-payment pay-selected-now">
+        <td colspan="6" class="math pay-selected"><%= link_to "Pay Selected Now", "#", class: "btn btn--save btn--small" %></td>
       </tr>
     </table>
+    <div class="payment-details is-hidden">
+       <div class="payment-types">
+          <b>Payment Type</b>
+         <label><%= radio_button_tag "payment[payment_type]", "cash" %> Cash</label>
+         <label><%= radio_button_tag "payment[payment_type]", "check" %> Check</label>
+       </div>
+       <div class="payment-notes">
+         <span class="cash is-hidden">
+           <%= label_tag "payment[note]", "Note" %>
+           <%= text_field_tag "payment[note]", "", disabled: true %>
+         </span>
+         <span class="check is-hidden">
+           <%= label_tag "payment[note]", "Check #" %>
+           <%= text_field_tag "payment[note]", "", disabled: true %>
+         </span>
+         <span class="record-payment is-hidden">
+           <%= submit_tag "Record Payment", class: "btn--small" %>
+           <a href="#" class="cancel">Cancel</a>
+         </span>
+
+       </div>
+       <div class="clearfix"></div>
+    </div>
   <% end %>
 </div>
 <% end %>

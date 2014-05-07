@@ -10,7 +10,7 @@ module Admin
     private
 
     def new_unit_params
-      params.permit([
+      params.require(:unit).permit([
         :singular, :plural, :additional_notes
       ])
     end

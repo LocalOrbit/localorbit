@@ -15,7 +15,7 @@ describe Admin::MarketsController do
   describe "#create" do
     context "when not signed in", :vcr do
       it_behaves_like "admin only action", lambda {
-        post :create, market: attributes_for(:market)
+        post :create, market: {name: "Major Market", subdomain: "major-market", contact_name: "Johnny", contact_email: "johnny@example.com"}
       }
     end
 

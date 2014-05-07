@@ -15,8 +15,8 @@ module Admin
     end
 
     def create
-      @organization = current_user.managed_organizations.selling.find_by_id(params[:product][:organization_id])
-      @product = Product.new(product_params.merge(organization: @organization)).decorate
+      @product = Product.new(product_params).decorate
+      @product.organization = current_user.managed_organizations.selling.find_by_id(@product.organization_id)
 
       if @product.save
         redirect_to after_create_page, notice: "Added #{@product.name}"
@@ -56,13 +56,13 @@ module Admin
 
     def product_params
       results = params.require(:product).permit(
-        :name, :image, :category_id, :unit_id, :location_id,
+        :name, :image, :category_id, :unit_id, :location_id, :organization_id,
         :short_description, :long_description,
         :who_story, :how_story,
         :use_simple_inventory, :simple_inventory, :use_all_deliveries,
         delivery_schedule_ids: []
       )
-      
+
       results.merge!(delivery_schedule_ids:[] ) unless results[:delivery_schedule_ids]
       results
     end

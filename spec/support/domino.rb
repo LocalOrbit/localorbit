@@ -228,8 +228,27 @@ module Dom
       class VendorPaymentRow < Domino
         selector ".vendor-payment"
 
+        def self.for_seller(name)
+          matches = all.select {|p| p.name.text == name }
+          if matches.size == 1
+            matches.first
+          elsif matches.size > 1
+            raise "more than one match for #{name}"
+          else
+            raise "no matches for #{name}"
+          end
+        end
+
         def review
           node.click_link('Review')
+        end
+
+        def pay_all_now
+          node.find_link('Pay All Now').trigger('click')
+        end
+
+        def pay_selected
+          node.click_link('Pay Selected Now')
         end
 
         def name

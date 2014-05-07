@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Payments to vendors" do
-  let(:market) { create(:market, po_payment_term: 14) }
+  let(:market) { create(:market, name: "Baskerville Co-op", po_payment_term: 14) }
   let!(:market_manager) { create :user, managed_markets: [market] }
 
   let!(:seller1) { create(:organization, :seller, name: "Better Farms", markets: [market]) }
@@ -30,21 +30,21 @@ feature "Payments to vendors" do
     seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
 
     expect(seller_rows.size).to eq(3)
-    expect(seller_rows[0].name).to have_content(seller1.name)
-    expect(seller_rows[0].order_count).to have_content(/\A1 order Review/)
+    expect(seller_rows[0].name).to have_content("Better Farms")
+    expect(seller_rows[0].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
     expect(seller_rows[0].owed).to have_content("$27.96")
 
-    expect(seller_rows[1].name).to have_content(seller3.name)
-    expect(seller_rows[1].order_count).to have_content(/\A1 order Review/)
+    expect(seller_rows[1].name).to have_content("Betterest Farms")
+    expect(seller_rows[1].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
     expect(seller_rows[1].owed).to have_content("$48.93")
 
-    expect(seller_rows[2].name).to have_content(seller2.name)
-    expect(seller_rows[2].order_count).to have_content(/\A3 orders Review/)
+    expect(seller_rows[2].name).to have_content("Great Farms")
+    expect(seller_rows[2].order_count).to have_content(/\A3 orders from Baskerville Co-op Review/)
     expect(seller_rows[2].owed).to have_content("$223.68")
   end
 
   scenario "de-selecting orders", :js do
-    seller_row = Dom::Admin::Financials::VendorPaymentRow.all.last
+    seller_row = Dom::Admin::Financials::VendorPaymentRow.for_seller("Great Farms")
     seller_row.review
 
     orders = Dom::Admin::Financials::VendorPaymentOrderRow.all
@@ -67,5 +67,47 @@ feature "Payments to vendors" do
     orders[1].click_check
 
     expect(seller_row.selected_owed).to have_content("$181.74")
+  end
+
+  scenario "mark all orders for seller paid", :js do
+    seller_row = Dom::Admin::Financials::VendorPaymentRow.for_seller("Great Farms")
+    seller_row.pay_all_now
+
+    choose "Check"
+    fill_in "Check #", with: "4234"
+
+    click_button "Record Payment"
+
+    expect(page).to have_content("Payment of $223.68 recorded for Great Farms")
+
+    # Great Farms should no longer be in the payments list
+    seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+    expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms", "Betterest Farms"])
+  end
+
+  scenario "mark selected orders for seller paid", :js do
+    seller_row = Dom::Admin::Financials::VendorPaymentRow.for_seller("Great Farms")
+    seller_row.review
+
+    orders = Dom::Admin::Financials::VendorPaymentOrderRow.all
+    orders[1].click_check
+
+    click_link 'Pay Selected Now'
+
+    choose "Check"
+    fill_in "Check #", with: "4234"
+
+    click_button "Record Payment"
+
+    expect(page).to have_content("Payment of $181.74 recorded for Great Farms")
+
+    # Great Farms should still be in the payments list
+    seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+    expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms", "Betterest Farms", "Great Farms"])
+
+    # With 1 order
+    expect(seller_rows[2].name).to have_content("Great Farms")
+    expect(seller_rows[2].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
+    expect(seller_rows[2].owed).to have_content("$41.94")
   end
 end

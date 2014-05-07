@@ -37,6 +37,6 @@ class Admin::PricesController < AdminController
   private
 
   def price_params
-    params.require(:price).permit(:market_id, :organization_id, :min_quantity, :sale_price)
+    params.require(:price).slice(:market_id, :organization_id, :min_quantity, :sale_price).permit!
   end
 end
