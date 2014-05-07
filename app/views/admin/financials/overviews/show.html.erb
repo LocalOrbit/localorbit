@@ -47,15 +47,7 @@
       <tr>
         <td class="title">
           LO Fees
-          <%= link_to raw('<i class="tooltip-popup"></i>'), "#lo-fees", class: "popup-toggle" %>
-          <div class="is-hidden with-anchor top-anchor popup" id="lo-fees">
-            <div class="popup-header">
-              What are LO Fees? <button class="close"><i class="font-icon icon-close"></i></button>
-            </div>
-            <div class="popup-body">
-              These fees are applied for purchases not made with credit cards or ACH.
-            </div>
-          </div>
+          <span class="tooltip" data-tooltip="These fees are applied for purchases not made with credit cards or ACH."></span>
         </td>
         <td class="amount"><%= number_to_currency @overview.lo_fees_next_seven_days %></td>
       </tr>
