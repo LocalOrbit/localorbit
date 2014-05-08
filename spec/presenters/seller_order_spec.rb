@@ -1,14 +1,58 @@
 require "spec_helper"
 
 describe SellerOrder do
-  let!(:seller) { create(:user, :seller) }
-  let!(:product) { create(:product, :sellable, organization: seller.organizations.first) }
-  let!(:items) { create_list(:order_item, 3, product: product, delivery_status: "pending") }
-  let!(:order) { create(:order, items: items, organization: seller.organizations.first, market: seller.markets.first) }
-  let!(:seller_order) { SellerOrder.new(order, seller) }
+  let!(:market)   { create(:market) }
+  let!(:buyer)    { create(:organization, :buyer, markets: [market]) }
+  let!(:seller1)  { create(:organization, :seller, markets: [market]) }
+  let!(:seller2)  { create(:organization, :seller, markets: [market]) }
+  let!(:product1) { create(:product, :sellable, organization: seller1) }
+  let!(:product2) { create(:product, :sellable, organization: seller2) }
+  let!(:product3) { create(:product, :sellable, organization: seller1) }
+  let!(:item1)    { create(:order_item, product: product1, delivery_status: "pending") }
+  let!(:item2)    { create(:order_item, product: product2, delivery_status: "pending") }
+  let!(:item3)    { create(:order_item, product: product3, delivery_status: "pending") }
+  let!(:order)    { create(:order, items: [item1, item2, item3], organization: buyer, market: market) }
+
+  describe "#items" do
+    it "loads the right items for seller 1 organization" do
+      seller_order = SellerOrder.new(order, seller1)
+
+      expect(seller_order.items).to eq([item1, item3])
+    end
+
+    it "loads the right items for seller 2 organization" do
+      seller_order = SellerOrder.new(order, seller2)
+
+      expect(seller_order.items).to eq([item2])
+    end
+
+    it "loads the right items for seller 1 user" do
+      seller_order = SellerOrder.new(order, create(:user, organizations: [seller1]))
+
+      expect(seller_order.items).to eq([item1, item3])
+    end
+
+    it "loads the right items for seller 2 user" do
+      seller_order = SellerOrder.new(order, create(:user, organizations: [seller2]))
+
+      expect(seller_order.items).to eq([item2])
+    end
+
+    it "loads all items for a market manager" do
+      seller_order = SellerOrder.new(order, create(:user, managed_markets: [market]))
+
+      expect(seller_order.items).to eq([item1, item2, item3])
+    end
+
+    it "loads all items for an admin" do
+      seller_order = SellerOrder.new(order, create(:user, :admin))
+
+      expect(seller_order.items).to eq([item1, item2, item3])
+    end
+  end
 
   describe "#delivery_status" do
-    subject { seller_order.delivery_status }
+    subject { SellerOrder.new(order, seller1).delivery_status }
 
     context "when all items pending" do
       it { should eq("pending") }
@@ -25,19 +69,19 @@ describe SellerOrder do
     end
 
     context "when at least one item is pending and delivered" do
-      before { items.first.update_attributes(delivery_status: "delivered") }
+      before { item1.update_attributes(delivery_status: "delivered") }
       it { should eq("partially delivered") }
     end
 
     context "when any item is contested" do
-      before { items.first.update_attributes(delivery_status: "contested") }
+      before { item1.update_attributes(delivery_status: "contested") }
       it { should eq("contested") }
     end
 
     context "when at least one item is contested, delivered, and pending" do
       before do
-        items.first.update_attributes(delivery_status: "contested")
-        items.last.update_attributes(delivery_status: "delivered")
+        item1.update_attributes(delivery_status: "contested")
+        item3.update_attributes(delivery_status: "delivered")
       end
 
       it { should eq("contested, partially delivered") }
