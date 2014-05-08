@@ -62,7 +62,7 @@ class Organization < ActiveRecord::Base
   end
 
   def can_cross_sell?
-    markets.where(allow_cross_sell: true).any?
+    can_sell? && markets.where(allow_cross_sell: true).any?
   end
 
   def update_product_delivery_schedules(market)
