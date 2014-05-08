@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   include PgSearch
+  include Sortable
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
@@ -24,8 +25,7 @@ class User < ActiveRecord::Base
   scope_accessible :search, method: :for_search, ignore_blank: true
 
   def self.for_sort(order)
-    column, direction = order.split(':').map(&:to_sym)
-
+    column, direction = column_and_direction(order)
     order(column => direction)
   end
 

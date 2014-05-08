@@ -2,6 +2,7 @@ class Order < ActiveRecord::Base
   PAYMENT_METHODS = ['purchase order', 'credit card', 'ach'].freeze
 
   include DeliveryStatus
+  include Sortable
 
   attr_accessor :credit_card, :bank_account
 
@@ -55,7 +56,7 @@ class Order < ActiveRecord::Base
   scope_accessible :sort, method: :for_sort, ignore_blank: true
 
   def self.for_sort(order)
-    column, direction = order.split(":").map(&:to_sym)
+    column, direction = column_and_direction(order)
     case column
     when :date
       order(placed_at: direction)

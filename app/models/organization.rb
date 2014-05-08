@@ -42,7 +42,7 @@ class Organization < ActiveRecord::Base
   end
 
   def self.for_sort(order)
-    column, direction = order.split(":").map(&:to_sym)
+    column, direction = column_and_direction(order)
     case column
     when :can_sell
       order(can_sell: direction)
