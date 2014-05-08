@@ -97,7 +97,7 @@ class Product < ActiveRecord::Base
     when :market
       joins(organization: { market_organizations: :market}).order("markets.name" => direction)
     else
-      order(name: :direction)
+      order(name: direction)
     end
   end
 

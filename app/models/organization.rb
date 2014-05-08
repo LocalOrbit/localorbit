@@ -1,4 +1,5 @@
 class Organization < ActiveRecord::Base
+  include Sortable
   has_many :market_organizations
   has_many :user_organizations
 
