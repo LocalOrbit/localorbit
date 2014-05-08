@@ -109,7 +109,7 @@ FactoryGirl.define do
   end
 
   factory :order_item do
-    sequence(:name) {|n| "Order Item #{n}"}
+    sequence(:name) {|n| product.name || "Order Item #{n}"}
     seller_name     "Old McDonald"
     quantity        1
     unit            "per box"

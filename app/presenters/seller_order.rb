@@ -5,9 +5,9 @@ class SellerOrder
   def initialize(order, seller)
     @order = order
     if seller.is_a?(User)
-      @items = order.items.select("order_items.*").joins(:product).where("products.organization_id" => seller.managed_organizations.pluck(:id)).order('products.name')
+      @items = order.items.select("order_items.*").joins(:product).where("products.organization_id" => seller.managed_organizations.pluck(:id)).order('order_items.name')
     elsif seller.is_a?(Organization)
-      @items = order.items.select("order_items.*").joins(:product).where("products.organization_id" => seller.id).order('products.name')
+      @items = order.items.select("order_items.*").joins(:product).where("products.organization_id" => seller.id).order('order_items.name')
     end
   end
 
