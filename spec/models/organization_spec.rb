@@ -63,6 +63,29 @@ describe Organization do
     end
   end
 
+  describe "#can_cross_sell?" do
+    context "as a buyer" do
+      it "returns false" do
+        organization = build(:organization, :buyer)
+        expect(organization.can_cross_sell?).to eq(false)
+      end
+    end
+
+    context "as a seller" do
+      let!(:market) { create(:market, allow_cross_sell: true) }
+      let!(:seller) { create(:organization, :seller, markets: [market]) }
+
+      it "returns false if none of the markets allow cross sell." do
+        market.update! allow_cross_sell: false
+        expect(seller.can_cross_sell?).to eq(false)
+      end
+
+      it "returns true if a market allows cross selling" do
+        expect(seller.can_cross_sell?).to eq(true)
+      end
+    end
+  end
+
   describe "#cross_sells" do
     let!(:cross_sell_market)  { create(:market, allow_cross_sell: true) }
     let!(:wednesday_delivery) { create(:delivery_schedule, market: cross_sell_market, day: 3) }
