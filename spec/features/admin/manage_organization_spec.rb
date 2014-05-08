@@ -9,8 +9,8 @@ describe "admin manange organization", :vcr do
   end
 
   it "create new organization with multiple markets available", js: true do
-    create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: false)
-    create(:market, name: "Market 2", default_allow_purchase_orders: false, default_allow_credit_cards: true)
+    create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: true, default_allow_ach: true)
+    create(:market, name: "Market 2", allow_purchase_orders: false, default_allow_purchase_orders: false, default_allow_credit_cards: true, default_allow_ach: false)
 
     visit "/admin/organizations"
     click_link "Add Organization"
@@ -19,10 +19,12 @@ describe "admin manange organization", :vcr do
 
     select "Market 1", from: "Market"
 
-    expect(find("#organization_allow_purchase_orders")).to be_checked
-    expect(find("#organization_allow_credit_cards")).to_not be_checked
+    expect(find_field("Allow purchase orders")).to be_checked
+    expect(find_field("Allow credit cards")).to be_checked
+    expect(find_field("Allow ACH")).to be_checked
 
     select "Market 2", from: "Market"
+
     fill_in "Name", with: "University of Michigan Farmers"
     fill_in "Who",  with: "Who Story"
     fill_in "How",  with: "How Story"
@@ -35,9 +37,9 @@ describe "admin manange organization", :vcr do
     fill_in "Phone", with: "616-555-9983"
     fill_in "Fax", with: "616-555-9984"
 
-    expect(find("#organization_allow_purchase_orders")).to_not be_checked
-    expect(find("#organization_allow_credit_cards")).to be_checked
-    expect(find("#organization_allow_ach")).to be_checked
+    expect(page).to_not have_field("Allow purchase orders")
+    expect(find_field("Allow credit cards")).to be_checked
+    expect(find_field("Allow ACH")).to_not be_checked
 
     click_button "Add Organization"
 
