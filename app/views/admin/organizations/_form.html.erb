@@ -95,12 +95,18 @@
           <% if @markets && @markets.size > 1 %>
             <p>Select a market to see payment options</p>
           <% else %>
-            <%= f.check_box :allow_purchase_orders %>
-            <%= f.label :allow_purchase_orders %><br>
-            <%= f.check_box :allow_credit_cards %>
-            <%= f.label :allow_credit_cards %><br>
-            <%= f.check_box :allow_ach %>
-            <%= f.label :allow_ach, "Allow ACH" %><br>
+            <% if allow_payment_type?("allow_purchase_orders") %>
+              <%= f.check_box :allow_purchase_orders %>
+              <%= f.label :allow_purchase_orders %><br>
+            <% end %>
+            <% if allow_payment_type?("allow_credit_cards") %>
+              <%= f.check_box :allow_credit_cards %>
+              <%= f.label :allow_credit_cards %><br>
+            <% end %>
+            <% if allow_payment_type?("allow_ach") %>
+              <%= f.check_box :allow_ach %>
+              <%= f.label :allow_ach, "Allow ACH" %><br>
+            <% end %>
           <% end %>
         </div>
       </div>
