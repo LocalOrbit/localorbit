@@ -205,6 +205,9 @@ th {
     .font-icon {
       font-size: 14px;
     }
+    > li {
+      position: relative;
+    }
   }
   a.name {
     margin: 0;

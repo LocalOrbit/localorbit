@@ -16,9 +16,9 @@
       <td class="info">
       <div class="product-image">
       <% if product.image_uid.present? %>
-        <%= image_tag product.image.thumb('75x').url %>
+        <%= image_tag product.image.thumb('75x').url, alt: "" %>
       <% else %>
-        <%= image_tag 'default-product-image.png' %>
+        <%= image_tag 'default-product-image.png', alt: "" %>
       <% end %>
       </div>
         <h3 class="name"><%= link_to product.name, product, tabindex: -1 %></h3>
