@@ -45,6 +45,18 @@ describe "admin manange organization", :vcr do
     expect(find_field("Organization is active")).to be_checked
   end
 
+  it "should not see payment types that are disabled for the market", js: true do
+    create(:market, name: "Market 1", allow_purchase_orders: false, allow_credit_cards: true, allow_ach: true)
+
+    visit "/admin/organizations"
+    click_link "Add Organization"
+
+    expect(page).to_not have_field("Allow purchase orders")
+    expect(page).to have_field("Allow credit cards")
+    expect(page).to have_field("Allow ACH")
+  end
+
+
   it "create new organization", js: true do
     create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: false, default_allow_ach: false)
 

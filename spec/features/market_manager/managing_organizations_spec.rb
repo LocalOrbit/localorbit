@@ -152,6 +152,17 @@ describe "A Market Manager", :vcr do
       end
     end
 
+    it "should not see payment types that are disabled for the market", js: true do
+      market.update_attribute(:allow_purchase_orders, false)
+
+      visit "/admin/organizations"
+      click_link "Add Organization"
+
+      expect(page).to_not have_field("Allow purchase orders")
+      expect(page).to have_field("Allow credit cards")
+      expect(page).to have_field("Allow ACH")
+    end
+
     it "allows updating all attributes" do
       visit "/admin/organizations"
       click_link "Fresh Pumpkin Patch"
