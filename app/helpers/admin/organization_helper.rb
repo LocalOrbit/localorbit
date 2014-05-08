@@ -9,10 +9,13 @@ module Admin
     end
 
     def allow_payment_type?(column)
+      column = column.to_sym
       if @markets
-        @markets.where("#{column} = 't'").any?
+        @markets.where(column => true).any?
       elsif @organization
-        @organization.markets.where("#{column} = 't'").any?
+        @organization.markets.where(column => true).any?
+      else
+        false
       end
     end
   end
