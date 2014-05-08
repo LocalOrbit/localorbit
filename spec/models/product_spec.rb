@@ -508,4 +508,19 @@ describe Product do
       end
     end
   end
+
+  describe ".for_sort" do
+    context "by price" do
+      let!(:market) { create(:market) }
+      let!(:organization) { create(:organization, :seller, markets: [market]) }
+      let!(:product_with_prices) { create(:product, :sellable, organization: organization) }
+      let!(:product_without_prices) { create(:product, :sellable, organization: organization) }
+
+      it "sorts products without a price" do
+        product_without_prices.prices = []
+        sorted = organization.products.for_sort("price:asc")
+        expect(sorted).to eq([product_with_prices])
+      end
+    end
+  end
 end

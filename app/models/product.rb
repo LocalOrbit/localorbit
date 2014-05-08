@@ -86,8 +86,9 @@ class Product < ActiveRecord::Base
     column, direction = column_and_direction(order)
     case column
     when :price
+      # FIXME: this filters out prodiucts without prices. Is that ok?
       joins(:prices).select("products.*, MAX(prices.sale_price) as price").
-        group("products.id").order(price: direction)
+        group("products.id").order("price #{direction}")
     when :stock
       joins(:lots).select("products.*, SUM(lots.quantity) as stock").
         group("products.id").order(stock: direction)
