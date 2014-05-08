@@ -4,6 +4,8 @@
     <%= render "shared/errors", { resource: @verification } %>
     <p>Please confirm the two micro deposits made to the following account.</p>
 
+    <p>Verification amounts normally show on the bank account owner's statement as &quot;Balanced verification&quot; within 2 business days.</p>
+
     <ul class="bank-info">
       <li><strong><%= @verification.bank_account.bank_name %></strong></li>
       <li><%= @verification.bank_account.account_type %></li>
