@@ -9,7 +9,7 @@ describe "Viewing the cart", js: true do
 
   let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms]) }
   let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
-  let(:delivery_day) { DateTime.parse("May 9, 2014, 11:00:00") }
+  let(:delivery_day) { DateTime.parse("May 16, 2014, 11:00:00") }
   let(:delivery) {
     create(:delivery,
       delivery_schedule: delivery_schedule,
@@ -27,7 +27,7 @@ describe "Viewing the cart", js: true do
 
   let!(:kale) { create(:product, :sellable, name: "Kale", organization: fulton_farms) }
   let!(:kale_lot) { kale.lots.first.update_attribute(:quantity, 100) }
-  let!(:kale_lot_expired) { create(:lot, product: kale, number: 1, quantity: 25, expires_at: DateTime.parse("May 8, 2014")) }
+  let!(:kale_lot_expired) { create(:lot, product: kale, number: 1, quantity: 25, expires_at: DateTime.parse("May 15, 2014")) }
   let!(:kale_price_tier1) {
     create(:price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
   }
@@ -48,7 +48,7 @@ describe "Viewing the cart", js: true do
   let!(:cart_kale) { create(:cart_item, cart: cart, product: kale, quantity: 20) }
 
   before do
-    Timecop.travel("May 5, 2014")
+    Timecop.travel("May 12, 2014")
   end
 
   after do
@@ -108,7 +108,7 @@ describe "Viewing the cart", js: true do
       it "shows delivery address" do
         within("#address") do
           expect(page).to have_content("Delivery Address")
-          expect(page).to have_content("Delivery on May 9, 2014 between 7:00AM and 11:00AM")
+          expect(page).to have_content("Delivery on May 16, 2014 between 7:00AM and 11:00AM")
           expect(page).to have_content(address.address)
           expect(page).to have_content(address.city)
           expect(page).to have_content(address.state)
@@ -124,7 +124,7 @@ describe "Viewing the cart", js: true do
       it "shows pickup address" do
         within("#address") do
           expect(page).to have_content("Delivery Address")
-          expect(page).to have_content("Pickup on May 9, 2014 between 10:00AM and 12:00PM")
+          expect(page).to have_content("Pickup on May 16, 2014 between 10:00AM and 12:00PM")
           expect(page).to have_content(address.address)
           expect(page).to have_content(address.city)
           expect(page).to have_content(address.state)

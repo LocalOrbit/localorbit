@@ -1,4 +1,5 @@
 class Market < ActiveRecord::Base
+  include Sortable
   validates :name, :subdomain, presence: true, uniqueness: true, length: {maximum: 255, allow_blank: true}
   validates :subdomain, exclusion: {in: %w(app www mail ftp smtp imap docs calendar community service support)}
   validates :tagline, length: {maximum: 255, allow_blank: true}
@@ -29,7 +30,7 @@ class Market < ActiveRecord::Base
   scope_accessible :sort, method: :for_sort, ignore_blank: true
 
   def self.for_sort(order)
-    column, direction = order.split(":").map(&:to_sym)
+    column, direction = column_and_direction(order)
     case column
     when :contact
       order(contact_name: direction)

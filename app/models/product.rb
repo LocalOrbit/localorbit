@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
   include SoftDelete
   include PgSearch
+  include Sortable
 
   belongs_to :category
   belongs_to :top_level_category, class: Category
@@ -82,7 +83,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.for_sort(order)
-    column, direction = order.split(":").map(&:to_sym)
+    column, direction = column_and_direction(order)
     case column
     when :price
       joins(:prices).select("products.*, MAX(prices.sale_price) as price").
