@@ -1,5 +1,6 @@
 class BuyerOrder
   include OrderPresenter
+  include DeliveryStatus
 
   def initialize(order)
     @order = order
