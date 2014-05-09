@@ -157,14 +157,6 @@ class Order < ActiveRecord::Base
     order
   end
 
-  def delivered_at
-    items.maximum(:delivered_at) if self.delivered?
-  end
-
-  def sellers
-    items.map {|item| item.seller }.uniq
-  end
-
   def self.joining_products
     joins(items: :product).includes(:items).group("orders.id").order("organization_id DESC")
   end
@@ -178,6 +170,10 @@ class Order < ActiveRecord::Base
       map(&:items).flatten.group_by(&:product)
   end
 
+  def delivered_at
+    items.maximum(:delivered_at) if self.delivered?
+  end
+
   def invoice
     self.invoiced_at      = Time.current
     self.invoice_due_date = market.po_payment_term.days.from_now(invoiced_at)
@@ -185,6 +181,14 @@ class Order < ActiveRecord::Base
 
   def invoiced?
     invoiced_at.present?
+  end
+
+  def paid_seller_ids
+    @paid_seller_ids ||= payments.where(payee_type: 'Organization').pluck(:payee_id)
+  end
+
+  def sellers
+    items.map {|item| item.seller }.uniq
   end
 
   def subtotal

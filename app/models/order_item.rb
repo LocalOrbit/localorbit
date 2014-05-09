@@ -50,6 +50,10 @@ class OrderItem < ActiveRecord::Base
     joins(:product).where(products: {organization_id: user.managed_organizations.pluck(:id).uniq})
   end
 
+  def buyer_payment_status
+    order.payment_status
+  end
+
   def seller_net_total
     gross_total - market_seller_fee - local_orbit_seller_fee - payment_seller_fee
   end
@@ -70,6 +74,10 @@ class OrderItem < ActiveRecord::Base
 
   def seller
     product.organization
+  end
+
+  def seller_payment_status
+    @seller_payment_status ||= order.paid_seller_ids.include?(product.organization_id) ? 'Paid' : 'Unpaid'
   end
 
   private

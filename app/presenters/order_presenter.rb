@@ -35,11 +35,6 @@ module OrderPresenter
     totals[:payment]
   end
 
-  def seller_payment_status
-    # TODO: Make work after Payments exists
-    "Unpaid"
-  end
-
   def transaction_fees
     totals[:transaction]
   end
