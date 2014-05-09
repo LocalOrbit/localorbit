@@ -64,8 +64,8 @@
       <td class="price"><%= number_to_currency item.unit_price %></td>
       <td class="discount"><%= number_to_currency item.discount %></td>
       <td class="total"><%= number_to_currency item.gross_total %></td>
-      <td class="delivery-status"><%= item.delivery_status %></td>
-      <td class="payment-status"><%= item.buyer_payment_status %></td>
+      <td class="delivery-status"><%= item.delivery_status.titleize %></td>
+      <td class="payment-status"><%= item.buyer_payment_status.titleize %></td>
       <td class="seller-status"><%= item.seller_payment_status %></td>
     </tr>
     <% end %>
