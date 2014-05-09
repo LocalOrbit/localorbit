@@ -24,7 +24,7 @@
         <td class="delivery-status">All Delivered</td>
         <td class="buyer-payment-status"><%= seller.unpaid_count == 0 ? "All paid" : "#{seller.unpaid_count} unpaid" %></td>
         <td class="owed"><%= number_to_currency seller.owed %></td>
-        <td class="pay-now action-link"><%= link_to raw('<i class="font-icon icon-money"></i> Pay All Now'), "#", class: 'pay-all-now' %></td>
+        <td class="pay-now action-link"><%= link_to raw('<i class="font-icon icon-money"></i> Record Payment'), "#", class: 'pay-all-now' %></td>
       </tr>
     </table>
     <table class="order-details is-hidden">
@@ -46,7 +46,7 @@
         <td class="total-owed line-total"><%= number_to_currency seller.owed %></td>
       </tr>
       <tr class="make-payment pay-selected-now">
-        <td colspan="6" class="math pay-selected"><%= link_to "Pay Selected Now", "#", class: "btn btn--save btn--small" %></td>
+        <td colspan="6" class="math pay-selected"><%= link_to "Record Payment", "#", class: "btn btn--save btn--small" %></td>
       </tr>
     </table>
     <div class="payment-details is-hidden">
@@ -65,7 +65,7 @@
            <%= text_field_tag "payment[note]", "", disabled: true %>
          </span>
          <span class="record-payment is-hidden">
-           <%= submit_tag "Pay Selected Now", class: "btn--small" %>
+           <%= submit_tag "Record Payment", class: "btn--small" %>
            <a href="#" class="cancel">Cancel</a>
          </span>
 

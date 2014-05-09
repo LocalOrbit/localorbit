@@ -78,7 +78,7 @@ feature "Payments to vendors" do
     choose "Check"
     fill_in "Check #", with: "4234"
 
-    click_button "Pay Selected Now"
+    click_button "Record Payment"
 
     expect(page).to have_content("Payment of $223.68 recorded for Great Farms")
 
@@ -94,12 +94,12 @@ feature "Payments to vendors" do
     orders = Dom::Admin::Financials::VendorPaymentOrderRow.all
     orders[1].click_check
 
-    click_link 'Pay Selected Now'
+    seller_row.pay_selected
 
     choose "Check"
     fill_in "Check #", with: "4234"
 
-    click_button "Pay Selected Now"
+    click_button "Record Payment"
 
     expect(page).to have_content("Payment of $181.74 recorded for Great Farms")
 
