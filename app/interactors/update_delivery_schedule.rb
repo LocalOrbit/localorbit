@@ -6,6 +6,6 @@ class UpdateDeliverySchedule
   end
 
   def perform
-    delivery_schedule.update_attributes(params)
+    delivery_schedule.update(params) || context.fail!
   end
 end

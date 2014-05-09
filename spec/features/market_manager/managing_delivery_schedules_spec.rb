@@ -102,6 +102,37 @@ describe 'Market Manager managing delivery schedules' do
       expect(schedule.delivery_time).to include("3:00 AM – #{delivery1.seller_delivery_end}")
     end
 
+    # Bug #70847574
+    it "edits a delivery schedule's fulfillment method" do
+      click_link 'Deliveries'
+
+      schedule = Dom::Admin::DeliverySchedule.first
+      expect(schedule.delivery_address).to have_content("Direct to customer")
+
+      click_link delivery1.weekday
+      select '3:00 AM', from: 'Seller delivery start'
+      select address.name, from: 'Fulfillment method'
+
+      click_button 'Save Delivery'
+
+      expect(page.body).to have_content("Buyer pickup start must be after delivery start")
+
+      select '3:00 AM', from: 'Seller delivery start'
+      select '4:00 AM', from: 'Seller delivery end'
+      select '6:00 AM', from: 'Buyer pick up/delivery start'
+      select '7:00 AM', from: 'Buyer pick up/delivery end'
+
+      click_button 'Save Delivery'
+
+      expect(page.body).to have_content("Saved delivery schedule");
+      schedule = Dom::Admin::DeliverySchedule.first
+      expect(schedule.delivery_address).not_to have_content("Direct to customer")
+
+      delivery1.reload
+      schedule = Dom::Admin::DeliverySchedule.first
+      expect(schedule.delivery_time).to include("3:00 AM – #{delivery1.seller_delivery_end}")
+    end
+
     it 'deletes a delivery schedule' do
       click_link "Deliveries"
 
