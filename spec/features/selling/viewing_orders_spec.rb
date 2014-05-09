@@ -61,7 +61,7 @@ feature "Viewing orders" do
     expect(item.price).to eq("$#{order_item1.unit_price}")
     expect(item.discount).to eq('$0.00')
     expect(item.total).to eq("$9.98")
-    expect(item.payment_status).to eq(order1.payment_status)
+    expect(item.payment_status).to eq("Unpaid")
 
     summary = Dom::Admin::OrderSummaryRow.first
     expect(summary.gross_total).to eq("$9.98")
