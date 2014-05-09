@@ -244,11 +244,11 @@ module Dom
         end
 
         def pay_all_now
-          node.find_link('Pay All Now').trigger('click')
+          node.find_link('Record Payment').trigger('click')
         end
 
         def pay_selected
-          node.click_link('Pay Selected Now')
+          within(".order-details") { click_link('Record Payment') }
         end
 
         def name
