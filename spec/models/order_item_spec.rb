@@ -222,4 +222,37 @@ describe OrderItem do
       order_item
     end
   end
+
+  context "seller_payment_status" do
+    let!(:market)      { create(:market) }
+    let!(:seller1)     { create(:organization, :seller, name: "Better Farms", markets: [market]) }
+    let!(:seller2)     { create(:organization, :seller, name: "Great Farms",  markets: [market]) }
+    let!(:buyer)       { create(:organization, :buyer,  name: "Money Bags",   markets: [market]) }
+    let!(:product1)    { create(:product, :sellable, organization: seller1) }
+    let!(:product2)    { create(:product, :sellable, organization: seller2) }
+    let!(:order_item1) { create(:order_item, :delivered, product: product1, quantity: 3) }
+    let!(:order_item2) { create(:order_item, :delivered, product: product2, quantity: 7) }
+    let!(:order) do
+      create(:order,
+        items:          [order_item1, order_item2],
+        market:         market,
+        organization:   buyer,
+        payment_method: "purchase order",
+        order_number:   "LO-002",
+        total_cost:     69.90,
+        placed_at:      6.days.ago,
+        payment_status: "paid"
+      )
+    end
+
+    let!(:payments_for_order) { create(:payment, payee: seller2, orders: [order], amount: 48.93) }
+
+    it "seller1 is unpaid" do
+      expect(order_item1.seller_payment_status).to eq('Unpaid')
+    end
+
+    it "seller2 is paid" do
+      expect(order_item2.seller_payment_status).to eq('Paid')
+    end
+  end
 end

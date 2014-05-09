@@ -31,10 +31,6 @@
       <td><%= order.buyer_payment_status.titleize %></td>
     </tr>
     <tr>
-      <td>Seller Payment</td>
-      <td><%= order.seller_payment_status.titleize %></td>
-    </tr>
-    <tr>
       <td>Payment Method</td>
       <td><%= order.payment_method.titleize %></td>
     </tr>
@@ -68,8 +64,9 @@
       <td class="price"><%= number_to_currency item.unit_price %></td>
       <td class="discount"><%= number_to_currency item.discount %></td>
       <td class="total"><%= number_to_currency item.gross_total %></td>
-      <td class="payment-status"><%= order.buyer_payment_status %></td>
-      <td class="seller-status"></td>
+      <td class="delivery-status"><%= item.delivery_status %></td>
+      <td class="payment-status"><%= item.buyer_payment_status %></td>
+      <td class="seller-status"><%= item.seller_payment_status %></td>
     </tr>
     <% end %>
   </tbody>
@@ -95,7 +92,7 @@
       <td class="payment-processing"><%= number_to_currency order.payment_fees %></td>
       <td class="net-sale"><%= number_to_currency order.net_total %></td>
       <td class="delivery-status"><%= order.delivery_status.titleize %></td>
-      <td class="payment-status"><%= order.seller_payment_status %></td>
+      <td class="payment-status"><%= order.buyer_payment_status.titleize %></td>
     </tr>
   </tbody>
 </table>
