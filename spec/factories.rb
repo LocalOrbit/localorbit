@@ -116,9 +116,8 @@ FactoryGirl.define do
     unit_price      6.99
     delivery_status "pending"
 
-    trait :payable do
+    trait :delivered do
       delivery_status 'delivered'
-      delivered_at 50.hours.ago
     end
   end
 

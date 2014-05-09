@@ -6,9 +6,11 @@ class SellerPaymentGroup
     subselect = "SELECT 1 FROM payments
       INNER JOIN order_payments ON order_payments.order_id = orders.id AND order_payments.payment_id = payments.id
       WHERE payments.payee_type = ? AND payments.payee_id = products.organization_id"
-    scope = Order.select('orders.*, products.organization_id as seller_id').joins(:items => :product).
+    scope = Order.select('orders.*, products.organization_id as seller_id').joins(:delivery, items: :product).
       where("NOT EXISTS(#{subselect})", "Organization").
-      where("order_items.delivered_at < ?", 48.hours.ago).
+      # This is a slightly fuzzy match right now.
+      # TODO: Implement delivery_end on deliveries for greater accuracy
+      where("deliveries.deliver_on < ? AND order_items.delivery_status = ?", 48.hours.ago, 'delivered').
       group("orders.id, seller_id").
       order("orders.order_number").
       includes(:market)
@@ -23,13 +25,13 @@ class SellerPaymentGroup
     seller_payment_groups = grouped_orders.map {|(org_id, _), orders| new(organizations[org_id], orders) }
 
     # This sorts the list by seller organization name with a secondary sort on market name
-    seller_payment_groups.sort_by {|s| s.market_name }.sort_by {|s| s.name }
+    seller_payment_groups.sort_by {|s| "#{s.name} / #{s.market_name}" }
   end
 
   def initialize(org, orders)
     @organization = org
     @orders = orders.map {|order| SellerOrder.new(order, @organization) }
-    @orders.reject! {|order| order.items.any? {|item| item.delivery_status != 'delivered' || item.delivered_at > 2.days.ago } }
+    @orders.select! {|order| order.delivery_status == 'delivered' }
   end
 
   def id

@@ -2,6 +2,8 @@ require "spec_helper"
 
 feature "Payments to vendors" do
   let(:market) { create(:market, name: "Baskerville Co-op", po_payment_term: 14) }
+  let!(:delivery_schedule) { create(:delivery_schedule, market: market, day: 3.days.ago.wday) }
+  let!(:delivery) { Timecop.freeze(5.days.ago) { delivery_schedule.next_delivery } }
   let!(:market_manager) { create :user, managed_markets: [market] }
 
   let!(:seller1) { create(:organization, :seller, name: "Better Farms", markets: [market]) }
@@ -15,10 +17,10 @@ feature "Payments to vendors" do
   let!(:product3) { create(:product, :sellable, organization: seller2) }
   let!(:product4) { create(:product, :sellable, organization: seller3) }
 
-  let!(:order1) { create(:order, items:[create(:order_item, :payable, product: product1, quantity: 4)], market: market, organization: buyer, payment_method: "purchase order", order_number: "LO-001", total_cost: 27.96, placed_at: 19.days.ago) }
-  let!(:order2) { create(:order, items:[create(:order_item, :payable, product: product2, quantity: 3), create(:order_item, :payable, product: product4, quantity: 7)], market: market, organization: buyer, payment_method: "purchase order", order_number: "LO-002", total_cost: 69.90, placed_at: 6.days.ago, payment_status: "paid") }
-  let!(:order3) { create(:order, items:[create(:order_item, :payable, product: product3, quantity: 6)], market: market, organization: buyer, payment_method: "purchase order", order_number: "LO-003", total_cost: 41.94, placed_at: 4.days.ago) }
-  let!(:order4) { create(:order, items:[create(:order_item, :payable, product: product2, quantity: 9), create(:order_item, :payable, product: product3, quantity: 14)], market: market, organization: buyer, payment_method: "purchase order", order_number: "LO-004", total_cost: 160.77, placed_at: 3.days.ago) }
+  let!(:order1) { create(:order, items:[create(:order_item, :delivered, product: product1, quantity: 4)], market: market, organization: buyer, delivery: delivery, payment_method: "purchase order", order_number: "LO-001", total_cost: 27.96, placed_at: 19.days.ago) }
+  let!(:order2) { create(:order, items:[create(:order_item, :delivered, product: product2, quantity: 3), create(:order_item, :delivered, product: product4, quantity: 7)], market: market, organization: buyer, delivery: delivery, payment_method: "purchase order", order_number: "LO-002", total_cost: 69.90, placed_at: 6.days.ago, payment_status: "paid") }
+  let!(:order3) { create(:order, items:[create(:order_item, :delivered, product: product3, quantity: 6)], market: market, organization: buyer, delivery: delivery, payment_method: "purchase order", order_number: "LO-003", total_cost: 41.94, placed_at: 4.days.ago) }
+  let!(:order4) { create(:order, items:[create(:order_item, :delivered, product: product2, quantity: 9), create(:order_item, :delivered, product: product3, quantity: 14)], market: market, organization: buyer, delivery: delivery, payment_method: "purchase order", order_number: "LO-004", total_cost: 160.77, placed_at: 3.days.ago) }
 
   before do
     switch_to_subdomain(market.subdomain)
