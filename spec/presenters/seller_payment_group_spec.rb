@@ -26,9 +26,13 @@ describe SellerPaymentGroup do
   let!(:order_for_seller_2_and_3_with_recent_delivery_to_2) { create(:order, items:[create(:order_item, product: product3, quantity: 14, delivery_status: 'delivered'), create(:order_item, :payable, product: product4, quantity: 7)], market: market1, organization: buyer1, payment_method: "purchase order", order_number: "LO-009", total_cost: 146.79, placed_at: 3.days.ago) }
   let!(:order_for_seller_2_multi_item_paid) { create(:order, items:[create(:order_item, :payable, product: product2, quantity: 9), create(:order_item, :payable, product: product3, quantity: 14)], market: market1, organization: buyer1, payment_method: "purchase order", order_number: "LO-010", total_cost: 160.77, placed_at: 3.days.ago) }
   let!(:order_for_sellers_2_and_3_with_2_paid) { create(:order, items:[create(:order_item, :payable, product: product2, quantity: 3), create(:order_item, :payable, product: product1, quantity: 7)], market: market1, organization: buyer1, payment_method: "purchase order", order_number: "LO-011", total_cost: 69.90, placed_at: 6.days.ago, payment_status: "paid") }
+  let!(:order_for_seller_2_buyer_and_seller_paid) { create(:order, items:[create(:order_item, :payable, product: product3, quantity: 6)], market: market1, organization: buyer1, payment_method: "credit card", order_number: "LO-012", total_cost: 41.94, placed_at: 4.days.ago, payment_status: "paid") }
 
   let!(:payments_for_order_for_seller_2_multi_item_paid) { create(:payment, payee: seller2, orders: [order_for_seller_2_multi_item_paid], amount: 160.77) }
   let!(:payments_for_order_for_sellers_2_and_3_with_2_paid) { create(:payment, payee: seller2, orders: [order_for_sellers_2_and_3_with_2_paid], amount: 20.97) }
+
+  let!(:buyer_payment_for_order_for_sellers_2_both_paid) { create(:payment, payee: nil, orders: [order_for_seller_2_buyer_and_seller_paid], payment_type: "credit card", amount: 20.97, status: "paid") }
+  let!(:seller_payments_for_order_for_sellers_2_both_paid) { create(:payment, payee: seller2, orders: [order_for_seller_2_buyer_and_seller_paid], amount: 20.97) }
 
   describe '.for_user' do
     it 'contains the right set of order information' do
