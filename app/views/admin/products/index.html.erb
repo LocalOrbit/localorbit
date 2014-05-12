@@ -6,10 +6,10 @@
     <div class="row row--justified product-header">
       <div class="column">
         <% if current_user.multi_market_membership? %>
-          <%= select_tag :filter_market, options_for_select(@selling_markets, selected: params[:market]), class: 'filter-dropdown', data: { parameter: "market"} %>
+          <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), prompt: "Show for all Markets", class: 'filter-dropdown', data: { parameter: "market"} %>
         <% end %>
         <% if current_user.multi_organization_membership? %>
-          <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: params[:organization]), class: 'filter-dropdown', data: { parameter: "organization"} %>
+          <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), prompt: "Show for all Sellers", class: 'filter-dropdown', data: { parameter: "organization"} %>
         <% end %>
       </div>
 

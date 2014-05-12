@@ -1,9 +1,12 @@
 module Admin
   class ProductsController < AdminController
+    include StickyFilters
+
     before_action :ensure_selling_organization
 
     def index
-      @products = current_user.managed_products.periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
+      @query_params = sticky_parameters(request.query_parameters)
+      @products = current_user.managed_products.periscope(@query_params).page(params[:page]).per(params[:per_page])
 
       find_organizations_for_filtering
       find_markets_for_filtering
@@ -89,14 +92,14 @@ module Admin
 
     def find_organizations_for_filtering
       @selling_organizations = current_user.managed_organizations.selling.periscope(request.query_parameters).
-        order(:name).inject([["Show from all Sellers", 0]]) do |result, org|
+        order(:name).inject([]) do |result, org|
         result << [org.name, org.id]
       end
     end
 
     def find_markets_for_filtering
       markets = current_user.admin? ? current_user.markets : current_user.managed_markets
-      @selling_markets = markets.order(:name).inject([["Show from all Markets", 0]]) {|result, market| result << [market.name, market.id] }
+      @selling_markets = markets.order(:name).inject([]) {|result, market| result << [market.name, market.id] }
     end
 
     def find_delivery_schedules(product=nil)

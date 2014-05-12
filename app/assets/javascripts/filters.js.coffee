@@ -11,7 +11,7 @@ $ ->
       $('.overlay').removeClass('is-open')
 
   $('.filter-dropdown').change ->
-    value = parseInt($(this).val())
+    value = $(this).val()
     key = $(this).data("parameter")
     addQueryStringParameter(key, value)
 
@@ -35,9 +35,6 @@ $ ->
 
   addQueryStringParameter = (key, value) ->
     params = parseSearchString()
-    if value == 0 || value == ""
-      delete params[key]
-    else
-      params[key] = value
+    params[key] = value
 
     window.location.search = $.param(params)
