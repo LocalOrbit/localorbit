@@ -57,13 +57,26 @@ feature "View Seller Profiles" do
     expect(page).not_to have_css('#admin-nav')
   end
 
-  scenario "view a sellers profile" do
-    click_link "Sellers"
-    click_link seller1.name
+  context "seller profile" do
+    scenario "view a sellers profile" do
+      click_link "Sellers"
+      click_link seller1.name
 
-    expect(page).to have_content(seller1.who_story)
-    expect(page).to have_content(seller1.how_story)
-    expect(page).not_to have_css('#admin-nav')
+      expect(page).to have_content(seller1.who_story)
+      expect(page).to have_content(seller1.how_story)
+      expect(page).to_not have_css('#admin-nav')
+      expect(page).to_not have_xpath("//a[@class='twitter-timeline' and @data-screen-name='#{seller1.twitter}']")
+    end
+
+    it "displays a twitter feed if enabled for the seller" do
+      seller1.update(display_twitter: true, twitter: 'localorbit')
+
+      visit seller_path(seller1)
+
+      expect(page).to have_xpath("//a[@class='twitter-timeline' and @data-screen-name='#{seller1.twitter}']")
+    end
+
+    it "displays a facebook feed if enabled for the seller"
   end
 
   context "available products" do
