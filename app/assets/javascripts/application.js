@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require jquery.ui.datepicker
 //= require chosen-jquery
-//= require parser_rules/simple
+//= require parser_rules/advanced
 //= require wysihtml5
 //= require underscore
 //= require accountingjs
