@@ -25,9 +25,9 @@ end
       <li>
         <a href="#market-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe054;"></i>Market Admin</a>
         <ul class="dropdown with-anchor top-anchor" id="market-dropdown">
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe000;"></i> Markets'), admin_markets_path %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe027;"></i> Organizations'), admin_organizations_path %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe017;"></i> All Users'), admin_users_path %></li>
+          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe000;"></i> Markets'), admin_markets_path(sort: "name-asc") %></li>
+          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe027;"></i> Organizations'), admin_organizations_path(sort: "name-asc") %></li>
+          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe017;"></i> All Users'), admin_users_path(sort: "name-asc")  %></li>
           <% if current_user.admin? %>
             <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe035;"></i> Units'), coming_soon_dashboard_path %></li>
             <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe025;"></i> User Event Log'), coming_soon_dashboard_path %></li>
@@ -54,7 +54,7 @@ end
 
     <% if current_user.admin? || current_user.market_manager? || current_user.seller? %>
       <li>
-        <%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe01f;"></i> Products'), admin_products_path %>
+        <%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe01f;"></i> Products'), admin_products_path(sort: "name-asc") %>
       </li>
     <% end %>
 
