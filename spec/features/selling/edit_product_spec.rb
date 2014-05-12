@@ -174,7 +174,7 @@ describe "Editing a product" do
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
 
         expect(page).to have_content("Mondays from 7:00 AM to 11:00 AM direct to customer")
-        expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at Market Address")
+        expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at 44 E. 8th St Holland, MI 49423")
       end
 
       it "persists changes" do
@@ -230,7 +230,7 @@ describe "Editing a product" do
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
 
         expect(page).to have_content("Mondays from 7:00 AM to 11:00 AM direct to customer")
-        expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at Market Address")
+        expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at 44 E. 8th St Holland, MI 49423")
         expect(page).to have_content("Wednesdays from 7:00 AM to 11:00 AM direct to customer")
       end
 
