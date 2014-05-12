@@ -67,6 +67,6 @@ class Organization < ActiveRecord::Base
   end
 
   def update_product_delivery_schedules(market)
-    reload.products.each(&:save)
+    reload.products.each(&:save) if persisted?
   end
 end
