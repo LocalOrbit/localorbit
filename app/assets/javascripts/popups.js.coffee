@@ -4,7 +4,6 @@ $ ->
   # data-popup attribute on the link.
   position_popup = ($element) ->
     bottom = $element.offset().top + $element.outerHeight()
-    console.log bottom, $('.l-app-footer').offset()
     if bottom > $('.l-app-footer').offset().top
       $element.removeClass('top-anchor').addClass('bottom-anchor')
     else
