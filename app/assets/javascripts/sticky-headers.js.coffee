@@ -26,7 +26,7 @@ $ ->
       $(e).parent().css('overflow', 'hidden')
     $(e).addClass('js-positioned').next().css({
         'position': 'relative',
-        'margin-top': "+=" + stick_heights[i] + "px",
+        'height': "+=" + stick_heights[i] + "px",
         'overflow': 'hidden'
       })
 

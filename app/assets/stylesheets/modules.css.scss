@@ -1257,7 +1257,6 @@ label ~ .tooltip {
       z-index: 3;
       @include box-sizing(border-box);
       width: 100%;
-      padding: 0;
       > .l-constraint {
         padding-right: 20px;
         padding-left: 20px;
@@ -1269,6 +1268,11 @@ label ~ .tooltip {
   }
 }
 .tab-header.stickable {
+  padding: 0;
+  > .l-constraint {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
   &.js-positioned {
     > .l-constraint {
       padding-bottom: 30px;
