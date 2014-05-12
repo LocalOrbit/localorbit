@@ -263,6 +263,25 @@ describe "Editing a product" do
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to_not be_checked
       end
+
+      it "saves state when there is an error" do
+        uncheck "Make product available on all market delivery dates"
+
+        Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
+        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").check!
+        Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays").uncheck!
+
+        fill_in "Name", with: ""
+
+        click_button "Save and Continue"
+        save_and_open_page
+
+        expect(page).to have_content("Name can't be blank")
+        expect(find_field("Make product available on all market delivery dates")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to_not be_checked
+      end
     end
   end
 end

@@ -14,8 +14,14 @@ module Admin
         @markets.where(column => true).any?
       elsif @organization
         @organization.markets.where(column => true).any?
-      else
-        false
+      end
+    end
+
+    def payment_type_enabled?(column)
+      if @organization
+        @organization[column.to_sym]
+      elsif @markets
+        @markets.where("default_#{column}".to_sym => true).any?
       end
     end
   end

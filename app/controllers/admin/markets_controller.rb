@@ -1,7 +1,7 @@
 class Admin::MarketsController < AdminController
   before_action :require_admin, only: [:new, :create]
   before_action :require_admin_or_market_manager, except: [:new, :create]
-  before_action :find_scoped_market, only: [:show, :update, :defaults]
+  before_action :find_scoped_market, only: [:show, :update, :payment_options]
 
   def index
     @markets = market_scope.periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
@@ -35,8 +35,9 @@ class Admin::MarketsController < AdminController
     end
   end
 
-  def defaults
-    render partial: 'defaults'
+  def payment_options
+    @markets = Market.where(id: @market.id)
+    render partial: 'payment_options'
   end
 
   protected

@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       resource  :fees, only: [:show, :update]
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
       resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
-      get :defaults
+      get :payment_options
     end
 
     get "financials" => "financials#index"
