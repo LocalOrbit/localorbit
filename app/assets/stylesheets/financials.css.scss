@@ -1,0 +1,173 @@
+//** Financials Vendor Payment Tab **//
+
+.vendor-payment {
+  .table-header th {
+    padding-top: 30px;
+  }
+  .total tr {
+    background-color: inherit;
+    border-top: none;
+  }
+  h2 {
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+  .buyer-payment-status {
+    width: 100px;
+    text-align: right;
+  }
+  .delivery-status {
+    width: 200px;
+    text-align: right;
+  }
+  .individual-delivery-status {
+    width: 74px;
+    text-align: right;
+  }
+  .individual-payment-status {
+    width: 100px;
+    text-align: right;
+  }
+  .make-payment {
+    background-color: #fff;
+    border: none;
+  }
+  .line-total {
+    padding-right: 210px;
+    text-align: right;
+  }
+  .math {
+    font-size: 16px;
+  }
+  .order-count {
+    width: 293px;
+  }
+  .order-number {
+    width: 275px;
+  }
+  .order-placed-on {
+    width: 100px;
+  }
+  .owed, .pay-now {
+    padding-right: 10px;
+    text-align: right;
+  }
+  .owed {
+    font-weight: 700;
+  }
+  .pay-now {
+    font-weight: 700;
+  }
+  .pay-selected {
+    margin-top: -100px;
+  }
+  .pay-selected-now {
+    border-bottom: 1px  solid #DDDDDD;
+  }
+  .payment-details {
+    padding: 10px;
+    background: #EFFFEC;
+    border: 1px  solid #DDDDDD;
+  }
+  .payment-notes {
+    display: inline-block;
+    float: right;
+    text-align: right;
+
+    .check, .cash {
+      input {
+        padding: 1px 5px;
+        font-size: 14px;
+      }
+    }
+    .check, .cash {
+      input {
+        width: 200px;
+      }
+    }
+    .record-payment {
+      input {
+        padding: 7px 15px;
+      }
+    }
+  }
+  .payment-types {
+    display: inline-block;
+    height: 33px;
+    padding-top: 12px;
+    float: left;
+  }
+  .review-orders {
+    padding-left: 10px;
+  }
+  .total-owed {
+    font-size: 16px;
+    font-weight: 700;
+  }
+}
+.table-header {
+  background: none;
+  padding-top: 0;
+}
+
+//** Financial Overview **//
+
+.overview-area {
+  width: 70%;
+  margin: 0 auto;
+}
+.overview-intro {
+  background: #fefefe;
+  padding: 0 0 20px 0;
+}
+.money-in, .money-out {
+  width: 48%;
+
+  td, th, tr {
+    font-size: 14px;
+  }
+  a {
+    margin-top: 10px;
+    float: right;
+  }
+  .amount {
+    padding-right: 10px;
+    text-align: right;
+    font-weight: 700;
+  }
+}
+.money-in {
+  float: left;
+}
+.money-out {
+  float: right;
+}
+
+//** Financial Payment History **//
+
+.order-list-modal {
+  height: 400px;
+  min-width: 350px;
+
+  .close {
+    padding-top: 10px;
+  }
+  h2 {
+    display: inline-block;
+    height: 20px;
+  }
+  .all-order-numbers {
+    overflow: auto;
+    padding: 0 10px;
+    height: 352px;
+    margin-right: 1px;
+  }
+}
+
+.payment-more {
+  padding-left: 10px;
+  color: #000;
+}
+.payment-more:hover {
+  text-decoration: none;
+}
