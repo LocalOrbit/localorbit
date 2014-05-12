@@ -66,6 +66,7 @@ feature "View Seller Profiles" do
       expect(page).to have_content(seller1.how_story)
       expect(page).to_not have_css('#admin-nav')
       expect(page).to_not have_xpath("//a[@class='twitter-timeline' and @data-screen-name='#{seller1.twitter}']")
+      expect(page).to_not have_xpath("//div[@class='fb-like-box' and @data-href='https://www.facebook.com/#{seller1.facebook}']")
     end
 
     it "displays a twitter feed if enabled for the seller" do
@@ -76,7 +77,13 @@ feature "View Seller Profiles" do
       expect(page).to have_xpath("//a[@class='twitter-timeline' and @data-screen-name='#{seller1.twitter}']")
     end
 
-    it "displays a facebook feed if enabled for the seller"
+    it "displays a facebook feed if enabled for the seller" do
+      seller1.update(display_facebook: true, facebook: 'localorbit')
+
+      visit seller_path(seller1)
+
+      expect(page).to have_xpath("//div[@class='fb-like-box' and @data-href='https://www.facebook.com/#{seller1.facebook}']")
+    end
   end
 
   context "available products" do
