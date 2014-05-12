@@ -35,6 +35,7 @@ class DeliveryScheduleDecorator < Draper::Decorator
   end
 
   def attached_to_product(product)
+    binding.pry
     if product && product.persisted?
       product.delivery_schedule_ids.include?(id)
     else

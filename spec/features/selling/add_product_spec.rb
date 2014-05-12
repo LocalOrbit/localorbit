@@ -412,6 +412,21 @@ describe "Adding a product" do
           expect(page).to have_content("Inventory")
         end
       end
+
+      it "maintains delivery schedule changes on error" do
+        within '#admin-nav' do
+          click_link 'Products'
+        end
+        click_link "Add New Product"
+
+        uncheck "Make product available on all market delivery dates"
+        Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
+        click_button "Save and Continue"
+
+        expect(find_field("Make product available on all market delivery dates")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+      end
     end
   end
 
@@ -493,6 +508,20 @@ describe "Adding a product" do
       end
     end
 
+    it "maintains delivery schedule changes on error", :js do
+      select org2.name, from: "Seller Organization"
+      expect(page).to have_content("Tuesdays")
+
+      uncheck "Make product available on all market delivery dates"
+      Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
+
+      click_button "Save and Continue"
+
+      expect(find_field("Make product available on all market delivery dates")).to_not be_checked
+      expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
+      expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+    end
+
     it "does not offer non-selling organizations as options for the Organization select" do
       product_form = Dom::Admin::ProductForm.first
       expect(product_form.organization_field).to_not have_content(buying_org.name)
@@ -539,6 +568,8 @@ describe "Adding a product" do
         expect(page).to have_content("Inventory")
       end
     end
+
+
   end
 
   describe "as a market manager" do
