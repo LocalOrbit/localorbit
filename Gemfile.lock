@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: git://github.com/collectiveidea/awesome_nested_set.git
-  revision: 7080ca788c5b1c7ac7c44978dc81fbd06943d5c7
+  revision: 515b7ac983e6a8dd49e5f759b98bd0ca30046d07
   specs:
     awesome_nested_set (3.0.0.rc.5)
       activerecord (>= 4.0.0, < 5)
@@ -118,7 +118,7 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    devise_invitable (1.3.4)
+    devise_invitable (1.3.5)
       actionmailer (>= 3.2.6, < 5)
       devise (>= 3.2.0)
     diff-lcs (1.2.5)
@@ -324,7 +324,7 @@ GEM
       powerpack (~> 0.0.6)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
-    ruby-progressbar (1.4.2)
+    ruby-progressbar (1.5.0)
     rubyzip (1.1.3)
     safe_yaml (1.0.3)
     sass (3.2.19)
@@ -360,7 +360,7 @@ GEM
     thread_safe (0.3.3)
     tilt (1.4.1)
     timecop (0.7.1)
-    tins (1.1.0)
+    tins (1.2.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
