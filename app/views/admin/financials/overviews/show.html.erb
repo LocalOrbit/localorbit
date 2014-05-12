@@ -2,7 +2,7 @@
 <div class="overview-area">
   <div class="overview-intro">
     <p>
-      This is a snapshot of all money currently owed to your organization. (If you're allowed to purchase on your market and pay by Purchase Order, it will also show what you owe to other organizations.)
+      This is a snapshot of all money currently owed to your organization (Money In) <% if current_user.can_manage_market?(current_market) %> and also what you owe to other organizations (Money Out). <% end %>
     </p>
   </div>
   <div class="money-in">
@@ -22,19 +22,19 @@
       </tr>
 
       <% if current_user.can_manage_market?(current_market) %>
-      <tr>
-        <td class="title">Next 30 Days</td>
-        <td class="amount"><%= number_to_currency @overview.money_in_next_thirty %></td>
-      </tr>
-      <tr>
-        <td class="title">Purchase Orders</td>
-        <td class="amount"><%= number_to_currency @overview.money_in_purchase_orders %></td>
-      </tr>
+        <tr>
+          <td class="title">Next 30 Days</td>
+          <td class="amount"><%= number_to_currency @overview.money_in_next_thirty %></td>
+        </tr>
+        <tr>
+          <td class="title">Purchase Orders</td>
+          <td class="amount"><%= number_to_currency @overview.money_in_purchase_orders %></td>
+        </tr>
       <% end %>
     </table>
     <% if current_user.can_manage_market?(current_market) %>
-    <%= link_to "Send Invoices", [:admin, :financials, :invoices], class: "btn btn--blue btn--small" %>
-   <% end %>
+      <%= link_to "Send Invoices", [:admin, :financials, :invoices], class: "btn btn--blue btn--small" %>
+    <% end %>
   </div>
   <% if current_user.can_manage_market?(current_market) %>
   <div class="money-out">
@@ -54,5 +54,5 @@
     </table>
     <%= link_to "Record Payments", coming_soon_dashboard_path, class: "btn btn--blue btn--small" %>
   </div>
+  <% end %>
 </div>
-<% end %>
