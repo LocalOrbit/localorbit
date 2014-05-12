@@ -43,7 +43,10 @@ module Admin
     end
 
     def delivery_schedules
-      render partial: "delivery_schedules", locals: {delivery_schedules: find_delivery_schedules, product: nil}
+      schedules = find_delivery_schedules
+      ids = schedules.map {|market, schedules| schedules.map {|schedule| schedule.id.to_s }}.flatten
+
+      render partial: "delivery_schedules", locals: {delivery_schedules: schedules, selected_ids: ids, product: nil}
     end
 
     private

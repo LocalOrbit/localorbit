@@ -4,8 +4,8 @@
   <h3 class="heading-conditionals"><%= market.name %></h3>
   <ul class="list-naked">
     <% schedules.decorate.each do |schedule| %>
-      <li class="product-delivery-schedule conditional">
-        <%= check_box_tag "product[delivery_schedule_ids][]", schedule.id, schedule.attached_to_product(product), id: "product_schedule_ids_#{schedule.id}", disabled: product.nil? || product.use_all_deliveries? %>
+      <li class="product-delivery-schedule conditional"> 
+        <%= check_box_tag "product[delivery_schedule_ids][]", schedule.id, selected_ids.include?(schedule.id.to_s), id: "product_schedule_ids_#{schedule.id}", disabled: product.nil? || product.use_all_deliveries? %>
         <label for="product_schedule_ids_<%= schedule.id %>">
           <span class="weekday"><%= schedule.weekday.pluralize %></span> <%= schedule.seller_human_description %>
         </label>

@@ -4,6 +4,7 @@ module Admin
 
     def index
       @products = current_user.managed_products.periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
+
       find_organizations_for_filtering
       find_markets_for_filtering
     end
@@ -12,6 +13,7 @@ module Admin
       @product = Product.new.decorate
       find_selling_organizations
       find_delivery_schedules
+      find_selected_delivery_schedule_ids
     end
 
     def create
@@ -23,6 +25,7 @@ module Admin
       else
         find_selling_organizations
         find_delivery_schedules
+        find_selected_delivery_schedule_ids
         render :new
       end
     end
@@ -32,6 +35,7 @@ module Admin
       @organizations = [@product.organization]
 
       find_delivery_schedules(@product)
+      find_selected_delivery_schedule_ids(@product)
     end
 
     def update
@@ -42,6 +46,7 @@ module Admin
       else
         @organizations = [@product.organization]
         find_delivery_schedules(@product)
+        find_selected_delivery_schedule_ids
         render :show
       end
     end
@@ -95,12 +100,25 @@ module Admin
     end
 
     def find_delivery_schedules(product=nil)
-      @delivery_schedules = if product.try(:organization)
+      @delivery_schedules = if params.try(:[], :product)
+        organization = Organization.where(id: params[:product][:organization_id])
+        organization.empty? ? {} : organization.first.decorate.delivery_schedules
+      elsif product.try(:organization)
         product.organization.decorate.delivery_schedules
       elsif current_user.organizations.count == 1
         current_user.organizations.first.decorate.delivery_schedules
       else
         {}
+      end
+    end
+
+    def find_selected_delivery_schedule_ids(product=nil)
+      @selected_delivery_schedule_ids = if params.try(:[], :product).try(:[], :delivery_schedule_ids)
+        product_params[:delivery_schedule_ids]
+      elsif product
+        product.delivery_schedule_ids.map {|id| id.to_s }
+      else
+        @delivery_schedules.map {|market, schedules| schedules.map{|ds| ds.id.to_s} }.flatten
       end
     end
   end

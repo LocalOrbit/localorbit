@@ -121,7 +121,7 @@
     <% if @organizations.count > 1 && @product.organization.blank? %>
       <h3 class="heading-conditionals">No Organization Selected</h3>
     <% else %>
-      <%= render partial: "admin/organizations/delivery_schedules", locals: {delivery_schedules: @delivery_schedules, product: @product} %>
+      <%= render partial: "admin/organizations/delivery_schedules", locals: {delivery_schedules: @delivery_schedules, selected_ids: @selected_delivery_schedule_ids, product: @product} %>
     <% end %>
   </div>
 </fieldset>
