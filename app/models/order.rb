@@ -59,12 +59,16 @@ class Order < ActiveRecord::Base
   def self.for_sort(order)
     column, direction = column_and_direction(order)
     case column
-    when :date
-      order(placed_at: direction)
-    when :buyer
-      order(payment_status: direction)
+    when "owed"
+      order_by_owed(direction)
+    when "date"
+      order_by_placed_at(direction)
+    when "buyer"
+      order_by_buyer(direction)
+    when "seller"
+        order_by_seller(direction)
     else
-      order(order_number: direction)
+      order_by_order_number(direction)
     end
   end
 
@@ -208,5 +212,25 @@ class Order < ActiveRecord::Base
     if changes[:payment_status] && changes[:payment_status][1] == "paid"
       self.paid_at = Time.current
     end
+  end
+
+  def self.order_by_order_number(direction)
+    direction == "asc" ? order("order_number asc") : order("order_number desc")
+  end
+
+  def self.order_by_buyer(direction)
+    direction == "asc" ? order("payment_status asc") : order("payment_status desc")
+  end
+
+  def self.order_by_owed(direction)
+    direction == "asc" ? order(:id) : order(:id)
+  end
+
+  def self.order_by_seller(direction)
+    direction == "asc" ? order(:id) : order(:id)
+  end
+
+  def self.order_by_placed_at(direction)
+    direction == "asc" ? order("placed_at asc") : order("placed_at desc")
   end
 end

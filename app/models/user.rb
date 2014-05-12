@@ -26,7 +26,12 @@ class User < ActiveRecord::Base
 
   def self.for_sort(order)
     column, direction = column_and_direction(order)
-    order(column => direction)
+    case column
+    when "name"
+      order_by_name(direction)
+    when "email"
+        order_by_email(direction)
+    end
   end
 
   def self.for_search(query)
@@ -146,5 +151,15 @@ class User < ActiveRecord::Base
       [m.name, m.id]
     end
     for_select.sort {|a, b| a[0] <=> b[0] }
+  end
+
+  private
+
+  def self.order_by_name(direction)
+    direction == "asc" ? order("name asc") : order("name desc")
+  end
+
+  def self.order_by_email(direction)
+    direction == "asc" ? order("email asc") : order("email desc")
   end
 end
