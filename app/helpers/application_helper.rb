@@ -15,7 +15,7 @@ module ApplicationHelper
 
   def column_sort_classes(column)
     if request.query_parameters["sort"]
-      col, dir = request.query_parameters["sort"].downcase.split(":")
+      col, dir = request.query_parameters["sort"].downcase.split("-")
       result = []
       if column == col
         result << "sorted"
