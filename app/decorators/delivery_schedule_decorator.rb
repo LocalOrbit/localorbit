@@ -20,18 +20,24 @@ class DeliveryScheduleDecorator < Draper::Decorator
     buyer_pickup? ? "#{buyer_pickup_start} to #{buyer_pickup_end}" : "#{seller_delivery_start} to #{seller_delivery_end}"
   end
 
-  def location_name
+  def seller_location_name
     if seller_fulfillment_location.present?
-      "at #{seller_fulfillment_location.name}"
-    elsif buyer_pickup? && buyer_pickup_location.present?
+      "at #{seller_fulfillment_location.address} #{seller_fulfillment_location.city}, #{seller_fulfillment_location.state} #{seller_fulfillment_location.zip}"
+    else
+      "direct to customer"
+    end
+  end
+
+  def location_name
+    if buyer_pickup? && buyer_pickup_location.present?
       "at #{buyer_pickup_location.name}"
     else
       "direct to customer"
     end
   end
 
-  def human_description
-    "from #{time_window} #{location_name}"
+  def seller_human_description
+    "from #{time_window} #{seller_location_name}"
   end
 
   def attached_to_product(product)

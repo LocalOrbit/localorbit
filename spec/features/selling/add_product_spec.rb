@@ -14,8 +14,6 @@ def fill_in_required_fields(select=:without_chosen)
   end
 end
 
-
-
 describe "Adding a product" do
   let(:user) { create(:user) }
   let(:market) { create(:market, :with_addresses) }
@@ -368,7 +366,7 @@ describe "Adding a product" do
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
 
-        expect(page).to have_content("Tuesdays from 7:00 AM to 11:00 AM at Aggregation Point")
+        expect(page).to have_content("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992")
 
         fill_in_required_fields(:with_chosen)
 
