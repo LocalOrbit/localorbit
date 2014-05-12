@@ -183,7 +183,7 @@ textarea {
   & > input[type=radio],
   & > input[type=checkbox] {
     position: absolute;
-    margin: 6px 0 0 -20px;
+    margin: 9px 0 0 -20px;
     &:disabled {
       ~ label {
         color: #aaa;

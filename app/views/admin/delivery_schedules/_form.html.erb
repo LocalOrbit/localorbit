@@ -31,11 +31,13 @@
   <div class="field conditional">
     <%= f.check_box :require_delivery %>
     <%= f.label :require_delivery, 'All products from sellers on this market will deliver on this cycle.' %>
+    <span class="tooltip" data-tooltip="Selecting this will add this delivery option for all existing products."></span>
   </div>
 
   <div class="field conditional">
     <%= f.check_box :require_cross_sell_delivery %>
     <%= f.label :require_cross_sell_delivery, 'All cross-sell products from sellers on this market will deliver on this cycle.' %>
+    <span class="tooltip" data-tooltip="Selecting this will add this delivery option for all existing products."></span>
   </div>
 </fieldset>
 
