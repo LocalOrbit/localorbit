@@ -11,9 +11,9 @@ module Admin
     def allow_payment_type?(column)
       column = column.to_sym
       if @markets
-        @markets.where(column.to_sym => true).any?
+        @markets.where(column => true).any?
       elsif @organization
-        @organization.markets.where(column.to_sym => true).any?
+        @organization.markets.where(column => true).any?
       end
     end
 
