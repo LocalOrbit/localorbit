@@ -63,6 +63,7 @@
       <br>
       <%= f.file_field :photo %>
       <%= image_tag @organization.photo.remote_url, alt: "Profile photo", class: "org-profile-photo" if @organization.photo %>
+      <div><small>Drag and drop your photo directly into the "Choose File" button and it will be uploaded instantly.</small></div>
 
     </div>
 

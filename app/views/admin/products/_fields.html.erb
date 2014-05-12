@@ -36,6 +36,7 @@
   <%= f.label :image, "Photo" %><br>
   <%= f.file_field :image, class: "column column--full" %>
   <%= image_tag f.object.image.remote_url, alt: f.object.name if f.object.image %>
+  <div><small>Drag and drop your photo directly into the "Choose File" button and it will be uploaded instantly.</small></div>
 </div>
 
 <div class="field">
