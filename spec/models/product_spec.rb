@@ -514,12 +514,14 @@ describe Product do
       let!(:market) { create(:market) }
       let!(:organization) { create(:organization, :seller, markets: [market]) }
       let!(:product_with_prices) { create(:product, :sellable, organization: organization) }
-      let!(:product_without_prices) { create(:product, :sellable, organization: organization) }
+      let!(:product_without_prices) { create(:product, organization: organization) }
 
       it "sorts products without a price" do
-        product_without_prices.prices = []
-        sorted = organization.products.for_sort("price:asc")
-        expect(sorted).to eq([product_with_prices])
+        sorted = organization.products.for_sort("price-asc")
+        expect(sorted.to_a).to eql([product_without_prices, product_with_prices])
+
+        sorted = organization.products.for_sort("price-desc")
+        expect(sorted.to_a).to eql([product_with_prices, product_without_prices])
       end
     end
   end

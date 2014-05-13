@@ -86,8 +86,8 @@ class Product < ActiveRecord::Base
     column, direction = column_and_direction(order)
     case column
     when "price"
-      # FIXME: this filters out prodiucts without prices. Is that ok?
-      joins(:prices).select("products.*, MAX(prices.sale_price) as price").
+      joins("left outer join prices on products.id = prices.product_id").
+        select("products.*, coalesce(MAX(prices.sale_price), 0) as price").
         group("products.id").order_by_price(direction)
     when "stock"
       joins(:lots).select("products.*, SUM(lots.quantity) as stock").

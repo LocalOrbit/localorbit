@@ -43,18 +43,6 @@ class Market < ActiveRecord::Base
     end
   end
 
-  def self.order_by_name(direction)
-    direction == "asc" ? order("name asc") : order("name desc")
-  end
-
-  def self.order_by_subdomain(direction)
-    direction == "asc" ? order("subdomain asc") : order("subdomain desc")
-  end
-
-  def self.order_by_contact_name(direction)
-    direction == "asc" ? order("contact_name asc") : order("contact_name desc")
-  end
-
   def fulfillment_locations(default_name)
     addresses.order(:name).map {|a| [a.name, a.id] }.unshift([default_name, 0])
   end
@@ -84,5 +72,19 @@ class Market < ActiveRecord::Base
     scope = deliveries.future.with_orders.order("deliver_on")
     scope = scope.with_orders_for_user(user) unless user.market_manager? || user.admin?
     scope
+  end
+
+  private
+
+  def self.order_by_name(direction)
+    direction == "asc" ? order("name asc") : order("name desc")
+  end
+
+  def self.order_by_subdomain(direction)
+    direction == "asc" ? order("subdomain asc") : order("subdomain desc")
+  end
+
+  def self.order_by_contact_name(direction)
+    direction == "asc" ? order("contact_name asc") : order("contact_name desc")
   end
 end
