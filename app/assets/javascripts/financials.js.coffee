@@ -31,7 +31,7 @@ $ ->
     element.addClass('is-hidden')
     element.parents('form').find('.payment-details').removeClass('is-hidden')
 
-  $('.vendor-payment .cancel').click (e)->
+  $('.vendor-payment-cancel > .cancel').click (e)->
     e.preventDefault()
     element = $(this)
     form = element.parents('form')
@@ -66,11 +66,4 @@ $ ->
     details.removeClass('is-hidden')
 
     paymentDetails.find('.record-payment').removeClass('is-hidden')
-
-  $('.vendor-payment-cancel > .cancel').click ->
-    e.preventDefault()
-    form = $(this).parents('form')
-    form.find('.order-details input[type=checkbox]').prop('checked', true)
-    form.find('.pay-all-now').removeClass('is-invisible')
-    form.find('.payment-details').addClass('is-hidden')
 
