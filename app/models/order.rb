@@ -52,6 +52,7 @@ class Order < ActiveRecord::Base
       .having("MAX(order_items.delivered_at) < ?", range.end)
   }
   scope :paid_between, lambda { |range| paid.where(paid_at: range) }
+  scope :due_between, lambda { |range| invoiced.where(invoice_due_date: range) }
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
 

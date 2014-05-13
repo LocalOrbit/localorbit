@@ -10,22 +10,22 @@ class FinancialOverview
     @po_orders = base_order_scope.paid_with("purchase order")
   end
 
-  def next_seven_days
-    range_start = (@time + 1.day).beginning_of_day - 7.days
+  def next_seven_days(offset=0)
+    range_start = offset.days.ago(@time + 1.day).beginning_of_day
     range_end = (range_start + 6.days).end_of_day
 
     range_start..range_end
   end
 
-  def today
-    start_of_day = 7.days.ago(@time).beginning_of_day
-    end_of_day = @time.end_of_day - 7.days
+  def today(offset=0)
+    start_of_day = offset.days.ago(@time).beginning_of_day
+    end_of_day = offset.days.ago(@time).end_of_day
 
     start_of_day..end_of_day
   end
 
   def overdue
-    sum_seller_items(@po_orders.delivered.payment_overdue)
+    sum_seller_items(@po_orders.delivered.where("invoice_due_date < ?", @time.beginning_of_day))
   end
 
   def money_in_today

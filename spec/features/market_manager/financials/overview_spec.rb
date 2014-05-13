@@ -25,6 +25,8 @@ feature "Market Manager Financial Overview" do
   end
 
   before do
+    Time.zone = "Eastern Time (US & Canada)"
+
     # Order for a different market
     Timecop.travel(Time.current - 32.days) do
       order = create(:order, payment_method: "purchase order", market: market2, items:[
@@ -33,14 +35,13 @@ feature "Market Manager Financial Overview" do
         create(:order_item, quantity: 7, product: from_different_seller)
       ])
 
-      order.invoice
       deliver_order(order)
+      order.invoice
       order.save!
     end
 
     # Overdue Order
     # Total for market: (5+7+7)*6.99 = 132.81
-    Time.zone = "Eastern Time (US & Canada)"
     Timecop.travel(Time.current - 32.days) do
       order = create(:order, payment_method: "purchase order", market: market, items:[
         create(:order_item, quantity: 5, product: peas, market_seller_fee: 2.00, payment_seller_fee: 1.00),
@@ -48,8 +49,8 @@ feature "Market Manager Financial Overview" do
         create(:order_item, quantity: 7, product: from_different_seller, market_seller_fee: 12, local_orbit_seller_fee: 10) # Not included in overdue total
       ])
 
-      order.invoice
       deliver_order(order)
+      order.invoice
       order.save!
     end
 
@@ -67,6 +68,26 @@ feature "Market Manager Financial Overview" do
       deliver_order(order)
       pay_order(order)
     end
+
+    # Payments for "Today" calculation
+    # Purchase order
+    # (3 + 7+ 7)*6.99 = 118.83
+    # Money to Seller: 118.83 - 26 = 92.83
+    paid_po = nil
+    Timecop.travel(Time.current - 30.days) do
+      paid_po = create(:order, payment_method: "purchase order", market: market, items:[
+        create(:order_item, quantity: 3, product: peas, payment_seller_fee: 1.00, local_orbit_market_fee: 22.00),
+        create(:order_item, quantity: 7, product: kale, market_seller_fee: 3.00),
+        create(:order_item, quantity: 7, product: from_different_seller)
+      ])
+
+      deliver_order(paid_po)
+
+      paid_po.invoice
+      paid_po.save!
+    end
+
+    pay_order(paid_po)
 
     # ACH
     # 2*6.99 + 2*6.99 + 7*6.99 = 76.89
@@ -87,7 +108,7 @@ feature "Market Manager Financial Overview" do
     # (3 + 10 + 7)*6.99 = 139.8
     # Money to Seller: (3*6.99 - 20.00 - 1.00) + (10*6.99 - 1.00) + 7*6.99 = 117.80
     #
-    Timecop.travel(Time.current - 7.days) do
+    Timecop.travel(Time.current - 28) do
       order = create(:order, payment_method: "purchase order", market: market, items:[
         create(:order_item, quantity: 3, product: peas, market_seller_fee: 20.00, local_orbit_seller_fee: 1.00),
         create(:order_item, quantity: 10, product: kale, local_orbit_seller_fee: 1.00),
@@ -95,14 +116,15 @@ feature "Market Manager Financial Overview" do
       ])
 
       deliver_order(order)
-      pay_order(order)
+      order.invoice
+      order.save!
     end
 
     # Payments for the next 7 days
     # (10+9+7)*6.99 = 181.74
     #
     # Money to Seller: (10*6.99 - 12.00) + (9*6.99 - 9.00) + 7*6.99 = 160.74
-    Timecop.travel(Time.current - 1.days) do
+    Timecop.travel(Time.current - 2.days) do
       order = create(:order, payment_method: "credit card", market: market, items:[
         create(:order_item, quantity: 10, product: peas, local_orbit_seller_fee: 12.00),
         create(:order_item, quantity: 9, product: kale, market_seller_fee: 9),
@@ -115,7 +137,7 @@ feature "Market Manager Financial Overview" do
 
     # (66+92+7)*6.99 = 1153.35
     # 1149.35
-    Timecop.travel(Time.current - 6.days) do
+    Timecop.travel(Time.current - 23.days) do
       order = create(:order, payment_method: "purchase order", market: market, items:[
         create(:order_item, quantity: 66, product: peas, local_orbit_seller_fee: 1.00, local_orbit_market_fee: 9.00),
         create(:order_item, quantity: 92, product: kale, market_seller_fee: 3.00, local_orbit_market_fee: 12.00),
@@ -123,11 +145,12 @@ feature "Market Manager Financial Overview" do
       ])
 
       deliver_order(order)
-      pay_order(order)
+      order.invoice
+      order.save!
     end
 
     # (20 + 9 + 7)*6.99 = 251.64
-    Timecop.travel(Time.current - 29.day) do
+    Timecop.travel(Time.current - 29.days) do
       order = create(:order, payment_method: "purchase order", market: market, items:[
         create(:order_item, quantity: 20, product: peas, local_orbit_seller_fee: 1.00, local_orbit_market_fee: 9.00),
         create(:order_item, quantity: 9, product: kale, market_seller_fee: 3.00, local_orbit_market_fee: 12.00),
@@ -135,26 +158,50 @@ feature "Market Manager Financial Overview" do
       ])
 
       deliver_order(order)
-      pay_order(order)
+      order.invoice
+      order.save!
     end
+
+    # Uninvoiced Purchase Orders
+    # (4*3)*6.99 = 83.88
+    order = create(:order, payment_method: "purchase order", market: market, items:[
+      create(:order_item, quantity: 4, product: peas, local_orbit_seller_fee: 1.00, local_orbit_market_fee: 9.00),
+      create(:order_item, quantity: 4, product: kale, market_seller_fee: 3.00, local_orbit_market_fee: 12.00),
+      create(:order_item, quantity: 4, product: from_different_seller) # Not included in overdue total
+    ])
+
+    deliver_order(order)
+    order.save!
+
+    # Uninvoiced Purchase Orders
+    # (2*3)*6.99 = 41.94
+    order = create(:order, payment_method: "purchase order", market: market, items:[
+      create(:order_item, quantity: 2, product: peas, local_orbit_seller_fee: 1.00, local_orbit_market_fee: 9.00),
+      create(:order_item, quantity: 2, product: kale, market_seller_fee: 3.00, local_orbit_market_fee: 12.00),
+      create(:order_item, quantity: 2, product: from_different_seller) # Not included in overdue total
+    ])
+
+
+    deliver_order(order)
+    order.save!
   end
 
-  scenario "Seller checks their financial overview" do
+  scenario "Market manager checks their financial overview" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(market_manager)
     click_link "Financials"
 
     expect(money_in_row("Overdue").amount).to eql("$132.81")
-    expect(money_in_row("Today").amount).to eql("$279.60")
-    expect(money_in_row("Next 7 Days").amount).to eql("$1,335.09")
-    expect(money_in_row("Next 30 Days").amount).to eql("$1,726.53")
-    expect(money_in_row("Purchase Orders").amount).to eql("$1,544.79")
+    expect(money_in_row("Today").amount).to eql("$118.83")
+    expect(money_in_row("Next 7 Days").amount).to eql("$1,404.99")
+    expect(money_in_row("Next 30 Days").amount).to eql("$1,544.79")
+    expect(money_in_row("Purchase Orders").amount).to eql("$125.82")
+    expect(money_out_row("Next 7 Days").amount).to eql("$114.83")
 
-    expect(money_out_row("Next 7 Days").amount).to eql("$1,310.09")
-    expect(Dom::Admin::Financials::MoneyOut.all[1].amount).to eql("$21.00")
+    expect(Dom::Admin::Financials::MoneyOut.all[1].amount).to eql("$22.00")
   end
 
-  scenario "Seller navigates to their financial overview" do
+  scenario "Market manager navigates to their financial overview" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(market_manager)
     click_link "Financials"
@@ -193,7 +240,7 @@ feature "Market Manager Financial Overview" do
   end
 
 
-  scenario "Seller navigates directly to their financial overview" do
+  scenario "Market manager navigates directly to their financial overview" do
     visit_financials
     expect(page).to have_content("Money In")
     expect(page).to have_content("This is a snapshot")
