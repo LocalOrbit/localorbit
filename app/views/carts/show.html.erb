@@ -58,8 +58,8 @@
               <%= current_cart.delivery.decorate.cart_type %> <%= raw(current_cart.delivery.decorate.checkout_date) %>
             </div>
             <address class="adr">
-              <span classs="street-address"><%= current_location.address %></span><br />
-              <span class="locality"><%= current_location.city %></span>, <span class="region"><%= current_location.state %></span> <span class="postal-code"><%= current_location.zip %></span>
+              <span classs="street-address"><%= current_cart.delivery_location.address %></span><br />
+              <span class="locality"><%= current_cart.delivery_location.city %></span>, <span class="region"><%= current_cart.delivery_location.state %></span> <span class="postal-code"><%= current_cart.delivery_location.zip %></span>
             </address>
           </div>
 

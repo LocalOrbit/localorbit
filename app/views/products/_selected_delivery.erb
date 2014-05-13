@@ -19,12 +19,12 @@
     </p>
 
     <h3 class="subheading--sidebar">Where</h3>
-    <strong class="location-name"><%= current_delivery.selected_location.name %></strong><br>
+    <strong class="location-name"><%= current_cart.delivery_location.name %></strong><br>
     <span class="location-address">
-      <%= current_delivery.selected_location.address %><br>
-      <%= current_delivery.selected_location.city %>,
-      <%= current_delivery.selected_location.state %>
-      <%= current_delivery.selected_location.zip %>
+      <%= current_cart.delivery_location.address %><br>
+      <%= current_cart.delivery_location.city %>,
+      <%= current_cart.delivery_location.state %>
+      <%= current_cart.delivery_location.zip %>
     </span>
   </div>
 </div>

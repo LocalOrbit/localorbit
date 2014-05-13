@@ -2,7 +2,7 @@ class Cart < ActiveRecord::Base
   belongs_to :market
   belongs_to :organization
   belongs_to :delivery
-  belongs_to :location
+  belongs_to :location, -> { visible }
 
   validates :organization, presence: true
   validates :market, presence: true
@@ -13,6 +13,14 @@ class Cart < ActiveRecord::Base
       joins(product: :organization).order("organizations.name, products.name").group_by do |item|
         item.product.organization.name
       end
+    end
+  end
+
+  def delivery_location
+    if delivery.delivery_schedule.buyer_pickup?
+      delivery.delivery_schedule.buyer_pickup_location
+    else
+      location || organization.shipping_location
     end
   end
 

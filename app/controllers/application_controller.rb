@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_market
   helper_method :current_organization
   helper_method :current_cart
-  helper_method :current_location
   helper_method :current_delivery
   helper_method :redirect_to_url
 
@@ -44,10 +43,6 @@ class ApplicationController < ActionController::Base
     else
       current_user.managed_organizations.find_by(id: session[:current_organization_id])
     end
-  end
-
-  def current_location
-    current_organization.locations.visible.find_by(id: session[:current_location]) || current_delivery.delivery_schedule.buyer_pickup_location
   end
 
   def current_market
@@ -88,7 +83,7 @@ class ApplicationController < ActionController::Base
     return @current_delivery if defined?(@current_delivery)
 
     @current_delivery = find_or_build_current_delivery
-    @current_delivery = @current_delivery.decorate(context: {current_organization: current_organization, location_id: session[:current_location]}) if @current_delivery
+    @current_delivery = @current_delivery.decorate if @current_delivery
   end
 
   def find_or_build_current_delivery
@@ -103,6 +98,12 @@ class ApplicationController < ActionController::Base
         end
       end
     end
+  end
+
+  def selected_organization_location
+    @selected_organization_location ||=
+      current_organization.locations.visible.find_by(id: session[:current_location]) ||
+      current_organization.shipping_location
   end
 
   def set_timezone
@@ -123,8 +124,13 @@ class ApplicationController < ActionController::Base
   end
 
   def require_cart
+    if current_delivery.requires_location? && !selected_organization_location
+      redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath)
+      return
+    end
+
     @current_cart = Cart.find_or_create_by!(organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
-      c.location_id = current_location.id if current_delivery.requires_location?
+      c.location = selected_organization_location if current_delivery.requires_location?
     end
     session[:cart_id] = @current_cart.id
   end

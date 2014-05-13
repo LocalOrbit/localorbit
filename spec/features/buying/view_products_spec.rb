@@ -443,4 +443,36 @@ feature "Viewing products" do
       expect(product.prices).to_not include("$8.00")
     end
   end
+
+  scenario "visiting the shop page after deleting your location" do
+    delivery_schedule1.seller_fulfillment_location_id = 0
+    delivery_schedule1.save!
+
+    sign_in_as(user)
+
+    products = Dom::Product.all
+    expect(products).to have(2).products
+
+    buyer_org.locations.each(&:soft_delete)
+
+    click_link "Dashboard"
+    click_link "Shop"
+
+    expect(page).to have_content("You must enter an address for this organization before you can shop")
+
+    fill_in "Address Label", with: "Warehouse 1"
+    fill_in "Address", with: "1021 Burton St."
+    fill_in "City", with: "Orleans Twp."
+    select "Michigan", from: "State"
+    fill_in "Postal Code", with: "49883"
+    fill_in "Phone", with: "616-555-9983"
+    fill_in "Fax", with: "616-555-9984"
+
+    click_button "Add Address"
+
+    click_link "Shop"
+
+    products = Dom::Product.all
+    expect(products).to have(2).products
+  end
 end
