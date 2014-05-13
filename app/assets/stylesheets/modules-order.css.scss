@@ -33,3 +33,31 @@
     }
   }
 }
+.order-info {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 30px;
+
+  h1 {
+    margin-bottom: 0;
+  }
+  p {
+    margin: 10px 0;
+  }
+  .special-content {
+    font-weight: 700;
+  }
+}
+.order-info-primary {
+  float: left;
+  margin-right: 50px;
+}
+.order-info-secondary {
+  float: left;
+}
+.order-data {
+  width: 100%;
+}
+.order-table-1 {
+  margin-bottom: 40px;
+}
