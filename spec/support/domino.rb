@@ -244,15 +244,15 @@ module Dom
         end
 
         def pay_all_now
-          node.find_link('Record Payment').trigger('click')
+          node.find_button('Record Payment').trigger('click')
         end
 
         def pay_selected
-          within(".order-details") { click_link('Record Payment') }
+          within(".order-details") { click_button('Record Payment') }
         end
 
         def name
-          node.find('h2')
+          node.find('h2', match: :first)
         end
 
         def order_count
