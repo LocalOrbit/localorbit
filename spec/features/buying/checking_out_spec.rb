@@ -120,7 +120,7 @@ describe "Checking Out", :js, :vcr do
 
         visit_in_email "Review Order"
         expect(page).to have_content("Order info")
-        expect(page).to have_content("Items for delivery...")
+        expect(page).to have_content("Items for Delivery")
       end
     end
 
@@ -147,7 +147,7 @@ describe "Checking Out", :js, :vcr do
 
         visit_in_email "Check Order Status"
         expect(page).to have_content("Order info")
-        expect(page).to have_content("Items for delivery...")
+        expect(page).to have_content("Items for Delivery")
       end
 
       ada_farms.users.each do |user|
@@ -170,7 +170,7 @@ describe "Checking Out", :js, :vcr do
 
         visit_in_email "Check Order Status"
         expect(page).to have_content("Order info")
-        expect(page).to have_content("Items for delivery...")
+        expect(page).to have_content("Items for Delivery")
       end
     end
 
@@ -195,7 +195,7 @@ describe "Checking Out", :js, :vcr do
 
       visit_in_email "Check Order Status"
       expect(page).to have_content("Order info")
-      expect(page).to have_content("Items for delivery...")
+      expect(page).to have_content("Items for Delivery")
     end
 
     it "displays the ordered products" do
