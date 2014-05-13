@@ -8,6 +8,7 @@ module MapHelper
     width = width > 640 ? 640 : width
     height = height > 640 ? 640 : height
 
-    "http://api.tiles.mapbox.com/v3/#{Figaro.env.mapbox_api_key}#{markers}/#{center.longitude},#{center.latitude},#{zoom}/#{width}x#{height}@2x.png"
+    "//api.tiles.mapbox.com/v3/#{Figaro.env.mapbox_api_key}#{markers}/#{center.longitude},#{center.latitude},#{zoom}/#{width}x#{height}@2x.png"
   end
+
 end
