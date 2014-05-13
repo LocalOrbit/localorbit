@@ -276,6 +276,12 @@
 .header {
   font-weight: bold;
 }
+  .header--inline {
+    display: inline;
+  }
+  .header--radio {
+    font-size: inherit;
+  }
 
 .product-header {
   height: 40px;

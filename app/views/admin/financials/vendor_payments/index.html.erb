@@ -51,7 +51,7 @@
     </table>
     <div class="payment-details is-hidden">
        <div class="payment-types">
-          <b>Payment Type</b>
+         <h2 class="header header--inline header--radio">Payment Type</h2>
          <label><%= radio_button_tag "payment[payment_type]", "cash" %> Cash</label>
          <label><%= radio_button_tag "payment[payment_type]", "check" %> Check</label>
        </div>
@@ -69,6 +69,9 @@
            <a href="#" class="cancel">Cancel</a>
          </span>
 
+       </div>
+       <div class="vendor-payment-cancel pull-right">
+         <button class="cancel pull-right">Cancel</button>
        </div>
        <div class="clearfix"></div>
     </div>

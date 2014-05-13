@@ -66,3 +66,11 @@ $ ->
     details.removeClass('is-hidden')
 
     paymentDetails.find('.record-payment').removeClass('is-hidden')
+
+  $('.vendor-payment-cancel > .cancel').click ->
+    e.preventDefault()
+    form = $(this).parents('form')
+    form.find('.order-details input[type=checkbox]').prop('checked', true)
+    form.find('.pay-all-now').removeClass('is-invisible')
+    form.find('.payment-details').addClass('is-hidden')
+
