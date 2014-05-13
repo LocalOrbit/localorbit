@@ -29,7 +29,10 @@ class SellersController < ApplicationController
   private
 
   def products_for_seller(seller)
-    Product.available_for_sale(current_market, current_organization).where(organization_id: seller.id).decorate(context: {current_cart: current_cart})
+    current_delivery.products_available_for_sale(current_organization).
+      where(organization_id: seller.id).
+      includes(:unit, :category).
+      decorate(context: {current_cart: current_cart})
   end
 
   def find_market_sellers
