@@ -94,7 +94,7 @@ feature "Adding bank account to a market", :js do
 
     visit new_admin_market_bank_account_path(org)
 
-    expect(page).to have_content("The page you were looking for doesn't exist.")
+    expect(page).to have_content("We can't find that page.")
     expect(page.status_code).to eq(404)
   end
 
@@ -104,7 +104,7 @@ feature "Adding bank account to a market", :js do
 
     visit new_admin_market_bank_account_path(org)
 
-    expect(page).to have_content("The page you were looking for doesn't exist.")
+    expect(page).to have_content("We can't find that page.")
     expect(page.status_code).to eq(404)
   end
 end
