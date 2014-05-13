@@ -21,9 +21,8 @@ $ ->
       return (document.documentElement || document.body.parentNode || document.body).scrollTop
 
   stick_absolutely = (i, e) ->
-    if !$(e).hasClass('l-app-header')
-      $('<div class="teflon"></div>').insertAfter(e)
-      $(e).parent().css('overflow', 'hidden')
+    $('<div class="teflon"></div>').insertAfter(e)
+    $(e).parent().css('overflow', 'hidden')
     $(e).addClass('js-positioned').next().css({
         'position': 'relative',
         'height': "+=" + stick_heights[i] + "px",
