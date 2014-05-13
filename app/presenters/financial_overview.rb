@@ -31,8 +31,8 @@ class FinancialOverview
   def money_in_today
     orders = []
 
-    orders += @cc_ach_orders.paid.delivered_between(today)
-    orders += @po_orders.delivered.paid_between(today)
+    orders += @cc_ach_orders.paid.delivered_between(today(7))
+    orders += @po_orders.delivered.paid_between(today(7))
 
     sum_seller_items(orders)
   end
@@ -40,8 +40,8 @@ class FinancialOverview
   def money_in_next_seven
     orders = []
 
-    orders += @cc_ach_orders.paid.delivered_between(next_seven_days)
-    orders += @po_orders.delivered.paid_between(next_seven_days)
+    orders += @cc_ach_orders.paid.delivered_between(next_seven_days(7))
+    orders += @po_orders.delivered.paid_between(next_seven_days(7))
 
     sum_seller_items(orders)
   end
