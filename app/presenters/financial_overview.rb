@@ -10,16 +10,16 @@ class FinancialOverview
     @po_orders = base_order_scope.paid_with("purchase order")
   end
 
-  def next_seven_days(offset=0)
-    range_start = offset.days.ago(@time + 1.day).beginning_of_day
+  def next_seven_days(offset: 0)
+    range_start = (@time + 1.day).beginning_of_day + offset.days
     range_end = (range_start + 6.days).end_of_day
 
     range_start..range_end
   end
 
-  def today(offset=0)
-    start_of_day = offset.days.ago(@time).beginning_of_day
-    end_of_day = offset.days.ago(@time).end_of_day
+  def today(offset: 0)
+    start_of_day = (@time).beginning_of_day + offset.days
+    end_of_day = start_of_day.end_of_day
 
     start_of_day..end_of_day
   end
@@ -31,8 +31,8 @@ class FinancialOverview
   def money_in_today
     orders = []
 
-    orders += @cc_ach_orders.paid.delivered_between(today(7))
-    orders += @po_orders.delivered.paid_between(today(7))
+    orders += @cc_ach_orders.paid.delivered_between(today(offset: -7))
+    orders += @po_orders.delivered.paid_between(today(offset: -7))
 
     sum_seller_items(orders)
   end
@@ -40,8 +40,8 @@ class FinancialOverview
   def money_in_next_seven
     orders = []
 
-    orders += @cc_ach_orders.paid.delivered_between(next_seven_days(7))
-    orders += @po_orders.delivered.paid_between(next_seven_days(7))
+    orders += @cc_ach_orders.paid.delivered_between(next_seven_days(offset: -7))
+    orders += @po_orders.delivered.paid_between(next_seven_days(offset: -7))
 
     sum_seller_items(orders)
   end

@@ -4,8 +4,8 @@ class MarketManagerOverview < FinancialOverview
     @calculation_method = :gross_total
   end
 
-  def next_thirty_days(offset=0)
-    range_start = offset.days.ago(@time + 1.day).beginning_of_day
+  def next_thirty_days(offset: 0)
+    range_start = (@time + 1.day).beginning_of_day + offset.days
     range_end = (range_start + 29.days).end_of_day
 
     range_start..range_end
@@ -14,7 +14,7 @@ class MarketManagerOverview < FinancialOverview
   def money_out_next_seven
     orders = []
     orders += @po_orders.delivered.paid_between(
-      next_seven_days(7)
+      next_seven_days(offset: -7)
     )
 
     sum_money_to_sellers(orders)
@@ -51,7 +51,7 @@ class MarketManagerOverview < FinancialOverview
   end
 
   def lo_fees_next_seven_days
-    orders = @po_orders.delivered.paid_between(next_seven_days(7))
+    orders = @po_orders.delivered.paid_between(next_seven_days(offset: -7))
     sum_local_orbit_fees(orders)
   end
 
