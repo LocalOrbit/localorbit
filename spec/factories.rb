@@ -132,6 +132,8 @@ FactoryGirl.define do
     allow_purchase_orders true
     allow_credit_cards    true
     allow_ach             true
+    display_twitter       false
+    display_facebook      false
 
     trait :seller do
       can_sell true
