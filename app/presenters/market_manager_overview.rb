@@ -4,7 +4,6 @@ class MarketManagerOverview < FinancialOverview
     @calculation_method = :gross_total
   end
 
-
   def money_out_next_seven
     orders = []
     orders += @po_orders.delivered.paid_between(
@@ -38,10 +37,8 @@ class MarketManagerOverview < FinancialOverview
   end
 
   def money_in_purchase_orders
-    orders = []
-    orders += @po_orders.uninvoiced
-
-    sum_seller_items(orders)
+    orders = @po_orders.uninvoiced
+    orders.map(&:total_cost).reduce(:+)
   end
 
   def lo_fees_next_seven_days

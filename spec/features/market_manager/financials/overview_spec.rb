@@ -195,7 +195,7 @@ feature "Market Manager Financial Overview" do
     expect(money_in_row("Today").amount).to eql("$118.83")
     expect(money_in_row("Next 7 Days").amount).to eql("$1,404.99")
     expect(money_in_row("Next 30 Days").amount).to eql("$1,544.79")
-    expect(money_in_row("Purchase Orders").amount).to eql("$125.82")
+    expect(money_in_row("Purchase Orders").amount).to eql("$201.98")
     expect(money_out_row("Next 7 Days").amount).to eql("$114.83")
 
     expect(Dom::Admin::Financials::MoneyOut.all[1].amount).to eql("$22.00")
