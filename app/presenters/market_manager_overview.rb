@@ -4,12 +4,6 @@ class MarketManagerOverview < FinancialOverview
     @calculation_method = :gross_total
   end
 
-  def next_thirty_days(offset: 0)
-    range_start = (@time + 1.day).beginning_of_day + offset.days
-    range_end = (range_start + 29.days).end_of_day
-
-    range_start..range_end
-  end
 
   def money_out_next_seven
     orders = []
