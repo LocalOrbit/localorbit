@@ -3,8 +3,9 @@
 <head>
   <title>The page you were looking for doesn't exist (404)</title>
   <style>
+
   .error-page {
-    background-color: #EFEFEF;
+    background-color: #fff;
     color: #2E2F30;
     text-align: center;
     font-family: arial, sans-serif;
@@ -17,7 +18,7 @@
     border-right-color: #999;
     border-left-color: #999;
     border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
+    border-top: #666 solid 4px;
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
     background-color: white;
@@ -25,9 +26,8 @@
   }
 
   .error-page h1 {
-    font-size: 100%;
+    font-size: 24px;
     color: #730E15;
-    line-height: 1.5em;
   }
 
   .error-page > p {
@@ -44,6 +44,15 @@
     color: #666;
     box-shadow:0 3px 8px rgba(50, 50, 50, 0.17);
   }
+
+  .error-page > p > a {
+    color: #B00100;
+    text-decoration: none;
+  }
+
+  .error-page > p > a:hover {
+    text-decoration: underline;
+  }
   </style>
 </head>
 
@@ -51,10 +60,10 @@
   <!-- This file lives in public/404.html -->
   <div class="error-page">
     <div class="dialog">
-      <h1>The page you were looking for doesn't exist.</h1>
-      <p>You may have mistyped the address or the page may have moved.</p>
+      <h1>We can't find that page.</h1>
+      <p>The page you were looking for is not available at this address. You may have mistyped it <i>or</i> the page may have moved. Please check the link and try again.</p>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
+    <p>If you continue having trouble, please contact <a href="https://localorbit.zendesk.com/anonymous_requests/new">Local Orbit support</a>.</p>
   </div>
 </body>
 </html>
