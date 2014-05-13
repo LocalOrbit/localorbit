@@ -1,3 +1,5 @@
+@import "mixins";
+
 .order-page {
   color: #000;
 }
@@ -38,22 +40,28 @@
   width: 100%;
   margin-bottom: 30px;
 
-  h1 {
-    margin-bottom: 0;
-  }
   p {
-    margin: 10px 0;
+    margin: 5px 0;
   }
   .special-content {
     font-weight: 700;
   }
 }
 .order-info-primary {
+  @include border-radius(5px);
   float: left;
-  margin-right: 50px;
+  margin-right: 100px;
+  padding: 5px 10px;
+  background: #F9F9F9;
+  font-size: 16px;
 }
 .order-info-secondary {
-  float: left;
+  float: right;
+  margin-right: 20px;
+}
+.order-info-third {
+  float: right;
+  margin-right: 50px;
 }
 .order-data {
   width: 100%;
