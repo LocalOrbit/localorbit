@@ -54,7 +54,7 @@ feature "Market Manager Financial Overview" do
 
     Timecop.travel(Time.current - 30.days) do
       paid_po = create(:order, payment_method: "purchase order", market: market, total_cost: 27.96, items:[
-        create(:order_item, quantity: 4, product: peas, payment_seller_fee: 1.00)
+        create(:order_item, quantity: 4, product: peas, payment_seller_fee: 1.00, local_orbit_market_fee: 10.00)
       ])
 
       deliver_order(paid_po)
@@ -117,7 +117,7 @@ feature "Market Manager Financial Overview" do
     expect(money_in_row("Purchase Orders").amount).to eql("$99.83")
 
     expect(money_out_row("Next 7 Days").amount).to eql("$26.96")
-    expect(Dom::Admin::Financials::MoneyOut.all[1].amount).to eql("$22.00")
+    expect(Dom::Admin::Financials::MoneyOut.all[1].amount).to eql("$10.00")
   end
 
   scenario "Market manager navigates to their financial overview" do
