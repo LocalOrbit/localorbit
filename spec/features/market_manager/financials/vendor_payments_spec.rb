@@ -78,7 +78,9 @@ feature "Payments to vendors" do
     choose "Check"
     fill_in "Check #", with: "4234"
 
-    click_button "Record Payment"
+    within('.record-payment') do
+      find_button("Record Payment").trigger('click')
+    end
 
     expect(page).to have_content("Payment of $223.68 recorded for Great Farms")
 
@@ -99,7 +101,9 @@ feature "Payments to vendors" do
     choose "Check"
     fill_in "Check #", with: "4234"
 
-    click_button "Record Payment"
+    within('.record-payment') do
+      click_button "Record Payment"
+    end
 
     expect(page).to have_content("Payment of $181.74 recorded for Great Farms")
 
