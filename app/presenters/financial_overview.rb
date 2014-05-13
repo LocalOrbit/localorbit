@@ -5,45 +5,33 @@ class FinancialOverview
     @time = Time.current
 
     base_order_scope = Order.orders_for_seller(@seller).where(market: @market)
-
     @cc_ach_orders = base_order_scope.paid_with(["credit card", "ach"])
     @po_orders = base_order_scope.paid_with("purchase order")
   end
 
-  def next_seven_days
-    range_start = (@time + 1.day).beginning_of_day - 7.days
+  def next_seven_days(offset: 0)
+    range_start = (@time + 1.day).beginning_of_day + offset.days
     range_end = (range_start + 6.days).end_of_day
 
     range_start..range_end
   end
 
-  def today
-    start_of_day = 7.days.ago(@time).beginning_of_day
-    end_of_day = @time.end_of_day - 7.days
+  def next_thirty_days(offset: 0)
+    range_start = (@time + 1.day).beginning_of_day + offset.days
+    range_end = (range_start + 29.days).end_of_day
+
+    range_start..range_end
+  end
+
+  def today(offset: 0)
+    start_of_day = (@time).beginning_of_day + offset.days
+    end_of_day = start_of_day.end_of_day
 
     start_of_day..end_of_day
   end
 
   def overdue
-    sum_seller_items(@po_orders.delivered.payment_overdue)
-  end
-
-  def money_in_today
-    orders = []
-
-    orders += @cc_ach_orders.paid.delivered_between(today)
-    orders += @po_orders.delivered.paid_between(today)
-
-    sum_seller_items(orders)
-  end
-
-  def money_in_next_seven
-    orders = []
-
-    orders += @cc_ach_orders.paid.delivered_between(next_seven_days)
-    orders += @po_orders.delivered.paid_between(next_seven_days)
-
-    sum_seller_items(orders)
+    sum_seller_items(@po_orders.delivered.where("invoice_due_date < ?", @time.beginning_of_day))
   end
 
   private
