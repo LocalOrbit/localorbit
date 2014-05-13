@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="pdfkit-footer_right" content="Powered by Local Orbit">
   <title>Local Orbit</title>
-  <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300|Open+Sans+Condensed:700,300" rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300%7COpen+Sans+Condensed:700,300" rel="stylesheet" type="text/css">
   <style>
     body {
       font-size: 14px;
@@ -65,12 +65,12 @@
       <%= content_tag :div, "Purchase Order Number: #{@invoice.payment_note}" if @invoice.payment_note.present? %>
       <div>Invoice Date: <%= @invoice.invoiced_at.strftime("%B %d, %Y") %></div>
       <br>
-      <div>Payment Due: <b><%= @invoice.invoice_due_date.strftime("%B %d, %Y") %></b></div>
-      <div>Amount Due: <b><%= number_to_currency @invoice.total_cost %></b></div>
+      <div>Payment Due: <strong><%= @invoice.invoice_due_date.strftime("%B %d, %Y") %></strong></div>
+      <div>Amount Due: <strong><%= number_to_currency @invoice.total_cost %></strong></div>
     </div>
   </div>
   <div class="buyer-name">To: <%= @invoice.billing_organization_name %></div>
-  <b>Detail</b>
+  <strong>Detail</strong>
   <table>
     <tr>
       <th class="al">Description</th>
@@ -99,17 +99,17 @@
     <% end %>
     <% end %>
     <tr>
-      <td colspan="5" align="right">Discounts</td>
+      <td colspan="5" class="ar">Discounts</td>
       <td class="ar"><%= number_to_currency @invoice.discount %></td>
     </tr>
     <tr>
-      <td colspan="5" align="right">Delivery Fees</td>
+      <td colspan="5" class="ar">Delivery Fees</td>
       <td class="ar"><%= number_to_currency @invoice.delivery_fees %></td>
     </tr>
     <tr>
       <td colspan="3">This order is complete.</td>
-      <td colspan="2" align="right"><b>Total</b></td>
-      <td class="ar"><b><%= number_to_currency @invoice.total_cost %><b></td>
+      <td colspan="2" class="ar"><strong>Total</strong></td>
+      <td class="ar"><strong><%= number_to_currency @invoice.total_cost %></strong></td>
     </tr>
   </table>
 </body>
