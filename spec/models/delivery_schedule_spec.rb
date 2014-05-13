@@ -198,4 +198,53 @@ describe DeliverySchedule do
     end
   end
 
+  describe "#participating_products" do
+    let!(:cross_sell_market) { create(:market) }
+
+    let!(:market_org)     { create(:organization, markets: [market]) }
+    let!(:cross_sell_org) { create(:organization).tap {|o| o.market_organizations.create(market: market, cross_sell: true) } }
+
+    let!(:in_market_opt_in)   { create(:product, organization: market_org, delivery_schedules: [delivery_schedule]) }
+    let!(:in_market_opt_out)  { create(:product, organization: market_org).tap {|p| p.delivery_schedules.clear } }
+    let!(:cross_sell_opt_in)  { create(:product, organization: cross_sell_org, delivery_schedules: [delivery_schedule]) }
+    let!(:cross_sell_opt_out) { create(:product, organization: cross_sell_org).tap {|p| p.delivery_schedules.clear } }
+
+    subject { delivery_schedule.participating_products }
+
+    context "all seller required to participate" do
+      let!(:delivery_schedule) { create(:delivery_schedule, market: market, require_delivery: true, require_cross_sell_delivery: true) }
+
+      it "includes all products" do
+        expect(subject.size).to eq(4)
+        expect(subject).to include(*Product.all)
+      end
+    end
+
+    context "all market sellers required to participate" do
+      let!(:delivery_schedule) { create(:delivery_schedule, market: market, require_delivery: true, require_cross_sell_delivery: false) }
+
+      it "includes all but the cross sell opt out" do
+        expect(subject.size).to eq(3)
+        expect(subject).to include(in_market_opt_in, in_market_opt_out, cross_sell_opt_in)
+      end
+    end
+
+    context "all cross sell sellers required to participate" do
+      let!(:delivery_schedule) { create(:delivery_schedule, market: market, require_delivery: false, require_cross_sell_delivery: true) }
+
+      it "includes all but the in market opt out" do
+        expect(subject.size).to eq(3)
+        expect(subject).to include(in_market_opt_in, cross_sell_opt_in, cross_sell_opt_out)
+      end
+    end
+
+    context "no participation requirement" do
+      let!(:delivery_schedule) { create(:delivery_schedule, market: market, require_delivery: false, require_cross_sell_delivery: false) }
+
+      it "includes only the opt ins" do
+        expect(subject.size).to eq(2)
+        expect(subject).to include(in_market_opt_in, cross_sell_opt_in)
+      end
+    end
+  end
 end

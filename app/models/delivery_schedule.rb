@@ -15,15 +15,35 @@ class DeliverySchedule < ActiveRecord::Base
   validates :day,          presence: true, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 6,   allow_nil: true}
   validates :order_cutoff, presence: true, numericality: {greater_than_or_equal_to: 6, less_than_or_equal_to: 504, allow_nil: true}
   validates :seller_fulfillment_location_id, presence: true
-  validates :seller_delivery_start, presence: true
-  validates :seller_delivery_end, presence: true
-  validates :buyer_pickup_location_id, presence: true, unless: :direct_to_customer?
-  validates :buyer_pickup_end,         presence: true, unless: :direct_to_customer?
-  validates :buyer_pickup_start,       presence: true, unless: :direct_to_customer?
+  validates :seller_delivery_start,          presence: true
+  validates :seller_delivery_end,            presence: true
+  validates :buyer_pickup_location_id,       presence: true, unless: :direct_to_customer?
+  validates :buyer_pickup_end,               presence: true, unless: :direct_to_customer?
+  validates :buyer_pickup_start,             presence: true, unless: :direct_to_customer?
 
   validate :buyer_pickup_end_after_start,                      unless: :direct_to_customer?
   validate :buyer_pickup_start_after_seller_fulfillment_start, unless: :direct_to_customer?
   validate :seller_delivery_end_after_start
+
+  def products_available_for_sale(organization, deliver_on_date=Time.current)
+    participating_products.available_for_sale(market, organization, deliver_on_date)
+  end
+
+  def participating_products
+    if require_delivery? && require_cross_sell_delivery?
+      Product.for_market_id(market_id)
+    elsif require_delivery?
+      Product.joins("LEFT JOIN product_deliveries ON products.id = product_deliveries.product_id").
+              where("NOT(market_organizations.cross_sell) OR product_deliveries.delivery_schedule_id = :id", id: id).
+              for_market_id(market_id)
+    elsif require_cross_sell_delivery?
+      Product.joins("LEFT JOIN product_deliveries ON products.id = product_deliveries.product_id").
+              where("market_organizations.cross_sell OR product_deliveries.delivery_schedule_id = :id", id: id).
+              for_market_id(market_id)
+    else
+      products.for_market_id(market_id)
+    end
+  end
 
   def buyer_pickup?
     seller_fulfillment_location.present? && buyer_pickup_location.present?

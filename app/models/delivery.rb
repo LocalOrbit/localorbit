@@ -22,6 +22,10 @@ class Delivery < ActiveRecord::Base
     where(id: ids)
   end
 
+  def products_available_for_sale(organization)
+    delivery_schedule.products_available_for_sale(organization, deliver_on)
+  end
+
   def requires_location?
     !delivery_schedule.buyer_pickup?
   end

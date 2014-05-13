@@ -274,7 +274,6 @@ describe "Editing a product" do
         fill_in "Name", with: ""
 
         click_button "Save and Continue"
-        save_and_open_page
 
         expect(page).to have_content("Name can't be blank")
         expect(find_field("Make product available on all market delivery dates")).to_not be_checked
