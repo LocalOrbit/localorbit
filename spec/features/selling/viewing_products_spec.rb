@@ -80,14 +80,14 @@ describe "Viewing products" do
 
     context "by name" do
       it "ascending" do
-        click_header("Name")
+        click_header("name")
 
         first = Dom::ProductRow.first
         expect(first.name).to have_content(apples.name)
       end
 
       it "descending" do
-        click_header_twice("Name")
+        click_header_twice("name")
 
         first = Dom::ProductRow.first
         expect(first.name).to have_content(grapes.name)
@@ -96,14 +96,14 @@ describe "Viewing products" do
 
     context "by price" do
       it "ascending" do
-        click_header("Pricing")
+        click_header("price")
 
         first = Dom::ProductRow.first
         expect(first.name).to have_content(bananas.name)
       end
 
       it "descending" do
-        click_header_twice("Pricing")
+        click_header_twice("price")
 
         first = Dom::ProductRow.first
         expect(first.name).to have_content(apples.name)
@@ -112,14 +112,14 @@ describe "Viewing products" do
 
     context "by stock" do
       it "ascending" do
-        click_header("Stock")
+        click_header("stock")
 
         first = Dom::ProductRow.first
         expect(first.name).to have_content(grapes.name)
       end
 
       it "descending" do
-        click_header_twice("Stock")
+        click_header_twice("stock")
 
         first = Dom::ProductRow.first
         expect(first.name).to have_content(bananas.name)
