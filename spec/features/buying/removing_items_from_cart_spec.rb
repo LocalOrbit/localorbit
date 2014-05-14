@@ -42,7 +42,7 @@ describe "Removing items" do
 
   let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms, delivery_schedules: [delivery_schedule]) }
 
-  let!(:cart) { create(:cart, market: market, organization: buyer, location: buyer.locations.first, delivery: delivery) }
+  let!(:cart) { create(:cart, market: market, organization: buyer, user: user, location: buyer.locations.first, delivery: delivery) }
   let!(:cart_bananas) { create(:cart_item, cart: cart, product: bananas, quantity: 10) }
   let!(:cart_potatoes) { create(:cart_item, cart: cart, product: potatoes, quantity: 5) }
   let!(:cart_kale) { create(:cart_item, cart: cart, product: kale, quantity: 20) }

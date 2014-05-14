@@ -42,7 +42,7 @@ describe "Viewing the cart", js: true do
 
   let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms) }
 
-  let!(:cart) { create(:cart, market: market, organization: buyer, location: buyer.locations.first, delivery: delivery) }
+  let!(:cart) { create(:cart, market: market, organization: buyer, user: user, location: buyer.locations.first, delivery: delivery) }
   let!(:cart_bananas) { create(:cart_item, cart: cart, product: bananas, quantity: 10) }
   let!(:cart_potatoes) { create(:cart_item, cart: cart, product: potatoes, quantity: 5) }
   let!(:cart_kale) { create(:cart_item, cart: cart, product: kale, quantity: 20) }
@@ -95,10 +95,24 @@ describe "Viewing the cart", js: true do
     expect(ada_farms_group).to have_product_row("Potatoes")
   end
 
-  it "displays the current cart item quantities" do
-    expect(bananas_item.quantity_field.value).to eql("10")
-    expect(kale_item.quantity_field.value).to eql("20")
-    expect(potatoes_item.quantity_field.value).to eql("5")
+  context "scoped to users" do
+    let!(:other_user)      { create(:user, organizations: [buyer]) }
+    let!(:other_cart)      { create(:cart, market: market, organization: buyer, user: other_user, location: buyer.locations.first, delivery: delivery) }
+    let!(:other_cart_kale) { create(:cart_item, cart: other_cart, product: kale, quantity: 6) }
+
+    it 'shows the cart for the current user' do
+      expect(bananas_item.quantity_field.value).to eql("10")
+      expect(kale_item.quantity_field.value).to eql("20")
+      expect(potatoes_item.quantity_field.value).to eql("5")
+
+      sign_out
+
+      sign_in_as(other_user)
+
+      cart_link.node.click
+      expect(page).to have_content("Your Order")
+      expect(kale_item.quantity_field.value).to eql("6")
+    end
   end
 
   context "delivery information" do
