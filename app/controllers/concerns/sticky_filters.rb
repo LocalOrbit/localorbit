@@ -1,6 +1,4 @@
 module StickyFilters
-  extend ActiveSupport::Concern
-
   def sticky_parameters(parameters)
     path = request.path
     session[:sticky_parameters] ||= {}

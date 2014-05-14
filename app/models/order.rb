@@ -223,10 +223,12 @@ class Order < ActiveRecord::Base
   end
 
   def self.order_by_owed(direction)
+    # FIXME: need to sort by amount owed
     direction == "asc" ? order(:id) : order(:id)
   end
 
   def self.order_by_seller(direction)
+    # FIXME: need to sort by the seller paid status
     direction == "asc" ? order(:id) : order(:id)
   end
 

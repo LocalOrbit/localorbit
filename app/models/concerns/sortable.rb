@@ -4,7 +4,7 @@ module Sortable
   module ClassMethods
     def column_and_direction(string)
       column, direction = string.split("-")
-      direction = "asc" unless ["asc", "desc"].include?(direction)
+      direction = "asc" unless direction == "desc"
       [column, direction]
     end
   end
