@@ -3,7 +3,7 @@
   <div class="order-info-primary">
     <p></p>
     <p>Buyer: <span class="special-content"><%= order.organization.name %></span></p>
-    <p>Placed On: <span class="special-content"><%= order.placed_at.strftime "%m/%d/%Y" %> at 00:00AM</span></p>
+    <p>Placed On: <span class="special-content"><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></span></p>
     <p><br />Delivery Fees: <span class="special-content">$<%= order.delivery_fees %></span></p>
     <p>Grand Total: <span class="special-content"><%= number_to_currency order.gross_total %></span></p>
   </div>
