@@ -1175,11 +1175,18 @@ label ~ .tooltip {
 .upcoming-delivery {
   color: #000;
 
+  h1 + .note {
+    margin-top: -1em;
+  }
+  h2 + h3 {
+    margin-top: 0;
+  }
   hr {
     margin: 30px 0;
   }
 
-  > .upcoming-delivery-date {
+  .upcoming-delivery-date,
+  .upcoming-delivery-order {
     margin-bottom: .5em;
     font: bold 24px 'Open Sans Condensed', 'Open Sans', OpenSans, sans-serif;
     + .note {
@@ -1187,11 +1194,12 @@ label ~ .tooltip {
     }
   }
 
-  > .location {
+  .location {
     margin: 0 0 1em;
     font: bold 20px 'Open Sans Condensed', 'Open Sans', OpenSans, sans-serif;
   }
-  .vcard--seller {
+  .vcard--seller,
+  .vcard--buyer {
     margin: 0 0 2em;
 
     .fn {

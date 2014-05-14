@@ -1,42 +1,51 @@
 <%= link_to "Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
-<%= link_to "Print", "#", class: "btn btn--small pull-right", id: "print-button" %>
+<button class="btn btn--action btn--small pull-right" id="print-button">Print</button>
 
 <% @delivery.orders.decorate.each_with_index do |order, index| %>
   <% if index != 0 %>
     <div class="pdf-page-break"></div>
   <% end %>
 
-  <h2>Packing Slip</h2>
-  <p><%= index + 1 %> of <%= @delivery.orders.count %><p>
+  <div class="upcoming-delivery">
+    <h1>Packing Slip</h1>
+    <p class="note"><%= index + 1 %> of <%= @delivery.orders.count %><p>
 
-  <b>Buyer Name</b>
-  <h1><%= order.organization.name %></h1>
+    <h2 class="heading heading-delivery-tool">Buyer Name</h2>
+    <h3 class="fn org"><%= order.organization.name %></h3>
 
-  <div class="half-block">
-    <b><%= order.display_fulfillment_info %></b>
-    <h2><%= @delivery.display_date %> <%= @delivery.buyer_time_range %></h2>
-  </div>
+    <div class="row">
+      <div class="column column--half">
 
-  <div class="half-block">
-    <b>Order Number</b>
-    <h2><%= order.order_number %></h2>
-  </div>
+        <h2 class="heading heading-delivery-tool"><%= order.display_fulfillment_info %></h2>
+        <span class="upcoming-delivery-date"><%= @delivery.display_date %> <%= @delivery.buyer_time_range %></>
 
-  <div class="half-block">
-    <b>From Market</b>
-    <h2><%= order.market.name %></h2>
-    <div class="street"><%= order.display_market_street %></div>
-    <div class="city-state-zip"><%= order.display_market_city_state_zip %></div>
-    <div class="phone"><%= order.display_market_phone %></div>
-  </div>
+      </div><div class="column column--half">
 
-  <div class="half-block">
-    <b>To Buyer</b>
-    <h2><%= order.organization.name %></h2>
-    <div class="street"><%= order.display_delivery_street %></div>
-    <div class="city-state-zip"><%= order.display_delivery_city_state_zip %></div>
-    <div class="phone"><%= order.display_delivery_phone %></div>
-  </div>
+        <h2 class="heading heading-delivery-tool">Order Number</h2>
+        <span class="upcoming-delivery-order"><%= order.order_number %></span>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="column column--half vcard vcard--seller">
+
+        <h2 class="heading heading-delivery-tool">From Market</h2>
+        <h3 class="fn org"><%= order.market.name %></h3>
+        <div class="street"><%= order.display_market_street %></div>
+        <div class="city-state-zip"><%= order.display_market_city_state_zip %></div>
+        <div class="phone"><%= order.display_market_phone %></div>
+
+      </div><div class="column column--half vcard vcard--buyer">
+
+        <h2 class="heading heading-delivery-tool">To Buyer</h2>
+        <h3 class="fn org"><%= order.organization.name %></h3>
+        <div class="street-address"><%= order.display_delivery_street %></div>
+        <div class="city-state-zip"><%= order.display_delivery_city_state_zip %></div>
+        <div class="tel"><%= order.display_delivery_phone %></div>
+      </div>
+    </div>
+
 
   <table class="delivery-tools">
     <tr>
@@ -59,4 +68,5 @@
     <% end %>
   </table>
 
+</div>
 <% end %>
