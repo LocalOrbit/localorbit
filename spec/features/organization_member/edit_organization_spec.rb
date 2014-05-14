@@ -42,8 +42,6 @@ describe "An organization member" do
   end
 
   describe "A buying organization" do
-    # TODO: Exercise this as a Market Manager
-    # they will need to have this update via javascript
     let(:org) { create(:organization, users: [member], can_sell: false) }
 
     it "hides profile information" do
