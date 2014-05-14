@@ -41,7 +41,7 @@
         </td>
         <td class="quantity">
           <%= item.quantity %> <%= item.unit %> (Delivered) <br />
-          <%= item.quantity %> <%= item.unit %> (Un-delivered)
+          <%= item.quantity_delivered || 0 %> <%= item.unit %> (Un-delivered)
         </td>
         <td class="price"><%= number_to_currency item.unit_price %></td>
         <td class="discount"><%= number_to_currency item.discount %></td>
