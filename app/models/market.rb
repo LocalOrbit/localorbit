@@ -37,9 +37,9 @@ class Market < ActiveRecord::Base
     when "name"
       order_by_name(direction)
     when "subdomain"
-        order_by_subdomain(direction)
+      order_by_subdomain(direction)
     else
-      order("#{column} #{direction}")
+      order_by_name(direction)
     end
   end
 
