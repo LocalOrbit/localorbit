@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :user_organizations
   has_many :organizations, through: :user_organizations
+  has_many :carts
 
   pg_search_scope :search_by_name_and_email,
                     against: {name: 'A', email: 'B'},

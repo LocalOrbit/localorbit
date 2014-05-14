@@ -103,7 +103,7 @@ describe "Add item to cart", js: true do
   end
 
   context "with a partially filled cart" do
-    let!(:cart) { create(:cart, market: market, organization: buyer, delivery: delivery.next_delivery) }
+    let!(:cart)      { create(:cart, market: market, organization: buyer, user: user, delivery: delivery.next_delivery) }
     let!(:cart_item) { create(:cart_item, product: bananas, cart: cart, quantity: 1) }
 
     before do

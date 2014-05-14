@@ -275,6 +275,7 @@ FactoryGirl.define do
     organization
     market
     delivery
+    user
 
     trait :with_items do
       after(:create) do |cart|
