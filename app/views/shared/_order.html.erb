@@ -37,7 +37,7 @@
       <tr class="order-item-row">
         <td class="name">
           <%= item.name %> <br />
-          <span class="seller-name">from Seller Name</span>
+          <span class="seller-name">from <%= item.product.organization.name %></span>
         </td>
         <td class="quantity">
           <%= item.quantity %> <%= item.unit %> (Delivered) <br />
