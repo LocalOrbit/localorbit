@@ -175,7 +175,6 @@ module Dom
 
   module Admin
     module Financials
-
       class InvoiceRow < Domino
         selector ".invoice-row"
 
@@ -285,6 +284,23 @@ module Dom
           node.all('td').last
         end
       end
+    end
+
+    class MarketRow < Domino
+      selector ".market-org-list tbody tr"
+
+      attribute :name
+      attribute :subdomain
+      attribute :contact
+    end
+
+    class OrganizationRow < Domino
+      selector ".organization-table tbody tr"
+
+      attribute :name
+      attribute :market
+      attribute :registered
+      attribute :can_sell
     end
 
     class UserRow < Domino

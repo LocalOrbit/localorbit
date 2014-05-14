@@ -107,7 +107,7 @@ describe "Managing Markets" do
 
   describe 'as an admin' do
     let!(:user) { create(:user, :admin) }
-    let!(:market) { create(:market) }
+    let!(:market) { create(:market, name: "A Market", subdomain: "not-c", contact_name: "B Name") }
 
     before :each do
       switch_to_subdomain market.subdomain
@@ -121,6 +121,63 @@ describe "Managing Markets" do
       expect(page).to have_text('Markets')
       expect(page).to have_text(market.name)
       expect(page).to have_text(@market2.name)
+    end
+
+    context "sorting", :js do
+      let!(:market_b) { create(:market, name: "B Market", subdomain: "not-a", contact_name: "C Name") }
+      let!(:market_c) { create(:market, name: "C Market", subdomain: "not-b", contact_name: "A Name") }
+
+      before do
+        visit admin_markets_path
+      end
+
+      context "by name" do
+        it "ascending" do
+          click_header("name")
+
+          first = Dom::Admin::MarketRow.first
+          expect(first.name).to have_content(market.name)
+        end
+
+        it "descending" do
+          click_header_twice("name")
+
+          first = Dom::Admin::MarketRow.first
+          expect(first.name).to have_content(market_c.name)
+        end
+      end
+
+      context "by subdomain" do
+        it "ascending" do
+          click_header("subdomain")
+
+          first = Dom::Admin::MarketRow.first
+          expect(first.name).to have_content(market_b.name)
+        end
+
+        it "descending" do
+          click_header_twice("subdomain")
+
+          first = Dom::Admin::MarketRow.first
+          expect(first.name).to have_content(market.name)
+        end
+      end
+
+      context "by contact name" do
+        it "ascending" do
+          click_header("contact")
+
+          first = Dom::Admin::MarketRow.first
+          expect(first.name).to have_content(market_c.name)
+        end
+
+        it "descending" do
+          click_header_twice("contact")
+
+          first = Dom::Admin::MarketRow.first
+          expect(first.name).to have_content(market_b.name)
+        end
+      end
     end
 
     it 'can see details for a single market' do
@@ -178,7 +235,7 @@ describe "Managing Markets" do
       visit '/admin/markets'
       click_link market.name
 
-      expect(find_field("market_contact_name").value).to eq('Jill Smith')
+      expect(find_field("market_contact_name").value).to eq('B Name')
 
       fill_in 'Contact name', with: 'Jane Smith'
 
@@ -192,7 +249,7 @@ describe "Managing Markets" do
       visit admin_market_path(market)
 
       expect(find_field("Auto-activate organizations")).to_not be_checked
-      
+
       check "Auto-activate organizations"
       click_button 'Update Market'
 
