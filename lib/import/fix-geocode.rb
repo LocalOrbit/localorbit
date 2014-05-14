@@ -1,28 +1,31 @@
-def print_report(failed_locations)
-  failed_locations.each do |l|
-    puts "--------------------------------------------------"
-    puts l[:id]
-    puts l[:reason]
-    puts "--------------------------------------------------"
-  end
-end
+module Imported
+  def self.fix_geocodes
+    @failed_locations = []
+    locations = []
 
-@failed_locations = []
+    locations += Location.all.select {|l| l.geocode.nil? }
+    locations += MarketAddress.all.select {|l| l.geocode.nil? }
 
-def save_location_and_report(location)
-  begin
-    unless location.save
-      @failed_locations << {location_id: location.id, reason: location.errors.to_s}
+    locations.each do |location|
+      begin
+        unless location.save
+          @failed_locations << {location: location, reason: location.errors}
+        end
+      rescue Exception => e
+        @failed_locations << {location: location, reason: e.message + e.backtrace.join("\n") }
+      end
     end
-  rescue Exception => e
-    @failed_locations << {location_id: location, reason: e.message + e.backtrace.join("\n") }
+
+    print_report(@failed_locations)
+  end
+
+  private
+  def self.print_report(failed_locations)
+    failed_locations.each do |l|
+      puts "--------------------------------------------------"
+      puts "Could not import: #{l[:id]}"
+      puts l[:reason]
+      puts "--------------------------------------------------"
+    end
   end
 end
-
-locations = Location.all.select {|l| l.geocode.nil? }
-market_addresses = MarketAddress.all.select {|l| l.geocode.nil? }
-
-locations.each {|l| save_location_and_report(l) }
-market_addresses.each {|ma| save_location_and_report(ma) }
-
-print_report(@failed_locations)
