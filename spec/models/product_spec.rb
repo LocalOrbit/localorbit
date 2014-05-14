@@ -524,5 +524,25 @@ describe Product do
         expect(sorted.to_a).to eql([product_with_prices, product_without_prices])
       end
     end
+
+    context "by stock" do
+      let!(:market)                    { create(:market) }
+      let!(:organization)              { create(:organization, :seller, markets: [market]) }
+      let!(:product_with_lots)         { create(:product, :sellable, organization: organization) }
+      let!(:product_without_lots)      { create(:product, organization: organization) }
+      let!(:product_with_expired_lots) { create(:product, organization: organization) }
+
+      it "sorts products with lots" do
+        Timecop.travel(6.days.ago) do
+          create(:lot, product: product_with_expired_lots, number: '1', expires_at: 1.day.from_now, quantity: 100)
+        end
+
+        sorted = organization.products.for_sort("stock-asc")
+        expect(sorted.to_a.last).to eql(product_with_lots)
+
+        sorted = organization.products.for_sort("stock-desc")
+        expect(sorted.to_a.first).to eql(product_with_lots)
+      end
+    end
   end
 end

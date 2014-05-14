@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
     when "name"
       order_by_name(direction)
     when "email"
-        order_by_email(direction)
+      order_by_email(direction)
     end
   end
 
