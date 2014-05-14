@@ -6,6 +6,12 @@ class Delivery < ActiveRecord::Base
   scope :future, -> { where("deliveries.deliver_on > ?", Time.current) }
   scope :with_orders, -> { joins(orders: {items: :product}).group("deliveries.id") }
   scope :with_orders_for_user, lambda {|user| with_orders.where(products: {organization_id: user.organization_ids}) }
+  scope :active, -> { joins(:delivery_schedule).where(DeliverySchedule.visible_conditional) }
+
+  def self.current_selected(market, id)
+    return nil unless id
+    active.upcoming.for_market(market).find_by(id: id)
+  end
 
   def self.for_market(market)
     joins(:delivery_schedule).

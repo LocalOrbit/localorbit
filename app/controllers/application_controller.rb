@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
     @current_organization = if current_user.managed_organizations.count == 1
       current_user.managed_organizations.first
-    else
+    elsif session[:current_organization_id]
       current_user.managed_organizations.find_by(id: session[:current_organization_id])
     end
   end
@@ -78,31 +78,27 @@ class ApplicationController < ActionController::Base
   end
 
   def current_delivery
-    return nil unless current_market.present?
-    return nil unless current_organization.present?
-    return @current_delivery if defined?(@current_delivery)
+    return nil if current_market.blank? || current_organization.blank?
 
-    @current_delivery = find_or_build_current_delivery
-    @current_delivery = @current_delivery.decorate if @current_delivery
+    if defined?(@current_delivery)
+      @current_delivery
+    else
+      @current_delivery = find_or_build_current_delivery.try(:decorate)
+    end
   end
 
   def find_or_build_current_delivery
-    if session[:current_delivery_id]
-      Delivery.upcoming.for_market(current_market).
-        find_by(id: session[:current_delivery_id])
-    elsif current_market.delivery_schedules.visible.count == 1
-      current_market.delivery_schedules.visible.first.next_delivery.tap do |delivery|
-        session[:current_delivery_id] = delivery.id
-        if delivery.requires_location?
-          session[:current_location] = current_organization.shipping_location.try(:id)
-        end
-      end
+    if selected = Delivery.current_selected(current_market, session[:current_delivery_id])
+      selected
+    elsif only_delivery = current_market.only_delivery
+      session[:current_delivery_id] = only_delivery.id
+      only_delivery
     end
   end
 
   def selected_organization_location
     @selected_organization_location ||=
-      current_organization.locations.visible.find_by(id: session[:current_location]) ||
+      (session[:current_location] && current_organization.locations.visible.find_by(id: session[:current_location])) ||
       current_organization.shipping_location
   end
 
@@ -124,11 +120,6 @@ class ApplicationController < ActionController::Base
   end
 
   def require_cart
-    if current_delivery.requires_location? && !selected_organization_location
-      redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath)
-      return
-    end
-
     @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
       c.location = selected_organization_location if current_delivery.requires_location?
     end
@@ -148,7 +139,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_current_delivery
-    if current_delivery.nil?
+    if current_delivery.nil? || (current_delivery.requires_location? && selected_organization_location.nil?)
       redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath)
     end
   end

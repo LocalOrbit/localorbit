@@ -2,7 +2,7 @@ module SoftDelete
   extend ActiveSupport::Concern
 
   included do
-    scope :visible, -> { where("deleted_at IS NULL OR deleted_at > ?", Time.current) }
+    scope :visible, -> { where(visible_conditional) }
   end
 
   def soft_delete
@@ -15,6 +15,10 @@ module SoftDelete
       records.update_all(deleted_at: Time.current) if records.any?
 
       records
+    end
+
+    def visible_conditional
+      arel_table[:deleted_at].eq(nil).or(arel_table[:deleted_at].gt(Time.current))
     end
   end
 end
