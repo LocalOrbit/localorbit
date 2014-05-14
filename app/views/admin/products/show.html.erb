@@ -1,4 +1,4 @@
-<%= render "admin/products/header" %> 
+<%= render "admin/products/header" %>
 
 <div class="row row--partial">
   <%= product_listing_disclaimer %>
@@ -9,7 +9,7 @@
 
     <div class="form-actions">
       <p class="action-helper">When you're finished with product info <%= f.submit "Save and Continue" %></p>
-      <p class="return-list">or <%= link_to "Save & Go to the Product List", admin_products_path %></p>
+      <p class="return-list">or <%= link_to "Save & Go to the Product List", admin_product_path(@product, after_save: admin_products_path), id: "product-save-and-return"  %></p>
     </div>
   <% end %>
 </div>
