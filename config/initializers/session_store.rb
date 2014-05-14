@@ -9,10 +9,12 @@ ENV["MEMCACHE_PASSWORD"] = ENV["MEMCACHEDCLOUD_PASSWORD"] if ENV["MEMCACHEDCLOUD
 # would not work unless we go with a large memcache plan
 if Rails.env.production?
   Rails.application.config.session_store :mem_cache_store,
+    memcache_server: (ENV["MEMCACHE_SERVERS"] || 'localhost:11211'),
     key: "_local_orbit_session",
     domain: ".#{Figaro.env.domain}"
 else
   Rails.application.config.session_store :mem_cache_store,
+  memcache_server: (ENV["MEMCACHE_SERVERS"] || 'localhost:11211'),
     key: "_local_orbit_session_#{Rails.env}",
     domain: Rails.env.test? ? nil : ".#{Figaro.env.domain}"
 end
