@@ -14,5 +14,5 @@ if Rails.env.production?
 else
   Rails.application.config.session_store :mem_cache_store,
     key: "_local_orbit_session_#{Rails.env}",
-    domain: (Rails.env.test? || Figaro.env.domain == 'localhost') ? :all : ".#{Figaro.env.domain}"
+    domain: Rails.env.test? ? nil : ".#{Figaro.env.domain}"
 end
