@@ -3,8 +3,8 @@
   <div class="order-info-primary">
     <p></p>
     <p>Buyer: <span class="special-content"><%= order.organization.name %></span></p>
-    <p>Placed On: <span class="special-content"><%= order.placed_at.strftime "%m/%d/%Y" %></span></p>
-    <p><br />Delivery Fees: <span class="special-content"><%= order.delivery_fees %></span></p>
+    <p>Placed On: <span class="special-content"><%= order.placed_at.strftime "%m/%d/%Y" %> at 00:00AM</span></p>
+    <p><br />Delivery Fees: <span class="special-content">$<%= order.delivery_fees %></span></p>
     <p>Grand Total: <span class="special-content"><%= number_to_currency order.gross_total %></span></p>
   </div>
   <div class="order-info-secondary">
@@ -23,7 +23,7 @@
     <thead>
       <tr>
         <th>Product</th>
-        <th>Quantity</th>
+        <th>Qty</th>
         <th>Price</th>
         <th>Discount</th>
         <th>Total</th>
@@ -35,8 +35,14 @@
     <tbody>
       <% order.items.each do |item| %>
       <tr class="order-item-row">
-        <td class="name"><%= item.name %></td>
-        <td class="quantity"><%= item.quantity %></td>
+        <td class="name">
+          <%= item.name %> <br />
+          <span class="seller-name">from Seller Name</span>
+        </td>
+        <td class="quantity">
+          <%= item.quantity %> Unit Names (Delivered) <br />
+          <%= item.quantity %> Unit Names (Un-delivered)
+        </td>
         <td class="price"><%= number_to_currency item.unit_price %></td>
         <td class="discount"><%= number_to_currency item.discount %></td>
         <td class="total"><%= number_to_currency item.gross_total %></td>
@@ -48,28 +54,26 @@
     </tbody>
   </table>
 
-  <h2>Order Financial Information</h2>
+  <h2>Order Totals</h2>
   <table class="order-summary">
     <thead>
       <tr>
         <th>Gross Total</th>
         <th>Discount</th>
+        <th>Market Fees</th>
         <th>Transaction Fees</th>
-        <th>Payment Processing</th>
+        <th>Payment Processing Fees</th>
         <th>Net Sale</th>
-        <th>Delivery Status</th>
-        <th>Payment Status</th>
       </tr>
     </thead>
     <tbody>
       <tr class="order-summary-row">
         <td class="gross-total"><%= number_to_currency order.gross_total %></td>
         <td class="discount"><%= number_to_currency order.discount %></td>
+        <td class="market-fees">$0.00</td>
         <td class="transaction-fees"><%= number_to_currency order.transaction_fees %></td>
         <td class="payment-processing"><%= number_to_currency order.payment_fees %></td>
         <td class="net-sale"><%= number_to_currency order.net_total %></td>
-        <td class="delivery-status"><%= order.delivery_status.titleize %></td>
-        <td class="payment-status"><%= order.buyer_payment_status.titleize %></td>
       </tr>
     </tbody>
   </table>
