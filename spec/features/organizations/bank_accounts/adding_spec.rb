@@ -3,7 +3,7 @@ require "spec_helper"
 feature "Adding a bank account to an organization", js: true do
   let!(:market_manager) { create(:user, :market_manager) }
   let!(:market) { market_manager.managed_markets.first }
-  let(:org) { create(:organization, markets: [market]) }
+  let(:org) { create(:organization, can_sell: true, markets: [market]) }
   let(:member) { create(:user, organizations: [org]) }
   let(:non_member) { create(:user) }
 
@@ -80,44 +80,81 @@ feature "Adding a bank account to an organization", js: true do
   end
 
   context "as an organization member" do
-    before do
-      switch_to_subdomain(market.subdomain)
-      sign_in_as(member)
+    context "organization can sell" do
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(member)
 
-      visit new_admin_organization_bank_account_path(org)
+        visit new_admin_organization_bank_account_path(org)
+      end
+
+      scenario "successfully adding a bank account" do
+        select "Checking", from: "balanced_account_type"
+
+        fill_in "Organization EIN", with: "20-1234567"
+        fill_in "Full Legal Name", with: "John Patrick Doe"
+        select "Sep", from: "representative_dob_month"
+        select "17", from: "representative_dob_day"
+        select "1990", from: "representative_dob_year"
+
+        fill_in "Last 4 of SSN", with: "1234"
+        fill_in "Street Address (Personal)", with: "6789 Fake Dr"
+        fill_in "Zip Code (Personal)", with: "12345"
+
+        fill_in "Name", with: "Org Bank Account"
+        select("Checking", from: "Account Type")
+        fill_in "Routing Number", with: "021000021"
+        fill_in "Account Number", with: "9900000002"
+        fill_in "Notes", with: "primary"
+
+        click_button "Save"
+
+        expect(page).to have_content("Successfully added a payment method")
+
+        bank_account = Dom::BankAccount.first
+        expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")
+        expect(bank_account.name).to eq("Org Bank Account")
+        expect(bank_account.account_number).to eq("******0002")
+        expect(bank_account.account_type).to eq("Checking")
+        expect(bank_account.notes).to eq("primary")
+
+        expect(org.reload).to be_balanced_underwritten
+      end
     end
 
-    scenario "successfully adding a bank account" do
-      select "Checking", from: "balanced_account_type"
+    context "organization can not sell" do
+      before do
+        org.update(can_sell: false)
 
-      fill_in "Organization EIN", with: "20-1234567"
-      fill_in "Full Legal Name", with: "John Patrick Doe"
-      select "Sep", from: "representative_dob_month"
-      select "17", from: "representative_dob_day"
-      select "1990", from: "representative_dob_year"
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(member)
 
-      fill_in "Last 4 of SSN", with: "1234"
-      fill_in "Street Address (Personal)", with: "6789 Fake Dr"
-      fill_in "Zip Code (Personal)", with: "12345"
+        visit new_admin_organization_bank_account_path(org)
+      end
 
-      fill_in "Name", with: "Org Bank Account"
-      select("Checking", from: "Account Type")
-      fill_in "Routing Number", with: "021000021"
-      fill_in "Account Number", with: "9900000002"
-      fill_in "Notes", with: "primary"
+      scenario "successfully adding a bank account" do
+        select "Checking", from: "balanced_account_type"
 
-      click_button "Save"
+        expect(page).to_not have_content("Account Verification Information")
+        expect(page).to_not have_field("Last 4 of SSN")
 
-      expect(page).to have_content("Successfully added a payment method")
+        fill_in "Name", with: "Org Bank Account"
+        select("Checking", from: "Account Type")
+        fill_in "Routing Number", with: "021000021"
+        fill_in "Account Number", with: "9900000002"
+        fill_in "Notes", with: "primary"
 
-      bank_account = Dom::BankAccount.first
-      expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")
-      expect(bank_account.name).to eq("Org Bank Account")
-      expect(bank_account.account_number).to eq("******0002")
-      expect(bank_account.account_type).to eq("Checking")
-      expect(bank_account.notes).to eq("primary")
+        click_button "Save"
 
-      expect(org.reload).to be_balanced_underwritten
+        expect(page).to have_content("Successfully added a payment method")
+
+        bank_account = Dom::BankAccount.first
+        expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")
+        expect(bank_account.name).to eq("Org Bank Account")
+        expect(bank_account.account_number).to eq("******0002")
+        expect(bank_account.account_type).to eq("Checking")
+        expect(bank_account.notes).to eq("primary")
+      end
     end
   end
 
