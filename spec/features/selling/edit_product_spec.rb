@@ -22,12 +22,23 @@ describe "Editing a product" do
       click_link "Canned Pears"
     end
 
-    context "when the product information is valid" do
-      it "saves the product" do
+    context "when the product information is valid", :js do
+      it "saves the product and advances to the prices page" do
         fill_in "Product Name", with: "Canned Peaches"
         click_button "Save and Continue"
         expect(page).to have_content("Saved Canned Peaches")
         expect(page).to have_content("Add Prices")
+      end
+
+      it "saves the product and goes back to the products list" do
+        fill_in "Product Name", with: "Canned Peaches"
+        click_link "Save & Go to the Product List"
+
+        expect(page).to have_content("Saved Canned Peaches")
+
+        click_link "Canned Peaches"
+
+        expect(page).to have_content("Update Canned Peaches")
       end
     end
 
@@ -40,7 +51,7 @@ describe "Editing a product" do
       end
     end
 
-    context "and switching to simple inventory management", js: true do
+    context "and switching to simple inventory management", :js do
       let(:product) { create(:product, name: "Canned Pears", use_simple_inventory: false) }
 
       context "with available inventory" do

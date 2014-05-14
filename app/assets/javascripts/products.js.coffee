@@ -236,6 +236,13 @@ $ ->
     $('#simple-inventory').toggleClass('is-hidden')
     $('#product-inventory-nav').toggleClass('is-hidden pulsed')
 
+  $('#product-save-and-return').click (e) ->
+    e.preventDefault()
+
+    form = $('form.product')
+    form.attr("action", $(this).attr("href"))
+    form.submit()
+
   $('.tab > .is-disabled').click (e) ->
     $('<div class="tab-error flash flash--alert"><p>' + $(this).attr('data-error') + '</p></div>').appendTo('.tab-header')
     window.setTimeout ->
