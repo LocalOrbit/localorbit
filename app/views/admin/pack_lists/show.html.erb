@@ -34,7 +34,7 @@
         <h3 class="fn org"><%= order.market.name %></h3>
         <div class="street"><%= order.display_market_street %></div>
         <div class="city-state-zip"><%= order.display_market_city_state_zip %></div>
-        <div class="phone"><%= order.display_market_phone %></div>
+        <div class="phone"><%= number_to_phone order.display_market_phone %></div>
 
       </div><div class="column column--half vcard vcard--buyer">
 
@@ -42,7 +42,7 @@
         <h3 class="fn org"><%= order.organization.name %></h3>
         <div class="street-address"><%= order.display_delivery_street %></div>
         <div class="city-state-zip"><%= order.display_delivery_city_state_zip %></div>
-        <div class="tel"><%= order.display_delivery_phone %></div>
+        <div class="tel"><%= number_to_phone order.display_delivery_phone %></div>
       </div>
     </div>
 

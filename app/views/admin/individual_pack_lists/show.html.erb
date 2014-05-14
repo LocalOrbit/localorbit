@@ -7,60 +7,65 @@
       <div class="pdf-page-break"></div>
     <% end %>
 
-    <h2>Individual Packing Slips</h2>
+    <div class="upcoming-delivery">
+      <h1>Individual Packing Slips</h1>
 
-    <strong>Buyer Name</strong>
-    <h1><%= order.organization.name %></h1>
+      <h2 class="heading heading-delivery-tool">Buyer Name</h2>
+      <h3 class="fn org"><%= order.organization.name %></h3>
 
-    <div class="half-block">
-      <strong>Seller Delivers to <%= @delivery.display_dropoff_location_type %> on</strong>
-      <h2><%= @delivery.display_date %> <%= @delivery.fulfillment_time_range %></h2>
-      <% if @delivery.buyer_pickup? %>
-      <p>For pickup on <%= @delivery.display_date %> <%= @delivery.buyer_time_range %></p>
-      <% end %>
-    </div>
+      <div class="row">
+        <div class="column column--half">
+          <h2 class="heading heading-delivery-tool">Seller Delivers to <%= @delivery.display_dropoff_location_type %> on</h2>
+          <span class="upcoming-delivery-date"><%= @delivery.display_date %> <%= @delivery.fulfillment_time_range %></span>
+          <% if @delivery.buyer_pickup? %>
+          <p class="note">For pickup on <%= @delivery.display_date %> <%= @delivery.buyer_time_range %></p>
+          <% end %>
+        </div><div class="column column--half">
 
-    <div class="half-block">
-      <strong>Order Number</strong>
-      <h2><%= order.order_number %></h2>
-    </div>
+          <h2 class="heading heading-delivery-tool">Order Number</h2>
+          <span class="upcoming-delivery-order"><%= order.order_number %></span>
 
-    <div class="half-block">
-      <strong>From Seller</strong>
-      <h2><%= seller.name %></h2>
-      <div class="street"><%= seller.decorate.shipping_address %></div>
-      <div class="city-state-zip"><%= seller.decorate.shipping_city_state_zip %></div>
-      <div class="phone"><%= seller.decorate.shipping_phone %></div>
-    </div>
+        </div>
+      </div>
 
-    <div class="half-block">
-      <strong>To Buyer</strong>
-      <h2><%= order.organization.name %></h2>
-      <div class="street"><%= order.decorate.display_delivery_street %></div>
-      <div class="city-state-zip"><%= order.decorate.display_delivery_city_state_zip %></div>
-      <div class="phone"><%= order.decorate.display_delivery_phone %></div>
-    </div>
+      <div class="row">
+        <div class="column column--half vcard vcard--seller">
+          <h2 class="heading heading-delivery-tool">From Seller</h2>
+          <h3 class="fn org"><%= seller.name %></h3>
+          <div class="street-address"><%= seller.decorate.shipping_address %></div>
+          <div class="city-state-zip"><%= seller.decorate.shipping_city_state_zip %></div>
+          <div class="tel"><%= number_to_phone seller.decorate.shipping_phone %></div>
 
-    <table class="delivery-tools">
-      <tr>
-        <th>Item</th>
-        <th>Total Sold</th>
-        <th>Units</th>
-        <th>Delivery</th>
-        <th>Initials</th>
-        <th>Notes</th>
-      </tr>
-      <% items.each do |item| %>
-        <tr class="individual-pack-list-item">
-          <td class="name"><%= item.product.name %></td>
-          <td class="total-sold"><%= item.quantity %></td>
-          <td class="units"><%= item.unit %></td>
-          <td class="delivery"></td>
-          <td class="initials"></td>
-          <td class="notes"></td>
+        </div><div class="column column--half vcard vcard--buyer">
+          <h2 class="heading heading-delivery-tool">To Buyer</h2>
+          <h3 class="fn org"><%= order.organization.name %></h3>
+          <div class="street-address"><%= order.decorate.display_delivery_street %></div>
+          <div class="city-state-zip"><%= order.decorate.display_delivery_city_state_zip %></div>
+          <div class="tel"><%= number_to_phone order.decorate.display_delivery_phone %></div>
+        </div>
+      </div>
+
+      <table class="delivery-tools">
+        <tr>
+          <th>Item</th>
+          <th>Total Sold</th>
+          <th>Units</th>
+          <th>Delivery</th>
+          <th>Initials</th>
+          <th>Notes</th>
         </tr>
-      <% end %>
-    </table>
+        <% items.each do |item| %>
+          <tr class="individual-pack-list-item">
+            <td class="name"><%= item.product.name %></td>
+            <td class="total-sold"><%= item.quantity %></td>
+            <td class="units"><%= item.unit %></td>
+            <td class="delivery"></td>
+            <td class="initials"></td>
+            <td class="notes"></td>
+          </tr>
+        <% end %>
+      </table>
 
+    </div>
   <% end %>
 <% end %>
