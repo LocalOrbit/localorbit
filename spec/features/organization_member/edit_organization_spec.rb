@@ -40,4 +40,23 @@ describe "An organization member" do
   it "can not change their active status" do
     expect(page).to_not have_field("Organization is active")
   end
+
+  describe "A buying organization" do
+    # TODO: Exercise this as a Market Manager
+    # they will need to have this update via javascript
+    let(:org) { create(:organization, users: [member], can_sell: false) }
+
+    it "hides profile information" do
+      visit "/admin/organizations"
+      click_link org.name
+
+      expect(page).not_to have_content("Facebook")
+      expect(page).not_to have_content("Twitter")
+      expect(page).not_to have_content("Display Feed on Profile Page")
+      expect(page).not_to have_content("Profile photo")
+      expect(page).not_to have_content("Who")
+      expect(page).not_to have_content("How")
+      expect(page).not_to have_content("Allowed payment methods")
+    end
+  end
 end

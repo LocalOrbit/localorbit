@@ -15,7 +15,7 @@
       <% end %>
     <% end %>
 
-    <div class="field column--half">
+    <div class="field <%= @organization.can_sell? ? "column--half" : "column--full" %>>
       <%= f.label :name %><br>
       <%= f.text_field :name, class: "column column--full" %>
     </div>
@@ -35,9 +35,11 @@
       </div>
     <% end %>
 
-    <div class="field field--inline">
-      <%= f.label :facebook %><br>
-      <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
+    <% if @organization.can_sell? %>
+    <fieldset>
+      <div class="field field--inline">
+        <%= f.label :facebook %><br>
+        <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
       <% if @organization.persisted? %>
         <div class="todo">
           <%= f.check_box :display_facebook %>
@@ -49,12 +51,12 @@
     <div class="field field--inline">
       <%= f.label :twitter %><br>
       <span class="btn btn--start">@</span><%= f.text_field :twitter, maxlength: 15 %>
-      <% if @organization.persisted? %>
-        <div class="todo">
-          <%= f.check_box :display_twitter %>
-          <%= f.label :display_twitter, "Display Feed on Profile Page" %>
-        </div>
-      <% end %>
+    <% if @organization.persisted? %>
+      <div class="todo">
+        <%= f.check_box :display_twitter %>
+        <%= f.label :display_twitter, "Display Feed on Profile Page" %>
+      </div>
+    <% end %>
     </div>
 
     <div class="field">
@@ -64,7 +66,6 @@
       <%= f.file_field :photo %>
       <%= image_tag @organization.photo.remote_url, alt: "Profile photo", class: "org-profile-photo" if @organization.photo %>
       <div><small>Drag and drop your photo directly into the "Choose File" button and it will be uploaded instantly.</small></div>
-
     </div>
 
     <div class="field">
@@ -80,6 +81,8 @@
       <br>
       <%= f.text_area :how_story, class: "column column--full", rows: 4 %>
     </div>
+  </fieldset>
+  <% end %>
 
     <% if current_user.admin? || current_user.market_manager? %>
       <div class="row row--field">
