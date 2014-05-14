@@ -11,10 +11,11 @@
         <% if current_user.multi_organization_membership? %>
           <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), prompt: "Show for all Sellers", class: 'filter-dropdown', data: { parameter: "organization"} %>
         <% end %>
+        <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params, "sort") %>
       </div>
 
       <div class="column">
-        <input type="search" id="search" value="<%= params[:search] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
+        <input type="search" id="search" value="<%= @query_params["search"] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
         <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small" %>
       </div>
     </div>

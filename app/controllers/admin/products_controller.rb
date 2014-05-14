@@ -2,6 +2,7 @@ module Admin
   class ProductsController < AdminController
     include StickyFilters
 
+    before_filter :process_filter_clear_requests
     before_action :ensure_selling_organization
 
     def index
