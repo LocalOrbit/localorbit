@@ -45,12 +45,12 @@ class Organization < ActiveRecord::Base
   def self.for_sort(order)
     column, direction = column_and_direction(order)
     case column
-    when :can_sell
-      order(can_sell: direction)
-    when :registered
-      order(created_at: direction)
+    when "can_sell"
+      order_by_can_sell(direction)
+    when "registered"
+      order_by_registered(direction)
     else
-      order(name: direction)
+      order_by_name(direction)
     end
   end
 
@@ -68,5 +68,19 @@ class Organization < ActiveRecord::Base
 
   def update_product_delivery_schedules(market)
     reload.products.each(&:save) if persisted?
+  end
+
+  private
+
+  def self.order_by_name(direction)
+    direction == "asc" ? order("name asc") : order("name desc")
+  end
+
+  def self.order_by_registered(direction)
+    direction == "asc" ? order("created_at asc") : order("created_at desc")
+  end
+
+  def self.order_by_can_sell(direction)
+    direction == "asc" ? order("can_sell asc") : order("can_sell desc")
   end
 end

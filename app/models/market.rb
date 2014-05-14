@@ -32,10 +32,14 @@ class Market < ActiveRecord::Base
   def self.for_sort(order)
     column, direction = column_and_direction(order)
     case column
-    when :contact
-      order(contact_name: direction)
+    when "contact"
+      order_by_contact_name(direction)
+    when "name"
+      order_by_name(direction)
+    when "subdomain"
+      order_by_subdomain(direction)
     else
-      order(column => direction)
+      order_by_name(direction)
     end
   end
 
@@ -68,5 +72,19 @@ class Market < ActiveRecord::Base
     scope = deliveries.future.with_orders.order("deliver_on")
     scope = scope.with_orders_for_user(user) unless user.market_manager? || user.admin?
     scope
+  end
+
+  private
+
+  def self.order_by_name(direction)
+    direction == "asc" ? order("name asc") : order("name desc")
+  end
+
+  def self.order_by_subdomain(direction)
+    direction == "asc" ? order("subdomain asc") : order("subdomain desc")
+  end
+
+  def self.order_by_contact_name(direction)
+    direction == "asc" ? order("contact_name asc") : order("contact_name desc")
   end
 end

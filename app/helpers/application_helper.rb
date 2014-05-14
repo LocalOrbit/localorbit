@@ -15,7 +15,7 @@ module ApplicationHelper
 
   def column_sort_classes(column)
     if request.query_parameters["sort"]
-      col, dir = request.query_parameters["sort"].downcase.split(":")
+      col, dir = request.query_parameters["sort"].downcase.split("-")
       result = []
       if column == col
         result << "sorted"
@@ -23,6 +23,14 @@ module ApplicationHelper
       end
       result.join(" ")
     end
+  end
+
+  def can_reset?(params, key)
+    if key
+      params.reject! {|k, v| k == key }
+    end
+
+    params.present?
   end
 
   def filter_list(collection, param_name)

@@ -21,9 +21,9 @@
   </thead>
   <% @markets.each do |market| %>
   <tr class="<%= cycle "odd", "even" %>">
-    <td><%= link_to market.name, [:admin, market] %></td>
-    <td><%= link_to market.subdomain, root_url(host: market.domain) %></td>
-    <td><%= market.contact_name %></td>
+    <td class="name"><%= link_to market.name, [:admin, market] %></td>
+    <td class="subdomain"><%= link_to market.subdomain, root_url(host: market.domain) %></td>
+    <td class="contact"><%= market.contact_name %></td>
     <td><%= market.contact_phone %></td>
   </tr>
   <% end %>

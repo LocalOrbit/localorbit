@@ -106,6 +106,7 @@ GEM
       safe_yaml (~> 1.0.0)
     currencies (0.4.2)
     daemon_controller (1.2.0)
+    dalli (2.7.1)
     database_cleaner (1.2.0)
     delayed_job (4.0.1)
       activesupport (>= 3.0, < 4.2)
@@ -397,6 +398,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   compass-rails
   countries
+  dalli
   database_cleaner
   delayed_job
   delayed_job_active_record

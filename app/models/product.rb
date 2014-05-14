@@ -85,19 +85,23 @@ class Product < ActiveRecord::Base
   def self.for_sort(order)
     column, direction = column_and_direction(order)
     case column
-    when :price
-      # FIXME: this filters out prodiucts without prices. Is that ok?
-      joins(:prices).select("products.*, MAX(prices.sale_price) as price").
-        group("products.id").order("price #{direction}")
-    when :stock
-      joins(:lots).select("products.*, SUM(lots.quantity) as stock").
-        group("products.id").order(stock: direction)
-    when :seller
-      order("organizations.name" => direction)
-    when :market
-      joins(organization: { market_organizations: :market}).order("markets.name" => direction)
+    when "price"
+      joins("left outer join prices on products.id = prices.product_id").
+        select("products.*, coalesce(MAX(prices.sale_price), 0) as price").
+        group("products.id").order_by_price(direction)
+    when "stock"
+      lot = Lot.arel_table
+      expires_condition = lot[:expires_at].gt(Time.current).or(lot[:expires_at].eq(nil))
+      good_from = lot[:good_from].lt(Time.current).or(lot[:good_from].eq(nil))
+      joins("LEFT OUTER JOIN lots ON products.id = lots.product_id AND #{expires_condition.and(good_from).to_sql}").
+        select("products.*, SUM(lots.quantity) as stock").
+        group("products.id").order_by_stock(direction)
+    when "seller"
+      order_by_seller_name(direction)
+    when "market"
+      joins(organization: { market_organizations: :market}).order_by_market_name(direction)
     else
-      order(name: direction)
+      order_by_name(direction)
     end
   end
 
@@ -155,6 +159,26 @@ class Product < ActiveRecord::Base
   end
 
   private
+
+  def self.order_by_name(direction)
+    direction == "asc" ? order(name: :asc) : order(name: :desc)
+  end
+
+  def self.order_by_market_name(direction)
+    direction == "asc" ? order("markets.name asc") : order("markets.name desc")
+  end
+
+  def self.order_by_seller_name(direction)
+    direction == "asc" ? order("organizations.name asc") : order("organizations.name desc")
+  end
+
+  def self.order_by_stock(direction)
+    direction == "asc" ? order("stock asc nulls first, name asc") : order("stock desc nulls last, name desc")
+  end
+
+  def self.order_by_price(direction)
+    direction == "asc" ? order("price asc") : order("price desc")
+  end
 
   def ensure_organization_can_sell
     unless organization.present? && organization.can_sell?

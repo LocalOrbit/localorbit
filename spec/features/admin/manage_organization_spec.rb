@@ -265,4 +265,62 @@ describe "admin manange organization", :vcr do
       expect(page).to have_content("Successfully updated address University of Michigan")
     end
   end
+
+  context "sorting", :js do
+    let!(:organization_a) { create(:organization, name: "A Organization", can_sell: false, created_at: '2014-01-01') }
+    let!(:organization_b) { create(:organization, name: "B Organization", can_sell: true, created_at: '2013-01-01') }
+    let!(:organization_c) { create(:organization, name: "C Organization", can_sell: false, created_at: '2012-01-01') }
+
+    before do
+      visit admin_organizations_path
+    end
+
+    context "by name" do
+      it "ascending" do
+        click_header("name")
+
+        first = Dom::Admin::OrganizationRow.first
+        expect(first.name).to have_content(organization_a.name)
+      end
+
+      it "descending" do
+        click_header_twice("name")
+
+        first = Dom::Admin::OrganizationRow.first
+        expect(first.name).to have_content(organization_c.name)
+      end
+    end
+
+    context "by registered" do
+      it "ascending" do
+        click_header("registered")
+
+        first = Dom::Admin::OrganizationRow.first
+        expect(first.name).to have_content(organization_c.name)
+      end
+
+      it "descending" do
+        click_header_twice("registered")
+
+        first = Dom::Admin::OrganizationRow.first
+        expect(first.name).to have_content(organization_a.name)
+      end
+    end
+
+    context "by can sell" do
+      it "ascending" do
+        click_header("can_sell")
+
+        first = Dom::Admin::OrganizationRow.first
+        expect(first.name).to have_content(organization_a.name)
+      end
+
+      it "descending" do
+        click_header_twice("can_sell")
+
+        first = Dom::Admin::OrganizationRow.first
+        expect(first.name).to have_content(organization_b.name)
+      end
+    end
+  end
 end

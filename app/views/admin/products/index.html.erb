@@ -6,15 +6,16 @@
     <div class="row row--justified product-header">
       <div class="column">
         <% if current_user.multi_market_membership? %>
-          <%= select_tag :filter_market, options_for_select(@selling_markets, selected: params[:market]), class: 'filter-dropdown', data: { parameter: "market"} %>
+          <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), prompt: "Show for all Markets", class: 'filter-dropdown', data: { parameter: "market"} %>
         <% end %>
         <% if current_user.multi_organization_membership? %>
-          <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: params[:organization]), class: 'filter-dropdown', data: { parameter: "organization"} %>
+          <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), prompt: "Show for all Sellers", class: 'filter-dropdown', data: { parameter: "organization"} %>
         <% end %>
+        <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params, "sort") %>
       </div>
 
       <div class="column">
-        <input type="search" id="search" value="<%= params[:search] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
+        <input type="search" id="search" value="<%= @query_params["search"] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
         <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small" %>
       </div>
     </div>
@@ -27,8 +28,8 @@
       <%= content_tag(:th, 'Seller', data: {column: 'seller'}, class: column_sort_classes("seller")) if current_user.multi_organization_membership? %>
       <%= content_tag(:th, 'Market', data: {column: 'market'}, class: column_sort_classes("market")) if current_user.multi_market_membership? %>
       <th data-column="name" class="<%= column_sort_classes("name") %>">Name</th>
-      <th data-column="price:desc" class="<%= column_sort_classes("price") %>">Pricing</th>
-      <th data-column="stock:desc" class="<%= column_sort_classes("stock") %>">In Stock</th>
+      <th data-column="price" class="<%= column_sort_classes("price") %>">Pricing</th>
+      <th data-column="stock" class="<%= column_sort_classes("stock") %>">In Stock</th>
       <th></th>
     </tr>
   </thead>

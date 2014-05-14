@@ -1,10 +1,14 @@
 module Admin
   class OrganizationsController < AdminController
+    include StickyFilters
+
+    before_filter :process_filter_clear_requests
     before_action :require_admin_or_market_manager, only: [:new, :create]
     before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules]
 
     def index
-      @organizations = current_user.managed_organizations.periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
+      @query_params = sticky_parameters(request.query_parameters)
+      @organizations = current_user.managed_organizations.periscope(@query_params).page(params[:page]).per(params[:per_page])
       find_selling_markets
     end
 
