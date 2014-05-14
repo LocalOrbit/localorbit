@@ -1,5 +1,5 @@
 <%= link_to "Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
-<%= link_to "Print", "#", class: "btn btn--small pull-right", id: "print-button" %>
+<button class="btn btn--action btn--small pull-right" id="print-button">Print</button>
 
 <% @pick_list.keys.each_with_index do |organization, index| %>
 
@@ -8,18 +8,20 @@
   <% end %>
 
   <h1>Pick List</h1>
+  <div class="upcoming-delivery">
 
-  <h2>Delivery</h2>
-  <%= @delivery.display_date %> <%= @delivery.time_range %>
-  <% if @delivery.available_to_order? %>
-    <h4>Ordering has not yet closed for this delivery</h4>
-  <% end %>
+    <h2 class="heading heading-delivery-tool">Delivery</h2>
+    <div class="upcoming-delivery-date"><%= @delivery.display_date %> <%= @delivery.time_range %></div>
+    <% if @delivery.available_to_order? %>
+      <p class="note">Ordering has not yet closed for this delivery</p>
+    <% end %>
 
-  <h2>Seller</h2>
-  <address>
-    <h3><%= organization.name %></h3>
-    <%= organization.decorate.ship_from_address %>
-  </address>
+    <h2 class="heading heading-delivery-tool">Seller</h2>
+    <div class="vcard vcard--seller">
+      <h3 class="fn org"><%= organization.name %></h3>
+      <%= organization.decorate.ship_from_address %>
+    </div>
+  </div>
 
   <table>
     <tr>
