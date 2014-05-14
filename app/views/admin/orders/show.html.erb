@@ -1,2 +1,2 @@
-<%= render "admin/financials/header" %>
-<%= render "shared/financials/order", {order: @order} %>
+<%= link_to "< Return to Orders List", admin_orders_path, class: "redundant-nav" %>
+<%= render "shared/order", {order: @order} %>

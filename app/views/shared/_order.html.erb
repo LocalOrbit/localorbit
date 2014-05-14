@@ -40,8 +40,8 @@
           <span class="seller-name">from Seller Name</span>
         </td>
         <td class="quantity">
-          <%= item.quantity %> Unit Names (Delivered) <br />
-          <%= item.quantity %> Unit Names (Un-delivered)
+          <%= item.quantity %> <%= item.unit %> (Delivered) <br />
+          <%= item.quantity %> <%= item.unit %> (Un-delivered)
         </td>
         <td class="price"><%= number_to_currency item.unit_price %></td>
         <td class="discount"><%= number_to_currency item.discount %></td>
