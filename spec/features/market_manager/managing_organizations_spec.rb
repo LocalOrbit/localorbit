@@ -7,14 +7,18 @@ describe "A Market Manager", :vcr do
 
   before(:each) do
     switch_to_subdomain(market.subdomain)
+    visit("/")
     sign_in_as market_manager
   end
 
   describe "Adding an organization" do
-    context "with valid information" do
+    context "with valid information", :js do
       before do
         visit "/admin/organizations"
         click_link 'Add Organization'
+
+        check "Can sell products"
+        expect(page).to have_content("Profile photo")
 
         fill_in 'Name', with: 'Famous Farm'
         fill_in "Address Label", with: "Warehouse 1"
@@ -23,9 +27,9 @@ describe "A Market Manager", :vcr do
         select "Michigan", from: "State"
         fill_in "Postal Code", with: "49883"
         fill_in "Phone", with: "616-555-9983"
+
         attach_file 'Profile photo', 'app/assets/images/logo.png'
 
-        check 'Can sell product'
         click_button 'Add Organization'
       end
 
@@ -65,7 +69,7 @@ describe "A Market Manager", :vcr do
         market_manager.managed_markets << market2
       end
 
-      it "with valid information" do
+      it "with valid information", :js do
         visit "/admin/organizations"
         click_link 'Add Organization'
 
@@ -143,7 +147,7 @@ describe "A Market Manager", :vcr do
       visit "/admin/organizations"
       click_link "Fresh Pumpkin Patch"
 
-      within("fieldset:last") do
+      within("fieldset.organization-info:last") do
         expect(page).not_to have_content("Address Label")
         expect(page).not_to have_content("Address")
         expect(page).not_to have_content("City")
@@ -152,23 +156,29 @@ describe "A Market Manager", :vcr do
       end
     end
 
-    it "should not see payment types that are disabled for the market", js: true do
+    it "should not see payment types that are disabled for the market", :js do
       market.update_attribute(:allow_purchase_orders, false)
 
       visit "/admin/organizations"
       click_link "Add Organization"
+
+      check "Can sell products"
+      expect(page).to have_content("Allowed payment methods")
 
       expect(page).to_not have_field("Allow purchase orders")
       expect(page).to have_field("Allow credit cards")
       expect(page).to have_field("Allow ACH")
     end
 
-    it "allows updating all attributes" do
+    it "allows updating all attributes", :js do
       visit "/admin/organizations"
       click_link "Fresh Pumpkin Patch"
 
       fill_in "Name", with: "SXSW Farmette"
-      uncheck "Can sell product"
+
+      check "Can sell product"
+      expect(page).to have_content("Allowed payment methods")
+
       uncheck "Show on Profile page"
 
       uncheck "Allow purchase orders"
@@ -178,7 +188,6 @@ describe "A Market Manager", :vcr do
 
       expect(page).to have_content("Saved SXSW Farmette")
       expect(find_field("Name").value).to eq("SXSW Farmette")
-      expect(find_field("Can sell products")).to_not be_checked
       expect(find_field("Show on Profile page")).to_not be_checked
 
       expect(find_field("Allow purchase orders")).to_not be_checked
@@ -211,6 +220,34 @@ describe "A Market Manager", :vcr do
       end
     end
 
+
+    describe "Manage an organization's ability to sell" do
+      it "shows/hides the appropriate fields when 'can sell products' is checked", :js do
+        visit "/admin/organizations"
+
+        click_link "Fresh Pumpkin Patch"
+
+        expect(page).to have_checked_field("Can sell products")
+
+        expect(page).to have_content("Facebook")
+        expect(page).to have_content("Twitter")
+        expect(page).to have_content("Display Feed on Profile Page")
+        expect(page).to have_content("Profile photo")
+        expect(page).to have_content("Who")
+        expect(page).to have_content("How")
+        expect(page).to have_content("Allowed payment methods")
+
+        uncheck "Can sell products"
+
+        expect(page).not_to have_content("Facebook")
+        expect(page).not_to have_content("Twitter")
+        expect(page).not_to have_content("Display Feed on Profile Page")
+        expect(page).not_to have_content("Profile photo")
+        expect(page).not_to have_content("Who")
+        expect(page).not_to have_content("How")
+        expect(page).not_to have_content("Allowed payment methods")
+      end
+    end
   end
 
   describe "Inviting a member to an org" do

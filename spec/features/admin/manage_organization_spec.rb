@@ -15,6 +15,10 @@ describe "admin manange organization", :vcr do
     visit "/admin/organizations"
     click_link "Add Organization"
 
+    check "Can sell products"
+    expect(page).to have_content("Who")
+    expect(page).to have_content("How")
+
     expect(page).to have_content("Select a market to see payment options")
 
     select "Market 1", from: "Market"
@@ -24,6 +28,10 @@ describe "admin manange organization", :vcr do
     expect(find_field("Allow ACH")).to be_checked
 
     select "Market 2", from: "Market"
+
+    check "Can sell products"
+    expect(page).to have_content("Who")
+    expect(page).to have_content("How")
 
     fill_in "Name", with: "University of Michigan Farmers"
     fill_in "Who",  with: "Who Story"
@@ -53,6 +61,10 @@ describe "admin manange organization", :vcr do
     visit "/admin/organizations"
     click_link "Add Organization"
 
+    check "Can sell products"
+    expect(page).to have_content("Who")
+    expect(page).to have_content("How")
+
     expect(page).to_not have_field("Allow purchase orders")
     expect(page).to have_field("Allow credit cards")
     expect(page).to have_field("Allow ACH")
@@ -64,6 +76,10 @@ describe "admin manange organization", :vcr do
 
     visit "/admin/organizations"
     click_link "Add Organization"
+
+    check "Can sell products"
+    expect(page).to have_content("Who")
+    expect(page).to have_content("How")
 
     fill_in "Name", with: "University of Michigan Farmers"
     fill_in "Who",  with: "Who Story"
