@@ -49,7 +49,11 @@
   h1 {
     margin-bottom: 0;
   }
+
 }
+.product-ordered {
+    font-weight: 700;
+  }
 .order-buyer {
   @include border-radius(5px);
   float: left;

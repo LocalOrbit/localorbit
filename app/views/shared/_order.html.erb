@@ -47,12 +47,12 @@
       <% order.items.each do |item| %>
       <tr class="order-item-row">
         <td class="name">
-          <%= item.name %> <br />
+          <span class="product-ordered"><%= item.name %></span> <br />
           <span class="seller-name">from <%= item.product.organization.name %></span>
         </td>
         <td class="quantity">
-          <%= item.quantity %> <%= item.unit %> (Delivered) <br />
-          <%= item.quantity_delivered || 0 %> <%= item.unit %> (Un-delivered)
+          <%= item.quantity_delivered || 0 %> <%= item.unit %> (Delivered) <br />
+          <%= item.quantity %> <%= item.unit %> (Ordered)
         </td>
         <td class="price"><%= number_to_currency item.unit_price %></td>
         <td class="discount"><%= number_to_currency item.discount %></td>
