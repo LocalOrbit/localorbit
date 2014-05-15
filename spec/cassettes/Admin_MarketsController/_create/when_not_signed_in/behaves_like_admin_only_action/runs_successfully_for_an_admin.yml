@@ -120,4 +120,123 @@ http_interactions:
         }
     http_version: 
   recorded_at: Thu, 15 May 2014 16:55:00 GMT
+- request:
+    method: post
+    uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: '{"name":"Major Market","meta":{"entity_id":1,"entity_name":"Major Market","entity_type":"market"}}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 15 May 2014 19:39:49 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHMaceafaa2dc6811e3ab5302a1fe52a36c
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP1EOzr67FEqkfTYGTJxxYsV
+      X-Balanced-Merchant:
+      - TEST-MR1UDDuhujWiJKH04gyn92gO
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.25
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9TBVVQDgVRUlELAgJSU1AHBhtGXQkaE0BUWwEGAwFTAQBVBlFcDFJTQx9CAldbEgM+
+      Content-Length:
+      - '1704'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "1",
+            "entity_name": "Major Market",
+            "entity_type": "market"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/bank_accounts",
+          "id": "CU5glzXQlAUB7vAvUgMn2gPv",
+          "credits_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/credits",
+          "cards_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/cards",
+          "holds_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/holds",
+          "name": "Major Market",
+          "refunds_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/refunds",
+          "dob": null,
+          "created_at": "2014-05-15T19:39:48.752836Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/debits",
+          "transactions_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Thu, 15 May 2014 19:39:50 GMT
 recorded_with: VCR 2.9.0
