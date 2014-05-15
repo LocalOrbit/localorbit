@@ -46,25 +46,34 @@
   .special-content {
     font-weight: 700;
   }
+  h1 {
+    margin-bottom: 0;
+  }
 }
-.order-info-primary {
+.order-buyer {
   @include border-radius(5px);
   float: left;
-  margin-right: 100px;
+  min-width: 20%;
+  margin-right: 30px;
   padding: 5px 10px;
   background: #F9F9F9;
   font-size: 16px;
 }
-.order-info-secondary {
-  float: right;
+.order-info-total {
+  float: left;
   margin-right: 20px;
 }
-.order-info-third {
+.order-info-status {
   float: right;
-  margin-right: 50px;
+}
+.order-address {
+  margin-top: 20px;
 }
 .order-data {
   width: 100%;
+}
+.order-info-date {
+  margin-bottom: 20px;
 }
 .order-table-1 {
   margin-bottom: 40px;

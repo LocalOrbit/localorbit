@@ -1,25 +1,30 @@
 <div class="order-info">
   <h1>Order info for <%= order.order_number %></h1>
-  <div class="order-info-primary">
+  <div class="order-info-date">Placed On: <span class="special-content"><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></span></div>
+
+  <div class="order-buyer">
     <p></p>
-    <p>Buyer: <span class="special-content"><%= order.organization.name %></span></p>
-    <p>Placed On: <span class="special-content"><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></span></p>
-    <p><br />Delivery Fees: <span class="special-content">$<%= order.delivery_fees %></span></p>
-    <p>Grand Total: <span class="special-content"><%= number_to_currency order.gross_total %></span></p>
+    <div>Buyer:</div>
+    <div class="special-content"><%= order.organization.name %></div>
+    <div class="order-address">Billing Address:</div>
+    <div class="special-content">
+      <%= order.billing_address %><br />
+      <%= order.billing_city %>, <%= order.billing_state %> <%= order.billing_zip %><br />
+      <%= order.billing_phone %><br />
+    </div>
   </div>
-  <div class="order-info-secondary">
+  <div class="order-info-status">
     <p>Delivery Status: <span class="special-content"><%= order.delivery_status.titleize %></span></p>
     <p>Buyer Payment: <span class="special-content"><%= order.buyer_payment_status.titleize %></span></p>
   </div>
-  <div class="order-info-third">
+  <div class="order-info-total">
     <p>Payment Method: <span class="special-content"><%= order.payment_method.titleize %></span></p>
     <p>Payment Reference #: <span class="special-content"><%= order.payment_note %></span></p>
+    <p><br />Delivery Fees: <span class="special-content">$<%= order.delivery_fees %></span></p>
+    <p>Grand Total: <span class="special-content"><%= number_to_currency order.gross_total %></span></p>
   </div>
   <div>
-    <strong>Billing Address</strong>
-    <p><%= order.billing_address %></p>
-    <p><%= order.billing_city %>, <%= order.billing_state %> <%= order.billing_zip %></p>
-    <p><%= order.billing_phone %></p>
+    
   </div>
 </div>
 <div class="order-data">
