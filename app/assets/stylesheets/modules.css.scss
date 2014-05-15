@@ -935,7 +935,6 @@
   max-width: 300px;
   height: 100px;
   margin: 0 0 20px 0;
-  text-align: center;
 
   > .logo {
     max-width: 100%;
@@ -1185,9 +1184,10 @@ label ~ .tooltip {
     margin: 30px 0;
   }
 
+  .order-summary-total,
   .upcoming-delivery-date,
   .upcoming-delivery-order {
-    margin-bottom: .5em;
+    margin: 0 0 .5em;
     font: bold 24px 'Open Sans Condensed', 'Open Sans', OpenSans, sans-serif;
     + .note {
       margin-top: -.5em;

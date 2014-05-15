@@ -1,5 +1,5 @@
-<%= link_to "Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
-<%= link_to "Print", "#", class: "btn btn--small pull-right", id: "print-button" %>
+<%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
+<button class="btn btn--action btn--small pull-right" id="print-button">Print</button>
 
 <% @pack_lists.sellers.each_with_index do |(seller, orders), org_index| %>
   <% orders.each_with_index do |(order, items), index| %>
@@ -46,14 +46,16 @@
       </div>
 
       <table class="delivery-tools">
-        <tr>
-          <th>Item</th>
-          <th>Total Sold</th>
-          <th>Units</th>
-          <th>Delivery</th>
-          <th>Initials</th>
-          <th>Notes</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Total Sold</th>
+            <th>Units</th>
+            <th>Delivery</th>
+            <th>Initials</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
         <% items.each do |item| %>
           <tr class="individual-pack-list-item">
             <td class="name"><%= item.product.name %></td>
