@@ -24,7 +24,7 @@
     <p>Grand Total: <span class="special-content"><%= number_to_currency order.gross_total %></span></p>
   </div>
   <div>
-    
+
   </div>
 </div>
 <div class="order-data">
@@ -40,7 +40,9 @@
         <th>Total</th>
         <th>Delivery</th>
         <th>Buyer Payment</th>
-        <th>Seller Payment</th>
+        <% if !current_user.buyer_only? %>
+          <th>Seller Payment</th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -59,7 +61,9 @@
         <td class="total"><%= number_to_currency item.gross_total %></td>
         <td class="delivery-status"><%= item.delivery_status.titleize %></td>
         <td class="payment-status"><%= item.buyer_payment_status.titleize %></td>
-        <td class="seller-status"><%= item.seller_payment_status %></td>
+        <% if !current_user.buyer_only? %>
+          <td class="seller-status"><%= item.seller_payment_status %></td>
+        <% end %>
       </tr>
       <% end %>
     </tbody>

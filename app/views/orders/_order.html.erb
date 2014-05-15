@@ -1,7 +1,7 @@
 
 <div class="delivery-time">
   <div class="actions pull-right">
-    <%= link_to "Review Order", [:organization, :financials, @order] %> &nbsp;
+    <%= link_to "Review Order", order_path(@order) %> &nbsp;
     <%= link_to "Print Order Confirmation", [:coming_soon, :dashboard], class: "btn btn--small btn--blue" %>
   </div>
 
