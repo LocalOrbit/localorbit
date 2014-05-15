@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/customers
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
     body:
       encoding: UTF-8
       string: '{"name":"Fake Market","meta":{"entity_id":1,"entity_name":"Fake Market","entity_type":"market"}}'
@@ -23,27 +23,27 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sat, 03 May 2014 15:35:24 GMT
+      - Thu, 15 May 2014 17:01:22 GMT
       Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU4etiZA11VAEcL9vaCjPfoR
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU4cXBxeiAX6m7p2tqtkRXut
       Server:
       - ngx_openresty/1.2.6.3
       X-Balanced-Guru:
-      - OHM8b149f94d2d811e38f8302a1fe53e539
+      - OHM8a46375cdc5211e3a82802a1fe52a36c
       X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-5-201
+      - bapi-integration-prod-8u30f7-10-3-4-8
       X-Balanced-Marketplace:
-      - TEST-MP1EOzr67FEqkfTYGTJxxYsV
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
       X-Balanced-Merchant:
-      - TEST-MR1UDDuhujWiJKH04gyn92gO
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
       X-Balanced-Revision:
       - '1.0'
       X-Balanced-Software-Build:
-      - 1.2.3
+      - 1.2.24
       X-Midlr-Version:
       - '2'
       X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9QC1dWBg5YXloNBwdTU1sCHRdfUh0WEVZXUVcHBFpTAV5QUAJSDVMTTRMEBVpEBDs=
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9VAFJXBwRQV1MLBgFRV1ACHRdfUh0WEVdWVQQJUg1aCwtSU1cDCQMTTRMEBVpEBDs=
       Content-Length:
       - '1702'
       Connection:
@@ -54,7 +54,7 @@ http_interactions:
         {
           "_type": "customer",
           "twitter": null,
-          "reversals_uri": "/v1/customers/CU4etiZA11VAEcL9vaCjPfoR/reversals",
+          "reversals_uri": "/v1/customers/CU4cXBxeiAX6m7p2tqtkRXut/reversals",
           "phone": null,
           "meta": {
             "entity_id": "1",
@@ -64,18 +64,18 @@ http_interactions:
           "facebook": null,
           "address": {},
           "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU4etiZA11VAEcL9vaCjPfoR/bank_accounts",
-          "id": "CU4etiZA11VAEcL9vaCjPfoR",
-          "credits_uri": "/v1/customers/CU4etiZA11VAEcL9vaCjPfoR/credits",
-          "cards_uri": "/v1/customers/CU4etiZA11VAEcL9vaCjPfoR/cards",
-          "holds_uri": "/v1/customers/CU4etiZA11VAEcL9vaCjPfoR/holds",
+          "bank_accounts_uri": "/v1/customers/CU4cXBxeiAX6m7p2tqtkRXut/bank_accounts",
+          "id": "CU4cXBxeiAX6m7p2tqtkRXut",
+          "credits_uri": "/v1/customers/CU4cXBxeiAX6m7p2tqtkRXut/credits",
+          "cards_uri": "/v1/customers/CU4cXBxeiAX6m7p2tqtkRXut/cards",
+          "holds_uri": "/v1/customers/CU4cXBxeiAX6m7p2tqtkRXut/holds",
           "name": "Fake Market",
-          "refunds_uri": "/v1/customers/CU4etiZA11VAEcL9vaCjPfoR/refunds",
+          "refunds_uri": "/v1/customers/CU4cXBxeiAX6m7p2tqtkRXut/refunds",
           "dob": null,
-          "created_at": "2014-05-03T15:35:23.969172Z",
+          "created_at": "2014-05-15T17:01:21.696170Z",
           "destination": null,
           "is_identity_verified": false,
-          "uri": "/v1/customers/CU4etiZA11VAEcL9vaCjPfoR",
+          "uri": "/v1/customers/CU4cXBxeiAX6m7p2tqtkRXut",
           "source": null,
           "_uris": {
             "transactions_uri": {
@@ -111,131 +111,12 @@ http_interactions:
               "key": "cards"
             }
           },
-          "debits_uri": "/v1/customers/CU4etiZA11VAEcL9vaCjPfoR/debits",
-          "transactions_uri": "/v1/customers/CU4etiZA11VAEcL9vaCjPfoR/transactions",
+          "debits_uri": "/v1/customers/CU4cXBxeiAX6m7p2tqtkRXut/debits",
+          "transactions_uri": "/v1/customers/CU4cXBxeiAX6m7p2tqtkRXut/transactions",
           "ssn_last4": null,
           "email": null,
           "ein": null
         }
     http_version: 
-  recorded_at: Sat, 03 May 2014 15:35:24 GMT
-- request:
-    method: post
-    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
-    body:
-      encoding: UTF-8
-      string: '{"name":"Fake Market","meta":{"entity_id":11,"entity_name":"Fake Market","entity_type":"market"}}'
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 201
-      message: CREATED
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 06 May 2014 15:14:27 GMT
-      Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CUTy550DogzcTcdL6evy6oZ
-      Server:
-      - ngx_openresty/1.2.6.3
-      X-Balanced-Guru:
-      - OHM1d6af9ecd53111e38f8302a1fe53e539
-      X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-4-8
-      X-Balanced-Marketplace:
-      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
-      X-Balanced-Merchant:
-      - TEST-MR4RZnrOZZQznEBncFS5xnVS
-      X-Balanced-Revision:
-      - '1.0'
-      X-Balanced-Software-Build:
-      - 1.2.5
-      X-Midlr-Version:
-      - '2'
-      X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9QCltSBAZYV1YAAgdWV1IABRtGXQYaE0BTAQMEA1kECAlRBAdQDVMCQx9CAldbEgM+
-      Content-Length:
-      - '1693'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "_type": "customer",
-          "twitter": null,
-          "reversals_uri": "/v1/customers/CUTy550DogzcTcdL6evy6oZ/reversals",
-          "phone": null,
-          "meta": {
-            "entity_id": "11",
-            "entity_name": "Fake Market",
-            "entity_type": "market"
-          },
-          "facebook": null,
-          "address": {},
-          "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CUTy550DogzcTcdL6evy6oZ/bank_accounts",
-          "id": "CUTy550DogzcTcdL6evy6oZ",
-          "credits_uri": "/v1/customers/CUTy550DogzcTcdL6evy6oZ/credits",
-          "cards_uri": "/v1/customers/CUTy550DogzcTcdL6evy6oZ/cards",
-          "holds_uri": "/v1/customers/CUTy550DogzcTcdL6evy6oZ/holds",
-          "name": "Fake Market",
-          "refunds_uri": "/v1/customers/CUTy550DogzcTcdL6evy6oZ/refunds",
-          "dob": null,
-          "created_at": "2014-05-06T15:14:27.529797Z",
-          "destination": null,
-          "is_identity_verified": false,
-          "uri": "/v1/customers/CUTy550DogzcTcdL6evy6oZ",
-          "source": null,
-          "_uris": {
-            "transactions_uri": {
-              "_type": "page",
-              "key": "transactions"
-            },
-            "bank_accounts_uri": {
-              "_type": "page",
-              "key": "bank_accounts"
-            },
-            "refunds_uri": {
-              "_type": "page",
-              "key": "refunds"
-            },
-            "debits_uri": {
-              "_type": "page",
-              "key": "debits"
-            },
-            "holds_uri": {
-              "_type": "page",
-              "key": "holds"
-            },
-            "reversals_uri": {
-              "_type": "page",
-              "key": "reversals"
-            },
-            "credits_uri": {
-              "_type": "page",
-              "key": "credits"
-            },
-            "cards_uri": {
-              "_type": "page",
-              "key": "cards"
-            }
-          },
-          "debits_uri": "/v1/customers/CUTy550DogzcTcdL6evy6oZ/debits",
-          "transactions_uri": "/v1/customers/CUTy550DogzcTcdL6evy6oZ/transactions",
-          "ssn_last4": null,
-          "email": null,
-          "ein": null
-        }
-    http_version: 
-  recorded_at: Tue, 06 May 2014 15:14:28 GMT
+  recorded_at: Thu, 15 May 2014 17:01:17 GMT
 recorded_with: VCR 2.9.0
