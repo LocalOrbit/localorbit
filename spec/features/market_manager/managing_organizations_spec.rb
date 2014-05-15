@@ -33,43 +33,65 @@ describe "A Market Manager", :vcr do
         click_button 'Add Organization'
       end
 
-    it "creates the organization" do
-      expect(page).to have_content('Famous Farm has been created')
+      it "creates the organization" do
+        expect(page).to have_content('Famous Farm has been created')
 
-      org_form = Dom::Admin::OrganizationForm.first
-      expect(org_form.name).to eql("Famous Farm")
-      #click_link "Cancel"
+        org_form = Dom::Admin::OrganizationForm.first
+        expect(org_form.name).to eql("Famous Farm")
+      end
+
+      it "creates a default location for the organization" do
+        click_link "Addresses"
+
+        click_link "Warehouse 1"
+
+        location = Dom::Admin::LocationForm.first
+
+        expect(location.location_name.value).to eql("Warehouse 1")
+        expect(location.address.value).to eql("1021 Burton St.")
+        expect(location.city.value).to eql("Orleans Twp.")
+        expect(location.selected_state.value).to eql("MI")
+        expect(location.zip.value).to eql("49883")
+      end
+
+      it "attaches a profile photo" do
+        expect(page).to have_css("img[alt='Profile photo']")
+      end
+
+      it "creates the organization as active" do
+        expect(find_field("Organization is active")).to be_checked
+      end
     end
 
-    it "creates a default location for the organization" do
-      click_link "Addresses"
+    context "with minimum valid information", :js do
+      before do
+        visit "/admin/organizations"
+        click_link 'Add Organization'
 
-      click_link "Warehouse 1"
+        fill_in 'Name', with: 'Famous Farm'
 
-      location = Dom::Admin::LocationForm.first
+        click_button 'Add Organization'
+      end
 
-      expect(location.location_name.value).to eql("Warehouse 1")
-      expect(location.address.value).to eql("1021 Burton St.")
-      expect(location.city.value).to eql("Orleans Twp.")
-      expect(location.selected_state.value).to eql("MI")
-      expect(location.zip.value).to eql("49883")
+      it "creates the organization" do
+        expect(page).to have_content('Famous Farm has been created')
+
+        org_form = Dom::Admin::OrganizationForm.first
+        expect(org_form.name).to eql("Famous Farm")
+
+      end
+
+      it "creates the organization as active" do
+        expect(find_field("Organization is active")).to be_checked
+      end
     end
-
-    it "attaches a profile photo" do
-      expect(page).to have_css("img[alt='Profile photo']")
-    end
-
-    it "creates the organization as active" do
-      expect(find_field("Organization is active")).to be_checked
-    end
-  end
 
     context "when the market manager manages multiple markets" do
       before do
         market_manager.managed_markets << market2
       end
 
-      it "with valid information", :js do
+      it "creates an organization with valid information", :js do
         visit "/admin/organizations"
         click_link 'Add Organization'
 
@@ -89,49 +111,25 @@ describe "A Market Manager", :vcr do
         expect(page).to have_content("Famous Farm has been created")
       end
 
-      context "without selecting a market" do
-        it "doesn't add the new organization" do
-          visit "/admin/organizations"
-          click_link 'Add Organization'
-          fill_in 'Name', with: 'Dairy Farms Co-op'
-          click_button 'Add Organization'
-
-          expect(page).to have_content("Markets can't be blank")
-          expect(page).to have_content("Location name can't be blank")
-          expect(page).to have_content("Address can't be blank")
-          expect(page).to have_content("City can't be blank")
-          expect(page).to have_content("State can't be blank")
-          expect(page).to have_content("Postal code can't be blank")
-        end
-      end
-    end
-
-
-    context "with a blank name" do
-      it "doesn't add the new organization" do
+      it "creates an organization with minimum valid information", :js do
         visit "/admin/organizations"
         click_link 'Add Organization'
 
-        fill_in 'Name', with: ''
+        fill_in 'Name', with: 'Famous Farm'
+        select market2.name, from: "Market"
+
         click_button 'Add Organization'
 
-        expect(page).to have_content("Name can't be blank")
+        expect(page).to have_content("Famous Farm has been created")
       end
-    end
 
-    context "with a blank location" do
-      it "shows error messages" do
+      it "displays errors from invalid data" do
         visit "/admin/organizations"
         click_link 'Add Organization'
-
-        fill_in 'Name', with: ''
+        fill_in 'Name', with: 'Dairy Farms Co-op'
         click_button 'Add Organization'
 
-        expect(page).to have_content("Location name can't be blank")
-        expect(page).to have_content("Address can't be blank")
-        expect(page).to have_content("City can't be blank")
-        expect(page).to have_content("State can't be blank")
-        expect(page).to have_content("Postal code can't be blank")
+        expect(page).to have_content("Markets can't be blank")
       end
     end
   end

@@ -125,7 +125,8 @@ http_interactions:
     uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/customers
     body:
       encoding: UTF-8
-      string: '{"name":"Major Market","meta":{"entity_id":1,"entity_name":"Major Market","entity_type":"market"}}'
+      string: '{"name":"Major Market","meta":{"entity_id":16,"entity_name":"Major
+        Market","entity_type":"market"}}'
     headers:
       User-Agent:
       - balanced-ruby/0.8.2
@@ -143,13 +144,13 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 15 May 2014 19:39:49 GMT
+      - Thu, 15 May 2014 18:16:06 GMT
       Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU7DpD1XxypVOuDmNcfZLojD
       Server:
       - ngx_openresty/1.2.6.3
       X-Balanced-Guru:
-      - OHMaceafaa2dc6811e3ab5302a1fe52a36c
+      - OHMfac7d896dc5c11e3a82802a1fe52a36c
       X-Balanced-Host:
       - bapi-integration-prod-8u30f7-10-3-5-201
       X-Balanced-Marketplace:
@@ -159,13 +160,11 @@ http_interactions:
       X-Balanced-Revision:
       - '1.0'
       X-Balanced-Software-Build:
-      - 1.2.25
+      - 1.2.24
       X-Midlr-Version:
       - '2'
-      X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9TBVVQDgVRUlELAgJSU1AHBhtGXQkaE0BUWwEGAwFTAQBVBlFcDFJTQx9CAldbEgM+
       Content-Length:
-      - '1704'
+      - '1705'
       Connection:
       - keep-alive
     body:
@@ -174,28 +173,28 @@ http_interactions:
         {
           "_type": "customer",
           "twitter": null,
-          "reversals_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/reversals",
+          "reversals_uri": "/v1/customers/CU7DpD1XxypVOuDmNcfZLojD/reversals",
           "phone": null,
           "meta": {
-            "entity_id": "1",
+            "entity_id": "16",
             "entity_name": "Major Market",
             "entity_type": "market"
           },
           "facebook": null,
           "address": {},
           "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/bank_accounts",
-          "id": "CU5glzXQlAUB7vAvUgMn2gPv",
-          "credits_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/credits",
-          "cards_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/cards",
-          "holds_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/holds",
+          "bank_accounts_uri": "/v1/customers/CU7DpD1XxypVOuDmNcfZLojD/bank_accounts",
+          "id": "CU7DpD1XxypVOuDmNcfZLojD",
+          "credits_uri": "/v1/customers/CU7DpD1XxypVOuDmNcfZLojD/credits",
+          "cards_uri": "/v1/customers/CU7DpD1XxypVOuDmNcfZLojD/cards",
+          "holds_uri": "/v1/customers/CU7DpD1XxypVOuDmNcfZLojD/holds",
           "name": "Major Market",
-          "refunds_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/refunds",
+          "refunds_uri": "/v1/customers/CU7DpD1XxypVOuDmNcfZLojD/refunds",
           "dob": null,
-          "created_at": "2014-05-15T19:39:48.752836Z",
+          "created_at": "2014-05-15T18:16:05.552159Z",
           "destination": null,
           "is_identity_verified": false,
-          "uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv",
+          "uri": "/v1/customers/CU7DpD1XxypVOuDmNcfZLojD",
           "source": null,
           "_uris": {
             "transactions_uri": {
@@ -231,12 +230,12 @@ http_interactions:
               "key": "cards"
             }
           },
-          "debits_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/debits",
-          "transactions_uri": "/v1/customers/CU5glzXQlAUB7vAvUgMn2gPv/transactions",
+          "debits_uri": "/v1/customers/CU7DpD1XxypVOuDmNcfZLojD/debits",
+          "transactions_uri": "/v1/customers/CU7DpD1XxypVOuDmNcfZLojD/transactions",
           "ssn_last4": null,
           "email": null,
           "ein": null
         }
     http_version: 
-  recorded_at: Thu, 15 May 2014 19:39:50 GMT
+  recorded_at: Thu, 15 May 2014 18:16:07 GMT
 recorded_with: VCR 2.9.0

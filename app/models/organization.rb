@@ -17,6 +17,9 @@ class Organization < ActiveRecord::Base
   has_many :bank_accounts, as: :bankable, dependent: :destroy
 
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
+  with_options unless: Proc.new { current_user && (current_user.market_manager? || current_user.admin?) } do
+
+  end
 
   scope :selling, -> { where(can_sell: true) }
   scope :buying,  -> { where(can_sell: false) } # needs a new boolean
@@ -25,7 +28,7 @@ class Organization < ActiveRecord::Base
 
   serialize :twitter, TwitterUser
 
-  accepts_nested_attributes_for :locations
+  accepts_nested_attributes_for :locations, reject_if: :reject_location
 
   dragonfly_accessor :photo
 
@@ -82,5 +85,13 @@ class Organization < ActiveRecord::Base
 
   def self.order_by_can_sell(direction)
     direction == "asc" ? order("can_sell asc") : order("can_sell desc")
+  end
+
+  def reject_location(attributed)
+    attributed['name'].blank? ||
+      attributed['address'].blank? ||
+      attributed['city'].blank? ||
+      attributed['state'].blank? ||
+      attributed['zip'].blank?
   end
 end
