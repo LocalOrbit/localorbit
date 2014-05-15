@@ -583,6 +583,28 @@ th {
   }
 }
 
+.order-summary{
+  &:nth-child(even) {
+    background: #F9F9F9;
+  }
+  tr {
+    border: 0;
+
+    &:nth-child(even),
+    &:nth-child(odd) {
+      background: transparent;
+    }
+  }
+  .fn {
+    margin: 0;
+    font: bold 14px OpenSans, "Open Sans", sans-serif;
+  }
+  .order-number {
+    margin: .5em 0 0;
+    font-weight: bold;
+  }
+}
+
 .filter-dropdown {
   width: 180px;
   margin-right: 10px;
