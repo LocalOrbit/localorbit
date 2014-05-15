@@ -15,6 +15,12 @@
     <p>Payment Method: <span class="special-content"><%= order.payment_method.titleize %></span></p>
     <p>Payment Reference #: <span class="special-content"><%= order.payment_note %></span></p>
   </div>
+  <div>
+    <strong>Billing Address</strong>
+    <p><%= order.billing_address %></p>
+    <p><%= order.billing_city %>, <%= order.billing_state %> <%= order.billing_zip %></p>
+    <p><%= order.billing_phone %></p>
+  </div>
 </div>
 <div class="order-data">
   <h2>Items for Delivery</h2>
