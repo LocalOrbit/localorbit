@@ -1,4 +1,4 @@
-<%= link_to "Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
+<%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
 <button class="btn btn--action btn--small pull-right" id="print-button">Print</button>
 
 <% @pick_list.keys.each_with_index do |organization, index| %>
@@ -23,16 +23,18 @@
     </div>
   </div>
 
-  <table>
-    <tr>
-      <th>Item</th>
-      <th>Total Sold</th>
-      <th>Units</th>
-      <th>Buyer</th>
-      <th>Breakdown</th>
-      <th>Initials</th>
-      <th>Notes</th>
-    </tr>
+  <table class="delivery-tools">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Total Sold</th>
+        <th>Units</th>
+        <th>Buyer</th>
+        <th>Breakdown</th>
+        <th>Initials</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
 
     <% @pick_list[organization].each do |line| %>
       <tr class="pick-list-item">
