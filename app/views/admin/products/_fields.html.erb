@@ -36,7 +36,7 @@
   <%= f.label :image, "Photo" %><br>
   <%= image_tag f.object.image.remote_url, alt: f.object.name if f.object.image %>
   <%= f.file_field :image, class: "column column--full photo-button" %>
-  <div><small>Drag and drop your photo anywhere in the "Choose File" area and it will be uploaded instantly.</small></div>
+  <div><small>Drag and drop your photo anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
 </div>
 
 <div class="field">
