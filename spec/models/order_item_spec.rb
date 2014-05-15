@@ -10,7 +10,7 @@ describe OrderItem do
   let(:order) { build(:order, market: create(:market)) }
 
   context "changing deliver status" do
-    subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 8) }
+    subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 8, quantity_delivered: 8) }
 
     it "sets delivered_at date when changed to 'delivered'" do
       expect(subject.delivery_status).to be_nil
@@ -112,7 +112,8 @@ describe OrderItem do
         order: order,
         product: product,
         delivery_status: "pending",
-        quantity: 7
+        quantity: 7,
+        quantity_delivered: 7
       )
     end
 
@@ -147,7 +148,8 @@ describe OrderItem do
           order: order,
           product: product2,
           delivery_status: "pending",
-          quantity: 8
+          quantity: 8,
+          quantity_delivered: 8
         )
 
         expect(item).to be_valid
@@ -190,6 +192,10 @@ describe OrderItem do
 
     it "captures the quantity" do
       expect(subject.quantity).to eql(cart_item.quantity)
+    end
+
+    it "presets delivered quantity" do
+      expect(subject.quantity_delivered).to eql(cart_item.quantity)
     end
 
     context "order item is not valid" do

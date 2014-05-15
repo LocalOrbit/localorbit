@@ -11,6 +11,7 @@ class OrderItem < ActiveRecord::Base
   validates :name, presence: true
   validates :seller_name, presence: true
   validates :quantity, presence: true
+  validates :quantity_delivered, presence: true
   validates :unit, presence: true
   validates :unit_price, presence: true
   validates :delivery_status, presence: true, inclusion: {in: DELIVERY_STATUSES}
@@ -34,6 +35,7 @@ class OrderItem < ActiveRecord::Base
       product: item.product,
       name: item.product.name,
       quantity: item.quantity,
+      quantity_delivered: item.quantity,
       unit: item.unit,
       unit_price: item.unit_price.sale_price,
       seller_name: item.product.organization.name,

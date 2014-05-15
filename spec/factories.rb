@@ -110,11 +110,12 @@ FactoryGirl.define do
 
   factory :order_item do
     sequence(:name) {|n| product.name || "Order Item #{n}"}
-    seller_name     "Old McDonald"
-    quantity        1
-    unit            "per box"
-    unit_price      6.99
-    delivery_status "pending"
+    seller_name         "Old McDonald"
+    quantity            1
+    quantity_delivered  1
+    unit                "per box"
+    unit_price          6.99
+    delivery_status     "pending"
 
     trait :delivered do
       delivery_status 'delivered'
