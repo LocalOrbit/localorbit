@@ -47,11 +47,11 @@ describe "Viewing the cart", js: true do
   let!(:cart_potatoes) { create(:cart_item, cart: cart, product: potatoes, quantity: 5) }
   let!(:cart_kale) { create(:cart_item, cart: cart, product: kale, quantity: 20) }
 
-  before do
+  before(:all) do
     Timecop.travel("May 12, 2014")
   end
 
-  after do
+  after(:all) do
     Timecop.return
   end
 
