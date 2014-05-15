@@ -119,7 +119,7 @@ class User < ActiveRecord::Base
     else
       Market.
         select("DISTINCT markets.*").
-        joins("INNER JOIN market_organizations ON market_organizations.market_id = markets.id
+        joins("INNER JOIN market_organizations ON market_organizations.market_id = markets.id AND market_organizations.cross_sell = 'f'
                INNER JOIN user_organizations ON user_organizations.organization_id = market_organizations.organization_id").
         where("user_organizations.user_id" => id)
     end
