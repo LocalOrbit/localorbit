@@ -115,5 +115,5 @@ Rails.application.routes.draw do
   resources :orders, only: [:show, :create]
   resource :registration, only: [:show, :create]
 
-  root to: redirect('/dashboard')
+  root to: redirect('/users/sign_in')
 end

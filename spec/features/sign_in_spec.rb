@@ -50,7 +50,8 @@ feature "User signing in" do
     visit "/"
     click_link "Sign Out"
     expect(page).not_to have_text("Dashboard")
-    expect(page).to have_text("You need to sign in or sign up before continuing.")
+    expect(page).to have_text("Signed out successfully")
+    expect(page).to have_text("Please Sign In")
   end
 
   scenario "After logging in an admin should be on the dashboard" do
@@ -61,6 +62,16 @@ feature "User signing in" do
     click_button "Sign In"
 
     expect(page.current_path).to eq(dashboard_path)
+  end
+
+  scenario "After logging in through the organizations page an admin should be on the organizations page" do
+    visit admin_organizations_path
+
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "password"
+    click_button "Sign In"
+
+    expect(page.current_path).to eq(admin_organizations_path)
   end
 
   scenario "After logging in a market manager should be on the dashboard" do
@@ -74,6 +85,17 @@ feature "User signing in" do
     expect(page.current_path).to eq(dashboard_path)
   end
 
+  scenario "After logging in through the organizations page a market manager should be on the organizations page" do
+    user = create(:user, :market_manager)
+    visit admin_organizations_path
+
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "password"
+    click_button "Sign In"
+
+    expect(page.current_path).to eq(admin_organizations_path)
+  end
+
   scenario "After logging in a seller should be on the dashboard" do
     org = create(:organization, :seller)
     user = create(:user, organizations: [org])
@@ -84,6 +106,18 @@ feature "User signing in" do
     click_button "Sign In"
 
     expect(page.current_path).to eq(dashboard_path)
+  end
+
+  scenario "After logging in through the products page a seller should be on the products page" do
+    org = create(:organization, :seller)
+    user = create(:user, organizations: [org])
+    visit admin_products_path
+
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "password"
+    click_button "Sign In"
+
+    expect(page.current_path).to eq(admin_products_path)
   end
 
   scenario "After logging in at the naked domain a buyer should be on the shop page" do

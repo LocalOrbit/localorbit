@@ -18,9 +18,9 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def after_sign_in_path_for(resource)
-    extra = on_main_domain? && current_user.markets.any? ? {host: current_user.markets.first.domain} : {}
-    if current_user.buyer_only?
+  def signed_in_root_path(resource)
+    extra = on_main_domain? && resource.markets.any? ? {host: resource.markets.first.domain} : {}
+    if resource.buyer_only?
       products_url(extra)
     else
       dashboard_url(extra)
