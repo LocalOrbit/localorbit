@@ -55,6 +55,9 @@ feature "Viewing products" do
 
   scenario "a product with less inventory than required to purchase" do
     org1_product.prices.first.update(min_quantity: 200) #there are only 150
+    org1_product.prices << create(:price, min_quantity: 300) # current scope is summing total available quantity once for each price that exists.
+    org1_product.prices << create(:price, market_id: market.id,          min_quantity: 200, sale_price: 2.50)
+    org1_product.prices << create(:price, organization_id: buyer_org.id, min_quantity: 200, sale_price: 2.40)
     sign_in_as(user)
 
     expect(Dom::Product.all.count).to eql(1)

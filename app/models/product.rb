@@ -51,19 +51,43 @@ class Product < ActiveRecord::Base
   # Does not explicitly scope to the market. Use in conjunction with available_for_market.
   def self.available_for_sale(market, buyer=nil, deliver_on_date=Time.current)
     visible.seller_can_sell.
-      joins(:lots, :prices).select("DISTINCT(products.*)").
-      where("(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND quantity > 0", time: deliver_on_date).
-      where("prices.market_id = ? OR prices.market_id IS NULL", market.id).
-      available_for_sale_price_conditions_for_buyer(buyer).
-      having("SUM(lots.quantity) >= MIN(prices.min_quantity)").group("products.id")
+      with_available_inventory(deliver_on_date).
+      priced_for_market_and_buyer(market, buyer).
+
+      # Limit to products with enough inventory to fulfill the min_quantity
+      having("SUM(lots.quantity) >= MIN(prices.min_quantity)").
+      group("products.id").tap {|i| puts i.to_sql }
   end
 
-  def self.available_for_sale_price_conditions_for_buyer(buyer=nil)
+  def self.priced_for_market_and_buyer(market, buyer=nil)
+    price_table = Price.arel_table
+    on_cond = arel_table[:id].eq(price_table[:product_id]).
+              and(price_table[:market_id].eq(market.id).or(price_table[:market_id].eq(nil)))
     if buyer
-      where("prices.organization_id = ? OR prices.organization_id IS NULL", buyer.id)
+      on_cond = on_cond.and(price_table[:organization_id].eq(market.id).or(price_table[:organization_id].eq(nil)))
     else
-      where("prices.organization_id IS NULL")
+      on_cond = on_cond.and(price_table[:organization_id].eq(nil))
     end
+    price_join = arel_table.create_join(price_table, arel_table.create_on(on_cond))
+
+    # Limit returned rows to only the lowest min_quantity
+    price_alias = price_table.alias
+    on_cond = price_table[:product_id].eq(price_alias[:product_id]).
+              and(
+                price_table[:min_quantity].gt(price_alias[:min_quantity]).
+                or(
+                  price_table[:min_quantity].eq(price_alias[:min_quantity]).
+                  and(
+                    price_alias[:organization_id].not_eq(nil).and(price_table[:organization_id].eq(nil)).
+                    or(price_alias[:market_id].not_eq(nil).and(price_table[:market_id].eq(nil)))
+                  )
+                )
+              )
+    price_limiter_join = arel_table.create_join(price_alias, arel_table.create_on(on_cond), Arel::Nodes::OuterJoin)
+
+    joins(price_join).
+    joins(price_limiter_join).
+    where(price_alias[:id].eq(nil))
   end
 
   def self.seller_can_sell
@@ -107,6 +131,17 @@ class Product < ActiveRecord::Base
 
   def self.for_search(query)
     search_by_name(query)
+  end
+
+  def self.with_available_inventory(deliver_on_date=Time.current)
+    lot_table = Lot.arel_table
+    on_cond = arel_table[:id].eq(lot_table[:product_id]).
+              and(lot_table[:good_from].eq(nil).or(lot_table[:good_from].lt(deliver_on_date))).
+              and(lot_table[:expires_at].eq(nil).or(lot_table[:expires_at].gt(deliver_on_date))).
+              and(lot_table[:quantity].gt(0))
+    join_on = arel_table.create_on(on_cond)
+
+    joins(arel_table.create_join(Lot.arel_table, join_on))
   end
 
   def can_use_simple_inventory?
