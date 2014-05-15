@@ -1,6 +1,10 @@
 class OrdersController < ApplicationController
-  before_action :require_cart
-  before_action :hide_admin_navigation
+  before_action :require_cart, only: :create
+  before_action :hide_admin_navigation, only: [:create]
+
+  def show
+    @order = BuyerOrder.find(current_user, params[:id])
+  end
 
   def create
     @placed_order = PlaceOrder.perform(buyer: current_user, order_params: order_params, cart: current_cart)

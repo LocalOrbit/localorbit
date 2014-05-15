@@ -2,7 +2,8 @@ module OrderPresenter
   def self.included(base)
     base.class_eval do
       attr_reader :items
-      delegate :id, :billing_organization_name, :delivery_fees,
+      delegate :id, :billing_organization_name, :billing_address, :billing_city,
+        :billing_state, :billing_zip, :billing_phone, :delivery_fees,
         :invoice_due_date, :invoiced_at, :invoiced?, :market, :order_number,
         :organization, :payment_method, :payment_note, :payment_status, :placed_at,
         to: :@order
@@ -39,13 +40,18 @@ module OrderPresenter
     totals[:transaction]
   end
 
+  def market_fees
+    totals[:market]
+  end
+
   def totals
-    @totals ||= items.inject(discount: 0, gross: 0, net: 0, payment: 0, transaction: 0) do |totals, item|
+    @totals ||= items.inject(discount: 0, gross: 0, net: 0, payment: 0, transaction: 0, market: 0) do |totals, item|
       totals[:discount]    += item.discount
       totals[:gross]       += item.quantity * item.unit_price
       totals[:transaction] += item.local_orbit_seller_fee + item.market_seller_fee
       totals[:net]         += item.seller_net_total
       totals[:payment]     += item.payment_seller_fee
+      totals[:market]      += item.market_seller_fee
       totals
     end
   end

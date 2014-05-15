@@ -36,7 +36,7 @@ Rails.application.routes.draw do
       resources :vendor_payments
     end
 
-    resources :orders
+    resources :orders, only: [:index, :show]
 
     resources :organizations, concerns: :bank_account do
       resources :organization_users, as: :users, path: :users
@@ -112,7 +112,7 @@ Rails.application.routes.draw do
   resource  :market, only: [:show]
   resources :sellers, only: [:index, :show]
   resource :cart, only: [:update, :show, :destroy]
-  resource :orders
+  resources :orders, only: [:show, :create]
   resource :registration, only: [:show, :create]
 
   root to: redirect('/dashboard')
