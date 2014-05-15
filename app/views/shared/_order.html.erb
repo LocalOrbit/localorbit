@@ -23,8 +23,13 @@
     <p><br />Delivery Fees: <span class="special-content">$<%= order.delivery_fees %></span></p>
     <p>Grand Total: <span class="special-content"><%= number_to_currency order.gross_total %></span></p>
   </div>
-  <div>
 
+  <div>
+    <div><%= order.display_delivery_or_pickup.titleize %></div>
+    <div class="special-content">
+      <%= order.display_delivery_address %><br>
+      <%= order.delivery.decorate.human_delivery_date %>
+    </div>
   </div>
 </div>
 <div class="order-data">
