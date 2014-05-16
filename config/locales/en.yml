@@ -22,6 +22,8 @@
 en:
   activerecord:
     attributes:
+      bank_account:
+        bankable_id: Payment method
       delivery_schedule:
         seller_fulfillment_location_id: Fulfillment method
         buyer_pickup_location_id: Buyer pickup location
@@ -51,6 +53,10 @@ en:
           attributes:
             min_quantity:
               taken: must be unique
+        bank_account:
+          attributes:
+            bankable_id:
+              taken: already exists for this organization
   devise:
     invitations:
       edit:

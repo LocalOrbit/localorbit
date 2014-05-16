@@ -77,12 +77,28 @@ feature "Adding a bank account to an organization", js: true do
         fill_in "Account Number", with: "8887776665555"
 
         click_button "Save"
+
         expect(page).not_to have_content("Successfully added a payment method")
         expect(page).to have_css(".field_with_errors")
         expect(page).to have_content("Routing number is invalid.")
       end
+
+      scenario "duplicate bank account gives an error" do
+        create(:bank_account, :checking, bank_name: 'JPMORGAN CHASE BANK', name: 'Org Bank Account', last_four: '0002', bankable: org)
+
+        fill_in "Name", with: "Org Bank Account"
+        select("Checking", from: "Account Type")
+        fill_in "Routing Number", with: "021000021"
+        fill_in "Account Number", with: "9900000002"
+        fill_in "Notes", with: "primary"
+
+        click_button "Save"
+      
+        expect(page).to have_content("Unable to save payment method")
+        expect(page).to have_content("Payment method already exists for this organization")
+      end
     end
-    
+
     context "organization can not sell" do
       before do
         org.update(can_sell: false)

@@ -61,6 +61,21 @@ feature "Adding a credit card to an organization", :js, :vcr do
       expect(page).to have_css(".field_with_errors")
       expect(page).to have_content("is not a valid credit card number")
     end
+
+    scenario "duplicate credit card gives an error" do
+      create(:bank_account, :credit_card, bank_name: 'MasterCard', account_type: 'mastercard', name: 'Org Credit Card', last_four: '5100', bankable: org)
+
+      select "Credit Card", from: "balanced_account_type"
+      fill_in "Card Number", with: "5105105105105100"
+      fill_in "Security Code", with: "123"
+      select "12", from: "expiration_month"
+      select "2018", from: "expiration_year"
+
+      click_button "Save"
+
+      expect(page).to have_content("Unable to save payment method")
+      expect(page).to have_content("Payment method already exists for this organization")
+    end
   end
 
   context "as an organization member" do
