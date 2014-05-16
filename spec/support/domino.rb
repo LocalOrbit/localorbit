@@ -737,6 +737,10 @@ module Dom
     def verfied?
       verified == "Verified"
     end
+
+    def click_remove_link
+      node.find_link("Remove").click
+    end
   end
 
   module Buying

@@ -296,7 +296,7 @@ FactoryGirl.define do
     trait :credit_card do
       bank_name        "Visa"
       account_type     "visa"
-      last_four        0001
+      sequence(:last_four) {|n| "#{'%04d' % n}"}
       expiration_month 5
       expiration_year  2014
     end

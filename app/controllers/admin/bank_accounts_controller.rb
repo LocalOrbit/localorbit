@@ -26,6 +26,11 @@ class Admin::BankAccountsController < AdminController
     end
   end
 
+  def destroy
+    @entity.bank_accounts.find(params[:id]).destroy
+    redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully removed payment method"
+  end
+
   private
 
   def bank_account_params
