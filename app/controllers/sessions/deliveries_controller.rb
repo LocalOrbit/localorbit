@@ -18,8 +18,11 @@ module Sessions
       return invalid_delivery_selection if current_delivery.nil?
 
       if current_delivery.requires_location?
-        location_id = params[:location_id][params[:delivery_id]]
-        if location = current_organization.locations.visible.find_by(id: location_id)
+        session[:current_location] = params[:location_id].try(:[], params[:delivery_id])
+
+        # This will sort out if the selected location is valid
+        # of if there is a valid selection that could be made
+        if location = selected_organization_location
           session[:current_location] = location.id
         else
           return invalid_delivery_selection

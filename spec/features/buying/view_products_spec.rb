@@ -3,7 +3,7 @@ require "spec_helper"
 feature "Viewing products" do
   let!(:market) { create(:market, :with_addresses) }
   let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, order_cutoff: 24, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
-  let!(:delivery_schedule2) { create(:delivery_schedule, market: market, deleted_at: Time.parse('2013-03-21')) }
+  let!(:delivery_schedule2) { create(:delivery_schedule, market: market, day: 3, deleted_at: Time.parse('2013-03-21')) }
 
   let!(:org1) { create(:organization, :seller, markets: [market]) }
   let!(:org1_product) { create(:product, :sellable, name: "celery", organization: org1, delivery_schedules: [delivery_schedule1]) }
@@ -504,5 +504,23 @@ feature "Viewing products" do
 
     products = Dom::Product.all
     expect(products).to have(2).products
+  end
+
+  scenario "visiting the shop page after deleting your delivery schedule" do
+    sign_in_as(user)
+
+    within('.selected-delivery') do
+      expect(page).to have_content("October 10, 2014")
+    end
+
+    delivery_schedule1.soft_delete
+    delivery_schedule2.update_attribute(:deleted_at, nil)
+
+    click_link "Dashboard"
+    click_link "Shop"
+
+    within('.selected-delivery') do
+      expect(page).to have_content("October 8, 2014")
+    end
   end
 end
