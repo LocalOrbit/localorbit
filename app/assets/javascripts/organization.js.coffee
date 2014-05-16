@@ -15,5 +15,3 @@ $ ->
   $("#organization_can_sell").change (e)->
     orgCanSell = $(this).prop("checked")
     updateSellerFields(orgCanSell)
-
-  updateSellerFields $("#organization_can_sell").prop("checked")

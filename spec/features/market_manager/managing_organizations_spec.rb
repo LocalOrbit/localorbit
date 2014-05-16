@@ -233,7 +233,6 @@ describe "A Market Manager", :vcr do
         expect(page).to have_content("Profile photo")
         expect(page).to have_content("Who")
         expect(page).to have_content("How")
-        expect(page).to have_content("Allowed payment methods")
 
         uncheck "Can sell products"
 
@@ -243,7 +242,6 @@ describe "A Market Manager", :vcr do
         expect(page).not_to have_content("Profile photo")
         expect(page).not_to have_content("Who")
         expect(page).not_to have_content("How")
-        expect(page).not_to have_content("Allowed payment methods")
       end
     end
   end

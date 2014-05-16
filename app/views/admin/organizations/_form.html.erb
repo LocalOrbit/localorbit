@@ -36,7 +36,7 @@
     <% end %>
 
     <% if @organization.new_record? || @organization.can_sell? || current_user.can_manage_organization?(@organization) %>
-    <fieldset class="seller-fields">
+    <fieldset class="seller-fields<%= ' is-hidden' unless @organization.can_sell? %>">
       <div class="field field--inline">
         <%= f.label :facebook %><br>
         <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
@@ -93,7 +93,7 @@
         </div>
       </div>
 
-      <div class="seller-fields row row--field">
+      <div class="row row--field">
         <div class="field column column--half column--guttered" id="allowed-payment-methods">
           <%= render 'admin/markets/payment_options' %>
         </div>
