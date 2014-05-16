@@ -11,5 +11,5 @@
     <% end %>
   </td>
   <td class="notes"><%= bank_account.notes %></td>
-  <td><%= link_to "Remove", [:admin, @entity, bank_account], data: { method: :delete } %></td>
+  <td><%= link_to raw("<i class='font-icon icon-delete'></i> Delete"), [:admin, @entity, bank_account], data: { method: :delete } %></td>
 </tr>

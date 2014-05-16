@@ -739,7 +739,7 @@ module Dom
     end
 
     def click_remove_link
-      node.find_link("Remove").click
+      node.find_link("Delete").click
     end
   end
 
