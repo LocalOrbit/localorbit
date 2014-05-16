@@ -3,7 +3,7 @@
 
 <% @pack_lists.sellers.each_with_index do |(seller, orders), org_index| %>
   <% orders.each_with_index do |(order, items), index| %>
-    <% if index != 0 %>
+    <% if index != 0 or org_index != 0 %>
       <div class="pdf-page-break"></div>
     <% end %>
 
