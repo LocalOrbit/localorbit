@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   concern :bank_account do
-    resources :bank_accounts, only: [:index, :new, :create] do
+    resources :bank_accounts, only: [:index, :new, :create, :destroy] do
       resource :bank_account_verification, only: [:show, :update], path: :verify
     end
   end

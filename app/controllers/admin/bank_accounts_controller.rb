@@ -20,9 +20,15 @@ class Admin::BankAccountsController < AdminController
     if results.success?
       redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully added a payment method"
     else
+      flash.now[:alert] = "Unable to save payment method"
       @bank_account = results.bank_account
       render :new
     end
+  end
+
+  def destroy
+    @entity.bank_accounts.find(params[:id]).destroy
+    redirect_to [:admin, @entity, :bank_accounts], notice: "Successfully removed payment method"
   end
 
   private
