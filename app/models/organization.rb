@@ -25,7 +25,7 @@ class Organization < ActiveRecord::Base
 
   serialize :twitter, TwitterUser
 
-  accepts_nested_attributes_for :locations
+  accepts_nested_attributes_for :locations, reject_if: :reject_location
 
   dragonfly_accessor :photo
 
@@ -82,5 +82,13 @@ class Organization < ActiveRecord::Base
 
   def self.order_by_can_sell(direction)
     direction == "asc" ? order("can_sell asc") : order("can_sell desc")
+  end
+
+  def reject_location(attributed)
+    attributed['name'].blank? ||
+      attributed['address'].blank? ||
+      attributed['city'].blank? ||
+      attributed['state'].blank? ||
+      attributed['zip'].blank?
   end
 end

@@ -125,7 +125,7 @@ http_interactions:
     uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/customers
     body:
       encoding: UTF-8
-      string: '{"name":"University of Michigan Farmers","meta":{"entity_id":4,"entity_name":"University
+      string: '{"name":"University of Michigan Farmers","meta":{"entity_id":1,"entity_name":"University
         of Michigan Farmers","entity_type":"organization"}}'
     headers:
       User-Agent:
@@ -144,13 +144,13 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 15 May 2014 19:33:26 GMT
+      - Thu, 15 May 2014 18:19:43 GMT
       Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU65UeI0VZOfgVIHOvQajrL3
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU3LzsFo9vG4YnjaP5GleodP
       Server:
       - ngx_openresty/1.2.6.3
       X-Balanced-Guru:
-      - OHMc8411c60dc6711e3ab5302a1fe52a36c
+      - OHM7bc33468dc5d11e3ab2502a1fe52a36c
       X-Balanced-Host:
       - bapi-integration-prod-8u30f7-10-3-5-201
       X-Balanced-Marketplace:
@@ -160,11 +160,11 @@ http_interactions:
       X-Balanced-Revision:
       - '1.0'
       X-Balanced-Software-Build:
-      - 1.2.25
+      - 1.2.24
       X-Midlr-Version:
       - '2'
       X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUB9QB1pVBwRYUFYBCwhVVFsFHRdXUAEaE0BUVgNVWg9VCA0EAlZcWlQAQx9CAldbEgM+
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUB9WB1NRBARYXlIICgRXV1IDHRdXUAEaE0AHB1dWBFwHDQpSAAdQWwVUQx9CAldbEgM+
       Content-Length:
       - '1746'
       Connection:
@@ -175,28 +175,28 @@ http_interactions:
         {
           "_type": "customer",
           "twitter": null,
-          "reversals_uri": "/v1/customers/CU65UeI0VZOfgVIHOvQajrL3/reversals",
+          "reversals_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/reversals",
           "phone": null,
           "meta": {
-            "entity_id": "4",
+            "entity_id": "1",
             "entity_name": "University of Michigan Farmers",
             "entity_type": "organization"
           },
           "facebook": null,
           "address": {},
           "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU65UeI0VZOfgVIHOvQajrL3/bank_accounts",
-          "id": "CU65UeI0VZOfgVIHOvQajrL3",
-          "credits_uri": "/v1/customers/CU65UeI0VZOfgVIHOvQajrL3/credits",
-          "cards_uri": "/v1/customers/CU65UeI0VZOfgVIHOvQajrL3/cards",
-          "holds_uri": "/v1/customers/CU65UeI0VZOfgVIHOvQajrL3/holds",
+          "bank_accounts_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/bank_accounts",
+          "id": "CU3LzsFo9vG4YnjaP5GleodP",
+          "credits_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/credits",
+          "cards_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/cards",
+          "holds_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/holds",
           "name": "University of Michigan Farmers",
-          "refunds_uri": "/v1/customers/CU65UeI0VZOfgVIHOvQajrL3/refunds",
+          "refunds_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/refunds",
           "dob": null,
-          "created_at": "2014-05-15T19:33:25.097799Z",
+          "created_at": "2014-05-15T18:19:41.801869Z",
           "destination": null,
           "is_identity_verified": false,
-          "uri": "/v1/customers/CU65UeI0VZOfgVIHOvQajrL3",
+          "uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP",
           "source": null,
           "_uris": {
             "transactions_uri": {
@@ -232,12 +232,12 @@ http_interactions:
               "key": "cards"
             }
           },
-          "debits_uri": "/v1/customers/CU65UeI0VZOfgVIHOvQajrL3/debits",
-          "transactions_uri": "/v1/customers/CU65UeI0VZOfgVIHOvQajrL3/transactions",
+          "debits_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/debits",
+          "transactions_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/transactions",
           "ssn_last4": null,
           "email": null,
           "ein": null
         }
     http_version: 
-  recorded_at: Thu, 15 May 2014 19:33:27 GMT
+  recorded_at: Thu, 15 May 2014 18:19:45 GMT
 recorded_with: VCR 2.9.0
