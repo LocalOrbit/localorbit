@@ -36,7 +36,7 @@
     <% end %>
 
     <% if @organization.new_record? || @organization.can_sell? || current_user.can_manage_organization?(@organization) %>
-    <fieldset class="seller-fields">
+    <fieldset class="seller-fields<%= ' is-hidden' unless @organization.can_sell? %>">
       <div class="field field--inline">
         <%= f.label :facebook %><br>
         <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
