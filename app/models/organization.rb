@@ -17,9 +17,6 @@ class Organization < ActiveRecord::Base
   has_many :bank_accounts, as: :bankable, dependent: :destroy
 
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
-  with_options unless: Proc.new { current_user && (current_user.market_manager? || current_user.admin?) } do
-
-  end
 
   scope :selling, -> { where(can_sell: true) }
   scope :buying,  -> { where(can_sell: false) } # needs a new boolean
