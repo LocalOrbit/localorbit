@@ -8,23 +8,34 @@ describe Sessions::DeliveriesController do
   }
 
   let!(:user) { create(:user, role: 'user') }
-  let!(:org) { create(:organization, :multiple_locations, markets: [current_market], users: [user]) }
+  let!(:org)  { create(:organization, :multiple_locations, markets: [current_market], users: [user]) }
 
   before do
-    sign_in(user)
     switch_to_subdomain current_market.subdomain
+    sign_in(user)
   end
 
   describe "/create" do
     let!(:delivery) { schedule.next_delivery }
 
     context "empty submission" do
-      before do
-        post :create, {delivery_id: ""}, {current_organization_id: org.id }
+      context "with multiple delivery schedules" do
+        let!(:schedule2) { create(:delivery_schedule, market: current_market, day: 2, seller_delivery_start: "6:00 am", seller_delivery_end: "10:00 am") }
+
+        it "assigns a flash message" do
+          post :create, {delivery_id: ""}, {current_organization_id: org.id}
+
+          expect(flash[:alert]).to eql("Please select a delivery")
+        end
       end
 
-      it "assigns a flash message" do
-        expect(flash[:alert]).to eql("Please select a delivery")
+      context "with one delivery schedule" do
+        it "completes and redirects to the shop" do
+          post :create, {delivery_id: ""}, {current_organization_id: org.id}
+
+          expect(session[:current_delivery_id]).to eql(delivery.id)
+          expect(response).to redirect_to([:products])
+        end
       end
     end
 
@@ -54,16 +65,16 @@ describe Sessions::DeliveriesController do
     end
 
     context "an organization_location is also passed as a parameter" do
-      before do
-        post :create,
-             {
-                delivery_id: delivery.id,
-                location_id: {delivery.id.to_s => org.locations.last.id}
-             },
-             {current_organization_id: org.id}
-      end
 
       context "and the location is valid" do
+        before do
+          post :create,
+               {
+                  delivery_id: delivery.id,
+                  location_id: {delivery.id.to_s => org.locations.last.id}
+               },
+               {current_organization_id: org.id}
+        end
 
         it "assigns the delivery" do
           expect(session[:current_delivery_id]).to eql(delivery.id)
@@ -80,34 +91,25 @@ describe Sessions::DeliveriesController do
 
 
       context "and the location is not valid" do
-        before do
-          post :create,
-              {
-                  delivery_id: delivery.id,
-                  location_id: {delivery.id.to_s => 999}
-              },
-              {current_organization_id: org.id }
-        end
+        it "falls back to the shipping address" do
+          post :create, {delivery_id: delivery.id, location_id: {delivery.id.to_s => 999}}, {current_organization_id: org.id}
 
-        it "assigns an error message and redirects" do
-          expect(flash[:alert]).to eql("Please select a delivery")
-          expect(response).to be_success
+          expect(response).to redirect_to([:products])
+          expect(session[:current_delivery_id]).to eq(delivery.id)
+          expect(session[:current_location]).to eq(org.shipping_location.id)
         end
       end
     end
 
-    it 'does not allow you to select a deleted location' do
+    it 'falls back to shipping location if a deleted location is selected' do
       loc = org.locations.first
       loc.soft_delete
 
-      post :create,
-           {
-             delivery_id: delivery.id,
-             location_id: {delivery.id.to_s => loc.id}
-           }, {current_organization_id: org.id }
+      post :create, {delivery_id: delivery.id, location_id: {delivery.id.to_s => loc.id}}, {current_organization_id: org.id}
 
-      expect(response).to be_success
-      expect(response).to render_template('sessions/deliveries/new')
+      expect(response).to redirect_to([:products])
+      expect(session[:current_delivery_id]).to eq(delivery.id)
+      expect(session[:current_location]).to eq(org.shipping_location.id)
     end
   end
 end

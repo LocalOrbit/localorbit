@@ -152,7 +152,8 @@ FactoryGirl.define do
 
     trait :multiple_locations do
       after(:create) do |org|
-        create_list(:location, 2, organization: org)
+        create(:location, organization: org)
+        create(:location, organization: org)
       end
     end
   end
