@@ -56,15 +56,16 @@ class Product < ActiveRecord::Base
 
       # Limit to products with enough inventory to fulfill the min_quantity
       having("SUM(lots.quantity) >= MIN(prices.min_quantity)").
-      group("products.id").tap {|i| puts i.to_sql }
+      group("products.id")
   end
 
   def self.priced_for_market_and_buyer(market, buyer=nil)
     price_table = Price.arel_table
     on_cond = arel_table[:id].eq(price_table[:product_id]).
               and(price_table[:market_id].eq(market.id).or(price_table[:market_id].eq(nil)))
+
     if buyer
-      on_cond = on_cond.and(price_table[:organization_id].eq(market.id).or(price_table[:organization_id].eq(nil)))
+      on_cond = on_cond.and(price_table[:organization_id].eq(buyer.id).or(price_table[:organization_id].eq(nil)))
     else
       on_cond = on_cond.and(price_table[:organization_id].eq(nil))
     end
