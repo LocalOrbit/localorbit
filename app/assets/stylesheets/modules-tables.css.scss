@@ -587,6 +587,10 @@ th {
   &:nth-child(even) {
     background: #F9F9F9;
   }
+  th[scope=row] {
+    padding-top: 10px;
+    vertical-align: top;
+  }
   tr {
     border: 0;
 

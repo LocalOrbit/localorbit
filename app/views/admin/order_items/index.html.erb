@@ -44,7 +44,7 @@
           <%= link_to order_item.order.order_number, coming_soon_dashboard_path, class: "order-number-bold" %>
         </td>
         <td class="order-seller"><%= link_to order_item.seller_name, [:admin, order_item.product.organization], class: "seller" %></td>
-        <td class="order-buyer">
+        <td>
           <%= link_to order_item.order.organization.name, [:admin, order_item.order.organization], class: "buyer" %><br>
           <%= content_tag "span", order_item.order.market.name, class: "market" %>
         </td>

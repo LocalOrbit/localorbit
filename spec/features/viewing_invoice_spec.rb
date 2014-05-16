@@ -31,11 +31,11 @@ feature "Viewing invoices" do
       expect(page).to have_content(address.state)
       expect(page).to have_content(address.zip)
 
-      expect(page).to have_content("Invoice Number: LO-001")
-      expect(page).to have_content("Invoice Date: April 02, 2014")
-      expect(page).to have_content("Payment Due: April 16, 2014")
-      expect(page).to have_content("Amount Due: $210.00")
+      expect(page).to have_content("Invoice Number LO-001")
+      expect(page).to have_content("Invoice Date 4/2/2014")
+      expect(page).to have_content("Due Date 4/16/2014")
     end
+    expect(page).to have_content("Total $210.00")
 
     # There should be one line item
     expect(all('.line-item').size).to eq(1)
@@ -62,11 +62,11 @@ feature "Viewing invoices" do
       expect(page).to have_content(address.state)
       expect(page).to have_content(address.zip)
 
-      expect(page).to have_content("Invoice Number: LO-001")
-      expect(page).to have_content("Invoice Date: April 02, 2014")
-      expect(page).to have_content("Payment Due: April 16, 2014")
-      expect(page).to have_content("Amount Due: $210.00")
+      expect(page).to have_content("Invoice Number LO-001")
+      expect(page).to have_content("Invoice Date 4/2/2014")
+      expect(page).to have_content("Due Date 4/16/2014")
     end
+    expect(page).to have_content("Total $210.00")
 
     # There should be one line item
     expect(all('.line-item').size).to eq(2)
