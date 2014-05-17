@@ -51,13 +51,13 @@ class Legacy::Organization < Legacy::Base
         when 2
           organization.display_twitter = true
         end
+
+        puts "- Importing profile photo..."
+        photo = Dragonfly.app.fetch_url("http://app.localorb.it/img/organizations/cached/#{org_id}.320.260.png")
+        organization.photo_uid = photo.store if photo.image?
       else
         puts "- Existing organization: #{organization.name}"
       end
-
-      puts "- Importing profile photo..."
-      photo = Dragonfly.app.fetch_url("http://app.localorb.it/img/organizations/cached/#{org_id}.320.260.png")
-      organization.photo_uid = photo.store if photo.image?
 
       addresses.each {|address| organization.locations << address.import }
 

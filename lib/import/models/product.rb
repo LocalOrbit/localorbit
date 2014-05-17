@@ -16,7 +16,7 @@ module Imported
     has_many :prices, autosave: true, inverse_of: :product
 
     def update_top_level_category
-      self.top_level_category = category.top_level_category
+      self.top_level_category = category.top_level_category if category
     end
 
     def update_delivery_schedules
@@ -40,7 +40,6 @@ class Legacy::Product < Legacy::Base
 
   def import(organization)
     product = Imported::Product.where(legacy_id: prod_id).first
-
     if product.nil?
       puts "  - Creating product: #{name}"
       product = Imported::Product.new(
@@ -56,6 +55,8 @@ class Legacy::Product < Legacy::Base
         legacy_id: prod_id
       )
 
+      product.image_uid = import_image
+      product.update_top_level_category
     else
       puts "  - Existing product: #{product.name}"
     end
@@ -64,10 +65,6 @@ class Legacy::Product < Legacy::Base
     product.use_simple_inventory = (lots.count == 1)
 
     prices.each {|price| product.prices << price.import }
-
-    product.image_uid = import_image
-
-    product.update_top_level_category
 
     product
   end

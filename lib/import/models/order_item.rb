@@ -23,6 +23,7 @@ class Legacy::OrderItem < Legacy::Base
       item = Imported::OrderItem.create(
         name: product_name,
         product: imported_product,
+        seller_name: seller_name,
         delivery_status: imported_delivery_status,
         quantity: qty_ordered,
         unit: unit,

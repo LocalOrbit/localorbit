@@ -131,11 +131,17 @@ class Legacy::Market < Legacy::Base
         market.delivery_schedules << ds.import(market)
       end
 
-      # puts "Importing #{orders.count} orders..."
-      # orders.each do |order|
-      #   imported = order.import
-      #   market.orders << imported if imported.present?
-      # end
+      puts "Importing #{orders.count} orders..."
+      Legacy::Order.where(domain_id: market.legacy_id).joins(:delivery).each do |order|
+        imported = order.import
+        market.orders << imported if imported.present?
+      end
+      market.save
+
+      puts "Importing payments..."
+      Legacy::Payment.where(from_domain_id: market.legacy_id).each do |payment|
+        payment.import.save!
+      end
 
       puts "Setting market product delivery schedules..."
       market.organizations.each do |organization|
