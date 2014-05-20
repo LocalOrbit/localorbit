@@ -93,7 +93,7 @@ Rails.application.routes.draw do
   namespace :organization do
     get "financials" => "financials#index"
     namespace :financials do
-      resources :orders, only: [:show]
+      resources :invoices
     end
   end
 

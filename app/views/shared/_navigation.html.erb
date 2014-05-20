@@ -38,7 +38,7 @@ end
     <% elsif current_user.seller? %>
       <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), admin_financials_path %></li>
     <% elsif show_financials? current_user, current_market %>
-      <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), admin_financials_overview_path %></li>
+      <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), organization_financials_path %></li>
     <% end %>
 
     <% if !current_user.buyer_only? %>
