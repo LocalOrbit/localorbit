@@ -6,6 +6,8 @@ namespace :invalid do
     end
 
     ActiveRecord::Base.subclasses.each do |model|
+      next unless model.table_exists?
+
       model.find_each do |instance|
         begin
           if !instance.valid?
