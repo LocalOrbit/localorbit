@@ -4,6 +4,7 @@ module Admin::Financials
       @payments = Payment.joins(:order_payments)
         .includes(:orders)
         .where(orders: {organization_id: current_organization.id, payment_status: 'paid'})
+        .order('payments.created_at DESC')
         .decorate
     end
   end
