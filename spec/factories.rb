@@ -112,7 +112,6 @@ FactoryGirl.define do
     sequence(:name) {|n| product.name || "Order Item #{n}"}
     seller_name         "Old McDonald"
     quantity            1
-    quantity_delivered  1
     unit                "per box"
     unit_price          6.99
     delivery_status     "pending"
