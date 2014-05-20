@@ -22,7 +22,7 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def human_delivery_date
-    "#{ display_date + ' ' + time_range }"
+    "#{display_date} #{time_range}"
   end
 
   def checkout_date
