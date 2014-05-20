@@ -42,7 +42,7 @@
 
             <% end %>
           </td>
-          <td class="payment-method"><%= payment.payment_type %></td>
+          <td class="payment-method"><%= payment.display_payment_type %></td>
           <td class="amount"><%= number_to_currency(payment.amount) %></td>
         </tr>
       <% end %>
