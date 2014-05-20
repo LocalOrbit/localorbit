@@ -21,7 +21,7 @@
     <% @orders.each do |order| %>
     <tr class="invoice-row<%= " past-due" if order.invoice_due_date < Time.current %>">
       <td class="order-number">
-        <%= link_to order.order_number, admin_order_path(order) %>
+        <%= link_to order.order_number, admin_invoice_path(order) %>
         <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
       </td>
       <td class="buyer"><%= order.organization.name %></td>
