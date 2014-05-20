@@ -66,15 +66,36 @@
       font-size: 12px;
       font-weight: normal;
     }
+    .cancelled > span {
+      text-decoration: line-through;
+    }
+      .cancelled:after {
+        color: #911;
+        content: " Cancelled";
+        text-decoration: none;
+      }
+    .discounts th, .discounts td {
+      padding: 10px 10px 2px;
+    }
+    .delivery th, .delivery td {
+      padding: 2px 10px 10px;
+    }
     .total {
       border-top: solid 1px #ccc;
+      color: #666;
     }
       .total .amount {
+        padding-left: 10px;
+        color: #000;
         font: bold 24px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
       }
       .total td,
       .total th {
+        padding-left: 0;
         font-size: 18px;
+      }
+      .total td:first-child {
+        font-style: italic;
       }
 
     .buyer-name {
@@ -98,6 +119,7 @@
       float: left;
       max-width: 200px;
       margin-right: 15px;
+      margin-bottom: 15px;
     }
     .vcard {
       overflow: hidden;
@@ -179,7 +201,7 @@
         <th>Price</th>
         <th>Quantity<br>Ordered</th>
         <th>Quantity<br>Delivered</th>
-        <th class="ar">Amount</th>
+        <th>Item Total<br>Price</th>
       </tr>
     </thead>
     <% @invoice.items.each do |item| %>
@@ -189,7 +211,8 @@
       <td><%= number_to_currency item.unit_price %></td>
       <td class="ac"><%= item.quantity %></td>
       <td class="ac"><%= item.quantity %></td>
-      <td class="ar"><%= number_to_currency item.gross_total %></td>
+      <% #TODO: Add class "cancelled" to cancelled items' td %>
+      <td><span class="amount"><%= number_to_currency item.gross_total %></span></td>
     </tr>
     <% item.lots.select {|lot| lot.number.present? }.each do |lot| %>
     <tr class="line-item-lot">
@@ -201,18 +224,18 @@
     <% end %>
     <% end %>
     <tfoot>
-      <tr>
+      <tr class="discounts">
         <th scope="row" colspan="5" class="ar">Discounts</th>
-        <td class="ar"><%= number_to_currency @invoice.discount %></td>
+        <td><%= number_to_currency @invoice.discount %></td>
       </tr>
-      <tr>
+      <tr class="delivery">
         <th scope="row" colspan="5" class="ar">Delivery Fees</th>
-        <td class="ar"><%= number_to_currency @invoice.delivery_fees %></td>
+        <td><%= number_to_currency @invoice.delivery_fees %></td>
       </tr>
       <tr class="total">
         <td colspan="3">This order is complete.</td>
         <th colspan="2" scope="row" class="ar">Total</th>
-        <td class="ar amount"><%= number_to_currency @invoice.total_cost %></td>
+        <td class="amount"><%= number_to_currency @invoice.total_cost %></td>
       </tr>
     </tfoot>
   </table>

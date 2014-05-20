@@ -25,7 +25,10 @@
         <div class="short_description">
 
           <% if product.long_description.present? %>
-           <%= simple_format (product.short_description + " " + link_to(raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{product.id}-long-description", class: "popup-toggle")) %>
+            <p>
+              <%= product.short_description %>
+              <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{product.id}-long-description", {class: "popup-toggle", tabindex: "-1"} %>
+            </p>
             <div class="long-description-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-long-description">
               <div class="popup-header">
                 Details <button class="close"><i class="font-icon icon-close"></i></button>
