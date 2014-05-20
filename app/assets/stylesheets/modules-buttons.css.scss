@@ -124,10 +124,15 @@ input[type=submit] {
 input[type=submit] {
   color: #fff;
   background-color: #43639f;
-  
-  &.btn--money {
-    background-color: #349D1C;
-  }
+}
+.btn--money {
+  @include border-radius(5px);
+  color: #fff;
+  background-color: #349D1C;
+  border: 3px solid white;
+}
+.btn--money:focus {
+  border-color: #BFD9AD;
 }
 .btn--add.btn--small {
   padding-right: 8px;
