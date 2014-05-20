@@ -1,7 +1,7 @@
 module Admin::Financials
   class PaymentsController < AdminController
     def index
-      @payments = Payment.where(payee: current_organization).order("updated_at DESC")
+      @payments = Payment.where(payee: current_organization).order("updated_at DESC").decorate
     end
   end
 end
