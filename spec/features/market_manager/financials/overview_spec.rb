@@ -141,7 +141,7 @@ feature "Market Manager Financial Overview" do
       click_link "Record Payments"
     end
 
-    expect(page).to have_content("Coming Soon")
+    expect(page).to have_content("Record Payments to Vendors")
   end
 
   def visit_financials

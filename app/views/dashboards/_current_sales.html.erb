@@ -10,7 +10,7 @@
   </thead>
 <% current_market.orders.limit(15).order("created_at DESC").each do |order| %>
   <tr class="order-row">
-    <td class="order-number"><%= link_to order.order_number, coming_soon_dashboard_path %></td>
+    <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %></td>
     <td class="placed-on"><%= order.placed_at.strftime("%b %e, %Y") %></td>
     <td class="total"><%= number_to_currency(order.total_cost) %></td>
     <td class="delivery"><%= order.delivery_status.titleize %></td>

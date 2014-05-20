@@ -10,8 +10,8 @@
       <div class="location"><%= delivery.deliver_to_location %></div>
 
       <div class="seller-tools-mini">
-        <%= link_to "Pick List", coming_soon_dashboard_path %>
-        <%= link_to "Individual\nPacking Slips", coming_soon_dashboard_path %>
+        <%= link_to "Pick List", admin_delivery_tools_pick_list_path(delivery) %>
+        <%= link_to "Individual\nPacking Slips", admin_delivery_tools_individual_pack_list_path(delivery) %>
         <%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery) %>
       </div>
     </div>
