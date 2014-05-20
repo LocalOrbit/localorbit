@@ -11,7 +11,6 @@ class OrderItem < ActiveRecord::Base
   validates :name, presence: true
   validates :seller_name, presence: true
   validates :quantity, presence: true
-  validates :quantity_delivered, presence: true
   validates :unit, presence: true
   validates :unit_price, presence: true
   validates :delivery_status, presence: true, inclusion: {in: DELIVERY_STATUSES}
@@ -20,6 +19,7 @@ class OrderItem < ActiveRecord::Base
 
   before_create :consume_inventory
   before_save :update_delivered_at
+  before_save :update_quantity_delivered
 
   def self.for_delivery(delivery)
     joins(order: :delivery).where(orders: {delivery_id: delivery.id})
@@ -35,7 +35,6 @@ class OrderItem < ActiveRecord::Base
       product: item.product,
       name: item.product.name,
       quantity: item.quantity,
-      quantity_delivered: item.quantity,
       unit: item.unit,
       unit_price: item.unit_price.sale_price,
       seller_name: item.product.organization.name,
@@ -101,6 +100,12 @@ class OrderItem < ActiveRecord::Base
   def update_delivered_at
     if changes[:delivery_status] && changes[:delivery_status][1] == "delivered"
       self.delivered_at ||= Time.current
+    end
+  end
+
+  def update_quantity_delivered
+    if delivery_status_changed? && delivery_status == "delivered"
+      self.quantity_delivered ||= quantity
     end
   end
 end
