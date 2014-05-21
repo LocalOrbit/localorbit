@@ -65,14 +65,18 @@ feature "Payment history" do
 
     expect(payment_row("$20.00")).not_to be_nil
     expect(payment_row("$20.00").payment_method).to eql("Cash")
+    expect(payment_row("$20.00").date).to eql("05/09/2014")
 
     expect(payment_row("$21.00")).not_to be_nil
     expect(payment_row("$21.00").payment_method).to eql("Check: #12345")
+    expect(payment_row("$20.00").date).to eql("05/09/2014")
 
     expect(payment_row("$22.00")).not_to be_nil
     expect(payment_row("$22.00").payment_method).to eql("ACH: *********9983")
+    expect(payment_row("$20.00").date).to eql("05/09/2014")
 
     expect(payment_row("$23.00")).not_to be_nil
     expect(payment_row("$23.00").payment_method).to eql("Credit Card: ************7732")
+    expect(payment_row("$20.00").date).to eql("05/09/2014")
   end
 end
