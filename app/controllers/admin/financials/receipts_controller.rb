@@ -28,7 +28,7 @@ module Admin
       end
 
       def payment_params
-        params.require(:payment).permit(:payment_type, :amount, :note)
+        params.require(:payment).permit(:payment_method, :amount, :note)
       end
     end
   end

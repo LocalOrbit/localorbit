@@ -7,7 +7,7 @@ describe "Payment history" do
 
   context "with payments" do
     let!(:order2)   { create(:order, :with_items) }
-    let!(:payment2) { create(:payment, payee: seller, payment_type: "Cash", amount: 42.00, updated_at: DateTime.parse("May 1, 2014 12:00"), orders: [order2])}
+    let!(:payment2) { create(:payment, payee: seller, payment_method: "Cash", amount: 42.00, updated_at: DateTime.parse("May 1, 2014 12:00"), orders: [order2])}
     let!(:order1)   { create(:order, :with_items) }
     let!(:payment1) { create(:payment, payee: seller, amount: 100.00, updated_at: DateTime.parse("May 5, 2014 12:00"), orders: [order1])}
 
@@ -45,7 +45,7 @@ describe "Payment history" do
 
     it "displays the payment history with a placeholder" do
       expect(page).to have_content("Payment History")
-      expect(page).to have_content("No payment history available.")
+      expect(page).to have_content("No Results")
     end
   end
 end

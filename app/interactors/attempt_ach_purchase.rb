@@ -14,7 +14,7 @@ class AttemptAchPurchase
 
         context[:payment] = Payment.create(
           payer: buyer,
-          payment_type: 'ach',
+          payment_method: 'ach',
           amount: cart.total,
           status: "pending",
           balanced_uri: debit.uri

@@ -18,7 +18,7 @@ describe RecordVendorPayment do
   let!(:order4) { create(:order, items:[create(:order_item, :delivered, product: product1, quantity: 9), create(:order_item, :delivered, product: product2, quantity: 14)], market: market, organization: buyer, delivery: delivery, payment_method: "purchase order", order_number: "LO-003", total_cost: 160.77, placed_at: 3.days.ago) }
 
   it "adds the appropriate orders to the payment" do
-    RecordVendorPayment.perform(seller: seller2, payment_params: {payment_type: 'check', note: '43251', order_ids: [order2.id, order3.id]})
+    RecordVendorPayment.perform(seller: seller2, payment_params: {payment_method: 'check', note: '43251', order_ids: [order2.id, order3.id]})
 
     payment = Payment.first
     expect(payment.orders.size).to eq(2)
@@ -26,29 +26,29 @@ describe RecordVendorPayment do
   end
 
   it "records the correct payment amount for the given orders" do
-    RecordVendorPayment.perform(seller: seller2, payment_params: {payment_type: 'check', note: '43251', order_ids: [order2.id, order3.id]})
+    RecordVendorPayment.perform(seller: seller2, payment_params: {payment_method: 'check', note: '43251', order_ids: [order2.id, order3.id]})
 
     payment = Payment.first
     expect(payment.amount).to eq(62.91)
   end
 
   it "records the correct payment type and note" do
-    RecordVendorPayment.perform(seller: seller2, payment_params: {payment_type: 'check', note: '43251', order_ids: [order2.id, order3.id]})
+    RecordVendorPayment.perform(seller: seller2, payment_params: {payment_method: 'check', note: '43251', order_ids: [order2.id, order3.id]})
 
     payment = Payment.first
-    expect(payment.payment_type).to eq("check")
+    expect(payment.payment_method).to eq("check")
     expect(payment.note).to eq("43251")
   end
 
   it "records the payment status as paid for checks" do
-    RecordVendorPayment.perform(seller: seller2, payment_params: {payment_type: 'check', note: '43251', order_ids: [order2.id, order3.id]})
+    RecordVendorPayment.perform(seller: seller2, payment_params: {payment_method: 'check', note: '43251', order_ids: [order2.id, order3.id]})
 
     payment = Payment.first
     expect(payment.status).to eq("paid")
   end
 
   it "records the payment status as paid for cash" do
-    RecordVendorPayment.perform(seller: seller2, payment_params: {payment_type: 'cash', order_ids: [order2.id, order3.id]})
+    RecordVendorPayment.perform(seller: seller2, payment_params: {payment_method: 'cash', order_ids: [order2.id, order3.id]})
 
     payment = Payment.first
     expect(payment.status).to eq("paid")
