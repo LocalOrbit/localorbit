@@ -13,7 +13,7 @@
           <%= content_tag(:li, link_to_or_span("Send Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
           <%= content_tag(:li, link_to_or_span("Enter Receipts", [:admin, :financials, :receipts]), class: 'tab') %>
           <%= content_tag(:li, link_to_or_span("Record Payments to Vendors", [:admin, :financials, :vendor_payments]), class: 'tab') %>
-          <%= content_tag(:li, link_to_or_span("Review Payment History", coming_soon_dashboard_path), class: 'tab') %>
+          <%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %>
         <% else %>
           <%= content_tag(:li, link_to_or_span("Review Payment History", coming_soon_dashboard_path), class: 'tab') %>
         <% end %>
