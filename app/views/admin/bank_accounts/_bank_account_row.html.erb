@@ -6,14 +6,13 @@
     <td class="account-number">******<%= bank_account.last_four %></td>
     <td class="account-type"><%= bank_account.account_type.titleize %></td>
     <td class="verified">
-        <i class="font-icon icon-checkmark"></i> Verified      
+        <i class="font-icon icon-checkmark"></i> Verified
     </td>
     <td class="notes"><%= bank_account.notes %></td>
     <td class="delete">
       <%= link_to raw("<i class='font-icon icon-delete'></i> Delete"), [:admin, @entity, bank_account], data: { method: :delete } %>
     </td>
   </tr>
-  <tr>
 
 <% else %>
 
