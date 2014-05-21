@@ -1,6 +1,13 @@
 require 'spec_helper'
 feature "Payment history" do
-  let!(:market)  { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let(:market_ach_balanced_uri) { "http://balanced.example.com/12345" }
+  let(:ach_balanced_uri) { "http://balanced.example.com/123456" }
+  let(:cc_balanced_uri) { "http://balanced.example.com/1234567" }
+
+  let!(:market)             { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:market_ach_account) { create(:bank_account, :checking, last_four: "7676", balanced_uri: market_ach_balanced_uri, bankable: market) }
+  let!(:service_fee)        { create(:payment, payment_method: 'ach', payment_type: 'service', payer: market, amount: 99.00) }
+
   let!(:seller)  { create(:organization, markets: [market]) }
   let!(:seller2) { create(:organization, markets: [market]) }
 
@@ -8,9 +15,6 @@ feature "Payment history" do
   let!(:user)    { create(:user, managed_markets: [market]) }
 
   let(:payment_day) { DateTime.parse("May 9, 2014, 11:00:00") }
-
-  let(:ach_balanced_uri) { "http://balanced.example.com/123456" }
-  let(:cc_balanced_uri) { "http://balanced.example.com/1234567" }
 
   let!(:ach_account) { create(:bank_account, :checking, last_four: "9983", balanced_uri: ach_balanced_uri, bankable: buyer) }
   let!(:cc_account) { create(:bank_account, :credit_card, last_four: "7732", balanced_uri: cc_balanced_uri, bankable: buyer) }
@@ -60,7 +64,7 @@ feature "Payment history" do
 
     expect(page).to have_content("Payment History")
     expect(page).to have_content("Payment Date")
-    expect(page).to have_content("Order #")
+    expect(page).to have_content("Description")
     expect(page).to have_content("Payment Method")
     expect(page).to have_content("Amount")
 
@@ -79,5 +83,8 @@ feature "Payment history" do
 
     expect(payment_row("$23.00")).not_to be_nil
     expect(payment_row("$23.00").payment_method).to eql("Credit Card: ************7732")
+
+    expect(payment_row("$99.00")).not_to be_nil
+    expect(payment_row("$99.00").payment_method).to have_content("ACH")
   end
 end

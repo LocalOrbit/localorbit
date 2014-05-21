@@ -219,7 +219,7 @@ module Dom
         selector ".payment-row"
 
         attribute :date
-        attribute :order_number
+        attribute :description
         attribute :payment_method
         attribute :amount
       end
