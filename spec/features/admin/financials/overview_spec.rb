@@ -101,9 +101,9 @@ feature "Seller Financial Overview" do
     # Sellers will not see the money-out section
     expect(Dom::Admin::Financials::MoneyOut.all).to be_empty
 
-    expect(financial_row("Overdue").amount).to eql("$63.88")
-    expect(financial_row("Today").amount).to eql("$103.81")
-    expect(financial_row("Next 7 Days").amount).to eql("$1,212.23")
+    expect(money_in_row("Overdue").amount).to eql("$63.88")
+    expect(money_in_row("Today").amount).to eql("$103.81")
+    expect(money_in_row("Next 7 Days").amount).to eql("$1,212.23")
   end
 
   scenario "Seller navigates to their financial overview" do

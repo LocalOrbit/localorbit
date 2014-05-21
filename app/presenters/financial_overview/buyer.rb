@@ -12,9 +12,11 @@ module FinancialOverview
     end
 
     def due
+      @po_orders.invoiced.sum(:total_cost) - overdue
     end
 
     def purchase_orders
+      @po_orders.uninvoiced.sum(:total_cost)
     end
   end
 end

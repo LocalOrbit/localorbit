@@ -11,8 +11,12 @@ module FinancialOverviewHelpers
     order.save!
   end
 
-  def financial_row(title)
+  def money_in_row(title)
     Dom::Admin::Financials::MoneyIn.find_by_title(title)
+  end
+
+  def money_out_row(title)
+    Dom::Admin::Financials::MoneyOut.find_by_title(title)
   end
 end
 
