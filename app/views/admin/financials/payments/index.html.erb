@@ -1,4 +1,54 @@
 <%= render "admin/financials/header" %>
 
-<%= render "admin/financials/shared/payments" %>
+<h2>Payment History</h2>
+
+<table>
+  <thead class="stickable">
+    <tr>
+      <th>Payment Date</th>
+      <th>Order #</th>
+      <th>Payment Method</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @payment_history.payments.empty? %>
+      <tr>
+        <td colspan="4">
+          No payment history available.
+        <td>
+      </tr>
+    <% else %>
+      <% @payment_history.payments.each do |payment| %>
+        <tr class="payment-row">
+          <td class="date"><%= payment.updated_at.strftime("%m/%d/%Y") %></td>
+          <td class="order-number">
+            <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
+            <% if payment.orders.count > 1 %>
+              <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#", class:"modal-toggle more-info payment-more", data: { modal: "more-info-#{payment.id}"} %>
+              
+              <!-- Modal -->
+              <div class="popup modal more-info-<%= payment.id %> is-hidden order-list-modal">
+                <div class="popup-header">
+                  All Order Numbers Paid on <strong><%= payment.updated_at.strftime("%m/%d/%Y") %></strong>
+                  <button class="close"><i class="font-icon icon-close"></i></button>
+                </div>
+                <div class="all-order-numbers">
+                  <% payment.orders.each do |order| %>
+                    <p><%= link_to order.order_number, admin_order_path(order) %></p>
+                  <% end %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <!-- End Modal -->
+
+            <% end %>
+          </td>
+          <td class="payment-method"><%= payment.display_payment_type %></td>
+          <td class="amount"><%= number_to_currency(payment.amount) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
 
