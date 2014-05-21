@@ -390,8 +390,8 @@ ActiveRecord::Schema.define(version: 20140521144613) do
   create_table "payments", force: true do |t|
     t.integer  "payee_id"
     t.string   "payee_type"
-    t.string   "payment_type"
-    t.decimal  "amount",         precision: 10, scale: 2, default: 0.0, null: false
+    t.string   "payment_type",                            default: "order"
+    t.decimal  "amount",         precision: 10, scale: 2, default: 0.0,     null: false
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
