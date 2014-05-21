@@ -169,3 +169,51 @@
 .vendor-payment-cancel {
   margin: 12px 0 0 12px;
 }
+
+.bank-account {
+  .delete {
+    padding-right: 5px;
+  }
+  .notes {
+    width: 300px;
+  }
+}
+
+.verified {
+  color: #0e8504;
+
+  i {
+    color: #0e8504;
+  }
+}
+
+.unverified,
+.unverified:nth-child(odd) {
+  background-color: #FFF8B2;
+  border-top: none;
+
+  span {
+    margin-left: 10px;
+  }
+}
+
+.unverified-bank-data,
+.unverified-bank-data:nth-child(odd) {
+  background-color: #FFF8B2;
+  border-bottom: none;
+}
+
+.unverified-bank-data:hover {
+  background-color: #FFF8B2;
+}
+
+.please-verify {
+  color: #913900;
+}
+
+.add-bank-warning {
+  width: 600px;
+  margin-bottom: 30px;
+  color: #913900;
+  line-height: 15px;
+}
