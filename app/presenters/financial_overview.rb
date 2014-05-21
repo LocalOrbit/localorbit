@@ -8,20 +8,17 @@ module FinancialOverview
       Seller
     end
 
-    klass.new(seller: user, market: market)
+    klass.new(user: user, market: market)
   end
 
   class Base
     attr_reader :partial
 
     def initialize(opts={})
-      @seller = opts[:seller]
+      @user = opts[:user]
       @market = opts[:market]
       @time = Time.current
 
-      base_order_scope = Order.orders_for_seller(@seller).where(market: @market)
-      @cc_ach_orders = base_order_scope.paid_with(["credit card", "ach"])
-      @po_orders = base_order_scope.paid_with("purchase order")
     end
 
     def next_seven_days(offset: 0)
@@ -52,7 +49,7 @@ module FinancialOverview
     private
     def sum_seller_items(orders)
       orders.inject(0) do |total, order|
-        total + order.items.for_user(@seller).map(&@calculation_method).reduce(:+)
+        total + order.items.for_user(@user).map(&@calculation_method).reduce(:+)
       end
     end
   end

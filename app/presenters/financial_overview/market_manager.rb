@@ -4,6 +4,10 @@ module FinancialOverview
       super
       @calculation_method = :gross_total
       @partial = "market_manager"
+
+      base_order_scope = Order.orders_for_seller(@user).where(market: @market)
+      @cc_ach_orders = base_order_scope.paid_with(["credit card", "ach"])
+      @po_orders = base_order_scope.paid_with("purchase order")
     end
 
     def overdue

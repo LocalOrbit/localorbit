@@ -4,6 +4,10 @@ module FinancialOverview
       super
       @calculation_method = :seller_net_total
       @partial = "seller"
+
+      base_order_scope = Order.orders_for_seller(@user).where(market: @market)
+      @cc_ach_orders = base_order_scope.paid_with(["credit card", "ach"])
+      @po_orders = base_order_scope.paid_with("purchase order")
     end
 
     def money_in_today
