@@ -385,6 +385,7 @@ module Dom
 
       attribute :gross_total
       attribute :discount
+      attribute :market_fees
       attribute :transaction_fees
       attribute :payment_processing
       attribute :net_sale
