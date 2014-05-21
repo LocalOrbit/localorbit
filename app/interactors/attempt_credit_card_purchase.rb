@@ -16,6 +16,7 @@ class AttemptCreditCardPurchase
         )
 
         context[:payment] = Payment.create(
+          payer: buyer,
           payment_type: 'credit card',
           amount: cart.total,
           status: "paid",

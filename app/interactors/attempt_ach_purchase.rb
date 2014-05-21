@@ -13,6 +13,7 @@ class AttemptAchPurchase
         debit = balanced_customer.debit(amount: amount, description: "#{cart.market.name} purchase", source_uri: bank_account.balanced_uri)
 
         context[:payment] = Payment.create(
+          payer: buyer,
           payment_type: 'ach',
           amount: cart.total,
           status: "pending",
