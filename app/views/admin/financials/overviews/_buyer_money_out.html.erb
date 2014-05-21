@@ -1,0 +1,20 @@
+<div class="money-out">
+  <h2>Payments Due</h2>
+
+  <table>
+    <tr>
+      <td class="title">Overdue</td>
+      <td class="amount"><%= number_to_currency @overview.overdue %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Due</td>
+      <td class="amount"><%= number_to_currency @overview.due %></td>
+    </tr>
+
+    <tr>
+      <td class="title">Purchase Orders</td>
+      <td class="amount"><%= number_to_currency @overview.purchase_orders %></td>
+    </tr>
+  </table>
+</div>

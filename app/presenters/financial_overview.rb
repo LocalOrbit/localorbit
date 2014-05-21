@@ -2,6 +2,8 @@ module FinancialOverview
   def self.build(user, market)
     klass = if user.can_manage_market?(market)
       MarketManager
+    elsif user.buyer_only?
+      Buyer
     else
       Seller
     end
