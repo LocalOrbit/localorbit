@@ -2,8 +2,10 @@ class SellerOrder
   include DeliveryStatus
   include OrderPresenter
 
+  delegate :display_delivery_or_pickup, :display_delivery_address, to: :@order
+
   def initialize(order, seller)
-    @order = order
+    @order = order.decorate
     if seller.is_a?(User)
       @items = order.items.select("order_items.*").joins(:product).where("products.organization_id" => seller.managed_organizations.pluck(:id)).order('order_items.name')
     elsif seller.is_a?(Organization)

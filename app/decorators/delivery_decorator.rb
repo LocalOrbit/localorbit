@@ -21,8 +21,12 @@ class DeliveryDecorator < Draper::Decorator
     deliver_on.strftime("%B %e, %Y")
   end
 
+  def human_delivery_date
+    "#{display_date} #{time_range}"
+  end
+
   def checkout_date
-    "#{h.content_tag(:time, datetime: deliver_on) { display_date + ' ' + time_range }}"
+    "#{h.content_tag(:time, datetime: deliver_on) { human_delivery_date }}"
   end
 
   def time_range
