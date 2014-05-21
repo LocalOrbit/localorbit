@@ -52,6 +52,7 @@ feature "Payment history" do
     sign_in_as(user)
 
     click_link "Financials"
+    click_link "Review Payment History"
 
     expect(page).to have_content("Payment History")
     expect(page).to have_content("Payment Date")

@@ -15,7 +15,7 @@
           <%= content_tag(:li, link_to_or_span("Record Payments to Vendors", [:admin, :financials, :vendor_payments]), class: 'tab') %>
           <%= content_tag(:li, link_to_or_span("Review Payment History", current_user.admin? ? [:admin, :financials, :payments] : coming_soon_dashboard_path), class: 'tab') %>
         <% else %>
-          <%= content_tag(:li, link_to_or_span("Review Payment History", coming_soon_dashboard_path), class: 'tab') %>
+          <%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :buyer_payments]), class: 'tab') %>
         <% end %>
       </ul>
     </div>
