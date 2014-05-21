@@ -1,7 +1,7 @@
 class PaymentHistoryPresenter
   attr_reader :payments
 
-  def self.build(user, organization)
+  def self.build(user, organization, page, per_page)
     scope = if user.admin?
       Payment.all
     elsif user.buyer_only?
@@ -14,10 +14,10 @@ class PaymentHistoryPresenter
 
     payments = scope.order("payments.updated_at DESC")
 
-    new(payments)
+    new(payments, page, per_page)
   end
 
-  def initialize(payments)
-    @payments = payments.decorate
+  def initialize(payments, page, per_page)
+    @payments = payments.page(page).per(per_page)
   end
 end
