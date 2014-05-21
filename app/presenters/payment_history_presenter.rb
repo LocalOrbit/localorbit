@@ -4,6 +4,12 @@ class PaymentHistoryPresenter
   def self.build(user, organization, page, per_page)
     scope = if user.admin?
       Payment.all
+    elsif user.market_manager?
+      market_ids = user.managed_market_ids
+
+      Payment.joins("left join organizations on organizations.id = payments.payer_id").
+        joins("left join market_organizations on market_organizations.organization_id = organizations.id").
+        where("market_organizations.market_id in (:market_ids) OR (payments.payer_type = 'Market' AND payments.payer_id in (:market_ids)) OR (payments.payee_type = 'Market' AND payments.payer_id in (:market_ids))", market_ids: market_ids)
     elsif user.buyer_only?
       Payment.joins(:order_payments)
       .includes(:orders)
