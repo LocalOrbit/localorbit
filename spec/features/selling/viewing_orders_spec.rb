@@ -70,7 +70,8 @@ feature "Viewing orders" do
       summary = Dom::Admin::OrderSummaryRow.first
       expect(summary.gross_total).to eq("$9.98")
       expect(summary.discount).to eq("$0.00")
-      expect(summary.transaction_fees).to eq("$0.90")
+      expect(summary.market_fees).to eq("$0.50")
+      expect(summary.transaction_fees).to eq("$0.40")
       expect(summary.payment_processing).to eq("$0.00")
       expect(summary.net_sale).to eq("$9.08")
     end
