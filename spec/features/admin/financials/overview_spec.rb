@@ -11,18 +11,6 @@ feature "Seller Financial Overview" do
   let!(:peas) { create(:product, :sellable, organization: seller, name: "Peas") }
   let!(:from_different_seller) { create(:product, :sellable, organization: seller2, name: "Apples") }
 
-  def deliver_order(order)
-    order.items.each do |item|
-      item.delivery_status = "delivered"
-      order.save!
-    end
-  end
-
-  def pay_order(order)
-    order.payment_status = "paid"
-    order.save!
-  end
-
   before do
     # Overdue Order
     # Total for seller: (5*6.99) + (7*6.99) - 2.00 - 1.00 - 9.00 - 8.00 = 63.88
@@ -134,10 +122,6 @@ feature "Seller Financial Overview" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
     visit "/admin/financials"
-  end
-
-  def financial_row(title)
-    Dom::Admin::Financials::MoneyIn.find_by_title(title)
   end
 
   scenario "Seller navigates directly to their financial overview" do
