@@ -3,6 +3,7 @@ module FinancialOverview
     def initialize(opts={})
       super
       @calculation_method = :seller_net_total
+      @partial = "seller"
     end
 
     def money_in_today

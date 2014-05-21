@@ -3,6 +3,7 @@ module FinancialOverview
     def initialize(opts={})
       super
       @calculation_method = :gross_total
+      @partial = "market_manager"
     end
 
     def overdue

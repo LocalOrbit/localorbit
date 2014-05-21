@@ -10,6 +10,8 @@ module FinancialOverview
   end
 
   class Base
+    attr_reader :partial
+
     def initialize(opts={})
       @seller = opts[:seller]
       @market = opts[:market]
