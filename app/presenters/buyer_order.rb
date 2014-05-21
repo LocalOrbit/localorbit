@@ -2,8 +2,10 @@ class BuyerOrder
   include OrderPresenter
   include DeliveryStatus
 
+  delegate :display_delivery_or_pickup, :display_delivery_address, to: :@order
+
   def initialize(order)
-    @order = order
+    @order = order.decorate
     @items = order.items
   end
 

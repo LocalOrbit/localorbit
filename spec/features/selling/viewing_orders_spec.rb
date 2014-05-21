@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 feature "Viewing orders" do
-  let!(:market)      { create(:market, market_seller_fee: 5, local_orbit_seller_fee: 4)}
+  let!(:market)          { create(:market, :with_delivery_schedule, market_seller_fee: 5, local_orbit_seller_fee: 4)}
+  let!(:delivery)        { market.delivery_schedules.first.next_delivery }
+
   let!(:seller_org1) { create(:organization, :seller, markets: [market]) }
   let!(:seller_org2) { create(:organization, :seller, markets: [market]) }
   let!(:buyer_org)   { create(:organization, :buyer,  markets: [market]) }
@@ -10,14 +12,14 @@ feature "Viewing orders" do
 
   let!(:order_item1) { create(:order_item, product: product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40) }
   let!(:order_item2) { create(:order_item, product: product2, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
-  let!(:order1)      { create(:order, items: [order_item1, order_item2], organization: buyer_org, market: market, total_cost: 27.96) }
+  let!(:order1)      { create(:order, items: [order_item1, order_item2], organization: buyer_org, market: market, total_cost: 27.96, delivery: delivery) }
 
   let!(:order_item3) { create(:order_item, product: product1, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
   let!(:order_item4) { create(:order_item, product: product2, quantity: 3, unit_price: 7.99, market_seller_fee: 1.20, local_orbit_seller_fee: 0.96) }
-  let!(:order2)      { create(:order, items: [order_item3, order_item4], organization: buyer_org, market: market, total_cost: 41.95) }
+  let!(:order2)      { create(:order, items: [order_item3, order_item4], organization: buyer_org, market: market, total_cost: 41.95, delivery: delivery) }
 
   let!(:order_item5) { create(:order_item, product: product2) }
-  let!(:order3)      { create(:order, items: [order_item5], organization: buyer_org, market: market) }
+  let!(:order3)      { create(:order, items: [order_item5], organization: buyer_org, market: market, delivery: delivery) }
 
   context "as a seller" do
     let!(:user) { create(:user, organizations: [seller_org1]) }
