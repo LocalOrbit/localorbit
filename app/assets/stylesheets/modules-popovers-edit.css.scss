@@ -25,8 +25,40 @@
     min-width: 200px;
     padding: 8px;
 
+    h2,
+    caption {
+      font-size: 14px;
+      font-family: "Open Sans", OpenSans, sans-serif;
+      font-weight: bold;
+    }
+    caption {
+      margin-top: 14px;
+    }
+    h2 {
+      margin: 0 0 11px;
+    }
     label {
       font-size: 12px;
+    }
+    select {
+      width: 100%;
+    }
+    table {
+      margin: 0 0 1em;
+    }
+    td {
+      padding-left: 0;
+    }
+    th {
+      padding: 5px 10px 0 0;
+    }
+      thead tr {
+        height: 1.2em;
+      }
+    tr,
+    tr:nth-child(odd) {
+      border: 0;
+      background: #fff;
     }
 
     .form-actions {
