@@ -13,6 +13,8 @@
 
     .column, .row {
       position: relative;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
       box-sizing: border-box;
     }
 
@@ -52,7 +54,7 @@
       text-align: left;
     }
 
-    th { padding: 10px; color: #666; font-size: 10px; text-align: left; vertical-align: top; }
+    th { padding: 10px; color: #666; font-size: 12px; text-align: left; vertical-align: top; }
     td { padding: 10px; font-size: 12px; }
     tbody  tr:nth-child(odd) { background: #f9f9f9; }
 
@@ -167,40 +169,41 @@
       </div>
     </div
     ><div class="invoice-info column column--fourth">
-        <h2>Invoice Number</h2>
-        <p class="invoice-num"><%= @invoice.order_number %></p>
-        <%= "<h2>Purchase Order Number</h2><p class=\"po-num\">#{@invoice.payment_note}</p>".html_safe if @invoice.payment_note.present? %>
-      </div
-      ><div class="column column--fourth">
-        <div class="due-date">
-          <h2>Due Date</h2>
-          <%= @invoice.invoice_due_date.strftime("%-m/%-d/%Y") %>
-        </div>
-        <h2 class="inline">Invoice Date</h2>
-        <span class="date"><%= @invoice.invoiced_at.strftime("%-m/%-d/%Y") %></div></span>
+      <h2>Invoice Number</h2>
+      <p class="invoice-num"><%= @invoice.order_number %></p>
+      <%= "<h2>Purchase Order Number</h2><p class=\"po-num\">#{@invoice.payment_note}</p>".html_safe if @invoice.payment_note.present? %>
+    </div
+    ><div class="column column--fourth">
+      <div class="due-date">
+        <h2>Due Date</h2>
+        <%= @invoice.invoice_due_date.strftime("%-m/%-d/%Y") %>
       </div>
+      <h2 class="inline">Invoice Date</h2>
+      <span class="date"><%= @invoice.invoiced_at.strftime("%-m/%-d/%Y") %></div></span>
     </div>
   </div>
-  <div class="vcard vcard-buyer">
-    <h2>To</h2>
-    <h3 class="fn org buyer-name"><%= @invoice.billing_organization_name %></h3>
-        <div>
-          <%= @invoice.billing_address %><br>
-          <%= @invoice.billing_city %>,
-          <%= @invoice.billing_state %>
-          <%= @invoice.billing_zip %>
-        </div>
+</div>
+<div class="vcard vcard-buyer">
+  <h2>To</h2>
+  <h3 class="fn org buyer-name"><%= @invoice.billing_organization_name %></h3>
+      <div>
+        <%= @invoice.billing_address %><br>
+        <%= @invoice.billing_city %>,
+        <%= @invoice.billing_state %>
+        <%= @invoice.billing_zip %>
+      </div>
   </div>
 
   <table>
     <caption>Order Detail</caption>
     <thead>
       <tr>
-        <th class="al">Description</th>
+        <th class="al">Item</th>
         <th>Unit</th>
-        <th>Price</th>
         <th>Quantity<br>Ordered</th>
         <th>Quantity<br>Delivered</th>
+        <th>Unit Price</th>
+        <th>Seller</th>
         <th>Item Total<br>Price</th>
       </tr>
     </thead>
@@ -208,9 +211,10 @@
     <tr class="line-item">
       <td class="al"><%= item.name %></td>
       <td><%= item.unit %></td>
+      <td class="ac"><%= item.quantity %></td>
+      <td class="ac"><%= item.quantity %></td>
       <td><%= number_to_currency item.unit_price %></td>
-      <td class="ac"><%= item.quantity %></td>
-      <td class="ac"><%= item.quantity %></td>
+      <td><%= item.seller.name %></td>
       <% #TODO: Add class "cancelled" to cancelled items' td %>
       <td><span class="amount"><%= number_to_currency item.gross_total %></span></td>
     </tr>
@@ -220,20 +224,21 @@
       <td class="ac"><%= lot.quantity %></td>
       <td class="ac"><%= lot.quantity %></td>
       <td></td>
+      <td></td>
     </td>
     <% end %>
     <% end %>
     <tfoot>
       <tr class="discounts">
-        <th scope="row" colspan="5" class="ar">Discounts</th>
+        <th scope="row" colspan="6" class="ar">Discounts</th>
         <td><%= number_to_currency @invoice.discount %></td>
       </tr>
       <tr class="delivery">
-        <th scope="row" colspan="5" class="ar">Delivery Fees</th>
+        <th scope="row" colspan="6" class="ar">Delivery Fees</th>
         <td><%= number_to_currency @invoice.delivery_fees %></td>
       </tr>
       <tr class="total">
-        <td colspan="3">This order is complete.</td>
+        <td colspan="4">Thank you for your business.</td>
         <th colspan="2" scope="row" class="ar">Total</th>
         <td class="amount"><%= number_to_currency @invoice.total_cost %></td>
       </tr>
