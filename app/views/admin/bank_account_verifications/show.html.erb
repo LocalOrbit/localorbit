@@ -2,9 +2,10 @@
   <%= form_for [:admin, @entity, @verification.bank_account, @verification], html: { class: "column column--half" } do |f| %>
     <h1>Verify Your Account</h1>
     <%= render "shared/errors", { resource: @verification } %>
-    <p>Please confirm the two micro deposits made to the following account.</p>
-
-    <p>Verification amounts normally show on the bank account owner's statement as &quot;Balanced verification&quot; within 2 business days.</p>
+    <p>Please confirm the <strong>two micro deposits</strong> (deposits made to your account that are in cents) made to the following account.</p>
+    <p>By confirming these two micro deposits we are able to confirm you have ownership of the bank account you have added here before you can make purchases.</p>
+    <p>Verification amounts normally show on the bank account owner's statement as &quot;Balanced verification&quot; within 2 business days (usually much faster).</p>
+    <p>You have 3 tries to enter the correct values. Please be very careful that they are accurate when entering them. If you have any questions or need help please contact <a href="https://localorbit.zendesk.com/anonymous_requests/new">Local Orbit Support</a>.</p>
 
     <ul class="bank-info">
       <li><strong><%= @verification.bank_account.bank_name %></strong></li>
@@ -16,10 +17,12 @@
       <div class="field column column--half column--guttered">
         <%= f.label :amount_1, "Amount 1 (in cents)" %><br>
         <%= f.text_field :amount_1, class: "column--full" %>
+        <small>The first deposit made to your account.</small>
       </div
       ><div class="field column column--half column--guttered">
         <%= f.label :amount_2, "Amount 2 (in cents)" %><br>
         <%= f.text_field :amount_2, class: "column--full" %>
+        <small>The last deposit made to your account.</small>
       </div>
     </div>
 
