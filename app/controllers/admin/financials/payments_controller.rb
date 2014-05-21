@@ -8,7 +8,7 @@ module Admin::Financials
         Payment.joins(from_organization: :markets).where(markets: { id: ids })
       else
         Payment.where(payee: current_organization)
-      end.order("updated_at DESC").decorate
+      end.order("updated_at DESC").page(params[:page]).per(params[:per_page])
     end
   end
 end

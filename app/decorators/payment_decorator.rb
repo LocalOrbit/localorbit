@@ -1,8 +1,8 @@
 class PaymentDecorator < Draper::Decorator
   delegate_all
 
-  def display_payment_type
-    case payment_type
+  def display_payment_method
+    case payment_method
     when "cash"
       "Cash"
     when "check"
@@ -11,6 +11,8 @@ class PaymentDecorator < Draper::Decorator
       bank_account.present? ? "ACH: *********#{bank_account.last_four}" : "ACH"
     when "credit card"
       bank_account.present? ? "Credit Card: ************#{bank_account.last_four}" : "Credit Card"
+    when "paypal"
+      "PayPal"
     end
   end
 end

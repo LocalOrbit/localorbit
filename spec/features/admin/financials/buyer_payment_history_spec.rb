@@ -26,7 +26,7 @@ feature "Payment history" do
       end
 
       orders.each_with_index do |order, i|
-        create(:payment, payment_type: ["cash", "check", "ach", "credit card"][i], payee: market, orders: [order], amount: order.total_cost)
+        create(:payment, payment_method: ["cash", "check", "ach", "credit card"][i], payee: market, orders: [order], amount: order.total_cost)
       end
 
       check_payment = orders[1].payments.first
