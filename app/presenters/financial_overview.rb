@@ -1,4 +1,14 @@
 class FinancialOverview
+  def self.build(user, market)
+    klass = if user.can_manage_market?(market)
+      MarketManagerOverview
+    else
+      SellerOverview
+    end
+
+    klass.new(seller: user, market: market)
+  end
+
   def initialize(opts={})
     @seller = opts[:seller]
     @market = opts[:market]
