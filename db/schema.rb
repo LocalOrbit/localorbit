@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140520203136) do
+ActiveRecord::Schema.define(version: 20140521144613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -390,14 +390,17 @@ ActiveRecord::Schema.define(version: 20140520203136) do
   create_table "payments", force: true do |t|
     t.integer  "payee_id"
     t.string   "payee_type"
-    t.string   "payment_type"
-    t.decimal  "amount",       precision: 10, scale: 2, default: 0.0, null: false
+    t.string   "payment_type",                            default: "order"
+    t.decimal  "amount",         precision: 10, scale: 2, default: 0.0,     null: false
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status"
     t.string   "balanced_uri"
     t.integer  "legacy_id"
+    t.integer  "payer_id"
+    t.string   "payer_type"
+    t.string   "payment_method"
   end
 
   add_index "payments", ["payee_id", "payee_type"], name: "index_payments_on_payee_id_and_payee_type", using: :btree

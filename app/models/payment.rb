@@ -1,5 +1,9 @@
 class Payment < ActiveRecord::Base
   belongs_to :payee, polymorphic: true
+  belongs_to :payer, polymorphic: true
+
+  belongs_to :from_organization, class_name: 'Organization', foreign_key: :payer_id
+  belongs_to :from_market, class_name: 'Market', foreign_key: :payer_id
 
   has_many :order_payments, inverse_of: :payment
   has_many :orders, through: :order_payments, inverse_of: :payments

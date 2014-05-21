@@ -158,9 +158,10 @@ FactoryGirl.define do
   end
 
   factory :payment do
-    payee        { Market.first }
-    payment_type "Purchase Order"
-    amount       199.99
+    payee          { Market.first }
+    payment_type   "order"
+    payment_method "purchase order"
+    amount         199.99
   end
 
   factory :product do

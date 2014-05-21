@@ -6,7 +6,7 @@ class RecordVendorPayment
     payment = Payment.new(payment_params)
     payment.payee = seller
     payment.amount = payment.orders.map {|order| SellerOrder.new(order, seller).net_total }.sum
-    payment.status = 'paid' if payment.payment_type == 'cash' || payment.payment_type == 'check'
+    payment.status = 'paid' if payment.payment_method == 'cash' || payment.payment_method == 'check'
     if payment.save
       context[:flash_message] = {notice: "Payment of #{number_to_currency payment.amount} recorded for #{seller.name}"}
     else

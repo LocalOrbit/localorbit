@@ -6,13 +6,14 @@ feature "Payment history" do
 
   let!(:market)             { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market_ach_account) { create(:bank_account, :checking, last_four: "7676", balanced_uri: market_ach_balanced_uri, bankable: market) }
-  let!(:service_fee)        { create(:payment, payment_method: 'ach', payment_type: 'service', payee: market, amount: 99.00) }
+  let!(:service_fee)        { create(:payment, payment_method: 'ach', payment_type: 'service', payer: market, amount: 99.00) }
 
   let!(:seller)  { create(:organization, markets: [market]) }
   let!(:seller2) { create(:organization, markets: [market]) }
 
   let!(:buyer)  { create(:organization, markets: [market], can_sell: false) }
-  let!(:user)    { create(:user, organizations: [buyer]) }
+  let!(:user)    { create(:user, managed_markets: [market]) }
+
   let(:payment_day) { DateTime.parse("May 9, 2014, 11:00:00") }
 
   let!(:ach_account) { create(:bank_account, :checking, last_four: "9983", balanced_uri: ach_balanced_uri, bankable: buyer) }
@@ -30,7 +31,7 @@ feature "Payment history" do
       end
 
       orders.each_with_index do |order, i|
-        create(:payment, payment_method: ["cash", "check", "ach", "credit card"][i], payee: market, orders: [order], amount: order.total_cost)
+        create(:payment, payment_method: ["cash", "check", "ach", "credit card"][i], payee: market, payer: buyer, orders: [order], amount: order.total_cost)
       end
 
       check_payment = orders[1].payments.first
@@ -51,11 +52,14 @@ feature "Payment history" do
     Dom::Admin::Financials::PaymentRow.find_by_amount(amount)
   end
 
-  scenario "Buyer can view their purchase history" do
+  scenario "Market manager can view payment history" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
 
     click_link "Financials"
+
+    expect(page).to have_content("Overview")
+
     click_link "Review Payment History"
 
     expect(page).to have_content("Payment History")
@@ -70,20 +74,17 @@ feature "Payment history" do
 
     expect(payment_row("$20.00")).not_to be_nil
     expect(payment_row("$20.00").payment_method).to eql("Cash")
-    expect(payment_row("$20.00").date).to eql("05/09/2014")
 
     expect(payment_row("$21.00")).not_to be_nil
     expect(payment_row("$21.00").payment_method).to eql("Check: #12345")
-    expect(payment_row("$20.00").date).to eql("05/09/2014")
 
     expect(payment_row("$22.00")).not_to be_nil
     expect(payment_row("$22.00").payment_method).to eql("ACH: *********9983")
-    expect(payment_row("$20.00").date).to eql("05/09/2014")
 
     expect(payment_row("$23.00")).not_to be_nil
     expect(payment_row("$23.00").payment_method).to eql("Credit Card: ************7732")
-    expect(payment_row("$20.00").date).to eql("05/09/2014")
 
-    expect(payment_row("$99.00")).to be_nil
+    expect(payment_row("$99.00")).not_to be_nil
+    expect(payment_row("$99.00").payment_method).to have_content("ACH")
   end
 end

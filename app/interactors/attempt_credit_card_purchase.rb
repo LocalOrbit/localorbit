@@ -16,7 +16,8 @@ class AttemptCreditCardPurchase
         )
 
         context[:payment] = Payment.create(
-          payment_type: 'credit card',
+          payer: buyer,
+          payment_method: 'credit card',
           amount: cart.total,
           status: "paid",
           balanced_uri: debit.uri
