@@ -24,7 +24,7 @@ class AttemptCreditCardPurchase
         )
 
         if !context[:payment].persisted?
-          debit.void
+          debit.refund
           context.fail!
         end
 
@@ -39,8 +39,8 @@ class AttemptCreditCardPurchase
   end
 
   def rollback
-    if order_params["payment_method"] == 'credit card' && context[:payment]
-      Balanced::Hold.find(payment.payment_uri).void
+    if context[:payment] && context[:payment][:payment_method] == "credit card"
+      Balanced::Debit.find(payment.balanced_uri).refund
       context.delete(:payment)
     end
   end
