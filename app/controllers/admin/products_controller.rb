@@ -93,6 +93,9 @@ module Admin
 
     def find_selling_organizations
       @organizations = current_user.managed_organizations.selling.order(:name).includes(:locations)
+      if !@product.persisted? && @organizations.size == 1
+        @product.organization = @organizations.first
+      end
     end
 
     def find_organizations_for_filtering

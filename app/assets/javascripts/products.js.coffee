@@ -158,7 +158,7 @@ $ ->
       if checked
         $(".product-delivery-schedule input").prop("disabled", true).prop("checked", true)
       else
-        $(".product-delivery-schedule input").prop("disabled", false)
+        $(".product-delivery-schedule input.optional-delivery").prop("disabled", false)
 
     display: ->
       if @defaultsToOrg() && !!@selectedOrg

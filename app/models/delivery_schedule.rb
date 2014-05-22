@@ -100,6 +100,16 @@ class DeliverySchedule < ActiveRecord::Base
     (fee_type == "fixed" && fee == 0) || fee.nil?
   end
 
+  def required?(organization)
+    if require_delivery?
+      organization.market_organizations.where(cross_sell: false, market_id: market_id).exists?
+    elsif require_cross_sell_delivery?
+      organization.market_organizations.where(cross_sell: true, market_id: market_id).exists?
+    else
+      false
+    end
+  end
+
   protected
 
   def buyer_pickup_end_after_start

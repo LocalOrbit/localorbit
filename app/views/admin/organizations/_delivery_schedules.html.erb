@@ -4,10 +4,18 @@
   <h3 class="heading-conditionals"><%= market.name %></h3>
   <ul class="list-naked">
     <% schedules.decorate.each do |schedule| %>
-      <li class="product-delivery-schedule conditional"> 
-        <%= check_box_tag "product[delivery_schedule_ids][]", schedule.id, selected_ids.include?(schedule.id.to_s), id: "product_schedule_ids_#{schedule.id}", disabled: product.nil? || product.use_all_deliveries? %>
+      <li class="product-delivery-schedule conditional">
+        <% if schedule.required?(organization) %>
+        <%= hidden_field_tag "product[delivery_schedule_ids][]", schedule.id if selected_ids.include?(schedule.id.to_s) %>
+        <%= check_box_tag "product[delivery_schedule_ids][]", schedule.id, true, id: "product_schedule_ids_#{schedule.id}", class: 'required-delivery', disabled: true %>
+        <% else %>
+        <%= check_box_tag "product[delivery_schedule_ids][]", schedule.id, selected_ids.include?(schedule.id.to_s),
+                          id: "product_schedule_ids_#{schedule.id}", disabled: product.nil? || product.use_all_deliveries?, class: 'optional-delivery' %>
+        <% end %>
         <label for="product_schedule_ids_<%= schedule.id %>">
-          <span class="weekday"><%= schedule.weekday.pluralize %></span> <%= schedule.seller_human_description %>
+          <span class="weekday"><%= schedule.weekday.pluralize %></span>
+          <%= schedule.seller_human_description %>
+          <%= "(required)" if schedule.required?(organization) %>
         </label>
       </li>
     <% end %>
