@@ -24,6 +24,8 @@ class Legacy::User < Legacy::Base
         role: 'user',
         confirmed_at: Time.current
       )
+    else
+      puts "- Existing user: #{email}"
     end
 
     user

@@ -4,7 +4,7 @@
 
   <div class="order-buyer">
     <div>Buyer: <span class="special-content"><%= order.organization.name %></span></div>
-    
+
     <div class="order-address">Billing Address:</div>
     <div class="special-content">
       <%= order.billing_address %>, <%= order.billing_city %>, <%= order.billing_state %> <%= order.billing_zip %><br />
@@ -30,11 +30,12 @@
 <div class="order-data">
   <h2>Items for Delivery</h2>
 
+
   <table class="order-summary order-table-1">
     <thead>
       <tr>
         <th>Product</th>
-        <th>Qty</th>
+        <th>Quantity</th>
         <th>Price</th>
         <th>Discount</th>
         <th>Total</th>
@@ -53,8 +54,8 @@
           <span class="seller-name">from <%= item.product.organization.name %></span>
         </td>
         <td class="quantity">
-          <%= item.quantity_delivered || 0 %> <%= item.unit %> (Delivered) <br />
-          <%= item.quantity %> <%= item.unit %> (Ordered)
+          <span style="width: 50px;"><%= item.quantity %></span> <%= item.unit %> (Ordered)<br />
+          <input type="text" value="<%= item.quantity_delivered || 0 %>"> <%= item.unit %> (Delivered)
         </td>
         <td class="price"><%= number_to_currency item.unit_price %></td>
         <td class="discount"><%= number_to_currency item.discount %></td>
@@ -69,7 +70,10 @@
     </tbody>
   </table>
 
+  <%= link_to "Update Quantities", admin_order_path(order.id), class: 'pull-right btn btn--blue btn--update' %><br>
+
   <% if !current_user.buyer_only? %>
+  <div class="order-totals">
     <h2>Order Totals</h2>
     <table class="order-summary">
       <thead>
@@ -93,5 +97,6 @@
         </tr>
       </tbody>
     </table>
+  </div>
   <% end %>
 </div>
