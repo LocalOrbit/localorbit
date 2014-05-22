@@ -21,7 +21,8 @@ class Legacy::User < Legacy::Base
         email: email,
         password: 'imported1',
         password_confirmation: 'imported1',
-        role: 'user'
+        role: 'user',
+        confirmed_at: Time.current
       )
     end
 

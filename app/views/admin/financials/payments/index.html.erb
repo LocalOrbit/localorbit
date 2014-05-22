@@ -16,7 +16,7 @@
         <td class="date"><%= payment.updated_at.strftime("%m/%d/%Y") %></td>
         <td class="description">
           <% if payment.payment_type == 'order' %>
-            <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
+            Order #: <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
             <% if payment.orders.count > 1 %>
               <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#", class:"modal-toggle more-info payment-more", data: { modal: "more-info-#{payment.id}"} %>
 

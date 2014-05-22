@@ -16,6 +16,42 @@ module Imported
 
     has_many :product_deliveries, class_name: "Imported::ProductDelivery"
     has_many :products, through: :product_deliveries
+    has_many :deliveries, class_name: "Imported::Delivery", inverse_of: :delivery_schedule, dependent: :destroy
+  end
+
+  class Delivery < ActiveRecord::Base
+    self.table_name = "deliveries"
+
+    belongs_to :delivery_schedule, class_name: "Imported::DeliverySchedule", inverse_of: :deliveries
+    has_many :orders, class_name: "Imported::Order", inverse_of: :delivery
+  end
+end
+
+class Legacy::Delivery < Legacy::Base
+  self.table_name = "lo_order_deliveries"
+  self.primary_key = "lodeliv_id"
+
+  belongs_to :order, class_name: "Legacy::Order", foreign_key: :dd_id, inverse_of: :delivery
+
+  def import
+    imported = Imported::Delivery.find_by_legacy_id(lodeliv_id)
+    if imported.nil?
+      ds = imported_delivery_schedule
+      date = Time.at(delivery_start_time)
+
+      imported = Imported::Delivery.new(
+        delivery_schedule: ds,
+        deliver_on: date,
+        cutoff_time: date - (ds.try(:order_cutoff) || 0).hours,
+        legacy_id: lodeliv_id
+      )
+    end
+
+    imported
+  end
+
+  def imported_delivery_schedule
+    Imported::DeliverySchedule.find_by_legacy_id(dd_id)
   end
 end
 
@@ -24,6 +60,7 @@ class Legacy::DeliverySchedule < Legacy::Base
   self.primary_key = "dd_id"
 
   belongs_to :market, class_name: "Legacy::Market", foreign_key: :domain_id
+  has_many :deliveries, class_name: "Legacy::Delivery", foreign_key: :dd_id, inverse_of: :delivery_schedule
 
   def import(market)
     imported = Imported::DeliverySchedule.where(legacy_id: dd_id).first
