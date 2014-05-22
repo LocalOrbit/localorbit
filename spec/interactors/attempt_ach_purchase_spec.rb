@@ -7,6 +7,7 @@ describe AttemptAchPurchase do
   let!(:bank_account) { create(:bank_account, :checking, bankable: buyer, balanced_uri: "/balanced-card-uri") }
   let!(:cart)        { create(:cart, organization: buyer) }
   let!(:cart_item)   { create(:cart_item, product: product, cart: cart, quantity: 10)}
+  let!(:order)       { create(:order, :with_items) }
   let(:params)       { { "payment_method" => "purchase order"} }
 
   let(:balanced_debit)  { double("balanced debit", uri: '/balanced-debit-uri') }
@@ -18,19 +19,19 @@ describe AttemptAchPurchase do
       organize [AttemptAchPurchase]
     end
 
-    OrganizerWrapper.perform(buyer: user, order_params: params, cart: cart)
+    OrganizerWrapper.perform(buyer: user, order: order, order_params: params, cart: cart)
   }
 
   context "purchase order" do
     let(:params) { { "payment_method" => "purchase order" } }
-    it "noop's" do
+    it "noop's on perform" do
       expect(subject).to be_success
     end
   end
 
-  context "purchase order" do
+  context "credit card" do
     let(:params) { { "payment_method" => "credit card" } }
-    it "noop's" do
+    it "noop's on perform" do
       expect(subject).to be_success
     end
   end
@@ -44,12 +45,31 @@ describe AttemptAchPurchase do
 
     context "valid bank account" do
       context "successfully debits bank account" do
-        it "sets the payment method on the order" do
+        it "creates a payment record" do
           expect {
             subject
           }.to change {
             Payment.all.count
           }.from(0).to(1)
+
+          expect(subject.context).to include(:payment)
+          expect(order.reload.payments).to include(subject.context[:payment])
+        end
+
+        it "sets the payment method on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_method
+          }.from("purchase order").to("ach")
+        end
+
+        it "sets the payment status on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_status
+          }.from("unpaid").to("pending")
         end
 
         it "creates a debit for the order amount" do

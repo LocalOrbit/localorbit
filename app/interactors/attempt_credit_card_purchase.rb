@@ -2,7 +2,7 @@ class AttemptCreditCardPurchase
   include Interactor
 
   def perform
-    if order_params["payment_method"] == 'credit card'
+    if order_params["payment_method"] == 'credit card' && order
       begin
         card = cart.organization.bank_accounts.find(order_params["credit_card"])
         balanced_customer = Balanced::Customer.find(cart.organization.balanced_customer_uri)
@@ -20,8 +20,11 @@ class AttemptCreditCardPurchase
           payment_method: 'credit card',
           amount: cart.total,
           status: "paid",
-          balanced_uri: debit.uri
+          balanced_uri: debit.uri,
+          orders: [order]
         )
+
+        order.update(payment_method: 'credit card', payment_status: 'paid')
 
         if !context[:payment].persisted?
           debit.refund
@@ -31,7 +34,6 @@ class AttemptCreditCardPurchase
       rescue Exception => e
         Honeybadger.notify_or_ignore(e) unless Rails.env.test? || Rails.env.development?
 
-        context[:order] = Order.new(credit_card: order_params["credit_card"])
         context[:order].errors.add(:credit_card, "Payment processor error.")
         context.fail!
       end
@@ -39,7 +41,7 @@ class AttemptCreditCardPurchase
   end
 
   def rollback
-    if context[:payment] && context[:payment][:payment_method] == "credit card"
+    if context[:payment] && context[:payment][:payment_method] == 'credit card'
       Balanced::Debit.find(payment.balanced_uri).refund
       context.delete(:payment)
     end

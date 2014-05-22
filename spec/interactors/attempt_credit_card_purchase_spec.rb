@@ -20,7 +20,7 @@ describe AttemptCreditCardPurchase do
       organize [AttemptCreditCardPurchase]
     end
 
-    OrganizerWrapper.perform(buyer: user, order_params: params, cart: cart)
+    OrganizerWrapper.perform(buyer: user, order: order, order_params: params, cart: cart)
   }
 
   context "purchase order" do
@@ -47,6 +47,23 @@ describe AttemptCreditCardPurchase do
           }.from(0).to(1)
 
           expect(subject.context).to include(:payment)
+          expect(order.reload.payments).to include(subject.context[:payment])
+        end
+
+        it "sets the payment method on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_method
+          }.from("purchase order").to("credit card")
+        end
+
+        it "sets the payment status on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_status
+          }.from("unpaid").to("paid")
         end
 
         it "creates a hold for the order amount" do

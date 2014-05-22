@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
   belongs_to :delivery
   belongs_to :placed_by, class: User
 
-  has_many :items, inverse_of: :order, class: OrderItem, autosave: true
+  has_many :items, inverse_of: :order, class: OrderItem, autosave: true, dependent: :destroy
   has_many :order_payments, inverse_of: :order
   has_many :payments, through: :order_payments, inverse_of: :orders
 
