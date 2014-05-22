@@ -3,8 +3,8 @@ class AddPayerToPayment < ActiveRecord::Migration
     add_column :payments, :payer_id, :integer
     add_column :payments, :payer_type, :string
 
-    Payment.all.each do |payment|
-      payment.payer = payment.orders.first.organization
+    Payment.find_each do |payment|
+      payment.payer = payment.orders.first.organization if payment.orders.any?
       payment.save!
     end
   end
