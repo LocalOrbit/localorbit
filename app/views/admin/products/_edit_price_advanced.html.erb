@@ -29,7 +29,7 @@
       <div class="form-actions pull-right">
         <%= f.submit f.object.new_record? ? "Add" : "Save Price" %>
       </div>
-      Add New Price<br>
+      <%= link_to "✚ Add New Price", [:admin, price.product, :prices] %><br>
       <%= link_to "Go to Price List", [:admin, price.product, :prices] %>
 
     <% end %>
