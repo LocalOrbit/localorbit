@@ -20,7 +20,7 @@ describe AttemptCreditCardPurchase do
       organize [AttemptCreditCardPurchase]
     end
 
-    OrganizerWrapper.perform(buyer: user, order_params: params, cart: cart)
+    OrganizerWrapper.perform(buyer: user, order: order, order_params: params, cart: cart)
   }
 
   context "purchase order" do

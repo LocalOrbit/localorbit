@@ -2,7 +2,7 @@ class AttemptAchPurchase
   include Interactor
 
   def perform
-    if order_params["payment_method"] == 'ach'
+    if order_params["payment_method"] == 'ach' && order
       begin
         bank_account = cart.organization.bank_accounts.find(order_params["bank_account"])
         balanced_customer = Balanced::Customer.find(cart.organization.balanced_customer_uri)
@@ -16,7 +16,8 @@ class AttemptAchPurchase
           payment_method: 'ach',
           amount: cart.total,
           status: "pending",
-          balanced_uri: debit.uri
+          balanced_uri: debit.uri,
+          orders: [order]
         )
 
         if !context[:payment].persisted?

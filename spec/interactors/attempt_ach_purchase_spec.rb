@@ -7,6 +7,7 @@ describe AttemptAchPurchase do
   let!(:bank_account) { create(:bank_account, :checking, bankable: buyer, balanced_uri: "/balanced-card-uri") }
   let!(:cart)        { create(:cart, organization: buyer) }
   let!(:cart_item)   { create(:cart_item, product: product, cart: cart, quantity: 10)}
+  let!(:order)       { create(:order, :with_items) }
   let(:params)       { { "payment_method" => "purchase order"} }
 
   let(:balanced_debit)  { double("balanced debit", uri: '/balanced-debit-uri') }
@@ -18,19 +19,19 @@ describe AttemptAchPurchase do
       organize [AttemptAchPurchase]
     end
 
-    OrganizerWrapper.perform(buyer: user, order_params: params, cart: cart)
+    OrganizerWrapper.perform(buyer: user, order: order, order_params: params, cart: cart)
   }
 
   context "purchase order" do
     let(:params) { { "payment_method" => "purchase order" } }
-    it "noop's" do
+    it "noop's on perform" do
       expect(subject).to be_success
     end
   end
 
-  context "purchase order" do
+  context "credit card" do
     let(:params) { { "payment_method" => "credit card" } }
-    it "noop's" do
+    it "noop's on perform" do
       expect(subject).to be_success
     end
   end

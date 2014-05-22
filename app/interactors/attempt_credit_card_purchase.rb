@@ -2,7 +2,7 @@ class AttemptCreditCardPurchase
   include Interactor
 
   def perform
-    if order_params["payment_method"] == 'credit card'
+    if order_params["payment_method"] == 'credit card' && order
       begin
         card = cart.organization.bank_accounts.find(order_params["credit_card"])
         balanced_customer = Balanced::Customer.find(cart.organization.balanced_customer_uri)
@@ -20,7 +20,8 @@ class AttemptCreditCardPurchase
           payment_method: 'credit card',
           amount: cart.total,
           status: "paid",
-          balanced_uri: debit.uri
+          balanced_uri: debit.uri,
+          orders: [order]
         )
 
         if !context[:payment].persisted?
@@ -39,7 +40,7 @@ class AttemptCreditCardPurchase
   end
 
   def rollback
-    if context[:payment] && context[:payment][:payment_method] == "credit card"
+    if context[:payment] && context[:payment][:payment_method] == 'credit card'
       Balanced::Debit.find(payment.balanced_uri).refund
       context.delete(:payment)
     end

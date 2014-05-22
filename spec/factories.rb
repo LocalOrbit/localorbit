@@ -162,6 +162,16 @@ FactoryGirl.define do
     payment_type   "order"
     payment_method "purchase order"
     amount         199.99
+
+    trait :checking do
+      payment_type   "order"
+      payment_method "ach"
+    end
+
+    trait :credit_card do
+      payment_type   "order"
+      payment_method "credit card"
+    end
   end
 
   factory :product do
