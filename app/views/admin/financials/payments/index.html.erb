@@ -1,4 +1,57 @@
 <%= render "admin/financials/header" %>
+<h2>Payment History</h2>
 
-<%= render "admin/financials/shared/payments" %>
+<table>
+  <thead class="stickable">
+    <tr>
+      <th>Payment Date</th>
+      <th>Description</th>
+      <th>Payment Method</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @payment_history.payments.decorate.each do |payment| %>
+      <tr class="payment-row">
+        <td class="date"><%= payment.updated_at.strftime("%m/%d/%Y") %></td>
+        <td class="description">
+          <% if payment.payment_type == 'order' %>
+            <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
+            <% if payment.orders.count > 1 %>
+              <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#", class:"modal-toggle more-info payment-more", data: { modal: "more-info-#{payment.id}"} %>
 
+              <!-- Modal -->
+              <div class="popup modal more-info-<%= payment.id %> is-hidden order-list-modal">
+                <div class="popup-header">
+                  All Order Numbers Paid on <strong><%= payment.updated_at.strftime("%m/%d/%Y") %></strong>
+                  <button class="close"><i class="font-icon icon-close"></i></button>
+                </div>
+                <div class="all-order-numbers">
+                  <% payment.orders.each do |order| %>
+                    <p><%= link_to order.order_number, admin_order_path(order) %></p>
+                  <% end %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <!-- End Modal -->
+
+            <% end %>
+          <% else %>
+            Service Fee
+          <% end %>
+        </td>
+        <td class="payment-method"><%= payment.display_payment_method %></td>
+        <td class="amount"><%= number_to_currency(payment.amount) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @payment_history.payments %>
+
+<% if @payment_history.payments.none? %>
+  <div class="empty-results">
+    <h2>No Results</h2>
+    This table is empty, either because there is no data, or because the filter you've applied is hiding it.
+  </div>
+<% end %>
