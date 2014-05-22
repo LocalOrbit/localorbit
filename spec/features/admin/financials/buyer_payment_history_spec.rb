@@ -27,23 +27,23 @@ feature "Payment history" do
       create(:order, :with_items, organization: buyer, payment_method: "credit card", total_cost: 129.00)
 
       orders = []
-      5.times do |i|
-        orders << create(:order, :with_items, organization: buyer, payment_method: ["purchase order", "purchase order", "ach", "ach", "credit card"][i], payment_status: "paid", total_cost: 20.00 + i)
+      6.times do |i|
+        orders << create(:order, :with_items, organization: buyer, payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i], payment_status: "paid", total_cost: 20.00 + i)
       end
 
-      orders.each_with_index do |order, i|
+      orders[1..5].each_with_index do |order, i|
         create(:payment, payment_method: ["cash", "check", "ach", "ach", "credit card"][i], payee: market, orders: [order], amount: order.total_cost)
       end
 
-      check_payment = orders[1].payments.first
+      check_payment = orders[2].payments.first
       check_payment.note = "#12345"
       check_payment.save!
 
-      ach_payment = orders[2].payments.first
+      ach_payment = orders[3].payments.first
       ach_payment.balanced_uri = ach_balanced_uri
       ach_payment.save!
 
-      pending_ach_order = orders[3]
+      pending_ach_order = orders[4]
       pending_ach_order.payment_status = "pending"
       pending_ach_order.save!
 
@@ -51,7 +51,7 @@ feature "Payment history" do
       pending_ach_payment.balanced_uri = other_ach_balanced_uri
       pending_ach_payment.save!
 
-      cc_payment = orders[4].payments.first
+      cc_payment = orders[5].payments.first
       cc_payment.balanced_uri = cc_balanced_uri
       cc_payment.save!
     end
@@ -78,25 +78,28 @@ feature "Payment history" do
     expect(payment_row("$72.00")).to be_nil
     expect(payment_row("$129.00")).to be_nil
 
-    expect(payment_row("$20.00")).not_to be_nil
-    expect(payment_row("$20.00").payment_method).to eql("Cash")
-    expect(payment_row("$20.00").date).to eql("05/09/2014")
+    # Don't show PO payments that have not been paid
+    expect(payment_row("$20.00")).to be_nil
 
     expect(payment_row("$21.00")).not_to be_nil
-    expect(payment_row("$21.00").payment_method).to eql("Check: #12345")
+    expect(payment_row("$21.00").payment_method).to eql("Cash")
     expect(payment_row("$21.00").date).to eql("05/09/2014")
 
     expect(payment_row("$22.00")).not_to be_nil
-    expect(payment_row("$22.00").payment_method).to eql("ACH: *********9983")
+    expect(payment_row("$22.00").payment_method).to eql("Check: #12345")
     expect(payment_row("$22.00").date).to eql("05/09/2014")
 
     expect(payment_row("$23.00")).not_to be_nil
-    expect(payment_row("$23.00").payment_method).to eql("ACH: *********2231")
+    expect(payment_row("$23.00").payment_method).to eql("ACH: *********9983")
     expect(payment_row("$23.00").date).to eql("05/09/2014")
 
     expect(payment_row("$24.00")).not_to be_nil
-    expect(payment_row("$24.00").payment_method).to eql("Credit Card: ************7732")
+    expect(payment_row("$24.00").payment_method).to eql("ACH: *********2231")
     expect(payment_row("$24.00").date).to eql("05/09/2014")
+
+    expect(payment_row("$25.00")).not_to be_nil
+    expect(payment_row("$25.00").payment_method).to eql("Credit Card: ************7732")
+    expect(payment_row("$25.00").date).to eql("05/09/2014")
 
     expect(payment_row("$99.00")).to be_nil
   end
