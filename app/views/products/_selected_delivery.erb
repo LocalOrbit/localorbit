@@ -1,3 +1,20 @@
+<div class="change-delivery-warning is-hidden modal modal--stealth popup">
+  <h3 class="popup-header">
+    <button class="close"><i class="font-icon icon-close"></i></button>
+    Date Change Confirmation
+  </h3>
+  <div class="popup-body">
+    <p>
+      <strong>Changing your delivery date will remove the items you have in your cart!</strong><br>
+      You can only order for one delivery date at a time. If you would like to purchase the
+      items that are in your cart, please do that before changing your delivery date. You
+      can access your cart right now by clicking Cart in your navigation above.
+    </p>
+
+    <%= link_to "Empty Cart and Change Date", reset_sessions_deliveries_path(redirect_back_to: request.fullpath), class: "btn btn--save btn--small" %>
+  </div>
+</div>
+
 <div class="selected-delivery">
   <div class="header header--column ">
     <h2 class="heading heading--sidebar delivery-type"><%= current_delivery.selected_type %></h2>
@@ -26,22 +43,5 @@
       <%= current_cart.delivery_location.state %>
       <%= current_cart.delivery_location.zip %>
     </span>
-  </div>
-</div>
-
-<div class="change-delivery-warning is-hidden modal modal--stealth popup">
-  <h3 class="popup-header">
-    <button class="close"><i class="font-icon icon-close"></i></button>
-    Date Change Confirmation
-  </h3>
-  <div class="popup-body">
-    <p>
-      <strong>Changing your delivery date will remove the items you have in your cart!</strong><br>
-      You can only order for one delivery date at a time. If you would like to purchase the
-      items that are in your cart, please do that before changing your delivery date. You
-      can access your cart right now by clicking Cart in your navigation above.
-    </p>
-
-    <%= link_to "Empty Cart and Change Date", reset_sessions_deliveries_path(redirect_back_to: request.fullpath), class: "btn btn--save btn--small" %>
   </div>
 </div>
