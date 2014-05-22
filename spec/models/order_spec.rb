@@ -149,6 +149,21 @@ describe Order do
     end
   end
 
+  describe "destruction" do
+    let(:market)       { create(:market) }
+    let(:organization) { create(:organization, markets: [market]) }
+    let!(:user)        { create(:user, organizations:[organization]) }
+    let!(:order)       { create(:order, :with_items, organization: organization, market: market) }
+
+    it 'removes order items' do
+      expect {
+        order.destroy
+      }.to change {
+        OrderItem.count
+      }.from(1).to(0)
+    end
+  end
+
   describe ".orders_for_seller" do
     context "admin" do
       let(:market)       { create(:market) }

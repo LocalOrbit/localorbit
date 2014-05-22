@@ -224,6 +224,7 @@ describe OrderItem do
     let!(:market)        { create(:market) }
     let!(:organization)  { create(:organization) }
     let!(:order)         { build(:order, market: market, organization: organization) }
+    let(:cart_item)      { create(:cart_item, product: product) }
     let(:deliver_on)     { Date.today }
 
     subject do
@@ -231,6 +232,24 @@ describe OrderItem do
       order_item.order = order
       order_item.save
       order_item
+    end
+
+    it 'consumes inventory on creation' do
+      expect {
+        subject
+      }.to change {
+        lot1.reload.quantity
+      }.from(10).to(9)
+    end
+
+    it 'returns inventory on destruction' do
+      subject
+
+      expect {
+        subject.destroy
+      }.to change {
+        lot1.reload.quantity
+      }.from(9).to(10)
     end
   end
 
