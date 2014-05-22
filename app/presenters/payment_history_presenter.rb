@@ -13,7 +13,7 @@ class PaymentHistoryPresenter
     elsif user.buyer_only?
       Payment.joins(:order_payments)
       .includes(:orders)
-      .where(orders: {organization_id: organization.id, payment_status: 'paid'})
+      .where(orders: {organization_id: organization.id})
     else
       Payment.where(payee: organization)
     end

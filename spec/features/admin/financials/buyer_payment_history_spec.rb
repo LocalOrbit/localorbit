@@ -2,6 +2,7 @@ require 'spec_helper'
 feature "Payment history" do
   let(:market_ach_balanced_uri) { "http://balanced.example.com/12345" }
   let(:ach_balanced_uri) { "http://balanced.example.com/123456" }
+  let(:other_ach_balanced_uri) { "http://balanced.example.com/12345687" }
   let(:cc_balanced_uri) { "http://balanced.example.com/1234567" }
 
   let!(:market)             { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
@@ -16,6 +17,7 @@ feature "Payment history" do
   let(:payment_day) { DateTime.parse("May 9, 2014, 11:00:00") }
 
   let!(:ach_account) { create(:bank_account, :checking, last_four: "9983", balanced_uri: ach_balanced_uri, bankable: buyer) }
+  let!(:other_ach_account) { create(:bank_account, :checking, last_four: "2231", balanced_uri: other_ach_balanced_uri, bankable: buyer) }
   let!(:cc_account) { create(:bank_account, :credit_card, last_four: "7732", balanced_uri: cc_balanced_uri, bankable: buyer) }
 
   before do
@@ -25,12 +27,12 @@ feature "Payment history" do
       create(:order, :with_items, organization: buyer, payment_method: "credit card", total_cost: 129.00)
 
       orders = []
-      4.times do |i|
-        orders << create(:order, :with_items, organization: buyer, payment_method: ["purchase order", "purchase order", "ach", "credit card"][i], payment_status: "paid", total_cost: 20.00 + i)
+      5.times do |i|
+        orders << create(:order, :with_items, organization: buyer, payment_method: ["purchase order", "purchase order", "ach", "ach", "credit card"][i], payment_status: "paid", total_cost: 20.00 + i)
       end
 
       orders.each_with_index do |order, i|
-        create(:payment, payment_method: ["cash", "check", "ach", "credit card"][i], payee: market, orders: [order], amount: order.total_cost)
+        create(:payment, payment_method: ["cash", "check", "ach", "ach", "credit card"][i], payee: market, orders: [order], amount: order.total_cost)
       end
 
       check_payment = orders[1].payments.first
@@ -41,7 +43,15 @@ feature "Payment history" do
       ach_payment.balanced_uri = ach_balanced_uri
       ach_payment.save!
 
-      cc_payment = orders[3].payments.first
+      pending_ach_order = orders[3]
+      pending_ach_order.payment_status = "pending"
+      pending_ach_order.save!
+
+      pending_ach_payment = pending_ach_order.payments.first
+      pending_ach_payment.balanced_uri = other_ach_balanced_uri
+      pending_ach_payment.save!
+
+      cc_payment = orders[4].payments.first
       cc_payment.balanced_uri = cc_balanced_uri
       cc_payment.save!
     end
@@ -74,15 +84,19 @@ feature "Payment history" do
 
     expect(payment_row("$21.00")).not_to be_nil
     expect(payment_row("$21.00").payment_method).to eql("Check: #12345")
-    expect(payment_row("$20.00").date).to eql("05/09/2014")
+    expect(payment_row("$21.00").date).to eql("05/09/2014")
 
     expect(payment_row("$22.00")).not_to be_nil
     expect(payment_row("$22.00").payment_method).to eql("ACH: *********9983")
-    expect(payment_row("$20.00").date).to eql("05/09/2014")
+    expect(payment_row("$22.00").date).to eql("05/09/2014")
 
     expect(payment_row("$23.00")).not_to be_nil
-    expect(payment_row("$23.00").payment_method).to eql("Credit Card: ************7732")
-    expect(payment_row("$20.00").date).to eql("05/09/2014")
+    expect(payment_row("$23.00").payment_method).to eql("ACH: *********2231")
+    expect(payment_row("$23.00").date).to eql("05/09/2014")
+
+    expect(payment_row("$24.00")).not_to be_nil
+    expect(payment_row("$24.00").payment_method).to eql("Credit Card: ************7732")
+    expect(payment_row("$24.00").date).to eql("05/09/2014")
 
     expect(payment_row("$99.00")).to be_nil
   end
