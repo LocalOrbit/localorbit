@@ -45,12 +45,31 @@ describe AttemptAchPurchase do
 
     context "valid bank account" do
       context "successfully debits bank account" do
-        it "sets the payment method on the order" do
+        it "creates a payment record" do
           expect {
             subject
           }.to change {
             Payment.all.count
           }.from(0).to(1)
+
+          expect(subject.context).to include(:payment)
+          expect(order.reload.payments).to include(subject.context[:payment])
+        end
+
+        it "sets the payment method on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_method
+          }.from("purchase order").to("ach")
+        end
+
+        it "sets the payment status on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_status
+          }.from("unpaid").to("pending")
         end
 
         it "creates a debit for the order amount" do

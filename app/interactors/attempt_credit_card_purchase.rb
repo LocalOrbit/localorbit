@@ -24,6 +24,8 @@ class AttemptCreditCardPurchase
           orders: [order]
         )
 
+        order.update(payment_method: 'credit card', payment_status: 'paid')
+
         if !context[:payment].persisted?
           debit.refund
           context.fail!
@@ -32,7 +34,6 @@ class AttemptCreditCardPurchase
       rescue Exception => e
         Honeybadger.notify_or_ignore(e) unless Rails.env.test? || Rails.env.development?
 
-        context[:order] = Order.new(credit_card: order_params["credit_card"])
         context[:order].errors.add(:credit_card, "Payment processor error.")
         context.fail!
       end

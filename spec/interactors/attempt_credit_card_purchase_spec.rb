@@ -47,6 +47,23 @@ describe AttemptCreditCardPurchase do
           }.from(0).to(1)
 
           expect(subject.context).to include(:payment)
+          expect(order.reload.payments).to include(subject.context[:payment])
+        end
+
+        it "sets the payment method on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_method
+          }.from("purchase order").to("credit card")
+        end
+
+        it "sets the payment status on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_status
+          }.from("unpaid").to("paid")
         end
 
         it "creates a hold for the order amount" do
