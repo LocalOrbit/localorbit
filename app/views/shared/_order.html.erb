@@ -37,6 +37,7 @@
   <table class="current-sales-table odd order-table-1">
     <thead>
       <tr>
+        <th><%= check_box_tag :all_delivered, "yes", false, class: 'check-all' %></th>
         <th>Product</th>
         <th>Quantity</th>
         <th>Price</th>
@@ -52,6 +53,7 @@
     <tbody>
       <%= f.fields_for :items do |item| %>
       <tr class="order-item-row">
+        <td><%= check_box_tag "item_ids[]", item.object.id %></td>
         <td class="name">
           <span class="product-ordered"><%= item.object.name %></span> <br />
           <span class="seller-name">from <%= item.object.product.organization.name %></span>
