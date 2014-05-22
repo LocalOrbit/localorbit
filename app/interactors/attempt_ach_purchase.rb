@@ -1,7 +1,6 @@
 class AttemptAchPurchase
   include Interactor
 
-
   def perform
     if order_params["payment_method"] == 'ach'
       begin
