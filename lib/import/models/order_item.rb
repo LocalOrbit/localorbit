@@ -26,6 +26,7 @@ class Legacy::OrderItem < Legacy::Base
         seller_name: seller_name,
         delivery_status: imported_delivery_status,
         quantity: qty_ordered,
+        quantity_delivered: qty_delivered,
         unit: unit,
         unit_price: unit_price,
         legacy_id: lo_liid
