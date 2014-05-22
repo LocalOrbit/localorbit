@@ -35,6 +35,7 @@ class OrderItem < ActiveRecord::Base
       product: item.product,
       name: item.product.name,
       quantity: item.quantity,
+      quantity_delivered: item.quantity,
       unit: item.unit,
       unit_price: item.unit_price.sale_price,
       seller_name: item.product.organization.name,
