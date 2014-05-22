@@ -11,6 +11,6 @@ class OrderItemLot < ActiveRecord::Base
   protected
 
   def return_inventory_to_lot
-    lot.update(quantity: lot.quantity + quantity)
+    lot.increment!(:quantity, quantity)
   end
 end
