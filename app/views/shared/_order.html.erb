@@ -1,3 +1,6 @@
+<%= render "shared/errors", { resource: order } %>
+
+<%= form_for order, url: admin_order_path(order.id), as: :order, method: :put do |f| %>
 <div class="order-info">
   <h1>Order info for <%= order.order_number %></h1>
   <div class="order-info-date">Placed On: <span class="special-content"><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></span></div>
@@ -47,30 +50,30 @@
       </tr>
     </thead>
     <tbody>
-      <% order.items.each do |item| %>
+      <%= f.fields_for :items do |item| %>
       <tr class="order-item-row">
         <td class="name">
-          <span class="product-ordered"><%= item.name %></span> <br />
-          <span class="seller-name">from <%= item.product.organization.name %></span>
+          <span class="product-ordered"><%= item.object.name %></span> <br />
+          <span class="seller-name">from <%= item.object.product.organization.name %></span>
         </td>
         <td class="quantity">
-          <span style="width: 50px;"><%= item.quantity %></span> <%= item.unit %> (Ordered)<br />
-          <input type="text" value="<%= item.quantity_delivered || 0 %>"> <%= item.unit %> (Delivered)
+          <span style="width: 50px;"><%= item.object.quantity %></span> <%= item.object.unit %> (Ordered)<br />
+          <%= item.text_field :quantity_delivered %> <%= item.object.unit %> (Delivered)
         </td>
-        <td class="price"><%= number_to_currency item.unit_price %></td>
-        <td class="discount"><%= number_to_currency item.discount %></td>
-        <td class="total"><%= number_to_currency item.gross_total %></td>
-        <td class="delivery-status"><%= item.delivery_status.titleize %></td>
-        <td class="payment-status"><%= item.buyer_payment_status.titleize %></td>
+        <td class="price"><%= number_to_currency item.object.unit_price %></td>
+        <td class="discount"><%= number_to_currency item.object.discount %></td>
+        <td class="total"><%= number_to_currency item.object.gross_total %></td>
+        <td class="delivery-status"><%= item.object.delivery_status.titleize %></td>
+        <td class="payment-status"><%= item.object.buyer_payment_status.titleize %></td>
         <% if !current_user.buyer_only? %>
-          <td class="seller-status"><%= item.seller_payment_status %></td>
+          <td class="seller-status"><%= item.object.seller_payment_status %></td>
         <% end %>
       </tr>
       <% end %>
     </tbody>
   </table>
 
-  <%= link_to "Update Quantities", admin_order_path(order.id), class: 'pull-right btn btn--blue btn--update' %><br>
+  <%= f.submit "Update Quantities", class: 'pull-right btn btn--blue btn--update' %>
 
   <% if !current_user.buyer_only? %>
   <div class="order-totals">
@@ -100,3 +103,4 @@
   </div>
   <% end %>
 </div>
+<% end %>

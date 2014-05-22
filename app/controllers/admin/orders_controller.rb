@@ -6,4 +6,24 @@ class Admin::OrdersController < AdminController
   def show
     @order = SellerOrder.find(current_user, params[:id])
   end
+
+  def update
+    order = Order.find(params[:id])
+    if order.update(order_params)
+      redirect_to admin_order_path(order)
+    else
+      binding.pry
+      @order = SellerOrder.new(order, current_user)
+      render :show
+    end
+  end
+
+  protected
+
+  def order_params
+    params.require(:order).permit(items_attributes: [
+      :id, :quantity_delivered
+      ])
+  end
+
 end

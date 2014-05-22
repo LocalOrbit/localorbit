@@ -1,4 +1,5 @@
 class SellerOrder
+  include ActiveModel::Model
   include DeliveryStatus
   include OrderPresenter
 
@@ -24,5 +25,12 @@ class SellerOrder
 
   def total_cost
     gross_total - discount
+  end
+
+  def errors
+    @order.errors
+  end
+
+  def items_attributes=(values)
   end
 end

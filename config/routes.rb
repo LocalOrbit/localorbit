@@ -36,7 +36,7 @@ Rails.application.routes.draw do
       resources :vendor_payments
     end
 
-    resources :orders, only: [:index, :show]
+    resources :orders, only: [:index, :show, :update]
 
     resources :organizations, concerns: :bank_account do
       resources :organization_users, as: :users, path: :users

@@ -56,6 +56,8 @@ class Order < ActiveRecord::Base
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
 
+  accepts_nested_attributes_for :items
+
   def self.for_sort(order)
     column, direction = column_and_direction(order)
     case column
