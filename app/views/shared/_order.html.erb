@@ -57,8 +57,12 @@
           <span class="seller-name">from <%= item.object.product.organization.name %></span>
         </td>
         <td class="quantity">
-          <span style="width: 50px;"><%= item.object.quantity %></span> <%= item.object.unit %> (Ordered)<br />
-          <%= item.text_field :quantity_delivered %> <%= item.object.unit %> (Delivered)
+          <span><%= item.object.quantity %></span> <%= item.object.unit %> (Ordered)<br />
+          <% if current_user.buyer_only? %>
+            <span><%= item.object.quantity_delivered %></span>
+          <% else %>
+            <%= item.text_field :quantity_delivered %>
+          <% end %> <%= item.object.unit %> (Delivered)
         </td>
         <td class="price"><%= number_to_currency item.object.unit_price %></td>
         <td class="discount"><%= number_to_currency item.object.discount %></td>

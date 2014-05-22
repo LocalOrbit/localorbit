@@ -83,6 +83,10 @@
 }
 .order-table-1 {
   margin-bottom: 10px;
+
+  .quantity span, .quantity input {
+    width: 50px;
+  }
 }
 
 .order-totals {
