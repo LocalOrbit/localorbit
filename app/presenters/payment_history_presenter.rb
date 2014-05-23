@@ -1,5 +1,5 @@
 class PaymentHistoryPresenter
-  attr_reader :payments, :q
+  attr_reader :payments, :q, :start_date, :end_date
 
   def self.build(user: user, organization: organization, options: options)
     page = options[:page]
@@ -29,6 +29,9 @@ class PaymentHistoryPresenter
   end
 
   def initialize(payments, search, page, per_page)
+    @start_date = search.try(:fetch, :updated_at_date_gteq)
+    @end_date = search.try(:fetch, :updated_at_date_lteq)
+
     @q = payments.search(search)
     @payments = @q.result.page(page).per(per_page)
   end
