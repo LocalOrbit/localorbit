@@ -12,7 +12,6 @@ class Admin::OrdersController < AdminController
     if order.update(order_params)
       redirect_to admin_order_path(order)
     else
-      binding.pry
       @order = SellerOrder.new(order, current_user)
       render :show
     end
@@ -22,7 +21,7 @@ class Admin::OrdersController < AdminController
 
   def order_params
     params.require(:order).permit(items_attributes: [
-      :id, :quantity_delivered
+      :id, :quantity_delivered, :delivery_status
       ])
   end
 

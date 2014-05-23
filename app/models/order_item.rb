@@ -18,6 +18,7 @@ class OrderItem < ActiveRecord::Base
   validate :product_availability, on: :create
 
   before_create :consume_inventory
+  before_save :adjust_inventory
   before_save :update_delivered_at
   before_save :update_quantity_delivered
 
@@ -35,7 +36,6 @@ class OrderItem < ActiveRecord::Base
       product: item.product,
       name: item.product.name,
       quantity: item.quantity,
-      quantity_delivered: item.quantity,
       unit: item.unit,
       unit_price: item.unit_price.sale_price,
       seller_name: item.product.organization.name,
@@ -61,7 +61,11 @@ class OrderItem < ActiveRecord::Base
   end
 
   def gross_total
-    unit_price * quantity
+    if quantity_delivered.present?
+      unit_price * quantity_delivered
+    else
+      unit_price * quantity
+    end
   end
 
   def product_availability
@@ -95,6 +99,26 @@ class OrderItem < ActiveRecord::Base
 
       lots.build(lot: lot, quantity: num_to_consume)
       quantity_remaining -= num_to_consume
+    end
+  end
+
+  def adjust_inventory
+    if quantity_delivered_changed?
+      if quantity_delivered != quantity
+        adjustment = quantity - quantity_delivered
+        lots.each do |order_item_lot|
+          break unless adjustment
+
+          #[5 , 3] = 3
+          #[5,  10] = 5
+          #[5, -3] = -3
+          value = [order_item_lot.quantity, adjustment].min
+          order_item_lot.lot.increment!(:quantity, value)
+
+          #-3 - -3 = 0
+          adjustment -= value
+        end
+      end
     end
   end
 

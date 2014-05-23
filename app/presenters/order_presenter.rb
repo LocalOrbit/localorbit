@@ -48,7 +48,7 @@ module OrderPresenter
   def totals
     @totals ||= items.inject(discount: 0, gross: 0, net: 0, payment: 0, transaction: 0, market: 0) do |totals, item|
       totals[:discount]    += item.discount
-      totals[:gross]       += item.quantity * item.unit_price
+      totals[:gross]       += item.gross_total
       totals[:transaction] += item.local_orbit_seller_fee
       totals[:net]         += item.seller_net_total
       totals[:payment]     += item.payment_seller_fee

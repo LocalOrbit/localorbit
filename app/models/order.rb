@@ -202,6 +202,10 @@ class Order < ActiveRecord::Base
     items.inject(0) {|sum, item| sum + item.gross_total}
   end
 
+  def total_cost
+    subtotal
+  end
+
   private
 
   def validate_items

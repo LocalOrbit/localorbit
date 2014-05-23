@@ -37,7 +37,7 @@
   <table class="current-sales-table odd order-table-1">
     <thead>
       <tr>
-        <th><%= check_box_tag :all_delivered, "yes", false, class: 'check-all' %></th>
+        <th><%= check_box_tag :all_delivered, "yes", false, class: 'check-all', tabindex: -1 %></th>
         <th>Product</th>
         <th>Quantity</th>
         <th>Price</th>
@@ -53,7 +53,7 @@
     <tbody>
       <%= f.fields_for :items do |item| %>
       <tr class="order-item-row">
-        <td><%= check_box_tag "item_ids[]", item.object.id %></td>
+        <td><%= check_box_tag "item_ids[]", item.object.id, false, tabindex: -1 %></td>
         <td class="name">
           <span class="product-ordered"><%= item.object.name %></span> <br />
           <span class="seller-name">from <%= item.object.product.organization.name %></span>
@@ -69,7 +69,10 @@
         <td class="price"><%= number_to_currency item.object.unit_price %></td>
         <td class="discount"><%= number_to_currency item.object.discount %></td>
         <td class="total"><%= number_to_currency item.object.gross_total %></td>
-        <td class="delivery-status"><%= item.object.delivery_status.titleize %></td>
+        <td class="delivery-status">
+          <%= item.hidden_field :delivery_status %>
+          <%= item.object.delivery_status.titleize %>
+        </td>
         <td class="payment-status"><%= item.object.buyer_payment_status.titleize %></td>
         <% if !current_user.buyer_only? %>
           <td class="seller-status"><%= item.object.seller_payment_status %></td>
@@ -79,7 +82,8 @@
     </tbody>
   </table>
 
-  <%= f.submit "Update Quantities", class: 'pull-right btn btn--blue btn--update' %>
+  <%= link_to "Mark selected delivered", admin_order_path(order.id), id: 'mark-selected-delivered' %>
+  <%= f.submit "Update quantities", class: 'pull-right btn btn--blue btn--update' %>
 
   <% if !current_user.buyer_only? %>
   <div class="order-totals">

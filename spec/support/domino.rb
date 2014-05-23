@@ -806,6 +806,10 @@ module Dom
       attribute :total
       attribute :payment_status
       attribute :delivery_status
+
+      def set_quantity_delivered(qty)
+        node.find(".quantity > input").set(qty)
+      end
     end
   end
 
