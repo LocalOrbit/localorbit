@@ -12,8 +12,9 @@ class PaymentHistoryPresenter
         where("market_organizations.market_id in (:market_ids) OR (payments.payer_type = 'Market' AND payments.payer_id in (:market_ids)) OR (payments.payee_type = 'Market' AND payments.payer_id in (:market_ids))", market_ids: market_ids)
     elsif user.buyer_only?
       Payment.joins(:order_payments)
-      .includes(:orders)
-      .where(orders: {organization_id: organization.id, payment_status: 'paid'})
+        .includes(:orders)
+        .where(orders: {organization_id: organization.id})
+        .where("orders.payment_status = ? OR (orders.payment_method = ? AND payments.status = ?)", "paid", "ach", "pending")
     else
       Payment.where(payee: organization)
     end
