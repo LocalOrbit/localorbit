@@ -322,6 +322,15 @@
     line-height: 1.1.25;
   }
 }
+@media screen and (max-width: 800px) {
+  .header--welcome {
+    max-width: 30%;
+
+    .tagline {
+      display: none;
+    }
+  }
+}
 
 .list-naked {
   padding-left: 0;
@@ -495,6 +504,14 @@
   }
   .font-icon {
     padding-right: 10px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .nav--admin {
+    .font-icon {
+      display: none;
+    }
   }
 }
 

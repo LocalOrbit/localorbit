@@ -74,7 +74,7 @@
         <% if current_user %>
         <p class="header header--welcome">
           <% if current_market %>
-            <%= current_market.name %> <%= "— #{current_market.tagline}" unless current_market.tagline.blank? %>
+            <%= current_market.name %> <%= content_tag :span, "— #{current_market.tagline}", class: "tagline" unless current_market.tagline.blank? %>
           <% else %>
             Local Orbit
           <% end %>
