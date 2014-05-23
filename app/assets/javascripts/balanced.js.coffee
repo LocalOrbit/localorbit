@@ -45,18 +45,35 @@ updateInputs = (object, $form) ->
   else
     value = $("#bank-account-notes").val()
 
+validateEIN = () ->
+  $field = $("#representative_ein")
+  ein = $field.val()
+
+  if ein != undefined && ein != "" && !/^\d{2}-\d{7}$/.test(ein)
+    setupErrorsContainer($("#balanced-payments-uri"))
+    $field.wrap('<div class="field_with_errors" />')
+    displayError('Organization EIN', 'must be 9 digits formatted as XX-XXXXXXX')
+    return false
+
+  return true
+
 displayErrors = ($form, errors)->
-  # (re-)set up error container
-  if $("#balanced-js-errors").length
-    $("#balanced-js-errors").html("")
-  else
-    $form.prepend('<ul id="balanced-js-errors" class="form-errors">')
+  setupErrorsContainer($form)
 
   for key of errors
     field_name = key.replace(/_/g, " ")
     field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
     $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
-    $("#balanced-js-errors").append("<li>#{field_name}: #{errors[key]}</li>")
+    displayError(field_name, errors[key])
+
+displayError = (field, error) ->
+  $("#balanced-js-errors").append("<li>#{field}: #{error}</li>")
+
+setupErrorsContainer = ($form) ->
+  if $("#balanced-js-errors").length
+    $("#balanced-js-errors").html("")
+  else
+    $form.prepend('<ul id="balanced-js-errors" class="form-errors">')
 
 $.getScript "https://js.balancedpayments.com/v1/balanced.js", ->
   $ ->
@@ -84,6 +101,8 @@ $.getScript "https://js.balancedpayments.com/v1/balanced.js", ->
 
     $("#balanced-payments-uri").submit (event) ->
       event.preventDefault()
+      return unless validateEIN()
+
       $form = $(event.target)
       balanced.init($form.data("balanced-marketplace-uri"))
       type = $form.data("balanced-object-type")
