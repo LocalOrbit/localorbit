@@ -14,7 +14,7 @@ class PaymentHistoryPresenter
       Payment.joins(:order_payments)
         .includes(:orders)
         .where(orders: {organization_id: organization.id})
-        .where("orders.payment_status = ? OR (orders.payment_method = ? AND orders.payment_status = ?)", "paid", "ach", "pending")
+        .where("orders.payment_status = ? OR (orders.payment_method = ? AND payments.status = ?)", "paid", "ach", "pending")
     else
       Payment.where(payee: organization)
     end

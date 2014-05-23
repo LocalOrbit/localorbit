@@ -44,10 +44,9 @@ feature "Payment history" do
       ach_payment.save!
 
       pending_ach_order = orders[4]
-      pending_ach_order.payment_status = "pending"
-      pending_ach_order.save!
 
       pending_ach_payment = pending_ach_order.payments.first
+      pending_ach_payment.status = "pending"
       pending_ach_payment.balanced_uri = other_ach_balanced_uri
       pending_ach_payment.save!
 
