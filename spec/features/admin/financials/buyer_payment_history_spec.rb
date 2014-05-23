@@ -26,27 +26,28 @@ feature "Payment history" do
     create(:order, :with_items, organization: buyer, payment_method: "credit card", total_cost: 129.00)
 
     orders = []
-    4.times do |i|
+    6.times do |i|
       orders << create(:order,
                        :with_items,
                        organization: buyer,
-                       payment_method: ["purchase order", "purchase order", "ach", "credit card"][i],
+                       payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
                        payment_status: "paid",
                        order_number: "LO-01-234-4567890-#{i}",
                        total_cost: 20.00 + i)
     end
 
-    orders.each_with_index do |order, i|
+    orders[1..5].each_with_index do |order, i|
       Timecop.freeze(payment_day + i.days) do
         payment = create(:payment,
-                         payment_method: ["cash", "check", "ach", "credit card"][i],
+                         payment_method: ["cash", "check", "ach", "ach", "credit card"][i],
                          payee: market,
                          orders: [order],
                          amount: order.total_cost)
 
         payment.update_attribute(:note, "#12345") if i == 1
         payment.update_attribute(:balanced_uri, ach_balanced_uri) if i == 2
-        payment.update_attribute(:balanced_uri, cc_balanced_uri) if i == 3
+        payment.update_attributes(balanced_uri: other_ach_balanced_uri, status: "pending") if i == 3
+        payment.update_attribute(:balanced_uri, cc_balanced_uri) if i == 4
 
       end
     end
@@ -77,56 +78,68 @@ feature "Payment history" do
     expect(payment_row("$20.00")).to be_nil
 
     expect(payment_row("$21.00")).not_to be_nil
-
-    expect(payment_row("$21.00").payment_method).to eql("Check: #12345")
-    expect(payment_row("$21.00").date).to eql("05/10/2014")
+    expect(payment_row("$21.00").payment_method).to eql("Cash")
+    expect(payment_row("$21.00").date).to eql("05/09/2014")
 
     expect(payment_row("$22.00")).not_to be_nil
-    expect(payment_row("$22.00").payment_method).to eql("ACH: *********9983")
-    expect(payment_row("$22.00").date).to eql("05/11/2014")
+    expect(payment_row("$22.00").payment_method).to eql("Check: #12345")
+    expect(payment_row("$22.00").date).to eql("05/10/2014")
 
     expect(payment_row("$23.00")).not_to be_nil
-    expect(payment_row("$23.00").payment_method).to eql("Credit Card: ************7732")
-    expect(payment_row("$23.00").date).to eql("05/12/2014")
+    expect(payment_row("$23.00").payment_method).to eql("ACH: *********9983")
+    expect(payment_row("$23.00").date).to eql("05/11/2014")
+
+    expect(payment_row("$24.00")).not_to be_nil
+    expect(payment_row("$24.00").payment_method).to eql("ACH: *********2231")
+    expect(payment_row("$24.00").date).to eql("05/12/2014")
+
+    expect(payment_row("$25.00")).not_to be_nil
+    expect(payment_row("$25.00").payment_method).to eql("Credit Card: ************7732")
+    expect(payment_row("$25.00").date).to eql("05/13/2014")
 
     expect(payment_row("$99.00")).to be_nil
   end
 
   scenario "Buyer can search purchase history by order number" do
-    expect(payment_row("$20.00").description).to include("LO-01-234-4567890-0")
     expect(payment_row("$21.00").description).to include("LO-01-234-4567890-1")
     expect(payment_row("$22.00").description).to include("LO-01-234-4567890-2")
     expect(payment_row("$23.00").description).to include("LO-01-234-4567890-3")
+    expect(payment_row("$24.00").description).to include("LO-01-234-4567890-4")
+    expect(payment_row("$25.00").description).to include("LO-01-234-4567890-5")
 
     fill_in "Search Payments", with: "4567890-1"
     click_button "Search"
 
     expect(page).to     have_content("LO-01-234-4567890-1")
-    expect(page).not_to have_content("LO-01-234-4567890-0")
     expect(page).not_to have_content("LO-01-234-4567890-2")
     expect(page).not_to have_content("LO-01-234-4567890-3")
+    expect(page).not_to have_content("LO-01-234-4567890-4")
+    expect(page).not_to have_content("LO-01-234-4567890-5")
   end
 
   scenario "Buyer can filter purchase history by payment date" do
-    expect(payment_row("$20.00").description).to include("LO-01-234-4567890-0")
     expect(payment_row("$21.00").description).to include("LO-01-234-4567890-1")
     expect(payment_row("$22.00").description).to include("LO-01-234-4567890-2")
     expect(payment_row("$23.00").description).to include("LO-01-234-4567890-3")
+    expect(payment_row("$24.00").description).to include("LO-01-234-4567890-4")
+    expect(payment_row("$25.00").description).to include("LO-01-234-4567890-5")
 
-    fill_in "q_updated_at_date_gteq", with: "10 May 2014"
+    fill_in "q_updated_at_date_gteq", with: "Sat, 10 May 2014"
     click_button "Update"
 
-    expect(page).not_to have_content("LO-01-234-4567890-0")
-    expect(page).to     have_content("LO-01-234-4567890-1")
+    expect(page).not_to have_content("LO-01-234-4567890-1")
     expect(page).to     have_content("LO-01-234-4567890-2")
     expect(page).to     have_content("LO-01-234-4567890-3")
+    expect(page).to     have_content("LO-01-234-4567890-4")
+    expect(page).to     have_content("LO-01-234-4567890-5")
 
-    fill_in "q_updated_at_date_lteq", with: "11 May 2014"
+    fill_in "q_updated_at_date_lteq", with: "Sun, 11 May 2014"
     click_button "Update"
 
-    expect(page).not_to have_content("LO-01-234-4567890-0")
-    expect(page).to     have_content("LO-01-234-4567890-1")
+    expect(page).not_to have_content("LO-01-234-4567890-1")
     expect(page).to     have_content("LO-01-234-4567890-2")
-    expect(page).not_to have_content("LO-01-234-4567890-3")
+    expect(page).to     have_content("LO-01-234-4567890-3")
+    expect(page).not_to have_content("LO-01-234-4567890-4")
+    expect(page).not_to have_content("LO-01-234-4567890-5")
   end
 end
