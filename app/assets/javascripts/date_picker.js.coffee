@@ -15,8 +15,7 @@ class @DatePicker
 
     field.prop('readonly', true)
 
-    unless field.siblings(".clear-link").length
-      @appendClearLink(field)
+    @appendClearLink(field)
 
   @appendClearLink: (field)->
     clearLink = $("<a href='#' class='clear-link'><i class='font-icon icon-clear'></i></a>")

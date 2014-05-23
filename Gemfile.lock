@@ -1,4 +1,16 @@
 GIT
+  remote: git://github.com/activerecord-hackery/ransack.git
+  revision: 79fe700bca7d69f30a44898635fdddd3a8ef486d
+  branch: rails-4.1
+  specs:
+    ransack (1.2.4)
+      actionpack (>= 4.0)
+      activerecord (>= 4.0)
+      activesupport (>= 4.0)
+      i18n
+      polyamorous (~> 1.0.0)
+
+GIT
   remote: git://github.com/bmabey/email-spec.git
   revision: 8f862c22413fe4cb220a8dac6b9206b8b46d1148
   specs:
@@ -252,6 +264,8 @@ GEM
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
+    polyamorous (1.0.0)
+      activerecord (>= 3.0)
     polyglot (0.3.4)
     powerpack (0.0.9)
     pry (0.9.12.6)
@@ -435,6 +449,7 @@ DEPENDENCIES
   rack-canonical-host
   rails (~> 4.1.0)
   rails_12factor
+  ransack!
   rspec-rails (~> 3.0.0.beta2)
   rubocop
   sass-rails (~> 4.0.0)

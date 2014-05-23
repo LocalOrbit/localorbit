@@ -11,4 +11,8 @@ class Payment < ActiveRecord::Base
   def bank_account
     BankAccount.find_by(balanced_uri: balanced_uri)
   end
+
+  ransacker :update_at_date do |parent|
+    Arel.sql("date(updated_at)")
+  end
 end

@@ -40,10 +40,11 @@ gem 'kaminari'
 gem 'newrelic_rpm'
 gem 'pdfkit'
 gem 'periscope-activerecord'
+gem 'pg_search'
 gem 'rack-canonical-host'
+gem 'ransack', github: 'activerecord-hackery/ransack', branch: 'rails-4.1'
 gem 'simpleidn'
 gem 'wkhtmltopdf-binary'
-gem 'pg_search'
 
 group :doc do
   gem 'sdoc', require: false
