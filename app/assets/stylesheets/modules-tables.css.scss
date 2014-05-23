@@ -78,6 +78,20 @@ td {
   }
 
 }
+@media screen and (max-width: 800px) {
+  td {
+    input[type=datetime],
+    input[type=email],
+    input[type=search],
+    input[type=tel],
+    input[type=text],
+    input[type=number],
+    input[type=url],
+    input[type=password] {
+      font-size: 16px;
+    }
+  }
+}
 
 table {
   .order-number {
@@ -237,6 +251,26 @@ th {
   }
   .total {
     width: 70px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .product-row,
+  .user-row {
+    .product-image {
+      width: 50px;
+      height: 50%;
+      img {
+        max-width: 50px;
+      }
+    }
+    .meta {
+      > li {
+        display: block;
+      }
+    }
+    .negotiated {
+      white-space: nowrap;
+    }
   }
 }
 
@@ -426,6 +460,21 @@ th {
       }
     }
   }
+
+@media screen and (max-width: 800px) {
+  .product-table--user {
+    .info {
+      width: 200px;
+      max-width: 200px;
+      ul {
+        margin-left: 60px;
+      }
+    }
+    .short_description {
+      margin-left: 60px;
+    }
+  }    
+}  
 
 .edit-cell {
   display: none;
