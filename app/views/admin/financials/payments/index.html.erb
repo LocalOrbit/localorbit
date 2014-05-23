@@ -1,6 +1,17 @@
 <%= render "admin/financials/header" %>
 <h2>Payment History</h2>
 
+<%= search_form_for @payment_history.q, url: admin_financials_payments_path do |f| %>
+  <%= f.label :orders_order_number_cont %>
+  <%= f.search_field :orders_order_number_cont, placeholder: "Search Payments" %>
+  <%= f.submit %>
+
+  <%# <%= f.label :orders_order_number_cont %1> %>
+  <%= f.text_field :updated_at_date_gteq, class: 'datepicker' %><a href="#q_updated_at_date_gteq" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+  <%= f.text_field :updated_at_date_lteq, class: 'datepicker' %><a href="#q_updated_at_date_lteq" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+  <%= f.submit "Update" %>
+<% end %>
+
 <table>
   <thead class="stickable">
     <tr>

@@ -1,7 +1,11 @@
 class PaymentHistoryPresenter
-  attr_reader :payments
+  attr_reader :payments, :q
 
-  def self.build(user, organization, page, per_page)
+  def self.build(user: user, organization: organization, options: options)
+    page = options[:page]
+    per_page = options[:per_page]
+    search = options[:q]
+
     scope = if user.admin?
       Payment.all
     elsif user.market_manager?
@@ -21,10 +25,11 @@ class PaymentHistoryPresenter
 
     payments = scope.order("payments.updated_at DESC")
 
-    new(payments, page, per_page)
+    new(payments, search, page, per_page)
   end
 
-  def initialize(payments, page, per_page)
-    @payments = payments.page(page).per(per_page)
+  def initialize(payments, search, page, per_page)
+    @q = payments.search(search)
+    @payments = @q.result.page(page).per(per_page)
   end
 end
