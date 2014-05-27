@@ -10,7 +10,8 @@ class OrderItem < ActiveRecord::Base
   validates :product, presence: true
   validates :name, presence: true
   validates :seller_name, presence: true
-  validates :quantity, presence: true
+  validates :quantity, presence: true, numericality: { greater_than_or_equal_to: 0}
+  validates :quantity_delivered, numericality: { greater_than_or_equal_to: 0, less_than: 2_147_483_647}, if: "quantity_delivered.present?"
   validates :unit, presence: true
   validates :unit_price, presence: true
   validates :delivery_status, presence: true, inclusion: {in: DELIVERY_STATUSES}
@@ -18,7 +19,6 @@ class OrderItem < ActiveRecord::Base
   validate :product_availability, on: :create
 
   before_create :consume_inventory
-  before_save :adjust_inventory
   before_save :update_delivered_at
   before_save :update_quantity_delivered
 
@@ -99,26 +99,6 @@ class OrderItem < ActiveRecord::Base
 
       lots.build(lot: lot, quantity: num_to_consume)
       quantity_remaining -= num_to_consume
-    end
-  end
-
-  def adjust_inventory
-    if quantity_delivered_changed?
-      if quantity_delivered != quantity
-        adjustment = quantity - quantity_delivered
-        lots.each do |order_item_lot|
-          break unless adjustment
-
-          #[5 , 3] = 3
-          #[5,  10] = 5
-          #[5, -3] = -3
-          value = [order_item_lot.quantity, adjustment].min
-          order_item_lot.lot.increment!(:quantity, value)
-
-          #-3 - -3 = 0
-          adjustment -= value
-        end
-      end
     end
   end
 

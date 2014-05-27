@@ -45,12 +45,78 @@ describe 'Editing an order' do
         expect(page).to have_content("Grand Total: $6.00")
       end
 
-      it "updates the product inventory" do
+      it "does not update the product inventory" do
         expect {
           subject
-        }.to change {
+        }.to_not change {
           product.lots.first.reload.quantity
-        }.from(145).to(148)
+        }.from(145)
+      end
+    end
+
+    context "more then ordered" do
+      subject {
+        visit admin_order_path(order)
+
+        item = Dom::Order::ItemRow.first
+        expect(item.total).to have_content("$15.00")
+
+        item.set_quantity_delivered(7)
+        click_button "Update quantities"
+      }
+
+      it "updates the item total" do
+        subject
+
+        item = Dom::Order::ItemRow.first
+        expect(item.total).to have_content("$21.00")
+      end
+
+      it "updates the grand total for the order" do
+        subject
+
+        expect(page).to have_content("Grand Total: $21.00")
+      end
+
+      it "does not update the product inventory" do
+        expect {
+          subject
+        }.to_not change {
+          product.lots.first.reload.quantity
+        }.from(145)
+      end
+    end
+
+    context "invalid input" do
+      before do
+        visit admin_order_path(order)
+
+        item = Dom::Order::ItemRow.first
+        expect(item.total).to have_content("$15.00")
+      end
+
+      it "shows an error for negative values" do
+        item = Dom::Order::ItemRow.first
+        item.set_quantity_delivered("-1")
+        click_button "Update quantities"
+
+        expect(page).to have_content("must be greater than or equal to 0")
+      end
+
+      it "shows an error for non-numerical values" do
+        item = Dom::Order::ItemRow.first
+        item.set_quantity_delivered("bad")
+        click_button "Update quantities"
+
+        expect(page).to have_content("is not a number")
+      end
+
+      it "shows an error for insanely large numbers" do
+        item = Dom::Order::ItemRow.first
+        item.set_quantity_delivered("2147483648")
+        click_button "Update quantities"
+
+        expect(page).to have_content("must be less than 2147483647")
       end
     end
   end
