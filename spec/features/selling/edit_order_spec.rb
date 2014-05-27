@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Editing an order' do
-  let!(:market)          { create(:market, :with_addresses) }
+  let!(:market)          { create(:market, :with_addresses, market_seller_fee: 5, local_orbit_seller_fee: 4) }
   let!(:monday_delivery) { create(:delivery_schedule, day: 1)}
   let!(:seller)          { create(:organization, :seller, markets: [market]) }
   let!(:product)         { create(:product, :sellable, organization: seller)}
@@ -27,6 +27,7 @@ describe 'Editing an order' do
 
         item = Dom::Order::ItemRow.first
         expect(item.total).to have_content("$15.00")
+        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
 
         item.set_quantity_delivered(2)
         click_button "Update quantities"
@@ -45,6 +46,14 @@ describe 'Editing an order' do
         expect(page).to have_content("Grand Total: $6.00")
       end
 
+      it "updates the fees for the order" do
+        subject
+
+        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.00")
+        expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.30")
+        expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.46")
+      end
+
       it "does not update the product inventory" do
         expect {
           subject
@@ -60,6 +69,8 @@ describe 'Editing an order' do
 
         item = Dom::Order::ItemRow.first
         expect(item.total).to have_content("$15.00")
+        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
+        expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$15.00")
 
         item.set_quantity_delivered(7)
         click_button "Update quantities"
@@ -76,6 +87,14 @@ describe 'Editing an order' do
         subject
 
         expect(page).to have_content("Grand Total: $21.00")
+      end
+
+      it "updates the fees for the order" do
+        subject
+
+        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$21.00")
+        expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$1.05")
+        expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$19.11")
       end
 
       it "does not update the product inventory" do
