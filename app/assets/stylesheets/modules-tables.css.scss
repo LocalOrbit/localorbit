@@ -665,12 +665,19 @@ th {
 }
 
 /** Sticky tables (like other sticky things, but sillier */
-.js-sticky {
-  position: absolute;
-  z-index: 6;
-  background: #fff;
+@media screen and (max-height: 767px) {
+  .js-sticky {
+    display: none;
+  }
+}
+@media screen and (min-height: 768px) {
+  .js-sticky {
+    position: absolute;
+    z-index: 6;
+    background: #fff;
 
-  &.js-fixed {
-    position: fixed;
+    &.js-fixed {
+      position: fixed;
+    }
   }
 }

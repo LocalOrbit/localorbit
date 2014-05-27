@@ -2,6 +2,10 @@
 //= depend_on_asset "center-rule@2x.png"
 @import "mixins.css.scss";
 
+body {
+  -webkit-text-size-adjust: none;
+}
+
 .clear-before {
   clear: both;
 }
@@ -46,12 +50,14 @@
   background-color: $link;
   @include gradient(rgba(255,255,255,0.0), rgba(255,255,255,0.13));
   font-size: 14px;
-  &.js-positioned {
+}
+@media screen and (min-height: 768px) {
+  .l-app-header.js-positioned {
     position: fixed;
     top: 0;
     z-index: 100;
   }
-}
+}  
 
 .tab-title {
   width: 50%;
