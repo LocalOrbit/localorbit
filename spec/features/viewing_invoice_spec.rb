@@ -23,6 +23,8 @@ feature "Viewing invoices" do
   scenario "html content" do
     visit admin_invoice_path(order.id)
 
+    expect(page).to have_content("Invoice Number LO-001")
+
     within('.invoice-top') do
       expect(page).to have_content(market.name)
 
@@ -31,8 +33,6 @@ feature "Viewing invoices" do
       expect(page).to have_content(address.city)
       expect(page).to have_content(address.state)
       expect(page).to have_content(address.zip)
-
-      expect(page).to have_content("Invoice Number LO-001")
       expect(page).to have_content("Invoice Date 4/2/2014")
       expect(page).to have_content("Due Date 4/16/2014")
     end
@@ -54,6 +54,8 @@ feature "Viewing invoices" do
 
     visit admin_invoice_path(order.id)
 
+    expect(page).to have_content("Invoice Number LO-001")
+
     within('.invoice-top') do
       expect(page).to have_content(market.name)
 
@@ -63,7 +65,6 @@ feature "Viewing invoices" do
       expect(page).to have_content(address.state)
       expect(page).to have_content(address.zip)
 
-      expect(page).to have_content("Invoice Number LO-001")
       expect(page).to have_content("Invoice Date 4/2/2014")
       expect(page).to have_content("Due Date 4/16/2014")
     end
