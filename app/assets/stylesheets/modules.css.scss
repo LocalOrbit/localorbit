@@ -573,6 +573,7 @@
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    min-width: 140px;
     border: solid 2px #ccc;
     padding: 200px 1em 1em;
     -webkit-border-radius: 10px;
@@ -580,6 +581,7 @@
     border-radius: 10px;
     background: asset_url('rotate.svg') center 10px / 180px auto no-repeat #fff;
     font-size: 16px;
+    text-align: center;
   }
 }
 
