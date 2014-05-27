@@ -18,6 +18,8 @@ describe SellerPaymentGroup do
   let!(:product2) { create(:product, :sellable, organization: seller2) }
   let!(:product3) { create(:product, :sellable, organization: seller2) }
   let!(:product4) { create(:product, :sellable, organization: seller3) }
+  let!(:product5) { create(:product, :sellable, organization: seller4) }
+  let!(:product6) { create(:product, :sellable, organization: seller4) }
 
   let!(:order_for_seller_1) { create(:order, items:[create(:order_item, :delivered, product: product1, quantity: 4)], market: market1, organization: buyer1, delivery: delivery, payment_method: "purchase order", order_number: "LO-001", total_cost: 27.96, placed_at: 19.days.ago) }
   let!(:order_for_sellers_2_and_3) { create(:order, items:[create(:order_item, :delivered, product: product2, quantity: 3), create(:order_item, :delivered, product: product4, quantity: 7)], market: market1, organization: buyer1, delivery: delivery, payment_method: "purchase order", order_number: "LO-002", total_cost: 69.90, placed_at: 6.days.ago, payment_status: "paid") }
@@ -31,6 +33,8 @@ describe SellerPaymentGroup do
   let!(:order_for_seller_2_multi_item_paid) { create(:order, items:[create(:order_item, :delivered, product: product2, quantity: 9), create(:order_item, :delivered, product: product3, quantity: 14)], market: market1, organization: buyer1, delivery: delivery, payment_method: "purchase order", order_number: "LO-010", total_cost: 160.77, placed_at: 3.days.ago) }
   let!(:order_for_sellers_2_and_3_with_2_paid) { create(:order, items:[create(:order_item, :delivered, product: product2, quantity: 3), create(:order_item, :delivered, product: product1, quantity: 7)], market: market1, organization: buyer1, delivery: delivery, payment_method: "purchase order", order_number: "LO-011", total_cost: 69.90, placed_at: 6.days.ago, payment_status: "paid") }
   let!(:order_for_seller_2_buyer_and_seller_paid) { create(:order, items:[create(:order_item, :delivered, product: product3, quantity: 6)], market: market1, organization: buyer1, delivery: delivery, payment_method: "credit card", order_number: "LO-012", total_cost: 41.94, placed_at: 4.days.ago, payment_status: "paid") }
+  # This needs to be the only order for seller 4
+  let!(:order_for_seller_4_partially_delivered) { create(:order, items:[create(:order_item, :delivered, product: product5, quantity: 2), create(:order_item, product: product6, quantity: 4)], market: market1, organization: buyer1, delivery: delivery, payment_method: "purchase order", order_number: "LO-013", total_cost: 41.94, placed_at: 4.days.ago) }
 
   let!(:payments_for_order_for_seller_2_multi_item_paid) { create(:payment, payee: seller2, orders: [order_for_seller_2_multi_item_paid], amount: 160.77) }
   let!(:payments_for_order_for_sellers_2_and_3_with_2_paid) { create(:payment, payee: seller2, orders: [order_for_sellers_2_and_3_with_2_paid], amount: 20.97) }
