@@ -65,6 +65,14 @@ describe SellerOrder do
       it { should eq("canceled") }
     end
 
+    context "when one item is canceled" do
+      it "returns the remaining delivery status" do
+        order.items.first.update(delivery_status: "canceled")
+
+        expect(SellerOrder.new(order, seller1).delivery_status).to eq("pending")
+      end
+    end
+
     context "when all items delivered" do
       before { OrderItem.update_all(delivery_status: "delivered") }
       it { should eq("delivered") }
