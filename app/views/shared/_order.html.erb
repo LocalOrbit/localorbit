@@ -1,10 +1,13 @@
+<%= render "shared/errors", { resource: order } %>
+
+<%= form_for order, url: admin_order_path(order.id), as: :order, method: :put do |f| %>
 <div class="order-info">
   <h1>Order info for <%= order.order_number %></h1>
   <div class="order-info-date">Placed On: <span class="special-content"><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></span></div>
 
   <div class="order-buyer">
     <div>Buyer: <span class="special-content"><%= order.organization.name %></span></div>
-    
+
     <div class="order-address">Billing Address:</div>
     <div class="special-content">
       <%= order.billing_address %>, <%= order.billing_city %>, <%= order.billing_state %> <%= order.billing_zip %><br />
@@ -30,11 +33,13 @@
 <div class="order-data">
   <h2>Items for Delivery</h2>
 
-  <table class="order-summary order-table-1">
+
+  <table class="current-sales-table odd order-table-1">
     <thead>
       <tr>
+        <!-- <th><%= check_box_tag :all_delivered, "yes", false, class: 'check-all', tabindex: -1 %></th> -->
         <th>Product</th>
-        <th>Qty</th>
+        <th>Quantity</th>
         <th>Price</th>
         <th>Discount</th>
         <th>Total</th>
@@ -46,32 +51,44 @@
       </tr>
     </thead>
     <tbody>
-      <% order.items.each do |item| %>
+      <%= f.fields_for :items do |item| %>
       <tr class="order-item-row">
+        <!-- <td><%= check_box_tag "item_ids[]", item.object.id, false, tabindex: -1 %></td> -->
         <td class="name">
-          <span class="product-ordered"><%= item.name %></span> <br />
-          <span class="seller-name">from <%= item.product.organization.name %></span>
+          <span class="product-ordered"><%= item.object.name %></span> <br />
+          <span class="seller-name">from <%= item.object.product.organization.name %></span>
         </td>
         <td class="quantity">
-          <%= item.quantity_delivered || 0 %> <%= item.unit %> (Delivered) <br />
-          <%= item.quantity %> <%= item.unit %> (Ordered)
+          <span><%= item.object.quantity %></span> <%= item.object.unit %> (Ordered)<br />
+          <% if current_user.buyer_only? %>
+            <span><%= item.object.quantity_delivered %></span>
+          <% else %>
+            <%= item.text_field :quantity_delivered %>
+          <% end %> <%= item.object.unit %> (Delivered)
         </td>
-        <td class="price"><%= number_to_currency item.unit_price %></td>
-        <td class="discount"><%= number_to_currency item.discount %></td>
-        <td class="total"><%= number_to_currency item.gross_total %></td>
-        <td class="delivery-status"><%= item.delivery_status.titleize %></td>
-        <td class="payment-status"><%= item.buyer_payment_status.titleize %></td>
+        <td class="price"><%= number_to_currency item.object.unit_price %></td>
+        <td class="discount"><%= number_to_currency item.object.discount %></td>
+        <td class="total"><%= number_to_currency item.object.gross_total %></td>
+        <td class="delivery-status">
+          <%= item.hidden_field :delivery_status %>
+          <%= item.object.delivery_status.titleize %>
+        </td>
+        <td class="payment-status"><%= item.object.buyer_payment_status.titleize %></td>
         <% if !current_user.buyer_only? %>
-          <td class="seller-status"><%= item.seller_payment_status %></td>
+          <td class="seller-status"><%= item.object.seller_payment_status %></td>
         <% end %>
       </tr>
       <% end %>
     </tbody>
   </table>
 
+  <!-- <%= link_to "Mark selected delivered", admin_order_path(order.id), id: 'mark-selected-delivered' %> -->
+  <%= f.submit "Update quantities", class: 'pull-right btn btn--blue btn--update' %>
+
   <% if !current_user.buyer_only? %>
+  <div class="order-totals">
     <h2>Order Totals</h2>
-    <table class="order-summary">
+    <table class="current-sales-table odd">
       <thead>
         <tr>
           <th>Gross Total</th>
@@ -93,5 +110,7 @@
         </tr>
       </tbody>
     </table>
+  </div>
   <% end %>
 </div>
+<% end %>

@@ -65,6 +65,21 @@ describe OrderItem do
       expect(subject).to have(1).error_on(:product)
     end
 
+    it "does not require a quantity_delivered" do
+      expect(subject).to_not have(1).error_on(:quantity_delivered)
+    end
+
+    it "require a quantity_delivered to be greater than 0" do
+      subject.quantity_delivered = -1
+      expect(subject).to have(1).error_on(:quantity_delivered)
+    end
+
+    it "require a quantity_delivered to be less than 2,147,483,647" do
+      subject.quantity_delivered = 2_147_483_648
+      expect(subject).to have(1).error_on(:quantity_delivered)
+    end
+
+
     describe "product_availability" do
       context "quantity is not present" do
         it "only shows the error for quantity" do

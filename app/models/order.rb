@@ -33,9 +33,11 @@ class Order < ActiveRecord::Base
   validates :payment_status, presence: true
   validates :placed_at, presence: true
   validates :total_cost, presence: true
+
   validate :validate_items
 
   before_save :update_paid_at
+  before_save :update_total_cost
 
   scope :recent, -> { order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
@@ -55,6 +57,8 @@ class Order < ActiveRecord::Base
   scope :due_between, lambda { |range| invoiced.where(invoice_due_date: range) }
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
+
+  accepts_nested_attributes_for :items
 
   def self.for_sort(order)
     column, direction = column_and_direction(order)
@@ -212,6 +216,10 @@ class Order < ActiveRecord::Base
     if changes[:payment_status] && changes[:payment_status][1] == "paid"
       self.paid_at = Time.current
     end
+  end
+
+  def update_total_cost
+    self.total_cost = items.inject(0) {|sum, item| sum = sum + item.gross_total }
   end
 
   def self.order_by_order_number(direction)

@@ -9,7 +9,7 @@
 }
 .order-subheading {
   margin: 0;
-  font: bold 20px "Open Sans Condensed", sans-serif; 
+  font: bold 20px "Open Sans Condensed", sans-serif;
 
   + .adr {
     margin: 0 0 3em;
@@ -82,5 +82,13 @@
   margin-bottom: 20px;
 }
 .order-table-1 {
-  margin-bottom: 40px;
+  margin-bottom: 10px;
+
+  .quantity span, .quantity input {
+    width: 50px;
+  }
+}
+
+.order-totals {
+  margin-top: 30px;
 }

@@ -15,8 +15,11 @@ feature "a market manager viewing their dashboard" do
     it "lists all sales for the currently managed market ordered by creation date" do
       product = create(:product, :sellable)
 
-      create(:order, :with_items, order_number: "LO-14-TEST-2", market: market)
-      create(:order, :with_items, total_cost: 50, market: market, placed_at: DateTime.parse("2014-04-01 12:00:00"), order_number: "LO-14-TEST")
+      order_item = create(:order_item, unit_price: 10.00, quantity: 2)
+      create(:order, items: [order_item], order_number: "LO-14-TEST-2", market: market)
+
+      order_item = create(:order_item, unit_price: 25.00, quantity: 2)
+      create(:order, items: [order_item], market: market, placed_at: DateTime.parse("2014-04-01 12:00:00"), order_number: "LO-14-TEST")
 
       product.organization.markets << market
 

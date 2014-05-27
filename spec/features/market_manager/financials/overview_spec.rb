@@ -29,7 +29,8 @@ feature "Market Manager Financial Overview" do
 
     # Order for a different market
     Timecop.travel(Time.current - 32.days) do
-      order = create(:order, :with_items, payment_method: "purchase order", market: market2, total_cost: 5.00)
+      order_item = create(:order_item, unit_price: 2.50, quantity: 2)
+      order = create(:order, items: [order_item], payment_method: "purchase order", market: market2, total_cost: 5.00)
 
       deliver_order(order)
       order.invoice
@@ -39,7 +40,8 @@ feature "Market Manager Financial Overview" do
     # Overdue Order
     # Total for market: (5+7+7)*6.99 = 132.81
     Timecop.travel(Time.current - 32.days) do
-      order = create(:order, :with_items, payment_method: "purchase order", market: market, total_cost: 12.00)
+      order_item = create(:order_item, unit_price: 6.00, quantity: 2)
+      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, total_cost: 12.00)
 
       deliver_order(order)
       order.invoice
@@ -54,7 +56,7 @@ feature "Market Manager Financial Overview" do
 
     Timecop.travel(Time.current - 30.days) do
       paid_po = create(:order, payment_method: "purchase order", market: market, total_cost: 27.96, items:[
-        create(:order_item, quantity: 4, product: peas, payment_seller_fee: 1.00, local_orbit_market_fee: 10.00)
+        create(:order_item, quantity: 1, unit_price: 27.96, product: peas, payment_seller_fee: 1.00, local_orbit_market_fee: 10.00)
       ])
 
       deliver_order(paid_po)
@@ -69,7 +71,7 @@ feature "Market Manager Financial Overview" do
     # (3*6.99) - 99
     Timecop.travel(Time.current - 28.days) do
       order = create(:order, payment_method: "purchase order", market: market, total_cost: 20.97, items:[
-        create(:order_item, quantity: 3, product: peas, payment_seller_fee: 1.00)
+        create(:order_item, quantity: 1, unit_price: 20.97, product: peas, payment_seller_fee: 1.00)
       ])
 
       deliver_order(order)
@@ -79,7 +81,7 @@ feature "Market Manager Financial Overview" do
 
     Timecop.travel(Time.current - 23.days) do
       order = create(:order, payment_method: "purchase order", market: market, total_cost: 48.93, items:[
-        create(:order_item, quantity: 7, product: peas, payment_seller_fee: 3)
+        create(:order_item, quantity: 1, unit_price: 48.93, product: peas, payment_seller_fee: 3)
       ])
 
       deliver_order(order)
@@ -88,7 +90,8 @@ feature "Market Manager Financial Overview" do
     end
 
     Timecop.travel(Time.current - 16.days) do
-      order = create(:order, :with_items, payment_method: "purchase order", market: market, total_cost: 302.77)
+      order_item = create(:order_item, quantity: 1, unit_price: 302.77, product: peas, payment_seller_fee: 1)
+      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, total_cost: 302.77)
 
       deliver_order(order)
       order.invoice
@@ -96,11 +99,13 @@ feature "Market Manager Financial Overview" do
     end
 
     # Uninvoiced Purchase Orders
-    order = create(:order, :with_items, payment_method: "purchase order", market: market, total_cost: 12.99)
+    order_item = create(:order_item, unit_price: 12.99, quantity: 1)
+    order = create(:order, items: [order_item], payment_method: "purchase order", market: market, total_cost: 12.99)
     deliver_order(order)
     order.save!
 
-    order = create(:order, :with_items, payment_method: "purchase order", market: market, total_cost: 86.84)
+    order_item = create(:order_item, unit_price: 43.42, quantity: 2)
+    order = create(:order, items: [order_item], payment_method: "purchase order", market: market, total_cost: 86.84)
     deliver_order(order)
     order.save!
   end

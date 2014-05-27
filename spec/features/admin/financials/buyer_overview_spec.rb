@@ -16,13 +16,16 @@ feature "Buyer Financial Overview" do
     # Overdue Order
     Time.zone = "Eastern Time (US & Canada)"
     Timecop.travel(Time.current - 32.days) do
-      order = create(:order, :with_items, total_cost: 53.99, payment_method: "purchase order", market: market, organization: buyer)
+
+      order_item = create(:order_item, unit_price: 53.99, quantity: 1)
+      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       order.invoice
       deliver_order(order)
       order.save!
 
-      order = create(:order, :with_items, total_cost: 102.99, payment_method: "purchase order", market: market, organization: buyer)
+      order_item = create(:order_item, unit_price: 102.99, quantity: 1)
+      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       order.invoice
       deliver_order(order)
@@ -30,28 +33,32 @@ feature "Buyer Financial Overview" do
     end
 
     Timecop.travel(Time.current - 7.days) do
-      order = create(:order, :with_items, total_cost: 12.82, payment_method: "purchase order", market: market, organization: buyer)
+      order_item = create(:order_item, unit_price: 6.41, quantity: 2)
+      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       order.invoice
       deliver_order(order)
     end
 
     Timecop.travel(Time.current - 6.days) do
-      @to_be_paid = create(:order, :with_items, total_cost: 82.22, payment_method: "purchase order", market: market, organization: buyer)
+      order_item = create(:order_item, unit_price: 41.11, quantity: 2)
+      @to_be_paid = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       @to_be_paid.invoice
       deliver_order(@to_be_paid)
     end
 
     Timecop.travel(Time.current - 6.days) do
-      order = create(:order, :with_items, total_cost: 92.86, payment_method: "purchase order", market: market, organization: buyer)
+      order_item = create(:order_item, unit_price: 46.43, quantity: 2)
+      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       deliver_order(order)
       pay_order(order)
     end
 
     Timecop.travel(Time.current - 6.days) do
-      order = create(:order, :with_items, total_cost: 300.02, payment_method: "purchase order", market: market, organization: buyer)
+      order_item = create(:order_item, unit_price: 150.01, quantity: 2)
+      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       deliver_order(order)
       pay_order(order)
