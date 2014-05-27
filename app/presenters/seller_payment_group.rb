@@ -23,6 +23,7 @@ class SellerPaymentGroup
     organizations = Organization.find(grouped_orders.each_key.map(&:first).uniq).index_by(&:id)
 
     seller_payment_groups = grouped_orders.map {|(org_id, _), orders| new(organizations[org_id], orders) }
+    seller_payment_groups.reject! {|group| group.orders.empty? }
 
     # This sorts the list by seller organization name with a secondary sort on market name
     seller_payment_groups.sort_by {|s| "#{s.name} / #{s.market_name}" }
