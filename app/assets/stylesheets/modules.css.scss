@@ -161,7 +161,6 @@
   }
 
 }
-
   .is-open > .dropdown {
     display: block;
   }
@@ -509,6 +508,9 @@
 
 @media screen and (max-width: 800px) {
   .nav--admin {
+    .dropdown > li {
+      font-size: 15px;
+    }
     .font-icon {
       display: none;
     }
