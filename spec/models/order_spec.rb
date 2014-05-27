@@ -488,4 +488,21 @@ describe Order do
       expect(Order.joins(:items).delivered).not_to include(undelivered_order)
     end
   end
+
+  describe "#update_total_cost" do
+    let(:market)       { create(:market) }
+    let(:organization) { create(:organization, markets: [market]) }
+    let!(:user)        { create(:user, :admin) }
+    let!(:order)       { create(:order, :with_items, organization: organization, market: market) }
+    let!(:order_item)  { order.items.first }
+
+    it "updates the total cost on order save" do
+      expect(order.total_cost.to_f).to eql(6.99)
+
+      order_item.update(unit_price: 3.99)
+      order.save!
+
+      expect(order.reload.total_cost.to_f).to eql(3.99)
+    end
+  end
 end

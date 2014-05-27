@@ -12,7 +12,8 @@ feature "Viewing invoices" do
 
   let!(:product) { create(:product, :sellable, organization: seller) }
 
-  let!(:order) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-001", total_cost: 210, placed_at: Time.zone.parse("2014-04-01"), invoiced_at: Time.zone.parse("2014-04-02"), invoice_due_date: Time.zone.parse("2014-04-16")) }
+  let!(:order_item) { create(:order_item, product: product, unit_price: 210.00) }
+  let!(:order) { create(:order, items:[order_item], market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-001", placed_at: Time.zone.parse("2014-04-01"), invoiced_at: Time.zone.parse("2014-04-02"), invoice_due_date: Time.zone.parse("2014-04-16")) }
 
   before do
     switch_to_subdomain(market.subdomain)

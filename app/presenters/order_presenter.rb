@@ -56,4 +56,11 @@ module OrderPresenter
       totals
     end
   end
+
+  def errors
+    @order.errors
+  end
+
+  def items_attributes=(values)
+  end
 end

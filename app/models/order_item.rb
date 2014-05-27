@@ -10,8 +10,8 @@ class OrderItem < ActiveRecord::Base
   validates :product, presence: true
   validates :name, presence: true
   validates :seller_name, presence: true
-  validates :quantity, presence: true, numericality: { greater_than_or_equal_to: 0}
-  validates :quantity_delivered, numericality: { greater_than_or_equal_to: 0, less_than: 2_147_483_647}, if: "quantity_delivered.present?"
+  validates :quantity, presence: true
+  validates :quantity_delivered, numericality: { greater_than_or_equal_to: 0, less_than: 2_147_483_647}, allow_blank: true
   validates :unit, presence: true
   validates :unit_price, presence: true
   validates :delivery_status, presence: true, inclusion: {in: DELIVERY_STATUSES}

@@ -21,19 +21,24 @@ feature "Payment history" do
   let!(:cc_account) { create(:bank_account, :credit_card, last_four: "7732", balanced_uri: cc_balanced_uri, bankable: buyer) }
 
   before do
-    create(:order, :with_items, organization: buyer, payment_method: "purchase order", total_cost: 13.00)
-    create(:order, :with_items, organization: buyer, payment_method: "ach", total_cost: 72.00)
-    create(:order, :with_items, organization: buyer, payment_method: "credit card", total_cost: 129.00)
+    order_item = create(:order_item, unit_price: 6.50, quantity: 2)
+    create(:order, items: [order_item], organization: buyer, payment_method: "purchase order", total_cost: 13.00)
+
+    order_item = create(:order_item, unit_price: 36.00, quantity: 2)
+    create(:order, items: [order_item], organization: buyer, payment_method: "ach", total_cost: 72.00)
+
+    order_item = create(:order_item, unit_price: 129.00, quantity: 1)
+    create(:order, items: [order_item], organization: buyer, payment_method: "credit card", total_cost: 129.00)
 
     orders = []
     6.times do |i|
+      order_item = create(:order_item, unit_price: 20.00 + i, quantity: 1)
       orders << create(:order,
-                       :with_items,
+                       items: [order_item],
                        organization: buyer,
                        payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
                        payment_status: "paid",
-                       order_number: "LO-01-234-4567890-#{i}",
-                       total_cost: 20.00 + i)
+                       order_number: "LO-01-234-4567890-#{i}")
     end
 
     orders[1..5].each_with_index do |order, i|
