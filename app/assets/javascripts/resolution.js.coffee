@@ -7,9 +7,9 @@ $ ->
       orientation = "landscape"
 
   set_viewport = ->
-    if window.innerWidth <= 960 && find_orientation == "landscape"
+    if window.innerWidth <= 960 && find_orientation() == "landscape"
       document.getElementById("viewport").setAttribute("content", "width=960");   
-    else
+    else if window.innerWidth <= 960
       document.getElementById("viewport").setAttribute("content", "width=device-width, initial-scale=1.0");   
 
   $(window).on "rotate, resize", ->
