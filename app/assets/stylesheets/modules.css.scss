@@ -556,7 +556,7 @@
 .orientation-warning {
   display: none;
 }
-@media screen and (max-width: 801px) and (orientation: portrait) {
+@media screen and (max-device-width: 767px) and (orientation: portrait) {
   .overlay {
     z-index: 50;
     display: block;
