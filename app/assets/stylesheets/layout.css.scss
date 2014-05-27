@@ -2,6 +2,10 @@
 //= depend_on_asset "center-rule@2x.png"
 @import "mixins.css.scss";
 
+body {
+  -webkit-text-size-adjust: none;
+}
+
 .clear-before {
   clear: both;
 }
