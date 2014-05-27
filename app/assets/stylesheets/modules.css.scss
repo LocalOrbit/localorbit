@@ -161,7 +161,6 @@
   }
 
 }
-
   .is-open > .dropdown {
     display: block;
   }
@@ -509,6 +508,9 @@
 
 @media screen and (max-width: 800px) {
   .nav--admin {
+    .dropdown > li {
+      font-size: 15px;
+    }
     .font-icon {
       display: none;
     }
@@ -530,7 +532,7 @@
 }
 
 .overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -548,6 +550,36 @@
   }
   &.is-modal {
     z-index: 50;
+  }
+}
+
+.orientation-warning {
+  display: none;
+}
+@media screen and (max-device-width: 767px) and (orientation: portrait) {
+  .overlay {
+    z-index: 50;
+    display: block;
+    background: rgba(200,200,200,0.95);
+  }
+  .orientation-warning {
+    position: fixed;
+    z-index: 50;
+    top: 50%;
+    left: 50%;
+    display: block;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border: solid 2px #ccc;
+    padding: 200px 1em 1em;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background: asset_url('rotate.svg') center 10px / 180px auto no-repeat #fff;
+    font-size: 16px;
   }
 }
 
