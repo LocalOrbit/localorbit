@@ -28,11 +28,13 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def shipping_address
-    shipping_location.address
+    shipping_location.address if shipping_location
   end
 
   def shipping_city_state_zip
-    "#{shipping_location.city}, #{shipping_location.state} #{shipping_location.zip}"
+    if shipping_location
+      "#{shipping_location.city}, #{shipping_location.state} #{shipping_location.zip}"
+    end
   end
 
   def shipping_phone
