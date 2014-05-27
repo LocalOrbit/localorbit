@@ -20,11 +20,12 @@
 
     .column {
       display: inline-block;
+      padding: 0 10px 0 0;
       text-align: left;
       vertical-align: top;
     }
-    .column + .column {
-      padding: 0  0 0 10px;
+    .column:last-child {
+      padding-right: 0;
     }
     .column--half { width: 50%; }
     .column--fourth { width: 25%; }
@@ -36,7 +37,7 @@
     .left-padded { padding-left: 20px; }
 
     h1 {
-      margin: 0 0 1em;
+      margin: 0 0 .5em;
       font: bold 30px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
     }
     h2 {
@@ -100,10 +101,6 @@
         font-style: italic;
       }
 
-    .buyer-name {
-      margin: 0;
-      font: bold 24px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
-    }
     .date {
       font-family: "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
       font-weight: bold;
@@ -129,9 +126,15 @@
       .vcard-buyer {
         margin-bottom: 25px;
       }
-    .org-from, .invoice-num, .po-num {
+    .buyer-name, .org-from, .invoice-num, .po-num {
       margin: 0;
       font: bold 20px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
+    }
+    .invoice-num,
+    .buyer-name,
+    .org-from {
+      word-break: break-all;
+      word-wrap: break-word;
     }
     @media screen {
       html {
@@ -150,6 +153,10 @@
 
 <body>
   <h1>Invoice</h1>
+  <h2>Invoice Number</h2>
+  <p class="invoice-num"><%= @invoice.order_number %></p><br>
+  <%= "<h2>Purchase Order Number</h2><p class=\"po-num\">#{@invoice.payment_note}</p>".html_safe if @invoice.payment_note.present? %>
+  
   <div class="invoice-top row">
     <div class="market-info column column--half">
       <%=
@@ -168,10 +175,17 @@
         </div>
       </div>
     </div
-    ><div class="invoice-info column column--fourth">
-      <h2>Invoice Number</h2>
-      <p class="invoice-num"><%= @invoice.order_number %></p>
-      <%= "<h2>Purchase Order Number</h2><p class=\"po-num\">#{@invoice.payment_note}</p>".html_safe if @invoice.payment_note.present? %>
+    ><div class="column column--fourth">
+      <div class="vcard vcard-buyer">
+        <h2>To</h2>
+        <h3 class="fn org buyer-name"><%= @invoice.billing_organization_name %></h3>
+        <div>
+          <%= @invoice.billing_address %><br>
+          <%= @invoice.billing_city %>,
+          <%= @invoice.billing_state %>
+          <%= @invoice.billing_zip %>
+        </div>
+      </div>
     </div
     ><div class="column column--fourth">
       <div class="due-date">
@@ -183,17 +197,6 @@
     </div>
   </div>
 </div>
-<div class="vcard vcard-buyer">
-  <h2>To</h2>
-  <h3 class="fn org buyer-name"><%= @invoice.billing_organization_name %></h3>
-      <div>
-        <%= @invoice.billing_address %><br>
-        <%= @invoice.billing_city %>,
-        <%= @invoice.billing_state %>
-        <%= @invoice.billing_zip %>
-      </div>
-  </div>
-
   <table>
     <caption>Order Detail</caption>
     <thead>
