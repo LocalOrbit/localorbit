@@ -506,10 +506,11 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .nav--admin {
     .dropdown > li {
       font-size: 15px;
+      line-height: 1.4;
     }
     .font-icon {
       display: none;
