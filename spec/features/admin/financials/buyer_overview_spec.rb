@@ -34,15 +34,13 @@ feature "Buyer Financial Overview" do
 
       order.invoice
       deliver_order(order)
-      pay_order(order)
     end
 
     Timecop.travel(Time.current - 6.days) do
-      order = create(:order, :with_items, total_cost: 82.22, payment_method: "purchase order", market: market, organization: buyer)
+      @to_be_paid = create(:order, :with_items, total_cost: 82.22, payment_method: "purchase order", market: market, organization: buyer)
 
-      order.invoice
-      deliver_order(order)
-      pay_order(order)
+      @to_be_paid.invoice
+      deliver_order(@to_be_paid)
     end
 
     Timecop.travel(Time.current - 6.days) do
@@ -72,5 +70,20 @@ feature "Buyer Financial Overview" do
     expect(money_out_row("Overdue").amount).to eql("$156.98")
     expect(money_out_row("Due").amount).to eql("$95.04")
     expect(money_out_row("Purchase Orders").amount).to eql("$392.88")
+  end
+
+  scenario "Buyer's 'due' items update when invoices get marked as paid" do
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(user)
+    click_link "Dashboard"
+    click_link "Financials"
+
+    expect(money_out_row("Due").amount).to eql("$95.04")
+    pay_order(@to_be_paid)
+
+    click_link "Dashboard"
+    click_link "Financials"
+
+    expect(money_out_row("Due").amount).to eql("$12.82")
   end
 end
