@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>Label</title>
+  <link href="https//fonts.googleapis.com/css?family=Open+Sans:400,700,300" rel="stylesheet" type="text/css">
+  <meta name="pdfkit-print_media_type" content="true">
+  <meta name="pdfkit-margin_top" content="0in">
+  <meta name="pdfkit-margin_right" content="0in">
+  <meta name="pdfkit-margin_bottom" content="0in">
+  <meta name="pdfkit-margin_left" content="0in">
+  <style type="text/css">
+    body {
+      color: #000;
+      font-size: 0.1px;
+    }
+    h1, h2 {
+      margin: 0;
+    }
+    hr {
+      position: relative;
+      height: 0;
+      padding: 0 0 1px;
+      border: 0;
+      margin: 1em 10%;
+      color: #ccc;
+      background: #ccc;
+    }
+    .page {
+      text-align: center;
+      page-break-after: always;
+    }
+    .label-wrap {
+      position: relative;
+      display: inline-block;
+      width: 4in;
+      height: 4in;
+      margin: 0 auto;
+      outline: dashed 1px #ccc;
+      background: #fff;
+      vertical-align: top;
+    }
+      .label-wrap:after {
+        position: relative;
+        display: inline-block;
+        width: 0;
+        height: 100%;
+        content: '';
+        vertical-align: middle;
+      }
+      .label {
+        display: inline-block;
+        width: 99.99%;
+        vertical-align: middle;
+      }
+    .two-up .label-wrap {
+      width: 7.5in;
+      height: 4.5in;
+    }
+      .two-up .product-name {
+        font-size: .6in;
+      }
+    .two-by-two .label-wrap {
+      width: 3.75in;
+      height: 4.5in;
+    }
+      .two-by-two .product-name {
+        margin-bottom: .2em;
+        font-size: .4in;
+      }
+
+    .product-name {
+      margin: 0 5% .1em;
+      font: bold .5in/1.2 'Open Sans', sans-serif;
+    }
+
+    .seller-name {
+      font: normal .4in 'Open Sans', sans-serif;
+    }
+    @media print {
+      .two-up .label-wrap {
+        width: 8.5in;
+        height: 5.5in;
+      }
+      .two-by-two {
+        margin: .5in 0 0 .5in;
+      }
+        .two-by-two .label-wrap {
+          width: 3.57in;
+          height: 5in;
+        }
+    }
+    @media only screen {
+      body {
+        background: #ccc;
+      }
+      .page {
+        width: 7.5in;
+        height: 9in;
+        padding: 1in .5in;
+        margin: 1in auto;
+        background: #f1f1f1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page foursquare">
+    <div class="label-wrap">
+      <div class="label">
+        <h1 class="product-name">Product Name</h1>
+        <hr>
+        <h2 class="seller-name">Seller Name</h2>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Two up page (i.e. Two labels) -->
+  <div class="page two-up">
+    <div class="label-wrap">
+      <div class="label">
+        <h1 class="product-name">Product Name</h1>
+        <hr>
+        <h2 class="seller-name">Seller Name</h2>
+      </div>
+    </div>    
+    <div class="label-wrap">
+      <div class="label">
+        <h1 class="product-name">Product Name</h1>
+        <hr>
+        <h2 class="seller-name">Seller Name</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- two by two page (i.e. 4 labels) -->
+  <div class="page two-by-two">
+    <div class="label-wrap">
+      <div class="label">
+        <h1 class="product-name">Product Name</h1>
+        <hr>
+        <h2 class="seller-name">Seller Name</h2>
+      </div>
+    </div>
+    <div class="label-wrap">
+      <div class="label">
+        <h1 class="product-name">Product Name</h1>
+        <hr>
+        <h2 class="seller-name">Seller Name</h2>
+      </div>
+    </div>
+    <div class="label-wrap">
+      <div class="label">
+        <h1 class="product-name">Longer Product Name</h1>
+        <hr>
+        <h2 class="seller-name">Seller Name</h2>
+      </div>
+    </div>
+    <div class="label-wrap">
+      <div class="label">
+        <h1 class="product-name">Product Name</h1>
+        <hr>
+        <h2 class="seller-name">Seller Name</h2>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

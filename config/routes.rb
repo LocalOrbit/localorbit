@@ -32,6 +32,8 @@ Rails.application.routes.draw do
       get :payment_options
     end
 
+    resources :labels, only: [:index, :show]
+    
     get "financials" => "financials#index"
     namespace :financials do
       resource  :overview, only: [:show]
