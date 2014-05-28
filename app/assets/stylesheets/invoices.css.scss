@@ -18,6 +18,7 @@
   .column:last-child {
     padding-right: 0;
   }
+  .column--three-fourths { width: 75%; }
   .column--half { width: 50%; }
   .column--fourth { width: 25%; }
 
@@ -133,6 +134,9 @@
     .l-app-header, .l-app-footer,
     .logo-link, .nav--main, .nav--admin, .tab-header, .teflon {
       display: none;
+    }
+    .logo {
+      display: block;
     }
   }
 }

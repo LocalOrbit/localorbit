@@ -1,10 +1,22 @@
 <div class="invoices-wrapper">
   <h1>Invoice</h1>
-  <h2>Invoice Number</h2>
-  <p class="invoice-num"><%= invoice.order_number %></p><br>
-  <%= "<h2>Purchase Order Number</h2><p class=\"po-num\">#{invoice.payment_note}</p><br>".html_safe if invoice.payment_note.present? %>
 
-  <div class="invoice-top row">
+  <div class="row invoice-basics">
+    <div class="column column--three-fourths">
+      <h2>Invoice Number</h2>
+      <p class="invoice-num"><%= invoice.order_number %></p><br>
+      <%= "<h2>Purchase Order Number</h2><p class=\"po-num\">#{invoice.payment_note}</p><br>".html_safe if invoice.payment_note.present? %>
+    </div><div class="column column--fourth">
+      <div class="due-date">
+        <h2>Due Date</h2>
+        <%= invoice.invoice_due_date.strftime("%-m/%-d/%Y") %>
+      </div>
+      <h2 class="inline">Invoice Date</h2>
+      <span class="date"><%= invoice.invoiced_at.strftime("%-m/%-d/%Y") %></span>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="market-info column column--half">
       <%=
       if market.logo
@@ -22,7 +34,7 @@
         </div>
       </div>
     </div
-    ><div class="column column--fourth">
+    ><div class="column column--half">
       <div class="vcard vcard-buyer">
         <h2>To</h2>
         <h3 class="fn org buyer-name"><%= invoice.billing_organization_name %></h3>
@@ -33,14 +45,6 @@
           <%= invoice.billing_zip %>
         </div>
       </div>
-    </div
-    ><div class="column column--fourth">
-      <div class="due-date">
-        <h2>Due Date</h2>
-        <%= invoice.invoice_due_date.strftime("%-m/%-d/%Y") %>
-      </div>
-      <h2 class="inline">Invoice Date</h2>
-      <span class="date"><%= invoice.invoiced_at.strftime("%-m/%-d/%Y") %></span>
     </div>
   </div>
   <table>
