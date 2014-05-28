@@ -11,14 +11,6 @@ GIT
       polyamorous (~> 1.0.0)
 
 GIT
-  remote: git://github.com/bmabey/email-spec.git
-  revision: 65d6ffd7f4cc8d6b52e210b48136d57a4beac9a1
-  specs:
-    email_spec (1.6.0)
-      launchy (~> 2.1)
-      mail (~> 2.2)
-
-GIT
   remote: git://github.com/collectiveidea/acts_as_geocodable.git
   revision: dc880018ab82a0d9fb2b0f950683907ce1e2cc58
   specs:
@@ -148,6 +140,9 @@ GEM
       activemodel (>= 3.0)
       activesupport (>= 3.0)
       request_store (~> 1.0.3)
+    email_spec (1.6.0)
+      launchy (~> 2.1)
+      mail (~> 2.2)
     erubis (2.7.0)
     excon (0.33.0)
     execjs (2.1.0)
@@ -413,7 +408,7 @@ DEPENDENCIES
   domino
   dragonfly-s3_data_store
   draper
-  email_spec!
+  email_spec
   factory_girl_rails
   figaro (~> 1.0.0.rc1)
   font_assets
