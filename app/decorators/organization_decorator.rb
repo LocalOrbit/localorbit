@@ -38,7 +38,7 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def shipping_phone
-    shipping_location.phone
+    shipping_location.phone if shipping_location
   end
 
   def credit_cards_available?
