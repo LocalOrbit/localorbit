@@ -1,7 +1,15 @@
 module Admin::Financials
   class InvoicesController < AdminController
     def index
-      @orders = Order.orders_for_seller(current_user).uninvoiced.order('orders.placed_at').page(params[:page]).per(params[:per_page])
+      @orders = if current_user.buyer_only?
+        Order.orders_for_buyer(current_user).invoiced
+      else
+        Order.orders_for_seller(current_user).uninvoiced
+      end.order('orders.placed_at').page(params[:page]).per(params[:per_page])
+    end
+
+    def show
+      @order = BuyerOrder.new(Order.find(params[:id]))
     end
 
     def create
@@ -12,5 +20,6 @@ module Admin::Financials
       message = "Invoice sent for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(', ')}. Invoices can be downloaded on the Enter Receipts page"
       redirect_to admin_financials_invoices_path, notice: message
     end
+
   end
 end
