@@ -1,5 +1,6 @@
 <%= render "admin/financials/header" %>
-<h2>Payment History</h2>
+<%= link_to "#{svg_icon} Export CSV".html_safe, admin_financials_payments_path(format: :csv, page: 1, per_page: 0), class: 'export todo pull-right' %>
+<h1>Payment History</h1>
 
 <%= search_form_for @payment_history.q, url: admin_financials_payments_path do |f| %>
   <%= f.label :orders_order_number_cont %>
@@ -57,8 +58,6 @@
     <% end %>
   </tbody>
 </table>
-
-<%= link_to "Export CSV", admin_financials_payments_path(format: :csv, page: 1, per_page: 0) %>
 
 <%= paginate @payment_history.payments %>
 
