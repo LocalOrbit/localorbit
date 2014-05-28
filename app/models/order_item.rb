@@ -109,8 +109,12 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_quantity_delivered
-    if delivery_status_changed? && delivery_status == "delivered"
-      self.quantity_delivered ||= quantity
+    if delivery_status_changed?
+      if delivery_status == "delivered"
+        self.quantity_delivered ||= quantity
+      elsif delivery_status == "canceled"
+        self.quantity_delivered = 0
+      end
     end
   end
 end

@@ -31,6 +31,13 @@ describe OrderItem do
 
       expect(subject.reload.quantity_delivered).to eql(8)
     end
+
+    it "sets quantity_delivered to 0 when changed to 'canceled'" do
+      subject.delivery_status = "canceled"
+      subject.save!
+
+      expect(subject.reload.quantity_delivered).to eql(0)
+    end
   end
 
   context "validations" do
