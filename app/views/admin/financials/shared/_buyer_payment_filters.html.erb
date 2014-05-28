@@ -1,0 +1,17 @@
+<%= search_form_for payment_history.q, url: admin_financials_payments_path do |f| %>
+
+  <%= f.label :orders_order_number_cont %>
+  <%# NOTE: Do not change the whitespace on the following line %>
+  <%= f.search_field :orders_order_number_cont, placeholder: "Search Payments" -%><%= f.submit "Search", class: "btn--end" %>
+
+
+  <%# <%= f.label :orders_order_number_cont %1> %>
+  <span class="preserve-alignment">
+    <%= datetime_field_tag "q[updated_at_date_gteq]", payment_history.start_date, class: 'datepicker' %><a href="#q_updated_at_date_gteq" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+  </span>
+  <span class="preserve-alignment">
+    <%= datetime_field_tag "q[updated_at_date_lteq]", payment_history.end_date, class: 'datepicker' %><a href="#q_updated_at_date_lteq" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+  </span>
+  <%= f.submit "Update", class: "btn--small" %>
+<% end %>
+
