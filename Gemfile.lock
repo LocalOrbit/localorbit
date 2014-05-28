@@ -12,9 +12,9 @@ GIT
 
 GIT
   remote: git://github.com/bmabey/email-spec.git
-  revision: 8f862c22413fe4cb220a8dac6b9206b8b46d1148
+  revision: 65d6ffd7f4cc8d6b52e210b48136d57a4beac9a1
   specs:
-    email_spec (1.5.0)
+    email_spec (1.6.0)
       launchy (~> 2.1)
       mail (~> 2.2)
 
@@ -150,7 +150,7 @@ GEM
       request_store (~> 1.0.3)
     erubis (2.7.0)
     excon (0.33.0)
-    execjs (2.0.2)
+    execjs (2.1.0)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.4.1)
@@ -184,7 +184,7 @@ GEM
       rack
     formatador (0.2.5)
     fssm (0.2.10)
-    heroku (3.8.1)
+    heroku (3.8.2)
       heroku-api (~> 0.3.17)
       launchy (>= 0.3.2)
       netrc (~> 0.7.7)
@@ -365,7 +365,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     thor (0.19.1)
-    thread_safe (0.3.3)
+    thread_safe (0.3.4)
     tilt (1.4.1)
     timecop (0.7.1)
     treetop (1.4.15)
@@ -377,7 +377,7 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     underscore-rails (1.6.0)
-    vcr (2.9.1)
+    vcr (2.9.2)
     warden (1.2.3)
       rack (>= 1.0)
     webmock (1.18.0)
