@@ -12,15 +12,14 @@ describe 'Editing an order' do
   let!(:order_item) { create(:order_item, product: product, quantity: 5, unit_price: 3.00) }
   let!(:order)      { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item])}
 
-  let!(:user)       { create(:user, organizations: [seller]) }
-
-
-  before do
-    switch_to_subdomain(market.subdomain)
-    sign_in_as(user)
-  end
-
   context "quantity delivered" do
+    let!(:user)       { create(:user, organizations: [seller]) }
+
+    before do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+    end
+
     context "less then ordered" do
       subject {
         visit admin_order_path(order)
@@ -136,6 +135,73 @@ describe 'Editing an order' do
         click_button "Update quantities"
 
         expect(page).to have_content("must be less than 2147483647")
+      end
+    end
+  end
+
+  context "order notes" do
+    context "buyer" do
+      let!(:user)       { create(:user, organizations: [buyer]) }
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        visit admin_order_path(order)
+      end
+
+      it "can not access the path" do
+        expect(page.status_code).to eq(404)
+      end
+    end
+
+    context "seller" do
+      let!(:user)       { create(:user, organizations: [seller]) }
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        visit admin_order_path(order)
+      end
+
+      it "can not see order notes" do
+        expect(page).to_not have_field("Notes")
+      end
+    end
+
+
+    context "market manager" do
+      let!(:user)       { create(:user, managed_markets: [market]) }
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        visit admin_order_path(order)
+      end
+
+      it "saves a note on the order" do
+        fill_in "Notes", with: "This is a test note"
+        click_button "Save Notes"
+
+        expect(page).to have_content("Order successfully updated")
+        expect(find_field("Notes")).to have_content("This is a test note")
+      end
+    end
+
+    context "admin" do
+      let!(:user)       { create(:user, :admin) }
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        visit admin_order_path(order)
+      end
+
+      it "saves a note on the order" do
+        fill_in "Notes", with: "This is a test note"
+        click_button "Save Notes"
+
+        expect(page).to have_content("Order successfully updated")
+        expect(find_field("Notes")).to have_content("This is a test note")
       end
     end
   end
