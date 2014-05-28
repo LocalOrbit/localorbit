@@ -58,6 +58,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta2'
+  gem 'rspec-collection_matchers'
   gem 'pry-rails'
   gem 'pry-remote'
   gem 'launchy'
