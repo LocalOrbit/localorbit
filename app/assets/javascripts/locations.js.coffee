@@ -19,4 +19,3 @@ $ ->
     form.submit()
 
   EditTable.build "#edit_addresses"
-

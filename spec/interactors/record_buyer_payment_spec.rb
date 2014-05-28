@@ -10,7 +10,7 @@ describe RecordBuyerPayment do
 
   let!(:product) { create(:product, :sellable, organization: seller) }
 
-  let!(:order1) { create(:order, items: [create(:order_item, product: product)], market: market, organization: buyer, payment_method: "purchase order", order_number: "LO-001", total_cost: 210, placed_at: 19.days.ago, invoiced_at: 18.days.ago, invoice_due_date: 4.days.ago) }
+  let!(:order1) { create(:order, items: [create(:order_item, product: product, unit_price: 210.00, quantity: 1)], market: market, organization: buyer, payment_method: "purchase order", order_number: "LO-001", placed_at: 19.days.ago, invoiced_at: 18.days.ago, invoice_due_date: 4.days.ago) }
 
   let(:run_payment) { RecordBuyerPayment.perform(order: order1, payment_params: {payment_method: "check", amount: "210", note: "Check #6341"}) }
 

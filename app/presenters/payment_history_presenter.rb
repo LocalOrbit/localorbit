@@ -29,10 +29,15 @@ class PaymentHistoryPresenter
   end
 
   def initialize(payments, search, page, per_page)
-    @start_date = search.try(:fetch, :updated_at_date_gteq)
-    @end_date = search.try(:fetch, :updated_at_date_lteq)
+    @start_date = format_date(search.try(:fetch, :updated_at_date_gteq))
+    @end_date = format_date(search.try(:fetch, :updated_at_date_lteq))
 
     @q = payments.search(search)
     @payments = @q.result.page(page).per(per_page)
+  end
+
+  private
+  def format_date(date_string)
+    date_string.present? ? Date.parse(date_string) : nil
   end
 end

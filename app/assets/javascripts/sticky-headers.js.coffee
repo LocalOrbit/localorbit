@@ -9,10 +9,13 @@ $ ->
     while i < index
       height += stick_heights[i]
       i++
-    if find_scrolly() >= scroll_point - height
-      $(stickable).addClass('js-fixed').css({'top': height})
-    else
-      $(stickable).removeClass('js-fixed').css({'top': ""})
+      if window.innerHeight >= 768
+        if find_scrolly() >= scroll_point - height
+          $(stickable).addClass('js-fixed').css({'top': height})
+        else
+          $(stickable).removeClass('js-fixed').css({'top': ""})
+      else
+        $(stickable).removeClass('js-fixed').css({'top': ""})
 
   find_scrolly  = ->
     if window.pageYOffset != undefined

@@ -109,6 +109,7 @@ FactoryGirl.define do
   end
 
   factory :order_item do
+    product factory: [:product, :sellable]
     sequence(:name) {|n| product.name || "Order Item #{n}"}
     seller_name         "Old McDonald"
     quantity            1

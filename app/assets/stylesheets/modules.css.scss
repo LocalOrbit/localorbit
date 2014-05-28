@@ -506,11 +506,16 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   .nav--admin {
     .dropdown > li {
       font-size: 15px;
+      line-height: 1.6;
     }
+  }
+}
+@media screen and (max-width: 800px) {
+  .nav--admin {
     .font-icon {
       display: none;
     }
@@ -689,9 +694,11 @@
   border-bottom: solid 1px #cbcbcb;
   margin: 0 -20px 30px;
 }
+@media screen and (min-height: 768px) {
   .js-fixed .tabs-wrapper {
     margin-bottom: 0;
   }
+}
 .tabs {
   position: relative;
   z-index: 1;
@@ -758,14 +765,16 @@
     }
   }
 
-  &.js-positioned {
-    padding: 0 20px;
-    margin-top: 0;
-  }
   .l-page-header {
     margin: 0;
   }
 }
+@media screen and (min-height: 768px) {
+  .tab-header.js-positioned {
+    padding: 0 20px;
+    margin-top: 0;
+  }
+}  
 
 .tab {
   position: relative;
@@ -1327,42 +1336,49 @@ label ~ .tooltip {
 .cling-wrap {
   overflow: hidden;
 }
-.tab-header,
-.sub-header {
-  > .l-constraint {
-    background: #fff;
+@media screen and (max-height: 767px){
+  .teflon {
+    display: none;
   }
-  &.stickable {
+}
+@media screen and (min-height: 768px) {
+  .tab-header,
+  .sub-header {
+    > .l-constraint {
+      background: #fff;
+    }
+    &.stickable {
+      &.js-positioned {
+        position: absolute;
+        left: 0;
+        z-index: 3;
+        @include box-sizing(border-box);
+        width: 100%;
+        > .l-constraint {
+          padding-right: 20px;
+          padding-left: 20px;
+        }
+      }
+      &.js-fixed {
+        position: fixed;
+      }
+    }
+  }
+  .tab-header.stickable {
+    padding: 0;
+    > .l-constraint {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
     &.js-positioned {
-      position: absolute;
-      left: 0;
-      z-index: 3;
-      @include box-sizing(border-box);
-      width: 100%;
       > .l-constraint {
-        padding-right: 20px;
-        padding-left: 20px;
+        padding-bottom: 30px;
       }
     }
     &.js-fixed {
-      position: fixed;
-    }
-  }
-}
-.tab-header.stickable {
-  padding: 0;
-  > .l-constraint {
-    padding-right: 20px;
-    padding-left: 20px;
-  }
-  &.js-positioned {
-    > .l-constraint {
-      padding-bottom: 30px;
-    }
-  }
-  &.js-fixed {
-    > .l-constraint {
-      padding-top: 20px;
+      > .l-constraint {
+        padding-top: 20px;
+      }
     }
   }
 }

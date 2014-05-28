@@ -240,4 +240,64 @@ http_interactions:
         }
     http_version: 
   recorded_at: Thu, 15 May 2014 18:19:38 GMT
+- request:
+    method: post
+    uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/bank_accounts/BA4pbGTQU8KYzS8ikXsFxkRH/verifications
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 27 May 2014 19:03:29 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/bank_accounts/BA4pbGTQU8KYzS8ikXsFxkRH/verifications/BZ4zrWYi9dgbj67JCUbS00y9
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM92a10552e5d111e38d4506429171ffad
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-4-8
+      X-Balanced-Marketplace:
+      - TEST-MP1EOzr67FEqkfTYGTJxxYsV
+      X-Balanced-Merchant:
+      - TEST-MR1UDDuhujWiJKH04gyn92gO
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.36
+      Content-Length:
+      - '359'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "bank_account_authentication",
+          "state": "deposit_succeeded",
+          "created_at": "2014-05-27T19:03:28.236435Z",
+          "uri": "/v1/bank_accounts/BA4pbGTQU8KYzS8ikXsFxkRH/verifications/BZ4zrWYi9dgbj67JCUbS00y9",
+          "updated_at": "2014-05-27T19:03:28.540714Z",
+          "attempts": 0,
+          "_uris": {},
+          "id": "BZ4zrWYi9dgbj67JCUbS00y9",
+          "remaining_attempts": 3
+        }
+    http_version: 
+  recorded_at: Tue, 27 May 2014 19:03:29 GMT
 recorded_with: VCR 2.9.0

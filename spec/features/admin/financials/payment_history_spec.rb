@@ -21,13 +21,19 @@ feature "Payment history" do
 
   before do
     Timecop.freeze(payment_day) do
-      create(:order, :with_items, organization: buyer, payment_method: "purchase order", total_cost: 13.00)
-      create(:order, :with_items, organization: buyer, payment_method: "ach", total_cost: 72.00)
-      create(:order, :with_items, organization: buyer, payment_method: "credit card", total_cost: 129.00)
+      order_item1 = create(:order_item, unit_price: 6.50, quantity: 2)
+      create(:order, items: [order_item1], organization: buyer, payment_method: "purchase order", total_cost: 13.00)
+
+      order_item2 = create(:order_item, unit_price: 41.00, quantity: 2)
+      create(:order, items: [order_item2], organization: buyer, payment_method: "ach", total_cost: 72.00)
+
+      order_item3 = create(:order_item, unit_price: 129.00, quantity: 1)
+      create(:order, items: [order_item3], organization: buyer, payment_method: "credit card", total_cost: 129.00)
 
       orders = []
       4.times do |i|
-        orders << create(:order, :with_items, organization: buyer, payment_method: ["purchase order", "purchase order", "ach", "credit card"][i], payment_status: "paid", total_cost: 20.00 + i)
+        order_item = create(:order_item, unit_price: 20.00 + i, quantity: 1)
+        orders << create(:order, items: [order_item], organization: buyer, payment_method: ["purchase order", "purchase order", "ach", "credit card"][i], payment_status: "paid")
       end
 
       orders.each_with_index do |order, i|

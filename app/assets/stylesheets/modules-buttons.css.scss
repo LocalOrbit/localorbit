@@ -131,8 +131,13 @@ input[type=submit] {
   background-color: #349D1C;
   border: 3px solid white;
 }
-.btn--money:focus {
-  border-color: #BFD9AD;
+.btn--update {
+  @include border-radius(5px);
+  color: #fff;
+  border: 3px solid white;
+}
+.btn--money:focus, .btn--update:focus {
+  border: 3px solid #BFD9AD;
 }
 .btn--add.btn--small {
   padding-right: 8px;
