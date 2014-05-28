@@ -2,7 +2,13 @@
 <%= link_to "#{svg_icon} Export CSV".html_safe, admin_financials_payments_path(format: :csv, page: 1, per_page: 0), class: 'export todo pull-right' %>
 <h1>Payment History</h1>
 
-<%= render partial: "admin/financials/shared/buyer_payment_filters", locals: { payment_history: @payment_history } %>
+<% if current_user.admin? %>
+<% elsif current_user.market_manager? %>
+<% elsif current_user.buyer_only? %>
+  <%= render partial: "admin/financials/shared/buyer_payment_filters", locals: { payment_history: @payment_history } %>
+<% else %>
+  <%= render partial: "admin/financials/shared/seller_payment_filters", locals: { payment_history: @payment_history } %>
+<% end %>
 
 <table>
   <thead class="stickable">
