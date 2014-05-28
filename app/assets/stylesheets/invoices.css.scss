@@ -131,7 +131,7 @@
 }
 @media print {
   .controller-invoices {
-    .l-app-header, .l-app-footer,
+    .l-app-header, .l-app-footer, .btn--save,
     .logo-link, .nav--main, .nav--admin, .tab-header, .teflon {
       display: none;
     }
@@ -148,6 +148,10 @@
       padding: 1in .5in;
       margin: 0 auto;
       background: #fff;
+
+      .btn--save {
+        display: none;
+      }
     }
   }
 }

@@ -34,6 +34,6 @@ module LocalOrbit
 
     config.font_assets.origin = "*"
 
-    config.middleware.use PDFKit::Middleware, {}, only: [%r[/admin/invoices], %r[/admin/financials/invoices]]
+    config.middleware.use PDFKit::Middleware, {}, only: [%r[/admin/invoices]]
   end
 end
