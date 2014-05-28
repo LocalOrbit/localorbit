@@ -13,7 +13,7 @@
       <%= f.collection_select :organization_id, @organizations, :id, :name, {include_blank: "Select an organization"}, class: "column--full" %>
     </div>
   <% else %>
-    <%= f.hidden_field :organization_id, {value: @organizations.first.id} %>
+    <%= f.hidden_field :organization_id %>
   <% end %>
 <% end %>
 
@@ -121,7 +121,7 @@
     <% if @organizations.count > 1 && @product.organization.blank? %>
       <h3 class="heading-conditionals">No Organization Selected</h3>
     <% else %>
-      <%= render partial: "admin/organizations/delivery_schedules", locals: {delivery_schedules: @delivery_schedules, selected_ids: @selected_delivery_schedule_ids, product: @product} %>
+      <%= render partial: "admin/organizations/delivery_schedules", locals: {delivery_schedules: @delivery_schedules, selected_ids: @selected_delivery_schedule_ids, product: @product, organization: @product.organization} %>
     <% end %>
   </div>
 </fieldset>

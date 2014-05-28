@@ -161,6 +161,7 @@ describe "Editing a product" do
   describe "delivery schedules", js: true do
     let!(:monday_delivery) { create(:delivery_schedule, market: market, day: 1) }
     let!(:tuesday_delivery) { create(:delivery_schedule, :buyer_pickup, market: market, day: 2) }
+    let!(:thursday_delivery) { create(:delivery_schedule, :buyer_pickup, market: market, day: 4, require_delivery: true) }
 
     context 'single market membership' do
       before do
@@ -179,13 +180,15 @@ describe "Editing a product" do
         expect(page).to have_content("Delivery Times")
 
         product_deliveries = Dom::Admin::ProductDelivery.all
-        expect(product_deliveries.count).to eql(2)
+        expect(product_deliveries.count).to eql(3)
         expect(find_field("Make product available on all market delivery dates")).to_not be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Thursdays")).to be_checked
 
         expect(page).to have_content("Mondays from 7:00 AM to 11:00 AM direct to customer")
         expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at 44 E. 8th St Holland, MI 49423")
+        expect(page).to have_content("Thursdays from 10:00 AM to 12:00 PM at 44 E. 8th St Holland, MI 49423")
       end
 
       it "persists changes" do
@@ -213,6 +216,12 @@ describe "Editing a product" do
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to_not be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
       end
+
+      it "does not allow required delivery to be unselected" do
+        uncheck "Make product available on all market delivery dates"
+
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Thursdays").node.find('input')).to be_disabled
+      end
     end
 
     context 'multi-market membership' do
@@ -235,14 +244,17 @@ describe "Editing a product" do
         expect(page).to have_content("Delivery Times")
 
         product_deliveries = Dom::Admin::ProductDelivery.all
-        expect(product_deliveries.count).to eql(3)
+        expect(product_deliveries.count).to eql(4)
         expect(find_field("Make product available on all market delivery dates")).to_not be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to_not be_checked
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Thursdays")).to be_checked
 
         expect(page).to have_content("Mondays from 7:00 AM to 11:00 AM direct to customer")
         expect(page).to have_content("Tuesdays from 10:00 AM to 12:00 PM at 44 E. 8th St Holland, MI 49423")
         expect(page).to have_content("Wednesdays from 7:00 AM to 11:00 AM direct to customer")
+        expect(page).to have_content("Thursdays from 10:00 AM to 12:00 PM at 44 E. 8th St Holland, MI 49423")
       end
 
       it "persists changes" do
@@ -260,7 +272,7 @@ describe "Editing a product" do
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Wednesdays")).to_not be_checked
       end
 
-      it "allows all delivery schedules to be unselected" do
+      it "allows all optional delivery schedules to be unselected" do
         uncheck "Make product available on all market delivery dates"
 
         Dom::Admin::ProductDelivery.find_by_weekday("Mondays").uncheck!
