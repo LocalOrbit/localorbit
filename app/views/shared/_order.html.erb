@@ -83,7 +83,7 @@
   </table>
 
   <!-- <%= link_to "Mark selected delivered", admin_order_path(order.id), id: 'mark-selected-delivered' %> -->
-  <%= f.submit "Update quantities", class: 'pull-right btn btn--blue btn--update' %>
+  <%= f.submit "Update quantities", class: 'pull-right btn btn--blue btn--small' %>
 
   <% if !current_user.buyer_only? %>
   <div class="order-totals">
@@ -111,6 +111,13 @@
       </tbody>
     </table>
   </div>
+  <% end %>
+  <% if current_user.market_manager? || current_user.admin? %>
+    <div class="order-notes">
+      <%= f.label :notes %>
+      <%= f.text_area :notes, rows: 10 %>
+      <%= f.submit "Save Notes", class: 'btn btn--blue btn--small' %>
+    </div>
   <% end %>
 </div>
 <% end %>

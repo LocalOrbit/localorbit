@@ -5,7 +5,7 @@ module OrderPresenter
       delegate :id, :delivery, :billing_organization_name, :billing_address, :billing_city,
         :billing_state, :billing_zip, :billing_phone, :delivery_address, :delivery_city,
         :delivery_state, :delivery_zip, :delivery_fees,
-        :invoice_due_date, :invoiced_at, :invoiced?, :market, :order_number,
+        :invoice_due_date, :invoiced_at, :invoiced?, :market, :notes, :order_number,
         :organization, :payment_method, :payment_note, :payment_status, :placed_at,
         to: :@order
     end

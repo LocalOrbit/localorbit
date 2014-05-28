@@ -10,7 +10,7 @@ class Admin::OrdersController < AdminController
   def update
     order = Order.find(params[:id])
     if order.update(order_params) && StoreOrderFees.perform(order: order)
-      redirect_to admin_order_path(order)
+      redirect_to admin_order_path(order), notice: "Order successfully updated."
     else
       @order = SellerOrder.new(order, current_user)
       render :show
@@ -19,7 +19,7 @@ class Admin::OrdersController < AdminController
 
   protected
   def order_params
-    params.require(:order).permit(items_attributes: [
+    params.require(:order).permit(:notes, items_attributes: [
       :id, :quantity_delivered, :delivery_status
       ])
   end
