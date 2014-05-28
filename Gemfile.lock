@@ -108,6 +108,8 @@ GEM
       currencies (~> 0.4.2)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
+    csv_builder (2.1.1)
+      actionpack (>= 3.0.0)
     currencies (0.4.2)
     daemon_controller (1.2.0)
     dalli (2.7.2)
@@ -399,6 +401,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   compass-rails
   countries
+  csv_builder
   dalli
   database_cleaner
   delayed_job
