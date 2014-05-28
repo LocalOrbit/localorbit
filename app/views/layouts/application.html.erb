@@ -67,7 +67,7 @@
     </style>
   <% end %>
 </head>
-<body class="<%= current_user.present? ? "" : "signed-out" %>">
+<body class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %>">
 
   <div class="page-content">
     <header class="l-app-header stickable" id="top">
