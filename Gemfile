@@ -58,6 +58,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta2'
+  gem 'rspec-collection_matchers'
   gem 'pry-rails'
   gem 'pry-remote'
   gem 'launchy'
@@ -69,7 +70,7 @@ group :test do
   gem 'capybara', github: 'jnicklas/capybara' # until gem > 2.2.1 is out
   gem 'domino'
   gem 'factory_girl_rails'
-  gem 'email_spec', github: 'bmabey/email-spec' # until gem > 1.5.0 is out
+  gem 'email_spec'
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'timecop'
