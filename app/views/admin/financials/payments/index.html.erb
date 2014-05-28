@@ -58,6 +58,8 @@
   </tbody>
 </table>
 
+<%= link_to "Export CSV", admin_financials_payments_path(format: :csv, page: 1, per_page: 0) %>
+
 <%= paginate @payment_history.payments %>
 
 <% if @payment_history.payments.none? %>
