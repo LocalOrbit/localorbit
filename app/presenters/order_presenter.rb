@@ -47,6 +47,8 @@ module OrderPresenter
 
   def totals
     @totals ||= items.inject(discount: 0, gross: 0, net: 0, payment: 0, transaction: 0, market: 0) do |totals, item|
+      next totals if item.delivery_status == "canceled"
+
       totals[:discount]    += item.discount
       totals[:gross]       += item.gross_total
       totals[:transaction] += item.local_orbit_seller_fee
