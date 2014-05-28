@@ -1153,6 +1153,11 @@
     color: #000;
     font-size: smaller;
   }
+  &[data-tools="5"] {
+    > .tool {
+      width: 19.99%;
+    }
+  }
   &[data-tools="4"] {
     > .tool {
       width: 23.9%;
