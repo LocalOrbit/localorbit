@@ -1021,6 +1021,11 @@
   font-size: smaller;
   line-height: 30px;
 }
+@media screen and (max-width: 800px) {
+  .redundant-nav {
+    font-size: 14px;
+  }
+}
 .slide {
   position: relative;
   overflow: hidden;

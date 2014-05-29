@@ -158,6 +158,13 @@ legend,
   font-size: 14px;
   font-weight: 600;
 }
+
+@media screen and (max-width: 800px) {
+  label, legend, .faux-label {
+    font-size: 16px;
+  }
+}
+
 legend {
   font: lighter 28px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", OpenSans, sans-serif;
 }
