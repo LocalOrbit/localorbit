@@ -39,6 +39,7 @@
       input[type=submit].close,
       input[type=submit].delete,
       .seller-map-toggle,
+      .tagline,
       .nav--sidebar a {
         color: <%= current_market.text_color -%>;
       }
@@ -75,7 +76,7 @@
         <% if current_user %>
         <p class="header header--welcome">
           <% if current_market %>
-            <%= current_market.name %> <%= content_tag :span, "— #{current_market.tagline}", class: "tagline" unless current_market.tagline.blank? %>
+            <%= current_market.name %>
           <% else %>
             Local Orbit
           <% end %>

@@ -7,12 +7,16 @@ end
 %>
 <%= link_to_or_span logo, root_path, class: "logo-link vc-wrapper pull-left" %>
 
-<% if current_market && current_user %>
-  <div class="nav nav--main pull-right">
-    <%= link_to_or_span "Shop", products_path, class: "" %>
-    <%= link_to_or_span "Sellers", sellers_path, class: "" %>
-    <%= link_to_or_span "Market Info", market_path, class: "" %>
-  </div>
+<% if current_market %>
+  <% if current_user %>
+    <div class="nav nav--main pull-right">
+      <%= link_to_or_span "Shop", products_path, class: "" %>
+      <%= link_to_or_span "Sellers", sellers_path, class: "" %>
+      <%= link_to_or_span "Market Info", market_path, class: "" %>
+    </div>
+  <% end %>
+
+  <%= content_tag :span, "#{current_market.tagline}", class: "tagline" unless current_market.tagline.blank? %>
 <% end %>
 
 <% if current_user && !@hide_admin_nav %>

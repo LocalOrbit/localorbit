@@ -321,6 +321,14 @@
     line-height: 1.1.25;
   }
 }
+.tagline {
+  clear: left;
+  display: block;
+  font: lighter 18px 'Open Sans', sans-serif;
+  -webkit-filter: brightness(0.9);
+  -moz-filter: brightness(0.9);
+  filter: brightness(0.9);
+}
 @media screen and (max-width: 800px) {
   .header--welcome {
     max-width: 30%;
