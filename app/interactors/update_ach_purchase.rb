@@ -1,8 +1,8 @@
-class UpdateCreditCardPurchase
+class UpdateAchPurchase
   include Interactor
 
   def perform
-    if order.payment_method == "credit card"
+    if order.payment_method == "ach"
       current_amount = rollup_payment_amounts
 
       if current_amount > order.total_cost
@@ -11,7 +11,7 @@ class UpdateCreditCardPurchase
         refund(refund_amount)
         fail! if context[:status] == 'failed'
 
-        adjustment_payment = Payment.create(payer: order.organization, payment_type: "order refund", payment_method: 'credit card', amount: -refund_amount, status: context[:status])
+        adjustment_payment = Payment.create(payer: order.organization, payment_type: "order refund", payment_method: 'ACH', amount: -refund_amount, status: context[:status])
         order.payments << adjustment_payment
       elsif current_amount < order.total_cost
         charge_amount = order.total_cost - current_amount
@@ -19,7 +19,7 @@ class UpdateCreditCardPurchase
         charge(charge_amount)
         fail! if context[:status] == 'failed'
 
-        adjustment_payment = Payment.create(payer: order.organization, payment_type: "order", payment_method: 'credit card', amount: charge_amount, status: context[:status])
+        adjustment_payment = Payment.create(payer: order.organization, payment_type: "order", payment_method: 'ACH', amount: charge_amount, status: context[:status])
         order.payments << adjustment_payment
       end
     end

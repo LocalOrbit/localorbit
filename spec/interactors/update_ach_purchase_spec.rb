@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe UpdateCreditCardPurchase do
+describe UpdateAchPurchase do
   let!(:market)     { create(:market) }
   let!(:order_item) { create(:order_item, unit_price: 15.00, quantity: 2) }
-  let!(:order)      { create(:order, market: market, items: [order_item], payment_method: "credit card") }
+  let!(:order)      { create(:order, market: market, items: [order_item], payment_method: "ach") }
 
   context "refund difference" do
-    let!(:payment) { create(:payment, :credit_card, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-1') }
+    let!(:payment) { create(:payment, :checking, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-1', status: 'paid') }
 
     it "against one payment" do
       existing_debit = double("balanced debit", amount: 4500)
@@ -15,7 +15,7 @@ describe UpdateCreditCardPurchase do
 
       expect(order.reload.payments.count).to eql(1)
 
-      UpdateCreditCardPurchase.perform(order: order)
+      UpdateAchPurchase.perform(order: order)
 
       expect(order.reload.payments.count).to eql(2)
       expect(Payment.first.amount.to_f).to eql(45.00)
@@ -24,18 +24,19 @@ describe UpdateCreditCardPurchase do
 
     it "against multiple payment" do
       create(:payment, :credit_card, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-2', status: 'failed')
-      create(:payment, :credit_card, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-3')
+      create(:payment, :credit_card, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-3', status: 'paid')
 
       debit1 = double("balanced debit 1", amount: 4500)
       debit3 = double("balanced debit 3", amount: 4500)
       expect(Balanced::Debit).to receive(:find).with('/balanced-debit-1').and_return(debit1)
+      expect(Balanced::Debit).to_not receive(:find).with('/balanced-debit-2')
       expect(Balanced::Debit).to receive(:find).with('/balanced-debit-3').and_return(debit3)
       expect(debit1).to receive(:refund).with({ amount: 4500 })
       expect(debit3).to receive(:refund).with({ amount: 1500 })
 
       expect(order.reload.payments.count).to eql(3)
 
-      UpdateCreditCardPurchase.perform(order: order)
+      UpdateAchPurchase.perform(order: order)
 
       expect(order.reload.payments.count).to eql(4)
       expect(Payment.first.amount.to_f).to eql(45.00)
@@ -49,7 +50,7 @@ describe UpdateCreditCardPurchase do
 
       expect(order.reload.payments.count).to eql(1)
 
-      UpdateCreditCardPurchase.perform(order: order)
+      UpdateAchPurchase.perform(order: order)
 
       expect(order.reload.payments.count).to eql(2)
       expect(Payment.first.amount.to_f).to eql(45.00)
@@ -59,7 +60,7 @@ describe UpdateCreditCardPurchase do
   end
 
   context "charge difference" do
-    let!(:payment) { create(:payment, :credit_card, orders: [order], amount: 15.00) }
+    let!(:payment) { create(:payment, :credit_card, orders: [order], amount: 15.00, status: 'paid') }
 
     it "charges the difference when the order amount goes up" do
       existing_debit = double("balanced debit", account: OpenStruct.new(uri: '/balanced-account-uri'), source: OpenStruct.new(uri: '/balanced-source-uri'))
@@ -70,7 +71,7 @@ describe UpdateCreditCardPurchase do
 
       expect(order.reload.payments.count).to eql(1)
 
-      UpdateCreditCardPurchase.perform(order: order)
+      UpdateAchPurchase.perform(order: order)
 
       expect(order.reload.payments.count).to eql(2)
       expect(Payment.first.amount.to_f).to eql(15.00)
@@ -86,7 +87,7 @@ describe UpdateCreditCardPurchase do
 
       expect(order.reload.payments.count).to eql(1)
 
-      UpdateCreditCardPurchase.perform(order: order)
+      UpdateAchPurchase.perform(order: order)
 
       expect(order.reload.payments.count).to eql(2)
       expect(Payment.last.amount.to_f).to eql(15.00)

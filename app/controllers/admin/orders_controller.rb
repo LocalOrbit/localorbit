@@ -15,9 +15,11 @@ class Admin::OrdersController < AdminController
 
   def update
     order = Order.find(params[:id])
-    if order.update(order_params) && StoreOrderFees.perform(order: order)
+    updates = UpdateOrder.perform(order: order, order_params: order_params)
+    if updates.success?
       redirect_to admin_order_path(order), notice: "Order successfully updated."
     else
+      order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] = 'failed'
       @order = SellerOrder.new(order, current_user)
       render :show
     end
