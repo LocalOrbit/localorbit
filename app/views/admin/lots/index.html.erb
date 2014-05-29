@@ -1,6 +1,6 @@
 <%= render "admin/products/header" %>
 
-<%= form_for [:admin, @product, @lot], html: { class: "row row--partial" } do |f| %>
+<%= form_for [:admin, @product, @lot], html: { class: "inventory-form row row--partial" } do |f| %>
 
 <div class="column column--three-fourths">
 <%= product_listing_disclaimer %>

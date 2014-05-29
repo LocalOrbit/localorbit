@@ -462,6 +462,9 @@ th {
   }
 
 @media screen and (max-width: 800px) {
+  .product-row .l-inline-list > li {
+    display: block;
+  }
   .product-table--user {
     .info {
       width: 200px;
@@ -662,6 +665,12 @@ th {
 .filter-dropdown {
   width: 180px;
   margin-right: 10px;
+}
+
+@media screen and (max-width: 800px) {
+  .filter-dropdown {
+    width: 150px;
+  }
 }
 
 /** Sticky tables (like other sticky things, but sillier */

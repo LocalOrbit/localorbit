@@ -1,6 +1,6 @@
 <%= render "admin/products/header" %>
 
-<%= form_for [:admin, @product, @price], html: { class: "row row--partial", novalidate: "novalidate" } do |f| %>
+<%= form_for [:admin, @product, @price], html: { class: "row row--partial price-form", novalidate: "novalidate" } do |f| %>
 
   <%= product_listing_disclaimer %>
 

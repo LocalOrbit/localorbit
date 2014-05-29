@@ -130,6 +130,12 @@ input[type=search] {
   }
 }
 
+@media screen and (max-width: 800px) {
+  input[type=search] {
+    width: 150px;
+  }
+}
+
 input[type=number] {
   -moz-appearance: textfield;
   &::-webkit-inner-spin-button {
