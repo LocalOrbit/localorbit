@@ -19,6 +19,7 @@ class Legacy::User < Legacy::Base
       puts "- Creating user: #{email}"
       user = ::User.create(
         email: email,
+        name: imported_name,
         password: 'imported1',
         password_confirmation: 'imported1',
         role: 'user',
@@ -29,5 +30,9 @@ class Legacy::User < Legacy::Base
     end
 
     user
+  end
+
+  def imported_name
+    "#{first_name} #{last_name}"
   end
 end
