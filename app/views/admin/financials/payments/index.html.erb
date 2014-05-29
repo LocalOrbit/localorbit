@@ -4,6 +4,7 @@
 
 <% if current_user.admin? %>
 <% elsif current_user.market_manager? %>
+  <%= render partial: "admin/financials/shared/market_manager_payment_filters", locals: { payment_history: @payment_history } %>
 <% elsif current_user.buyer_only? %>
   <%= render partial: "admin/financials/shared/buyer_payment_filters", locals: { payment_history: @payment_history } %>
 <% else %>
