@@ -126,4 +126,65 @@ describe "Viewing products" do
       end
     end
   end
+
+  context "updating prices and quantities", js: true do
+    let!(:user) { create(:user, organizations: [org1]) }
+
+    it "updates simple inventory" do
+      sign_in_as(user)
+      visit admin_products_path
+
+      product = Dom::ProductRow.first
+      expect(product.name).to eq("Grapes")
+
+      product.click_stock
+
+      fill_in "Quantity", with: 99
+      click_button "Save Inventory"
+
+      product = Dom::ProductRow.first
+      expect(product.stock).to eq("99")
+    end
+
+    it "updates advanced inventory" do
+      grapes.update_attributes!(use_simple_inventory: false)
+
+      sign_in_as(user)
+      visit admin_products_path
+
+      product = Dom::ProductRow.first
+      expect(product.name).to eq("Grapes")
+
+      product.click_stock
+
+      fill_in "lot_number", with: 32
+      fill_in "Quantity", with: 45
+      fill_in "Good From", with: "1 May 2054"
+      fill_in "Expires On", with: "30 May 2054"
+
+      click_button "Save Lot"
+
+      product = Dom::ProductRow.first
+      expect(product.stock).to eq("46")
+    end
+
+    it "updates advanced pricing" do
+      sign_in_as(user)
+      visit admin_products_path
+
+      product = Dom::ProductRow.first
+      expect(product.name).to eq("Grapes")
+
+      product.click_pricing
+
+      fill_in "Net Price", with: 10
+      fill_in "Sale Price", with: 12
+      fill_in "Min Qty", with: 5
+
+      click_button "Save Price"
+
+      product = Dom::ProductRow.first
+      expect(product.pricing).to eq("$12.00 5+ boxes")
+    end
+  end
 end

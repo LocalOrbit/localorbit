@@ -46,12 +46,20 @@ module Admin
       @product = current_user.managed_products.find(params[:id]).decorate
 
       if @product.update_attributes(product_params)
-        redirect_to after_create_page, notice: "Saved #{@product.name}"
+        respond_to do |format|
+          format.html { redirect_to after_create_page, notice: "Saved #{@product.name}" }
+          format.js   { redirect_to admin_products_path, notice: "Saved #{@product.name}" }
+        end
       else
-        @organizations = [@product.organization]
-        find_delivery_schedules(@product)
-        find_selected_delivery_schedule_ids
-        render :show
+        respond_to do |format|
+          format.html do
+            @organizations = [@product.organization]
+            find_delivery_schedules(@product)
+            find_selected_delivery_schedule_ids
+            render :show
+          end
+          format.js { redirect_to admin_products_path, alert: "Could not save product" }
+        end
       end
     end
 

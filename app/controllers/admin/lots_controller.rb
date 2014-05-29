@@ -10,10 +10,16 @@ class Admin::LotsController < AdminController
   def create
     @lot = @product.lots.create(lot_params)
     if @lot.persisted?
-      redirect_to [:admin, @product, :lots], notice: "Successfully added a new lot"
+      respond_to do |format|
+        format.html { redirect_to [:admin, @product, :lots], notice: "Successfully added a new lot" }
+        format.js   { redirect_to admin_products_path, notice: "Successfully added a new lot" }
+      end
     else
       flash.now[:alert] = "Could not save lot"
-      render :index
+      respond_to do |format|
+        format.html { render :index }
+        format.js   { redirect_to admin_products_path, alert: "Could not save lot" }
+      end
     end
   end
 

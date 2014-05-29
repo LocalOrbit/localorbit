@@ -714,6 +714,14 @@ module Dom
     def click_delete
       node.click_link "Delete"
     end
+
+    def click_pricing
+      node.find(".pricing .popup-toggle").trigger(:click)
+    end
+
+    def click_stock
+      node.find(".stock .popup-toggle").trigger(:click)
+    end
   end
 
   class CartLink < Domino

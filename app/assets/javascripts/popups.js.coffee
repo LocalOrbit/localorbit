@@ -4,10 +4,14 @@ $ ->
   # data-popup attribute on the link.
   position_popup = ($element) ->
     bottom = $element.offset().top + $element.outerHeight()
+    right = $element.offset().left + $element.outerWidth()
     if bottom > $('.l-app-footer').offset().top
       $element.removeClass('top-anchor').addClass('bottom-anchor')
-    else
-      $element.removeClass('bottom-anchor').addClass('top-anchor')
+    if right >= window.innerWidth
+      $element.css({
+          'right': '10px',
+          'left': 'auto'
+        })
 
   $('.popup-toggle').click (e) ->
     e.preventDefault()

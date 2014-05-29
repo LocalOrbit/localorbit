@@ -22,11 +22,46 @@
 }
   .popup--edit {
     top: 0;
-    min-width: 200px;
+    width: auto;
+    min-width: 250px;
     padding: 8px;
+    border: solid 2px #ccc;
 
+    h2,
+    caption {
+      font: bold 14px "Open Sans", OpenSans, sans-serif;
+    }
+    caption {
+      margin-top: 14px;
+    }
+    h2 {
+      margin: 0 0 11px;
+    }
     label {
       font-size: 12px;
+    }
+    legend {
+      font: bold 12px "Open Sans", OpenSans, sans-serif;
+    }
+    select {
+      width: 100%;
+    }
+    table {
+      margin: 0 0 1em;
+    }
+    td {
+      padding-left: 0;
+    }
+    th {
+      padding: 5px 10px 0 0;
+    }
+      thead tr {
+        height: 1.2em;
+      }
+    tr,
+    tr:nth-child(odd) {
+      border: 0;
+      background: #fff;
     }
 
     .form-actions {
