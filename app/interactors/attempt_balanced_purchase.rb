@@ -1,30 +1,29 @@
-class AttemptCreditCardPurchase
+class AttemptBalancedPurchase
   include Interactor
 
   def perform
-    if order_params["payment_method"] == 'credit card' && order
+    if ['credit card', 'ach'].include?(payment_method) && order
       begin
-        card = cart.organization.bank_accounts.find(order_params["credit_card"])
         balanced_customer = Balanced::Customer.find(cart.organization.balanced_customer_uri)
 
         amount = (cart.total * 100).to_i #USD in cents
 
         debit = balanced_customer.debit(
           amount: amount,
-          source_uri: card.balanced_uri,
+          source_uri: balanced_source_uri,
           description: "#{cart.market.name} purchase"
         )
 
         context[:payment] = Payment.create(
           payer: buyer,
-          payment_method: 'credit card',
+          payment_method: payment_method,
           amount: cart.total,
-          status: "paid",
+          status: initial_payment_status,
           balanced_uri: debit.uri,
           orders: [order]
         )
 
-        order.update(payment_method: 'credit card', payment_status: 'paid')
+        order.update(payment_method: payment_method, payment_status: initial_payment_status)
 
         if !context[:payment].persisted?
           debit.refund
@@ -41,9 +40,29 @@ class AttemptCreditCardPurchase
   end
 
   def rollback
-    if context[:payment] && context[:payment][:payment_method] == 'credit card'
+    if context[:payment]
       Balanced::Debit.find(payment.balanced_uri).refund
       context.delete(:payment)
+    end
+  end
+
+  def balanced_source_uri
+    if payment_method == 'credit card'
+      cart.organization.bank_accounts.find(order_params["credit_card"]).balanced_uri
+    else
+      cart.organization.bank_accounts.find(order_params["bank_account"]).balanced_uri
+    end
+  end
+
+  def payment_method
+    order_params["payment_method"]
+  end
+
+  def initial_payment_status
+    if payment_method == 'credit card'
+      "paid"
+    else
+      "pending"
     end
   end
 end
