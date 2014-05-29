@@ -11,11 +11,27 @@ class PaymentHistoryPresenter
     scope = if user.admin?
       Payment.all
     elsif user.market_manager?
+      payment_table = Payment.arel_table
+      order_payment_table = OrderPayment.arel_table
+      order_table = Order.arel_table
+
       market_ids = user.managed_market_ids
 
-      Payment.joins("left join organizations on organizations.id = payments.payer_id").
-        joins("left join market_organizations on market_organizations.organization_id = organizations.id").
-        where("market_organizations.market_id in (:market_ids) OR (payments.payer_type = 'Market' AND payments.payer_id in (:market_ids)) OR (payments.payee_type = 'Market' AND payments.payer_id in (:market_ids))", market_ids: market_ids)
+      Payment.joins(
+        payment_table.join(order_payment_table, Arel::Nodes::OuterJoin).
+          on(order_payment_table[:payment_id].eq(payment_table[:id])).join_sources
+      ).joins(
+        order_payment_table.join(order_table, Arel::Nodes::OuterJoin).
+          on(order_payment_table[:order_id].eq(order_table[:id])).join_sources
+      ).where(
+          order_table[:market_id].in(market_ids).
+        or(
+          payment_table[:payer_type].eq("Market").
+          and(payment_table[:payer_id].in(market_ids))).
+        or(
+          payment_table[:payee_type].eq("Market").
+          and(payment_table[:payee_id].in(market_ids)))
+      ).uniq
     elsif user.buyer_only?
       Payment.joins(:order_payments)
         .includes(:orders)
