@@ -569,6 +569,7 @@
 .orientation-warning {
   display: none;
 }
+/**
 @media screen and (max-device-width: 767px) and (orientation: portrait) {
   .overlay {
     z-index: 50;
@@ -597,6 +598,7 @@
     text-align: center;
   }
 }
+**/
 
 /** Headings */
 
