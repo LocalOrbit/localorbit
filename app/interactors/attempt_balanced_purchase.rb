@@ -4,8 +4,6 @@ class AttemptBalancedPurchase
   def perform
     if ['credit card', 'ach'].include?(payment_method) && order
       begin
-        balanced_customer = Balanced::Customer.find(cart.organization.balanced_customer_uri)
-
         amount = (cart.total * 100).to_i #USD in cents
 
         debit = create_debit(amount)
@@ -22,6 +20,8 @@ class AttemptBalancedPurchase
 
         context[:order].errors.add(:credit_card, "Payment processor error.")
         context.fail!
+
+        raise e if Rails.env.development?
       end
     end
   end
@@ -54,7 +54,7 @@ class AttemptBalancedPurchase
   end
 
   def create_debit(amount)
-    balanced_customer.debit(
+    cart.organization.balanced_customer.debit(
       amount: amount,
       source_uri: balanced_source_uri,
       description: "#{cart.market.name} purchase"

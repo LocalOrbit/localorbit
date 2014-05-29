@@ -70,6 +70,10 @@ class Organization < ActiveRecord::Base
     reload.products.each(&:save) if persisted?
   end
 
+  def balanced_customer
+    Balanced::Customer.find(balanced_customer_uri)
+  end
+
   private
 
   def self.order_by_name(direction)
