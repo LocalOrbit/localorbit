@@ -3,7 +3,7 @@ module Sessions
     before_action :hide_admin_navigation
 
     def new
-      @organizations = current_user.managed_organizations_within_market(current_market)
+      @organizations = current_user.managed_organizations_within_market(current_market).order(:name)
     end
 
     def create
