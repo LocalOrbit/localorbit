@@ -93,4 +93,40 @@ feature "Payment history" do
     expect(payment_row("$99.00")).not_to be_nil
     expect(payment_row("$99.00").payment_method).to have_content("ACH")
   end
+
+  scenario "Market manager can download a CSV of payment history" do
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(user)
+
+    click_link "Financials"
+    click_link "Review Payment History"
+    click_link "Export CSV"
+
+    # Headers
+    expect(page).to have_content("Date Paid")
+    expect(page).to have_content("Order Number")
+    expect(page).to have_content("Type")
+    expect(page).to have_content("Description")
+    expect(page).to have_content("Payment Method")
+    expect(page).to have_content("Amount")
+
+    expect(page).not_to have_content("$13.00")
+    expect(page).not_to have_content("$72.00")
+    expect(page).not_to have_content("$129.00")
+
+    expect(page).to have_content("$20.00")
+    expect(page).to have_content("Cash")
+
+    expect(page).to have_content("$21.00")
+    expect(page).to have_content("Check: #12345")
+
+    expect(page).to have_content("$22.00")
+    expect(page).to have_content("ACH: *********9983")
+
+    expect(page).to have_content("$23.00")
+    expect(page).to have_content("Credit Card: ************7732")
+
+    expect(page).to have_content("$99.00")
+    expect(page).to have_content("ACH")
+  end
 end
