@@ -138,7 +138,7 @@ feature "Payment history" do
       expect(payment_row("$25.00").description).to include("LO-01-234-4567890-5")
 
       fill_in "q_updated_at_date_gteq", with: "Sat, 10 May 2014"
-      click_button "Update"
+      click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
       expect(page).to     have_content("LO-01-234-4567890-2")
@@ -147,7 +147,7 @@ feature "Payment history" do
       expect(page).to     have_content("LO-01-234-4567890-5")
 
       fill_in "q_updated_at_date_lteq", with: "Sun, 11 May 2014"
-      click_button "Update"
+      click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
       expect(page).to     have_content("LO-01-234-4567890-2")
@@ -209,7 +209,7 @@ feature "Payment history" do
       expect(payment_row("$50.00").description).to include("LO-01-234-4567890-5")
 
       fill_in "q_updated_at_date_gteq", with: "Sat, 10 May 2014"
-      click_button "Update"
+      click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
       expect(page).to     have_content("LO-01-234-4567890-2")
@@ -218,7 +218,7 @@ feature "Payment history" do
       expect(page).to     have_content("LO-01-234-4567890-5")
 
       fill_in "q_updated_at_date_lteq", with: "Sun, 11 May 2014"
-      click_button "Update"
+      click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
       expect(page).to     have_content("LO-01-234-4567890-2")
@@ -235,7 +235,7 @@ feature "Payment history" do
       expect(payment_row("$50.00").description).to include("LO-01-234-4567890-5")
 
       select "Cash", from: "q_payment_method_eq"
-      click_button "Update"
+      click_button "Filter"
 
       expect(page).to     have_content("LO-01-234-4567890-1")
       expect(page).not_to have_content("LO-01-234-4567890-2")
@@ -244,7 +244,7 @@ feature "Payment history" do
       expect(page).to     have_content("LO-01-234-4567890-5")
 
       select "Check", from: "q_payment_method_eq"
-      click_button "Update"
+      click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
       expect(page).to     have_content("LO-01-234-4567890-2")
