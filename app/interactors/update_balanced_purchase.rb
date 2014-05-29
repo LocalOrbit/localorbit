@@ -50,11 +50,7 @@ class UpdateBalancedPurchase
       context[:status] = 'paid'
 
     rescue Exception => e
-      Honeybadger.notify_or_ignore(e) unless Rails.env.test? || Rails.env.development?
-
-      context[:status] = 'failed'
-
-      raise e if Rails.env.development?
+      process_exception(e)
     end
   end
 
@@ -88,10 +84,7 @@ class UpdateBalancedPurchase
       context[:status] = 'paid'
 
     rescue Exception => e
-      Honeybadger.notify_or_ignore(e) unless Rails.env.test? || Rails.env.development?
-      context[:status] = 'failed'
-
-      raise e if Rails.env.development?
+      process_exception(e)
     end
   end
 
@@ -104,5 +97,12 @@ class UpdateBalancedPurchase
     type = debit.source._type == 'card' ? "credit card" : "ach"
 
     [debit, type]
+  end
+
+  def process_exception(exception)
+    Honeybadger.notify_or_ignore(exception) unless Rails.env.test? || Rails.env.development?
+    context[:status] = 'failed'
+
+    raise exception if Rails.env.development?
   end
 end

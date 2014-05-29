@@ -25,4 +25,8 @@ class Payment < ActiveRecord::Base
   ransacker :update_at_date do |parent|
     Arel.sql("date(updated_at)")
   end
+
+  def balanced_debit
+    Balanced::Debit.find(balanced_uri) if balanced_uri.present?
+  end
 end
