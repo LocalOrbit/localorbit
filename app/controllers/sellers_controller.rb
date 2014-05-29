@@ -14,19 +14,21 @@ class SellersController < ApplicationController
       @empty_message = "#{current_market.name} has no sellers at this time."
     else
       @current_seller = @sellers.order("RANDOM()").first.decorate
-      @categories = Category.where(depth: 2)
-      @product_groups = products_for_seller(@current_seller).group_by {|p| p.category.self_and_ancestors.find_by(depth: 2).id }
+      load_products(@current_seller)
     end
     render :show
   end
 
   def show
     @current_seller = @sellers.find(params[:id]).decorate
-    @categories = Category.where(depth: 2)
-    @product_groups = products_for_seller(@current_seller).group_by {|p| p.category.self_and_ancestors.find_by(depth: 2).id }
+    load_products(@current_seller)
   end
 
   private
+
+  def load_products(seller)
+    @products_for_sale = ProductsForSale.new(current_delivery, current_organization, current_cart, request.query_parameters, seller: seller)
+  end
 
   def products_for_seller(seller)
     current_delivery.products_available_for_sale(current_organization).

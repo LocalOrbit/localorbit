@@ -11,8 +11,8 @@ class Lot < ActiveRecord::Base
     where("(lots.good_from IS NULL OR lots.good_from < :time) AND (lots.expires_at IS NULL OR lots.expires_at > :time) AND quantity > 0", time: time)
   }
 
-  def available?
-    (expires_at.nil? || expires_at.future?) && (good_from.nil? || good_from.past?)
+  def available?(time=Time.current)
+    (expires_at.nil? || expires_at > time) && (good_from.nil? || good_from < time)
   end
 
   def available_quantity

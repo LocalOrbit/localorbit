@@ -54,8 +54,6 @@ class Product < ActiveRecord::Base
       with_available_inventory(deliver_on_date).
       priced_for_market_and_buyer(market, buyer).
 
-      # Limit to products with enough inventory to fulfill the min_quantity
-      having("SUM(lots.quantity) >= MIN(prices.min_quantity)").
       group("products.id")
   end
 
@@ -71,24 +69,7 @@ class Product < ActiveRecord::Base
     end
     price_join = arel_table.create_join(price_table, arel_table.create_on(on_cond))
 
-    # Limit returned rows to only the lowest min_quantity
-    price_alias = price_table.alias
-    on_cond = price_table[:product_id].eq(price_alias[:product_id]).
-              and(
-                price_table[:min_quantity].gt(price_alias[:min_quantity]).
-                or(
-                  price_table[:min_quantity].eq(price_alias[:min_quantity]).
-                  and(
-                    price_alias[:organization_id].not_eq(nil).and(price_table[:organization_id].eq(nil)).
-                    or(price_alias[:market_id].not_eq(nil).and(price_table[:market_id].eq(nil)))
-                  )
-                )
-              )
-    price_limiter_join = arel_table.create_join(price_alias, arel_table.create_on(on_cond), Arel::Nodes::OuterJoin)
-
-    joins(price_join).
-    joins(price_limiter_join).
-    where(price_alias[:id].eq(nil))
+    joins(price_join)
   end
 
   def self.seller_can_sell
@@ -162,7 +143,11 @@ class Product < ActiveRecord::Base
   end
 
   def available_inventory(deliver_on_date=DateTime.current)
-    lots.available(deliver_on_date).sum(:quantity)
+    if lots.loaded?
+      lots.to_a.sum {|l| l.available?(deliver_on_date) ? l.quantity : 0 }
+    else
+      lots.available(deliver_on_date).sum(:quantity)
+    end
   end
 
   def minimum_quantity_for_purchase(opts={})
@@ -190,8 +175,19 @@ class Product < ActiveRecord::Base
   end
 
   def prices_for_market_and_organization(market, organization)
-    ids = [organization.id, nil]
-    prices.where(market_id: [market.id, nil]).where(organization_id: ids).order("min_quantity, organization_id desc nulls first").index_by {|price| price.min_quantity }.values
+    if prices.loaded?
+      prices.inject({}) do |final_prices, price|
+        if price.for_market_and_organization?(market, organization) && (price.organization_id || !final_prices.key?(price.min_quantity))
+          final_prices[price.min_quantity] = price
+        end
+
+        final_prices
+      end.values.sort {|a,b| a.min_quantity <=> b.min_quantity }
+    else
+      prices.where(market_id: [market.id, nil], organization_id: [organization.id, nil]).
+        order("min_quantity, organization_id desc nulls first").
+        index_by {|price| price.min_quantity }.values
+    end
   end
 
   private

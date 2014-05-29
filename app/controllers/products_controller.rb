@@ -4,22 +4,17 @@ class ProductsController < ApplicationController
   before_action :require_current_delivery
   before_action :require_cart
   before_action :hide_admin_navigation
+  before_action :load_products
 
   def index
-    @categories = Category.where(depth: 2)
-    @product_groups = products.periscope(request.query_parameters).decorate(context: {current_cart: current_cart}).group_by {|p| p.category.self_and_ancestors.find_by(depth: 2) }
-    @filter_categories = Category.where(id: products.pluck(:top_level_category_id).uniq)
-    @filter_organizations = current_market.organizations.selling.where(id: products.pluck(:organization_id).uniq)
   end
 
   def show
-    @product = products.find(params[:id]).decorate(context: {current_cart: current_cart})
+    @product = @products_for_sale.products.first || raise(ActiveRecord::RecordNotFound)
 
-    cat = @product.category
-    @breadcrumbs = [cat]
-    while cat.parent_id.present?
-      @breadcrumbs.push cat.parent
-      cat = cat.parent
+    @breadcrumbs = [@product.category]
+    while @breadcrumbs.last.parent_id.present?
+      @breadcrumbs.push @breadcrumbs.last.parent
     end
     @breadcrumbs.pop
     @breadcrumbs.reverse!
@@ -27,7 +22,7 @@ class ProductsController < ApplicationController
 
   private
 
-  def products
-    current_delivery.products_available_for_sale(current_organization).includes(:unit, :category)
+  def load_products
+    @products_for_sale = ProductsForSale.new(current_delivery, current_organization, current_cart, request.query_parameters, product_id: params[:id])
   end
 end

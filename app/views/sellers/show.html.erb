@@ -72,12 +72,10 @@
         </div>
       </div>
 
-      <% if !@product_groups.empty? %>
+      <% if !@products_for_sale.product_groups.empty? %>
         <h2 class="heading-section">Currently Selling</h2>
-        <% @categories.each do |category| %>
-          <% if @product_groups[category.id].present? %>
-            <%= render "products/table", products: @product_groups[category.id], category: category %>
-          <% end %>
+        <% @products_for_sale.each_category_with_products do |category, products| %>
+          <%= render "products/table", products: products, category: category %>
         <% end %>
       <% end %>
       <%= link_to "Review Cart", cart_path, id: "review_cart", class: "btn btn--blue btn--small pull-right add-toggle" %>
