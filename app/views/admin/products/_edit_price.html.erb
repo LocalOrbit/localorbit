@@ -1,7 +1,7 @@
 <div class="popup popup--edit is-hidden" id="edit_price_<%= price.id %>">
   <h2>Simple Edit Price</h2>
 
-  <%= form_for [:admin, price.product, price], html: { novalidate: "novalidate" } do |f| %>
+  <%= form_for [:admin, price.product, price], html: { novalidate: "novalidate" }, format: :js do |f| %>
     <%= fields_for :price, price, index: price.id do |f| %>
       <table>
         <caption>Price for all buyers</caption>

@@ -1,6 +1,6 @@
 <div class="popup popup--edit is-hidden" id="edit_inventory_<%= product.id %>">
   <h2>Edit Inventory</h2>
-  <%= form_for admin_product_lots_path(product) do |f| %>
+  <%= form_for [:admin, product, product.lots.build], format: :js do |f| %>
     <div class="fieldset">
       <legend>Add a lot for “<%= product.name %>”</legend>
 
