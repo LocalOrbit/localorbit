@@ -6,20 +6,21 @@ feature "Viewing orders" do
 
   let!(:market1_seller_org1) { create(:organization, :seller, markets: [market1]) }
   let!(:market1_seller_org2) { create(:organization, :seller, markets: [market1]) }
-  let!(:market1_buyer_org)   { create(:organization, :buyer,  markets: [market1]) }
+  let!(:market1_buyer_org1)   { create(:organization, :buyer,  markets: [market1]) }
+  let!(:market1_buyer_org2)   { create(:organization, :buyer,  markets: [market1]) }
   let!(:market1_product1)    { create(:product, :sellable, organization: market1_seller_org1) }
   let!(:market1_product2)    { create(:product, :sellable, organization: market1_seller_org2) }
 
   let!(:market1_order_item1) { create(:order_item, product: market1_product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40) }
   let!(:market1_order_item2) { create(:order_item, product: market1_product2, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
-  let!(:market1_order1)      { create(:order, items: [market1_order_item1, market1_order_item2], organization: market1_buyer_org, market: market1, total_cost: 27.96, delivery: market1_delivery) }
+  let!(:market1_order1)      { create(:order, items: [market1_order_item1, market1_order_item2], organization: market1_buyer_org1, market: market1, total_cost: 27.96, delivery: market1_delivery) }
 
   let!(:market1_order_item3) { create(:order_item, product: market1_product1, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
   let!(:market1_order_item4) { create(:order_item, product: market1_product2, quantity: 3, unit_price: 7.99, market_seller_fee: 1.20, local_orbit_seller_fee: 0.96) }
-  let!(:market1_order2)      { create(:order, items: [market1_order_item3, market1_order_item4], organization: market1_buyer_org, market: market1, total_cost: 41.95, delivery: market1_delivery) }
+  let!(:market1_order2)      { create(:order, items: [market1_order_item3, market1_order_item4], organization: market1_buyer_org2, market: market1, total_cost: 41.95, delivery: market1_delivery) }
 
   let!(:market1_order_item5) { create(:order_item, product: market1_product2) }
-  let!(:market1_order3)      { create(:order, items: [market1_order_item5], organization: market1_buyer_org, market: market1, delivery: market1_delivery) }
+  let!(:market1_order3)      { create(:order, items: [market1_order_item5], organization: market1_buyer_org1, market: market1, delivery: market1_delivery) }
 
   let!(:market2)          { create(:market, :with_delivery_schedule, market_seller_fee: 5, local_orbit_seller_fee: 4)}
   let!(:market2_delivery)        { market2.delivery_schedules.first.next_delivery }
@@ -121,5 +122,52 @@ feature "Viewing orders" do
       expect(order.delivery_status).to eq('Pending')
       expect(order.buyer_status).to eq('Unpaid')
     end
+
+    scenario "filtering a list of orders by market" do
+      visit admin_orders_path
+
+      expect(page).to have_content(market1_order1.order_number)
+      expect(page).to have_content(market1_order2.order_number)
+      expect(page).to have_content(market1_order3.order_number)
+      expect(page).to have_content(market2_order1.order_number)
+      expect(page).to have_content(market2_order2.order_number)
+      expect(page).to have_content(market2_order3.order_number)
+
+      select market1.name, from: "q_market_id_eq"
+      click_button "Update"
+
+      expect(page).to have_content(market1_order1.order_number)
+      expect(page).to have_content(market1_order2.order_number)
+      expect(page).to have_content(market1_order3.order_number)
+      expect(page).not_to have_content(market2_order1.order_number)
+      expect(page).not_to have_content(market2_order2.order_number)
+      expect(page).not_to have_content(market2_order3.order_number)
+
+      expect(find(:css, "#q_market_id_eq").value).to eql(market1.id.to_s)
+    end
+
+    scenario "filtering list of orders by buyer" do
+      visit admin_orders_path
+
+      expect(page).to have_content(market1_order1.order_number)
+      expect(page).to have_content(market1_order2.order_number)
+      expect(page).to have_content(market1_order3.order_number)
+      expect(page).to have_content(market2_order1.order_number)
+      expect(page).to have_content(market2_order2.order_number)
+      expect(page).to have_content(market2_order3.order_number)
+
+      select market1_buyer_org1.name, from: "q_organization_id_eq"
+      click_button "Update"
+
+      expect(page).to have_content(market1_order1.order_number)
+      expect(page).not_to have_content(market1_order2.order_number)
+      expect(page).to have_content(market1_order3.order_number)
+      expect(page).not_to have_content(market2_order1.order_number)
+      expect(page).not_to have_content(market2_order2.order_number)
+      expect(page).not_to have_content(market2_order3.order_number)
+    end
+
+    scenario "filtering list of orders by order date"
+    scenario "filtering list of orders by delivery status"
   end
 end

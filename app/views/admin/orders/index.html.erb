@@ -4,6 +4,19 @@
   </div>
 </div>
 
+
+<% if current_user.market_manager? %>
+  <%= search_form_for @q, url: admin_orders_path do |f| %>
+  <%= f.label :market_id_eq, "Market" %>
+  <%= f.collection_select :market_id_eq, @selling_markets, :id, :name, prompt: "Show by Market" %>
+  <%= f.label :organization_id_eq, "Buyer" %>
+  <%= f.collection_select :organization_id_eq, @buyer_organizations, :id, :name, prompt: "Show by Buyer" %>
+
+  <%= f.submit "Update" %>
+<% end %>
+<% end %>
+
+
 <table class="sortable">
   <thead class="stickable">
     <th data-column="number" class="<%= column_sort_classes("number")%>">Order #</th>
