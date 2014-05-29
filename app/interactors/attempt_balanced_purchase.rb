@@ -8,22 +8,9 @@ class AttemptBalancedPurchase
 
         amount = (cart.total * 100).to_i #USD in cents
 
-        debit = balanced_customer.debit(
-          amount: amount,
-          source_uri: balanced_source_uri,
-          description: "#{cart.market.name} purchase"
-        )
-
-        context[:payment] = Payment.create(
-          payer: buyer,
-          payment_method: payment_method,
-          amount: cart.total,
-          status: initial_payment_status,
-          balanced_uri: debit.uri,
-          orders: [order]
-        )
-
-        order.update(payment_method: payment_method, payment_status: initial_payment_status)
+        debit = create_debit(amount)
+        record_payment(debit)
+        update_order_payment_method
 
         if !context[:payment].persisted?
           debit.refund
@@ -64,5 +51,28 @@ class AttemptBalancedPurchase
     else
       "pending"
     end
+  end
+
+  def create_debit(amount)
+    balanced_customer.debit(
+      amount: amount,
+      source_uri: balanced_source_uri,
+      description: "#{cart.market.name} purchase"
+    )
+  end
+
+  def record_payment(debit)
+    context[:payment] = Payment.create(
+      payer: buyer,
+      payment_method: payment_method,
+      amount: cart.total,
+      status: initial_payment_status,
+      balanced_uri: debit.uri,
+      orders: [order]
+    )
+  end
+
+  def update_order_payment_method
+    order.update(payment_method: payment_method, payment_status: initial_payment_status)
   end
 end

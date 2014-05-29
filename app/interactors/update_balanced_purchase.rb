@@ -48,8 +48,13 @@ class UpdateBalancedPurchase
         remaining_amount -= refund_amount / 100.0
       end
       context[:status] = 'paid'
-    rescue
+
+    rescue Exception => e
+      Honeybadger.notify_or_ignore(e) unless Rails.env.test? || Rails.env.development?
+
       context[:status] = 'failed'
+
+      raise e if Rails.env.development?
     end
   end
 
@@ -81,8 +86,12 @@ class UpdateBalancedPurchase
         description: "#{order.market.name} purchase"
       )
       context[:status] = 'paid'
-    rescue
+
+    rescue Exception => e
+      Honeybadger.notify_or_ignore(e) unless Rails.env.test? || Rails.env.development?
       context[:status] = 'failed'
+
+      raise e if Rails.env.development?
     end
   end
 
