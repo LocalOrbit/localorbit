@@ -1,11 +1,6 @@
 class Admin::OrdersController < AdminController
   def index
-    query = request.query_parameters[:q] || {}
-    @selected_market_id = query[:market_id_eq].to_s
-    @selected_organization_id = query[:organization_id_eq].to_s
-
-    @selling_markets = current_user.managed_markets.order(:name)
-    @buyer_organizations = Order.orders_for_seller(current_user).joins(:organization).map(&:organization).uniq
+    @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user)
 
     @q = Order.search(params[:q])
     @orders = @q.result.orders_for_seller(current_user).page(params[:page]).per(params[:per_page])
