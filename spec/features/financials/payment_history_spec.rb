@@ -265,30 +265,36 @@ feature "Payment history" do
   context "Buyers" do
     let!(:user) { create(:user, organizations: [buyer]) }
 
+    scenario "cannot view market-to-seller payments" do
+      expect(payment_row("$42.00")).to be_nil
+      expect(payment_row("$44.00")).to be_nil
+      expect(payment_row("$46.00")).to be_nil
+      expect(payment_row("$48.00")).to be_nil
+      expect(payment_row("$50.00")).to be_nil
+    end
+
     scenario "can view their purchase history" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(10)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
 
       expect(payment_row("$21.00")).not_to be_nil
       expect(payment_row("$21.00").payment_method).to eql("Cash")
-      expect(payment_row("$21.00").date).to eql("05/09/2014")
+      expect(payment_row("$21.00").date).to eql("05/10/2014")
 
       expect(payment_row("$22.00")).not_to be_nil
       expect(payment_row("$22.00").payment_method).to eql("Check: #12345")
-      expect(payment_row("$22.00").date).to eql("05/10/2014")
+      expect(payment_row("$22.00").date).to eql("05/11/2014")
 
       expect(payment_row("$23.00")).not_to be_nil
       expect(payment_row("$23.00").payment_method).to eql("ACH: *********9983")
-      expect(payment_row("$23.00").date).to eql("05/11/2014")
+      expect(payment_row("$23.00").date).to eql("05/12/2014")
 
       expect(payment_row("$24.00")).not_to be_nil
       expect(payment_row("$24.00").payment_method).to eql("ACH: *********2231")
-      expect(payment_row("$24.00").date).to eql("05/12/2014")
+      expect(payment_row("$24.00").date).to eql("05/13/2014")
 
       expect(payment_row("$25.00")).not_to be_nil
       expect(payment_row("$25.00").payment_method).to eql("Credit Card: ************7732")
-      expect(payment_row("$25.00").date).to eql("05/13/2014")
-
-      expect(payment_row("$99.00")).to be_nil
+      expect(payment_row("$25.00").date).to eql("05/14/2014")
     end
 
     scenario "can search purchase history by order number" do
