@@ -1,0 +1,158 @@
+.invoices-wrapper {
+  font-size: 14px;
+  font-family: OpenSans, "Open Sans", sans-serif;
+
+  .column, .row {
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .column {
+    display: inline-block;
+    padding: 0 10px 0 0;
+    text-align: left;
+    vertical-align: top;
+  }
+  .column:last-child {
+    padding-right: 0;
+  }
+  .column--three-fourths { width: 75%; }
+  .column--half { width: 50%; }
+  .column--fourth { width: 25%; }
+
+  .ar { text-align: right; }
+  .al { text-align: left; }
+  .ac { text-align: center; }
+
+  .left-padded { padding-left: 20px; }
+
+  h1 {
+    margin: 0 0 .5em;
+    font: bold 30px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
+  }
+  h2 {
+    margin: 0;
+    color: #666;
+    font: bold 14px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  caption {
+    color: #000;
+    font: bold 14px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
+    text-align: left;
+  }
+
+  th { padding: 10px; color: #666; font-size: 12px; text-align: left; vertical-align: top; }
+  td { padding: 10px; font-size: 12px; }
+  tbody  tr:nth-child(odd) { background: #f9f9f9; }
+
+  tfoot {
+    padding: 10px 0 0;
+  }
+    tfoot td {
+      padding: 5px 10px;
+    }
+  tfoot th {
+    font-size: 12px;
+    font-weight: normal;
+  }
+  .cancelled > span {
+    text-decoration: line-through;
+  }
+    .cancelled:after {
+      color: #911;
+      content: " Cancelled";
+      text-decoration: none;
+    }
+  .discounts th, .discounts td {
+    padding: 10px 10px 2px;
+  }
+  .delivery th, .delivery td {
+    padding: 2px 10px 10px;
+  }
+  .total {
+    border-top: solid 1px #ccc;
+    color: #666;
+  }
+    .total .amount {
+      padding-left: 10px;
+      color: #000;
+      font: bold 24px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
+    }
+    .total td,
+    .total th {
+      padding-left: 0;
+      font-size: 18px;
+    }
+    .total td:first-child {
+      font-style: italic;
+    }
+
+  .date {
+    font-family: "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
+    font-weight: bold;
+  }
+  .due-date{
+    padding: 17px;
+    border: solid 2px #C7C7C7;
+    background: #f9f9f9;
+    font: bold 25px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
+  }
+  .inline {
+    display: inline;
+  }
+  .logo {
+    float: left;
+    max-width: 200px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+  }
+  .vcard {
+    overflow: hidden;
+  }
+    .vcard-buyer {
+      margin-bottom: 25px;
+    }
+  .buyer-name, .org-from, .invoice-num, .po-num {
+    margin: 0;
+    font: bold 20px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", sans-serif;
+  }
+  .invoice-num,
+  .buyer-name,
+  .org-from {
+    word-break: break-all;
+    word-wrap: break-word;
+  }
+}
+@media print {
+  .controller-invoices {
+    .l-app-header, .l-app-footer, .btn--save,
+    .logo-link, .nav--main, .nav--admin, .tab-header, .teflon {
+      display: none;
+    }
+    .logo {
+      display: block;
+    }
+  }
+}
+@media screen {
+  body {
+    > .invoices-wrapper {
+      width: 7.5in;
+      min-height: 9in;
+      padding: 1in .5in;
+      margin: 0 auto;
+      background: #fff;
+
+      .btn--save {
+        display: none;
+      }
+    }
+  }
+}
+

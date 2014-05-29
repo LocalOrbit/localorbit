@@ -25,7 +25,11 @@ feature "Viewing invoices" do
 
     expect(page).to have_content("Invoice Number LO-001")
 
-    within('.invoice-top') do
+    within('.invoice-basics') do
+      expect(page).to have_content("Invoice Date 4/2/2014")
+      expect(page).to have_content("Due Date 4/16/2014")
+    end
+    within('.invoice-parties') do
       expect(page).to have_content(market.name)
 
       address = market.addresses.first
@@ -33,8 +37,6 @@ feature "Viewing invoices" do
       expect(page).to have_content(address.city)
       expect(page).to have_content(address.state)
       expect(page).to have_content(address.zip)
-      expect(page).to have_content("Invoice Date 4/2/2014")
-      expect(page).to have_content("Due Date 4/16/2014")
     end
     expect(page).to have_content("Total $210.00")
 
@@ -56,7 +58,11 @@ feature "Viewing invoices" do
 
     expect(page).to have_content("Invoice Number LO-001")
 
-    within('.invoice-top') do
+    within('.invoice-basics') do
+      expect(page).to have_content("Invoice Date 4/2/2014")
+      expect(page).to have_content("Due Date 4/16/2014")
+    end
+    within('.invoice-parties') do
       expect(page).to have_content(market.name)
 
       address = market.addresses.first
@@ -65,8 +71,6 @@ feature "Viewing invoices" do
       expect(page).to have_content(address.state)
       expect(page).to have_content(address.zip)
 
-      expect(page).to have_content("Invoice Date 4/2/2014")
-      expect(page).to have_content("Due Date 4/16/2014")
     end
     expect(page).to have_content("Total $210.00")
 

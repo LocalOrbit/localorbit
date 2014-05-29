@@ -16,6 +16,7 @@
           <%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %>
         <% else %>
           <%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %>
+          <%= content_tag(:li, link_to_or_span("Review Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
         <% end %>
       </ul>
     </div>
