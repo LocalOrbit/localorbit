@@ -9,6 +9,9 @@ body {
 .clear-before {
   clear: both;
 }
+.clear-right {
+  clear: right;
+}
 .clear-after:after {
   clear: both;
   display: block;
