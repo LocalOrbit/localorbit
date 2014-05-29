@@ -73,6 +73,28 @@ input[type=password] {
 }
 
 .datepicker {
+  width: 8em;
+
+  &.hasDatepicker {
+    height: 24px;
+    @include border-radius(2px 0 0 2px);
+    margin: 2px 0;
+    vertical-align: top;
+
+    + .clear-link {
+      position: absolute;
+      padding: 0;
+      border: 0;
+      margin: .4em 0 0 -1.2em;
+      background: transparent;
+      font-size: 14px;
+      -webkit-appearance: none;
+    }
+    ~ .btn--end {
+      display: inline-block;
+    }
+  }
+
   ~ .btn--end {
     display: none;
     padding: 3px 3px 2px;
@@ -80,19 +102,6 @@ input[type=password] {
     margin-left: -1px;
     font-size: 12px;
     vertical-align: top;
-  }
-  &.hasDatepicker {
-    width: 8em;
-    @include border-radius(2px 0 0 2px);
-    vertical-align: top;
-
-    + .clear-link {
-      position: absolute;
-      margin: .4em 0 0 -1.2em;
-    }
-    ~ .btn--end {
-      display: inline-block;
-    }
   }
 }
 
@@ -337,6 +346,17 @@ form.form-actions {
       font-weight: 400;
     }
   }
+}
+.payment_search {
+  margin: 0 0 1em;
+
+  input,
+  .preserve-alignment {
+    vertical-align: middle;
+  }
+  .preserve-alignment {
+    display: inline-block;
+  } 
 }
 .wys-toolbar {
   margin-top: 5px;
