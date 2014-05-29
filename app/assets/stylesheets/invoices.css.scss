@@ -61,10 +61,10 @@
     font-size: 12px;
     font-weight: normal;
   }
-  .cancelled > span {
+  .canceled > span {
     text-decoration: line-through;
   }
-    .cancelled:after {
+    .canceled:after {
       color: #911;
       content: " Cancelled";
       text-decoration: none;

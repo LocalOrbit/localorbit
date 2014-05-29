@@ -65,22 +65,12 @@
     <tr class="line-item">
       <td class="al"><%= item.name %></td>
       <td><%= item.unit %></td>
-      <td class="ac"><%= item.quantity %></td>
-      <td class="ac"><%= item.quantity %></td>
+      <td><%= item.quantity %></td>
+      <td><%= item.quantity_delivered || item.delivery_status.try(:titleize) %></td>
       <td><%= number_to_currency item.unit_price %></td>
       <td><%= item.seller.name %></td>
-      <% #TODO: Add class "cancelled" to cancelled items' td %>
-      <td><span class="amount"><%= number_to_currency item.gross_total %></span></td>
+      <td class="<%= item.delivery_status %>"><span class="amount"><%= number_to_currency item.gross_total %></span></td>
     </tr>
-    <% item.lots.select {|lot| lot.number.present? }.each do |lot| %>
-    <tr class="line-item-lot">
-      <td class="al left-padded" colspan="3">Lot #: <%= lot.number %></td>
-      <td class="ac"><%= lot.quantity %></td>
-      <td class="ac"><%= lot.quantity %></td>
-      <td></td>
-      <td></td>
-    </td>
-    <% end %>
     <% end %>
     <tfoot>
       <tr class="discounts">
