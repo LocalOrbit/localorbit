@@ -19,7 +19,7 @@ class @DatePicker
     @appendClearLink(field)
 
   @appendClearLink: (field)->
-    clearLink = $("<a href='#' class='clear-link'><i class='font-icon icon-clear'></i></a>")
+    clearLink = $("<button class='clear-link'><i class='font-icon icon-clear'></i></button>")
     field.after(clearLink)
     clearLink.on 'click', (event)->
       event.preventDefault()
