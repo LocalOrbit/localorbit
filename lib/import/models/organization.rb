@@ -33,11 +33,11 @@ class Legacy::Organization < Legacy::Base
         puts "- Creating organization: #{name}"
         organization = Imported::Organization.new(
           legacy_id: org_id,
-          name: name,
+          name: name.clean,
           can_sell: !!allow_sell,
           show_profile: !!public_profile,
-          who_story: profile,
-          how_story: product_how,
+          who_story: profile.clean,
+          how_story: product_how.clean,
           facebook: facebook,
           twitter: twitter,
           allow_ach: payment_allow_ach,

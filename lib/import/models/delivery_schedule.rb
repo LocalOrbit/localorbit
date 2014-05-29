@@ -27,11 +27,18 @@ module Imported
   end
 end
 
+class Legacy::DeliveryFee < Legacy::Base
+  self.table_name = "delivery_fees"
+  self.primary_key = "devfee_id"
+
+  belongs_to :delivery_schedule, class_name: "Legacy::DeliverySchedule", foreign_key: :dd_id, inverse_of: :delivery_fee
+end
+
 class Legacy::Delivery < Legacy::Base
   self.table_name = "lo_order_deliveries"
   self.primary_key = "lodeliv_id"
 
-  belongs_to :order, class_name: "Legacy::Order", foreign_key: :dd_id, inverse_of: :delivery
+  belongs_to :order, class_name: "Legacy::Order", foreign_key: :dd_id, inverse_of: :delivery_schedule
 
   def import
     imported = Imported::Delivery.find_by_legacy_id(lodeliv_id)
@@ -55,12 +62,15 @@ class Legacy::Delivery < Legacy::Base
   end
 end
 
+
+
 class Legacy::DeliverySchedule < Legacy::Base
   self.table_name = "delivery_days"
   self.primary_key = "dd_id"
 
   belongs_to :market, class_name: "Legacy::Market", foreign_key: :domain_id
   has_many :deliveries, class_name: "Legacy::Delivery", foreign_key: :dd_id, inverse_of: :delivery_schedule
+  has_one :delivery_fee, class_name: "Legacy::DeliveryFee", foreign_key: :dd_id, inverse_of: :delivery_schedule
 
   def import(market)
     imported = Imported::DeliverySchedule.where(legacy_id: dd_id).first
@@ -70,6 +80,8 @@ class Legacy::DeliverySchedule < Legacy::Base
       imported = Imported::DeliverySchedule.new(
         legacy_id: dd_id,
         day: day_of_week,
+        fee: imported_delivery_fee,
+        fee_type: imported_delivery_fee_type,
         order_cutoff: hours_due_before,
         seller_fulfillment_location_id: fulfillment_location_id,
         seller_delivery_start: parse_time(delivery_start_time),
@@ -99,6 +111,14 @@ class Legacy::DeliverySchedule < Legacy::Base
 
   def pickup_location_id(market)
     pickup_address_id == 0 ? 0 : Imported::MarketAddress.where(legacy_id: pickup_address_id).first.try(:id)
+  end
+
+  def imported_delivery_fee
+    delivery_fee.amount
+  end
+
+  def imported_delivery_fee_type
+    delivery_fee.fee_calc_type_id == 2 ? "fixed" : "percent"
   end
 
 end
