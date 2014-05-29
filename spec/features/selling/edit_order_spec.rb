@@ -185,6 +185,10 @@ describe 'Editing an order' do
       end
 
       context "less then ordered" do
+        before do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        end
+
         subject {
           visit admin_order_path(order)
 
@@ -227,6 +231,10 @@ describe 'Editing an order' do
       end
 
       context "more then ordered" do
+        before do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        end
+
         subject {
           visit admin_order_path(order)
 
@@ -299,6 +307,29 @@ describe 'Editing an order' do
           click_button "Update quantities"
 
           expect(page).to have_content("must be less than 2147483647")
+        end
+      end
+
+      context "payment processor error" do
+        let!(:payment) { create(:payment, :checking, orders: [order], amount: 15.00) }
+
+        before do
+          expect(Balanced::Debit).to receive(:find).and_throw(Exception)
+
+          visit admin_order_path(order)
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$15.00")
+        end
+
+        it "shows an error" do
+          item = Dom::Order::ItemRow.first
+          item.set_quantity_delivered("2")
+          click_button "Update quantities"
+
+          expect(page).to have_content("failed to update your payment")
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$15.00")
         end
       end
     end

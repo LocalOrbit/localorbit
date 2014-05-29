@@ -1,6 +1,6 @@
 class Admin::OrdersController < AdminController
   before_filter :require_admin_or_market_manager, only: :update
-  
+
   def index
     @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user)
 
@@ -19,7 +19,7 @@ class Admin::OrdersController < AdminController
     if updates.success?
       redirect_to admin_order_path(order), notice: "Order successfully updated."
     else
-      order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] = 'failed'
+      order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == 'failed'
       @order = SellerOrder.new(order, current_user)
       render :show
     end

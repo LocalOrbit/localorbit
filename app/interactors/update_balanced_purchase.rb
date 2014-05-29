@@ -40,8 +40,7 @@ class UpdateBalancedPurchase
       order.payments.refundable.each do |payment|
         break unless remaining_amount
 
-        debit = Balanced::Debit.find(payment.balanced_uri)
-        context[:type] = debit.source._type == 'card' ? "credit card" : "ach"
+        debit, context[:type] = fetch_balanced_debit(payment.balanced_uri)
 
         refund_amount = [debit.amount, remaining_amount * 100].min.to_i
         debit.refund(amount: refund_amount)
@@ -73,9 +72,7 @@ class UpdateBalancedPurchase
 
   def charge(amount)
     begin
-      debit = Balanced::Debit.find(first_order_payment.balanced_uri)
-      context[:type] = debit.source._type == 'card' ? "credit card" : "ach"
-
+      debit, context[:type] = fetch_balanced_debit(first_order_payment.balanced_uri)
       customer = Balanced::Customer.find(debit.account.uri)
 
       customer.debit(
@@ -91,5 +88,12 @@ class UpdateBalancedPurchase
 
   def first_order_payment
     order.payments.first
+  end
+
+  def fetch_balanced_debit(uri)
+    debit = Balanced::Debit.find(uri)
+    type = debit.source._type == 'card' ? "credit card" : "ach"
+
+    [debit, type]
   end
 end
