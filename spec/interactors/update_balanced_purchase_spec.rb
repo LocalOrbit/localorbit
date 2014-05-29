@@ -21,6 +21,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(2)
         expect(Payment.first.amount.to_f).to eql(45.00)
+        expect(Payment.first.refunded_amount.to_f).to eql(15.00)
         expect(Payment.last.amount.to_f).to eql(-15.00)
       end
 
@@ -41,6 +42,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(4)
         expect(Payment.first.amount.to_f).to eql(45.00)
+        expect(Payment.first.refunded_amount.to_f).to eql(45.00)
         expect(Payment.last.amount.to_f).to eql(-60.00)
       end
 
@@ -114,6 +116,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(2)
         expect(Payment.first.amount.to_f).to eql(45.00)
+        expect(Payment.first.refunded_amount.to_f).to eql(15.00)
         expect(Payment.last.amount.to_f).to eql(-15.00)
       end
 
@@ -134,6 +137,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(4)
         expect(Payment.first.amount.to_f).to eql(45.00)
+        expect(Payment.first.refunded_amount.to_f).to eql(45.00)
         expect(Payment.last.amount.to_f).to eql(-60.00)
       end
 
@@ -148,6 +152,7 @@ describe UpdateBalancedPurchase do
 
         expect(order.reload.payments.count).to eql(2)
         expect(Payment.first.amount.to_f).to eql(45.00)
+        expect(Payment.first.refunded_amount.to_f).to eql(0.00)
         expect(Payment.last.amount.to_f).to eql(-15.00)
         expect(Payment.last.status).to eql("failed")
       end

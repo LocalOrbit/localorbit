@@ -42,10 +42,11 @@ class UpdateBalancedPurchase
 
         debit, context[:type] = fetch_balanced_debit(payment.balanced_uri)
 
-        refund_amount = [debit.amount, remaining_amount * 100].min.to_i
-        debit.refund(amount: refund_amount)
+        refund_amount = [remaining_amount, payment.unrefunded_amount].min
+        debit.refund(amount: refund_amount.to_i * 100)
 
-        remaining_amount -= refund_amount / 100.0
+        payment.increment!(:refunded_amount, refund_amount)
+        remaining_amount -= refund_amount
       end
       context[:status] = 'paid'
 
