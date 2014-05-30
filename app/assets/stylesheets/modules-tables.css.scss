@@ -696,9 +696,33 @@ th {
 }
 
 @media screen and (max-width: 800px) {
-  .filter-dropdown {
-    width: 150px;
+  .product-filters {
+    width: 100%;
+    margin-bottom: 5px;
   }
+  .filter-dropdown {
+    width: 47%;
+    margin:  4px 0 2px;
+
+    + .filter-dropdown {
+      margin-left: 5%; 
+    }
+  }
+  .row--justified {
+    > .product-search,
+    > .product-search:last-child {
+      width: 100%;
+      text-align: left;
+    }
+  }
+  .search-widget {
+    float: left;
+    ~ .btn--add {
+      float: right;
+      margin-left: 5%;
+    }
+  }
+
 }
 
 /** Sticky tables (like other sticky things, but sillier */
