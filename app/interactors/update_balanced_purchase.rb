@@ -35,6 +35,7 @@ class UpdateBalancedPurchase
 
         ActiveRecord::Base.transaction do
           order.payments.refundable.order(:created_at).each do |payment|
+
             break unless remaining_amount > 0
 
             debit, context[:type] = fetch_balanced_debit(payment.balanced_uri)

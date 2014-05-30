@@ -10,7 +10,8 @@ describe 'Editing an order' do
 
   let!(:delivery)   { monday_delivery.next_delivery }
   let!(:order_item) { create(:order_item, product: product, quantity: 5, unit_price: 3.00) }
-  let!(:order)      { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item])}
+  let!(:order)      { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item], payment_method: 'ach')}
+  let!(:payment)    { create(:payment, :checking, orders: [order], amount: 15.00) }
 
   context "quantity delivered" do
     context "as a buyer" do
@@ -58,6 +59,10 @@ describe 'Editing an order' do
       end
 
       context "less then ordered" do
+        before do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        end
+
         subject {
           visit admin_order_path(order)
 
@@ -87,7 +92,7 @@ describe 'Editing an order' do
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.00")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.30")
-          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.46")
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.38")
         end
 
         it "does not update the product inventory" do
@@ -100,6 +105,10 @@ describe 'Editing an order' do
       end
 
       context "more then ordered" do
+        before do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        end
+
         subject {
           visit admin_order_path(order)
 
@@ -130,7 +139,7 @@ describe 'Editing an order' do
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$21.00")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$1.05")
-          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$19.11")
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$18.84")
         end
 
         it "does not update the product inventory" do
@@ -218,7 +227,7 @@ describe 'Editing an order' do
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.00")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.30")
-          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.46")
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.38")
         end
 
         it "does not update the product inventory" do
@@ -265,7 +274,7 @@ describe 'Editing an order' do
 
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$21.00")
           expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$1.05")
-          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$19.11")
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$18.84")
         end
 
         it "does not update the product inventory" do
@@ -291,6 +300,7 @@ describe 'Editing an order' do
           click_button "Update quantities"
 
           expect(page).to have_content("must be greater than or equal to 0")
+          expect(page).to_not have_content("failed to update your payment")
         end
 
         it "shows an error for non-numerical values" do
@@ -299,6 +309,7 @@ describe 'Editing an order' do
           click_button "Update quantities"
 
           expect(page).to have_content("is not a number")
+          expect(page).to_not have_content("failed to update your payment")
         end
 
         it "shows an error for insanely large numbers" do
@@ -307,6 +318,7 @@ describe 'Editing an order' do
           click_button "Update quantities"
 
           expect(page).to have_content("must be less than 2147483647")
+          expect(page).to_not have_content("failed to update your payment")
         end
       end
 

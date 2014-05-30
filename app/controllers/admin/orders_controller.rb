@@ -19,6 +19,7 @@ class Admin::OrdersController < AdminController
     if updates.success?
       redirect_to admin_order_path(order), notice: "Order successfully updated."
     else
+      order = updates.context[:order]
       order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == 'failed'
       @order = SellerOrder.new(order, current_user)
       render :show
