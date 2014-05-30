@@ -103,8 +103,8 @@ feature "Payment history" do
       create(:payment,
              payment_method: 'ach',
              payment_type: 'service',
-             payee: @market,
-             # payee: nil,
+             payer: @market,
+             payee: nil,
              amount: 99.00)
 
       # Create a cash buyer payment for a market that IS managed by our market manager
@@ -196,27 +196,6 @@ feature "Payment history" do
   context "Market Managers" do
     let!(:user) { create(:user, :market_manager, managed_markets: [@market, @market2]) }
 
-    scenario "can view buyer order payments for markets they manage" do
-      expect(payment_row("$123.00")).not_to be_nil
-      expect(payment_row("$123.00").payment_method).to eql("Cash")
-      expect(payment_row("$123.00").date).to eql("05/08/2014")
-
-      expect(payment_row("$345.00")).not_to be_nil
-      expect(payment_row("$345.00").payment_method).to eql("ACH: *********9983")
-      expect(payment_row("$345.00").date).to eql("05/08/2014")
-    end
-
-    scenario "cannot view buyer order payments for markets they do not manage" do
-      expect(payment_row("$234.00")).to be_nil
-      expect(payment_row("$456.00")).to be_nil
-    end
-
-    scenario "can view fews for markets they manage" do
-      expect(payment_row("$99.00")).not_to be_nil
-      expect(payment_row("$99.00").payment_method).to eql("ACH")
-      expect(payment_row("$99.00").date).to eql("05/08/2014")
-    end
-
     # 5 buyer   -> market payments
     # 5 buyer2  -> market2 payments
     # 5 seller  -> market payments
@@ -240,6 +219,27 @@ feature "Payment history" do
       expect(payment_rows_for_description("LO-02-234-4567890-123").count).to eq(1)
       expect(payment_rows_for_description("LO-02-234-4567890-345").count).to eq(1)
       expect(Dom::Admin::Financials::PaymentRow.find_by_description("Service Fee")).not_to be_nil
+    end
+
+    scenario "can view buyer order payments for markets they manage" do
+      expect(payment_row("$123.00")).not_to be_nil
+      expect(payment_row("$123.00").payment_method).to eql("Cash")
+      expect(payment_row("$123.00").date).to eql("05/08/2014")
+
+      expect(payment_row("$345.00")).not_to be_nil
+      expect(payment_row("$345.00").payment_method).to eql("ACH: *********9983")
+      expect(payment_row("$345.00").date).to eql("05/08/2014")
+    end
+
+    scenario "can view fews for markets they manage" do
+      expect(payment_row("$99.00")).not_to be_nil
+      expect(payment_row("$99.00").payment_method).to eql("ACH")
+      expect(payment_row("$99.00").date).to eql("05/08/2014")
+    end
+
+    scenario "cannot view buyer order payments for markets they do not manage" do
+      expect(payment_row("$234.00")).to be_nil
+      expect(payment_row("$456.00")).to be_nil
     end
 
     scenario "can search purchase history by order number" do
@@ -315,18 +315,12 @@ feature "Payment history" do
       select "Market 1", from: "Received From"
       click_button "Filter"
 
-      # FIXME: Validate service fees are TO market
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
 
       select "Buyer", from: "Received From"
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
-
-      select "Local Orbit", from: "Received From"
-      click_button "Filter"
-
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(1)
     end
 
     scenario "can filter purchase history by payee" do
@@ -335,8 +329,7 @@ feature "Payment history" do
       select "Market 1", from: "Paid To"
       click_button "Filter"
 
-      # FIXME: Validate service fees are TO market
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
 
       select "Seller", from: "Paid To"
       click_button "Filter"
@@ -351,20 +344,13 @@ feature "Payment history" do
       select "Local Orbit", from: "Paid To"
       click_button "Filter"
 
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(1)
+      # Service Fee + ACH Buyer Payment
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(2)
     end
   end
 
   context "Buyers" do
     let!(:user) { create(:user, organizations: [@buyer]) }
-
-    scenario "cannot view market-to-seller payments" do
-      expect(payment_row("$42.00")).to be_nil
-      expect(payment_row("$44.00")).to be_nil
-      expect(payment_row("$46.00")).to be_nil
-      expect(payment_row("$48.00")).to be_nil
-      expect(payment_row("$50.00")).to be_nil
-    end
 
     scenario "can view their purchase history" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
@@ -388,6 +374,14 @@ feature "Payment history" do
       expect(payment_row("$25.00")).not_to be_nil
       expect(payment_row("$25.00").payment_method).to eql("Credit Card: ************7732")
       expect(payment_row("$25.00").date).to eql("05/14/2014")
+    end
+
+    scenario "cannot view market-to-seller payments" do
+      expect(payment_row("$42.00")).to be_nil
+      expect(payment_row("$44.00")).to be_nil
+      expect(payment_row("$46.00")).to be_nil
+      expect(payment_row("$48.00")).to be_nil
+      expect(payment_row("$50.00")).to be_nil
     end
 
     scenario "can search purchase history by order number" do
