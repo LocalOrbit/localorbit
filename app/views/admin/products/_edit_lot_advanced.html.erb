@@ -1,4 +1,5 @@
 <div class="popup popup--edit is-hidden" id="edit_inventory_<%= product.id %>">
+  <button class="pull-right close"><i class="font-icon icon-close"></i></button>
   <h2>Edit Inventory</h2>
   <%= form_for [:admin, product, product.lots.build], format: :js do |f| %>
     <div class="fieldset">

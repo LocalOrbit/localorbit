@@ -1,6 +1,6 @@
 <%= render "admin/products/header" %>
 
-<%= form_for [:admin, @product, @price], html: { class: "row row--partial", novalidate: "novalidate" } do |f| %>
+<%= form_for [:admin, @product, @price], html: { class: "row row--partial price-form", novalidate: "novalidate" } do |f| %>
 
   <%= product_listing_disclaimer %>
 
@@ -21,6 +21,7 @@
       <p>You don't have any prices yet! We've gone ahead and started the entry for you.</p>
     <% end %>
 
+    <div class="table-wrapper">
     <%= content_tag :table, border: 0, id: 'pricing_table', data: edit_table_error_payload(@price_with_errors), class: "sortable pricing-table" do %>
       <thead>
         <tr>
@@ -102,6 +103,7 @@
       <% end %>
       </tbody>
     <% end # table %>
+    </div>
 
     <% if @product.prices.view_sorted.none? %>
       <p>

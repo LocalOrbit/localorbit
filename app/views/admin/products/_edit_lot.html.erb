@@ -1,5 +1,6 @@
 <div class="popup popup--edit is-hidden" id="edit_inventory_<%= product.id %>">
-  <h2>Edit Inventory</h2>
+  <button class="pull-right close"><i class="font-icon icon-close"></i></button>
+  <h2>Edit Inventory for <%= product.name %></h2>
   <%= form_for [:admin, product], html: { class: "", data: { organizations: @organizations.to_json(include: :locations), type: "edit"}}, format: :js do |f| %>
 
       <%= f.label :simple_inventory, "Quantity" %><br>

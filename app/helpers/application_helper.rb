@@ -91,9 +91,9 @@ module ApplicationHelper
     color_b = color_b.reverse.chomp('#').reverse
     if color_a.length == 6 && color_b.length == 6
 
-      r = (((color_a[0..1].hex - color_b[0..1].hex).abs / 6 * 5 ) + color_a[0..1].hex).to_s(16)
-      g = (((color_a[2..3].hex - color_b[2..3].hex).abs / 6 * 5 ) + color_a[2..3].hex).to_s(16)
-      b = (((color_a[4..5].hex - color_b[4..5].hex).abs / 6 * 5 ) + color_a[4..5].hex).to_s(16)
+      r = (((color_a[0..1].hex - color_b[0..1].hex).abs / 6 * 5 ) + color_a[0..1].hex).to_s(16)[0..1]
+      g = (((color_a[2..3].hex - color_b[2..3].hex).abs / 6 * 5 ) + color_a[2..3].hex).to_s(16)[0..1]
+      b = (((color_a[4..5].hex - color_b[4..5].hex).abs / 6 * 5 ) + color_a[4..5].hex).to_s(16)[0..1]
       return "##{r}#{g}#{b}"
     end
     return "##{color_a}"

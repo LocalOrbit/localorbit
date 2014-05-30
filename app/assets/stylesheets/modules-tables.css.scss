@@ -17,8 +17,13 @@
   background: $notice_bg;
 }
 
+.table-wrapper {
+  position: relative;
+  max-width: 100%;
+  overflow: auto;
+}
 table {
-  width: 100%;
+  min-width: 100%;
   border-collapse: collapse;
   font-size: 12px;
 }
@@ -271,6 +276,10 @@ th {
     .negotiated {
       white-space: nowrap;
     }
+    > .pricing,
+    > .stock {
+      position: static;
+    }
   }
 }
 
@@ -462,6 +471,9 @@ th {
   }
 
 @media screen and (max-width: 800px) {
+  .product-row .l-inline-list > li {
+    display: block;
+  }
   .product-table--user {
     .info {
       width: 200px;
@@ -473,8 +485,24 @@ th {
     .short_description {
       margin-left: 60px;
     }
-  }    
-}  
+  }
+  td.delete{
+    font-size: 0.1px;
+
+    .font-icon {
+      font-size: 12px;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .prodcuct-row {
+    > td,
+    > th {
+      position: static;
+    }
+  }
+}
 
 .edit-cell {
   display: none;
@@ -599,6 +627,9 @@ th {
 }
 
 .pricing-table {
+  select {
+    min-width: 7em;
+  }
   .market,
   .buyer {
     width: 135px;
@@ -662,6 +693,36 @@ th {
 .filter-dropdown {
   width: 180px;
   margin-right: 10px;
+}
+
+@media screen and (max-width: 800px) {
+  .product-filters {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .filter-dropdown {
+    width: 47%;
+    margin:  4px 0 2px;
+
+    + .filter-dropdown {
+      margin-left: 5%; 
+    }
+  }
+  .row--justified {
+    > .product-search,
+    > .product-search:last-child {
+      width: 100%;
+      text-align: left;
+    }
+  }
+  .search-widget {
+    float: left;
+    ~ .btn--add {
+      float: right;
+      margin-left: 5%;
+    }
+  }
+
 }
 
 /** Sticky tables (like other sticky things, but sillier */
