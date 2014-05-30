@@ -126,6 +126,12 @@ feature "Viewing orders" do
     scenario "filtering a list of orders by market" do
       visit admin_orders_path
 
+      within("#q_organization_id_eq") do
+        expect(page).to have_content(market1_buyer_org1.name)
+        expect(page).to have_content(market1_buyer_org2.name)
+        expect(page).to have_content(market2_buyer_org.name)
+      end
+
       expect(page).to have_content(market1_order1.order_number)
       expect(page).to have_content(market1_order2.order_number)
       expect(page).to have_content(market1_order3.order_number)
@@ -142,6 +148,12 @@ feature "Viewing orders" do
       expect(page).not_to have_content(market2_order1.order_number)
       expect(page).not_to have_content(market2_order2.order_number)
       expect(page).not_to have_content(market2_order3.order_number)
+
+      within("#q_organization_id_eq") do
+        expect(page).to have_content(market1_buyer_org1.name)
+        expect(page).to have_content(market1_buyer_org2.name)
+        expect(page).not_to have_content(market2_buyer_org.name)
+      end
 
       expect(find(:css, "#q_market_id_eq").value).to eql(market1.id.to_s)
     end
