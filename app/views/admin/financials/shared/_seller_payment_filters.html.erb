@@ -6,7 +6,7 @@
       <%= f.search_field :orders_order_number_cont, placeholder: "Search Payments" -%><%= f.submit "Search", class: "btn--end" %>
     </span>
     <span class="preserve-alignment">
-      <%= f.label :payment_method_eq, "Method" %><br>
+      <%= f.label :payment_method_eq, "Payment Method" %><br>
       <%= f.select :payment_method_eq, Payment::PAYMENT_METHODS.map { |pm| [pm[1], pm[0]] }, { prompt: "All" }, { class: "filter-input" } %>
     </span>
   </div>

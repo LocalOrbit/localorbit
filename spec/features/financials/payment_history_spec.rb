@@ -1,36 +1,36 @@
 require "spec_helper"
 
 feature "Payment history" do
-  let(:market_ach_balanced_uri) { "http://balanced.example.com/12345" }
-  let(:ach_balanced_uri) { "http://balanced.example.com/123456" }
-  let(:other_ach_balanced_uri) { "http://balanced.example.com/12345687" }
-  let(:cc_balanced_uri) { "http://balanced.example.com/1234567" }
+  before :all do
+    market_ach_balanced_uri = "http://balanced.example.com/12345"
+    ach_balanced_uri = "http://balanced.example.com/123456"
+    other_ach_balanced_uri = "http://balanced.example.com/12345687"
+    cc_balanced_uri = "http://balanced.example.com/1234567"
 
-  let!(:market)             { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
-  let!(:market2)            { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
-  let!(:market3)            { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
-  let!(:market_ach_account) { create(:bank_account, :checking, last_four: "7676", balanced_uri: market_ach_balanced_uri, bankable: market) }
+    @market = create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)")
+    @market2 = create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)")
+    market3 = create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)")
+    create(:bank_account, :checking, last_four: "7676", balanced_uri: market_ach_balanced_uri, bankable: @market)
 
-  let!(:buyer)   { create(:organization, markets: [market], can_sell: false) }
-  let!(:buyer2)  { create(:organization, markets: [market2, market3], can_sell: false) }
-  let!(:seller)  { create(:organization, markets: [market], can_sell: true) }
-  let!(:seller2) { create(:organization, markets: [market2], can_sell: true) }
+    @buyer = create(:organization, name: "Buyer", markets: [@market], can_sell: false)
+    buyer2 = create(:organization, name: "Buyer 2", markets: [@market2, market3], can_sell: false)
+    @seller = create(:organization, name: "Seller", markets: [@market], can_sell: true)
+    seller2 = create(:organization, name: "Seller 2", markets: [@market2], can_sell: true)
 
-  let(:payment_day) { DateTime.parse("May 9, 2014, 11:00:00") }
+    payment_day = DateTime.parse("May 9, 2014, 11:00:00")
 
-  let!(:ach_account) { create(:bank_account, :checking, last_four: "9983", balanced_uri: ach_balanced_uri, bankable: buyer) }
-  let!(:other_ach_account) { create(:bank_account, :checking, last_four: "2231", balanced_uri: other_ach_balanced_uri, bankable: buyer) }
-  let!(:cc_account) { create(:bank_account, :credit_card, last_four: "7732", balanced_uri: cc_balanced_uri, bankable: buyer) }
+    create(:bank_account, :checking, last_four: "9983", balanced_uri: ach_balanced_uri, bankable: @buyer)
+    create(:bank_account, :checking, last_four: "2231", balanced_uri: other_ach_balanced_uri, bankable: @buyer)
+    create(:bank_account, :credit_card, last_four: "7732", balanced_uri: cc_balanced_uri, bankable: @buyer)
 
-  before do
     order_item = create(:order_item, unit_price: 6.50, quantity: 2)
-    create(:order, items: [order_item], organization: buyer, payment_method: "purchase order", total_cost: 13.00)
+    create(:order, items: [order_item], organization: @buyer, payment_method: "purchase order", total_cost: 13.00)
 
     order_item = create(:order_item, unit_price: 36.00, quantity: 2)
-    create(:order, items: [order_item], organization: buyer, payment_method: "ach", total_cost: 72.00)
+    create(:order, items: [order_item], organization: @buyer, payment_method: "ach", total_cost: 72.00)
 
     order_item = create(:order_item, unit_price: 129.00, quantity: 1)
-    create(:order, items: [order_item], organization: buyer, payment_method: "credit card", total_cost: 129.00)
+    create(:order, items: [order_item], organization: @buyer, payment_method: "credit card", total_cost: 129.00)
 
     orders = []
     orders2 = []
@@ -38,7 +38,7 @@ feature "Payment history" do
       order_item = create(:order_item, unit_price: 20.00 + i, quantity: 1)
       orders << create(:order,
                        items: [order_item],
-                       organization: buyer,
+                       organization: @buyer,
                        payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
                        payment_status: "paid",
                        order_number: "LO-01-234-4567890-#{i}")
@@ -55,8 +55,8 @@ feature "Payment history" do
         # Create payment from buyer to market
         payment = create(:payment,
                          payment_method: ["cash", "check", "ach", "ach", "credit card"][i - 1],
-                         payer: buyer,
-                         payee: market,
+                         payer: @buyer,
+                         payee: @market,
                          orders: [orders[i]],
                          amount: orders[i].total_cost)
 
@@ -68,7 +68,7 @@ feature "Payment history" do
         payment2 = create(:payment,
                          payment_method: ["cash", "check", "ach", "ach", "credit card"][i - 1],
                          payer: buyer2,
-                         payee: market2,
+                         payee: @market2,
                          orders: [orders2[i]],
                          amount: orders2[i].total_cost + 0.01)
 
@@ -80,8 +80,8 @@ feature "Payment history" do
         # Create payment from market to seller
         create(:payment,
                payment_method: ["cash", "check"][i % 2],
-               payer: market,
-               payee: seller,
+               payer: @market,
+               payee: @seller,
                orders: [orders[i]],
                note: ["", "#67890"][i % 2],
                amount: orders[i].total_cost * 2)
@@ -89,7 +89,7 @@ feature "Payment history" do
         # Create payment from market to seller2
         create(:payment,
                payment_method: ["cash", "check"][i % 2],
-               payer: market2,
+               payer: @market2,
                payee: seller2,
                orders: [orders2[i]],
                note: ["", "#54321"][i % 2],
@@ -100,20 +100,25 @@ feature "Payment history" do
     # Multiple market payments
     Timecop.freeze(payment_day - 1.day) do
       # Create a fee for market
-      create(:payment, payment_method: 'ach', payment_type: 'service', payee: market, amount: 99.00)
+      create(:payment,
+             payment_method: 'ach',
+             payment_type: 'service',
+             payee: @market,
+             # payee: nil,
+             amount: 99.00)
 
       # Create a cash buyer payment for a market that IS managed by our market manager
       order = create(:order,
                     items: [create(:order_item, unit_price: 123.00, quantity: 1)],
                     organization: buyer2,
-                    market: market2,
+                    market: @market2,
                     payment_method: "purchase order",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-123")
       create(:payment,
             payment_method: "cash",
             payer: buyer2,
-            payee: market2,
+            payee: @market2,
             orders: [order],
             amount: order.total_cost)
 
@@ -136,7 +141,7 @@ feature "Payment history" do
       order = create(:order,
                     items: [create(:order_item, unit_price: 345.00, quantity: 1)],
                     organization: buyer2,
-                    market: market2,
+                    market: @market2,
                     payment_method: "ach",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-345")
@@ -164,8 +169,10 @@ feature "Payment history" do
             amount: order.total_cost,
             balanced_uri: other_ach_balanced_uri)
     end
+  end
 
-    switch_to_subdomain(market.subdomain)
+  before do
+    switch_to_subdomain(@market.subdomain)
     sign_in_as(user)
 
     click_link "Financials"
@@ -187,7 +194,7 @@ feature "Payment history" do
   end
 
   context "Market Managers" do
-    let!(:user)    { create(:user, :market_manager, managed_markets: [market, market2]) }
+    let!(:user) { create(:user, :market_manager, managed_markets: [@market, @market2]) }
 
     scenario "can view buyer order payments for markets they manage" do
       expect(payment_row("$123.00")).not_to be_nil
@@ -272,10 +279,84 @@ feature "Payment history" do
       expect(payment_rows_for_description("LO-02-234-4567890-2").count).to eq(2)
       expect(payment_rows_for_description("LO-02-234-4567890-3").count).to eq(2)
     end
+
+    scenario "can filter purchase history by payment method" do
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+
+      select "ACH", from: "Payment Method"
+      click_button "Filter"
+
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
+      expect(payment_row("$23.00")).not_to be_nil
+      expect(payment_row("$23.01")).not_to be_nil
+      expect(payment_row("$24.00")).not_to be_nil
+      expect(payment_row("$24.01")).not_to be_nil
+      expect(payment_row("$99.00")).not_to be_nil
+      expect(payment_row("$345.00")).not_to be_nil
+    end
+
+    scenario "can filter purchase history by payment type" do
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+
+      select "Order", from: "Payment Type"
+      click_button "Filter"
+
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(22)
+
+      select "Service Fee", from: "Payment Type"
+      click_button "Filter"
+
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(1)
+    end
+
+    scenario "can filter purchase history by payer" do
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+
+      select "Market 1", from: "Received From"
+      click_button "Filter"
+
+      # FIXME: Validate service fees are TO market
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
+
+      select "Buyer", from: "Received From"
+      click_button "Filter"
+
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
+
+      select "Local Orbit", from: "Received From"
+      click_button "Filter"
+
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(1)
+    end
+
+    scenario "can filter purchase history by payee" do
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+
+      select "Market 1", from: "Paid To"
+      click_button "Filter"
+
+      # FIXME: Validate service fees are TO market
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
+
+      select "Seller", from: "Paid To"
+      click_button "Filter"
+
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
+
+      select "Market 2", from: "Paid To"
+      click_button "Filter"
+
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
+
+      select "Local Orbit", from: "Paid To"
+      click_button "Filter"
+
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(1)
+    end
   end
 
   context "Buyers" do
-    let!(:user) { create(:user, organizations: [buyer]) }
+    let!(:user) { create(:user, organizations: [@buyer]) }
 
     scenario "cannot view market-to-seller payments" do
       expect(payment_row("$42.00")).to be_nil
@@ -354,7 +435,7 @@ feature "Payment history" do
   end
 
   context "Sellers" do
-    let!(:user) { create(:user, organizations: [seller]) }
+    let!(:user) { create(:user, organizations: [@seller]) }
 
     scenario "can view their purchase history" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
@@ -430,7 +511,7 @@ feature "Payment history" do
       expect(payment_row("$48.00").description).to include("LO-01-234-4567890-4")
       expect(payment_row("$50.00").description).to include("LO-01-234-4567890-5")
 
-      select "Check", from: "q_payment_method_eq"
+      select "Check", from: "Payment Method"
       click_button "Filter"
 
       expect(page).to     have_content("LO-01-234-4567890-1")
@@ -439,7 +520,7 @@ feature "Payment history" do
       expect(page).not_to have_content("LO-01-234-4567890-4")
       expect(page).to     have_content("LO-01-234-4567890-5")
 
-      select "Cash", from: "q_payment_method_eq"
+      select "Cash", from: "Payment Method"
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
