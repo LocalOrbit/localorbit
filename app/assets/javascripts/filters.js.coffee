@@ -38,3 +38,8 @@ $ ->
     params[key] = value
 
     window.location.search = $.param(params)
+
+  # Ransack inputs
+  $(".filter-input").change ->
+    $(this).parents("form").first().submit()
+

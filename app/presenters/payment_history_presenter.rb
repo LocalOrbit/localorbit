@@ -1,6 +1,8 @@
 class PaymentHistoryPresenter
   attr_reader :payments, :q, :start_date, :end_date
 
+  include Search::DateFormat
+
   def self.build(user: user, organization: organization, options: options)
     page = options[:page]
     per_page = options[:per_page]
@@ -34,10 +36,5 @@ class PaymentHistoryPresenter
 
     @q = payments.search(search)
     @payments = @q.result.page(page).per(per_page)
-  end
-
-  private
-  def format_date(date_string)
-    date_string.present? ? Date.parse(date_string) : nil
   end
 end
