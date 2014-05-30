@@ -9,7 +9,7 @@ module Admin::Financials
         Order.orders_for_seller(current_user).uninvoiced
       end.search(request.query_parameters[:q])
 
-      #@q.sorts = ['placed_at desc'] if @q.sorts.empty?
+      @q.sorts = ['invoice_due_at desc', 'order_number asc'] if @q.sorts.empty?
       @orders = @q.result.page(params[:page]).per(params[:per_page])
     end
 
