@@ -4,6 +4,7 @@ class Admin::BankAccountVerificationsController < AdminController
   def show
     @verification = BankAccountVerification.new
     @verification.bank_account = find_bank_account
+    render @verification.failed? ? "verification_failed" : "show"
   end
 
   def update
@@ -13,8 +14,12 @@ class Admin::BankAccountVerificationsController < AdminController
     if @verification.save
       redirect_to [:admin, @entity, :bank_accounts]
     else
-      flash.now[:alert] = "Could not verify bank account."
-      render :show
+      if @verification.failed?
+        redirect_to [:admin, @entity, :bank_accounts], alert: "Bank account verification failed."
+      else
+        flash.now[:alert] = "Could not verify bank account."
+        render "show"
+      end
     end
   end
 

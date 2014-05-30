@@ -9,6 +9,10 @@ class BankAccountVerification
     bank_account.balanced_verification.try(:attempts)
   end
 
+  def failed?
+    bank_account.verification_failed?
+  end
+
   def remaining_attempts
     bank_account.balanced_verification.try(:remaining_attempts)
   end
@@ -24,9 +28,14 @@ class BankAccountVerification
       bank_account: bank_account,
       verification_params: {amount_1: amount_1, amount_2: amount_2})
 
-    errors.add(:base, "Could not verify bank account.") unless results.success?
-
-    results.success?
+    if results.success?
+      true
+    else
+      errors.add(:base, "Could not verify bank account.")
+      # clear memoized data
+      self.bank_account = BankAccount.find bank_account.id
+      false
+    end
   end
 
   def persisted?

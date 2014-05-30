@@ -9,7 +9,7 @@
       <% if @verification.attempts == 0 %>
       You have 3 tries to enter the correct values. Please be very careful that they are accurate when entering them.
       <% else %>
-      <span class="alert">You have <%= pluralize(@verification.remaining_attempts, 'try') %> remaining to enter the correct values. Please be very careful that they are accurate when entering them.</span>
+      <span class="warning"><strong>You have <%= pluralize(@verification.remaining_attempts, 'try') %> remaining to enter the correct values. Please be very careful that they are accurate when entering them.</strong></span>
       <% end %>
       If you have any questions or need help please contact <%= link_to 'Local Orbit Support', help_path %>.
     </p>
