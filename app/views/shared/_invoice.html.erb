@@ -1,9 +1,8 @@
 <div class="invoices-wrapper">
-  <%= link_to "Print Invoice", invoice_admin_invoice_path(invoice.id, "pdf"), class: "btn btn--small btn--save pull-right" %>
-  <h1>Invoice</h1>
-
   <div class="row invoice-basics">
     <div class="column column--three-fourths">
+      <%= link_to "Print Invoice", invoice_admin_invoice_path(invoice.id, "pdf"), class: "btn btn--small btn--save pull-right" %>
+      <h1>Invoice</h1>
       <h2>Invoice Number</h2>
       <p class="invoice-num"><%= invoice.order_number %></p><br>
       <%= "<h2>Purchase Order Number</h2><p class=\"po-num\">#{invoice.payment_note}</p><br>".html_safe if invoice.payment_note.present? %>
@@ -18,7 +17,7 @@
   </div>
 
   <div class="row invoice-parties">
-    <div class="market-info column column--half">
+    <div class="market-info column column--half-plus">
       <%=
       if market.logo
         image_tag(market.logo.thumb('200x150>').url, alt: "#{market.name} logo", class: "logo")
@@ -35,7 +34,7 @@
         </div>
       </div>
     </div
-    ><div class="column column--half">
+    ><div class="column">
       <div class="vcard vcard-buyer">
         <h2>To</h2>
         <h3 class="fn org buyer-name"><%= invoice.billing_organization_name %></h3>

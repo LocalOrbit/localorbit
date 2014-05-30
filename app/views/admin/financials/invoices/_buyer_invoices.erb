@@ -9,22 +9,24 @@
 <table>
   <thead class="stickable">
     <tr>
+      <th>Due Date</th>
       <th>Order #</th>
+      <th>Purchase Order #</th>
       <th>Order Date</th>
-      <th>Invoice Date</th>
       <th>Amount</th>
-      <th>Payment Status</th>
     </tr>
   </thead>
   <tbody>
     <% @orders.each do |order| %>
-    <tr class="invoice-row">
-      <td class="order-number"><%= link_to order.order_number, admin_financials_invoice_path(order) %></td>
-      <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
-      <td class="invoice-date"><%= order.invoiced_at.strftime("%m/%d/%Y") %></td>
-      <td class="amount"><%= number_to_currency(order.total_cost) %></td>
-      <td class="payment-status"><%= order.payment_status.titleize %></td>
-    </tr>
+      <% if order.payment_status == "unpaid" %>
+        <tr class="invoice-row">
+          <td class="due-date"><%= order.invoice_due_date.strftime("%m/%d/%Y") %></td>
+          <td class="order-number"><%= link_to order.order_number, admin_financials_invoice_path(order) %></td>
+          <td class="po-number"><%= order.payment_note if order.payment_method == "purchase order" %></td>
+          <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
+          <td class="amount"><%= number_to_currency(order.total_cost) %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
