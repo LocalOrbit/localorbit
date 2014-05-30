@@ -2,8 +2,8 @@ class Admin::OrdersController < AdminController
   def index
     @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user)
 
-    @q = Order.search(params[:q])
-    @orders = @q.result.orders_for_seller(current_user).page(params[:page]).per(params[:per_page])
+    @q = Order.orders_for_seller(current_user).search(params[:q])
+    @orders = @q.result.page(params[:page]).per(params[:per_page])
   end
 
   def show
