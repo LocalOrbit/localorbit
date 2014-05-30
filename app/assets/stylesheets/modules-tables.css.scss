@@ -484,6 +484,15 @@ th {
   }    
 }  
 
+@media screen and (max-width: 767px) {
+  .prodcuct-row {
+    > td,
+    > th {
+      position: static;
+    }
+  }
+}
+
 .edit-cell {
   display: none;
 }
@@ -607,6 +616,9 @@ th {
 }
 
 .pricing-table {
+  select {
+    min-width: 7em;
+  }
   .market,
   .buyer {
     width: 135px;

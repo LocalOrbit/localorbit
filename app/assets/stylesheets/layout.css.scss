@@ -233,6 +233,9 @@ body {
 
 
 @media screen and (max-width: 800px) {
+  .hidden-tablet {
+    display: none;
+  }
   .product-form.column,
   .price-form > .column,
   .inventory-form > .column,
@@ -242,6 +245,10 @@ body {
 }
 
 @media screen and (max-width: 520px) {
+
+  .hidden-mobile {
+    display: none;
+  }
   .header--welcome, .nav--main, .nav--admin {
     display: none;
   }
