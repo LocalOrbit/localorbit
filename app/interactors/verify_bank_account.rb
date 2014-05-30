@@ -2,7 +2,7 @@ class VerifyBankAccount
   include Interactor
 
   def setup
-    context[:verification] ||= Balanced::Verification.find(bank_account.balanced_verification_uri)
+    context[:verification] ||= bank_account.balanced_verification
   end
 
   def perform

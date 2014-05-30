@@ -7,6 +7,11 @@ class BankAccount < ActiveRecord::Base
 
   validate :account_is_unique_to_bankable
 
+  def balanced_verification
+    return nil if verified? || balanced_verification_uri.nil?
+    @balanced_verification ||= Balanced::Verification.find(balanced_verification_uri)
+  end
+
   private
 
   def account_is_unique_to_bankable
