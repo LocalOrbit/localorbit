@@ -26,24 +26,26 @@ describe UpdateBalancedPurchase do
       end
 
       it "against multiple payment" do
-        create(:payment, :credit_card, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-2', status: 'failed')
-        create(:payment, :credit_card, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-3')
+        create(:payment, :checking, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-2', status: 'failed')
+        create(:payment, :checking, orders: [order], amount: 20.00, balanced_uri: '/balanced-debit-3')
+        create(:payment, :checking, orders: [order], amount: 25.00, balanced_uri: '/balanced-debit-4')
 
         debit1 = double("balanced debit 1", amount: 4500, source: OpenStruct.new(_type: 'card'))
-        debit3 = double("balanced debit 3", amount: 4500, source: OpenStruct.new(_type: 'card'))
+        debit3 = double("balanced debit 3", amount: 2000, source: OpenStruct.new(_type: 'card'))
         expect(Balanced::Debit).to receive(:find).with('/balanced-debit-1').and_return(debit1)
         expect(Balanced::Debit).to receive(:find).with('/balanced-debit-3').and_return(debit3)
+        expect(Balanced::Debit).to_not receive(:find).with('/balanced-debit-4')
         expect(debit1).to receive(:refund).with({ amount: 4500 })
         expect(debit3).to receive(:refund).with({ amount: 1500 })
 
-        expect(order.reload.payments.count).to eql(3)
+        expect(order.reload.payments.count).to eql(4)
 
         UpdateBalancedPurchase.perform(order: order)
 
-        expect(order.reload.payments.count).to eql(4)
+        expect(order.reload.payments.count).to eql(6)
         expect(Payment.first.amount.to_f).to eql(45.00)
         expect(Payment.first.refunded_amount.to_f).to eql(45.00)
-        expect(Payment.last.amount.to_f).to eql(-60.00)
+        expect(Payment.last.amount.to_f).to eql(-15.00)
       end
 
       it "records a failed refund when balanced fails" do
@@ -121,24 +123,26 @@ describe UpdateBalancedPurchase do
       end
 
       it "against multiple payment" do
-        create(:payment, :checking, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-2', status: 'failed')
-        create(:payment, :checking, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-3')
+        create(:payment, :credit_card, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-2', status: 'failed')
+        create(:payment, :credit_card, orders: [order], amount: 20.00, balanced_uri: '/balanced-debit-3')
+        create(:payment, :credit_card, orders: [order], amount: 25.00, balanced_uri: '/balanced-debit-4')
 
-        debit1 = double("balanced debit 1", amount: 4500, source: OpenStruct.new(_type: 'ach'))
-        debit3 = double("balanced debit 3", amount: 4500, source: OpenStruct.new(_type: 'ach'))
+        debit1 = double("balanced debit 1", amount: 4500, source: OpenStruct.new(_type: 'card'))
+        debit3 = double("balanced debit 3", amount: 2000, source: OpenStruct.new(_type: 'card'))
         expect(Balanced::Debit).to receive(:find).with('/balanced-debit-1').and_return(debit1)
         expect(Balanced::Debit).to receive(:find).with('/balanced-debit-3').and_return(debit3)
+        expect(Balanced::Debit).to_not receive(:find).with('/balanced-debit-4')
         expect(debit1).to receive(:refund).with({ amount: 4500 })
         expect(debit3).to receive(:refund).with({ amount: 1500 })
 
-        expect(order.reload.payments.count).to eql(3)
+        expect(order.reload.payments.count).to eql(4)
 
         UpdateBalancedPurchase.perform(order: order)
 
-        expect(order.reload.payments.count).to eql(4)
+        expect(order.reload.payments.count).to eql(6)
         expect(Payment.first.amount.to_f).to eql(45.00)
         expect(Payment.first.refunded_amount.to_f).to eql(45.00)
-        expect(Payment.last.amount.to_f).to eql(-60.00)
+        expect(Payment.last.amount.to_f).to eql(-15.00)
       end
 
       it "records a failed refund when balanced fails" do

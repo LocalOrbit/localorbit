@@ -14,46 +14,48 @@ class UpdateBalancedPurchase
   end
 
   def rollup_payment_amounts
-    order.payments.refundable.inject(0) {|sum, payment| sum = sum + payment.amount }
-  end
-
-  def create_refunds(amount)
-    refund_amount = amount - order.total_cost
-
-    refund(refund_amount)
-    fail! if context[:status] == 'failed'
-
-    record_payment("order refund", -refund_amount, nil)
-  end
-
-  def refund(amount)
-    begin
-      remaining_amount = amount
-      order.payments.refundable.each do |payment|
-        break unless remaining_amount
-
-        debit, context[:type] = fetch_balanced_debit(payment.balanced_uri)
-
-        refund_amount = [remaining_amount, payment.unrefunded_amount].min
-        debit.refund(amount: refund_amount.to_i * 100)
-
-        payment.increment!(:refunded_amount, refund_amount)
-        remaining_amount -= refund_amount
-      end
-      context[:status] = 'paid'
-
-    rescue Exception => e
-      process_exception(e)
-    end
+    order.payments.successful.inject(0) {|sum, payment| sum += payment.amount }
   end
 
   def create_new_charge(amount)
     charge_amount = order.total_cost - amount
-
     debit = charge(charge_amount)
-    fail! if context[:status] == 'failed'
+  end
 
-    record_payment("order", amount, debit)
+  def create_refunds(amount)
+    refund_amount = amount - order.total_cost
+    refund(refund_amount)
+  end
+
+  def refund(amount)
+    begin
+      begin
+        remaining_amount = amount
+        context[:status] = 'paid'
+
+        ActiveRecord::Base.transaction do
+          order.payments.refundable.order(:created_at).each do |payment|
+            break unless remaining_amount > 0
+
+            debit, context[:type] = fetch_balanced_debit(payment.balanced_uri)
+
+            refund_amount = [remaining_amount, payment.unrefunded_amount].min
+            refund = debit.refund(amount: refund_amount.to_i * 100)
+
+            payment.increment!(:refunded_amount, refund_amount)
+            record_payment("order refund", -refund_amount, refund)
+
+            remaining_amount -= refund_amount
+          end
+        end
+
+      rescue Exception => e
+        process_exception(e, -amount)
+
+        raise ActiveRecord::Rollback
+      end
+    rescue ActiveRecord::Rollback
+    end
   end
 
   def charge(amount)
@@ -68,14 +70,14 @@ class UpdateBalancedPurchase
       )
       context[:status] = 'paid'
 
-      new_debit
+      record_payment("order", amount, new_debit)
     rescue Exception => e
-      process_exception(e)
+      process_exception(e, amount)
     end
   end
 
   def first_order_payment
-    order.payments.order(:created_at).first
+    order.payments.refundable.order(:created_at).first
   end
 
   def fetch_balanced_debit(uri)
@@ -85,23 +87,37 @@ class UpdateBalancedPurchase
     [debit, type]
   end
 
-  def process_exception(exception)
+  def process_exception(exception, amount)
     Honeybadger.notify_or_ignore(exception) unless Rails.env.test? || Rails.env.development?
-    context[:status] = 'failed'
+    record_payment("order refund", amount, nil)
 
     raise exception if Rails.env.development?
+
+    context[:status] = 'failed'
+    fail!
   end
 
-  def record_payment(type, amount, debit)
+  def record_payment(type, amount, balanced_record)
     adjustment_payment = Payment.create(
       payer: order.organization,
       payment_type: type,
       payment_method: context[:type],
       amount: amount,
-      status: context[:status],
-      balanced_uri: debit.try(:uri)
+      status: parse_payment_status(balanced_record.try(:status)),
+      balanced_uri: balanced_record.try(:uri)
     )
 
     order.payments << adjustment_payment
+  end
+
+  def parse_payment_status(status)
+    case status
+    when "pending"
+      "pending"
+    when "succeeded"
+      "paid"
+    else
+      "failed"
+    end
   end
 end
