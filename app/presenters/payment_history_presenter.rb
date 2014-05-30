@@ -6,7 +6,7 @@ class PaymentHistoryPresenter
   def self.build(user: user, organization: organization, options: options)
     page = options[:page]
     per_page = options[:per_page]
-    search = options[:q]
+    search = options[:q] || {}
 
     scope = if user.admin?
       Payment.all
@@ -47,8 +47,8 @@ class PaymentHistoryPresenter
   end
 
   def initialize(payments, search, page, per_page)
-    @start_date = format_date(search.try(:fetch, :updated_at_date_gteq))
-    @end_date = format_date(search.try(:fetch, :updated_at_date_lteq))
+    @start_date = format_date(search[:updated_at_date_gteq])
+    @end_date = format_date(search[:updated_at_date_lteq])
 
     @q = payments.search(search)
     @payments = @q.result.page(page).per(per_page)
