@@ -21,9 +21,9 @@ describe "Buyer invoices" do
   let!(:ordered_grapes3) { create(:order_item, product: grapes) }
 
   let!(:invoice_date) { DateTime.parse("April 20, 2014") }
-  let!(:invoiced_order) { create(:order, market: market, organization: buyers, items: [ordered_apples1, ordered_grapes1], invoiced_at: invoice_date, invoice_due_date: Date.parse("May 20, 2014")) }
-  let!(:invoiced_order2) { create(:order, market: market, organization: buyers, items: [ordered_apples2, ordered_grapes2], invoiced_at: invoice_date, invoice_due_date: Date.parse("May 21, 2014")) }
-  let!(:invoiced_order3) { create(:order, market: market, organization: buyers, items: [ordered_apples3, ordered_grapes3], invoiced_at: invoice_date, invoice_due_date: Date.parse("May 23, 2014")) }
+  let!(:invoiced_order) { create(:order, market: market, organization: buyers, items: [ordered_apples1, ordered_grapes1], payment_note: "123456", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 20, 2014")) }
+  let!(:invoiced_order2) { create(:order, market: market, organization: buyers, items: [ordered_apples2, ordered_grapes2], payment_note: "77839", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 21, 2014")) }
+  let!(:invoiced_order3) { create(:order, market: market, organization: buyers, items: [ordered_apples3, ordered_grapes3], payment_note: "992830", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 23, 2014")) }
 
   let!(:ordered_oranges)  { create(:order_item, product: oranges) }
   let!(:uninvoiced_order) { create(:order, market: market, organization: buyers, items: [ordered_oranges]) }
@@ -94,6 +94,30 @@ describe "Buyer invoices" do
         expect(page).not_to have_content(invoiced_order3.order_number)
       end
 
+      it "by order number" do
+        fill_in "q_order_number_cont", with: invoiced_order.order_number
+        click_button "Filter"
+
+        expect(page).to have_content(invoiced_order.order_number)
+        expect(page).not_to have_content(invoiced_order2.order_number)
+        expect(page).not_to have_content(invoiced_order3.order_number)
+      end
+
+      it "by purchase order" do
+        fill_in "q_payment_note_cont", with: "123456"
+        click_button "Filter"
+
+        expect(page).to have_content(invoiced_order.order_number)
+        expect(page).not_to have_content(invoiced_order2.order_number)
+        expect(page).not_to have_content(invoiced_order3.order_number)
+
+        fill_in "q_payment_note_cont", with: "77839"
+        click_button "Filter"
+
+        expect(page).not_to have_content(invoiced_order.order_number)
+        expect(page).to have_content(invoiced_order2.order_number)
+        expect(page).not_to have_content(invoiced_order3.order_number)
+      end
     end
   end
 end
