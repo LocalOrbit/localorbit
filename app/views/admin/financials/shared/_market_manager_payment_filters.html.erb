@@ -7,19 +7,19 @@
     </span>
     <span class="preserve-alignment">
       <%= f.label :payer_type_id_nil_eq, "Received From" %><br>
-      <%= f.select :payer_type_id_nil_eq, payment_history.payers, { prompt: "All" }, { class: "filter-input" } %>
+      <%= f.select :payer_type_id_nil_eq, payment_history.payers, { include_blank: "All" }, { class: "filter-input" } %>
     </span>
     <span class="preserve-alignment">
       <%= f.label :payee_type_id_nil_eq, "Paid To" %><br>
-      <%= f.select :payee_type_id_nil_eq, payment_history.payees, { prompt: "All" }, { class: "filter-input" } %>
+      <%= f.select :payee_type_id_nil_eq, payment_history.payees, { include_blank: "All" }, { class: "filter-input" } %>
     </span>
     <span class="preserve-alignment">
       <%= f.label :payment_type_eq, "Payment Type" %><br>
-      <%= f.select :payment_type_eq, Payment::PAYMENT_TYPES.map { |pm| [pm[1], pm[0]] }, { prompt: "All" }, { class: "filter-input" } %>
+      <%= f.select :payment_type_eq, Payment::PAYMENT_TYPES.map { |pm| [pm[1], pm[0]] }, { include_blank: "All" }, { class: "filter-input" } %>
     </span>
     <span class="preserve-alignment">
       <%= f.label :payment_method_eq, "Payment Method" %><br>
-      <%= f.select :payment_method_eq, Payment::PAYMENT_METHODS.map { |pm| [pm[1], pm[0]] }, { prompt: "All" }, { class: "filter-input" } %>
+      <%= f.select :payment_method_eq, Payment::PAYMENT_METHODS.map { |pm| [pm[1], pm[0]] }, { include_blank: "All" }, { class: "filter-input" } %>
     </span>
   </div>
 
