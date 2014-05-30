@@ -1,4 +1,6 @@
 class OrderSearchPresenter
+  include Search::DateFormat
+
   attr_reader :start_date, :end_date
 
   def initialize(query, user)
@@ -23,10 +25,5 @@ class OrderSearchPresenter
 
   def buyer_organizations
     Order.orders_for_seller(@user).joins(:organization).map(&:organization).uniq
-  end
-
-  private
-  def format_date(date_string)
-    date_string.present? ? Date.parse(date_string) : nil
   end
 end
