@@ -2,8 +2,8 @@
 <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(q: params[:q], format: :csv, page: 1, per_page: 0), class: 'export todo pull-right' %>
 <h1>Payment History</h1>
 
-<% if current_user.admin? %>
-<% elsif current_user.market_manager? %>
+<% if current_user.admin? || current_user.market_manager? %>
+  <%= render partial: "admin/financials/shared/market_manager_payment_filters", locals: { payment_history: @payment_history } %>
 <% elsif current_user.buyer_only? %>
   <%= render partial: "admin/financials/shared/buyer_payment_filters", locals: { payment_history: @payment_history } %>
 <% else %>

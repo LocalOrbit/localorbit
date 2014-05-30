@@ -359,8 +359,8 @@ ActiveRecord::Schema.define(version: 20140529200719) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "placed_by_id"
-    t.integer  "legacy_id"
     t.datetime "paid_at"
+    t.integer  "legacy_id"
   end
 
   add_index "orders", ["market_id"], name: "index_orders_on_market_id", using: :btree
@@ -437,8 +437,8 @@ ActiveRecord::Schema.define(version: 20140529200719) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.string   "image_uid"
     t.integer  "top_level_category_id"
+    t.string   "image_uid"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"
