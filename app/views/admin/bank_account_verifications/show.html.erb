@@ -5,7 +5,14 @@
     <p>Please confirm the <strong>two micro deposits</strong> (deposits made to your account that are in cents) made to the following account.</p>
     <p>By confirming these two micro deposits we are able to confirm you have ownership of the bank account you have added here before you can make purchases.</p>
     <p>Verification amounts normally show on the bank account owner's statement as &quot;Balanced verification&quot; within 2 business days (usually much faster).</p>
-    <p>You have 3 tries to enter the correct values. Please be very careful that they are accurate when entering them. If you have any questions or need help please contact <a href="<%= help_path %>">Local Orbit Support</a>.</p>
+    <p>
+      <% if @verification.attempts == 0 %>
+      You have 3 tries to enter the correct values. Please be very careful that they are accurate when entering them.
+      <% else %>
+      <span class="alert">You have <%= pluralize(@verification.remaining_attempts, 'try') %> remaining to enter the correct values. Please be very careful that they are accurate when entering them.</span>
+      <% end %>
+      If you have any questions or need help please contact <%= link_to 'Local Orbit Support', help_path %>.
+    </p>
 
     <ul class="bank-info">
       <li><strong><%= @verification.bank_account.bank_name %></strong></li>
