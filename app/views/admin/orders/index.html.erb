@@ -21,14 +21,14 @@
 <% end %>
 
 
-<table class="sortable">
+<table>
   <thead class="stickable">
-    <th data-column="number" class="<%= column_sort_classes("number")%>">Order #</th>
-    <th data-column="date" class="<%= column_sort_classes("date")%>">Order Date</th>
-    <th data-column="owed" class="<%= column_sort_classes("owed")%>">Amount</th>
-    <th data-column="delivery" class="<%= column_sort_classes("delivery")%>">Delivery</th>
-    <th data-column="buyer" class="<%= column_sort_classes("buyer")%>">Buyer</th>
-    <th data-column="seller" class="<%= column_sort_classes("seller")%>">Seller</th>
+    <%= content_tag :th, sort_link(@q, :order_number, "Order #") %>
+    <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
+    <%= content_tag :th, sort_link(@q, :total_cost, "Amount") %>
+    <th>Delivery</th>
+    <%= content_tag :th, sort_link(@q, :payment_status, "Buyer") %>
+    <th>Seller</th>
   </thead>
   <tbody>
     <% @orders.each do |order| %>

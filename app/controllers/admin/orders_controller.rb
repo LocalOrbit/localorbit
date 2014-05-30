@@ -3,6 +3,7 @@ class Admin::OrdersController < AdminController
     @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user)
 
     @q = Order.orders_for_seller(current_user).search(params[:q])
+    @q.sorts = "placed_at desc" if @q.sorts.empty?
     @orders = @q.result.page(params[:page]).per(params[:per_page])
   end
 
