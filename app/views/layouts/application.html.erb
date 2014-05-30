@@ -111,11 +111,9 @@
       <div class="l-constraint">
         <% if current_market.present? %>
           <div class="pull-right market-manager-contact">
-            <% if current_market.managers.any? %>
-              <%= mail_to current_market.managers.first.email, current_market.managers.first.name, class: "email" %>, Market Manager<br>
-            <% end %>
-            <% if current_market.addresses.any? && current_market.addresses.first.phone.present? %>
-              Phone <%= number_to_phone current_market.addresses.first.phone %>
+            <%= mail_to current_market.contact_email, current_market.contact_name, class: "email" %>, Market Manager<br>
+            <% if current_market.contact_phone.present? %>
+              Phone <%= number_to_phone current_market.contact_phone %>
             <% end %>
           </div>
         <% end %>
