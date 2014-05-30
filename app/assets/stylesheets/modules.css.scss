@@ -616,6 +616,14 @@
   }
 }
 
+@media screen and (max-width: 800px) {
+  .controller-products {
+    .overlay {
+      background: rgba(0,0,0,0.4);
+    }
+  }
+}
+
 .orientation-warning {
   display: none;
 }

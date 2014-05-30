@@ -19,6 +19,9 @@
   &.with-anchor:after {
     border-bottom-color: #F2F2F2;
   }
+  &.rtl {
+    right: 10px;
+  }
 }
   .popup--edit {
     top: 0;
@@ -74,6 +77,24 @@
     @include transform(translateX(-50%));
   }
 
+@media screen and (max-width: 800px) {
+  .popup--edit {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    &.rtl {
+      right: auto;
+    }
+  }
+}
 .popup-header {
   padding: 5px 10px;
   margin: 0;

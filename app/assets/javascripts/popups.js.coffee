@@ -8,10 +8,7 @@ $ ->
     if bottom > $('.l-app-footer').offset().top
       $element.removeClass('top-anchor').addClass('bottom-anchor')
     if right >= window.innerWidth
-      $element.css({
-          'right': '10px',
-          'left': 'auto'
-        })
+      $element.addClass('rtl')
 
   $('.popup-toggle').click (e) ->
     e.preventDefault()
@@ -29,7 +26,7 @@ $ ->
     $(".modal").not($element).addClass('is-hidden')
     $('.overlay').addClass('is-open is-dim is-modal')
 
-  $('.popup .popup-header button').click ->
+  $('.popup button.close').click ->
     $(this).closest('.popup').addClass('is-hidden')
     $('.overlay').removeClass('is-open is-dark is-dim is-modal')
 

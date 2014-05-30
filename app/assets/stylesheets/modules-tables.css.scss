@@ -276,6 +276,10 @@ th {
     .negotiated {
       white-space: nowrap;
     }
+    > .pricing,
+    > .stock {
+      position: static;
+    }
   }
 }
 
