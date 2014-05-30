@@ -725,6 +725,32 @@ th {
 
 }
 
+@media screen and (max-width: 400px) {
+  .filter-dropdown {
+    width: 100%;
+    margin:  4px 0 2px;
+
+    + .filter-dropdown {
+      margin-left: 0; 
+    }
+  }
+  .row--justified {
+    > .product-search,
+    > .product-search:last-child {
+      width: 100%;
+      text-align: left;
+    }
+  }
+  .search-widget {
+    float: none;
+    margin-bottom: 5px;
+    ~ .btn--add {
+      float: none;
+      margin-left: 0;
+    }
+  }
+}
+
 /** Sticky tables (like other sticky things, but sillier */
 @media screen and (max-height: 767px) {
   .js-sticky {
