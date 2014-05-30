@@ -62,13 +62,13 @@ class Legacy::Order < Legacy::Base
           notes: admin_notes,
           legacy_id: lo_oid
         )
+
+        items.each do |item|
+          imported = item.import
+          order.items << imported if imported.present?
+        end
       else
         puts "- Existing order #{order.order_number}"
-      end
-
-      items.each do |item|
-        imported = item.import
-        order.items << imported if imported.present?
       end
 
       order

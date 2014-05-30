@@ -42,14 +42,14 @@ class Legacy::Market < Legacy::Base
     if market.nil?
       market = Imported::Market.new(
         legacy_id: domain_id,
-        name: name,
+        name: name.clean,
         subdomain: parse_subdomain,
         active: is_live,
         timezone: TIMEZONES[timezone.tz_name],
-        profile: market_profile,
-        policies: market_policies,
-        tagline: custom_tagline,
-        contact_name: secondary_contact_name,
+        profile: market_profile.clean,
+        policies: market_policies.clean,
+        tagline: custom_tagline.clean,
+        contact_name: secondary_contact_name.clean,
         contact_phone: secondary_contact_phone,
         contact_email: secondary_contact_email,
         twitter: twitter,
@@ -142,6 +142,7 @@ class Legacy::Market < Legacy::Base
       Legacy::Payment.where(from_domain_id: market.legacy_id).each do |payment|
         payment.import.save!
       end
+      Imported::Payment.where('payer_type LIKE ?', 'Imported::%').update_all(payer_type: "Organization")
 
       puts "Setting market product delivery schedules..."
       market.organizations.each do |organization|

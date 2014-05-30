@@ -43,14 +43,14 @@ class Legacy::Product < Legacy::Base
     if product.nil?
       puts "  - Creating product: #{name}"
       product = Imported::Product.new(
-        name: name,
+        name: name.clean,
         unit: imported_unit,
         category: imported_category,
         location: imported_location(organization),
-        who_story: who,
-        how_story: how,
-        long_description: imported_long_description,
-        short_description: imported_short_description,
+        who_story: who.clean,
+        how_story: how.clean,
+        long_description: imported_long_description.try(:clean),
+        short_description: imported_short_description.try(:clean),
         deleted_at: is_deleted == 1 ? DateTime.current : nil,
         legacy_id: prod_id
       )

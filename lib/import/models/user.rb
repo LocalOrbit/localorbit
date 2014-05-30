@@ -15,19 +15,27 @@ class Legacy::User < Legacy::Base
   def import
     user = ::User.where("lower(email) = ?", email.downcase).first
 
+    user_details = {
+      email: email,
+      name: imported_name,
+      password: 'imported1',
+      password_confirmation: 'imported1',
+      role: 'user',
+      confirmed_at: Time.current
+    }
+
     if user.nil? && email =~ /\A\S+@.+\.\S+\z/
       puts "- Creating user: #{email}"
-      user = ::User.create(
-        email: email,
-        password: 'imported1',
-        password_confirmation: 'imported1',
-        role: 'user',
-        confirmed_at: Time.current
-      )
+      user = ::User.create(user_details)
     else
-      puts "- Existing user: #{email}"
+      puts "- Updating existing user: #{email}"
+      user.update(user_details)
     end
 
     user
+  end
+
+  def imported_name
+    "#{first_name} #{last_name}"
   end
 end
