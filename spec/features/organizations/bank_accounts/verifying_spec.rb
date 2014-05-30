@@ -45,6 +45,8 @@ feature "Verifying a bank account", js: true do
     end
 
     scenario "successfully verifying an account" do
+      expect(page).to have_content("Attempt 1 of 3")
+
       fill_in "Amount 1", with: 1
       fill_in "Amount 2", with: 1
 
@@ -55,12 +57,15 @@ feature "Verifying a bank account", js: true do
     end
 
     scenario "unsuccessfully verifying an account" do
+      expect(page).to have_content("Attempt 1 of 3")
+
       fill_in "Amount 1", with: 2
       fill_in "Amount 2", with: 3
 
       click_button "Verify"
 
-      expect(page).to have_content("Verify Your Account")
+      expect(page).to have_content("Could not verify bank account")
+      expect(page).to have_content("Attempt 2 of 3")
     end
   end
 end
