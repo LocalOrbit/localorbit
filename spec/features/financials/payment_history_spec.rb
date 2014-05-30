@@ -312,7 +312,7 @@ feature "Payment history" do
     scenario "can filter purchase history by payer" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
 
-      select "Market 1", from: "Received From"
+      select @market.name, from: "Received From"
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
@@ -326,17 +326,17 @@ feature "Payment history" do
     scenario "can filter purchase history by payee" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
 
-      select "Market 1", from: "Paid To"
+      select @market.name, from: "Paid To"
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
 
-      select "Seller", from: "Paid To"
+      select @seller.name, from: "Paid To"
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
 
-      select "Market 2", from: "Paid To"
+      select @market2.name, from: "Paid To"
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
