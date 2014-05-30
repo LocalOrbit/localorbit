@@ -1,5 +1,5 @@
 class PaymentHistoryPresenter
-  attr_reader :payments, :q, :start_date, :end_date
+  attr_reader :payments, :q, :start_date, :end_date, :payers, :payees
 
   include Search::DateFormat
 
@@ -52,5 +52,31 @@ class PaymentHistoryPresenter
 
     @q = payments.search(search)
     @payments = @q.result.page(page).per(per_page)
+
+    @payers = options_for_payments(payments, :payer)
+    @payees = options_for_payments(payments, :payee)
+  end
+
+  private
+
+  def options_for_payments(payments, payment_attribute)
+    case payment_attribute
+    when :payer
+      payments.map do |payment|
+        if payment.payer.nil?
+          ["Local Orbit", -1] 
+        else
+          [payment.payer.name, "#{payment.payer_type}#{payment.payer_id}"]
+        end
+      end.uniq.compact
+    when :payee
+      payments.map do |payment|
+        if payment.payee.nil?
+          ["Local Orbit", -1] 
+        else
+          [payment.payee.name, "#{payment.payee_type}#{payment.payee_id}"]
+        end
+      end.uniq.compact
+    end
   end
 end
