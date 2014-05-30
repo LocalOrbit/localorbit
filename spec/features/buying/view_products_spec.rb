@@ -66,6 +66,18 @@ feature "Viewing products" do
     expect(Dom::Product.find_by_name(org2_product.name)).to_not be_nil
   end
 
+  scenario "a product with just enough inventory required to purchase" do
+    org1_product.prices.first.update(min_quantity: 150) #there are only 150
+    org1_product.prices << create(:price, min_quantity: 150) # current scope is summing total available quantity once for each price that exists.
+    org1_product.prices << create(:price, market_id: market.id,          min_quantity: 150, sale_price: 2.50)
+    org1_product.prices << create(:price, organization_id: buyer_org.id, min_quantity: 150, sale_price: 2.40)
+    sign_in_as(user)
+
+    expect(Dom::Product.all.count).to eql(2)
+    expect(Dom::Product.find_by_name(org1_product.name)).to_not be_nil
+    expect(Dom::Product.find_by_name(org2_product.name)).to_not be_nil
+  end
+
   scenario "a product with less inventory than required to purchase that is cross-sold in multiple markets" do
     delivery_schedule1.require_delivery = true
     delivery_schedule1.save!
