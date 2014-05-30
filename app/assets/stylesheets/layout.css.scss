@@ -239,3 +239,35 @@ body {
     width: 100%;
   }
 }
+
+@media screen and (max-width: 520px) {
+  .header--welcome, .nav--main, .nav--admin {
+    display: none;
+  }
+  .l-page-header {
+    text-align: center;
+    h1 {
+      margin: 0 auto;
+
+      font-size: 26px;
+    }
+    .delete {
+      margin: 10px 0 20px 0;
+    }
+  }
+  .action-helper {
+    text-align: center;
+    line-height: 40px;
+    margin-top: -30px;
+    input {
+      width: 100%;      
+    }
+  }
+  
+  .return-list {
+    text-align: center;
+    font-size: 14px;
+    line-height: 30px;
+    margin-bottom: -20px;
+  }
+}
