@@ -485,8 +485,15 @@ th {
     .short_description {
       margin-left: 60px;
     }
-  }    
-}  
+  }
+  td.delete{
+    font-size: 0.1px;
+
+    .font-icon {
+      font-size: 12px;
+    }
+  }
+}
 
 @media screen and (max-width: 767px) {
   .prodcuct-row {
