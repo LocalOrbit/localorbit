@@ -73,28 +73,31 @@ class Legacy::DeliverySchedule < Legacy::Base
   has_one :delivery_fee, class_name: "Legacy::DeliveryFee", foreign_key: :dd_id, inverse_of: :delivery_schedule
 
   def import(market)
-    imported = Imported::DeliverySchedule.where(legacy_id: dd_id).first
+    schedule = Imported::DeliverySchedule.where(legacy_id: dd_id).first
 
-    if imported.nil?
+    schedule_details = {
+      legacy_id: dd_id,
+      day: day_of_week,
+      fee: imported_delivery_fee,
+      fee_type: imported_delivery_fee_type,
+      order_cutoff: hours_due_before,
+      seller_fulfillment_location_id: fulfillment_location_id,
+      seller_delivery_start: parse_time(delivery_start_time),
+      seller_delivery_end: parse_time(delivery_end_time),
+      buyer_pickup_location_id: pickup_location_id(market),
+      buyer_pickup_start: parse_time(pickup_start_time),
+      buyer_pickup_end: parse_time(pickup_end_time)
+    }
+
+    if schedule.nil?
       puts "- Creating delivery schedule..."
-      imported = Imported::DeliverySchedule.new(
-        legacy_id: dd_id,
-        day: day_of_week,
-        fee: imported_delivery_fee,
-        fee_type: imported_delivery_fee_type,
-        order_cutoff: hours_due_before,
-        seller_fulfillment_location_id: fulfillment_location_id,
-        seller_delivery_start: parse_time(delivery_start_time),
-        seller_delivery_end: parse_time(delivery_end_time),
-        buyer_pickup_location_id: pickup_location_id(market),
-        buyer_pickup_start: parse_time(pickup_start_time),
-        buyer_pickup_end: parse_time(pickup_end_time)
-      )
+      schedule = Imported::DeliverySchedule.new(schedule_details)
     else
-      puts "- Existing delivery schedule"
+      puts "- Updating existing delivery schedule"
+      schedule.update(schedule_details)
     end
 
-    imported
+    schedule
   end
 
   def day_of_week

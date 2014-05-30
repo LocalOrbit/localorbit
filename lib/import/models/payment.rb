@@ -23,7 +23,7 @@ class Legacy::Payment < Legacy::Base
   def import
     payment = Imported::Payment.find_by_legacy_id(payment_id)
     if payment.nil?
-      puts "- Importing payment for #{payment_id}"
+      puts "- Importing #{imported_payment_type} payment for #{payment_id}"
       payment = Imported::Payment.new(
         amount: total_payment,
         note: ref_nbr,
@@ -41,7 +41,7 @@ class Legacy::Payment < Legacy::Base
       payment.orders << order if order.present?
 
     else
-      puts "- Existing payment for #{payment_id}"
+      puts "- Existing #{imported_payment_type} payment for #{payment_id}"
     end
 
     payment

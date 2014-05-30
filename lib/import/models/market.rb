@@ -142,7 +142,7 @@ class Legacy::Market < Legacy::Base
       Legacy::Payment.where(from_domain_id: market.legacy_id).each do |payment|
         payment.import.save!
       end
-      Payment.where('payer_type LIKE ?', 'Imported::%').update_all(payer_type: "Organization")
+      Imported::Payment.where('payer_type LIKE ?', 'Imported::%').update_all(payer_type: "Organization")
 
       puts "Setting market product delivery schedules..."
       market.organizations.each do |organization|
