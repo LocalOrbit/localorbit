@@ -68,7 +68,6 @@ feature "Payment history" do
 
     click_link "Review Payment History"
 
-    expect(page).to have_content("Payment History")
     expect(page).to have_content("Payment Date")
     expect(page).to have_content("Description")
     expect(page).to have_content("Payment Method")
@@ -103,9 +102,7 @@ feature "Payment history" do
     click_link "Export CSV"
 
     # Headers
-    expect(page).to have_content("Date Paid")
-    expect(page).to have_content("Order Number")
-    expect(page).to have_content("Type")
+    expect(page).to have_content("Payment Date")
     expect(page).to have_content("Description")
     expect(page).to have_content("Payment Method")
     expect(page).to have_content("Amount")
@@ -128,5 +125,19 @@ feature "Payment history" do
 
     expect(page).to have_content("$99.00")
     expect(page).to have_content("ACH")
+  end
+
+  scenario "Market manager sees the same columns in HTML and CSV versions of Payment History" do
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(user)
+
+    click_link "Financials"
+    click_link "Review Payment History"
+    html_headers = page.all('th').map(&:text)
+
+    click_link "Export CSV"
+    csv_headers = CSV.parse(page.body).first
+
+    expect(html_headers).to eq(csv_headers)
   end
 end

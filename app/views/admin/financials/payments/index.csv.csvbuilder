@@ -1,20 +1,14 @@
-csv << ["Date Paid", "Order Number", "Type", "Description", "Payment Method", "Amount"]
+csv << ["Payment Date", "Description", "Payment Method", "Amount"]
 
 @payment_history.payments.decorate.each do |payment|
   if payment.payment_type == "order"
-    type = "Order"
-    order_number = payment.orders.first.order_number
     description = "Order #: #{payment.orders.pluck(:order_number).to_sentence}"
   else
-    type = "Service Fee"
-    order_number = nil
     description = nil
   end
 
   csv << [
     payment.updated_at.strftime("%m/%d/%Y"),
-    order_number,
-    type,
     description,
     payment.display_payment_method,
     number_to_currency(payment.amount)
