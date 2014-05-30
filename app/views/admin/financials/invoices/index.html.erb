@@ -1,4 +1,5 @@
 <%= render "admin/financials/header" %>
+<%= render "filters" %>
 
 <% if current_user.buyer_only? %>
   <%= render "buyer_invoices" %>

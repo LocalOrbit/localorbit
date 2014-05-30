@@ -13,9 +13,17 @@ describe "Buyer invoices" do
   let!(:others)     { create(:organization, :buyer, markets: [market]) }
   let!(:other_user) { create(:user, organizations: [others]) }
 
-  let!(:ordered_apples) { create(:order_item, product: apples) }
-  let!(:ordered_grapes) { create(:order_item, product: grapes) }
-  let!(:invoiced_order) { create(:order, market: market, organization: buyers, items: [ordered_apples, ordered_grapes], invoiced_at: 1.day.ago, invoice_due_date: 5.days.from_now) }
+  let!(:ordered_apples1) { create(:order_item, product: apples) }
+  let!(:ordered_grapes1) { create(:order_item, product: grapes) }
+  let!(:ordered_apples2) { create(:order_item, product: apples) }
+  let!(:ordered_grapes2) { create(:order_item, product: grapes) }
+  let!(:ordered_apples3) { create(:order_item, product: apples) }
+  let!(:ordered_grapes3) { create(:order_item, product: grapes) }
+
+  let!(:invoice_date) { DateTime.parse("April 20, 2014") }
+  let!(:invoiced_order) { create(:order, market: market, organization: buyers, items: [ordered_apples1, ordered_grapes1], invoiced_at: invoice_date, invoice_due_date: DateTime.parse("May 20, 2014")) }
+  let!(:invoiced_order2) { create(:order, market: market, organization: buyers, items: [ordered_apples2, ordered_grapes2], invoiced_at: invoice_date, invoice_due_date: DateTime.parse("May 21, 2014")) }
+  let!(:invoiced_order3) { create(:order, market: market, organization: buyers, items: [ordered_apples3, ordered_grapes3], invoiced_at: invoice_date, invoice_due_date: DateTime.parse("May 23, 2014")) }
 
   let!(:ordered_oranges)  { create(:order_item, product: oranges) }
   let!(:uninvoiced_order) { create(:order, market: market, organization: buyers, items: [ordered_oranges]) }
@@ -41,8 +49,9 @@ describe "Buyer invoices" do
 
       expect(page).to have_content("Invoices")
 
-      invoices = Dom::Admin::Financials::InvoiceRow.all
-      expect(invoices.map(&:order_number)).to eql([invoiced_order.order_number])
+      expect(page).to have_content(invoiced_order.order_number)
+      expect(page).to have_content(invoiced_order2.order_number)
+      expect(page).to have_content(invoiced_order3.order_number)
     end
 
     it "shows an invoices details page" do
@@ -55,6 +64,29 @@ describe "Buyer invoices" do
       click_link invoiced_order.order_number
 
       expect(page).to have_content("Due Date")
+    end
+
+    context "filter invoices" do
+      before do
+        click_link "Financials"
+
+        expect(page).to have_content("Financials Overview")
+        click_link "Review Invoices"
+
+        expect(page).to have_content(invoiced_order.order_number)
+        expect(page).to have_content(invoiced_order2.order_number)
+        expect(page).to have_content(invoiced_order3.order_number)
+      end
+
+      it "by date" do
+        fill_in "q_updated_at_date_gteq", with: "Tue, 20 May 2014"
+        click_button "Filter"
+
+        #fill_in "q_updated_at_date_gteq", with: "Wed, 21 May 2014"
+        #click_button "Filter"
+      end
+
+      it "by order number"
     end
   end
 end
