@@ -151,6 +151,10 @@ textarea {
   }
 }
 
+select {
+  max-width: 100%;
+}
+
 label,
 legend,
 .faux-label {

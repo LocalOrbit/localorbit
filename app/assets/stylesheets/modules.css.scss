@@ -121,6 +121,18 @@
     background: asset_url('footer-logo@2x.png') left center / 38px 40px no-repeat;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .copyright {
+    text-align: center;
+    > a {
+      padding: 50px 0 0;
+      background-position: center top;
+    }
+  }
+}
+
+
 .counter {
   padding: 0 15px;
   @include border-radius(12px);
@@ -380,9 +392,18 @@
 
 .market-manager-contact {
   text-align: right;
+  a {
+    color: inherit;
+  }
   > .email {
     color: inherit;
     font-weight: bold;
+  }
+}
+@media screen and (max-width: 767px) {
+  .market-manager-contact {
+    margin: 0 1em 1em;
+    text-align: center;
   }
 }
 
