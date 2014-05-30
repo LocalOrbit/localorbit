@@ -60,10 +60,10 @@
         </td>
         <td class="quantity">
           <span><%= item.object.quantity %></span> <%= item.object.unit %> (Ordered)<br />
-          <% if current_user.buyer_only? %>
-            <span><%= item.object.quantity_delivered %></span>
-          <% else %>
+          <% if current_user.admin? || current_user.market_manager? %>
             <%= item.text_field :quantity_delivered %>
+          <% else %>
+            <span><%= item.object.quantity_delivered %></span>
           <% end %> <%= item.object.unit %> (Delivered)
         </td>
         <td class="price"><%= number_to_currency item.object.unit_price %></td>
@@ -83,7 +83,9 @@
   </table>
 
   <!-- <%= link_to "Mark selected delivered", admin_order_path(order.id), id: 'mark-selected-delivered' %> -->
-  <%= f.submit "Update quantities", class: 'pull-right btn btn--blue btn--small' %>
+  <% if current_user.admin? || current_user.market_manager? %>
+    <%= f.submit "Update quantities", class: 'pull-right btn btn--blue btn--small' %>
+  <% end %>
 
   <% if !current_user.buyer_only? %>
   <div class="order-totals">

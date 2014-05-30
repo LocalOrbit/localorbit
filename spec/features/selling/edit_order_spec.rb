@@ -13,128 +13,293 @@ describe 'Editing an order' do
   let!(:order)      { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item])}
 
   context "quantity delivered" do
-    let!(:user)       { create(:user, organizations: [seller]) }
+    context "as a buyer" do
+      let!(:user) { create(:user, organizations: [buyer]) }
 
-    before do
-      switch_to_subdomain(market.subdomain)
-      sign_in_as(user)
-    end
-
-    context "less then ordered" do
-      subject {
-        visit admin_order_path(order)
-
-        item = Dom::Order::ItemRow.first
-        expect(item.total).to have_content("$15.00")
-        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
-
-        item.set_quantity_delivered(2)
-        click_button "Update quantities"
-      }
-
-      it "updates the item total" do
-        subject
-
-        item = Dom::Order::ItemRow.first
-        expect(item.total).to have_content("$6.00")
-      end
-
-      it "updates the grand total for the order" do
-        subject
-
-        expect(page).to have_content("Grand Total: $6.00")
-      end
-
-      it "updates the fees for the order" do
-        subject
-
-        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.00")
-        expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.30")
-        expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.46")
-      end
-
-      it "does not update the product inventory" do
-        expect {
-          subject
-        }.to_not change {
-          product.lots.first.reload.quantity
-        }.from(145)
-      end
-    end
-
-    context "more then ordered" do
-      subject {
-        visit admin_order_path(order)
-
-        item = Dom::Order::ItemRow.first
-        expect(item.total).to have_content("$15.00")
-        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
-        expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$15.00")
-
-        item.set_quantity_delivered(7)
-        click_button "Update quantities"
-      }
-
-      it "updates the item total" do
-        subject
-
-        item = Dom::Order::ItemRow.first
-        expect(item.total).to have_content("$21.00")
-      end
-
-      it "updates the grand total for the order" do
-        subject
-
-        expect(page).to have_content("Grand Total: $21.00")
-      end
-
-      it "updates the fees for the order" do
-        subject
-
-        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$21.00")
-        expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$1.05")
-        expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$19.11")
-      end
-
-      it "does not update the product inventory" do
-        expect {
-          subject
-        }.to_not change {
-          product.lots.first.reload.quantity
-        }.from(145)
-      end
-    end
-
-    context "invalid input" do
       before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
         visit admin_order_path(order)
-
-        item = Dom::Order::ItemRow.first
-        expect(item.total).to have_content("$15.00")
       end
 
-      it "shows an error for negative values" do
-        item = Dom::Order::ItemRow.first
-        item.set_quantity_delivered("-1")
-        click_button "Update quantities"
-
-        expect(page).to have_content("must be greater than or equal to 0")
+      it "should not show quantity delivered fields" do
+        expect(page).to_not have_css(".quantity > input")
       end
 
-      it "shows an error for non-numerical values" do
-        item = Dom::Order::ItemRow.first
-        item.set_quantity_delivered("bad")
-        click_button "Update quantities"
+      it "should not have an update button" do
+        expect(page).to_not have_button("Update quantities")
+      end
+    end
 
-        expect(page).to have_content("is not a number")
+    context "as a seller" do
+      let!(:user) { create(:user, organizations: [seller]) }
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        visit admin_order_path(order)
       end
 
-      it "shows an error for insanely large numbers" do
-        item = Dom::Order::ItemRow.first
-        item.set_quantity_delivered("2147483648")
-        click_button "Update quantities"
+      it "should not show quantity delivered fields" do
+        expect(page).to_not have_css(".quantity > input")
+      end
 
-        expect(page).to have_content("must be less than 2147483647")
+      it "should not have an update button" do
+        expect(page).to_not have_button("Update quantities")
+      end
+    end
+
+    context "as a market manager" do
+      let!(:user) { create(:user, managed_markets: [market]) }
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+      end
+
+      context "less then ordered" do
+        subject {
+          visit admin_order_path(order)
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$15.00")
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
+
+          item.set_quantity_delivered(2)
+          click_button "Update quantities"
+        }
+
+        it "updates the item total" do
+          subject
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$6.00")
+        end
+
+        it "updates the grand total for the order" do
+          subject
+
+          expect(page).to have_content("Grand Total: $6.00")
+        end
+
+        it "updates the fees for the order" do
+          subject
+
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.00")
+          expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.30")
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.46")
+        end
+
+        it "does not update the product inventory" do
+          expect {
+            subject
+          }.to_not change {
+            product.lots.first.reload.quantity
+          }.from(145)
+        end
+      end
+
+      context "more then ordered" do
+        subject {
+          visit admin_order_path(order)
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$15.00")
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$15.00")
+
+          item.set_quantity_delivered(7)
+          click_button "Update quantities"
+        }
+
+        it "updates the item total" do
+          subject
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$21.00")
+        end
+
+        it "updates the grand total for the order" do
+          subject
+
+          expect(page).to have_content("Grand Total: $21.00")
+        end
+
+        it "updates the fees for the order" do
+          subject
+
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$21.00")
+          expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$1.05")
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$19.11")
+        end
+
+        it "does not update the product inventory" do
+          expect {
+            subject
+          }.to_not change {
+            product.lots.first.reload.quantity
+          }.from(145)
+        end
+      end
+
+      context "invalid input" do
+        before do
+          visit admin_order_path(order)
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$15.00")
+        end
+
+        it "shows an error for negative values" do
+          item = Dom::Order::ItemRow.first
+          item.set_quantity_delivered("-1")
+          click_button "Update quantities"
+
+          expect(page).to have_content("must be greater than or equal to 0")
+        end
+
+        it "shows an error for non-numerical values" do
+          item = Dom::Order::ItemRow.first
+          item.set_quantity_delivered("bad")
+          click_button "Update quantities"
+
+          expect(page).to have_content("is not a number")
+        end
+
+        it "shows an error for insanely large numbers" do
+          item = Dom::Order::ItemRow.first
+          item.set_quantity_delivered("2147483648")
+          click_button "Update quantities"
+
+          expect(page).to have_content("must be less than 2147483647")
+        end
+      end
+    end
+
+    context "as an admin" do
+      let!(:user) { create(:user, :admin) }
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+      end
+
+      context "less then ordered" do
+        subject {
+          visit admin_order_path(order)
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$15.00")
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
+
+          item.set_quantity_delivered(2)
+          click_button "Update quantities"
+        }
+
+        it "updates the item total" do
+          subject
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$6.00")
+        end
+
+        it "updates the grand total for the order" do
+          subject
+
+          expect(page).to have_content("Grand Total: $6.00")
+        end
+
+        it "updates the fees for the order" do
+          subject
+
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$6.00")
+          expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$0.30")
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$5.46")
+        end
+
+        it "does not update the product inventory" do
+          expect {
+            subject
+          }.to_not change {
+            product.lots.first.reload.quantity
+          }.from(145)
+        end
+      end
+
+      context "more then ordered" do
+        subject {
+          visit admin_order_path(order)
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$15.00")
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$15.00")
+
+          item.set_quantity_delivered(7)
+          click_button "Update quantities"
+        }
+
+        it "updates the item total" do
+          subject
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$21.00")
+        end
+
+        it "updates the grand total for the order" do
+          subject
+
+          expect(page).to have_content("Grand Total: $21.00")
+        end
+
+        it "updates the fees for the order" do
+          subject
+
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$21.00")
+          expect(Dom::Admin::OrderSummaryRow.first.market_fees).to eql("$1.05")
+          expect(Dom::Admin::OrderSummaryRow.first.net_sale).to eql("$19.11")
+        end
+
+        it "does not update the product inventory" do
+          expect {
+            subject
+          }.to_not change {
+            product.lots.first.reload.quantity
+          }.from(145)
+        end
+      end
+
+      context "invalid input" do
+        before do
+          visit admin_order_path(order)
+
+          item = Dom::Order::ItemRow.first
+          expect(item.total).to have_content("$15.00")
+        end
+
+        it "shows an error for negative values" do
+          item = Dom::Order::ItemRow.first
+          item.set_quantity_delivered("-1")
+          click_button "Update quantities"
+
+          expect(page).to have_content("must be greater than or equal to 0")
+        end
+
+        it "shows an error for non-numerical values" do
+          item = Dom::Order::ItemRow.first
+          item.set_quantity_delivered("bad")
+          click_button "Update quantities"
+
+          expect(page).to have_content("is not a number")
+        end
+
+        it "shows an error for insanely large numbers" do
+          item = Dom::Order::ItemRow.first
+          item.set_quantity_delivered("2147483648")
+          click_button "Update quantities"
+
+          expect(page).to have_content("must be less than 2147483647")
+        end
       end
     end
   end
