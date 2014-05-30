@@ -630,7 +630,6 @@
 .orientation-warning {
   display: none;
 }
-/**
 @media screen and (max-device-width: 767px) and (orientation: portrait) {
   .overlay {
     z-index: 50;
@@ -658,8 +657,15 @@
     font-size: 16px;
     text-align: center;
   }
+  .controller-products,
+  .controller-lots,
+  .controller-prices {
+    .overlay,
+    .orientation-warning {
+      display: none;
+    }
+  }
 }
-**/
 
 /** Headings */
 
