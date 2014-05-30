@@ -17,8 +17,13 @@
   background: $notice_bg;
 }
 
+.table-wrapper {
+  position: relative;
+  max-width: 100%;
+  overflow: auto;
+}
 table {
-  width: 100%;
+  min-width: 100%;
   border-collapse: collapse;
   font-size: 12px;
 }

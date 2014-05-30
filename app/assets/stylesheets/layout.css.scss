@@ -235,7 +235,8 @@ body {
 @media screen and (max-width: 800px) {
   .product-form.column,
   .price-form > .column,
-  .inventory-form > .column {
+  .inventory-form > .column,
+  .organization-form {
     width: 100%;
   }
 }
