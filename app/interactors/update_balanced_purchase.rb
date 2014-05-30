@@ -51,7 +51,7 @@ class UpdateBalancedPurchase
         end
 
       rescue Exception => e
-        process_exception(e, -amount)
+        process_exception(e, "order refund", -amount)
 
         raise ActiveRecord::Rollback
       end
@@ -73,7 +73,7 @@ class UpdateBalancedPurchase
 
       record_payment("order", amount, new_debit)
     rescue Exception => e
-      process_exception(e, amount)
+      process_exception(e, "order", amount)
     end
   end
 
@@ -88,9 +88,9 @@ class UpdateBalancedPurchase
     [debit, type]
   end
 
-  def process_exception(exception, amount)
+  def process_exception(exception, type, amount)
     Honeybadger.notify_or_ignore(exception) unless Rails.env.test? || Rails.env.development?
-    record_payment("order refund", amount, nil)
+    record_payment(type, amount, nil)
 
     raise exception if Rails.env.development?
 
