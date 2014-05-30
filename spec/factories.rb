@@ -277,7 +277,7 @@ FactoryGirl.define do
 
     trait :percent_fee do
       fee_type "percent"
-      fee 0.25
+      fee 25
     end
   end
 

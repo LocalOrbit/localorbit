@@ -35,7 +35,7 @@ class Cart < ActiveRecord::Base
     when "fixed"
       delivery.delivery_schedule.fee || 0
     when "percent"
-      (subtotal * (delivery.delivery_schedule.fee / 100 || 0))
+      (subtotal * ((delivery.delivery_schedule.fee || 0) / 100))
     else
       0.0
     end
