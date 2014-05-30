@@ -9,11 +9,11 @@
 <table>
   <thead class="stickable">
     <tr>
-      <th>Due Date</th>
-      <th>Order #</th>
-      <th>Purchase Order #</th>
-      <th>Order Date</th>
-      <th>Amount</th>
+      <%= content_tag :th, sort_link(@q, :invoice_due_date, "Due Date") %>
+      <%= content_tag :th, sort_link(@q, :order_number, "Order Number") %>
+      <%= content_tag :th, sort_link(@q, :payment_note, "Purchase Order #") %>
+      <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
+      <%= content_tag :th, sort_link(@q, :total_cost, "Amount") %>
     </tr>
   </thead>
   <tbody>
