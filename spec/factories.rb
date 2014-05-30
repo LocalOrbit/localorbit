@@ -163,6 +163,7 @@ FactoryGirl.define do
     payment_type   "order"
     payment_method "purchase order"
     amount         199.99
+    status         "paid"
 
     trait :checking do
       payment_type   "order"
@@ -172,6 +173,7 @@ FactoryGirl.define do
     trait :credit_card do
       payment_type   "order"
       payment_method "credit card"
+      status         "pending"
     end
   end
 
