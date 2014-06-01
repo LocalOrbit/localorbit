@@ -193,7 +193,7 @@ feature "Payment history" do
     Dom::Admin::Financials::PaymentRow.all.select { |row| row.description == "Order #: #{description}" }
   end
 
-  context "Sorting" do
+  context "Any User" do
     let!(:user) { create(:user, organizations: [@buyer]) }
 
     before do
@@ -243,6 +243,29 @@ feature "Payment history" do
       expect(payments[2].amount).to eq("$23.00")
       expect(payments[3].amount).to eq("$22.00")
       expect(payments[4].amount).to eq("$21.00")
+    end
+
+    scenario "can download a CSV of payment history" do
+      payments = Dom::Admin::Financials::PaymentRow.all
+      html_headers = page.all("th").map(&:text)
+
+      expect(payments.count).to eq(5)
+
+      click_link "Export CSV"
+
+      csv = CSV.parse(page.body, headers: true)
+
+      expect(csv.count).to eq(5)
+
+      # Ensure we see the same columns in HTML and CSV
+      expect(csv.headers).to eq(html_headers)
+
+      payments.each_with_index do |payment, i|
+        expect(csv[i]["Payment Date"]).to eq(payment.date)
+        expect(csv[i]["Description"]).to eq(payment.description)
+        expect(csv[i]["Payment Method"]).to eq(payment.payment_method)
+        expect(csv[i]["Amount"]).to eq(payment.amount)
+      end
     end
   end
 
