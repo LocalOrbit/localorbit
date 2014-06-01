@@ -46,7 +46,7 @@
 
             <% end %>
           <% else %>
-            Service Fee
+            <%= Payment::PAYMENT_TYPES[payment.payment_type] %>
           <% end %>
         </td>
         <td class="payment-method"><%= payment.display_payment_method %></td>
