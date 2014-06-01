@@ -254,6 +254,32 @@ feature "Payment history" do
       expect(payment_rows_for_description("LO-02-234-4567890-123").count).to eq(1)
     end
 
+    scenario "can search purchase history by payer or payee name" do
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+
+      fill_in "Search Payments", with: "Buyer 2"
+      click_button "Search"
+
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
+      expect(payment_rows_for_description("LO-02-234-4567890-1").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-2").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-3").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-4").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-5").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-123").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-345").count).to eq(1)
+
+      fill_in "Search Payments", with: "Seller 2"
+      click_button "Search"
+
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
+      expect(payment_rows_for_description("LO-02-234-4567890-1").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-2").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-3").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-4").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-5").count).to eq(1)
+    end
+
     scenario "can filter purchase history by payment date" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
 
