@@ -1,5 +1,5 @@
 class Admin::OrganizationCrossSellsController < AdminController
-  before_filter :find_organization
+  before_action :find_organization
 
   def show
     @cross_selling_markets = @organization.markets.map {|m| m.cross_sells }.flatten.uniq
