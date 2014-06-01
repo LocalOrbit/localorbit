@@ -1,8 +1,8 @@
 <%= search_form_for payment_history.q, url: admin_financials_payments_path, html: { class: "payment_search clear-after" } do |f| %>
   <div class="pull-left">
-    <%= f.label :orders_order_number_cont, "Order number contains" %><br>
+    <%= f.label :orders_order_number_or_organization_payee_name_or_organization_payer_name_cont, "Order number contains" %><br>
     <%# NOTE: Do not change the whitespace on the following line %>
-    <%= f.search_field :orders_order_number_cont, placeholder: "Search Payments" -%><%= f.submit "Search", class: "btn--end" %>
+    <%= f.search_field :orders_order_number_or_organization_payee_name_or_organization_payer_name_cont, placeholder: "Search Payments" -%><%= f.submit "Search", class: "btn--end" %>
   </div>
   <div class="pull-right">
     <span class="preserve-alignment">
