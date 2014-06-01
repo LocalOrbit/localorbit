@@ -193,6 +193,59 @@ feature "Payment history" do
     Dom::Admin::Financials::PaymentRow.all.select { |row| row.description == "Order #: #{description}" }
   end
 
+  context "Sorting" do
+    let!(:user) { create(:user, organizations: [@buyer]) }
+
+    before do
+      payments = Dom::Admin::Financials::PaymentRow.all
+
+      # Default sort order should be payment date descending
+      expect(payments.count).to eq(5)
+      expect(payments[0].date).to eq("05/14/2014")
+      expect(payments[1].date).to eq("05/13/2014")
+      expect(payments[2].date).to eq("05/12/2014")
+      expect(payments[3].date).to eq("05/11/2014")
+      expect(payments[4].date).to eq("05/10/2014")
+    end
+
+    scenario "can sort by payment date" do
+      click_link "Payment Date"
+
+      payments = Dom::Admin::Financials::PaymentRow.all
+
+      expect(payments.count).to eq(5)
+      expect(payments[0].date).to eq("05/10/2014")
+      expect(payments[1].date).to eq("05/11/2014")
+      expect(payments[2].date).to eq("05/12/2014")
+      expect(payments[3].date).to eq("05/13/2014")
+      expect(payments[4].date).to eq("05/14/2014")
+    end
+
+    scenario "can sort by payment amount" do
+      click_link "Amount"
+
+      payments = Dom::Admin::Financials::PaymentRow.all
+
+      expect(payments.count).to eq(5)
+      expect(payments[0].amount).to eq("$21.00")
+      expect(payments[1].amount).to eq("$22.00")
+      expect(payments[2].amount).to eq("$23.00")
+      expect(payments[3].amount).to eq("$24.00")
+      expect(payments[4].amount).to eq("$25.00")
+
+      click_link "Amount"
+
+      payments = Dom::Admin::Financials::PaymentRow.all
+
+      expect(payments.count).to eq(5)
+      expect(payments[0].amount).to eq("$25.00")
+      expect(payments[1].amount).to eq("$24.00")
+      expect(payments[2].amount).to eq("$23.00")
+      expect(payments[3].amount).to eq("$22.00")
+      expect(payments[4].amount).to eq("$21.00")
+    end
+  end
+
   context "Market Managers" do
     let!(:user) { create(:user, :market_manager, managed_markets: [@market, @market2]) }
 
