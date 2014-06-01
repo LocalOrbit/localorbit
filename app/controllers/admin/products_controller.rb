@@ -2,8 +2,9 @@ module Admin
   class ProductsController < AdminController
     include StickyFilters
 
-    before_filter :process_filter_clear_requests
+    before_action :process_filter_clear_requests
     before_action :ensure_selling_organization
+    before_action :find_product, only: [:show, :update, :destroy]
 
     def index
       @query_params = sticky_parameters(request.query_parameters)
@@ -15,9 +16,7 @@ module Admin
 
     def new
       @product = Product.new.decorate
-      find_selling_organizations
-      find_delivery_schedules
-      find_selected_delivery_schedule_ids
+      setup_new_form
     end
 
     def create
@@ -27,15 +26,12 @@ module Admin
       if @product.save
         redirect_to after_create_page, notice: "Added #{@product.name}"
       else
-        find_selling_organizations
-        find_delivery_schedules
-        find_selected_delivery_schedule_ids
+        setup_new_form
         render :new
       end
     end
 
     def show
-      @product = current_user.managed_products.find(params[:id]).decorate
       @organizations = [@product.organization]
 
       find_delivery_schedules(@product)
@@ -43,8 +39,6 @@ module Admin
     end
 
     def update
-      @product = current_user.managed_products.find(params[:id]).decorate
-
       if @product.update_attributes(product_params)
         respond_to do |format|
           format.html { redirect_to after_create_page, notice: "Saved #{@product.name}" }
@@ -64,12 +58,15 @@ module Admin
     end
 
     def destroy
-      product = current_user.managed_products.find(params[:id])
-      product.soft_delete
-      redirect_to [:admin, :products], notice: "Successfully deleted #{product.name}"
+      @product.soft_delete
+      redirect_to [:admin, :products], notice: "Successfully deleted #{@product.name}"
     end
 
     private
+
+    def find_product
+      @product = current_user.managed_products.find(params[:id]).decorate
+    end
 
     def product_params
       results = params.require(:product).permit(
@@ -80,15 +77,17 @@ module Admin
         delivery_schedule_ids: []
       )
 
-      results.merge!(delivery_schedule_ids:[] ) unless results[:delivery_schedule_ids]
+      results[:delivery_schedule_ids] ||= []
       results
     end
 
     def after_create_page
       if params[:after_save]
         params[:after_save]
+      elsif @product.use_simple_inventory?
+        [:admin, @product, :prices]
       else
-        @product.use_simple_inventory? ? [:admin, @product, :prices] : [:admin, @product, :lots]
+        [:admin, @product, :lots]
       end
     end
 
@@ -139,6 +138,12 @@ module Admin
       else
         @delivery_schedules.map {|market, schedules| schedules.map{|ds| ds.id.to_s} }.flatten
       end
+    end
+
+    def setup_new_form
+      find_selling_organizations
+      find_delivery_schedules
+      find_selected_delivery_schedule_ids
     end
   end
 end
