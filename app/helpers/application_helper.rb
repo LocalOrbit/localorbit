@@ -86,17 +86,21 @@ module ApplicationHelper
     files.map {|name| [name.split(/[\/\.]/)[-2].titleize, name.split("/")[-1]] }
   end
 
-  def color_mix (color_a = "#000000", color_b = "#ffffff")
-    color_a = color_a.reverse.chomp('#').reverse
-    color_b = color_b.reverse.chomp('#').reverse
+  def color_mix(color_a = "#000000", color_b = "#ffffff")
+    color_a = color_a.sub(/^#/, '')
+    color_b = color_b.sub(/^#/, '')
     if color_a.length == 6 && color_b.length == 6
-
-      r = (((color_a[0..1].hex - color_b[0..1].hex).abs / 6 * 5 ) + color_a[0..1].hex).to_s(16)[0..1]
-      g = (((color_a[2..3].hex - color_b[2..3].hex).abs / 6 * 5 ) + color_a[2..3].hex).to_s(16)[0..1]
-      b = (((color_a[4..5].hex - color_b[4..5].hex).abs / 6 * 5 ) + color_a[4..5].hex).to_s(16)[0..1]
-      return "##{r}#{g}#{b}"
+      r = color_mix_range(color_a, color_b, 0..1)
+      g = color_mix_range(color_a, color_b, 2..3)
+      b = color_mix_range(color_a, color_b, 4..5)
+      "##{r}#{g}#{b}"
+    else
+      "##{color_a}"
     end
-    return "##{color_a}"
+  end
+
+  def color_mix_range(color_a, color_b, range)
+    (((color_a[range].hex - color_b[range].hex).abs / 6 * 5 ) + color_a[range].hex).to_s(16)[0..1]
   end
 
   def svg_icon
