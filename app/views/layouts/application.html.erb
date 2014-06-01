@@ -9,20 +9,16 @@
   <%= csrf_meta_tags %>
   <% if current_market.present? %>
     <style>
-    <% if current_market.background_color.present? -%>
       body {
+      <% if current_market.background_color.present? -%>
         background-color: <%= current_market.background_color -%>;
-      }
-    <% end -%>
-    <% if !current_market.background_image.blank? -%>
-      body {
+      <% end -%>
+      <% if !current_market.background_image.blank? -%>
         background-image: url(<%= asset_path "backgrounds/#{current_market.background_image}" -%>);
-      }
-    <% else %>
-      body {
+      <% else -%>
         background-image: none;
-      }
-    <% end -%>
+      <% end -%>
+    }
     <% if current_market.text_color.present? -%>
       a,
       button.reset, button.cancel, button.close, button.delete,
@@ -64,7 +60,6 @@
         background-color: <%= color_mix current_market.text_color, "#ffffff" %>
       }
     <% end %>
-
     </style>
   <% end %>
 </head>
