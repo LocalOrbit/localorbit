@@ -1,4 +1,11 @@
-<%= organization_name = @resource.organizations.first.try(:name) || "Local Orbit" %>
+<%# gets the market for the email layout. Isn't ideal, but works well. %>
+<% if @organization = @resource.organizations.first
+     @market = @organization.markets.first
+     organization_name = @organization.name
+   else
+     organization_name = "Local Orbit"
+   end %>
+
 <h1>Join <%= organization_name %> today!</h1>
 <p>
   Hello! You have been invited to join <%= organization_name %> by a member of your organization.
