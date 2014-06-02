@@ -244,12 +244,9 @@ body {
   }
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 599px) {
 
-  .hidden-mobile {
-    display: none;
-  }
-  .header--welcome, .nav--main, .nav--admin {
+  .nav--admin {
     display: none;
   }
   .l-page-header {

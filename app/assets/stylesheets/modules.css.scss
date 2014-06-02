@@ -539,6 +539,15 @@
     padding: 4px 8px;
   }
 }
+@media screen and (max-width: 599px) {
+  .nav--main {
+    font-size: 18px;
+    padding: 4px 4px;
+    margin: 5px 0 20px 0;
+    float: none;
+    text-align: center;
+  }  
+}
 
 .nav--admin,
 .nav--app {
@@ -1124,9 +1133,10 @@
   }
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 599px) {
   .logo-link {
-    display: none;
+    text-align: center;
+    float: none;
   }
 }
 .signed-out .logo-link {
