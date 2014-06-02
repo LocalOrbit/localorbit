@@ -13,6 +13,61 @@ describe 'Editing an order' do
   let!(:order)      { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item], payment_method: 'ach')}
   let!(:payment)    { create(:payment, :checking, orders: [order], amount: 15.00) }
 
+  context "mark order delivered", :js do
+    let(:user) { create(:user, organizations: [buyer]) }
+
+    before do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+      visit admin_order_path(order)
+    end
+
+    context "as a buyer" do
+      it "gives a 404" do
+        expect(page.status_code).to eql(404)
+      end
+    end
+
+    context "as a seller" do
+      let!(:user) { create(:user, organizations: [seller]) }
+
+      it "marks all items delivered" do
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Pending')
+
+        click_button 'Mark all delivered'
+
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Delivered')
+        expect(page).to_not have_button("Mark all delivered")
+      end
+    end
+
+    context "as a market manager" do
+      let!(:user) { create(:user, managed_markets: [market]) }
+
+      it "marks all items delivered" do
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Pending')
+
+        click_button 'Mark all delivered'
+
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Delivered')
+        expect(page).to_not have_button("Mark all delivered")
+      end
+    end
+
+    context "as an admin" do
+      let!(:user) { create(:user, :admin) }
+
+      it "marks all items delivered" do
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Pending')
+
+        click_button 'Mark all delivered'
+
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Delivered')
+        expect(page).to_not have_button("Mark all delivered")
+      end
+    end
+  end
+
   context "quantity delivered" do
     context "as a buyer" do
       let!(:user) { create(:user, organizations: [buyer]) }
@@ -23,12 +78,8 @@ describe 'Editing an order' do
         visit admin_order_path(order)
       end
 
-      it "should not show quantity delivered fields" do
-        expect(page).to_not have_css(".quantity > input")
-      end
-
-      it "should not have an update button" do
-        expect(page).to_not have_button("Update quantities")
+      it "gives a 404" do
+        expect(page.status_code).to eql(404)
       end
     end
 
