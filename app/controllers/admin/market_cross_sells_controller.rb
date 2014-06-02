@@ -1,6 +1,6 @@
 class Admin::MarketCrossSellsController < AdminController
-  before_filter :require_admin_or_market_manager
-  before_filter :find_market
+  before_action :require_admin_or_market_manager
+  before_action :find_market
 
   def show
     @cross_selling_markets = Market.where(allow_cross_sell: true).where.not(id: @market.id).order(:name)

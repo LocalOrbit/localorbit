@@ -19,4 +19,13 @@ describe ApplicationHelper do
       end
     end
   end
+
+  describe "#color_mix" do
+    it "mixes colors" do
+      expect(color_mix).to eq("#d2d2d2")
+      expect(color_mix("#ffffff", "#ffffff")).to eq("#ffffff")
+      expect(color_mix("#000000", "#ffffff")).to eq("#d2d2d2")
+      expect(color_mix("000000", "ffffff")).to eq("#d2d2d2")
+    end
+  end
 end

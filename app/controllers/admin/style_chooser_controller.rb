@@ -1,6 +1,6 @@
 module Admin
   class StyleChooserController < AdminController
-    before_action :load_market
+    before_action :find_market
 
     def show
     end
@@ -14,10 +14,6 @@ module Admin
     end
 
     protected
-
-    def load_market
-      @market = current_user.markets.find(params[:market_id])
-    end
 
     def style_params
       params.require(:market).permit(:background_color, :background_image, :text_color)
