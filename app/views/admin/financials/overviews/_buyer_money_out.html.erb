@@ -1,17 +1,23 @@
 <div class="money-out payments-due">
   <table>
     <tr>
-      <td class="title">Overdue</td>
+      <td class="title">
+        <%= link_to "Overdue", admin_financials_invoices_path(payment_overdue: true) %>
+      </td>
       <td class="amount"><%= number_to_currency @overview.overdue %></td>
     </tr>
 
     <tr>
-      <td class="title">Due</td>
+      <td class="title">
+        <%= link_to "Due", admin_financials_invoices_path(payment_due: true) %>
+      </td>
       <td class="amount"><%= number_to_currency @overview.due %></td>
     </tr>
 
     <tr>
-      <td class="title">Purchase Orders</td>
+      <td class="title">
+        <%= link_to "Purchase Orders", dashboard_path(uninvoiced: true) %>
+      </td>
       <td class="amount"><%= number_to_currency @overview.purchase_orders %></td>
     </tr>
   </table>

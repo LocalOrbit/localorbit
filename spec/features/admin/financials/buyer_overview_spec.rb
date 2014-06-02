@@ -18,26 +18,26 @@ feature "Buyer Financial Overview" do
     Timecop.travel(Time.current - 32.days) do
 
       order_item = create(:order_item, unit_price: 53.99, quantity: 1)
-      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
+      @overdue_order1 = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
-      order.invoice
-      deliver_order(order)
-      order.save!
+      @overdue_order1.invoice
+      deliver_order(@overdue_order1)
+      @overdue_order1.save!
 
       order_item = create(:order_item, unit_price: 102.99, quantity: 1)
-      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
+      @overdue_order2 = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
-      order.invoice
-      deliver_order(order)
-      order.save!
+      @overdue_order2.invoice
+      deliver_order(@overdue_order2)
+      @overdue_order2.save!
     end
 
     Timecop.travel(Time.current - 7.days) do
       order_item = create(:order_item, unit_price: 6.41, quantity: 2)
-      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
+      @due_order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
-      order.invoice
-      deliver_order(order)
+      @due_order.invoice
+      deliver_order(@due_order)
     end
 
     Timecop.travel(Time.current - 6.days) do
@@ -50,18 +50,18 @@ feature "Buyer Financial Overview" do
 
     Timecop.travel(Time.current - 6.days) do
       order_item = create(:order_item, unit_price: 46.43, quantity: 2)
-      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
+      @uninvoiced1 = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
-      deliver_order(order)
-      pay_order(order)
+      deliver_order(@uninvoiced1)
+      #pay_order(@uninvoiced1)
     end
 
     Timecop.travel(Time.current - 6.days) do
       order_item = create(:order_item, unit_price: 150.01, quantity: 2)
-      order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
+      @uninvoiced2 = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
-      deliver_order(order)
-      pay_order(order)
+      deliver_order(@uninvoiced2)
+      #pay_order(@uninvoiced2)
     end
   end
 
@@ -77,6 +77,34 @@ feature "Buyer Financial Overview" do
     expect(money_out_row("Overdue").amount).to eql("$156.98")
     expect(money_out_row("Due").amount).to eql("$95.04")
     expect(money_out_row("Purchase Orders").amount).to eql("$392.88")
+
+    click_link "Overdue"
+
+    expect(page).to have_content(@overdue_order1.order_number)
+    expect(page).to have_content(@overdue_order2.order_number)
+    expect(page).not_to have_content(@due_order.order_number)
+    expect(page).not_to have_content(@uninvoiced1.order_number)
+    expect(page).not_to have_content(@uninvoiced2.order_number)
+
+    click_link "Dashboard"
+    click_link "Financials"
+    click_link "Due"
+
+    expect(page).to have_content(@due_order.order_number)
+    expect(page).not_to have_content(@overdue_order1.order_number)
+    expect(page).not_to have_content(@overdue_order2.order_number)
+    expect(page).not_to have_content(@uninvoiced1.order_number)
+    expect(page).not_to have_content(@uninvoiced2.order_number)
+
+    click_link "Dashboard"
+    click_link "Financials"
+    click_link "Purchase Orders"
+
+    expect(page).not_to have_content(@due_order.order_number)
+    expect(page).not_to have_content(@overdue_order1.order_number)
+    expect(page).not_to have_content(@overdue_order2.order_number)
+    expect(page).to have_content(@uninvoiced1.order_number)
+    expect(page).to have_content(@uninvoiced2.order_number)
   end
 
   scenario "Buyer's 'due' items update when invoices get marked as paid" do

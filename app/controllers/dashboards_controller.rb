@@ -1,6 +1,6 @@
 class DashboardsController < ApplicationController
   def show
-    @presenter = DashboardPresenter.new(current_user, current_market)
+    @presenter = DashboardPresenter.new(current_user, current_market, request.query_parameters)
     render @presenter.template
   end
 
