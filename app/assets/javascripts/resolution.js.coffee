@@ -1,7 +1,7 @@
 find_orientation = ->
-  if window.innerWidth < window.innerHeight
+  if screen.width < screen.height
     "portrait"
-  else if window.innerWidth > window.innerHeight
+  else if screen.width > screen.height
     "landscape"
   else
     "square"

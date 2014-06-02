@@ -83,6 +83,7 @@ class @EditTable
     $('.add-toggle').addClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled').on 'click', (e) ->
       e.preventDefault()
+    $row.parents('.table-wrapper').trigger "scroll"
 
   openAddRow: ()->
     @closeEditRow(@form.find('.editing'), false)
@@ -95,6 +96,7 @@ class @EditTable
     $('.add-toggle').addClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', 'disabled').addClass('disabled').on 'click', (e) ->
       e.preventDefault()
+    fieldsRow.parents('.table-wrapper').trigger "scroll"
 
   closeEditRow: ($row, cancel)->
     return if $row.length == 0
@@ -115,6 +117,7 @@ class @EditTable
 
     @hiddenRow.show() if @hiddenRow != null
     @hiddenRow = null
+    $row.parents('.table-wrapper').first().scrollLeft(0)
 
   bindActions: ()->
     context = this
