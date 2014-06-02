@@ -26,6 +26,9 @@ table {
   min-width: 100%;
   border-collapse: collapse;
   font-size: 12px;
+  &.js-fixed {
+    min-width: 0;
+  }
 }
 
 thead {
@@ -695,7 +698,18 @@ th {
   margin-right: 10px;
 }
 
-@media screen and (max-width: 800px) {
+.product-search {
+  float: right;
+}
+
+.search-widget {
+    display: inline-block;
+    ~ .btn--add {
+      display: inline-block;
+    }
+  }
+
+@media screen and (max-width: 900px) {
   .product-filters {
     width: 100%;
     margin-bottom: 5px;
@@ -711,6 +725,7 @@ th {
   .row--justified {
     > .product-search,
     > .product-search:last-child {
+      float: none;
       width: 100%;
       text-align: left;
     }
