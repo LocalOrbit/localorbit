@@ -678,13 +678,18 @@
   display: none;
 }
 @media screen and (max-device-width: 768px) and (orientation: portrait) {
-  .overlay.is-open.is-editable {
+  .overlay {
     z-index: 50;
+    background: rgba(0,0,0,0.85);    
+  }
+  .overlay.is-open.is-editable {
     display: block;
-    background: rgba(0,0,0,0.85);
   }
 }
 @media screen and (max-device-width: 767px) and (orientation: portrait) {
+  .overlay {
+    display: block;
+  }
   .orientation-warning {
     position: fixed;
     z-index: 50;
@@ -702,7 +707,8 @@
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    background: asset_url('rotate.svg') center 10px / 180px auto no-repeat #fff;
+    background: asset_url('rotate.svg') center 10px no-repeat #fff;
+    background-size: 180px auto;
     font-size: 16px;
     text-align: center;
   }
