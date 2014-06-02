@@ -1,12 +1,12 @@
 <%= search_form_for payment_history.q, url: admin_financials_payments_path, html: { class: "payment_search clear-after" } do |f| %>
   <div class="pull-left">
-    <%= render partial: "admin/financials/shared/payment_filters_search", locals: { f: f } %>
+    <%= render "admin/financials/shared/payment_filters_search", { f: f } %>
   </div>
   <div class="pull-right">
-    <%= render partial: "admin/financials/shared/payment_filters_payment_date",
-          locals: { f: f,
-                    start_date: payment_history.start_date,
-                    end_date: payment_history.end_date } %>
+    <%= render "admin/financials/shared/payment_filters_payment_date",
+          { f: f,
+            start_date: payment_history.start_date,
+            end_date: payment_history.end_date } %>
   </div>
   <div class="manager-filters">
     <span class="preserve-alignment">
@@ -21,6 +21,6 @@
       <%= f.label :payment_type_eq, "Payment Type" %><br>
       <%= f.select :payment_type_eq, Payment::PAYMENT_TYPES.map { |pm| [pm[1], pm[0]] }, { include_blank: "All" }, { class: "filter-input" } %>
     </span>
-    <%= render partial: "admin/financials/shared/payment_filters_payment_method", locals: { f: f } %>
+    <%= render "admin/financials/shared/payment_filters_payment_method", { f: f } %>
   </div>
 <% end %>
