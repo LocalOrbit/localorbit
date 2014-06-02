@@ -23,13 +23,13 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 15 May 2014 16:57:31 GMT
+      - Mon, 02 Jun 2014 15:14:40 GMT
       Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU2455ZBqj7Qw3QDgmSKNj
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU4P3ZtI5rfw8mKDdzDT21OV
       Server:
       - ngx_openresty/1.2.6.3
       X-Balanced-Guru:
-      - OHMffffeebcdc5111e39beb02a1fe52a36c
+      - OHM9e7855ceea6811e3a52c02a1fe53e539
       X-Balanced-Host:
       - bapi-integration-prod-8u30f7-10-3-5-201
       X-Balanced-Marketplace:
@@ -39,130 +39,11 @@ http_interactions:
       X-Balanced-Revision:
       - '1.0'
       X-Balanced-Software-Build:
-      - 1.2.24
+      - 1.2.48
       X-Midlr-Version:
       - '2'
       X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUx9QB1BUBQFYV1cAAQVQUlsCHRdXVAMaE0BVVFVSUFxaDQ8NAAtVWlQCQx9CAldbEgM+
-      Content-Length:
-      - '1688'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "_type": "customer",
-          "twitter": null,
-          "reversals_uri": "/v1/customers/CU2455ZBqj7Qw3QDgmSKNj/reversals",
-          "phone": null,
-          "meta": {
-            "entity_id": "1",
-            "entity_name": "Famous Farm",
-            "entity_type": "organization"
-          },
-          "facebook": null,
-          "address": {},
-          "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU2455ZBqj7Qw3QDgmSKNj/bank_accounts",
-          "id": "CU2455ZBqj7Qw3QDgmSKNj",
-          "credits_uri": "/v1/customers/CU2455ZBqj7Qw3QDgmSKNj/credits",
-          "cards_uri": "/v1/customers/CU2455ZBqj7Qw3QDgmSKNj/cards",
-          "holds_uri": "/v1/customers/CU2455ZBqj7Qw3QDgmSKNj/holds",
-          "name": "Famous Farm",
-          "refunds_uri": "/v1/customers/CU2455ZBqj7Qw3QDgmSKNj/refunds",
-          "dob": null,
-          "created_at": "2014-05-15T16:57:29.696270Z",
-          "destination": null,
-          "is_identity_verified": false,
-          "uri": "/v1/customers/CU2455ZBqj7Qw3QDgmSKNj",
-          "source": null,
-          "_uris": {
-            "transactions_uri": {
-              "_type": "page",
-              "key": "transactions"
-            },
-            "bank_accounts_uri": {
-              "_type": "page",
-              "key": "bank_accounts"
-            },
-            "refunds_uri": {
-              "_type": "page",
-              "key": "refunds"
-            },
-            "debits_uri": {
-              "_type": "page",
-              "key": "debits"
-            },
-            "holds_uri": {
-              "_type": "page",
-              "key": "holds"
-            },
-            "reversals_uri": {
-              "_type": "page",
-              "key": "reversals"
-            },
-            "credits_uri": {
-              "_type": "page",
-              "key": "credits"
-            },
-            "cards_uri": {
-              "_type": "page",
-              "key": "cards"
-            }
-          },
-          "debits_uri": "/v1/customers/CU2455ZBqj7Qw3QDgmSKNj/debits",
-          "transactions_uri": "/v1/customers/CU2455ZBqj7Qw3QDgmSKNj/transactions",
-          "ssn_last4": null,
-          "email": null,
-          "ein": null
-        }
-    http_version: 
-  recorded_at: Thu, 15 May 2014 16:57:27 GMT
-- request:
-    method: post
-    uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/customers
-    body:
-      encoding: UTF-8
-      string: '{"name":"Famous Farm","meta":{"entity_id":1,"entity_name":"Famous Farm","entity_type":"organization"}}'
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 201
-      message: CREATED
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 15 May 2014 18:25:55 GMT
-      Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU2KKS7eXLgkPhaFCiLcrsJX
-      Server:
-      - ngx_openresty/1.2.6.3
-      X-Balanced-Guru:
-      - OHM5a79c6d6dc5e11e3a82802a1fe52a36c
-      X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-5-201
-      X-Balanced-Marketplace:
-      - TEST-MP1EOzr67FEqkfTYGTJxxYsV
-      X-Balanced-Merchant:
-      - TEST-MR1UDDuhujWiJKH04gyn92gO
-      X-Balanced-Revision:
-      - '1.0'
-      X-Balanced-Software-Build:
-      - 1.2.24
-      X-Midlr-Version:
-      - '2'
-      X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9QBFVdBgZRVFoNCwZTWFAbEQZWVh0WEVMFAVYJVwwGAVlRUwNSCAcTTRMEBVpEBDs=
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9TA1JVBA9RUVsMBQBSWFEEBxtGVQEEH0JEVgADBg5UDQlRVAsDC1IJAhFORFBWDRUGZQ==
       Content-Length:
       - '1708'
       Connection:
@@ -173,7 +54,7 @@ http_interactions:
         {
           "_type": "customer",
           "twitter": null,
-          "reversals_uri": "/v1/customers/CU2KKS7eXLgkPhaFCiLcrsJX/reversals",
+          "reversals_uri": "/v1/customers/CU4P3ZtI5rfw8mKDdzDT21OV/reversals",
           "phone": null,
           "meta": {
             "entity_id": "1",
@@ -183,18 +64,18 @@ http_interactions:
           "facebook": null,
           "address": {},
           "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU2KKS7eXLgkPhaFCiLcrsJX/bank_accounts",
-          "id": "CU2KKS7eXLgkPhaFCiLcrsJX",
-          "credits_uri": "/v1/customers/CU2KKS7eXLgkPhaFCiLcrsJX/credits",
-          "cards_uri": "/v1/customers/CU2KKS7eXLgkPhaFCiLcrsJX/cards",
-          "holds_uri": "/v1/customers/CU2KKS7eXLgkPhaFCiLcrsJX/holds",
+          "bank_accounts_uri": "/v1/customers/CU4P3ZtI5rfw8mKDdzDT21OV/bank_accounts",
+          "id": "CU4P3ZtI5rfw8mKDdzDT21OV",
+          "credits_uri": "/v1/customers/CU4P3ZtI5rfw8mKDdzDT21OV/credits",
+          "cards_uri": "/v1/customers/CU4P3ZtI5rfw8mKDdzDT21OV/cards",
+          "holds_uri": "/v1/customers/CU4P3ZtI5rfw8mKDdzDT21OV/holds",
           "name": "Famous Farm",
-          "refunds_uri": "/v1/customers/CU2KKS7eXLgkPhaFCiLcrsJX/refunds",
+          "refunds_uri": "/v1/customers/CU4P3ZtI5rfw8mKDdzDT21OV/refunds",
           "dob": null,
-          "created_at": "2014-05-15T18:25:55.448575Z",
+          "created_at": "2014-06-02T15:14:40.774358Z",
           "destination": null,
           "is_identity_verified": false,
-          "uri": "/v1/customers/CU2KKS7eXLgkPhaFCiLcrsJX",
+          "uri": "/v1/customers/CU4P3ZtI5rfw8mKDdzDT21OV",
           "source": null,
           "_uris": {
             "transactions_uri": {
@@ -230,12 +111,12 @@ http_interactions:
               "key": "cards"
             }
           },
-          "debits_uri": "/v1/customers/CU2KKS7eXLgkPhaFCiLcrsJX/debits",
-          "transactions_uri": "/v1/customers/CU2KKS7eXLgkPhaFCiLcrsJX/transactions",
+          "debits_uri": "/v1/customers/CU4P3ZtI5rfw8mKDdzDT21OV/debits",
+          "transactions_uri": "/v1/customers/CU4P3ZtI5rfw8mKDdzDT21OV/transactions",
           "ssn_last4": null,
           "email": null,
           "ein": null
         }
     http_version: 
-  recorded_at: Thu, 15 May 2014 18:25:57 GMT
-recorded_with: VCR 2.9.0
+  recorded_at: Mon, 02 Jun 2014 15:14:41 GMT
+recorded_with: VCR 2.9.2

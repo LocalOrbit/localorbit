@@ -5,7 +5,7 @@ http_interactions:
     uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
     body:
       encoding: UTF-8
-      string: '{"name":"Holland Farmers","meta":{"entity_id":130,"entity_name":"Holland
+      string: '{"name":"Holland Farmers","meta":{"entity_id":25,"entity_name":"Holland
         Farmers","entity_type":"market"}}'
     headers:
       User-Agent:
@@ -24,15 +24,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 15 May 2014 16:56:54 GMT
+      - Mon, 02 Jun 2014 15:16:44 GMT
       Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU72QVeKzEGWPQcMhCLQbqvD
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU73IbkP6Q7TA2tD5JzzbYJT
       Server:
       - ngx_openresty/1.2.6.3
       X-Balanced-Guru:
-      - OHMe77e77c8dc5111e3a82802a1fe52a36c
+      - OHMe7f314aaea6811e3a82802a1fe52a36c
       X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-5-201
+      - bapi-integration-prod-8u30f7-10-3-4-8
       X-Balanced-Marketplace:
       - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
       X-Balanced-Merchant:
@@ -40,131 +40,11 @@ http_interactions:
       X-Balanced-Revision:
       - '1.0'
       X-Balanced-Software-Build:
-      - 1.2.24
+      - 1.2.48
       X-Midlr-Version:
       - '2'
       X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZVB9ZBFtXDgFYVlIABgVQV1sbEQZWUh0WEVVUAAACWlpTCF0GCgNRX1ITTRMEBVpEBDs=
-      Content-Length:
-      - '1712'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "_type": "customer",
-          "twitter": null,
-          "reversals_uri": "/v1/customers/CU72QVeKzEGWPQcMhCLQbqvD/reversals",
-          "phone": null,
-          "meta": {
-            "entity_id": "130",
-            "entity_name": "Holland Farmers",
-            "entity_type": "market"
-          },
-          "facebook": null,
-          "address": {},
-          "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU72QVeKzEGWPQcMhCLQbqvD/bank_accounts",
-          "id": "CU72QVeKzEGWPQcMhCLQbqvD",
-          "credits_uri": "/v1/customers/CU72QVeKzEGWPQcMhCLQbqvD/credits",
-          "cards_uri": "/v1/customers/CU72QVeKzEGWPQcMhCLQbqvD/cards",
-          "holds_uri": "/v1/customers/CU72QVeKzEGWPQcMhCLQbqvD/holds",
-          "name": "Holland Farmers",
-          "refunds_uri": "/v1/customers/CU72QVeKzEGWPQcMhCLQbqvD/refunds",
-          "dob": null,
-          "created_at": "2014-05-15T16:56:48.579709Z",
-          "destination": null,
-          "is_identity_verified": false,
-          "uri": "/v1/customers/CU72QVeKzEGWPQcMhCLQbqvD",
-          "source": null,
-          "_uris": {
-            "transactions_uri": {
-              "_type": "page",
-              "key": "transactions"
-            },
-            "bank_accounts_uri": {
-              "_type": "page",
-              "key": "bank_accounts"
-            },
-            "refunds_uri": {
-              "_type": "page",
-              "key": "refunds"
-            },
-            "debits_uri": {
-              "_type": "page",
-              "key": "debits"
-            },
-            "holds_uri": {
-              "_type": "page",
-              "key": "holds"
-            },
-            "reversals_uri": {
-              "_type": "page",
-              "key": "reversals"
-            },
-            "credits_uri": {
-              "_type": "page",
-              "key": "credits"
-            },
-            "cards_uri": {
-              "_type": "page",
-              "key": "cards"
-            }
-          },
-          "debits_uri": "/v1/customers/CU72QVeKzEGWPQcMhCLQbqvD/debits",
-          "transactions_uri": "/v1/customers/CU72QVeKzEGWPQcMhCLQbqvD/transactions",
-          "ssn_last4": null,
-          "email": null,
-          "ein": null
-        }
-    http_version: 
-  recorded_at: Thu, 15 May 2014 16:56:50 GMT
-- request:
-    method: post
-    uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/customers
-    body:
-      encoding: UTF-8
-      string: '{"name":"Holland Farmers","meta":{"entity_id":30,"entity_name":"Holland
-        Farmers","entity_type":"market"}}'
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 201
-      message: CREATED
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 15 May 2014 18:28:55 GMT
-      Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU60x7BaaCNSzfKmjioOElVn
-      Server:
-      - ngx_openresty/1.2.6.3
-      X-Balanced-Guru:
-      - OHMc5686acedc5e11e3ab5302a1fe52a36c
-      X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-5-201
-      X-Balanced-Marketplace:
-      - TEST-MP1EOzr67FEqkfTYGTJxxYsV
-      X-Balanced-Merchant:
-      - TEST-MR1UDDuhujWiJKH04gyn92gO
-      X-Balanced-Revision:
-      - '1.0'
-      X-Balanced-Software-Build:
-      - 1.2.24
-      X-Midlr-Version:
-      - '2'
-      X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9QCldTDwZRVlUICwhWVFQPBRtGVQEDH0JEUgMJAFxXXQoECwADAFNVWBFORFBWDRUGZQ==
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9TBFVXAwFQUlQPBQZVUFEEHRdXVAQaE0ACVAcJVFlVDAgDBVJdWFAJQx9CAldbEgM+
       Content-Length:
       - '1711'
       Connection:
@@ -175,28 +55,28 @@ http_interactions:
         {
           "_type": "customer",
           "twitter": null,
-          "reversals_uri": "/v1/customers/CU60x7BaaCNSzfKmjioOElVn/reversals",
+          "reversals_uri": "/v1/customers/CU73IbkP6Q7TA2tD5JzzbYJT/reversals",
           "phone": null,
           "meta": {
-            "entity_id": "30",
+            "entity_id": "25",
             "entity_name": "Holland Farmers",
             "entity_type": "market"
           },
           "facebook": null,
           "address": {},
           "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU60x7BaaCNSzfKmjioOElVn/bank_accounts",
-          "id": "CU60x7BaaCNSzfKmjioOElVn",
-          "credits_uri": "/v1/customers/CU60x7BaaCNSzfKmjioOElVn/credits",
-          "cards_uri": "/v1/customers/CU60x7BaaCNSzfKmjioOElVn/cards",
-          "holds_uri": "/v1/customers/CU60x7BaaCNSzfKmjioOElVn/holds",
+          "bank_accounts_uri": "/v1/customers/CU73IbkP6Q7TA2tD5JzzbYJT/bank_accounts",
+          "id": "CU73IbkP6Q7TA2tD5JzzbYJT",
+          "credits_uri": "/v1/customers/CU73IbkP6Q7TA2tD5JzzbYJT/credits",
+          "cards_uri": "/v1/customers/CU73IbkP6Q7TA2tD5JzzbYJT/cards",
+          "holds_uri": "/v1/customers/CU73IbkP6Q7TA2tD5JzzbYJT/holds",
           "name": "Holland Farmers",
-          "refunds_uri": "/v1/customers/CU60x7BaaCNSzfKmjioOElVn/refunds",
+          "refunds_uri": "/v1/customers/CU73IbkP6Q7TA2tD5JzzbYJT/refunds",
           "dob": null,
-          "created_at": "2014-05-15T18:28:54.851110Z",
+          "created_at": "2014-06-02T15:16:44.055241Z",
           "destination": null,
           "is_identity_verified": false,
-          "uri": "/v1/customers/CU60x7BaaCNSzfKmjioOElVn",
+          "uri": "/v1/customers/CU73IbkP6Q7TA2tD5JzzbYJT",
           "source": null,
           "_uris": {
             "transactions_uri": {
@@ -232,12 +112,12 @@ http_interactions:
               "key": "cards"
             }
           },
-          "debits_uri": "/v1/customers/CU60x7BaaCNSzfKmjioOElVn/debits",
-          "transactions_uri": "/v1/customers/CU60x7BaaCNSzfKmjioOElVn/transactions",
+          "debits_uri": "/v1/customers/CU73IbkP6Q7TA2tD5JzzbYJT/debits",
+          "transactions_uri": "/v1/customers/CU73IbkP6Q7TA2tD5JzzbYJT/transactions",
           "ssn_last4": null,
           "email": null,
           "ein": null
         }
     http_version: 
-  recorded_at: Thu, 15 May 2014 18:28:56 GMT
-recorded_with: VCR 2.9.0
+  recorded_at: Mon, 02 Jun 2014 15:16:44 GMT
+recorded_with: VCR 2.9.2

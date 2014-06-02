@@ -23,13 +23,13 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 15 May 2014 17:01:30 GMT
+      - Mon, 02 Jun 2014 15:18:09 GMT
       Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU4n5dDEZDF3DOxOG17pCXDD
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CUOakjpSxPMroNQSCP1o8Id
       Server:
       - ngx_openresty/1.2.6.3
       X-Balanced-Guru:
-      - OHM8fa0165adc5211e3ab2502a1fe52a36c
+      - OHM1a8e8a7aea6911e3ab5302a1fe52a36c
       X-Balanced-Host:
       - bapi-integration-prod-8u30f7-10-3-4-8
       X-Balanced-Marketplace:
@@ -39,13 +39,13 @@ http_interactions:
       X-Balanced-Revision:
       - '1.0'
       X-Balanced-Software-Build:
-      - 1.2.24
+      - 1.2.48
       X-Midlr-Version:
       - '2'
       X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9TC1tdAABRUFMICwlVUFMEAhtGXQcaE0AAV1VRUAsDClsEUQpdW1JTQx9CAldbEgM+
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9TBFdSDgFRVFYOAglRUVQPBRtGXQcaE0AFU1FVVwwAXFlSVlVSDlYFQx9CAldbEgM+
       Content-Length:
-      - '1702'
+      - '1692'
       Connection:
       - keep-alive
     body:
@@ -54,7 +54,7 @@ http_interactions:
         {
           "_type": "customer",
           "twitter": null,
-          "reversals_uri": "/v1/customers/CU4n5dDEZDF3DOxOG17pCXDD/reversals",
+          "reversals_uri": "/v1/customers/CUOakjpSxPMroNQSCP1o8Id/reversals",
           "phone": null,
           "meta": {
             "entity_id": "1",
@@ -64,18 +64,18 @@ http_interactions:
           "facebook": null,
           "address": {},
           "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU4n5dDEZDF3DOxOG17pCXDD/bank_accounts",
-          "id": "CU4n5dDEZDF3DOxOG17pCXDD",
-          "credits_uri": "/v1/customers/CU4n5dDEZDF3DOxOG17pCXDD/credits",
-          "cards_uri": "/v1/customers/CU4n5dDEZDF3DOxOG17pCXDD/cards",
-          "holds_uri": "/v1/customers/CU4n5dDEZDF3DOxOG17pCXDD/holds",
+          "bank_accounts_uri": "/v1/customers/CUOakjpSxPMroNQSCP1o8Id/bank_accounts",
+          "id": "CUOakjpSxPMroNQSCP1o8Id",
+          "credits_uri": "/v1/customers/CUOakjpSxPMroNQSCP1o8Id/credits",
+          "cards_uri": "/v1/customers/CUOakjpSxPMroNQSCP1o8Id/cards",
+          "holds_uri": "/v1/customers/CUOakjpSxPMroNQSCP1o8Id/holds",
           "name": "Fake Market",
-          "refunds_uri": "/v1/customers/CU4n5dDEZDF3DOxOG17pCXDD/refunds",
+          "refunds_uri": "/v1/customers/CUOakjpSxPMroNQSCP1o8Id/refunds",
           "dob": null,
-          "created_at": "2014-05-15T17:01:30.696228Z",
+          "created_at": "2014-06-02T15:18:08.982005Z",
           "destination": null,
           "is_identity_verified": false,
-          "uri": "/v1/customers/CU4n5dDEZDF3DOxOG17pCXDD",
+          "uri": "/v1/customers/CUOakjpSxPMroNQSCP1o8Id",
           "source": null,
           "_uris": {
             "transactions_uri": {
@@ -111,202 +111,12 @@ http_interactions:
               "key": "cards"
             }
           },
-          "debits_uri": "/v1/customers/CU4n5dDEZDF3DOxOG17pCXDD/debits",
-          "transactions_uri": "/v1/customers/CU4n5dDEZDF3DOxOG17pCXDD/transactions",
+          "debits_uri": "/v1/customers/CUOakjpSxPMroNQSCP1o8Id/debits",
+          "transactions_uri": "/v1/customers/CUOakjpSxPMroNQSCP1o8Id/transactions",
           "ssn_last4": null,
           "email": null,
           "ein": null
         }
     http_version: 
-  recorded_at: Thu, 15 May 2014 17:01:26 GMT
-- request:
-    method: put
-    uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/customers/CU4qI6tfV02n9V2gwSYl6Qd3
-    body:
-      encoding: UTF-8
-      string: '{"_type":"customer","twitter":null,"reversals_uri":"/v1/customers/CU4qI6tfV02n9V2gwSYl6Qd3/reversals","phone":null,"meta":{"entity_id":"21","entity_name":"Funville","entity_type":"market"},"facebook":null,"address":{"postal_code":"12345","country_code":"USA","line1":"6789
-        Fake Dr"},"business_name":"Funville","bank_accounts_uri":"/v1/customers/CU4qI6tfV02n9V2gwSYl6Qd3/bank_accounts","id":"CU4qI6tfV02n9V2gwSYl6Qd3","credits_uri":"/v1/customers/CU4qI6tfV02n9V2gwSYl6Qd3/credits","cards_uri":"/v1/customers/CU4qI6tfV02n9V2gwSYl6Qd3/cards","holds_uri":"/v1/customers/CU4qI6tfV02n9V2gwSYl6Qd3/holds","name":"John
-        Patrick Doe","refunds_uri":"/v1/customers/CU4qI6tfV02n9V2gwSYl6Qd3/refunds","dob":"1990-09","created_at":"2014-05-15T18:20:18.380845Z","destination":null,"is_identity_verified":true,"source":null,"_uris":{"transactions_uri":{"_type":"page","key":"transactions"},"bank_accounts_uri":{"_type":"page","key":"bank_accounts"},"refunds_uri":{"_type":"page","key":"refunds"},"debits_uri":{"_type":"page","key":"debits"},"holds_uri":{"_type":"page","key":"holds"},"reversals_uri":{"_type":"page","key":"reversals"},"credits_uri":{"_type":"page","key":"credits"},"cards_uri":{"_type":"page","key":"cards"}},"debits_uri":"/v1/customers/CU4qI6tfV02n9V2gwSYl6Qd3/debits","transactions_uri":"/v1/customers/CU4qI6tfV02n9V2gwSYl6Qd3/transactions","ssn_last4":"xxxx","email":null,"ein":"201234567","bank_account_uri":"/v1/marketplaces/TEST-MP1EOzr67FEqkfTYGTJxxYsV/bank_accounts/BA4C2q9KMk28Pv764miSVIEd"}'
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 504
-      message: Gateway Timeout
-    headers:
-      Content-Length:
-      - '0'
-    body:
-      encoding: UTF-8
-      string: ''
-    http_version: 
-  recorded_at: Thu, 15 May 2014 18:21:34 GMT
-- request:
-    method: put
-    uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/customers/CU4L2ZG0DdiJ1QzKEZM1iJaV
-    body:
-      encoding: UTF-8
-      string: '{"_type":"customer","twitter":null,"reversals_uri":"/v1/customers/CU4L2ZG0DdiJ1QzKEZM1iJaV/reversals","phone":null,"meta":{"entity_id":"1","entity_name":"Funville","entity_type":"market"},"facebook":null,"address":{"postal_code":"12345","country_code":"USA","line1":"6789
-        Fake Dr"},"business_name":"Funville","bank_accounts_uri":"/v1/customers/CU4L2ZG0DdiJ1QzKEZM1iJaV/bank_accounts","id":"CU4L2ZG0DdiJ1QzKEZM1iJaV","credits_uri":"/v1/customers/CU4L2ZG0DdiJ1QzKEZM1iJaV/credits","cards_uri":"/v1/customers/CU4L2ZG0DdiJ1QzKEZM1iJaV/cards","holds_uri":"/v1/customers/CU4L2ZG0DdiJ1QzKEZM1iJaV/holds","name":"John
-        Patrick Doe","refunds_uri":"/v1/customers/CU4L2ZG0DdiJ1QzKEZM1iJaV/refunds","dob":"1990-09","created_at":"2014-05-15T18:20:36.463621Z","destination":null,"is_identity_verified":true,"source":null,"_uris":{"transactions_uri":{"_type":"page","key":"transactions"},"bank_accounts_uri":{"_type":"page","key":"bank_accounts"},"refunds_uri":{"_type":"page","key":"refunds"},"debits_uri":{"_type":"page","key":"debits"},"holds_uri":{"_type":"page","key":"holds"},"reversals_uri":{"_type":"page","key":"reversals"},"credits_uri":{"_type":"page","key":"credits"},"cards_uri":{"_type":"page","key":"cards"}},"debits_uri":"/v1/customers/CU4L2ZG0DdiJ1QzKEZM1iJaV/debits","transactions_uri":"/v1/customers/CU4L2ZG0DdiJ1QzKEZM1iJaV/transactions","ssn_last4":"xxxx","email":null,"ein":"201234567","bank_account_uri":"/v1/marketplaces/TEST-MP1EOzr67FEqkfTYGTJxxYsV/bank_accounts/BA4WfugWMN2TQ7M9M40wAFUN"}'
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 504
-      message: GATEWAY TIMEOUT
-    headers:
-      Content-Type:
-      - text/html
-      Date:
-      - Thu, 15 May 2014 18:21:33 GMT
-      Server:
-      - ngx_openresty/1.2.6.3
-      X-Balanced-Guru:
-      - OHMa6a87adadc5d11e3a82802a1fe52a36c
-      X-Midlr-Version:
-      - '2'
-      Content-Length:
-      - '182'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: "<html>\r\n<head><title>504 Gateway Time-out</title></head>\r\n<body
-        bgcolor=\"white\">\r\n<center><h1>504 Gateway Time-out</h1></center>\r\n<hr><center>nginx/1.4.7</center>\r\n</body>\r\n</html>\r\n"
-    http_version: 
-  recorded_at: Thu, 15 May 2014 18:21:35 GMT
-- request:
-    method: post
-    uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/customers
-    body:
-      encoding: UTF-8
-      string: '{"name":"Fake Market","meta":{"entity_id":1,"entity_name":"Fake Market","entity_type":"market"}}'
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 201
-      message: CREATED
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 15 May 2014 18:21:34 GMT
-      Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU5MR2bfwmGoCKpd7XQ4BT2l
-      Server:
-      - ngx_openresty/1.2.6.3
-      X-Balanced-Guru:
-      - OHMad00c342dc5d11e390b902a1fe53e539
-      X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-4-8
-      X-Balanced-Marketplace:
-      - TEST-MP1EOzr67FEqkfTYGTJxxYsV
-      X-Balanced-Merchant:
-      - TEST-MR1UDDuhujWiJKH04gyn92gO
-      X-Balanced-Revision:
-      - '1.0'
-      X-Balanced-Software-Build:
-      - 1.2.24
-      X-Midlr-Version:
-      - '2'
-      X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUB9VCltWAQVZVFALAANTVVIFHRdfUh0WEQZSUQQDBAAHD10GVgVUWFMTTRMEBVpEBDs=
-      Content-Length:
-      - '1702'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "_type": "customer",
-          "twitter": null,
-          "reversals_uri": "/v1/customers/CU5MR2bfwmGoCKpd7XQ4BT2l/reversals",
-          "phone": null,
-          "meta": {
-            "entity_id": "1",
-            "entity_name": "Fake Market",
-            "entity_type": "market"
-          },
-          "facebook": null,
-          "address": {},
-          "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU5MR2bfwmGoCKpd7XQ4BT2l/bank_accounts",
-          "id": "CU5MR2bfwmGoCKpd7XQ4BT2l",
-          "credits_uri": "/v1/customers/CU5MR2bfwmGoCKpd7XQ4BT2l/credits",
-          "cards_uri": "/v1/customers/CU5MR2bfwmGoCKpd7XQ4BT2l/cards",
-          "holds_uri": "/v1/customers/CU5MR2bfwmGoCKpd7XQ4BT2l/holds",
-          "name": "Fake Market",
-          "refunds_uri": "/v1/customers/CU5MR2bfwmGoCKpd7XQ4BT2l/refunds",
-          "dob": null,
-          "created_at": "2014-05-15T18:21:33.199293Z",
-          "destination": null,
-          "is_identity_verified": false,
-          "uri": "/v1/customers/CU5MR2bfwmGoCKpd7XQ4BT2l",
-          "source": null,
-          "_uris": {
-            "transactions_uri": {
-              "_type": "page",
-              "key": "transactions"
-            },
-            "bank_accounts_uri": {
-              "_type": "page",
-              "key": "bank_accounts"
-            },
-            "refunds_uri": {
-              "_type": "page",
-              "key": "refunds"
-            },
-            "debits_uri": {
-              "_type": "page",
-              "key": "debits"
-            },
-            "holds_uri": {
-              "_type": "page",
-              "key": "holds"
-            },
-            "reversals_uri": {
-              "_type": "page",
-              "key": "reversals"
-            },
-            "credits_uri": {
-              "_type": "page",
-              "key": "credits"
-            },
-            "cards_uri": {
-              "_type": "page",
-              "key": "cards"
-            }
-          },
-          "debits_uri": "/v1/customers/CU5MR2bfwmGoCKpd7XQ4BT2l/debits",
-          "transactions_uri": "/v1/customers/CU5MR2bfwmGoCKpd7XQ4BT2l/transactions",
-          "ssn_last4": null,
-          "email": null,
-          "ein": null
-        }
-    http_version: 
-  recorded_at: Thu, 15 May 2014 18:21:36 GMT
-recorded_with: VCR 2.9.0
+  recorded_at: Mon, 02 Jun 2014 15:18:09 GMT
+recorded_with: VCR 2.9.2
