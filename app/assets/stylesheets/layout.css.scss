@@ -266,10 +266,14 @@ body {
   }
   .action-helper {
     text-align: center;
-    line-height: 40px;
-    margin-top: -30px;
-    input {
-      width: 100%;      
+    line-height: 20px;
+    margin-top: 20px;
+    input, .btn--add, .btn--save {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      width: 100%;
+      margin-top: 20px;   
     }
   }
   
