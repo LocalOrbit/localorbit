@@ -53,4 +53,11 @@ describe RecordVendorPayment do
     payment = Payment.first
     expect(payment.status).to eq("paid")
   end
+
+  it "records the payment type as seller payment" do
+    RecordVendorPayment.perform(seller: seller2, payment_params: {payment_method: 'cash', order_ids: [order2.id, order3.id]})
+
+    payment = Payment.first
+    expect(payment.payment_type).to eq("seller payment")
+  end
 end
