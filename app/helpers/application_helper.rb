@@ -9,7 +9,7 @@ module ApplicationHelper
     if organizations.count == 1
       admin_organization_path(organizations.first)
     else
-      admin_organizations_path
+      organizations_path
     end
   end
 
