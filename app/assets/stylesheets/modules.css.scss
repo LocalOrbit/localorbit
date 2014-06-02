@@ -98,7 +98,11 @@
     margin: .25em 0;
     opacity: 0.5;
   }
-
+@media screen and (max-width: 800px) {
+  .carreted:after {
+    margin-left: .4em;
+  }
+}
 .cancel {
   color: #43639f;
 }
@@ -524,6 +528,26 @@
     text-decoration: none;
   }
 }
+@media screen and (max-width: 768px) {
+  .nav--main {
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .nav--main {
+    font-size: 22px;
+    padding: 4px 8px;
+  }
+}
+@media screen and (max-width: 599px) {
+  .nav--main {
+    font-size: 18px;
+    padding: 4px 4px;
+    margin: 5px 0 20px 0;
+    float: none;
+    text-align: center;
+  }  
+}
 
 .nav--admin,
 .nav--app {
@@ -581,17 +605,27 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .nav--admin {
+  .nav--admin > li {
+    a {
+      font-size: 12px;
+    }
     .dropdown > li {
       font-size: 15px;
       line-height: 1.6;
     }
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 889px) {
   .nav--admin {
+    padding: 0 10px;
+    a, .current {
+      padding: 1em .5em .93em;
+    }
     .font-icon {
       display: none;
+    }
+    > li {
+      font-size: 12px;
     }
   }
 }
@@ -634,7 +668,7 @@
 
 @media screen and (max-width: 800px) {
   .controller-products {
-    .overlay {
+    .overlay.is-editable {
       background: rgba(0,0,0,0.4);
     }
   }
@@ -643,11 +677,18 @@
 .orientation-warning {
   display: none;
 }
-@media screen and (max-device-width: 767px) and (orientation: portrait) {
+@media screen and (max-device-width: 768px) and (orientation: portrait) {
   .overlay {
     z-index: 50;
+    background: rgba(0,0,0,0.85);    
+  }
+  .overlay.is-open.is-editable {
     display: block;
-    background: rgba(200,200,200,0.95);
+  }
+}
+@media screen and (max-device-width: 767px) and (orientation: portrait) {
+  .overlay {
+    display: block;
   }
   .orientation-warning {
     position: fixed;
@@ -666,14 +707,15 @@
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    background: asset_url('rotate.svg') center 10px / 180px auto no-repeat #fff;
+    background: asset_url('rotate.svg') center 10px no-repeat #fff;
+    background-size: 180px auto;
     font-size: 16px;
     text-align: center;
   }
   .controller-products,
   .controller-lots,
   .controller-prices {
-    .overlay,
+    .overlay:not(.is-open),
     .orientation-warning {
       display: none;
     }
@@ -1100,9 +1142,14 @@
   }
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 599px) {
   .logo-link {
-    display: none;
+    float: none;
+    max-width: 100%;
+    text-align: center;
+    > .logo {
+     max-width: 300px;
+    }
   }
 }
 .signed-out .logo-link {
