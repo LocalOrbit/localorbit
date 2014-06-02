@@ -1,6 +1,4 @@
 class Admin::OrdersController < AdminController
-  before_action :require_admin_or_market_manager, only: :update
-
   def index
     @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user)
 
