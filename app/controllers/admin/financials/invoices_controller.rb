@@ -4,9 +4,9 @@ module Admin::Financials
       @search_presenter = InvoiceSearchPresenter.new(request.query_parameters)
 
       @q = if current_user.buyer_only?
-        Order.orders_for_buyer(current_user).invoiced
+        Order.orders_for_buyer(current_user).invoiced.periscope(request.query_parameters)
       else
-        Order.orders_for_seller(current_user).uninvoiced
+        Order.orders_for_seller(current_user).uninvoiced.periscope(request.query_parameters)
       end.search(request.query_parameters[:q])
 
       @q.sorts = ['invoice_due_at desc', 'order_number asc'] if @q.sorts.empty?

@@ -95,7 +95,7 @@ describe "Buyer invoices" do
       end
 
       it "by order number" do
-        fill_in "q_order_number_cont", with: invoiced_order.order_number
+        fill_in "q_order_number_or_payment_note_cont", with: invoiced_order.order_number
         click_button "Filter"
 
         expect(page).to have_content(invoiced_order.order_number)
@@ -104,14 +104,14 @@ describe "Buyer invoices" do
       end
 
       it "by purchase order" do
-        fill_in "q_payment_note_cont", with: "123456"
+        fill_in "q_order_number_or_payment_note_cont", with: "123456"
         click_button "Filter"
 
         expect(page).to have_content(invoiced_order.order_number)
         expect(page).not_to have_content(invoiced_order2.order_number)
         expect(page).not_to have_content(invoiced_order3.order_number)
 
-        fill_in "q_payment_note_cont", with: "77839"
+        fill_in "q_order_number_or_payment_note_cont", with: "77839"
         click_button "Filter"
 
         expect(page).not_to have_content(invoiced_order.order_number)

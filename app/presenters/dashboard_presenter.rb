@@ -1,7 +1,8 @@
 class DashboardPresenter
-  def initialize(user, market)
+  def initialize(user, market, request_params={})
     @user   = user
     @market = market
+    @request_params = request_params
   end
 
   def template
@@ -17,15 +18,15 @@ class DashboardPresenter
   end
 
   def buyer_orders
-    @buyer_orders ||= Order.orders_for_buyer(@user).order("placed_at DESC").limit(25)
+    @buyer_orders ||= Order.orders_for_buyer(@user).periscope(@request_params).order("placed_at DESC").limit(25)
   end
 
   def pending_orders
     # TODO: Should scope by pending seller payment once payments are implemented
-    @pending_orders ||= Order.orders_for_seller(@user).order("placed_at DESC").limit(15)
+    @pending_orders ||= Order.orders_for_seller(@user).periscope(@request_params).order("placed_at DESC").limit(15)
   end
 
   def upcoming_deliveries
-    @upcoming_deliveries ||= @market.upcoming_deliveries_for_user(@user).decorate
+    @upcoming_deliveries ||= @market.upcoming_deliveries_for_user(@user).periscope(@request_params).decorate
   end
 end
