@@ -9,6 +9,32 @@ describe OrderItem do
 
   let(:order) { build(:order, market: create(:market)) }
 
+  context "changing quantity delivered" do
+    subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 8, delivery_status: 'pending') }
+
+    it "sets the delivery status to 'delivered' when a positive quantity delivered" do
+      subject.quantity_delivered = 9
+      subject.save!
+
+      expect(subject.reload.delivery_status).to eql('delivered')
+    end
+
+    it "sets the delivery status to 'canceled' when a quantity delivered of 0" do
+      subject.quantity_delivered = 0
+      subject.save!
+
+      expect(subject.reload.delivery_status).to eql('canceled')
+    end
+
+    it "does not override 'contested'" do
+      subject.delivery_status = "contested"
+      subject.quantity_delivered = 9
+      subject.save!
+
+      expect(subject.reload.delivery_status).to eql('contested')
+    end
+  end
+
   context "changing deliver status" do
     subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 8) }
 
