@@ -15,6 +15,8 @@ module DeliveryStatus
       "contested"
     elsif statuses_within(statuses, %w(delivered pending))
       "partially delivered"
+    else
+      "canceled"
     end
   end
 

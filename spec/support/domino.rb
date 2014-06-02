@@ -819,6 +819,10 @@ module Dom
       def set_quantity_delivered(qty)
         node.find(".quantity > input").set(qty)
       end
+
+      def click_delete
+        node.find(".action-link > a").trigger('click')
+      end
     end
   end
 

@@ -27,7 +27,7 @@ class Admin::OrdersController < AdminController
   protected
   def order_params
     params.require(:order).permit(:notes, items_attributes: [
-      :id, :quantity_delivered, :delivery_status
+      :id, :quantity_delivered, :delivery_status, :_destroy
       ])
   end
 

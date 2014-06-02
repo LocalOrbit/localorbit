@@ -75,7 +75,7 @@ class Order < ActiveRecord::Base
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :payment_status
 
-  accepts_nested_attributes_for :items
+  accepts_nested_attributes_for :items, allow_destroy: true
 
   def self.for_sort(order)
     column, direction = column_and_direction(order)
