@@ -19,8 +19,9 @@ class OrderItem < ActiveRecord::Base
   validate :product_availability, on: :create
 
   before_create :consume_inventory
-  before_save :update_delivered_at
   before_save :update_quantity_delivered
+  before_save :update_delivery_status
+  before_save :update_delivered_at
 
   def self.for_delivery(delivery)
     joins(order: :delivery).where(orders: {delivery_id: delivery.id})
@@ -109,6 +110,12 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_quantity_delivered
+    if quantity_delivered_changed? && quantity_delivered.present?
+      self.delivery_status = quantity_delivered > 0 ? "delivered" : "canceled"
+    end
+  end
+
+  def update_delivery_status
     if delivery_status_changed?
       if delivery_status == "delivered"
         self.quantity_delivered ||= quantity

@@ -58,6 +58,20 @@ describe 'Editing an order' do
         sign_in_as(user)
       end
 
+      it "should not change delivery status on an item without a delivery quantity set" do
+        visit admin_order_path(order)
+
+        item = Dom::Order::ItemRow.first
+        expect(item.total).to have_content("$15.00")
+        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
+
+        click_button "Update quantities"
+
+        item = Dom::Order::ItemRow.first
+        expect(item.total).to have_content("$15.00")
+        expect(item.delivery_status).to eql("Pending")
+      end
+
       context "less then ordered" do
         before do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
@@ -101,6 +115,12 @@ describe 'Editing an order' do
           }.to_not change {
             product.lots.first.reload.quantity
           }.from(145)
+        end
+
+        it "sets the delivery status to 'delivered'" do
+          subject
+
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
         end
       end
 
@@ -149,6 +169,12 @@ describe 'Editing an order' do
             product.lots.first.reload.quantity
           }.from(145)
         end
+
+        it "sets the delivery status to 'delivered'" do
+          subject
+
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
+        end
       end
 
       context "invalid input" do
@@ -165,6 +191,7 @@ describe 'Editing an order' do
           click_button "Update quantities"
 
           expect(page).to have_content("must be greater than or equal to 0")
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         end
 
         it "shows an error for non-numerical values" do
@@ -173,6 +200,7 @@ describe 'Editing an order' do
           click_button "Update quantities"
 
           expect(page).to have_content("is not a number")
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         end
 
         it "shows an error for insanely large numbers" do
@@ -181,6 +209,7 @@ describe 'Editing an order' do
           click_button "Update quantities"
 
           expect(page).to have_content("must be less than 2147483647")
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         end
       end
     end
@@ -193,6 +222,20 @@ describe 'Editing an order' do
         sign_in_as(user)
       end
 
+      it "should not change delivery status on an item without a delivery quantity set" do
+        visit admin_order_path(order)
+
+        item = Dom::Order::ItemRow.first
+        expect(item.total).to have_content("$15.00")
+        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
+
+        click_button "Update quantities"
+
+        item = Dom::Order::ItemRow.first
+        expect(item.total).to have_content("$15.00")
+        expect(item.delivery_status).to eql("Pending")
+      end
+
       context "less then ordered" do
         before do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
@@ -236,6 +279,12 @@ describe 'Editing an order' do
           }.to_not change {
             product.lots.first.reload.quantity
           }.from(145)
+        end
+
+        it "sets the delivery status to 'delivered'" do
+          subject
+
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
         end
       end
 
@@ -284,6 +333,12 @@ describe 'Editing an order' do
             product.lots.first.reload.quantity
           }.from(145)
         end
+
+        it "sets the delivery status to 'delivered'" do
+          subject
+
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
+        end
       end
 
       context "invalid input" do
@@ -301,6 +356,7 @@ describe 'Editing an order' do
 
           expect(page).to have_content("must be greater than or equal to 0")
           expect(page).to_not have_content("failed to update your payment")
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         end
 
         it "shows an error for non-numerical values" do
@@ -310,6 +366,7 @@ describe 'Editing an order' do
 
           expect(page).to have_content("is not a number")
           expect(page).to_not have_content("failed to update your payment")
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         end
 
         it "shows an error for insanely large numbers" do
@@ -319,6 +376,7 @@ describe 'Editing an order' do
 
           expect(page).to have_content("must be less than 2147483647")
           expect(page).to_not have_content("failed to update your payment")
+          expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
         end
       end
 
