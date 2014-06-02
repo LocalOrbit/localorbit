@@ -2,6 +2,11 @@ module Admin
   class OrderItemsController < AdminController
     def index
       @order_items = OrderItem.for_user(current_user).joins(:order).order("orders.placed_at DESC, name").page(params[:page]).per(params[:per_page])
+
+      respond_to do |format|
+        format.html
+        format.csv { @filename = "orders.csv"}
+      end
     end
 
     def set_status

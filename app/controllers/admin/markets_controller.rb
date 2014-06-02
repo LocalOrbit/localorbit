@@ -5,6 +5,11 @@ class Admin::MarketsController < AdminController
 
   def index
     @markets = market_scope.periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
+
+    respond_to do |format|
+      format.html
+      format.csv { @filename = "markets.csv"}
+    end
   end
 
   def show

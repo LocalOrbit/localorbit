@@ -1,0 +1,15 @@
+csv << ["Order #", "Seller", "Buyer", "Product", "Qty", "Total", "Delivery", "Buyer $", "Seller $"]
+
+@order_items.decorate.each do |order_item|
+  csv << [
+    order_item.order.order_number,
+    order_item.seller_name,
+    order_item.order.organization.name,
+    order_item.name,
+    order_item.quantity,
+    number_to_currency(order_item.gross_total),
+    order_item.delivery_status.titleize,
+    order_item.order.payment_status.titleize,
+    "Unpaid (WIP)"
+  ]
+end

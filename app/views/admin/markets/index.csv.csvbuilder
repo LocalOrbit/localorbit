@@ -1,0 +1,10 @@
+csv << ["Name", "Subdomain", "Contact Name", "Contact Phone"]
+
+@markets.each do |market|
+  csv << [
+    market.name,
+    market.subdomain,
+    market.contact_name,
+    market.contact_phone
+  ]
+end

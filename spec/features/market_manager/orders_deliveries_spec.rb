@@ -53,6 +53,14 @@ context "Viewing sold items" do
       expect(sold_item.seller_payment_status).to eq("Unpaid (WIP)")
     end
 
+    it "lists all sold items for the market as a CSV" do
+      html_headers = page.all('th').map(&:text)[1..-1] # remove checkbox column
+      click_link "Export CSV"
+      csv_headers = CSV.parse(page.body).first
+      expect(html_headers).to eq(csv_headers)
+      expect(page).to have_content("LO-ADA-0000001")
+    end
+
     it "sets item delivery status" do
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
