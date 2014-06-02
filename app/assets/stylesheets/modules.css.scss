@@ -612,6 +612,7 @@
 
 .overlay {
   position: fixed;
+  z-index: 50;
   top: 0;
   left: 0;
   width: 100%;
@@ -626,9 +627,6 @@
   }
   &.is-open {
     display: block;
-  }
-  &.is-modal {
-    z-index: 50;
   }
 }
 
@@ -673,7 +671,7 @@
   .controller-products,
   .controller-lots,
   .controller-prices {
-    .overlay,
+    .overlay:not(.is-open),
     .orientation-warning {
       display: none;
     }
