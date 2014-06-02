@@ -246,6 +246,7 @@ body {
 
 @media screen and (max-width: 599px) {
   .hidden-mobile {
+    max-width: 0;
     display: none;
   }
   .nav--admin {
