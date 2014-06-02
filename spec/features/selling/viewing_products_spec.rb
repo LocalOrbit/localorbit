@@ -152,8 +152,7 @@ describe "Viewing products" do
       sign_in_as(user)
       visit admin_products_path
 
-      product = Dom::ProductRow.first
-      expect(product.name).to eq("Grapes")
+      product = Dom::ProductRow.find_by_name("Grapes")
 
       product.click_stock
 
