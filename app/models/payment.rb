@@ -2,6 +2,8 @@ class Payment < ActiveRecord::Base
   PAYMENT_TYPES = {
     "delivery fee" => "Delivery Fee",
     "order" => "Order",
+    "order refund" => "Order Refund",
+    "seller payment" => "Seller Payment",
     "service" => "Service Fee"
   }.freeze
 
