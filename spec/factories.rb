@@ -312,7 +312,7 @@ FactoryGirl.define do
       account_type     "visa"
       sequence(:last_four) {|n| "#{'%04d' % n}"}
       expiration_month 5
-      expiration_year  2014
+      expiration_year  2020
     end
 
     trait :checking do

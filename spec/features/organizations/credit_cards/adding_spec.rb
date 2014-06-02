@@ -25,7 +25,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
       fill_in "Card Number", with: "5105105105105100"
       fill_in "Security Code", with: "123"
       select "5", from: "expiration_month"
-      select "2014", from: "expiration_year"
+      select "2020", from: "expiration_year"
       fill_in "Notes", with: "primary"
 
       expect(page).not_to have_content("EIN")
@@ -40,7 +40,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
       expect(bank_account.name).to eq("John Doe")
       expect(bank_account.account_number).to eq("**** **** **** 5100")
       expect(bank_account.account_type).to eq("Credit Card")
-      expect(bank_account.expiration).to eq("Expires 05/2014")
+      expect(bank_account.expiration).to eq("Expires 05/2020")
       expect(bank_account.notes).to eq("primary")
     end
 
@@ -54,7 +54,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
       fill_in "Card Number", with: "5105105105105"
       fill_in "Security Code", with: "123"
       select "5", from: "expiration_month"
-      select "2014", from: "expiration_year"
+      select "2020", from: "expiration_year"
 
       click_button "Save"
       expect(page).not_to have_content("Successfully added a payment method")
@@ -69,7 +69,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
       fill_in "Card Number", with: "5105105105105100"
       fill_in "Security Code", with: "123"
       select "12", from: "expiration_month"
-      select "2018", from: "expiration_year"
+      select "2020", from: "expiration_year"
 
       click_button "Save"
 
@@ -92,7 +92,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
       fill_in "Card Number", with: "5105105105105100"
       fill_in "Security Code", with: "123"
       select "5", from: "expiration_month"
-      select "2014", from: "expiration_year"
+      select "2020", from: "expiration_year"
       fill_in "Notes", with: "primary"
 
       expect(page).not_to have_content("EIN")
@@ -107,7 +107,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
       expect(bank_account.name).to eq("John Doe")
       expect(bank_account.account_number).to eq("**** **** **** 5100")
       expect(bank_account.account_type).to eq("Credit Card")
-      expect(bank_account.expiration).to eq("Expires 05/2014")
+      expect(bank_account.expiration).to eq("Expires 05/2020")
       expect(bank_account.notes).to eq("primary")
     end
   end
