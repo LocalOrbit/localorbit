@@ -22,6 +22,45 @@
   max-width: 100%;
   overflow: auto;
 }
+  @media screen and (max-width: 599px) {
+    .table-wrapper {
+      .fade-right,
+      .fade-left {
+        position: absolute;
+        top: 0;
+        z-index: 2;
+        width: 20px;
+        height: 100%;
+        content: '';
+      }
+      .fade-left {
+        left: 0;
+        background:   -moz-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,0));
+        background:-webkit-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,0));
+        background:     -o-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,0));
+        background:    -ms-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,0));
+        background:        linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,0));
+      }
+      .fade-right {
+        right: 0;
+        background:   -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5));
+        background:-webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5));
+        background:     -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5));
+        background:    -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5));
+        background:        linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5));
+      }
+      &.hard-left {
+        .fade-left {
+          display: none;
+        }
+      }
+      &.hard-right {
+        .fade-right {
+          display: none;
+        }
+      }
+    }
+  }
 table {
   min-width: 100%;
   border-collapse: collapse;
