@@ -123,6 +123,21 @@ describe "Managing Markets" do
       expect(page).to have_text(@market2.name)
     end
 
+    it 'can see a list of markets as a CSV' do
+      @market2 = create(:market)
+      visit "/admin/markets"
+      html_headers = page.all('th').map(&:text)
+
+      click_link "Export CSV"
+
+      csv_headers = CSV.parse(page.body).first
+
+      expect(html_headers).to eq(csv_headers)
+
+      expect(page).to have_text(market.name)
+      expect(page).to have_text(@market2.name)
+    end
+
     context "sorting", :js do
       let!(:market_b) { create(:market, name: "B Market", subdomain: "not-a", contact_name: "C Name") }
       let!(:market_c) { create(:market, name: "C Market", subdomain: "not-b", contact_name: "A Name") }

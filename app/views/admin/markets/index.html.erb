@@ -3,7 +3,7 @@
     <div class="l-page-header">
       <h1><i class="font-icon" data-icon="&#xe000;"></i>&nbsp; Markets</h1>
       <div class="header-actions">
-        <%= link_to "#{svg_icon} Export CSV".html_safe, coming_soon_dashboard_path, class: "export todo" %>
+        <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv, page: 1, per_page: 0), class: "export" %>
         <%= link_to 'Add Market', new_admin_market_url, class: "btn btn--add btn--small" if current_user.admin? %>
       </div>
     </div>
