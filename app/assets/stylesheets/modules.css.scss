@@ -665,7 +665,7 @@
 
 @media screen and (max-width: 800px) {
   .controller-products {
-    .overlay {
+    .overlay.is-editable {
       background: rgba(0,0,0,0.4);
     }
   }
