@@ -4,7 +4,7 @@
         <div class="l-page-header">
           <h1><i class="font-icon" data-icon="&#xe02d;"></i>&nbsp; Sold Items</h1>
           <div class="header-actions">
-            <%= link_to "#{svg_icon} Export CSV".html_safe, coming_soon_dashboard_path, class: "export todo pull-right" %>
+            <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv, page: 1, per_page: 0), class: "export todo pull-right" %>
           </div>
           <div class="action-header">
             <div class="actions">
