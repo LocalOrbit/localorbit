@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://betterest.lvh.me/admin/invoices/23/invoice.pdf?auth_token=BAh7CToGYWkNOgdpZGkaOgxleHBpcmVzbCsH9P90UzoGYmlC--72c77759b731b995f862f5514f223c6eb7d10b2a
+    uri: http://betterest.lvh.me/admin/invoices/7/invoice.pdf?auth_token=BAh7CToGYWkGOgdpZGkTOgxleHBpcmVzbCsHm6OMUzoGYmlP--7cf8b96e2da0cc9e775ffc57e45ee9a74dfdf45b
     body:
       encoding: US-ASCII
       string: ''
@@ -15,136 +15,159 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 301
-      message: Moved Permanently
+      code: 500
+      message: Internal Server Error
     headers:
-      Location:
-      - http://app.lvh.me/admin/invoices/23/invoice
       Content-Type:
-      - application/pdf
-      Cache-Control:
-      - no-cache
+      - text/html; charset=utf-8
       X-Request-Id:
-      - fc873116-3d83-4cb0-a0f0-349fa57b662b
+      - db9b5593-b390-40c4-908b-bfefecd264a1
       X-Runtime:
-      - '0.829564'
+      - '0.084914'
       Vary:
       - Accept-Encoding
       Date:
-      - Thu, 15 May 2014 16:57:09 GMT
+      - Mon, 02 Jun 2014 15:17:36 GMT
       Connection:
       - close
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        JVBERi0xLjQKMSAwIG9iago8PAovVGl0bGUgKP7/KQovUHJvZHVjZXIgKHdr
-        aHRtbHRvcGRmKQovQ3JlYXRpb25EYXRlIChEOjIwMTQwNTE1MTY1NzA5KQo+
-        PgplbmRvYmoKNCAwIG9iago8PAovVHlwZSAvRXh0R1N0YXRlCi9TQSB0cnVl
-        Ci9TTSAwLjAyCi9jYSAxLjAKL0NBIDEuMAovQUlTIGZhbHNlCi9TTWFzayAv
-        Tm9uZT4+CmVuZG9iago1IDAgb2JqClsvUGF0dGVybiAvRGV2aWNlUkdCXQpl
-        bmRvYmoKOCAwIG9iago8PAovVHlwZSAvQW5ub3QKL1N1YnR5cGUgL0xpbmsK
-        L1JlY3QgWzEzNC42Mzk5OTkgIDcxOC43OTk5OTkgIDE4OC4zOTk5OTkgIDcz
-        Mi4yNDAwMDAgXQovQm9yZGVyIFswIDAgMF0KL0EgPDwKL1R5cGUgL0FjdGlv
-        bgovUyAvVVJJCi9VUkkgKGh0dHA6Ly9hcHAubHZoLm1lL2FkbWluL2ludm9p
-        Y2VzLzIzL2ludm9pY2UpCj4+Cj4+CmVuZG9iago5IDAgb2JqCjw8Ci9UeXBl
-        IC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKNiAwIG9iago8PAov
-        VHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9Db250ZW50cyAxMCAwIFIKL1Jl
-        c291cmNlcyAxMiAwIFIKL0Fubm90cyAxMyAwIFIKL01lZGlhQm94IFswIDAg
-        NjEyIDc5Ml0KPj4KZW5kb2JqCjEyIDAgb2JqCjw8Ci9Db2xvclNwYWNlIDw8
-        Ci9QQ1NwIDUgMCBSCi9DU3AgL0RldmljZVJHQgovQ1NwZyAvRGV2aWNlR3Jh
-        eQo+PgovRXh0R1N0YXRlIDw8Ci9HU2EgNCAwIFIKPj4KL1BhdHRlcm4gPDwK
-        Pj4KL0ZvbnQgPDwKL0Y3IDcgMCBSCj4+Ci9YT2JqZWN0IDw8Cj4+Cj4+CmVu
-        ZG9iagoxMyAwIG9iagpbIDggMCBSIF0KZW5kb2JqCjEwIDAgb2JqCjw8Ci9M
-        ZW5ndGggMTEgMCBSCi9GaWx0ZXIgL0ZsYXRlRGVjb2RlCj4+CnN0cmVhbQp4
-        nL1UTWvDMAy961foXKgT23FswxisWTvYYVAS2KHsMNp1o7RlWQ/7+5OdlHhO
-        mxYGc0gcPX1YeoqSPJSv+H7ApCg/cdnuRQkpS/O0WeiucQioDLU0uNxBjTXM
-        YU5Pt9dwDNM4HZZ7SJoDWiuH7sBIa5mlxUnchmKWaZYZo7QlPI1FZ/wBzyPc
-        Dx511HB/hZoauGDaKGkoonOLRKrIbbnSKBV+vcHa5X2N2/lsGqQsnujtGwU+
-        0r3BxQuBq8EyJhUkM408x2qNvOlCs1VEIY6FwGqFN9QQfovVBjRTkgvVdKzV
-        CK+xHSA9YDog80DWASp2yT2gOkDHFr0YJrboudjY5S5ObHL6lGlFDflFGrOy
-        XX3eA911HTgTbLAXPM3Dblzmq7jIxuUY9zFf0zjGmWM9gafI4X1yXGVCMtXO
-        PZWqdQhsYTL690/f5RDQPeuqOv6JyM9Paf7H6XSTP2yAc/gBbssk1WVuZHN0
-        cmVhbQplbmRvYmoKMTEgMCBvYmoKMzU2CmVuZG9iagoxNCAwIG9iago8PCAv
-        VHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9RT0FBQUErQXJpYWxN
-        VAovRmxhZ3MgNCAKL0ZvbnRCQm94IFstNjY0LjU1MDc4MSAtMzI0LjcwNzAz
-        MSAyMDAwIDEwMDUuODU5MzcgXQovSXRhbGljQW5nbGUgMCAKL0FzY2VudCA5
-        MDUuMjczNDM3IAovRGVzY2VudCAtMjExLjkxNDA2MiAKL0NhcEhlaWdodCA5
-        MDUuMjczNDM3IAovU3RlbVYgNzMuMjQyMTg3NSAKL0ZvbnRGaWxlMiAxNSAw
-        IFIKPj4gZW5kb2JqCjE1IDAgb2JqCjw8Ci9MZW5ndGgxIDE5NDggCi9MZW5n
-        dGggMTggMCBSCi9GaWx0ZXIgL0ZsYXRlRGVjb2RlCj4+CnN0cmVhbQp4nGVV
-        e0yTVxQ/5+trAiJfoC0qCm1pCzoR6eMDQQSEAjIESilUp1AebUFQx9uImw5L
-        C0N8TGPcnPNBZrKYgbOZm5vRbMZlcWwz27LoojFmUffM9oeJUQo730c3Fndv
-        bu45p/e7v3N+95xTQACQQQ4wkOpu3e5qT/bvJEsfgORLT5OzsdFRLAWQFpHN
-        7CFDxBeRtaTvIj3R09bZmx0mTSV9lPSc1q0Nzoj3w+eR/hPp6jZn7zaIhkIC
-        eI70hC3OtibJ6tjHpCeR3g4MDy6hCSLyAVQqViVhVawEJkEMkwmiKxJIeJoj
-        vgKAQF5ILJKLEEHnNCwaUKE0c7QxwU+D139DVZkltxbj7gUvMG2i0ilL386O
-        Azg2eZ7iyp9+KNaLs4EFFUB0FGc2KJQKeYxMKpNq1HpddIxSYUjjzJxOr9OT
-        LX/Uf+3W8Gursrt6hu76hz5y1Pi962sQa9Z7/TUOJhp1+7pxZH/wq86enNx9
-        Ixg50ehyuW5cdTciNjaRp/3TD0V3xTpYxHtqEjD4aWINLEGFwMwcaxDdPbnz
-        u9rySl3yvPBAeFQ6V1FRaImPw8CxQKIm3VRu7GQOBs/vXVGYlLwkqdgyyGRQ
-        NMUUTRxFkwYFANpQDJxRuFKYJqNepyG7TC+ofLD8lMt5cI1OZOJ/o6mUkisK
-        /ogoq2nDxpbxjbWYqM7MKDK23vSgocC/KzM7blyZznncQz67LVnPzokI03yy
-        SFF/dWvK8tgFiOnmZre1QhfXb1dr7LaBdbk5en3M3Mj52sTwtpRVuDRlW+y2
-        wgKdFuMTUtOKl/f8+TQvP4vDY3nJC9louTYppSg1FZc/X76Kf18vAHON4ooW
-        3tcg511PU8pmQpHKMSNwapXZuHp9bXZeXlZKavRise7kNm3iyjN6VCeurmun
-        z6GEuFlMdyyERLpSGSKHjRKuUrAxMpViJmZUhR5btOnisu7eD3/2Dw4N3v7e
-        58PJB2EOx0B9oSV4k7HO5ar9O212rI4ddazfP4JiDD986MDBqSds/PiLG9Fk
-        xMPefDeitZJHH5h+II6nDI3h0bVyCoI1c2kz7CujyBepiCjneMr5J1LLpLjs
-        TKD9nNNRncGp4tHnu3SpFU22g132KrTaOnqq7F6v5GLw0Qjqky3FjU0dU38c
-        OoyM8XLVMKLHdf2bhgaXh0f2U7RZhCxUEWpMBpbAMStAQ/zr108slIzEsI/K
-        7L7ATohhQ8g5OR03Ckmq5pnODJzqul1XUUYvHhaQK4zmok6rTaw7MqZO5DJe
-        MPQFO5iBtnQzeVy89jqh505ViH6he7VgAlDOZrhJqif2TbpQFpJX0mdrzqSb
-        IcI1FmZY09lXsGb+3J6xH3t7MZ1rdo98vOMdXGFo23Licmf3G5XWl/tsNqyq
-        2d5rs9UsqNCmpa3YwI0P4/G37hx59ZVCCx7ZNdny2O3JyrLbREtv1NXVbZr4
-        rKHBWc8zVDD9QHSHGFKALlSVUqEmhboReCDCYmaS458CEt0503R1V/PmlZkm
-        4+bm/rqSkuWBYIK9qru70mqz7dheVjFwHAstL/eNHu/fXVCQtCSHiZysmWhs
-        wvq6azfdLiRohDJC/p3Y0YQykuckehZWFmKAr0Yuja/Fc4u7e9+7tWcAMzK6
-        OobObm1LGFuQnesYpDzESuueForUG3vB7UHqPWFnd+/Ozal2nFjYwpmd9d/+
-        UFePuTmEqpn+i1kiOcq/tVYp1QvBciyfGdR3KDWFRsQpmKgFpZn1ZrNCiV4v
-        ZcucMLlCv/jk2yxiQrxhxWmmYRhlrVN7h4OvlyqUEZGIdPdFisQHE5RtPJMG
-        9E1MTPD5Jaz62NY3a+dlPQLgW/6zY6pC6OFCNw8N+kaWPbUO1kQJqsQi3PTf
-        ESUlk8QOUnEH5NPqpz4ItK9l3gUv7SW0BvBz8NPuo5VHq0AMUE7nNLTIX5BT
-        v2yBo3AUJahHF57GD/AeY2ReYs4yt5j7M35AFFgoV0Je/W9III9iRvGckD4j
-        I4T9KzMQSdqMLCYpNiRLya6GXPrHawYntIIVmsANXSQ5yTZrn5VKwQbwN8dg
-        t4VlbmRzdHJlYW0KZW5kb2JqCjE4IDAgb2JqCjE1MzYKZW5kb2JqCjE2IDAg
-        b2JqCjw8IC9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9DSURGb250VHlwZTIKL0Jh
-        c2VGb250IC9BcmlhbE1UCi9DSURTeXN0ZW1JbmZvIDw8IC9SZWdpc3RyeSAo
-        QWRvYmUpIC9PcmRlcmluZyAoSWRlbnRpdHkpIC9TdXBwbGVtZW50IDAgPj4K
-        L0ZvbnREZXNjcmlwdG9yIDE0IDAgUgovQ0lEVG9HSURNYXAgL0lkZW50aXR5
-        Ci9XIFswIFs3NDQgNjYyIDU1MiA1NTIgMjc2IDU1MiAzMzAgNTUyIDU1MiAy
-        MjAgNTUyIDU1MiA1NTIgNDk2IDI3NiAyNzYgXQpdCj4+CmVuZG9iagoxNyAw
-        IG9iago8PCAvTGVuZ3RoIDQ2OSA+PgpzdHJlYW0KL0NJREluaXQgL1Byb2NT
-        ZXQgZmluZHJlc291cmNlIGJlZ2luCjEyIGRpY3QgYmVnaW4KYmVnaW5jbWFw
-        Ci9DSURTeXN0ZW1JbmZvIDw8IC9SZWdpc3RyeSAoQWRvYmUpIC9PcmRlcmlu
-        ZyAoVUNTKSAvU3VwcGxlbWVudCAwID4+IGRlZgovQ01hcE5hbWUgL0Fkb2Jl
-        LUlkZW50aXR5LVVDUyBkZWYKL0NNYXBUeXBlIDIgZGVmCjEgYmVnaW5jb2Rl
-        c3BhY2VyYW5nZQo8MDAwMD4gPEZGRkY+CmVuZGNvZGVzcGFjZXJhbmdlCjIg
-        YmVnaW5iZnJhbmdlCjwwMDAwPiA8MDAwMD4gPDAwMDA+CjwwMDAxPiA8MDAw
-        Rj4gWzwwMDU5PiA8MDA2Rj4gPDAwNzU+IDwwMDIwPiA8MDA2MT4gPDAwNzI+
-        IDwwMDY1PiA8MDA2Mj4gPDAwNjk+IDwwMDZFPiA8MDA2Nz4gPDAwNjQ+IDww
-        MDYzPiA8MDA3ND4gPDAwMkU+IF0KZW5kYmZyYW5nZQplbmRjbWFwCkNNYXBO
-        YW1lIGN1cnJlbnRkaWN0IC9DTWFwIGRlZmluZXJlc291cmNlIHBvcAplbmQK
-        ZW5kCmVuZHN0cmVhbQplbmRvYmoKNyAwIG9iago8PCAvVHlwZSAvRm9udAov
-        U3VidHlwZSAvVHlwZTAKL0Jhc2VGb250IC9BcmlhbE1UCi9FbmNvZGluZyAv
-        SWRlbnRpdHktSAovRGVzY2VuZGFudEZvbnRzIFsxNiAwIFJdCi9Ub1VuaWNv
-        ZGUgMTcgMCBSPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9L
-        aWRzIApbCjYgMCBSCl0KL0NvdW50IDEKL1Byb2NTZXQgWy9QREYgL1RleHQg
-        L0ltYWdlQiAvSW1hZ2VDXQo+PgplbmRvYmoKeHJlZgowIDE5CjAwMDAwMDAw
-        MDAgNjU1MzUgZiAKMDAwMDAwMDAwOSAwMDAwMCBuIAowMDAwMDA0MDY5IDAw
-        MDAwIG4gCjAwMDAwMDAwMDAgMDAwMDAgbiAKMDAwMDAwMDA5OSAwMDAwMCBu
-        IAowMDAwMDAwMTk0IDAwMDAwIG4gCjAwMDAwMDA0ODMgMDAwMDAgbiAKMDAw
-        MDAwMzkzNiAwMDAwMCBuIAowMDAwMDAwMjMxIDAwMDAwIG4gCjAwMDAwMDA0
-        MzQgMDAwMDAgbiAKMDAwMDAwMDc5NiAwMDAwMCBuIAowMDAwMDAxMjI3IDAw
-        MDAwIG4gCjAwMDAwMDA2MDQgMDAwMDAgbiAKMDAwMDAwMDc3MCAwMDAwMCBu
-        IAowMDAwMDAxMjQ3IDAwMDAwIG4gCjAwMDAwMDE0OTggMDAwMDAgbiAKMDAw
-        MDAwMzE0NSAwMDAwMCBuIAowMDAwMDAzNDE2IDAwMDAwIG4gCjAwMDAwMDMx
-        MjQgMDAwMDAgbiAKdHJhaWxlcgo8PAovU2l6ZSAxOQovSW5mbyAxIDAgUgov
-        Um9vdCA5IDAgUgo+PgpzdGFydHhyZWYKNDE2NwolJUVPRgo=
+      encoding: UTF-8
+      string: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\"
+        />\n  <title>Action Controller: Exception caught</title>\n  <style>\n    body
+        {\n      background-color: #FAFAFA;\n      color: #333;\n      margin: 0px;\n
+        \   }\n\n    body, p, ol, ul, td {\n      font-family: helvetica, verdana,
+        arial, sans-serif;\n      font-size:   13px;\n      line-height: 18px;\n    }\n\n
+        \   pre {\n      font-size: 11px;\n      white-space: pre-wrap;\n    }\n\n
+        \   pre.box {\n      border: 1px solid #EEE;\n      padding: 10px;\n      margin:
+        0px;\n      width: 958px;\n    }\n\n    header {\n      color: #F0F0F0;\n
+        \     background: #C52F24;\n      padding: 0.5em 1.5em;\n    }\n\n    h1 {\n
+        \     margin: 0.2em 0;\n      line-height: 1.1em;\n      font-size: 2em;\n
+        \   }\n\n    h2 {\n      color: #C52F24;\n      line-height: 25px;\n    }\n\n
+        \   .details {\n      border: 1px solid #D0D0D0;\n      border-radius: 4px;\n
+        \     margin: 1em 0px;\n      display: block;\n      width: 978px;\n    }\n\n
+        \   .summary {\n      padding: 8px 15px;\n      border-bottom: 1px solid #D0D0D0;\n
+        \     display: block;\n    }\n\n    .details pre {\n      margin: 5px;\n      border:
+        none;\n    }\n\n    #container {\n      box-sizing: border-box;\n      width:
+        100%;\n      padding: 0 1.5em;\n    }\n\n    .source * {\n      margin: 0px;\n
+        \     padding: 0px;\n    }\n\n    .source {\n      border: 1px solid #D9D9D9;\n
+        \     background: #ECECEC;\n      width: 978px;\n    }\n\n    .source pre
+        {\n      padding: 10px 0px;\n      border: none;\n    }\n\n    .source .data
+        {\n      font-size: 80%;\n      overflow: auto;\n      background-color: #FFF;\n
+        \   }\n\n    .info {\n      padding: 0.5em;\n    }\n\n    .source .data .line_numbers
+        {\n      background-color: #ECECEC;\n      color: #AAA;\n      padding: 1em
+        .5em;\n      border-right: 1px solid #DDD;\n      text-align: right;\n    }\n\n
+        \   .line {\n      padding-left: 10px;\n    }\n\n    .line:hover {\n      background-color:
+        #F6F6F6;\n    }\n\n    .line.active {\n      background-color: #FFCCCC;\n
+        \   }\n\n    a { color: #980905; }\n    a:visited { color: #666; }\n    a:hover
+        { color: #C52F24; }\n\n    \n  </style>\n\n  <script>\n    var toggle = function(id)
+        {\n      var s = document.getElementById(id).style;\n      s.display = s.display
+        == 'none' ? 'block' : 'none';\n      return false;\n    }\n    var show =
+        function(id) {\n      document.getElementById(id).style.display = 'block';\n
+        \   }\n    var hide = function(id) {\n      document.getElementById(id).style.display
+        = 'none';\n    }\n    var toggleTrace = function() {\n      return toggle('blame_trace');\n
+        \   }\n    var toggleSessionDump = function() {\n      return toggle('session_dump');\n
+        \   }\n    var toggleEnvDump = function() {\n      return toggle('env_dump');\n
+        \   }\n  </script>\n</head>\n<body>\n\n<header>\n  <h1>\n    ActiveRecord::PendingMigrationError\n
+        \ </h1>\n</header>\n\n<div id=\"container\">\n  <h2>\n\nMigrations are pending.
+        To resolve this issue, run:\n\n\tbin/rake db:migrate RAILS_ENV=development\n\n</h2>\n\n
+        \ \n  \n<p><code>Rails.root: /Users/dgenord/webdev/clients/local_orbit</code></p>\n\n<div
+        id=\"traces\">\n    <a href=\"#\" onclick=\"hide(&#39;Framework-Trace&#39;);hide(&#39;Full-Trace&#39;);show(&#39;Application-Trace&#39;);;
+        return false;\">Application Trace</a> |\n    <a href=\"#\" onclick=\"hide(&#39;Application-Trace&#39;);hide(&#39;Full-Trace&#39;);show(&#39;Framework-Trace&#39;);;
+        return false;\">Framework Trace</a> |\n    <a href=\"#\" onclick=\"hide(&#39;Application-Trace&#39;);hide(&#39;Framework-Trace&#39;);show(&#39;Full-Trace&#39;);;
+        return false;\">Full Trace</a> \n\n    <div id=\"Application-Trace\" style=\"display:
+        block;\">\n      <pre><code></code></pre>\n    </div>\n    <div id=\"Framework-Trace\"
+        style=\"display: none;\">\n      <pre><code>vendor/ruby/2.1.0/gems/activerecord-4.1.2.rc1/lib/active_record/migration.rb:389:in
+        `check_pending!&#39;\nvendor/ruby/2.1.0/gems/activerecord-4.1.2.rc1/lib/active_record/migration.rb:377:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/callbacks.rb:29:in
+        `block in call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/callbacks.rb:82:in
+        `run_callbacks&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/callbacks.rb:27:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/reloader.rb:73:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/remote_ip.rb:76:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/debug_exceptions.rb:17:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/show_exceptions.rb:30:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:38:in
+        `call_app&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:20:in
+        `block in call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:68:in
+        `block in tagged&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:26:in
+        `tagged&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:68:in
+        `tagged&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:20:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/request_id.rb:21:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/methodoverride.rb:21:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/runtime.rb:17:in `call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/cache/strategy/local_cache_middleware.rb:26:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/dragonfly-1.0.5/lib/dragonfly/cookie_monster.rb:9:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/lock.rb:17:in `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/static.rb:64:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/font_assets-0.1.11/lib/font_assets/middleware.rb:29:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/sendfile.rb:112:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/error_notifier.rb:43:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/user_feedback.rb:24:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/user_informer.rb:13:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/engine.rb:514:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/application.rb:144:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-canonical-host-0.1.0/lib/rack/canonical_host.rb:19:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/deflater.rb:25:in `call&#39;\n/Users/dgenord/Library/Application
+        Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:155:in `handle&#39;\n/Users/dgenord/Library/Application
+        Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:109:in `rescue
+        in block (2 levels) in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:106:in
+        `block (2 levels) in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:96:in
+        `each&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:96:in
+        `block in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:76:in
+        `loop&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:76:in
+        `start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:12:in
+        `run&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/bin/nack_worker:4:in
+        `&lt;main&gt;&#39;</code></pre>\n    </div>\n    <div id=\"Full-Trace\" style=\"display:
+        none;\">\n      <pre><code>vendor/ruby/2.1.0/gems/activerecord-4.1.2.rc1/lib/active_record/migration.rb:389:in
+        `check_pending!&#39;\nvendor/ruby/2.1.0/gems/activerecord-4.1.2.rc1/lib/active_record/migration.rb:377:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/callbacks.rb:29:in
+        `block in call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/callbacks.rb:82:in
+        `run_callbacks&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/callbacks.rb:27:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/reloader.rb:73:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/remote_ip.rb:76:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/debug_exceptions.rb:17:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/show_exceptions.rb:30:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:38:in
+        `call_app&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:20:in
+        `block in call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:68:in
+        `block in tagged&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:26:in
+        `tagged&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:68:in
+        `tagged&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:20:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/request_id.rb:21:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/methodoverride.rb:21:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/runtime.rb:17:in `call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/cache/strategy/local_cache_middleware.rb:26:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/dragonfly-1.0.5/lib/dragonfly/cookie_monster.rb:9:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/lock.rb:17:in `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/static.rb:64:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/font_assets-0.1.11/lib/font_assets/middleware.rb:29:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/sendfile.rb:112:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/error_notifier.rb:43:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/user_feedback.rb:24:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/user_informer.rb:13:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/engine.rb:514:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/application.rb:144:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-canonical-host-0.1.0/lib/rack/canonical_host.rb:19:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/deflater.rb:25:in `call&#39;\n/Users/dgenord/Library/Application
+        Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:155:in `handle&#39;\n/Users/dgenord/Library/Application
+        Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:109:in `rescue
+        in block (2 levels) in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:106:in
+        `block (2 levels) in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:96:in
+        `each&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:96:in
+        `block in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:76:in
+        `loop&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:76:in
+        `start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:12:in
+        `run&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/bin/nack_worker:4:in
+        `&lt;main&gt;&#39;</code></pre>\n    </div>\n</div>\n\n  \n\n<h2 style=\"margin-top:
+        30px\">Request</h2>\n<p><b>Parameters</b>:</p> <pre>{&quot;auth_token&quot;=&gt;&quot;BAh7CToGYWkGOgdpZGkTOgxleHBpcmVzbCsHm6OMUzoGYmlP--7cf8b96e2da0cc9e775ffc57e45ee9a74dfdf45b&quot;}</pre>\n\n<div
+        class=\"details\">\n  <div class=\"summary\"><a href=\"#\" onclick=\"return
+        toggleSessionDump()\">Toggle session dump</a></div>\n  <div id=\"session_dump\"
+        style=\"display:none\"><pre></pre></div>\n</div>\n\n<div class=\"details\">\n
+        \ <div class=\"summary\"><a href=\"#\" onclick=\"return toggleEnvDump()\">Toggle
+        env dump</a></div>\n  <div id=\"env_dump\" style=\"display:none\"><pre>HTTP_ACCEPT:
+        &quot;*/*&quot;\nHTTP_ACCEPT_ENCODING: &quot;gzip;q=1.0,deflate;q=0.6,identity;q=0.3&quot;\nREMOTE_ADDR:
+        &quot;127.0.0.1&quot;\nSERVER_NAME: &quot;betterest.lvh.me&quot;</pre></div>\n</div>\n\n<h2
+        style=\"margin-top: 30px\">Response</h2>\n<p><b>Headers</b>:</p> <pre>None</pre>\n\n</div>\n\n\n</body>\n</html>\n"
     http_version: 
-  recorded_at: Thu, 15 May 2014 16:57:09 GMT
+  recorded_at: Mon, 02 Jun 2014 15:17:36 GMT
 - request:
     method: get
-    uri: http://betterest.lvh.me/admin/invoices/27/invoice.pdf?auth_token=BAh7CToGYWk2OgdpZGkaOgxleHBpcmVzbCsH9f90UzoGYmlT--b0cb6f6aa5befba3312c0ac1cf3dddeb00ac9dda
+    uri: http://betterest.lvh.me/admin/invoices/11/invoice.pdf?auth_token=BAh7CToGYWlLOgdpZGkTOgxleHBpcmVzbCsHoKOMUzoGYmkg--69a2ebcc951585888454e68fe064d42a1a87078b
     body:
       encoding: US-ASCII
       string: ''
@@ -157,415 +180,154 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 301
-      message: Moved Permanently
+      code: 500
+      message: Internal Server Error
     headers:
-      Location:
-      - http://app.lvh.me/admin/invoices/27/invoice
       Content-Type:
-      - application/pdf
-      Cache-Control:
-      - no-cache
+      - text/html; charset=utf-8
       X-Request-Id:
-      - fce4b4df-5b67-4817-8bfb-a4cbd9899eec
+      - 3da4efb6-9de8-41f2-b6d9-668449ce810e
       X-Runtime:
-      - '0.879021'
+      - '0.044057'
       Vary:
       - Accept-Encoding
       Date:
-      - Thu, 15 May 2014 16:57:10 GMT
+      - Mon, 02 Jun 2014 15:17:36 GMT
       Connection:
       - close
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        JVBERi0xLjQKMSAwIG9iago8PAovVGl0bGUgKP7/KQovUHJvZHVjZXIgKHdr
-        aHRtbHRvcGRmKQovQ3JlYXRpb25EYXRlIChEOjIwMTQwNTE1MTY1NzEwKQo+
-        PgplbmRvYmoKNCAwIG9iago8PAovVHlwZSAvRXh0R1N0YXRlCi9TQSB0cnVl
-        Ci9TTSAwLjAyCi9jYSAxLjAKL0NBIDEuMAovQUlTIGZhbHNlCi9TTWFzayAv
-        Tm9uZT4+CmVuZG9iago1IDAgb2JqClsvUGF0dGVybiAvRGV2aWNlUkdCXQpl
-        bmRvYmoKOCAwIG9iago8PAovVHlwZSAvQW5ub3QKL1N1YnR5cGUgL0xpbmsK
-        L1JlY3QgWzEzNC42Mzk5OTkgIDcxOC43OTk5OTkgIDE4OC4zOTk5OTkgIDcz
-        Mi4yNDAwMDAgXQovQm9yZGVyIFswIDAgMF0KL0EgPDwKL1R5cGUgL0FjdGlv
-        bgovUyAvVVJJCi9VUkkgKGh0dHA6Ly9hcHAubHZoLm1lL2FkbWluL2ludm9p
-        Y2VzLzI3L2ludm9pY2UpCj4+Cj4+CmVuZG9iago5IDAgb2JqCjw8Ci9UeXBl
-        IC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKNiAwIG9iago8PAov
-        VHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9Db250ZW50cyAxMCAwIFIKL1Jl
-        c291cmNlcyAxMiAwIFIKL0Fubm90cyAxMyAwIFIKL01lZGlhQm94IFswIDAg
-        NjEyIDc5Ml0KPj4KZW5kb2JqCjEyIDAgb2JqCjw8Ci9Db2xvclNwYWNlIDw8
-        Ci9QQ1NwIDUgMCBSCi9DU3AgL0RldmljZVJHQgovQ1NwZyAvRGV2aWNlR3Jh
-        eQo+PgovRXh0R1N0YXRlIDw8Ci9HU2EgNCAwIFIKPj4KL1BhdHRlcm4gPDwK
-        Pj4KL0ZvbnQgPDwKL0Y3IDcgMCBSCj4+Ci9YT2JqZWN0IDw8Cj4+Cj4+CmVu
-        ZG9iagoxMyAwIG9iagpbIDggMCBSIF0KZW5kb2JqCjEwIDAgb2JqCjw8Ci9M
-        ZW5ndGggMTEgMCBSCi9GaWx0ZXIgL0ZsYXRlRGVjb2RlCj4+CnN0cmVhbQp4
-        nL1UTWvDMAy961foXKgT23FswxisWTvYYVAS2KHsMNp1o7RlWQ/7+5OdlHhO
-        mxYGc0gcPX1YeoqSPJSv+H7ApCg/cdnuRQkpS/O0WeiucQioDLU0uNxBjTXM
-        YU5Pt9dwDNM4HZZ7SJoDWiuH7sBIa5mlxUnchmKWaZYZo7QlPI1FZ/wBzyPc
-        Dx511HB/hZoauGDaKGkoonOLRKrIbbnSKBV+vcHa5X2N2/lsGqQsnujtGwU+
-        0r3BxQuBq8EyJhUkM408x2qNvOlCs1VEIY6FwGqFN9QQfovVBjRTkgvVdKzV
-        CK+xHSA9YDog80DWASp2yT2gOkDHFr0YJrboudjY5S5ObHL6lGlFDflFGrOy
-        XX3eA911HTgTbLAXPM3Dblzmq7jIxuUY9zFf0zjGmWM9gafI4X1yXGVCMtXO
-        PZWqdQhsYTL690/f5RDQPeuqOv6JyM9Paf7H6XSTP2yAc/gBbssk1WVuZHN0
-        cmVhbQplbmRvYmoKMTEgMCBvYmoKMzU2CmVuZG9iagoxNCAwIG9iago8PCAv
-        VHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9RT0FBQUErQXJpYWxN
-        VAovRmxhZ3MgNCAKL0ZvbnRCQm94IFstNjY0LjU1MDc4MSAtMzI0LjcwNzAz
-        MSAyMDAwIDEwMDUuODU5MzcgXQovSXRhbGljQW5nbGUgMCAKL0FzY2VudCA5
-        MDUuMjczNDM3IAovRGVzY2VudCAtMjExLjkxNDA2MiAKL0NhcEhlaWdodCA5
-        MDUuMjczNDM3IAovU3RlbVYgNzMuMjQyMTg3NSAKL0ZvbnRGaWxlMiAxNSAw
-        IFIKPj4gZW5kb2JqCjE1IDAgb2JqCjw8Ci9MZW5ndGgxIDE5NDggCi9MZW5n
-        dGggMTggMCBSCi9GaWx0ZXIgL0ZsYXRlRGVjb2RlCj4+CnN0cmVhbQp4nGVV
-        e0yTVxQ/5+trAiJfoC0qCm1pCzoR6eMDQQSEAjIESilUp1AebUFQx9uImw5L
-        C0N8TGPcnPNBZrKYgbOZm5vRbMZlcWwz27LoojFmUffM9oeJUQo730c3Fndv
-        bu45p/e7v3N+95xTQACQQQ4wkOpu3e5qT/bvJEsfgORLT5OzsdFRLAWQFpHN
-        7CFDxBeRtaTvIj3R09bZmx0mTSV9lPSc1q0Nzoj3w+eR/hPp6jZn7zaIhkIC
-        eI70hC3OtibJ6tjHpCeR3g4MDy6hCSLyAVQqViVhVawEJkEMkwmiKxJIeJoj
-        vgKAQF5ILJKLEEHnNCwaUKE0c7QxwU+D139DVZkltxbj7gUvMG2i0ilL386O
-        Azg2eZ7iyp9+KNaLs4EFFUB0FGc2KJQKeYxMKpNq1HpddIxSYUjjzJxOr9OT
-        LX/Uf+3W8Gursrt6hu76hz5y1Pi962sQa9Z7/TUOJhp1+7pxZH/wq86enNx9
-        Ixg50ehyuW5cdTciNjaRp/3TD0V3xTpYxHtqEjD4aWINLEGFwMwcaxDdPbnz
-        u9rySl3yvPBAeFQ6V1FRaImPw8CxQKIm3VRu7GQOBs/vXVGYlLwkqdgyyGRQ
-        NMUUTRxFkwYFANpQDJxRuFKYJqNepyG7TC+ofLD8lMt5cI1OZOJ/o6mUkisK
-        /ogoq2nDxpbxjbWYqM7MKDK23vSgocC/KzM7blyZznncQz67LVnPzokI03yy
-        SFF/dWvK8tgFiOnmZre1QhfXb1dr7LaBdbk5en3M3Mj52sTwtpRVuDRlW+y2
-        wgKdFuMTUtOKl/f8+TQvP4vDY3nJC9louTYppSg1FZc/X76Kf18vAHON4ooW
-        3tcg511PU8pmQpHKMSNwapXZuHp9bXZeXlZKavRise7kNm3iyjN6VCeurmun
-        z6GEuFlMdyyERLpSGSKHjRKuUrAxMpViJmZUhR5btOnisu7eD3/2Dw4N3v7e
-        58PJB2EOx0B9oSV4k7HO5ar9O212rI4ddazfP4JiDD986MDBqSds/PiLG9Fk
-        xMPefDeitZJHH5h+II6nDI3h0bVyCoI1c2kz7CujyBepiCjneMr5J1LLpLjs
-        TKD9nNNRncGp4tHnu3SpFU22g132KrTaOnqq7F6v5GLw0Qjqky3FjU0dU38c
-        OoyM8XLVMKLHdf2bhgaXh0f2U7RZhCxUEWpMBpbAMStAQ/zr108slIzEsI/K
-        7L7ATohhQ8g5OR03Ckmq5pnODJzqul1XUUYvHhaQK4zmok6rTaw7MqZO5DJe
-        MPQFO5iBtnQzeVy89jqh505ViH6he7VgAlDOZrhJqif2TbpQFpJX0mdrzqSb
-        IcI1FmZY09lXsGb+3J6xH3t7MZ1rdo98vOMdXGFo23Licmf3G5XWl/tsNqyq
-        2d5rs9UsqNCmpa3YwI0P4/G37hx59ZVCCx7ZNdny2O3JyrLbREtv1NXVbZr4
-        rKHBWc8zVDD9QHSHGFKALlSVUqEmhboReCDCYmaS458CEt0503R1V/PmlZkm
-        4+bm/rqSkuWBYIK9qru70mqz7dheVjFwHAstL/eNHu/fXVCQtCSHiZysmWhs
-        wvq6azfdLiRohDJC/p3Y0YQykuckehZWFmKAr0Yuja/Fc4u7e9+7tWcAMzK6
-        OobObm1LGFuQnesYpDzESuueForUG3vB7UHqPWFnd+/Ozal2nFjYwpmd9d/+
-        UFePuTmEqpn+i1kiOcq/tVYp1QvBciyfGdR3KDWFRsQpmKgFpZn1ZrNCiV4v
-        ZcucMLlCv/jk2yxiQrxhxWmmYRhlrVN7h4OvlyqUEZGIdPdFisQHE5RtPJMG
-        9E1MTPD5Jaz62NY3a+dlPQLgW/6zY6pC6OFCNw8N+kaWPbUO1kQJqsQi3PTf
-        ESUlk8QOUnEH5NPqpz4ItK9l3gUv7SW0BvBz8NPuo5VHq0AMUE7nNLTIX5BT
-        v2yBo3AUJahHF57GD/AeY2ReYs4yt5j7M35AFFgoV0Je/W9III9iRvGckD4j
-        I4T9KzMQSdqMLCYpNiRLya6GXPrHawYntIIVmsANXSQ5yTZrn5VKwQbwN8dg
-        t4VlbmRzdHJlYW0KZW5kb2JqCjE4IDAgb2JqCjE1MzYKZW5kb2JqCjE2IDAg
-        b2JqCjw8IC9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9DSURGb250VHlwZTIKL0Jh
-        c2VGb250IC9BcmlhbE1UCi9DSURTeXN0ZW1JbmZvIDw8IC9SZWdpc3RyeSAo
-        QWRvYmUpIC9PcmRlcmluZyAoSWRlbnRpdHkpIC9TdXBwbGVtZW50IDAgPj4K
-        L0ZvbnREZXNjcmlwdG9yIDE0IDAgUgovQ0lEVG9HSURNYXAgL0lkZW50aXR5
-        Ci9XIFswIFs3NDQgNjYyIDU1MiA1NTIgMjc2IDU1MiAzMzAgNTUyIDU1MiAy
-        MjAgNTUyIDU1MiA1NTIgNDk2IDI3NiAyNzYgXQpdCj4+CmVuZG9iagoxNyAw
-        IG9iago8PCAvTGVuZ3RoIDQ2OSA+PgpzdHJlYW0KL0NJREluaXQgL1Byb2NT
-        ZXQgZmluZHJlc291cmNlIGJlZ2luCjEyIGRpY3QgYmVnaW4KYmVnaW5jbWFw
-        Ci9DSURTeXN0ZW1JbmZvIDw8IC9SZWdpc3RyeSAoQWRvYmUpIC9PcmRlcmlu
-        ZyAoVUNTKSAvU3VwcGxlbWVudCAwID4+IGRlZgovQ01hcE5hbWUgL0Fkb2Jl
-        LUlkZW50aXR5LVVDUyBkZWYKL0NNYXBUeXBlIDIgZGVmCjEgYmVnaW5jb2Rl
-        c3BhY2VyYW5nZQo8MDAwMD4gPEZGRkY+CmVuZGNvZGVzcGFjZXJhbmdlCjIg
-        YmVnaW5iZnJhbmdlCjwwMDAwPiA8MDAwMD4gPDAwMDA+CjwwMDAxPiA8MDAw
-        Rj4gWzwwMDU5PiA8MDA2Rj4gPDAwNzU+IDwwMDIwPiA8MDA2MT4gPDAwNzI+
-        IDwwMDY1PiA8MDA2Mj4gPDAwNjk+IDwwMDZFPiA8MDA2Nz4gPDAwNjQ+IDww
-        MDYzPiA8MDA3ND4gPDAwMkU+IF0KZW5kYmZyYW5nZQplbmRjbWFwCkNNYXBO
-        YW1lIGN1cnJlbnRkaWN0IC9DTWFwIGRlZmluZXJlc291cmNlIHBvcAplbmQK
-        ZW5kCmVuZHN0cmVhbQplbmRvYmoKNyAwIG9iago8PCAvVHlwZSAvRm9udAov
-        U3VidHlwZSAvVHlwZTAKL0Jhc2VGb250IC9BcmlhbE1UCi9FbmNvZGluZyAv
-        SWRlbnRpdHktSAovRGVzY2VuZGFudEZvbnRzIFsxNiAwIFJdCi9Ub1VuaWNv
-        ZGUgMTcgMCBSPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9L
-        aWRzIApbCjYgMCBSCl0KL0NvdW50IDEKL1Byb2NTZXQgWy9QREYgL1RleHQg
-        L0ltYWdlQiAvSW1hZ2VDXQo+PgplbmRvYmoKeHJlZgowIDE5CjAwMDAwMDAw
-        MDAgNjU1MzUgZiAKMDAwMDAwMDAwOSAwMDAwMCBuIAowMDAwMDA0MDY5IDAw
-        MDAwIG4gCjAwMDAwMDAwMDAgMDAwMDAgbiAKMDAwMDAwMDA5OSAwMDAwMCBu
-        IAowMDAwMDAwMTk0IDAwMDAwIG4gCjAwMDAwMDA0ODMgMDAwMDAgbiAKMDAw
-        MDAwMzkzNiAwMDAwMCBuIAowMDAwMDAwMjMxIDAwMDAwIG4gCjAwMDAwMDA0
-        MzQgMDAwMDAgbiAKMDAwMDAwMDc5NiAwMDAwMCBuIAowMDAwMDAxMjI3IDAw
-        MDAwIG4gCjAwMDAwMDA2MDQgMDAwMDAgbiAKMDAwMDAwMDc3MCAwMDAwMCBu
-        IAowMDAwMDAxMjQ3IDAwMDAwIG4gCjAwMDAwMDE0OTggMDAwMDAgbiAKMDAw
-        MDAwMzE0NSAwMDAwMCBuIAowMDAwMDAzNDE2IDAwMDAwIG4gCjAwMDAwMDMx
-        MjQgMDAwMDAgbiAKdHJhaWxlcgo8PAovU2l6ZSAxOQovSW5mbyAxIDAgUgov
-        Um9vdCA5IDAgUgo+PgpzdGFydHhyZWYKNDE2NwolJUVPRgo=
+      encoding: UTF-8
+      string: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\"
+        />\n  <title>Action Controller: Exception caught</title>\n  <style>\n    body
+        {\n      background-color: #FAFAFA;\n      color: #333;\n      margin: 0px;\n
+        \   }\n\n    body, p, ol, ul, td {\n      font-family: helvetica, verdana,
+        arial, sans-serif;\n      font-size:   13px;\n      line-height: 18px;\n    }\n\n
+        \   pre {\n      font-size: 11px;\n      white-space: pre-wrap;\n    }\n\n
+        \   pre.box {\n      border: 1px solid #EEE;\n      padding: 10px;\n      margin:
+        0px;\n      width: 958px;\n    }\n\n    header {\n      color: #F0F0F0;\n
+        \     background: #C52F24;\n      padding: 0.5em 1.5em;\n    }\n\n    h1 {\n
+        \     margin: 0.2em 0;\n      line-height: 1.1em;\n      font-size: 2em;\n
+        \   }\n\n    h2 {\n      color: #C52F24;\n      line-height: 25px;\n    }\n\n
+        \   .details {\n      border: 1px solid #D0D0D0;\n      border-radius: 4px;\n
+        \     margin: 1em 0px;\n      display: block;\n      width: 978px;\n    }\n\n
+        \   .summary {\n      padding: 8px 15px;\n      border-bottom: 1px solid #D0D0D0;\n
+        \     display: block;\n    }\n\n    .details pre {\n      margin: 5px;\n      border:
+        none;\n    }\n\n    #container {\n      box-sizing: border-box;\n      width:
+        100%;\n      padding: 0 1.5em;\n    }\n\n    .source * {\n      margin: 0px;\n
+        \     padding: 0px;\n    }\n\n    .source {\n      border: 1px solid #D9D9D9;\n
+        \     background: #ECECEC;\n      width: 978px;\n    }\n\n    .source pre
+        {\n      padding: 10px 0px;\n      border: none;\n    }\n\n    .source .data
+        {\n      font-size: 80%;\n      overflow: auto;\n      background-color: #FFF;\n
+        \   }\n\n    .info {\n      padding: 0.5em;\n    }\n\n    .source .data .line_numbers
+        {\n      background-color: #ECECEC;\n      color: #AAA;\n      padding: 1em
+        .5em;\n      border-right: 1px solid #DDD;\n      text-align: right;\n    }\n\n
+        \   .line {\n      padding-left: 10px;\n    }\n\n    .line:hover {\n      background-color:
+        #F6F6F6;\n    }\n\n    .line.active {\n      background-color: #FFCCCC;\n
+        \   }\n\n    a { color: #980905; }\n    a:visited { color: #666; }\n    a:hover
+        { color: #C52F24; }\n\n    \n  </style>\n\n  <script>\n    var toggle = function(id)
+        {\n      var s = document.getElementById(id).style;\n      s.display = s.display
+        == 'none' ? 'block' : 'none';\n      return false;\n    }\n    var show =
+        function(id) {\n      document.getElementById(id).style.display = 'block';\n
+        \   }\n    var hide = function(id) {\n      document.getElementById(id).style.display
+        = 'none';\n    }\n    var toggleTrace = function() {\n      return toggle('blame_trace');\n
+        \   }\n    var toggleSessionDump = function() {\n      return toggle('session_dump');\n
+        \   }\n    var toggleEnvDump = function() {\n      return toggle('env_dump');\n
+        \   }\n  </script>\n</head>\n<body>\n\n<header>\n  <h1>\n    ActiveRecord::PendingMigrationError\n
+        \ </h1>\n</header>\n\n<div id=\"container\">\n  <h2>\n\nMigrations are pending.
+        To resolve this issue, run:\n\n\tbin/rake db:migrate RAILS_ENV=development\n\n</h2>\n\n
+        \ \n  \n<p><code>Rails.root: /Users/dgenord/webdev/clients/local_orbit</code></p>\n\n<div
+        id=\"traces\">\n    <a href=\"#\" onclick=\"hide(&#39;Framework-Trace&#39;);hide(&#39;Full-Trace&#39;);show(&#39;Application-Trace&#39;);;
+        return false;\">Application Trace</a> |\n    <a href=\"#\" onclick=\"hide(&#39;Application-Trace&#39;);hide(&#39;Full-Trace&#39;);show(&#39;Framework-Trace&#39;);;
+        return false;\">Framework Trace</a> |\n    <a href=\"#\" onclick=\"hide(&#39;Application-Trace&#39;);hide(&#39;Framework-Trace&#39;);show(&#39;Full-Trace&#39;);;
+        return false;\">Full Trace</a> \n\n    <div id=\"Application-Trace\" style=\"display:
+        block;\">\n      <pre><code></code></pre>\n    </div>\n    <div id=\"Framework-Trace\"
+        style=\"display: none;\">\n      <pre><code>vendor/ruby/2.1.0/gems/activerecord-4.1.2.rc1/lib/active_record/migration.rb:389:in
+        `check_pending!&#39;\nvendor/ruby/2.1.0/gems/activerecord-4.1.2.rc1/lib/active_record/migration.rb:377:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/callbacks.rb:29:in
+        `block in call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/callbacks.rb:82:in
+        `run_callbacks&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/callbacks.rb:27:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/reloader.rb:73:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/remote_ip.rb:76:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/debug_exceptions.rb:17:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/show_exceptions.rb:30:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:38:in
+        `call_app&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:20:in
+        `block in call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:68:in
+        `block in tagged&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:26:in
+        `tagged&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:68:in
+        `tagged&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:20:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/request_id.rb:21:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/methodoverride.rb:21:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/runtime.rb:17:in `call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/cache/strategy/local_cache_middleware.rb:26:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/dragonfly-1.0.5/lib/dragonfly/cookie_monster.rb:9:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/lock.rb:17:in `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/static.rb:64:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/font_assets-0.1.11/lib/font_assets/middleware.rb:29:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/sendfile.rb:112:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/error_notifier.rb:43:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/user_feedback.rb:24:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/user_informer.rb:13:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/engine.rb:514:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/application.rb:144:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-canonical-host-0.1.0/lib/rack/canonical_host.rb:19:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/deflater.rb:25:in `call&#39;\n/Users/dgenord/Library/Application
+        Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:155:in `handle&#39;\n/Users/dgenord/Library/Application
+        Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:109:in `rescue
+        in block (2 levels) in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:106:in
+        `block (2 levels) in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:96:in
+        `each&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:96:in
+        `block in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:76:in
+        `loop&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:76:in
+        `start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:12:in
+        `run&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/bin/nack_worker:4:in
+        `&lt;main&gt;&#39;</code></pre>\n    </div>\n    <div id=\"Full-Trace\" style=\"display:
+        none;\">\n      <pre><code>vendor/ruby/2.1.0/gems/activerecord-4.1.2.rc1/lib/active_record/migration.rb:389:in
+        `check_pending!&#39;\nvendor/ruby/2.1.0/gems/activerecord-4.1.2.rc1/lib/active_record/migration.rb:377:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/callbacks.rb:29:in
+        `block in call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/callbacks.rb:82:in
+        `run_callbacks&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/callbacks.rb:27:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/reloader.rb:73:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/remote_ip.rb:76:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/debug_exceptions.rb:17:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/show_exceptions.rb:30:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:38:in
+        `call_app&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:20:in
+        `block in call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:68:in
+        `block in tagged&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:26:in
+        `tagged&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/tagged_logging.rb:68:in
+        `tagged&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/rack/logger.rb:20:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/request_id.rb:21:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/methodoverride.rb:21:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/runtime.rb:17:in `call&#39;\nvendor/ruby/2.1.0/gems/activesupport-4.1.2.rc1/lib/active_support/cache/strategy/local_cache_middleware.rb:26:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/dragonfly-1.0.5/lib/dragonfly/cookie_monster.rb:9:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/lock.rb:17:in `call&#39;\nvendor/ruby/2.1.0/gems/actionpack-4.1.2.rc1/lib/action_dispatch/middleware/static.rb:64:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/font_assets-0.1.11/lib/font_assets/middleware.rb:29:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/sendfile.rb:112:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/error_notifier.rb:43:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/user_feedback.rb:24:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/honeybadger-1.14.0/lib/honeybadger/rack/user_informer.rb:13:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/engine.rb:514:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/railties-4.1.2.rc1/lib/rails/application.rb:144:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-canonical-host-0.1.0/lib/rack/canonical_host.rb:19:in
+        `call&#39;\nvendor/ruby/2.1.0/gems/rack-1.5.2/lib/rack/deflater.rb:25:in `call&#39;\n/Users/dgenord/Library/Application
+        Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:155:in `handle&#39;\n/Users/dgenord/Library/Application
+        Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:109:in `rescue
+        in block (2 levels) in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:106:in
+        `block (2 levels) in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:96:in
+        `each&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:96:in
+        `block in start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:76:in
+        `loop&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:76:in
+        `start&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/lib/nack/server.rb:12:in
+        `run&#39;\n/Users/dgenord/Library/Application Support/Pow/Versions/0.4.3/node_modules/nack/bin/nack_worker:4:in
+        `&lt;main&gt;&#39;</code></pre>\n    </div>\n</div>\n\n  \n\n<h2 style=\"margin-top:
+        30px\">Request</h2>\n<p><b>Parameters</b>:</p> <pre>{&quot;auth_token&quot;=&gt;&quot;BAh7CToGYWlLOgdpZGkTOgxleHBpcmVzbCsHoKOMUzoGYmkg--69a2ebcc951585888454e68fe064d42a1a87078b&quot;}</pre>\n\n<div
+        class=\"details\">\n  <div class=\"summary\"><a href=\"#\" onclick=\"return
+        toggleSessionDump()\">Toggle session dump</a></div>\n  <div id=\"session_dump\"
+        style=\"display:none\"><pre></pre></div>\n</div>\n\n<div class=\"details\">\n
+        \ <div class=\"summary\"><a href=\"#\" onclick=\"return toggleEnvDump()\">Toggle
+        env dump</a></div>\n  <div id=\"env_dump\" style=\"display:none\"><pre>HTTP_ACCEPT:
+        &quot;*/*&quot;\nHTTP_ACCEPT_ENCODING: &quot;gzip;q=1.0,deflate;q=0.6,identity;q=0.3&quot;\nREMOTE_ADDR:
+        &quot;127.0.0.1&quot;\nSERVER_NAME: &quot;betterest.lvh.me&quot;</pre></div>\n</div>\n\n<h2
+        style=\"margin-top: 30px\">Response</h2>\n<p><b>Headers</b>:</p> <pre>None</pre>\n\n</div>\n\n\n</body>\n</html>\n"
     http_version: 
-  recorded_at: Thu, 15 May 2014 16:57:10 GMT
-- request:
-    method: get
-    uri: http://betterest.localorbit.dev/admin/invoices/19/invoice.pdf?auth_token=BAh7CToGYWlROgdpZGk9OgxleHBpcmVzbCsHoHN7UzoGYmlU--1419acf3b8296efe4d6339c74f569905f4cb3c35
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 301
-      message: Moved Permanently
-    headers:
-      Location:
-      - http://app.localorbit.dev/admin/invoices/19/invoice
-      Content-Type:
-      - application/pdf
-      Cache-Control:
-      - no-cache
-      X-Request-Id:
-      - ce36237b-ca41-47bd-931a-fb6faeefcb0e
-      X-Runtime:
-      - '1.229109'
-      Vary:
-      - Accept-Encoding
-      Date:
-      - Tue, 20 May 2014 14:24:18 GMT
-      Connection:
-      - close
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        JVBERi0xLjQKMSAwIG9iago8PAovVGl0bGUgKP7/KQovUHJvZHVjZXIgKHdr
-        aHRtbHRvcGRmKQovQ3JlYXRpb25EYXRlIChEOjIwMTQwNTIwMTQyNDE4KQo+
-        PgplbmRvYmoKNCAwIG9iago8PAovVHlwZSAvRXh0R1N0YXRlCi9TQSB0cnVl
-        Ci9TTSAwLjAyCi9jYSAxLjAKL0NBIDEuMAovQUlTIGZhbHNlCi9TTWFzayAv
-        Tm9uZT4+CmVuZG9iago1IDAgb2JqClsvUGF0dGVybiAvRGV2aWNlUkdCXQpl
-        bmRvYmoKOCAwIG9iago8PAovVHlwZSAvQW5ub3QKL1N1YnR5cGUgL0xpbmsK
-        L1JlY3QgWzEzNC42Mzk5OTkgIDcxOC43OTk5OTkgIDE4OC4zOTk5OTkgIDcz
-        Mi4yNDAwMDAgXQovQm9yZGVyIFswIDAgMF0KL0EgPDwKL1R5cGUgL0FjdGlv
-        bgovUyAvVVJJCi9VUkkgKGh0dHA6Ly9hcHAubG9jYWxvcmJpdC5kZXYvYWRt
-        aW4vaW52b2ljZXMvMTkvaW52b2ljZSkKPj4KPj4KZW5kb2JqCjkgMCBvYmoK
-        PDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIgMCBSCj4+CmVuZG9iago2IDAg
-        b2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgMiAwIFIKL0NvbnRlbnRzIDEw
-        IDAgUgovUmVzb3VyY2VzIDEyIDAgUgovQW5ub3RzIDEzIDAgUgovTWVkaWFC
-        b3ggWzAgMCA2MTIgNzkyXQo+PgplbmRvYmoKMTIgMCBvYmoKPDwKL0NvbG9y
-        U3BhY2UgPDwKL1BDU3AgNSAwIFIKL0NTcCAvRGV2aWNlUkdCCi9DU3BnIC9E
-        ZXZpY2VHcmF5Cj4+Ci9FeHRHU3RhdGUgPDwKL0dTYSA0IDAgUgo+PgovUGF0
-        dGVybiA8PAo+PgovRm9udCA8PAovRjcgNyAwIFIKPj4KL1hPYmplY3QgPDwK
-        Pj4KPj4KZW5kb2JqCjEzIDAgb2JqClsgOCAwIFIgXQplbmRvYmoKMTAgMCBv
-        YmoKPDwKL0xlbmd0aCAxMSAwIFIKL0ZpbHRlciAvRmxhdGVEZWNvZGUKPj4K
-        c3RyZWFtCnicvVRNa8MwDL3rV+hcqBPbcWzDGKxZO9hhUBLYoeww2nWjtGVZ
-        D/v7k52UeE6bFgZzSBw9fVh6ipI8lK/4fsCkKD9x2e5FCSlL87RZ6K5xCKgM
-        tTS43EGNNcxhTk+313AM0zgdlntImgNaK4fuwEhrmaXFSdyGYpZplhmjtCU8
-        jUVn/AHPI9wPHnXUcH+Fmhq4YNooaSiic4tEqshtudIoFX69wdrlfY3b+Wwa
-        pCye6O0bBT7SvcHFC4GrwTImFSQzjTzHao286UKzVUQhjoXAaoU31BB+i9UG
-        NFOSC9V0rNUIr7EdID1gOiDzQNYBKnbJPaA6QMcWvRgmtui52NjlLk5scvqU
-        aUUN+UUas7Jdfd4D3XUdOBNssBc8zcNuXOaruMjG5Rj3MV/TOMaZYz2Bp8jh
-        fXJcZUIy1c49lap1CGxhMvr3T9/lENA966o6/onIz09p/sfpdJM/bIBz+AFu
-        yyTVZW5kc3RyZWFtCmVuZG9iagoxMSAwIG9iagozNTYKZW5kb2JqCjE0IDAg
-        b2JqCjw8IC9UeXBlIC9Gb250RGVzY3JpcHRvcgovRm9udE5hbWUgL1FPQUFB
-        QStBcmlhbE1UCi9GbGFncyA0IAovRm9udEJCb3ggWy02NjQuNTUwNzgxIC0z
-        MjQuNzA3MDMxIDIwMDAgMTAwNS44NTkzNyBdCi9JdGFsaWNBbmdsZSAwIAov
-        QXNjZW50IDkwNS4yNzM0MzcgCi9EZXNjZW50IC0yMTEuOTE0MDYyIAovQ2Fw
-        SGVpZ2h0IDkwNS4yNzM0MzcgCi9TdGVtViA3My4yNDIxODc1IAovRm9udEZp
-        bGUyIDE1IDAgUgo+PiBlbmRvYmoKMTUgMCBvYmoKPDwKL0xlbmd0aDEgMTk0
-        OCAKL0xlbmd0aCAxOCAwIFIKL0ZpbHRlciAvRmxhdGVEZWNvZGUKPj4Kc3Ry
-        ZWFtCnicZVV7TJNXFD/n62sCIl+gLSoKbWkLOhHp4wNBBIQCMgRKKVSnUB5t
-        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
-        Z2lzdHJ5IChBZG9iZSkgL09yZGVyaW5nIChJZGVudGl0eSkgL1N1cHBsZW1l
-        bnQgMCA+PgovRm9udERlc2NyaXB0b3IgMTQgMCBSCi9DSURUb0dJRE1hcCAv
-        SWRlbnRpdHkKL1cgWzAgWzc0NCA2NjIgNTUyIDU1MiAyNzYgNTUyIDMzMCA1
-        NTIgNTUyIDIyMCA1NTIgNTUyIDU1MiA0OTYgMjc2IDI3NiBdCl0KPj4KZW5k
-        b2JqCjE3IDAgb2JqCjw8IC9MZW5ndGggNDY5ID4+CnN0cmVhbQovQ0lESW5p
-        dCAvUHJvY1NldCBmaW5kcmVzb3VyY2UgYmVnaW4KMTIgZGljdCBiZWdpbgpi
-        ZWdpbmNtYXAKL0NJRFN5c3RlbUluZm8gPDwgL1JlZ2lzdHJ5IChBZG9iZSkg
-        L09yZGVyaW5nIChVQ1MpIC9TdXBwbGVtZW50IDAgPj4gZGVmCi9DTWFwTmFt
-        ZSAvQWRvYmUtSWRlbnRpdHktVUNTIGRlZgovQ01hcFR5cGUgMiBkZWYKMSBi
-        ZWdpbmNvZGVzcGFjZXJhbmdlCjwwMDAwPiA8RkZGRj4KZW5kY29kZXNwYWNl
-        cmFuZ2UKMiBiZWdpbmJmcmFuZ2UKPDAwMDA+IDwwMDAwPiA8MDAwMD4KPDAw
-        MDE+IDwwMDBGPiBbPDAwNTk+IDwwMDZGPiA8MDA3NT4gPDAwMjA+IDwwMDYx
-        PiA8MDA3Mj4gPDAwNjU+IDwwMDYyPiA8MDA2OT4gPDAwNkU+IDwwMDY3PiA8
-        MDA2ND4gPDAwNjM+IDwwMDc0PiA8MDAyRT4gXQplbmRiZnJhbmdlCmVuZGNt
-        YXAKQ01hcE5hbWUgY3VycmVudGRpY3QgL0NNYXAgZGVmaW5lcmVzb3VyY2Ug
-        cG9wCmVuZAplbmQKZW5kc3RyZWFtCmVuZG9iago3IDAgb2JqCjw8IC9UeXBl
-        IC9Gb250Ci9TdWJ0eXBlIC9UeXBlMAovQmFzZUZvbnQgL0FyaWFsTVQKL0Vu
-        Y29kaW5nIC9JZGVudGl0eS1ICi9EZXNjZW5kYW50Rm9udHMgWzE2IDAgUl0K
-        L1RvVW5pY29kZSAxNyAwIFI+PgplbmRvYmoKMiAwIG9iago8PAovVHlwZSAv
-        UGFnZXMKL0tpZHMgClsKNiAwIFIKXQovQ291bnQgMQovUHJvY1NldCBbL1BE
-        RiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUNdCj4+CmVuZG9iagp4cmVmCjAgMTkK
-        MDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAw
-        MDQwNzcgMDAwMDAgbiAKMDAwMDAwMDAwMCAwMDAwMCBuIAowMDAwMDAwMDk5
-        IDAwMDAwIG4gCjAwMDAwMDAxOTQgMDAwMDAgbiAKMDAwMDAwMDQ5MSAwMDAw
-        MCBuIAowMDAwMDAzOTQ0IDAwMDAwIG4gCjAwMDAwMDAyMzEgMDAwMDAgbiAK
-        MDAwMDAwMDQ0MiAwMDAwMCBuIAowMDAwMDAwODA0IDAwMDAwIG4gCjAwMDAw
-        MDEyMzUgMDAwMDAgbiAKMDAwMDAwMDYxMiAwMDAwMCBuIAowMDAwMDAwNzc4
-        IDAwMDAwIG4gCjAwMDAwMDEyNTUgMDAwMDAgbiAKMDAwMDAwMTUwNiAwMDAw
-        MCBuIAowMDAwMDAzMTUzIDAwMDAwIG4gCjAwMDAwMDM0MjQgMDAwMDAgbiAK
-        MDAwMDAwMzEzMiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDE5Ci9JbmZv
-        IDEgMCBSCi9Sb290IDkgMCBSCj4+CnN0YXJ0eHJlZgo0MTc1CiUlRU9GCg==
-    http_version: 
-  recorded_at: Tue, 20 May 2014 14:24:18 GMT
-- request:
-    method: get
-    uri: http://betterest.localorbit.dev/admin/invoices/23/invoice.pdf?auth_token=BAh7CToGYWkVOgdpZGk9OgxleHBpcmVzbCsHonN7UzoGYmlV--ab33a8736538ea4094b678f3a495bb63d1b4621f
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 301
-      message: Moved Permanently
-    headers:
-      Location:
-      - http://app.localorbit.dev/admin/invoices/23/invoice
-      Content-Type:
-      - application/pdf
-      Cache-Control:
-      - no-cache
-      X-Request-Id:
-      - f6841b9f-da00-4939-96d5-3bf1808a3c16
-      X-Runtime:
-      - '1.290247'
-      Vary:
-      - Accept-Encoding
-      Date:
-      - Tue, 20 May 2014 14:24:19 GMT
-      Connection:
-      - close
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        JVBERi0xLjQKMSAwIG9iago8PAovVGl0bGUgKP7/KQovUHJvZHVjZXIgKHdr
-        aHRtbHRvcGRmKQovQ3JlYXRpb25EYXRlIChEOjIwMTQwNTIwMTQyNDE5KQo+
-        PgplbmRvYmoKNCAwIG9iago8PAovVHlwZSAvRXh0R1N0YXRlCi9TQSB0cnVl
-        Ci9TTSAwLjAyCi9jYSAxLjAKL0NBIDEuMAovQUlTIGZhbHNlCi9TTWFzayAv
-        Tm9uZT4+CmVuZG9iago1IDAgb2JqClsvUGF0dGVybiAvRGV2aWNlUkdCXQpl
-        bmRvYmoKOCAwIG9iago8PAovVHlwZSAvQW5ub3QKL1N1YnR5cGUgL0xpbmsK
-        L1JlY3QgWzEzNC42Mzk5OTkgIDcxOC43OTk5OTkgIDE4OC4zOTk5OTkgIDcz
-        Mi4yNDAwMDAgXQovQm9yZGVyIFswIDAgMF0KL0EgPDwKL1R5cGUgL0FjdGlv
-        bgovUyAvVVJJCi9VUkkgKGh0dHA6Ly9hcHAubG9jYWxvcmJpdC5kZXYvYWRt
-        aW4vaW52b2ljZXMvMjMvaW52b2ljZSkKPj4KPj4KZW5kb2JqCjkgMCBvYmoK
-        PDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIgMCBSCj4+CmVuZG9iago2IDAg
-        b2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgMiAwIFIKL0NvbnRlbnRzIDEw
-        IDAgUgovUmVzb3VyY2VzIDEyIDAgUgovQW5ub3RzIDEzIDAgUgovTWVkaWFC
-        b3ggWzAgMCA2MTIgNzkyXQo+PgplbmRvYmoKMTIgMCBvYmoKPDwKL0NvbG9y
-        U3BhY2UgPDwKL1BDU3AgNSAwIFIKL0NTcCAvRGV2aWNlUkdCCi9DU3BnIC9E
-        ZXZpY2VHcmF5Cj4+Ci9FeHRHU3RhdGUgPDwKL0dTYSA0IDAgUgo+PgovUGF0
-        dGVybiA8PAo+PgovRm9udCA8PAovRjcgNyAwIFIKPj4KL1hPYmplY3QgPDwK
-        Pj4KPj4KZW5kb2JqCjEzIDAgb2JqClsgOCAwIFIgXQplbmRvYmoKMTAgMCBv
-        YmoKPDwKL0xlbmd0aCAxMSAwIFIKL0ZpbHRlciAvRmxhdGVEZWNvZGUKPj4K
-        c3RyZWFtCnicvVRNa8MwDL3rV+hcqBPbcWzDGKxZO9hhUBLYoeww2nWjtGVZ
-        D/v7k52UeE6bFgZzSBw9fVh6ipI8lK/4fsCkKD9x2e5FCSlL87RZ6K5xCKgM
-        tTS43EGNNcxhTk+313AM0zgdlntImgNaK4fuwEhrmaXFSdyGYpZplhmjtCU8
-        jUVn/AHPI9wPHnXUcH+Fmhq4YNooaSiic4tEqshtudIoFX69wdrlfY3b+Wwa
-        pCye6O0bBT7SvcHFC4GrwTImFSQzjTzHao286UKzVUQhjoXAaoU31BB+i9UG
-        NFOSC9V0rNUIr7EdID1gOiDzQNYBKnbJPaA6QMcWvRgmtui52NjlLk5scvqU
-        aUUN+UUas7Jdfd4D3XUdOBNssBc8zcNuXOaruMjG5Rj3MV/TOMaZYz2Bp8jh
-        fXJcZUIy1c49lap1CGxhMvr3T9/lENA966o6/onIz09p/sfpdJM/bIBz+AFu
-        yyTVZW5kc3RyZWFtCmVuZG9iagoxMSAwIG9iagozNTYKZW5kb2JqCjE0IDAg
-        b2JqCjw8IC9UeXBlIC9Gb250RGVzY3JpcHRvcgovRm9udE5hbWUgL1FPQUFB
-        QStBcmlhbE1UCi9GbGFncyA0IAovRm9udEJCb3ggWy02NjQuNTUwNzgxIC0z
-        MjQuNzA3MDMxIDIwMDAgMTAwNS44NTkzNyBdCi9JdGFsaWNBbmdsZSAwIAov
-        QXNjZW50IDkwNS4yNzM0MzcgCi9EZXNjZW50IC0yMTEuOTE0MDYyIAovQ2Fw
-        SGVpZ2h0IDkwNS4yNzM0MzcgCi9TdGVtViA3My4yNDIxODc1IAovRm9udEZp
-        bGUyIDE1IDAgUgo+PiBlbmRvYmoKMTUgMCBvYmoKPDwKL0xlbmd0aDEgMTk0
-        OCAKL0xlbmd0aCAxOCAwIFIKL0ZpbHRlciAvRmxhdGVEZWNvZGUKPj4Kc3Ry
-        ZWFtCnicZVV7TJNXFD/n62sCIl+gLSoKbWkLOhHp4wNBBIQCMgRKKVSnUB5t
-        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
-        Z2lzdHJ5IChBZG9iZSkgL09yZGVyaW5nIChJZGVudGl0eSkgL1N1cHBsZW1l
-        bnQgMCA+PgovRm9udERlc2NyaXB0b3IgMTQgMCBSCi9DSURUb0dJRE1hcCAv
-        SWRlbnRpdHkKL1cgWzAgWzc0NCA2NjIgNTUyIDU1MiAyNzYgNTUyIDMzMCA1
-        NTIgNTUyIDIyMCA1NTIgNTUyIDU1MiA0OTYgMjc2IDI3NiBdCl0KPj4KZW5k
-        b2JqCjE3IDAgb2JqCjw8IC9MZW5ndGggNDY5ID4+CnN0cmVhbQovQ0lESW5p
-        dCAvUHJvY1NldCBmaW5kcmVzb3VyY2UgYmVnaW4KMTIgZGljdCBiZWdpbgpi
-        ZWdpbmNtYXAKL0NJRFN5c3RlbUluZm8gPDwgL1JlZ2lzdHJ5IChBZG9iZSkg
-        L09yZGVyaW5nIChVQ1MpIC9TdXBwbGVtZW50IDAgPj4gZGVmCi9DTWFwTmFt
-        ZSAvQWRvYmUtSWRlbnRpdHktVUNTIGRlZgovQ01hcFR5cGUgMiBkZWYKMSBi
-        ZWdpbmNvZGVzcGFjZXJhbmdlCjwwMDAwPiA8RkZGRj4KZW5kY29kZXNwYWNl
-        cmFuZ2UKMiBiZWdpbmJmcmFuZ2UKPDAwMDA+IDwwMDAwPiA8MDAwMD4KPDAw
-        MDE+IDwwMDBGPiBbPDAwNTk+IDwwMDZGPiA8MDA3NT4gPDAwMjA+IDwwMDYx
-        PiA8MDA3Mj4gPDAwNjU+IDwwMDYyPiA8MDA2OT4gPDAwNkU+IDwwMDY3PiA8
-        MDA2ND4gPDAwNjM+IDwwMDc0PiA8MDAyRT4gXQplbmRiZnJhbmdlCmVuZGNt
-        YXAKQ01hcE5hbWUgY3VycmVudGRpY3QgL0NNYXAgZGVmaW5lcmVzb3VyY2Ug
-        cG9wCmVuZAplbmQKZW5kc3RyZWFtCmVuZG9iago3IDAgb2JqCjw8IC9UeXBl
-        IC9Gb250Ci9TdWJ0eXBlIC9UeXBlMAovQmFzZUZvbnQgL0FyaWFsTVQKL0Vu
-        Y29kaW5nIC9JZGVudGl0eS1ICi9EZXNjZW5kYW50Rm9udHMgWzE2IDAgUl0K
-        L1RvVW5pY29kZSAxNyAwIFI+PgplbmRvYmoKMiAwIG9iago8PAovVHlwZSAv
-        UGFnZXMKL0tpZHMgClsKNiAwIFIKXQovQ291bnQgMQovUHJvY1NldCBbL1BE
-        RiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUNdCj4+CmVuZG9iagp4cmVmCjAgMTkK
-        MDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAw
-        MDQwNzcgMDAwMDAgbiAKMDAwMDAwMDAwMCAwMDAwMCBuIAowMDAwMDAwMDk5
-        IDAwMDAwIG4gCjAwMDAwMDAxOTQgMDAwMDAgbiAKMDAwMDAwMDQ5MSAwMDAw
-        MCBuIAowMDAwMDAzOTQ0IDAwMDAwIG4gCjAwMDAwMDAyMzEgMDAwMDAgbiAK
-        MDAwMDAwMDQ0MiAwMDAwMCBuIAowMDAwMDAwODA0IDAwMDAwIG4gCjAwMDAw
-        MDEyMzUgMDAwMDAgbiAKMDAwMDAwMDYxMiAwMDAwMCBuIAowMDAwMDAwNzc4
-        IDAwMDAwIG4gCjAwMDAwMDEyNTUgMDAwMDAgbiAKMDAwMDAwMTUwNiAwMDAw
-        MCBuIAowMDAwMDAzMTUzIDAwMDAwIG4gCjAwMDAwMDM0MjQgMDAwMDAgbiAK
-        MDAwMDAwMzEzMiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDE5Ci9JbmZv
-        IDEgMCBSCi9Sb290IDkgMCBSCj4+CnN0YXJ0eHJlZgo0MTc1CiUlRU9GCg==
-    http_version: 
-  recorded_at: Tue, 20 May 2014 14:24:19 GMT
-recorded_with: VCR 2.9.0
+  recorded_at: Mon, 02 Jun 2014 15:17:36 GMT
+recorded_with: VCR 2.9.2

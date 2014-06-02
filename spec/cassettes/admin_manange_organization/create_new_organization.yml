@@ -5,7 +5,7 @@ http_interactions:
     uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
     body:
       encoding: UTF-8
-      string: '{"name":"University of Michigan Farmers","meta":{"entity_id":1,"entity_name":"University
+      string: '{"name":"University of Michigan Farmers","meta":{"entity_id":50,"entity_name":"University
         of Michigan Farmers","entity_type":"organization"}}'
     headers:
       User-Agent:
@@ -24,15 +24,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 15 May 2014 16:51:41 GMT
+      - Mon, 02 Jun 2014 15:19:04 GMT
       Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU1tuiWtMBqCkYfjth1VVS8l
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU1OoNlehbmDZS3cY6b6hOdP
       Server:
       - ngx_openresty/1.2.6.3
       X-Balanced-Guru:
-      - OHM30772fd4dc5111e3ab2502a1fe52a36c
+      - OHM3b8cfab8ea6911e3a82802a1fe52a36c
       X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-4-8
+      - bapi-integration-prod-8u30f7-10-3-5-201
       X-Balanced-Marketplace:
       - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
       X-Balanced-Merchant:
@@ -40,13 +40,13 @@ http_interactions:
       X-Balanced-Revision:
       - '1.0'
       X-Balanced-Software-Build:
-      - 1.2.24
+      - 1.2.48
       X-Midlr-Version:
       - '2'
       X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9VA1ZSBQVRX1INAQJWUFQPHRdXUAEaE0ADB1IFVg4BCQxSBgRcCFBSQx9CAldbEgM+
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9QC1RcDwVRVVEOAQNWWFMHAxtGVQUHH0JEAAFTBwhQW10EAlADAAMHUBFORFBWDRUGZQ==
       Content-Length:
-      - '1746'
+      - '1747'
       Connection:
       - keep-alive
     body:
@@ -55,28 +55,28 @@ http_interactions:
         {
           "_type": "customer",
           "twitter": null,
-          "reversals_uri": "/v1/customers/CU1tuiWtMBqCkYfjth1VVS8l/reversals",
+          "reversals_uri": "/v1/customers/CU1OoNlehbmDZS3cY6b6hOdP/reversals",
           "phone": null,
           "meta": {
-            "entity_id": "1",
+            "entity_id": "50",
             "entity_name": "University of Michigan Farmers",
             "entity_type": "organization"
           },
           "facebook": null,
           "address": {},
           "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU1tuiWtMBqCkYfjth1VVS8l/bank_accounts",
-          "id": "CU1tuiWtMBqCkYfjth1VVS8l",
-          "credits_uri": "/v1/customers/CU1tuiWtMBqCkYfjth1VVS8l/credits",
-          "cards_uri": "/v1/customers/CU1tuiWtMBqCkYfjth1VVS8l/cards",
-          "holds_uri": "/v1/customers/CU1tuiWtMBqCkYfjth1VVS8l/holds",
+          "bank_accounts_uri": "/v1/customers/CU1OoNlehbmDZS3cY6b6hOdP/bank_accounts",
+          "id": "CU1OoNlehbmDZS3cY6b6hOdP",
+          "credits_uri": "/v1/customers/CU1OoNlehbmDZS3cY6b6hOdP/credits",
+          "cards_uri": "/v1/customers/CU1OoNlehbmDZS3cY6b6hOdP/cards",
+          "holds_uri": "/v1/customers/CU1OoNlehbmDZS3cY6b6hOdP/holds",
           "name": "University of Michigan Farmers",
-          "refunds_uri": "/v1/customers/CU1tuiWtMBqCkYfjth1VVS8l/refunds",
+          "refunds_uri": "/v1/customers/CU1OoNlehbmDZS3cY6b6hOdP/refunds",
           "dob": null,
-          "created_at": "2014-05-15T16:51:41.520141Z",
+          "created_at": "2014-06-02T15:19:04.306299Z",
           "destination": null,
           "is_identity_verified": false,
-          "uri": "/v1/customers/CU1tuiWtMBqCkYfjth1VVS8l",
+          "uri": "/v1/customers/CU1OoNlehbmDZS3cY6b6hOdP",
           "source": null,
           "_uris": {
             "transactions_uri": {
@@ -112,132 +112,12 @@ http_interactions:
               "key": "cards"
             }
           },
-          "debits_uri": "/v1/customers/CU1tuiWtMBqCkYfjth1VVS8l/debits",
-          "transactions_uri": "/v1/customers/CU1tuiWtMBqCkYfjth1VVS8l/transactions",
+          "debits_uri": "/v1/customers/CU1OoNlehbmDZS3cY6b6hOdP/debits",
+          "transactions_uri": "/v1/customers/CU1OoNlehbmDZS3cY6b6hOdP/transactions",
           "ssn_last4": null,
           "email": null,
           "ein": null
         }
     http_version: 
-  recorded_at: Thu, 15 May 2014 16:51:37 GMT
-- request:
-    method: post
-    uri: https://ak-test-HzSyNK15oKm6nk9UrXeKYeEf7xMXjcwp:@api.balancedpayments.com/v1/customers
-    body:
-      encoding: UTF-8
-      string: '{"name":"University of Michigan Farmers","meta":{"entity_id":1,"entity_name":"University
-        of Michigan Farmers","entity_type":"organization"}}'
-    headers:
-      User-Agent:
-      - balanced-ruby/0.8.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 201
-      message: CREATED
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 15 May 2014 18:19:43 GMT
-      Location:
-      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU3LzsFo9vG4YnjaP5GleodP
-      Server:
-      - ngx_openresty/1.2.6.3
-      X-Balanced-Guru:
-      - OHM7bc33468dc5d11e3ab2502a1fe52a36c
-      X-Balanced-Host:
-      - bapi-integration-prod-8u30f7-10-3-5-201
-      X-Balanced-Marketplace:
-      - TEST-MP1EOzr67FEqkfTYGTJxxYsV
-      X-Balanced-Merchant:
-      - TEST-MR1UDDuhujWiJKH04gyn92gO
-      X-Balanced-Revision:
-      - '1.0'
-      X-Balanced-Software-Build:
-      - 1.2.24
-      X-Midlr-Version:
-      - '2'
-      X-Newrelic-App-Data:
-      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUB9WB1NRBARYXlIICgRXV1IDHRdXUAEaE0AHB1dWBFwHDQpSAAdQWwVUQx9CAldbEgM+
-      Content-Length:
-      - '1746'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "_type": "customer",
-          "twitter": null,
-          "reversals_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/reversals",
-          "phone": null,
-          "meta": {
-            "entity_id": "1",
-            "entity_name": "University of Michigan Farmers",
-            "entity_type": "organization"
-          },
-          "facebook": null,
-          "address": {},
-          "business_name": null,
-          "bank_accounts_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/bank_accounts",
-          "id": "CU3LzsFo9vG4YnjaP5GleodP",
-          "credits_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/credits",
-          "cards_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/cards",
-          "holds_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/holds",
-          "name": "University of Michigan Farmers",
-          "refunds_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/refunds",
-          "dob": null,
-          "created_at": "2014-05-15T18:19:41.801869Z",
-          "destination": null,
-          "is_identity_verified": false,
-          "uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP",
-          "source": null,
-          "_uris": {
-            "transactions_uri": {
-              "_type": "page",
-              "key": "transactions"
-            },
-            "bank_accounts_uri": {
-              "_type": "page",
-              "key": "bank_accounts"
-            },
-            "refunds_uri": {
-              "_type": "page",
-              "key": "refunds"
-            },
-            "debits_uri": {
-              "_type": "page",
-              "key": "debits"
-            },
-            "holds_uri": {
-              "_type": "page",
-              "key": "holds"
-            },
-            "reversals_uri": {
-              "_type": "page",
-              "key": "reversals"
-            },
-            "credits_uri": {
-              "_type": "page",
-              "key": "credits"
-            },
-            "cards_uri": {
-              "_type": "page",
-              "key": "cards"
-            }
-          },
-          "debits_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/debits",
-          "transactions_uri": "/v1/customers/CU3LzsFo9vG4YnjaP5GleodP/transactions",
-          "ssn_last4": null,
-          "email": null,
-          "ein": null
-        }
-    http_version: 
-  recorded_at: Thu, 15 May 2014 18:19:45 GMT
-recorded_with: VCR 2.9.0
+  recorded_at: Mon, 02 Jun 2014 15:19:04 GMT
+recorded_with: VCR 2.9.2
