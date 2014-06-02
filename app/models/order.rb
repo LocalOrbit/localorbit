@@ -1,4 +1,9 @@
 class Order < ActiveRecord::Base
+  INVOICE_STATUSES = [
+    "due",
+    "overdue"
+  ].freeze
+
   include DeliveryStatus
   include Sortable
 
@@ -47,6 +52,18 @@ class Order < ActiveRecord::Base
   scope :paid_with, lambda { |method| where(payment_method: method) }
   scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", (Time.current - 1.day).end_of_day) }
   scope :payment_due, -> { unpaid.where("invoice_due_date >= ?", (Time.current - 1.day).end_of_day) }
+  scope :payment_status, lambda { |status|
+    case status
+    when "overdue"
+      payment_overdue
+    when "due"
+      payment_due
+    when "uninvoiced"
+      uninvoiced
+    else
+      all
+    end
+  }
   scope :delivered_between, lambda { |range|
     delivered
       .having("MAX(order_items.delivered_at) >= ?", range.begin)
@@ -56,7 +73,7 @@ class Order < ActiveRecord::Base
   scope :due_between, lambda { |range| invoiced.where(invoice_due_date: range) }
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
-  scope_accessible :payment_overdue, :payment_due, :uninvoiced, boolean: true
+  scope_accessible :payment_status
 
   accepts_nested_attributes_for :items
 

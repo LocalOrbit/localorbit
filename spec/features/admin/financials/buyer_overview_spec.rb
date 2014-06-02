@@ -86,6 +86,10 @@ feature "Buyer Financial Overview" do
     expect(page).not_to have_content(@uninvoiced1.order_number)
     expect(page).not_to have_content(@uninvoiced2.order_number)
 
+    within("#payment_status") do
+      expect(find('option[selected]').text).to eql("Overdue")
+    end
+
     click_link "Dashboard"
     click_link "Financials"
     click_link "Due"
@@ -95,6 +99,10 @@ feature "Buyer Financial Overview" do
     expect(page).not_to have_content(@overdue_order2.order_number)
     expect(page).not_to have_content(@uninvoiced1.order_number)
     expect(page).not_to have_content(@uninvoiced2.order_number)
+
+    within("#payment_status") do
+      expect(find('option[selected]').text).to eql("Due")
+    end
 
     click_link "Dashboard"
     click_link "Financials"

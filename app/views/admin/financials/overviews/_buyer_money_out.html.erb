@@ -2,21 +2,21 @@
   <table>
     <tr>
       <td class="title">
-        <%= link_to "Overdue", admin_financials_invoices_path(payment_overdue: true) %>
+        <%= link_to "Overdue", admin_financials_invoices_path(payment_status: "overdue") %>
       </td>
       <td class="amount"><%= number_to_currency @overview.overdue %></td>
     </tr>
 
     <tr>
       <td class="title">
-        <%= link_to "Due", admin_financials_invoices_path(payment_due: true) %>
+        <%= link_to "Due", admin_financials_invoices_path(payment_status: "due") %>
       </td>
       <td class="amount"><%= number_to_currency @overview.due %></td>
     </tr>
 
     <tr>
       <td class="title">
-        <%= link_to "Purchase Orders", dashboard_path(uninvoiced: true) %>
+        <%= link_to "Purchase Orders", dashboard_path(payment_status: "uninvoiced") %>
       </td>
       <td class="amount"><%= number_to_currency @overview.purchase_orders %></td>
     </tr>
