@@ -1138,8 +1138,12 @@
 
 @media screen and (max-width: 599px) {
   .logo-link {
-    text-align: center;
     float: none;
+    max-width: 100%;
+    text-align: center;
+    > .logo {
+     max-width: 300px;
+    }
   }
 }
 .signed-out .logo-link {
