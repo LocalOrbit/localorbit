@@ -10,13 +10,13 @@
   <%= render partial: "admin/financials/shared/seller_payment_filters", locals: { payment_history: @payment_history } %>
 <% end %>
 
-<table>
+<table class="sortable">
   <thead class="stickable">
     <tr>
-      <th>Payment Date</th>
+      <th><%= sort_link(@payment_history.q, :updated_at, "Payment Date") %></th>
       <th>Description</th>
       <th>Payment Method</th>
-      <th>Amount</th>
+      <th><%= sort_link(@payment_history.q, :amount, "Amount") %></th>
     </tr>
   </thead>
   <tbody>

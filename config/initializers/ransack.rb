@@ -17,3 +17,12 @@ Ransack.configure do |config|
     validator: proc { |v| v.present? },
     type: :string
 end
+
+# Removes the sort indicator from ransack sort links.
+module Ransack
+  module Helpers
+    module FormHelper
+      def order_indicator_for(order); end
+    end
+  end
+end

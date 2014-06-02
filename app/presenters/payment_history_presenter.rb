@@ -8,7 +8,7 @@ class PaymentHistoryPresenter
     per_page = options[:per_page]
     search = options[:q] || {}
 
-    scope = if user.admin?
+    payments = if user.admin?
       Payment.all
     elsif user.market_manager?
       payment_table = Payment.arel_table
@@ -41,8 +41,6 @@ class PaymentHistoryPresenter
       Payment.where(payee: organization)
     end
 
-    payments = scope.order("payments.updated_at DESC")
-
     new(payments, search, page, per_page)
   end
 
@@ -50,7 +48,10 @@ class PaymentHistoryPresenter
     @start_date = format_date(search[:updated_at_date_gteq])
     @end_date = format_date(search[:updated_at_date_lteq])
 
+    # Initialize ransack and set a default sort order
     @q = payments.search(search)
+    @q.sorts = "updated_at desc" if @q.sorts.empty?
+
     @payments = @q.result.page(page).per(per_page)
 
     @payers = options_for_payments(payments, :payer)
