@@ -4,6 +4,12 @@
     <h1><i class="font-icon" data-icon="&#xe01f;"></i>&nbsp; Products</h1>
 
     <div class="row row--justified product-header">
+      <div class="column product-search">
+          <div class="search-widget">
+            <input type="search" id="search" value="<%= @query_params["search"] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
+          </div>
+          <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small" %>
+      </div>
       <div class="column product-filters">
         <% if current_user.multi_market_membership? %>
           <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), prompt: "Show for all Markets", class: 'filter-dropdown', data: { parameter: "market"} %>
@@ -12,13 +18,6 @@
           <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), prompt: "Show for all Sellers", class: 'filter-dropdown', data: { parameter: "organization"} %>
         <% end %>
         <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params, "sort") %>
-      </div>
-
-      <div class="column product-search">
-          <div class="search-widget">
-            <input type="search" id="search" value="<%= @query_params["search"] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
-          </div>
-          <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small" %>
       </div>
     </div>
   </div>

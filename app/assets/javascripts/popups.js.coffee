@@ -17,6 +17,8 @@ $ ->
     $(".popup").not($element).addClass('is-hidden')
     position_popup($element)
     $('.overlay').addClass('is-open')
+    if $element.hasClass('popup--edit')
+      $('.overlay').addClass('is-editable')
 
 
   $('.modal-toggle').click ->
@@ -28,8 +30,8 @@ $ ->
 
   $('.popup button.close').click ->
     $(this).closest('.popup').addClass('is-hidden')
-    $('.overlay').removeClass('is-open is-dark is-dim is-modal')
+    $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable')
 
   $('.popup form[data-remote]').on 'ajax:success', (event, xhr, status) ->
     $(this).closest('.popup').addClass('is-hidden')
-    $('.overlay').removeClass('is-open is-dark is-dim is-modal')
+    $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable')

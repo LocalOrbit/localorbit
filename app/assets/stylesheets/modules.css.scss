@@ -98,7 +98,11 @@
     margin: .25em 0;
     opacity: 0.5;
   }
-
+@media screen and (max-width: 800px) {
+  .carreted:after {
+    margin-left: .4em;
+  }
+}
 .cancel {
   color: #43639f;
 }
@@ -524,6 +528,17 @@
     text-decoration: none;
   }
 }
+@media screen and (max-width: 768px) {
+  .nav--main {
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .nav--main {
+    font-size: 22px;
+    padding: 4px 8px;
+  }
+}
 
 .nav--admin,
 .nav--app {
@@ -590,8 +605,15 @@
 }
 @media screen and (max-width: 800px) {
   .nav--admin {
+    padding: 0 10px;
+    a, .current {
+      padding: 1em .5em .93em;
+    }
     .font-icon {
       display: none;
+    }
+    > li {
+      font-size: 12px;
     }
   }
 }
@@ -612,7 +634,6 @@
 
 .overlay {
   position: fixed;
-  z-index: 50;
   top: 0;
   left: 0;
   width: 100%;
@@ -628,6 +649,9 @@
   &.is-open {
     display: block;
   }
+  &.is-modal {
+    z-index: 50;
+  }
 }
 
 @media screen and (max-width: 800px) {
@@ -641,12 +665,14 @@
 .orientation-warning {
   display: none;
 }
-@media screen and (max-device-width: 767px) and (orientation: portrait) {
-  .overlay {
+@media screen and (max-device-width: 768px) and (orientation: portrait) {
+  .overlay.is-open.is-editable {
     z-index: 50;
     display: block;
-    background: rgba(200,200,200,0.95);
+    background: rgba(0,0,0,0.85);
   }
+}
+@media screen and (max-device-width: 767px) and (orientation: portrait) {
   .orientation-warning {
     position: fixed;
     z-index: 50;
