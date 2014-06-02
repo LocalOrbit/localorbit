@@ -25,6 +25,14 @@ describe OrderItem do
 
       expect(subject.reload.delivery_status).to eql('canceled')
     end
+
+    it "does not override 'contested'" do
+      subject.delivery_status = "contested"
+      subject.quantity_delivered = 9
+      subject.save!
+
+      expect(subject.reload.delivery_status).to eql('contested')
+    end
   end
 
   context "changing deliver status" do

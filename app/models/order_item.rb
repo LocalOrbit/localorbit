@@ -110,7 +110,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_quantity_delivered
-    if quantity_delivered_changed? && quantity_delivered.present?
+    if quantity_delivered_changed? && quantity_delivered.present? && delivery_status == "pending"
       self.delivery_status = quantity_delivered > 0 ? "delivered" : "canceled"
     end
   end
