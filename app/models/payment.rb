@@ -16,6 +16,17 @@ class Payment < ActiveRecord::Base
   belongs_to :payee, polymorphic: true
   belongs_to :payer, polymorphic: true
 
+  # Add organization-specifc payer and payee associations so we can
+  # search payments by payer and payee attributes.
+  belongs_to :organization_payer,
+    -> { where(payments: { payer_type: "Organization" }) },
+    class_name: "Organization",
+    foreign_key: "payer_id"
+  belongs_to :organization_payee,
+    -> { where(payments: { payee_type: "Organization" }) },
+    class_name: "Organization",
+    foreign_key: "payee_id"
+
   belongs_to :from_organization, class_name: "Organization", foreign_key: :payer_id
   belongs_to :from_market, class_name: "Market", foreign_key: :payer_id
 
