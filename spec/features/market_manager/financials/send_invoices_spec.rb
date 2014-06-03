@@ -159,5 +159,28 @@ feature "sending invoices" do
         expect(page).not_to have_content(market2_buyer1.name)
       end
     end
+
+    it "can be filtered by organization" do
+      switch_to_subdomain(market1.subdomain)
+      sign_in_as market_manager
+      visit admin_financials_invoices_path
+
+      select market1_buyer2.name, from: "q_organization_id_eq"
+      click_button "Filter"
+
+      expect(page).not_to have_content(market1_order1.order_number)
+      expect(page).not_to have_content(market1_order2.order_number)
+      expect(page).not_to have_content(market1_order3.order_number)
+      expect(page).not_to have_content(market1_order4.order_number)
+      expect(page).not_to have_content(market1_order5.order_number)
+      expect(page).to have_content(market1_order6.order_number)
+
+      expect(page).not_to have_content(market2_order1.order_number)
+      expect(page).not_to have_content(market2_order2.order_number)
+      expect(page).not_to have_content(market2_order3.order_number)
+      expect(page).not_to have_content(market2_order4.order_number)
+      expect(page).not_to have_content(market2_order5.order_number)
+      expect(page).not_to have_content(market2_order6.order_number)
+    end
   end
 end

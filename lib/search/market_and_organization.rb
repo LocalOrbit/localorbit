@@ -5,7 +5,7 @@ module Search
     end
 
     def selling_markets
-      @user.managed_markets.order(:name)
+      @user.markets.order(:name)
     end
 
     def organization_id
@@ -13,13 +13,11 @@ module Search
     end
 
     def buyer_organizations
-      base_scope = Order.orders_for_seller(@user).joins(:organization)
-
       if @filtered_market.present?
-        base_scope.where(market_id: @filtered_market)
+        @user.managed_organizations_within_market(@filtered_market)
       else
-        base_scope
-      end.map(&:organization).uniq
+        @user.managed_organizations
+      end
     end
   end
 end

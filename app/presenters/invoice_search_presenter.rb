@@ -5,10 +5,11 @@ class InvoiceSearchPresenter
   attr_reader :start_date, :end_date
   def initialize(query, user)
     @query = query[:q] || {}
-    @filtered_market = @query[:market_id_eq]
     @user = user
 
-    @start_date = format_date(@query[:invoice_due_date_date_gteq])
-    @end_date = format_date(@query[:invoice_due_date_date_lteq])
+    if @query[:market_id_eq].present?
+      @filtered_market = @user.markets.find(@query[:market_id_eq])
+    end
+
   end
 end
