@@ -187,6 +187,7 @@ module Dom
         attribute :order_date
         attribute :due_date
         attribute :amount
+        attribute :action
 
         def send_invoice
           node.click_link("Send Invoice")

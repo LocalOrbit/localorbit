@@ -52,6 +52,12 @@ describe "Buyer invoices" do
       expect(page).to have_content(invoiced_order.order_number)
       expect(page).to have_content(invoiced_order2.order_number)
       expect(page).to have_content(invoiced_order3.order_number)
+      invoices = Dom::Admin::Financials::InvoiceRow.all
+
+      # Ensure no actions are available
+      invoices.each do |invoice|
+        expect(invoice.action).to be_nil
+      end
     end
 
     it "shows an invoices details page" do
