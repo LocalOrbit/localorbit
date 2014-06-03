@@ -15,7 +15,11 @@ class Admin::OrdersController < AdminController
     order = Order.find(params[:id])
     updates = UpdateOrder.perform(order: order, order_params: order_params)
     if updates.success?
-      redirect_to admin_order_path(order), notice: "Order successfully updated."
+      if Order.orders_for_seller(current_user).where(id: order.id).any?
+        redirect_to admin_order_path(order), notice: "Order successfully updated."
+      else
+        redirect_to admin_orders_path, notice: "Order successfully updated"
+      end
     else
       order = updates.context[:order]
       order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == 'failed'

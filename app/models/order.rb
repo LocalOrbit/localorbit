@@ -225,7 +225,7 @@ class Order < ActiveRecord::Base
 
   def validate_items
     if items.empty?
-      errors.add(:items, "cannot be empty")
+      # errors.add(:items, "cannot be empty")
     end
   end
 

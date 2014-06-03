@@ -16,67 +16,101 @@ describe 'Editing an order' do
 
   context "remove item", :js do
     let(:user) { create(:user, organizations: [buyer]) }
-    let!(:order_item2) { create(:order_item, product: product2, quantity: 10, unit_price: 3.00) }
 
     before do
-      order.items << order_item2
-
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
-      visit admin_order_path(order)
     end
 
     context "as a buyer" do
       it "returns a 404" do
+        visit admin_order_path(order)
+
         expect(page.status_code).to eql(404)
       end
     end
 
-    context "as a seller" do
-      let!(:user) { create(:user, organizations: [seller]) }
+    context "multiple order items" do
+      let!(:order_item2) { create(:order_item, product: product2, quantity: 10, unit_price: 3.00) }
 
-      it "should not allow removing items" do
-        expect(page).to_not have_link "Delete"
+      before do
+        order.items << order_item2
+        visit admin_order_path(order)
+      end
+
+      context "as a seller" do
+        let!(:user) { create(:user, organizations: [seller]) }
+
+        it "should not allow removing items" do
+          expect(page).to_not have_link "Delete"
+        end
+      end
+
+      context "as a market manager" do
+        let!(:user) { create(:user, managed_markets: [market]) }
+
+        it 'removes an item' do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+
+          expect(Dom::Order::ItemRow.count).to eq(2)
+          expect(Dom::Order::ItemRow.all[0].name).to have_content(order_item.name)
+          expect(Dom::Order::ItemRow.all[1].name).to have_content(order_item2.name)
+
+          Dom::Order::ItemRow.first.click_delete
+
+          expect(page).to have_content("Order successfully updated")
+          expect(Dom::Order::ItemRow.count).to eq(1)
+          expect(Dom::Order::ItemRow.all[0].name).to have_content(order_item2.name)
+        end
+
+        it 'updates the order total' do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+
+          expect(page).to have_content("Grand Total: $45.00")
+
+          Dom::Order::ItemRow.first.click_delete
+
+          expect(page).to have_content("Order successfully updated")
+          expect(page).to have_content("Grand Total: $30.00")
+        end
+
+        it 'updates the order summary totals' do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
+
+          Dom::Order::ItemRow.first.click_delete
+
+          expect(page).to have_content("Order successfully updated")
+          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
+        end
       end
     end
 
-    context "as a market manager" do
-      let!(:user) { create(:user, managed_markets: [market]) }
-
-      it 'removes an item' do
-        expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
-
-        expect(Dom::Order::ItemRow.count).to eq(2)
-        expect(Dom::Order::ItemRow.all[0].name).to have_content(order_item.name)
-        expect(Dom::Order::ItemRow.all[1].name).to have_content(order_item2.name)
-
-        Dom::Order::ItemRow.first.click_delete
-
-        expect(page).to have_content("Order successfully updated")
-        expect(Dom::Order::ItemRow.count).to eq(1)
-        expect(Dom::Order::ItemRow.all[0].name).to have_content(order_item2.name)
+    context "single order items" do
+      before do
+        visit admin_order_path(order)
       end
 
-      it 'updates the order total' do
-        expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+      context "as a seller" do
+        let!(:user) { create(:user, organizations: [seller]) }
 
-        expect(page).to have_content("Grand Total: $45.00")
-
-        Dom::Order::ItemRow.first.click_delete
-
-        expect(page).to have_content("Order successfully updated")
-        expect(page).to have_content("Grand Total: $30.00")
+        it "should not allow removing items" do
+          expect(page).to_not have_link "Delete"
+        end
       end
 
-      it 'updates the order summary totals' do
-        expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+      context "as a market manager" do
+        let!(:user) { create(:user, managed_markets: [market]) }
 
-        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
+        it 'returns you to the orders list' do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
-        Dom::Order::ItemRow.first.click_delete
+          Dom::Order::ItemRow.first.click_delete
 
-        expect(page).to have_content("Order successfully updated")
-        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
+          expect(page).to have_content("Order successfully updated")
+          expect(page.current_path).to eql(admin_orders_path)
+        end
       end
     end
   end
