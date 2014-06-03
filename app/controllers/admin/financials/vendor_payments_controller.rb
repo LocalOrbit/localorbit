@@ -16,7 +16,7 @@ module Admin
       protected
 
       def payment_params
-        params.require(:payment).permit(:note, :payment_type, order_ids: [])
+        params.require(:payment).permit(:note, :payment_method, order_ids: [])
       end
     end
   end
