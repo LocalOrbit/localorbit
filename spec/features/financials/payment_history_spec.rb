@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Payment history" do
+feature "Payment history", :truncate_after_all do
   before :all do
     market_ach_balanced_uri = "http://balanced.example.com/12345"
     ach_balanced_uri = "http://balanced.example.com/123456"
