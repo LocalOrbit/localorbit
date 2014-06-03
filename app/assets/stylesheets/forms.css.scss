@@ -108,20 +108,22 @@ input[type=password] {
   input {
     font-size: 16px;
   }
-  .datepicker {
-    &.hasDatepicker {
-      + .clear-link,
-      ~ .btn--end {
-        display: none;
+  body.input_date {
+    .datepicker {
+      &.hasDatepicker {
+        + .clear-link,
+        ~ .btn--end {
+          display: none;
+        }
       }
     }
-  }
-  .ui-datepicker {
-    max-width: 0;
-    max-height: 0;
-    padding: 0;
-    border: 0;
-    overflow: hidden;
+    .ui-datepicker {
+      max-width: 0;
+      max-height: 0;
+      padding: 0;
+      border: 0;
+      overflow: hidden;
+    }
   }
 }
 
