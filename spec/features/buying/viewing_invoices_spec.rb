@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe "Buyer invoices" do
   let!(:market)    { create(:market, :with_address) }
+  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery)    { delivery_schedule.next_delivery }
 
   let!(:sellers)   { create(:organization, :seller, markets: [market]) }
   let!(:apples)    { create(:product, :sellable, name: "Apples", organization: sellers) }
@@ -21,15 +23,15 @@ describe "Buyer invoices" do
   let!(:ordered_grapes3) { create(:order_item, product: grapes) }
 
   let!(:invoice_date) { DateTime.parse("April 20, 2014") }
-  let!(:invoiced_order) { create(:order, market: market, organization: buyers, items: [ordered_apples1, ordered_grapes1], payment_note: "123456", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 20, 2014")) }
-  let!(:invoiced_order2) { create(:order, market: market, organization: buyers, items: [ordered_apples2, ordered_grapes2], payment_note: "77839", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 21, 2014")) }
-  let!(:invoiced_order3) { create(:order, market: market, organization: buyers, items: [ordered_apples3, ordered_grapes3], payment_note: "992830", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 23, 2014")) }
+  let!(:invoiced_order) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_apples1, ordered_grapes1], payment_note: "123456", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 20, 2014")) }
+  let!(:invoiced_order2) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_apples2, ordered_grapes2], payment_note: "77839", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 21, 2014")) }
+  let!(:invoiced_order3) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_apples3, ordered_grapes3], payment_note: "992830", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 23, 2014")) }
 
   let!(:ordered_oranges)  { create(:order_item, product: oranges) }
-  let!(:uninvoiced_order) { create(:order, market: market, organization: buyers, items: [ordered_oranges]) }
+  let!(:uninvoiced_order) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_oranges]) }
 
   let!(:ordered_oranges2) { create(:order_item, product: oranges) }
-  let!(:others_order)     { create(:order, market: market, organization: others, items: [ordered_oranges2], invoiced_at: 2.days.ago, invoice_due_date: 5.days.from_now) }
+  let!(:others_order)     { create(:order, delivery: delivery, market: market, organization: others, items: [ordered_oranges2], invoiced_at: 2.days.ago, invoice_due_date: 5.days.from_now) }
 
   context "as a buyer" do
     let!(:user)      { create(:user, organizations: [buyers]) }

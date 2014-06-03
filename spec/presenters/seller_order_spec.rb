@@ -2,6 +2,9 @@ require "spec_helper"
 
 describe SellerOrder do
   let!(:market)   { create(:market) }
+  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery)    { delivery_schedule.next_delivery }
+
   let!(:buyer)    { create(:organization, :buyer, markets: [market]) }
   let!(:seller1)  { create(:organization, :seller, markets: [market]) }
   let!(:seller2)  { create(:organization, :seller, markets: [market]) }
@@ -13,7 +16,7 @@ describe SellerOrder do
   let!(:item2)    { create(:order_item, product: product2, delivery_status: "pending") }
   let!(:item3)    { create(:order_item, product: product3, delivery_status: "pending") }
   let!(:item4)    { create(:order_item, product: product4, delivery_status: "pending") }
-  let!(:order)    { create(:order, items: [item1, item2, item3, item4], organization: buyer, market: market) }
+  let!(:order)    { create(:order, delivery: delivery, items: [item1, item2, item3, item4], organization: buyer, market: market) }
 
   describe "#items" do
     it "loads the right items for seller 1 organization" do

@@ -14,8 +14,12 @@ feature "seller views their dashboard" do
   end
 
   let!(:market) { create(:market, :with_addresses) }
+
   let!(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, seller_delivery_start: '7:00 AM') }
   let!(:delivery) { delivery_schedule.next_delivery }
+
+  let!(:delivery_schedule2) { create(:delivery_schedule) }
+  let!(:delivery2)    { delivery_schedule2.next_delivery }
 
   let!(:organization) { create(:organization, :seller, markets: [market]) }
   let!(:user) { create(:user, organizations: [organization]) }
@@ -35,6 +39,7 @@ feature "seller views their dashboard" do
     create(:order,
            items: create_list(:order_item, 1, product: product, delivery_status: "pending"),
            market: market,
+           delivery: delivery2,
            placed_at: DateTime.parse("2014-03-31 12:00:00"),
            order_number: "Extra Order"
           )

@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe AttemptBalancedPurchase do
   let!(:market)      { create(:market) }
+  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery)    { delivery_schedule.next_delivery }
+
   let!(:user)        { create(:user) }
   let!(:buyer)       { create(:organization) }
   let!(:product)     { create(:product, :sellable, organization: buyer) }
@@ -9,7 +12,7 @@ describe AttemptBalancedPurchase do
   let!(:credit_card) { create(:bank_account, :credit_card, bankable: buyer, balanced_uri: "/balanced-credit-card-uri") }
   let!(:cart)        { create(:cart, organization: buyer, market: market) }
   let!(:cart_item)   { create(:cart_item, product: product, cart: cart, quantity: 10)}
-  let!(:order)       { create(:order, :with_items) }
+  let!(:order)       { create(:order, :with_items, delivery: delivery) }
   let(:params)       { { "payment_method" => "purchase order"} }
 
   let!(:balanced_customer) { double("balanced customer", debit: balanced_debit) }

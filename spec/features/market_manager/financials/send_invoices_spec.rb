@@ -3,6 +3,8 @@ require "spec_helper"
 feature "sending invoices" do
   let(:market) { create(:market, subdomain: 'betterest', po_payment_term: 14) }
   let!(:market_manager) { create :user, managed_markets: [market] }
+  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery)    { delivery_schedule.next_delivery }
 
   let!(:buyer_user) { create :user }
 
@@ -12,12 +14,12 @@ feature "sending invoices" do
 
   let!(:product) { create(:product, :sellable, organization: seller) }
 
-  let!(:order1) { create(:order, items:[create(:order_item, product: product, unit_price: 210.00)], market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-001", total_cost: 210, placed_at: Time.zone.parse("2014-04-01")) }
-  let!(:order2) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer, invoiced_at: 1.day.ago, invoice_due_date: 13.days.from_now) }
-  let!(:order3) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: 'credit card') }
-  let!(:order4) { create(:order, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: 'ach') }
-  let!(:order5) { create(:order, items:[create(:order_item, product: product, unit_price: 420.00)], market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-005", total_cost: 420, placed_at: Time.zone.parse("2014-04-02")) }
-  let!(:order6) { create(:order, items:[create(:order_item, product: product, unit_price: 310.00)], market: market, organization: buyer2, payment_method: 'purchase order', order_number: "LO-006", total_cost: 310, placed_at: Time.zone.parse("2014-04-03")) }
+  let!(:order1) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 210.00)], market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-001", total_cost: 210, placed_at: Time.zone.parse("2014-04-01")) }
+  let!(:order2) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market, organization: buyer, invoiced_at: 1.day.ago, invoice_due_date: 13.days.from_now) }
+  let!(:order3) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: 'credit card') }
+  let!(:order4) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: 'ach') }
+  let!(:order5) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 420.00)], market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-005", total_cost: 420, placed_at: Time.zone.parse("2014-04-02")) }
+  let!(:order6) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 310.00)], market: market, organization: buyer2, payment_method: 'purchase order', order_number: "LO-006", total_cost: 310, placed_at: Time.zone.parse("2014-04-03")) }
 
   invoice_auth_matcher = lambda {|r1, r2|
     matcher = %r{/admin/invoices/[0-9]+/invoice\.pdf\?auth_token=}

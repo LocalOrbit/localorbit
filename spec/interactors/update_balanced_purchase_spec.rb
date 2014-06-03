@@ -2,10 +2,13 @@ require 'spec_helper'
 
 describe UpdateBalancedPurchase do
   let!(:market)     { create(:market) }
+  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery)    { delivery_schedule.next_delivery }
+
   let!(:order_item) { create(:order_item, unit_price: 15.00, quantity: 2) }
 
   context "credit card" do
-    let!(:order)      { create(:order, market: market, items: [order_item], payment_method: "credit card") }
+    let!(:order)      { create(:order, delivery: delivery, market: market, items: [order_item], payment_method: "credit card") }
 
     context "refund difference" do
       let!(:payment) { create(:payment, :credit_card, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-1') }
@@ -102,7 +105,7 @@ describe UpdateBalancedPurchase do
   end
 
   context "ach" do
-    let!(:order)      { create(:order, market: market, items: [order_item], payment_method: "ach") }
+    let!(:order)      { create(:order, delivery: delivery, market: market, items: [order_item], payment_method: "ach") }
 
     context "refund difference" do
       let!(:payment) { create(:payment, :checking, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-1') }
