@@ -1,7 +1,7 @@
 module Admin::Financials
   class InvoicesController < AdminController
     def index
-      @search_presenter = InvoiceSearchPresenter.new(request.query_parameters)
+      @search_presenter = InvoiceSearchPresenter.new(request.query_parameters, current_user)
 
       @q = if current_user.buyer_only?
         Order.orders_for_buyer(current_user).invoiced.periscope(request.query_parameters)

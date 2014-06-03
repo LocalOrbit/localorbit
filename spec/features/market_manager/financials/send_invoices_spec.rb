@@ -28,13 +28,11 @@ feature "sending invoices" do
     matcher.match(r1.uri) && matcher.match(r2.uri)
   }
 
-  before do
+  scenario "seeing a list of unsent invoices" do
     switch_to_subdomain(market1.subdomain)
     sign_in_as market_manager
     visit admin_financials_invoices_path
-  end
 
-  scenario "seeing a list of unsent invoices" do
     # Orders paid with PO payment type, that have no invoiced_at time
     invoice_rows = Dom::Admin::Financials::InvoiceRow.all
     expect(invoice_rows.size).to eq(3)
@@ -68,6 +66,10 @@ feature "sending invoices" do
   end
 
   scenario "sending an invoice to an organization with no users" do
+    switch_to_subdomain(market1.subdomain)
+    sign_in_as market_manager
+    visit admin_financials_invoices_path
+
     Dom::Admin::Financials::InvoiceRow.all.last.send_invoice
 
     expect(page).to have_content("Invoice sent for order number LO-006")
@@ -77,6 +79,10 @@ feature "sending invoices" do
   end
 
   scenario "sending selected invoices", :js, vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
+    switch_to_subdomain(market1.subdomain)
+    sign_in_as market_manager
+    visit admin_financials_invoices_path
+
     Dom::Admin::Financials::InvoiceRow.select_all
     click_button 'Send Selected Invoices'
 
@@ -85,17 +91,73 @@ feature "sending invoices" do
   end
 
   context "filtering" do
-    let(:market2) { create(:market, subdomain: 'betterest2', po_payment_term: 14) }
+    let!(:market2) { create(:market, subdomain: 'betterest2', po_payment_term: 14) }
     let!(:market_manager) { create :user, managed_markets: [market1, market2] }
     let!(:buyer_user2) { create :user }
     let!(:market2_seller1) { create(:organization, :seller, name: "Better Farms", markets: [market2]) }
-    let!(:market2_buyer1)  { create(:organization, :buyer, name: "Money Bags", markets: [market2], users: [buyer_user2]) }
-    let!(:market2_buyer2) { create(:organization, :buyer, name: "Money Satchels", markets: [market2]) }
+    let!(:market2_buyer1)  { create(:organization, :buyer, name: "Buyer for Market2 1", markets: [market2], users: [buyer_user2]) }
+    let!(:market2_buyer2) { create(:organization, :buyer, name: "Buyer for Market 2 1", markets: [market2]) }
     let!(:market2_order1) { create(:order, items:[create(:order_item, product: product, unit_price: 210.00)], market: market2, organization: market2_buyer1, payment_method: 'purchase order', order_number: "LO-007", total_cost: 210, placed_at: Time.zone.parse("2014-04-01")) }
     let!(:market2_order2) { create(:order, items:[create(:order_item, product: product)], market: market2, organization: market2_buyer1, invoiced_at: 1.day.ago, invoice_due_date: 13.days.from_now) }
     let!(:market2_order3) { create(:order, items:[create(:order_item, product: product)], market: market2, organization: market2_buyer1, payment_method: 'credit card') }
     let!(:market2_order4) { create(:order, items:[create(:order_item, product: product)], market: market2, organization: market2_buyer1, payment_method: 'ach') }
     let!(:market2_order5) { create(:order, items:[create(:order_item, product: product, unit_price: 420.00)], market: market2, organization: market2_buyer1, payment_method: 'purchase order', order_number: "LO-008", total_cost: 420, placed_at: Time.zone.parse("2014-04-02")) }
     let!(:market2_order6) { create(:order, items:[create(:order_item, product: product, unit_price: 310.00)], market: market2, organization: market2_buyer2, payment_method: 'purchase order', order_number: "LO-009", total_cost: 310, placed_at: Time.zone.parse("2014-04-03")) }
+
+    it "can be filtered by market" do
+      switch_to_subdomain(market1.subdomain)
+      sign_in_as market_manager
+      visit admin_financials_invoices_path
+
+      within("#q_market_id_eq") do
+        expect(page).to have_content(market1.name)
+        expect(page).to have_content(market2.name)
+      end
+
+      within("#q_organization_id_eq") do
+        expect(page).to have_content(market1_buyer1.name)
+        expect(page).to have_content(market1_buyer2.name)
+        expect(page).to have_content(market2_buyer2.name)
+        expect(page).to have_content(market2_buyer1.name)
+      end
+
+      expect(page).to have_content(market1_order1.order_number)
+      expect(page).not_to have_content(market1_order2.order_number)
+      expect(page).not_to have_content(market1_order3.order_number)
+      expect(page).not_to have_content(market1_order4.order_number)
+      expect(page).to have_content(market1_order5.order_number)
+      expect(page).to have_content(market1_order6.order_number)
+
+      expect(page).to have_content(market2_order1.order_number)
+      expect(page).not_to have_content(market2_order2.order_number)
+      expect(page).not_to have_content(market2_order3.order_number)
+      expect(page).not_to have_content(market2_order4.order_number)
+      expect(page).to have_content(market2_order5.order_number)
+      expect(page).to have_content(market2_order6.order_number)
+
+      select market1.name, from: "q_market_id_eq"
+      click_button "Filter"
+
+      expect(page).to have_content(market1_order1.order_number)
+      expect(page).not_to have_content(market1_order2.order_number)
+      expect(page).not_to have_content(market1_order3.order_number)
+      expect(page).not_to have_content(market1_order4.order_number)
+      expect(page).to have_content(market1_order5.order_number)
+      expect(page).to have_content(market1_order6.order_number)
+
+      expect(page).not_to have_content(market2_order1.order_number)
+      expect(page).not_to have_content(market2_order2.order_number)
+      expect(page).not_to have_content(market2_order3.order_number)
+      expect(page).not_to have_content(market2_order4.order_number)
+      expect(page).not_to have_content(market2_order5.order_number)
+      expect(page).not_to have_content(market2_order6.order_number)
+
+      within("#q_organization_id_eq") do
+        expect(page).to have_content(market1_buyer1.name)
+        expect(page).to have_content(market1_buyer2.name)
+        expect(page).not_to have_content(market2_buyer2.name)
+        expect(page).not_to have_content(market2_buyer1.name)
+      end
+    end
   end
 end
