@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Viewing invoices" do
-  let(:market) { create(:market, :with_address, po_payment_term: 14) }
+  let(:market) { create(:market, :with_address, po_payment_term: 14, contact_phone: "1234567890") }
   let!(:market_manager) { create :user, managed_markets: [market] }
 
   let!(:buyer_user) { create :user }
@@ -40,6 +40,8 @@ feature "Viewing invoices" do
       expect(page).to have_content(address.city)
       expect(page).to have_content(address.state)
       expect(page).to have_content(address.zip)
+      expect(page).to have_content("(123) 456-7890")
+      expect(page).to have_content(market.contact_email)
     end
     expect(page).to have_content("Total $400.00")
 

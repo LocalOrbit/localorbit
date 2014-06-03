@@ -1,4 +1,5 @@
 class MarketDecorator < Draper::Decorator
+  include ActionView::Helpers::NumberHelper
   include Draper::LazyHelpers
   include MapHelper
 
@@ -30,6 +31,10 @@ class MarketDecorator < Draper::Decorator
 
   def phone_number
     first_address.phone
+  end
+
+  def display_contact_phone
+    number_to_phone(contact_phone.to_s.gsub(/[^0-9]/, ""), area_code: true)
   end
 
   def header
