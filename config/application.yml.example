@@ -3,7 +3,7 @@ BALANCED_MARKETPLACE_URI: "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D"
 SECRET_TOKEN: 4edd1c93887a120e04b118d93dc0dc0a79def610c8f3b04669891b7ce8b0c1cafbc0a3c5d6651f108e15257e1dc3fd689d049a4e23c648168ac432c3f03b9fe6
 GOOGLE_MAPS_KEY: "AIzaSyDRQCjRSGyFnuGb5kNdk7IHjUyyRWmsPrQ"
 ASSET_HOST: "http://localhost:3000"
-DOMAIN: "lvh.me" # lvh.me points to 127.0.0.1 and lets us use subdomains. localhost does not.
+DOMAIN: "localhost.me" # locahost.me points to 127.0.0.1 and lets us use subdomains. localhost does not. see http://readme.localtest.me/
 ZENDESK_EMAIL: "service@localorb.it"
 UPLOADS_BUCKET: "localorbit-fake"
 UPLOADS_ACCESS_KEY_ID: 'fakety-fake'
