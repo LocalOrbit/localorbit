@@ -24,3 +24,6 @@ env:
 cache: bundler
 services:
   - memcached
+addons:
+  hosts:
+    - localhost.me
