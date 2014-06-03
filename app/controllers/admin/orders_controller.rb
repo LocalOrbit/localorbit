@@ -15,9 +15,10 @@ class Admin::OrdersController < AdminController
     order = Order.find(params[:id])
     updates = UpdateOrder.perform(order: order, order_params: order_params)
     if updates.success?
-      if Order.orders_for_seller(current_user).where(id: order.id).any?
+      if order.reload.items.any?
         redirect_to admin_order_path(order), notice: "Order successfully updated."
       else
+        order.soft_delete
         redirect_to admin_orders_path, notice: "Order successfully updated"
       end
     else

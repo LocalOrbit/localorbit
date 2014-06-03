@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
     "overdue"
   ].freeze
 
+  include SoftDelete
   include DeliveryStatus
   include Sortable
 
@@ -42,14 +43,14 @@ class Order < ActiveRecord::Base
   before_save :update_paid_at
   before_save :update_total_cost
 
-  scope :recent, -> { order("created_at DESC").limit(15) }
-  scope :upcoming_delivery, -> { joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
-  scope :uninvoiced, -> { where(payment_method: "purchase order", invoiced_at: nil) }
-  scope :invoiced, -> { where(payment_method: "purchase order").where.not(invoiced_at: nil) }
-  scope :unpaid, -> { where(payment_status: "unpaid") }
-  scope :paid, -> { where(payment_status: "paid") }
-  scope :delivered, -> { where("order_items.delivery_status = ?", "delivered").group('orders.id') }
-  scope :paid_with, lambda { |method| where(payment_method: method) }
+  scope :recent, -> { visible.order("created_at DESC").limit(15) }
+  scope :upcoming_delivery, -> { visible.joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
+  scope :uninvoiced, -> { visible.where(payment_method: "purchase order", invoiced_at: nil) }
+  scope :invoiced, -> { visible.where(payment_method: "purchase order").where.not(invoiced_at: nil) }
+  scope :unpaid, -> { visible.where(payment_status: "unpaid") }
+  scope :paid, -> { visible.where(payment_status: "paid") }
+  scope :delivered, -> { visible.where("order_items.delivery_status = ?", "delivered").group('orders.id') }
+  scope :paid_with, lambda { |method| visible.where(payment_method: method) }
   scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", (Time.current - 1.day).end_of_day) }
   scope :payment_due, -> { unpaid.where("invoice_due_date >= ?", (Time.current - 1.day).end_of_day) }
   scope :payment_status, lambda { |status|

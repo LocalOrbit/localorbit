@@ -92,11 +92,6 @@ describe Order do
       expect(subject).to be_invalid
       expect(subject).to have(1).error_on(:payment_method)
     end
-
-    it "requires at least one order item to be valid" do
-      expect(subject).to be_invalid
-      expect(subject).to have(1).error_on(:items)
-    end
   end
 
   describe ".orders_for_buyer" do

@@ -162,6 +162,44 @@ describe 'Editing an order' do
           expect(page).to have_content("Order successfully updated")
           expect(page.current_path).to eql(admin_orders_path)
         end
+
+        it 'soft deletes the order' do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+
+          first_order_item.click_delete
+
+          expect(page).to have_content("Order successfully updated")
+          expect(order.reload.deleted_at).to_not be_nil
+        end
+      end
+
+      context "as an admin" do
+        let!(:user) { create(:user, :admin) }
+
+        it 'is not allowed to delete a delivered item' do
+          order_item.update(delivery_status: 'delivered')
+          visit admin_order_path(order)
+
+          expect(Dom::Order::ItemRow.first.node.first(".icon-delete")).to be_nil
+        end
+
+        it 'returns you to the orders list' do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+
+          first_order_item.click_delete
+
+          expect(page).to have_content("Order successfully updated")
+          expect(page.current_path).to eql(admin_orders_path)
+        end
+
+        it 'soft deletes the order' do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+
+          first_order_item.click_delete
+
+          expect(page).to have_content("Order successfully updated")
+          expect(order.reload.deleted_at).to_not be_nil
+        end
       end
     end
   end
