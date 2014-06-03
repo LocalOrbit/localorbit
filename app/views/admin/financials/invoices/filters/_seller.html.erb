@@ -7,6 +7,9 @@
     <%= f.label :organization_id_eq, "Buyer" %>
     <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "Show by Buyer"}, {class: "filter-input"} %>
 
+    <%= f.label :order_number_or_payment_note_cont, "PO number contains" %><br>
+    <%# NOTE: Do not change the whitespace on the following line %>
+    <%= f.search_field :order_number_or_payment_note_cont, placeholder: "Order # or Purchase Order #" -%><%= f.submit "Search", class: "btn--end" %>
   </div>
 
 

@@ -240,5 +240,30 @@ feature "sending invoices" do
       expect(page).to have_content(market2_order5.order_number)
       expect(page).not_to have_content(market2_order6.order_number)
     end
+
+    it "can be filtered by order number" do
+      switch_to_subdomain(market1.subdomain)
+      sign_in_as market_manager
+      visit admin_financials_invoices_path
+
+      expect(page).to have_content(market1_order1.order_number)
+      expect(page).not_to have_content(market1_order2.order_number)
+      expect(page).not_to have_content(market1_order3.order_number)
+      expect(page).not_to have_content(market1_order4.order_number)
+      expect(page).to have_content(market1_order5.order_number)
+      expect(page).to have_content(market1_order6.order_number)
+
+      fill_in "q_order_number_or_payment_note_cont", with: "LO-001"
+      click_button "Filter"
+
+      expect(page).to have_content(market1_order1.order_number)
+      expect(page).not_to have_content(market1_order2.order_number)
+      expect(page).not_to have_content(market1_order3.order_number)
+      expect(page).not_to have_content(market1_order4.order_number)
+      expect(page).not_to have_content(market1_order5.order_number)
+      expect(page).not_to have_content(market1_order6.order_number)
+
+      expect(page.find("#q_order_number_or_payment_note_cont").value).to eql("LO-001")
+    end
   end
 end
