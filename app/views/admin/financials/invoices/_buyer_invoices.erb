@@ -1,12 +1,11 @@
 <div class="sub-header stickable">
   <div class="l-constraint">
-    <div class="tab-title">
       <h1>Invoices</h1>
-    </div>
-    <div class="clearfix"></div>
+      <%= render "filters" %>
   </div>
 </div>
-<table>
+<div class="sub-header-whitespace"></div>
+<table class="sortable">
   <thead class="stickable">
     <tr>
       <%= content_tag :th, sort_link(@q, :invoice_due_date, "Due Date") %>

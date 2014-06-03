@@ -590,11 +590,15 @@ th {
   }
 }
 .sortable {
+  a {
+    text-decoration: none;
+    color: #000;
+  }
   th {
     cursor: pointer;
-  }
-  .asc, .desc, .headerSortDown, .headerSortUp {
-    color: #0A3078;
+    > a {
+      color: #0A3078;
+    }
   }
   .asc:before,
   .desc:before,
@@ -616,10 +620,6 @@ th {
   .asc:before,
   .headerSortUp:before {
     background-position: 0 0;
-  }
-  a {
-    text-decoration: none;
-    color: #000;
   }
 }
 .cart {

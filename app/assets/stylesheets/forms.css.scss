@@ -386,7 +386,9 @@ form.form-actions {
     }
   }
 }
-.payment_search {
+.invoice_search,
+.payment_search,
+.order_search {
   margin: 0 0 1em;
 
   input,
@@ -410,12 +412,12 @@ form.form-actions {
   margin-bottom: -5px;
   padding: 0;
   background: #eee;
-  border: 1px solid #AAAAAA;
+  border: 1px solid #AAA;
   a {
-    color: #666666;
-  }
-  a:hover {
-    text-decoration: none;
+    color: #666;
+    &:hover{
+      text-decoration: none;
+    }
   }
   .wys-text-format, .wys-text-lists, .wys-text-colors, .wys-links {
     display: inline-block;
@@ -455,7 +457,7 @@ form.form-actions {
     width: 2px;
     height: 30px;
     float: left;
-    background: #dddddd;
+    background: #ddd;
   }
 }
 .wys-create-link {
