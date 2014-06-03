@@ -21,7 +21,7 @@ input[type=checkbox] {
       font-size: 14px;
     }
 }
-
+input[type=date],
 input[type=datetime],
 input[type=email],
 input[type=search],
@@ -50,7 +50,7 @@ textarea {
     margin: 0;
   }
 }
-
+input[type=date],
 input[type=datetime],
 input[type=email],
 input[type=search],
@@ -102,6 +102,26 @@ input[type=password] {
     margin-left: -1px;
     font-size: 12px;
     vertical-align: top;
+  }
+}
+@media screen and (max-width: 599px) {
+  input {
+    font-size: 16px;
+  }
+  .datepicker {
+    &.hasDatepicker {
+      + .clear-link,
+      ~ .btn--end {
+        display: none;
+      }
+    }
+  }
+  .ui-datepicker {
+    max-width: 0;
+    max-height: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
   }
 }
 

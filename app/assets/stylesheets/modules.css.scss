@@ -680,15 +680,18 @@
 @media screen and (max-device-width: 768px) and (orientation: portrait) {
   .overlay {
     z-index: 50;
-    background: rgba(0,0,0,0.85);    
-  }
-  .overlay.is-open.is-editable {
-    display: block;
+    &.is-editable {
+      background: rgba(0,0,0,0.85);    
+    }
+    &.is-open {
+      display: block;   
+    }
   }
 }
 @media screen and (max-device-width: 767px) and (orientation: portrait) {
   .overlay {
     display: block;
+    background: rgba(0,0,0,0.85);    
   }
   .orientation-warning {
     position: fixed;
@@ -718,6 +721,9 @@
     .overlay:not(.is-open),
     .orientation-warning {
       display: none;
+    }
+    .overlay:not(.is-editable) {
+      background: transparent;
     }
   }
 }
