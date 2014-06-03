@@ -1,14 +1,15 @@
-<%= form_tag admin_financials_invoices_path, method: :post do %>
   <div class="sub-header stickable">
     <div class="l-constraint">
-      <div class="tab-title">
         <h1>Unsent Invoices</h1>
-        <div>These invoices require your attention.</div>
-      </div>
-      <input type="submit" value="Send Selected Invoices" class="btn btn--small btn--right">
-      <div class="clearfix"></div>
+      <%= render "filters" %>
     </div>
   </div>
+<%= form_tag admin_financials_invoices_path, method: :post do %>
+  <p class="pull-right">
+    <input type="submit" value="Send Selected Invoices" class="btn btn--small">
+  </p>
+  <p>These invoices require your attention.</p>
+  <div class="clearfix sub-header-whitespace"></div>
   <table>
     <thead class="stickable">
       <tr>

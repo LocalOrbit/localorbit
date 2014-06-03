@@ -1,9 +1,16 @@
 <%= search_form_for @q, url: admin_financials_invoices_path, html: { class: "invoice_search clear-after" } do |f| %>
 
   <div class="pull-left">
-    <%= f.label :order_number_or_payment_note_cont, "PO number contains" %><br>
-    <%# NOTE: Do not change the whitespace on the following line %>
-    <%= f.search_field :order_number_or_payment_note_cont, placeholder: "Order # or Purchase Order #" -%><%= f.submit "Search", class: "btn--end" %>
+    <span class="preserve-alignment">
+      <%= f.label :order_number_or_payment_note_cont, "PO number contains" %><br>
+      <%# NOTE: Do not change the whitespace on the following line %>
+      <%= f.search_field :order_number_or_payment_note_cont, placeholder: "Order # or Purchase Order #" -%><%= f.submit "Search", class: "btn--end" %>
+    </span>
+
+    <span class="preserve-alignment">
+      <%= label :payment_status, "Payment Status" %><br>
+      <%= select_tag :payment_status, options_from_collection_for_select(Order::INVOICE_STATUSES, :to_s, :titleize, selected: request.query_parameters[:payment_status]), { prompt: "All", class: "filter-input" } %>
+    </span>
   </div>
 
 
@@ -23,10 +30,4 @@
     </span>
   </div>
 
-  <div class="manager-filters">
-    <span class="preserve-alignment">
-      <%= label :payment_status, "Payment Status" %><br>
-      <%= select_tag :payment_status, options_from_collection_for_select(Order::INVOICE_STATUSES, :to_s, :titleize, selected: request.query_parameters[:payment_status]), { prompt: "All", class: "filter-input" } %>
-    </span>
-  </div>
 <% end %>
