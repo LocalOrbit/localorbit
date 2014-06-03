@@ -9,10 +9,20 @@
     </div><div class="column column--fourth">
       <div class="due-date">
         <h2>Due Date</h2>
-        <%= invoice.invoice_due_date.strftime("%-m/%-d/%Y") %>
+        <% if invoice.invoiced? %>
+          <%= invoice.invoice_due_date.strftime("%-m/%-d/%Y") %>
+        <% else %>
+          --/--/----
+        <% end %>
       </div>
       <h2 class="inline">Invoice Date</h2>
-      <span class="date"><%= invoice.invoiced_at.strftime("%-m/%-d/%Y") %></span>
+      <span class="date">
+        <% if invoice.invoiced? %>
+          <%= invoice.invoiced_at.strftime("%-m/%-d/%Y") %>
+        <% else %>
+          --/--/----
+        <% end %>
+      </span>
     </div>
   </div>
 

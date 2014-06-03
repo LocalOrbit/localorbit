@@ -41,6 +41,8 @@ feature "sending invoices" do
     expect(invoice.buyer).to eq("Money Bags")
     expect(invoice.order_date).to eq("04/01/2014")
     expect(invoice.amount).to eq("$210.00")
+    expect(invoice.action).to include("Send Invoice")
+    expect(invoice.action).to include("Preview")
   end
 
   scenario "sending a invoice", vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
