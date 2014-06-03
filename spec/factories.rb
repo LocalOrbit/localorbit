@@ -75,6 +75,7 @@ FactoryGirl.define do
   factory :order do
     organization
     market
+    delivery
 
     sequence(:order_number) {|n| "LO-#{n}"}
     placed_at        Time.current
