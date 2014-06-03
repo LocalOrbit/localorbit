@@ -49,10 +49,12 @@ describe "Buyer invoices" do
 
       expect(page).to have_content("Invoices")
 
-      expect(page).to have_content(invoiced_order.order_number)
-      expect(page).to have_content(invoiced_order2.order_number)
-      expect(page).to have_content(invoiced_order3.order_number)
       invoices = Dom::Admin::Financials::InvoiceRow.all
+      dom_order_numbers = invoices.map(&:order_number)
+      invoiced_order_numbers = [invoiced_order, invoiced_order2, invoiced_order3].map(&:order_number)
+
+      expect(invoices.count).to eq(3)
+      expect(dom_order_numbers).to match_array(invoiced_order_numbers)
 
       # Ensure no actions are available
       invoices.each do |invoice|
