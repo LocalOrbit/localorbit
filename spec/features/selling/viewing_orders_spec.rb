@@ -140,7 +140,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order3.order_number)
 
       select market1.name, from: "q_market_id_eq"
-      click_button "Update"
+      click_button "Filter"
 
       expect(page).to have_content(market1_order1.order_number)
       expect(page).to have_content(market1_order2.order_number)
@@ -169,7 +169,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order3.order_number)
 
       select market1_buyer_org1.name, from: "q_organization_id_eq"
-      click_button "Update"
+      click_button "Filter"
 
       expect(page).to have_content(market1_order1.order_number)
       expect(page).not_to have_content(market1_order2.order_number)
@@ -190,7 +190,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order3.order_number)
 
       fill_in "q_placed_at_date_gteq", with: "Mon, 12 May 2014"
-      click_button "Update"
+      click_button "Filter"
 
       expect(page).not_to have_content(market1_order1.order_number)
       expect(page).not_to have_content(market1_order2.order_number)
@@ -200,7 +200,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market2_order3.order_number)
 
       fill_in "q_placed_at_date_lteq", with: "Mon, 14 May 2014"
-      click_button "Update"
+      click_button "Filter"
 
       expect(page).not_to have_content(market1_order1.order_number)
       expect(page).not_to have_content(market1_order2.order_number)
