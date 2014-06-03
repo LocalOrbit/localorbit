@@ -134,15 +134,14 @@ describe "Viewing products" do
       sign_in_as(user)
       visit admin_products_path
 
-      product = Dom::ProductRow.first
-      expect(product.name).to eq("Grapes")
+      product = Dom::ProductRow.find_by_name("Grapes")
 
       product.click_stock
 
       fill_in "Quantity", with: 99
       click_button "Save Inventory"
 
-      product = Dom::ProductRow.first
+      product = Dom::ProductRow.find_by_name("Grapes")
       expect(product.stock).to eq("99")
     end
 
@@ -163,7 +162,7 @@ describe "Viewing products" do
 
       click_button "Save Lot"
 
-      product = Dom::ProductRow.first
+      product = Dom::ProductRow.find_by_name("Grapes")
       expect(product.stock).to eq("46")
     end
 
@@ -171,8 +170,7 @@ describe "Viewing products" do
       sign_in_as(user)
       visit admin_products_path
 
-      product = Dom::ProductRow.first
-      expect(product.name).to eq("Grapes")
+      product = Dom::ProductRow.find_by_name("Grapes")
 
       product.click_pricing
 
@@ -182,7 +180,7 @@ describe "Viewing products" do
 
       click_button "Save Price"
 
-      product = Dom::ProductRow.first
+      product = Dom::ProductRow.find_by_name("Grapes")
       expect(product.pricing).to eq("$12.00 5+ boxes")
     end
   end
