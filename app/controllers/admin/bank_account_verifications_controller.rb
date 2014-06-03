@@ -2,8 +2,11 @@ class Admin::BankAccountVerificationsController < AdminController
   include BankAccountEntity
 
   def show
+    bank_account = find_bank_account
+
     @verification = BankAccountVerification.new
-    @verification.bank_account = find_bank_account
+
+    @verification.bank_account = bank_account
   end
 
   def update

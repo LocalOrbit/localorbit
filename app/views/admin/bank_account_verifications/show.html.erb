@@ -7,6 +7,8 @@
     <p>Verification amounts normally show on the bank account owner's statement as &quot;Balanced verification&quot; within 2 business days (usually much faster).</p>
     <p>You have 3 tries to enter the correct values. Please be very careful that they are accurate when entering them. If you have any questions or need help please contact <a href="https://localorbit.zendesk.com/anonymous_requests/new">Local Orbit Support</a>.</p>
 
+    <h2>Attempt <%= @verification.attempt %> of 3</h2>
+
     <ul class="bank-info">
       <li><strong><%= @verification.bank_account.bank_name %></strong></li>
       <li><%= @verification.bank_account.account_type %></li>
