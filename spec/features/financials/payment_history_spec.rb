@@ -168,6 +168,39 @@ feature "Payment history" do
             orders: [order],
             amount: order.total_cost,
             balanced_uri: other_ach_balanced_uri)
+
+      # Create Local Orbit -> Seller payment
+      order = create(:order,
+                    items: [create(:order_item, unit_price: 888.00, quantity: 1)],
+                    organization: @buyer,
+                    market: @market,
+                    payment_method: "ach",
+                    payment_status: "paid",
+                    order_number: "LO-02-234-4567890-888")
+      create(:payment,
+            payment_method: "ach",
+            payer: nil,
+            payee: @seller,
+            orders: [order],
+            amount: order.total_cost,
+            balanced_uri: other_ach_balanced_uri)
+
+      # Create Market -> Seller payment
+      order = create(:order,
+                    items: [create(:order_item, unit_price: 999.00, quantity: 1)],
+                    organization: @buyer,
+                    market: @market,
+                    payment_method: "check",
+                    payment_status: "paid",
+                    order_number: "LO-02-234-4567890-999")
+      create(:payment,
+            payment_type: "seller payment",
+            payment_method: "check",
+            payer: @market,
+            payee: @seller,
+            orders: [order],
+            amount: order.total_cost,
+            balanced_uri: other_ach_balanced_uri)
     end
   end
 
@@ -276,11 +309,13 @@ feature "Payment history" do
     # 5 buyer2  -> market2 payments
     # 5 seller  -> market payments
     # 5 seller2 -> market2 payments
+    # 1 market -> seller payment
+    # 1 Local Orbit -> seller payment
     # 1 cash buyer payment
     # 1 ACH buyer payment
     # 1 service fee
     scenario "can view their purchase history" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
 
       expect(payment_rows_for_description("LO-01-234-4567890-1").count).to eq(2)
       expect(payment_rows_for_description("LO-01-234-4567890-2").count).to eq(2)
@@ -294,6 +329,8 @@ feature "Payment history" do
       expect(payment_rows_for_description("LO-02-234-4567890-5").count).to eq(2)
       expect(payment_rows_for_description("LO-02-234-4567890-123").count).to eq(1)
       expect(payment_rows_for_description("LO-02-234-4567890-345").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-888").count).to eq(1)
+      expect(payment_rows_for_description("LO-02-234-4567890-999").count).to eq(1)
       expect(Dom::Admin::Financials::PaymentRow.find_by_description("Service Fee")).not_to be_nil
     end
 
@@ -319,7 +356,7 @@ feature "Payment history" do
     end
 
     scenario "can search purchase history by order number" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
 
       fill_in "Search Payments", with: "4567890-1"
       click_button "Search"
@@ -331,7 +368,7 @@ feature "Payment history" do
     end
 
     scenario "can search purchase history by payer or payee name" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
 
       fill_in "Search Payments", with: "Buyer 2"
       click_button "Search"
@@ -357,7 +394,7 @@ feature "Payment history" do
     end
 
     scenario "can filter purchase history by payment date" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
 
       fill_in "q_updated_at_date_gteq", with: "Sun, 11 May 2014"
       click_button "Filter"
@@ -383,12 +420,12 @@ feature "Payment history" do
     end
 
     scenario "can filter purchase history by payment method" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
 
       select "ACH", from: "Payment Method"
       click_button "Filter"
 
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
       expect(payment_row("$23.00")).not_to be_nil
       expect(payment_row("$23.01")).not_to be_nil
       expect(payment_row("$24.00")).not_to be_nil
@@ -398,12 +435,12 @@ feature "Payment history" do
     end
 
     scenario "can filter purchase history by payment type" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
 
       select "Order", from: "Payment Type"
       click_button "Filter"
 
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(22)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
 
       select "Service Fee", from: "Payment Type"
       click_button "Filter"
@@ -412,12 +449,12 @@ feature "Payment history" do
     end
 
     scenario "can filter purchase history by payer" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
 
       select @market.name, from: "Received From"
       click_button "Filter"
 
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(6)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
 
       select "Buyer", from: "Received From"
       click_button "Filter"
@@ -426,7 +463,7 @@ feature "Payment history" do
     end
 
     scenario "can filter purchase history by payee" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(23)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
 
       select @market.name, from: "Paid To"
       click_button "Filter"
@@ -436,7 +473,7 @@ feature "Payment history" do
       select @seller.name, from: "Paid To"
       click_button "Filter"
 
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
 
       select @market2.name, from: "Paid To"
       click_button "Filter"
@@ -534,7 +571,7 @@ feature "Payment history" do
     let!(:user) { create(:user, organizations: [@seller]) }
 
     scenario "can view their purchase history" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
 
       expect(payment_row("$42.00")).not_to be_nil
       expect(payment_row("$42.00").payment_method).to eql("Check: #67890")
@@ -555,6 +592,14 @@ feature "Payment history" do
       expect(payment_row("$50.00")).not_to be_nil
       expect(payment_row("$50.00").payment_method).to eql("Check: #67890")
       expect(payment_row("$50.00").date).to eql("05/14/2014")
+
+      expect(payment_row("$888.00")).not_to be_nil
+      expect(payment_row("$888.00").payment_method).to eql("ACH: *********2231")
+      expect(payment_row("$888.00").date).to eql("05/08/2014")
+
+      expect(payment_row("$999.00")).not_to be_nil
+      expect(payment_row("$999.00").payment_method).to eql("Check")
+      expect(payment_row("$999.00").date).to eql("05/08/2014")
     end
 
     scenario "can search purchase history by order number" do
@@ -563,6 +608,8 @@ feature "Payment history" do
       expect(payment_row("$46.00").description).to include("LO-01-234-4567890-3")
       expect(payment_row("$48.00").description).to include("LO-01-234-4567890-4")
       expect(payment_row("$50.00").description).to include("LO-01-234-4567890-5")
+      expect(payment_row("$888.00").description).to include("LO-02-234-4567890-888")
+      expect(payment_row("$999.00").description).to include("LO-02-234-4567890-999")
 
       fill_in "Search Payments", with: "4567890-1"
       click_button "Search"
@@ -580,6 +627,8 @@ feature "Payment history" do
       expect(payment_row("$46.00").description).to include("LO-01-234-4567890-3")
       expect(payment_row("$48.00").description).to include("LO-01-234-4567890-4")
       expect(payment_row("$50.00").description).to include("LO-01-234-4567890-5")
+      expect(payment_row("$888.00").description).to include("LO-02-234-4567890-888")
+      expect(payment_row("$999.00").description).to include("LO-02-234-4567890-999")
 
       fill_in "q_updated_at_date_gteq", with: "Sun, 11 May 2014"
       click_button "Filter"
@@ -606,6 +655,8 @@ feature "Payment history" do
       expect(payment_row("$46.00").description).to include("LO-01-234-4567890-3")
       expect(payment_row("$48.00").description).to include("LO-01-234-4567890-4")
       expect(payment_row("$50.00").description).to include("LO-01-234-4567890-5")
+      expect(payment_row("$888.00").description).to include("LO-02-234-4567890-888")
+      expect(payment_row("$999.00").description).to include("LO-02-234-4567890-999")
 
       select "Check", from: "Payment Method"
       click_button "Filter"
