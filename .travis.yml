@@ -26,4 +26,4 @@ services:
   - memcached
 addons:
   hosts:
-    - localhost.me
+    - localtest.me
