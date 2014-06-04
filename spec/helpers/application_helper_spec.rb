@@ -12,7 +12,7 @@ describe ApplicationHelper do
     end
 
     context "a user with multiple managed organization" do
-      let(:current_user) { double(:user, organizations: [build(:organization), build(:organization)]) }
+      let(:current_user) { double(:user, managed_organizations: [build(:organization), build(:organization)]) }
 
       it "returns the url to the organizations" do
         expect(path_to_my_organization).to eq(organizations_path)
