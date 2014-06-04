@@ -17,6 +17,7 @@ class Organization < ActiveRecord::Base
   has_many :bank_accounts, as: :bankable, dependent: :destroy
 
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
+  validate :require_payment_method
 
   scope :selling, -> { where(can_sell: true) }
   scope :buying,  -> { where(can_sell: false) } # needs a new boolean
@@ -94,5 +95,11 @@ class Organization < ActiveRecord::Base
       attributed['city'].blank? ||
       attributed['state'].blank? ||
       attributed['zip'].blank?
+  end
+
+  def require_payment_method
+    unless allow_purchase_orders? || allow_credit_cards? || allow_ach
+      self.errors.add(:payment_method, "At least one payment method is required for the organization")
+    end
   end
 end

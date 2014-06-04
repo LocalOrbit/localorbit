@@ -205,6 +205,19 @@ describe "A Market Manager", :vcr do
       expect(page).to have_content("Name can't be blank")
     end
 
+    it "requires at least one payment method" do
+      visit "/admin/organizations"
+      click_link "Fresh Pumpkin Patch"
+
+      uncheck "Allow purchase orders"
+      uncheck "Allow credit cards"
+      uncheck "Allow ACH"
+
+      click_button "Save Organization"
+
+      expect(page).to have_content("At least one payment method is required for the organization")
+    end
+
     describe "when a market manager has multiple markets" do
       before do
         market_manager.markets << market2

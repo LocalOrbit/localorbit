@@ -7,6 +7,8 @@ class Market < ActiveRecord::Base
   validates :ach_fee_cap, presence: true, numericality: {greater_than_or_equal_to: 0, less_than: 10_000, allow_blank: true}
   validates :contact_name, :contact_email, presence: true
 
+  validate :require_payment_method
+
   has_many :managed_markets
   has_many :managers, through: :managed_markets, source: :user
 
@@ -91,5 +93,11 @@ class Market < ActiveRecord::Base
 
   def self.order_by_contact_name(direction)
     direction == "asc" ? order("contact_name asc") : order("contact_name desc")
+  end
+
+  def require_payment_method
+    unless allow_purchase_orders? || allow_credit_cards? || allow_ach
+      self.errors.add(:payment_method, "At least one payment method is required for the market")
+    end
   end
 end

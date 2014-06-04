@@ -306,6 +306,18 @@ describe "Managing Markets" do
         expect(find('#market_default_allow_credit_cards')).to be_checked
         expect(find('#market_default_allow_ach')).to_not be_checked
       end
+
+      it 'requires at lease one payment method' do
+        within("#allowed-payment-options") do
+          uncheck "Allow purchase orders"
+          uncheck "Allow credit cards"
+          uncheck "Allow ACH"
+        end
+
+        click_button "Update Market"
+
+        expect(page).to have_content("At least one payment method is required for the market")
+      end
     end
 
     describe "modifying a market without valid infirmation", js: true do
