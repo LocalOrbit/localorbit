@@ -8,7 +8,7 @@
       <th>Buyer Payment</th>
     </tr>
   </thead>
-<% current_market.orders.limit(15).order("created_at DESC").each do |order| %>
+<% current_market.orders.visible.limit(15).order("created_at DESC").each do |order| %>
   <tr class="order-row">
     <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %></td>
     <td class="placed-on"><%= order.placed_at.strftime("%b %e, %Y") %></td>
