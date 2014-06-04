@@ -62,6 +62,8 @@ context "Viewing sold items" do
     end
 
     it "sets item delivery status" do
+      expect(UpdateBalancedPurchase).to receive(:perform).twice.and_return(double("interactor", success?: true))
+
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
       select 'Delivered', from: 'delivery_status'
@@ -80,6 +82,22 @@ context "Viewing sold items" do
       expect(sold_items[0].delivery_status).to eq("Delivered")
       expect(sold_items[1].delivery_status).to eq("Delivered")
       expect(sold_items[2].delivery_status).to eq("Delivered")
+    end
+
+    it "cancels an item from an order" do
+      expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", success?: true))
+      expect(order.total_cost.to_f).to eql(106.50)
+
+      sold_item = Dom::Admin::SoldItemRow.first
+      sold_item.select
+      select 'Canceled', from: 'delivery_status'
+      click_button 'Apply Action'
+
+      expect(order.reload.total_cost.to_f).to eql(82.50)
+      sold_items = Dom::Admin::SoldItemRow.all
+      expect(sold_items[0].delivery_status).to eq("Canceled")
+      expect(sold_items[1].delivery_status).to eq("Pending")
+      expect(sold_items[2].delivery_status).to eq("Pending")
     end
   end
 
