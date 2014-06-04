@@ -68,7 +68,7 @@ end
 group :test do
   gem 'codeclimate-test-reporter', require: false
   gem 'simplecov', '~> 0.7.1',     require: false
-  gem 'capybara', github: 'jnicklas/capybara' # until gem > 2.2.1 is out
+  gem 'capybara'
   gem 'domino'
   gem 'factory_girl_rails'
   gem 'email_spec'
