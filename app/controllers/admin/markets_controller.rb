@@ -4,10 +4,10 @@ class Admin::MarketsController < AdminController
   before_action :find_scoped_market, only: [:show, :update, :payment_options]
 
   def index
-    @markets = market_scope.periscope(request.query_parameters).page(params[:page]).per(params[:per_page])
+    @markets = market_scope.periscope(request.query_parameters)
 
     respond_to do |format|
-      format.html
+      format.html { @markets = @markets.page(params[:page]).per(params[:per_page]) }
       format.csv { @filename = "markets.csv"}
     end
   end

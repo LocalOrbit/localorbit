@@ -3,7 +3,7 @@ class PaymentHistoryPresenter
 
   include Search::DateFormat
 
-  def self.build(user: user, organization: organization, options: options)
+  def self.build(user: user, organization: organization, options: options, paginate: true)
     page = options[:page]
     per_page = options[:per_page]
     search = options[:q] || {}
@@ -41,10 +41,10 @@ class PaymentHistoryPresenter
       Payment.where(payee: organization)
     end
 
-    new(payments, search, page, per_page)
+    new(payments, search, page, per_page, paginate)
   end
 
-  def initialize(payments, search, page, per_page)
+  def initialize(payments, search, page, per_page, paginate = true)
     @start_date = format_date(search[:updated_at_date_gteq])
     @end_date = format_date(search[:updated_at_date_lteq])
 
@@ -52,7 +52,8 @@ class PaymentHistoryPresenter
     @q = payments.search(search)
     @q.sorts = "updated_at desc" if @q.sorts.empty?
 
-    @payments = @q.result.page(page).per(per_page)
+    @payments = @q.result
+    @payments = @payments.page(page).per(per_page) if paginate
 
     @payers = options_for_payments(payments, :payer)
     @payees = options_for_payments(payments, :payee)
@@ -65,7 +66,7 @@ class PaymentHistoryPresenter
     when :payer
       payments.map do |payment|
         if payment.payer.nil?
-          ["Local Orbit", -1] 
+          ["Local Orbit", -1]
         else
           [payment.payer.name, "#{payment.payer_type}#{payment.payer_id}"]
         end
@@ -73,7 +74,7 @@ class PaymentHistoryPresenter
     when :payee
       payments.map do |payment|
         if payment.payee.nil?
-          ["Local Orbit", -1] 
+          ["Local Orbit", -1]
         else
           [payment.payee.name, "#{payment.payee_type}#{payment.payee_id}"]
         end
