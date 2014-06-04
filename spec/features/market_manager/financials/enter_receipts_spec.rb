@@ -61,4 +61,19 @@ feature "entering receipts" do
     expect(row.due_date).to eq(12.days.from_now.strftime("%m/%d/%Y"))
     expect(row.amount).to eq("$420.00")
   end
+
+  context "filtering" do
+    it "by order number" do
+      expect(page).to have_content(order1.order_number)
+      expect(page).to have_content(order2.order_number)
+      expect(page).to have_content(order3.order_number)
+
+      fill_in "q_order_number_or_payment_note_cont", with: "LO-001"
+      click_button "Filter"
+
+      expect(page).to have_content(order1.order_number)
+      expect(page).not_to have_content(order2.order_number)
+      expect(page).not_to have_content(order3.order_number)
+    end
+  end
 end

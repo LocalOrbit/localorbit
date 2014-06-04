@@ -1,4 +1,4 @@
-<%= search_form_for @q, url: admin_financials_invoices_path, html: { class: "invoice_search clear-after" } do |f| %>
+<%= search_form_for @q, url: url, html: { class: "invoice_search clear-after" } do |f| %>
   <div class="pull-left">
     <span class="preserve-alignment">
       <%= f.label :order_number_or_payment_note_cont, "Search Invoices" %><br>

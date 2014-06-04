@@ -2,7 +2,10 @@ module Admin
   module Financials
     class ReceiptsController < AdminController
       def index
-        @orders = for_receipts.order('orders.invoice_due_date').page(params[:page]).per(params[:per_page])
+        @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user, :placed_at)
+        @q = for_receipts.order('orders.invoice_due_date').search(request.query_parameters[:q])
+        @q.sorts = ["invoice_due_date"] if @q.sorts.empty?
+        @orders = @q.result.page(params[:page]).per(params[:per_page])
       end
 
       def edit
