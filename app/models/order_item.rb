@@ -11,7 +11,7 @@ class OrderItem < ActiveRecord::Base
   validates :product, presence: true
   validates :name, presence: true
   validates :seller_name, presence: true
-  validates :quantity, presence: true
+  validates :quantity, presence: true, numericality: {greater_than_or_equal_to: 0, less_than: 2_147_483_647 }
   validates :quantity_delivered, numericality: {greater_than_or_equal_to: 0, less_than: 2_147_483_647, allow_nil: true}
   validates :unit, presence: true
   validates :unit_price, presence: true
@@ -23,6 +23,7 @@ class OrderItem < ActiveRecord::Base
   before_save :update_quantity_delivered
   before_save :update_delivery_status
   before_save :update_delivered_at
+  before_save :update_consumed_inventory
 
   def self.for_delivery(delivery)
     joins(order: :delivery).where(orders: {delivery_id: delivery.id})
@@ -91,17 +92,7 @@ class OrderItem < ActiveRecord::Base
   private
 
   def consume_inventory
-    quantity_remaining = quantity
-
-    product.lots_by_expiration.available(deliver_on_date).each do |lot|
-      break unless quantity_remaining
-
-      num_to_consume = [lot.quantity, quantity_remaining].min
-      lot.decrement!(:quantity, num_to_consume)
-
-      lots.build(lot: lot, quantity: num_to_consume)
-      quantity_remaining -= num_to_consume
-    end
+    consume_inventory_amount(quantity)
   end
 
   def update_delivered_at
@@ -117,11 +108,47 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_delivery_status
-    if delivery_status_changed?
+    if persisted? && delivery_status_changed?
       if delivery_status == "delivered"
         self.quantity_delivered ||= quantity
       elsif delivery_status == "canceled"
         self.quantity_delivered = 0
+      end
+    end
+  end
+
+
+  def consume_inventory_amount(amount)
+    product.lots_by_expiration.available(deliver_on_date).each do |lot|
+      break unless amount
+
+      num_to_consume = [lot.quantity, amount].min
+      lot.decrement!(:quantity, num_to_consume)
+
+      lots.build(lot: lot, quantity: num_to_consume)
+      amount -= num_to_consume
+    end
+  end
+
+  def return_inventory_amount(amount)
+    lots.order(created_at: :desc).each do |lot|
+      break unless amount
+
+      num_to_return = [lot.quantity, amount].min
+      lot.lot.increment!(:quantity, num_to_return)
+
+      amount -= num_to_return
+    end
+  end
+
+  def update_consumed_inventory
+    if quantity_changed?
+      quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
+
+      if quantity_remaining > 0
+        consume_inventory_amount(quantity_remaining)
+      else
+        return_inventory_amount(quantity_remaining.abs)
       end
     end
   end

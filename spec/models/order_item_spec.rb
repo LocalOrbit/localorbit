@@ -92,7 +92,7 @@ describe OrderItem do
 
     it "requires a quantity" do
       expect(subject).to be_invalid
-      expect(subject).to have(1).error_on(:quantity)
+      expect(subject).to have(2).error_on(:quantity)
     end
 
     it "required a product" do
@@ -118,7 +118,7 @@ describe OrderItem do
     describe "product_availability" do
       context "quantity is not present" do
         it "only shows the error for quantity" do
-          expect(subject).to have(1).error_on(:quantity)
+          expect(subject).to have(2).error_on(:quantity)
           expect(subject).to have(:no).errors_on(:inventory)
         end
       end
@@ -278,7 +278,7 @@ describe OrderItem do
     let!(:delivery)    { delivery_schedule.next_delivery }
     let!(:organization)  { create(:organization) }
     let!(:order)         { build(:order, delivery: delivery, market: market, organization: organization) }
-    let(:cart_item)      { create(:cart_item, product: product) }
+    let(:cart_item)      { create(:cart_item, product: product, quantity: 5) }
     let(:deliver_on)     { Date.today }
 
     subject do
@@ -293,7 +293,7 @@ describe OrderItem do
         subject
       }.to change {
         lot1.reload.quantity
-      }.from(10).to(9)
+      }.from(10).to(5)
     end
 
     it 'returns inventory on destruction' do
@@ -303,7 +303,62 @@ describe OrderItem do
         subject.destroy
       }.to change {
         lot1.reload.quantity
-      }.from(9).to(10)
+      }.from(5).to(10)
+    end
+
+    context "updation" do
+      context "large quantity" do
+        context "one lot" do
+          let!(:order_item2) { create(:order_item, product: product, quantity: 5, order: order)}
+
+          it "consumes additional inventory" do
+            expect {
+              order_item2.update(quantity: 7)
+            }.to change {
+              lot1.reload.quantity
+            }.from(5).to(3)
+          end
+        end
+
+        context "multiple lots" do
+          let!(:lot2) { create(:lot, number: '2', quantity: 10, product: product) }
+          let!(:order_item2) { create(:order_item, product: product, quantity: 5, order: order)}
+
+          it "consumes additional inventory" do
+            order_item2.update(quantity: 17)
+
+            expect(lot1.reload.quantity).to eql(0)
+            expect(lot2.reload.quantity).to eql(3)
+          end
+        end
+      end
+
+      context "smaller quantity" do
+        context "one lot" do
+          let!(:order_item2) { create(:order_item, product: product, quantity: 5, order: order)}
+
+          it "returns excess inventory" do
+
+            expect {
+              order_item2.update(quantity: 2)
+            }.to change {
+              lot1.reload.quantity
+            }.from(5).to(8)
+          end
+        end
+
+        context "multiple lots" do
+          let!(:lot2) { create(:lot, number: '2', quantity: 10, product: product) }
+          let!(:order_item2) { create(:order_item, product: product, quantity: 17, order: order)}
+
+          it "returns excess inventory" do
+            order_item2.update(quantity: 5)
+
+            expect(lot1.reload.quantity).to eql(5)
+            expect(lot2.reload.quantity).to eql(10)
+          end
+        end
+      end
     end
   end
 

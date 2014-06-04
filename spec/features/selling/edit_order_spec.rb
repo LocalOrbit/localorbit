@@ -4,15 +4,18 @@ describe 'Editing an order' do
   let!(:market)          { create(:market, :with_addresses, market_seller_fee: 5, local_orbit_seller_fee: 4) }
   let!(:monday_delivery) { create(:delivery_schedule, day: 1)}
   let!(:seller)          { create(:organization, :seller, markets: [market]) }
-  let!(:product)         { create(:product, :sellable, organization: seller)}
+  let!(:product_lot)     { create(:lot, quantity: 145) }
+  let!(:product)         { create(:product, :sellable, organization: seller, lots: [product_lot])}
+
   let!(:product2)         { create(:product, :sellable, organization: seller)}
 
-  let!(:buyer)      { create(:organization, :buyer, markets: [market]) }
+  let!(:buyer)          { create(:organization, :buyer, markets: [market]) }
 
-  let!(:delivery)   { monday_delivery.next_delivery }
-  let!(:order_item) { create(:order_item, product: product, quantity: 5, unit_price: 3.00) }
-  let!(:order)      { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item], payment_method: 'ach')}
-  let!(:payment)    { create(:payment, :checking, orders: [order], amount: 15.00) }
+  let!(:delivery)       { monday_delivery.next_delivery }
+  let!(:order_item)     { create(:order_item, product: product, quantity: 5, unit_price: 3.00) }
+  let!(:order_item_lot) { create(:order_item_lot, quantity: 5, lot: product_lot, order_item: order_item) }
+  let!(:order)          { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item], payment_method: 'ach')}
+  let!(:payment)        { create(:payment, :checking, orders: [order], amount: 15.00) }
 
   def first_order_item
     Dom::Order::ItemRow.find_by_name("#{product.name} from #{product.organization.name}")
@@ -88,6 +91,16 @@ describe 'Editing an order' do
           expect(page).to have_content("Order successfully updated")
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
         end
+
+        it 'returns the inventory' do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(product.available_inventory).to eql(145)
+
+          first_order_item.click_delete
+
+          expect(page).to have_content("Order successfully updated")
+          expect(product.reload.available_inventory).to eql(150)
+        end
       end
 
       context "as an admin" do
@@ -127,6 +140,16 @@ describe 'Editing an order' do
 
           expect(page).to have_content("Order successfully updated")
           expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
+        end
+
+        it 'returns the inventory' do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(product.available_inventory).to eql(145)
+
+          first_order_item.click_delete
+
+          expect(page).to have_content("Order successfully updated")
+          expect(product.reload.available_inventory).to eql(150)
         end
       end
     end
@@ -171,6 +194,16 @@ describe 'Editing an order' do
           expect(page).to have_content("Order successfully updated")
           expect(order.reload.deleted_at).to_not be_nil
         end
+
+        it 'returns the inventory' do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(product.available_inventory).to eql(145)
+
+          first_order_item.click_delete
+
+          expect(page).to have_content("Order successfully updated")
+          expect(product.reload.available_inventory).to eql(150)
+        end
       end
 
       context "as an admin" do
@@ -199,6 +232,16 @@ describe 'Editing an order' do
 
           expect(page).to have_content("Order successfully updated")
           expect(order.reload.deleted_at).to_not be_nil
+        end
+
+        it 'returns the inventory' do
+          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          expect(product.available_inventory).to eql(145)
+
+          first_order_item.click_delete
+
+          expect(page).to have_content("Order successfully updated")
+          expect(product.reload.available_inventory).to eql(150)
         end
       end
     end
@@ -356,7 +399,7 @@ describe 'Editing an order' do
             subject
           }.to_not change {
             product.lots.first.reload.quantity
-          }.from(145)
+          }.from(140)
         end
 
         it "sets the delivery status to 'delivered'" do
@@ -409,7 +452,7 @@ describe 'Editing an order' do
             subject
           }.to_not change {
             product.lots.first.reload.quantity
-          }.from(145)
+          }.from(140)
         end
 
         it "sets the delivery status to 'delivered'" do
@@ -520,7 +563,7 @@ describe 'Editing an order' do
             subject
           }.to_not change {
             product.lots.first.reload.quantity
-          }.from(145)
+          }.from(140)
         end
 
         it "sets the delivery status to 'delivered'" do
@@ -573,7 +616,7 @@ describe 'Editing an order' do
             subject
           }.to_not change {
             product.lots.first.reload.quantity
-          }.from(145)
+          }.from(140)
         end
 
         it "sets the delivery status to 'delivered'" do
@@ -646,6 +689,8 @@ describe 'Editing an order' do
       end
     end
   end
+
+  
 
   context "order notes" do
     context "buyer" do
