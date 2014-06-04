@@ -1,10 +1,9 @@
 module Admin
   class OrderItemsController < AdminController
     def index
-      @order_items = OrderItem.for_user(current_user).joins(:order).order("orders.placed_at DESC, name").page(params[:page]).per(params[:per_page])
-
+      @order_items = OrderItem.for_user(current_user).joins(:order).order("orders.placed_at DESC, name")
       respond_to do |format|
-        format.html
+        format.html { @order_items = @order_items.page(params[:page]).per(params[:per_page]) }
         format.csv { @filename = "orders.csv"}
       end
     end
