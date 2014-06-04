@@ -1,5 +1,5 @@
 <h1 class="clear-before page-title">Welcome to <%= current_market ? current_market.name : "Local Orbit" %></h1>
-<%= content_tag :span, "#{current_market.tagline}", class: "tagline" unless current_market.blank? or current_market.tagline.blank? or current_user.present? %>
+<%= content_tag :span, "#{current_market.tagline}", class: "tagline" if current_market.present? && current_market.tagline.present? %>
 <div class="row devise-forms center-rule">
 
 <div class="column column--half">
