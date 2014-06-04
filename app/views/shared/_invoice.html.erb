@@ -9,7 +9,7 @@
     </div><div class="column column--fourth">
       <div class="due-date">
         <h2>Due Date</h2>
-        <%= (invoice.invoice_due_date || Date.current).strftime("%-m/%-d/%Y") %>
+        <%= (invoice.invoice_due_date || market.po_payment_term.to_i.days.from_now).strftime("%-m/%-d/%Y") %>
       </div>
       <h2 class="inline">Invoice Date</h2>
       <span class="date">
