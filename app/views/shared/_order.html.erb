@@ -51,6 +51,9 @@
         <% if !current_user.buyer_only? %>
           <th>Seller Payment</th>
         <% end %>
+        <% if current_user.market_manager? || current_user.admin? %>
+          <th></th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -78,6 +81,12 @@
         <td class="payment-status"><%= item.object.buyer_payment_status.titleize %></td>
         <% if !current_user.buyer_only? %>
           <td class="seller-status"><%= item.object.seller_payment_status %></td>
+        <% end %>
+        <% if (current_user.market_manager? || current_user.admin?) && item.object.delivery_status == 'pending'%>
+          <td class="action-link">
+            <%= item.hidden_field :_destroy %>
+            <%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), "#delete" %>
+          </td>
         <% end %>
       </tr>
       <% end %>

@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
     "overdue"
   ].freeze
 
+  include SoftDelete
   include DeliveryStatus
   include Sortable
 
@@ -37,19 +38,17 @@ class Order < ActiveRecord::Base
   validates :placed_at, presence: true
   validates :total_cost, presence: true
 
-  validate :validate_items
-
   before_save :update_paid_at
   before_save :update_total_cost
 
-  scope :recent, -> { order("created_at DESC").limit(15) }
-  scope :upcoming_delivery, -> { joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
-  scope :uninvoiced, -> { where(payment_method: "purchase order", invoiced_at: nil) }
-  scope :invoiced, -> { where(payment_method: "purchase order").where.not(invoiced_at: nil) }
-  scope :unpaid, -> { where(payment_status: "unpaid") }
-  scope :paid, -> { where(payment_status: "paid") }
-  scope :delivered, -> { where("order_items.delivery_status = ?", "delivered").group('orders.id') }
-  scope :paid_with, lambda { |method| where(payment_method: method) }
+  scope :recent, -> { visible.order("created_at DESC").limit(15) }
+  scope :upcoming_delivery, -> { visible.joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
+  scope :uninvoiced, -> { visible.where(payment_method: "purchase order", invoiced_at: nil) }
+  scope :invoiced, -> { visible.where(payment_method: "purchase order").where.not(invoiced_at: nil) }
+  scope :unpaid, -> { visible.where(payment_status: "unpaid") }
+  scope :paid, -> { visible.where(payment_status: "paid") }
+  scope :delivered, -> { visible.where("order_items.delivery_status = ?", "delivered").group('orders.id') }
+  scope :paid_with, lambda { |method| visible.where(payment_method: method) }
   scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", (Time.current - 1.day).end_of_day) }
   scope :payment_due, -> { unpaid.where("invoice_due_date >= ?", (Time.current - 1.day).end_of_day) }
   scope :payment_status, lambda { |status|
@@ -75,7 +74,7 @@ class Order < ActiveRecord::Base
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :payment_status
 
-  accepts_nested_attributes_for :items
+  accepts_nested_attributes_for :items, allow_destroy: true
 
   def self.for_sort(order)
     column, direction = column_and_direction(order)
@@ -223,12 +222,6 @@ class Order < ActiveRecord::Base
 
   private
 
-  def validate_items
-    if items.empty?
-      errors.add(:items, "cannot be empty")
-    end
-  end
-
   def update_paid_at
     if changes[:payment_status] && changes[:payment_status][1] == "paid"
       self.paid_at = Time.current
@@ -238,8 +231,8 @@ class Order < ActiveRecord::Base
   def update_total_cost
     self.total_cost = items.inject(0) {|sum, item| sum = sum + item.gross_total }
     self.delivery_fees = delivery.delivery_schedule.fees_for_amount(self.total_cost)
-    
-    self.total_cost += self.delivery_fees
+
+    self.total_cost += self.delivery_fees if self.total_cost > 0.0
   end
 
   def self.order_by_order_number(direction)

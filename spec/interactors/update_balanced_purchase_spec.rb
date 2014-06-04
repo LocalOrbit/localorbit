@@ -10,6 +10,31 @@ describe UpdateBalancedPurchase do
   context "credit card" do
     let!(:order)      { create(:order, delivery: delivery, market: market, items: [order_item], payment_method: "credit card") }
 
+    context "without any items" do
+      let!(:payment) { create(:payment, :credit_card, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-1') }
+
+      before do
+        order.items.delete_all
+        order.save!
+      end
+
+      it 'refunds the entire amount' do
+        existing_debit = double("balanced debit", amount: 4500, source: OpenStruct.new(_type: 'card'))
+        expect(Balanced::Debit).to receive(:find).and_return(existing_debit)
+        expect(existing_debit).to receive(:refund).with({ amount: 4500 })
+
+        expect(order.reload.payments.count).to eql(1)
+
+        UpdateBalancedPurchase.perform(order: order)
+
+        expect(order.reload.payments.count).to eql(2)
+        expect(order.total_cost.to_f).to eql(0.0)
+        expect(Payment.first.amount.to_f).to eql(45.00)
+        expect(Payment.first.refunded_amount.to_f).to eql(45.00)
+        expect(Payment.last.amount.to_f).to eql(-45.00)
+      end
+    end
+
     context "refund difference" do
       let!(:payment) { create(:payment, :credit_card, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-1') }
 

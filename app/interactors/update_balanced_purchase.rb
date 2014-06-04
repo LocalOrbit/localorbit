@@ -92,8 +92,6 @@ class UpdateBalancedPurchase
     Honeybadger.notify_or_ignore(exception) unless Rails.env.test? || Rails.env.development?
     record_payment(type, amount, nil)
 
-    raise exception if Rails.env.development?
-
     context[:status] = 'failed'
     fail!
   end

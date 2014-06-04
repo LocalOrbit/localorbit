@@ -13,9 +13,16 @@ class Admin::OrdersController < AdminController
 
   def update
     order = Order.find(params[:id])
+
+    # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
     updates = UpdateOrder.perform(order: order, order_params: order_params)
     if updates.success?
-      redirect_to admin_order_path(order), notice: "Order successfully updated."
+      if order.reload.items.any?
+        redirect_to admin_order_path(order), notice: "Order successfully updated."
+      else
+        order.soft_delete
+        redirect_to admin_orders_path, notice: "Order successfully updated"
+      end
     else
       order = updates.context[:order]
       order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == 'failed'
@@ -27,7 +34,7 @@ class Admin::OrdersController < AdminController
   protected
   def order_params
     params.require(:order).permit(:notes, items_attributes: [
-      :id, :quantity_delivered, :delivery_status
+      :id, :quantity_delivered, :delivery_status, :_destroy
       ])
   end
 

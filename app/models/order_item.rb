@@ -2,6 +2,7 @@ class OrderItem < ActiveRecord::Base
   DELIVERY_STATUSES = %w(pending canceled delivered contested)
 
   attr_accessor :deliver_on_date
+  attr_accessor :_destroy
 
   belongs_to :order, inverse_of: :items
   belongs_to :product

@@ -92,11 +92,6 @@ describe Order do
       expect(subject).to be_invalid
       expect(subject).to have(1).error_on(:payment_method)
     end
-
-    it "requires at least one order item to be valid" do
-      expect(subject).to be_invalid
-      expect(subject).to have(1).error_on(:items)
-    end
   end
 
   describe ".orders_for_buyer" do
@@ -537,6 +532,15 @@ describe Order do
       order.save!
 
       expect(order.reload.total_cost.to_f).to eql(5.74)
+    end
+
+    it "does not include fixed delivery fees if the subtotal is zero" do
+      expect(order.total_cost.to_f).to eql(8.74)
+
+      order_item.update(quantity: 0)
+      order.save!
+
+      expect(order.reload.total_cost.to_f).to eql(0.0)
     end
   end
 end
