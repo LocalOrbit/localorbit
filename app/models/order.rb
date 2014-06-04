@@ -18,6 +18,7 @@ class Order < ActiveRecord::Base
   has_many :items, inverse_of: :order, class: OrderItem, autosave: true, dependent: :destroy
   has_many :order_payments, inverse_of: :order
   has_many :payments, through: :order_payments, inverse_of: :orders
+  has_many :products, through: :items
 
   validates :billing_address, presence: true
   validates :billing_city, presence: true
@@ -110,18 +111,16 @@ class Order < ActiveRecord::Base
     if user.admin?
       all
     elsif user.market_manager?
-      select("DISTINCT orders.*").
-      joins("INNER JOIN order_items ON order_items.order_id = orders.id
-             INNER JOIN products ON products.id = order_items.product_id
-             LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id
+      joins(:products).
+      joins("LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id
              LEFT JOIN managed_markets ON managed_markets.market_id = orders.market_id").
-      where("user_organizations.user_id = :user_id OR managed_markets.user_id = :user_id", user_id: user.id)
+      where("user_organizations.user_id = :user_id OR managed_markets.user_id = :user_id", user_id: user.id).
+      uniq
     else
-      select("DISTINCT orders.*").
-      joins("INNER JOIN order_items ON order_items.order_id = orders.id
-             INNER JOIN products ON products.id = order_items.product_id
-             LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id").
-      where("user_organizations.user_id = :user_id", user_id: user.id)
+      joins(:products).
+      joins("LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id").
+      where("user_organizations.user_id = :user_id", user_id: user.id).
+      uniq
     end
   end
 
