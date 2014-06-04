@@ -102,10 +102,13 @@ describe Order do
   describe ".orders_for_buyer" do
     context "admin" do
       let(:market)       { create(:market) }
+      let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+      let!(:delivery)    { delivery_schedule.next_delivery }
+
       let(:organization) { create(:organization, markets: [market]) }
       let!(:user)        { create(:user, :admin) }
-      let!(:order)       { create(:order, :with_items, organization: organization, market: market) }
-      let!(:other_order) { create(:order, :with_items, organization_id: 0, market: market) }
+      let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market) }
+      let!(:other_order) { create(:order, :with_items, delivery: delivery, organization_id: 0, market: market) }
 
       it "returns all orders" do
         orders = Order.orders_for_buyer(user)
@@ -117,13 +120,16 @@ describe Order do
     context "market manager" do
       let!(:user)        { create(:user, :market_manager) }
       let(:market)       { user.managed_markets.first }
+      let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+      let!(:delivery)    { delivery_schedule.next_delivery }
+
       let(:other_market) { create(:market) }
       let(:organization) { create(:organization, markets: [market]) }
       let(:org2)         { create(:organization, markets: [other_market], users: [user])}
-      let!(:order)       { create(:order, :with_items, organization: organization, market: market) }
-      let!(:other_order) { create(:order, :with_items,organization_id: 0, market: market) }
-      let!(:other_market_order) { create(:order, :with_items, organization_id: 0, market: other_market) }
-      let!(:valid_other_market_order) { create(:order, :with_items, organization: org2, market: other_market) }
+      let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market) }
+      let!(:other_order) { create(:order, :with_items, delivery: delivery, organization_id: 0, market: market) }
+      let!(:other_market_order) { create(:order, :with_items, delivery: delivery, organization_id: 0, market: other_market) }
+      let!(:valid_other_market_order) { create(:order, :with_items, delivery: delivery, organization: org2, market: other_market) }
 
       it "returns only managed markets orders" do
         orders = Order.orders_for_buyer(user)
@@ -135,10 +141,12 @@ describe Order do
 
     context "user" do
       let(:market)       { create(:market) }
+      let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+      let!(:delivery)    { delivery_schedule.next_delivery }
       let(:organization) { create(:organization, markets: [market]) }
       let!(:user)        { create(:user, organizations:[organization]) }
-      let!(:order)       { create(:order, :with_items, organization: organization, market: market) }
-      let!(:other_order) { create(:order, :with_items, organization_id: 0, market: market) }
+      let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market) }
+      let!(:other_order) { create(:order, :with_items, delivery: delivery, organization_id: 0, market: market) }
 
       it 'returns only the organizations orders' do
         orders = Order.orders_for_buyer(user)
@@ -151,9 +159,11 @@ describe Order do
 
   describe "destruction" do
     let(:market)       { create(:market) }
+    let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+    let!(:delivery)    { delivery_schedule.next_delivery }
     let(:organization) { create(:organization, markets: [market]) }
     let!(:user)        { create(:user, organizations:[organization]) }
-    let!(:order)       { create(:order, :with_items, organization: organization, market: market) }
+    let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market) }
 
     it 'removes order items' do
       expect {
@@ -167,10 +177,12 @@ describe Order do
   describe ".orders_for_seller" do
     context "admin" do
       let(:market)       { create(:market) }
+      let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+      let!(:delivery)    { delivery_schedule.next_delivery }
       let(:organization) { create(:organization, markets: [market]) }
       let!(:user)        { create(:user, :admin) }
-      let!(:order)       { create(:order, :with_items, organization: organization, market: market) }
-      let!(:other_order) { create(:order, :with_items, organization_id: 0, market: market) }
+      let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market) }
+      let!(:other_order) { create(:order, :with_items, delivery: delivery, organization_id: 0, market: market) }
 
       it "returns all orders" do
         orders = Order.orders_for_seller(user)
@@ -182,6 +194,9 @@ describe Order do
     context "market_manager" do
       let!(:user)    { create(:user, :market_manager) }
       let!(:market1) { user.managed_markets.first }
+      let!(:delivery_schedule) { create(:delivery_schedule) }
+      let!(:delivery)    { delivery_schedule.next_delivery }
+
       let!(:market2) { create(:market) }
       let!(:org1)    { create(:organization, users: [user], markets: [market2]) }
       let!(:org2)    { create(:organization, markets: [market2]) }
@@ -189,9 +204,9 @@ describe Order do
       let!(:product2) { create(:product, :sellable, organization: org2) }
       let!(:product3) { create(:product, :sellable, organization: org1) }
 
-      let!(:managed_order) { create(:order, market: market1, organization_id: 0, items: [create(:order_item, product: product2)]) }
-      let!(:org_order)     { create(:order, market: market2, organization_id: 0, items: [create(:order_item, product: product1),create(:order_item, product: product3)]) }
-      let!(:not_order)     { create(:order, market: market2, organization_id: 0, items: [create(:order_item, product: product2)]) }
+      let!(:managed_order) { create(:order, market: market1, delivery: delivery, organization_id: 0, items: [create(:order_item, product: product2)]) }
+      let!(:org_order)     { create(:order, market: market2, delivery: delivery, organization_id: 0, items: [create(:order_item, product: product1),create(:order_item, product: product3)]) }
+      let!(:not_order)     { create(:order, market: market2, delivery: delivery, organization_id: 0, items: [create(:order_item, product: product2)]) }
 
       it "returns only managed markets orders" do
         orders = Order.orders_for_seller(user)
@@ -203,14 +218,16 @@ describe Order do
 
     context "seller" do
       let(:market)       { create(:market) }
+      let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+      let!(:delivery)    { delivery_schedule.next_delivery }
       let(:organization) { create(:organization, markets: [market]) }
       let(:product)      { create(:product, :sellable, organization: organization)}
       let(:product2)     { create(:product, :sellable, organization: organization)}
       let!(:user)        { create(:user, organizations:[organization]) }
-      let!(:order)       { create(:order, :with_items, organization: organization, market: market) }
+      let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market) }
       let!(:order_item)  { create(:order_item, order: order, product: product) }
       let!(:order_item2) { create(:order_item, order: order, product: product2) }
-      let!(:other_order) { create(:order, :with_items, organization_id: 0, market: market) }
+      let!(:other_order) { create(:order, :with_items, delivery: delivery, organization_id: 0, market: market) }
 
       it 'returns only the organizations orders' do
         orders = Order.orders_for_seller(user)
@@ -363,7 +380,10 @@ describe Order do
   end
 
   describe "#delivered_at" do
-    subject{ create(:order, items: items) }
+    let!(:delivery_schedule) { create(:delivery_schedule) }
+    let!(:delivery)    { delivery_schedule.next_delivery }
+
+    subject{ create(:order, delivery: delivery, items: items) }
     let(:items) { create_list(:order_item, 2, product: create(:product, :sellable)) }
 
     def set_delivered(item, date)
@@ -392,6 +412,9 @@ describe Order do
     end
 
     context "all delivered order items" do
+      let!(:delivery_schedule) { create(:delivery_schedule) }
+      let!(:delivery)    { delivery_schedule.next_delivery }
+
       let(:delivered_at) { Time.current - 1.week }
       let(:latest_delivered_at) { Time.current - 2.days}
       let(:items) { create_list(:order_item, 2, product: create(:product, :sellable)) }
@@ -409,7 +432,10 @@ describe Order do
   end
 
   describe "#paid_at" do
-    subject{ create(:order, items: items) }
+    let!(:delivery_schedule) { create(:delivery_schedule) }
+    let!(:delivery)    { delivery_schedule.next_delivery }
+
+    subject{ create(:order, delivery: delivery, items: items) }
     let(:items) { create_list(:order_item, 2, product: create(:product, :sellable)) }
 
     def set_payment_status(item, date)
@@ -444,6 +470,9 @@ describe Order do
     end
 
     context "with order_items" do
+      let!(:delivery_schedule) { create(:delivery_schedule) }
+      let!(:delivery)    { delivery_schedule.next_delivery }
+
       let(:ada_farms) { create(:organization, :seller) }
       let(:fulton_farms) { create(:organization, :seller) }
       let(:not_included_farms) { create(:organization, :seller) }
@@ -461,7 +490,7 @@ describe Order do
           create(:order_item, product: peas)
         ]
 
-        order = create(:order, items: order_items)
+        order = create(:order, delivery: delivery, items: order_items)
 
         expect(order.sellers.count).to eql(2)
         expect(order.sellers).to include(ada_farms)
@@ -475,13 +504,16 @@ describe Order do
     let(:product) { create(:product, :sellable) }
     let(:product2) { create(:product, :sellable) }
 
+    let!(:delivery_schedule) { create(:delivery_schedule) }
+    let!(:delivery)    { delivery_schedule.next_delivery }
+
     let(:delivered_item1) { create(:order_item, product: product, delivery_status: "delivered") }
     let(:delivered_item2) { create(:order_item, product: product2, delivery_status: "delivered") }
-    let!(:delivered_order) { create(:order, items: [delivered_item1, delivered_item2]) }
+    let!(:delivered_order) { create(:order, delivery: delivery, items: [delivered_item1, delivered_item2]) }
 
     let(:undelivered_item1) { create(:order_item, product: product) }
     let(:undelivered_item2) { create(:order_item, product: product2) }
-    let!(:undelivered_order) { create(:order, items: [undelivered_item1, undelivered_item2]) }
+    let!(:undelivered_order) { create(:order, delivery: delivery, items: [undelivered_item1, undelivered_item2]) }
 
     it "returns orders where all items have deivered" do
       expect(Order.joins(:items).delivered).to include(delivered_order)
@@ -491,18 +523,20 @@ describe Order do
 
   describe "#update_total_cost" do
     let(:market)       { create(:market) }
+    let!(:delivery_schedule) { create(:delivery_schedule, fee: "1.75", fee_type: "fixed") }
+    let!(:delivery)    { delivery_schedule.next_delivery }
     let(:organization) { create(:organization, markets: [market]) }
     let!(:user)        { create(:user, :admin) }
-    let!(:order)       { create(:order, :with_items, organization: organization, market: market) }
+    let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market) }
     let!(:order_item)  { order.items.first }
 
     it "updates the total cost on order save" do
-      expect(order.total_cost.to_f).to eql(6.99)
+      expect(order.total_cost.to_f).to eql(8.74)
 
       order_item.update(unit_price: 3.99)
       order.save!
 
-      expect(order.reload.total_cost.to_f).to eql(3.99)
+      expect(order.reload.total_cost.to_f).to eql(5.74)
     end
   end
 end

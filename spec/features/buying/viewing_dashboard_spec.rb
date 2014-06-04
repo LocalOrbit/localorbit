@@ -10,7 +10,8 @@ describe 'Buyer viewing dashboard' do
   let!(:ada_farms)    { create(:organization, :seller, :single_location, name: "Ada Farms") }
 
   let(:market)            { create(:market, :with_addresses, organizations: [buyer, buyer2, fulton_farms, ada_farms]) }
-  let(:delivery_schedule) { create(:delivery_schedule,  market: market) }
+  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery)    { delivery_schedule.next_delivery }
 
   # Fulton St. Farms
   let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms) }
@@ -21,16 +22,16 @@ describe 'Buyer viewing dashboard' do
 
   context 'with orders' do
     let!(:order_item1) { create(:order_item, product: bananas) }
-    let!(:order1)      { create(:order, items:[order_item1], organization: buyer, placed_at: Time.zone.parse('2014-04-02')) }
+    let!(:order1)      { create(:order, delivery: delivery, items:[order_item1], organization: buyer, placed_at: Time.zone.parse('2014-04-02')) }
 
     let!(:order_item2) { create(:order_item, product: kale) }
-    let!(:order2)      { create(:order, items:[order_item2], organization: buyer, placed_at: Time.zone.parse('2014-04-03')) }
+    let!(:order2)      { create(:order, delivery: delivery, items:[order_item2], organization: buyer, placed_at: Time.zone.parse('2014-04-03')) }
 
     let!(:order_item3) { create(:order_item, product: potatoes) }
-    let!(:order3)      { create(:order, items:[order_item3], organization: buyer, placed_at: Time.zone.parse('2014-04-04')) }
+    let!(:order3)      { create(:order, delivery: delivery, items:[order_item3], organization: buyer, placed_at: Time.zone.parse('2014-04-04')) }
 
     let!(:order_item4) { create(:order_item, product: potatoes) }
-    let!(:order4)      { create(:order, items:[order_item4], organization: buyer2, placed_at: Time.zone.parse('2014-04-03')) }
+    let!(:order4)      { create(:order, delivery: delivery, items:[order_item4], organization: buyer2, placed_at: Time.zone.parse('2014-04-03')) }
 
     it 'shows their order history' do
       switch_to_subdomain(market.subdomain)

@@ -2,6 +2,9 @@ require 'spec_helper'
 
 feature "Buyer Financial Overview" do
   let!(:market)  { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery)    { delivery_schedule.next_delivery }
+
   let!(:seller)  { create(:organization, markets: [market]) }
   let!(:seller2) { create(:organization, markets: [market]) }
   let!(:buyer) { create(:organization, :single_location, markets: [market], can_sell: false) }
@@ -18,14 +21,14 @@ feature "Buyer Financial Overview" do
     Timecop.travel(Time.current - 32.days) do
 
       order_item = create(:order_item, unit_price: 53.99, quantity: 1)
-      @overdue_order1 = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
+      @overdue_order1 = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       @overdue_order1.invoice
       deliver_order(@overdue_order1)
       @overdue_order1.save!
 
       order_item = create(:order_item, unit_price: 102.99, quantity: 1)
-      @overdue_order2 = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
+      @overdue_order2 = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       @overdue_order2.invoice
       deliver_order(@overdue_order2)
@@ -34,7 +37,7 @@ feature "Buyer Financial Overview" do
 
     Timecop.travel(Time.current - 7.days) do
       order_item = create(:order_item, unit_price: 6.41, quantity: 2)
-      @due_order = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
+      @due_order = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       @due_order.invoice
       deliver_order(@due_order)
@@ -42,7 +45,7 @@ feature "Buyer Financial Overview" do
 
     Timecop.travel(Time.current - 6.days) do
       order_item = create(:order_item, unit_price: 41.11, quantity: 2)
-      @to_be_paid = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
+      @to_be_paid = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       @to_be_paid.invoice
       deliver_order(@to_be_paid)
@@ -50,7 +53,7 @@ feature "Buyer Financial Overview" do
 
     Timecop.travel(Time.current - 6.days) do
       order_item = create(:order_item, unit_price: 46.43, quantity: 2)
-      @uninvoiced1 = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
+      @uninvoiced1 = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       deliver_order(@uninvoiced1)
       #pay_order(@uninvoiced1)
@@ -58,7 +61,7 @@ feature "Buyer Financial Overview" do
 
     Timecop.travel(Time.current - 6.days) do
       order_item = create(:order_item, unit_price: 150.01, quantity: 2)
-      @uninvoiced2 = create(:order, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
+      @uninvoiced2 = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
 
       deliver_order(@uninvoiced2)
       #pay_order(@uninvoiced2)

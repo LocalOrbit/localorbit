@@ -303,6 +303,9 @@ describe OrderItem do
 
   context "seller_payment_status" do
     let!(:market)      { create(:market) }
+    let!(:delivery_schedule) { create(:delivery_schedule) }
+    let!(:delivery)    { delivery_schedule.next_delivery }
+
     let!(:seller1)     { create(:organization, :seller, name: "Better Farms", markets: [market]) }
     let!(:seller2)     { create(:organization, :seller, name: "Great Farms",  markets: [market]) }
     let!(:buyer)       { create(:organization, :buyer,  name: "Money Bags",   markets: [market]) }
@@ -315,6 +318,7 @@ describe OrderItem do
         items:          [order_item1, order_item2],
         market:         market,
         organization:   buyer,
+        delivery:       delivery,
         payment_method: "purchase order",
         order_number:   "LO-002",
         total_cost:     69.90,

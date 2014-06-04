@@ -110,6 +110,17 @@ class DeliverySchedule < ActiveRecord::Base
     end
   end
 
+  def fees_for_amount(amount)
+    case fee_type
+    when "fixed"
+      fee || 0
+    when "percent"
+      (amount * ((fee || 0) / 100))
+    else
+      0.0
+    end
+  end
+
   protected
 
   def buyer_pickup_end_after_start

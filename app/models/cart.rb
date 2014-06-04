@@ -31,14 +31,7 @@ class Cart < ActiveRecord::Base
   end
 
   def delivery_fees
-    case delivery.delivery_schedule.fee_type
-    when "fixed"
-      delivery.delivery_schedule.fee || 0
-    when "percent"
-      (subtotal * ((delivery.delivery_schedule.fee || 0) / 100))
-    else
-      0.0
-    end
+    delivery.delivery_schedule.fees_for_amount(subtotal)
   end
 
   def total

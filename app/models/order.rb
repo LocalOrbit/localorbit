@@ -237,6 +237,9 @@ class Order < ActiveRecord::Base
 
   def update_total_cost
     self.total_cost = items.inject(0) {|sum, item| sum = sum + item.gross_total }
+    self.delivery_fees = delivery.delivery_schedule.fees_for_amount(self.total_cost)
+    
+    self.total_cost += self.delivery_fees
   end
 
   def self.order_by_order_number(direction)

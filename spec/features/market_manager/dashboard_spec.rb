@@ -4,6 +4,9 @@ feature "a market manager viewing their dashboard" do
   let!(:user) { create(:user, :market_manager) }
   let!(:market) { user.managed_markets.first }
 
+  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery)    { delivery_schedule.next_delivery }
+
   before do
     market.update_attributes(subdomain: "ada")
     switch_to_subdomain(market.subdomain)
@@ -16,14 +19,14 @@ feature "a market manager viewing their dashboard" do
       product = create(:product, :sellable)
 
       order_item = create(:order_item, unit_price: 10.00, quantity: 2)
-      create(:order, items: [order_item], order_number: "LO-14-TEST-2", market: market)
+      create(:order, delivery: delivery, items: [order_item], order_number: "LO-14-TEST-2", market: market)
 
       order_item = create(:order_item, unit_price: 25.00, quantity: 2)
-      create(:order, items: [order_item], market: market, placed_at: DateTime.parse("2014-04-01 12:00:00"), order_number: "LO-14-TEST")
+      create(:order, delivery: delivery, items: [order_item], market: market, placed_at: DateTime.parse("2014-04-01 12:00:00"), order_number: "LO-14-TEST")
 
       product.organization.markets << market
 
-      create(:order, :with_items)
+      create(:order, :with_items, delivery: delivery)
 
       visit dashboard_path
 

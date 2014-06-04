@@ -2,13 +2,16 @@ require "spec_helper"
 
 describe "Payment history" do
   let!(:market) { create(:market, :with_addresses) }
+  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery)    { delivery_schedule.next_delivery }
+
   let!(:seller) { create(:organization, :seller, markets: [market]) }
   let!(:user)   { create(:user, organizations: [seller]) }
 
   context "with payments" do
-    let!(:order2)   { create(:order, :with_items) }
+    let!(:order2)   { create(:order, :with_items, delivery: delivery) }
     let!(:payment2) { create(:payment, payee: seller, payment_method: "cash", amount: 42.00, updated_at: DateTime.parse("May 1, 2014 12:00"), orders: [order2])}
-    let!(:order1)   { create(:order, :with_items) }
+    let!(:order1)   { create(:order, :with_items, delivery: delivery) }
     let!(:payment1) { create(:payment, payment_method: 'credit card', payee: seller, amount: 100.00, updated_at: DateTime.parse("May 5, 2014 12:00"), orders: [order1])}
     let!(:service_payment) { create(:payment, payment_type: 'service', payment_method: "ach", payee: seller, amount: 99.00, updated_at: DateTime.parse("May 6, 2014 12:00"))}
 
