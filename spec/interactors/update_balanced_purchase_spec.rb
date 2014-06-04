@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe UpdateBalancedPurchase do
   let!(:market)     { create(:market) }
-  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery_schedule) { create(:delivery_schedule, fee: 0.0, fee_type: 'fixed') }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
   let!(:order_item) { create(:order_item, unit_price: 15.00, quantity: 2) }
