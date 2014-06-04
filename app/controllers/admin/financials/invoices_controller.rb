@@ -1,13 +1,19 @@
 module Admin::Financials
   class InvoicesController < AdminController
     def index
-      @search_presenter = InvoiceSearchPresenter.new(request.query_parameters)
+      base_scope = nil
+      date_filter_attr = nil
 
-      @q = if current_user.buyer_only?
-        Order.orders_for_buyer(current_user).invoiced.periscope(request.query_parameters)
+      if current_user.buyer_only?
+        base_scope = Order.orders_for_buyer(current_user).invoiced
+        date_filter_attr = :invoice_due_date
       else
-        Order.orders_for_seller(current_user).uninvoiced.periscope(request.query_parameters)
-      end.search(request.query_parameters[:q])
+        base_scope = Order.orders_for_seller(current_user).uninvoiced
+        date_filter_attr = :placed_at
+      end
+
+      @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user, date_filter_attr)
+      @q = base_scope.periscope(request.query_parameters).search(request.query_parameters[:q])
 
       @q.sorts = ['invoice_due_at desc', 'order_number asc'] if @q.sorts.empty?
       @orders = @q.result.page(params[:page]).per(params[:per_page])

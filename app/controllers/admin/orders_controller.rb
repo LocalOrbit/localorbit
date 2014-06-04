@@ -1,6 +1,6 @@
 class Admin::OrdersController < AdminController
   def index
-    @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user)
+    @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user, "placed_at")
 
     @q = Order.orders_for_seller(current_user).search(params[:q])
     @q.sorts = "placed_at asc" if @q.sorts.empty?
