@@ -12,7 +12,7 @@ module Admin::Financials
         date_filter_attr = :placed_at
       end
 
-      @search_presenter = InvoiceSearchPresenter.new(request.query_parameters, current_user, date_filter_attr)
+      @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user, date_filter_attr)
       @q = base_scope.periscope(request.query_parameters).search(request.query_parameters[:q])
 
       @q.sorts = ['invoice_due_at desc', 'order_number asc'] if @q.sorts.empty?
