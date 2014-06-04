@@ -50,6 +50,18 @@ describe "Upcoming Deliveries" do
         expect(deliveries.count).to eql(1)
         expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
       end
+
+      it "shows a delivery until 11:59 the day of the delivery" do
+        Timecop.travel("May 8, 2014 11:30 PM") do
+          visit admin_delivery_tools_path
+
+          expect(page).to have_content("Upcoming Deliveries")
+
+          deliveries = Dom::UpcomingDelivery.all
+          expect(deliveries.count).to eql(1)
+          expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+        end
+      end
     end
 
     context "shows deliveries only once" do
