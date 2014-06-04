@@ -102,6 +102,7 @@ Rails.application.routes.draw do
   end
 
   resources :products, only: [:index, :show]
+  resources :organizations, only: :index
   resource  :market, only: [:show]
   resources :sellers, only: [:index, :show]
   resource :cart, only: [:update, :show, :destroy]

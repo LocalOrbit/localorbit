@@ -15,7 +15,7 @@ describe ApplicationHelper do
       let(:current_user) { double(:user, managed_organizations: [build(:organization), build(:organization)]) }
 
       it "returns the url to the organizations" do
-        expect(path_to_my_organization).to eq(admin_organizations_path)
+        expect(path_to_my_organization).to eq(organizations_path)
       end
     end
   end
