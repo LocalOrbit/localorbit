@@ -359,8 +359,13 @@
   filter: brightness(0.9);
   word-wrap: break-word;
   word-break: break-all;
-
 }
+  .signed-out .tagline {
+    text-align: center;
+  }
+  .page-title + .tagline {
+    margin: -1em auto 1em;
+  }
 @media screen and (max-width: 800px) {
   .header--welcome {
     max-width: 30%;
@@ -1022,7 +1027,7 @@
 
 .flash {
   position: absolute;
-  z-index: 4;
+  z-index: 51;
   top: 180px;
   margin-left: -20px;
   width: 100%;
