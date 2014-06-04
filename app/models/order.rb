@@ -38,8 +38,6 @@ class Order < ActiveRecord::Base
   validates :placed_at, presence: true
   validates :total_cost, presence: true
 
-  validate :validate_items
-
   before_save :update_paid_at
   before_save :update_total_cost
 
@@ -224,12 +222,6 @@ class Order < ActiveRecord::Base
 
   private
 
-  def validate_items
-    if items.empty?
-      # errors.add(:items, "cannot be empty")
-    end
-  end
-
   def update_paid_at
     if changes[:payment_status] && changes[:payment_status][1] == "paid"
       self.paid_at = Time.current
@@ -239,8 +231,8 @@ class Order < ActiveRecord::Base
   def update_total_cost
     self.total_cost = items.inject(0) {|sum, item| sum = sum + item.gross_total }
     self.delivery_fees = delivery.delivery_schedule.fees_for_amount(self.total_cost)
-    
-    self.total_cost += self.delivery_fees
+
+    self.total_cost += self.delivery_fees if self.total_cost > 0.0
   end
 
   def self.order_by_order_number(direction)
