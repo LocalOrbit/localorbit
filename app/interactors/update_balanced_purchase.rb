@@ -14,7 +14,7 @@ class UpdateBalancedPurchase
   end
 
   def rollup_payment_amounts
-    order.payments.successful.inject(0) {|sum, payment| sum += payment.amount }
+    order.payments.successful.buyer_payments.inject(0) {|sum, payment| sum += payment.amount }
   end
 
   def create_new_charge(amount)
@@ -41,7 +41,7 @@ class UpdateBalancedPurchase
             debit, context[:type] = fetch_balanced_debit(payment.balanced_uri)
 
             refund_amount = [remaining_amount, payment.unrefunded_amount].min
-            refund = debit.refund(amount: refund_amount.to_i * 100)
+            refund = debit.refund(amount: (refund_amount * 100).to_i)
 
             payment.increment!(:refunded_amount, refund_amount)
             record_payment("order refund", -refund_amount, refund)
@@ -65,7 +65,7 @@ class UpdateBalancedPurchase
       customer = Balanced::Customer.find(debit.account.uri)
 
       new_debit = customer.debit(
-        amount: amount.to_i * 100,
+        amount: (amount * 100).to_i,
         source_uri: debit.source.uri,
         description: "#{order.market.name} purchase"
       )
@@ -78,7 +78,7 @@ class UpdateBalancedPurchase
   end
 
   def first_order_payment
-    order.payments.refundable.order(:created_at).first
+    order.payments.buyer_payments.refundable.order(:created_at).first
   end
 
   def fetch_balanced_debit(uri)
