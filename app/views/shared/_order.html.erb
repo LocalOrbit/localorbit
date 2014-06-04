@@ -64,7 +64,12 @@
           <span class="seller-name">from <%= item.object.product.organization.name %></span>
         </td>
         <td class="quantity">
-          <span><%= item.object.quantity %></span> <%= item.object.unit %> (Ordered)<br />
+          <% if current_user.admin? || current_user.market_manager? %>
+            <%= item.text_field :quantity %>
+          <% else %>
+            <span><%= item.object.quantity %></span>
+          <% end %> <%= item.object.unit %> (Ordered)<br />
+
           <% if current_user.admin? || current_user.market_manager? %>
             <%= item.text_field :quantity_delivered %>
           <% else %>
