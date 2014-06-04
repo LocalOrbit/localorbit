@@ -38,10 +38,9 @@ describe OrderItem do
   end
 
   context "changing deliver status" do
-    subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 8) }
+    subject { create(:order_item, product: product, quantity: 8) }
 
     it "sets delivered_at date when changed to 'delivered'" do
-      expect(subject.delivery_status).to be_nil
       expect(subject.delivered_at).to be_nil
 
       Timecop.freeze do

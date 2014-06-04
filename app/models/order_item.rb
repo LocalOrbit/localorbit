@@ -142,7 +142,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_consumed_inventory
-    if quantity_changed?
+    if persisted? && quantity_changed?
       quantity_remaining = changes[:quantity][1] - (changes[:quantity][0] || 0)
 
       if quantity_remaining > 0
