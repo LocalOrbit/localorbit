@@ -7,14 +7,14 @@
   </div>
 </div>
 
-<table>
+<table class="sortable">
   <thead class="stickable">
     <tr>
-      <th>Invoice #</th>
-      <th>Buyer (Name)</th>
-      <th>Order Date</th>
-      <th>Due Date</th>
-      <th>Amount</th>
+      <th> <%= sort_link(@q, :order_number, "Invoice #") %></th>
+      <th> <%= sort_link(@q, :organizations_name, "Buyer (Name)") %></th>
+      <th> <%= sort_link(@q, :placed_at, "Order Date") %></th>
+      <th> <%= sort_link(@q, :invoice_due_date, "Due Date") %></th>
+      <th> <%= sort_link(@q, :total_cost, "Amount") %></th>
       <th></th>
     </tr>
   </thead>

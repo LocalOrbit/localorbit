@@ -10,14 +10,14 @@
   </p>
   <p>These invoices require your attention.</p>
   <div class="clearfix sub-header-whitespace"></div>
-  <table>
+  <table class="sortable">
     <thead class="stickable">
       <tr>
         <th><input type="checkbox" class="select-all"></th>
-        <th>Order #</th>
-        <th>Buyer</th>
-        <th>Order Date</th>
-        <th>Amount</th>
+        <th> <%= sort_link(@q, :order_number, "Order Number") %></th>
+        <th> <%= sort_link(@q, :organizations_name, "Buyer") %></th>
+        <th> <%= sort_link(@q, :placed_at, "Order Date") %></th>
+        <th> <%= sort_link(@q, :total_cost, "Amount") %></th>
         <th></th>
       </tr>
     </thead>
