@@ -169,12 +169,16 @@ FactoryGirl.define do
     trait :checking do
       payment_type   "order"
       payment_method "ach"
+      status         "pending"
     end
 
     trait :credit_card do
       payment_type   "order"
       payment_method "credit card"
-      status         "pending"
+    end
+
+    trait :market_orders do
+      payment_type "market payment"
     end
   end
 

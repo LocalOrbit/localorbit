@@ -36,7 +36,8 @@ class Payment < ActiveRecord::Base
   has_many :orders, through: :order_payments, inverse_of: :payments
 
   scope :successful, -> { where(status: ['paid', 'pending'])}
-  scope :refundable, -> { successful.where("amount > refunded_amount") }
+  scope :refundable, -> { successful.where(payment_type: "order").where("amount > refunded_amount") }
+  scope :buyer_payments, -> { where(payment_type: ["order", "order refund"]) }
 
   def bank_account
     BankAccount.find_by(balanced_uri: balanced_uri)

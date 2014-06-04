@@ -14,7 +14,7 @@ class UpdateBalancedPurchase
   end
 
   def rollup_payment_amounts
-    order.payments.successful.inject(0) {|sum, payment| sum += payment.amount }
+    order.payments.successful.buyer_payments.inject(0) {|sum, payment| sum += payment.amount }
   end
 
   def create_new_charge(amount)
@@ -78,7 +78,7 @@ class UpdateBalancedPurchase
   end
 
   def first_order_payment
-    order.payments.refundable.order(:created_at).first
+    order.payments.buyer_payments.refundable.order(:created_at).first
   end
 
   def fetch_balanced_debit(uri)
