@@ -13,6 +13,8 @@ class Admin::OrdersController < AdminController
 
   def update
     order = Order.find(params[:id])
+
+    # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
     updates = UpdateOrder.perform(order: order, order_params: order_params)
     if updates.success?
       if order.reload.items.any?

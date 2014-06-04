@@ -6,8 +6,10 @@ describe OrderItem do
         create(:lot, quantity: 5)
       ]
   )}
+  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery)    { delivery_schedule.next_delivery }
 
-  let(:order) { build(:order, market: create(:market)) }
+  let(:order) { build(:order, delivery: delivery, market: create(:market)) }
 
   context "changing quantity delivered" do
     subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 8, delivery_status: 'pending') }
@@ -215,9 +217,11 @@ describe OrderItem do
 
   describe "self.create_with_order_and_item_and_deliver_on_date" do
     let(:market) { create(:market) }
+    let!(:delivery_schedule) { create(:delivery_schedule) }
+    let!(:delivery)    { delivery_schedule.next_delivery }
     let(:organization) { create(:organization) }
     let(:product) { create(:product, :sellable) }
-    let(:order) { build(:order, market: market, organization: organization) }
+    let(:order) { build(:order, delivery: delivery, market: market, organization: organization) }
     let(:cart_item) { create(:cart_item, product: product) }
 
     subject { OrderItem.create_with_order_and_item_and_deliver_on_date(order: order, item: cart_item, deliver_on_date: Date.today) }
@@ -270,8 +274,10 @@ describe OrderItem do
     let!(:lot1)          { create(:lot, number: 1, quantity: 10) }
     let!(:product)       { create(:product, :sellable, lots: [lot1]) }
     let!(:market)        { create(:market) }
+    let!(:delivery_schedule) { create(:delivery_schedule) }
+    let!(:delivery)    { delivery_schedule.next_delivery }
     let!(:organization)  { create(:organization) }
-    let!(:order)         { build(:order, market: market, organization: organization) }
+    let!(:order)         { build(:order, delivery: delivery, market: market, organization: organization) }
     let(:cart_item)      { create(:cart_item, product: product) }
     let(:deliver_on)     { Date.today }
 
