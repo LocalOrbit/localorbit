@@ -54,6 +54,16 @@ describe AttemptBalancedPurchase do
           expect(order.reload.payments).to include(subject.context[:payment])
         end
 
+        it "sets the payment's payer to the cart's organization" do
+          subject # run the interactor
+
+          payment = subject.context[:payment]
+          payer = payment.reload.payer
+
+          expect(payer).to eq(buyer)
+          expect(payer.class).to eq(Organization)
+        end
+
         it "sets the payment method on the order" do
           expect {
             subject
