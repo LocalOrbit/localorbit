@@ -10,7 +10,7 @@ module Admin
     end
 
     def set_status
-      SetOrderItemsStatus.perform(user: current_user, order_item_ids: params[:order_item_ids], delivery_status: params[:delivery_status])
+      UpdateOrderItemsStatus.perform(user: current_user, order_item_ids: params[:order_item_ids], delivery_status: params[:delivery_status])
       redirect_to action: :index
     end
   end
