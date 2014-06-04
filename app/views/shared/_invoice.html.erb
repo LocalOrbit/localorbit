@@ -9,19 +9,11 @@
     </div><div class="column column--fourth">
       <div class="due-date">
         <h2>Due Date</h2>
-        <% if invoice.invoiced? %>
-          <%= invoice.invoice_due_date.strftime("%-m/%-d/%Y") %>
-        <% else %>
-          --/--/----
-        <% end %>
+        <%= (invoice.invoice_due_date || Date.current).strftime("%-m/%-d/%Y") %>
       </div>
       <h2 class="inline">Invoice Date</h2>
       <span class="date">
-        <% if invoice.invoiced? %>
-          <%= invoice.invoiced_at.strftime("%-m/%-d/%Y") %>
-        <% else %>
-          --/--/----
-        <% end %>
+        <%= (invoice.invoiced_at || Date.current).strftime("%-m/%-d/%Y") %>
       </span>
     </div>
   </div>
