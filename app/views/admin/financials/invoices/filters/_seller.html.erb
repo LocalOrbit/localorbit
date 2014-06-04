@@ -1,17 +1,11 @@
 <%= search_form_for @q, url: admin_financials_invoices_path, html: { class: "invoice_search clear-after" } do |f| %>
-
   <div class="pull-left">
-    <%= f.label :market_id_eq, "Market" %>
-    <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "Show by Market"}, {class: "filter-input"} %>
-
-    <%= f.label :organization_id_eq, "Buyer" %>
-    <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "Show by Buyer"}, {class: "filter-input"} %>
-
-    <%= f.label :order_number_or_payment_note_cont, "PO number contains" %><br>
-    <%# NOTE: Do not change the whitespace on the following line %>
-    <%= f.search_field :order_number_or_payment_note_cont, placeholder: "Order # or Purchase Order #" -%><%= f.submit "Search", class: "btn--end" %>
+    <span class="preserve-alignment">
+      <%= f.label :order_number_or_payment_note_cont, "Search Invoices" %><br>
+      <%# NOTE: Do not change the whitespace on the following line %>
+      <%= f.search_field :order_number_or_payment_note_cont, placeholder: "Order # or PO #" -%><%= f.submit "Search", class: "btn--end" %>
+    </span>
   </div>
-
 
   <div class="pull-right">
     <span class="preserve-alignment">
@@ -23,10 +17,19 @@
       <%= datetime_field_tag "q[placed_at_date_lteq]", @search_presenter.end_date, class: 'datepicker' %><a href="#q_placed_at_date_lteq" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
     </span>
     <span class="preserve-alignment">
-      <%# This <br> makes me sad, but it is the easiest/fastest way to achieve this %>
       <br>
       <%= f.submit "Filter", class: "btn--small" %>
     </span>
   </div>
 
+  <div class="manager-filters">
+    <span class="preserve-alignment">
+      <%= f.label :market_id_eq, "Market" %><br>
+      <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "Show by Market"}, {class: "filter-input"} %>
+    </span>
+    <span class="preserve-alignment">
+      <%= f.label :organization_id_eq, "Buyer" %><br>
+      <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "Show by Buyer"}, {class: "filter-input"} %>
+    </span>
+  </div>
 <% end %>
