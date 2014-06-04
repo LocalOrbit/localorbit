@@ -65,14 +65,12 @@ feature "entering receipts" do
   context "filtering" do
     it "by order number" do
       expect(page).to have_content(order1.order_number)
-      expect(page).to have_content(order2.order_number)
       expect(page).to have_content(order3.order_number)
 
       fill_in "q_order_number_or_payment_note_cont", with: "LO-001"
       click_button "Filter"
 
       expect(page).to have_content(order1.order_number)
-      expect(page).not_to have_content(order2.order_number)
       expect(page).not_to have_content(order3.order_number)
     end
   end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://betterest.lvh.me/admin/invoices/7/invoice.pdf?auth_token=BAh7CToGYWlCOgdpZGkJOgxleHBpcmVzbCsHay2OUzoGYmk7--86b24e8b6a3c01de64644d1e01ffab9f6fd29b3f
+    uri: http://betterest.localtest.me/admin/invoices/7/invoice.pdf?auth_token=BAh7CToGYWlCOgdpZGkJOgxleHBpcmVzbCsHay2OUzoGYmk7--86b24e8b6a3c01de64644d1e01ffab9f6fd29b3f
     body:
       encoding: US-ASCII
       string: ''
@@ -19,7 +19,7 @@ http_interactions:
       message: Moved Permanently
     headers:
       Location:
-      - http://app.lvh.me/admin/invoices/7/invoice
+      - http://app.localtest.me/admin/invoices/7/invoice
       Content-Type:
       - application/pdf
       Cache-Control:

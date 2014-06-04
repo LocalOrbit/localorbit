@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://betterest.lvh.me/admin/invoices/19/invoice.pdf?auth_token=BAh7CToGYWkSOgdpZGkNOgxleHBpcmVzbCsHci2OUzoGYmkt--e148632084ef607239a54e5bae1caffeedca959c
+    uri: http://betterest.localtest.me/admin/invoices/19/invoice.pdf?auth_token=BAh7CToGYWkSOgdpZGkNOgxleHBpcmVzbCsHci2OUzoGYmkt--e148632084ef607239a54e5bae1caffeedca959c
     body:
       encoding: US-ASCII
       string: ''
@@ -19,7 +19,7 @@ http_interactions:
       message: Moved Permanently
     headers:
       Location:
-      - http://app.lvh.me/admin/invoices/19/invoice
+      - http://app.localtest.me/admin/invoices/19/invoice
       Content-Type:
       - application/pdf
       Cache-Control:
@@ -144,7 +144,7 @@ http_interactions:
   recorded_at: Tue, 03 Jun 2014 19:17:54 GMT
 - request:
     method: get
-    uri: http://betterest.lvh.me/admin/invoices/23/invoice.pdf?auth_token=BAh7CToGYWlkOgdpZGkNOgxleHBpcmVzbCsHcy2OUzoGYmlA--9720286d6561b66cdaca00f2fb2ed20c22b89676
+    uri: http://betterest.localtest.me/admin/invoices/23/invoice.pdf?auth_token=BAh7CToGYWlkOgdpZGkNOgxleHBpcmVzbCsHcy2OUzoGYmlA--9720286d6561b66cdaca00f2fb2ed20c22b89676
     body:
       encoding: US-ASCII
       string: ''
@@ -161,7 +161,7 @@ http_interactions:
       message: Moved Permanently
     headers:
       Location:
-      - http://app.lvh.me/admin/invoices/23/invoice
+      - http://app.localtest.me/admin/invoices/23/invoice
       Content-Type:
       - application/pdf
       Cache-Control:
