@@ -817,11 +817,15 @@ module Dom
       attribute :delivery_status
 
       def set_quantity_delivered(qty)
-        node.find(".quantity > input").set(qty)
+        node.first(".quantity-delivered").set(qty)
+      end
+
+      def set_quantity_ordered(qty)
+        node.first(".quantity-ordered").set(qty)
       end
 
       def click_delete
-        node.find(".action-link > a").trigger('click')
+        node.first(".action-link > a").trigger('click')
       end
     end
   end
