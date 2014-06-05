@@ -2,8 +2,8 @@ require "spec_helper"
 
 feature "Payments to vendors" do
   let(:market1) { create(:market, name: "Baskerville Co-op", po_payment_term: 14) }
-  let!(:market_1_delivery_schedule) { create(:delivery_schedule, market: market1, day: 3.days.ago.wday) }
-  let!(:market1_delivery) { Timecop.freeze(5.days.ago) { market_1_delivery_schedule.next_delivery } }
+  let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market1, day: 3.days.ago.wday) }
+  let!(:market1_delivery) { Timecop.freeze(5.days.ago) { market1_delivery_schedule.next_delivery } }
   let!(:market_manager) { create :user, managed_markets: [market1] }
 
   let!(:market1_seller1) { create(:organization, :seller, name: "Better Farms", markets: [market1]) }
@@ -124,12 +124,37 @@ feature "Payments to vendors" do
     expect(seller_rows[2].owed).to have_content("$41.94")
   end
 
-  scenario "filtering by market" do
-    switch_to_subdomain(market1.subdomain)
-    sign_in_as market_manager
-    visit admin_financials_vendor_payments_path
-  end
 
-  scenario "filtering by organization"
-  scenario "filtering by payment type"
+  context "filtering" do
+    let(:market2) { create(:market, name: "Jonesville Co-op", po_payment_term: 14) }
+    let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market2, day: 3.days.ago.wday) }
+    let!(:market2_delivery) { Timecop.freeze(5.days.ago) { market1_delivery_schedule.next_delivery } }
+    let!(:market_manager) { create :user, managed_markets: [market1, market2] }
+
+    let!(:market2_seller1) { create(:organization, :seller, name: "Best Farms", markets: [market2]) }
+    let!(:market2_seller2) { create(:organization, :seller, name: "Fruit Farms", markets: [market2]) }
+    let!(:market2_seller3) { create(:organization, :seller, name: "Vegetable Farms", markets: [market2]) }
+    let!(:market2_seller4) { create(:organization, :seller, name: "Smith Farms", markets: [market2]) }
+    let!(:market2_buyer)  { create(:organization, :buyer, name: "Institution", markets: [market2]) }
+
+    let!(:market2_product1) { create(:product, :sellable, organization: market2_seller1) }
+    let!(:market2_product2) { create(:product, :sellable, organization: market2_seller2) }
+    let!(:market2_product3) { create(:product, :sellable, organization: market2_seller2) }
+    let!(:market2_product4) { create(:product, :sellable, organization: market2_seller3) }
+
+    let!(:market2_order1) { create(:order, items:[create(:order_item, :delivered, product: market2_product1, quantity: 4)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-006", total_cost: 27.96, placed_at: 19.days.ago) }
+    let!(:market2_order2) { create(:order, items:[create(:order_item, :delivered, product: market2_product2, quantity: 3), create(:order_item, :delivered, product: market2_product4, quantity: 7)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-007", total_cost: 69.90, placed_at: 6.days.ago, payment_status: "paid") }
+    let!(:market2_order3) { create(:order, items:[create(:order_item, :delivered, product: market2_product3, quantity: 6)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-0008", total_cost: 41.94, placed_at: 4.days.ago) }
+    let!(:market2_order4) { create(:order, items:[create(:order_item, :delivered, product: market2_product2, quantity: 9), create(:order_item, :delivered, product: market2_product3, quantity: 14)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-009", total_cost: 160.77, placed_at: 3.days.ago) }
+
+
+    scenario "filtering by market" do
+      switch_to_subdomain(market1.subdomain)
+      sign_in_as market_manager
+      visit admin_financials_vendor_payments_path
+    end
+
+    scenario "filtering by organization"
+    scenario "filtering by payment type"
+  end
 end
