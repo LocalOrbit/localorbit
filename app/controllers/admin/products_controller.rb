@@ -42,7 +42,7 @@ module Admin
       if @product.update_attributes(product_params)
         respond_to do |format|
           format.html { redirect_to after_create_page, notice: "Saved #{@product.name}" }
-          format.js   { redirect_to admin_products_path, notice: "Saved #{@product.name}" }
+          format.js   { redirect_to admin_products_path(query_params), notice: "Saved #{@product.name}" }
         end
       else
         respond_to do |format|
@@ -79,6 +79,10 @@ module Admin
 
       results[:delivery_schedule_ids] ||= []
       results
+    end
+
+    def query_params
+      params.fetch(:query_params, {})
     end
 
     def after_create_page

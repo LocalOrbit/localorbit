@@ -130,12 +130,29 @@ describe "Viewing products" do
   context "updating prices and quantities", js: true do
     let!(:user) { create(:user, organizations: [org1]) }
 
+    it "maintains filters when updating updating price or inventory" do
+      sign_in_as(market_manager)
+
+      visit admin_products_path
+
+      select market.name, from: "product-filter-market"
+      # Don't know what else to do here, and I've been working on this for too long
+      sleep 2
+
+      product = Dom::ProductRow.find_by_name("Grapes")
+      product.click_stock
+
+      fill_in "Quantity", with: 99
+      click_button "Save Inventory"
+
+      expect(page.find("#product-filter-market").find("option[selected=selected]").text).to eq(market.name)
+    end
+
     it "updates simple inventory" do
       sign_in_as(user)
       visit admin_products_path
 
       product = Dom::ProductRow.find_by_name("Grapes")
-
       product.click_stock
 
       fill_in "Quantity", with: 99
@@ -152,7 +169,6 @@ describe "Viewing products" do
       visit admin_products_path
 
       product = Dom::ProductRow.find_by_name("Grapes")
-
       product.click_stock
 
       fill_in "lot_number", with: 32
