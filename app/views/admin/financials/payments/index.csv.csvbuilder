@@ -4,7 +4,7 @@ csv << ["Payment Date", "Description", "Payment Method", "Amount"]
   if payment.payment_type == "order"
     description = "Order #: #{payment.orders.pluck(:order_number).to_sentence}"
   else
-    description = nil
+    description = Payment::PAYMENT_TYPES[payment.payment_type]
   end
 
   csv << [
