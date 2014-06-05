@@ -40,7 +40,7 @@ class Order < ActiveRecord::Base
   validates :total_cost, presence: true
 
   before_save :update_paid_at
-  before_save :update_total_cost
+  after_save :update_total_cost
 
   scope :recent, -> { visible.order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { visible.joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
@@ -228,10 +228,12 @@ class Order < ActiveRecord::Base
   end
 
   def update_total_cost
-    self.total_cost = items.inject(0) {|sum, item| sum = sum + item.gross_total }
-    self.delivery_fees = delivery.delivery_schedule.fees_for_amount(self.total_cost)
+    cost = items.inject(0) {|sum, item| sum = sum + item.gross_total }
+    fees = delivery.delivery_schedule.fees_for_amount(cost)
 
-    self.total_cost += self.delivery_fees if self.total_cost > 0.0
+    cost += fees if cost > 0.0
+
+    self.update_columns(total_cost: cost, delivery_fees: fees)
   end
 
   def self.order_by_order_number(direction)
