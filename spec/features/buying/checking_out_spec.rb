@@ -401,63 +401,75 @@ describe "Checking Out", :js, :vcr do
       end
 
       context "disabled at organization" do
-        before do
-          buyer.update(allow_credit_cards: false, allow_purchase_orders: false, allow_ach: false)
-          visit cart_path
-        end
-
         it "should not show purchase order payment option on the checkout page" do
+          buyer.update(allow_purchase_orders: false)
+          visit cart_path
+
           expect(page).to_not have_content("Pay by Purchase Order")
         end
 
         it "should not show credit card payment option on the checkout page" do
+          buyer.update(allow_credit_cards: false)
+          visit cart_path
+
           expect(page).to_not have_content("Pay by Credit Card")
         end
 
         it "should not show ach payment option on the checkout page" do
+          buyer.update(allow_ach: false)
+          visit cart_path
+
           expect(page).to_not have_content("Pay by ACH")
         end
       end
     end
 
     context "disabled at market" do
-      before do
-        market.update(allow_credit_cards: false, allow_purchase_orders: false, allow_ach: false)
-      end
-
       context "enabled at organization" do
-        before do
-          visit cart_path
-        end
-
         it "should not show purchase order payment option on the checkout page" do
+          market.update(allow_purchase_orders: false)
+          visit cart_path
+
           expect(page).to_not have_content("Pay by Purchase Order")
         end
 
         it "should not show credit card payment option on the checkout page" do
+          market.update(allow_credit_cards: false)
+          visit cart_path
+
           expect(page).to_not have_content("Pay by Credit Card")
         end
 
         it "should not show ACH payment option on the checkout page" do
+          market.update(allow_ach: false)
+          visit cart_path
+
           expect(page).to_not have_content("Pay by ACH")
         end
       end
 
       context "disabled at organization" do
-        before do
-          buyer.update(allow_credit_cards: false, allow_purchase_orders: false, allow_ach: false)
-          visit cart_path
-        end
-
         it "should not show purchase order payment option on the checkout page" do
+          market.update(allow_purchase_orders: false)
+          buyer.update(allow_purchase_orders: false)
+          visit cart_path
+
           expect(page).to_not have_content("Pay by Purchase Order")
         end
 
         it "should not show credit card payment option on the checkout page" do
+          market.update(allow_credit_cards: false)
+          buyer.update(allow_credit_cards: false)
+          visit cart_path
+
           expect(page).to_not have_content("Pay by Credit Card")
         end
 
         it "should not show ach payment option on the checkout page" do
+          market.update(allow_ach: false)
+          buyer.update(allow_ach: false)
+          visit cart_path
+
           expect(page).to_not have_content("Pay by ACH")
         end
       end
