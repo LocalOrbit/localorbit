@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604160724) do
+ActiveRecord::Schema.define(version: 20140605203750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -262,9 +262,9 @@ ActiveRecord::Schema.define(version: 20140604160724) do
     t.boolean  "default_allow_purchase_orders",                         default: false
     t.boolean  "default_allow_credit_cards",                            default: true
     t.boolean  "default_allow_ach",                                     default: true
-    t.integer  "legacy_id"
     t.string   "background_color"
     t.string   "text_color"
+    t.integer  "legacy_id"
     t.boolean  "allow_cross_sell",                                      default: false
     t.boolean  "auto_activate_organizations",                           default: false
   end
@@ -403,6 +403,7 @@ ActiveRecord::Schema.define(version: 20140604160724) do
     t.string   "payer_type"
     t.string   "payment_method"
     t.decimal  "refunded_amount", precision: 10, scale: 2, default: 0.0,     null: false
+    t.integer  "market_id"
   end
 
   add_index "payments", ["payee_id", "payee_type"], name: "index_payments_on_payee_id_and_payee_type", using: :btree
