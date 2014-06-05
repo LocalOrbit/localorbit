@@ -88,6 +88,10 @@ Rails.application.routes.draw do
 
     resource :unit_request, only: :create
     resource :category_request, only: :create
+
+    namespace :reports do
+      get "total-sales" => :total_sales
+    end
   end
 
   resource :dashboard do
