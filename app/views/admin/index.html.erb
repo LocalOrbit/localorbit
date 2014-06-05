@@ -1,0 +1,28 @@
+<div class="tab-header stickable">
+  <div class="l-constraint">
+    <div class="l-page-header">
+     <h1><i class="font-icon" data-icon="&#xe023;">&nbsp; </i>Product Taxonomy</h1>
+     <%= select_tag :filter_depth, options_for_select([['Top-Level Categories', 1], ['Subcategories', 2], ['All', 3]], 3), id: 'filter-categories', data: { parameter: "depth"} %>
+    </div>
+  </div>
+</div>
+
+<div class="row row--partial">
+  <div class="column">
+    <table>
+      <thead>
+        <th>Name</th>
+      </thead>
+      <tbody>
+        <% @root.descendants.each do |category| %>
+          <tr data-depth="<%= category.depth %>">
+            <td>
+              <%= "-" * (category.depth - 1) %>
+              <%= category.name %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

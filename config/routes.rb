@@ -86,6 +86,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :categories, only: :index, path: :taxonomy
     resource :unit_request, only: :create
     resource :category_request, only: :create
   end
