@@ -20,10 +20,11 @@
 .table-wrapper {
   position: relative;
   max-width: 100%;
-  overflow: auto;
+  overflow: visible;
 }
   @media screen and (max-width: 600px) {
     .table-wrapper {
+      overflow: auto;
       .fade-right,
       .fade-left {
         position: absolute;
