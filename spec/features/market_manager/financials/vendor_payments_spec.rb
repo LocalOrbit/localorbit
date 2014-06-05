@@ -152,6 +152,16 @@ feature "Payments to vendors" do
       switch_to_subdomain(market1.subdomain)
       sign_in_as market_manager
       visit admin_financials_vendor_payments_path
+
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms", "Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
+
+      within("#q_market_id_eq") do
+        expect(page).to have_content(market1.name)
+        expect(page).to have_content(market2.name)
+      end
+
+
     end
 
     scenario "filtering by organization"

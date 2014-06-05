@@ -2,21 +2,8 @@ class SellerPaymentGroup
   attr_reader :orders
   attr_reader :organization
 
-  def self.for_user(user)
-    subselect = "SELECT 1 FROM payments
-      INNER JOIN order_payments ON order_payments.order_id = orders.id AND order_payments.payment_id = payments.id
-      WHERE payments.payee_type = ? AND payments.payee_id = products.organization_id"
-    scope = Order.select('orders.*, products.organization_id as seller_id').joins(:delivery, items: :product).
-      where("NOT EXISTS(#{subselect})", "Organization").
-      # This is a slightly fuzzy match right now.
-      # TODO: Implement delivery_end on deliveries for greater accuracy
-      where("deliveries.deliver_on < ? AND order_items.delivery_status = ?", 48.hours.ago, 'delivered').
-      group("orders.id, seller_id").
-      order("orders.order_number").
-      includes(:market)
-
-    scope = scope.where(market_id: user.managed_market_ids) unless user.admin?
-
+  # This goes on the model
+  def self.for_scope(scope)
     grouped_orders = scope.group_by {|order| [order.seller_id, order.market_id] }
 
     # Preload seller organizations

@@ -44,6 +44,21 @@ class Payment < ActiveRecord::Base
     BankAccount.find_by(balanced_uri: balanced_uri)
   end
 
+  def self.payments_for_user(user)
+    subselect = "SELECT 1 FROM payments
+      INNER JOIN order_payments ON order_payments.order_id = orders.id AND order_payments.payment_id = payments.id
+      WHERE payments.payee_type = ? AND payments.payee_id = products.organization_id"
+
+    Order.select('orders.*, products.organization_id as seller_id').joins(:delivery, items: :product).
+      where("NOT EXISTS(#{subselect})", "Organization").
+      # This is a slightly fuzzy match right now.
+      # TODO: Implement delivery_end on deliveries for greater accuracy
+      where("deliveries.deliver_on < ? AND order_items.delivery_status = ?", 48.hours.ago, 'delivered').
+      group("orders.id, seller_id").
+      order("orders.order_number").
+      includes(:market)
+  end
+
   ransacker :update_at_date do |parent|
     Arel.sql("DATE(updated_at)")
   end

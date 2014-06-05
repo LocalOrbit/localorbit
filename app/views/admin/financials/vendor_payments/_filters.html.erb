@@ -1,0 +1,12 @@
+<%= search_form_for @finder.q, url: url, html: { class: "invoice_search clear-after" } do |f| %>
+  <div class="manager-filters">
+    <span class="preserve-alignment">
+      <%= f.label :market_id_eq, "Market" %><br>
+      <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "Show by Market"}, {class: "filter-input"} %>
+    </span>
+    <span class="preserve-alignment">
+      <%= f.label :organization_id_eq, "Buyer" %><br>
+      <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "Show by Buyer"}, {class: "filter-input"} %>
+    </span>
+  </div>
+<% end %>

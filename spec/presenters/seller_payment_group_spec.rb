@@ -41,10 +41,11 @@ describe SellerPaymentGroup do
 
   let!(:buyer_payment_for_order_for_sellers_2_both_paid) { create(:payment, payee: nil, orders: [order_for_seller_2_buyer_and_seller_paid], payment_method: "credit card", amount: 20.97, status: "paid") }
   let!(:seller_payments_for_order_for_sellers_2_both_paid) { create(:payment, payee: seller2, orders: [order_for_seller_2_buyer_and_seller_paid], amount: 20.97) }
+  let(:scope) { Payment.payments_for_user(market_manager) }
 
-  describe '.for_user' do
+  describe '.for_scope' do
     it 'contains the right set of order information' do
-      sellers = SellerPaymentGroup.for_user(market_manager)
+      sellers = SellerPaymentGroup.for_scope(scope)
 
       # only 3 sellers are payable
       expect(sellers.size).to eq(3)
@@ -69,7 +70,8 @@ describe SellerPaymentGroup do
     end
 
     describe 'for multi market manager' do
-      let!(:market2) { create(:market, :with_delivery_schedule, name: "Upper Foods", po_payment_term: 14, managers: [market_manager]) }
+      let!(:market2) { create(:market, :with_delivery_schedule, name: "Upper Foods", po_payment_term: 14) }
+      let!(:market_manager)           { create :user, managed_markets: [market1, market2] }
       let!(:delivery2) { Timecop.freeze(14.days.ago) { market2.delivery_schedules.first.next_delivery } }
 
       let!(:seller1) { create(:organization, :seller, name: "Better Farms", markets: [market1, market2]) }
@@ -78,9 +80,10 @@ describe SellerPaymentGroup do
 
       let!(:order_for_seller_2_multi_item) { create(:order, items:[create(:order_item, :delivered, product: product2, quantity: 9), create(:order_item, :delivered, product: product3, quantity: 14)], market: market2, organization: buyer1, delivery: delivery2, payment_method: "purchase order", order_number: "LO-004", total_cost: 160.77, placed_at: 3.days.ago) }
       let!(:order_for_seller_1_market2) { create(:order, items:[create(:order_item, :delivered, product: product1, quantity: 4)], market: market2, organization: buyer1, delivery: delivery2, payment_method: "purchase order", order_number: "LO-020", total_cost: 27.96, placed_at: 19.days.ago) }
+      let(:multiple_market_scope) { scope.where(market_id: market_manager.managed_markets.map(&:id)) }
 
       it 'contains the right set of order information' do
-        sellers = SellerPaymentGroup.for_user(market_manager.reload)
+        sellers = SellerPaymentGroup.for_scope(multiple_market_scope)
 
         # only 5 sellers are payable
         expect(sellers.size).to eq(5)

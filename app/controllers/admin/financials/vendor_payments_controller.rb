@@ -4,7 +4,9 @@ module Admin
       before_action :require_admin_or_market_manager
 
       def index
-        @sellers = SellerPaymentGroup.for_user(current_user)
+        @search_presenter = PaymentSearchPresenter.new(user: current_user, query: request.query_parameters)
+        @finder = Search::SellerPaymentGroupFinder.new(user: current_user, query: request.query_parameters)
+        @sellers = @finder.payment_groups
       end
 
       def create
