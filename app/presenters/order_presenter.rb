@@ -17,6 +17,10 @@ module OrderPresenter
     end
   end
 
+  def display_delivery_fees?(user)
+    user.admin? || user.market_manager? || user.buyer_only?
+  end
+
   def buyer_payment_status
     @order.payment_status
   end
