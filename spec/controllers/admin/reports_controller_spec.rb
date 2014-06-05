@@ -7,5 +7,5 @@ describe Admin::ReportsController do
     switch_to_subdomain market.subdomain
   end
 
-  it_behaves_like "an action restricted to admin or market manager", lambda { get :total_sales }
+  it_behaves_like "an action that restricts access admin, market manager, or seller only", lambda { get :total_sales }
 end
