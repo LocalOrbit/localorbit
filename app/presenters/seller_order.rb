@@ -19,10 +19,6 @@ class SellerOrder
     new(order, seller)
   end
 
-  def delivery_fees
-    0
-  end
-
   def total_cost
     gross_total - discount
   end

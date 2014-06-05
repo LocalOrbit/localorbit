@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 feature "Viewing orders" do
-  let!(:market1)          { create(:market, :with_delivery_schedule, market_seller_fee: 5, local_orbit_seller_fee: 4)}
+  let!(:market1)          { create(:market, market_seller_fee: 5, local_orbit_seller_fee: 4)}
+  let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market1, day: 2, fee: 7.12, fee_type: 'fixed') }
   let!(:market1_delivery)        { market1.delivery_schedules.first.next_delivery }
 
   let!(:market1_seller_org1) { create(:organization, :seller, markets: [market1]) }
@@ -76,6 +77,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market1_order1.organization.name)
       expect(page).to have_content("$9.98")
       expect(page).to have_content("Purchase Order")
+      expect(page).to_not have_content("Delivery Fees: $7.12")
 
       items = Dom::Order::ItemRow.all
       expect(items.count).to eq(1)
@@ -121,6 +123,41 @@ feature "Viewing orders" do
       expect(order.amount_owed).to eq("$41.95")
       expect(order.delivery_status).to eq('Pending')
       expect(order.buyer_status).to eq('Unpaid')
+    end
+
+    scenario "order details" do
+      visit admin_orders_path
+
+      click_link market1_order1.order_number
+
+      expect(page).to have_content("Order info")
+      expect(page).to have_content(market1_order1.organization.name)
+      expect(page).to have_content("$9.98")
+      expect(page).to have_content("Purchase Order")
+      expect(page).to have_content("Delivery Fees: $7.12")
+
+      items = Dom::Order::ItemRow.all
+      expect(items.count).to eq(2)
+
+      item = Dom::Order::ItemRow.find_by_name("#{market1_order_item1.name} from #{market1_seller_org1.name}")
+      expect(item.price).to eq("$#{market1_order_item1.unit_price}")
+      expect(item.discount).to eq('$0.00')
+      expect(item.total).to eq("$9.98")
+      expect(item.payment_status).to eq("Unpaid")
+
+      item = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org2.name}")
+      expect(item.price).to eq("$#{market1_order_item2.unit_price}")
+      expect(item.discount).to eq('$0.00')
+      expect(item.total).to eq("$17.98")
+      expect(item.payment_status).to eq("Unpaid")
+
+      summary = Dom::Admin::OrderSummaryRow.first
+      expect(summary.gross_total).to eq("$27.96")
+      expect(summary.discount).to eq("$0.00")
+      expect(summary.market_fees).to eq("$1.40")
+      expect(summary.transaction_fees).to eq("$1.12")
+      expect(summary.payment_processing).to eq("$0.00")
+      expect(summary.net_sale).to eq("$25.44")
     end
 
     scenario "filtering a list of orders by market" do

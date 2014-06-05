@@ -139,8 +139,8 @@ describe "Checking Out", :js, :vcr do
         expect(current_email).to have_body_text("Bananas")
         expect(current_email).to_not have_body_text("Potatoes")
 
-        expect(current_email).not_to have_body_text("Product Total")
-        expect(current_email).not_to have_body_text("Delivery Fee")
+        expect(current_email).to have_body_text("Product Total")
+        expect(current_email).to have_body_text("Delivery Fee")
         expect(current_email).not_to have_body_text("Discount")
 
         expect(current_email.body).to have_content("An order was just placed by #{market.name}")
@@ -162,8 +162,8 @@ describe "Checking Out", :js, :vcr do
         expect(current_email).not_to have_body_text("Bananas")
         expect(current_email).to have_body_text("Potatoes")
 
-        expect(current_email).not_to have_body_text("Product Total")
-        expect(current_email).not_to have_body_text("Delivery Fee")
+        expect(current_email).to have_body_text("Product Total")
+        expect(current_email).to have_body_text("Delivery Fee")
         expect(current_email).not_to have_body_text("Discount")
 
         expect(current_email.body).to have_content("An order was just placed by #{market.name}")
