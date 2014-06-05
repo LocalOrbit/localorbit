@@ -7,7 +7,7 @@
     <div class="row row--justified product-header">
       <div class="column">
         <input type="search" id="search" value="<%= @query_params["search"] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
-        <%= link_to "Reset", admin_users_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params, "sort") %>
+        <%= link_to "Reset", admin_users_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
       </div>
     </div>
   </div>

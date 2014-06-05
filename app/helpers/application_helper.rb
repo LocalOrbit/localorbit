@@ -29,12 +29,8 @@ module ApplicationHelper
     end
   end
 
-  def can_reset?(params, key)
-    if key
-      params.reject! {|k, v| k == key }
-    end
-
-    params.present?
+  def can_reset?(params)
+    params.any? {|key, _| key != "sort" && key != "page" }
   end
 
   def filter_list(collection, param_name)
