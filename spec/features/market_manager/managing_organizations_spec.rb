@@ -117,6 +117,7 @@ describe "A Market Manager", :vcr do
 
         fill_in 'Name', with: 'Famous Farm'
         select market2.name, from: "Market"
+        check "Allow purchase orders"
 
         click_button 'Add Organization'
 
