@@ -20,6 +20,10 @@ class DeliveryScheduleDecorator < Draper::Decorator
     seller_fulfillment_location.present? ? "#{buyer_pickup_start} to #{buyer_pickup_end}" : "#{seller_delivery_start} to #{seller_delivery_end}"
   end
 
+  def dropoff_time_window
+    buyer_pickup? ? "#{buyer_pickup_start} to #{buyer_pickup_end}" : "#{seller_delivery_start} to #{seller_delivery_end}"
+  end
+
   def seller_location_name
     if seller_fulfillment_location.present?
       "at #{seller_fulfillment_location.address} #{seller_fulfillment_location.city}, #{seller_fulfillment_location.state} #{seller_fulfillment_location.zip}"
@@ -37,7 +41,7 @@ class DeliveryScheduleDecorator < Draper::Decorator
   end
 
   def seller_human_description
-    "from #{time_window} #{seller_location_name}"
+    "from #{dropoff_time_window} #{seller_location_name}"
   end
 
   def attached_to_product(product)
