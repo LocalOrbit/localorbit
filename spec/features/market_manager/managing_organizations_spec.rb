@@ -117,6 +117,7 @@ describe "A Market Manager", :vcr do
 
         fill_in 'Name', with: 'Famous Farm'
         select market2.name, from: "Market"
+        check "Allow purchase orders"
 
         click_button 'Add Organization'
 
@@ -203,6 +204,19 @@ describe "A Market Manager", :vcr do
       click_button "Save Organization"
 
       expect(page).to have_content("Name can't be blank")
+    end
+
+    it "requires at least one payment method" do
+      visit "/admin/organizations"
+      click_link "Fresh Pumpkin Patch"
+
+      uncheck "Allow purchase orders"
+      uncheck "Allow credit cards"
+      uncheck "Allow ACH"
+
+      click_button "Save Organization"
+
+      expect(page).to have_content("At least one payment method is required for the organization")
     end
 
     describe "when a market manager has multiple markets" do
