@@ -98,7 +98,7 @@ class Organization < ActiveRecord::Base
   end
 
   def require_payment_method
-    unless allow_purchase_orders? || allow_credit_cards? || allow_ach
+    unless allow_purchase_orders? || allow_credit_cards? || allow_ach?
       self.errors.add(:payment_method, "At least one payment method is required for the organization")
     end
   end
