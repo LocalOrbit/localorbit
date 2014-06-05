@@ -17,7 +17,7 @@ class DeliveryScheduleDecorator < Draper::Decorator
   end
 
   def time_window
-    buyer_pickup? ? "#{buyer_pickup_start} to #{buyer_pickup_end}" : "#{seller_delivery_start} to #{seller_delivery_end}"
+    seller_fulfillment_location.present? ? "#{buyer_pickup_start} to #{buyer_pickup_end}" : "#{seller_delivery_start} to #{seller_delivery_end}"
   end
 
   def seller_location_name

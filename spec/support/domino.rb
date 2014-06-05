@@ -1,4 +1,14 @@
 module Dom
+  module Info
+    class DeliverySchedule < Domino
+      selector ".deliveries-list li"
+
+      attribute :display_date
+      attribute :time_range
+      attribute :location
+    end
+  end
+
   class TypeAhead < Domino
     def select_text
       raise "Implement in subclass"

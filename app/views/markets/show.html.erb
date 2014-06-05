@@ -75,8 +75,9 @@
     <ul class="list-naked list-zebra deliveries-list">
     <% @market.delivery_schedules.visible.order(:day).decorate.each do |delivery| %>
       <li>
-        <strong class="display-date"><%= delivery.plural_weekday %></strong> — <%= delivery.time_window %><br>
-        <span class="time-range"><%= delivery.pickup_or_dropoff %><br></span>
+        <strong class="display-date"><%= delivery.plural_weekday %></strong> — 
+        <span class="time-range"><%= delivery.time_window %></span><br>
+        <span class="location"><%= delivery.pickup_or_dropoff %><br></span>
       </li>
     <% end %>
     </ul>
