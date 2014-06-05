@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Viewing the cart", js: true do
+describe "Viewing the cart", :js do
   before(:each) do
     Timecop.travel("May 12, 2014")
   end
@@ -273,4 +273,59 @@ describe "Viewing the cart", js: true do
     end
   end
 
+  context "place order button" do
+    it "enables/disables the button when cycling through the payment options" do
+      expect(page).to have_button("Place Order", disabled: true)
+
+      choose "Pay by Purchase Order"
+
+      expect(page).to have_button("Place Order")
+
+      choose "Pay by Credit Card"
+
+      expect(page).to have_button("Place Order", disabled: true)
+    end
+
+    context "credit cards" do
+      it "stays disabled if there are no valid credit cards" do
+        expect(page).to have_button("Place Order", disabled: true)
+
+        choose "Pay by Credit Card"
+
+        expect(page).to have_button("Place Order", disabled: true)
+      end
+
+      it "enables the button if there is at least one valid credit card for the organization" do
+        create(:bank_account, :credit_card, bankable: buyer)
+        visit cart_path
+
+        expect(page).to have_button("Place Order", disabled: true)
+
+        choose "Pay by Credit Card"
+
+        expect(page).to have_button("Place Order")
+      end
+    end
+
+    context "ach" do
+      it "stays disabled if there are no valid bank accounts" do
+        expect(page).to have_button("Place Order", disabled: true)
+
+        choose "Pay by ACH"
+
+        expect(page).to have_button("Place Order", disabled: true)
+      end
+
+      it "enables the button if there is at least one valid bank account for the organization" do
+        create(:bank_account, :checking, :verified, bankable: buyer)
+        visit cart_path
+
+        expect(page).to have_button("Place Order", disabled: true)
+
+        choose "Pay by ACH"
+
+        expect(page).to have_button("Place Order")
+      end
+    end
+  end
 end

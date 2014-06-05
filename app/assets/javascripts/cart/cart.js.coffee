@@ -212,9 +212,12 @@ $ ->
     model.saveItem(data.product_id, 0)
 
   $("input[type=radio]").click (e)->
-    $("#place-order-button").attr("disabled", false)
     $(".payment-fields").addClass("is-hidden")
-    $(this).parents(".field").find(".payment-fields").removeClass("is-hidden")
+    $paymentFields = $(this).parents(".field").find(".payment-fields")
+    $paymentFields.removeClass("is-hidden")
+
+    buttonState = !$paymentFields.data('available') == true
+    $("#place-order-button").attr("disabled", buttonState) 
 
   $("#place-order-button").click (e)->
     $(".quantity input").prop("readonly", true)
