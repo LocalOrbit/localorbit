@@ -690,7 +690,7 @@ describe 'Editing an order' do
     end
   end
 
-  
+
 
   context "order notes" do
     context "buyer" do

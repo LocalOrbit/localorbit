@@ -45,6 +45,8 @@
               <!-- End Modal -->
 
             <% end %>
+          <% elsif payment.payment_type == "order refund" %>
+            Order Refund #: <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
           <% else %>
             <%= Payment::PAYMENT_TYPES[payment.payment_type] %>
           <% end %>
