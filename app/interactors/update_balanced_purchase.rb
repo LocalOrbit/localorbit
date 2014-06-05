@@ -98,6 +98,7 @@ class UpdateBalancedPurchase
 
   def record_payment(type, amount, balanced_record)
     adjustment_payment = Payment.create(
+      market_id: order.market_id,
       payer: order.organization,
       payment_type: type,
       payment_method: context[:type],

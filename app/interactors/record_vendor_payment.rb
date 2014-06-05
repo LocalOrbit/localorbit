@@ -5,6 +5,7 @@ class RecordVendorPayment
   def perform
     payment = Payment.new(payment_params)
     payment.payer        = payment.orders.first.market
+    payment.market_id    = payment.payer_id
     payment.payee        = seller
     payment.amount       = payment.orders.map {|order| SellerOrder.new(order, seller).net_total }.sum
     payment.status       = 'paid' if payment.payment_method == 'cash' || payment.payment_method == 'check'
