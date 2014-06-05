@@ -12,13 +12,13 @@ class Admin::LotsController < AdminController
     if @lot.persisted?
       respond_to do |format|
         format.html { redirect_to [:admin, @product, :lots], notice: "Successfully added a new lot" }
-        format.js   { redirect_to admin_products_path, notice: "Successfully added a new lot" }
+        format.js   { redirect_to admin_products_path(query_params), notice: "Successfully added a new lot" }
       end
     else
       flash.now[:alert] = "Could not save lot"
       respond_to do |format|
         format.html { render :index }
-        format.js   { redirect_to admin_products_path, alert: "Could not save lot" }
+        format.js   { redirect_to admin_products_path(query_params), alert: "Could not save lot" }
       end
     end
   end
@@ -40,6 +40,10 @@ class Admin::LotsController < AdminController
 
   def lot_params
     params.require(:lot).permit(:number, :good_from, :expires_at, :quantity)
+  end
+
+  def query_params
+    params.fetch(:query_params, {})
   end
 
   def redirect_simple_inventory

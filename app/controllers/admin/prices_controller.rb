@@ -22,7 +22,7 @@ class Admin::PricesController < AdminController
     if price.update price_params
       respond_to do |format|
         format.html { redirect_to [:admin, @product, :prices], notice: "Successfully saved price" }
-        format.js   { redirect_to admin_products_path, notice: "Successfully saved price" }
+        format.js   { redirect_to admin_products_path(query_params), notice: "Successfully saved price" }
       end
     else
       respond_to do |format|
@@ -32,7 +32,7 @@ class Admin::PricesController < AdminController
           flash.now[:alert] = "Could not save price"
           render :index
         end
-        format.js { redirect_to admin_products_path, alert: "Could not save price" }
+        format.js { redirect_to admin_products_path(query_params), alert: "Could not save price" }
       end
     end
   end
@@ -46,5 +46,9 @@ class Admin::PricesController < AdminController
 
   def price_params
     params.require(:price).slice(:market_id, :organization_id, :min_quantity, :sale_price).permit!
+  end
+
+  def query_params
+    params.fetch(:query_params, {})
   end
 end

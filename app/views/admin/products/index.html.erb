@@ -10,14 +10,14 @@
           </div>
           <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small" %>
       </div>
-      <div class="column product-filters">
+      <div class="column product-filters" id="product-filter">
         <% if current_user.multi_market_membership? %>
-          <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), prompt: "Show for all Markets", class: 'filter-dropdown', data: { parameter: "market"} %>
+          <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), prompt: "Show for all Markets", class: 'filter-dropdown', id: "product-filter-market", data: { parameter: "market"} %>
         <% end %>
         <% if current_user.multi_organization_membership? %>
-          <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), prompt: "Show for all Sellers", class: 'filter-dropdown', data: { parameter: "organization"} %>
+          <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), prompt: "Show for all Sellers", class: 'filter-dropdown', id: "product-filter-organization", data: { parameter: "organization"} %>
         <% end %>
-        <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params, "sort") %>
+        <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
       </div>
     </div>
   </div>
