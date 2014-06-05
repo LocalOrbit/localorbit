@@ -35,6 +35,7 @@ end
           <% if current_user.admin? %>
             <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe035;"></i> Units'), coming_soon_dashboard_path %></li>
             <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe025;"></i> User Event Log'), coming_soon_dashboard_path %></li>
+            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe023;"></i> Product Taxonomy'), admin_categories_path %></li>
           <% end %>
         </ul>
       </li>
