@@ -75,7 +75,7 @@
                     <%= f.radio_button :payment_method, "purchase order" %>
                     Pay by Purchase Order
                   </label>
-                  <fieldset id="purchase-order-fields" class="payment-fields is-hidden">
+                  <fieldset id="purchase-order-fields" class="payment-fields is-hidden" data-available="true">
                     <div class="payment-field">
                       <%= f.label :payment_note, "PO Number" %><br>
                       <%= f.text_field :payment_note, class: "input--short" %>
@@ -90,7 +90,7 @@
                     <%= f.radio_button :payment_method, "credit card" %>
                     Pay by Credit Card
                   </label>
-                  <fieldset id="credit-card-fields" class="payment-fields is-hidden">
+                  <fieldset id="credit-card-fields" class="payment-fields is-hidden" data-available="<%= current_organization.decorate.credit_cards_available? %>">
                     <div class="payment-field">
                       <%= f.label :credit_card, "Saved credit cards" %><br>
                       <% if current_organization.decorate.credit_cards_available? %>
@@ -108,7 +108,7 @@
                     <%= f.radio_button :payment_method, "ach" %>
                     Pay by ACH
                   </label>
-                  <fieldset id="ach-fields" class="payment-fields is-hidden">
+                  <fieldset id="ach-fields" class="payment-fields is-hidden" data-available="<%= current_organization.decorate.ach_available? %>">
                     <div class="payment-field">
                       <% if current_organization.decorate.ach_available? %>
                         <%= f.label :bank_account, "Account" %><br>
