@@ -1,3 +1,10 @@
+# Admin
+admin = User.find_or_create_by!(email: 'admin@example.com') { |user|
+  user.password = "password1"
+  user.password_confirmation = "password1"
+  user.role = "admin"
+}
+
 # Market
 market = Market.find_or_create_by!(name: "Fulton Market") {|m|
   m.subdomain = "fulton"
