@@ -43,6 +43,10 @@ class Market < ActiveRecord::Base
     end
   end
 
+  def self.for_order_items(order_items)
+    joins(:orders).where(orders: { id: order_items.map(&:order_id) }).uniq
+  end
+
   def fulfillment_locations(default_name)
     addresses.order(:name).map {|a| [a.name, a.id] }.unshift([default_name, 0])
   end

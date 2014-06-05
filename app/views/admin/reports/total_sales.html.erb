@@ -1,1 +1,53 @@
 <%= render "admin/reports/header" %>
+
+<%= render partial: "admin/reports/report_filters", locals: { q: @q } %>
+
+<div class="">
+  <table class="sortable sold-table">
+    <thead class="stickable">
+      <tr>
+        <th><%= sort_link @q, :created_at, "Placed On" %></th>
+        <th><%= sort_link @q, :name, "Product" %></th>
+        <th><%= sort_link @q, :seller_name, "Seller" %></th>
+        <th><%= sort_link @q, :order_organization_name, "Buyer" %></th>
+        <th><%= sort_link @q, :quantity, "Qty" %></th>
+        <th><%= sort_link @q, :gross_total, "Total" %></th>
+        <th><%= sort_link @q, :delivery_status, "Delivery" %></th>
+        <th><%= sort_link @q, :order_payment_status, "Buyer $" %></th>
+        <th>Seller $</th>
+      </tr>
+    </thead>
+
+    <% @order_items.decorate.each do |order_item| %>
+    <tr class="<%= cycle "odd", "even" %> sold-item">
+      <td class="order-number">
+        <%= content_tag "span", order_item.placed_at, class: "placed-at" %><br>
+        <%= link_to order_item.order.order_number, admin_order_path(order_item.order), class: "order-number-bold" %>
+      </td>
+      <td class="order-product"><%= link_to order_item.name, [:admin, order_item.product], class: "product" %></td>
+      <td class="order-seller"><%= link_to order_item.seller_name, [:admin, order_item.product.organization], class: "seller" %></td>
+      <td>
+        <%= link_to order_item.order.organization.name, [:admin, order_item.order.organization], class: "buyer" %><br>
+        <%= content_tag "span", order_item.order.market.name, class: "market" %>
+      </td>
+      <td class="quantity"><%= order_item.quantity %></td>
+      <td class="order-total-price">
+        <%= content_tag "span", number_to_currency(order_item.gross_total), class: "total-price" %><br>
+        <%= content_tag "span", order_item.price_per_unit, class: "unit-price" %>
+      </td>
+      <td class="delivery-status"><%= order_item.delivery_status.titleize %></td>
+      <td class="buyer-payment-status"><%= order_item.order.payment_status.titleize %></td>
+      <td class="seller-payment-status"><%= order_item.seller_payment_status.titleize %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= paginate @order_items %>
+
+<% if @order_items.none? %>
+  <div class="empty-results">
+    <h2>No Results</h2>
+    This table is empty, either because there is no data, or because the filter you've applied is hiding it.
+  </div>
+<% end %>

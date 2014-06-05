@@ -1,0 +1,28 @@
+<%= search_form_for @q, url: admin_reports_total_sales_path, html: { class: "payment_search clear-after" } do |f| %>
+  <div class="manager-filters">
+    <div class="pull-left">
+      <span class="preserve-alignment">
+        <%= f.label :order_order_number_cont, "Search" %><br>
+        <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
+      </span>
+      <span class="preserve-alignment">
+        <%= f.label :order_market_id_eq, "Market" %><br>
+        <%= f.select :order_market_id_eq, options_from_collection_for_select(@markets, "id", "name", @q.order_market_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+      </span>
+    </div>
+    <div class="pull-right">
+      <span class="preserve-alignment">
+        <label for="q_order_placed_at_gteq">Placed on or after</label><br>
+        <%= datetime_field_tag "q[order_placed_at_gteq]", nil, class: 'datepicker' %><a href="#q_placed_at_gteq" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+      </span>
+      <span class="preserve-alignment">
+        <label for="q_order_placed_at_lteq">Placed on or before</label><br>
+        <%= datetime_field_tag "q[order_placed_at_lteq]", nil, class: 'datepicker' %><a href="#q_placed_at_lteq" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+      </span>
+      <span class="preserve-alignment">
+        <br>
+        <%= f.submit "Filter", class: "btn--small" %>
+      </span>
+    </div>
+  </div>
+<% end %>

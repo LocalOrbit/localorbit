@@ -569,6 +569,7 @@ module Dom
     class SoldItemRow < Domino
       selector ".sold-item"
 
+      attribute :placed_at
       attribute :order_number
       attribute :order_date
       attribute :buyer
