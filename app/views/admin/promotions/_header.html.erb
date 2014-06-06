@@ -1,0 +1,14 @@
+<div class="tab-header stickable">
+  <div class="l-constraint">
+    <%= link_to "< Return to Featured Promotions List", admin_featured_promotions_path, class: "redundant-nav" %>
+    <div class="l-page-header">
+      <% if @promotion.persisted? %>
+        <h1>Update <%= @promotion.name %></h1>
+        <%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), [:admin, @promotion], class: "delete",
+          data: {method: :delete, confirm: "Are you sure you want to permanently delete this promotion?"} %>
+      <% else %>
+        <h1>Add Promotion</h1>
+      <% end %>
+    </div>
+  </div>
+</div>

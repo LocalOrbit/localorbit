@@ -305,6 +305,10 @@ module Dom
       attribute :name
       attribute :title
       attribute :market
+
+      def click_delete
+        node.find_link("Delete").click
+      end
     end
 
     class MarketRow < Domino

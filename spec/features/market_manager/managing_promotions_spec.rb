@@ -30,7 +30,7 @@ describe "Managing featured promotions" do
 
     context "create a promotion" do
       it "accepts valid input" do
-        click_link "Create Promotion"
+        click_link "Add New Promotion"
 
         fill_in "Name", with: "Summer Promotion"
         select market.name, from: "Market"
@@ -47,7 +47,7 @@ describe "Managing featured promotions" do
       end
 
       it "displays errors for invalid input" do
-        click_link "Create Promotion"
+        click_link "Add New Promotion"
 
         fill_in "Name", with: ""
         select market.name, from: "Market"
@@ -58,6 +58,46 @@ describe "Managing featured promotions" do
 
         expect(page).to_not have_content("Successfully created the featured promotion.")
         expect(page).to have_content("Name can't be blank")
+      end
+    end
+
+    context "update a promotion" do
+      it "accepts valid input" do
+        click_link active_promotion.name
+
+        fill_in "Name", with: "Changed Promotion"
+
+        click_button "Save Promotion"
+
+        expect(page).to have_content("Successfully updated the featured promotion.")
+
+        promotions = Dom::Admin::FeaturedPromotionRow.all
+        expect(promotions.count).to eql(2)
+        expect(promotions.map(&:name)).to include("Changed Promotion")
+      end
+
+      it "displays errors for invalid input" do
+        click_link active_promotion.name
+
+        fill_in "Name", with: ""
+
+        click_button "Save Promotion"
+
+        expect(page).to_not have_content("Successfully updated the featured promotion.")
+        expect(page).to have_content("Name can't be blank")
+      end
+    end
+
+    context "remove a promotion" do
+      it "is successful" do
+        promotions = Dom::Admin::FeaturedPromotionRow.all
+        expect(promotions.count).to eql(2)
+
+        Dom::Admin::FeaturedPromotionRow.find_by_name(promotion.name).click_delete
+
+        promotions = Dom::Admin::FeaturedPromotionRow.all
+        expect(promotions.count).to eql(1)
+        expect(promotions.map(&:name)).to include(active_promotion.name)
       end
     end
   end
