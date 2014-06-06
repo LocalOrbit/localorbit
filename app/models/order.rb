@@ -87,7 +87,9 @@ class Order < ActiveRecord::Base
     when "buyer"
       order_by_buyer(direction)
     when "seller"
-        order_by_seller(direction)
+      order_by_seller(direction)
+    when "delivery_status"
+      order_by_delivery_status(direction)
     else
       order_by_order_number(direction)
     end
@@ -251,6 +253,11 @@ class Order < ActiveRecord::Base
 
   def self.order_by_seller(direction)
     # FIXME: need to sort by the seller paid status
+    direction == "asc" ? order(:id) : order(:id)
+  end
+
+  def self.order_by_delivery_status
+    # FIXME: need to sort by order-wide delivery status
     direction == "asc" ? order(:id) : order(:id)
   end
 

@@ -197,6 +197,7 @@ module Dom
         attribute :order_date
         attribute :due_date
         attribute :amount
+        attribute :delivery_status
         attribute :action
 
         def send_invoice
