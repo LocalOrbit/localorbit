@@ -9,6 +9,8 @@ class Promotion < ActiveRecord::Base
 
   validate :one_active_per_market, if: "market.present?"
 
+  dragonfly_accessor :image
+  
   scope :active, -> { where(active: true) }
 
   def self.promotions_for_user(user)

@@ -43,7 +43,7 @@ class Admin::PromotionsController < AdminController
   private
 
   def promotion_params
-    params.require(:promotion).permit(:name, :market_id, :title, :product_id)
+    params.require(:promotion).permit(:name, :market_id, :title, :product_id, :body, :image)
   end
 
   def find_featured_promotion

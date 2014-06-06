@@ -55,4 +55,13 @@
   <%= f.text_area :body, rows: 15, id: "wysihtml5-textarea", class: "newsletter-body" %>
 </div>
 
+<div class="row row--field">
+  <div class="column column--guttered">
+    <%= f.label :image %><br>
+    <%= image_tag @promotion.image.remote_url, class: "market-logo" if @promotion.image %>
+    <%= f.file_field :image, class: "photo-button" %><br>
+    <div><small>Drag and drop your image anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
+  </div>
+</div>
+
 <%= f.submit "Save Promotion", class: 'pull-right' %>
