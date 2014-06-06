@@ -397,13 +397,17 @@ form.form-actions {
   }
   .preserve-alignment {
     display: inline-block;
-  } 
+  }
 }
 .wys-toolbar {
   margin-top: 5px;
 }
 .wys-headline {
   margin-bottom: 4px;
+}
+
+.promotion-field .wys-tools {
+  width: 458px;
 }
 .wys-tools {
   @include border-radius(5px 5px 0 0);

@@ -18,4 +18,41 @@
   <%= f.collection_select :product_id, @products, :id, :name, {include_blank: "Select a product"}, class: "column--full" %>
 </div>
 
-<%= f.submit "Save Promotion" %>
+<div class="field promotion-field">
+  <label for="wysihtml5-textarea">Body</label><br>
+  <div id="wysihtml5-toolbar" class="wys-toolbar">
+    <div class="wys-tools">
+      <span class="wys-text-format">
+        <a data-wysihtml5-command="bold" class="wys-tools-icon text-bold">B</a>
+        <a data-wysihtml5-command="italic" class="wys-tools-icon text-italic">i</a>
+        <a data-wysihtml5-command="underline" class="wys-tools-icon text-underline">U</a>
+      </span>
+      <div class="wys-divider"></div>
+      <span class="wys-text-lists">
+        <a data-wysihtml5-command="insertOrderedList" class="wys-tools-icon">1. <span>Numbered List</span></a>
+        <a data-wysihtml5-command="insertUnorderedList" class="wys-tools-icon">• <span>Bulleted List</span></a>
+      </span>
+      <span class="wys-divider"></span>
+      <span class="wys-text-colors">
+        <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red" class="wys-tools-icon text-red">R</a>
+        <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green" class="wys-tools-icon text-green">G</a>
+        <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue" class="wys-tools-icon text-blue">B</a>
+      </span>
+      <span class="wys-divider"></span>
+      <span class="wys-links">
+        <a data-wysihtml5-command="createLink">Link</a>
+      </span>
+    </div>
+    <div data-wysihtml5-dialog="createLink" style="display: none;" class="wys-create-link">
+      <label>
+        <input data-wysihtml5-dialog-field="href" value="http://">
+      </label>
+      <a data-wysihtml5-dialog-action="save" class="btn btn--tiny btn--blue">Done</a>
+      <a data-wysihtml5-dialog-action="cancel" class="cancel-link">Cancel</a>
+    </div>
+  </div>
+
+  <%= f.text_area :body, rows: 15, id: "wysihtml5-textarea", class: "newsletter-body" %>
+</div>
+
+<%= f.submit "Save Promotion", class: 'pull-right' %>
