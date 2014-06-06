@@ -18,7 +18,7 @@ feature "Viewing products" do
   let!(:other_org) { create(:organization, :seller) }
   let!(:other_products) { create_list(:product, 3, :sellable, organization: other_org) }
 
-  let!(:buyer_org) { create(:organization, :multiple_locations, :buyer, markets: [market]) }
+  let!(:buyer_org) { create(:organization, :single_location, :buyer, markets: [market]) }
   let(:user) { create(:user, organizations: [buyer_org]) }
 
   let(:available_products) { [org1_product, org2_product] }
@@ -223,38 +223,74 @@ feature "Viewing products" do
   end
 
   context "single delivery schedule" do
-    before do
-      sign_in_as(user)
-    end
-
-    context "multiple locations" do
-      scenario "change delivery location after the fact"
-    end
-
-    context "single location" do
-      let!(:buyer_org) { create(:organization, :single_location, :buyer, markets: [market]) }
-
-      scenario "shopping without an existing shopping cart" do
-        expect(page).to have_content(org1_product.name)
+    context "as a buyer" do
+      before do
+        sign_in_as(user)
       end
 
-      context "as a market manager" do
-        let(:user) { create(:user, managed_markets: [market]) }
+      context "multiple locations" do
+        let!(:second_location) { create(:location, organization: buyer_org) }
 
-        scenario "has to select an organization to shop as" do
-          click_link "Shop"
+        scenario "shows the 'change' link" do
+          visit products_path
+          within('.selected-delivery') do
+            expect(page).to have_link('Change')
+          end
+        end
+
+        scenario "change delivery location after the fact"
+      end
+
+      context "single location" do
+        scenario "shopping without an existing shopping cart" do
+          expect(page).to have_content(org1_product.name)
+        end
+
+        scenario "does not show the 'change' link" do
+          within('.selected-delivery') do
+            expect(page).to_not have_link('Change')
+          end
+        end
+      end
+
+      context "user is a member of multiple organizations" do
+        let!(:buyer_org2) { create(:organization, :single_location, :buyer, markets: [market], users: [user]) }
+
+        scenario "shows the 'change' link" do
+          visit products_path
 
           select buyer_org.name, from: 'Organization'
 
           click_button 'Select Organization'
 
-          expect(page).to have_content(org1_product.name)
+          within('.selected-delivery') do
+            expect(page).to have_link('Change')
+          end
         end
+      end
+    end
+
+    context "as a market manager" do
+      let(:user) { create(:user, managed_markets: [market]) }
+      before do
+        sign_in_as(user)
+      end
+
+      scenario "has to select an organization to shop as" do
+        click_link "Shop"
+
+        select buyer_org.name, from: 'Organization'
+
+        click_button 'Select Organization'
+
+        expect(page).to have_content(org1_product.name)
       end
     end
   end
 
   context "multiple delivery schedules" do
+    let!(:second_location) { create(:location, organization: buyer_org) }
+
     let!(:ds3) { create(:delivery_schedule,
       day: 2,
       order_cutoff: 24,
