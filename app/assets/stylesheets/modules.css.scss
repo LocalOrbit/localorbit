@@ -1028,6 +1028,20 @@
     content: '!';
   }
 }
+
+.popup-error {
+  color: $alert_text;
+  font-size: larger;
+  h3 {
+    margin: 0 0 .2em;
+    color: inherit;
+    font-size: 100%;
+  }
+  .errors {
+    padding-left: 20px;
+    margin-bottom: 1em;
+  }
+}
 .product-status-alert {
   max-width: 75%;
   padding: 1em 2em;

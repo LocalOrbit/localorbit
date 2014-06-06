@@ -2,6 +2,23 @@ $ ->
   $('.product-table--admin .delete > a').hover (e) ->
     $(this).closest('tr').toggleClass('destructive')
 
+  $('.popup--edit form').on "submit", (e) ->
+    data = {}
+    $(e.target).find('input').each (i, el) ->
+      data[el.name] = el.value
+
+    update = $.post(this.action, data)
+      .error (data) ->
+        response_text = $.parseJSON(data.responseText)
+        error_holder = $(e.target).find('.popup-error')
+        $('<h3>Could not save</h3>').appendTo(error_holder)
+        $('<ul class="errors"></ul>').appendTo(error_holder)
+        errors = $(error_holder).find('.errors')
+        add_li = (text) ->
+          $('<li>' + text + '</li>').appendTo(errors)
+        add_li error for error in response_text.errors
+    false
+
   return unless $("form.product").length
 
   formView =
@@ -242,6 +259,7 @@ $ ->
     form = $('form.product')
     form.attr("action", $(this).attr("href"))
     form.submit()
+
 
   $('.tab > .is-disabled').click (e) ->
     $('<div class="tab-error flash flash--alert"><p>' + $(this).attr('data-error') + '</p></div>').appendTo('.tab-header')

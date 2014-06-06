@@ -32,7 +32,19 @@ class Admin::PricesController < AdminController
           flash.now[:alert] = "Could not save price"
           render :index
         end
-        format.js { redirect_to admin_products_path(query_params), alert: "Could not save price" }
+        format.js { 
+          #redirect_to admin_products_path, alert: "Could not save price"
+          if price.errors.full_messages.present?
+            @data = {
+              errors:  price.errors.full_messages
+            }
+          else
+            @data = {
+              errors: []
+            }
+          end
+          render json: @data, status: 422
+        }
       end
     end
   end
