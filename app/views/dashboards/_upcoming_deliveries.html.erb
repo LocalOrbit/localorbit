@@ -4,6 +4,9 @@
 
   <% @presenter.upcoming_deliveries.each do |delivery| %>
     <div class="upcoming-delivery upcoming-delivery-mini">
+      <% if current_user.multi_market_membership? %>
+        <span class="market"><%= delivery.delivery_schedule.market.name %></span><br>
+      <% end %>
       <h2 class="upcoming-delivery-date">Deliveries for <%= delivery.upcoming_delivery_date_heading %></h2>
       Deliver to:
       <div class="location-name"><%= delivery.deliver_to_name %></div>

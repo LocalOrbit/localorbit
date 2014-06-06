@@ -49,6 +49,7 @@ describe "Upcoming Deliveries" do
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
         expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+        expect(deliveries.first.market).to be_nil
       end
 
       it "shows a delivery until 11:59 the day of the delivery" do
@@ -60,6 +61,7 @@ describe "Upcoming Deliveries" do
           deliveries = Dom::UpcomingDelivery.all
           expect(deliveries.count).to eql(1)
           expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+          expect(deliveries.first.market).to be_nil
         end
       end
     end
@@ -83,6 +85,28 @@ describe "Upcoming Deliveries" do
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
         expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+      end
+    end
+
+    context "multiple market membership" do
+      let!(:other_market) { create(:market, :with_delivery_schedule, :with_addresses, organizations: [seller]) }
+
+      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_with_seller_product) { create(:order, items: [order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
+
+      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1)}
+      let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        visit admin_delivery_tools_path
+      end
+
+      it "shows the the market name with the upcoming delivery" do
+        deliveries = Dom::UpcomingDelivery.all
+        expect(deliveries.count).to eql(1)
+        expect(deliveries.first.market).to have_content(market.name)
       end
     end
 
@@ -145,6 +169,28 @@ describe "Upcoming Deliveries" do
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
         expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+      end
+    end
+
+    context "multiple market membership" do
+      let!(:other_market) { create(:market, :with_delivery_schedule, :with_addresses, managers: [user]) }
+
+      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_with_seller_product) { create(:order, items: [order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
+
+      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1)}
+      let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
+
+      before do
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(user)
+        visit admin_delivery_tools_path
+      end
+
+      it "shows the the market name with the upcoming delivery" do
+        deliveries = Dom::UpcomingDelivery.all
+        expect(deliveries.count).to eql(2)
+        expect(deliveries.first.market).to have_content(market.name)
       end
     end
 
