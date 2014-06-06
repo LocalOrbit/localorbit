@@ -42,6 +42,7 @@ feature "sending invoices" do
     expect(invoice.buyer).to eq("Money Bags")
     expect(invoice.order_date).to eq("04/01/2014")
     expect(invoice.amount).to eq("$210.00")
+    expect(invoice.delivery_status).to eq("Pending")
     expect(invoice.action).to include("Send Invoice")
     expect(invoice.action).to include("Preview")
   end
