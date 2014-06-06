@@ -1,4 +1,4 @@
-<%= search_form_for @q, url: admin_reports_total_sales_path, html: { class: "payment_search clear-after" } do |f| %>
+<%= search_form_for presenter.q, url: admin_reports_path(presenter.report), html: { class: "payment_search clear-after" } do |f| %>
   <div class="manager-filters">
     <div class="pull-left">
       <span class="preserve-alignment">
@@ -7,8 +7,14 @@
       </span>
       <span class="preserve-alignment">
         <%= f.label :order_market_id_eq, "Market" %><br>
-        <%= f.select :order_market_id_eq, options_from_collection_for_select(@markets, "id", "name", @q.order_market_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+        <%= f.select :order_market_id_eq, options_from_collection_for_select(presenter.markets, "id", "name", presenter.q.order_market_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
       </span>
+      <% if presenter.report == :sales_by_seller %>
+        <span class="preserve-alignment">
+          <%= f.label :seller_name_eq, "Seller" %><br>
+          <%= f.select :seller_name_eq, options_from_collection_for_select(presenter.sellers, :to_s, :titleize, presenter.q.seller_name_eq), { include_blank: "All" }, { class: "filter-input" } %>
+        </span>
+      <% end %>
     </div>
     <div class="pull-right">
       <span class="preserve-alignment">
