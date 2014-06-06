@@ -15,6 +15,7 @@ class Product < ActiveRecord::Base
   has_many :product_deliveries, dependent: :destroy
   has_many :delivery_schedules, through: :product_deliveries
   has_many :prices, autosave: true, inverse_of: :product, dependent: :destroy
+  has_many :promotions, inverse_of: :product
 
   dragonfly_accessor :image
 
