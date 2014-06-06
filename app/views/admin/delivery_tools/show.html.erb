@@ -7,6 +7,9 @@
     <% else %>
       <% @upcoming_deliveries.each do |delivery| %>
       <div class="upcoming-delivery">
+        <% if current_user.multi_market_membership? %>
+          <span class="market"><%= delivery.delivery_schedule.market.name %></span><br>
+        <% end %>
         <h2 class="upcoming-delivery-date"><%= delivery.upcoming_delivery_date_heading %></h2>
         Deliver to:
         <%= content_tag :div, delivery.deliver_to_name, class: "location-name" if delivery.deliver_to_name.present? %>

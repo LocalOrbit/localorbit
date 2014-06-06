@@ -870,5 +870,6 @@ module Dom
     attribute :upcoming_delivery_date
     attribute :location_name
     attribute :location
+    attribute :market
   end
 end
