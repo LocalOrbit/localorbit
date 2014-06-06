@@ -6,9 +6,10 @@
     </span>
 
     <span class="preserve-alignment">
-      <%= f.label :products_organization_id_eq, "Sellers" %><br>
-      <%= f.collection_select :products_organization_id_eq, @search_presenter.seller_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
+      <label for="filtered_organization_id">Sellers</label><br>
+      <%= select_tag :filtered_organization_id, options_from_collection_for_select(@search_presenter.seller_organizations, :id, :name, selected: @search_presenter.organization_id), {prompt: "All", class: "filter-input"} %>
     </span>
+
   </div>
   <span class="preserve-alignment">
     <br>
