@@ -1,0 +1,23 @@
+<h1>Featured Promotions</h1>
+
+<%= link_to "Create Promotion", new_admin_featured_promotion_path, class: 'btn btn--small' %>
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Market</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @promotions.each do |promotion| %>
+    <tr class="promotion-row">
+      <td class="date"></td>
+      <td class="name"><%= promotion.name %></td>
+      <td class="market"><%= promotion.market.name %></td>
+      <td class="action-links"><%= link_to "<i class='icons-font icons-delete'></i>Delete", "#" %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

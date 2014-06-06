@@ -11,6 +11,15 @@ class Promotion < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
 
+  def self.promotions_for_user(user)
+    if user.admin?
+      all
+    else
+      market_ids = user.markets.map(&:id)
+      where(market_id: market_ids)
+    end
+  end
+
   private
 
   def one_active_per_market

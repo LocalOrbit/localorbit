@@ -1,0 +1,25 @@
+<%= render "shared/errors", {resource: @promotion} %>
+
+<%= form_for @promotion, url: admin_featured_promotions_path(@promotion) do |f| %>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, class: "column column--full" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :market_id, "Market" %><br>
+    <%= f.collection_select :market_id, @markets, :id, :name, {include_blank: "Select an market"}, class: "column--full" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title, class: "column column--full" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :product_id, "Product" %><br>
+    <%= f.collection_select :product_id, @products, :id, :name, {include_blank: "Select a product"}, class: "column--full" %>
+  </div>
+
+  <%= f.submit "Save Promotion" %>
+<% end %>

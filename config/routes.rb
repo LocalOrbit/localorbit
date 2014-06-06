@@ -75,6 +75,7 @@ Rails.application.routes.draw do
 
     resources :users, only: :index
 
+    resources :promotions
     resource :fresh_sheet, only: [:show, :update] do
       get :preview
     end
