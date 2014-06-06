@@ -42,7 +42,14 @@ module Admin
       if @product.update_attributes(product_params)
         respond_to do |format|
           format.html { redirect_to after_create_page, notice: "Saved #{@product.name}" }
-          format.js   { redirect_to admin_products_path(query_params), notice: "Saved #{@product.name}" }
+          format.js   { 
+            # redirect_to admin_products_path(query_params), notice: "Saved #{@product.name}"
+            @data = {
+              message: "Saved #{@product.name}",
+              params: product_params.to_a
+            }
+            render json: @data, status: 200
+          }
         end
       else
         respond_to do |format|
@@ -52,7 +59,17 @@ module Admin
             find_selected_delivery_schedule_ids
             render :show
           end
-          format.js { redirect_to admin_products_path, alert: "Could not save product" }
+          format.js { 
+            #redirect_to admin_products_path, alert: "Could not save product"
+            if @product.errors.full_messages.present?
+              @data = {
+                errors: @product.errors.full_messages
+              }
+            else
+              @data = {errors: []}
+            end
+            render json: @data, status: 422
+          }
         end
       end
     end
