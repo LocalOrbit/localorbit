@@ -1,4 +1,8 @@
 module ProductsHelper
+  def can_change_delivery?(user)
+    current_market.delivery_schedules.visible.count > 1 || current_organization.locations.count > 1 || current_user.managed_organizations.count > 1
+  end
+
   def inventory_tab_complete?
     @product.available_inventory > 0
   end
