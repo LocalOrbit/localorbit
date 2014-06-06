@@ -100,6 +100,29 @@ describe "Managing featured promotions" do
         expect(promotions.map(&:name)).to include(active_promotion.name)
       end
     end
-  end
 
+    context "activate a promotion" do
+      it "activate an inactive promotion" do
+        Dom::Admin::FeaturedPromotionRow.find_by_name(promotion.name).click_activate
+
+        row = Dom::Admin::FeaturedPromotionRow.find_by_name(promotion.name)
+        expect(row.links).to have_content("Deactivate")
+
+        row = Dom::Admin::FeaturedPromotionRow.find_by_name(active_promotion.name)
+        expect(row.links).to have_content("Activate")
+      end
+    end
+
+    context "deactivate a promotion" do
+      it "deactivate an active promotion" do
+        Dom::Admin::FeaturedPromotionRow.find_by_name(active_promotion.name).click_deactivate
+
+        row = Dom::Admin::FeaturedPromotionRow.find_by_name(active_promotion.name)
+        expect(row.links).to have_content("Activate")
+
+        row = Dom::Admin::FeaturedPromotionRow.find_by_name(promotion.name)
+        expect(row.links).to have_content("Activate")
+      end
+    end
+  end
 end

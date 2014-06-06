@@ -305,9 +305,18 @@ module Dom
       attribute :name
       attribute :title
       attribute :market
+      attribute :links
 
       def click_delete
         node.find_link("Delete").click
+      end
+
+      def click_activate
+        node.find_link("Activate").click
+      end
+
+      def click_deactivate
+        node.find_link("Deactivate").click
       end
     end
 

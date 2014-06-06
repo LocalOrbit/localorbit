@@ -1,6 +1,6 @@
 class Admin::PromotionsController < AdminController
   before_action :require_admin_or_market_manager
-  before_action :find_featured_promotion, only: [:show, :update, :destroy]
+  before_action :find_featured_promotion, only: [:show, :update, :destroy, :activate, :deactivate]
 
   def index
     @promotions = Promotion.promotions_for_user(current_user)
@@ -36,6 +36,19 @@ class Admin::PromotionsController < AdminController
 
   def destroy
     @promotion.destroy
+
+    redirect_to admin_promotions_path
+  end
+
+  def activate
+    @promotion.market.promotions.update_all(active: false)
+    @promotion.update(active: true)
+
+    redirect_to admin_promotions_path
+  end
+
+  def deactivate
+    @promotion.update(active: false)
 
     redirect_to admin_promotions_path
   end
