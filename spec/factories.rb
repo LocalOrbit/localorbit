@@ -47,7 +47,7 @@ FactoryGirl.define do
     password "password"
     password_confirmation "password"
     role 'user'
-    confirmed_at Time.current
+    confirmed_at { Time.current }
 
     trait :market_manager do
       role 'user'
@@ -78,7 +78,7 @@ FactoryGirl.define do
     delivery
 
     sequence(:order_number) {|n| "LO-#{n}"}
-    placed_at        Time.current
+    placed_at        { DateTime.current }
 
     billing_organization_name "Collective Idea"
     billing_address  "44 E. 8th St"

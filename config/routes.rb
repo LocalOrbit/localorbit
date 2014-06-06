@@ -89,6 +89,11 @@ Rails.application.routes.draw do
     resources :categories, only: :index, path: :taxonomy
     resource :unit_request, only: :create
     resource :category_request, only: :create
+
+    get "reports" => "reports#index"
+    namespace :reports do
+      get "total-sales" => :total_sales
+    end
   end
 
   resource :dashboard do
