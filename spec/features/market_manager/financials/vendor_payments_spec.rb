@@ -161,10 +161,72 @@ feature "Payments to vendors" do
         expect(page).to have_content(market2.name)
       end
 
+      select market1.name, from: "q_market_id_eq"
+      click_button "Filter"
 
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms", "Betterest Farms", "Great Farms"])
+
+      within("#q_product_products_organization_id_eq") do
+        expect(page).to have_content(market1_seller1.name)
+        expect(page).to have_content(market1_seller2.name)
+        expect(page).to have_content(market1_seller3.name)
+        expect(page).to have_content(market1_seller4.name)
+        expect(page).not_to have_content(market2_seller1.name)
+        expect(page).not_to have_content(market2_seller2.name)
+        expect(page).not_to have_content(market2_seller3.name)
+        expect(page).not_to have_content(market2_seller4.name)
+      end
+
+      select market2.name, from: "q_market_id_eq"
+      click_button "Filter"
+
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Fruit Farms", "Vegetable Farms"])
+      within("#q_products_organization_id_eq") do
+        expect(page).not_to have_content(market1_seller1.name)
+        expect(page).not_to have_content(market1_seller2.name)
+        expect(page).not_to have_content(market1_seller3.name)
+        expect(page).not_to have_content(market1_seller4.name)
+        expect(page).to have_content(market2_seller1.name)
+        expect(page).to have_content(market2_seller2.name)
+        expect(page).to have_content(market2_seller3.name)
+        expect(page).to have_content(market2_seller4.name)
+      end
     end
 
-    scenario "filtering by organization"
+    scenario "filtering by organization" do
+      switch_to_subdomain(market1.subdomain)
+      sign_in_as market_manager
+      visit admin_financials_vendor_payments_path
+
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms", "Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
+
+      within("#q_products_organization_id_eq") do
+        expect(page).to have_content(market1_seller1.name)
+        expect(page).to have_content(market1_seller2.name)
+        expect(page).to have_content(market1_seller3.name)
+        expect(page).to have_content(market1_seller4.name)
+        expect(page).to have_content(market2_seller1.name)
+        expect(page).to have_content(market2_seller2.name)
+        expect(page).to have_content(market2_seller3.name)
+        expect(page).to have_content(market2_seller4.name)
+      end
+
+      select market1_seller1.name, from: "q_products_organization_id_eq"
+      click_button "Filter"
+
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms"])
+
+      select market1_seller3.name, from: "q_products_organization_id_eq"
+      click_button "Filter"
+
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Betterest Farms", "Great Farms"])
+    end
+
     scenario "filtering by payment type"
   end
 end

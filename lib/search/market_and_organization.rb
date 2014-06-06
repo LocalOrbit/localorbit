@@ -17,7 +17,11 @@ module Search
         @user.managed_organizations_within_market(@filtered_market)
       else
         @user.managed_organizations
-      end
+      end.order(:name)
+    end
+
+    def seller_organizations
+      buyer_organizations.where(can_sell: true)
     end
   end
 end

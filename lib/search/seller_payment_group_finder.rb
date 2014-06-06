@@ -6,7 +6,7 @@ module Search
       scope = Payment.payments_for_user(user)
 
       if user.admin?
-        scope = scope.where(market_id: user.managed_markets_ids)
+        scope = scope.where(market_id: user.managed_markets.map(&:id))
       end
 
       @q = scope.search(query[:q])
