@@ -23,7 +23,7 @@ class Promotion < ActiveRecord::Base
   private
 
   def one_active_per_market
-    if market.reload.promotions.active.reject {|p| p.id == self.id }.any?
+    if market.reload.promotions.active.count > 1
       self.errors.add(:active, "There can only be one active promotion per market")
     end
   end

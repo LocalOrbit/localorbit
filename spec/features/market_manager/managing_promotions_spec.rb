@@ -5,8 +5,8 @@ describe "Managing featured promotions" do
   let!(:seller)  { create(:organization, markets: [market]) }
   let!(:product) { create(:product, :sellable, organization: seller) }
 
-  let!(:active_promotion) { create(:featured_promotion, :active, market: market, product: product, name: 'Active Promotion') }
-  let!(:promotion) { create(:featured_promotion, market: market, product: product, name: 'Unactive Promotion') }
+  let!(:active_promotion) { create(:promotion, :active, market: market, product: product, name: 'Active Promotion') }
+  let!(:promotion) { create(:promotion, market: market, product: product, name: 'Unactive Promotion') }
 
   context "as a market manager" do
     let!(:user) { create(:user, managed_markets: [market]) }
@@ -15,7 +15,7 @@ describe "Managing featured promotions" do
       switch_to_subdomain(market.subdomain)
       sign_in_as user
 
-      visit admin_featured_promotions_path
+      visit admin_promotions_path
     end
 
     context "list view" do

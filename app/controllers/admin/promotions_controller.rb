@@ -18,7 +18,7 @@ class Admin::PromotionsController < AdminController
   def create
     @promotion = Promotion.new(promotion_params)
     if @promotion.save
-      redirect_to admin_featured_promotions_path, notice: "Successfully created the featured promotion."
+      redirect_to admin_promotions_path, notice: "Successfully created the featured promotion."
     else
       fetch_markets_and_products
       render "new"
@@ -27,7 +27,7 @@ class Admin::PromotionsController < AdminController
 
   def update
     if @promotion.update(promotion_params)
-      redirect_to admin_featured_promotions_path, notice: "Successfully updated the featured promotion."
+      redirect_to admin_promotions_path, notice: "Successfully updated the featured promotion."
     else
       fetch_markets_and_products
       render "show"
@@ -37,13 +37,13 @@ class Admin::PromotionsController < AdminController
   def destroy
     @promotion.destroy
 
-    redirect_to admin_featured_promotions_path
+    redirect_to admin_promotions_path
   end
 
   private
 
   def promotion_params
-    params.require(:featured_promotion).permit(:name, :market_id, :title, :product_id)
+    params.require(:promotion).permit(:name, :market_id, :title, :product_id)
   end
 
   def find_featured_promotion

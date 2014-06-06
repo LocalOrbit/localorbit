@@ -1,6 +1,6 @@
 <div class="tab-header stickable">
   <div class="l-constraint">
-    <%= link_to "< Return to Featured Promotions List", admin_featured_promotions_path, class: "redundant-nav" %>
+    <%= link_to "< Return to Featured Promotions List", admin_promotions_path, class: "redundant-nav" %>
     <div class="l-page-header">
       <% if @promotion.persisted? %>
         <h1>Update <%= @promotion.name %></h1>

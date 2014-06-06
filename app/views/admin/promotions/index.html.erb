@@ -1,6 +1,6 @@
 <h1>Featured Promotions</h1>
 <div class="row row--justified header">
-  <%= link_to "Add New Promotion", new_admin_featured_promotion_path, class: 'btn btn--add btn--small pull-right' %>
+  <%= link_to "Add New Promotion", new_admin_promotion_path, class: 'btn btn--add btn--small pull-right' %>
 </div>
 
 <table>
@@ -16,9 +16,9 @@
     <% @promotions.each do |promotion| %>
     <tr class="promotion-row">
       <td class="date"><%= promotion.created_at.strftime("%B %d, %Y") %></td>
-      <td class="name"><%= link_to promotion.name, admin_featured_promotion_path(promotion) %></td>
+      <td class="name"><%= link_to promotion.name, admin_promotion_path(promotion) %></td>
       <td class="market"><%= promotion.market.name %></td>
-      <td class="action-links"><%= link_to raw("<i class='font-icon icon-delete'></i>Delete"), admin_featured_promotion_path(promotion), method: :delete, data: { confirm: "Are you sure you want to delete this promotion?" } %></td>
+      <td class="action-links"><%= link_to raw("<i class='font-icon icon-delete'></i>Delete"), admin_promotion_path(promotion), method: :delete, data: { confirm: "Are you sure you want to delete this promotion?" } %></td>
     </tr>
     <% end %>
   </tbody>

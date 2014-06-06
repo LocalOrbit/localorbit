@@ -3,7 +3,7 @@
 <div class="row row--partial">
   <%= render "shared/errors", {resource: @promotion} %>
 
-  <%= form_for @promotion, url: admin_featured_promotion_path(@promotion), html: { class: "product column column--half"} do |f| %>
+  <%= form_for @promotion, url: admin_promotion_path(@promotion), html: { class: "product column column--half"} do |f| %>
     <%= render "fields", {f: f} %>
   <% end %>
 </div>
