@@ -22,7 +22,14 @@ class Admin::PricesController < AdminController
     if price.update price_params
       respond_to do |format|
         format.html { redirect_to [:admin, @product, :prices], notice: "Successfully saved price" }
-        format.js   { redirect_to admin_products_path(query_params), notice: "Successfully saved price" }
+        format.js   { 
+         #redirect_to admin_products_path(query_params), notice: "Successfully saved price"
+          @data = {
+            message: "Successfully saved price",
+            params: price_params.to_a
+          }
+          render json: @data, status: 200
+        }
       end
     else
       respond_to do |format|

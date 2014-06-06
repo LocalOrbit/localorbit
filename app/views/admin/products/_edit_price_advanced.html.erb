@@ -2,7 +2,7 @@
   <button class="pull-right close"><i class="font-icon icon-close"></i></button>
   <h2>Edit Price for <%= price.product.name %></h2>
 
-  <%= form_for [:admin, price.product, price], url: admin_product_price_path(price.product, price, format: :js, query_params: @query_params), html: { novalidate: "novalidate" } do |f| %>
+  <%= form_for [:admin, price.product, price], url: admin_product_price_path(price.product, price, format: :js, query_params: @query_params), html: { novalidate: "novalidate", data: { prefix: "price_#{price.id}" }} do |f| %>
     <%= fields_for :price, price, index: price.id do |f| %>
       <%= f.select :market_id, current_user.markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
 
