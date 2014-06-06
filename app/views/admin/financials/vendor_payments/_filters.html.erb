@@ -2,12 +2,12 @@
   <div class="manager-filters">
     <span class="preserve-alignment">
       <%= f.label :market_id_eq, "Market" %><br>
-      <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "Show by Market"}, {class: "filter-input"} %>
+      <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
     </span>
 
     <span class="preserve-alignment">
       <%= f.label :products_organization_id_eq, "Sellers" %><br>
-      <%= f.collection_select :products_organization_id_eq, @search_presenter.seller_organizations, :id, :name, {include_blank: "Show by Seller"}, {class: "filter-input"} %>
+      <%= f.collection_select :products_organization_id_eq, @search_presenter.seller_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
     </span>
   </div>
   <span class="preserve-alignment">
