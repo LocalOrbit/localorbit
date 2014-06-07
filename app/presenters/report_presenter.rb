@@ -11,8 +11,8 @@ class ReportPresenter
     quantity:               { sort: :quantity,                display_name: "Quantity" },
     unit_price:             { sort: :unit_price,              display_name: "Unit Price" },
     discount:               { sort: :discount,                display_name: "Discount" },
-    row_total:              { sort: :nil,                     display_name: "Row Total" },
-    net_sale:               { sort: :nil,                     display_name: "Net Sale" },
+    row_total:              { sort: nil,                      display_name: "Row Total" },
+    net_sale:               { sort: nil,                      display_name: "Net Sale" },
     delivery_status:        { sort: :delivery_status,         display_name: "Delivery" },
     buyer_payment_status:   { sort: :order_payment_status,    display_name: "Buyer Payment Status" },
     seller_payment_status:  { sort: nil,                      display_name: "Seller Payment Status" }
@@ -31,6 +31,11 @@ class ReportPresenter
 
   def self.reports
     REPORT_FIELD_MAP.keys
+  end
+
+  def self.field_headers_for_report(report)
+    fields = REPORT_FIELD_MAP[report] || []
+    Hash[fields.map { |f| [f, FIELD_MAP[f][:display_name]] }]
   end
 
   def initialize(report:, user:, search: {}, paginate: {})

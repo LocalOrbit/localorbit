@@ -24,19 +24,19 @@ class OrderItemDecorator < Draper::Decorator
   end
 
   def product_name
-    product.name.to_s.titleize
+    name.to_s
   end
 
   def seller_name
-    object.seller_name.to_s.titleize
+    object.seller_name.to_s
   end
 
   def buyer_name
-    order.organization.name.to_s.titleize
+    order.organization.name.to_s
   end
 
   def market_name
-    order.market.name.to_s.titleize
+    order.market.name.to_s
   end
 
   def unit_price

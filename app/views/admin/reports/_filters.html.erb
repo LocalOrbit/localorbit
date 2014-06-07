@@ -1,4 +1,4 @@
-<%= search_form_for presenter.q, url: admin_reports_path(presenter.report), html: { class: "payment_search clear-after" } do |f| %>
+<%= search_form_for presenter.q, url: admin_report_path(presenter.report.to_s.dasherize), html: { class: "payment_search clear-after" } do |f| %>
   <div class="manager-filters">
     <div class="pull-left">
       <span class="preserve-alignment">

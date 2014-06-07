@@ -3,36 +3,42 @@
 <%= render "admin/reports/filters", presenter: @presenter %>
 
 <div class="">
-  <table class="sortable sold-table">
+  <table class="sortable report-table">
     <thead class="stickable">
       <tr>
         <% @presenter.fields.each do |field| %>
           <% filter_map = ReportPresenter::FIELD_MAP[field] || {} %>
-          <th><%= sort_link @presenter.q, filter_map[:sort], filter_map[:display_name] %></th>
+          <th>
+            <% if filter_map[:sort] %>
+              <%= sort_link @presenter.q, filter_map[:sort], filter_map[:display_name] %>
+            <% else %>
+              <%= filter_map[:display_name] %>
+            <% end %>
+          </th>
         <% end %>
       </tr>
     </thead>
 
     <% @presenter.items.decorate.each do |item| %>
-    <tr class="<%= cycle "odd", "even" %> sold-item">
+    <tr class="<%= cycle "odd", "even" %> item">
       <% @presenter.fields.each do |field| %>
         <% if field == :placed_at %>
-          <td class="order-number">
-            <%= content_tag "span", item.placed_at, class: "placed-at" %><br>
-            <%= link_to item.order_number, admin_order_path(item.order), class: "order-number-bold" %>
+          <td class="placed-at">
+            <%= content_tag "span", item.placed_at, class: "order-date" %><br>
+            <%= link_to item.order_number, admin_order_path(item.order), class: "order-number" %>
           </td>
         <% end %>
 
         <% if field == :category_name %>
-          <td class="category-name"><%= item.category_name %></td>
+          <td class="category"><%= item.category_name %></td>
         <% end %>
 
         <% if field == :product_name %>
-          <td class="order-product"><%= link_to item.product_name, [:admin, item.product], class: "product" %></td>
+          <td class="product"><%= link_to item.product_name, [:admin, item.product] %></td>
         <% end %>
 
         <% if field == :seller_name %>
-          <td class="order-seller"><%= link_to item.seller_name, [:admin, item.product.organization], class: "seller" %></td>
+          <td class="seller"><%= link_to item.seller_name, [:admin, item.product.organization] %></td>
         <% end %>
 
         <% if field == :buyer_name %>
@@ -47,7 +53,7 @@
         <% end %>
 
         <% if field == :unit_price %>
-          <td class="row-total"><%= item.unit_price %></td>
+          <td class="price"><%= item.unit_price %></td>
         <% end %>
 
         <% if field == :discount %>
@@ -59,7 +65,7 @@
         <% end %>
 
         <% if field == :net_sale %>
-          <td class="order-net-sale">
+          <td class="net-sale">
             <%= content_tag "span", item.net_sale, class: "total-price" %><br>
             <%= content_tag "span", item.price_per_unit, class: "unit-price" %>
           </td>
