@@ -7,7 +7,7 @@
       </span>
       <span class="preserve-alignment">
         <%= f.label :order_market_id_eq, "Market" %><br>
-        <%= f.select :order_market_id_eq, options_from_collection_for_select(presenter.markets, "id", "name", presenter.q.order_market_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+        <%= f.select :order_market_id_eq, options_from_collection_for_select(presenter.markets, :id, :name, presenter.q.order_market_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
       </span>
 
       <% if presenter.report == :sales_by_seller %>
@@ -21,6 +21,17 @@
         <span class="preserve-alignment">
           <%= f.label :order_organization_id_eq, "Buyer" %><br>
           <%= f.select :order_organization_id_eq, options_from_collection_for_select(presenter.buyers, :id, :name, presenter.q.order_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+        </span>
+      <% end %>
+
+      <% if presenter.report == :sales_by_product %>
+        <span class="preserve-alignment">
+          <%= f.label :product_category_id_eq, "Category" %><br>
+          <%= f.select :product_category_id_eq, options_from_collection_for_select(presenter.categories, :id, :name, presenter.q.product_category_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+        </span>
+        <span class="preserve-alignment">
+          <%= f.label :name_eq, "Product" %><br>
+          <%= f.select :name_eq, options_from_collection_for_select(presenter.products, :to_s, :titleize, presenter.q.name_eq), { include_blank: "All" }, { class: "filter-input" } %>
         </span>
       <% end %>
     </div>

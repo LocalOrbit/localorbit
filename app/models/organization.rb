@@ -23,6 +23,7 @@ class Organization < ActiveRecord::Base
   scope :buying,  -> { where(can_sell: false) } # needs a new boolean
   scope :visible, -> { where(show_profile: true) }
   scope :with_products, -> { joins(:products).select("DISTINCT organizations.*").order(name: :asc) }
+  scope :buyers_for_orders, ->(orders) { joins(:orders).where(orders: { id: orders }).uniq }
 
   serialize :twitter, TwitterUser
 
@@ -41,10 +42,6 @@ class Organization < ActiveRecord::Base
 
   def self.for_can_sell(can_sell)
     where(can_sell: can_sell)
-  end
-
-  def self.buyers_for_order_items(items)
-    joins(:orders, orders: :items).where(order_items: { id: items }).uniq
   end
 
   def self.for_sort(order)
