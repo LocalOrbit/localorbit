@@ -43,6 +43,10 @@ class Organization < ActiveRecord::Base
     where(can_sell: can_sell)
   end
 
+  def self.buyers_for_order_items(items)
+    joins(:orders, orders: :items).where(order_items: { id: items }).uniq
+  end
+
   def self.for_sort(order)
     column, direction = column_and_direction(order)
     case column

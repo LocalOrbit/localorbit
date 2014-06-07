@@ -4,6 +4,7 @@ feature "Reports" do
   let!(:market)    { create(:market, name: "Foo Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market2)   { create(:market, name: "Bar Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market3)   { create(:market, name: "Baz Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:buyer)     { create(:organization, name: "Foo Buyer", markets: [market], can_sell: false) }
   let!(:seller)    { create(:organization, name: "Foo Seller", markets: [market], can_sell: true) }
   let!(:seller2)   { create(:organization, name: "Bar Seller", markets: [market2], can_sell: true) }
   let!(:subdomain) { market.subdomain }
@@ -15,7 +16,6 @@ feature "Reports" do
     delivery_schedule2 = create(:delivery_schedule, market: market2)
     delivery2 = delivery_schedule2.next_delivery
 
-    buyer   = create(:organization, name: "Foo Buyer", markets: [market], can_sell: false)
     buyer2  = create(:organization, name: "Bar Buyer", markets: [market2], can_sell: false)
     buyer3  = create(:organization, name: "Baz Buyer", markets: [market3], can_sell: false)
 
@@ -155,6 +155,25 @@ feature "Reports" do
           expect(Dom::Report::ItemRow.all.count).to eq(11)
 
           select seller.name, from: "Seller"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(5)
+          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+        end
+      end
+
+      context "Sales by Buyer report" do
+        let!(:report) { :sales_by_buyer }
+
+        scenario "filters by buyer" do
+
+          expect(Dom::Report::ItemRow.all.count).to eq(11)
+
+          select buyer.name, from: "Buyer"
           click_button "Filter"
 
           expect(Dom::Report::ItemRow.all.count).to eq(5)

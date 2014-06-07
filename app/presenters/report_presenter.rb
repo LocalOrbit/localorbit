@@ -1,5 +1,5 @@
 class ReportPresenter
-  attr_reader :report, :items, :fields, :q, :markets, :sellers
+  attr_reader :report, :items, :fields, :q, :markets, :sellers, :buyers
 
   FIELD_MAP = {
     placed_at:              { sort: :created_at,              display_name: "Placed On" },
@@ -26,6 +26,10 @@ class ReportPresenter
     sales_by_seller: [
       :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
       :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
+    ],
+    sales_by_buyer: [
+      :placed_at, :buyer_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+      :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
     ]
   }.with_indifferent_access
 
@@ -51,6 +55,7 @@ class ReportPresenter
     @items = @q.result.page(paginate[:page]).per(paginate[:per_page])
     @markets = Market.for_order_items(items)
     @sellers = items.pluck(:seller_name).uniq
+    @buyers = Organization.buyers_for_order_items(items)
     @fields = REPORT_FIELD_MAP[report]
   end
 end
