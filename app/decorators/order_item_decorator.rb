@@ -11,7 +11,7 @@ class OrderItemDecorator < Draper::Decorator
     "#{number_to_currency(object.unit_price)}/#{unit}"
   end
 
-  def placed_on
+  def placed_at
     order.placed_at.strftime("%m/%d/%Y")
   end
 

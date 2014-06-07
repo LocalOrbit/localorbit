@@ -16,9 +16,9 @@
     <% @presenter.items.decorate.each do |item| %>
     <tr class="<%= cycle "odd", "even" %> sold-item">
       <% @presenter.fields.each do |field| %>
-        <% if field == :placed_on %>
+        <% if field == :placed_at %>
           <td class="order-number">
-            <%= content_tag "span", item.placed_on, class: "placed-at" %><br>
+            <%= content_tag "span", item.placed_at, class: "placed-at" %><br>
             <%= link_to item.order_number, admin_order_path(item.order), class: "order-number-bold" %>
           </td>
         <% end %>

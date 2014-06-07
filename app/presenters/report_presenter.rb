@@ -2,7 +2,7 @@ class ReportPresenter
   attr_reader :report, :items, :fields, :q, :markets, :sellers
 
   FIELD_MAP = {
-    placed_on:              { sort: :created_at,              display_name: "Placed On" },
+    placed_at:              { sort: :created_at,              display_name: "Placed On" },
     category_name:          { sort: :product_category_name,   display_name: "Category" },
     product_name:           { sort: :name,                    display_name: "Product" },
     seller_name:            { sort: :seller_name,             display_name: "Seller" },
@@ -20,11 +20,11 @@ class ReportPresenter
 
   REPORT_FIELD_MAP = {
     total_sales: [
-      :placed_on, :product_name, :seller_name, :quantity, :unit_price, :discount,
+      :placed_at, :product_name, :seller_name, :quantity, :unit_price, :discount,
       :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
     ],
     sales_by_seller: [
-      :placed_on, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+      :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
       :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
     ]
   }.with_indifferent_access

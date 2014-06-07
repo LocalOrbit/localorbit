@@ -4,8 +4,8 @@ csv << ReportPresenter::REPORT_FIELD_MAP[@report].map { |r| ReportPresenter::FIE
   data = []
 
   @presenter.fields.each do |field|
-    if field == :placed_on
-    	data << "#{item.placed_on} #{item.order_number}"
+    if field == :placed_at
+    	data << "#{item.placed_at} #{item.order_number}"
     else
       data << item.send(field)
     end
