@@ -60,7 +60,7 @@ body {
     top: 0;
     z-index: 100;
   }
-}  
+}
 
 .tab-title {
   width: 50%;
@@ -229,59 +229,4 @@ body {
 }
 .row--whitespace > .column {
   float: left;
-}
-
-
-@media screen and (max-width: 800px) {
-  .hidden-tablet {
-    display: none;
-  }
-  .product-form.column,
-  .price-form > .column,
-  .inventory-form > .column,
-  .organization-form {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 599px) {
-  .hidden-mobile {
-    max-width: 0;
-    display: none;
-  }
-  .nav--admin {
-    display: none;
-  }
-  .l-page-header {
-    text-align: center;
-    h1 {
-      margin: 0 auto;
-
-      font-size: 26px;
-    }
-    .delete {
-      display: block;
-      margin: 10px 0 20px 0;
-      text-align: center;
-    }
-  }
-  .action-helper {
-    text-align: center;
-    line-height: 20px;
-    margin-top: 20px;
-    input, .btn--add, .btn--save {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      width: 100%;
-      margin-top: 20px;   
-    }
-  }
-  
-  .return-list {
-    text-align: center;
-    font-size: 14px;
-    line-height: 30px;
-    margin-bottom: -20px;
-  }
 }
