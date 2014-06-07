@@ -107,7 +107,15 @@ feature "Reports" do
 
   context "for all reports" do
     context "as any user" do
-      let!(:user) { create(:user, :admin) }
+      let!(:user)   { create(:user, :admin) }
+      let!(:report) { :total_sales }
+
+      scenario "displays the appropriate filters" do
+        has_field?("Search")
+        has_field?("Placed on or after")
+        has_field?("Placed on or before")
+        has_select?("Market")
+      end
 
       scenario "searches by order number" do
         expect(Dom::Report::ItemRow.all.count).to eq(11)
@@ -182,6 +190,14 @@ feature "Reports" do
       context "Sales by Seller report" do
         let!(:report) { :sales_by_seller }
 
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
+          has_select?("Seller")
+        end
+
         scenario "filters by seller" do
           expect(Dom::Report::ItemRow.all.count).to eq(11)
 
@@ -210,6 +226,13 @@ feature "Reports" do
       context "Sales by Buyer report" do
         let!(:report) { :sales_by_buyer }
 
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
+        end
+
         scenario "filters by buyer" do
           expect(Dom::Report::ItemRow.all.count).to eq(11)
 
@@ -237,6 +260,15 @@ feature "Reports" do
 
       context "Sales by Product report" do
         let!(:report) { :sales_by_product }
+
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
+          has_select?("Category")
+          has_select?("Product")
+        end
 
         scenario "filters by category" do
           expect(Dom::Report::ItemRow.all.count).to eq(11)
@@ -276,6 +308,14 @@ feature "Reports" do
       context "Sales by Payment report" do
         let!(:report) { :sales_by_payment }
 
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
+          has_select?("Payment Method")
+        end
+
         scenario "filters by payment method" do
           expect(Dom::Report::ItemRow.all.count).to eq(11)
 
@@ -290,6 +330,21 @@ feature "Reports" do
 
           expect(Dom::Report::ItemRow.all.count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+        end
+      end
+
+      context "Purchases by Product report" do
+        let!(:report) { :purchases_by_product }
+
+        # Filters are reused from other reports so we just need to ensure
+        # the right ones show on the page.
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
+          has_select?("Category")
+          has_select?("Product")
         end
       end
 
