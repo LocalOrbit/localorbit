@@ -2,7 +2,7 @@
 <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(q: params[:q], format: :csv), class: 'export todo pull-right' %>
 <%= render "admin/reports/filters", presenter: @presenter %>
 
-<div class="">
+<div>
   <table class="sortable report-table">
     <thead class="stickable">
       <tr>
