@@ -13,6 +13,7 @@ class ReportPresenter
     discount:               { sort: :discount,                display_name: "Discount" },
     row_total:              { sort: nil,                      display_name: "Row Total" },
     net_sale:               { sort: nil,                      display_name: "Net Sale" },
+    payment_methods:        { sort: :order_payments_payment_method, display_name: "Payment Method" },
     delivery_status:        { sort: :delivery_status,         display_name: "Delivery" },
     buyer_payment_status:   { sort: :order_payment_status,    display_name: "Buyer Payment Status" },
     seller_payment_status:  { sort: nil,                      display_name: "Seller Payment Status" }
@@ -35,6 +36,9 @@ class ReportPresenter
       :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
       :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
     ],
+    sales_by_payment: [
+      :placed_at, :buyer_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+      :row_total, :net_sale, :payment_methods, :delivery_status, :buyer_payment_status, :seller_payment_status
     ]
   }.with_indifferent_access
 
@@ -66,5 +70,6 @@ class ReportPresenter
     @buyers = Organization.buyers_for_orders(items.pluck(:order_id)).order(:name)
     @products = items.pluck(:name).sort.uniq
     @categories = Category.for_products(items.pluck(:product_id)).order(:name)
+    @payment_methods = Payment.for_orders(items.pluck(:order_id)).pluck(:payment_method).uniq.compact.sort
   end
 end

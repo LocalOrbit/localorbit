@@ -71,6 +71,10 @@
           </td>
         <% end %>
 
+        <% if field == :payment_methods %>
+          <td class="payment-methods"><%= item.payment_methods.join(",") %></td>
+        <% end %>
+
         <% if field == :delivery_status %>
           <td class="delivery-status"><%= item.delivery_status %></td>
         <% end %>

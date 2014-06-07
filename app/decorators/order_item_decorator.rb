@@ -59,6 +59,10 @@ class OrderItemDecorator < Draper::Decorator
     number_to_currency(object.seller_net_total)
   end
 
+  def payment_methods
+    order.payments.pluck(:payment_method).uniq.compact.map(&:titleize)
+  end
+
   def delivery_status
     object.delivery_status.to_s.titleize
   end

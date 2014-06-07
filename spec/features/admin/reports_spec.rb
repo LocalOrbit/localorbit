@@ -34,16 +34,21 @@ feature "Reports" do
                             product: product,
                             seller_name: seller.name,
                             unit_price: 20.00 + i, quantity: 1)
-        create(:order,
-               market_id: market.id,
-               delivery: delivery,
-               items: [order_item],
-               organization: buyer,
-               payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
-               payment_status: "paid",
-               order_number: "LO-01-234-4567890-#{i}")
+        order = create(:order,
+                       market_id: market.id,
+                       delivery: delivery,
+                       items: [order_item],
+                       organization: buyer,
+                       payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
+                       payment_status: "paid",
+                       order_number: "LO-01-234-4567890-#{i}")
+        create(:payment,
+               payment_method: ["cash", "check", "ach", "ach", "credit card"][i],
+               payer: buyer,
+               payee: market,
+               orders: [order],
+               amount: order.total_cost)
 
-        product = create(:product, :sellable, name: "Product#{i}", organization: seller2)
         category = create(:category, name: "Category-02-#{i}")
         product = create(:product,
                          :sellable,
@@ -116,10 +121,26 @@ feature "Reports" do
         expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
         expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
         expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+
+        fill_in "Search", with: "LO-03"
+        click_button "Search"
+
+        expect(Dom::Report::ItemRow.all.count).to eq(1)
+        expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
       end
 
       scenario "filters by market" do
         expect(Dom::Report::ItemRow.all.count).to eq(11)
+
+        select market.name, from: "Market"
+        click_button "Filter"
+
+        expect(Dom::Report::ItemRow.all.count).to eq(5)
+        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
 
         select market2.name, from: "Market"
         click_button "Filter"
@@ -173,6 +194,16 @@ feature "Reports" do
           expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+
+          select seller2.name, from: "Seller"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(5)
+          expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
         end
       end
 
@@ -191,6 +222,18 @@ feature "Reports" do
           expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+
+          select buyer2.name, from: "Buyer"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(5)
+          expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+        end
+      end
 
       context "Sales by Product report" do
         let!(:report) { :sales_by_product }
@@ -229,6 +272,24 @@ feature "Reports" do
           expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
         end
       end
+
+      context "Sales by Payment report" do
+        let!(:report) { :sales_by_payment }
+
+        scenario "filters by payment method" do
+          expect(Dom::Report::ItemRow.all.count).to eq(11)
+
+          select "Cash", from: "Payment Method"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+
+          select "Check", from: "Payment Method"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
         end
       end
     end

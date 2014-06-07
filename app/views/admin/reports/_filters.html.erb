@@ -34,6 +34,13 @@
           <%= f.select :name_eq, options_from_collection_for_select(presenter.products, :to_s, :titleize, presenter.q.name_eq), { include_blank: "All" }, { class: "filter-input" } %>
         </span>
       <% end %>
+
+      <% if presenter.report == :sales_by_payment %>
+        <span class="preserve-alignment">
+          <%= f.label :order_payments_payment_method_eq, "Payment Method" %><br>
+          <%= f.select :order_payments_payment_method_eq, options_from_collection_for_select(presenter.payment_methods, :to_s, :titleize, presenter.q.order_payments_payment_method_eq), { include_blank: "All" }, { class: "filter-input" } %>
+        </span>
+      <% end %>
     </div>
     <div class="pull-right">
       <span class="preserve-alignment">
