@@ -44,8 +44,8 @@ class ReportPresenter
     @q.sorts = "created_at desc" if @q.sorts.empty?
 
     @items = @q.result.page(paginate[:page]).per(paginate[:per_page])
-    @markets = Market.for_order_items(@items)
-    @sellers = @items.pluck(:seller_name).uniq
+    @markets = Market.for_order_items(items)
+    @sellers = items.pluck(:seller_name).uniq
     @fields = REPORT_FIELD_MAP[report]
   end
 end
