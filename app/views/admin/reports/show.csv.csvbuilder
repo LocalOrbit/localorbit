@@ -1,0 +1,15 @@
+csv << ReportPresenter::REPORT_FIELD_MAP[@report].map { |r| ReportPresenter::FIELD_MAP[r][:display_name] }
+
+@presenter.items.decorate.each do |item|
+  data = []
+
+  @presenter.fields.each do |field|
+    if field == :placed_on
+    	data << "#{item.placed_on} #{item.order_number}"
+    else
+      data << item.send(field)
+    end
+  end
+
+  csv << data
+end
