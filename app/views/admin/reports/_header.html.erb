@@ -5,7 +5,7 @@
     </div>
     <div class="tabs-wrapper">
       <ul class="tabs">
-        <% ReportsPresenter.reports.each do |report| %>
+        <% ReportPresenter.reports.each do |report| %>
           <%= content_tag(:li, link_to_or_span(report.titleize, admin_report_path(report.dasherize)), class: 'tab') %>
         <% end %>
       </ul>

@@ -1,4 +1,4 @@
-class ReportsPresenter
+class ReportPresenter
   attr_reader :report, :items, :fields, :q, :markets, :sellers
 
   FIELD_MAP = {
