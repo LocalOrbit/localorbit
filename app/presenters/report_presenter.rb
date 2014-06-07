@@ -39,6 +39,10 @@ class ReportPresenter
     sales_by_payment: [
       :placed_at, :buyer_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
       :row_total, :net_sale, :payment_methods, :delivery_status, :buyer_payment_status, :seller_payment_status
+    ],
+    purchases_by_product: [
+      :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+      :row_total, :delivery_status, :buyer_payment_status
     ]
   }.with_indifferent_access
 
