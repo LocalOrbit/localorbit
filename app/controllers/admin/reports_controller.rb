@@ -23,7 +23,7 @@ class Admin::ReportsController < AdminController
   private
 
   def restrict_buyer_only
-    if @report == :purchases_by_product
+    if @report == :purchases_by_product || @report == :total_purchases
       render_404 unless current_user.admin? || current_user.buyer_only?
     else
       render_404 if current_user.buyer_only?

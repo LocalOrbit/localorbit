@@ -292,6 +292,19 @@ feature "Reports" do
           expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
         end
       end
+
+      context "Total Purchases report" do
+        let!(:report) { :total_purchases }
+
+        # Filters are reused from other reports so we just need to ensure
+        # the right ones show on the page.
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
+        end
+      end
     end
 
     context "as an Admin" do

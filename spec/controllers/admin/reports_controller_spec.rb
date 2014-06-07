@@ -12,4 +12,5 @@ describe Admin::ReportsController do
   it_behaves_like "an action that restricts access to non buyers only", lambda { get :show, report: "sales-by-product" }
   it_behaves_like "an action that restricts access to non buyers only", lambda { get :show, report: "sales-by-payment" }
   it_behaves_like "an action that restricts access to buyers only",     lambda { get :show, report: "purchases-by-product" }
+  it_behaves_like "an action that restricts access to buyers only",     lambda { get :show, report: "total-purchases" }
 end
