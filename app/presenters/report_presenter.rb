@@ -1,5 +1,6 @@
 class ReportPresenter
-  attr_reader :report, :items, :fields, :q, :markets, :sellers, :buyers, :products, :categories, :payment_methods
+  attr_reader :report, :items, :fields, :filters, :q,
+    :markets, :sellers, :buyers, :products, :categories, :payment_methods
 
   FIELD_MAP = {
     placed_at:              { sort: :created_at,              display_name: "Placed On" },
@@ -19,65 +20,146 @@ class ReportPresenter
     seller_payment_status:  { sort: nil,                      display_name: "Seller Payment Status" }
   }.with_indifferent_access
 
-  REPORT_FIELD_MAP = {
-    total_sales: [
-      :placed_at, :product_name, :seller_name, :quantity, :unit_price, :discount,
-      :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-    ],
-    sales_by_seller: [
-      :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
-      :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-    ],
-    sales_by_buyer: [
-      :placed_at, :buyer_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
-      :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-    ],
-    sales_by_product: [
-      :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
-      :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
-    ],
-    sales_by_payment: [
-      :placed_at, :buyer_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
-      :row_total, :net_sale, :payment_methods, :delivery_status, :buyer_payment_status, :seller_payment_status
-    ],
-    purchases_by_product: [
-      :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
-      :row_total, :delivery_status, :buyer_payment_status
-    ],
-    total_purchases: [
-      :placed_at, :product_name, :seller_name, :quantity, :unit_price, :discount,
-      :row_total, :delivery_status, :buyer_payment_status
-    ]
+  REPORT_MAP = {
+    total_sales: {
+      filters: [:placed_at, :order_number, :market_name],
+      fields: [
+        :placed_at, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
+      ]
+    },
+    sales_by_seller: {
+      filters: [:placed_at, :order_number, :market_name, :seller_name],
+      fields: [
+        :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
+      ]
+    },
+    sales_by_buyer: {
+      filters: [:placed_at, :order_number, :market_name, :buyer_name],
+      fields: [
+        :placed_at, :buyer_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
+      ]
+    },
+    sales_by_product: {
+      filters: [:placed_at, :order_number, :market_name, :category_name, :product_name],
+      fields: [
+        :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
+      ]
+    },
+    sales_by_payment: {
+      filters: [:placed_at, :order_number, :market_name, :payment_methods],
+      fields: [
+        :placed_at, :buyer_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :row_total, :net_sale, :payment_methods, :delivery_status, :buyer_payment_status, :seller_payment_status
+      ]
+    },
+    purchases_by_product: {
+      filters: [:placed_at, :order_number, :market_name, :category_name, :product_name],
+      fields: [
+        :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :row_total, :delivery_status, :buyer_payment_status
+      ]
+    },
+    total_purchases: {
+      filters: [:placed_at, :order_number, :market_name],
+      fields: [
+        :placed_at, :product_name, :seller_name, :quantity, :unit_price, :discount,
+        :row_total, :delivery_status, :buyer_payment_status
+      ]
+    }
   }.with_indifferent_access
-
-  def self.reports
-    REPORT_FIELD_MAP.keys
-  end
-
-  def self.field_headers_for_report(report)
-    fields = REPORT_FIELD_MAP[report] || []
-    Hash[fields.map { |f| [f, FIELD_MAP[f][:display_name]] }]
-  end
 
   def initialize(report:, user:, search: {}, paginate: {})
     @report = report
+    @fields = REPORT_MAP[@report].fetch(:fields, [])
+    @filters = REPORT_MAP[@report].fetch(:filters, [])
 
-    # TODO: includes appropriate associations based on report
-    items = OrderItem.for_user(user).joins(:order)
+    # Set our initial scope and lookup any applicable filter data
+    items = OrderItem.for_user(user).joins(:order).uniq
+    setup_filter_data(items)
 
     # Initialize ransack and set a default sort order
     @q = items.search(search)
     @q.sorts = "created_at desc" if @q.sorts.empty?
 
-    @items = @q.result.page(paginate[:page]).per(paginate[:per_page])
-    @fields = REPORT_FIELD_MAP[report]
+    items = @q.result.
+              page(paginate[:page]).
+              per(paginate[:per_page])
 
-    # Filter values
-    @markets = Market.for_order_items(items)
-    @sellers = items.pluck(:seller_name).uniq
-    @buyers = Organization.buyers_for_orders(items.pluck(:order_id)).order(:name)
-    @products = items.pluck(:name).sort.uniq
-    @categories = Category.for_products(items.pluck(:product_id)).order(:name)
-    @payment_methods = Payment.for_orders(items.pluck(:order_id)).pluck(:payment_method).uniq.compact.sort
+    @items = include_associations(items)
+  end
+
+  def self.reports
+    REPORT_MAP.keys
+  end
+
+  def self.field_headers_for_report(report)
+    fields = REPORT_MAP[report].fetch(:fields, [])
+    Hash[fields.map { |f| [f, FIELD_MAP[f][:display_name]] }]
+  end
+
+  private
+
+  def setup_filter_data(items)
+    if includes_filter?(:market_name)
+      @markets = Market.select(:id, :name).where(id: items.pluck("orders.market_id")).order(:name).uniq
+    end
+
+    if includes_filter?(:seller_name)
+      @sellers = Organization.select(:id, :name).where(id: items.joins(:product).pluck("products.organization_id")).order(:name).uniq
+    end
+
+    if includes_filter?(:buyer_name)
+      @buyers = Organization.select(:id, :name).where(id: items.pluck("orders.organization_id")).order(:name).uniq
+    end
+
+    if includes_filter?(:category_name)
+      @categories = Category.select(:id, :name).where(id: items.joins(:product).pluck("products.category_id")).order(:name).uniq
+    end
+
+    if includes_filter?(:product_name)
+      # Products have a high chance of duplication so we'll be filtering by
+      # string search/matching rather than model ID
+      @products = items.pluck(:name).sort_by { |s| s.downcase }.uniq
+    end
+
+    if includes_filter?(:payment_methods)
+      @payment_methods = Payment.where(id: items.joins(order: :order_payments).pluck("order_payments.payment_id")).pluck(:payment_method).uniq.compact.sort
+    end
+  end
+
+  def include_associations(items)
+    # All reports use attributes from order
+    items = items.includes(:order)
+
+    if includes_field?(:seller_name)
+      items = items.includes(product: :organization)
+    end
+
+    if includes_field?(:buyer_name)
+      # buyer name shows buyer and market so we load both associations
+      items = items.includes(order: [:market, :organization])
+    end
+
+    if includes_field?(:payment_methods)
+      items = items.includes(order: :payments)
+    end
+
+    if includes_field?(:category_name)
+      items = items.includes(product: :category)
+    end
+
+    items
+  end
+
+  def includes_field?(field)
+    REPORT_MAP[@report].fetch(:fields, []).include?(field)
+  end
+
+  def includes_filter?(filter)
+    REPORT_MAP[@report].fetch(:filters, []).include?(filter)
   end
 end
