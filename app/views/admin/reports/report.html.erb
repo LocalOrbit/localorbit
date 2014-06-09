@@ -42,10 +42,7 @@
         <% end %>
 
         <% if field == :buyer_name %>
-          <td>
-            <%= link_to item.buyer_name, [:admin, item.order.organization], class: "buyer" %><br>
-            <%= content_tag "span", item.market_name, class: "market" %>
-          </td>
+          <td><%= link_to item.buyer_name, [:admin, item.order.organization], class: "buyer" %></td>
         <% end %>
 
         <% if field == :quantity %>
