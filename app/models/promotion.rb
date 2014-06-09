@@ -13,6 +13,11 @@ class Promotion < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
 
+  def featureable?(market, buyer, delivery)
+    inventory = product.available_inventory(delivery.deliver_on)
+    product.prices.any? {|price| price.for_market_and_organization?(market, buyer) && price.min_quantity <= inventory }
+  end
+
   def self.promotions_for_user(user)
     if user.admin?
       all
@@ -21,6 +26,7 @@ class Promotion < ActiveRecord::Base
       where(market_id: market_ids)
     end
   end
+
 
   private
 

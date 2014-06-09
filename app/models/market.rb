@@ -90,6 +90,17 @@ class Market < ActiveRecord::Base
     scope
   end
 
+  def featured_promotion(buyer)
+    promotion = promotions.active.first
+    product = promotion.product
+
+    if product.available_inventory > 0 && product.prices_for_market_and_organization(self, buyer).any?
+      promotion
+    else
+      nil
+    end
+  end
+
   private
 
   def self.order_by_name(direction)
