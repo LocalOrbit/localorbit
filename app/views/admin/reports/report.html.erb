@@ -50,10 +50,7 @@
         <% end %>
 
         <% if field == :unit_price %>
-          <td class="price">
-            <%= content_tag "span", item.unit_price %><br>
-            <%= content_tag "span", item.price_per_unit, class: "unit-price" %>
-          </td>
+          <td class="price"><%= content_tag "span", item.price_per_unit, class: "unit-price" %></td>
         <% end %>
 
         <% if field == :discount %>
