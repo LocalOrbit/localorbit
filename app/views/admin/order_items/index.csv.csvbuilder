@@ -8,7 +8,7 @@ csv << ["Order Date", "Order #", "Market", "Seller", "Buyer", "Product", "Price"
     order_item.seller_name,
     order_item.buyer_name,
     order_item.product_name,
-    order_item.unit_price,
+    order_item.price_per_unit,
     order_item.quantity,
     number_to_currency(order_item.gross_total),
     order_item.delivery_status.titleize,
