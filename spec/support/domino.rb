@@ -874,4 +874,28 @@ module Dom
     attribute :location
     attribute :market
   end
+
+  module Report
+    class ItemRow < Domino
+      selector ".item"
+
+      attribute :placed_at
+      attribute :order_date
+      attribute :order_number
+      attribute :category_name, ".category"
+      attribute :product_name,  ".product"
+      attribute :seller_name,   ".seller"
+      attribute :buyer_name,    ".buyer"
+      attribute :product_name,  ".product"
+      attribute :market_name,   ".market"
+      attribute :quantity
+      attribute :unit_price,    ".price"
+      attribute :discount
+      attribute :row_total
+      attribute :net_sale
+      attribute :delivery_status
+      attribute :buyer_payment_status
+      attribute :seller_payment_status
+    end
+  end
 end

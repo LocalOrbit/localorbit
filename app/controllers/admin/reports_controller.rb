@@ -1,20 +1,22 @@
 class Admin::ReportsController < AdminController
   before_action :restrict_buyer_only
-  before_action :find_order_items
-  before_action :setup_search
+  before_action :restrict_reports, only: :show
 
   def index
-    redirect_to [:admin, :reports, :total_sales]
+    redirect_to admin_report_path("total-sales")
   end
 
-  def total_sales
+  def show
+    @presenter = ReportPresenter.new(report: @report,
+                                     user: current_user,
+                                     search: params[:q],
+                                     paginate: {
+                                       page: params[:page],
+                                       per_page: params[:per_page]
+                                     })
     respond_to do |format|
-      format.html do
-        @markets = Market.for_order_items(@order_items)
-        @order_items = @q.result.page(params[:page]).per(params[:per_page])
-      end
-
-      format.csv  { @filename = "report.csv"}
+      format.html { render "report" }
+      format.csv  { @filename = "report.csv" }
     end
   end
 
@@ -24,12 +26,11 @@ class Admin::ReportsController < AdminController
     render_404 if current_user.buyer_only?
   end
 
-  def find_order_items
-    @order_items ||= OrderItem.for_user(current_user).joins(:order)
-  end
-
-  def setup_search
-    @q = @order_items.search(params[:q])
-    @q.sorts = "created_at desc" if @q.sorts.empty?
+  def restrict_reports
+    @report = begin
+      params[:report].to_s.underscore.tap do |report|
+        render_404 unless ReportPresenter.reports.include?(report)
+      end.to_sym
+    end
   end
 end
