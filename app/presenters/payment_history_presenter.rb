@@ -45,8 +45,8 @@ class PaymentHistoryPresenter
   end
 
   def initialize(payments, search, page, per_page, paginate = true)
-    @start_date = format_date(search[:updated_at_date_gteq])
-    @end_date = format_date(search[:updated_at_date_lteq])
+    @start_date = format_date(search[:created_at_date_gteq])
+    @end_date = format_date(search[:created_at_date_lteq])
 
     # Initialize ransack and set a default sort order
     @q = payments.search(search)

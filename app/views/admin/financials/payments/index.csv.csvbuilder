@@ -8,7 +8,7 @@ csv << ["Payment Date", "Description", "Payment Method", "Amount"]
   end
 
   csv << [
-    payment.updated_at.strftime("%m/%d/%Y"),
+    payment.created_at.strftime("%m/%d/%Y"),
     description,
     payment.display_payment_method,
     number_to_currency(payment.amount)
