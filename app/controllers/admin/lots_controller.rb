@@ -44,31 +44,35 @@ class Admin::LotsController < AdminController
     lot = @product.lots.find(params[:id])
     params[:lot] = params[:lot][lot.id.to_s]
     if lot.update lot_params
-      format.html { redirect_to [:admin, @product, :lots], notice: "Successfully saved lot" }
-      format.js {
-        @data = {
-          message: "Successfully added a new lot",
-          params: lot_params.to_a
+      respond_to do |format|
+        format.html { redirect_to [:admin, @product, :lots], notice: "Successfully saved lot" }
+        format.js {
+          @data = {
+            message: "Successfully added a new lot",
+            params: lot_params.to_a
+          }
+          render json: @data, status: 200
         }
-        render json: @data, status: 200
-      }
+      end
     else
       @lot_with_errors = lot
       @lot = @product.lots.build
-      format.html {
-        flash.now[:alert] = "Could not save lot"
-        render :index
-      }
-      format.js {
-        if @lot.errors.full_messages.present?
-          @data = {
-            errors: @lot.errors.full_messages
-          }
-        else
-          @data = {errors: []}
-        end
-        render json: @data, status: 422
-      }
+      respond_to do |format|
+        format.html {
+          flash.now[:alert] = "Could not save lot"
+          render :index
+        }
+        format.js {
+          if @lot.errors.full_messages.present?
+            @data = {
+              errors: @lot.errors.full_messages
+            }
+          else
+            @data = {errors: []}
+          end
+          render json: @data, status: 422
+        }
+      end
     end
   end
 
