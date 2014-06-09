@@ -60,7 +60,13 @@ class OrderItemDecorator < Draper::Decorator
   end
 
   def payment_methods
-    order.payments.pluck(:payment_method).uniq.compact.map(&:titleize)
+    payments = order.payments.pluck(:payment_method).uniq.compact
+
+    if payments.empty?
+      ["Purchase Order"]
+    else
+      payments.map(&:titleize)
+    end
   end
 
   def delivery_status
