@@ -32,9 +32,11 @@ class Admin::ReportsController < AdminController
 
   def restrict_reports
     @report = begin
-      params[:report].to_s.underscore.tap do |report|
-        render_404 unless ReportPresenter.reports.include?(report)
-      end.to_sym
+      if report = ReportPresenter.reports.detect { |r| r == params[:report].to_s.underscore }
+        report.to_sym
+      else
+        render_404
+      end
     end
   end
 end
