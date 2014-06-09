@@ -67,6 +67,9 @@ h1 .font-icon {
 .icon-plus-circle:before {
   content: "\e02e";
 }
+.icon-minus-circle:before {
+  content: "\e02f";
+}
 .icon-twitter:before {
   content: "\e040";
 }
@@ -118,9 +121,6 @@ you can use the generic selector below, but it's slower:
 .icon-stack-checkmark:before {
   content: "\e02d";
 }
-.icon-minus-circle:before {
-  content: "\e02f";
-}
 .icon-close:before {
   content: "\e030";
 }
@@ -129,12 +129,6 @@ you can use the generic selector below, but it's slower:
 }
 .icon-arrow-down:before {
   content: "\e033";
-}
-.icon-checkbox-checked:before {
-  content: "\e034";
-}
-.icon-checkbox-unchecked:before {
-  content: "\e035";
 }
 .icon-filter:before {
   content: "\e036";
@@ -311,6 +305,12 @@ you can use the generic selector below, but it's slower:
 }
 .icon-tablet:before {
   content: "\e02a";
+}
+.icon-checkbox-checked:before {
+  content: "\e034";
+}
+.icon-checkbox-unchecked:before {
+  content: "\e035";
 }
 .icon-database:before {
   content: "\e04a";

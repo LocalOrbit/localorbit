@@ -1,0 +1,32 @@
+@import 'mixins';
+
+.products-featured {
+  .featured-heading {
+    padding: 10px;
+    border-bottom: solid 1px #bbb;
+    margin: 0;
+    background: #f0f0f0;
+    @include border-radius(10px 10px 0 0);
+  }
+  .featured-description {
+    padding: 10px;
+    border-top: solid 1px #c8c8c8;
+    border-bottom: solid 1px #c8c8c8;
+    background: #f7f7f7;
+  }
+  .featured-product,
+  .featured-product tr:nth-child(odd) {
+    background: #f0f0f0;
+    border-bottom: 0;
+    @include border-radius(0 0 10px 10px);
+  }
+  .featured-product {
+    td:first-child {
+      padding-left: 10px;
+      @include border-radius(0 0 0 10px);
+    }
+    td:last-child {
+      @include border-radius(0 0 10px 0);
+    }
+  }
+}
