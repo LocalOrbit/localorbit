@@ -12,7 +12,7 @@ class ReportPresenter
     quantity:               { sort: :quantity,                display_name: "Quantity" },
     unit_price:             { sort: :unit_price,              display_name: "Unit Price" },
     discount:               { sort: :discount,                display_name: "Discount" },
-    row_total:              { sort: nil,                      display_name: "Row Total" },
+    row_total:              { sort: nil,                      display_name: "Total" },
     net_sale:               { sort: nil,                      display_name: "Net Sale" },
     payment_methods:        { sort: :order_payments_payment_method, display_name: "Payment Method" },
     delivery_status:        { sort: :delivery_status,         display_name: "Delivery" },
