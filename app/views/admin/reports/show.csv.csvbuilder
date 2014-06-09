@@ -1,11 +1,21 @@
-csv << ReportPresenter::REPORT_MAP[@report].fetch(:fields, []).map { |r| ReportPresenter::FIELD_MAP[r][:display_name] }
+headers = ["Market"]
+
+ReportPresenter::REPORT_MAP[@report].fetch(:fields, []).each do |field|
+  headers << ReportPresenter::FIELD_MAP[field][:display_name]
+  headers << "Order Number" if field == :placed_at
+end
+
+csv << headers
 
 @presenter.items.decorate.each do |item|
-  data = []
+  data = [item.market_name]
 
   @presenter.fields.each do |field|
     if field == :placed_at
-    	data << "#{item.placed_at} #{item.order_number}"
+      data << item.placed_at
+      data << item.order_number
+    elsif field == :unit_price
+      data << item.price_per_unit
     else
       data << item.send(field)
     end
