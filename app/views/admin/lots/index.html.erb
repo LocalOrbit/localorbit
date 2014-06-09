@@ -32,10 +32,10 @@
         <td class="edit-cell"><%= Time.current.strftime('%m/%d/%Y') %></td>
         <td class="edit-cell"><%= f.text_field :number, size: 8  %></td>
         <td class="edit-cell">
-            <%= f.date_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+            <%= f.datetime_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
         </td>
         <td class="edit-cell">
-            <%= f.date_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+            <%= f.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
         </td>
         <td class="edit-cell"><%= f.number_field :quantity, min: 0, size: 3 %></td>
         <td class="edit-cell">
@@ -67,7 +67,7 @@
               <%= lot.good_from.try(:strftime, '%d %b %Y') %>
             </div>
             <div class="edit-cell">
-              <%= lot_in_table.date_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_<%= lot.id %>_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+              <%= lot_in_table.datetime_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_<%= lot.id %>_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
              </div>
           </td>
           <td class="expires_at">
@@ -75,7 +75,7 @@
               <%= lot.expires_at.try(:strftime, '%d %b %Y') %>
             </div>
             <div class="edit-cell">
-              <%= lot_in_table.date_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_<%= lot.id %>_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+              <%= lot_in_table.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_<%= lot.id %>_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
             </div>
           </td>
           <td class="quantity">
