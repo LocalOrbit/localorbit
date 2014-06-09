@@ -305,8 +305,8 @@ feature "Reports" do
         end
       end
 
-      context "Sales by Payment report" do
-        let!(:report) { :sales_by_payment }
+      context "Sales by Payment Method report" do
+        let!(:report) { :sales_by_payment_method }
 
         scenario "displays the appropriate filters" do
           has_field?("Search")

@@ -49,7 +49,7 @@ class ReportPresenter
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
       ]
     },
-    sales_by_payment: {
+    sales_by_payment_method: {
       filters: [:placed_at, :order_number, :market_name, :payment_methods],
       fields: [
         :placed_at, :buyer_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
