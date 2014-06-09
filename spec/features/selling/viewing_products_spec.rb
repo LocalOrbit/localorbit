@@ -187,10 +187,8 @@ describe "Viewing products" do
       visit admin_products_path
 
       product = Dom::ProductRow.find_by_name("Grapes")
-
       product.click_pricing
 
-      fill_in "Net Price", with: 10
       fill_in "Sale Price", with: 12
       fill_in "Min Qty", with: 5
 
@@ -198,6 +196,12 @@ describe "Viewing products" do
 
       product = Dom::ProductRow.find_by_name("Grapes")
       expect(product.pricing).to eq("$12.00 5+ boxes")
+
+      product.click_pricing
+      net_price  = find_field("Net Price")
+      sale_price = find_field("Sale Price")
+      expect(net_price.value).to eq("11.28")
+      expect(sale_price.value).to eq("12.00")
     end
   end
 end

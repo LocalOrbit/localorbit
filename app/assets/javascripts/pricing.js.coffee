@@ -1,5 +1,5 @@
 $ ->
-  return unless $("#pricing_table").length
+  return unless $("#pricing_table").length || $(".product-table").length
 
   formatFieldAsMoney = (field)->
     field.val(parseFloat(field.val()).toFixed(2))
@@ -36,6 +36,9 @@ $ ->
     netPrice.trigger('blur')
 
   $('input.sale-price').each ->
+    bindCalculator(this)
+
+  $('input.edit-price').each ->
     bindCalculator(this)
 
   EditTable.build "#new_price",
