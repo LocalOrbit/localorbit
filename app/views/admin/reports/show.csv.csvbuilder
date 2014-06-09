@@ -1,4 +1,4 @@
-csv << ReportPresenter::REPORT_FIELD_MAP[@report].map { |r| ReportPresenter::FIELD_MAP[r][:display_name] }
+csv << ReportPresenter::REPORT_MAP[@report].fetch(:fields, []).map { |r| ReportPresenter::FIELD_MAP[r][:display_name] }
 
 @presenter.items.decorate.each do |item|
   data = []

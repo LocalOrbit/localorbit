@@ -28,7 +28,7 @@ class OrderItemDecorator < Draper::Decorator
   end
 
   def seller_name
-    object.seller_name.to_s
+    product.organization.name.to_s
   end
 
   def buyer_name
