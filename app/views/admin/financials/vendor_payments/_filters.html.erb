@@ -1,9 +1,9 @@
-<%= search_form_for @q, url: url, html: { class: "invoice_search clear-after" } do |f| %>
+<%= search_form_for @finder.q, url: url, html: { class: "invoice_search clear-after" } do |f| %>
   <div class="pull-left">
     <span class="preserve-alignment">
-      <%= f.label :order_number_or_payment_note_cont, "Search Invoices" %><br>
+      <%= f.label :order_number_cont, "Search Payments" %><br>
       <%# NOTE: Do not change the whitespace on the following line %>
-      <%= f.search_field :order_number_or_payment_note_cont, placeholder: "Order # or PO #" -%><%= f.submit "Search", class: "btn--end" %>
+      <%= f.search_field :order_number_cont, placeholder: "Order #" -%><%= f.submit "Search", class: "btn--end" %>
     </span>
   </div>
 
@@ -27,9 +27,15 @@
       <%= f.label :market_id_eq, "Market" %><br>
       <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
     </span>
+
     <span class="preserve-alignment">
-      <%= f.label :organization_id_eq, "Buyer" %><br>
-      <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
+      <label for="filtered_organization_id">Sellers</label><br>
+      <%= select_tag :filtered_organization_id, options_from_collection_for_select(@search_presenter.seller_organizations, :id, :name, selected: @search_presenter.organization_id), {prompt: "All", class: "filter-input"} %>
+    </span>
+
+    <span class="preserve-alignment">
+      <%= f.label :payment_status_eq, "Payment Status" %><br>
+      <%= f.select :payment_status_eq, @search_presenter.payment_statuses, {include_blank: "All"}, {class: "filter-input"} %>
     </span>
   </div>
 <% end %>
