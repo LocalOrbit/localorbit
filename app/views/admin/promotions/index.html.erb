@@ -3,12 +3,27 @@
   <%= link_to "Add New Promotion", new_admin_promotion_path, class: 'btn btn--add btn--small pull-right' %>
 </div>
 
-<table>
-  <thead>
+<% if current_user.multi_market_membership? %>
+  <%= search_form_for @q, url: admin_promotions_path, html: { class: "payment_search clear-after" } do |f| %>
+    <div class="manager-filters">
+      <span class="preserve-alignment">
+        <%= f.label :market_id_nil_eq, "Market" %><br>
+        <%= f.select :market_id_nil_eq, @markets.map {|m| [m.name, m.id] }, { include_blank: "All" }, { class: "filter-input" } %>
+      </span>
+      <%= link_to "Reset", admin_promotions_path(clear: '', sort: @query_params["s"]), class: 'btn reset' if can_reset?(@query_params) %>
+    </div>
+  <% end %>
+<% end %>
+
+
+<table class="sortable">
+  <thead class="stickable">
     <tr>
-      <th>Date</th>
-      <th>Name</th>
-      <th>Market</th>
+      <th><%= sort_link(@q, :created_at, "Date") %></th>
+      <th><%= sort_link(@q, :name, "Name") %></th>
+      <% if current_user.multi_market_membership? %>
+        <th><%= sort_link(@q, "market_name", "Market") %></th>
+      <% end %>
       <th></th>
     </tr>
   </thead>
@@ -17,7 +32,9 @@
     <tr class="promotion-row">
       <td class="date"><%= promotion.created_at.strftime("%B %d, %Y") %></td>
       <td class="name"><%= link_to promotion.name, admin_promotion_path(promotion) %></td>
-      <td class="market"><%= promotion.market.name %></td>
+      <% if current_user.multi_market_membership? %>
+        <td class="market"><%= promotion.market.name %></td>
+      <% end %>
       <td class="links">
         <% if promotion.active? %>
           <%= link_to raw("<i class='font-icon icon-preview'></i>Deactivate"), activate_admin_promotion_path(promotion) %>

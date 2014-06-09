@@ -6,6 +6,11 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td colspan="5">
+        <%= raw featured.body %>
+      </td>
+    </tr>
     <tr class="product product-row cart_item" data-cart-item="<%= featured.product.cart_item.to_json %>">
       <td class="info">
       <div class="product-image">
