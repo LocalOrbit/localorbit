@@ -1,4 +1,12 @@
 <%= search_form_for @finder.q, url: url, html: { class: "invoice_search clear-after" } do |f| %>
+  <div class="pull-left">
+    <span class="preserve-alignment">
+      <%= f.label :order_number_cont, "Search Payments" %><br>
+      <%# NOTE: Do not change the whitespace on the following line %>
+      <%= f.search_field :order_number_cont, placeholder: "Order #" -%><%= f.submit "Search", class: "btn--end" %>
+    </span>
+  </div>
+
   <div class="pull-right">
     <span class="preserve-alignment">
       <label for="q_placed_at_date_gteq">Filter by Date</label><br>

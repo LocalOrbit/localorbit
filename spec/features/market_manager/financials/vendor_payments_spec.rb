@@ -244,6 +244,7 @@ feature "Payments to vendors" do
       expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms", "Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
 
       fill_in "q_placed_at_date_gteq", with: "Tue, 2 April 2014"
+
       fill_in "q_placed_at_date_lteq", with: "Wed, 14 May 2014"
       click_button "Filter"
 
@@ -256,7 +257,27 @@ feature "Payments to vendors" do
 
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
+    end
 
+    scenario "searching by order number" do
+      switch_to_subdomain(market1.subdomain)
+      sign_in_as market_manager
+      visit admin_financials_vendor_payments_path
+
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms", "Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
+
+      fill_in "q_order_number_cont", with: market1_order1.order_number
+      click_button "Filter"
+
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Better Farms"])
+
+      fill_in "q_order_number_cont", with: market1_order2.order_number
+      click_button "Filter"
+
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Betterest Farms", "Great Farms"])
     end
   end
 end
