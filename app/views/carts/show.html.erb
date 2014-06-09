@@ -1,6 +1,6 @@
 <div class="cart-page">
   <h1 class="heading-cart"><i class="font-icon icon-cart"></i> Cart</h1>
-  <%= form_for :order, url: [:orders] do |f| %>
+  <%= form_for :order, url: [:orders], html: { id: "order-form" } do |f| %>
     <%= render "shared/errors", {resource: @order} if @order %>
     <div class="row">
       <div class="column column--half column--guttered">
@@ -94,9 +94,40 @@
                     <div class="payment-field">
                       <%= f.label :credit_card, "Saved credit cards" %><br>
                       <% if current_organization.decorate.credit_cards_available? %>
-                        <%= f.select :credit_card, options_for_select(current_organization.decorate.credit_card_options) %><br>
+                        <%= select_tag "order[credit_card][id]", options_for_select(current_organization.decorate.credit_card_options), prompt: 'Select a Stored Credit Card' %><br>
                       <% end %>
                       Add a <%= link_to "credit card", new_admin_organization_bank_account_path(current_organization) %> to your account.
+
+                      <fieldset id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>">
+                        <div class="row">
+                          <div class="field column column--full column--guttered">
+                            <label for="balanced_account_name">Name</label>
+                            <span class="hint">Full name as it appears on the account</span>
+                            <br>
+                            <input id="balanced_account_name" type="text" value="" class="column--full">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="field column column--full column--guttered">
+                            <label for="balanced_card_number">Card Number</label><br>
+                            <input class="column--full" id="balanced_card_number" type="text" name="card_number">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="field column column--fourth column--guttered">
+                            <label for="expiration_month">Month</label><br>
+                            <%= select_tag(:expiration_month, options_for_select(expiration_month_options), class: "column--full") %>
+                          </div
+                          ><div class="field column column--fourth column--guttered">
+                            <label for="expiration_year">Year</label><br>
+                            <%= select_tag(:expiration_year, options_for_select(expiration_year_options), class: "column--full") %>
+                          </div
+                          ><div class="field column column--half column--guttered">
+                            <label for="balanced_security_code">Security Code</label><br>
+                            <input class="column--half" id="balanced_security_code" type="text" name="security_code">
+                          </div>
+                        </div>
+                      </fieldset>
                     </div>
                   </fieldset>
                 </div>

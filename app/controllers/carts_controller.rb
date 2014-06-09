@@ -4,6 +4,7 @@ class CartsController < ApplicationController
   before_action :require_current_delivery
   before_action :require_cart
   before_action :hide_admin_navigation
+  before_action :set_balanced_flag
 
   def show
     if current_cart.items.empty?
@@ -39,5 +40,11 @@ class CartsController < ApplicationController
     current_cart.destroy
     session.delete(:cart_id)
     redirect_to [:products]
+  end
+
+  private
+
+  def set_balanced_flag
+    @balanced = true
   end
 end

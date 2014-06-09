@@ -13,6 +13,24 @@ tokenize = (type, info) ->
 
   deferred.promise()
 
+displayErrors = ($form, errors)->
+  setupErrorsContainer($form)
+
+  for key of errors
+    field_name = key.replace(/_/g, " ")
+    field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
+    $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
+    displayError(field_name, errors[key])
+
+displayError = (field, error) ->
+  $("#balanced-js-errors").append("<li>#{field}: #{error}</li>")
+
+setupErrorsContainer = ($form) ->
+  if $("#balanced-js-errors").length
+    $("#balanced-js-errors").html("")
+  else
+    $form.prepend('<ul id="balanced-js-errors" class="form-errors">')
+
 updateInputs = (object, $form) ->
   fields = {
     "card" : {
@@ -57,23 +75,7 @@ validateEIN = () ->
 
   return true
 
-displayErrors = ($form, errors)->
-  setupErrorsContainer($form)
 
-  for key of errors
-    field_name = key.replace(/_/g, " ")
-    field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
-    $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
-    displayError(field_name, errors[key])
-
-displayError = (field, error) ->
-  $("#balanced-js-errors").append("<li>#{field}: #{error}</li>")
-
-setupErrorsContainer = ($form) ->
-  if $("#balanced-js-errors").length
-    $("#balanced-js-errors").html("")
-  else
-    $form.prepend('<ul id="balanced-js-errors" class="form-errors">')
 
 $.getScript "https://js.balancedpayments.com/v1/balanced.js", ->
   $ ->

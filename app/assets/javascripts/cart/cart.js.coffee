@@ -1,3 +1,21 @@
+displayErrors = ($form, errors)->
+  setupErrorsContainer($form)
+
+  for key of errors
+    field_name = key.replace(/_/g, " ")
+    field_name = field_name.charAt(0).toUpperCase() + field_name.substr(1)
+    $form.find("[name^=#{key}]").wrap('<div class="field_with_errors"/>')
+    displayError(field_name, errors[key])
+
+displayError = (field, error) ->
+  $("#balanced-js-errors").append("<li>#{field}: #{error}</li>")
+
+setupErrorsContainer = ($form) ->
+  if $("#balanced-js-errors").length
+    $("#balanced-js-errors").html("")
+  else
+    $form.prepend('<ul id="balanced-js-errors" class="form-errors">')
+
 $ ->
   return unless $(".cart_item").length
   selector = $('.cart_item')
@@ -199,6 +217,7 @@ $ ->
     items: $(".cart_item")
 
 
+
   $(".cart_item .quantity input").on 'cart.inputFinished', ->
     data = $(this).closest(".cart_item").data("cart-item")
 
@@ -217,7 +236,51 @@ $ ->
     $paymentFields.removeClass("is-hidden")
 
     buttonState = !$paymentFields.data('available') == true
-    $("#place-order-button").attr("disabled", buttonState) 
+    $("#place-order-button").attr("disabled", buttonState)
 
   $("#place-order-button").click (e)->
-    $(".quantity input").prop("readonly", true)
+    e.preventDefault()
+
+    $("#balanced-js-errors").html("")
+    $(".field_with_errors :input").unwrap()
+
+    if $("#order_payment_method_credit_card").is(":checked") && $("#order_credit_card_id").val() == ''
+      $(".quantity input").prop("readonly", true)
+
+      newCard = {
+        card_number: $("#balanced_card_number").val(),
+        expiration_month: $("#expiration_month").val(),
+        expiration_year: $("#expiration_year").val(),
+        security_code: $("#balanced_security_code").val()
+      }
+
+      balanced.init($("#balanced-payments-uri").data("balanced-marketplace-uri"))
+      balanced.card.create newCard, (response) ->
+        if response.status == 201
+          $form = $("#order-form")
+
+          fields = {
+            "brand" : "order[credit_card][bank_name]",
+            "name" : "order[credit_card][name]",
+            "last_four" : "order[credit_card][last_four]",
+            "uri" : "order[credit_card][balanced_uri]",
+            "card_type" : "order[credit_card][account_type]",
+            "expiration_month" : "order[credit_card][expiration_month]",
+            "expiration_year" : "order[credit_card][expiration_year]",
+          }
+          for key, field of fields
+            $("<input>").attr(
+              type: 'hidden',
+              name: field,
+              value: response.data[key]
+            ).appendTo($form)
+
+          $("#balanced-payments-uri").prop("disabled", true)
+          $form.submit()
+
+        else
+          messages = if response.error.extras? then response.error.extras else response.error
+          displayErrors($("#balanced-payments-uri"), messages)
+    else
+      $(".quantity input").prop("readonly", true)
+      $("#order-form").submit()

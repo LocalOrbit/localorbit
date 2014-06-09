@@ -30,6 +30,19 @@ class OrdersController < ApplicationController
   protected
 
   def order_params
-    params.require(:order).permit(:payment_method, :payment_note, :credit_card, :bank_account)
+    params.require(:order).permit(
+      :payment_method,
+      :payment_note,
+      :bank_account,
+      credit_card: [
+        :id,
+        :last_four,
+        :expiration_month,
+        :expiration_year,
+        :bank_name,
+        :account_type,
+        :balanced_uri
+      ]
+    )
   end
 end
