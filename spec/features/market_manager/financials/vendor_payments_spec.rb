@@ -1,9 +1,11 @@
 require "spec_helper"
 
 feature "Payments to vendors" do
+  let(:today) { Date.parse("June 1, 2014") }
+
   let(:market1) { create(:market, name: "Baskerville Co-op", po_payment_term: 14) }
-  let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market1, day: 3.days.ago.wday) }
-  let!(:market1_delivery) { Timecop.freeze(5.days.ago) { market1_delivery_schedule.next_delivery } }
+  let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market1, day: (today - 3.day).wday) }
+  let!(:market1_delivery) { Timecop.freeze(today - 5.days) { market1_delivery_schedule.next_delivery } }
   let!(:market_manager) { create :user, managed_markets: [market1] }
 
   let!(:market1_seller1) { create(:organization, :seller, name: "Better Farms", markets: [market1]) }
@@ -17,10 +19,11 @@ feature "Payments to vendors" do
   let!(:market1_product3) { create(:product, :sellable, organization: market1_seller2) }
   let!(:market1_product4) { create(:product, :sellable, organization: market1_seller3) }
 
-  let!(:market1_order1) { create(:order, items:[create(:order_item, :delivered, product: market1_product1, quantity: 4)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-001", total_cost: 27.96, placed_at: 19.days.ago) }
-  let!(:market1_order2) { create(:order, items:[create(:order_item, :delivered, product: market1_product2, quantity: 3), create(:order_item, :delivered, product: market1_product4, quantity: 7)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-002", total_cost: 69.90, placed_at: 6.days.ago, payment_status: "paid") }
-  let!(:market1_order3) { create(:order, items:[create(:order_item, :delivered, product: market1_product3, quantity: 6)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-003", total_cost: 41.94, placed_at: 4.days.ago) }
-  let!(:market1_order4) { create(:order, items:[create(:order_item, :delivered, product: market1_product2, quantity: 9), create(:order_item, :delivered, product: market1_product3, quantity: 14)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-004", total_cost: 160.77, placed_at: 3.days.ago) }
+
+  let!(:market1_order1) { create(:order, items:[create(:order_item, :delivered, product: market1_product1, quantity: 4)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-001", total_cost: 27.96, placed_at: today - 19.days) }
+  let!(:market1_order2) { create(:order, items:[create(:order_item, :delivered, product: market1_product2, quantity: 3), create(:order_item, :delivered, product: market1_product4, quantity: 7)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-002", total_cost: 69.90, placed_at: today - 6.days, payment_status: "paid") }
+  let!(:market1_order3) { create(:order, items:[create(:order_item, :delivered, product: market1_product3, quantity: 6)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-003", total_cost: 41.94, placed_at: today - 4.days) }
+  let!(:market1_order4) { create(:order, items:[create(:order_item, :delivered, product: market1_product2, quantity: 9), create(:order_item, :delivered, product: market1_product3, quantity: 14)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-004", total_cost: 160.77, placed_at: today - 3.days) }
 
   scenario "displays the correct items" do
     switch_to_subdomain(market1.subdomain)
@@ -127,8 +130,8 @@ feature "Payments to vendors" do
 
   context "filtering" do
     let(:market2) { create(:market, name: "Jonesville Co-op", po_payment_term: 14) }
-    let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market2, day: 3.days.ago.wday) }
-    let!(:market2_delivery) { Timecop.freeze(5.days.ago) { market1_delivery_schedule.next_delivery } }
+    let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market2, day: (today - 3.days).wday) }
+    let!(:market2_delivery) { Timecop.freeze(today - 5.days) { market1_delivery_schedule.next_delivery } }
     let!(:market_manager) { create :user, managed_markets: [market1, market2] }
 
     let!(:market2_seller1) { create(:organization, :seller, name: "Best Farms", markets: [market2]) }
@@ -142,10 +145,10 @@ feature "Payments to vendors" do
     let!(:market2_product3) { create(:product, :sellable, organization: market2_seller2) }
     let!(:market2_product4) { create(:product, :sellable, organization: market2_seller3) }
 
-    let!(:market2_order1) { create(:order, items:[create(:order_item, :delivered, product: market2_product1, quantity: 4)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-006", total_cost: 27.96, placed_at: 19.days.ago) }
-    let!(:market2_order2) { create(:order, items:[create(:order_item, :delivered, product: market2_product2, quantity: 3), create(:order_item, :delivered, product: market2_product4, quantity: 7)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-007", total_cost: 69.90, placed_at: 6.days.ago, payment_status: "paid") }
-    let!(:market2_order3) { create(:order, items:[create(:order_item, :delivered, product: market2_product3, quantity: 6)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-0008", total_cost: 41.94, placed_at: 4.days.ago) }
-    let!(:market2_order4) { create(:order, items:[create(:order_item, :delivered, product: market2_product2, quantity: 9), create(:order_item, :delivered, product: market2_product3, quantity: 14)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-009", total_cost: 160.77, placed_at: 3.days.ago) }
+    let!(:market2_order1) { create(:order, items:[create(:order_item, :delivered, product: market2_product1, quantity: 4)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-006", total_cost: 27.96, placed_at: today - 19.days) }
+    let!(:market2_order2) { create(:order, items:[create(:order_item, :delivered, product: market2_product2, quantity: 3), create(:order_item, :delivered, product: market2_product4, quantity: 7)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-007", total_cost: 69.90, placed_at: today - 6.days, payment_status: "paid") }
+    let!(:market2_order3) { create(:order, items:[create(:order_item, :delivered, product: market2_product3, quantity: 6)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-0008", total_cost: 41.94, placed_at: today - 4.days) }
+    let!(:market2_order4) { create(:order, items:[create(:order_item, :delivered, product: market2_product2, quantity: 9), create(:order_item, :delivered, product: market2_product3, quantity: 14)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-009", total_cost: 160.77, placed_at: today - 3.days) }
 
 
     scenario "filtering by market" do
@@ -230,6 +233,30 @@ feature "Payments to vendors" do
 
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
+    end
+
+    scenario "filtering by date" do
+      switch_to_subdomain(market1.subdomain)
+      sign_in_as market_manager
+      visit admin_financials_vendor_payments_path
+
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms", "Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
+
+      fill_in "q_placed_at_date_gteq", with: "Tue, 2 April 2014"
+      fill_in "q_placed_at_date_lteq", with: "Wed, 14 May 2014"
+      click_button "Filter"
+
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms"])
+
+      fill_in "q_placed_at_date_gteq", with: "Wed, 14 May 2014"
+      fill_in "q_placed_at_date_lteq", with: ""
+      click_button "Filter"
+
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+      expect(seller_rows.map {|r| r.name.text }).to eq(["Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
+
     end
   end
 end
