@@ -1,11 +1,14 @@
-csv << ["Order #", "Seller", "Buyer", "Product", "Qty", "Total", "Delivery", "Buyer $", "Seller $"]
+csv << ["Order Date", "Order #", "Market", "Seller", "Buyer", "Product", "Price", "Qty", "Total", "Delivery", "Buyer $", "Seller $"]
 
 @order_items.decorate.each do |order_item|
   csv << [
-    order_item.order.order_number,
+    order_item.placed_at,
+    order_item.order_number,
+    order_item.market_name,
     order_item.seller_name,
-    order_item.order.organization.name,
-    order_item.name,
+    order_item.buyer_name,
+    order_item.product_name,
+    order_item.unit_price,
     order_item.quantity,
     number_to_currency(order_item.gross_total),
     order_item.delivery_status.titleize,

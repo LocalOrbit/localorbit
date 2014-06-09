@@ -57,7 +57,7 @@ context "Viewing sold items" do
       html_headers = page.all('th').map(&:text)[1..-1] # remove checkbox column
       click_link "Export CSV"
       csv_headers = CSV.parse(page.body).first
-      expect(html_headers).to eq(csv_headers)
+      expect(html_headers - csv_headers).to be_empty # CSV expands stacked columns for order date, market, and unit price
       expect(page).to have_content("LO-ADA-0000001")
     end
 
