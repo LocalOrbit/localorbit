@@ -80,22 +80,18 @@ end
     <% end %>
 
     <li>
-      <% if current_user.admin? || current_user.market_manager? || current_user.seller? %>
-        <a href="#reports-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe01e;"></i> Reports</a>
-        <ul class="dropdown with-anchor top-anchor" id="reports-dropdown">
-          <% if Rails.env.production? %>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe006;"></i> Reports'), coming_soon_dashboard_path %></li>
-          <% else %>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe006;"></i> Reports'), admin_reports_path %></li>
-          <% end %>
-          <% if current_user.admin? %>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe04f;"></i> Referrals'), coming_soon_dashboard_path %></li>
-            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe01e;"></i> Metrics'), coming_soon_dashboard_path %></li>
-          <% end %>
-        </ul>
-      <% else %>
-        <%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe01e;"></i> Reports'), coming_soon_dashboard_path %>
-      <% end %>
+      <a href="#reports-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe01e;"></i> Reports</a>
+      <ul class="dropdown with-anchor top-anchor" id="reports-dropdown">
+        <% if Rails.env.production? %>
+        <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe006;"></i> Reports'), coming_soon_dashboard_path %></li>
+        <% else %>
+        <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe006;"></i> Reports'), admin_reports_path %></li>
+        <% end %>
+        <% if current_user.admin? %>
+          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe04f;"></i> Referrals'), coming_soon_dashboard_path %></li>
+          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe01e;"></i> Metrics'), coming_soon_dashboard_path %></li>
+        <% end %>
+      </ul>
     </li>
 
     <li>

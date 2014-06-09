@@ -12,7 +12,7 @@ class ReportPresenter
     quantity:               { sort: :quantity,                display_name: "Quantity" },
     unit_price:             { sort: :unit_price,              display_name: "Unit Price" },
     discount:               { sort: :discount,                display_name: "Discount" },
-    row_total:              { sort: nil,                      display_name: "Row Total" },
+    row_total:              { sort: nil,                      display_name: "Total" },
     net_sale:               { sort: nil,                      display_name: "Net Sale" },
     payment_methods:        { sort: :order_payments_payment_method, display_name: "Payment Method" },
     delivery_status:        { sort: :delivery_status,         display_name: "Delivery" },
@@ -49,7 +49,7 @@ class ReportPresenter
         :row_total, :net_sale, :delivery_status, :buyer_payment_status, :seller_payment_status
       ]
     },
-    sales_by_payment: {
+    sales_by_payment_method: {
       filters: [:placed_at, :order_number, :market_name, :payment_methods],
       fields: [
         :placed_at, :buyer_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
@@ -73,6 +73,8 @@ class ReportPresenter
   }.with_indifferent_access
 
   def initialize(report:, user:, search: {}, paginate: {})
+    search ||= {}
+
     @report = report
     @fields = REPORT_MAP[@report].fetch(:fields, [])
     @filters = REPORT_MAP[@report].fetch(:filters, [])
@@ -80,6 +82,12 @@ class ReportPresenter
     # Set our initial scope and lookup any applicable filter data
     items = OrderItem.for_user(user).joins(:order).uniq
     setup_filter_data(items)
+
+    # Purchase orders have a nil payment_method
+    if search[:order_payments_payment_method_eq] == "purchase order"
+      search.delete(:order_payments_payment_method_eq)
+      search[:order_payments_payment_method_null] = true
+    end
 
     # Initialize ransack and set a default sort order
     @q = items.search(search)
@@ -127,7 +135,9 @@ class ReportPresenter
     end
 
     if includes_filter?(:payment_methods)
-      @payment_methods = Payment.where(id: items.joins(order: :order_payments).pluck("order_payments.payment_id")).pluck(:payment_method).uniq.compact.sort
+      payment_methods = Payment.where(id: items.joins(order: :order_payments).pluck("order_payments.payment_id")).pluck(:payment_method)
+      payment_methods << "purchase order" # nil payment methods are purchase orders so we manually inject the term here
+      @payment_methods = payment_methods.compact.uniq.sort
     end
   end
 

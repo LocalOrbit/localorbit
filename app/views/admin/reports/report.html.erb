@@ -42,10 +42,7 @@
         <% end %>
 
         <% if field == :buyer_name %>
-          <td>
-            <%= link_to item.buyer_name, [:admin, item.order.organization], class: "buyer" %><br>
-            <%= content_tag "span", item.market_name, class: "market" %>
-          </td>
+          <td><%= link_to item.buyer_name, [:admin, item.order.organization], class: "buyer" %></td>
         <% end %>
 
         <% if field == :quantity %>
@@ -53,7 +50,10 @@
         <% end %>
 
         <% if field == :unit_price %>
-          <td class="price"><%= item.unit_price %></td>
+          <td class="price">
+            <%= content_tag "span", item.unit_price %><br>
+            <%= content_tag "span", item.price_per_unit, class: "unit-price" %>
+          </td>
         <% end %>
 
         <% if field == :discount %>
@@ -65,10 +65,7 @@
         <% end %>
 
         <% if field == :net_sale %>
-          <td class="net-sale">
-            <%= content_tag "span", item.net_sale, class: "total-price" %><br>
-            <%= content_tag "span", item.price_per_unit, class: "unit-price" %>
-          </td>
+          <td class="net-sale"><%= content_tag "span", item.net_sale, class: "total-price" %></td>
         <% end %>
 
         <% if field == :payment_methods %>
