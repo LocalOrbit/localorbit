@@ -65,8 +65,8 @@
           <td class="net-sale"><%= content_tag "span", item.net_sale, class: "total-price" %></td>
         <% end %>
 
-        <% if field == :payment_methods %>
-          <td class="payment-methods"><%= item.payment_methods.join(",") %></td>
+        <% if field == :payment_method %>
+          <td class="payment-method"><%= item.payment_method %></td>
         <% end %>
 
         <% if field == :delivery_status %>

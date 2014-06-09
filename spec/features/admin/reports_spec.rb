@@ -319,17 +319,25 @@ feature "Reports" do
         scenario "filters by payment method" do
           expect(Dom::Report::ItemRow.all.count).to eq(11)
 
-          select "Cash", from: "Payment Method"
+          select "ACH", from: "Payment Method"
           click_button "Filter"
 
-          expect(Dom::Report::ItemRow.all.count).to eq(1)
+          expect(Dom::Report::ItemRow.all.count).to eq(4)
+          expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+
+          select "Purchase Order", from: "Payment Method"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(6)
           expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-
-          select "Check", from: "Payment Method"
-          click_button "Filter"
-
-          expect(Dom::Report::ItemRow.all.count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
         end
       end
 

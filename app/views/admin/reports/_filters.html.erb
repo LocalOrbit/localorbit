@@ -45,10 +45,10 @@
           </span>
         <% end %>
 
-        <% if filter == :payment_methods %>
+        <% if filter == :payment_method %>
           <span class="preserve-alignment">
-            <%= f.label :order_payments_payment_method_eq, "Payment Method" %><br>
-            <%= f.select :order_payments_payment_method_eq, options_from_collection_for_select(presenter.payment_methods, :to_s, :titleize, presenter.q.order_payments_payment_method_null ? "purchase order" : presenter.q.order_payments_payment_method_eq), { include_blank: "All" }, { class: "filter-input" } %>
+            <%= f.label :order_payment_method_eq, "Payment Method" %><br>
+            <%= f.select :order_payment_method_eq, options_from_collection_for_select(presenter.payment_methods, :to_s, :titleize, presenter.q.order_payment_method_eq), { include_blank: "All" }, { class: "filter-input" } %>
           </span>
         <% end %>
       <% end %>
