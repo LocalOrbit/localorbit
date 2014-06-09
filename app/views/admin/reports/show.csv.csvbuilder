@@ -1,4 +1,8 @@
-headers = ["Market"]
+# Include Market if it's shown in either a column or as a filter
+all_fields = (ReportPresenter::REPORT_MAP[@report].fetch(:fields, []) + ReportPresenter::REPORT_MAP[@report].fetch(:filters, [])).uniq.compact
+include_market = all_fields.include?(:market_name)
+
+headers = include_market ? ["Market"] : []
 
 ReportPresenter::REPORT_MAP[@report].fetch(:fields, []).each do |field|
   headers << ReportPresenter::FIELD_MAP[field][:display_name]
@@ -8,7 +12,7 @@ end
 csv << headers
 
 @presenter.items.decorate.each do |item|
-  data = [item.market_name]
+  data = include_market ? [item.market_name] : []
 
   @presenter.fields.each do |field|
     if field == :placed_at
