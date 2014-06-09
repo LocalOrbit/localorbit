@@ -7,5 +7,10 @@ describe Admin::ReportsController do
     switch_to_subdomain market.subdomain
   end
 
-  it_behaves_like "an action that restricts access admin, market manager, or seller only", lambda { get :show, report: "total-sales" }
+  it_behaves_like "an action that restricts access to non buyers only", lambda { get :show, report: "total-sales" }
+  it_behaves_like "an action that restricts access to non buyers only", lambda { get :show, report: "sales-by-seller" }
+  it_behaves_like "an action that restricts access to non buyers only", lambda { get :show, report: "sales-by-product" }
+  it_behaves_like "an action that restricts access to non buyers only", lambda { get :show, report: "sales-by-payment" }
+  it_behaves_like "an action that restricts access to buyers only",     lambda { get :show, report: "purchases-by-product" }
+  it_behaves_like "an action that restricts access to buyers only",     lambda { get :show, report: "total-purchases" }
 end

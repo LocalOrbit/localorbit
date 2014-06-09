@@ -38,6 +38,7 @@ class Payment < ActiveRecord::Base
   scope :successful, -> { where(status: ['paid', 'pending'])}
   scope :refundable, -> { successful.where(payment_type: "order").where("amount > refunded_amount") }
   scope :buyer_payments, -> { where(payment_type: ["order", "order refund"]) }
+  scope :for_orders, ->(orders) { joins(:order_payments).where(order_payments: { order_id: orders }) }
 
   def bank_account
     BankAccount.find_by(balanced_uri: balanced_uri)

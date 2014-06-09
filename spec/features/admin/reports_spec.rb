@@ -4,6 +4,8 @@ feature "Reports" do
   let!(:market)    { create(:market, name: "Foo Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market2)   { create(:market, name: "Bar Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market3)   { create(:market, name: "Baz Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:buyer)     { create(:organization, name: "Foo Buyer", markets: [market], can_sell: false) }
+  let!(:buyer2)    { create(:organization, name: "Bar Buyer", markets: [market2], can_sell: false) }
   let!(:seller)    { create(:organization, name: "Foo Seller", markets: [market], can_sell: true) }
   let!(:seller2)   { create(:organization, name: "Bar Seller", markets: [market2], can_sell: true) }
   let!(:subdomain) { market.subdomain }
@@ -15,8 +17,6 @@ feature "Reports" do
     delivery_schedule2 = create(:delivery_schedule, market: market2)
     delivery2 = delivery_schedule2.next_delivery
 
-    buyer   = create(:organization, name: "Foo Buyer", markets: [market], can_sell: false)
-    buyer2  = create(:organization, name: "Bar Buyer", markets: [market2], can_sell: false)
     buyer3  = create(:organization, name: "Baz Buyer", markets: [market3], can_sell: false)
 
     order_date = DateTime.parse("May 9, 2014, 11:00:00")
@@ -24,21 +24,37 @@ feature "Reports" do
     5.times do |i|
       this_date = order_date + i.days
       Timecop.freeze(this_date) do
-        product = create(:product, :sellable, name: "Product#{i}", organization: seller)
+        category = create(:category, name: "Category-01-#{i}")
+        product = create(:product,
+                         :sellable,
+                         name: "Product#{i}",
+                         category: category,
+                         organization: seller)
         order_item = create(:order_item,
                             product: product,
                             seller_name: seller.name,
                             unit_price: 20.00 + i, quantity: 1)
-        create(:order,
-               market_id: market.id,
-               delivery: delivery,
-               items: [order_item],
-               organization: buyer,
-               payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
-               payment_status: "paid",
-               order_number: "LO-01-234-4567890-#{i}")
+        order = create(:order,
+                       market_id: market.id,
+                       delivery: delivery,
+                       items: [order_item],
+                       organization: buyer,
+                       payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
+                       payment_status: "paid",
+                       order_number: "LO-01-234-4567890-#{i}")
+        create(:payment,
+               payment_method: ["cash", "check", "ach", "ach", "credit card"][i],
+               payer: buyer,
+               payee: market,
+               orders: [order],
+               amount: order.total_cost)
 
-        product = create(:product, :sellable, name: "Product#{i}", organization: seller2)
+        category = create(:category, name: "Category-02-#{i}")
+        product = create(:product,
+                         :sellable,
+                         name: "Product#{i}",
+                         category: category,
+                         organization: seller2)
         order_item = create(:order_item,
                             product: product,
                             seller_name: seller2.name,
@@ -91,7 +107,15 @@ feature "Reports" do
 
   context "for all reports" do
     context "as any user" do
-      let!(:user) { create(:user, :admin) }
+      let!(:user)   { create(:user, :admin) }
+      let!(:report) { :total_sales }
+
+      scenario "displays the appropriate filters" do
+        has_field?("Search")
+        has_field?("Placed on or after")
+        has_field?("Placed on or before")
+        has_select?("Market")
+      end
 
       scenario "searches by order number" do
         expect(Dom::Report::ItemRow.all.count).to eq(11)
@@ -105,10 +129,26 @@ feature "Reports" do
         expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
         expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
         expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+
+        fill_in "Search", with: "LO-03"
+        click_button "Search"
+
+        expect(Dom::Report::ItemRow.all.count).to eq(1)
+        expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
       end
 
       scenario "filters by market" do
         expect(Dom::Report::ItemRow.all.count).to eq(11)
+
+        select market.name, from: "Market"
+        click_button "Filter"
+
+        expect(Dom::Report::ItemRow.all.count).to eq(5)
+        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
 
         select market2.name, from: "Market"
         click_button "Filter"
@@ -150,8 +190,15 @@ feature "Reports" do
       context "Sales by Seller report" do
         let!(:report) { :sales_by_seller }
 
-        scenario "filters by seller" do
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
+          has_select?("Seller")
+        end
 
+        scenario "filters by seller" do
           expect(Dom::Report::ItemRow.all.count).to eq(11)
 
           select seller.name, from: "Seller"
@@ -163,6 +210,154 @@ feature "Reports" do
           expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+
+          select seller2.name, from: "Seller"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(5)
+          expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+        end
+      end
+
+      context "Sales by Buyer report" do
+        let!(:report) { :sales_by_buyer }
+
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
+        end
+
+        scenario "filters by buyer" do
+          expect(Dom::Report::ItemRow.all.count).to eq(11)
+
+          select buyer.name, from: "Buyer"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(5)
+          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+
+          select buyer2.name, from: "Buyer"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(5)
+          expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+        end
+      end
+
+      context "Sales by Product report" do
+        let!(:report) { :sales_by_product }
+
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
+          has_select?("Category")
+          has_select?("Product")
+        end
+
+        scenario "filters by category" do
+          expect(Dom::Report::ItemRow.all.count).to eq(11)
+
+          select "Category-01-0", from: "Category"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+
+          select "Category-01-1", from: "Category"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+        end
+
+        scenario "filters by product" do
+          expect(Dom::Report::ItemRow.all.count).to eq(11)
+
+          select "Product0", from: "Product"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(2)
+          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
+
+          select "Product1", from: "Product"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(2)
+          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+          expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
+        end
+      end
+
+      context "Sales by Payment report" do
+        let!(:report) { :sales_by_payment }
+
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
+          has_select?("Payment Method")
+        end
+
+        scenario "filters by payment method" do
+          expect(Dom::Report::ItemRow.all.count).to eq(11)
+
+          select "Cash", from: "Payment Method"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+
+          select "Check", from: "Payment Method"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+        end
+      end
+
+      context "Purchases by Product report" do
+        let!(:report) { :purchases_by_product }
+
+        # Filters are reused from other reports so we just need to ensure
+        # the right ones show on the page.
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
+          has_select?("Category")
+          has_select?("Product")
+        end
+      end
+
+      context "Total Purchases report" do
+        let!(:report) { :total_purchases }
+
+        # Filters are reused from other reports so we just need to ensure
+        # the right ones show on the page.
+        scenario "displays the appropriate filters" do
+          has_field?("Search")
+          has_field?("Placed on or after")
+          has_field?("Placed on or before")
+          has_select?("Market")
         end
       end
     end

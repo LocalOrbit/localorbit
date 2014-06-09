@@ -1,6 +1,6 @@
 class Admin::ReportsController < AdminController
-  before_action :restrict_buyer_only
   before_action :restrict_reports, only: :show
+  before_action :restrict_buyer_only
 
   def index
     redirect_to admin_report_path("total-sales")
@@ -23,7 +23,11 @@ class Admin::ReportsController < AdminController
   private
 
   def restrict_buyer_only
-    render_404 if current_user.buyer_only?
+    if @report == :purchases_by_product || @report == :total_purchases
+      render_404 unless current_user.admin? || current_user.buyer_only?
+    else
+      render_404 if current_user.buyer_only?
+    end
   end
 
   def restrict_reports
