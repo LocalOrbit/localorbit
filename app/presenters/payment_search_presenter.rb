@@ -13,4 +13,8 @@ class PaymentSearchPresenter
       @filtered_market = @user.markets.find(@query[:market_id_eq])
     end
   end
+
+  def payment_statuses
+    ["paid", "pending"].map {|v| [v.titleize, v]}
+  end
 end

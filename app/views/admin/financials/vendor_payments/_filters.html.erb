@@ -10,7 +10,12 @@
       <%= select_tag :filtered_organization_id, options_from_collection_for_select(@search_presenter.seller_organizations, :id, :name, selected: @search_presenter.organization_id), {prompt: "All", class: "filter-input"} %>
     </span>
 
+    <span class="preserve-alignment">
+      <%= f.label :payment_status_eq, "Payment Status" %><br>
+      <%= f.select :payment_status_eq, @search_presenter.payment_statuses, {include_blank: "All"}, {class: "filter-input"} %>
+    </span>
   </div>
+
   <span class="preserve-alignment">
     <br>
     <%= f.submit "Filter", class: "btn--small" %>
