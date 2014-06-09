@@ -130,6 +130,9 @@ feature "Payments to vendors" do
 
   context "filtering" do
     let(:market2) { create(:market, name: "Jonesville Co-op", po_payment_term: 14) }
+
+    let!(:market3) { create(:market, name: "Not In List", po_payment_term: 14) }
+
     let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market2, day: (today - 3.days).wday) }
     let!(:market2_delivery) { Timecop.freeze(today - 5.days) { market1_delivery_schedule.next_delivery } }
     let!(:market_manager) { create :user, managed_markets: [market1, market2] }
@@ -151,6 +154,26 @@ feature "Payments to vendors" do
     let!(:market2_order4) { create(:order, items:[create(:order_item, :delivered, product: market2_product2, quantity: 9), create(:order_item, :delivered, product: market2_product3, quantity: 14)], market: market2, organization: market2_buyer, delivery: market2_delivery, payment_method: "purchase order", order_number: "LO-009", total_cost: 160.77, placed_at: today - 3.days) }
 
 
+    let!(:market3_delivery_schedule) { create(:delivery_schedule, market: market3, day: (today - 3.days).wday) }
+    let!(:market3_delivery) { Timecop.freeze(today - 5.days) { market1_delivery_schedule.next_delivery } }
+
+    let!(:market3_seller1) { create(:organization, :seller, name: "Freshest Farm", markets: [market3]) }
+    let!(:market3_seller2) { create(:organization, :seller, name: "Less Fresh Farm", markets: [market3]) }
+    let!(:market3_seller3) { create(:organization, :seller, name: "Normal Farm", markets: [market3]) }
+    let!(:market3_seller4) { create(:organization, :seller, name: "A few days behind farm", markets: [market3]) }
+    let!(:market3_buyer)  { create(:organization, :buyer, name: "The Last Institution", markets: [market3]) }
+
+    let!(:market3_product1) { create(:product, :sellable, organization: market3_seller1) }
+    let!(:market3_product2) { create(:product, :sellable, organization: market3_seller2) }
+    let!(:market3_product3) { create(:product, :sellable, organization: market3_seller2) }
+    let!(:market3_product4) { create(:product, :sellable, organization: market3_seller3) }
+
+    let!(:market3_order1) { create(:order, items:[create(:order_item, :delivered, product: market3_product1, quantity: 4)], market: market3, organization: market3_buyer, delivery: market3_delivery, payment_method: "purchase order", order_number: "LO-092", total_cost: 27.96, placed_at: today - 19.days) }
+    let!(:market3_order2) { create(:order, items:[create(:order_item, :delivered, product: market3_product2, quantity: 3), create(:order_item, :delivered, product: market3_product4, quantity: 7)], market: market3, organization: market3_buyer, delivery: market3_delivery, payment_method: "purchase order", order_number: "LO-010", total_cost: 69.90, placed_at: today - 6.days, payment_status: "paid") }
+    let!(:market3_order3) { create(:order, items:[create(:order_item, :delivered, product: market3_product3, quantity: 6)], market: market3, organization: market3_buyer, delivery: market3_delivery, payment_method: "purchase order", order_number: "LO-008", total_cost: 41.94, placed_at: today - 4.days) }
+    let!(:market3_order4) { create(:order, items:[create(:order_item, :delivered, product: market3_product2, quantity: 9), create(:order_item, :delivered, product: market3_product3, quantity: 14)], market: market3, organization: market3_buyer, delivery: market3_delivery, payment_method: "purchase order", order_number: "LO-082", total_cost: 160.77, placed_at: today - 3.days) }
+
+
     scenario "filtering by market" do
       switch_to_subdomain(market1.subdomain)
       sign_in_as market_manager
@@ -159,9 +182,11 @@ feature "Payments to vendors" do
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms", "Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
 
+
       within("#q_market_id_eq") do
         expect(page).to have_content(market1.name)
         expect(page).to have_content(market2.name)
+        expect(page).not_to have_content(market3.name)
       end
 
       select market1.name, from: "q_market_id_eq"
