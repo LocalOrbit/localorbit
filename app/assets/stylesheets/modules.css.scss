@@ -1169,7 +1169,7 @@
 /** Pagination */
 .pagination {
   width: 300px;
-  padding: 5px;
+  padding: .5em;
   border: 1px solid #e7e7e7;
   @include border-radius(100px);
   margin: 30px auto 0;
@@ -1179,6 +1179,15 @@
 
   .current {
     color: #aaa;
+  }
+}
+@media screen and (max-width: 800px) {
+  .pagination {
+    font-size: 1.2em;
+    > span {
+      display: inline-block;
+      padding: .3em;
+    }
   }
 }
 
