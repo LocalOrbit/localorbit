@@ -5,6 +5,8 @@
 
       <%= f.label :simple_inventory, "Quantity" %><br>
       <%= f.number_field :simple_inventory, min: 0, size: 3 %>
+      <div class="popup-error">
+      </div>
 
       <div class="form-actions">
         <%= f.submit "Save Inventory", class: "btn--small" %>

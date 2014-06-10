@@ -25,4 +25,7 @@ $ ->
           $('.flash').fadeOut(500)
         , 3000
 
+  $('.flash').click ->
+    $(this).hide()
+
   window.fade_flash()

@@ -12,13 +12,25 @@ class Admin::LotsController < AdminController
     if @lot.persisted?
       respond_to do |format|
         format.html { redirect_to [:admin, @product, :lots], notice: "Successfully added a new lot" }
-        format.js   { redirect_to admin_products_path(query_params), notice: "Successfully added a new lot" }
+        format.js   { 
+          @data = {
+            message: "Successfully added a new lot",
+            params: lot_params.to_a,
+            toggle: @lot.product.available_inventory
+          }
+          render json: @data, status: 200
+        }
       end
     else
       flash.now[:alert] = "Could not save lot"
       respond_to do |format|
         format.html { render :index }
-        format.js   { redirect_to admin_products_path(query_params), alert: "Could not save lot" }
+        format.js   {
+          @data = {
+            errors: @lot.errors.full_messages
+          }
+          render json: @data, status: 422
+        }
       end
     end
   end
@@ -27,12 +39,32 @@ class Admin::LotsController < AdminController
     lot = @product.lots.find(params[:id])
     params[:lot] = params[:lot][lot.id.to_s]
     if lot.update lot_params
-      redirect_to [:admin, @product, :lots], notice: "Successfully saved lot"
+      respond_to do |format|
+        format.html { redirect_to [:admin, @product, :lots], notice: "Successfully saved lot" }
+        format.js {
+          @data = {
+            message: "Successfully added a new lot",
+            params: lot_params.to_a,
+            toggle: lot.product.available_inventory
+          }
+          render json: @data, status: 200
+        }
+      end
     else
       @lot_with_errors = lot
       @lot = @product.lots.build
-      flash.now[:alert] = "Could not save lot"
-      render :index
+      respond_to do |format|
+        format.html {
+          flash.now[:alert] = "Could not save lot"
+          render :index
+        }
+        format.js {
+          @data = {
+            errors: @lot.errors.full_messages
+          }
+          render json: @data, status: 422
+        }
+      end
     end
   end
 

@@ -970,6 +970,7 @@
   margin-left: -20px;
   width: 100%;
   text-align: center;
+  opacity: 1;
   @include transition(opacity .5s linear 4s);
 
   &.is-fading {
@@ -1026,6 +1027,20 @@
     line-height: 1;
     text-align: center;
     content: '!';
+  }
+}
+
+.popup-error {
+  color: $alert_text;
+  font-size: larger;
+  h3 {
+    margin: 0 0 .2em;
+    color: inherit;
+    font-size: 100%;
+  }
+  .errors {
+    padding-left: 20px;
+    margin-bottom: 1em;
   }
 }
 .product-status-alert {

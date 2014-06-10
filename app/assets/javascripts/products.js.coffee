@@ -2,6 +2,7 @@ $ ->
   $('.product-table--admin .delete > a').hover (e) ->
     $(this).closest('tr').toggleClass('destructive')
 
+
   return unless $("form.product").length
 
   formView =
@@ -242,6 +243,7 @@ $ ->
     form = $('form.product')
     form.attr("action", $(this).attr("href"))
     form.submit()
+
 
   $('.tab > .is-disabled').click (e) ->
     $('<div class="tab-error flash flash--alert"><p>' + $(this).attr('data-error') + '</p></div>').appendTo('.tab-header')
