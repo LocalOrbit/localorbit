@@ -720,9 +720,15 @@ module Dom
 
     attribute :market
     attribute :name
-    attribute :pricing
     attribute :seller
-    attribute :stock
+
+    def pricing
+      node.find(".pricing")
+    end
+
+    def stock
+      node.find(".stock")
+    end
 
     def click_delete
       node.click_link "Delete"
