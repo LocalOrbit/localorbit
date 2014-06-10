@@ -13,7 +13,6 @@ class Admin::LotsController < AdminController
       respond_to do |format|
         format.html { redirect_to [:admin, @product, :lots], notice: "Successfully added a new lot" }
         format.js   { 
-          #redirect_to admin_products_path(query_params), notice: "Successfully added a new lot"
           @data = {
             message: "Successfully added a new lot",
             params: lot_params.to_a,
@@ -26,15 +25,10 @@ class Admin::LotsController < AdminController
       flash.now[:alert] = "Could not save lot"
       respond_to do |format|
         format.html { render :index }
-        format.js   { 
-          #redirect_to admin_products_path(query_params), alert: "Could not save lot"
-          if @lot.errors.full_messages.present?
-            @data = {
-              errors: @lot.errors.full_messages
-            }
-          else
-            @data = {errors: []}
-          end
+        format.js   {
+          @data = {
+            errors: @lot.errors.full_messages
+          }
           render json: @data, status: 422
         }
       end
@@ -65,13 +59,9 @@ class Admin::LotsController < AdminController
           render :index
         }
         format.js {
-          if @lot.errors.full_messages.present?
-            @data = {
-              errors: @lot.errors.full_messages
-            }
-          else
-            @data = {errors: []}
-          end
+          @data = {
+            errors: @lot.errors.full_messages
+          }
           render json: @data, status: 422
         }
       end
