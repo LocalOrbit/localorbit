@@ -4,10 +4,6 @@
   background: none;
   font-weight: normal;
 }
-.ui-datepicker {
-  /* jquery UI sucks if for nothing else than forcing the use of !important */
-  z-index: 20 !important;
-}
 .ui-datepicker th {
   padding: .3em;
 }
