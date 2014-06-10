@@ -1,5 +1,7 @@
 class Organization < ActiveRecord::Base
   include Sortable
+  include PgSearch
+
   has_many :market_organizations
   has_many :user_organizations
 
@@ -34,6 +36,13 @@ class Organization < ActiveRecord::Base
   scope_accessible :market, method: :for_market_id, ignore_blank: true
   scope_accessible :can_sell, method: :for_can_sell, ignore_blank: true
   scope_accessible :sort, method: :for_sort, ignore_blank: true
+  scope_accessible :search, method: :for_search, ignore_blank: true
+
+  pg_search_scope :search_by_name, against: :name, using: { tsearch: { prefix: true }}
+
+  def self.for_search(query)
+    search_by_name(query)
+  end
 
   def self.for_market_id(market_id)
     orgs = !all.to_sql.include?('market_organizations') ? joins(:market_organizations) : all
