@@ -61,14 +61,16 @@ class ReportPresenter
       fields: [
         :placed_at, :category_name, :product_name, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :delivery_status, :buyer_payment_status
-      ]
+      ],
+      buyer_only: true
     },
     total_purchases: {
       filters: [:placed_at, :order_number, :market_name],
       fields: [
         :placed_at, :product_name, :seller_name, :quantity, :unit_price, :discount,
         :row_total, :delivery_status, :buyer_payment_status
-      ]
+      ],
+      buyer_only: true
     }
   }.with_indifferent_access
 
@@ -94,8 +96,12 @@ class ReportPresenter
     @items = include_associations(items)
   end
 
-  def self.reports
-    REPORT_MAP.keys
+  def self.reports(buyer_only: false)
+    if buyer_only
+      REPORT_MAP.keys.select { |k| REPORT_MAP[k][:buyer_only] }
+    else
+      REPORT_MAP.keys
+    end
   end
 
   def self.field_headers_for_report(report)

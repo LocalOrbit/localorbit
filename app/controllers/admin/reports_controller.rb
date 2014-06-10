@@ -1,9 +1,9 @@
 class Admin::ReportsController < AdminController
   before_action :restrict_reports, only: :show
-  before_action :restrict_buyer_only
+  before_action :restrict_buyer_only, only: :show
 
   def index
-    redirect_to admin_report_path("total-sales")
+    redirect_to current_user.buyer_only? ? admin_report_path("purchases-by-product") : admin_report_path("total-sales")
   end
 
   def show
@@ -23,7 +23,9 @@ class Admin::ReportsController < AdminController
   private
 
   def restrict_buyer_only
-    if @report == :purchases_by_product || @report == :total_purchases
+    if current_user.nil?
+      render_404
+    elsif ReportPresenter.reports(buyer_only: true).include?(@report)
       render_404 unless current_user.admin? || current_user.buyer_only?
     else
       render_404 if current_user.buyer_only?
@@ -33,7 +35,7 @@ class Admin::ReportsController < AdminController
   def restrict_reports
     @report = begin
       if report = ReportPresenter.reports.detect { |r| r == params[:report].to_s.underscore }
-        report.to_sym
+        report
       else
         render_404
       end
