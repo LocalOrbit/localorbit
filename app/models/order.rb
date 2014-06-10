@@ -132,12 +132,6 @@ class Order < ActiveRecord::Base
     scope.where(order_items: {delivery_status: "pending"})
   end
 
-  def self.undelivered_orders_for_seller(user)
-    scope = orders_for_seller(user)
-    scope = scope.joins(:order_items) if user.admin?
-    scope.where(order_items: {delivery_status: "pending"})
-  end
-
   def self.create_from_cart(params, cart, buyer)
     billing = cart.organization.locations.default_billing
     order_number = OrderNumber.new(cart.market)
