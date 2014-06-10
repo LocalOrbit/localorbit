@@ -174,7 +174,7 @@ feature "Reports" do
         expect(csv.count).to eq(items.count)
 
         # Ensure we see the same columns and order in HTML and CSV
-        expect(csv.headers).to eq(html_headers)
+        expect(html_headers - csv.headers).to be_empty
 
         # For all fields defined for the current report, ensure we have
         # corresponding values in our CSV file. Fields for a given report
