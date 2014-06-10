@@ -89,6 +89,10 @@ class OrderItem < ActiveRecord::Base
     @seller_payment_status ||= order.paid_seller_ids.include?(product.organization_id) ? 'Paid' : 'Unpaid'
   end
 
+  def delivered?
+    delivery_status == "delivered"
+  end
+
   private
 
   def consume_inventory
