@@ -31,7 +31,7 @@
         <%= content_tag(:th, 'Market', data: {column: 'market'}, class: "hidden-mobile #{column_sort_classes("market")}") if current_user.multi_market_membership? %>
         <th data-column="name" class="<%= column_sort_classes("name") %>">Name</th>
         <th data-column="price" class="<%= column_sort_classes("price") %>">Pricing</th>
-        <th data-column="stock" class="<%= column_sort_classes("stock") %>">In Stock</th>
+        <th data-column="stock" class="<%= column_sort_classes("stock") %>">Available</th>
         <th>&nbsp;</th>
       </tr>
     </thead>
