@@ -63,6 +63,18 @@ describe 'Filter organizations', :js do
         expect(page).to_not have_content(org4.name)
       end
     end
+
+    context "by name" do
+      it "shows markets by searched string" do
+        expect(Dom::Admin::OrganizationRow.count).to eq(4)
+
+        fill_in "search", with: org1.name
+        click_button "Search"
+
+        expect(Dom::Admin::OrganizationRow.count).to eq(1)
+        expect(Dom::Admin::OrganizationRow.first.name).to eq(org1.name)
+      end
+    end
   end
 
   context 'as a market manager' do
