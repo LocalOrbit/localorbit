@@ -14,11 +14,12 @@ $ ->
             $(prefix + "_" + pair[0]).attr('value', pair[1])
           update_input pair for pair in response_text.params
           $('<div class="flash flash--notice"><p>' + data.message + '</p></div>').appendTo('#flash-messages')
+          $('.edit-toggle[href="#' + e.target.parentNode.id + '"]').text(response_text.toggle)
           $(e.target).parent().find('.close').trigger "click"
+
           window.setTimeout ->
               window.fade_flash()
             , 0
-
         , "json")
       .fail (data) ->
         data = $.parseJSON(data.responseText)

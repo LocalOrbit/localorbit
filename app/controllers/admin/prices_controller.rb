@@ -24,9 +24,11 @@ class Admin::PricesController < AdminController
         format.html { redirect_to [:admin, @product, :prices], notice: "Successfully saved price" }
         format.js   { 
          #redirect_to admin_products_path(query_params), notice: "Successfully saved price"
+          toggle = price.decorate
           @data = {
             message: "Successfully saved price",
-            params: price_params.to_a
+            params: price_params.to_a,
+            toggle: toggle.quick_info
           }
           render json: @data, status: 200
         }

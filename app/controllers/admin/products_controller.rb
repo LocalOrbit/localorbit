@@ -46,7 +46,8 @@ module Admin
             # redirect_to admin_products_path(query_params), notice: "Saved #{@product.name}"
             @data = {
               message: "Saved #{@product.name}",
-              params: product_params.to_a
+              params: product_params.to_a,
+              toggle: @product.available_inventory
             }
             render json: @data, status: 200
           }

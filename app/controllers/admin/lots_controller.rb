@@ -16,7 +16,8 @@ class Admin::LotsController < AdminController
           #redirect_to admin_products_path(query_params), notice: "Successfully added a new lot"
           @data = {
             message: "Successfully added a new lot",
-            params: lot_params.to_a
+            params: lot_params.to_a,
+            toggle: @lot.product.available_inventory
           }
           render json: @data, status: 200
         }
@@ -49,7 +50,8 @@ class Admin::LotsController < AdminController
         format.js {
           @data = {
             message: "Successfully added a new lot",
-            params: lot_params.to_a
+            params: lot_params.to_a,
+            toggle: lot.product.available_inventory
           }
           render json: @data, status: 200
         }
