@@ -1,6 +1,7 @@
 class Payment < ActiveRecord::Base
   PAYMENT_TYPES = {
     "delivery fee" => "Delivery Fee",
+    "market payment" => "Market Payment",
     "order" => "Order",
     "order refund" => "Order Refund",
     "seller payment" => "Seller Payment",
