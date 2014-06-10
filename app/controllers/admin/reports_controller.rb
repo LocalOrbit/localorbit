@@ -10,7 +10,7 @@ class Admin::ReportsController < AdminController
       search: params[:q],
       paginate: {
         page: params[:page],
-        per_page: params[:per_page]
+        per_page: request.format.to_sym == :csv ? 999 : params[:per_page]
       })
 
     if @presenter
