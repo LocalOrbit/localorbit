@@ -23,7 +23,6 @@ class Admin::PricesController < AdminController
       respond_to do |format|
         format.html { redirect_to [:admin, @product, :prices], notice: "Successfully saved price" }
         format.js   { 
-         #redirect_to admin_products_path(query_params), notice: "Successfully saved price"
           toggle = price.decorate
           @data = {
             message: "Successfully saved price",
@@ -42,16 +41,9 @@ class Admin::PricesController < AdminController
           render :index
         end
         format.js { 
-          #redirect_to admin_products_path, alert: "Could not save price"
-          if price.errors.full_messages.present?
-            @data = {
-              errors:  price.errors.full_messages
-            }
-          else
-            @data = {
-              errors: []
-            }
-          end
+          @data = {
+            errors:  price.errors.full_messages
+          }
           render json: @data, status: 422
         }
       end
