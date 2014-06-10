@@ -407,7 +407,7 @@ feature "Payment history", :truncate_after_all do
     scenario "can filter purchase history by payment date" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
 
-      fill_in "q_updated_at_date_gteq", with: "Sun, 11 May 2014"
+      fill_in "q_created_at_date_gteq", with: "Sun, 11 May 2014"
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(16)
@@ -420,7 +420,7 @@ feature "Payment history", :truncate_after_all do
       expect(payment_rows_for_description("LO-02-234-4567890-4").count).to eq(2)
       expect(payment_rows_for_description("LO-02-234-4567890-5").count).to eq(2)
 
-      fill_in "q_updated_at_date_lteq", with: "Mon, 12 May 2014"
+      fill_in "q_created_at_date_lteq", with: "Mon, 12 May 2014"
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(8)
@@ -558,7 +558,7 @@ feature "Payment history", :truncate_after_all do
       expect(payment_row("$24.00").description).to include("LO-01-234-4567890-4")
       expect(payment_row("$25.00").description).to include("LO-01-234-4567890-5")
 
-      fill_in "q_updated_at_date_gteq", with: "Sun, 11 May 2014"
+      fill_in "q_created_at_date_gteq", with: "Sun, 11 May 2014"
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
@@ -567,7 +567,7 @@ feature "Payment history", :truncate_after_all do
       expect(page).to     have_content("LO-01-234-4567890-4")
       expect(page).to     have_content("LO-01-234-4567890-5")
 
-      fill_in "q_updated_at_date_lteq", with: "Mon, 12 May 2014"
+      fill_in "q_created_at_date_lteq", with: "Mon, 12 May 2014"
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
@@ -641,7 +641,7 @@ feature "Payment history", :truncate_after_all do
       expect(payment_row("$888.00").description).to include("LO-02-234-4567890-888")
       expect(payment_row("$999.00").description).to include("LO-02-234-4567890-999")
 
-      fill_in "q_updated_at_date_gteq", with: "Sun, 11 May 2014"
+      fill_in "q_created_at_date_gteq", with: "Sun, 11 May 2014"
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
@@ -650,7 +650,7 @@ feature "Payment history", :truncate_after_all do
       expect(page).to     have_content("LO-01-234-4567890-4")
       expect(page).to     have_content("LO-01-234-4567890-5")
 
-      fill_in "q_updated_at_date_lteq", with: "Mon, 12 May 2014"
+      fill_in "q_created_at_date_lteq", with: "Mon, 12 May 2014"
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")

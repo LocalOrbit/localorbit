@@ -13,7 +13,7 @@
 <table class="sortable">
   <thead class="stickable">
     <tr>
-      <th><%= sort_link(@payment_history.q, :updated_at, "Payment Date") %></th>
+      <th><%= sort_link(@payment_history.q, :created_at, "Payment Date") %></th>
       <th>Description</th>
       <th>Payment Method</th>
       <th><%= sort_link(@payment_history.q, :amount, "Amount") %></th>
@@ -22,7 +22,7 @@
   <tbody>
     <% @payment_history.payments.decorate.each do |payment| %>
       <tr class="payment-row">
-        <td class="date"><%= payment.updated_at.strftime("%m/%d/%Y") %></td>
+        <td class="date"><%= payment.created_at.strftime("%m/%d/%Y") %></td>
         <td class="description">
           <% if payment.payment_type == "order" || payment.payment_type == "seller payment" %>
             Order #: <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
@@ -32,7 +32,7 @@
               <!-- Modal -->
               <div class="popup modal more-info-<%= payment.id %> is-hidden order-list-modal">
                 <div class="popup-header">
-                  All Order Numbers Paid on <strong><%= payment.updated_at.strftime("%m/%d/%Y") %></strong>
+                  All Order Numbers Paid on <strong><%= payment.created_at.strftime("%m/%d/%Y") %></strong>
                   <button class="close"><i class="font-icon icon-close"></i></button>
                 </div>
                 <div class="all-order-numbers">
