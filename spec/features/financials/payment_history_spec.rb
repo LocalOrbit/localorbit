@@ -8,7 +8,7 @@ feature "Payment history", :truncate_after_all do
     cc_balanced_uri         = "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/cards/CC4O7hP4aRjIkvqRC2wwr4i5"
 
     delivery_schedule = create(:delivery_schedule)
-    delivery = delivery_schedule.next_delivery
+    @delivery = delivery_schedule.next_delivery
 
     @market  = create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)")
     @market2 = create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)")
@@ -27,27 +27,27 @@ feature "Payment history", :truncate_after_all do
     cc_account        = create(:bank_account, :credit_card, last_four: "7732", balanced_uri: cc_balanced_uri,        bankable: @buyer)
 
     order_item = create(:order_item, unit_price: 6.50, quantity: 2)
-    create(:order, delivery: delivery, items: [order_item], organization: @buyer, payment_method: "purchase order", total_cost: 13.00)
+    create(:order, delivery: @delivery, items: [order_item], organization: @buyer, payment_method: "purchase order", total_cost: 13.00)
 
     order_item = create(:order_item, unit_price: 36.00, quantity: 2)
-    create(:order, delivery: delivery, items: [order_item], organization: @buyer, payment_method: "ach", total_cost: 72.00)
+    create(:order, delivery: @delivery, items: [order_item], organization: @buyer, payment_method: "ach", total_cost: 72.00)
 
     order_item = create(:order_item, unit_price: 129.00, quantity: 1)
-    create(:order, delivery: delivery, items: [order_item], organization: @buyer, payment_method: "credit card", total_cost: 129.00)
+    create(:order, delivery: @delivery, items: [order_item], organization: @buyer, payment_method: "credit card", total_cost: 129.00)
 
     orders = []
     orders2 = []
     6.times do |i|
       order_item = create(:order_item, unit_price: 20.00 + i, quantity: 1)
       orders << create(:order,
-                       delivery: delivery,
+                       delivery: @delivery,
                        items: [order_item],
                        organization: @buyer,
                        payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
                        payment_status: "paid",
                        order_number: "LO-01-234-4567890-#{i}")
       orders2 << create(:order,
-                       delivery: delivery,
+                       delivery: @delivery,
                        items: [order_item],
                        organization: buyer2,
                        payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
@@ -114,7 +114,7 @@ feature "Payment history", :truncate_after_all do
 
       # Create a cash buyer payment for a market that IS managed by our market manager
       order = create(:order,
-                    delivery: delivery,
+                    delivery: @delivery,
                     items: [create(:order_item, unit_price: 123.00, quantity: 1)],
                     organization: buyer2,
                     market: @market2,
@@ -130,7 +130,7 @@ feature "Payment history", :truncate_after_all do
 
       # Create a cash buyer payment for a market that IS NOT managed by our market manager
       order = create(:order,
-                    delivery: delivery,
+                    delivery: @delivery,
                     items: [create(:order_item, unit_price: 234.00, quantity: 1)],
                     organization: buyer2,
                     market: market3,
@@ -146,7 +146,7 @@ feature "Payment history", :truncate_after_all do
 
       # Create an ACH buyer payment for a market that IS managed by our market manager
       order = create(:order,
-                    delivery: delivery,
+                    delivery: @delivery,
                     items: [create(:order_item, unit_price: 345.00, quantity: 1)],
                     organization: buyer2,
                     market: @market2,
@@ -163,7 +163,7 @@ feature "Payment history", :truncate_after_all do
 
       # Create an ACH buyer payment for a market that IS NOT managed by our market manager
       order = create(:order,
-                    delivery: delivery,
+                    delivery: @delivery,
                     items: [create(:order_item, unit_price: 456.00, quantity: 1)],
                     organization: buyer2,
                     market: market3,
@@ -180,7 +180,7 @@ feature "Payment history", :truncate_after_all do
 
       # Create Local Orbit -> Seller payment
       order = create(:order,
-                    delivery: delivery,
+                    delivery: @delivery,
                     items: [create(:order_item, unit_price: 888.00, quantity: 1)],
                     organization: @buyer,
                     market: @market,
@@ -197,7 +197,7 @@ feature "Payment history", :truncate_after_all do
 
       # Create Market -> Seller payment
       order = create(:order,
-                    delivery: delivery,
+                    delivery: @delivery,
                     items: [create(:order_item, unit_price: 999.00, quantity: 1)],
                     organization: @buyer,
                     market: @market,
@@ -309,6 +309,77 @@ feature "Payment history", :truncate_after_all do
         expect(csv[i]["Description"]).to eq(payment.description)
         expect(csv[i]["Payment Method"]).to eq(payment.payment_method)
         expect(csv[i]["Amount"]).to eq(payment.amount)
+      end
+    end
+
+    context "viewing orders by payment type" do
+      let!(:order) do
+        order_item = create(:order_item, unit_price: 12.34, quantity: 1)
+        create(:order,
+               delivery: @delivery,
+               items: [order_item],
+               organization: @buyer,
+               payment_method: "ach",
+               payment_status: "paid",
+               order_number: "LO-99-234-4567890-1234")
+      end
+
+      before do
+        # order
+        create(:payment,
+               payment_type: "order",
+               payment_method: "ach",
+               payer: @buyer,
+               payee: @market,
+               orders: [order],
+               amount: 12.34)
+
+        # order refund
+        create(:payment,
+               payment_type: "order refund",
+               payment_method: "ach",
+               payer: @buyer,
+               payee: @market,
+               orders: [order],
+               amount: 23.45)
+
+        # seller payment
+        create(:payment,
+               payment_type: "seller payment",
+               payment_method: "ach",
+               payer: @buyer,
+               payee: @market,
+               orders: [order],
+               amount: 34.56)
+
+        # market payment
+        create(:payment,
+               payment_type: "market payment",
+               payment_method: "ach",
+               payer: @buyer,
+               payee: @market,
+               orders: [order],
+               amount: 45.67)
+
+        # service fee
+        create(:payment,
+               payment_type: "service",
+               payment_method: "ach",
+               payer: @buyer,
+               payee: @market,
+               orders: [order],
+               amount: 56.78)
+
+        click_link "Financials"
+        click_link "Review Payment History"
+      end
+
+      it "sees the correct order for each payment type" do
+        expect(payment_row("$12.34").description).to eq("Order #: LO-99-234-4567890-1234")
+        expect(payment_row("$23.45").description).to eq("Order Refund #: LO-99-234-4567890-1234")
+        expect(payment_row("$34.56").description).to eq("Order #: LO-99-234-4567890-1234")
+        expect(payment_row("$45.67").description).to eq("Order #: LO-99-234-4567890-1234")
+        expect(payment_row("$56.78").description).to eq("Service Fee")
       end
     end
   end
