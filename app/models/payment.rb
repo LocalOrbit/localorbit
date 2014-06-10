@@ -54,7 +54,8 @@ class Payment < ActiveRecord::Base
       where("deliveries.deliver_on < ? AND order_items.delivery_status = ?", 48.hours.ago, 'delivered').
       group("orders.id, seller_id").
       order("orders.order_number").
-      includes(:market)
+      includes(:market).
+      where("orders.market_id" => user.managed_markets.map(&:id))
   end
 
   ransacker :update_at_date do |parent|
