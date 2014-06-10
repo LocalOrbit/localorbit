@@ -59,14 +59,8 @@ class OrderItemDecorator < Draper::Decorator
     number_to_currency(object.seller_net_total)
   end
 
-  def payment_methods
-    payments = order.payments.pluck(:payment_method).uniq.compact
-
-    if payments.empty?
-      ["Purchase Order"]
-    else
-      payments.map(&:titleize)
-    end
+  def payment_method
+    order.payment_method.to_s.titleize
   end
 
   def delivery_status
