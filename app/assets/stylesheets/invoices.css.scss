@@ -54,9 +54,11 @@
     text-align: left;
   }
 
+  tr, td, th { page-break-inside: avoid; }
+
   th { padding: 10px; color: #666; font-size: 12px; text-align: left; vertical-align: top; }
   td { padding: 10px; font-size: 12px; }
-  tbody  tr:nth-child(odd) { background: #f9f9f9; }
+  tbody tr:nth-child(odd) { background: #f9f9f9; }
 
   tfoot {
     padding: 10px 0 0;
