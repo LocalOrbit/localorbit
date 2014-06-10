@@ -15,7 +15,8 @@ describe "Edit quantity ordered" do
   let!(:order_item)     { create(:order_item, product: product, quantity: 5, unit_price: 3.00) }
   let!(:order_item_lot) { create(:order_item_lot, quantity: 5, lot: product_lot, order_item: order_item) }
   let!(:order)          { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item], payment_method: 'ach')}
-  let!(:payment)        { create(:payment, :checking, orders: [order], amount: 15.00) }
+  let!(:bank_account)   { create(:bank_account, :checking, :verified, bankable: buyer) }
+  let!(:payment)        { create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 15.00) }
 
   context "as a buyer" do
     let!(:user) { create(:user, organizations: [buyer]) }
@@ -358,10 +359,10 @@ describe "Edit quantity ordered" do
     end
 
     context "payment processor error" do
-      let!(:payment) { create(:payment, :checking, orders: [order], amount: 15.00) }
+      let!(:payment) { create(:payment, :checking, bank_account: bank_account, balanced_uri: '/debit-1', orders: [order], amount: 15.00) }
 
       before do
-        expect(Balanced::Debit).to receive(:find).and_throw(Exception)
+        expect(Balanced::Transaction).to receive(:find).with('/debit-1').and_raise(StandardError)
 
         visit admin_order_path(order)
 

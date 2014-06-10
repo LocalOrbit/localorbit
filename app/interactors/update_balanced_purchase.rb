@@ -28,76 +28,62 @@ class UpdateBalancedPurchase
   end
 
   def refund(amount)
-    begin
+    remaining_amount = amount
+    context[:status] = 'paid'
+
+    order.payments.refundable.order(:created_at).each do |payment|
+
+      break unless remaining_amount > 0
+
       begin
-        remaining_amount = amount
-        context[:status] = 'paid'
+        context[:type] = payment.payment_method
 
-        ActiveRecord::Base.transaction do
-          order.payments.refundable.order(:created_at).each do |payment|
+        refund_amount = [remaining_amount, payment.unrefunded_amount].min
+        refund = payment.balanced_transaction.refund(amount: (refund_amount * 100).to_i)
 
-            break unless remaining_amount > 0
+        payment.increment!(:refunded_amount, refund_amount)
+        record_payment("order refund", -refund_amount, refund, payment.bank_account)
 
-            debit, context[:type] = fetch_balanced_debit(payment.balanced_uri)
-
-            refund_amount = [remaining_amount, payment.unrefunded_amount].min
-            refund = debit.refund(amount: (refund_amount * 100).to_i)
-
-            payment.increment!(:refunded_amount, refund_amount)
-            record_payment("order refund", -refund_amount, refund)
-
-            remaining_amount -= refund_amount
-          end
-        end
-
-      rescue Exception => e
-        process_exception(e, "order refund", -amount)
-
-        raise ActiveRecord::Rollback
+        remaining_amount -= refund_amount
+      rescue => e
+        process_exception(e, "order refund", -refund_amount, payment.bank_account)
+        break
       end
-    rescue ActiveRecord::Rollback
     end
   end
 
   def charge(amount)
-    begin
-      debit, context[:type] = fetch_balanced_debit(first_order_payment.balanced_uri)
-      customer = Balanced::Customer.find(debit.account.uri)
+    payment = order.payments.buyer_payments.successful.first
+    payment ||= order.payments.buyer_payments.first
 
-      new_debit = customer.debit(
-        amount: (amount * 100).to_i,
-        source_uri: debit.source.uri,
-        description: "#{order.market.name} purchase"
-      )
-      context[:status] = 'paid'
+    account = payment.try(:bank_account) || raise("No chargable accounts found")
 
-      record_payment("order", amount, new_debit)
-    rescue Exception => e
-      process_exception(e, "order", amount)
-    end
+    context[:type] = payment.payment_method
+
+    new_debit = account.bankable.balanced_customer.debit(
+      amount: (amount * 100).to_i,
+      source_uri: account.balanced_uri,
+      description: "#{order.market.name} purchase"
+    )
+    context[:status] = 'paid'
+
+    record_payment("order", amount, new_debit, account)
+  rescue => e
+    process_exception(e, "order", amount, account)
   end
 
-  def first_order_payment
-    order.payments.buyer_payments.refundable.order(:created_at).first
-  end
-
-  def fetch_balanced_debit(uri)
-    debit = Balanced::Debit.find(uri)
-    type = debit.source._type == 'card' ? "credit card" : "ach"
-
-    [debit, type]
-  end
-
-  def process_exception(exception, type, amount)
+  def process_exception(exception, type, amount, account)
     Honeybadger.notify_or_ignore(exception) unless Rails.env.test? || Rails.env.development?
-    record_payment(type, amount, nil)
+    record_payment(type, amount, nil, account)
 
     context[:status] = 'failed'
     fail!
   end
 
-  def record_payment(type, amount, balanced_record)
-    adjustment_payment = Payment.create(
+  def record_payment(type, amount, balanced_record, bank_account)
+    adjustment_payment = Payment.create!(
+      market_id: order.market_id,
+      bank_account: bank_account,
       payer: order.organization,
       payment_type: type,
       payment_method: context[:type],

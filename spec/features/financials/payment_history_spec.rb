@@ -2,29 +2,29 @@ require "spec_helper"
 
 feature "Payment history", :truncate_after_all do
   before :all do
-    market_ach_balanced_uri = "http://balanced.example.com/12345"
-    ach_balanced_uri = "http://balanced.example.com/123456"
-    other_ach_balanced_uri = "http://balanced.example.com/12345687"
-    cc_balanced_uri = "http://balanced.example.com/1234567"
+    market_ach_balanced_uri = "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/bank_accounts/BA6MvUHwvMFA1EtwhPT5F2sT"
+    ach_balanced_uri        = "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/bank_accounts/BA1YqNWvILpfyq9FqSDPLhCO"
+    other_ach_balanced_uri  = "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/bank_accounts/BA1R1oClZ5QiHNzj0D9KNMKC"
+    cc_balanced_uri         = "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/cards/CC4O7hP4aRjIkvqRC2wwr4i5"
 
     delivery_schedule = create(:delivery_schedule)
     delivery = delivery_schedule.next_delivery
 
-    @market = create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)")
+    @market  = create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)")
     @market2 = create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)")
-    market3 = create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)")
+    market3  = create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)")
     create(:bank_account, :checking, last_four: "7676", balanced_uri: market_ach_balanced_uri, bankable: @market)
 
-    @buyer = create(:organization, name: "Buyer", markets: [@market], can_sell: false)
-    buyer2 = create(:organization, name: "Buyer 2", markets: [@market2, market3], can_sell: false)
-    @seller = create(:organization, name: "Seller", markets: [@market], can_sell: true)
-    seller2 = create(:organization, name: "Seller 2", markets: [@market2], can_sell: true)
+    @buyer  = create(:organization, :buyer,  name: "Buyer",    markets: [@market])
+    buyer2  = create(:organization, :buyer,  name: "Buyer 2",  markets: [@market2, market3])
+    @seller = create(:organization, :seller, name: "Seller",   markets: [@market])
+    seller2 = create(:organization, :seller, name: "Seller 2", markets: [@market2])
 
     payment_day = DateTime.parse("May 9, 2014, 11:00:00")
 
-    create(:bank_account, :checking, last_four: "9983", balanced_uri: ach_balanced_uri, bankable: @buyer)
-    create(:bank_account, :checking, last_four: "2231", balanced_uri: other_ach_balanced_uri, bankable: @buyer)
-    create(:bank_account, :credit_card, last_four: "7732", balanced_uri: cc_balanced_uri, bankable: @buyer)
+    ach_account       = create(:bank_account, :checking,    last_four: "9983", balanced_uri: ach_balanced_uri,       bankable: @buyer)
+    other_ach_account = create(:bank_account, :checking,    last_four: "2231", balanced_uri: other_ach_balanced_uri, bankable: @buyer)
+    cc_account        = create(:bank_account, :credit_card, last_four: "7732", balanced_uri: cc_balanced_uri,        bankable: @buyer)
 
     order_item = create(:order_item, unit_price: 6.50, quantity: 2)
     create(:order, delivery: delivery, items: [order_item], organization: @buyer, payment_method: "purchase order", total_cost: 13.00)
@@ -66,9 +66,9 @@ feature "Payment history", :truncate_after_all do
                          amount: orders[i].total_cost)
 
         payment.update_attribute(:note, "#12345") if i == 2
-        payment.update_attribute(:balanced_uri, ach_balanced_uri) if i == 3
-        payment.update_attributes(balanced_uri: other_ach_balanced_uri, status: "pending") if i == 4
-        payment.update_attribute(:balanced_uri, cc_balanced_uri) if i == 5
+        payment.update_attributes(bank_account: ach_account) if i == 3
+        payment.update_attributes(bank_account: other_ach_account, status: "pending") if i == 4
+        payment.update_attributes(bank_account: cc_account) if i == 5
 
         payment2 = create(:payment,
                          payment_method: ["cash", "check", "ach", "ach", "credit card"][i - 1],
@@ -78,9 +78,9 @@ feature "Payment history", :truncate_after_all do
                          amount: orders2[i].total_cost + 0.01)
 
         payment2.update_attribute(:note, "#12345") if i == 2
-        payment2.update_attribute(:balanced_uri, ach_balanced_uri) if i == 3
-        payment2.update_attributes(balanced_uri: other_ach_balanced_uri, status: "pending") if i == 4
-        payment2.update_attribute(:balanced_uri, cc_balanced_uri) if i == 5
+        payment2.update_attributes(bank_account: ach_account) if i == 3
+        payment2.update_attributes(bank_account: other_ach_account, status: "pending") if i == 4
+        payment2.update_attributes(bank_account: cc_account) if i == 5
 
         # Create payment from market to seller
         create(:payment,
@@ -159,7 +159,7 @@ feature "Payment history", :truncate_after_all do
             payee: nil,
             orders: [order],
             amount: order.total_cost,
-            balanced_uri: ach_balanced_uri)
+            bank_account: ach_account)
 
       # Create an ACH buyer payment for a market that IS NOT managed by our market manager
       order = create(:order,
@@ -176,7 +176,7 @@ feature "Payment history", :truncate_after_all do
             payee: nil,
             orders: [order],
             amount: order.total_cost,
-            balanced_uri: other_ach_balanced_uri)
+            bank_account: other_ach_account)
 
       # Create Local Orbit -> Seller payment
       order = create(:order,
@@ -193,7 +193,7 @@ feature "Payment history", :truncate_after_all do
             payee: @seller,
             orders: [order],
             amount: order.total_cost,
-            balanced_uri: other_ach_balanced_uri)
+            bank_account: other_ach_account)
 
       # Create Market -> Seller payment
       order = create(:order,
@@ -211,7 +211,7 @@ feature "Payment history", :truncate_after_all do
             payee: @seller,
             orders: [order],
             amount: order.total_cost,
-            balanced_uri: other_ach_balanced_uri)
+            bank_account: other_ach_account)
     end
   end
 

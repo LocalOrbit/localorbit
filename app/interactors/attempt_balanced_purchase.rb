@@ -33,12 +33,9 @@ class AttemptBalancedPurchase
     end
   end
 
-  def balanced_source_uri
-    if payment_method == 'credit card'
-      cart.organization.bank_accounts.find(order_params["credit_card"]).balanced_uri
-    else
-      cart.organization.bank_accounts.find(order_params["bank_account"]).balanced_uri
-    end
+  def bank_account
+    id = payment_method == "credit card" ? order_params["credit_card"] : order_params["bank_account"]
+    @bank_account ||= cart.organization.bank_accounts.find(id)
   end
 
   def payment_method
@@ -56,13 +53,15 @@ class AttemptBalancedPurchase
   def create_debit(amount)
     cart.organization.balanced_customer.debit(
       amount: amount,
-      source_uri: balanced_source_uri,
+      source_uri: bank_account.balanced_uri,
       description: "#{cart.market.name} purchase"
     )
   end
 
   def record_payment(debit)
     context[:payment] = Payment.create(
+      market_id: cart.market_id,
+      bank_account: bank_account,
       payer: cart.organization,
       payment_method: payment_method,
       amount: cart.total,

@@ -17,6 +17,8 @@ class Payment < ActiveRecord::Base
 
   belongs_to :payee, polymorphic: true
   belongs_to :payer, polymorphic: true
+  belongs_to :market
+  belongs_to :bank_account
 
   # Add organization-specifc payer and payee associations so we can
   # search payments by payer and payee attributes.
@@ -39,10 +41,6 @@ class Payment < ActiveRecord::Base
   scope :refundable, -> { successful.where(payment_type: "order").where("amount > refunded_amount") }
   scope :buyer_payments, -> { where(payment_type: ["order", "order refund"]) }
   scope :for_orders, ->(orders) { joins(:order_payments).where(order_payments: { order_id: orders }) }
-
-  def bank_account
-    BankAccount.find_by(balanced_uri: balanced_uri)
-  end
 
   def self.payments_for_user(user)
     subselect = "SELECT 1 FROM payments
@@ -75,7 +73,8 @@ class Payment < ActiveRecord::Base
     amount - refunded_amount
   end
 
-  def balanced_debit
-    Balanced::Debit.find(balanced_uri) if balanced_uri.present?
+  def balanced_transaction
+    # Will return the appropriate transaction type for any transaction
+    Balanced::Transaction.find(balanced_uri) if balanced_uri.present?
   end
 end
