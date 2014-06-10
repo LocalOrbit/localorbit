@@ -159,6 +159,7 @@ describe "Viewing products" do
       click_button "Save Inventory"
 
       product = Dom::ProductRow.find_by_name("Grapes")
+      sleep 1
       expect(product.stock).to eq("99")
     end
 
@@ -179,6 +180,7 @@ describe "Viewing products" do
       click_button "Save Lot"
 
       product = Dom::ProductRow.find_by_name("Grapes")
+      sleep 1
       expect(product.stock).to eq("46")
     end
 
@@ -195,6 +197,7 @@ describe "Viewing products" do
       click_button "Save Price"
 
       product = Dom::ProductRow.find_by_name("Grapes")
+      sleep 1
       expect(product.pricing).to eq("$12.00 5+ boxes")
 
       product.click_pricing
