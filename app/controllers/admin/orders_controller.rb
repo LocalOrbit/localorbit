@@ -8,7 +8,12 @@ class Admin::OrdersController < AdminController
   end
 
   def show
-    @order = SellerOrder.find(current_user, params[:id])
+    order = Order.orders_for_seller(current_user).find(params[:id])
+    if current_user.organization_ids.include?(order.organization_id) || current_user.can_manage_organization?(order.organization)
+      @order = BuyerOrder.new(order)
+    else
+      @order = SellerOrder.new(order, current_user)
+    end
   end
 
   def update

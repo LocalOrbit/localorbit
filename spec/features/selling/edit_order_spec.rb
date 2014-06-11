@@ -18,19 +18,23 @@ describe 'Editing an order' do
   let!(:bank_account)   { create(:bank_account, :checking, :verified, bankable: buyer) }
   let!(:payment)        { create(:payment, :checking, bank_account: bank_account, balanced_uri: '/debit-1', orders: [order], amount: 15.00) }
 
+  def long_name(item)
+    "#{item.product.name} from #{item.product.organization.name}"
+  end
+
   def first_order_item
-    Dom::Order::ItemRow.find_by_name("#{product.name} from #{product.organization.name}")
+    Dom::Order::ItemRow.find_by_name(long_name(order_item))
   end
 
   context "remove item", :js do
-    let(:user) { create(:user, organizations: [buyer]) }
-
     before do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
     end
 
     context "as a buyer" do
+      let(:user) { create(:user, organizations: [buyer]) }
+
       it "returns a 404" do
         visit admin_order_path(order)
 
@@ -43,6 +47,8 @@ describe 'Editing an order' do
 
       before do
         order.items << order_item2
+        order.save!
+
         visit admin_order_path(order)
       end
 
@@ -61,14 +67,13 @@ describe 'Editing an order' do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           expect(Dom::Order::ItemRow.count).to eq(2)
-          expect(Dom::Order::ItemRow.all[0].name).to have_content(order_item.name)
-          expect(Dom::Order::ItemRow.all[1].name).to have_content(order_item2.name)
+          expect(Dom::Order::ItemRow.all.map(&:name)).to include(long_name(order_item), long_name(order_item2))
 
           first_order_item.click_delete
 
           expect(page).to have_content("Order successfully updated")
           expect(Dom::Order::ItemRow.count).to eq(1)
-          expect(Dom::Order::ItemRow.all[0].name).to have_content(order_item2.name)
+          expect(Dom::Order::ItemRow.all.map(&:name)).to eql([long_name(order_item2)])
         end
 
         it 'updates the order total' do
@@ -111,14 +116,13 @@ describe 'Editing an order' do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           expect(Dom::Order::ItemRow.count).to eq(2)
-          expect(Dom::Order::ItemRow.all[0].name).to have_content(order_item.name)
-          expect(Dom::Order::ItemRow.all[1].name).to have_content(order_item2.name)
+          expect(Dom::Order::ItemRow.all.map(&:name)).to include(long_name(order_item), long_name(order_item2))
 
           first_order_item.click_delete
 
           expect(page).to have_content("Order successfully updated")
           expect(Dom::Order::ItemRow.count).to eq(1)
-          expect(Dom::Order::ItemRow.all[0].name).to have_content(order_item2.name)
+          expect(Dom::Order::ItemRow.all.map(&:name)).to eql([long_name(order_item2)])
         end
 
         it 'updates the order total' do

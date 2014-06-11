@@ -27,9 +27,9 @@
     <p>Payment Method: <span class="special-content"><%= order.payment_method.titleize %></span></p>
     <p>Payment Reference #: <span class="special-content"><%= order.payment_note %></span></p><br>
     <% if order.display_delivery_fees?(current_user) %>
-      <p>Delivery Fees: <span class="special-content">$<%= order.delivery_fees %></span></p>
+      <p>Delivery Fees: <span class="special-content"><%= number_to_currency order.delivery_fees %></span></p>
     <% end %>
-    <p>Grand Total: <span class="special-content"><%= number_to_currency order.gross_total %></span></p>
+    <p>Grand Total: <span class="special-content"><%= number_to_currency order.total_cost %></span></p>
   </div>
 </div>
 <div class="order-data">
