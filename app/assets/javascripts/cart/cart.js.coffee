@@ -238,13 +238,19 @@ $ ->
     buttonState = !$paymentFields.data('available') == true
     $("#place-order-button").attr("disabled", buttonState)
 
+  $("#balanced_card_number").keyup (e) ->
+    if $(this).val() != ''
+      $("#place-order-button").attr("disabled", false)
+    else
+      $("#place-order-button").attr("disabled", true)
+
   $("#place-order-button").click (e)->
     e.preventDefault()
 
     $("#balanced-js-errors").html("")
     $(".field_with_errors :input").unwrap()
 
-    if $("#order_payment_method_credit_card").is(":checked") && $("#order_credit_card_id").val() == ''
+    if $("#order_payment_method_credit_card").is(":checked") && ($("#order_credit_card_id").val() == '' || $("#order_credit_card_id").val() == undefined)
       $(".quantity input").prop("readonly", true)
 
       newCard = {

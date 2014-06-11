@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @placed_order = PlaceOrder.perform(buyer: current_user, order_params: order_params, cart: current_cart)
+    @placed_order = PlaceOrder.perform(entity: current_cart.organization, buyer: current_user, order_params: order_params, cart: current_cart)
 
     if @placed_order.context.has_key?(:order)
       @order = @placed_order.order.decorate

@@ -92,8 +92,8 @@
                   </label>
                   <fieldset id="credit-card-fields" class="payment-fields is-hidden" data-available="<%= current_organization.decorate.credit_cards_available? %>">
                     <div class="payment-field">
-                      <label for="order_credit_card_id">Saved credit cards</label><br>
                       <% if current_organization.decorate.credit_cards_available? %>
+                        <label for="order_credit_card_id">Saved credit cards</label><br>
                         <%= select_tag "order[credit_card][id]", options_for_select(current_organization.decorate.credit_card_options), prompt: 'Select a Stored Credit Card' %><br>
                       <% end %><br>
 
