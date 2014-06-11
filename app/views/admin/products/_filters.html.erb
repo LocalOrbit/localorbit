@@ -8,7 +8,7 @@
   <div class="manager-filters">
     <% if current_user.multi_market_membership? %>
     <span class="preserve-alignment">
-      <label for="filter_market">Market</label><br>
+      <label for="product-filter-market">Market</label><br>
       <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), prompt: "All", class: 'filter-dropdown', id: "product-filter-market", data: { parameter: "market"} %>
     </span>
     <% end %>
