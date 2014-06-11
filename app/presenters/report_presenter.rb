@@ -112,6 +112,10 @@ class ReportPresenter
     new(report: report, user: user, search: search, paginate: paginate) if valid
   end
 
+  def self.reports_for_user(user)
+    self.reports(buyer_only: user.try(:buyer_only?))
+  end
+
   def self.reports(buyer_only: false)
     if buyer_only
       REPORT_MAP.keys.select { |k| REPORT_MAP[k][:buyer_only] }
