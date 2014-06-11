@@ -36,12 +36,14 @@ class OrdersController < ApplicationController
       :bank_account,
       credit_card: [
         :id,
+        :name,
         :last_four,
         :expiration_month,
         :expiration_year,
         :bank_name,
         :account_type,
-        :balanced_uri
+        :balanced_uri,
+        :save_for_future
       ]
     )
   end
