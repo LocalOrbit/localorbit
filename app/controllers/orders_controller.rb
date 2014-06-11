@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @placed_order = PlaceOrder.perform(buyer: current_user, order_params: order_params, cart: current_cart)
+    @placed_order = PlaceOrder.perform(entity: current_cart.organization, buyer: current_user, order_params: order_params, cart: current_cart)
 
     if @placed_order.context.has_key?(:order)
       @order = @placed_order.order.decorate
@@ -30,6 +30,21 @@ class OrdersController < ApplicationController
   protected
 
   def order_params
-    params.require(:order).permit(:payment_method, :payment_note, :credit_card, :bank_account)
+    params.require(:order).permit(
+      :payment_method,
+      :payment_note,
+      :bank_account,
+      credit_card: [
+        :id,
+        :name,
+        :last_four,
+        :expiration_month,
+        :expiration_year,
+        :bank_name,
+        :account_type,
+        :balanced_uri,
+        :save_for_future
+      ]
+    )
   end
 end

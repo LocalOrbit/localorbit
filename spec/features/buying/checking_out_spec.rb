@@ -333,6 +333,55 @@ describe "Checking Out", :js, :vcr do
         expect(Payment.all.count).to eql(0)
       end
     end
+
+    context "unsaved credit card" do
+      before do
+        expect(balanced_customer).to receive(:add_card)
+      end
+
+      it "uses the card as a one off transaction" do
+        choose "Pay by Credit Card"
+        fill_in "Name", with: "John Doe"
+        fill_in "Card Number", with: '5105105105105100'
+        select "12", from: "Month"
+        select "2020", from: "Year"
+        fill_in "Security Code", with: '123'
+
+        checkout
+
+        expect(page).to have_content("Thank you for your order")
+        expect(page).to have_content("Credit Card")
+
+        order = Order.last
+        expect(order.payment_status).to eql("paid")
+        expect(order.payments.count).to eql(1)
+        expect(order.payments.first.status).to eql("paid")
+      end
+
+      it "saves the card for later use" do
+        expect(buyer.bank_accounts.visible.count).to eql(2)
+
+        choose "Pay by Credit Card"
+        fill_in "Name", with: "John Doe"
+        fill_in "Card Number", with: '5105105105105100'
+        select "12", from: "Month"
+        select "2020", from: "Year"
+        fill_in "Security Code", with: '123'
+        check "Save credit card for future use"
+
+        checkout
+
+        expect(page).to have_content("Thank you for your order")
+        expect(page).to have_content("Credit Card")
+
+        order = Order.last
+        expect(order.payment_status).to eql("paid")
+        expect(order.payments.count).to eql(1)
+        expect(order.payments.first.status).to eql("paid")
+
+        expect(buyer.bank_accounts.visible.count).to eql(3)
+      end
+    end
   end
 
   context "via ACH" do

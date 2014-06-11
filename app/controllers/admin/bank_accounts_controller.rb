@@ -3,7 +3,7 @@ class Admin::BankAccountsController < AdminController
   before_action :set_balanced_flag
 
   def index
-    @bank_accounts = @entity.bank_accounts
+    @bank_accounts = @entity.bank_accounts.visible
   end
 
   def new

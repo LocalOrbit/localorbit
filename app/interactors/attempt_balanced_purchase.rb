@@ -34,7 +34,7 @@ class AttemptBalancedPurchase
   end
 
   def bank_account
-    id = payment_method == "credit card" ? order_params["credit_card"] : order_params["bank_account"]
+    id = payment_method == "credit card" ? order_params["credit_card"]["id"] : order_params["bank_account"]
     @bank_account ||= cart.organization.bank_accounts.find(id)
   end
 

@@ -19,12 +19,7 @@ describe AttemptBalancedPurchase do
   let!(:balanced_debit)    { double("balanced debit", uri: "/balanced-debit-uri") }
 
   subject {
-    class OrganizerWrapper
-      include Interactor::Organizer
-      organize [AttemptBalancedPurchase]
-    end
-
-    OrganizerWrapper.perform(buyer: user, order: order, order_params: params, cart: cart)
+    AttemptBalancedPurchase.perform(buyer: user, order: order, order_params: params, cart: cart)
   }
 
   context "purchase order" do
@@ -131,7 +126,7 @@ describe AttemptBalancedPurchase do
   end
 
   context "credit card" do
-    let!(:params) { { "payment_method" => "credit card", "credit_card" => "#{credit_card.id}" } }
+    let!(:params) { { "payment_method" => "credit card", "credit_card" => {"id" => "#{credit_card.id}"} } }
 
     before do
       allow(Balanced::Customer).to receive(:find).and_return(balanced_customer)
