@@ -50,7 +50,7 @@ context "Viewing sold items" do
       expect(sold_item.unit_price).to eq("$2.00/Heads")
       expect(sold_item.delivery_status).to eq("Pending")
       expect(sold_item.buyer_payment_status).to eq("Unpaid")
-      expect(sold_item.seller_payment_status).to eq("Unpaid (WIP)")
+      expect(sold_item.seller_payment_status).to eq("Unpaid")
     end
 
     it "shows the correct search and filters" do
@@ -138,7 +138,7 @@ context "Viewing sold items" do
       expect(sold_item.unit_price).to eq("$6.50/Bushels")
       expect(sold_item.delivery_status).to eq("Pending")
       expect(sold_item.buyer_payment_status).to eq("Unpaid")
-      expect(sold_item.seller_payment_status).to eq("Unpaid (WIP)")
+      expect(sold_item.seller_payment_status).to eq("Unpaid")
     end
   end
 end

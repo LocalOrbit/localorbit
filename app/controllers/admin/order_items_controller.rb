@@ -6,6 +6,7 @@ module Admin
 
       # initialize ransack and search
       @q = @order_items.search(params[:q])
+      @q.sorts = ["order_placed_at desc", "name"] if @q.sorts.empty?
       @order_items = @q.result
 
       respond_to do |format|
