@@ -744,78 +744,7 @@ th {
   }
 }
 
-.filter-dropdown {
-  width: 180px;
-  margin-right: 10px;
-}
 
-.product-search {
-  float: right;
-}
-
-.search-widget {
-    display: inline-block;
-    ~ .btn--add {
-      display: inline-block;
-    }
-  }
-
-@media screen and (max-width: 900px) {
-  .product-filters {
-    width: 100%;
-    margin-bottom: 5px;
-  }
-  .filter-dropdown {
-    width: 47%;
-    margin:  4px 0 2px;
-
-    + .filter-dropdown {
-      margin-left: 5%; 
-    }
-  }
-  .row--justified {
-    > .product-search,
-    > .product-search:last-child {
-      float: none;
-      width: 100%;
-      text-align: left;
-    }
-  }
-  .search-widget {
-    float: left;
-    ~ .btn--add {
-      float: right;
-      margin-left: 5%;
-    }
-  }
-
-}
-
-@media screen and (max-width: 599px) {
-  .filter-dropdown {
-    width: 100%;
-    margin:  4px 0 2px;
-
-    + .filter-dropdown {
-      margin-left: 0; 
-    }
-  }
-  .row--justified {
-    > .product-search,
-    > .product-search:last-child {
-      width: 100%;
-      text-align: left;
-    }
-  }
-  .search-widget {
-    float: none;
-    margin-bottom: 20px;
-    ~ .btn--add {
-      float: none;
-      margin: 0 0 20px 0;
-    }
-  }
-}
 
 /** Sticky tables (like other sticky things, but sillier */
 @media screen and (max-height: 767px) {

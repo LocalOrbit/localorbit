@@ -199,8 +199,7 @@
     width: 100%;
     height: auto;
     padding: 0;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0 -10px;
     box-shadow: none;
     background: #e2e2e2;
     @include transform(translateY(-100%));

@@ -1,14 +1,14 @@
-<div class="tab-header stickable">
+<div class="stickable">
   <div class="l-constraint">
     <%= link_to "#{svg_icon} Export CSV".html_safe, coming_soon_dashboard_path, class: "export todo pull-right" %>
     <h1><i class="font-icon" data-icon="&#xe01f;"></i>&nbsp; Products</h1>
 
-    <div class="row row--justified product-header">
+    <div class="row row--justified product-header filter-group">
       <div class="column product-search">
+          <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small pull-right" %>
           <div class="search-widget">
             <input type="search" id="search" value="<%= @query_params["search"] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
           </div>
-          <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small" %>
       </div>
       <div class="column product-filters" id="product-filter">
         <% if current_user.multi_market_membership? %>
