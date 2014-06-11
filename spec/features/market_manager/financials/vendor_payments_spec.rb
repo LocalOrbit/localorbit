@@ -174,10 +174,25 @@ feature "Payments to vendors" do
     let!(:market3_order4) { create(:order, items:[create(:order_item, :delivered, product: market3_product2, quantity: 9), create(:order_item, :delivered, product: market3_product3, quantity: 14)], market: market3, organization: market3_buyer, delivery: market3_delivery, payment_method: "purchase order", order_number: "LO-082", total_cost: 160.77, placed_at: today - 3.days) }
 
 
+    context "market manager who has only 1 market" do
+      let!(:market_manager) { create :user, managed_markets: [market1] }
+
+      scenario "will not see market as a filter option" do
+        switch_to_subdomain(market1.subdomain)
+        sign_in_as market_manager
+        visit admin_financials_vendor_payments_path
+
+        expect(page).not_to have_select("Market")
+      end
+    end
+
+
     scenario "filtering by market" do
       switch_to_subdomain(market1.subdomain)
       sign_in_as market_manager
       visit admin_financials_vendor_payments_path
+
+      expect(page).to have_select("Market")
 
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms", "Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
