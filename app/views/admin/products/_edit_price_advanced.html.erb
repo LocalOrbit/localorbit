@@ -6,33 +6,25 @@
     <%= fields_for :price, price, index: price.id do |f| %>
       <%= f.select :market_id, current_user.markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
 
-      <table>
-        <caption>Price for all buyers</caption>
-        <thead>
-          <tr>
-            <th><label for="<%= "price_#{price.id}_net_price" %>">Net Price</label></th>
-            <th><label for="<%= "price_#{price.id}_sale_price" %>">Sale Price</label></th>
-            <th><label for="<%= "price_#{price.id}_min_quantity" %>">Min Qty</label></th>
-          </tr>
-        </thead>
-        <tr>
-          <td>
-            <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price', data: {"net-percent" => price.product.net_percent} %>
-          </td>
-          <td>
-            <%= f.number_field :sale_price, min: 0, step: 0.01, size: 4, class: "sale-price", inputmode: "numeric" %>
-          </td>
-          <td>
-            <%= f.number_field :min_quantity, min: 0, size: 4 %>
-          </td>
-        </tr>
-      </table>
+      <h3>Price for all buyers</h3>
+      <span class="preserve-alignment">
+        <label for="<%= "price_#{price.id}_net_price" %>">Net Price</label>
+        <%= f.number_field :net_price, min: 0, step: 0.01, size: 4, class: 'net-price', data: {"net-percent" => price.product.net_percent} %>
+      </span>
+      <span class="preserve-alignment">
+        <label for="<%= "price_#{price.id}_sale_price" %>">Sale Price</label>
+        <%= f.number_field :sale_price, min: 0, step: 0.01, size: 4, class: "sale-price", inputmode: "numeric" %>
+      </span>
+      <span class="preserve-alignment">
+        <label for="<%= "price_#{price.id}_min_quantity" %>">Min Qty</label>
+        <%= f.number_field :min_quantity, min: 0, size: 4 %>
+      </span>
       <div class="popup-error">
       </div>
       <div class="form-actions pull-right">
         <%= f.submit f.object.new_record? ? "Add" : "Save Price" %>
       </div>
-      <%= link_to "✚ Add New Price", [:admin, price.product, :prices] %><br>
+      <%= link_to "✚ Add New Price", [:admin, price.product, :prices] %>
       <%= link_to "Go to Price List", [:admin, price.product, :prices] %>
 
     <% end %>

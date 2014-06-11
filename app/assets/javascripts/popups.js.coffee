@@ -10,6 +10,9 @@ $ ->
     if right >= window.innerWidth
       $element.addClass('rtl')
 
+  size_popup = ($popup) ->
+    $popup.css('min-height', $(window).height() - $('.nav--app').outerHeight() - 20)
+
   $('.popup-toggle').click (e) ->
     e.preventDefault()
     $element = $(this.hash)
@@ -17,6 +20,7 @@ $ ->
     $(".popup").not($element).addClass('is-hidden')
     $('.overlay').addClass('is-open')
     if $element.hasClass('popup--edit')
+      size_popup($element)
       $('.overlay').addClass('is-editable')
     position_popup($element)
 
