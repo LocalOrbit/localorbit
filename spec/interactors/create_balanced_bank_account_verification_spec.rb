@@ -3,7 +3,8 @@ require "spec_helper"
 describe CreateBalancedBankAccountVerification do
   context "no verification" do
     it "creates a balanced bank account verification" do
-      bank_account = build(:bank_account)
+      organization = build(:organization)
+      bank_account = build(:bank_account, bankable: organization)
       balanced_bank_account = double(:balanced_bank_account, verification_uri: nil)
       verification = double(:verification, uri: "/balanced/uri")
 

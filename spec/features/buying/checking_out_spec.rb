@@ -335,10 +335,14 @@ describe "Checking Out", :js, :vcr do
     end
 
     context "unsaved credit card" do
+      before do
+        expect(balanced_customer).to receive(:add_card)
+      end
+
       it "uses the card as a one off transaction" do
         choose "Pay by Credit Card"
         fill_in "Name", with: "John Doe"
-        fill_in "Card Number", with: '4111111111111111'
+        fill_in "Card Number", with: '5105105105105100'
         select "12", from: "Month"
         select "2020", from: "Year"
         fill_in "Security Code", with: '123'
@@ -359,7 +363,7 @@ describe "Checking Out", :js, :vcr do
 
         choose "Pay by Credit Card"
         fill_in "Name", with: "John Doe"
-        fill_in "Card Number", with: '4111111111111111'
+        fill_in "Card Number", with: '5105105105105100'
         select "12", from: "Month"
         select "2020", from: "Year"
         fill_in "Security Code", with: '123'

@@ -8,7 +8,7 @@ describe BankAccount do
       create(:bank_account, account_type: 'visa', last_four: '1234', bankable: organization)
 
       subject = BankAccount.new(bankable: organization, account_type: 'visa', last_four: '1234')
-      expect(subject).to have(1).errors_on(:bankable)
+      expect(subject).to have(1).errors_on(:bankable_id)
 
       subject = BankAccount.new(bankable: organization, account_type: 'visa', last_four: '1235')
       expect(subject).to be_valid
@@ -19,6 +19,11 @@ describe BankAccount do
 
       subject = BankAccount.new(bankable: organization, account_type: 'visa', last_four: '1234')
       expect(subject).to be_valid
+    end
+
+    it "calling valid? does not return a false negative" do
+      subject = create(:bank_account, account_type: 'visa', last_four: '1234', bankable: organization, deleted_at: Time.current)
+      expect(subject.valid?).to eql(true)
     end
   end
 end
