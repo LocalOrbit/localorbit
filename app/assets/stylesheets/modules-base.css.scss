@@ -881,14 +881,9 @@
   }
 }
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 600px) {
   .logo-link {
-    float: none;
-    max-width: 100%;
-    text-align: center;
-    > .logo {
-     max-width: 300px;
-    }
+    display: none;
   }
 }
 .signed-out .logo-link {

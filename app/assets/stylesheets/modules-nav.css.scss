@@ -97,13 +97,9 @@
     padding: 4px 8px;
   }
 }
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 600px) {
   .nav--main {
-    font-size: 18px;
-    padding: 4px 4px;
-    margin: 5px 0 20px 0;
-    float: none;
-    text-align: center;
+    display: none;
   }
 }
 
@@ -204,6 +200,7 @@
     height: auto;
     padding: 0;
     margin-top: 0;
+    margin-bottom: 0;
     box-shadow: none;
     background: #e2e2e2;
     @include transform(translateY(-100%));
