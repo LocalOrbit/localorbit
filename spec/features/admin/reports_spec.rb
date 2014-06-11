@@ -111,10 +111,10 @@ feature "Reports" do
       let!(:report) { :total_sales }
 
       scenario "displays the appropriate filters" do
-        has_field?("Search")
-        has_field?("Placed on or after")
-        has_field?("Placed on or before")
-        has_select?("Market")
+        expect(page).to have_field("Search")
+        expect(page).to have_field("Placed on or after")
+        expect(page).to have_field("Placed on or before")
+        expect(page).to have_select("Market")
       end
 
       scenario "searches by order number" do
@@ -218,11 +218,11 @@ feature "Reports" do
         let!(:report) { :sales_by_seller }
 
         scenario "displays the appropriate filters" do
-          has_field?("Search")
-          has_field?("Placed on or after")
-          has_field?("Placed on or before")
-          has_select?("Market")
-          has_select?("Seller")
+          expect(page).to have_field("Search")
+          expect(page).to have_field("Placed on or after")
+          expect(page).to have_field("Placed on or before")
+          expect(page).to have_select("Market")
+          expect(page).to have_select("Seller")
         end
 
         scenario "filters by seller" do
@@ -254,10 +254,10 @@ feature "Reports" do
         let!(:report) { :sales_by_buyer }
 
         scenario "displays the appropriate filters" do
-          has_field?("Search")
-          has_field?("Placed on or after")
-          has_field?("Placed on or before")
-          has_select?("Market")
+          expect(page).to have_field("Search")
+          expect(page).to have_field("Placed on or after")
+          expect(page).to have_field("Placed on or before")
+          expect(page).to have_select("Market")
         end
 
         scenario "filters by buyer" do
@@ -289,12 +289,12 @@ feature "Reports" do
         let!(:report) { :sales_by_product }
 
         scenario "displays the appropriate filters" do
-          has_field?("Search")
-          has_field?("Placed on or after")
-          has_field?("Placed on or before")
-          has_select?("Market")
-          has_select?("Category")
-          has_select?("Product")
+          expect(page).to have_field("Search")
+          expect(page).to have_field("Placed on or after")
+          expect(page).to have_field("Placed on or before")
+          expect(page).to have_select("Market")
+          expect(page).to have_select("Category")
+          expect(page).to have_select("Product")
         end
 
         scenario "filters by category" do
@@ -336,11 +336,11 @@ feature "Reports" do
         let!(:report) { :sales_by_payment_method }
 
         scenario "displays the appropriate filters" do
-          has_field?("Search")
-          has_field?("Placed on or after")
-          has_field?("Placed on or before")
-          has_select?("Market")
-          has_select?("Payment Method")
+          expect(page).to have_field("Search")
+          expect(page).to have_field("Placed on or after")
+          expect(page).to have_field("Placed on or before")
+          expect(page).to have_select("Market")
+          expect(page).to have_select("Payment Method")
         end
 
         scenario "filters by payment method" do
@@ -374,12 +374,12 @@ feature "Reports" do
         # Filters are reused from other reports so we just need to ensure
         # the right ones show on the page.
         scenario "displays the appropriate filters" do
-          has_field?("Search")
-          has_field?("Placed on or after")
-          has_field?("Placed on or before")
-          has_select?("Market")
-          has_select?("Category")
-          has_select?("Product")
+          expect(page).to have_field("Search")
+          expect(page).to have_field("Placed on or after")
+          expect(page).to have_field("Placed on or before")
+          expect(page).to have_select("Market")
+          expect(page).to have_select("Category")
+          expect(page).to have_select("Product")
         end
       end
 
@@ -389,10 +389,10 @@ feature "Reports" do
         # Filters are reused from other reports so we just need to ensure
         # the right ones show on the page.
         scenario "displays the appropriate filters" do
-          has_field?("Search")
-          has_field?("Placed on or after")
-          has_field?("Placed on or before")
-          has_select?("Market")
+          expect(page).to have_field("Search")
+          expect(page).to have_field("Placed on or after")
+          expect(page).to have_field("Placed on or before")
+          expect(page).to have_select("Market")
         end
       end
     end
@@ -454,6 +454,7 @@ feature "Reports" do
         expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
       end
     end
+
 
     context "as a Seller" do
       let!(:user)      { create(:user, organizations: [seller2]) }
