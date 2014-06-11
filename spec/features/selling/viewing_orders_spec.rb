@@ -160,8 +160,19 @@ feature "Viewing orders" do
       expect(summary.net_sale).to eq("$25.44")
     end
 
+    context "when a user only has one market" do
+      let!(:user) { create(:user, managed_markets: [market1]) }
+
+      scenario "they don't see an option to filter by a market" do
+        visit admin_orders_path
+        expect(page).not_to have_select("Market")
+      end
+    end
+
     scenario "filtering a list of orders by market" do
       visit admin_orders_path
+
+      expect(page).to have_select("Market")
 
       within("#q_organization_id_eq") do
         expect(page).to have_content(market1_buyer_org1.name)
