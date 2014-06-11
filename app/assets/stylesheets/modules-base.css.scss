@@ -949,6 +949,7 @@
 }
 @media screen and (max-width: 800px) {
   .pagination {
+    width: auto;
     font-size: 1.2em;
     > span {
       display: inline-block;

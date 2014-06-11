@@ -19,6 +19,9 @@
         background-image: none;
       <% end -%>
     }
+    @media screen and (max-width: 600px) {
+      body { background-image: none; }
+    }
     <% if current_market.text_color.present? -%>
       a,
       button.reset, button.cancel, button.close, button.delete,
