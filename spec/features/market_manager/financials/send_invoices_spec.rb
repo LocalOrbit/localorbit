@@ -267,5 +267,18 @@ feature "sending invoices" do
 
       expect(page.find("#q_order_number_or_payment_note_cont").value).to eql("LO-001")
     end
+
+    context "users who have only 1 market" do
+      let!(:market_manager) { create :user, managed_markets: [market1] }
+
+      scenario "won't see the option to filter by market" do
+        switch_to_subdomain(market1.subdomain)
+        sign_in_as market_manager
+        visit admin_financials_invoices_path
+
+        expect(page).not_to have_select("Market")
+      end
+    end
   end
+
 end
