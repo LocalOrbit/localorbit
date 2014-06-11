@@ -9,7 +9,7 @@
             end_date: payment_history.end_date } %>
   </div>
   <div class="manager-filters">
-    <% if current_user.markets.count > 1 %>
+    <% if current_user.multi_market_membership? > 1 %>
     <span class="preserve-alignment">
       <%= f.label :payer_type_id_nil_eq, "Received From" %><br>
       <%= f.select :payer_type_id_nil_eq, payment_history.payers, { include_blank: "All" }, { class: "filter-input" } %>
