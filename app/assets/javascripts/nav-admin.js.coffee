@@ -8,3 +8,6 @@ $ ->
     else
       $('.overlay').removeClass('is-open')
 
+  $('.nav-admin-toggle').click (e) ->
+    e.preventDefault()
+    $('#admin-nav').toggleClass('is-open')

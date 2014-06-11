@@ -44,7 +44,6 @@
 
 @media screen and (max-width:600px) {
   .nav--app {
-
     a {
       padding: 10px 10px;
       &.cart[data-count='0'] {
@@ -113,6 +112,11 @@
   a {
     color: inherit;
   }
+}
+.nav-admin-toggle {
+  float: left;
+  color: #fff;
+  padding: 10px;
 }
 .nav--admin {
   position: relative;
@@ -190,6 +194,9 @@
 }
 
 @media screen and (max-width: 600px) {
+  .nav-admin-toggle {
+    display: block;
+  }
   .nav--admin {
     position: absolute;
     top: 0;
@@ -199,6 +206,14 @@
     margin-top: 0;
     box-shadow: none;
     background: #e2e2e2;
+    @include transform(translateY(-100%));
+    -webkit-transition: -webkit-transform .3s ease-in-out;
+    -moz-transition: -moz-transform .3s ease-in-out;
+    -ms-transition: -ms-transform .3s ease-in-out;
+    transition: transform .3s ease-in-out;
+    &.is-open {
+      @include transform(translateY(0));
+    }
     .caretted:before {
       position: absolute;
       top: .8em;
