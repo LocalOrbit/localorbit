@@ -61,6 +61,12 @@ body {
     z-index: 100;
   }
 }
+@media screen and (max-width: 600px) {
+  .l-app-header {
+    position: relative;
+    z-index: 51;
+  }
+}
 
 .tab-title {
   width: 50%;
@@ -229,4 +235,10 @@ body {
 }
 .row--whitespace > .column {
   float: left;
+}
+
+@media screen and (max-width: 600px) {
+  .hidden-mobile {
+    display: none;
+  }
 }
