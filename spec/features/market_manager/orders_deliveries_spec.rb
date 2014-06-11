@@ -53,6 +53,18 @@ context "Viewing sold items" do
       expect(sold_item.seller_payment_status).to eq("Unpaid (WIP)")
     end
 
+    it "shows the correct search and filters" do
+      has_field?("Search")
+      has_select?("Market")
+      has_select?("Seller")
+      has_select?("Buyer")
+      has_select?("Delivery Status")
+      has_select?("Buyer Payment Status")
+      # has_select?("Seller Payment Status") # TODO: Add this
+      has_field?("Placed on or after")
+      has_field?("Placed on or before")
+    end
+
     it "lists all sold items for the market as a CSV" do
       html_headers = page.all('th').map(&:text)[1..-1] # remove checkbox column
       click_link "Export CSV"
