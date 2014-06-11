@@ -1,9 +1,11 @@
-<div class="popup popup--edit is-hidden" id="edit_price_<%= price.id %>">
+<%= form_for [:admin, price.product, price], url: admin_product_price_path(price.product, price, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden edit_price", novalidate: "novalidate", data: { prefix: "price_#{price.id}" }} do |f| %>
   <button class="pull-right close"><i class="font-icon icon-close"></i></button>
-  <h2>Edit Price for <%= price.product.name %></h2>
-
-  <%= form_for [:admin, price.product, price], url: admin_product_price_path(price.product, price, format: :js, query_params: @query_params), html: { novalidate: "novalidate", data: { prefix: "price_#{price.id}" }} do |f| %>
-    <%= fields_for :price, price, index: price.id do |f| %>
+  <hgroup>
+    <h2>Edit Price</h2>
+    <h3><%= price.product.name %></h3>
+  </hgroup>
+  <%= fields_for :price, price, index: price.id do |f| %>
+    <div class="fields">
       <%= f.select :market_id, current_user.markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
 
       <h3>Price for all buyers</h3>
@@ -21,13 +23,15 @@
       </span>
       <div class="popup-error">
       </div>
-      <div class="form-actions pull-right">
-        <%= f.submit f.object.new_record? ? "Add" : "Save Price" %>
-      </div>
+    </div>
+    <div class="form-actions pull-right">
+      <%= f.submit f.object.new_record? ? "Add" : "Save Price" %>
+    </div>
+    <div class="links">
       <%= link_to "✚ Add New Price", [:admin, price.product, :prices] %>
       <%= link_to "Go to Price List", [:admin, price.product, :prices] %>
+    </div>
 
-    <% end %>
   <% end %>
-</div>
+<% end %>
 

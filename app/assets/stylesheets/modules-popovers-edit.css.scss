@@ -33,7 +33,7 @@
       top: auto;
     }
 
-    h2,
+    h3,
     caption {
       font: bold 14px "Open Sans", OpenSans, sans-serif;
     }
@@ -101,9 +101,13 @@
 
 @media screen and (max-width: 600px) {
   .popup--edit {
-    .form-actions {
-      float: none;
-    }
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-flow: column;
+    flex-flow: column;
+
     input[size] {
       margin-bottom: 10px;
       font-size: 16px;
@@ -112,6 +116,28 @@
     input[type=submit] {
       display: block;
       width: 100%;
+    }
+
+    .fields {
+      -webkit-flex: auto 1;
+      flex: auto 1;
+    }
+    .form-actions {
+      float: none;
+    }
+    .links {
+      padding: 5px 0;
+      font-size: 0.1px;
+      text-align: justify;
+      &:after {
+        display: inline-block;
+        width: 100%;
+        content: '';
+      }
+      a {
+        display:inline-block;
+        font-size: 12px;
+      }
     }
   }
 }
