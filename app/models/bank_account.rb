@@ -5,5 +5,13 @@ class BankAccount < ActiveRecord::Base
 
   belongs_to :bankable, polymorphic: true
 
-  validates :bankable_id, presence: true, uniqueness: { scope: [:account_type, :bank_name, :last_four]}
+  validate :account_is_unique_to_bankable
+
+  private
+
+  def account_is_unique_to_bankable
+    if bankable.bank_accounts.visible.where(account_type: account_type, last_four: last_four).any?
+      errors.add(:bankable, "already exists for this #{bankable_type.downcase}.")
+    end
+  end
 end
