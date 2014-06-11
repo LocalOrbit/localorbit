@@ -22,6 +22,7 @@ class Market < ActiveRecord::Base
   has_many :orders
   has_many :newsletters
   has_many :promotions, inverse_of: :market
+  belongs_to :plan, inverse_of: :markets
 
   has_many :bank_accounts, as: :bankable
 
