@@ -298,6 +298,28 @@ module Dom
       end
     end
 
+    class FeaturedPromotionRow < Domino
+      selector ".promotion-row"
+
+      attribute :date
+      attribute :name
+      attribute :title
+      attribute :market
+      attribute :links
+
+      def click_delete
+        node.find_link("Delete").click
+      end
+
+      def click_activate
+        node.find_link("Activate").click
+      end
+
+      def click_deactivate
+        node.find_link("Deactivate").click
+      end
+    end
+
     class MarketRow < Domino
       selector ".market-org-list tbody tr"
 

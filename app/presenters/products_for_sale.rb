@@ -26,6 +26,11 @@ class ProductsForSale
     @filter_organizations ||= @market.organizations.selling.where(id: pre_filter_products.map(&:organization_id).uniq)
   end
 
+  def featured_promotion
+    promotion = @market.featured_promotion(@buyer)
+    @featured_promotion ||= promotion.decorate(context: {current_cart: @cart}) if promotion
+  end
+
   def products
     return @products if @products
 

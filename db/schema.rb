@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140609201335) do
+ActiveRecord::Schema.define(version: 20140610121016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20140609201335) do
     t.integer  "expiration_year"
     t.string   "name"
     t.string   "notes"
+    t.datetime "deleted_at"
   end
 
   add_index "bank_accounts", ["bankable_type", "bankable_id"], name: "index_bank_accounts_on_bankable_type_and_bankable_id", using: :btree
@@ -262,9 +263,9 @@ ActiveRecord::Schema.define(version: 20140609201335) do
     t.boolean  "default_allow_purchase_orders",                         default: false
     t.boolean  "default_allow_credit_cards",                            default: true
     t.boolean  "default_allow_ach",                                     default: true
+    t.integer  "legacy_id"
     t.string   "background_color"
     t.string   "text_color"
-    t.integer  "legacy_id"
     t.boolean  "allow_cross_sell",                                      default: false
     t.boolean  "auto_activate_organizations",                           default: false
   end
@@ -452,6 +453,18 @@ ActiveRecord::Schema.define(version: 20140609201335) do
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
   add_index "products", ["location_id"], name: "index_products_on_location_id", using: :btree
   add_index "products", ["organization_id"], name: "index_products_on_organization_id", using: :btree
+
+  create_table "promotions", force: true do |t|
+    t.integer  "market_id"
+    t.integer  "product_id"
+    t.string   "name"
+    t.string   "title"
+    t.text     "body"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_uid"
+  end
 
   create_table "sequences", force: true do |t|
     t.string  "name"

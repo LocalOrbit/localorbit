@@ -21,6 +21,7 @@ class Market < ActiveRecord::Base
   has_many :delivery_schedules, inverse_of: :market
   has_many :orders
   has_many :newsletters
+  has_many :promotions, inverse_of: :market
 
   has_many :bank_accounts, as: :bankable
 
@@ -87,6 +88,17 @@ class Market < ActiveRecord::Base
     scope = deliveries.future.with_orders.order("deliver_on")
     scope = scope.with_orders_for_user(user) unless user.market_manager? || user.admin?
     scope
+  end
+
+  def featured_promotion(buyer)
+    promotion = promotions.active.first
+    product = promotion.try(:product)
+
+    if product.present? && product.available_inventory > 0 && product.prices_for_market_and_organization(self, buyer).any?
+      promotion
+    else
+      nil
+    end
   end
 
   private

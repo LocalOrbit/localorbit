@@ -347,4 +347,16 @@ FactoryGirl.define do
     body "news goes here"
     market
   end
+
+  factory :promotion do
+    market
+    product
+    sequence(:name) {|n| "Featured Promotion ##{n}" }
+    sequence(:title) {|n| "Featured Promotion Title ##{n}" }
+    active false
+
+    trait :active do
+      active true
+    end
+  end
 end
