@@ -23,6 +23,7 @@
 }
   @media screen and (max-width: 600px) {
     .table-wrapper {
+      padding-top: 20px;
       margin-right: -10px;
       margin-left: -10px;
       overflow: auto;
@@ -34,6 +35,16 @@
         width: 20px;
         height: 100%;
         content: '';
+        &:before {
+          position: absolute;
+          padding: 2px 4px;
+          color: #fff;
+          background-image: asset_url('bg-flag.png');
+          content: "Scroll to see more";
+          font-size: 12px;
+          font-weight: bold;
+          white-space: nowrap;
+        }
       }
       .fade-left {
         left: 0;
@@ -42,6 +53,11 @@
         background:     -o-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,0));
         background:    -ms-linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,0));
         background:        linear-gradient(left, rgba(0,0,0,0.5), rgba(0,0,0,0));
+        &:before {
+          left: 10px;
+          padding-left: 10px;
+          background-position: left center;
+        }
       }
       .fade-right {
         right: 0;
@@ -50,6 +66,11 @@
         background:     -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5));
         background:    -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5));
         background:        linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.5));
+        &:before {
+          right: 10px;
+          padding-right: 10px;
+          background-position: right center;
+        }
       }
       &.hard-left {
         .fade-left {
