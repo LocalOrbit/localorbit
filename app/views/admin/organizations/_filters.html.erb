@@ -7,7 +7,7 @@
 
   <div class="manager-filters">
 
-  <% if current_user.admin? || current_user.managed_markets.count %>
+  <% if current_user.admin? || current_user.multi_market_membership? %>
     <span class="preserve-alignment">
       <label for="filter_maket">Market</label><br>
       <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), class: 'filter-dropdown', data: { parameter: "market"} %>

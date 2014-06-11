@@ -102,7 +102,7 @@ describe 'Filter organizations', :js do
           sign_in_as(single_market_manager)
           visit admin_organizations_path
 
-          expect(page).to have_no_css("#filter_market")
+          expect(page).not_to have_selector("Market")
         end
       end
 
