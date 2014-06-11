@@ -106,6 +106,17 @@ feature "Reports" do
   end
 
   context "for all reports" do
+    context "as a user in only 1 market" do
+      let!(:user) { create(:user, :market_manager, managed_markets: [market])}
+
+      scenario "does not display the market filter" do
+        expect(page).to have_field("Search")
+        expect(page).to have_field("Placed on or after")
+        expect(page).to have_field("Placed on or before")
+        expect(page).not_to have_select("Market")
+      end
+    end
+
     context "as any user" do
       let!(:user)   { create(:user, :admin) }
       let!(:report) { :total_sales }
