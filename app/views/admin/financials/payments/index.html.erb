@@ -16,6 +16,10 @@
       <th><%= sort_link(@payment_history.q, :created_at, "Payment Date") %></th>
       <th>Description</th>
       <th>Payment Method</th>
+      <% if current_user.admin? || current_user.market_manager? %>
+      <th>Received From</th>
+      <th>Paid To</th>
+      <% end %>
       <th><%= sort_link(@payment_history.q, :amount, "Amount") %></th>
     </tr>
   </thead>
@@ -52,6 +56,10 @@
           <% end %>
         </td>
         <td class="payment-method"><%= payment.display_payment_method %></td>
+        <% if current_user.admin? || current_user.market_manager? %>
+          <td class="from"><%= payment.payer.try(:name) %></td>
+          <td class="to"><%= payment.payee.try(:name) %></td>
+        <% end %>
         <td class="amount"><%= number_to_currency(payment.amount) %></td>
       </tr>
     <% end %>

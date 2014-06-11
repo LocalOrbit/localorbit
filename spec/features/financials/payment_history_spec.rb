@@ -16,7 +16,7 @@ feature "Payment history", :truncate_after_all do
     create(:bank_account, :checking, last_four: "7676", balanced_uri: market_ach_balanced_uri, bankable: @market)
 
     @buyer  = create(:organization, :buyer,  name: "Buyer",    markets: [@market])
-    buyer2  = create(:organization, :buyer,  name: "Buyer 2",  markets: [@market2, market3])
+    @buyer2  = create(:organization, :buyer,  name: "Buyer 2",  markets: [@market2, market3])
     @seller = create(:organization, :seller, name: "Seller",   markets: [@market])
     seller2 = create(:organization, :seller, name: "Seller 2", markets: [@market2])
 
@@ -49,7 +49,7 @@ feature "Payment history", :truncate_after_all do
       orders2 << create(:order,
                        delivery: @delivery,
                        items: [order_item],
-                       organization: buyer2,
+                       organization: @buyer2,
                        payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
                        payment_status: "paid",
                        order_number: "LO-02-234-4567890-#{i}")
@@ -72,7 +72,7 @@ feature "Payment history", :truncate_after_all do
 
         payment2 = create(:payment,
                          payment_method: ["cash", "check", "ach", "ach", "credit card"][i - 1],
-                         payer: buyer2,
+                         payer: @buyer2,
                          payee: @market2,
                          orders: [orders2[i]],
                          amount: orders2[i].total_cost + 0.01)
@@ -116,14 +116,14 @@ feature "Payment history", :truncate_after_all do
       order = create(:order,
                     delivery: @delivery,
                     items: [create(:order_item, unit_price: 123.00, quantity: 1)],
-                    organization: buyer2,
+                    organization: @buyer2,
                     market: @market2,
                     payment_method: "purchase order",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-123")
       create(:payment,
             payment_method: "cash",
-            payer: buyer2,
+            payer: @buyer2,
             payee: @market2,
             orders: [order],
             amount: order.total_cost)
@@ -132,14 +132,14 @@ feature "Payment history", :truncate_after_all do
       order = create(:order,
                     delivery: @delivery,
                     items: [create(:order_item, unit_price: 234.00, quantity: 1)],
-                    organization: buyer2,
+                    organization: @buyer2,
                     market: market3,
                     payment_method: "purchase order",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-234")
       create(:payment,
             payment_method: "cash",
-            payer: buyer2,
+            payer: @buyer2,
             payee: market3,
             orders: [order],
             amount: order.total_cost)
@@ -148,14 +148,14 @@ feature "Payment history", :truncate_after_all do
       order = create(:order,
                     delivery: @delivery,
                     items: [create(:order_item, unit_price: 345.00, quantity: 1)],
-                    organization: buyer2,
+                    organization: @buyer2,
                     market: @market2,
                     payment_method: "ach",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-345")
       create(:payment,
             payment_method: "ach",
-            payer: buyer2,
+            payer: @buyer2,
             payee: nil,
             orders: [order],
             amount: order.total_cost,
@@ -165,14 +165,14 @@ feature "Payment history", :truncate_after_all do
       order = create(:order,
                     delivery: @delivery,
                     items: [create(:order_item, unit_price: 456.00, quantity: 1)],
-                    organization: buyer2,
+                    organization: @buyer2,
                     market: market3,
                     payment_method: "ach",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-456")
       create(:payment,
             payment_method: "ach",
-            payer: buyer2,
+            payer: @buyer2,
             payee: nil,
             orders: [order],
             amount: order.total_cost,
@@ -223,10 +223,6 @@ feature "Payment history", :truncate_after_all do
     click_link "Review Payment History"
 
     expect(page).to have_content("Payment History")
-    expect(page).to have_content("Payment Date")
-    expect(page).to have_content("Description")
-    expect(page).to have_content("Payment Method")
-    expect(page).to have_content("Amount")
   end
 
   def payment_row(amount)
@@ -241,6 +237,15 @@ feature "Payment history", :truncate_after_all do
     let!(:user) { create(:user, organizations: [@buyer]) }
 
     before do
+      within("table thead") do
+        expect(page).to have_content("Payment Date")
+        expect(page).to have_content("Description")
+        expect(page).to have_content("Payment Method")
+        expect(page).to have_content("Amount")
+        expect(page).not_to have_content("Received From")
+        expect(page).not_to have_content("Paid To")
+      end
+
       payments = Dom::Admin::Financials::PaymentRow.all
 
       # Default sort order should be payment date descending
@@ -388,7 +393,7 @@ feature "Payment history", :truncate_after_all do
     let!(:user) { create(:user, :market_manager, managed_markets: [@market, @market2]) }
 
     # 5 buyer   -> market payments
-    # 5 buyer2  -> market2 payments
+    # 5 @buyer2  -> market2 payments
     # 5 seller  -> market payments
     # 5 seller2 -> market2 payments
     # 1 market -> seller payment
@@ -397,6 +402,15 @@ feature "Payment history", :truncate_after_all do
     # 1 ACH buyer payment
     # 1 service fee
     scenario "can view their purchase history" do
+      within("table thead") do
+        expect(page).to have_content("Payment Date")
+        expect(page).to have_content("Description")
+        expect(page).to have_content("Payment Method")
+        expect(page).to have_content("Received From")
+        expect(page).to have_content("Paid To")
+        expect(page).to have_content("Amount")
+      end
+
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
 
       expect(payment_rows_for_description("LO-01-234-4567890-1").count).to eq(2)
@@ -417,13 +431,27 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can view buyer order payments for markets they manage" do
+    # 5 buyer   -> market payments
+    # 5 @buyer2  -> market2 payments
+    # 5 seller  -> market payments
+    # 5 seller2 -> market2 payments
+    # 1 market -> seller payment
+    # 1 Local Orbit -> seller payment
+    # 1 cash buyer payment
+    # 1 ACH buyer payment
+    # 1 service fee
+
       expect(payment_row("$123.00")).not_to be_nil
       expect(payment_row("$123.00").payment_method).to eql("Cash")
       expect(payment_row("$123.00").date).to eql("05/08/2014")
+      expect(payment_row("$123.00").from).to eql(@buyer2.name)
+      expect(payment_row("$123.00").to).to eql(@market2.name)
 
       expect(payment_row("$345.00")).not_to be_nil
       expect(payment_row("$345.00").payment_method).to eql("ACH: *********9983")
       expect(payment_row("$345.00").date).to eql("05/08/2014")
+      expect(payment_row("$345.00").from).to eql(@buyer2.name)
+      expect(payment_row("$345.00").to).to eql("")
     end
 
     scenario "can view fews for markets they manage" do
