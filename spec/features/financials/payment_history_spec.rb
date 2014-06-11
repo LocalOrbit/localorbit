@@ -568,6 +568,14 @@ feature "Payment history", :truncate_after_all do
       # Service Fee + ACH Buyer Payment
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(2)
     end
+
+    context "who have only one market" do
+      let!(:user) { create(:user, :market_manager, managed_markets: [@market]) }
+
+      scenario "will not see an option to filter by market" do
+        expect(page).not_to have_select("Received From")
+      end
+    end
   end
 
   context "Buyers" do
