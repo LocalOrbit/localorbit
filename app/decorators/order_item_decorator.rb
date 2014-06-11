@@ -48,7 +48,7 @@ class OrderItemDecorator < Draper::Decorator
   end
 
   def quantity
-    number_with_delimiter(object.quantity)
+    number_with_delimiter(delivered? ? object.quantity_delivered : object.quantity)
   end
 
   def row_total
