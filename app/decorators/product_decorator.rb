@@ -62,4 +62,8 @@ class ProductDecorator < Draper::Decorator
   def display_prices
     prices.for_market_and_org(context[:current_cart].market, context[:current_cart].organization)
   end
+
+  def name_and_unit
+    "#{name} (#{unit.singular})"
+  end
 end

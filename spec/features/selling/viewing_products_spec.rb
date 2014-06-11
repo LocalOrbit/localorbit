@@ -15,7 +15,7 @@ describe "Viewing products" do
   let!(:bananas_price) { create(:price, product: bananas, sale_price: 1.00, min_quantity: 1) }
   let!(:bananas_lot)   { create(:lot, product: bananas, quantity: 100) }
 
-  let!(:grapes)       { create(:product, organization: org1, name: "Grapes") }
+  let!(:grapes)       { create(:product, organization: org1, name: "Grapes", unit: create(:unit, singular: "Tube", plural: "Tubes")) }
   let!(:grapes_price) { create(:price, product: grapes, sale_price: 5.00, min_quantity: 1) }
   let!(:grapes_lot)   { create(:lot, product: grapes, quantity: 1) }
 
@@ -151,7 +151,7 @@ describe "Viewing products" do
       # Don't know what else to do here, and I've been working on this for too long
       sleep 2
 
-      product = Dom::ProductRow.find_by_name("Grapes")
+      product = Dom::ProductRow.find_by_name("Grapes (Tube)")
       product.click_stock
 
       fill_in "Quantity", with: 99
@@ -164,14 +164,14 @@ describe "Viewing products" do
       sign_in_as(user)
       visit admin_products_path
 
-      product = Dom::ProductRow.find_by_name("Grapes")
+      product = Dom::ProductRow.find_by_name("Grapes (Tube)")
       product.click_stock
 
       fill_in "Quantity", with: 99
       click_button "Save Inventory"
 
-      product = Dom::ProductRow.find_by_name("Grapes")
-      
+      product = Dom::ProductRow.find_by_name("Grapes (Tube)")
+
       expect(product.stock).to have_content("99")
     end
 
@@ -181,7 +181,7 @@ describe "Viewing products" do
       sign_in_as(user)
       visit admin_products_path
 
-      product = Dom::ProductRow.find_by_name("Grapes")
+      product = Dom::ProductRow.find_by_name("Grapes (Tube)")
       product.click_stock
 
       fill_in "lot_number", with: 32
@@ -191,7 +191,7 @@ describe "Viewing products" do
 
       click_button "Save Lot"
 
-      product = Dom::ProductRow.find_by_name("Grapes")
+      product = Dom::ProductRow.find_by_name("Grapes (Tube)")
 
       expect(product.stock).to have_content("46")
     end
@@ -200,7 +200,7 @@ describe "Viewing products" do
       sign_in_as(user)
       visit admin_products_path
 
-      product = Dom::ProductRow.find_by_name("Grapes")
+      product = Dom::ProductRow.find_by_name("Grapes (Tube)")
       product.click_pricing
 
       fill_in "Sale Price", with: 12
@@ -208,9 +208,9 @@ describe "Viewing products" do
 
       click_button "Save Price"
 
-      product = Dom::ProductRow.find_by_name("Grapes")
+      product = Dom::ProductRow.find_by_name("Grapes (Tube)")
 
-      expect(product.pricing).to have_content("$12.00 5+ boxes")
+      expect(product.pricing).to have_content("$12.00 5+")
 
       product.click_pricing
       net_price  = find_field("Net Price")

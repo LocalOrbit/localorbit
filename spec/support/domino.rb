@@ -743,8 +743,15 @@ module Dom
     selector ".product-row"
 
     attribute :market
-    attribute :name
     attribute :seller
+
+    def name
+      node.find(".name").text.match(/^(.*)\s\(.*\)$/)[1]
+    end
+
+    def unit
+      node.find(".name").text.match(/^.*\s\((.*)\)$/)[1]
+    end
 
     def pricing
       node.find(".pricing")
