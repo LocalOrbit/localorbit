@@ -10,10 +10,10 @@ feature "Reports" do
   let!(:seller2)   { create(:organization, name: "Bar Seller", markets: [market2], can_sell: true) }
   let!(:subdomain) { market.subdomain }
   let!(:report)    { :total_sales }
+  let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+  let!(:delivery)  { delivery_schedule.next_delivery }
 
   before do
-    delivery_schedule = create(:delivery_schedule, market: market)
-    delivery = delivery_schedule.next_delivery
     delivery_schedule2 = create(:delivery_schedule, market: market2)
     delivery2 = delivery_schedule2.next_delivery
 
@@ -185,6 +185,33 @@ feature "Reports" do
             expect(item.send(field)).to include(csv[i][display_name])
           end
         end
+      end
+
+      scenario "can download a CSV of all records irrespective of pagniation" do
+        category = create(:category)
+        product = create(:product,
+                         :sellable,
+                         category: category,
+                         organization: seller)
+        order_items = create_list(:order_item, 20, product: product, seller_name: seller.name)
+        order_items.each do |order_item|
+          create(:order,
+                market_id: market.id,
+                delivery: delivery,
+                items: [order_item],
+                organization: buyer)
+        end
+
+        visit(current_path)
+
+        # paginates to 25
+        expect(Dom::Report::ItemRow.all.count).to eq(25)
+
+        click_link "Export CSV"
+
+        csv = CSV.parse(page.body, headers: true)
+
+        expect(csv.count).to eq(31) # 11 + 20
       end
 
       context "Sales by Seller report" do

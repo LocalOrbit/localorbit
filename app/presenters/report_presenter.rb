@@ -89,9 +89,13 @@ class ReportPresenter
     @q = items.search(search)
     @q.sorts = "created_at desc" if @q.sorts.empty?
 
-    items = @q.result.
-              page(paginate[:page]).
-              per(paginate[:per_page])
+    items = @q.result
+
+    unless paginate[:csv]
+      items = items.
+                page(paginate[:page]).
+                per(paginate[:per_page])
+    end
 
     @items = include_associations(items)
   end
