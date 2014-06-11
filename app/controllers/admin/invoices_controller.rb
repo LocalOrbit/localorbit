@@ -7,6 +7,11 @@ module Admin
         Order.orders_for_buyer(current_user).invoiced.find(params[:id])
       end
 
+      if params[:mark_invoiced]
+        order.invoice
+        order.save
+      end
+
       @invoice = BuyerOrder.new(order)
       @market  = @invoice.market.decorate
 
