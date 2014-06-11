@@ -244,6 +244,10 @@ body {
 }
 
 @media screen and (max-width: 600px) {
+  .column--half,
+  .column--three-fourths {
+    width: 100%;
+  }
   .hidden-mobile {
     display: none;
   }

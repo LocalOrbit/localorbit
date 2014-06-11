@@ -555,6 +555,11 @@
     margin-bottom: 0;
   }
 }
+@media screen and (max-width: 600px) {
+  .tabs-wrapper {
+    margin: 0 -10px 30px;
+  }
+}
 .tabs {
   position: relative;
   z-index: 1;
@@ -583,6 +588,7 @@
     background: asset_url('icons/circled-check@2x.png') center / cover no-repeat;
   }
 }
+
 @media screen and (max-width:400px) {
   .tabs {
     font-size: 14px;
@@ -635,6 +641,18 @@
     padding: 0 20px;
     margin-top: 0;
   }
+}
+
+@media screen and (max-width: 600px) {
+    .tab-header {
+      width: auto;
+      margin-right: -10px;
+      margin-left: -10px;
+      > .l-constraint {
+        margin-right: 10px;
+        margin-left: 10px
+      }
+    }
 }
 
 .tab {
@@ -826,6 +844,12 @@
   a {
     color: inherit;
     text-decoration: underline;
+  }
+}
+@media screen and (max-width: 600px) {
+  .product-status-alert {
+    max-width: none;
+    padding: 1em;
   }
 }
 
