@@ -15,4 +15,20 @@ class PaymentDecorator < Draper::Decorator
       "PayPal"
     end
   end
+
+  def from
+    if payer.nil?
+      "Local Orbit"
+    else
+      payer.name
+    end
+  end
+
+  def to
+    if payee.nil?
+      "Local Orbit"
+    else
+      payee.name
+    end
+  end
 end

@@ -57,8 +57,8 @@
         </td>
         <td class="payment-method"><%= payment.display_payment_method %></td>
         <% if current_user.admin? || current_user.market_manager? %>
-          <td class="from"><%= payment.payer.try(:name) %></td>
-          <td class="to"><%= payment.payee.try(:name) %></td>
+          <td class="from"><%= payment.from %></td>
+          <td class="to"><%= payment.to %></td>
         <% end %>
         <td class="amount"><%= number_to_currency(payment.amount) %></td>
       </tr>
