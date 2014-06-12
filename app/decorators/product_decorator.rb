@@ -50,12 +50,14 @@ class ProductDecorator < Draper::Decorator
   end
 
   def cart_item
-    return unless context[:current_cart]
+    @cart_item ||= begin
+      return unless context[:current_cart]
 
-    if i = context[:current_cart].items.detect {|i| i.product_id == id }
-      i
-    else
-      CartItem.new(product_id: id, quantity: 0, cart: context[:current_cart])
+      if i = context[:current_cart].items.detect {|i| i.product_id == id }
+        i
+      else
+        CartItem.new(product_id: id, quantity: 0, cart: context[:current_cart])
+      end
     end
   end
 
