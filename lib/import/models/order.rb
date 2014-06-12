@@ -14,11 +14,6 @@ module Imported
   end
 end
 
-class Legacy::DeliveryStatus < Legacy::Base
-  self.table_name = "lo_delivery_statuses"
-  self.primary_key = "ldstat_id"
-end
-
 class Legacy::OrderPaymentStatus < Legacy::Base
   self.table_name = "lo_buyer_payment_statuses"
   self.primary_key = "lbps_id"
@@ -28,7 +23,7 @@ class Legacy::Order < Legacy::Base
   self.table_name = "lo_order"
   self.primary_key = "lo_oid"
 
-  has_one :buyer_payment_status, class_name: "Legacy::OrderPaymentStatus", foreign_key: :lbps_id
+  belongs_to :buyer_payment_status, class_name: "Legacy::OrderPaymentStatus", foreign_key: :lbps_id
 
   has_many :items, class_name: "Legacy::OrderItem", foreign_key: :lo_oid
   has_many :shipping_addresses, -> { where(address_type: "Shipping") }, class_name: "Legacy::OrderAddress", foreign_key: :lo_oid
@@ -41,27 +36,30 @@ class Legacy::Order < Legacy::Base
 
   def import
     if order_date.present?
+      attributes = {
+        organization: imported_organization,
+        delivery: imported_delivery,
+        order_number: lo3_order_nbr,
+        billing_organization_name: organization.name,
+        billing_address: billing.street1,
+        billing_city: billing.city,
+        billing_state: billing.region.code,
+        billing_state: billing.postcode,
+        billing_phone: billing.telephone,
+        placed_at: order_date,
+        total_cost: grand_total,
+        payment_method: imported_payment_method,
+        payment_status: imported_payment_status,
+        payment_note: payment_ref,
+        notes: admin_notes,
+        legacy_id: lo_oid
+      }
+
       order = Imported::Order.where(legacy_id: lo_oid).first
+
       if order.nil?
         puts "- Creating order #{lo3_order_nbr}"
-        order = Imported::Order.new(
-          organization: imported_organization,
-          delivery: imported_delivery,
-          order_number: lo3_order_nbr,
-          billing_organization_name: organization.name,
-          billing_address: billing.street1,
-          billing_city: billing.city,
-          billing_state: billing.region.code,
-          billing_state: billing.postcode,
-          billing_phone: billing.telephone,
-          placed_at: order_date,
-          total_cost: grand_total,
-          payment_method: payment_method,
-          payment_status: imported_payment_status,
-          payment_note: payment_ref,
-          notes: admin_notes,
-          legacy_id: lo_oid
-        )
+        order = Imported::Order.new(attributes)
 
         items.each do |item|
           imported = item.import
@@ -69,6 +67,8 @@ class Legacy::Order < Legacy::Base
         end
       else
         puts "- Existing order #{order.order_number}"
+        order.update(attributes)
+        items.each {|i| i.import }
       end
 
       order
@@ -89,6 +89,14 @@ class Legacy::Order < Legacy::Base
 
   def imported_delivery
     delivery.import if delivery
+  end
+
+  def imported_payment_method
+    if payment_method == "purchaseorder"
+      "purchase order"
+    else
+      payment_method
+    end
   end
 
   def imported_payment_status
