@@ -2,7 +2,7 @@ class CreateTemporaryCreditCard
   include Interactor
 
   def perform
-    if order_params["payment_method"] == 'credit card' && order_params["credit_card"]["id"].empty?
+    if order_params["payment_method"] == 'credit card' && order_params["credit_card"]["id"].blank?
       org = cart.organization
 
       credit_card_params = order_params["credit_card"]
