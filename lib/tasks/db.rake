@@ -5,7 +5,7 @@ namespace :db do
     task :staging => [:environment] do
       install_plugins = "heroku plugins:install https://github.com/ddollar/heroku-pg-transfer"
       update_pg_plugins = "heroku plugins:update"
-      system_command = "env DATABASE_URL=postgres://localhost/local_orbit_development heroku pg:transfer --confirm localorbit-staging"
+      system_command = "env DATABASE_URL=postgres://localhost/#{ActiveRecord::Base.connection.current_database} heroku pg:transfer --confirm localorbit-staging"
 
       system(install_plugins)
       system(update_pg_plugins)
