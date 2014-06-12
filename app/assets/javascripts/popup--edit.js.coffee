@@ -14,7 +14,7 @@ $ ->
             $(prefix + "_" + pair[0]).attr('value', pair[1])
           update_input pair for pair in response_text.params
           $('<div class="flash flash--notice"><p>' + data.message + '</p></div>').appendTo('#flash-messages')
-          $('.edit-toggle[href="#' + e.target + '"]').text(response_text.toggle)
+          $('.edit-toggle[href="#' + e.target.id + '"]').text(response_text.toggle)
           $(e.target).find('.close').trigger "click"
 
           window.setTimeout ->

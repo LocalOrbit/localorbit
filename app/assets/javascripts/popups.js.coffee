@@ -20,7 +20,8 @@ $ ->
     $(".popup").not($element).addClass('is-hidden')
     $('.overlay').addClass('is-open')
     if $element.hasClass('popup--edit')
-      size_popup($element)
+      if screen.width <= 600
+        size_popup($element)
       $('.overlay').addClass('is-editable')
     position_popup($element)
 

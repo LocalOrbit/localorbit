@@ -289,6 +289,9 @@
   &.is-dark {
     background: rgba(0,0,0,0.9);
   }
+  &.is-editable {
+    z-index: 50;
+  }
   &.is-open {
     display: block;
   }
