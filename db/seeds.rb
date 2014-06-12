@@ -52,3 +52,7 @@ Unit.find_or_create_by!(singular: 'Bushel', plural: 'Bushels')
 Unit.find_or_create_by!(singular: 'Crate', plural: 'Crates')
 Unit.find_or_create_by!(singular: 'Bunch', plural: 'Bunches')
 Unit.find_or_create_by!(singular: 'Box', plural: 'Boxes')
+
+Plan.create(name: "Start Up")
+Plan.create(name: "Grow",     cross_selling: true, discount_codes: true, custom_branding: true)
+Plan.create(name: "Automate", cross_selling: true, discount_codes: true, custom_branding: true, automatic_payments: true)
