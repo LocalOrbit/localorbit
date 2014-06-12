@@ -109,10 +109,12 @@
     flex-flow: column;
 
     input[size] {
+      height: auto;
+      padding: .2em .4em;
       margin-bottom: 10px;
       font-size: 16px;
     }
-    input[size],
+    input[size]:not(.datepicker),
     input[type=submit] {
       display: block;
       width: 100%;
@@ -122,6 +124,11 @@
       right: 5px;
       top: 5px;
     }
+
+  .datepicker ~.btn--end {
+    padding-bottom: 3px;
+    font-size: 16px;
+   }
 
     .fields {
       -webkit-flex: auto 1;

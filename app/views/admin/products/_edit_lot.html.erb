@@ -1,7 +1,10 @@
 <%= form_for [:admin, product], url: admin_product_path(product, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden", data: { organizations: @organizations.to_json(include: :locations), type: "edit"}} do |f| %>
   <div class="fields">
     <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
-    <h2>Edit Inventory for <%= product.name %></h2>
+    <hgroup>
+      <h2>Edit Inventory</h2>
+      <h3><%= product.name %></h3>
+    </hgroup>
 
     <%= f.label :simple_inventory, "Quantity" %><br>
     <%= f.number_field :simple_inventory, min: 0, size: 3 %>
