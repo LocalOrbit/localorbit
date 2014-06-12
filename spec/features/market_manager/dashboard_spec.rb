@@ -55,7 +55,7 @@ feature "a market manager viewing their dashboard" do
   describe "Products table" do
     it "lists all products in the managed market by creation date" do
       organization = create(:organization, name: "Super Farm!", markets: [market])
-      product = create(:product, name: "Power Food", organization: organization)
+      product = create(:product, name: "Power Food", organization: organization, unit: create(:unit, singular: "Capsule"))
 
       create(:price, product: product, market: market, organization: organization, sale_price: 20)
       create(:lot, product: product, quantity: 123)
@@ -69,7 +69,7 @@ feature "a market manager viewing their dashboard" do
       seller_row = Dom::Dashboard::ProductRow.first
 
       expect(seller_row.seller).to eq("Super Farm!")
-      expect(seller_row.name).to eq("Power Food")
+      expect(seller_row.name).to eq("Power Food (Capsule)")
       expect(seller_row.pricing).to eq("$20.00")
       expect(seller_row.stock).to eq("123")
     end
