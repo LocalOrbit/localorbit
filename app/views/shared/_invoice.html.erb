@@ -1,7 +1,7 @@
 <div class="invoices-wrapper">
   <div class="row">
     <div class="column">
-      <%= link_to "Print And Mark Invoiced", invoice_admin_invoice_path(invoice.id, "pdf", mark_invoiced: "true"), class: "btn btn--small btn--save pull-right" %>
+      <%= link_to "Print And Mark Invoiced", mark_invoiced_admin_invoice_path(invoice.id), class: "btn btn--small btn--save pull-right", id: 'print-and-mark-invoiced' %>
     </div>
   </div>
   <div class="row invoice-basics">
@@ -96,3 +96,5 @@
     </tfoot>
   </table>
 </div>
+
+<%= javascript_include_tag "application" if @needs_js %>
