@@ -29,6 +29,9 @@
     min-width: 250px;
     padding: 8px;
     border: solid 2px #ccc;
+    &.bottom-anchor {
+      top: auto;
+    }
 
     h2,
     caption {

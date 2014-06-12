@@ -15,10 +15,10 @@ $ ->
     $element = $(this.hash)
     $element.toggleClass('is-hidden')
     $(".popup").not($element).addClass('is-hidden')
-    position_popup($element)
     $('.overlay').addClass('is-open')
     if $element.hasClass('popup--edit')
       $('.overlay').addClass('is-editable')
+    position_popup($element)
 
 
   $('.modal-toggle').click ->
