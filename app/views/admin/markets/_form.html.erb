@@ -94,13 +94,15 @@
     </div>
   </div>
 
-  <div class="row row--field">
-    <div class="field column column--half column--guttered">
-      <label>Cross Selling</label><br>
-      <%= f.check_box :allow_cross_sell %>
-      <%= f.label :allow_cross_sell, "Allow Cross Selling" %>
+  <% if @market.plan.cross_selling? %>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered">
+        <label>Cross Selling</label><br>
+        <%= f.check_box :allow_cross_sell %>
+        <%= f.label :allow_cross_sell, "Allow Cross Selling" %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <% if current_user.admin? %>
     <div class="row row--field">
