@@ -44,4 +44,8 @@ class MarketDecorator < Draper::Decorator
       name
     end
   end
+
+  def plan_options
+    Plan.all.map {|plan| [plan.name, plan.id] }
+  end
 end

@@ -61,6 +61,12 @@ describe "Managing Markets" do
       expect(page).not_to have_content('Deactivate')
     end
 
+    it 'can not change a markets plan' do
+      visit admin_market_path(market1)
+
+      expect(page).to_not have_field("Plan")
+    end
+
     it 'I cannot see payment options' do
       visit admin_market_path(market1)
 
@@ -258,6 +264,12 @@ describe "Managing Markets" do
 
       expect(page).to have_text('Market Information')
       expect(find_field("market_contact_name").value).to eq('Jane Smith')
+    end
+
+    it 'can change a markets plan' do
+      visit admin_market_path(market)
+
+      expect(page).to have_field("Plan")
     end
 
     it 'can set the auto-activation flag for organization registrations' do

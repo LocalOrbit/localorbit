@@ -124,6 +124,12 @@
       </div>
     </div>
 
+    <div class="row row--field">
+      <div class="field column column--half column--guttered" id="plan-options">
+        <%= f.label :plan_id %><br>
+        <%= f.select :plan_id, options_for_select(@market.decorate.plan_options, selected: @market.plan_id), prompt: 'Select a plan' %>
+      </div>
+    </div>
   <% end %>
 
 </fieldset>
