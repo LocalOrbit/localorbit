@@ -246,6 +246,7 @@ $ ->
 
   $("#place-order-button").click (e)->
     e.preventDefault()
+    $(this).prop("disabled", true)
 
     $("#balanced-js-errors").html("")
     $(".field_with_errors :input").unwrap()
@@ -287,6 +288,7 @@ $ ->
         else
           messages = if response.error.extras? then response.error.extras else response.error
           displayErrors($("#balanced-payments-uri"), messages)
+          $("#place-order-button").prop("disabled", false)
     else
       $(".quantity input").prop("readonly", true)
       $("#order-form").submit()
