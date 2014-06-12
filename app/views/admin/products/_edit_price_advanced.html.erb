@@ -1,5 +1,5 @@
 <%= form_for [:admin, price.product, price], url: admin_product_price_path(price.product, price, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden edit_price", novalidate: "novalidate", data: { prefix: "price_#{price.id}" }} do |f| %>
-  <button class="pull-right close"><i class="font-icon icon-close"></i></button>
+  <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
   <hgroup>
     <h2>Edit Price</h2>
     <h3><%= price.product.name %></h3>

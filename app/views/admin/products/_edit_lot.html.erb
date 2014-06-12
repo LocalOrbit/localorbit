@@ -1,15 +1,15 @@
-<div class="popup popup--edit is-hidden" id="edit_inventory_<%= product.id %>">
-  <button class="pull-right close"><i class="font-icon icon-close"></i></button>
-  <h2>Edit Inventory for <%= product.name %></h2>
-  <%= form_for [:admin, product], url: admin_product_path(product, format: :js, query_params: @query_params), html: { class: "", data: { organizations: @organizations.to_json(include: :locations), type: "edit"}} do |f| %>
+<%= form_for [:admin, product], url: admin_product_path(product, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden", data: { organizations: @organizations.to_json(include: :locations), type: "edit"}} do |f| %>
+  <div class="fields">
+    <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
+    <h2>Edit Inventory for <%= product.name %></h2>
 
-      <%= f.label :simple_inventory, "Quantity" %><br>
-      <%= f.number_field :simple_inventory, min: 0, size: 3 %>
-      <div class="popup-error">
-      </div>
+    <%= f.label :simple_inventory, "Quantity" %><br>
+    <%= f.number_field :simple_inventory, min: 0, size: 3 %>
+    <div class="popup-error">
+    </div>
+  </div>
 
-      <div class="form-actions">
-        <%= f.submit "Save Inventory", class: "btn--small" %>
-      </div>
-  <% end %>
-</div>
+  <div class="form-actions">
+    <%= f.submit "Save Inventory", class: "btn--small" %>
+  </div>
+<% end %>
