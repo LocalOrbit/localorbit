@@ -234,6 +234,8 @@ module Dom
         attribute :description
         attribute :payment_method
         attribute :amount
+        attribute :from
+        attribute :to
       end
 
       class VendorPaymentRow < Domino
