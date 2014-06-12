@@ -1,9 +1,5 @@
 <div class="invoices-wrapper">
-  <div class="row">
-    <div class="column">
-      <%= link_to "Print And Mark Invoiced", mark_invoiced_admin_invoice_path(invoice.id), class: "btn btn--small btn--save pull-right", id: 'print-and-mark-invoiced' %>
-    </div>
-  </div>
+  <%= link_to "Print And Mark Invoiced", mark_invoiced_admin_invoice_path(invoice.id), class: "btn btn--small btn--save pull-right", id: 'print-and-mark-invoiced' %>
   <div class="row invoice-basics">
     <div class="column column--three-fourths">
       <h1>Invoice</h1>
