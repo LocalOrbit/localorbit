@@ -744,6 +744,7 @@ module Dom
 
     attribute :market
     attribute :seller
+    attribute :name
 
     def name
       node.find(".name").text.match(/^(.*)\s\(.*\)$/)[1]
