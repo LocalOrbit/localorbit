@@ -43,6 +43,8 @@
   </table>
   <% end %>
 
+  <%= paginate @orders %>
+
   <% if @orders.none? %>
     <div class="empty-results">
       <h2>No Results</h2>

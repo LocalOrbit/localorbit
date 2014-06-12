@@ -32,10 +32,11 @@
   </tbody>
 </table>
 
+<%= paginate @orders %>
 
-  <% if @orders.none? %>
-    <div class="empty-results">
-      <h2>No Results</h2>
-      This table is empty, either because there is no data, or because the filter you've applied is hiding it.
-    </div>
-  <% end %>
+<% if @orders.none? %>
+  <div class="empty-results">
+    <h2>No Results</h2>
+    This table is empty, either because there is no data, or because the filter you've applied is hiding it.
+  </div>
+<% end %>
