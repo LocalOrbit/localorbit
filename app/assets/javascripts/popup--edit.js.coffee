@@ -1,7 +1,7 @@
 $ ->
   return unless $('.popup--edit').length
 
-  $('.popup--edit form').on "submit", (e) ->
+  $('.popup--edit').on "submit", (e) ->
     params = {}
     update_status = false
     $(e.target).find('input').each (i, el) ->
@@ -14,8 +14,8 @@ $ ->
             $(prefix + "_" + pair[0]).attr('value', pair[1])
           update_input pair for pair in response_text.params
           $('<div class="flash flash--notice"><p>' + data.message + '</p></div>').appendTo('#flash-messages')
-          $('.edit-toggle[href="#' + e.target.parentNode.id + '"]').text(response_text.toggle)
-          $(e.target).parent().find('.close').trigger "click"
+          $('.edit-toggle[href="#' + e.target + '"]').text(response_text.toggle)
+          $(e.target).find('.close').trigger "click"
 
           window.setTimeout ->
               window.fade_flash()
