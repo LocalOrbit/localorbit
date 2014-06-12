@@ -89,6 +89,7 @@ table {
   border-collapse: collapse;
   font-size: 12px;
   &.js-fixed {
+    z-index: auto;
     min-width: 0;
   }
 }
@@ -731,6 +732,8 @@ th {
   }
   .order-number {
     max-width: 130px;
+    word-wrap: break-word;
+    word-break: break-all;
     .order-number-bold {
       font-weight: 700;
     }
