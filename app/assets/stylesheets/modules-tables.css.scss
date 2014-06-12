@@ -731,6 +731,8 @@ th {
   }
   .order-number {
     max-width: 130px;
+    word-wrap: break-word;
+    word-break: break-all;
     .order-number-bold {
       font-weight: 700;
     }
