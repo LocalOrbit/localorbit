@@ -178,6 +178,8 @@ GEM
       rack
     formatador (0.2.5)
     fssm (0.2.10)
+    groupdate (2.2.1)
+      activesupport (>= 3)
     heroku (3.9.1)
       heroku-api (~> 0.3.17)
       launchy (>= 0.3.2)
@@ -422,6 +424,7 @@ DEPENDENCIES
   figaro (~> 1.0.0.rc1)
   font_assets
   graticule!
+  groupdate
   heroku-api
   honeybadger (= 1.14.0)
   interactor-rails
