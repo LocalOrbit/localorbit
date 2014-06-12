@@ -52,7 +52,11 @@ class OrderItem < ActiveRecord::Base
   end
 
   def self.for_user(user)
-    joins(:product).where(products: {organization_id: user.managed_organizations.pluck(:id).uniq})
+    if user.buyer_only?
+      joins(:order).where(orders: { organization_id: user.managed_organizations.pluck(:id).uniq })
+    else
+      joins(:product).where(products: { organization_id: user.managed_organizations.pluck(:id).uniq })
+    end
   end
 
   def buyer_payment_status
