@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140612155142) do
+ActiveRecord::Schema.define(version: 20140612155413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,10 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.integer  "legacy_id"
   end
 
+  add_index "deliveries", ["cutoff_time"], name: "index_deliveries_on_cutoff_time", using: :btree
+  add_index "deliveries", ["deliver_on"], name: "index_deliveries_on_deliver_on", using: :btree
+  add_index "deliveries", ["delivery_schedule_id"], name: "index_deliveries_on_delivery_schedule_id", using: :btree
+
   create_table "delivery_schedules", force: true do |t|
     t.integer  "market_id"
     t.integer  "day"
@@ -124,6 +128,8 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.integer  "legacy_id"
   end
 
+  add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
+  add_index "delivery_schedules", ["market_id", "deleted_at"], name: "index_delivery_schedules_on_market_id_and_deleted_at", using: :btree
   add_index "delivery_schedules", ["market_id"], name: "index_delivery_schedules_on_market_id", using: :btree
 
   create_table "geocodes", force: true do |t|
@@ -174,6 +180,8 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.integer  "legacy_id"
   end
 
+  add_index "locations", ["deleted_at"], name: "index_locations_on_deleted_at", using: :btree
+  add_index "locations", ["organization_id", "deleted_at"], name: "index_locations_on_organization_id_and_deleted_at", using: :btree
   add_index "locations", ["organization_id"], name: "index_locations_on_organization_id", using: :btree
 
   create_table "lots", force: true do |t|
@@ -187,6 +195,10 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.integer  "legacy_id"
   end
 
+  add_index "lots", ["expires_at"], name: "index_lots_on_expires_at", using: :btree
+  add_index "lots", ["good_from", "expires_at"], name: "index_lots_on_good_from_and_expires_at", using: :btree
+  add_index "lots", ["good_from"], name: "index_lots_on_good_from", using: :btree
+  add_index "lots", ["product_id", "good_from", "expires_at"], name: "index_lots_on_product_id_and_good_from_and_expires_at", using: :btree
   add_index "lots", ["product_id"], name: "index_lots_on_product_id", using: :btree
 
   create_table "managed_markets", force: true do |t|
@@ -195,6 +207,10 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "managed_markets", ["market_id"], name: "index_managed_markets_on_market_id", using: :btree
+  add_index "managed_markets", ["user_id", "market_id"], name: "index_managed_markets_on_user_id_and_market_id", using: :btree
+  add_index "managed_markets", ["user_id"], name: "index_managed_markets_on_user_id", using: :btree
 
   create_table "market_addresses", force: true do |t|
     t.string   "name",       null: false
@@ -211,6 +227,7 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.integer  "legacy_id"
   end
 
+  add_index "market_addresses", ["market_id", "deleted_at"], name: "index_market_addresses_on_market_id_and_deleted_at", using: :btree
   add_index "market_addresses", ["market_id"], name: "index_market_addresses_on_market_id", using: :btree
 
   create_table "market_cross_sells", force: true do |t|
@@ -220,6 +237,10 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.datetime "updated_at"
   end
 
+  add_index "market_cross_sells", ["destination_market_id"], name: "index_market_cross_sells_on_destination_market_id", using: :btree
+  add_index "market_cross_sells", ["source_market_id", "destination_market_id"], name: "index_market_cross_sells_on_src_market_id_and_dest_market_id", using: :btree
+  add_index "market_cross_sells", ["source_market_id"], name: "index_market_cross_sells_on_source_market_id", using: :btree
+
   create_table "market_organizations", force: true do |t|
     t.integer  "market_id"
     t.integer  "organization_id"
@@ -227,6 +248,10 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.datetime "updated_at"
     t.boolean  "cross_sell",      default: false
   end
+
+  add_index "market_organizations", ["market_id", "organization_id"], name: "index_market_organizations_on_market_id_and_organization_id", using: :btree
+  add_index "market_organizations", ["market_id"], name: "index_market_organizations_on_market_id", using: :btree
+  add_index "market_organizations", ["organization_id"], name: "index_market_organizations_on_organization_id", using: :btree
 
   create_table "markets", force: true do |t|
     t.string   "name"
@@ -272,6 +297,7 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.boolean  "closed",                                                default: false
   end
 
+  add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
 
   create_table "newsletters", force: true do |t|
@@ -300,6 +326,10 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.integer  "legacy_id"
   end
 
+  add_index "order_item_lots", ["lot_id"], name: "index_order_item_lots_on_lot_id", using: :btree
+  add_index "order_item_lots", ["order_item_id", "lot_id"], name: "index_order_item_lots_on_order_item_id_and_lot_id", using: :btree
+  add_index "order_item_lots", ["order_item_id"], name: "index_order_item_lots_on_order_item_id", using: :btree
+
   create_table "order_items", force: true do |t|
     t.integer  "order_id"
     t.integer  "product_id"
@@ -322,7 +352,9 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.integer  "quantity_delivered"
   end
 
+  add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
   add_index "order_items", ["order_id"], name: "index_order_items_on_order_id", using: :btree
+  add_index "order_items", ["product_id"], name: "index_order_items_on_product_id", using: :btree
 
   create_table "order_payments", force: true do |t|
     t.integer  "payment_id"
@@ -331,6 +363,7 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.datetime "updated_at"
   end
 
+  add_index "order_payments", ["order_id", "payment_id"], name: "index_order_payments_on_order_id_and_payment_id", using: :btree
   add_index "order_payments", ["order_id"], name: "index_order_payments_on_order_id", using: :btree
   add_index "order_payments", ["payment_id"], name: "index_order_payments_on_payment_id", using: :btree
 
@@ -367,7 +400,10 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.datetime "deleted_at"
   end
 
+  add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
   add_index "orders", ["market_id"], name: "index_orders_on_market_id", using: :btree
+  add_index "orders", ["organization_id"], name: "index_orders_on_organization_id", using: :btree
+  add_index "orders", ["placed_by_id"], name: "index_orders_on_placed_by_id", using: :btree
 
   create_table "organizations", force: true do |t|
     t.string   "name"
@@ -391,6 +427,8 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.boolean  "active",                default: true
   end
 
+  add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
+
   create_table "payments", force: true do |t|
     t.integer  "payee_id"
     t.string   "payee_type"
@@ -410,7 +448,10 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.integer  "bank_account_id"
   end
 
+  add_index "payments", ["bank_account_id"], name: "index_payments_on_bank_account_id", using: :btree
+  add_index "payments", ["market_id"], name: "index_payments_on_market_id", using: :btree
   add_index "payments", ["payee_id", "payee_type"], name: "index_payments_on_payee_id_and_payee_type", using: :btree
+  add_index "payments", ["payer_id", "payer_type"], name: "index_payments_on_payer_id_and_payer_type", using: :btree
 
   create_table "plans", force: true do |t|
     t.string   "name"
@@ -442,6 +483,10 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.integer "delivery_schedule_id"
   end
 
+  add_index "product_deliveries", ["delivery_schedule_id"], name: "index_product_deliveries_on_delivery_schedule_id", using: :btree
+  add_index "product_deliveries", ["product_id", "delivery_schedule_id"], name: "index_product_deliveries_on_product_id_and_delivery_schedule_id", using: :btree
+  add_index "product_deliveries", ["product_id"], name: "index_product_deliveries_on_product_id", using: :btree
+
   create_table "products", force: true do |t|
     t.text     "name"
     t.integer  "category_id"
@@ -465,6 +510,7 @@ ActiveRecord::Schema.define(version: 20140612155142) do
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree
   add_index "products", ["location_id"], name: "index_products_on_location_id", using: :btree
   add_index "products", ["organization_id"], name: "index_products_on_organization_id", using: :btree
+  add_index "products", ["top_level_category_id"], name: "index_products_on_top_level_category_id", using: :btree
 
   create_table "promotions", force: true do |t|
     t.integer  "market_id"
@@ -477,6 +523,10 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.datetime "updated_at"
     t.string   "image_uid"
   end
+
+  add_index "promotions", ["market_id", "product_id"], name: "index_promotions_on_market_id_and_product_id", using: :btree
+  add_index "promotions", ["market_id"], name: "index_promotions_on_market_id", using: :btree
+  add_index "promotions", ["product_id"], name: "index_promotions_on_product_id", using: :btree
 
   create_table "sequences", force: true do |t|
     t.string  "name"
@@ -500,6 +550,10 @@ ActiveRecord::Schema.define(version: 20140612155142) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "user_organizations", ["organization_id"], name: "index_user_organizations_on_organization_id", using: :btree
+  add_index "user_organizations", ["user_id", "organization_id"], name: "index_user_organizations_on_user_id_and_organization_id", using: :btree
+  add_index "user_organizations", ["user_id"], name: "index_user_organizations_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",   null: false
