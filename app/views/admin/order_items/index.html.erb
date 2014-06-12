@@ -6,62 +6,58 @@
           <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export todo pull-right" %>
         </div>
 
-        <%= search_form_for @q, url: admin_order_items_path, html: { class: "payment_search clear-after" } do |f| %>
-          <div class="manager-filters">
-            <div class="pull-left">
-              <span class="preserve-alignment">
-                <%= f.label :order_order_number_cont, "Search" %><br>
-                <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
-              </span>
+        <%= search_form_for @q, url: admin_order_items_path, html: { class: "payment_search manage_filters clear-after" } do |f| %>
+          <div class="search-widget">
+            <%= f.label :order_order_number_cont, "Search" %><br>
+            <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
+          </div>
+          <div class="filter-row">
+            <span class="preserve-alignment">
+              <%= f.label :order_market_id_eq, "Market" %><br>
+              <%= f.select :order_market_id_eq, options_from_collection_for_select(@markets, :id, :name, @q.order_market_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+            </span>
 
-              <span class="preserve-alignment">
-                <%= f.label :order_market_id_eq, "Market" %><br>
-                <%= f.select :order_market_id_eq, options_from_collection_for_select(@markets, :id, :name, @q.order_market_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
-              </span>
+            <span class="preserve-alignment">
+              <%= f.label :product_organization_id_eq, "Seller" %><br>
+              <%= f.select :product_organization_id_eq, options_from_collection_for_select(@sellers, :id, :name, @q.product_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+            </span>
 
-              <span class="preserve-alignment">
-                <%= f.label :product_organization_id_eq, "Seller" %><br>
-                <%= f.select :product_organization_id_eq, options_from_collection_for_select(@sellers, :id, :name, @q.product_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
-              </span>
+            <span class="preserve-alignment">
+              <%= f.label :order_organization_id_eq, "Buyer" %><br>
+              <%= f.select :order_organization_id_eq, options_from_collection_for_select(@buyers, :id, :name, @q.order_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+            </span>
 
-              <span class="preserve-alignment">
-                <%= f.label :order_organization_id_eq, "Buyer" %><br>
-                <%= f.select :order_organization_id_eq, options_from_collection_for_select(@buyers, :id, :name, @q.order_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
-              </span>
+            <span class="preserve-alignment">
+              <%= f.label :delivery_status_eq, "Delivery Status" %><br>
+              <%= f.select :delivery_status_eq, options_from_collection_for_select(@delivery_statuses, :to_s, :titleize, @q.delivery_status_eq), { include_blank: "All" }, { class: "filter-input" } %>
+            </span>
 
-              <span class="preserve-alignment">
-                <%= f.label :delivery_status_eq, "Delivery Status" %><br>
-                <%= f.select :delivery_status_eq, options_from_collection_for_select(@delivery_statuses, :to_s, :titleize, @q.delivery_status_eq), { include_blank: "All" }, { class: "filter-input" } %>
-              </span>
+            <span class="preserve-alignment">
+              <%= f.label :order_payment_status_eq, "Buyer Payment Status" %><br>
+              <%= f.select :order_payment_status_eq, options_from_collection_for_select(@buyer_payment_statuses, :to_s, :titleize, @q.order_payment_status_eq), { include_blank: "All" }, { class: "filter-input" } %>
+            </span>
 
-              <span class="preserve-alignment">
-                <%= f.label :order_payment_status_eq, "Buyer Payment Status" %><br>
-                <%= f.select :order_payment_status_eq, options_from_collection_for_select(@buyer_payment_statuses, :to_s, :titleize, @q.order_payment_status_eq), { include_blank: "All" }, { class: "filter-input" } %>
-              </span>
+            <%# <span class="preserve-alignment"> %>
+            <%#   <%= f.label :seller_payment_status_eq, "Seller Payment Status" %1><br> %>
+            <%#   <%= f.select :seller_payment_status_eq, options_from_collection_for_select(["paid", "unpaid"], :to_s, :titleize, @q.seller_payment_status_eq), { include_blank: "All" }, { class: "filter-input" } %1> %>
+            <%# </span> %>
+          </div>
 
-              <%# <span class="preserve-alignment"> %>
-              <%#   <%= f.label :seller_payment_status_eq, "Seller Payment Status" %1><br> %>
-              <%#   <%= f.select :seller_payment_status_eq, options_from_collection_for_select(["paid", "unpaid"], :to_s, :titleize, @q.seller_payment_status_eq), { include_blank: "All" }, { class: "filter-input" } %1> %>
-              <%# </span> %>
-            </div>
-
-            <div class="pull-right">
-              <span class="preserve-alignment">
-                <label for="q_created_at_date_gteq">Placed on or after</label><br>
-                <%= datetime_field_tag "q[created_at_date_gteq]", nil, class: 'datepicker' %><a href="#q_created_at_date_gteq" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
-              </span>
-              <span class="preserve-alignment">
-                <label for="q_created_at_date_lteq">Placed on or before</label><br>
-                <%= datetime_field_tag "q[created_at_date_lteq]", nil, class: 'datepicker' %><a href="#q_created_at_date_lteq" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
-              </span>
-              <span class="preserve-alignment">
-                <br>
-                <%= f.submit "Filter", class: "btn--small" %>
-              </span>
-            </div>
+          <div class="date-filters">
+            <span class="preserve-alignment">
+              <label for="q_created_at_date_gteq">Placed on or after</label><br>
+              <%= datetime_field_tag "q[created_at_date_gteq]", nil, class: 'datepicker' %><a href="#q_created_at_date_gteq" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+            </span>
+            <span class="preserve-alignment">
+              <label for="q_created_at_date_lteq">Placed on or before</label><br>
+              <%= datetime_field_tag "q[created_at_date_lteq]", nil, class: 'datepicker' %><a href="#q_created_at_date_lteq" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+            </span>
+            <span class="preserve-alignment">
+              <br>
+              <%= f.submit "Filter", class: "btn--small" %>
+            </span>
           </div>
         <% end %>
-
       </div>
     </div>
   </div>
