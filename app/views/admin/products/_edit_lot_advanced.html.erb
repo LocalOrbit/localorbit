@@ -1,8 +1,8 @@
-<div class="popup popup--edit is-hidden" id="edit_inventory_<%= product.id %>">
-  <button class="pull-right close"><i class="font-icon icon-close"></i></button>
-  <h2>Edit Inventory</h2>
-  <%= form_for [:admin, product, product.lots.build], url: admin_product_lots_path(product, format: :js, query_params: @query_params) do |f| %>
-    <div class="fieldset">
+<%= form_for [:admin, product, product.lots.build], url: admin_product_lots_path(product, format: :js, query_params: @query_params), html: { class: "popup popup--edit is-hidden", id: "add_inventory_product_#{product.id}" } do |f| %>
+  <div class="fields">
+    <button type="button" class="pull-right close"><i class="font-icon icon-close"></i></button>
+    <h2>Edit Inventory</h2>
+    <fieldset>
       <legend>Add a lot for “<%= product.name %>”</legend>
 
       <div class="row">
@@ -24,14 +24,14 @@
           <%= f.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
         </div>
       </div>
-
-      <div class="popup-error">
-      </div>
-
-      <div class="form-actions">
-        <%= link_to "Edit Existing Lot",  admin_product_lots_path(product), class: "pull-left" %>
-        <%= f.submit "Save Lot", class: "btn--small" %>
-      </div>
     </fieldset>
-  <% end %>
-</div>
+
+    <div class="popup-error">
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= link_to "Edit Existing Lot",  admin_product_lots_path(product), class: "pull-left" %>
+    <%= f.submit "Save Lot", class: "btn--small" %>
+  </div>
+<% end %>

@@ -50,6 +50,17 @@ textarea {
     margin: 0;
   }
 }
+input {
+  &[size="3"] {
+    width: 4em;
+  }
+  &[size="4"] {
+    width: 6em;
+  }
+  &[size="6"] {
+    width: 8em;
+  }
+}
 input[type=date],
 input[type=datetime],
 input[type=email],
@@ -60,16 +71,6 @@ input[type=number],
 input[type=url],
 input[type=password] {
   height: 36px;
-
-  &[size="3"] {
-    width: 4em;
-  }
-  &[size="4"] {
-    width: 6em;
-  }
-  &[size="6"] {
-    width: 8em;
-  }
 }
 
 .datepicker {
@@ -399,6 +400,7 @@ form.form-actions {
     }
   }
 }
+.product-filters,
 .invoice_search,
 .payment_search,
 .order_search {
@@ -410,6 +412,10 @@ form.form-actions {
   }
   .preserve-alignment {
     display: inline-block;
+    > select {
+      display: block;
+      text-align: left;
+    }
   }
 }
 .wys-toolbar {

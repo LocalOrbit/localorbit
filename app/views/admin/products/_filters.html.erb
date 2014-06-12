@@ -1,24 +1,22 @@
-<div class="clear-after invoice_search">
-  <div class="pull-left">
-    <span class="preserve-alignment">
-      <input type="search" id="search" value="<%= @query_params["search"] %>" placeholder="Product Name"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
-    </span>
-  </div>
-
-  <div class="manager-filters">
+<div class="row product-header filter-group">
+  <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small pull-right" %>
+  <div class="column product-filters" id="product-filter">
+    <div class="product-search">
+      <input type="search" id="search" value="<%= @query_params["search"] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
+    </div>
     <% if current_user.multi_market_membership? %>
     <span class="preserve-alignment">
-      <label for="product-filter-market">Market</label><br>
-      <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), prompt: "All", class: 'filter-dropdown', id: "product-filter-market", data: { parameter: "market"} %>
+      <label for="product-filter-market">Market</label>
+      <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), prompt: "All Markets", class: 'filter-dropdown', id: "product-filter-market", data: { parameter: "market"} %>
     </span>
     <% end %>
 
     <% if current_user.multi_organization_membership? %>
     <span class="preserve-alignment">
-      <label for="filter_market">Organization</label><br>
-      <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), prompt: "All", class: 'filter-dropdown', id: "product-filter-organization", data: { parameter: "organization"} %>
+      <label for="filter_market">Organization</label>
+      <%= select_tag :filter_organization, options_for_select(@selling_organizations, selected: @query_params["organization"]), prompt: "All Organizations", class: 'filter-dropdown', id: "product-filter-organization", data: { parameter: "organization"} %>
     </span>
     <% end %>
+    <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
   </div>
-  <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
 </div>

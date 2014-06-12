@@ -33,7 +33,7 @@
       top: auto;
     }
 
-    h2,
+    h3,
     caption {
       font: bold 14px "Open Sans", OpenSans, sans-serif;
     }
@@ -98,6 +98,62 @@
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  .popup--edit {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-flow: column;
+    flex-flow: column;
+
+    input[size] {
+      height: auto;
+      padding: .2em .4em;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    input[size]:not(.datepicker),
+    input[type=submit] {
+      display: block;
+      width: 100%;
+    }
+    .close.pull-right {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+
+  .datepicker ~.btn--end {
+    padding-bottom: 3px;
+    font-size: 16px;
+   }
+
+    .fields {
+      -webkit-flex: auto 1;
+      flex: auto 1;
+    }
+    .form-actions {
+      float: none;
+    }
+    .links {
+      padding: 5px 0;
+      font-size: 0.1px;
+      text-align: justify;
+      &:after {
+        display: inline-block;
+        width: 100%;
+        content: '';
+      }
+      a {
+        display:inline-block;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
 .popup-header {
   padding: 5px 10px;
   margin: 0;

@@ -3,7 +3,6 @@
     <%= link_to "#{svg_icon} Export CSV".html_safe, coming_soon_dashboard_path, class: "export todo pull-right" %>
     <h1><i class="font-icon" data-icon="&#xe01f;"></i>&nbsp; Products</h1>
     <%= render "filters" %>
-    <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small pull-right" %>
   </div>
 </div>
 
@@ -35,10 +34,11 @@
           </ul>
         </td>
         <td class="stock">
-            <%= link_to product.available_inventory, "#edit_inventory_#{product.id}", class: "edit-toggle popup-toggle" %>
           <% if product.use_simple_inventory? %>
+            <%= link_to product.available_inventory, "#edit_product_#{product.id}", class: "edit-toggle popup-toggle" %>
             <%= render partial: "edit_lot", locals: { product: product } %>
           <% else %>
+            <%= link_to product.available_inventory, "#add_inventory_product_#{product.id}", class: "edit-toggle popup-toggle" %>
             <%= render partial: "edit_lot_advanced", locals: { product: product } %>
           <% end %>
         </td>
