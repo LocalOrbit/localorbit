@@ -17,18 +17,19 @@ class PaymentDecorator < Draper::Decorator
   end
 
   def from
-    if payer.nil?
-      "Local Orbit"
-    else
-      payer.name
-    end
+    display_entity(payer)
   end
 
   def to
-    if payee.nil?
+    display_entity(payee)
+  end
+
+  private
+  def display_entity(entity)
+    if entity.nil?
       "Local Orbit"
     else
-      payee.name
+      entity.name
     end
   end
 end
