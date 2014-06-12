@@ -400,6 +400,7 @@ form.form-actions {
     }
   }
 }
+.product-filters,
 .invoice_search,
 .payment_search,
 .order_search {
@@ -411,6 +412,10 @@ form.form-actions {
   }
   .preserve-alignment {
     display: inline-block;
+    > select {
+      display: block;
+      text-align: left;
+    }
   }
 }
 .wys-toolbar {
