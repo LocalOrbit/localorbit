@@ -23,10 +23,12 @@
   </div>
 
   <div class="manager-filters">
+    <% if current_user.multi_market_membership? %>
     <span class="preserve-alignment">
       <%= f.label :market_id_eq, "Market" %><br>
       <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
     </span>
+    <% end %>
 
     <span class="preserve-alignment">
       <label for="filtered_organization_id">Sellers</label><br>

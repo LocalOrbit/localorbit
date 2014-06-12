@@ -1,15 +1,8 @@
-<div class="tab-header stickable">
+<div class="stickable">
   <div class="l-constraint">
-    <div class="l-page-header">
       <h1><i class="font-icon" data-icon="&#xe027;"></i>&nbsp; Organizations</h1>
-      <%= link_to 'Add Organization', new_admin_organization_path, class: "btn btn--add btn--small" if current_user.admin? || current_user.market_manager? %>
-    </div>
-    <%= select_tag :filter_market, options_for_select(@selling_markets, selected: @query_params["market"]), class: 'filter-dropdown', data: { parameter: "market"} %>
-    <%= select_tag :filter_can_sell, options_for_select(seller_status_options, selected: @query_params["can_sell"]), class: 'filter-dropdown', data: { parameter: "can_sell"} %>
-    <%= link_to "Reset", admin_organizations_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
-    <div class="search-widget">
-      <input type="search" id="search" value="<%= @query_params["search"] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
-    </div>
+      <%= render "filters" %>
+      <%= link_to 'Add Organization', new_admin_organization_path, class: "btn btn--add btn--small pull-right" if current_user.admin? || current_user.market_manager? %>
   </div>
 </div>
 

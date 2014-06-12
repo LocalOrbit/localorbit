@@ -2,7 +2,7 @@ module Admin
   module OrganizationHelper
     def seller_status_options
       [
-        ["Select a selling status",nil],
+        ["Any",nil],
         ["Can Sell", 1],
         ["Can Not Sell", 0]
       ]

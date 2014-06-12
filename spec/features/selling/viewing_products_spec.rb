@@ -1,9 +1,9 @@
 require "spec_helper"
 
 describe "Viewing products" do
-  let!(:market_manager) { create(:user, :market_manager)}
-  let!(:market) { market_manager.managed_markets.first }
-  let!(:market2) { create(:market, managers: [market_manager])}
+  let!(:market) { create(:market)}
+  let!(:market2) { create(:market)}
+
   let!(:org1) { create(:organization, markets: [market]) }
   let!(:org2) { create(:organization, markets: [market]) }
 
@@ -19,6 +19,7 @@ describe "Viewing products" do
   let!(:grapes_price) { create(:price, product: grapes, sale_price: 5.00, min_quantity: 1) }
   let!(:grapes_lot)   { create(:lot, product: grapes, quantity: 1) }
 
+  let!(:market_manager) { create(:user, :market_manager, managed_markets:[market, market2])}
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -57,18 +58,29 @@ describe "Viewing products" do
   context "market manager" do
     before do
       sign_in_as(market_manager)
-    end
 
-    it "shows a list of products which the owner manages" do
       within '#admin-nav' do
         click_link 'Products'
       end
+    end
+
+    it "shows a list of products which the owner manages" do
+      expect(page).to have_select("Market")
 
       product = Dom::ProductRow.first
       expect(product.name).to have_content(apples.name)
       expect(product.seller).to have_content(org1.name)
       expect(product.market).to have_content(org1.markets.first.name)
       expect(product.stock).to have_content(apples.lots.map(&:quantity).join(" "))
+    end
+
+    context "with only one market" do
+      let!(:market_manager) { create(:user, :market_manager, managed_markets:[market])}
+
+      it "won't show the market filter" do
+        visit admin_products_path
+        expect(page).not_to have_select("Market")
+      end
     end
   end
 
