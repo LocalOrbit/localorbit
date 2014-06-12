@@ -132,6 +132,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_market_open
+    if current_market.closed?
+      redirect_to closed_market_path
+    end
+  end
+
   def require_current_organization
     if current_organization.nil?
       redirect_to new_sessions_organization_path(redirect_back_to: request.fullpath)
