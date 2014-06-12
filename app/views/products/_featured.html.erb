@@ -8,11 +8,7 @@
       <tr class="product product-row cart_item" data-cart-item="<%= featured.product.cart_item.to_json %>">
         <td class="info">
         <div class="product-image">
-        <% if featured.product.image_uid.present? %>
-          <%= image_tag featured.product.image.thumb('75x').url, alt: "" %>
-        <% else %>
-          <%= image_tag 'default-product-image.png', alt: "" %>
-        <% end %>
+          <%= image_tag featured.image, alt: "" %>
         </div>
           <h3 class="name"><%= link_to featured.product.name, featured.product, tabindex: -1 %></h3>
           <div class="short_description">
