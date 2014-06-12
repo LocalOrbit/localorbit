@@ -94,7 +94,7 @@
     </div>
   </div>
 
-  <% if @market.plan.cross_selling? %>
+  <% if @market.new_record? || @market.plan.try(:cross_selling?) %>
     <div class="row row--field">
       <div class="field column column--half column--guttered">
         <label>Cross Selling</label><br>
