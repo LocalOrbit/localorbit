@@ -89,6 +89,7 @@ table {
   border-collapse: collapse;
   font-size: 12px;
   &.js-fixed {
+    z-index: auto;
     min-width: 0;
   }
 }
