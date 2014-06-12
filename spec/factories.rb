@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :market do
+    plan
     sequence(:name)      {|n| "Market #{n}" }
     sequence(:subdomain) {|n| "market-#{n}" }
     tagline                'Connecting Farm to Market'
@@ -40,6 +41,15 @@ FactoryGirl.define do
     trait :with_logo do
       logo File.open(Rails.root.join('app/assets/images/logo-farm-to-fork.png'))
     end
+  end
+
+  factory :plan do
+    sequence(:name) {|n| "Plan ##{n}" }
+
+    discount_codes     true
+    cross_selling      true
+    custom_branding    true
+    automatic_payments true
   end
 
   factory :user do

@@ -70,7 +70,8 @@ class Admin::MarketsController < AdminController
       :default_allow_purchase_orders,
       :default_allow_credit_cards,
       :default_allow_ach,
-      :auto_activate_organizations
+      :auto_activate_organizations,
+      :plan_id
     )
 
   end

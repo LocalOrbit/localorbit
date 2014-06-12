@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610121016) do
+ActiveRecord::Schema.define(version: 20140611205503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -268,6 +268,7 @@ ActiveRecord::Schema.define(version: 20140610121016) do
     t.string   "text_color"
     t.boolean  "allow_cross_sell",                                      default: false
     t.boolean  "auto_activate_organizations",                           default: false
+    t.integer  "plan_id"
   end
 
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
@@ -409,6 +410,16 @@ ActiveRecord::Schema.define(version: 20140610121016) do
   end
 
   add_index "payments", ["payee_id", "payee_type"], name: "index_payments_on_payee_id_and_payee_type", using: :btree
+
+  create_table "plans", force: true do |t|
+    t.string   "name"
+    t.boolean  "discount_codes",     default: false
+    t.boolean  "cross_selling",      default: false
+    t.boolean  "custom_branding",    default: false
+    t.boolean  "automatic_payments", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "prices", force: true do |t|
     t.integer  "product_id"
