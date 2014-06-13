@@ -1,4 +1,4 @@
-<% if current_user.market_manager? %>
+<% if current_user.admin? || current_user.market_manager? %>
   <%= search_form_for @q, url: admin_orders_path, html: { class: "order_search clear-after" } do |f| %>
     <div class="pull-left">
       <span class="preserve-alignment">
