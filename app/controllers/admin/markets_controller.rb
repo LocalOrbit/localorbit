@@ -71,7 +71,8 @@ class Admin::MarketsController < AdminController
       :default_allow_credit_cards,
       :default_allow_ach,
       :auto_activate_organizations,
-      :plan_id
+      :plan_id,
+      :closed
     )
 
   end
