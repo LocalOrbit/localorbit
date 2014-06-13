@@ -11,6 +11,7 @@ module Imported
     has_many :market_organizations, class_name: "Imported::MarketOrganization"
     has_many :orders, class_name: "Imported::Order"
     has_many :organizations, class_name: "Imported::Organization", through: :market_organizations
+    has_many :payments, class_name: 'Imported::Payment'
   end
 end
 
@@ -63,7 +64,8 @@ class Legacy::Market < Legacy::Base
       market_seller_fee: fee_percen_hub,
       background_image: imported_background,
       background_color: imported_background_color,
-      text_color: imported_text_color
+      text_color: imported_text_color,
+      closed: !!is_closed
     }
 
     market = Imported::Market.where(legacy_id: domain_id).first
@@ -146,13 +148,13 @@ class Legacy::Market < Legacy::Base
 
       puts "Importing payments..."
       Legacy::Payment.where(from_domain_id: market.legacy_id).uniq.each do |payment|
-        payment.import.save!
+        payment.import(market).save!
       end
-      Imported::Payment.where('payer_type LIKE ?', 'Imported::%').each do |payment|
-        payment.update(payer_type: payment.payer_type.gsub('Imported::', ''))
-      end
-      Imported::Payment.where('payee_type LIKE ?', 'Imported::%').each do |payment|
-        payment.update(payee_type: payment.payee_type.gsub('Imported::', ''))
+      Imported::Payment.where('payer_type LIKE ? or payee_type LIKE ?', 'Imported::%', 'Imported::%').each do |payment|
+        payment.update(
+          payer_type: payment.payer_type.try(:gsub, 'Imported::', ''),
+          payee_type: payment.payee_type.try(:gsub, 'Imported::', '')
+        )
       end
 
       puts "Setting market product delivery schedules..."

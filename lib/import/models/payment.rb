@@ -11,6 +11,7 @@ module Imported
 
     belongs_to :payee, polymorphic: true
     belongs_to :payer, polymorphic: true
+    belongs_to :market, class_name: 'Imported::Market'
 
     has_many :order_payments, class_name: 'Imported::OrderPayment', inverse_of: :payment
     has_many :orders, through: :order_payments, inverse_of: :payments
@@ -20,7 +21,7 @@ end
 class Legacy::Payment < Legacy::Base
   self.table_name = "v_payments_export"
 
-  def import
+  def import(market)
     attributes = {
       amount: total_payment,
       note: ref_nbr,
@@ -31,7 +32,8 @@ class Legacy::Payment < Legacy::Base
       updated_at: Time.at(payment_date),
       payee: imported_entity(to_org_id),
       payer: imported_entity(from_org_id),
-      legacy_id: payment_id
+      legacy_id: payment_id,
+      market: market
     }
 
     payment = Imported::Payment.find_by_legacy_id(payment_id)
