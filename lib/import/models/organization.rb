@@ -63,8 +63,6 @@ class Legacy::Organization < Legacy::Base
         organization.update(attributes)
       end
 
-      addresses.each {|address| organization.locations << address.import }
-
       puts "- Importing #{users.count} users..."
       users.each do |user|
         if user.is_deleted == 0

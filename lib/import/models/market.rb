@@ -161,6 +161,12 @@ class Legacy::Market < Legacy::Base
       market.organizations.each do |organization|
         organization.products.each {|p| p.update_delivery_schedules }
       end
+
+      puts "Ensuring Geocodes..."
+      ::MarketAddress.where(market_id: market.id).each do |address|
+        address.send(:attach_geocode)
+      end
+
     end
 
     market.save
