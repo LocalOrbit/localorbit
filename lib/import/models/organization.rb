@@ -28,22 +28,24 @@ class Legacy::Organization < Legacy::Base
 
   def import
     if is_deleted != 1
+      attributes = {
+        legacy_id: org_id,
+        name: name.clean,
+        can_sell: !!allow_sell,
+        show_profile: !!public_profile,
+        who_story: profile.try(:clean),
+        how_story: product_how.try(:clean),
+        facebook: facebook,
+        twitter: twitter,
+        allow_ach: payment_allow_ach,
+        allow_purchase_orders: payment_allow_purchaseorder,
+        allow_credit_cards: payment_allow_paypal
+      }
+
       organization = Imported::Organization.where(legacy_id: org_id).first
       if organization.nil?
         puts "- Creating organization: #{name}"
-        organization = Imported::Organization.new(
-          legacy_id: org_id,
-          name: name.clean,
-          can_sell: !!allow_sell,
-          show_profile: !!public_profile,
-          who_story: profile.try(:clean),
-          how_story: product_how.try(:clean),
-          facebook: facebook,
-          twitter: twitter,
-          allow_ach: payment_allow_ach,
-          allow_purchase_orders: payment_allow_purchaseorder,
-          allow_credit_cards: payment_allow_paypal
-        )
+        organization = Imported::Organization.new(attributes)
 
         case social_option_id
         when 1
@@ -55,8 +57,10 @@ class Legacy::Organization < Legacy::Base
         puts "- Importing profile photo..."
         photo = Dragonfly.app.fetch_url("http://app.localorb.it/img/organizations/cached/#{org_id}.320.260.png")
         organization.photo_uid = photo.store if photo.image?
+
       else
         puts "- Existing organization: #{organization.name}"
+        organization.update(attributes)
       end
 
       addresses.each {|address| organization.locations << address.import }

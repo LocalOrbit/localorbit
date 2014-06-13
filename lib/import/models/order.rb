@@ -32,8 +32,6 @@ class Legacy::Order < Legacy::Base
   belongs_to :organization, class_name: "Legacy::Organization", foreign_key: :org_id
   belongs_to :market, class_name: "Legacy::Market", foreign_key: :domain_id
 
-  has_one :delivery, class_name: "Legacy::Delivery", foreign_key: :lo_oid
-
   def import
     if order_date.present?
       attributes = {
@@ -41,11 +39,11 @@ class Legacy::Order < Legacy::Base
         delivery: imported_delivery,
         order_number: lo3_order_nbr,
         billing_organization_name: organization.name,
-        billing_address: billing.street1,
-        billing_city: billing.city,
-        billing_state: billing.region.code,
-        billing_state: billing.postcode,
-        billing_phone: billing.telephone,
+        billing_address: billing.try(:street1),
+        billing_city: billing.try(:city),
+        billing_state: billing_region_code,
+        billing_state: billing.try(:postcode),
+        billing_phone: billing.try(:telephone),
         placed_at: order_date,
         total_cost: grand_total,
         payment_method: imported_payment_method,
@@ -88,7 +86,8 @@ class Legacy::Order < Legacy::Base
   end
 
   def imported_delivery
-    delivery.import if delivery
+    delivery = items.map{|i| i.delivery }.uniq.first
+    delivery.import if delivery.present?
   end
 
   def imported_payment_method
@@ -106,5 +105,9 @@ class Legacy::Order < Legacy::Base
   # 2-letter region/state code. Example: "MI"
   def region_code
     region ? region.code : ""
+  end
+
+  def billing_region_code
+    billing.try(:region) ? billing.region.code : ""
   end
 end

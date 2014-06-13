@@ -21,30 +21,43 @@ class Legacy::Payment < Legacy::Base
   self.table_name = "v_payments_export"
 
   def import
+    attributes = {
+      amount: total_payment,
+      note: ref_nbr,
+      status: 'paid',
+      payment_method: imported_payment_method,
+      payment_type: imported_payment_type,
+      created_at: Time.at(payment_date),
+      updated_at: Time.at(payment_date),
+      payee: imported_entity(to_org_id),
+      payer: imported_entity(from_org_id),
+      legacy_id: payment_id
+    }
+    puts attributes.inspect
+
     payment = Imported::Payment.find_by_legacy_id(payment_id)
     if payment.nil?
-      puts "- Importing #{imported_payment_type} payment for #{payment_id}"
-      payment = Imported::Payment.new(
-        amount: total_payment,
-        note: ref_nbr,
-        status: 'paid',
-        payment_method: payment_method,
-        payment_type: imported_payment_type,
-        created_at: Time.at(payment_date),
-        updated_at: Time.at(payment_date),
-        payee: imported_organization(to_org_id),
-        payer: imported_organization(from_org_id),
-        legacy_id: payment_id
-      )
+      puts "- Creating payment: #{attributes[:payer].try(:name) || 'localorbit'} => #{attributes[:payee].try(:name) || 'localorbit'}"
+      payment = Imported::Payment.new(attributes)
 
-      order = Imported::Order.find_by_order_number(buyer_order_nbr)
-      payment.orders << order if order.present?
-
+      if imported_payment_type == "order"
+        order = Imported::Order.find_by_order_number(buyer_order_nbr)
+        payment.orders << order if order.present?
+      end
     else
-      puts "- Existing #{imported_payment_type} payment for #{payment_id}"
+      puts "- Updating payment: #{attributes[:payer].try(:name) || 'localorbit'} => #{attributes[:payee].try(:name) || 'localorbit'}"
+      payment.update(attributes)
     end
 
     payment
+  end
+
+  def imported_payment_method
+    if payment_method == "purchaseorder"
+      "purchase order"
+    else
+      payment_method
+    end
   end
 
   def imported_payment_type
@@ -58,7 +71,12 @@ class Legacy::Payment < Legacy::Base
     end
   end
 
-  def imported_organization(org)
-    Imported::Organization.find_by_legacy_id(org) unless org == 1
+  def imported_entity(org)
+    entity = Imported::Organization.find_by_legacy_id(org) unless org == 1
+    if imported_payment_type == "order"
+      entity
+    elsif entity.present?
+      Imported::Market.find_by_name(entity.name) || entity
+    end
   end
 end

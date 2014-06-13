@@ -20,6 +20,7 @@ module Legacy
     self.primary_key = "lo_liid"
 
     belongs_to :delivery_status, class_name: "Legacy::DeliveryStatus", foreign_key: :ldstat_id
+    belongs_to :delivery, class_name: "Legacy::Delivery", foreign_key: :lodeliv_id
     belongs_to :order, class_name: "Legacy::Order", foreign_key: :org_id
 
     def import
