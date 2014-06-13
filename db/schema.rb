@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140612155413) do
+ActiveRecord::Schema.define(version: 20140613150809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20140612155413) do
     t.integer  "depth"
   end
 
+  add_index "categories", ["depth"], name: "index_categories_on_depth", using: :btree
   add_index "categories", ["lft"], name: "index_categories_on_lft", using: :btree
   add_index "categories", ["parent_id", "lft", "rgt"], name: "index_categories_on_parent_id_and_lft_and_rgt", using: :btree
   add_index "categories", ["parent_id", "lft"], name: "index_categories_on_parent_id_and_lft", using: :btree
@@ -476,6 +477,7 @@ ActiveRecord::Schema.define(version: 20140612155413) do
 
   add_index "prices", ["market_id"], name: "index_prices_on_market_id", using: :btree
   add_index "prices", ["organization_id"], name: "index_prices_on_organization_id", using: :btree
+  add_index "prices", ["product_id", "market_id", "organization_id"], name: "index_prices_on_product_id_and_market_id_and_organization_id", using: :btree
   add_index "prices", ["product_id"], name: "index_prices_on_product_id", using: :btree
 
   create_table "product_deliveries", force: true do |t|

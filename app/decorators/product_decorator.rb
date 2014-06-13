@@ -30,7 +30,7 @@ class ProductDecorator < Draper::Decorator
 
   def location
     return @location if defined?(@location)
-    @location = Location.visible.find_by(id: location_id) || organization.shipping_location
+    @location = (location_id && Location.visible.find_by(id: location_id)) || organization.shipping_location
   end
 
   def location_map(w=300, h=200)
