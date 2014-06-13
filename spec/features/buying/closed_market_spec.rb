@@ -14,13 +14,17 @@ feature "Buying in a closed market" do
     end
 
     scenario "Buyer visits the shop page" do
-      click_link "Shop"
       expect(page).to have_content("The Market Is Currently Closed")
     end
 
     scenario "Buyer visits the sellers page" do
       click_link "Sellers"
-      expect(page).to have_content("The Market Is Currently Closed")
+
+      expect(page).to have_content("Who")
+      expect(page).to have_content("When")
+      expect(page).to have_content("Where")
+      expect(page).not_to have_content("Currently Selling")
+      expect(page).not_to have_content("Quantity")
     end
   end
 
@@ -38,7 +42,14 @@ feature "Buying in a closed market" do
 
     scenario "Buyer visits the sellers page" do
       click_link "Sellers"
-      expect(page).to have_content("The Market Is Currently Closed")
+
+      choose_delivery "Delivery: June 17, 2014 Between 7:00AM and 11:00AM"
+
+      expect(page).to have_content("Who")
+      expect(page).to have_content("When")
+      expect(page).to have_content("Where")
+      expect(page).not_to have_content("Currently Selling")
+      expect(page).not_to have_content("Quantity")
     end
   end
 
@@ -58,7 +69,7 @@ feature "Buying in a closed market" do
       market_copy = Market.find(market.id)
       market_copy.closed = true
       market_copy.save!
-      
+
       Dom::CartLink.first.node.click
       expect(page).to have_content("The Market Is Currently Closed")
     end

@@ -83,9 +83,9 @@
   </div>
   <div class="row row--field">
     <div class="field column column--half column--guttered">
-      <%= f.label :open_or_closed %><br>
-      <input checked="checked" id="this_market_is_open" name="market_open" type="checkbox" value="1" disabled>
-      <label for="product_use_simple_inventory">This market is open.</label>
+      <label>Open or Closed</label><br>
+      <%= f.check_box :closed, {checked: !f.object.closed?}, 0, 1 %>
+      <%= f.label :closed, "This market is open" %>
     </div
     ><div class="field column column--half column--guttered">
       <label>Organization registration</label><br>

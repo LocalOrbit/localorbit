@@ -102,6 +102,14 @@ class Market < ActiveRecord::Base
     end
   end
 
+  def close!
+    update!(closed: true)
+  end
+
+  def open!
+    update!(closed: false)
+  end
+
   private
 
   def self.order_by_name(direction)
