@@ -55,7 +55,7 @@ class Legacy::Payment < Legacy::Base
     if payment_method == "purchaseorder"
       "purchase order"
     else
-      payment_method
+      payment_method.try(:downcase)
     end
   end
 
@@ -66,7 +66,7 @@ class Legacy::Payment < Legacy::Base
     when /^service/
       "service"
     else
-      payable_type
+      payable_type.try(:downcase)
     end
   end
 
