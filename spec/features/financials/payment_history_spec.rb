@@ -451,7 +451,7 @@ feature "Payment history", :truncate_after_all do
       expect(payment_row("$345.00").payment_method).to eql("ACH: *********9983")
       expect(payment_row("$345.00").date).to eql("05/08/2014")
       expect(payment_row("$345.00").from).to eql(@buyer2.name)
-      expect(payment_row("$345.00").to).to eql("")
+      expect(payment_row("$345.00").to).to eql("Local Orbit")
     end
 
     scenario "can view fews for markets they manage" do

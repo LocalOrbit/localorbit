@@ -15,4 +15,21 @@ class PaymentDecorator < Draper::Decorator
       "PayPal"
     end
   end
+
+  def from
+    display_entity(payer)
+  end
+
+  def to
+    display_entity(payee)
+  end
+
+  private
+  def display_entity(entity)
+    if entity.nil?
+      "Local Orbit"
+    else
+      entity.name
+    end
+  end
 end
