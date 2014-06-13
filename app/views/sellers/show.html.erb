@@ -72,7 +72,7 @@
         </div>
       </div>
 
-      <% if !@products_for_sale.product_groups.empty? %>
+      <% if !current_market.closed? && !@products_for_sale.product_groups.empty?  %>
         <h2 class="heading-section">Currently Selling</h2>
         <% @products_for_sale.each_category_with_products do |category, products| %>
           <%= render "products/table", products: products, category: category %>
