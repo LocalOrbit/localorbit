@@ -115,9 +115,7 @@ Rails.application.routes.draw do
 
   resources :products, only: [:index, :show]
   resources :organizations, only: :index
-  resource  :market, only: [:show] do
-    get "/closed" => "markets#closed"
-  end
+  resource  :market, only: [:show]
   resources :sellers, only: [:index, :show]
   resource :cart, only: [:update, :show, :destroy]
   resources :orders, only: [:show, :create]

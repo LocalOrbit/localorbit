@@ -5,9 +5,6 @@ class MarketsController < ApplicationController
   def show
   end
 
-  def closed
-  end
-
   private
   def find_market
     @market = current_market.decorate
