@@ -134,7 +134,7 @@ class ApplicationController < ActionController::Base
 
   def require_market_open
     if current_market.closed?
-      redirect_to closed_market_path
+      render "shared/market_closed"
     end
   end
 

@@ -14,7 +14,6 @@ feature "Buying in a closed market" do
     end
 
     scenario "Buyer visits the shop page" do
-      click_link "Shop"
       expect(page).to have_content("The Market Is Currently Closed")
     end
 

@@ -4,7 +4,7 @@
       <span class="vertical-centerer">
         <span class="fn org"><%= @market.name %></span>
         <% if @market.first_address.present? %>
-          <span class="adr"><span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%=@market.first_address.state %></span></span>
+          <span class="adr"><span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%= @market.first_address.state %></span></span>
         <% end %>
 
       </span>
