@@ -145,7 +145,7 @@ class Legacy::Market < Legacy::Base
       market.save
 
       puts "Importing payments..."
-      Legacy::Payment.where(from_domain_id: market.legacy_id).each do |payment|
+      Legacy::Payment.where(from_domain_id: market.legacy_id).uniq.each do |payment|
         payment.import.save!
       end
       Imported::Payment.where('payer_type LIKE ?', 'Imported::%').each do |payment|

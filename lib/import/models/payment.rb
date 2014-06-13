@@ -33,7 +33,6 @@ class Legacy::Payment < Legacy::Base
       payer: imported_entity(from_org_id),
       legacy_id: payment_id
     }
-    puts attributes.inspect
 
     payment = Imported::Payment.find_by_legacy_id(payment_id)
     if payment.nil?
