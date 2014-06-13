@@ -39,33 +39,36 @@ class Legacy::Product < Legacy::Base
   belongs_to :unit, class_name: "Legacy::Unit", foreign_key: :unit_id
 
   def import(organization)
+    attributes = {
+      name: name.clean,
+      unit: imported_unit,
+      category: imported_category,
+      location: imported_location(organization),
+      who_story: who.try(:clean),
+      how_story: how.try(:clean),
+      long_description: imported_long_description.try(:clean),
+      short_description: imported_short_description.try(:clean),
+      deleted_at: is_deleted == 1 ? DateTime.current : nil,
+      legacy_id: prod_id
+    }
+
     product = Imported::Product.where(legacy_id: prod_id).first
     if product.nil?
       puts "  - Creating product: #{name}"
-      product = Imported::Product.new(
-        name: name.clean,
-        unit: imported_unit,
-        category: imported_category,
-        location: imported_location(organization),
-        who_story: who.try(:clean),
-        how_story: how.try(:clean),
-        long_description: imported_long_description.try(:clean),
-        short_description: imported_short_description.try(:clean),
-        deleted_at: is_deleted == 1 ? DateTime.current : nil,
-        legacy_id: prod_id
-      )
+      product = Imported::Product.new(attributes)
 
       product.image_uid = import_image
-      product.update_top_level_category
+
+      lots.each {|lot| product.lots << lot.import }
+      product.use_simple_inventory = (lots.count == 1)
+
+      prices.each {|price| product.prices << price.import }
     else
-      puts "  - Existing product: #{product.name}"
+      puts "  - Updating product: #{product.name}"
+      product.update(attributes)
     end
 
-    lots.each {|lot| product.lots << lot.import }
-    product.use_simple_inventory = (lots.count == 1)
-
-    prices.each {|price| product.prices << price.import }
-
+    product.update_top_level_category
     product
   end
 
@@ -76,19 +79,21 @@ class Legacy::Product < Legacy::Base
   end
 
   def imported_category
-    ids = category_ids.split(',').reverse
-    categories = ids.map do |id|
+    legacy_categories = category_ids.split(',').reverse.map do |id|
       begin
-        Legacy::Category.find(id)
+        Legacy::Category.find(id).try(:cat_name)
       rescue
       end
     end.compact
 
-    new_category = ::Category.where(name: categories.first.cat_name)
+    new_category = []
+    begin
+      new_category = Import::Category.where(name: legacy_categories.first)
+      legacy_categories.shift unless new_category.any?
+    end until new_category.any? || legacy_categories.blank?
+
     if new_category.count > 1
-      old_category = categories.map do |category|
-        category.cat_name
-      end.join('/')
+      old_category = legacy_categories.join('/')
 
       new_category.each do |category|
         str = category_string(category.id)
