@@ -24,6 +24,11 @@ module Imported
         market.delivery_schedules.visible.map(&:id)
       end.flatten
     end
+
+    def self.products_with_shallow_categories(market_id)
+      Product.joins(organization: :market_organizations).
+              joins(:category).where("products.deleted_at is null AND market_organizations.market_id = ? AND categories.depth <= 1", market_id)
+    end
   end
 end
 

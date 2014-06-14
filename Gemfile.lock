@@ -27,7 +27,7 @@ GIT
 
 GIT
   remote: git://github.com/collectiveidea/graticule.git
-  revision: 2e743f6da9db4dcd12c4b0da827e0088750bbae9
+  revision: 0ceb721ce39fbaf5b5899a46a2e585200b99d6a7
   specs:
     graticule (2.4.0)
       activesupport

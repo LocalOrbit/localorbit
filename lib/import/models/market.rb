@@ -65,7 +65,7 @@ class Legacy::Market < Legacy::Base
       background_image: imported_background,
       background_color: imported_background_color,
       text_color: imported_text_color,
-      closed: !!is_closed
+      closed: is_closed == 1
     }
 
     market = Imported::Market.where(legacy_id: domain_id).first

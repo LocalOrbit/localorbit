@@ -22,24 +22,27 @@ class Legacy::Address < Legacy::Base
   end
 
   def import
+    attributes = {
+      legacy_id: address_id,
+      name: imported_name,
+      address: imported_address,
+      city: imported_city,
+      state: region_code,
+      zip: zipcode,
+      phone: telephone,
+      fax: fax,
+      deleted_at: is_deleted == 1 ? DateTime.current : nil,
+      default_billing: default_billing == 1,
+      default_shipping: default_shipping == 1
+    }
+
     imported = Imported::Location.where(legacy_id: address_id).first
     if imported.nil?
       puts "- Creating organization address: #{label}"
-      imported = Imported::Location.new(
-        legacy_id: address_id,
-        name: imported_name,
-        address: imported_address,
-        city: imported_city,
-        state: region_code,
-        zip: zipcode,
-        phone: telephone,
-        fax: fax,
-        deleted_at: is_deleted == 1 ? DateTime.current : nil,
-        default_billing: default_billing == 1,
-        default_shipping: default_shipping == 1
-      )
+      imported = Imported::Location.new(attributes)
     else
-      puts "- Existing organization address: #{imported.name}"
+      puts "- Updating organization address: #{imported.name}"
+      imported.update(attributes)
     end
 
     imported
