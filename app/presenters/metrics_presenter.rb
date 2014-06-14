@@ -1,52 +1,117 @@
 class MetricsPresenter
   attr_reader :metrics, :q
 
-  METRIC_MAP = {
-    num_orders: {
-      title: "# of Order",
-      scope: Order,
+  METRICS = {
+    number_of_orders: {
+      title: "# of Orders",
+      scope: Order.joins(:items).where.not(order_items: { delivery_status: "canceled" }),
       attribute: :placed_at,
       calculation: :count
     },
+    number_of_items: {
+      title: "# of Items",
+      scope: OrderItem.joins(:order).where.not(delivery_status: "canceled"),
+      attribute: "orders.placed_at",
+      calculation: :count,
+    },
     total_sales: {
       title: "Total Sales",
-      scope: Order,
+      scope: OrderItem.joins(:order).where.not(delivery_status: "canceled"),
+      attribute: "orders.placed_at",
+      calculation: :sum,
+      calculation_arg: "unit_price * quantity"
+    },
+    average_order: {
+      title: "Average Order",
+      scope: OrderItem.joins(:order).where.not(delivery_status: "canceled"),
+      attribute: "orders.placed_at",
+      calculation: :average,
+      calculation_arg: "unit_price * quantity"
+    },
+    average_number_items: {
+      title: "Average # Items",
+      scope: Order.joins(:items).where.not(order_items: { delivery_status: "canceled" }),
       attribute: :placed_at,
-      calculation: :count
+      calculation: :custom,
+      calculation_arg: "(COUNT(DISTINCT order_items.id)::NUMERIC / COUNT(DISTINCT orders.id)::NUMERIC) AS count"
     }
   }
 
-  CONTEXT_MAP = {
-    financials: [
-      :num_orders, :total_sales, :avg_order, :avg_num_items, :avg_lo_fees,
-      :avg_lo_fee_pct, :sales_pct_growth, :lo_fees, :fee_pct_growth, :service_fees
-    ]
-  }.with_indifferent_access
+  GROUPS = {
+    financials: {
+      title: "Financials",
+      metrics: [
+        :number_of_orders, :total_sales, :average_order, :average_number_items
+      ]
+    }
+    # :avg_lo_fees, :avg_lo_fee_pct, :sales_pct_growth, :lo_fees, :fee_pct_growth, :service_fees
+  }
 
-  def calculate_metric(metric, interval)
-    metric_def = METRIC_MAP[metric]
-
-    scope = metric_def[:scope].uniq
-
-    scope = case interval
-            when :week
-              scope.group_by_week(metric_def[:attribute],
-                                  range: 4.weeks.ago.beginning_of_week..Time.now,
-                                  format: "%-m/%-d/%Y")
-            else # when :month
-              scope.group_by_month(metric_def[:attribute],
-                                   range: 5.months.ago.beginning_of_month..Time.now,
-                                   format: "%b %Y")
-            end
-
-    scope.send(metric_def[:calculation])
-  end
-
-  def calculate_metrics_for(context)
-    Hash[
-      CONTEXT_MAP[context].each do |metric|
-        [METRIC_MAP[metric][:title], calculate_metric(metric, :week)]
+  def initialize(groups: [], search: {})
+    # {
+    #   "Group Title" => {
+    #     "Metric Title" => {
+    #       "Jan 2013" => 123,
+    #       "Feb 2013" => 321,
+    #       "Mar 2013" => 123,
+    #       "Apr 2013" => 321,
+    #       "May 2013" => 123,
+    #       "Jun 2013" => 321,
+    #     }
+    #   }
+    # }
+    @metrics = Hash[
+      groups.map do |group|
+        [GROUPS[group][:title], metrics_for_group(group)]
       end
     ]
+  end
+
+  def self.metrics_for(groups: [], search: {})
+    search ||= {}
+    groups = [groups].flatten
+
+    new(groups: groups, search: search)
+  end
+
+  private
+
+  def metrics_for_group(group)
+    Hash[
+      GROUPS[group][:metrics].map do |metric|
+        [METRICS[metric][:title], calculate_metric(metric, :month)]
+      end
+    ]
+  end
+
+  def scope_for(scope:, attribute:, interval:)
+    case interval
+    when :week
+      scope.group_by_week(attribute,
+                          range: 4.weeks.ago.beginning_of_week..Time.now,
+                          format: "%-m/%-d/%Y")
+    when :month
+      scope.group_by_month(attribute,
+                            range: 5.months.ago.beginning_of_month..Time.now,
+                            format: "%b %Y")
+    end
+  end
+
+  def calculate_metric(metric, interval)
+    m = METRICS[metric]
+
+    scope = m[:scope].uniq
+    scope = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
+
+    if m[:calculation] == :custom
+      # Since we're using a custom calculation, we have to redefine the
+      # interval column since it gets clobbered when using `select`.
+      # Additionally, groupdate relies on ActiveRecord::Calculations so we
+      # provide an override at the model level for our custom calculations.
+      interval_column = scope.relation.group_values.first
+      scope.select("#{m[:calculation_arg]}, #{interval_column} AS #{interval}").to_groupdate(interval, :count)
+    else
+      scope.send(m[:calculation], m[:calculation_arg])
+    end
   end
 end

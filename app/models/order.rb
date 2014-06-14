@@ -261,6 +261,10 @@ class Order < ActiveRecord::Base
       map(&:items).flatten.select{|item| item.delivery_status == "pending"}.group_by(&:product)
   end
 
+  def self.to_groupdate(group, attribute)
+    Hash[all.to_a.map { |o| [o[group.to_s], o[attribute.to_s]] }]
+  end
+
   def delivered_at
     items.maximum(:delivered_at) if self.delivered?
   end
