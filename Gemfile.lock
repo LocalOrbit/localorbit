@@ -35,6 +35,14 @@ GIT
       json
       nokogiri-happymapper (>= 0.5.9)
 
+GIT
+  remote: git://github.com/trestrantham/groupdate.git
+  revision: ff1ce7de22dcc617993522989747e90c591d2a1c
+  branch: custom-calculations
+  specs:
+    groupdate (2.1.1)
+      activerecord (>= 3.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -424,7 +432,7 @@ DEPENDENCIES
   figaro (~> 1.0.0.rc1)
   font_assets
   graticule!
-  groupdate
+  groupdate!
   heroku-api
   honeybadger (= 1.14.0)
   interactor-rails
