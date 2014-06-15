@@ -3,10 +3,14 @@
   <%= f.text_field :name, class: "column column--full" %>
 </div>
 
-<div class="field">
-  <%= f.label :market_id, "Market" %><br>
-  <%= f.collection_select :market_id, @markets, :id, :name, {include_blank: "Select an market"}, class: "column--full" %>
-</div>
+<% if current_user.multi_market_membership? %>
+  <div class="field">
+    <%= f.label :market_id, "Market" %><br>
+    <%= f.collection_select :market_id, @markets, :id, :name, {include_blank: "Select a market"}, class: "column--full" %>
+  </div>
+<% else %>
+  <input type='hidden' name='promotion[market_id]' value='<%= @markets.first.id %>'>
+<% end %>
 
 <div class="field">
   <%= f.label :title %><br>

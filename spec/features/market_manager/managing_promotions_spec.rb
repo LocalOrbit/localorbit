@@ -9,7 +9,7 @@ describe "Managing featured promotions" do
   let!(:promotion) { create(:promotion, market: market, product: product, name: 'Unactive Promotion', created_at: Time.parse("2014-05-26")) }
 
   context "as a market manager" do
-    let!(:user) { create(:user, managed_markets: [market]) }
+    let(:user) { create(:user, managed_markets: [market]) }
 
     before do
       switch_to_subdomain(market.subdomain)
@@ -28,63 +28,132 @@ describe "Managing featured promotions" do
       end
     end
 
-    context "create a promotion" do
-      it "accepts valid input" do
-        click_link "Add New Promotion"
+    context "multi market membership" do
+      let!(:second_market) { create(:market) }
+      let!(:user) { create(:user, managed_markets: [market, second_market]) }
 
-        fill_in "Name", with: "Summer Promotion"
-        select market.name, from: "Market"
-        fill_in "Title", with: "Summer Promotion: Apples"
-        select product.name, from: "Product"
-
-        click_button "Save Promotion"
-
-        expect(page).to have_content("Successfully created the featured promotion.")
-
-        promotions = Dom::Admin::FeaturedPromotionRow.all
-        expect(promotions.count).to eql(3)
-        expect(promotions.map(&:name)).to include(active_promotion.name, promotion.name, "Summer Promotion")
+      before do
+        visit admin_promotions_path
       end
 
-      it "displays errors for invalid input" do
-        click_link "Add New Promotion"
+      context "create a promotion" do
+        it "accepts valid input" do
+          click_link "Add New Promotion"
 
-        fill_in "Name", with: ""
-        select market.name, from: "Market"
-        fill_in "Title", with: "Summer Promotion: Apples"
-        select product.name, from: "Product"
+          fill_in "Name", with: "Summer Promotion"
+          select market.name, from: "Market"
+          fill_in "Title", with: "Summer Promotion: Apples"
+          select product.name, from: "Product"
 
-        click_button "Save Promotion"
+          click_button "Save Promotion"
 
-        expect(page).to_not have_content("Successfully created the featured promotion.")
-        expect(page).to have_content("Name can't be blank")
+          expect(page).to have_content("Successfully created the featured promotion.")
+
+          promotions = Dom::Admin::FeaturedPromotionRow.all
+          expect(promotions.count).to eql(3)
+          expect(promotions.map(&:name)).to include(active_promotion.name, promotion.name, "Summer Promotion")
+        end
+
+        it "displays errors for invalid input" do
+          click_link "Add New Promotion"
+
+          fill_in "Name", with: ""
+          select market.name, from: "Market"
+          fill_in "Title", with: "Summer Promotion: Apples"
+          select product.name, from: "Product"
+
+          click_button "Save Promotion"
+
+          expect(page).to_not have_content("Successfully created the featured promotion.")
+          expect(page).to have_content("Name can't be blank")
+        end
+      end
+
+      context "update a promotion" do
+        it "accepts valid input" do
+          click_link active_promotion.name
+
+          fill_in "Name", with: "Changed Promotion"
+
+          click_button "Save Promotion"
+
+          expect(page).to have_content("Successfully updated the featured promotion.")
+
+          promotions = Dom::Admin::FeaturedPromotionRow.all
+          expect(promotions.count).to eql(2)
+          expect(promotions.map(&:name)).to include("Changed Promotion")
+        end
+
+        it "displays errors for invalid input" do
+          click_link active_promotion.name
+
+          fill_in "Name", with: ""
+
+          click_button "Save Promotion"
+
+          expect(page).to_not have_content("Successfully updated the featured promotion.")
+          expect(page).to have_content("Name can't be blank")
+        end
       end
     end
 
-    context "update a promotion" do
-      it "accepts valid input" do
-        click_link active_promotion.name
+    context "single market membership" do
+      context "create a promotion" do
+        it "accepts valid input" do
+          click_link "Add New Promotion"
 
-        fill_in "Name", with: "Changed Promotion"
+          fill_in "Name", with: "Summer Promotion"
+          fill_in "Title", with: "Summer Promotion: Apples"
+          select product.name, from: "Product"
 
-        click_button "Save Promotion"
+          click_button "Save Promotion"
 
-        expect(page).to have_content("Successfully updated the featured promotion.")
+          expect(page).to have_content("Successfully created the featured promotion.")
 
-        promotions = Dom::Admin::FeaturedPromotionRow.all
-        expect(promotions.count).to eql(2)
-        expect(promotions.map(&:name)).to include("Changed Promotion")
+          promotions = Dom::Admin::FeaturedPromotionRow.all
+          expect(promotions.count).to eql(3)
+          expect(promotions.map(&:name)).to include(active_promotion.name, promotion.name, "Summer Promotion")
+        end
+
+        it "displays errors for invalid input" do
+          click_link "Add New Promotion"
+
+          fill_in "Name", with: ""
+          fill_in "Title", with: "Summer Promotion: Apples"
+          select product.name, from: "Product"
+
+          click_button "Save Promotion"
+
+          expect(page).to_not have_content("Successfully created the featured promotion.")
+          expect(page).to have_content("Name can't be blank")
+        end
       end
 
-      it "displays errors for invalid input" do
-        click_link active_promotion.name
+      context "update a promotion" do
+        it "accepts valid input" do
+          click_link active_promotion.name
 
-        fill_in "Name", with: ""
+          fill_in "Name", with: "Changed Promotion"
 
-        click_button "Save Promotion"
+          click_button "Save Promotion"
 
-        expect(page).to_not have_content("Successfully updated the featured promotion.")
-        expect(page).to have_content("Name can't be blank")
+          expect(page).to have_content("Successfully updated the featured promotion.")
+
+          promotions = Dom::Admin::FeaturedPromotionRow.all
+          expect(promotions.count).to eql(2)
+          expect(promotions.map(&:name)).to include("Changed Promotion")
+        end
+
+        it "displays errors for invalid input" do
+          click_link active_promotion.name
+
+          fill_in "Name", with: ""
+
+          click_button "Save Promotion"
+
+          expect(page).to_not have_content("Successfully updated the featured promotion.")
+          expect(page).to have_content("Name can't be blank")
+        end
       end
     end
 
