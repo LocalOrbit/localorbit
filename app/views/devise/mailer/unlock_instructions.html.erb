@@ -1,3 +1,8 @@
+<% if @market = @resource.primary_market
+     market_name = @market.name
+   else
+     market_name = "Local Orbit"
+   end %>
 
 <p>Hello <%= @resource.email %>!</p>
 
