@@ -11,6 +11,7 @@ module Imported
     has_many :market_organizations, class_name: "Imported::MarketOrganization"
     has_many :orders, class_name: "Imported::Order"
     has_many :organizations, class_name: "Imported::Organization", through: :market_organizations
+    has_many :payments, class_name: 'Imported::Payment'
   end
 end
 
@@ -25,7 +26,7 @@ class Legacy::Market < Legacy::Base
   self.table_name = "domains"
   self.primary_key = "domain_id"
 
-  has_one  :brand, class_name: "Legacy::Brand", foreign_key: :domain_id
+  belongs_to  :brand, class_name: "Legacy::Brand", foreign_key: :domain_id
 
   has_many :organizations, class_name: "Legacy::Organization"
   has_many :delivery_schedules, class_name: "Legacy::DeliverySchedule", foreign_key: :domain_id
@@ -38,37 +39,44 @@ class Legacy::Market < Legacy::Base
   belongs_to :timezone, class_name: "Legacy::Timezone", foreign_key: :tz_id
 
   def import
+    attributes = {
+      legacy_id: domain_id,
+      name: name.clean,
+      subdomain: parse_subdomain,
+      active: is_live,
+      timezone: TIMEZONES[timezone.tz_name],
+      profile: market_profile.clean,
+      policies: market_policies.clean,
+      tagline: custom_tagline.clean,
+      contact_name: secondary_contact_name.clean,
+      contact_phone: secondary_contact_phone,
+      contact_email: secondary_contact_email,
+      twitter: twitter,
+      facebook: facebook,
+      po_payment_term: po_due_within_days,
+      default_allow_purchase_orders: payment_default_purchaseorder,
+      default_allow_credit_cards: payment_default_paypal,
+      default_allow_ach: payment_default_ach,
+      allow_purchase_orders: payment_allow_purchaseorder,
+      allow_credit_cards: payment_allow_paypal,
+      allow_ach: payment_allow_ach,
+      local_orbit_seller_fee: fee_percen_lo,
+      market_seller_fee: fee_percen_hub,
+      background_image: imported_background,
+      background_color: imported_background_color,
+      text_color: imported_text_color,
+      closed: is_closed == 1
+    }
+
     market = Imported::Market.where(legacy_id: domain_id).first
     if market.nil?
-      market = Imported::Market.new(
-        legacy_id: domain_id,
-        name: name.clean,
-        subdomain: parse_subdomain,
-        active: is_live,
-        timezone: TIMEZONES[timezone.tz_name],
-        profile: market_profile.clean,
-        policies: market_policies.clean,
-        tagline: custom_tagline.clean,
-        contact_name: secondary_contact_name.clean,
-        contact_phone: secondary_contact_phone,
-        contact_email: secondary_contact_email,
-        twitter: twitter,
-        facebook: facebook,
-        po_payment_term: po_due_within_days,
-        default_allow_purchase_orders: payment_default_purchaseorder,
-        default_allow_credit_cards: payment_default_paypal,
-        default_allow_ach: payment_default_ach,
-        allow_purchase_orders: payment_allow_purchaseorder,
-        allow_credit_cards: payment_allow_paypal,
-        allow_ach: payment_allow_ach,
-        local_orbit_seller_fee: fee_percen_lo,
-        market_seller_fee: fee_percen_hub,
-        background_image: imported_background,
-        background_color: imported_background_color,
-        text_color: imported_text_color
-      )
+      puts "Importing market: #{name}"
+      market = Imported::Market.new(attributes)
+    else
+      puts "Updating market: #{market.name}"
+      market.update(attributes)
     end
-    puts "Importing market: #{market.name}"
+
 
     if market.valid?
       organizations.each_with_index do |org, index|
@@ -132,22 +140,33 @@ class Legacy::Market < Legacy::Base
       end
 
       puts "Importing #{orders.count} orders..."
-      Legacy::Order.where(domain_id: market.legacy_id).joins(:delivery).each do |order|
+      Legacy::Order.where(domain_id: market.legacy_id).each do |order|
         imported = order.import
         market.orders << imported if imported.present?
       end
       market.save
 
       puts "Importing payments..."
-      Legacy::Payment.where(from_domain_id: market.legacy_id).each do |payment|
-        payment.import.save!
+      Legacy::Payment.where(from_domain_id: market.legacy_id).uniq.each do |payment|
+        payment.import(market).save!
       end
-      Imported::Payment.where('payer_type LIKE ?', 'Imported::%').update_all(payer_type: "Organization")
+      Imported::Payment.where('payer_type LIKE ? or payee_type LIKE ?', 'Imported::%', 'Imported::%').each do |payment|
+        payment.update(
+          payer_type: payment.payer_type.try(:gsub, 'Imported::', ''),
+          payee_type: payment.payee_type.try(:gsub, 'Imported::', '')
+        )
+      end
 
       puts "Setting market product delivery schedules..."
       market.organizations.each do |organization|
         organization.products.each {|p| p.update_delivery_schedules }
       end
+
+      puts "Ensuring Geocodes..."
+      ::MarketAddress.where(market_id: market.id).each do |address|
+        address.send(:attach_geocode)
+      end
+
     end
 
     market.save

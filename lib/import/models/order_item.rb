@@ -9,18 +9,22 @@ module Imported
   end
 end
 
-class Legacy::OrderItem < Legacy::Base
-  self.table_name = "lo_order_line_item"
-  self.primary_key = "lo_liid"
+module Legacy
+  class DeliveryStatus < Legacy::Base
+    self.table_name = "lo_delivery_statuses"
+    self.primary_key = "ldstat_id"
+  end
 
-  has_one    :delivery_status, class_name: "Legacy::DeliveryStatus", foreign_key: :ldstat_id
-  belongs_to :order, class_name: "Legacy::Order", foreign_key: :org_id
+  class OrderItem < Legacy::Base
+    self.table_name = "lo_order_line_item"
+    self.primary_key = "lo_liid"
 
-  def import
-    item = Imported::OrderItem.where(legacy_id: lo_liid).first
-    if item.nil?
-      puts "- Creating order item..."
-      item = Imported::OrderItem.create(
+    belongs_to :delivery_status, class_name: "Legacy::DeliveryStatus", foreign_key: :ldstat_id
+    belongs_to :delivery, class_name: "Legacy::Delivery", foreign_key: :lodeliv_id
+    belongs_to :order, class_name: "Legacy::Order", foreign_key: :org_id
+
+    def import
+      attributes = {
         name: product_name,
         product: imported_product,
         seller_name: seller_name,
@@ -30,19 +34,26 @@ class Legacy::OrderItem < Legacy::Base
         unit: unit,
         unit_price: unit_price,
         legacy_id: lo_liid
-      )
-    else
-      puts "- Existing order item..."
+      }
+
+      item = Imported::OrderItem.where(legacy_id: lo_liid).first
+      if item.nil?
+        puts "- Creating order item..."
+        item = Imported::OrderItem.create(attributes)
+      else
+        puts "- Updating order item..."
+        item.update(attributes)
+      end
+
+      item
     end
 
-    item
-  end
+    def imported_product
+      Imported::Product.where(legacy_id: prod_id).first
+    end
 
-  def imported_product
-    Imported::Product.where(legacy_id: prod_id).first
-  end
-
-  def imported_delivery_status
-    delivery_status.try(:delivery_status) || "pending"
+    def imported_delivery_status
+      delivery_status.try(:delivery_status) || "pending"
+    end
   end
 end

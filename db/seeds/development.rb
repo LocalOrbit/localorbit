@@ -107,6 +107,7 @@ seller_user = User.find_or_create_by!(email: "seller@example.com"){ |user|
   user.password = "password1"
   user.password_confirmation = "password1"
   user.role = "user"
+  user.confirmed_at = Time.current
 }
 
 unless sell_org.users.include?(seller_user)
@@ -126,4 +127,11 @@ market_address = MarketAddress.find_or_create_by!(name: "Default Marketplace") {
   addr.state = "Michigan"
   addr.zip = "48836"
   addr.market_id = market.id
+}
+
+admin_user = User.find_or_create_by!(email: "admin@example.com"){ |user|
+  user.password = "password1"
+  user.password_confirmation = "password1"
+  user.role = "admin"
+  user.confirmed_at = Time.current
 }
