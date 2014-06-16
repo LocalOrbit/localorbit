@@ -364,4 +364,22 @@ describe User do
       end
     end
   end
+
+  describe "#primary_market" do
+    context "as a market manager" do
+      let!(:user) { create(:user, :market_manager) }
+
+      it "returns the primary market" do
+        expect(user.primary_market).to eq(user.markets.first)
+      end
+    end
+
+    context "as an admin" do
+      let!(:user) { create(:user, :admin) }
+
+      it "returns nil" do
+        expect(user.primary_market).to eq(nil)
+      end
+    end
+  end
 end

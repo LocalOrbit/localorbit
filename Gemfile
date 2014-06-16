@@ -55,6 +55,7 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'rubocop', require: false
+  gem 'quiet_assets'
 end
 
 group :development, :test do
