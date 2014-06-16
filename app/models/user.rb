@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
   # shortcut for grabbing the "primary" market for things like email layout
   # when we don't know. We can make this more intelligent later.
   def primary_market
-    markets.first
+    markets.first unless admin?
   end
 
   def markets
