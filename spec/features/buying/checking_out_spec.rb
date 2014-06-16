@@ -143,7 +143,7 @@ describe "Checking Out", :js, :vcr do
         expect(current_email).to have_body_text("Delivery Fee")
         expect(current_email).not_to have_body_text("Discount")
 
-        expect(current_email.body).to have_content("An order was just placed by #{user.email}")
+        expect(current_email.body).to have_content("An order was just placed by #{buyer.name}")
 
         visit_in_email "Check Order Status"
         expect(page).to have_content("Order info")
@@ -166,7 +166,7 @@ describe "Checking Out", :js, :vcr do
         expect(current_email).to have_body_text("Delivery Fee")
         expect(current_email).not_to have_body_text("Discount")
 
-        expect(current_email.body).to have_content("An order was just placed by #{user.name}")
+        expect(current_email.body).to have_content("An order was just placed by #{buyer.name}")
 
         visit_in_email "Check Order Status"
         expect(page).to have_content("Order info")

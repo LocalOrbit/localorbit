@@ -3,7 +3,7 @@ class SellerOrder
   include DeliveryStatus
   include OrderPresenter
 
-  delegate :placed_by, :display_delivery_or_pickup, :display_delivery_address, to: :@order
+  delegate :display_delivery_or_pickup, :display_delivery_address, to: :@order
 
   def initialize(order, seller)
     @order = order.decorate

@@ -4,13 +4,7 @@
 </p>
 
 <p>
-
-<% if @order.placed_by.present? %>
-  An order was just placed by <strong><%= mail_to(@order.placed_by.email) %></strong>.
-<% else %>
-  An order was just placed in <strong><%= @market.name %></strong>.
-<% end %>
-
+An order was just placed by <strong><%= @order.organization.name %></strong>.
 You can check the details of this and all of your current orders by
 following the link below and logging in to your <%= @seller.name %> account.
 </p>

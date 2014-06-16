@@ -5,15 +5,15 @@ describe OrderMailer do
     let!(:market) { create(:market) }
     let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
     let!(:delivery) { create(:delivery, delivery_schedule: delivery_schedule) }
-    let!(:seller) { create(:organization, name: "Hudsonville Farms", can_sell: true, markets: [market]) }
-    let!(:buyer) { create(:organization, name: "Hudsonville Farms", can_sell: true, markets: [market]) }
+    let!(:seller) { create(:organization, name: "Grandville Farms", can_sell: true, markets: [market]) }
+    let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", can_sell: true, markets: [market]) }
     let!(:users) { create_list(:user, 2, organizations: [seller])}
     let!(:buyer_user) { create(:user, organizations: [buyer])}
 
     let!(:product) { create(:product, :sellable, organization: seller)}
 
     let!(:order_item) { create(:order_item) }
-    let!(:order) { create(:order, market: market, delivery: delivery, placed_by: buyer_user) }
+    let!(:order) { create(:order, market: market, delivery: delivery, placed_by: buyer_user, organization: buyer) }
     let!(:notification) { OrderMailer.seller_confirmation(order, seller) }
 
     it "delivers to all users in the organization" do
@@ -30,7 +30,7 @@ describe OrderMailer do
 
     it "shows what buyer made the order" do
       expect(notification).to have_body_text(
-        "An order was just placed by <strong><a href=\"mailto:#{buyer_user.email}\">#{buyer_user.email}</a></strong>"
+        "An order was just placed by <strong>#{buyer.name}</strong>"
       )
     end
 
