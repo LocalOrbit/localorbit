@@ -571,4 +571,21 @@ feature "Viewing products" do
       expect(page).to have_content("October 8, 2014")
     end
   end
+
+  scenario "delivery schedule info shows correctly for delivery products" do
+    delivery_schedule1.update_attribute(:seller_fulfillment_location_id, 0)
+    sign_in_as(user)
+
+    within(".table-summary") do
+      expect(page).to have_content("Delivery date is October 10, 2014")
+    end
+  end
+
+  scenario "delivery schedule info shows correctly for pick up products" do 
+    sign_in_as(user)
+
+    within(".table-summary") do
+      expect(page).to have_content("Pick up date is October 10, 2014")
+    end
+  end
 end
