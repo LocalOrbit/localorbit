@@ -8,7 +8,7 @@ describe SendOrderEmails do
   let(:product) { create(:product, :sellable, organization: seller) }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
-  let(:order)  { create(:order, delivery: delivery, items: [create(:order_item, product: product)], market: market, organization: buyer) }
+  let(:order)  { create(:order, placed_by: buyer.users.first, delivery: delivery, items: [create(:order_item, product: product)], market: market, organization: buyer) }
 
   context "when a seller has no users" do
     let(:seller) { create(:organization, :seller) }
