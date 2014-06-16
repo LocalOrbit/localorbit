@@ -13,6 +13,7 @@ class Payment < ActiveRecord::Base
     "cash" => "Cash",
     "check" => "Check",
     "credit card" => "Credit Card",
+    "paypal" => "PayPal",
     "purchase order" => "Purchase Order"
   }.freeze
 
