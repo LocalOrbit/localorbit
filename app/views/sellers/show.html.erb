@@ -51,12 +51,14 @@
 
         </div
         ><div class="column column--half column--guttered">
-          <h1 class="story-header adr">
-            <% if @current_seller.billing_location.present? %>
-              <span class="locality"><%= @current_seller.billing_location.city %></span>, <span class="region"><%= @current_seller.billing_location.state %></span>
-            <% end %>
-          </h1>
-          <div class="seller-map"><img alt="map" src="<%= @current_seller.locations_map(330, 240) %>"></div>
+          <% if @current_seller.locations_map(330, 240).present? %>
+            <h1 class="story-header adr">
+              <% if @current_seller.billing_location.present? %>
+                <span class="locality"><%= @current_seller.billing_location.city %></span>, <span class="region"><%= @current_seller.billing_location.state %></span>
+              <% end %>
+            </h1>
+            <div class="seller-map"><img alt="map" src="<%= @current_seller.locations_map(330, 240) %>"></div>
+          <% end %>
         </div>
       </div>
 
