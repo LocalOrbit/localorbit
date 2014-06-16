@@ -12,6 +12,7 @@ class OrderMailer < BaseMailer
   def seller_confirmation(order, seller)
     @market = order.market
     @order = SellerOrder.new(order, seller) # Selling users organizations only see
+    @seller = seller
 
     mail(
       to: seller.users.pluck(:email),
