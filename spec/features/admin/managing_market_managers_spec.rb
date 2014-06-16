@@ -44,6 +44,10 @@ describe "Admin Managing Market Managers" do
       click_button 'Add Market Manager'
 
       expect(page).to have_text('new-user@example.com')
+
+      open_email("new-user@example.com")
+      expect(current_email.body).to have_content("You have been invited")
+      expect(current_email.body).to have_content(market.name)
     end
 
     it 'requries an email address to invite' do
@@ -86,7 +90,7 @@ describe "Admin Managing Market Managers" do
 
       open_last_email
 
-      visit_in_email("Join Local Orbit")
+      visit_in_email("Join #{market.name}")
 
       expect(page).to have_content("Set up your account")
     end
