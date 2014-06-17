@@ -1,5 +1,4 @@
 <div class="row product-header filter-group">
-  <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small pull-right" %>
   <div class="column product-filters" id="product-filter">
     <div class="product-search">
       <input type="search" id="search" value="<%= @query_params["search"] %>"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
@@ -19,4 +18,5 @@
     <% end %>
     <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
   </div>
+  <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add pull-right" %>
 </div>

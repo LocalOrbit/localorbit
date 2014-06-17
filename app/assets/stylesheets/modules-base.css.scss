@@ -621,6 +621,12 @@
     }
   }
 
+  @media screen and (max-width: 600px) {
+    > .l-constraint {
+      padding-bottom: 0;
+    }
+  }
+
   .l-page-header {
     margin: 0;
   }

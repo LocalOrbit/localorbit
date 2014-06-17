@@ -118,6 +118,7 @@
     margin-bottom: 15px;
 
     input {
+      height: 35px;
       -webkit-flex: auto 1;
       flex: auto 1;
       &[type=search] + .btn--end {

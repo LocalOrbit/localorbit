@@ -112,6 +112,12 @@ input[type=submit] {
   }
 }
 
+@media screen and (max-width: 600px) {
+  .btn--add {
+    text-align: center;
+  }
+}
+
 .btn.reset {
   font-size: 9px;
   font-weight: bold;
