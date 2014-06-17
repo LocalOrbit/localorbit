@@ -794,6 +794,12 @@
     font-weight: bold;
   }
 
+@media screen and (max-width: 600px) {
+  .flash {
+    top: 10px;
+  }
+}
+
 .form-errors {
   padding: 0;
   margin: 0 0 2em;
