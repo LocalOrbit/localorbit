@@ -39,10 +39,17 @@ module Admin
     end
 
     def update
-      if @product.update_attributes(product_params)
+      if product_params[:simple_inventory].present? && product_params.count == 1
+        @product.simple_inventory = product_params[:simple_inventory]
+        update = @product.lots.last.save
+      else
+        update = @product.update_attributes(product_params)
+      end
+
+      if update
         respond_to do |format|
           format.html { redirect_to after_create_page, notice: "Saved #{@product.name}" }
-          format.js   { 
+          format.js   {
             @data = {
               message: "Saved #{@product.name}",
               params: product_params.to_a,
@@ -59,7 +66,7 @@ module Admin
             find_selected_delivery_schedule_ids
             render :show
           end
-          format.js { 
+          format.js {
             @data = {
               errors: @product.errors.full_messages
             }
@@ -89,7 +96,10 @@ module Admin
         delivery_schedule_ids: []
       )
 
-      results[:delivery_schedule_ids] ||= []
+      unless results.count == 1 && results["simple_inventory"].present?
+        results[:delivery_schedule_ids] ||= []
+      end
+
       results
     end
 
