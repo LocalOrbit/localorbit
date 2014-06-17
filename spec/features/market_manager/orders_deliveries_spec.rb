@@ -50,7 +50,19 @@ context "Viewing sold items" do
       expect(sold_item.unit_price).to eq("$2.00/Heads")
       expect(sold_item.delivery_status).to eq("Pending")
       expect(sold_item.buyer_payment_status).to eq("Unpaid")
-      expect(sold_item.seller_payment_status).to eq("Unpaid (WIP)")
+      expect(sold_item.seller_payment_status).to eq("Unpaid")
+    end
+
+    it "shows the correct search and filters" do
+      has_field?("Search")
+      has_select?("Market")
+      has_select?("Seller")
+      has_select?("Buyer")
+      has_select?("Delivery Status")
+      has_select?("Buyer Payment Status")
+      # has_select?("Seller Payment Status") # TODO: Add this
+      has_field?("Placed on or after")
+      has_field?("Placed on or before")
     end
 
     it "lists all sold items for the market as a CSV" do
@@ -126,7 +138,7 @@ context "Viewing sold items" do
       expect(sold_item.unit_price).to eq("$6.50/Bushels")
       expect(sold_item.delivery_status).to eq("Pending")
       expect(sold_item.buyer_payment_status).to eq("Unpaid")
-      expect(sold_item.seller_payment_status).to eq("Unpaid (WIP)")
+      expect(sold_item.seller_payment_status).to eq("Unpaid")
     end
   end
 end
