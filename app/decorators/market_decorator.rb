@@ -34,7 +34,15 @@ class MarketDecorator < Draper::Decorator
   end
 
   def display_contact_phone
-    number_to_phone(contact_phone.to_s.gsub(/[^0-9]/, ""), area_code: true)
+    number = contact_phone.to_s.gsub(/[^0-9]/, "")
+
+    # if we have a clean phone number, format it appropriately, otherwise
+    # just display what they give us
+    if number.length == 10
+      number_to_phone(number, area_code: true)
+    else
+      contact_phone.to_s
+    end
   end
 
   def header

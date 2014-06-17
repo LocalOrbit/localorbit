@@ -54,6 +54,22 @@ feature "Viewing invoices" do
     expect(find('tr:last-child td:last-child')).to have_content("$400.00")
   end
 
+  context "with irregular phone numbers" do
+    before do
+      market.update_attribute(:contact_phone, "+123 (456) 789-0987 ext. 654")
+    end
+
+    scenario "html content" do
+      visit admin_invoice_path(order.id)
+
+      expect(page).to have_content("Invoice Number LO-001")
+
+      within('.invoice-parties') do
+        expect(page).to have_content("+123 (456) 789-0987 ext. 654")
+      end
+    end
+  end
+
   context "with lots" do
     let!(:product3)  { create(:product, :sellable, organization: seller, lots: [create(:lot, number: '123')]) }
     let!(:order_item3) { create(:order_item, product: product3, quantity: 4) }
