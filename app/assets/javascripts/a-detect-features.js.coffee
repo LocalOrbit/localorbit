@@ -12,7 +12,7 @@ $ ->
       features.input_date = false
 
   window.detect_touch = ->
-    if 'ontouchstart' in window || 'onmsgesturechange' in window
+    if window.ontouchstart == null || window.onmsgesturechange == null
       features.touch = true
       $('body').addClass('touch')
     else
