@@ -73,6 +73,12 @@
     .form-actions {
       margin: 1em 0 0;
     }
+    .preserve-alignment {
+      display: inline-block;
+      label {
+        display: block;
+      }
+    }
   }
 
   .popup--centered {
@@ -95,6 +101,9 @@
     transform: translate(-50%, -50%);
     &.rtl {
       right: auto;
+    }
+    .preserve-alignment {
+      display: block;
     }
   }
 }
