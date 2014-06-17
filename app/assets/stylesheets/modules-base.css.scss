@@ -621,6 +621,12 @@
     }
   }
 
+  @media screen and (max-width: 600px) {
+    > .l-constraint {
+      padding-bottom: 0;
+    }
+  }
+
   .l-page-header {
     margin: 0;
   }
@@ -640,6 +646,13 @@
       > .l-constraint {
         margin-right: 10px;
         margin-left: 10px
+      }
+      &.js-fixed {
+        margin: 0;
+        > .l-constraint {
+          margin-right: 0px;
+          margin-left: 0px
+        }
       }
     }
 }
@@ -786,6 +799,12 @@
     text-align: center;
     font-weight: bold;
   }
+
+@media screen and (max-width: 600px) {
+  .flash {
+    top: 10px;
+  }
+}
 
 .form-errors {
   padding: 0;
