@@ -2,7 +2,7 @@ $ ->
 
   $('.table-wrapper').scroll (e) ->
     $wrapper = $(e.target.parentNode);
-    if $wrapper.scrollLeft == 0
+    if e.target.scrollLeft == 0
       $wrapper.addClass('hard-left')
     else
       $wrapper.removeClass('hard-left')

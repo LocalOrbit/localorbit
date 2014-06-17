@@ -641,6 +641,13 @@
         margin-right: 10px;
         margin-left: 10px
       }
+      &.js-fixed {
+        margin: 0;
+        > .l-constraint {
+          margin-right: 0px;
+          margin-left: 0px
+        }
+      }
     }
 }
 
