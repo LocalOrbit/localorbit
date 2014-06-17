@@ -87,3 +87,7 @@ group :production, :staging do
   gem 'pgbackups-archive'
   gem 'heroku-api'
 end
+
+group :production do
+  gem 'lograge'
+end
