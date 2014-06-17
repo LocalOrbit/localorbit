@@ -1,20 +1,23 @@
 $ ->
 
   $('.table-wrapper').scroll (e) ->
-    if e.target.scrollLeft == 0
-      $(e.target).addClass('hard-left')
+    $wrapper = $(e.target.parentNode);
+    if $wrapper.scrollLeft == 0
+      $wrapper.addClass('hard-left')
     else
-      $(e.target).removeClass('hard-left')
-      $(e.target).find('.fade-left').css('left', e.target.scrollLeft)
+      $wrapper.removeClass('hard-left')
 
     if e.target.scrollLeft + $(e.target).width() == $(e.target).children('table').width()
-      $(e.target).addClass('hard-right')
+      $wrapper.addClass('hard-right')
     else
-      $(e.target).removeClass('hard-right')
-      $(e.target).find('.fade-right').css('left', $(e.target).width() + e.target.scrollLeft - 20)
+      $wrapper.removeClass('hard-right')
 
   $(document).ready ->
-    $('.table-wrapper').prepend('<div class="fade-left"></div>')
-    $('.table-wrapper').append('<div class="fade-right"></div>')
+    $('.table-wrapper').wrapAll('<div class="scroll-wrapper"/>')
+    $('.scroll-wrapper').prepend('<div class="fade-left"></div>')
+    $('.scroll-wrapper').append('<div class="fade-right"></div>')
     $('.table-wrapper').trigger "scroll"
 
+  $(window).on "rotate", ->
+    $('.table-wrapper').trigger "scroll"
+    

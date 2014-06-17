@@ -17,6 +17,10 @@
   background: $notice_bg;
 }
 
+.scroll-wrapper {
+  position: relative;
+  overflow: hidden;
+}
 .table-wrapper {
   position: relative;
   overflow: visible;
@@ -24,9 +28,12 @@
   @media screen and (max-width: 600px) {
     .table-wrapper {
       padding-top: 20px;
+      overflow: auto;
+    }
+    .scroll-wrapper {
       margin-right: -10px;
       margin-left: -10px;
-      overflow: auto;
+
       .fade-right,
       .fade-left {
         position: absolute;

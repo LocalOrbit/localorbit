@@ -244,6 +244,10 @@ body {
 }
 
 @media screen and (max-width: 600px) {
+  .row.center-rule,
+  .row.three-fourths-rule {
+    background-image: none;
+  }
   .column--half,
   .column--three-fourths {
     width: 100%;
