@@ -192,9 +192,6 @@ tbody {
     &:nth-child(odd) {
       background: #f9f9f9;
     }
-    &:hover {
-      background: #D8EED2;
-    }
     &.destructive {
       background: #fdd;
 
@@ -202,6 +199,13 @@ tbody {
       > .delete button {
         color: $alert_text;
       }
+    }
+  }
+}
+.no-touch {
+  tbody {
+    tr:hover {
+      background: #D8EED2;
     }
   }
 }

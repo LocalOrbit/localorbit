@@ -11,6 +11,15 @@ $ ->
     else
       features.input_date = false
 
+  window.detect_touch = ->
+    if 'ontouchstart' in window || 'onmsgesturechange' in window
+      features.touch = true
+      $('body').addClass('touch')
+    else
+      features.touch = false
+      $('body').addClass('no-touch')
+
+
   window.detect_transforms = ->
     ext = false
     styles = ["t", "msT", "OT", "WebkitT", "MozT"]
@@ -35,3 +44,4 @@ $ ->
   detect_transforms()
   detect_transitions()
   detect_input_date()
+  detect_touch()
