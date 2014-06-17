@@ -1,26 +1,24 @@
 <?php
 
 $markets = array(
-     "allenmarketplace"   => "allenmarketplace",
-     "allthingsfood"      => "allthingsfoodllc",
-     "appleridgefarm"     => "appleridgefarm",
-     "appleton"           => "appleton",
-     "centralup"          => "centralup",
-     "dtestkitchentables" => "dtestkitchentables",
-     "easternup"          => "easternup",
-     "morgansgrovemarket" => "morgansgrove",
-     "northvalleyfoodhub" => "northvalleyfoodhub",
-     "tahoefoodhub"       => "tahoefoodhub",
-     "westernup"          => "westernup"
- );
+    "allenmarketplace"   => "allenmarketplace",
+    "allthingsfood"      => "allthingsfoodllc",
+    "appleridgefarm"     => "appleridgefarm",
+    "appleton"           => "appleton",
+    "centralup"          => "centralup",
+    "dtestkitchentables" => "dtestkitchentables",
+    "easternup"          => "easternup",
+    "morgansgrovemarket" => "morgansgrove",
+    "northvalleyfoodhub" => "northvalleyfoodhub",
+    "tahoefoodhub"       => "tahoefoodhub",
+    "westernup"          => "westernup"
+);
 
- $segments = explode(".", $_SERVER["HTTP_HOST"]);
- $subdomain = array_shift($segments);
- if (array_key_exists($subdomain, $markets)) {
-     $market = $markets[$subdomain];
-     header("Location: https://$market.localorbit.com");
-     exit;
- }
+$segments = explode(".", $_SERVER["HTTP_HOST"]);
+$subdomain = array_shift($segments);
+$market = array_key_exists($subdomain, $markets) ? $markets[$subdomain] : "www";
+header("Location: https://$market.localorbit.com/");
+exit;
 
 session_start();
 
