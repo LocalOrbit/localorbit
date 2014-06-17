@@ -8,7 +8,7 @@ describe SendOrderEmails do
   let(:product) { create(:product, :sellable, organization: seller) }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
-  let(:order)  { create(:order, delivery: delivery, items: [create(:order_item, product: product)], market: market, organization: buyer) }
+  let(:order)  { create(:order, placed_by: buyer.users.first, delivery: delivery, items: [create(:order_item, product: product)], market: market, organization: buyer) }
 
   context "when a seller has no users" do
     let(:seller) { create(:organization, :seller) }
@@ -22,8 +22,10 @@ describe SendOrderEmails do
     end
   end
 
-  context "when a buyer has no users" do
+  context "when a market manager shops for an organizatgion with no users" do
+    let(:market_manager) { create(:user, managed_markets: [market]) }
     let(:buyer) { create(:organization, :buyer) }
+    let(:order)  { create(:order, placed_by: market_manager, delivery: delivery, items: [create(:order_item, product: product)], market: market, organization: buyer) }
 
     it "sends no emails to the buying organization" do
       expect {

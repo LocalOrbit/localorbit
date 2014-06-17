@@ -127,10 +127,10 @@ describe "Checking Out", :js, :vcr do
     it "sends the seller email about the order" do
       checkout
 
-      fulton_farms.users.each do |user|
+      fulton_farms.users.each do |seller_user|
         sign_out
-        sign_in_as(user)
-        open_email(user.email)
+        sign_in_as(seller_user)
+        open_email(seller_user.email)
 
         expect(current_email).to have_subject("New order on #{market.name}")
         expect(current_email.body).to have_content("You have a new order!")
@@ -143,17 +143,17 @@ describe "Checking Out", :js, :vcr do
         expect(current_email).to have_body_text("Delivery Fee")
         expect(current_email).not_to have_body_text("Discount")
 
-        expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+        expect(current_email.body).to have_content("An order was just placed by #{buyer.name}")
 
         visit_in_email "Check Order Status"
         expect(page).to have_content("Order info")
         expect(page).to have_content("Items for Delivery")
       end
 
-      ada_farms.users.each do |user|
+      ada_farms.users.each do |seller_user|
         sign_out
-        sign_in_as(user)
-        open_email(user.email)
+        sign_in_as(seller_user)
+        open_email(seller_user.email)
 
         expect(current_email).to have_subject("New order on #{market.name}")
         expect(current_email.body).to have_content("You have a new order!")
@@ -166,7 +166,7 @@ describe "Checking Out", :js, :vcr do
         expect(current_email).to have_body_text("Delivery Fee")
         expect(current_email).not_to have_body_text("Discount")
 
-        expect(current_email.body).to have_content("An order was just placed by #{market.name}")
+        expect(current_email.body).to have_content("An order was just placed by #{buyer.name}")
 
         visit_in_email "Check Order Status"
         expect(page).to have_content("Order info")
