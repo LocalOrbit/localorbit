@@ -1,5 +1,27 @@
 <?php
 
+$markets = array(
+     "allenmarketplace"   => "allenmarketplace",
+     "allthingsfood"      => "allthingsfoodllc",
+     "appleridgefarm"     => "appleridgefarm",
+     "appleton"           => "appleton",
+     "centralup"          => "centralup",
+     "dtestkitchentables" => "dtestkitchentables",
+     "easternup"          => "easternup",
+     "morgansgrovemarket" => "morgansgrove",
+     "northvalleyfoodhub" => "northvalleyfoodhub",
+     "tahoefoodhub"       => "tahoefoodhub",
+     "westernup"          => "westernup"
+ );
+
+ $segments = explode(".", $_SERVER["HTTP_HOST"]);
+ $subdomain = array_shift($segments);
+ if (array_key_exists($subdomain, $markets)) {
+     $market = $markets[$subdomain];
+     header("Location: https://$market.localorbit.com");
+     exit;
+ }
+
 session_start();
 
 if(in_array(strtolower($_SERVER['HTTP_HOST']),array('localorbit.com','localorbit.org','www.localorbit.com','www.localorbit.org')))
@@ -54,11 +76,11 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" media="all" />
 	<link rel="stylesheet" href="/css/icomoon-ultimate1563/style.css">
 	<link rel="stylesheet" href="/css/icomoon-ultimate88910/style.css">
-	
-	
-	
+
+
+
 	<style type="text/css" media="screen, projection">
-		@import url(//assets.zendesk.com/external/zenbox/v2.5/zenbox.css); 
+		@import url(//assets.zendesk.com/external/zenbox/v2.5/zenbox.css);
 	</style>
 
 	<!--<link rel="stylesheet" type="text/css" href="css/responsive.css" />-->
@@ -83,13 +105,13 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<script language="Javascript" type="text/javascript" src="js/lo3.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="js/lo4.js?time=<?php echo time();?>"></script>
 	<script language="Javascript" type="text/javascript" src="js/catalog.js?time=<?php echo time();?>"></script>
-	
+
 	<!-- new calendar -->
 	<script language="Javascript" type="text/javascript" src="js/jquery-ui.min.js"></script>
-	
+
 	<!-- old calendar
 	<script language="Javascript" type="text/javascript" src="app/core/js/jquery.datePicker.js?time=<?php echo time();?>"></script> -->
-	
+
 	<!-- <script language="Javascript" type="text/javascript" src="app/core/js/jquery.tabset.js?time=<?php echo time();?>"></script>-->
 
 	<script language="Javascript" type="text/javascript" src="js/stylesheetToggle.js"></script>
@@ -97,7 +119,7 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
 	<!--<script language="Javascript" type="text/javascript" src="js/jquery.jqplot.min.js"></script>-->
 	<script language="Javascript" type="text/javascript" src="<?=$prtcl?>maps.googleapis.com/maps/api/js?key=AIzaSyAMekmlIkMHfj2m5G4lgWrwgZyrgM6rhgU&sensor=false"></script>
 
-  
+
 
 	<script language="Javascript" type="text/javascript">
 		<!--
@@ -131,8 +153,8 @@ $stage = (strpos($_SERVER['HTTP_HOST'],'qa') !== false)?'qa':$stage;
   };
 
   // Load the SDK's source Asynchronously
-  // Note that the debug version is being actively developed and might 
-  // contain some type checks that are overly strict. 
+  // Note that the debug version is being actively developed and might
+  // contain some type checks that are overly strict.
   // Please report such bugs using the bugs tool.
   (function(d, debug){
      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
@@ -282,7 +304,7 @@ core.doRequest('/whitelabel/get_options','');
 	_gaq.push(['_setAccount', 'UA-19817823-1']);
 	_gaq.push(['_setDomainName', '.localorb.it']);
 	_gaq.push(['_trackPageview']);
-	
+
 	(function() {
 	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
