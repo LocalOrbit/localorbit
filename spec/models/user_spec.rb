@@ -44,6 +44,29 @@ describe User do
       end
     end
 
+    describe "#with_primary_market" do
+      let!(:market) { create(:market) }
+      let!(:market2) { create(:market) }
+      let!(:organization) { create(:organization, markets: [market]) }
+      let!(:organization2) { create(:organization, markets: [market2]) }
+
+      let!(:user) { create(:user, organizations: [organization]) }
+      let!(:user2) { create(:user, organizations: [organization2]) }
+      let!(:market_manager) { create(:user, managed_markets: [market])}
+
+      it "finds all users for organizations in the market" do
+        result = User.with_primary_market(market)
+
+        expect(result).to include(user)
+        expect(result).not_to include(user2)
+      end
+
+      it "finds market_managers" do
+        result = User.with_primary_market(market)
+        expect(result).to include(market_manager)
+      end
+    end
+
     it 'admin? returns true if role is "admin"' do
       user = build(:user)
       user.role = 'admin'
