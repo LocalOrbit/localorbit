@@ -1,7 +1,7 @@
 module Sessions
   class DeliveriesController < ApplicationController
     before_action :require_selected_market
-    before_action :require_organization
+    before_action :require_current_organization
     before_action :require_organization_location
     before_action :hide_admin_navigation
 
@@ -45,10 +45,6 @@ module Sessions
       flash.now[:alert] = "Please select a delivery"
       new
       render :new
-    end
-
-    def require_organization
-      redirect_to new_sessions_organization_path(redirect_back_to: redirect_to_url) unless current_organization
     end
   end
 end
