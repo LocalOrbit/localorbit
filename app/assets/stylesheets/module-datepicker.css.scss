@@ -1,0 +1,17 @@
+.datepicker-no-float {
+  > .ui-datepicker {
+    width: 0;
+    height: 0;
+    border: 0;
+    overflow: hidden;
+  }
+}
+.ui-datepicker-inline {
+  display: none;
+}
+.datepicker-is-open {
+  .ui-datepicker-inline {
+    display: block;
+    margin: 0 auto .5em;
+  }
+}

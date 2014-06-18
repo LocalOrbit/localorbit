@@ -90,6 +90,9 @@ input[type=password] {
 .datepicker {
   width: 8em;
 
+  ~ .btn--end {
+    display: none;
+  }
   &.hasDatepicker {
     height: 24px;
     @include border-radius(2px 0 0 2px);
@@ -117,11 +120,6 @@ input[type=password] {
     margin-left: -1px;
     font-size: 12px;
     vertical-align: top;
-  }
-}
-@media screen and (max-width: 599px) {
-  input {
-    font-size: 16px;
   }
 }
 
