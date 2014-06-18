@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
       current_user.managed_organizations.find_by(id: session[:current_organization_id])
     end
 
-    @current_organization = potential if potential.all_markets.include?(current_market)
+    @current_organization = potential if potential && potential.all_markets.include?(current_market)
   end
 
   def current_market
