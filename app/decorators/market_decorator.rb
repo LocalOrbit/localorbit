@@ -56,4 +56,12 @@ class MarketDecorator < Draper::Decorator
   def plan_options
     Plan.all.map {|plan| [plan.name, plan.id] }
   end
+
+  def payble_accounts_for_select
+    bank_accounts.where(account_type: %w(savings checking)).map do |bank_account|
+      display_name = "ACH: #{bank_account.bank_name} - *********#{bank_account.last_four}"
+      display_name += " NOT VERIFIED" unless bank_account.verified?
+      [display_name, bank_account.id]
+    end
+  end
 end

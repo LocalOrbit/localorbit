@@ -77,6 +77,15 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :items, allow_destroy: true
 
+  def self.balanced_payable
+    # TODO: figure out how to filter out paid orders in the db
+    # and make sure the orders haven't changed
+    where(payment_method: ["credit card", "ach"]).
+      order(:order_number).
+      includes(:items, :market, payments: :payee).
+      select {|o| o.delivery_status == 'delivered' && o.payments.select {|p| p.status != "failed" && p.payee == o.market } }
+  end
+
   def self.for_sort(order)
     column, direction = column_and_direction(order)
     case column
@@ -213,6 +222,35 @@ class Order < ActiveRecord::Base
 
   def subtotal
     items.inject(0) {|sum, item| sum + item.gross_total}
+  end
+
+  # Market payable calculations
+
+  def market_payable?
+    return false unless delivery_status == 'delivered'
+
+    market_payments = payments.select {|p| p.status != "failed" && p.payee == o.market }
+    market_payments.sum {|p| p.amount } != payable_to_market
+  end
+
+  def payable_to_market
+    @payable_to_market ||= payable_subtotal - market_payable_local_orbit_fee - market_payable_payment_fee
+  end
+
+  def payable_subtotal
+    @payable_subtotal ||= items.to_a.inject(delivery_fees) {|sum, item| sum + (item.delivered? ? item.gross_total : 0) }
+  end
+
+  def market_payable_market_fee
+    @market_payable_market_fee ||= items.to_a.sum {|i| i.delivered? ? i.market_seller_fee : 0 }
+  end
+
+  def market_payable_local_orbit_fee
+    @market_payable_local_orbit_fee ||= items.to_a.sum {|i| i.delivered? ? i.local_orbit_seller_fee + i.local_orbit_market_fee : 0 }
+  end
+
+  def market_payable_payment_fee
+    @market_payable_payment_fee ||= items.to_a.sum {|i| i.delivered? ? i.payment_seller_fee + i.payment_market_fee : 0 }
   end
 
   private
