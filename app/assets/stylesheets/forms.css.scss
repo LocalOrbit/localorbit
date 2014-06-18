@@ -50,6 +50,20 @@ textarea {
     margin: 0;
   }
 }
+@media screen and (max-width: 600px) {
+  input[type=date],
+  input[type=datetime],
+  input[type=email],
+  input[type=search],
+  input[type=tel],
+  input[type=text],
+  input[type=number],
+  input[type=url],
+  input[type=password],
+  textarea {
+    font-size: 16px;
+  }
+}
 input {
   &[size="3"] {
     width: 4em;
