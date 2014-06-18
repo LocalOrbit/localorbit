@@ -204,7 +204,7 @@ tbody {
 }
 .no-touch {
   tbody {
-    tr:hover {
+    tr:not('.destructive'):hover {
       background: #D8EED2;
     }
   }
