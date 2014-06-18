@@ -36,13 +36,17 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organization
-    return @current_organization if defined?(@current_organization)
+    if @current_organization && @current_organization.all_markets.include?(current_market)
+      return @current_organization
+    end
 
-    @current_organization = if current_user.managed_organizations.count == 1
+    potential = if current_user.managed_organizations.count == 1
       current_user.managed_organizations.first
     elsif session[:current_organization_id]
       current_user.managed_organizations.find_by(id: session[:current_organization_id])
     end
+
+    @current_organization = potential if potential.all_markets.include?(current_market)
   end
 
   def current_market

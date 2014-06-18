@@ -112,4 +112,17 @@ describe Sessions::DeliveriesController do
       expect(session[:current_location]).to eq(org.shipping_location.id)
     end
   end
+
+  describe "new" do
+    # Fixes https://www.pivotaltracker.com/story/show/73465524
+    describe "switching markets" do
+      let!(:other_market) { create(:market) }
+      let!(:other_organization) { create(:organization, :multiple_locations, markets: [other_market], users: [user]) }
+
+      it "clears out the organization if it isn't linked to the market" do
+        get :new, {}, {current_organization_id: other_organization.id}
+        expect(response).to redirect_to(new_sessions_organization_path(redirect_back_to: new_sessions_deliveries_path))
+      end
+    end
+  end
 end
