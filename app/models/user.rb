@@ -174,10 +174,11 @@ class User < ActiveRecord::Base
     self.reset_password_sent_at = Time.now.utc + 3.weeks #4 week expiration for imported users
     self.save(validate: false)
 
-    unless Rails.env.staging? && (self.email != "anna@localorb.it") #allow Anna to get test emails from staging
+    if !Rails.env.staging?
+      send_devise_notification(:reset_import_password_instructions, raw, {})
+    elsif (self.email == "anna+manager@localorb.it" || self.email == "chris.rittersdorf+buyer@collectiveidea.com")
       send_devise_notification(:reset_import_password_instructions, raw, {})
     end
-
     raw
   end
 
