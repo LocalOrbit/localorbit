@@ -5,17 +5,18 @@
   See what's fresh this week.
 </p>
 
-<% @categories.each do |category| %>
-  <% if @previous_top_level_category != category.top_level_category %>
-    <% @previous_top_level_category = category.top_level_category %>
-    <h2 class="pull-left"><%= category.top_level_category.name %></h2>
+<% @products_for_sale.each_category_with_products do |category, products| %>
+  <% current_top_level_category = category.top_level_category %>
+  <% if @previous_top_level_category != current_top_level_category %>
+    <% @previous_top_level_category = current_top_level_category %>
+    <h2 class="pull-left"><%= current_top_level_category.name %></h2>
     <%= link_to "Shop Now", products_url(host: @market.domain), class: "lo_button pull-right" %>
   <% end %>
 
   <h3 class="clear"><%= category.name %></h3>
 
   <table class="lo_fresh_sheet">
-    <% @product_groups[category.id].each do |product| %>
+    <% products.each do |product| %>
       <tr class="<%= cycle('odd', 'even') %>">
         <th scope="row">
           <dl>

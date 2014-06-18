@@ -1,5 +1,5 @@
 class ProductsForSale
-  def initialize(delivery, buyer, cart, filters, options=nil)
+  def initialize(delivery, buyer, cart, filters = {}, options=nil)
     @delivery = delivery
     @buyer    = buyer
     @cart     = cart
