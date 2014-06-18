@@ -192,6 +192,8 @@ tbody {
     &:nth-child(odd) {
       background: #f9f9f9;
     }
+    &:hover {
+    }
     &.destructive {
       background: #fdd;
 
@@ -203,8 +205,8 @@ tbody {
   }
 }
 .no-touch {
-  tbody {
-    tr:not('.destructive'):hover {
+  tbody:not(.order-summary) {
+    tr:not(.destructive):hover {
       background: #D8EED2;
     }
   }
