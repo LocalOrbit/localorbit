@@ -1,11 +1,9 @@
-<h1>Featured Promotions</h1>
-<div class="row row--justified header">
-  <%= link_to "Add New Promotion", new_admin_promotion_path, class: 'btn btn--add btn--small pull-right' %>
-</div>
+<h1 class="pull-left">Featured Promotions</h1>
+<%= link_to "Add New Promotion", new_admin_promotion_path, class: 'btn btn--add btn--small btn--headline pull-right' %>
 
 <% if current_user.multi_market_membership? %>
   <%= search_form_for @q, url: admin_promotions_path, html: { class: "payment_search clear-after" } do |f| %>
-    <div class="manager-filters">
+    <div class="manager-filters featured-promo-filter">
       <span class="preserve-alignment">
         <%= f.label :market_id_nil_eq, "Market" %><br>
         <%= f.select :market_id_nil_eq, @markets.map {|m| [m.name, m.id] }, { include_blank: "All" }, { class: "filter-input" } %>
