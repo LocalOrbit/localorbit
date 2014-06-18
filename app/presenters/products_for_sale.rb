@@ -1,10 +1,10 @@
 class ProductsForSale
-  def initialize(delivery, buyer, cart, filters, options=nil)
+  def initialize(delivery, buyer, cart, filters = {}, options = {})
     @delivery = delivery
     @buyer    = buyer
     @cart     = cart
     @filters  = filters
-    @options  = options || {}
+    @options  = options
     @market   = cart.market
   end
 

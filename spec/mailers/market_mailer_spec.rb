@@ -8,14 +8,11 @@ describe MarketMailer do
     let!(:market_in)  { create(:market, organizations: [fulton_farms], contact_phone: "616-123-4567") }
     let!(:market_out) { create(:market, organizations: [ada_farms]) }
 
-    let!(:product_in)  { create(:product, :sellable, organization: fulton_farms) }
-    let!(:product_out) { create(:product, :sellable, organization: ada_farms) }
+    let!(:delivery_schedule1) { create(:delivery_schedule, market: market_in, day: 5, order_cutoff: 24, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
+    let!(:delivery_schedule2) { create(:delivery_schedule, market: market_out, day: 5, order_cutoff: 24, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
 
-    before do
-      [market_in, market_out].each do |market|
-        create(:delivery, delivery_schedule: create(:delivery_schedule,  market: market))
-      end
-    end
+    let!(:product_in)  { create(:product, :sellable, delivery_schedules: [delivery_schedule1], organization: fulton_farms) }
+    let!(:product_out) { create(:product, :sellable, delivery_schedules: [delivery_schedule2], organization: ada_farms) }
 
     it "only shows products for the given market" do
       fresh_sheet = MarketMailer.fresh_sheet(market_in)
