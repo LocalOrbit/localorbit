@@ -42,6 +42,9 @@
       .nav--sidebar a {
         color: <%= current_market.text_color -%>;
       }
+      a:hover {
+        color: <%= color_mix current_market.text_color, "#ffffff" %>;
+      }
       .l-app-header,
       .l-app-footer,
       .nav--main > a:hover,

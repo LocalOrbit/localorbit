@@ -343,11 +343,9 @@
   clear: left;
   display: block;
   font: lighter 18px 'Open Sans', sans-serif;
-  -webkit-filter: brightness(0.9);
-  -moz-filter: brightness(0.9);
-  filter: brightness(0.9);
   word-wrap: break-word;
   word-break: break-all;
+  margin-bottom: 20px;
 }
   .signed-out .tagline {
     text-align: center;
@@ -899,7 +897,7 @@
   display: block;
   max-width: 300px;
   height: 100px;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
 
   > .logo {
     max-width: 100%;
