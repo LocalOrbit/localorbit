@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_cart
   helper_method :current_delivery
   helper_method :redirect_to_url
+  helper_method :signed_in_root_path
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -19,6 +20,7 @@ class ApplicationController < ActionController::Base
   private
 
   def signed_in_root_path(resource)
+    return root_path unless resource
     extra = on_main_domain? && resource.markets.any? ? {host: resource.markets.first.domain} : {}
     if resource.buyer_only?
       products_url(extra)

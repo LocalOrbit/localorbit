@@ -5,7 +5,7 @@ else
   logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "vertical-centerer logo")
 end
 %>
-<%= link_to_or_span logo, root_path, class: "logo-link vc-wrapper pull-left" %>
+<%= link_to_or_span logo, signed_in_root_path(current_user), class: "logo-link vc-wrapper pull-left" %>
 
 <% if current_market %>
   <% if current_user %>
