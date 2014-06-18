@@ -342,7 +342,12 @@
 .tagline {
   clear: left;
   display: block;
+  margin-bottom: 1em;
   font: lighter 18px 'Open Sans', sans-serif;
+  -webkit-filter: brightness(0.9);
+  -moz-filter: brightness(0.9);
+  filter: brightness(0.9);
+  -webkit-transform: translateZ(0);
   word-wrap: break-word;
   word-break: break-all;
   margin-bottom: 20px;
