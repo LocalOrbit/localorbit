@@ -16,9 +16,15 @@ $markets = array(
 
 $segments = explode(".", $_SERVER["HTTP_HOST"]);
 $subdomain = array_shift($segments);
-$market = array_key_exists($subdomain, $markets) ? $markets[$subdomain] : "www";
-header("Location: https://$market.localorbit.com/");
-exit;
+if ($subdomain == "www") {
+  $subdomain = array_shift($segments);
+}
+if (array_key_exists($subdomain, $markets)) {
+  $market = $markets[$subdomain];
+  header("Location: https://$market.localorbit.com/");
+  exit;
+}
+
 
 session_start();
 
