@@ -25,6 +25,10 @@ class User < ActiveRecord::Base
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :search, method: :for_search, ignore_blank: true
 
+  def self.with_primary_market(market)
+    User.all.select{|u| u.primary_market == market }
+  end
+
   def self.for_sort(order)
     column, direction = column_and_direction(order)
     case column
@@ -34,6 +38,7 @@ class User < ActiveRecord::Base
       order_by_email(direction)
     end
   end
+
 
   def self.for_search(query)
     search_by_name_and_email(query)
@@ -160,6 +165,20 @@ class User < ActiveRecord::Base
       [m.name, m.id]
     end
     for_select.sort {|a, b| a[0] <=> b[0] }
+  end
+
+  def send_import_password_reset_instructions
+    raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
+
+    self.reset_password_token   = enc
+    self.reset_password_sent_at = Time.now.utc + 3.weeks #4 week expiration for imported users
+    self.save(validate: false)
+
+    unless Rails.env.staging? && (self.email != "anna@localorb.it") #allow Anna to get test emails from staging
+      send_devise_notification(:reset_import_password_instructions, raw, {})
+    end
+
+    raw
   end
 
   private
