@@ -131,21 +131,28 @@ module ApplicationHelper
         s = delta / (2.0 - max - min)
       end
 
-      [ (h * 360).to_i, (s * 100).to_i, (l * 100).to_i ]
+      color = [ (h * 360).to_i, (s * 100).to_i, (l * 100).to_i ]
+    elsif delta == 0 and max == 1.0
+      color = [ 0, 100, 100 ]
+    else
+      color = [ 0, 0, 0 ]
     end
+    color
   end
 
-  def color_mix(color, percentage)
+  def color_mix(color = "#000000", percentage = 50)
     color = hex_to_hsl(color)
+
     adjustment = color[2].to_f * (percentage.abs / 100.0)
     if percentage < 0
-      lum = color[2] - adjustment
+      lum = color[2].to_f - adjustment
     else
-      lum = color[2] + adjustment
+      lum = color[2].to_f + adjustment
     end
     lum = lum > 100 ? 100 : lum
     lum = lum < 0 ? 0 : lum
     "hsl(#{color[0]}, #{color[1]}%, #{lum}%)"
+
   end
 
 
