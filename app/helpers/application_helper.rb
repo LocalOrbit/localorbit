@@ -82,23 +82,6 @@ module ApplicationHelper
     files.map {|name| [name.split(/[\/\.]/)[-2].titleize, name.split("/")[-1]] }
   end
 
-  def color_mix(color_a = "#000000", color_b = "#ffffff")
-    color_a = color_a.sub(/^#/, '')
-    color_b = color_b.sub(/^#/, '')
-    if color_a.length == 6 && color_b.length == 6
-      r = color_mix_range(color_a, color_b, 0..1)
-      g = color_mix_range(color_a, color_b, 2..3)
-      b = color_mix_range(color_a, color_b, 4..5)
-      "##{r}#{g}#{b}"
-    else
-      "##{color_a}"
-    end
-  end
-
-  def color_mix_range(color_a, color_b, range)
-    (((color_a[range].hex - color_b[range].hex).abs / 6 * 5 ) + color_a[range].hex).to_s(16)[0..1]
-  end
-
   def hex_to_hsl (color)
     min = 255
     max = 0
@@ -151,6 +134,20 @@ module ApplicationHelper
       [ (h * 360).to_i, (s * 100).to_i, (l * 100).to_i ]
     end
   end
+
+  def color_mix(color, percentage)
+    color = hex_to_hsl(color)
+    adjustment = color[2].to_f * (percentage.abs / 100.0)
+    if percentage < 0
+      lum = color[2] - adjustment
+    else
+      lum = color[2] + adjustment
+    end
+    lum = lum > 100 ? 100 : lum
+    lum = lum < 0 ? 0 : lum
+    "hsl(#{color[0]}, #{color[1]}%, #{lum}%)"
+  end
+
 
   def svg_icon
     svg = "<svg class='icon' width='100%' height='100%' viewBox='0 0 513 395' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
