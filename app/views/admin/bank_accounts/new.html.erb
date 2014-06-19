@@ -23,7 +23,8 @@
         <label for="balanced_account_name">Name</label>
         <span class="hint">Full name as it appears on the account</span>
         <br>
-        <input id="balanced_account_name" type="text" name="name" value="<%= @bank_account.name %>" class="column--full">
+        <input id="balanced_account_name" type="text" name="credit_card[name]" value="<%= @bank_account.name %>" class="column--full">
+        <%= # f.text_field :name, {id: "balanced_account_name", class:"column--full"} %>
       </div
       ><div class="field column column--half column--guttered">
         <label for="balanced_account_type">Account Type</label><br>
