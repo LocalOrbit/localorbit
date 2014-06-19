@@ -9,7 +9,7 @@
 
 <%= render "shared/errors", {resource: @lot_with_errors} if @lot_with_errors %>
 
-<%= link_to "Add Lot", '#add-lot', class: @product.lots.count > 0 ? 'pull-right btn btn--add btn--small add-toggle' : 'is-hidden'  %>
+<%= link_to "Add Lot", '#add-lot', class: @product.lots.count > 0 ? 'pull-right btn btn--add-mobile btn--add btn--small   add-toggle' : 'is-hidden'  %>
 <h2>Add Inventory</h2>
 
 <% if @product.lots.select { |lot| lot.persisted? }.empty? %>

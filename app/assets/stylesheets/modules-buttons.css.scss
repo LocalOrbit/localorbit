@@ -47,6 +47,12 @@ input[type=submit] {
       font-size: 17px;
     }
   }
+  @media screen and (max-width: 600px) {
+    &.btn--add-mobile {
+      padding: 4px 8px;
+      font-size: 14px;
+    }
+  }
   &.btn--tiny {
     padding: 1px 6px;
     font-size: 12px;
@@ -159,11 +165,7 @@ input[type=submit] {
   padding-right: 8px;
   padding-left: 8px;
 }
-@media screen and (max-width: 600px) {
-  .btn--add.btn--small {
-    padding: 12px 18px;
-  }
-}
+
 .btn--add:before {
   content: "✚  "
 }
