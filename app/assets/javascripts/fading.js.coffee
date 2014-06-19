@@ -1,5 +1,4 @@
 $ ->
-
   window.fade_flash = ->
     if $('body').hasClass('transitions')
       $('.flash').addClass('is-fading')

@@ -1,86 +1,90 @@
 <div class="products-featured">
-  <h3 class="featured-heading">Featured: <%= featured.title %></h3>
-  <div class="featured-description">
-    <%= raw featured.body %>
+  <h3 class="featured-heading">Featured: <%= link_to featured.title, product_path(featured.product) %><a href="#featured-table" class="toggle-slide featured-product-toggle font-icon icon-minus-circle featured-toggle"></a></h3>
+  <div class="slide featured-table-slide" id="featured-table">
+    <div class="slide-content">
+      <div class="featured-description">
+        <%= raw featured.body %>
+      </div>
+      <table class="product-table product-table--user featured-product cart_items" data-cart-url="<%= cart_path %>">
+        <tbody>
+          <tr class="product product-row cart_item" data-cart-item="<%= featured.product.cart_item.to_json %>">
+            <td class="info">
+            <div class="product-image">
+              <%= image_tag featured.image, alt: "" %>
+            </div>
+              <h3 class="name"><%= link_to featured.product.name, featured.product, tabindex: -1 %></h3>
+              <div class="short_description">
+
+                <% if featured.product.long_description.present? %>
+                  <p>
+                    <%= featured.product.short_description %>
+                    <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{featured.product.id}-long-description", {class: "popup-toggle", tabindex: "-1"} %>
+                  </p>
+                  <div class="long-description-info is-hidden with-anchor top-anchor popup" id="product-<%= featured.product.id %>-long-description">
+                    <div class="popup-header">
+                      Details <button class="close"><i class="font-icon icon-close"></i></button>
+                    </div>
+                    <div class="popup-body">
+                      <%= simple_format featured.product.long_description %>
+                    </div>
+                  </div>
+                <% else %>
+                  <%= simple_format featured.product.short_description  %>
+                <% end %>
+              </div>
+
+              <ul class="meta list-naked l-inline-list">
+                <li class="organization-name">
+                  <%= link_to raw("<i class=\"font-icon icon-credit\"></i> #{featured.product.organization_name}"), "#product-#{featured.product.id}-who", class: "popup-toggle", tabindex: -1 %>
+                  <div class="who-info is-hidden with-anchor top-anchor popup" id="product-<%= featured.product.id %>-who">
+                    <div class="popup-header">
+                      Who <button class="close"><i class="font-icon icon-close"></i></button>
+                    </div>
+                    <div class="popup-body">
+                      <%= featured.product.who_story %>
+                    </div>
+                  </div>
+                </li>
+                <li class="how-story">
+                  <%= link_to raw('<i class="font-icon icon-archive"></i> How'), "#product-#{featured.product.id}-how", class: "popup-toggle", tabindex: -1 %>
+                  <div class="how-info is-hidden with-anchor top-anchor popup" id="product-<%= featured.product.id %>-how">
+                    <div class="popup-header">
+                      How <button class="close"><i class="font-icon icon-close"></i></button>
+                    </div>
+                    <div class="popup-body">
+                      <%= featured.product.how_story %>
+                    </div>
+                  </div>
+                </li>
+                <li class="where">
+                  <%= link_to raw('<i class="font-icon icon-direction"></i> Where'), "#product-#{featured.product.id}-where", class: "popup-toggle", tabindex: -1 %>
+                  <div class="where-info is-hidden with-anchor top-anchor popup" id="product-<%= featured.product.id %>-where">
+                    <div class="popup-header">
+                      <%= featured.product.location_label %>     <button class="close"><i class="font-icon icon-close"></i></button>
+                    </div>
+                    <img class="location-map" alt="" src="<%= featured.product.location_map 310, 225 %>" />
+                  </div>
+                </li>
+              </ul>
+            </td>
+            <td class="pricing">
+              <ul class="tiers">
+                <% featured.product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
+                  <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
+                <% end %>
+              </ul>
+            </td>
+            <td class="quantity">
+              <span>
+                <input name="quantity" type="text" size="3" min="0" value="<%= featured.product.cart_item.quantity > 0 ? featured.product.cart_item.quantity : '' %>" max="<%= featured.product.available_inventory(current_delivery.deliver_on) %>"><br>
+                <span class="price-for-quantity"><%= number_to_currency(featured.product.cart_item.unit_price.sale_price) %></span>
+              </span>
+            </td>
+            <td class="total price"><%= featured.product.cart_item.decorate.display_total_price %></td>
+            <td class="featured-clear"><%= link_to "", "#", class: "font-icon icon-clear #{' is-hidden' unless featured.product.cart_item.persisted?}", tabindex: -1%></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <table class="product-table product-table--user featured-product cart_items" data-cart-url="<%= cart_path %>">
-    <tbody>
-      <tr class="product product-row cart_item" data-cart-item="<%= featured.product.cart_item.to_json %>">
-        <td class="info">
-        <div class="product-image">
-          <%= image_tag featured.image, alt: "" %>
-        </div>
-          <h3 class="name"><%= link_to featured.product.name, featured.product, tabindex: -1 %></h3>
-          <div class="short_description">
-
-            <% if featured.product.long_description.present? %>
-              <p>
-                <%= featured.product.short_description %>
-                <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{featured.product.id}-long-description", {class: "popup-toggle", tabindex: "-1"} %>
-              </p>
-              <div class="long-description-info is-hidden with-anchor top-anchor popup" id="product-<%= featured.product.id %>-long-description">
-                <div class="popup-header">
-                  Details <button class="close"><i class="font-icon icon-close"></i></button>
-                </div>
-                <div class="popup-body">
-                  <%= simple_format featured.product.long_description %>
-                </div>
-              </div>
-            <% else %>
-              <%= simple_format featured.product.short_description  %>
-            <% end %>
-          </div>
-
-          <ul class="meta list-naked l-inline-list">
-            <li class="organization-name">
-              <%= link_to raw("<i class=\"font-icon icon-credit\"></i> #{featured.product.organization_name}"), "#product-#{featured.product.id}-who", class: "popup-toggle", tabindex: -1 %>
-              <div class="who-info is-hidden with-anchor top-anchor popup" id="product-<%= featured.product.id %>-who">
-                <div class="popup-header">
-                  Who <button class="close"><i class="font-icon icon-close"></i></button>
-                </div>
-                <div class="popup-body">
-                  <%= featured.product.who_story %>
-                </div>
-              </div>
-            </li>
-            <li class="how-story">
-              <%= link_to raw('<i class="font-icon icon-archive"></i> How'), "#product-#{featured.product.id}-how", class: "popup-toggle", tabindex: -1 %>
-              <div class="how-info is-hidden with-anchor top-anchor popup" id="product-<%= featured.product.id %>-how">
-                <div class="popup-header">
-                  How <button class="close"><i class="font-icon icon-close"></i></button>
-                </div>
-                <div class="popup-body">
-                  <%= featured.product.how_story %>
-                </div>
-              </div>
-            </li>
-            <li class="where">
-              <%= link_to raw('<i class="font-icon icon-direction"></i> Where'), "#product-#{featured.product.id}-where", class: "popup-toggle", tabindex: -1 %>
-              <div class="where-info is-hidden with-anchor top-anchor popup" id="product-<%= featured.product.id %>-where">
-                <div class="popup-header">
-                  <%= featured.product.location_label %>     <button class="close"><i class="font-icon icon-close"></i></button>
-                </div>
-                <img class="location-map" alt="" src="<%= featured.product.location_map 310, 225 %>" />
-              </div>
-            </li>
-          </ul>
-        </td>
-        <td class="pricing">
-          <ul class="tiers">
-            <% featured.product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
-              <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
-            <% end %>
-          </ul>
-        </td>
-        <td class="quantity">
-          <span>
-            <input name="quantity" type="text" size="3" min="0" value="<%= featured.product.cart_item.quantity > 0 ? featured.product.cart_item.quantity : '' %>" max="<%= featured.product.available_inventory(current_delivery.deliver_on) %>"><br>
-            <span class="price-for-quantity"><%= number_to_currency(featured.product.cart_item.unit_price.sale_price) %></span>
-          </span>
-        </td>
-        <td class="total price"><%= featured.product.cart_item.decorate.display_total_price %></td>
-        <td class="featured-clear"><%= link_to "", "#", class: "font-icon icon-clear #{' is-hidden' unless featured.product.cart_item.persisted?}", tabindex: -1%></td>
-      </tr>
-    </tbody>
-  </table>
 </div>

@@ -943,15 +943,15 @@
     @include transform(translateY(-110%));
   }
 }
-  .slide-content {
-    position: relative;
-    max-height: 100%;
-    @include transform(translateY(0));
-    -webkit-transition:-webkit-transform .4s linear, max-height .4s linear;
-       -moz-transition:   -moz-transform .4s linear, max-height .4s linear;
-            transition:        transform .4s linear, max-height .4s linear;
-  }
-
+.slide-content {
+  position: relative;
+  overflow: hidden;
+  max-height: 100%;
+  @include transform(translateY(0));
+  -webkit-transition:-webkit-transform .4s linear, max-height .4s linear;
+     -moz-transition:   -moz-transform .4s linear, max-height .4s linear;
+          transition:        transform .4s linear, max-height .4s linear;
+}
 .delivery {
   .date {
     color: $notice_text;

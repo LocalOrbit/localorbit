@@ -1,12 +1,26 @@
 @import 'mixins';
 
 .products-featured {
+  .featured-toggle {
+    float: right;
+    color: #999;
+    font-size: 14px;
+    margin-top: 8px;
+  }
   .featured-heading {
+    font-weight: normal;
     padding: 10px;
     border-bottom: solid 1px #bbb;
     margin: 0;
     background: #f0f0f0;
     @include border-radius(10px 10px 0 0);
+    &.collapsed {
+      @include border-radius(10px 10px 10px 10px);
+      border-bottom: none;
+    }
+    a:hover {
+      text-decoration: none;
+    }
   }
   .featured-description {
     padding: 10px;

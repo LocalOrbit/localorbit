@@ -4,7 +4,7 @@ describe "Viewing featured promotion" do
   let!(:market)    { create(:market, :with_delivery_schedule, :with_address) }
   let!(:seller)    { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:product)   { create(:product, :sellable, organization: seller) }
-  let!(:promotion) { create(:promotion, :active, product: product, market: market) }
+  let!(:promotion) { create(:promotion, :active, product: product, market: market, body: "Big savings!") }
 
   let!(:buyer) { create(:organization, :buyer, :single_location, markets: [market]) }
   let!(:user) { create(:user, organizations: [buyer]) }
@@ -13,8 +13,6 @@ describe "Viewing featured promotion" do
     before do
       switch_to_subdomain(market.subdomain)
       sign_in_as user
-
-
     end
 
     context 'with a price' do
@@ -24,6 +22,16 @@ describe "Viewing featured promotion" do
 
       it 'shows the featured product' do
         expect(page).to have_content("Featured")
+      end
+
+      it 'can be toggled between minimized and maximized', js: true do
+        expect(page).to have_content('Big savings!')
+        find('.featured-product-toggle').trigger('click')
+
+        expect(page).not_to have_content('Big savings!')
+
+        find('.featured-product-toggle').trigger('click')
+        expect(page).to have_content('Big savings!')
       end
     end
 
