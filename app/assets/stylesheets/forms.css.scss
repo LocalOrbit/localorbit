@@ -510,3 +510,9 @@ form.form-actions {
 .newsletter-body {
   @include border-radius(0 0 5px 5px);
 }
+
+@media screen and (max-width: 600px) {
+  .delete-check-mobile {
+    display: none;
+  }
+}

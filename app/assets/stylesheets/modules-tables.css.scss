@@ -115,7 +115,7 @@ caption {
 
 td,
 th {
-  padding: 4px 0 4px 10px;
+  padding: 4px 10px;
   font-size: 13px;
 }
 
@@ -762,6 +762,13 @@ th {
     width: 100%;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .pricing-table {
+    min-width: 500px;
+  }
+}
+
 .sold-table, .report-table {
   margin-bottom: 20px;
   td {
