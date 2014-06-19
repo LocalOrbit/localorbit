@@ -313,15 +313,22 @@ div.field_with_errors {
 
 @media screen and (max-width: 600px) {
   .action-helper {
-    text-align: left;
+    text-align: center;
     button,
     input[type=submit],
     .btn {
       display: block;
+      margin-top: 15px;
     }
     input[type=submit] {
       width: 100%;
+      
     }
+  }
+  .return-list {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 15px;
   }
 }
 
