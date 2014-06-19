@@ -2,11 +2,7 @@
 
 <div class="row row--partial">
 <form class="column column--three-fourths" id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>" data-target-form="new_bank_account" data-balanced-object-type="bankAccount">
-  <noscript>
-    <ul class="form-errors">
-      <li>This page requires you to enable JavaScript in your browser.</li>
-    </ul>
-  </noscript>
+  <%= render 'shared/enable_javascript' %>
 
   <%= render 'shared/errors', resource: @bank_account %>
 
