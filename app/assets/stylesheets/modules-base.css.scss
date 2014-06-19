@@ -1268,6 +1268,9 @@ label ~ .tooltip {
   .teflon {
     display: none;
   }
+  .l-app-header + .teflon {
+    display: block;
+  }
 }
 @media screen and (min-height: 768px) {
   .tab-header,
