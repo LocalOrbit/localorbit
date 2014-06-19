@@ -104,6 +104,12 @@
     text-align: left;
   }
 
+  @media screen and (max-width: 600px) {
+    h1 {
+      text-align: center;
+    }
+  }
+
   .field {
     margin-top: 0;
   }

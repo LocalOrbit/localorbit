@@ -204,6 +204,12 @@ tbody {
     }
   }
 }
+
+.product-delete {
+  margin-top: 5px;
+  float: right;
+}
+
 .no-touch {
   tbody:not(.order-summary) {
     tr:not(.destructive):hover {
