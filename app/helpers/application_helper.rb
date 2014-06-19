@@ -82,22 +82,79 @@ module ApplicationHelper
     files.map {|name| [name.split(/[\/\.]/)[-2].titleize, name.split("/")[-1]] }
   end
 
-  def color_mix(color_a = "#000000", color_b = "#ffffff")
-    color_a = color_a.sub(/^#/, '')
-    color_b = color_b.sub(/^#/, '')
-    if color_a.length == 6 && color_b.length == 6
-      r = color_mix_range(color_a, color_b, 0..1)
-      g = color_mix_range(color_a, color_b, 2..3)
-      b = color_mix_range(color_a, color_b, 4..5)
-      "##{r}#{g}#{b}"
-    else
-      "##{color_a}"
+  def hex_to_hsl (color)
+    min = 255
+    max = 0
+
+    color = color.sub(/^#/, '').to_s
+
+    rgb = [
+      color[0..1].hex.to_f / 255,
+      color[2..3].hex.to_f / 255,
+      color[4..5].hex.to_f / 255
+    ]
+
+    rgb.each do |val|
+      min = val if val < min
+      max = val if val > max
     end
+
+    delta = max - min
+
+    if delta != 0
+
+      delta_r = ((max - rgb[0] / 6.0) + (max / 2)) / delta
+      delta_g = ((max - rgb[1] / 6.0) + (max / 2)) / delta
+      delta_b = ((max - rgb[2] / 6.0) + (max / 2)) / delta
+
+      if rgb[0] == max
+        h = delta_b - delta_g
+      elsif rgb[1] == max
+        h = (1.0 / 3.0) + delta_r - delta_b
+      elsif rgb[2] == max
+        h = (2.0 / 3.0) + delta_g - delta_r
+      end
+
+      while h < 0.0
+        h += 1.0
+      end
+
+      while h > 1.0
+        h -= 1.0
+      end
+
+      l = (max + min) / 2
+
+      if l < 0.5
+        s = delta / (min + max)
+      else
+        s = delta / (2.0 - max - min)
+      end
+
+      color = [ (h * 360).to_i, (s * 100).to_i, (l * 100).to_i ]
+    elsif delta == 0 and max == 1.0
+      color = [ 0, 100, 100 ]
+    else
+      color = [ 0, 0, 0 ]
+    end
+    color
   end
 
-  def color_mix_range(color_a, color_b, range)
-    (((color_a[range].hex - color_b[range].hex).abs / 6 * 5 ) + color_a[range].hex).to_s(16)[0..1]
+  def color_mix(color = "#000000", percentage = 50)
+    color = hex_to_hsl(color)
+
+    adjustment = color[2].to_f * (percentage.abs / 100.0)
+    if percentage < 0
+      lum = color[2].to_f - adjustment
+    else
+      lum = color[2].to_f + adjustment
+    end
+    lum = lum > 100 ? 100 : lum
+    lum = lum < 0 ? 0 : lum
+    "hsl(#{color[0]}, #{color[1]}%, #{lum}%)"
+
   end
+
 
   def svg_icon
     svg = "<svg class='icon' width='100%' height='100%' viewBox='0 0 513 395' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
