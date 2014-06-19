@@ -2,10 +2,6 @@
 //= depend_on_asset "center-rule@2x.png"
 @import "mixins.css.scss";
 
-body {
-  -webkit-text-size-adjust: none;
-}
-
 .clear-before {
   clear: both;
 }
@@ -54,7 +50,7 @@ body {
   @include gradient(rgba(255,255,255,0.0), rgba(255,255,255,0.13));
   font-size: 14px;
 }
-@media screen and (min-height: 480px) {
+@media screen and (min-device-height: 330px) {
   .l-app-header.js-positioned {
     position: fixed;
     top: 0;
