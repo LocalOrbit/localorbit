@@ -71,7 +71,7 @@
 
   > a {
     &:hover {
-      color: #fff;
+      color: $hover;
       @include border-radius(6px);
       background: $link;
       @include gradient(rgba(0,0,0,0.3), rgba(0,0,0,0));
