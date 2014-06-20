@@ -342,10 +342,12 @@
 .tagline {
   clear: left;
   display: block;
+  margin-bottom: 1em;
   font: lighter 18px 'Open Sans', sans-serif;
   -webkit-filter: brightness(0.9);
   -moz-filter: brightness(0.9);
   filter: brightness(0.9);
+  -webkit-transform: translateZ(0);
   word-wrap: break-word;
   word-break: break-all;
 }
@@ -621,15 +623,22 @@
     }
   }
 
-  @media screen and (max-width: 600px) {
-    > .l-constraint {
-      padding-bottom: 0;
-    }
-  }
-
   .l-page-header {
     margin: 0;
   }
+}
+
+@media screen and (max-width: 600px) {
+  .l-page-header {
+    text-align: center;
+
+    .delete {
+      position: absolute;
+      top: 25px;
+      right: 15px;
+    }
+  }
+  
 }
 @media screen and (min-height: 768px) {
   .tab-header.js-positioned {
@@ -905,7 +914,7 @@
   display: block;
   max-width: 300px;
   height: 100px;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
 
   > .logo {
     max-width: 100%;
@@ -1272,6 +1281,9 @@ label ~ .tooltip {
   .teflon {
     display: none;
   }
+  .l-app-header + .teflon {
+    display: block;
+  }
 }
 @media screen and (min-height: 768px) {
   .tab-header,
@@ -1301,6 +1313,11 @@ label ~ .tooltip {
     > .l-constraint {
       padding-right: 20px;
       padding-left: 20px;
+    }
+    @media screen and (max-width: 600px) {
+      > .l-constraint {
+        padding-right: 0;
+      }
     }
     &.js-positioned {
       > .l-constraint {

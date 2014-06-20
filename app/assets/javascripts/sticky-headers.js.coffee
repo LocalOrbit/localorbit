@@ -9,7 +9,7 @@ $ ->
     while i < index
       height += stick_heights[i]
       i++
-      if window.innerHeight >= 768
+      if window.innerHeight >= 768 || i == 0
         if find_scrolly() >= scroll_point - height
           $(stickable).addClass('js-fixed').css({'top': height})
         else

@@ -115,7 +115,7 @@ caption {
 
 td,
 th {
-  padding: 4px 0 4px 10px;
+  padding: 4px 10px;
   font-size: 13px;
 }
 
@@ -192,6 +192,8 @@ tbody {
     &:nth-child(odd) {
       background: #f9f9f9;
     }
+    &:hover {
+    }
     &.destructive {
       background: #fdd;
 
@@ -202,9 +204,15 @@ tbody {
     }
   }
 }
+
+.product-delete {
+  margin-top: 5px;
+  float: right;
+}
+
 .no-touch {
-  tbody {
-    tr:hover {
+  tbody:not(.order-summary) {
+    tr:not(.destructive):hover {
       background: #D8EED2;
     }
   }
@@ -754,6 +762,13 @@ th {
     width: 100%;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .pricing-table {
+    min-width: 500px;
+  }
+}
+
 .sold-table, .report-table {
   margin-bottom: 20px;
   td {
@@ -806,8 +821,6 @@ th {
     font-weight: bold;
   }
 }
-
-
 
 /** Sticky tables (like other sticky things, but sillier */
 @media screen and (max-height: 767px) {

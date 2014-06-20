@@ -18,5 +18,5 @@
     <% end %>
     <%= link_to "Reset", admin_products_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
   </div>
-  <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add pull-right" %>
+  <%= link_to "Add New Product", new_admin_product_path, class: "btn btn--add btn--small pull-right" %>
 </div>

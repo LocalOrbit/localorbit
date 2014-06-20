@@ -296,15 +296,22 @@ div.field_with_errors {
 
 @media screen and (max-width: 600px) {
   .action-helper {
-    text-align: left;
+    text-align: center;
     button,
     input[type=submit],
     .btn {
       display: block;
+      margin-top: 15px;
     }
     input[type=submit] {
       width: 100%;
+      
     }
+  }
+  .return-list {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 15px;
   }
 }
 
@@ -387,7 +394,7 @@ form.form-actions {
 .invoice_search,
 .payment_search,
 .order_search {
-  margin: 0 0 1em;
+  padding: 0 0 1em;
 
   input,
   .preserve-alignment {
@@ -485,4 +492,10 @@ form.form-actions {
 }
 .newsletter-body {
   @include border-radius(0 0 5px 5px);
+}
+
+@media screen and (max-width: 600px) {
+  .delete-check-mobile {
+    display: none;
+  }
 }

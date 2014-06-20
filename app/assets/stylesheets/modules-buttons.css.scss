@@ -41,6 +41,18 @@ input[type=submit] {
     padding: 4px 18px;
     font-size: 14px;
   }
+  @media screen and (max-width: 600px) {
+    &.btn--small {
+      padding: 12px 18px;
+      font-size: 17px;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    &.btn--add-mobile {
+      padding: 4px 8px;
+      font-size: 14px;
+    }
+  }
   &.btn--tiny {
     padding: 1px 6px;
     font-size: 12px;
@@ -53,6 +65,10 @@ input[type=submit] {
     height: 0;
     width: 0;
   }
+}
+
+.btn--headline {
+  margin-top: 10px;
 }
 
 .btn--gray {
@@ -149,6 +165,7 @@ input[type=submit] {
   padding-right: 8px;
   padding-left: 8px;
 }
+
 .btn--add:before {
   content: "✚  "
 }
