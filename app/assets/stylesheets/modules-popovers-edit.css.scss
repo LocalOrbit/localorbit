@@ -145,9 +145,11 @@
     }
     .form-actions {
       float: none;
+      text-align: center;
     }
     .links {
       padding: 5px 0;
+        margin-top: 20px;
       font-size: 0.1px;
       text-align: justify;
       &:after {
@@ -158,11 +160,6 @@
       a {
         display:inline-block;
         font-size: 12px;
-      }
-    }
-    @media screen and (max-width: 600px) {
-      .links {
-        margin-top: 20px;
       }
     }
   }
