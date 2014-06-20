@@ -65,17 +65,23 @@ $ ->
          clone_header_attr($original_headers[i], e, i, $original_headers.length)
         , 5
 
+  measure_stickables = ->
+    $('.stickable').each (i, e) ->
+      stick_points.push($(e).offset().top)
+      stick_heights.push($(e).outerHeight())
+      $(e).attr({'data-height': stick_heights[i], 'data-offset': stick_points[i]})
+      if e.tagName != "THEAD"
+        stick_absolutely(i, e)
+      else
+        stick_table(i, e)
 
-  $('.stickable').each (i, e) ->
-    stick_points.push($(e).offset().top)
-    stick_heights.push($(e).outerHeight())
-    $(e).attr({'data-height': stick_heights[i], 'data-offset': stick_points[i]})
-    if e.tagName != "THEAD"
-      stick_absolutely(i, e)
-    else
-      stick_table(i, e)
+  $(window).resize ->
+    measure_stickables
+
+  measure_stickables()
 
   $(window).scroll (event) ->
     affix i, point for point, i in stick_points
 
   $(window).trigger "scroll"
+

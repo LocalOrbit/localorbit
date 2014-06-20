@@ -4,11 +4,7 @@
         <%= render "admin/financials/invoices/filters/seller", url: admin_financials_invoices_path %>
     </div>
   </div>
-<%= form_tag admin_financials_invoices_path, method: :post do %>
-  <p class="pull-right">
-    <input type="submit" value="Send Selected Invoices" class="btn btn--small">
-  </p>
-  <p>These invoices require your attention.</p>
+<%= form_tag admin_financials_invoices_path, method: :post, id: 'invoice-list' do %>
   <div class="clearfix sub-header-whitespace"></div>
   <table class="sortable">
     <thead class="stickable">
