@@ -19,9 +19,9 @@ namespace :destroy do
     metric("Delete", "Bank Accounts", org.bank_accounts.count)
     metric("Delete", "Carts", org.carts.count)
     metric("Delete", "Locations", org.locations.count)
-    metric("Delete", "Payments To", Payment.where(payee_type: "Organization", payee_id: args[:id]))
-    metric("Delete", "Payments From", Payment.where(payer_type: "Organization", payer_id: args[:id]))
-    metric("Delete", "Prices", Price.where(organization_id: args[:id].to_i).count)
+    metric("Delete", "Payments To", Payment.where(payee_type: "Organization", payee_id: org.id).count)
+    metric("Delete", "Payments From", Payment.where(payer_type: "Organization", payer_id: org.id).count)
+    metric("Delete", "Prices", Price.where(organization_id: org.id).count)
     metric("Delete", "Products", org.products.count)
     metric("Delete", "Orders", org.orders.count)
     metric("Remove Associations with ", "User", org.users.count)
@@ -33,7 +33,7 @@ namespace :destroy do
 
     org.carts.each(&:destroy!)
     org.orders.each(&:destroy!)
-    prices = Price.where(organization_id: args[:id].to_i)
+    prices = Price.where(organization_id: org.id)
     prices.each(&:destroy!)
 
     org.users = []
