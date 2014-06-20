@@ -147,6 +147,9 @@ input[type=submit] {
   color: #fff;
   background-color: #43639f;
 }
+input[type=button].btn--save {
+  color: #fff;
+}
 .btn--money {
   @include border-radius(5px);
   color: #fff;

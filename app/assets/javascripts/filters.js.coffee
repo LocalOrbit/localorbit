@@ -23,6 +23,9 @@ $ ->
     if (e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)
       $("#search-btn").click()
 
+  $('#submit_send_selected').click ->
+    $('#invoice-list').trigger('submit')
+
   parseSearchString = () ->
     list = window.location.search.substr(1).split("&")
     params = {}

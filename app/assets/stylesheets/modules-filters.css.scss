@@ -10,6 +10,12 @@
   display: inline-block;
   width: 100%;
   margin: 10px 0;
+  text-align: justify;
+  &:after {
+    display: inline-block;
+    width: 100%;
+    content: '';
+  }
   select {
     width: 130px;
   }
