@@ -22,11 +22,11 @@ describe ApplicationHelper do
 
   describe "#color_mix" do
     it "mixes colors" do
-      expect(color_mix).to eq("hsl(0, 0%, 0.0%)")
-      expect(color_mix("#ffffff", 0)).to eq("hsl(0, 100%, 100.0%)")
-      expect(color_mix("#000000", 100)).to eq("hsl(0, 0%, 0.0%)")
-      expect(color_mix("000000", 100)).to eq("hsl(0, 0%, 0.0%)")
-      expect(color_mix("#456589", 50)).to eq("hsl(211, 33%, 60.0%)")
+      expect(color_mix).to eq("hsl(0, 0%, 50%)")
+      expect(color_mix("#ffffff", 0)).to eq("hsl(0, 100%, 100%)")
+      expect(color_mix("#000000", 100)).to eq("hsl(0, 0%, 100%)")
+      expect(color_mix("000000", 100)).to eq("hsl(0, 0%, 100%)")
+      expect(color_mix("#456589", 50)).to eq("hsl(211, 33%, 90%)")
     end
   end
 end
