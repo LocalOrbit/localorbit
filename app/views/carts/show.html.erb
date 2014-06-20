@@ -95,8 +95,11 @@
                       <% if current_organization.decorate.credit_cards_available? %>
                         <label for="order_credit_card_id">Saved credit cards</label><br>
                         <%= select_tag "order[credit_card][id]", options_for_select(current_organization.decorate.credit_card_options), prompt: 'Select a Stored Credit Card' %><br>
+                      <% else %>
+                        Add a <%= link_to "credit card", new_admin_organization_bank_account_path(current_organization) %> to your account.
                       <% end %><br>
 
+                      <% unless Rails.env.production? %>
                       <label>New Credit Card</label><br>
                       <fieldset id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>">
                         <div class="row">
@@ -134,6 +137,7 @@
                           </div>
                         </div>
                       </fieldset>
+                      <% end %>
                     </div>
                   </fieldset>
                 </div>
