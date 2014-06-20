@@ -132,6 +132,8 @@
   <input type="hidden" name="bank_account[notes]" value="" id="notes">
 <% end -%>
 
+  <ul id="balanced-js-errors" class="form-errors"></ul>
+
   <div class="column column--three-fourths">
     <div class="form-actions">
       <%= link_to "Cancel", [:admin, @entity, @bank_account], class: "btn cancel" %>
