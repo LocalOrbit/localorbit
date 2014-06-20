@@ -43,7 +43,7 @@
         color: <%= current_market.text_color -%>;
       }
       a:hover {
-        color: <%= color_mix current_market.text_color, 50 %>;
+        color: <%= color_mix current_market.text_color, 10 %>;
       }
       .l-app-header,
       .l-app-footer,
@@ -60,10 +60,10 @@
       .nav--app a:hover,
       .nav--app a:active,
       .nav--app a.current {
-        color: <%= color_mix current_market.text_color, 50 %>
+        color: <%= color_mix current_market.text_color, 20 %>
       }
       .pdf-download {
-        background-color: <%= color_mix current_market.text_color, 50 %>
+        background-color: <%= color_mix current_market.text_color, 70 %>
       }
     <% end %>
     </style>
