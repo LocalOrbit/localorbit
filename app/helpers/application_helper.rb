@@ -143,12 +143,7 @@ module ApplicationHelper
   def color_mix(color = "#000000", percentage = 50)
     color = hex_to_hsl(color)
 
-    adjustment = color[2].to_f * (percentage.abs / 100.0)
-    if percentage < 0
-      lum = color[2].to_f - adjustment
-    else
-      lum = color[2].to_f + adjustment
-    end
+    lum = color[2] + percentage
     lum = lum > 100 ? 100 : lum
     lum = lum < 0 ? 0 : lum
     "hsl(#{color[0]}, #{color[1]}%, #{lum}%)"
