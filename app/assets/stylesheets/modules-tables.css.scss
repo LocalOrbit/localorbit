@@ -835,6 +835,7 @@ th {
 
     &.js-fixed {
       position: fixed;
+      z-index: 3;
     }
   }
 }
