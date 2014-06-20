@@ -1,0 +1,25 @@
+<%# The container tag
+  - available local variables
+    current_page:  a page object for the currently displayed page
+    total_pages:   total number of pages
+    per_page:      number of items to fetch per page
+    remote:        data-remote
+    paginator:     the paginator that renders the pagination tags inside
+-%>
+<%= select_tag :per_page, options_for_select([["Show 10 rows", 10], ["Show 50 rows", 50], ["Show 100 rows", 100], ["Show all rows", 99999]], selected: params["per_page"] || 10), class: 'filter-dropdown per-page-filter', data: { parameter: "per_page" } %>
+
+<%= paginator.render do %>
+  <nav class="pagination">
+    <%= first_page_tag unless current_page.first? %>
+    <%= prev_page_tag unless current_page.first? %>
+    <% each_page do |page| %>
+      <% if page.left_outer? || page.right_outer? || page.inside_window? %>
+        <%= page_tag page %>
+      <% elsif !page.was_truncated? %>
+        <%= gap_tag %>
+      <% end %>
+    <% end %>
+    <%= next_page_tag unless current_page.last? %>
+    <%= last_page_tag unless current_page.last? %>
+  </nav>
+<% end %>

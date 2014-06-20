@@ -53,6 +53,17 @@ describe "Viewing products" do
 
       expect(Dom::ProductRow.count).to eq(1)
     end
+
+    it "allows user to change the number of rows displayed", js: true do
+      visit admin_products_path(per_page: 2)
+
+      expect(Dom::ProductRow.count).to eq(2)
+
+      select "Show 50 rows"
+      expect(page).to have_content("Apples")
+
+      expect(Dom::ProductRow.count).to eq(3)
+    end
   end
 
   context "market manager" do
