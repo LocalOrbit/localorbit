@@ -2,13 +2,6 @@ $ ->
   sandbox = document.createElement('div')
   window.features = {}
 
-  detect_form_attribute = ->
-    bucket = document.createElement('input')
-    bucket.setAttribute('form', 'sandbox_form')
-    sandbox_form = document.createElement('form')
-    sandbox_form.setAttribute('id', 'sandbox_form')
-    console.log bucket.form
-
   window.detect_input_date = ->
     bucket = document.createElement('input')
     bucket.setAttribute('type', 'date')
@@ -52,4 +45,3 @@ $ ->
   detect_transitions()
   detect_input_date()
   detect_touch()
-  detect_form_attribute()
