@@ -12,6 +12,8 @@ class CreateTemporaryCreditCard
       if temp_card.valid?
         set_card_for_transaction(temp_card)
       else
+        # Handles case in which buyer enters a credit
+        # card they have already saved
         if temp_card.errors.messages.keys == [:bankable_id]
           accounts = @org.bank_accounts.visible.where(
             account_type: @credit_card_params[:account_type],
