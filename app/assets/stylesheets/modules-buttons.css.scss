@@ -173,6 +173,10 @@ input[type=button].btn--save {
   content: "✚  "
 }
 
+.btn--add:hover {
+  color: $hover;
+}
+
 .btn--end,
 .btn--start {
   display: inline-block;
