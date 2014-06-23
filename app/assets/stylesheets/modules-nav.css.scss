@@ -257,7 +257,8 @@
       &:last-child {
         border-bottom: 0;
       }
-      > a {
+      > a,
+      > .current {
         position: relative;
         font-size: 14px;
         padding: 1em .5em .93em 2.5em;
