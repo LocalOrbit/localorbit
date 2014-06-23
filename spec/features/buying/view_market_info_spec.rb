@@ -20,7 +20,7 @@ feature "Viewing Market Info" do
     expect(page).to have_content(market.contact_email)
     expect(page).to have_content(market.policies)
     expect(page).to have_content(market.profile)
-    expect(page).not_to have_css('#admin-nav')
+    expect(page).to have_css('#admin-nav', :visible => false)
 
     sellers = Dom::MarketSellers.all
     expect(sellers.map(&:name)).to match_array([seller1.name, seller2.name])

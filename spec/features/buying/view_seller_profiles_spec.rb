@@ -54,7 +54,7 @@ feature "View Seller Profiles" do
     expect(page).to have_content(seller2.name)
     expect(page).to_not have_content(inactive_seller.name)
     expect(page).to_not have_content(hidden_seller.name)
-    expect(page).not_to have_css('#admin-nav')
+    expect(page).to have_css('#admin-nav', visible: false)
   end
 
   context "seller profile" do
@@ -64,7 +64,7 @@ feature "View Seller Profiles" do
 
       expect(page).to have_content(seller1.who_story)
       expect(page).to have_content(seller1.how_story)
-      expect(page).to_not have_css('#admin-nav')
+      expect(page).to have_css('#admin-nav', visible: false)
       expect(page).to_not have_xpath("//a[@class='twitter-timeline' and @data-screen-name='#{seller1.twitter}']")
       expect(page).to_not have_xpath("//div[@class='fb-like-box' and @data-href='https://www.facebook.com/#{seller1.facebook}']")
     end
