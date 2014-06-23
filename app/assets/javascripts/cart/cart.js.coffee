@@ -255,6 +255,7 @@ $ ->
       $(".quantity input").prop("readonly", true)
 
       newCard = {
+        name: $("#balanced_account_name").val(),
         card_number: $("#balanced_card_number").val(),
         expiration_month: $("#expiration_month").val(),
         expiration_year: $("#expiration_year").val(),

@@ -10,7 +10,7 @@ class BankAccount < ActiveRecord::Base
   private
 
   def account_is_unique_to_bankable
-    accounts = bankable.bank_accounts.visible.where(account_type: account_type, last_four: last_four)
+    accounts = bankable.bank_accounts.visible.where(account_type: account_type, last_four: last_four, bank_name: bank_name, name: name)
     accounts = accounts.where.not(id: id) if persisted?
 
     if accounts.any?

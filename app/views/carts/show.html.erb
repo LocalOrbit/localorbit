@@ -58,7 +58,7 @@
               <%= current_cart.delivery.decorate.cart_type %> <%= raw(current_cart.delivery.decorate.checkout_date) %>
             </div>
             <address class="adr">
-              <span classs="street-address"><%= current_cart.delivery_location.address %></span><br />
+              <span class="street-address"><%= current_cart.delivery_location.address %></span><br />
               <span class="locality"><%= current_cart.delivery_location.city %></span>, <span class="region"><%= current_cart.delivery_location.state %></span> <span class="postal-code"><%= current_cart.delivery_location.zip %></span>
             </address>
           </div>
@@ -107,7 +107,7 @@
                             <label for="balanced_account_name">Name</label>
                             <span class="hint">Full name as it appears on the account</span>
                             <br>
-                            <input id="balanced_account_name" type="text" value="" class="column--full">
+                            <input id="balanced_account_name" type="text" value="" name="order[credit_card][name]" class="column--full">
                           </div>
                         </div>
                         <div class="row">
