@@ -277,7 +277,7 @@ feature "Viewing products" do
       end
 
       scenario "has to select an organization to shop as" do
-        click_link "Shop"
+        click_link "Shop", match: :first
 
         select buyer_org.name, from: 'Organization'
 
@@ -533,8 +533,8 @@ feature "Viewing products" do
 
     buyer_org.locations.each(&:soft_delete)
 
-    click_link "Dashboard"
-    click_link "Shop"
+    click_link "Dashboard", match: :first
+    click_link "Shop", match: :first
 
     expect(page).to have_content("You must enter an address for this organization before you can shop")
 
@@ -548,7 +548,7 @@ feature "Viewing products" do
 
     click_button "Add Address"
 
-    click_link "Shop"
+    click_link "Shop", match: :first
 
     products = Dom::Product.all
     expect(products).to have(2).products
@@ -564,8 +564,8 @@ feature "Viewing products" do
     delivery_schedule1.soft_delete
     delivery_schedule2.update_attribute(:deleted_at, nil)
 
-    click_link "Dashboard"
-    click_link "Shop"
+    click_link "Dashboard", match: :first
+    click_link "Shop", match: :first
 
     within('.selected-delivery') do
       expect(page).to have_content("October 8, 2014")
