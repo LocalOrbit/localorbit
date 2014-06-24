@@ -224,6 +224,9 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
     netrc (0.7.7)
+    newrelic-dragonfly (0.0.4)
+      dragonfly
+      newrelic_rpm
     newrelic_rpm (3.8.1.221)
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
@@ -425,6 +428,7 @@ DEPENDENCIES
   kaminari
   launchy
   mysql2
+  newrelic-dragonfly
   newrelic_rpm
   passenger
   pdfkit
