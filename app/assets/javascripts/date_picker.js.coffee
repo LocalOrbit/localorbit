@@ -16,14 +16,17 @@ class @DatePicker
       options.altField = "#" + field.attr('data-input')
       field.find('.ui-datepicker-inline').attr('style', null)
 
-
     picker = field.datepicker(options)
 
     if field.val()
       # JS parses "2014-02-15" different than "2014/02/15"
-      date_str = field.val().substr(0,10).replace(/-/g, "/")
+      date_str = field.val().substr(0,12).replace(/-/g, "/")
       picker.datepicker('setDate', new Date(date_str))
 
+    if field.is('div')
+      field.hide()
+      $('#' + field.attr('data-input')).click (e) ->
+        field.slideDown()
     field.prop('readonly', true)
 
     @appendClearLink(field)
