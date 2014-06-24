@@ -189,6 +189,7 @@ describe "Viewing products" do
       fill_in "Good From", with: "1 May 2054"
       fill_in "Expires On", with: "30 May 2054"
 
+
       click_button "Save Lot"
 
       product = Dom::ProductRow.find_by_name("Grapes (Tube)")

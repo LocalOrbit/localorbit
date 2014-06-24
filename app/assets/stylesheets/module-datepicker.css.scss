@@ -44,7 +44,13 @@ input.alt-datepicker {
   }
 }
 .ui-datepicker-inline {
+  position: absolute;
   display: none;
+}
+@media screen and (max-width: 600px) {
+  .ui-datepicker-inline {
+    position: relative;
+  }
 }
 .datepicker-is-open {
   .ui-datepicker-inline {
