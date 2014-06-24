@@ -1,6 +1,6 @@
 module ApplicationHelper
   def help_path
-    "https://localorbit.zendesk.com/anonymous_requests/new"
+    "http://knowledge.localorbit.com/anonymous_requests/new"
   end
 
   # Used in navigation to get to the users organization(s)
