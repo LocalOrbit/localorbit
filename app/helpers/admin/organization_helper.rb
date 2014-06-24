@@ -3,8 +3,9 @@ module Admin
     def seller_status_options
       [
         ["Any",nil],
-        ["Can Sell", 1],
-        ["Can Not Sell", 0]
+        ["Buyer", 0],
+        ["Seller", 1]
+        
       ]
     end
 

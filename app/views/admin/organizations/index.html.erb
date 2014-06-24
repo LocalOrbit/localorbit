@@ -13,7 +13,7 @@
       <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
       <th>Market</th>
       <th data-column="registered" class="<%= column_sort_classes("registered")%>">Registered On</th>
-      <th data-column="can_sell" class="<%= column_sort_classes("can_sell")%>">Can Sell</th>
+      <th data-column="can_sell" class="<%= column_sort_classes("can_sell")%>">Role</th>
     </tr>
   </thead>
   <% @organizations.each do |organization| %>
@@ -21,7 +21,7 @@
       <td class="name"><%= link_to organization.name, [:admin, organization] %></td>
       <td class="market"><%= organization.markets.map {|m| m.name }.join(', ') %></td>
       <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
-      <td class="can-sell"><%= organization.can_sell? ? "Yes" : "No" %></td>
+      <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
     </tr>
   <% end %>
 </table>
