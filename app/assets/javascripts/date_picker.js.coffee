@@ -7,12 +7,8 @@ class @DatePicker
     options.minDate = field.data('min-date')
     options.maxDate = field.data('max-date')
     if field.is('div')
-      options.beforeShow = ->
-        field.addClass('datepicker-is-open')
-        $('body').addClass('datepicker-no-float')
-      options.onClose = ->
-        field.removeClass('datepicker-is-open')
-        $('body').removeClass('datepicker-no-float')
+      options.onSelect = ->
+        field.slideUp()
       options.altField = "#" + field.attr('data-input')
       field.find('.ui-datepicker-inline').attr('style', null)
 
@@ -26,6 +22,7 @@ class @DatePicker
     if field.is('div')
       field.hide()
       $('#' + field.attr('data-input')).click (e) ->
+        $('div.datepicker').not(field).slideUp()
         field.slideDown()
     field.prop('readonly', true)
 

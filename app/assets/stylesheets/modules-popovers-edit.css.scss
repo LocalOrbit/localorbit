@@ -26,7 +26,7 @@
   .popup--edit {
     top: 0;
     width: auto;
-    min-width: 250px;
+    min-width: 290px;
     padding: 8px;
     border: solid 2px #ccc;
     &.bottom-anchor {
@@ -123,7 +123,7 @@
       margin-bottom: 10px;
       font-size: 16px;
     }
-    input[size]:not(.datepicker),
+    input[size]:not(.datepicker):not(.alt-datepicker),
     input[type=submit] {
       display: block;
       width: 100%;
