@@ -6,13 +6,15 @@ class @DatePicker
     options = {dateFormat: @format}
     options.minDate = field.data('min-date')
     options.maxDate = field.data('max-date')
-    if field.parent().hasClass('alt-datepicker')
+    if field.is('div')
       options.beforeShow = ->
-        field.parent().addClass('datepicker-is-open')
+        field.addClass('datepicker-is-open')
         $('body').addClass('datepicker-no-float')
       options.onClose = ->
-        field.parent().removeClass('datepicker-is-open')
+        field.removeClass('datepicker-is-open')
         $('body').removeClass('datepicker-no-float')
+      options.altField = "#" + field.attr('data-input')
+      field.find('.ui-datepicker-inline').attr('style', null)
 
 
     picker = field.datepicker(options)
@@ -26,19 +28,19 @@ class @DatePicker
 
     @appendClearLink(field)
 
-    if field.parent().hasClass('alt-datepicker')
-      options.altField = "#" + field.attr('id')
-      field.parent().datepicker(options)
-      field.parent().find('.ui-datepicker-inline').attr('style', null)
 
 
   @appendClearLink: (field)->
     clearLink = $("<button class='clear-link'><i class='font-icon icon-clear'></i></button>")
-    field.after(clearLink)
+
+    if field.is('input')
+      field.after(clearLink)
+    else
+      $('#' + field.attr('data-input')).after(clearLink)
     clearLink.on 'click', (event)->
       event.preventDefault()
       field.val('')
 
-$ ->
-  $(".datepicker").each (idx, field)->
-    DatePicker.setup(field)
+  $ ->
+    $(".datepicker").each (idx, field)->
+      DatePicker.setup(field)
