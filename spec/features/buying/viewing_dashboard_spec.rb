@@ -37,11 +37,11 @@ describe 'Buyer viewing dashboard' do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
 
-      expect(page).not_to have_content("Purchase History")
+      expect(page).not_to have_css("h1", text: "Purchase History")
 
-      click_link 'Dashboard'
+      click_link 'Dashboard', match: :first
 
-      expect(page).to have_content("Purchase History")
+      expect(page).to have_css("h1", text: "Purchase History")
 
       orders = Dom::Dashboard::OrderRow.all
       expect(orders.size).to eq(3)

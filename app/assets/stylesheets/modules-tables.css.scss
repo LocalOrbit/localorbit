@@ -31,6 +31,7 @@
       overflow: auto;
     }
     .scroll-wrapper {
+      clear: both;
       margin-right: -10px;
       margin-left: -10px;
 
@@ -205,10 +206,11 @@ tbody {
   }
 }
 
-.product-delete {
+.product-header-delete {
   margin-top: 5px;
   float: right;
 }
+
 
 .no-touch {
   tbody:not(.order-summary) {
@@ -567,7 +569,13 @@ th {
       }
     }
   }
+  td.delete{
+    font-size: 0.1px;
 
+    .font-icon {
+      font-size: 14px;
+    }
+  }
 @media screen and (max-width: 800px) {
   .product-row .l-inline-list > li {
     display: block;

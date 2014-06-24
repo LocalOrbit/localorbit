@@ -13,14 +13,14 @@ feature "Viewing Market Info" do
   end
 
   scenario "current market information is visible" do
-    click_link "Market Info"
+    click_link "Market Info", match: :first
 
     expect(page).to have_content(market.name)
     expect(page).to have_content(market.contact_name)
     expect(page).to have_content(market.contact_email)
     expect(page).to have_content(market.policies)
     expect(page).to have_content(market.profile)
-    expect(page).not_to have_css('#admin-nav')
+    expect(page).to have_css('#admin-nav', :visible => false)
 
     sellers = Dom::MarketSellers.all
     expect(sellers.map(&:name)).to match_array([seller1.name, seller2.name])
@@ -30,7 +30,7 @@ feature "Viewing Market Info" do
     let!(:address) { create(:market_address, market: market) }
 
     scenario "is displayed on the page" do
-      click_link "Market Info"
+      click_link "Market Info", match: :first
 
       expect(page).to have_content(address.address)
       expect(page).to have_content(address.city)
@@ -45,7 +45,7 @@ feature "Viewing Market Info" do
     let!(:friday_deliveries) { create(:delivery_schedule, market: market, day: 5, seller_fulfillment_location_id: market.addresses.first.id, buyer_pickup_location_id: market.addresses.first.id, buyer_pickup_start: '12:00PM', buyer_pickup_end: '5:00PM') }
 
     scenario "are displayed on the page correctly" do
-      click_link "Market Info"
+      click_link "Market Info", match: :first
 
       deliveries = Dom::Info::DeliverySchedule.all
 

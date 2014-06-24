@@ -71,7 +71,7 @@ feature "Buyer Financial Overview" do
   scenario "Buyer's default financial view is the overview" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
-    click_link "Dashboard"
+    click_link "Dashboard", match: :first
     click_link "Financials"
 
     expect(page).to have_content("Payments Due")
@@ -93,7 +93,7 @@ feature "Buyer Financial Overview" do
       expect(find('option[selected]').text).to eql("Overdue")
     end
 
-    click_link "Dashboard"
+    click_link "Dashboard", match: :first
     click_link "Financials"
     click_link "Due"
 
@@ -107,7 +107,7 @@ feature "Buyer Financial Overview" do
       expect(find('option[selected]').text).to eql("Due")
     end
 
-    click_link "Dashboard"
+    click_link "Dashboard", match: :first
     click_link "Financials"
     click_link "Purchase Orders"
 
@@ -121,13 +121,13 @@ feature "Buyer Financial Overview" do
   scenario "Buyer's 'due' items update when invoices get marked as paid" do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
-    click_link "Dashboard"
+    click_link "Dashboard", match: :first
     click_link "Financials"
 
     expect(money_out_row("Due").amount).to eql("$95.04")
     pay_order(@to_be_paid)
 
-    click_link "Dashboard"
+    click_link "Dashboard", match: :first
     click_link "Financials"
 
     expect(money_out_row("Due").amount).to eql("$12.82")

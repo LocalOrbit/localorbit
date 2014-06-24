@@ -22,7 +22,7 @@ feature "View Seller Profiles" do
     end
 
     scenario "redirects to organization select page" do
-      click_link "Sellers"
+      click_link "Sellers", match: :first
 
       expect(page).to have_content("Select an Organization")
       select buyer.name, from: "org_id"
@@ -41,30 +41,30 @@ feature "View Seller Profiles" do
     scenario "no sellers in market" do
       switch_to_subdomain(market.subdomain)
 
-      click_link "Sellers"
+      click_link "Sellers", match: :first
       expect(page).to have_content("#{market.name} has no sellers at this time.")
     end
 
   end
 
   scenario "view list of sellers" do
-    click_link "Sellers"
+    click_link "Sellers", match: :first
 
     expect(page).to have_content(seller1.name)
     expect(page).to have_content(seller2.name)
     expect(page).to_not have_content(inactive_seller.name)
     expect(page).to_not have_content(hidden_seller.name)
-    expect(page).not_to have_css('#admin-nav')
+    expect(page).to have_css('#admin-nav', visible: false)
   end
 
   context "seller profile" do
     scenario "view a sellers profile" do
-      click_link "Sellers"
+      click_link "Sellers", match: :first
       click_link seller1.name
 
       expect(page).to have_content(seller1.who_story)
       expect(page).to have_content(seller1.how_story)
-      expect(page).to_not have_css('#admin-nav')
+      expect(page).to have_css('#admin-nav', visible: false)
       expect(page).to_not have_xpath("//a[@class='twitter-timeline' and @data-screen-name='#{seller1.twitter}']")
       expect(page).to_not have_xpath("//div[@class='fb-like-box' and @data-href='https://www.facebook.com/#{seller1.facebook}']")
     end
