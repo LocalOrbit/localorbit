@@ -1,20 +1,22 @@
-<table class="current-sales-table <%= cycle "odd", "even" %>">
-  <thead>
-    <tr>
-      <th>Order #</th>
-      <th>Placed On</th>
-      <th>Total</th>
-      <th>Delivery</th>
-      <th>Buyer Payment</th>
+<div class="table-wrapper">
+  <table class="current-sales-table <%= cycle "odd", "even" %>">
+    <thead>
+      <tr>
+        <th>Order #</th>
+        <th>Placed On</th>
+        <th>Total</th>
+        <th>Delivery</th>
+        <th>Buyer Payment</th>
+      </tr>
+    </thead>
+  <% current_market.orders.visible.limit(15).order("created_at DESC").each do |order| %>
+    <tr class="order-row">
+      <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %></td>
+      <td class="placed-on"><%= order.placed_at.strftime("%b %e, %Y") %></td>
+      <td class="total"><%= number_to_currency(order.total_cost) %></td>
+      <td class="delivery"><%= order.delivery_status.titleize %></td>
+      <td class="payment"><%= order.payment_status.titleize %></td>
     </tr>
-  </thead>
-<% current_market.orders.visible.limit(15).order("created_at DESC").each do |order| %>
-  <tr class="order-row">
-    <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %></td>
-    <td class="placed-on"><%= order.placed_at.strftime("%b %e, %Y") %></td>
-    <td class="total"><%= number_to_currency(order.total_cost) %></td>
-    <td class="delivery"><%= order.delivery_status.titleize %></td>
-    <td class="payment"><%= order.payment_status.titleize %></td>
-  </tr>
-<% end %>
-</table>
+  <% end %>
+  </table>
+</div>
