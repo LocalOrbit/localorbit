@@ -26,7 +26,7 @@ feature "Buying in a closed market" do
     end
 
     scenario "Buyer visits the sellers page" do
-      click_link "Sellers"
+      click_link "Sellers", match: :first
 
       expect(page).to have_content("Who")
       expect(page).to have_content("When")
@@ -49,7 +49,7 @@ feature "Buying in a closed market" do
     end
 
     scenario "Buyer visits the sellers page" do
-      click_link "Sellers"
+      click_link "Sellers", match: :first
 
       choose_delivery "Delivery: June 17, 2014 Between 7:00AM and 11:00AM"
 
