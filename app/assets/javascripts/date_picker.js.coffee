@@ -29,7 +29,10 @@ class @DatePicker
       $('#' + field.attr('data-input')).click (e) ->
         $('div.datepicker').not(field).slideUp()
         field.slideDown()
+      $('#' + field.attr('data-input')).prop('readonly', true)
     field.prop('readonly', true)
+    field.change (e) ->
+      field.datepicker('setDate', new Date(field.val()))
 
     @appendClearLink(field)
 

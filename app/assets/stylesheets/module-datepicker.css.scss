@@ -50,6 +50,7 @@ input.alt-datepicker {
 @media screen and (max-width: 600px) {
   .ui-datepicker-inline {
     position: relative;
+    margin: 0 auto .5em;
   }
 }
 .datepicker-is-open {
@@ -58,3 +59,40 @@ input.alt-datepicker {
     margin: 0 auto .5em;
   }
 }
+
+.edit-cell {
+  input.alt-datepicker,
+  input.hasDatepicker {
+    height: 36px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+
+    ~ .btn--end {
+      padding: 7px 3px 5px;
+      font-size: 16px;
+    }
+  }
+  input.alt-datepicker,
+  input.hasDatepicker {
+    ~ .clear-link {
+      margin-top: .8em;
+    }
+  }
+}
+
+.popup--edit {
+  input.alt-datepicker,
+  input.hasDatepicker {
+
+    ~ .btn--end {
+      padding: 5px 3px 4px;
+      font-size: 14px;
+    }
+
+  }
+  input.alt-datepicker,
+  input.hasDatepicker {
+    ~ .clear-link {
+      margin-top: .6em;
+    }
+  }}
