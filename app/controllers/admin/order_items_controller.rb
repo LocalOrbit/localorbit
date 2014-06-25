@@ -8,6 +8,7 @@ module Admin
       @q = @order_items.search(params[:q])
       @q.sorts = ["order_placed_at desc", "name"] if @q.sorts.empty?
       @order_items = @q.result
+      @totals = OrderTotals.new(@order_items)
 
       respond_to do |format|
         format.html { @order_items = @order_items.page(params[:page]).per(params[:per_page]) }

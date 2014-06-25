@@ -123,3 +123,5 @@
     This table is empty, either because there is no data, or because the filter you've applied is hiding it.
   </div>
 <% end %>
+
+<%= render "shared/total_sales", totals: @totals unless @order_items.none? %>

@@ -13,9 +13,9 @@ context "Viewing sold items" do
   let!(:delivery) { create(:delivery, delivery_schedule: delivery_schedule) }
   let!(:order_items) {
     [
-      create(:order_item, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, unit: "Bushels"),
-      create(:order_item, product: product2, seller_name: seller.name, name: product2.name, unit_price: 5.00, quantity: 10, unit: "Lots"),
-      create(:order_item, product: product3, seller_name: seller2.name, name: product3.name, unit_price: 2.00, quantity: 12, unit: "Heads")
+      create(:order_item, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, unit: "Bushels", market_seller_fee: 0.75),
+      create(:order_item, product: product2, seller_name: seller.name, name: product2.name, unit_price: 5.00, quantity: 10, unit: "Lots", payment_seller_fee: 1.20),
+      create(:order_item, product: product3, seller_name: seller2.name, name: product3.name, unit_price: 2.00, quantity: 12, unit: "Heads", local_orbit_seller_fee: 4)
     ]
   }
 
@@ -66,7 +66,7 @@ context "Viewing sold items" do
     end
 
     it "lists all sold items for the market as a CSV" do
-      html_headers = page.all('th').map(&:text)[1..-1] # remove checkbox column
+      html_headers = page.all('#sold-items th').map(&:text)[1..-1] # remove checkbox column
       click_link "Export CSV"
       csv_headers = CSV.parse(page.body).first
       expect(html_headers - csv_headers).to be_empty # CSV expands stacked columns for order date, market, and unit price
@@ -110,6 +110,30 @@ context "Viewing sold items" do
       expect(sold_items[0].delivery_status).to eq("Canceled")
       expect(sold_items[1].delivery_status).to eq("Pending")
       expect(sold_items[2].delivery_status).to eq("Pending")
+    end
+
+    it "displays sales totals for all pages of filtered results" do
+      expect(page).to have_content("Total Sales")
+      totals = Dom::Admin::TotalSales.first
+
+      expect(totals.gross_sales).to eq("$106.50")
+      expect(totals.market_fees).to eq("$0.75")
+      expect(totals.lo_fees).to eq("$4.00")
+      expect(totals.processing_fees).to eq("$1.20")
+      expect(totals.discounts).to eq("$0.00")
+      expect(totals.net_sales).to eq("$100.55")
+
+      select seller.name, from: "q_product_organization_id_eq"
+      click_button "Filter"
+
+      totals = Dom::Admin::TotalSales.first
+
+      expect(totals.gross_sales).to eq("$82.50")
+      expect(totals.market_fees).to eq("$0.75")
+      expect(totals.lo_fees).to eq("$0.00")
+      expect(totals.processing_fees).to eq("$1.20")
+      expect(totals.discounts).to eq("$0.00")
+      expect(totals.net_sales).to eq("$80.55")
     end
   end
 

@@ -40,7 +40,7 @@ feature "Viewing orders" do
   let!(:market2_order_item4) { create(:order_item, seller_name: market2_seller_org2.name, product: market2_product2, quantity: 3, unit_price: 7.99, market_seller_fee: 1.20, local_orbit_seller_fee: 0.96) }
   let!(:market2_order2)      { create(:order, items: [market2_order_item3, market2_order_item4], organization: market2_buyer_org, market: market2, total_cost: 41.95, delivery: market2_delivery, placed_at: Date.parse("May 14, 2014")) }
 
-  let!(:market2_order_item5) { create(:order_item, seller_name: market2_seller_org2.name,  product: market2_product2) }
+  let!(:market2_order_item5) { create(:order_item, seller_name: market2_seller_org2.name,  product: market2_product2, payment_seller_fee: 0.50) }
   let!(:market2_order3)      { create(:order, items: [market2_order_item5], organization: market2_buyer_org, market: market2, delivery: market2_delivery, placed_at: Date.parse("May 15, 2014")) }
 
   context "as a seller" do
@@ -321,5 +321,31 @@ feature "Viewing orders" do
       expect(page).not_to have_content(market2_order3.order_number)
     end
 
+    it "displays sales order totals for all pages of filtered results" do
+      visit admin_orders_path(per_page: 2)
+
+      find(".pagination")
+
+      totals = Dom::Admin::TotalSales.first
+
+      expect(totals.gross_sales).to eq("$153.80")
+      expect(totals.market_fees).to eq("$7.00")
+      expect(totals.lo_fees).to eq("$5.60")
+      expect(totals.processing_fees).to eq("$0.50")
+      expect(totals.discounts).to eq("$0.00")
+      expect(totals.net_sales).to eq("$140.70")
+
+      select market1_buyer_org1.name, from: "q_organization_id_eq"
+      click_button "Filter"
+
+      totals = Dom::Admin::TotalSales.first
+
+      expect(totals.gross_sales).to eq("$34.95")
+      expect(totals.market_fees).to eq("$1.40")
+      expect(totals.lo_fees).to eq("$1.12")
+      expect(totals.processing_fees).to eq("$0.00")
+      expect(totals.discounts).to eq("$0.00")
+      expect(totals.net_sales).to eq("$32.43")
+    end
   end
 end

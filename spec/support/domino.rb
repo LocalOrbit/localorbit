@@ -407,6 +407,17 @@ module Dom
       end
     end
 
+    class TotalSales < Domino
+      selector ".totals-table"
+
+      attribute :gross_sales
+      attribute :market_fees
+      attribute :lo_fees
+      attribute :processing_fees
+      attribute :discounts
+      attribute :net_sales
+    end
+
     class OrderRow < Domino
       selector ".order-row"
 
