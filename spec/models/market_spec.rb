@@ -335,4 +335,21 @@ describe Market do
       expect(market.seller_net_percent).to eq(BigDecimal.new("0.88"))
     end
   end
+
+  describe "next_delivery" do
+    let!(:market) { create(:market) }
+    let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+
+    it 'builds and returns the next delivery' do
+      delivery = market.next_delivery
+      expect(delivery.delivery_schedule).to eq(delivery_schedule)
+      expect(delivery.deliver_on).to be_future
+      expect(delivery).to be_persisted
+    end
+
+    it 'returns nil if there are no valid delivery schedules' do
+      delivery_schedule.soft_delete
+      expect(market.next_delivery).to be_nil
+    end
+  end
 end
