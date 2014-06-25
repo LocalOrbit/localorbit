@@ -25,32 +25,6 @@
 8. `rails server`
 9. Go to http://lvh.me:3000 in a browser (we use lvh.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
 
-## Development Workflow
-
-1. Create your new topic branch from _master_:
-
-  ```
-  > git checkout master
-  > git checkout -b feature-branch-1
-  ```
-
-2. Submit a pull request for your topic branch against _develop_ for review
-
-  **(NOTE: DO NOT DELETE THE BRANCH AFTER IT'S BEEN MERGED TO DEVELOP!)**
-
-3. When the branch has been accepted, deploy _develop_ to staging
-
-  ```
-  > git pull develop
-  > rake deploy:staging
-  ```
-4. When the story has been accepted in Pivotal Tracker, submit a pull request against _master_.
-5. Deploy production with:
-
-  ```
-  > rake deploy:production
-  ```
-
 ### Production Setup
 * At least one Market must be created before creating Organizations
 
