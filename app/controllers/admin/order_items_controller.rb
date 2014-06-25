@@ -1,13 +1,15 @@
 module Admin
   class OrderItemsController < AdminController
     include Search::DateFormat
+    include StickyFilters
 
     def index
       @order_items = OrderItem.for_user(current_user).joins(:order)
       prepare_filter_data(@order_items)
 
       # initialize ransack and search
-      search = params[:q] || {}
+      @sticky_params = sticky_parameters(request.query_parameters)
+      search = @sticky_params[:q] || {}
       @q = @order_items.search(search)
       @q.sorts = ["order_placed_at desc", "name"] if @q.sorts.empty?
       @order_items = @q.result
