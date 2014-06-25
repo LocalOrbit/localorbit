@@ -14,7 +14,7 @@
     </span>
     <% end %>
     <span class="preserve-alignment pull-left">
-      <label for="filter_can_sell">Selling Status</label><br>
+      <label for="filter_can_sell">Role</label><br>
       <%= select_tag :filter_can_sell, options_for_select(seller_status_options, selected: @query_params["can_sell"]), class: 'filter-dropdown', data: { parameter: "can_sell"} %>
     </span>
     <%= link_to "Reset", admin_organizations_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
