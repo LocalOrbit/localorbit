@@ -204,6 +204,7 @@ describe "Viewing products" do
       visit admin_products_path
 
       product = Dom::ProductRow.find_by_name("Grapes (Tube)")
+      product.click_stock
 
       fill_in "lot_number", with: 33
       fill_in "Quantity", with: 45
