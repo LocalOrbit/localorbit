@@ -140,14 +140,14 @@ td {
     margin-bottom: 0;
   }
 
-  input[type=datetime],
-  input[type=email],
-  input[type=search],
-  input[type=tel],
-  input[type=text],
-  input[type=number],
-  input[type=url],
-  input[type=password] {
+  > input[type=datetime],
+  > input[type=email],
+  > input[type=search],
+  > input[type=tel],
+  > input[type=text],
+  > input[type=number],
+  > input[type=url],
+  > input[type=password] {
     height: 24px;
     padding-right: 7px;
     padding-left: 7px;
@@ -249,7 +249,7 @@ th {
 
 .lot {
   > td {
-    vertical-align: middle;
+    vertical-align: top;
     white-space: nowrap
   }
 }

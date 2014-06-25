@@ -175,7 +175,7 @@ describe "Viewing products" do
       expect(product.stock).to have_content("99")
     end
 
-    it "updates advanced inventory" do
+    it "updates advanced inventory with a future lot" do
       grapes.update_attributes!(use_simple_inventory: false)
 
       sign_in_as(user)
@@ -188,6 +188,29 @@ describe "Viewing products" do
       fill_in "Quantity", with: 45
       fill_in "Good From", with: "1 May 2054"
       fill_in "Expires On", with: "30 May 2054"
+
+
+      click_button "Save Lot"
+
+      product = Dom::ProductRow.find_by_name("Grapes (Tube)")
+
+      expect(product.stock).to have_content("1")
+
+    end
+    it "updates advanced inventory" do
+      grapes.update_attributes!(use_simple_inventory: false)
+
+      sign_in_as(user)
+      visit admin_products_path
+
+      product = Dom::ProductRow.find_by_name("Grapes (Tube)")
+      product.click_stock
+
+      fill_in "lot_number", with: 33
+      fill_in "Quantity", with: 45
+      fill_in "Good From", with: "1 May 2014"
+      fill_in "Expires On", with: "30 May 2054"
+
 
       click_button "Save Lot"
 

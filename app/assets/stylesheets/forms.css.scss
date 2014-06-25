@@ -73,43 +73,6 @@ input[type=password] {
   height: 36px;
 }
 
-.datepicker {
-  width: 8em;
-
-  &.hasDatepicker {
-    height: 24px;
-    @include border-radius(2px 0 0 2px);
-    margin: 2px 0;
-    vertical-align: top;
-
-    + .clear-link {
-      position: absolute;
-      padding: 0;
-      border: 0;
-      margin: .4em 0 0 -1.2em;
-      background: transparent;
-      font-size: 14px;
-      -webkit-appearance: none;
-    }
-    ~ .btn--end {
-      display: inline-block;
-    }
-  }
-
-  ~ .btn--end {
-    display: none;
-    padding: 3px 3px 2px;
-    margin-top: 2px;
-    margin-left: -1px;
-    font-size: 12px;
-    vertical-align: top;
-  }
-}
-@media screen and (max-width: 599px) {
-  input {
-    font-size: 16px;
-  }
-}
 
 input[type=file] + img {
   margin-top: 1em;
