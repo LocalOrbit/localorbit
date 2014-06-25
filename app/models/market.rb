@@ -77,7 +77,7 @@ class Market < ActiveRecord::Base
   end
 
   def next_delivery
-    delivery_schedules.map(&:next_delivery).min {|a,b| a.deliver_on <=> b.deliver_on }
+    delivery_schedules.visible.map(&:next_delivery).min {|a,b| a.deliver_on <=> b.deliver_on }
   end
 
   def only_delivery
