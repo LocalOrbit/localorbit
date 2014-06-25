@@ -123,10 +123,15 @@ th {
 td {
 
   &.delete {
+    font-size: 0.1px;
     white-space: nowrap;
 
     &:last-child {
       text-align: right;
+    }
+
+    .font-icon {
+      font-size: 14px;
     }
   }
 
@@ -206,10 +211,16 @@ tbody {
   }
 }
 
-.product-delete {
+.product-header-delete {
   margin-top: 5px;
   float: right;
+  font-size: 0.1px;
+
+  .font-icon {
+    font-size: 18px;
+  }
 }
+
 
 .no-touch {
   tbody:not(.order-summary) {
@@ -568,7 +579,13 @@ th {
       }
     }
   }
+  td.delete{
+    font-size: 0.1px;
 
+    .font-icon {
+      font-size: 14px;
+    }
+  }
 @media screen and (max-width: 800px) {
   .product-row .l-inline-list > li {
     display: block;

@@ -63,9 +63,11 @@ feature "Adding a credit card to an organization", :js, :vcr do
     end
 
     scenario "duplicate credit card gives an error" do
-      create(:bank_account, :credit_card, bank_name: 'MasterCard', account_type: 'mastercard', name: 'Org Credit Card', last_four: '5100', bankable: org)
+      card = create(:bank_account, :credit_card, name: "John Doe", bank_name: 'MasterCard', account_type: 'mastercard', last_four: '5100', bankable: org)
 
+      puts "Name on existing card: #{card.inspect}"
       select "Credit Card", from: "balanced_account_type"
+      fill_in "Name", with: "John Doe"
       fill_in "Card Number", with: "5105105105105100"
       fill_in "Security Code", with: "123"
       select "12", from: "expiration_month"

@@ -381,6 +381,36 @@ describe "Checking Out", :js, :vcr do
 
         expect(buyer.bank_accounts.visible.count).to eql(3)
       end
+
+      context "when the user tries to checkout with a credit card they've already saved", record: :new_episodes do
+        let!(:credit_card)  { create(:bank_account, :credit_card, name: "John Doe", bank_name: "MasterCard", account_type:"mastercard", bankable: buyer, last_four: "5100") }
+
+        it "uses the bank account that's already saved" do
+          expect(buyer.bank_accounts.visible.count).to eql(2)
+
+          choose "Pay by Credit Card"
+          fill_in "Name", with: credit_card.name
+          fill_in "Card Number", with: '5105105105105100'
+          select "12", from: "Month"
+          select "2020", from: "Year"
+          fill_in "Security Code", with: '123'
+
+          check "Save credit card for future use"
+
+          checkout
+
+          expect(page).to have_content("Thank you for your order")
+          expect(page).to have_content("Credit Card")
+
+          order = Order.last
+          expect(order.payment_status).to eql("paid")
+          expect(order.payments.count).to eql(1)
+          expect(order.payments.first.status).to eql("paid")
+
+          # The entered credit card doesn't get saved in this case
+          expect(buyer.bank_accounts.visible.count).to eql(2)
+        end
+      end
     end
   end
 

@@ -7,20 +7,28 @@
 }
 
 .manager-filters {
+  clear: both;
   display: inline-block;
   width: 100%;
   margin: 10px 0;
+  font-size: 0.1px;
   text-align: justify;
   &:after {
     display: inline-block;
     width: 100%;
     content: '';
   }
+  > p, > span, > div {
+    font-size: 14px;
+  }
   select {
     width: 130px;
   }
   span {
     margin-right: 10px;
+  }
+  &.unjustify {
+    text-align: left;
   }
 }
 

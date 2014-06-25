@@ -1,13 +1,19 @@
 module Admin
   class OrderItemsController < AdminController
+    include Search::DateFormat
+
     def index
       @order_items = OrderItem.for_user(current_user).joins(:order)
       prepare_filter_data(@order_items)
 
       # initialize ransack and search
-      @q = @order_items.search(params[:q])
+      search = params[:q] || {}
+      @q = @order_items.search(search)
       @q.sorts = ["order_placed_at desc", "name"] if @q.sorts.empty?
       @order_items = @q.result
+
+      @start_date = format_date(search[:created_at_date_gteq])
+      @end_date = format_date(search[:created_at_date_lteq])
 
       respond_to do |format|
         format.html { @order_items = @order_items.page(params[:page]).per(params[:per_page]) }

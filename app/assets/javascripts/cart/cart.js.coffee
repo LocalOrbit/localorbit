@@ -251,7 +251,10 @@ $ ->
     $("#balanced-js-errors").html("")
     $(".field_with_errors :input").unwrap()
 
-    if $("#order_payment_method_credit_card").is(":checked") && ($("#order_credit_card_id").val() == '' || $("#order_credit_card_id").val() == undefined)
+    isSubmittingUnsavedCreditCard = ()->
+      $("#order_payment_method_credit_card").is(":checked") && ($("#order_credit_card_id").val() == '' || $("#order_credit_card_id").val() == undefined)
+
+    if isSubmittingUnsavedCreditCard()
       $(".quantity input").prop("readonly", true)
 
       newCard = {
@@ -266,21 +269,39 @@ $ ->
         if response.status == 201
           $form = $("#order-form")
 
-          fields = {
-            "brand" : "order[credit_card][bank_name]",
+          accountFields = {
             "name" : "order[credit_card][name]",
+            "save_for_future" : "order[credit_card][save_for_future]",
+          }
+
+          accountFieldData = {
+            name: $("#balanced_account_name").val(),
+            save_for_future: $("#save_for_future").val()
+          }
+
+          for key, field of accountFields
+            $("<input>").attr(
+              type: 'hidden',
+              name: field,
+              value: accountFieldData[key]
+            ).appendTo($form)
+
+          balancedFields = {
+            "brand" : "order[credit_card][bank_name]",
             "last_four" : "order[credit_card][last_four]",
             "uri" : "order[credit_card][balanced_uri]",
             "card_type" : "order[credit_card][account_type]",
             "expiration_month" : "order[credit_card][expiration_month]",
             "expiration_year" : "order[credit_card][expiration_year]",
           }
-          for key, field of fields
+
+          for key, field of balancedFields
             $("<input>").attr(
               type: 'hidden',
               name: field,
               value: response.data[key]
             ).appendTo($form)
+
 
           $("#balanced-payments-uri").prop("disabled", true)
           $form.submit()
