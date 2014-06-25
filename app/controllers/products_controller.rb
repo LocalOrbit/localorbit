@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :require_selected_market
   before_action :require_market_open
   before_action :require_current_organization
   before_action :require_organization_location
