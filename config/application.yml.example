@@ -5,6 +5,8 @@ GOOGLE_MAPS_KEY: "AIzaSyDRQCjRSGyFnuGb5kNdk7IHjUyyRWmsPrQ"
 ASSET_HOST: "http://localhost:3000"
 DOMAIN: "localtest.me" # localtest.me points to 127.0.0.1 and lets us use subdomains. localhost does not. see http://readme.localtest.me/
 ZENDESK_EMAIL: "service@localorb.it"
+ZENDESK_SHARED_SECRET: "fake"
+ZENDESK_SUBDOMAIN: "localorbit"
 UPLOADS_BUCKET: "localorbit-fake"
 UPLOADS_ACCESS_KEY_ID: 'fakety-fake'
 UPLOADS_SECRET_ACCESS_KEY: 'fakety-fake'
