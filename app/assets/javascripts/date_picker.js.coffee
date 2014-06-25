@@ -16,7 +16,12 @@ class @DatePicker
 
     if field.val()
       # JS parses "2014-02-15" different than "2014/02/15"
-      date_str = field.val().substr(0,12).replace(/-/g, "/")
+      date_str = field.val().replace(/-/g, "/")
+      if date_str.match(/T/)
+        length = date_str.indexOf('T')
+        date_str = date_str.substr(0,length)
+      else
+        date_str = date_str.substr(0,11)
       picker.datepicker('setDate', new Date(date_str))
 
     if field.is('div')
