@@ -348,4 +348,32 @@ feature "Viewing orders" do
       expect(totals.net_sales).to eq("$32.43")
     end
   end
+
+  context "as an admin" do
+    let(:user){ create(:user, role: "admin")}
+
+    before do
+      switch_to_subdomain(market1.subdomain)
+      sign_in_as(user)
+    end
+
+
+    context "searching with an order number" do
+      it "only shows unique results" do
+        visit admin_orders_path
+
+        fill_in "Search Orders", with: market1_order1.order_number
+        click_button "Search"
+
+        items = Dom::Dashboard::OrderRow.all
+        expect(items.count).to eql(1)
+
+        fill_in "Search Orders", with: market1_order2.order_number
+        click_button "Search"
+
+        items = Dom::Dashboard::OrderRow.all
+        expect(items.count).to eql(1)
+      end
+    end
+  end
 end
