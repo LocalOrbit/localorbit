@@ -11,6 +11,7 @@ module Admin
       @q = @order_items.search(search)
       @q.sorts = ["order_placed_at desc", "name"] if @q.sorts.empty?
       @order_items = @q.result
+      @totals = OrderTotals.new(@order_items)
 
       @start_date = format_date(search[:created_at_date_gteq])
       @end_date = format_date(search[:created_at_date_lteq])

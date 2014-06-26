@@ -1,5 +1,5 @@
 class ReportPresenter
-  attr_reader :report, :items, :fields, :filters, :q,
+  attr_reader :report, :items, :fields, :filters, :q, :totals,
     :markets, :sellers, :buyers, :products, :categories, :payment_methods
 
   FIELD_MAP = {
@@ -90,6 +90,7 @@ class ReportPresenter
     @q.sorts = "created_at desc" if @q.sorts.empty?
 
     items = @q.result
+    @totals = OrderTotals.new(items)
 
     unless paginate[:csv]
       items = items.
