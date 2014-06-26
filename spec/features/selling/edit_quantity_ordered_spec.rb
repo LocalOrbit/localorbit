@@ -78,6 +78,10 @@ describe "Edit quantity ordered" do
 
         expect(UpdateBalancedPurchase).not_to receive(:perform)
         item.quantity_delivered_field.native.send_keys(:return)
+        expect(item.quantity_delivered_field.value).to eq("2")
+
+        item2 = Dom::Order::ItemRow.all.last
+        expect(item2.quantity_delivered_field.value).not_to eq("1")
       end
     end
 
