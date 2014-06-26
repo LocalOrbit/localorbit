@@ -9,3 +9,7 @@ $ ->
     href = $(this).attr('href')
     $.get href, (response) ->
       window.print()
+
+  $("#print-invoice").click (event) ->
+    event.preventDefault()
+    window.print()

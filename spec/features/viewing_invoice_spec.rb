@@ -20,14 +20,9 @@ feature "Viewing invoices" do
   let!(:order_items) { [order_item1, order_item2] }
   let!(:order) { create(:order, delivery: delivery, items: order_items, market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-001", placed_at: Time.zone.parse("2014-04-01"), invoiced_at: Time.zone.parse("2014-04-02"), invoice_due_date: Time.zone.parse("2014-04-16")) }
 
-  before do
-    switch_to_subdomain(market.subdomain)
-    sign_in_as market_manager
-  end
 
-  scenario "html content" do
-    visit admin_invoice_path(order.id)
 
+  def expect_invoice_content
     expect(page).to have_content("Invoice Number LO-001")
 
     within('.invoice-basics') do
@@ -45,35 +40,36 @@ feature "Viewing invoices" do
       expect(page).to have_content("(123) 456-7890")
       expect(page).to have_content(market.contact_email)
     end
+
     expect(page).to have_content("Total $400.00")
 
     # There should be 2 line items
     expect(all('.line-item').size).to eq(2)
-
-    # Line items total
-    expect(find('tr:last-child td:last-child')).to have_content("$400.00")
   end
 
-  context "with irregular phone numbers" do
+  context "as a buyer" do
     before do
-      market.update_attribute(:contact_phone, "+123 (456) 789-0987 ext. 654")
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(buyer_user)
     end
 
     scenario "html content" do
       visit admin_invoice_path(order.id)
 
-      expect(page).to have_content("Invoice Number LO-001")
+      expect_invoice_content
 
-      within('.invoice-parties') do
-        expect(page).to have_content("+123 (456) 789-0987 ext. 654")
-      end
+      # Line items total
+      expect(find('tr:last-child td:last-child')).to have_content("$400.00")
+      expect(page).to_not have_content("Print And Mark Invoiced")
+      expect(page).to have_content("Print")
     end
   end
 
-  context "with lots" do
-    let!(:product3)  { create(:product, :sellable, organization: seller, lots: [create(:lot, number: '123')]) }
-    let!(:order_item3) { create(:order_item, product: product3, quantity: 4) }
-    let!(:order_items) { [order_item1, order_item2, order_item3] }
+  context "as a market manager" do
+    before do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as market_manager
+    end
 
     scenario "html content" do
       visit admin_invoice_path(order.id)
@@ -84,7 +80,6 @@ feature "Viewing invoices" do
         expect(page).to have_content("Invoice Date 4/2/2014")
         expect(page).to have_content("Due Date 4/16/2014")
       end
-
       within('.invoice-parties') do
         expect(page).to have_content(market.name)
 
@@ -93,20 +88,73 @@ feature "Viewing invoices" do
         expect(page).to have_content(address.city)
         expect(page).to have_content(address.state)
         expect(page).to have_content(address.zip)
+        expect(page).to have_content("(123) 456-7890")
+        expect(page).to have_content(market.contact_email)
       end
-      expect(page).to have_content("Total $427.96")
 
-      # There should be 3 line items
-      expect(all('.line-item').size).to eq(3)
+      expect(page).to have_content("Total $400.00")
+
+      # There should be 2 line items
+      expect(all('.line-item').size).to eq(2)
 
       # Line items total
-      expect(find('tr:last-child td:last-child')).to have_content("$427.96")
+      expect(find('tr:last-child td:last-child')).to have_content("$400.00")
     end
-  end
 
-  scenario "generates a PDF of the content" do
-    visit admin_invoice_path(order.id, format: 'pdf')
+    context "with irregular phone numbers" do
+      before do
+        market.update_attribute(:contact_phone, "+123 (456) 789-0987 ext. 654")
+      end
 
-    expect(response_headers["Content-Type"]).to eq("application/pdf")
+      scenario "html content" do
+        visit admin_invoice_path(order.id)
+
+        expect(page).to have_content("Invoice Number LO-001")
+
+        within('.invoice-parties') do
+          expect(page).to have_content("+123 (456) 789-0987 ext. 654")
+        end
+      end
+    end
+
+    context "with lots" do
+      let!(:product3)  { create(:product, :sellable, organization: seller, lots: [create(:lot, number: '123')]) }
+      let!(:order_item3) { create(:order_item, product: product3, quantity: 4) }
+      let!(:order_items) { [order_item1, order_item2, order_item3] }
+
+      scenario "html content" do
+        visit admin_invoice_path(order.id)
+
+        expect(page).to have_content("Invoice Number LO-001")
+
+        within('.invoice-basics') do
+          expect(page).to have_content("Invoice Date 4/2/2014")
+          expect(page).to have_content("Due Date 4/16/2014")
+        end
+
+        within('.invoice-parties') do
+          expect(page).to have_content(market.name)
+
+          address = market.addresses.first
+          expect(page).to have_content(address.address)
+          expect(page).to have_content(address.city)
+          expect(page).to have_content(address.state)
+          expect(page).to have_content(address.zip)
+        end
+        expect(page).to have_content("Total $427.96")
+
+        # There should be 3 line items
+        expect(all('.line-item').size).to eq(3)
+
+        # Line items total
+        expect(find('tr:last-child td:last-child')).to have_content("$427.96")
+      end
+    end
+
+    scenario "generates a PDF of the content" do
+      visit admin_invoice_path(order.id, format: 'pdf')
+
+      expect(response_headers["Content-Type"]).to eq("application/pdf")
+    end
   end
 end
