@@ -866,8 +866,12 @@ module Dom
       attribute :payment_status
       attribute :delivery_status
 
+      def quantity_delivered_field
+        node.first(".quantity-delivered")
+      end
+
       def set_quantity_delivered(qty)
-        node.first(".quantity-delivered").set(qty)
+        quantity_delivered_field.set(qty)
       end
 
       def set_quantity_ordered(qty)
