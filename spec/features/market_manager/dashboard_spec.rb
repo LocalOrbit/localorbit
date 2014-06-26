@@ -14,7 +14,7 @@ feature "a market manager viewing their dashboard" do
     sign_in_as user
   end
 
-  describe "Current Sales tables" do
+  describe "Current Orders tables" do
     it "lists all sales for the currently managed market ordered by creation date" do
       product = create(:product, :sellable)
 
@@ -30,7 +30,7 @@ feature "a market manager viewing their dashboard" do
 
       visit dashboard_path
 
-      expect(page).to have_content("Current Sales")
+      expect(page).to have_content("Current Orders")
 
       expect(Dom::Dashboard::OrderRow.all.count).to eq(2)
       order_row = Dom::Dashboard::OrderRow.first
@@ -47,7 +47,7 @@ feature "a market manager viewing their dashboard" do
     it "displays a message if there are no orders" do
       visit dashboard_path
 
-      expect(page).to have_content("Current Sales")
+      expect(page).to have_content("Current Orders")
       expect(page).to have_content("No orders have yet been created")
     end
   end
