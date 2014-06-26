@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get 'account' => 'devise/registrations#edit', as: :edit_user_registration
     put 'account' => 'devise/registrations#update', as: :user_registration
   end
+  get "zendesk/sso" => "zendesk_sso#show"
 
   concern :bank_account do
     resources :bank_accounts, only: [:index, :new, :create, :destroy] do
