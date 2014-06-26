@@ -33,11 +33,11 @@
         <td class="edit-cell"><%= f.text_field :number, size: 8  %></td>
         <td class="edit-cell">
             <%= f.datetime_field :good_from, size: 8, class: "alt-datepicker" %><a href="#lot_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
-            <div class="date-picker" data-input="lot_good_from"></div>
+            <div class="datepicker" data-input="lot_good_from"></div>
         </td>
         <td class="edit-cell">
             <%= f.datetime_field :expires_at, size: 8, class: "alt-datepicker", data: {'min-date' => 0} %><a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
-            <div class="date-picker" data-input="lot_expires_at"></div>
+            <div class="datepicker" data-input="lot_expires_at"></div>
         </td>
         <td class="edit-cell"><%= f.number_field :quantity, min: 0, size: 3 %></td>
         <td class="edit-cell">

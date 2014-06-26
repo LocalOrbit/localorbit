@@ -8,8 +8,8 @@ class @DatePicker
     options.maxDate = field.data('max-date')
     if field.is('div')
       options.onSelect = ->
-        field.slideUp()
-      options.altField = "#" + field.attr('data-input')
+        field.slideUp().removeClass('is-open')
+        $("#" + field.attr('data-input')).val(field.datepicker('getDate'))
       field.find('.ui-datepicker-inline').attr('style', null)
 
     picker = field.datepicker(options)
@@ -25,10 +25,10 @@ class @DatePicker
       picker.datepicker('setDate', new Date(date_str))
 
     if field.is('div')
-      field.hide()
+      field.hide().removeClass('is-open')
       $('#' + field.attr('data-input')).click (e) ->
         $('div.datepicker').not(field).slideUp()
-        field.slideDown()
+        field.slideDown().addClass('is-open')
       $('#' + field.attr('data-input')).prop('readonly', true)
     field.prop('readonly', true)
     field.change (e) ->
@@ -41,10 +41,9 @@ class @DatePicker
   @appendClearLink: (field)->
     clearLink = $("<button class='clear-link'><i class='font-icon icon-clear'></i></button>")
 
-    if field.is('input')
+    if field.is('div')
+      field = $('#' + field.attr('data-input'))
       field.after(clearLink)
-    else
-      $('#' + field.attr('data-input')).after(clearLink)
     clearLink.on 'click', (event)->
       event.preventDefault()
       field.val('')
