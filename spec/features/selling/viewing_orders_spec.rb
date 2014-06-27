@@ -14,14 +14,14 @@ feature "Viewing orders" do
 
   let!(:market1_order_item1) { create(:order_item, seller_name: market1_seller_org1.name, product: market1_product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40) }
   let!(:market1_order_item2) { create(:order_item, seller_name: market1_seller_org2.name, product: market1_product2, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
-  let!(:market1_order1)      { create(:order, items: [market1_order_item1, market1_order_item2], organization: market1_buyer_org1, market: market1, total_cost: 27.96, delivery: market1_delivery, placed_at: Date.parse("May 10, 2014")) }
+  let!(:market1_order1)      { create(:order, items: [market1_order_item1, market1_order_item2], organization: market1_buyer_org1, market: market1, total_cost: 27.96, delivery: market1_delivery, placed_at: 2.weeks.ago) }
 
   let!(:market1_order_item3) { create(:order_item, seller_name: market1_seller_org1.name, product: market1_product1, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
   let!(:market1_order_item4) { create(:order_item, seller_name: market1_seller_org2.name, product: market1_product2, quantity: 3, unit_price: 7.99, market_seller_fee: 1.20, local_orbit_seller_fee: 0.96) }
-  let!(:market1_order2)      { create(:order, items: [market1_order_item3, market1_order_item4], organization: market1_buyer_org2, market: market1, total_cost: 41.95, delivery: market1_delivery, placed_at: Date.parse("May 11, 2014")) }
+  let!(:market1_order2)      { create(:order, items: [market1_order_item3, market1_order_item4], organization: market1_buyer_org2, market: market1, total_cost: 41.95, delivery: market1_delivery, placed_at: 2.weeks.ago) }
 
   let!(:market1_order_item5) { create(:order_item, seller_name: market1_seller_org2, product: market1_product2) }
-  let!(:market1_order3)      { create(:order, items: [market1_order_item5], organization: market1_buyer_org1, market: market1, delivery: market1_delivery, placed_at: Date.parse("May 12, 2014")) }
+  let!(:market1_order3)      { create(:order, items: [market1_order_item5], organization: market1_buyer_org1, market: market1, delivery: market1_delivery) }
 
   let!(:market2)          { create(:market, :with_delivery_schedule, market_seller_fee: 5, local_orbit_seller_fee: 4)}
   let!(:market2_delivery)        { market2.delivery_schedules.first.next_delivery }
@@ -34,14 +34,14 @@ feature "Viewing orders" do
 
   let!(:market2_order_item1) { create(:order_item, seller_name: market2_seller_org1.name, product: market2_product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40) }
   let!(:market2_order_item2) { create(:order_item, seller_name: market2_seller_org2.name, product: market2_product2, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
-  let!(:market2_order1)      { create(:order, items: [market2_order_item1, market2_order_item2], organization: market2_buyer_org, market: market2, total_cost: 27.96, delivery: market2_delivery, placed_at: Date.parse("May 13, 2014")) }
+  let!(:market2_order1)      { create(:order, items: [market2_order_item1, market2_order_item2], organization: market2_buyer_org, market: market2, total_cost: 27.96, delivery: market2_delivery) }
 
   let!(:market2_order_item3) { create(:order_item, seller_name: market2_seller_org1.name, product: market2_product1, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
   let!(:market2_order_item4) { create(:order_item, seller_name: market2_seller_org2.name, product: market2_product2, quantity: 3, unit_price: 7.99, market_seller_fee: 1.20, local_orbit_seller_fee: 0.96) }
-  let!(:market2_order2)      { create(:order, items: [market2_order_item3, market2_order_item4], organization: market2_buyer_org, market: market2, total_cost: 41.95, delivery: market2_delivery, placed_at: Date.parse("May 14, 2014")) }
+  let!(:market2_order2)      { create(:order, items: [market2_order_item3, market2_order_item4], organization: market2_buyer_org, market: market2, total_cost: 41.95, delivery: market2_delivery) }
 
   let!(:market2_order_item5) { create(:order_item, seller_name: market2_seller_org2.name,  product: market2_product2, payment_seller_fee: 0.50) }
-  let!(:market2_order3)      { create(:order, items: [market2_order_item5], organization: market2_buyer_org, market: market2, delivery: market2_delivery, placed_at: Date.parse("May 15, 2014")) }
+  let!(:market2_order3)      { create(:order, items: [market2_order_item5], organization: market2_buyer_org, market: market2, delivery: market2_delivery) }
 
   context "as a seller" do
     let!(:user) { create(:user, organizations: [market1_seller_org1]) }
@@ -227,35 +227,40 @@ feature "Viewing orders" do
       expect(page).not_to have_content(market2_order3.order_number)
     end
 
-    scenario "filtering list of orders by order date" do
+    scenario "filter orders by order date with past month default or other range" do
+      market2_order2.update_attributes(placed_at: 5.weeks.ago)
+      market2_order3.update_attributes(placed_at: 7.weeks.ago)
+
       visit admin_orders_path
 
+      # Tests default date filter of the past month
       expect(page).to have_content(market1_order1.order_number)
       expect(page).to have_content(market1_order2.order_number)
       expect(page).to have_content(market1_order3.order_number)
       expect(page).to have_content(market2_order1.order_number)
-      expect(page).to have_content(market2_order2.order_number)
-      expect(page).to have_content(market2_order3.order_number)
-
-      fill_in "q_placed_at_date_gteq", with: "Mon, 12 May 2014"
-      click_button "Filter"
-
-      expect(page).not_to have_content(market1_order1.order_number)
-      expect(page).not_to have_content(market1_order2.order_number)
-      expect(page).to have_content(market1_order3.order_number)
-      expect(page).to have_content(market2_order1.order_number)
-      expect(page).to have_content(market2_order2.order_number)
-      expect(page).to have_content(market2_order3.order_number)
-
-      fill_in "q_placed_at_date_lteq", with: "Mon, 14 May 2014"
-      click_button "Filter"
-
-      expect(page).not_to have_content(market1_order1.order_number)
-      expect(page).not_to have_content(market1_order2.order_number)
-      expect(page).to have_content(market1_order3.order_number)
-      expect(page).to have_content(market2_order1.order_number)
-      expect(page).to have_content(market2_order2.order_number)
+      expect(page).not_to have_content(market2_order2.order_number)
       expect(page).not_to have_content(market2_order3.order_number)
+
+      fill_in "q_placed_at_date_gteq", with: 7.weeks.ago.to_date.to_s
+      fill_in "q_placed_at_date_lteq", with: 5.weeks.ago.to_date.to_s
+      click_button "Filter"
+
+      expect(page).not_to have_content(market1_order1.order_number)
+      expect(page).not_to have_content(market1_order2.order_number)
+      expect(page).not_to have_content(market1_order3.order_number)
+      expect(page).not_to have_content(market2_order1.order_number)
+      expect(page).to have_content(market2_order2.order_number)
+      expect(page).to have_content(market2_order3.order_number)
+
+      fill_in "q_placed_at_date_lteq", with: 6.weeks.ago.to_date.to_s
+      click_button "Filter"
+
+      expect(page).not_to have_content(market1_order1.order_number)
+      expect(page).not_to have_content(market1_order2.order_number)
+      expect(page).not_to have_content(market1_order3.order_number)
+      expect(page).not_to have_content(market2_order1.order_number)
+      expect(page).not_to have_content(market2_order2.order_number)
+      expect(page).to have_content(market2_order3.order_number)
     end
 
     scenario "filtering list of orders by order number" do

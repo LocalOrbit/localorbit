@@ -23,9 +23,10 @@ describe "Buyer invoices" do
   let!(:ordered_grapes3) { create(:order_item, product: grapes) }
 
   let!(:invoice_date) { DateTime.parse("April 20, 2014") }
-  let!(:invoiced_order) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_apples1, ordered_grapes1], payment_note: "123456", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 20, 2014")) }
-  let!(:invoiced_order2) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_apples2, ordered_grapes2], payment_note: "77839", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 21, 2014")) }
-  let!(:invoiced_order3) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_apples3, ordered_grapes3], payment_note: "992830", invoiced_at: invoice_date, invoice_due_date: Date.parse("May 23, 2014")) }
+  let!(:invoiced_order) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_apples1, ordered_grapes1], payment_note: "123456", invoiced_at: invoice_date, invoice_due_date: 1.weeks.ago) }
+  let!(:invoiced_order2) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_apples2, ordered_grapes2], payment_note: "77839", invoiced_at: invoice_date, invoice_due_date: 2.weeks.ago) }
+  let!(:invoiced_order3) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_apples3, ordered_grapes3], payment_note: "992830", invoiced_at: invoice_date, invoice_due_date: 3.weeks.ago) }
+  let!(:invoiced_order4) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_apples3, ordered_grapes3], payment_note: "992830", invoiced_at: invoice_date, invoice_due_date: 5.weeks.ago) }
 
   let!(:ordered_oranges)  { create(:order_item, product: oranges) }
   let!(:uninvoiced_order) { create(:order, delivery: delivery, market: market, organization: buyers, items: [ordered_oranges]) }
@@ -89,19 +90,21 @@ describe "Buyer invoices" do
       end
 
       it "by date" do
-        fill_in "q_invoice_due_date_date_gteq", with: "Tue, 21 May 2014"
+        fill_in "q_invoice_due_date_date_gteq", with: 5.weeks.ago.to_date
         click_button "Filter"
 
-        expect(page).not_to have_content(invoiced_order.order_number)
+        expect(page).to have_content(invoiced_order.order_number)
         expect(page).to have_content(invoiced_order2.order_number)
         expect(page).to have_content(invoiced_order3.order_number)
+        expect(page).to have_content(invoiced_order4.order_number)
 
-        fill_in "q_invoice_due_date_date_lteq", with: "Tue, 22 May 2014"
+        fill_in "q_invoice_due_date_date_lteq", with: 3.weeks.ago.to_date
         click_button "Filter"
 
         expect(page).not_to have_content(invoiced_order.order_number)
-        expect(page).to have_content(invoiced_order2.order_number)
-        expect(page).not_to have_content(invoiced_order3.order_number)
+        expect(page).not_to have_content(invoiced_order2.order_number)
+        expect(page).to have_content(invoiced_order3.order_number)
+        expect(page).to have_content(invoiced_order4.order_number)
       end
 
       it "by order number" do

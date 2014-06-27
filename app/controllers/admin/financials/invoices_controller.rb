@@ -13,7 +13,7 @@ module Admin::Financials
       end
 
       @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user, date_filter_attr)
-      @q = base_scope.periscope(request.query_parameters).search(request.query_parameters[:q])
+      @q = base_scope.periscope(request.query_parameters).search(@search_presenter.query)
 
       @q.sorts = ['invoice_due_at desc', 'order_number asc'] if @q.sorts.empty?
       @orders = @q.result.page(params[:page]).per(params[:per_page])
