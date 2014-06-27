@@ -6,23 +6,39 @@ class @DatePicker
     options = {dateFormat: @format}
     options.minDate = field.data('min-date')
     options.maxDate = field.data('max-date')
-    if field.is('div')
-      options.onSelect = ->
-        field.slideUp().removeClass('is-open')
-        $("#" + field.attr('data-input')).val(field.datepicker('getDate'))
-      field.find('.ui-datepicker-inline').attr('style', null)
-
-    picker = field.datepicker(options)
-
-    if field.val()
+    preParseDate = (val) ->
+      if val.toISOString != undefined
+        val = val.toISOString()
       # JS parses "2014-02-15" different than "2014/02/15"
-      date_str = field.val().replace(/-/g, "/")
+      date_str = val.replace(/-/g, "/")
       if date_str.match(/T/)
         length = date_str.indexOf('T')
         date_str = date_str.substr(0,length)
       else
         date_str = date_str.substr(0,11)
+      date_str
+
+    formatDate = (date_str) ->
+      date = new Date(date_str)
+      months = $('.datepicker').datepicker( "option", "monthNamesShort" )
+      date.getUTCDate() + " " + months[date.getMonth()] + " " + date.getFullYear()
+
+    if field.is('div')
+      input =  $("#" + field.attr('data-input'))
+      options.onSelect = ->
+        field.slideUp().removeClass('is-open')
+        date_str = preParseDate(field.datepicker('getDate'))
+        input.val(formatDate(date_str))
+      field.find('.ui-datepicker-inline').attr('style', null)
+    else
+      input = field
+
+    picker = field.datepicker(options)
+
+    if input.val()
+      date_str = preParseDate(input.val())
       picker.datepicker('setDate', new Date(date_str))
+      input.val(formatDate(date_str))
 
     if field.is('div')
       field.hide().removeClass('is-open')
@@ -31,8 +47,8 @@ class @DatePicker
         field.slideDown().addClass('is-open')
       $('#' + field.attr('data-input')).prop('readonly', true)
     field.prop('readonly', true)
-    field.change (e) ->
-      field.datepicker('setDate', new Date(field.val()))
+    input.change (e) ->
+      field.datepicker('setDate', new Date(input.val()))
 
     @appendClearLink(field)
 

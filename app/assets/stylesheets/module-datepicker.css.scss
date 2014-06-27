@@ -46,6 +46,7 @@ input.alt-datepicker {
 .ui-datepicker-inline {
   position: absolute;
   display: none;
+  z-index:2;
 }
 @media screen and (max-width: 600px) {
   .ui-datepicker-inline {
