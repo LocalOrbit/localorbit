@@ -36,6 +36,10 @@ class Admin::OrdersController < AdminController
       flash.now[:notice] = "Add items below."
       render :show
       return
+    elsif
+      params[:commit] == "Change Delivery"
+      update_delivery(order)
+      return
     end
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
@@ -61,6 +65,17 @@ class Admin::OrdersController < AdminController
     params.require(:order).permit(:notes, items_attributes: [
       :id, :quantity, :quantity_delivered, :delivery_status, :_destroy
     ])
+  end
+
+  def update_delivery(order)
+    order = Order.find(params[:id])
+
+    updates = UpdateOrderDelivery.perform(order: order, delivery_id: params.require(:order)[:delivery_id])
+    if updates.success?
+      redirect_to admin_order_path(order), notice: "Delivery successfully updated."
+    else
+      redirect_to admin_order_path(order), alert: "This order's delivery cannot be changed at this time. Our support team has been notified and will update you with more information."
+    end
   end
 
   def items_to_add
