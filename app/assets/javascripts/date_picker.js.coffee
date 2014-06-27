@@ -43,6 +43,7 @@ class @DatePicker
     if field.is('div')
       field.hide().removeClass('is-open')
       $("#" + input.attr('id') + ", #" + input.attr('id') + " ~ .btn--end").click (e) ->
+        e.preventDefault()
         $('div.datepicker').not(field).slideUp()
         field.slideDown().addClass('is-open')
       input.prop('readonly', true)
