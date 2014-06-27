@@ -34,7 +34,7 @@
 </div>
 <div class="order-data">
   <% if !current_user.buyer_only? && !order.delivered? %>
-    <%= f.submit "Mark all delivered", class: 'pull-right btn btn--blue btn--small', id: 'mark-all-delivered' %>
+    <%= button_tag "Mark all delivered", class: 'pull-right btn btn--blue btn--small', id: 'mark-all-delivered', type: 'button' %>
   <% end %>
 
   <h2>Items for Delivery</h2>

@@ -65,6 +65,27 @@ describe "Edit quantity ordered" do
       expect(page).to_not have_css(".quantity-ordered")
     end
 
+    # Fixes: https://www.pivotaltracker.com/story/show/73913054
+    context "hitting enter on a quantity field", js:true do
+      it "does not submit the form" do
+        visit admin_order_path(order)
+
+        item = Dom::Order::ItemRow.first
+        expect(item.total).to have_content("$15.00")
+        expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
+
+        allow(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true)) # failure messages are non-sensical if we expect it to_not receive(:perform)
+        item.quantity_delivered_field.native.send_keys(:Enter)
+
+        expect(page).to have_content("Order successfully updated.")
+        item = Dom::Order::ItemRow.first
+        expect(item.quantity_delivered_field.value).to eq("")
+
+        item2 = Dom::Order::ItemRow.all.last
+        expect(item2.quantity_delivered_field.value).to eq("")
+      end
+    end
+
     context "less then ordered" do
       before do
         expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
