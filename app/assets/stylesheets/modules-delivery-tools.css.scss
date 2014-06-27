@@ -1,0 +1,24 @@
+@media print {
+  .upcoming-delivery {
+    h1 {
+      font-size: 24px;
+    }
+     h1, h1 + .note {
+      display: inline-block;
+      margin-bottom: .1in;
+     }
+     h3,
+     .order-summary-total,
+     .upcoming-delivery-date,
+     .upcoming-delivery-order {
+       font-size: 18px;
+     }
+     .heading-delivery-tool {
+       margin-top: 1em;
+       + .org {
+         margin-bottom: .5em;
+       }
+     }
+  }
+
+}
