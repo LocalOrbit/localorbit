@@ -19,7 +19,7 @@ class PickListPresenter
         OpenStruct.new(
           name: product.name,
           total_sold: total,
-          unit: total == 1 ? product.unit.singular : product.unit.plural,
+          unit: total == 1 ? product.unit_singular : product.unit_plural,
           buyers: order_items.map do |line|
             OpenStruct.new(
               name: line.order.organization.name,

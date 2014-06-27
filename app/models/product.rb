@@ -168,11 +168,19 @@ class Product < ActiveRecord::Base
   end
 
   def unit_plural
-    unit.try(:plural)
+    if unit_description.present?
+      "#{unit.try(:plural)}, #{unit_description}"
+    else
+      unit.try(:plural)
+    end
   end
 
   def unit_singular
-    unit.try(:singular)
+    if unit_description.present?
+      "#{unit.try(:singular)}, #{unit_description}"
+    else
+      unit.try(:singular)
+    end
   end
 
   def prices_for_market_and_organization(market, organization)

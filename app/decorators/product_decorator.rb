@@ -66,10 +66,6 @@ class ProductDecorator < Draper::Decorator
   end
 
   def name_and_unit
-    if unit_description.present?
-      "#{name} (#{unit.singular}, #{unit_description})"
-    else
-      "#{name} (#{unit.singular})"
-    end
+    "#{name} (#{unit_singular})"
   end
 end
