@@ -17,4 +17,11 @@ feature "An Admin viewing the product taxonomy" do
     expect(page).to have_content("Product Taxonomy")
     expect(page).to have_content("Fruit")
   end
+
+  scenario "viewing the taxonomy as CSV" do
+    sign_in_as user
+    visit admin_categories_path
+    click_link "Export CSV"
+    expect(page).to have_content("Fruits,Apples,Golden Delicious")
+  end
 end

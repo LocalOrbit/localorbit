@@ -3,5 +3,10 @@ class Admin::CategoriesController < AdminController
 
   def index
     @root = Category.root
+
+    respond_to do |format|
+      format.html
+      format.csv { @filename = "taxonomy.csv"}
+    end
   end
 end
