@@ -306,6 +306,7 @@ describe "Adding a product" do
         fill_in_required_fields(:with_chosen)
 
         select_from_chosen "Bushels", from: "Unit"
+        fill_in "Unit description", with: "48 lbs"
         fill_in "Long description", with: "There are many kinds of apples."
 
         fill_in "Current inventory", with: "12"
@@ -342,6 +343,7 @@ describe "Adding a product" do
         fill_in_required_fields(:with_chosen)
 
         select_from_chosen "Bushels", from: "Unit"
+        fill_in "Unit description", with: "48 lbs"
         fill_in "Long description", with: "There are many kinds of apples."
 
         fill_in "Current inventory", with: "12"

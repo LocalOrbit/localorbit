@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140613150809) do
+ActiveRecord::Schema.define(version: 20140627171721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -396,8 +396,8 @@ ActiveRecord::Schema.define(version: 20140613150809) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "placed_by_id"
-    t.integer  "legacy_id"
     t.datetime "paid_at"
+    t.integer  "legacy_id"
     t.datetime "deleted_at"
   end
 
@@ -507,6 +507,7 @@ ActiveRecord::Schema.define(version: 20140613150809) do
     t.text     "long_description"
     t.boolean  "use_all_deliveries",    default: true
     t.integer  "legacy_id"
+    t.string   "unit_description"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

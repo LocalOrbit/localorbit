@@ -93,6 +93,7 @@ module Admin
         :short_description, :long_description,
         :who_story, :how_story,
         :use_simple_inventory, :simple_inventory, :use_all_deliveries,
+        :unit_description,
         delivery_schedule_ids: []
       )
 

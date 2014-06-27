@@ -66,6 +66,6 @@ class ProductDecorator < Draper::Decorator
   end
 
   def name_and_unit
-    "#{name} (#{unit.singular})"
+    "#{name} (#{unit_singular})"
   end
 end

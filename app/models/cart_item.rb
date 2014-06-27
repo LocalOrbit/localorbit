@@ -37,9 +37,9 @@ class CartItem < ActiveRecord::Base
 
   def unit
     if quantity == 1
-      product.unit.singular
+      product.unit_singular
     else
-      product.unit.plural
+      product.unit_plural
     end
   end
 

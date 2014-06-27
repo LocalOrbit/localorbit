@@ -32,9 +32,11 @@ describe "Editing a product" do
 
       it "saves the product and goes back to the products list" do
         fill_in "Product Name", with: "Canned Peaches"
+        fill_in "Unit description", with: "32 lbs"
         click_link "Save & Go to the Product List"
 
         expect(page).to have_content("Saved Canned Peaches")
+        expect(page).to have_content("32 lbs")
 
         click_link "Canned Peaches"
 
