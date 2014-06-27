@@ -3,7 +3,11 @@
     <div class="column column--two-thirds">
       <h1>Invoice</h1>
     </div><div class="column column--third">
+    <% if current_user.admin? || current_user.market_manager? %>
       <%= link_to "Print And Mark Invoiced", mark_invoiced_admin_invoice_path(invoice.id), class: "btn btn--small btn--save pull-right", id: 'print-and-mark-invoiced' %>
+    <% else %>
+      <%= link_to "Print", "#", class: "btn btn--small btn--save pull-right", id: 'print-invoice' %>
+    <% end %>
     </div>
   </div>
   <div class="row invoice-basics">
