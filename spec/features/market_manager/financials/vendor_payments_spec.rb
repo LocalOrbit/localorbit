@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Payments to vendors" do
-  let(:today) { Date.parse("June 1, 2014") }
+  let(:today) { 1.week.ago }
 
   let(:market1) { create(:market, name: "Baskerville Co-op", po_payment_term: 14) }
   let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market1, day: (today - 3.day).wday) }
@@ -24,6 +24,7 @@ feature "Payments to vendors" do
   let!(:market1_order2) { create(:order, items:[create(:order_item, :delivered, product: market1_product2, quantity: 3), create(:order_item, :delivered, product: market1_product4, quantity: 7)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-002", total_cost: 69.90, placed_at: today - 6.days, payment_status: "paid") }
   let!(:market1_order3) { create(:order, items:[create(:order_item, :delivered, product: market1_product3, quantity: 6)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-003", total_cost: 41.94, placed_at: today - 4.days) }
   let!(:market1_order4) { create(:order, items:[create(:order_item, :delivered, product: market1_product2, quantity: 9), create(:order_item, :delivered, product: market1_product3, quantity: 14)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-004", total_cost: 160.77, placed_at: today - 3.days) }
+  let!(:market1_order5) { create(:order, items:[create(:order_item, :delivered, product: market1_product2, quantity: 9), create(:order_item, :delivered, product: market1_product3, quantity: 14)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-005", total_cost: 160.77, placed_at: today - 80.days) }
 
   scenario "displays the correct items" do
     switch_to_subdomain(market1.subdomain)
@@ -283,15 +284,15 @@ feature "Payments to vendors" do
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms", "Betterest Farms", "Fruit Farms", "Great Farms", "Vegetable Farms"])
 
-      fill_in "q_placed_at_date_gteq", with: "Tue, 2 April 2014"
+      fill_in "q_placed_at_date_gteq", with: 50.days.ago(today).strftime("%a, %e %B %Y")
 
-      fill_in "q_placed_at_date_lteq", with: "Wed, 14 May 2014"
+      fill_in "q_placed_at_date_lteq", with: 2.weeks.ago(today).strftime("%a, %e %B %Y")
       click_button "Filter"
 
       seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
       expect(seller_rows.map {|r| r.name.text }).to eq(["Best Farms", "Better Farms"])
 
-      fill_in "q_placed_at_date_gteq", with: "Wed, 14 May 2014"
+      fill_in "q_placed_at_date_gteq", with: 2.weeks.ago(today).strftime("%a, %e %B %Y")
       fill_in "q_placed_at_date_lteq", with: ""
       click_button "Filter"
 

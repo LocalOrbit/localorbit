@@ -12,7 +12,7 @@ module Search
         scope = scope.where(market_id: user.managed_markets.map(&:id))
       end
 
-      @q = scope.search(query[:q])
+      @q = scope.search(Search::QueryDefaults.new(query[:q] || {}, 'placed_at').query)
     end
 
     def payment_groups
