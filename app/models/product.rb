@@ -168,18 +168,18 @@ class Product < ActiveRecord::Base
   end
 
   def unit_plural
-    if unit_description.present?
-      "#{unit.try(:plural)}, #{unit_description}"
-    else
-      unit.try(:plural)
-    end
+    unit_with_description(:plural)
   end
 
   def unit_singular
+    unit_with_description(:singular)
+  end
+
+  def unit_with_description(singular_or_plural)
     if unit_description.present?
-      "#{unit.try(:singular)}, #{unit_description}"
+      "#{unit.try(singular_or_plural)}, #{unit_description}"
     else
-      unit.try(:singular)
+      unit.try(singular_or_plural)
     end
   end
 
