@@ -19,7 +19,7 @@ context "Viewing sold items" do
     ]
   }
 
-  let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: "LO-ADA-0000001", placed_at: Time.zone.parse("2014-03-15")) }
+  let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: "LO-ADA-0000001") }
 
   before(:each) do
     switch_to_subdomain(market.subdomain)
@@ -41,7 +41,7 @@ context "Viewing sold items" do
       sold_item = Dom::Admin::SoldItemRow.first
 
       expect(sold_item.order_number).to have_content("LO-ADA-0000001")
-      expect(sold_item.order_date).to eq("03/15/2014")
+      expect(sold_item.order_date).to eq(order.placed_at.strftime("%m/%d/%Y"))
       expect(sold_item.buyer).to eq("Big Money")
       expect(sold_item.seller).to eq("Better foodz")
       expect(sold_item.product).to eq("Brocolli")
@@ -51,6 +51,18 @@ context "Viewing sold items" do
       expect(sold_item.delivery_status).to eq("Pending")
       expect(sold_item.buyer_payment_status).to eq("Unpaid")
       expect(sold_item.seller_payment_status).to eq("Unpaid")
+    end
+
+    it "lists by default items sold within the last month" do
+      order_item = create(:order_item, product: product2, seller_name: seller.name, name: product2.name, created_at: 5.weeks.ago )
+      order = create(:order, items: [order_item], organization: buyer, market: market, order_number: "LO-ADA-0000002", delivery: delivery, created_at: 5.weeks.ago, placed_at: 5.weeks.ago)
+
+      expect(Dom::Admin::SoldItemRow.count).to eq(3)
+
+      fill_in "q_created_at_date_gteq", with: 6.weeks.ago.to_date.to_s
+      click_button "Filter"
+
+      expect(Dom::Admin::SoldItemRow.count).to eq(4)
     end
 
     it "shows the correct search and filters" do
@@ -153,7 +165,7 @@ context "Viewing sold items" do
       sold_item = Dom::Admin::SoldItemRow.first
 
       expect(sold_item.order_number).to have_content("LO-ADA-0000001")
-      expect(sold_item.order_date).to eq("03/15/2014")
+      expect(sold_item.order_date).to eq(order.placed_at.strftime("%m/%d/%Y"))
       expect(sold_item.buyer).to eq("Big Money")
       expect(sold_item.seller).to eq("Good foodz")
       expect(sold_item.product).to eq("Green things")

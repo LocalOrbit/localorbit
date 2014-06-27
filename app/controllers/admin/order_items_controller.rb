@@ -9,7 +9,8 @@ module Admin
 
       # initialize ransack and search
       @sticky_params = sticky_parameters(request.query_parameters)
-      search = @sticky_params[:q] || {}
+      search = Search::QueryDefaults.new(@sticky_params[:q], :created_at).query
+
       @q = @order_items.search(search)
       @q.sorts = ["order_placed_at desc", "name"] if @q.sorts.empty?
       @order_items = @q.result
