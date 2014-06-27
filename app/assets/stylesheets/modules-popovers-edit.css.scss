@@ -88,17 +88,10 @@
 
 @media screen and (max-width: 800px) {
   .popup--edit {
-    position: fixed;
-    top: 50%;
-    left: 50%;
+    left: 5%;
     width: 90%;
     max-width: 300px;
     margin: 0 auto;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
     &.rtl {
       right: auto;
     }

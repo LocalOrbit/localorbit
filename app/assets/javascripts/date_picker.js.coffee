@@ -42,10 +42,10 @@ class @DatePicker
 
     if field.is('div')
       field.hide().removeClass('is-open')
-      $('#' + field.attr('data-input')).click (e) ->
+      $("#" + input.attr('id') + ", #" + input.attr('id') + " ~ .btn--end").click (e) ->
         $('div.datepicker').not(field).slideUp()
         field.slideDown().addClass('is-open')
-      $('#' + field.attr('data-input')).prop('readonly', true)
+      input.prop('readonly', true)
     field.prop('readonly', true)
     input.change (e) ->
       field.datepicker('setDate', new Date(input.val()))
