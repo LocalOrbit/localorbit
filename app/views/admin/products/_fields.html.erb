@@ -63,6 +63,14 @@
   <span class="hint">Not seeing what you need? <%= link_to "Request a New Unit", "#", class: "modal-toggle", data: { modal: "request-new-unit" } %></span>
 </div>
 
+<div class="field">
+  <%= f.label :unit_description %>
+  <span class="hint">Up to 20 characters</span>
+  <br>
+  <%= f.text_field :unit_description, size: 20, maxlength: 20, class: "column column--full" %>
+</div>
+
+
 <fieldset class="conditional">
   <legend>Inventory</legend>
   <%= f.check_box :use_simple_inventory, disabled: !@product.can_use_simple_inventory? %>
