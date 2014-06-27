@@ -7,19 +7,23 @@
   </div>
 </div>
 
+<% max_depth = Category.maximum(:depth) - 1 %>
+
 <div class="row row--partial">
   <div class="column">
     <table>
       <thead>
-        <th>Name</th>
+        <th colspan="<%= max_depth %>">Name</th>
       </thead>
       <tbody>
         <% @root.descendants.each do |category| %>
           <tr data-depth="<%= category.depth %>">
-            <td>
-              <%= "-" * (category.depth - 1) %>
-              <%= category.name %>
-            </td>
+            <% row_categories = category.self_and_ancestors.where("depth > 0") %>
+            <% row_categories.each do |column_category| %>
+              <td <%= "colspan=#{max_depth - column_category.depth}" if column_category == row_categories.last %>>
+                <%= column_category.name %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
