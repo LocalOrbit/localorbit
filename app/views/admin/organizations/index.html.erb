@@ -16,14 +16,24 @@
       <th data-column="can_sell" class="<%= column_sort_classes("can_sell")%>">Role</th>
     </tr>
   </thead>
+  <tbody>
   <% @organizations.each do |organization| %>
     <tr>
       <td class="name"><%= link_to organization.name, [:admin, organization] %></td>
       <td class="market"><%= organization.markets.map {|m| m.name }.join(', ') %></td>
       <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
       <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
+      <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
+      <td class="action">
+        <% if current_user.market_manager? %>
+          <%= link_to 'Delete', admin_organization_path(organization.id), method: :delete, class: 'action-link font-icon icon-delete', data: {confirm: "Are you sure you want to delete organization #{organization.name}? All discounts, users, prices, products related to this organization will also be deleted. This cannot be undone."} %>
+        <% end %>
+      </td>
     </tr>
+
+
   <% end %>
+  </tbody>
 </table>
 
 <%= paginate @organizations %>

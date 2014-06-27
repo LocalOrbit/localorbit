@@ -260,6 +260,27 @@ describe "A Market Manager", :vcr do
     end
   end
 
+  describe "Deleting an organization" do
+    let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market])}
+    let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market])}
+
+    it "removes the organization from the organizations list" do
+      visit admin_organizations_path
+      expect(page).to have_content("Holland Farms")
+
+      holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+
+      within(holland_farms.node) do
+        click_link "Delete"
+      end
+
+      expect(page).to have_content("Removed Holland Farms from #{market.name}")
+
+      holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+      expect(holland_farms).to be_nil
+    end
+  end
+
   describe "Inviting a member to an org" do
     let(:org) { create(:organization, name: "Holland Farms")}
 

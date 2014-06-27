@@ -4,7 +4,7 @@ module Admin
 
     before_action :process_filter_clear_requests
     before_action :require_admin_or_market_manager, only: [:new, :create]
-    before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules]
+    before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules, :destroy]
 
     def index
       @query_params = sticky_parameters(request.query_parameters)
@@ -43,6 +43,14 @@ module Admin
         redirect_to [:admin, @organization], notice: "Saved #{@organization.name}"
       else
         render action: :show
+      end
+    end
+
+    def destroy
+      if current_market.organizations.delete(@organization)
+        redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} from #{current_market.name}"
+      else
+        redirect_to [:admin, :organizations], error: "Could not remove #{@organization.name} from #{current_market.name}"
       end
     end
 
