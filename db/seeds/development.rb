@@ -48,7 +48,7 @@ delivery_schedule = DeliverySchedule.find_or_create_by!(
 
 
 # Buyer
-buy_org = Organization.find_or_create_by!(name: "Farm to Table Cafe") {|org|
+buy_org = Organization.find_or_create_by!(name: "Farm to Table Cafe", allow_purchase_orders: true) {|org|
   org.can_sell = false
 }
 
@@ -64,6 +64,7 @@ buyer_user = User.find_or_create_by!(email: "buyer@example.com") {|user|
   user.password = "password1"
   user.password_confirmation = "password1"
   user.role = "user"
+  user.confirmed_at = Time.current
 }
 
 unless buy_org.users.include?(buyer_user)
@@ -72,7 +73,7 @@ unless buy_org.users.include?(buyer_user)
 end
 
 # Seller
-sell_org = Organization.find_or_create_by!(name: "Alto Valley Farms") {|org|
+sell_org = Organization.find_or_create_by!(name: "Alto Valley Farms", allow_purchase_orders: true) {|org|
   org.can_sell = true
 }
 
