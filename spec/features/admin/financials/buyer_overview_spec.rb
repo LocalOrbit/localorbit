@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature "Buyer Financial Overview" do
-  let!(:market)  { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
+  let!(:market)  { create(:market, po_payment_term: 20, timezone: "Eastern Time (US & Canada)") }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
@@ -18,7 +18,7 @@ feature "Buyer Financial Overview" do
   before do
     # Overdue Order
     Time.zone = "Eastern Time (US & Canada)"
-    Timecop.travel(Time.current - 32.days) do
+    Timecop.travel(Time.current - 27.days) do
 
       order_item = create(:order_item, unit_price: 53.99, quantity: 1)
       @overdue_order1 = create(:order, delivery: delivery, items: [order_item], payment_method: "purchase order", market: market, organization: buyer)
@@ -96,6 +96,9 @@ feature "Buyer Financial Overview" do
     click_link "Dashboard", match: :first
     click_link "Financials"
     click_link "Due"
+
+    fill_in "q_invoice_due_date_date_lteq", with: 30.days.from_now.to_date.to_s
+    click_button "Filter"
 
     expect(page).to have_content(@due_order.order_number)
     expect(page).not_to have_content(@overdue_order1.order_number)

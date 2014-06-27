@@ -15,12 +15,12 @@ feature "sending invoices" do
 
   let!(:product) { create(:product, :sellable, organization: market1_seller1) }
 
-  let!(:market1_order1) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 210.00)], market: market1, organization: market1_buyer1, payment_method: 'purchase order', order_number: "LO-001", total_cost: 210, placed_at: Time.zone.parse("2014-04-01")) }
+  let!(:market1_order1) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 210.00)], market: market1, organization: market1_buyer1, payment_method: 'purchase order', order_number: "LO-001", total_cost: 210, placed_at: 1.week.ago) }
   let!(:market1_order2) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market1, organization: market1_buyer1, invoiced_at: 1.day.ago, invoice_due_date: 13.days.from_now) }
   let!(:market1_order3) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market1, organization: market1_buyer1, payment_method: 'credit card') }
   let!(:market1_order4) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market1, organization: market1_buyer1, payment_method: 'ach') }
-  let!(:market1_order5) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 420.00)], market: market1, organization: market1_buyer1, payment_method: 'purchase order', order_number: "LO-005", total_cost: 420, placed_at: Time.zone.parse("2014-04-02")) }
-  let!(:market1_order6) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 310.00)], market: market1, organization: market1_buyer2, payment_method: 'purchase order', order_number: "LO-006", total_cost: 310, placed_at: Time.zone.parse("2014-04-03")) }
+  let!(:market1_order5) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 420.00)], market: market1, organization: market1_buyer1, payment_method: 'purchase order', order_number: "LO-005", total_cost: 420, placed_at: 2.weeks.ago) }
+  let!(:market1_order6) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 310.00)], market: market1, organization: market1_buyer2, payment_method: 'purchase order', order_number: "LO-006", total_cost: 310, placed_at: 3.weeks.ago) }
 
   invoice_auth_matcher = lambda {|r1, r2|
     matcher = %r{/admin/invoices/[0-9]+/invoice\.pdf\?auth_token=}
@@ -40,7 +40,7 @@ feature "sending invoices" do
 
     expect(invoice.order_number).to eq("LO-001")
     expect(invoice.buyer).to eq("Money Bags")
-    expect(invoice.order_date).to eq("04/01/2014")
+    expect(invoice.order_date).to eq(1.week.ago.strftime("%m/%d/%Y"))
     expect(invoice.amount).to eq("$210.00")
     expect(invoice.delivery_status).to eq("Pending")
     expect(invoice.action).to include("Send Invoice")
@@ -103,12 +103,13 @@ feature "sending invoices" do
     let!(:market2_seller1) { create(:organization, :seller, name: "Better Farms", markets: [market2]) }
     let!(:market2_buyer1)  { create(:organization, :buyer, name: "Buyer for Market2 1", markets: [market2], users: [buyer_user2]) }
     let!(:market2_buyer2) { create(:organization, :buyer, name: "Buyer for Market 2 1", markets: [market2]) }
-    let!(:market2_order1) { create(:order, delivery: delivery2, items:[create(:order_item, product: product, unit_price: 210.00)], market: market2, organization: market2_buyer1, payment_method: 'purchase order', order_number: "LO-007", total_cost: 210, placed_at: Time.zone.parse("2014-04-01")) }
+    let!(:market2_order1) { create(:order, delivery: delivery2, items:[create(:order_item, product: product, unit_price: 210.00)], market: market2, organization: market2_buyer1, payment_method: 'purchase order', order_number: "LO-007", total_cost: 210, placed_at: 1.week.ago) }
     let!(:market2_order2) { create(:order, delivery: delivery2, items:[create(:order_item, product: product)], market: market2, organization: market2_buyer1, invoiced_at: 1.day.ago, invoice_due_date: 13.days.from_now) }
     let!(:market2_order3) { create(:order, delivery: delivery2, items:[create(:order_item, product: product)], market: market2, organization: market2_buyer1, payment_method: 'credit card') }
     let!(:market2_order4) { create(:order, delivery: delivery2, items:[create(:order_item, product: product)], market: market2, organization: market2_buyer1, payment_method: 'ach') }
-    let!(:market2_order5) { create(:order, delivery: delivery2, items:[create(:order_item, product: product, unit_price: 420.00)], market: market2, organization: market2_buyer1, payment_method: 'purchase order', order_number: "LO-008", total_cost: 420, placed_at: Time.zone.parse("2014-04-02")) }
-    let!(:market2_order6) { create(:order, delivery: delivery2, items:[create(:order_item, product: product, unit_price: 310.00)], market: market2, organization: market2_buyer2, payment_method: 'purchase order', order_number: "LO-009", total_cost: 310, placed_at: Time.zone.parse("2014-04-03")) }
+    let!(:market2_order5) { create(:order, delivery: delivery2, items:[create(:order_item, product: product, unit_price: 420.00)], market: market2, organization: market2_buyer1, payment_method: 'purchase order', order_number: "LO-008", total_cost: 420, placed_at: 2.weeks.ago) }
+    let!(:market2_order6) { create(:order, delivery: delivery2, items:[create(:order_item, product: product, unit_price: 310.00)], market: market2, organization: market2_buyer2, payment_method: 'purchase order', order_number: "LO-009", total_cost: 310, placed_at: 3.weeks.ago) }
+    let!(:market2_order7) { create(:order, delivery: delivery2, items:[create(:order_item, product: product, unit_price: 110.00)], market: market2, organization: market2_buyer2, payment_method: 'purchase order', order_number: "LO-010", total_cost: 110, placed_at: 5.weeks.ago) }
 
     it "can be filtered by market" do
       switch_to_subdomain(market1.subdomain)
@@ -157,6 +158,7 @@ feature "sending invoices" do
       expect(page).not_to have_content(market2_order4.order_number)
       expect(page).not_to have_content(market2_order5.order_number)
       expect(page).not_to have_content(market2_order6.order_number)
+      expect(page).not_to have_content(market2_order7.order_number)
 
       within("#q_organization_id_eq") do
         expect(page).to have_content(market1_buyer1.name)
@@ -207,40 +209,43 @@ feature "sending invoices" do
       expect(page).not_to have_content(market2_order4.order_number)
       expect(page).to have_content(market2_order5.order_number)
       expect(page).to have_content(market2_order6.order_number)
+      expect(page).not_to have_content(market2_order7.order_number)
 
-      fill_in "q_placed_at_date_gteq", with: "Tue, 2 April 2014"
+      fill_in "q_placed_at_date_gteq", with: 6.weeks.ago.to_date
       click_button "Filter"
 
-      expect(page).not_to have_content(market1_order1.order_number)
+      expect(page).to have_content(market1_order1.order_number)
       expect(page).not_to have_content(market1_order2.order_number)
       expect(page).not_to have_content(market1_order3.order_number)
       expect(page).not_to have_content(market1_order4.order_number)
       expect(page).to have_content(market1_order5.order_number)
       expect(page).to have_content(market1_order6.order_number)
 
-      expect(page).not_to have_content(market2_order1.order_number)
+      expect(page).to have_content(market2_order1.order_number)
       expect(page).not_to have_content(market2_order2.order_number)
       expect(page).not_to have_content(market2_order3.order_number)
       expect(page).not_to have_content(market2_order4.order_number)
       expect(page).to have_content(market2_order5.order_number)
       expect(page).to have_content(market2_order6.order_number)
+      expect(page).to have_content(market2_order7.order_number)
 
-      fill_in "q_placed_at_date_lteq", with: "Tue, 2 April 2014"
+      fill_in "q_placed_at_date_lteq", with: 3.weeks.ago.to_date
       click_button "Filter"
 
       expect(page).not_to have_content(market1_order1.order_number)
       expect(page).not_to have_content(market1_order2.order_number)
       expect(page).not_to have_content(market1_order3.order_number)
       expect(page).not_to have_content(market1_order4.order_number)
-      expect(page).to have_content(market1_order5.order_number)
-      expect(page).not_to have_content(market1_order6.order_number)
+      expect(page).not_to have_content(market1_order5.order_number)
+      expect(page).to have_content(market1_order6.order_number)
 
       expect(page).not_to have_content(market2_order1.order_number)
       expect(page).not_to have_content(market2_order2.order_number)
       expect(page).not_to have_content(market2_order3.order_number)
       expect(page).not_to have_content(market2_order4.order_number)
-      expect(page).to have_content(market2_order5.order_number)
-      expect(page).not_to have_content(market2_order6.order_number)
+      expect(page).not_to have_content(market2_order5.order_number)
+      expect(page).to have_content(market2_order6.order_number)
+      expect(page).to have_content(market2_order7.order_number)
     end
 
     it "can be filtered by order number" do
