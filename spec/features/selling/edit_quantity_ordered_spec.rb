@@ -74,14 +74,15 @@ describe "Edit quantity ordered" do
         expect(item.total).to have_content("$15.00")
         expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$15.00")
 
-        item.set_quantity_ordered(2)
+        allow(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true)) # failure messages are non-sensical if we expect it to_not receive(:perform)
+        item.quantity_delivered_field.native.send_keys(:Enter)
 
-        expect(UpdateBalancedPurchase).not_to receive(:perform)
-        item.quantity_delivered_field.native.send_keys(:return)
-        expect(item.quantity_delivered_field.value).to eq("2")
+        expect(page).to have_content("Order successfully updated.")
+        item = Dom::Order::ItemRow.first
+        expect(item.quantity_delivered_field.value).to eq("")
 
         item2 = Dom::Order::ItemRow.all.last
-        expect(item2.quantity_delivered_field.value).not_to eq("1")
+        expect(item2.quantity_delivered_field.value).to eq("")
       end
     end
 
