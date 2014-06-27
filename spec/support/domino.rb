@@ -183,6 +183,10 @@ module Dom
     end
   end
 
+  class InlineDatePicker < DatePicker
+    selector ".datepicker.is-open"
+  end
+
   module Admin
     module Financials
       class InvoiceRow < Domino

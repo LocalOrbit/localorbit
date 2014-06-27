@@ -1,0 +1,99 @@
+@import 'mixins';
+
+input.datepicker,
+input.alt-datepicker {
+  width: 8em;
+
+  ~ .btn--end {
+    display: none;
+    padding: 3px 3px 2px;
+    margin-top: 2px;
+    margin-left: -1px;
+    font-size: 12px;
+    vertical-align: top;
+  }
+}
+  input.alt-datepicker,
+  input.hasDatepicker {
+    height: 30px;
+    @include border-radius(2px 0 0 2px);
+    margin: 2px 0;
+    vertical-align: top;
+
+    ~ .clear-link {
+      position: absolute;
+      padding: 0;
+      border: 0;
+      margin: .4em 0 0 -1.2em;
+      background: transparent;
+      font-size: 14px;
+      -webkit-appearance: none;
+    }
+    ~ .btn--end {
+      display: inline-block;
+    }
+  }
+
+
+.datepicker-no-float {
+  > .ui-datepicker {
+    width: 0;
+    height: 0;
+    border: 0;
+    overflow: hidden;
+  }
+}
+.ui-datepicker-inline {
+  position: absolute;
+  display: none;
+  z-index:2;
+}
+@media screen and (max-width: 600px) {
+  .ui-datepicker-inline {
+    position: relative;
+    margin: 0 auto .5em;
+  }
+}
+.datepicker-is-open {
+  .ui-datepicker-inline {
+    display: block;
+    margin: 0 auto .5em;
+  }
+}
+
+.edit-cell {
+  input.alt-datepicker,
+  input.hasDatepicker {
+    height: 36px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+
+    ~ .btn--end {
+      padding: 7px 3px 5px;
+      font-size: 16px;
+    }
+  }
+  input.alt-datepicker,
+  input.hasDatepicker {
+    ~ .clear-link {
+      margin-top: .8em;
+    }
+  }
+}
+
+.popup--edit {
+  input.alt-datepicker,
+  input.hasDatepicker {
+
+    ~ .btn--end {
+      padding: 5px 3px 4px;
+      font-size: 14px;
+    }
+
+  }
+  input.alt-datepicker,
+  input.hasDatepicker {
+    ~ .clear-link {
+      margin-top: .6em;
+    }
+  }}

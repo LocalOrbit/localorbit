@@ -6,25 +6,65 @@ class @DatePicker
     options = {dateFormat: @format}
     options.minDate = field.data('min-date')
     options.maxDate = field.data('max-date')
+    preParseDate = (val) ->
+      if val.toISOString != undefined
+        val = val.toISOString()
+      # JS parses "2014-02-15" different than "2014/02/15"
+      date_str = val.replace(/-/g, "/")
+      if date_str.match(/T/)
+        length = date_str.indexOf('T')
+        date_str = date_str.substr(0,length)
+      else
+        date_str = date_str.substr(0,11)
+      date_str
+
+    formatDate = (date_str) ->
+      date = new Date(date_str)
+      months = $('.datepicker').datepicker( "option", "monthNamesShort" )
+      date.getUTCDate() + " " + months[date.getMonth()] + " " + date.getFullYear()
+
+    if field.is('div')
+      input =  $("#" + field.attr('data-input'))
+      options.onSelect = ->
+        field.slideUp().removeClass('is-open')
+        date_str = preParseDate(field.datepicker('getDate'))
+        input.val(formatDate(date_str))
+      field.find('.ui-datepicker-inline').attr('style', null)
+    else
+      input = field
 
     picker = field.datepicker(options)
 
-    if field.val()
-      # JS parses "2014-02-15" different than "2014/02/15"
-      date_str = field.val().substr(0,10).replace(/-/g, "/")
+    if input.val()
+      date_str = preParseDate(input.val())
       picker.datepicker('setDate', new Date(date_str))
+      input.val(formatDate(date_str))
 
+    if field.is('div')
+      field.hide().removeClass('is-open')
+      $("#" + input.attr('id') + ", #" + input.attr('id') + " ~ .btn--end").click (e) ->
+        e.preventDefault()
+        $('div.datepicker').not(field).slideUp()
+        field.slideDown().addClass('is-open')
+      input.prop('readonly', true)
     field.prop('readonly', true)
+    input.change (e) ->
+      field.datepicker('setDate', new Date(input.val()))
 
     @appendClearLink(field)
 
+
+
   @appendClearLink: (field)->
     clearLink = $("<button class='clear-link'><i class='font-icon icon-clear'></i></button>")
-    field.after(clearLink)
+
+    if field.is('div')
+      field = $('#' + field.attr('data-input'))
+      field.after(clearLink)
     clearLink.on 'click', (event)->
       event.preventDefault()
       field.val('')
 
-$ ->
-  $(".datepicker").each (idx, field)->
-    DatePicker.setup(field)
+  $ ->
+    $(".datepicker").each (idx, field)->
+      DatePicker.setup(field)

@@ -12,9 +12,10 @@ $ ->
           response_text = data
           update_input = (pair) ->
             $(prefix + "_" + pair[0]).attr('value', pair[1])
+          $('.edit-toggle[href="#' + e.target.id + '"]').text(response_text.toggle)
           update_input pair for pair in response_text.params
           $('<div class="flash flash--notice"><p>' + data.message + '</p></div>').appendTo('#flash-messages')
-          $('.edit-toggle[href="#' + e.target.id + '"]').text(response_text.toggle)
+          error_holder = $(e.target).find('.popup-error').empty()
           $(e.target).find('.close').trigger "click"
 
           window.setTimeout ->

@@ -17,11 +17,13 @@
 
       <div class="row">
         <div class="column column--half">
-          <%= f.label :good_from %>
-          <%= f.datetime_field :good_from, size: 8, class: 'datepicker' %><a href="#lot_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+          <label for="lot_<%= product.id %>_good_from">Good From</label>
+          <%= f.datetime_field :good_from, size: 8, class: 'alt-datepicker', id: "lot_#{product.id}_good_from" %><a href="#lot_<%= product.id %>_good_from" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+          <div class="datepicker" data-input="lot_<%= product.id %>_good_from"></div>
         </div><div class="column column--half">
-          <%= f.label :expires_at, "Expires On" %>
-          <%= f.datetime_field :expires_at, size: 8, class: 'datepicker', data: {'min-date' => 0} %><a href="#lot_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+          <label for="lot_<%= product.id %>_expires_at">Expires On</label>
+          <%= f.datetime_field :expires_at, size: 8, class: 'alt-datepicker', id: "lot_#{product.id}_expires_at", data: {'min-date' => 0} %><a href="#lot_<%= product.id %>_expires_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
+          <div class="datepicker" data-input="lot_<%= product.id %>_expires_at"></div>
         </div>
       </div>
     </fieldset>

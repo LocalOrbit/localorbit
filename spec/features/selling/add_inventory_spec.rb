@@ -111,7 +111,7 @@ describe "Adding advanced inventory" do
 
     it "populates the correct date on validation errors" do
       expected_date = 1.month.from_now.change(day: 15).strftime("%d %b %Y")
-      datepicker = Dom::DatePicker.open('lot_expires_at')
+      datepicker = Dom::InlineDatePicker.open('lot_expires_at')
       datepicker.click_next
       datepicker.click_day('15')
 

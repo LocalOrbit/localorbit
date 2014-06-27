@@ -63,7 +63,7 @@ class @EditTable
       $(field).val(data[item])
 
       # Apply Any Client-side formatting for fields
-      if field.hasClass("datepicker")
+      if field.hasClass("datepicker") || field.hasClass('alt-datepicker')
         DatePicker.setup(field)
 
       if field.length && @applyErrorValuesCallback
