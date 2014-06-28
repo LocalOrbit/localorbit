@@ -343,6 +343,20 @@ module Dom
       attribute :can_sell
     end
 
+    class MarketMembershipRow < Domino
+      selector ".market-membership-row"
+
+      attribute :name
+
+      def check
+        node.find('input').set(true)
+      end
+
+      def uncheck
+        node.find('input').set(false)
+      end
+    end
+
     class UserRow < Domino
       selector ".user-row"
       attribute :email

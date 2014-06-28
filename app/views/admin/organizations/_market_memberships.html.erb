@@ -1,0 +1,20 @@
+<%= form_tag admin_organization_path(@organization.id), method: :delete do %>
+  <table>
+    <thead>
+      <tr>
+        <th><input type="checkbox" class="select-all"></th>
+        <th>Market</th>
+      </tr>
+    </thead>
+    <% @organization.markets.each do |market| %>
+      <tr class="market-membership-row">
+        <td class="checkbox"><%= check_box_tag "ids[]", market.id %></td>
+        <td class="name"><%= market.name %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= submit_tag "Remove Membership(s)", class: 'pull-right btn--small' %>
+  <br>
+  <br>
+<% end %>

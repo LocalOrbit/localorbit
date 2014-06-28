@@ -3,8 +3,8 @@ module Admin
     include StickyFilters
 
     before_action :process_filter_clear_requests
-    before_action :require_admin_or_market_manager, only: [:new, :create]
-    before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules, :destroy]
+    before_action :require_admin_or_market_manager, only: [:new, :create, :destroy]
+    before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules, :market_memberships, :destroy]
 
     def index
       @query_params = sticky_parameters(request.query_parameters)
@@ -47,10 +47,17 @@ module Admin
     end
 
     def destroy
-      if current_market.organizations.destroy(@organization)
-        redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} from #{current_market.name}"
+      if params[:ids].present?
+        MarketOrganization.where(organization_id: @organization.id, market_id: params[:ids]).destroy_all
+        redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} market membership(s)"
       else
-        redirect_to [:admin, :organizations], error: "Could not remove #{@organization.name} from #{current_market.name}"
+        market = current_user.admin? ? @organization.markets.first : current_market
+
+        if market.organizations.destroy(@organization)
+          redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} from #{market.name}"
+        else
+          redirect_to [:admin, :organizations], error: "Could not remove #{@organization.name} from #{market.name}"
+        end
       end
     end
 
@@ -59,6 +66,10 @@ module Admin
       ids = schedules.map {|market, schedules| schedules.map {|schedule| schedule.id.to_s }}.flatten
 
       render partial: "delivery_schedules", locals: {delivery_schedules: schedules, selected_ids: ids, product: nil, organization: @organization}
+    end
+
+    def market_memberships
+      render partial: "market_memberships"
     end
 
     private

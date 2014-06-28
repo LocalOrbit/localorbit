@@ -25,8 +25,12 @@
       <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
       <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
       <td class="action">
-        <% if current_user.market_manager? %>
-          <%= link_to 'Delete', admin_organization_path(organization.id), method: :delete, class: 'action-link font-icon icon-delete', data: {confirm: "Are you sure you want to delete organization #{organization.name}? All discounts, users, prices, products related to this organization will also be deleted. This cannot be undone."} %>
+        <% if current_user.market_manager? || current_user.admin? %>
+          <% if organization.markets.count > 1 %>
+            <%= link_to 'Delete', market_memberships_admin_organization_path(organization.id), class: "action-link font-icon icon-delete remote-modal-toggle", data: { modal: "delete-organization" }%>
+          <% else %>
+            <%= link_to 'Delete', admin_organization_path(organization.id), method: :delete, class: 'action-link font-icon icon-delete', data: {confirm: "Are you sure you want to delete organization #{organization.name}? All discounts, users, prices, products related to this organization will also be deleted. This cannot be undone."} %>
+          <% end %>
         <% end %>
       </td>
     </tr>
@@ -44,3 +48,12 @@
     This table is empty, either because there is no data, or because the filter you've applied is hiding it.
   </div>
 <% end %>
+
+<div class="delete-organization is-hidden modal popup">
+  <div class="popup-header">
+    Remove Organization from Markets <button class="close"><i class="font-icon icon-close"></i></button>
+  </div>
+  <div class="popup-body">
+    Loading Market Membership(s)...
+  </div>
+</div>
