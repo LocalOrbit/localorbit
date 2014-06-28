@@ -92,7 +92,7 @@ context "Viewing sold items" do
         sold_item = Dom::Admin::SoldItemRow.first
 
         expect(sold_item.order_number).to have_content("LO-ADA-0000001")
-        expect(sold_item.order_date).to eq("03/15/2014")
+        expect(sold_item.order_date).to eq(order.placed_at.strftime("%m/%d/%Y"))
         expect(sold_item.buyer).to eq("Big Money")
         expect(sold_item.seller).to eq("Better foodz")
         expect(sold_item.product).to eq("Brocolli")

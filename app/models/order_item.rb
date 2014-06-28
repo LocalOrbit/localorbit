@@ -57,9 +57,9 @@ class OrderItem < ActiveRecord::Base
 
   def self.for_user(user)
     if user.buyer_only?
-      joins(:order).where(orders: { organization_id: user.managed_organizations.pluck(:id).uniq })
+      joins(:order).where(orders: { organization_id: user.managed_organizations_including_deleted.pluck(:id).uniq })
     else
-      joins(:product).where(products: { organization_id: user.managed_organizations.pluck(:id).uniq })
+      joins(:product).where(products: { organization_id: user.managed_organizations_including_deleted.pluck(:id).uniq })
     end
   end
 
