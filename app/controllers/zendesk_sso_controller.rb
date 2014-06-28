@@ -5,6 +5,8 @@ class ZendeskSSOController < ApplicationController
   ZENDESK_SHARED_SECRET = ENV["ZENDESK_SHARED_SECRET"]
   ZENDESK_SUBDOMAIN     = ENV["ZENDESK_SUBDOMAIN"]
 
+  skip_before_action :ensure_market_affiliation
+
   def show
     sign_into_zendesk(current_user)
   end
