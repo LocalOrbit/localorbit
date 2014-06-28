@@ -20,6 +20,23 @@ class Admin::OrdersController < AdminController
   def update
     order = Order.find(params[:id])
 
+    if params["items_to_add"]
+      result = UpdateOrderWithNewItems.perform(order: order, item_hashes: items_to_add)
+      unless result.success?
+        @show_add_items_form = true
+        order.errors[:base] << "Failed to add items to this order."
+        @order = SellerOrder.new(order, current_user)
+        render :show and return
+      end
+    elsif params[:commit] == "Add Items"
+      @show_add_items_form = true
+      @order = SellerOrder.new(order, current_user)
+      @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new)
+      flash.now[:notice] = "Add items below."
+      render :show
+      return
+    end
+
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
     updates = UpdateOrder.perform(order: order, order_params: order_params)
     if updates.success?
@@ -44,4 +61,8 @@ class Admin::OrdersController < AdminController
       ])
   end
 
+  def items_to_add
+    items = params.require(:items_to_add)
+    items.select{|i| i[:quantity].to_i > 0 }
+  end
 end
