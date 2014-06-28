@@ -47,7 +47,7 @@ module Admin
     end
 
     def destroy
-      if current_market.organizations.delete(@organization)
+      if current_market.organizations.destroy(@organization)
         redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} from #{current_market.name}"
       else
         redirect_to [:admin, :organizations], error: "Could not remove #{@organization.name} from #{current_market.name}"

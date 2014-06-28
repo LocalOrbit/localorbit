@@ -2,11 +2,11 @@ require "spec_helper"
 
 feature "viewing and managing users" do
   let!(:admin) { create(:user, :admin) }
-  let!(:market) { create(:market) }
+  let!(:market) { create(:market, name: 'Test Market') }
   let!(:market_manager) { create(:user, managed_markets:[market]) }
 
-  let!(:organization) {  create(:organization, markets: [market])}
-  let!(:organization2) {  create(:organization, markets: [market])}
+  let!(:organization) {  create(:organization, name: 'Test Org 1', markets: [market])}
+  let!(:organization2) {  create(:organization, name: 'Test Org 2', markets: [market])}
   let!(:user) { create(:user, organizations: [organization, organization2]) }
 
   context "as an admin" do
@@ -51,8 +51,8 @@ feature "viewing and managing users" do
       manager_row = Dom::Admin::UserRow.find_by_email(market_manager.email)
       user_row = Dom::Admin::UserRow.find_by_email(user.email)
 
-      expect(manager_row.affiliations).to eql("Market 1, Market Manager")
-      expect(user_row.affiliations).to eql("Market 1: Organization 1, Seller Market 1: Organization 2, Seller")
+      expect(manager_row.affiliations).to eql("Test Market, Market Manager")
+      expect(user_row.affiliations).to eql("Test Market: Test Org 1, Seller Test Market: Test Org 2, Seller")
     end
 
     scenario "viewing only relevant users after deleting an organization" do
@@ -66,8 +66,8 @@ feature "viewing and managing users" do
       manager_row = Dom::Admin::UserRow.find_by_email(market_manager.email)
       user_row = Dom::Admin::UserRow.find_by_email(user.email)
 
-      expect(manager_row.affiliations).to eql("Market 1, Market Manager")
-      expect(user_row.affiliations).to eql("Market 1: Organization 2, Seller")
+      expect(manager_row.affiliations).to eql("Test Market, Market Manager")
+      expect(user_row.affiliations).to eql("Test Market: Test Org 2, Seller")
     end
   end
 end
