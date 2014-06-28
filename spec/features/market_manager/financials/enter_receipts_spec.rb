@@ -44,6 +44,33 @@ feature "entering receipts" do
     expect(row.amount).to eq("$420.00")
   end
 
+  context "after a seller has been deleted by the market manager" do
+    it "keeps the seller entries in the list" do
+      delete_organization(buyer)
+      delete_organization(seller)
+
+      visit admin_financials_receipts_path
+
+      rows = Dom::Admin::Financials::InvoiceRow.all
+
+      expect(rows.size).to eq(2)
+
+      row = rows[0]
+      expect(row.order_number).to eq("LO-001 PDF")
+      expect(row.buyer).to eq("Money Bags")
+      expect(row.order_date).to eq(19.days.ago.strftime("%m/%d/%Y"))
+      expect(row.due_date).to eq("4 Days Overdue")
+      expect(row.amount).to eq("$210.00")
+
+      row = rows[1]
+      expect(row.order_number).to eq("LO-003 PDF")
+      expect(row.buyer).to eq("Money Bags")
+      expect(row.order_date).to eq(2.days.ago.strftime("%m/%d/%Y"))
+      expect(row.due_date).to eq(12.days.from_now.strftime("%m/%d/%Y"))
+      expect(row.amount).to eq("$420.00")
+    end
+  end
+
   it "allows the user to enter payment of an invoice" do
     Dom::Admin::Financials::InvoiceRow.first.enter_receipt
 

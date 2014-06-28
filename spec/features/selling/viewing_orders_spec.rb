@@ -125,6 +125,26 @@ feature "Viewing orders" do
       expect(order.buyer_status).to eq('Unpaid')
     end
 
+    scenario "list of orders after the market manager deletes an organization" do
+      delete_organization(market1_seller_org1)
+      delete_organization(market1_seller_org2)
+
+      visit admin_orders_path
+
+      orders = Dom::Admin::OrderRow.all
+      expect(orders.count).to eq(6)
+
+      order = Dom::Admin::OrderRow.find_by_order_number(market1_order1.order_number)
+      expect(order.amount_owed).to eq("$27.96")
+      expect(order.delivery_status).to eq('Pending')
+      expect(order.buyer_status).to eq('Unpaid')
+
+      order = Dom::Admin::OrderRow.find_by_order_number(market1_order2.order_number)
+      expect(order.amount_owed).to eq("$41.95")
+      expect(order.delivery_status).to eq('Pending')
+      expect(order.buyer_status).to eq('Unpaid')
+    end
+
     scenario "order details" do
       visit admin_orders_path
 
@@ -158,6 +178,48 @@ feature "Viewing orders" do
       expect(summary.transaction_fees).to eq("$1.12")
       expect(summary.payment_processing).to eq("$0.00")
       expect(summary.net_sale).to eq("$25.44")
+    end
+
+    context "market manager deletes an organization" do
+      before do
+        delete_organization(market1_seller_org1)
+        delete_organization(market1_seller_org2)
+      end
+
+      scenario "order details" do
+        visit admin_orders_path
+
+        click_link market1_order1.order_number
+
+        expect(page).to have_content("Order info")
+        expect(page).to have_content(market1_order1.organization.name)
+        expect(page).to have_content("$9.98")
+        expect(page).to have_content("Purchase Order")
+        expect(page).to have_content("Delivery Fees: $7.12")
+
+        items = Dom::Order::ItemRow.all
+        expect(items.count).to eq(2)
+
+        item = Dom::Order::ItemRow.find_by_name("#{market1_order_item1.name} from #{market1_seller_org1.name}")
+        expect(item.price).to eq("$#{market1_order_item1.unit_price}")
+        expect(item.discount).to eq('$0.00')
+        expect(item.total).to eq("$9.98")
+        expect(item.payment_status).to eq("Unpaid")
+
+        item = Dom::Order::ItemRow.find_by_name("#{market1_order_item2.name} from #{market1_seller_org2.name}")
+        expect(item.price).to eq("$#{market1_order_item2.unit_price}")
+        expect(item.discount).to eq('$0.00')
+        expect(item.total).to eq("$17.98")
+        expect(item.payment_status).to eq("Unpaid")
+
+        summary = Dom::Admin::OrderSummaryRow.first
+        expect(summary.gross_total).to eq("$27.96")
+        expect(summary.discount).to eq("$0.00")
+        expect(summary.market_fees).to eq("$1.40")
+        expect(summary.transaction_fees).to eq("$1.12")
+        expect(summary.payment_processing).to eq("$0.00")
+        expect(summary.net_sale).to eq("$25.44")
+      end
     end
 
     context "when a user only has one market" do
