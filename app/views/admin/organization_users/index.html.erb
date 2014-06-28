@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <% @organization.users.each do |user| %>
-      <tr class="<%= cycle "odd", "even" %>">
+      <tr class="user-row <%= cycle "odd", "even" %>">
         <td class="name"><%= user.name %></td>
         <td class="email"><%= user.email %></td>
         <td><%= user.invitation_accepted_at.present? ? user.invitation_accepted_at.strftime("%b %-d, %Y") : "" %>
