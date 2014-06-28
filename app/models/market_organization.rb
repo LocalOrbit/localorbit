@@ -4,11 +4,7 @@ class MarketOrganization < ActiveRecord::Base
   belongs_to :market
   belongs_to :organization
 
-  after_update :check_for_orphaned_users
-
-  private
-
-  def check_for_orphaned_users
+  def after_soft_delete
     if organization.markets.empty?
       organization.users.destroy_all
     end
