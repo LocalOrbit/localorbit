@@ -9,12 +9,20 @@ module SoftDelete
     update_attribute(:deleted_at, Time.current)
   end
 
+  def soft_delete_all
+    update_all(deleted_at: Time.current)
+  end
+
   module ClassMethods
     def soft_delete(*ids)
-      records = where(id: ids)
+      records = ids.empty? ? all : where(id: ids)
       records.update_all(deleted_at: Time.current) if records.any?
 
       records
+    end
+
+    def soft_delete_all
+      update_all(deleted_at: Time.current)
     end
 
     def visible_conditional

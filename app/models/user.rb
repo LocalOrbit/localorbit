@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
       Organization.
         select("DISTINCT organizations.*").
         joins("LEFT JOIN user_organizations ON user_organizations.organization_id = organizations.id
-               LEFT JOIN market_organizations ON market_organizations.organization_id = organizations.id").
+               LEFT JOIN market_organizations ON market_organizations.organization_id = organizations.id AND market_organizations.deleted_at IS NULL").
         where(["user_organizations.user_id = ? OR market_organizations.market_id IN (?)", id, managed_markets_join.map(&:market_id)])
     else
       organizations

@@ -1,8 +1,10 @@
 class MarketOrganization < ActiveRecord::Base
+  include SoftDelete
+
   belongs_to :market
   belongs_to :organization
 
-  after_destroy :check_for_orphaned_users
+  after_update :check_for_orphaned_users
 
   private
 

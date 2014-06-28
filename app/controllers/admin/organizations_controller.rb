@@ -48,12 +48,12 @@ module Admin
 
     def destroy
       if params[:ids].present?
-        MarketOrganization.where(organization_id: @organization.id, market_id: params[:ids]).destroy_all
+        MarketOrganization.where(organization_id: @organization.id, market_id: params[:ids]).soft_delete_all
         redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} market membership(s)"
       else
         market = current_user.admin? ? @organization.markets.first : current_market
 
-        if market.organizations.destroy(@organization)
+        if MarketOrganization.where(organization_id: @organization.id, market_id: market.id).soft_delete
           redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} from #{market.name}"
         else
           redirect_to [:admin, :organizations], error: "Could not remove #{@organization.name} from #{market.name}"
