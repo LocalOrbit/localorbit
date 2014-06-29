@@ -100,10 +100,50 @@
       </tr>
       <% end %>
     </tbody>
+
+    <% if can_add_products_to_order?(order) && @show_add_items_form %>
+      <tbody>
+        <% @products_for_sale.each_category_with_products do |category, products| %>
+          <tr><th colspan="9"><%= category.name %></th></tr>
+          <% products.each do |product| %>
+            <tr class="order-item-row">
+              <td class="name">
+                <span class="product-ordered"><%= product.name %></span> <br>
+                <span class="seller-name">from <%= product.organization.name %></span>
+              </td>
+              <td class="quantity">
+                <%= fields_for "items_to_add[]", CartItem.new(product: product) do |item| %>
+                  <%= item.hidden_field :product_id, id: "items_to_add_#{product.id}_product_id" %>
+                  <%= item.text_field :quantity, id: "items_to_add_#{product.id}_quantity", class: 'quantity-ordered' %>
+                <% end %>
+              </td>
+              <td class="price">
+                <ul class="tiers">
+                  <% product.prices_for_market_and_organization(current_market, order.organization).each do |price| %>
+                    <% price = price.decorate %>
+                    <% if price.organization_id.present? %>
+                      <li class="negotiated"><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span><span class="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i class="font-icon" data-icon="&#xe01f;"></i></span></li>
+                    <% else %>
+                      <li><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span></li>
+                    <% end %>
+                  <% end %>
+                </ul>
+              </td>
+              <td class="price" colspan="6">
+                <%= product.available_inventory(order.delivery.deliver_on) %> available
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    <% end %>
   </table>
 
-  <% if current_user.admin? || current_user.market_manager? %>
+  <% if current_user.can_manage_market?(order.market) %>
     <%= f.submit "Update quantities", class: 'pull-right btn btn--blue btn--small' %>
+  <% end %>
+  <% if can_add_products_to_order?(order) && !@show_add_items_form %>
+    <%= f.submit "Add Items", class: 'pull-right btn btn--blue btn--small' %>
   <% end %>
 
   <% if !current_user.buyer_only? %>
@@ -133,7 +173,7 @@
     </table>
   </div>
   <% end %>
-  <% if current_user.market_manager? || current_user.admin? %>
+  <% if current_user.can_manage_market?(order.market) %>
     <div class="order-notes">
       <%= f.label :notes %>
       <%= f.text_area :notes, rows: 10 %>
