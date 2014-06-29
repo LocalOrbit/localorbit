@@ -158,7 +158,8 @@ class User < ActiveRecord::Base
 
   def managed_products
     if admin?
-      Product.visible.seller_can_sell
+      # Join market orgs to avoid grabbing products from deleted organizations
+      Product.visible.seller_can_sell.joins(organization: :market_organizations)
     else
       org_ids = managed_organizations.pluck(:id).uniq
       Product.visible.seller_can_sell.where(organization_id: org_ids)

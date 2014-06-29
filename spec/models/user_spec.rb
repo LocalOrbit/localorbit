@@ -300,7 +300,7 @@ describe User do
 
       it 'returns all products' do
         Timecop.freeze do
-          expect(subject).to eq(Product.visible.seller_can_sell)
+          expect(subject).to eq(Product.visible.seller_can_sell.joins(organization: :market_organizations))
         end
       end
     end
