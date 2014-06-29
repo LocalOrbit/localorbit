@@ -126,7 +126,8 @@ module Admin
     end
 
     def find_selling_organizations
-      @organizations = current_user.managed_organizations.selling.order(:name).includes(:locations)
+      # Join market orgs to avoid showing deleted organizations
+      @organizations = current_user.managed_organizations.selling.order(:name).includes(:locations).joins(:market_organizations)
       if !@product.persisted? && @organizations.size == 1
         @product.organization = @organizations.first
       end
