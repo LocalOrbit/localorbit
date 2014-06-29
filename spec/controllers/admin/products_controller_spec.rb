@@ -42,7 +42,7 @@ describe Admin::ProductsController do
       post :create, {product: {organization_id: org2, name: "Apple", category_id: 1}}
 
       expect(response).to render_template("admin/products/new")
-      expect(assigns(:product)).to have(1).errors_on(:organization_id)
+      expect(assigns(:product).organization).to eq(product1.organization)
     end
   end
 

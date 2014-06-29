@@ -21,7 +21,8 @@ module Admin
 
     def create
       @product = Product.new(product_params).decorate
-      @product.organization = current_user.managed_organizations.selling.find_by_id(@product.organization_id)
+      find_selling_organizations
+      @product.organization = @organizations.detect{|o| o.id == @product.organization_id }
 
       if @product.save
         redirect_to after_create_page, notice: "Added #{@product.name}"
@@ -128,9 +129,6 @@ module Admin
     def find_selling_organizations
       @organizations = current_user.managed_organizations.selling.order(:name).includes(:locations)
       @organizations = @organizations.select {|o| o.markets.any? } # remove deleted orgs
-      if !@product.persisted? && @organizations.size == 1
-        @product.organization = @organizations.first
-      end
     end
 
     def find_organizations_for_filtering
@@ -170,6 +168,9 @@ module Admin
 
     def setup_new_form
       find_selling_organizations
+      if !@product.persisted? && @organizations.size == 1
+        @product.organization = @organizations.first
+      end
       find_delivery_schedules
       find_selected_delivery_schedule_ids
     end
