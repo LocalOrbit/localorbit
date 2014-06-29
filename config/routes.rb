@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       end
 
       get :delivery_schedules, on: :member
+      get :market_memberships, on: :member
     end
 
     resource :delivery_tools, only: :show do

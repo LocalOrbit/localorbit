@@ -33,6 +33,17 @@ $ ->
     $(".modal").not($element).addClass('is-hidden')
     $('.overlay').addClass('is-open is-dim is-modal')
 
+  $('.remote-modal-toggle').click (event)->
+    event.preventDefault()
+    href = $(this).attr("href")
+    destination = $(this).data('modal')
+    $element = $(".#{destination}")
+    $element.toggleClass('is-hidden')
+    $(".modal").not($element).addClass('is-hidden')
+    $('.overlay').addClass('is-open is-dim is-modal')
+    $.get href, (response) =>
+      $element.find(".popup-body").html(response)
+
   $('.popup button.close').click ->
     $(this).closest('.popup').addClass('is-hidden')
     $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable')

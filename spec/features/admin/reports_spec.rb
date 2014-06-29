@@ -534,6 +534,34 @@ feature "Reports" do
         expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
         expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
       end
+
+      context "who deletes an organization" do
+        it "shows the appropriate order items" do
+          delete_organization(buyer)
+          delete_organization(seller)
+
+          within("#reports-dropdown") do
+            click_link "Reports"
+          end
+
+          items = Dom::Report::ItemRow.all
+
+          expect(items.count).to eq(5)
+
+          # default sort order is placed_at descending
+          expect(items[0].order_date).to eq("05/13/2014")
+          expect(items[1].order_date).to eq("05/12/2014")
+          expect(items[2].order_date).to eq("05/11/2014")
+          expect(items[3].order_date).to eq("05/10/2014")
+          expect(items[4].order_date).to eq("05/09/2014")
+
+          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+        end
+      end
     end
 
 

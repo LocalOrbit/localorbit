@@ -20,6 +20,7 @@ feature "Viewing products" do
 
   let!(:buyer_org) { create(:organization, :single_location, :buyer, markets: [market]) }
   let(:user) { create(:user, organizations: [buyer_org]) }
+  let(:market_manager) { create(:user, managed_markets: [market]) }
 
   let(:available_products) { [org1_product, org2_product] }
 
@@ -43,6 +44,27 @@ feature "Viewing products" do
 
     expect(products).to have(2).products
     expect(products.map(&:name)).to match_array(available_products.map(&:name))
+
+    product = available_products.first
+    dom_product = Dom::Product.find_by_name(product.name)
+
+    expect(dom_product.organization_name).to have_text(product.organization_name)
+    expected_price = "$%.2f" % product.prices.first.sale_price
+    expect(dom_product.pricing).to have_text(expected_price)
+    expect(dom_product.quantity).to have_text(expected_price)
+  end
+
+  scenario "list of products after a selling organization is deleted" do
+    switch_user(market_manager) do
+      delete_organization(org2)
+    end
+
+    sign_in_as(user)
+
+    products = Dom::Product.all
+
+    expect(products).to have(1).products
+    expect(products.map(&:name)).to match_array([available_products.first.name])
 
     product = available_products.first
     dom_product = Dom::Product.find_by_name(product.name)

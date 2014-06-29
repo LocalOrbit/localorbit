@@ -13,7 +13,7 @@
       <% @users.each do |user| %>
       <tr class="user-row">
         <td class="user-list-name"><%= user.name %></td>
-        <td><%= user.email %></td>
+        <td class="email"><%= user.email %></td>
         <td>
           <ul class="affiliations">
             <% user.managed_markets.each do |market| %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140627171721) do
+ActiveRecord::Schema.define(version: 20140628222927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -248,6 +248,7 @@ ActiveRecord::Schema.define(version: 20140627171721) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "cross_sell",      default: false
+    t.datetime "deleted_at"
   end
 
   add_index "market_organizations", ["market_id", "organization_id"], name: "index_market_organizations_on_market_id_and_organization_id", using: :btree

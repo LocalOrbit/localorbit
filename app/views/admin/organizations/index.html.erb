@@ -2,7 +2,7 @@
   <div class="l-constraint">
       <h1><i class="font-icon" data-icon="&#xe027;"></i>&nbsp; Organizations</h1>
       <%= render "filters" %>
-      
+
       <div class="clearfix"></div>
   </div>
 </div>
@@ -16,14 +16,28 @@
       <th data-column="can_sell" class="<%= column_sort_classes("can_sell")%>">Role</th>
     </tr>
   </thead>
+  <tbody>
   <% @organizations.each do |organization| %>
     <tr>
       <td class="name"><%= link_to organization.name, [:admin, organization] %></td>
       <td class="market"><%= organization.markets.map {|m| m.name }.join(', ') %></td>
       <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
       <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
+      <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
+      <td class="action">
+        <% if current_user.market_manager? || current_user.admin? %>
+          <% if organization.markets.count > 1 %>
+            <%= link_to 'Delete', market_memberships_admin_organization_path(organization.id), class: "action-link font-icon icon-delete remote-modal-toggle", data: { modal: "delete-organization" }%>
+          <% else %>
+            <%= link_to 'Delete', admin_organization_path(organization.id), method: :delete, class: 'action-link font-icon icon-delete', data: {confirm: "Are you sure you want to delete organization #{organization.name}? All discounts, users, prices, products related to this organization will also be deleted. This cannot be undone."} %>
+          <% end %>
+        <% end %>
+      </td>
     </tr>
+
+
   <% end %>
+  </tbody>
 </table>
 
 <%= paginate @organizations %>
@@ -34,3 +48,12 @@
     This table is empty, either because there is no data, or because the filter you've applied is hiding it.
   </div>
 <% end %>
+
+<div class="delete-organization is-hidden modal popup">
+  <div class="popup-header">
+    Remove Organization from Markets <button class="close"><i class="font-icon icon-close"></i></button>
+  </div>
+  <div class="popup-body">
+    Loading Market Membership(s)...
+  </div>
+</div>

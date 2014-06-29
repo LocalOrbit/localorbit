@@ -343,12 +343,30 @@ module Dom
       attribute :can_sell
     end
 
+    class MarketMembershipRow < Domino
+      selector ".market-membership-row"
+
+      attribute :name
+
+      def check
+        node.find('input').set(true)
+      end
+
+      def uncheck
+        node.find('input').set(false)
+      end
+    end
+
     class UserRow < Domino
-      selector "tbody tr"
+      selector ".user-row"
       attribute :email
 
       def remove!
         node.click_button "Delete"
+      end
+
+      def affiliations
+        node.find(".affiliations").text
       end
     end
 

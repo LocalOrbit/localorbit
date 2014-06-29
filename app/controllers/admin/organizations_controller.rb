@@ -3,8 +3,8 @@ module Admin
     include StickyFilters
 
     before_action :process_filter_clear_requests
-    before_action :require_admin_or_market_manager, only: [:new, :create]
-    before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules]
+    before_action :require_admin_or_market_manager, only: [:new, :create, :destroy]
+    before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules, :market_memberships, :destroy]
 
     def index
       @query_params = sticky_parameters(request.query_parameters)
@@ -46,11 +46,30 @@ module Admin
       end
     end
 
+    def destroy
+      if params[:ids].present?
+        MarketOrganization.where(organization_id: @organization.id, market_id: params[:ids]).soft_delete_all
+        redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} market membership(s)"
+      else
+        market = current_user.admin? ? @organization.markets.first : current_market
+
+        if MarketOrganization.where(organization_id: @organization.id, market_id: market.id).soft_delete
+          redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} from #{market.name}"
+        else
+          redirect_to [:admin, :organizations], error: "Could not remove #{@organization.name} from #{market.name}"
+        end
+      end
+    end
+
     def delivery_schedules
       schedules = find_delivery_schedules
       ids = schedules.map {|market, schedules| schedules.map {|schedule| schedule.id.to_s }}.flatten
 
       render partial: "delivery_schedules", locals: {delivery_schedules: schedules, selected_ids: ids, product: nil, organization: @organization}
+    end
+
+    def market_memberships
+      render partial: "market_memberships"
     end
 
     private

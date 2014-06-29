@@ -2,7 +2,7 @@ class Organization < ActiveRecord::Base
   include Sortable
   include PgSearch
 
-  has_many :market_organizations
+  has_many :market_organizations, -> { where(deleted_at: nil) }
   has_many :user_organizations
 
   has_many :users, through: :user_organizations

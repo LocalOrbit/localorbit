@@ -339,4 +339,60 @@ describe "admin manange organization", :vcr do
       end
     end
   end
+
+  describe "Deleting an organization" do
+    let!(:market) { create(:market) }
+
+    context "single market membership" do
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market])}
+      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market])}
+
+      it "removes the organization from the organizations list" do
+        visit admin_organizations_path
+        expect(page).to have_content("Holland Farms")
+
+        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+
+        within(holland_farms.node) do
+          click_link "Delete"
+        end
+
+        expect(page).to have_content("Removed Holland Farms")
+
+        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+        expect(holland_farms.market).to_not have_content(market.name)
+      end
+    end
+
+    context "multi-market membership", :js do
+      let!(:market2) { create(:market) }
+
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market, market2])}
+      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market])}
+
+      it "removes the organization from the organizations list" do
+        visit admin_organizations_path
+        expect(page).to have_content("Holland Farms")
+
+        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+
+        within(holland_farms.node) do
+          click_link "Delete"
+        end
+
+        expect(page).to have_content("Remove Organization from Markets")
+        sleep(1)
+        expect(Dom::Admin::MarketMembershipRow.count).to eql(2)
+
+        Dom::Admin::MarketMembershipRow.find_by_name(market.name).check
+        click_button "Remove Membership(s)"
+
+        expect(page).to have_content("Removed Holland Farms")
+
+        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+        expect(holland_farms.market).to have_content(market2.name)
+        expect(holland_farms.market).to_not have_content(market.name)
+      end
+    end
+  end
 end

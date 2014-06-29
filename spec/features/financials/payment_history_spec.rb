@@ -18,7 +18,7 @@ feature "Payment history", :truncate_after_all do
     @buyer  = create(:organization, :buyer,  name: "Buyer",    markets: [@market])
     @buyer2  = create(:organization, :buyer,  name: "Buyer 2",  markets: [@market2, market3])
     @seller = create(:organization, :seller, name: "Seller",   markets: [@market])
-    seller2 = create(:organization, :seller, name: "Seller 2", markets: [@market2])
+    @seller2 = create(:organization, :seller, name: "Seller 2", markets: [@market2])
 
     payment_day = DateTime.parse("May 9, 2014, 11:00:00")
 
@@ -95,7 +95,7 @@ feature "Payment history", :truncate_after_all do
         create(:payment,
                payment_method: ["cash", "check"][i % 2],
                payer: @market2,
-               payee: seller2,
+               payee: @seller2,
                orders: [orders2[i]],
                note: ["", "#54321"][i % 2],
                amount: orders2[i].total_cost * 2)
@@ -255,6 +255,7 @@ feature "Payment history", :truncate_after_all do
       expect(payments[2].date).to eq("05/12/2014")
       expect(payments[3].date).to eq("05/11/2014")
       expect(payments[4].date).to eq("05/10/2014")
+
     end
 
     scenario "can sort by payment date" do
@@ -608,8 +609,37 @@ feature "Payment history", :truncate_after_all do
 
   context "Buyers" do
     let!(:user) { create(:user, organizations: [@buyer]) }
+    let!(:market_manager) { create(:user, managed_markets: [@market]) }
 
     scenario "can view their purchase history" do
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
+
+      expect(payment_row("$21.00")).not_to be_nil
+      expect(payment_row("$21.00").payment_method).to eql("Cash")
+      expect(payment_row("$21.00").date).to eql("05/10/2014")
+
+      expect(payment_row("$22.00")).not_to be_nil
+      expect(payment_row("$22.00").payment_method).to eql("Check: #12345")
+      expect(payment_row("$22.00").date).to eql("05/11/2014")
+
+      expect(payment_row("$23.00")).not_to be_nil
+      expect(payment_row("$23.00").payment_method).to eql("ACH: *********9983")
+      expect(payment_row("$23.00").date).to eql("05/12/2014")
+
+      expect(payment_row("$24.00")).not_to be_nil
+      expect(payment_row("$24.00").payment_method).to eql("ACH: *********2231")
+      expect(payment_row("$24.00").date).to eql("05/13/2014")
+
+      expect(payment_row("$25.00")).not_to be_nil
+      expect(payment_row("$25.00").payment_method).to eql("Credit Card: ************7732")
+      expect(payment_row("$25.00").date).to eql("05/14/2014")
+    end
+
+    scenario "can view their purchase history after market manage deletes an organization" do
+      switch_user(market_manager) do
+        delete_organization(@seller)
+      end
+
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(5)
 
       expect(payment_row("$21.00")).not_to be_nil
