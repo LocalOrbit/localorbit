@@ -113,6 +113,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def managed_organization_ids_including_deleted
+    managed_organizations_including_deleted.pluck(:id).uniq
+  end
+
   def managed_organizations_within_market(market)
     if admin? || managed_markets.include?(market)
       market.organizations

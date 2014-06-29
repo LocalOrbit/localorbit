@@ -51,15 +51,15 @@ class OrderItem < ActiveRecord::Base
   end
 
   def self.for_delivery_and_user(delivery, user)
-    ids = user.managed_organizations.map(&:id)
+    ids = user.managed_organization_ids_including_deleted
     OrderItem.for_delivery(delivery).joins(:product).where(products: {organization_id: ids})
   end
 
   def self.for_user(user)
     if user.buyer_only?
-      joins(:order).where(orders: { organization_id: user.managed_organizations_including_deleted.pluck(:id).uniq })
+      joins(:order).where(orders: { organization_id: user.managed_organization_ids_including_deleted })
     else
-      joins(:product).where(products: { organization_id: user.managed_organizations_including_deleted.pluck(:id).uniq })
+      joins(:product).where(products: { organization_id: user.managed_organization_ids_including_deleted })
     end
   end
 
