@@ -6,7 +6,7 @@ class PaymentSearchPresenter
 
   def initialize(query: query, user: user)
     date_search_attr = "placed_at"
-    @query = query[:q] || {}
+    @query = Search::QueryDefaults.new(query[:q] || {}, date_search_attr).query
     @user = user
 
     @organization_id = query[:filtered_organization_id].to_s
