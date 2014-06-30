@@ -43,6 +43,8 @@ en:
         address: Address
         city: City
         state: State
+      price:
+        min_quantity: Minimum quantity
       product/lots:
         quantity: Simple inventory quantity
       order/items:
