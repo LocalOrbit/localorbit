@@ -132,8 +132,10 @@ module Admin
     end
 
     def find_organizations_for_filtering
-      @selling_organizations = current_user.managed_organizations.selling.periscope(request.query_parameters).
-        order(:name).inject([]) do |result, org|
+      orgs = current_user.managed_organizations.selling.periscope(request.query_parameters).
+        order(:name)
+      orgs = orgs.select {|o| o.markets.any? } # remove deleted orgs
+      @selling_organizations = orgs.inject([]) do |result, org|
         result << [org.name, org.id]
       end
     end
