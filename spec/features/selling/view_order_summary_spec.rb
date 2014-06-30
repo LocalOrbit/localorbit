@@ -83,6 +83,14 @@ describe "Order summary" do
         visit admin_delivery_tools_order_summary_path(friday_delivery.id)
         see_orders_for_entire_market
       end
+
+      it "includes items from deleted organizations" do
+        MarketOrganization.where(organization_id: sellers.id, market_id: market.id).soft_delete
+        switch_to_subdomain(market.subdomain)
+        sign_in_as(market_manager)
+        navigate_to_order_summary
+        see_orders_for_entire_market
+      end
     end
 
     context "as an admin" do
