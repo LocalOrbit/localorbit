@@ -23,15 +23,12 @@ class Admin::OrdersController < AdminController
     if params["items_to_add"]
       result = UpdateOrderWithNewItems.perform(order: order, item_hashes: items_to_add)
       unless result.success?
-        @show_add_items_form = true
+        setup_add_items_form(order)
         order.errors[:base] << "Failed to add items to this order."
-        @order = SellerOrder.new(order, current_user)
         render :show and return
       end
     elsif params[:commit] == "Add Items"
-      @show_add_items_form = true
-      @order = SellerOrder.new(order, current_user)
-      @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new)
+      setup_add_items_form(order)
       flash.now[:notice] = "Add items below."
       render :show
       return
@@ -64,5 +61,11 @@ class Admin::OrdersController < AdminController
   def items_to_add
     items = params.require(:items_to_add)
     items.select{|i| i[:quantity].to_i > 0 }
+  end
+
+  def setup_add_items_form(order)
+    @show_add_items_form = true
+    @order = SellerOrder.new(order, current_user)
+    @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new)
   end
 end
