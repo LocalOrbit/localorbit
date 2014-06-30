@@ -74,7 +74,7 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :items, allow_destroy: true
 
-  def self.balanced_payable
+  def self.balanced_payable_to_market
     # TODO: figure out how to make sure the orders haven't changed
     non_automate_market_ids = Market.joins(:plan).where.not(plans: {name: 'Automate'}).pluck(:id)
     where(payment_method: ["credit card", "ach", "paypal"]).
