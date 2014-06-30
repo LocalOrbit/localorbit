@@ -43,7 +43,7 @@ describe "Adding items to an order" do
       expect(page).to have_content(product2.name)
       expect(page).to have_content(product2.organization.name)
       fill_in "items_to_add_#{product2.id}_quantity", with: 7
-      click_button "Update quantities"
+      click_button "Add items and Update quantities"
       expect(page).to have_content("success")
       expect(page).to have_content(product2.name)
     end
@@ -52,7 +52,7 @@ describe "Adding items to an order" do
       click_button "Add Items"
       quantity = product2.available_inventory(delivery.deliver_on) + 1
       fill_in "items_to_add_#{product2.id}_quantity", with: quantity
-      click_button "Update quantities"
+      click_button "Add items and Update quantities"
       expect(page).to have_content("Failed to add items")
     end
   end

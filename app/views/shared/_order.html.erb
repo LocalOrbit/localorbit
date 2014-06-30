@@ -140,7 +140,7 @@
   </table>
 
   <% if current_user.can_manage_market?(order.market) %>
-    <%= f.submit "Update quantities", class: 'pull-right btn btn--blue btn--small' %>
+    <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", class: 'pull-right btn btn--blue btn--small' %>
   <% end %>
   <% if can_add_products_to_order?(order) && !@show_add_items_form %>
     <%= f.submit "Add Items", class: 'pull-right btn btn--blue btn--small' %>
