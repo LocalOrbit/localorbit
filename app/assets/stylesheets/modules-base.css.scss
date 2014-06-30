@@ -1217,8 +1217,6 @@ label ~ .tooltip {
 /** Apply Action Box **/
 
 .action-header {
-  background: #D9F6F9;
-  @include border-radius(5px);
   margin: 0;
   width: 100%;
 
@@ -1228,6 +1226,8 @@ label ~ .tooltip {
 
   .actions {
     padding: 10px;
+    @include border-radius(5px);
+    background: #D9F6F9;
   }
 }
 
@@ -1274,6 +1274,15 @@ label ~ .tooltip {
 
 
 /** Sticky things */
+.stickable {
+  &.js-positioned {
+    position: absolute;
+    left: 0;
+  }
+  &.js-fixed {
+    position: fixed;
+  }
+}
 .cling-wrap {
   overflow: hidden;
 }
@@ -1293,8 +1302,6 @@ label ~ .tooltip {
     }
     &.stickable {
       &.js-positioned {
-        position: absolute;
-        left: 0;
         z-index: 3;
         @include box-sizing(border-box);
         width: 100%;
@@ -1302,9 +1309,6 @@ label ~ .tooltip {
           padding-right: 20px;
           padding-left: 20px;
         }
-      }
-      &.js-fixed {
-        position: fixed;
       }
     }
   }

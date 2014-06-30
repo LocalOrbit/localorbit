@@ -118,6 +118,7 @@ class @EditTable
     @hiddenRow.show() if @hiddenRow != null
     @hiddenRow = null
     $row.parents('.table-wrapper').first().scrollLeft(0)
+    $row.parents('.table-wrapper').trigger "scroll"
 
   bindActions: ()->
     context = this
