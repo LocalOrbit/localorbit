@@ -1,16 +1,16 @@
+<% max_depth = Category.maximum(:depth) %>
+
 <div class="tab-header stickable">
   <div class="l-constraint">
     <div class="l-page-header">
      <h1><i class="font-icon" data-icon="&#xe023;">&nbsp; </i>Product Taxonomy</h1>
-     <%= select_tag :filter_depth, options_for_select([['Top-Level Categories', 1], ['Subcategories', 2], ['All', 3]], 3), id: 'filter-categories', data: { parameter: "depth"} %>
+
+     <%= select_tag :filter_depth, options_for_select([['Top-Level Categories', 1], ['Subcategories', 2], ['All', max_depth]], max_depth), id: 'filter-categories', data: { parameter: "depth"} %>
     </div>
   </div>
 </div>
 
 <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: 'export pull-right' %>
-
-
-<% max_depth = Category.maximum(:depth) - 1 %>
 
 <div class="row row--partial">
   <div class="column">
@@ -23,7 +23,7 @@
           <tr data-depth="<%= category.depth %>">
             <% row_categories = category.self_and_ancestors.where("depth > 0") %>
             <% row_categories.each do |column_category| %>
-              <td <%= "colspan=#{max_depth - column_category.depth}" if column_category == row_categories.last %>>
+              <td <%= "colspan=#{max_depth + 1 - column_category.depth}" if column_category == row_categories.last %>>
                 <%= column_category.name %>
               </td>
             <% end %>
