@@ -27,6 +27,8 @@ class Organization < ActiveRecord::Base
   scope :with_products, -> { joins(:products).select("DISTINCT organizations.*").order(name: :asc) }
   scope :buyers_for_orders, ->(orders) { joins(:orders).where(orders: { id: orders }).uniq }
 
+  scope :without_cross_sells, -> { where(market_organizations: {cross_sell: false}) }
+
   serialize :twitter, TwitterUser
 
   accepts_nested_attributes_for :locations, reject_if: :reject_location

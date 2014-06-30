@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe "admin manange organization", :vcr do
   let(:admin) { create(:user, :admin) }
+  let(:market) { create(:market) }
 
   before do
     switch_to_main_domain
@@ -119,7 +120,7 @@ describe "admin manange organization", :vcr do
 
   describe "locations" do
     let!(:organization) do
-      create(:organization, name: "University of Michigan Farmers")
+      create(:organization, name: "University of Michigan Farmers", markets:[market])
     end
 
     it "lists locations" do
@@ -283,9 +284,9 @@ describe "admin manange organization", :vcr do
   end
 
   context "sorting", :js do
-    let!(:organization_a) { create(:organization, name: "A Organization", can_sell: false, created_at: '2014-01-01') }
-    let!(:organization_b) { create(:organization, name: "B Organization", can_sell: true, created_at: '2013-01-01') }
-    let!(:organization_c) { create(:organization, name: "C Organization", can_sell: false, created_at: '2012-01-01') }
+    let!(:organization_a) { create(:organization, markets: [market], name: "A Organization", can_sell: false, created_at: '2014-01-01') }
+    let!(:organization_b) { create(:organization, markets: [market], name: "B Organization", can_sell: true, created_at: '2013-01-01') }
+    let!(:organization_c) { create(:organization, markets: [market], name: "C Organization", can_sell: false, created_at: '2012-01-01') }
 
     before do
       visit admin_organizations_path
@@ -342,6 +343,7 @@ describe "admin manange organization", :vcr do
 
   describe "Deleting an organization" do
     let!(:market) { create(:market) }
+    let!(:product) { create(:product, :sellable, organization: seller) }
 
     context "single market membership" do
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market])}
@@ -360,7 +362,12 @@ describe "admin manange organization", :vcr do
         expect(page).to have_content("Removed Holland Farms")
 
         holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
-        expect(holland_farms.market).to_not have_content(market.name)
+        expect(holland_farms).to be_nil
+      end
+
+      it "removes the organizations products from the products listing" do
+        expect(page).to_not have_content(product.name)
+        expect(page).to_not have_content(seller.name)
       end
     end
 
@@ -370,7 +377,7 @@ describe "admin manange organization", :vcr do
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market, market2])}
       let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market])}
 
-      it "removes the organization from the organizations list" do
+      before do
         visit admin_organizations_path
         expect(page).to have_content("Holland Farms")
 
@@ -388,10 +395,40 @@ describe "admin manange organization", :vcr do
         click_button "Remove Membership(s)"
 
         expect(page).to have_content("Removed Holland Farms")
+      end
 
+      it "removes the organization from the organizations list" do
         holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
         expect(holland_farms.market).to have_content(market2.name)
         expect(holland_farms.market).to_not have_content(market.name)
+      end
+    end
+
+    context "cross selling market" do
+      let!(:market2) { create(:market) }
+      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market])}
+      let!(:seller) { create(:organization, name: "Holland Farms", markets:[market]).tap {|o| o.market_organizations.create!(market: market2, cross_sell: true) } }
+      let!(:product) { create(:product, :sellable, organization: seller) }
+
+      before do
+        visit admin_organizations_path
+        expect(page).to have_content("Holland Farms")
+
+        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+
+        within(holland_farms.node) do
+          click_link "Delete"
+        end
+
+        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+        expect(holland_farms).to be_nil
+        expect(page).to have_content("Removed Holland Farms")
+      end
+
+      it "removes products from the admin products view" do
+        visit admin_products_path
+        expect(page).to_not have_content(product.name)
+        expect(page).to_not have_content(seller.name)
       end
     end
   end

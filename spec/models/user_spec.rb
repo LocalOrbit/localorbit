@@ -126,10 +126,29 @@ describe User do
   describe 'managed_organizations' do
 
     context 'for an admin' do
-      let(:user) { create(:user, :admin) }
+      let!(:user) { create(:user, :admin) }
+      let!(:market1) { create(:market) }
+      let!(:market2) { create(:market) }
+      let!(:org1) { create(:organization, :seller, markets: [market1]) }
+      let!(:org2) { create(:organization, markets: [market2]) }
+      let(:result) { user.managed_organizations }
 
       it 'returns a scope with all organizations' do
-        expect(user.managed_organizations).to eq(Organization.all)
+        expect(result.count).to eq(2)
+
+        expect(result).to include(org1)
+        expect(result).to include(org2)
+      end
+
+      context "cross selling organizations belonging to a market" do
+        let!(:cross_sell_org) { create(:organization, markets:[market2]).tap {|o| o.market_organizations.create(market: market1, cross_sell: true) } }
+
+        it "returns unique results for all organizations" do
+          expect(result.count).to eql(3)
+          expect(result).to include(org1)
+          expect(result).to include(org2)
+          expect(result).to include(cross_sell_org)
+        end
       end
     end
 

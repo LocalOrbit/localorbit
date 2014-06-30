@@ -87,7 +87,9 @@ class User < ActiveRecord::Base
 
   def managed_organizations
     if admin?
-      Organization.all
+      Organization.
+        joins("LEFT JOIN user_organizations ON user_organizations.organization_id = organizations.id
+               LEFT JOIN market_organizations ON market_organizations.organization_id = organizations.id AND market_organizations.deleted_at IS NULL").uniq
     elsif market_manager?
       Organization.
         select("DISTINCT organizations.*").
@@ -163,7 +165,7 @@ class User < ActiveRecord::Base
   def managed_products
     if admin?
       # Join market orgs to avoid grabbing products from deleted organizations
-      Product.visible.seller_can_sell.joins(organization: :market_organizations)
+      Product.visible.seller_can_sell.joins(organization: :market_organizations).where(market_organizations: {cross_sell: false})
     else
       org_ids = managed_organizations.pluck(:id).uniq
       Product.visible.seller_can_sell.where(organization_id: org_ids)
