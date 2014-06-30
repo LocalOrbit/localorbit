@@ -75,12 +75,15 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :items, allow_destroy: true
 
   def self.balanced_payable
-    # TODO: figure out how to filter out paid orders in the db
-    # and make sure the orders haven't changed
-    where(payment_method: ["credit card", "ach"]).
+    # TODO: figure out how to make sure the orders haven't changed
+    non_automate_market_ids = Market.joins(:plan).where.not(plans: {name: 'Automate'}).pluck(:id)
+    where(payment_method: ["credit card", "ach", "paypal"]).
+      where(%Q{orders.id NOT IN (SELECT DISTINCT "order_payments"."order_id" FROM "order_payments" INNER JOIN "payments" ON "payments"."id" = "order_payments"."payment_id" WHERE "payments"."payment_type" = 'market payment' AND "payments"."payee_type" = 'Market' AND "payments"."payee_id" = "orders"."market_id")}).
+      where("orders.placed_at > ?", 6.months.ago).
+      where(market_id: non_automate_market_ids).
       order(:order_number).
-      includes(:items, :market, payments: :payee).
-      select {|o| o.delivery_status == "delivered" && o.payments.select {|p| p.status != "failed" && p.payee == o.market } }
+      includes(:items, :market).
+      select {|o| o.delivery_status == 'delivered' }
   end
 
   def self.for_sort(order)
