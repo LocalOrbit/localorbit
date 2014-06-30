@@ -19,7 +19,7 @@
             <% user.managed_markets.each do |market| %>
               <li><%= market.name %>, Market Manager</li>
             <% end %>
-            <% user.organizations.each do |organization| %>
+            <% user.organizations.select{|o| o.markets.any? }.each do |organization| %>
               <li><%= organization.markets.pluck(:name).to_sentence %>: <%= organization.name %>, <%= organization.can_sell? ? "Seller" : "Buyer" %></li>
             <% end %>
           </ul>
