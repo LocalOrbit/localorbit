@@ -55,11 +55,11 @@ class Payment < ActiveRecord::Base
       where("NOT EXISTS(#{subselect})", "Organization").
       # This is a slightly fuzzy match right now.
       # TODO: Implement delivery_end on deliveries for greater accuracy
-      where("deliveries.deliver_on < ? AND order_items.delivery_status = ?", 48.hours.ago, "delivered").
+      where("deliveries.deliver_on < ?", 48.hours.ago).
+      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
       group("orders.id, seller_id").
       order("orders.order_number").
-      includes(:market).
-      where("orders.market_id" => user.managed_markets.map(&:id))
+      includes(:market)
   end
 
   ransacker :update_at_date do |_|

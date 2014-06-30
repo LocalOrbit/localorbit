@@ -8,7 +8,7 @@ module Search
       @seller_id = query[:filtered_organization_id]
       @seller_id = @seller_id.to_i if @seller_id.present?
 
-      if user.admin?
+      if !user.admin?
         scope = scope.where(market_id: user.managed_markets.map(&:id))
       end
 
