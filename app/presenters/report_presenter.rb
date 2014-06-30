@@ -1,5 +1,7 @@
 class ReportPresenter
-  attr_reader :report, :items, :fields, :filters, :q, :totals,
+  include Search::DateFormat
+
+  attr_reader :report, :items, :fields, :filters, :q, :totals, :start_date, :end_date,
     :markets, :sellers, :buyers, :products, :categories, :payment_methods
 
   FIELD_MAP = {
@@ -86,8 +88,12 @@ class ReportPresenter
     setup_filter_data(items)
 
     # Initialize ransack and set a default sort order
-    @q = items.search(search)
+    query = Search::QueryDefaults.new(search, :order_placed_at).query
+    @q = items.search(query)
     @q.sorts = "created_at desc" if @q.sorts.empty?
+
+    @start_date = format_date(query["order_placed_at_date_gteq".to_s])
+    @end_date = format_date(query["order_placed_at_date_lteq".to_s])
 
     items = @q.result
     @totals = OrderTotals.new(items)
@@ -104,13 +110,11 @@ class ReportPresenter
   def self.report_for(report:, user:, search: {}, paginate: {})
     return nil unless user && self.reports.include?(report)
 
-    valid = if user.admin?
-              true
-            elsif user.buyer_only?
+    valid = if user.buyer_only?
               if self.reports(buyer_only: true).include?(report)
                 true
               end
-            elsif (self.reports - self.reports(buyer_only: true)).include?(report)
+            else
               true
             end
 
