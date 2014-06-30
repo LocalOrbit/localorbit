@@ -1,17 +1,21 @@
 class Admin::ReportsController < AdminController
+  include StickyFilters
+
   def index
     redirect_to current_user.buyer_only? ? admin_report_path("purchases-by-product") : admin_report_path("total-sales")
   end
 
   def show
+    @sticky_params = sticky_parameters(request.query_parameters)
+
     @presenter = ReportPresenter.report_for(
       report: params[:report].to_s.underscore,
       user: current_user,
-      search: params[:q],
+      search: @sticky_params[:q],
       paginate: {
         csv: request.format.to_sym == :csv,
-        page: params[:page],
-        per_page: params[:per_page]
+        page: @sticky_params[:page],
+        per_page: @sticky_params[:per_page]
       })
 
     if @presenter

@@ -1,5 +1,9 @@
 require "spec_helper"
 
+def display_date(date)
+  date.strftime("%m/%d/%Y")
+end
+
 feature "Reports" do
   let!(:market)    { create(:market, name: "Foo Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market2)   { create(:market, name: "Bar Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
@@ -12,14 +16,13 @@ feature "Reports" do
   let!(:report)    { :total_sales }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
   let!(:delivery)  { delivery_schedule.next_delivery }
+  let!(:order_date) { 3.weeks.ago }
 
   before do
     delivery_schedule2 = create(:delivery_schedule, market: market2)
     delivery2 = delivery_schedule2.next_delivery
 
     buyer3  = create(:organization, name: "Baz Buyer", markets: [market3], can_sell: false)
-
-    order_date = DateTime.parse("May 9, 2014, 11:00:00")
 
     5.times do |i|
       this_date = order_date + i.days
@@ -88,6 +91,17 @@ feature "Reports" do
            payment_status: "unpaid",
            order_number: "LO-03-234-4567890-1")
 
+    # Order outside of default date range
+    older_date = 5.weeks.ago
+    create(:order,
+           placed_at: older_date,
+           delivery: delivery,
+           items: [create(:order_item, created_at: older_date)],
+           organization: buyer3,
+           payment_method: "credit card",
+           payment_status: "unpaid",
+           order_number: "LO-03-234-4567890-2")
+
     switch_to_subdomain(subdomain)
     sign_in_as(user)
     within("#reports-dropdown") do
@@ -124,6 +138,53 @@ feature "Reports" do
     context "as any user" do
       let!(:user)   { create(:user, :admin) }
       let!(:report) { :total_sales }
+
+      scenario "date range defaults to last 30 days and can filter results" do
+        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+        expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
+        expect(item_rows_for_order("LO-03-234-4567890-2").count).to eq(0)
+
+        fill_in "q_order_placed_at_date_gteq", with: 6.weeks.ago.to_date
+        click_button "Filter"
+
+        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+        expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
+        expect(item_rows_for_order("LO-03-234-4567890-2").count).to eq(1)
+
+        fill_in "q_order_placed_at_date_lteq", with: order_date + 2.days
+        click_button "Filter"
+
+        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
+        expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(0)
+        expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(0)
+        expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
+        expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(0)
+        expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(0)
+        expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
+        expect(item_rows_for_order("LO-03-234-4567890-2").count).to eq(1)
+      end
 
       scenario "displays the appropriate filters" do
         expect(page).to have_field("Search")
@@ -487,17 +548,17 @@ feature "Reports" do
         expect(items.count).to eq(11)
 
         # default sort order is placed_at descending
-        expect(items[0].order_date).to eq("05/13/2014")
-        expect(items[1].order_date).to eq("05/13/2014")
-        expect(items[2].order_date).to eq("05/12/2014")
-        expect(items[3].order_date).to eq("05/12/2014")
-        expect(items[4].order_date).to eq("05/11/2014")
-        expect(items[5].order_date).to eq("05/11/2014")
-        expect(items[6].order_date).to eq("05/10/2014")
-        expect(items[7].order_date).to eq("05/10/2014")
-        expect(items[8].order_date).to eq("05/09/2014")
-        expect(items[9].order_date).to eq("05/09/2014")
-        expect(items[10].order_date).to eq("05/08/2014")
+        expect(items[0].order_date).to eq(display_date(order_date + 4.days))
+        expect(items[1].order_date).to eq(display_date(order_date + 4.days))
+        expect(items[2].order_date).to eq(display_date(order_date + 3.days))
+        expect(items[3].order_date).to eq(display_date(order_date + 3.days))
+        expect(items[4].order_date).to eq(display_date(order_date + 2.days))
+        expect(items[5].order_date).to eq(display_date(order_date + 2.days))
+        expect(items[6].order_date).to eq(display_date(order_date + 1.day))
+        expect(items[7].order_date).to eq(display_date(order_date + 1.day))
+        expect(items[8].order_date).to eq(display_date(order_date))
+        expect(items[9].order_date).to eq(display_date(order_date))
+        expect(items[10].order_date).to eq(display_date(order_date - 1.day))
 
         expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
         expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
@@ -522,11 +583,11 @@ feature "Reports" do
         expect(items.count).to eq(5)
 
         # default sort order is placed_at descending
-        expect(items[0].order_date).to eq("05/13/2014")
-        expect(items[1].order_date).to eq("05/12/2014")
-        expect(items[2].order_date).to eq("05/11/2014")
-        expect(items[3].order_date).to eq("05/10/2014")
-        expect(items[4].order_date).to eq("05/09/2014")
+        expect(items[0].order_date).to eq(display_date(order_date + 4.days))
+        expect(items[1].order_date).to eq(display_date(order_date + 3.days))
+        expect(items[2].order_date).to eq(display_date(order_date + 2.days))
+        expect(items[3].order_date).to eq(display_date(order_date + 1.days))
+        expect(items[4].order_date).to eq(display_date(order_date))
 
         expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
         expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
@@ -549,11 +610,11 @@ feature "Reports" do
           expect(items.count).to eq(5)
 
           # default sort order is placed_at descending
-          expect(items[0].order_date).to eq("05/13/2014")
-          expect(items[1].order_date).to eq("05/12/2014")
-          expect(items[2].order_date).to eq("05/11/2014")
-          expect(items[3].order_date).to eq("05/10/2014")
-          expect(items[4].order_date).to eq("05/09/2014")
+          expect(items[0].order_date).to eq(display_date(order_date + 4.days))
+          expect(items[1].order_date).to eq(display_date(order_date + 3.days))
+          expect(items[2].order_date).to eq(display_date(order_date + 2.days))
+          expect(items[3].order_date).to eq(display_date(order_date + 1.days))
+          expect(items[4].order_date).to eq(display_date(order_date))
 
           expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
           expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
@@ -563,7 +624,6 @@ feature "Reports" do
         end
       end
     end
-
 
     context "as a Seller" do
       let!(:user)      { create(:user, organizations: [seller2]) }
@@ -575,11 +635,11 @@ feature "Reports" do
         expect(items.count).to eq(5)
 
         # default sort order is placed_at descending
-        expect(items[0].order_date).to eq("05/13/2014")
-        expect(items[1].order_date).to eq("05/12/2014")
-        expect(items[2].order_date).to eq("05/11/2014")
-        expect(items[3].order_date).to eq("05/10/2014")
-        expect(items[4].order_date).to eq("05/09/2014")
+        expect(items[0].order_date).to eq(display_date(order_date + 4.days))
+        expect(items[1].order_date).to eq(display_date(order_date + 3.days))
+        expect(items[2].order_date).to eq(display_date(order_date + 2.days))
+        expect(items[3].order_date).to eq(display_date(order_date + 1.days))
+        expect(items[4].order_date).to eq(display_date(order_date))
 
         expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
         expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
