@@ -1,5 +1,5 @@
 $('.overlay').click (e) ->
-  $('.is-open').removeClass('is-open is-dark is-dim ismodal')
+  $('.is-open').removeClass('is-open is-dark is-dim is-modal is-editable')
   $('.popover, .popup, .dropdown').addClass('is-hidden')
 
 $(window).keyup (e) ->
