@@ -42,7 +42,7 @@
             <%= render partial: "edit_lot_advanced", locals: { product: product } %>
           <% end %>
         </td>
-        <td class="delete action-link"><%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), [:admin, product], method: :delete, data: { confirm: "Are you sure you want to delete this product?" } %></td>
+        <td class="delete action-link"><%= link_to raw('<i class="font-icon icon-delete"></i>'), [:admin, product], method: :delete, data: { confirm: "Are you sure you want to delete this product?" } %></td>
       </tr>
     <% end %>
   </table>

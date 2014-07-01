@@ -25,7 +25,7 @@
               <%= "#{delivery.buyer_pickup_start} – #{delivery.buyer_pickup_end}" if delivery.seller_fulfillment_location %>
             </td>
             <td class="delete">
-              <%= link_to '<i class="font-icon icon-delete"></i> Delete'.html_safe, [:admin, @market, delivery], method: :delete, data: {confirm: 'Are you sure you want to delete this delivery'} %>
+              <%= link_to '<i class="font-icon icon-delete"></i>'.html_safe, [:admin, @market, delivery], method: :delete, data: {confirm: 'Are you sure you want to delete this delivery'} %>
             </td>
           </tr>
         <% end %>
