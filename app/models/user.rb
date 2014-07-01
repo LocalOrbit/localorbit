@@ -86,19 +86,19 @@ class User < ActiveRecord::Base
   end
 
   def managed_organizations
-    if admin?
-      Organization.
-        joins("LEFT JOIN user_organizations ON user_organizations.organization_id = organizations.id
-               LEFT JOIN market_organizations ON market_organizations.organization_id = organizations.id AND market_organizations.deleted_at IS NULL").uniq
+    market_ids = []
+
+    market_ids = if admin?
+      Market.all.pluck(:id)
     elsif market_manager?
-      Organization.
-        select("DISTINCT organizations.*").
-        joins("LEFT JOIN user_organizations ON user_organizations.organization_id = organizations.id
-               LEFT JOIN market_organizations ON market_organizations.organization_id = organizations.id AND market_organizations.deleted_at IS NULL").
-        where(["user_organizations.user_id = ? OR market_organizations.market_id IN (?)", id, managed_markets_join.map(&:market_id)])
-    else
-      organizations
+      managed_markets_join.map(&:market_id)
     end
+
+    Organization.
+      select("DISTINCT organizations.*").
+      joins("LEFT JOIN user_organizations ON user_organizations.organization_id = organizations.id
+              LEFT JOIN market_organizations ON market_organizations.organization_id = organizations.id AND market_organizations.deleted_at IS NULL").
+              where(["user_organizations.user_id = ? OR market_organizations.market_id IN (?)", id, market_ids])
   end
 
   def managed_organizations_including_deleted
