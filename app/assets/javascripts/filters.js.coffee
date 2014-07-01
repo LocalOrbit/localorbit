@@ -46,3 +46,6 @@ $ ->
   $(".filter-input").change ->
     $(this).parents("form").first().submit()
 
+  $(".per-page-filter").change ->
+    window.location.href = $(this).val()
+
