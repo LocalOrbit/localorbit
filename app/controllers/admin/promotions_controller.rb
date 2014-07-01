@@ -12,7 +12,7 @@ class Admin::PromotionsController < AdminController
     @markets = base_scope.map(&:market).uniq
 
     @q = base_scope.search(@query_params["q"])
-    @promotions = @q.result.page(params[:page]).per(params[:per_page])
+    @promotions = @q.result.page(params[:page]).per(@query_params[:per_page])
   end
 
   def new

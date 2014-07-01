@@ -13,7 +13,7 @@ module Admin
         ids = current_user.managed_markets.map {|m| m.manager_ids }.flatten |
           current_user.managed_organizations.map {|o| o.user_ids }.flatten
         User.where(id: ids)
-      end.periscope(@query_params).page(params[:page]).per(params[:per_page])
+      end.periscope(@query_params).page(params[:page]).per(@query_params[:per_page])
 
       @users.includes(:managed_markets, :organizations)
     end
