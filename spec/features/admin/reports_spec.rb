@@ -278,7 +278,7 @@ feature "Reports" do
                 organization: buyer)
         end
 
-        visit(current_path)
+        visit(current_path + "?per_page=25")
 
         # paginates to 25
         expect(Dom::Report::ItemRow.all.count).to eq(25)

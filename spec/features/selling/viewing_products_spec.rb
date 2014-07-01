@@ -4,7 +4,7 @@ describe "Viewing products" do
   let!(:market) { create(:market)}
   let!(:market2) { create(:market)}
 
-  let!(:org1) { create(:organization, markets: [market]) }
+  let!(:org1) { create(:organization, name: "County Park", markets: [market]) }
   let!(:org2) { create(:organization, markets: [market]) }
 
   let!(:apples)       { create(:product, organization: org1, name: "Apples") }
@@ -72,6 +72,27 @@ describe "Viewing products" do
       expect(product.seller).to have_content(org1.name)
       expect(product.market).to have_content(org1.markets.first.name)
       expect(product.stock).to have_content(apples.lots.map(&:quantity).join(" "))
+    end
+
+    it "limits the number of rows based on user's choice", js: true do
+      peppers = create(:product, created_at: 1.week.ago, organization: org2, name: "Peppers", unit: create(:unit, singular: "Tube", plural: "Tubes"))
+      create(:price, product: peppers, sale_price: 5.00, min_quantity: 1)
+      create(:lot, product: peppers, quantity: 1)
+
+      visit admin_products_path(per_page: 2)
+
+      select "County Park", from: "product-filter-organization"
+      # I know, I know, but I can't find another way to make Capybara wait :/
+      sleep 3
+      expect(Dom::ProductRow.count).to eq(2)
+
+      select "Show all rows", from: "per_page"
+      expect(page).to have_content("Grapes")
+      expect(Dom::ProductRow.count).to eq(3)
+
+      select "All Organization", from: "product-filter-organization"
+      expect(page).to have_content("Peppers")
+      expect(Dom::ProductRow.count).to eq(4)
     end
 
     context "with only one market" do
