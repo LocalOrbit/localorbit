@@ -47,17 +47,25 @@ module Admin
     end
 
     def destroy
-      if params[:ids].present?
-        MarketOrganization.where(organization_id: @organization.id, market_id: params[:ids]).soft_delete_all
-        redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} market membership(s)"
-      else
-        market = current_user.admin? ? @organization.markets.first : current_market
+      # NOTE: Market manager can remove association for a different market?
+      markets = if params[:ids].present?
+                  if params[:commit].present? # check for submit in case user didn't choose market to delete org from
+                    @organization.markets.managed_by(current_user).where(id: params[:ids])
+                  end
+                else
+                  @organization.markets.managed_by(current_user).where(id: @organization.markets.first.id)
+                end
 
-        if MarketOrganization.where(organization_id: @organization.id, market_id: market.id).soft_delete
-          redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} from #{market.name}"
-        else
-          redirect_to [:admin, :organizations], error: "Could not remove #{@organization.name} from #{market.name}"
-        end
+      postfix = if markets.count == 1
+                  "#{markets.first.name}"
+                else
+                  "market membership(s)"
+                end
+
+      if MarketOrganization.where(organization_id: @organization.id, market_id: markets.map(&:id)).soft_delete_all
+        redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} from #{postfix}"
+      else
+        redirect_to [:admin, :organizations], error: "Could not remove #{@organization.name} from #{postfix}"
       end
     end
 

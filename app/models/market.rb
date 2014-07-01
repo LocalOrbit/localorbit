@@ -33,6 +33,14 @@ class Market < ActiveRecord::Base
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
 
+  scope :managed_by, lambda { |user|
+    if user.admin?
+      all
+    else
+      where(id: user.managed_markets.map(&:id))
+    end.order(:name)
+  }
+
   def self.for_sort(order)
     column, direction = column_and_direction(order)
     case column
