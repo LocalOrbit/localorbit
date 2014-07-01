@@ -5,5 +5,5 @@
   <td class="account-type">Credit Card</td>
   <td class="expiration">Expires <%= "%02d" % card.expiration_month %>/<%= card.expiration_year %></td>
   <td class="notes"><%= card.notes %></td>
-  <td class="delete"><%= link_to raw("<i class='font-icon icon-delete'></i>"), [:admin, @entity, card], data: { method: :delete } %></td>
+  <td class="delete"><%= link_to raw("&#57418;"), [:admin, @entity, card], data: { method: :delete }, title: “Delete” %></td>
 </tr>
