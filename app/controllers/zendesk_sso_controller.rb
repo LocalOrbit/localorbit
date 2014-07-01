@@ -6,6 +6,7 @@ class ZendeskSSOController < ApplicationController
   ZENDESK_SUBDOMAIN     = ENV["ZENDESK_SUBDOMAIN"]
 
   skip_before_action :ensure_market_affiliation
+  skip_before_action :set_timezone
 
   def show
     sign_into_zendesk(current_user)
