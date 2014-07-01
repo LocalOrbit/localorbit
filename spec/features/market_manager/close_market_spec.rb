@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "Opening  and closing a market:" do
+feature "Opening and closing a market:" do
   let!(:seller)         { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:buyer)          { create(:organization, :buyer, :single_location, markets: [market]) }
   let!(:products)       { create_list(:product, 5, :sellable, organization: seller) }

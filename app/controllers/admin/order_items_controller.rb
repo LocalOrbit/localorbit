@@ -8,8 +8,8 @@ module Admin
       prepare_filter_data(@order_items)
 
       # initialize ransack and search
-      @sticky_params = sticky_parameters(request.query_parameters)
-      search = Search::QueryDefaults.new(@sticky_params[:q], :created_at).query
+      @query_params = sticky_parameters(request.query_parameters)
+      search = Search::QueryDefaults.new(@query_params[:q], :created_at).query
 
       @q = @order_items.search(search)
       @q.sorts = ["order_placed_at desc", "name"] if @q.sorts.empty?
@@ -20,7 +20,7 @@ module Admin
       @end_date = format_date(search[:created_at_date_lteq])
 
       respond_to do |format|
-        format.html { @order_items = @order_items.page(params[:page]).per(params[:per_page]) }
+        format.html { @order_items = @order_items.page(params[:page]).per(@query_params[:per_page]) }
         format.csv { @filename = "orders.csv"}
       end
     end

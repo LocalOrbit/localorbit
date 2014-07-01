@@ -8,7 +8,7 @@ module Admin
 
     def index
       @query_params = sticky_parameters(request.query_parameters)
-      @products = current_user.managed_products.periscope(@query_params).page(params[:page]).per(params[:per_page])
+      @products = current_user.managed_products.periscope(@query_params).page(params[:page]).per(@query_params[:per_page])
 
       find_organizations_for_filtering
       find_markets_for_filtering

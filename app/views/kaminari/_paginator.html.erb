@@ -8,9 +8,10 @@
 -%>
 
 <% selected_url = nil %>
+<% @query_params ||= {} %>
 <% per_page_select_options = [50, 100, 500, 1000, 1500].map do |per_page| %>
 <%  url = Kaminari::Helpers::FirstPage.new(self, params: {per_page: per_page}).url %>
-<%  selected_url = url if params["per_page"] == per_page.to_s %>
+<%  selected_url = url if (params["per_page"] || @query_params[:per_page]) == per_page.to_s %>
 <%  ["Show #{per_page} rows", url] %>
 <% end %>
 <%= select_tag :per_page, options_for_select(per_page_select_options, selected: selected_url), class: 'filter-input per-page-filter' %>

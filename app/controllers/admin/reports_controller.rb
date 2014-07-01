@@ -6,16 +6,16 @@ class Admin::ReportsController < AdminController
   end
 
   def show
-    @sticky_params = sticky_parameters(request.query_parameters)
+    @query_params = sticky_parameters(request.query_parameters)
 
     @presenter = ReportPresenter.report_for(
       report: params[:report].to_s.underscore,
       user: current_user,
-      search: @sticky_params[:q],
+      search: @query_params[:q],
       paginate: {
         csv: request.format.to_sym == :csv,
-        page: @sticky_params[:page],
-        per_page: @sticky_params[:per_page]
+        page: @query_params[:page],
+        per_page: @query_params[:per_page]
       })
 
     if @presenter
