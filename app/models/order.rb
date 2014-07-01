@@ -111,6 +111,42 @@ class Order < ActiveRecord::Base
       includes(:market)
   end
 
+  def self.payable_lo_fees
+    subselect = %[SELECT DISTINCT "order_payments"."order_id" FROM "order_payments"
+      INNER JOIN "payments" ON "payments"."id" = "order_payments"."payment_id"
+      WHERE "payments"."payment_type" = 'lo fee' AND "payments"."payer_type" = 'Market' AND "payments"."payer_id" = "orders"."market_id"]
+
+    joins(:delivery, :items).
+      where("orders.id NOT IN (#{subselect})").
+      # This is a slightly fuzzy match right now.
+      # TODO: Implement delivery_end on deliveries for greater accuracy
+      where("deliveries.deliver_on < ?", 48.hours.ago).
+      where(payment_method: 'purchase order').
+      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
+      order("orders.order_number").
+      select("orders.*").
+      group("orders.id")
+  end
+
+  def self.payable_market_fees
+    # TODO: figure out how to make sure the orders haven't changed
+    automate_market_ids = Market.joins(:plan).where(plans: {name: 'Automate'}).pluck(:id)
+    subselect = %[SELECT DISTINCT "order_payments"."order_id" FROM "order_payments"
+      INNER JOIN "payments" ON "payments"."id" = "order_payments"."payment_id"
+      WHERE "payments"."payment_type" = 'hub fee' AND "payments"."payee_type" = 'Market' AND "payments"."payee_id" = "orders"."market_id"]
+
+    joins(:delivery, :items).
+      where(payment_method: ["credit card", "ach", "paypal"]).
+      where("orders.id NOT IN (#{subselect})").
+      where("deliveries.deliver_on < ?", 48.hours.ago).
+      where("orders.placed_at > ?", 6.months.ago).
+      where(market_id: automate_market_ids).
+      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
+      order(:order_number).
+      select("orders.*").
+      group("orders.id")
+  end
+
   def self.for_sort(order)
     column, direction = column_and_direction(order)
     case column
