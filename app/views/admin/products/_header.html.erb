@@ -2,8 +2,8 @@
   <div class="l-constraint">
     <% if @product.persisted? %>
     <%= link_to "< Return to Products List", admin_products_path, class: "redundant-nav" %>
-    <%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), [:admin, @product], class: "delete product-header-delete",
-          data: {method: :delete, confirm: "Are you sure you want to permanently delete this product?"} %>
+    <%= link_to raw('&#57418;'), [:admin, @product], class: "delete product-header-delete font-icon",
+          data: {method: :delete, confirm: "Are you sure you want to permanently delete this product?"}, title: "Delete" %>
     <div class="l-page-header">
        <h1>Update <%= @product.name %></h1>
     </div>

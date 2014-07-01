@@ -10,7 +10,7 @@
     </td>
     <td class="notes"><%= bank_account.notes %></td>
     <td class="delete">
-      <%= link_to raw("<i class='font-icon icon-delete'></i> Delete"), [:admin, @entity, bank_account], data: { method: :delete } %>
+      <%= link_to raw("&#57418;"), [:admin, @entity, bank_account], data: { method: :delete }, title: "Delete", class: "font-icon" %>
     </td>
   </tr>
 
@@ -23,7 +23,7 @@
     <td class="account-type"><%= bank_account.account_type.titleize %></td>
     <td class="verified">    </td>
     <td class="notes"><%= bank_account.notes %></td>
-    <td class="delete"><%= link_to raw("<i class='font-icon icon-delete'></i> Delete"), [:admin, @entity, bank_account], data: { method: :delete } %></td>
+    <td class="delete"><%= link_to raw("&#57418;"), [:admin, @entity, bank_account], data: { method: :delete }, title: "Delete" %></td>
   </tr>
   <tr class="unverified">
     <td colspan="7"><%= link_to "Verify Account", [:admin, @entity, bank_account, BankAccountVerification.new], class: "btn btn--blue btn--small" %> <span class="please-verify">This account needs to be verified. Please click the button and follow the instructions.</span></td>

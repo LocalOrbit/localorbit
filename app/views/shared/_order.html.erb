@@ -93,7 +93,7 @@
           <td class="action-link">
             <% if item.object.delivery_status == 'pending' %>
               <%= item.hidden_field :_destroy %>
-              <%= link_to raw('<i class="font-icon icon-delete"></i> Delete'), "#delete" %>
+              <%= link_to raw('<i class="font-icon icon-delete"></i>'), "#delete" %>
             <% end %>
           </td>
         <% end %>
