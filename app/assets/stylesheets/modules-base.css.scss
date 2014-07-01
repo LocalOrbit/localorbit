@@ -1274,15 +1274,6 @@ label ~ .tooltip {
 
 
 /** Sticky things */
-.stickable {
-  &.js-positioned {
-    position: absolute;
-    left: 0;
-  }
-  &.js-fixed {
-    position: fixed;
-  }
-}
 .cling-wrap {
   overflow: hidden;
 }
@@ -1295,6 +1286,15 @@ label ~ .tooltip {
   }
 }
 @media screen and (min-height: 768px) {
+  .stickable {
+    &.js-positioned {
+      position: absolute;
+      left: 0;
+    }
+    &.js-fixed {
+      position: fixed;
+    }
+  }
   .tab-header,
   .sub-header {
     > .l-constraint {
