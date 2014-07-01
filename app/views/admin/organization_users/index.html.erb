@@ -23,7 +23,7 @@
         <td><%= user.invitation_accepted_at.present? ? user.invitation_accepted_at.strftime("%b %-d, %Y") : "" %>
 
         <td class="delete">
-          <%= button_to admin_organization_user_path(@organization, user), {method: :delete, class: "delete", data: {confirm: "Are you sure you want to delete #{user.email} from #{@organization.name}?"}, title: "Delete"} do%>
+          <%= button_to admin_organization_user_path(@organization, user), {method: :delete, class: "delete font-icon", data: {confirm: "Are you sure you want to delete #{user.email} from #{@organization.name}?"}, title: "Delete"} do%>
             &#57418;
           <% end %>
         </td>

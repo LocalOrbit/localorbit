@@ -15,7 +15,7 @@
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
-.font-icon:before {
+.font-icon, .font-icon:before {
   font-family: 'icomoon-ultimate88910';
   speak: none;
   font-style: normal;

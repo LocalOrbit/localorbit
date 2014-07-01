@@ -25,7 +25,7 @@
               <td><%= number_to_phone location.phone %></td>
               <td><%= radio_button_tag :default_billing_id, location.id, location.default_billing? %></td>
               <td><%= radio_button_tag :default_shipping_id, location.id, location.default_shipping? %></td>
-              <td class="delete"><button class="delete delete-location" title="Delete">&#57418;</button>
+              <td class="delete"><button class="delete delete-location font-icon" title="Delete">&#57418;</button>
             </tr>
           <% end %>
         </tbody>

@@ -4,7 +4,7 @@
     <div class="l-page-header">
       <% if @promotion.persisted? %>
         <h1>Update <%= @promotion.name %></h1>
-        <%= link_to raw('&#57418;'), [:admin, @promotion], class: "delete",
+        <%= link_to raw('&#57418;'), [:admin, @promotion], class: "delete font-icon",
           data: {method: :delete, confirm: "Are you sure you want to permanently delete this promotion?"}, title: "Delete" %>
       <% else %>
         <h1>Add Promotion</h1>
