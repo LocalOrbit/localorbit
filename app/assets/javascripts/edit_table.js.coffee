@@ -105,6 +105,8 @@ class @EditTable
     $row.removeClass('editing')
     if $row.attr('id') == "add-row"
       $row.addClass('is-hidden')
+    $row.parents('.table-wrapper').first().scrollLeft(0)
+    $row.parents('.table-wrapper').trigger "scroll"
 
     $(".add-toggle").removeClass('is-hidden')
     $('.form-actions .btn--save, .form-actions input[type=submit]').prop('disabled', null).removeClass('disabled').off 'click'
@@ -117,8 +119,6 @@ class @EditTable
 
     @hiddenRow.show() if @hiddenRow != null
     @hiddenRow = null
-    $row.parents('.table-wrapper').first().scrollLeft(0)
-    $row.parents('.table-wrapper').trigger "scroll"
 
   bindActions: ()->
     context = this
