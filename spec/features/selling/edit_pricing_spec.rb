@@ -117,7 +117,7 @@ describe "Editing advanced pricing", js: true do
 
         it "responds with an error message" do
           expect(page).to have_content("Could not save price")
-          expect(page).to have_content("Min quantity must be greater than 0")
+          expect(page).to have_content("Minimum quantity must be greater than 0")
         end
 
         it "opens the price row for editing" do

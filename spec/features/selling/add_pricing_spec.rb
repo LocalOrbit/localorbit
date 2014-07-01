@@ -44,7 +44,7 @@ describe 'Adding advanced pricing' do
 
     it "shows error messages" do
       expect(page).to have_content("Sale price must be greater than 0")
-      expect(page).to have_content("Min quantity must be greater than 0")
+      expect(page).to have_content("Minimum quantity must be greater than 0")
     end
 
     it "re-enables the net pricing calculator for the new form", js: true do
@@ -65,7 +65,7 @@ describe 'Adding advanced pricing' do
       fill_in 'price_sale_price', with: '1.50'
       click_button 'Add'
 
-      expect(page).to have_content("Min quantity must be unique")
+      expect(page).to have_content("Minimum quantity must be unique")
     end
 
     it "allowed for different buyers" do
@@ -78,7 +78,7 @@ describe 'Adding advanced pricing' do
       fill_in 'price_sale_price', with: '1.50'
       click_button 'Add'
 
-      expect(page).to_not have_content("Min quantity must be unique")
+      expect(page).to_not have_content("Minimum quantity must be unique")
       expect(page).to have_content("Successfully added a new price")
     end
 
@@ -92,7 +92,7 @@ describe 'Adding advanced pricing' do
       fill_in 'price_sale_price', with: '1.50'
       click_button 'Add'
 
-      expect(page).to_not have_content("Min quantity must be unique")
+      expect(page).to_not have_content("Minimum quantity must be unique")
       expect(page).to have_content("Successfully added a new price")
     end
   end
