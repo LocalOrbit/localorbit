@@ -91,7 +91,7 @@
             <td class="edit">
               <div class="edit-trigger view-cell">
                 <%= link_to raw('<i class="font-icon" data-icon="&#xe002;"></i> Edit</span>'), "#fields_price_#{price.id}", class: "edit-trigger edit-price" %>
-                <%= link_to raw('<i class="font-icon icon-delete"></i>'), [:admin, @product, price], method: :delete, data: {confirm: 'Are you sure you want to delete this price'}, class: "delete" %>
+                <%= link_to raw('&#57418;'), [:admin, @product, price], method: :delete, data: {confirm: 'Are you sure you want to delete this price'}, class: "delete", title: "Delete" %>
               </div>
               <div class="edit-cell">
                 <%= content_tag(:button, "Cancel", class: "cancel") if @product.prices.view_sorted.any? %>

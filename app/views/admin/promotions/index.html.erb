@@ -40,7 +40,7 @@
           <%= link_to raw("<i class='font-icon icon-plus-circle'></i> Activate"), activate_admin_promotion_path(promotion) %>
         <% end %>
         &#160;
-        <%= link_to raw("<i class='font-icon icon-delete'></i>"), admin_promotion_path(promotion), method: :delete, data: { confirm: "Are you sure you want to delete this promotion?" } %>
+        <%= link_to raw("&#57418;"), admin_promotion_path(promotion), method: :delete, data: { confirm: "Are you sure you want to delete this promotion?" }, title: "Delete" %>
       </td>
     </tr>
     <% end %>

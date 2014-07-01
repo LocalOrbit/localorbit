@@ -141,7 +141,7 @@ module Dom
     end
 
     def click_delete
-      node.find_link("Delete").click
+      node.find_link("\uE04A").click
     end
 
     def click_edit
@@ -314,7 +314,7 @@ module Dom
       attribute :links
 
       def click_delete
-        node.find_link("Delete").click
+        node.find_link("\uE04A").click
       end
 
       def click_activate
@@ -417,7 +417,7 @@ module Dom
       end
 
       def click_delete
-        node.find_link('Delete').click
+        node.find_link("\uE04A").click
       end
     end
 
@@ -796,7 +796,7 @@ module Dom
     end
 
     def click_delete
-      node.click_link "Delete"
+      node.click_link "\uE04A"
     end
 
     def click_pricing
