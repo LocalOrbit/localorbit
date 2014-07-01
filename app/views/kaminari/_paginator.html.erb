@@ -8,10 +8,10 @@
 -%>
 
 <% selected_url = nil %>
-<% per_page_select_options = [["Show 50 rows", 50], ["Show 100 rows", 100], ["Show 500 rows", 500], ["Show all rows", Kaminari.config.max_per_page]].map do |name, per_page| %>
+<% per_page_select_options = [50, 100, 500, 1000, 1500].map do |per_page| %>
 <%  url = Kaminari::Helpers::FirstPage.new(self, params: {per_page: per_page}).url %>
 <%  selected_url = url if params["per_page"] == per_page.to_s %>
-<%  [name, url] %>
+<%  ["Show #{per_page} rows", url] %>
 <% end %>
 <%= select_tag :per_page, options_for_select(per_page_select_options, selected: selected_url), class: 'filter-input per-page-filter' %>
 

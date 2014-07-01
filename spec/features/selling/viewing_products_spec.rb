@@ -86,7 +86,7 @@ describe "Viewing products" do
       sleep 3
       expect(Dom::ProductRow.count).to eq(2)
 
-      select "Show all rows", from: "per_page"
+      select "Show 1500 rows", from: "per_page"
       expect(page).to have_content("Grapes")
       expect(Dom::ProductRow.count).to eq(3)
 
