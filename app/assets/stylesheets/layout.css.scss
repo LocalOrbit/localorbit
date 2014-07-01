@@ -53,14 +53,14 @@
   font-size: 14px;
 }
 @media screen and (min-device-height: 330px) {
-  .l-app-header.js-positioned {
+  .l-app-header.stickable.js-positioned {
     position: absolute;
     top: 0;
     z-index: 100;
   }
 }
 @media screen and (min-width: 600px) {
-  .l-app-header.js-positioned {
+  .l-app-header.stickable.js-positioned {
     position: fixed;
   }
 }
