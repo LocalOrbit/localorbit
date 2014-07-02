@@ -4,7 +4,7 @@ module Admin
     include StickyFilters
 
     def index
-      @order_items = OrderItem.for_user(current_user).joins(:order)
+      @order_items = OrderItem.for_user(current_user).joins(:order).preload(product: [:organization, :category], order: [:market, :organization])
       prepare_filter_data(@order_items)
 
       # initialize ransack and search
