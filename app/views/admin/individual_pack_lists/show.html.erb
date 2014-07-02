@@ -10,8 +10,22 @@
     <div class="upcoming-delivery">
       <h1>Individual Packing Slips</h1>
 
-      <h2 class="heading heading-delivery-tool">Buyer Name</h2>
-      <h3 class="fn org"><%= order.organization.name %></h3>
+      <div class="row">
+        <div class="column column--half vcard vcard--buyer">
+          <h2 class="heading heading-delivery-tool">To Buyer</h2>
+          <h3 class="fn org"><%= order.organization.name %></h3>
+          <div class="street-address"><%= order.decorate.display_delivery_street %></div>
+          <div class="city-state-zip"><%= order.decorate.display_delivery_city_state_zip %></div>
+          <div class="tel"><%= number_to_phone order.decorate.display_delivery_phone %></div>
+        </div><div class="column column--half vcard vcard--seller">
+          <h2 class="heading heading-delivery-tool">From Seller</h2>
+          <h3 class="fn org"><%= seller.name %></h3>
+          <div class="street-address"><%= seller.decorate.shipping_address %></div>
+          <div class="city-state-zip"><%= seller.decorate.shipping_city_state_zip %></div>
+          <div class="tel"><%= number_to_phone seller.decorate.shipping_phone %></div>
+
+        </div>
+      </div>
 
       <div class="row">
         <div class="column column--half">
@@ -28,22 +42,6 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="column column--half vcard vcard--seller">
-          <h2 class="heading heading-delivery-tool">From Seller</h2>
-          <h3 class="fn org"><%= seller.name %></h3>
-          <div class="street-address"><%= seller.decorate.shipping_address %></div>
-          <div class="city-state-zip"><%= seller.decorate.shipping_city_state_zip %></div>
-          <div class="tel"><%= number_to_phone seller.decorate.shipping_phone %></div>
-
-        </div><div class="column column--half vcard vcard--buyer">
-          <h2 class="heading heading-delivery-tool">To Buyer</h2>
-          <h3 class="fn org"><%= order.organization.name %></h3>
-          <div class="street-address"><%= order.decorate.display_delivery_street %></div>
-          <div class="city-state-zip"><%= order.decorate.display_delivery_city_state_zip %></div>
-          <div class="tel"><%= number_to_phone order.decorate.display_delivery_phone %></div>
-        </div>
-      </div>
 
       <table class="delivery-tools">
         <thead>
