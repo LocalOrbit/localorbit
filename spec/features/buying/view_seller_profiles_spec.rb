@@ -17,7 +17,7 @@ feature "View Seller Profiles" do
 
   context "when user has multiple organizations" do
     before do
-      user.organizations << create(:organization, :single_location, :buyer)
+      user.organizations << create(:organization, :single_location, :buyer, markets: [market])
       user.save
     end
 
