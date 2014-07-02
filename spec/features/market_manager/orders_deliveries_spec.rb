@@ -63,7 +63,7 @@ context "Viewing sold items" do
       expect(Dom::DateFilter::GTEQField.first.value).to eq(30.days.ago.to_date.to_s)
       expect(Dom::DateFilter::LTEQField.first.value).to eq(Date.today.to_s)
 
-      fill_in "q_created_at_date_gteq", with: 6.weeks.ago.to_date.to_s
+      fill_in "q_order_placed_at_date_gteq", with: 6.weeks.ago.to_date.to_s
       click_button "Filter"
 
       expect(Dom::Admin::SoldItemRow.count).to eq(4)

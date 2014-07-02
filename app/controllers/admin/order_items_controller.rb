@@ -9,15 +9,15 @@ module Admin
 
       # initialize ransack and search
       @query_params = sticky_parameters(request.query_parameters)
-      search = Search::QueryDefaults.new(@query_params[:q], :created_at).query
+      search = Search::QueryDefaults.new(@query_params[:q], :order_placed_at).query
 
       @q = @order_items.search(search)
       @q.sorts = ["order_placed_at desc", "name"] if @q.sorts.empty?
       @order_items = @q.result
       @totals = OrderTotals.new(@order_items)
 
-      @start_date = format_date(search[:created_at_date_gteq])
-      @end_date = format_date(search[:created_at_date_lteq])
+      @start_date = format_date(search[:order_placed_at_date_gteq])
+      @end_date = format_date(search[:order_placed_at_date_lteq])
 
       respond_to do |format|
         format.html { @order_items = @order_items.page(params[:page]).per(@query_params[:per_page]) }
