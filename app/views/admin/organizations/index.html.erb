@@ -27,9 +27,9 @@
       <td class="action">
         <% if current_user.market_manager? || current_user.admin? %>
           <% if organization.markets.count > 1 %>
-            <%= link_to raw("&#57418;"), market_memberships_admin_organization_path(organization.id), class: "action-link font-icon icon-delete remote-modal-toggle", data: { modal: "delete-organization" }, title: "Delete" %>
+            <%= link_to raw("&#57418;"), market_memberships_admin_organization_path(organization.id), class: "action-link font-icon remote-modal-toggle", data: { modal: "delete-organization" }, title: "Delete" %>
           <% else %>
-            <%= link_to raw("&#57418;"), admin_organization_path(organization.id), method: :delete, class: 'action-link font-icon icon-delete', data: {confirm: "Are you sure you want to delete organization #{organization.name}? All discounts, users, prices, products related to this organization will also be deleted. This cannot be undone."}, title: "Delete" %>
+            <%= link_to raw("&#57418;"), admin_organization_path(organization.id), method: :delete, class: 'action-link font-icon', data: {confirm: "Are you sure you want to delete organization #{organization.name}? All discounts, users, prices, products related to this organization will also be deleted. This cannot be undone."}, title: "Delete" %>
           <% end %>
         <% end %>
       </td>
