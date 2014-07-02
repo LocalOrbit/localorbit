@@ -7,7 +7,7 @@ module Admin
 
     def index
       @query_params = sticky_parameters(request.query_parameters)
-      @products = current_user.managed_products.periscope(@query_params).page(params[:page]).per(@query_params[:per_page])
+      @products = current_user.managed_products.periscope(@query_params).preload(:prices, :lots, :organization).page(params[:page]).per(@query_params[:per_page])
 
       find_organizations_for_filtering
       find_markets_for_filtering
@@ -126,14 +126,12 @@ module Admin
     end
 
     def find_selling_organizations
-      @organizations = current_user.managed_organizations.selling.order(:name).includes(:locations)
-      @organizations = @organizations.select {|o| o.markets.any? } # remove deleted orgs
+      @organizations = current_user.managed_organizations.selling.order(:name).preload(:locations)
     end
 
     def find_organizations_for_filtering
       orgs = current_user.managed_organizations.selling.periscope(request.query_parameters).
         order(:name)
-      orgs = orgs.select {|o| o.markets.any? } # remove deleted orgs
       @selling_organizations = orgs.inject([]) do |result, org|
         result << [org.name, org.id]
       end
