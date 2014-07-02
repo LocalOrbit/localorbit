@@ -1,11 +1,14 @@
 module Admin
   module Financials
     class ReceiptsController < AdminController
+      include StickyFilters
+
       def index
-        @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user, :placed_at)
+        @query_params = sticky_parameters(request.query_parameters)
+        @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
         @q = for_receipts.order('orders.invoice_due_date').search(@search_presenter.query)
         @q.sorts = ["invoice_due_date"] if @q.sorts.empty?
-        @orders = @q.result.page(params[:page]).per(params[:per_page])
+        @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
       end
 
       def edit
