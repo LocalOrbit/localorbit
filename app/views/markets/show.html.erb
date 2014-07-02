@@ -60,7 +60,7 @@
       <% if @market.contact_phone.present? %><span class="tel"><%= @market.contact_phone %></span><% end %>
     </div>
 
-    <h2 class="story-header">Pickups &amp; Deliveries</h2>
+    <h2 class="story-header">Pick ups &amp; Deliveries</h2>
     <ul class="list-naked list-zebra deliveries-list">
     <% @market.delivery_schedules.visible.order(:day).decorate.each do |delivery| %>
       <li>
