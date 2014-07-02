@@ -638,7 +638,7 @@
       right: 15px;
     }
   }
-  
+
 }
 @media screen and (min-height: 768px) {
   .tab-header.js-positioned {
@@ -1227,7 +1227,6 @@ label ~ .tooltip {
   .actions {
     padding: 10px;
     @include border-radius(5px);
-    margin: 0 20px;
     background: #D9F6F9;
   }
 }
