@@ -41,7 +41,7 @@ describe "Individual pack slips" do
         expect(page).to have_content("Individual Packing Slips")
         expect(page).to have_content("Seller Delivers to Market on")
         expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
-        expect(page).to have_content("For pickup on May 9, 2014 between 10:00AM and 12:00PM")
+        expect(page).to have_content("For pick up on May 9, 2014 between 10:00AM and 12:00PM")
 
         expect(Dom::Admin::IndividualPackListItem.count).to eql(2)
 
@@ -68,7 +68,7 @@ describe "Individual pack slips" do
         expect(page).to have_content("Individual Packing Slips")
         expect(page).to have_content("Seller Delivers to Market on")
         expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
-        expect(page).to have_content("For pickup on May 9, 2014 between 10:00AM and 12:00PM")
+        expect(page).to have_content("For pick up on May 9, 2014 between 10:00AM and 12:00PM")
 
         expect(page).to have_content(sellers_order.order_number)
 
