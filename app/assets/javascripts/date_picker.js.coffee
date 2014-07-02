@@ -6,6 +6,8 @@ class @DatePicker
     options = {dateFormat: @format}
     options.minDate = field.data('min-date')
     options.maxDate = field.data('max-date')
+    options.showOn = "both"
+    options.buttonText = "\ue013"
     preParseDate = (val) ->
       if val.toISOString != undefined
         val = val.toISOString()
@@ -60,7 +62,7 @@ class @DatePicker
 
     if field.is('div')
       field = $('#' + field.attr('data-input'))
-      field.after(clearLink)
+    field.after(clearLink)
     clearLink.on 'click', (event)->
       event.preventDefault()
       field.val('')

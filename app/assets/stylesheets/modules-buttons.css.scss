@@ -177,6 +177,7 @@ input[type=button].btn--save {
   color: $hover;
 }
 
+input ~ .ui-datepicker-trigger,
 .btn--end,
 .btn--start {
   display: inline-block;
@@ -184,6 +185,7 @@ input[type=button].btn--save {
   background-color: #fff;
   vertical-align: top;
 }
+input ~ .ui-datepicker-trigger,
 .btn--end,
 input[type=submit].btn--end {
   @include border-radius(0 2px 2px 0);
