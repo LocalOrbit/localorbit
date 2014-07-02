@@ -2,7 +2,6 @@ module Admin
   class ProductsController < AdminController
     include StickyFilters
 
-    before_action :process_filter_clear_requests
     before_action :ensure_selling_organization
     before_action :find_product, only: [:show, :update, :destroy]
 

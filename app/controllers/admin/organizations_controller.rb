@@ -2,7 +2,6 @@ module Admin
   class OrganizationsController < AdminController
     include StickyFilters
 
-    before_action :process_filter_clear_requests
     before_action :require_admin_or_market_manager, only: [:new, :create, :destroy]
     before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules, :market_memberships, :destroy]
 

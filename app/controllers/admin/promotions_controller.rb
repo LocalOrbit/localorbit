@@ -2,7 +2,6 @@ class Admin::PromotionsController < AdminController
   include StickyFilters
 
   before_action :require_admin_or_market_manager
-  before_action :process_filter_clear_requests
   before_action :find_featured_promotion, only: [:show, :update, :destroy, :activate, :deactivate]
 
   def index
