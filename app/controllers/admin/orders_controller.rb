@@ -1,10 +1,13 @@
 class Admin::OrdersController < AdminController
+  include StickyFilters
+
   def index
-    @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user, "placed_at")
+    @query_params = sticky_parameters(request.query_parameters)
+    @search_presenter = OrderSearchPresenter.new(@query_params, current_user, "placed_at")
 
     @q = Order.orders_for_seller(current_user).uniq.search(@search_presenter.query)
     @q.sorts = "placed_at desc" if @q.sorts.empty?
-    @orders = @q.result.page(params[:page]).per(params[:per_page])
+    @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
     @totals = OrderTotals.new(OrderItem.where(order_id: @q.result.map(&:id)))
   end
 

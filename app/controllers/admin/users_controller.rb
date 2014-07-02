@@ -2,8 +2,6 @@ module Admin
   class UsersController < AdminController
     include StickyFilters
 
-    before_action :process_filter_clear_requests
-
     def index
       @query_params = sticky_parameters(request.query_parameters)
 

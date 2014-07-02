@@ -1,5 +1,7 @@
 module Admin::Financials
   class InvoicesController < AdminController
+    include StickyFilters
+
     def index
       base_scope = nil
       date_filter_attr = nil
@@ -12,11 +14,12 @@ module Admin::Financials
         date_filter_attr = :placed_at
       end
 
-      @search_presenter = OrderSearchPresenter.new(request.query_parameters, current_user, date_filter_attr)
-      @q = base_scope.periscope(request.query_parameters).search(@search_presenter.query)
+      @query_params = sticky_parameters(request.query_parameters)
+      @search_presenter = OrderSearchPresenter.new(@query_params, current_user, date_filter_attr)
+      @q = base_scope.periscope(@query_params).search(@search_presenter.query)
 
       @q.sorts = ['invoice_due_at desc', 'order_number asc'] if @q.sorts.empty?
-      @orders = @q.result.page(params[:page]).per(params[:per_page])
+      @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
     end
 
     def show

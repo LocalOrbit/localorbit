@@ -54,15 +54,21 @@ context "Viewing sold items" do
     end
 
     it "lists by default items sold within the last month" do
+      visit admin_order_items_path(clear: "")
+
       order_item = create(:order_item, product: product2, seller_name: seller.name, name: product2.name, created_at: 5.weeks.ago )
       order = create(:order, items: [order_item], organization: buyer, market: market, order_number: "LO-ADA-0000002", delivery: delivery, created_at: 5.weeks.ago, placed_at: 5.weeks.ago)
 
       expect(Dom::Admin::SoldItemRow.count).to eq(3)
+      expect(Dom::DateFilter::GTEQField.first.value).to eq(30.days.ago.to_date.to_s)
+      expect(Dom::DateFilter::LTEQField.first.value).to eq(Date.today.to_s)
 
-      fill_in "q_created_at_date_gteq", with: 6.weeks.ago.to_date.to_s
+      fill_in "q_order_placed_at_date_gteq", with: 6.weeks.ago.to_date.to_s
       click_button "Filter"
 
       expect(Dom::Admin::SoldItemRow.count).to eq(4)
+      expect(Dom::DateFilter::GTEQField.first.value).to eq(6.weeks.ago.to_date.to_s)
+      expect(Dom::DateFilter::LTEQField.first.value).to eq(Date.today.to_s)
     end
 
     it "shows the correct search and filters" do
