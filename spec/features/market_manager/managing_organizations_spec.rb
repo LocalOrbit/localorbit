@@ -1,9 +1,9 @@
 require "spec_helper"
 
 describe "A Market Manager", :vcr do
-  let(:market_manager) { create :user, :market_manager }
-  let(:market) { market_manager.managed_markets.first }
+  let(:market)  { create(:market) }
   let(:market2) { create(:market) }
+  let(:market_manager) { create :user, :market_manager, managed_markets: [market] }
 
   before(:each) do
     switch_to_subdomain(market.subdomain)
@@ -260,24 +260,97 @@ describe "A Market Manager", :vcr do
     end
   end
 
-  describe "Deleting an organization" do
-    let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market])}
-    let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market])}
+  describe "Deleting an organization", js: true do
+    context "organization belongs to a single market" do
+      let!(:market2) { create(:market) }
+      let!(:market3) { create(:market) }
 
-    it "removes the organization from the organizations list" do
-      visit admin_organizations_path
-      expect(page).to have_content("Holland Farms")
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market2]) }
+      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market]) }
+      let!(:market_manager) { create(:user, managed_markets: [market, market2]) }
 
-      holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+      before do
+        visit admin_organizations_path
+        expect(page).to have_content("Holland Farms")
 
-      within(holland_farms.node) do
-        click_link "Delete"
+        seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+        expect(seller_row.market).to eql(market2.name)
+
+        within(seller_row.node) do
+          click_link "Delete"
+        end
       end
 
-      expect(page).to have_content("Removed Holland Farms from #{market.name}")
+      it "removes the organization from the organizations list" do
+        expect(page).to have_content("Removed Holland Farms from #{market2.name}")
 
-      holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
-      expect(holland_farms).to be_nil
+        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+        expect(holland_farms).to be_nil
+      end
+
+      context "and the market manager belongs to multiple markets" do
+        let!(:market_manager) { create(:user, managed_markets: [market, market2]) }
+
+
+        it "deletes the organization from the only market it's associated with" do
+          expect(page).to have_content("Removed #{seller.name} from #{market2.name}")
+        end
+      end
+    end
+
+    context "organization belongs to multiple markets" do
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market, market2])}
+
+      before do
+        visit admin_organizations_path
+        seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+
+        expect(seller_row).to_not be_nil
+
+        within(seller_row.node) do
+          click_link "Delete"
+        end
+
+        sleep(2)
+      end
+
+      context "and the market manager only manages one of the markets" do
+        let!(:market_manager) {create(:user, managed_markets: [market]) }
+
+        it "will not prompt to select a market" do
+          expect(page).to have_content("Removed Holland Farms from #{market.name}")
+          seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+          expect(seller_row).to be_nil
+        end
+      end
+
+      context "and market manager manages more than one market" do
+        let!(:market)  { create(:market, name: "Market 1") }
+        let!(:market2) { create(:market, name: "Market 2") }
+        let!(:market3) { create(:market, name: "Market 3") }
+
+        let!(:seller)  { create(:organization, :seller, name: "Holland Farms", markets:[market2, market, market3])}
+        let!(:market_manager) {create(:user, managed_markets: [market, market3]) }
+
+        it "allows the market manager to delete an organization from a one or more markets" do
+          seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+          expect(seller_row.market).to eql("Market 1, Market 2, Market 3")
+
+          members = Dom::Admin::MarketMembershipRow.all
+          expect(members.count).to eql(2)
+
+          expect(members[0].name).to eql(market.name)
+          expect(members[1].name).to eql(market3.name)
+
+          Dom::Admin::MarketMembershipRow.find_by_name(market.name).check
+          click_button "Remove Membership(s)"
+
+          expect(page).to have_content("Removed Holland Farms")
+
+          seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+          expect(seller_row.market).to eql("Market 2, Market 3")
+        end
+      end
     end
   end
 
@@ -363,6 +436,5 @@ describe "A Market Manager", :vcr do
         expect(page).to have_content("Email is invalid")
       end
     end
-
   end
 end

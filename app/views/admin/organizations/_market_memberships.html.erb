@@ -6,7 +6,8 @@
         <th>Market</th>
       </tr>
     </thead>
-    <% @organization.markets.each do |market| %>
+
+    <% @organization.markets.managed_by(current_user).each do |market| %>
       <tr class="market-membership-row">
         <td class="checkbox"><%= check_box_tag "ids[]", market.id %></td>
         <td class="name"><%= market.name %></td>
