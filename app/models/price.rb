@@ -20,7 +20,7 @@ class Price < ActiveRecord::Base
   end
 
   def net_percent
-    (market || product.organization.markets.first).seller_net_percent
+    (market || product.organization.original_market).seller_net_percent
   end
 
   def for_market_and_organization?(market, organization)

@@ -1,7 +1,7 @@
 <%# gets the market for the email layout. Isn't ideal, but works well. %>
 <% if organization = @resource.organizations.first
      org_or_market_name = organization.name
-     @market = organization.markets.first
+     @market = organization.original_market
    elsif @market = @resource.primary_market
      org_or_market_name = @market.name
    else

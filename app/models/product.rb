@@ -156,11 +156,11 @@ class Product < ActiveRecord::Base
   end
 
   def market_name
-    organization.markets.first.name
+    organization.original_market.name
   end
 
   def net_percent
-    organization.markets.first.seller_net_percent
+    organization.original_market.seller_net_percent
   end
 
   def organization_name

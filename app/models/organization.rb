@@ -87,6 +87,10 @@ class Organization < ActiveRecord::Base
     Balanced::Customer.find(balanced_customer_uri)
   end
 
+  def original_market
+    (markets.empty? ? cross_sells : markets).first
+  end
+
   private
 
   def self.order_by_name(direction)

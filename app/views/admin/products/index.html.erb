@@ -21,7 +21,7 @@
     <% @products.decorate.each do |product| %>
       <tr class="product-row <%= cycle "odd", "even" %>">
         <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]), class: 'seller hidden-mobile') if current_user.multi_organization_membership? %>
-        <%= content_tag(:td, link_to(product.market_name, [:admin, product.organization.markets.first]), class: 'market hidden-mobile') if current_user.multi_market_membership? %>
+        <%= content_tag(:td, link_to(product.market_name, [:admin, product.organization.original_market]), class: 'market hidden-mobile') if current_user.multi_market_membership? %>
         <td class="name product-name"><%= link_to product.name_and_unit, [:admin, product] %></td>
         <td class="pricing">
           <ul class="l-inline-list">
