@@ -165,6 +165,23 @@ module Dom
     end
   end
 
+  class DateFilter
+    class GTEQField < Domino
+      selector "[id $= '_date_gteq']"
+
+      def value
+        node.value
+      end
+    end
+
+    class LTEQField < Domino
+      selector "[id $= '_date_lteq']"
+
+      def value
+        node.value
+      end
+    end
+  end
 
   class DatePicker < Domino
     selector ".ui-datepicker"
