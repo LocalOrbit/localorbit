@@ -124,7 +124,8 @@
     }
   }
 
-  .product-search {
+  .product-search,
+  .order-search-widget {
     float: none;
     display: -webkit-flex;
     display: flex;
@@ -136,10 +137,11 @@
     margin-bottom: 15px;
 
     input {
+      width: auto;
       height: 35px;
       -webkit-flex: auto 1;
       flex: auto 1;
-      &[type=search] + .btn--end {
+      &[type=search] + input.btn--end {
         margin-right: 0;
       }
     }
@@ -155,17 +157,32 @@
 
 @media screen and (max-width: 600px) {
   .order_search {
-    .pull-left,
-    .pull-right {
+    .date-filters {
       float: none;
+      text-align: justify;
+      .datepicker {
+        width: 7.5em;
+      }
       > .preserve-alignment:last-child {
-        display: block;
+        width: 100%;
       }
     }
     input[value=Filter] {
       display: block;
       width: 100%;
     }
+    .manager-filters {
+      &.unjustify {
+        text-align: justify;
+      }
+      .preserve-alignment:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  .order-search-widget {
+    display: block;
+    margin-bottom: 1em;
   }
   
 }
