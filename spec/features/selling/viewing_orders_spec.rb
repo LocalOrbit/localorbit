@@ -181,9 +181,12 @@ feature "Viewing orders" do
     end
 
     context "market manager deletes an organization" do
+      let!(:market_manager) { create(:user, managed_markets: [market1]) }
       before do
-        delete_organization(market1_seller_org1)
-        delete_organization(market1_seller_org2)
+        switch_user(market_manager) do
+          delete_organization(market1_seller_org1)
+          delete_organization(market1_seller_org2)
+        end
       end
 
       scenario "order details" do

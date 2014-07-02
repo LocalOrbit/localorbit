@@ -276,9 +276,7 @@ describe "A Market Manager", :vcr do
         seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
         expect(seller_row.market).to eql(market2.name)
 
-        within(seller_row.node) do
-          click_link "Delete"
-        end
+        seller_row.click_delete
       end
 
       it "removes the organization from the organizations list" do
@@ -307,10 +305,7 @@ describe "A Market Manager", :vcr do
 
         expect(seller_row).to_not be_nil
 
-        within(seller_row.node) do
-          click_link "Delete"
-        end
-
+        seller_row.click_delete
         sleep(2)
       end
 

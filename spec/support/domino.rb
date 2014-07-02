@@ -9,6 +9,12 @@ module Dom
     end
   end
 
+  module Deletable
+    def click_delete
+      node.find("[title=Delete]").click
+    end
+  end
+
   class TypeAhead < Domino
     def select_text
       raise "Implement in subclass"
@@ -110,6 +116,7 @@ module Dom
   end
 
   class PricingRow < EditableTableRow
+    include Dom::Deletable
     selector "#pricing_table tbody tr.price"
 
     def click_buyer
@@ -138,10 +145,6 @@ module Dom
 
     def check_delete
       node.find('.delete input').set(true)
-    end
-
-    def click_delete
-      node.find_link("\uE04A").click
     end
 
     def click_edit
@@ -322,6 +325,8 @@ module Dom
     end
 
     class FeaturedPromotionRow < Domino
+      include Dom::Deletable
+
       selector ".promotion-row"
 
       attribute :date
@@ -329,10 +334,6 @@ module Dom
       attribute :title
       attribute :market
       attribute :links
-
-      def click_delete
-        node.find_link("\uE04A").click
-      end
 
       def click_activate
         node.find_link("Activate").click
@@ -352,6 +353,8 @@ module Dom
     end
 
     class OrganizationRow < Domino
+      include Dom::Deletable
+
       selector ".organization-table tbody tr"
 
       attribute :name
@@ -407,6 +410,8 @@ module Dom
     end
 
     class DeliverySchedule < Domino
+      include Dom::Deletable
+
       selector "tbody tr"
 
       def weekday
@@ -431,10 +436,6 @@ module Dom
 
       def pickup_time
         node.find('.pickup-time').text
-      end
-
-      def click_delete
-        node.find_link("\uE04A").click
       end
     end
 
