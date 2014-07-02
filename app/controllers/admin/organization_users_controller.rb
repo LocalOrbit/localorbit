@@ -6,7 +6,7 @@ module Admin
     end
 
     def create
-      market = current_market || @organization.markets.first
+      market = current_market || @organization.original_market
       @invite_user = InviteUserToOrganization.perform(
         inviter: current_user,
         email: user_params[:email],

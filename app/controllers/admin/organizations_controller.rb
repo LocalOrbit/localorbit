@@ -52,7 +52,7 @@ module Admin
                     @organization.markets.managed_by(current_user).where(id: params[:ids])
                   end
                 else
-                  @organization.markets.managed_by(current_user).where(id: @organization.markets.first.id)
+                  @organization.markets.managed_by(current_user).where(id: @organization.original_market.id)
                 end
 
       postfix = if markets.count == 1
