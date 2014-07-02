@@ -86,7 +86,7 @@ describe "Viewing products" do
       sleep 3
       expect(Dom::ProductRow.count).to eq(2)
 
-      select "Show 1500 rows", from: "per_page"
+      select "Show 500 rows", from: "per_page"
       expect(page).to have_content("Grapes")
       expect(Dom::ProductRow.count).to eq(3)
 
@@ -216,8 +216,8 @@ describe "Viewing products" do
       product = Dom::ProductRow.find_by_name("Grapes (Tube)")
 
       expect(product.stock).to have_content("1")
-
     end
+
     it "updates advanced inventory" do
       grapes.update_attributes!(use_simple_inventory: false)
 
