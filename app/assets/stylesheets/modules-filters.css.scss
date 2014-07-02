@@ -153,3 +153,19 @@
 }
 
 
+@media screen and (max-width: 600px) {
+  .order_search {
+    .pull-left,
+    .pull-right {
+      float: none;
+      > .preserve-alignment:last-child {
+        display: block;
+      }
+    }
+    input[value=Filter] {
+      display: block;
+      width: 100%;
+    }
+  }
+  
+}
