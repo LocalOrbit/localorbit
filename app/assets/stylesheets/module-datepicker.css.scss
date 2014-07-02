@@ -4,6 +4,7 @@ input.datepicker,
 input.alt-datepicker {
   width: 8em;
 
+  ~ .ui-datepicker-trigger,
   ~ .btn--end {
     display: none;
     padding: .35em 3px .28em;
@@ -11,6 +12,12 @@ input.alt-datepicker {
     margin-left: -1px;
     font-size: 1em;
     vertical-align: top;
+  }
+  ~ .ui-datepicker-trigger {
+    @include box-sizing(content-box);
+    padding-top: .5em;
+    padding-bottom: .4em;
+    font-family: 'icomoon-ultimate88910';
   }
 }
   input.alt-datepicker,
@@ -29,6 +36,7 @@ input.alt-datepicker {
       font-size: 14px;
       -webkit-appearance: none;
     }
+    ~ .ui-datepicker-trigger,
     ~ .btn--end {
       display: inline-block;
     }
