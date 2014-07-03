@@ -12,9 +12,3 @@ $ ->
     if confirm("Are you sure you want to remove this item?")
       $(this).parent().find("input").val("true")
       $(this).closest("form").submit()
-
-  # Change Delivery
-  $("#delivery-changer").on "click", "a", (e) ->
-    e.preventDefault()
-    $("#delivery-changer .fields").show()
-    $("#delivery-changer a").hide()
