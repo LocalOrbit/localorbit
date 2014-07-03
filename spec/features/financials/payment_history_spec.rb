@@ -1,5 +1,9 @@
 require "spec_helper"
 
+def format_date(date)
+  date.strftime("%m/%d/%Y")
+end
+
 feature "Payment history", :truncate_after_all do
   before :all do
     market_ach_balanced_uri = "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/bank_accounts/BA6MvUHwvMFA1EtwhPT5F2sT"
@@ -20,7 +24,7 @@ feature "Payment history", :truncate_after_all do
     @seller = create(:organization, :seller, name: "Seller",   markets: [@market])
     @seller2 = create(:organization, :seller, name: "Seller 2", markets: [@market2])
 
-    payment_day = DateTime.parse("May 9, 2014, 11:00:00")
+    @payment_day = 20.days.ago
 
     ach_account       = create(:bank_account, :checking,    last_four: "9983", balanced_uri: ach_balanced_uri,       bankable: @buyer)
     other_ach_account = create(:bank_account, :checking,    last_four: "2231", balanced_uri: other_ach_balanced_uri, bankable: @buyer)
@@ -56,7 +60,7 @@ feature "Payment history", :truncate_after_all do
     end
 
     (1..5).each do |i|
-      Timecop.freeze(payment_day + i.days) do
+      Timecop.freeze(@payment_day + i.days) do
         # Create payment from buyer to market
         payment = create(:payment,
                          payment_method: ["cash", "check", "ach", "ach", "credit card"][i - 1],
@@ -103,7 +107,7 @@ feature "Payment history", :truncate_after_all do
     end
 
     # Multiple market payments
-    Timecop.freeze(payment_day - 1.day) do
+    Timecop.freeze(@payment_day - 1.day) do
       # Create a fee for market
       create(:payment,
              payment_method: 'ach',
@@ -245,16 +249,18 @@ feature "Payment history", :truncate_after_all do
         expect(page).not_to have_content("Received From")
         expect(page).not_to have_content("Paid To")
       end
+    end
 
+    scenario "default sort order payment date descending" do
       payments = Dom::Admin::Financials::PaymentRow.all
 
       # Default sort order should be payment date descending
       expect(payments.count).to eq(5)
-      expect(payments[0].date).to eq("05/14/2014")
-      expect(payments[1].date).to eq("05/13/2014")
-      expect(payments[2].date).to eq("05/12/2014")
-      expect(payments[3].date).to eq("05/11/2014")
-      expect(payments[4].date).to eq("05/10/2014")
+      expect(payments[0].date).to eq(format_date(@payment_day + 5.days))
+      expect(payments[1].date).to eq(format_date(@payment_day + 4.days))
+      expect(payments[2].date).to eq(format_date(@payment_day + 3.days))
+      expect(payments[3].date).to eq(format_date(@payment_day + 2.days))
+      expect(payments[4].date).to eq(format_date(@payment_day + 1.day))
 
     end
 
@@ -264,11 +270,11 @@ feature "Payment history", :truncate_after_all do
       payments = Dom::Admin::Financials::PaymentRow.all
 
       expect(payments.count).to eq(5)
-      expect(payments[0].date).to eq("05/10/2014")
-      expect(payments[1].date).to eq("05/11/2014")
-      expect(payments[2].date).to eq("05/12/2014")
-      expect(payments[3].date).to eq("05/13/2014")
-      expect(payments[4].date).to eq("05/14/2014")
+      expect(payments[0].date).to eq(format_date(@payment_day + 1.day))
+      expect(payments[1].date).to eq(format_date(@payment_day + 2.days))
+      expect(payments[2].date).to eq(format_date(@payment_day + 3.days))
+      expect(payments[3].date).to eq(format_date(@payment_day + 4.days))
+      expect(payments[4].date).to eq(format_date(@payment_day + 5.days))
     end
 
     scenario "can sort by payment amount" do
@@ -444,13 +450,13 @@ feature "Payment history", :truncate_after_all do
 
       expect(payment_row("$123.00")).not_to be_nil
       expect(payment_row("$123.00").payment_method).to eql("Cash")
-      expect(payment_row("$123.00").date).to eql("05/08/2014")
+      expect(payment_row("$123.00").date).to eql(format_date(@payment_day - 1.day))
       expect(payment_row("$123.00").from).to eql(@buyer2.name)
       expect(payment_row("$123.00").to).to eql(@market2.name)
 
       expect(payment_row("$345.00")).not_to be_nil
       expect(payment_row("$345.00").payment_method).to eql("ACH: *********9983")
-      expect(payment_row("$345.00").date).to eql("05/08/2014")
+      expect(payment_row("$345.00").date).to eql(format_date(@payment_day - 1.day))
       expect(payment_row("$345.00").from).to eql(@buyer2.name)
       expect(payment_row("$345.00").to).to eql("Local Orbit")
     end
@@ -458,7 +464,7 @@ feature "Payment history", :truncate_after_all do
     scenario "can view fews for markets they manage" do
       expect(payment_row("$99.00")).not_to be_nil
       expect(payment_row("$99.00").payment_method).to eql("ACH")
-      expect(payment_row("$99.00").date).to eql("05/08/2014")
+      expect(payment_row("$99.00").date).to eql(format_date(@payment_day - 1.day))
     end
 
     scenario "cannot view buyer order payments for markets they do not manage" do
@@ -507,7 +513,7 @@ feature "Payment history", :truncate_after_all do
     scenario "can filter purchase history by payment date" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
 
-      fill_in "q_created_at_date_gteq", with: "Sun, 11 May 2014"
+      fill_in "q_created_at_date_gteq", with: (@payment_day + 2.days).to_s
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(16)
@@ -520,7 +526,7 @@ feature "Payment history", :truncate_after_all do
       expect(payment_rows_for_description("LO-02-234-4567890-4").count).to eq(2)
       expect(payment_rows_for_description("LO-02-234-4567890-5").count).to eq(2)
 
-      fill_in "q_created_at_date_lteq", with: "Mon, 12 May 2014"
+      fill_in "q_created_at_date_lteq", with: (@payment_day + 3.days).to_s
       click_button "Filter"
 
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(8)
@@ -616,23 +622,23 @@ feature "Payment history", :truncate_after_all do
 
       expect(payment_row("$21.00")).not_to be_nil
       expect(payment_row("$21.00").payment_method).to eql("Cash")
-      expect(payment_row("$21.00").date).to eql("05/10/2014")
+      expect(payment_row("$21.00").date).to eql(format_date(@payment_day + 1.day))
 
       expect(payment_row("$22.00")).not_to be_nil
       expect(payment_row("$22.00").payment_method).to eql("Check: #12345")
-      expect(payment_row("$22.00").date).to eql("05/11/2014")
+      expect(payment_row("$22.00").date).to eql(format_date(@payment_day + 2.days))
 
       expect(payment_row("$23.00")).not_to be_nil
       expect(payment_row("$23.00").payment_method).to eql("ACH: *********9983")
-      expect(payment_row("$23.00").date).to eql("05/12/2014")
+      expect(payment_row("$23.00").date).to eql(format_date(@payment_day + 3.days))
 
       expect(payment_row("$24.00")).not_to be_nil
       expect(payment_row("$24.00").payment_method).to eql("ACH: *********2231")
-      expect(payment_row("$24.00").date).to eql("05/13/2014")
+      expect(payment_row("$24.00").date).to eql(format_date(@payment_day + 4.days))
 
       expect(payment_row("$25.00")).not_to be_nil
       expect(payment_row("$25.00").payment_method).to eql("Credit Card: ************7732")
-      expect(payment_row("$25.00").date).to eql("05/14/2014")
+      expect(payment_row("$25.00").date).to eql(format_date(@payment_day + 5.days))
     end
 
     scenario "can view their purchase history after market manage deletes an organization" do
@@ -644,23 +650,23 @@ feature "Payment history", :truncate_after_all do
 
       expect(payment_row("$21.00")).not_to be_nil
       expect(payment_row("$21.00").payment_method).to eql("Cash")
-      expect(payment_row("$21.00").date).to eql("05/10/2014")
+      expect(payment_row("$21.00").date).to eql(format_date(@payment_day + 1.day))
 
       expect(payment_row("$22.00")).not_to be_nil
       expect(payment_row("$22.00").payment_method).to eql("Check: #12345")
-      expect(payment_row("$22.00").date).to eql("05/11/2014")
+      expect(payment_row("$22.00").date).to eql(format_date(@payment_day + 2.days))
 
       expect(payment_row("$23.00")).not_to be_nil
       expect(payment_row("$23.00").payment_method).to eql("ACH: *********9983")
-      expect(payment_row("$23.00").date).to eql("05/12/2014")
+      expect(payment_row("$23.00").date).to eql(format_date(@payment_day + 3.days))
 
       expect(payment_row("$24.00")).not_to be_nil
       expect(payment_row("$24.00").payment_method).to eql("ACH: *********2231")
-      expect(payment_row("$24.00").date).to eql("05/13/2014")
+      expect(payment_row("$24.00").date).to eql(format_date(@payment_day + 4.days))
 
       expect(payment_row("$25.00")).not_to be_nil
       expect(payment_row("$25.00").payment_method).to eql("Credit Card: ************7732")
-      expect(payment_row("$25.00").date).to eql("05/14/2014")
+      expect(payment_row("$25.00").date).to eql(format_date(@payment_day + 5.days))
     end
 
     scenario "cannot view market-to-seller payments" do
@@ -695,7 +701,7 @@ feature "Payment history", :truncate_after_all do
       expect(payment_row("$24.00").description).to include("LO-01-234-4567890-4")
       expect(payment_row("$25.00").description).to include("LO-01-234-4567890-5")
 
-      fill_in "q_created_at_date_gteq", with: "Sun, 11 May 2014"
+      fill_in "q_created_at_date_gteq", with: (@payment_day + 2.days).to_s
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
@@ -704,7 +710,7 @@ feature "Payment history", :truncate_after_all do
       expect(page).to     have_content("LO-01-234-4567890-4")
       expect(page).to     have_content("LO-01-234-4567890-5")
 
-      fill_in "q_created_at_date_lteq", with: "Mon, 12 May 2014"
+      fill_in "q_created_at_date_lteq", with: (@payment_day + 3.days).to_s
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
@@ -723,31 +729,31 @@ feature "Payment history", :truncate_after_all do
 
       expect(payment_row("$42.00")).not_to be_nil
       expect(payment_row("$42.00").payment_method).to eql("Check: #67890")
-      expect(payment_row("$42.00").date).to eql("05/10/2014")
+      expect(payment_row("$42.00").date).to eql(format_date(@payment_day + 1.day))
 
       expect(payment_row("$44.00")).not_to be_nil
       expect(payment_row("$44.00").payment_method).to eql("Cash")
-      expect(payment_row("$44.00").date).to eql("05/11/2014")
+      expect(payment_row("$44.00").date).to eql(format_date(@payment_day + 2.days))
 
       expect(payment_row("$46.00")).not_to be_nil
       expect(payment_row("$46.00").payment_method).to eql("Check: #67890")
-      expect(payment_row("$46.00").date).to eql("05/12/2014")
+      expect(payment_row("$46.00").date).to eql(format_date(@payment_day + 3.days))
 
       expect(payment_row("$48.00")).not_to be_nil
       expect(payment_row("$48.00").payment_method).to eql("Cash")
-      expect(payment_row("$48.00").date).to eql("05/13/2014")
+      expect(payment_row("$48.00").date).to eql(format_date(@payment_day + 4.days))
 
       expect(payment_row("$50.00")).not_to be_nil
       expect(payment_row("$50.00").payment_method).to eql("Check: #67890")
-      expect(payment_row("$50.00").date).to eql("05/14/2014")
+      expect(payment_row("$50.00").date).to eql(format_date(@payment_day + 5.days))
 
       expect(payment_row("$888.00")).not_to be_nil
       expect(payment_row("$888.00").payment_method).to eql("ACH: *********2231")
-      expect(payment_row("$888.00").date).to eql("05/08/2014")
+      expect(payment_row("$888.00").date).to eql(format_date(@payment_day - 1.day))
 
       expect(payment_row("$999.00")).not_to be_nil
       expect(payment_row("$999.00").payment_method).to eql("Check")
-      expect(payment_row("$999.00").date).to eql("05/08/2014")
+      expect(payment_row("$999.00").date).to eql(format_date(@payment_day - 1.day))
     end
 
     scenario "can search purchase history by order number" do
@@ -778,7 +784,7 @@ feature "Payment history", :truncate_after_all do
       expect(payment_row("$888.00").description).to include("LO-02-234-4567890-888")
       expect(payment_row("$999.00").description).to include("LO-02-234-4567890-999")
 
-      fill_in "q_created_at_date_gteq", with: "Sun, 11 May 2014"
+      fill_in "q_created_at_date_gteq", with: (@payment_day + 2.days).to_s
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
@@ -787,7 +793,7 @@ feature "Payment history", :truncate_after_all do
       expect(page).to     have_content("LO-01-234-4567890-4")
       expect(page).to     have_content("LO-01-234-4567890-5")
 
-      fill_in "q_created_at_date_lteq", with: "Mon, 12 May 2014"
+      fill_in "q_created_at_date_lteq", with: (@payment_day + 3.days).to_s
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
