@@ -1,9 +1,9 @@
 require "spec_helper"
 
 describe "A Market Manager", :vcr do
-  let(:market)  { create(:market) }
-  let(:market2) { create(:market) }
-  let(:market_manager) { create :user, :market_manager, managed_markets: [market] }
+  let!(:market)  { create(:market) }
+  let!(:market2) { create(:market) }
+  let!(:market_manager) { create :user, :market_manager, managed_markets: [market] }
 
   before(:each) do
     switch_to_subdomain(market.subdomain)
@@ -262,23 +262,22 @@ describe "A Market Manager", :vcr do
 
   describe "Deleting an organization", js: true do
     context "organization belongs to a single market" do
-      let!(:market2) { create(:market) }
       let!(:market3) { create(:market) }
 
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market2]) }
       let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market]) }
-      let!(:market_manager) { create(:user, managed_markets: [market, market2]) }
 
       before do
+        market_manager.managed_markets << market2
+        market_manager.save!
+
         visit admin_organizations_path
         expect(page).to have_content("Holland Farms")
 
         seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
         expect(seller_row.market).to eql(market2.name)
 
-        within(seller_row.node) do
-          click_link "Delete"
-        end
+        seller_row.click_delete
       end
 
       it "removes the organization from the organizations list" do
@@ -290,7 +289,6 @@ describe "A Market Manager", :vcr do
 
       context "and the market manager belongs to multiple markets" do
         let!(:market_manager) { create(:user, managed_markets: [market, market2]) }
-
 
         it "deletes the organization from the only market it's associated with" do
           expect(page).to have_content("Removed #{seller.name} from #{market2.name}")
@@ -307,10 +305,7 @@ describe "A Market Manager", :vcr do
 
         expect(seller_row).to_not be_nil
 
-        within(seller_row.node) do
-          click_link "Delete"
-        end
-
+        seller_row.click_delete
         sleep(2)
       end
 
