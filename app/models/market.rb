@@ -37,7 +37,7 @@ class Market < ActiveRecord::Base
     if user.admin?
       all
     else
-      where(id: user.managed_markets.map(&:id))
+      where(id: user.managed_markets.pluck(:id))
     end.order(:name)
   }
 

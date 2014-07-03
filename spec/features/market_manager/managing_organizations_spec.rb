@@ -290,7 +290,6 @@ describe "A Market Manager", :vcr do
       context "and the market manager belongs to multiple markets" do
         let!(:market_manager) { create(:user, managed_markets: [market, market2]) }
 
-
         it "deletes the organization from the only market it's associated with" do
           expect(page).to have_content("Removed #{seller.name} from #{market2.name}")
         end
