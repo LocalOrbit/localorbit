@@ -3,7 +3,7 @@ class Admin::MarketCrossSellsController < AdminController
   before_action :find_market
 
   def show
-    @cross_selling_markets = Market.where(allow_cross_sell: true).where.not(id: @market.id).order(:name)
+    @cross_selling_markets = current_user.markets.where(allow_cross_sell: true).where.not(id: @market.id).order(:name)
   end
 
   def update
