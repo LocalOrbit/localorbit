@@ -1,9 +1,9 @@
 require "spec_helper"
 
 describe "A Market Manager", :vcr do
-  let(:market)  { create(:market) }
-  let(:market2) { create(:market) }
-  let(:market_manager) { create :user, :market_manager, managed_markets: [market] }
+  let!(:market)  { create(:market) }
+  let!(:market2) { create(:market) }
+  let!(:market_manager) { create :user, :market_manager, managed_markets: [market] }
 
   before(:each) do
     switch_to_subdomain(market.subdomain)
@@ -262,14 +262,15 @@ describe "A Market Manager", :vcr do
 
   describe "Deleting an organization", js: true do
     context "organization belongs to a single market" do
-      let!(:market2) { create(:market) }
       let!(:market3) { create(:market) }
 
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market2]) }
       let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market]) }
-      let!(:market_manager) { create(:user, managed_markets: [market, market2]) }
 
       before do
+        market_manager.managed_markets << market2
+        market_manager.save!
+
         visit admin_organizations_path
         expect(page).to have_content("Holland Farms")
 
