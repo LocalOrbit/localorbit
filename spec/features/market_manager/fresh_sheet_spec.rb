@@ -9,7 +9,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
 
   # Intentionally not let! changing that will break tests
   let(:buyer_org) { create(:organization, :buyer, markets: [market]) }
-  let(:buyer_user) { create(:user, organizations: [buyer_org]) }
+  let(:buyer_user) { create(:user, organizations: [buyer_org], name: 'Jack Stevens') }
 
   scenario "navigating to the page" do
     switch_to_subdomain(market.subdomain)
@@ -52,7 +52,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
     end
 
     scenario "sending a test" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market, user.email).and_return(double(:mailer, deliver: true))
+      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, user.email).and_return(double(:mailer, deliver: true))
       visit admin_fresh_sheet_path
       click_button "Send Test"
       expect(page).to have_content("Successfully sent a test to #{user.email}")
@@ -60,7 +60,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
     end
 
     scenario "sending a test to a different email" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market, "foo@example.com").and_return(double(:mailer, deliver: true))
+      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, "foo@example.com").and_return(double(:mailer, deliver: true))
       visit admin_fresh_sheet_path
       fill_in "email", with: "foo@example.com"
       click_button "Send Test"
@@ -69,7 +69,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
     end
 
     scenario "sending to everyone" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market, "#{buyer_user.name} <#{buyer_user.email}>").and_return(double(:mailer, deliver: true))
+      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, "\"Jack Stevens\" <#{buyer_user.email}>").and_return(double(:mailer, deliver: true))
       visit admin_fresh_sheet_path
       click_button "Send to Everyone Now"
       expect(page).to have_content("Successfully sent the Fresh Sheet")
