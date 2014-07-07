@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "Manage cross selling" do
   let!(:user) { create(:user, role: 'user') }
 
-  let!(:cross_selling_market)     { create(:market, allow_cross_sell: true) }
-  let!(:not_cross_selling_market) { create(:market)}
+  let!(:cross_selling_market)     { create(:market, managers: [user], allow_cross_sell: true) }
+  let!(:not_cross_selling_market) { create(:market, managers: [user])}
 
   context 'for a none-cross selling market' do
     let!(:market) { create(:market, managers: [user]) }
@@ -30,7 +30,7 @@ describe "Manage cross selling" do
       visit admin_market_path(market)
     end
 
-    it "does not show the cross-sell tab" do
+    it "shows the cross-sell tab" do
       expect(page).to have_css(".tabs", text: 'Cross Sell')
     end
 
