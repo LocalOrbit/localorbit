@@ -450,6 +450,25 @@ describe "Adding a product" do
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
       end
     end
+
+    context "organization in multiple markets" do
+      before do
+        org.markets << create(:market, :with_addresses)
+      end
+
+      it "defaults to simple inventory" do
+        within '#admin-nav' do
+          click_link 'Products'
+        end
+        click_link "Add New Product"
+
+        simple_inventory_checkbox = page.find_field("Use simple inventory management")
+        inventory_quantity = page.find_field("Current inventory")
+
+        expect(simple_inventory_checkbox).to be_checked
+        expect(inventory_quantity.value).to eql("0")
+      end
+    end
   end
 
   describe "a seller belonging to multiple organizations" do
