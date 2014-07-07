@@ -126,7 +126,7 @@ module Admin
     end
 
     def find_selling_organizations
-      @organizations = current_user.managed_organizations.selling.order(:name).preload(:locations)
+      @organizations = current_user.managed_organizations.selling.order(:name).preload(:locations).to_a
     end
 
     def find_organizations_for_filtering
