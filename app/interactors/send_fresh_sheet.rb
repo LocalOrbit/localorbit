@@ -3,10 +3,12 @@ class SendFreshSheet
 
   def perform
     if commit == "Send Test"
-      MarketMailer.fresh_sheet(market, email).deliver
+      MarketMailer.delay.fresh_sheet(market, email)
       context[:notice] = "Successfully sent a test to #{email}"
     elsif commit == "Send to Everyone Now"
-      MarketMailer.fresh_sheet(market, emails).deliver if emails.present?
+      emails.each do |email|
+        MarketMailer.delay.fresh_sheet(market, email)
+      end
       context[:notice] = "Successfully sent the Fresh Sheet"
     else
       context[:error] = "Invalid action chosen"
@@ -22,6 +24,6 @@ class SendFreshSheet
       users: {send_freshsheet: true}
     ).
     pluck(:name, :email).
-    map {|name, email| "#{name} <#{email}>" }
+    map {|name, email| "#{name} <#{email}>" }.uniq
   end
 end
