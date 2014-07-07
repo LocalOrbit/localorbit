@@ -424,4 +424,50 @@ describe User do
       end
     end
   end
+
+  describe ".set_role_context" do
+    context "when the user is an admin" do
+      let!(:user) { create(:user, role: "admin")}
+      let!(:market) { create(:market) }
+
+      it "sets their context as an admin" do
+        user.set_role(market)
+        expect(user.role_context).to eql(role: Role::Admin, market: market)
+      end
+    end
+
+    context "when the user is the manager of a market" do
+      let!(:user) { create(:user) }
+      let!(:market) { create(:market, managers:[user]) }
+
+      it "sets their context to MarketManager" do
+        user.set_role(market)
+        expect(user.role_context).to eql(role: Role::MarketManager, market: market)
+      end
+    end
+  end
+
+  context "when the user is a member of an organization in the market" do
+    let!(:user) { create(:user) }
+    let!(:market) { create(:market) }
+    let!(:organization) { create(:organization, users: [user], markets:[market]) }
+
+    it "sets their role context to be an OrganizationMember" do
+      user.set_role(market)
+      expect(user.role_context).to eql(role: Role::OrganizationMember, market: market)
+    end
+  end
+
+  context "when the user is not a member of an organization in the passed market" do
+    let!(:user) { create(:user) }
+    let!(:market) { create(:market) }
+    let!(:market2) { create(:market) }
+    let!(:organization) { create(:organization, users: [user], markets:[market2]) }
+
+    it "raises an exception" do
+      expect {
+        user.set_role(market)
+      }.to raise_error(User::RoleError)
+    end
+  end
 end
