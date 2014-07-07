@@ -56,6 +56,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
       visit admin_fresh_sheet_path
       click_button "Send Test"
       expect(page).to have_content("Successfully sent a test to #{user.email}")
+      Delayed::Worker.new.work_off
     end
 
     scenario "sending a test to a different email" do
@@ -64,13 +65,15 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
       fill_in "email", with: "foo@example.com"
       click_button "Send Test"
       expect(page).to have_content("Successfully sent a test to foo@example.com")
+      Delayed::Worker.new.work_off
     end
 
     scenario "sending to everyone" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market, ["#{buyer_user.name} <#{buyer_user.email}>"]).and_return(double(:mailer, deliver: true))
+      expect(MarketMailer).to receive(:fresh_sheet).with(market, "#{buyer_user.name} <#{buyer_user.email}>").and_return(double(:mailer, deliver: true))
       visit admin_fresh_sheet_path
       click_button "Send to Everyone Now"
       expect(page).to have_content("Successfully sent the Fresh Sheet")
+      Delayed::Worker.new.work_off
     end
 
     scenario "sending to everyone without any buyers" do
@@ -78,6 +81,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
       visit admin_fresh_sheet_path
       click_button "Send to Everyone Now"
       expect(page).to have_content("Successfully sent the Fresh Sheet")
+      Delayed::Worker.new.work_off
     end
   end
 end
