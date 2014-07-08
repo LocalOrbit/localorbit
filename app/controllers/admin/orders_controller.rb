@@ -25,10 +25,11 @@ class Admin::OrdersController < AdminController
 
     if params["items_to_add"]
       result = UpdateOrderWithNewItems.perform(order: order, item_hashes: items_to_add)
-      unless result.success?
+      if !result.success?
         setup_add_items_form(order)
         order.errors[:base] << "Failed to add items to this order."
-        render :show and return
+        render :show
+        return
       end
     elsif params[:commit] == "Add Items"
       setup_add_items_form(order)
@@ -48,22 +49,23 @@ class Admin::OrdersController < AdminController
       end
     else
       order = updates.context[:order]
-      order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == 'failed'
+      order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == "failed"
       @order = SellerOrder.new(order, current_user)
       render :show
     end
   end
 
   protected
+
   def order_params
     params.require(:order).permit(:notes, items_attributes: [
       :id, :quantity, :quantity_delivered, :delivery_status, :_destroy
-      ])
+    ])
   end
 
   def items_to_add
     items = params.require(:items_to_add)
-    items.select{|i| i[:quantity].to_i > 0 }
+    items.select {|i| i[:quantity].to_i > 0 }
   end
 
   def setup_add_items_form(order)

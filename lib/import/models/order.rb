@@ -1,10 +1,10 @@
-require 'import/models/base'
+require "import/models/base"
 
 module Imported
   class Order < ActiveRecord::Base
     self.table_name = "orders"
 
-    has_many :order_payments, class_name: 'Imported::OrderPayment', inverse_of: :order
+    has_many :order_payments, class_name: "Imported::OrderPayment", inverse_of: :order
     has_many :payments, through: :order_payments, inverse_of: :orders
 
     has_many :items, class_name: "Imported::OrderItem", inverse_of: :order
@@ -103,7 +103,7 @@ module Legacy
     end
 
     def imported_delivery
-      delivery = items.map{|i| i.delivery }.uniq.first
+      delivery = items.map {|i| i.delivery }.uniq.first
       delivery.import if delivery.present?
     end
 

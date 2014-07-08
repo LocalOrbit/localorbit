@@ -1,5 +1,4 @@
 class MarketMailer < BaseMailer
-
   def fresh_sheet(market_id, recipients=nil, preview=false)
     @preview        = preview
     @market         = Market.find(market_id)

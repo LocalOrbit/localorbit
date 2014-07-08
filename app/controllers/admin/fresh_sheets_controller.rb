@@ -26,7 +26,7 @@ class Admin::FreshSheetsController < AdminController
     if current_market.delivery_schedules.empty?
       redirect_to [:new_admin, current_market, :delivery_schedule], alert: "You must have a delivery schedule to view the fresh sheet"
     elsif current_market.products.empty?
-      render 'no_products'
+      render "no_products"
     end
   end
 end

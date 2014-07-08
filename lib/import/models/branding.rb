@@ -1,4 +1,4 @@
-require 'import/models/base'
+require "import/models/base"
 class Legacy::Brand < Legacy::Base
   self.table_name = "domains_branding"
   self.primary_key = "branding_id"

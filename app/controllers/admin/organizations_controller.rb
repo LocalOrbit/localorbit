@@ -48,18 +48,18 @@ module Admin
     def destroy
       # NOTE: Market manager can remove association for a different market?
       markets = if params[:ids].present?
-                  if params[:commit].present? # check for submit in case user didn't choose market to delete org from
-                    @organization.markets.managed_by(current_user).where(id: params[:ids])
-                  end
-                else
-                  @organization.markets.managed_by(current_user).where(id: @organization.original_market.id)
-                end
+        if params[:commit].present? # check for submit in case user didn't choose market to delete org from
+          @organization.markets.managed_by(current_user).where(id: params[:ids])
+        end
+      else
+        @organization.markets.managed_by(current_user).where(id: @organization.original_market.id)
+      end
 
       postfix = if markets.count == 1
-                  "#{markets.first.name}"
-                else
-                  "market membership(s)"
-                end
+        "#{markets.first.name}"
+      else
+        "market membership(s)"
+      end
 
       if MarketOrganization.where(organization_id: @organization.id, market_id: markets.map(&:id)).soft_delete_all
         redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} from #{postfix}"
@@ -70,7 +70,7 @@ module Admin
 
     def delivery_schedules
       schedules = find_delivery_schedules
-      ids = schedules.map {|market, schedules| schedules.map {|schedule| schedule.id.to_s }}.flatten
+      ids = schedules.values.flatten.map {|schedule| schedule.id.to_s }
 
       render partial: "delivery_schedules", locals: {delivery_schedules: schedules, selected_ids: ids, product: nil, organization: @organization}
     end

@@ -8,7 +8,7 @@ class Admin::MarketsController < AdminController
 
     respond_to do |format|
       format.html { @markets = @markets.page(params[:page]).per(params[:per_page]) }
-      format.csv { @filename = "markets.csv"}
+      format.csv { @filename = "markets.csv" }
     end
   end
 
@@ -42,7 +42,7 @@ class Admin::MarketsController < AdminController
 
   def payment_options
     @markets = Market.where(id: @market.id)
-    render partial: 'payment_options'
+    render partial: "payment_options"
   end
 
   protected
@@ -74,7 +74,6 @@ class Admin::MarketsController < AdminController
       :plan_id,
       :closed
     )
-
   end
 
   def market_scope
@@ -82,6 +81,6 @@ class Admin::MarketsController < AdminController
   end
 
   def find_scoped_market
-    @market = market_scope.find(params[:id ] || params[:market_id])
+    @market = market_scope.find(params[:id] || params[:market_id])
   end
 end

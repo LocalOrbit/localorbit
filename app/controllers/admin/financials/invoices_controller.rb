@@ -18,7 +18,7 @@ module Admin::Financials
       @search_presenter = OrderSearchPresenter.new(@query_params, current_user, date_filter_attr)
       @q = base_scope.periscope(@query_params).search(@search_presenter.query)
 
-      @q.sorts = ['invoice_due_at desc', 'order_number asc'] if @q.sorts.empty?
+      @q.sorts = ["invoice_due_at desc", "order_number asc"] if @q.sorts.empty?
       @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
     end
 
@@ -31,9 +31,8 @@ module Admin::Financials
       # TODO: Figure out what to do if the save fails
       # The order would have to become invalid after being placed.
       orders.each {|order| SendInvoice.perform(order: order) }
-      message = "Invoice sent for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(', ')}. Invoices can be downloaded on the Enter Receipts page"
+      message = "Invoice sent for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(", ")}. Invoices can be downloaded on the Enter Receipts page"
       redirect_to admin_financials_invoices_path, notice: message
     end
-
   end
 end

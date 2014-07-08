@@ -1,4 +1,4 @@
-require 'import/models/base'
+require "import/models/base"
 class Legacy::User < Legacy::Base
   class UserOrganization < ActiveRecord::Base
     self.table_name = "user_organizations"
@@ -18,9 +18,9 @@ class Legacy::User < Legacy::Base
     user_details = {
       email: email,
       name: imported_name,
-      password: 'imported1',
-      password_confirmation: 'imported1',
-      role: 'user',
+      password: "imported1",
+      password_confirmation: "imported1",
+      role: "user",
       confirmed_at: Time.current
     }
 

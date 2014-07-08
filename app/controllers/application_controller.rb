@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def after_update_path_for(resource)
+  def after_update_path_for(_)
     dashboard_path
   end
 
@@ -133,27 +133,22 @@ class ApplicationController < ActionController::Base
   end
 
   def require_organization_location
-    if current_organization && current_organization.locations.visible.none?
-      redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
-    end
+    return unless current_organization && current_organization.locations.visible.none?
+    redirect_to [:new_admin, current_organization, :location], alert: "You must enter an address for this organization before you can shop"
   end
 
   def require_market_open
-    if current_market.closed?
-      render "shared/market_closed"
-    end
+    render "shared/market_closed" if current_market.closed?
   end
 
   def require_current_organization
-    if current_organization.nil?
-      redirect_to new_sessions_organization_path(redirect_back_to: request.fullpath)
-    end
+    return unless current_organization.nil?
+    redirect_to new_sessions_organization_path(redirect_back_to: request.fullpath)
   end
 
   def require_current_delivery
-    if current_delivery.nil? || (current_delivery.requires_location? && selected_organization_location.nil?)
-      redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath)
-    end
+    return unless current_delivery.nil? || (current_delivery.requires_location? && selected_organization_location.nil?)
+    redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath)
   end
 
   def configure_permitted_parameters

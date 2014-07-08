@@ -54,7 +54,7 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def seller_fulfillment_address
-    if address = seller_fulfillment_location
+    if (address = seller_fulfillment_location)
       "#{address.address}, #{address.city}, #{address.state} #{address.zip}"
     else
       "Direct to customer"

@@ -82,11 +82,11 @@ module ApplicationHelper
     files.map {|name| [name.split(/[\/\.]/)[-2].titleize, name.split("/")[-1]] }
   end
 
-  def hex_to_hsl (color)
+  def hex_to_hsl(color)
     min = 255
     max = 0
 
-    color = color.sub(/^#/, '').to_s
+    color = color.sub(/^#/, "").to_s
 
     rgb = [
       color[0..1].hex.to_f / 255,
@@ -131,25 +131,24 @@ module ApplicationHelper
         s = delta / (2.0 - max - min)
       end
 
-      color = [ (h * 360).to_i, (s * 100).to_i, (l * 100).to_i ]
-    elsif delta == 0 and max == 1.0
-      color = [ 0, 100, 100 ]
+      color = [(h * 360).to_i, (s * 100).to_i, (l * 100).to_i]
+    elsif delta == 0 && max == 1.0
+      color = [0, 100, 100]
     else
-      color = [ 0, 0, 0 ]
+      color = [0, 0, 0]
     end
+
     color
   end
 
-  def color_mix(color = "#000000", percentage = 50)
+  def color_mix(color="#000000", percentage=50)
     color = hex_to_hsl(color)
 
     lum = color[2] + percentage
     lum = lum > 100 ? 100 : lum
     lum = lum < 0 ? 0 : lum
     "hsl(#{color[0]}, #{color[1]}%, #{lum}%)"
-
   end
-
 
   def svg_icon
     svg = "<svg class='icon' width='100%' height='100%' viewBox='0 0 513 395' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
@@ -160,5 +159,4 @@ module ApplicationHelper
 
     svg
   end
-
 end

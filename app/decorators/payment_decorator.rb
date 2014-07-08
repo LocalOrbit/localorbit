@@ -25,6 +25,7 @@ class PaymentDecorator < Draper::Decorator
   end
 
   private
+
   def display_entity(entity)
     if entity.nil?
       "Local Orbit"

@@ -7,9 +7,7 @@ class TwitterUser
     value.to_s
   end
 
-  private
-
   def self.clean_username(username)
-    username.sub(/^@/, '')
+    username.sub(/^@/, "")
   end
 end

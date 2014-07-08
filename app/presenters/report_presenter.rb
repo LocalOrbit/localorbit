@@ -2,24 +2,24 @@ class ReportPresenter
   include Search::DateFormat
 
   attr_reader :report, :items, :fields, :filters, :q, :totals, :start_date, :end_date,
-    :markets, :sellers, :buyers, :products, :categories, :payment_methods
+              :markets, :sellers, :buyers, :products, :categories, :payment_methods
 
   FIELD_MAP = {
-    placed_at:              { sort: :created_at,              display_name: "Placed On" },
-    category_name:          { sort: :product_category_name,   display_name: "Category" },
-    product_name:           { sort: :name,                    display_name: "Product" },
-    seller_name:            { sort: :seller_name,             display_name: "Seller" },
-    buyer_name:             { sort: :order_organization_name, display_name: "Buyer" },
-    market_name:            { sort: :order_market_name,       display_name: "Market" },
-    quantity:               { sort: :quantity,                display_name: "Quantity" },
-    unit_price:             { sort: :unit_price,              display_name: "Unit Price" },
-    discount:               { sort: :discount,                display_name: "Discount" },
-    row_total:              { sort: nil,                      display_name: "Total" },
-    net_sale:               { sort: nil,                      display_name: "Net Sale" },
-    payment_method:         { sort: :order_payment_method,    display_name: "Payment Method" },
-    delivery_status:        { sort: :delivery_status,         display_name: "Delivery" },
-    buyer_payment_status:   { sort: :order_payment_status,    display_name: "Buyer Payment Status" },
-    seller_payment_status:  { sort: nil,                      display_name: "Seller Payment Status" }
+    placed_at:              {sort: :created_at,              display_name: "Placed On"},
+    category_name:          {sort: :product_category_name,   display_name: "Category"},
+    product_name:           {sort: :name,                    display_name: "Product"},
+    seller_name:            {sort: :seller_name,             display_name: "Seller"},
+    buyer_name:             {sort: :order_organization_name, display_name: "Buyer"},
+    market_name:            {sort: :order_market_name,       display_name: "Market"},
+    quantity:               {sort: :quantity,                display_name: "Quantity"},
+    unit_price:             {sort: :unit_price,              display_name: "Unit Price"},
+    discount:               {sort: :discount,                display_name: "Discount"},
+    row_total:              {sort: nil,                      display_name: "Total"},
+    net_sale:               {sort: nil,                      display_name: "Net Sale"},
+    payment_method:         {sort: :order_payment_method,    display_name: "Payment Method"},
+    delivery_status:        {sort: :delivery_status,         display_name: "Delivery"},
+    buyer_payment_status:   {sort: :order_payment_status,    display_name: "Buyer Payment Status"},
+    seller_payment_status:  {sort: nil,                      display_name: "Seller Payment Status"}
   }.with_indifferent_access
 
   REPORT_MAP = {
@@ -108,26 +108,20 @@ class ReportPresenter
   end
 
   def self.report_for(report:, user:, search: {}, paginate: {})
-    return nil unless user && self.reports.include?(report)
+    return nil unless user && reports.include?(report)
 
-    valid = if user.buyer_only?
-              if self.reports(buyer_only: true).include?(report)
-                true
-              end
-            else
-              true
-            end
+    valid = !user.buyer_only? || reports(buyer_only: true).include?(report)
 
     new(report: report, user: user, search: search, paginate: paginate) if valid
   end
 
   def self.reports_for_user(user)
-    self.reports(buyer_only: user.try(:buyer_only?))
+    reports(buyer_only: user.try(:buyer_only?))
   end
 
   def self.reports(buyer_only: false)
     if buyer_only
-      REPORT_MAP.keys.select { |k| REPORT_MAP[k][:buyer_only] }
+      REPORT_MAP.keys.select {|k| REPORT_MAP[k][:buyer_only] }
     else
       REPORT_MAP.keys
     end
@@ -135,7 +129,7 @@ class ReportPresenter
 
   def self.field_headers_for_report(report)
     fields = REPORT_MAP[report].fetch(:fields, [])
-    Hash[fields.map { |f| [f, FIELD_MAP[f][:display_name]] }]
+    Hash[fields.map {|f| [f, FIELD_MAP[f][:display_name]] }]
   end
 
   private
@@ -160,7 +154,7 @@ class ReportPresenter
     if includes_filter?(:product_name)
       # Products have a high chance of duplication so we'll be filtering by
       # string search/matching rather than model ID
-      @products = items.pluck(:name).sort_by { |s| s.downcase }.uniq
+      @products = items.pluck(:name).sort_by {|s| s.downcase }.uniq
     end
 
     if includes_filter?(:payment_method)

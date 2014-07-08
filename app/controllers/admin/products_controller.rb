@@ -21,7 +21,7 @@ module Admin
     def create
       @product = Product.new(product_params).decorate
       find_selling_organizations
-      @product.organization = @organizations.detect{|o| o.id == @product.organization_id }
+      @product.organization = @organizations.detect {|o| o.id == @product.organization_id }
 
       if @product.save
         redirect_to after_create_page, notice: "Added #{@product.name}"
@@ -119,10 +119,9 @@ module Admin
     end
 
     def ensure_selling_organization
-      unless current_user.managed_organizations.selling.any?
-        flash[:alert] = "You must add an organization that can sell before adding any products"
-        redirect_to new_admin_organization_path
-      end
+      return if current_user.managed_organizations.selling.any?
+      flash[:alert] = "You must add an organization that can sell before adding any products"
+      redirect_to new_admin_organization_path
     end
 
     def find_selling_organizations
@@ -161,7 +160,7 @@ module Admin
       elsif product
         product.delivery_schedule_ids.map {|id| id.to_s }
       else
-        @delivery_schedules.map {|market, schedules| schedules.map{|ds| ds.id.to_s} }.flatten
+        @delivery_schedules.values.flatten.map {|ds| ds.id.to_s }
       end
     end
 

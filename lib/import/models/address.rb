@@ -1,4 +1,4 @@
-require 'import/models/base'
+require "import/models/base"
 
 module Imported
   class Location < ActiveRecord::Base
@@ -53,7 +53,7 @@ class Legacy::Address < Legacy::Base
   end
 
   def imported_address
-    address.blank? ? "TBD" : address.gsub(";","\n")
+    address.blank? ? "TBD" : address.gsub(";", "\n")
   end
 
   def imported_city

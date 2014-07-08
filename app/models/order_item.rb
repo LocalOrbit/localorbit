@@ -11,7 +11,7 @@ class OrderItem < ActiveRecord::Base
   validates :product, presence: true
   validates :name, presence: true
   validates :seller_name, presence: true
-  validates :quantity, presence: true, numericality: {greater_than_or_equal_to: 0, less_than: 2_147_483_647 }
+  validates :quantity, presence: true, numericality: {greater_than_or_equal_to: 0, less_than: 2_147_483_647}
   validates :quantity_delivered, numericality: {greater_than_or_equal_to: 0, less_than: 2_147_483_647, allow_nil: true}
   validates :unit, presence: true
   validates :unit_price, presence: true
@@ -53,9 +53,9 @@ class OrderItem < ActiveRecord::Base
 
   def self.for_user(user)
     if user.buyer_only?
-      joins(:order).where(orders: { organization_id: user.managed_organization_ids_including_deleted })
+      joins(:order).where(orders: {organization_id: user.managed_organization_ids_including_deleted})
     else
-      joins(:product).where(products: { organization_id: user.managed_organization_ids_including_deleted })
+      joins(:product).where(products: {organization_id: user.managed_organization_ids_including_deleted})
     end
   end
 
@@ -90,7 +90,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def seller_payment_status
-    @seller_payment_status ||= order.paid_seller_ids.include?(product.organization_id) ? 'Paid' : 'Unpaid'
+    @seller_payment_status ||= order.paid_seller_ids.include?(product.organization_id) ? "Paid" : "Unpaid"
   end
 
   def delivered?
@@ -124,7 +124,6 @@ class OrderItem < ActiveRecord::Base
       end
     end
   end
-
 
   def consume_inventory_amount(amount)
     product.lots_by_expiration.available(deliver_on_date).each do |lot|

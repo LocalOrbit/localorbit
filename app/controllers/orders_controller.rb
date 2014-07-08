@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
   def create
     @placed_order = PlaceOrder.perform(entity: current_cart.organization, buyer: current_user, order_params: order_params, cart: current_cart)
 
-    if @placed_order.context.has_key?(:order)
+    if @placed_order.context.key?(:order)
       @order = @placed_order.order.decorate
     end
 
@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
     else
       @grouped_items = current_cart.items.for_checkout
 
-      if @placed_order.context.has_key?(:cart_is_empty)
+      if @placed_order.context.key?(:cart_is_empty)
         redirect_to [:products], alert: @placed_order.message
       else
         flash.now[:alert] = "Your order could not be completed."

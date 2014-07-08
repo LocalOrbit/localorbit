@@ -11,8 +11,8 @@ module Imported
         unless location.save
           @failed_locations << {location: location, reason: location.errors}
         end
-      rescue Exception => e
-        @failed_locations << {location: location, reason: e.message + e.backtrace.join("\n") }
+      rescue => e
+        @failed_locations << {location: location, reason: e.message + e.backtrace.join("\n")}
       end
     end
 
@@ -20,6 +20,7 @@ module Imported
   end
 
   private
+
   def self.print_report(failed_locations)
     failed_locations.each do |l|
       puts "--------------------------------------------------"

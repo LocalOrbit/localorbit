@@ -1,9 +1,9 @@
-require 'import/models/base'
+require "import/models/base"
 
 module Imported
   class OrderPayment < ActiveRecord::Base
-    belongs_to :order, class_name: 'Imported::Order'
-    belongs_to :payment, class_name: 'Imported::Payment'
+    belongs_to :order, class_name: "Imported::Order"
+    belongs_to :payment, class_name: "Imported::Payment"
   end
 
   class Payment < ActiveRecord::Base
@@ -11,9 +11,9 @@ module Imported
 
     belongs_to :payee, polymorphic: true
     belongs_to :payer, polymorphic: true
-    belongs_to :market, class_name: 'Imported::Market'
+    belongs_to :market, class_name: "Imported::Market"
 
-    has_many :order_payments, class_name: 'Imported::OrderPayment', inverse_of: :payment
+    has_many :order_payments, class_name: "Imported::OrderPayment", inverse_of: :payment
     has_many :orders, through: :order_payments, inverse_of: :payments
   end
 end
@@ -25,7 +25,7 @@ class Legacy::Payment < Legacy::Base
     attributes = {
       amount: total_payment,
       note: ref_nbr,
-      status: 'paid',
+      status: "paid",
       payment_method: imported_payment_method,
       payment_type: imported_payment_type,
       created_at: Time.at(payment_date),
@@ -38,7 +38,7 @@ class Legacy::Payment < Legacy::Base
 
     payment = Imported::Payment.find_by_legacy_id(payment_id)
     if payment.nil?
-      puts "- Creating payment: #{attributes[:payer].try(:name) || 'localorbit'} => #{attributes[:payee].try(:name) || 'localorbit'}"
+      puts "- Creating payment: #{attributes[:payer].try(:name) || "localorbit"} => #{attributes[:payee].try(:name) || "localorbit"}"
       payment = Imported::Payment.new(attributes)
 
       if imported_payment_type == "order"
@@ -46,7 +46,7 @@ class Legacy::Payment < Legacy::Base
         payment.orders << order if order.present?
       end
     else
-      puts "- Updating payment: #{attributes[:payer].try(:name) || 'localorbit'} => #{attributes[:payee].try(:name) || 'localorbit'}"
+      puts "- Updating payment: #{attributes[:payer].try(:name) || "localorbit"} => #{attributes[:payee].try(:name) || "localorbit"}"
       payment.update(attributes)
     end
 

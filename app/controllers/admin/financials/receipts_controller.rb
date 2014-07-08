@@ -6,7 +6,7 @@ module Admin
       def index
         @query_params = sticky_parameters(request.query_parameters)
         @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
-        @q = for_receipts.order('orders.invoice_due_date').search(@search_presenter.query)
+        @q = for_receipts.order("orders.invoice_due_date").search(@search_presenter.query)
         @q.sorts = ["invoice_due_date"] if @q.sorts.empty?
         @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
       end

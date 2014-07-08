@@ -7,8 +7,8 @@ class Organization < ActiveRecord::Base
 
   has_many :users, through: :user_organizations
   has_many :all_markets, through: :market_organizations, source: :market
-  has_many :markets, -> { where(market_organizations: { cross_sell: false }) }, through: :market_organizations
-  has_many :cross_sells, -> { where(market_organizations: { cross_sell: true }) }, through: :market_organizations, source: :market, after_add: :update_product_delivery_schedules, after_remove: :update_product_delivery_schedules
+  has_many :markets, -> { where(market_organizations: {cross_sell: false}) }, through: :market_organizations
+  has_many :cross_sells, -> { where(market_organizations: {cross_sell: true}) }, through: :market_organizations, source: :market, after_add: :update_product_delivery_schedules, after_remove: :update_product_delivery_schedules
   has_many :orders, inverse_of: :organization
 
   has_many :products, inverse_of: :organization, autosave: true, dependent: :destroy
@@ -25,7 +25,7 @@ class Organization < ActiveRecord::Base
   scope :buying,  -> { where(can_sell: false) } # needs a new boolean
   scope :visible, -> { where(show_profile: true) }
   scope :with_products, -> { joins(:products).select("DISTINCT organizations.*").order(name: :asc) }
-  scope :buyers_for_orders, ->(orders) { joins(:orders).where(orders: { id: orders }).uniq }
+  scope :buyers_for_orders, lambda {|orders| joins(:orders).where(orders: {id: orders}).uniq }
 
   scope :without_cross_sells, -> { where(market_organizations: {cross_sell: false}) }
 
@@ -40,15 +40,15 @@ class Organization < ActiveRecord::Base
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :search, method: :for_search, ignore_blank: true
 
-  pg_search_scope :search_by_name, against: :name, using: { tsearch: { prefix: true }}
+  pg_search_scope :search_by_name, against: :name, using: {tsearch: {prefix: true}}
 
   def self.for_search(query)
     search_by_name(query)
   end
 
   def self.for_market_id(market_id)
-    orgs = !all.to_sql.include?('market_organizations') ? joins(:market_organizations) : all
-    orgs.where(market_organizations: { market_id: [market_id] })
+    orgs = !all.to_sql.include?("market_organizations") ? joins(:market_organizations) : all
+    orgs.where(market_organizations: {market_id: [market_id]})
   end
 
   def self.for_can_sell(can_sell)
@@ -76,10 +76,10 @@ class Organization < ActiveRecord::Base
   end
 
   def can_cross_sell?
-    can_sell? && markets.joins(:plan).where(allow_cross_sell: true, plans: {cross_selling: true }).any?
+    can_sell? && markets.joins(:plan).where(allow_cross_sell: true, plans: {cross_selling: true}).any?
   end
 
-  def update_product_delivery_schedules(market)
+  def update_product_delivery_schedules(_)
     reload.products.each(&:save) if persisted?
   end
 
@@ -106,16 +106,16 @@ class Organization < ActiveRecord::Base
   end
 
   def reject_location(attributed)
-    attributed['name'].blank? ||
-      attributed['address'].blank? ||
-      attributed['city'].blank? ||
-      attributed['state'].blank? ||
-      attributed['zip'].blank?
+    attributed["name"].blank? ||
+      attributed["address"].blank? ||
+      attributed["city"].blank? ||
+      attributed["state"].blank? ||
+      attributed["zip"].blank?
   end
 
   def require_payment_method
     unless allow_purchase_orders? || allow_credit_cards? || allow_ach?
-      self.errors.add(:payment_method, "At least one payment method is required for the organization")
+      errors.add(:payment_method, "At least one payment method is required for the organization")
     end
   end
 end

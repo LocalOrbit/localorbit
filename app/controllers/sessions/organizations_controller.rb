@@ -7,7 +7,7 @@ module Sessions
     end
 
     def create
-      if org = current_user.managed_organizations.find_by(id: params[:org_id])
+      if (org = current_user.managed_organizations.find_by(id: params[:org_id]))
         session[:current_organization_id] = org.id
         redirect_to redirect_to_url
       else
