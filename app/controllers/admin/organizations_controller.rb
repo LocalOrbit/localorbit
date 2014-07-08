@@ -7,7 +7,7 @@ module Admin
 
     def index
       @query_params = sticky_parameters(request.query_parameters)
-      @organizations = current_user.managed_organizations.without_cross_sells.periscope(@query_params).page(params[:page]).per(@query_params[:per_page])
+      @organizations = current_user.managed_organizations.periscope(@query_params).page(params[:page]).per(@query_params[:per_page])
       find_selling_markets
     end
 
@@ -49,10 +49,10 @@ module Admin
       # NOTE: Market manager can remove association for a different market?
       markets = if params[:ids].present?
         if params[:commit].present? # check for submit in case user didn't choose market to delete org from
-          @organization.markets.managed_by(current_user).where(id: params[:ids])
+          @organization.all_markets.managed_by(current_user).where(id: params[:ids])
         end
       else
-        @organization.markets.managed_by(current_user).where(id: @organization.original_market.id)
+        @organization.all_markets.managed_by(current_user).where(id: @organization.original_market.id)
       end
 
       postfix = if markets.count == 1

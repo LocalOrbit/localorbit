@@ -403,5 +403,46 @@ describe "admin manange organization", :vcr do
         expect(holland_farms.market).to_not have_content(market.name)
       end
     end
+
+    context "cross-sell membership" do
+      let!(:origin_market) { create(:market) }
+      let!(:market) { create(:market, managers:[admin]) }
+
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms") }
+      let!(:seller2) { create(:organization, :seller, name: "Grandville Farms") }
+      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market])}
+
+      let!(:product) { create(:product, :sellable, organization: seller) }
+      let!(:product2) { create(:product, :sellable, organization: seller2) }
+
+      before do
+        market.market_organizations.create!(organization: seller, market: market, cross_sell: true)
+        market.market_organizations.create!(organization: seller2, market: market, cross_sell: true)
+
+        visit admin_organizations_path
+        expect(page).to have_content("Holland Farms")
+
+        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+
+        within(holland_farms.node) do
+          click_link "Delete"
+        end
+
+        expect(page).to have_content("Removed Holland Farms")
+      end
+
+      it "removes the organization from the organizations list" do
+        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+        expect(holland_farms).to be_nil
+      end
+
+      it "removes the organization from the organization filter on the admin products view" do
+        visit admin_products_path
+
+        within("#product-filter-organization") do
+          expect(page).not_to have_content("Holland Farms")
+        end
+      end
+    end
   end
 end
