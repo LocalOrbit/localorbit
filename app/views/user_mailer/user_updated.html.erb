@@ -1,0 +1,11 @@
+<%# gets the market for the email layout. Isn't ideal, but works well. %>
+<% if @market = @user.primary_market
+     market_name = @market.name
+   else
+     market_name = "Local Orbit"
+   end %>
+
+<p>Hello <%= @user.email %>!</p>
+
+<p>An administrator has made a change to your account.</p>
+<p>If this was unexpected, please contact customer service using the information below.</p>

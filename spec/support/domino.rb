@@ -381,6 +381,10 @@ module Dom
       selector ".user-row"
       attribute :email
 
+      def name
+        node.find(".user-list-name").text
+      end
+
       def remove!
         node.click_button "Delete"
       end

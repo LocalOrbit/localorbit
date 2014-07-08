@@ -21,4 +21,16 @@ class UserMailer < BaseMailer
       subject: "You have been added to a market"
     )
   end
+
+  def user_updated(user, updater, original_email)
+    @user = user
+    @updater = updater
+
+    recipients = [@user.email, original_email].uniq
+
+    mail(
+      to: recipients,
+      subject: "Your account has been updated"
+    )
+  end
 end
