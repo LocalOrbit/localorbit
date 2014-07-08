@@ -13,7 +13,7 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def ship_from_address
-    if address = shipping_location
+    if (address = shipping_location)
       raw "#{address.address}<br/>#{address.city}, #{address.state} #{address.zip}"
     else
       ""

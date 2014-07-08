@@ -1,6 +1,6 @@
 class Import
   def self.setup
-    Dir[Rails.root.join('lib/import/models/*.rb')].each {|f| require f }
+    Dir[Rails.root.join("lib/import/models/*.rb")].each {|f| require f }
     @@ready = true
   end
 
@@ -26,7 +26,7 @@ class Import
     Payment.destroy_all
     ProductDelivery.destroy_all
     UserOrganization.destroy_all
-    User.destroy_all(role: 'user')
+    User.destroy_all(role: "user")
     MarketAddress.destroy_all
     MarketOrganization.destroy_all
     ManagedMarket.destroy_all

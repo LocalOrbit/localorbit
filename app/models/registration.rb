@@ -25,15 +25,15 @@ class Registration
   def save
     if valid?
       self.organization = Organization.new(organization_params)
-      self.organization.markets = [market]
-      self.organization.locations.build(location_params)
-      self.organization.save!
+      organization.markets = [market]
+      organization.locations.build(location_params)
+      organization.save!
 
       # create the user second so we have the organization available
       # to the confirmation email
       self.user = User.find_by(email: email) || User.new(user_params)
-      self.user.organizations << organization
-      self.user.save!
+      user.organizations << organization
+      user.save!
     else
       false
     end
@@ -72,7 +72,7 @@ class Registration
   end
 
   # Stub methods for Devise::Model::Validatable
-  def self.validates_uniqueness_of(*args)
+  def self.validates_uniqueness_of(*_args)
     true
   end
 

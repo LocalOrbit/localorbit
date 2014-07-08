@@ -1,4 +1,4 @@
-require 'import/models/base'
+require "import/models/base"
 class Legacy::OrderAddress < Legacy::Base
   self.table_name = "lo_order_address"
   self.primary_key = "lo_aid"

@@ -22,7 +22,7 @@ class Admin::PricesController < AdminController
     if price.update price_params
       respond_to do |format|
         format.html { redirect_to [:admin, @product, :prices], notice: "Successfully saved price" }
-        format.js   { 
+        format.js   {
           toggle = price.decorate
           @data = {
             message: "Successfully saved price",
@@ -40,7 +40,7 @@ class Admin::PricesController < AdminController
           flash.now[:alert] = "Could not save price"
           render :index
         end
-        format.js { 
+        format.js {
           @data = {
             errors:  price.errors.full_messages
           }

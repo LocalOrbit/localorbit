@@ -7,8 +7,8 @@ module Devise
 
       def authenticate!
         # if the authentication header is an acceptible value
-        if resource = mapping.to.for_auth_token(params[:auth_token])
-          env['devise.skip_storage'] = true
+        if (resource = mapping.to.for_auth_token(params[:auth_token]))
+          env["devise.skip_storage"] = true
           success!(resource, "success")
         else
           fail(:not_found_in_database)

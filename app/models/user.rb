@@ -19,14 +19,14 @@ class User < ActiveRecord::Base
   has_many :carts
 
   pg_search_scope :search_by_name_and_email,
-                    against: {name: 'A', email: 'B'},
-                    using: { tsearch: { prefix: true } }
+                  against: {name: "A", email: "B"},
+                  using: {tsearch: {prefix: true}}
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :search, method: :for_search, ignore_blank: true
 
   def self.with_primary_market(market)
-    User.all.select{|u| u.primary_market == market }
+    User.all.select {|u| u.primary_market == market }
   end
 
   def self.for_sort(order)
@@ -38,7 +38,6 @@ class User < ActiveRecord::Base
       order_by_email(direction)
     end
   end
-
 
   def self.for_search(query)
     search_by_name_and_email(query)
@@ -57,7 +56,7 @@ class User < ActiveRecord::Base
     Rails.application.message_verifier(:user_auth_token)
   end
 
-  def auth_token(expires_in = 1.hour)
+  def auth_token(expires_in=1.hour)
     self.class.auth_token_verifier.generate(a: rand(100), id: id, expires: expires_in.from_now.to_i, b: rand(100))
   end
 
@@ -198,18 +197,16 @@ class User < ActiveRecord::Base
     raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
 
     self.reset_password_token   = enc
-    self.reset_password_sent_at = Time.now.utc + 3.weeks #4 week expiration for imported users
-    self.save(validate: false)
+    self.reset_password_sent_at = Time.now.utc + 3.weeks # 4 week expiration for imported users
+    save(validate: false)
 
     if !Rails.env.staging?
       send_devise_notification(:reset_import_password_instructions, raw, {})
-    elsif (self.email == "anna+manager@localorb.it" || self.email == "chris.rittersdorf+buyer@collectiveidea.com")
+    elsif email == "anna+manager@localorb.it" || email == "chris.rittersdorf+buyer@collectiveidea.com"
       send_devise_notification(:reset_import_password_instructions, raw, {})
     end
     raw
   end
-
-  private
 
   def self.order_by_name(direction)
     direction == "asc" ? order("name asc") : order("name desc")

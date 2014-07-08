@@ -1,4 +1,4 @@
-require 'import/models/base'
+require "import/models/base"
 module Imported
   class MarketOrganization < ActiveRecord::Base
     belongs_to :market, class_name: "Imported::Market"

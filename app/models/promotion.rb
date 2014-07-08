@@ -27,13 +27,12 @@ class Promotion < ActiveRecord::Base
     end
   end
 
-
   private
 
   def one_active_per_market
-    if (self.persisted? && market.promotions.active.where.not(id: self.id).any?) ||
+    if (self.persisted? && market.promotions.active.where.not(id: id).any?) ||
        (self.new_record? && market.promotions.active.any?)
-      self.errors.add(:active, "There can only be one active promotion per market")
+      errors.add(:active, "There can only be one active promotion per market")
     end
   end
 end

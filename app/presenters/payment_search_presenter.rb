@@ -20,6 +20,6 @@ class PaymentSearchPresenter
   end
 
   def payment_statuses
-    ["paid", "pending"].map {|v| [v.titleize, v]}
+    %w(paid pending).map {|v| [v.titleize, v] }
   end
 end

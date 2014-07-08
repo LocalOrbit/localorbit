@@ -1,8 +1,5 @@
 class Order < ActiveRecord::Base
-  INVOICE_STATUSES = [
-    "due",
-    "overdue"
-  ].freeze
+  INVOICE_STATUSES = %w(due overdue).freeze
 
   include SoftDelete
   include DeliveryStatus
@@ -48,8 +45,8 @@ class Order < ActiveRecord::Base
   scope :invoiced, -> { visible.where(payment_method: "purchase order").where.not(invoiced_at: nil) }
   scope :unpaid, -> { visible.where(payment_status: "unpaid") }
   scope :paid, -> { visible.where(payment_status: "paid") }
-  scope :delivered, -> { visible.where("order_items.delivery_status = ?", "delivered").group('orders.id') }
-  scope :paid_with, lambda { |method| visible.where(payment_method: method) }
+  scope :delivered, -> { visible.where("order_items.delivery_status = ?", "delivered").group("orders.id") }
+  scope :paid_with, lambda {|method| visible.where(payment_method: method) }
   scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", (Time.current - 1.day).end_of_day) }
   scope :payment_due, -> { unpaid.where("invoice_due_date >= ?", (Time.current - 1.day).end_of_day) }
   scope :payment_status, lambda { |status|
@@ -65,12 +62,12 @@ class Order < ActiveRecord::Base
     end
   }
   scope :delivered_between, lambda { |range|
-    delivered
-      .having("MAX(order_items.delivered_at) >= ?", range.begin)
-      .having("MAX(order_items.delivered_at) < ?", range.end)
+    delivered.
+      having("MAX(order_items.delivered_at) >= ?", range.begin).
+      having("MAX(order_items.delivered_at) < ?", range.end)
   }
-  scope :paid_between, lambda { |range| paid.where(paid_at: range) }
-  scope :due_between, lambda { |range| invoiced.where(invoice_due_date: range) }
+  scope :paid_between, lambda {|range| paid.where(paid_at: range) }
+  scope :due_between, lambda {|range| invoiced.where(invoice_due_date: range) }
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :payment_status
@@ -83,7 +80,7 @@ class Order < ActiveRecord::Base
     where(payment_method: ["credit card", "ach"]).
       order(:order_number).
       includes(:items, :market, payments: :payee).
-      select {|o| o.delivery_status == 'delivered' && o.payments.select {|p| p.status != "failed" && p.payee == o.market } }
+      select {|o| o.delivery_status == "delivered" && o.payments.select {|p| p.status != "failed" && p.payee == o.market } }
   end
 
   def self.for_sort(order)
@@ -213,7 +210,7 @@ class Order < ActiveRecord::Base
   end
 
   def paid_seller_ids
-    @paid_seller_ids ||= payments.where(payee_type: 'Organization').pluck(:payee_id)
+    @paid_seller_ids ||= payments.where(payee_type: "Organization").pluck(:payee_id)
   end
 
   def sellers
@@ -221,13 +218,13 @@ class Order < ActiveRecord::Base
   end
 
   def subtotal
-    items.inject(0) {|sum, item| sum + item.gross_total}
+    items.inject(0) {|sum, item| sum + item.gross_total }
   end
 
   # Market payable calculations
 
   def market_payable?
-    return false unless delivery_status == 'delivered'
+    return false unless delivery_status == "delivered"
 
     market_payments = payments.select {|p| p.status != "failed" && p.payee == o.market }
     market_payments.sum {|p| p.amount } != payable_to_market
@@ -262,12 +259,12 @@ class Order < ActiveRecord::Base
   end
 
   def update_total_cost
-    cost = items.inject(0) {|sum, item| sum = sum + item.gross_total }
+    cost = items.inject(0) {|sum, item| sum + item.gross_total }
     fees = delivery.delivery_schedule.fees_for_amount(cost)
 
     cost += fees if cost > 0.0
 
-    self.update_columns(total_cost: cost, delivery_fees: fees)
+    update_columns(total_cost: cost, delivery_fees: fees)
   end
 
   def self.order_by_order_number(direction)

@@ -12,7 +12,7 @@ class Admin::LotsController < AdminController
     if @lot.persisted?
       respond_to do |format|
         format.html { redirect_to [:admin, @product, :lots], notice: "Successfully added a new lot" }
-        format.js   { 
+        format.js   {
           @data = {
             message: "Successfully added a new lot",
             params: lot_params.to_a,

@@ -1,4 +1,4 @@
-require 'import/models/base'
+require "import/models/base"
 
 module Imported
   class Price < ActiveRecord::Base
@@ -9,7 +9,6 @@ module Imported
 end
 
 class Legacy::Price < Legacy::Base
-
   self.table_name = "product_prices"
   self.primary_key = "price_id"
 

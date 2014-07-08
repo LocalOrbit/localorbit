@@ -22,7 +22,7 @@ module Sessions
 
         # This will sort out if the selected location is valid
         # of if there is a valid selection that could be made
-        if location = selected_organization_location
+        if (location = selected_organization_location)
           session[:current_location] = location.id
         else
           return invalid_delivery_selection

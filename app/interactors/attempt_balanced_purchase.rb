@@ -2,9 +2,9 @@ class AttemptBalancedPurchase
   include Interactor
 
   def perform
-    if ['credit card', 'ach'].include?(payment_method) && order
+    if ["credit card", "ach"].include?(payment_method) && order
       begin
-        amount = (cart.total * 100).to_i #USD in cents
+        amount = (cart.total * 100).to_i # USD in cents
 
         debit = create_debit(amount)
         record_payment(debit)
@@ -15,7 +15,7 @@ class AttemptBalancedPurchase
           context.fail!
         end
 
-      rescue Exception => e
+      rescue => e
         Honeybadger.notify_or_ignore(e) unless Rails.env.test? || Rails.env.development?
 
         context[:order].errors.add(:credit_card, "Payment processor error.")
@@ -43,7 +43,7 @@ class AttemptBalancedPurchase
   end
 
   def initial_payment_status
-    if payment_method == 'credit card'
+    if payment_method == "credit card"
       "paid"
     else
       "pending"

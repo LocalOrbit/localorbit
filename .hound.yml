@@ -23,6 +23,7 @@ CollectionMethods:
     collect!: 'map!'
     reduce: 'inject'
     find_all: 'select'
+    find: 'detect'
 
 # Checks formatting of special comments
 CommentAnnotation:
@@ -46,6 +47,13 @@ DotPosition:
   SupportedStyles:
     - leading
     - trailing
+
+EachWithObject:
+  Enabled: false
+
+# Align ends correctly.
+EndAlignment:
+  AlignWith: variable
 
 # Enforce the method used for string formatting.
 FormatString:

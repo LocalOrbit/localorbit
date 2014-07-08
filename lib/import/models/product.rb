@@ -1,4 +1,4 @@
-require 'import/models/base'
+require "import/models/base"
 module Imported
   class Product < ActiveRecord::Base
     self.table_name = "products"
@@ -79,12 +79,12 @@ class Legacy::Product < Legacy::Base
 
   def imported_unit
     imported = ::Unit.where(singular: unit.NAME).first if unit
-    imported = ::Unit.where(singular: 'Each').first if (!defined?(import) || imported.nil?)
+    imported = ::Unit.where(singular: "Each").first if !defined?(import) || imported.nil?
     imported
   end
 
   def imported_category
-    legacy_categories = category_ids.split(',').reverse.map do |id|
+    legacy_categories = category_ids.split(",").reverse.map do |id|
       begin
         Legacy::Category.find(id).try(:cat_name)
       rescue
@@ -98,11 +98,11 @@ class Legacy::Product < Legacy::Base
     end until new_category.any? || legacy_categories.blank?
 
     if new_category.count > 1
-      old_category = legacy_categories.join('/')
+      old_category = legacy_categories.join("/")
 
       new_category.each do |category|
         str = category_string(category.id)
-        if old_category = str
+        if old_category == str
           return category
         end
       end

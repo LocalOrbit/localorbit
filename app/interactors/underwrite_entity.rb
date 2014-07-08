@@ -3,7 +3,7 @@ class UnderwriteEntity
 
   def setup
     context[:balanced_customer] ||= Balanced::Customer.find(entity.balanced_customer_uri)
-    representative_params.delete_if {|k, v| v.blank? }
+    representative_params.delete_if {|_, v| v.blank? }
   end
 
   def perform
@@ -26,7 +26,7 @@ class UnderwriteEntity
       balanced_customer.address = representative_params[:address]
 
       if representative_params[:ein].present?
-        balanced_customer.ein = representative_params[:ein].gsub(/[^\d]/, '')
+        balanced_customer.ein = representative_params[:ein].gsub(/[^\d]/, "")
         balanced_customer.business_name = entity.name
       end
     end

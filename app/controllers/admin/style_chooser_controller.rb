@@ -7,7 +7,7 @@ module Admin
 
     def update
       if @market.update_attributes(style_params)
-        redirect_to [:admin, @market, :style_chooser], notice: 'Styles updated'
+        redirect_to [:admin, @market, :style_chooser], notice: "Styles updated"
       else
         render :show
       end

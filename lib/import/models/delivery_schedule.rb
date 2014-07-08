@@ -1,4 +1,4 @@
-require 'import/models/base'
+require "import/models/base"
 
 module Imported
   class ProductDelivery < ActiveRecord::Base
@@ -64,8 +64,6 @@ module Legacy
     end
   end
 
-
-
   class DeliverySchedule < Legacy::Base
     self.table_name = "delivery_days"
     self.primary_key = "dd_id"
@@ -114,7 +112,7 @@ module Legacy
       Imported::MarketAddress.where(legacy_id: deliv_address_id).first.try(:id) || 0
     end
 
-    def pickup_location_id(market)
+    def pickup_location_id(_market)
       pickup_address_id == 0 ? 0 : Imported::MarketAddress.where(legacy_id: pickup_address_id).first.try(:id)
     end
 
@@ -125,6 +123,5 @@ module Legacy
     def imported_delivery_fee_type
       delivery_fee.try(:fee_calc_type_id) == 2 ? "fixed" : "percent"
     end
-
   end
 end

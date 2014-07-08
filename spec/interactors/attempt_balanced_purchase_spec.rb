@@ -108,7 +108,7 @@ describe AttemptBalancedPurchase do
       let!(:params) { { "payment_method" => "ach", "bank_account" => "0" } }
 
       before do
-        allow(Balanced::Customer).to receive(:debit).and_raise(Exception)
+        allow(Balanced::Customer).to receive(:debit).and_raise(RuntimeError)
       end
 
       it "returns as a failure" do
@@ -188,7 +188,7 @@ describe AttemptBalancedPurchase do
       let!(:params) { { "payment_method" => "credit card", "credit_card" => "0" } }
 
       before do
-        allow(Balanced::Customer).to receive(:find).and_raise(Exception)
+        allow(Balanced::Customer).to receive(:find).and_raise(RuntimeError)
       end
 
       it "returns as a failure" do

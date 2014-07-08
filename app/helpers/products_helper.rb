@@ -1,5 +1,5 @@
 module ProductsHelper
-  def can_change_delivery?(user)
+  def can_change_delivery?
     current_market.delivery_schedules.visible.count > 1 || current_organization.locations.count > 1 || current_user.managed_organizations.count > 1
   end
 
@@ -26,7 +26,7 @@ module ProductsHelper
     end
 
     if condition.length > 0
-      content_tag(:div, "Your product will not appear in the Shop until you #{condition.join(', and ')}".html_safe, class: "product-status-alert")
+      content_tag(:div, "Your product will not appear in the Shop until you #{condition.join(", and ")}".html_safe, class: "product-status-alert")
     end
   end
 

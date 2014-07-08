@@ -18,7 +18,6 @@ module FinancialOverview
       @user = opts[:user]
       @market = opts[:market]
       @time = Time.current
-
     end
 
     def next_seven_days(offset: 0)
@@ -47,6 +46,7 @@ module FinancialOverview
     end
 
     private
+
     def sum_seller_items(orders)
       orders.inject(0) do |total, order|
         total + order.items.for_user(@user).map(&@calculation_method).reduce(:+)

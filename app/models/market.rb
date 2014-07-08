@@ -56,7 +56,7 @@ class Market < ActiveRecord::Base
   end
 
   def self.for_order_items(order_items)
-    joins(:orders).where(orders: { id: order_items.map(&:order_id) }).uniq
+    joins(:orders).where(orders: {id: order_items.map(&:order_id)}).uniq
   end
 
   def balanced_customer
@@ -85,7 +85,7 @@ class Market < ActiveRecord::Base
   end
 
   def next_delivery
-    delivery_schedules.visible.map(&:next_delivery).min {|a,b| a.deliver_on <=> b.deliver_on }
+    delivery_schedules.visible.map(&:next_delivery).min {|a, b| a.deliver_on <=> b.deliver_on }
   end
 
   def only_delivery
@@ -134,7 +134,7 @@ class Market < ActiveRecord::Base
 
   def require_payment_method
     unless allow_purchase_orders? || allow_credit_cards? || allow_ach?
-      self.errors.add(:payment_method, "At least one payment method is required for the market")
+      errors.add(:payment_method, "At least one payment method is required for the market")
     end
   end
 end

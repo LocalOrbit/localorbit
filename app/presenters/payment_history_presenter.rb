@@ -44,7 +44,7 @@ class PaymentHistoryPresenter
     new(payments, search, page, per_page, paginate)
   end
 
-  def initialize(payments, query, page, per_page, paginate = true)
+  def initialize(payments, query, page, per_page, paginate=true)
     search = Search::QueryDefaults.new(query, :created_at).query
 
     @start_date = format_date(search[:created_at_date_gteq])

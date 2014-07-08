@@ -38,7 +38,7 @@ class Product < ActiveRecord::Base
   scope_accessible :sort, method: :for_sort, ignore_blank: true
   scope_accessible :search, method: :for_search, ignore_blank: true
 
-  pg_search_scope :search_by_name, against: :name, using: { tsearch: { prefix: true }}
+  pg_search_scope :search_by_name, against: :name, using: {tsearch: {prefix: true}}
 
   before_save :update_top_level_category
   before_save :update_delivery_schedules
@@ -106,7 +106,7 @@ class Product < ActiveRecord::Base
     when "seller"
       order_by_seller_name(direction)
     when "market"
-      joins(organization: { market_organizations: :market}).order_by_market_name(direction)
+      joins(organization: {market_organizations: :market}).order_by_market_name(direction)
     else
       order_by_name(direction)
     end
@@ -191,7 +191,7 @@ class Product < ActiveRecord::Base
         end
 
         final_prices
-      end.values.sort {|a,b| a.min_quantity <=> b.min_quantity }
+      end.values.sort {|a, b| a.min_quantity <=> b.min_quantity }
     else
       prices.where(market_id: [market.id, nil], organization_id: [organization.id, nil]).
         order("min_quantity, organization_id desc nulls first").
@@ -244,7 +244,7 @@ class Product < ActiveRecord::Base
       end.flatten
     else
       ids = organization.reload.all_markets.map(&:id)
-      self.delivery_schedules = self.delivery_schedules.select {|ds| ids.include?(ds.market.id) }
+      self.delivery_schedules = delivery_schedules.select {|ds| ids.include?(ds.market.id) }
     end
   end
 end

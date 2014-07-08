@@ -50,6 +50,7 @@ module FinancialOverview
     end
 
     private
+
     def sum_order_total(orders)
       orders.map(&:total_cost).reduce(:+) || 0
     end

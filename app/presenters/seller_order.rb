@@ -8,9 +8,9 @@ class SellerOrder
   def initialize(order, seller)
     @order = order.decorate
     if seller.is_a?(User)
-      @items = order.items.select("order_items.*").joins(:product).where("products.organization_id" => seller.managed_organization_ids_including_deleted).order('order_items.name')
+      @items = order.items.select("order_items.*").joins(:product).where("products.organization_id" => seller.managed_organization_ids_including_deleted).order("order_items.name")
     elsif seller.is_a?(Organization)
-      @items = order.items.select("order_items.*").joins(:product).where("products.organization_id" => seller.id).order('order_items.name')
+      @items = order.items.select("order_items.*").joins(:product).where("products.organization_id" => seller.id).order("order_items.name")
     end
   end
 
@@ -27,6 +27,6 @@ class SellerOrder
     @order.errors
   end
 
-  def items_attributes=(values)
+  def items_attributes=(_)
   end
 end

@@ -6,7 +6,7 @@ class Admin::CategoriesController < AdminController
 
     respond_to do |format|
       format.html
-      format.csv { @filename = "taxonomy.csv"}
+      format.csv { @filename = "taxonomy.csv" }
     end
   end
 end

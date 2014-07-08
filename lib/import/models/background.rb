@@ -1,4 +1,4 @@
-require 'import/models/base'
+require "import/models/base"
 class Legacy::Background < Legacy::Base
   self.table_name = "backgrounds"
   self.primary_key = "background_id"

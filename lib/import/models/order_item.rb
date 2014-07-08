@@ -1,4 +1,4 @@
-require 'import/models/base'
+require "import/models/base"
 
 module Imported
   class OrderItem < ActiveRecord::Base

@@ -21,12 +21,12 @@ class ZendeskSSOController < ApplicationController
     jti = "#{iat}/#{SecureRandom.hex(18)}"
 
     payload = JWT.encode({
-      iat: iat, # Seconds since epoch, determine when this token is stale
-      jti: jti, # Unique token id, helps prevent replay attacks
-      name: user.name || user.email, # ZD doesn't like blank names
-      email: user.email,
-      external_id: user.id.to_s,
-    }, ZENDESK_SHARED_SECRET.to_s)
+                           iat: iat, # Seconds since epoch, determine when this token is stale
+                           jti: jti, # Unique token id, helps prevent replay attacks
+                           name: user.name || user.email, # ZD doesn't like blank names
+                           email: user.email,
+                           external_id: user.id.to_s,
+                         }, ZENDESK_SHARED_SECRET.to_s)
 
     redirect_to zendesk_sso_url(payload)
   end

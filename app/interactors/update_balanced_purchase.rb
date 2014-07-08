@@ -2,7 +2,7 @@ class UpdateBalancedPurchase
   include Interactor
 
   def perform
-    if ['credit card', 'ach'].include?(order.payment_method)
+    if ["credit card", "ach"].include?(order.payment_method)
       current_amount = rollup_payment_amounts
 
       if current_amount > order.total_cost
@@ -14,7 +14,7 @@ class UpdateBalancedPurchase
   end
 
   def rollup_payment_amounts
-    order.payments.successful.buyer_payments.inject(0) {|sum, payment| sum += payment.amount }
+    order.payments.successful.buyer_payments.inject(0) {|sum, payment| sum + payment.amount }
   end
 
   def create_new_charge(amount)
@@ -29,7 +29,7 @@ class UpdateBalancedPurchase
 
   def refund(amount)
     remaining_amount = amount
-    context[:status] = 'paid'
+    context[:status] = "paid"
 
     order.payments.refundable.order(:created_at).each do |payment|
 
@@ -65,7 +65,7 @@ class UpdateBalancedPurchase
       source_uri: account.balanced_uri,
       description: "#{order.market.name} purchase"
     )
-    context[:status] = 'paid'
+    context[:status] = "paid"
 
     record_payment("order", amount, new_debit, account)
   rescue => e
@@ -76,7 +76,7 @@ class UpdateBalancedPurchase
     Honeybadger.notify_or_ignore(exception) unless Rails.env.test? || Rails.env.development?
     record_payment(type, amount, nil, account)
 
-    context[:status] = 'failed'
+    context[:status] = "failed"
     fail!
   end
 

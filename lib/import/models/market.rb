@@ -1,4 +1,4 @@
-require 'import/models/base'
+require "import/models/base"
 
 module Imported
   class Market < ActiveRecord::Base
@@ -11,7 +11,7 @@ module Imported
     has_many :market_organizations, class_name: "Imported::MarketOrganization"
     has_many :orders, class_name: "Imported::Order"
     has_many :organizations, class_name: "Imported::Organization", through: :market_organizations
-    has_many :payments, class_name: 'Imported::Payment'
+    has_many :payments, class_name: "Imported::Payment"
   end
 end
 
@@ -26,7 +26,7 @@ class Legacy::Market < Legacy::Base
   self.table_name = "domains"
   self.primary_key = "domain_id"
 
-  belongs_to  :brand, class_name: "Legacy::Brand", foreign_key: :domain_id
+  belongs_to :brand, class_name: "Legacy::Brand", foreign_key: :domain_id
 
   has_many :organizations, class_name: "Legacy::Organization"
   has_many :delivery_schedules, class_name: "Legacy::DeliverySchedule", foreign_key: :domain_id
@@ -77,7 +77,6 @@ class Legacy::Market < Legacy::Base
       market.update(attributes)
     end
 
-
     if market.valid?
       organizations.each_with_index do |org, index|
         puts "Importing organization #{index + 1} of #{organizations.count}"
@@ -99,11 +98,10 @@ class Legacy::Market < Legacy::Base
 
         puts "Importing market managers..."
         org.users.each do |user|
-          if user.is_deleted == 0
-            imported_user = user.import
-            if imported_user && !market.managers.include?(imported_user)
-              market.managers << imported_user
-            end
+          next unless user.is_deleted == 0
+          imported_user = user.import
+          if imported_user && !market.managers.include?(imported_user)
+            market.managers << imported_user
           end
         end
       end
@@ -150,10 +148,10 @@ class Legacy::Market < Legacy::Base
       Legacy::Payment.where(from_domain_id: market.legacy_id).uniq.each do |payment|
         payment.import(market).save!
       end
-      Imported::Payment.where('payer_type LIKE ? or payee_type LIKE ?', 'Imported::%', 'Imported::%').each do |payment|
+      Imported::Payment.where("payer_type LIKE ? or payee_type LIKE ?", "Imported::%", "Imported::%").each do |payment|
         payment.update(
-          payer_type: payment.payer_type.try(:gsub, 'Imported::', ''),
-          payee_type: payment.payee_type.try(:gsub, 'Imported::', '')
+          payer_type: payment.payer_type.try(:gsub, "Imported::", ""),
+          payee_type: payment.payee_type.try(:gsub, "Imported::", "")
         )
       end
 
@@ -174,7 +172,7 @@ class Legacy::Market < Legacy::Base
   end
 
   def parse_subdomain
-    hostname.split('.').first
+    hostname.split(".").first
   end
 
   def imported_background

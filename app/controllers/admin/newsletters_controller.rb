@@ -16,7 +16,7 @@ class Admin::NewslettersController < AdminController
     if @newsletter.save
       send_newsletter
     else
-      render 'new'
+      render "new"
     end
   end
 
@@ -27,7 +27,7 @@ class Admin::NewslettersController < AdminController
     if @newsletter.update(newsletter_params)
       send_newsletter
     else
-      render 'show'
+      render "show"
     end
   end
 

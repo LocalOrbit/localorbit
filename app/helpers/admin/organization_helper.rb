@@ -2,10 +2,10 @@ module Admin
   module OrganizationHelper
     def seller_status_options
       [
-        ["Any",nil],
+        ["Any", nil],
         ["Buyer", 0],
         ["Seller", 1]
-        
+
       ]
     end
 
