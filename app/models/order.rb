@@ -74,13 +74,77 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :items, allow_destroy: true
 
-  def self.balanced_payable
-    # TODO: figure out how to filter out paid orders in the db
-    # and make sure the orders haven't changed
-    where(payment_method: ["credit card", "ach"]).
+  def self.balanced_payable_to_market
+    # TODO: figure out how to make sure the orders haven't changed
+    non_automate_market_ids = Market.joins(:plan).where.not(plans: {name: 'Automate'}).pluck(:id)
+    subselect = %[SELECT DISTINCT "order_payments"."order_id" FROM "order_payments"
+      INNER JOIN "payments" ON "payments"."id" = "order_payments"."payment_id"
+      WHERE "payments"."status" != 'failed' AND
+            "payments"."payment_type" = 'market payment' AND
+            "payments"."payee_type" = 'Market' AND
+            "payments"."payee_id" = "orders"."market_id"]
+
+    where(payment_method: ["credit card", "ach", "paypal"]).
+      where("orders.id NOT IN (#{subselect})").
+      where("orders.placed_at > ?", 6.months.ago).
+      where(market_id: non_automate_market_ids).
+      joins(:delivery, :items).
+      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
+      select("orders.*").
+      group("orders.id").
+      preload(:items, :market)
+  end
+
+  def self.payable_to_sellers
+    subselect = "SELECT 1 FROM payments
+      INNER JOIN order_payments ON order_payments.order_id = orders.id AND order_payments.payment_id = payments.id
+      WHERE payments.payee_type = ? AND payments.payee_id = products.organization_id"
+
+    select('orders.*, products.organization_id as seller_id').joins(:delivery, items: :product).
+      where("NOT EXISTS(#{subselect})", "Organization").
+      # This is a slightly fuzzy match right now.
+      # TODO: Implement delivery_end on deliveries for greater accuracy
+      where("deliveries.deliver_on < ?", 48.hours.ago).
+      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
+      group("orders.id, seller_id").
+      order("orders.order_number").
+      includes(:market)
+  end
+
+  def self.payable_lo_fees
+    subselect = %[SELECT DISTINCT "order_payments"."order_id" FROM "order_payments"
+      INNER JOIN "payments" ON "payments"."id" = "order_payments"."payment_id"
+      WHERE "payments"."payment_type" = 'lo fee' AND "payments"."payer_type" = 'Market' AND "payments"."payer_id" = "orders"."market_id"]
+
+    joins(:delivery, :items).
+      where("orders.id NOT IN (#{subselect})").
+      # This is a slightly fuzzy match right now.
+      # TODO: Implement delivery_end on deliveries for greater accuracy
+      where("deliveries.deliver_on < ?", 48.hours.ago).
+      where(payment_method: 'purchase order').
+      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
+      order("orders.order_number").
+      select("orders.*").
+      group("orders.id")
+  end
+
+  def self.payable_market_fees
+    # TODO: figure out how to make sure the orders haven't changed
+    automate_market_ids = Market.joins(:plan).where(plans: {name: 'Automate'}).pluck(:id)
+    subselect = %[SELECT DISTINCT "order_payments"."order_id" FROM "order_payments"
+      INNER JOIN "payments" ON "payments"."id" = "order_payments"."payment_id"
+      WHERE "payments"."payment_type" = 'hub fee' AND "payments"."payee_type" = 'Market' AND "payments"."payee_id" = "orders"."market_id"]
+
+    joins(:delivery, :items).
+      where(payment_method: ["credit card", "ach", "paypal"]).
+      where("orders.id NOT IN (#{subselect})").
+      where("deliveries.deliver_on < ?", 48.hours.ago).
+      where("orders.placed_at > ?", 6.months.ago).
+      where(market_id: automate_market_ids).
+      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
       order(:order_number).
-      includes(:items, :market, payments: :payee).
-      select {|o| o.delivery_status == "delivered" && o.payments.select {|p| p.status != "failed" && p.payee == o.market } }
+      select("orders.*").
+      group("orders.id")
   end
 
   def self.for_sort(order)

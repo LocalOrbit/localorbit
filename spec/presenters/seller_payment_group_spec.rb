@@ -41,7 +41,7 @@ describe SellerPaymentGroup do
 
   let!(:buyer_payment_for_order_for_sellers_2_both_paid) { create(:payment, payee: nil, orders: [order_for_seller_2_buyer_and_seller_paid], payment_method: "credit card", amount: 20.97, status: "paid") }
   let!(:seller_payments_for_order_for_sellers_2_both_paid) { create(:payment, payee: seller2, orders: [order_for_seller_2_buyer_and_seller_paid], amount: 20.97) }
-  let(:scope) { Payment.payments_for_user(market_manager) }
+  let(:scope) { Order.payable_to_sellers }
 
   describe '.for_scope' do
     it 'contains the right set of order information' do

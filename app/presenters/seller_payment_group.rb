@@ -21,7 +21,6 @@ class SellerPaymentGroup
   def initialize(org, orders)
     @organization = org
     @orders = orders.map {|order| SellerOrder.new(order, @organization) }
-    @orders.select! {|order| order.delivery_status == "delivered" }
   end
 
   def id

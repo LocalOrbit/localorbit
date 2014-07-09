@@ -1,6 +1,6 @@
 module DeliveryStatus
   def delivery_status
-    statuses = items.pluck(:delivery_status).map(&:downcase).uniq
+    statuses = (items.try(:loaded?) ? items.map(&:delivery_status) : items.pluck(:delivery_status)).map(&:downcase).uniq
 
     # TODO: Currently, canceled will only return if all items are canceled, this logic needs to be confirmed
     if statuses.size > 1 && statuses.include?("canceled")
