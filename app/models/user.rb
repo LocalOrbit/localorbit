@@ -207,23 +207,6 @@ class User < ActiveRecord::Base
     raw
   end
 
-  def set_role(market)
-    role_concern = Role::Admin
-
-    role_concern = if role == "admin"
-      Role::Admin
-    elsif market.managers.include?(self)
-      Role::MarketManager
-    elsif market.organizations.joins(:users).where(users: {id: self.id}).count > 0
-      Role::OrganizationMember
-    else
-      raise(User::RoleError)
-    end
-
-    self.extend(role_concern)
-    @role_context = {role: role_concern, market: market}
-  end
-
   private
 
   def self.order_by_name(direction)
