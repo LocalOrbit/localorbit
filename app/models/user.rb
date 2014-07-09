@@ -160,7 +160,7 @@ class User < ActiveRecord::Base
       else
         Market.
           select("DISTINCT markets.*").
-          joins("INNER JOIN market_organizations ON market_organizations.market_id = markets.id AND market_organizations.cross_sell = 'f'
+          joins("INNER JOIN market_organizations ON market_organizations.market_id = markets.id AND market_organizations.cross_sell_origin_market_id IS NULL
                  INNER JOIN user_organizations ON user_organizations.organization_id = market_organizations.organization_id").
           where("user_organizations.user_id" => id)
       end
@@ -173,8 +173,7 @@ class User < ActiveRecord::Base
 
   def managed_products
     if admin?
-      # Join market orgs to avoid grabbing products from deleted organizations
-      Product.visible.seller_can_sell.joins(organization: :market_organizations).where(market_organizations: {cross_sell: false})
+      Product.visible.seller_can_sell.joins(organization: :market_organizations).where(market_organizations: {cross_sell_origin_market_id: nil})
     else
       org_ids = managed_organizations.pluck(:id).uniq
       Product.visible.seller_can_sell.where(organization_id: org_ids)

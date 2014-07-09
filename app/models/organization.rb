@@ -7,8 +7,12 @@ class Organization < ActiveRecord::Base
 
   has_many :users, through: :user_organizations
   has_many :all_markets, through: :market_organizations, source: :market
-  has_many :markets, -> { where(market_organizations: {cross_sell: false}) }, through: :market_organizations
-  has_many :cross_sells, -> { where(market_organizations: {cross_sell: true}) }, through: :market_organizations, source: :market, after_add: :update_product_delivery_schedules, after_remove: :update_product_delivery_schedules
+
+  has_many :markets, -> { where(market_organizations: {cross_sell_origin_market_id: nil}) }, through: :market_organizations
+  has_many :cross_sells, -> { where.not(market_organizations: {cross_sell_origin_market_id: true}) }, 
+    through: :market_organizations,
+    source: :market
+
   has_many :orders, inverse_of: :organization
 
   has_many :products, inverse_of: :organization, autosave: true, dependent: :destroy
@@ -26,8 +30,6 @@ class Organization < ActiveRecord::Base
   scope :visible, -> { where(show_profile: true) }
   scope :with_products, -> { joins(:products).select("DISTINCT organizations.*").order(name: :asc) }
   scope :buyers_for_orders, lambda {|orders| joins(:orders).where(orders: {id: orders}).uniq }
-
-  scope :without_cross_sells, -> { where(market_organizations: {cross_sell: false}) }
 
   serialize :twitter, TwitterUser
 
@@ -83,12 +85,34 @@ class Organization < ActiveRecord::Base
     reload.products.each(&:save) if persisted?
   end
 
+  def update_cross_sells!(from_market: nil, to_ids: [])
+    ids = to_ids
+
+    original_cross_sells  = market_organizations.where(cross_sell_origin_market: from_market)
+    cross_sells_to_remove = market_organizations.where(cross_sell_origin_market: from_market).where.not(market_id: ids)
+    new_cross_sell_ids = ids - original_cross_sells.map(&:market_id)
+
+    # Create the new ones
+    new_cross_sell_ids.each do |new_cross_sell_id|
+      market_organizations.create(market_id: new_cross_sell_id, cross_sell_origin_market: from_market)
+    end
+
+    #Destroy the old ones
+    cross_sells_to_remove.each{|cs| cs.delete}
+
+    update_product_delivery_schedules(nil)
+  end
+
   def balanced_customer
     Balanced::Customer.find(balanced_customer_uri)
   end
 
   def original_market
     (markets.empty? ? cross_sells : markets).first
+  end
+
+  def is_cross_selling?(from: nil, to: nil)
+    market_organizations.where(cross_sell_origin_market: from, market_id: to.id).any?
   end
 
   private

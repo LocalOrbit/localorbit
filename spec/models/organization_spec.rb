@@ -99,19 +99,18 @@ describe Organization do
 
       it 'adds a markets delivery schedules to products on adding to #cross_sells' do
         expect {
-          organization.cross_sell_ids = [cross_sell_market.id]
-          organization.market_organizations.where(market_id: [cross_sell_market.id]).update_all(cross_sell: true)
+          organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
+
         }.to change {
           product.reload.delivery_schedules.count
         }.from(1).to(2)
       end
 
       it 'removes a markets delivery schedules from a product on removing from #cross_sells' do
-        organization.cross_sell_ids = [cross_sell_market.id]
-        organization.market_organizations.where(market_id: [cross_sell_market.id]).update_all(cross_sell: true)
+        organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
 
         expect {
-          organization.cross_sell_ids = []
+          organization.update_cross_sells!(from_market: market, to_ids: [])
         }.to change {
           product.reload.delivery_schedules.count
         }.from(2).to(1)
@@ -123,21 +122,18 @@ describe Organization do
 
       it 'adding a markets to #cross_sells does not add its delivery schedules to products' do
         expect {
-          organization.cross_sell_ids = [cross_sell_market.id]
-          organization.market_organizations.where(market_id: [cross_sell_market.id]).update_all(cross_sell: true)
+          organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
         }.to_not change {
           product.reload.delivery_schedules.count
         }.from(0)
       end
 
       it 'removing a markets from #cross_sells removes its delivery schedules' do
-        organization.cross_sell_ids = [cross_sell_market.id]
-        organization.market_organizations.where(market_id: [cross_sell_market.id]).update_all(cross_sell: true)
-
+        organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
         product.delivery_schedules << wednesday_delivery
 
         expect {
-          organization.cross_sell_ids = []
+          organization.update_cross_sells!(from_market: market, to_ids: [])
         }.to change {
           product.reload.delivery_schedules.count
         }.from(1).to(0)
