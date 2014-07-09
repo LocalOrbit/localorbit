@@ -51,8 +51,51 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
       end
     end
 
+    context "adding a custom note" do
+      scenario "note is displayed in preview" do
+        visit admin_fresh_sheet_path
+
+        click_link "Add Note"
+
+        fill_in "note", with: "Forever Young"
+        click_button "Save Note"
+
+        visit preview_admin_fresh_sheet_path
+        expect(page).to have_content("Forever Young")
+      end
+
+      scenario "note is in sent email" do
+        expect(MarketMailer).to receive(:fresh_sheet).with(market.id, "\"Jack Stevens\" <#{buyer_user.email}>", "Forever Young").and_return(double(:mailer, deliver: true))
+        visit admin_fresh_sheet_path
+
+        click_link "Add Note"
+
+        fill_in "note", with: "Forever Young"
+        click_button "Save Note"
+
+        click_button "Send to Everyone Now"
+
+        expect(page).to have_content("Successfully sent the Fresh Sheet")
+        Delayed::Worker.new.work_off
+      end
+
+      scenario "note is cleared once email is sent to customers" do
+        visit admin_fresh_sheet_path
+
+        click_link "Add Note"
+
+        fill_in "note", with: "Forever Young"
+        click_button "Save Note"
+
+        click_button "Send to Everyone Now"
+
+        visit preview_admin_fresh_sheet_path
+        expect(page).not_to have_content("Forever Young")
+      end
+    end
+
     scenario "sending a test" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, user.email).and_return(double(:mailer, deliver: true))
+      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, user.email, nil).and_return(double(:mailer, deliver: true))
       visit admin_fresh_sheet_path
       click_button "Send Test"
       expect(page).to have_content("Successfully sent a test to #{user.email}")
@@ -60,7 +103,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
     end
 
     scenario "sending a test to a different email" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, "foo@example.com").and_return(double(:mailer, deliver: true))
+      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, "foo@example.com", nil).and_return(double(:mailer, deliver: true))
       visit admin_fresh_sheet_path
       fill_in "email", with: "foo@example.com"
       click_button "Send Test"
@@ -69,7 +112,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
     end
 
     scenario "sending to everyone" do
-      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, "\"Jack Stevens\" <#{buyer_user.email}>").and_return(double(:mailer, deliver: true))
+      expect(MarketMailer).to receive(:fresh_sheet).with(market.id, "\"Jack Stevens\" <#{buyer_user.email}>", nil).and_return(double(:mailer, deliver: true))
       visit admin_fresh_sheet_path
       click_button "Send to Everyone Now"
       expect(page).to have_content("Successfully sent the Fresh Sheet")

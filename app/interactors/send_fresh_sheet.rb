@@ -3,11 +3,11 @@ class SendFreshSheet
 
   def perform
     if commit == "Send Test"
-      MarketMailer.delay.fresh_sheet(market.id, email)
+      MarketMailer.delay.fresh_sheet(market.id, email, note)
       context[:notice] = "Successfully sent a test to #{email}"
     elsif commit == "Send to Everyone Now"
       emails.each do |email|
-        MarketMailer.delay.fresh_sheet(market.id, email)
+        MarketMailer.delay.fresh_sheet(market.id, email, note)
       end
       context[:notice] = "Successfully sent the Fresh Sheet"
     else

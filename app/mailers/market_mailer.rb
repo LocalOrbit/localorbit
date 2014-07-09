@@ -1,8 +1,10 @@
 class MarketMailer < BaseMailer
-  def fresh_sheet(market_id, recipients=nil, preview=false)
+  def fresh_sheet(market_id, recipients=nil, note=nil, preview=false)
     @preview        = preview
+    @note           = note
     @market         = Market.find(market_id)
     @delivery       = @market.next_delivery.decorate
+
     organization    = @market.organizations.build
     cart            = Cart.new(market: @market, organization: organization)
 
