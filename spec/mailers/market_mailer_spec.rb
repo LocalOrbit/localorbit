@@ -25,5 +25,11 @@ describe MarketMailer do
       expect(fresh_sheet.body).to include("For customer service please reply to this email")
       expect(fresh_sheet.body).to include("616-123-4567")
     end
+
+    it "displays the fresh sheet note if present" do
+      fresh_sheet = MarketMailer.fresh_sheet(market_in, nil, "Rockin")
+
+      expect(fresh_sheet.body).to include("Rockin")
+    end
   end
 end
