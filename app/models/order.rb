@@ -77,13 +77,22 @@ class Order < ActiveRecord::Base
   def self.balanced_payable_to_market
     # TODO: figure out how to make sure the orders haven't changed
     non_automate_market_ids = Market.joins(:plan).where.not(plans: {name: 'Automate'}).pluck(:id)
+    subselect = %[SELECT DISTINCT "order_payments"."order_id" FROM "order_payments"
+      INNER JOIN "payments" ON "payments"."id" = "order_payments"."payment_id"
+      WHERE "payments"."status" != 'failed' AND
+            "payments"."payment_type" = 'market payment' AND
+            "payments"."payee_type" = 'Market' AND
+            "payments"."payee_id" = "orders"."market_id"]
+
     where(payment_method: ["credit card", "ach", "paypal"]).
-      where(%Q{orders.id NOT IN (SELECT DISTINCT "order_payments"."order_id" FROM "order_payments" INNER JOIN "payments" ON "payments"."id" = "order_payments"."payment_id" WHERE "payments"."payment_type" = 'market payment' AND "payments"."payee_type" = 'Market' AND "payments"."payee_id" = "orders"."market_id")}).
+      where("orders.id NOT IN (#{subselect})").
       where("orders.placed_at > ?", 6.months.ago).
       where(market_id: non_automate_market_ids).
-      order(:order_number).
-      includes(:items, :market).
-      select {|o| o.delivery_status == 'delivered' }
+      joins(:delivery, :items).
+      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
+      select("orders.*").
+      group("orders.id").
+      preload(:items, :market)
   end
 
   def self.for_sort(order)
