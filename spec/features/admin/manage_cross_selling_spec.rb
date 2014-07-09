@@ -88,8 +88,17 @@ describe "Manage cross selling" do
     end
 
     context "managing an organization" do
+      let!(:cross_selling_market2) { create(:market, allow_cross_sell: true) }
+      let!(:cross_selling_market3) { create(:market, allow_cross_sell: true) }
+      let!(:another_origin_market) { create(:market) }
+
       before do
-        market.cross_sells << cross_selling_market
+        market.cross_sells.concat(cross_selling_market, cross_selling_market2, cross_selling_market3)
+        organization.market_organizations.create!(cross_sell_origin_market: market, market: cross_selling_market)
+        organization.market_organizations.create!(cross_sell_origin_market: market, market: cross_selling_market2)
+        organization.market_organizations.create!(cross_sell_origin_market: another_origin_market, market: cross_selling_market)
+        organization.market_organizations.create!(cross_sell_origin_market: another_origin_market, market: cross_selling_market2)
+        organization.market_organizations.create!(cross_sell_origin_market: another_origin_market, market: cross_selling_market3)
 
         switch_to_subdomain(market.subdomain)
         sign_in_as user
@@ -114,26 +123,32 @@ describe "Manage cross selling" do
           click_link "Cross Sell"
         end
 
-        organization_row = Dom::Admin::CrossSell.find_by_name(cross_selling_market.name)
-        expect(organization_row).to_not be_checked
+        cross_sell_row = Dom::Admin::CrossSell.find_by_name(cross_selling_market.name)
+        expect(cross_sell_row).to be_checked
 
-        organization_row.check
+        cross_sell_row2 = Dom::Admin::CrossSell.find_by_name(cross_selling_market2.name)
+        expect(cross_sell_row2).to be_checked
 
-        click_button "Save Changes"
+        cross_sell_row3 = Dom::Admin::CrossSell.find_by_name(cross_selling_market3.name)
+        expect(cross_sell_row3).not_to be_checked
 
-        expect(page).to have_content("Organization Updated Successfully")
-
-        organization_row = Dom::Admin::CrossSell.find_by_name(cross_selling_market.name)
-        expect(organization_row).to be_checked
-
-        organization_row.uncheck
+        cross_sell_row2.uncheck
+        cross_sell_row3.check
 
         click_button "Save Changes"
 
         expect(page).to have_content("Organization Updated Successfully")
 
-        organization_row = Dom::Admin::CrossSell.find_by_name(cross_selling_market.name)
-        expect(organization_row).to_not be_checked
+        cross_sell_row = Dom::Admin::CrossSell.find_by_name(cross_selling_market.name)
+        expect(cross_sell_row).to be_checked
+
+        cross_sell_row2 = Dom::Admin::CrossSell.find_by_name(cross_selling_market2.name)
+        expect(cross_sell_row2).to_not be_checked
+
+        cross_sell_row3 = Dom::Admin::CrossSell.find_by_name(cross_selling_market3.name)
+        expect(cross_sell_row3).to be_checked
+
+        expect(organization.market_organizations.where(cross_sell_origin_market: another_origin_market).count).to eq(3)
       end
     end
   end

@@ -34,11 +34,11 @@ class DeliverySchedule < ActiveRecord::Base
       Product.for_market_id(market_id)
     elsif require_delivery?
       Product.joins("LEFT JOIN product_deliveries ON products.id = product_deliveries.product_id").
-              where("NOT(market_organizations.cross_sell) OR product_deliveries.delivery_schedule_id = :id", id: id).
+              where("(market_organizations.cross_sell_origin_market_id IS NULL) OR product_deliveries.delivery_schedule_id = :id", id: id).
               for_market_id(market_id)
     elsif require_cross_sell_delivery?
       Product.joins("LEFT JOIN product_deliveries ON products.id = product_deliveries.product_id").
-              where("market_organizations.cross_sell OR product_deliveries.delivery_schedule_id = :id", id: id).
+              where("(market_organizations.cross_sell_origin_market_id IS NOT NULL) OR product_deliveries.delivery_schedule_id = :id", id: id).
               for_market_id(market_id)
     else
       products.for_market_id(market_id)
@@ -102,9 +102,9 @@ class DeliverySchedule < ActiveRecord::Base
 
   def required?(organization)
     if require_delivery?
-      organization.market_organizations.where(cross_sell: false, market_id: market_id).exists?
+      organization.markets.where(id: market_id).exists?
     elsif require_cross_sell_delivery?
-      organization.market_organizations.where(cross_sell: true, market_id: market_id).exists?
+      organization.cross_sells.where(id: market_id).exists?
     else
       false
     end

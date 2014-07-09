@@ -141,7 +141,7 @@ describe User do
       end
 
       context "cross selling organizations belonging to a market" do
-        let!(:cross_sell_org) { create(:organization, markets:[market2]).tap {|o| o.market_organizations.create(market: market1, cross_sell: true) } }
+        let!(:cross_sell_org) { create(:organization, markets:[market2]).tap {|o| o.market_organizations.create(market: market1, cross_sell_origin_market: market2) } }
 
         it "returns unique results for all organizations" do
           expect(result.count).to eql(3)
