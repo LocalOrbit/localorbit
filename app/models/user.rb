@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  class RoleError < RuntimeError; end
+
+  attr_reader :role_context
+
   include PgSearch
   include Sortable
   # Include default devise modules. Others available are:
@@ -60,17 +64,17 @@ class User < ActiveRecord::Base
     self.class.auth_token_verifier.generate(a: rand(100), id: id, expires: expires_in.from_now.to_i, b: rand(100))
   end
 
-  def admin?
-    role == "admin"
-  end
+  #def admin?
+    #role == "admin"
+  #end
 
-  def can_manage_organization?(org)
-    admin? || managed_markets.can_manage_organization?(org)
-  end
+  #def can_manage_organization?(org)
+    #admin? || managed_markets.can_manage_organization?(org)
+  #end
 
-  def can_manage_market?(market)
-    admin? || managed_markets.all.include?(market)
-  end
+  #def can_manage_market?(market)
+    #admin? || managed_markets.all.include?(market)
+  #end
 
   def market_manager?
     managed_markets.any?
@@ -168,13 +172,8 @@ class User < ActiveRecord::Base
   end
 
   def managed_products
-    if admin?
-      # Join market orgs to avoid grabbing products from deleted organizations
-      Product.visible.seller_can_sell.joins(organization: :market_organizations).where(market_organizations: {cross_sell: false})
-    else
-      org_ids = managed_organizations.pluck(:id).uniq
-      Product.visible.seller_can_sell.where(organization_id: org_ids)
-    end
+    org_ids = managed_organizations.pluck(:id).uniq
+    Product.visible.seller_can_sell.where(organization_id: org_ids)
   end
 
   def buyers_for_select
@@ -207,6 +206,8 @@ class User < ActiveRecord::Base
     end
     raw
   end
+
+  private
 
   def self.order_by_name(direction)
     direction == "asc" ? order("name asc") : order("name desc")

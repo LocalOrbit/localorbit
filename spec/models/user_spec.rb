@@ -424,4 +424,29 @@ describe User do
       end
     end
   end
+
+
+  context "when the user is a member of an organization in the market" do
+    let!(:user) { create(:user) }
+    let!(:market) { create(:market) }
+    let!(:organization) { create(:organization, users: [user], markets:[market]) }
+
+    it "sets their role context to be an OrganizationMember" do
+      user.set_role(market)
+      expect(user.role_context).to eql(role: Role::OrganizationMember, market: market)
+    end
+  end
+
+  context "when the user is not a member of an organization in the passed market" do
+    let!(:user) { create(:user) }
+    let!(:market) { create(:market) }
+    let!(:market2) { create(:market) }
+    let!(:organization) { create(:organization, users: [user], markets:[market2]) }
+
+    it "raises an exception" do
+      expect {
+        user.set_role(market)
+      }.to raise_error(User::RoleError)
+    end
+  end
 end
