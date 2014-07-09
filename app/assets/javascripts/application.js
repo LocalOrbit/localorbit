@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.datepicker
+//= require jquery-ui/datepicker
 //= require chosen-jquery
 //= require parser_rules/advanced
 //= require wysihtml5
