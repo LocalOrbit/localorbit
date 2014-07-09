@@ -5,7 +5,7 @@ module Admin
 
       def index
         @search_presenter = PaymentSearchPresenter.new(user: current_user, query: request.query_parameters)
-        @finder = Search::SellerPaymentGroupFinder.new(user: current_user, query: request.query_parameters)
+        @finder = Search::SellerPaymentGroupFinder.new(user: current_user, query: request.query_parameters, current_market: current_market)
         @sellers = @finder.payment_groups
       end
 

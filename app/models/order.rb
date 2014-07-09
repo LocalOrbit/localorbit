@@ -95,6 +95,22 @@ class Order < ActiveRecord::Base
       preload(:items, :market)
   end
 
+  def self.payable_to_sellers
+    subselect = "SELECT 1 FROM payments
+      INNER JOIN order_payments ON order_payments.order_id = orders.id AND order_payments.payment_id = payments.id
+      WHERE payments.payee_type = ? AND payments.payee_id = products.organization_id"
+
+    select('orders.*, products.organization_id as seller_id').joins(:delivery, items: :product).
+      where("NOT EXISTS(#{subselect})", "Organization").
+      # This is a slightly fuzzy match right now.
+      # TODO: Implement delivery_end on deliveries for greater accuracy
+      where("deliveries.deliver_on < ?", 48.hours.ago).
+      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
+      group("orders.id, seller_id").
+      order("orders.order_number").
+      includes(:market)
+  end
+
   def self.for_sort(order)
     column, direction = column_and_direction(order)
     case column

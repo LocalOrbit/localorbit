@@ -46,22 +46,6 @@ class Payment < ActiveRecord::Base
   scope :buyer_payments, -> { where(payment_type: ["order", "order refund"]) }
   scope :for_orders, lambda {|orders| joins(:order_payments).where(order_payments: {order_id: orders}) }
 
-  def self.payments_for_user(user)
-    subselect = "SELECT 1 FROM payments
-      INNER JOIN order_payments ON order_payments.order_id = orders.id AND order_payments.payment_id = payments.id
-      WHERE payments.payee_type = ? AND payments.payee_id = products.organization_id"
-
-    Order.select("orders.*, products.organization_id as seller_id").joins(:delivery, items: :product).
-      where("NOT EXISTS(#{subselect})", "Organization").
-      # This is a slightly fuzzy match right now.
-      # TODO: Implement delivery_end on deliveries for greater accuracy
-      where("deliveries.deliver_on < ?", 48.hours.ago).
-      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
-      group("orders.id, seller_id").
-      order("orders.order_number").
-      includes(:market)
-  end
-
   ransacker :update_at_date do |_|
     Arel.sql("DATE(updated_at)")
   end
