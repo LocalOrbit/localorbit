@@ -72,6 +72,10 @@ class User < ActiveRecord::Base
     admin? || managed_markets.all.include?(market)
   end
 
+  def can_manage_user?(user)
+    admin? || user.organizations.any? {|org| can_manage_organization?(org) }
+  end
+
   def market_manager?
     managed_markets.any?
   end

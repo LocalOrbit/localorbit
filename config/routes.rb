@@ -76,7 +76,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :users, only: :index
+    resources :users, only: [:index, :edit, :update]
 
     resources :promotions do
       member do
