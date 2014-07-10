@@ -11,13 +11,9 @@ namespace :db do
       system(update_pg_plugins)
       system(system_command)
 
-      users = User.all
-      default_pw = "password1"
-
-      users.each do |u|
-        u.password_confirmation = u.password = default_pw
-        u.save!
-      end
+      # This works for local dev data
+      # NEVER USE ON A SERVER
+      User.update_all(encrypted_password: Devise.bcrypt(User, "password1"))
 
     end
   end
