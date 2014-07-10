@@ -36,12 +36,16 @@ class OrderMailer < BaseMailer
 
     user = User.find_by(email: addresses)
 
+    auth_token = URI.encode_www_form_component(user.auth_token) # remove + and other characters
+
     scheme = Rails.env.production? || Rails.env.staging? ? "https://" : "http://"
-    uri = URI("#{scheme}#{@order.market.subdomain}.#{Figaro.env.domain}/admin/invoices/#{@order.id}/invoice.pdf?auth_token=#{user.auth_token}")
+    uri = URI("#{scheme}#{@order.market.subdomain}.#{Figaro.env.domain}/admin/invoices/#{@order.id}/invoice.pdf?auth_token=#{auth_token}")
 
     res = Net::HTTP.start(uri.host, uri.port, use_ssl: (uri.scheme == "https"), verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
       http.request Net::HTTP::Get.new(uri)
     end
+
+    res.value # Raises an exception if the response code isn't 2xx
 
     attachments["invoice.pdf"] = {mime_type: "application/pdf", content: res.body}
 
