@@ -15,11 +15,9 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 301
-      message: Moved Permanently
+      code: 200
+      message: OK
     headers:
-      Location:
-      - http://app.localtest.me/admin/invoices/19/invoice
       Content-Type:
       - application/pdf
       Cache-Control:
@@ -140,7 +138,7 @@ http_interactions:
         biAKMDAwMDAwMzE1MSAwMDAwMCBuIAowMDAwMDAzNDIyIDAwMDAwIG4gCjAw
         MDAwMDMxMzAgMDAwMDAgbiAKdHJhaWxlcgo8PAovU2l6ZSAxOQovSW5mbyAx
         IDAgUgovUm9vdCA5IDAgUgo+PgpzdGFydHhyZWYKNDE3MwolJUVPRgo=
-    http_version: 
+    http_version:
   recorded_at: Tue, 03 Jun 2014 19:17:54 GMT
 - request:
     method: get
@@ -157,11 +155,9 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 301
-      message: Moved Permanently
+      code: 200
+      message: OK
     headers:
-      Location:
-      - http://app.localtest.me/admin/invoices/23/invoice
       Content-Type:
       - application/pdf
       Cache-Control:
@@ -282,7 +278,7 @@ http_interactions:
         biAKMDAwMDAwMzE1MSAwMDAwMCBuIAowMDAwMDAzNDIyIDAwMDAwIG4gCjAw
         MDAwMDMxMzAgMDAwMDAgbiAKdHJhaWxlcgo8PAovU2l6ZSAxOQovSW5mbyAx
         IDAgUgovUm9vdCA5IDAgUgo+PgpzdGFydHhyZWYKNDE3MwolJUVPRgo=
-    http_version: 
+    http_version:
   recorded_at: Tue, 03 Jun 2014 19:17:55 GMT
 - request:
     method: get
@@ -299,11 +295,9 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 301
-      message: Moved Permanently
+      code: 200
+      message: OK
     headers:
-      Location:
-      - http://app.localorbit.dev/admin/invoices/29/invoice
       Content-Type:
       - application/pdf
       Cache-Control:
@@ -424,7 +418,7 @@ http_interactions:
         MCBuIAowMDAwMDAzMTUzIDAwMDAwIG4gCjAwMDAwMDM0MjQgMDAwMDAgbiAK
         MDAwMDAwMzEzMiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDE5Ci9JbmZv
         IDEgMCBSCi9Sb290IDkgMCBSCj4+CnN0YXJ0eHJlZgo0MTc1CiUlRU9GCg==
-    http_version: 
+    http_version:
   recorded_at: Thu, 05 Jun 2014 20:24:34 GMT
 - request:
     method: get
@@ -441,11 +435,9 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 301
-      message: Moved Permanently
+      code: 200
+      message: OK
     headers:
-      Location:
-      - http://app.localorbit.dev/admin/invoices/33/invoice
       Content-Type:
       - application/pdf
       Cache-Control:
@@ -566,6 +558,6 @@ http_interactions:
         MCBuIAowMDAwMDAzMTUzIDAwMDAwIG4gCjAwMDAwMDM0MjQgMDAwMDAgbiAK
         MDAwMDAwMzEzMiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDE5Ci9JbmZv
         IDEgMCBSCi9Sb290IDkgMCBSCj4+CnN0YXJ0eHJlZgo0MTc1CiUlRU9GCg==
-    http_version: 
+    http_version:
   recorded_at: Thu, 05 Jun 2014 20:24:35 GMT
 recorded_with: VCR 2.9.2
