@@ -15,6 +15,27 @@ namespace :db do
       # NEVER USE ON A SERVER
       User.update_all(encrypted_password: Devise.bcrypt(User, "password1"))
 
+      # Triggers all app files to load
+      Rails.application.config.eager_load_namespaces.each(&:eager_load!)
+
+      # By triggering all models to load we can auto detect uploads we need to process
+      uploads = Dragonfly::Model::Attachment.descendants.map {|i| [i.model_class, i.attribute] }
+
+      uploads.each do |klass, field|
+        scope = klass.where.not("#{field}_uid" => nil)
+        total = scope.count
+        scope.find_each.each_with_index do |item, idx|
+          begin
+            item.send(field).job.fetch_step.apply
+            puts "#{klass}/#{field} (#{idx + 1}/#{total}) Already downloaded"
+          rescue
+            puts "#{klass}/#{field} (#{idx + 1}/#{total}) Downloading"
+            uid = item.send(field).job.uid
+            image = Dragonfly.app.fetch_url("https://s3-us-west-2.amazonaws.com/localorbit-uploads-staging/#{uid}")
+            image.store(path: uid)
+          end
+        end
+      end
     end
   end
 end
