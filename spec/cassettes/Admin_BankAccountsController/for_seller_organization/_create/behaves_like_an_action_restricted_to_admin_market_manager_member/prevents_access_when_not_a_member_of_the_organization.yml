@@ -1,0 +1,96 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/bank_accounts
+    body:
+      encoding: UTF-8
+      string: '{"routing_number":"021000021","account_number":"9900000002","name":"Johann
+        Bernoulli","type":"checking"}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 11 Jul 2014 15:38:58 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/bank_accounts/BA3GUPoyKRZWYCiymcPSgMBf
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM7917e606091111e49beb02a1fe52a36c
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-4-8
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhTVggPbldQAQkWDEQRFgFKXVVGVkcVQQFNE1JKBQ9UUVEKCwdRVFsCAQ5UXB0WAVNeT0ISV14ECQENBgNcAVUCB1BWUBQbQQACVEBVOQ==
+      Content-Length:
+      - '965'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "credits_uri": "/v1/bank_accounts/BA3GUPoyKRZWYCiymcPSgMBf/credits",
+          "bank_name": "JPMORGAN CHASE BANK",
+          "_type": "bank_account",
+          "customer": null,
+          "_uris": {
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "verifications_uri": {
+              "_type": "page",
+              "key": "verifications"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            }
+          },
+          "fingerprint": "2ef53fa3f76e47c5930f77fe0a59aa103b5abfd5622f08305b786808ec574a1e",
+          "can_debit": false,
+          "id": "BA3GUPoyKRZWYCiymcPSgMBf",
+          "verifications_uri": "/v1/bank_accounts/BA3GUPoyKRZWYCiymcPSgMBf/verifications",
+          "routing_number": "021000021",
+          "verification_uri": null,
+          "name": "Johann Bernoulli",
+          "created_at": "2014-07-11T15:38:58.247397Z",
+          "uri": "/v1/bank_accounts/BA3GUPoyKRZWYCiymcPSgMBf",
+          "meta": {},
+          "debits_uri": "/v1/bank_accounts/BA3GUPoyKRZWYCiymcPSgMBf/debits",
+          "account_number": "xxxxxx0002",
+          "type": "checking"
+        }
+    http_version: 
+  recorded_at: Fri, 11 Jul 2014 15:38:58 GMT
+recorded_with: VCR 2.9.2
