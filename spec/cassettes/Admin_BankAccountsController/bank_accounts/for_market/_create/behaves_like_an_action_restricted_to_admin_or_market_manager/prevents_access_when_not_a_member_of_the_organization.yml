@@ -1,0 +1,215 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: '{"name":"Market 13","meta":{"entity_id":13,"entity_name":"Market 13","entity_type":"market"}}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 11 Jul 2014 16:51:21 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU4zqM0efPTKQNAW9MRkKyoh
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM962f9b58091b11e4a52c02a1fe53e539
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9QCltcBgBZXlELAwhdVFsOBxtGXQIaE0AFUQYIBg9WW1xWBQtXWAIJQx9CAldbEgM+
+      Content-Length:
+      - '1699'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU4zqM0efPTKQNAW9MRkKyoh/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "13",
+            "entity_name": "Market 13",
+            "entity_type": "market"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU4zqM0efPTKQNAW9MRkKyoh/bank_accounts",
+          "id": "CU4zqM0efPTKQNAW9MRkKyoh",
+          "credits_uri": "/v1/customers/CU4zqM0efPTKQNAW9MRkKyoh/credits",
+          "cards_uri": "/v1/customers/CU4zqM0efPTKQNAW9MRkKyoh/cards",
+          "holds_uri": "/v1/customers/CU4zqM0efPTKQNAW9MRkKyoh/holds",
+          "name": "Market 13",
+          "refunds_uri": "/v1/customers/CU4zqM0efPTKQNAW9MRkKyoh/refunds",
+          "dob": null,
+          "created_at": "2014-07-11T16:51:21.675530Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU4zqM0efPTKQNAW9MRkKyoh",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU4zqM0efPTKQNAW9MRkKyoh/debits",
+          "transactions_uri": "/v1/customers/CU4zqM0efPTKQNAW9MRkKyoh/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Fri, 11 Jul 2014 16:51:22 GMT
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/bank_accounts
+    body:
+      encoding: UTF-8
+      string: '{"routing_number":"021000021","account_number":"9900000002","name":"Johann
+        Bernoulli","type":"checking"}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 11 Jul 2014 16:51:22 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/bank_accounts/BA4AoqlXup6iVh1cHdzlykGF
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM9699161e091b11e49cde02a1fe53e539
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-4-8
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhTVggPbldQAQkWDEQRFgFKXVVGVkcVQQFNE1JKBANVUVUNAwRXU1cPBwFRSBEEAlpKQ0ABA1lWXAgGVwQEXVYEVFBSRhoXBwcPS1Zt
+      Content-Length:
+      - '965'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "credits_uri": "/v1/bank_accounts/BA4AoqlXup6iVh1cHdzlykGF/credits",
+          "bank_name": "JPMORGAN CHASE BANK",
+          "_type": "bank_account",
+          "customer": null,
+          "_uris": {
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "verifications_uri": {
+              "_type": "page",
+              "key": "verifications"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            }
+          },
+          "fingerprint": "2ef53fa3f76e47c5930f77fe0a59aa103b5abfd5622f08305b786808ec574a1e",
+          "can_debit": false,
+          "id": "BA4AoqlXup6iVh1cHdzlykGF",
+          "verifications_uri": "/v1/bank_accounts/BA4AoqlXup6iVh1cHdzlykGF/verifications",
+          "routing_number": "021000021",
+          "verification_uri": null,
+          "name": "Johann Bernoulli",
+          "created_at": "2014-07-11T16:51:22.539903Z",
+          "uri": "/v1/bank_accounts/BA4AoqlXup6iVh1cHdzlykGF",
+          "meta": {},
+          "debits_uri": "/v1/bank_accounts/BA4AoqlXup6iVh1cHdzlykGF/debits",
+          "account_number": "xxxxxx0002",
+          "type": "checking"
+        }
+    http_version: 
+  recorded_at: Fri, 11 Jul 2014 16:51:22 GMT
+recorded_with: VCR 2.9.2

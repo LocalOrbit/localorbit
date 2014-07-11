@@ -1,0 +1,559 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: '{"name":"Organization 89","meta":{"entity_id":89,"entity_name":"Organization
+        89","entity_type":"organization"}}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 11 Jul 2014 16:54:05 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU7xDn3tKPno6zf3IrsepxuB
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHMf7cbed76091b11e49cde02a1fe53e539
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-4-8
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9VAVFXBAZRVlsOCwJWVFMbEQZXVR0WEVYFAlIHVVwADQxSCwNSCQATTRMEBVpEBDs=
+      Content-Length:
+      - '1717'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "89",
+            "entity_name": "Organization 89",
+            "entity_type": "organization"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/bank_accounts",
+          "id": "CU7xDn3tKPno6zf3IrsepxuB",
+          "credits_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/credits",
+          "cards_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/cards",
+          "holds_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/holds",
+          "name": "Organization 89",
+          "refunds_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/refunds",
+          "dob": null,
+          "created_at": "2014-07-11T16:54:05.459737Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/debits",
+          "transactions_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Fri, 11 Jul 2014 16:54:05 GMT
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/cards
+    body:
+      encoding: UTF-8
+      string: '{"name":"John Doe","card_number":"4111111111111111","expiration_month":"05","expiration_year":"2020","security_code":"123"}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 11 Jul 2014 16:54:06 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/cards/CC7yOj6q7O6A0jpzydblsT0p
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHMf850980a091b11e48da902a1fe53e539
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-4-8
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSVhQAQhhQEAMCFlVAFEIIFBQCHVcPUgNYBlpcDg5RVlQNBQhQTUIEAgBKRBNTClJSWgYHVllXXFtSBgNVG00RB1IOF1Nq
+      Content-Length:
+      - '664'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "security_code_check": "passed",
+          "_type": "card",
+          "hash": "6d81d77017c302d824e830cbb49d132d9e3078f9a949a7b7900f817bf89d450f",
+          "last_four": "1111",
+          "_uris": {},
+          "brand": "Visa",
+          "expiration_month": 5,
+          "meta": {},
+          "postal_code": null,
+          "country_code": null,
+          "id": "CC7yOj6q7O6A0jpzydblsT0p",
+          "customer": null,
+          "account": null,
+          "postal_code_check": "unknown",
+          "name": "John Doe",
+          "expiration_year": 2020,
+          "created_at": "2014-07-11T16:54:06.506853Z",
+          "uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/cards/CC7yOj6q7O6A0jpzydblsT0p",
+          "card_type": "visa",
+          "is_valid": true,
+          "is_verified": true,
+          "street_address": null
+        }
+    http_version: 
+  recorded_at: Fri, 11 Jul 2014 16:54:06 GMT
+- request:
+    method: get
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU7xDn3tKPno6zf3IrsepxuB
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 11 Jul 2014 16:54:07 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHMf8c11c38091b11e48ad106429171ffad
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-4-8
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      Content-Length:
+      - '485'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "89",
+            "entity_name": "Organization 89",
+            "entity_type": "organization"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/bank_accounts",
+          "id": "CU7xDn3tKPno6zf3IrsepxuB",
+          "credits_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/credits",
+          "cards_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/cards",
+          "holds_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/holds",
+          "name": "Organization 89",
+          "refunds_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/refunds",
+          "dob": null,
+          "created_at": "2014-07-11T16:54:05.459737Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/debits",
+          "transactions_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Fri, 11 Jul 2014 16:54:07 GMT
+- request:
+    method: put
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU7xDn3tKPno6zf3IrsepxuB
+    body:
+      encoding: UTF-8
+      string: '{"_type":"customer","twitter":null,"reversals_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/reversals","phone":null,"meta":{"entity_id":"89","entity_name":"Organization
+        89","entity_type":"organization"},"facebook":null,"address":null,"business_name":null,"bank_accounts_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/bank_accounts","id":"CU7xDn3tKPno6zf3IrsepxuB","credits_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/credits","cards_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/cards","holds_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/holds","name":null,"refunds_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/refunds","dob":null,"created_at":"2014-07-11T16:54:05.459737Z","destination":null,"is_identity_verified":false,"source":null,"_uris":{"transactions_uri":{"_type":"page","key":"transactions"},"bank_accounts_uri":{"_type":"page","key":"bank_accounts"},"refunds_uri":{"_type":"page","key":"refunds"},"debits_uri":{"_type":"page","key":"debits"},"holds_uri":{"_type":"page","key":"holds"},"reversals_uri":{"_type":"page","key":"reversals"},"credits_uri":{"_type":"page","key":"credits"},"cards_uri":{"_type":"page","key":"cards"}},"debits_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/debits","transactions_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/transactions","ssn_last4":null,"email":null,"ein":null}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 11 Jul 2014 16:54:07 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHMf902d9de091b11e4ab2502a1fe52a36c
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-4-8
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNF0AGWRZdGhgSA0kZUR9QA1tXAwNRV1oJBQVUUlsHBxtGVQIHA05GQVUABAsDCV0GAVJcDwAHBAdASBZRAAoQXW4=
+      Content-Length:
+      - '484'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "89",
+            "entity_name": "Organization 89",
+            "entity_type": "organization"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/bank_accounts",
+          "id": "CU7xDn3tKPno6zf3IrsepxuB",
+          "credits_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/credits",
+          "cards_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/cards",
+          "holds_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/holds",
+          "name": null,
+          "refunds_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/refunds",
+          "dob": null,
+          "created_at": "2014-07-11T16:54:05.459737Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/debits",
+          "transactions_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Fri, 11 Jul 2014 16:54:07 GMT
+- request:
+    method: put
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU7xDn3tKPno6zf3IrsepxuB
+    body:
+      encoding: UTF-8
+      string: '{"_type":"customer","twitter":null,"reversals_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/reversals","phone":null,"meta":{"entity_id":"89","entity_name":"Organization
+        89","entity_type":"organization"},"facebook":null,"address":{},"business_name":null,"bank_accounts_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/bank_accounts","id":"CU7xDn3tKPno6zf3IrsepxuB","credits_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/credits","cards_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/cards","holds_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/holds","name":null,"refunds_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/refunds","dob":null,"created_at":"2014-07-11T16:54:05.459737Z","destination":null,"is_identity_verified":false,"source":null,"_uris":{"transactions_uri":{"_type":"page","key":"transactions"},"bank_accounts_uri":{"_type":"page","key":"bank_accounts"},"refunds_uri":{"_type":"page","key":"refunds"},"debits_uri":{"_type":"page","key":"debits"},"holds_uri":{"_type":"page","key":"holds"},"reversals_uri":{"_type":"page","key":"reversals"},"credits_uri":{"_type":"page","key":"credits"},"cards_uri":{"_type":"page","key":"cards"}},"debits_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/debits","transactions_uri":"/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/transactions","ssn_last4":null,"email":null,"ein":null,"card_uri":"/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/cards/CC7yOj6q7O6A0jpzydblsT0p"}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 11 Jul 2014 16:54:08 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHMf94e71b4091b11e4a52c02a1fe53e539
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNF0AGWRZdGhgSA0kZUR9TBlNTDg9ZU1cNCghdWFsbEQZVXQgaE0BeUAcHBghQCFkAAVcEDQcJQx9CAldbEgM+
+      Content-Length:
+      - '537'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "89",
+            "entity_name": "Organization 89",
+            "entity_type": "organization"
+          },
+          "facebook": null,
+          "address": {
+            "country_code": "USA"
+          },
+          "source_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/cards/CC7yOj6q7O6A0jpzydblsT0p",
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/bank_accounts",
+          "id": "CU7xDn3tKPno6zf3IrsepxuB",
+          "credits_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/credits",
+          "cards_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/cards",
+          "holds_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/holds",
+          "name": null,
+          "dob": null,
+          "created_at": "2014-07-11T16:54:05.459737Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB",
+          "refunds_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/refunds",
+          "_uris": {
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "source_uri": {
+              "_type": "card",
+              "key": "source"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/debits",
+          "transactions_uri": "/v1/customers/CU7xDn3tKPno6zf3IrsepxuB/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Fri, 11 Jul 2014 16:54:08 GMT
+recorded_with: VCR 2.9.2

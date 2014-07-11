@@ -1,0 +1,123 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: '{"name":"Market 103","meta":{"entity_id":103,"entity_name":"Market
+        103","entity_type":"market"}}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 11 Jul 2014 16:53:31 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU6URSFchFKVK0b2ZNQVJpit
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHMe3424a08091b11e4a52c02a1fe53e539
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-4-8
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9TA1JWAQFQVVULCghXUFcDAhtGXQcaE0BWWgdVVQ1XDA5XVgtcDQMFQx9CAldbEgM+
+      Content-Length:
+      - '1702'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU6URSFchFKVK0b2ZNQVJpit/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "103",
+            "entity_name": "Market 103",
+            "entity_type": "market"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU6URSFchFKVK0b2ZNQVJpit/bank_accounts",
+          "id": "CU6URSFchFKVK0b2ZNQVJpit",
+          "credits_uri": "/v1/customers/CU6URSFchFKVK0b2ZNQVJpit/credits",
+          "cards_uri": "/v1/customers/CU6URSFchFKVK0b2ZNQVJpit/cards",
+          "holds_uri": "/v1/customers/CU6URSFchFKVK0b2ZNQVJpit/holds",
+          "name": "Market 103",
+          "refunds_uri": "/v1/customers/CU6URSFchFKVK0b2ZNQVJpit/refunds",
+          "dob": null,
+          "created_at": "2014-07-11T16:53:30.992309Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU6URSFchFKVK0b2ZNQVJpit",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU6URSFchFKVK0b2ZNQVJpit/debits",
+          "transactions_uri": "/v1/customers/CU6URSFchFKVK0b2ZNQVJpit/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Fri, 11 Jul 2014 16:53:31 GMT
+recorded_with: VCR 2.9.2

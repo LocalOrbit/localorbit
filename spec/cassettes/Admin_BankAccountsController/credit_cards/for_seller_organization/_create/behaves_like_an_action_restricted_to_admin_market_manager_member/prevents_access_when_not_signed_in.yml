@@ -1,0 +1,206 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: '{"name":"Organization 87","meta":{"entity_id":87,"entity_name":"Organization
+        87","entity_type":"organization"}}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 11 Jul 2014 16:54:02 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU7uvHEUVnfdhl36UEvhkV7v
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHMf624d00a091b11e4ba9202a1fe52a36c
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-4-8
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9TAVZWAQRYVFMIBglWUVYGHRdXVQAaE0BSBgcIAQwHWwACCgRUD1YHQx9CAldbEgM+
+      Content-Length:
+      - '1717'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU7uvHEUVnfdhl36UEvhkV7v/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "87",
+            "entity_name": "Organization 87",
+            "entity_type": "organization"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU7uvHEUVnfdhl36UEvhkV7v/bank_accounts",
+          "id": "CU7uvHEUVnfdhl36UEvhkV7v",
+          "credits_uri": "/v1/customers/CU7uvHEUVnfdhl36UEvhkV7v/credits",
+          "cards_uri": "/v1/customers/CU7uvHEUVnfdhl36UEvhkV7v/cards",
+          "holds_uri": "/v1/customers/CU7uvHEUVnfdhl36UEvhkV7v/holds",
+          "name": "Organization 87",
+          "refunds_uri": "/v1/customers/CU7uvHEUVnfdhl36UEvhkV7v/refunds",
+          "dob": null,
+          "created_at": "2014-07-11T16:54:02.682070Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU7uvHEUVnfdhl36UEvhkV7v",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU7uvHEUVnfdhl36UEvhkV7v/debits",
+          "transactions_uri": "/v1/customers/CU7uvHEUVnfdhl36UEvhkV7v/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Fri, 11 Jul 2014 16:54:03 GMT
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/cards
+    body:
+      encoding: UTF-8
+      string: '{"name":"John Doe","card_number":"4111111111111111","expiration_month":"05","expiration_year":"2020","security_code":"123"}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 11 Jul 2014 16:54:03 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/cards/CC7vB15FcwxfaFlkkWHOnXaV
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHMf6844f76091b11e49beb02a1fe52a36c
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSVhQAQhhQEAMCFlVAFEIIFBQCHVEJUwZXAVpcDw9XVFMOAwVRTUIEAgBKRBMOVgRTW1YAAVxQDABWAlFTG00RB1IOF1Nq
+      Content-Length:
+      - '664'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "security_code_check": "passed",
+          "_type": "card",
+          "hash": "6d81d77017c302d824e830cbb49d132d9e3078f9a949a7b7900f817bf89d450f",
+          "last_four": "1111",
+          "_uris": {},
+          "brand": "Visa",
+          "expiration_month": 5,
+          "meta": {},
+          "postal_code": null,
+          "country_code": null,
+          "id": "CC7vB15FcwxfaFlkkWHOnXaV",
+          "customer": null,
+          "account": null,
+          "postal_code_check": "unknown",
+          "name": "John Doe",
+          "expiration_year": 2020,
+          "created_at": "2014-07-11T16:54:03.641555Z",
+          "uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/cards/CC7vB15FcwxfaFlkkWHOnXaV",
+          "card_type": "visa",
+          "is_valid": true,
+          "is_verified": true,
+          "street_address": null
+        }
+    http_version: 
+  recorded_at: Fri, 11 Jul 2014 16:54:03 GMT
+recorded_with: VCR 2.9.2
