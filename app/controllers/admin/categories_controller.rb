@@ -11,6 +11,6 @@ class Admin::CategoriesController < AdminController
   end
 
   def show
-    @category = Category.preload(:products).find(params[:id])
+    @category = Category.preload(products: :organization).find(params[:id])
   end
 end
