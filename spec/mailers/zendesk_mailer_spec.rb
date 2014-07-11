@@ -1,9 +1,9 @@
 require "spec_helper"
 
 describe ZendeskMailer do
+  let(:user) { build(:user) }
+
   describe "request_unit" do
-    let(:email) { "requester@example.com" }
-    let(:name) { "Requester Person" }
     let(:params) {{
       singular: "fathom",
       plural: "fathoms",
@@ -11,9 +11,9 @@ describe ZendeskMailer do
     }}
 
     it "sends a new unit request to the admins" do
-      fresh_sheet = ZendeskMailer.request_unit(email, name, params)
-      expect(fresh_sheet.from).to include(email)
-      expect(fresh_sheet.body).to include(name)
+      fresh_sheet = ZendeskMailer.request_unit(user, params)
+      expect(fresh_sheet.from).to include(user.email)
+      expect(fresh_sheet.body).to include(user.name)
       expect(fresh_sheet.body).to include(params[:singular])
       expect(fresh_sheet.body).to include(params[:plural])
       expect(fresh_sheet.body).to include(params[:additional_notes])
@@ -21,14 +21,12 @@ describe ZendeskMailer do
   end
 
   describe "request_category" do
-    let(:email) { "requester@example.com" }
-    let(:name) { "Requester Person" }
     let(:category) { "Meat/Spam" }
 
     it "sends a new unit request to the admins" do
-      fresh_sheet = ZendeskMailer.request_category(email, name, category)
-      expect(fresh_sheet.from).to include(email)
-      expect(fresh_sheet.body).to include(name)
+      fresh_sheet = ZendeskMailer.request_category(user, category)
+      expect(fresh_sheet.from).to include(user.email)
+      expect(fresh_sheet.body).to include(user.name)
       expect(fresh_sheet.body).to include(category)
     end
   end

@@ -657,7 +657,7 @@ describe "Adding a product" do
       it "allows the user to request a new unit" do
         click_link "Request a New Unit"
 
-        expect(ZendeskMailer).to receive(:request_unit).with(user.email, user.name, {
+        expect(ZendeskMailer).to receive(:request_unit).with(user, {
           "singular" => "fathom",
           "plural" => "fathoms",
           "additional_notes" => "See more notes"
@@ -677,7 +677,7 @@ describe "Adding a product" do
         click_link "Request a New Category"
 
         expect(ZendeskMailer).to receive(:request_category).with(
-          user.email, user.name, "Goop"
+          user, "Goop"
         ).and_return(double(:mailer, deliver: true))
 
         fill_in "Product Category", with: "Goop"
