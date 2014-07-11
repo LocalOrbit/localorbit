@@ -33,7 +33,7 @@ class MetricsPresenter
       scope: Order.joins(:items).where.not(order_items: { delivery_status: "canceled" }),
       attribute: :placed_at,
       calculation: :custom,
-      calculation_arg: "(COUNT(DISTINCT order_items.id)::NUMERIC / COUNT(DISTINCT orders.id)::NUMERIC) AS count"
+      calculation_arg: "(COUNT(DISTINCT order_items.id)::NUMERIC / COUNT(DISTINCT orders.id)::NUMERIC)"
     }
   }
 
@@ -92,8 +92,8 @@ class MetricsPresenter
                           format: "%-m/%-d/%Y")
     when :month
       scope.group_by_month(attribute,
-                            range: 5.months.ago.beginning_of_month..Time.now,
-                            format: "%b %Y")
+                           range: 5.months.ago.beginning_of_month..Time.now,
+                           format: "%b %Y")
     end
   end
 
@@ -104,12 +104,7 @@ class MetricsPresenter
     scope = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
 
     if m[:calculation] == :custom
-      # Since we're using a custom calculation, we have to redefine the
-      # interval column since it gets clobbered when using `select`.
-      # Additionally, groupdate relies on ActiveRecord::Calculations so we
-      # provide an override at the model level for our custom calculations.
-      interval_column = scope.relation.group_values.first
-      scope.select("#{m[:calculation_arg]}, #{interval_column} AS #{interval}").to_groupdate(interval, :count)
+      scope.group_calc(m[:calculation_arg])
     else
       scope.send(m[:calculation], m[:calculation_arg])
     end
