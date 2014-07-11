@@ -152,6 +152,8 @@ describe "Manage cross selling" do
         expect(cross_sell_row3).to be_checked
 
         expect(organization.market_organizations.where(cross_sell_origin_market: another_origin_market).count).to eq(3)
+        # if we don't handle string keys correctly then we will create an extra join record:
+        expect(organization.market_organizations.where(cross_sell_origin_market: market).count).to eq(2)
       end
     end
   end

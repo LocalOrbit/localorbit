@@ -86,7 +86,7 @@ class Organization < ActiveRecord::Base
   end
 
   def update_cross_sells!(from_market: nil, to_ids: [])
-    ids = to_ids
+    ids = to_ids.map(&:to_i)
 
     original_cross_sells  = market_organizations.where(cross_sell_origin_market: from_market)
     cross_sells_to_remove = market_organizations.where(cross_sell_origin_market: from_market).where.not(market_id: ids)
