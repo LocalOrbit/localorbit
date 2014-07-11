@@ -98,7 +98,7 @@ class Organization < ActiveRecord::Base
     ids = to_ids.map(&:to_i)
 
     original_cross_sells  = market_organizations.where(cross_sell_origin_market: from_market)
-    cross_sells_to_remove = market_organizations.where(cross_sell_origin_market: from_market).where.not(market_id: ids)
+    cross_sells_to_remove = original_cross_sells.where.not(market_id: ids)
     new_cross_sell_ids = ids - original_cross_sells.map(&:market_id)
 
     # Create the new ones
