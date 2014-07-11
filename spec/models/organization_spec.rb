@@ -95,15 +95,23 @@ describe Organization do
       it "creates new associations" do
         expect {
           organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
-        }.to change(organization.market_organizations, :count).by(1)
+        }.to change(organization.cross_sells, :count).by(1)
       end
 
-      it "destroys missing associations" do
+      it "removes missing associations" do
         organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
 
         expect {
           organization.update_cross_sells!(from_market: market, to_ids: [])
-        }.to change(organization.market_organizations, :count).by(-1)
+        }.to change(organization.cross_sells, :count).by(-1)
+      end
+
+      it "soft deletes the removed missing associations" do
+        organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
+
+        expect {
+          organization.update_cross_sells!(from_market: market, to_ids: [])
+        }.to_not change(MarketOrganization, :count)
       end
 
       it "doesn't touch unchanged associations" do
@@ -112,7 +120,7 @@ describe Organization do
         expect {
           # if we don't handle string IDs properly we will get an extra record
           organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id.to_s])
-        }.to_not change(organization.market_organizations, :count)
+        }.to_not change(organization.cross_sells, :count)
       end
 
       it "ignores cross sells originating from other markets" do
@@ -121,7 +129,7 @@ describe Organization do
 
         expect {
           organization.update_cross_sells!(from_market: market, to_ids: [])
-        }.to_not change(organization.market_organizations, :count)
+        }.to_not change(organization.cross_sells, :count)
       end
     end
 

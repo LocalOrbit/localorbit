@@ -115,7 +115,7 @@ class Organization < ActiveRecord::Base
     end
 
     # Destroy the old ones
-    cross_sells_to_remove.each(&:destroy)
+    cross_sells_to_remove.soft_delete_all
 
     update_product_delivery_schedules
   end
