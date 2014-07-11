@@ -1,18 +1,14 @@
 require "spec_helper"
 
 describe "admin manange organization", :vcr do
-  let(:admin) { create(:user, :admin) }
-  let(:market) { create(:market) }
-
-  before do
-    switch_to_main_domain
-    sign_in_as(admin)
-  end
+  let(:user) { create(:user, :admin) }
 
   it "create new organization with multiple markets available", js: true do
-    create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: true, default_allow_ach: true)
-    create(:market, name: "Market 2", allow_purchase_orders: false, default_allow_purchase_orders: false, default_allow_credit_cards: true, default_allow_ach: false)
+    market1 = create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: true, default_allow_ach: true)
+    market2 = create(:market, name: "Market 2", allow_purchase_orders: false, default_allow_purchase_orders: false, default_allow_credit_cards: true, default_allow_ach: false)
 
+    switch_to_subdomain(market1.subdomain)
+    sign_in_as(user)
     visit "/admin/organizations"
     click_link "Add Organization"
 
@@ -57,8 +53,10 @@ describe "admin manange organization", :vcr do
   end
 
   it "should not see payment types that are disabled for the market", js: true do
-    create(:market, name: "Market 1", allow_purchase_orders: false, allow_credit_cards: true, allow_ach: true)
+    market = create(:market, name: "Market 1", allow_purchase_orders: false, allow_credit_cards: true, allow_ach: true)
 
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(user)
     visit "/admin/organizations"
     click_link "Add Organization"
 
@@ -73,8 +71,10 @@ describe "admin manange organization", :vcr do
 
 
   it "create new organization", js: true do
-    create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: false, default_allow_ach: false)
+    market = create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: false, default_allow_ach: false)
 
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(user)
     visit "/admin/organizations"
     click_link "Add Organization"
 
@@ -105,9 +105,11 @@ describe "admin manange organization", :vcr do
   end
 
   it "maintains market selection on form errors" do
-    m1 = create(:market, name: "Market 1")
-    m2 = create(:market, name: "Market 2")
+    market1 = create(:market, name: "Market 1")
+    market2 = create(:market, name: "Market 2")
 
+    switch_to_subdomain(market1.subdomain)
+    sign_in_as(user)
     visit "/admin/organizations"
     click_link "Add Organization"
 
@@ -115,12 +117,18 @@ describe "admin manange organization", :vcr do
     click_button "Add Organization"
 
     expect(page).to have_content("Name can't be blank")
-    expect(find_field('Market').value).to eq(m2.id.to_s)
+    expect(find_field('Market').value).to eq(market2.id.to_s)
   end
 
   describe "locations" do
+    let!(:market) { create(:market) }
     let!(:organization) do
-      create(:organization, name: "University of Michigan Farmers", markets:[market])
+      create(:organization, name: "University of Michigan Farmers", markets: [market])
+    end
+
+    before do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
     end
 
     it "lists locations" do
@@ -341,11 +349,14 @@ describe "admin manange organization", :vcr do
   end
 
   context "sorting", :js do
+    let!(:market)         { create(:market) }
     let!(:organization_a) { create(:organization, markets: [market], name: "A Organization", can_sell: false, created_at: '2014-01-01') }
     let!(:organization_b) { create(:organization, markets: [market], name: "B Organization", can_sell: true, created_at: '2013-01-01') }
     let!(:organization_c) { create(:organization, markets: [market], name: "C Organization", can_sell: false, created_at: '2012-01-01') }
 
     before do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
       visit admin_organizations_path
     end
 
@@ -399,8 +410,13 @@ describe "admin manange organization", :vcr do
   end
 
   describe "Deleting an organization" do
-    let!(:market) { create(:market) }
+    let!(:market)  { create(:market) }
     let!(:product) { create(:product, :sellable, organization: seller) }
+
+    before do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+    end
 
     context "single market membership" do
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market])}
@@ -423,8 +439,52 @@ describe "admin manange organization", :vcr do
       end
 
       it "removes the organizations products from the products listing" do
+        visit admin_organizations_path
+        expect(page).to have_content("Holland Farms")
+
+        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+
+        within(holland_farms.node) do
+          click_link "Delete"
+        end
+
+        expect(page).to have_content("Removed Holland Farms")
+
+        visit admin_products_path
+
+        expect(page).to have_content("Add New Product")
         expect(page).to_not have_content(product.name)
         expect(page).to_not have_content(seller.name)
+      end
+
+      context "with cross sells" do
+        let!(:cross_sell_to) { create(:market) }
+
+        before do
+          seller.update_cross_sells!(from_market: market, to_ids: [cross_sell_to.id])
+        end
+
+        it "removes cross sell associations" do
+          expect(seller.markets.count).to eq(1)
+          expect(seller.cross_sells.count).to eq(1)
+
+          visit admin_organizations_path
+          expect(page).to have_content("Holland Farms")
+
+          holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+
+          within(holland_farms.node) do
+            click_link "Delete"
+          end
+
+          expect(page).to have_content("Removed Holland Farms")
+          holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+          expect(holland_farms).to be_nil
+
+          seller.reload
+          expect(seller.markets.count).to eq(0)
+          expect(seller.cross_sells.count).to eq(0)
+        end
       end
     end
 
@@ -447,19 +507,52 @@ describe "admin manange organization", :vcr do
         expect(page).to have_content("Remove Organization from Markets")
         sleep(1)
         expect(Dom::Admin::MarketMembershipRow.count).to eql(2)
-
-        Dom::Admin::MarketMembershipRow.find_by_name(market.name).check
-        click_button "Remove Membership(s)"
-
-        expect(page).to have_content("Removed Holland Farms")
       end
 
-      it "removes the organization from the organizations list" do
-        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
-        expect(holland_farms.market).to have_content(market2.name)
-        expect(holland_farms.market).to_not have_content(market.name)
+      context "when the admin checks markets" do      
+        it "removes the organization from the organizations list" do
+          Dom::Admin::MarketMembershipRow.find_by_name(market.name).check
+          click_button "Remove Membership(s)"
+
+          expect(page).to have_content("Removed Holland Farms")
+
+          holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+          expect(holland_farms.market).to have_content(market2.name)
+          expect(holland_farms.market).to_not have_content(market.name)
+        end
+      end
+
+      context "when the admin checks no markets" do
+        it "responds with a flash message" do
+          click_button "Remove Membership(s)"
+          save_screenshot("sweetness.png")
+          expect(page).to have_content("Please choose at least one market to remove #{seller.name} from.")
+        end
       end
     end
 
+    context "trying to mess with market you can't manage" do
+      let!(:user)    { create(:user, managed_markets: [market]) }
+      let!(:market2) { create(:market) }
+
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market, market2]) }
+
+      it "does not remove the market" do
+        visit admin_organizations_path
+
+        holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+
+        delete_link = holland_farms.node.find("[title=Delete]")
+        # user modifies dom with Chrome inspector…
+        delete_link.native[:href] = admin_organization_path(seller, "ids[]" => market2.id)
+
+        delete_link.click
+
+        expect(page).to have_content("Holland Farms")
+        expect(page).to_not have_content("Removed #{seller.name}")
+
+        expect(seller.markets.count).to eq(2)
+      end
+    end
   end
 end
