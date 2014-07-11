@@ -25,11 +25,11 @@
             <% row_categories = category.self_and_ancestors.where("depth > 0") %>
             <% row_categories.each do |column_category| %>
               <td <%= "colspan=#{max_depth + 1 - column_category.depth}" if column_category == row_categories.last %>>
-                <%= column_category.name %>
+                <%= link_to column_category.name, [:admin, category] %>
               </td>
             <% end %>
             <td>
-              <%= category.products.count %>
+              <%= link_to category.products.count, [:admin, category] %>
             </td>
           </tr>
         <% end %>

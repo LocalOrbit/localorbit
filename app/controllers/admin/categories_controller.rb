@@ -9,4 +9,8 @@ class Admin::CategoriesController < AdminController
       format.csv { @filename = "taxonomy.csv" }
     end
   end
+
+  def show
+    @category = Category.preload(:products).find(params[:id])
+  end
 end
