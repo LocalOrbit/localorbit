@@ -17,6 +17,7 @@
     <table>
       <thead>
         <th colspan="<%= max_depth %>">Name</th>
+        <th>Products</th>
       </thead>
       <tbody>
         <% @root.descendants.each do |category| %>
@@ -27,6 +28,9 @@
                 <%= column_category.name %>
               </td>
             <% end %>
+            <td>
+              <%= category.products.count %>
+            </td>
           </tr>
         <% end %>
       </tbody>
