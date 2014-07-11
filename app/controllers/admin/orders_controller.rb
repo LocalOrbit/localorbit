@@ -18,6 +18,7 @@ class Admin::OrdersController < AdminController
     else
       @order = SellerOrder.new(order, current_user)
     end
+    setup_deliveries(@order)
   end
 
   def update
@@ -55,6 +56,7 @@ class Admin::OrdersController < AdminController
       order = updates.context[:order]
       order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == "failed"
       @order = SellerOrder.new(order, current_user)
+      setup_deliveries(@order)
       render :show
     end
   end
@@ -87,5 +89,13 @@ class Admin::OrdersController < AdminController
     @show_add_items_form = true
     @order = SellerOrder.new(order, current_user)
     @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new)
+  end
+
+  # Builds a list of deliveries for potential changes
+  # Some from the past, some from future, and the order's actual one.
+  def setup_deliveries(order)
+    @deliveries = current_market.deliveries.recent |
+      current_market.deliveries.future.active |
+      [order.delivery]
   end
 end
