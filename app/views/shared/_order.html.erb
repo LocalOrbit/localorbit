@@ -21,7 +21,7 @@
       <% if can_change_delivery_on_placed_order?(current_user) && (current_user.admin? || current_user.market_manager?) %>
         <div id="delivery-changer">
           <span class="change-delivery">
-            <%= link_to "Change", "#", id: "change-delivery-date", class: "reset btn" %>
+            <%= link_to "Change Delivery", "#", id: "change-delivery-date", class: "reset btn" %>
           </span>
           <div class="fields is-hidden">
             <%= f.select :delivery_id, @deliveries.

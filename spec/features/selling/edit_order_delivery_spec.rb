@@ -59,7 +59,7 @@ describe "Edit order delivery date" do
     context "successfully changing the delivery" do
       before do
         visit admin_order_path(order)
-        click_link "Change"
+        click_link "Change Delivery"
         expect(UpdateOrderDelivery).to receive(:perform).and_return(double("interactor", success?: true))
       end
 
@@ -73,7 +73,7 @@ describe "Edit order delivery date" do
     context "unsuccessfully changing the delivery" do
       before do
         visit admin_order_path(order)
-        click_link "Change"
+        click_link "Change Delivery"
         expect(UpdateOrderDelivery).to receive(:perform).and_return(double("interactor", success?: false))
       end
 
