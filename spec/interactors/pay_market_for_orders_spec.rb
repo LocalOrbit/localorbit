@@ -11,7 +11,7 @@ describe PayMarketForOrders do
   let(:balanced_credit) { double(Balanced::Credit, uri: '/balanced-credit-1') }
 
   before do
-    Balanced::BankAccount.stub(:find).with("/bank-account-1").and_return(balanaced_bank_account)
+    expect(Balanced::BankAccount).to receive(:find).with("/bank-account-1").and_return(balanaced_bank_account)
 
     expect(Market).to receive(:find).with(market.id).and_return(market)
     expect(market).to receive(:orders).and_return(double("orders", find: orders))
