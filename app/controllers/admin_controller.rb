@@ -14,4 +14,9 @@ class AdminController < ApplicationController
   def find_market
     @market = current_user.markets.find(params[:market_id])
   end
+
+  def lookup_manageable_user
+    @user = User.find(params[:id])
+    render_404 unless current_user.can_manage_user?(@user)
+  end
 end

@@ -379,11 +379,9 @@ module Dom
 
     class UserRow < Domino
       selector ".user-row"
-      attribute :email
 
-      def name
-        node.find(".user-list-name").text
-      end
+      attribute :email
+      attribute :name
 
       def remove!
         node.click_button "Delete"

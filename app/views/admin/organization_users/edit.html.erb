@@ -1,0 +1,5 @@
+<%= render 'admin/organizations/header' %>
+
+<div class="row row--partial">
+  <%= render 'admin/users/form', url: admin_organization_user_path(@organization, @user) %>
+</div>

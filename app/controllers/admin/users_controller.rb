@@ -35,11 +35,6 @@ module Admin
 
     private
 
-    def lookup_manageable_user
-      @user = User.find(params[:id])
-      render_404 unless current_user.can_manage_user?(@user)
-    end
-
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation).reject {|k,v| v.empty?}
     end
