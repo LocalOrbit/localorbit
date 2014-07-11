@@ -24,4 +24,13 @@ feature "An Admin viewing the product taxonomy" do
     click_link "Export CSV"
     expect(page).to have_content("Fruits,Apples,Golden Delicious")
   end
+
+  scenario "viewing products for a category" do
+    product = create(:product)
+    sign_in_as user
+    visit admin_categories_path
+    click_link "1"
+    expect(page).to have_content(product.category.name)
+    expect(page).to have_content(product.name)
+  end
 end
