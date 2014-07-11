@@ -1,8 +1,23 @@
 module Admin
   class OrganizationUsersController < AdminController
     before_action :find_organization
+    before_action :lookup_manageable_user, only: [:edit, :update]
 
     def index
+    end
+
+    def edit
+    end
+
+    def update
+      original_email = @user.email
+
+      if @user.update_attributes(user_params)
+        redirect_to admin_organization_users_path(@organization), notice: "User saved successfully."
+        UserMailer.user_updated(@user, current_user, original_email).deliver
+      else
+        render :edit
+      end
     end
 
     def create
@@ -30,7 +45,7 @@ module Admin
     private
 
     def user_params
-      params.require(:user).permit(:email)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation).reject {|k,v| v.empty?}
     end
 
     def find_organization

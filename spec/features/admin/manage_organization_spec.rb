@@ -283,6 +283,63 @@ describe "admin manange organization", :vcr do
     end
   end
 
+  context "user management" do
+    let!(:user) { create(:user, name: "Design Dude") }
+    let!(:organization) do
+      create(:organization, name: "University of Michigan Farmers", markets:[market], users:[user])
+    end
+
+    before do
+      visit "/admin/organizations"
+      click_link "University of Michigan Farmers"
+
+      click_link "Users"
+
+      user = Dom::Admin::UserRow.first
+
+      click_link "Design Dude"
+
+      expect(page).to have_content("Editing User: Design Dude")
+    end
+
+    scenario "editing a user's password" do
+      fill_in "New Password", with: "password2"
+      fill_in "Confirm Password", with: "password2"
+
+      expect(UserMailer).to receive(:user_updated).with(user, admin, user.email).and_return(double(:user_mailer, deliver: true))
+
+      click_button "Save Changes"
+
+      user_row = Dom::Admin::UserRow.find_by_email(user.email)
+
+      expect(user.reload.valid_password?("password2")).to be true
+    end
+
+    scenario "editing a user's email address" do
+      fill_in "Email", with: "wrong@example.com"
+
+      expect(UserMailer).to receive(:user_updated).with(user, admin, user.email).and_return(double(:user_mailer, deliver: true))
+
+      click_button "Save Changes"
+
+      user_row = Dom::Admin::UserRow.find_by_email("wrong@example.com")
+
+      expect(user_row.email).to eq("wrong@example.com")
+    end
+
+    scenario "editing a user's name" do
+      expect(UserMailer).to receive(:user_updated).with(user, admin, user.email).and_return(double(:user_mailer, deliver: true))
+
+      fill_in "Name", with: "Frank Ocean"
+
+      click_button "Save Changes"
+
+      user_row = Dom::Admin::UserRow.first
+
+      expect(user_row.name).to eq("Frank Ocean")
+    end
+  end
+
   context "sorting", :js do
     let!(:organization_a) { create(:organization, markets: [market], name: "A Organization", can_sell: false, created_at: '2014-01-01') }
     let!(:organization_b) { create(:organization, markets: [market], name: "B Organization", can_sell: true, created_at: '2013-01-01') }
