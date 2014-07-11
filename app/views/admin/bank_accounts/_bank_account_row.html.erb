@@ -1,10 +1,14 @@
-<% if bank_account.verified? %>
-
-  <tr class="bank-account">
+<% content_for bank_account do %>
     <td class="bank-name"><%= bank_account.bank_name %></td>
     <td class="name"><%= bank_account.name %></td>
     <td class="account-number">******<%= bank_account.last_four %></td>
     <td class="account-type"><%= bank_account.account_type.titleize %></td>
+<% end %>
+
+<% if bank_account.verified? %>
+
+  <tr class="bank-account">
+    <%= yield bank_account %>
     <td class="verified">
         <i class="font-icon icon-checkmark"></i> Verified
     </td>
@@ -17,16 +21,20 @@
 <% else %>
 
   <tr class="bank-account unverified-bank-data">
-    <td class="bank-name"><%= bank_account.bank_name %></td>
-    <td class="name"><%= bank_account.name %></td>
-    <td class="account-number">******<%= bank_account.last_four %></td>
-    <td class="account-type"><%= bank_account.account_type.titleize %></td>
+    <%= yield bank_account %>
     <td class="verified">    </td>
     <td class="notes"><%= bank_account.notes %></td>
     <td class="delete"><%= link_to raw("&#57418;"), [:admin, @entity, bank_account], data: { method: :delete }, title: "Delete" %></td>
   </tr>
   <tr class="unverified">
-    <td colspan="7"><%= link_to "Verify Account", [:admin, @entity, bank_account, BankAccountVerification.new], class: "btn btn--blue btn--small" %> <span class="please-verify">This account needs to be verified. Please click the button and follow the instructions.</span></td>
+    <td colspan="7">
+      <% if bank_account.verification_failed? %>
+      We could not verify your bank account. Please contact <%= link_to 'Local Orbit Support', help_path %>.
+      <% else %>
+      <%= link_to "Verify Account", [:admin, @entity, bank_account, :bank_account_verification], class: "btn btn--blue btn--small" %>
+      <span class="please-verify">This account needs to be verified. Please click the button and follow the instructions.</span>
+      <% end %>
+    </td>
   </tr>
 
 <% end %>

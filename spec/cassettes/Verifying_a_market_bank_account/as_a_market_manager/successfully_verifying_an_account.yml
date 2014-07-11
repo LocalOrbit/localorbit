@@ -1,0 +1,873 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers
+    body:
+      encoding: UTF-8
+      string: '{"name":"Funville","meta":{"entity_id":1,"entity_name":"Funville","entity_type":"market"}}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 10 Jul 2014 21:41:52 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM0184b498087b11e4a52c02a1fe53e539
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNAUIHWRZdGhgSA0kZUR9QC1ZTBwdRVFYPCwdXVFECAxtGXQEaE0AFVQZUUltXCg8MBAJdAVBQQx9CAldbEgM+
+      Content-Length:
+      - '1686'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "1",
+            "entity_name": "Funville",
+            "entity_type": "market"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/bank_accounts",
+          "id": "CU2Uiu4SEPUwnW8uSCdIXoJ",
+          "credits_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/credits",
+          "cards_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/cards",
+          "holds_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/holds",
+          "name": "Funville",
+          "refunds_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/refunds",
+          "dob": null,
+          "created_at": "2014-07-10T21:41:52.779152Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/debits",
+          "transactions_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Thu, 10 Jul 2014 21:41:53 GMT
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/bank_accounts
+    body:
+      encoding: UTF-8
+      string: '{"routing_number":"021000021","account_number":"9900000002","name":"Johann
+        Bernoulli","type":"checking"}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type
+      Access-Control-Allow-Methods:
+      - POST, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 10 Jul 2014 21:41:54 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM026d302e087b11e487d602a1fe53e539
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhTVggPbldQAQkWDEQRFgFKXVVGVkcVQQFNE1JKBQFWVVMAAgNdWVIGAQVTUB0WAVNeT0ISUwAEAVxXUVFUAAdQAlJUVBQbQQACVEBVOQ==
+      Content-Length:
+      - '960'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "credits_uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/credits",
+          "bank_name": "JPMORGAN CHASE BANK",
+          "_type": "bank_account",
+          "customer": null,
+          "_uris": {
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "verifications_uri": {
+              "_type": "page",
+              "key": "verifications"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            }
+          },
+          "fingerprint": "2ef53fa3f76e47c5930f77fe0a59aa103b5abfd5622f08305b786808ec574a1e",
+          "can_debit": false,
+          "id": "BA4XtIcovmifGRHUSyeRXYJ",
+          "verifications_uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications",
+          "routing_number": "021000021",
+          "verification_uri": null,
+          "name": "Johann Bernoulli",
+          "created_at": "2014-07-10T21:41:54.604571Z",
+          "uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ",
+          "meta": {},
+          "debits_uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/debits",
+          "account_number": "xxxxxx0002",
+          "type": "checking"
+        }
+    http_version: 
+  recorded_at: Thu, 10 Jul 2014 21:41:54 GMT
+- request:
+    method: get
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 10 Jul 2014 21:41:55 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM02f3fd02087b11e4aecc02b12035401b
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      Content-Length:
+      - '481'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "1",
+            "entity_name": "Funville",
+            "entity_type": "market"
+          },
+          "facebook": null,
+          "address": {},
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/bank_accounts",
+          "id": "CU2Uiu4SEPUwnW8uSCdIXoJ",
+          "credits_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/credits",
+          "cards_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/cards",
+          "holds_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/holds",
+          "name": "Funville",
+          "refunds_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/refunds",
+          "dob": null,
+          "created_at": "2014-07-10T21:41:52.779152Z",
+          "destination": null,
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/debits",
+          "transactions_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Thu, 10 Jul 2014 21:41:55 GMT
+- request:
+    method: put
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ
+    body:
+      encoding: UTF-8
+      string: '{"_type":"customer","twitter":null,"reversals_uri":"/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/reversals","phone":null,"meta":{"entity_id":"1","entity_name":"Funville","entity_type":"market"},"facebook":null,"address":{},"business_name":null,"bank_accounts_uri":"/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/bank_accounts","id":"CU2Uiu4SEPUwnW8uSCdIXoJ","credits_uri":"/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/credits","cards_uri":"/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/cards","holds_uri":"/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/holds","name":"Funville","refunds_uri":"/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/refunds","dob":null,"created_at":"2014-07-10T21:41:52.779152Z","destination":null,"is_identity_verified":false,"source":null,"_uris":{"transactions_uri":{"_type":"page","key":"transactions"},"bank_accounts_uri":{"_type":"page","key":"bank_accounts"},"refunds_uri":{"_type":"page","key":"refunds"},"debits_uri":{"_type":"page","key":"debits"},"holds_uri":{"_type":"page","key":"holds"},"reversals_uri":{"_type":"page","key":"reversals"},"credits_uri":{"_type":"page","key":"credits"},"cards_uri":{"_type":"page","key":"cards"}},"debits_uri":"/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/debits","transactions_uri":"/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/transactions","ssn_last4":null,"email":null,"ein":null,"bank_account_uri":"/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ"}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 10 Jul 2014 21:41:55 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM033096a4087b11e4a82802a1fe52a36c
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      X-Midlr-Version:
+      - '2'
+      X-Newrelic-App-Data:
+      - PxQFWFNXCQYTVVhWAwQDVUYdFhE1AwE2QgNWEVlbQFtcCxYxSBVbDQoZVA4IF0pcXAgEEBhSQhUQXltWEBVNF0AGWRZdGhgSA0kZUR9TAFdRAANYUlQJAQhWWFcOHRdXVwQCH0JEAAFTUgsGDQwDBwJXC1VQUhFORFBWDRUGZQ==
+      Content-Length:
+      - '540'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "reversals_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/reversals",
+          "phone": null,
+          "meta": {
+            "entity_id": "1",
+            "entity_name": "Funville",
+            "entity_type": "market"
+          },
+          "facebook": null,
+          "address": {
+            "country_code": "USA"
+          },
+          "destination_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ",
+          "business_name": null,
+          "bank_accounts_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/bank_accounts",
+          "id": "CU2Uiu4SEPUwnW8uSCdIXoJ",
+          "credits_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/credits",
+          "cards_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/cards",
+          "holds_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/holds",
+          "name": "Funville",
+          "refunds_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/refunds",
+          "dob": null,
+          "created_at": "2014-07-10T21:41:52.779152Z",
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ",
+          "source": null,
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "destination_uri": {
+              "_type": "bank_account",
+              "key": "destination"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/debits",
+          "transactions_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ/transactions",
+          "ssn_last4": null,
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Thu, 10 Jul 2014 21:41:55 GMT
+- request:
+    method: get
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 10 Jul 2014 21:41:56 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM03911ed4087b11e48ad106429171ffad
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      Content-Length:
+      - '803'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "credits_uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/credits",
+          "bank_name": "JPMORGAN CHASE BANK",
+          "_type": "bank_account",
+          "customer": {
+            "customer_uri": "/v1/customers/CU2Uiu4SEPUwnW8uSCdIXoJ",
+            "_type": "account",
+            "_uris": {
+              "transactions_uri": {
+                "_type": "page",
+                "key": "transactions"
+              },
+              "bank_accounts_uri": {
+                "_type": "page",
+                "key": "bank_accounts"
+              },
+              "refunds_uri": {
+                "_type": "page",
+                "key": "refunds"
+              },
+              "customer_uri": {
+                "_type": "customer",
+                "key": "customer"
+              },
+              "debits_uri": {
+                "_type": "page",
+                "key": "debits"
+              },
+              "holds_uri": {
+                "_type": "page",
+                "key": "holds"
+              },
+              "reversals_uri": {
+                "_type": "page",
+                "key": "reversals"
+              },
+              "credits_uri": {
+                "_type": "page",
+                "key": "credits"
+              },
+              "cards_uri": {
+                "_type": "page",
+                "key": "cards"
+              }
+            },
+            "transactions_uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/accounts/CU2Uiu4SEPUwnW8uSCdIXoJ/transactions",
+            "name": "Funville",
+            "roles": [],
+            "created_at": "2014-07-10T21:41:52.779152Z",
+            "uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/accounts/CU2Uiu4SEPUwnW8uSCdIXoJ",
+            "reversals_uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/accounts/CU2Uiu4SEPUwnW8uSCdIXoJ/reversals",
+            "refunds_uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/accounts/CU2Uiu4SEPUwnW8uSCdIXoJ/refunds",
+            "meta": {
+              "entity_id": "1",
+              "entity_name": "Funville",
+              "entity_type": "market"
+            },
+            "debits_uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/accounts/CU2Uiu4SEPUwnW8uSCdIXoJ/debits",
+            "holds_uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/accounts/CU2Uiu4SEPUwnW8uSCdIXoJ/holds",
+            "bank_accounts_uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/accounts/CU2Uiu4SEPUwnW8uSCdIXoJ/bank_accounts",
+            "email_address": null,
+            "id": "CU2Uiu4SEPUwnW8uSCdIXoJ",
+            "credits_uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/accounts/CU2Uiu4SEPUwnW8uSCdIXoJ/credits",
+            "cards_uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/accounts/CU2Uiu4SEPUwnW8uSCdIXoJ/cards"
+          },
+          "_uris": {
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "verifications_uri": {
+              "_type": "page",
+              "key": "verifications"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            }
+          },
+          "fingerprint": "2ef53fa3f76e47c5930f77fe0a59aa103b5abfd5622f08305b786808ec574a1e",
+          "can_debit": false,
+          "id": "BA4XtIcovmifGRHUSyeRXYJ",
+          "verifications_uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications",
+          "routing_number": "021000021",
+          "verification_uri": null,
+          "name": "Johann Bernoulli",
+          "created_at": "2014-07-10T21:41:54.604571Z",
+          "uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ",
+          "meta": {},
+          "debits_uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/debits",
+          "account_number": "xxxxxx0002",
+          "type": "checking"
+        }
+    http_version: 
+  recorded_at: Thu, 10 Jul 2014 21:41:56 GMT
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 10 Jul 2014 21:42:03 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications/BZe5pwvQanEQbl6HUzoGE5v
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM03d5ef46087b11e4a4e806429171ffad
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-4-8
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      Content-Length:
+      - '356'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "bank_account_authentication",
+          "state": "deposit_succeeded",
+          "created_at": "2014-07-10T21:42:02.729581Z",
+          "uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications/BZe5pwvQanEQbl6HUzoGE5v",
+          "updated_at": "2014-07-10T21:42:03.119623Z",
+          "attempts": 0,
+          "_uris": {},
+          "id": "BZe5pwvQanEQbl6HUzoGE5v",
+          "remaining_attempts": 3
+        }
+    http_version: 
+  recorded_at: Thu, 10 Jul 2014 21:42:03 GMT
+- request:
+    method: get
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications/BZe5pwvQanEQbl6HUzoGE5v
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 10 Jul 2014 21:42:03 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM08330d4e087b11e4b88e02b12035401b
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      Content-Length:
+      - '356'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "bank_account_authentication",
+          "state": "deposit_succeeded",
+          "created_at": "2014-07-10T21:42:02.729581Z",
+          "uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications/BZe5pwvQanEQbl6HUzoGE5v",
+          "updated_at": "2014-07-10T21:42:03.119623Z",
+          "attempts": 0,
+          "_uris": {},
+          "id": "BZe5pwvQanEQbl6HUzoGE5v",
+          "remaining_attempts": 3
+        }
+    http_version: 
+  recorded_at: Thu, 10 Jul 2014 21:42:04 GMT
+- request:
+    method: get
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications/BZe5pwvQanEQbl6HUzoGE5v
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 10 Jul 2014 21:42:04 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM08c459d4087b11e4ac8902b12035401b
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      Content-Length:
+      - '356'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "bank_account_authentication",
+          "state": "deposit_succeeded",
+          "created_at": "2014-07-10T21:42:02.729581Z",
+          "uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications/BZe5pwvQanEQbl6HUzoGE5v",
+          "updated_at": "2014-07-10T21:42:03.119623Z",
+          "attempts": 0,
+          "_uris": {},
+          "id": "BZe5pwvQanEQbl6HUzoGE5v",
+          "remaining_attempts": 3
+        }
+    http_version: 
+  recorded_at: Thu, 10 Jul 2014 21:42:05 GMT
+- request:
+    method: get
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications/BZe5pwvQanEQbl6HUzoGE5v
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 10 Jul 2014 21:42:05 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM091a9434087b11e48ad106429171ffad
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-4-8
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      Content-Length:
+      - '356'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "bank_account_authentication",
+          "state": "deposit_succeeded",
+          "created_at": "2014-07-10T21:42:02.729581Z",
+          "uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications/BZe5pwvQanEQbl6HUzoGE5v",
+          "updated_at": "2014-07-10T21:42:03.119623Z",
+          "attempts": 0,
+          "_uris": {},
+          "id": "BZe5pwvQanEQbl6HUzoGE5v",
+          "remaining_attempts": 3
+        }
+    http_version: 
+  recorded_at: Thu, 10 Jul 2014 21:42:05 GMT
+- request:
+    method: put
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications/BZe5pwvQanEQbl6HUzoGE5v
+    body:
+      encoding: UTF-8
+      string: '{"_type":"bank_account_authentication","state":"deposit_succeeded","created_at":"2014-07-10T21:42:02.729581Z","updated_at":"2014-07-10T21:42:03.119623Z","attempts":0,"_uris":{},"id":"BZe5pwvQanEQbl6HUzoGE5v","remaining_attempts":3,"amount_1":"1","amount_2":"1"}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 10 Jul 2014 21:42:06 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM095dce20087b11e4b88e02b12035401b
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-201
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.2.82
+      Content-Length:
+      - '347'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "bank_account_authentication",
+          "state": "verified",
+          "created_at": "2014-07-10T21:42:02.729581Z",
+          "uri": "/v1/bank_accounts/BA4XtIcovmifGRHUSyeRXYJ/verifications/BZe5pwvQanEQbl6HUzoGE5v",
+          "updated_at": "2014-07-10T21:42:05.974538Z",
+          "attempts": 1,
+          "_uris": {},
+          "id": "BZe5pwvQanEQbl6HUzoGE5v",
+          "remaining_attempts": 2
+        }
+    http_version: 
+  recorded_at: Thu, 10 Jul 2014 21:42:06 GMT
+recorded_with: VCR 2.9.2

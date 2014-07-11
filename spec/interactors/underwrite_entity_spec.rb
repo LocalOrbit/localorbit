@@ -7,20 +7,6 @@ describe UnderwriteEntity do
   let(:org) { create(:organization, name: "Our Org") }
   let(:balanced_customer) { OpenStruct.new }
 
-  describe "#setup" do
-    let(:representative_params) do
-      {
-        name: "",
-        ssn_last4: "",
-      }
-    end
-
-    it "clears nil values in representative_params" do
-      expect(interactor.representative_params[:name]).to be_nil
-      expect(interactor.representative_params[:ssn_last_4]).to be_nil
-    end
-  end
-
   describe "#perform" do
     let(:representative_params) do
       {
@@ -85,6 +71,24 @@ describe UnderwriteEntity do
         }.to change {
           org.balanced_underwritten?
         }.from(false).to(true)
+      end
+
+      context "without underwritting params" do
+        let(:representative_params) do
+          {
+            name: "",
+            ssn_last4: "",
+          }
+        end
+
+        it "does not attempt underwritting" do
+          expect(Balanced::Customer).to_not receive(:find)
+
+          interactor.perform
+
+          expect(interactor.representative_params[:name]).to be_nil
+          expect(interactor.representative_params[:ssn_last_4]).to be_nil
+        end
       end
     end
   end

@@ -1,8 +1,14 @@
 require "spec_helper"
 
 describe BankAccountVerification do
+  let(:org) { create(:organization) }
+  let(:bank_account) { create(:bank_account, :checking, bankable: org) }
   let(:model) { BankAccountVerification.new }
-  
+
+  before do
+    model.bank_account = bank_account
+  end
+
   describe "validations" do
     it "requires 2 amounts" do
       model.valid?
@@ -15,7 +21,6 @@ describe BankAccountVerification do
     it "verifies with balanced if valid" do
       model.amount_1 = 1
       model.amount_2 = 2
-      model.bank_account = double(:bank_account)
       expect(VerifyBankAccount).to receive(:perform).with(
         bank_account: model.bank_account,
         verification_params: {amount_1: 1, amount_2: 2}).and_return(double(:interactor, success?: true))
