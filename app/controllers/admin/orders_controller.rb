@@ -18,10 +18,12 @@ class Admin::OrdersController < AdminController
     else
       @order = SellerOrder.new(order, current_user)
     end
+    setup_deliveries(@order)
   end
 
   def update
     order = Order.find(params[:id])
+    setup_deliveries(order)
 
     if params["items_to_add"]
       result = UpdateOrderWithNewItems.perform(order: order, item_hashes: items_to_add)
@@ -35,6 +37,9 @@ class Admin::OrdersController < AdminController
       setup_add_items_form(order)
       flash.now[:notice] = "Add items below."
       render :show
+      return
+    elsif params[:commit] == "Change Delivery"
+      update_delivery(order)
       return
     end
 
@@ -63,6 +68,17 @@ class Admin::OrdersController < AdminController
     ])
   end
 
+  def update_delivery(order)
+    order = Order.find(params[:id])
+
+    updates = UpdateOrderDelivery.perform(order: order, delivery_id: params.require(:order)[:delivery_id])
+    if updates.success?
+      redirect_to admin_order_path(order), notice: "Delivery successfully updated."
+    else
+      redirect_to admin_order_path(order), alert: "This order's delivery cannot be changed at this time. Our support team has been notified and will update you with more information."
+    end
+  end
+
   def items_to_add
     items = params.require(:items_to_add)
     items.select {|i| i[:quantity].to_i > 0 }
@@ -72,5 +88,13 @@ class Admin::OrdersController < AdminController
     @show_add_items_form = true
     @order = SellerOrder.new(order, current_user)
     @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new)
+  end
+
+  # Builds a list of deliveries for potential changes
+  # Some from the past, some from future, and the order's actual one.
+  def setup_deliveries(order)
+    @deliveries = current_market.deliveries.recent |
+      current_market.deliveries.future.active |
+      [order.delivery]
   end
 end

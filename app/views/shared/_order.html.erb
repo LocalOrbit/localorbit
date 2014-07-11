@@ -10,13 +10,28 @@
 
     <div class="order-address">Billing Address:</div>
     <div class="special-content">
-      <%= order.billing_address %>, <%= order.billing_city %>, <%= order.billing_state %> <%= order.billing_zip %><br />
-      <%= order.billing_phone %><br />
+      <%= order.billing_address %>, <%= order.billing_city %>, <%= order.billing_state %> <%= order.billing_zip %><br>
+      <%= order.billing_phone %><br>
     </div>
     <div class="order-address"><%= order.display_delivery_or_pickup.titleize %></div>
     <div class="special-content">
       <%= order.display_delivery_address %><br>
       <%= order.delivery.decorate.human_delivery_date %><br>
+
+      <% if can_change_delivery_on_placed_order?(current_user) && (current_user.admin? || current_user.market_manager?) %>
+        <div id="delivery-changer">
+          <span class="change-delivery">
+            <%= link_to "Change Delivery", "#", id: "change-delivery-date", class: "reset btn" %>
+          </span>
+          <div class="fields is-hidden">
+            <%= f.select :delivery_id, @deliveries.
+                        map {|d| d.decorate(context: {current_organization: current_organization}) }.
+                        sort_by {|d| d.deliver_on }.map{|d| ["#{d.type} - #{d.display_date} #{d.buyer_time_range}", d.id] } %>
+            <br>
+            <%= f.submit "Change Delivery", class: "btn btn--blue btn--small" %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class="order-info-status">
