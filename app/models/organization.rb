@@ -122,7 +122,7 @@ class Organization < ActiveRecord::Base
   end
 
   def is_cross_selling?(from: nil, to: nil)
-    market_organizations.where(cross_sell_origin_market: from, market: to).any?
+    market_organizations.where(cross_sell_origin_market: from, market: to).exists?
   end
 
   private
