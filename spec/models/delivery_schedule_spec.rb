@@ -199,12 +199,12 @@ describe DeliverySchedule do
   end
 
   describe "#participating_products" do
-    let!(:cross_sell_market) { create(:market) }
+    let!(:origin_market) { create(:market) }
 
     let!(:market_org)     { create(:organization, markets: [market]) }
     let!(:cross_sell_org) do
-      create(:organization, markets: [cross_sell_market]).tap do |o|
-        o.market_organizations.create!(market: market, cross_sell_origin_market: cross_sell_market)
+      create(:organization, markets: [origin_market]).tap do |o|
+        o.update_cross_sells!(from_market: origin_market, to_ids: [market.id])
       end
     end
 
