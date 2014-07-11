@@ -37,8 +37,7 @@ class Admin::OrdersController < AdminController
       flash.now[:notice] = "Add items below."
       render :show
       return
-    elsif
-      params[:commit] == "Change Delivery"
+    elsif params[:commit] == "Change Delivery"
       update_delivery(order)
       return
     end
