@@ -82,7 +82,7 @@ class Organization < ActiveRecord::Base
     can_sell? && markets.joins(:plan).where(allow_cross_sell: true, plans: {cross_selling: true}).any?
   end
 
-  def update_product_delivery_schedules(_)
+  def update_product_delivery_schedules
     reload.products.each(&:save) if persisted?
   end
 
@@ -98,10 +98,10 @@ class Organization < ActiveRecord::Base
       market_organizations.create(market_id: new_cross_sell_id, cross_sell_origin_market: from_market)
     end
 
-    #Destroy the old ones
-    cross_sells_to_remove.each{|cs| cs.delete}
+    # Destroy the old ones
+    cross_sells_to_remove.each(&:delete)
 
-    update_product_delivery_schedules(nil)
+    update_product_delivery_schedules
   end
 
   def balanced_customer
@@ -113,7 +113,7 @@ class Organization < ActiveRecord::Base
   end
 
   def is_cross_selling?(from: nil, to: nil)
-    market_organizations.where(cross_sell_origin_market: from, market_id: to.id).any?
+    market_organizations.where(cross_sell_origin_market: from, market: to).any?
   end
 
   private

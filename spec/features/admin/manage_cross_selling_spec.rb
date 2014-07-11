@@ -94,11 +94,14 @@ describe "Manage cross selling" do
 
       before do
         market.cross_sells.concat(cross_selling_market, cross_selling_market2, cross_selling_market3)
-        organization.market_organizations.create!(cross_sell_origin_market: market, market: cross_selling_market)
-        organization.market_organizations.create!(cross_sell_origin_market: market, market: cross_selling_market2)
-        organization.market_organizations.create!(cross_sell_origin_market: another_origin_market, market: cross_selling_market)
-        organization.market_organizations.create!(cross_sell_origin_market: another_origin_market, market: cross_selling_market2)
-        organization.market_organizations.create!(cross_sell_origin_market: another_origin_market, market: cross_selling_market3)
+        organization.update_cross_sells!(
+          from_market: market,
+          to_ids:      [cross_selling_market.id, cross_selling_market2.id]
+        )
+        organization.update_cross_sells!(
+          from_market: another_origin_market,
+          to_ids:      [cross_selling_market.id, cross_selling_market2.id, cross_selling_market3.id]
+        )
 
         switch_to_subdomain(market.subdomain)
         sign_in_as user
