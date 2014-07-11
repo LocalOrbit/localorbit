@@ -9,7 +9,7 @@ class Organization < ActiveRecord::Base
   has_many :all_markets, through: :market_organizations, source: :market
 
   has_many :markets, -> { where(market_organizations: {cross_sell_origin_market_id: nil}) }, through: :market_organizations
-  has_many :cross_sells, -> { where.not(market_organizations: {cross_sell_origin_market_id: true}) }, 
+  has_many :cross_sells, -> { where.not(market_organizations: {cross_sell_origin_market_id: nil}) }, 
     through: :market_organizations,
     source: :market
 
