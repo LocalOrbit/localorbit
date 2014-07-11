@@ -212,6 +212,10 @@ class User < ActiveRecord::Base
     raw
   end
 
+  def pretty_email
+    "#{name.to_s.inspect} <#{email}>"
+  end
+
   def self.order_by_name(direction)
     direction == "asc" ? order("name asc") : order("name desc")
   end

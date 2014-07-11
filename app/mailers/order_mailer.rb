@@ -4,7 +4,7 @@ class OrderMailer < BaseMailer
     @order = BuyerOrder.new(order)
 
     mail(
-      to: order.organization.users.pluck(:email),
+      to: order.organization.users.map(&:pretty_email),
       subject: "Thank you for your order"
     )
   end
@@ -15,7 +15,7 @@ class OrderMailer < BaseMailer
     @seller = seller
 
     mail(
-      to: seller.users.pluck(:email),
+      to: seller.users.map(&:pretty_email),
       subject: "New order on #{@market.name}"
     )
   end
@@ -25,7 +25,7 @@ class OrderMailer < BaseMailer
     @order = BuyerOrder.new(order) # Market Managers should see all items
 
     mail(
-      to: order.market.managers.pluck(:email),
+      to: order.market.managers.map(&:pretty_email),
       subject: "New order on #{@market.name}"
     )
   end
