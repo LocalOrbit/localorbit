@@ -1227,6 +1227,7 @@ label ~ .tooltip {
   .actions {
     padding: 10px;
     @include border-radius(5px);
+    margin: 0 10px;
     background: #D9F6F9;
   }
 }
@@ -1289,6 +1290,7 @@ label ~ .tooltip {
   .stickable {
     &.js-positioned {
       position: absolute;
+      z-index: 3;
       left: 0;
     }
     &.js-fixed {
@@ -1302,7 +1304,6 @@ label ~ .tooltip {
     }
     &.stickable {
       &.js-positioned {
-        z-index: 3;
         @include box-sizing(border-box);
         width: 100%;
         > .l-constraint {

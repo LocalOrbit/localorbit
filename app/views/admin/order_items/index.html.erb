@@ -64,11 +64,13 @@
 
 <%= form_tag set_status_admin_order_items_path, class: "cling-wrap", id: "sold-items" do %>
   <div class="action-header stickable">
-    <div class="actions l-constraint">
-      <h4>Actions</h4>
-      <%= select_tag :delivery_status, options_for_select([['Set Delivery Status', nil]] + OrderItem::DELIVERY_STATUSES.map {|s| [s.titleize, s] }) %>
-      <input type="submit" class="btn btn--small" value="Apply Action">
-      <span>This will be applied to any selected rows.</span>
+    <div class="l-constraint">
+      <div class="actions l-constraint">
+        <h4>Actions</h4>
+        <%= select_tag :delivery_status, options_for_select([['Set Delivery Status', nil]] + OrderItem::DELIVERY_STATUSES.map {|s| [s.titleize, s] }) %>
+        <input type="submit" class="btn btn--small" value="Apply Action">
+        <span>This will be applied to any selected rows.</span>
+      </div>
     </div>
   </div>
   <div class="">
