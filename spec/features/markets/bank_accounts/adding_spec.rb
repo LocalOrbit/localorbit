@@ -87,24 +87,4 @@ feature "Adding bank account to a market", :js do
 
     expect(market.reload).to be_balanced_underwritten
   end
-
-  scenario "as a organization member" do
-    switch_to_subdomain(market.subdomain)
-    sign_in_as(create(:user, organizations: [org]))
-
-    visit new_admin_market_bank_account_path(org)
-
-    expect(page).to have_content("We can't find that page.")
-    expect(page.status_code).to eq(404)
-  end
-
-  scenario "as a non member" do
-    switch_to_subdomain(market.subdomain)
-    sign_in_as(create(:user))
-
-    visit new_admin_market_bank_account_path(org)
-
-    expect(page).to have_content("We can't find that page.")
-    expect(page.status_code).to eq(404)
-  end
 end
