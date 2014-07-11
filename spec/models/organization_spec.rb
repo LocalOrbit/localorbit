@@ -98,7 +98,7 @@ describe Organization do
         }.to change(organization.market_organizations, :count).by(1)
       end
 
-      it "deletes missing associations" do
+      it "destroys missing associations" do
         organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
 
         expect {

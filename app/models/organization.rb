@@ -108,7 +108,7 @@ class Organization < ActiveRecord::Base
     end
 
     # Destroy the old ones
-    cross_sells_to_remove.each(&:delete)
+    cross_sells_to_remove.each(&:destory)
 
     update_product_delivery_schedules
   end
