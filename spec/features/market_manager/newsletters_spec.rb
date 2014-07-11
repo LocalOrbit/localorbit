@@ -116,8 +116,7 @@ describe "A Market Manager managing Newsletters" do
 
     describe "to groups" do
       it "sends to specific groups" do
-        email = "#{market_manager.name} <#{market_manager.email}>"
-        expect(MarketMailer).to receive(:newsletter).with(newsletter, market, email).and_return(double(:mailer, deliver: true))
+        expect(MarketMailer).to receive(:newsletter).with(newsletter, market, market_manager.pretty_email).and_return(double(:mailer, deliver: true))
         check "Market Managers"
         click_button "Send Now"
         expect(page).to have_content("Successfully sent this Newsletter")
