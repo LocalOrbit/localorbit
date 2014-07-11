@@ -23,6 +23,7 @@ class Admin::OrdersController < AdminController
 
   def update
     order = Order.find(params[:id])
+    setup_deliveries(order)
 
     if params["items_to_add"]
       result = UpdateOrderWithNewItems.perform(order: order, item_hashes: items_to_add)
@@ -55,7 +56,6 @@ class Admin::OrdersController < AdminController
       order = updates.context[:order]
       order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == "failed"
       @order = SellerOrder.new(order, current_user)
-      setup_deliveries(@order)
       render :show
     end
   end
