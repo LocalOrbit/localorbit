@@ -17,7 +17,7 @@ class Newsletter < ActiveRecord::Base
     end
 
     if market_managers?
-      recipients += market.managers.where(send_newsletter: true).pluck(:name, :email)
+      recipients += market.managers.where(send_newsletter: true).select(:name, :email)
     end
 
     recipients
@@ -29,6 +29,6 @@ class Newsletter < ActiveRecord::Base
     User.joins(:organizations).where(
       organizations: {id: organizations.pluck(:id)},
       users: {send_newsletter: true}
-    ).pluck(:name, :email)
+    ).select(:name, :email)
   end
 end

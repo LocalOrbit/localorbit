@@ -12,36 +12,36 @@ describe Newsletter do
 
     it "can include buyers" do
       newsletter.buyers = true
-      emails = newsletter.recipients.map{|name, email| email }
-      expect(emails).to include(buyer.email)
-      expect(emails).not_to include(seller.email)
-      expect(emails).not_to include(market_manager.email)
+      recipients = newsletter.recipients.map(&:email)
+      expect(recipients).to include(buyer.email)
+      expect(recipients).not_to include(seller.email)
+      expect(recipients).not_to include(market_manager.email)
     end
 
     it "can include sellers" do
       newsletter.sellers = true
-      emails = newsletter.recipients.map{|name, email| email }
-      expect(emails).to include(seller.email)
-      expect(emails).not_to include(buyer.email)
-      expect(emails).not_to include(market_manager.email)
+      recipients = newsletter.recipients.map(&:email)
+      expect(recipients).to include(seller.email)
+      expect(recipients).not_to include(buyer.email)
+      expect(recipients).not_to include(market_manager.email)
     end
 
     it "can include market managers" do
       newsletter.market_managers = true
-      emails = newsletter.recipients.map{|name, email| email }
-      expect(emails).to include(market_manager.email)
-      expect(emails).not_to include(buyer.email)
-      expect(emails).not_to include(seller.email)
+      recipients = newsletter.recipients.map(&:email)
+      expect(recipients).to include(market_manager.email)
+      expect(recipients).not_to include(buyer.email)
+      expect(recipients).not_to include(seller.email)
     end
 
     it "can include all groups" do
       newsletter.buyers = true
       newsletter.sellers = true
       newsletter.market_managers = true
-      emails = newsletter.recipients.map{|name, email| email }
-      expect(emails).to include(market_manager.email)
-      expect(emails).to include(buyer.email)
-      expect(emails).to include(seller.email)
+      recipients = newsletter.recipients.map(&:email)
+      expect(recipients).to include(market_manager.email)
+      expect(recipients).to include(buyer.email)
+      expect(recipients).to include(seller.email)
     end
   end
 end

@@ -6,7 +6,7 @@ class UserMailer < BaseMailer
     @market = market
 
     mail(
-      to: @user.email,
+      to: @user.pretty_email,
       subject: "You have been added to an organization"
     )
   end
@@ -17,7 +17,7 @@ class UserMailer < BaseMailer
     @market = market
 
     mail(
-      to: @user.email,
+      to: @user.pretty_email,
       subject: "You have been added to a market"
     )
   end

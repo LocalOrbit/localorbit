@@ -20,8 +20,8 @@ class SendFreshSheet
 
   def emails
     @emails ||= User.joins(organizations: :market_organizations).
-      where(send_freshsheet: true, market_organizations: {market_id: market.id}).
-      uniq.pluck(:name, :email). # putting uniq first has the database de-dup the data
-      map {|name, email| name.blank? ? email : "#{name.inspect} <#{email}>" }
+      where(send_freshsheet: true, market_organizations: {market_id: market.id}).select(:name, :email).
+      uniq. # putting uniq first has the database de-dup the data
+      map(&:pretty_email)
   end
 end

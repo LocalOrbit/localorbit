@@ -1,8 +1,7 @@
 module Admin
   class CategoryRequestsController < AdminController
     def create
-      ZendeskMailer.request_category(current_user.email, current_user.name, params[:product_category]).
-                    deliver
+      ZendeskMailer.delay.request_category(current_user, params[:product_category])
 
       redirect_to new_admin_product_path
     end
