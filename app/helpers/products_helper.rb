@@ -3,8 +3,8 @@ module ProductsHelper
     current_market.delivery_schedules.visible.count > 1 || current_organization.locations.count > 1 || current_user.managed_organizations.count > 1
   end
 
-  def can_change_delivery_on_placed_order?(user)
-    current_market.delivery_schedules.visible.count > 1
+  def can_change_delivery_on_placed_order?(order)
+    current_user.can_manage_market?(order.market)
   end
 
   def inventory_tab_complete?
