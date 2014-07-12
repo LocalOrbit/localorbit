@@ -78,6 +78,13 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def self.managed_by_user_id_or_market_ids_including_deleted(user_id, market_ids)
+    select("DISTINCT organizations.*").
+    joins("LEFT JOIN user_organizations ON user_organizations.organization_id = organizations.id
+           LEFT JOIN market_organizations ON market_organizations.organization_id = organizations.id").
+    where(["user_organizations.user_id = ? OR (market_organizations.market_id IN (?) AND market_organizations.cross_sell_origin_market_id IS NULL)", user_id, market_ids])
+  end
+
   def shipping_location
     locations.visible.default_shipping
   end
