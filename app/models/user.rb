@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
          :confirmable
 
   has_many :managed_markets_join, class_name: "ManagedMarket"
+
+  # prefer Market.managed_by(user) over (user.admin? ? Market.all : user.managed_markets)
   has_many :managed_markets, through: :managed_markets_join, source: :market do
     def can_manage_organization?(org)
       joins(:organizations).where(organizations: {id: org.id}).exists?

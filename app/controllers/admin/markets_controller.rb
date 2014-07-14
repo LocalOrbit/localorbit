@@ -77,7 +77,7 @@ class Admin::MarketsController < AdminController
   end
 
   def market_scope
-    current_user.admin? ? Market.all : current_user.managed_markets
+    Market.managed_by(current_user)
   end
 
   def find_scoped_market

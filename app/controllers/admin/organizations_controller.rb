@@ -46,8 +46,8 @@ module Admin
     end
 
     def destroy
-      market_ids = Array.wrap(params[:ids]).map(&:to_i)
-       market_ids &= current_user.managed_markets.pluck(:id) unless current_user.admin?
+      market_ids  = Array.wrap(params[:ids]).map(&:to_i)
+      market_ids &= Market.managed_by(current_user).pluck(:id)
 
       remove_organization_from_markets = RemoveOrganizationFromMarkets.perform(
         organization: @organization,
@@ -103,8 +103,7 @@ module Admin
     end
 
     def find_selling_markets
-      markets = current_user.admin? ? current_user.markets : current_user.managed_markets
-      @selling_markets = markets.order(:name).inject([["All", 0]]) {|result, market| result << [market.name, market.id] }
+      @selling_markets = Market.managed_by(current_user).inject([["All", 0]]) {|result, market| result << [market.name, market.id] }
     end
   end
 end

@@ -12,11 +12,7 @@ module BankAccountEntity
   end
 
   def find_market
-    if current_user.admin?
-      current_user.markets.find(params[:market_id])
-    else
-      current_user.managed_markets.find(params[:market_id])
-    end
+    Market.managed_by(current_user).find(params[:market_id])
   end
 
   def find_organization
