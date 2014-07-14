@@ -266,6 +266,9 @@
   .column--three-fourths,
   .column--seven-twelfths {
     width: 100%;
+    &.column--guttered {
+      padding: 0;
+    }
   }
   .hidden-mobile {
     display: none;
