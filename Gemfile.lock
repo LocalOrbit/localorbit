@@ -229,7 +229,7 @@ GEM
     newrelic-dragonfly (0.0.4)
       dragonfly
       newrelic_rpm
-    newrelic_rpm (3.9.0.229)
+    newrelic_rpm (3.8.1.221)
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
     nokogiri-happymapper (0.5.9)
@@ -433,7 +433,7 @@ DEPENDENCIES
   launchy
   mysql2
   newrelic-dragonfly
-  newrelic_rpm
+  newrelic_rpm (< 3.9.0)
   passenger
   pdfkit
   periscope-activerecord
