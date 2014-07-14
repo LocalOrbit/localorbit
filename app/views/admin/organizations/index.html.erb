@@ -18,10 +18,11 @@
     </tr>
   </thead>
   <tbody>
+
   <% @organizations.each do |organization| %>
     <tr>
       <td class="name"><%= link_to organization.name, [:admin, organization] %></td>
-      <td class="market"><%= organization.market_organizations.joins(:market).order("markets.name ASC").map {|mo| mo.market.name}.join(', ') %></td>
+      <td class="market"><%= organization.original_market.name %></td>
       <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
       <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
       <td class="action">
@@ -35,6 +36,7 @@
       </td>
     </tr>
   <% end %>
+
   </tbody>
 </table>
 

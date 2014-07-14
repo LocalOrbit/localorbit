@@ -47,7 +47,8 @@ module Admin
 
     def destroy
       market_ids = Array.wrap(params[:ids]).map(&:to_i)
-      market_ids &= current_user.managed_markets.pluck(:id) unless current_user.admin?
+      # Delaying permissions until story #
+      # market_ids &= current_user.managed_markets.pluck(:id) unless current_user.admin?
 
       remove_organization_from_markets = RemoveOrganizationFromMarkets.perform(
         organization: @organization,

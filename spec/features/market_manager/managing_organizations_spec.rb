@@ -264,7 +264,7 @@ describe "A Market Manager", :vcr do
     context "organization belongs to a single market" do
       let!(:market3) { create(:market) }
 
-      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market2]) }
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market]) }
       let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market]) }
 
       before do
@@ -275,13 +275,13 @@ describe "A Market Manager", :vcr do
         expect(page).to have_content("Holland Farms")
 
         seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
-        expect(seller_row.market).to eql(market2.name)
+        expect(seller_row.market).to eql(market.name)
 
         seller_row.click_delete
       end
 
       it "removes the organization from the organizations list" do
-        expect(page).to have_content("Removed Holland Farms from #{market2.name}")
+        expect(page).to have_content("Removed Holland Farms from #{market.name}")
 
         holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
         expect(holland_farms).to be_nil
@@ -291,7 +291,7 @@ describe "A Market Manager", :vcr do
         let!(:market_manager) { create(:user, managed_markets: [market, market2]) }
 
         it "deletes the organization from the only market it's associated with" do
-          expect(page).to have_content("Removed #{seller.name} from #{market2.name}")
+          expect(page).to have_content("Removed #{seller.name} from #{market.name}")
         end
       end
     end
@@ -329,7 +329,7 @@ describe "A Market Manager", :vcr do
 
         it "allows the market manager to delete an organization from a one or more markets" do
           seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
-          expect(seller_row.market).to eql("Market 1, Market 2, Market 3")
+          expect(seller_row.market).to eql("Market 2")
 
           members = Dom::Admin::MarketMembershipRow.all
           expect(members.count).to eql(2)
@@ -343,7 +343,7 @@ describe "A Market Manager", :vcr do
           expect(page).to have_content("Removed Holland Farms")
 
           seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
-          expect(seller_row.market).to eql("Market 2, Market 3")
+          expect(seller_row.market).to eql("Market 2")
         end
       end
     end
