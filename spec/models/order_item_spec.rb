@@ -176,7 +176,7 @@ describe OrderItem do
       expect{
         create_valid_order_item
       }.to change {
-        Lot.find(product.lots.map(&:id)).map(&:quantity)
+        Lot.where(id: product.lots.map(&:id)).order(:id).map(&:quantity)
       }.from([3, 5]).to([0, 1])
     end
 
