@@ -553,7 +553,7 @@ describe "admin manange organization", :vcr do
       end
     end
 
-    xcontext "trying to mess with market you can't manage" do
+    context "trying to mess with market you can't manage" do
       let!(:user)    { create(:user, managed_markets: [market]) }
       let!(:market2) { create(:market) }
 
