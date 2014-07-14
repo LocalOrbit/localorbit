@@ -1,26 +1,28 @@
 <div class="totals-table">
   <h2>Total Sales</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Gross Sales</th>
-        <th>Market Fees</th>
-        <th>Local Orbit Fees</th>
-        <th>Payment Processing Fees</th>
-        <th>Discounts</th>
-        <th>Net Sales</th>
-      </tr>
-    </thead>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Gross Sales</th>
+          <th>Market Fees</th>
+          <th>Local Orbit Fees</th>
+          <th>Payment Processing Fees</th>
+          <th>Discounts</th>
+          <th>Net Sales</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr>
-        <td class="gross-sales"><%= number_to_currency totals.gross_total %></td>
-        <td class="market-fees"><%= number_to_currency totals.market_fees %></td>
-        <td class="lo-fees"><%= number_to_currency totals.transaction_fees %></td>
-        <td class="processing-fees"><%= number_to_currency totals.payment_fees %></td>
-        <td class="discounts"><%= number_to_currency totals.discount %></td>
-        <td class="net-sales"><%= number_to_currency totals.net_total %></td>
-      </tr>
-    </tbody>
-  </table>
+      <tbody>
+        <tr>
+          <td class="gross-sales"><%= number_to_currency totals.gross_total %></td>
+          <td class="market-fees"><%= number_to_currency totals.market_fees %></td>
+          <td class="lo-fees"><%= number_to_currency totals.transaction_fees %></td>
+          <td class="processing-fees"><%= number_to_currency totals.payment_fees %></td>
+          <td class="discounts"><%= number_to_currency totals.discount %></td>
+          <td class="net-sales"><%= number_to_currency totals.net_total %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
