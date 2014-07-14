@@ -28,6 +28,7 @@ describe RecordBuyerPayment do
     expect(p.payment_method).to eq("check")
     expect(p.amount).to eq(210)
     expect(p.note).to eq("Check #6341")
+    expect(p.payer).to eq(buyer)
   end
 
   it "payment should be associated with the order" do
