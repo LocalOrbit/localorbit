@@ -2,16 +2,7 @@ class Organization < ActiveRecord::Base
   include Sortable
   include PgSearch
 
-  has_many :market_organizations, -> { where(deleted_at: nil) } do
-    def cross_selling
-      where.not(cross_sell_origin_market_id: nil)
-    end
-
-    def not_cross_selling
-      where(cross_sell_origin_market_id: nil)
-    end
-  end
-
+  has_many :market_organizations, -> { where(deleted_at: nil) }
   has_many :user_organizations
 
   has_many :users, through: :user_organizations
