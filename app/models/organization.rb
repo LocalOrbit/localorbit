@@ -21,6 +21,7 @@ class Organization < ActiveRecord::Base
   validates :name, presence: true, length: {maximum: 255, allow_blank: true}
   validate :require_payment_method
 
+  scope :active,  -> { where(active: true) }
   scope :selling, -> { where(can_sell: true) }
   scope :buying,  -> { where(can_sell: false) } # needs a new boolean
   scope :visible, -> { where(show_profile: true) }

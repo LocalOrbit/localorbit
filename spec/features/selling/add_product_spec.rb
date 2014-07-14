@@ -25,6 +25,8 @@ describe "Adding a product" do
   let(:stub_warning_both) {"Your product will not appear in the Shop until you add inventory, and add pricing"}
   let(:organization_label) { "Product Organization" }
 
+  let!(:inactive_seller) { create(:organization, :seller, markets: [market], active: false) }
+
   let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1, require_delivery: true) }
   # This is the schedule we'll model after the Appleton bug
   # Seller fulfillment location is what will show for the seller
@@ -566,6 +568,7 @@ describe "Adding a product" do
     it "does not offer non-selling organizations as options for the Organization select" do
       product_form = Dom::Admin::ProductForm.first
       expect(product_form.organization_field).to_not have_content(buying_org.name)
+      expect(product_form.organization_field).to_not have_content(inactive_seller.name)
     end
 
     context "when product information is valid" do
