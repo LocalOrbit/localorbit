@@ -1,27 +1,25 @@
 <div class="row row--partial">
   <div class="column column--three-fourths">
-    <div class="l-page-header">
       <h1><i class="font-icon" data-icon="&#xe023;"></i>&nbsp; Fresh Sheet Preview</h1>
-      <%= form_tag [:admin, :fresh_sheet], method: :post, class: "l-page-header" do %>
+      <%= form_tag [:admin, :fresh_sheet], method: :post do %>
         <div class="field field--inline">
           <input name="email" type="email" placeholder="Email address" class="input--short" value="<%= current_user.email %>">
-          <%= submit_tag 'Send Test', class: "btn btn--small btn--test" %>
+          <%= submit_tag 'Send Test', class: "btn btn--small btn--test trigger-email" %>
         </div>
-        <%= submit_tag 'Send to Everyone Now', class: "btn btn--small pull-right", data: {confirm: "Are you ready to send the Fresh Sheet?"} %>
-      <% end %>
+        <%= submit_tag 'Send to Everyone Now', class: "btn btn--small pull-right trigger-email", data: {confirm: "Are you ready to send the Fresh Sheet?"} %>
 
-      <a href="#fresh-sheet-note" class="toggle-slide">Add Note</a>
+      <div class="clear-before">
+        <a href="#fresh-sheet-note" class="toggle-slide">Preview Note</a>
+      </div>
 
       <div class="is-up slide" id="fresh-sheet-note">
         <div class="slide-content">
-          <%= form_tag [:admin, :fresh_sheet], method: :put do %>
-            <%= text_area_tag "note", @note, size: "100x10", placeholder: "Fresh Sheet Note" %>
-            <%= submit_tag "Save Note", class: "btn btn--small pull-right" %>
+          <%= text_area_tag "note", @note, size: "100x10", placeholder: "Fresh Sheet Note" %>
+          <%= submit_tag "Add Note", class: "btn btn--small pull-right" %>
           <% end %>
         </div>
       </div>
-    </div>
 
-    <iframe width="600" height="1000" src="<%= preview_admin_fresh_sheet_path %>"></iframe>
+      <iframe width="600" height="1000" src="<%= preview_admin_fresh_sheet_path %>"></iframe>
   </div>
 </div>

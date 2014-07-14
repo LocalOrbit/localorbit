@@ -2,32 +2,37 @@ class Admin::FreshSheetsController < AdminController
   before_action :require_admin_or_market_manager
   before_action :require_selected_market
   before_action :require_valid_market
+  before_action :load_saved_note, only: [:preview, :show]
 
   def show
-    @note = session[:fresh_sheet_note]
   end
 
   def create
+    session[:fresh_sheet_note] = params[:note]
+
+    if params[:commit] == "Save Note"
+      redirect_to [:admin, :fresh_sheet], notice: "Note saved." and return
+    end
+
     sent_fresh_sheet = SendFreshSheet.perform(market: current_market, commit: params[:commit], email: params[:email], note: session[:fresh_sheet_note])
     if sent_fresh_sheet.success?
+      session[:fresh_sheet_note] = nil if params[:commit] == "Send to Everyone Now"
       redirect_to [:admin, :fresh_sheet], notice: sent_fresh_sheet.notice
-      session[:fresh_sheet_note] = nil
     else
       redirect_to [:admin, :fresh_sheet], alert: sent_fresh_sheet.error
     end
   end
 
-  def update
-    @note = session[:fresh_sheet_note] = params[:note]
-    render :show
-  end
-
   def preview
-    email = MarketMailer.fresh_sheet(current_market, current_user.email, session[:fresh_sheet_note], true)
+    email = MarketMailer.fresh_sheet(current_market, current_user.email, @note, true)
     render html: email.body.to_s.html_safe
   end
 
   protected
+
+  def load_saved_note
+    @note = session[:fresh_sheet_note]
+  end
 
   def require_valid_market
     if current_market.delivery_schedules.empty?
