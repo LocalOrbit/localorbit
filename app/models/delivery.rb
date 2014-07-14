@@ -4,7 +4,7 @@ class Delivery < ActiveRecord::Base
 
   scope :upcoming, -> { where("deliveries.cutoff_time > ?", Time.current) }
   scope :future, -> { where("deliveries.deliver_on >= ?", Time.current.midnight) }
-  scope :recent, -> { where("deliveries.deliver_on <= ?", 4.weeks.ago ) }
+  scope :recent, -> { where(deliver_on: (4.weeks.ago..Time.current)) }
   scope :with_orders, -> { joins(orders: {items: :product}).group("deliveries.id") }
   scope :with_orders_for_user, lambda {|user| with_orders.where(products: {organization_id: user.organization_ids}) }
   scope :active, -> { joins(:delivery_schedule).where(DeliverySchedule.visible_conditional) }
