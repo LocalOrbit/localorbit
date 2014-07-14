@@ -80,105 +80,106 @@
 
   <h2>Items for Delivery</h2>
 
-
-  <table class="current-sales-table odd order-table-1">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Discount</th>
-        <th>Total</th>
-        <th>Delivery</th>
-        <th>Buyer Payment</th>
-        <% if !current_user.buyer_only? %>
-          <th>Seller Payment</th>
-        <% end %>
-        <% if current_user.market_manager? || current_user.admin? %>
-          <th></th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <%= f.fields_for :items do |item| %>
-      <tr class="order-item-row">
-        <td class="name">
-          <span class="product-ordered"><%= item.object.name %></span> <br />
-          <span class="seller-name">from <%= item.object.product.organization.name %></span>
-        </td>
-        <td class="quantity">
-          <% if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
-            <%= item.text_field :quantity, class: 'quantity-ordered' %>
-          <% else %>
-            <span><%= item.object.quantity %></span>
-          <% end %> <%= item.object.unit %> (Ordered)<br />
-
-          <% if current_user.admin? || current_user.market_manager? %>
-            <%= item.text_field :quantity_delivered, class: 'quantity-delivered' %>
-          <% else %>
-            <span><%= item.object.quantity_delivered %></span>
-          <% end %> <%= item.object.unit %> (Delivered)
-        </td>
-        <td class="price"><%= number_to_currency item.object.unit_price %></td>
-        <td class="discount"><%= number_to_currency item.object.discount %></td>
-        <td class="total"><%= number_to_currency item.object.gross_total %></td>
-        <td class="delivery-status">
-          <%= item.hidden_field :delivery_status %>
-          <%= item.object.delivery_status.titleize %>
-        </td>
-        <td class="payment-status"><%= item.object.buyer_payment_status.titleize %></td>
-        <% if !current_user.buyer_only? %>
-          <td class="seller-status"><%= item.object.seller_payment_status %></td>
-        <% end %>
-        <% if (current_user.market_manager? || current_user.admin?) %>
-          <td class="action-link">
-            <% if item.object.delivery_status == 'pending' %>
-              <%= item.hidden_field :_destroy %>
-              <%= link_to raw('<i class="font-icon icon-delete"></i>'), "#delete" %>
-            <% end %>
-          </td>
-        <% end %>
-      </tr>
-      <% end %>
-    </tbody>
-
-    <% if can_add_products_to_order?(order) && @show_add_items_form %>
-      <tbody>
-        <% @products_for_sale.each_category_with_products do |category, products| %>
-          <tr><th colspan="9"><%= category.name %></th></tr>
-          <% products.each do |product| %>
-            <tr class="order-item-row">
-              <td class="name">
-                <span class="product-ordered"><%= product.name %></span> <br>
-                <span class="seller-name">from <%= product.organization.name %></span>
-              </td>
-              <td class="quantity">
-                <%= fields_for "items_to_add[]", CartItem.new(product: product) do |item| %>
-                  <%= item.hidden_field :product_id, id: "items_to_add_#{product.id}_product_id" %>
-                  <%= item.text_field :quantity, id: "items_to_add_#{product.id}_quantity", class: 'quantity-ordered' %>
-                <% end %>
-              </td>
-              <td class="price">
-                <ul class="tiers">
-                  <% product.prices_for_market_and_organization(current_market, order.organization).each do |price| %>
-                    <% price = price.decorate %>
-                    <% if price.organization_id.present? %>
-                      <li class="negotiated"><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span><span class="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i class="font-icon" data-icon="&#xe01f;"></i></span></li>
-                    <% else %>
-                      <li><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span></li>
-                    <% end %>
-                  <% end %>
-                </ul>
-              </td>
-              <td class="price" colspan="6">
-                <%= product.available_inventory(order.delivery.deliver_on) %> available
-              </td>
-            </tr>
+  <div class="table-wrapper">
+    <table class="current-sales-table odd order-table-1">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Discount</th>
+          <th>Total</th>
+          <th>Delivery</th>
+          <th>Buyer Payment</th>
+          <% if !current_user.buyer_only? %>
+            <th>Seller Payment</th>
           <% end %>
+          <% if current_user.market_manager? || current_user.admin? %>
+            <th></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <%= f.fields_for :items do |item| %>
+        <tr class="order-item-row">
+          <td class="name">
+            <span class="product-ordered"><%= item.object.name %></span> <br />
+            <span class="seller-name">from <%= item.object.product.organization.name %></span>
+          </td>
+          <td class="quantity">
+            <% if (current_user.admin? || current_user.market_manager?) && item.object.delivery_status == 'pending' %>
+              <%= item.text_field :quantity, class: 'quantity-ordered' %>
+            <% else %>
+              <span><%= item.object.quantity %></span>
+            <% end %> <%= item.object.unit %> (Ordered)<br />
+
+            <% if current_user.admin? || current_user.market_manager? %>
+              <%= item.text_field :quantity_delivered, class: 'quantity-delivered' %>
+            <% else %>
+              <span><%= item.object.quantity_delivered %></span>
+            <% end %> <%= item.object.unit %> (Delivered)
+          </td>
+          <td class="price"><%= number_to_currency item.object.unit_price %></td>
+          <td class="discount"><%= number_to_currency item.object.discount %></td>
+          <td class="total"><%= number_to_currency item.object.gross_total %></td>
+          <td class="delivery-status">
+            <%= item.hidden_field :delivery_status %>
+            <%= item.object.delivery_status.titleize %>
+          </td>
+          <td class="payment-status"><%= item.object.buyer_payment_status.titleize %></td>
+          <% if !current_user.buyer_only? %>
+            <td class="seller-status"><%= item.object.seller_payment_status %></td>
+          <% end %>
+          <% if (current_user.market_manager? || current_user.admin?) %>
+            <td class="action-link">
+              <% if item.object.delivery_status == 'pending' %>
+                <%= item.hidden_field :_destroy %>
+                <%= link_to raw('<i class="font-icon icon-delete"></i>'), "#delete" %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
         <% end %>
       </tbody>
-    <% end %>
-  </table>
+
+      <% if can_add_products_to_order?(order) && @show_add_items_form %>
+        <tbody>
+          <% @products_for_sale.each_category_with_products do |category, products| %>
+            <tr><th colspan="9"><%= category.name %></th></tr>
+            <% products.each do |product| %>
+              <tr class="order-item-row">
+                <td class="name">
+                  <span class="product-ordered"><%= product.name %></span> <br>
+                  <span class="seller-name">from <%= product.organization.name %></span>
+                </td>
+                <td class="quantity">
+                  <%= fields_for "items_to_add[]", CartItem.new(product: product) do |item| %>
+                    <%= item.hidden_field :product_id, id: "items_to_add_#{product.id}_product_id" %>
+                    <%= item.text_field :quantity, id: "items_to_add_#{product.id}_quantity", class: 'quantity-ordered' %>
+                  <% end %>
+                </td>
+                <td class="price">
+                  <ul class="tiers">
+                    <% product.prices_for_market_and_organization(current_market, order.organization).each do |price| %>
+                      <% price = price.decorate %>
+                      <% if price.organization_id.present? %>
+                        <li class="negotiated"><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span><span class="tooltip tooltip--naked tooltip--notice" data-tooltip="This is a negotiated price specific to you!"><i class="font-icon" data-icon="&#xe01f;"></i></span></li>
+                      <% else %>
+                        <li><span class="unit-price"><%= number_to_currency(price.sale_price)%></span> <span class="tier"><%= price.formatted_units %></span></li>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </td>
+                <td class="price" colspan="6">
+                  <%= product.available_inventory(order.delivery.deliver_on) %> available
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
 
   <% if current_user.can_manage_market?(order.market) %>
     <%= f.submit @show_add_items_form ? "Add items and Update quantities" : "Update quantities", class: 'pull-right btn btn--blue btn--small' %>
@@ -190,28 +191,30 @@
   <% if !current_user.buyer_only? %>
   <div class="order-totals">
     <h2>Order Totals</h2>
-    <table class="current-sales-table odd">
-      <thead>
-        <tr>
-          <th>Gross Total</th>
-          <th>Discount</th>
-          <th>Market Fees</th>
-          <th>Transaction Fees</th>
-          <th>Payment Processing Fees</th>
-          <th>Net Sale</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="order-summary-row">
-          <td class="gross-total"><%= number_to_currency order.gross_total %></td>
-          <td class="discount"><%= number_to_currency order.discount %></td>
-          <td class="market-fees"><%= number_to_currency order.market_fees %></td>
-          <td class="transaction-fees"><%= number_to_currency order.transaction_fees %></td>
-          <td class="payment-processing"><%= number_to_currency order.payment_fees %></td>
-          <td class="net-sale"><%= number_to_currency order.net_total %></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-wrapper">
+      <table class="current-sales-table odd">
+        <thead>
+          <tr>
+            <th>Gross Total</th>
+            <th>Discount</th>
+            <th>Market Fees</th>
+            <th>Transaction Fees</th>
+            <th>Payment Processing Fees</th>
+            <th>Net Sale</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="order-summary-row">
+            <td class="gross-total"><%= number_to_currency order.gross_total %></td>
+            <td class="discount"><%= number_to_currency order.discount %></td>
+            <td class="market-fees"><%= number_to_currency order.market_fees %></td>
+            <td class="transaction-fees"><%= number_to_currency order.transaction_fees %></td>
+            <td class="payment-processing"><%= number_to_currency order.payment_fees %></td>
+            <td class="net-sale"><%= number_to_currency order.net_total %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <% end %>
   <% if current_user.can_manage_market?(order.market) %>

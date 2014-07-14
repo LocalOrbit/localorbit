@@ -14,29 +14,30 @@
         <%=  datetime_field_tag "q[placed_at_date_gteq]", @search_presenter.start_date, class: 'datepicker filter-input' %>
       </span>
 
-      <span class="preserve-alignment">
-        <label for="q_placed_at_date_lteq" class="is-invisible">End Date</label><br>
-        <%=  datetime_field_tag "q[placed_at_date_lteq]", @search_presenter.end_date, class: 'datepicker filter-input' %>
-      </span>
+        <span class="preserve-alignment">
+          <label for="q_placed_at_date_lteq" class="is-invisible">End Date</label><br>
+          <%=  datetime_field_tag "q[placed_at_date_lteq]", @search_presenter.end_date, class: 'datepicker filter-input' %>
+        </span>
 
-      <span class="preserve-alignment">
-        <br>
-        <%= f.submit "Filter", class: "btn--small" %>
-      </span>
-    </div>
+        <span class="preserve-alignment">
+          <br>
+          <%= f.submit "Filter", class: "btn--small" %>
+        </span>
+      </div>
 
-    <div class="manager-filters unjustify">
-      <% if current_user.multi_market_membership? %>
-      <span class="preserve-alignment">
-        <%= f.label :market_id_eq, "Market" %><br>
-        <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
-      </span>
-      <% end %>
+      <div class="manager-filters unjustify">
+        <% if current_user.multi_market_membership? %>
+        <span class="preserve-alignment">
+          <%= f.label :market_id_eq, "Market" %><br>
+          <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
+        </span>
+        <% end %>
 
-      <span class="preserve-alignment">
-        <%= f.label :organization_id_eq, "Buyer" %><br>
-        <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
-      </span>
+        <span class="preserve-alignment">
+          <%= f.label :organization_id_eq, "Buyer" %><br>
+          <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
+        </span>
+      </div>
     </div>
   <% end %>
 <% end %>
