@@ -30,8 +30,5 @@
       <%= label :payment_status, "Payment Status" %><br>
       <%= select_tag :payment_status, options_from_collection_for_select(Order::INVOICE_STATUSES, :to_s, :titleize, selected: request.query_parameters[:payment_status]), { prompt: "All", class: "filter-input" } %>
     </span>
-
-    <p class="preserve-alignment">These invoices require your attention.</p>
-    <input type="button" value="Send Selected Invoices" id="submit_send_selected" class="btn btn--small btn--save">
   </div>
 <% end %>
