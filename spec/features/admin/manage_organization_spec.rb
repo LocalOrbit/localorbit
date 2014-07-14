@@ -453,13 +453,31 @@ describe "admin manange organization", :vcr do
           click_link "Delete"
         end
 
-        expect(page).to have_content("Removed Holland Farms")
+        expect(page).to have_content("Removed Holland Farms from #{market.name}")
 
         visit admin_products_path
 
         expect(page).to have_content("Add New Product")
         expect(page).to_not have_content(product.name)
         expect(page).to_not have_content(seller.name)
+      end
+
+      context "logging into a subdomain which is different from the organization I'm deleting from" do
+        let!(:market2) { create(:market) }
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market2])}
+
+        it "deletes the organization from it's only market it belongs to" do
+          visit admin_organizations_path
+          expect(page).to have_content("Holland Farms")
+
+          holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
+
+          within(holland_farms.node) do
+            click_link "Delete"
+          end
+
+          expect(page).to have_content("Removed Holland Farms from #{market2.name}")
+        end
       end
 
       context "with cross sells" do

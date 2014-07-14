@@ -47,7 +47,7 @@ module Admin
 
     def destroy
       market_ids = Array.wrap(params[:ids]).map(&:to_i)
-      # Delaying permissions until story #
+      # Delaying permissions until story #74615378
       # market_ids &= current_user.managed_markets.pluck(:id) unless current_user.admin?
 
       remove_organization_from_markets = RemoveOrganizationFromMarkets.perform(
@@ -56,8 +56,7 @@ module Admin
       )
 
       if remove_organization_from_markets.success?
-        postfix = (market_ids.count == 1 ? Market.find(market_ids.first).name : "market membership(s)")
-        redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} from #{postfix}"
+        redirect_to [:admin, :organizations], notice: remove_organization_from_markets.message
       else
         redirect_to [:admin, :organizations], alert: remove_organization_from_markets.error
       end
