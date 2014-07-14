@@ -30,13 +30,15 @@ class OrderMailer < BaseMailer
     )
   end
 
-  def invoice(order_id, addresses)
+  def invoice(order_id)
     @order  = BuyerOrder.new(Order.find(order_id))
     @market = @order.market
 
-    user = User.find_by(email: addresses)
+    # Try to find a user that can actually log in
+    user = @order.organization.users.where.not(confirmed_at: nil).first || @market.managers.where.not(confirmed_at: nil).first
 
-    auth_token = URI.encode_www_form_component(user.auth_token) # remove + and other characters
+    # encode "+" and other characters to be url safe
+    auth_token = URI.encode_www_form_component(user.auth_token)
 
     scheme = Rails.env.production? || Rails.env.staging? ? "https://" : "http://"
     uri = URI("#{scheme}#{@order.market.subdomain}.#{Figaro.env.domain}/admin/invoices/#{@order.id}/invoice.pdf?auth_token=#{auth_token}")
@@ -50,7 +52,7 @@ class OrderMailer < BaseMailer
     attachments["invoice.pdf"] = {mime_type: "application/pdf", content: res.body}
 
     mail(
-      to: addresses,
+      to: @order.organization.users.map(&:pretty_email),
       subject: "New Invoice"
     )
   end
