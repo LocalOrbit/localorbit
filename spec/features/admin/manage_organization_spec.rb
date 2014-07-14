@@ -460,5 +460,6 @@ describe "admin manange organization", :vcr do
         expect(holland_farms.market).to_not have_content(market.name)
       end
     end
+
   end
 end

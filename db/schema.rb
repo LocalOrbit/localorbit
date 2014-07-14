@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140628222927) do
+ActiveRecord::Schema.define(version: 20140709165608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -247,8 +247,8 @@ ActiveRecord::Schema.define(version: 20140628222927) do
     t.integer  "organization_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "cross_sell",      default: false
     t.datetime "deleted_at"
+    t.integer  "cross_sell_origin_market_id"
   end
 
   add_index "market_organizations", ["market_id", "organization_id"], name: "index_market_organizations_on_market_id_and_organization_id", using: :btree
@@ -501,8 +501,8 @@ ActiveRecord::Schema.define(version: 20140628222927) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.string   "image_uid"
     t.integer  "top_level_category_id"
+    t.string   "image_uid"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"

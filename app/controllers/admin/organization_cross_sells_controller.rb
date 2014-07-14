@@ -8,8 +8,8 @@ class Admin::OrganizationCrossSellsController < AdminController
   def update
     ids = params[:organization].try(:[], :cross_sell_ids) || []
 
-    @organization.cross_sell_ids = ids
-    @organization.market_organizations.where(market_id: ids).update_all(cross_sell: true)
+    @organization.update_cross_sells!(from_market: current_market, to_ids: ids)
+
 
     redirect_to admin_organization_cross_sell_path(@organization), notice: "Organization Updated Successfully"
   end
