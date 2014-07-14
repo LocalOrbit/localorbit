@@ -655,6 +655,34 @@ th {
   .icon-close {
     font-size: 18px;
   }
+
+  .products--user {
+    padding-left: 0;
+  }
+  .product-table--user {
+    .product {
+      td {
+        display: block;
+        width: 100%;
+        max-width: none;
+        padding: 0;
+        margin: 10px 0;
+      }
+      .quantity br {
+        display: none;
+      }
+    }
+    .product-image {
+      display: none;
+    }
+    .info ul,
+    .short_description {
+      margin-left: 0;
+    }
+    .info li {
+      display: inline-block;
+    }
+  }
 }
 
 .edit-cell {
