@@ -30,4 +30,14 @@ describe ZendeskMailer do
       expect(fresh_sheet.body).to include(category)
     end
   end
+
+  describe "error_intervention" do
+    it "sends a message to the admins about the error" do
+      email = ZendeskMailer.error_intervention(user, "Bad Error", {thing: "stuff"})
+      expect(email.from).to include(user.email)
+      expect(email.subject).to include("Bad Error")
+      expect(email.body).to include("thing")
+      expect(email.body).to include("stuff")
+    end
+  end
 end

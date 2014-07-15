@@ -72,7 +72,7 @@ class Admin::OrdersController < AdminController
   def update_delivery(order)
     order = Order.find(params[:id])
 
-    updates = UpdateOrderDelivery.perform(order: order, delivery_id: params.require(:order)[:delivery_id])
+    updates = UpdateOrderDelivery.perform(user: current_user, order: order, delivery_id: params.require(:order)[:delivery_id])
     if updates.success?
       redirect_to admin_order_path(order), notice: "Delivery successfully updated."
     else
