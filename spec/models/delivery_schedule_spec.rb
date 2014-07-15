@@ -251,4 +251,58 @@ describe DeliverySchedule do
       end
     end
   end
+
+  describe "#required?" do
+    let(:other_market)   { create(:market, allow_cross_sell: true) }
+    let(:primary_org)    { create(:organization, :seller, markets: [market]) }
+    let(:cross_sell_org) do
+      create(:organization, :seller).tap do |org|
+        org.update_cross_sells!(from_market: other_market, to_ids: [market.id])
+      end
+    end
+    let(:delivery_schedule) { create(:delivery_schedule, market: market, require_delivery: @require_primary_org_delivery, require_cross_sell_delivery: @require_cross_sell_org_delivery) }
+
+    it "is false if neither cross sell or primary orgs are required to deliver" do
+      @require_primary_org_delivery, @require_cross_sell_org_delivery = false, false
+
+      expect(delivery_schedule.required?(primary_org)).to be_falsy
+      expect(delivery_schedule.required?(cross_sell_org)).to be_falsy
+    end
+
+    it "is false if only cross sell orgs are requied to deliver and org is primary" do
+      @require_primary_org_delivery, @require_cross_sell_org_delivery = false, true
+
+      expect(delivery_schedule.required?(primary_org)).to be_falsy
+    end
+
+    it "is false if only primary orgs are required to deliver and org is cross sell" do
+      @require_primary_org_delivery, @require_cross_sell_org_delivery = true, false
+
+      expect(delivery_schedule.required?(cross_sell_org)).to be_falsy
+    end
+
+    it "is true if primary orgs are required to deliver and org is primary" do
+      @require_primary_org_delivery, @require_cross_sell_org_delivery = true, false
+
+      expect(delivery_schedule.required?(primary_org)).to be_truthy
+    end
+
+    it "is true if cross sell orgs are required to deliver and org is cross sell" do
+      @require_primary_org_delivery, @require_cross_sell_org_delivery = false, true
+
+      expect(delivery_schedule.required?(cross_sell_org)).to be_truthy
+    end
+
+    it "is true if both kinds of orgs are required to deliver and org is primary" do
+      @require_primary_org_delivery, @require_cross_sell_org_delivery = true, true
+
+      expect(delivery_schedule.required?(primary_org)).to be_truthy
+    end
+
+    it "is true if both kinds of orgs are required to deliver and org is cross sell" do
+      @require_primary_org_delivery, @require_cross_sell_org_delivery = true, true
+
+      expect(delivery_schedule.required?(cross_sell_org)).to be_truthy
+    end
+  end
 end

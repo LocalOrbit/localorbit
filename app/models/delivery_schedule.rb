@@ -101,13 +101,8 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def required?(organization)
-    if require_delivery?
-      organization.market_organizations.not_cross_selling.where(market_id: market_id).exists?
-    elsif require_cross_sell_delivery?
-      organization.market_organizations.cross_selling.where(market_id: market_id).exists?
-    else
-      false
-    end
+    (require_delivery? && organization.market_organizations.not_cross_selling.where(market_id: market_id).exists?) ||
+    (require_cross_sell_delivery? && organization.market_organizations.cross_selling.where(market_id: market_id).exists?)
   end
 
   def fees_for_amount(amount)
