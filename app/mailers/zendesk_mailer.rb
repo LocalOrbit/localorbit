@@ -20,4 +20,15 @@ class ZendeskMailer < ActionMailer::Base
       subject: "A new category has been requested"
     )
   end
+
+  def error_intervention(user, title, data)
+    @user = user
+    @title = title
+    @data = data
+
+    mail(
+      from: user.pretty_email,
+      subject: "Requires admin review: #{title}"
+    )
+  end
 end
