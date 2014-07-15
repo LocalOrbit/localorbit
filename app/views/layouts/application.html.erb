@@ -42,12 +42,8 @@
       .nav--sidebar a {
         color: <%= current_market.text_color -%>;
       }
-      a:hover {
-        color: <%= color_mix current_market.text_color, 10 %>;
-      }
       .l-app-header,
       .l-app-footer,
-      .nav--main > a:hover,
       .nav--main > span,
       .btn--add,
       .btn--save,
@@ -58,6 +54,9 @@
         fill: <%= current_market.text_color -%>;
       }
       @media screen and (min-width: 601px) {
+        a:hover {
+          color: <%= color_mix current_market.text_color, 10 %>;
+        }
         .btn--add:hover,
         .btn--add:active,
         .btn--add.current,
@@ -66,11 +65,14 @@
         .nav--app a.current {
           color: <%= color_mix current_market.text_color, 40 %>
         }
-      }
-      .nav--main a:hover,
-      .nav--main a:active,
-      .nav--main a.current {
-        color: #fff;
+        .nav--main > a:hover {
+          background-color: <%= current_market.text_color -%>;
+        }
+        .nav--main a:hover,
+        .nav--main a:active,
+        .nav--main a.current {
+          color: #fff;
+        }
       }
       .pdf-download {
         background-color: <%= color_mix current_market.text_color, 70 %>
