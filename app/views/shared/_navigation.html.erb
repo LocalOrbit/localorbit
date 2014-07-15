@@ -23,7 +23,7 @@ end
   <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before <%= "show-mobile" if @hide_admin_nav %>">
     <li class="show-mobile"><%= link_to_or_span 'Dashboard', dashboard_path %></li>
     <% if current_user.buyer_only? %>
-      <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xf000;"></i> Purchase History'), dashboard_path %></li>
+      <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00c;"></i> Purchase History'), dashboard_path %></li>
     <% end %>
 
     <% if current_user.admin? || current_user.market_manager? %>

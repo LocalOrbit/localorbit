@@ -3,20 +3,26 @@
 <%= form_for order, url: admin_order_path(order.id), as: :order, method: :put do |f| %>
 <div class="order-info">
   <h1>Order info for <%= order.order_number %></h1>
-  <div class="order-info-date">Placed On: <span class="special-content"><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></span></div>
+  <div class="order-info-date">Placed On: <strong><%= order.placed_at.strftime "%m/%d/%Y at %l:%M%p" %></strong></div>
 
   <div class="order-buyer">
-    <div>Buyer: <span class="special-content"><%= order.organization.name %></span></div>
+    <div>Buyer: <strong><%= order.organization.name %></strong></div>
 
-    <div class="order-address">Billing Address:</div>
-    <div class="special-content">
-      <%= order.billing_address %>, <%= order.billing_city %>, <%= order.billing_state %> <%= order.billing_zip %><br>
-      <%= order.billing_phone %><br>
-    </div>
-    <div class="order-address"><%= order.display_delivery_or_pickup.titleize %></div>
-    <div class="special-content">
-      <%= order.display_delivery_address %><br>
-      <%= order.delivery.decorate.human_delivery_date %><br>
+    <h2 class="order-address">Billing Address:</h2>
+    <p class="vcard">
+      <span class="street-address"><%= order.billing_address %></span><br>
+      <span class="locality"><%= order.billing_city %></span>,
+      <span class="region"><%= order.billing_state %></span> <span class="postal-code"><%= order.billing_zip %></span><br>
+      <%= content_tag :span, order.billing_phone, class: "tel" if order.billing_phone.present? %>
+    </p>
+    <h2 class="order-address"><%= order.display_delivery_or_pickup.titleize %></h2>
+    <div>
+      <p class="vcard">
+        <%= order.display_delivery_address %><br>
+      </p>
+      <p class="delivery-time">
+        <%= order.delivery.decorate.human_delivery_date %>
+      </p>
 
       <% if can_change_delivery_on_placed_order?(order) %>
         <div id="delivery-changer">
@@ -34,23 +40,43 @@
       <% end %>
     </div>
   </div>
-  <div class="order-info-status">
-    <p>Delivery Status: <span class="special-content"><%= order.delivery_status.titleize %></span></p>
-    <p>Buyer Payment: <span class="special-content"><%= order.buyer_payment_status.titleize %></span></p>
-  </div>
-  <div class="order-info-total">
-    <p>Payment Method: <span class="special-content"><%= order.payment_method.titleize %></span></p>
-    <p>Payment Reference #: <span class="special-content"><%= order.payment_note %></span></p><br>
+  <table class="order-info-status">
+    <tr>
+      <th scope="row">Delivery Status:</th>
+      <td><%= order.delivery_status.titleize %></td>
+    </tr>
+    <tr>
+      <th scope="row">Buyer Payment:</th>
+      <td><%= order.buyer_payment_status.titleize %></td>
+    </tr>
+  </table>
+  <table class="order-info-total">
+    <tr>
+        <th scope="row">Payment Method:</th>
+        <td><%= order.payment_method.titleize %></td>
+    </tr>
+    <tr>
+        <th scope="row">Payment Reference #:</th>
+        <td><%= order.payment_note %></td>
+    </tr>
     <% if order.display_delivery_fees?(current_user) %>
-      <p>Delivery Fees: <span class="special-content"><%= number_to_currency order.delivery_fees %></span></p>
+      <tr>
+        <th scope="row">Delivery Fees:</th>
+        <td><%= number_to_currency order.delivery_fees %></td>
+      </tr>
     <% end %>
-    <p>Grand Total: <span class="special-content"><%= number_to_currency order.total_cost %></span></p>
+    <tfoot>
+      <tr>
+        <th scope="row">Grand Total:</th>
+        <td><%= number_to_currency order.total_cost %></td>
+      </tr>
+    </tfoot>
+  </table>
   </div>
-</div>
-<div class="order-data">
-  <% if !current_user.buyer_only? && !order.delivered? %>
-    <%= button_tag "Mark all delivered", class: 'pull-right btn btn--blue btn--small', id: 'mark-all-delivered', type: 'button' %>
-  <% end %>
+  <div class="order-data">
+    <% if !current_user.buyer_only? && !order.delivered? %>
+      <%= button_tag "Mark all delivered", class: 'pull-right btn btn--blue btn--small', id: 'mark-all-delivered', type: 'button' %>
+    <% end %>
 
   <h2>Items for Delivery</h2>
 

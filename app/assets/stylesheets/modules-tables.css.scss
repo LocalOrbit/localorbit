@@ -876,3 +876,20 @@ th {
     }
   }
 }
+
+.order-info-status,
+.order-info-total {
+  td, th {
+    padding: 5px 0;
+    font-size: inherit;
+  }
+  td {
+    font-weight: bold;
+  }
+  tr,
+  tr:nth-child(odd) {
+    height: auto;
+    border: 0;
+    background: transparent;
+  }
+}
