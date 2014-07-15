@@ -155,6 +155,15 @@
       text-align: center;
     }
   }
+  .mobile-block {
+    float: none;
+    display: block;
+    width: 100%;
+
+    select {
+      width: 100%;
+    }
+  }
 }
 
 
