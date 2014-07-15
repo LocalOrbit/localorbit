@@ -79,6 +79,9 @@
 
   margin-right: 20px;
   font-size: 14px;
+  tbody {
+    border-bottom: solid 1em transparent;
+  }
 }
 .order-info-status {
   float: right;
