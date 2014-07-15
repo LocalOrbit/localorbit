@@ -24,7 +24,7 @@
         <%= order.delivery.decorate.human_delivery_date %>
       </p>
 
-      <% if can_change_delivery_on_placed_order?(order) %>
+      <% if @deliveries && can_change_delivery_on_placed_order?(order) %>
         <div id="delivery-changer">
           <span class="change-delivery">
             <%= link_to "Change Delivery", "#", id: "change-delivery-date", class: "reset btn" %>
