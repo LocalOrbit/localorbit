@@ -32,18 +32,6 @@
   }
 }
 
-@media screen and (max-width: 600px) {
-  span {
-    width: 100%;
-    margin: 0;
-  }
-  .manager-filters {
-    select {
-      width: 100%;
-    }
-  }
-}
-
 .featured-promo-filter {
   margin: 0;
 }
@@ -213,4 +201,7 @@
     }
   }
   
+}
+.per-page-filter {
+  margin-top: 20px;
 }
