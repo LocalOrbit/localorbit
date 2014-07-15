@@ -55,7 +55,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
       scenario "note is displayed in preview" do
         visit admin_fresh_sheet_path
 
-        click_link "Preview Note"
+        click_link "Add Note"
 
         fill_in "note", with: "Forever Young"
         click_button "Add Note"
@@ -68,7 +68,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
         expect(MarketMailer).to receive(:fresh_sheet).with(market.id, "\"Jack Stevens\" <#{buyer_user.email}>", "Something Else").and_return(double(:mailer, deliver: true))
         visit admin_fresh_sheet_path
 
-        click_link "Preview Note"
+        click_link "Add Note"
 
         fill_in "note", with: "Forever Young"
         click_button "Add Note"
@@ -83,7 +83,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
       scenario "note is cleared once email is sent to customers" do
         visit admin_fresh_sheet_path
 
-        click_link "Preview Note"
+        click_link "Add Note"
 
         fill_in "note", with: "Forever Young"
         click_button "Add Note"

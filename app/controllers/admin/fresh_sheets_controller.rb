@@ -10,7 +10,7 @@ class Admin::FreshSheetsController < AdminController
   def create
     session[:fresh_sheet_note] = params[:note]
 
-    if params[:commit] == "Save Note"
+    if params[:commit] == "Add Note"
       redirect_to [:admin, :fresh_sheet], notice: "Note saved." and return
     end
 
