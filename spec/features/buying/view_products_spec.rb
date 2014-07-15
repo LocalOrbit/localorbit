@@ -60,7 +60,6 @@ feature "Viewing products" do
     end
 
     sign_in_as(user)
-
     products = Dom::Product.all
 
     expect(products).to have(1).products
@@ -603,7 +602,7 @@ feature "Viewing products" do
     end
   end
 
-  scenario "delivery schedule info shows correctly for pick up products" do 
+  scenario "delivery schedule info shows correctly for pick up products" do
     sign_in_as(user)
 
     within(".table-summary") do

@@ -48,9 +48,8 @@ feature "entering receipts" do
     it "keeps the seller entries in the list" do
       delete_organization(buyer)
       delete_organization(seller)
-
+      
       visit admin_financials_receipts_path
-
       rows = Dom::Admin::Financials::InvoiceRow.all
 
       expect(rows.size).to eq(2)

@@ -15,7 +15,7 @@
         </thead>
         <% @cross_selling_markets.each do |market| %>
           <tr>
-            <td class="accept-products"><%= check_box_tag("organization[cross_sell_ids][]", market.id, @organization.is_cross_selling?(from: current_market, to: market)) %></td>
+            <td class="accept-products"><%= check_box_tag("organization[cross_sell_ids][]", market.id, @organization.cross_selling?(from: current_market, to: market)) %></td>
             <td class="name"><%= market.name %></td>
           </tr>
         <% end %>

@@ -156,7 +156,7 @@ describe Organization do
           expect {
             organization.update_cross_sells!(from_market: market, to_ids: [])
           }.to change {
-            product.reload.delivery_schedules.count
+            Product.find(product.id).delivery_schedules.count
           }.from(2).to(1)
         end
       end

@@ -17,8 +17,9 @@ class Market < ActiveRecord::Base
   has_many :market_cross_sells, class_name: "MarketCrossSells", foreign_key: :source_market_id
   has_many :cross_sells, through: :market_cross_sells
 
-  has_many :market_organizations, -> { where(deleted_at: nil) }
-  has_many :organizations, through: :market_organizations
+  has_many :market_organizations
+  has_many :organizations, -> { extending(MarketOrganization::AssociationScopes).excluding_deleted }, through: :market_organizations
+
   has_many :addresses, class_name: MarketAddress
   has_many :delivery_schedules, inverse_of: :market
   has_many :orders

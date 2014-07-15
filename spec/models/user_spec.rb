@@ -298,6 +298,21 @@ describe User do
       it 'does not show markets for which they are not members' do
         expect(user.markets).to_not include(market3)
       end
+
+      context "user is a  member of an organization which was deleted" do
+        let!(:empty_market) { create(:market, organizations: [], managers: [user])}
+        let!(:deleted_organization) { create(:organization, markets: [empty_market]) }
+
+        before do
+          mo = MarketOrganization.where(market_id: empty_market.id, organization_id: deleted_organization.id)
+          mo.soft_delete
+        end
+
+        it "still returns markets the user manages" do
+          expect(user.markets).to include(empty_market)
+        end
+      end
+
     end
 
     context 'user' do

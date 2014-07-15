@@ -81,7 +81,10 @@ class Product < ActiveRecord::Base
   end
 
   def self.for_market_id(market_id)
-    joins(organization: :market_organizations).where(market_organizations: {market_id: market_id})
+    joins(organization: :market_organizations).
+      extending(MarketOrganization::AssociationScopes).
+      excluding_deleted.
+      mo_join_market_id(market_id)
   end
 
   def self.for_organization_id(organization_id)
@@ -242,11 +245,11 @@ class Product < ActiveRecord::Base
 
   def update_delivery_schedules
     if use_all_deliveries?
-      self.delivery_schedule_ids = organization.reload.all_markets.map do |market|
+      self.delivery_schedule_ids = organization.reload.all_markets.excluding_deleted.map do |market|
         market.delivery_schedules.visible.map(&:id)
       end.flatten
     else
-      ids = organization.reload.all_markets.map(&:id)
+      ids = organization.reload.all_markets.excluding_deleted.map(&:id)
       self.delivery_schedules = delivery_schedules.select {|ds| ids.include?(ds.market.id) }
     end
   end
