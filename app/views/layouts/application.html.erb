@@ -57,13 +57,15 @@
       .export path {
         fill: <%= current_market.text_color -%>;
       }
-      .btn--add:hover,
-      .btn--add:active,
-      .btn--add.current,
-      .nav--app a:hover,
-      .nav--app a:active,
-      .nav--app a.current {
-        color: <%= color_mix current_market.text_color, 40 %>
+      @media screen and (min-width: 601px) {
+        .btn--add:hover,
+        .btn--add:active,
+        .btn--add.current,
+        .nav--app a:hover,
+        .nav--app a:active,
+        .nav--app a.current {
+          color: <%= color_mix current_market.text_color, 40 %>
+        }
       }
       .nav--main a:hover,
       .nav--main a:active,
