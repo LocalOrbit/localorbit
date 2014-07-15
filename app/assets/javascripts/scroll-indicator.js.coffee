@@ -13,7 +13,7 @@ $ ->
       $wrapper.removeClass('hard-right')
 
   $(document).ready ->
-    $('.table-wrapper').wrapAll('<div class="scroll-wrapper"/>')
+    $('.table-wrapper').wrap('<div class="scroll-wrapper"/>')
     $('.scroll-wrapper').prepend('<div class="fade-left"></div>')
     $('.scroll-wrapper').append('<div class="fade-right"></div>')
     $('.table-wrapper').trigger "scroll"
