@@ -48,6 +48,7 @@
           <tr>
             <th>Item</th>
             <th>Total Sold</th>
+            <th>Lot #</th>
             <th>Units</th>
             <th>Delivery</th>
             <th>Initials</th>
@@ -58,6 +59,7 @@
           <tr class="individual-pack-list-item">
             <td class="name"><%= item.product.name %></td>
             <td class="total-sold"><%= item.quantity %></td>
+            <td class="lot"><%= item.product.unit_id if item.product.unit_id.present? and !item.product.use_simple_inventory %></td>
             <td class="units"><%= item.unit %></td>
             <td class="delivery"></td>
             <td class="initials"></td>
