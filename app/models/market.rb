@@ -38,7 +38,7 @@ class Market < ActiveRecord::Base
       all
     else
       where(id: user.managed_markets.pluck(:id))
-    end.order(:name)
+    end
   }
 
   def self.for_sort(order)

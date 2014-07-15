@@ -247,8 +247,8 @@ ActiveRecord::Schema.define(version: 20140714193242) do
     t.integer  "organization_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "cross_sell",      default: false
     t.datetime "deleted_at"
+    t.integer  "cross_sell_origin_market_id"
   end
 
   add_index "market_organizations", ["market_id", "organization_id"], name: "index_market_organizations_on_market_id_and_organization_id", using: :btree

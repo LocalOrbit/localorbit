@@ -7,7 +7,7 @@ module Admin
 
     def index
       @query_params = sticky_parameters(request.query_parameters)
-      @organizations = current_user.managed_organizations.without_cross_sells.periscope(@query_params).page(params[:page]).per(@query_params[:per_page])
+      @organizations = current_user.managed_organizations.periscope(@query_params).page(params[:page]).per(@query_params[:per_page])
       find_selling_markets
     end
 
@@ -46,25 +46,18 @@ module Admin
     end
 
     def destroy
-      # NOTE: Market manager can remove association for a different market?
-      markets = if params[:ids].present?
-        if params[:commit].present? # check for submit in case user didn't choose market to delete org from
-          @organization.markets.managed_by(current_user).where(id: params[:ids])
-        end
-      else
-        @organization.markets.managed_by(current_user).where(id: @organization.original_market.id)
-      end
+      market_ids  = Array.wrap(params[:ids]).map(&:to_i)
+      market_ids &= Market.managed_by(current_user).pluck(:id)
 
-      postfix = if markets.count == 1
-        "#{markets.first.name}"
-      else
-        "market membership(s)"
-      end
+      remove_organization_from_markets = RemoveOrganizationFromMarkets.perform(
+        organization: @organization,
+        market_ids:   market_ids
+      )
 
-      if MarketOrganization.where(organization_id: @organization.id, market_id: markets.map(&:id)).soft_delete_all
-        redirect_to [:admin, :organizations], notice: "Removed #{@organization.name} from #{postfix}"
+      if remove_organization_from_markets.success?
+        redirect_to [:admin, :organizations], notice: remove_organization_from_markets.message
       else
-        redirect_to [:admin, :organizations], error: "Could not remove #{@organization.name} from #{postfix}"
+        redirect_to [:admin, :organizations], alert: remove_organization_from_markets.error
       end
     end
 
@@ -110,8 +103,7 @@ module Admin
     end
 
     def find_selling_markets
-      markets = current_user.admin? ? current_user.markets : current_user.managed_markets
-      @selling_markets = markets.order(:name).inject([["All", 0]]) {|result, market| result << [market.name, market.id] }
+      @selling_markets = Market.managed_by(current_user).order(:name).inject([["All", 0]]) {|result, market| result << [market.name, market.id] }
     end
   end
 end

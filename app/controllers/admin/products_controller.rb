@@ -137,8 +137,7 @@ module Admin
     end
 
     def find_markets_for_filtering
-      markets = current_user.admin? ? current_user.markets : current_user.managed_markets
-      @selling_markets = markets.order(:name).inject([]) {|result, market| result << [market.name, market.id] }
+      @selling_markets = Market.managed_by(current_user).order(:name).inject([]) {|result, market| result << [market.name, market.id] }
     end
 
     def find_delivery_schedules(product=nil)

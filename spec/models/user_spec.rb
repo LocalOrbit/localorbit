@@ -141,7 +141,7 @@ describe User do
       end
 
       context "cross selling organizations belonging to a market" do
-        let!(:cross_sell_org) { create(:organization, markets:[market2]).tap {|o| o.market_organizations.create(market: market1, cross_sell: true) } }
+        let!(:cross_sell_org) { create(:organization, markets:[market2]).tap {|o| o.market_organizations.create(market: market1, cross_sell_origin_market: market2) } }
 
         it "returns unique results for all organizations" do
           expect(result.count).to eql(3)
@@ -163,15 +163,21 @@ describe User do
       let(:org3) { create(:organization, name: 'Org 3') }
       let(:org4) { create(:organization, name: 'Org 4') }
       let(:org5) { create(:organization, name: 'Org 5') }
+      let(:org6) { create(:organization, name: 'Org 6') }
+      let(:org7) { create(:organization, name: 'Org 7') }
 
       before do
         market1.organizations << org1
         market1.organizations << org5
         market2.organizations << org2
+        market2.organizations << org7
         market3.organizations << org3
         market3.organizations << org4
+        market3.organizations << org7
         user.organizations << org4
         user.organizations << org5
+        org6.update_cross_sells!(from_market: market3, to_ids: [market2.id])
+        org7.market_organizations.where(market_id: market2).soft_delete_all
       end
 
       it 'returns a chainable scope' do
@@ -188,6 +194,14 @@ describe User do
 
       it "does not include organizations in other markets" do
         expect(user.managed_organizations).to_not include(org3)
+      end
+
+      it "does not include organizations merely cross selling to the market" do
+        expect(user.managed_organizations).to_not include(org6)
+      end
+
+      it "does not include organizations removed from the market" do
+        expect(user.managed_organizations).to_not include(org7)
       end
     end
 

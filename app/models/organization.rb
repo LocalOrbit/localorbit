@@ -7,8 +7,12 @@ class Organization < ActiveRecord::Base
 
   has_many :users, through: :user_organizations
   has_many :all_markets, through: :market_organizations, source: :market
-  has_many :markets, -> { where(market_organizations: {cross_sell: false}) }, through: :market_organizations
-  has_many :cross_sells, -> { where(market_organizations: {cross_sell: true}) }, through: :market_organizations, source: :market, after_add: :update_product_delivery_schedules, after_remove: :update_product_delivery_schedules
+
+  has_many :markets, -> { where(market_organizations: {cross_sell_origin_market_id: nil}) }, through: :market_organizations
+  has_many :cross_sells, -> { where.not(market_organizations: {cross_sell_origin_market_id: nil}) }, 
+    through: :market_organizations,
+    source: :market
+
   has_many :orders, inverse_of: :organization
 
   has_many :products, inverse_of: :organization, autosave: true, dependent: :destroy
@@ -27,8 +31,6 @@ class Organization < ActiveRecord::Base
   scope :visible, -> { where(show_profile: true) }
   scope :with_products, -> { joins(:products).select("DISTINCT organizations.*").order(name: :asc) }
   scope :buyers_for_orders, lambda {|orders| joins(:orders).where(orders: {id: orders}).uniq }
-
-  scope :without_cross_sells, -> { where(market_organizations: {cross_sell: false}) }
 
   serialize :twitter, TwitterUser
 
@@ -68,6 +70,13 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def self.managed_by_user_id_or_market_ids_including_deleted(user_id, market_ids)
+    select("DISTINCT organizations.*").
+    joins("LEFT JOIN user_organizations ON user_organizations.organization_id = organizations.id
+           LEFT JOIN market_organizations ON market_organizations.organization_id = organizations.id").
+    where(["user_organizations.user_id = ? OR (market_organizations.market_id IN (?) AND market_organizations.cross_sell_origin_market_id IS NULL)", user_id, market_ids])
+  end
+
   def shipping_location
     locations.visible.default_shipping
   end
@@ -80,8 +89,26 @@ class Organization < ActiveRecord::Base
     can_sell? && markets.joins(:plan).where(allow_cross_sell: true, plans: {cross_selling: true}).any?
   end
 
-  def update_product_delivery_schedules(_)
+  def update_product_delivery_schedules
     reload.products.each(&:save) if persisted?
+  end
+
+  def update_cross_sells!(from_market: nil, to_ids: [])
+    ids = to_ids.map(&:to_i)
+
+    original_cross_sells  = market_organizations.where(cross_sell_origin_market: from_market)
+    cross_sells_to_remove = original_cross_sells.where.not(market_id: ids)
+    new_cross_sell_ids = ids - original_cross_sells.map(&:market_id)
+
+    # Create the new ones
+    new_cross_sell_ids.each do |new_cross_sell_id|
+      market_organizations.create(market_id: new_cross_sell_id, cross_sell_origin_market: from_market)
+    end
+
+    # Destroy the old ones
+    cross_sells_to_remove.soft_delete_all
+
+    update_product_delivery_schedules
   end
 
   def balanced_customer
@@ -89,7 +116,11 @@ class Organization < ActiveRecord::Base
   end
 
   def original_market
-    (markets.empty? ? cross_sells : markets).first
+    (markets.empty? ? cross_sells : markets).order("market_organizations.id ASC").first
+  end
+
+  def is_cross_selling?(from: nil, to: nil)
+    market_organizations.where(cross_sell_origin_market: from, market: to).exists?
   end
 
   private
