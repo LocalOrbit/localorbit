@@ -103,12 +103,35 @@
   }
 
 }
+
+@media screen and (max-width: 600px) {
+  .order-buyer,
+  .order-info-total,
+  .order-info-status  {
+    width: 95%;
+  }
+  .order-info-total,
+  .order-info-status {
+    float: left;
+  }
+}
 .order-address {
   margin-top: 20px;
 }
 .order-data {
   width: 100%;
 }
+
+@media screen and (max-width: 600px) {
+  h2 {
+    margin-bottom: 10px;
+  }
+  .btn {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
 .order-info-date {
   margin-bottom: 20px;
 }
@@ -130,8 +153,10 @@
   textarea {
     resize: none;
   }
+}
 
-  // .btn {
-  //   color: #fff;
-  // }
+@media screen and (max-width: 600px) {
+  .order-notes {
+    width: 100%;
+  }
 }
