@@ -57,7 +57,7 @@ module ApplicationHelper
   end
 
   def link_to_or_span(name, options={}, html_options={}, &block)
-    if similar_base_url_for_tab?(options)
+    if similar_base_url_for_tab?(url_for, options)
       if html_options[:class].present?
         html_options[:class] += " current"
       else
@@ -71,10 +71,10 @@ module ApplicationHelper
 
   # a matcher similar to current_page?(options) but crazier!
   # See also http://rubular.com/r/PVc6MLd5mL
-  def similar_base_url_for_tab?(options)
-    base_url = url_for.sub(/\/?(\d*|new)?(\?.*)?$/, "")
+  def similar_base_url_for_tab?(current_url, options)
+    base_url = current_url.sub(/\/?(\d+(\/edit)?|new|)?(\?.*)?$/, "")
     regexp = %r{#{Regexp.escape(base_url)}(/(new|\d+(/edit)?)|)$}
-    regexp =~ url_for(options)
+    !!(regexp =~ url_for(options))
   end
 
   def background_options
