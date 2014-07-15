@@ -115,6 +115,11 @@ table {
     min-width: 0;
   }
 }
+@media screen and (max-width: 600px) {
+  table {
+    min-width: 900px;
+  } 
+}
 
 thead {
   th {
