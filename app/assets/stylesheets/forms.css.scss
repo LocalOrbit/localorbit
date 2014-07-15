@@ -32,8 +32,7 @@ input[type=url],
 input[type=password],
 textarea {
   @include box-sizing(border-box);
-  padding-right: 12px;
-  padding-left: 12px;
+  padding: .071em 12px;
   border: solid 1px #aaa;
   @include border-radius(3px);
   margin: 4px 0;

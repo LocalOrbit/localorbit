@@ -51,19 +51,23 @@
     </tr>
   </table>
   <table class="order-info-total">
-    <tr>
-        <th scope="row">Payment Method:</th>
-        <td><%= order.payment_method.titleize %></td>
-    </tr>
-    <tr>
-        <th scope="row">Payment Reference #:</th>
-        <td><%= order.payment_note %></td>
-    </tr>
-    <% if order.display_delivery_fees?(current_user) %>
+    <tbody>
       <tr>
-        <th scope="row">Delivery Fees:</th>
-        <td><%= number_to_currency order.delivery_fees %></td>
+          <th scope="row">Payment Method:</th>
+          <td><%= order.payment_method.titleize %></td>
       </tr>
+      <tr>
+          <th scope="row">Payment Reference #:</th>
+          <td><%= order.payment_note %></td>
+      </tr>
+    </tbody>
+    <% if order.display_delivery_fees?(current_user) %>
+      <tbody>
+        <tr>
+          <th scope="row">Delivery Fees:</th>
+          <td><%= number_to_currency order.delivery_fees %></td>
+        </tr>
+      </tbody>
     <% end %>
     <tfoot>
       <tr>
