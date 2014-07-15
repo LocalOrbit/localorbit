@@ -27,13 +27,13 @@
 
     <div class="manager-filters unjustify">
       <% if current_user.multi_market_membership? %>
-      <span class="preserve-alignment">
+      <span class="preserve-alignment mobile-block">
         <%= f.label :market_id_eq, "Market" %><br>
         <%= f.collection_select :market_id_eq, @search_presenter.selling_markets, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
       </span>
       <% end %>
 
-      <span class="preserve-alignment">
+      <span class="preserve-alignment mobile-block">
         <%= f.label :organization_id_eq, "Buyer" %><br>
         <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
       </span>
