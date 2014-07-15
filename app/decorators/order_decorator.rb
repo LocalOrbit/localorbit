@@ -10,7 +10,7 @@ class OrderDecorator < Draper::Decorator
   end
 
   def display_delivery_address
-    "#{delivery_address}, #{delivery_city}, #{delivery_state} #{delivery_zip}"
+    "#{delivery_address}<br> #{delivery_city}, #{delivery_state} #{delivery_zip}".html_safe
   end
 
   def display_delivery_street
