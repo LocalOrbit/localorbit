@@ -21,7 +21,7 @@ module Admin
 
       respond_to do |format|
         format.html { @order_items = @order_items.page(params[:page]).per(@query_params[:per_page]) }
-        format.csv { @filename = "orders.csv" }
+        format.csv { @filename = "sold_items.csv" }
       end
     end
 
