@@ -1,14 +1,14 @@
 <% if current_user.admin? || current_user.market_manager? %>
   <%= search_form_for @q, url: admin_orders_path, html: { class: "order_search clear-after" } do |f| %>
-    <div class="pull-left">
+    <div class="pull-left order-search-widget">
       <span class="preserve-alignment">
         <%= f.label :order_number_or_organization_name_or_items_seller_name_cont, "Search Orders" %><br>
         <%# NOTE: Do not change the whitespace on the following line %>
-        <%= f.search_field :order_number_or_organization_name_or_items_seller_name_cont, placeholder: "Order #, Buyer, or Seller" -%><%= f.submit "Search", class: "btn--end" %>
+        <%= f.search_field :order_number_or_organization_name_or_items_seller_name_cont, placeholder: "Order #, Buyer, etc." -%><%= f.submit "Search", class: "btn--end" %>
       </span>
     </div>
 
-    <div class="pull-right">
+    <div class="pull-right date-filters">
       <span class="preserve-alignment">
         <label for="q_placed_at_date_gteq">Filter by Date</label><br>
         <%=  datetime_field_tag "q[placed_at_date_gteq]", @search_presenter.start_date, class: 'datepicker filter-input' %>

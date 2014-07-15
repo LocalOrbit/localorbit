@@ -7,7 +7,7 @@ input.alt-datepicker {
   ~ .ui-datepicker-trigger,
   ~ .btn--end {
     display: none;
-    padding: .35em 3px .28em;
+    padding: .36em 3px .3em;
     margin-top: 2px;
     margin-left: -1px;
     font-size: 1em;
@@ -22,7 +22,7 @@ input.alt-datepicker {
 }
   input.alt-datepicker,
   input.hasDatepicker {
-    height: 30px;
+    height: 2.12em;
     @include border-radius(2px 0 0 2px);
     margin: 2px 0;
     vertical-align: top;

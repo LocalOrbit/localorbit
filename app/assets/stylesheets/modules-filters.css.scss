@@ -124,7 +124,8 @@
     }
   }
 
-  .product-search {
+  .product-search,
+  .order-search-widget > .preserve-alignment {
     float: none;
     display: -webkit-flex;
     display: flex;
@@ -136,10 +137,11 @@
     margin-bottom: 15px;
 
     input {
+      width: auto;
       height: 35px;
       -webkit-flex: auto 1;
       flex: auto 1;
-      &[type=search] + .btn--end {
+      &[type=search] + input.btn--end {
         margin-right: 0;
       }
     }
@@ -153,3 +155,50 @@
 }
 
 
+@media screen and (max-width: 600px) {
+  .order_search {
+    .date-filters {
+      float: none;
+      margin: 1em 0;
+      text-align: justify;
+
+      .datepicker {
+        width: 7.5em;
+      }
+      > .preserve-alignment:last-child {
+        width: 100%;
+        font-size: 0.1px;
+      }
+    }
+    input[value=Filter] {
+      display: block;
+      width: 100%;
+    }
+    .manager-filters {
+      &.unjustify {
+        text-align: justify;
+      }
+      .preserve-alignment:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  .order-search-widget {
+    float: none;
+    display: block;
+    width: 100%;
+    margin-bottom: 1em;
+    label {
+      -webkit-flex-shrink: 0;
+      -moz-flex-shrink: 0;
+      flex-shrink: 0;
+      width: 100%;
+    }
+    .preserve-alignment {
+      -webkit-flex-wrap: wrap;
+      -moz-flex-wrap: wrap;
+      flex-wrap: wrap;
+    }
+  }
+  
+}
