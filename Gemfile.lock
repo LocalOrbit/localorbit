@@ -11,6 +11,12 @@ GIT
       polyamorous (~> 1.0.0)
 
 GIT
+  remote: git://github.com/cater2me/wkhtmltopdf-heroku.git
+  revision: 7383436d6e94c2f5363d80a8939f630555277320
+  specs:
+    wkhtmltopdf-heroku (1.0.3)
+
+GIT
   remote: git://github.com/collectiveidea/acts_as_geocodable.git
   revision: be2ca4a448245ec6425f71664428402fa43e877c
   specs:
@@ -464,4 +470,5 @@ DEPENDENCIES
   vcr
   webmock
   wkhtmltopdf-binary
+  wkhtmltopdf-heroku!
   wysihtml5-rails
