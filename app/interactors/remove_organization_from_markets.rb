@@ -11,6 +11,8 @@ class RemoveOrganizationFromMarkets
 
     primary_market_organizations_to_remove.soft_delete_all
     cross_sell_market_organizations_to_remove.soft_delete_all
+
+    remove_promotions_for_organization_products
   end
 
   def primary_market_organizations_to_remove
@@ -19,5 +21,10 @@ class RemoveOrganizationFromMarkets
 
   def cross_sell_market_organizations_to_remove
     organization.market_organizations.where(cross_sell_origin_market_id: market_ids)
+  end
+
+  def remove_promotions_for_organization_products
+    product_ids = organization.products.pluck(:id)
+    Promotion.delete_all(product_id: product_ids)
   end
 end
