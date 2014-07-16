@@ -1,35 +1,36 @@
 <div class="tab-header stickable">
   <div class="l-constraint">
-    <div class="l-page-header">
       <h1><i class="font-icon" data-icon="&#xe027;"></i>&nbsp; Your Organizations</h1>
-    </div>
+      <div class="clearfix"></div>
   </div>
 </div>
 
-<table class="sortable organization-table market-org-list">
-  <thead class="stickable">
-    <tr>
-      <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
-      <th>Market</th>
-      <th data-column="registered" class="<%= column_sort_classes("registered")%>">Registered On</th>
-      <th data-column="can_sell" class="<%= column_sort_classes("can_sell")%>">Can Sell</th>
-    </tr>
-  </thead>
-  <% @organizations.each do |organization| %>
-    <tr>
-      <td class="name"><%= link_to organization.name, [:admin, organization] %></td>
-      <td class="market"><%= organization.markets.map {|m| m.name }.join(', ') %></td>
-      <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
-      <td class="can-sell"><%= organization.can_sell? ? "Yes" : "No" %></td>
-    </tr>
-  <% end %>
-</table>
+<div class="table-wrapper"}
+  <table class="sortable organization-table market-org-list">
+    <thead class="stickable">
+      <tr>
+        <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
+        <th>Market</th>
+        <th data-column="registered" class="<%= column_sort_classes("registered")%>">Registered On</th>
+        <th data-column="can_sell" class="<%= column_sort_classes("can_sell")%>">Can Sell</th>
+      </tr>
+    </thead>
+    <% @organizations.each do |organization| %>
+      <tr>
+        <td class="name"><%= link_to organization.name, [:admin, organization] %></td>
+        <td class="market"><%= organization.markets.map {|m| m.name }.join(', ') %></td>
+        <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
+        <td class="can-sell"><%= organization.can_sell? ? "Yes" : "No" %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
 
 <%= paginate @organizations %>
 
 <% if @organizations.none? %>
   <div class="empty-results">
     <h2>No Results</h2>
-    This table is empty because you aren't directly associated with any organizations.
+    <p>This table is empty because you aren't directly associated with any organizations.</p>
   </div>
 <% end %>
