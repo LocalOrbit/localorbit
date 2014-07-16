@@ -16,7 +16,7 @@
         </thead>
         <tbody>
         <% @addresses.each do |address| %>
-          <tr class="<%= cycle "odd", "even" %>">
+          <tr class="address <%= cycle "odd", "even" %>">
             <td>
               <div><%= link_to address.name, edit_admin_market_address_path(@market, address) %></div>
               <div><%= address.address %>, <%= address.city %>, <%= address.state %> <%= address.zip %></div>
@@ -25,7 +25,7 @@
               <%= address.phone %>
             </td>
             <td class="delete">
-              <button type="submit" class="delete"><i class="font-icon icon-delete"></i></button>
+              <a href="<%= admin_market_address_path(@market, address) %>" data-method="delete" class="delete-address"><i class="font-icon icon-delete"></i></a>
             </td>
           </tr>
         <% end %>
