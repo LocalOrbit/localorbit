@@ -1,3 +1,5 @@
+@import 'mixins';
+
 .date-filters {
   font-size: 14px;
 }
@@ -106,6 +108,7 @@
   .product-header > .btn--add {
     float: none;
     display: block;
+    @include box-sizing(border-box);
   }
   .row {
     > .product-search,
@@ -136,12 +139,12 @@
     margin-top: 15px;
     margin-bottom: 15px;
 
-    input {
+    input, button[type=submit] {
       width: auto;
       height: 35px;
       -webkit-flex: auto 1;
       flex: auto 1;
-      &[type=search] + input.btn--end {
+      &[type=search] + .btn--end {
         margin-right: 0;
       }
     }
@@ -150,6 +153,15 @@
       display: block;
       margin-bottom: 15px;
       text-align: center;
+    }
+  }
+  .mobile-block {
+    float: none;
+    display: block;
+    width: 100%;
+
+    select {
+      width: 100%;
     }
   }
 }
@@ -201,4 +213,7 @@
     }
   }
   
+}
+.per-page-filter {
+  margin: 20px 0 0 10px;
 }
