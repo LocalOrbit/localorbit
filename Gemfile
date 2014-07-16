@@ -51,8 +51,7 @@ gem 'pg_search'
 gem 'rack-canonical-host'
 gem 'ransack', github: 'activerecord-hackery/ransack', branch: 'rails-4.1'
 gem 'simpleidn'
-gem 'wkhtmltopdf-binary', group: [:development, :test]
-gem 'wkhtmltopdf-heroku', github: 'cater2me/wkhtmltopdf-heroku', group: [:staging, :production]
+gem 'wkhtmltopdf-binary'
 
 group :doc do
   gem 'sdoc', require: false
