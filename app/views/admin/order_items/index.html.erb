@@ -1,15 +1,19 @@
   <div class="tab-header stickable">
     <div class="l-constraint">
       <div class="l-page-header">
+        
         <h1><i class="font-icon" data-icon="&#xe02d;"></i>&nbsp; Sold Items</h1>
+
         <div class="header-actions">
           <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export todo pull-right" %>
         </div>
 
-        <%= search_form_for @q, url: admin_order_items_path, html: { class: "payment_search manage_filters clear-after" } do |f| %>
-          <div class="search-widget">
-            <%= f.label :order_order_number_cont, "Search" %><br>
-            <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
+
+        <%= search_form_for @q, url: admin_order_items_path, html: { class: "sold_item_search clear-after" } do |f| %>
+          <div class="pull-left sold-item-search-widget">
+            <span class="preserve-alignment">
+              <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
+            </span>
           </div>
           <div class="filter-row">
             <span class="preserve-alignment">

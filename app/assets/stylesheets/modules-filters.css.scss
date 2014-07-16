@@ -65,6 +65,17 @@
     }
   }
 }
+@media screen and (max-width: 600px) {
+  .filter-row {
+    span {
+      width: 100%;
+      margin-bottom: 10px;
+      select {
+        width: 100%;
+      }
+    }
+  }
+}
 
 @media screen and (max-width: 900px) {
   .product-filters {
@@ -127,8 +138,10 @@
     }
   }
 
+
   .product-search,
-  .order-search-widget > .preserve-alignment {
+  .order-search-widget,
+  .sold-item-search-widget > .preserve-alignment {
     float: none;
     display: -webkit-flex;
     display: flex;
@@ -167,14 +180,25 @@
   }
 }
 
-
 @media screen and (max-width: 600px) {
-  .order_search {
+  .sold-item-search-widget {
+    display: block;
+    float: left;
+  }
+}
+ 
+@media screen and (max-width: 600px) {
+  .order_search,
+  .sold_item_search {
     .date-filters {
       float: none;
       margin: 1em 0;
       text-align: justify;
+      width: 100%;
 
+      label {
+        font-size: .95em;
+      }
       .datepicker {
         width: 7.5em;
       }
@@ -218,3 +242,4 @@
 .per-page-filter {
   margin: 20px 0 0 10px;
 }
+

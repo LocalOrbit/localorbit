@@ -111,6 +111,11 @@
   @media screen and (max-width: 600px) {
     h1 {
       text-align: center;
+      float: left;
+    }
+    .header-actions {
+      margin-top: 15px;
+      float: right;
     }
   }
 
@@ -131,6 +136,11 @@
   .header-actions a {
     margin-left: 10px;
   }
+}
+
+.sold-item-header {
+  display: block;
+  width: 100%;
 }
 
 .l-inline-list {
