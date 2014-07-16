@@ -20,9 +20,12 @@ describe "Master Pack List" do
   let!(:order1_item2)       { create(:order_item, product: product3, quantity: 5, unit_price: 3.00)}
   let!(:order1)             { create(:order, items: [order1_item1, order1_item2], delivery: thursday_delivery, market: market, organization: buyer1) }
 
+  let!(:delivered_item)     { create(:order_item, product: product2, quantity: 8, unit_price: 3.00, delivery_status: 'delivered')}
+  let!(:delivered_order)    { create(:order, items: [delivered_item], delivery: thursday_delivery, market: market, organization: buyer1) }
+
   let!(:order_other_item1)  { create(:order_item, product: product2, quantity: 8, unit_price: 3.00)}
   let!(:order_other)        { create(:order, items: [order_other_item1], delivery: friday_delivery, market: market, organization: buyer1) }
-
+  
 
   before do
     Timecop.travel("May 5, 2014")
@@ -55,17 +58,17 @@ describe "Master Pack List" do
           line_items = Dom::Admin::PackListItem.all
           expect(line_items.count).to eql(2)
 
-          line_item = line_items[0]
-          expect(line_item.name).to have_content(product1.name)
+          line_item = Dom::Admin::PackListItem.find_by_name(product1.name)
           expect(line_item.quantity).to have_content(2)
           expect(line_item.seller).to have_content(sellers1.name)
           expect(line_item.total_price).to have_content("$6.00")
 
-          line_item = line_items[1]
-          expect(line_item.name).to have_content(product3.name)
+          line_item = Dom::Admin::PackListItem.find_by_name(product3.name)
           expect(line_item.quantity).to have_content(5)
           expect(line_item.seller).to have_content(sellers2.name)
           expect(line_item.total_price).to have_content("$15.00")
+
+          expect(Dom::Admin::PackListItem.find_by_name(product2.name)).to be_nil
         end
       end
 
