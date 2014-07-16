@@ -35,6 +35,9 @@
       h2 {
         margin-left: 10px;
       }
+      > table {
+        min-width: 900px;
+      }
     }
     .scroll-wrapper {
       clear: both;
@@ -119,11 +122,6 @@ table {
     z-index: auto;
     min-width: 0;
   }
-}
-@media screen and (max-width: 600px) {
-  table {
-    min-width: 900px;
-  } 
 }
 
 thead {
