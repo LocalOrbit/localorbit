@@ -54,6 +54,37 @@ describe RemoveOrganizationFromMarkets do
     end
   end
 
+  context "organization has promotional items" do
+    it "removes the promotions for the organization" do
+      organization = create(:organization, markets: [market])
+      product = create(:product, :sellable, organization: organization)
+      promotion = create(:promotion, market: market, product: product)
+
+      expect(Promotion.count).to eql(1)
+
+      remove_organization_from_market = RemoveOrganizationFromMarkets.perform(
+        market_ids: [market.id], organization: organization
+      )
+
+      expect(Promotion.count).to eql(0)
+    end
+
+    it "does not remove promitional items for other organizations" do
+      organization = create(:organization, markets: [market])
+      other_organization = create(:organization, markets: [market])
+      product = create(:product, :sellable, organization: other_organization)
+      promotion = create(:promotion, market: market, product: product)
+
+      expect(Promotion.count).to eql(1)
+
+      remove_organization_from_market = RemoveOrganizationFromMarkets.perform(
+        market_ids: [market.id], organization: organization
+      )
+
+      expect(Promotion.count).to eql(1)
+    end
+  end
+
   it "returns a helpful message when passing no parameters" do
     cross_sell_from = create(:market)
 
