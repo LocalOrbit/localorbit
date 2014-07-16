@@ -25,6 +25,8 @@ class OrderItem < ActiveRecord::Base
   before_save :update_delivered_at
   before_save :update_consumed_inventory
 
+  scope :undelivered,  -> { where(delivery_status: 'pending') }
+
   def self.for_delivery(delivery)
     joins(order: :delivery).where(orders: {delivery_id: delivery.id})
   end

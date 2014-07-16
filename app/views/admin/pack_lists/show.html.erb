@@ -1,14 +1,14 @@
 <%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
 <button class="btn btn--action btn--small pull-right" id="print-button">Print</button>
 
-<% @delivery.orders.decorate.each_with_index do |order, index| %>
+<% @orders.decorate.each_with_index do |order, index| %>
   <% if index != 0 %>
     <div class="pdf-page-break"></div>
   <% end %>
 
   <div class="upcoming-delivery">
     <h1>Packing Slip</h1>
-    <p class="note"><%= index + 1 %> of <%= @delivery.orders.count %><p>
+    <p class="note"><%= index + 1 %> of <%= @orders.length %><p>
 
     <div class="row">
       <div class="column column--half vcard vcard--buyer">
@@ -57,7 +57,7 @@
         <th>Notes</th>
       </tr>
     </thead>
-    <% order.items.includes(:product => :organization).order('products.name').each do |item| %>
+    <% order.items.undelivered.includes(:product => :organization).order('products.name').each do |item| %>
       <tr class="pack-list-item">
         <td class="name"><%= item.product.name %></td>
         <td class="lot"><%= item.product.unit_id if item.product.unit_id.present? and !item.product.use_simple_inventory %></td>

@@ -248,16 +248,17 @@ class Order < ActiveRecord::Base
   end
 
   def self.joining_products
-    joins(items: :product).includes(:items).group("orders.id").order("organization_id DESC")
+    joins(items: :product).where(order_items: {delivery_status: "pending"}).includes(:items).group("orders.id").order("organization_id DESC")
   end
 
-  def self.order_items_by_product
-    joining_products.map {|order| order.items }.flatten.group_by(&:product)
+  def self.undelivered_order_items_by_product
+    joining_products.map {|order| order.items }.
+      flatten.select{|item| item.delivery_status == "pending"}.group_by(&:product)
   end
 
-  def self.order_items_by_product_for_organization(organization)
+  def self.undelivered_order_items_by_product_for_organization(organization)
     joining_products.where(products: {organization_id: organization.id}).
-      map(&:items).flatten.group_by(&:product)
+      map(&:items).flatten.select{|item| item.delivery_status == "pending"}.group_by(&:product)
   end
 
   def delivered_at
