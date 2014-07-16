@@ -1,23 +1,25 @@
 require "spec_helper"
 
 describe "Pick list" do
-  let!(:market)  { create(:market) }
-  let!(:sellers) { create(:organization, :seller, :single_location, markets: [market]) }
-  let!(:others) { create(:organization, :seller, :single_location, markets: [market]) }
-  let!(:sellers_product) { create(:product, :sellable, organization: sellers) }
-  let!(:others_product) { create(:product, :sellable, organization: others) }
+  let!(:market)                    { create(:market) }
+  let!(:sellers)                   { create(:organization, :seller, :single_location, markets: [market]) }
+  let!(:others)                    { create(:organization, :seller, :single_location, markets: [market]) }
+  let!(:sellers_product)           { create(:product, :sellable, organization: sellers) }
+  let!(:delivered_product)         { create(:product, :sellable, organization: sellers) }
+  let!(:others_product)            { create(:product, :sellable, organization: others) }
 
-  let!(:friday_schedule_schedule) { create(:delivery_schedule, market: market, day: 5) }
-  let!(:friday_delivery) { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014"))}
+  let!(:friday_schedule_schedule)  { create(:delivery_schedule, market: market, day: 5) }
+  let!(:friday_delivery)           { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014"))}
 
-  let!(:buyer1) { create(:organization, :buyer, :single_location, markets: [market]) }
-  let!(:buyer2) { create(:organization, :buyer, :single_location, markets: [market]) }
+  let!(:buyer1)                    { create(:organization, :buyer, :single_location, markets: [market]) }
+  let!(:buyer2)                    { create(:organization, :buyer, :single_location, markets: [market]) }
 
-  let!(:sellers_order_item) { create(:order_item, product: sellers_product, quantity: 1)}
-  let!(:sellers_order)      { create(:order, items: [sellers_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
+  let!(:sellers_order_item)        { create(:order_item, product: sellers_product, quantity: 1)}
+  let!(:delivered_order_item)      { create(:order_item, product: delivered_product, quantity: 1, delivery_status: 'delivered')}
+  let!(:sellers_order)             { create(:order, items: [delivered_order_item, sellers_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
 
-  let!(:others_order_item) { create(:order_item, product: others_product, quantity: 2)}
-  let!(:others_order)      { create(:order, items: [others_order_item], organization: buyer2, market: market, delivery: friday_delivery) }
+  let!(:others_order_item)         { create(:order_item, product: others_product, quantity: 2)}
+  let!(:others_order)              { create(:order, items: [others_order_item], organization: buyer2, market: market, delivery: friday_delivery) }
 
   before do
     Timecop.travel("May 5, 2014")
@@ -35,13 +37,13 @@ describe "Pick list" do
         switch_to_subdomain(market.subdomain)
         sign_in_as(user)
         visit admin_delivery_tools_pick_list_path(friday_delivery.id)
-      end
 
-      it "shows the pick lists" do
         expect(page).to have_content("Pick List")
         expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
         expect(page).to have_content(sellers.name)
+      end
 
+      it "shows the pick lists" do
         lines = Dom::Admin::PickListItem.all
         expect(lines.count).to eql(2)
 
@@ -58,6 +60,10 @@ describe "Pick list" do
         expect(line.total_sold).to have_content("2")
         expect(line.buyer).to have_content(buyer2.name)
         expect(line.breakdown).to have_content("2")
+      end
+
+      it "does not show delivered items" do
+        expect(Dom::Admin::PickListItem.find_by_name(delivered_product.name)).to be_nil
       end
     end
   end
@@ -78,6 +84,10 @@ describe "Pick list" do
         expect(page).to have_content("Ordering has not yet closed for this delivery")
         expect(page).to have_content(sellers.name)
         expect(page).to_not have_content(others.name)
+      end
+
+      it "does not show delivered items" do
+        expect(Dom::Admin::PickListItem.find_by_name(delivered_product.name)).to be_nil
       end
     end
 
@@ -103,13 +113,13 @@ describe "Pick list" do
         switch_to_subdomain(market.subdomain)
         sign_in_as(user)
         visit admin_delivery_tools_pick_list_path(friday_delivery.id)
-      end
 
-      it "shows the pick list" do
         expect(page).to have_content("Pick List")
         expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
         expect(page).to have_content(sellers.name)
+      end
 
+      it "shows the pick list" do
         lines = Dom::Admin::PickListItem.all
         expect(lines.count).to eql(1)
 
@@ -119,6 +129,10 @@ describe "Pick list" do
         expect(line.breakdown).to have_content("1")
 
         expect(page).to_not have_content(others_product.name)
+      end
+
+      it "does not show delivered items" do
+        expect(Dom::Admin::PickListItem.find_by_name(delivered_product.name)).to be_nil
       end
     end
 
@@ -130,13 +144,13 @@ describe "Pick list" do
         switch_to_subdomain(market.subdomain)
         sign_in_as(user)
         visit admin_delivery_tools_pick_list_path(friday_delivery.id)
-      end
 
-      it "shows the pick list", js: true do
         expect(page).to have_content("Pick List")
         expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
         expect(page).to have_content(sellers.name)
+      end
 
+      it "shows the pick list", js: true do
         expect(Dom::Admin::PickListItem.count).to eql(1)
 
         line = Dom::Admin::PickListItem.find_by_name(sellers_product.name)
@@ -145,6 +159,10 @@ describe "Pick list" do
         expect(line.breakdown).to have_content("1")
 
         expect(page).to_not have_content(others_product.name)
+      end
+
+      it "does not show delivered items" do
+        expect(Dom::Admin::PickListItem.find_by_name(delivered_product.name)).to be_nil
       end
     end
 
