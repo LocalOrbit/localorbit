@@ -47,6 +47,14 @@ describe "Admin Managing Markets" do
       expect(page).to have_text(address1.zip)
     end
 
+    it 'I can delete an address from the index' do
+      expect(page).to have_text(address1.name)
+
+      page.find('.delete-address').click
+
+      expect(page).to_not have_text(address1.name)
+    end
+
     it 'I can add a new address' do
       expect(page).to have_text 'Add Address'
 
