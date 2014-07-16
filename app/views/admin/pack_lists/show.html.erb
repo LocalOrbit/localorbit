@@ -49,6 +49,7 @@
     <thead>
       <tr>
         <th>Item</th>
+        <th>Lot #</th>
         <th>Quantity</th>
         <th>Units</th>
         <th>Seller</th>
@@ -59,6 +60,7 @@
     <% order.items.includes(:product => :organization).order('products.name').each do |item| %>
       <tr class="pack-list-item">
         <td class="name"><%= item.product.name %></td>
+        <td class="lot"><%= item.product.unit_id if item.product.unit_id.present? and !item.product.use_simple_inventory %></td>
         <td class="quantity"><%= item.quantity %></td>
         <td class="units"><%= item.unit %></td>
         <td class="seller"><%= item.product.organization.name %></td>

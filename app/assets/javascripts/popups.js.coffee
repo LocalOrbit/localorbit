@@ -2,6 +2,12 @@ $ ->
   # Attaches to links with the '.popup-toggle' class and
   # shows/hides an element with the class indicated by the
   # data-popup attribute on the link.
+  clone_popup = ($element, toggle) ->
+    $element.css({
+      'left': $element.offset().left,
+      'top':  $element.offset().top
+    }).insertAfter('.overlay')
+
   position_popup = ($element) ->
     bottom = $element.offset().top + $element.outerHeight()
     right = $element.offset().left + $element.outerWidth()
@@ -24,6 +30,7 @@ $ ->
         size_popup($element)
       $('.overlay').addClass('is-editable')
     position_popup($element)
+    clone_popup($element, e.target)
 
 
   $('.modal-toggle').click ->
@@ -45,7 +52,8 @@ $ ->
       $element.find(".popup-body").html(response)
 
   $('.popup button.close').click ->
-    $(this).closest('.popup').addClass('is-hidden')
+    $popup = $(this).closest('.popup')
+    $popup.addClass('is-hidden').css({'left': 'auto', 'top': 'auto'}).insertAfter('.popup-toggle[href="#' + $popup.attr('id') + '"]')
     $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable')
 
   $('.popup form[data-remote]').on 'ajax:success', (event, xhr, status) ->

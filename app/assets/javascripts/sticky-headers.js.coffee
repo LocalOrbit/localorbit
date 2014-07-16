@@ -25,7 +25,7 @@ $ ->
 
   stick_absolutely = (i, e) ->
     $('<div class="teflon"></div>').insertAfter(e)
-    if !$(e).parent().hasClass('l-main')
+    if !$(e).parent().hasClass('l-main') && $(e).parent().attr('id') != "sold-items"
       $(e).parent().css('overflow', 'hidden')
     $(e).addClass('js-positioned').next().css({
         'position': 'relative',
