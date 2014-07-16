@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "A Market Manager", :vcr do
-  let!(:market)  { create(:market) }
+  let!(:market)  { create(:market, :with_delivery_schedule) }
   let!(:market2) { create(:market) }
   let!(:market_manager) { create :user, :market_manager, managed_markets: [market] }
 
@@ -262,10 +262,12 @@ describe "A Market Manager", :vcr do
 
   describe "Deleting an organization", js: true do
     context "organization belongs to a single market" do
-      let!(:market3) { create(:market) }
+      let!(:market3) { create(:market, :with_address) }
 
       let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market]) }
-      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market]) }
+      let!(:product) { create(:product, :sellable, organization: seller) }
+      let!(:promotion) { create(:promotion, :active, market: market, product: product) }
+      let!(:buyer) { create(:organization, :single_location, name: "Hudsonville Restraunt", markets: [market]) }
 
       before do
         market_manager.managed_markets << market2
@@ -285,6 +287,12 @@ describe "A Market Manager", :vcr do
 
         holland_farms = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
         expect(holland_farms).to be_nil
+      end
+
+      it "removes promotions for items" do
+        visit products_path
+
+        expect(page).to_not have_content(promotion.title)
       end
 
       context "and the market manager belongs to multiple markets" do
