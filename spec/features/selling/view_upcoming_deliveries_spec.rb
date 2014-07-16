@@ -34,6 +34,9 @@ describe "Upcoming Deliveries" do
       let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1)}
       let!(:order_with_seller_product) { create(:order, items: [order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
 
+      let!(:delivered_order_item) { create(:order_item, product: product, quantity: 1, delivery_status: 'delivered') }
+      let!(:delivered_order) { create(:order, items: [delivered_order_item], organization: seller, market: market, delivery: wednesday_delivery) }
+
       let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1)}
       let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
 
@@ -63,6 +66,11 @@ describe "Upcoming Deliveries" do
           expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
           expect(deliveries.first.market).to be_nil
         end
+      end
+
+      it "does not show orders that have been delivered" do
+        expect(page).to have_content("Upcoming Deliveries")
+        expect(Dom::UpcomingDelivery.find_by_upcoming_delivery_date("May 7, 2014, 7:00 AM")).to be_nil
       end
     end
 
