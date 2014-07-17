@@ -12,7 +12,7 @@ class InviteUserToOrganization
   def add_to_organization_and_notify
     if !user.organizations.include? organization
       user.organizations << organization
-      UserMailer.organization_invitation(user, organization, inviter, market).deliver
+      UserMailer.delay.organization_invitation(user, organization, inviter, market)
     elsif user.accepted_or_not_invited?
       fail!(message: "You have already added this user")
     else

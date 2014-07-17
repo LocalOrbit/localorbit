@@ -3,17 +3,17 @@ class SendOrderEmails
 
   def perform
     unless order.organization.users.empty?
-      OrderMailer.buyer_confirmation(order).deliver
+      OrderMailer.delay.buyer_confirmation(order)
     end
 
     order.sellers.each do |seller|
       unless seller.users.empty?
-        OrderMailer.seller_confirmation(order, seller).deliver
+        OrderMailer.delay.seller_confirmation(order, seller)
       end
     end
 
     unless order.market.managers.empty?
-      OrderMailer.market_manager_confirmation(order).deliver
+      OrderMailer.delay.market_manager_confirmation(order)
     end
   end
 end
