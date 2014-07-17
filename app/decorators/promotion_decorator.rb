@@ -6,10 +6,12 @@ class PromotionDecorator < Draper::Decorator
   end
 
   def image
-    if object.image_uid.present?
-      object.image.thumb("75x").url
-    elsif object.product.image_uid.present?
-      object.product.image.thumb("75x").url
+    if object.image_stored?
+      object.image.thumb("150x").url
+    elsif object.product.thumb_stored?
+      object.product.thumb.url
+    elsif object.product.image_stored?
+      object.product.image.thumb("150x").url
     else
       "default-product-image.png"
     end

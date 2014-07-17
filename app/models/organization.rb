@@ -1,4 +1,5 @@
 class Organization < ActiveRecord::Base
+  extend DragonflyBackgroundResize
   include Sortable
   include PgSearch
 
@@ -9,7 +10,7 @@ class Organization < ActiveRecord::Base
   has_many :all_markets, through: :market_organizations, source: :market
 
   has_many :markets, -> { where(market_organizations: {cross_sell_origin_market_id: nil}) }, through: :market_organizations
-  has_many :cross_sells, -> { where.not(market_organizations: {cross_sell_origin_market_id: nil}) }, 
+  has_many :cross_sells, -> { where.not(market_organizations: {cross_sell_origin_market_id: nil}) },
     through: :market_organizations,
     source: :market
 
@@ -37,6 +38,7 @@ class Organization < ActiveRecord::Base
   accepts_nested_attributes_for :locations, reject_if: :reject_location
 
   dragonfly_accessor :photo
+  define_after_upload_resize(:photo, 1200, 1200)
 
   scope_accessible :market, method: :for_market_id, ignore_blank: true
   scope_accessible :can_sell, method: :for_can_sell, ignore_blank: true

@@ -1,4 +1,6 @@
 class Promotion < ActiveRecord::Base
+  extend DragonflyBackgroundResize
+
   belongs_to :product, inverse_of: :promotions
   belongs_to :market, inverse_of: :promotions
 
@@ -10,6 +12,7 @@ class Promotion < ActiveRecord::Base
   validate :one_active_per_market, if: "market.present? && active?"
 
   dragonfly_accessor :image
+  define_after_upload_resize(:image, 1200, 1200)
 
   scope :active, -> { where(active: true) }
 

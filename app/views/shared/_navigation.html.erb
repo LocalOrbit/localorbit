@@ -1,5 +1,5 @@
 <%
-if current_market && current_market.logo
+if current_market.try(:logo_stored?)
   logo = image_tag(current_market.logo.thumb("600x200>").url, alt: "#{current_market.name} logo", class: "vertical-centerer logo")
 else
   logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "vertical-centerer logo")

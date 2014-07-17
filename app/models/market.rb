@@ -1,5 +1,7 @@
 class Market < ActiveRecord::Base
+  extend DragonflyBackgroundResize
   include Sortable
+
   validates :name, :subdomain, presence: true, uniqueness: true, length: {maximum: 255, allow_blank: true}
   validates :subdomain, exclusion: {in: %w(app www mail ftp smtp imap docs calendar community knowledge service support)}
   validates :tagline, length: {maximum: 255, allow_blank: true}
@@ -30,6 +32,8 @@ class Market < ActiveRecord::Base
 
   dragonfly_accessor :logo
   dragonfly_accessor :photo
+  define_after_upload_resize(:logo, 1200, 1200)
+  define_after_upload_resize(:photo, 1800, 1800)
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
 

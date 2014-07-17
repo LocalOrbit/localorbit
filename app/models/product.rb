@@ -1,4 +1,5 @@
 class Product < ActiveRecord::Base
+  extend DragonflyBackgroundResize
   include SoftDelete
   include PgSearch
   include Sortable
@@ -18,6 +19,8 @@ class Product < ActiveRecord::Base
   has_many :promotions, inverse_of: :product
 
   dragonfly_accessor :image
+  dragonfly_accessor :thumb
+  define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
 
   validates :name, presence: true
   validates :unit, presence: true
