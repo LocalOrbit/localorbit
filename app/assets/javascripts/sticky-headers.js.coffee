@@ -1,6 +1,8 @@
 $ ->
   stick_points = []
   stick_heights = []
+  left = $('.l-main').offset().left
+  width = $('.l-main').outerWidth()
 
   affix = (index, scroll_point) ->
     stickable = $('.stickable')[index]
@@ -11,11 +13,15 @@ $ ->
       i++
       if window.innerHeight >= 768 || i == 0
         if find_scrolly() >= scroll_point - height
-          $(stickable).addClass('js-fixed').css({'top': height})
+          $(stickable).addClass('js-fixed').css({
+              'top': height,
+              'left': left,
+              'width': width,
+          })
         else
-          $(stickable).removeClass('js-fixed').css({'top': ""})
+          $(stickable).removeClass('js-fixed').css({'top': "", 'left': "", 'width':""})
       else
-        $(stickable).removeClass('js-fixed').css({'top': ""})
+        $(stickable).removeClass('js-fixed').css({'top': "", 'left': "", 'width':""})
 
   find_scrolly  = ->
     if window.pageYOffset != undefined
@@ -23,7 +29,7 @@ $ ->
     else
       return (document.documentElement || document.body.parentNode || document.body).scrollTop
 
-  stick_absolutely = (i, e) ->
+  stick_absolutely = (i, e, width, left) ->
     $('<div class="teflon"></div>').insertAfter(e)
     if !$(e).parent().hasClass('l-main') && $(e).parent().attr('id') != "sold-items"
       $(e).parent().css('overflow', 'hidden')
@@ -66,14 +72,20 @@ $ ->
         , 5
 
   measure_stickables = ->
+    width = $('.l-main').outerWidth()
+    left = $('.l-main').offset().left
     $('.stickable').each (i, e) ->
       stick_points.push($(e).offset().top)
-      stick_heights.push($(e).outerHeight())
+      if $(e).prev('.nav--admin').length
+        stick_heights.push($(e).outerHeight()-20)
+      else
+        stick_heights.push($(e).outerHeight())
       $(e).attr({'data-height': stick_heights[i], 'data-offset': stick_points[i]})
       if e.tagName != "THEAD"
         stick_absolutely(i, e)
       else
         stick_table(i, e)
+    $('body').attr({'data-points': stick_points, 'data-heights': stick_heights})
 
   $(window).resize ->
     measure_stickables
