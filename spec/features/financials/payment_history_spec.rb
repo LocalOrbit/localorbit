@@ -5,6 +5,10 @@ def format_date(date)
 end
 
 feature "Payment history", :truncate_after_all do
+  def remember_payment(payment)
+    @payments[payment.created_at.strftime("%m/%d/%Y")] = payment.orders.map(&:order_number).join(',')
+  end
+
   before :all do
     market_ach_balanced_uri = "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/bank_accounts/BA6MvUHwvMFA1EtwhPT5F2sT"
     ach_balanced_uri        = "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/bank_accounts/BA1YqNWvILpfyq9FqSDPLhCO"
@@ -38,6 +42,8 @@ feature "Payment history", :truncate_after_all do
 
     order_item = create(:order_item, unit_price: 129.00, quantity: 1)
     create(:order, delivery: @delivery, items: [order_item], organization: @buyer, payment_method: "credit card", total_cost: 129.00)
+
+    @payments = {}
 
     orders = []
     orders2 = []
@@ -73,6 +79,8 @@ feature "Payment history", :truncate_after_all do
         payment.update_attributes(bank_account: ach_account) if i == 3
         payment.update_attributes(bank_account: other_ach_account, status: "pending") if i == 4
         payment.update_attributes(bank_account: cc_account) if i == 5
+        remember_payment(payment)
+
 
         payment2 = create(:payment,
                          payment_method: ["cash", "check", "ach", "ach", "credit card"][i - 1],
@@ -85,15 +93,17 @@ feature "Payment history", :truncate_after_all do
         payment2.update_attributes(bank_account: ach_account) if i == 3
         payment2.update_attributes(bank_account: other_ach_account, status: "pending") if i == 4
         payment2.update_attributes(bank_account: cc_account) if i == 5
+        remember_payment(payment2)
 
         # Create payment from market to seller
-        create(:payment,
+        payment = create(:payment,
                payment_method: ["cash", "check"][i % 2],
                payer: @market,
                payee: @seller,
                orders: [orders[i]],
                note: ["", "#67890"][i % 2],
                amount: orders[i].total_cost * 2)
+        remember_payment(payment)
 
         # Create payment from market to seller2
         create(:payment,
@@ -103,6 +113,7 @@ feature "Payment history", :truncate_after_all do
                orders: [orders2[i]],
                note: ["", "#54321"][i % 2],
                amount: orders2[i].total_cost * 2)
+        remember_payment(payment)
       end
     end
 
@@ -125,12 +136,13 @@ feature "Payment history", :truncate_after_all do
                     payment_method: "purchase order",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-123")
-      create(:payment,
+      payment = create(:payment,
             payment_method: "cash",
             payer: @buyer2,
             payee: @market2,
             orders: [order],
             amount: order.total_cost)
+      remember_payment(payment)
 
       # Create a cash buyer payment for a market that IS NOT managed by our market manager
       order = create(:order,
@@ -141,12 +153,13 @@ feature "Payment history", :truncate_after_all do
                     payment_method: "purchase order",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-234")
-      create(:payment,
+      payment = create(:payment,
             payment_method: "cash",
             payer: @buyer2,
             payee: market3,
             orders: [order],
             amount: order.total_cost)
+      remember_payment(payment)
 
       # Create an ACH buyer payment for a market that IS managed by our market manager
       order = create(:order,
@@ -157,13 +170,14 @@ feature "Payment history", :truncate_after_all do
                     payment_method: "ach",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-345")
-      create(:payment,
+      payment = create(:payment,
             payment_method: "ach",
             payer: @buyer2,
             payee: nil,
             orders: [order],
             amount: order.total_cost,
             bank_account: ach_account)
+      remember_payment(payment)
 
       # Create an ACH buyer payment for a market that IS NOT managed by our market manager
       order = create(:order,
@@ -174,13 +188,14 @@ feature "Payment history", :truncate_after_all do
                     payment_method: "ach",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-456")
-      create(:payment,
+      payment = create(:payment,
             payment_method: "ach",
             payer: @buyer2,
             payee: nil,
             orders: [order],
             amount: order.total_cost,
             bank_account: other_ach_account)
+      remember_payment(payment)
 
       # Create Local Orbit -> Seller payment
       order = create(:order,
@@ -191,13 +206,14 @@ feature "Payment history", :truncate_after_all do
                     payment_method: "ach",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-888")
-      create(:payment,
+      payment = create(:payment,
             payment_method: "ach",
             payer: nil,
             payee: @seller,
             orders: [order],
             amount: order.total_cost,
             bank_account: other_ach_account)
+      remember_payment(payment)
 
       # Create Market -> Seller payment
       order = create(:order,
@@ -208,7 +224,7 @@ feature "Payment history", :truncate_after_all do
                     payment_method: "check",
                     payment_status: "paid",
                     order_number: "LO-02-234-4567890-999")
-      create(:payment,
+      payment = create(:payment,
             payment_type: "seller payment",
             payment_method: "check",
             payer: @market,
@@ -216,6 +232,7 @@ feature "Payment history", :truncate_after_all do
             orders: [order],
             amount: order.total_cost,
             bank_account: other_ach_account)
+      remember_payment(payment)
     end
   end
 
@@ -314,13 +331,14 @@ feature "Payment history", :truncate_after_all do
       expect(csv.count).to eq(5)
 
       # Ensure we see the same columns in HTML and CSV
-      expect(csv.headers).to eq(html_headers)
+      expect(csv.headers).to eql(html_headers << "Order Numbers")
 
       payments.each_with_index do |payment, i|
         expect(csv[i]["Payment Date"]).to eq(payment.date)
         expect(csv[i]["Description"]).to eq(payment.description)
         expect(csv[i]["Payment Method"]).to eq(payment.payment_method)
         expect(csv[i]["Amount"]).to eq(payment.amount)
+        expect(csv[i]["Order Numbers"]).to eql(@payments[payment.date])
       end
     end
 
