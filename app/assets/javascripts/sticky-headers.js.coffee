@@ -98,7 +98,7 @@ $ ->
     left = $('.l-main').offset().left
     $('.stickable').each (i, e) ->
       stick_points.push($(e).offset().top)
-      if $(e).prev('.nav--admin').length
+      if $(e).hasClass('tab-header') && $(e).prev('.nav--admin').length
         stick_heights.push($(e).outerHeight()-20)
       else
         stick_heights.push($(e).outerHeight())
