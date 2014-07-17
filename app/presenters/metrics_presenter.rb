@@ -1,6 +1,9 @@
 class MetricsPresenter
   attr_reader :metrics
 
+  TEST_MARKET_IDS = [10]
+  TEST_ORG_IDS    = Market.where(id: TEST_MARKET_IDS).joins(:organizations).uniq.pluck("organizations.id")
+
   GROUPDATE_OPTIONS = {
     week: {
       groupdate: :group_by_week,
@@ -14,88 +17,97 @@ class MetricsPresenter
     }
   }.freeze
 
-  TEST_MARKET_IDS = [10]
-  TEST_ORG_IDS    = Market.where(id: TEST_MARKET_IDS).joins(:organizations).uniq.pluck("organizations.id")
+  BASE_SCOPES = {
+    order: Order.joins(:items).where.not(market_id: TEST_MARKET_IDS, order_items: { delivery_status: "canceled" }),
+    order_item: OrderItem.joins(:order).where.not(orders: { market_id: TEST_MARKET_IDS }, delivery_status: "canceled"),
+    payment: Payment.where.not(market_id: TEST_MARKET_IDS),
+    market: Market.where.not(id: TEST_MARKET_IDS),
+    organization: Organization.where.not(id: TEST_ORG_IDS)
+  }
 
   METRICS = {
     total_orders: {
       title: "Total Orders",
-      scope: Order.joins(:items).where.not(market_id: TEST_MARKET_IDS, order_items: { delivery_status: "canceled" }),
+      scope: BASE_SCOPES[:order],
       attribute: :placed_at,
       calculation: :count
     },
     number_of_items: {
       title: "Number of Items",
-      scope: OrderItem.joins(:order).where.not(orders: { market_id: TEST_MARKET_IDS }, delivery_status: "canceled"),
+      scope: BASE_SCOPES[:order_item],
       attribute: "orders.placed_at",
       calculation: :count,
     },
     total_sales: {
       title: "Total Sales",
-      scope: OrderItem.joins(:order).where.not(orders: { market_id: TEST_MARKET_IDS }, delivery_status: "canceled"),
+      scope: BASE_SCOPES[:order_item],
       attribute: "orders.placed_at",
       calculation: :sum,
       calculation_arg: "unit_price * quantity"
     },
     average_order: {
       title: "Average Order",
-      scope: OrderItem.joins(:order).where.not(orders: { market_id: TEST_MARKET_IDS }, delivery_status: "canceled"),
+      scope: BASE_SCOPES[:order_item],
       attribute: "orders.placed_at",
       calculation: :average,
       calculation_arg: "unit_price * quantity"
     },
     average_order_size: {
       title: "Average Order Size",
-      scope: Order.joins(:items).where.not(market_id: TEST_MARKET_IDS, order_items: { delivery_status: "canceled" }),
+      scope: BASE_SCOPES[:order],
       attribute: :placed_at,
       calculation: :custom,
       calculation_arg: "(COUNT(DISTINCT order_items.id)::NUMERIC / COUNT(DISTINCT orders.id)::NUMERIC)"
     },
     total_service_fees: {
       title: "Total Service Fees",
-      scope: Payment.where.not(market_id: TEST_MARKET_IDS).where(payment_type: 'service'),
+      scope: BASE_SCOPES[:payment].where(payment_type: 'service'),
       attribute: "created_at",
       calculation: :sum,
       calculation_arg: :amount
     },
     total_transaction_fees: {
       title: "Total Transaction Fees",
-      scope: OrderItem.joins(:order).where.not(orders: { market_id: TEST_MARKET_IDS }, delivery_status: "canceled"),
+      scope: BASE_SCOPES[:order_item],
       attribute: "orders.placed_at",
       calculation: :sum,
       calculation_arg: "local_orbit_seller_fee + local_orbit_market_fee"
     },
     total_markets: {
       title: "Total Markets",
-      scope: Market.where.not(id: TEST_MARKET_IDS),
+      scope: BASE_SCOPES[:market],
       attribute: :created_at,
       calculation: :window
     },
     active_markets: {
       title: "Active Markets",
-      scope: Order.where.not(market_id: TEST_MARKET_IDS).uniq.pluck(:market_id),
+      scope: BASE_SCOPES[:order].joins(:market),
       attribute: :placed_at,
-      calculation: :count
+      calculation: :count,
+      calculation_arg: "DISTINCT(markets.id)"
     },
     total_organizations: {
       title: "Total Organizations",
-      scope: Organization.where.not(id: TEST_ORG_IDS),
+      scope: BASE_SCOPES[:organization],
       attribute: :created_at,
       calculation: :window
     },
     total_buyer_only: {
       title: "Total Buyers Only",
-      scope: Organization.where.not(id: TEST_ORG_IDS).where(can_sell: false),
+      scope: BASE_SCOPES[:organization].where(can_sell: false),
       attribute: :created_at,
       calculation: :window
     },
     # Formula: all buyers + any seller that has bought
     total_buyers: {
       title: "Total Buyers",
+      scope: BASE_SCOPES[:organization].where(can_sell: false),
+      attribute: :created_at,
+      calculation: :window
     },
     total_sellers: {
       title: "Total Sellers",
-      scope: Organization.where.not(id: TEST_ORG_IDS).where(can_sell: true),
+      scope: BASE_SCOPES[:organization].where(can_sell: true),
       attribute: :created_at,
       calculation: :window
     },
@@ -125,9 +137,9 @@ class MetricsPresenter
       title: "Products",
       metrics: [
       ]
-    },
+    }
     # :avg_lo_fees, :avg_lo_fee_pct, :sales_pct_growth, :lo_fees, :fee_pct_growth, :service_fees
-  }
+  }.with_indifferent_access
 
   def initialize(groups: [], search: {})
     # {
