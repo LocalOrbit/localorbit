@@ -34,7 +34,6 @@
       <%= f.label :organization_id_eq, "Buyer" %><br>
       <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
     </span>
-    <p class="preserve-alignment">These invoices require your attention.</p>
     <input type="button" value="Send Selected Invoices" id="submit_send_selected" class="btn btn--small btn--save">
   </div>
   
