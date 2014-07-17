@@ -2,31 +2,33 @@
 
 <div class="row row--partial">
   <div class="column column--full">
-    <table class="product-table product-table--admin sortable">
-      <thead class="stickable">
-        <tr>
-          <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
-          <th data-column="email" class="<%= column_sort_classes("email")%>">E-mail</th>
-          <th>Affiliations</th>
+    <div class="table-wrapper">
+      <table class="product-table product-table--admin sortable">
+        <thead class="stickable">
+          <tr>
+            <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
+            <th data-column="email" class="<%= column_sort_classes("email")%>">E-mail</th>
+            <th>Affiliations</th>
+          </tr>
+        </thead>
+        <% @users.each do |user| %>
+        <tr class="user-row">
+          <td class="name"><%= link_to (user.name || user.email), edit_admin_user_path(user) %></td>
+          <td class="email"><%= user.email %></td>
+          <td>
+            <ul class="affiliations">
+              <% user.managed_markets.each do |market| %>
+                <li><%= market.name %>, Market Manager</li>
+              <% end %>
+              <% user.organizations.select{|o| o.markets.any? }.each do |organization| %>
+                <li><%= organization.markets.pluck(:name).to_sentence %>: <%= organization.name %>, <%= organization.can_sell? ? "Seller" : "Buyer" %></li>
+              <% end %>
+            </ul>
+          </td>
         </tr>
-      </thead>
-      <% @users.each do |user| %>
-      <tr class="user-row">
-        <td class="name"><%= link_to (user.name || user.email), edit_admin_user_path(user) %></td>
-        <td class="email"><%= user.email %></td>
-        <td>
-          <ul class="affiliations">
-            <% user.managed_markets.each do |market| %>
-              <li><%= market.name %>, Market Manager</li>
-            <% end %>
-            <% user.organizations.select{|o| o.markets.any? }.each do |organization| %>
-              <li><%= organization.markets.pluck(:name).to_sentence %>: <%= organization.name %>, <%= organization.can_sell? ? "Seller" : "Buyer" %></li>
-            <% end %>
-          </ul>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+        <% end %>
+      </table>
+    </div>
   </div>
 </div>
 
