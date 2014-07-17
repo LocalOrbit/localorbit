@@ -79,7 +79,7 @@ $ ->
        clone_header_attr($original_headers[i], e, i, $original_headers.length)
       )
     $stuck_header.insertBefore($original.parent())
-    $stuck_header.wrap('<table class="js-original stickable"></table>')
+    $stuck_header.wrap('<table class="js-sticky stickable"></table>')
 
     $stuck_header.find('.select-all').click ->
       $original.find('.select-all').trigger "click"
