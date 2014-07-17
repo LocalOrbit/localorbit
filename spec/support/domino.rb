@@ -533,6 +533,15 @@ module Dom
       end
     end
 
+    class PickList < Domino
+      selector ".pick-list"
+
+      attribute :org
+
+      def items
+        node.all(".pick-list-item .name")
+      end
+    end
 
     class PickListItem < Domino
       selector ".pick-list-item"
@@ -541,7 +550,6 @@ module Dom
       attribute :total_sold
       attribute :buyer
       attribute :breakdown
-
     end
 
     class PackListItem < Domino
@@ -562,7 +570,6 @@ module Dom
       attribute :units
       attribute :delivery
     end
-
 
     class ProductForm < Domino
       selector "form.product"

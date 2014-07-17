@@ -4,7 +4,8 @@ describe "Pick list" do
   let!(:market)                    { create(:market) }
   let!(:sellers)                   { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:others)                    { create(:organization, :seller, :single_location, markets: [market]) }
-  let!(:sellers_product)           { create(:product, :sellable, organization: sellers) }
+  let!(:sellers_product)           { create(:product, :sellable, name: "Avocado", organization: sellers) }
+  let!(:sellers_product2)          { create(:product, :sellable, name: "Beans", organization: sellers) }
   let!(:delivered_product)         { create(:product, :sellable, organization: sellers) }
   let!(:others_product)            { create(:product, :sellable, organization: others) }
 
@@ -15,8 +16,10 @@ describe "Pick list" do
   let!(:buyer2)                    { create(:organization, :buyer, :single_location, markets: [market]) }
 
   let!(:sellers_order_item)        { create(:order_item, product: sellers_product, quantity: 1)}
+  let!(:sellers_order)             { create(:order, items: [sellers_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
+  let!(:sellers_order_item2)       { create(:order_item, product: sellers_product2, quantity: 1)}
+  let!(:sellers_order2)            { create(:order, items: [sellers_order_item2], organization: buyer1, market: market, delivery: friday_delivery) }
   let!(:delivered_order_item)      { create(:order_item, product: delivered_product, quantity: 1, delivery_status: 'delivered')}
-  let!(:sellers_order)             { create(:order, items: [delivered_order_item, sellers_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
 
   let!(:others_order_item)         { create(:order_item, product: others_product, quantity: 2)}
   let!(:others_order)              { create(:order, items: [others_order_item], organization: buyer2, market: market, delivery: friday_delivery) }
@@ -40,22 +43,30 @@ describe "Pick list" do
 
         expect(page).to have_content("Pick List")
         expect(page).to have_content("May 9, 2014 between 7:00AM and 11:00AM")
-        expect(page).to have_content(sellers.name)
       end
 
-      it "shows the pick lists" do
-        lines = Dom::Admin::PickListItem.all
-        expect(lines.count).to eql(2)
+      it "shows the pick lists in alphabetical order" do
+        seller_pick_list = Dom::Admin::PickList.first
+        expect(seller_pick_list.org).to eql(sellers.name)
+        expect(seller_pick_list.items.count).to eql(2)
 
-        line = Dom::Admin::PickListItem.find_by_name(sellers_product.name)
-        expect(line.name).to have_content(sellers_product.name)
-        expect(line.total_sold).to have_content("1")
-        expect(line.buyer).to have_content(buyer1.name)
-        expect(line.breakdown).to have_content("1")
+        avocado = Dom::Admin::PickListItem.find_by_name(seller_pick_list.items.first.text)
+        expect(avocado.name).to have_content(sellers_product.name)
+        expect(avocado.total_sold).to have_content("1")
+        expect(avocado.buyer).to have_content(buyer1.name)
+        expect(avocado.breakdown).to have_content("1")
 
-        expect(page).to have_content(others.name)
+        beans = Dom::Admin::PickListItem.find_by_name(seller_pick_list.items.last.text)
+        expect(beans.name).to have_content(sellers_product2.name)
+        expect(beans.total_sold).to have_content("1")
+        expect(beans.buyer).to have_content(buyer1.name)
+        expect(beans.breakdown).to have_content("1")
 
-        line = Dom::Admin::PickListItem.find_by_name(others_product.name)
+        other_pick_list = Dom::Admin::PickList.all.last
+        expect(other_pick_list.org).to eql(others.name)
+        expect(other_pick_list.items.count).to eql(1)
+
+        line = Dom::Admin::PickListItem.find_by_name(other_pick_list.items.first.text)
         expect(line.name).to have_content(others_product.name)
         expect(line.total_sold).to have_content("2")
         expect(line.buyer).to have_content(buyer2.name)
@@ -121,7 +132,7 @@ describe "Pick list" do
 
       it "shows the pick list" do
         lines = Dom::Admin::PickListItem.all
-        expect(lines.count).to eql(1)
+        expect(lines.count).to eql(2)
 
         line = Dom::Admin::PickListItem.find_by_name(sellers_product.name)
         expect(line.total_sold).to have_content("1")
@@ -151,7 +162,7 @@ describe "Pick list" do
       end
 
       it "shows the pick list", js: true do
-        expect(Dom::Admin::PickListItem.count).to eql(1)
+        expect(Dom::Admin::PickListItem.count).to eql(2)
 
         line = Dom::Admin::PickListItem.find_by_name(sellers_product.name)
         expect(line.total_sold).to have_content("2")

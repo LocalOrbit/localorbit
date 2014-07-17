@@ -6,7 +6,10 @@ class PickListPresenter
       result
     end
 
-    pick_list_tree.keys.inject({}) do |result, organization|
+    sorted_tree = pick_list_tree.sort { |o1, o2| o1.first.name.casecmp(o2.first.name) }
+    sorted_tree_hash = sorted_tree.to_h
+
+    sorted_tree_hash.keys.inject({}) do |result, organization|
       result[organization] = result[organization] || []
 
       result[organization] = pick_list_tree[organization].keys.map do |product|
@@ -29,6 +32,8 @@ class PickListPresenter
           end
         )
       end
+
+      result[organization].sort! {|p1, p2| p1.name.casecmp(p2.name) }
       result
     end
   end

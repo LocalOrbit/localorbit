@@ -7,73 +7,76 @@
     <div class="pdf-page-break"></div>
   <% end %>
 
-  <h1>Pick List</h1>
-  <div class="upcoming-delivery">
+  <div class="pick-list">
 
-    <h2 class="heading heading-delivery-tool">Delivery</h2>
-    <div class="upcoming-delivery-date"><%= @delivery.display_date %> <%= @delivery.time_range %></div>
-    <% if @delivery.available_to_order? %>
-      <p class="note">Ordering has not yet closed for this delivery</p>
-    <% end %>
+    <h1>Pick List</h1>
+    <div class="upcoming-delivery">
 
-    <h2 class="heading heading-delivery-tool">Seller</h2>
-    <div class="vcard vcard--seller">
-      <h3 class="fn org"><%= organization.name %></h3>
-      <%= organization.decorate.ship_from_address %>
-    </div>
-  </div>
-
-  <table class="delivery-tools">
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Total Sold</th>
-        <th>Units</th>
-        <th>Buyer</th>
-        <th>Breakdown</th>
-        <th>Initials</th>
-        <th>Notes</th>
-      </tr>
-    </thead>
-
-    <% @pick_list[organization].each do |line| %>
-      <tr class="pick-list-item">
-        <td class="name"><%= line.name %></td>
-        <td class="total-sold"><%= line.total_sold %></td>
-        <td class="units"><%= line.unit %></td>
-        <td class="buyer"><%= line.buyers.first.name %></td>
-        <td class="breakdown">
-          <%= line.buyers.first.quantity %>
-          <% if line.buyers.first.lots.present? %>
-            <ul>
-              <% line.buyers.first.lots.each do |lot| %>
-                <li>Lot #<%= lot.lot.number %>: <%= lot.quantity %></li>
-              <% end %>
-            </ul>
-          <% end %>
-        </td>
-        <td class="initials"></td>
-        <td class="notes"></td>
-      </tr>
-      <% line.buyers.drop(1).each do |buyer| %>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td class="buyer"><%= buyer.name %></td>
-          <td class="breakdown"><%= buyer.quantity %>
-          <% if buyer.lots.present? %>
-            <ul>
-              <% buyer.lots.each do |lot| %>
-                <li>Lot #<%= lot.lot.number %>: <%= lot.quantity %></li>
-              <% end %>
-            </ul>
-          <% end %>
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
+      <h2 class="heading heading-delivery-tool">Delivery</h2>
+      <div class="upcoming-delivery-date"><%= @delivery.display_date %> <%= @delivery.time_range %></div>
+      <% if @delivery.available_to_order? %>
+        <p class="note">Ordering has not yet closed for this delivery</p>
       <% end %>
-    <% end %>
-  </table>
+
+      <h2 class="heading heading-delivery-tool">Seller</h2>
+      <div class="vcard vcard--seller">
+        <h3 class="fn org"><%= organization.name %></h3>
+        <%= organization.decorate.ship_from_address %>
+      </div>
+    </div>
+
+    <table class="delivery-tools">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Total Sold</th>
+          <th>Units</th>
+          <th>Buyer</th>
+          <th>Breakdown</th>
+          <th>Initials</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+
+      <% @pick_list[organization].each do |line| %>
+        <tr class="pick-list-item">
+          <td class="name"><%= line.name %></td>
+          <td class="total-sold"><%= line.total_sold %></td>
+          <td class="units"><%= line.unit %></td>
+          <td class="buyer"><%= line.buyers.first.name %></td>
+          <td class="breakdown">
+            <%= line.buyers.first.quantity %>
+            <% if line.buyers.first.lots.present? %>
+              <ul>
+                <% line.buyers.first.lots.each do |lot| %>
+                  <li>Lot #<%= lot.lot.number %>: <%= lot.quantity %></li>
+                <% end %>
+              </ul>
+            <% end %>
+          </td>
+          <td class="initials"></td>
+          <td class="notes"></td>
+        </tr>
+        <% line.buyers.drop(1).each do |buyer| %>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="buyer"><%= buyer.name %></td>
+            <td class="breakdown"><%= buyer.quantity %>
+            <% if buyer.lots.present? %>
+              <ul>
+                <% buyer.lots.each do |lot| %>
+                  <li>Lot #<%= lot.lot.number %>: <%= lot.quantity %></li>
+                <% end %>
+              </ul>
+            <% end %>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
 <% end %>
