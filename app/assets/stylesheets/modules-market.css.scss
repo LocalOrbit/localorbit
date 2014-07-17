@@ -72,3 +72,17 @@
     vertical-align: top;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .admin-markets-header {
+    .header-actions {
+      display: inline;
+      > a {
+        margin-left: 0;
+      }
+      > .btn {
+        @include box-sizing(border-box);
+      }
+    }
+  }
+}
