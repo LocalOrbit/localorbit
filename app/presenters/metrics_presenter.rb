@@ -1,5 +1,5 @@
 class MetricsPresenter
-  attr_reader :metrics
+  attr_reader :metrics, :headers
 
   TEST_MARKET_IDS = [10]
   TEST_ORG_IDS    = Market.where(id: TEST_MARKET_IDS).joins(:organizations).uniq.pluck("organizations.id")
@@ -159,6 +159,8 @@ class MetricsPresenter
         [GROUPS[group][:title], metrics_for_group(group)]
       end
     ]
+
+    @headers ||= []
   end
 
   def self.metrics_for(groups: [], search: {})
@@ -194,7 +196,7 @@ class MetricsPresenter
     m = METRICS[metric]
     scope = m[:scope].uniq
 
-    if m[:calculation] == :custom
+    values = if m[:calculation] == :custom
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
       series.group_calc(m[:calculation_arg])
 
@@ -210,5 +212,10 @@ class MetricsPresenter
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
       series.send(m[:calculation], m[:calculation_arg])
     end
+
+    # set our headers for this result set
+    @headers ||= values.keys
+
+    values
   end
 end
