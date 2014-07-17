@@ -264,3 +264,21 @@ span.btn {
 .photo-button:active {
   background: #fefefe;
 }
+
+@media screen and (max-width: 600px) {
+  .fresh-sheet-test {
+    width: 100%;
+    input[type=email] {
+      width: 66%;
+    }
+    input[type=submit] {
+      width: 32%;
+      padding: 5px 10px;
+      text-align: center;
+    }
+  }
+  .fresh-sheet-send {
+    width: 100%;
+    margin: 20px 0;
+  }
+}

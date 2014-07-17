@@ -2,13 +2,13 @@
   <div class="column column--three-fourths">
       <h1><i class="font-icon" data-icon="&#xe023;"></i>&nbsp; Fresh Sheet Preview</h1>
       <%= form_tag [:admin, :fresh_sheet], method: :post do %>
-        <div class="field field--inline">
+        <div class="field field--inline fresh-sheet-test">
           <input name="email" type="email" placeholder="Email address" class="input--short" value="<%= current_user.email %>">
-          <%= submit_tag 'Send Test', class: "btn btn--small btn--test trigger-email" %>
+          <%= submit_tag 'Send Test', class: "btn btn--test btn--small btn--test trigger-email " %>
         </div>
-        <%= submit_tag 'Send to Everyone Now', class: "btn btn--small pull-right trigger-email", data: {confirm: "Are you ready to send the Fresh Sheet?"} %>
+        <%= submit_tag 'Send to Everyone Now', class: "btn btn--small pull-right trigger-email fresh-sheet-send", data: {confirm: "Are you ready to send the Fresh Sheet?"} %>
 
-      <div class="clear-before">
+      <div class="clear-before add-note">
         <a href="#fresh-sheet-note" class="toggle-slide">Add Note</a>
       </div>
 
