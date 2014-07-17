@@ -2,31 +2,32 @@
   <div class="l-constraint">
     <div class="l-page-header">
       <h1><i class="font-icon" data-icon="&#xe000;"></i>&nbsp; Markets</h1>
-      <div class="header-actions">
         <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export" %>
         <%= link_to 'Add Market', new_admin_market_url, class: "btn btn--add btn--small" if current_user.admin? %>
+      <div class="header-actions">
+        
       </div>
     </div>
   </div>
 </div>
-
-<table class="sortable market-org-list">
-  <thead class="stickable">
-    <tr>
-      <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
-      <th data-column="subdomain" class="<%= column_sort_classes("subdomain")%>">Subdomain</th>
-      <th data-column="contact" class="<%= column_sort_classes("contact")%>">Contact Name</th>
-      <th>Contact Phone</th>
+<div class="table-wrapper">
+  <table class="sortable market-org-list">
+    <thead class="stickable">
+      <tr>
+        <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
+        <th data-column="subdomain" class="<%= column_sort_classes("subdomain")%>">Subdomain</th>
+        <th data-column="contact" class="<%= column_sort_classes("contact")%>">Contact Name</th>
+        <th>Contact Phone</th>
+      </tr>
+    </thead>
+    <% @markets.each do |market| %>
+    <tr class="<%= cycle "odd", "even" %>">
+      <td class="name"><%= link_to market.name, [:admin, market] %></td>
+      <td class="subdomain"><%= link_to market.subdomain, root_url(host: market.domain) %></td>
+      <td class="contact"><%= market.contact_name %></td>
+      <td><%= market.contact_phone %></td>
     </tr>
-  </thead>
-  <% @markets.each do |market| %>
-  <tr class="<%= cycle "odd", "even" %>">
-    <td class="name"><%= link_to market.name, [:admin, market] %></td>
-    <td class="subdomain"><%= link_to market.subdomain, root_url(host: market.domain) %></td>
-    <td class="contact"><%= market.contact_name %></td>
-    <td><%= market.contact_phone %></td>
-  </tr>
-  <% end %>
-</table>
-
+    <% end %>
+  </table>
+</div>
 <%= paginate @markets %>
