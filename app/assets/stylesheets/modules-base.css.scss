@@ -1272,6 +1272,9 @@ label ~ .tooltip {
 .cling-wrap {
   overflow: hidden;
 }
+.js-original {
+  position: absolute;
+}
 @media screen and (max-height: 767px){
   .teflon {
     display: none;
