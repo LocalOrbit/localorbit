@@ -1,0 +1,14 @@
+<div class="tab-header stickable">
+  <div class="l-constraint">
+    <div class="l-page-header">
+     <h1><i class="font-icon" data-icon="&#xe006;">&nbsp; </i>Metrics</h1>
+    </div>
+    <div class="tabs-wrapper">
+      <ul class="tabs">
+        <% MetricsPresenter::GROUPS.keys.each do |group_title| %>
+          <%= content_tag(:li, link_to_or_span(group_title.to_s.titleize, admin_metric_path(group_title.to_s.dasherize)), class: 'tab') %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

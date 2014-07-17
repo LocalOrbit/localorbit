@@ -103,6 +103,9 @@ Rails.application.routes.draw do
 
     get "reports"         => "reports#index"
     get "reports/:report" => "reports#show", as: :report
+
+    get "metrics"         => "metrics#index"
+    get "metrics/:metric" => "metrics#show", as: :metric
   end
 
   resource :dashboard do
