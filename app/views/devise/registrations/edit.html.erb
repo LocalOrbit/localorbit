@@ -39,32 +39,32 @@
         <%= f.password_field :current_password, class: "column--full" %>
       </div>
     </div>
+    <div class="table-wrapper">
+      <table class="sortable">
+        <thead>
+          <tr>
+            <th>Market</th>
+            <th>Organization(s)</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <% resource.managed_markets.each do |market| %>
+          <tr>
+            <td><%= market.name %></td>
+            <td><%= market.organizations.pluck(:name).to_sentence %></td>
+            <td>Market Manager</td>
+          </tr>
+        <% end %>
 
-    <table class="sortable">
-      <thead>
+        <% resource.organizations.each do |organization| %>
         <tr>
-          <th>Market</th>
-          <th>Organization(s)</th>
-          <th>Role</th>
+          <td><%= organization.markets.pluck(:name).to_sentence %></td>
+          <td><%= organization.name %></td>
+          <td><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
         </tr>
-      </thead>
-      <% resource.managed_markets.each do |market| %>
-        <tr>
-          <td><%= market.name %></td>
-          <td><%= market.organizations.pluck(:name).to_sentence %></td>
-          <td>Market Manager</td>
-        </tr>
-      <% end %>
-
-      <% resource.organizations.each do |organization| %>
-      <tr>
-        <td><%= organization.markets.pluck(:name).to_sentence %></td>
-        <td><%= organization.name %></td>
-        <td><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
-      </tr>
-      <% end %>
-    </table>
-
+        <% end %>
+      </table>
+    </div>
     <div class="form-actions">
       <%= link_to "Clear Changes", edit_user_registration_path, class: "btn cancel" %>
       <%= f.submit "Save Changes" %>
