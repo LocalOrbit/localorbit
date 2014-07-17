@@ -129,7 +129,7 @@ class OrderItem < ActiveRecord::Base
 
   def consume_inventory_amount(amount)
     product.lots_by_expiration.available(deliver_on_date).each do |lot|
-      break unless amount
+      break unless amount > 0
 
       num_to_consume = [lot.quantity, amount].min
       lot.decrement!(:quantity, num_to_consume)

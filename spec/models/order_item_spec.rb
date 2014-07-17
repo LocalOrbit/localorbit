@@ -159,7 +159,6 @@ describe OrderItem do
     end
 
     let!(:future_good_from_lot) { create(:lot, number: 3, quantity: 10, product: product, good_from: Time.now + 3.days) }
-
     def create_valid_order_item
       OrderItem.create!(
         name: "Foo",
@@ -186,6 +185,21 @@ describe OrderItem do
       }.not_to change{
         Lot.find(expired_lot.id, future_good_from_lot.id).map(&:quantity)
       }
+    end
+
+    it "does not record lots that have not been used" do
+      order_item = OrderItem.create!(
+        name: "Foo",
+        seller_name: "Seller",
+        unit: create(:unit),
+        order: order,
+        product: product,
+        delivery_status: "pending",
+        quantity: 3
+      )
+
+      expect(order_item.lots.count).to eql(1)
+      expect(Lot.where(id: product.lots.map(&:id)).order(:id).map(&:quantity)).to eql([0,5])
     end
 
     context "uses oldest expiring lots first" do
