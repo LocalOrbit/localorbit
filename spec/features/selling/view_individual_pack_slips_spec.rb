@@ -5,6 +5,7 @@ describe "Individual pack slips" do
   let!(:sellers) { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:others) { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:sellers_product) { create(:product, :sellable, organization: sellers) }
+  let!(:sellers_delivered_product) { create(:product, :sellable, organization: sellers) }
   let!(:others_product) { create(:product, :sellable, organization: others) }
 
   let!(:buyer1) { create(:organization, :buyer, :single_location, markets: [market]) }
@@ -23,7 +24,8 @@ describe "Individual pack slips" do
     let!(:friday_delivery) { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014"))}
 
     let!(:sellers_order_item) { create(:order_item, product: sellers_product, quantity: 1)}
-    let!(:sellers_order)      { create(:order, items:[sellers_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
+    let!(:sellers_delivered_order_item) { create(:order_item, product: sellers_product, quantity: 1, delivery_status: "delivered")}
+    let!(:sellers_order)      { create(:order, items:[sellers_order_item, sellers_delivered_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
 
     let!(:others_order_item) { create(:order_item, product: others_product, quantity: 2)}
     let!(:others_order)      { create(:order, items: [others_order_item], organization: buyer2, market: market, delivery: friday_delivery) }

@@ -6,7 +6,7 @@ class OrdersBySellerPresenter
     @totals = {}
     @sellers = {}
 
-    items.each do |item|
+    items.undelivered.each do |item|
       seller = item.product.organization
       @sellers[seller] ||= {}
       @sellers[seller][item.order] ||= []
