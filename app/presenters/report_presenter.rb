@@ -108,8 +108,8 @@ class ReportPresenter
   end
 
   def self.report_for(report:, user:, search: {}, paginate: {})
-    return nil unless user && reports.include?(report)
-
+    return nil unless user && reports(buyer_only: user.buyer_only?).include?(report)
+    
     valid = !user.buyer_only? || reports(buyer_only: true).include?(report)
 
     new(report: report, user: user, search: search, paginate: paginate) if valid
@@ -123,7 +123,7 @@ class ReportPresenter
     if buyer_only
       REPORT_MAP.keys.select {|k| REPORT_MAP[k][:buyer_only] }
     else
-      REPORT_MAP.keys
+      REPORT_MAP.keys.reject {|k| REPORT_MAP[k][:buyer_only] }
     end
   end
 

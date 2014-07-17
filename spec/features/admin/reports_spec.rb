@@ -487,56 +487,6 @@ feature "Reports" do
           expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
         end
       end
-
-      context "Purchases by Product report" do
-        let!(:report) { :purchases_by_product }
-
-        # Filters are reused from other reports so we just need to ensure
-        # the right ones show on the page.
-        scenario "displays the appropriate filters" do
-          expect(page).to have_field("Search")
-          expect(page).to have_field("Placed on or after")
-          expect(page).to have_field("Placed on or before")
-          expect(page).to have_select("Market")
-          expect(page).to have_select("Category")
-          expect(page).to have_select("Product")
-        end
-
-        scenario "displays total sales" do
-          totals = Dom::Admin::TotalSales.first
-
-          expect(totals.gross_sales).to eq("$521.00")
-          expect(totals.market_fees).to eq("$2.50")
-          expect(totals.lo_fees).to eq("$7.50")
-          expect(totals.processing_fees).to eq("$6.25")
-          expect(totals.discounts).to eq("$0.00")
-          expect(totals.net_sales).to eq("$504.75")
-        end
-      end
-
-      context "Total Purchases report" do
-        let!(:report) { :total_purchases }
-
-        # Filters are reused from other reports so we just need to ensure
-        # the right ones show on the page.
-        scenario "displays the appropriate filters" do
-          expect(page).to have_field("Search")
-          expect(page).to have_field("Placed on or after")
-          expect(page).to have_field("Placed on or before")
-          expect(page).to have_select("Market")
-        end
-
-        scenario "displays total sales" do
-          totals = Dom::Admin::TotalSales.first
-
-          expect(totals.gross_sales).to eq("$521.00")
-          expect(totals.market_fees).to eq("$2.50")
-          expect(totals.lo_fees).to eq("$7.50")
-          expect(totals.processing_fees).to eq("$6.25")
-          expect(totals.discounts).to eq("$0.00")
-          expect(totals.net_sales).to eq("$504.75")
-        end
-      end
     end
 
     context "as an Admin" do
@@ -646,6 +596,58 @@ feature "Reports" do
         expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
         expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
         expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+      end
+    end
+
+    context "as a Buyer" do
+      let!(:user)      { create(:user, organizations: [buyer]) }
+
+      context "Purchases by Product report" do
+        let!(:report) { :purchases_by_product }
+
+        # Filters are reused from other reports so we just need to ensure
+        # the right ones show on the page.
+        scenario "displays the appropriate filters" do
+          expect(page).to have_field("Search")
+          expect(page).to have_field("Placed on or after")
+          expect(page).to have_field("Placed on or before")
+          expect(page).to have_select("Category")
+          expect(page).to have_select("Product")
+        end
+
+        scenario "displays total sales" do
+          totals = Dom::Admin::TotalSales.first
+
+          expect(totals.gross_sales).to eq("$110.00")
+          expect(totals.market_fees).to eq("$2.50")
+          expect(totals.lo_fees).to eq("$7.50")
+          expect(totals.processing_fees).to eq("$6.25")
+          expect(totals.discounts).to eq("$0.00")
+          expect(totals.net_sales).to eq("$93.75")
+        end
+      end
+
+      context "Total Purchases report" do
+        let!(:report) { :total_purchases }
+
+        # Filters are reused from other reports so we just need to ensure
+        # the right ones show on the page.
+        scenario "displays the appropriate filters" do
+          expect(page).to have_field("Search")
+          expect(page).to have_field("Placed on or after")
+          expect(page).to have_field("Placed on or before")
+        end
+
+        scenario "displays total sales" do
+          totals = Dom::Admin::TotalSales.first
+
+          expect(totals.gross_sales).to eq("$110.00")
+          expect(totals.market_fees).to eq("$2.50")
+          expect(totals.lo_fees).to eq("$7.50")
+          expect(totals.processing_fees).to eq("$6.25")
+          expect(totals.discounts).to eq("$0.00")
+          expect(totals.net_sales).to eq("$93.75")
+        end
       end
     end
   end
