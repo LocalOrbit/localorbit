@@ -13,7 +13,7 @@ module Admin
 
       if @user.update_attributes(user_params)
         redirect_to admin_users_path, notice: "User saved successfully."
-        UserMailer.user_updated(@user, current_user, original_email).deliver
+        UserMailer.delay.user_updated(@user, current_user, original_email)
       else
         render :edit
       end
