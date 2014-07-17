@@ -640,12 +640,6 @@
   }
 
 }
-@media screen and (min-height: 768px) {
-  .tab-header.js-positioned {
-    padding: 0 20px;
-    margin-top: 0;
-  }
-}
 
 @media screen and (max-width: 600px) {
     .tab-header {
@@ -1278,6 +1272,7 @@ label ~ .tooltip {
 .cling-wrap {
   overflow: hidden;
 }
+
 @media screen and (max-height: 767px){
   .teflon {
     display: none;
@@ -1288,51 +1283,19 @@ label ~ .tooltip {
 }
 @media screen and (min-height: 768px) {
   .stickable {
+    background: #fff;
     &.js-positioned {
       position: absolute;
       z-index: 3;
       left: 0;
+      width: 100%;
+      > .l-constraint {
+        padding-right: 20px;
+        padding-left: 20px;
+      }
     }
     &.js-fixed {
       position: fixed;
-    }
-  }
-  .tab-header,
-  .sub-header {
-    > .l-constraint {
-      background: #fff;
-    }
-    &.stickable {
-      &.js-positioned {
-        @include box-sizing(border-box);
-        width: 100%;
-        > .l-constraint {
-          padding-right: 20px;
-          padding-left: 20px;
-        }
-      }
-    }
-  }
-  .tab-header.stickable {
-    padding: 0;
-    > .l-constraint {
-      padding-right: 20px;
-      padding-left: 20px;
-    }
-    @media screen and (max-width: 600px) {
-      > .l-constraint {
-        padding-right: 0;
-      }
-    }
-    &.js-positioned {
-      > .l-constraint {
-        padding-bottom: 30px;
-      }
-    }
-    &.js-fixed {
-      > .l-constraint {
-        padding-top: 20px;
-      }
     }
   }
 }

@@ -165,13 +165,16 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .nav--admin > li {
-    a {
-      font-size: 12px;
-    }
-    .dropdown > li {
-      font-size: 15px;
-      line-height: 1.6;
+  .nav--admin {
+    height: 35px;
+    > li {
+      a {
+        font-size: 12px;
+      }
+      .dropdown > li {
+        font-size: 15px;
+        line-height: 1.6;
+      }
     }
   }
 }
