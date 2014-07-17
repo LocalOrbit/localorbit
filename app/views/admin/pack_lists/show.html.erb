@@ -62,7 +62,7 @@
         <td class="name"><%= item.product.name %></td>
         <td class="lot">
           <% if !item.product.use_simple_inventory and item.lots.any? %>
-            <%= item.lots.map {|lot| lot.id }.join(', ') %>
+            <%= item.lots.map {|lot| lot.number }.join(', ') %>
           <% end %>
         </td>
         <td class="quantity"><%= item.quantity %></td>
