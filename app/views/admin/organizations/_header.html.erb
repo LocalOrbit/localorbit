@@ -3,7 +3,7 @@
     <%= link_to "< Return to Organizations List", admin_organizations_path, class: "redundant-nav" if current_user.multi_organization_membership? %>
 
     <h1>Editing Organization: <%= @organization.name %></h1>
-    <div class="tabs-wrapper">
+    <div class="tabs-wrapper organization-tabs">
       <ul class="tabs">
         <%= content_tag(:li, link_to_or_span("Info", [:admin, @organization]), class: 'tab') %>
         <%= content_tag(:li, link_to_or_span("Users", [:admin, @organization, :users]), class: 'tab') %>

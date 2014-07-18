@@ -2,37 +2,39 @@
 
 <div class="row row--partial">
   <div class="column column--three-fourths">
-      <%= link_to "Add New Address", new_admin_organization_location_path(@organization), class: "btn btn--add btn--small pull-right" %>
+      <%= link_to "Add New Address", new_admin_organization_location_path(@organization), class: "btn btn--add btn--small pull-right mobile-block" %>
 
     <%= form_tag admin_organization_locations_path(@organization), method: :delete, class: "clear-before", id: "edit_addresses" do %>
       <%= submit_tag "Delete Selected", class: "delete delete-selected is-invisible" %>
 
-      <table class="sortable">
-        <thead>
-          <tr>
-            <td><input type="checkbox" class="check-all"></td>
-            <th>Address</th>
-            <th>Telephone</th>
-            <th>Default Billing</th>
-            <th>Default Shipping</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @locations.each do |location| %>
+      <div class="table-wrapper">
+        <table class="sortable">
+          <thead>
             <tr>
-              <td><%= check_box_tag "location_ids[]", location.id %></td>
-              <td><%= location.name_and_address %></td>
-              <td><%= number_to_phone location.phone %></td>
-              <td><%= radio_button_tag :default_billing_id, location.id, location.default_billing? %></td>
-              <td><%= radio_button_tag :default_shipping_id, location.id, location.default_shipping? %></td>
-              <td class="delete"><button class="delete delete-location font-icon" title="Delete">&#57418;</button>
+              <td><input type="checkbox" class="check-all"></td>
+              <th>Address</th>
+              <th>Telephone</th>
+              <th>Default Billing</th>
+              <th>Default Shipping</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @locations.each do |location| %>
+              <tr>
+                <td><%= check_box_tag "location_ids[]", location.id %></td>
+                <td><%= location.name_and_address %></td>
+                <td><%= number_to_phone location.phone %></td>
+                <td><%= radio_button_tag :default_billing_id, location.id, location.default_billing? %></td>
+                <td><%= radio_button_tag :default_shipping_id, location.id, location.default_shipping? %></td>
+                <td class="delete"><button class="delete delete-location font-icon" title="Delete">&#57418;</button>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
 
       <div class="form-actions">
-        <%= link_to "Save Changes", update_default_admin_organization_locations_path(@organization), class: "btn btn--save", id: "save-update-defaults" %>
+        <%= link_to "Save Changes", update_default_admin_organization_locations_path(@organization), class: "btn btn--save save-address-button mobile-block", id: "save-update-defaults" %>
       </div>
     <% end %>
   </div>

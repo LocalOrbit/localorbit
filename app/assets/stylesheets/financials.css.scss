@@ -222,6 +222,11 @@
   color: #913900;
   line-height: 15px;
 }
+@media screen and (max-width: 600px) {
+  .add-bank-warning {
+    width: auto;
+  }
+}
 
 /* Financials Vendor Payment Tab */
 

@@ -117,7 +117,7 @@
   <% end %>
 
   <div class="field form-actions">
-    <%= link_to "Cancel", (@organization.new_record? ? admin_organizations_path : admin_organization_path(@organization)), class: "btn cancel" %>
+    <%= link_to "Cancel", (@organization.new_record? ? admin_organizations_path : admin_organization_path(@organization)), class: "btn cancel org-cancel" %>
     <%= f.submit "#{@organization.new_record? ? 'Add' : 'Save'} Organization" %>
   </div>
 <% end %>

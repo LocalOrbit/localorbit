@@ -619,6 +619,22 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .organization-tabs {
+    padding: 0;
+
+    .tabs {
+      font-size: 11px;
+    }
+    .tabs > .tab > span {
+      padding: 14px 4px;
+    }
+    .tabs > .tab > a {
+      padding: 14px 4px;
+    }
+  }
+}
+
 @media screen and (max-width:400px) {
   .tabs {
     font-size: 14px;
@@ -1137,7 +1153,14 @@ label ~ .tooltip {
   line-height: 1em;
   text-align: center;
   cursor: pointer;
+  @media screen and (max-width: 600px) {
+      width: 20px;
+      height: 20px;
+      margin-bottom: -5px;
+  }
 }
+
+
 
 .tooltip-popup {
   @include tooltip-icon;
