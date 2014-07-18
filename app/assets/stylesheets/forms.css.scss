@@ -245,6 +245,11 @@ textarea {
     + .field--inline {
       margin: 0 0 0 1em;
     }
+    @media screen and (max-width: 600px) {
+      + .field--inline {
+        margin: 10px 0 0 0;
+      }
+    }
   }
 .field_with_errors {
   input,
@@ -478,4 +483,7 @@ form.form-actions {
   .delete-check-mobile {
     display: none;
   }
+}
+.invite-email-field {
+  width: 100%;
 }

@@ -280,6 +280,16 @@ span.btn {
     width: 100%;
     margin: 20px 0;
   }
+  .cancel {
+    float: left;
+  }
+  .btn.cancel + .btn--add,
+  .btn.cancel + .btn--save,
+  .btn.cancel + input[type=submit],
+  .invite-email-button{
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 .pane-toggle {
@@ -290,4 +300,3 @@ span.btn {
     float: right;
   }
 }
-

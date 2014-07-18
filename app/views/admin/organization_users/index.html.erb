@@ -3,32 +3,33 @@
 <div class="row row--partial">
   <div class="column column--three-fourths">
     <%= form_for [:admin, @organization, User.new], html: { class: "form-actions" } do |f|%>
-      <%= f.email_field :email, placeholder: "Email address" %>
-      <button type="submit" class="btn--add btn--small">Invite New User</button>
+      <%= f.email_field :email, placeholder: "Email address", class: "invite-email-field" %>
+      <button type="submit" class="btn--add btn--small invite-email-button">Invite New User</button>
     <% end %>
+    <div class="table-wrapper">
+      <table class="sortable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>Registered On</th>
+            <th></th>
+          </tr>
+        </thead>
+        <% @organization.users.each do |user| %>
+        <tr class="user-row <%= cycle "odd", "even" %>">
+          <td class="name"><%= link_to user.name, edit_admin_organization_user_path(@organization, user) %></td>
+          <td class="email"><%= user.email %></td>
+          <td><%= user.invitation_accepted_at.present? ? user.invitation_accepted_at.strftime("%b %-d, %Y") : "" %>
 
-    <table class="sortable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>E-mail</th>
-          <th>Registered On</th>
-          <th></th>
+          <td class="delete">
+            <%= button_to admin_organization_user_path(@organization, user), {method: :delete, class: "delete font-icon", data: {confirm: "Are you sure you want to delete #{user.email} from #{@organization.name}?"}, title: "Delete"} do%>
+              &#57418;
+            <% end %>
+          </td>
         </tr>
-      </thead>
-      <% @organization.users.each do |user| %>
-      <tr class="user-row <%= cycle "odd", "even" %>">
-        <td class="name"><%= link_to user.name, edit_admin_organization_user_path(@organization, user) %></td>
-        <td class="email"><%= user.email %></td>
-        <td><%= user.invitation_accepted_at.present? ? user.invitation_accepted_at.strftime("%b %-d, %Y") : "" %>
-
-        <td class="delete">
-          <%= button_to admin_organization_user_path(@organization, user), {method: :delete, class: "delete font-icon", data: {confirm: "Are you sure you want to delete #{user.email} from #{@organization.name}?"}, title: "Delete"} do%>
-            &#57418;
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+        <% end %>
+      </table>
+    </div>
   </div>
 </div>
