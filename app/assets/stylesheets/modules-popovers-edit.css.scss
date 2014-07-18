@@ -237,6 +237,18 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  .modal {
+    left: 0;
+    width: auto;
+  }
+  .modal--stealth {
+    top: 64px;
+    width: auto;
+    margin: 0 auto;
+  }
+}
+
 
 .nav--app {
   .popup {
