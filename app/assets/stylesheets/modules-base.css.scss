@@ -1303,7 +1303,40 @@ label ~ .tooltip {
       position: absolute;
       z-index: 3;
       left: 0;
-      width: 100%;
+    }
+    &.js-fixed {
+      position: fixed;
+    }
+  }
+  .tab-header,
+  .sub-header {
+    > .l-constraint {
+      background: #fff;
+      overflow: hidden;
+    }
+    &.stickable {
+      &.js-positioned {
+        @include box-sizing(border-box);
+        width: 100%;
+        > .l-constraint {
+          padding-right: 20px;
+          padding-left: 20px;
+        }
+      }
+    }
+  }
+  .tab-header.stickable {
+    padding: 0;
+    > .l-constraint {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+    @media screen and (max-width: 600px) {
+      > .l-constraint {
+        padding-right: 0;
+      }
+    }
+    &.js-positioned {
       > .l-constraint {
         padding-right: 20px;
         padding-left: 20px;
