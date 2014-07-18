@@ -188,7 +188,7 @@
 @media print {
   .controller-invoices {
     .l-app-header, .l-app-footer, .btn--save,
-    .logo-link, .nav--main, .nav--admin, .tab-header, .teflon {
+    .logo-link, .nav--main, .nav--admin, .tab-header, .teflon, .no-print {
       display: none;
     }
     .logo {
