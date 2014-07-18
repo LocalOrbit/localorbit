@@ -1,23 +1,32 @@
 class PickListPresenter
-  def self.build(order_items)
-    pick_list_tree = order_items.keys.inject({}) do |result, key|
-      result[key.organization] = result[key.organization] || {}
-      result[key.organization][key] = order_items[key]
+  def self.build(current_user, current_organization, delivery)
+    # The condition combined with the eager_load will result
+    # in loaded items lists that only include pending deliveries
+    scope = delivery.orders.where(order_items: {delivery_status: "pending"}).eager_load(items: {product: :organization})
+    if !(current_user.market_manager? || current_user.admin?)
+      scope = scope.where(products: {organization_id: current_organization.id})
+    end
+
+    order_items = scope.map(&:items).flatten
+    order_items.sort! do |a,b|
+      s1 = a.product.organization.name.casecmp(b.product.organization.name)
+      next(s1) unless s1 == 0
+      a.product.name.casecmp(b.product.name)
+    end
+
+    pick_list_tree = order_items.inject({}) do |result, item|
+      result[item.product.organization] ||= {}
+      (result[item.product.organization][item.product] ||= []) << item
       result
     end
 
-    sorted_tree = pick_list_tree.sort { |o1, o2| o1.first.name.casecmp(o2.first.name) }
-    sorted_tree_hash = sorted_tree.to_h
-
-    sorted_tree_hash.keys.inject({}) do |result, organization|
+    pick_list_tree.keys.inject({}) do |result, organization|
       result[organization] = result[organization] || []
 
       result[organization] = pick_list_tree[organization].keys.map do |product|
         order_items = pick_list_tree[organization][product]
 
-        total = order_items.inject(0) do |memo, line|
-          memo + line.quantity
-        end
+        total = order_items.sum(&:quantity)
 
         OpenStruct.new(
           name: product.name,
@@ -32,8 +41,6 @@ class PickListPresenter
           end
         )
       end
-
-      result[organization].sort! {|p1, p2| p1.name.casecmp(p2.name) }
       result
     end
   end

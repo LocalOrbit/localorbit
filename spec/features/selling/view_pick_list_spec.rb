@@ -2,12 +2,12 @@ require "spec_helper"
 
 describe "Pick list" do
   let!(:market)                    { create(:market) }
-  let!(:sellers)                   { create(:organization, :seller, :single_location, markets: [market]) }
-  let!(:others)                    { create(:organization, :seller, :single_location, markets: [market]) }
+  let!(:sellers)                   { create(:organization, :seller, :single_location, markets: [market], name: "First Seller") }
+  let!(:others)                    { create(:organization, :seller, :single_location, markets: [market], name: "Second Seller") }
   let!(:sellers_product)           { create(:product, :sellable, name: "Avocado", organization: sellers) }
   let!(:sellers_product2)          { create(:product, :sellable, name: "Beans", organization: sellers) }
   let!(:delivered_product)         { create(:product, :sellable, organization: sellers) }
-  let!(:others_product)            { create(:product, :sellable, organization: others) }
+  let!(:others_product)            { create(:product, :sellable, name: "Sprouts", organization: others) }
 
   let!(:friday_schedule_schedule)  { create(:delivery_schedule, market: market, day: 5) }
   let!(:friday_delivery)           { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014"))}
@@ -16,6 +16,7 @@ describe "Pick list" do
   let!(:buyer2)                    { create(:organization, :buyer, :single_location, markets: [market]) }
 
   let!(:sellers_order_item)        { create(:order_item, product: sellers_product, quantity: 1)}
+  let!(:sellers_order_item_prod2)  { create(:order_item, product: sellers_product2, quantity: 2) }
   let!(:sellers_order)             { create(:order, items: [sellers_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
   let!(:sellers_order_item2)       { create(:order_item, product: sellers_product2, quantity: 1)}
   let!(:sellers_order2)            { create(:order, items: [sellers_order_item2], organization: buyer1, market: market, delivery: friday_delivery) }
