@@ -3,11 +3,13 @@
     <div class="column column--fourth secondary-panes" data-panes="2">
 
       <div class="mobile-pane" id="delivery_details">
-        <a href="#delivery_products" class="slide-toggle show-mobile btn btn--small">Return to Shop</a>
+        <div class="vacuus"></div>
+        <a href="#delivery_products" class="pane-toggle show-mobile btn">Return to Shop</a>
         <%= render "selected_delivery" %>
       </div
       ><div class="mobile-pane" id="delivery_filters">
-        <a href="#delivery_products" class="slide-toggle show-mobile btn btn--small">Return to Shop</a>
+        <div class="vacuus"></div>
+        <a href="#delivery_products" class="pane-toggle show-mobile btn">Return to Shop</a>
         <div class="header header--column">
           <h2 class="heading heading--sidebar">Filter the Shop</h2>
           <% if request.query_parameters.present? %>
@@ -26,8 +28,9 @@
       </div
     ></div
     ><div class="column column--three-fourths mobile-pane" id="delivery_products">
-      <a href="#delivery_details" class="slide-toggle show-mobile btn btn--small">Delivery Information</a>
-      <a href="#delivery_filters" class="slide-toggle show-mobile btn btn--small">Filter Products</a>
+      <div class="vacuus"></div>
+      <a href="#delivery_details" class="pane-toggle show-mobile btn">Delivery Information</a>
+      <a href="#delivery_filters" class="pane-toggle show-mobile btn">Filter Products</a>
       <div class="products--user">
         <h2 class="table-heading">Products Available on <%= current_delivery.display_date %></h2>
         <p class="table-summary">

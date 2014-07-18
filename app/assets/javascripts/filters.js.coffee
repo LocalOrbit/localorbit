@@ -6,9 +6,9 @@ $ ->
     $(this).toggleClass('is-open')
     $(this.hash).toggleClass('is-open')
     if $('.filter-toggle.is-open').length
-      $('.overlay').addClass('is-open')
+      $('.overlay').addClass('is-open hidden-mobile')
     else
-      $('.overlay').removeClass('is-open')
+      $('.overlay').removeClass('is-open hidden-mobile')
 
   $('.filter-dropdown').change ->
     value = $(this).val()

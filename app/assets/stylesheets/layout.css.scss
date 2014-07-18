@@ -274,6 +274,7 @@
     display: none;
   }
   .mobile-panes-wrapper {
+    margin-top: -64px;
     width: 100%;
     overflow: hidden;
   }
@@ -281,6 +282,11 @@
     position: relative;
     vertical-align: top;
     overflow: hidden;
+    .vacuus {
+      position: relative;
+      width: 100%;
+      height: 64px;
+    }
   }
   .mobile-panes[data-panes="3"] {
     width: 300%;

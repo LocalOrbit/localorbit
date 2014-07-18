@@ -290,16 +290,26 @@
 }
 
 @media screen and (max-width: 600px) {
+  .filter-toggle {
+    &.is-open {
+      @include border-radius(4px 4px 0 0);
+    }
+  }
   .filter-list {
     &.is-open {
       position: relative;
       @include transform(translateY(0));
       left: 0;
+      @include border-radius(0 0 4px 4px);
       &[data-count="0"],
       &[data-count="1"],
       &[data-count="2"] {
         min-height: 37px;
         @include transform(translateY(0));
+      }
+      a {
+        padding: 4px 15px;
+        font-size: 16px;
       }
     }
   }
