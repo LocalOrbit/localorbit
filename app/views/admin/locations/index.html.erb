@@ -2,7 +2,7 @@
 
 <div class="row row--partial">
   <div class="column column--three-fourths">
-      <%= link_to "Add New Address", new_admin_organization_location_path(@organization), class: "btn btn--add btn--small pull-right" %>
+      <%= link_to "Add New Address", new_admin_organization_location_path(@organization), class: "btn btn--add btn--small pull-right mobile-block" %>
 
     <%= form_tag admin_organization_locations_path(@organization), method: :delete, class: "clear-before", id: "edit_addresses" do %>
       <%= submit_tag "Delete Selected", class: "delete delete-selected is-invisible" %>
@@ -34,7 +34,7 @@
       </div>
 
       <div class="form-actions">
-        <%= link_to "Save Changes", update_default_admin_organization_locations_path(@organization), class: "btn btn--save save-address-button", id: "save-update-defaults" %>
+        <%= link_to "Save Changes", update_default_admin_organization_locations_path(@organization), class: "btn btn--save save-address-button mobile-block", id: "save-update-defaults" %>
       </div>
     <% end %>
   </div>

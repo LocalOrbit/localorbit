@@ -1,39 +1,36 @@
 <%= render "admin/bank_accounts/header" %>
 
-<div class="row row--partial">
-
-  <div class="column">
-    <div>
-      <%= link_to "Add Payment Method", [:new, :admin, @entity, :bank_account], class: "btn btn--add btn--small pull-right" %>
-    </div>
-    <div class="add-bank-warning">
-      <small><strong>Important:</strong> If you've recently added a bank account as a payment method, please don't add the same account to another organization or market until it is verified where it was originally added.</small>
-    </div>
-    <% if @bank_accounts.empty? %>
-      <p>You don't have any payment methods set up. Please add a payment method.</p>
-    <% else %>
-      <table class="sortable" id="bank-accounts">
-        <thead>
-          <tr>
-            <th>Account</th>
-            <th>Name</th>
-            <th>Account Number</th>
-            <th>Type</th>
-            <th></th>
-            <th>Notes</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @bank_accounts.each do |bank_account| %>
-          <% if ["savings", "checking"].include?(bank_account.account_type) %>
-            <%= render partial: "bank_account_row", locals: { bank_account: bank_account } %>
-          <% else %>
-            <%= render partial: "card_row", locals: { card: bank_account } %>
-          <% end %>
-        <% end %>
-        </tbody>
-      </table>
-    <% end %>
-  </div>
+<div>
+  <%= link_to "Add Payment Method", [:new, :admin, @entity, :bank_account], class: "btn btn--add btn--small pull-right mobile-block" %>
 </div>
+<div class="add-bank-warning">
+  <small><strong>Important:</strong> If you've recently added a bank account as a payment method, please don't add the same account to another organization or market until it is verified where it was originally added.</small>
+</div>
+<% if @bank_accounts.empty? %>
+  <p>You don't have any payment methods set up. Please add a payment method.</p>
+<% else %>
+  <div class="table-wrapper">
+    <table class="sortable" id="bank-accounts">
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Name</th>
+          <th>Account Number</th>
+          <th>Type</th>
+          <th></th>
+          <th>Notes</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @bank_accounts.each do |bank_account| %>
+        <% if ["savings", "checking"].include?(bank_account.account_type) %>
+          <%= render partial: "bank_account_row", locals: { bank_account: bank_account } %>
+        <% else %>
+          <%= render partial: "card_row", locals: { card: bank_account } %>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

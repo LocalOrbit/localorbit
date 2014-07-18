@@ -43,6 +43,9 @@ input[type=submit] {
     font-size: 14px;
   }
   @media screen and (max-width: 600px) {
+    &.mobile-block {
+      text-align: center;
+    }
     &.btn--small {
       padding: 12px 18px;
       font-size: 17px;
