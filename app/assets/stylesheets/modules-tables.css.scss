@@ -674,8 +674,21 @@ th {
         padding: 0;
         margin: 10px 0;
       }
-      .quantity br {
-        display: none;
+      .quantity, .total, .product-clear {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .quantity {
+        width: 50%;
+        br {
+          display: none;
+        }
+      }
+      .total {
+        width: 40%;
+      }
+      .product-clear {
+        width: 10%;
       }
     }
     .product-image {
