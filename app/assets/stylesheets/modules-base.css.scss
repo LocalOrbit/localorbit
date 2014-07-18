@@ -282,10 +282,26 @@
     text-decoration: none;
   }
 
-  &.is-open {
+  &.is-open { 
     z-index: 11;
     @include border-radius(4px 0 0 4px);
     background: #e3e3e3;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .filter-list {
+    &.is-open {
+      position: relative;
+      @include transform(translateY(0));
+      left: 0;
+      &[data-count="0"],
+      &[data-count="1"],
+      &[data-count="2"] {
+        min-height: 37px;
+        @include transform(translateY(0));
+      }
+    }
   }
 }
 
@@ -532,6 +548,12 @@
   .location-name,
   .organization-name {
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .sidebar-box {
+    padding: 7px 0 0;
   }
 }
 

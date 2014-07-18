@@ -3,9 +3,11 @@
     <div class="column column--fourth secondary-panes" data-panes="2">
 
       <div class="mobile-pane" id="delivery_details">
+        <a href="#delivery_products" class="slide-toggle show-mobile btn btn--small">Return to Shop</a>
         <%= render "selected_delivery" %>
       </div
       ><div class="mobile-pane" id="delivery_filters">
+        <a href="#delivery_products" class="slide-toggle show-mobile btn btn--small">Return to Shop</a>
         <div class="header header--column">
           <h2 class="heading heading--sidebar">Filter the Shop</h2>
           <% if request.query_parameters.present? %>
@@ -14,6 +16,7 @@
         </div>
 
         <div id="product-filter">
+
           <a href="#product-filter-organization" class="filter-toggle caretted caretted--right">Seller</a>
           <%= filter_list(@products_for_sale.filter_organizations, :organization) %>
 
@@ -23,10 +26,12 @@
       </div
     ></div
     ><div class="column column--three-fourths mobile-pane" id="delivery_products">
+      <a href="#delivery_details" class="slide-toggle show-mobile btn btn--small">Delivery Information</a>
+      <a href="#delivery_filters" class="slide-toggle show-mobile btn btn--small">Filter Products</a>
       <div class="products--user">
         <h2 class="table-heading">Products Available on <%= current_delivery.display_date %></h2>
         <p class="table-summary">
-          Please complete your order by <%= current_delivery.cutoff_time.strftime("%B %-d at %l%p") %>.<br>
+          Please complete your order by <%= current_delivery.cutoff_time.strftime("%B %-d at %l%p") %>.<br>
           <%= current_delivery.selected_type.capitalize %> is <%= current_delivery.display_date %> <%= current_delivery.time_range %>.
         </p>
 
