@@ -8,10 +8,6 @@ class Admin::MetricsController < AdminController
   def show
     @presenter = MetricsPresenter.metrics_for(groups: [params[:id]])
 
-    if @presenter
-      render :show
-    else
-      render_404
-    end
+    render_404 unless @presenter
   end
 end

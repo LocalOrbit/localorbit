@@ -180,10 +180,12 @@ class MetricsPresenter
     search ||= {}
     groups = [groups].flatten
 
+    return nil unless groups.all? { |group| GROUPS.keys.include?(group) }
+
     new(groups: groups, search: search)
   end
 
-  # private
+  private
 
   def metrics_for_group(group)
     Hash[
