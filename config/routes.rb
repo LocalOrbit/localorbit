@@ -101,8 +101,8 @@ Rails.application.routes.draw do
     resource :unit_request, only: :create
     resource :category_request, only: :create
 
-    get "reports"         => "reports#index"
-    get "reports/:report" => "reports#show", as: :report
+    resources :reports, only: [:index, :show]
+    resources :metrics, only: [:index, :show]
   end
 
   resource :dashboard do

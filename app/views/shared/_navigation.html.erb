@@ -86,7 +86,7 @@ end
         <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe006;"></i> Reports'), admin_reports_path %></li>
         <% if current_user.admin? %>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe04f;"></i> Referrals'), coming_soon_dashboard_path %></li>
-          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe01e;"></i> Metrics'), coming_soon_dashboard_path %></li>
+          <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe01e;"></i> Metrics'), admin_metrics_path %></li>
         <% end %>
       </ul>
     </li>

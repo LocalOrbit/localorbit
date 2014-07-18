@@ -1,0 +1,36 @@
+<%= render "admin/metrics/header" %>
+
+<% if @presenter.metrics.values.first.empty? %>
+  <div class="empty-results">
+    <h2>No Results</h2>
+    This table is empty because there is no data for the criteria specified.
+  </div>
+<% else %>
+  <div class="report-table">
+    <% @presenter.metrics.each_pair do |group_title, group| %>
+      <h2><%= group_title %></h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <% @presenter.headers.each do |header| %>
+              <th><%= header %></th>
+            <% end %>
+          </tr>
+        </thead>
+
+        <% group.each_pair do |metric_title, metric_values| %>
+          <tr class="<%= cycle "odd", "even" %> item">
+            <td><%= metric_title %></td>
+            <% metric_values.values.each do |metric_value| %>
+              <td>
+                <%= content_tag "span", metric_value, class: "metric-value" %><br>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+<% end %>

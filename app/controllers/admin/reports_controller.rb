@@ -9,7 +9,7 @@ class Admin::ReportsController < AdminController
     @query_params = sticky_parameters(request.query_parameters)
 
     @presenter = ReportPresenter.report_for(
-      report: params[:report].to_s.underscore,
+      report: params[:id].to_s.underscore,
       user: current_user,
       search: @query_params[:q],
       paginate: {

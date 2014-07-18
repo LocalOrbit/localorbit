@@ -38,6 +38,7 @@ gem 'figaro', '~> 1.0.0.rc1'
 gem 'font_assets'
 gem "graticule", github: 'collectiveidea/graticule'
 gem 'honeybadger', '1.14.0'
+gem "groupdate", github: "trestrantham/groupdate", branch: "custom-calculations"
 gem 'interactor-rails'
 gem 'jbuilder'
 gem 'jwt'
