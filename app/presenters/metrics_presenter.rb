@@ -1,4 +1,6 @@
 class MetricsPresenter
+  include ActiveSupport::NumberHelper
+
   attr_reader :metrics, :headers
 
   TEST_MARKET_IDS = [10]
@@ -43,73 +45,84 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order_item],
       attribute: "orders.placed_at",
       calculation: :sum,
-      calculation_arg: "unit_price * quantity"
+      calculation_arg: "unit_price * quantity",
+      format: :currency
     },
     average_order: {
       title: "Average Order",
       scope: BASE_SCOPES[:order_item],
       attribute: "orders.placed_at",
       calculation: :average,
-      calculation_arg: "unit_price * quantity"
+      calculation_arg: "unit_price * quantity",
+      format: :currency
     },
     average_order_size: {
       title: "Average Order Size",
       scope: BASE_SCOPES[:order],
       attribute: :placed_at,
       calculation: :custom,
-      calculation_arg: "(COUNT(DISTINCT order_items.id)::NUMERIC / COUNT(DISTINCT orders.id)::NUMERIC)"
+      calculation_arg: "(COUNT(DISTINCT order_items.id)::NUMERIC / COUNT(DISTINCT orders.id)::NUMERIC)",
+      format: :decimal
     },
     total_service_fees: {
       title: "Total Service Fees",
       scope: BASE_SCOPES[:payment].where(payment_type: 'service'),
       attribute: "created_at",
       calculation: :sum,
-      calculation_arg: :amount
+      calculation_arg: :amount,
+      format: :currency
     },
     total_transaction_fees: {
       title: "Total Transaction Fees",
       scope: BASE_SCOPES[:order_item],
       attribute: "orders.placed_at",
       calculation: :sum,
-      calculation_arg: "local_orbit_seller_fee + local_orbit_market_fee"
+      calculation_arg: "local_orbit_seller_fee + local_orbit_market_fee",
+      format: :currency
     },
     total_markets: {
       title: "Total Markets",
       scope: BASE_SCOPES[:market],
       attribute: :created_at,
-      calculation: :window
+      calculation: :window,
+      format: :integer
     },
     active_markets: {
       title: "Active Markets",
       scope: BASE_SCOPES[:order].joins(:market),
       attribute: :placed_at,
       calculation: :count,
-      calculation_arg: "DISTINCT(markets.id)"
+      calculation_arg: "DISTINCT(markets.id)",
+      format: :integer
     },
     total_organizations: {
       title: "Total Organizations",
       scope: BASE_SCOPES[:organization],
       attribute: :created_at,
-      calculation: :window
+      calculation: :window,
+      format: :integer
     },
     total_buyer_only: {
       title: "Total Buyers Only",
       scope: BASE_SCOPES[:organization].where(can_sell: false),
       attribute: :created_at,
-      calculation: :window
+      calculation: :window,
+      format: :integer
     },
-    # Formula: all buyers + any seller that has bought
+    # !!! Formula: all buyers + any seller that has bought
     total_buyers: {
       title: "Total Buyers",
       scope: BASE_SCOPES[:organization].where(can_sell: false),
       attribute: :created_at,
-      calculation: :window
+      calculation: :window,
+      format: :integer
     },
     total_sellers: {
       title: "Total Sellers",
       scope: BASE_SCOPES[:organization].where(can_sell: true),
       attribute: :created_at,
-      calculation: :window
+      calculation: :window,
+      format: :integer
     },
   }
 
@@ -202,7 +215,7 @@ class MetricsPresenter
 
     elsif m[:calculation] == :window
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval, window: true)
-      values = series.group_calc("SUM(COUNT(DISTINCT(id))) OVER (ORDER BY #{series.relation.group_values[0]})")
+      values = series.group_calc("SUM(COUNT(DISTINCT(#{m[:calculation_arg] || "id"}))) OVER (ORDER BY #{series.relation.group_values[0]})")
 
       # we have to calculate all history when using windows so we need to only
       # return the last X values from the result set
@@ -216,6 +229,17 @@ class MetricsPresenter
     # set our headers for this result set
     @headers ||= values.keys
 
-    values
+    Hash[values.map { |key, value| [key, format(value, m[:format])] }]
+  end
+
+  def format(value, format)
+    value ||= 0
+
+    case format
+    when :integer  then value.to_i
+    when :decimal  then value.try(:round, 2)
+    when :currency then number_to_currency(value)
+    else value
+    end
   end
 end
