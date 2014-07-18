@@ -660,9 +660,15 @@ th {
     padding-left: 0;
   }
   .product-table--user {
+    thead {
+      th:last-child {
+       display: none;
+      }
+    }
     .product {
       td {
         display: block;
+        @include box-sizing(border-box);
         width: 100%;
         max-width: none;
         padding: 0;
@@ -681,6 +687,11 @@ th {
     }
     .info li {
       display: inline-block;
+    }
+    &.featured-product {
+      td {
+        padding: 0 10px;
+      }
     }
   }
 }

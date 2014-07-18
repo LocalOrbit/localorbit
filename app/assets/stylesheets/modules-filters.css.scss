@@ -158,6 +158,7 @@
   .mobile-block {
     float: none;
     display: block;
+    @include box-sizing(border-box);
     width: 100%;
 
     select {
