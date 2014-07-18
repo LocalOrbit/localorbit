@@ -135,28 +135,26 @@ describe Organization do
 
     context "updating delivery schedules" do
       let!(:wednesday_delivery) { create(:delivery_schedule, market: cross_sell_market, day: 3) }
-
       let!(:monday_delivery)    { create(:delivery_schedule, market: market, day: 1) }
 
       context "using all deliveries" do
         let!(:product) { create(:product, :sellable, organization: organization) }
 
-        it 'adds a markets delivery schedules to products on adding to #cross_sells' do
+        it "adds a markets delivery schedules to products on adding to #cross_sells" do
           expect {
             organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
-
           }.to change {
             product.reload.delivery_schedules.count
           }.from(1).to(2)
         end
 
-        it 'removes a markets delivery schedules from a product on removing from #cross_sells' do
+        it "removes a markets delivery schedules from a product on removing from #cross_sells" do
           organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
 
           expect {
             organization.update_cross_sells!(from_market: market, to_ids: [])
           }.to change {
-            product.reload.delivery_schedules.count
+            Product.find(product.id).delivery_schedules.count
           }.from(2).to(1)
         end
       end
@@ -164,7 +162,7 @@ describe Organization do
       context "manually managing deliveries" do
         let!(:product) { create(:product, :sellable, use_all_deliveries: false, organization: organization) }
 
-        it 'adding a markets to #cross_sells does not add its delivery schedules to products' do
+        it "adding a markets to #cross_sells does not add its delivery schedules to products" do
           expect {
             organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
           }.to_not change {
@@ -172,7 +170,7 @@ describe Organization do
           }.from(0)
         end
 
-        it 'removing a markets from #cross_sells removes its delivery schedules' do
+        it "removing a markets from #cross_sells removes its delivery schedules" do
           organization.update_cross_sells!(from_market: market, to_ids: [cross_sell_market.id])
           product.delivery_schedules << wednesday_delivery
 

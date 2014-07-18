@@ -18,7 +18,7 @@ describe Lot do
         expect(subject.errors_on(:quantity)).to include("must be greater than or equal to 0")
       end
 
-      it 'requires the quantity to be less than a million' do
+      it "requires the quantity to be less than a million" do
         subject.quantity = 1_000_000
         expect(subject).to have(1).error_on(:quantity)
       end
@@ -33,20 +33,20 @@ describe Lot do
         end
       end
 
-      it 'unique across a product' do
+      it "unique across a product" do
         product1 = create(:product)
         product2 = create(:product)
 
-        create(:lot, product: product1, number: 'ABC')
+        create(:lot, product: product1, number: "ABC")
 
-        lot = build(:lot, product: product1, number: 'ABC')
+        lot = build(:lot, product: product1, number: "ABC")
         expect(lot).to have(1).errors_on(:number)
 
-        lot = build(:lot, product: product2, number: 'ABC')
+        lot = build(:lot, product: product2, number: "ABC")
         expect(lot).to have(0).errors_on(:number)
       end
 
-      it 'allows muliple unnamed lots' do
+      it "allows muliple unnamed lots" do
         product1 = create(:product)
 
         create(:lot, product: product1, number: nil)
@@ -108,10 +108,10 @@ describe Lot do
     it "returns current lots" do
       expect {
         product.lots.create!(quantity: 12)
-        product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
-        product.lots.create!(quantity: 12, number: '2', good_from: 1.day.ago)
-        product.lots.create!(quantity: 12, number: '3', good_from: 1.day.ago, expires_at: 1.day.from_now)
-        product.lots.create!(quantity: 12, number: '4', good_from: 1.day.ago, expires_at: 2.days.from_now)
+        product.lots.create!(quantity: 12, number: "1", expires_at: 1.day.from_now)
+        product.lots.create!(quantity: 12, number: "2", good_from: 1.day.ago)
+        product.lots.create!(quantity: 12, number: "3", good_from: 1.day.ago, expires_at: 1.day.from_now)
+        product.lots.create!(quantity: 12, number: "4", good_from: 1.day.ago, expires_at: 2.days.from_now)
       }.to change {
         Lot.available.count
       }.from(0).to(5)
@@ -120,10 +120,10 @@ describe Lot do
     it "returns lots available at the requested date" do
       expect {
         product.lots.create!(quantity: 12)
-        product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
-        product.lots.create!(quantity: 12, number: '2', good_from: 1.day.ago)
-        product.lots.create!(quantity: 12, number: '3', good_from: 1.day.ago, expires_at: 1.day.from_now)
-        product.lots.create!(quantity: 12, number: '4', good_from: 1.day.ago, expires_at: 2.days.from_now)
+        product.lots.create!(quantity: 12, number: "1", expires_at: 1.day.from_now)
+        product.lots.create!(quantity: 12, number: "2", good_from: 1.day.ago)
+        product.lots.create!(quantity: 12, number: "3", good_from: 1.day.ago, expires_at: 1.day.from_now)
+        product.lots.create!(quantity: 12, number: "4", good_from: 1.day.ago, expires_at: 2.days.from_now)
       }.to change {
         Lot.available(1.day.from_now).count
       }.from(0).to(3)
@@ -131,7 +131,7 @@ describe Lot do
 
     it "excludes expired lots" do
       expect {
-        lot = product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
+        lot = product.lots.create!(quantity: 12, number: "1", expires_at: 1.day.from_now)
         lot.update_attribute(:expires_at, 1.day.ago)
       }.to_not change {
         Lot.available.count
@@ -140,7 +140,7 @@ describe Lot do
 
     it "excludes lots from the future" do
       expect {
-        lot = product.lots.create!(quantity: 12, number: '1', good_from: 1.day.from_now, expires_at: 2.day.from_now)
+        lot = product.lots.create!(quantity: 12, number: "1", good_from: 1.day.from_now, expires_at: 2.day.from_now)
       }.to_not change {
         Lot.available.count
       }
@@ -148,12 +148,12 @@ describe Lot do
 
     it "returns available lots, oldest first" do
       product.lots.create!(quantity: 12)
-      product.lots.create!(quantity: 12, number: '1', expires_at: 1.day.from_now)
-      product.lots.create!(quantity: 12, number: '2', good_from: 1.day.ago)
-      product.lots.create!(quantity: 12, number: '3', good_from: 1.day.ago, expires_at: 1.day.from_now)
-      product.lots.create!(quantity: 12, number: '4', good_from: 1.day.ago, expires_at: 2.days.from_now)
+      product.lots.create!(quantity: 12, number: "1", expires_at: 1.day.from_now)
+      product.lots.create!(quantity: 12, number: "2", good_from: 1.day.ago)
+      product.lots.create!(quantity: 12, number: "3", good_from: 1.day.ago, expires_at: 1.day.from_now)
+      product.lots.create!(quantity: 12, number: "4", good_from: 1.day.ago, expires_at: 2.days.from_now)
 
-      expect(product.lots_by_expiration.available(1.day.from_now).first.number).to eql('4')
+      expect(product.lots_by_expiration.available(1.day.from_now).first.number).to eql("4")
     end
 
   end
@@ -163,35 +163,35 @@ describe Lot do
       subject.quantity = 42
     end
 
-    context 'without expiration' do
-      it 'returns the set quantity' do
+    context "without expiration" do
+      it "returns the set quantity" do
         expect(subject.available_quantity).to eq(42)
       end
     end
 
-    context 'with a current good from date' do
-      it 'returns the set quantity' do
+    context "with a current good from date" do
+      it "returns the set quantity" do
         subject.good_from = 1.day.ago
         expect(subject.available_quantity).to eq(42)
       end
     end
 
-    context 'with a future good from date' do
-      it 'returns 0' do
+    context "with a future good from date" do
+      it "returns 0" do
         subject.good_from = 1.day.from_now
         expect(subject.available_quantity).to eq(0)
       end
     end
 
-    context 'with a future expiration date' do
-      it 'returns the given quantity' do
+    context "with a future expiration date" do
+      it "returns the given quantity" do
         subject.expires_at = 1.day.from_now
         expect(subject.available_quantity).to eq(42)
       end
     end
 
-    context 'with a past expiration date' do
-      it 'returns 0' do
+    context "with a past expiration date" do
+      it "returns 0" do
         subject.expires_at = 1.day.ago
         expect(subject.available_quantity).to eq(0)
       end
@@ -199,7 +199,7 @@ describe Lot do
   end
 
   describe "#available?" do
-    it 'is true if good_from and expires_at are nil or appropriate values' do
+    it "is true if good_from and expires_at are nil or appropriate values" do
       subject.good_from = nil
       subject.expires_at = nil
       expect(subject).to be_available
@@ -214,7 +214,7 @@ describe Lot do
       expect(subject).to be_available
     end
 
-    it 'is false if good_from is in the future' do
+    it "is false if good_from is in the future" do
       subject.good_from = 1.day.from_now
       subject.expires_at = nil
       expect(subject).to_not be_available
@@ -223,7 +223,7 @@ describe Lot do
       expect(subject).to_not be_available
     end
 
-    it 'is false if expires at is in the past' do
+    it "is false if expires at is in the past" do
       subject.expires_at = 1.day.ago
       expect(subject).to_not be_available
     end

@@ -1,8 +1,8 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Register" do
   context "a new organization for a market" do
-    let!(:manager) { create(:user, email: 'fake@example.com') }
+    let!(:manager) { create(:user, email: "fake@example.com") }
 
     context "automatically activated" do
       let!(:market) { create(:market, managers: [manager], auto_activate_organizations: true) }
@@ -32,7 +32,7 @@ describe "Register" do
           click_button "Sign Up"
         end
 
-        it 'creates a new organization' do
+        it "creates a new organization" do
           expect(page).to have_content("Registration: Step Two")
           expect(page).to have_content("daniel@collectiveidea.com")
 
@@ -40,6 +40,7 @@ describe "Register" do
           expect(Organization.last.name).to eql("Collective Idea")
           expect(Organization.last.active).to eql(true)
           expect(Organization.last.can_sell?).to eql(false)
+          expect(Organization.last.markets).not_to be_empty
         end
 
         it 'sends a confirmation email' do
@@ -159,7 +160,7 @@ describe "Register" do
           click_button "Sign Up"
         end
 
-        it 'creates a new organization' do
+        it "creates a new organization" do
           expect(page).to have_content("Registration: Step Two")
           expect(page).to have_content("daniel@collectiveidea.com")
 
@@ -167,16 +168,17 @@ describe "Register" do
           expect(Organization.last.name).to eql("Collective Idea")
         end
 
-        it 'sends a confirmation email' do
+        it "sends a confirmation email" do
           open_email("daniel@collectiveidea.com")
           expect(current_email.body).to have_content("Verify Email Address")
           expect(current_email.body).to have_content(market.name)
         end
 
-        it 'creates a new organization' do
+        it "creates a new organization" do
           expect(Organization.count).to eql(1)
           expect(Organization.last.name).to eql("Collective Idea")
           expect(Organization.last.active).to eql(false)
+          expect(Organization.last.markets).to eq([market])
         end
 
         # it 'sends the market managers a notification' do

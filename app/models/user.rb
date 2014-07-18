@@ -137,28 +137,17 @@ class User < ActiveRecord::Base
   # when we don't know. We can make this more intelligent later.
   # confirmation email needs the organizations bit.
   def primary_market
-    return nil if admin?
-    markets.first || (organizations.first && organizations.first.markets.first)
+    admin? ? nil : markets.order(:created_at).first
   end
 
   def markets
-    @market ||= begin
-      if admin?
-        Market.all
-      elsif market_manager?
-        Market.
-          select("DISTINCT markets.*").
-          joins("LEFT JOIN market_organizations ON market_organizations.market_id = markets.id
-                 LEFT JOIN user_organizations ON user_organizations.organization_id = market_organizations.organization_id
-                 LEFT JOIN managed_markets ON managed_markets.market_id = markets.id").
-          where(["user_organizations.user_id = ? OR managed_markets.user_id = ?", id, id])
-      else
-        Market.
-          select("DISTINCT markets.*").
-          joins("INNER JOIN market_organizations ON market_organizations.market_id = markets.id AND market_organizations.cross_sell_origin_market_id IS NULL
-                 INNER JOIN user_organizations ON user_organizations.organization_id = market_organizations.organization_id").
-          where("user_organizations.user_id" => id)
-      end
+    @markets ||= if admin?
+      Market.all
+    else
+      managed_market_ids = managed_markets.pluck(:id)
+
+      organization_member_market_ids = organizations.map(&:markets).flatten.map(&:id)
+      Market.where(id: (managed_market_ids + organization_member_market_ids))
     end
   end
 
@@ -167,12 +156,8 @@ class User < ActiveRecord::Base
   end
 
   def managed_products
-    if admin?
-      Product.visible.seller_can_sell.joins(organization: :market_organizations).where(market_organizations: {cross_sell_origin_market_id: nil})
-    else
-      org_ids = managed_organizations.pluck(:id).uniq
-      Product.visible.seller_can_sell.where(organization_id: org_ids)
-    end
+    org_ids = managed_organizations.pluck(:id).uniq
+    Product.visible.seller_can_sell.where(organization_id: org_ids)
   end
 
   def buyers_for_select

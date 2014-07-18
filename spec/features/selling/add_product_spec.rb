@@ -17,12 +17,12 @@ end
 describe "Adding a product" do
   let(:user) { create(:user) }
   let(:market) { create(:market, :with_addresses) }
-  let(:aggregation_point) { create(:market_address, market: market, name: "Aggregation Point", address:"1123 Grand Rd.", city:"Appleton", state:"WI", zip:"83992") }
+  let(:aggregation_point) { create(:market_address, market: market, name: "Aggregation Point", address: "1123 Grand Rd.", city: "Appleton", state: "WI", zip: "83992") }
   let(:org) { create(:organization, :seller, markets: [market]) }
-  let(:loc1) {create(:location) }
-  let(:stub_warning_pricing) {"Your product will not appear in the Shop until you add pricing"}
-  let(:stub_warning_inventory) {"Your product will not appear in the Shop until you add inventory"}
-  let(:stub_warning_both) {"Your product will not appear in the Shop until you add inventory, and add pricing"}
+  let(:loc1) { create(:location) }
+  let(:stub_warning_pricing) { "Your product will not appear in the Shop until you add pricing" }
+  let(:stub_warning_inventory) { "Your product will not appear in the Shop until you add inventory" }
+  let(:stub_warning_both) { "Your product will not appear in the Shop until you add inventory, and add pricing" }
   let(:organization_label) { "Product Organization" }
 
   let!(:inactive_seller) { create(:organization, :seller, markets: [market], active: false) }
@@ -30,7 +30,16 @@ describe "Adding a product" do
   let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1, require_delivery: true) }
   # This is the schedule we'll model after the Appleton bug
   # Seller fulfillment location is what will show for the seller
-  let!(:tuesdays_schedule) { create(:delivery_schedule, market: market, day: 2, buyer_pickup_location_id: 0, seller_fulfillment_location: aggregation_point, buyer_pickup_start: "8:30 AM", buyer_pickup_end: "10:00 AM") }
+  let!(:tuesdays_schedule) {
+    create(:delivery_schedule,
+      market: market,
+      day: 2,
+      buyer_pickup_location_id: 0,
+      seller_fulfillment_location: aggregation_point,
+      buyer_pickup_start: "8:30 AM", buyer_pickup_end: "10:00 AM"
+    )
+  }
+
   let!(:deleted_schedule) { create(:delivery_schedule, market: market, day: 2, deleted_at: Time.current) }
 
   before do
@@ -334,9 +343,10 @@ describe "Adding a product" do
       end
 
       it "selects all delivery schedules by default" do
-        within '#admin-nav' do
-          click_link 'Products'
+        within "#admin-nav" do
+          click_link "Products"
         end
+
         click_link "Add New Product"
 
         expect(page).to_not have_content(stub_warning_both)
@@ -599,7 +609,7 @@ describe "Adding a product" do
     it "does not save a product with invalid product info", js: true do
       expect(page).to have_content("Current inventory")
       select org2.name, from: "Seller Organization"
-      uncheck 'Use simple inventory management'
+      uncheck "Use simple inventory management"
 
       click_button "Save and Continue"
       expect(page).to have_content("Name can't be blank")
@@ -608,12 +618,10 @@ describe "Adding a product" do
       expect(find_field("Use seller info from my account.")).to be_checked
       expect(page).not_to have_content("No Organization Selected")
 
-      within('.tabs') do
+      within(".tabs") do
         expect(page).to have_content("Inventory")
       end
     end
-
-
   end
 
   describe "as a market manager" do

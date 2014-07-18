@@ -3,14 +3,18 @@ class Organization < ActiveRecord::Base
   include Sortable
   include PgSearch
 
-  has_many :market_organizations, -> { where(deleted_at: nil) }
+  has_many :market_organizations
   has_many :user_organizations
 
   has_many :users, through: :user_organizations
-  has_many :all_markets, through: :market_organizations, source: :market
+  has_many :all_markets, -> { extending(MarketOrganization::AssociationScopes) },  
+    through: :market_organizations, 
+    source: :market
 
-  has_many :markets, -> { where(market_organizations: {cross_sell_origin_market_id: nil}) }, through: :market_organizations
-  has_many :cross_sells, -> { where.not(market_organizations: {cross_sell_origin_market_id: nil}) },
+  has_many :markets, -> { extending(MarketOrganization::AssociationScopes).excluding_deleted.not_cross_selling },
+    through: :market_organizations
+
+  has_many :cross_sells, -> { extending(MarketOrganization::AssociationScopes).excluding_deleted.cross_selling },
     through: :market_organizations,
     source: :market
 
@@ -98,7 +102,7 @@ class Organization < ActiveRecord::Base
   def update_cross_sells!(from_market: nil, to_ids: [])
     ids = to_ids.map(&:to_i)
 
-    original_cross_sells  = market_organizations.where(cross_sell_origin_market: from_market)
+    original_cross_sells  = market_organizations.visible.where(cross_sell_origin_market: from_market)
     cross_sells_to_remove = original_cross_sells.where.not(market_id: ids)
     new_cross_sell_ids = ids - original_cross_sells.map(&:market_id)
 
@@ -109,7 +113,6 @@ class Organization < ActiveRecord::Base
 
     # Destroy the old ones
     cross_sells_to_remove.soft_delete_all
-
     update_product_delivery_schedules
   end
 
@@ -121,8 +124,8 @@ class Organization < ActiveRecord::Base
     (markets.empty? ? cross_sells : markets).order("market_organizations.id ASC").first
   end
 
-  def is_cross_selling?(from: nil, to: nil)
-    market_organizations.where(cross_sell_origin_market: from, market: to).exists?
+  def cross_selling?(from: nil, to: nil)
+    market_organizations.excluding_deleted.where(cross_sell_origin_market: from, market: to).exists?
   end
 
   private

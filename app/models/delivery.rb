@@ -21,7 +21,7 @@ class Delivery < ActiveRecord::Base
 
   def self.for_seller(seller)
     joins(:delivery_schedule).
-    where(delivery_schedules: {market_id: [seller.markets.map(&:id)]})
+    where(delivery_schedules: {market_id: [seller.markets.pluck(:id)]})
   end
 
   def self.upcoming_for_seller(seller)

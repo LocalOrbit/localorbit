@@ -463,8 +463,8 @@ describe "admin manange organization", :vcr do
       end
 
       context "logging into a subdomain which is different from the organization I'm deleting from" do
-        let!(:market2) { create(:market) }
-      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market2])}
+      let!(:market2) { create(:market) }
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market2])}
 
         it "deletes the organization from it's only market it belongs to" do
           visit admin_organizations_path
@@ -532,7 +532,7 @@ describe "admin manange organization", :vcr do
         expect(Dom::Admin::MarketMembershipRow.count).to eql(2)
       end
 
-      context "when the admin checks markets" do      
+      context "when the admin checks markets" do
         it "removes the organization from the organizations list" do
           Dom::Admin::MarketMembershipRow.find_by_name(market.name).check
           click_button "Remove Membership(s)"
