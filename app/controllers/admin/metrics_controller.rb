@@ -6,7 +6,7 @@ class Admin::MetricsController < AdminController
   end
 
   def show
-    @presenter = MetricsPresenter.metrics_for(groups: [params[:metric]])
+    @presenter = MetricsPresenter.metrics_for(groups: [params[:id]])
 
     if @presenter
       render :show
