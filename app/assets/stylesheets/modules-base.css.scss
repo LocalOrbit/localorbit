@@ -1106,6 +1106,30 @@
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  .toolbar {
+    height: auto;
+    &[data-tools="4"] {
+      > .tool {
+        width: 100%;
+        border-bottom: 1px solid #ddd;
+      }
+      > .tool:nth-child(4n) {
+        border-bottom: 0;
+      }
+    }
+    &[data-tools="3"] {
+      > .tool {
+        width: 100%;
+        border-bottom: 1px solid #ddd;
+      }
+      > .tool:nth-child(3n) {
+        border-bottom: 0;
+      }
+    }
+  }
+}
   .tool {
     display: inline-block;
     height: 80px;
@@ -1131,6 +1155,12 @@
     > a {
       display:inline-block;
       vertical-align: middle;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .tool {
+      background: none;
     }
   }
 

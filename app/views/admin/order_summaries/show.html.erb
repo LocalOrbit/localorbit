@@ -17,62 +17,63 @@
       <div class="tel"><%= number_to_phone seller.decorate.shipping_phone %></div>
     </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Buyer</th>
-        <th>Items</th>
-        <th>Units</th>
-        <th>Qty</th>
-        <th>Item Total Price</th>
-        <th>Notes</th>
-      </tr>
-    </thead>
-
-    <% orders.each do |order, items| %>
-      <tbody class="order-summary">
-        <% min_rowspan = 5 %>
+  <div class="table-wrapper">
+    <table>
+      <thead>
         <tr>
-          <th scope="row" rowspan="<%= [min_rowspan, items.count].max %>" class="vcard">
-            <h3 class="fn org"><%= order.organization.name %></h3>
-            <div class="street-address"><%= order.decorate.display_delivery_street %></div>
-            <div><%= order.decorate.display_delivery_city_state_zip %></div>
-            <% if order.decorate.display_delivery_phone.present? %>
-              <div class="tel">T: <%= number_to_phone order.decorate.display_delivery_phone %></div>
+          <th>Buyer</th>
+          <th>Items</th>
+          <th>Units</th>
+          <th>Qty</th>
+          <th>Item Total Price</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+
+      <% orders.each do |order, items| %>
+        <tbody class="order-summary">
+          <% min_rowspan = 5 %>
+          <tr>
+            <th scope="row" rowspan="<%= [min_rowspan, items.count].max %>" class="vcard">
+              <h3 class="fn org"><%= order.organization.name %></h3>
+              <div class="street-address"><%= order.decorate.display_delivery_street %></div>
+              <div><%= order.decorate.display_delivery_city_state_zip %></div>
+              <% if order.decorate.display_delivery_phone.present? %>
+                <div class="tel">T: <%= number_to_phone order.decorate.display_delivery_phone %></div>
+              <% end %>
+              <div class="order-number">Order #:<%= order.order_number %></div>
+            </th>
+            <% first_item = items.shift %>
+            <td><%= first_item.name %></td>
+            <td><%= first_item.unit %></td>
+              <td><%= first_item.quantity %></td>
+              <td><%= number_to_currency first_item.seller_net_total %></td>
+              <td></td>
+            </tr>
+
+            <% items.each do |item| %>
+              <tr>
+                <td><%= item.name %></td>
+                <td><%= item.unit %></td>
+                <td><%= item.quantity %></td>
+                <td><%= number_to_currency item.seller_net_total %></td>
+                <td></td>
+              </tr>
             <% end %>
-            <div class="order-number">Order #:<%= order.order_number %></div>
-          </th>
-          <% first_item = items.shift %>
-          <td><%= first_item.name %></td>
-          <td><%= first_item.unit %></td>
-            <td><%= first_item.quantity %></td>
-            <td><%= number_to_currency first_item.seller_net_total %></td>
-            <td></td>
-          </tr>
 
-          <% items.each do |item| %>
-            <tr>
-              <td><%= item.name %></td>
-              <td><%= item.unit %></td>
-              <td><%= item.quantity %></td>
-              <td><%= number_to_currency item.seller_net_total %></td>
-              <td></td>
-            </tr>
-          <% end %>
-
-          <% (min_rowspan - (items.size + 1)).times do %>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          <% end %>
-        </tbody>
-      <% end %>
-    </table>
-
+            <% (min_rowspan - (items.size + 1)).times do %>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            <% end %>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
     <h2 class="heading heading-delivery-tool">Total</h2>
     <p class="order-summary-total"><%= number_to_currency @summaries.totals[seller] %></p>
   </div>

@@ -42,34 +42,34 @@
         </div>
       </div>
 
-
-      <table class="delivery-tools">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Total Sold</th>
-            <th>Lot #</th>
-            <th>Units</th>
-            <th>Delivery</th>
-            <th>Initials</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <% items.each do |item| %>
-          <tr class="individual-pack-list-item">
-            <td class="name"><%= item.product.name %></td>
-            <td class="total-sold"><%= item.quantity %></td>
-            <td class="lot">
-              <%= item.lots.map {|lot| lot.number }.join(', ') if !item.product.use_simple_inventory and item.lots.any? %>
-            </td>
-            <td class="units"><%= item.unit %></td>
-            <td class="delivery"></td>
-            <td class="initials"></td>
-            <td class="notes"></td>
-          </tr>
-        <% end %>
-      </table>
-
+      <div class="table-wrapper">
+        <table class="delivery-tools">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Total Sold</th>
+              <th>Lot #</th>
+              <th>Units</th>
+              <th>Delivery</th>
+              <th>Initials</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <% items.each do |item| %>
+            <tr class="individual-pack-list-item">
+              <td class="name"><%= item.product.name %></td>
+              <td class="total-sold"><%= item.quantity %></td>
+              <td class="lot">
+                <%= item.lots.map {|lot| lot.number }.join(', ') if !item.product.use_simple_inventory and item.lots.any? %>
+              </td>
+              <td class="units"><%= item.unit %></td>
+              <td class="delivery"></td>
+              <td class="initials"></td>
+              <td class="notes"></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
     </div>
   <% end %>
 <% end %>

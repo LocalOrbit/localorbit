@@ -25,58 +25,61 @@
       </div>
     </div>
 
-    <table class="delivery-tools">
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Total Sold</th>
-          <th>Units</th>
-          <th>Buyer</th>
-          <th>Breakdown</th>
-          <th>Initials</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
+    <div class="table-wrapper">
 
-      <% @pick_list[organization].each do |line| %>
-        <tr class="pick-list-item">
-          <td class="name"><%= line.name %></td>
-          <td class="total-sold"><%= line.total_sold %></td>
-          <td class="units"><%= line.unit %></td>
-          <td class="buyer"><%= line.buyers.first.name %></td>
-          <td class="breakdown">
-            <%= line.buyers.first.quantity %>
-            <% if line.buyers.first.lots.present? %>
-              <ul>
-                <% line.buyers.first.lots.each do |lot| %>
-                  <li>Lot #<%= lot.lot.number %>: <%= lot.quantity %></li>
-                <% end %>
-              </ul>
-            <% end %>
-          </td>
-          <td class="initials"></td>
-          <td class="notes"></td>
-        </tr>
-        <% line.buyers.drop(1).each do |buyer| %>
+      <table class="delivery-tools">
+        <thead>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="buyer"><%= buyer.name %></td>
-            <td class="breakdown"><%= buyer.quantity %>
-            <% if buyer.lots.present? %>
-              <ul>
-                <% buyer.lots.each do |lot| %>
-                  <li>Lot #<%= lot.lot.number %>: <%= lot.quantity %></li>
-                <% end %>
-              </ul>
-            <% end %>
-            </td>
-            <td></td>
-            <td></td>
+            <th>Item</th>
+            <th>Total Sold</th>
+            <th>Units</th>
+            <th>Buyer</th>
+            <th>Breakdown</th>
+            <th>Initials</th>
+            <th>Notes</th>
           </tr>
+        </thead>
+
+        <% @pick_list[organization].each do |line| %>
+          <tr class="pick-list-item">
+            <td class="name"><%= line.name %></td>
+            <td class="total-sold"><%= line.total_sold %></td>
+            <td class="units"><%= line.unit %></td>
+            <td class="buyer"><%= line.buyers.first.name %></td>
+            <td class="breakdown">
+              <%= line.buyers.first.quantity %>
+              <% if line.buyers.first.lots.present? %>
+                <ul>
+                  <% line.buyers.first.lots.each do |lot| %>
+                    <li>Lot #<%= lot.lot.number %>: <%= lot.quantity %></li>
+                  <% end %>
+                </ul>
+              <% end %>
+            </td>
+            <td class="initials"></td>
+            <td class="notes"></td>
+          </tr>
+          <% line.buyers.drop(1).each do |buyer| %>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="buyer"><%= buyer.name %></td>
+              <td class="breakdown"><%= buyer.quantity %>
+              <% if buyer.lots.present? %>
+                <ul>
+                  <% buyer.lots.each do |lot| %>
+                    <li>Lot #<%= lot.lot.number %>: <%= lot.quantity %></li>
+                  <% end %>
+                </ul>
+              <% end %>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+          <% end %>
         <% end %>
-      <% end %>
-    </table>
+      </table>
+    </div>
   </div>
 <% end %>

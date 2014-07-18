@@ -44,35 +44,35 @@
       </div>
     </div>
 
-
-  <table class="delivery-tools">
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Lot #</th>
-        <th>Quantity</th>
-        <th>Units</th>
-        <th>Seller</th>
-        <th>Item Total Price</th>
-        <th>Notes</th>
-      </tr>
-    </thead>
-    <% order.items.undelivered.includes(:product => :organization).order('products.name').each do |item| %>
-      <tr class="pack-list-item">
-        <td class="name"><%= item.product.name %></td>
-        <td class="lot">
-          <% if !item.product.use_simple_inventory and item.lots.any? %>
-            <%= item.lots.map {|lot| lot.number }.join(', ') %>
-          <% end %>
-        </td>
-        <td class="quantity"><%= item.quantity %></td>
-        <td class="units"><%= item.unit %></td>
-        <td class="seller"><%= item.product.organization.name %></td>
-        <td class="total-price"><%= number_to_currency item.gross_total %></td>
-        <td class="notes"></td>
-      </tr>
-    <% end %>
-  </table>
-
-</div>
+    <div class="table-wrapper">
+      <table class="delivery-tools">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Lot #</th>
+            <th>Quantity</th>
+            <th>Units</th>
+            <th>Seller</th>
+            <th>Item Total Price</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <% order.items.undelivered.includes(:product => :organization).order('products.name').each do |item| %>
+          <tr class="pack-list-item">
+            <td class="name"><%= item.product.name %></td>
+            <td class="lot">
+              <% if !item.product.use_simple_inventory and item.lots.any? %>
+                <%= item.lots.map {|lot| lot.number }.join(', ') %>
+              <% end %>
+            </td>
+            <td class="quantity"><%= item.quantity %></td>
+            <td class="units"><%= item.unit %></td>
+            <td class="seller"><%= item.product.organization.name %></td>
+            <td class="total-price"><%= number_to_currency item.gross_total %></td>
+            <td class="notes"></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
 <% end %>
