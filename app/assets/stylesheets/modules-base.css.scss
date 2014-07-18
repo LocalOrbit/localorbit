@@ -1282,8 +1282,10 @@ label ~ .tooltip {
   }
 }
 @media screen and (min-height: 768px) {
-  .stickable {
+  .l-main .stickable {
     background: #fff;
+  }
+  .stickable {
     &.js-positioned {
       position: absolute;
       z-index: 3;
