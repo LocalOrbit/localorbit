@@ -3,7 +3,7 @@ class MetricsPresenter
 
   attr_reader :metrics, :headers
 
-  TEST_MARKET_IDS = [10]
+  TEST_MARKET_IDS = Market.where(demo: true).pluck(:id)
   TEST_ORG_IDS    = Market.where(id: TEST_MARKET_IDS).joins(:organizations).uniq.pluck("organizations.id")
 
   GROUPDATE_OPTIONS = {
