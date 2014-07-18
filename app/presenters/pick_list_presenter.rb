@@ -1,51 +1,70 @@
 class PickListPresenter
   def self.build(current_user, current_organization, delivery)
-    # The condition combined with the eager_load will result
-    # in loaded items lists that only include pending deliveries
-    scope = delivery.orders.where(order_items: {delivery_status: "pending"}).
-      eager_load(items: {product: :organization}).
-      preload(:organization)
-    if !(current_user.market_manager? || current_user.admin?)
-      scope = scope.where(products: {organization_id: current_organization.id})
+    order_items = OrderItem.where(delivery_status: "pending", orders: {delivery_id: delivery.id}).
+      eager_load(:order, product: :organization).
+      order("organizations.name, products.name").
+      preload(order: :organization)
+
+    if !(current_user.admin? || current_user.market_manager?)
+      order_items = order_items.where(products: {organization_id: current_organization.id})
     end
 
-    order_items = scope.map(&:items).flatten
-    order_items.sort! do |a,b|
-      s1 = a.product.organization.name.casecmp(b.product.organization.name)
-      next(s1) unless s1 == 0
-      s2 = a.product.name.casecmp(b.product.name)
-      next(s2) unless s2 == 0
-      a.order.organization.name.casecmp(b.order.organization.name)
+    order_items.group_by {|item| item.product.organization_id }.map do |_, items|
+      new(items)
+    end
+  end
+
+  def initialize(items)
+    @items  = items
+    @seller = items.first.product.organization
+  end
+
+  def products
+    @products ||= @items.group_by(&:product_id).map {|_, items| PickListProduct.new(items) }
+  end
+
+  def seller_name
+    @seller.name
+  end
+
+  def seller_ship_from_address
+    @seller_ship_from_address ||= @seller.decorate.ship_from_address
+  end
+
+  class PickListProduct
+    def initialize(items)
+      @items   = items
+      @product = @items.first.product
     end
 
-    pick_list_tree = order_items.inject({}) do |result, item|
-      result[item.product.organization] ||= {}
-      (result[item.product.organization][item.product] ||= []) << item
-      result
+    def name
+      @product.name
     end
 
-    pick_list_tree.keys.inject({}) do |result, organization|
-      result[organization] = result[organization] || []
+    def total_sold
+      @total_sold ||= @items.sum(&:quantity)
+    end
 
-      result[organization] = pick_list_tree[organization].keys.map do |product|
-        order_items = pick_list_tree[organization][product]
+    def unit
+      @unit ||= total_sold == 1 ? @product.unit_singular : @product.unit_plural
+    end
 
-        total = order_items.sum(&:quantity)
-
+    def buyers
+      @buyers ||= @items.sort {|a,b| a.order.organization.name.casecmp(b.order.organization.name) }.map do |item|
         OpenStruct.new(
-          name: product.name,
-          total_sold: total,
-          unit: total == 1 ? product.unit_singular : product.unit_plural,
-          buyers: order_items.map do |line|
-            OpenStruct.new(
-              name: line.order.organization.name,
-              quantity: line.quantity,
-              lots: line.lots.select {|lot| lot.number.present? }
-            )
-          end
+          name:     item.order.organization.name,
+          quantity: item.quantity,
+          lots:     item.lots.select {|lot| lot.number.present? }
         )
       end
-      result
+    end
+
+    def first_buyer
+      @first_buyer ||= buyers.first
+    end
+
+    def remaining_buyers
+      @remaining_buyers ||= buyers[1..-1]
     end
   end
 end

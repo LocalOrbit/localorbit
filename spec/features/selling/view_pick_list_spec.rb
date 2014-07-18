@@ -164,7 +164,7 @@ describe "Pick list" do
 
       it "shows the pick list", js: true do
         expect(Dom::Admin::PickListItem.count).to eql(2)
-        save_and_open_screenshot
+
         line = Dom::Admin::PickListItem.find_by_name(sellers_product.name)
         expect(line.total_sold).to have_content("4")
         expect(line.buyer).to have_content(buyer1.name)
