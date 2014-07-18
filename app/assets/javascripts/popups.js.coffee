@@ -3,10 +3,19 @@ $ ->
   # shows/hides an element with the class indicated by the
   # data-popup attribute on the link.
   clone_popup = ($element, toggle) ->
-    $element.css({
-      'left': $element.offset().left,
-      'top':  $element.offset().top
-    }).insertAfter('.overlay')
+    if $('.l-main').outerWidth() <= 600
+      styles = {
+        position: 'fixed',
+        top: 54,
+        left: '50%',
+        marginLeft: -138
+      }
+    else
+      styles = {
+        'left': $element.offset().left,
+        'top':  $element.offset().top
+      }
+    $element.css(styles).insertAfter('.overlay')
 
   position_popup = ($element) ->
     bottom = $element.offset().top + $element.outerHeight()
@@ -25,6 +34,8 @@ $ ->
     $element.toggleClass('is-hidden')
     $(".popup").not($element).addClass('is-hidden')
     $('.overlay').addClass('is-open')
+    if $element.parents('.product').length
+      $('.overlay').addClass('mobile-dim')
     if $element.hasClass('popup--edit')
       if screen.width <= 600
         size_popup($element)
@@ -54,8 +65,8 @@ $ ->
   $('.popup button.close').click ->
     $popup = $(this).closest('.popup')
     $popup.addClass('is-hidden').css({'left': 'auto', 'top': 'auto'}).insertAfter('.popup-toggle[href="#' + $popup.attr('id') + '"]')
-    $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable')
+    $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable mobile-dim')
 
   $('.popup form[data-remote]').on 'ajax:success', (event, xhr, status) ->
     $(this).closest('.popup').addClass('is-hidden')
-    $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable')
+    $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable mobile-dim')

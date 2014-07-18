@@ -263,10 +263,47 @@
   }
   .column--half,
   .column--two-thirds,
-  .column--three-fourths {
+  .column--three-fourths,
+  .column--seven-twelfths {
     width: 100%;
+    &.column--guttered {
+      padding: 0;
+    }
   }
   .hidden-mobile {
     display: none;
+  }
+  .mobile-panes-wrapper {
+    margin-top: -64px;
+    width: 100%;
+    overflow: hidden;
+  }
+  .mobile-pane {
+    position: relative;
+    vertical-align: top;
+    overflow: hidden;
+    .vacuus {
+      position: relative;
+      width: 100%;
+      height: 64px;
+    }
+  }
+  .mobile-panes[data-panes="3"] {
+    width: 300%;
+    max-width: none;
+    .column,
+    .mobile-pane {
+      display: inline-block;
+      width: 33.3333%;
+    }
+    .column[data-panes="2"] {
+      width: 66.6666666%;
+      .mobile-pane {
+        width: 50%;
+      }
+    }
+    .secondary-panes {
+      float: right;
+    }
   }
 }

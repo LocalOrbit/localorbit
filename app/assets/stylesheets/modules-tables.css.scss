@@ -655,6 +655,58 @@ th {
   .icon-close {
     font-size: 18px;
   }
+
+  .products--user {
+    padding-left: 0;
+  }
+  .product-table--user {
+    thead {
+      th:last-child {
+       display: none;
+      }
+    }
+    .product {
+      td {
+        display: block;
+        @include box-sizing(border-box);
+        width: 100%;
+        max-width: none;
+        padding: 0;
+        margin: 10px 0;
+      }
+      .quantity, .total, .product-clear {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .quantity {
+        width: 50%;
+        br {
+          display: none;
+        }
+      }
+      .total {
+        width: 40%;
+      }
+      .product-clear {
+        width: 10%;
+      }
+    }
+    .product-image {
+      display: none;
+    }
+    .info ul,
+    .short_description {
+      margin-left: 0;
+    }
+    .info li {
+      display: inline-block;
+    }
+    &.featured-product {
+      td {
+        padding: 0 10px;
+      }
+    }
+  }
 }
 
 .edit-cell {

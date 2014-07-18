@@ -11,7 +11,7 @@
       <%= select_tag(:org_id, options_from_collection_for_select(@organizations, 'id', 'name'), class: "column column--full") %>
     </div>
     <div class="form-actions">
-      <%= submit_tag "Select Organization"%>
+      <%= submit_tag "Select Organization", class: "mobile-block" %>
     </div>
   <% end %>
 </div>

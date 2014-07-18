@@ -6,7 +6,7 @@
       <%= hidden_field_tag :redirect_back_to, params[:redirect_back_to] %>
 
       <h1 class="clear-before">Welcome to <%= current_market.name %></h1>
-      <p class="faux-label">Please choose a pick up or delivery date.</p>
+      <p class="faux-label">Please choose a pick up or delivery date.</p>
 
       <div class="row"><% @deliveries.each do |d| -%><div class="column column--guttered column--half">
           <div class="conditional field vcard delivery">
@@ -18,7 +18,7 @@
             </label>
 
             <% if d.display_locations.count > 1 %>
-              <%= select_tag "location_id[#{d.id}]", options_from_collection_for_select(d.display_locations, "id", "address", current_organization.shipping_location.id) %>
+              <%= select_tag "location_id[#{d.id}]", options_from_collection_for_select(d.display_locations, "id", "address", current_organization.shipping_location.id), class: "mobile-block" %>
             <% else %>
               <%= content_tag_for :div, d.display_locations.first, class: "adr" do |location| %>
                 <%= hidden_field_tag "location_id[#{d.id}]", location.id unless d.buyer_pickup? %>
@@ -32,7 +32,7 @@
       </div>
 
       <div class="form-actions">
-        <%= submit_tag "Start Shopping"%>
+        <%= submit_tag "Start Shopping", class: "mobile-block" %>
       </div>
     <% end %>
   </div>
