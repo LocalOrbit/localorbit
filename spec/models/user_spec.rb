@@ -467,27 +467,27 @@ describe User do
     end
   end
 
-  describe "managed_products" do
+  describe ".managed_products" do
+    let!(:market1) { create(:market) }
+    let!(:market2) { create(:market) }
+    let!(:org1)    { create(:organization, markets: [market1]) }
+    let!(:org2)    { create(:organization, markets: [market2]) }
+    let!(:prod1)   { create(:product, organization: org1) }
+    let!(:prod2)   { create(:product, organization: org2) }
+
     subject { user.managed_products }
 
-    context "for an admin" do
+    context "as an admin" do
       let!(:user) { create(:user, :admin) }
 
-      xit "returns all products" do
-        Timecop.freeze do
-          expect(subject).to eq(Product.visible.seller_can_sell.joins(organization: :market_organizations))
-        end
+      it "returns all products" do
+        expect(subject).to include(prod1, prod2)
       end
     end
 
-    context "for a market manager" do
+    context "as a market manager" do
       let!(:user) { create(:user, :market_manager) }
       let!(:market1) { user.managed_markets.first }
-      let!(:market2) { create(:market) }
-      let!(:org1) { create(:organization, markets: [market1]) }
-      let!(:org2) { create(:organization, markets: [market2]) }
-      let!(:prod1) { create(:product, organization: org1) }
-      let!(:prod2) { create(:product, organization: org2) }
       let!(:deleted_prod) { create(:product, organization: org1, deleted_at: 1.minute.ago) }
 
       it "returns a scope" do
@@ -507,7 +507,7 @@ describe User do
       end
     end
 
-    context "for a user" do
+    context "as a user" do
       let!(:user) { create(:user) }
       let!(:market1) { create(:market) }
       let!(:org1) { create(:organization, markets: [market1], users: [user]) }
