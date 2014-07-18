@@ -509,6 +509,7 @@ ActiveRecord::Schema.define(version: 20140717125656) do
     t.boolean  "use_all_deliveries",    default: true
     t.integer  "legacy_id"
     t.string   "unit_description"
+    t.string   "thumb_uid"
   end
 
   add_index "products", ["category_id"], name: "index_products_on_category_id", using: :btree

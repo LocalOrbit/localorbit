@@ -17,12 +17,12 @@
       </div>
       <div class="about tabbed-item" id="market-about">
         <div class="row">
-         <% if @market.photo.present? %>
+         <% if @market.photo_stored? %>
           <div class="column column--guttered column--two-thirds">
             <h2 class="story-header">About</h2>
             <%= simple_format @market.profile %>
           </div><div class="column column--guttered column--third">
-            <%= image_tag Dragonfly.app.remote_url_for(@market.photo_uid) %>
+            <%= image_tag @market.photo.thumb("440x440>").url %>
           </div>
         <% else %>
           <h2 class="story-header">About Us</h2>
@@ -64,7 +64,7 @@
     <ul class="list-naked list-zebra deliveries-list">
     <% @market.delivery_schedules.visible.order(:day).decorate.each do |delivery| %>
       <li>
-        <strong class="display-date"><%= delivery.plural_weekday %></strong> — 
+        <strong class="display-date"><%= delivery.plural_weekday %></strong> —
         <span class="time-range"><%= delivery.time_window %></span><br>
         <span class="location"><%= delivery.pickup_or_dropoff %><br></span>
       </li>

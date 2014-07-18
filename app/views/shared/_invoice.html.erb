@@ -28,7 +28,7 @@
   </div>
 
   <%=
-  if market.logo
+  if market.logo_stored?
     image_tag(market.logo.thumb('200x150>').url, alt: "#{market.name} logo", class: "logo")
   else
     image_tag(asset_url("logo.png"), alt: "Local Orbit logo", class: "logo")

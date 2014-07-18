@@ -16,8 +16,10 @@
     <tr class="product product-row cart_item" data-cart-item="<%= product.cart_item.to_json %>">
       <td class="info">
       <div class="product-image">
-      <% if product.image_uid.present? %>
-        <%= image_tag product.image.thumb('75x').url, alt: "" %>
+      <% if product.thumb_stored? %>
+        <%= image_tag product.thumb.url, alt: "" %>
+      <% elsif product.image_stored? %>
+        <%= image_tag product.image.thumb("150x150>").url, alt: "" %>
       <% else %>
         <%= image_tag 'default-product-image.png', alt: "" %>
       <% end %>
@@ -28,7 +30,7 @@
           <% if product.long_description.present? %>
             <p>
               <%= product.short_description %>
-              <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{product.id}-long-description", {class: "popup-toggle", tabindex: "-1"} %>
+              <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#product-#{product.id}-long-description", {class: "popup-toggle", tabindex: "-1"} %>
             </p>
             <div class="long-description-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-long-description">
               <div class="popup-header">

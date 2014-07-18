@@ -278,7 +278,7 @@
       <table class="lo_content_header">
         <tr>
           <td>
-            <% logo = @market.logo ? @market.logo.remote_url : 'logo.png' %>
+            <% logo = @market.logo_stored? ? @market.logo.thumb('240x240>').url : 'logo.png' %>
             <a href="<%= root_url(host: @market.domain) %>"><%= image_tag logo, alt: @market.name, class: "lo_org_logo" %></a>
           </td>
           <td>

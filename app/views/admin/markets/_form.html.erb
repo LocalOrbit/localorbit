@@ -21,7 +21,7 @@
       <%= f.label :logo %>
       <span class="tooltip pull-right" data-tooltip="This logo appears in the header of every page and email."></span>
       <br>
-      <%= image_tag @market.logo.remote_url, class: "market-logo" if @market.logo %>
+      <%= image_tag @market.logo.remote_url, class: "market-logo" if @market.logo_stored? %>
       <%= f.file_field :logo, class: "photo-button" %><br>
       <div><small>Drag and drop your logo anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
     </div
@@ -29,7 +29,7 @@
       <%= f.label :photo %>
       <span class="tooltip pull-right" data-tooltip="This photo appears on the Market Info page."></span>
       <br>
-      <%= image_tag @market.photo.remote_url, class: "market-photo" if @market.photo %>
+      <%= image_tag @market.photo.remote_url, class: "market-photo" if @market.photo_stored? %>
       <%= f.file_field :photo, class: "photo-button" %><br>
       <div><small>Drag and drop your photo anywhere in the "Choose File" area and it will be uploaded when you save.</small></div>
     </div>
