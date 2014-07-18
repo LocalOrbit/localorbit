@@ -20,65 +20,66 @@
   background: $notice_bg;
   list-style: none;
 }
-.with-anchor {
-  &:before,
-  &:after {
-    position: absolute;
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border: 7px solid transparent;
-    content: "";
+@media screen and (min-width: 601px){
+  .with-anchor {
+    &:before,
+    &:after {
+      position: absolute;
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border: 7px solid transparent;
+      content: "";
+    }
   }
+    .top-anchor {
+      &:before {
+        top: -7px;
+        left: 10px;
+        border-bottom-color: #ccc;
+        border-top: 0;
+      }
+      &:after {
+        top: -6px;
+        left: 10px;
+        border-bottom-color: #fff;
+        border-top: 0;
+      }
+    }
+
+    .top-centered-anchor {
+      &:before {
+        top: -7px;
+        left: 50%;
+        border-bottom-color: #ccc;
+        border-top: 0;
+        margin-left: -3px;
+      }
+      &:after {
+        top: -6px;
+        left: 50%;
+        border-bottom-color: #fff;
+        border-top: 0;
+        margin-left: -3px;
+      }
+    }
+    .bottom-anchor {
+      top: auto;
+      bottom: 100%;
+      &:before {
+        bottom: -7px;
+        left: 10px;
+        border-top-color: #ccc;
+        border-bottom: 0;
+      }
+      &:after {
+        bottom: -6px;
+        left: 10px;
+        border-top-color: #fff;
+        border-bottom: 0;
+      }
+    }
 }
-  .top-anchor {
-    &:before {
-      top: -7px;
-      left: 10px;
-      border-bottom-color: #ccc;
-      border-top: 0;
-    }
-    &:after {
-      top: -6px;
-      left: 10px;
-      border-bottom-color: #fff;
-      border-top: 0;
-    }
-  }
-
-  .top-centered-anchor {
-    &:before {
-      top: -7px;
-      left: 50%;
-      border-bottom-color: #ccc;
-      border-top: 0;
-      margin-left: -3px;
-    }
-    &:after {
-      top: -6px;
-      left: 50%;
-      border-bottom-color: #fff;
-      border-top: 0;
-      margin-left: -3px;
-    }
-  }
-  .bottom-anchor {
-    top: auto;
-    bottom: 100%;
-    &:before {
-      bottom: -7px;
-      left: 10px;
-      border-top-color: #ccc;
-      border-bottom: 0;
-    }
-    &:after {
-      bottom: -6px;
-      left: 10px;
-      border-top-color: #fff;
-      border-bottom: 0;
-    }
-  }
-
 .caretted:after {
   display: inline-block;
   width: 0;
