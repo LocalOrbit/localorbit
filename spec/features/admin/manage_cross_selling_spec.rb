@@ -1,16 +1,16 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Manage cross selling" do
-  let!(:user) { create(:user, role: 'admin') }
+  let!(:user) { create(:user, role: "admin") }
 
   let!(:cross_selling_market)     { create(:market, allow_cross_sell: true) }
   let!(:not_cross_selling_market) { create(:market)}
 
-  context 'for a none-cross selling market' do
+  context "for a none-cross selling market" do
     let!(:market) { create(:market) }
     let!(:organization) { create(:organization, :seller, markets: [market]) }
 
-    context 'managing a market' do
+    context "managing a market" do
       before do
         switch_to_subdomain(market.subdomain)
         sign_in_as user
@@ -18,7 +18,7 @@ describe "Manage cross selling" do
       end
 
       it "does not show the cross-sell tab" do
-        expect(page).to_not have_css(".tabs", text: 'Cross Sell')
+        expect(page).to_not have_css(".tabs", text: "Cross Sell")
       end
     end
 
@@ -30,16 +30,16 @@ describe "Manage cross selling" do
       end
 
       it "does not show the cross-sell tab" do
-        expect(page).to_not have_css(".tabs", text: 'Cross Sell')
+        expect(page).to_not have_css(".tabs", text: "Cross Sell")
       end
     end
   end
 
-  context 'for a cross selling market' do
+  context "for a cross selling market" do
     let!(:market) { create(:market, allow_cross_sell: true) }
     let!(:organization) { create(:organization, :seller, markets: [market]) }
 
-    context 'managing a market' do
+    context "managing a market" do
       before do
         switch_to_subdomain(market.subdomain)
         sign_in_as user
@@ -47,7 +47,7 @@ describe "Manage cross selling" do
       end
 
       it "does show the cross-sell tab" do
-        expect(page).to have_css(".tabs", text: 'Cross Sell')
+        expect(page).to have_css(".tabs", text: "Cross Sell")
       end
 
       it "shows a list of cross selling markets" do
@@ -109,7 +109,7 @@ describe "Manage cross selling" do
       end
 
       it "does show the cross-sell tab" do
-        expect(page).to have_css(".tabs", text: 'Cross Sell')
+        expect(page).to have_css(".tabs", text: "Cross Sell")
       end
 
       it "shows a list of cross selling markets" do
@@ -152,7 +152,7 @@ describe "Manage cross selling" do
         expect(cross_sell_row3).to be_checked
 
         expect(organization.market_organizations.where(cross_sell_origin_market: another_origin_market).count).to eq(3)
-        # if we don't handle string keys correctly then we will create an extra join record:
+        # if we don"t handle string keys correctly then we will create an extra join record:
         expect(organization.market_organizations.where(cross_sell_origin_market: market, deleted_at: nil).count).to eq(2)
       end
     end

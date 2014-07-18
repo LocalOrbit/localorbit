@@ -152,19 +152,19 @@ describe User do
       end
     end
 
-    context 'for a market manager' do
+    context "for a market manager" do
       let(:user) { create(:user, :market_manager) }
       let(:market1) { user.managed_markets.first }
       let(:market2) { user.managed_markets.create!(attributes_for(:market)) }
       let(:market3) { create(:market) }
 
-      let(:org1) { create(:organization, name: 'Org 1') }
-      let(:org2) { create(:organization, name: 'Org 2') }
-      let(:org3) { create(:organization, name: 'Org 3') }
-      let(:org4) { create(:organization, name: 'Org 4') }
-      let(:org5) { create(:organization, name: 'Org 5') }
-      let(:org6) { create(:organization, name: 'Org 6') }
-      let(:org7) { create(:organization, name: 'Org 7') }
+      let(:org1) { create(:organization, name: "Org 1") }
+      let(:org2) { create(:organization, name: "Org 2") }
+      let(:org3) { create(:organization, name: "Org 3") }
+      let(:org4) { create(:organization, name: "Org 4") }
+      let(:org5) { create(:organization, name: "Org 5") }
+      let(:org6) { create(:organization, name: "Org 6") }
+      let(:org7) { create(:organization, name: "Org 7") }
 
       before do
         market1.organizations << org1
@@ -180,7 +180,7 @@ describe User do
         org7.market_organizations.where(market_id: market2).soft_delete_all
       end
 
-      it 'returns a chainable scope' do
+      it "returns a chainable scope" do
         expect(user.managed_organizations).to be_a_kind_of(ActiveRecord::Relation)
       end
 
@@ -205,10 +205,10 @@ describe User do
       end
     end
 
-    context 'for a user' do
-      let(:user) { create(:user, role: 'user') }
+    context "for a user" do
+      let(:user) { create(:user, role: "user") }
 
-      it 'returns a scope for the organization memberships' do
+      it "returns a scope for the organization memberships" do
         expect(user.managed_organizations).to eq(user.organizations)
       end
     end
