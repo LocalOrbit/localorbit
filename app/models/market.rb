@@ -99,7 +99,7 @@ class Market < ActiveRecord::Base
 
   def upcoming_deliveries_for_user(user)
     scope = deliveries.future.with_undelivered_orders.order("deliver_on")
-    scope = scope.with_undelivered_orders_for_user(user) unless user.market_manager? || user.admin?
+    scope = scope.for_user(user) unless user.can_manage_market?(self)
     scope
   end
 

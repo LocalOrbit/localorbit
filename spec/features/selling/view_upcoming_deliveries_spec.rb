@@ -214,6 +214,39 @@ describe "Upcoming Deliveries" do
         expect(page).to have_content("You currently have no upcoming deliveries.")
       end
     end
+
+    context "on a non-managed market" do
+      let!(:market2) { create(:market) }
+
+      let!(:market2_seller)            { create(:organization, :seller, markets: [market2]) }
+      let!(:my_market2_seller)         { create(:organization, :seller, markets: [market2]) }
+      let!(:market2_seller_product)    { create(:product, :sellable, organization: market2_seller) }
+      let!(:my_market2_seller_product) { create(:product, :sellable, organization: my_market2_seller) }
+
+      let!(:market2_wednesday_delivery_schedule) { create(:delivery_schedule, market: market2, day: 3) }
+      let!(:market2_wednesday_delivery) { create(:delivery, delivery_schedule: market2_wednesday_delivery_schedule, deliver_on: Date.parse("May 7, 2014")) }
+
+      let!(:market2_thursday_delivery_schedule) { create(:delivery_schedule, market: market2, day: 4) }
+      let!(:market2_thursday_delivery) { create(:delivery, delivery_schedule: market2_thursday_delivery_schedule, deliver_on: Date.parse("May 8, 2014")) }
+
+      let!(:order_item_for_market2_seller_product1) { create(:order_item, product: market2_seller_product, quantity: 1)}
+      let!(:order_with_market2_seller_product1) { create(:order, items: [order_item_for_market2_seller_product1], organization: market2_seller, market: market2, delivery: market2_thursday_delivery) }
+
+      let!(:order_item_for_my_market2_seller_product1) { create(:order_item, product: my_market2_seller_product, quantity: 1)}
+      let!(:order_with_my_market2_seller_product1) { create(:order, items: [order_item_for_my_market2_seller_product1], organization: my_market2_seller, market: market2, delivery: market2_wednesday_delivery) }
+
+      before do
+        user.organizations << my_market2_seller
+        switch_to_subdomain(market2.subdomain)
+        sign_in_as(user)
+        visit admin_delivery_tools_path
+      end
+
+      it "does not show all deliveries" do
+        deliveries = Dom::UpcomingDelivery.all
+        expect(deliveries.count).to eql(1) # don't show delivery for other org
+      end
+    end
   end
 
   context "as an admin" do
