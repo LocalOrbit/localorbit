@@ -294,6 +294,11 @@
   .filter-toggle {
     &.is-open {
       @include border-radius(4px 4px 0 0);
+      &:after {
+        border: .42em solid transparent;
+        border-top-color: inherit;
+        border-bottom-width: 0;
+      }
     }
   }
   .filter-list {
@@ -302,6 +307,7 @@
       @include transform(translateY(0));
       left: 0;
       @include border-radius(0 0 4px 4px);
+      background: #d7d7d7;
       &[data-count="0"],
       &[data-count="1"],
       &[data-count="2"] {
