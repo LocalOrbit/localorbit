@@ -10,8 +10,8 @@
     <% @presenter.metrics.each_pair do |group_title, group| %>
       <h2><%= group_title %></h2>
 
-      <table class="sortable report-table">
-        <thead class="stickable">
+      <table>
+        <thead>
           <tr>
             <th>Metric</th>
             <% @presenter.headers.each do |header| %>
@@ -24,7 +24,7 @@
           <tr class="<%= cycle "odd", "even" %> item">
             <td><%= metric_title %></td>
             <% metric_values.values.each do |metric_value| %>
-              <td class="placed-at">
+              <td>
                 <%= content_tag "span", metric_value, class: "metric-value" %><br>
               </td>
             <% end %>
