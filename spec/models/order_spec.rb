@@ -149,7 +149,7 @@ describe Order do
       let!(:other_market_order) { create(:order, :with_items, delivery: delivery, organization_id: 0, market: other_market) }
       let!(:valid_other_market_order) { create(:order, :with_items, delivery: delivery, organization: org2, market: other_market) }
 
-      it "returns only managed markets orders" do
+      it "returns orders for manged markets and the user's organizations" do
         orders = Order.orders_for_buyer(user)
 
         expect(orders.count).to eq(3)
@@ -166,7 +166,7 @@ describe Order do
       let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market) }
       let!(:other_order) { create(:order, :with_items, delivery: delivery, organization_id: 0, market: market) }
 
-      it "returns only the organizations orders" do
+      it "returns only the user's organizations orders" do
         orders = Order.orders_for_buyer(user)
 
         expect(orders.count).to eq(1)
