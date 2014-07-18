@@ -12,8 +12,8 @@ describe "Pick list" do
   let!(:friday_schedule_schedule)  { create(:delivery_schedule, market: market, day: 5) }
   let!(:friday_delivery)           { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014"))}
 
-  let!(:buyer1)                    { create(:organization, :buyer, :single_location, markets: [market]) }
-  let!(:buyer2)                    { create(:organization, :buyer, :single_location, markets: [market]) }
+  let!(:buyer1)                    { create(:organization, :buyer, :single_location, markets: [market], name: "First Buyer") }
+  let!(:buyer2)                    { create(:organization, :buyer, :single_location, markets: [market], name: "Second Buyer") }
 
   let!(:sellers_order_item)        { create(:order_item, product: sellers_product, quantity: 1)}
   let!(:sellers_order_item_prod2)  { create(:order_item, product: sellers_product2, quantity: 2) }
@@ -149,7 +149,7 @@ describe "Pick list" do
     end
 
     context "multiple orders" do
-      let!(:order_item2) { create(:order_item, product: sellers_product, quantity: 1)}
+      let!(:order_item2) { create(:order_item, product: sellers_product, quantity: 3)}
       let!(:order2)      { create(:order, items: [order_item2], organization: buyer2, market: market, delivery: friday_delivery) }
 
       before do
@@ -164,10 +164,10 @@ describe "Pick list" do
 
       it "shows the pick list", js: true do
         expect(Dom::Admin::PickListItem.count).to eql(2)
-
+        save_and_open_screenshot
         line = Dom::Admin::PickListItem.find_by_name(sellers_product.name)
-        expect(line.total_sold).to have_content("2")
-        expect(line.buyer).to have_content(buyer2.name)
+        expect(line.total_sold).to have_content("4")
+        expect(line.buyer).to have_content(buyer1.name)
         expect(line.breakdown).to have_content("1")
 
         expect(page).to_not have_content(others_product.name)

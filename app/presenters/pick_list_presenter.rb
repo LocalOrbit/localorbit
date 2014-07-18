@@ -2,7 +2,9 @@ class PickListPresenter
   def self.build(current_user, current_organization, delivery)
     # The condition combined with the eager_load will result
     # in loaded items lists that only include pending deliveries
-    scope = delivery.orders.where(order_items: {delivery_status: "pending"}).eager_load(items: {product: :organization})
+    scope = delivery.orders.where(order_items: {delivery_status: "pending"}).
+      eager_load(items: {product: :organization}).
+      preload(:organization)
     if !(current_user.market_manager? || current_user.admin?)
       scope = scope.where(products: {organization_id: current_organization.id})
     end
@@ -11,7 +13,9 @@ class PickListPresenter
     order_items.sort! do |a,b|
       s1 = a.product.organization.name.casecmp(b.product.organization.name)
       next(s1) unless s1 == 0
-      a.product.name.casecmp(b.product.name)
+      s2 = a.product.name.casecmp(b.product.name)
+      next(s2) unless s2 == 0
+      a.order.organization.name.casecmp(b.order.organization.name)
     end
 
     pick_list_tree = order_items.inject({}) do |result, item|
