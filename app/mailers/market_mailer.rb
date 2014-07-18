@@ -16,9 +16,9 @@ class MarketMailer < BaseMailer
     )
   end
 
-  def newsletter(newsletter, market, recipients=nil)
-    @newsletter     = newsletter
-    @market         = market
+  def newsletter(newsletter_id, market_id, recipients=nil)
+    @newsletter = Newsletter.find(newsletter_id)
+    @market     = Market.find(market_id)
 
     mail(
       to: recipients,

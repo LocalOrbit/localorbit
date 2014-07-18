@@ -101,13 +101,13 @@ describe "A Market Manager managing Newsletters" do
 
     describe "a test" do
       it "sends a test" do
-        expect(MarketMailer).to receive(:newsletter).with(newsletter, market, market_manager.email).and_return(double(:mailer, deliver: true))
+        expect(MarketMailer).to receive(:newsletter).with(newsletter.id, market.id, market_manager.email).and_return(double(:mailer, deliver: true))
         click_button "Send Test"
         expect(page).to have_content("Successfully sent a test to #{market_manager.email}")
       end
 
       it "allows sending a test to a different email" do
-        expect(MarketMailer).to receive(:newsletter).with(newsletter, market, "foo@example.com").and_return(double(:mailer, deliver: true))
+        expect(MarketMailer).to receive(:newsletter).with(newsletter.id, market.id, "foo@example.com").and_return(double(:mailer, deliver: true))
         fill_in "email", with: "foo@example.com"
         click_button "Send Test"
         expect(page).to have_content("Successfully sent a test to foo@example.com")
@@ -116,7 +116,7 @@ describe "A Market Manager managing Newsletters" do
 
     describe "to groups" do
       it "sends to specific groups" do
-        expect(MarketMailer).to receive(:newsletter).with(newsletter, market, market_manager.pretty_email).and_return(double(:mailer, deliver: true))
+        expect(MarketMailer).to receive(:newsletter).with(newsletter.id, market.id, market_manager.pretty_email).and_return(double(:mailer, deliver: true))
         check "Market Managers"
         click_button "Send Now"
         expect(page).to have_content("Successfully sent this Newsletter")
