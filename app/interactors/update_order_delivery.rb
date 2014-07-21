@@ -14,11 +14,7 @@ class UpdateOrderDelivery
         address = new_delivery.delivery_schedule.buyer_pickup_location
       end
 
-      order.delivery_address = address.address
-      order.delivery_city    = address.city
-      order.delivery_state   = address.state
-      order.delivery_zip     = address.zip
-      order.delivery_phone   = address.phone
+      order.apply_delivery_address(address)
     end
 
     order.delivery_id = delivery_id
