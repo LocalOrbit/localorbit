@@ -2,10 +2,10 @@ $ ->
   updateSellerFields = (orgCanSell)->
     if orgCanSell
       $(".organization_name").removeClass('column--full').addClass('column--half')
-      $(".seller-fields").show()
+      $(".seller-fields").removeClass('is-hidden')
     else
       $(".organization_name").removeClass('column--half').addClass('column--full')
-      $(".seller-fields").hide()
+      $(".seller-fields").addClass('is-hidden')
 
   $("#initial_market_id").change (e) ->
     market_id = $(this).val()
