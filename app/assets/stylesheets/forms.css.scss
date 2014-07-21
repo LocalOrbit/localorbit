@@ -396,6 +396,11 @@ form.form-actions {
 .wys-toolbar {
   margin-top: 5px;
 }
+@media screen and (max-width: 600px) {
+  .wys-toolbar {
+    display: none;
+  }
+}
 .wys-headline {
   margin-bottom: 4px;
 }
