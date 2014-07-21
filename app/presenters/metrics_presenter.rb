@@ -118,10 +118,10 @@ class MetricsPresenter
       calculation: :window,
       format: :integer
     },
-    # !!! Formula: all buyers + any seller that has bought
+    # union of all buyers + any seller that has bought
     total_buyers: {
       title: "Total Buyers",
-      scope: BASE_SCOPES[:organization].where(can_sell: false),
+      scope: Organization.where(Organization.arel_table[:id].in(BASE_SCOPES[:organization].select(:id).where(can_sell: false).union(BASE_SCOPES[:organization].select(:id).joins(:orders)))),
       attribute: :created_at,
       calculation: :window,
       format: :integer
