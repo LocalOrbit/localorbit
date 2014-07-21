@@ -77,6 +77,21 @@
               <img class="location-map" alt="" src="<%= product.location_map 310, 225 %>">
             </div>
           </li>
+          <li class="show-mobile product-image-alt">
+            <%= link_to raw('<i class="font-icon icon-picture"></i> Product Image'), "#product-#{product.id}-image", class: "popup-toggle", tabindex: -1 %>
+            <div class="image-info is-hidden with-anchor top-anchor popup" id="product-<%= product.id %>-image">
+              <div class="popup-header">
+                 <%= product.name %> <button class="close"><i class="font-icon icon-close"></i></button>
+              </div>
+              <% if product.thumb_stored? %>
+                <%= image_tag product.thumb.url, alt: "" %>
+              <% elsif product.image_stored? %>
+                <%= image_tag product.image.thumb("200x200>").url, alt: "" %>
+              <% else %>
+                <%= image_tag 'default-product-image.png', alt: "" %>
+              <% end %>
+            </div>
+          </li>
         </ul>
       </td>
       <td class="pricing">

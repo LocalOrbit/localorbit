@@ -90,6 +90,9 @@ h1 .font-icon {
 .icon-money:before {
   content: "\e00e";
 }
+.icon-picture:before {
+  content: "\e004";
+}
 .icon-preview:before {
   content: "\e02b";
   padding-right: 4px;
@@ -199,9 +202,6 @@ you can use the generic selector below, but it's slower:
 }
 .icon-bullhorn:before {
   content: "\e005";
-}
-.icon-new:before {
-  content: "\e004";
 }
 .icon-connection:before {
   content: "\e006";
