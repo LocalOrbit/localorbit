@@ -96,6 +96,7 @@ $ ->
 
     #actions
     updateCounter: (count)->
+      @counter.attr("data-count", count.toString())
       @counter.find(".counter").text(count.toString())
       @counter.data('count', count)
 
