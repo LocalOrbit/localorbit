@@ -141,13 +141,18 @@ module Admin
     end
 
     def find_delivery_schedules(product=nil)
-      @delivery_schedules = if params.try(:[], :product)
-        organization = Organization.where(id: params[:product][:organization_id])
-        organization.empty? ? {} : organization.first.decorate.delivery_schedules
+      organization = if params.try(:[], :product)
+        Organization.find_by(id: params[:product][:organization_id])
       elsif product.try(:organization)
-        product.organization.decorate.delivery_schedules
+        product.organization
       elsif current_user.organizations.count == 1
-        current_user.organizations.first.decorate.delivery_schedules
+        current_user.organizations.first
+      else
+        nil
+      end
+
+      @delivery_schedules = if organization
+        organization.decorate.delivery_schedules
       else
         {}
       end

@@ -244,12 +244,14 @@ class Product < ActiveRecord::Base
   end
 
   def update_delivery_schedules
+    markets = organization.reload.all_markets.excluding_deleted
+
     if use_all_deliveries?
-      self.delivery_schedule_ids = organization.reload.all_markets.excluding_deleted.map do |market|
+      self.delivery_schedule_ids = markets.map do |market|
         market.delivery_schedules.visible.map(&:id)
       end.flatten
     else
-      ids = organization.reload.all_markets.excluding_deleted.map(&:id)
+      ids = markets.map(&:id)
       self.delivery_schedules = delivery_schedules.select {|ds| ids.include?(ds.market.id) }
     end
   end

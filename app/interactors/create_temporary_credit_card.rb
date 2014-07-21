@@ -15,14 +15,7 @@ class CreateTemporaryCreditCard
         # Handles case in which buyer enters a credit
         # card they have already saved
         if temp_card.errors.messages.keys == [:bankable_id]
-          accounts = @org.bank_accounts.visible.where(
-            account_type: @credit_card_params[:account_type],
-            last_four: @credit_card_params[:last_four],
-            bank_name: @credit_card_params[:bank_name],
-            name: @credit_card_params[:name]
-          )
-
-          temp_card = accounts.first
+          temp_card = find_accounts(@credit_card_params).first
           set_card_for_transaction(temp_card)
         else
           context[:credit_card] = temp_card
@@ -33,6 +26,15 @@ class CreateTemporaryCreditCard
   end
 
   private
+
+  def find_accounts(params)
+    @org.bank_accounts.visible.where(
+      account_type: params[:account_type],
+      last_four: params[:last_four],
+      bank_name: params[:bank_name],
+      name: params[:name]
+    )
+  end
 
   def set_card_for_transaction(temp_card)
     @org.balanced_customer.add_card(temp_card.balanced_uri)
@@ -48,7 +50,6 @@ class CreateTemporaryCreditCard
   end
 
   def should_save_card?
-    save_option = @credit_card_params.delete(:save_for_future)
-    save_option == "on"
+    @credit_card_params.delete(:save_for_future) == "on"
   end
 end

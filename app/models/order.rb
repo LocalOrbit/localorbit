@@ -230,11 +230,7 @@ class Order < ActiveRecord::Base
     address = cart.delivery.delivery_schedule.buyer_pickup? ?
       cart.delivery.delivery_schedule.buyer_pickup_location : cart.location
 
-    order.delivery_address = address.address
-    order.delivery_city    = address.city
-    order.delivery_state   = address.state
-    order.delivery_zip     = address.zip
-    order.delivery_phone   = address.phone
+    order.apply_delivery_address(address)
 
     ActiveRecord::Base.transaction do
       cart.items.each do |item|
@@ -299,6 +295,14 @@ class Order < ActiveRecord::Base
 
   def market_payable_payment_fee
     @market_payable_payment_fee ||= items.to_a.sum {|i| i.delivered? ? i.payment_seller_fee + i.payment_market_fee : 0 }
+  end
+
+  def apply_delivery_address(address)
+    self.delivery_address = address.address
+    self.delivery_city    = address.city
+    self.delivery_state   = address.state
+    self.delivery_zip     = address.zip
+    self.delivery_phone   = address.phone
   end
 
   private
