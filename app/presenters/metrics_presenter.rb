@@ -181,6 +181,13 @@ class MetricsPresenter
       calculation: :window,
       format: :integer
     },
+    active_users: {
+      title: "Active Users",
+      scope: Organization.find_by_sql(BASE_SCOPES[:organization].select(:id, "orders.placed_at").joins(:orders).union(BASE_SCOPES[:organization].select(:id, "orders.placed_at").joins(:products, :orders)).to_sql),
+      attribute: :placed_at,
+      calculation: :count,
+      format: :integer
+    },
     total_buyer_orders: {
       title: "Buyers Placing Orders",
       scope: BASE_SCOPES[:organization].joins(:orders),
@@ -217,14 +224,14 @@ class MetricsPresenter
       calculation_arg: "products.id",
       format: :integer
     },
-    # average_product_price: {
-    #   title: "Average Product Price",
-    #   scope: BASE_SCOPES[:product],
-    #   attribute: :placed_at,
-    #   calculation: :custom,
-    #   calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
-    #   format: :decimal
-    # }
+    average_product_price: {
+      title: "Average Product Price",
+      scope: BASE_SCOPES[:product],
+      attribute: :placed_at,
+      calculation: :custom,
+      calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
+      format: :decimal
+    }
   }
 
   GROUPS = {
@@ -233,6 +240,7 @@ class MetricsPresenter
       metrics: [
         :total_orders, :total_sales, :average_order, :average_order_size,
         :total_service_fees, :total_transaction_fees
+        # :avg_lo_fees, :avg_lo_fee_pct, :sales_pct_growth, :lo_fees, :fee_pct_growth, :service_fees
       ]
     },
     markets: {
@@ -246,6 +254,7 @@ class MetricsPresenter
       title: "Users",
       metrics: [
         :total_organizations, :total_buyer_only, :total_sellers, :total_buyers, :total_buyer_orders,
+        # :active_users
       ]
     },
     products: {
@@ -255,7 +264,6 @@ class MetricsPresenter
         # :average_product_price, :number_of_items
       ]
     }
-    # :avg_lo_fees, :avg_lo_fee_pct, :sales_pct_growth, :lo_fees, :fee_pct_growth, :service_fees
   }.with_indifferent_access
 
   def initialize(groups: [], search: {})
