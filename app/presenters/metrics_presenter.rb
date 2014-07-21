@@ -104,6 +104,53 @@ class MetricsPresenter
       calculation_arg: "DISTINCT(markets.id)",
       format: :integer
     },
+    # allow_credit_cards is the admin setting which when
+    # false trumps the default_allow_credit_cards setting
+    credit_card_markets: {
+      title: "Markets Using Credit Cards",
+      scope: BASE_SCOPES[:market].where(allow_credit_cards: true, default_allow_credit_cards: true),
+      attribute: :created_at,
+      calculation: :window,
+      format: :integer
+    },
+    ach_markets: {
+      title: "Markets Using ACH",
+      scope: BASE_SCOPES[:market].where(allow_ach: true, default_allow_ach: true),
+      attribute: :created_at,
+      calculation: :window,
+      format: :integer
+    },
+    lo_payment_markets: {
+      title: "Markets Using LO Payments",
+      scope: BASE_SCOPES[:market],
+      attribute: :created_at,
+      calculation: :window,
+      format: :integer
+    },
+    start_up_markets: {
+      title: "Markets On Start Up Plan",
+      scope: BASE_SCOPES[:market].joins(:plan).where(plan_id: Plan.find_by_name("Start Up")),
+      attribute: "markets.created_at",
+      calculation: :window,
+      calculation_arg: "markets.id",
+      format: :integer
+    },
+    grow_markets: {
+      title: "Markets On Grow Plan",
+      scope: BASE_SCOPES[:market].joins(:plan).where(plan_id: Plan.find_by_name("Grow")),
+      attribute: "markets.created_at",
+      calculation: :window,
+      calculation_arg: "markets.id",
+      format: :integer
+    },
+    automate_markets: {
+      title: "Markets On Automate Plan",
+      scope: BASE_SCOPES[:market].joins(:plan).where(plan_id: Plan.find_by_name("Automate")),
+      attribute: "markets.created_at",
+      calculation: :window,
+      calculation_arg: "markets.id",
+      format: :integer
+    },
     total_organizations: {
       title: "Total Organizations",
       scope: BASE_SCOPES[:organization],
@@ -153,7 +200,8 @@ class MetricsPresenter
     markets: {
       title: "Markets",
       metrics: [
-        :total_markets, :live_markets, :active_markets
+        :total_markets, :live_markets, :active_markets, :credit_card_markets, :ach_markets,
+        :lo_payment_markets, :start_up_markets, :grow_markets, :automate_markets
       ]
     },
     users: {
