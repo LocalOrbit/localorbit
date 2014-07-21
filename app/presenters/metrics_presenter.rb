@@ -3,6 +3,8 @@ class MetricsPresenter
 
   attr_reader :metrics, :headers
 
+  START_OF_WEEK = :sun
+
   TEST_MARKET_IDS = Market.where(demo: true).pluck(:id)
   TEST_ORG_IDS    = Market.where(id: TEST_MARKET_IDS).joins(:organizations).uniq.pluck("organizations.id")
 
@@ -167,13 +169,15 @@ class MetricsPresenter
     #     }
     #   }
     # }
+
+    interval = :month
+    @headers = headers_for_interval(interval)
+
     @metrics = Hash[
       groups.map do |group|
-        [GROUPS[group][:title], metrics_for_group(group)]
+        [GROUPS[group][:title], metrics_for_group(group, interval)]
       end
     ]
-
-    @headers ||= []
   end
 
   def self.metrics_for(groups: [], search: {})
@@ -187,10 +191,10 @@ class MetricsPresenter
 
   private
 
-  def metrics_for_group(group)
+  def metrics_for_group(group, interval)
     Hash[
       GROUPS[group][:metrics].map do |metric|
-        [METRICS[metric][:title], calculate_metric(metric, :month)]
+        [METRICS[metric][:title], calculate_metric(metric, interval)]
       end
     ]
   end
@@ -221,20 +225,16 @@ class MetricsPresenter
 
       # we have to calculate all history when using windows so we need to only
       # return the last X values from the result set
-      values.to_a.last(GROUPDATE_OPTIONS[interval][:last]).to_h
-
+      format_values(values, interval)
     else
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
       series.send(m[:calculation], m[:calculation_arg])
     end
 
-    # set our headers for this result set
-    @headers ||= values.keys
-
-    Hash[values.map { |key, value| [key, format(value, m[:format])] }]
+    Hash[values.map { |key, value| [key, format_value(value, m[:format])] }]
   end
 
-  def format(value, format)
+  def format_value(value, format)
     value ||= 0
 
     case format
@@ -242,6 +242,22 @@ class MetricsPresenter
     when :decimal  then value.try(:round, 2)
     when :currency then number_to_currency(value)
     else value
+    end
+  end
+
+  def format_values(values, interval)
+    count = GROUPDATE_OPTIONS[interval][:last]
+
+    Hash[@headers.map { |header| [header, (values[header] || values.values.last || 0)] }.last(count)]
+  end
+
+  def headers_for_interval(interval)
+    if interval == :month
+      end_date = Date.current.beginning_of_month
+      (0..5).map { |x| (end_date - x.months).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
+    elsif interval == :week
+      end_date = Date.current.beginning_of_week - (START_OF_WEEK == :sun ? 1 : 0).days
+      (0..4).map { |x| (end_date - x.weeks).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
     end
   end
 end

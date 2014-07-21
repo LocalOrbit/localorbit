@@ -23,9 +23,9 @@
         <% group.each_pair do |metric_title, metric_values| %>
           <tr class="<%= cycle "odd", "even" %> item">
             <td><%= metric_title %></td>
-            <% metric_values.values.each do |metric_value| %>
+            <% @presenter.headers.each do |header| %>
               <td>
-                <%= content_tag "span", metric_value, class: "metric-value" %><br>
+                <%= content_tag "span", metric_values[header], class: "metric-value" %><br>
               </td>
             <% end %>
           </tr>
