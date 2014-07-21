@@ -1,7 +1,7 @@
 <%= link_to "< Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
 <button class="btn btn--action btn--small pull-right" id="print-button">Print</button>
 
-<% @pick_list.keys.each_with_index do |organization, index| %>
+<% @pick_lists.each_with_index do |pick_list, index| %>
 
   <% if index != 0 %>
     <div class="pdf-page-break"></div>
@@ -20,13 +20,12 @@
 
       <h2 class="heading heading-delivery-tool">Seller</h2>
       <div class="vcard vcard--seller">
-        <h3 class="fn org"><%= organization.name %></h3>
-        <%= organization.decorate.ship_from_address %>
+        <h3 class="fn org"><%= pick_list.seller_name %></h3>
+        <%= pick_list.seller_ship_from_address %>
       </div>
     </div>
 
     <div class="table-wrapper">
-
       <table class="delivery-tools">
         <thead>
           <tr>
@@ -40,17 +39,17 @@
           </tr>
         </thead>
 
-        <% @pick_list[organization].each do |line| %>
+        <% pick_list.products.each do |product| %>
           <tr class="pick-list-item">
-            <td class="name"><%= line.name %></td>
-            <td class="total-sold"><%= line.total_sold %></td>
-            <td class="units"><%= line.unit %></td>
-            <td class="buyer"><%= line.buyers.first.name %></td>
+            <td class="name"><%= product.name %></td>
+            <td class="total-sold"><%= product.total_sold %></td>
+            <td class="units"><%= product.unit %></td>
+            <td class="buyer"><%= product.first_buyer.name %></td>
             <td class="breakdown">
-              <%= line.buyers.first.quantity %>
-              <% if line.buyers.first.lots.present? %>
+              <%= product.first_buyer.quantity %>
+              <% if product.first_buyer.lots.present? %>
                 <ul>
-                  <% line.buyers.first.lots.each do |lot| %>
+                  <% product.first_buyer.lots.each do |lot| %>
                     <li>Lot #<%= lot.lot.number %>: <%= lot.quantity %></li>
                   <% end %>
                 </ul>
@@ -59,7 +58,7 @@
             <td class="initials"></td>
             <td class="notes"></td>
           </tr>
-          <% line.buyers.drop(1).each do |buyer| %>
+          <% product.remaining_buyers.each do |buyer| %>
             <tr>
               <td></td>
               <td></td>
