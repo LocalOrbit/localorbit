@@ -83,71 +83,17 @@ module ApplicationHelper
   end
 
   def hex_to_hsl(color)
-    min = 255
-    max = 0
-
-    color = color.sub(/^#/, "").to_s
-
-    rgb = [
-      color[0..1].hex.to_f / 255,
-      color[2..3].hex.to_f / 255,
-      color[4..5].hex.to_f / 255
-    ]
-
-    rgb.each do |val|
-      min = val if val < min
-      max = val if val > max
-    end
-
-    delta = max - min
-
-    if delta != 0
-
-      delta_r = ((max - rgb[0] / 6.0) + (max / 2)) / delta
-      delta_g = ((max - rgb[1] / 6.0) + (max / 2)) / delta
-      delta_b = ((max - rgb[2] / 6.0) + (max / 2)) / delta
-
-      if rgb[0] == max
-        h = delta_b - delta_g
-      elsif rgb[1] == max
-        h = (1.0 / 3.0) + delta_r - delta_b
-      elsif rgb[2] == max
-        h = (2.0 / 3.0) + delta_g - delta_r
-      end
-
-      while h < 0.0
-        h += 1.0
-      end
-
-      while h > 1.0
-        h -= 1.0
-      end
-
-      l = (max + min) / 2
-
-      if l < 0.5
-        s = delta / (min + max)
-      else
-        s = delta / (2.0 - max - min)
-      end
-
-      color = [(h * 360).to_i, (s * 100).to_i, (l * 100).to_i]
-    elsif delta == 0 && max == 1.0
-      color = [0, 100, 100]
-    else
-      color = [0, 0, 0]
-    end
-
-    color
+    color = color.sub(/^#/, "")
+    Color::RGB.by_hex(color).to_hsl
   end
 
-  def color_mix(color="#000000", percentage=50)
-    color = hex_to_hsl(color)
-
-    lum = color[2] + percentage
-    lum = lum > 100 ? 100 : lum
-    lum = lum < 0 ? 0 : lum
-    "hsl(#{color[0]}, #{color[1]}%, #{lum}%)"
+  def color_mix(color = "#000000", percentage = 50)
+    hsl = hex_to_hsl(color)
+    lum = hsl.luminosity + percentage
+    lum = [lum, 100].min
+    lum = [lum, 0].max
+    hsl.luminosity = lum
+    hsl.css_hsl
   end
 
   def svg_icon

@@ -25,6 +25,7 @@ gem "active_model_serializers"
 gem "acts_as_geocodable", github: 'collectiveidea/acts_as_geocodable'
 gem 'awesome_nested_set', github: 'collectiveidea/awesome_nested_set'
 gem "balanced", "~> 0.7"
+gem "color"
 gem "countries"
 gem "csv_builder"
 gem "dalli"
