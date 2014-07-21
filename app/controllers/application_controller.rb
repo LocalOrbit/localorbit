@@ -25,8 +25,11 @@ class ApplicationController < ActionController::Base
 
   def signed_in_root_path(resource)
     return root_path unless resource
-    extra = on_main_domain? && resource.markets.any? ? {host: resource.markets.first.domain} : {}
-    if resource.buyer_only?
+
+    market = current_market || resource.markets.first
+    extra = market ? {host: market.domain} : {}
+
+    if market && resource.buyer_only?(market)
       products_url(extra)
     else
       dashboard_url(extra)
@@ -68,6 +71,7 @@ class ApplicationController < ActionController::Base
   # some capacity. 404 if not.
   def ensure_market_affiliation
     return if current_user.admin?
+
     if current_market.nil? || current_market != market_for_current_subdomain(current_user.markets)
       render_404
     end

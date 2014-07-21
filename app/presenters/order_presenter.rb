@@ -19,8 +19,8 @@ module OrderPresenter
     end
   end
 
-  def display_delivery_fees?(user)
-    user.admin? || user.market_manager? || user.buyer_only?
+  def display_delivery_fees?(user, market)
+    user.admin? || user.can_manage_market?(market) || user.buyer_only?(market)
   end
 
   def buyer_payment_status

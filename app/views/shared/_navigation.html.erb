@@ -5,6 +5,7 @@ else
   logo = image_tag(asset_path('logo.png'), alt: "Local Orbit logo", class: "vertical-centerer logo")
 end
 %>
+
 <%= link_to_or_span logo, signed_in_root_path(current_user), class: "logo-link vc-wrapper pull-left" %>
 
 <% if current_market %>
@@ -22,7 +23,7 @@ end
 <% if current_user %>
   <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before <%= "mobile-only" if @hide_admin_nav %>">
     <li class="mobile-only"><%= link_to_or_span 'Dashboard', dashboard_path %></li>
-    <% if current_user.buyer_only? %>
+    <% if current_market && current_user.buyer_only?(current_market) %>
       <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00c;"></i> Purchase History'), dashboard_path %></li>
     <% end %>
 
@@ -47,7 +48,7 @@ end
       <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Financials'), admin_financials_path %></li>
     <% end %>
 
-    <% if !current_user.buyer_only? %>
+    <% unless current_market && current_user.buyer_only?(current_market) %>
       <li>
         <a href="#orders-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe024;"></i>Orders &amp; Delivery</a>
         <ul class="dropdown with-anchor top-anchor" id="orders-dropdown">

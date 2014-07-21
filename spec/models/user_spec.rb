@@ -172,33 +172,66 @@ describe User do
     end
 
     context "#buyer_only?" do
-      it "returns true if the user is only a buyer" do
-        user = build(:user)
-        expect(user).to be_buyer_only
+      subject { create(:user) }
+      let!(:market) { create(:market) }
+
+      context "as a member of a buying organization" do
+        let!(:org) { create(:organization, :buyer, markets: [market], users: [subject]) }
+        it { is_expected.to be_buyer_only(market) }
+
+        context "and a member of a selling organization" do
+          let!(:org2) { create(:organization, :seller, markets: [market], users: [subject]) }
+          it { is_expected.not_to be_buyer_only(market) }
+
+          context "in a market that's not the current market" do
+            let!(:market2) { create(:market) }
+            let!(:org2) { create(:organization, :seller, markets: [market2], users: [subject]) }
+            it { is_expected.not_to be_buyer_only(market2) }
+          end
+        end
       end
 
-      it "returns false if the user is a seller" do
-        user = build(:user)
-        allow(user).to receive(:seller?).and_return(true)
-        expect(user).not_to be_buyer_only
+      context "as a member of a selling organization" do
+        let!(:org) { create(:organization, :seller, markets: [market], users: [subject]) }
+        it { is_expected.not_to be_buyer_only(market) }
       end
 
-      it "returns false if the user is a market manager" do
-        user = build(:user)
-        allow(user).to receive(:market_manager?).and_return(true)
-        expect(user).not_to be_buyer_only
+      context "as a market manager" do
+        let!(:market) { create(:market, managers: [subject]) }
+
+        context "of the current market" do
+          it { is_expected.not_to be_buyer_only(market) }
+
+          context "and a member of a buying organization" do
+            let!(:org2) { create(:organization, :buyer, markets: [market], users: [subject]) }
+            it { is_expected.not_to be_buyer_only(market) }
+          end
+        end
+
+        context "but not of the current market" do
+          let!(:market2) { create(:market) }
+          it { is_expected.not_to be_buyer_only(market2) }
+
+          context "and is a member of a buying organization" do
+            let!(:org2) { create(:organization, :buyer, markets: [market2], users: [subject]) }
+            it { is_expected.to be_buyer_only(market2) }
+          end
+        end
       end
 
-      it "returns false if the user is an admin" do
-        user = build(:user)
-        allow(user).to receive(:admin?).and_return(true)
-        expect(user).not_to be_buyer_only
+      context "as an admin" do
+        subject { create(:user, :admin) }
+        it { is_expected.not_to be_buyer_only(nil) }
+
+        context "and a member of a buying organization" do
+          let!(:org2) { create(:organization, :buyer, users: [subject]) }
+          it { is_expected.not_to be_buyer_only(nil) }
+        end
       end
     end
   end
 
   describe "managed_organizations" do
-
     context "for an admin" do
       let!(:user) { create(:user, :admin) }
       let!(:market1) { create(:market) }

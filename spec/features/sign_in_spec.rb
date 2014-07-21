@@ -1,11 +1,8 @@
 require "spec_helper"
 
 feature "User signing in" do
-  let!(:admin) { create(:user, :admin) }
-  let!(:market2) { create(:market) }
-  let!(:org2) { create(:organization, markets: [market2]) }
-  let!(:user2) { create(:user, organizations: [org2]) }
-
+  let!(:first_market) { create(:market) }
+  let!(:user) { create(:user, :admin) }
   let(:cookie_name) { "_local_orbit_session_test" }
 
   scenario "A user can sign in" do
@@ -90,6 +87,8 @@ feature "User signing in" do
 
   scenario "After logging in through the organizations page a market manager should be on the organizations page" do
     user = create(:user, :market_manager)
+    switch_to_subdomain(user.managed_markets.first.domain)
+
     visit admin_organizations_path
 
     fill_in "Email", with: user.email
@@ -101,8 +100,9 @@ feature "User signing in" do
 
   scenario "After logging in a seller should be on the dashboard" do
     market = create(:market)
-    org = create(:organization, :seller, markets: [market])
+    org = create(:organization, :seller, :single_location, markets: [market])
     user = create(:user, organizations: [org])
+
     visit "/"
 
     fill_in "Email", with: user.email
@@ -116,6 +116,9 @@ feature "User signing in" do
     market = create(:market)
     org = create(:organization, :seller, markets: [market])
     user = create(:user, organizations: [org])
+
+    switch_to_subdomain(market.subdomain)
+    
     visit admin_products_path
 
     fill_in "Email", with: user.email

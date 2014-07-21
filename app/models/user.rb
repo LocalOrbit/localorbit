@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
   end
 
   def can_manage_market?(market)
-    admin? || managed_markets.all.include?(market)
+    admin? || managed_markets.include?(market)
   end
 
   def can_manage_user?(user)
@@ -137,8 +137,9 @@ class User < ActiveRecord::Base
     organizations.selling.any?
   end
 
-  def buyer_only?
-    !admin? && !market_manager? && !seller?
+  def buyer_only?(market_context)
+    raise "Must provide a market context!" if market_context.nil? && !admin?
+    !admin? && !can_manage_market?(market_context) && !organizations.empty? && !seller?
   end
 
   def is_seller_with_purchase?

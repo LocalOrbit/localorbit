@@ -61,7 +61,7 @@
           <td><%= order.payment_note %></td>
       </tr>
     </tbody>
-    <% if order.display_delivery_fees?(current_user) %>
+    <% if order.display_delivery_fees?(current_user, current_market) %>
       <tbody>
         <tr>
           <th scope="row">Delivery Fees:</th>
@@ -79,7 +79,7 @@
   </div>
   <div class="order-data">
     <h2 class="pull-left">Items for Delivery</h2>
-    <% if !current_user.buyer_only? && order.undelivered_for_user?(current_user) %>
+    <% if !current_user.buyer_only?(current_market) && order.undelivered_for_user?(current_user) %>
       <%= button_tag "Mark all delivered", class: 'pull-right btn btn--blue btn--small mobile-block', id: 'mark-all-delivered', type: 'button' %>
     <% end %>
   <div class="table-wrapper">
@@ -93,7 +93,7 @@
           <th>Total</th>
           <th>Delivery</th>
           <th>Buyer Payment</th>
-          <% if !current_user.buyer_only? %>
+          <% if !current_user.buyer_only?(current_market) %>
             <th>Seller Payment</th>
           <% end %>
           <% if current_user.market_manager? || current_user.admin? %>
@@ -129,7 +129,7 @@
             <%= item.object.delivery_status.titleize %>
           </td>
           <td class="payment-status"><%= item.object.buyer_payment_status.titleize %></td>
-          <% if !current_user.buyer_only? %>
+          <% if !current_user.buyer_only?(current_market) %>
             <td class="seller-status"><%= item.object.seller_payment_status %></td>
           <% end %>
           <% if (current_user.market_manager? || current_user.admin?) %>
@@ -190,7 +190,7 @@
     <%= f.submit "Add Items", class: 'pull-right btn btn--blue btn--small mobile-block' %>
   <% end %>
 
-  <% if !current_user.buyer_only? %>
+  <% if !current_user.buyer_only?(current_market) %>
   <div class="order-totals">
     <div class="table-wrapper">
       <h2>Order Totals</h2>

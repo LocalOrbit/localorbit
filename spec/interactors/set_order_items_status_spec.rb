@@ -21,9 +21,9 @@ describe SetOrderItemsStatus do
 
   let!(:order) { create(:order, delivery: delivery, items: [order_item1, order_item2, order_item3], organization: buyer, order_number: "LO-ADA-0000001", placed_at: Time.zone.parse("2014-03-15")) }
 
-  context "as a market manager" do
-    it "sets the status on the order items" do
-      interactor = SetOrderItemsStatus.perform(user: market_manager, delivery_status: "delivered", order_item_ids: [order_item1.id.to_s, order_item3.id.to_s])
+  context 'as a market manager' do
+    it 'sets the status on the order items' do
+      interactor = SetOrderItemsStatus.perform(user: market_manager, market_context: market, delivery_status: 'delivered', order_item_ids: [order_item1.id.to_s, order_item3.id.to_s])
       expect(interactor).to be_success
 
       order_item1.reload
@@ -49,7 +49,7 @@ describe SetOrderItemsStatus do
       other_order = create(:order, :with_items, delivery: delivery)
       other_item = create(:order_item, order: other_order, product: other_prod)
 
-      interactor = SetOrderItemsStatus.perform(user: market_manager, delivery_status: "delivered", order_item_ids: [order_item1.id.to_s, other_item.id.to_s])
+      interactor = SetOrderItemsStatus.perform(user: market_manager, market_context: market, delivery_status: 'delivered', order_item_ids: [order_item1.id.to_s, other_item.id.to_s])
       expect(interactor).to be_success
 
       other_item.reload
@@ -63,9 +63,10 @@ describe SetOrderItemsStatus do
     end
   end
 
-  context "as a seller" do
-    it "sets the status on the order items" do
-      interactor = SetOrderItemsStatus.perform(user: user, delivery_status: "delivered", order_item_ids: [order_item1.id.to_s, order_item2.id.to_s])
+  context 'as a seller' do
+
+    it 'sets the status on the order items' do
+      interactor = SetOrderItemsStatus.perform(user: user, market_context: market, delivery_status: 'delivered', order_item_ids: [order_item1.id.to_s, order_item2.id.to_s])
       expect(interactor).to be_success
 
       order_item1.reload
@@ -75,8 +76,8 @@ describe SetOrderItemsStatus do
       expect(order_item2.delivery_status).to eq("delivered")
     end
 
-    it "does not set the status on order items for other markets" do
-      interactor = SetOrderItemsStatus.perform(user: user, delivery_status: "delivered", order_item_ids: [order_item1.id.to_s, order_item3.id.to_s])
+    it 'does not set the status on order items for other markets' do
+      interactor = SetOrderItemsStatus.perform(user: user, market_context: market, delivery_status: 'delivered', order_item_ids: [order_item1.id.to_s, order_item3.id.to_s])
       expect(interactor).to be_success
 
       order_item3.reload
