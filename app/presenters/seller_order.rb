@@ -14,11 +14,6 @@ class SellerOrder
     end
   end
 
-  def self.find(seller, id)
-    order = Order.orders_for_seller(seller).find(id)
-    new(order, seller)
-  end
-
   def total_cost
     gross_total - discount
   end

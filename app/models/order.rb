@@ -183,13 +183,8 @@ class Order < ActiveRecord::Base
       all
     else
       joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq
-    end
-  end
 
-  def self.undelivered_orders_for_seller(user)
-    scope = orders_for_seller(user)
-    scope = scope.joins(:order_items) if user.admin?
-    scope.where(order_items: {delivery_status: "pending"})
+    end
   end
 
   def self.buyer_orders_arel(user)

@@ -25,11 +25,6 @@ class Delivery < ActiveRecord::Base
     where(delivery_schedules: {market_id: [seller.markets.pluck(:id)]})
   end
 
-  def self.upcoming_for_seller(seller)
-    ids = Order.undelivered_orders_for_seller(seller).upcoming_delivery.pluck(:delivery_id).uniq
-    where(id: ids)
-  end
-
   def products_available_for_sale(organization)
     delivery_schedule.products_available_for_sale(organization, deliver_on)
   end
