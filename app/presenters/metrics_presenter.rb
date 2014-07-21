@@ -146,20 +146,20 @@ class MetricsPresenter
     financials: {
       title: "Financials",
       metrics: [
-        :total_orders, :number_of_items, :total_sales, :average_order, :average_order_size,
+        :total_orders, :total_sales, :average_order, :average_order_size,
         :total_service_fees, :total_transaction_fees
       ]
     },
     markets: {
       title: "Markets",
       metrics: [
-        :total_markets, :active_markets, :total_organizations, :total_buyer_only,
-        :total_buyers, :total_sellers
+        :total_markets, :live_markets, :active_markets
       ]
     },
     users: {
       title: "Users",
       metrics: [
+        :total_organizations, :total_buyer_only, :total_sellers, :total_buyers, :total_buyer_orders,
       ]
     },
     products: {
