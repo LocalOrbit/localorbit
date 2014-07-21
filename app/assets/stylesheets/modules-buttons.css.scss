@@ -259,6 +259,7 @@ span.btn {
   background: #f9f9f9;
   padding: 20px;
   border: 1px solid #9a9a9a;
+  box-sizing: border-box;
 }
 .photo-button:hover {
   background: #f3f3f3;
@@ -268,6 +269,9 @@ span.btn {
 }
 
 @media screen and (max-width: 600px) {
+  .photo-button, .save-button {
+    width: 100%;
+  }
   .fresh-sheet-test {
     width: 100%;
     input[type=email] {

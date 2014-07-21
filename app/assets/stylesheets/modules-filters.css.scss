@@ -29,10 +29,20 @@
   span {
     margin-right: 10px;
   }
+  @media screen and (max-width: 600px) {
+    select {
+      width: 100%;
+    }
+    span {
+      width: 100%;
+    }
+  }
   &.unjustify {
     text-align: left;
   }
 }
+
+
 
 .featured-promo-filter {
   margin: 0;
@@ -116,7 +126,7 @@
       margin-left: 0; 
     }
   }
-  .product-header > .btn--add {
+  .product-header, .promo-header  > .btn--add {
     float: none;
     display: block;
     @include box-sizing(border-box);
