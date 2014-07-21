@@ -89,6 +89,13 @@ class MetricsPresenter
       calculation: :window,
       format: :integer
     },
+    live_markets: {
+      title: "Live Markets",
+      scope: BASE_SCOPES[:market].where(active: true),
+      attribute: :created_at,
+      calculation: :window,
+      format: :integer
+    },
     active_markets: {
       title: "Active Markets",
       scope: BASE_SCOPES[:order].joins(:market),
