@@ -133,6 +133,13 @@ class MetricsPresenter
       calculation: :window,
       format: :integer
     },
+    total_buyer_orders: {
+      title: "Buyers Placing Orders",
+      scope: BASE_SCOPES[:organization].joins(:orders),
+      attribute: "orders.placed_at",
+      calculation: :count,
+      format: :integer
+    },
   }
 
   GROUPS = {
@@ -158,6 +165,7 @@ class MetricsPresenter
     products: {
       title: "Products",
       metrics: [
+        :number_of_items
       ]
     }
     # :avg_lo_fees, :avg_lo_fee_pct, :sales_pct_growth, :lo_fees, :fee_pct_growth, :service_fees
