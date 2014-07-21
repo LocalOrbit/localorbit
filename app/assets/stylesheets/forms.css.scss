@@ -475,11 +475,22 @@ form.form-actions {
     padding-left: 20px;
   }
 }
+@media screen and (max-width: 600px) {
+  .wys-tools {
+    display: none;
+  }
+}
 .newsletter-body {
   @include border-radius(0 0 5px 5px);
 }
 
 @media screen and (max-width: 600px) {
+  .newsletter {
+    .btn--send, .btn--newsletter{
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
   .delete-check-mobile {
     display: none;
   }
