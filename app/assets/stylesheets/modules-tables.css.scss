@@ -712,6 +712,12 @@ th {
       }
     }
   }
+  .popup.image-info {
+    img {
+      display: block;
+      margin: 1em auto;
+    }
+  }
 }
 
 .edit-cell {
