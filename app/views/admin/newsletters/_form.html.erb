@@ -6,7 +6,7 @@
     <input name="email" type="email" placeholder="Email address" class="input--short" value="<%= current_user.email %>">
     <%= f.submit 'Send Test', class: "btn btn--small btn--test" %>
   </div>
-  <%= f.submit 'Send Now', class: "btn btn--small pull-right", data: {confirm: "Are you ready to send this Newsletter?"} %>
+  <%= f.submit 'Send Now', class: "btn btn--small btn--send pull-right", data: {confirm: "Are you ready to send this Newsletter?"} %>
 
   <fieldset name="send-to-info">
     <legend>Send To</legend>
@@ -93,6 +93,6 @@
   </fieldset>
 
   <div class="row form-actions">
-    <%= f.submit "#{@newsletter.new_record? ? 'Add' : 'Save'} Newsletter" %>
+    <%= f.submit "#{@newsletter.new_record? ? 'Add' : 'Save'} Newsletter", class: "btn--newsletter" %>
   </div>
 <% end %>

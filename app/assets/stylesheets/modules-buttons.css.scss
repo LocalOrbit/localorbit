@@ -47,6 +47,7 @@ input[type=submit] {
       text-align: center;
     }
     &.btn--small {
+      box-sizing: border-box;
       padding: 12px 18px;
       font-size: 17px;
     }
@@ -116,6 +117,12 @@ input[type=submit] {
   }
   &.btn--test {
     background-color: #ccc;
+  }
+  @media screen and (max-width: 600px) {
+    &.btn--test {
+      padding: 5px 10px;
+      margin-bottom: 20px;
+    }
   }
   + .note {
     color: #999;
