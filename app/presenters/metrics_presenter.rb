@@ -26,7 +26,8 @@ class MetricsPresenter
     order_item: OrderItem.joins(:order).where.not(orders: { market_id: TEST_MARKET_IDS }, delivery_status: "canceled"),
     payment: Payment.where.not(market_id: TEST_MARKET_IDS),
     market: Market.where.not(id: TEST_MARKET_IDS),
-    organization: Organization.where.not(id: TEST_ORG_IDS)
+    organization: Organization.where.not(id: TEST_ORG_IDS),
+    product: Product
   }
 
   METRICS = {
@@ -187,6 +188,43 @@ class MetricsPresenter
       calculation: :count,
       format: :integer
     },
+    total_products: {
+      title: "Total Products",
+      scope: BASE_SCOPES[:product],
+      attribute: :created_at,
+      calculation: :window,
+      format: :integer
+    },
+    total_products_simple: {
+      title: "Total Products Using Simple Inventory",
+      scope: BASE_SCOPES[:product].where(use_simple_inventory: true),
+      attribute: :created_at,
+      calculation: :window,
+      format: :integer
+    },
+    total_products_advanced: {
+      title: "Total Products Using Advanced Inventory",
+      scope: BASE_SCOPES[:product].where(use_simple_inventory: false),
+      attribute: :created_at,
+      calculation: :window,
+      format: :integer
+    },
+    total_products_ordered: {
+      title: "Total Products Ordered",
+      scope: BASE_SCOPES[:product].joins(:orders),
+      attribute: "orders.placed_at",
+      calculation: :count,
+      calculation_arg: "products.id",
+      format: :integer
+    },
+    # average_product_price: {
+    #   title: "Average Product Price",
+    #   scope: BASE_SCOPES[:product],
+    #   attribute: :placed_at,
+    #   calculation: :custom,
+    #   calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
+    #   format: :decimal
+    # }
   }
 
   GROUPS = {
@@ -213,7 +251,8 @@ class MetricsPresenter
     products: {
       title: "Products",
       metrics: [
-        :number_of_items
+        :total_products, :total_products_simple, :total_products_advanced, :total_products_ordered
+        # :average_product_price, :number_of_items
       ]
     }
     # :avg_lo_fees, :avg_lo_fee_pct, :sales_pct_growth, :lo_fees, :fee_pct_growth, :service_fees
