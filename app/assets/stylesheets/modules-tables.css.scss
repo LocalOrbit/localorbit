@@ -646,6 +646,11 @@ th {
   }
 }
 
+@media screen and (min-width: 601px) {
+  .product-table--user .info .show-mobile {
+    display: none;
+  }
+}
 @media screen and (max-width: 600px) {
   td.delete{
     .font-icon {

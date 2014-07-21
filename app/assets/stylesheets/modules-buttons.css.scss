@@ -307,3 +307,8 @@ span.btn {
     float: right;
   }
 }
+@media screen and (min-width: 601px) {
+  .pane-toggle {
+    display:none;
+  }
+}
