@@ -45,7 +45,7 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order_item],
       attribute: "orders.placed_at",
       calculation: :sum,
-      calculation_arg: "unit_price * quantity",
+      calculation_arg: "unit_price * COALESCE(quantity_delivered, quantity)",
       format: :currency
     },
     average_order: {
@@ -53,7 +53,7 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order_item],
       attribute: "orders.placed_at",
       calculation: :average,
-      calculation_arg: "unit_price * quantity",
+      calculation_arg: "unit_price * COALESCE(quantity_delivered, quantity)",
       format: :currency
     },
     average_order_size: {
