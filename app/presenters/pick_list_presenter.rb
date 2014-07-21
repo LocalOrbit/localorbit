@@ -1,12 +1,14 @@
 class PickListPresenter
-  def self.build(current_user, current_organization, delivery)
+  def self.build(current_user, delivery)
     order_items = OrderItem.where(delivery_status: "pending", orders: {delivery_id: delivery.id}).
       eager_load(:order, product: :organization).
       order("organizations.name, products.name").
       preload(order: :organization)
 
-    if !(current_user.admin? || current_user.market_manager?)
-      order_items = order_items.where(products: {organization_id: current_organization.id})
+    # Limit the scope unless the current user is an admin
+    # or manages the market for this delivery
+    if !(current_user.admin? || current_user.managed_market_ids.include?(delivery.delivery_schedule.market_id))
+      order_items = order_items.where(products: {organization_id: current_user.organization_ids})
     end
 
     order_items.group_by {|item| item.product.organization_id }.map do |_, items|
