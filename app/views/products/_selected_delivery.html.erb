@@ -5,13 +5,13 @@
   </h3>
   <div class="popup-body">
     <p>
-      <strong>Changing your delivery date will remove the items you have in your cart!</strong><br>
+      <strong>Changing your delivery date will remove the items you have in your cart!</strong><br>
       You can only order for one delivery date at a time. If you would like to purchase the
       items that are in your cart, please do that before changing your delivery date. You
-      can access your cart right now by clicking Cart in your navigation above.
+      can access your cart right now by clicking Cart in your navigation above.
     </p>
 
-    <%= link_to "Empty Cart and Change Date", reset_sessions_deliveries_path(redirect_back_to: request.fullpath), class: "btn btn--save btn--small" %>
+    <%= link_to "Empty Cart and Change Date", reset_sessions_deliveries_path(redirect_back_to: request.fullpath), class: "btn btn--save btn--small mobile-block" %>
   </div>
 </div>
 

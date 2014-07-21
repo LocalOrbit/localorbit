@@ -226,6 +226,7 @@
   }
   .icon-clear {
     color: #ddd;
+    
   }
   &.is-open {
     position: absolute;
@@ -1328,6 +1329,20 @@ label ~ .tooltip {
     @include border-radius(5px);
     margin: 0 10px;
     background: #D9F6F9;
+  }
+
+  @media screen and (max-width: 600px) {
+    .actions {
+      margin: 0 0 10px 0;
+
+      select {
+        width: 100%;
+      }
+      input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
   }
 }
 

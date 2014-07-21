@@ -109,8 +109,22 @@
   }
 
   @media screen and (max-width: 600px) {
+    a, h1, h2, div, span, i, .field {
+      &.hidden-mobile {
+        display: none;
+      }
+    }
     h1 {
       text-align: center;
+      float: left;
+    }
+    .mobile-toggle {
+      font-size: 14px;
+      text-align: center;
+    }
+    .header-actions {
+      margin-top: 15px;
+      float: right;
     }
   }
 
@@ -131,6 +145,11 @@
   .header-actions a {
     margin-left: 10px;
   }
+}
+
+.sold-item-header {
+  display: block;
+  width: 100%;
 }
 
 .l-inline-list {

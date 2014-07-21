@@ -1,4 +1,6 @@
 $ ->
+  $('.mobile-toggle').click (e) ->
+    $(e.target.hash).toggleClass('hidden-mobile')
   $('.filter-toggle').click (e) ->
     e.preventDefault()
     $('.filter-toggle').not(this).removeClass('is-open')

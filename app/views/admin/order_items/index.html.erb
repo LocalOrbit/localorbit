@@ -1,68 +1,76 @@
   <div class="tab-header stickable">
     <div class="l-constraint">
       <div class="l-page-header">
+
         <h1><i class="font-icon" data-icon="&#xe02d;"></i>&nbsp; Sold Items</h1>
+
         <div class="header-actions">
           <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export todo pull-right" %>
         </div>
 
-        <%= search_form_for @q, url: admin_order_items_path, html: { class: "payment_search manage_filters clear-after" } do |f| %>
-          <div class="search-widget">
-            <%= f.label :order_order_number_cont, "Search" %><br>
-            <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
+
+        <%= search_form_for @q, url: admin_order_items_path, html: { class: "sold_item_search clear-after" } do |f| %>
+          <div class="pull-left sold-item-search-widget">
+            <span class="preserve-alignment">
+              <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
+            </span>
           </div>
-          <div class="filter-row">
-            <span class="preserve-alignment">
-              <%= f.label :order_market_id_eq, "Market" %><br>
-              <%= f.select :order_market_id_eq, options_from_collection_for_select(@markets, :id, :name, @q.order_market_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
-            </span>
+          <a href="#items-filter" class="show-mobile mobile-block btn mobile-toggle">Show Filters</a>
+          <div class="hidden-mobile" id="items-filter">
+            <div class="filter-row">
+              <span class="preserve-alignment">
+                <%= f.label :order_market_id_eq, "Market" %><br>
+                <%= f.select :order_market_id_eq, options_from_collection_for_select(@markets, :id, :name, @q.order_market_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+              </span>
 
-            <span class="preserve-alignment">
-              <%= f.label :product_organization_id_eq, "Seller" %><br>
-              <%= f.select :product_organization_id_eq, options_from_collection_for_select(@sellers, :id, :name, @q.product_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
-            </span>
+              <span class="preserve-alignment">
+                <%= f.label :product_organization_id_eq, "Seller" %><br>
+                <%= f.select :product_organization_id_eq, options_from_collection_for_select(@sellers, :id, :name, @q.product_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+              </span>
 
-            <span class="preserve-alignment">
-              <%= f.label :order_organization_id_eq, "Buyer" %><br>
-              <%= f.select :order_organization_id_eq, options_from_collection_for_select(@buyers, :id, :name, @q.order_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
-            </span>
+              <span class="preserve-alignment">
+                <%= f.label :order_organization_id_eq, "Buyer" %><br>
+                <%= f.select :order_organization_id_eq, options_from_collection_for_select(@buyers, :id, :name, @q.order_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
+              </span>
 
-            <span class="preserve-alignment">
-              <%= f.label :delivery_status_eq, "Delivery Status" %><br>
-              <%= f.select :delivery_status_eq, options_from_collection_for_select(@delivery_statuses, :to_s, :titleize, @q.delivery_status_eq), { include_blank: "All" }, { class: "filter-input" } %>
-            </span>
+              <span class="preserve-alignment">
+                <%= f.label :delivery_status_eq, "Delivery Status" %><br>
+                <%= f.select :delivery_status_eq, options_from_collection_for_select(@delivery_statuses, :to_s, :titleize, @q.delivery_status_eq), { include_blank: "All" }, { class: "filter-input" } %>
+              </span>
 
-            <span class="preserve-alignment">
-              <%= f.label :order_payment_status_eq, "Buyer Payment Status" %><br>
-              <%= f.select :order_payment_status_eq, options_from_collection_for_select(@buyer_payment_statuses, :to_s, :titleize, @q.order_payment_status_eq), { include_blank: "All" }, { class: "filter-input" } %>
-            </span>
+              <span class="preserve-alignment">
+                <%= f.label :order_payment_status_eq, "Buyer Payment Status" %><br>
+                <%= f.select :order_payment_status_eq, options_from_collection_for_select(@buyer_payment_statuses, :to_s, :titleize, @q.order_payment_status_eq), { include_blank: "All" }, { class: "filter-input" } %>
+              </span>
 
-            <%# <span class="preserve-alignment"> %>
-            <%#   <%= f.label :seller_payment_status_eq, "Seller Payment Status" %1><br> %>
-            <%#   <%= f.select :seller_payment_status_eq, options_from_collection_for_select(["paid", "unpaid"], :to_s, :titleize, @q.seller_payment_status_eq), { include_blank: "All" }, { class: "filter-input" } %1> %>
-            <%# </span> %>
-          </div>
+              <%# <span class="preserve-alignment"> %>
+              <%#   <%= f.label :seller_payment_status_eq, "Seller Payment Status" %1><br> %>
+              <%#   <%= f.select :seller_payment_status_eq, options_from_collection_for_select(["paid", "unpaid"], :to_s, :titleize, @q.seller_payment_status_eq), { include_blank: "All" }, { class: "filter-input" } %1> %>
+              <%# </span> %>
+            </div>
 
-          <div class="date-filters">
-            <span class="preserve-alignment">
-              <label for="order_placed_at_date_gteq">Placed on or after</label><br>
-              <%= datetime_field_tag "q[order_placed_at_date_gteq]", @start_date, class: 'datepicker' %>
-            </span>
-            <span class="preserve-alignment">
-              <label for="order_placed_at_date_lteq">Placed on or before</label><br>
-              <%= datetime_field_tag "q[order_placed_at_date_lteq]", @end_date, class: 'datepicker' %>
-            </span>
-            <span class="preserve-alignment">
-              <br>
-              <%= f.submit "Filter", class: "btn--small" %>
-            </span>
+            <div class="date-filters">
+              <span class="preserve-alignment">
+                <label for="order_placed_at_date_gteq">Placed on or after</label><br>
+                <%= datetime_field_tag "q[order_placed_at_date_gteq]", @start_date, class: 'datepicker' %>
+              </span>
+              <span class="preserve-alignment">
+                <label for="order_placed_at_date_lteq">Placed on or before</label><br>
+                <%= datetime_field_tag "q[order_placed_at_date_lteq]", @end_date, class: 'datepicker' %>
+              </span>
+              <span class="preserve-alignment">
+                <br>
+                <%= f.submit "Filter", class: "btn--small mobile-block" %>
+              </span>
+            </div>
+            <a href="#items-filter" class="show-mobile mobile-block mobile-toggle">Hide Filters</a>
           </div>
         <% end %>
       </div>
     </div>
   </div>
 
-<%= form_tag set_status_admin_order_items_path, class: "cling-wrap", id: "sold-items" do %>
+<%= form_tag set_status_admin_order_items_path, class: "", id: "sold-items" do %>
   <div class="action-header stickable">
     <div class="l-constraint">
       <div class="actions l-constraint">
@@ -73,7 +81,7 @@
       </div>
     </div>
   </div>
-  <div class="">
+  <div class="table-wrapper">
     <table class="sortable sold-table">
       <thead class="stickable">
         <tr>
