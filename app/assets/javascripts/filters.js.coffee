@@ -1,5 +1,6 @@
 $ ->
   $('.mobile-toggle').click (e) ->
+    $('.mobile-toggle[href="' + e.target.hash + '"]').toggleClass('is-hidden')
     $(e.target.hash).toggleClass('hidden-mobile')
   $('.filter-toggle').click (e) ->
     e.preventDefault()

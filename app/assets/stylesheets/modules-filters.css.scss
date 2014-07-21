@@ -151,6 +151,11 @@
 
   .product-search,
   .order-search-widget,
+  .sold-item-search-widget {
+    max-width: 100%;
+  }
+  .product-search,
+  .order-search-widget,
   .sold-item-search-widget > .preserve-alignment {
     float: none;
     display: -webkit-flex;
