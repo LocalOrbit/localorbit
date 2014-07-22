@@ -112,7 +112,7 @@ feature "Reports" do
     # currently defined in the `report` variable
     report_title = report.to_s.titleize
 
-    ReportPresenter.reports.each do |report|
+    ReportPresenter.reports_for_user(user).each do |report|
       expect(page).to have_content(report_title)
     end
 
