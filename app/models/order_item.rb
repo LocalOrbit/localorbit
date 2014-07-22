@@ -53,9 +53,13 @@ class OrderItem < ActiveRecord::Base
     OrderItem.for_delivery(delivery).joins(:product).where(products: {organization_id: ids})
   end
 
+  def self.for_user_purchases(user)
+    joins(:order).where(orders: {organization_id: user.managed_organization_ids_including_deleted})
+  end
+
   def self.for_user(user)
     if user.buyer_only?
-      joins(:order).where(orders: {organization_id: user.managed_organization_ids_including_deleted})
+      for_user_purchases(user)
     else
       joins(:product).where(products: {organization_id: user.managed_organization_ids_including_deleted})
     end

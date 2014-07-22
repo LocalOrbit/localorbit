@@ -92,7 +92,11 @@ class ReportPresenter
     @filters = REPORT_MAP[@report].fetch(:filters, [])
 
     # Set our initial scope and lookup any applicable filter data
-    items = OrderItem.for_user(user).joins(:order).uniq
+    items = if self.class.buyer_reports.include?(report)
+      OrderItem.for_user_purchases(user).joins(:order).uniq
+    else
+      OrderItem.for_user(user).joins(:order).uniq
+    end
     setup_filter_data(items)
 
     # Initialize ransack and set a default sort order
