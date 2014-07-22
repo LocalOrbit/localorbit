@@ -9,28 +9,29 @@
   <div class="report-table">
     <% @presenter.metrics.each_pair do |group_title, group| %>
       <h2><%= group_title %></h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <% @presenter.headers.each do |header| %>
+                <th><%= header %></th>
+              <% end %>
+            </tr>
+          </thead>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Metric</th>
-            <% @presenter.headers.each do |header| %>
-              <th><%= header %></th>
-            <% end %>
-          </tr>
-        </thead>
-
-        <% group.each_pair do |metric_title, metric_values| %>
-          <tr class="<%= cycle "odd", "even" %> item">
-            <td><%= metric_title %></td>
-            <% @presenter.headers.each do |header| %>
-              <td>
-                <%= content_tag "span", metric_values[header], class: "metric-value" %><br>
-              </td>
-            <% end %>
-          </tr>
+          <% group.each_pair do |metric_title, metric_values| %>
+            <tr class="<%= cycle "odd", "even" %> item">
+              <td><%= metric_title %></td>
+              <% @presenter.headers.each do |header| %>
+                <td>
+                  <%= content_tag "span", metric_values[header], class: "metric-value" %><br>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
         <% end %>
-      <% end %>
-    </table>
+      </table>
+    </div>
   </div>
 <% end %>
