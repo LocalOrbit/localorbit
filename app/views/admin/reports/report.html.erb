@@ -3,87 +3,89 @@
 <%= render "admin/reports/filters", presenter: @presenter %>
 
 <div class="report-table">
-  <table class="sortable report-table">
-    <thead class="stickable">
-      <tr>
+  <div class="table-wrapper">
+    <table class="sortable report-table">
+      <thead class="stickable">
+        <tr>
+          <% @presenter.fields.each do |field| %>
+            <% filter_map = ReportPresenter::FIELD_MAP[field] || {} %>
+            <th>
+              <% if filter_map[:sort] %>
+                <%= sort_link @presenter.q, filter_map[:sort], filter_map[:display_name] %>
+              <% else %>
+                <%= filter_map[:display_name] %>
+              <% end %>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+
+      <% @presenter.items.decorate.each do |item| %>
+      <tr class="<%= cycle "odd", "even" %> item">
         <% @presenter.fields.each do |field| %>
-          <% filter_map = ReportPresenter::FIELD_MAP[field] || {} %>
-          <th>
-            <% if filter_map[:sort] %>
-              <%= sort_link @presenter.q, filter_map[:sort], filter_map[:display_name] %>
-            <% else %>
-              <%= filter_map[:display_name] %>
-            <% end %>
-          </th>
+          <% if field == :placed_at %>
+            <td class="placed-at">
+              <%= content_tag "span", item.placed_at, class: "order-date" %><br>
+              <%= link_to item.order_number, admin_order_path(item.order), class: "order-number" %>
+            </td>
+          <% end %>
+
+          <% if field == :category_name %>
+            <td class="category"><%= item.category_name %></td>
+          <% end %>
+
+          <% if field == :product_name %>
+            <td class="product"><%= link_to item.product_name, [:admin, item.product] %></td>
+          <% end %>
+
+          <% if field == :seller_name %>
+            <td class="seller"><%= link_to item.seller_name, [:admin, item.product.organization] %></td>
+          <% end %>
+
+          <% if field == :buyer_name %>
+            <td><%= link_to item.buyer_name, [:admin, item.order.organization], class: "buyer" %></td>
+          <% end %>
+
+          <% if field == :quantity %>
+            <td class="quantity"><%= item.quantity %></td>
+          <% end %>
+
+          <% if field == :unit_price %>
+            <td class="price"><%= content_tag "span", item.price_per_unit %></td>
+          <% end %>
+
+          <% if field == :discount %>
+            <td class="discount"><%= item.discount %></td>
+          <% end %>
+
+          <% if field == :row_total %>
+            <td class="row-total"><%= item.row_total %></td>
+          <% end %>
+
+          <% if field == :net_sale %>
+            <td class="net-sale"><%= content_tag "span", item.net_sale, class: "total-price" %></td>
+          <% end %>
+
+          <% if field == :payment_method %>
+            <td class="payment-method"><%= item.payment_method %></td>
+          <% end %>
+
+          <% if field == :delivery_status %>
+            <td class="delivery-status"><%= item.delivery_status %></td>
+          <% end %>
+
+          <% if field == :buyer_payment_status %>
+            <td class="buyer-payment-status"><%= item.buyer_payment_status %></td>
+          <% end %>
+
+          <% if field == :seller_payment_status %>
+            <td class="seller-payment-status"><%= item.seller_payment_status %></td>
+          <% end %>
         <% end %>
       </tr>
-    </thead>
-
-    <% @presenter.items.decorate.each do |item| %>
-    <tr class="<%= cycle "odd", "even" %> item">
-      <% @presenter.fields.each do |field| %>
-        <% if field == :placed_at %>
-          <td class="placed-at">
-            <%= content_tag "span", item.placed_at, class: "order-date" %><br>
-            <%= link_to item.order_number, admin_order_path(item.order), class: "order-number" %>
-          </td>
-        <% end %>
-
-        <% if field == :category_name %>
-          <td class="category"><%= item.category_name %></td>
-        <% end %>
-
-        <% if field == :product_name %>
-          <td class="product"><%= link_to item.product_name, [:admin, item.product] %></td>
-        <% end %>
-
-        <% if field == :seller_name %>
-          <td class="seller"><%= link_to item.seller_name, [:admin, item.product.organization] %></td>
-        <% end %>
-
-        <% if field == :buyer_name %>
-          <td><%= link_to item.buyer_name, [:admin, item.order.organization], class: "buyer" %></td>
-        <% end %>
-
-        <% if field == :quantity %>
-          <td class="quantity"><%= item.quantity %></td>
-        <% end %>
-
-        <% if field == :unit_price %>
-          <td class="price"><%= content_tag "span", item.price_per_unit %></td>
-        <% end %>
-
-        <% if field == :discount %>
-          <td class="discount"><%= item.discount %></td>
-        <% end %>
-
-        <% if field == :row_total %>
-          <td class="row-total"><%= item.row_total %></td>
-        <% end %>
-
-        <% if field == :net_sale %>
-          <td class="net-sale"><%= content_tag "span", item.net_sale, class: "total-price" %></td>
-        <% end %>
-
-        <% if field == :payment_method %>
-          <td class="payment-method"><%= item.payment_method %></td>
-        <% end %>
-
-        <% if field == :delivery_status %>
-          <td class="delivery-status"><%= item.delivery_status %></td>
-        <% end %>
-
-        <% if field == :buyer_payment_status %>
-          <td class="buyer-payment-status"><%= item.buyer_payment_status %></td>
-        <% end %>
-
-        <% if field == :seller_payment_status %>
-          <td class="seller-payment-status"><%= item.seller_payment_status %></td>
-        <% end %>
       <% end %>
-    </tr>
-    <% end %>
-  </table>
+    </table>
+  </div>
 </div>
 
 <%= render "admin/reports/footer", presenter: @presenter %>
