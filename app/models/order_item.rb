@@ -20,6 +20,7 @@ class OrderItem < ActiveRecord::Base
   validate :product_availability, on: :create
 
   before_create :consume_inventory
+  before_save :update_quantity_ordered
   before_save :update_quantity_delivered
   before_save :update_delivery_status
   before_save :update_delivered_at
@@ -108,6 +109,12 @@ class OrderItem < ActiveRecord::Base
   def update_delivered_at
     if changes[:delivery_status] && changes[:delivery_status][1] == "delivered"
       self.delivered_at ||= Time.current
+    end
+  end
+
+  def update_quantity_ordered
+    if quantity_changed? && quantity.present? && delivery_status == "pending"
+      self.delivery_status = "canceled" if quantity == 0
     end
   end
 
