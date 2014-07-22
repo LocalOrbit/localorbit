@@ -150,6 +150,10 @@
     width: auto;
     padding: 0 0 2em;
     overflow: hidden;
+    .tooltip:after {
+      right: auto;
+      left: -40px;
+    }
   }
 }
 
