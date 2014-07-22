@@ -7,14 +7,16 @@ $ ->
       styles = {
         position: 'fixed',
         top: 54,
-        left: '50%',
-        marginLeft: -138
+        left: '50%'
       }
     else
       styles = {
         'left': $element.offset().left,
         'top':  $element.offset().top
       }
+    if $element.outerHeight() + 54 >= $('body').outerHeight()
+      $('body').css('min-height', $element.outerHeight() + 74)
+      styles.position = 'absolute'
     $element.css(styles).insertAfter('.overlay')
 
   position_popup = ($element) ->
@@ -25,9 +27,6 @@ $ ->
     if right >= window.innerWidth
       $element.addClass('rtl')
 
-  size_popup = ($popup) ->
-    $popup.css('min-height', $(window).height() - $('.nav--app').outerHeight() - 20)
-
   $('.popup-toggle').click (e) ->
     e.preventDefault()
     $element = $(this.hash)
@@ -37,8 +36,6 @@ $ ->
     if $element.parents('.product').length
       $('.overlay').addClass('mobile-dim')
     if $element.hasClass('popup--edit')
-      if screen.width <= 600
-        size_popup($element)
       $('.overlay').addClass('is-editable')
     position_popup($element)
     clone_popup($element, e.target)
