@@ -74,7 +74,7 @@ class DeliverySchedule < ActiveRecord::Base
       d = Time.zone.parse("#{date} #{seller_delivery_start}")
       d += 1.week while (d - order_cutoff.hours) < current_time
 
-      return @next_delivery_date = d
+      @next_delivery_date = d
     end
   end
 
