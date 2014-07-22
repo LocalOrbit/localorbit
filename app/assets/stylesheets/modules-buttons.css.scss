@@ -277,8 +277,12 @@ span.btn {
 }
 
 @media screen and (max-width: 600px) {
-  .photo-button, .save-button {
+  .photo-button, .save-button, .btn--money {
     width: 100%;
+  }
+  .continue-shop {
+    display: inline-block;
+    margin-top: 28px;
   }
   .fresh-sheet-test {
     width: 100%;
