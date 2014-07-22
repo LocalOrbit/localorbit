@@ -8,6 +8,14 @@
   margin-right: 10px;
 }
 
+@media screen and (max-width:600px) {
+  .date-filters {
+    .btn--small {
+      width: 100%;
+    }
+  }
+}
+
 .manager-filters {
   clear: both;
   display: inline-block;
