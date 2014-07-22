@@ -45,7 +45,7 @@ class ProductsForSale
   protected
 
   def base_products_scope
-    scope = @delivery.products_available_for_sale(@buyer).includes(:unit, :category, :prices, :lots)
+    scope = @delivery.products_available_for_sale(@buyer).includes(:unit, :category, :prices, :lots).order(:name)
 
     if @options[:seller]
       scope.where(organization_id: @options[:seller])
