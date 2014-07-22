@@ -20,35 +20,6 @@
   padding: 0 20px 0 20px;
 }
 
-.empty-results {
-  width: 380px;
-  padding: 14px;
-  margin: 40px 0 20px 260px;
-  background: #d9edf7;
-  border: 1px solid #bce8f1;
-  border-radius: 4px;
-  color: #3a87ad;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-
-  h2 {
-    color: #3a87ad;
-    margin-bottom: 5px;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .empty-results {
-    margin: 20px 0 0 0;
-    padding: 0;
-
-    h2 {
-      padding: 10px 0 0 10px;
-    }
-    p {
-      padding: 0 10px;
-    }
-  }
-}
 
 .info-note {
   width: 100%;
