@@ -9,14 +9,16 @@ $ ->
         top: 54,
         left: '50%'
       }
+      $element.find('div.datepicker').show()
     else
       styles = {
         'left': $element.offset().left,
         'top':  $element.offset().top
       }
-    if $element.outerHeight() + 54 >= $('body').outerHeight()
+    if $element.outerHeight() + 54 >= screen.height
       $('body').css('min-height', $element.outerHeight() + 74)
       styles.position = 'absolute'
+      console.log styles
     $element.css(styles).insertAfter('.overlay')
 
   position_popup = ($element) ->
