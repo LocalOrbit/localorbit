@@ -1456,3 +1456,31 @@ label ~ .tooltip {
     }
   }
 }
+
+.empty-results {
+  max-width: 380px;
+  padding: 14px;
+  border: 1px solid #bce8f1;
+  @include border-radius(4px);
+  margin: 40px auto 20px;
+  color: #3a87ad;
+  background: #d9edf7;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+
+  h2 {
+    color: #3a87ad;
+    margin-bottom: 5px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .empty-results {
+    padding: 10px;
+    margin: 20px auto 0;
+
+    p {
+      padding: 0 10px;
+    }
+  }
+}
+

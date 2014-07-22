@@ -15,7 +15,7 @@
               <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
             </span>
           </div>
-          <a href="#items-filter" class="show-mobile mobile-block btn mobile-toggle">Show Filters</a>
+          <a href="#items-filter" class="mobile-only mobile-block btn mobile-toggle">Show Filters</a>
           <div class="hidden-mobile" id="items-filter">
             <div class="filter-row">
               <span class="preserve-alignment">
@@ -63,7 +63,7 @@
                 <%= f.submit "Filter", class: "btn--small mobile-block" %>
               </span>
             </div>
-            <a href="#items-filter" class="is-hidden show-mobile mobile-block mobile-toggle">Hide Filters</a>
+            <a href="#items-filter" class="is-hidden mobile-only mobile-block mobile-toggle">Hide Filters</a>
           </div>
         <% end %>
       </div>

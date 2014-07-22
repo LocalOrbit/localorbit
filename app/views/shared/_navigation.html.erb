@@ -20,8 +20,8 @@ end
 <% end %>
 
 <% if current_user %>
-  <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before <%= "show-mobile" if @hide_admin_nav %>">
-    <li class="show-mobile"><%= link_to_or_span 'Dashboard', dashboard_path %></li>
+  <ul id="admin-nav" class="l-inline-list nav nav--admin clear-before <%= "mobile-only" if @hide_admin_nav %>">
+    <li class="mobile-only"><%= link_to_or_span 'Dashboard', dashboard_path %></li>
     <% if current_user.buyer_only? %>
       <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00c;"></i> Purchase History'), dashboard_path %></li>
     <% end %>
@@ -98,8 +98,8 @@ end
         <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe027;"></i>') + "Your Organization".pluralize(current_user.managed_organizations.count), path_to_my_organization %></li>
       </ul>
     </li>
-    <li class="show-mobile"><%= link_to_or_span "Shop", products_path, class: "" %></li>
-    <li class="show-mobile"><%= link_to_or_span "Sellers", sellers_path, class: "" %></li>
-    <li class="show-mobile"><%= link_to_or_span "Market Info", market_path, class: "" %></li>
+    <li class="mobile-only"><%= link_to_or_span "Shop", products_path, class: "" %></li>
+    <li class="mobile-only"><%= link_to_or_span "Sellers", sellers_path, class: "" %></li>
+    <li class="mobile-only"><%= link_to_or_span "Market Info", market_path, class: "" %></li>
   </ul>
 <% end %>
