@@ -1,8 +1,8 @@
 
 <div class="delivery-time">
   <div class="actions pull-right">
-    <%= link_to "Review Order", order_path(@order) %> &nbsp;
-    <button class="btn btn--small btn--blue print-button" id="print-button">Print Order Confirmation</button>
+    <%= link_to "Review Order", order_path(@order), class: "review-order" %> &nbsp;
+    <button class="btn btn--small btn--blue print-button order-print" id="print-button">Print Order Confirmation</button>
   </div>
 
   <h2 class="order-heading">Items for <%=  @order.delivery.decorate.checkout_type %>:</h2>
