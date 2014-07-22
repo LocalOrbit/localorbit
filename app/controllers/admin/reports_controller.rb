@@ -7,7 +7,6 @@ class Admin::ReportsController < AdminController
 
   def show
     @query_params = sticky_parameters(request.query_parameters)
-
     @presenter = ReportPresenter.report_for(
       report: params[:id].to_s.underscore,
       user: current_user,

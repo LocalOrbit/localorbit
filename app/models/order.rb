@@ -7,9 +7,9 @@ class Order < ActiveRecord::Base
 
   attr_accessor :credit_card, :bank_account
 
-  belongs_to :market
-  belongs_to :organization
-  belongs_to :delivery
+  belongs_to :market, inverse_of: :orders
+  belongs_to :organization, inverse_of: :orders
+  belongs_to :delivery, inverse_of: :orders
   belongs_to :placed_by, class: User
 
   has_many :items, inverse_of: :order, class: OrderItem, autosave: true, dependent: :destroy

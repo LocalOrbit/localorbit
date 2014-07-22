@@ -76,6 +76,14 @@ class ReportPresenter
     }
   }.with_indifferent_access
 
+  def self.buyer_reports
+    REPORT_MAP.keys.select {|k| REPORT_MAP[k][:buyer_only] }
+  end
+
+  def self.seller_reports
+    REPORT_MAP.keys.reject {|k| REPORT_MAP[k][:buyer_only] }
+  end
+
   def initialize(report:, user:, search: {}, paginate: {})
     search ||= {}
 
@@ -84,7 +92,11 @@ class ReportPresenter
     @filters = REPORT_MAP[@report].fetch(:filters, [])
 
     # Set our initial scope and lookup any applicable filter data
-    items = OrderItem.for_user(user).joins(:order).uniq
+    items = if self.class.buyer_reports.include?(report)
+      OrderItem.for_user_purchases(user).uniq
+    else
+      OrderItem.for_user(user).joins(:order).uniq
+    end
     setup_filter_data(items)
 
     # Initialize ransack and set a default sort order
@@ -108,22 +120,20 @@ class ReportPresenter
   end
 
   def self.report_for(report:, user:, search: {}, paginate: {})
-    return nil unless user && reports.include?(report)
+    return nil unless user && reports_for_user(user).include?(report)
 
-    valid = !user.buyer_only? || reports(buyer_only: true).include?(report)
+    valid = !user.buyer_only? || reports_for_user(user).include?(report)
 
     new(report: report, user: user, search: search, paginate: paginate) if valid
   end
 
   def self.reports_for_user(user)
-    reports(buyer_only: user.try(:buyer_only?))
-  end
-
-  def self.reports(buyer_only: false)
-    if buyer_only
-      REPORT_MAP.keys.select {|k| REPORT_MAP[k][:buyer_only] }
+    if user.is_seller_with_purchase?
+      seller_reports + buyer_reports
+    elsif user.buyer_only?
+      buyer_reports
     else
-      REPORT_MAP.keys
+      seller_reports
     end
   end
 

@@ -90,6 +90,10 @@ class User < ActiveRecord::Base
     !admin? && !market_manager? && !seller?
   end
 
+  def is_seller_with_purchase?
+    seller? && Order.where(organization_id: organization_ids).exists?
+  end
+
   def managed_organizations
     @managed_organizations ||= begin
       market_ids = []
