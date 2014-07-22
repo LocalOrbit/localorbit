@@ -117,7 +117,11 @@ input[type=search] {
     width: 150px;
   }
 }
-
+@media screen and (max-width: 600px) {
+  input[type=search] {
+    width: auto;
+  }
+}
 input[type=number] {
   -moz-appearance: textfield;
   &::-webkit-inner-spin-button {
