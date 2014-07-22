@@ -758,6 +758,12 @@ th {
     padding: 0;
   }
 }
+
+@media screen and (max-width:600px) {
+  .order-status {
+    margin-top: 0;
+  }
+}
 .sortable {
   a {
     text-decoration: none;

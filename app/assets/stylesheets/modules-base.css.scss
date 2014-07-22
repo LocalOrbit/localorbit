@@ -113,6 +113,13 @@
   margin-top: 120px;
   color: #000;
 }
+
+@media screen and (max-width:600px) {
+  .cart-page {
+    margin-top: 0;
+  }
+}
+
 .copyright {
 
   .org {
@@ -476,6 +483,12 @@
 .subheading-cart {
   font: lighter 24px "Open Sans Condensed", OpenSans-Condensed, "Open Sans", OpenSans, sans-serif;
   margin-top: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .subheading-cart {
+    margin-top: 20px;
+  }
 }
 
 .heading-conditionals {
