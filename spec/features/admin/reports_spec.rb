@@ -116,10 +116,6 @@ feature "Reports" do
     # currently defined in the `report` variable
     report_title = report.to_s.titleize
 
-    # ReportPresenter.reports_for_user(user).each do |report|
-    #   expect(page).to have_content(report_title)
-    # end
-
     click_link(report_title) if page.has_link?(report_title)
   end
 

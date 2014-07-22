@@ -91,8 +91,7 @@ class User < ActiveRecord::Base
   end
 
   def is_seller_with_purchase?
-    ids = organizations.pluck(:id)
-    seller? && Order.where(organization_id: ids).count > 0
+    seller? && Order.where(organization_id: organization_ids).exists?
   end
 
   def managed_organizations

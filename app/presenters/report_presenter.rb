@@ -93,7 +93,7 @@ class ReportPresenter
 
     # Set our initial scope and lookup any applicable filter data
     items = if self.class.buyer_reports.include?(report)
-      OrderItem.for_user_purchases(user).joins(:order).uniq
+      OrderItem.for_user_purchases(user).uniq
     else
       OrderItem.for_user(user).joins(:order).uniq
     end
