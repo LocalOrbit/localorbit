@@ -69,9 +69,21 @@ class MetricsPresenter
     },
     total_service_fees: {
       title: "Total Service Fees",
-      scope: BASE_SCOPES[:payment].where(payment_type: 'service'),
+      scope: BASE_SCOPES[:payment].where(payment_type: "service"),
       attribute: "created_at",
       calculation: :sum,
+      calculation_arg: :amount,
+      format: :currency
+    },
+    # Average LO Service Fees
+    # Fees charged based on user's plan
+    #
+    # Payment#amount when Payment#payment_type  is "service"
+    average_service_fees: {
+      title: "Average Service Fees",
+      scope: BASE_SCOPES[:payment].where(payment_type: "service"),
+      attribute: "created_at",
+      calculation: :average,
       calculation_arg: :amount,
       format: :currency
     },
@@ -81,6 +93,85 @@ class MetricsPresenter
       attribute: "orders.placed_at",
       calculation: :sum,
       calculation_arg: "local_orbit_seller_fee + local_orbit_market_fee",
+      format: :currency
+    },
+    total_delivery_fees: {
+      title: "Total Delivery Fees",
+      scope: BASE_SCOPES[:order],
+      attribute: :placed_at,
+      calculation: :sum,
+      calculation_arg: "delivery_fees",
+      format: :currency
+    },
+    average_delivery_fees: {
+      title: "Average Delivery Fees",
+      scope: BASE_SCOPES[:order],
+      attribute: :placed_at,
+      calculation: :average,
+      calculation_arg: "delivery_fees",
+      format: :currency
+    },
+    # Credit Card Processing Fees
+    # What LO charges customers for credit card processing payments
+    #
+    # OrderItem#payment_seller_fee + OrderItem#payment_market_fee
+    # when Order#payment_method is "credit_card"
+    credit_card_processing_fees: {
+      title: "Credit Card Processing Fees",
+      scope: BASE_SCOPES[:order_item].where(orders: { payment_method: "credit card" }),
+      attribute: "orders.placed_at",
+      calculation: :sum,
+      calculation_arg: "payment_seller_fee + payment_market_fee",
+      format: :currency
+    },
+    # ACH Processing Fees
+    # What LO charges customers for credit card processing payments
+    #
+    # OrderItem#payment_seller_fee + OrderItem#payment_market_fee
+    # when Order#payment_method is "ach"
+    ach_processing_fees: {
+      title: "ACH Processing Fees",
+      scope: BASE_SCOPES[:order_item].where(orders: { payment_method: "ach" }),
+      attribute: "orders.placed_at",
+      calculation: :sum,
+      calculation_arg: "payment_seller_fee + payment_market_fee",
+      format: :currency
+    },
+    # Total Payment Processing Fees:
+    # What LO charges customers for credit card + ACH processing payments
+    #
+    # OrderItem#payment_seller_fee + OrderItem#payment_market_fee
+    # when Order#payment_method is "credit_card" or "ach"
+    total_processing_fees: {
+      title: "Total Processing Fees",
+      scope: BASE_SCOPES[:order_item].where(orders: { payment_method: ["credit card", "ach"] }),
+      attribute: "orders.placed_at",
+      calculation: :sum,
+      calculation_arg: "payment_seller_fee + payment_market_fee",
+      format: :currency
+    },
+    # Total Market Fees
+    # Fees charged to a Market for payments and LO fees
+    #
+    # OrderItem#payment_market_fee + OrderItem#local_orbit_market_fee
+    total_market_fees: {
+      title: "Total Market Fees",
+      scope: BASE_SCOPES[:order_item],
+      attribute: "orders.placed_at",
+      calculation: :sum,
+      calculation_arg: "payment_market_fee + local_orbit_market_fee",
+      format: :currency
+    },
+    # Total Seller Fees
+    # Fees charged to a Seller for payments and LO fees
+    #
+    # OrderItem#payment_seller_fee + OrderItem#local_orbit_seller_fee
+    total_seller_fees: {
+      title: "Total Seller Fees",
+      scope: BASE_SCOPES[:order_item],
+      attribute: "orders.placed_at",
+      calculation: :sum,
+      calculation_arg: "payment_seller_fee + local_orbit_seller_fee",
       format: :currency
     },
     total_markets: {
@@ -239,7 +330,9 @@ class MetricsPresenter
       title: "Financials",
       metrics: [
         :total_orders, :total_sales, :average_order, :average_order_size,
-        :total_service_fees, :total_transaction_fees
+        :total_service_fees, :total_transaction_fees, :total_delivery_fees,
+        :average_delivery_fees, :average_service_fees, :credit_card_processing_fees,
+        :ach_processing_fees, :total_processing_fees, :total_market_fees, :total_seller_fees
         # :avg_lo_fees, :avg_lo_fee_pct, :sales_pct_growth, :lo_fees, :fee_pct_growth, :service_fees
       ]
     },
