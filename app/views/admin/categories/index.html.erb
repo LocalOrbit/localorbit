@@ -5,35 +5,37 @@
     <div class="l-page-header">
      <h1><i class="font-icon" data-icon="&#xe023;">&nbsp; </i>Product Taxonomy</h1>
 
-     <%= select_tag :filter_depth, options_for_select([['Top-Level Categories', 1], ['Subcategories', 2], ['All', max_depth]], max_depth), id: 'filter-categories', data: { parameter: "depth"} %>
+     <%= select_tag :filter_depth, options_for_select([['Top-Level Categories', 1], ['Subcategories', 2], ['All', max_depth]], max_depth), id: 'filter-categories', data: { parameter: "depth"}, class: "taxonomy-select" %>
     </div>
   </div>
 </div>
 
-<%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: 'export pull-right' %>
+<%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: 'export pull-right taxonomy-export' %>
 
 <div class="row row--partial">
-  <div class="column">
-    <table>
-      <thead>
-        <th colspan="<%= max_depth %>">Name</th>
-        <th>Products</th>
-      </thead>
-      <tbody>
-        <% @root.descendants.each do |category| %>
-          <tr data-depth="<%= category.depth %>">
-            <% row_categories = category.self_and_ancestors.where("depth > 0") %>
-            <% row_categories.each do |column_category| %>
-              <td <%= "colspan=#{max_depth + 1 - column_category.depth}" if column_category == row_categories.last %>>
-                <%= link_to column_category.name, [:admin, category] %>
+  <div class="table-wrapper">
+    <div class="column">
+      <table>
+        <thead>
+          <th colspan="<%= max_depth %>">Name</th>
+          <th>Products</th>
+        </thead>
+        <tbody>
+          <% @root.descendants.each do |category| %>
+            <tr data-depth="<%= category.depth %>">
+              <% row_categories = category.self_and_ancestors.where("depth > 0") %>
+              <% row_categories.each do |column_category| %>
+                <td <%= "colspan=#{max_depth + 1 - column_category.depth}" if column_category == row_categories.last %>>
+                  <%= link_to column_category.name, [:admin, category] %>
+                </td>
+              <% end %>
+              <td>
+                <%= link_to category.products.count, [:admin, category] %>
               </td>
-            <% end %>
-            <td>
-              <%= link_to category.products.count, [:admin, category] %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

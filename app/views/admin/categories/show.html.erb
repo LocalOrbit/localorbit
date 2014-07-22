@@ -8,23 +8,25 @@
 </div>
 
 <div class="row row--partial">
-  <div class="column">
-    <table>
-      <thead>
-        <th>Product</th>
-        <th>Seller</th>
-        <th>Market</th>
-      </thead>
-      <tbody>
-        <% @category.products.each do |product| %>
-          <tr>
-            <td><%= link_to product.name, [:admin, product] %></td>
-            <td><%= link_to product.organization.name, [:admin, product] %></td>
-            <td><%= link_to product.organization.markets.pluck(:name).join(", "), [:admin, product] %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="table-wrapper">
+    <div class="column">
+      <table>
+        <thead>
+          <th>Product</th>
+          <th>Seller</th>
+          <th>Market</th>
+        </thead>
+        <tbody>
+          <% @category.products.each do |product| %>
+            <tr>
+              <td><%= link_to product.name, [:admin, product] %></td>
+              <td><%= link_to product.organization.name, [:admin, product] %></td>
+              <td><%= link_to product.organization.markets.pluck(:name).join(", "), [:admin, product] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
