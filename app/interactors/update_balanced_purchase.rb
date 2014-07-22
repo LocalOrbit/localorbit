@@ -39,7 +39,7 @@ class UpdateBalancedPurchase
         context[:type] = payment.payment_method
 
         refund_amount = [remaining_amount, payment.unrefunded_amount].min
-        refund = payment.balanced_transaction.refund(amount: (refund_amount * 100).to_i)
+        refund = payment.balanced_transaction.refund(amount: amount_to_cents(refund_amount))
 
         payment.increment!(:refunded_amount, refund_amount)
         record_payment("order refund", -refund_amount, refund, payment.bank_account)
@@ -61,7 +61,7 @@ class UpdateBalancedPurchase
     context[:type] = payment.payment_method
 
     new_debit = account.bankable.balanced_customer.debit(
-      amount: (amount * 100).to_i,
+      amount: amount_to_cents(amount),
       source_uri: account.balanced_uri,
       description: "#{order.market.name} purchase"
     )
@@ -104,5 +104,9 @@ class UpdateBalancedPurchase
     else
       "failed"
     end
+  end
+
+  def amount_to_cents(amount)
+    (amount * 100).to_i
   end
 end
