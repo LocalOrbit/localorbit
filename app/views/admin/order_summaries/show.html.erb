@@ -1,5 +1,5 @@
 <%= link_to "Back to Upcoming Deliveries", admin_delivery_tools_path, class: 'back-button' %>
-<button class="btn btn--action btn--small pull-right" id="print-button">Print</button>
+<button class="btn btn--action btn--small pull-right print-button" id="print-button">Print</button>
 
 <% @summaries.sellers.each_with_index do |(seller, orders), index| %>
   <% if index != 0 %>
