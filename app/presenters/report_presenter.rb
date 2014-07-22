@@ -124,7 +124,7 @@ class ReportPresenter
   end
 
   def self.reports_for_user(user)
-    if user.has_made_purchase?
+    if user.is_seller_with_purchase?
       seller_reports + buyer_reports
     elsif user.buyer_only?
       buyer_reports

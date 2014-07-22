@@ -90,9 +90,9 @@ class User < ActiveRecord::Base
     !admin? && !market_manager? && !seller?
   end
 
-  def has_made_purchase?
+  def is_seller_with_purchase?
     ids = organizations.pluck(:id)
-    Order.where(organization_id: ids).count > 0
+    seller? && Order.where(organization_id: ids).count > 0
   end
 
   def managed_organizations
