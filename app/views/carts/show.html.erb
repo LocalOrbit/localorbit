@@ -99,7 +99,6 @@
                         Add a <%= link_to "credit card", new_admin_organization_bank_account_path(current_organization) %> to your account.
                       <% end %><br>
 
-                      <% unless Rails.env.production? %>
                       <label>New Credit Card</label><br>
                       <fieldset id="balanced-payments-uri" data-balanced-marketplace-uri="<%= ENV["BALANCED_MARKETPLACE_URI"] %>">
                         <div class="row">
@@ -137,7 +136,6 @@
                           </div>
                         </div>
                       </fieldset>
-                      <% end %>
                     </div>
                   </fieldset>
                 </div>
