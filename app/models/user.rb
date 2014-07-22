@@ -90,6 +90,11 @@ class User < ActiveRecord::Base
     !admin? && !market_manager? && !seller?
   end
 
+  def has_made_purchase?
+    ids = organizations.pluck(:id)
+    Order.where(organization_id: ids).count > 0
+  end
+
   def managed_organizations
     @managed_organizations ||= begin
       market_ids = []

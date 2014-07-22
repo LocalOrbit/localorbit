@@ -76,6 +76,14 @@ class ReportPresenter
     }
   }.with_indifferent_access
 
+  def self.buyer_reports
+    REPORT_MAP.keys.select {|k| REPORT_MAP[k][:buyer_only] }
+  end
+
+  def self.seller_reports
+    REPORT_MAP.keys.reject {|k| REPORT_MAP[k][:buyer_only] }
+  end
+
   def initialize(report:, user:, search: {}, paginate: {})
     search ||= {}
 
@@ -116,10 +124,12 @@ class ReportPresenter
   end
 
   def self.reports_for_user(user)
-    if user.buyer_only?
-      REPORT_MAP.keys.select {|k| REPORT_MAP[k][:buyer_only] }
+    if user.has_made_purchase?
+      seller_reports + buyer_reports
+    elsif user.buyer_only?
+      buyer_reports
     else
-      REPORT_MAP.keys.reject {|k| REPORT_MAP[k][:buyer_only] }
+      seller_reports
     end
   end
 

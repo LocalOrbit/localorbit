@@ -1,4 +1,4 @@
-shared_examples "an action that restricts access to buyers only" do |action|
+shared_examples "an action that grants access to buyers and sellers only" do |action|
   let(:market)                    { create(:market) }
   let(:organization)              { create(:organization, :buyer, markets: [market]) }
   let(:seller_organization)       { create(:organization, :seller, markets: [market]) }
@@ -6,6 +6,7 @@ shared_examples "an action that restricts access to buyers only" do |action|
   let(:market_manager)            { create(:user, managed_markets: [market]) }
   let(:buyer_only)                { create(:user, organizations: [organization]) }
   let(:seller)                    { create(:user, organizations: [seller_organization]) }
+  let!(:order)                    { create(:order, organization: seller_organization) }
 
   def meet_expected_expectation
     %w[show].include?(controller.action_name) ? be_a_success : be_a_redirect
@@ -25,12 +26,12 @@ shared_examples "an action that restricts access to buyers only" do |action|
     expect(response).to be_not_found
   end
 
-  it "prevents access to sellers" do
+  it "grants access to sellers" do
     sign_in seller
 
     instance_exec(&action)
 
-    expect(response).to be_not_found
+    expect(response).to meet_expected_expectation
   end
 
   it "grants access to buyer only" do
@@ -41,11 +42,11 @@ shared_examples "an action that restricts access to buyers only" do |action|
     expect(response).to meet_expected_expectation
   end
 
-  it "grants access to admins" do
+  it "prevents access to admins" do
     sign_in admin
 
     instance_exec(&action)
 
-    expect(response).to meet_expected_expectation
+    expect(response).to be_not_found
   end
 end

@@ -1,4 +1,4 @@
-shared_examples "an action that restricts access to non-sellers only" do |action|
+shared_examples "an action that grants access to buyers only" do |action|
   let(:market)                    { create(:market) }
   let(:organization)              { create(:organization, :buyer, markets: [market]) }
   let(:seller_organization)       { create(:organization, :seller, markets: [market]) }

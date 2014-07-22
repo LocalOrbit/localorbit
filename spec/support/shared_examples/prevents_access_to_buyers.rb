@@ -1,4 +1,4 @@
-shared_examples "an action that restricts access to non buyers only" do |action|
+shared_examples "an action that prevents access to buyers" do |action|
   let(:market)                    { create(:market) }
   let(:market2)                   { create(:market) }
   let(:organization)              { create(:organization, :buyer, markets: [market]) }
@@ -28,7 +28,7 @@ shared_examples "an action that restricts access to non buyers only" do |action|
     expect(response).to be_not_found
   end
 
-  it "prevents access to organization members" do
+  it "prevents access to buyers" do
     sign_in member
 
     instance_exec(&action)

@@ -104,7 +104,6 @@ FactoryGirl.define do
     delivery_phone   "(616) 555-1222"
 
     delivery_fees    0.00
-    delivery_id      0
 
     payment_method   "purchase order"
     payment_status   "unpaid"
