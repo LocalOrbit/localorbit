@@ -69,7 +69,7 @@ class MetricsPresenter
     },
     total_service_fees: {
       title: "Total Service Fees",
-      scope: BASE_SCOPES[:payment].where(payment_type: 'service'),
+      scope: BASE_SCOPES[:payment].where(payment_type: "service"),
       attribute: "created_at",
       calculation: :sum,
       calculation_arg: :amount,
@@ -81,6 +81,22 @@ class MetricsPresenter
       attribute: "orders.placed_at",
       calculation: :sum,
       calculation_arg: "local_orbit_seller_fee + local_orbit_market_fee",
+      format: :currency
+    },
+    total_delivery_fees: {
+      title: "Total Delivery Fees",
+      scope: BASE_SCOPES[:order],
+      attribute: :placed_at,
+      calculation: :sum,
+      calculation_arg: "delivery_fees",
+      format: :currency
+    },
+    average_delivery_fees: {
+      title: "Average Delivery Fees",
+      scope: BASE_SCOPES[:order],
+      attribute: :placed_at,
+      calculation: :average,
+      calculation_arg: "delivery_fees",
       format: :currency
     },
     total_markets: {
@@ -239,7 +255,7 @@ class MetricsPresenter
       title: "Financials",
       metrics: [
         :total_orders, :total_sales, :average_order, :average_order_size,
-        :total_service_fees, :total_transaction_fees
+        :total_service_fees, :total_transaction_fees, :total_delivery_fees, :average_delivery_fees
         # :avg_lo_fees, :avg_lo_fee_pct, :sales_pct_growth, :lo_fees, :fee_pct_growth, :service_fees
       ]
     },
