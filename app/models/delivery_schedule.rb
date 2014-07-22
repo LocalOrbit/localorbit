@@ -30,19 +30,18 @@ class DeliverySchedule < ActiveRecord::Base
   end
 
   def participating_products
-    if require_delivery? && require_cross_sell_delivery?
-      Product.for_market_id(market_id)
+    scope = if require_delivery? && require_cross_sell_delivery?
+      Product
     elsif require_delivery?
       Product.joins("LEFT JOIN product_deliveries ON products.id = product_deliveries.product_id").
-              where("(market_organizations.cross_sell_origin_market_id IS NULL) OR product_deliveries.delivery_schedule_id = :id", id: id).
-              for_market_id(market_id)
+              where("(market_organizations.cross_sell_origin_market_id IS NULL) OR product_deliveries.delivery_schedule_id = :id", id: id)
     elsif require_cross_sell_delivery?
       Product.joins("LEFT JOIN product_deliveries ON products.id = product_deliveries.product_id").
-              where("(market_organizations.cross_sell_origin_market_id IS NOT NULL) OR product_deliveries.delivery_schedule_id = :id", id: id).
-              for_market_id(market_id)
+              where("(market_organizations.cross_sell_origin_market_id IS NOT NULL) OR product_deliveries.delivery_schedule_id = :id", id: id)
     else
-      products.for_market_id(market_id)
+      products
     end
+    scope.for_market_id(market_id)
   end
 
   def buyer_pickup?
@@ -68,8 +67,6 @@ class DeliverySchedule < ActiveRecord::Base
   def next_delivery_date
     return @next_delivery_date if defined?(@next_delivery_date)
 
-    timezone = market.timezone || Time.zone
-
     Time.use_zone timezone do
       current_time = Time.current
       beginning = current_time.beginning_of_week(:sunday) - 1.week
@@ -77,8 +74,12 @@ class DeliverySchedule < ActiveRecord::Base
       d = Time.zone.parse("#{date} #{seller_delivery_start}")
       d += 1.week while (d - order_cutoff.hours) < current_time
 
-      return @next_delivery_date = d
+      @next_delivery_date = d
     end
+  end
+
+  def timezone
+    market.timezone || Time.zone
   end
 
   def next_delivery

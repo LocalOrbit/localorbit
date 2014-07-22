@@ -144,10 +144,7 @@ class User < ActiveRecord::Base
     @markets ||= if admin?
       Market.all
     else
-      managed_market_ids = managed_markets.pluck(:id)
-
-      organization_member_market_ids = organizations.map(&:markets).flatten.map(&:id)
-      Market.where(id: (managed_market_ids + organization_member_market_ids))
+      markets_for_non_admin
     end
   end
 
@@ -201,5 +198,14 @@ class User < ActiveRecord::Base
 
   def self.order_by_email(direction)
     direction == "asc" ? order("email asc") : order("email desc")
+  end
+
+  private
+
+  def markets_for_non_admin
+    managed_market_ids = managed_markets.pluck(:id)
+
+    organization_member_market_ids = organizations.map(&:market_ids).flatten
+    Market.where(id: (managed_market_ids + organization_member_market_ids))
   end
 end
