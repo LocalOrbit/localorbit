@@ -26,6 +26,6 @@
     <% end %>
   </table>
   <% if current_user.can_manage_market?(current_market) %>
-    <%= link_to "Send Invoices", [:admin, :financials, :invoices], class: "btn btn--blue btn--small" %>
+    <%= link_to "Send Invoices", [:admin, :financials, :invoices], class: "btn btn--blue btn--small mobile-block" %>
   <% end %>
 </div>

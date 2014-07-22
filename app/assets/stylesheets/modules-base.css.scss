@@ -621,7 +621,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .organization-tabs {
+  .tabs-wrapper {
     padding: 0;
 
     .tabs {
@@ -1242,6 +1242,13 @@ label ~ .tooltip {
     border-color: $notice_text;
     color: $notice_text;
     background: $notice_bg;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  label ~ .tooltip {
+    float: right;
+    margin: 0 0 .5em;
   }
 }
 
