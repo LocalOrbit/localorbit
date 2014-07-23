@@ -1,28 +1,35 @@
-<div class="table-wrapper">
-  <table class="products-table <%= cycle "odd", "even" %>">
-    <thead>
-      <tr>
-        <th>Seller</th>
-        <th>Name</th>
-        <th>Pricing</th>
-        <th>Available</th>
-      </tr>
-    </thead>
-  <% @products.limit(10).order("created_at DESC").decorate.each do |product| %>
-    <tr class="product-row">
-      <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]), class: 'seller') %>
-      <td class="name"><%= link_to product.name_and_unit, [:admin, product] %></td>
-      <td class="pricing">
-        <ul class="l-inline-list">
-          <% product.prices.view_sorted.decorate.each do |price| %>
-          <%= content_tag(:li, link_to(price.quick_info, [:admin, product, :prices], class: 'edit-toggle')) %>
-          <% end %>
-        </ul>
-      </td>
-      <td class="stock">
-        <%= link_to product.available_inventory, [:admin, product, :lots], class: "edit-toggle" %>
-      </td>
+<table class="products-table <%= cycle "odd", "even" %>">
+  <thead>
+    <tr>
+      <%= content_tag(:th, 'Seller', data: {column: 'seller'}, class: "hidden-mobile") if current_user.multi_organization_membership? %>
+      <th>Name</th>
+      <th>Pricing</th>
+      <th>Available</th>
     </tr>
-  <% end %>
-  </table>
-</div>
+  </thead>
+<% @products.limit(10).order("created_at DESC").decorate.each do |product| %>
+  <tr class="product-row">
+    <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]), class: 'seller hidden-mobile') if current_user.multi_organization_membership? %>
+    <td class="name product-name"><%= link_to product.name_and_unit, [:admin, product] %></td>
+    <td class="pricing">
+      <ul class="l-inline-list">
+        <% product.prices.view_sorted.decorate.each do |price| %>
+        <li>
+          <%= link_to price.quick_info, "#edit_price_#{price.id}", class: 'edit-toggle popup-toggle' %>
+          <%= render partial: "admin/products/edit_price_advanced", locals: { price: price } %>
+        </li>
+        <% end %>
+      </ul>
+    </td>
+    <td class="stock">
+      <% if product.use_simple_inventory? %>
+        <%= link_to product.available_inventory, "#edit_product_#{product.id}", class: "edit-toggle popup-toggle" %>
+        <%= render partial: "admin/products/edit_lot", locals: { product: product } %>
+      <% else %>
+        <%= link_to product.available_inventory, "#add_inventory_product_#{product.id}", class: "edit-toggle popup-toggle" %>
+        <%= render partial: "admin/products/edit_lot_advanced", locals: { product: product } %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>
