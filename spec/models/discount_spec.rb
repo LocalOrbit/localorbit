@@ -10,18 +10,24 @@ describe Discount do
       expect(subject).to have(1).error_on(:code)
     end
 
+    it "requires code to be unique" do
+      first = create(:discount)
+      subject.code = first.code
+      expect(subject).to have(1).error_on(:code)
+    end
+
     it "requires a type" do
-      expect(subject).to have(2).error_on(:type)
+      expect(subject).to have(1).error_on(:type)
     end
 
     context "valid types" do
       it "allows a type of 'fixed'" do
-        subject.type = 'fixed'
+        subject.type = "fixed"
         expect(subject).to have(0).errors_on(:type)
       end
 
       it "allows a type of 'percentage'" do
-        subject.type = 'percentage'
+        subject.type = "percentage"
         expect(subject).to have(0).errors_on(:type)
       end
     end

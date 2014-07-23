@@ -368,4 +368,11 @@ FactoryGirl.define do
       active true
     end
   end
+
+  factory :discount do
+    sequence(:name) {|n| "Discount ##{n}" }
+    sequence(:code) {|n| n.to_s(16) }
+    type "fixed"
+    discount "5.00"
+  end
 end

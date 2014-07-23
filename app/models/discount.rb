@@ -2,7 +2,7 @@ class Discount < ActiveRecord::Base
   enum type: {percentage: 0, fixed: 1}
 
   validates :name, presence: true
-  validates :code, presence: true
+  validates :code, presence: true, uniqueness: true
   validates :type, presence: true
   validate :starts_before_it_ends
 
