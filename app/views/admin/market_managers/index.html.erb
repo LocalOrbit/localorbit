@@ -9,27 +9,25 @@
       <% end %>
 
     </div>
-    <div class="table-wrapper">
-      <table class="market-managers">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th></th>
-          </tr>
-        </thead>
-        <% @market.managers.each do |user| %>
-        <tr id="<%= dom_id(user) %>">
-          <td><%= user.name %></td>
-          <td><%= user.email %></td>
-          <td class="delete">
-            <%= button_to admin_market_manager_path(@market, user), {method: :delete, class: "delete", data: {confirm: "Are you sure you want to delete #{user.email} from #{@market.name}?"}} do%>
-              <i class="font-icon icon-delete"></i> Remove Manager
-            <% end %>
-          </td>
+    <table class="market-managers">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th></th>
         </tr>
-        <% end %>
-      </table>
-    </div>
+      </thead>
+      <% @market.managers.each do |user| %>
+      <tr id="<%= dom_id(user) %>">
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td class="delete">
+          <%= button_to admin_market_manager_path(@market, user), {method: :delete, class: "delete", data: {confirm: "Are you sure you want to delete #{user.email} from #{@market.name}?"}} do%>
+            <i class="font-icon icon-delete"></i>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
   </div>
 </div>
