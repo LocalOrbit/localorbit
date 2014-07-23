@@ -22,7 +22,11 @@ class MetricsPresenter
   }.freeze
 
   BASE_SCOPES = {
-    order: Order.joins(:items).where.not(market_id: TEST_MARKET_IDS, order_items: { delivery_status: "canceled" }),
+    # When joining orders to order_items, we have to make sure we running calculations
+    # on distinct orders rather than multiples (by order items). The query below
+    # grabs all order IDs where the order's items aren't canceled and returns a
+    # distinct order set from those IDs.
+    order: Order.joins("INNER JOIN (SELECT DISTINCT orders_alias2.id FROM orders orders_alias2 INNER JOIN order_items order_items_alias ON order_items_alias.order_id = orders_alias2.id AND order_items_alias.delivery_status != 'canceled') orders_alias ON orders_alias.id = orders.id"),
     order_item: OrderItem.joins(:order).where.not(orders: { market_id: TEST_MARKET_IDS }, delivery_status: "canceled"),
     payment: Payment.where.not(market_id: TEST_MARKET_IDS),
     market: Market.where.not(id: TEST_MARKET_IDS),
@@ -53,7 +57,7 @@ class MetricsPresenter
     },
     average_order: {
       title: "Average Order",
-      scope: BASE_SCOPES[:order],
+      scope: BASE_SCOPES[:order].joins(:items),
       attribute: :placed_at,
       calculation: :custom,
       calculation_arg: "(SUM(order_items.unit_price * COALESCE(order_items.quantity_delivered, order_items.quantity))::NUMERIC / COUNT(DISTINCT orders.id)::NUMERIC)",
@@ -61,7 +65,7 @@ class MetricsPresenter
     },
     average_order_size: {
       title: "Average Order Size",
-      scope: BASE_SCOPES[:order],
+      scope: BASE_SCOPES[:order].joins(:items),
       attribute: :placed_at,
       calculation: :custom,
       calculation_arg: "(COUNT(DISTINCT order_items.id)::NUMERIC / COUNT(DISTINCT orders.id)::NUMERIC)",
