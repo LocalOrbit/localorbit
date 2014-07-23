@@ -37,7 +37,9 @@ feature "viewing and managing users" do
 
     scenario "viewing user without name" do
       visit "/admin/users"
-      user_row = Dom::Admin::UserRow.find_by_name("user2@example.com")
+      user_row = Dom::Admin::UserRow.find_by_email(user2.email)
+
+      expect(user_row.name).to eq("Edit")
     end
 
     context "editing a user's information" do

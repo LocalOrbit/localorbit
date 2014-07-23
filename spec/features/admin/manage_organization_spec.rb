@@ -298,7 +298,7 @@ describe "admin manange organization", :vcr do
     let!(:organization) do
       create(:organization, name: "University of Michigan Farmers", markets:[market], users:[user])
     end
-    let!(:user2) { create(:user, organizations: [organization])}
+    let!(:user2) { create(:user, organizations: [organization]) }
 
     before do
       switch_to_subdomain(market.subdomain)
@@ -356,8 +356,8 @@ describe "admin manange organization", :vcr do
     scenario "viewing a user without name" do
       visit admin_organization_users_path(organization)
 
-      user_row = Dom::Admin::UserRow.find_by_name(user2.email)
-      expect(user_row.name).to eq(user2.email)
+      user_row = Dom::Admin::UserRow.find_by_email(user2.email)
+      expect(user_row.name).to eq("Edit")
     end
   end
 

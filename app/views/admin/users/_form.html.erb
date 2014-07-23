@@ -1,5 +1,5 @@
 <%= form_for(@user, url: url, html: { class: "column column--two-thirds" }) do |f| %>
-  <h1><i class="font-icon" data-icon="&#xe018;"></i>&nbsp; Editing User<%= ": #{@user.name}" || @user.email %></h1>
+  <h1><i class="font-icon" data-icon="&#xe018;"></i>&nbsp; Editing User<%= ": #{@user.name}" if @user.name.present? %></h1>
 
   <div class="field">
     <%= f.label :name %><br>
