@@ -10,62 +10,63 @@
   <%= render partial: "admin/financials/shared/seller_payment_filters", locals: { payment_history: @payment_history } %>
 <% end %>
 
-<table class="sortable">
-  <thead class="stickable">
-    <tr>
-      <th><%= sort_link(@payment_history.q, :created_at, "Payment Date") %></th>
-      <th>Description</th>
-      <th>Payment Method</th>
-      <% if current_user.admin? || current_user.market_manager? %>
-      <th>Received From</th>
-      <th>Paid To</th>
-      <% end %>
-      <th><%= sort_link(@payment_history.q, :amount, "Amount") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @payment_history.payments.decorate.each do |payment| %>
-      <tr class="payment-row">
-        <td class="date"><%= payment.created_at.strftime("%m/%d/%Y") %></td>
-        <td class="description">
-          <% if payment.payment_type == "order" || payment.payment_type == "seller payment" || payment.payment_type == "market payment" %>
-            Order #: <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
-            <% if payment.orders.count > 1 %>
-              <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#", class:"modal-toggle more-info payment-more", data: { modal: "more-info-#{payment.id}"} %>
-
-              <!-- Modal -->
-              <div class="popup modal more-info-<%= payment.id %> is-hidden order-list-modal">
-                <div class="popup-header">
-                  All Order Numbers Paid on <strong><%= payment.created_at.strftime("%m/%d/%Y") %></strong>
-                  <button class="close"><i class="font-icon icon-close"></i></button>
-                </div>
-                <div class="all-order-numbers">
-                  <% payment.orders.each do |order| %>
-                    <p><%= link_to order.order_number, admin_order_path(order) %></p>
-                  <% end %>
-                </div>
-                <div class="clearfix"></div>
-              </div>
-              <!-- End Modal -->
-
-            <% end %>
-          <% elsif payment.payment_type == "order refund" %>
-            Order Refund #: <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
-          <% else %>
-            <%= Payment::PAYMENT_TYPES[payment.payment_type] %>
-          <% end %>
-        </td>
-        <td class="payment-method"><%= payment.display_payment_method %></td>
+<div class="table-wrapper">
+  <table class="sortable">
+    <thead class="stickable">
+      <tr>
+        <th><%= sort_link(@payment_history.q, :created_at, "Payment Date") %></th>
+        <th>Description</th>
+        <th>Payment Method</th>
         <% if current_user.admin? || current_user.market_manager? %>
-          <td class="from"><%= payment.from %></td>
-          <td class="to"><%= payment.to %></td>
+        <th>Received From</th>
+        <th>Paid To</th>
         <% end %>
-        <td class="amount"><%= number_to_currency(payment.amount) %></td>
+        <th><%= sort_link(@payment_history.q, :amount, "Amount") %></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @payment_history.payments.decorate.each do |payment| %>
+        <tr class="payment-row">
+          <td class="date"><%= payment.created_at.strftime("%m/%d/%Y") %></td>
+          <td class="description">
+            <% if payment.payment_type == "order" || payment.payment_type == "seller payment" || payment.payment_type == "market payment" %>
+              Order #: <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
+              <% if payment.orders.count > 1 %>
+                <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#", class:"modal-toggle more-info payment-more", data: { modal: "more-info-#{payment.id}"} %>
 
+                <!-- Modal -->
+                <div class="popup modal more-info-<%= payment.id %> is-hidden order-list-modal">
+                  <div class="popup-header">
+                    All Order Numbers Paid on <strong><%= payment.created_at.strftime("%m/%d/%Y") %></strong>
+                    <button class="close"><i class="font-icon icon-close"></i></button>
+                  </div>
+                  <div class="all-order-numbers">
+                    <% payment.orders.each do |order| %>
+                      <p><%= link_to order.order_number, admin_order_path(order) %></p>
+                    <% end %>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <!-- End Modal -->
+
+              <% end %>
+            <% elsif payment.payment_type == "order refund" %>
+              Order Refund #: <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
+            <% else %>
+              <%= Payment::PAYMENT_TYPES[payment.payment_type] %>
+            <% end %>
+          </td>
+          <td class="payment-method"><%= payment.display_payment_method %></td>
+          <% if current_user.admin? || current_user.market_manager? %>
+            <td class="from"><%= payment.from %></td>
+            <td class="to"><%= payment.to %></td>
+          <% end %>
+          <td class="amount"><%= number_to_currency(payment.amount) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <%= paginate @payment_history.payments %>
 
 <% if @payment_history.payments.none? %>

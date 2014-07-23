@@ -138,7 +138,10 @@ input[type=submit] {
 }
 
 @media screen and (max-width: 600px) {
-  .btn--add {
+  .filter-container {
+    width: 100%;
+  }
+  .btn--add, .btn--filter {
     width: 100%;
     text-align: center;
     margin-bottom: 10px;

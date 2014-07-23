@@ -21,54 +21,54 @@
   <% end %>
   </p>
 </div>
+<div="table-wrapper">
+  <table class="order-summary">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th></th>
+        <th class="math">Item Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order.items.each do |item| %>
+      <tr class="order-item-row">
+        <td class="name"><%= item.name %></td>
+        <td class="quantity"><%= item.decorate.quantity_with_unit %></td>
+        <td class="price"><%= number_to_currency item.unit_price %></td>
+        <td> </td>
+        <td class="item-total math"><%= number_to_currency item.gross_total %></td>
+      </tr>
+      <% end %>
+    </tbody>
 
-<table class="order-summary">
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Quantity</th>
-      <th>Unit Price</th>
-      <th></th>
-      <th class="math">Item Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @order.items.each do |item| %>
-    <tr class="order-item-row">
-      <td class="name"><%= item.name %></td>
-      <td class="quantity"><%= item.decorate.quantity_with_unit %></td>
-      <td class="price"><%= number_to_currency item.unit_price %></td>
-      <td> </td>
-      <td class="item-total math"><%= number_to_currency item.gross_total %></td>
-    </tr>
-    <% end %>
-  </tbody>
-
-  <tfoot class="math">
-    <tr class="line-item">
-      <td></td>
-      <td></td>
-      <td></td>
-      <th scope="row">Item Subtotal</th>
-      <td class="delivery-fees"><strong><%= number_to_currency @order.subtotal %></strong></td>
-    </tr>
-    <tr class="line-item">
-      <td></td>
-      <td></td>
-      <td></td>
-      <th scope="row">Delivery Fees</th>
-      <td class="delivery-fees"><strong><%= number_to_currency @order.delivery_fees %></strong></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <th scope="row" class="review-order-total">Order Total</th>
-      <td class="total review-order-total"><strong><%= number_to_currency @order.total_cost %></strong></td>
-    </tr>
-  </tfoot>
-</table>
-
+    <tfoot class="math">
+      <tr class="line-item">
+        <td></td>
+        <td></td>
+        <td></td>
+        <th scope="row">Item Subtotal</th>
+        <td class="delivery-fees"><strong><%= number_to_currency @order.subtotal %></strong></td>
+      </tr>
+      <tr class="line-item">
+        <td></td>
+        <td></td>
+        <td></td>
+        <th scope="row">Delivery Fees</th>
+        <td class="delivery-fees"><strong><%= number_to_currency @order.delivery_fees %></strong></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <th scope="row" class="review-order-total">Order Total</th>
+        <td class="total review-order-total"><strong><%= number_to_currency @order.total_cost %></strong></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
 <div class="order-status">
   <div>
     <p><strong>Payment Status</strong>  &nbsp; <%= @order.payment_status.titleize %></p>
