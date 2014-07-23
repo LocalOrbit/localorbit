@@ -212,6 +212,7 @@
  
 @media screen and (max-width: 600px) {
   .order_search,
+  .payment_search,
   .sold_item_search {
     .date-filters {
       float: none;
@@ -239,7 +240,7 @@
       }
     }
   }
-  .order-search-widget {
+  .order-search-widget, .payment-search-widget {
     float: none;
     display: block;
     width: 100%;
@@ -250,6 +251,16 @@
       flex-shrink: 0;
       width: 100%;
     }
+    .payment-search-container {
+      width: 100%;
+      display: inline-block;
+      margin-top: 10px;
+
+      .filter-input {
+        width: 100%;
+      }
+    }
+
     .preserve-alignment {
       -webkit-flex-wrap: wrap;
       -moz-flex-wrap: wrap;
