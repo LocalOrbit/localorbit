@@ -318,6 +318,12 @@ class MetricsPresenter
       calculation: :custom,
       calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
       format: :decimal
+    },
+    total_service_transaction_fees: {
+      title: "Total Service And Transaction Fees",
+      calculation: :ruby,
+      calculation_arg: [:+, :total_service_fees, :total_transaction_fees],
+      format: :currency
     }
   }
 
@@ -328,7 +334,8 @@ class MetricsPresenter
         :total_orders, :total_sales, :average_order, :average_order_size,
         :total_service_fees, :total_transaction_fees, :total_delivery_fees,
         :average_delivery_fees, :average_service_fees, :credit_card_processing_fees,
-        :ach_processing_fees, :total_processing_fees, :total_market_fees
+        :ach_processing_fees, :total_processing_fees, :total_market_fees,
+        :total_service_transaction_fees
       ]
     },
     markets: {
@@ -409,9 +416,9 @@ class MetricsPresenter
     scope.send(groupdate, attribute, options)
   end
 
-  def calculate_metric(metric, interval)
+  def calculate_metric(metric, interval, apply_format = true)
     m = METRICS[metric]
-    scope = m[:scope].uniq
+    scope = m[:scope].uniq if m[:scope]
 
     values = if m[:calculation] == :custom
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
@@ -424,12 +431,22 @@ class MetricsPresenter
       # we have to calculate all history when using windows so we need to only
       # return the last X values from the result set
       format_values(values, interval)
+
+    elsif m[:calculation] == :ruby
+      args = m[:calculation_arg]
+      metric1 = calculate_metric(args[1], interval, false)
+      metric2 = calculate_metric(args[2], interval, false)
+
+      Hash[metric1.map do |key, value|
+        [key, value.send(args[0], metric2[key])]
+      end]
+
     else
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
       series.send(m[:calculation], m[:calculation_arg])
     end
 
-    Hash[values.map { |key, value| [key, format_value(value, m[:format])] }]
+    Hash[values.map { |key, value| [key, (apply_format ? format_value(value, m[:format]) : value)] }]
   end
 
   def format_value(value, format)
