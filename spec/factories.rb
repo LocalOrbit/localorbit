@@ -1,4 +1,120 @@
 FactoryGirl.define do
+  factory :bank_account do
+    trait :credit_card do
+      bank_name        "Visa"
+      account_type     "visa"
+      sequence(:last_four) {|n| "#{'%04d' % n}"}
+      expiration_month 5
+      expiration_year  2020
+    end
+
+    trait :checking do
+      bank_name        "LMCU"
+      account_type     "checking"
+      sequence(:last_four) {|n| "#{'%04d' % n}"}
+    end
+
+    trait :verified do
+      verified true
+    end
+  end
+
+  factory :cart do
+    organization
+    market
+    delivery
+    user
+
+    trait :with_items do
+      after(:create) do |cart|
+        create_list(:cart_item, 2, cart: cart)
+      end
+    end
+  end
+
+  factory :cart_item do
+    product { create(:product, :sellable) }
+    cart
+    quantity 1
+  end
+
+  factory :category do
+    sequence(:name) {|n| "Category #{n}" }
+  end
+
+  factory :delivery do
+    delivery_schedule
+    deliver_on Date.today
+  end
+
+  factory :delivery_schedule do
+    day 2
+    order_cutoff 6
+    seller_fulfillment_location_id 0
+    seller_delivery_start '7:00 AM'
+    seller_delivery_end   '11:00 AM'
+    association :market, factory: [:market, :with_addresses]
+
+    trait :buyer_pickup do
+      seller_fulfillment_location { market.addresses.first }
+      buyer_pickup_start '10:00 AM'
+      buyer_pickup_end '12:00 PM'
+      buyer_pickup_location { market.addresses.first }
+    end
+
+    trait :fixed_fee do
+      fee_type "fixed"
+      fee 1.00
+    end
+
+    trait :percent_fee do
+      fee_type "percent"
+      fee 25
+    end
+  end
+
+  factory :discount do
+    sequence(:name) {|n| "Discount ##{n}" }
+    sequence(:code) {|n| n.to_s(16) }
+    type "fixed"
+    discount "5.00"
+  end
+
+  factory :location do
+    sequence(:name) {|n| "Location #{n}" }
+    address "500 S. State Street"
+    city "Ann Arbor"
+    state "MI"
+    zip "48109"
+    sequence(:phone) {|n| "(616) 555-#{'%04d' % n}"}
+    organization
+
+    trait :default_billing do
+      default_billing true
+    end
+
+    trait :default_shipping do
+      default_shipping true
+    end
+
+    trait :decorated do
+      initialize_with do
+        LocationDecorator.new(new)
+      end
+    end
+  end
+
+  factory :lot do
+    product
+    quantity 150
+
+    trait :with_expiration do
+      sequence(:number) {|n| "lot-#{n}"}
+      good_from Time.current
+      expires_at 1.week.from_now
+    end
+  end
+
   factory :market do
     plan
     sequence(:name)      {|n| "Market #{n}" }
@@ -43,43 +159,20 @@ FactoryGirl.define do
     end
   end
 
-  factory :plan do
-    sequence(:name) {|n| "Plan ##{n}" }
-
-    discount_codes     true
-    cross_selling      true
-    custom_branding    true
-    automatic_payments true
+  factory :market_address do
+    sequence(:name) {|n| "Market Address #{n}" }
+    address "44 E. 8th St"
+    city "Holland"
+    state "MI"
+    zip "49423"
+    phone "(616) 555-1212"
   end
 
-  factory :user do
-    sequence(:email) {|n| "user#{n}@example.com" }
-    password "password"
-    password_confirmation "password"
-    role 'user'
-    confirmed_at { Time.current }
-
-    trait :market_manager do
-      role 'user'
-      after(:create) do |user|
-        if user.managed_markets.empty?
-          m = create(:market)
-          user.managed_markets << m
-        end
-      end
-    end
-
-    trait :admin do
-      role 'admin'
-    end
-
-    trait :seller do
-      after(:create) do |user|
-        m = create(:market)
-        o = create(:organization, :seller, markets: [m])
-        user.organizations << o
-      end
-    end
+  factory :newsletter do
+    subject "Some News"
+    header "Some Exciting News"
+    body "news goes here"
+    market
   end
 
   factory :order do
@@ -115,7 +208,6 @@ FactoryGirl.define do
         order.items = create_list(:order_item, 1, product: create(:product, :sellable))
       end
     end
-
   end
 
   factory :order_item do
@@ -191,6 +283,21 @@ FactoryGirl.define do
     end
   end
 
+  factory :plan do
+    sequence(:name) {|n| "Plan ##{n}" }
+
+    discount_codes     true
+    cross_selling      true
+    custom_branding    true
+    automatic_payments true
+  end
+
+  factory :price do
+    product
+    min_quantity 1
+    sale_price 3.00
+  end
+
   factory :product do
     sequence(:name) {|n| "Product #{n}" }
     category { Category.find_by(name: "Empire Apples") }
@@ -215,148 +322,6 @@ FactoryGirl.define do
     end
   end
 
-  factory :lot do
-    product
-    quantity 150
-
-    trait :with_expiration do
-      sequence(:number) {|n| "lot-#{n}"}
-      good_from Time.current
-      expires_at 1.week.from_now
-    end
-  end
-
-  factory :price do
-    product
-    min_quantity 1
-    sale_price 3.00
-  end
-
-  factory :category do
-    sequence(:name) {|n| "Category #{n}" }
-  end
-
-  factory :location do
-    sequence(:name) {|n| "Location #{n}" }
-    address "500 S. State Street"
-    city "Ann Arbor"
-    state "MI"
-    zip "48109"
-    sequence(:phone) {|n| "(616) 555-#{'%04d' % n}"}
-    organization
-
-    trait :default_billing do
-      default_billing true
-    end
-
-    trait :default_shipping do
-      default_shipping true
-    end
-
-    trait :decorated do
-      initialize_with do
-        LocationDecorator.new(new)
-      end
-    end
-  end
-
-  factory :market_address do
-    sequence(:name) {|n| "Market Address #{n}" }
-    address "44 E. 8th St"
-    city "Holland"
-    state "MI"
-    zip "49423"
-    phone "(616) 555-1212"
-  end
-
-  factory :delivery_schedule do
-    day 2
-    order_cutoff 6
-    seller_fulfillment_location_id 0
-    seller_delivery_start '7:00 AM'
-    seller_delivery_end   '11:00 AM'
-    association :market, factory: [:market, :with_addresses]
-
-    trait :buyer_pickup do
-      seller_fulfillment_location { market.addresses.first }
-      buyer_pickup_start '10:00 AM'
-      buyer_pickup_end '12:00 PM'
-      buyer_pickup_location { market.addresses.first }
-    end
-
-    trait :fixed_fee do
-      fee_type "fixed"
-      fee 1.00
-    end
-
-    trait :percent_fee do
-      fee_type "percent"
-      fee 25
-    end
-  end
-
-  factory :delivery do
-    delivery_schedule
-    deliver_on Date.today
-  end
-
-  factory :cart do
-    organization
-    market
-    delivery
-    user
-
-    trait :with_items do
-      after(:create) do |cart|
-        create_list(:cart_item, 2, cart: cart)
-      end
-    end
-  end
-
-  factory :cart_item do
-    product { create(:product, :sellable) }
-    cart
-    quantity 1
-
-  end
-
-  factory :bank_account do
-    trait :credit_card do
-      bank_name        "Visa"
-      account_type     "visa"
-      sequence(:last_four) {|n| "#{'%04d' % n}"}
-      expiration_month 5
-      expiration_year  2020
-    end
-
-    trait :checking do
-      bank_name        "LMCU"
-      account_type     "checking"
-      sequence(:last_four) {|n| "#{'%04d' % n}"}
-    end
-
-    trait :verified do
-      verified true
-    end
-  end
-
-  factory :unit do
-    singular "box"
-    plural   "boxes"
-  end
-
-  factory :sequence do
-    name "stuff"
-    value 0
-  end
-
-  factory :newsletter do
-    subject "Some News"
-    header "Some Exciting News"
-    body "news goes here"
-    market
-  end
-
   factory :promotion do
     market
     product
@@ -369,10 +334,43 @@ FactoryGirl.define do
     end
   end
 
-  factory :discount do
-    sequence(:name) {|n| "Discount ##{n}" }
-    sequence(:code) {|n| n.to_s(16) }
-    type "fixed"
-    discount "5.00"
+  factory :sequence do
+    name "stuff"
+    value 0
+  end
+
+  factory :unit do
+    singular "box"
+    plural   "boxes"
+  end
+
+  factory :user do
+    sequence(:email) {|n| "user#{n}@example.com" }
+    password "password"
+    password_confirmation "password"
+    role 'user'
+    confirmed_at { Time.current }
+
+    trait :market_manager do
+      role 'user'
+      after(:create) do |user|
+        if user.managed_markets.empty?
+          m = create(:market)
+          user.managed_markets << m
+        end
+      end
+    end
+
+    trait :admin do
+      role 'admin'
+    end
+
+    trait :seller do
+      after(:create) do |user|
+        m = create(:market)
+        o = create(:organization, :seller, markets: [m])
+        user.organizations << o
+      end
+    end
   end
 end
