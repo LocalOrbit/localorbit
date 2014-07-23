@@ -8,7 +8,7 @@ feature "viewing and managing users" do
   let!(:organization) {  create(:organization, name: 'Test Org 1', markets: [market])}
   let!(:organization2) {  create(:organization, name: 'Test Org 2', markets: [market])}
   let!(:user) { create(:user, name: "New Dude", organizations: [organization, organization2]) }
-
+  let!(:user2) { create(:user)}
   context "as an admin" do
     before do
       switch_to_main_domain
@@ -33,6 +33,13 @@ feature "viewing and managing users" do
       expect(page).to have_content(admin.name)
       expect(page).to have_content(admin.email)
       expect(page).to have_content(market.name)
+    end
+
+    scenario "viewing user without name" do
+      visit "/admin/users"
+      user_row = Dom::Admin::UserRow.find_by_email(user2.email)
+
+      expect(user_row.name).to eq("Edit")
     end
 
     context "editing a user's information" do
