@@ -283,6 +283,10 @@
       padding: 0;
     }
   }
+  .column--fourth,
+  .column--third {
+    width: 50%;
+  }
   .hidden-mobile {
     display: none !important;
   }
@@ -317,6 +321,16 @@
     }
     .secondary-panes {
       float: right;
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .column--fourth,
+  .column--third {
+    width: 100%;
+    &.column--guttered {
+      padding:0 ;
     }
   }
 }

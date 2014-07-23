@@ -653,6 +653,14 @@
   .tabs {
     font-size: 14px;
   }
+  .tabs--small {
+    font-size: 11px;
+    > .tab {
+      > a {
+        padding: 12px 5px;
+      }
+    }
+  }
 }
   .tabs--bottom {
     text-align: left;
@@ -1044,6 +1052,11 @@
   -webkit-transition:-webkit-transform .4s linear, max-height .4s linear;
      -moz-transition:   -moz-transform .4s linear, max-height .4s linear;
           transition:        transform .4s linear, max-height .4s linear;
+}
+.seller-map-slide {
+  > img {
+    height: auto;
+  }
 }
 .delivery {
   .date {

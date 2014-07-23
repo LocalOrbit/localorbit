@@ -2,7 +2,7 @@
 
 <div class="row three-fourths-rule">
   <div class="column column--three-fourths column--guttered">
-    <div class="tab-box">
+    <div class="tab-box" id="market-tab-box">
       <ul class="tabs tabs--small unguttered">
         <li class="tab">
           <a href="#market-about" class="active">About</a>
@@ -47,28 +47,32 @@
     </div>
   </div
   ><aside class="column column--fourth column-guttered market-sidebar">
-    <h2 class="story-header">Contact Us</h2>
-    <div class="vcard">
-      <% if @market.contact_name.present? %><strong class="fn"><%= @market.contact_name %></strong><br><% end %>
-      <% if @market.contact_email.present? %><%= link_to @market.contact_email, @market.contact_email, class: "email" %><br><% end %>
-      <% if @market.first_address %>
-      <p class="adr">
-        <span class="street-address"><%= @market.first_address.address %></span><br>
-        <span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%=@market.first_address.state %></span> <span class="postal-code"><%= @market.first_address.zip %></span>
-      </p>
-      <% end %>
-      <% if @market.contact_phone.present? %><span class="tel"><%= @market.contact_phone %></span><% end %>
+    <div class="mobile-entab" data-tabbox="#market-tab-box">
+      <h2 class="story-header">Contact Us</h2>
+      <div class="vcard">
+        <% if @market.contact_name.present? %><strong class="fn"><%= @market.contact_name %></strong><br><% end %>
+        <% if @market.contact_email.present? %><%= link_to @market.contact_email, @market.contact_email, class: "email" %><br><% end %>
+        <% if @market.first_address %>
+        <p class="adr">
+          <span class="street-address"><%= @market.first_address.address %></span><br>
+          <span class="locality"><%= @market.first_address.city %></span>, <span class="region"><%=@market.first_address.state %></span> <span class="postal-code"><%= @market.first_address.zip %></span>
+        </p>
+        <% end %>
+        <% if @market.contact_phone.present? %><span class="tel"><%= @market.contact_phone %></span><% end %>
+      </div>
     </div>
 
-    <h2 class="story-header">Pick ups &amp; Deliveries</h2>
-    <ul class="list-naked list-zebra deliveries-list">
-    <% @market.delivery_schedules.visible.order(:day).decorate.each do |delivery| %>
-      <li>
-        <strong class="display-date"><%= delivery.plural_weekday %></strong> —
-        <span class="time-range"><%= delivery.time_window %></span><br>
-        <span class="location"><%= delivery.pickup_or_dropoff %><br></span>
-      </li>
-    <% end %>
-    </ul>
+    <div class="mobile-entab" data-tabbox="#market-tab-box">
+      <h2 class="story-header">Pick ups &amp; Deliveries</h2>
+      <ul class="list-naked list-zebra deliveries-list">
+      <% @market.delivery_schedules.visible.order(:day).decorate.each do |delivery| %>
+        <li>
+          <strong class="display-date"><%= delivery.plural_weekday %></strong> —
+          <span class="time-range"><%= delivery.time_window %></span><br>
+          <span class="location"><%= delivery.pickup_or_dropoff %><br></span>
+        </li>
+      <% end %>
+      </ul>
+    </div>
   </aside>
 </div>
