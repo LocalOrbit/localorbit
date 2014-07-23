@@ -214,7 +214,7 @@ class MetricsPresenter
     },
     lo_payment_markets: {
       title: "Markets Using LO Payments",
-      scope: BASE_SCOPES[:market],
+      scope: BASE_SCOPES[:market].where(allow_purchase_orders: true, default_allow_purchase_orders: true),
       attribute: :created_at,
       calculation: :window,
       format: :integer
