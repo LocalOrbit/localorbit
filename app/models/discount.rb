@@ -1,4 +1,6 @@
 class Discount < ActiveRecord::Base
+  self.inheritance_column = nil
+
   enum type: {percentage: 0, fixed: 1}
 
   validates :name, presence: true
