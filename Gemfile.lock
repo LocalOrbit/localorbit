@@ -234,7 +234,6 @@ GEM
     minitest (5.4.0)
     multi_json (1.10.1)
     multipart-post (1.2.0)
-    mysql2 (0.3.16)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
@@ -446,7 +445,6 @@ DEPENDENCIES
   jwt
   kaminari
   launchy
-  mysql2
   newrelic-dragonfly
   newrelic_rpm (< 3.9.0)
   passenger
