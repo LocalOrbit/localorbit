@@ -70,8 +70,8 @@ feature "a market manager viewing their dashboard" do
 
       expect(seller_row.seller).to eq("Super Farm!")
       expect(seller_row.name).to eq("Power Food (Capsule)")
-      expect(seller_row.pricing).to eq("$20.00")
-      expect(seller_row.stock).to eq("123")
+      expect(seller_row.pricing).to have_content("$20.00")
+      expect(seller_row.stock).to have_content("123")
     end
 
     it "displays a message if there are no products" do

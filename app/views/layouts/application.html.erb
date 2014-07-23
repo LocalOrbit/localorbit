@@ -7,7 +7,13 @@
   <%= stylesheet_link_tag "application", media: "all" %>
   <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300|Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
   <%= csrf_meta_tags %>
+  <style id="viewport-declarations">
+    @-ms-viewport{ width: device-width;, zoom: 1.0}
+    @-o-viewport{ width: device-width; zoom: 1.0}
+    @viewport{ width: device-width; zoom: 1.0}
+  </style>
   <% if current_market.present? %>
+
     <style>
       body {
       <% if current_market.background_color.present? -%>
@@ -137,6 +143,7 @@
             Powered by <span class="org">Local Orbit</span><br>
             © 2014
           </a>
+          <button class="btn reset mobile-only mobile-block toggle-viewport">View Desktop Version</button>
         </div>
       </div>
     </footer>
