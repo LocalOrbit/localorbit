@@ -53,10 +53,10 @@ class MetricsPresenter
     },
     average_order: {
       title: "Average Order",
-      scope: BASE_SCOPES[:order_item],
-      attribute: "orders.placed_at",
-      calculation: :average,
-      calculation_arg: "unit_price * COALESCE(quantity_delivered, quantity)",
+      scope: BASE_SCOPES[:order],
+      attribute: :placed_at,
+      calculation: :custom,
+      calculation_arg: "(SUM(order_items.unit_price * COALESCE(order_items.quantity_delivered, order_items.quantity))::NUMERIC / COUNT(DISTINCT orders.id)::NUMERIC)",
       format: :currency
     },
     average_order_size: {
@@ -95,17 +95,25 @@ class MetricsPresenter
       calculation_arg: "local_orbit_seller_fee + local_orbit_market_fee",
       format: :currency
     },
+    # Total Delivery Fees
+    # Total of order delivery fees excluding orders without a delivery fee
+    #
+    # Order#delivery_fees when Order#delivery_fees is present
     total_delivery_fees: {
       title: "Total Delivery Fees",
-      scope: BASE_SCOPES[:order],
+      scope: BASE_SCOPES[:order].where.not(delivery_fees: [nil, 0]),
       attribute: :placed_at,
       calculation: :sum,
       calculation_arg: "delivery_fees",
       format: :currency
     },
+    # Average Delivery Fees
+    # Average of order delivery fees excluding orders without a delivery fee
+    #
+    # Order#delivery_fees when Order#delivery_fees is present
     average_delivery_fees: {
       title: "Average Delivery Fees",
-      scope: BASE_SCOPES[:order],
+      scope: BASE_SCOPES[:order].where.not(delivery_fees: [nil, 0]),
       attribute: :placed_at,
       calculation: :average,
       calculation_arg: "delivery_fees",
@@ -159,19 +167,7 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order_item],
       attribute: "orders.placed_at",
       calculation: :sum,
-      calculation_arg: "payment_market_fee + local_orbit_market_fee",
-      format: :currency
-    },
-    # Total Seller Fees
-    # Fees charged to a Seller for payments and LO fees
-    #
-    # OrderItem#payment_seller_fee + OrderItem#local_orbit_seller_fee
-    total_seller_fees: {
-      title: "Total Seller Fees",
-      scope: BASE_SCOPES[:order_item],
-      attribute: "orders.placed_at",
-      calculation: :sum,
-      calculation_arg: "payment_seller_fee + local_orbit_seller_fee",
+      calculation_arg: "market_seller_fee",
       format: :currency
     },
     total_markets: {
@@ -322,6 +318,12 @@ class MetricsPresenter
       calculation: :custom,
       calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
       format: :decimal
+    },
+    total_service_transaction_fees: {
+      title: "Total Service And Transaction Fees",
+      calculation: :ruby,
+      calculation_arg: [:+, :total_service_fees, :total_transaction_fees],
+      format: :currency
     }
   }
 
@@ -332,8 +334,8 @@ class MetricsPresenter
         :total_orders, :total_sales, :average_order, :average_order_size,
         :total_service_fees, :total_transaction_fees, :total_delivery_fees,
         :average_delivery_fees, :average_service_fees, :credit_card_processing_fees,
-        :ach_processing_fees, :total_processing_fees, :total_market_fees, :total_seller_fees
-        # :avg_lo_fees, :avg_lo_fee_pct, :sales_pct_growth, :lo_fees, :fee_pct_growth, :service_fees
+        :ach_processing_fees, :total_processing_fees, :total_market_fees,
+        :total_service_transaction_fees
       ]
     },
     markets: {
@@ -414,9 +416,9 @@ class MetricsPresenter
     scope.send(groupdate, attribute, options)
   end
 
-  def calculate_metric(metric, interval)
+  def calculate_metric(metric, interval, apply_format = true)
     m = METRICS[metric]
-    scope = m[:scope].uniq
+    scope = m[:scope].uniq if m[:scope]
 
     values = if m[:calculation] == :custom
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
@@ -429,12 +431,22 @@ class MetricsPresenter
       # we have to calculate all history when using windows so we need to only
       # return the last X values from the result set
       format_values(values, interval)
+
+    elsif m[:calculation] == :ruby
+      args = m[:calculation_arg]
+      metric1 = calculate_metric(args[1], interval, false)
+      metric2 = calculate_metric(args[2], interval, false)
+
+      Hash[metric1.map do |key, value|
+        [key, value.send(args[0], metric2[key])]
+      end]
+
     else
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
       series.send(m[:calculation], m[:calculation_arg])
     end
 
-    Hash[values.map { |key, value| [key, format_value(value, m[:format])] }]
+    Hash[values.map { |key, value| [key, (apply_format ? format_value(value, m[:format]) : value)] }]
   end
 
   def format_value(value, format)
