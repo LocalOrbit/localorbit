@@ -1,16 +1,27 @@
 find_orientation = ->
-  if screen.width < screen.height
+  if window.innerWidth < window.innerHeight
     "portrait"
-  else if screen.width > screen.height
+  else if window.innerWidth > window.innerHeight
     "landscape"
   else
     "square"
 
 set_viewport = ->
-  if window.innerWidth <= 767 && find_orientation() == "landscape"
-    document.getElementById("viewport").setAttribute("content", "width=960, initial-scale=1.0");
-  else if window.innerWidth <=767
-    document.getElementById("viewport").setAttribute("content", "width=device-width, initial-scale=1.0");
+  viewport = document.getElementById('viewport')
+  if $('body').hasClass('request-desktop')
+    viewport.setAttribute("content", "width=960, initial-scale=1.0");
+    $('#viewport-declarations').text("@-ms-viewport{ width: 960px; zoom: 1.0}\n@-o-viewport{ width: 960px; zoom: 1.0}\n@viewport{ width: 960px; zoom: 1.0}")
+  else
+    if window.innerWidth <= 767 && find_orientation() == "landscape"
+      viewport.setAttribute("content", "width=960, initial-scale=1.0");
+      $('#viewport-declarations').text("@-ms-viewport{ width: 960px; zoom: 1.0}\n@-o-viewport{ width: 960px; zoom: 1.0}\n@viewport{ width: 960px; zoom: 1.0}")
+    else if window.innerWidth <=767
+      viewport.setAttribute("content", "width=device-width, initial-scale=1.0");
+      $('#viewport-declarations').text("@-ms-viewport{ width: device-width; zoom: 1.0}\n@-o-viewport{ width: device-width; zoom: 1.0}\n@viewport{ width: device-width; zoom: 1.0}")
+
+$('.toggle-viewport').click ->
+  $('body').addClass('request-desktop')
+  set_viewport()
 
 $(window).on "rotate, resize", ->
   set_viewport()
