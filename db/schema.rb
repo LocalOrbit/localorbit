@@ -137,10 +137,10 @@ ActiveRecord::Schema.define(version: 20140723150758) do
     t.string   "name",                                                             null: false
     t.string   "code",                                                             null: false
     t.integer  "market_id"
-    t.date     "start_date"
-    t.date     "end_date"
+    t.datetime "start_date"
+    t.datetime "end_date"
     t.string   "type",                                                             null: false
-    t.decimal  "discount",                  precision: 10, scale: 2
+    t.decimal  "discount",                  precision: 10, scale: 2,               null: false
     t.integer  "product_id"
     t.integer  "category_id"
     t.integer  "buyer_organization_id"
@@ -152,6 +152,8 @@ ActiveRecord::Schema.define(version: 20140723150758) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "discounts", ["code"], name: "index_discounts_on_code", using: :btree
 
   create_table "geocodes", force: true do |t|
     t.decimal "latitude",    precision: 15, scale: 12
