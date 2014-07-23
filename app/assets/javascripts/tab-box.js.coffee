@@ -8,7 +8,8 @@ $ ->
     $(box).children('.tabbed-item').each (i, item) ->
       height = $(item).height()
       if $(item).find("#seller-map").length
-        height = height + 400
+        if $('#seller-map').height() < 20
+          height = height + ($(item).width() * .625)
       if height > items_height
         items_height = height
     $(box).css('height': tabs_height + items_height).addClass('js-sized').children('.tabbed-item').css({'height': items_height, 'top': tabs_height})
