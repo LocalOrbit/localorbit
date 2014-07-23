@@ -1125,6 +1125,11 @@
 }
 
 @media screen and (max-width: 600px) {
+  .cancel-link {
+    .note {
+      display: none;
+    }
+  }
   .toolbar {
     height: auto;
     &[data-tools="4"] {
