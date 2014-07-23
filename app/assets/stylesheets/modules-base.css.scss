@@ -679,6 +679,11 @@
   padding-top: 20px;
   margin-top: -20px;
 }
+@media screen and (min-height: 767px) and (min-width: 600px) {
+  .nav--admin + .tab-header {
+    margin-top: 0;
+  }
+}
 .tab-header {
   position: relative;
   width: 100%;
@@ -1415,15 +1420,16 @@ label ~ .tooltip {
   overflow: hidden;
 }
 
-@media screen and (max-height: 767px){
+.teflon {
+  display: none;
+}
+.l-app-header + .teflon {
+  display: block;
+}
+@media screen and (min-height: 768px) and (min-width: 601px) {
   .teflon {
-    display: none;
-  }
-  .l-app-header + .teflon {
     display: block;
   }
-}
-@media screen and (min-height: 768px) {
   .l-main .stickable {
     background: #fff;
   }
@@ -1467,8 +1473,7 @@ label ~ .tooltip {
     }
     &.js-positioned {
       > .l-constraint {
-        padding-right: 20px;
-        padding-left: 20px;
+        padding: 20px 20px 10px;
       }
     }
     &.js-fixed {

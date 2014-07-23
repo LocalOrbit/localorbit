@@ -34,7 +34,7 @@ $ ->
           'left': "",
           'width': ""
         }
-      if window.innerHeight >= 768 || i == 0
+      if (window.innerHeight >= 768 && window.innerWidth >= 601) || i == 0
         if find_scrolly() >= scroll_point - height
           $(stickable).addClass('js-fixed').css(stuck_styles)
         else
@@ -97,10 +97,11 @@ $ ->
     width = $('.l-main').outerWidth()
     left = $('.l-main').offset().left
     $('.stickable').each (i, e) ->
-      stick_points.push($(e).offset().top)
       if $(e).hasClass('tab-header') && $(e).prev('.nav--admin').length
-        stick_heights.push($(e).outerHeight()-20)
+        stick_points.push($(e).offset().top - 20)
+        stick_heights.push($(e).outerHeight())
       else
+        stick_points.push($(e).offset().top)
         stick_heights.push($(e).outerHeight())
       $(e).attr({'data-height': stick_heights[i], 'data-offset': stick_points[i]})
       if e.tagName != "THEAD"
