@@ -1,7 +1,7 @@
 <table class="products-table <%= cycle "odd", "even" %>">
   <thead>
     <tr>
-      <%= content_tag(:th, 'Seller', data: {column: 'seller'}, class: "hidden-mobile") if current_user.multi_organization_membership? %>
+      <%= content_tag(:th, 'Seller', data: {column: 'seller'}, class: "hidden-mobile") %>
       <th>Name</th>
       <th>Pricing</th>
       <th>Available</th>
@@ -9,7 +9,7 @@
   </thead>
 <% @products.limit(10).order("created_at DESC").decorate.each do |product| %>
   <tr class="product-row">
-    <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]), class: 'seller hidden-mobile') if current_user.multi_organization_membership? %>
+    <%= content_tag(:td, link_to(product.organization_name, [:admin, product.organization]), class: 'seller hidden-mobile') %>
     <td class="name product-name"><%= link_to product.name_and_unit, [:admin, product] %></td>
     <td class="pricing">
       <ul class="l-inline-list">
