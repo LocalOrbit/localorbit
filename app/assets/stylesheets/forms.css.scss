@@ -238,9 +238,18 @@ textarea {
   }
 
 }
-
+@media screen and (max-width: 600px) {
+  .payment-fields {
+    label {
+      font-size: 12px;
+    }
+  }
+}
 .payment-field {
   margin-left: 23px;
+  @media screen and (max-width: 600px) {
+    margin-left: 0;
+  }
 }
   .field--inline {
     display: inline-block;
