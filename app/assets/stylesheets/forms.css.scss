@@ -507,6 +507,9 @@ form.form-actions {
 }
 
 @media screen and (max-width: 600px) {
+  .email-field {
+    width: 100%;
+  }
   .newsletter {
     .btn--send, .btn--newsletter{
       width: 100%;

@@ -4,30 +4,32 @@
   <div class="column column--three-fourths">
     <div class="l-page-header">
       <%= form_for admin_market_managers_path(@market), html: { class: "form-actions" } do |f|%>
-        <%= email_field_tag :email, nil, placeholder: "Email address" %>
+        <%= email_field_tag :email, nil, placeholder: "Email address", class: "email-field" %>
         <button type="submit" class="btn--add btn--small">Add Market Manager</button>
       <% end %>
 
     </div>
-    <table class="market-managers">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th></th>
+    <div class="table-wrapper">
+      <table class="market-managers">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+          </tr>
+        </thead>
+        <% @market.managers.each do |user| %>
+        <tr id="<%= dom_id(user) %>">
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td class="delete">
+            <%= button_to admin_market_manager_path(@market, user), {method: :delete, class: "delete", data: {confirm: "Are you sure you want to delete #{user.email} from #{@market.name}?"}} do%>
+              <i class="font-icon icon-delete"></i> Remove Manager
+            <% end %>
+          </td>
         </tr>
-      </thead>
-      <% @market.managers.each do |user| %>
-      <tr id="<%= dom_id(user) %>">
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td class="delete">
-          <%= button_to admin_market_manager_path(@market, user), {method: :delete, class: "delete", data: {confirm: "Are you sure you want to delete #{user.email} from #{@market.name}?"}} do%>
-            <i class="font-icon icon-delete"></i> Remove Manager
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
-    </table>
+        <% end %>
+      </table>
+    </div>
   </div>
 </div>
