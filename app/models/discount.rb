@@ -7,8 +7,13 @@ class Discount < ActiveRecord::Base
   validates :code, presence: true, uniqueness: true
   validates :type, presence: true
   validate :starts_before_it_ends
+  validate :future_end_date
 
   private
+
+  def future_end_date
+    errors.add(:end_date, "must be in the future") if end_date && (!persisted? || end_date_changed?) && end_date < Time.current
+  end
 
   def starts_before_it_ends
     if end_date.present?
