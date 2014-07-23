@@ -278,9 +278,31 @@ class MetricsPresenter
       calculation: :window,
       format: :integer
     },
+    # Active Users
+    # All sellers + all buyers for the current period
+    #
+    # The query below is equivalent to the following ActiveRecord but done in a
+    # single query to utilize the Relation chaining in this framework.
+    # (Organization.joins(products: { order_items: :order }) +
+    # Organization.joins(:orders)).uniq
     active_users: {
       title: "Active Users",
-      scope: Organization.find_by_sql(BASE_SCOPES[:organization].select(:id, "orders.placed_at").joins(:orders).union(BASE_SCOPES[:organization].select(:id, "orders.placed_at").joins(:products, :orders)).to_sql),
+      scope: Organization.joins(<<-SQL
+        INNER JOIN (
+          SELECT DISTINCT buyer_organizations.id, buyer_orders.placed_at
+          FROM organizations buyer_organizations
+            INNER JOIN orders buyer_orders ON buyer_orders.organization_id = buyer_organizations.id
+
+          UNION
+
+          SELECT DISTINCT seller_organizations.id, seller_orders.placed_at
+          FROM organizations seller_organizations
+            INNER JOIN products seller_products ON seller_products.organization_id = seller_organizations.id
+            INNER JOIN order_items seller_order_items ON seller_order_items.product_id = seller_products.id
+            INNER JOIN orders seller_orders ON seller_orders.id = seller_order_items.order_id
+        ) active_organizations ON organizations.id = active_organizations.id
+      SQL
+      ),
       attribute: :placed_at,
       calculation: :count,
       format: :integer
@@ -352,8 +374,8 @@ class MetricsPresenter
     users: {
       title: "Users",
       metrics: [
-        :total_organizations, :total_buyer_only, :total_sellers, :total_buyers, :total_buyer_orders,
-        # :active_users
+        :total_organizations, :total_buyer_only, :total_sellers, :total_buyers,
+        :total_buyer_orders, :active_users
       ]
     },
     products: {
