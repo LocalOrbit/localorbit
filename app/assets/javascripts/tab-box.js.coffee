@@ -1,6 +1,15 @@
 $ ->
   return unless $('.tab-box').length
 
+  if window.innerWidth <= 600
+    $('.mobile-entab').each (i, tabable) ->
+      tabbed = $(tabable).clone()
+      tabbox = $(tabbed.attr('data-tabbox'))
+      tabtitle = $(tabbed).find('h2').text()
+      $(tabable).addClass("hidden-mobile")
+      tabbed.addClass('tabbed-item mobile-only').attr('id', 'entabbed-' + i).prependTo(tabbox)
+      $('<li class="tab mobile-only"><a href="#entabbed-' + i + '">' + tabtitle + '</a></li>').appendTo(tabbox.find('.tabs'))
+      tabbox.find('.tabs').append(" ")
   $('.tab-box').each (i, box) ->
     tabs_height = $(box).find('.tabs').height() + 10
     items_height = 0

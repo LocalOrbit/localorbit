@@ -653,6 +653,14 @@
   .tabs {
     font-size: 14px;
   }
+  .tabs--small {
+    font-size: 11px;
+    > .tab {
+      > a {
+        padding: 12px 5px;
+      }
+    }
+  }
 }
   .tabs--bottom {
     text-align: left;
