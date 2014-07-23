@@ -19,7 +19,7 @@ class MetricsPresenter
       last: 6,
       format: "%b %Y"
     }
-  }.freeze
+  }.with_indifferent_access.freeze
 
   BASE_SCOPES = {
     # When joining orders to order_items, we have to make sure we running calculations
@@ -387,7 +387,7 @@ class MetricsPresenter
     }
   }.with_indifferent_access
 
-  def initialize(groups: [], search: {})
+  def initialize(groups: [], interval: "month", markets: [])
     # {
     #   "Group Title" => {
     #     "Metric Title" => {
@@ -401,7 +401,6 @@ class MetricsPresenter
     #   }
     # }
 
-    interval = :month
     @headers = headers_for_interval(interval)
 
     @metrics = Hash[
@@ -411,13 +410,14 @@ class MetricsPresenter
     ]
   end
 
-  def self.metrics_for(groups: [], search: {})
-    search ||= {}
+  def self.metrics_for(groups: [], interval: "month", markets: [])
     groups = [groups].flatten
+    interval = "month" unless ["week", "month"].include?(interval)
+    markets ||= []
 
     return nil unless groups.all? { |group| GROUPS.keys.include?(group) }
 
-    new(groups: groups, search: search)
+    new(groups: groups, interval: interval, markets: markets)
   end
 
   private
@@ -493,10 +493,10 @@ class MetricsPresenter
   end
 
   def headers_for_interval(interval)
-    if interval == :month
+    if interval == "month"
       end_date = Date.current.beginning_of_month
       (0..5).map { |x| (end_date - x.months).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
-    elsif interval == :week
+    elsif interval == "week"
       end_date = Date.current.beginning_of_week - (START_OF_WEEK == :sun ? 1 : 0).days
       (0..4).map { |x| (end_date - x.weeks).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
     end

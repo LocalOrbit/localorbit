@@ -1,0 +1,10 @@
+<%= form_tag admin_metric_path(params[:id]), method: :get, html: { class: "clear-after" } do |f| %>
+  <div class="manager-filters">
+    <div class="pull-left">
+      <span class="preserve-alignment">
+        <%= label_tag "Display By" %><br>
+        <%= select_tag :interval, options_from_collection_for_select([["month", "Month"], ["week", "Week"]], :first, :last, params[:interval]), class: "filter-input" %>
+      </span>
+    </div>
+  </div>
+<% end %>
