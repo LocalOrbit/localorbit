@@ -74,6 +74,13 @@
 }
 
 @media screen and (max-width: 600px) {
+  .photo-header {
+    padding: 0 0 33%;
+    margin: -20px -10px 20px;
+    > .photo-header-txt {
+      font-size: 2em;
+    }
+  }
   .admin-markets-header {
     .header-actions {
       display: inline;
