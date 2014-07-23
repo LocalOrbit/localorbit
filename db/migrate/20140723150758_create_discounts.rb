@@ -6,7 +6,7 @@ class CreateDiscounts < ActiveRecord::Migration
       t.integer  :market_id
       t.datetime :start_date
       t.datetime :end_date
-      t.string   :type,                      null: false
+      t.integer  :type,                      null: false
       t.decimal  :discount,                  precision: 10, scale: 2, null: false
       t.integer  :product_id
       t.integer  :category_id

@@ -1,9 +1,9 @@
 class Discount < ActiveRecord::Base
-  VALID_TYPES = %w(fixed percentage).freeze
+  enum type: {percentage: 0, fixed: 1}
 
   validates :name, presence: true
   validates :code, presence: true
-  validates :type, presence: true, inclusion: {in: DiscountCode::VALID_TYPES}
+  validates :type, presence: true
   validate :starts_before_it_ends
 
   private
