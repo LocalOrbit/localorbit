@@ -108,7 +108,7 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order].where.not(delivery_fees: [nil, 0]),
       attribute: :placed_at,
       calculation: :sum,
-      calculation_arg: "delivery_fees",
+      calculation_arg: :delivery_fees,
       format: :currency
     },
     # Average Delivery Fees
@@ -120,7 +120,7 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order].where.not(delivery_fees: [nil, 0]),
       attribute: :placed_at,
       calculation: :average,
-      calculation_arg: "delivery_fees",
+      calculation_arg: :delivery_fees,
       format: :currency
     },
     # Credit Card Processing Fees
@@ -172,6 +172,12 @@ class MetricsPresenter
       attribute: "orders.placed_at",
       calculation: :sum,
       calculation_arg: "market_seller_fee",
+      format: :currency
+    },
+    total_service_transaction_fees: {
+      title: "Total Service And Transaction Fees",
+      calculation: :ruby,
+      calculation_arg: [:+, :total_service_fees, :total_transaction_fees],
       format: :currency
     },
     total_markets: {
@@ -323,12 +329,6 @@ class MetricsPresenter
       calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
       format: :decimal
     },
-    total_service_transaction_fees: {
-      title: "Total Service And Transaction Fees",
-      calculation: :ruby,
-      calculation_arg: [:+, :total_service_fees, :total_transaction_fees],
-      format: :currency
-    }
   }
 
   GROUPS = {
