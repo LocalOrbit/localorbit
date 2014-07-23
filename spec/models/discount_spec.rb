@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe DiscountCode do
+describe Discount do
   context "validations" do
     it "requires a name" do
       expect(subject).to have(1).error_on(:name)

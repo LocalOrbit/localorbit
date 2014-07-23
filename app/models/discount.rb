@@ -1,4 +1,4 @@
-class DiscountCode < ActiveRecord::Base
+class Discount < ActiveRecord::Base
   VALID_TYPES = %w(fixed percentage).freeze
 
   validates :name, presence: true

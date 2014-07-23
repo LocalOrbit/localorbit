@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 20140723150758) do
   add_index "delivery_schedules", ["market_id", "deleted_at"], name: "index_delivery_schedules_on_market_id_and_deleted_at", using: :btree
   add_index "delivery_schedules", ["market_id"], name: "index_delivery_schedules_on_market_id", using: :btree
 
-  create_table "discount_codes", force: true do |t|
+  create_table "discounts", force: true do |t|
     t.string   "name",                                                             null: false
     t.string   "code",                                                             null: false
     t.integer  "market_id"

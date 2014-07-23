@@ -1,6 +1,6 @@
-class CreateDiscountCodes < ActiveRecord::Migration
+class CreateDiscounts < ActiveRecord::Migration
   def change
-    create_table :discount_codes do |t|
+    create_table :discounts do |t|
       t.string :name,                       null: false
       t.string :code,                       null: false
       t.integer :market_id
