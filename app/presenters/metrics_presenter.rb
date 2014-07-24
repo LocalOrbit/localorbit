@@ -1,7 +1,7 @@
 class MetricsPresenter
   include ActiveSupport::NumberHelper
 
-  attr_reader :metrics, :headers
+  attr_reader :metrics, :headers, :markets
 
   START_OF_WEEK = :sun
 
@@ -35,9 +35,9 @@ class MetricsPresenter
           AND order_items_alias.delivery_status != 'canceled'
       ) orders_alias ON orders_alias.id = orders.id
     SQL
-    ).where.not(market_id: TEST_MARKET_IDS),
-    order_item: OrderItem.joins(:order).where.not(orders: { market_id: TEST_MARKET_IDS }, delivery_status: "canceled"),
-    payment: Payment.where.not(market_id: TEST_MARKET_IDS),
+    ).joins(:market).where.not(market_id: TEST_MARKET_IDS),
+    order_item: OrderItem.joins(order: :market).where.not(orders: { market_id: TEST_MARKET_IDS }, delivery_status: "canceled"),
+    payment: Payment.joins(:market).where.not(market_id: TEST_MARKET_IDS),
     market: Market.where.not(id: TEST_MARKET_IDS),
     organization: Organization.where.not(id: TEST_ORG_IDS),
     product: Product
@@ -83,7 +83,7 @@ class MetricsPresenter
     total_service_fees: {
       title: "Total Service Fees",
       scope: BASE_SCOPES[:payment].where(payment_type: "service"),
-      attribute: "created_at",
+      attribute: "payments.created_at",
       calculation: :sum,
       calculation_arg: :amount,
       format: :currency
@@ -95,7 +95,7 @@ class MetricsPresenter
     average_service_fees: {
       title: "Average Service Fees",
       scope: BASE_SCOPES[:payment].where(payment_type: "service"),
-      attribute: "created_at",
+      attribute: "payments.created_at",
       calculation: :average,
       calculation_arg: :amount,
       format: :currency
@@ -105,7 +105,7 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order_item],
       attribute: "orders.placed_at",
       calculation: :sum,
-      calculation_arg: "local_orbit_seller_fee + local_orbit_market_fee",
+      calculation_arg: "order_items.local_orbit_seller_fee + order_items.local_orbit_market_fee",
       format: :currency
     },
     # Total Delivery Fees
@@ -142,7 +142,7 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order_item].where(orders: { payment_method: "credit card" }),
       attribute: "orders.placed_at",
       calculation: :sum,
-      calculation_arg: "payment_seller_fee + payment_market_fee",
+      calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
       format: :currency
     },
     # ACH Processing Fees
@@ -155,7 +155,7 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order_item].where(orders: { payment_method: "ach" }),
       attribute: "orders.placed_at",
       calculation: :sum,
-      calculation_arg: "payment_seller_fee + payment_market_fee",
+      calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
       format: :currency
     },
     # Total Payment Processing Fees:
@@ -168,7 +168,7 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order_item].where(orders: { payment_method: ["credit card", "ach"] }),
       attribute: "orders.placed_at",
       calculation: :sum,
-      calculation_arg: "payment_seller_fee + payment_market_fee",
+      calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
       format: :currency
     },
     # Total Market Fees
@@ -412,9 +412,13 @@ class MetricsPresenter
 
     @headers = headers_for_interval(interval)
 
+    if groups.include?("financials")
+      @markets = Market.where.not(id: TEST_MARKET_IDS).order("LOWER(name)").pluck(:id, :name)
+    end
+
     @metrics = Hash[
       groups.map do |group|
-        [GROUPS[group][:title], metrics_for_group(group, interval)]
+        [GROUPS[group][:title], metrics_for_group(group, interval, markets)]
       end
     ]
   end
@@ -422,7 +426,7 @@ class MetricsPresenter
   def self.metrics_for(groups: [], interval: "month", markets: [])
     groups = [groups].flatten
     interval = "month" unless ["week", "month"].include?(interval)
-    markets ||= []
+    markets = [markets].compact.flatten.delete_if(&:empty?)
 
     return nil unless groups.all? { |group| GROUPS.keys.include?(group) }
 
@@ -431,10 +435,10 @@ class MetricsPresenter
 
   private
 
-  def metrics_for_group(group, interval)
+  def metrics_for_group(group, interval, markets = [])
     Hash[
       GROUPS[group][:metrics].map do |metric|
-        [METRICS[metric][:title], calculate_metric(metric, interval)]
+        [METRICS[metric][:title], calculate_metric(metric, interval, markets)]
       end
     ]
   end
@@ -451,9 +455,13 @@ class MetricsPresenter
     scope.send(groupdate, attribute, options)
   end
 
-  def calculate_metric(metric, interval, apply_format = true)
+  def calculate_metric(metric, interval, markets = [], apply_format = true)
     m = METRICS[metric]
-    scope = m[:scope].uniq if m[:scope]
+
+    if m[:scope]
+      scope = m[:scope].uniq
+      scope = scope.where(markets: { id: markets }) unless markets.empty?
+    end
 
     values = if m[:calculation] == :custom
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
@@ -469,8 +477,8 @@ class MetricsPresenter
 
     elsif m[:calculation] == :ruby
       args = m[:calculation_arg]
-      metric1 = calculate_metric(args[1], interval, false)
-      metric2 = calculate_metric(args[2], interval, false)
+      metric1 = calculate_metric(args[1], interval, markets, false)
+      metric2 = calculate_metric(args[2], interval, markets, false)
 
       Hash[metric1.map do |key, value|
         [key, value.send(args[0], metric2[key])]

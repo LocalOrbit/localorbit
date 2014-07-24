@@ -1,6 +1,14 @@
 <%= form_tag admin_metric_path(params[:id]), method: :get, html: { class: "clear-after" } do |f| %>
   <div class="manager-filters">
     <div class="pull-left">
+      <% if presenter.markets.present? %>
+        <span class="preserve-alignment">
+          <%= label_tag "Market" %><br>
+          <%= select_tag :market, options_from_collection_for_select(presenter.markets, :first, :last, params[:market]), { prompt: "All", class: "filter-input" } %>
+        </span>
+      <% end %>
+    </div>
+    <div class="pull-left">
       <span class="preserve-alignment">
         <%= label_tag "Display By" %><br>
         <%= select_tag :interval, options_from_collection_for_select([["month", "Month"], ["week", "Week"]], :first, :last, params[:interval]), class: "filter-input" %>
