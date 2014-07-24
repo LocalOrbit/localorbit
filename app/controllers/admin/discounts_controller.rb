@@ -73,7 +73,11 @@ module Admin
     end
 
     def find_markets
-      @markets = current_user.markets.order(:name)
+      @markets = if current_user.admin?
+        Market.all
+      else
+        current_user.managed_markets
+      end.order(:name)
     end
   end
 end
