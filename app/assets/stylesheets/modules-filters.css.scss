@@ -61,11 +61,11 @@
 }
 
 .search-widget {
+  display: inline-block;
+  ~ .btn--add {
     display: inline-block;
-    ~ .btn--add {
-      display: inline-block;
-    }
   }
+}
 
 @media screen and (min-width: 960px) {
   .filter-row {
@@ -211,26 +211,27 @@
 }
  
 @media screen and (max-width: 600px) {
+  .date-filters {
+    float: none;
+    margin: 1em 0;
+    text-align: justify;
+    width: 100%;
+
+    label {
+      font-size: .95em;
+    }
+    .datepicker {
+      width: 7.5em;
+    }
+    > .preserve-alignment:last-child {
+      width: 100%;
+      font-size: 0.1px;
+    }
+  }
+  
   .order_search,
   .payment_search,
   .sold_item_search {
-    .date-filters {
-      float: none;
-      margin: 1em 0;
-      text-align: justify;
-      width: 100%;
-
-      label {
-        font-size: .95em;
-      }
-      .datepicker {
-        width: 7.5em;
-      }
-      > .preserve-alignment:last-child {
-        width: 100%;
-        font-size: 0.1px;
-      }
-    }
     .manager-filters {
       &.unjustify {
         text-align: justify;
