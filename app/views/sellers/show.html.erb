@@ -1,6 +1,6 @@
 <div class="mobile-panes-wrapper">
-  <div class="row mobile-panes" data-panes="3">
-    <aside class="column column--fourth column--guttered secondary-panes" data-panes="2">
+  <div class="row mobile-panes" data-panes="4">
+    <aside class="column column--fourth column--guttered secondary-panes" data-panes="3">
 
       <div class="mobile-pane" id="delivery-information">
         <div class="vacuus"></div>
@@ -18,7 +18,10 @@
             <% end %>
           </ul>
         <% end %>
-
+      </div
+      ><div class="mobile-pane" id="social">
+        <div class="vacuus"></div>
+        <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Seller</a>
         <% if @current_seller.try(:display_twitter) %>
           <div class="widget widget--twitter">
             <a class="twitter-timeline" href="https://twitter.com/<%= @current_seller.twitter %>" data-widget-id="<%= Figaro.env.twitter_widget_id %>" data-screen-name="<%= @current_seller.twitter %>"></a>
@@ -49,8 +52,13 @@
           <h2><%= "#{current_market.name} has no sellers at this time." %></h2>
         </div>
       <% else %>
-        <a href="#delivery-information" class="pane-toggle mobile-only btn">Delivery Information</a>
-        <a href="#sellers" class="pane-toggle mobile-only btn">Sellers</a>
+        <div class="mobile-only row--justified">
+          <a href="#delivery-information" class="pane-toggle mobile-only btn">Delivery Information</a>
+          <% if @current_seller.try(:display_facebook) or @current_seller.try(:display_twitter) %>
+            <a href="#social" class="pane-toggle mobile-only btn">Social</a>
+          <% end %>
+          <a href="#sellers" class="pane-toggle mobile-only btn">Sellers</a>
+        </div>
 
         <div class="row">
           <div class="column column--half column--guttered">
