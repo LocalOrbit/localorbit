@@ -109,7 +109,8 @@ describe "Admin Managing Market Managers" do
 
       expect(page).to have_text(user2.email)
 
-      click_button 'Remove Manager'
+      manager_row = Dom::Admin::UserRow.find_by_email(user2.email)
+      manager_row.remove!
 
       expect(page).to_not have_text(user2.email)
     end
