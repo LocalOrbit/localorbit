@@ -1,0 +1,9 @@
+<%= render "header" %>
+
+<div class="row row--partial">
+  <%= render "shared/errors", {resource: @discount} %>
+
+  <%= form_for @discount, url: admin_discounts_path(@discount), html: { class: "product column column--half"} do |f| %>
+    <%= render "fields", {f: f} %>
+  <% end %>
+</div>

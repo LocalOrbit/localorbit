@@ -1,0 +1,79 @@
+<div class="field">
+  <%= f.label :name %><br>
+  <%= f.text_field :name, class: "column column--full" %>
+</div>
+
+<div class="field">
+  <%= f.label :code %><br>
+  <%= f.text_field :code, class: "column column--full" %>
+</div>
+
+<% if current_user.multi_market_membership? %>
+  <div class="field">
+    <%= f.label :market_id, "Market" %><br>
+    <%= f.collection_select :market_id, @markets, :id, :name, {include_blank: "Any Market"}, class: "column--full" %>
+  </div>
+<% else %>
+  <input type='hidden' name='discount[market_id]' value='<%= @markets.first.id %>'>
+<% end %>
+
+<div class="row row--field">
+  <div class="field column column--half column--guttered">
+    <%= f.label :start_date %><br>
+    <%= f.text_field :start_date %>
+  </div
+  ><div class="field column column--half column--guttered">
+    <%= f.label :end_date %><br>
+    <%= f.text_field :end_date %>
+  </div>
+</div>
+
+<div class="row row--field">
+  <div class="field column column--half column--guttered">
+    <%= f.label :type, "Type" %><br>
+    <%= f.select :type, [["Fixed", "fixed"], ["Percentage", "percentage"]], class: 'column--full' %>
+  </div
+  ><div class="field column column--half column--guttered">
+    <%= f.label :discount %><br>
+    <%= f.text_field :discount %>
+  </div>
+</div>
+
+<div class="field">
+  <%= f.label :product_id, "Restrict to Product" %><br>
+  <%= f.collection_select :product_id, @markets, :id, :name, {include_blank: "Any Product"}, class: "column--full" %>
+</div>
+
+<div class="field">
+  <%= f.label :buyer_organization_id, "Restrict to Buyer Organization" %><br>
+  <%= f.collection_select :buyer_organization_id, @markets, :id, :name, {include_blank: "Any Buyers"}, class: "column--full" %>
+</div>
+
+<div class="field">
+  <%= f.label :seller_organization_id, "Restrict to Seller Organization" %><br>
+  <%= f.collection_select :seller_organization_id, @markets, :id, :name, {include_blank: "Any Sellers"}, class: "column--full" %>
+</div>
+
+<div class="field">
+  <%= f.label :minimum_order_total %><br>
+  <%= f.text_field :minimum_order_total, class: "column column--full" %>
+</div>
+
+<div class="field">
+  <%= f.label :maximum_order_total %><br>
+  <%= f.text_field :maximum_order_total, class: "column column--full" %>
+</div>
+
+<div class="field">
+  <%= f.label :maximum_uses, "Maximum global uses" %><br>
+  <%= f.text_field :maximum_uses, class: "column column--full" %>
+</div>
+
+<div class="field">
+  <%= f.label :maximum_organization_uses, "Maximum per org uses" %><br>
+  <%= f.text_field :maximum_organization_uses, class: "column column--full" %>
+</div>
+
+
+
+<%= f.submit "Save Discount", class: 'pull-right save-button' %>
