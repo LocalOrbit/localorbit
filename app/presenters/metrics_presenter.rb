@@ -19,7 +19,7 @@ class MetricsPresenter
       last: 6,
       format: "%b %Y"
     }
-  }.freeze
+  }.with_indifferent_access.freeze
 
   BASE_SCOPES = {
     # When joining orders to order_items, we have to make sure we running calculations
@@ -108,7 +108,7 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order].where.not(delivery_fees: [nil, 0]),
       attribute: :placed_at,
       calculation: :sum,
-      calculation_arg: "delivery_fees",
+      calculation_arg: :delivery_fees,
       format: :currency
     },
     # Average Delivery Fees
@@ -120,7 +120,7 @@ class MetricsPresenter
       scope: BASE_SCOPES[:order].where.not(delivery_fees: [nil, 0]),
       attribute: :placed_at,
       calculation: :average,
-      calculation_arg: "delivery_fees",
+      calculation_arg: :delivery_fees,
       format: :currency
     },
     # Credit Card Processing Fees
@@ -174,6 +174,12 @@ class MetricsPresenter
       calculation_arg: "market_seller_fee",
       format: :currency
     },
+    total_service_transaction_fees: {
+      title: "Total Service And Transaction Fees",
+      calculation: :ruby,
+      calculation_arg: [:+, :total_service_fees, :total_transaction_fees],
+      format: :currency
+    },
     total_markets: {
       title: "Total Markets",
       scope: BASE_SCOPES[:market],
@@ -214,7 +220,7 @@ class MetricsPresenter
     },
     lo_payment_markets: {
       title: "Markets Using LO Payments",
-      scope: BASE_SCOPES[:market],
+      scope: BASE_SCOPES[:market].where(allow_purchase_orders: true, default_allow_purchase_orders: true),
       attribute: :created_at,
       calculation: :window,
       format: :integer
@@ -272,9 +278,31 @@ class MetricsPresenter
       calculation: :window,
       format: :integer
     },
+    # Active Users
+    # All sellers + all buyers for the current period
+    #
+    # The query below is equivalent to the following ActiveRecord but done in a
+    # single query to utilize the Relation chaining in this framework.
+    # (Organization.joins(products: { order_items: :order }) +
+    # Organization.joins(:orders)).uniq
     active_users: {
       title: "Active Users",
-      scope: Organization.find_by_sql(BASE_SCOPES[:organization].select(:id, "orders.placed_at").joins(:orders).union(BASE_SCOPES[:organization].select(:id, "orders.placed_at").joins(:products, :orders)).to_sql),
+      scope: Organization.joins(<<-SQL
+        INNER JOIN (
+          SELECT DISTINCT buyer_organizations.id, buyer_orders.placed_at
+          FROM organizations buyer_organizations
+            INNER JOIN orders buyer_orders ON buyer_orders.organization_id = buyer_organizations.id
+
+          UNION
+
+          SELECT DISTINCT seller_organizations.id, seller_orders.placed_at
+          FROM organizations seller_organizations
+            INNER JOIN products seller_products ON seller_products.organization_id = seller_organizations.id
+            INNER JOIN order_items seller_order_items ON seller_order_items.product_id = seller_products.id
+            INNER JOIN orders seller_orders ON seller_orders.id = seller_order_items.order_id
+        ) active_organizations ON organizations.id = active_organizations.id
+      SQL
+      ),
       attribute: :placed_at,
       calculation: :count,
       format: :integer
@@ -323,12 +351,6 @@ class MetricsPresenter
       calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
       format: :decimal
     },
-    total_service_transaction_fees: {
-      title: "Total Service And Transaction Fees",
-      calculation: :ruby,
-      calculation_arg: [:+, :total_service_fees, :total_transaction_fees],
-      format: :currency
-    }
   }
 
   GROUPS = {
@@ -352,8 +374,8 @@ class MetricsPresenter
     users: {
       title: "Users",
       metrics: [
-        :total_organizations, :total_buyer_only, :total_sellers, :total_buyers, :total_buyer_orders,
-        # :active_users
+        :total_organizations, :total_buyer_only, :total_sellers, :total_buyers,
+        :total_buyer_orders, :active_users
       ]
     },
     products: {
@@ -365,7 +387,7 @@ class MetricsPresenter
     }
   }.with_indifferent_access
 
-  def initialize(groups: [], search: {})
+  def initialize(groups: [], interval: "month", markets: [])
     # {
     #   "Group Title" => {
     #     "Metric Title" => {
@@ -379,7 +401,6 @@ class MetricsPresenter
     #   }
     # }
 
-    interval = :month
     @headers = headers_for_interval(interval)
 
     @metrics = Hash[
@@ -389,13 +410,14 @@ class MetricsPresenter
     ]
   end
 
-  def self.metrics_for(groups: [], search: {})
-    search ||= {}
+  def self.metrics_for(groups: [], interval: "month", markets: [])
     groups = [groups].flatten
+    interval = "month" unless ["week", "month"].include?(interval)
+    markets ||= []
 
     return nil unless groups.all? { |group| GROUPS.keys.include?(group) }
 
-    new(groups: groups, search: search)
+    new(groups: groups, interval: interval, markets: markets)
   end
 
   private
@@ -471,10 +493,10 @@ class MetricsPresenter
   end
 
   def headers_for_interval(interval)
-    if interval == :month
+    if interval == "month"
       end_date = Date.current.beginning_of_month
       (0..5).map { |x| (end_date - x.months).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
-    elsif interval == :week
+    elsif interval == "week"
       end_date = Date.current.beginning_of_week - (START_OF_WEEK == :sun ? 1 : 0).days
       (0..4).map { |x| (end_date - x.weeks).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
     end
