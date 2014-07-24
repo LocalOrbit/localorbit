@@ -26,10 +26,16 @@ describe "Manage Discount Codes" do
     expect(Dom::Admin::DiscountRow.all.count).to eql(2)
 
     code = Dom::Admin::DiscountRow.find_by_name(discount_fixed.name)
+    expect(code).to_not be_nil
     expect(code.code).to have_content(discount_fixed.code)
+    expect(code.type).to have_content("$")
+    expect(code.amount).to have_content("$5.00")
 
     code = Dom::Admin::DiscountRow.find_by_name(discount_percentage.name)
+    expect(code).to_not be_nil
     expect(code.code).to have_content(discount_percentage.code)
+    expect(code.type).to have_content("%")
+    expect(code.amount).to have_content("10.0%")
   end
 
   context "Creation" do
