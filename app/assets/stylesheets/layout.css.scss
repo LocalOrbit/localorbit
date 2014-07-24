@@ -278,7 +278,8 @@
   .column--two-thirds,
   .column--three-fourths,
   .column--seven-twelfths {
-    width: 100%;
+    display: block;
+    width: auto;
     &.column--guttered {
       padding: 0;
     }

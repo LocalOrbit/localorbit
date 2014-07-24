@@ -61,12 +61,16 @@
   </div>
 
   <div class="field field--inline">
-    <%= f.label :facebook %><br>
-    <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
+    <%= f.label :facebook %>
+    <div class="combo-input">
+      <span class="btn btn--start">facebook.com/</span><%= f.text_field :facebook %>
+    </div>
   </div
   ><div class="field field--inline">
-    <%= f.label :twitter %><br>
-    <span class="btn btn--start">@</span><%= f.text_field :twitter, maxlength: 15, size: 15 %>
+    <%= f.label :twitter %>
+    <div class="combo-input">
+      <span class="btn btn--start">@</span><%= f.text_field :twitter, maxlength: 15, size: 15 %>
+    </div>
   </div>
 
   <div class="field">
