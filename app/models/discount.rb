@@ -1,5 +1,9 @@
 class Discount < ActiveRecord::Base
+  include SoftDelete
+  
   self.inheritance_column = nil
+
+  belongs_to :market
 
   enum type: {percentage: 0, fixed: 1}
 
