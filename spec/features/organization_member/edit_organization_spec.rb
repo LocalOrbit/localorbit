@@ -62,8 +62,7 @@ describe "An organization member" do
     let(:org) { create(:organization, users: [member], can_sell: true) }
 
     it "shows profile information" do
-      visit "/admin/organizations"
-      click_link org.name
+      visit admin_organization_path(org)
 
       expect(page).to have_content("Facebook")
       expect(page).to have_content("Twitter")
