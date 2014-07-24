@@ -287,7 +287,7 @@ class MetricsPresenter
     # Organization.joins(:orders)).uniq
     active_users: {
       title: "Active Users",
-      scope: Organization.joins(<<-SQL
+      scope: BASE_SCOPES[:organization].joins(<<-SQL
         INNER JOIN (
           SELECT DISTINCT buyer_organizations.id, buyer_orders.placed_at
           FROM organizations buyer_organizations
