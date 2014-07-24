@@ -26,7 +26,7 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def checkout_date
-    "#{h.content_tag(:time, datetime: deliver_on) { human_delivery_date }}"
+    h.content_tag(:time, datetime: deliver_on.xmlschema) { human_delivery_date }
   end
 
   def time_range

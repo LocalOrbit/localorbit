@@ -13,9 +13,10 @@
                 <td class="cart-quantity-column">Quantity</td>
                 <td class="cart-price-column">Price</td>
                 <td class="cart-total-column">Total</td>
+                <td class="product-clear"></td>
               </tr>
               <tr>
-                <th colspan="6" class="seller"><%= seller_name %></th>
+                <th colspan="5" class="seller"><%= seller_name %></th>
               </tr>
               <% items.each do |item| %>
                 <%= content_tag_for(:tr, item, id: "cart_item_#", class: "product", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
@@ -55,7 +56,7 @@
           <div id="address">
             <h2 class="subheading-cart"><i class="font-icon icon-truck"></i> Delivery Address</h2>
             <div class="when-deliver">
-              <%= current_cart.delivery.decorate.cart_type %> <%= raw(current_cart.delivery.decorate.checkout_date) %>
+              <%= current_cart.delivery.decorate.cart_type %> <%= current_cart.delivery.decorate.checkout_date %>
             </div>
             <address class="adr">
               <span class="street-address"><%= current_cart.delivery_location.address %></span><br />
@@ -160,8 +161,7 @@
                   </fieldset>
                 </div>
               <% end %>
-            </fieldset>
-          </div>
+          </fieldset>
         </div>
         <div class="form-actions">
           <span class="pull-left cancel-link">
