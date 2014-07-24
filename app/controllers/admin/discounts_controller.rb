@@ -3,7 +3,7 @@ module Admin
     include StickyFilters
 
     before_action :require_admin_or_market_manager
-    before_action :find_markets, only: [:new, :create, :show, :update]
+    before_action :find_select_data, only: [:new, :create, :show, :update]
 
     def index
       @query_params = sticky_parameters(request.query_parameters)
@@ -72,12 +72,21 @@ module Admin
       )
     end
 
-    def find_markets
+    def find_select_data
       @markets = if current_user.admin?
         Market.all
       else
         current_user.managed_markets
       end.order(:name)
+
+      org_ids = @markets.map {|m| m.organization_ids }.flatten
+      @products = Product.where(organization_id: org_ids).order(:name)
+
+      @organizations = Organization.
+          joins(market_organizations: :market).
+          where(markets: {id: current_user.managed_market_ids}, market_organizations: {deleted_at: nil}).
+          distinct("organization.id").
+          order(:name)
     end
   end
 end

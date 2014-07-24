@@ -41,17 +41,17 @@
 
 <div class="field">
   <%= f.label :product_id, "Restrict to Product" %><br>
-  <%= f.collection_select :product_id, @markets, :id, :name, {include_blank: "Any Product"}, class: "column--full" %>
+  <%= f.collection_select :product_id, @products, :id, :name, {include_blank: "Any Product"}, class: "column--full" %>
 </div>
 
 <div class="field">
   <%= f.label :buyer_organization_id, "Restrict to Buyer Organization" %><br>
-  <%= f.collection_select :buyer_organization_id, @markets, :id, :name, {include_blank: "Any Buyers"}, class: "column--full" %>
+  <%= f.collection_select :buyer_organization_id, @organizations, :id, :name, {include_blank: "Any Buyers"}, class: "column--full" %>
 </div>
 
 <div class="field">
   <%= f.label :seller_organization_id, "Restrict to Seller Organization" %><br>
-  <%= f.collection_select :seller_organization_id, @markets, :id, :name, {include_blank: "Any Sellers"}, class: "column--full" %>
+  <%= f.collection_select :seller_organization_id, @organizations, :id, :name, {include_blank: "Any Sellers"}, class: "column--full" %>
 </div>
 
 <div class="field">
