@@ -18,7 +18,7 @@ class OrderNumber
   end
 
   def market_id
-    @market.subdomain.upcase
+    @market.ascii_subdomain.upcase
   end
 
   def year

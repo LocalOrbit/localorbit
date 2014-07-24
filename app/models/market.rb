@@ -71,8 +71,12 @@ class Market < ActiveRecord::Base
     addresses.order(:name).map {|a| [a.name, a.id] }.unshift([default_name, 0])
   end
 
+  def ascii_subdomain
+    SimpleIDN.to_ascii(subdomain)
+  end
+
   def domain
-    "#{subdomain}.#{Figaro.env.domain!}"
+    "#{ascii_subdomain}.#{Figaro.env.domain!}"
   end
 
   # TODO: exclude fees for payment types not available on the market

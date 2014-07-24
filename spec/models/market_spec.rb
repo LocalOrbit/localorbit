@@ -318,11 +318,23 @@ describe Market do
     end
   end
 
-  describe "domain" do
+  describe "#ascii_subdomain" do
+    it "ASCIIifies unicode" do
+      market = build(:market, subdomain: "👍")
+      expect(market.ascii_subdomain).to eq("xn--yp8h")
+    end    
+  end
+
+  describe "#domain" do
     let(:market) { build(:market) }
 
     it "is is the subdomain with the canonical domain" do
       expect(market.domain).to eq("#{market.subdomain}.#{Figaro.env.domain!}")
+    end
+
+    it "ASCIIifies unicode in subdomain" do
+      market.subdomain = "👍"
+      expect(market.domain).to eq("xn--yp8h.#{Figaro.env.domain!}")
     end
   end
 
