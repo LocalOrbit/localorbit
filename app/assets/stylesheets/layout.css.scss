@@ -277,7 +277,8 @@
   .column--half,
   .column--two-thirds,
   .column--three-fourths,
-  .column--seven-twelfths {
+  .column--seven-twelfths,
+  .column--eleven-twelfths {
     display: block;
     width: auto;
     &.column--guttered {
