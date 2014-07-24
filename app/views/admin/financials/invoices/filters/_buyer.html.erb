@@ -1,6 +1,6 @@
 <%= search_form_for @q, url: admin_financials_invoices_path, html: { class: "invoice_search clear-after" } do |f| %>
 
-  <div class="pull-left">
+  <div class="pull-left search-widget">
     <span class="preserve-alignment">
       <%= f.label :order_number_or_payment_note_cont, "Search Invoices" %><br>
       <%# NOTE: Do not change the whitespace on the following line %>
