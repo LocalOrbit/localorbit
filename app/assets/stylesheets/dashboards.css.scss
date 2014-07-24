@@ -35,7 +35,6 @@
 }
 
 .upcoming-delivery-mini {
-  float: left;
   width: 100%;
 }
 
@@ -60,5 +59,13 @@
   }
   a:nth-child(3) {
     padding-right: 0;
+  }
+}
+
+@media screen and (max-width: 767px){
+  .dashboard > .column--half {
+    display: block;
+    width: auto;
+    margin: 0 0 20px;
   }
 }
