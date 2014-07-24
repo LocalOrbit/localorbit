@@ -1,5 +1,5 @@
 <%= search_form_for presenter.q, url: admin_report_path(presenter.report.to_s.dasherize), html: { class: "payment_search clear-after" } do |f| %>
-  <div class="manager-filters">
+  <div class="manager-filters report_search">
     <div class="pull-left">
       <% presenter.filters.each do |filter| %>
 
@@ -55,14 +55,14 @@
     </div>
 
     <% if presenter.filters.include?(:placed_at) %>
-      <div class="pull-right">
-        <span class="preserve-alignment">
+      <div class="pull-right date-filters">
+        <span class="preserve-alignment date-select">
           <label for="q_order_placed_at_date_gteq">Placed on or after</label><br>
-          <%= datetime_field_tag "q[order_placed_at_date_gteq]", @presenter.start_date, class: 'datepicker' %>
+          <%= datetime_field_tag "q[order_placed_at_date_gteq]", @presenter.start_date, class: 'datepicker filter-input' %>
         </span>
-        <span class="preserve-alignment">
+        <span class="preserve-alignment date-select">
           <label for="q_order_placed_at_date_lteq">Placed on or before</label><br>
-          <%= datetime_field_tag "q[order_placed_at_date_lteq]", @presenter.end_date, class: 'datepicker' %>
+          <%= datetime_field_tag "q[order_placed_at_date_lteq]", @presenter.end_date, class: 'datepicker filter-input' %>
         </span>
         <span class="preserve-alignment">
           <br>

@@ -203,8 +203,31 @@
   
   .order_search,
   .payment_search,
-  .sold_item_search {
+  .sold_item_search,
+  .report_search {
+    .date-filters {
+      float: none;
+      margin: 1em 0;
+      text-align: justify;
+      width: 100%;
+
+      label {
+        font-size: .95em;
+      }
+      .datepicker {
+        width: 7.5em;
+      }
+      > .preserve-alignment:last-child {
+        width: 100%;
+        font-size: 0.1px;
+      }
+    }
+    .date-select {
+      width: auto;
+      margin-right: 0;
+    }
     .manager-filters {
+
       &.unjustify {
         text-align: justify;
       }
