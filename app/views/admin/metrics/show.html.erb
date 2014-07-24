@@ -1,5 +1,5 @@
 <%= render "admin/metrics/header" %>
-<%= render "admin/metrics/filters" %>
+<%= render "admin/metrics/filters", presenter: @presenter %>
 
 <% if @presenter.metrics.values.first.empty? %>
   <div class="empty-results">
