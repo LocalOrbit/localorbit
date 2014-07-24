@@ -75,11 +75,7 @@ describe "Adding a product" do
     end
 
     it "defaults to using all delivery schedules" do
-      within '#admin-nav' do
-        click_link 'Products'
-      end
-
-      click_link "Add New Product"
+      visit "/admin/products/new"
 
       expect(find_field("Make product available on all market delivery dates")).to be_checked
     end
@@ -88,10 +84,7 @@ describe "Adding a product" do
       let(:product_form) { Dom::Admin::ProductForm.first }
 
       it "pre-populates the fields from the organization" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         uncheck "seller_info"
 
@@ -105,10 +98,7 @@ describe "Adding a product" do
       it "saves changes made to fields if checked and unchecked" do
         location2 = create(:location, name: "Good Place", organization: org)
 
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         uncheck "seller_info"
         expect(page.find('.seller_info_fields', visible: false)).to be_visible
@@ -131,10 +121,7 @@ describe "Adding a product" do
       end
 
       it "does not save the product who/where/how information if checked after updating who/how/where" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         fill_in_required_fields(:with_chosen)
 
@@ -160,10 +147,7 @@ describe "Adding a product" do
       end
 
       it "it uses a default address if using who/how" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         fill_in "Product Name", with: "Good food"
         select_from_chosen "Grapes / Red Grapes", from: "Category"
@@ -182,10 +166,7 @@ describe "Adding a product" do
 
     context "attaching an image" do
       it "uploads an image when provided" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         fill_in "Product Name", with: "Red Grapes"
         attach_file("Photo", 'app/assets/images/backgrounds/lentils.jpg')
@@ -197,10 +178,7 @@ describe "Adding a product" do
 
     context "adding simple inventory for the first time", js: true, chosen_js: true do
       it "creates a new lot for the product" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         fill_in_required_fields(:with_chosen)
         select_from_chosen "Pounds", from: "Unit"
@@ -228,10 +206,7 @@ describe "Adding a product" do
 
     context "adding a product with advanced inventory", js: true, chosen_js: true do
       it "hides the simple inventory field" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         expect(page).to have_content("Current inventory")
 
@@ -245,10 +220,7 @@ describe "Adding a product" do
       let(:category_select) { Dom::CategorySelect.first }
 
       it "can quickly drill down to a result" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         category_select.click
 
@@ -280,10 +252,7 @@ describe "Adding a product" do
       end
 
       it "fuzzy searches across top-level categories" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         category_select.click
 
@@ -306,10 +275,7 @@ describe "Adding a product" do
       let!(:loc2) { create(:location, organization: org)}
 
       it "saves the product stub" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
@@ -343,11 +309,7 @@ describe "Adding a product" do
       end
 
       it "selects all delivery schedules by default" do
-        within "#admin-nav" do
-          click_link "Products"
-        end
-
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
@@ -372,10 +334,7 @@ describe "Adding a product" do
       end
 
       it "allows the user to select delivery schedules" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
@@ -404,10 +363,7 @@ describe "Adding a product" do
       end
 
       it "user can not deselect required deliveries" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
@@ -428,10 +384,7 @@ describe "Adding a product" do
 
     context "when the product information is invalid", js: true do
       it "does not create the product" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         expect(page).to have_content("Current inventory")
         uncheck 'Use simple inventory management'
@@ -448,10 +401,7 @@ describe "Adding a product" do
       end
 
       it "maintains delivery schedule changes on error" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         uncheck "Make product available on all market delivery dates"
         Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
@@ -469,10 +419,7 @@ describe "Adding a product" do
       end
 
       it "defaults to simple inventory" do
-        within '#admin-nav' do
-          click_link 'Products'
-        end
-        click_link "Add New Product"
+        visit "/admin/products/new"
 
         simple_inventory_checkbox = page.find_field("Use simple inventory management")
         inventory_quantity = page.find_field("Current inventory")
@@ -496,10 +443,7 @@ describe "Adding a product" do
       buying_org.users << user
 
       sign_in_as(user)
-      within '#admin-nav' do
-        click_link 'Products'
-      end
-      click_link "Add New Product"
+      visit "/admin/products/new"
     end
 
     it "is prevented from unchecking 'Use seller info from my account' until organization is selected", js: true do
@@ -543,9 +487,7 @@ describe "Adding a product" do
         it "populates the locations list" do
           product_form = Dom::Admin::ProductForm.first
           expect(product_form.locations).to include(*org.locations.map(&:name))
-
-          # Wait for AJAX to finish
-          expect(page).not_to have_content("No Organization Selected")
+          expect(product_form.locations).not_to include(*org2.locations.map(&:name))
         end
       end
 
@@ -607,20 +549,28 @@ describe "Adding a product" do
     end
 
     it "does not save a product with invalid product info", js: true do
-      expect(page).to have_content("Current inventory")
       select org2.name, from: "Seller Organization"
+
+      expect(page).to have_content("Current inventory")
       uncheck "Use simple inventory management"
+      expect(page).not_to have_content("Current inventory")
 
       click_button "Save and Continue"
+
+      # Shows error messages
       expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("Category can't be blank")
-      expect(page).to_not have_content("Current inventory")
-      expect(find_field("Use seller info from my account.")).to be_checked
-      expect(page).not_to have_content("No Organization Selected")
 
+      # Maintains inventory selections
+      expect(page).not_to have_content("Current inventory")
+      expect(find_field("Use simple inventory management")).not_to be_checked
       within(".tabs") do
         expect(page).to have_content("Inventory")
       end
+
+      # Maintains organization selection
+      expect(find_field("Use seller info from my account.")).to be_checked
+      expect(page).not_to have_content("No Organization Selected")
     end
   end
 
@@ -634,10 +584,7 @@ describe "Adding a product" do
       market.organizations << org2
 
       sign_in_as(user)
-      within '#admin-nav' do
-        click_link 'Products'
-      end
-      click_link "Add New Product"
+      visit "/admin/products/new"
     end
 
     it "makes the user choose an organization to add the product for" do
@@ -658,10 +605,7 @@ describe "Adding a product" do
       org.users << user
       sign_in_as(user)
 
-      within '#admin-nav' do
-        click_link 'Products'
-      end
-      click_link "Add New Product"
+      visit "/admin/products/new"
     end
 
     describe "a user can request a new inventory unit" do
