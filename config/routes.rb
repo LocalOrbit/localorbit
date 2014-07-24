@@ -89,6 +89,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :discounts
+
     resource :fresh_sheet, only: [:show, :update, :create] do
       get :preview
     end

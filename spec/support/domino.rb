@@ -324,6 +324,20 @@ module Dom
       end
     end
 
+    class DiscountRow < Domino
+      include Dom::Deletable
+
+      selector ".discount-row"
+
+      attribute :market
+      attribute :name
+      attribute :code
+      attribute :amount
+      attribute :type
+      attribute :uses
+      attribute :available
+    end
+
     class FeaturedPromotionRow < Domino
       include Dom::Deletable
 
