@@ -21,6 +21,7 @@ set_viewport = ->
 
 $('.toggle-viewport').click ->
   $('body').addClass('request-desktop')
+  document.cookie = "request_desktop=true; path=/";
   set_viewport()
 
 $(window).on "rotate, resize", ->
