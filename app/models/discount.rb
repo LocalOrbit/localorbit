@@ -1,6 +1,7 @@
 class Discount < ActiveRecord::Base
   include SoftDelete
-  
+  include Sortable
+
   self.inheritance_column = nil
 
   belongs_to :market
