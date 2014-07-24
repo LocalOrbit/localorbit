@@ -590,6 +590,7 @@
 
 /** Tabs */
 .tabs-wrapper {
+  clear: both;
   padding: 0 20px;
   border-bottom: solid 1px #cbcbcb;
   margin: 0 -20px 30px;
@@ -635,6 +636,9 @@
 }
 
 @media screen and (max-width: 600px) {
+  h1 + form + .tabs-wrapper {
+    margin-top: 14px;
+  }
   .tabs-wrapper {
     padding: 0;
 

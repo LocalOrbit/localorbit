@@ -4,13 +4,15 @@
     <%= link_to "< Return to Markets List", admin_markets_path, class: "redundant-nav" %>
 
     <% if current_user.admin? %>
+      <h1 class="pull-left"><%= @market.decorate.header %></h1>
       <%= form_for [:admin, @market], html: { class: "pull-right" } do |f| %>
         <%= f.hidden_field :active, value: !@market.active? %>
         <%= f.submit (@market.active? ? 'Deactivate' : 'Activate'), class: "btn--small btn--activate" %>
       <% end %>
+    <% else %>
+      <h1><%= @market.decorate.header %></h1>
     <% end %>
 
-    <h1><%= @market.decorate.header %></h1>
     <div class="tabs-wrapper">
       <ul class="tabs wrapping-tabs">
         <%= content_tag(:li, link_to_or_span("Market Info",   [:admin, @market]), class: 'tab') %>
