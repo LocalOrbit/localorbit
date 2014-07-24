@@ -64,6 +64,20 @@
             </address>
           </div>
 
+          <% if current_market.plan.discount_codes? %>
+          <div id="discount-info">
+            <h2 class="subheading-cart"><i class="font-icon icon-coins"></i> Discount Information</h2>
+          </div>
+
+          <fieldset class="conditional">
+            <div class="discount-field">
+              <%= f.label :discount_code, "Discount Code" %><br>
+              <%= f.text_field :discount_code, class: "input--short" %>
+              <%= link_to "Apply", "#" %>
+            </div>
+          </fieldset>
+          <% end %>
+
           <div id="payment-info">
             <h2 class="subheading-cart"><i class="font-icon icon-coins"></i> Payment Information</h2>
           </div>
