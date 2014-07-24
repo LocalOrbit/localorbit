@@ -90,10 +90,12 @@
   }
 
 @media screen and (max-width: 800px) {
-  .popup--edit {
-    left: 50%;
+  .popup {
     @include box-sizing(border-box);
     @include transform(translateX(-50%));
+  }
+  .popup--edit {
+    left: 50%;
     width: 90%;
     max-width: 300px;
     margin: 0 auto;
