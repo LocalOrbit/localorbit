@@ -1,5 +1,8 @@
 @import 'mixins';
 
+.breadcrumbs {
+  clear: both;
+}
 .nav {
   a {
     text-decoration: none;

@@ -1,62 +1,78 @@
-<div class="row">
-  <div class="column column--fourth column--guttered" id="product-filter">
+<div class="mobile-panes-wrapper">
+  <div class="row mobile-panes" data-panes="3">
+    <div class="column column--fourth column--guttered secondary-panes" id="product-filter" data-panes="2">
 
-    <%= render "selected_delivery" %>
-
-    <ul class="list-naked nav nav--sidebar">
-      <li><%= link_to "Continue Shopping",  products_path %></li>
-      <li><%= link_to "More Products from this Seller", seller_path(@product.organization) %></li>
-      <li><%= link_to "More Products in #{@breadcrumbs.first.name}", "#{products_path}?category=#{@breadcrumbs.first.id}" %></li>
-    </ul>
-
-  </div
-  ><div class="column column--three-fourths column--guttered">
-    <%= link_to "Shop Home",  products_path %>
-    / <%= link_to @breadcrumbs.first.name, "#{products_path}?category=#{@breadcrumbs.first.id}" %>
-
-    <div class="row">
-      <div class="column column--half column--guttered">
-
-        <h1 class="heading-product"><%= @product.name %></h1>
-        <p class="producer">Produced by <%= link_to @product.organization.name, seller_path(@product.organization) %></p>
-
-        <table class="product-table product-table--mini cart_items" data-cart-url="<%= cart_path %>">
-          <tr class="product product-row cart_item" data-cart-item="<%= @product.cart_item.to_json %>">
-            <td class="pricing">
-              <ul class="tiers">
-                <% @product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
-                  <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
-                <% end %>
-              </ul>
-            </td>
-            <td class="quantity">
-              <span>
-                <input name="quantity" type="number" size="3" min="0" value="<%= @product.cart_item.quantity > 0 ? @product.cart_item.quantity : "" %>" max="<%= @product.available_inventory %>"><br>
-                <span class="price-for-quantity"><%= number_to_currency(@product.cart_item.unit_price.sale_price) %></span>
-              </span>
-            </td>
-            <td class="total price"><%= @product.cart_item.decorate.display_total_price %></td>
-            <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear #{' is-hidden' unless @product.cart_item.persisted?}" %></td>
-          </tr>
-        </table>
-
-        <h2 class="heading-section heading-section--product">What</h2>
-        <%= simple_format @product.short_description %>
-
-        <h2 class="heading-section heading-section--product">How</h2>
-
-        <%= simple_format @product.long_description %>
+      <div class="mobile-pane" id="delivery-information">
+        <div class="vacuus"></div>
+        <a href="#product-information" class="pane-toggle mobile-only btn">Return to Product</a>
+        <%= render "selected_delivery" %>
 
       </div
-      ><div class="column column--half column--guttered">
-        <% if @product.image_stored? %>
-          <div class="product-image product-image--large vc-wrapper">
-            <%= image_tag @product.image.thumb('330x').url, alt: "", class: "vertical-centerer" %>
-          </div>
-        <% end %>
+      ><div class="mobile-pane" id="other-options">
 
-        <img class="location-map" alt="" src="<%= @product.location_map %>">
-        <%= @product.location_address %>
+        <div class="vacuus"></div>
+        <a href="#product-information" class="pane-toggle mobile-only btn">Return to Product</a>
+        <ul class="list-naked nav nav--sidebar">
+          <li><%= link_to "Continue Shopping",  products_path %></li>
+          <li><%= link_to "More Products from this Seller", seller_path(@product.organization) %></li>
+          <li><%= link_to "More Products in #{@breadcrumbs.first.name}", "#{products_path}?category=#{@breadcrumbs.first.id}" %></li>
+        </ul>
+      </div>
+
+    </div
+    ><div class="column column--three-fourths column--guttered mobile-pane" id="product-information">
+      <div class="vacuus"></div>
+      <a href="#delivery-information" class="pane-toggle mobile-only btn">Delivery Information</a>
+      <a href="#other-options" class="pane-toggle mobile-only btn">Additional Options</a>
+      <div class="breadcrumbs">
+        <%= link_to "Shop Home",  products_path %>
+        / <%= link_to @breadcrumbs.first.name, "#{products_path}?category=#{@breadcrumbs.first.id}" %>
+      </div>
+
+      <div class="row">
+        <div class="column column--half column--guttered">
+
+          <h1 class="heading-product"><%= @product.name %></h1>
+          <p class="producer">Produced by <%= link_to @product.organization.name, seller_path(@product.organization) %></p>
+
+          <table class="product-table product-table--mini cart_items" data-cart-url="<%= cart_path %>">
+            <tr class="product product-row cart_item" data-cart-item="<%= @product.cart_item.to_json %>">
+              <td class="pricing">
+                <ul class="tiers">
+                  <% @product.prices_for_market_and_organization(current_market, current_organization).each do |price| %>
+                    <li><span class="unit-price"><%= number_to_currency(price.decorate.sale_price)%></span> <span class="tier"><%= price.decorate.formatted_units %></span></li>
+                  <% end %>
+                </ul>
+              </td>
+              <td class="quantity">
+                <span>
+                  <input name="quantity" type="number" size="3" min="0" value="<%= @product.cart_item.quantity > 0 ? @product.cart_item.quantity : "" %>" max="<%= @product.available_inventory %>"><br>
+                  <span class="price-for-quantity"><%= number_to_currency(@product.cart_item.unit_price.sale_price) %></span>
+                </span>
+              </td>
+              <td class="total price"><%= @product.cart_item.decorate.display_total_price %></td>
+              <td class="product-clear"><%= link_to "", "#", class: "font-icon icon-clear #{' is-hidden' unless @product.cart_item.persisted?}" %></td>
+            </tr>
+          </table>
+
+          <h2 class="heading-section heading-section--product">What</h2>
+          <%= simple_format @product.short_description %>
+
+          <h2 class="heading-section heading-section--product">How</h2>
+
+          <%= simple_format @product.long_description %>
+
+        </div
+        ><div class="column column--half column--guttered">
+          <% if @product.image_stored? %>
+            <div class="product-image product-image--large vc-wrapper">
+              <%= image_tag @product.image.thumb('330x').url, alt: "", class: "vertical-centerer" %>
+            </div>
+          <% end %>
+
+          <img class="location-map" alt="" src="<%= @product.location_map %>">
+          <%= @product.location_address %>
+        </div>
       </div>
     </div>
   </div>
