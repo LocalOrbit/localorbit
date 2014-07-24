@@ -17,10 +17,13 @@ class Registration
                 :buyer,
                 :seller,
                 :user,
-                :organization
+                :organization,
+                :terms_of_service
 
   validates :market, :name, :contact_name, :address_label, :address,
             :city, :state, :zip, presence: true
+
+  validates_acceptance_of :terms_of_service
 
   def save
     if valid?
@@ -55,7 +58,8 @@ class Registration
       name: contact_name,
       email: email,
       password: password,
-      password_confirmation: password_confirmation
+      password_confirmation: password_confirmation,
+      terms_of_service: terms_of_service
     }
   end
 

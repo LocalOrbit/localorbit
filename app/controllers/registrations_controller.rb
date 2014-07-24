@@ -2,6 +2,8 @@ class RegistrationsController < ApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :ensure_market_affiliation
 
+  STATIC_PAGES = [:terms_of_service, :standards]
+
   def show
     @registration = Registration.new(buyer: true)
   end
@@ -18,6 +20,10 @@ class RegistrationsController < ApplicationController
     end
   end
 
+  def method_missing(page)
+    render page if STATIC_PAGES.include? page
+  end
+
   protected
 
   def registration_params
@@ -27,6 +33,7 @@ class RegistrationsController < ApplicationController
       :email,
       :password,
       :password_confirmation,
+      :terms_of_service,
       :buyer,
       :seller,
       :address_label,
