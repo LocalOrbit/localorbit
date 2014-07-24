@@ -5,33 +5,35 @@
   </div>
 </div>
 <div class="sub-header-whitespace"></div>
-<table class="sortable">
-  <thead class="stickable">
-    <tr>
-      <%= content_tag :th, sort_link(@q, :invoice_due_date, "Due Date") %>
-      <%= content_tag :th, sort_link(@q, :order_number, "Order Number") %>
-      <%= content_tag :th, sort_link(@q, :payment_note, "Purchase Order #") %>
-      <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
-      <%= content_tag :th, sort_link(@q, :delivery_status, "Delivery Status") %>
-      <%= content_tag :th, sort_link(@q, :total_cost, "Amount") %>
-    </tr>
-  </thead>
-  <tbody>
-    <% @orders.each do |order| %>
-      <% if order.payment_status == "unpaid" %>
-        <tr class="invoice-row">
-          <td class="due-date"><%= order.invoice_due_date.strftime("%m/%d/%Y") %></td>
-          <td class="order-number"><%= link_to order.order_number, admin_financials_invoice_path(order) %></td>
-          <td class="po-number"><%= order.payment_note if order.payment_method == "purchase order" %></td>
-          <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
-          <td class="delivery-status"><%= order.delivery_status.titleize %></td>
-          <td class="amount"><%= number_to_currency(order.total_cost) %></td>
-        </tr>
+<div class="table-wrapper">
+  <table class="sortable">
+    <thead class="stickable">
+      <tr>
+        <%= content_tag :th, sort_link(@q, :invoice_due_date, "Due Date") %>
+        <%= content_tag :th, sort_link(@q, :order_number, "Order Number") %>
+        <%= content_tag :th, sort_link(@q, :payment_note, "Purchase Order #") %>
+        <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
+        <%= content_tag :th, sort_link(@q, :delivery_status, "Delivery Status") %>
+        <%= content_tag :th, sort_link(@q, :total_cost, "Amount") %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <% if order.payment_status == "unpaid" %>
+          <tr class="invoice-row">
+            <td class="due-date"><%= order.invoice_due_date.strftime("%m/%d/%Y") %></td>
+            <td class="order-number"><%= link_to order.order_number, admin_financials_invoice_path(order) %></td>
+            <td class="po-number"><%= order.payment_note if order.payment_method == "purchase order" %></td>
+            <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
+            <td class="delivery-status"><%= order.delivery_status.titleize %></td>
+            <td class="amount"><%= number_to_currency(order.total_cost) %></td>
+          </tr>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
+</div>
 <%= paginate @orders %>
 
 <% if @orders.none? %>
