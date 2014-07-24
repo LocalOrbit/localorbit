@@ -648,6 +648,19 @@
       padding: 14px 4px;
     }
   }
+  .wrapping-tabs {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    .tab {
+      -webkit-flex: 1 0 auto;
+      flex: 1 0 auto;
+      > a, > .current {
+        @include border-radius(0);
+      }
+    }
+  }
 }
 
 @media screen and (max-width:400px) {
