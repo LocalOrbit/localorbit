@@ -9,9 +9,11 @@
 
 ### Requirements
 
-* Ruby 2.1.1
+* Ruby 2.1.2
 * PostgreSQL
 * PhantomJS (for running tests)
+* ImageMagick
+* Memcached
 
 ### Setup
 
@@ -23,7 +25,7 @@
 6. `rake db:setup`
 7. `rake db:seed:development`
 8. `rails server`
-9. Go to http://lvh.me:3000 in a browser (we use lvh.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
+9. Go to http://localtest.me:3000 in a browser (we use localtest.me to always point to 127.0.0.1 so we can use subdomains, which localhost doesn't allow.)
 
 ### Production Setup
 * At least one Market must be created before creating Organizations
