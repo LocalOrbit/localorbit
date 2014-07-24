@@ -25,6 +25,9 @@
 	width: 130px;
 	text-align: right;
 	font-weight: 700;
+	@media screen and (max-width: 600px) {
+		margin-top: -62px;
+	}
 }
 
 .products-dashboard {
@@ -34,15 +37,25 @@
 .upcoming-delivery-mini {
   float: left;
   width: 100%;
+  margin-top: 20px;
 }
 
 .seller-tools-mini {
+	width: 100%;
 	background: #f2f2f2;
 	@include border-radius(5px);
-	padding: 10px;
 	line-height: 24px;
 	text-align: center;
-
+	.tool-mini {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 20px;
+		border-bottom: 1px solid #ddd;
+		
+	}
+	.tool-mini:nth-child(3n) {
+    border-bottom: 0;
+  }
 	a {
 		padding-right: 30px;
 	}

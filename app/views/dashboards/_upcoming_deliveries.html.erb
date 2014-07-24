@@ -1,25 +1,27 @@
-<h2 class="dashboard-titles"><i class="font-icon" data-icon="&#xe022;"></i>&nbsp; Upcoming Deliveries</h2>
-<span class="supporting-text-mini">These orders are ready to be delivered.</span><br>
-<% if @presenter.upcoming_deliveries.present? %>
+<div class="upcoming-delivery-mini">
+  <h2 class="dashboard-titles"><i class="font-icon" data-icon="&#xe022;"></i>&nbsp; Upcoming Deliveries</h2>
+  <span class="supporting-text-mini">These orders are ready to be delivered.</span><br>
+  <% if @presenter.upcoming_deliveries.present? %>
 
-  <% @presenter.upcoming_deliveries.each do |delivery| %>
-    <div class="upcoming-delivery upcoming-delivery-mini">
-      <% if current_user.multi_market_membership? %>
-        <span class="market"><%= delivery.delivery_schedule.market.name %></span><br>
-      <% end %>
-      <h2 class="upcoming-delivery-date">Deliveries for <%= delivery.upcoming_delivery_date_heading %></h2>
-      Deliver to:
-      <div class="location-name"><%= delivery.deliver_to_name %></div>
-      <div class="location"><%= delivery.deliver_to_location %></div>
+    <% @presenter.upcoming_deliveries.each do |delivery| %>
+      <div class="upcoming-delivery">
+        <% if current_user.multi_market_membership? %>
+          <span class="market"><%= delivery.delivery_schedule.market.name %></span><br>
+        <% end %>
+        <h2 class="upcoming-delivery-date">Deliveries for <%= delivery.upcoming_delivery_date_heading %></h2>
+        Deliver to:
+        <div class="location-name"><%= delivery.deliver_to_name %></div>
+        <div class="location"><%= delivery.deliver_to_location %></div>
 
-      <div class="seller-tools-mini">
-        <%= link_to "Pick List", admin_delivery_tools_pick_list_path(delivery) %>
-        <%= link_to "Individual\nPacking Slips", admin_delivery_tools_individual_pack_list_path(delivery) %>
-        <%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery) %>
+        <div class="seller-tools-mini">
+          <div class="tool-mini"><%= link_to "Pick List", admin_delivery_tools_pick_list_path(delivery) %></div>
+          <div class="tool-mini"><%= link_to "Individual\nPacking Slips", admin_delivery_tools_individual_pack_list_path(delivery) %></div>
+          <div class="tool-mini"><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery) %></div>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
 
-<% else %>
-  <div class="upcoming-delivery upcoming-delivery-mini">There are currently no upcoming deliveries</div>
-<% end %>
+  <% else %>
+    <div class="upcoming-delivery upcoming-delivery-mini">There are currently no upcoming deliveries</div>
+  <% end %>
+</div>

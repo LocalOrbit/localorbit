@@ -1354,6 +1354,9 @@ label ~ .tooltip {
   .upcoming-delivery-order {
     margin: 0 0 .5em;
     font: bold 24px 'Open Sans Condensed', 'Open Sans', OpenSans, sans-serif;
+    display: inline-block;
+    width: 100%;
+
     + .note {
       margin-top: -.5em;
     }
