@@ -87,7 +87,8 @@
     </style>
   <% end %>
 </head>
-<body class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] %>">
+
+<body class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">
 
   <div class="page-content">
     <header class="l-app-header stickable" id="top">
@@ -143,8 +144,9 @@
             Powered by <span class="org">Local Orbit</span><br>
             © 2014
           </a>
-          <button class="btn reset mobile-only mobile-block toggle-viewport">View Desktop Version</button>
+          <button class="btn reset mobile-only mobile-block toggle-viewport" id="toggle-desktop">View Desktop Version</button>
         </div>
+        <button class="btn reset btn--small hidden-mobile toggle-viewport is-hidden" id="toggle-mobile">View Mobile Version</button>
       </div>
     </footer>
   </div>
