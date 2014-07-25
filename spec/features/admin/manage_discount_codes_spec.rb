@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Manage Discount Codes" do
   let!(:market)              { create(:market) }
+  let!(:market2)             { create(:market) }
   let!(:discount_fixed)      { create(:discount, name: "fixed discount", type: "fixed", discount: 5.00) }
   let!(:discount_percentage) { create(:discount, name: "percentage discount", type: "percentage", discount: 10) }
   let(:organization)         { create(:organization, :buyer, markets: [market]) }
@@ -33,7 +34,9 @@ describe "Manage Discount Codes" do
     end
 
     it "does not show 'All Markets' as an option" do
-      
+      visit new_admin_discount_path
+
+      expect(page).to_not have_xpath("//select/option[normalize-space(text())='All Markets']")
     end
 
     it "shows a list of discount codes" do
@@ -148,6 +151,12 @@ describe "Manage Discount Codes" do
       expect(code.code).to have_content(discount_percentage.code)
       expect(code.type).to have_content("%")
       expect(code.amount).to have_content("10.0%")
+    end
+
+    it "does show 'All Markets' as an option" do
+      visit new_admin_discount_path
+
+      expect(page).to have_xpath("//select/option[normalize-space(text())='All Markets']")
     end
 
     context "Creation" do
