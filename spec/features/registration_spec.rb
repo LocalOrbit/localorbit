@@ -29,6 +29,8 @@ describe "Register" do
           fill_in "Postal Code", with: "49423"
           fill_in "Phone", with: "616-555-1963"
 
+          check "registration_terms_of_service"
+
           click_button "Sign Up"
         end
 
@@ -77,6 +79,8 @@ describe "Register" do
           select "Michigan", from: "State"
           fill_in "Postal Code", with: "49423"
           fill_in "Phone", with: "616-555-1963"
+
+          check "registration_terms_of_service"
 
           click_button "Sign Up"
         end
@@ -156,6 +160,8 @@ describe "Register" do
           select "Michigan", from: "State"
           fill_in "Postal Code", with: "49423"
           fill_in "Phone", with: "616-555-1963"
+
+          check "registration_terms_of_service"
 
           click_button "Sign Up"
         end

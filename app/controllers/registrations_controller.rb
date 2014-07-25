@@ -27,6 +27,7 @@ class RegistrationsController < ApplicationController
       :email,
       :password,
       :password_confirmation,
+      :terms_of_service,
       :buyer,
       :seller,
       :address_label,
