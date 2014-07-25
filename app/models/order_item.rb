@@ -67,7 +67,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def buyer_payment_status
-    order.payment_status
+    payment_status
   end
 
   def seller_net_total
