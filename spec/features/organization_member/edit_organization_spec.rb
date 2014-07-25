@@ -57,4 +57,20 @@ describe "An organization member" do
       expect(page).not_to have_content("Allowed payment methods")
     end
   end
+
+  describe "A selling organization" do
+    let(:org) { create(:organization, users: [member], can_sell: true) }
+
+    it "shows profile information" do
+      visit admin_organization_path(org)
+
+      expect(page).to have_content("Facebook")
+      expect(page).to have_content("Twitter")
+      expect(page).to have_content("Display Feed on Profile Page")
+      expect(page).to have_content("Profile photo")
+      expect(page).to have_content("Who")
+      expect(page).to have_content("How")
+      expect(page).to have_content("Show on Profile page")
+    end
+  end
 end
