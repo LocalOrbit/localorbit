@@ -150,11 +150,16 @@ http {
             ssl_certificate_key <%= app[:ssl_certificate_key] %>;
         <% end %>
 
-        ####################################
-        ###  This location block is the  ###
-        ###  only thing added to the     ###
-        ###  default passenger config    ###
-        ####################################
+        ##################################
+        ###  Start config added by us. ###
+        ###  DO NOT REMOVE             ###
+        ##################################
+
+        # Faster restart time
+        passenger_max_preloader_idle_time 0;
+        # Try to manage memory better
+        passenger_max_requests 200;
+
         location ~* \.(eot|ttf|woff)$ {
             gzip_static on;
             expires max;
@@ -162,6 +167,11 @@ http {
             add_header ETag "";
             add_header Access-Control-Allow-Origin *;
         }
+
+        ################################
+        ###  End config added by us. ###
+        ###  DO NOT REMOVE           ###
+        ################################
 
         # Rails asset pipeline support.
         location ~ "^/assets/.+-[0-9a-f]{32}\..+" {

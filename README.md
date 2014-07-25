@@ -30,8 +30,14 @@
 ### Production Setup
 * At least one Market must be created before creating Organizations
 
+### Updating Passenger
+`config/passenger_nginx.erb` is copied from `resources/templates/standalone/config.erb` in the gem.
+
+After updating the gem copy the file from the gem, then use git to keep the section between the keep me comments.
+Everything in this section has been added so just keep it all.
+
 ### Test Accounts
-Running _rake db:seed:development_ makes the following test accounts available
+Running `rake db:seed:development` makes the following test accounts available
 
 *Selling Organization*
 Email: seller@example.com
@@ -44,6 +50,11 @@ Password: password1
 *Market Manager*
 Email: mm@example.com
 Password: password1
+
+### Cloning staging for local development
+Run `rake db:dump:staging`
+
+**WARNING: This will replace EVERYTHING in your development db with what is currently on staging**
 
 ## Contributing
 
