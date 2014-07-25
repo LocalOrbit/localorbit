@@ -33,7 +33,7 @@
 
     <% if @organization.new_record? || @organization.can_sell? %>
       <div class="row row--field">
-        <div class="field field column column--half column--guttered">
+        <div class="field column column--half column--guttered">
           <%= f.check_box :show_profile %>
           <%= f.label :show_profile, "Show on Profile page" %>
           <span class="tooltip" data-tooltip="Show or hide this customer on the Profile page."></span>
