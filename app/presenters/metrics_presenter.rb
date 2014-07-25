@@ -36,7 +36,7 @@ class MetricsPresenter
       ) orders_alias ON orders_alias.id = orders.id
     SQL
     ).joins(:market).where.not(market_id: TEST_MARKET_IDS),
-    order_item: OrderItem.joins(order: :market).where.not(orders: { market_id: TEST_MARKET_IDS }, delivery_status: "canceled"),
+    order_item: OrderItem.joins(order: :market).where.not(orders: {market_id: TEST_MARKET_IDS}, delivery_status: "canceled"),
     payment: Payment.joins(:market).where.not(market_id: TEST_MARKET_IDS),
     market: Market.where.not(id: TEST_MARKET_IDS),
     organization: Organization.where.not(id: TEST_ORG_IDS),
@@ -139,7 +139,7 @@ class MetricsPresenter
     # when Order#payment_method is "credit_card"
     credit_card_processing_fees: {
       title: "Credit Card Processing Fees",
-      scope: BASE_SCOPES[:order_item].where(orders: { payment_method: "credit card" }),
+      scope: BASE_SCOPES[:order_item].where(orders: {payment_method: "credit card"}),
       attribute: "orders.placed_at",
       calculation: :sum,
       calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
@@ -152,7 +152,7 @@ class MetricsPresenter
     # when Order#payment_method is "ach"
     ach_processing_fees: {
       title: "ACH Processing Fees",
-      scope: BASE_SCOPES[:order_item].where(orders: { payment_method: "ach" }),
+      scope: BASE_SCOPES[:order_item].where(orders: {payment_method: "ach"}),
       attribute: "orders.placed_at",
       calculation: :sum,
       calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
@@ -165,7 +165,7 @@ class MetricsPresenter
     # when Order#payment_method is "credit_card" or "ach"
     total_processing_fees: {
       title: "Total Processing Fees",
-      scope: BASE_SCOPES[:order_item].where(orders: { payment_method: ["credit card", "ach"] }),
+      scope: BASE_SCOPES[:order_item].where(orders: {payment_method: ["credit card", "ach"]}),
       attribute: "orders.placed_at",
       calculation: :sum,
       calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
@@ -428,14 +428,14 @@ class MetricsPresenter
     interval = "month" unless ["week", "month"].include?(interval)
     markets = [markets].compact.flatten.delete_if(&:empty?)
 
-    return nil unless groups.all? { |group| GROUPS.keys.include?(group) }
+    return nil unless groups.all? {|group| GROUPS.keys.include?(group) }
 
     new(groups: groups, interval: interval, markets: markets)
   end
 
   private
 
-  def metrics_for_group(group, interval, markets = [])
+  def metrics_for_group(group, interval, markets=[])
     Hash[
       GROUPS[group][:metrics].map do |metric|
         [METRICS[metric][:title], calculate_metric(metric, interval, markets)]
@@ -455,12 +455,12 @@ class MetricsPresenter
     scope.send(groupdate, attribute, options)
   end
 
-  def calculate_metric(metric, interval, markets = [], apply_format = true)
+  def calculate_metric(metric, interval, markets=[], apply_format=true)
     m = METRICS[metric]
 
     if m[:scope]
       scope = m[:scope].uniq
-      scope = scope.where(markets: { id: markets }) unless markets.empty?
+      scope = scope.where(markets: {id: markets}) unless markets.empty?
     end
 
     values = if m[:calculation] == :custom
@@ -489,7 +489,7 @@ class MetricsPresenter
       series.send(m[:calculation], m[:calculation_arg])
     end
 
-    Hash[values.map { |key, value| [key, (apply_format ? format_value(value, m[:format]) : value)] }]
+    Hash[values.map {|key, value| [key, (apply_format ? format_value(value, m[:format]) : value)] }]
   end
 
   def format_value(value, format)
@@ -506,16 +506,16 @@ class MetricsPresenter
   def format_values(values, interval)
     count = GROUPDATE_OPTIONS[interval][:last]
 
-    Hash[@headers.map { |header| [header, (values[header] || values.values.last || 0)] }.last(count)]
+    Hash[@headers.map {|header| [header, (values[header] || values.values.last || 0)] }.last(count)]
   end
 
   def headers_for_interval(interval)
     if interval == "month"
       end_date = Date.current.beginning_of_month
-      (0..5).map { |x| (end_date - x.months).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
+      (0..5).map {|x| (end_date - x.months).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
     elsif interval == "week"
       end_date = Date.current.beginning_of_week - (START_OF_WEEK == :sun ? 1 : 0).days
-      (0..4).map { |x| (end_date - x.weeks).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
+      (0..4).map {|x| (end_date - x.weeks).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
     end
   end
 end

@@ -7,8 +7,8 @@ class Organization < ActiveRecord::Base
   has_many :user_organizations
 
   has_many :users, through: :user_organizations
-  has_many :all_markets, -> { extending(MarketOrganization::AssociationScopes) },  
-    through: :market_organizations, 
+  has_many :all_markets, -> { extending(MarketOrganization::AssociationScopes) },
+    through: :market_organizations,
     source: :market
 
   has_many :markets, -> { extending(MarketOrganization::AssociationScopes).excluding_deleted.not_cross_selling },

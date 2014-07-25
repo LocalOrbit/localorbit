@@ -2,7 +2,7 @@ class UnderwriteEntity
   include Interactor
 
   def setup
-    representative_params.delete_if {|k, v| v.blank? }
+    representative_params.delete_if {|_, v| v.blank? }
   end
 
   def perform
@@ -29,7 +29,7 @@ class UnderwriteEntity
 
   def set_date_of_birth(date_params)
     if date_params.present?
-      balanced_customer.dob = "#{date_params[:year]}-#{'%02d' % date_params[:month].to_i}"
+      balanced_customer.dob = "#{date_params[:year]}-#{"%02d" % date_params[:month].to_i}"
     end
   end
 

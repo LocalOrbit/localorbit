@@ -36,7 +36,7 @@ module Admin
     private
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation).reject {|k,v| v.empty?}
+      params.require(:user).permit(:name, :email, :password, :password_confirmation).reject {|_, v| v.empty? }
     end
   end
 end
