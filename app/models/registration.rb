@@ -23,7 +23,7 @@ class Registration
   validates :market, :name, :contact_name, :address_label, :address,
             :city, :state, :zip, presence: true
 
-  validates_acceptance_of :terms_of_service
+  validates :terms_of_service, acceptance: true
 
   def save
     if valid?
