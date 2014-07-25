@@ -3,13 +3,13 @@ class ChargeServiceFee
 
   def perform
     payment = Payment.create({
-      payment_type: "service",
-      amount: amount,
-      status: "pending",
-      payer: market,
-      payment_method: "ach",
-      market: market,
-      bank_account: bank_account
+      payment_type:   "service",
+      market:         market,
+      payer:          market,
+      amount:         amount,
+      bank_account:   bank_account,
+      payment_method: bank_account.bank_account? ? "ach" : "credit card",
+      status:         bank_account.bank_account? ? "pending" : "paid"
     })
 
     begin
@@ -20,8 +20,12 @@ class ChargeServiceFee
         appears_on_statement_as: "Local Orbit"
       )
       payment.update_attributes(balanced_uri: debit.uri)
-    rescue
-      payment.update_attributes(status: 'failed')
+    rescue => e
+      updates = {status: "failed"}
+      if e.try(:category_code).present?
+        updates[:note] = [payment.note, "Error: #{e.category_code}"].reject(&:blank?).join(" ")
+      end
+      payment.update_attributes(updates)
       context.fail!
     end
   end
