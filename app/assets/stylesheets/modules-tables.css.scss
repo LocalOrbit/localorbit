@@ -925,6 +925,13 @@ th {
     font-weight: bold;
   }
 }
+@media screen and (max-width: 600px) {
+  .table-wrapper > .order-summary {
+    min-width: 0;
+    width: auto;
+    white-space: nowrap;
+  }
+}
 
 .totals-table {
   padding-top: 30px;
