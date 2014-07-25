@@ -52,7 +52,7 @@ class PickListPresenter
     end
 
     def buyers
-      @buyers ||= @items.sort {|a,b| a.order.organization.name.casecmp(b.order.organization.name) }.map do |item|
+      @buyers ||= @items.sort {|a, b| a.order.organization.name.casecmp(b.order.organization.name) }.map do |item|
         OpenStruct.new(
           name:     item.order.organization.name,
           quantity: item.quantity,

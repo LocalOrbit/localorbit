@@ -105,17 +105,15 @@ class User < ActiveRecord::Base
 
   def managed_organizations
     @managed_organizations ||= begin
-      market_ids = []
-
       market_ids = if admin?
         Market.all.pluck(:id)
       elsif market_manager?
         managed_markets_join.map(&:market_id)
       end
 
-      Organization.managed_by_user_id_or_market_ids_including_deleted(id, market_ids)
-        .where("market_organizations.deleted_at IS NULL") # exclude deleted
-        .where("market_organizations.id IS NOT NULL")     # exclude your organizations not connected to a market
+      Organization.managed_by_user_id_or_market_ids_including_deleted(id, market_ids).
+        where("market_organizations.deleted_at IS NULL"). # exclude deleted
+        where("market_organizations.id IS NOT NULL")      # exclude your organizations not connected to a market
     end
   end
 

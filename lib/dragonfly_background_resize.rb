@@ -9,7 +9,7 @@ module DragonflyBackgroundResize
   #
   # example:
   # define_after_upload_resize(:photo, 1200, 1200, photo_small: {width: 150, height: 150})
-  def define_after_upload_resize(accessor, max_width, max_height, thumbs = {})
+  def define_after_upload_resize(accessor, max_width, max_height, thumbs={})
     class_eval <<-EOS
       around_save :post_process_#{accessor}, prepend: true
 

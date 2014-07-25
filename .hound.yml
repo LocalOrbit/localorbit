@@ -124,3 +124,6 @@ StringLiterals:
 
 TrailingComma:
   Enabled: false
+
+WordArray:
+  Enabled: false

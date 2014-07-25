@@ -87,7 +87,7 @@ module ApplicationHelper
     Color::RGB.by_hex(color).to_hsl
   end
 
-  def color_mix(color = "#000000", percentage = 50)
+  def color_mix(color="#000000", percentage=50)
     hsl = hex_to_hsl(color)
     lum = hsl.luminosity + percentage
     lum = [lum, 100].min

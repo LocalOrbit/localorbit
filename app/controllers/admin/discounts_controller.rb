@@ -22,7 +22,7 @@ module Admin
     def create
       @discount = Discount.new(discount_params)
       if @discount.save
-        redirect_to admin_discounts_path, notice: 'Successfully created discount.'
+        redirect_to admin_discounts_path, notice: "Successfully created discount."
       else
         flash.now[:alert] = "Error creating discount."
         render "new"
@@ -36,7 +36,7 @@ module Admin
     def update
       @discount = Discount.find(params[:id])
       if @discount.update(discount_params)
-        redirect_to admin_discounts_path, notice: 'Successfully updated discount.'
+        redirect_to admin_discounts_path, notice: "Successfully updated discount."
       else
         flash.now[:alert] = "Error updating discount."
         render "show"
@@ -45,9 +45,9 @@ module Admin
 
     def destroy
       if Discount.soft_delete(params[:id])
-        redirect_to admin_discounts_path, notice: 'Successfully removed discount.'
+        redirect_to admin_discounts_path, notice: "Successfully removed discount."
       else
-        redirect_to admin_discounts_path, alert: 'Unable to remove discount.'
+        redirect_to admin_discounts_path, alert: "Unable to remove discount."
       end
     end
 
@@ -79,14 +79,14 @@ module Admin
         current_user.managed_markets
       end.order(:name)
 
-      @market_select_options = current_user.admin? ? { include_blank: "All Markets"} : {}
+      @market_select_options = current_user.admin? ? {include_blank: "All Markets"} : {}
 
       org_ids = @markets.map {|m| m.organization_ids }.flatten
       @products = Product.
           joins(:organization).
           where(organization_id: org_ids).
           order("organizations.name, products.name").
-          map {|p| ["#{p.organization.name}: #{p.name}", p.id]}
+          map {|p| ["#{p.organization.name}: #{p.name}", p.id] }
 
       @organizations = MarketOrganization.
           excluding_deleted.
@@ -94,7 +94,7 @@ module Admin
           includes(:market, :organization).
           where(market_id: current_user.managed_market_ids).
           order("markets.name ASC, organizations.name ASC").
-          map {|mo| ["#{mo.market.name}: #{mo.organization.name}", mo.organization_id]}
+          map {|mo| ["#{mo.market.name}: #{mo.organization.name}", mo.organization_id] }
     end
   end
 end
