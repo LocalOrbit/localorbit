@@ -3,6 +3,7 @@ close_popups = ->
     $(e).remove().insertAfter('.popup-toggle[href="#' + e.id + '"]')
       .css({'left': 'auto', 'top': 'auto'})
   $('.popover, .popup, .dropdown').addClass('is-hidden')
+  $('body').css('min-height', '0')
 
 $('.overlay').click (e) ->
   $('.is-open').removeClass('is-open is-dark is-dim is-modal is-editable mobile-dim')
