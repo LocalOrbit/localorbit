@@ -1,52 +1,71 @@
 @import "mixins.css.scss";
 
 .dashboard-titles {
-	font-weight: 700;
-	margin-bottom: 0;
+  font-weight: 700;
+  margin-bottom: 0;
 }
 
 .supporting-text {
-	float: left;
-	display: block;
-	margin-bottom: 20px;
-	width: 500px;
+  float: left;
+  display: block;
+  margin-bottom: 20px;
+  width: 500px;
 }
 
 .supporting-text-mini {
-	float: left;
-	display: block;
-	margin-bottom: 20px;
-	width: 300px;
+  float: left;
+  display: block;
+  margin-bottom: 20px;
+  width: 300px;
 }
 
 .dashboard-link {
-	float: right;
-	display: block;
-	width: 130px;
-	text-align: right;
-	font-weight: 700;
+  float: right;
+  display: block;
+  width: 130px;
+  text-align: right;
+  font-weight: 700;
+  @media screen and (max-width: 600px) {
+    margin-top: -62px;
+  }
 }
 
 .products-dashboard {
-	margin-top: 40px;
+  margin-top: 40px;
 }
 
 .upcoming-delivery-mini {
-  float: left;
   width: 100%;
 }
 
 .seller-tools-mini {
-	background: #f2f2f2;
-	@include border-radius(5px);
-	padding: 10px;
-	line-height: 24px;
-	text-align: center;
+  width: 100%;
+  background: #f2f2f2;
+  @include border-radius(5px);
+  line-height: 24px;
+  text-align: center;
+  .tool-mini {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    
+  }
+  .tool-mini:nth-child(3n) {
+    border-bottom: 0;
+  }
+  a {
+    padding-right: 30px;
+  }
+  a:nth-child(3) {
+    padding-right: 0;
+  }
+}
 
-	a {
-		padding-right: 30px;
-	}
-	a:nth-child(3) {
-		padding-right: 0;
-	}
+@media screen and (max-width: 767px){
+  .dashboard > .column--half {
+    display: block;
+    width: auto;
+    margin: 0 0 20px;
+  }
 }
