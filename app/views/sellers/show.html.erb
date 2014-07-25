@@ -1,86 +1,106 @@
+<div class="mobile-panes-wrapper">
+  <div class="row mobile-panes" data-panes="4">
+    <aside class="column column--fourth column--guttered secondary-panes" data-panes="3">
 
-<div class="row">
-  <aside class="column column--fourth column--guttered">
-
-    <%= render "products/selected_delivery" %>
-
-    <% unless @sellers.empty? %>
-    <h2 class="heading heading--sidebar">Sellers</h2>
-    <ul class="list-naked">
-      <% @sellers.each do |seller| %>
-        <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>
-      <% end %>
-    </ul>
-    <% end %>
-
-    <% if @current_seller.try(:display_twitter) %>
-      <div class="widget widget--twitter">
-        <a class="twitter-timeline" href="https://twitter.com/<%= @current_seller.twitter %>" data-widget-id="<%= Figaro.env.twitter_widget_id %>" data-screen-name="<%= @current_seller.twitter %>"></a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-      </div>
-    <% end %>
-
-    <% if @current_seller.try(:display_facebook) %>
-      <div class="widget widget--facebook">
-        <div class="fb-like-box" data-href="https://www.facebook.com/<%= @current_seller.facebook %>" data-width="220" data-colorscheme="light" data-show-faces="false" data-header="false" data-stream="true" data-show-border="true"></div>
-        <div id="fb-root"></div>
-        <script>(function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=371089202914911&version=v2.0";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-      </div>
-    <% end %>
-
-  </aside
-  ><div class="column column--three-fourths column--guttered vcard">
-    <% if @sellers.empty? %>
-      <div class="blank-state">
-        <h2><%= "#{current_market.name} has no sellers at this time." %></h2>
-      </div>
-    <% else %>
-      <div class="row">
-        <div class="column column--half column--guttered">
-          <h1 class="fn story-header"><%= @current_seller.name %></h1>
-
-          <% if @current_seller.photo_stored? %>
-            <div class="seller-photo"><%= image_tag @current_seller.photo.remote_url, alt: "Profile photo", class: "photo" %></div>
-          <% end %>
-
-        </div
-        ><div class="column column--half column--guttered">
-          <% if @current_seller.locations_map(330, 240).present? %>
-            <h1 class="story-header adr">
-              <% if @current_seller.billing_location.present? %>
-                <span class="locality"><%= @current_seller.billing_location.city %></span>, <span class="region"><%= @current_seller.billing_location.state %></span>
-              <% end %>
-            </h1>
-            <div class="seller-map"><img alt="map" src="<%= @current_seller.locations_map(330, 240) %>"></div>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="row">
-
-        <div class="who-story column column--half column--guttered">
-          <h2 class="story-header">Who We Are</h2>
-          <%= simple_format @current_seller.who_story %>
-        </div
-        ><div class="how-story column column--half column--guttered">
-          <h2 class="story-header">How We Do It</h2>
-          <%= simple_format @current_seller.how_story %>
-        </div>
-      </div>
-
-      <% if !current_market.closed? && !@products_for_sale.product_groups.empty?  %>
-        <h2 class="heading-section">Currently Selling</h2>
-        <% @products_for_sale.each_category_with_products do |category, products| %>
-          <%= render "products/table", products: products, category: category %>
+      <div class="mobile-pane" id="delivery-information">
+        <div class="vacuus"></div>
+        <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Seller</a>
+        <%= render "products/selected_delivery" %>
+      </div
+      ><div class="mobile-pane" id="sellers">
+        <div class="vacuus"></div>
+        <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Seller</a>
+        <% unless @sellers.empty? %>
+          <h2 class="heading heading--sidebar">Sellers</h2>
+          <ul class="list-naked">
+            <% @sellers.each do |seller| %>
+              <%= content_tag :li, link_to(seller.name, seller_path(seller)) %>
+            <% end %>
+          </ul>
         <% end %>
+      </div
+      ><div class="mobile-pane" id="social">
+        <div class="vacuus"></div>
+        <a href="#seller-info" class="pane-toggle mobile-only btn">Return to the Seller</a>
+        <% if @current_seller.try(:display_twitter) %>
+          <div class="widget widget--twitter">
+            <a class="twitter-timeline" href="https://twitter.com/<%= @current_seller.twitter %>" data-widget-id="<%= Figaro.env.twitter_widget_id %>" data-screen-name="<%= @current_seller.twitter %>"></a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          </div>
+        <% end %>
+
+        <% if @current_seller.try(:display_facebook) %>
+          <div class="widget widget--facebook">
+            <div class="fb-like-box" data-href="https://www.facebook.com/<%= @current_seller.facebook %>" data-width="220" data-colorscheme="light" data-show-faces="false" data-header="false" data-stream="true" data-show-border="true"></div>
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=371089202914911&version=v2.0";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+          </div>
+        <% end %>
+      </div>
+
+    </aside
+    ><div class="column column--three-fourths column--guttered vcard mobile-pane" id="seller-info">
+      <div class="vacuus"></div>
+      <% if @sellers.empty? %>
+        <div class="blank-state">
+          <h2><%= "#{current_market.name} has no sellers at this time." %></h2>
+        </div>
+      <% else %>
+        <div class="mobile-only row--justified">
+          <a href="#delivery-information" class="pane-toggle mobile-only btn">Delivery Information</a>
+          <% if @current_seller.try(:display_facebook) or @current_seller.try(:display_twitter) %>
+            <a href="#social" class="pane-toggle mobile-only btn">Social</a>
+          <% end %>
+          <a href="#sellers" class="pane-toggle mobile-only btn">Sellers</a>
+        </div>
+
+        <div class="row">
+          <div class="column column--half column--guttered">
+            <h1 class="fn story-header"><%= @current_seller.name %></h1>
+
+            <% if @current_seller.photo_stored? %>
+              <div class="seller-photo"><%= image_tag @current_seller.photo.remote_url, alt: "Profile photo", class: "photo" %></div>
+            <% end %>
+
+          </div
+          ><div class="column column--half column--guttered">
+            <% if @current_seller.locations_map(330, 240).present? %>
+              <h1 class="story-header adr">
+                <% if @current_seller.billing_location.present? %>
+                  <span class="locality"><%= @current_seller.billing_location.city %></span>, <span class="region"><%= @current_seller.billing_location.state %></span>
+                <% end %>
+              </h1>
+              <div class="seller-map"><img alt="map" src="<%= @current_seller.locations_map(330, 240) %>"></div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="who-story column column--half column--guttered">
+            <h2 class="story-header">Who We Are</h2>
+            <%= simple_format @current_seller.who_story %>
+          </div
+          ><div class="how-story column column--half column--guttered">
+            <h2 class="story-header">How We Do It</h2>
+            <%= simple_format @current_seller.how_story %>
+          </div>
+        </div>
+
+        <% if !current_market.closed? && !@products_for_sale.product_groups.empty?  %>
+          <h2 class="heading-section">Currently Selling</h2>
+          <% @products_for_sale.each_category_with_products do |category, products| %>
+            <%= render "products/table", products: products, category: category %>
+          <% end %>
+        <% end %>
+        <%= link_to "Review Cart", cart_path, id: "review_cart", class: "btn btn--blue btn--small pull-right add-toggle mobile-block" %>
       <% end %>
-      <%= link_to "Review Cart", cart_path, id: "review_cart", class: "btn btn--blue btn--small pull-right add-toggle" %>
-    <% end %>
+    </div>
   </div>
 </div>

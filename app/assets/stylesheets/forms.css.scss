@@ -259,6 +259,7 @@ textarea {
       margin: 0 0 0 1em;
     }
     @media screen and (max-width: 600px) {
+      display: block;
       + .field--inline {
         margin: 10px 0 0 0;
       }
@@ -507,6 +508,9 @@ form.form-actions {
 }
 
 @media screen and (max-width: 600px) {
+  .email-field {
+    width: 100%;
+  }
   .newsletter {
     .btn--send, .btn--newsletter{
       width: 100%;
@@ -519,4 +523,9 @@ form.form-actions {
 }
 .invite-email-field {
   width: 100%;
+}
+@media screen and (max-width: 600px) {
+  .combo-input input {
+    max-width: 50%;
+  }
 }

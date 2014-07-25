@@ -62,6 +62,10 @@ input[type=submit] {
   }
   &.btn--activate {
     margin-top: 38px;
+    @media screen and (max-width: 600px) {
+      margin-top: 5px;
+      padding: 5px 10px;
+    }
   }
   &.prevent-delete {
     position: absolute;
@@ -320,10 +324,13 @@ span.btn {
 .pane-toggle {
   padding: 5px 10px;
   margin: 0 0 15px;
-  font-size: 14px;
+  font-size: 12px;
   + .pane-toggle {
     float: right;
   }
+}
+.row--justified .pane-toggle {
+  float: none;
 }
 @media screen and (min-width: 601px) {
   .pane-toggle {

@@ -590,6 +590,7 @@
 
 /** Tabs */
 .tabs-wrapper {
+  clear: both;
   padding: 0 20px;
   border-bottom: solid 1px #cbcbcb;
   margin: 0 -20px 30px;
@@ -621,6 +622,7 @@
       @include border-radius(5px 5px 0 0);
     }
   }
+
   > .completed:after {
     position: absolute;
     top: 4px;
@@ -634,6 +636,9 @@
 }
 
 @media screen and (max-width: 600px) {
+  h1 + form + .tabs-wrapper {
+    margin-top: 14px;
+  }
   .tabs-wrapper {
     padding: 0;
 
@@ -645,6 +650,19 @@
     }
     .tabs > .tab > a {
       padding: 14px 4px;
+    }
+  }
+  .wrapping-tabs {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    .tab {
+      -webkit-flex: 1 0 auto;
+      flex: 1 0 auto;
+      > a, > .current {
+        @include border-radius(0);
+      }
     }
   }
 }
