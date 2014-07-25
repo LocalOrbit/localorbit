@@ -4,7 +4,7 @@
       <% presenter.filters.each do |filter| %>
 
         <% if filter == :order_number %>
-          <span class="preserve-alignment">
+          <span class="preserve-alignment search-widget">
             <%= f.label :order_order_number_cont, "Search" %><br>
             <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
           </span>

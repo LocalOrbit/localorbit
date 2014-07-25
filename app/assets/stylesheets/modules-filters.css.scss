@@ -231,6 +231,9 @@
       &.unjustify {
         text-align: justify;
       }
+      .search-widget {
+        margin-right: 0;
+      }
       .preserve-alignment:last-child {
         margin-right: 0;
       }
@@ -246,14 +249,14 @@
     -webkit-flex-flow: row;
     flex-flow: row;
     width: 100%;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin: 1em 0;
     input, button[type=submit] {
       width: auto;
       height: 35px;
+      margin-right: 0;
       -webkit-flex: auto 1;
       flex: auto 1;
-      &[type=search] + .btn--end {
+      &[type=search] + input[type=submit].btn--end {
         margin-right: 0;
       }
     }
