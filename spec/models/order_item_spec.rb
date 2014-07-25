@@ -21,6 +21,13 @@ describe OrderItem do
       expect(subject.reload.delivery_status).to eql('canceled')
     end
 
+    it "sets the payment status to 'refunded' when a quantity ordered of 0" do
+      subject.quantity = 0
+      subject.save!
+
+      expect(subject.reload.payment_status).to eql('refunded')
+    end
+
     it "does not override 'contested'" do
       subject.delivery_status = "contested"
       subject.quantity = 3
@@ -46,6 +53,13 @@ describe OrderItem do
       subject.save!
 
       expect(subject.reload.delivery_status).to eql('canceled')
+    end
+
+    it "sets the payment status to 'refunded' when a quantity delivered of 0" do
+      subject.quantity_delivered = 0
+      subject.save!
+
+      expect(subject.reload.payment_status).to eql('refunded')
     end
 
     it "does not override 'contested'" do
