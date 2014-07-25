@@ -30,6 +30,12 @@
 ### Production Setup
 * At least one Market must be created before creating Organizations
 
+### Updating Passenger
+`config/passenger_nginx.erb` is copied from `resources/templates/standalone/config.erb` in the gem.
+
+After updating the gem copy the file from the gem, then use git to keep the section between the keep me comments.
+Everything in this section has been added so just keep it all.
+
 ### Test Accounts
 Running _rake db:seed:development_ makes the following test accounts available
 
