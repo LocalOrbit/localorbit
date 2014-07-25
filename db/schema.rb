@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724165201) do
+ActiveRecord::Schema.define(version: 20140725182554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -383,19 +383,20 @@ ActiveRecord::Schema.define(version: 20140724165201) do
     t.string   "seller_name"
     t.integer  "quantity"
     t.string   "unit"
-    t.decimal  "discount",               precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "market_seller_fee",      precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "local_orbit_seller_fee", precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "local_orbit_market_fee", precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "payment_seller_fee",     precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "payment_market_fee",     precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "unit_price",             precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "discount",               precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "market_seller_fee",      precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "local_orbit_seller_fee", precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "local_orbit_market_fee", precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "payment_seller_fee",     precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "payment_market_fee",     precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "unit_price",             precision: 10, scale: 2, default: 0.0,      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "delivery_status"
     t.datetime "delivered_at"
     t.integer  "legacy_id"
     t.integer  "quantity_delivered"
+    t.string   "payment_status",                                  default: "unpaid"
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
