@@ -4,7 +4,7 @@ def display_date(date)
   date.strftime("%m/%d/%Y")
 end
 
-feature "Reports" do
+feature "Reports", js: true do
   let!(:market)    { create(:market, name: "Foo Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market2)   { create(:market, name: "Bar Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market3)   { create(:market, name: "Baz Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
@@ -108,6 +108,7 @@ feature "Reports" do
   end
 
   def visit_report_view
+    click_link "Reports"
     within("#reports-dropdown") do
       click_link "Reports"
     end
@@ -116,7 +117,8 @@ feature "Reports" do
     # currently defined in the `report` variable
     report_title = report.to_s.titleize
 
-    click_link(report_title) if page.has_link?(report_title)
+    select report_title, from: "Report type"
+    #click_link(report_title) if page.has_link?(report_title)
   end
 
   def item_rows_for_order(order)
@@ -313,6 +315,8 @@ feature "Reports" do
         end
 
         scenario "filters by seller" do
+          save_and_open_page
+          expect(page).to have_content("Seller")
           expect(Dom::Report::ItemRow.all.count).to eq(11)
 
           select seller.name, from: "Seller"
