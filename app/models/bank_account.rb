@@ -12,6 +12,14 @@ class BankAccount < ActiveRecord::Base
     @balanced_verification ||= Balanced::Verification.find(balanced_verification_uri)
   end
 
+  def bank_account?
+    account_type == "checking" || account_type == "savings"
+  end
+
+  def credit_card?
+    !bank_account?
+  end
+
   def verification_failed?
     return false if verified?
     balanced_verification.try(:state) == "failed"
