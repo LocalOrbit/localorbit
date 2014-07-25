@@ -1,6 +1,6 @@
 <%= search_form_for payment_history.q, url: admin_financials_payments_path, html: { class: "payment_search clear-after" } do |f| %>
 <div class="payment_search">
-  <div class="pull-left payment-search-widget">
+  <div class="pull-left search-widget">
     <%= render "admin/financials/shared/payment_filters_search", { f: f } %>
   </div>
   <div class="pull-right date-filters">

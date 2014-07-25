@@ -6,37 +6,39 @@
   </div>
 <%= form_tag admin_financials_invoices_path, method: :post, id: 'invoice-list' do %>
   <div class="clearfix sub-header-whitespace"></div>
-  <table class="sortable">
-    <thead class="stickable">
-      <tr>
-        <th><input type="checkbox" class="select-all"></th>
-        <th> <%= sort_link(@q, :order_number, "Order Number") %></th>
-        <th> <%= sort_link(@q, :organizations_name, "Buyer") %></th>
-        <th> <%= sort_link(@q, :placed_at, "Order Date") %></th>
-        <th> <%= sort_link(@q, :delivery_status, "Delivery Status") %></th>
-        <th> <%= sort_link(@q, :total_cost, "Amount") %></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @orders.each do |order| %>
-      <tr class="invoice-row">
-        <td><%= check_box_tag "order_id[]", order.id %></td>
-        <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %></td>
-        <td class="buyer"><%= order.organization.name %></td>
-        <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
-        <td class="delivery-status"><%= order.delivery_status.titleize %></td>
-        <td class="amount"><%= number_to_currency(order.total_cost) %></td>
-        <td class="action">
-          <%= link_to 'Send Invoice', admin_financials_invoices_path(order_id: order.id), method: :post, class: 'action-link font-icon icon-mail-send' %>
-          <% if current_user.admin? || current_user.market_manager? %>
-            <%= link_to 'Preview', admin_invoice_path(order.id), class: 'action-link font-icon icon-preview' %>
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div class="table-wrapper">
+    <table class="sortable">
+      <thead class="stickable">
+        <tr>
+          <th><input type="checkbox" class="select-all"></th>
+          <th> <%= sort_link(@q, :order_number, "Order Number") %></th>
+          <th> <%= sort_link(@q, :organizations_name, "Buyer") %></th>
+          <th> <%= sort_link(@q, :placed_at, "Order Date") %></th>
+          <th> <%= sort_link(@q, :delivery_status, "Delivery Status") %></th>
+          <th> <%= sort_link(@q, :total_cost, "Amount") %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+        <tr class="invoice-row">
+          <td><%= check_box_tag "order_id[]", order.id %></td>
+          <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %></td>
+          <td class="buyer"><%= order.organization.name %></td>
+          <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
+          <td class="delivery-status"><%= order.delivery_status.titleize %></td>
+          <td class="amount"><%= number_to_currency(order.total_cost) %></td>
+          <td class="action">
+            <%= link_to 'Send Invoice', admin_financials_invoices_path(order_id: order.id), method: :post, class: 'action-link font-icon icon-mail-send' %>
+            <% if current_user.admin? || current_user.market_manager? %>
+              <%= link_to 'Preview', admin_invoice_path(order.id), class: 'action-link font-icon icon-preview' %>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
   <% end %>
 
   <%= paginate @orders %>

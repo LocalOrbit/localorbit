@@ -4,7 +4,7 @@
   <div class="l-constraint">
     <h1>Enter Receipts for Paid Invoices</h1>
     <%= search_form_for @q, url: admin_financials_receipts_path, html: { class: "invoice_search clear-after" } do |f| %>
-      <div class="pull-left">
+      <div class="pull-left search-widget">
         <span class="preserve-alignment">
           <%= f.label :order_number_or_payment_note_cont, "Search Invoices" %><br>
           <%# NOTE: Do not change the whitespace on the following line %>
@@ -12,7 +12,7 @@
         </span>
       </div>
 
-      <div class="pull-right">
+      <div class="pull-right date-filters">
         <span class="preserve-alignment">
           <label for="q_placed_at_date_gteq">Filter by Date</label><br>
           <%= datetime_field_tag "q[placed_at_date_gteq]", @search_presenter.start_date, class: 'datepicker' %>
@@ -23,7 +23,7 @@
         </span>
         <span class="preserve-alignment">
           <br>
-          <%= f.submit "Filter", class: "btn--small" %>
+          <%= f.submit "Filter", class: "btn--small mobile-block" %>
         </span>
       </div>
 
@@ -44,35 +44,38 @@
   </div>
 </div>
 
-<table class="sortable">
-  <thead class="stickable">
-    <tr>
-      <th> <%= sort_link(@q, :order_number, "Invoice #") %></th>
-      <th> <%= sort_link(@q, :organizations_name, "Buyer (Name)") %></th>
-      <th> <%= sort_link(@q, :placed_at, "Order Date") %></th>
-      <th> <%= sort_link(@q, :invoice_due_date, "Due Date") %></th>
-      <th> <%= sort_link(@q, :total_cost, "Amount") %></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @orders.each do |order| %>
-    <tr class="invoice-row<%= " past-due" if order.invoice_due_date < Time.current %>">
-      <td class="order-number">
-        <%= link_to order.order_number, admin_invoice_path(order) %>
-        <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
-      </td>
-      <td class="buyer"><%= order.organization.name %></td>
-      <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
-      <td class="due-date"><%= display_due_date(order.invoice_due_date) %></td>
-      <td class="amount"><%= number_to_currency(order.total_cost) %></td>
-      <td><%= link_to 'Enter Receipt', edit_admin_financials_receipt_path(id: order.id), class: 'action-link font-icon icon-stack-list' %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if @orders.any? %>
+  <div class="table-wrapper">
+    <table class="sortable">
+      <thead class="stickable">
+        <tr>
+          <th> <%= sort_link(@q, :order_number, "Invoice #") %></th>
+          <th> <%= sort_link(@q, :organizations_name, "Buyer (Name)") %></th>
+          <th> <%= sort_link(@q, :placed_at, "Order Date") %></th>
+          <th> <%= sort_link(@q, :invoice_due_date, "Due Date") %></th>
+          <th> <%= sort_link(@q, :total_cost, "Amount") %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+        <tr class="invoice-row<%= " past-due" if order.invoice_due_date < Time.current %>">
+          <td class="order-number">
+            <%= link_to order.order_number, admin_invoice_path(order) %>
+            <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
+          </td>
+          <td class="buyer"><%= order.organization.name %></td>
+          <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
+          <td class="due-date"><%= display_due_date(order.invoice_due_date) %></td>
+          <td class="amount"><%= number_to_currency(order.total_cost) %></td>
+          <td><%= link_to 'Enter Receipt', edit_admin_financials_receipt_path(id: order.id), class: 'action-link font-icon icon-stack-list' %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
-<% if @orders.none? %>
+<% else %>
   <div class="empty-results">
     <h2>No Results</h2>
     This table is empty, either because there is no data, or because the filter you've applied is hiding it.

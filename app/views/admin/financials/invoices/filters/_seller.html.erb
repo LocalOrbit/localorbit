@@ -1,5 +1,5 @@
 <%= search_form_for @q, url: url, html: { class: "invoice_search clear-after" } do |f| %>
-  <div class="pull-left">
+  <div class="pull-left search-widget">
     <span class="preserve-alignment">
       <%= f.label :order_number_or_payment_note_cont, "Search Invoices" %><br>
       <%# NOTE: Do not change the whitespace on the following line %>
@@ -7,7 +7,7 @@
     </span>
   </div>
 
-  <div class="pull-right">
+  <div class="pull-right date-filters">
     <span class="preserve-alignment">
       <label for="q_placed_at_date_gteq">Filter by Date</label><br>
       <%= datetime_field_tag "q[placed_at_date_gteq]", @search_presenter.start_date, class: 'datepicker' %>
@@ -18,7 +18,7 @@
     </span>
     <span class="preserve-alignment">
       <br>
-      <%= f.submit "Filter", class: "btn--small" %>
+      <%= f.submit "Filter", class: "btn--small mobile-block" %>
     </span>
   </div>
 
@@ -34,7 +34,7 @@
       <%= f.label :organization_id_eq, "Buyer" %><br>
       <%= f.collection_select :organization_id_eq, @search_presenter.buyer_organizations, :id, :name, {include_blank: "All"}, {class: "filter-input"} %>
     </span>
-    <input type="button" value="Send Selected Invoices" id="submit_send_selected" class="btn btn--small btn--save">
+    <input type="button" value="Send Selected Invoices" id="submit_send_selected" class="btn btn--small btn--save mobile-block">
   </div>
   
 <% end %>

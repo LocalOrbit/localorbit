@@ -61,11 +61,11 @@
 }
 
 .search-widget {
+  display: inline-block;
+  ~ .btn--add {
     display: inline-block;
-    ~ .btn--add {
-      display: inline-block;
-    }
   }
+}
 
 @media screen and (min-width: 960px) {
   .filter-row {
@@ -159,31 +159,7 @@
 
   .product-search,
   .order-search-widget,
-  .sold-item-search-widget {
-    max-width: 100%;
-  }
-  .product-search,
-  .order-search-widget,
   .sold-item-search-widget > .preserve-alignment {
-    float: none;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-flow: row;
-    flex-flow: row;
-    margin-top: 15px;
-    margin-bottom: 15px;
-
-    input, button[type=submit] {
-      width: auto;
-      height: 35px;
-      -webkit-flex: auto 1;
-      flex: auto 1;
-      &[type=search] + .btn--end {
-        margin-right: 0;
-      }
-    }
     .pull-right {
       float: none;
       display: block;
@@ -201,36 +177,33 @@
       width: 100%;
     }
   }
-}
 
-@media screen and (max-width: 600px) {
   .sold-item-search-widget {
     display: block;
     float: left;
   }
-}
  
-@media screen and (max-width: 600px) {
+  .date-filters {
+    float: none;
+    margin: 1em 0;
+    text-align: justify;
+    width: 100%;
+
+    label {
+      font-size: .95em;
+    }
+    .datepicker {
+      width: 7.5em;
+    }
+    > .preserve-alignment:last-child {
+      width: 100%;
+      font-size: 0.1px;
+    }
+  }
+  
   .order_search,
   .payment_search,
   .sold_item_search {
-    .date-filters {
-      float: none;
-      margin: 1em 0;
-      text-align: justify;
-      width: 100%;
-
-      label {
-        font-size: .95em;
-      }
-      .datepicker {
-        width: 7.5em;
-      }
-      > .preserve-alignment:last-child {
-        width: 100%;
-        font-size: 0.1px;
-      }
-    }
     .manager-filters {
       &.unjustify {
         text-align: justify;
@@ -240,17 +213,34 @@
       }
     }
   }
-  .order-search-widget, .payment-search-widget {
+  .search-widget,
+  .search-widget > .preserve-alignment {
     float: none;
-    display: block;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-flow: row;
+    flex-flow: row;
     width: 100%;
+    margin-top: 1em;
     margin-bottom: 1em;
+    input, button[type=submit] {
+      width: auto;
+      height: 35px;
+      -webkit-flex: auto 1;
+      flex: auto 1;
+      &[type=search] + .btn--end {
+        margin-right: 0;
+      }
+    }
     label {
       -webkit-flex-shrink: 0;
       -moz-flex-shrink: 0;
       flex-shrink: 0;
       width: 100%;
     }
+
     .payment-search-container {
       width: 100%;
       display: inline-block;
