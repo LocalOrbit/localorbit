@@ -82,7 +82,11 @@ module Admin
       @market_select_options = current_user.admin? ? { include_blank: "All Markets"} : {}
 
       org_ids = @markets.map {|m| m.organization_ids }.flatten
-      @products = Product.joins(:organization).where(organization_id: org_ids).order("organizations.name, products.name").map {|p| ["#{p.organization.name}: #{p.name}", p.id]}
+      @products = Product.
+          joins(:organization).
+          where(organization_id: org_ids).
+          order("organizations.name, products.name").
+          map {|p| ["#{p.organization.name}: #{p.name}", p.id]}
 
       @organizations = MarketOrganization.
           excluding_deleted.

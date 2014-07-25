@@ -82,5 +82,46 @@ describe Discount do
         end
       end
     end
+
+    it "requires discount to be between 0 and 2_147_483_647" do
+      subject.discount = -1
+      expect(subject).to have(1).errors_on(:discount)
+
+      subject.discount = 2_147_483_648
+      expect(subject).to have(1).errors_on(:discount)
+    end
+
+
+    it "requires minimum_order_total to be between 0 and 2_147_483_647" do
+      subject.minimum_order_total = -1
+      expect(subject).to have(1).errors_on(:minimum_order_total)
+
+      subject.minimum_order_total = 2_147_483_648
+      expect(subject).to have(1).errors_on(:minimum_order_total)
+    end
+
+    it "requires maximum_order_total to be between 0 and 2_147_483_647" do
+      subject.maximum_order_total = -1
+      expect(subject).to have(1).errors_on(:maximum_order_total)
+
+      subject.maximum_order_total = 2_147_483_648
+      expect(subject).to have(1).errors_on(:maximum_order_total)
+    end
+
+    it "requires maximum_uses to be between 0 and 2,147,483,647" do
+      subject.maximum_uses = -1
+      expect(subject).to have(1).errors_on(:maximum_uses)
+
+      subject.maximum_uses = 2_147_483_648
+      expect(subject).to have(1).errors_on(:maximum_uses)
+    end
+
+    it "requires maximum_organization_uses to be between 0 and 2,147,483,647" do
+      subject.maximum_organization_uses = -1
+      expect(subject).to have(1).errors_on(:maximum_organization_uses)
+
+      subject.maximum_organization_uses = 2_147_483_648
+      expect(subject).to have(1).errors_on(:maximum_organization_uses)
+    end
   end
 end
