@@ -11,7 +11,7 @@
 <% if current_user.multi_market_membership? %>
   <div class="field">
     <%= f.label :market_id, "Market" %><br>
-    <%= f.collection_select :market_id, @markets, :id, :name, {include_blank: "Any Market"}, class: "column--full" %>
+    <%= f.collection_select :market_id, @markets, :id, :name, @market_select_options, class: "column--full" %>
   </div>
 <% else %>
   <input type='hidden' name='discount[market_id]' value='<%= @markets.first.id %>'>
@@ -20,11 +20,11 @@
 <div class="row row--field">
   <div class="field column column--half column--guttered">
     <%= f.label :start_date %><br>
-    <%= f.text_field :start_date %>
+    <%= f.datetime_field :start_date, class: 'datepicker', data: {'min-date' => 0} %>
   </div
   ><div class="field column column--half column--guttered">
     <%= f.label :end_date %><br>
-    <%= f.text_field :end_date %>
+    <%= f.datetime_field :end_date, class: 'datepicker', data: {'min-date' => 0} %>
   </div>
 </div>
 
@@ -41,17 +41,17 @@
 
 <div class="field">
   <%= f.label :product_id, "Restrict to Product" %><br>
-  <%= f.collection_select :product_id, @products, :id, :name, {include_blank: "Any Product"}, class: "column--full" %>
+  <%= f.select :product_id, @products, {include_blank: "Any Product"}, class: "column--full" %>
 </div>
 
 <div class="field">
   <%= f.label :buyer_organization_id, "Restrict to Buyer Organization" %><br>
-  <%= f.collection_select :buyer_organization_id, @organizations, :id, :name, {include_blank: "Any Buyers"}, class: "column--full" %>
+  <%= f.select :buyer_organization_id, @organizations, {include_blank: "Any Buyers"}, class: "column--full" %>
 </div>
 
 <div class="field">
   <%= f.label :seller_organization_id, "Restrict to Seller Organization" %><br>
-  <%= f.collection_select :seller_organization_id, @organizations, :id, :name, {include_blank: "Any Sellers"}, class: "column--full" %>
+  <%= f.select :seller_organization_id, @organizations, {include_blank: "Any Sellers"}, class: "column--full" %>
 </div>
 
 <div class="field">

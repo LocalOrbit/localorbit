@@ -79,14 +79,18 @@ module Admin
         current_user.managed_markets
       end.order(:name)
 
-      org_ids = @markets.map {|m| m.organization_ids }.flatten
-      @products = Product.where(organization_id: org_ids).order(:name)
+      @market_select_options = current_user.admin? ? { include_blank: "All Markets"} : {}
 
-      @organizations = Organization.
-          joins(market_organizations: :market).
-          where(markets: {id: current_user.managed_market_ids}, market_organizations: {deleted_at: nil}).
-          distinct("organization.id").
-          order(:name)
+      org_ids = @markets.map {|m| m.organization_ids }.flatten
+      @products = Product.joins(:organization).where(organization_id: org_ids).order("organizations.name, products.name").map {|p| ["#{p.organization.name}: #{p.name}", p.id]}
+
+      @organizations = MarketOrganization.
+          excluding_deleted.
+          not_cross_selling.
+          includes(:market, :organization).
+          where(market_id: current_user.managed_market_ids).
+          order("markets.name ASC, organizations.name ASC").
+          map {|mo| ["#{mo.market.name}: #{mo.organization.name}", mo.organization_id]}
     end
   end
 end
