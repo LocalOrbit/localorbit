@@ -32,6 +32,10 @@ describe "Manage Discount Codes" do
       expect(page).to have_content("Add New Discount")
     end
 
+    it "does not show 'All Markets' as an option" do
+      
+    end
+
     it "shows a list of discount codes" do
       visit admin_discounts_path
 
