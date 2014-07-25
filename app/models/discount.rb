@@ -1,11 +1,21 @@
 class Discount < ActiveRecord::Base
+  include SoftDelete
+  include Sortable
+
   self.inheritance_column = nil
+
+  belongs_to :market
 
   enum type: {percentage: 0, fixed: 1}
 
   validates :name, presence: true
   validates :code, presence: true, uniqueness: true
   validates :type, presence: true
+  validates :discount, numericality: {greater_than_or_equal_to: 0, less_than: 2_147_483_647}
+  validates :minimum_order_total, numericality: {greater_than_or_equal_to: 0, less_than: 2_147_483_647}
+  validates :maximum_order_total, numericality: {greater_than_or_equal_to: 0, less_than: 2_147_483_647}
+  validates :maximum_uses, numericality: {greater_than_or_equal_to: 0, less_than: 2_147_483_647}
+  validates :maximum_organization_uses, numericality: {greater_than_or_equal_to: 0, less_than: 2_147_483_647}
   validate :starts_before_it_ends
   validate :future_end_date
 

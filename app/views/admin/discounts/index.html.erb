@@ -1,0 +1,55 @@
+<h1 class="pull-left">Discount Codes</h1>
+<div class="row promo-header filter-group">
+  <%= link_to "Add New Discount", new_admin_discount_path, class: 'btn btn--add btn--small btn--headline ' %>
+</div>
+<% if current_user.multi_market_membership? %>
+  <%= search_form_for @q, url: admin_discounts_path, html: { class: "payment_search clear-after" } do |f| %>
+    <div class="manager-filters featured-discount-filter">
+      <span class="preserve-alignment">
+        <%= f.label :market_id_nil_eq, "Market" %><br>
+        <%= f.select :market_id_nil_eq, @markets.compact.map {|m| [m.name, m.id] }, { include_blank: "All" }, { class: "filter-input" } %>
+      </span>
+      <%= link_to "Reset", admin_discounts_path(clear: '', sort: @query_params["s"]), class: 'btn reset' if can_reset?(@query_params) %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="table-wrapper">
+  <table class="sortable">
+    <thead class="stickable">
+      <tr>
+        <% if current_user.multi_market_membership? %>
+          <th><%= sort_link(@q, "market_name", "Market") %></th>
+        <% end %>
+        <th><%= sort_link(@q, :name, "Name") %></th>
+        <th><%= sort_link(@q, :code, "Code") %></th>
+        <th><%= sort_link(@q, :type, "Type") %></th>
+        <th><%= sort_link(@q, :discount, "Amount") %></th>
+        <th>Uses</th>
+        <th>Available</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @discounts.decorate.each do |discount| %>
+      <tr class="discount-row">
+        <% if current_user.multi_market_membership? %>
+          <td class="market"><%= discount.market_name %></td>
+        <% end %>
+        <td class="name"><%= link_to discount.name, admin_discount_path(discount) %></td>
+        <td class="code"><%= discount.code %></td>
+        <td class="type"><%= discount.short_type_indicator %></td>
+        <td class="amount"><%= discount.discounted_amount %></td>
+        <td class="uses"><%= discount.total_usages %></td>
+        <td class="available"><%= discount.available_usages %></td>
+        <td class="links">
+          &#160;
+          <%= link_to raw("&#57418;"), admin_discount_path(discount), method: :delete, data: { confirm: "Are you sure you want to delete this discount?" }, title: "Delete", class: "font-icon" %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @discounts %>
+</div>
