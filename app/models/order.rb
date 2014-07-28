@@ -37,6 +37,7 @@ class Order < ActiveRecord::Base
   validates :total_cost, presence: true
 
   before_save :update_paid_at
+  before_save :update_payment_status
   before_save :update_order_item_payment_status
   after_save :update_total_cost
 
@@ -312,6 +313,11 @@ class Order < ActiveRecord::Base
     if changes[:payment_status] && changes[:payment_status][1] == "paid"
       self.paid_at = Time.current
     end
+  end
+
+  def update_payment_status
+    statuses = items.map(&:payment_status).uniq
+    self.payment_status = "refunded" if statuses == ["refunded"]
   end
 
   def update_order_item_payment_status

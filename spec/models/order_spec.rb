@@ -109,6 +109,13 @@ describe Order do
         expect(i.payment_status).to eql('paid')
       end
     end
+
+    it "sets payment_status to 'refunded' if all items have been refunded" do
+      order.items.each {|i| i.update(payment_status: 'refunded')}
+      order.save!
+      
+      expect(order.reload.payment_status).to eql("refunded")
+    end
   end
 
   describe ".orders_for_buyer" do
