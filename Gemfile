@@ -75,7 +75,7 @@ end
 
 group :test do
   gem 'codeclimate-test-reporter', require: false
-  gem 'simplecov', '~> 0.7.1',     require: false
+  gem 'simplecov', require: false
   gem 'capybara'
   gem 'domino'
   gem 'factory_girl_rails'
