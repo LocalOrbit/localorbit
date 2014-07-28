@@ -752,13 +752,9 @@ module Dom
     class Totals < Domino
       selector "#totals"
 
-      def subtotal
-        node.find(".subtotal")
-      end
-
-      def total
-        node.find(".total")
-      end
+      attribute :subtotal
+      attribute :total
+      attribute :discount
 
       def delivery_fees
         node.find(".delivery_fees")

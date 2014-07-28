@@ -314,3 +314,8 @@ $ ->
     else
       $(".quantity input").prop("readonly", true)
       $("#order-form").submit()
+
+  $("#apply-discount").click (e)->
+    e.preventDefault()
+    if $("#discount_code").val() != $("#prev_discount_code").val()
+      $(this).parents('form').submit()

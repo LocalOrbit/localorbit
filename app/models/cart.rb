@@ -32,8 +32,11 @@ class Cart < ActiveRecord::Base
   end
 
   def discount_amount
-    return 0 unless discount
-    @discount_amount ||= discount.value_for(subtotal)
+    @discount_amount ||= discount.try(:value_for, subtotal) || 0
+  end
+
+  def discount_code
+    discount.try(:code)
   end
 
   def delivery_fees

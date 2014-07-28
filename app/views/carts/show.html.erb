@@ -39,7 +39,7 @@
               <% if current_cart.discount_amount > 0 %>
               <tr class="cart_total">
                 <th scope="row" colspan="3">Discount</th>
-                <td class="subtotal"><%= current_cart.display_discount %></td>
+                <td class="discount"><%= current_cart.display_discount %></td>
                 <td></td>
               </tr>
               <% end %>
@@ -79,9 +79,11 @@
 
           <fieldset class="conditional">
             <div class="discount-field">
-              <%= f.label :discount_code, "Discount Code" %><br>
-              <%= f.text_field :discount_code, class: "input--short" %>
-              <%= link_to "Apply", "#" %>
+              <div class="warning"><strong><%= flash[:discount_message] %></strong></div>
+              <%= hidden_field_tag :prev_discount_code, current_cart.discount_code %>
+              <%= label_tag :discount_code, "Discount Code" %><br>
+              <%= text_field_tag :discount_code, current_cart.discount_code, class: "input--short" %>
+              <%= link_to "Apply", "#", id: "apply-discount" %>
             </div>
           </fieldset>
           <% end %>

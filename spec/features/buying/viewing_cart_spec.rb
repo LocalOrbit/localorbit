@@ -148,7 +148,6 @@ describe "Viewing the cart", :js do
     end
   end
 
-
   context "delivery fees" do
     it "show in the totals" do
       expect(cart_totals.delivery_fees).to have_content("$10.00")
@@ -325,6 +324,43 @@ describe "Viewing the cart", :js do
         choose "Pay by ACH"
 
         expect(page).to have_button("Place Order")
+      end
+    end
+  end
+
+  context "using a discount code" do
+    context "with an invalid discount code" do
+      it "informs the user the code is invalid" do
+        fill_in "Discount Code", with: "Super Awesome"
+        click_link "Apply"
+
+        expect(page).to have_content("Invalid discount code")
+
+        within("#totals") do
+          expect(page).not_to have_content("Discount")
+        end
+      end
+    end
+
+    context "with a valid discount code" do
+      let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed") }
+
+      it "displays the applied discount and code" do
+        fill_in "Discount Code", with: "15off"
+        click_link "Apply"
+
+        expect(page).to have_content("Discount applied")
+
+        within("#totals") do
+          expect(page).to have_content("Discount")
+        end
+
+        save_and_open_screenshot
+
+        expect(cart_totals.subtotal).to have_content("$40.00")
+        expect(cart_totals.discount).to have_content("$15.00")
+        expect(cart_totals.delivery_fees).to have_content("$10.00")
+        expect(cart_totals.total).to have_content("$35.00")
       end
     end
   end
