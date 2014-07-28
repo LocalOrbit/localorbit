@@ -484,6 +484,20 @@ class MetricsPresenter
         [key, value.send(args[0], metric2[key])]
       end]
 
+    elsif m[:calculation] == :percent_growth
+      base_metric = calculate_metric(m[:calculation_arg], interval, markets, false).to_a
+      growth_metric = {}
+
+      base_metric.each_with_index do |value, index|
+        if index <= 0
+          growth_metric[value[0]] = nil
+        else
+          growth_metric[value[0]] = ((value[1].to_f - base_metric[index - 1][1].to_f) / base_metric[index - 1][1].to_f) * 100
+        end
+      end
+
+      growth_metric
+
     else
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
       series.send(m[:calculation], m[:calculation_arg])
@@ -493,12 +507,16 @@ class MetricsPresenter
   end
 
   def format_value(value, format)
-    value ||= 0
-
     case format
-    when :integer  then value.to_i
-    when :decimal  then value.try(:round, 2)
-    when :currency then number_to_currency(value)
+    when :integer  then (value || 0).to_i
+    when :decimal  then (value || 0).try(:round, 2)
+    when :currency then number_to_currency(value || 0)
+    when :percent
+      if value = (value.try(:nan?) ? 0 : value)
+        sprintf("%+0.1f%%", value)
+      else
+        nil
+      end
     else value
     end
   end
