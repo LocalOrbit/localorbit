@@ -26,6 +26,21 @@ describe StoreOrderFees do
     StoreOrderFees.perform(order_params: params, cart: cart, order: order).order.reload.items.index_by {|item| item.product_id }
   end
 
+  context "discounts" do
+    it "applys the discount before figuring out the fees" do
+      order_item = create(:order_item, product: product1, quantity: 10, discount: 1.00)
+      discounted_order = create(:order, market: market, items: [order_item])
+
+      StoreOrderFees.perform(order_params: params, cart: cart, order: discounted_order).order.reload.items.index_by {|item| item.product_id }
+
+      item = discounted_order.items.first # 69.90
+      expect(item.market_seller_fee.to_f).to eq(6.89)
+      expect(item.local_orbit_seller_fee.to_f).to eq(1.03)
+      expect(item.local_orbit_market_fee.to_f).to eq(0.69)
+      expect(item.payment_seller_fee.to_f).to eq(0)
+      expect(item.payment_market_fee.to_f).to eq(0)
+    end
+  end
 
   context "purchase order" do
     let!(:params) { { payment_method: "purchase order", payment_note: "1234" } }
