@@ -28,19 +28,17 @@ describe StoreOrderFees do
 
   context "discounts" do
     it "applys the discount before figuring out the fees" do
-      order = Order.create_from_cart(params, cart, user)
-      order.update(payment_method: params[:payment_method])
-      order.reload.items.update_all(discount: 1.00)
-      order.items.reload
+      order_item = create(:order_item, product: product1, quantity: 10, discount: 1.00)
+      discounted_order = create(:order, market: market, items: [order_item])
 
-      StoreOrderFees.perform(order_params: params, cart: cart, order: order).order.reload.items.index_by {|item| item.product_id }
+      StoreOrderFees.perform(order_params: params, cart: cart, order: discounted_order).order.reload.items.index_by {|item| item.product_id }
 
-      item = order.items.first
-      expect(item.market_seller_fee).to eq(9.9)
-      expect(item.local_orbit_seller_fee).to eq(1.49)
-      expect(item.local_orbit_market_fee).to eq(0.99)
-      expect(item.payment_seller_fee).to eq(0)
-      expect(item.payment_market_fee).to eq(0)
+      item = discounted_order.items.first # 69.90
+      expect(item.market_seller_fee.to_f).to eq(6.89)
+      expect(item.local_orbit_seller_fee.to_f).to eq(1.03)
+      expect(item.local_orbit_market_fee.to_f).to eq(0.69)
+      expect(item.payment_seller_fee.to_f).to eq(0)
+      expect(item.payment_market_fee.to_f).to eq(0)
     end
   end
 
