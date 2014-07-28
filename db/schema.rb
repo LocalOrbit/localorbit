@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724165201) do
+ActiveRecord::Schema.define(version: 20140725182554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,26 +132,6 @@ ActiveRecord::Schema.define(version: 20140724165201) do
   add_index "delivery_schedules", ["deleted_at"], name: "index_delivery_schedules_on_deleted_at", using: :btree
   add_index "delivery_schedules", ["market_id", "deleted_at"], name: "index_delivery_schedules_on_market_id_and_deleted_at", using: :btree
   add_index "delivery_schedules", ["market_id"], name: "index_delivery_schedules_on_market_id", using: :btree
-
-  create_table "discount_codes", force: true do |t|
-    t.string   "name",                                                             null: false
-    t.string   "code",                                                             null: false
-    t.integer  "market_id"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.string   "type",                                                             null: false
-    t.decimal  "discount",                  precision: 10, scale: 2
-    t.integer  "product_id"
-    t.integer  "category_id"
-    t.integer  "buyer_organization_id"
-    t.integer  "seller_organization_id"
-    t.decimal  "minimum_order_total",       precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "maximum_order_total",       precision: 10, scale: 2, default: 0.0, null: false
-    t.integer  "maximum_uses",                                       default: 0,   null: false
-    t.integer  "maximum_organization_uses",                          default: 0,   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "discounts", force: true do |t|
     t.string   "name",                                                             null: false
@@ -383,19 +363,20 @@ ActiveRecord::Schema.define(version: 20140724165201) do
     t.string   "seller_name"
     t.integer  "quantity"
     t.string   "unit"
-    t.decimal  "discount",               precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "market_seller_fee",      precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "local_orbit_seller_fee", precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "local_orbit_market_fee", precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "payment_seller_fee",     precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "payment_market_fee",     precision: 10, scale: 2, default: 0.0, null: false
-    t.decimal  "unit_price",             precision: 10, scale: 2, default: 0.0, null: false
+    t.decimal  "discount",               precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "market_seller_fee",      precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "local_orbit_seller_fee", precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "local_orbit_market_fee", precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "payment_seller_fee",     precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "payment_market_fee",     precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "unit_price",             precision: 10, scale: 2, default: 0.0,      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "delivery_status"
     t.datetime "delivered_at"
     t.integer  "legacy_id"
     t.integer  "quantity_delivered"
+    t.string   "payment_status",                                  default: "unpaid"
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree

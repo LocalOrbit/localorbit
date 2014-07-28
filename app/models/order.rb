@@ -37,6 +37,8 @@ class Order < ActiveRecord::Base
   validates :total_cost, presence: true
 
   before_save :update_paid_at
+  before_save :update_payment_status
+  before_save :update_order_item_payment_status
   after_save :update_total_cost
 
   scope :recent, -> { visible.order("created_at DESC").limit(15) }
@@ -310,6 +312,19 @@ class Order < ActiveRecord::Base
   def update_paid_at
     if changes[:payment_status] && changes[:payment_status][1] == "paid"
       self.paid_at = Time.current
+    end
+  end
+
+  def update_payment_status
+    statuses = items.map(&:payment_status).uniq
+    self.payment_status = "refunded" if statuses == ["refunded"]
+  end
+
+  def update_order_item_payment_status
+    if changes[:payment_status]
+      items.each do |i|
+        i.update(payment_status: payment_status) if (i.payment_status == 'pending' || i.payment_status == 'unpaid')
+      end
     end
   end
 

@@ -67,7 +67,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def buyer_payment_status
-    order.payment_status
+    payment_status
   end
 
   def seller_net_total
@@ -118,13 +118,17 @@ class OrderItem < ActiveRecord::Base
 
   def update_quantity_ordered
     if quantity_changed? && quantity.present? && delivery_status == "pending"
-      self.delivery_status = "canceled" if quantity == 0
+      if quantity == 0
+        self.delivery_status = "canceled"
+        self.payment_status = "refunded"
+      end
     end
   end
 
   def update_quantity_delivered
     if quantity_delivered_changed? && quantity_delivered.present? && delivery_status == "pending"
       self.delivery_status = quantity_delivered > 0 ? "delivered" : "canceled"
+      self.payment_status = "refunded" if quantity_delivered == 0
     end
   end
 

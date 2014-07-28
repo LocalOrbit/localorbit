@@ -68,7 +68,7 @@ class OrderItemDecorator < Draper::Decorator
   end
 
   def buyer_payment_status
-    order.payment_status.to_s.titleize
+    payment_status.to_s.titleize
   end
 
   def seller_payment_status

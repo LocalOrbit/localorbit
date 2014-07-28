@@ -73,5 +73,6 @@ class AttemptBalancedPurchase
 
   def update_order_payment_method
     order.update(payment_method: payment_method, payment_status: initial_payment_status)
+    order.items.update_all(payment_status: initial_payment_status)
   end
 end
