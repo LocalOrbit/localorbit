@@ -94,6 +94,23 @@ describe Order do
     end
   end
 
+  context "payment status updated" do
+    let!(:market)       { create(:market) }
+    let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
+    let!(:delivery)    { delivery_schedule.next_delivery }
+    let!(:organization) { create(:organization, markets: [market]) }
+
+    let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market) }
+
+    it "updates order items if they are unpaid" do
+      order.update(payment_status: 'paid')
+
+      order.reload.items.each do |i|
+        expect(i.payment_status).to eql('paid')
+      end
+    end
+  end
+
   describe ".orders_for_buyer" do
     context "admin" do
       let(:market)       { create(:market) }
