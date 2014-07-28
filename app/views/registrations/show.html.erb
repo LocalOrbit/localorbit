@@ -91,7 +91,7 @@
     <legend>Terms of Service Agreement</legend>
     <div class="row row--field">
       <div class="field column column--half column--guttered">
-        <%= f.check_box :terms_of_service %>
+        <%= f.check_box :terms_of_service, class: "modal-toggle", data: { modal: "terms-of-service" } %>
         <%= f.label :terms_of_service, ("I have read and agree to the #{ link_to "terms of service", terms_of_service_registration_path, target: "_blank" }").html_safe %>
       </div>
     </div>
@@ -100,5 +100,14 @@
   <div class="field form-actions">
     <%= f.submit "Sign Up" %>
   </div>
-
 <% end %>
+
+<div class="terms-of-service is-hidden modal modal--extended popup">
+  <div class="popup-body">
+    <%= render "/shared/terms_of_service" %>
+  </div>
+  <div class="popup-footer">
+    <button class="cancel">Cancel</button>
+    <button class="btn btn--action btn--small pull-right" id="read-terms">I have read the Terms of Service</button>
+  </div>
+</div>
