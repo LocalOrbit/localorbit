@@ -117,7 +117,7 @@
           <%= content_tag "span", order_item.price_per_unit, class: "unit-price" %>
         </td>
         <td class="delivery-status"><%= order_item.delivery_status.titleize %></td>
-        <td class="buyer-payment-status"><%= order_item.order.payment_status.titleize %></td>
+        <td class="buyer-payment-status"><%= order_item.payment_status.titleize %></td>
         <td class="seller-payment-status"><%= order_item.seller_payment_status %></td>
       </tr>
       <% end %>
