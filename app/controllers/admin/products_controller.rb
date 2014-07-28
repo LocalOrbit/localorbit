@@ -39,19 +39,13 @@ module Admin
     end
 
     def update
-      if product_params[:simple_inventory].present? && product_params.count == 1
-        @product.simple_inventory = product_params[:simple_inventory]
-        update = @product.lots.last.save
-      else
-        update = @product.update_attributes(product_params)
-      end
-
-      if update
+      if update_product
+        message = "Saved #{@product.name}"
         respond_to do |format|
-          format.html { redirect_to after_create_page, notice: "Saved #{@product.name}" }
+          format.html { redirect_to after_create_page, notice: message }
           format.js   {
             @data = {
-              message: "Saved #{@product.name}",
+              message: message,
               params: product_params.to_a,
               toggle: @product.available_inventory
             }
@@ -85,6 +79,15 @@ module Admin
 
     def find_product
       @product = current_user.managed_products.find(params[:id]).decorate
+    end
+
+    def update_product
+      if product_params[:simple_inventory].present? && product_params.count == 1
+        @product.simple_inventory = product_params[:simple_inventory]
+        @product.lots.last.save
+      else
+        @product.update_attributes(product_params)
+      end
     end
 
     def product_params

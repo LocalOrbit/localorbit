@@ -101,16 +101,9 @@ class Product < ActiveRecord::Base
     column, direction = column_and_direction(order)
     case column
     when "price"
-      joins("left outer join prices on products.id = prices.product_id").
-        select("products.*, coalesce(MAX(prices.sale_price), 0) as price").
-        group("products.id").order_by_price(direction)
+      for_sort_by_price(direction)
     when "stock"
-      lot = Lot.arel_table
-      expires_condition = lot[:expires_at].gt(Time.current).or(lot[:expires_at].eq(nil))
-      good_from = lot[:good_from].lt(Time.current).or(lot[:good_from].eq(nil))
-      joins("LEFT OUTER JOIN lots ON products.id = lots.product_id AND #{expires_condition.and(good_from).to_sql}").
-        select("products.*, SUM(lots.quantity) as stock").
-        group("products.id").order_by_stock(direction)
+      for_sort_by_stock(direction)
     when "seller"
       order_by_seller_name(direction)
     when "market"
@@ -227,6 +220,21 @@ class Product < ActiveRecord::Base
 
   def self.order_by_price(direction)
     direction == "asc" ? order("price asc") : order("price desc")
+  end
+
+  def self.for_sort_by_price(direction)
+    joins("left outer join prices on products.id = prices.product_id").
+      select("products.*, coalesce(MAX(prices.sale_price), 0) as price").
+      group("products.id").order_by_price(direction)
+  end
+
+  def self.for_sort_by_stock(direction)
+    lot = Lot.arel_table
+    expires_condition = lot[:expires_at].gt(Time.current).or(lot[:expires_at].eq(nil))
+    good_from = lot[:good_from].lt(Time.current).or(lot[:good_from].eq(nil))
+    joins("LEFT OUTER JOIN lots ON products.id = lots.product_id AND #{expires_condition.and(good_from).to_sql}").
+      select("products.*, SUM(lots.quantity) as stock").
+      group("products.id").order_by_stock(direction)
   end
 
   def ensure_organization_can_sell

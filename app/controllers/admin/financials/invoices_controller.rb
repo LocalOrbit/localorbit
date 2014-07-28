@@ -3,9 +3,6 @@ module Admin::Financials
     include StickyFilters
 
     def index
-      base_scope = nil
-      date_filter_attr = nil
-
       if current_user.buyer_only?
         base_scope = Order.orders_for_buyer(current_user).invoiced
         date_filter_attr = :invoice_due_date

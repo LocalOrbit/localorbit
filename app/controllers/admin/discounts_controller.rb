@@ -73,28 +73,38 @@ module Admin
     end
 
     def find_select_data
+      find_markets
+      find_products
+      find_organizations
+    end
+
+    def find_markets
       @markets = if current_user.admin?
         Market.all
       else
         current_user.managed_markets
       end.order(:name)
+    end
 
+    def find_products
       @market_select_options = current_user.admin? ? {include_blank: "All Markets"} : {}
 
       org_ids = @markets.map {|m| m.organization_ids }.flatten
       @products = Product.
-          joins(:organization).
-          where(organization_id: org_ids).
-          order("organizations.name, products.name").
-          map {|p| ["#{p.organization.name}: #{p.name}", p.id] }
+        joins(:organization).
+        where(organization_id: org_ids).
+        order("organizations.name, products.name").
+        map {|p| ["#{p.organization.name}: #{p.name}", p.id] }
+     end
 
-      @organizations = MarketOrganization.
-          excluding_deleted.
-          not_cross_selling.
-          includes(:market, :organization).
-          where(market_id: current_user.managed_market_ids).
-          order("markets.name ASC, organizations.name ASC").
-          map {|mo| ["#{mo.market.name}: #{mo.organization.name}", mo.organization_id] }
+     def find_organizations
+       @organizations = MarketOrganization.
+         excluding_deleted.
+         not_cross_selling.
+         includes(:market, :organization).
+         where(market_id: current_user.managed_market_ids).
+         order("markets.name ASC, organizations.name ASC").
+         map {|mo| ["#{mo.market.name}: #{mo.organization.name}", mo.organization_id] }
     end
   end
 end
