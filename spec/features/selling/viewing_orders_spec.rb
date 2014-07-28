@@ -12,8 +12,8 @@ feature "Viewing orders" do
   let!(:market1_product1)    { create(:product, :sellable, organization: market1_seller_org1) }
   let!(:market1_product2)    { create(:product, :sellable, organization: market1_seller_org2) }
 
-  let!(:market1_order_item1) { create(:order_item, seller_name: market1_seller_org1.name, product: market1_product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40) }
-  let!(:market1_order_item2) { create(:order_item, seller_name: market1_seller_org2.name, product: market1_product2, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
+  let!(:market1_order_item1) { create(:order_item, seller_name: market1_seller_org1.name, product: market1_product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40, delivery_status: 'delivered') }
+  let!(:market1_order_item2) { create(:order_item, seller_name: market1_seller_org2.name, product: market1_product2, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72, delivery_status: 'pending') }
   let!(:market1_order1)      { create(:order, items: [market1_order_item1, market1_order_item2], organization: market1_buyer_org1, market: market1, total_cost: 27.96, delivery: market1_delivery, placed_at: 2.weeks.ago) }
 
   let!(:market1_order_item3) { create(:order_item, seller_name: market1_seller_org1.name, product: market1_product1, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
@@ -59,7 +59,7 @@ feature "Viewing orders" do
 
       order = Dom::Admin::OrderRow.find_by_order_number(market1_order1.order_number)
       expect(order.amount_owed).to eq("$9.98")
-      expect(order.delivery_status).to eq('Pending')
+      expect(order.delivery_status).to eq('Delivered')
       expect(order.buyer_status).to eq('Unpaid')
 
       order = Dom::Admin::OrderRow.find_by_order_number(market1_order2.order_number)
@@ -77,6 +77,7 @@ feature "Viewing orders" do
       expect(page).to have_content(market1_order1.organization.name)
       expect(page).to have_content("$9.98")
       expect(page).to have_content("Purchase Order")
+      expect(page).to have_content("Delivery Status: Delivered")
       expect(page).to_not have_content("Delivery Fees: $7.12")
 
       items = Dom::Order::ItemRow.all
@@ -116,7 +117,7 @@ feature "Viewing orders" do
 
       order = Dom::Admin::OrderRow.find_by_order_number(market1_order1.order_number)
       expect(order.amount_owed).to eq("$27.96")
-      expect(order.delivery_status).to eq('Pending')
+      expect(order.delivery_status).to eq('Partially Delivered')
       expect(order.buyer_status).to eq('Unpaid')
 
       order = Dom::Admin::OrderRow.find_by_order_number(market1_order2.order_number)
@@ -136,7 +137,7 @@ feature "Viewing orders" do
 
       order = Dom::Admin::OrderRow.find_by_order_number(market1_order1.order_number)
       expect(order.amount_owed).to eq("$27.96")
-      expect(order.delivery_status).to eq('Pending')
+      expect(order.delivery_status).to eq('Partially Delivered')
       expect(order.buyer_status).to eq('Unpaid')
 
       order = Dom::Admin::OrderRow.find_by_order_number(market1_order2.order_number)
