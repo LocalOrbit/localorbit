@@ -1,5 +1,9 @@
 class AddPaymentStatusToOrderItem < ActiveRecord::Migration
-  class Order < ActiveRecord::Base;
+  class OrderItem < ActiveRecord::Base
+    has_one :order
+  end
+
+  class Order < ActiveRecord::Base
     has_many :order_items
   end
 
