@@ -73,7 +73,7 @@ class MetricsPresenter
       format: :currency
     },
     average_order_size: {
-      title: "Average Order Size",
+      title: "Average Items Per Order",
       scope: BASE_SCOPES[:order].joins(:items),
       attribute: :placed_at,
       calculation: :custom,
