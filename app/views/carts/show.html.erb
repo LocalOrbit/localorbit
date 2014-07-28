@@ -32,19 +32,27 @@
             <tbody class="math" id="totals">
               <tr class="cart_total">
                 <th scope="row" colspan="3">Item Subtotal</th>
-                <td class="subtotal"><%= current_cart.decorate.display_subtotal %></td>
+                <td class="subtotal"><%= current_cart.display_subtotal %></td>
                 <td></td>
               </tr>
 
+              <% if current_cart.discount_amount > 0 %>
+              <tr class="cart_total">
+                <th scope="row" colspan="3">Discount</th>
+                <td class="subtotal"><%= current_cart.display_discount %></td>
+                <td></td>
+              </tr>
+              <% end %>
+
               <tr class="cart_total">
                 <th scope="row" colspan="3">Delivery Fees</th>
-                <td class="delivery_fees"><%= current_cart.decorate.display_delivery_fees%></td>
+                <td class="delivery_fees"><%= current_cart.display_delivery_fees%></td>
                 <td></td>
               </tr>
 
               <tr class="cart_total">
                 <th scope="row" colspan="3"><strong>Total</strong></th>
-                <td class="total"><strong><%= current_cart.decorate.display_total %></strong></td>
+                <td class="total"><strong><%= current_cart.display_total %></strong></td>
                 <td></td>
               </tr>
             </tbody>
