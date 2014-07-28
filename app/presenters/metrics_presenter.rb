@@ -50,6 +50,12 @@ class MetricsPresenter
       attribute: :placed_at,
       calculation: :count
     },
+    total_orders_percent_growth: {
+      title: "Total Orders % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :total_orders,
+      format: :percent
+    },
     number_of_items: {
       title: "Number of Items",
       scope: BASE_SCOPES[:order_item],
@@ -63,6 +69,12 @@ class MetricsPresenter
       calculation: :sum,
       calculation_arg: "unit_price * COALESCE(quantity_delivered, quantity)",
       format: :currency
+    },
+    total_sales_percent_growth: {
+      title: "Total Sales % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :total_sales,
+      format: :percent
     },
     average_order: {
       title: "Average Order",
@@ -88,6 +100,12 @@ class MetricsPresenter
       calculation_arg: :amount,
       format: :currency
     },
+    total_service_fees_percent_growth: {
+      title: "Total Service Fees % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :total_service_fees,
+      format: :percent
+    },
     # Average LO Service Fees
     # Fees charged based on user's plan
     #
@@ -100,6 +118,12 @@ class MetricsPresenter
       calculation_arg: :amount,
       format: :currency
     },
+    average_service_fees_percent_growth: {
+      title: "Average Service Fees % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :average_service_fees,
+      format: :percent
+    },
     total_transaction_fees: {
       title: "Total Transaction Fees",
       scope: BASE_SCOPES[:order_item],
@@ -107,6 +131,12 @@ class MetricsPresenter
       calculation: :sum,
       calculation_arg: "order_items.local_orbit_seller_fee + order_items.local_orbit_market_fee",
       format: :currency
+    },
+    total_transaction_fees_percent_growth: {
+      title: "Total Transaction Fees % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :total_transaction_fees,
+      format: :percent
     },
     # Total Delivery Fees
     # Total of order delivery fees excluding orders without a delivery fee
@@ -119,6 +149,12 @@ class MetricsPresenter
       calculation: :sum,
       calculation_arg: :delivery_fees,
       format: :currency
+    },
+    total_delivery_fees_percent_growth: {
+      title: "Total Delivery Fees % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :total_delivery_fees,
+      format: :percent
     },
     # Average Delivery Fees
     # Average of order delivery fees excluding orders without a delivery fee
@@ -145,6 +181,12 @@ class MetricsPresenter
       calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
       format: :currency
     },
+    credit_card_processing_fees_percent_growth: {
+      title: "Credit Card Processing Fees % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :credit_card_processing_fees,
+      format: :percent
+    },
     # ACH Processing Fees
     # What LO charges customers for credit card processing payments
     #
@@ -157,6 +199,12 @@ class MetricsPresenter
       calculation: :sum,
       calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
       format: :currency
+    },
+    ach_processing_fees_percent_growth: {
+      title: "ACH Processing Fees % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :ach_processing_fees,
+      format: :percent
     },
     # Total Payment Processing Fees:
     # What LO charges customers for credit card + ACH processing payments
@@ -171,6 +219,12 @@ class MetricsPresenter
       calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
       format: :currency
     },
+    total_processing_fees_percent_growth: {
+      title: "Total Processing Fees % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :total_processing_fees,
+      format: :percent
+    },
     # Total Market Fees
     # Fees charged to a Market for payments and LO fees
     #
@@ -183,11 +237,23 @@ class MetricsPresenter
       calculation_arg: "market_seller_fee",
       format: :currency
     },
+    total_market_fees_percent_growth: {
+      title: "Total Market Fees % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :total_market_fees,
+      format: :percent
+    },
     total_service_transaction_fees: {
-      title: "Total Service And Transaction Fees",
+      title: "Total Service & Transaction Fees",
       calculation: :ruby,
       calculation_arg: [:+, :total_service_fees, :total_transaction_fees],
       format: :currency
+    },
+    total_service_transaction_fees_percent_growth: {
+      title: "Total Service & Transaction Fees % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :total_service_transaction_fees,
+      format: :percent
     },
     total_markets: {
       title: "Total Markets",
@@ -359,18 +425,22 @@ class MetricsPresenter
       calculation: :custom,
       calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
       format: :decimal
-    },
+    }
   }
 
   GROUPS = {
     financials: {
       title: "Financials",
       metrics: [
-        :total_orders, :total_sales, :average_order, :average_order_size,
-        :total_service_fees, :total_transaction_fees, :total_delivery_fees,
-        :average_delivery_fees, :average_service_fees, :credit_card_processing_fees,
-        :ach_processing_fees, :total_processing_fees, :total_market_fees,
-        :total_service_transaction_fees
+        :total_orders, :total_orders_percent_growth, :total_sales, :total_sales_percent_growth,
+        :average_order, :average_order_size, :total_service_fees, :total_service_fees_percent_growth,
+        :total_transaction_fees, :total_transaction_fees_percent_growth,
+        :total_delivery_fees, :total_delivery_fees_percent_growth,
+        :average_delivery_fees, :average_service_fees, :average_service_fees_percent_growth,
+        :credit_card_processing_fees, :credit_card_processing_fees_percent_growth,
+        :ach_processing_fees, :ach_processing_fees_percent_growth, :total_processing_fees,
+        :total_processing_fees_percent_growth, :total_market_fees, :total_market_fees_percent_growth,
+        :total_service_transaction_fees, :total_service_transaction_fees_percent_growth
       ]
     },
     markets: {
