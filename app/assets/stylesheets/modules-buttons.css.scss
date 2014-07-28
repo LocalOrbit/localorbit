@@ -341,3 +341,11 @@ button.toggle-viewport.reset {
   margin-top: 2em;
   color: #fff;
 }
+button {
+  &.increment,
+  &.decrement {
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+}
