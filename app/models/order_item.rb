@@ -36,7 +36,7 @@ class OrderItem < ActiveRecord::Base
     item = opts[:item]
     order = opts[:order]
 
-    create(
+    new(
       deliver_on_date: opts[:deliver_on_date],
       order: order,
       product: item.product,

@@ -39,8 +39,8 @@ class Order < ActiveRecord::Base
 
   before_save :update_paid_at
   before_save :update_payment_status
-  before_save :update_order_item_payment_status
-  after_save :update_total_cost
+  before_update :update_order_item_payment_status
+  before_update :update_total_cost
 
   scope :recent, -> { visible.order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { visible.joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
@@ -215,6 +215,7 @@ class Order < ActiveRecord::Base
       organization: cart.organization,
       market: cart.market,
       delivery: cart.delivery,
+      discount: cart.discount,
       billing_organization_name: cart.organization.name,
       billing_address: billing.address,
       billing_city: billing.city,
@@ -254,6 +255,10 @@ class Order < ActiveRecord::Base
     discount.try(:code)
   end
 
+  def discount_amount
+    items.sum(:discount)
+  end
+
   def invoice
     self.invoiced_at      = Time.current
     self.invoice_due_date = market.po_payment_term.days.from_now(invoiced_at)
@@ -272,7 +277,7 @@ class Order < ActiveRecord::Base
   end
 
   def subtotal
-    items.inject(0) {|sum, item| sum + item.gross_total }
+    @subtotal ||= items.each.sum(&:gross_total)
   end
 
   # Market payable calculations
@@ -328,18 +333,25 @@ class Order < ActiveRecord::Base
   def update_order_item_payment_status
     if changes[:payment_status]
       items.each do |i|
-        i.update(payment_status: payment_status) if (i.payment_status == 'pending' || i.payment_status == 'unpaid')
+        i.update(payment_status: payment_status) if i.payment_status == 'pending' || i.payment_status == 'unpaid'
       end
     end
   end
 
   def update_total_cost
-    cost = items.inject(0) {|sum, item| sum + item.gross_total }
-    fees = delivery.delivery_schedule.fees_for_amount(cost)
+    usable_items = items.reject {|i| i.destroyed? || i.marked_for_destruction? }
 
-    cost += fees if cost > 0.0
+    cost = usable_items.sum(&:gross_total)
+    if cost > 0.0
+      self.delivery_fees = delivery.delivery_schedule.fees_for_amount(cost)
 
-    update_columns(total_cost: cost, delivery_fees: fees)
+      cost += delivery_fees
+      cost -= usable_items.sum(&:discount)
+    else
+      self.delivery_fees = 0
+    end
+
+    self.total_cost = cost
   end
 
   def self.order_by_order_number(direction)
