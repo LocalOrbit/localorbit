@@ -1,6 +1,7 @@
 module DeliveryStatus
-  def delivery_status
-    statuses = (items.try(:loaded?) ? items.map(&:delivery_status) : items.pluck(:delivery_status)).map(&:downcase).uniq
+  def delivery_status_for_user(user)
+    order_items = items_for_seller(user)
+    statuses = (order_items.try(:loaded?) ? order_items.map(&:delivery_status) : order_items.pluck(:delivery_status)).map(&:downcase).uniq
 
     # TODO: Currently, canceled will only return if all items are canceled, this logic needs to be confirmed
     if statuses.size > 1 && statuses.include?("canceled")
@@ -24,9 +25,22 @@ module DeliveryStatus
     delivery_status == "delivered"
   end
 
+  def undelivered_for_user?(user)
+    delivery_status_for_user(user) == "pending"
+  end
+
   private
 
   def statuses_within(statuses, query)
     (query & statuses) == query
+  end
+
+  def items_for_seller(user)
+    if user.admin? || user.market_manager?
+      items
+    else
+      organization_ids = user.managed_organizations.pluck(:id)
+      items.joins(:product).where(products: { organization_id: organization_ids})
+    end
   end
 end

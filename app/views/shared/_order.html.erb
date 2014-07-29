@@ -43,7 +43,7 @@
   <table class="order-info-status">
     <tr>
       <th scope="row">Delivery Status:</th>
-      <td><%= order.delivery_status.titleize %></td>
+      <td><%= order.delivery_status_for_user(current_user).titleize %></td>
     </tr>
     <tr>
       <th scope="row">Buyer Payment:</th>
@@ -79,7 +79,7 @@
   </div>
   <div class="order-data">
     <h2 class="pull-left">Items for Delivery</h2>
-    <% if !current_user.buyer_only? && !order.delivered? %>
+    <% if !current_user.buyer_only? && order.undelivered_for_user?(current_user) %>
       <%= button_tag "Mark all delivered", class: 'pull-right btn btn--blue btn--small mobile-block', id: 'mark-all-delivered', type: 'button' %>
     <% end %>
   <div class="table-wrapper">

@@ -14,7 +14,7 @@
       <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %></td>
       <td class="placed-on"><%= order.placed_at.strftime("%b %e, %Y") %></td>
       <td class="total"><%= number_to_currency(order.total_cost) %></td>
-      <td class="delivery"><%= order.delivery_status.titleize %></td>
+      <td class="delivery"><%= order.delivery_status_for_user(current_user).titleize %></td>
       <td class="payment"><%= order.payment_status.titleize %></td>
     </tr>
   <% end %>
