@@ -41,3 +41,11 @@ a.cart .message {
 .cancel-link {
   margin-top: 12px;
 }
+
+@media screen and (max-width: 600px) {
+  .cart {
+    .quantity {
+      white-space: nowrap;
+    }
+  }
+}

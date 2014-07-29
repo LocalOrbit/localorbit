@@ -271,6 +271,21 @@ describe "Viewing the cart", :js do
         expect(page).to have_content("Quantity must be greater than or equal to 0")
       end
     end
+
+    context "incrementing and decrementing quantities" do
+      before do
+        kale_item.set_quantity(0)
+      end
+
+      it "increments kale" do
+        kale_item.node.find('.increment').click
+        kale_item.node.find('.increment').click
+        expect(kale_item.quantity_field.value).to eql("2")
+        kale_item.node.find('.decrement').click
+        expect(kale_item.quantity_field.value).to eql("1")
+      end
+
+    end
   end
 
   context "place order button" do
