@@ -21,11 +21,28 @@ describe OrderItem do
       expect(subject.reload.delivery_status).to eql('canceled')
     end
 
-    it "sets the payment status to 'refunded' when a quantity ordered of 0" do
+    it "sets the payment status to 'refunded' when a quantity ordered of 0 and a payment status of pending" do
       subject.quantity = 0
+      subject.payment_status = "pending"
       subject.save!
 
       expect(subject.reload.payment_status).to eql('refunded')
+    end
+
+    it "sets the payment status to 'refunded' when a quantity ordered of 0 and a payment status of paid" do
+      subject.quantity = 0
+      subject.payment_status = "paid"
+      subject.save!
+
+      expect(subject.reload.payment_status).to eql('refunded')
+    end
+
+    it "does not change the payment status if it is unpaid" do
+      subject.quantity = 0
+      subject.payment_status = "unpaid"
+      subject.save!
+
+      expect(subject.reload.payment_status).to eql('unpaid')
     end
 
     it "does not override 'contested'" do
@@ -53,13 +70,31 @@ describe OrderItem do
       subject.save!
 
       expect(subject.reload.delivery_status).to eql('canceled')
+      expect(subject.reload.payment_status).to eql('unpaid')
     end
 
-    it "sets the payment status to 'refunded' when a quantity delivered of 0" do
+    it "sets the payment status to 'refunded' when a quantity delivered of 0 and payment status of pending" do
       subject.quantity_delivered = 0
+      subject.payment_status = "pending"
       subject.save!
 
       expect(subject.reload.payment_status).to eql('refunded')
+    end
+
+    it "sets the payment status to 'refunded' when a quantity delivered of 0 and payment status of paid" do
+      subject.quantity_delivered = 0
+      subject.payment_status = "paid"
+      subject.save!
+
+      expect(subject.reload.payment_status).to eql('refunded')
+    end
+
+    it "does not change the payment status if it is unpaid" do
+      subject.quantity_delivered = 0
+      subject.payment_status = "unpaid"
+      subject.save!
+
+      expect(subject.reload.payment_status).to eql('unpaid')
     end
 
     it "does not override 'contested'" do
