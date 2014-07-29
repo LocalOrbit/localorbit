@@ -17,6 +17,7 @@ describe SellerOrder do
   let!(:item3)    { create(:order_item, product: product3, delivery_status: "pending") }
   let!(:item4)    { create(:order_item, product: product4, delivery_status: "pending") }
   let!(:order)    { create(:order, delivery: delivery, items: [item1, item2, item3, item4], organization: buyer, market: market) }
+  let!(:user)     { create(:user, :admin)}
 
   describe "#items" do
     it "loads the right items for seller 1 organization" do
@@ -56,8 +57,8 @@ describe SellerOrder do
     end
   end
 
-  describe "#delivery_status" do
-    subject { SellerOrder.new(order, seller1).delivery_status }
+  describe "#delivery_status_for_user" do
+    subject { SellerOrder.new(order, seller1).delivery_status_for_user(user) }
 
     context "when all items pending" do
       it { should eq("pending") }
@@ -72,7 +73,7 @@ describe SellerOrder do
       it "returns the remaining delivery status" do
         order.items.first.update(delivery_status: "canceled")
 
-        expect(SellerOrder.new(order, seller1).delivery_status).to eq("pending")
+        expect(SellerOrder.new(order, seller1).delivery_status_for_user(user)).to eq("pending")
       end
     end
 
@@ -86,7 +87,7 @@ describe SellerOrder do
       item3.update_attributes(delivery_status: "delivered")
       item4.update_attributes(delivery_status: "delivered")
 
-      expect(SellerOrder.new(order, seller1).delivery_status).to eq("delivered")
+      expect(SellerOrder.new(order, seller1).delivery_status_for_user(user)).to eq("delivered")
     end
 
     context "when at least one item is pending and delivered" do

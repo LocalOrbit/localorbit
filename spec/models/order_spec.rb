@@ -113,7 +113,7 @@ describe Order do
     it "sets payment_status to 'refunded' if all items have been refunded" do
       order.items.each {|i| i.update(payment_status: 'refunded')}
       order.save!
-      
+
       expect(order.reload.payment_status).to eql("refunded")
     end
   end
@@ -327,6 +327,7 @@ describe Order do
     end
 
     context "delivery information" do
+      let!(:admin) { create(:user, :admin) }
       context "for dropoff" do
         let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup) }
         it "captures location" do
@@ -335,7 +336,7 @@ describe Order do
           expect(subject.delivery_state).to eql(pickup_location.state)
           expect(subject.delivery_zip).to eql(pickup_location.zip)
           expect(subject.delivery_phone).to eql(pickup_location.phone)
-          expect(subject.delivery_status).to eql("pending")
+          expect(subject.delivery_status_for_user(admin)).to eql("pending")
         end
       end
 
@@ -346,7 +347,7 @@ describe Order do
           expect(subject.delivery_state).to eql(delivery_location.state)
           expect(subject.delivery_zip).to eql(delivery_location.zip)
           expect(subject.delivery_phone).to eql(delivery_location.phone)
-          expect(subject.delivery_status).to eql("pending")
+          expect(subject.delivery_status_for_user(admin)).to eql("pending")
         end
       end
     end
