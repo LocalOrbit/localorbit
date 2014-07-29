@@ -63,98 +63,102 @@ describe 'Editing an order' do
       context "as a market manager" do
         let!(:user) { create(:user, managed_markets: [market]) }
 
-        it 'removes an item' do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        context "removes an item" do
+          it 'removes an item' do
+            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
-          expect(Dom::Order::ItemRow.count).to eq(2)
-          expect(Dom::Order::ItemRow.all.map(&:name)).to include(long_name(order_item), long_name(order_item2))
+            expect(Dom::Order::ItemRow.count).to eq(2)
+            expect(Dom::Order::ItemRow.all.map(&:name)).to include(long_name(order_item), long_name(order_item2))
 
-          first_order_item.click_delete
+            first_order_item.click_delete
 
-          expect(page).to have_content("Order successfully updated")
-          expect(Dom::Order::ItemRow.count).to eq(1)
-          expect(Dom::Order::ItemRow.all.map(&:name)).to eql([long_name(order_item2)])
-        end
+            expect(page).to have_content("Order successfully updated")
+            expect(Dom::Order::ItemRow.count).to eq(1)
+            expect(Dom::Order::ItemRow.all.map(&:name)).to eql([long_name(order_item2)])
+          end
 
-        it 'updates the order total' do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          it 'updates the order total' do
+            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
-          expect(page).to have_content("Grand Total: $45.00")
+            expect(page).to have_content("Grand Total: $45.00")
 
-          first_order_item.click_delete
+            first_order_item.click_delete
 
-          expect(page).to have_content("Order successfully updated")
-          expect(page).to have_content("Grand Total: $30.00")
-        end
+            expect(page).to have_content("Order successfully updated")
+            expect(page).to have_content("Grand Total: $30.00")
+          end
 
-        it 'updates the order summary totals' do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          it 'updates the order summary totals' do
+            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
-          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
+            expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
 
-          first_order_item.click_delete
+            first_order_item.click_delete
 
-          expect(page).to have_content("Order successfully updated")
-          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
-        end
+            expect(page).to have_content("Order successfully updated")
+            expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
+          end
 
-        it 'returns the inventory' do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
-          expect(product.available_inventory).to eql(145)
+          it 'returns the inventory' do
+            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+            expect(product.available_inventory).to eql(145)
 
-          first_order_item.click_delete
+            first_order_item.click_delete
 
-          expect(page).to have_content("Order successfully updated")
-          expect(product.reload.available_inventory).to eql(150)
+            expect(page).to have_content("Order successfully updated")
+            expect(product.reload.available_inventory).to eql(150)
+          end
         end
       end
 
       context "as an admin" do
         let!(:user) { create(:user, :admin) }
 
-        it 'removes an item' do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+        context "remove an item" do
+          it 'removes an item' do
+            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
-          expect(Dom::Order::ItemRow.count).to eq(2)
-          expect(Dom::Order::ItemRow.all.map(&:name)).to include(long_name(order_item), long_name(order_item2))
+            expect(Dom::Order::ItemRow.count).to eq(2)
+            expect(Dom::Order::ItemRow.all.map(&:name)).to include(long_name(order_item), long_name(order_item2))
 
-          first_order_item.click_delete
+            first_order_item.click_delete
 
-          expect(page).to have_content("Order successfully updated")
-          expect(Dom::Order::ItemRow.count).to eq(1)
-          expect(Dom::Order::ItemRow.all.map(&:name)).to eql([long_name(order_item2)])
-        end
+            expect(page).to have_content("Order successfully updated")
+            expect(Dom::Order::ItemRow.count).to eq(1)
+            expect(Dom::Order::ItemRow.all.map(&:name)).to eql([long_name(order_item2)])
+          end
 
-        it 'updates the order total' do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          it 'updates the order total' do
+            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
-          expect(page).to have_content("Grand Total: $45.00")
+            expect(page).to have_content("Grand Total: $45.00")
 
-          first_order_item.click_delete
+            first_order_item.click_delete
 
-          expect(page).to have_content("Order successfully updated")
-          expect(page).to have_content("Grand Total: $30.00")
-        end
+            expect(page).to have_content("Order successfully updated")
+            expect(page).to have_content("Grand Total: $30.00")
+          end
 
-        it 'updates the order summary totals' do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+          it 'updates the order summary totals' do
+            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
-          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
+            expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
 
-          first_order_item.click_delete
+            first_order_item.click_delete
 
-          expect(page).to have_content("Order successfully updated")
-          expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
-        end
+            expect(page).to have_content("Order successfully updated")
+            expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
+          end
 
-        it 'returns the inventory' do
-          expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
-          expect(product.available_inventory).to eql(145)
+          it 'returns the inventory' do
+            expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
+            expect(product.available_inventory).to eql(145)
 
-          first_order_item.click_delete
+            first_order_item.click_delete
 
-          expect(page).to have_content("Order successfully updated")
-          expect(product.reload.available_inventory).to eql(150)
+            expect(page).to have_content("Order successfully updated")
+            expect(product.reload.available_inventory).to eql(150)
+          end
         end
       end
     end

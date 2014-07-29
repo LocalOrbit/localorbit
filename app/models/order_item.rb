@@ -120,7 +120,7 @@ class OrderItem < ActiveRecord::Base
     if quantity_changed? && quantity.present? && delivery_status == "pending"
       if quantity == 0
         self.delivery_status = "canceled"
-        self.payment_status = "refunded"
+        self.payment_status = "refunded" if refundable?
       end
     end
   end
@@ -128,7 +128,7 @@ class OrderItem < ActiveRecord::Base
   def update_quantity_delivered
     if quantity_delivered_changed? && quantity_delivered.present? && delivery_status == "pending"
       self.delivery_status = quantity_delivered > 0 ? "delivered" : "canceled"
-      self.payment_status = "refunded" if quantity_delivered == 0
+      self.payment_status = "refunded" if quantity_delivered == 0 && refundable?
     end
   end
 
@@ -138,6 +138,7 @@ class OrderItem < ActiveRecord::Base
         self.quantity_delivered ||= quantity
       elsif delivery_status == "canceled"
         self.quantity_delivered = 0
+        self.payment_status = "refunded" if refundable?
       end
     end
   end
@@ -175,5 +176,9 @@ class OrderItem < ActiveRecord::Base
         return_inventory_amount(quantity_remaining.abs)
       end
     end
+  end
+
+  def refundable?
+    ["pending", "paid"].include?(payment_status)
   end
 end
