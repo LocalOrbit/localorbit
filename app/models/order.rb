@@ -224,17 +224,13 @@ class Order < ActiveRecord::Base
       billing_phone: billing.phone,
       payment_status: "unpaid",
       payment_method: params[:payment_method],
+      payment_note: params[:payment_note],
       delivery_fees: cart.delivery_fees,
       total_cost: cart.total,
       placed_at: DateTime.current
     )
 
-    order.payment_note = params[:payment_note] if params[:payment_note]
-
-    address = cart.delivery.delivery_schedule.buyer_pickup? ?
-      cart.delivery.delivery_schedule.buyer_pickup_location : cart.location
-
-    order.apply_delivery_address(address)
+    order.apply_delivery_address(cart.delivery_location)
 
     ActiveRecord::Base.transaction do
       cart.items.each do |item|
@@ -344,14 +340,11 @@ class Order < ActiveRecord::Base
     cost = usable_items.sum(&:gross_total)
     if cost > 0.0
       self.delivery_fees = delivery.delivery_schedule.fees_for_amount(cost)
-
-      cost += delivery_fees
-      cost -= usable_items.sum(&:discount)
+      self.total_cost    = cost + delivery_fees - usable_items.sum(&:discount)
     else
       self.delivery_fees = 0
+      self.total_cost    = 0
     end
-
-    self.total_cost = cost
   end
 
   def self.order_by_order_number(direction)
