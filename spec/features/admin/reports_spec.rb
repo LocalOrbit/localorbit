@@ -347,6 +347,8 @@ feature "Reports", js: true do
           select seller2.name, from: "Seller"
           click_button "Filter"
 
+          sleep 1
+
           wait_for { Dom::Report::ItemRow.all.count }.to eq(5)
           expect_item_rows_for_order("LO-02-234-4567890-0", 1)
           expect_item_rows_for_order("LO-02-234-4567890-1", 1)
@@ -396,6 +398,8 @@ feature "Reports", js: true do
 
           select buyer2.name, from: "Buyer"
           click_button "Filter"
+
+          sleep 1
 
           wait_for { Dom::Report::ItemRow.all.count }.to eq(5)
           expect_item_rows_for_order("LO-02-234-4567890-0", 1)
