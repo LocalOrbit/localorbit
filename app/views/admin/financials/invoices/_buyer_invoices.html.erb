@@ -25,7 +25,7 @@
             <td class="order-number"><%= link_to order.order_number, admin_financials_invoice_path(order) %></td>
             <td class="po-number"><%= order.payment_note if order.payment_method == "purchase order" %></td>
             <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
-            <td class="delivery-status"><%= order.delivery_status.titleize %></td>
+            <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
             <td class="amount"><%= number_to_currency(order.total_cost) %></td>
           </tr>
         <% end %>

@@ -43,7 +43,7 @@
               <%= link_to 'PDF', invoice_admin_invoice_path(order.id, format: 'pdf'), class: 'pdf-download', target: '_blank' if order.invoiced? %>
             </td>
             <td class="order-placed-on"><%= order.placed_at.strftime("%b %d, %Y") %></td>
-            <td class="individual-delivery-status"><%= order.delivery_status.titleize %></td>
+            <td class="individual-delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
             <td class="individual-payment-status"><%= order.payment_status.titleize %></td>
             <td class="line-total"><%= number_to_currency order.net_total %></td>
           </tr>

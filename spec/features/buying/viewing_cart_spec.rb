@@ -370,8 +370,6 @@ describe "Viewing the cart", :js do
           expect(page).to have_content("Discount")
         end
 
-        save_and_open_screenshot
-
         expect(cart_totals.subtotal).to have_content("$40.00")
         expect(cart_totals.discount).to have_content("$15.00")
         expect(cart_totals.delivery_fees).to have_content("$10.00")

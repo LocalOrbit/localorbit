@@ -17,7 +17,7 @@
       <tr class="order-row">
         <td class="order-number"><%= link_to order.order_number, admin_order_path(order) %></td>
         <td class="placed-on"><%= order.placed_at.strftime("%-m/%-d/%Y") %></td>
-        <td class="delivery"><%= order.delivery_status.try(:titleize) %></td>
+        <td class="delivery"><%= order.delivery_status_for_user(current_user).try(:titleize) %></td>
         <td class="total"><%= number_to_currency(SellerOrder.new(order, current_user).net_total) %></td>
       </tr>
     <% end %>
