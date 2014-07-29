@@ -19,13 +19,6 @@ GIT
       rails (>= 3, < 4.2)
 
 GIT
-  remote: git://github.com/collectiveidea/awesome_nested_set.git
-  revision: f823ffb304ccf5ca9c4f14b60ff1f45ad2c3f440
-  specs:
-    awesome_nested_set (3.0.0.rc.6)
-      activerecord (>= 4.0.0, < 5)
-
-GIT
   remote: git://github.com/collectiveidea/graticule.git
   revision: 0ceb721ce39fbaf5b5899a46a2e585200b99d6a7
   specs:
@@ -78,6 +71,8 @@ GEM
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
     ast (2.0.0)
+    awesome_nested_set (3.0.0)
+      activerecord (>= 4.0.0, < 5)
     balanced (0.8.2)
       faraday (~> 0.8.6)
       faraday_middleware (~> 0.9.0)
@@ -414,7 +409,7 @@ DEPENDENCIES
   accountingjs-rails
   active_model_serializers
   acts_as_geocodable!
-  awesome_nested_set!
+  awesome_nested_set
   balanced (~> 0.7)
   capybara
   codeclimate-test-reporter
