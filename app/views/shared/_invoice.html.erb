@@ -41,12 +41,14 @@
       <div class="vcard">
         <h2>From</h2>
         <h3 class="fn org org-from"><%= invoice.market.name %></h3>
-        <div>
-          <%= market.street_address %><br>
-          <%= market.city_state_zip %><br>
-          <%= market.display_contact_phone %><br>
-          <%= market.contact_email %>
-        </div>
+        <% if market.addresses.visible.any? %>
+          <div>
+            <%= market.street_address %><br>
+            <%= market.city_state_zip %><br>
+            <%= market.display_contact_phone %><br>
+            <%= market.contact_email %>
+          </div>
+        <% end %>
       </div>
     </div
     ><div class="column column--half">
