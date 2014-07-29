@@ -1,5 +1,5 @@
 module Metrics
-  class Market < Metrics::Base
+  class Market < Base
     BASE_SCOPE = ::Market.where.not(id: MetricsPresenter::TEST_MARKET_IDS).uniq
     METRICS = {
       live_markets:         BASE_SCOPE.where(active: true),

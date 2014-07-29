@@ -1,5 +1,5 @@
 module Metrics
-  class Organization < Metrics::Base
+  class Organization < Base
     BASE_SCOPE = ::Organization.where.not(id: MetricsPresenter::TEST_ORG_IDS).uniq
     METRICS = {
       total_buyer_only:   BASE_SCOPE.where(can_sell: false),
