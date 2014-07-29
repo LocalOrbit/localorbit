@@ -2,6 +2,9 @@
 
 .date-filters {
   font-size: 14px;
+  .preserve-alignment {
+    vertical-align: top;
+  }
 }
 .filter-dropdown {
   width: 180px;

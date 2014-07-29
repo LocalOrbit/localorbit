@@ -89,13 +89,13 @@
     @include transform(translateX(-50%));
   }
 
-@media screen and (max-width: 800px) {
+@media screen and (min-width: $tablet_floor) and (max-width: 800px) {
   .popup {
+    left: 50%;
     @include box-sizing(border-box);
     @include transform(translateX(-50%));
   }
   .popup--edit {
-    left: 50%;
     width: 90%;
     max-width: 300px;
     margin: 0 auto;

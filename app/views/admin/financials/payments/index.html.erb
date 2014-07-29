@@ -32,7 +32,7 @@
             <% if payment.payment_type == "order" || payment.payment_type == "seller payment" || payment.payment_type == "market payment" %>
               Order #: <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
               <% if payment.orders.count > 1 %>
-                <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#", class:"modal-toggle more-info payment-more", data: { modal: "more-info-#{payment.id}"} %>
+                <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#more-info-#{payment.id}", class:"modal-toggle more-info payment-more", data: { modal: "more-info-#{payment.id}"} %>
 
                 <!-- Modal -->
                 <div class="popup modal more-info-<%= payment.id %> is-hidden order-list-modal">
