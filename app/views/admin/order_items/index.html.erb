@@ -86,15 +86,15 @@
       <thead class="stickable">
         <tr>
           <th><input class="select-all" type="checkbox"></th>
-          <th><%= sort_link @q, :created_at, "Order #" %></th>
+          <th><%= sort_link @q, :created_at, "Order #" %></th>
           <th><%= sort_link @q, :product_organization_name, "Seller" %></th>
           <th><%= sort_link @q, :order_organization_name, "Buyer" %></th>
           <th><%= sort_link @q, :product_name, "Product" %></th>
           <th><%= sort_link @q, :quantity, "Qty" %></th>
           <th>Total</th>
           <th><%= sort_link @q, :delivery_status, "Delivery" %></th>
-          <th><%= sort_link @q, :order_payment_status, "Buyer $" %></th>
-          <th>Seller $</th>
+          <th><%= sort_link @q, :order_payment_status, "Buyer $" %></th>
+          <th>Seller $</th>
         </tr>
       </thead>
 

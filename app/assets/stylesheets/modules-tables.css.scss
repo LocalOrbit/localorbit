@@ -900,6 +900,9 @@ th {
     min-width: 50px;
   }
 }
+.sold-table th {
+  white-space: nowrap;
+}
 
 .order-summary{
   &:nth-child(even) {

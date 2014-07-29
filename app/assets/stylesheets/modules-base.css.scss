@@ -1385,6 +1385,10 @@ label ~ .tooltip {
 .action-header {
   margin: 0;
   width: 100%;
+  &.js-fixed {
+    padding-top: 20px;
+    margin-top: -20px;
+  }
 
   h4 {
     margin: 0;
