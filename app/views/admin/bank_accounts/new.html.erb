@@ -17,6 +17,15 @@
          <li>You will receive a receipt each time you make an online payment so you can monitor your account activity.</li>
        </ul>
      </div>
+    <div>
+      <% if current_user.can_manage_organization?(@organization) %>
+        <p>This payment method will be used to deliver payments from orders and from where you will be charged Local Orbit fees.</p>
+      <% elsif @organization.can_sell? %>
+        <p>This payment method will be used to deliver payments from orders.  (What about the Markey fee?)</p>
+      <% else %>
+        <p>This payment method will be used to fulfill your orders.</p>
+      <% end %>
+    </div>
 
     <div class="row">
       <div class="field column column--half column--guttered">
