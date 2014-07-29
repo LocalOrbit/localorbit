@@ -12,8 +12,7 @@ $ ->
     if $('.l-main').outerWidth() <= 640
       styles = {
         position: 'fixed',
-        top: 54,
-        left: '50%'
+        top: 54
       }
       $element.find('div.datepicker').show()
     else
@@ -55,6 +54,9 @@ $ ->
     $element.toggleClass('is-hidden')
     $(".modal").not($element).addClass('is-hidden')
     $('.overlay').addClass('is-open is-dim is-modal')
+    console.log this, $element
+    if $element.hasClass('clonable')
+      clone_popup($element, this)
 
   $('.remote-modal-toggle').click (event)->
     event.preventDefault()

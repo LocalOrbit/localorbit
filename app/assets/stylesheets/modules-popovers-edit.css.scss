@@ -89,25 +89,6 @@
     @include transform(translateX(-50%));
   }
 
-@media screen and (min-width: $tablet_floor) and (max-width: 800px) {
-  .popup {
-    left: 50%;
-    @include box-sizing(border-box);
-    @include transform(translateX(-50%));
-  }
-  .popup--edit {
-    width: 90%;
-    max-width: 300px;
-    margin: 0 auto;
-    &.rtl {
-      right: auto;
-    }
-    .preserve-alignment {
-      display: block;
-    }
-  }
-}
-
 @media screen and (max-width: $mobile_break) {
   .popup--edit {
     display: -webkit-flex;
@@ -241,8 +222,25 @@
     padding-top: 0;
   }
 }
+@media screen and (max-width: 800px) {
+  .popup,
+  .overlay + .modal {
+    left: 50%;
+    @include box-sizing(border-box);
+    @include transform(translateX(-50%));
+  }
+  .popup--edit {
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto;
+    &.rtl {
+      right: auto;
+    }
+    .preserve-alignment {
+      display: block;
+    }
+  }
 
-@media screen and (max-width: $mobile_break) {
   .modal {
     left: 0;
     width: auto;
@@ -270,3 +268,4 @@
     background: #F2F2F2;
   }
 }
+
