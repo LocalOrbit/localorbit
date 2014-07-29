@@ -6,7 +6,7 @@ class MarketDecorator < Draper::Decorator
   delegate_all
 
   def first_address
-    addresses.first
+    addresses.visible.first
   end
 
   def seller_locations_map(w=400, h=400)
