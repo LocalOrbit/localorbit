@@ -13,7 +13,7 @@ context "Viewing sold items" do
   let!(:delivery) { create(:delivery, delivery_schedule: delivery_schedule) }
   let!(:order_items) {
     [
-      create(:order_item, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, unit: "Bushels", market_seller_fee: 0.75),
+      create(:order_item, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, quantity_delivered: 0, unit: "Bushels", market_seller_fee: 0.75, payment_status: "refunded"),
       create(:order_item, product: product2, seller_name: seller.name, name: product2.name, unit_price: 5.00, quantity: 10, unit: "Lots", payment_seller_fee: 1.20),
       create(:order_item, product: product3, seller_name: seller2.name, name: product3.name, unit_price: 2.00, quantity: 12, unit: "Heads", local_orbit_seller_fee: 4)
     ]
@@ -38,18 +38,18 @@ context "Viewing sold items" do
 
       expect(sold_items.count).to eq(3)
 
-      sold_item = Dom::Admin::SoldItemRow.first
+      sold_item = Dom::Admin::SoldItemRow.find_by_product(product1.name)
 
       expect(sold_item.order_number).to have_content("LO-ADA-0000001")
       expect(sold_item.order_date).to eq(order.placed_at.strftime("%m/%d/%Y"))
       expect(sold_item.buyer).to eq("Big Money")
-      expect(sold_item.seller).to eq("Better foodz")
-      expect(sold_item.product).to eq("Brocolli")
-      expect(sold_item.quantity).to eq("12")
-      expect(sold_item.total_price).to eq("$24.00")
-      expect(sold_item.unit_price).to eq("$2.00/Heads")
-      expect(sold_item.delivery_status).to eq("Pending")
-      expect(sold_item.buyer_payment_status).to eq("Unpaid")
+      expect(sold_item.seller).to eq("Good foodz")
+      expect(sold_item.product).to eq(product1.name)
+      expect(sold_item.quantity).to eq("5")
+      expect(sold_item.total_price).to eq("$0.00")
+      expect(sold_item.unit_price).to eq("$6.50/Bushels")
+      expect(sold_item.delivery_status).to eq("Canceled")
+      expect(sold_item.buyer_payment_status).to eq("Refunded")
       expect(sold_item.seller_payment_status).to eq("Unpaid")
     end
 
@@ -130,7 +130,7 @@ context "Viewing sold items" do
 
       sold_items = Dom::Admin::SoldItemRow.all
       expect(sold_items[0].delivery_status).to eq("Delivered")
-      expect(sold_items[1].delivery_status).to eq("Pending")
+      expect(sold_items[1].delivery_status).to eq("Canceled")
       expect(sold_items[2].delivery_status).to eq("Pending")
 
       Dom::Admin::SoldItemRow.all.each(&:select)
@@ -145,17 +145,17 @@ context "Viewing sold items" do
 
     it "cancels an item from an order" do
       expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", success?: true))
-      expect(order.total_cost.to_f).to eql(106.50)
+      expect(order.total_cost.to_f).to eql(74.00)
 
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
       select 'Canceled', from: 'delivery_status'
       click_button 'Apply Action'
 
-      expect(order.reload.total_cost.to_f).to eql(82.50)
+      expect(order.reload.total_cost.to_f).to eql(50.00)
       sold_items = Dom::Admin::SoldItemRow.all
       expect(sold_items[0].delivery_status).to eq("Canceled")
-      expect(sold_items[1].delivery_status).to eq("Pending")
+      expect(sold_items[1].delivery_status).to eq("Canceled")
       expect(sold_items[2].delivery_status).to eq("Pending")
     end
 
@@ -163,24 +163,24 @@ context "Viewing sold items" do
       expect(page).to have_content("Total Sales")
       totals = Dom::Admin::TotalSales.first
 
-      expect(totals.gross_sales).to eq("$106.50")
-      expect(totals.market_fees).to eq("$0.75")
+      expect(totals.gross_sales).to eq("$74.00")
+      expect(totals.market_fees).to eq("$0.00")
       expect(totals.lo_fees).to eq("$4.00")
       expect(totals.processing_fees).to eq("$1.20")
       expect(totals.discounts).to eq("$0.00")
-      expect(totals.net_sales).to eq("$100.55")
+      expect(totals.net_sales).to eq("$68.80")
 
       select seller.name, from: "q_product_organization_id_eq"
       click_button "Filter"
 
       totals = Dom::Admin::TotalSales.first
 
-      expect(totals.gross_sales).to eq("$82.50")
-      expect(totals.market_fees).to eq("$0.75")
+      expect(totals.gross_sales).to eq("$50.00")
+      expect(totals.market_fees).to eq("$0.00")
       expect(totals.lo_fees).to eq("$0.00")
       expect(totals.processing_fees).to eq("$1.20")
       expect(totals.discounts).to eq("$0.00")
-      expect(totals.net_sales).to eq("$80.55")
+      expect(totals.net_sales).to eq("$48.80")
     end
 
     it "sets item delivery status" do
@@ -193,7 +193,7 @@ context "Viewing sold items" do
 
       sold_items = Dom::Admin::SoldItemRow.all
       expect(sold_items[0].delivery_status).to eq("Delivered")
-      expect(sold_items[1].delivery_status).to eq("Pending")
+      expect(sold_items[1].delivery_status).to eq("Canceled")
       expect(sold_items[2].delivery_status).to eq("Pending")
 
       Dom::Admin::SoldItemRow.all.each(&:select)
@@ -208,17 +208,17 @@ context "Viewing sold items" do
 
     it "cancels an item from an order" do
       expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", success?: true))
-      expect(order.total_cost.to_f).to eql(106.50)
+      expect(order.total_cost.to_f).to eql(74.00)
 
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
       select 'Canceled', from: 'delivery_status'
       click_button 'Apply Action'
 
-      expect(order.reload.total_cost.to_f).to eql(82.50)
+      expect(order.reload.total_cost.to_f).to eql(50.00)
       sold_items = Dom::Admin::SoldItemRow.all
       expect(sold_items[0].delivery_status).to eq("Canceled")
-      expect(sold_items[1].delivery_status).to eq("Pending")
+      expect(sold_items[1].delivery_status).to eq("Canceled")
       expect(sold_items[2].delivery_status).to eq("Pending")
     end
 
@@ -226,24 +226,24 @@ context "Viewing sold items" do
       expect(page).to have_content("Total Sales")
       totals = Dom::Admin::TotalSales.first
 
-      expect(totals.gross_sales).to eq("$106.50")
-      expect(totals.market_fees).to eq("$0.75")
+      expect(totals.gross_sales).to eq("$74.00")
+      expect(totals.market_fees).to eq("$0.00")
       expect(totals.lo_fees).to eq("$4.00")
       expect(totals.processing_fees).to eq("$1.20")
       expect(totals.discounts).to eq("$0.00")
-      expect(totals.net_sales).to eq("$100.55")
+      expect(totals.net_sales).to eq("$68.80")
 
       select seller.name, from: "q_product_organization_id_eq"
       click_button "Filter"
 
       totals = Dom::Admin::TotalSales.first
 
-      expect(totals.gross_sales).to eq("$82.50")
-      expect(totals.market_fees).to eq("$0.75")
+      expect(totals.gross_sales).to eq("$50.00")
+      expect(totals.market_fees).to eq("$0.00")
       expect(totals.lo_fees).to eq("$0.00")
       expect(totals.processing_fees).to eq("$1.20")
       expect(totals.discounts).to eq("$0.00")
-      expect(totals.net_sales).to eq("$80.55")
+      expect(totals.net_sales).to eq("$48.80")
     end
   end
 
@@ -268,10 +268,10 @@ context "Viewing sold items" do
       expect(sold_item.seller).to eq("Good foodz")
       expect(sold_item.product).to eq("Green things")
       expect(sold_item.quantity).to eq("5")
-      expect(sold_item.total_price).to eq("$32.50")
+      expect(sold_item.total_price).to eq("$0.00")
       expect(sold_item.unit_price).to eq("$6.50/Bushels")
-      expect(sold_item.delivery_status).to eq("Pending")
-      expect(sold_item.buyer_payment_status).to eq("Unpaid")
+      expect(sold_item.delivery_status).to eq("Canceled")
+      expect(sold_item.buyer_payment_status).to eq("Refunded")
       expect(sold_item.seller_payment_status).to eq("Unpaid")
     end
   end
