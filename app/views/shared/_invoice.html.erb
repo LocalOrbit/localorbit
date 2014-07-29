@@ -41,7 +41,7 @@
       <div class="vcard">
         <h2>From</h2>
         <h3 class="fn org org-from"><%= invoice.market.name %></h3>
-        <% if market.addresses.visible.any? %>
+        <% if market.has_address? %>
           <div>
             <%= market.street_address %><br>
             <%= market.city_state_zip %><br>
