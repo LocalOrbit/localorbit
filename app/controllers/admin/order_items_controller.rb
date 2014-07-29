@@ -4,7 +4,9 @@ module Admin
     include StickyFilters
 
     def index
-      @order_items = OrderItem.for_user(current_user).joins(:order).preload(product: [:organization, :category], order: [:market, :organization])
+      @order_items = OrderItem.for_user(current_user).
+                       includes(order: :organization, product: :organization).
+                       preload(product: [:organization, :category], order: [:market, :organization])
       prepare_filter_data(@order_items)
 
       # initialize ransack and search
@@ -37,7 +39,7 @@ module Admin
       @sellers = Organization.select(:id, :name).where(id: order_items.joins(:product).pluck("products.organization_id")).order(:name).uniq
       @buyers = Organization.select(:id, :name).where(id: order_items.pluck("orders.organization_id")).order(:name).uniq
       @delivery_statuses = order_items.uniq.pluck(:delivery_status).sort
-      @buyer_payment_statuses = Order.joins(:items).uniq.merge(order_items).pluck(:payment_status).sort
+      @buyer_payment_statuses = Order.joins(:items).uniq.merge(OrderItem.for_user(current_user)).pluck(:payment_status).sort
     end
   end
 end
