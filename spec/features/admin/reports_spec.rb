@@ -147,6 +147,7 @@ feature "Reports", js: true do
       end
 
       scenario "date range defaults to last 30 days and can filter results" do
+        sleep 1 # just gotta sleep a little bit to make these work…
         expect_item_rows_for_order("LO-01-234-4567890-0", 1)
         expect_item_rows_for_order("LO-01-234-4567890-1", 1)
         expect_item_rows_for_order("LO-01-234-4567890-2", 1)
