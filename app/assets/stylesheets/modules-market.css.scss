@@ -73,7 +73,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .photo-header {
     padding: 0 0 33%;
     margin: -20px -10px 20px;

@@ -34,7 +34,7 @@ $ ->
           'left': "",
           'width': ""
         }
-      if (window.innerHeight >= 768 && window.innerWidth >= 601) || i == 0
+      if (window.innerHeight >= 768 && window.innerWidth >= 641) || i == 0
         if find_scrolly() >= scroll_point - height
           $(stickable).addClass('js-fixed').css(stuck_styles)
         else

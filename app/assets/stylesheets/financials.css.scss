@@ -1,3 +1,4 @@
+@import 'mixins';
 //** Financials Vendor Payment Tab **//
 
 .vendor-payment {
@@ -144,7 +145,7 @@
   float: right;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .money-in, .money-out {
     float: none;
     width: auto;
@@ -160,13 +161,10 @@
 /** Financial Payment History **/
 
 .order-list-modal {
-  height: 400px;
-  min-width: 350px;
-
+  min-width: 300px;
   .all-order-numbers {
     overflow: auto;
     padding: 0 10px;
-    height: 372px;
     margin-right: 1px;
     text-align: center;
   }
@@ -231,7 +229,7 @@
   color: #913900;
   line-height: 15px;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .add-bank-warning {
     width: auto;
   }

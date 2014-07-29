@@ -20,7 +20,7 @@
   background: $notice_bg;
   list-style: none;
 }
-@media screen and (min-width: 601px){
+@media screen and (min-width: $tablet_floor){
   .with-anchor {
     &:before,
     &:after {
@@ -298,7 +298,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .filter-toggle {
     &.is-open {
       @include border-radius(4px 4px 0 0);
@@ -407,7 +407,7 @@
     }
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .header--welcome,
   .tagline {
       display: none;
@@ -485,7 +485,7 @@
   margin-top: 0;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .subheading-cart {
     margin-top: 20px;
   }
@@ -582,7 +582,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .sidebar-box {
     padding: 7px 0 0;
   }
@@ -600,7 +600,7 @@
     margin-bottom: 0;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .tabs-wrapper {
     margin: 0 -10px 30px;
   }
@@ -635,7 +635,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   h1 + form + .tabs-wrapper {
     margin-top: 14px;
   }
@@ -728,7 +728,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .l-page-header {
     text-align: left;
 
@@ -746,7 +746,7 @@
 
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
     .tab-header {
       width: auto;
       margin-right: -10px;
@@ -908,7 +908,7 @@
     font-weight: bold;
   }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .flash {
     top: 10px;
   }
@@ -962,7 +962,7 @@
     text-decoration: underline;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .product-status-alert {
     max-width: none;
     padding: 1em;
@@ -1005,7 +1005,7 @@
  }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .export {
     float: right;
     margin-top: 10px;
@@ -1032,7 +1032,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .logo-link {
     display: none;
   }
@@ -1160,7 +1160,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .cancel-link {
     .note {
       display: none;
@@ -1216,7 +1216,7 @@
     }
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $mobile_break) {
     .tool {
       background: none;
     }
@@ -1241,7 +1241,7 @@ label ~ .tooltip {
   line-height: 1em;
   text-align: center;
   cursor: pointer;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $mobile_break) {
       width: 20px;
       height: 20px;
   }
@@ -1299,7 +1299,7 @@ label ~ .tooltip {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   label ~ .tooltip {
     float: right;
     margin: 0 0 .5em;
@@ -1385,6 +1385,10 @@ label ~ .tooltip {
 .action-header {
   margin: 0;
   width: 100%;
+  &.js-fixed {
+    padding-top: 20px;
+    margin-top: -20px;
+  }
 
   h4 {
     margin: 0;
@@ -1397,7 +1401,7 @@ label ~ .tooltip {
     background: #D9F6F9;
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $mobile_break) {
     .actions {
       margin: 0 0 10px 0;
 
@@ -1465,7 +1469,7 @@ label ~ .tooltip {
 .l-app-header + .teflon {
   display: block;
 }
-@media screen and (min-height: 768px) and (min-width: 601px) {
+@media screen and (min-height: 768px) and (min-width: $tablet_floor) {
   .teflon {
     display: block;
   }
@@ -1505,7 +1509,7 @@ label ~ .tooltip {
       padding-right: 20px;
       padding-left: 20px;
     }
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: $mobile_break) {
       > .l-constraint {
         padding-right: 0;
       }
@@ -1537,7 +1541,7 @@ label ~ .tooltip {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .empty-results {
     padding: 10px;
     margin: 20px auto 0;

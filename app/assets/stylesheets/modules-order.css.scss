@@ -32,7 +32,7 @@
     .review-order-total {
       font-size: 18px;
       font-weight: bold;
-      @media screen and (max-width: 600px) {
+      @media screen and (max-width: $mobile_break) {
         font-size: 14px;
       }
     }
@@ -110,7 +110,7 @@
 
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .order-buyer,
   .order-info-total,
   .order-info-status  {
@@ -128,7 +128,7 @@
   width: 100%;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   h2 {
     margin-bottom: 10px;
   }
@@ -165,7 +165,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .order-notes {
     width: 100%;
   }

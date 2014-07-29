@@ -42,7 +42,7 @@ input[type=submit] {
     padding: 4px 18px;
     font-size: 14px;
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $mobile_break) {
     &.mobile-block {
       text-align: center;
     }
@@ -62,7 +62,7 @@ input[type=submit] {
   }
   &.btn--activate {
     margin-top: 38px;
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: $mobile_break) {
       margin-top: 5px;
       padding: 5px 10px;
     }
@@ -122,7 +122,7 @@ input[type=submit] {
   &.btn--test {
     background-color: #ccc;
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $mobile_break) {
     &.btn--test {
       padding: 5px 10px;
       margin-bottom: 20px;
@@ -141,7 +141,7 @@ input[type=submit] {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .filter-container {
     width: 100%;
   }
@@ -283,7 +283,7 @@ span.btn {
   background: #fefefe;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .photo-button, .save-button, .btn--money, .order-print {
     width: 100%;
   }
@@ -332,7 +332,7 @@ span.btn {
 .row--justified .pane-toggle {
   float: none;
 }
-@media screen and (min-width: 601px) {
+@media screen and (min-width: $tablet_floor) {
   .pane-toggle {
     display:none;
   }

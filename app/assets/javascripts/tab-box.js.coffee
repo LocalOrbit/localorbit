@@ -1,7 +1,7 @@
 $ ->
   return unless $('.tab-box').length
 
-  if window.innerWidth <= 600
+  if window.innerWidth <= 640
     $('.mobile-entab').each (i, tabable) ->
       tabbed = $(tabable).clone()
       tabbox = $(tabbed.attr('data-tabbox'))

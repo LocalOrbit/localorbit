@@ -49,7 +49,7 @@ textarea {
     margin: 0;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   input[type=date],
   input[type=datetime],
   input[type=email],
@@ -117,7 +117,7 @@ input[type=search] {
     width: 150px;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   input[type=search] {
     width: auto;
   }
@@ -238,7 +238,7 @@ textarea {
   }
 
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .payment-fields {
     label {
       font-size: 12px;
@@ -247,7 +247,7 @@ textarea {
 }
 .payment-field {
   margin-left: 23px;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $mobile_break) {
     margin-left: 0;
   }
 }
@@ -258,7 +258,7 @@ textarea {
     + .field--inline {
       margin: 0 0 0 1em;
     }
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: $mobile_break) {
       display: block;
       + .field--inline {
         margin: 10px 0 0 0;
@@ -293,7 +293,7 @@ div.field_with_errors {
     margin-top: -10px;
   }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .taxonomy-select {
     width: 100%;
   }
@@ -414,7 +414,7 @@ form.form-actions {
 .wys-toolbar {
   margin-top: 5px;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .wys-toolbar {
     display: none;
   }
@@ -498,7 +498,7 @@ form.form-actions {
     padding-left: 20px;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .wys-tools {
     display: none;
   }
@@ -507,7 +507,7 @@ form.form-actions {
   @include border-radius(0 0 5px 5px);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .email-field {
     width: 100%;
   }
@@ -524,7 +524,7 @@ form.form-actions {
 .invite-email-field {
   width: 100%;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .combo-input input {
     max-width: 50%;
   }
