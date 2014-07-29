@@ -13,9 +13,10 @@
                 <td class="cart-quantity-column">Quantity</td>
                 <td class="cart-price-column">Price</td>
                 <td class="cart-total-column">Total</td>
+                <td class="product-clear"></td>
               </tr>
               <tr>
-                <th colspan="6" class="seller"><%= seller_name %></th>
+                <th colspan="5" class="seller"><%= seller_name %></th>
               </tr>
               <% items.each do |item| %>
                 <%= content_tag_for(:tr, item, id: "cart_item_#", class: "product", data: {id: item.product.id, :"cart-item" => item.to_json}) do %>
@@ -31,19 +32,27 @@
             <tbody class="math" id="totals">
               <tr class="cart_total">
                 <th scope="row" colspan="3">Item Subtotal</th>
-                <td class="subtotal"><%= current_cart.decorate.display_subtotal %></td>
+                <td class="subtotal"><%= current_cart.display_subtotal %></td>
                 <td></td>
               </tr>
 
+              <% if current_cart.discount_amount > 0 %>
+              <tr class="cart_total">
+                <th scope="row" colspan="3">Discount</th>
+                <td class="discount"><%= current_cart.display_discount %></td>
+                <td></td>
+              </tr>
+              <% end %>
+
               <tr class="cart_total">
                 <th scope="row" colspan="3">Delivery Fees</th>
-                <td class="delivery_fees"><%= current_cart.decorate.display_delivery_fees%></td>
+                <td class="delivery_fees"><%= current_cart.display_delivery_fees%></td>
                 <td></td>
               </tr>
 
               <tr class="cart_total">
                 <th scope="row" colspan="3"><strong>Total</strong></th>
-                <td class="total"><strong><%= current_cart.decorate.display_total %></strong></td>
+                <td class="total"><strong><%= current_cart.display_total %></strong></td>
                 <td></td>
               </tr>
             </tbody>
@@ -55,13 +64,29 @@
           <div id="address">
             <h2 class="subheading-cart"><i class="font-icon icon-truck"></i> Delivery Address</h2>
             <div class="when-deliver">
-              <%= current_cart.delivery.decorate.cart_type %> <%= raw(current_cart.delivery.decorate.checkout_date) %>
+              <%= current_cart.delivery.decorate.cart_type %> <%= current_cart.delivery.decorate.checkout_date %>
             </div>
             <address class="adr">
               <span class="street-address"><%= current_cart.delivery_location.address %></span><br />
               <span class="locality"><%= current_cart.delivery_location.city %></span>, <span class="region"><%= current_cart.delivery_location.state %></span> <span class="postal-code"><%= current_cart.delivery_location.zip %></span>
             </address>
           </div>
+
+          <% if current_market.plan.discount_codes? %>
+          <div id="discount-info">
+            <h2 class="subheading-cart"><i class="font-icon icon-coins"></i> Discount Information</h2>
+          </div>
+
+          <fieldset class="conditional">
+            <div class="discount-field">
+              <div class="warning"><strong><%= flash[:discount_message] %></strong></div>
+              <%= hidden_field_tag :prev_discount_code, current_cart.discount_code %>
+              <%= label_tag :discount_code, "Discount Code" %><br>
+              <%= text_field_tag :discount_code, current_cart.discount_code, class: "input--short" %>
+              <%= link_to "Apply", "#", id: "apply-discount" %>
+            </div>
+          </fieldset>
+          <% end %>
 
           <div id="payment-info">
             <h2 class="subheading-cart"><i class="font-icon icon-coins"></i> Payment Information</h2>
@@ -160,8 +185,7 @@
                   </fieldset>
                 </div>
               <% end %>
-            </fieldset>
-          </div>
+          </fieldset>
         </div>
         <div class="form-actions">
           <span class="pull-left cancel-link">

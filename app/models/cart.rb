@@ -4,6 +4,7 @@ class Cart < ActiveRecord::Base
   belongs_to :user
   belongs_to :delivery
   belongs_to :location, -> { visible }
+  belongs_to :discount
 
   validates :organization, presence: true
   validates :market, presence: true
@@ -27,7 +28,15 @@ class Cart < ActiveRecord::Base
   end
 
   def subtotal
-    items.inject(0) {|sum, item| sum + item.total_price }
+    @subtotal ||= items.each.sum(&:total_price)
+  end
+
+  def discount_amount
+    @discount_amount ||= discount.try(:value_for, subtotal) || 0
+  end
+
+  def discount_code
+    discount.try(:code)
   end
 
   def delivery_fees
@@ -35,6 +44,6 @@ class Cart < ActiveRecord::Base
   end
 
   def total
-    subtotal + delivery_fees
+    subtotal + delivery_fees - discount_amount
   end
 end

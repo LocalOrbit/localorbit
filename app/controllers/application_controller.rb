@@ -122,13 +122,13 @@ class ApplicationController < ActionController::Base
     return nil unless current_organization.present?
     return nil unless current_delivery
 
-    @current_cart ||= current_user.carts.find_by(id: session[:cart_id])
+    @current_cart ||= current_user.carts.find_by(id: session[:cart_id]).try(:decorate)
   end
 
   def require_cart
     @current_cart = Cart.find_or_create_by!(user_id: current_user.id, organization_id: current_organization.id, market_id: current_market.id, delivery_id: current_delivery.id) do |c|
       c.location = selected_organization_location if current_delivery.requires_location?
-    end
+    end.decorate
     session[:cart_id] = @current_cart.id
   end
 

@@ -7,22 +7,28 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @placed_order = PlaceOrder.perform(entity: current_cart.organization, buyer: current_user, order_params: order_params, cart: current_cart)
-
-    if @placed_order.context.key?(:order)
-      @order = @placed_order.order.decorate
-    end
-
-    if @placed_order.success?
-      session.delete(:cart_id)
+    if params[:prev_discount_code] != params[:discount_code]
+      @apply_discount = ApplyDiscountToCart.perform(cart: current_cart, code: params[:discount_code])
+      flash[:discount_message] = @apply_discount.message
+      redirect_to cart_path
     else
-      @grouped_items = current_cart.items.for_checkout
+      @placed_order = PlaceOrder.perform(entity: current_cart.organization, buyer: current_user, order_params: order_params, cart: current_cart)
 
-      if @placed_order.context.key?(:cart_is_empty)
-        redirect_to [:products], alert: @placed_order.message
+      if @placed_order.context.key?(:order)
+        @order = @placed_order.order.decorate
+      end
+
+      if @placed_order.success?
+        session.delete(:cart_id)
       else
-        flash.now[:alert] = "Your order could not be completed."
-        render "carts/show"
+        @grouped_items = current_cart.items.for_checkout
+
+        if @placed_order.context.key?(:cart_is_empty)
+          redirect_to [:products], alert: @placed_order.message
+        else
+          flash.now[:alert] = "Your order could not be completed."
+          render "carts/show"
+        end
       end
     end
   end
@@ -31,6 +37,7 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
+      :discount_code,
       :payment_method,
       :payment_note,
       :bank_account,

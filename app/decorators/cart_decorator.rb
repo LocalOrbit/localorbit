@@ -10,6 +10,10 @@ class CartDecorator < Draper::Decorator
     number_to_currency subtotal
   end
 
+  def display_discount
+    number_to_currency discount_amount
+  end
+
   def display_delivery_fees
     return "Free!" if delivery.delivery_schedule.free_delivery?
 

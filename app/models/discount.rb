@@ -19,6 +19,21 @@ class Discount < ActiveRecord::Base
   validate :starts_before_it_ends
   validate :future_end_date
 
+  def value_for(subtotal)
+    if percentage?
+      subtotal * (discount / 100)
+    elsif fixed?
+      [subtotal, discount].min
+    else
+      Honeybadger.notify(
+        error_class:   "Invalid Discount Code",
+        error_message: "Discount code has an unknown type",
+        parameters:    {discount_id: id}
+      )
+      0
+    end
+  end
+
   private
 
   def future_end_date

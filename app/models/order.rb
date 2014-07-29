@@ -11,6 +11,7 @@ class Order < ActiveRecord::Base
   belongs_to :organization, inverse_of: :orders
   belongs_to :delivery, inverse_of: :orders
   belongs_to :placed_by, class: User
+  belongs_to :discount
 
   has_many :items, inverse_of: :order, class: OrderItem, autosave: true, dependent: :destroy
   has_many :order_payments, inverse_of: :order
@@ -247,6 +248,10 @@ class Order < ActiveRecord::Base
 
   def delivered_at
     items.maximum(:delivered_at) if self.delivered?
+  end
+
+  def discount_code
+    discount.try(:code)
   end
 
   def invoice
