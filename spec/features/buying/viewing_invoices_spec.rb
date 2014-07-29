@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe "Buyer invoices" do
-  let!(:market)    { create(:market, :with_address) }
+  let!(:market)    { create(:market) }
+  let!(:deleted_market_address) { create(:market_address, market: market, deleted_at: Time.current) }
+  let!(:market_address) { create(:market_address, market: market ) }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
@@ -75,6 +77,11 @@ describe "Buyer invoices" do
       click_link invoiced_order.order_number
 
       expect(page).to have_content("Due Date")
+
+      within(".market-info") do
+        expect(page).to have_content(market_address.address)
+        expect(page).to have_content(market_address.city)
+      end
     end
 
     context "filter invoices" do
