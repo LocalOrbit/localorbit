@@ -81,9 +81,11 @@ group :test do
   gem 'email_spec'
   gem 'database_cleaner'
   gem 'poltergeist'
+  gem 'selenium-webdriver'
   gem 'timecop'
   gem 'vcr'
   gem 'webmock'
+  gem 'rspec-wait'
 end
 
 group :production, :staging do

@@ -1,10 +1,11 @@
 require "spec_helper"
+include DownloadHelpers
 
 def display_date(date)
   date.strftime("%m/%d/%Y")
 end
 
-feature "Reports" do
+feature "Reports", js: true do
   let!(:market)    { create(:market, name: "Foo Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market2)   { create(:market, name: "Bar Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
   let!(:market3)   { create(:market, name: "Baz Market", po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
@@ -21,8 +22,7 @@ feature "Reports" do
   before do
     delivery_schedule2 = create(:delivery_schedule, market: market2)
     delivery2 = delivery_schedule2.next_delivery
-
-    buyer3  = create(:organization, name: "Baz Buyer", markets: [market3], can_sell: false)
+    buyer3 = create(:organization, name: "Baz Buyer", markets: [market3], can_sell: false)
 
     5.times do |i|
       this_date = order_date + i.days
@@ -108,19 +108,22 @@ feature "Reports" do
   end
 
   def visit_report_view
+    click_link "Reports", match: :first
     within("#reports-dropdown") do
       click_link "Reports"
     end
-
-    # Ensure we have links for all our reports and navigate to the report
-    # currently defined in the `report` variable
-    report_title = report.to_s.titleize
-
-    click_link(report_title) if page.has_link?(report_title)
   end
 
-  def item_rows_for_order(order)
-    Dom::Report::ItemRow.all.select { |row| row.order_number.include?("#{order}") }
+  def select_report
+    report_title = report.to_s.titleize
+    select report_title, from: "Report type"
+    wait_for { current_path }.to eq(admin_report_path(report.to_s.dasherize))
+  end
+
+  def expect_item_rows_for_order(order, count)
+    wait_for {
+      Dom::Report::ItemRow.all.select { |row| row.order_number.include?("#{order}") }.count
+    }.to eq(count)
   end
 
   context "for all reports" do
@@ -139,51 +142,60 @@ feature "Reports" do
       let!(:user)   { create(:user, :admin) }
       let!(:report) { :total_sales }
 
+      before do
+        select_report
+      end
+
       scenario "date range defaults to last 30 days and can filter results" do
-        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
-        expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-03-234-4567890-2").count).to eq(0)
+        sleep 1 # just gotta sleep a little bit to make these work…
+        expect_item_rows_for_order("LO-01-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-3", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-4", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-3", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-4", 1)
+        expect_item_rows_for_order("LO-03-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-03-234-4567890-2", 0)
 
-        fill_in "q_order_placed_at_date_gteq", with: 6.weeks.ago.to_date
+        # Because Javascript. And datepickers. But mostly Javascript.
+        page.execute_script("$('#q_order_placed_at_date_gteq').datepicker('setDate', '#{6.weeks.ago.strftime("%d %b %Y")}')")
+
         click_button "Filter"
 
-        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
-        expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-03-234-4567890-2").count).to eq(1)
+        expect_item_rows_for_order("LO-01-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-3", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-4", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-3", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-4", 1)
+        expect_item_rows_for_order("LO-03-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-03-234-4567890-2", 1)
 
-        fill_in "q_order_placed_at_date_lteq", with: order_date + 2.days
+        # Because Javascript. And datepickers. But mostly Javascript.
+        page.execute_script("$('#q_order_placed_at_date_lteq').datepicker('setDate', '#{(order_date + 2.days).strftime("%d %b %Y")}')")
+        
         click_button "Filter"
 
-        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(0)
-        expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(0)
-        expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(0)
-        expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(0)
-        expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-03-234-4567890-2").count).to eq(1)
+        expect_item_rows_for_order("LO-01-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-3", 0)
+        expect_item_rows_for_order("LO-01-234-4567890-4", 0)
+        expect_item_rows_for_order("LO-02-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-3", 0)
+        expect_item_rows_for_order("LO-02-234-4567890-4", 0)
+        expect_item_rows_for_order("LO-03-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-03-234-4567890-2", 1)
       end
 
       scenario "displays the appropriate filters" do
@@ -194,104 +206,110 @@ feature "Reports" do
       end
 
       scenario "searches by order number" do
-        expect(Dom::Report::ItemRow.all.count).to eq(11)
+        wait_for { Dom::Report::ItemRow.all.count }.to eq(11)
 
         fill_in "Search", with: "LO-02"
         click_button "Search"
 
-        expect(Dom::Report::ItemRow.all.count).to eq(5)
-        expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+        wait_for { Dom::Report::ItemRow.all.count }.to eq(5)
+        expect_item_rows_for_order("LO-02-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-3", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-4", 1)
 
         fill_in "Search", with: "LO-03"
         click_button "Search"
 
-        expect(Dom::Report::ItemRow.all.count).to eq(1)
-        expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
+        wait_for { Dom::Report::ItemRow.all.count }.to eq(1)
+        expect_item_rows_for_order("LO-03-234-4567890-1", 1)
       end
 
       scenario "filters by market" do
-        expect(Dom::Report::ItemRow.all.count).to eq(11)
+        wait_for { Dom::Report::ItemRow.all.count }.to eq(11)
 
         select market.name, from: "Market"
         click_button "Filter"
 
-        expect(Dom::Report::ItemRow.all.count).to eq(5)
-        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+        wait_for { Dom::Report::ItemRow.all.count }.to eq(5)
+        expect_item_rows_for_order("LO-01-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-3", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-4", 1)
 
         select market2.name, from: "Market"
         click_button "Filter"
 
-        expect(Dom::Report::ItemRow.all.count).to eq(5)
-        expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+        wait_for { Dom::Report::ItemRow.all.count }.to eq(5)
+        expect_item_rows_for_order("LO-02-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-3", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-4", 1)
       end
 
-      scenario "can download a CSV of report" do
-        items = Dom::Report::ItemRow.all
-        html_headers = page.all(".report-table th").map(&:text)
+      context "can download a CSV", driver: :ff_csv do
+        scenario "of report" do
+          items = Dom::Report::ItemRow.all
+          html_headers = page.all(".report-table .stickable th").map(&:text)
 
-        expect(items.count).to eq(11)
+          expect(items.count).to eq(11)
 
-        click_link "Export CSV"
+          click_link "Export CSV"
 
-        csv = CSV.parse(page.body, headers: true)
+          csv = CSV.read(download, headers: true)
 
-        expect(csv.count).to eq(items.count)
+          expect(csv.count).to eq(items.count)
 
-        # Ensure we see the same columns and order in HTML and CSV
-        expect(html_headers - csv.headers).to be_empty
+          # Ensure we see the same columns and order in HTML and CSV
+          expect(html_headers - csv.headers).to be_empty
 
-        # For all fields defined for the current report, ensure we have
-        # corresponding values in our CSV file. Fields for a given report
-        # are defined in ReportPresenter.
-        field_headers = ReportPresenter.field_headers_for_report(report)
-        items.each_with_index do |item, i|
-          field_headers.each_pair do |field, display_name|
-            expect(item.send(field)).to include(csv[i][display_name])
+          # For all fields defined for the current report, ensure we have
+          # corresponding values in our CSV file. Fields for a given report
+          # are defined in ReportPresenter.
+          field_headers = ReportPresenter.field_headers_for_report(report)
+          items.each_with_index do |item, i|
+            field_headers.each_pair do |field, display_name|
+              expect(item.send(field)).to include(csv[i][display_name])
+            end
           end
         end
-      end
 
-      scenario "can download a CSV of all records irrespective of pagniation" do
-        category = create(:category)
-        product = create(:product,
-                         :sellable,
-                         category: category,
-                         organization: seller)
-        order_items = create_list(:order_item, 20, product: product, seller_name: seller.name)
-        order_items.each do |order_item|
-          create(:order,
-                market_id: market.id,
-                delivery: delivery,
-                items: [order_item],
-                organization: buyer)
+        scenario "of all records irrespective of pagination" do
+          category = create(:category)
+          product = create(:product,
+                           :sellable,
+                           category: category,
+                           organization: seller)
+          order_items = create_list(:order_item, 20, product: product, seller_name: seller.name)
+          order_items.each do |order_item|
+            create(:order,
+                  market_id: market.id,
+                  delivery: delivery,
+                  items: [order_item],
+                  organization: buyer)
+          end
+
+          visit(current_path + "?per_page=25")
+
+          # paginates to 25
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(25)
+
+          click_link "Export CSV"
+
+          csv = CSV.read(download, headers: true)
+
+          expect(csv.count).to eq(31) # 11 + 20
         end
-
-        visit(current_path + "?per_page=25")
-
-        # paginates to 25
-        expect(Dom::Report::ItemRow.all.count).to eq(25)
-
-        click_link "Export CSV"
-
-        csv = CSV.parse(page.body, headers: true)
-
-        expect(csv.count).to eq(31) # 11 + 20
       end
 
       context "Sales by Seller report" do
         let!(:report) { :sales_by_seller }
+
+        before do
+          select_report
+        end
 
         scenario "displays the appropriate filters" do
           expect(page).to have_field("Search")
@@ -313,32 +331,39 @@ feature "Reports" do
         end
 
         scenario "filters by seller" do
-          expect(Dom::Report::ItemRow.all.count).to eq(11)
+          expect(page).to have_content("Seller")
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(11)
 
           select seller.name, from: "Seller"
           click_button "Filter"
 
-          expect(Dom::Report::ItemRow.all.count).to eq(5)
-          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(5)
+          expect_item_rows_for_order("LO-01-234-4567890-0", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-1", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-2", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-3", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-4", 1)
 
           select seller2.name, from: "Seller"
           click_button "Filter"
 
-          expect(Dom::Report::ItemRow.all.count).to eq(5)
-          expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+          sleep 1
+
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(5)
+          expect_item_rows_for_order("LO-02-234-4567890-0", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-1", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-2", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-3", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-4", 1)
         end
       end
 
       context "Sales by Buyer report" do
         let!(:report) { :sales_by_buyer }
+
+        before do
+          select_report
+        end
 
         scenario "displays the appropriate filters" do
           expect(page).to have_field("Search")
@@ -359,32 +384,38 @@ feature "Reports" do
         end
 
         scenario "filters by buyer" do
-          expect(Dom::Report::ItemRow.all.count).to eq(11)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(11)
 
           select buyer.name, from: "Buyer"
           click_button "Filter"
 
-          expect(Dom::Report::ItemRow.all.count).to eq(5)
-          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(5)
+          expect_item_rows_for_order("LO-01-234-4567890-0", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-1", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-2", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-3", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-4", 1)
 
           select buyer2.name, from: "Buyer"
           click_button "Filter"
 
-          expect(Dom::Report::ItemRow.all.count).to eq(5)
-          expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+          sleep 1
+
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(5)
+          expect_item_rows_for_order("LO-02-234-4567890-0", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-1", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-2", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-3", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-4", 1)
         end
       end
 
       context "Sales by Product report" do
         let!(:report) { :sales_by_product }
+
+        before do
+          select_report
+        end
 
         scenario "displays the appropriate filters" do
           expect(page).to have_field("Search")
@@ -407,42 +438,46 @@ feature "Reports" do
         end
 
         scenario "filters by category" do
-          expect(Dom::Report::ItemRow.all.count).to eq(11)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(11)
 
           select "Category-01-0", from: "Category"
           click_button "Filter"
 
-          expect(Dom::Report::ItemRow.all.count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(1)
+          expect_item_rows_for_order("LO-01-234-4567890-0", 1)
 
           select "Category-01-1", from: "Category"
           click_button "Filter"
 
-          expect(Dom::Report::ItemRow.all.count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(1)
+          expect_item_rows_for_order("LO-01-234-4567890-1", 1)
         end
 
         scenario "filters by product" do
-          expect(Dom::Report::ItemRow.all.count).to eq(11)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(11)
 
           select "Product0", from: "Product"
           click_button "Filter"
 
-          expect(Dom::Report::ItemRow.all.count).to eq(2)
-          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(2)
+          expect_item_rows_for_order("LO-01-234-4567890-0", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-0", 1)
 
           select "Product1", from: "Product"
           click_button "Filter"
 
-          expect(Dom::Report::ItemRow.all.count).to eq(2)
-          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(2)
+          expect_item_rows_for_order("LO-01-234-4567890-1", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-1", 1)
         end
       end
 
       context "Sales by Payment Method report" do
         let!(:report) { :sales_by_payment_method }
+
+        before do
+          select_report
+        end
 
         scenario "displays the appropriate filters" do
           expect(page).to have_field("Search")
@@ -464,27 +499,27 @@ feature "Reports" do
         end
 
         scenario "filters by payment method" do
-          expect(Dom::Report::ItemRow.all.count).to eq(11)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(11)
 
           select "ACH", from: "Payment Method"
           click_button "Filter"
 
-          expect(Dom::Report::ItemRow.all.count).to eq(4)
-          expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(4)
+          expect_item_rows_for_order("LO-01-234-4567890-3", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-3", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-4", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-4", 1)
 
           select "Purchase Order", from: "Payment Method"
           click_button "Filter"
 
-          expect(Dom::Report::ItemRow.all.count).to eq(6)
-          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
-          expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
+          wait_for { Dom::Report::ItemRow.all.count }.to eq(6)
+          expect_item_rows_for_order("LO-01-234-4567890-0", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-0", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-1", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-1", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-2", 1)
+          expect_item_rows_for_order("LO-02-234-4567890-2", 1)
         end
       end
     end
@@ -510,17 +545,17 @@ feature "Reports" do
         expect(items[9].order_date).to eq(display_date(order_date))
         expect(items[10].order_date).to eq(display_date(order_date - 1.day))
 
-        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
-        expect(item_rows_for_order("LO-03-234-4567890-1").count).to eq(1)
+        expect_item_rows_for_order("LO-01-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-3", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-4", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-3", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-4", 1)
+        expect_item_rows_for_order("LO-03-234-4567890-1", 1)
       end
     end
 
@@ -539,11 +574,11 @@ feature "Reports" do
         expect(items[3].order_date).to eq(display_date(order_date + 1.days))
         expect(items[4].order_date).to eq(display_date(order_date))
 
-        expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
-        expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+        expect_item_rows_for_order("LO-01-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-3", 1)
+        expect_item_rows_for_order("LO-01-234-4567890-4", 1)
       end
 
       context "who deletes an organization" do
@@ -551,9 +586,7 @@ feature "Reports" do
           delete_organization(buyer)
           delete_organization(seller)
 
-          within("#reports-dropdown") do
-            click_link "Reports"
-          end
+          visit_report_view
 
           items = Dom::Report::ItemRow.all
 
@@ -566,11 +599,11 @@ feature "Reports" do
           expect(items[3].order_date).to eq(display_date(order_date + 1.days))
           expect(items[4].order_date).to eq(display_date(order_date))
 
-          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-2").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-3").count).to eq(1)
-          expect(item_rows_for_order("LO-01-234-4567890-4").count).to eq(1)
+          expect_item_rows_for_order("LO-01-234-4567890-0", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-1", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-2", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-3", 1)
+          expect_item_rows_for_order("LO-01-234-4567890-4", 1)
         end
       end
     end
@@ -591,11 +624,11 @@ feature "Reports" do
         expect(items[3].order_date).to eq(display_date(order_date + 1.days))
         expect(items[4].order_date).to eq(display_date(order_date))
 
-        expect(item_rows_for_order("LO-02-234-4567890-0").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-1").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-2").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-3").count).to eq(1)
-        expect(item_rows_for_order("LO-02-234-4567890-4").count).to eq(1)
+        expect_item_rows_for_order("LO-02-234-4567890-0", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-1", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-2", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-3", 1)
+        expect_item_rows_for_order("LO-02-234-4567890-4", 1)
       end
 
       context "with purchases" do
@@ -608,6 +641,10 @@ feature "Reports" do
         context "Purchases by Product report" do
           let!(:report) { :purchases_by_product }
 
+          before do
+            select_report
+          end
+
           # Filters are reused from other reports so we just need to ensure
           # the right ones show on the page.
           scenario "displays the appropriate filters" do
@@ -619,6 +656,7 @@ feature "Reports" do
           end
 
           scenario "displays total sales" do
+            
             totals = Dom::Admin::TotalSales.first
 
             expect(totals.gross_sales).to eq("$6.99")
@@ -633,6 +671,10 @@ feature "Reports" do
         context "Total Purchases report" do
           let!(:report) { :total_purchases }
 
+          before do
+            select_report
+          end
+
           # Filters are reused from other reports so we just need to ensure
           # the right ones show on the page.
           scenario "displays the appropriate filters" do
@@ -642,6 +684,7 @@ feature "Reports" do
           end
 
           scenario "displays total sales" do
+            
             totals = Dom::Admin::TotalSales.first
 
             expect(totals.gross_sales).to eq("$6.99")
@@ -661,6 +704,10 @@ feature "Reports" do
 
       context "Purchases by Product report" do
         let!(:report) { :purchases_by_product }
+
+        before do
+          select_report
+        end
 
         # Filters are reused from other reports so we just need to ensure
         # the right ones show on the page.
@@ -686,6 +733,10 @@ feature "Reports" do
 
       context "Total Purchases report" do
         let!(:report) { :total_purchases }
+
+        before do
+          select_report
+        end
 
         # Filters are reused from other reports so we just need to ensure
         # the right ones show on the page.
