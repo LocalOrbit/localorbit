@@ -37,7 +37,7 @@
   span {
     margin-right: 10px;
   }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $mobile_break) {
     select {
       width: 100%;
     }
@@ -83,7 +83,7 @@
     }
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .filter-row {
     span {
       width: 100%;
@@ -125,7 +125,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .filter-dropdown {
     width: 100%;
     margin:  4px 0 15px;

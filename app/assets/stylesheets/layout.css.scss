@@ -85,7 +85,7 @@
   background: #fff;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .l-main {
     padding: 20px 10px;
   }
@@ -108,7 +108,7 @@
     text-align: left;
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $mobile_break) {
     h1 {
       text-align: center;
       float: left;
@@ -243,7 +243,7 @@
     }
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $mobile_break) {
     .column--guttered {
       padding: 0;
     }
@@ -264,12 +264,12 @@
   float: left;
 }
 
-@media screen and (min-width: 601px) {
+@media screen and (min-width: $tablet_floor) {
   .mobile-only {
     display: none !important;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .row.center-rule,
   .row.three-fourths-rule {
     background-image: none;

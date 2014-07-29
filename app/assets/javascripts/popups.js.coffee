@@ -9,7 +9,7 @@ $ ->
       return (document.documentElement || document.body.parentNode || document.body).scrollTop
 
   clone_popup = ($element, toggle) ->
-    if $('.l-main').outerWidth() <= 600
+    if $('.l-main').outerWidth() <= 640
       styles = {
         position: 'fixed',
         top: 54,

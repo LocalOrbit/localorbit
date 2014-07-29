@@ -108,7 +108,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .popup--edit {
     display: -webkit-flex;
     display: flex;
@@ -242,7 +242,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .modal {
     left: 0;
     width: auto;

@@ -1,3 +1,4 @@
+@import 'mixins';
 //** Financials Vendor Payment Tab **//
 
 .vendor-payment {
@@ -144,7 +145,7 @@
   float: right;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .money-in, .money-out {
     float: none;
     width: auto;
@@ -231,7 +232,7 @@
   color: #913900;
   line-height: 15px;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $mobile_break) {
   .add-bank-warning {
     width: auto;
   }

@@ -25,7 +25,7 @@
   width: 130px;
   text-align: right;
   font-weight: 700;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: $mobile_break) {
     margin-top: -62px;
   }
 }
