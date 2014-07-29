@@ -19,10 +19,10 @@ feature "a market manager viewing their dashboard" do
       product = create(:product, :sellable)
 
       order_item = create(:order_item, unit_price: 10.00, quantity: 2)
-      create(:order, delivery: delivery, items: [order_item], order_number: "LO-14-TEST-2", market: market)
+      create(:order, delivery: delivery, items: [order_item], total_cost: 20.00, order_number: "LO-14-TEST-2", market: market)
 
       order_item = create(:order_item, unit_price: 25.00, quantity: 2)
-      create(:order, delivery: delivery, items: [order_item], market: market, placed_at: DateTime.parse("2014-04-01 12:00:00"), order_number: "LO-14-TEST")
+      create(:order, delivery: delivery, items: [order_item], total_cost: 50.00, market: market, placed_at: DateTime.parse("2014-04-01 12:00:00"), order_number: "LO-14-TEST")
 
       product.organization.markets << market
 

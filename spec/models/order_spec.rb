@@ -547,7 +547,7 @@ describe Order do
     let!(:delivery)    { delivery_schedule.next_delivery }
     let(:organization) { create(:organization, markets: [market]) }
     let!(:user)        { create(:user, :admin) }
-    let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market) }
+    let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market, delivery_fees: 1.75, total_cost: 8.74) }
     let!(:order_item)  { order.items.first }
 
     it "updates the total cost on order save" do

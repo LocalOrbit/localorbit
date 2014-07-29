@@ -14,9 +14,9 @@ feature "entering receipts" do
 
   let!(:product) { create(:product, :sellable, organization: seller) }
 
-  let!(:order1) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 210.00)], market: market, organization: buyer, payment_method: "purchase order", order_number: "LO-001", placed_at: 19.days.ago, invoiced_at: 18.days.ago, invoice_due_date: 4.days.ago) }
-  let!(:order2) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market, organization: buyer, payment_method: "purchase order", order_number: "LO-002", invoiced_at: 4.day.ago, invoice_due_date: 10.days.from_now, payment_status: "paid") }
-  let!(:order3) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 420.00)], market: market, organization: buyer, payment_method: "purchase order", order_number: "LO-003", placed_at: 2.days.ago, invoiced_at: 2.day.ago, invoice_due_date: 12.days.from_now) }
+  let!(:order1) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 210.00)], market: market, organization: buyer, total_cost: 210.00, payment_method: "purchase order", order_number: "LO-001", placed_at: 19.days.ago, invoiced_at: 18.days.ago, invoice_due_date: 4.days.ago) }
+  let!(:order2) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market, organization: buyer, total_cost: 6.99, payment_method: "purchase order", order_number: "LO-002", invoiced_at: 4.day.ago, invoice_due_date: 10.days.from_now, payment_status: "paid") }
+  let!(:order3) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 420.00)], market: market, organization: buyer, total_cost: 420, payment_method: "purchase order", order_number: "LO-003", placed_at: 2.days.ago, invoiced_at: 2.day.ago, invoice_due_date: 12.days.from_now) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -48,7 +48,7 @@ feature "entering receipts" do
     it "keeps the seller entries in the list" do
       delete_organization(buyer)
       delete_organization(seller)
-      
+
       visit admin_financials_receipts_path
       rows = Dom::Admin::Financials::InvoiceRow.all
 

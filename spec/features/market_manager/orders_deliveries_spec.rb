@@ -19,7 +19,7 @@ context "Viewing sold items" do
     ]
   }
 
-  let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: "LO-ADA-0000001") }
+  let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: "LO-ADA-0000001", total_cost: order_items.sum(&:gross_total)) }
 
   before(:each) do
     switch_to_subdomain(market.subdomain)

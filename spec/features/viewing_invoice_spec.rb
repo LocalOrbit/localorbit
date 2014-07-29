@@ -18,7 +18,7 @@ feature "Viewing invoices" do
   let!(:order_item1) { create(:order_item, product: product1, unit_price: 210.00) }
   let!(:order_item2) { create(:order_item, product: product2, unit_price: 95.00, quantity: 2, quantity_delivered: 2, delivery_status: "delivered") }
   let!(:order_items) { [order_item1, order_item2] }
-  let!(:order) { create(:order, delivery: delivery, items: order_items, market: market, organization: buyer, payment_method: 'purchase order', order_number: "LO-001", placed_at: Time.zone.parse("2014-04-01"), invoiced_at: Time.zone.parse("2014-04-02"), invoice_due_date: Time.zone.parse("2014-04-16")) }
+  let!(:order) { create(:order, delivery: delivery, items: order_items, market: market, organization: buyer, total_cost: order_items.sum(&:gross_total), payment_method: 'purchase order', order_number: "LO-001", placed_at: Time.zone.parse("2014-04-01"), invoiced_at: Time.zone.parse("2014-04-02"), invoice_due_date: Time.zone.parse("2014-04-16")) }
 
 
 

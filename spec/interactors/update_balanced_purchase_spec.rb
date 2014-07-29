@@ -12,7 +12,7 @@ describe UpdateBalancedPurchase do
   let(:balanced_customer) { double("balanced_customer") }
 
   context "credit card" do
-    let!(:order) { create(:order, organization: buyer, delivery: delivery, market: market, items: [order_item], payment_method: "credit card") }
+    let!(:order) { create(:order, organization: buyer, delivery: delivery, market: market, items: [order_item], payment_method: "credit card", total_cost: 30.00) }
     let!(:bank_account) { create(:bank_account, :credit_card, bankable: buyer, balanced_uri: '/balanced-card-uri') }
 
     context "without any items" do
@@ -199,7 +199,7 @@ describe UpdateBalancedPurchase do
   end
 
   context "ach" do
-    let!(:order)      { create(:order, organization: buyer, delivery: delivery, market: market, items: [order_item], payment_method: "ach") }
+    let!(:order)      { create(:order, organization: buyer, delivery: delivery, market: market, items: [order_item], payment_method: "ach", total_cost: 30.00) }
     let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: buyer, balanced_uri: '/balanced-bank-account-uri') }
 
     context "refund difference" do
