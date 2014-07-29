@@ -222,6 +222,12 @@
     max-height: 400px;
     overflow-y: auto;
   }
+  .popup-footer {
+    overflow: hidden;
+  }
+  button {
+    margin-top: -5px;
+  }
 }
 
 .popup-footer {
