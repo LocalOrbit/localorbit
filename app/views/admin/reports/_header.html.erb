@@ -6,8 +6,8 @@
     <label for="nav-dropdown">Report type</label><br>
     <select name="nav_dropdown" class="mobile-block nav-dropdown" id="nav-dropdown">
       <% ReportPresenter.reports_for_user(current_user).each do |report| %>
-        <%  selected_option = admin_report_path(report.dasherize).eql?(request.fullpath) ? true : false %>
-        <%= content_tag(:option, report.titleize, value: admin_report_path(report.dasherize), class: 'tab', selected: selected_option ) %>
+        <% selected_option = admin_report_path(report.dasherize).eql?(request.fullpath) ? true : false %>
+        <%= content_tag(:option, report.titleize, value: admin_report_path(report.dasherize), selected: selected_option ) %>
       <% end %>
     </select>
   </div>
