@@ -22,7 +22,7 @@ gem 'wysihtml5-rails'
 
 gem "active_model_serializers"
 gem "acts_as_geocodable", github: 'collectiveidea/acts_as_geocodable'
-gem 'awesome_nested_set', github: 'collectiveidea/awesome_nested_set'
+gem "awesome_nested_set"
 gem "balanced", "~> 0.7"
 gem "color"
 gem "countries"
@@ -37,20 +37,19 @@ gem 'draper'
 gem 'figaro', '~> 1.0.0.rc1'
 gem 'font_assets'
 gem "graticule", github: 'collectiveidea/graticule'
-gem 'honeybadger', '1.14.0'
+gem 'honeybadger'
 gem "groupdate", github: "trestrantham/groupdate", branch: "custom-calculations"
 gem 'interactor-rails'
 gem 'jbuilder'
 gem 'jwt'
 gem 'kaminari'
-# Rack middleware instrumentation is very broken
-gem 'newrelic_rpm', '< 3.9.0'
+gem 'newrelic_rpm', '< 3.9.0' # Rack middleware instrumentation is very broken
 gem 'newrelic-dragonfly'
 gem 'pdfkit'
 gem 'periscope-activerecord'
 gem 'pg_search'
 gem 'rack-canonical-host'
-gem 'ransack', github: 'activerecord-hackery/ransack', branch: 'rails-4.1'
+gem 'ransack', github: 'activerecord-hackery/ransack', branch: 'rails-4.1' # branch version is smaller than gem version
 gem 'simpleidn'
 gem 'wkhtmltopdf-binary'
 
