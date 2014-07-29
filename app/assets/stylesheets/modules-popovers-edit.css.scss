@@ -213,7 +213,9 @@
   }
 }
 .modal--extended {
-  width: 560px;
+  @include transform(translateX(0));
+  left: 20.5%;
+  width: 58%;
   position: fixed;
   
   .popup-body {
@@ -268,6 +270,10 @@
     top: 64px;
     width: auto;
     margin: 0 auto;
+  }
+  .modal--extended {
+    width: 90%;
+    left: 5%;
   }
 }
 
