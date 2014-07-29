@@ -21,6 +21,10 @@ class MarketDecorator < Draper::Decorator
     end
   end
 
+  def has_address?
+    addresses.visible.any?
+  end
+
   def street_address
     first_address.address
   end
