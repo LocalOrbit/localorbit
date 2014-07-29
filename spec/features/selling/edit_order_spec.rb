@@ -7,16 +7,16 @@ describe 'Editing an order' do
   let!(:product_lot)     { create(:lot, quantity: 145) }
   let!(:product)         { create(:product, :sellable, organization: seller, lots: [product_lot])}
 
-  let!(:product2)         { create(:product, :sellable, organization: seller)}
+  let!(:product2)        { create(:product, :sellable, organization: seller)}
 
-  let!(:buyer)          { create(:organization, :buyer, markets: [market]) }
+  let!(:buyer)           { create(:organization, :buyer, markets: [market]) }
 
-  let!(:delivery)       { monday_delivery.next_delivery }
-  let!(:order_item)     { create(:order_item, product: product, quantity: 5, unit_price: 3.00) }
-  let!(:order_item_lot) { create(:order_item_lot, quantity: 5, lot: product_lot, order_item: order_item) }
-  let!(:order)          { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item], payment_method: 'ach')}
-  let!(:bank_account)   { create(:bank_account, :checking, :verified, bankable: buyer) }
-  let!(:payment)        { create(:payment, :checking, bank_account: bank_account, balanced_uri: '/debit-1', orders: [order], amount: 15.00) }
+  let!(:delivery)        { monday_delivery.next_delivery }
+  let!(:order_item)      { create(:order_item, product: product, quantity: 5, unit_price: 3.00) }
+  let!(:order_item_lot)  { create(:order_item_lot, quantity: 5, lot: product_lot, order_item: order_item) }
+  let!(:order)           { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item], total_cost: 15.00, payment_method: 'ach')}
+  let!(:bank_account)    { create(:bank_account, :checking, :verified, bankable: buyer) }
+  let!(:payment)         { create(:payment, :checking, bank_account: bank_account, balanced_uri: '/debit-1', orders: [order], amount: 15.00) }
 
   def long_name(item)
     "#{item.product.name} from #{item.product.organization.name}"

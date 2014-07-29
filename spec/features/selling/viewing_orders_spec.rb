@@ -1,30 +1,30 @@
 require 'spec_helper'
 
 feature "Viewing orders" do
-  let!(:market1)          { create(:market, market_seller_fee: 5, local_orbit_seller_fee: 4)}
+  let!(:market1)                   { create(:market, market_seller_fee: 5, local_orbit_seller_fee: 4)}
   let!(:market1_delivery_schedule) { create(:delivery_schedule, market: market1, day: 2, fee: 7.12, fee_type: 'fixed') }
-  let!(:market1_delivery)        { market1.delivery_schedules.first.next_delivery }
+  let!(:market1_delivery)          { market1.delivery_schedules.first.next_delivery }
 
   let!(:market1_seller_org1) { create(:organization, :seller, markets: [market1]) }
   let!(:market1_seller_org2) { create(:organization, :seller, markets: [market1]) }
-  let!(:market1_buyer_org1)   { create(:organization, :buyer,  markets: [market1]) }
-  let!(:market1_buyer_org2)   { create(:organization, :buyer,  markets: [market1]) }
+  let!(:market1_buyer_org1)  { create(:organization, :buyer,  markets: [market1]) }
+  let!(:market1_buyer_org2)  { create(:organization, :buyer,  markets: [market1]) }
   let!(:market1_product1)    { create(:product, :sellable, organization: market1_seller_org1) }
   let!(:market1_product2)    { create(:product, :sellable, organization: market1_seller_org2) }
 
   let!(:market1_order_item1) { create(:order_item, seller_name: market1_seller_org1.name, product: market1_product1, quantity: 2, unit_price: 4.99, market_seller_fee: 0.50, local_orbit_seller_fee: 0.40, delivery_status: 'delivered') }
   let!(:market1_order_item2) { create(:order_item, seller_name: market1_seller_org2.name, product: market1_product2, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72, delivery_status: 'pending') }
-  let!(:market1_order1)      { create(:order, items: [market1_order_item1, market1_order_item2], organization: market1_buyer_org1, market: market1, total_cost: 27.96, delivery: market1_delivery, placed_at: 2.weeks.ago) }
+  let!(:market1_order1)      { create(:order, items: [market1_order_item1, market1_order_item2], organization: market1_buyer_org1, market: market1, total_cost: 35.08, delivery: market1_delivery, delivery_fees: 7.12, placed_at: 2.weeks.ago) }
 
   let!(:market1_order_item3) { create(:order_item, seller_name: market1_seller_org1.name, product: market1_product1, quantity: 2, unit_price: 8.99, market_seller_fee: 0.90, local_orbit_seller_fee: 0.72) }
   let!(:market1_order_item4) { create(:order_item, seller_name: market1_seller_org2.name, product: market1_product2, quantity: 3, unit_price: 7.99, market_seller_fee: 1.20, local_orbit_seller_fee: 0.96) }
-  let!(:market1_order2)      { create(:order, items: [market1_order_item3, market1_order_item4], organization: market1_buyer_org2, market: market1, total_cost: 41.95, delivery: market1_delivery, placed_at: 2.weeks.ago) }
+  let!(:market1_order2)      { create(:order, items: [market1_order_item3, market1_order_item4], organization: market1_buyer_org2, market: market1, total_cost: 49.07, delivery: market1_delivery, delivery_fees: 7.12, placed_at: 2.weeks.ago) }
 
   let!(:market1_order_item5) { create(:order_item, seller_name: market1_seller_org2, product: market1_product2) }
-  let!(:market1_order3)      { create(:order, items: [market1_order_item5], organization: market1_buyer_org1, market: market1, delivery: market1_delivery) }
+  let!(:market1_order3)      { create(:order, items: [market1_order_item5], organization: market1_buyer_org1, market: market1, total_cost: market1_order_item5.gross_total + 7.12, delivery_fees: 7.12, delivery: market1_delivery) }
 
   let!(:market2)          { create(:market, :with_delivery_schedule, market_seller_fee: 5, local_orbit_seller_fee: 4)}
-  let!(:market2_delivery)        { market2.delivery_schedules.first.next_delivery }
+  let!(:market2_delivery) { market2.delivery_schedules.first.next_delivery }
 
   let!(:market2_seller_org1) { create(:organization, :seller, markets: [market2]) }
   let!(:market2_seller_org2) { create(:organization, :seller, markets: [market2]) }
@@ -41,7 +41,7 @@ feature "Viewing orders" do
   let!(:market2_order2)      { create(:order, items: [market2_order_item3, market2_order_item4], organization: market2_buyer_org, market: market2, total_cost: 41.95, delivery: market2_delivery) }
 
   let!(:market2_order_item5) { create(:order_item, seller_name: market2_seller_org2.name,  product: market2_product2, payment_seller_fee: 0.50) }
-  let!(:market2_order3)      { create(:order, items: [market2_order_item5], organization: market2_buyer_org, market: market2, delivery: market2_delivery) }
+  let!(:market2_order3)      { create(:order, items: [market2_order_item5], organization: market2_buyer_org, market: market2, total_cost: market2_order_item5.gross_total, delivery: market2_delivery) }
 
   context "as a seller" do
     let!(:user) { create(:user, organizations: [market1_seller_org1]) }

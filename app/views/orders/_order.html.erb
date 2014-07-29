@@ -50,8 +50,17 @@
         <td></td>
         <td></td>
         <th scope="row">Item Subtotal</th>
-        <td class="delivery-fees"><strong><%= number_to_currency @order.subtotal %></strong></td>
+        <td class="subtotal"><strong><%= number_to_currency @order.subtotal %></strong></td>
       </tr>
+      <% if @order.discount_amount > 0 %>
+      <tr class="line-item">
+        <td></td>
+        <td></td>
+        <td></td>
+        <th scope="row">Discount</th>
+        <td class="discounts"><strong><%= number_to_currency @order.discount_amount %></strong></td>
+      </tr>
+      <% end %>
       <tr class="line-item">
         <td></td>
         <td></td>

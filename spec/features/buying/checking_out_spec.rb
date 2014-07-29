@@ -288,6 +288,25 @@ describe "Checking Out", :js, :vcr do
       }
       expect(page).to have_content("Your cart is empty. Please add items to your cart before checking out.")
     end
+
+    context "with discount" do
+      let(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed") }
+
+      before do
+        cart.update_column(:discount_id, discount.id)
+      end
+
+      it "persists the discount on the order" do
+        checkout
+
+        within("tfoot") do
+          expect(page).to have_content("Item Subtotal $40.00")
+          expect(page).to have_content("Discount $15.00")
+          expect(page).to have_content("Delivery Fees $10.00")
+          expect(page).to have_content("Order Total $35.00")
+        end
+      end
+    end
   end
 
   context "via credit card" do

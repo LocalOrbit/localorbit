@@ -23,9 +23,9 @@ feature "Payment history", :truncate_after_all do
     market3  = create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)")
     create(:bank_account, :checking, last_four: "7676", balanced_uri: market_ach_balanced_uri, bankable: @market)
 
-    @buyer  = create(:organization, :buyer,  name: "Buyer",    markets: [@market])
+    @buyer   = create(:organization, :buyer,  name: "Buyer",    markets: [@market])
     @buyer2  = create(:organization, :buyer,  name: "Buyer 2",  markets: [@market2, market3])
-    @seller = create(:organization, :seller, name: "Seller",   markets: [@market])
+    @seller  = create(:organization, :seller, name: "Seller",   markets: [@market])
     @seller2 = create(:organization, :seller, name: "Seller 2", markets: [@market2])
 
     @payment_day = 20.days.ago
@@ -55,14 +55,19 @@ feature "Payment history", :truncate_after_all do
                        organization: @buyer,
                        payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
                        payment_status: "paid",
-                       order_number: "LO-01-234-4567890-#{i}")
+                       order_number: "LO-01-234-4567890-#{i}",
+                       total_cost: 20.00 + i
+                       )
+      order_item2 = create(:order_item, unit_price: 20.01 + i, quantity: 1)
       orders2 << create(:order,
                        delivery: @delivery,
-                       items: [order_item],
+                       items: [order_item2],
                        organization: @buyer2,
                        payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
                        payment_status: "paid",
-                       order_number: "LO-02-234-4567890-#{i}")
+                       order_number: "LO-02-234-4567890-#{i}",
+                       total_cost: 20.01 + i
+                       )
     end
 
     (1..5).each do |i|
@@ -87,7 +92,7 @@ feature "Payment history", :truncate_after_all do
                          payer: @buyer2,
                          payee: @market2,
                          orders: [orders2[i]],
-                         amount: orders2[i].total_cost + 0.01)
+                         amount: orders2[i].total_cost)
 
         payment2.update_attribute(:note, "#12345") if i == 2
         payment2.update_attributes(bank_account: ach_account) if i == 3
@@ -102,7 +107,7 @@ feature "Payment history", :truncate_after_all do
                payee: @seller,
                orders: [orders[i]],
                note: ["", "#67890"][i % 2],
-               amount: orders[i].total_cost * 2)
+               amount: orders[i].total_cost)
         remember_payment(payment)
 
         # Create payment from market to seller2
@@ -112,7 +117,7 @@ feature "Payment history", :truncate_after_all do
                payee: @seller2,
                orders: [orders2[i]],
                note: ["", "#54321"][i % 2],
-               amount: orders2[i].total_cost * 2)
+               amount: orders2[i].total_cost)
         remember_payment(payment)
       end
     end
@@ -135,7 +140,8 @@ feature "Payment history", :truncate_after_all do
                     market: @market2,
                     payment_method: "purchase order",
                     payment_status: "paid",
-                    order_number: "LO-02-234-4567890-123")
+                    order_number: "LO-02-234-4567890-123",
+                    total_cost: 123.00)
       payment = create(:payment,
             payment_method: "cash",
             payer: @buyer2,
@@ -152,7 +158,8 @@ feature "Payment history", :truncate_after_all do
                     market: market3,
                     payment_method: "purchase order",
                     payment_status: "paid",
-                    order_number: "LO-02-234-4567890-234")
+                    order_number: "LO-02-234-4567890-234",
+                    total_cost: 234.00)
       payment = create(:payment,
             payment_method: "cash",
             payer: @buyer2,
@@ -169,7 +176,8 @@ feature "Payment history", :truncate_after_all do
                     market: @market2,
                     payment_method: "ach",
                     payment_status: "paid",
-                    order_number: "LO-02-234-4567890-345")
+                    order_number: "LO-02-234-4567890-345",
+                    total_cost: 345.00)
       payment = create(:payment,
             payment_method: "ach",
             payer: @buyer2,
@@ -187,7 +195,8 @@ feature "Payment history", :truncate_after_all do
                     market: market3,
                     payment_method: "ach",
                     payment_status: "paid",
-                    order_number: "LO-02-234-4567890-456")
+                    order_number: "LO-02-234-4567890-456",
+                    total_cost: 456.00)
       payment = create(:payment,
             payment_method: "ach",
             payer: @buyer2,
@@ -205,7 +214,8 @@ feature "Payment history", :truncate_after_all do
                     market: @market,
                     payment_method: "ach",
                     payment_status: "paid",
-                    order_number: "LO-02-234-4567890-888")
+                    order_number: "LO-02-234-4567890-888",
+                    total_cost: 888.00)
       payment = create(:payment,
             payment_method: "ach",
             payer: nil,
@@ -223,7 +233,8 @@ feature "Payment history", :truncate_after_all do
                     market: @market,
                     payment_method: "check",
                     payment_status: "paid",
-                    order_number: "LO-02-234-4567890-999")
+                    order_number: "LO-02-234-4567890-999",
+                    total_cost: 999.00)
       payment = create(:payment,
             payment_type: "seller payment",
             payment_method: "check",
@@ -688,11 +699,11 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "cannot view market-to-seller payments" do
-      expect(payment_row("$42.00")).to be_nil
-      expect(payment_row("$44.00")).to be_nil
-      expect(payment_row("$46.00")).to be_nil
-      expect(payment_row("$48.00")).to be_nil
-      expect(payment_row("$50.00")).to be_nil
+      expect(payment_rows_for_description("LO-01-234-4567890-1").count).to eq(1)
+      expect(payment_rows_for_description("LO-01-234-4567890-2").count).to eq(1)
+      expect(payment_rows_for_description("LO-01-234-4567890-3").count).to eq(1)
+      expect(payment_rows_for_description("LO-01-234-4567890-4").count).to eq(1)
+      expect(payment_rows_for_description("LO-01-234-4567890-5").count).to eq(1)
     end
 
     scenario "can search purchase history by order number" do
@@ -742,28 +753,28 @@ feature "Payment history", :truncate_after_all do
   context "Sellers" do
     let!(:user) { create(:user, organizations: [@seller]) }
 
-    scenario "can view their purchase history" do
+    scenario "can view their payment history" do
       expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
 
-      expect(payment_row("$42.00")).not_to be_nil
-      expect(payment_row("$42.00").payment_method).to eql("Check: #67890")
-      expect(payment_row("$42.00").date).to eql(format_date(@payment_day + 1.day))
+      expect(payment_row("$21.00")).not_to be_nil
+      expect(payment_row("$21.00").payment_method).to eql("Check: #67890")
+      expect(payment_row("$21.00").date).to eql(format_date(@payment_day + 1.day))
 
-      expect(payment_row("$44.00")).not_to be_nil
-      expect(payment_row("$44.00").payment_method).to eql("Cash")
-      expect(payment_row("$44.00").date).to eql(format_date(@payment_day + 2.days))
+      expect(payment_row("$22.00")).not_to be_nil
+      expect(payment_row("$22.00").payment_method).to eql("Cash")
+      expect(payment_row("$22.00").date).to eql(format_date(@payment_day + 2.days))
 
-      expect(payment_row("$46.00")).not_to be_nil
-      expect(payment_row("$46.00").payment_method).to eql("Check: #67890")
-      expect(payment_row("$46.00").date).to eql(format_date(@payment_day + 3.days))
+      expect(payment_row("$23.00")).not_to be_nil
+      expect(payment_row("$23.00").payment_method).to eql("Check: #67890")
+      expect(payment_row("$23.00").date).to eql(format_date(@payment_day + 3.days))
 
-      expect(payment_row("$48.00")).not_to be_nil
-      expect(payment_row("$48.00").payment_method).to eql("Cash")
-      expect(payment_row("$48.00").date).to eql(format_date(@payment_day + 4.days))
+      expect(payment_row("$24.00")).not_to be_nil
+      expect(payment_row("$24.00").payment_method).to eql("Cash")
+      expect(payment_row("$24.00").date).to eql(format_date(@payment_day + 4.days))
 
-      expect(payment_row("$50.00")).not_to be_nil
-      expect(payment_row("$50.00").payment_method).to eql("Check: #67890")
-      expect(payment_row("$50.00").date).to eql(format_date(@payment_day + 5.days))
+      expect(payment_row("$25.00")).not_to be_nil
+      expect(payment_row("$25.00").payment_method).to eql("Check: #67890")
+      expect(payment_row("$25.00").date).to eql(format_date(@payment_day + 5.days))
 
       expect(payment_row("$888.00")).not_to be_nil
       expect(payment_row("$888.00").payment_method).to eql("ACH: *********2231")
@@ -775,11 +786,11 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can search purchase history by order number" do
-      expect(payment_row("$42.00").description).to include("LO-01-234-4567890-1")
-      expect(payment_row("$44.00").description).to include("LO-01-234-4567890-2")
-      expect(payment_row("$46.00").description).to include("LO-01-234-4567890-3")
-      expect(payment_row("$48.00").description).to include("LO-01-234-4567890-4")
-      expect(payment_row("$50.00").description).to include("LO-01-234-4567890-5")
+      expect(payment_row("$21.00").description).to include("LO-01-234-4567890-1")
+      expect(payment_row("$22.00").description).to include("LO-01-234-4567890-2")
+      expect(payment_row("$23.00").description).to include("LO-01-234-4567890-3")
+      expect(payment_row("$24.00").description).to include("LO-01-234-4567890-4")
+      expect(payment_row("$25.00").description).to include("LO-01-234-4567890-5")
       expect(payment_row("$888.00").description).to include("LO-02-234-4567890-888")
       expect(payment_row("$999.00").description).to include("LO-02-234-4567890-999")
 
@@ -794,11 +805,11 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can filter purchase history by payment date" do
-      expect(payment_row("$42.00").description).to include("LO-01-234-4567890-1")
-      expect(payment_row("$44.00").description).to include("LO-01-234-4567890-2")
-      expect(payment_row("$46.00").description).to include("LO-01-234-4567890-3")
-      expect(payment_row("$48.00").description).to include("LO-01-234-4567890-4")
-      expect(payment_row("$50.00").description).to include("LO-01-234-4567890-5")
+      expect(payment_row("$21.00").description).to include("LO-01-234-4567890-1")
+      expect(payment_row("$22.00").description).to include("LO-01-234-4567890-2")
+      expect(payment_row("$23.00").description).to include("LO-01-234-4567890-3")
+      expect(payment_row("$24.00").description).to include("LO-01-234-4567890-4")
+      expect(payment_row("$25.00").description).to include("LO-01-234-4567890-5")
       expect(payment_row("$888.00").description).to include("LO-02-234-4567890-888")
       expect(payment_row("$999.00").description).to include("LO-02-234-4567890-999")
 
@@ -822,11 +833,11 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can filter purchase history by payment method" do
-      expect(payment_row("$42.00").description).to include("LO-01-234-4567890-1")
-      expect(payment_row("$44.00").description).to include("LO-01-234-4567890-2")
-      expect(payment_row("$46.00").description).to include("LO-01-234-4567890-3")
-      expect(payment_row("$48.00").description).to include("LO-01-234-4567890-4")
-      expect(payment_row("$50.00").description).to include("LO-01-234-4567890-5")
+      expect(payment_row("$21.00").description).to include("LO-01-234-4567890-1")
+      expect(payment_row("$22.00").description).to include("LO-01-234-4567890-2")
+      expect(payment_row("$23.00").description).to include("LO-01-234-4567890-3")
+      expect(payment_row("$24.00").description).to include("LO-01-234-4567890-4")
+      expect(payment_row("$25.00").description).to include("LO-01-234-4567890-5")
       expect(payment_row("$888.00").description).to include("LO-02-234-4567890-888")
       expect(payment_row("$999.00").description).to include("LO-02-234-4567890-999")
 

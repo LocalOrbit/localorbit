@@ -21,7 +21,7 @@ class Discount < ActiveRecord::Base
 
   def value_for(subtotal)
     if percentage?
-      subtotal * (discount / 100)
+      (subtotal * (discount / 100)).round(2)
     elsif fixed?
       [subtotal, discount].min
     else
