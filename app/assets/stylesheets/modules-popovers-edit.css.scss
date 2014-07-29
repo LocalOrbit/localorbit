@@ -212,6 +212,31 @@
     display: inline-block;
   }
 }
+.modal--extended {
+  @include transform(translateX(0));
+  left: 20.5%;
+  width: 58%;
+  position: fixed;
+  
+  .popup-body {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .popup-footer {
+    overflow: hidden;
+  }
+  button {
+    margin-top: -5px;
+  }
+}
+
+.popup-footer {
+  padding: 14px 15px 15px;
+  margin-bottom: 0;
+  text-align: right;
+  background-color: #f5f5f5;
+  border-top: 1px solid #ddd;
+}
 
 .modal--stealth {
   width: 530px;
@@ -251,6 +276,10 @@
     top: 64px;
     width: auto;
     margin: 0 auto;
+  }
+  .modal--extended {
+    width: 90%;
+    left: 5%;
   }
 }
 
