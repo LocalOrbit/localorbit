@@ -138,6 +138,7 @@ class OrderItem < ActiveRecord::Base
         self.quantity_delivered ||= quantity
       elsif delivery_status == "canceled"
         self.quantity_delivered = 0
+        self.payment_status = "refunded" if ["pending", "paid"].include?(payment_status)
       end
     end
   end

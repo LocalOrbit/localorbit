@@ -143,9 +143,11 @@ context "Viewing sold items" do
       expect(sold_items[2].delivery_status).to eq("Delivered")
     end
 
-    it "cancels an item from an order" do
+    it "cancels an item from an order that has not been paid for yet" do
       expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", success?: true))
       expect(order.total_cost.to_f).to eql(74.00)
+      sold_items = Dom::Admin::SoldItemRow.all
+      expect(sold_items.map(&:buyer_payment_status)).to eql(["Unpaid", "Refunded", "Unpaid"])
 
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
@@ -154,9 +156,27 @@ context "Viewing sold items" do
 
       expect(order.reload.total_cost.to_f).to eql(50.00)
       sold_items = Dom::Admin::SoldItemRow.all
-      expect(sold_items[0].delivery_status).to eq("Canceled")
-      expect(sold_items[1].delivery_status).to eq("Canceled")
-      expect(sold_items[2].delivery_status).to eq("Pending")
+      expect(sold_items.map(&:delivery_status)).to eql(["Canceled", "Canceled", "Pending"])
+      expect(sold_items.map(&:buyer_payment_status)).to eql(["Unpaid", "Refunded", "Unpaid"])
+    end
+
+    it "cancels an item from an order that has been paid for" do
+      order.items.each{|i| i.update(payment_status: "paid") if i.payment_status == "unpaid"}
+
+      expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", success?: true))
+      expect(order.total_cost.to_f).to eql(74.00)
+      sold_items = Dom::Admin::SoldItemRow.all
+      expect(sold_items.map(&:buyer_payment_status)).to eql(["Unpaid", "Refunded", "Unpaid"])
+
+      sold_item = Dom::Admin::SoldItemRow.first
+      sold_item.select
+      select 'Canceled', from: 'delivery_status'
+      click_button 'Apply Action'
+
+      expect(order.reload.total_cost.to_f).to eql(50.00)
+      sold_items = Dom::Admin::SoldItemRow.all
+      expect(sold_items.map(&:delivery_status)).to eql(["Canceled", "Canceled", "Pending"])
+      expect(sold_items.map(&:buyer_payment_status)).to eql(["Refunded", "Refunded", "Paid"])
     end
 
     it "displays sales totals for all pages of filtered results" do
