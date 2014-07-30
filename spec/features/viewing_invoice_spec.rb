@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature "Viewing invoices" do
   let(:market) { create(:market, po_payment_term: 14, contact_phone: "1234567890") }
-  let!(:delivery_schedule) { create(:delivery_schedule) }
+  let!(:delivery_schedule) { create(:delivery_schedule, fee_type: "fixed", fee: '12.95') }
   let!(:delivery)    { delivery_schedule.next_delivery }
   let!(:market_manager) { create :user, managed_markets: [market] }
 
@@ -18,7 +18,20 @@ feature "Viewing invoices" do
   let!(:order_item1) { create(:order_item, product: product1, unit_price: 210.00) }
   let!(:order_item2) { create(:order_item, product: product2, unit_price: 95.00, quantity: 2, quantity_delivered: 2, delivery_status: "delivered") }
   let!(:order_items) { [order_item1, order_item2] }
-  let!(:order) { create(:order, delivery: delivery, items: order_items, market: market, organization: buyer, total_cost: order_items.sum(&:gross_total), payment_method: 'purchase order', order_number: "LO-001", placed_at: Time.zone.parse("2014-04-01"), invoiced_at: Time.zone.parse("2014-04-02"), invoice_due_date: Time.zone.parse("2014-04-16")) }
+  let!(:order) {
+    create(:order,
+      delivery: delivery,
+      items: order_items,
+      market: market,
+      organization: buyer,
+      total_cost: order_items.sum(&:gross_total) + 12.95,
+      payment_method: 'purchase order',
+      order_number: "LO-001",
+      placed_at: Time.zone.parse("2014-04-01"),
+      invoiced_at: Time.zone.parse("2014-04-02"),
+      invoice_due_date: Time.zone.parse("2014-04-16"),
+      delivery_fees: '12.95')
+  }
 
 
 
@@ -32,7 +45,8 @@ feature "Viewing invoices" do
 
     expect(page).to have_content(market.name)
 
-    expect(page).to have_content("Total $400.00")
+    expect(page).to have_content("Subtotal $400.00")
+    expect(page).to have_content("Total $412.95")
 
     # There should be 2 line items
     expect(all('.line-item').size).to eq(2)
@@ -63,7 +77,8 @@ feature "Viewing invoices" do
         expect_invoice_content
 
         # Line items total
-        expect(find('tr:last-child td:last-child')).to have_content("$400.00")
+        expect(find('tr:last-child td:last-child')).to have_content("$412.95")
+        expect(page).to have_content("Subtotal $400.00")
         expect(page).to_not have_content("Print And Mark Invoiced")
         expect(page).to have_content("Print")
       end
@@ -85,7 +100,8 @@ feature "Viewing invoices" do
         expect_market_address
 
         # Line items total
-        expect(find('tr:last-child td:last-child')).to have_content("$400.00")
+        expect(find('tr:last-child td:last-child')).to have_content("$412.95")
+        expect(page).to have_content("Subtotal $400.00")
         expect(page).to_not have_content("Print And Mark Invoiced")
         expect(page).to have_content("Print")
       end
@@ -118,13 +134,14 @@ feature "Viewing invoices" do
           expect(page).to have_content(market.contact_email)
         end
 
-        expect(page).to have_content("Total $400.00")
+        expect(page).to have_content("Subtotal $400.00")
+        expect(page).to have_content("Total $412.95")
 
         # There should be 2 line items
         expect(all('.line-item').size).to eq(2)
 
         # Line items total
-        expect(find('tr:last-child td:last-child')).to have_content("$400.00")
+        expect(find('tr:last-child td:last-child')).to have_content("$412.95")
       end
 
       context "with irregular phone numbers" do
@@ -167,13 +184,14 @@ feature "Viewing invoices" do
             expect(page).to have_content(address.state)
             expect(page).to have_content(address.zip)
           end
-          expect(page).to have_content("Total $427.96")
+          expect(page).to have_content("Subtotal $427.96")
+          expect(page).to have_content("Total $440.91")
 
           # There should be 3 line items
           expect(all('.line-item').size).to eq(3)
 
           # Line items total
-          expect(find('tr:last-child td:last-child')).to have_content("$427.96")
+          expect(find('tr:last-child td:last-child')).to have_content("$440.91")
         end
       end
 
