@@ -32,12 +32,9 @@ class OrderItem < ActiveRecord::Base
     joins(order: :delivery).where(orders: {delivery_id: delivery.id})
   end
 
-  def self.create_with_order_and_item_and_deliver_on_date(opts={})
-    item = opts[:item]
-    order = opts[:order]
-
+  def self.create_with_order_and_item_and_deliver_on_date(order, item, deliver_on_date)
     new(
-      deliver_on_date: opts[:deliver_on_date],
+      deliver_on_date: deliver_on_date,
       order: order,
       product: item.product,
       name: item.product.name,
