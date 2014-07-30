@@ -4,7 +4,7 @@
   <%= form_for [:admin, price.product, price], html: { novalidate: "novalidate" }, format: :js do |f| %>
     <%= fields_for :price, price, index: price.id do |f| %>
       <table>
-        <caption>Price for all buyers</caption>
+        <caption>Price for all Buyers</caption>
         <thead>
           <tr>
             <th><label for="<%= "price_#{price.id}_net_price" %>">Net Price</label></th>

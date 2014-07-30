@@ -1,6 +1,7 @@
 <div class="row row--partial">
   <div class="column column--eleven-twelfths">
     <h1><i class="font-icon" data-icon="&#xe022;"></i>&nbsp; Upcoming Deliveries</h1>
+    <p>This is a list of all upcoming deliveries for your market.</p>
 
     <% if @upcoming_deliveries.empty? %>
       <h2>You currently have no upcoming deliveries.</h2>
@@ -20,7 +21,7 @@
           <% if current_user.market_manager? || current_user.admin? %>
             <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, admin_delivery_tools_pack_list_path(delivery) %></div>
           <% end %>
-          <div class="tool"><%= link_to "Individual Packing Slips <span class='note'>per seller</span>".html_safe, admin_delivery_tools_individual_pack_list_path(delivery) %></div>
+          <div class="tool"><%= link_to "Individual Packing Slips <span class='note'>per Seller</span>".html_safe, admin_delivery_tools_individual_pack_list_path(delivery) %></div>
           <div class="tool"><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery)%></div>
         </div>
         <hr>
