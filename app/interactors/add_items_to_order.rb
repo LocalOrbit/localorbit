@@ -4,10 +4,11 @@ class AddItemsToOrder
   def perform
     ActiveRecord::Base.transaction do
       item_hashes.each do |item_hash|
+        delivery = order.delivery
         product = Product.find(item_hash[:product_id])
-        cart = Cart.new(market: order.market, organization: order.organization, delivery: order.delivery)
+        cart = Cart.new(market: order.market, organization: order.organization, delivery: delivery)
         cart_item = CartItem.new(cart: cart, product: product, quantity: item_hash[:quantity].to_i)
-        order.items << OrderItem.create_with_order_and_item_and_deliver_on_date(order: order, item: cart_item, deliver_on_date: order.delivery.deliver_on)
+        order.add_cart_item(cart_item, delivery.deliver_on)
       end
 
       unless order.save

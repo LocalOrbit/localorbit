@@ -21,7 +21,7 @@ describe StoreOrderFees do
   let(:params)            { {payment_method: "purchase order"} }
 
   subject do
-    order = Order.create_from_cart(params, cart, user)
+    order = CreateOrder.perform(order_params: params, cart: cart, buyer: user).order
     order.update(payment_method: params[:payment_method])
     StoreOrderFees.perform(order_params: params, cart: cart, order: order).order.reload.items.index_by {|item| item.product_id }
   end

@@ -205,42 +205,14 @@ class Order < ActiveRecord::Base
     scope.where(order_items: {delivery_status: "pending"})
   end
 
-  def self.create_from_cart(params, cart, buyer)
-    billing = cart.organization.locations.default_billing
-    order_number = OrderNumber.new(cart.market)
-
-    order = Order.new(
-      placed_by: buyer,
-      order_number: order_number.id,
-      organization: cart.organization,
-      market: cart.market,
-      delivery: cart.delivery,
-      discount: cart.discount,
-      billing_organization_name: cart.organization.name,
-      billing_address: billing.address,
-      billing_city: billing.city,
-      billing_state: billing.state,
-      billing_zip: billing.zip,
-      billing_phone: billing.phone,
-      payment_status: "unpaid",
-      payment_method: params[:payment_method],
-      payment_note: params[:payment_note],
-      delivery_fees: cart.delivery_fees,
-      total_cost: cart.total,
-      placed_at: DateTime.current
-    )
-
-    order.apply_delivery_address(cart.delivery_location)
-
-    ActiveRecord::Base.transaction do
-      cart.items.each do |item|
-        order.items << OrderItem.create_with_order_and_item_and_deliver_on_date(order: order, item: item, deliver_on_date: cart.delivery.deliver_on)
-      end
-
-      raise ActiveRecord::Rollback unless order.save
+  def add_cart_items(cart_items, deliver_on)
+    cart_items.each do |cart_item|
+      add_cart_item(cart_item, deliver_on)
     end
+  end
 
-    order
+  def add_cart_item(cart_item, deliver_on)
+    items << OrderItem.create_with_order_and_item_and_deliver_on_date(self, cart_item, deliver_on)
   end
 
   def delivered_at
