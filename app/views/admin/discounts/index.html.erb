@@ -40,8 +40,8 @@
         <td class="code"><%= discount.code %></td>
         <td class="type"><%= discount.short_type_indicator %></td>
         <td class="amount"><%= discount.discounted_amount %></td>
-        <td class="uses"><%= discount.total_usages %></td>
-        <td class="available"><%= discount.available_usages %></td>
+        <td class="uses"><%= discount.total_uses %></td>
+        <td class="available"><%= discount.available_uses %></td>
         <td class="links">
           &#160;
           <%= link_to raw("&#57418;"), admin_discount_path(discount), method: :delete, data: { confirm: "Are you sure you want to delete this discount?" }, title: "Delete", class: "font-icon" %>

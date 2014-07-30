@@ -34,6 +34,14 @@ class Discount < ActiveRecord::Base
     end
   end
 
+  def total_uses
+    Order.where(discount_id: id).count
+  end
+
+  def uses_by_organization(organization)
+    Order.where(organization_id: organization.id, discount_id: id).count
+  end
+
   private
 
   def future_end_date

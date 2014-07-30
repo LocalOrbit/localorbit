@@ -4,8 +4,9 @@ describe "Manage Discount Codes" do
   let!(:market)              { create(:market) }
   let!(:market2)             { create(:market) }
   let!(:discount_fixed)      { create(:discount, name: "fixed discount", type: "fixed", discount: 5.00) }
-  let!(:discount_percentage) { create(:discount, name: "percentage discount", type: "percentage", discount: 10) }
+  let!(:discount_percentage) { create(:discount, name: "percentage discount", type: "percentage", discount: 10, maximum_uses: 10) }
   let(:organization)         { create(:organization, :buyer, markets: [market]) }
+  let!(:order)               { create(:order, discount: discount_percentage) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -49,12 +50,16 @@ describe "Manage Discount Codes" do
       expect(code.code).to have_content(discount_fixed.code)
       expect(code.type).to have_content("$")
       expect(code.amount).to have_content("$5.00")
+      expect(code.uses).to have_content("0")
+      expect(code.available).to have_content("Unlimited")
 
       code = Dom::Admin::DiscountRow.find_by_name(discount_percentage.name)
       expect(code).to_not be_nil
       expect(code.code).to have_content(discount_percentage.code)
       expect(code.type).to have_content("%")
       expect(code.amount).to have_content("10.0%")
+      expect(code.uses).to have_content("1")
+      expect(code.available).to have_content("9")
     end
 
     context "Creation" do

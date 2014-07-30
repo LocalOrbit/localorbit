@@ -124,4 +124,27 @@ describe Discount do
       expect(subject).to have(1).errors_on(:maximum_organization_uses)
     end
   end
+
+  describe "#total_uses" do
+    let!(:discount) { create(:discount) }
+    let!(:order1)   { create(:order, discount: discount) }
+    let!(:order2)   { create(:order, discount: discount) }
+    let!(:order3)   { create(:order) }
+
+    it "returns a count of the times the discount has been used" do
+      expect(discount.total_uses).to eql(2)
+    end
+  end
+
+  describe "#uses_by_organization" do
+    let!(:organization) { create(:organization) }
+    let!(:discount)     { create(:discount) }
+    let!(:order1)       { create(:order, discount: discount, organization: organization) }
+    let!(:order2)       { create(:order, discount: discount) }
+    let!(:order3)       { create(:order) }
+
+    it "returns a count of the times the discount has been used" do
+      expect(discount.uses_by_organization(organization)).to eql(1)
+    end
+  end
 end

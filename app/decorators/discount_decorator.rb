@@ -15,11 +15,7 @@ class DiscountDecorator < Draper::Decorator
     fixed? ? number_to_currency(discount.discount) : "#{discount.discount}%"
   end
 
-  def total_usages
-    0
-  end
-
-  def available_usages
-    maximum_uses == 0 ? "Unlimited" : 0
+  def available_uses
+    maximum_uses == 0 ? "Unlimited" : maximum_uses - total_uses
   end
 end
