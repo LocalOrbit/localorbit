@@ -59,15 +59,16 @@
   margin: 0;
 }
 
-.product-search {
-  margin: 0 0 15px;
-}
-
 .search-widget {
   display: inline-block;
   ~ .btn--add {
     display: inline-block;
   }
+}
+
+.product-search {
+  display:block;
+  margin: 0 0 15px;
 }
 
 @media screen and (min-width: 960px) {

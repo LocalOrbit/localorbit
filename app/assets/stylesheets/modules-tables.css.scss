@@ -877,6 +877,20 @@ th {
 }
 
 .pricing-table {
+  th {
+    white-space: nowrap;
+    .tooltip {
+      white-space: normal;
+    }
+  }
+  th, td {
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+  }
   select {
     min-width: 7em;
   }
