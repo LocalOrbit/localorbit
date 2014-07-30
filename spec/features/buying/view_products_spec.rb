@@ -199,7 +199,7 @@ feature "Viewing products" do
       expect(selected_delivery.location_address).to eq("#{location.address} #{location.city}, #{location.state} #{location.zip}")
     end
 
-    context "when changing selected delivery" do
+    context "when changing selected delivery", js: true do
       it "allows user to change" do
         Dom::Buying::DeliveryChoice.all.last.choose!
 
@@ -461,7 +461,7 @@ feature "Viewing products" do
           expect(page).to have_content(org1_product.name)
         end
 
-        scenario "changing organization to shop for after creating a cart" do
+        scenario "changing organization to shop for after creating a cart", js:true  do
           select = Dom::Select.first
 
           expect(select).to have_option(buyer_org.name)
