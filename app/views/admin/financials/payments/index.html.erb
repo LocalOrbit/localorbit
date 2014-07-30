@@ -35,7 +35,7 @@
                 <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#more-info-#{payment.id}", class:"modal-toggle more-info payment-more", data: { modal: "more-info-#{payment.id}"} %>
 
                 <!-- Modal -->
-                <div class="popup modal clonable more-info-<%= payment.id %> is-hidden order-list-modal">
+                <div class="popup modal clonable  is-hidden order-list-modal" id="more-info-<%= payment.id %>">
                   <div class="popup-header">
                     All Order Numbers Paid on <strong><%= payment.created_at.strftime("%m/%d/%Y") %></strong>
                     <button class="close"><i class="font-icon icon-close"></i></button>

@@ -50,11 +50,10 @@ $ ->
 
   $('.modal-toggle').click ->
     destination = $(this).data('modal')
-    $element = $(".#{destination}")
+    $element = $("##{destination}")
     $element.toggleClass('is-hidden')
     $(".modal").not($element).addClass('is-hidden')
     $('.overlay').addClass('is-open is-dim is-modal')
-    console.log this, $element
     if $element.hasClass('clonable')
       clone_popup($element, this)
 
@@ -62,7 +61,7 @@ $ ->
     event.preventDefault()
     href = $(this).attr("href")
     destination = $(this).data('modal')
-    $element = $(".#{destination}")
+    $element = $("##{destination}")
     $element.toggleClass('is-hidden')
     $(".modal").not($element).addClass('is-hidden')
     $('.overlay').addClass('is-open is-dim is-modal')

@@ -1,7 +1,11 @@
 close_popups = ->
   $('.overlay + .popup').each (i,e) ->
-    $(e).remove().insertAfter('.popup-toggle[href="#' + e.id + '"]')
-      .css({'left': 'auto', 'top': 'auto'})
+    if $('.popup-toggle[href="#' + e.id + '"]').length
+      toggle = '.popup-toggle[href="#' + e.id + '"]'
+    else
+      toggle = '.modal-toggle[data-modal="' + e.id + '"]'
+    $(e).remove().insertAfter(toggle)
+      .css({'position': "", 'left': "", 'top': ""})
   $('.popover, .popup, .dropdown').addClass('is-hidden')
   $('body').css('min-height', '0')
 
