@@ -29,7 +29,7 @@
   <span class="tooltip pull-right" data-tooltip="Type the product name and select a category."></span>
   <br>
   <%= f.select :category_id, Category.for_select, {include_blank: ""}, {data: {placeholder: "Click and type to search for a Category"}, class: "chosen"} %>
-  <span class="hint">Not seeing what you need? <%= link_to "Request a New Category", "#", class: "modal-toggle", data: { modal: "request-new-category" } %></span>
+  <span class="hint">Not seeing what you need? <%= link_to "Request a New Category", "#request-new-category", class: "modal-toggle" %></span>
 </div>
 
 <div class="field">
@@ -60,7 +60,7 @@
   <%= f.label :unit_id %>
   <br>
   <%= f.select :unit_id, Unit.for_display.map { |u| [u.plural, u.id] } , {include_blank: ""}, {data: {placeholder: "Click and type to search for a Unit"}, class: "chosen column--full"} %>
-  <span class="hint">Not seeing what you need? <%= link_to "Request a New Unit", "#", class: "modal-toggle", data: { modal: "request-new-unit" } %></span>
+  <span class="hint">Not seeing what you need? <%= link_to "Request a New Unit", "#request-new-unit", class: "modal-toggle" %></span>
 </div>
 
 <div class="field">

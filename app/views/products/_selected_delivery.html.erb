@@ -1,4 +1,4 @@
-<div class="change-delivery-warning is-hidden modal modal--stealth popup">
+<div class="is-hidden modal modal--stealth popup" id="change-delivery-warning">
   <h3 class="popup-header">
     <button class="close"><i class="font-icon icon-close"></i></button>
     Date Change Confirmation
@@ -20,7 +20,7 @@
     <h2 class="heading heading--sidebar delivery-type"><%= current_delivery.selected_type %></h2>
     <% if can_change_delivery? %>
       <span class="change-delivery">
-        <%= link_to "Change", reset_sessions_deliveries_path(redirect_back_to: request.fullpath), id: "change-delivery-date", class: "reset btn modal-toggle", data: { modal: "change-delivery-warning"} %>
+        <%= link_to "Change", "#change-delivery-warning", id: "change-delivery-date", class: "reset btn modal-toggle" %>
       </span>
     <% end %>
   </div>
