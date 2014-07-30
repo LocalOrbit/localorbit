@@ -88,15 +88,15 @@
   <div class="row row--field">
     <div class="field column column--half column--guttered">
       <label>Open or Closed</label><br>
-      <span class="tooltip pull-right" data-tooltip="Please contact your administrator if you want to change this status."></span>
       <%= f.check_box :closed, {checked: !f.object.closed?}, 0, 1 %>
       <%= f.label :closed, "This market is open" %>
+      <span class="tooltip" data-tooltip="Please contact your administrator if you want to change this status."></span>
     </div
     ><div class="field column column--half column--guttered">
       <label>Organization registration</label><br>
-    <span class="tooltip pull-right" data-tooltip="Check this box if you want organizations to be automatically activated upon registration."></span>
       <%= f.check_box :auto_activate_organizations %>
       <%= f.label :auto_activate_organizations, "Auto-activate organizations" %>
+      <span class="tooltip" data-tooltip="Check this box if you want organizations to be automatically activated upon registration."></span>
     </div>
   </div>
 
@@ -104,9 +104,9 @@
     <div class="row row--field">
       <div class="field column column--half column--guttered">
         <label>Cross Selling</label><br>
-        <span class="tooltip pull-right" data-tooltip="This feature applies to the Grow and Automate plans.  Check this box to allow cross selling between your markets."></span>
         <%= f.check_box :allow_cross_sell %>
         <%= f.label :allow_cross_sell, "Allow Cross Selling" %>
+        <span class="tooltip" data-tooltip="This feature applies to the Grow and Automate plans.  Check this box to allow cross selling between your markets."></span>
       </div>
     </div>
   <% end %>
