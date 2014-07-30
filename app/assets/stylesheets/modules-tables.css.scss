@@ -372,6 +372,7 @@ th {
     > img {
       display: block;
       max-width: 75px;
+      max-height: 75px;
       @include border-radius(5px);
     }
   }
@@ -565,9 +566,6 @@ th {
       p {
         overflow: hidden;
       }
-      ul {
-        margin-left: 85px;
-      }
       .popup-toggle {
         color: #666;
       }
@@ -589,7 +587,6 @@ th {
     }
 
     .short_description {
-      margin-left: 75px;
 
       > p {
         max-width: 281px;
@@ -622,11 +619,8 @@ th {
       width: 200px;
       max-width: 200px;
       ul {
-        margin-left: 60px;
+        clear: left;
       }
-    }
-    .short_description {
-      margin-left: 60px;
     }
   }
   td.delete{
