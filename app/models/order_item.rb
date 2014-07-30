@@ -111,7 +111,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_delivered_at
-    if changes[:delivery_status] && changes[:delivery_status][1] == "delivered"
+    if delivery_status_changed? && delivery_status == "delivered"
       self.delivered_at ||= Time.current
     end
   end
@@ -126,10 +126,14 @@ class OrderItem < ActiveRecord::Base
   end
 
   def update_quantity_delivered
-    if quantity_delivered_changed? && quantity_delivered.present? && delivery_status == "pending"
+    if should_update_delivery_status?
       self.delivery_status = quantity_delivered > 0 ? "delivered" : "canceled"
       self.payment_status = "refunded" if quantity_delivered == 0 && refundable?
     end
+  end
+
+  def should_update_delivery_status?
+    quantity_delivered_changed? && quantity_delivered.present? && delivery_status_was == "pending" && delivery_status != "contested"
   end
 
   def update_delivery_status

@@ -56,7 +56,7 @@ describe OrderItem do
 
 
   context "changing quantity delivered" do
-    subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 8, delivery_status: 'pending') }
+    subject { create(:order_item, seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 8, delivery_status: 'pending', payment_status: 'pending') }
 
     it "sets the delivery status to 'delivered' when a positive quantity delivered" do
       subject.quantity_delivered = 9
@@ -66,6 +66,7 @@ describe OrderItem do
     end
 
     it "sets the delivery status to 'canceled' when a quantity delivered of 0" do
+      subject.payment_status = 'unpaid'
       subject.quantity_delivered = 0
       subject.save!
 
@@ -103,6 +104,15 @@ describe OrderItem do
       subject.save!
 
       expect(subject.reload.delivery_status).to eql('contested')
+    end
+
+    it "overrides concurrent delivery status changes" do
+      subject.delivery_status = "delivered"
+      subject.quantity_delivered = 0
+      subject.save!
+
+      expect(subject.reload.delivery_status).to eql('canceled')
+      expect(subject.reload.payment_status).to eql('refunded')
     end
   end
 
