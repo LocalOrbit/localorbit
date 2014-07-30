@@ -264,9 +264,8 @@ class MetricsPresenter
     },
     live_markets: {
       title: "Live Markets",
-      scope: BASE_SCOPES[:market].where(active: true),
-      attribute: :created_at,
-      calculation: :window,
+      scope: Metric.where(model_type: "Market", metric_code: "live_markets"),
+      calculation: :metric,
       format: :integer
     },
     active_markets: {
@@ -567,6 +566,17 @@ class MetricsPresenter
       end
 
       growth_metric
+
+    elsif m[:calculation] == :metric
+      sub_select = scope.select(:effective_on, "UNNEST(model_ids) AS model_id")
+      query_model = sub_select.model.name.pluralize.downcase
+
+      scope = sub_select.model.
+        joins("INNER JOIN (#{sub_select.to_sql}) AS metric_calculation ON metric_calculation.model_id = #{query_model}.id").
+        select("metric_calculation.effective_on, metric_calculation.model_id")
+      
+      series = scope_for(scope: scope, attribute: "metric_calculation.effective_on", interval: interval)
+      series.count("DISTINCT(model_id)")
 
     else
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
