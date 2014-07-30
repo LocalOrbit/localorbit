@@ -11,7 +11,7 @@ module Admin
       find_selling_markets
 
       respond_to do |format|
-        format.html {}
+        format.html
         format.csv { @filename = "organizations.csv" }
       end
     end
