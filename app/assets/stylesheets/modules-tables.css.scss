@@ -372,6 +372,7 @@ th {
     > img {
       display: block;
       max-width: 75px;
+      max-height: 75px;
       @include border-radius(5px);
     }
   }
@@ -565,9 +566,6 @@ th {
       p {
         overflow: hidden;
       }
-      ul {
-        margin-left: 85px;
-      }
       .popup-toggle {
         color: #666;
       }
@@ -579,8 +577,11 @@ th {
     }
 
     .pricing {
-      width: 125px;
-      max-width: 125px;
+      width: 115px;
+      max-width: 115px;
+      &.narrow {
+        padding-left: 0;
+      }
     }
 
     .quantity {
@@ -589,7 +590,6 @@ th {
     }
 
     .short_description {
-      margin-left: 75px;
 
       > p {
         max-width: 281px;
@@ -601,6 +601,15 @@ th {
         display: inline-block;
         margin: 0 0 0 .5em;
       }
+    }
+  }
+  .product-table--user,
+  .cart_item {
+    .js-incrementers {
+      padding: 15px 0;
+      width: 95px;
+      min-width: 95px;
+      max-width: 95px;
     }
   }
   td.delete{
@@ -622,11 +631,11 @@ th {
       width: 200px;
       max-width: 200px;
       ul {
-        margin-left: 60px;
+        clear: left;
       }
     }
-    .short_description {
-      margin-left: 60px;
+    .tier {
+      display: block;
     }
   }
   td.delete{
@@ -637,6 +646,11 @@ th {
   }
 }
 
+@media screen and (min-width: $tablet_floor) and (max-width: 800px) {
+  .js-incrementers input[type=text] {
+    font-size: 14px;
+  }
+}
 @media screen and (max-width: 767px) {
   .prodcuct-row {
     > td,
