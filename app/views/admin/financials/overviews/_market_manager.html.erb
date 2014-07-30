@@ -1,7 +1,11 @@
 <div class="overview-intro">
-  <p>
-    This is a snapshot of all money currently owed to your organization (Money In) and also what you owe to other organizations (Money Out).
-  </p>
+  <% if current_user.admin? || current_user.market_manager? %>
+    <p>This is a list of all money currently owed to your organization and that you owe to other organizations.</p>
+  <% elsif current_user.buyer_only? %>
+    <p>This is a snapshot of all money you currently owe.</p>
+  <% else %>
+    <p>This is a snapshot of all money currently owed to your organization.</p>
+  <% end %>
 </div>
 
 <%= render "money_in" %>
