@@ -89,6 +89,10 @@
     </tr>
     <% end %>
     <tfoot>
+      <tr class="subtotal">
+        <th scope="row" colspan="6" class="ar">Subtotal</th>
+        <td><%= number_to_currency invoice.gross_total %></td>
+      </tr>
       <tr class="discounts">
         <th scope="row" colspan="6" class="ar">Discounts</th>
         <td><%= number_to_currency invoice.discount %></td>
