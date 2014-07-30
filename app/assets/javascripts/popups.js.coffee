@@ -4,7 +4,7 @@ $ ->
   # data-popup attribute on the link.
   find_scrolly  = ->
     if window.pageYOffset != undefined
-      return window.pageYOffset 
+      return window.pageYOffset
     else
       return (document.documentElement || document.body.parentNode || document.body).scrollTop
 
@@ -23,7 +23,7 @@ $ ->
     if $element.outerHeight() + 54 + find_scrolly() >= screen.height
       $('body').css('min-height', $element.outerHeight() + 74 + find_scrolly())
       styles.position = 'absolute'
-      styles.top = find_scrolly() + 74 
+      styles.top = find_scrolly() + 74
     $element.css(styles).insertAfter('.overlay')
 
   position_popup = ($element) ->
@@ -54,7 +54,6 @@ $ ->
     $element.toggleClass('is-hidden')
     $(".modal").not($element).addClass('is-hidden')
     $('.overlay').addClass('is-open is-dim is-modal')
-    console.log this, $element
     if $element.hasClass('clonable')
       clone_popup($element, this)
 
