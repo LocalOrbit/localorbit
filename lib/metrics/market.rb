@@ -10,6 +10,14 @@ module Metrics
       start_up_markets:     BASE_SCOPE.joins(:plan).where(plan_id: Plan.find_by_name("Start Up")),
       grow_markets:         BASE_SCOPE.joins(:plan).where(plan_id: Plan.find_by_name("Grow")),
       automate_market:      BASE_SCOPE.joins(:plan).where(plan_id: Plan.find_by_name("Automate"))
-    }.with_indifferent_access
+    }
+  end
+
+  def initialize
+    super(
+      base_scope: BASE_SCOPE,
+      metrics: METRICS,
+      model_name: "Organization"
+    )
   end
 end

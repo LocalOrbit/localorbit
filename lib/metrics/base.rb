@@ -6,10 +6,10 @@ module Metrics
       self.new.perform
     end
 
-    def initialize
-      @base_scope = self.class::BASE_SCOPE
-      @metrics    = self.class::METRICS
-      @model_name = self.class.name.demodulize
+    def initialize(base_scope:, metrics:, model_name:)
+      @base_scope = base_scope
+      @metrics    = metrics
+      @model_name = model_name
     end
 
     def perform

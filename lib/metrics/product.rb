@@ -4,6 +4,14 @@ module Metrics
     METRICS = {
       total_products_simple:   BASE_SCOPE.where(use_simple_inventory: true),
       total_products_advanced: BASE_SCOPE.where(use_simple_inventory: false)
-    }.with_indifferent_access
+    }
+  end
+
+  def initialize
+    super(
+      base_scope: BASE_SCOPE,
+      metrics: METRICS,
+      model_name: "Organization"
+    )
   end
 end
