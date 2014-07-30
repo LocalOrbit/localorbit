@@ -42,7 +42,7 @@ feature "View Seller Profiles" do
       switch_to_subdomain(market.subdomain)
 
       click_link "Sellers", match: :first
-      expect(page).to have_content("#{market.name} has no sellers at this time.")
+      expect(page).to have_content("#{market.name} has no Sellers at this time.")
     end
 
   end

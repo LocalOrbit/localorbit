@@ -393,7 +393,7 @@ describe "Adding a product" do
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Category can't be blank")
         expect(page).to_not have_content("Current inventory")
-        expect(find_field("Use seller info from my account.")).to be_checked
+        expect(find_field("Use Seller info from my account.")).to be_checked
 
         within('.tabs') do
           expect(page).to have_content("Inventory")
@@ -569,7 +569,7 @@ describe "Adding a product" do
       end
 
       # Maintains organization selection
-      expect(find_field("Use seller info from my account.")).to be_checked
+      expect(find_field("Use Seller info from my account.")).to be_checked
       expect(page).not_to have_content("No Organization Selected")
     end
   end
