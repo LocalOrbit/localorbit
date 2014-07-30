@@ -49,8 +49,8 @@ $ ->
 
 
   $('.modal-toggle').click ->
-    destination = $(this).data('modal')
-    $element = $("##{destination}")
+    destination = this.hash
+    $element = $("#{destination}")
     $element.toggleClass('is-hidden')
     $(".modal").not($element).addClass('is-hidden')
     $('.overlay').addClass('is-open is-dim is-modal')
@@ -59,7 +59,7 @@ $ ->
 
   $('.remote-modal-toggle').click (event)->
     event.preventDefault()
-    href = $(this).attr("href")
+    href = this.href
     destination = $(this).data('modal')
     $element = $("##{destination}")
     $element.toggleClass('is-hidden')
