@@ -264,6 +264,13 @@
   float: left;
 }
 
+@media screen and (max-width: 800px) {
+  .cart-page .column {
+    display: block;
+    width: auto;
+    padding: 0 0 20px;
+  }
+}
 @media screen and (min-width: $tablet_floor) {
   .mobile-only {
     display: none !important;
