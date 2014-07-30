@@ -291,6 +291,24 @@ describe "admin manange organization", :vcr do
     end
   end
 
+  it 'can see a list of organizations as a CSV' do
+    market = create(:market)
+    organization = create(:organization, name: "University of Michigan Farmers", markets: [market])
+    admin = create(:user, :admin)
+
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(admin)
+    visit admin_organizations_path
+
+    html_headers = page.all('th').map(&:text)
+
+    click_link "Export CSV"
+
+    csv_headers = CSV.parse(page.body).first
+
+    expect(csv_headers).to include(*html_headers.reject!(&:empty?))
+  end
+
   context "user management" do
     let!(:market) { create(:market) }
     let!(:admin) { create(:user, :admin) }
