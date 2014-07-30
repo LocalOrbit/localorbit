@@ -1,10 +1,15 @@
 <div class="row product-header filter-group">
+  <div class="header-actions pull-right">
+    <%= link_to "#{svg_icon} Export CSV".html_safe, url_for(format: :csv), class: "export" %>
+    <%= link_to 'Add Organization', new_admin_organization_path, class: "btn btn--add btn--small" if current_user.admin? || current_user.market_manager? %>
+  </div>
+
   <div class="column product-filters">
     <div class="product-search search-widget">
       <input type="search" id="search" value="<%= @query_params["search"] %>" placeholder="Organization Name"><button type="submit" id="search-btn" class="btn btn--end">Search</button>
     </div>
   </div>
-   <%= link_to 'Add Organization', new_admin_organization_path, class: "btn btn--add btn--small pull-right" if current_user.admin? || current_user.market_manager? %>
+
 
   <div class="manager-filters">
     <% if current_user.admin? || current_user.multi_market_membership? %>
@@ -18,7 +23,7 @@
       <%= select_tag :filter_can_sell, options_for_select(seller_status_options, selected: @query_params["can_sell"]), class: 'filter-dropdown', data: { parameter: "can_sell"} %>
     </span>
     <%= link_to "Reset", admin_organizations_path(clear: '', sort: @query_params["sort"]), class: 'btn reset' if can_reset?(@query_params) %>
-   
+
   </div>
- 
+
 </div>

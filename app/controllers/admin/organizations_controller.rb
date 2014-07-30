@@ -9,6 +9,11 @@ module Admin
       @query_params = sticky_parameters(request.query_parameters)
       @organizations = current_user.managed_organizations.periscope(@query_params).page(params[:page]).per(@query_params[:per_page])
       find_selling_markets
+
+      respond_to do |format|
+        format.html
+        format.csv { @filename = "organizations.csv" }
+      end
     end
 
     def new
