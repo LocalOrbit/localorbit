@@ -26,6 +26,7 @@ class OrderItem < ActiveRecord::Base
   before_save :update_delivered_at
   before_save :update_consumed_inventory
 
+  scope :delivered,    -> { where(delivery_status: "delivered") }
   scope :undelivered,  -> { where(delivery_status: "pending") }
 
   def self.for_delivery(delivery)
