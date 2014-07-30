@@ -290,19 +290,19 @@ class Order < ActiveRecord::Base
   end
 
   def payable_subtotal
-    @payable_subtotal ||= items.to_a.inject(delivery_fees) {|sum, item| sum + (item.delivered? ? item.gross_total : 0) }
+    @payable_subtotal ||= delivery_fees + items.delivered.to_a.sum {|i| i.gross_total }
   end
 
   def market_payable_market_fee
-    @market_payable_market_fee ||= items.to_a.sum {|i| i.delivered? ? i.market_seller_fee : 0 }
+    @market_payable_market_fee ||= items.delivered.sum(:market_seller_fee)
   end
 
   def market_payable_local_orbit_fee
-    @market_payable_local_orbit_fee ||= items.to_a.sum {|i| i.delivered? ? i.local_orbit_seller_fee + i.local_orbit_market_fee : 0 }
+    @market_payable_local_orbit_fee ||= items.delivered.sum("local_orbit_seller_fee + local_orbit_market_fee")
   end
 
   def market_payable_payment_fee
-    @market_payable_payment_fee ||= items.to_a.sum {|i| i.delivered? ? i.payment_seller_fee + i.payment_market_fee : 0 }
+    @market_payable_payment_fee ||= items.delivered.sum("payment_seller_fee + payment_market_fee")
   end
 
   def apply_delivery_address(address)
