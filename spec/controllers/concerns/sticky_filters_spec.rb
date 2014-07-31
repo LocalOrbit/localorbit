@@ -27,6 +27,12 @@ describe StickyFilters do
     expect(sticky_parameters({"boo" => "hiss"})).to eq({"boo" => "hiss"})
   end
 
+  it "saves params per path ignoring format" do
+    sticky_parameters({"foo" => "bar"})
+    @path = "/something.csv"
+    expect(sticky_parameters({"boo" => "hiss"})).to eq({"boo" => "hiss"})
+  end
+
   it "replaces saved parameter if given a new value in a request" do
     sticky_parameters({"foo" => "bar", "boo" => "hiss"})
     expect(sticky_parameters({"boo" => "ya!"})).to eq({"foo" => "bar", "boo" => "ya!"})
