@@ -12,7 +12,7 @@ module Metrics
       lo_payment_markets:   self.base_scope.where(allow_purchase_orders: true, default_allow_purchase_orders: true),
       start_up_markets:     self.base_scope.joins(:plan).where(plan_id: Plan.find_by_name("Start Up")),
       grow_markets:         self.base_scope.joins(:plan).where(plan_id: Plan.find_by_name("Grow")),
-      automate_market:      self.base_scope.joins(:plan).where(plan_id: Plan.find_by_name("Automate"))
+      automate_markets:     self.base_scope.joins(:plan).where(plan_id: Plan.find_by_name("Automate"))
     }
   end
 end
