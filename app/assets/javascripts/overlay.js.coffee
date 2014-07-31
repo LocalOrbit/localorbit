@@ -9,7 +9,7 @@ close_popups = ->
   $('.popover, .popup, .dropdown').addClass('is-hidden')
   $('body').css('min-height', '0')
 
-$('.overlay').click (e) ->
+$('.overlay').on "click", (e) ->
   $('.is-open').removeClass('is-open is-dark is-dim is-modal is-editable mobile-dim')
   close_popups()
     
