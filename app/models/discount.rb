@@ -34,6 +34,10 @@ class Discount < ActiveRecord::Base
     end
   end
 
+  def active?
+    (start_date.nil? || start_date < Time.current) && (end_date.nil? || end_date > Time.current)
+  end
+
   def total_uses
     Order.where(discount_id: id).count
   end

@@ -381,6 +381,22 @@ describe "Viewing the cart", :js do
       end
     end
 
+    context "with an expired discount code" do
+      let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed", start_date: 2.days.ago, end_date: 1.day.from_now) }
+
+      it "displays the applied discount and code" do
+        discount.update_attribute(:end_date, 1.day.ago)
+        fill_in "Discount Code", with: "15off"
+        click_link "Apply"
+
+        expect(page).to have_content("Discount code expired")
+
+        within("#totals") do
+          expect(page).not_to have_content("Discount")
+        end
+      end
+    end
+
     context "with a valid discount maxed out on total usage" do
       let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed", maximum_uses: 2) }
       let!(:order1) { create(:order, discount: discount )}
