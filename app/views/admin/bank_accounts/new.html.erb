@@ -19,12 +19,12 @@
     </div>
 
     <div>
-      <% if current_user.can_manage_organization?(@organization) %>
+      <% if current_user.market_manager? %>
         <p>This payment method will be used to deliver payments from orders and from where you will be charged Local Orbit fees.</p>
-      <% elsif @organization.can_sell? %>
-        <p>This payment method will be used to deliver payments from orders.</p>
-      <% else %>
+      <% elsif current_user.buyer_only? %>
         <p>This payment method will be used to fulfill your orders.</p>
+      <% else %>
+        <p>This payment method will be used to deliver payments from orders.</p>
       <% end %>
     </div>
 
