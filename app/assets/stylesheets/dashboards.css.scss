@@ -17,10 +17,6 @@
   display: block;
   margin-bottom: 20px;
   width: 300px;
-  @media screen and (max-width: 600px) {
-    float: none;
-    width: auto;
-  }
 }
 
 .dashboard-link {
