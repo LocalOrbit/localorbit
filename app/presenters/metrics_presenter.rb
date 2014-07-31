@@ -40,7 +40,7 @@ class MetricsPresenter
     payment: Payment.joins(:market).where.not(market_id: TEST_MARKET_IDS),
     market: Market.where.not(id: TEST_MARKET_IDS),
     organization: Organization.where.not(id: TEST_ORG_IDS),
-    product: Product
+    product: Product.where.not(organization_id: TEST_ORG_IDS).uniq
   }
 
   METRICS = {
