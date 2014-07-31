@@ -63,6 +63,7 @@ module Admin
         :type,
         :discount,
         :product_id,
+        :category_id,
         :buyer_organization_id,
         :seller_organization_id,
         :minimum_order_total,
@@ -75,6 +76,7 @@ module Admin
     def find_select_data
       find_markets
       find_products
+      find_categories
       find_organizations
     end
 
@@ -95,7 +97,13 @@ module Admin
         where(organization_id: org_ids).
         order("organizations.name, products.name").
         map {|p| ["#{p.organization.name}: #{p.name}", p.id] }
-     end
+    end
+
+    def find_categories
+      @categories = Category.where(depth: 1).
+        order(:name).
+        map {|c| [c.name, c.id] }
+    end
 
      def find_organizations
        @organizations = MarketOrganization.

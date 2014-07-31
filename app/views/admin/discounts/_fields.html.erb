@@ -46,6 +46,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :category_id, "Restrict to Category" %><br>
+    <%= f.select :category_id, @categories, {include_blank: "Any Category"}, class: "column--full" %>
+  </div>
+
+  <div class="field">
     <%= f.label :buyer_organization_id, "Restrict to Buyer Organization" %><br>
     <%= f.select :buyer_organization_id, @organizations, {include_blank: "Any Buyers"}, class: "column--full" %>
   </div>
