@@ -1,6 +1,6 @@
 <fieldset class="l-flush-top primary-delivery-info">
   <legend>Add a new Delivery</legend>
-  <span class="tooltip" data-tooltip="You can have multiple delivery options that all of your Buyers will see."></span>
+  <span>You can have multiple delivery options that all of your Buyers will see.</span>
 
   <div class="field">
     <%= f.label :cycle %><br>
@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :fee, 'Delivery fee' %>
-    <span class="tooltip" data-tooltip="This fee is charged to the Buyer."></span>
+    <!--<span class="tooltip" data-tooltip="This fee is charged to the Buyer."></span>-->
     <br>
     <%= f.number_field :fee, min: 0, step: "0.01", size: 4 %>
   </div
@@ -25,7 +25,7 @@
 
   <div class="field">
     <%= f.label :order_cutoff %>
-    <span class="tooltip pull-right" data-tooltip="The order cutoff is the latest time a Buyer can place an order for that delivery cycle. The time is based on the start of the Seller delivery.  If you have a 24 hour cut off, orders would stop being accepted at 5:59am on Tuesday for a 6am Seller delivery start on Wednesday."></span>
+    <span class="tooltip" data-tooltip="The order cutoff is the latest time a Buyer can place an order for that delivery cycle. The time is based on the start of the Seller delivery.  If you have a 24 hour cut off, orders would stop being accepted at 5:59am on Tuesday for a 6am Seller delivery start on Wednesday."></span>
     <br>
     <%= f.number_field :order_cutoff, min: 6, max: 504, size: 4 %> hours before delivery
   </div>
