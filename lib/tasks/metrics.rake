@@ -2,7 +2,7 @@ namespace :metrics do
   desc "calculates Market metrics for the previous day"
   task market: [:environment] do
     before = Metric.where(model_type: "Market").count
-    Metrics::Market.perform
+    Metrics::MarketHistory.perform
     count = Metric.where(model_type: "Market").count - before
 
     puts "#{count} Market #{"metric".pluralize(count)} changed since the last run." 
@@ -11,7 +11,7 @@ namespace :metrics do
   desc "calculates Organization metrics for the previous day"
   task organization: [:environment] do
     before = Metric.where(model_type: "Organization").count
-    Metrics::Organization.perform
+    Metrics::OrganizationHistory.perform
     count = Metric.where(model_type: "Organization").count - before
 
     puts "#{count} Organization #{"metric".pluralize(count)} changed since the last run."
@@ -20,7 +20,7 @@ namespace :metrics do
   desc "calculates Product metrics for the previous day"
   task product: [:environment] do
     before = Metric.where(model_type: "Product").count
-    Metrics::Product.perform
+    Metrics::ProductHistory.perform
     count = Metric.where(model_type: "Product").count - before
 
     puts "#{count} Product #{"metric".pluralize(count)} changed since the last run."

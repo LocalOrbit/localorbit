@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20140729103610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
 
   create_table "bank_accounts", force: true do |t|
     t.string   "bank_name"
@@ -542,8 +541,8 @@ ActiveRecord::Schema.define(version: 20140729103610) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.integer  "top_level_category_id"
     t.string   "image_uid"
+    t.integer  "top_level_category_id"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"

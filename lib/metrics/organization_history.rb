@@ -1,5 +1,5 @@
 module Metrics
-  class Organization < Base
+  class OrganizationHistory < Base
     cattr_accessor :base_scope, :metrics, :model_name
 
     @@model_name = "Organization"
