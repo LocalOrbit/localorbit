@@ -1,5 +1,5 @@
 module Metrics
-  class Product < Base
+  class ProductHistory < Base
     cattr_accessor :base_scope, :metrics, :model_name
 
     @@model_name = "Product"
