@@ -26,7 +26,8 @@
               <td><%= metric_title %></td>
               <% @presenter.headers.each do |header| %>
                 <td>
-                  <%= content_tag "span", metric_values[header], class: "metric-value" %><br>
+                  <% infinity = metric_values[header] == "∞" %>
+                  <%= content_tag "span", metric_values[header], class: "metric-value#{infinity ? ' infinity' : ''}" %><br>
                 </td>
               <% end %>
             </tr>

@@ -646,7 +646,9 @@ class MetricsPresenter
     when :decimal  then (value || 0).try(:round, 2)
     when :currency then number_to_currency(value || 0)
     when :percent
-      if value = (value.try(:nan?) ? 0 : value)
+      if value.try(:infinite?)
+        "∞"
+      elsif value = (value.try(:nan?) ? 0 : value)
         sprintf("%+0.1f%%", value)
       else
         nil
