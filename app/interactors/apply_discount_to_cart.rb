@@ -22,7 +22,7 @@ class ApplyDiscountToCart
   end
 
   def discount_is_valid?(discount)
-    less_than_max_uses?(discount) && less_than_max_org_uses?(discount)
+    discount.active? && less_than_max_uses?(discount) && less_than_max_org_uses?(discount)
   end
 
   def less_than_max_uses?(discount)

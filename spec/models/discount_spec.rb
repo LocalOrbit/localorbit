@@ -125,6 +125,62 @@ describe Discount do
     end
   end
 
+  describe "#active?" do
+    it "start is not set and end is not set is active" do
+      subject.start_date = nil
+      subject.end_date = nil
+      expect(subject).to be_active
+    end
+
+    it "start is not set and end is in the past is not active" do
+      subject.start_date = nil
+      subject.end_date = 1.day.ago
+      expect(subject).not_to be_active
+    end
+
+    it "start is not set and end is in the future is active" do
+      subject.start_date = nil
+      subject.end_date = 1.day.from_now
+      expect(subject).to be_active
+    end
+
+    it "start is in the past and end is not set is active" do
+      subject.start_date = 1.day.ago
+      subject.end_date = nil
+      expect(subject).to be_active
+    end
+
+    it "start is in the past and end is in the past is not active" do
+      subject.start_date = 1.day.ago
+      subject.end_date = 1.day.ago
+      expect(subject).not_to be_active
+    end
+
+    it "start is in the past and end is in the future is active" do
+      subject.start_date = 1.day.ago
+      subject.end_date = 1.day.from_now
+      expect(subject).to be_active
+    end
+
+    it "start is in the future and end is not set is not active" do
+      subject.start_date = 1.day.from_now
+      subject.end_date = nil
+      expect(subject).not_to be_active
+    end
+
+    it "start is in the future and end is in the past is not active" do
+      subject.start_date = 1.day.from_now
+      subject.end_date = 1.day.ago
+      expect(subject).not_to be_active
+    end
+
+    it "start is in the future and end is in the future is not active" do
+      subject.start_date = 1.day.from_now
+      subject.end_date = 1.day.from_now
+      expect(subject).not_to be_active
+    end
+  end
+
   describe "#total_uses" do
     let!(:discount) { create(:discount) }
     let!(:order1)   { create(:order, discount: discount) }
