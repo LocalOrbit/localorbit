@@ -63,6 +63,7 @@ module Admin
         :type,
         :discount,
         :product_id,
+        :category_id,
         :buyer_organization_id,
         :seller_organization_id,
         :minimum_order_total,
