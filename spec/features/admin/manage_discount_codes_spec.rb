@@ -25,6 +25,17 @@ describe "Manage Discount Codes" do
   context "market managers" do
     let!(:user) { create(:user, managed_markets: [market]) }
 
+    context "plan does not allow discount codes" do
+      let!(:market) { create(:market, plan: create(:plan, discount_codes: false)) }
+
+      it "does not see Discount Codes in the menu" do
+        within '#admin-nav' do
+          click_link 'Marketing'
+        end
+        expect(first(:link, "Discount Codes")).to be_nil
+      end
+    end
+
     it "can be accessed via the menu" do
       within '#admin-nav' do
         click_link 'Marketing'
