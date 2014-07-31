@@ -413,5 +413,42 @@ describe "Viewing the cart", :js do
         end
       end
     end
+
+    context "with a valid discount restricted to the current buying organization" do
+      let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed", buyer_organization_id: buyer.id) }
+
+      it "displays the applied discount and code" do
+        fill_in "Discount Code", with: "15off"
+        click_link "Apply"
+
+        expect(page).to have_content("Discount applied")
+
+        within("#totals") do
+          expect(page).to have_content("Discount")
+        end
+
+        expect(cart_totals.subtotal).to have_content("$40.00")
+        expect(cart_totals.discount).to have_content("$15.00")
+        expect(cart_totals.delivery_fees).to have_content("$10.00")
+        expect(cart_totals.total).to have_content("$35.00")
+      end
+    end
+
+    context "with a valid discount restricted to a different buyer organization" do
+      let!(:other_org) { create(:organization, :buyer, :single_location) }
+      let!(:discount)  { create(:discount, code: "15off", discount: "15", type: "fixed", buyer_organization_id: other_org.id) }
+      let!(:order1)    { create(:order, organization: buyer, discount: discount )}
+
+      it "informs the user the code is invalid" do
+        fill_in "Discount Code", with: "15off"
+        click_link "Apply"
+
+        expect(page).to have_content("Invalid discount code")
+
+        within("#totals") do
+          expect(page).not_to have_content("Discount")
+        end
+      end
+    end
   end
 end
