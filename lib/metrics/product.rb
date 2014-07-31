@@ -5,8 +5,8 @@ module Metrics
     @@model_name = "Product"
     @@base_scope = ::Product
     @@metrics = {
-      total_products_simple:   BASE_SCOPE.where(use_simple_inventory: true),
-      total_products_advanced: BASE_SCOPE.where(use_simple_inventory: false)
+      total_products_simple:   self.base_scope.where(use_simple_inventory: true),
+      total_products_advanced: self.base_scope.where(use_simple_inventory: false)
     }
   end
 end
