@@ -377,10 +377,26 @@ describe "Viewing the cart", :js do
       end
     end
 
-    context "with a valid discount maxed out on usage" do
+    context "with a valid discount maxed out on total usage" do
       let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed", maximum_uses: 2) }
       let!(:order1) { create(:order, discount: discount )}
       let!(:order2) { create(:order, discount: discount )}
+
+      it "informs the user the code has expired" do
+        fill_in "Discount Code", with: "15off"
+        click_link "Apply"
+
+        expect(page).to have_content("Discount code expired")
+
+        within("#totals") do
+          expect(page).not_to have_content("Discount")
+        end
+      end
+    end
+
+    context "with a valid discount maxed out on organizational usage" do
+      let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed", maximum_organization_uses: 1) }
+      let!(:order1)   { create(:order, organization: buyer, discount: discount )}
 
       it "informs the user the code has expired" do
         fill_in "Discount Code", with: "15off"

@@ -17,6 +17,14 @@ class ApplyDiscountToCart
   end
 
   def can_use_discount?(discount)
-    discount.maximum_uses == 0 || discount.maximum_uses < discount.total_uses
+    less_than_max_uses?(discount) && less_than_max_org_uses?(discount)
+  end
+
+  def less_than_max_uses?(discount)
+    discount.maximum_uses == 0 || discount.maximum_uses > discount.total_uses
+  end
+
+  def less_than_max_org_uses?(discount)
+    discount.maximum_organization_uses == 0 || discount.maximum_organization_uses > discount.uses_by_organization(cart.organization)
   end
 end

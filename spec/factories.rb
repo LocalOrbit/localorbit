@@ -78,6 +78,8 @@ FactoryGirl.define do
     sequence(:code) {|n| n.to_s(16) }
     type "fixed"
     discount 5.00
+    maximum_uses 0
+    maximum_organization_uses 0
   end
 
   factory :location do
