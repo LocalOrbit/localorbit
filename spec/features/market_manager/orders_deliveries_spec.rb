@@ -13,7 +13,7 @@ context "Viewing sold items" do
   let!(:delivery) { create(:delivery, delivery_schedule: delivery_schedule) }
   let!(:order_items) {
     [
-      create(:order_item, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, quantity_delivered: 0, unit: "Bushels", market_seller_fee: 0.75, payment_status: "refunded"),
+      create(:order_item, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, quantity_delivered: 0, unit: "Bushels", market_seller_fee: 0.75, delivery_status: 'canceled', payment_status: "refunded"),
       create(:order_item, product: product2, seller_name: seller.name, name: product2.name, unit_price: 5.00, quantity: 10, unit: "Lots", payment_seller_fee: 1.20),
       create(:order_item, product: product3, seller_name: seller2.name, name: product3.name, unit_price: 2.00, quantity: 12, unit: "Heads", local_orbit_seller_fee: 4)
     ]

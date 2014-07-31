@@ -12,7 +12,7 @@ describe 'Editing an order' do
   let!(:buyer)           { create(:organization, :buyer, markets: [market]) }
 
   let!(:delivery)        { monday_delivery.next_delivery }
-  let!(:order_item)      { create(:order_item, product: product, quantity: 5, unit_price: 3.00) }
+  let!(:order_item)      { create(:order_item, product: product, quantity: 5, unit_price: 3.00, payment_status: "pending", delivery_status: 'pending') }
   let!(:order_item_lot)  { create(:order_item_lot, quantity: 5, lot: product_lot, order_item: order_item) }
   let!(:order)           { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item], total_cost: 15.00, payment_method: 'ach')}
   let!(:bank_account)    { create(:bank_account, :checking, :verified, bankable: buyer) }
@@ -295,6 +295,18 @@ describe 'Editing an order' do
         expect(Dom::Order::ItemRow.first.delivery_status).to eql('Delivered')
         expect(page).to_not have_button("Mark all delivered")
       end
+
+      it "marks items canceled if quantity delivered is set to 0" do
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Pending')
+
+        Dom::Order::ItemRow.first.set_quantity_delivered(0)
+        click_button 'Mark all delivered'
+
+        item = Dom::Order::ItemRow.first
+        expect(item.delivery_status).to eql('Canceled')
+        expect(item.payment_status).to eql('Refunded')
+        expect(page).to_not have_button("Mark all delivered")
+      end
     end
 
     context "as an admin" do
@@ -306,6 +318,18 @@ describe 'Editing an order' do
         click_button 'Mark all delivered'
 
         expect(Dom::Order::ItemRow.first.delivery_status).to eql('Delivered')
+        expect(page).to_not have_button("Mark all delivered")
+      end
+
+      it "marks items canceled if quantity delivered is set to 0" do
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Pending')
+
+        Dom::Order::ItemRow.first.set_quantity_delivered(0)
+        click_button 'Mark all delivered'
+
+        item = Dom::Order::ItemRow.first
+        expect(item.delivery_status).to eql('Canceled')
+        expect(item.payment_status).to eql('Refunded')
         expect(page).to_not have_button("Mark all delivered")
       end
     end
