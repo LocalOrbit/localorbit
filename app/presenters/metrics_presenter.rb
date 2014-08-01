@@ -666,10 +666,10 @@ class MetricsPresenter
   def headers_for_interval(interval)
     if interval == "month"
       end_date = Date.current.beginning_of_month
-      (0..(GROUPDATE_OPTIONS[:month][:last] - 1)).map {|x| (end_date - x.months).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
+      (0...GROUPDATE_OPTIONS[:month][:last]).map {|x| (end_date - x.months).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
     elsif interval == "week"
       end_date = Date.current.beginning_of_week - (START_OF_WEEK == :sun ? 1 : 0).days
-      (0..(GROUPDATE_OPTIONS[:week][:last] - 1)).map {|x| (end_date - x.weeks).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
+      (0...GROUPDATE_OPTIONS[:week][:last]).map {|x| (end_date - x.weeks).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
     end
   end
 end
