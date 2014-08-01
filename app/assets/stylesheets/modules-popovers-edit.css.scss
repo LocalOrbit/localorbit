@@ -83,6 +83,9 @@
       }
     }
   }
+  .overlay ~ .popup--edit {
+    max-width: 300px;
+  }
 
   .popup--centered {
     left: 50%;
