@@ -68,9 +68,9 @@ $ ->
     $.get href, (response) =>
       $element.find(".popup-body").html(response)
 
-  $('.popup button.close').click ->
+  $('.popup button.close').on "click touchend", (e) ->
     $popup = $(this).closest('.popup')
-    $popup.addClass('is-hidden').css({'left': 'auto', 'top': 'auto'}).insertAfter('.popup-toggle[href="#' + $popup.attr('id') + '"]')
+    $popup.addClass('is-hidden').css({'left': '', 'top': '', 'position': ''}).insertAfter('.popup-toggle[href="#' + $popup.attr('id') + '"]')
     $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable mobile-dim')
     $('body').css('min-height', '0')
 
