@@ -48,6 +48,7 @@ gem 'newrelic-dragonfly'
 gem 'pdfkit'
 gem 'periscope-activerecord'
 gem 'pg_search'
+gem 'postgres_ext'
 gem 'rack-canonical-host'
 gem 'ransack', github: 'activerecord-hackery/ransack', branch: 'rails-4.1' # branch version is smaller than gem version
 gem 'simpleidn'

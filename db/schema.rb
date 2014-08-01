@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140729103610) do
+ActiveRecord::Schema.define(version: 20140801175604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -334,6 +334,7 @@ ActiveRecord::Schema.define(version: 20140729103610) do
     t.integer  "model_ids",    default: [], null: false, array: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "value"
   end
 
   add_index "metrics", ["effective_on"], name: "index_metrics_on_effective_on", using: :btree

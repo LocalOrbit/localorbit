@@ -40,7 +40,7 @@ class MetricsPresenter
     payment: Payment.joins(:market).where.not(market_id: TEST_MARKET_IDS),
     market: Market.where.not(id: TEST_MARKET_IDS),
     organization: Organization.where.not(id: TEST_ORG_IDS),
-    product: Product.where.not(organization_id: TEST_ORG_IDS).uniq
+    product: Product.joins(organization: :markets).where.not(organization_id: TEST_ORG_IDS).uniq
   }
 
   METRICS = {
@@ -442,8 +442,9 @@ class MetricsPresenter
     total_products: {
       title: "Total Products",
       scope: BASE_SCOPES[:product],
-      attribute: :created_at,
+      attribute: "products.created_at",
       calculation: :window,
+      calculation_arg: "products.id",
       format: :integer
     },
     total_products_simple: {
@@ -473,7 +474,29 @@ class MetricsPresenter
       calculation: :custom,
       calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
       format: :decimal
-    }
+    },
+    total_price_sum: {
+      title: "Total Price Sum",
+      scope: Metric.where(metric_code: "total_price_sum"),
+      attribute: :effective_on,
+      calculation: :sum,
+      calculation_arg: :value,
+      format: :currency
+    },
+    total_price_count: {
+      title: "Total Price Count",
+      scope: Metric.where(metric_code: "total_price_count"),
+      attribute: :effective_on,
+      calculation: :sum,
+      calculation_arg: :value,
+      format: :integer
+    },
+    average_price: {
+      title: "Average Price",
+      calculation: :ruby,
+      calculation_arg: [:/, :total_price_sum, :total_price_count],
+      format: :currency
+    },
   }
 
   GROUPS = {
@@ -512,8 +535,8 @@ class MetricsPresenter
     products: {
       title: "Products",
       metrics: [
-        :total_products, :total_products_simple, :total_products_advanced, :total_products_ordered
-        # :average_product_price, :number_of_items
+        :total_products, :total_products_simple, :total_products_advanced, :total_products_ordered,
+        :average_price
       ]
     }
   }.with_indifferent_access
@@ -534,7 +557,7 @@ class MetricsPresenter
 
     @headers = headers_for_interval(interval)
 
-    if groups.include?("financials")
+    if groups.include?("financials") || groups.include?("products")
       @markets = Market.where.not(id: TEST_MARKET_IDS).order("LOWER(name)").pluck(:id, :name)
     end
 
@@ -582,7 +605,14 @@ class MetricsPresenter
 
     if m[:scope]
       scope = m[:scope].uniq
-      scope = scope.where(markets: {id: markets}) unless markets.empty?
+
+      unless markets.empty?
+        if scope.table_name == "metrics"
+          scope = scope.where.overlap(model_ids: markets)
+        else
+          scope = scope.where(markets: {id: markets})
+        end
+      end
     end
 
     values = if m[:calculation] == :custom
@@ -603,7 +633,7 @@ class MetricsPresenter
       metric2 = calculate_metric(args[2], interval, markets, false)
 
       Hash[metric1.map do |key, value|
-        [key, value.send(args[0], metric2[key])]
+        [key, (value.send(args[0], metric2[key]) rescue 0)]
       end]
 
     elsif m[:calculation] == :percent_growth
