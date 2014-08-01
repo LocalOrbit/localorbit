@@ -290,20 +290,41 @@ describe "Checking Out", :js, :vcr do
     end
 
     context "with discount" do
-      let(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed") }
+      context "over the whole order" do
+        let(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed") }
 
-      before do
-        cart.update_column(:discount_id, discount.id)
+        before do
+          cart.update_column(:discount_id, discount.id)
+        end
+
+        it "persists the discount on the order" do
+          checkout
+
+          within("tfoot") do
+            expect(page).to have_content("Item Subtotal $40.00")
+            expect(page).to have_content("Discount $15.00")
+            expect(page).to have_content("Delivery Fees $10.00")
+            expect(page).to have_content("Order Total $35.00")
+          end
+        end
       end
 
-      it "persists the discount on the order" do
-        checkout
+      context "over seller items" do
+        let(:discount) { create(:discount, code: "50percent", discount: "50", type: "percentage", seller_organization_id: ada_farms.id) }
 
-        within("tfoot") do
-          expect(page).to have_content("Item Subtotal $40.00")
-          expect(page).to have_content("Discount $15.00")
-          expect(page).to have_content("Delivery Fees $10.00")
-          expect(page).to have_content("Order Total $35.00")
+        before do
+          cart.update_column(:discount_id, discount.id)
+        end
+
+        it "persists the discount on the order" do
+          checkout
+
+          within("tfoot") do
+            expect(page).to have_content("Item Subtotal $40.00")
+            expect(page).to have_content("Discount $7.50")
+            expect(page).to have_content("Delivery Fees $10.00")
+            expect(page).to have_content("Order Total $42.50")
+          end
         end
       end
     end
