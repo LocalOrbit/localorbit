@@ -3,7 +3,7 @@ module Metrics
     cattr_accessor :base_scope, :metrics, :model_name
 
     @@model_name = "Product"
-    @@base_scope = ::Product.where.not(organization_id: MetricsPresenter::TEST_ORG_IDS).uniq
+    @@base_scope = ::Product.joins(organization: :markets).where.not(organization_id: MetricsPresenter::TEST_ORG_IDS).uniq
     @@metrics = {
       total_products_simple:   { scope: self.base_scope.where(use_simple_inventory: true) },
       total_products_advanced: { scope: self.base_scope.where(use_simple_inventory: false) }

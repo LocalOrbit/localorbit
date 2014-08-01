@@ -40,7 +40,7 @@ class MetricsPresenter
     payment: Payment.joins(:market).where.not(market_id: TEST_MARKET_IDS),
     market: Market.where.not(id: TEST_MARKET_IDS),
     organization: Organization.where.not(id: TEST_ORG_IDS),
-    product: Product.where.not(organization_id: TEST_ORG_IDS).uniq
+    product: Product.joins(organization: :markets).where.not(organization_id: TEST_ORG_IDS).uniq
   }
 
   METRICS = {
@@ -442,8 +442,9 @@ class MetricsPresenter
     total_products: {
       title: "Total Products",
       scope: BASE_SCOPES[:product],
-      attribute: :created_at,
+      attribute: "products.created_at",
       calculation: :window,
+      calculation_arg: "products.id",
       format: :integer
     },
     total_products_simple: {
@@ -556,7 +557,7 @@ class MetricsPresenter
 
     @headers = headers_for_interval(interval)
 
-    if groups.include?("financials")
+    if groups.include?("financials") || groups.include?("products")
       @markets = Market.where.not(id: TEST_MARKET_IDS).order("LOWER(name)").pluck(:id, :name)
     end
 
@@ -604,7 +605,14 @@ class MetricsPresenter
 
     if m[:scope]
       scope = m[:scope].uniq
-      scope = scope.where(markets: {id: markets}) unless markets.empty?
+
+      unless markets.empty?
+        if scope.table_name == "metrics"
+          scope = scope.where.overlap(model_ids: markets)
+        else
+          scope = scope.where(markets: {id: markets})
+        end
+      end
     end
 
     values = if m[:calculation] == :custom
