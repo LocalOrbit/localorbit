@@ -268,11 +268,23 @@ class MetricsPresenter
       calculation: :metric,
       format: :integer
     },
+    live_markets_percent_growth: {
+      title: "Live Markets % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :live_markets,
+      format: :percent
+    },
     active_markets: {
       title: "Active Markets",
       scope: Market,
       calculation: :metric,
       format: :integer
+    },
+    active_markets_percent_growth: {
+      title: "Active Markets % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :active_markets,
+      format: :percent
     },
     # allow_credit_cards is the admin setting which when
     # false trumps the default_allow_credit_cards setting
@@ -282,11 +294,23 @@ class MetricsPresenter
       calculation: :metric,
       format: :integer
     },
+    credit_card_markets_percent_growth: {
+      title: "Markets Using Credit Cards % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :credit_card_markets,
+      format: :percent
+    },
     ach_markets: {
       title: "Markets Using ACH",
       scope: Market,
       calculation: :metric,
       format: :integer
+    },
+    ach_markets_percent_growth: {
+      title: "Markets Using ACH % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :ach_markets,
+      format: :percent
     },
     lo_payment_markets: {
       title: "Markets Using LO Payments",
@@ -294,11 +318,23 @@ class MetricsPresenter
       calculation: :metric,
       format: :integer
     },
+    lo_payment_markets_percent_growth: {
+      title: "Markets Using LO Payments % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :lo_payment_markets,
+      format: :percent
+    },
     start_up_markets: {
       title: "Markets On Start Up Plan",
       scope: Market,
       calculation: :metric,
       format: :integer
+    },
+    start_up_markets_percent_growth: {
+      title: "Start Up Plan Markets % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :start_up_markets,
+      format: :percent
     },
     grow_markets: {
       title: "Markets On Grow Plan",
@@ -306,11 +342,23 @@ class MetricsPresenter
       calculation: :metric,
       format: :integer
     },
+    grow_markets_percent_growth: {
+      title: "Growth Plan Markets % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :grow_markets,
+      format: :percent
+    },
     automate_markets: {
       title: "Markets On Automate Plan",
       scope: Market,
       calculation: :metric,
       format: :integer
+    },
+    automate_markets_percent_growth: {
+      title: "Automate Plan Markets % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :automate_markets,
+      format: :percent
     },
     total_organizations: {
       title: "Total Organizations",
@@ -332,11 +380,23 @@ class MetricsPresenter
       calculation: :metric,
       format: :integer
     },
+    total_buyers_percent_growth: {
+      title: "Total Buyers % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :total_buyers,
+      format: :percent
+    },
     total_sellers: {
       title: "Total Sellers",
       scope: Organization,
       calculation: :metric,
       format: :integer
+    },
+    total_sellers_percent_growth: {
+      title: "Total Sellers % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :total_sellers,
+      format: :percent
     },
     # Active Users
     # All sellers + all buyers for the current period
@@ -373,6 +433,12 @@ class MetricsPresenter
       calculation: :metric,
       format: :integer
     },
+    total_buyer_orders_percent_growth: {
+      title: "Buyers Placing Orders % Growth",
+      calculation: :percent_growth,
+      calculation_arg: :total_buyer_orders,
+      format: :percent
+    },
     total_products: {
       title: "Total Products",
       scope: BASE_SCOPES[:product],
@@ -402,7 +468,7 @@ class MetricsPresenter
     },
     average_product_price: {
       title: "Average Product Price",
-      scope: BASE_SCOPES[:product],
+      scope: BASE_SCOPES[:product].joins(:prices),
       attribute: :placed_at,
       calculation: :custom,
       calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
@@ -428,15 +494,19 @@ class MetricsPresenter
     markets: {
       title: "Markets",
       metrics: [
-        :total_markets, :live_markets, :active_markets, :credit_card_markets, :ach_markets,
-        :lo_payment_markets, :start_up_markets, :grow_markets, :automate_markets
+        :total_markets, :live_markets, :live_markets_percent_growth, :active_markets,
+        :active_markets_percent_growth, :credit_card_markets, :credit_card_markets_percent_growth,
+        :ach_markets, :ach_markets_percent_growth, :lo_payment_markets,
+        :lo_payment_markets_percent_growth, :start_up_markets, :start_up_markets_percent_growth,
+        :grow_markets, :grow_markets_percent_growth, :automate_markets, :automate_markets_percent_growth
       ]
     },
     users: {
       title: "Users",
       metrics: [
-        :total_organizations, :total_buyer_only, :total_sellers, :total_buyers,
-        :total_buyer_orders, :active_users
+        :total_organizations, :total_buyer_only, :total_sellers, :total_sellers_percent_growth,
+        :total_buyers, :total_buyers_percent_growth, :total_buyer_orders,
+        :total_buyer_orders_percent_growth, :active_users
       ]
     },
     products: {
@@ -576,7 +646,9 @@ class MetricsPresenter
     when :decimal  then (value || 0).try(:round, 2)
     when :currency then number_to_currency(value || 0)
     when :percent
-      if value = (value.try(:nan?) ? 0 : value)
+      if value.try(:infinite?)
+        "∞"
+      elsif value = (value.try(:nan?) ? 0 : value)
         sprintf("%+0.1f%%", value)
       else
         nil
