@@ -18,11 +18,19 @@ class ApplyDiscountToCart
   end
 
   def can_use_discount?(discount)
-    discount && (discount.buyer_organization_id.nil? || discount.buyer_organization_id == cart.organization.id)
+    discount && can_use_in_market?(discount) && can_use_for_buyer?(discount)
   end
 
   def discount_is_valid?(discount)
     discount.active? && less_than_max_uses?(discount) && less_than_max_org_uses?(discount)
+  end
+
+  def can_use_in_market?(discount)
+    (discount.market_id.nil? || discount.market_id == cart.market_id)
+  end
+
+  def can_use_for_buyer?(discount)
+    (discount.buyer_organization_id.nil? || discount.buyer_organization_id == cart.organization.id)
   end
 
   def less_than_max_uses?(discount)
