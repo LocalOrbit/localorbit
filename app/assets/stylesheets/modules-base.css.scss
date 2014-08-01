@@ -1315,7 +1315,7 @@ label ~ .tooltip {
   margin-bottom: 2em;
 
 }
-.seller-map, .seller-photo  {
+.seller-map  {
   > img {
     width: 100%;
   }
@@ -1323,6 +1323,9 @@ label ~ .tooltip {
 .seller-photo {
   > img {
     position: relative;
+    display:block;
+    max-height: 100%;
+    margin: 0 auto;
   }
 }
 .transforms {
