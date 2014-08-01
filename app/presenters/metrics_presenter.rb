@@ -40,7 +40,7 @@ class MetricsPresenter
     payment: Payment.joins(:market).where.not(market_id: TEST_MARKET_IDS),
     market: Market.where.not(id: TEST_MARKET_IDS),
     organization: Organization.where.not(id: TEST_ORG_IDS),
-    product: Product
+    product: Product.where.not(organization_id: TEST_ORG_IDS).uniq
   }
 
   METRICS = {
@@ -264,64 +264,52 @@ class MetricsPresenter
     },
     live_markets: {
       title: "Live Markets",
-      scope: BASE_SCOPES[:market].where(active: true),
-      attribute: :created_at,
-      calculation: :window,
+      scope: Market,
+      calculation: :metric,
       format: :integer
     },
     active_markets: {
       title: "Active Markets",
-      scope: BASE_SCOPES[:order].joins(:market),
-      attribute: :placed_at,
-      calculation: :count,
-      calculation_arg: "DISTINCT(markets.id)",
+      scope: Market,
+      calculation: :metric,
       format: :integer
     },
     # allow_credit_cards is the admin setting which when
     # false trumps the default_allow_credit_cards setting
     credit_card_markets: {
       title: "Markets Using Credit Cards",
-      scope: BASE_SCOPES[:market].where(allow_credit_cards: true, default_allow_credit_cards: true),
-      attribute: :created_at,
-      calculation: :window,
+      scope: Market,
+      calculation: :metric,
       format: :integer
     },
     ach_markets: {
       title: "Markets Using ACH",
-      scope: BASE_SCOPES[:market].where(allow_ach: true, default_allow_ach: true),
-      attribute: :created_at,
-      calculation: :window,
+      scope: Market,
+      calculation: :metric,
       format: :integer
     },
     lo_payment_markets: {
       title: "Markets Using LO Payments",
-      scope: BASE_SCOPES[:market].where(allow_purchase_orders: true, default_allow_purchase_orders: true),
-      attribute: :created_at,
-      calculation: :window,
+      scope: Market,
+      calculation: :metric,
       format: :integer
     },
     start_up_markets: {
       title: "Markets On Start Up Plan",
-      scope: BASE_SCOPES[:market].joins(:plan).where(plan_id: Plan.find_by_name("Start Up")),
-      attribute: "markets.created_at",
-      calculation: :window,
-      calculation_arg: "markets.id",
+      scope: Market,
+      calculation: :metric,
       format: :integer
     },
     grow_markets: {
       title: "Markets On Grow Plan",
-      scope: BASE_SCOPES[:market].joins(:plan).where(plan_id: Plan.find_by_name("Grow")),
-      attribute: "markets.created_at",
-      calculation: :window,
-      calculation_arg: "markets.id",
+      scope: Market,
+      calculation: :metric,
       format: :integer
     },
     automate_markets: {
       title: "Markets On Automate Plan",
-      scope: BASE_SCOPES[:market].joins(:plan).where(plan_id: Plan.find_by_name("Automate")),
-      attribute: "markets.created_at",
-      calculation: :window,
-      calculation_arg: "markets.id",
+      scope: Market,
+      calculation: :metric,
       format: :integer
     },
     total_organizations: {
@@ -333,24 +321,21 @@ class MetricsPresenter
     },
     total_buyer_only: {
       title: "Total Buyers Only",
-      scope: BASE_SCOPES[:organization].where(can_sell: false),
-      attribute: :created_at,
-      calculation: :window,
+      scope: Organization,
+      calculation: :metric,
       format: :integer
     },
     # union of all buyers + any seller that has bought
     total_buyers: {
       title: "Total Buyers",
-      scope: Organization.where(Organization.arel_table[:id].in(BASE_SCOPES[:organization].select(:id).where(can_sell: false).union(BASE_SCOPES[:organization].select(:id).joins(:orders)))),
-      attribute: :created_at,
-      calculation: :window,
+      scope: Organization,
+      calculation: :metric,
       format: :integer
     },
     total_sellers: {
       title: "Total Sellers",
-      scope: BASE_SCOPES[:organization].where(can_sell: true),
-      attribute: :created_at,
-      calculation: :window,
+      scope: Organization,
+      calculation: :metric,
       format: :integer
     },
     # Active Users
@@ -384,9 +369,8 @@ class MetricsPresenter
     },
     total_buyer_orders: {
       title: "Buyers Placing Orders",
-      scope: BASE_SCOPES[:organization].joins(:orders),
-      attribute: "orders.placed_at",
-      calculation: :count,
+      scope: Organization,
+      calculation: :metric,
       format: :integer
     },
     total_products: {
@@ -398,16 +382,14 @@ class MetricsPresenter
     },
     total_products_simple: {
       title: "Total Products Using Simple Inventory",
-      scope: BASE_SCOPES[:product].where(use_simple_inventory: true),
-      attribute: :created_at,
-      calculation: :window,
+      scope: Product,
+      calculation: :metric,
       format: :integer
     },
     total_products_advanced: {
       title: "Total Products Using Advanced Inventory",
-      scope: BASE_SCOPES[:product].where(use_simple_inventory: false),
-      attribute: :created_at,
-      calculation: :window,
+      scope: Product,
+      calculation: :metric,
       format: :integer
     },
     total_products_ordered: {
@@ -567,6 +549,18 @@ class MetricsPresenter
       end
 
       growth_metric
+
+    elsif m[:calculation] == :metric
+      model_name = m[:scope].name
+      sub_select = Metric.where(model_type: model_name, metric_code: metric).
+                          select(:effective_on, "UNNEST(model_ids) AS model_id")
+
+      scope = m[:scope].
+        joins("INNER JOIN (#{sub_select.to_sql}) AS metric_calculation ON metric_calculation.model_id = #{model_name.pluralize.downcase}.id").
+        select("metric_calculation.effective_on, metric_calculation.model_id")
+
+      scope_for(scope: scope, attribute: "metric_calculation.effective_on", interval: interval).
+        count("DISTINCT(model_id)")
 
     else
       series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140725191928) do
+ActiveRecord::Schema.define(version: 20140729103610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -327,6 +327,19 @@ ActiveRecord::Schema.define(version: 20140725191928) do
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
   add_index "markets", ["subdomain"], name: "index_markets_on_subdomain", using: :btree
 
+  create_table "metrics", force: true do |t|
+    t.string   "metric_code"
+    t.date     "effective_on"
+    t.string   "model_type"
+    t.integer  "model_ids",    default: [], null: false, array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "metrics", ["effective_on"], name: "index_metrics_on_effective_on", using: :btree
+  add_index "metrics", ["metric_code", "model_type"], name: "index_metrics_on_metric_code_and_model_type", using: :btree
+  add_index "metrics", ["metric_code"], name: "index_metrics_on_metric_code", using: :btree
+
   create_table "newsletters", force: true do |t|
     t.string   "subject"
     t.text     "body"
@@ -528,8 +541,8 @@ ActiveRecord::Schema.define(version: 20140725191928) do
     t.integer  "location_id"
     t.boolean  "use_simple_inventory",  default: true, null: false
     t.integer  "unit_id"
-    t.integer  "top_level_category_id"
     t.string   "image_uid"
+    t.integer  "top_level_category_id"
     t.datetime "deleted_at"
     t.text     "short_description"
     t.text     "long_description"
