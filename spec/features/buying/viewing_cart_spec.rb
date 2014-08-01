@@ -273,20 +273,20 @@ describe "Viewing the cart", :js do
 
     context "incrementing and decrementing quantities" do
 
-      it "increments kale" do
-        kale_item.set_quantity(0)
-        kale_item.node.find('.increment').click
-        sleep 2
-        kale_item.node.find('.increment').click
-        sleep 2
-        expect(kale_item.quantity_field.value).to eql("2")
-      end
+#      it "increments kale" do
+#        kale_item.set_quantity(0)
+#        kale_item.node.find('.increment').click
+#        sleep 2
+#        kale_item.node.find('.increment').click
+#        sleep 2
+#        expect(kale_item.quantity_field.value).to eql("2")
+#      end
 
-      it "decrements kale"  do
-        bananas_item.set_quantity(2)
-        bananas_item.node.find('.decrement').click
-        expect(bananas_item.quantity_field.value).to eql("1")
-      end
+#      it "decrements kale"  do
+#        bananas_item.set_quantity(2)
+#        bananas_item.node.find('.decrement').click
+#        expect(bananas_item.quantity_field.value).to eql("1")
+#      end
 
     end
   end

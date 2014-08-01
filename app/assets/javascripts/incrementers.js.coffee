@@ -1,4 +1,5 @@
 $ ->
+  return false
   $('<button type="button" title="Remove an item" class="decrement font-icon">&#xe02f;</button>').insertBefore('input[name=quantity]')
   $('<button type="button" title="Add an item" class="increment font-icon">&#xe02e;</button>').insertAfter('input[name=quantity]')
   $('input[name=quantity]').parents('td.quantity').addClass('js-incrementers').prev('td').addClass('narrow')
