@@ -3,30 +3,36 @@ class ApplyDiscountToCart
 
   def perform
     discount = Discount.where(code: code).first
+
     if can_use_discount?(discount)
-      if discount.minimum_order_total > 0 && discount.minimum_order_total > cart.subtotal
-        context[:message] = "Discount code requires a minimum of #{"$%.2f" % discount.minimum_order_total}"
-        context.fail!
-      elsif discount_is_valid?(discount)
+      if discount_is_valid?(discount)
         cart.discount = discount
         cart.save
-        context[:message] = "Discount applied"
-      else
-        context[:message] = "Discount code expired"
-        context.fail!
       end
-    else
-      context[:message] = "Invalid discount code"
-      context.fail!
     end
   end
 
   def can_use_discount?(discount)
-    discount && can_use_in_market?(discount) && can_use_for_buyer?(discount)
+    if !discount || !can_use_in_market?(discount) || !can_use_for_buyer?(discount)
+      context[:message] = "Invalid discount code"
+      context.fail!
+    end
+
+    context.success?
   end
 
   def discount_is_valid?(discount)
-    discount.active? && less_than_max_uses?(discount) && less_than_max_org_uses?(discount)
+    if less_than_minimum?(discount)
+      context[:message] = "Discount code requires a minimum of #{"$%.2f" % discount.minimum_order_total}"
+      context.fail!
+    elsif !discount.active? || maximum_uses_hit?(discount) || maximum_organization_uses_hit?(discount)
+      context[:message] = "Discount code expired"
+      context.fail!
+    else
+      context[:message] = "Discount applied"
+    end
+
+    context.success?
   end
 
   def can_use_in_market?(discount)
@@ -37,11 +43,15 @@ class ApplyDiscountToCart
     (discount.buyer_organization_id.nil? || discount.buyer_organization_id == cart.organization.id)
   end
 
-  def less_than_max_uses?(discount)
-    discount.maximum_uses == 0 || discount.maximum_uses > discount.total_uses
+  def less_than_minimum?(discount)
+    discount.minimum_order_total > 0 && discount.minimum_order_total > cart.subtotal
   end
 
-  def less_than_max_org_uses?(discount)
-    discount.maximum_organization_uses == 0 || discount.maximum_organization_uses > discount.uses_by_organization(cart.organization)
+  def maximum_uses_hit?(discount)
+    discount.maximum_uses > 0 && discount.maximum_uses <= discount.total_uses
+  end
+
+  def maximum_organization_uses_hit?(discount)
+    discount.maximum_organization_uses > 0 && discount.maximum_organization_uses <= discount.uses_by_organization(cart.organization)
   end
 end
