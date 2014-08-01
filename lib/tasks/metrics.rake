@@ -25,4 +25,7 @@ namespace :metrics do
 
     puts "#{count} Product #{"metric".pluralize(count)} changed since the last run."
   end
+
+  desc "run all metrics calculations"
+  task all: [:market, :organization, :product]
 end
