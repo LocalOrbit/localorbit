@@ -473,7 +473,29 @@ class MetricsPresenter
       calculation: :custom,
       calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
       format: :decimal
-    }
+    },
+    total_price_sum: {
+      title: "Total Price Sum",
+      scope: Metric.where(metric_code: "total_price_sum"),
+      attribute: :effective_on,
+      calculation: :sum,
+      calculation_arg: :value,
+      format: :currency
+    },
+    total_price_count: {
+      title: "Total Price Count",
+      scope: Metric.where(metric_code: "total_price_count"),
+      attribute: :effective_on,
+      calculation: :sum,
+      calculation_arg: :value,
+      format: :integer
+    },
+    average_price: {
+      title: "Average Price",
+      calculation: :ruby,
+      calculation_arg: [:/, :total_price_sum, :total_price_count],
+      format: :currency
+    },
   }
 
   GROUPS = {
@@ -512,8 +534,8 @@ class MetricsPresenter
     products: {
       title: "Products",
       metrics: [
-        :total_products, :total_products_simple, :total_products_advanced, :total_products_ordered
-        # :average_product_price, :number_of_items
+        :total_products, :total_products_simple, :total_products_advanced, :total_products_ordered,
+        :average_price
       ]
     }
   }.with_indifferent_access
@@ -603,7 +625,7 @@ class MetricsPresenter
       metric2 = calculate_metric(args[2], interval, markets, false)
 
       Hash[metric1.map do |key, value|
-        [key, value.send(args[0], metric2[key])]
+        [key, (value.send(args[0], metric2[key]) rescue 0)]
       end]
 
     elsif m[:calculation] == :percent_growth
