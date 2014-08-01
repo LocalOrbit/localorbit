@@ -32,7 +32,13 @@ class Cart < ActiveRecord::Base
   end
 
   def discount_amount
-    @discount_amount ||= discount.try(:value_for, subtotal) || 0
+    item_total = if discount.try(:seller_organization_id).present?
+      items.joins(:product).where(products: {organization_id: discount.seller_organization_id}).each.sum(&:total_price)
+    else
+      subtotal
+    end
+
+    @discount_amount ||= discount.try(:value_for, item_total) || 0
   end
 
   def discount_code
