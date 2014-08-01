@@ -26,6 +26,15 @@ namespace :metrics do
     puts "#{count} Product #{"metric".pluralize(count)} changed since the last run."
   end
 
+  desc "calculates Price metrics for the previous day"
+  task price: [:environment] do
+    before = Metric.where(model_type: "Market").count
+    Metrics::PriceHistory.perform
+    count = Metric.where(model_type: "Market").count - before
+
+    puts "#{count} Price #{"metric".pluralize(count)} changed since the last run."
+  end
+
   desc "run all metrics calculations"
-  task all: [:market, :organization, :product]
+  task all: [:market, :organization, :product, :price]
 end
