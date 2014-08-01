@@ -5,10 +5,10 @@ module Metrics
     cattr_accessor :base_scope, :metrics, :model_name
 
     @@model_name = "Organization"
-    @@base_scope = ::Organization.where("1=1")
+    @@base_scope = ::Organization
     @@metrics    = {
-      total_sellers: @@base_scope.where(can_sell: true),
-      total_buyer_only: @@base_scope.where(can_sell: false)
+      total_sellers:    { scope:  @@base_scope.where(can_sell: true) },
+      total_buyer_only: { scope: @@base_scope.where(can_sell: false) }
     }
   end
 end
