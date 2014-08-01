@@ -381,7 +381,22 @@ describe "Viewing the cart", :js do
       end
     end
 
-    context "with an expired discount code" do
+    context "with an order less then the discount minimum" do
+      let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed", minimum_order_total: 100.00) }
+
+      it "informs the user of the discount code minimum order total" do
+        fill_in "Discount Code", with: "15off"
+        click_link "Apply"
+
+        expect(page).to have_content("Discount code requires a minimum of $100.00")
+
+        within("#totals") do
+          expect(page).not_to have_content("Discount")
+        end
+      end
+    end
+
+    context "with an discount code restricted to order minimum" do
       let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed", start_date: 2.days.ago, end_date: 1.day.from_now) }
 
       it "displays the applied discount and code" do

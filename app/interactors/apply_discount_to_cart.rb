@@ -4,12 +4,16 @@ class ApplyDiscountToCart
   def perform
     discount = Discount.where(code: code).first
     if can_use_discount?(discount)
-      if discount_is_valid?(discount)
+      if discount.minimum_order_total > 0 && discount.minimum_order_total > cart.subtotal
+        context[:message] = "Discount code requires a minimum of #{"$%.2f" % discount.minimum_order_total}"
+        context.fail!
+      elsif discount_is_valid?(discount)
         cart.discount = discount
         cart.save
         context[:message] = "Discount applied"
       else
         context[:message] = "Discount code expired"
+        context.fail!
       end
     else
       context[:message] = "Invalid discount code"
