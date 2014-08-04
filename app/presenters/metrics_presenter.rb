@@ -37,10 +37,7 @@ class MetricsPresenter
     SQL
     ).joins(:market).where.not(market_id: TEST_MARKET_IDS),
     order_item: OrderItem.joins(order: :market).where.not(orders: {market_id: TEST_MARKET_IDS}, delivery_status: "canceled"),
-    payment: Payment.joins(:market).where.not(market_id: TEST_MARKET_IDS),
-    market: Market.where.not(id: TEST_MARKET_IDS),
-    organization: Organization.where.not(id: TEST_ORG_IDS),
-    product: Product.joins(organization: :markets).where.not(organization_id: TEST_ORG_IDS).uniq
+    payment: Payment.joins(:market).where.not(market_id: TEST_MARKET_IDS)
   }
 
   METRICS = {
@@ -255,149 +252,6 @@ class MetricsPresenter
       calculation_arg: :total_service_transaction_fees,
       format: :percent
     },
-    total_markets: {
-      title: "Total Markets",
-      scope: BASE_SCOPES[:market],
-      attribute: :created_at,
-      calculation: :window,
-      format: :integer
-    },
-    live_markets: {
-      title: "Live Markets",
-      scope: Market,
-      calculation: :metric,
-      format: :integer
-    },
-    live_markets_percent_growth: {
-      title: "Live Markets % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :live_markets,
-      format: :percent
-    },
-    active_markets: {
-      title: "Active Markets",
-      scope: Market,
-      calculation: :metric,
-      format: :integer
-    },
-    active_markets_percent_growth: {
-      title: "Active Markets % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :active_markets,
-      format: :percent
-    },
-    # allow_credit_cards is the admin setting which when
-    # false trumps the default_allow_credit_cards setting
-    credit_card_markets: {
-      title: "Markets Using Credit Cards",
-      scope: Market,
-      calculation: :metric,
-      format: :integer
-    },
-    credit_card_markets_percent_growth: {
-      title: "Markets Using Credit Cards % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :credit_card_markets,
-      format: :percent
-    },
-    ach_markets: {
-      title: "Markets Using ACH",
-      scope: Market,
-      calculation: :metric,
-      format: :integer
-    },
-    ach_markets_percent_growth: {
-      title: "Markets Using ACH % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :ach_markets,
-      format: :percent
-    },
-    lo_payment_markets: {
-      title: "Markets Using LO Payments",
-      scope: Market,
-      calculation: :metric,
-      format: :integer
-    },
-    lo_payment_markets_percent_growth: {
-      title: "Markets Using LO Payments % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :lo_payment_markets,
-      format: :percent
-    },
-    start_up_markets: {
-      title: "Markets On Start Up Plan",
-      scope: Market,
-      calculation: :metric,
-      format: :integer
-    },
-    start_up_markets_percent_growth: {
-      title: "Start Up Plan Markets % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :start_up_markets,
-      format: :percent
-    },
-    grow_markets: {
-      title: "Markets On Grow Plan",
-      scope: Market,
-      calculation: :metric,
-      format: :integer
-    },
-    grow_markets_percent_growth: {
-      title: "Growth Plan Markets % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :grow_markets,
-      format: :percent
-    },
-    automate_markets: {
-      title: "Markets On Automate Plan",
-      scope: Market,
-      calculation: :metric,
-      format: :integer
-    },
-    automate_markets_percent_growth: {
-      title: "Automate Plan Markets % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :automate_markets,
-      format: :percent
-    },
-    total_organizations: {
-      title: "Total Organizations",
-      scope: BASE_SCOPES[:organization],
-      attribute: :created_at,
-      calculation: :window,
-      format: :integer
-    },
-    total_buyer_only: {
-      title: "Total Buyers Only",
-      scope: Organization,
-      calculation: :metric,
-      format: :integer
-    },
-    # union of all buyers + any seller that has bought
-    total_buyers: {
-      title: "Total Buyers",
-      scope: Organization,
-      calculation: :metric,
-      format: :integer
-    },
-    total_buyers_percent_growth: {
-      title: "Total Buyers % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :total_buyers,
-      format: :percent
-    },
-    total_sellers: {
-      title: "Total Sellers",
-      scope: Organization,
-      calculation: :metric,
-      format: :integer
-    },
-    total_sellers_percent_growth: {
-      title: "Total Sellers % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :total_sellers,
-      format: :percent
-    },
     active_users: {
       title: "Active Users",
       scope: Organization,
@@ -415,42 +269,6 @@ class MetricsPresenter
       calculation: :percent_growth,
       calculation_arg: :total_buyer_orders,
       format: :percent
-    },
-    total_products: {
-      title: "Total Products",
-      scope: BASE_SCOPES[:product],
-      attribute: "products.created_at",
-      calculation: :window,
-      calculation_arg: "products.id",
-      format: :integer
-    },
-    total_products_simple: {
-      title: "Total Products Using Simple Inventory",
-      scope: BASE_SCOPES[:product],
-      calculation: :metric,
-      format: :integer
-    },
-    total_products_advanced: {
-      title: "Total Products Using Advanced Inventory",
-      scope: BASE_SCOPES[:product],
-      calculation: :metric,
-      format: :integer
-    },
-    total_products_ordered: {
-      title: "Total Products Ordered",
-      scope: BASE_SCOPES[:product].joins(:orders),
-      attribute: "orders.placed_at",
-      calculation: :count,
-      calculation_arg: "products.id",
-      format: :integer
-    },
-    average_product_price: {
-      title: "Average Product Price",
-      scope: BASE_SCOPES[:product].joins(:prices),
-      attribute: :placed_at,
-      calculation: :custom,
-      calculation_arg: "(COUNT(DISTINCT products.id)::NUMERIC / AVERAGE(price.sale_price)::NUMERIC)",
-      format: :decimal
     },
     total_price_sum: {
       title: "Total Price Sum",

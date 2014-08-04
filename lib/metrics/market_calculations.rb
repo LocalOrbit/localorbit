@@ -3,7 +3,7 @@ module Metrics
     cattr_accessor :base_scope, :metrics, :model_name
 
     @@model_name = "Market"
-    @@base_scope = ::Market.where.not(id: MetricsPresenter::TEST_MARKET_IDS).uniq
+    @@base_scope = Market.where.not(id: MetricsPresenter::TEST_MARKET_IDS).uniq
     @@metrics = {
       total_markets: {
         title: "Total Markets",
