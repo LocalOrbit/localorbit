@@ -21,6 +21,13 @@ describe ApplyDiscountToCart do
   let!(:cart_item2) { create(:cart_item, product: seller2_product, quantity: 20) }
   let!(:cart)     { create(:cart, market: market1, organization: buyer, discount: discount, items: [cart_item1, cart_item2])}
 
+  it "allows a discount to be applied" do
+    result = ApplyDiscountToCart.perform(cart: cart, code: discount.code)
+
+    expect(result.context).to be_success
+    expect(result.message).to eql("Discount applied")
+  end
+
   context "order maximum" do
     let!(:discount) { create(:discount, code: "10percent", type: "percentage", discount: 10, maximum_order_total: 50.00) }
 
@@ -64,6 +71,45 @@ describe ApplyDiscountToCart do
 
       expect(result.context).to be_failure
       expect(result.message).to eql("Invalid discount code")
+    end
+  end
+
+  context "maximum uses" do
+    let!(:discount) { create(:discount, code: "10percent", type: "percentage", discount: 10, maximum_uses: 2) }
+    let!(:order1) { create(:order, discount: discount)}
+    let!(:order2) { create(:order, discount: discount)}
+
+    it "requires a particular buyer" do
+      result = ApplyDiscountToCart.perform(cart: cart, code: discount.code)
+
+      expect(result.context).to be_failure
+      expect(result.message).to eql("Discount code expired")
+    end
+  end
+
+  context "maximum organizational uses" do
+    let!(:discount) { create(:discount, code: "10percent", type: "percentage", discount: 10, maximum_organization_uses: 1) }
+    let!(:order1) { create(:order, discount: discount, organization: buyer)}
+
+    it "requires a particular buyer" do
+      result = ApplyDiscountToCart.perform(cart: cart, code: discount.code)
+
+      expect(result.context).to be_failure
+      expect(result.message).to eql("Discount code expired")
+    end
+  end
+
+  context "date range" do
+    let!(:discount) { create(:discount, code: "10percent", type: "percentage", discount: 10, start_date: 3.days.ago, end_date: 1.hours.from_now) }
+    let!(:order1) { create(:order, discount: discount, organization: buyer)}
+
+    it "requires a particular buyer" do
+      Timecop.travel(1.day.from_now) do
+        result = ApplyDiscountToCart.perform(cart: cart, code: discount.code)
+
+        expect(result.context).to be_failure
+        expect(result.message).to eql("Discount code expired")
+      end
     end
   end
 end
