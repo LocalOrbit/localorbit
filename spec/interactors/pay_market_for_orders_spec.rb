@@ -43,7 +43,7 @@ describe PayMarketForOrders do
   end
 
   it "generates the appropriate balanced transaction" do
-    expect(balanaced_bank_account).to receive(:credit).with({amount: 60524, appears_on_statement_as: "Local Orbit"}).and_return(balanced_credit)
+    expect(balanaced_bank_account).to receive(:credit).with({amount: 60524, description: "Local Orbit", appears_on_statement_as: "Local Orbit"}).and_return(balanced_credit)
 
     interactor
   end
