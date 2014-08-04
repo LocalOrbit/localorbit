@@ -12,6 +12,11 @@ class CartsController < ApplicationController
       redirect_to [:products], alert: "Your cart is empty. Please add items to your cart before checking out."
     else
       @grouped_items = current_cart.items.for_checkout
+
+      if current_cart.discount.present?
+        @apply_discount = ApplyDiscountToCart.perform(cart: current_cart)
+        flash[:discount_message] = @apply_discount.message
+      end
     end
   end
 

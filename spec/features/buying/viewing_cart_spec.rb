@@ -23,13 +23,13 @@ describe "Viewing the cart", :js do
   }
 
   # Fulton St. Farms
-  let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms) }
+  let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms, delivery_schedules: [delivery_schedule]) }
   let!(:bananas_lot) { create(:lot, product: bananas, quantity: 100) }
   let!(:bananas_price_buyer_base) {
     create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
   }
 
-  let!(:kale) { create(:product, :sellable, name: "Kale", organization: fulton_farms) }
+  let!(:kale) { create(:product, :sellable, name: "Kale", organization: fulton_farms, delivery_schedules: [delivery_schedule]) }
   let!(:kale_lot) { kale.lots.first.update_attribute(:quantity, 100) }
   let!(:kale_lot_expired) { create(:lot, product: kale, number: 1, quantity: 25, expires_at: DateTime.parse("May 15, 2014")) }
   let!(:kale_price_tier1) {
@@ -41,10 +41,10 @@ describe "Viewing the cart", :js do
   }
 
   # Ada Farms
-  let!(:potatoes) { create(:product, :sellable, name: "Potatoes", organization: ada_farms) }
+  let!(:potatoes) { create(:product, :sellable, name: "Potatoes", organization: ada_farms, delivery_schedules: [delivery_schedule]) }
   let!(:pototoes_lot) { create(:lot, product: potatoes, quantity: 100) }
 
-  let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms) }
+  let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms, delivery_schedules: [delivery_schedule]) }
 
   let!(:cart) { create(:cart, market: market, organization: buyer, user: user, location: buyer.locations.first, delivery: delivery) }
   let!(:cart_bananas) { create(:cart_item, cart: cart, product: bananas, quantity: 10) }
@@ -378,6 +378,31 @@ describe "Viewing the cart", :js do
         expect(cart_totals.discount).to have_content("$15.00")
         expect(cart_totals.delivery_fees).to have_content("$10.00")
         expect(cart_totals.total).to have_content("$35.00")
+      end
+    end
+
+    context "changing the cart after applying a discount" do
+      let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed", minimum_order_total: 30.00) }
+
+      it "informs the user the discount code is no longer valid" do
+        fill_in "Discount Code", with: "15off"
+        click_link "Apply"
+
+        expect(page).to have_content("Discount applied")
+
+        click_link "Shop"
+
+        kale_item.set_quantity(1)
+        bananas_item.quantity_field.click
+        expect(Dom::CartLink.first).to have_content("Quantity updated!")
+
+        cart_link.node.click
+
+        expect(page).to have_content("Discount code requires a minimum of $30.00")
+
+        within("#totals") do
+          expect(page).not_to have_content("Discount")
+        end
       end
     end
 

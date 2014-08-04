@@ -29,17 +29,38 @@ describe ApplyDiscountToCart do
   end
 
   context "updating cart with an existing discount applied" do
-    let!(:discount) { create(:discount, code: "10percent", type: "percentage", discount: 10, minimum_order_total: 30.00) }
-
-    it "clears the discount if is no longer valid" do
+    before do
       cart.discount = discount
-      cart.items = [cart_item1]
+    end
 
-      result = ApplyDiscountToCart.perform(cart: cart, code: discount.code)
+    context "order total changed" do
+      let!(:discount) { create(:discount, code: "10percent", type: "percentage", discount: 10, minimum_order_total: 30.00) }
 
-      expect(result.context).to be_failure
-      expect(result.message).to eql("Discount code requires a minimum of $30.00")
-      expect(cart.discount_id).to be_nil
+      it "clears the discount if is no longer valid" do
+        cart.items = [cart_item1]
+
+        result = ApplyDiscountToCart.perform(cart: cart)
+
+        expect(result.context).to be_failure
+        expect(result.message).to eql("Discount code requires a minimum of $30.00")
+        expect(cart.discount_id).to be_nil
+      end
+    end
+
+    context "discount has expired" do
+      let!(:discount) {
+        Timecop.travel(7.days.ago) do
+          create(:discount, code: "10percent", type: "percentage", discount: 10, start_date: Date.current, end_date: 5.days.from_now)
+        end
+      }
+
+      it "clears the discount if has expired" do
+        result = ApplyDiscountToCart.perform(cart: cart)
+
+        expect(result.context).to be_failure
+        expect(result.message).to eql("Discount code expired")
+        expect(cart.discount_id).to be_nil
+      end
     end
   end
 
