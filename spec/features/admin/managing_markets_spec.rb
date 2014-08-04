@@ -239,7 +239,7 @@ describe "Managing Markets" do
       expect(find_field("Twitter").value).to eq('hollandfarmers')
     end
 
-    describe "adding a market without valid infirmation" do
+    describe "adding a market without valid information" do
       it "shows an error message" do
         visit '/admin/markets'
 
@@ -332,7 +332,7 @@ describe "Managing Markets" do
       end
     end
 
-    describe "modifying a market without valid infirmation", js: true do
+    describe "modifying a market without valid information", js: true do
       it "shows an error message" do
         visit '/admin/markets'
         click_link market.name
