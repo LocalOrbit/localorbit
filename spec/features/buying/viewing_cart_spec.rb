@@ -484,6 +484,28 @@ describe "Viewing the cart", :js do
       end
     end
 
+    context "seller organization restrictions" do
+      context "with a valid discount restricted to the seller items" do
+        let!(:discount) { create(:discount, code: "50percent", discount: "50", type: "percentage", seller_organization_id: ada_farms.id) }
+
+        it "displays the applied discount and code" do
+          fill_in "Discount Code", with: "50percent"
+          click_link "Apply"
+
+          expect(page).to have_content("Discount applied")
+
+          within("#totals") do
+            expect(page).to have_content("Discount")
+          end
+
+          expect(cart_totals.subtotal).to have_content("$40.00")
+          expect(cart_totals.discount).to have_content("$7.50")
+          expect(cart_totals.delivery_fees).to have_content("$10.00")
+          expect(cart_totals.total).to have_content("$42.50")
+        end
+      end
+    end
+
     context "market restrictions" do
       context "with a valid discount restricted to the current market" do
         let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed", market_id: market.id) }
