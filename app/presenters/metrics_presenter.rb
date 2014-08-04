@@ -3,6 +3,8 @@ class MetricsPresenter
 
   attr_reader :metrics, :headers, :markets
 
+  cattr_accessor :start_date, :end_date
+
   START_OF_WEEK = :sun
 
   TEST_MARKET_IDS = Market.where(demo: true).pluck(:id)
