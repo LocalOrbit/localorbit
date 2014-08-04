@@ -5,7 +5,7 @@ class ApplyDiscountToOrderItems
     return unless order.discount
 
     discounted_items.each do |item|
-      item.discount = (cart.discount_amount * item.gross_total / order.subtotal).round(2)
+      item.discount = (cart.discount_amount * item.gross_total / subtotal).round(2)
     end
 
     while (curr_discount = discounted_items.each.sum(&:discount)) != cart.discount_amount
@@ -20,10 +20,18 @@ class ApplyDiscountToOrderItems
   end
 
   def discounted_items
-    @discounted_items ||= if order.discount.seller_organization_id.present?
-      order.items.joins(:product).where(products: { organization_id: order.discount.seller_organization_id})
+    @discounted_items ||= if restrict_to_seller_items?
+      order.items.select {|i| i.product.organization_id == order.discount.seller_organization_id }
     else
       order.items
     end
+  end
+
+  def subtotal
+    @subtotal ||= restrict_to_seller_items? ? discounted_items.each.sum(&:gross_total) : order.subtotal
+  end
+
+  def restrict_to_seller_items?
+    order.discount.seller_organization_id.present?
   end
 end
