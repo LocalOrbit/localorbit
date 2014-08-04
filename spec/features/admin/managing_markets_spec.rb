@@ -267,9 +267,15 @@ describe "Managing Markets" do
     end
 
     it 'can change a markets plan' do
+      new_plan = create(:plan)
       visit admin_market_path(market)
 
-      expect(page).to have_field("Plan")
+      expect(find_field("Plan").value).to eq(market.plan_id.to_s)
+
+      select new_plan.name, from: "Plan"
+      click_button "Update Market"
+
+      expect(find_field("Plan").value).to eq(new_plan.id.to_s)
     end
 
     it 'can set the auto-activation flag for organization registrations' do
