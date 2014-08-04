@@ -49,8 +49,11 @@ $ ->
 
 
   $('.modal-toggle').click ->
-    destination = this.hash
-    $element = $("#{destination}")
+    if this.tagName == "A"
+      destination = this.hash
+    else
+      destination = "#" + this.getAttribute('data-modal')
+    $element = $(destination)
     $element.toggleClass('is-hidden')
     $(".modal").not($element).addClass('is-hidden')
     $('.overlay').addClass('is-open is-dim is-modal')

@@ -102,12 +102,12 @@
   </div>
 <% end %>
 
-<div class="terms-of-service is-hidden modal modal--extended popup">
+<div class="is-hidden modal modal--extended popup" id="terms-of-service">
   <div class="popup-body">
     <%= render "/shared/terms_of_service" %>
   </div>
   <div class="popup-footer">
-    <button class="cancel">Cancel</button>
+    <button class="cancel close">Cancel</button>
     <button class="btn btn--action btn--small pull-right" id="read-terms">I have read the Terms of Service</button>
   </div>
 </div>
