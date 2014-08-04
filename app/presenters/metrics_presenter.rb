@@ -449,13 +449,13 @@ class MetricsPresenter
     },
     total_products_simple: {
       title: "Total Products Using Simple Inventory",
-      scope: Product,
+      scope: BASE_SCOPES[:product],
       calculation: :metric,
       format: :integer
     },
     total_products_advanced: {
       title: "Total Products Using Advanced Inventory",
-      scope: Product,
+      scope: BASE_SCOPES[:product],
       calculation: :metric,
       format: :integer
     },
@@ -651,11 +651,11 @@ class MetricsPresenter
       growth_metric
 
     elsif m[:calculation] == :metric
-      model_name = m[:scope].name
+      model_name = scope.name
       sub_select = Metric.where(model_type: model_name, metric_code: metric).
                           select(:effective_on, "UNNEST(model_ids) AS model_id")
 
-      scope = m[:scope].
+      scope = scope.
         joins("INNER JOIN (#{sub_select.to_sql}) AS metric_calculation ON metric_calculation.model_id = #{model_name.pluralize.downcase}.id").
         select("metric_calculation.effective_on, metric_calculation.model_id")
 
