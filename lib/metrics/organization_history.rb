@@ -1,10 +1,8 @@
 module Metrics
-  class OrganizationHistory < Base
-    cattr_accessor :base_scope, :metrics, :model_name
+  class OrganizationHistory < OrganizationCalculations
+    cattr_accessor :history_metrics
 
-    @@model_name = "Organization"
-    @@base_scope = Organization.where.not(id: MetricsPresenter::TEST_ORG_IDS).uniq
-    @@metrics = {
+    @@history_metrics = {
       total_buyer_only:   { scope: self.base_scope.where(can_sell: false) },
       total_sellers:      { scope: self.base_scope.where(can_sell: true) },
       total_buyers:       { scope: Organization.where(id: self.base_scope.select(:id).where(can_sell: false).union(self.base_scope.select(:id).joins(:orders)).pluck(:id)) },
