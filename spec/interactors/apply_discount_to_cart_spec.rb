@@ -28,6 +28,21 @@ describe ApplyDiscountToCart do
     expect(result.message).to eql("Discount applied")
   end
 
+  context "updating cart with an existing discount applied" do
+    let!(:discount) { create(:discount, code: "10percent", type: "percentage", discount: 10, minimum_order_total: 30.00) }
+
+    it "clears the discount if is no longer valid" do
+      cart.discount = discount
+      cart.items = [cart_item1]
+
+      result = ApplyDiscountToCart.perform(cart: cart, code: discount.code)
+
+      expect(result.context).to be_failure
+      expect(result.message).to eql("Discount code requires a minimum of $30.00")
+      expect(cart.discount_id).to be_nil
+    end
+  end
+
   context "order maximum" do
     let!(:discount) { create(:discount, code: "10percent", type: "percentage", discount: 10, maximum_order_total: 50.00) }
 

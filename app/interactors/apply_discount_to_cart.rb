@@ -8,6 +8,8 @@ class ApplyDiscountToCart
       if discount_is_valid?(discount)
         cart.discount = discount
         cart.save
+      else
+        cart.discount_id = nil
       end
     end
   end
