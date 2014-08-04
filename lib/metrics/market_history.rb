@@ -1,10 +1,8 @@
 module Metrics
-  class MarketHistory < Base
-    cattr_accessor :base_scope, :metrics, :model_name
+  class MarketHistory < MarketCalculations
+    cattr_accessor :history_metrics
 
-    @@model_name = "Market"
-    @@base_scope = ::Market.where.not(id: MetricsPresenter::TEST_MARKET_IDS).uniq
-    @@metrics = {
+    @@history_metrics = {
       live_markets:         { scope: self.base_scope.where(active: true) },
       active_markets:       { scope: self.base_scope.joins(:orders) },
       credit_card_markets:  { scope: self.base_scope.where(allow_credit_cards: true, default_allow_credit_cards: true) },
