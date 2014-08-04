@@ -55,6 +55,8 @@ GEM
       erubis (~> 2.7.0)
     active_model_serializers (0.8.1)
       activemodel (>= 3.0)
+    active_record_union (1.0.0)
+      activerecord (>= 4.0)
     activemodel (4.1.4)
       activesupport (= 4.1.4)
       builder (~> 3.1)
@@ -413,6 +415,7 @@ PLATFORMS
 DEPENDENCIES
   accountingjs-rails
   active_model_serializers
+  active_record_union
   acts_as_geocodable!
   awesome_nested_set
   balanced (~> 0.7)
