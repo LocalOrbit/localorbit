@@ -23,10 +23,10 @@ class ApplyDiscountToCart
 
   def discount_is_valid?(discount)
     if less_than_minimum?(discount)
-      context[:message] = "Discount code requires a minimum subtotal of #{"$%.2f" % discount.minimum_order_total}"
+      context[:message] = "Discount code requires a minimum of #{"$%.2f" % discount.minimum_order_total}"
       context.fail!
     elsif more_than_maximum?(discount)
-      context[:message] = "Discount code requires a maximum subtotal of #{"$%.2f" % discount.maximum_order_total}"
+      context[:message] = "Discount code requires a maximum of #{"$%.2f" % discount.maximum_order_total}"
       context.fail!
     elsif !discount.active? || maximum_uses_hit?(discount) || maximum_organization_uses_hit?(discount)
       context[:message] = "Discount code expired"

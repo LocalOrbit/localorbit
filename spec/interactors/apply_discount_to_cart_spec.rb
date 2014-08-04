@@ -35,7 +35,7 @@ describe ApplyDiscountToCart do
       result = ApplyDiscountToCart.perform(cart: cart, code: discount.code)
 
       expect(result.context).to be_failure
-      expect(result.message).to eql("Discount code requires a maximum subtotal of $50.00")
+      expect(result.message).to eql("Discount code requires a maximum of $50.00")
     end
   end
 
@@ -46,7 +46,7 @@ describe ApplyDiscountToCart do
       result = ApplyDiscountToCart.perform(cart: cart, code: discount.code)
 
       expect(result.context).to be_failure
-      expect(result.message).to eql("Discount code requires a minimum subtotal of $100.00")
+      expect(result.message).to eql("Discount code requires a minimum of $100.00")
     end
   end
 
