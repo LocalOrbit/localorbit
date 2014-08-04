@@ -30,22 +30,16 @@ module Metrics
                               model_type: metric_params[:model_type],
                               model_ids: [model_id])
 
-        if metric.value != value
-          metric.value = value
-          metric.save!
-        end
+        metric.update!(value: value)
       end
     end
 
-    def self.calculate_custom(metric_params, metric_code, values)
+    def self.calculate_custom(metric_params, metric_code, value)
       metric = Metric.find_or_initialize_by(metric_code: metric_code,
                                             effective_on: Date.current,
                                             model_type: self.model_name)
 
-      if metric.value != values
-        metric.value = values
-        metric.save!
-      end
+      metric.update!(value: value)
     end
 
     def self.calculate_metric(metric_params, metric_code)
@@ -54,10 +48,9 @@ module Metrics
                                             effective_on: Date.current,
                                             model_type: self.model_name)
 
-      if metric.model_ids.to_set != model_ids.to_set
-        metric.model_ids = model_ids
-        metric.save!
-      end
+      # we don't to trigger an update if only the order of IDs changed so we
+      # cast the arrays to sets to ensure uniqueness
+      metric.update!(model_ids: model_ids) if metric.model_ids.to_set != model_ids.to_set
     end
   end
 end
