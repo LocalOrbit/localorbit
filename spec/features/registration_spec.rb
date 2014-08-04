@@ -7,7 +7,7 @@ describe "Register" do
     context "automatically activated" do
       let!(:market) { create(:market, managers: [manager], auto_activate_organizations: true) }
 
-      context "happy path" do
+      context "happy path", js: true do
         before do
           switch_to_subdomain market.subdomain
           visit root_path
@@ -29,7 +29,11 @@ describe "Register" do
           fill_in "Postal Code", with: "49423"
           fill_in "Phone", with: "616-555-1963"
 
+          expect(page).not_to have_content("Local Orbit User Agreement")
           check "registration_terms_of_service"
+
+          expect(page).to have_content("I have read the Terms of Service")
+          find("button.read-terms").trigger("click")
 
           click_button "Sign Up"
         end
