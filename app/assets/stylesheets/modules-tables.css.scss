@@ -787,9 +787,10 @@ th {
     text-decoration: none;
   }
   th {
+    color: #0A3078;
     cursor: pointer;
     > a {
-      color: #0A3078;
+      color: inherit;
     }
   }
 }

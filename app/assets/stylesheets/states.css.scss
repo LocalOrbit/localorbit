@@ -11,6 +11,10 @@
   visibility: hidden;
 }
 
+.is-open .hide-when-open {
+  display: none;
+}
+
 .is-pulsing {
   -webkit-animation: pulse 3s infinite;
      -moz-animation: pulse 3s infinite;

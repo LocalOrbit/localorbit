@@ -92,6 +92,12 @@
     @include transform(translateX(-50%));
   }
 
+  .popup--wide {
+    width: 650px;
+    max-width: 80%;
+    padding: 0 1em .5em;
+  }
+
 @media screen and (max-width: $mobile_break) {
   .popup--edit {
     display: -webkit-flex;
