@@ -2,12 +2,12 @@ module Metrics
   class OrganizationCalculations < Base
     cattr_accessor :base_scope, :metrics, :model_name
 
-    @@model_name = "Organization"
-    @@base_scope = Organization.where.not(id: MetricsPresenter::TEST_ORG_IDS).uniq
-    @@metrics = {
+    BASE_SCOPE = Organization.where.not(id: TEST_ORG_IDS).uniq
+    MODEL_NAME = BASE_SCOPE.name
+    METRICS = {
       total_organizations: {
         title: "Total Organizations",
-        scope: @@base_scope,
+        scope: BASE_SCOPE,
         attribute: :created_at,
         calculation: :window,
         format: :integer
@@ -46,3 +46,5 @@ module Metrics
     }
   end
 end
+
+Metrics::Base.register_metrics(Metrics::OrganizationCalculations::METRICS)
