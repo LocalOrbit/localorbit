@@ -1,24 +1,29 @@
 module Metrics
   class PriceCalculations < Base
-    cattr_accessor :base_scope, :metrics, :model_name
-
-    BASE_SCOPE = Price.where.not(market_id: MetricsPresenter::TEST_MARKET_IDS).uniq
+    BASE_SCOPE = Price.where.not(market_id: TEST_MARKET_IDS).uniq
     MODEL_NAME = BASE_SCOPE.name
     METRICS = {
-      total_price_count: {
-        calculation: :count,
-        scope: BASE_SCOPE,
-        group: "markets.id",
-        joins: { product: { organization: :markets } },
-        model_type: "Market"
-      },
       total_price_sum: {
+        title: "Total Price Sum",
+        scope: Metric.where(metric_code: "total_price_sum"),
+        attribute: :effective_on,
         calculation: :sum,
-        calculation_arg: :sale_price,
-        scope: BASE_SCOPE,
-        group: "markets.id",
-        joins: { product: { organization: :markets } },
-        model_type: "Market"
+        calculation_arg: :value,
+        format: :currency
+      },
+      total_price_count: {
+        title: "Total Price Count",
+        scope: Metric.where(metric_code: "total_price_count"),
+        attribute: :effective_on,
+        calculation: :sum,
+        calculation_arg: :value,
+        format: :integer
+      },
+      average_price: {
+        title: "Average Price",
+        calculation: :ruby,
+        calculation_arg: [:/, :total_price_sum, :total_price_count],
+        format: :currency
       }
     }
   end

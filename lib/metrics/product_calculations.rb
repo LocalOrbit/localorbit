@@ -2,7 +2,7 @@ module Metrics
   class ProductCalculations < Base
     cattr_accessor :base_scope, :metrics, :model_name
 
-    BASE_SCOPE = Product.joins(organization: :markets).where.not(organization_id: MetricsPresenter::TEST_ORG_IDS).uniq
+    BASE_SCOPE = Product.joins(organization: :markets).where.not(organization_id: TEST_ORG_IDS).uniq
     MODEL_NAME = BASE_SCOPE.name
     METRICS = {
       total_products: {
@@ -45,4 +45,4 @@ module Metrics
   end
 end
 
-Metrics::Base.register_metrics(Metrics::PriceCalculations::METRICS)
+Metrics::Base.register_metrics(Metrics::ProductCalculations::METRICS)

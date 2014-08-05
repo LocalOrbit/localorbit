@@ -1,7 +1,5 @@
 module Metrics
   class OrganizationCalculations < Base
-    cattr_accessor :base_scope, :metrics, :model_name
-
     BASE_SCOPE = Organization.where.not(id: TEST_ORG_IDS).uniq
     MODEL_NAME = BASE_SCOPE.name
     METRICS = {
@@ -43,6 +41,24 @@ module Metrics
         calculation_arg: :total_sellers,
         format: :percent
       },
+      active_users: {
+        title: "Active Users",
+        scope: Organization,
+        calculation: :metric,
+        format: :integer
+      },
+      total_buyer_orders: {
+        title: "Buyers Placing Orders",
+        scope: Organization,
+        calculation: :metric,
+        format: :integer
+      },
+      total_buyer_orders_percent_growth: {
+        title: "Buyers Placing Orders % Growth",
+        calculation: :percent_growth,
+        calculation_arg: :total_buyer_orders,
+        format: :percent
+      }
     }
   end
 end
