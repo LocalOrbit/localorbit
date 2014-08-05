@@ -226,11 +226,11 @@ class Order < ActiveRecord::Base
   end
 
   def paid_seller_ids
-    @paid_seller_ids ||= payments.where(payee_type: "Organization").pluck(:payee_id)
+    @paid_seller_ids ||= payments.seller_payments.pluck(:payee_id)
   end
 
   def sellers
-    items.map {|item| item.seller }.uniq
+    items.map(&:seller).uniq
   end
 
   def subtotal
@@ -239,19 +239,12 @@ class Order < ActiveRecord::Base
 
   # Market payable calculations
 
-  def market_payable?
-    return false unless delivery_status == "delivered"
-
-    market_payments = payments.select {|p| p.status != "failed" && p.payee == o.market }
-    market_payments.sum {|p| p.amount } != payable_to_market
-  end
-
   def payable_to_market
     @payable_to_market ||= payable_subtotal - market_payable_local_orbit_fee - market_payable_payment_fee - discount_amount
   end
 
   def payable_subtotal
-    @payable_subtotal ||= delivery_fees + items.delivered.to_a.sum {|i| i.gross_total }
+    @payable_subtotal ||= delivery_fees + items.delivered.each.sum(&:gross_total)
   end
 
   def market_payable_market_fee
@@ -277,9 +270,7 @@ class Order < ActiveRecord::Base
   private
 
   def update_paid_at
-    if changes[:payment_status] && changes[:payment_status][1] == "paid"
-      self.paid_at = Time.current
-    end
+    self.paid_at ||= Time.current if payment_status == "paid"
   end
 
   def update_payment_status
@@ -288,11 +279,8 @@ class Order < ActiveRecord::Base
   end
 
   def update_order_item_payment_status
-    if changes[:payment_status]
-      items.each do |i|
-        i.update(payment_status: payment_status) if i.payment_status == 'pending' || i.payment_status == 'unpaid'
-      end
-    end
+    return unless payment_status_changed?
+    items.where(payment_status: ["pending", "unpaid"]).update_all(payment_status: payment_status)
   end
 
   def update_total_cost
