@@ -2,12 +2,12 @@ module Metrics
   class MarketCalculations < Base
     cattr_accessor :base_scope, :metrics, :model_name
 
-    @@model_name = "Market"
-    @@base_scope = Market.where.not(id: MetricsPresenter::TEST_MARKET_IDS).uniq
-    @@metrics = {
+    BASE_SCOPE = Market.where.not(id: TEST_MARKET_IDS).uniq
+    MODEL_NAME = BASE_SCOPE.name
+    METRICS = {
       total_markets: {
         title: "Total Markets",
-        scope: @@base_scope,
+        scope: BASE_SCOPE,
         attribute: :created_at,
         calculation: :window,
         format: :integer
@@ -113,3 +113,5 @@ module Metrics
     }
   end
 end
+
+Metrics::Base.register_metrics(Metrics::MarketCalculations::METRICS)

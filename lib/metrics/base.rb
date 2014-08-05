@@ -1,7 +1,20 @@
 module Metrics
   class Base
+    METRICS = {}
+
+    TEST_MARKET_IDS = Market.where(demo: true).pluck(:id)
+    TEST_ORG_IDS    = Market.where(id: TEST_MARKET_IDS).joins(:organizations).uniq.pluck("organizations.id")
+
+    def self.register_metrics(metrics)
+      METRICS.merge!(metrics)
+    end
+
+    # History
+    # =======
+
+    # Called from the metrics rake tasks to calculate history for the given subclass
     def self.perform
-      self.metrics.each do |metric_code, metric_params|
+      self.history_metrics.each do |metric_code, metric_params|
         if [:count, :sum].include? metric_params[:calculation]
           scope  = metric_params[:scope]
           scope  = scope.group(metric_params[:group]) if metric_params[:group]
@@ -9,17 +22,17 @@ module Metrics
           values = scope.send(metric_params[:calculation], metric_params[:calculation_arg])
 
           if metric_params[:group]
-            calculate_custom_group(metric_params, metric_code, values)
+            history_custom_group(metric_params, metric_code, values)
           else
-            calculate_custom(metric_params, metric_code, values)
+            history_custom(metric_params, metric_code, values)
           end
         else
-          calculate_metric(metric_params, metric_code)
+          history_metric(metric_params, metric_code)
         end
       end
     end
 
-    def self.calculate_custom_group(metric_params, metric_code, values)
+    def self.history_custom_group(metric_params, metric_code, values)
       values.each_pair do |model_id, value|
         metric = Metric.where(metric_code: metric_code,
                               effective_on: Date.current,
@@ -34,7 +47,7 @@ module Metrics
       end
     end
 
-    def self.calculate_custom(metric_params, metric_code, value)
+    def self.history_custom(metric_params, metric_code, value)
       metric = Metric.find_or_initialize_by(metric_code: metric_code,
                                             effective_on: Date.current,
                                             model_type: self.model_name)
@@ -42,7 +55,7 @@ module Metrics
       metric.update!(value: value)
     end
 
-    def self.calculate_metric(metric_params, metric_code)
+    def self.history_metric(metric_params, metric_code)
       model_ids = metric_params[:scope].pluck(:id)
       metric = Metric.find_or_initialize_by(metric_code: metric_code,
                                             effective_on: Date.current,
@@ -54,3 +67,7 @@ module Metrics
     end
   end
 end
+
+# Because dev environment does eager loading, we need to manually
+# load these classes or they won't appear in dev or test mode.
+require_dependency "metrics/market_calculations"
