@@ -1,6 +1,6 @@
 @media print {
-  footer, #top, .nav, .logo, .logo-link, .back-button, .btn, .tabs-wrapper, .screen-only, .teflon {
-    display: none;
+  footer, #top, .nav, .logo, .logo-link, .back-button, .btn, .tabs-wrapper, .screen-only, .teflon, .tagline {
+    display: none !important;
   }
   .logo-link {
     float: none;
