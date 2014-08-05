@@ -258,7 +258,7 @@ class Order < ActiveRecord::Base
   end
 
   def payable_to_market
-    @payable_to_market ||= payable_subtotal - market_payable_local_orbit_fee - market_payable_payment_fee
+    @payable_to_market ||= payable_subtotal - market_payable_local_orbit_fee - market_payable_payment_fee - discount_amount
   end
 
   def payable_subtotal

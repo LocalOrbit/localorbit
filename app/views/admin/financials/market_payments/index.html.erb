@@ -16,8 +16,8 @@
         <th>Order Number</th>
         <th>Owed</th>
         <th>Item Subtotal</th>
+        <th>Discount</th>
         <th>Delivery Fee</th>
-        <th>Market Fee</th>
         <th>LO Fee</th>
         <th>Payment Fee</th>
       </tr>
@@ -27,8 +27,8 @@
         <td><%= order.order_number %></td>
         <td><%= number_to_currency(order.payable_to_market) %></td>
         <td><%= number_to_currency(order.payable_subtotal) %></td>
+        <td><%= number_to_currency(order.discount_amount) %></td>
         <td><%= number_to_currency(order.delivery_fees) %></td>
-        <td><%= number_to_currency(order.market_payable_market_fee) %></td>
         <td><%= number_to_currency(order.market_payable_local_orbit_fee) %></td>
         <td><%= number_to_currency(order.market_payable_payment_fee) %></td>
       </tr>
@@ -38,8 +38,8 @@
         <td>Total</td>
         <td><%= number_to_currency(orders.sum(&:payable_to_market)) %></td>
         <td><%= number_to_currency(orders.sum(&:subtotal)) %></td>
+        <td><%= number_to_currency(orders.sum(&:discount_amount)) %></td>
         <td><%= number_to_currency(orders.sum(&:delivery_fees)) %></td>
-        <td><%= number_to_currency(orders.sum(&:market_payable_market_fee)) %></td>
         <td><%= number_to_currency(orders.sum(&:market_payable_local_orbit_fee)) %></td>
         <td><%= number_to_currency(orders.sum(&:market_payable_payment_fee)) %></td>
       </tr>
