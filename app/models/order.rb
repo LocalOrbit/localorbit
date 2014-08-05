@@ -44,15 +44,46 @@ class Order < ActiveRecord::Base
 
   scope :recent, -> { visible.order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { visible.joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
-  scope :uninvoiced, -> { visible.where(payment_method: "purchase order", invoiced_at: nil) }
-  scope :invoiced, -> { visible.where(payment_method: "purchase order").where.not(invoiced_at: nil) }
+  scope :uninvoiced, -> { visible.purchase_orders.where(invoiced_at: nil) }
+  scope :invoiced, -> { visible.purchase_orders.where.not(invoiced_at: nil) }
   scope :unpaid, -> { visible.where(payment_status: "unpaid") }
   scope :paid, -> { visible.where(payment_status: "paid") }
   scope :delivered, -> { visible.where("order_items.delivery_status = ?", "delivered").group("orders.id") }
   scope :paid_with, lambda {|method| visible.where(payment_method: method) }
+  scope :purchase_orders, -> { where(payment_method: "purchase order") }
   scope :payment_overdue, -> { unpaid.where("invoice_due_date < ?", (Time.current - 1.day).end_of_day) }
   scope :payment_due, -> { unpaid.where("invoice_due_date >= ?", (Time.current - 1.day).end_of_day) }
-  scope :payment_status, lambda { |status|
+  scope :paid_between, lambda {|range| paid.where(paid_at: range) }
+  scope :due_between, lambda {|range| invoiced.where(invoice_due_date: range) }
+
+  scope_accessible :sort, method: :for_sort, ignore_blank: true
+  scope_accessible :payment_status
+
+  accepts_nested_attributes_for :items, allow_destroy: true
+
+  def self.delivered_between(range)
+    delivered.
+      having("MAX(order_items.delivered_at) >= ?", range.begin).
+      having("MAX(order_items.delivered_at) < ?", range.end)
+  end
+
+  def self.fully_delivered
+    joins(:items).
+      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
+      group("orders.id")
+  end
+
+  def self.not_paid_for(payment_type)
+    where.not(id: OrderPayment.market_paid_orders_subselect(payment_type))
+  end
+
+  def self.payable
+    # This is a slightly fuzzy match right now.
+    # TODO: Implement delivery_end on deliveries for greater accuracy
+    joins(:delivery).where("deliveries.deliver_on < ?", 48.hours.ago)
+  end
+
+  def self.payment_status(status)
     case status
     when "overdue"
       payment_overdue
@@ -63,38 +94,19 @@ class Order < ActiveRecord::Base
     else
       all
     end
-  }
-  scope :delivered_between, lambda { |range|
-    delivered.
-      having("MAX(order_items.delivered_at) >= ?", range.begin).
-      having("MAX(order_items.delivered_at) < ?", range.end)
-  }
-  scope :paid_between, lambda {|range| paid.where(paid_at: range) }
-  scope :due_between, lambda {|range| invoiced.where(invoice_due_date: range) }
+  end
 
-  scope_accessible :sort, method: :for_sort, ignore_blank: true
-  scope_accessible :payment_status
-
-  accepts_nested_attributes_for :items, allow_destroy: true
+  def self.used_lo_payment_processing
+    where(payment_method: ["credit card", "ach", "paypal"])
+  end
 
   def self.balanced_payable_to_market
     # TODO: figure out how to make sure the orders haven't changed
     non_automate_market_ids = Market.joins(:plan).where.not(plans: {name: "Automate"}).pluck(:id)
-    subselect = %(SELECT DISTINCT "order_payments"."order_id" FROM "order_payments"
-      INNER JOIN "payments" ON "payments"."id" = "order_payments"."payment_id"
-      WHERE "payments"."status" != 'failed' AND
-            "payments"."payment_type" = 'market payment' AND
-            "payments"."payee_type" = 'Market' AND
-            "payments"."payee_id" = "orders"."market_id")
 
-    where(payment_method: ["credit card", "ach", "paypal"]).
-      where("orders.id NOT IN (#{subselect})").
+    fully_delivered.used_lo_payment_processing.not_paid_for("market payment").
       where("orders.placed_at > ?", 6.months.ago).
       where(market_id: non_automate_market_ids).
-      joins(:delivery, :items).
-      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
-      select("orders.*").
-      group("orders.id").
       preload(:items, :market)
   end
 
@@ -103,51 +115,28 @@ class Order < ActiveRecord::Base
       INNER JOIN order_payments ON order_payments.order_id = orders.id AND order_payments.payment_id = payments.id
       WHERE payments.payee_type = ? AND payments.payee_id = products.organization_id"
 
-    select("orders.*, products.organization_id as seller_id").joins(:delivery, items: :product).
+    fully_delivered.payable.
+      select("orders.*, products.organization_id as seller_id").
+      joins(items: :product).
       where("NOT EXISTS(#{subselect})", "Organization").
-      # This is a slightly fuzzy match right now.
-      # TODO: Implement delivery_end on deliveries for greater accuracy
-      where("deliveries.deliver_on < ?", 48.hours.ago).
-      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
-      group("orders.id, seller_id").
-      order("orders.order_number").
+      group("seller_id"). # orders.id is already present from fully_delivered
+      order(:order_number).
       includes(:market)
   end
 
   def self.payable_lo_fees
-    subselect = %(SELECT DISTINCT "order_payments"."order_id" FROM "order_payments"
-      INNER JOIN "payments" ON "payments"."id" = "order_payments"."payment_id"
-      WHERE "payments"."payment_type" = 'lo fee' AND "payments"."payer_type" = 'Market' AND "payments"."payer_id" = "orders"."market_id")
-
-    joins(:delivery, :items).
-      where("orders.id NOT IN (#{subselect})").
-      # This is a slightly fuzzy match right now.
-      # TODO: Implement delivery_end on deliveries for greater accuracy
-      where("deliveries.deliver_on < ?", 48.hours.ago).
-      where(payment_method: "purchase order").
-      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
-      order("orders.order_number").
-      select("orders.*").
-      group("orders.id")
+    fully_delivered.purchase_orders.payable.not_paid_for("lo fee").order(:order_number)
   end
 
   def self.payable_market_fees
     # TODO: figure out how to make sure the orders haven't changed
     automate_market_ids = Market.joins(:plan).where(plans: {name: "Automate"}).pluck(:id)
-    subselect = %(SELECT DISTINCT "order_payments"."order_id" FROM "order_payments"
-      INNER JOIN "payments" ON "payments"."id" = "order_payments"."payment_id"
-      WHERE "payments"."payment_type" = 'hub fee' AND "payments"."payee_type" = 'Market' AND "payments"."payee_id" = "orders"."market_id")
 
-    joins(:delivery, :items).
-      where(payment_method: ["credit card", "ach", "paypal"]).
-      where("orders.id NOT IN (#{subselect})").
-      where("deliveries.deliver_on < ?", 48.hours.ago).
-      where("orders.placed_at > ?", 6.months.ago).
+    fully_delivered.used_lo_payment_processing.payable.not_paid_for("hub fee").
+      # orders before this were poorly tracked
+      where("orders.placed_at > ?", Time.parse("2014-01-01")).
       where(market_id: automate_market_ids).
-      having("BOOL_AND(order_items.delivery_status IN (?)) AND BOOL_OR(order_items.delivery_status = ?)", ["delivered", "canceled"], "delivered").
-      order(:order_number).
-      select("orders.*").
-      group("orders.id")
+      order(:order_number)
   end
 
   def self.for_sort(order)
