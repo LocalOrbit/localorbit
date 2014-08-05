@@ -4,20 +4,14 @@ class ApplyDiscountToCart
   def perform
     discount = context[:code].present? ? Discount.where(code: code).first : cart.discount
 
-    if can_use_discount?(discount)
-      if discount_is_valid?(discount)
+    if can_use_discount?(discount) && discount_is_valid?(discount)
         cart.discount = discount
         cart.save
-      else
-        cart.update(discount_id: nil)
-      end
-    else
-      cart.update(discount_id: nil)
     end
   end
 
   def can_use_discount?(discount)
-    if !discount || !can_use_in_market?(discount) || !can_use_for_buyer?(discount)
+    if !discount || !discount.can_use_in_market?(cart) || !discount.can_use_for_buyer?(cart)
       context[:message] = "Invalid discount code"
       context.fail!
     end
@@ -26,16 +20,16 @@ class ApplyDiscountToCart
   end
 
   def discount_is_valid?(discount)
-    if less_than_minimum?(discount)
+    if discount.less_than_minimum?(cart)
       context[:message] = "Discount code requires a minimum of #{"$%.2f" % discount.minimum_order_total}"
       context.fail!
-    elsif more_than_maximum?(discount)
+    elsif discount.more_than_maximum?(cart)
       context[:message] = "Discount code requires a maximum of #{"$%.2f" % discount.maximum_order_total}"
       context.fail!
-    elsif requires_seller_items?(discount)
+    elsif discount.requires_seller_items?(cart)
       context[:message] = "Discount code requires items from #{discount.seller_organization.name}"
       context.fail!
-    elsif !discount.active? || maximum_uses_hit?(discount) || maximum_organization_uses_hit?(discount)
+    elsif !discount.active? || discount.maximum_uses_hit? || discount.maximum_organization_uses_hit?(cart)
       context[:message] = "Discount code expired"
       context.fail!
     else
@@ -45,31 +39,5 @@ class ApplyDiscountToCart
     context.success?
   end
 
-  def can_use_in_market?(discount)
-    (discount.market_id.nil? || discount.market_id == cart.market_id)
-  end
 
-  def can_use_for_buyer?(discount)
-    (discount.buyer_organization_id.nil? || discount.buyer_organization_id == cart.organization.id)
-  end
-
-  def less_than_minimum?(discount)
-    discount.minimum_order_total > 0 && discount.minimum_order_total > cart.subtotal
-  end
-
-  def more_than_maximum?(discount)
-    discount.maximum_order_total > 0 && discount.maximum_order_total < cart.subtotal
-  end
-
-  def maximum_uses_hit?(discount)
-    discount.maximum_uses > 0 && discount.maximum_uses <= discount.total_uses
-  end
-
-  def maximum_organization_uses_hit?(discount)
-    discount.maximum_organization_uses > 0 && discount.maximum_organization_uses <= discount.uses_by_organization(cart.organization)
-  end
-
-  def requires_seller_items?(discount)
-    discount.seller_organization_id.present? && cart.items.joins(:product).where(products: {organization_id: discount.seller_organization.id}).none?
-  end
 end

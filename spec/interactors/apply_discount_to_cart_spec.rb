@@ -43,7 +43,6 @@ describe ApplyDiscountToCart do
 
         expect(result.context).to be_failure
         expect(result.message).to eql("Discount code requires a minimum of $30.00")
-        expect(cart.discount_id).to be_nil
       end
     end
 
@@ -59,7 +58,6 @@ describe ApplyDiscountToCart do
 
         expect(result.context).to be_failure
         expect(result.message).to eql("Discount code expired")
-        expect(cart.discount_id).to be_nil
       end
     end
   end

@@ -15,7 +15,7 @@ class CartsController < ApplicationController
 
       if current_cart.discount.present?
         @apply_discount = ApplyDiscountToCart.perform(cart: current_cart)
-        flash[:discount_message] = @apply_discount.message
+        flash.now[:discount_message] = @apply_discount.message
       end
     end
   end
