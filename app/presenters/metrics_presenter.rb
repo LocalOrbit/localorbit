@@ -640,9 +640,9 @@ class MetricsPresenter
 
     elsif m[:calculation] == :metric
       model_name = scope.name
-      sub_select = Metric.where(model_type: model_name, metric_code: metric)
+      sub_select = Metric.where(model_type: model_name, metric_code: metric).
+                          select(:effective_on, "UNNEST(model_ids) AS model_id")
       sub_select = sub_select.where(effective_on: @date_range) if @date_range
-      sub_select = sub_select.select(:effective_on, "UNNEST(model_ids) AS model_id")
 
       scope = scope.
         joins("INNER JOIN (#{sub_select.to_sql}) AS metric_calculation ON metric_calculation.model_id = #{model_name.pluralize.downcase}.id").
