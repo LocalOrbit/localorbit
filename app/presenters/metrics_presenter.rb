@@ -3,8 +3,6 @@ class MetricsPresenter
 
   attr_reader :metrics, :headers, :markets
 
-  cattr_accessor :start_date, :end_date
-
   START_OF_WEEK = :sun
 
   TEST_MARKET_IDS = Market.where(demo: true).pluck(:id)
@@ -520,7 +518,7 @@ class MetricsPresenter
     }
   }.with_indifferent_access
 
-  def initialize(groups: [], interval: "month", markets: [])
+  def initialize(groups: [], interval: "month", markets: [], date_range: nil)
     # {
     #   "Group Title" => {
     #     "Metric Title" => {
@@ -536,6 +534,8 @@ class MetricsPresenter
 
     @headers = headers_for_interval(interval)
 
+    @date_range = date_range
+
     if groups.include?("financials") || groups.include?("products")
       @markets = Market.where.not(id: TEST_MARKET_IDS).order("LOWER(name)").pluck(:id, :name)
     end
@@ -547,14 +547,23 @@ class MetricsPresenter
     ]
   end
 
-  def self.metrics_for(groups: [], interval: "month", markets: [])
+  def self.metrics_for(groups: [], interval: "month", markets: [], start_date: nil, end_date: nil)
     groups = [groups].flatten
     interval = "month" unless ["week", "month"].include?(interval)
     markets = [markets].compact.flatten.delete_if(&:empty?)
+    date_range = [start_date, end_date].all?(&:present?) ? Range.new(start_date, end_date) : nil
 
     return nil unless groups.all? {|group| GROUPS.keys.include?(group) }
 
-    new(groups: groups, interval: interval, markets: markets)
+    new(groups: groups, interval: interval, markets: markets, date_range: date_range)
+  end
+
+  def start_date
+    @date_range.begin if @date_range
+  end
+
+  def end_date
+    @date_range.end if @date_range
   end
 
   private
@@ -631,8 +640,9 @@ class MetricsPresenter
 
     elsif m[:calculation] == :metric
       model_name = scope.name
-      sub_select = Metric.where(model_type: model_name, metric_code: metric).
-                          select(:effective_on, "UNNEST(model_ids) AS model_id")
+      sub_select = Metric.where(model_type: model_name, metric_code: metric)
+      sub_select = sub_select.where(effective_on: @date_range) if @date_range
+      sub_select = sub_select.select(:effective_on, "UNNEST(model_ids) AS model_id")
 
       scope = scope.
         joins("INNER JOIN (#{sub_select.to_sql}) AS metric_calculation ON metric_calculation.model_id = #{model_name.pluralize.downcase}.id").
