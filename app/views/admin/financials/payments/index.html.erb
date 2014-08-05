@@ -3,10 +3,13 @@
 <h1>Payment History</h1>
 
 <% if current_user.admin? || current_user.market_manager? %>
+  <p>These are all completed payments to and from your organization. You can download a CSV file to import into your accounting system.</p>
   <%= render partial: "admin/financials/shared/market_manager_payment_filters", locals: { payment_history: @payment_history } %>
 <% elsif current_user.buyer_only? %>
+  <p>These are all completed payments you have made. You can download a CSV file to import into your accounting system.</p>
   <%= render partial: "admin/financials/shared/buyer_payment_filters", locals: { payment_history: @payment_history } %>
 <% else %>
+  <p>These are all completed payments made to you. You can download a CSV file to import into your accounting system.</p>
   <%= render partial: "admin/financials/shared/seller_payment_filters", locals: { payment_history: @payment_history } %>
 <% end %>
 

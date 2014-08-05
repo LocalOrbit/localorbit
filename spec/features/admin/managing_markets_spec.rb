@@ -380,12 +380,12 @@ describe "Managing Markets" do
       visit "/admin/markets/#{market.id}"
       click_link "Fees"
 
-      fill_in 'Local Orbit % paid by seller',   with: '2.0'
+      fill_in 'Local Orbit % paid by Seller',   with: '2.0'
       fill_in 'Local Orbit % paid by market',   with: '4.0'
-      fill_in 'Market % paid by seller',        with: '3.0'
-      fill_in 'Credit Card fee paid by seller', with: '2.5'
+      fill_in 'Market % paid by Seller',        with: '3.0'
+      fill_in 'Credit Card fee paid by Seller', with: '2.5'
       fill_in 'Credit Card fee paid by market', with: '4.5'
-      fill_in 'ACH fee paid by seller',         with: '3.5'
+      fill_in 'ACH fee paid by Seller',         with: '3.5'
       fill_in 'ACH fee paid by market',         with: '5.5'
       fill_in 'ACH fee cap',                    with: '10.00'
       fill_in 'PO Payment Terms',               with: '18'
@@ -393,12 +393,12 @@ describe "Managing Markets" do
       click_button 'Update Fees'
 
       expect(page).to have_content("#{market.name} fees successfully updated")
-      expect(find_field('Local Orbit % paid by seller').value).to   eq('2.000')
+      expect(find_field('Local Orbit % paid by Seller').value).to   eq('2.000')
       expect(find_field('Local Orbit % paid by market').value).to   eq('4.000')
-      expect(find_field('Market % paid by seller').value).to        eq('3.000')
-      expect(find_field('Credit Card fee paid by seller').value).to eq('2.500')
+      expect(find_field('Market % paid by Seller').value).to        eq('3.000')
+      expect(find_field('Credit Card fee paid by Seller').value).to eq('2.500')
       expect(find_field('Credit Card fee paid by market').value).to eq('4.500')
-      expect(find_field('ACH fee paid by seller').value).to         eq('3.500')
+      expect(find_field('ACH fee paid by Seller').value).to         eq('3.500')
       expect(find_field('ACH fee paid by market').value).to         eq('5.500')
       expect(find_field('ACH fee cap').value).to                    eq('10.00')
       expect(find_field('PO Payment Terms').value).to               eq('18')

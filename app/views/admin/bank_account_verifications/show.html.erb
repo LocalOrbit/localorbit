@@ -2,9 +2,8 @@
   <%= form_for [:admin, @entity, @verification.bank_account, @verification], html: { class: "column column--half" } do |f| %>
     <h1>Verify Your Account</h1>
     <%= render "shared/errors", { resource: @verification } %>
-    <p>Please confirm the <strong>two micro deposits</strong> (deposits made to your account that are in cents) made to the following account.</p>
-    <p>By confirming these two micro deposits we are able to confirm you have ownership of the bank account you have added here before you can make purchases.</p>
-    <p>Verification amounts normally show on the bank account owner's statement as &quot;Balanced verification&quot; within 2 business days (usually much faster).</p>
+
+    <p>You should see two small deposits in your bank account within 1-2 business days of adding payment information.  To verify your account in the market, place the amounts (in cents and without a decimal point) for both deposits in the Verify section of the specified checking or savings account.</p>
     <p>
       <% if @verification.attempts == 0 %>
       You have 3 tries to enter the correct values. Please be very careful that they are accurate when entering them.

@@ -1,6 +1,9 @@
 <div class="row row--partial">
   <div class="column column--three-fourths">
       <h1><i class="font-icon" data-icon="&#xe023;"></i>&nbsp; Fresh Sheet Preview</h1>
+      <p>This is a preview of all items available to your Buyers. You can send a test version to a specified email address.
+        When you are ready to send to your Buyer list, click Send to Everyone Now.
+      </p>
       <%= form_tag [:admin, :fresh_sheet], method: :post do %>
         <div class="field field--inline fresh-sheet-test">
           <input name="email" type="email" placeholder="Email address" class="input--short" value="<%= current_user.email %>">

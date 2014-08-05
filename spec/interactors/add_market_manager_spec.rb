@@ -28,7 +28,7 @@ describe AddMarketManager do
 
       open_email(user.email)
       expect(current_email).to have_subject("You have been added to a market")
-      expect(current_email).to have_body_text("You have been added as a market manager for #{market.name}")
+      expect(current_email).to have_body_text("You have been added as a Market Manager for #{market.name}")
       expect(current_email).to have_body_text("View #{market.name}")
     end
   end

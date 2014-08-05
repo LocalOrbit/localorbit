@@ -23,12 +23,36 @@
 
           <% group.each_pair do |metric_title, metric_values| %>
             <tr class="<%= cycle "odd", "even" %> item">
-              <td><%= metric_title %></td>
-              <% @presenter.headers.each do |header| %>
+              <% if metric_title == "Active Markets" %>
                 <td>
-                  <% infinity = metric_values[header] == "∞" %>
-                  <%= content_tag "span", metric_values[header], class: "metric-value#{infinity ? ' infinity' : ''}" %><br>
+                  <%= metric_title %>
+                  <span class="tooltip pull-right" data-tooltip="These are markets that are actively transacting."></span>
                 </td>
+                <% @presenter.headers.each do |header| %>
+                  <td>
+                    <% infinity = metric_values[header] == "∞" %>
+                    <%= content_tag "span", metric_values[header], class: "metric-value#{infinity ? ' infinity' : ''}" %><br>
+                  </td>
+                <% end %>
+              <% elsif metric_title == "Active Users" %>
+                <td>
+                  <%= metric_title %>
+                  <span class="tooltip pull-right" data-tooltip="These are Buyers who have placed an order, and Sellers who have available inventory."></span>
+                </td>
+                <% @presenter.headers.each do |header| %>
+                  <td>
+                    <% infinity = metric_values[header] == "∞" %>
+                    <%= content_tag "span", metric_values[header], class: "metric-value#{infinity ? ' infinity' : ''}" %><br>
+                  </td>
+                <% end %>
+              <% else %>
+                <td><%= metric_title %></td>
+                <% @presenter.headers.each do |header| %>
+                  <td>
+                    <% infinity = metric_values[header] == "∞" %>
+                    <%= content_tag "span", metric_values[header], class: "metric-value#{infinity ? ' infinity' : ''}" %><br>
+                  </td>
+                <% end %>
               <% end %>
             </tr>
           <% end %>

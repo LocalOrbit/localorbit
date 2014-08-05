@@ -18,7 +18,10 @@
       </p>
     <% else %>
       <h2>Add Prices</h2>
-      <p>You don't have any prices yet! We've gone ahead and started the entry for you.</p>
+      <p>You don't have any prices yet! We've gone ahead and started the entry for you. When you enter a Sale Price,
+        the Net Price will automatically update. You can adjust these numbers to arrive at the Net Price that you want
+        to receive per unit.
+      </p>
     <% end %>
 
     <div class="table-wrapper">
@@ -28,9 +31,18 @@
           <%= content_tag :th, raw('<input type="checkbox" class="select-all">'), class: "delete-check-mobile" if @product.prices.view_sorted.any? %>
           <%= content_tag(:th, 'Market') if current_user.multi_market_membership? %>
           <th>Buyer</th>
-          <th>Min Qty</th>
-          <th>Net Price</th>
-          <th>Sale Price</th>
+          <th>
+            Min Qty
+            <span class="tooltip" data-tooltip="This is the minimum quantity available for sale of this product."></span>
+          </th>
+          <th>
+            Net Price
+            <span class="tooltip" data-tooltip="This is the amount that the Seller wants to receive for this product. It is calculated by the system based on sale price and associated fees."></span>
+          </th>
+          <th>
+            Sale Price
+            <span class="tooltip" data-tooltip="This is the sale price that the Buyer will see. The net price will adjust when you enter a sale price."></span>
+          </th>
           <th></th>
         </tr>
 
@@ -105,17 +117,9 @@
     <% end # table %>
     </div>
 
-    <% if @product.prices.view_sorted.none? %>
-      <p>
-        When entering a price with advanced pricing, you are able to set prices for specific buyers. Before you do that
-        though, you should have a base price that everyone will pay. We have prefilled the information to get you started.
-        Set a sale price and click add to add this price. You will notice that the Net Price updates when you enter a Sale
-        Price. You can play with these numbers to get the Net Price that you want to receive per unit.
-      </p>
-    <% end %>
     <div class="form-actions">
       <p class="action-helper">Now that pricing is complete <%= link_to "return to product list", admin_products_path %> or <%= link_to "Add Another Product", new_admin_product_path, class: "btn btn--add" %></p>
-
     </div>
+
   </div>
 <% end # form %>

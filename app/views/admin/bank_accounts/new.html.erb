@@ -12,11 +12,21 @@
     <div class="is-hidden popup with-anchor top-anchor" id="security-assurance">
       <h3>About Our Security Assurance</h3>
       <p>Adding a payment method to your Local Orbit powered market is safe and secure. Here's how we protect you:</p>
-       <ul>
-         <li>No one from Local Orbit, your market or the payment processor can view or access your bank account or credit card information at any time. Account information is stored using the strictest security standards and transmitted securely by our payments provider.</li>
-         <li>You will receive a receipt each time you make an online payment so you can monitor your account activity.</li>
-       </ul>
-     </div>
+      <ul>
+       <li>No one from Local Orbit, your market or the payment processor can view or access your bank account or credit card information at any time. Account information is stored using the strictest security standards and transmitted securely by our payments provider.</li>
+       <li>You will receive a receipt each time you make an online payment so you can monitor your account activity.</li>
+      </ul>
+    </div>
+
+    <div>
+      <% if current_user.market_manager? %>
+        <p>This payment method will be used to deliver payments from orders and from where you will be charged Local Orbit fees.</p>
+      <% elsif current_user.buyer_only? %>
+        <p>This payment method will be used to fulfill your orders.</p>
+      <% else %>
+        <p>This payment method will be used to deliver payments from orders.</p>
+      <% end %>
+    </div>
 
     <div class="row">
       <div class="field column column--half column--guttered">

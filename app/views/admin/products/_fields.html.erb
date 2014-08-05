@@ -42,7 +42,7 @@
 <div class="field">
   <%= f.label :short_description %>
   <span class="hint">Up to 50 characters</span>
-  <span class="tooltip pull-right" data-tooltip="This is the first opportunity for a buyer to learn about the product. Include additional explanation about the quantity, size or unit here, if needed."></span>
+  <span class="tooltip pull-right" data-tooltip="This is the first opportunity for a Buyer to learn about the product. Include additional explanation about the quantity, size or unit here, if needed."></span>
   <br>
   <%= f.text_field :short_description, size: 50, maxlength: 50, class: "column column--full" %>
 </div>
@@ -89,8 +89,8 @@
 <fieldset class="conditional">
   <legend>More product info (Where, Who, How)</legend>
   <%= check_box_tag :seller_info, "", !@product.has_custom_seller_info? %>
-  <%= label_tag :seller_info, "Use seller info from my account." %>
-  <span class="hint">Uncheck this to customize your seller information for this product.</span>
+  <%= label_tag :seller_info, "Use Seller info from my account." %>
+  <span class="hint">Uncheck this to customize your Seller information for this product.</span>
 
   <div class="hidden seller_info_fields">
     <div class="field">

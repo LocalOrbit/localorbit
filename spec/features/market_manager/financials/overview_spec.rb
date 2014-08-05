@@ -134,7 +134,7 @@ feature "Market Manager Financial Overview" do
 
     expect(page).to have_content("Money In")
     expect(page).to have_content("Money Out")
-    expect(page).to have_content("This is a snapshot")
+    expect(page).to have_content("This is a list of all money currently owed to your organization and that you owe to other organizations.")
 
     within(".money-in") do
       click_link "Send Invoices"
@@ -169,6 +169,7 @@ feature "Market Manager Financial Overview" do
   scenario "Market manager navigates directly to their financial overview" do
     visit_financials
     expect(page).to have_content("Money In")
-    expect(page).to have_content("This is a snapshot")
+    expect(page).to have_content("This is a list of all money currently owed to your organization and that you owe to other organizations.")
+
   end
 end
