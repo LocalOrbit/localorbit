@@ -1,8 +1,10 @@
 module Metrics
-  class PriceHistory < PriceCalculations
-    cattr_accessor :history_metrics
+  class PriceCalculations < Base
+    cattr_accessor :base_scope, :metrics, :model_name
 
-    @@history_metrics = {
+    BASE_SCOPE = Price.where.not(market_id: MetricsPresenter::TEST_MARKET_IDS).uniq
+    MODEL_NAME = BASE_SCOPE.name
+    METRICS = {
       total_price_count: {
         calculation: :count,
         scope: BASE_SCOPE,
@@ -21,3 +23,5 @@ module Metrics
     }
   end
 end
+
+Metrics::Base.register_metrics(Metrics::PriceCalculations::METRICS)
