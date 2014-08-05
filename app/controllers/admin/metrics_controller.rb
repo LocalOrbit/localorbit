@@ -10,8 +10,8 @@ class Admin::MetricsController < AdminController
       groups: [params[:id]],
       interval: params[:interval],
       markets: params[:market],
-      start_date: params[:start_date],
-      end_date: params[:end_date])
+      start_date: params[:start_date].try(:to_date),
+      end_date: params[:end_date].try(:to_date))
 
     render_404 unless @presenter
   end
