@@ -42,6 +42,6 @@ module ProductsHelper
   end
 
   def market_organization_select(orgs)
-    orgs.each.map { |org| [org.markets.first.name + " - " + org.name, org.id]}
+    orgs.map { |org| [org.markets.first.name + " - " + org.name, org.id]}
   end
 end
