@@ -17,7 +17,7 @@ module ProductsHelper
 
   def product_listing_disclaimer
     condition = []
-    if @product.lots.count < 1
+    if @product.simple_inventory == 0
       condition.push link_to_unless_current "add inventory", [:admin, @product, :lots]
     end
 
