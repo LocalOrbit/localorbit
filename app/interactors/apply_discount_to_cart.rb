@@ -32,6 +32,9 @@ class ApplyDiscountToCart
     elsif more_than_maximum?(discount)
       context[:message] = "Discount code requires a maximum of #{"$%.2f" % discount.maximum_order_total}"
       context.fail!
+    elsif requires_seller_items?(discount)
+      context[:message] = "Discount code requires items from #{discount.seller_organization.name}"
+      context.fail!
     elsif !discount.active? || maximum_uses_hit?(discount) || maximum_organization_uses_hit?(discount)
       context[:message] = "Discount code expired"
       context.fail!
@@ -64,5 +67,9 @@ class ApplyDiscountToCart
 
   def maximum_organization_uses_hit?(discount)
     discount.maximum_organization_uses > 0 && discount.maximum_organization_uses <= discount.uses_by_organization(cart.organization)
+  end
+
+  def requires_seller_items?(discount)
+    discount.seller_organization_id.present? && cart.items.joins(:product).where(products: {organization_id: discount.seller_organization.id}).none?
   end
 end

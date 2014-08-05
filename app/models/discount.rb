@@ -5,6 +5,8 @@ class Discount < ActiveRecord::Base
   self.inheritance_column = nil
 
   belongs_to :market
+  belongs_to :buyer_organization, class_name: "Organization"
+  belongs_to :seller_organization, class_name: "Organization"
 
   enum type: {percentage: 0, fixed: 1}
 
