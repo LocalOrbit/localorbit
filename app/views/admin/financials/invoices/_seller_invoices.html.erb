@@ -1,9 +1,7 @@
 <div class="sub-header stickable">
   <div class="l-constraint">
     <h1>Unsent Invoices</h1>
-    <% if current_user.admin? || current_user.market_manager? %>
       <p>This is all money owed to you by other organizations. Issue invoices to collect payments.</p>
-    <% end %>
     <%= render "admin/financials/invoices/filters/seller", url: admin_financials_invoices_path %>
   </div>
 </div>
