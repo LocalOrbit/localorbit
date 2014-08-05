@@ -6,6 +6,10 @@ class CartDecorator < Draper::Decorator
     number_to_currency total
   end
 
+  def display_discount_amount
+    number_to_currency discount_amount
+  end
+
   def display_subtotal
     number_to_currency subtotal
   end

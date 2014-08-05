@@ -2,11 +2,15 @@ class ApplyDiscountToCart
   include Interactor
 
   def perform
-    discount = context[:code].present? ? Discount.where(code: code).first : cart.discount
+    if context[:code].present?
+      discount = Discount.where(code: code).first
 
-    if can_use_discount?(discount) && discount_is_valid?(discount)
+      if can_use_discount?(discount) && discount_is_valid?(discount)
         cart.discount = discount
         cart.save
+      end
+    else
+      cart.update(discount_id: nil)
     end
   end
 
@@ -38,6 +42,4 @@ class ApplyDiscountToCart
 
     context.success?
   end
-
-
 end

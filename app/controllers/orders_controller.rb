@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
   def create
     if params[:prev_discount_code] != params[:discount_code]
       @apply_discount = ApplyDiscountToCart.perform(cart: current_cart, code: params[:discount_code])
-      flash[:discount_message] = @apply_discount.message
+      flash[:discount_message] = @apply_discount.context[:message]
       redirect_to cart_path
     else
       @placed_order = PlaceOrder.perform(entity: current_cart.organization, buyer: current_user, order_params: order_params, cart: current_cart)

@@ -28,6 +28,20 @@ describe ApplyDiscountToCart do
     expect(result.message).to eql("Discount applied")
   end
 
+  it "rejects an invalid discount code" do
+    result = ApplyDiscountToCart.perform(cart: cart, code: "INVALID")
+
+    expect(result.context).to be_failure
+    expect(result.message).to eql("Invalid discount code")
+  end
+
+  it "clears a discount code" do
+    result = ApplyDiscountToCart.perform(cart: cart, code: "")
+
+    expect(result.context).to be_success
+    expect(cart.discount).to be_nil
+  end
+
   context "updating cart with an existing discount applied" do
     before do
       cart.discount = discount
@@ -39,7 +53,7 @@ describe ApplyDiscountToCart do
       it "clears the discount if is no longer valid" do
         cart.items = [cart_item1]
 
-        result = ApplyDiscountToCart.perform(cart: cart)
+        result = ApplyDiscountToCart.perform(cart: cart, code: discount.code)
 
         expect(result.context).to be_failure
         expect(result.message).to eql("Discount code requires a minimum of $30.00")
@@ -54,7 +68,7 @@ describe ApplyDiscountToCart do
       end
 
       it "clears the discount if has expired" do
-        result = ApplyDiscountToCart.perform(cart: cart)
+        result = ApplyDiscountToCart.perform(cart: cart, code: discount.code)
 
         expect(result.context).to be_failure
         expect(result.message).to eql("Discount code expired")
