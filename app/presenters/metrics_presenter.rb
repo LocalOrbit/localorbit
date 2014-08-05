@@ -5,9 +5,6 @@ class MetricsPresenter
 
   START_OF_WEEK = :sun
 
-  TEST_MARKET_IDS = Market.where(demo: true).pluck(:id)
-  TEST_ORG_IDS    = Market.where(id: TEST_MARKET_IDS).joins(:organizations).uniq.pluck("organizations.id")
-
   GROUPDATE_OPTIONS = {
     week: {
       groupdate: :group_by_week,
@@ -20,279 +17,6 @@ class MetricsPresenter
       format: "%b %Y"
     }
   }.with_indifferent_access.freeze
-
-  BASE_SCOPES = {
-    # When joining orders to order_items, we have to make sure we running calculations
-    # on distinct orders rather than multiples (by order items). The query below
-    # grabs all order IDs where the order's items aren't canceled and returns a
-    # distinct order set from those IDs.
-    order: Order.joins(<<-SQL
-      INNER JOIN (
-        SELECT DISTINCT orders_alias2.id
-        FROM orders orders_alias2
-        INNER JOIN order_items order_items_alias
-          ON order_items_alias.order_id = orders_alias2.id
-          AND order_items_alias.delivery_status != 'canceled'
-      ) orders_alias ON orders_alias.id = orders.id
-    SQL
-    ).joins(:market).where.not(market_id: TEST_MARKET_IDS),
-    order_item: OrderItem.joins(order: :market).where.not(orders: {market_id: TEST_MARKET_IDS}, delivery_status: "canceled"),
-    payment: Payment.joins(:market).where.not(market_id: TEST_MARKET_IDS)
-  }
-
-  METRICS = {
-    total_orders: {
-      title: "Total Orders",
-      scope: BASE_SCOPES[:order],
-      attribute: :placed_at,
-      calculation: :count
-    },
-    total_orders_percent_growth: {
-      title: "Total Orders % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :total_orders,
-      format: :percent
-    },
-    number_of_items: {
-      title: "Number of Items",
-      scope: BASE_SCOPES[:order_item],
-      attribute: "orders.placed_at",
-      calculation: :count,
-    },
-    total_sales: {
-      title: "Total Sales",
-      scope: BASE_SCOPES[:order_item],
-      attribute: "orders.placed_at",
-      calculation: :sum,
-      calculation_arg: "unit_price * COALESCE(quantity_delivered, quantity)",
-      format: :currency
-    },
-    total_sales_percent_growth: {
-      title: "Total Sales % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :total_sales,
-      format: :percent
-    },
-    average_order: {
-      title: "Average Order",
-      scope: BASE_SCOPES[:order].joins(:items),
-      attribute: :placed_at,
-      calculation: :custom,
-      calculation_arg: "(SUM(order_items.unit_price * COALESCE(order_items.quantity_delivered, order_items.quantity))::NUMERIC / COUNT(DISTINCT orders.id)::NUMERIC)",
-      format: :currency
-    },
-    average_order_size: {
-      title: "Average Items Per Order",
-      scope: BASE_SCOPES[:order].joins(:items),
-      attribute: :placed_at,
-      calculation: :custom,
-      calculation_arg: "(COUNT(DISTINCT order_items.id)::NUMERIC / COUNT(DISTINCT orders.id)::NUMERIC)",
-      format: :decimal
-    },
-    total_service_fees: {
-      title: "Total Service Fees",
-      scope: BASE_SCOPES[:payment].where(payment_type: "service"),
-      attribute: "payments.created_at",
-      calculation: :sum,
-      calculation_arg: :amount,
-      format: :currency
-    },
-    total_service_fees_percent_growth: {
-      title: "Total Service Fees % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :total_service_fees,
-      format: :percent
-    },
-    # Average LO Service Fees
-    # Fees charged based on user's plan
-    #
-    # Payment#amount when Payment#payment_type  is "service"
-    average_service_fees: {
-      title: "Average Service Fees",
-      scope: BASE_SCOPES[:payment].where(payment_type: "service"),
-      attribute: "payments.created_at",
-      calculation: :average,
-      calculation_arg: :amount,
-      format: :currency
-    },
-    average_service_fees_percent_growth: {
-      title: "Average Service Fees % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :average_service_fees,
-      format: :percent
-    },
-    total_transaction_fees: {
-      title: "Total Transaction Fees",
-      scope: BASE_SCOPES[:order_item],
-      attribute: "orders.placed_at",
-      calculation: :sum,
-      calculation_arg: "order_items.local_orbit_seller_fee + order_items.local_orbit_market_fee",
-      format: :currency
-    },
-    total_transaction_fees_percent_growth: {
-      title: "Total Transaction Fees % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :total_transaction_fees,
-      format: :percent
-    },
-    # Total Delivery Fees
-    # Total of order delivery fees excluding orders without a delivery fee
-    #
-    # Order#delivery_fees when Order#delivery_fees is present
-    total_delivery_fees: {
-      title: "Total Delivery Fees",
-      scope: BASE_SCOPES[:order].where.not(delivery_fees: [nil, 0]),
-      attribute: :placed_at,
-      calculation: :sum,
-      calculation_arg: :delivery_fees,
-      format: :currency
-    },
-    total_delivery_fees_percent_growth: {
-      title: "Total Delivery Fees % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :total_delivery_fees,
-      format: :percent
-    },
-    # Average Delivery Fees
-    # Average of order delivery fees excluding orders without a delivery fee
-    #
-    # Order#delivery_fees when Order#delivery_fees is present
-    average_delivery_fees: {
-      title: "Average Delivery Fees",
-      scope: BASE_SCOPES[:order].where.not(delivery_fees: [nil, 0]),
-      attribute: :placed_at,
-      calculation: :average,
-      calculation_arg: :delivery_fees,
-      format: :currency
-    },
-    # Credit Card Processing Fees
-    # What LO charges customers for credit card processing payments
-    #
-    # OrderItem#payment_seller_fee + OrderItem#payment_market_fee
-    # when Order#payment_method is "credit_card"
-    credit_card_processing_fees: {
-      title: "Credit Card Processing Fees",
-      scope: BASE_SCOPES[:order_item].where(orders: {payment_method: "credit card"}),
-      attribute: "orders.placed_at",
-      calculation: :sum,
-      calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
-      format: :currency
-    },
-    credit_card_processing_fees_percent_growth: {
-      title: "Credit Card Processing Fees % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :credit_card_processing_fees,
-      format: :percent
-    },
-    # ACH Processing Fees
-    # What LO charges customers for credit card processing payments
-    #
-    # OrderItem#payment_seller_fee + OrderItem#payment_market_fee
-    # when Order#payment_method is "ach"
-    ach_processing_fees: {
-      title: "ACH Processing Fees",
-      scope: BASE_SCOPES[:order_item].where(orders: {payment_method: "ach"}),
-      attribute: "orders.placed_at",
-      calculation: :sum,
-      calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
-      format: :currency
-    },
-    ach_processing_fees_percent_growth: {
-      title: "ACH Processing Fees % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :ach_processing_fees,
-      format: :percent
-    },
-    # Total Payment Processing Fees:
-    # What LO charges customers for credit card + ACH processing payments
-    #
-    # OrderItem#payment_seller_fee + OrderItem#payment_market_fee
-    # when Order#payment_method is "credit_card" or "ach"
-    total_processing_fees: {
-      title: "Total Processing Fees",
-      scope: BASE_SCOPES[:order_item].where(orders: {payment_method: ["credit card", "ach"]}),
-      attribute: "orders.placed_at",
-      calculation: :sum,
-      calculation_arg: "order_items.payment_seller_fee + order_items.payment_market_fee",
-      format: :currency
-    },
-    total_processing_fees_percent_growth: {
-      title: "Total Processing Fees % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :total_processing_fees,
-      format: :percent
-    },
-    # Total Market Fees
-    # Fees charged to a Market for payments and LO fees
-    #
-    # OrderItem#payment_market_fee + OrderItem#local_orbit_market_fee
-    total_market_fees: {
-      title: "Total Market Fees",
-      scope: BASE_SCOPES[:order_item],
-      attribute: "orders.placed_at",
-      calculation: :sum,
-      calculation_arg: "market_seller_fee",
-      format: :currency
-    },
-    total_market_fees_percent_growth: {
-      title: "Total Market Fees % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :total_market_fees,
-      format: :percent
-    },
-    total_service_transaction_fees: {
-      title: "Total Service & Transaction Fees",
-      calculation: :ruby,
-      calculation_arg: [:+, :total_service_fees, :total_transaction_fees],
-      format: :currency
-    },
-    total_service_transaction_fees_percent_growth: {
-      title: "Total Service & Transaction Fees % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :total_service_transaction_fees,
-      format: :percent
-    },
-    active_users: {
-      title: "Active Users",
-      scope: Organization,
-      calculation: :metric,
-      format: :integer
-    },
-    total_buyer_orders: {
-      title: "Buyers Placing Orders",
-      scope: Organization,
-      calculation: :metric,
-      format: :integer
-    },
-    total_buyer_orders_percent_growth: {
-      title: "Buyers Placing Orders % Growth",
-      calculation: :percent_growth,
-      calculation_arg: :total_buyer_orders,
-      format: :percent
-    },
-    total_price_sum: {
-      title: "Total Price Sum",
-      scope: Metric.where(metric_code: "total_price_sum"),
-      attribute: :effective_on,
-      calculation: :sum,
-      calculation_arg: :value,
-      format: :currency
-    },
-    total_price_count: {
-      title: "Total Price Count",
-      scope: Metric.where(metric_code: "total_price_count"),
-      attribute: :effective_on,
-      calculation: :sum,
-      calculation_arg: :value,
-      format: :integer
-    },
-    average_price: {
-      title: "Average Price",
-      calculation: :ruby,
-      calculation_arg: [:/, :total_price_sum, :total_price_count],
-      format: :currency
-    },
-  }
 
   GROUPS = {
     financials: {
@@ -353,7 +77,7 @@ class MetricsPresenter
     @headers = headers_for_interval(interval)
 
     if groups.include?("financials") || groups.include?("products")
-      @markets = Market.where.not(id: TEST_MARKET_IDS).order("LOWER(name)").pluck(:id, :name)
+      @markets = Market.where.not(id: Metrics::Base::TEST_MARKET_IDS).order("LOWER(name)").pluck(:id, :name)
     end
 
     @metrics = Hash[
@@ -376,96 +100,31 @@ class MetricsPresenter
   private
 
   def metrics_for_group(group, interval, markets=[])
-    Hash[
-      GROUPS[group][:metrics].map do |metric|
-        [METRICS[metric][:title], calculate_metric(metric, interval, markets)]
-      end
-    ]
+    Hash[GROUPS[group][:metrics].map do |metric|
+      m = Metrics::Base::METRICS[metric]
+      results = Metrics::Base.calculate_metric(metric: metric,
+                                               interval: interval,
+                                               markets: markets,
+                                               options: GROUPDATE_OPTIONS[interval].dup)
+
+      results = format_results(results: results, interval: interval, calculation_type: m[:calculation], format: m[:format])
+
+      [m[:title], results]
+    end]
+
   end
 
-  def scope_for(scope:, attribute:, interval:, window: false)
-    options = GROUPDATE_OPTIONS[interval].dup
-    groupdate = options.delete(:groupdate)
+  def format_results(results:, interval:, calculation_type:, format:)
+    if calculation_type == :window
+      count = GROUPDATE_OPTIONS[interval][:last]
 
-    if window
-      options[:carry_forward] = true
-      options.delete(:last)
-    end
-
-    scope.send(groupdate, attribute, options)
-  end
-
-  def calculate_metric(metric, interval, markets=[], apply_format=true)
-    m = METRICS[metric]
-
-    if m[:scope]
-      scope = m[:scope].uniq
-
-      unless markets.empty?
-        if scope.table_name == "metrics"
-          scope = scope.where.overlap(model_ids: markets)
-        else
-          scope = scope.where(markets: {id: markets})
-        end
-      end
-    end
-
-    values = if m[:calculation] == :custom
-      series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
-      series.group_calc(m[:calculation_arg])
-
-    elsif m[:calculation] == :window
-      series = scope_for(scope: scope, attribute: m[:attribute], interval: interval, window: true)
-      values = series.group_calc("SUM(COUNT(DISTINCT(#{m[:calculation_arg] || "id"}))) OVER (ORDER BY #{series.relation.group_values[0]})")
-
-      # we have to calculate all history when using windows so we need to only
-      # return the last X values from the result set
-      format_values(values, interval)
-
-    elsif m[:calculation] == :ruby
-      args = m[:calculation_arg]
-      metric1 = calculate_metric(args[1], interval, markets, false)
-      metric2 = calculate_metric(args[2], interval, markets, false)
-
-      Hash[metric1.map do |key, value|
-        [key, (value.send(args[0], metric2[key]) rescue 0)]
-      end]
-
-    elsif m[:calculation] == :percent_growth
-      base_metric = calculate_metric(m[:calculation_arg], interval, markets, false).to_a
-      growth_metric = {}
-
-      base_metric.each_with_index do |value, index|
-        if index <= 0
-          growth_metric[value[0]] = nil
-        else
-          growth_metric[value[0]] = ((value[1].to_f - base_metric[index - 1][1].to_f) / base_metric[index - 1][1].to_f) * 100
-        end
-      end
-
-      growth_metric
-
-    elsif m[:calculation] == :metric
-      model_name = scope.name
-      sub_select = Metric.where(model_type: model_name, metric_code: metric).
-                          select(:effective_on, "UNNEST(model_ids) AS model_id")
-
-      scope = scope.
-        joins("INNER JOIN (#{sub_select.to_sql}) AS metric_calculation ON metric_calculation.model_id = #{model_name.pluralize.downcase}.id").
-        select("metric_calculation.effective_on, metric_calculation.model_id")
-
-      scope_for(scope: scope, attribute: "metric_calculation.effective_on", interval: interval).
-        count("DISTINCT(model_id)")
-
+      Hash[@headers.map { |header| [header, format_value(value: (results[header] || results.values.last || 0), format: format)] }.last(count)]
     else
-      series = scope_for(scope: scope, attribute: m[:attribute], interval: interval)
-      series.send(m[:calculation], m[:calculation_arg])
+      Hash[@headers.map { |header| [header, format_value(value: results[header], format: format)] }]
     end
-
-    Hash[values.map {|key, value| [key, (apply_format ? format_value(value, m[:format]) : value)] }]
   end
 
-  def format_value(value, format)
+  def format_value(value:, format:)
     case format
     when :integer  then (value || 0).to_i
     when :decimal  then (value || 0).try(:round, 2)
@@ -480,12 +139,6 @@ class MetricsPresenter
       end
     else value
     end
-  end
-
-  def format_values(values, interval)
-    count = GROUPDATE_OPTIONS[interval][:last]
-
-    Hash[@headers.map {|header| [header, (values[header] || values.values.last || 0)] }.last(count)]
   end
 
   def headers_for_interval(interval)
