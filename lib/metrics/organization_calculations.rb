@@ -48,8 +48,9 @@ module Metrics
       },
       total_buyer_orders: {
         title: "Buyers Placing Orders",
-        scope: Organization,
-        calculation: :metric,
+        scope: BASE_SCOPE.joins(:orders),
+        attribute: "orders.placed_at",
+        calculation: :count,
         format: :integer
       },
       total_buyer_orders_percent_growth: {
