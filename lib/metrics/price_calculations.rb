@@ -1,7 +1,6 @@
 module Metrics
   class PriceCalculations < Base
     BASE_SCOPE = Price.where.not(market_id: TEST_MARKET_IDS).uniq
-    MODEL_NAME = BASE_SCOPE.name
     METRICS = {
       total_price_sum: {
         title: "Total Price Sum",

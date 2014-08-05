@@ -1,7 +1,8 @@
 module Metrics
   class MarketHistory < MarketCalculations
-    cattr_accessor :history_metrics
+    cattr_accessor :history_metrics, :model_name
 
+    @@model_name = BASE_SCOPE.name
     @@history_metrics = {
       live_markets:         { scope: BASE_SCOPE.where(active: true) },
       active_markets:       { scope: BASE_SCOPE.joins(:orders) },

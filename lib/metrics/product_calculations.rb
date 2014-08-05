@@ -1,9 +1,6 @@
 module Metrics
   class ProductCalculations < Base
-    cattr_accessor :base_scope, :metrics, :model_name
-
     BASE_SCOPE = Product.joins(organization: :markets).where.not(organization_id: TEST_ORG_IDS).uniq
-    MODEL_NAME = BASE_SCOPE.name
     METRICS = {
       total_products: {
         title: "Total Products",

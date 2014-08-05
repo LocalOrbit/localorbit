@@ -1,7 +1,6 @@
 module Metrics
   class MarketCalculations < Base
     BASE_SCOPE = Market.where.not(id: TEST_MARKET_IDS).uniq
-    MODEL_NAME = BASE_SCOPE.name
     METRICS = {
       total_markets: {
         title: "Total Markets",

@@ -11,8 +11,6 @@ module Metrics
       SQL
     ).joins(:market).where.not(market_id: TEST_MARKET_IDS)
 
-    MODEL_NAME = BASE_SCOPE.name
-
     METRICS = {
       total_orders: {
         title: "Total Orders",

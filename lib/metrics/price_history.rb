@@ -1,7 +1,8 @@
 module Metrics
   class PriceHistory < PriceCalculations
-    cattr_accessor :history_metrics
+    cattr_accessor :history_metrics, :model_name
 
+    @@model_name = BASE_SCOPE.name
     @@history_metrics = {
       total_price_count: {
         calculation: :count,

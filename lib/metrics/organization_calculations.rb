@@ -1,7 +1,6 @@
 module Metrics
   class OrganizationCalculations < Base
     BASE_SCOPE = Organization.where.not(id: TEST_ORG_IDS).uniq
-    MODEL_NAME = BASE_SCOPE.name
     METRICS = {
       total_organizations: {
         title: "Total Organizations",

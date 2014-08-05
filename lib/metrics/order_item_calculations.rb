@@ -1,7 +1,6 @@
 module Metrics
   class OrderItemCalculations < Base
     BASE_SCOPE = OrderItem.joins(order: :market).where.not(orders: {market_id: TEST_MARKET_IDS}, delivery_status: "canceled")
-    MODEL_NAME = BASE_SCOPE.name
     METRICS = {
       number_of_items: {
         title: "Number of Items",

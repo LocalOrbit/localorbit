@@ -1,7 +1,8 @@
 module Metrics
   class OrganizationHistory < OrganizationCalculations
-    cattr_accessor :history_metrics
+    cattr_accessor :history_metrics, :model_name
 
+    @@model_name = BASE_SCOPE.name
     @@history_metrics = {
       total_buyer_only:   { scope: BASE_SCOPE.where(can_sell: false) },
       total_sellers:      { scope: BASE_SCOPE.where(can_sell: true) },

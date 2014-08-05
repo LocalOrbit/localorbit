@@ -1,7 +1,6 @@
 module Metrics
   class PaymentCalculations < Base
     BASE_SCOPE = Payment.joins(:market).where.not(market_id: TEST_MARKET_IDS)
-    MODEL_NAME = BASE_SCOPE.name
     METRICS = {
       total_service_fees: {
         title: "Total Service Fees",

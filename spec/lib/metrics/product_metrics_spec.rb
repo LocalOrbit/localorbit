@@ -3,7 +3,7 @@ require "spec_helper"
 describe "Product Metrics" do
   it "standard metrics don't bomb" do
     expect {
-      Metrics::ProductCalculations.metrics.each { |s| s.first }
+      Metrics::ProductCalculations::METRICS.each { |s| s.first }
     }.not_to raise_error
   end
 
