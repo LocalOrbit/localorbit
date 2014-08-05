@@ -2,7 +2,7 @@
 <%= render "admin/metrics/filters", presenter: @presenter %>
 
 <% if @presenter.metrics.values.first.empty? %>
-  <div class="empty-results">
+  <div class="info-note">
     <h2>No Results</h2>
     This table is empty because there is no data for the criteria specified.
   </div>
