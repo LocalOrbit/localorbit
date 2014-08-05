@@ -3,8 +3,8 @@ module Metrics
     cattr_accessor :history_metrics
 
     @@history_metrics = {
-      total_products_simple:   { scope: self.base_scope.where(use_simple_inventory: true) },
-      total_products_advanced: { scope: self.base_scope.where(use_simple_inventory: false) }
+      total_products_simple:   { scope: BASE_SCOPE.where(use_simple_inventory: true) },
+      total_products_advanced: { scope: BASE_SCOPE.where(use_simple_inventory: false) }
     }
   end
 end
