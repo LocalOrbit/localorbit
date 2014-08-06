@@ -3,7 +3,7 @@ module Admin
     include StickyFilters
 
     before_action :require_admin_or_market_manager, only: [:new, :create, :destroy]
-    before_action :find_organization, only: [:show, :edit, :update, :delivery_schedules, :market_memberships, :destroy]
+    before_action :find_organization, only: [:show, :edit, :update, :activate, :deactivate, :delivery_schedules, :market_memberships, :destroy]
 
     def index
       @query_params = sticky_parameters(request.query_parameters)
@@ -48,6 +48,16 @@ module Admin
       else
         render action: :show
       end
+    end
+
+    def activate
+      @organization.update_attributes(active: true)
+      redirect_to :back
+    end
+
+    def deactivate
+      @organization.update_attributes(active: false)
+      redirect_to :back
     end
 
     def destroy
