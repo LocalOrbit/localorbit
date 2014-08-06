@@ -176,7 +176,7 @@ module Metrics
         group_options.delete(:last)
       end
 
-      scope.send(groupdate, attribute, group_options) rescue binding.pry
+      scope.send(groupdate, attribute, group_options)
     end
   end
 end
