@@ -480,7 +480,7 @@ describe OrderItem do
       )
     end
 
-    let!(:payments_for_order) { create(:payment, payee: seller2, orders: [order], amount: 48.93) }
+    let!(:payments_for_order) { create(:payment, payment_type: "seller payment", payee: seller2, orders: [order], amount: 48.93) }
 
     it "seller1 is unpaid" do
       expect(order_item1.seller_payment_status).to eq('Unpaid')

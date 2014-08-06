@@ -45,6 +45,7 @@ class Payment < ActiveRecord::Base
   scope :refundable, -> { successful.where(payment_type: "order").where("amount > refunded_amount") }
   scope :buyer_payments, -> { where(payment_type: ["order", "order refund"]) }
   scope :for_orders, lambda {|orders| joins(:order_payments).where(order_payments: {order_id: orders}) }
+  scope :seller_payments, -> { where(payment_type: "seller payment") }
 
   ransacker :update_at_date do |_|
     Arel.sql("DATE(updated_at)")
