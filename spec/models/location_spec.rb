@@ -31,6 +31,15 @@ describe Location do
 
         expect(subject).to have(0).error_on(:default_billing)
       end
+
+      it 'ignores soft deleted organization locations on validation' do
+        create(:location, name: "test", organization: org, deleted_at: 1.day.ago)
+        subject = create(:location, name: "test", organization: org)
+        expect(subject).to have(0).errors_on(:name)
+        subject.soft_delete
+        subject = create(:location, name: "test", organization: org)
+        expect(subject).to have(0).errors_on(:name)
+      end
     end
 
     context "there is only one default_shipping location" do
