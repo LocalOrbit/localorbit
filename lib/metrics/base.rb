@@ -69,7 +69,7 @@ module Metrics
     # Current
     # =======
 
-    def self.calculate_metric(metric:, interval:, markets: [], options:, date_range: nil)
+    def self.calculate_metric(metric:, interval:, markets: [], options:)
       m = METRICS[metric]
 
       if m[:scope]
@@ -97,7 +97,7 @@ module Metrics
         when :percent_growth
           calculate_percent_growth(metric: m, interval: interval, markets: markets, options: options)
         when :metric
-          calculate_metric_history(scope: scope, metric_code: metric, interval: interval, options: options, date_range: date_range)
+          calculate_metric_history(scope: scope, metric_code: metric, interval: interval, options: options)
         else
           calculate_standard(scope: scope, metric: m, interval: interval, options: options)
       end
@@ -149,11 +149,10 @@ module Metrics
       growth_metric
     end
 
-    def self.calculate_metric_history(scope:, metric_code:, interval:, options:, date_range: nil)
+    def self.calculate_metric_history(scope:, metric_code:, interval:, options:)
       model_name = scope.name
       sub_select = Metric.where(model_type: model_name, metric_code: metric_code).
                           select(:effective_on, "UNNEST(model_ids) AS model_id")
-      sub_select = sub_select.where(effective_on: date_range) if date_range
 
       scope = scope.
         joins("INNER JOIN (#{sub_select.to_sql}) AS metric_calculation ON metric_calculation.model_id = #{model_name.pluralize.downcase}.id").
