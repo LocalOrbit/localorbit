@@ -533,7 +533,7 @@ describe "Adding a product" do
         click_button "Save and Continue"
 
         expect(page).to have_content("Added Red Grapes")
-        expect(page).to have_content(stub_warning_pricing)
+        expect(page).to have_content(stub_warning_both)
         expect(Product.last.organization).to eql(org2)
       end
     end
@@ -588,15 +588,29 @@ describe "Adding a product" do
     end
 
     it "makes the user choose an organization to add the product for" do
+      select org2.name, from: "Seller Organization"
+      fill_in_required_fields
+      fill_in "product_simple_inventory", with: "30"
+
+      click_button "Save and Continue"
+
+      expect(page).to have_content("Added Red Grapes")
+
+      expect(page).to have_content(stub_warning_pricing)
+      expect(Product.last.organization).to eql(org2)
+    end
+
+    it "alerts user that product will not appear in the Shop until price/inventory are added" do
       expect(page).to_not have_content(stub_warning_both)
       select org2.name, from: "Seller Organization"
       fill_in_required_fields
 
       click_button "Save and Continue"
-
-      expect(page).to have_content("Added Red Grapes")
-      expect(page).to have_content(stub_warning_pricing)
-      expect(Product.last.organization).to eql(org2)
+      
+      fill_in "price_net_price", with: "3.00"
+      fill_in "price_sale_price", with: "2.00"
+      click_button "Add"
+      expect(page).to have_content(stub_warning_inventory)
     end
   end
 
