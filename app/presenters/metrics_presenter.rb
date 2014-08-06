@@ -60,7 +60,7 @@ class MetricsPresenter
     }
   }.with_indifferent_access
 
-  def initialize(groups: [], interval: "month", markets: [])
+  def initialize(groups: [], interval: "month", markets: [], date_range: nil)
     # {
     #   "Group Title" => {
     #     "Metric Title" => {
@@ -76,6 +76,8 @@ class MetricsPresenter
 
     @headers = headers_for_interval(interval)
 
+    @date_range = date_range
+
     if groups.include?("financials") || groups.include?("products")
       @markets = Market.where.not(id: Metrics::Base::TEST_MARKET_IDS).order("LOWER(name)").pluck(:id, :name)
     end
@@ -87,14 +89,23 @@ class MetricsPresenter
     ]
   end
 
-  def self.metrics_for(groups: [], interval: "month", markets: [])
+  def self.metrics_for(groups: [], interval: "month", markets: [], start_date: nil, end_date: nil)
     groups = [groups].flatten
     interval = "month" unless ["week", "month"].include?(interval)
     markets = [markets].compact.flatten.delete_if(&:empty?)
+    date_range = [start_date, end_date].all?(&:present?) ? Range.new(start_date, end_date) : nil
 
     return nil unless groups.all? {|group| GROUPS.keys.include?(group) }
 
-    new(groups: groups, interval: interval, markets: markets)
+    new(groups: groups, interval: interval, markets: markets, date_range: date_range)
+  end
+
+  def start_date
+    @date_range.begin if @date_range
+  end
+
+  def end_date
+    @date_range.end if @date_range
   end
 
   private
@@ -105,7 +116,8 @@ class MetricsPresenter
       results = Metrics::Base.calculate_metric(metric: metric,
                                                interval: interval,
                                                markets: markets,
-                                               options: GROUPDATE_OPTIONS[interval].dup)
+                                               options: GROUPDATE_OPTIONS[interval].dup,
+                                               date_range: @date_range || nil)
 
       results = format_results(results: results, interval: interval, calculation_type: m[:calculation], format: m[:format])
 

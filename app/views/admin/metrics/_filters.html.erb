@@ -14,5 +14,25 @@
         <%= select_tag :interval, options_from_collection_for_select([["month", "Month"], ["week", "Week"]], :first, :last, params[:interval]), class: "filter-input" %>
       </span>
     </div>
+    <div class="pull-left">
+      <span class="preserve-alignment">
+        <%= label_tag "For Dates" %><br>
+        <%= select_tag :metric_date_interval, options_from_collection_for_select([["now", "Ending Now"], ["range", "Between Range"]], :first, :last, params[:metric_date_interval]) %>
+      </span>
+    </div>
+    <div class="date-filters">
+      <div class="pull-left">
+        <span class="preserve-alignment">
+          <label for="start_date">Beginning on</label><br>
+          <%= datetime_field_tag "start_date", presenter.start_date, class: 'datepicker filter-group-input', data: { requires_presence_of: "#end_date"} %>
+        </span>
+      </div>
+      <div class="pull-left">
+        <span class="preserve-alignment">
+          <label for="end_date">Ending on</label><br>
+          <%= datetime_field_tag "end_date", presenter.end_date, class: 'datepicker filter-group-input', data: { requires_presence_of: "#start_date" } %>
+        </span>
+      </div>
+    </div>
   </div>
 <% end %>
