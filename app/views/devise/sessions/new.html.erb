@@ -27,7 +27,7 @@
       <% end -%>
       <%= render "devise/shared/links" %>
 
-      <%= link_to "Request an Account", registration_path, class: 'account-request' if current_market %>
+      <%= link_to "<strong>Request an Account</strong>".html_safe, registration_path, class: 'account-request pull-right' if current_market %>
     <% end -%>
   </div>
 </div
