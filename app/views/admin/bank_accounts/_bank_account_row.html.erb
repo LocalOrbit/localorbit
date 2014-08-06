@@ -24,7 +24,7 @@
     <%= yield bank_account %>
     <td class="verified">    </td>
     <td class="notes"><%= bank_account.notes %></td>
-    <td class="delete"><%= link_to raw("&#57418;"), [:admin, @entity, bank_account], data: { method: :delete }, title: "Delete" %></td>
+    <td class="delete"><%= link_to raw("&#57418;"), [:admin, @entity, bank_account], data: { method: :delete }, title: "Delete", class: "font-icon" %></td>
   </tr>
   <tr class="unverified">
     <td colspan="7">
