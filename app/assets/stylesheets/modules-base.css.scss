@@ -588,6 +588,10 @@
   }
 }
 
+.social-widget {
+  margin: 0 0 20px 0;
+}
+
 /** Tabs */
 .tabs-wrapper {
   clear: both;
@@ -1528,7 +1532,7 @@ label ~ .tooltip {
   }
 }
 
-.empty-results {
+.info-note {
   max-width: 380px;
   padding: 14px;
   border: 1px solid #bce8f1;
