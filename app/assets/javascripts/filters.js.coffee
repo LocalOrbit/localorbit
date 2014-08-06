@@ -49,10 +49,6 @@ $ ->
   $(".filter-input").change ->
     $(this).parents("form").first().submit()
 
-  $(".filter-group-input").change ->
-    if (s = $(this).attr("data-requires-presence-of")) && $(s).val().length > 0
-      $(this).parents("form").first().submit()
-
   $(".per-page-filter").change ->
     window.location.href = $(this).val()
 
