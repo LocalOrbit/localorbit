@@ -10,6 +10,9 @@ describe MarketAddress do
     create(:market_address, name: "test", market: market, deleted_at: 1.day.ago)
     subject = create(:market_address, name: "test", market: market)
     expect(subject).to have(0).errors_on(:name)
+    subject.soft_delete
+    subject = create(:market_address, name: "test", market: market)
+    expect(subject).to have(0).errors_on(:name)
   end
 
   it 'requires an address' do

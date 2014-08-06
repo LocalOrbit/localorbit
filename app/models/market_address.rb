@@ -3,8 +3,7 @@ class MarketAddress < ActiveRecord::Base
 
   belongs_to :market, inverse_of: :addresses
 
-  validates :name, presence: true
-  validates_uniqueness_of :name, conditions: -> { where('deleted_at != null') }
+  validates :name, presence: true, uniqueness: {scope: [:market_id, :deleted_at]}
   validates :address, :city, :state, :zip, :market, presence: true
 
   acts_as_geocodable address: {street: :address, locality: :city, region: :state, postal_code: :zip}
