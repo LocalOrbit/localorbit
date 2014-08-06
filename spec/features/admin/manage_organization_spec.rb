@@ -444,6 +444,25 @@ describe "admin manange organization", :vcr do
     end
   end
 
+  describe "Activating/Deactivating an organization" do
+    let!(:market)  { create(:market) }
+
+    before do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(user)
+    end
+
+    context "as an admin" do
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market])}
+
+      it "deactivates an organization" do
+        visit admin_organizations_path
+        click_link "Deactivate"
+      end
+    end
+  end
+
+
   describe "Deleting an organization" do
     let!(:market)  { create(:market) }
     let!(:product) { create(:product, :sellable, organization: seller) }
