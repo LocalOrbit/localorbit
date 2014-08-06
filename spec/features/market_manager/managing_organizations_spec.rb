@@ -219,6 +219,18 @@ describe "A Market Manager", :vcr do
       expect(page).to have_content("At least one payment method is required for the organization")
     end
 
+    it "deactivates an organization" do
+      visit admin_organizations_path
+
+      expect(page).to have_content("Deactivate")
+      expect(page).to_not have_content("Activate")
+
+      click_link "Deactivate"
+
+      expect(page).to have_content("Activate")
+      expect(page).to_not have_content("Deactivate")
+    end
+
     describe "when a market manager has multiple markets" do
       before do
         market_manager.markets << market2
