@@ -5,6 +5,8 @@ class Discount < ActiveRecord::Base
   self.inheritance_column = nil
 
   belongs_to :market
+  belongs_to :buyer_organization, class_name: "Organization"
+  belongs_to :seller_organization, class_name: "Organization"
 
   enum type: {percentage: 0, fixed: 1}
 
@@ -36,6 +38,43 @@ class Discount < ActiveRecord::Base
 
   def active?
     (start_date.nil? || start_date < Time.current) && (end_date.nil? || end_date > Time.current)
+  end
+
+  def valid_for_cart?(cart)
+    can_use_in_market?(cart) &&
+    can_use_for_buyer?(cart) &&
+    !less_than_minimum?(cart) &&
+    !more_than_maximum?(cart) &&
+    !maximum_uses_hit? &&
+    !maximum_organization_uses_hit?(cart)
+  end
+
+  def can_use_in_market?(cart)
+    market_id.nil? || market_id == cart.market_id
+  end
+
+  def can_use_for_buyer?(cart)
+    buyer_organization_id.nil? || buyer_organization_id == cart.organization.id
+  end
+
+  def less_than_minimum?(cart)
+    minimum_order_total > 0 && minimum_order_total > cart.subtotal
+  end
+
+  def more_than_maximum?(cart)
+    maximum_order_total > 0 && maximum_order_total < cart.subtotal
+  end
+
+  def maximum_uses_hit?
+    maximum_uses > 0 && maximum_uses <= total_uses
+  end
+
+  def maximum_organization_uses_hit?(cart)
+    maximum_organization_uses > 0 && maximum_organization_uses <= uses_by_organization(cart.organization)
+  end
+
+  def requires_seller_items?(cart)
+    seller_organization_id.present? && cart.items.joins(:product).where(products: {organization_id: seller_organization.id}).none?
   end
 
   def total_uses

@@ -104,6 +104,19 @@ $ ->
       totals = $("#totals")
       totals.find(".subtotal").text(accounting.formatMoney(subtotal))
 
+    updateDiscount: (discount) ->
+      $discount = $("#totals .discount")
+      if discount != undefined
+        $discount.parent("tr").removeClass("is-hidden")
+        $discount.text(discount)
+      else
+        $discount.parent("tr").addClass("is-hidden")
+
+    updateDiscountStatus: (status) ->
+      $status = $(".discount-field strong")
+      if status != undefined && status != null
+        $status.text(status)
+
     updateDeliveryFees: (fees) ->
       totals = $("#totals")
       totals.find(".delivery_fees").text(fees)
@@ -174,6 +187,8 @@ $ ->
     updateTotals: (data) ->
       @view.updateCounter(@itemCount())
       @view.updateSubtotal(@subtotal())
+      @view.updateDiscount(data.discount)
+      @view.updateDiscountStatus(data.discount_status)
       @view.updateDeliveryFees(data.delivery_fees)
       @view.updateTotal(data.total)
 
@@ -318,4 +333,10 @@ $ ->
   $("#apply-discount").click (e)->
     e.preventDefault()
     if $("#discount_code").val() != $("#prev_discount_code").val()
+      $(this).parents('form').submit()
+
+  $("#clear-discount").click (e)->
+    e.preventDefault()
+    if $("#discount_code").val() != ""
+      $("#discount_code").val("")
       $(this).parents('form').submit()

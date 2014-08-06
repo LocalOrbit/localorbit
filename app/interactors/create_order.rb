@@ -23,7 +23,7 @@ class CreateOrder
       organization: cart.organization,
       market: cart.market,
       delivery: cart.delivery,
-      discount: cart.discount,
+      discount: discount,
       billing_organization_name: cart.organization.name,
       billing_address: billing.address,
       billing_city: billing.city,
@@ -47,5 +47,9 @@ class CreateOrder
     end
 
     order
+  end
+
+  def discount
+    cart.discount if cart.has_valid_discount?
   end
 end

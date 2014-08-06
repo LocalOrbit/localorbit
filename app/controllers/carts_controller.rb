@@ -12,6 +12,11 @@ class CartsController < ApplicationController
       redirect_to [:products], alert: "Your cart is empty. Please add items to your cart before checking out."
     else
       @grouped_items = current_cart.items.for_checkout
+
+      if !flash.now[:discount_message] && current_cart.discount.present?
+        @apply_discount = ApplyDiscountToCart.perform(cart: current_cart, code: current_cart.discount.code)
+        flash.now[:discount_message] = @apply_discount.context[:message]
+      end
     end
   end
 
@@ -35,6 +40,8 @@ class CartsController < ApplicationController
       @item.update(quantity: 0)
       @item.destroy
     end
+
+    @apply_discount = current_cart.discount ? ApplyDiscountToCart.perform(cart: current_cart, code: current_cart.discount.code) : nil
   end
 
   def destroy
