@@ -40,4 +40,8 @@ module ProductsHelper
       [state["name"], key]
     end.compact
   end
+
+  def market_organization_select(orgs)
+    orgs.map { |org| [org.markets.first.name + " - " + org.name, org.id]}
+  end
 end

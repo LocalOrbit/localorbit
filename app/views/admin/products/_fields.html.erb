@@ -10,7 +10,7 @@
   <% if @organizations.count > 1 %>
     <div class="field">
       <%= f.label :organization_id, "Seller Organization" %><br>
-      <%= f.collection_select :organization_id, @organizations, :id, :name, {include_blank: "Select an organization"}, class: "column--full" %>
+      <%= f.select :organization_id, market_organization_select(@organizations), {include_blank: "Select an organization"}, class: "column--full" %>
     </div>
   <% else %>
     <%= f.hidden_field :organization_id %>
