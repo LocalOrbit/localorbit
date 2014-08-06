@@ -1,20 +1,23 @@
 require "spec_helper"
 
 module Metrics
-  class TestMetrics < Base
-    cattr_accessor :base_scope, :metrics, :model_name
+  class TestCalculations < Base
+    BASE_SCOPE = Organization
+    METRICS = {}
+  end
 
-    @@model_name = "Organization"
-    @@base_scope = ::Organization
-    @@metrics    = {
-      total_sellers:    { scope:  @@base_scope.where(can_sell: true) },
-      total_buyer_only: { scope: @@base_scope.where(can_sell: false) }
+  class TestHistory < TestCalculations
+    cattr_accessor :history_metrics, :model_name
+
+    @@model_name = BASE_SCOPE.name
+    @@history_metrics = {
+      total_sellers:    { scope: BASE_SCOPE.where(can_sell: true) },
+      total_buyer_only: { scope: BASE_SCOPE.where(can_sell: false) }
     }
   end
 end
 
-describe Metrics::TestMetrics do
-
+describe Metrics::TestHistory do
   let!(:organization1) { create(:organization) }
   let!(:organization2) { create(:organization, can_sell: false) }
 
