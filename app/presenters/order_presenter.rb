@@ -33,4 +33,14 @@ module OrderPresenter
 
   def items_attributes=(_)
   end
+
+  def activities
+    Audit.where("(associated_type = 'Order' AND associated_id = :order_id) OR
+    (auditable_type = 'Order' AND auditable_id = :order_id) OR
+    (auditable_type = 'Payment' AND auditable_id IN (:payment_ids))",
+      order_id: @order.id,
+      payment_ids: @order.payment_ids
+    ).reorder("created_at ASC")
+#    Audit.where(associated_type: "Order", associated_id: @order.id).reorder("created_at ASC")
+  end
 end

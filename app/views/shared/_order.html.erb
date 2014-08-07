@@ -226,5 +226,30 @@
       <%= f.submit "Save Notes", class: 'btn btn--blue btn--small mobile-block' %>
     </div>
   <% end %>
+
+  <% if current_user.admin? %>
+  <div class="order-history">
+    <div class="table-wrapper">
+      <h2>Order History</h2>
+
+      <table class="odd">
+        <thead>
+          <tr>
+            <th>What</th>
+            <th>When</th>
+            <th>Changes</th>
+            <th>Who</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% order.activities.each do |activity| %>
+            <%= render "shared/order_history/#{activity.auditable_type.underscore}", activity: activity  %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <% end %>
+
 </div>
 <% end %>

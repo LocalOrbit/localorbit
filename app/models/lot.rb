@@ -1,5 +1,5 @@
 class Lot < ActiveRecord::Base
-  audited allow_mass_assignment: true
+  audited allow_mass_assignment: true, associated_with: :product
   belongs_to :product, inverse_of: :lots
 
   validates :quantity, numericality: {greater_than_or_equal_to: 0, less_than: 1_000_000}

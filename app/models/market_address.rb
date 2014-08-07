@@ -1,5 +1,5 @@
 class MarketAddress < ActiveRecord::Base
-  audited allow_mass_assignment: true
+  audited allow_mass_assignment: true, associated_with: :market
   include SoftDelete
 
   belongs_to :market, inverse_of: :addresses

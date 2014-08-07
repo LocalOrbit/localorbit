@@ -1,5 +1,5 @@
 class OrderPayment < ActiveRecord::Base
-  audited allow_mass_assignment: true
+  audited allow_mass_assignment: true, associated_with: :order
   belongs_to :order
   belongs_to :payment
 
