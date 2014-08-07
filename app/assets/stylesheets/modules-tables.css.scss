@@ -24,6 +24,7 @@
 }
 .table-wrapper {
   position: relative;
+  clear: both;
   overflow: visible;
 }
   @media screen and (max-width: $mobile_break) {

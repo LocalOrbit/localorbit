@@ -15,6 +15,8 @@ input.alt-datepicker {
   }
   ~ .ui-datepicker-trigger {
     @include box-sizing(content-box);
+    width: 1em;
+    height: 1.1em;
     padding-top: .5em;
     padding-bottom: .4em;
     font-family: 'icomoon-ultimate88910';
@@ -31,7 +33,7 @@ input.alt-datepicker {
       position: absolute;
       padding: 0;
       border: 0;
-      margin: .7em 0 0 -1.2em;
+      margin: .6em 0 0 -1.2em;
       background: transparent;
       font-size: 14px;
       -webkit-appearance: none;
