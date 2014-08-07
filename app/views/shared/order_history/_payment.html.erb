@@ -1,0 +1,17 @@
+<tr>
+  <td>Payment <%= activity.action %>d</td>
+  <td><%= activity.created_at %><br>(<%= time_ago_in_words activity.created_at %> ago)</td>
+  <td>
+    <% fields = %w(payment_method) %>
+    <% fields.each do |field| %>
+      <% if activity.audited_changes[field] %>
+        <b><%= field.humanize %>:</b> <%= Array(activity.audited_changes[field]).last %><br>
+      <% end %>
+      <% if activity.audited_changes["amount"] %>
+        <b>Amount:</b> <%= number_to_currency activity.auditable.amount %>
+      <% end %>
+    <% end %>
+    <%#= activity.audited_changes %>
+  </td>
+  <td><%= link_to_if activity.user, activity.user_name_or_email, [:admin, activity.user] %></td>
+</tr>
