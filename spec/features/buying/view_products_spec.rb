@@ -418,7 +418,7 @@ feature "Viewing products" do
         expect(delivery.date).to eq("October 8, 2014")
         expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
         expect(delivery).to_not have_location_select
-        expect(delivery.street_address).to eq("500 S. State Street")
+        expect(delivery.street_address).to eq(buyer_org.locations.first.address)
         expect(delivery.locality).to eq("Ann Arbor")
         expect(delivery.region).to eq("MI")
         expect(delivery.postal_code).to eq("48109")

@@ -84,7 +84,7 @@ FactoryGirl.define do
 
   factory :location do
     sequence(:name) {|n| "Location #{n}" }
-    address "500 S. State Street"
+    sequence(:address) {|n| "#{n} S. State Street" }
     city "Ann Arbor"
     state "MI"
     zip "48109"
@@ -120,7 +120,7 @@ FactoryGirl.define do
   factory :market do
     plan
     sequence(:name)      {|n| "Market #{n}" }
-    sequence(:subdomain) {|n| "market-#{n}" }
+    sequence(:subdomain) {|n| "market#{n}" }
     tagline                'Connecting Farm to Market'
     timezone               'US/Eastern'
     contact_name           'Jill Smith'
@@ -182,8 +182,8 @@ FactoryGirl.define do
     market
     delivery
 
-    sequence(:order_number) {|n| "LO-#{n}"}
-    placed_at        { DateTime.current }
+    sequence(:order_number) {|n| "LO-%s-%s-%07d" % [Time.now.strftime("%y"), market.try(:subdomain).to_s.upcase, n] }
+    placed_at        { Time.current }
 
     billing_organization_name "Collective Idea"
     billing_address  "44 E. 8th St"
