@@ -11,7 +11,7 @@
     <div class="pull-left">
       <span class="preserve-alignment">
         <%= label_tag "Display By" %><br>
-        <%= select_tag :interval, options_from_collection_for_select([["month", "Month"], ["week", "Week"]], :first, :last, params[:interval]), class: "filter-input" %>
+        <%= select_tag :interval, options_from_collection_for_select(MetricsPresenter::GROUPDATE_OPTIONS.map { |k, v| [k, v[:caption]] }, :first, :last, params[:interval]), class: "filter-input" %>
       </span>
     </div>
     <div class="pull-left">

@@ -174,7 +174,6 @@ module Metrics
 
       if window
         group_options[:carry_forward] = true
-        group_options.delete(:last)
       end
 
       scope.send(groupdate, attribute, group_options)
