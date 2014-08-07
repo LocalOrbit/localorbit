@@ -4,7 +4,7 @@ describe "Manage cross selling" do
   let!(:user) { create(:user, role: "admin") }
 
   let!(:cross_selling_market)     { create(:market, allow_cross_sell: true) }
-  let!(:not_cross_selling_market) { create(:market)}
+  let!(:not_cross_selling_market) { create(:market) }
 
   context "for a none-cross selling market" do
     let!(:market) { create(:market) }
