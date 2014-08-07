@@ -26,15 +26,15 @@ class OrderDecorator < Draper::Decorator
   end
 
   def display_market_street
-    market_address.address
+    market_address.address if market_address
   end
 
   def display_market_city_state_zip
-    "#{market_address.city}, #{market_address.state} #{market_address.zip}"
+    "#{market_address.city}, #{market_address.state} #{market_address.zip}" if market_address
   end
 
   def display_market_phone
-    market_address.phone
+    market_address.phone if market_address
   end
 
   def market_address
