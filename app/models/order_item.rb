@@ -70,7 +70,7 @@ class OrderItem < ActiveRecord::Base
   end
 
   def seller_net_total
-    gross_total - market_seller_fee - local_orbit_seller_fee - payment_seller_fee
+    gross_total - market_seller_fee - local_orbit_seller_fee - payment_seller_fee - discount_seller
   end
 
   def gross_total

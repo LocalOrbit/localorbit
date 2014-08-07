@@ -437,7 +437,7 @@ describe Order do
 
     context "no discount" do
       it "payable_to_market returns the appropriate value" do
-        # delivered item subtotal + delivery fee - local orbit fees - payment fees
+        # delivered item subtotal + delivery fee - local orbit fees - payment fees - discount amount paid by market
         expect(order.payable_to_market.to_s).to eq("67.03")
       end
 

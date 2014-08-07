@@ -19,31 +19,91 @@ feature "Payments to vendors" do
   let!(:market1_product3) { create(:product, :sellable, organization: market1_seller2) }
   let!(:market1_product4) { create(:product, :sellable, organization: market1_seller3) }
 
+  let!(:market1_order1) do
+    create(:order,
+           market: market1,
+           organization: market1_buyer,
+           delivery: market1_delivery,
+           payment_method: "purchase order",
+           order_number: "LO-001",
+           total_cost: 27.96,
+           placed_at: today - 19.days)
+  end
 
-  let!(:market1_order1) { create(:order, items:[create(:order_item, :delivered, product: market1_product1, quantity: 4)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-001", total_cost: 27.96, placed_at: today - 19.days) }
+  let!(:market1_order1_item1) do
+     create(:order_item,
+            :delivered,
+            product: market1_product1,
+            quantity: 4,
+            order: market1_order1)
+  end
+
   let!(:market1_order2) { create(:order, items:[create(:order_item, :delivered, product: market1_product2, quantity: 3), create(:order_item, :delivered, product: market1_product4, quantity: 7)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-002", total_cost: 69.90, placed_at: today - 6.days, payment_status: "paid") }
   let!(:market1_order3) { create(:order, items:[create(:order_item, :delivered, product: market1_product3, quantity: 6)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-003", total_cost: 41.94, placed_at: today - 4.days) }
   let!(:market1_order4) { create(:order, items:[create(:order_item, :delivered, product: market1_product2, quantity: 9), create(:order_item, :delivered, product: market1_product3, quantity: 14)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-004", total_cost: 160.77, placed_at: today - 3.days) }
   let!(:market1_order5) { create(:order, items:[create(:order_item, :delivered, product: market1_product2, quantity: 9), create(:order_item, :delivered, product: market1_product3, quantity: 14)], market: market1, organization: market1_buyer, delivery: market1_delivery, payment_method: "purchase order", order_number: "LO-005", total_cost: 160.77, placed_at: today - 80.days) }
 
-  scenario "displays the correct items" do
-    switch_to_subdomain(market1.subdomain)
-    sign_in_as market_manager
-    visit admin_financials_vendor_payments_path
-    seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
+  context "no discounts" do
+    scenario "displays the correct items" do
+      switch_to_subdomain(market1.subdomain)
+      sign_in_as market_manager
+      visit admin_financials_vendor_payments_path
+      seller_rows = Dom::Admin::Financials::VendorPaymentRow.all
 
-    expect(seller_rows.size).to eq(3)
-    expect(seller_rows[0].name).to have_content("Better Farms")
-    expect(seller_rows[0].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
-    expect(seller_rows[0].owed).to have_content("$27.96")
+      expect(seller_rows.size).to eq(3)
+      expect(seller_rows[0].name).to have_content("Better Farms")
+      expect(seller_rows[0].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
+      expect(seller_rows[0].owed).to have_content("$27.96")
 
-    expect(seller_rows[1].name).to have_content("Betterest Farms")
-    expect(seller_rows[1].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
-    expect(seller_rows[1].owed).to have_content("$48.93")
+      expect(seller_rows[1].name).to have_content("Betterest Farms")
+      expect(seller_rows[1].order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
+      expect(seller_rows[1].owed).to have_content("$48.93")
 
-    expect(seller_rows[2].name).to have_content("Great Farms")
-    expect(seller_rows[2].order_count).to have_content(/\A3 orders from Baskerville Co-op Review/)
-    expect(seller_rows[2].owed).to have_content("$223.68")
+      expect(seller_rows[2].name).to have_content("Great Farms")
+      expect(seller_rows[2].order_count).to have_content(/\A3 orders from Baskerville Co-op Review/)
+      expect(seller_rows[2].owed).to have_content("$223.68")
+    end
+  end
+
+  context "discounts" do
+    context "market pays discount" do
+      let!(:discount) { create(:discount, type: "fixed", payer: "market", discount: 10.00) }
+
+      before do
+        market1_order1.update(discount: discount)
+      end
+
+      scenario "displays the correct items" do
+        switch_to_subdomain(market1.subdomain)
+        sign_in_as market_manager
+        visit admin_financials_vendor_payments_path
+        seller_row = Dom::Admin::Financials::VendorPaymentRow.all[0]
+
+        expect(seller_row.name).to have_content("Better Farms")
+        expect(seller_row.order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
+        expect(seller_row.owed).to have_content("$27.96")
+      end
+    end
+
+    context "seller pays discount" do
+      let!(:discount) { create(:discount, type: "fixed", payer: "seller", discount: 10.00) }
+
+      before do
+        market1_order1.update(discount: discount)
+        market1_order1_item1.update(discount_seller: discount.discount)
+      end
+
+      scenario "displays the correct items" do
+        switch_to_subdomain(market1.subdomain)
+        sign_in_as market_manager
+        visit admin_financials_vendor_payments_path
+        seller_row = Dom::Admin::Financials::VendorPaymentRow.all[0]
+
+        expect(seller_row.name).to have_content("Better Farms")
+        expect(seller_row.order_count).to have_content(/\A1 order from Baskerville Co-op Review/)
+        expect(seller_row.owed).to have_content("$17.96")
+      end
+    end
   end
 
   scenario "de-selecting orders", :js do
