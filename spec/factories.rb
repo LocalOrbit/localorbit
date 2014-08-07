@@ -220,6 +220,8 @@ FactoryGirl.define do
     unit                "per box"
     unit_price          6.99
     delivery_status     "pending"
+    discount_market     0.0
+    discount_seller     0.0
 
     trait :delivered do
       delivery_status 'delivered'

@@ -211,7 +211,7 @@ class Order < ActiveRecord::Base
   end
 
   def discount_amount
-    items.sum(:discount)
+    @discount_amount ||= items.sum(:discount_market) + items.sum(:discount_seller)
   end
 
   def invoice
@@ -238,7 +238,7 @@ class Order < ActiveRecord::Base
   # Market payable calculations
 
   def payable_to_market
-    @payable_to_market ||= payable_subtotal - market_payable_local_orbit_fee - market_payable_payment_fee - discount_amount
+    @payable_to_market ||= payable_subtotal - market_payable_local_orbit_fee - market_payable_payment_fee - items.sum(:discount_market)
   end
 
   def payable_subtotal
@@ -287,7 +287,7 @@ class Order < ActiveRecord::Base
     cost = usable_items.sum(&:gross_total)
     if cost > 0.0
       self.delivery_fees = delivery.delivery_schedule.fees_for_amount(cost)
-      self.total_cost    = cost + delivery_fees - usable_items.sum(&:discount)
+      self.total_cost    = cost + delivery_fees - (usable_items.sum(&:discount_market) + usable_items.sum(&:discount_seller))
     else
       self.delivery_fees = 0
       self.total_cost    = 0

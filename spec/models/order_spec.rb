@@ -430,31 +430,60 @@ describe Order do
   describe "payable to market" do
     let(:order_item1) { create(:order_item, delivery_status: "pending",   unit_price: "12.23", quantity: 1, market_seller_fee: "2.10", local_orbit_seller_fee: "3.20", local_orbit_market_fee: "2.40", payment_seller_fee: "1.30", payment_market_fee: "0.20") }
     let(:order_item2) { create(:order_item, delivery_status: "canceled",  unit_price: "17.13", quantity: 2, market_seller_fee: "0.00", local_orbit_seller_fee: "0.00", local_orbit_market_fee: "0.00", payment_seller_fee: "0.00", payment_market_fee: "0.00") }
-    let(:order_item3) { create(:order_item, delivery_status: "delivered", unit_price: "13.27", quantity: 4, market_seller_fee: "3.87", local_orbit_seller_fee: "4.39", local_orbit_market_fee: "3.76", payment_seller_fee: "2.32", payment_market_fee: "1.30") }
+    let(:order_item3) { create(:order_item, delivery_status: "delivered", unit_price: "13.27", quantity: 4, market_seller_fee: "3.87", local_orbit_seller_fee: "4.39", local_orbit_market_fee: "3.76", payment_seller_fee: "2.32", payment_market_fee: "1.30", discount_market: 5.00) }
     let(:order_item4) { create(:order_item, delivery_status: "contested", unit_price: "14.75", quantity: 2, market_seller_fee: "1.56", local_orbit_seller_fee: "2.80", local_orbit_market_fee: "3.10", payment_seller_fee: "2.10", payment_market_fee: "1.50") }
-    let(:order_item5) { create(:order_item, delivery_status: "delivered", unit_price: "10.83", quantity: 3, market_seller_fee: "2.87", local_orbit_seller_fee: "3.39", local_orbit_market_fee: "2.76", payment_seller_fee: "1.32", payment_market_fee: "0.30") }
+    let(:order_item5) { create(:order_item, delivery_status: "delivered", unit_price: "10.83", quantity: 3, market_seller_fee: "2.87", local_orbit_seller_fee: "3.39", local_orbit_market_fee: "2.76", payment_seller_fee: "1.32", payment_market_fee: "0.30", discount_market: 5.00) }
     let(:order) { create(:order, delivery_fees: "11", total_cost: "138.30", items: [order_item1, order_item2, order_item3, order_item4, order_item5]) }
 
-    it "payable_to_market returns the appropriate value" do
-      # delivered item subtotal + delivery fee - local orbit fees - payment fees
-      expect(order.payable_to_market.to_s).to eq("77.03")
+    context "no discount" do
+      it "payable_to_market returns the appropriate value" do
+        # delivered item subtotal + delivery fee - local orbit fees - payment fees - discount amount paid by market
+        expect(order.payable_to_market.to_s).to eq("67.03")
+      end
+
+      it "payable_subtotal" do
+        # delivery fee + delivered item gross total
+        expect(order.payable_subtotal.to_s).to eq("96.57")
+      end
+
+      it "market_payable_market_fee" do
+        expect(order.market_payable_market_fee.to_s).to eq("6.74")
+      end
+
+      it "market_payable_local_orbit_fee" do
+        expect(order.market_payable_local_orbit_fee.to_s).to eq("14.3")
+      end
+
+      it "market_payable_payment_fee" do
+        expect(order.market_payable_payment_fee.to_s).to eq("5.24")
+      end
     end
 
-    it "payable_subtotal" do
-      # delivery fee + delivered item gross total
-      expect(order.payable_subtotal.to_s).to eq("96.57")
-    end
+    context "with discount" do
+      let!(:discount) { create(:discount, type: "fixed", payer: "market", discount: 10.00) }
+      let!(:order) { create(:order, delivery_fees: "11", total_cost: "138.30", items: [order_item1, order_item2, order_item3, order_item4, order_item5], discount: discount) }
 
-    it "market_payable_market_fee" do
-      expect(order.market_payable_market_fee.to_s).to eq("6.74")
-    end
+      it "payable_to_market returns the appropriate value" do
+        # delivered item subtotal + delivery fee - local orbit fees - payment fees - discount
+        expect(order.payable_to_market.to_s).to eq("67.03")
+      end
 
-    it "market_payable_local_orbit_fee" do
-      expect(order.market_payable_local_orbit_fee.to_s).to eq("14.3")
-    end
+      it "payable_subtotal" do
+        # delivery fee + delivered item gross total
+        expect(order.payable_subtotal.to_s).to eq("96.57")
+      end
 
-    it "market_payable_payment_fee" do
-      expect(order.market_payable_payment_fee.to_s).to eq("5.24")
+      it "market_payable_market_fee" do
+        expect(order.market_payable_market_fee.to_s).to eq("6.74")
+      end
+
+      it "market_payable_local_orbit_fee" do
+        expect(order.market_payable_local_orbit_fee.to_s).to eq("14.3")
+      end
+
+      it "market_payable_payment_fee" do
+        expect(order.market_payable_payment_fee.to_s).to eq("5.24")
+      end
     end
   end
 end

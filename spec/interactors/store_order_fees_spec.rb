@@ -28,7 +28,7 @@ describe StoreOrderFees do
 
   context "discounts" do
     it "applys the discount before figuring out the fees" do
-      order_item = create(:order_item, product: product1, quantity: 10, discount: 1.00)
+      order_item = create(:order_item, product: product1, quantity: 10, discount_market: 1.00)
       discounted_order = create(:order, market: market, items: [order_item])
 
       StoreOrderFees.perform(order_params: params, cart: cart, order: discounted_order).order.reload.items.index_by {|item| item.product_id }

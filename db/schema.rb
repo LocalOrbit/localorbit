@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 20140807142504) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.integer  "payer",                                              default: 0,   null: false
   end
 
   add_index "discounts", ["code"], name: "index_discounts_on_code", using: :btree
@@ -399,7 +400,7 @@ ActiveRecord::Schema.define(version: 20140807142504) do
     t.string   "seller_name"
     t.integer  "quantity"
     t.string   "unit"
-    t.decimal  "discount",               precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "market_seller_fee",      precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "local_orbit_seller_fee", precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "local_orbit_market_fee", precision: 10, scale: 2, default: 0.0,      null: false
@@ -413,6 +414,7 @@ ActiveRecord::Schema.define(version: 20140807142504) do
     t.integer  "legacy_id"
     t.integer  "quantity_delivered"
     t.string   "payment_status",                                  default: "unpaid"
+    t.decimal  "discount_seller",        precision: 10, scale: 2, default: 0.0,      null: false
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree

@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe PayMarketForOrders do
-  let!(:market) { create(:market) }
+  let!(:market)            { create(:market) }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
-  let!(:delivery) { delivery_schedule.next_delivery }
-  let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: market, balanced_uri: "/bank-account-1") }
-  let!(:orders) { [create(:order, market: market, delivery: delivery), create(:order, market: market, delivery: delivery), create(:order, market: market, delivery: delivery)] }
-  let(:order_ids) { orders.map(&:id) }
+  let!(:delivery)          { delivery_schedule.next_delivery }
+  let!(:bank_account)      { create(:bank_account, :checking, :verified, bankable: market, balanced_uri: "/bank-account-1") }
+  let!(:orders)            { [create(:order, market: market, delivery: delivery), create(:order, market: market, delivery: delivery), create(:order, market: market, delivery: delivery)] }
+  let(:order_ids)          { orders.map(&:id) }
   let(:balanaced_bank_account) { double(Balanced::BankAccount, credit: balanced_credit) }
-  let(:balanced_credit) { double(Balanced::Credit, uri: '/balanced-credit-1') }
+  let(:balanced_credit)    { double(Balanced::Credit, uri: '/balanced-credit-1') }
 
   before do
     expect(Balanced::BankAccount).to receive(:find).with("/bank-account-1").and_return(balanaced_bank_account)

@@ -11,7 +11,7 @@ describe ApplyDiscountToOrderItems do
   let!(:seller2_product_price) { create(:price, product: seller2_product, sale_price: 2.00) }
   let!(:seller2_product_lot)   { create(:lot, product: seller2_product) }
 
-  let(:discount) { create(:discount, code: "10percent", type: "percentage", discount: 10) }
+  let(:discount) { create(:discount, code: "10percent", type: "percentage", payer: "market", discount: 10) }
 
   let!(:order_item1) { create(:order_item, product: seller1_product, quantity: 10, unit_price: 2.00) }
   let!(:order_item2) { create(:order_item, product: seller2_product, quantity: 20, unit_price: 2.00) }
