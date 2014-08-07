@@ -300,7 +300,7 @@ describe "Checking Out", :js, :vcr do
         it "persists the discount on the order" do
           checkout
 
-          within("tfoot") do
+          within(".pseudopod") do
             expect(page).to have_content("Item Subtotal $40.00")
             expect(page).to have_content("Discount $15.00")
             expect(page).to have_content("Delivery Fees $10.00")
@@ -319,7 +319,7 @@ describe "Checking Out", :js, :vcr do
         it "persists the discount on the order" do
           checkout
 
-          within("tfoot") do
+          within(".pseudopod") do
             expect(page).to have_content("Item Subtotal $40.00")
             expect(page).to have_content("Discount $7.50")
             expect(page).to have_content("Delivery Fees $10.00")

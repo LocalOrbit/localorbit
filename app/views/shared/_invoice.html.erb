@@ -88,7 +88,7 @@
       <td class="<%= item.delivery_status %>"><span class="amount"><%= number_to_currency item.gross_total %></span></td>
     </tr>
     <% end %>
-    <tfoot>
+    <tbody class="pseudopod">
       <tr class="subtotal">
         <th scope="row" colspan="6" class="ar">Subtotal</th>
         <td><%= number_to_currency invoice.gross_total %></td>
@@ -106,7 +106,7 @@
         <th colspan="2" scope="row" class="ar">Total</th>
         <td class="amount"><%= number_to_currency invoice.total_cost %></td>
       </tr>
-    </tfoot>
+    </tbody>
   </table>
 </div>
 
