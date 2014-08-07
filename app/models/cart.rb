@@ -1,4 +1,5 @@
 class Cart < ActiveRecord::Base
+  audited allow_mass_assignment: true
   belongs_to :market
   belongs_to :organization
   belongs_to :user

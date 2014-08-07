@@ -1,4 +1,5 @@
 class Price < ActiveRecord::Base
+  audited allow_mass_assignment: true
   belongs_to :product, inverse_of: :prices
   belongs_to :market
   belongs_to :organization

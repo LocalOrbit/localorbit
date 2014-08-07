@@ -1,4 +1,5 @@
 class Discount < ActiveRecord::Base
+  audited allow_mass_assignment: true
   include SoftDelete
   include Sortable
 

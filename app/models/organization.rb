@@ -1,4 +1,5 @@
 class Organization < ActiveRecord::Base
+  audited allow_mass_assignment: true
   extend DragonflyBackgroundResize
   include Sortable
   include PgSearch

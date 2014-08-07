@@ -1,4 +1,5 @@
 class Location < ActiveRecord::Base
+  audited allow_mass_assignment: true
   include SoftDelete
   belongs_to :organization, inverse_of: :locations
 

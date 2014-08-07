@@ -1,4 +1,5 @@
 class OrderItem < ActiveRecord::Base
+  audited allow_mass_assignment: true
   DELIVERY_STATUSES = %w(pending canceled delivered contested)
 
   attr_accessor :deliver_on_date

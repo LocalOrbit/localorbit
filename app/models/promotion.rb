@@ -1,4 +1,5 @@
 class Promotion < ActiveRecord::Base
+  audited allow_mass_assignment: true
   extend DragonflyBackgroundResize
 
   belongs_to :product, inverse_of: :promotions
