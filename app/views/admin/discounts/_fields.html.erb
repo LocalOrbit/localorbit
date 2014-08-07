@@ -39,6 +39,11 @@
   </div>
 </div>
 
+<div class="field">
+  <%= f.label :payer, "Discount paid by" %><br>
+  <%= f.select :payer, [["Market", "market"], ["Seller", "seller"]], {}, class: "column--full" %>
+</div>
+
 <% unless Rails.env.production? %>
   <div class="field">
     <%= f.label :product_id, "Restrict to Product" %><br>

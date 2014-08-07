@@ -61,6 +61,7 @@ module Admin
         :start_date,
         :end_date,
         :type,
+        :payer,
         :discount,
         :product_id,
         :category_id,
