@@ -74,9 +74,9 @@ class MetricsPresenter
     #   }
     # }
 
-    @headers = headers_for_interval(interval)
-
     @date_range = date_range
+
+    @headers = headers_for_interval(interval)
 
     if groups.include?("financials") || groups.include?("products")
       @markets = Market.where.not(id: Metrics::Base::TEST_MARKET_IDS).order("LOWER(name)").pluck(:id, :name)
@@ -93,7 +93,7 @@ class MetricsPresenter
     groups = [groups].flatten
     interval = "month" unless ["week", "month"].include?(interval)
     markets = [markets].compact.flatten.delete_if(&:empty?)
-    date_range = [start_date, end_date].all?(&:present?) ? Range.new(start_date, end_date) : nil
+    date_range = self.create_or_expand_date_range(interval: interval, start_date: start_date, end_date: end_date)
 
     return nil unless groups.all? {|group| GROUPS.keys.include?(group) }
 
@@ -110,9 +110,31 @@ class MetricsPresenter
 
   private
 
+  def self.create_or_expand_date_range(interval:, start_date: nil, end_date: nil)
+    end_date = case interval
+                 when "day"
+                   end_date || Date.current
+                 when "week"
+                   (end_date || Date.current).end_of_week
+                 when "month"
+                   (end_date || Date.current).end_of_month
+                end
+    start_date = case interval
+                  when "day"
+                    start_date || end_date - 30.days
+                  when "week"
+                    (start_date || end_date - 5.weeks).beginning_of_week
+                  when "month"
+                    (start_date || end_date - 7.months).beginning_of_month
+                 end
+
+    Range.new(start_date, end_date)
+  end
+
   def metrics_for_group(group, interval, markets=[])
     Hash[GROUPS[group][:metrics].map do |metric|
       m = Metrics::Base::METRICS[metric]
+
       results = Metrics::Base.calculate_metric(metric: metric,
                                                interval: interval,
                                                markets: markets,
