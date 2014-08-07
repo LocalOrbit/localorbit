@@ -227,6 +227,7 @@
     </div>
   <% end %>
 
+  <% if current_user.admin? %>
   <div class="order-history">
     <div class="table-wrapper">
       <h2>Order History</h2>
@@ -248,6 +249,7 @@
       </table>
     </div>
   </div>
+  <% end %>
 
 </div>
 <% end %>
