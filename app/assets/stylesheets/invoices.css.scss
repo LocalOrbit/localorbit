@@ -101,13 +101,13 @@
   td { padding: 10px; font-size: 12px; }
   tbody tr:nth-child(odd) { background: #f9f9f9; }
 
-  tfoot {
+  .pseudopod {
     padding: 10px 0 0;
   }
-    tfoot td {
+    .pseudopod td {
       padding: 5px 10px;
     }
-  tfoot th {
+  .pseudopod th {
     font-size: 12px;
     font-weight: normal;
   }
