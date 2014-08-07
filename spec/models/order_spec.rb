@@ -209,50 +209,113 @@ describe Order do
       end
     end
 
-    context "market_manager" do
+    context "as a market manager:" do
       let!(:user)    { create(:user, :market_manager) }
-      let!(:market1) { user.managed_markets.first }
-      let!(:delivery_schedule) { create(:delivery_schedule) }
-      let!(:delivery)    { delivery_schedule.next_delivery }
+      let!(:managed_market) { user.managed_markets.first }
 
-      let!(:market2) { create(:market) }
-      let!(:org1)    { create(:organization, users: [user], markets: [market2]) }
-      let!(:org2)    { create(:organization, markets: [market2]) }
-      let!(:product1) { create(:product, :sellable, organization: org1) }
-      let!(:product2) { create(:product, :sellable, organization: org2) }
-      let!(:product3) { create(:product, :sellable, organization: org1) }
+      let!(:managed_org)      { create(:organization, markets: [managed_market]) }
+      let!(:managed_product1) { create(:product, :sellable, organization: managed_org) }
+      let!(:managed_product2) { create(:product, :sellable, organization: managed_org) }
 
-      let!(:managed_order) { create(:order, market: market1, delivery: delivery, organization_id: 0, items: [create(:order_item, product: product2)]) }
-      let!(:org_order)     { create(:order, market: market2, delivery: delivery, organization_id: 0, items: [create(:order_item, product: product1), create(:order_item, product: product3)]) }
-      let!(:not_order)     { create(:order, market: market2, delivery: delivery, organization_id: 0, items: [create(:order_item, product: product2)]) }
+      let!(:managed_order1) { create(:order, market: managed_market, organization: managed_org, items: [create(:order_item, product: managed_product1)]) }
+      let!(:managed_order2) { create(:order, market: managed_market, organization: managed_org, items: [create(:order_item, product: managed_product2)]) }
+      let!(:managed_order_no_items) { create(:order, market: managed_market, organization: managed_org, items: []) }
 
-      it "returns only managed markets orders" do
-        orders = Order.orders_for_seller(user)
+      let!(:other_org)     { create(:organization, markets: [market]) }
+      let!(:other_product) { create(:product, :sellable, organization: other_org) }
+      let!(:other_order)   { create(:order, market: market, organization: other_org, items: [create(:order_item, product: other_product)]) }
 
-        expect(orders.count).to eq(2)
-        expect(orders).to include(managed_order, org_order)
+      context "who manages a single market" do
+        it "returns orders for the marker that have sold items" do
+          orders = Order.orders_for_seller(user)
+
+          expect(orders.count).to eq(2)
+          expect(orders).to include(managed_order1, managed_order2)
+        end
+      end
+
+      context "who manages a multiple markets" do
+        let!(:managed_market2) { create(:market, managers: [user]) }
+        let!(:managed_org2)    { create(:organization, markets: [managed_market2]) }
+
+        let!(:managed_product3) { create(:product, :sellable, organization: managed_org2) }
+        let!(:managed_order3) { create(:order, market: managed_market2, organization_id: 0, items: [create(:order_item, product:managed_product3)]) }
+
+        it "shows orders from all markets the user manages" do
+          orders = Order.orders_for_seller(user)
+
+          expect(orders.count).to eq(3)
+          expect(orders).to include(managed_order1, managed_order2, managed_order3)
+        end
+      end
+
+      context "who is a member of an organization in a different market" do
+        let!(:unmanaged_market)              { create(:market) }
+        let!(:unmanaged_market_org)          { create(:organization, users: [user], markets: [unmanaged_market]) }
+        let!(:unmanaged_market_org2)         { create(:organization, markets: [unmanaged_market]) }
+        let!(:unmanaged_market_org_product)  { create(:product, :sellable, organization: unmanaged_market_org) }
+        let!(:unmanaged_market_org2_product) { create(:product, :sellable, organization: unmanaged_market_org2) }
+        let!(:org_order)                     { create(:order, market: unmanaged_market, organization: unmanaged_market_org, items: [create(:order_item, product: unmanaged_market_org_product)]) }
+        let!(:org_order2)                    { create(:order, market: unmanaged_market, organization: unmanaged_market_org2, items: [create(:order_item, product: unmanaged_market_org2_product)]) }
+
+        it "returns orders for the current market and the organization's market" do
+          orders = Order.orders_for_seller(user)
+
+          expect(orders.count).to eq(3)
+          expect(orders).to include(managed_order1, managed_order2, org_order)
+        end
       end
     end
 
-    context "seller" do
+    context "as a seller:" do
       let(:market)       { create(:market) }
       let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
       let!(:delivery)    { delivery_schedule.next_delivery }
       let(:organization) { create(:organization, markets: [market]) }
       let(:product)      { create(:product, :sellable, organization: organization) }
-      let(:product2)     { create(:product, :sellable, organization: organization) }
-      let!(:user)        { create(:user, organizations: [organization]) }
+      let(:managed_product2)     { create(:product, :sellable, organization: organization) }
+      let!(:user)        { create(:user, organizations:[organization]) }
       let!(:order)       { create(:order, :with_items, delivery: delivery, organization: organization, market: market) }
       let!(:order_item)  { create(:order_item, order: order, product: product) }
-      let!(:order_item2) { create(:order_item, order: order, product: product2) }
+      let!(:order_item2) { create(:order_item, order: order, product: managed_product2) }
       let!(:other_order) { create(:order, :with_items, delivery: delivery, organization_id: 0, market: market) }
 
-      it "returns only the organizations orders" do
-        orders = Order.orders_for_seller(user)
+      context "belonging to a single organization" do
+        it "returns orders sold for that organization" do
+          orders = Order.orders_for_seller(user)
 
-        expect(orders.count).to eq(1)
-        expect(orders).to include(order)
+          expect(orders.count).to eq(1)
+          expect(orders).to include(order)
+        end
       end
+
+      context "belonging to multiple organizations" do
+        let!(:org2)        { create(:organization, users: [user], markets: [market]) }
+        let!(:product2)    { create(:product, :sellable, organization: org2) }
+        let!(:order2)      { create(:order, :with_items, delivery: delivery, organization: org2, market: market) }
+        let!(:order_item3) { create(:order_item, order: order2, product: product2) }
+
+        it "returns orders for all organizations which the user belongs to" do
+          orders = Order.orders_for_seller(user)
+
+          expect(orders.count).to eq(2)
+          expect(orders).to include(order, order2)
+        end
+
+        context "in different markets" do
+          let!(:market2) { create(:market) }
+          let!(:org2)    { create(:organization, users: [user], markets: [market2]) }
+          let!(:order2)  { create(:order, :with_items, delivery: delivery, organization: org2, market: market2) }
+
+          it "returns all orders for organizations that the user is a member of" do
+            orders = Order.orders_for_seller(user)
+            expect(orders.count).to eq(2)
+            expect(orders).to include(order, order2)
+          end
+        end
+      end
+
+      context "organization gets removed from a market"
     end
   end
 
@@ -430,17 +493,17 @@ describe Order do
 
   describe ".delivered" do
     let(:product) { create(:product, :sellable) }
-    let(:product2) { create(:product, :sellable) }
+    let(:managed_product2) { create(:product, :sellable) }
 
     let!(:delivery_schedule) { create(:delivery_schedule) }
     let!(:delivery)    { delivery_schedule.next_delivery }
 
     let(:delivered_item1) { create(:order_item, product: product, delivery_status: "delivered") }
-    let(:delivered_item2) { create(:order_item, product: product2, delivery_status: "delivered") }
+    let(:delivered_item2) { create(:order_item, product: managed_product2, delivery_status: "delivered") }
     let!(:delivered_order) { create(:order, delivery: delivery, items: [delivered_item1, delivered_item2]) }
 
     let(:undelivered_item1) { create(:order_item, product: product) }
-    let(:undelivered_item2) { create(:order_item, product: product2) }
+    let(:undelivered_item2) { create(:order_item, product: managed_product2) }
     let!(:undelivered_order) { create(:order, delivery: delivery, items: [undelivered_item1, undelivered_item2]) }
 
     it "returns orders where all items have deivered" do
