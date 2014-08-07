@@ -86,9 +86,11 @@ describe "A Market Manager managing Newsletters" do
     end
 
     it "deletes the newsletter" do
+      expect(page).to_not have_content("No Newsletters")
       expect(page).to have_content(newsletter.subject)
       click_link "Delete"
       expect(page).not_to have_content(newsletter.subject)
+      expect(page).to have_content("No Newsletters")
     end
   end
 
