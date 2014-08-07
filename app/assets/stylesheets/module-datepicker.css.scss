@@ -16,10 +16,9 @@ input.alt-datepicker {
   ~ .ui-datepicker-trigger {
     @include box-sizing(content-box);
     width: 1em;
-    height: 1.1em;
+    height: 1.08em;
     padding-top: .5em;
     padding-bottom: .4em;
-    font-family: 'icomoon-ultimate88910';
   }
 }
   input.alt-datepicker,
@@ -44,7 +43,11 @@ input.alt-datepicker {
     }
   }
 
-
+.ui-datepicker-trigger > img {
+  width: 1em;
+  max-width: none;
+  height: auto;
+}
 .datepicker-no-float {
   > .ui-datepicker {
     width: 0;
