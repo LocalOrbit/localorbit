@@ -40,7 +40,6 @@ module OrderPresenter
     (auditable_type = 'Payment' AND auditable_id IN (:payment_ids))",
       order_id: @order.id,
       payment_ids: @order.payment_ids
-    ).reorder("created_at ASC")
-#    Audit.where(associated_type: "Order", associated_id: @order.id).reorder("created_at ASC")
+    ).reorder("created_at DESC")
   end
 end
