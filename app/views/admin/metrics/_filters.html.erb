@@ -14,12 +14,6 @@
         <%= select_tag :interval, options_from_collection_for_select(MetricsPresenter::GROUPDATE_OPTIONS.map { |k, v| [k, v[:caption]] }, :first, :last, params[:interval]), class: "filter-input" %>
       </span>
     </div>
-    <div class="pull-left">
-      <span class="preserve-alignment">
-        <%= label_tag "For Dates" %><br>
-        <%= select_tag :metric_date_interval, options_from_collection_for_select([["now", "Ending Now"], ["range", "Between Range"]], :first, :last, params[:metric_date_interval]) %>
-      </span>
-    </div>
     <div class="date-filters">
       <div class="pull-left">
         <span class="preserve-alignment">
