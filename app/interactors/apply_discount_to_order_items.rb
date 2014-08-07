@@ -5,7 +5,13 @@ class ApplyDiscountToOrderItems
     return unless order.discount
 
     discounted_items.each do |item|
-      item.discount = (cart.discount_amount * item.gross_total / subtotal).round(2)
+      discount_amount = (cart.discount_amount * item.gross_total / subtotal).round(2)
+
+      if order.discount.market?
+        item.discount_market = discount_amount
+      else
+        item.discount_seller = discount_amount
+      end
     end
 
     while (curr_discount = discounted_items.each.sum(&:discount)) != cart.discount_amount

@@ -81,6 +81,10 @@ class OrderItem < ActiveRecord::Base
     end
   end
 
+  def discount
+    discount_market + discount_seller
+  end
+
   def product_availability
     return unless product.present?
 

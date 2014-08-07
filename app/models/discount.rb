@@ -9,6 +9,7 @@ class Discount < ActiveRecord::Base
   belongs_to :buyer_organization, class_name: "Organization"
   belongs_to :seller_organization, class_name: "Organization"
 
+  enum payer: {market: 0, seller: 1}
   enum type: {percentage: 0, fixed: 1}
 
   validates :name, presence: true

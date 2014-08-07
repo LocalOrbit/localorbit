@@ -211,7 +211,11 @@ class Order < ActiveRecord::Base
   end
 
   def discount_amount
-    items.sum(:discount)
+    if discount.present?
+      discount.market? ? items.sum(:discount_market) : items.sum(:discount_seller)
+    else
+      0
+    end
   end
 
   def invoice
@@ -287,7 +291,7 @@ class Order < ActiveRecord::Base
     cost = usable_items.sum(&:gross_total)
     if cost > 0.0
       self.delivery_fees = delivery.delivery_schedule.fees_for_amount(cost)
-      self.total_cost    = cost + delivery_fees - usable_items.sum(&:discount)
+      self.total_cost    = cost + delivery_fees - (usable_items.sum(&:discount_market) + usable_items.sum(&:discount_seller))
     else
       self.delivery_fees = 0
       self.total_cost    = 0
