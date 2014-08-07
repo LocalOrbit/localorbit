@@ -73,6 +73,11 @@ GEM
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
     ast (2.0.0)
+    audited (4.0.0.rc1)
+      rails-observers (~> 0.1.2)
+    audited-activerecord (4.0.0.rc1)
+      activerecord (~> 4.0)
+      audited (= 4.0.0.rc1)
     awesome_nested_set (3.0.0)
       activerecord (>= 4.0.0, < 5)
     balanced (0.8.2)
@@ -310,6 +315,8 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.4)
       sprockets-rails (~> 2.0)
+    rails-observers (0.1.2)
+      activemodel (~> 4.0)
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
@@ -417,6 +424,7 @@ DEPENDENCIES
   active_model_serializers
   active_record_union
   acts_as_geocodable!
+  audited-activerecord (~> 4.0.0.rc1)
   awesome_nested_set
   balanced (~> 0.7)
   capybara
