@@ -1,16 +1,18 @@
-<tr>
-  <td>Item <%= activity.action %>d</td>
-  <td><%= activity.created_at %><br>(<%= time_ago_in_words activity.created_at %> ago)</td>
-  <td>
-    <% fields = %w(name quantity quantity_delivered delivery_status delivered_at) %>
-    <% fields.each do |field| %>
-      <% if activity.audited_changes[field] %>
-        <b><%= field.humanize %>:</b> <%= Array(activity.audited_changes[field]).last %><br>
+<% fields = %w(name quantity quantity_delivered delivery_status delivered_at) %>
+<% if fields.map{|field| activity.audited_changes[field].present? }.any? %>
+  <tr>
+    <td>Item <%= activity.action %>d</td>
+    <td><%= activity.created_at %><br>(<%= time_ago_in_words activity.created_at %> ago)</td>
+    <td>
+      <% fields.each do |field| %>
+        <% if activity.audited_changes[field] %>
+          <b><%= field.humanize %>:</b> <%= Array(activity.audited_changes[field]).last %><br>
+        <% end %>
+        <% if activity.audited_changes["amount"] %>
+          <b>Amount:</b> <%= number_to_currency activity.auditable.amount %>
+        <% end %>
       <% end %>
-      <% if activity.audited_changes["amount"] %>
-        <b>Amount:</b> <%= number_to_currency activity.auditable.amount %>
-      <% end %>
-    <% end %>
-    <%#= activity.audited_changes %></td>
-  <td><%= link_to_if activity.user, activity.user_name_or_email, [:admin, activity.user] %></td>
-</tr>
+      <%#= activity.audited_changes %></td>
+    <td><%= link_to_if activity.user, activity.user_name_or_email, [:admin, activity.user] %></td>
+  </tr>
+<% end %>
