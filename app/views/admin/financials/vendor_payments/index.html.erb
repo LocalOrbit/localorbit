@@ -11,8 +11,6 @@
   </div>
 </div>
 
-<div>These Sellers have outstanding payments that need to be recorded.</div>
-
 <% @sellers.each do |seller| %>
 <div class="vendor-payment">
   <%= form_tag [:admin, :financials, :vendor_payments] do %>
