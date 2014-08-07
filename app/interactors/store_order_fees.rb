@@ -51,7 +51,7 @@ class StoreOrderFees
   end
 
   def calculated_fee(item, fee)
-    (item.gross_total - item.discount) * fee / 100
+    (item.gross_total - item.discount_market - item.discount_seller) * fee / 100
   end
 
   def market
