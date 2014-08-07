@@ -9,6 +9,7 @@ input[type=submit] {
   padding: 12px 18px;
   border: solid 1px #b0b0b0;
   @include border-radius(3px);
+  background: #c2c2c2;
   @include gradient(rgba(0,0,0,0), rgba(0,0,0,0.2));
   color: #777;
   font-family: inherit;
@@ -16,6 +17,7 @@ input[type=submit] {
   text-align: center;
   -webkit-appearance: none;
   -webkit-font-smoothing: antialiased;
+  -moz-appearance: none;
 
   &:hover {
     background-image: none;
@@ -221,7 +223,9 @@ input[type=submit].btn--end {
 
 input[type=search] + .btn--end,
 input[type=search] + input[type=submit].btn--end {
+  height: 1.79em;
   padding: 2px 10px;
+  padding: 0.071em 10px;
   margin: 0 10px 0 -1px;
   color: #666;
   background-color: #fff;

@@ -7,7 +7,8 @@ class @DatePicker
     options.minDate = field.data('min-date')
     options.maxDate = field.data('max-date')
     options.showOn = "both"
-    options.buttonText = "\ue013"
+#options.buttonText = "\ue013"
+    options.buttonImage = "/assets/icons/calendar@2x.png"
     preParseDate = (val) ->
       if val.toISOString != undefined
         val = val.toISOString()
