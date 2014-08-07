@@ -1,5 +1,5 @@
 class Delivery < ActiveRecord::Base
-  audited allow_mass_assignment: true
+  audited allow_mass_assignment: true, associated_with: :delivery_schedule
   belongs_to :delivery_schedule
   has_many :orders, inverse_of: :delivery
 

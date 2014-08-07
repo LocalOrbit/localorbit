@@ -1,5 +1,5 @@
 class Product < ActiveRecord::Base
-  audited allow_mass_assignment: true
+  audited allow_mass_assignment: true, associated_with: :organization
   extend DragonflyBackgroundResize
   include SoftDelete
   include PgSearch

@@ -1,5 +1,5 @@
 class Payment < ActiveRecord::Base
-  audited allow_mass_assignment: true
+  audited allow_mass_assignment: true, associated_with: :order
   PAYMENT_TYPES = {
     "delivery fee" => "Delivery Fee",
     "hub fee" => "Market Fee",

@@ -1,5 +1,5 @@
 class DeliverySchedule < ActiveRecord::Base
-  audited allow_mass_assignment: true
+  audited allow_mass_assignment: true, associated_with: :market
   include SoftDelete
 
   WEEKDAYS = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)

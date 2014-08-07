@@ -1,5 +1,5 @@
 class BankAccount < ActiveRecord::Base
-  audited allow_mass_assignment: true
+  audited allow_mass_assignment: true, associated_with: :bankable
   include SoftDelete
 
   attr_accessor :save_for_future
