@@ -160,31 +160,16 @@ class Order < ActiveRecord::Base
   def self.orders_for_buyer(user)
     if user.admin?
       all
-    elsif user.market_manager?
-      select("orders.*").
-      joins("LEFT JOIN user_organizations ON user_organizations.organization_id = orders.organization_id
-             LEFT JOIN managed_markets ON managed_markets.market_id = orders.market_id").
-      where("user_organizations.user_id = :user_id OR managed_markets.user_id = :user_id", user_id: user.id)
     else
-      select("orders.*").joins("INNER JOIN user_organizations ON user_organizations.organization_id = orders.organization_id").
-        where("user_organizations.user_id = ?", user.id)
+      where(buyer_orders_arel(user).or(manager_orders_arel(user))).uniq
     end
   end
 
   def self.orders_for_seller(user)
     if user.admin?
       all
-    elsif user.market_manager?
-      joins(:products).
-      joins("LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id
-             LEFT JOIN managed_markets ON managed_markets.market_id = orders.market_id").
-      where("user_organizations.user_id = :user_id OR managed_markets.user_id = :user_id", user_id: user.id).
-      uniq
     else
-      joins(:products).
-      joins("LEFT JOIN user_organizations ON user_organizations.organization_id = products.organization_id").
-      where("user_organizations.user_id = :user_id", user_id: user.id).
-      uniq
+      joins(:products).where(seller_orders_arel(user).or(manager_orders_arel(user))).uniq
     end
   end
 
@@ -192,6 +177,18 @@ class Order < ActiveRecord::Base
     scope = orders_for_seller(user)
     scope = scope.joins(:order_items) if user.admin?
     scope.where(order_items: {delivery_status: "pending"})
+  end
+
+  def self.buyer_orders_arel(user)
+    arel_table[:organization_id].in(UserOrganization.where(user_id: user.id).select(:organization_id).arel)
+  end
+
+  def self.seller_orders_arel(user)
+    Product.arel_table[:organization_id].in(UserOrganization.where(user_id: user.id).select(:organization_id).arel)
+  end
+
+  def self.manager_orders_arel(user)
+    arel_table[:market_id].in(ManagedMarket.where(user_id: user.id).select(:market_id).arel)
   end
 
   def add_cart_items(cart_items, deliver_on)
