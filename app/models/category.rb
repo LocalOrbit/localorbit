@@ -1,4 +1,5 @@
 class Category < ActiveRecord::Base
+  audited allow_mass_assignment: true
   acts_as_nested_set order: :name
   has_many :products
 

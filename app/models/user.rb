@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  audited allow_mass_assignment: true
   include PgSearch
   include Sortable
   # Include default devise modules. Others available are:

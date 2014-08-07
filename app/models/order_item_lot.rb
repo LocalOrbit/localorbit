@@ -1,4 +1,5 @@
 class OrderItemLot < ActiveRecord::Base
+  audited allow_mass_assignment: true
   belongs_to :order_item, inverse_of: :lots
   belongs_to :lot
 

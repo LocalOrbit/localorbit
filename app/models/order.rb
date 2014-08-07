@@ -1,4 +1,5 @@
 class Order < ActiveRecord::Base
+  audited allow_mass_assignment: true
   INVOICE_STATUSES = %w(due overdue).freeze
 
   include SoftDelete

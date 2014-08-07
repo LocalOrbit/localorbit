@@ -1,4 +1,6 @@
 class MarketOrganization < ActiveRecord::Base
+  audited allow_mass_assignment: true
+
   module AssociationScopes
     def including_deleted
       unscope(market_organizations: :deleted_at)

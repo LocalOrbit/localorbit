@@ -1,4 +1,5 @@
 class DeliverySchedule < ActiveRecord::Base
+  audited allow_mass_assignment: true
   include SoftDelete
 
   WEEKDAYS = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)

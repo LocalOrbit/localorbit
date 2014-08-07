@@ -1,4 +1,5 @@
 class Newsletter < ActiveRecord::Base
+  audited allow_mass_assignment: true
   belongs_to :market
 
   validates :subject, :header, :body, presence: true

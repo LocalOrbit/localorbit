@@ -1,4 +1,5 @@
 class CartItem < ActiveRecord::Base
+  audited allow_mass_assignment: true
   belongs_to :cart, inverse_of: :items
   belongs_to :product
 
