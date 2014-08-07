@@ -87,7 +87,7 @@ class MetricsPresenter
 
     @date_range = date_range
 
-    # @headers = headers_for_interval(interval)
+    @headers = headers_for_interval(interval: interval, date_range: @date_range)
 
     if groups.include?("financials") || groups.include?("products")
       @markets = Market.where.not(id: Metrics::Base::TEST_MARKET_IDS).order("LOWER(name)").pluck(:id, :name)
@@ -161,7 +161,6 @@ class MetricsPresenter
   end
 
   def format_results(results:, interval:, calculation_type:, format:)
-    @headers = results.keys
     if calculation_type == :window
       Hash[@headers.map { |header| [header, format_value(value: (results[header] || results.values.last || 0), format: format)] }.last(@headers.count)]
     else
@@ -186,14 +185,15 @@ class MetricsPresenter
     end
   end
 
-  # Cast to format - precompile these again
-  def headers_for_interval(interval)
-    if interval == "month"
-      end_date = Date.current.beginning_of_month
-      (0...GROUPDATE_OPTIONS[:month][:last]).map {|x| (end_date - x.months).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
-    elsif interval == "week"
-      end_date = Date.current.beginning_of_week - (START_OF_WEEK == :sun ? 1 : 0).days
-      (0...GROUPDATE_OPTIONS[:week][:last]).map {|x| (end_date - x.weeks).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
+  def headers_for_interval(interval:, date_range:)
+    advance_type = interval.pluralize.to_sym
+    date = date_range.begin
+    headers = []
+    count = 0
+    while date_range.cover?(header_date = date.advance(advance_type => count))
+      headers << header_date.strftime(GROUPDATE_OPTIONS[interval][:format])
+      count = count.next
     end
+    headers
   end
 end
