@@ -566,6 +566,39 @@ module Dom
       attribute :breakdown
     end
 
+    class PackList < Domino
+      selector ".pack-list"
+
+      attribute :note
+      attribute :order_number
+      attribute :delivery_message
+      attribute :upcoming_delivery_date
+
+      def buyer
+        within(node) { Buyer.first }
+      end
+
+      def seller
+        within(node) { Seller.first }
+      end
+      alias_method :market, :seller
+
+      class Contact < Domino
+        attribute :org
+        attribute :street
+        attribute :city_state_zip
+        attribute :phone
+      end
+
+      class Buyer < Contact
+        selector ".vcard--buyer"
+      end
+
+      class Seller < Contact
+        selector ".vcard--seller"
+      end
+    end
+
     class PackListItem < Domino
       selector ".pack-list-item"
 
