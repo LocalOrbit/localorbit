@@ -60,11 +60,11 @@ $ ->
       })
 
   clone_header_attr = (original, prime, current, last) ->
-    if current == last - 1
+    if current == last
       $(prime).attr('class', original.getAttribute('class'))
     else
       $(prime).css({
-        'width': $(original).width(),
+        'width': $(original).width()
         }).attr('class', original.getAttribute('class'))
 
   stick_table = (index, original) ->
@@ -79,7 +79,7 @@ $ ->
        clone_header_attr($original_headers[i], e, i, $original_headers.length)
       )
     $stuck_header.insertBefore($original.parent())
-    $stuck_header.wrap('<table class="js-sticky stickable"></table>')
+    $stuck_header.wrap('<table class="js-sticky stickable" style="min-width: 0"></table>')
 
     $stuck_header.find('.select-all').click ->
       $original.find('.select-all').trigger "click"
