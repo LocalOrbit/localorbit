@@ -6,7 +6,7 @@
     <div class="pdf-page-break"></div>
   <% end %>
 
-  <div class="upcoming-delivery">
+  <div class="upcoming-delivery pack-list">
     <h1>Packing Slip</h1>
     <p class="note"><%= index + 1 %> of <%= @orders.length %><p>
 
@@ -15,9 +15,9 @@
 
         <h2 class="heading heading-delivery-tool">To Buyer</h2>
         <h3 class="fn org"><%= order.organization.name %></h3>
-        <div class="street-address"><%= order.display_delivery_street %></div>
+        <div class="street"><%= order.display_delivery_street %></div>
         <div class="city-state-zip"><%= order.display_delivery_city_state_zip %></div>
-        <div class="tel"><%= number_to_phone order.display_delivery_phone %></div>
+        <div class="phone"><%= number_to_phone order.display_delivery_phone %></div>
       </div><div class="column column--half vcard vcard--seller">
 
         <h2 class="heading heading-delivery-tool">From Market</h2>
@@ -33,13 +33,13 @@
     <div class="row">
       <div class="column column--half">
 
-        <h2 class="heading heading-delivery-tool"><%= order.display_fulfillment_info %></h2>
-        <span class="upcoming-delivery-date"><%= @delivery.display_date %> <%= @delivery.buyer_time_range %></>
+        <h2 class="heading heading-delivery-tool delivery-message"><%= order.display_fulfillment_info %></h2>
+        <span class="upcoming-delivery-date"><%= @delivery.display_date %> <%= @delivery.buyer_time_range %></span>
 
       </div><div class="column column--half">
 
         <h2 class="heading heading-delivery-tool">Order Number</h2>
-        <span class="upcoming-delivery-order"><%= order.order_number %></span>
+        <span class="upcoming-delivery-order order-number"><%= order.order_number %></span>
 
       </div>
     </div>

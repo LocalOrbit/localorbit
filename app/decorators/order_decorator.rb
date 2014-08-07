@@ -14,15 +14,15 @@ class OrderDecorator < Draper::Decorator
   end
 
   def display_delivery_street
-    billing_address
+    delivery_address
   end
 
   def display_delivery_city_state_zip
-    "#{billing_city}, #{billing_state} #{billing_zip}"
+    "#{delivery_city}, #{delivery_state} #{delivery_zip}"
   end
 
   def display_delivery_phone
-    billing_phone
+    delivery_phone
   end
 
   def display_market_street
@@ -38,6 +38,6 @@ class OrderDecorator < Draper::Decorator
   end
 
   def market_address
-    market.addresses.first
+    market.addresses.visible.first
   end
 end

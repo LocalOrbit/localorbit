@@ -223,7 +223,7 @@ describe "Checking Out", :js, :vcr do
         checkout
         expect(page).to have_content("Thank you for your order")
         expect(page).to have_content("Your order will be delivered to:")
-        expect(page).to have_content("500 S. State Street")
+        expect(page).to have_content(buyer.locations.first.address)
         expect(page).to have_content("Ann Arbor, MI 48109")
       end
 
