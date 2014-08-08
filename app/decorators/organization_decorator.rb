@@ -63,11 +63,12 @@ class OrganizationDecorator < Draper::Decorator
 
   def toggle_active_button
     title = organization.active? ? "Deactivate" : "Activate"
+    status = organization.active? ? "alert" : "notice"
     link_to(
       title,
       update_active_admin_organization_path(organization, organization: {active: !active?}),
       method: :patch,
-      class: "btn btn--small"
+      class: "btn btn--small #{status}"
     )
   end
 end

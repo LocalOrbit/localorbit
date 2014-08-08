@@ -44,6 +44,21 @@ input[type=submit] {
     padding: 4px 18px;
     font-size: 14px;
   }
+  &.alert {
+    border-color: $alert_text;
+    color: $alert_text;
+    background-color: $alert_bg;
+  }
+  &.notice {
+    border-color: $notice_text;
+    color: $notice_text;
+    background-color: $notice_bg;
+  }
+  &.warning {
+    border-color: $warning_text;
+    color: $warning_text;
+    background-color: $warning_bg;
+  }
   @media screen and (max-width: $mobile_break) {
     &.mobile-block {
       text-align: center;
