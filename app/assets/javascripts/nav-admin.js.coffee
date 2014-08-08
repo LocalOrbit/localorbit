@@ -1,7 +1,8 @@
 $ -> 
   $('.nav--admin .caretted').click (e) ->
     e.preventDefault()
-    $('.dropdown').not($(e.target).next()).parent().removeClass('is-open')
+    $('.dropdown').not($(e.target.hash)).addClass('is-hidden').parent().removeClass('is-open')
+    $(e.target.hash).removeClass('is-hidden')
     $(e.target).parent().toggleClass('is-open')
     if $('.is-open > .caretted + .dropdown').length
       $('.overlay').addClass('is-open')
