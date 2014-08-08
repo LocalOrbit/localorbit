@@ -5,7 +5,6 @@ class AttemptBalancedPurchase
     if ["credit card", "ach"].include?(payment_method) && order
       begin
         amount = (cart.total * 100).to_i # USD in cents
-
         debit = create_debit(amount)
         record_payment(debit)
         update_order_payment_method
@@ -43,7 +42,7 @@ class AttemptBalancedPurchase
   end
 
   def initial_payment_status
-    if payment_method == "credit card"
+    if cart.total == 0 || payment_method == "credit card"
       "paid"
     else
       "pending"
@@ -55,7 +54,7 @@ class AttemptBalancedPurchase
       amount: amount,
       source_uri: bank_account.balanced_uri,
       description: "#{cart.market.name} purchase"
-    )
+    ) if amount > 0
   end
 
   def record_payment(debit)
@@ -66,7 +65,7 @@ class AttemptBalancedPurchase
       payment_method: payment_method,
       amount: cart.total,
       status: initial_payment_status,
-      balanced_uri: debit.uri,
+      balanced_uri: debit.try(:uri),
       orders: [order]
     )
   end

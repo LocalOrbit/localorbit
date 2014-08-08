@@ -10,8 +10,10 @@ describe AttemptBalancedPurchase do
   let!(:product)     { create(:product, :sellable, organization: buyer) }
   let!(:bank_account) { create(:bank_account, :checking, bankable: buyer, balanced_uri: "/balanced-card-uri") }
   let!(:credit_card) { create(:bank_account, :credit_card, bankable: buyer, balanced_uri: "/balanced-credit-card-uri") }
-  let!(:cart)        { create(:cart, organization: buyer, market: market) }
-  let!(:cart_item)   { create(:cart_item, product: product, cart: cart, quantity: 10)}
+
+  let!(:cart_item)   { create(:cart_item, product: product, quantity: 10)}
+  let(:cart)        { create(:cart, organization: buyer, market: market, items: [cart_item]) }
+
   let!(:order)       { create(:order, :with_items, delivery: delivery) }
   let(:params)       { { "payment_method" => "purchase order"} }
 
@@ -102,6 +104,52 @@ describe AttemptBalancedPurchase do
           }.from(0)
         end
       end
+
+      context "zero dollar purchase" do
+        let!(:cart) { create(:cart, organization: buyer, market: market, items: []) }
+
+        it "creates a payment record" do
+          expect {
+            subject
+          }.to change {
+            Payment.all.count
+          }.from(0).to(1)
+
+          expect(subject.context).to include(:payment)
+          expect(order.reload.payments).to include(subject.context[:payment])
+        end
+
+        it "sets the payment's payer to the cart's organization" do
+          subject # run the interactor
+
+          payment = subject.context[:payment]
+          payer = payment.reload.payer
+
+          expect(payer).to eq(buyer)
+          expect(payer.class).to eq(Organization)
+        end
+
+        it "sets the payment method on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_method
+          }.from("purchase order").to("ach")
+        end
+
+        it "sets the payment status on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_status
+          }.from("unpaid").to("paid")
+        end
+
+        it "does not create a balanced debit" do
+          expect(subject).to be_success
+          expect(balanced_customer).to_not have_received(:debit)
+        end
+      end
     end
 
     context "invalid bank account" do
@@ -180,6 +228,52 @@ describe AttemptBalancedPurchase do
           subject
 
           expect(Payment.all.count).to eql(0)
+        end
+      end
+
+      context "zero dollar purchase" do
+        let!(:cart) { create(:cart, organization: buyer, market: market, items: []) }
+
+        it "creates a payment record" do
+          expect {
+            subject
+          }.to change {
+            Payment.all.count
+          }.from(0).to(1)
+
+          expect(subject.context).to include(:payment)
+          expect(order.reload.payments).to include(subject.context[:payment])
+        end
+
+        it "sets the payment's payer to the cart's organization" do
+          subject # run the interactor
+
+          payment = subject.context[:payment]
+          payer = payment.reload.payer
+
+          expect(payer).to eq(buyer)
+          expect(payer.class).to eq(Organization)
+        end
+
+        it "sets the payment method on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_method
+          }.from("purchase order").to("credit card")
+        end
+
+        it "sets the payment status on the order" do
+          expect {
+            subject
+          }.to change {
+            order.reload.payment_status
+          }.from("unpaid").to("paid")
+        end
+
+        it "does not create a balanced debit" do
+          expect(subject).to be_success
+          expect(balanced_customer).to_not have_received(:debit)
         end
       end
     end
