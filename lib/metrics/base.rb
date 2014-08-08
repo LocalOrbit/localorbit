@@ -90,8 +90,6 @@ module Metrics
       values = case m[:calculation]
         when :custom
           calculate_custom(scope: scope, metric: m, interval: interval, options: options)
-        when :window
-          calculate_window(scope: scope, metric: m, interval: interval, options: options)
         when :ruby
           calculate_ruby(scope: scope, metric: m, interval: interval, markets: markets, options: options)
         when :percent_growth
@@ -108,11 +106,6 @@ module Metrics
     def self.calculate_custom(scope:, metric:, interval:, options:)
       series = scope_for(scope: scope, attribute: metric[:attribute], interval: interval, options: options)
       series.group_calc(metric[:calculation_arg])
-    end
-
-    def self.calculate_window(scope:, metric:, interval:, options:)
-      series = scope_for(scope: scope, attribute: metric[:attribute], interval: interval, options: options, window: true)
-      series.group_calc("SUM(COUNT(DISTINCT(#{metric[:calculation_arg] || "id"}))) OVER (ORDER BY #{series.relation.group_values[0]})")
     end
 
     def self.calculate_ruby(scope:, metric:, interval:, markets: [], options:)
@@ -168,13 +161,9 @@ module Metrics
       series.send(metric[:calculation], metric[:calculation_arg])
     end
 
-    def self.scope_for(scope:, attribute:, interval:, options:, window: false)
+    def self.scope_for(scope:, attribute:, interval:, options:)
       group_options = options.dup
       groupdate = group_options.delete(:groupdate)
-
-      if window
-        group_options[:carry_forward] = true
-      end
 
       scope.send(groupdate, attribute, group_options)
     end

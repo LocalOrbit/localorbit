@@ -160,11 +160,7 @@ class MetricsPresenter
   end
 
   def format_results(results:, interval:, calculation_type:, format:)
-    if calculation_type == :window
-      Hash[@headers.map { |header| [header, format_value(value: (results[header] || results.values.last || 0), format: format)] }.last(@headers.count)]
-    else
-      Hash[@headers.map { |header| [header, format_value(value: results[header], format: format)] }]
-    end
+    Hash[@headers.map { |header| [header, format_value(value: results[header], format: format)] }]
   end
 
   def format_value(value:, format:)
