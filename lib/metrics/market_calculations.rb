@@ -4,9 +4,8 @@ module Metrics
     METRICS = {
       total_markets: {
         title: "Total Markets",
-        scope: BASE_SCOPE,
-        attribute: :created_at,
-        calculation: :window,
+        scope: Market,
+        calculation: :metric,
         format: :integer
       },
       live_markets: {

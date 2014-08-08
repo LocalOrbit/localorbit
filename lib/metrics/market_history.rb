@@ -4,6 +4,7 @@ module Metrics
 
     @@model_name = BASE_SCOPE.name
     @@history_metrics = {
+      total_markets:        { scope: BASE_SCOPE },
       live_markets:         { scope: BASE_SCOPE.where(active: true) },
       active_markets:       { scope: BASE_SCOPE.joins(:orders) },
       credit_card_markets:  { scope: BASE_SCOPE.where(allow_credit_cards: true, default_allow_credit_cards: true) },
