@@ -12,13 +12,15 @@ $ ->
     if $('.l-main').outerWidth() <= 640
       styles = {
         position: 'fixed',
-        top: 54
+        top: 54,
+        bottom: "auto",
       }
       $element.find('div.datepicker').show()
     else
       styles = {
-        'left': $element.offset().left,
-        'top':  $element.offset().top
+        left: $element.offset().left,
+        top:  $element.offset().top,
+        bottom: "auto"
       }
     if $element.outerHeight() + 54 + find_scrolly() >= screen.height
       $('body').css('min-height', $element.outerHeight() + 74 + find_scrolly())
