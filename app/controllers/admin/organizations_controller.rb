@@ -3,7 +3,7 @@ module Admin
     include StickyFilters
 
     before_action :require_admin_or_market_manager, only: [:new, :create, :destroy]
-    before_action :find_organization, only: [:show, :edit, :update, :activate, :deactivate, :delivery_schedules, :market_memberships, :destroy]
+    before_action :find_organization, only: [:show, :edit, :update, :update_active, :delivery_schedules, :market_memberships, :destroy]
 
     def index
       @query_params = sticky_parameters(request.query_parameters)
@@ -50,13 +50,8 @@ module Admin
       end
     end
 
-    def activate
-      @organization.update_attributes(active: true)
-      redirect_to :back, notice: "Updated #{@organization.name}"
-    end
-
-    def deactivate
-      @organization.update_attributes(active: false)
+    def update_active
+      @organization.update_attributes(update_active_params)
       redirect_to :back, notice: "Updated #{@organization.name}"
     end
 
@@ -88,6 +83,12 @@ module Admin
     end
 
     private
+
+    def update_active_params
+      params.require(:organization).permit(
+        :active
+      )
+    end
 
     def organization_params
       params.require(:organization).permit(

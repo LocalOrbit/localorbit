@@ -56,8 +56,7 @@ Rails.application.routes.draw do
 
       get :delivery_schedules, on: :member
       get :market_memberships, on: :member
-      patch :activate, on: :member
-      patch :deactivate, on: :member
+      patch :update_active, on: :member
     end
 
     resource :delivery_tools, only: :show do

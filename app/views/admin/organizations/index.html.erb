@@ -28,10 +28,11 @@
         <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
         <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
         <td class="activated">
+
           <% if organization.active? %>
-            <%= link_to "Deactivate", deactivate_admin_organization_path(organization, organization: {active: false}), method: :patch %>
+            <%= link_to "Deactivate", update_active_admin_organization_path(organization, organization: {active: false}), method: :patch %>
           <% else %>
-            <%= link_to "Activate", activate_admin_organization_path(organization, organization: {active: true}), method: :patch %>
+            <%= link_to "Activate", update_active_admin_organization_path(organization, organization: {active: true}), method: :patch %>
           <% end %>
         </td>
         <td class="action">
