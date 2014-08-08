@@ -21,6 +21,13 @@
         <td class="market"><%= organization.markets.map {|m| m.name }.join(', ') %></td>
         <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
         <td class="can-sell"><%= organization.can_sell? ? "Yes" : "No" %></td>
+        <td class="activated">
+          <% if organization.active? %>
+            <%= link_to "Deactivate", deactivate_admin_organization_path(organization, organization: {active: false}), method: :patch %>
+          <% else %>
+            <%= link_to "Activate", activate_admin_organization_path(organization, organization: {active: true}), method: :patch %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </table>
