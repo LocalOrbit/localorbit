@@ -88,7 +88,7 @@ class Admin::OrdersController < AdminController
   def setup_add_items_form(order)
     @show_add_items_form = true
     @order = SellerOrder.new(order, current_user)
-    @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new)
+    @products_for_sale = ProductsForSale.new(order.delivery, order.organization, Cart.new(market: order.market))
   end
 
   # Builds a list of deliveries for potential changes
