@@ -4,10 +4,8 @@ module Metrics
     METRICS = {
       total_products: {
         title: "Total Products",
-        scope: BASE_SCOPE,
-        attribute: "products.created_at",
-        calculation: :window,
-        calculation_arg: "products.id",
+        scope: Product,
+        calculation: :metric,
         format: :integer
       },
       total_products_simple: {

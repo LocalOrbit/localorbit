@@ -4,9 +4,8 @@ module Metrics
     METRICS = {
       total_organizations: {
         title: "Total Organizations",
-        scope: BASE_SCOPE,
-        attribute: :created_at,
-        calculation: :window,
+        scope: Organization,
+        calculation: :metric,
         format: :integer
       },
       total_buyer_only: {
