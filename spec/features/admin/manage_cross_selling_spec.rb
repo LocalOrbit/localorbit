@@ -4,7 +4,7 @@ describe "Manage cross selling" do
   let!(:user) { create(:user, role: "admin") }
 
   let!(:cross_selling_market)     { create(:market, allow_cross_sell: true) }
-  let!(:not_cross_selling_market) { create(:market)}
+  let!(:not_cross_selling_market) { create(:market) }
 
   context "for a none-cross selling market" do
     let!(:market) { create(:market) }
@@ -118,6 +118,8 @@ describe "Manage cross selling" do
         end
 
         expect(page).to have_content(cross_selling_market.name)
+        expect(page).to have_content(cross_selling_market2.name)
+        expect(page).to have_content(cross_selling_market3.name)
         expect(page).to_not have_content(not_cross_selling_market.name)
       end
 

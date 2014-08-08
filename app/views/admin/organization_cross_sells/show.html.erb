@@ -5,22 +5,30 @@
 <div class="row row--partial">
   <div class="column column--three-fourths">
     <h2>Cross Selling with Markets</h2>
-    <%= form_tag [:admin, @organization, :cross_sell], method: :put do %>
-      <table id="cross-sell-with">
-        <thead>
-          <tr>
-            <th>Sell Products</th>
-            <th>Market</th>
-          </tr>
-        </thead>
-        <% @cross_selling_markets.each do |market| %>
-          <tr>
-            <td class="accept-products"><%= check_box_tag("organization[cross_sell_ids][]", market.id, @organization.cross_selling?(from: current_market, to: market)) %></td>
-            <td class="name"><%= market.name %></td>
-          </tr>
+    <% if @cross_selling_markets.count > 0 %>
+
+      <%= form_tag [:admin, @organization, :cross_sell], method: :put do %>
+        <% @cross_sells.each do |market, cross_sells| %>
+          <h2>Origin market: <%= market.name %></h2>
+          <table id="cross-sell-with">
+            <thead>
+              <tr>
+                <th>Sell Products</th>
+                <th>Cross Selling Market</th>
+              </tr>
+            </thead>
+            <% cross_sells.each do |cross_sell| %>
+              <tr>
+                <td class="accept-products"><%= check_box_tag("organization[cross_sell_ids][#{cross_sell.source_market_id}][]", cross_sell.destination_market_id, @organization.cross_selling?(from:cross_sell.market, to: cross_sell.cross_sell)) %></td>
+                <td class="name"><%= cross_sell.cross_sell.name %></td>
+              </tr>
+            <% end %>
+          </table>
         <% end %>
-      </table>
-      <%= submit_tag "Save Changes", class: "pull-right" %>
+        <%= submit_tag "Save Changes", class: "pull-right" %>
+      <% end %>
+    <% else %>
+      <h3>There are currently no markets accepting cross-sells from this market.</h3>
     <% end %>
   </div>
 </div>
