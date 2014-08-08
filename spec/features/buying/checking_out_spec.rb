@@ -291,22 +291,44 @@ describe "Checking Out", :js, :vcr do
 
     context "with discount" do
       context "over the whole order" do
-        let(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed") }
+        context "less then the order total" do
+          let(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed") }
 
-        before do
-          cart.update_column(:discount_id, discount.id)
-        end
+          before do
+            cart.update_column(:discount_id, discount.id)
+          end
 
-        it "persists the discount on the order" do
-          checkout
+          it "persists the discount on the order" do
+            checkout
 
-          within(".pseudopod") do
-            expect(page).to have_content("Item Subtotal $40.00")
-            expect(page).to have_content("Discount $15.00")
-            expect(page).to have_content("Delivery Fees $10.00")
-            expect(page).to have_content("Order Total $35.00")
+            within(".pseudopod") do
+              expect(page).to have_content("Item Subtotal $40.00")
+              expect(page).to have_content("Discount $15.00")
+              expect(page).to have_content("Delivery Fees $10.00")
+              expect(page).to have_content("Order Total $35.00")
+            end
           end
         end
+
+        context "more than order total" do
+          let(:discount) { create(:discount, code: "50off", discount: "50", type: "fixed") }
+
+          before do
+            cart.update_column(:discount_id, discount.id)
+          end
+
+          it "persists the discount on the order" do
+            checkout
+
+            within(".pseudopod") do
+              expect(page).to have_content("Item Subtotal $40.00")
+              expect(page).to have_content("Discount $40.00")
+              expect(page).to have_content("Delivery Fees $10.00")
+              expect(page).to have_content("Order Total $10.00")
+            end
+          end
+        end
+
       end
 
       context "over seller items" do
@@ -338,7 +360,7 @@ describe "Checking Out", :js, :vcr do
       allow(Balanced::Customer).to receive(:find).and_return(balanced_customer)
     end
 
-    context "successful payment processing" do
+    context "successful payment processing" do    
       it "uses a stored credit card" do
         choose "Pay by Credit Card"
         select "Visa", from: "Saved credit cards"
@@ -352,6 +374,30 @@ describe "Checking Out", :js, :vcr do
         expect(order.payment_status).to eql("paid")
         expect(order.payments.count).to eql(1)
         expect(order.payments.first.status).to eql("paid")
+      end
+
+      context "cart total of zero" do
+        let(:discount) { create(:discount, code: "60off", discount: "60", type: "fixed") }
+
+        before do
+          delivery_schedule.update_column(:fee, 0)
+          cart.update_column(:discount_id, discount.id)
+        end
+
+        it "allows a zero dollar purchase" do
+          choose "Pay by Credit Card"
+          select "Visa", from: "Saved credit cards"
+
+          checkout
+
+          expect(page).to have_content("Thank you for your order")
+          expect(page).to have_content("Credit Card")
+
+          order = Order.last
+          expect(order.payment_status).to eql("paid")
+          expect(order.payments.count).to eql(1)
+          expect(order.payments.first.status).to eql("paid")
+        end
       end
     end
 
@@ -476,6 +522,30 @@ describe "Checking Out", :js, :vcr do
         expect(order.payment_status).to eql("pending")
         expect(order.payments.count).to eql(1)
         expect(order.payments.first.status).to eql("pending")
+      end
+
+      context "cart total of zero" do
+        let(:discount) { create(:discount, code: "60off", discount: "60", type: "fixed") }
+
+        before do
+          delivery_schedule.update_column(:fee, 0)
+          cart.update_column(:discount_id, discount.id)
+        end
+
+        it "allows a zero dollar purchase" do
+          choose "Pay by ACH"
+          select "LMCU", from: "Account"
+
+          checkout
+
+          expect(page).to have_content("Thank you for your order")
+          expect(page).to have_content("ACH")
+
+          order = Order.last
+          expect(order.payment_status).to eql("paid")
+          expect(order.payments.count).to eql(1)
+          expect(order.payments.first.status).to eql("paid")
+        end
       end
     end
 
