@@ -614,6 +614,6 @@ describe "admin manange organization", :vcr do
       sign_in_as(user)
     end
 
-    it_behaves_like "activates and deactivates organizations"
+    include_examples "activates and deactivates organizations"
   end
 end
