@@ -1,13 +1,13 @@
 class MetricsPresenter
   include ActiveSupport::NumberHelper
 
-  attr_reader :metrics, :headers, :markets
+  attr_reader :metrics, :headers, :markets, :date_range, :interval
 
   START_OF_WEEK = :sun
 
   DEFAULT_INTERVAL_COUNT = {
     week: 5,
-    month: 8,
+    month: 5,
     day: 30
   }
 
@@ -86,8 +86,8 @@ class MetricsPresenter
     # }
 
     @date_range = date_range
-
     @headers = headers_for_interval(interval: interval, date_range: @date_range)
+    @interval = interval
 
     if groups.include?("financials") || groups.include?("products")
       @markets = Market.where.not(id: Metrics::Base::TEST_MARKET_IDS).order("LOWER(name)").pluck(:id, :name)
@@ -112,11 +112,11 @@ class MetricsPresenter
   end
 
   def start_date
-    @date_range.begin if @date_range
+    @date_range.begin
   end
 
   def end_date
-    @date_range.end if @date_range
+    @date_range.end
   end
 
   private
@@ -132,13 +132,13 @@ class MetricsPresenter
                 end
     start_date = case interval
                   when "day"
-                    start_date || end_date - DEFAULT_INTERVAL_COUNT[:day].days
+                    # start_date || end_date - DEFAULT_INTERVAL_COUNT[:day].days
+                    start_date || end_date.advance(months: -1)
                   when "week"
                     (start_date || end_date - DEFAULT_INTERVAL_COUNT[:week].weeks).beginning_of_week
                   when "month"
                     (start_date || end_date - DEFAULT_INTERVAL_COUNT[:month].months).beginning_of_month
                  end
-
     Range.new(start_date, end_date)
   end
 
@@ -150,8 +150,7 @@ class MetricsPresenter
       results = Metrics::Base.calculate_metric(metric: metric,
                                                interval: interval,
                                                markets: markets,
-                                               options: calculation_options,
-                                               date_range: @date_range)
+                                               options: calculation_options)
 
       results = format_results(results: results, interval: interval, calculation_type: m[:calculation], format: m[:format])
 
