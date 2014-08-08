@@ -152,7 +152,8 @@ module Metrics
     def self.calculate_metric_history(scope:, metric_code:, interval:, options:)
       model_name = scope.name
       sub_select = Metric.where(model_type: model_name, metric_code: metric_code).
-                          select(:effective_on, "UNNEST(model_ids) AS model_id")
+                          select(:effective_on, "UNNEST(model_ids) AS model_id").
+                          where(effective_on: options[:range])
 
       scope = scope.
         joins("INNER JOIN (#{sub_select.to_sql}) AS metric_calculation ON metric_calculation.model_id = #{model_name.pluralize.downcase}.id").
@@ -173,7 +174,6 @@ module Metrics
 
       if window
         group_options[:carry_forward] = true
-        group_options.delete(:last)
       end
 
       scope.send(groupdate, attribute, group_options)

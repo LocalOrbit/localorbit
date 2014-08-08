@@ -1,20 +1,31 @@
 class MetricsPresenter
   include ActiveSupport::NumberHelper
 
-  attr_reader :metrics, :headers, :markets
+  attr_reader :metrics, :headers, :markets, :date_range, :interval
 
   START_OF_WEEK = :sun
 
+  DEFAULT_INTERVAL_COUNT = {
+    week: 5,
+    month: 5,
+    day: 30
+  }
+
   GROUPDATE_OPTIONS = {
     week: {
+      caption: "Week",
       groupdate: :group_by_week,
-      last: 5,
       format: "%-m/%-d/%Y"
     },
     month: {
+      caption: "Month",
       groupdate: :group_by_month,
-      last: 8,
       format: "%b %Y"
+    },
+    day: {
+      caption: "Day",
+      groupdate: :group_by_day,
+      format: "%b %-d"
     }
   }.with_indifferent_access.freeze
 
@@ -60,7 +71,7 @@ class MetricsPresenter
     }
   }.with_indifferent_access
 
-  def initialize(groups: [], interval: "month", markets: [])
+  def initialize(groups: [], interval: "month", markets: [], date_range: nil)
     # {
     #   "Group Title" => {
     #     "Metric Title" => {
@@ -74,7 +85,9 @@ class MetricsPresenter
     #   }
     # }
 
-    @headers = headers_for_interval(interval)
+    @date_range = date_range
+    @headers = headers_for_interval(interval: interval, date_range: @date_range)
+    @interval = interval
 
     if groups.include?("financials") || groups.include?("products")
       @markets = Market.where.not(id: Metrics::Base::TEST_MARKET_IDS).order("LOWER(name)").pluck(:id, :name)
@@ -87,25 +100,57 @@ class MetricsPresenter
     ]
   end
 
-  def self.metrics_for(groups: [], interval: "month", markets: [])
+  def self.metrics_for(groups: [], interval: "month", markets: [], start_date: nil, end_date: nil)
     groups = [groups].flatten
-    interval = "month" unless ["week", "month"].include?(interval)
+    interval = "month" unless GROUPDATE_OPTIONS.keys.include?(interval)
     markets = [markets].compact.flatten.delete_if(&:empty?)
+    date_range = self.create_or_expand_date_range(interval: interval, start_date: start_date, end_date: end_date)
 
     return nil unless groups.all? {|group| GROUPS.keys.include?(group) }
 
-    new(groups: groups, interval: interval, markets: markets)
+    new(groups: groups, interval: interval, markets: markets, date_range: date_range)
+  end
+
+  def start_date
+    @date_range.begin
+  end
+
+  def end_date
+    @date_range.end
   end
 
   private
 
+  def self.create_or_expand_date_range(interval:, start_date: nil, end_date: nil)
+    end_date = case interval
+                 when "day"
+                   end_date || Date.current
+                 when "week"
+                   (end_date || Date.current).end_of_week
+                 when "month"
+                   (end_date || Date.current).end_of_month
+                end
+    start_date = case interval
+                  when "day"
+                    # start_date || end_date - DEFAULT_INTERVAL_COUNT[:day].days
+                    start_date || end_date.advance(months: -1)
+                  when "week"
+                    (start_date || end_date - DEFAULT_INTERVAL_COUNT[:week].weeks).beginning_of_week
+                  when "month"
+                    (start_date || end_date - DEFAULT_INTERVAL_COUNT[:month].months).beginning_of_month
+                 end
+    Range.new(start_date, end_date)
+  end
+
   def metrics_for_group(group, interval, markets=[])
     Hash[GROUPS[group][:metrics].map do |metric|
       m = Metrics::Base::METRICS[metric]
+
+      calculation_options = GROUPDATE_OPTIONS[interval].dup.merge({ range: @date_range })
       results = Metrics::Base.calculate_metric(metric: metric,
                                                interval: interval,
                                                markets: markets,
-                                               options: GROUPDATE_OPTIONS[interval].dup)
+                                               options: calculation_options)
 
       results = format_results(results: results, interval: interval, calculation_type: m[:calculation], format: m[:format])
 
@@ -116,9 +161,7 @@ class MetricsPresenter
 
   def format_results(results:, interval:, calculation_type:, format:)
     if calculation_type == :window
-      count = GROUPDATE_OPTIONS[interval][:last]
-
-      Hash[@headers.map { |header| [header, format_value(value: (results[header] || results.values.last || 0), format: format)] }.last(count)]
+      Hash[@headers.map { |header| [header, format_value(value: (results[header] || results.values.last || 0), format: format)] }.last(@headers.count)]
     else
       Hash[@headers.map { |header| [header, format_value(value: results[header], format: format)] }]
     end
@@ -141,13 +184,15 @@ class MetricsPresenter
     end
   end
 
-  def headers_for_interval(interval)
-    if interval == "month"
-      end_date = Date.current.beginning_of_month
-      (0...GROUPDATE_OPTIONS[:month][:last]).map {|x| (end_date - x.months).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
-    elsif interval == "week"
-      end_date = Date.current.beginning_of_week - (START_OF_WEEK == :sun ? 1 : 0).days
-      (0...GROUPDATE_OPTIONS[:week][:last]).map {|x| (end_date - x.weeks).strftime(GROUPDATE_OPTIONS[interval][:format]) }.reverse
+  def headers_for_interval(interval:, date_range:)
+    advance_type = interval.pluralize.to_sym
+    date = date_range.begin
+    headers = []
+    count = 0
+    while date_range.cover?(header_date = date.advance(advance_type => count))
+      headers << header_date.strftime(GROUPDATE_OPTIONS[interval][:format])
+      count = count.next
     end
+    headers
   end
 end

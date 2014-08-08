@@ -6,8 +6,12 @@ class Admin::MetricsController < AdminController
   end
 
   def show
-    @presenter = MetricsPresenter.metrics_for(groups: [params[:id]], interval: params[:interval], markets: params[:market])
-
+    @presenter = MetricsPresenter.metrics_for(
+      groups: [params[:id]],
+      interval: params[:interval],
+      markets: params[:market],
+      start_date: params[:start_date].try(:to_date),
+      end_date: params[:end_date].try(:to_date))
     render_404 unless @presenter
   end
 end
