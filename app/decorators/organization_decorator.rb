@@ -62,6 +62,7 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def toggle_active_button
+    return unless current_user.admin? || current_user.can_manage_market?(current_market)
     title = organization.active? ? "Deactivate" : "Activate"
     status = organization.active? ? "alert" : "notice"
     link_to(
