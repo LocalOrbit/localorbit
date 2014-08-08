@@ -60,4 +60,14 @@ class OrganizationDecorator < Draper::Decorator
       ["ACH: #{bank_account.bank_name} - *********#{bank_account.last_four}", bank_account.id]
     end
   end
+
+  def toggle_active_button
+    title = organization.active? ? "Deactivate" : "Activate"
+    link_to(
+      title,
+      update_active_admin_organization_path(organization, organization: {active: !active?}),
+      method: :patch,
+      class: "btn btn--small"
+    )
+  end
 end
