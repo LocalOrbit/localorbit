@@ -52,12 +52,12 @@ module Admin
 
     def activate
       @organization.update_attributes(active: true)
-      redirect_to :back
+      redirect_to :back, notice: "Updated #{@organization.name}"
     end
 
     def deactivate
       @organization.update_attributes(active: false)
-      redirect_to :back
+      redirect_to :back, notice: "Updated #{@organization.name}"
     end
 
     def destroy

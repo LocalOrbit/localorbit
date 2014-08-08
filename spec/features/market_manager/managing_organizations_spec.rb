@@ -452,4 +452,8 @@ describe "A Market Manager", :vcr do
       end
     end
   end
+
+  it_behaves_like "activates and deactivates organizations" do
+    let!(:user) { market_manager }
+  end
 end

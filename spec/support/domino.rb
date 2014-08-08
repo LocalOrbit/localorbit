@@ -375,6 +375,14 @@ module Dom
       attribute :market
       attribute :registered
       attribute :can_sell
+
+      def activate!
+        node.click_link "Activate"
+      end
+
+      def deactivate!
+        node.click_link "Deactivate"
+      end
     end
 
     class MarketMembershipRow < Domino
