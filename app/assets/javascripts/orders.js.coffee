@@ -16,5 +16,5 @@ $ ->
   # Change Delivery
   $("#delivery-changer").on "click", "a", (e) ->
     e.preventDefault()
-    $("#delivery-changer .fields").show()
-    $("#delivery-changer a").hide()
+    $("#delivery-changer .fields").toggleClass('is-hidden')
+    $("#delivery-changer a").toggleClass('is-hidden')

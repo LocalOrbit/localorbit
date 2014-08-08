@@ -63,7 +63,7 @@ describe "Edit order delivery date" do
         expect(UpdateOrderDelivery).to receive(:perform).and_return(double("interactor", success?: true))
       end
 
-      it "saves the delivery change" do
+      it "saves the delivery change", :js do
         select "Pick up:", from: "order_delivery_id"
         click_button "Change Delivery"
         expect(page).to have_content("Delivery successfully updated")
