@@ -33,4 +33,15 @@ context "As an organization member", :permissions, :organization_member do
       end
     end
   end
+
+  context "belonging only to deactivated markets" do
+    let!(:org2) { create(:organization, active: false, markets: [market2]) }
+    let!(:user_of_disabled_org) { create(:user, organizations: [org2]) }
+
+    it "shows an error message" do
+      switch_to_subdomain(market2.subdomain)
+      sign_in_as(user_of_disabled_org)
+      expect(page).to have_content("Your account has been suspended.")
+    end
+  end
 end

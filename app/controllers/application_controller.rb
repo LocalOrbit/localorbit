@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
   before_action :ensure_market_affiliation
+  before_action :ensure_active_organization
+
   before_action :set_timezone
 
   helper_method :current_market
@@ -61,6 +63,14 @@ class ApplicationController < ActionController::Base
     return if current_user.admin?
     if current_market.nil? || current_market != market_for_current_subdomain(current_user.markets)
       render_404
+    end
+  end
+
+  def ensure_active_organization
+    return if current_user.nil?
+    return if current_user.admin? || current_user.can_manage_market?(market_for_current_subdomain)
+    if current_user.organizations.active.empty?
+      render file: Rails.root.join("public/organization_disabled.html"), status: :forbidden
     end
   end
 

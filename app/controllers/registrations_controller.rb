@@ -1,6 +1,7 @@
 class RegistrationsController < ApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :ensure_market_affiliation
+  skip_before_action :ensure_active_organization
 
   def show
     @registration = Registration.new(buyer: true)
@@ -11,6 +12,8 @@ class RegistrationsController < ApplicationController
 
     if @registration.save
       MarketMailer.delay.registration(current_market, @registration.organization)
+      ActivateOrganization.perform(organization: @registration.organization, market: current_market)
+
       redirect_to dashboard_path if @registration.user.confirmed?
     else
       flash.now[:alert] = "Unable to complete registration..."
