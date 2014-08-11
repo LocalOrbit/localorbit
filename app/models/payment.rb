@@ -9,7 +9,8 @@ class Payment < ActiveRecord::Base
     "order" => "Order",
     "order refund" => "Order Refund",
     "seller payment" => "Seller Payment",
-    "service" => "Service Fee"
+    "service" => "Service Fee",
+    "service refund" => "Service Refund"
   }.freeze
 
   PAYMENT_METHODS = {
@@ -25,6 +26,7 @@ class Payment < ActiveRecord::Base
   belongs_to :payer, polymorphic: true
   belongs_to :market
   belongs_to :bank_account
+  belongs_to :parent, class_name: "Payment"
 
   # Add organization-specifc payer and payee associations so we can
   # search payments by payer and payee attributes.

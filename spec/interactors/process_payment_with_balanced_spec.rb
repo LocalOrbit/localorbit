@@ -118,4 +118,35 @@ describe ProcessPaymentWithBalanced do
       expect(payment.note).to eq("A great note Error: card-declined")
     end
   end
+
+  context "as refund" do
+    let(:parent_payment)  { create(:payment, market: market, payer:  market, payee: nil, payment_type: "service", amount: "250.00", status: "pending", payment_method: "ach", bank_account: bank_account, balanced_uri: "/this-debit") }
+    let(:payment)         { create(:payment, market: market, payer:  market, payee: nil, payment_type: "service refund", amount: "-250.00", status: "pending", payment_method: "ach", bank_account: bank_account, parent: parent_payment) }
+    let(:balanced_refund) { double(Balanced::Refund, uri: "/this-refund") }
+    let(:balanced_debit)  { double(Balanced::Debit, uri: "/this-debit", refund: balanced_refund) }
+
+
+    before do
+      allow(Balanced::Transaction).to receive(:find).and_return(balanced_debit)
+    end
+
+    it "looks up the correct balanced debit" do
+      expect(Balanced::Transaction).to receive(:find).with("/this-debit").and_return(balanced_debit)
+
+      ProcessPaymentWithBalanced.perform(payment: payment)
+    end
+
+    it "processes the correct refund" do
+      expect(balanced_debit).to receive(:refund).with(amount: 25000).and_return(balanced_refund)
+
+      ProcessPaymentWithBalanced.perform(payment: payment)
+    end
+    
+    it "updates the payment with the refund url" do
+      ProcessPaymentWithBalanced.perform(payment: payment)
+
+      payment.reload
+      expect(payment.balanced_uri).to eq("/this-refund")
+    end
+  end
 end

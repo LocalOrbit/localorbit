@@ -1,4 +1,4 @@
-class ProcessPaymentWithBalanced
+class ProcessRefundWithBalanced
   include Interactor
 
   def setup
@@ -7,13 +7,8 @@ class ProcessPaymentWithBalanced
   end
 
   def perform
-    if payment.amount < 0
-      process_refund
-    elsif payment.payee
-      process_credit
-    else
-      process_debit
-    end
+    process_refund if payment
+
   rescue => error
     handle_error(error)
 
@@ -25,32 +20,16 @@ class ProcessPaymentWithBalanced
 
   def handle_error(error)
     updates = {status: "failed"}
-    if (error_code = error.try(:category_code).presence)
+    if error_code = error.try(:category_code).presence
       updates[:note] = "Error: #{error_code}"
       updates[:note] = "#{payment.note} #{updates[:note]}" if payment.note.present?
     end
-    payment.update_columns(updates)
-  end
-
-  def process_credit
-    balanced_account = Balanced::BankAccount.find(payment.bank_account.balanced_uri)
-    credit = balanced_account.credit(transaction_params(false))
-
-    payment.update_attribute(:balanced_uri, credit.uri)
-  end
-
-  def process_debit
-    customer = payment.payer.balanced_customer
-    debit = customer.debit(transaction_params(true))
-
-    payment.update_attributes(balanced_uri: debit.uri)
+    refund_payment.update_columns(updates)
   end
 
   def process_refund
-    debit = payment.parent.balanced_transaction
-    refund = debit.refund(amount: -(payment.amount * 100))
-
-    payment.update_attributes(balanced_uri: refund.uri)
+    debit = Balanced::debit.find(payment.balanced_uri)
+    debit.refund(amount) if debit
   end
 
   def transaction_params(with_source)
