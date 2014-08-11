@@ -38,10 +38,7 @@ class DeliveryDecorator < Draper::Decorator
       end_time = delivery_schedule.seller_delivery_end
     end
 
-    start_time.gsub!(" ", "")
-    end_time.gsub!(" ", "")
-
-    "between #{start_time} and #{end_time}"
+    format_time_range(start_time, end_time)
   end
 
   def buyer_time_range
@@ -53,20 +50,14 @@ class DeliveryDecorator < Draper::Decorator
       end_time   = delivery_schedule.buyer_pickup_end
     end
 
-    start_time.gsub!(" ", "")
-    end_time.gsub!(" ", "")
-
-    "between #{start_time} and #{end_time}"
+    format_time_range(start_time, end_time)
   end
 
   def fulfillment_time_range
     start_time = delivery_schedule.seller_delivery_start
     end_time   = delivery_schedule.seller_delivery_end
 
-    start_time.gsub!(" ", "")
-    end_time.gsub!(" ", "")
-
-    "between #{start_time} and #{end_time}"
+    format_time_range(start_time, end_time)
   end
 
   def buyer_time_range_capitalized
@@ -106,5 +97,12 @@ class DeliveryDecorator < Draper::Decorator
 
   def available_to_order?
     Time.current < cutoff_time
+  end
+
+  def format_time_range(start_time, end_time)
+    start_time.gsub!(" ", "")
+    end_time.gsub!(" ", "")
+
+    "between #{start_time} and #{end_time}"
   end
 end
