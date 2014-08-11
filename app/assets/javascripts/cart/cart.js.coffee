@@ -99,6 +99,10 @@ $ ->
       @counter.attr("data-count", count.toString())
       @counter.find(".counter").text(count.toString())
       @counter.data('count', count)
+      if count > 0
+        $('#review_cart').removeClass('is-hidden')
+      else
+        $('#review_cart').addClass('is-hidden')
 
     updateSubtotal: (subtotal)->
       totals = $("#totals")

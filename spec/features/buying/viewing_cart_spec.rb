@@ -122,7 +122,7 @@ describe "Viewing the cart", :js do
       it "shows delivery address" do
         within("#address") do
           expect(page).to have_content("Delivery Address")
-          expect(page).to have_content("Delivery on May 16, 2014 between 7:00AM and 11:00AM")
+          expect(page).to have_content("Delivery on Friday May 16, 2014 between 7:00AM and 11:00AM")
           expect(page).to have_content(address.address)
           expect(page).to have_content(address.city)
           expect(page).to have_content(address.state)
@@ -138,7 +138,7 @@ describe "Viewing the cart", :js do
       it "shows pickup address" do
         within("#address") do
           expect(page).to have_content("Delivery Address")
-          expect(page).to have_content("Pickup on May 16, 2014 between 10:00AM and 12:00PM")
+          expect(page).to have_content("Pickup on Friday May 16, 2014 between 10:00AM and 12:00PM")
           expect(page).to have_content(address.address)
           expect(page).to have_content(address.city)
           expect(page).to have_content(address.state)

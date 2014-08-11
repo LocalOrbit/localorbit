@@ -27,7 +27,7 @@ describe DeliveryDecorator do
     subject { create(:delivery, deliver_on: Time.parse("2014-05-15 06:00:00 EDT")).decorate }
 
     it "displays the date of the upcoming delivery" do
-      expect(subject.display_date).to eq("May 15, 2014")
+      expect(subject.display_date).to eq("Thursday May 15, 2014")
     end
   end
 

@@ -55,7 +55,7 @@ describe "Master Pack List" do
           expect(pack_list.order_number).to eq(order1.order_number)
           expect(pack_list.note).to eq("1 of 1")
           expect(pack_list.delivery_message).to eq("Market delivers to buyer on")
-          expect(pack_list.upcoming_delivery_date).to eq("May 8, 2014 between 7:00AM and 11:00AM")
+          expect(pack_list.upcoming_delivery_date).to eq("Thursday May 8, 2014 between 7:00AM and 11:00AM")
 
           buyer = pack_list.buyer
           expect(buyer.org).to eq(buyer1.name)
@@ -93,7 +93,7 @@ describe "Master Pack List" do
           expect(pack_list.order_number).to eq(order_other.order_number)
           expect(pack_list.note).to eq("1 of 1")
           expect(pack_list.delivery_message).to eq("Buyer picks up from market on")
-          expect(pack_list.upcoming_delivery_date).to eq("May 9, 2014 between 10:00AM and 12:00PM")
+          expect(pack_list.upcoming_delivery_date).to eq("Friday May 9, 2014 between 10:00AM and 12:00PM")
 
           buyer = pack_list.buyer
           expect(buyer.org).to eq(buyer1.name)

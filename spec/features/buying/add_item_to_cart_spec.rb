@@ -78,11 +78,13 @@ describe "Add item to cart", js: true do
       expect(kale_row.price).to have_content("$0.00")
 
       expect(Dom::CartLink.first.count).to have_content("0")
+      expect(page).not_to have_content('Review Cart')
 
       bananas_row.set_quantity(12)
 
       expect(page).to have_content("Added to cart!")
       expect(Dom::CartLink.first.count).to have_content("1")
+      expect(page).to have_content('Review Cart')
 
       kale_row.set_quantity(9)
       expect(page).to have_content("Added to cart!")

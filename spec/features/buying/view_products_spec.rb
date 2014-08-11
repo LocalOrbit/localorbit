@@ -185,7 +185,7 @@ feature "Viewing products" do
       location = market.addresses.first
 
       expect(selected_delivery.delivery_type).to eq("Pick Up Date")
-      expect(selected_delivery.display_date).to eq("October 10, 2014")
+      expect(selected_delivery.display_date).to eq("Friday October 10, 2014")
       expect(selected_delivery.time_range).to eq("between 12:00PM and 2:00PM")
       expect(selected_delivery.location_name).to eq(location.name)
       expect(selected_delivery.location_address).to eq("#{location.address} #{location.city}, #{location.state} #{location.zip}")
@@ -198,7 +198,7 @@ feature "Viewing products" do
       location = buyer_org.locations.first
 
       expect(selected_delivery.delivery_type).to eq("Delivery Date")
-      expect(selected_delivery.display_date).to eq("October 8, 2014")
+      expect(selected_delivery.display_date).to eq("Wednesday October 8, 2014")
       expect(selected_delivery.time_range).to eq("between 4:00PM and 8:00PM")
       expect(selected_delivery.location_name).to eq(location.name)
       expect(selected_delivery.location_address).to eq("#{location.address} #{location.city}, #{location.state} #{location.zip}")
@@ -210,7 +210,7 @@ feature "Viewing products" do
 
         selected_delivery = Dom::Buying::SelectedDelivery.first
         expect(selected_delivery.delivery_type).to eq("Pick Up Date")
-        expect(selected_delivery.display_date).to eq("October 10, 2014")
+        expect(selected_delivery.display_date).to eq("Friday October 10, 2014")
         expect(selected_delivery.time_range).to eq("between 12:00PM and 2:00PM")
 
         Dom::Buying::SelectedDelivery.first.click_change
@@ -220,7 +220,7 @@ feature "Viewing products" do
 
         selected_delivery = Dom::Buying::SelectedDelivery.first
         expect(selected_delivery.delivery_type).to eq("Delivery Date")
-        expect(selected_delivery.display_date).to eq("October 8, 2014")
+        expect(selected_delivery.display_date).to eq("Wednesday October 8, 2014")
         expect(selected_delivery.time_range).to eq("between 4:00PM and 8:00PM")
       end
 
@@ -364,12 +364,12 @@ feature "Viewing products" do
 
       # This order does matter
       expect(delivery_choices[0].type).to eq("Delivery:")
-      expect(delivery_choices[0].date).to eq("October 8, 2014")
+      expect(delivery_choices[0].date).to eq("Wednesday October 8, 2014")
       expect(delivery_choices[0].time_range).to eq("Between 12:00PM and 3:00PM")
       expect(delivery_choices[0]).to have_location_select
 
       expect(delivery_choices[1].type).to eq("Pick up:")
-      expect(delivery_choices[1].date).to eq("October 10, 2014")
+      expect(delivery_choices[1].date).to eq("Friday October 10, 2014")
       expect(delivery_choices[1].time_range).to eq("Between 12:00PM and 2:00PM")
       expect(delivery_choices[1].street_address).to eq("123 Street Ave.")
       expect(delivery_choices[1].locality).to eq("Town")
@@ -377,7 +377,7 @@ feature "Viewing products" do
       expect(delivery_choices[1].postal_code).to eq("32339")
 
       expect(delivery_choices[2].type).to eq("Delivery:")
-      expect(delivery_choices[2].date).to eq("October 14, 2014")
+      expect(delivery_choices[2].date).to eq("Tuesday October 14, 2014")
       expect(delivery_choices[2].time_range).to eq("Between 7:00AM and 11:00AM")
       expect(delivery_choices[2]).to have_location_select
 
@@ -401,7 +401,7 @@ feature "Viewing products" do
 
         delivery = Dom::Buying::DeliveryChoice.first
         expect(delivery.type).to eq("Delivery:")
-        expect(delivery.date).to eq("October 8, 2014")
+        expect(delivery.date).to eq("Wednesday October 8, 2014")
         expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
         expect(delivery).to have_location_select
 
@@ -422,7 +422,7 @@ feature "Viewing products" do
 
         delivery = Dom::Buying::DeliveryChoice.first
         expect(delivery.type).to eq("Delivery:")
-        expect(delivery.date).to eq("October 8, 2014")
+        expect(delivery.date).to eq("Wednesday October 8, 2014")
         expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
         expect(delivery).to_not have_location_select
         expect(delivery.street_address).to eq(buyer_org.locations.first.address)
@@ -458,7 +458,7 @@ feature "Viewing products" do
 
           delivery = Dom::Buying::DeliveryChoice.first
           expect(delivery.type).to eq("Delivery:")
-          expect(delivery.date).to eq("October 8, 2014")
+          expect(delivery.date).to eq("Wednesday October 8, 2014")
           expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
           expect(delivery).to have_location_select
 
@@ -483,7 +483,7 @@ feature "Viewing products" do
 
           delivery = Dom::Buying::DeliveryChoice.first
           expect(delivery.type).to eq("Delivery:")
-          expect(delivery.date).to eq("October 8, 2014")
+          expect(delivery.date).to eq("Wednesday October 8, 2014")
           expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
           expect(delivery).to have_location_select
 
@@ -503,7 +503,7 @@ feature "Viewing products" do
 
           delivery = Dom::Buying::DeliveryChoice.first
           expect(delivery.type).to eq("Delivery:")
-          expect(delivery.date).to eq("October 8, 2014")
+          expect(delivery.date).to eq("Wednesday October 8, 2014")
           expect(delivery.time_range).to eq("Between 12:00PM and 3:00PM")
 
           delivery.choose!
@@ -605,7 +605,7 @@ feature "Viewing products" do
     sign_in_as(user)
 
     within(".table-summary") do
-      expect(page).to have_content("Delivery date is October 10, 2014")
+      expect(page).to have_content("Delivery date is Friday October 10, 2014")
     end
   end
 
@@ -615,7 +615,7 @@ feature "Viewing products" do
     sign_in_as(user)
 
     within(".table-summary") do
-      expect(page).to have_content("Pick up date is October 10, 2014")
+      expect(page).to have_content("Pick up date is Friday October 10, 2014")
     end
   end
 end
