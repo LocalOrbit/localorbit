@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature "Viewing products" do
   let!(:market) { create(:market, :with_addresses) }
-  let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, order_cutoff: 24, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
+  let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, order_cutoff: 24, buyer_pickup_location_id: 0, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
   let!(:delivery_schedule2) { create(:delivery_schedule, market: market, day: 3, deleted_at: Time.parse('2013-03-21')) }
 
   let!(:org1) { create(:organization, :seller, markets: [market]) }
@@ -41,6 +41,10 @@ feature "Viewing products" do
     sign_in_as(user)
 
     products = Dom::Product.all
+
+    within(".table-summary") do
+      expect(page).to have_content("between 12:00PM and 2:00PM")
+    end
 
     expect(products).to have(2).products
     expect(products.map(&:name)).to match_array(available_products.map(&:name))
@@ -169,6 +173,7 @@ feature "Viewing products" do
     let!(:delivery_schedule) { create(:delivery_schedule, market: market, day: 3, seller_delivery_start: "4:00 PM", seller_delivery_end: "8:00 PM") }
 
     before do
+      delivery_schedule1.update_column(:buyer_pickup_location_id, market.addresses.first.id)
       org1_product.delivery_schedules << delivery_schedule
       sign_in_as(user)
     end
@@ -340,6 +345,8 @@ feature "Viewing products" do
     end
 
     scenario "shopping without an existing shopping cart" do
+      delivery_schedule1.update_column(:buyer_pickup_location_id, market.addresses.first.id)
+
       address = market.addresses.first
       address.name = "Market Place"
       address.address = "123 Street Ave."
@@ -603,6 +610,8 @@ feature "Viewing products" do
   end
 
   scenario "delivery schedule info shows correctly for pick up products" do
+    delivery_schedule1.update_column(:buyer_pickup_location_id, market.addresses.first.id)
+    
     sign_in_as(user)
 
     within(".table-summary") do

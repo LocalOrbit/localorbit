@@ -35,7 +35,7 @@
         <h2 class="table-heading">Products Available on <%= current_delivery.display_date %></h2>
         <p class="table-summary">
           Please complete your order by <%= current_delivery.cutoff_time.strftime("%B %-d at %l%p") %>.<br>
-          <%= current_delivery.selected_type.capitalize %> is <%= current_delivery.display_date %> <%= current_delivery.time_range %>.
+          <%= current_delivery.selected_type.capitalize %> is <%= current_delivery.display_date %> <%= current_delivery.buyer_time_range %>.
         </p>
 
         <% if @products_for_sale.featured_promotion.present? %>
@@ -51,4 +51,3 @@
     </div>
   </div>
 </div>
-
