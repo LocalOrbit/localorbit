@@ -18,7 +18,7 @@ class DeliveryDecorator < Draper::Decorator
   end
 
   def display_date
-    deliver_on.strftime("%B %e, %Y")
+    deliver_on.strftime("%A %B %e, %Y")
   end
 
   def human_delivery_date
