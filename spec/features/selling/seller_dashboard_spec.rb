@@ -89,13 +89,13 @@ feature "seller views their dashboard" do
 
     first_delivery = delivery_rows.first
 
-    expect(first_delivery.upcoming_delivery_date).to eq("Deliveries for April 4, 2014 7:00 AM")
+    expect(first_delivery.upcoming_delivery_date).to eq("Deliveries for Friday April 4, 2014 7:00 AM")
     expect(first_delivery.location_name).to eq("Idea Market")
     expect(first_delivery.location).to eq("44 E. 8th St, Holland, MI 49423")
 
     last_delivery = delivery_rows.last
 
-    expect(last_delivery.upcoming_delivery_date).to eq("Deliveries for April 5, 2014 8:00 AM")
+    expect(last_delivery.upcoming_delivery_date).to eq("Deliveries for Saturday April 5, 2014 8:00 AM")
     expect(last_delivery.location).to eq("Direct to customer")
   end
 end

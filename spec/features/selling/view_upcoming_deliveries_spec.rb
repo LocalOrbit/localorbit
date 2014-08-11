@@ -51,7 +51,7 @@ describe "Upcoming Deliveries" do
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
-        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+        expect(deliveries.first.upcoming_delivery_date).to eq("Thursday May 8, 2014 7:00 AM")
         expect(deliveries.first.market).to be_nil
       end
 
@@ -63,7 +63,7 @@ describe "Upcoming Deliveries" do
 
           deliveries = Dom::UpcomingDelivery.all
           expect(deliveries.count).to eql(1)
-          expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+          expect(deliveries.first.upcoming_delivery_date).to eq("Thursday May 8, 2014 7:00 AM")
           expect(deliveries.first.market).to be_nil
         end
       end
@@ -92,7 +92,7 @@ describe "Upcoming Deliveries" do
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
-        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+        expect(deliveries.first.upcoming_delivery_date).to eq("Thursday May 8, 2014 7:00 AM")
       end
     end
 
@@ -153,8 +153,8 @@ describe "Upcoming Deliveries" do
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(2)
-        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
-        expect(deliveries.last.upcoming_delivery_date).to eq("May 9, 2014 7:00 AM")
+        expect(deliveries.first.upcoming_delivery_date).to eq("Thursday May 8, 2014 7:00 AM")
+        expect(deliveries.last.upcoming_delivery_date).to eq("Friday May 9, 2014 7:00 AM")
       end
     end
 
@@ -176,7 +176,7 @@ describe "Upcoming Deliveries" do
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
-        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+        expect(deliveries.first.upcoming_delivery_date).to eq("Thursday May 8, 2014 7:00 AM")
       end
     end
 
@@ -242,8 +242,8 @@ describe "Upcoming Deliveries" do
 
           deliveries = Dom::UpcomingDelivery.all
           expect(deliveries.count).to eql(2)
-          expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
-          expect(deliveries.last.upcoming_delivery_date).to eq("May 9, 2014 7:00 AM")
+          expect(deliveries.first.upcoming_delivery_date).to eq("Thursday May 8, 2014 7:00 AM")
+          expect(deliveries.last.upcoming_delivery_date).to eq("Friday May 9, 2014 7:00 AM")
         end
       end
 
@@ -258,8 +258,8 @@ describe "Upcoming Deliveries" do
 
           deliveries = Dom::UpcomingDelivery.all
           expect(deliveries.count).to eql(2)
-          expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
-          expect(deliveries.last.upcoming_delivery_date).to eq("May 9, 2014 7:00 AM")
+          expect(deliveries.first.upcoming_delivery_date).to eq("Thursday May 8, 2014 7:00 AM")
+          expect(deliveries.last.upcoming_delivery_date).to eq("Friday May 9, 2014 7:00 AM")
         end
       end
     end
@@ -282,8 +282,8 @@ describe "Upcoming Deliveries" do
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(2)
-        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
-        expect(deliveries.last.upcoming_delivery_date).to eq("May 9, 2014 7:00 AM")
+        expect(deliveries.first.upcoming_delivery_date).to eq("Thursday May 8, 2014 7:00 AM")
+        expect(deliveries.last.upcoming_delivery_date).to eq("Friday May 9, 2014 7:00 AM")
       end
     end
 
@@ -305,7 +305,7 @@ describe "Upcoming Deliveries" do
 
         deliveries = Dom::UpcomingDelivery.all
         expect(deliveries.count).to eql(1)
-        expect(deliveries.first.upcoming_delivery_date).to eq("May 8, 2014 7:00 AM")
+        expect(deliveries.first.upcoming_delivery_date).to eq("Thursday May 8, 2014 7:00 AM")
       end
     end
 
