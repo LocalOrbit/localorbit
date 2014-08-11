@@ -34,7 +34,7 @@ feature "user viewing their organizations" do
       click_link "Account"
       click_link "Your Organization"
       expect(page).to have_content(org1.name)
-      expect(page).not_to have_content(org2.name)
+      expect(page).to have_content(org2.name)
       expect(page).not_to have_content(org3.name)
     end
   end
