@@ -65,11 +65,21 @@ class OrganizationDecorator < Draper::Decorator
     return unless current_user.admin? || current_user.can_manage_market?(current_market)
     title = organization.active? ? "Deactivate" : "Activate"
     status = organization.active? ? "alert" : "notice"
+
+    confirm_text = !organization.active? ? nil : "Deactivating this organization will prevent it from doing business in other Local Orbit markets. \n\nAdditionally, users of this organization will not be able to sign in until the it is active again. \n\nDo you want to continue deactivating this organization?"
+
+    link_to_opts = {
+      method: :patch,
+      class: "btn btn--small #{status}",
+      data: {
+        confirm: confirm_text
+      }
+    }
+
     link_to(
       title,
       update_active_admin_organization_path(organization, organization: {active: !active?}),
-      method: :patch,
-      class: "btn btn--small #{status}"
+      link_to_opts
     )
   end
 end
