@@ -73,4 +73,11 @@ describe "An organization member" do
       expect(page).to have_content("Show on Profile page")
     end
   end
+
+  it "cannot activate/deactivate an organization" do
+    visit admin_organizations_path
+
+    expect(page).not_to have_content("Activate")
+    expect(page).not_to have_content("Deactivate")
+  end
 end

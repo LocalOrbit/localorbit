@@ -69,7 +69,6 @@ describe "admin manange organization", :vcr do
     expect(page).to have_field("Allow ACH")
   end
 
-
   it "create new organization", js: true do
     market = create(:market, name: "Market 1", default_allow_purchase_orders: true, default_allow_credit_cards: false, default_allow_ach: false)
 
@@ -444,6 +443,8 @@ describe "admin manange organization", :vcr do
     end
   end
 
+
+
   describe "Deleting an organization" do
     let!(:market)  { create(:market) }
     let!(:product) { create(:product, :sellable, organization: seller) }
@@ -606,5 +607,13 @@ describe "admin manange organization", :vcr do
         expect(seller.markets.count).to eq(2)
       end
     end
+  end
+
+  context "Activating/deactivating" do
+    before do
+      sign_in_as(user)
+    end
+
+    include_examples "activates and deactivates organizations"
   end
 end

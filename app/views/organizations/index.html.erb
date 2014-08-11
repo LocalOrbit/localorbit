@@ -15,12 +15,15 @@
         <th data-column="can_sell" class="<%= column_sort_classes("can_sell")%>">Can Sell</th>
       </tr>
     </thead>
-    <% @organizations.each do |organization| %>
+    <% @organizations.decorate.each do |organization| %>
       <tr>
         <td class="name"><%= link_to organization.name, [:admin, organization] %></td>
         <td class="market"><%= organization.markets.map {|m| m.name }.join(', ') %></td>
         <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
         <td class="can-sell"><%= organization.can_sell? ? "Yes" : "No" %></td>
+        <td class="activated">
+          <%= organization.toggle_active_button %>
+        </td>
       </tr>
     <% end %>
   </table>
