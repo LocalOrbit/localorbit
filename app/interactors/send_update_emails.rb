@@ -1,0 +1,19 @@
+class SendUpdateEmails
+  include Interactor
+
+  def perform
+    unless order.organization.users.empty?
+      OrderMailer.delay.buyer_order_updated(order)
+    end
+
+    # order.sellers.each do |seller|
+    #   unless seller.users.empty?
+    #     OrderMailer.delay.seller_confirmation(order, seller)
+    #   end
+    # end
+    #
+    # unless order.market.managers.empty?
+    #   OrderMailer.delay.market_manager_confirmation(order)
+    # end
+  end
+end

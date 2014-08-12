@@ -1,0 +1,34 @@
+<h1>Your order has been changed.</h1>
+<p>
+  <span class="lo_order_number">Order Number: <%= @order.order_number %></span>
+</p>
+
+<p>
+  Your order through <%= @order.market.name %> has been changed. You can see the details of the changes below.
+</p>
+
+<p>
+  A refund of $0.00 has been sent to your account and will appear in 2-5 business days.
+</p>
+
+<p>
+  You can check the status of your order by following the link below and logging in to your account.
+</p>
+
+<div class="lo_call_to_action">
+  <%= link_to "Review Order", order_url(@order.id, host: @market.domain), class: "lo_button lo_button_large"%>
+  <p>
+    If clicking the button doesn't work, right click it and copy the link.<br>
+    After you've copied it, paste it into a new browser window.
+  </p>
+</div>
+
+<%= render "order" %>
+
+<% if @order.payment_method && @order.payment_method == "purchase order"%>
+  <h1>Method of Payment</h1>
+  <dl>
+    <dt>Purchase Order:</dt>
+    <dd><%= @order.payment_note %></dd>
+  </dl>
+<% end %>
