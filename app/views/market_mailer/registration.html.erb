@@ -14,32 +14,19 @@
   <dd><%= @organization.users.first.email %></dd>
 </dl>
 
-<p>Here is how to activate this new organization:</p>
+<% unless @organization.active? %>
+<div class="lo_call_to_action">
 
-<table class="lo_steps">
-  <tr>
-    <td><span class="lo_step">1</span></td>
-    <td>
-      <a href="#" class="lo_button">Log in to Your Market</a>
-    </td>
-  </tr>
-  <tr>
-    <td><span class="lo_step">2</span></td>
-    <td>
-      Click on Market Admin
-    </td>
-  </tr>
-  <tr>
-    <td><span class="lo_step">3</span></td>
-    <td>
-      Click on Organizations<br>
-      <span class="lo_hint">The New Organization should be located near the top of the list.</span>
-    </td>
-  </tr>
-  <tr>
-    <td><span class="lo_step">4</span></td>
-    <td>
-      Click the Activate button.
-    </td>
-  </tr>
-</table>
+  <p>
+    Click the link below, then click the <em>Activate</em> button.
+  </p>
+
+  <%= link_to "Edit Organization", admin_organization_url(@organization), class: "lo_button lo_button_large"%>
+
+  <p>
+    If clicking the button doesn't work, right click it and copy the link.<br>
+    After you've copied it, paste it into a new browser window.
+  </p>
+</div>
+
+<% end %>
