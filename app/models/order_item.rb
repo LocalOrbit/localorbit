@@ -1,6 +1,14 @@
 class OrderItem < ActiveRecord::Base
-  audited allow_mass_assignment: true, associated_with: :order
   DELIVERY_STATUSES = %w(pending canceled delivered contested)
+
+  before_create :consume_inventory
+  before_save :update_quantity_ordered
+  before_save :update_quantity_delivered
+  before_save :update_delivery_status
+  before_save :update_delivered_at
+  before_save :update_consumed_inventory
+
+  audited allow_mass_assignment: true, associated_with: :order
 
   attr_accessor :deliver_on_date
   attr_accessor :_destroy
@@ -19,13 +27,6 @@ class OrderItem < ActiveRecord::Base
   validates :delivery_status, presence: true, inclusion: {in: DELIVERY_STATUSES}
 
   validate :product_availability, on: :create
-
-  before_create :consume_inventory
-  before_save :update_quantity_ordered
-  before_save :update_quantity_delivered
-  before_save :update_delivery_status
-  before_save :update_delivered_at
-  before_save :update_consumed_inventory
 
   scope :delivered,    -> { where(delivery_status: "delivered") }
   scope :undelivered,  -> { where(delivery_status: "pending") }

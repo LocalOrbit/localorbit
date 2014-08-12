@@ -1,10 +1,17 @@
 class Order < ActiveRecord::Base
-  audited allow_mass_assignment: true
-  INVOICE_STATUSES = %w(due overdue).freeze
-
   include SoftDelete
   include DeliveryStatus
   include Sortable
+
+  INVOICE_STATUSES = %w(due overdue).freeze
+
+  before_save :update_paid_at
+  before_save :update_payment_status
+  before_update :update_order_item_payment_status
+  before_update :update_total_cost
+
+  audited allow_mass_assignment: true
+  has_associated_audits
 
   attr_accessor :credit_card, :bank_account
 
@@ -37,11 +44,6 @@ class Order < ActiveRecord::Base
   validates :payment_status, presence: true
   validates :placed_at, presence: true
   validates :total_cost, presence: true
-
-  before_save :update_paid_at
-  before_save :update_payment_status
-  before_update :update_order_item_payment_status
-  before_update :update_total_cost
 
   scope :recent, -> { visible.order("created_at DESC").limit(15) }
   scope :upcoming_delivery, -> { visible.joins(:delivery).where("deliveries.deliver_on > ?", Time.current) }
