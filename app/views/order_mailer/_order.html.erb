@@ -5,16 +5,17 @@
       <th>Quantity</th>
       <th class="lo_currency">Unit Price</th>
       <th class="lo_currency">Subtotal</th>
+      <th class="status"></th>
     </tr>
   </thead>
 
   <% @order.grouped_items.each_pair do |seller, items| %>
     <tr>
-      <th colspan="4" class="lo_vendor"><%= seller %></th>
+      <th colspan="5" class="lo_vendor"><%= seller %></th>
     </tr>
 
     <% items.each do |item|%>
-      <%= render "orders/order_item", {item: item} %>
+      <%= render "order_item", {item: item} %>
     <% end %>
   <% end %>
 
@@ -23,23 +24,27 @@
     <tr>
       <th colspan="3">Product Total</th>
       <td class="lo_currency"><%= number_to_currency @order.gross_total %></td>
+      <td></td>
     </tr>
     <% end %>
     <% if @order.discount > 0 %>
     <tr>
       <th colspan="3">Discount</th>
       <td class="lo_currency"><%= number_to_currency @order.discount %></td>
+      <td></td>
     </tr>
     <% end %>
     <% if @order.delivery_fees > 0 %>
     <tr>
       <th colspan="3">Delivery Fee</th>
       <td class="lo_currency"><%= number_to_currency @order.delivery_fees %></td>
+      <td></td>
     </tr>
     <% end %>
     <tr>
       <th colspan="3">Total</th>
       <td class="lo_currency"><%= number_to_currency @order.total_cost %></td>
+      <td></td>
     </tr>
   </tbody>
 

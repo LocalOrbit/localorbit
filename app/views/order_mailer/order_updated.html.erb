@@ -7,9 +7,11 @@
   Your order through <%= @order.market.name %> has been changed. You can see the details of the changes below.
 </p>
 
-<p>
-  A refund of $0.00 has been sent to your account and will appear in 2-5 business days.
-</p>
+<% if ["ach", "credit card"].include?(@order.payment_method) && display_refund %>
+  <p>
+    A refund of <%= display_refund %> has been sent to your account and will appear in 2-5 business days.
+  </p>
+<% end %>
 
 <p>
   You can check the status of your order by following the link below and logging in to your account.

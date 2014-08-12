@@ -7,6 +7,11 @@ class OrderItemDecorator < Draper::Decorator
     "#{object.quantity} #{unit}"
   end
 
+  def previous_quantity_with_unit
+    previous_quantity = previous_value_for("quantity")
+    "#{previous_quantity} #{unit}" if previous_quantity
+  end
+
   def price_per_unit
     "#{number_to_currency(object.unit_price)}/#{unit}"
   end
@@ -73,5 +78,25 @@ class OrderItemDecorator < Draper::Decorator
 
   def seller_payment_status
     object.seller_payment_status.to_s.titleize
+  end
+
+  def canceled?
+    object.delivery_status == "canceled"
+  end
+
+  private
+
+  def previous_value_for(column)
+    changes = audits_with_changes_for(column)
+    if changes.present?
+      changes.last.audited_changes[column][0]
+    else
+      false
+    end
+  end
+
+  def audits_with_changes_for(column)
+    object.audits.where("created_at between ? and ?", object.order.updated_at - 2.minutes, object.order.updated_at + 2.minutes).
+      select {|audit| audit.audited_changes[column] }.flatten
   end
 end
