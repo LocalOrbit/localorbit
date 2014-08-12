@@ -40,20 +40,4 @@ class OrderDecorator < Draper::Decorator
   def market_address
     market.addresses.visible.first
   end
-
-  def display_refund
-    @refund ||= begin
-      refund = refund_after_changes
-      number_to_currency(refund) if refund && refund > 0
-    end
-  end
-
-  def refund_after_changes
-    total_cost_update = audits.last.audited_changes["total_cost"]
-    if total_cost_update.present?
-      total_cost[0] - total_cost[1]
-    else
-      false
-    end
-  end
 end

@@ -7,9 +7,9 @@
   Your order through <%= @order.market.name %> has been changed. You can see the details of the changes below.
 </p>
 
-<% if ["ach", "credit card"].include?(@order.payment_method) && display_refund %>
+<% if @order.has_refund? %>
   <p>
-    A refund of <%= display_refund %> has been sent to your account and will appear in 2-5 business days.
+    A refund of <%= number_to_currency(@order.refund_for_changes) %> has been sent to your account and will appear in 2-5 business days.
   </p>
 <% end %>
 

@@ -42,4 +42,20 @@ module OrderPresenter
       payment_ids: @order.payment_ids
     ).reorder("created_at DESC")
   end
+
+  def has_refund?
+    ["ach", "credit card"].include?(@order.payment_method) && refund_for_changes
+  end
+
+  def refund_for_changes
+    @refund_for_changes ||= begin
+      if @order.audits.present?
+        total_cost_update = @order.audits.last.audited_changes["total_cost"]
+        
+        if total_cost_update.present?
+          total_cost[0] - total_cost[1]
+        end
+      end
+    end
+  end
 end
