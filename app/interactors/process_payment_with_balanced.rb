@@ -1,5 +1,6 @@
 class ProcessPaymentWithBalanced
   include Interactor
+  include MoneyHelpers
 
   def setup
     context[:description]             ||= "Local Orbit"
@@ -48,14 +49,14 @@ class ProcessPaymentWithBalanced
 
   def process_refund
     debit = payment.parent.balanced_transaction
-    refund = debit.refund(amount: -(payment.amount * 100))
+    refund = debit.refund(amount: -amount_to_cents(payment.amount))
 
     payment.update_attributes(balanced_uri: refund.uri)
   end
 
   def transaction_params(with_source)
     params = {
-      amount:                  (payment.amount * 100).to_i,
+      amount:                  amount_to_cents(payment.amount),
       description:             context[:description],
       appears_on_statement_as: context[:appears_on_statement_as]
     }

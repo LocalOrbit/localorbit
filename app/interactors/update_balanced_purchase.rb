@@ -1,5 +1,6 @@
 class UpdateBalancedPurchase
   include Interactor
+  include MoneyHelpers
 
   def perform
     if ["credit card", "ach"].include?(order.payment_method)
@@ -104,9 +105,5 @@ class UpdateBalancedPurchase
     else
       "failed"
     end
-  end
-
-  def amount_to_cents(amount)
-    (amount * 100).to_i
   end
 end
