@@ -1,6 +1,7 @@
 class RegistrationsController < ApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :ensure_market_affiliation
+  skip_before_action :ensure_active_organization
 
   def show
     @registration = Registration.new(buyer: true)

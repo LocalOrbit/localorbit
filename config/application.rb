@@ -30,6 +30,7 @@ module LocalOrbit
     config.to_prepare do
       Devise::Mailer.layout "email"
       DeviseController.skip_before_action :ensure_market_affiliation
+      DeviseController.skip_before_action :ensure_active_organization
     end
 
     config.font_assets.origin = "*"

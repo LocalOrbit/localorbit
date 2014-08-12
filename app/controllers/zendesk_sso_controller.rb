@@ -7,6 +7,7 @@ class ZendeskSSOController < ApplicationController
 
   skip_before_action :ensure_market_affiliation
   skip_before_action :set_timezone
+  skip_before_action :ensure_active_organization
 
   def show
     sign_into_zendesk(current_user)
