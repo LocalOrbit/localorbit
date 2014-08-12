@@ -328,7 +328,7 @@ ActiveRecord::Schema.define(version: 20140812212855) do
     t.decimal  "ach_seller_fee",                precision: 5, scale: 3, default: 0.0,   null: false
     t.decimal  "ach_market_fee",                precision: 5, scale: 3, default: 0.0,   null: false
     t.decimal  "ach_fee_cap",                   precision: 6, scale: 2, default: 8.0,   null: false
-    t.integer  "po_payment_term"
+    t.integer  "po_payment_term",                                       default: 14,    null: false
     t.string   "photo_uid"
     t.boolean  "allow_credit_cards",                                    default: true
     t.boolean  "allow_purchase_orders",                                 default: true
