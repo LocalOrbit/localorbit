@@ -241,6 +241,7 @@ FactoryGirl.define do
     allow_ach             true
     display_twitter       false
     display_facebook      false
+    active                true
 
     trait :seller do
       can_sell true
