@@ -28,7 +28,7 @@ class Admin::OrganizationCrossSellsController < AdminController
       @organization.markets
     else
       user_managed_markets = current_user.admin? ? Market.all : current_user.managed_markets
-      @organization.markets.where(id: user_managed_markets)
+      @organization.markets.where(id: user_managed_markets.pluck(:id))
     end
     @cross_selling_markets = MarketCrossSells.where(source_market_id: user_allowed_origin_markets)
   end
