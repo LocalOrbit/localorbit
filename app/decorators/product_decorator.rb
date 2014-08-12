@@ -24,10 +24,6 @@ class ProductDecorator < Draper::Decorator
     self[:how_story].presence || (organization ? organization.how_story : nil)
   end
 
-  def initial_price
-    prices.decorate.first
-  end
-
   def location
     return @location if defined?(@location)
     @location = (location_id && Location.visible.find_by(id: location_id)) || organization.shipping_location
@@ -59,10 +55,6 @@ class ProductDecorator < Draper::Decorator
         CartItem.new(product: object, quantity: 0, cart: context[:current_cart])
       end
     end
-  end
-
-  def display_prices
-    prices.for_market_and_org(context[:current_cart].market, context[:current_cart].organization)
   end
 
   def name_and_unit
