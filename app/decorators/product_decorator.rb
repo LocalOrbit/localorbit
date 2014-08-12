@@ -56,7 +56,7 @@ class ProductDecorator < Draper::Decorator
       if i = context[:current_cart].items.detect {|i| i.product_id == id }
         i
       else
-        CartItem.new(product_id: id, quantity: 0, cart: context[:current_cart])
+        CartItem.new(product: object, quantity: 0, cart: context[:current_cart])
       end
     end
   end
