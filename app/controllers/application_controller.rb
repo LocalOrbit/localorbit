@@ -122,7 +122,7 @@ class ApplicationController < ActionController::Base
     return nil unless current_organization.present?
     return nil unless current_delivery
 
-    @current_cart ||= current_user.carts.find_by(id: session[:cart_id]).try(:decorate)
+    @current_cart ||= current_user.carts.includes(items: {product: :prices}).find_by(id: session[:cart_id]).try(:decorate)
   end
 
   def require_cart

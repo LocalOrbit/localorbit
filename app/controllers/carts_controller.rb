@@ -21,7 +21,7 @@ class CartsController < ApplicationController
   end
 
   def update
-    product = Product.find(params[:product_id])
+    product = Product.includes(:prices).find(params[:product_id])
     delivery_date = current_delivery.deliver_on
 
     @item = current_cart.items.find_or_initialize_by(product_id: product.id)
