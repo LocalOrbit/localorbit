@@ -59,7 +59,11 @@
 <body>
   <div class="error-page">
     <div class="dialog">
-      <h1> Your account has been suspended.</h1>
+      <h1> Uh-oh! Wait a sec...</h1>
+      <p>Hi, <%= current_user.name %>.</p>
+      <p>
+        You've confirmed your email account, but the market manager must approve your account before you can shop. We'll let you know as soon as that happens!
+      </p>
     </div>
     <p>If you continue having trouble, please contact <a href="https://localorbit.zendesk.com/anonymous_requests/new">Local Orbit support</a>.</p>
   </div>
