@@ -15,7 +15,7 @@ class ProductsForSale
   end
 
   def product_groups
-    @product_groups ||= products.group_by {|p| p.category.self_and_ancestors.find_by(depth: 2).id }
+    @product_groups ||= products.group_by {|p| p.second_level_category_id }
   end
 
   def filter_categories
