@@ -136,6 +136,11 @@ describe "Removing items" do
     end
 
     it "by setting the quantity to 0" do
+      kale_item.set_quantity(0)
+      expect(Dom::CartLink.first).to have_content("Removed from cart!")
+
+      expect(kale_item.quantity_field.value).to eq("0")
+      expect(cart_link.count).to have_content("2")
     end
   end
 end
