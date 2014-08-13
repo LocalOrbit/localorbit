@@ -1,5 +1,10 @@
 module Metrics
   class MarketCalculations < Base
+    STATES = %w(AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD
+                MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD
+                TN TX UT VT VA WA WV WI WY
+                AB BC MB NB NL NS NT NU ON PE QC SK YT)
+
     BASE_SCOPE = Market.where.not(id: TEST_MARKET_IDS).uniq
     METRICS = {
       total_markets: {
@@ -107,6 +112,15 @@ module Metrics
         format: :percent
       },
     }
+
+    STATES.each do |state|
+      METRICS["#{state.downcase}_markets"] = {
+        title: "#{state} Markets",
+        scope: Market,
+        calculation: :metric,
+        format: :integer
+      }
+    end
   end
 end
 
