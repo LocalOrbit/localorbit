@@ -7,6 +7,7 @@ class Product < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :top_level_category, class: Category
+  belongs_to :second_level_category, class: Category
   belongs_to :organization, inverse_of: :products
   belongs_to :location
   belongs_to :unit
@@ -46,7 +47,7 @@ class Product < ActiveRecord::Base
 
   pg_search_scope :search_by_name, against: :name, using: {tsearch: {prefix: true}}
 
-  before_save :update_top_level_category
+  before_save :update_cached_categories
   before_save :update_delivery_schedules
 
   def self.available_for_market(market)
@@ -244,9 +245,10 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def update_top_level_category
+  def update_cached_categories
     if category_id_changed?
       self.top_level_category = category.top_level_category
+      self.second_level_category = category.self_and_ancestors.find_by(depth: 2)
     end
   end
 

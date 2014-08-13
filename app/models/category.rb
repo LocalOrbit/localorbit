@@ -26,6 +26,6 @@ class Category < ActiveRecord::Base
   end
 
   def top_level_category
-    self_and_ancestors.find_by(depth: 1)
+    @top_level_category ||= self_and_ancestors.find_by(depth: 1)
   end
 end
