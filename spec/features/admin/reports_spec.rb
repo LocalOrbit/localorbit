@@ -657,7 +657,7 @@ feature "Reports" do
     end
 
     context "as a Buyer" do
-      let!(:user)      { create(:user, organizations: [buyer]) }
+      let!(:user) { create(:user, organizations: [buyer]) }
 
       context "Purchases by Product report" do
         let!(:report) { :purchases_by_product }
@@ -681,6 +681,22 @@ feature "Reports" do
           expect(totals.processing_fees).to eq("$6.25")
           expect(totals.discounts).to eq("$0.00")
           expect(totals.net_sales).to eq("$93.75")
+        end
+
+        scenario "filters by category" do
+          expect(Dom::Report::ItemRow.all.count).to eq(5)
+
+          select "Category-01-0", from: "Category"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-0").count).to eq(1)
+
+          select "Category-01-1", from: "Category"
+          click_button "Filter"
+
+          expect(Dom::Report::ItemRow.all.count).to eq(1)
+          expect(item_rows_for_order("LO-01-234-4567890-1").count).to eq(1)
         end
       end
 
