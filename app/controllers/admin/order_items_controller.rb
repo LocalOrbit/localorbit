@@ -6,7 +6,7 @@ module Admin
     def index
       items = fetch_order_items
       prepare_filter_data(items)
-      
+
       # initialize ransack and search
       @query_params = sticky_parameters(request.query_parameters)
       search = Search::QueryDefaults.new(@query_params[:q], :order_placed_at).query
@@ -35,6 +35,7 @@ module Admin
 
     def fetch_order_items
       OrderItem.for_user(current_user).
+        joins(:order).
         includes(order: :organization, product: :organization).
         preload(product: [:organization, :category], order: [:market, :organization])
     end
