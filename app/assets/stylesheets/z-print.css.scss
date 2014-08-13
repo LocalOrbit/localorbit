@@ -1,6 +1,9 @@
 @media print {
-  footer, #top, .nav, .logo, .logo-link, .back-button, .btn, .tabs-wrapper, .screen-only, .teflon, .tagline {
+  footer, #top, .nav, .logo, .logo-link, .back-button, .btn, a.export, .tabs-wrapper, .screen-only, .teflon, .tagline {
     display: none !important;
+  }
+  tr, td, th {
+    page-break-inside: avoid;
   }
   .logo-link {
     float: none;

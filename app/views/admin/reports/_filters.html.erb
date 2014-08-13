@@ -4,10 +4,11 @@
       <% presenter.filters.each do |filter| %>
 
         <% if filter == :order_number %>
-          <span class="preserve-alignment">
-            <%= f.label :order_order_number_cont, "Search" %><br>
+          <div>
+            <%= f.label :order_order_number_cont, "Search by order number" %><br>
             <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
-          </span>
+          </div>
+          <br>
         <% end %>
 
         <% if filter == :market_name && current_user.multi_market_membership? %>
@@ -66,7 +67,7 @@
         </span>
         <span class="preserve-alignment">
           <br>
-          <%= f.submit "Filter", class: "btn--small" %>
+          <%= f.submit "Filter", class: "btn--small screen-only" %>
         </span>
       </div>
     <% end %>
