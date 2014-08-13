@@ -12,7 +12,7 @@ shared_examples "activates and deactivates organizations" do
     sign_in_as(user)
   end
 
-  it "activating an organization changes the active status" do
+  xit "activating an organization changes the active status" do
     visit admin_organizations_path
 
     org_row = Dom::Admin::OrganizationRow.find_by_name(org1.name)
@@ -23,7 +23,7 @@ shared_examples "activates and deactivates organizations" do
     expect(org_row.node).not_to have_content("Activate")
   end
 
-  it "deactivating an organization changes the active status" do
+  xit "deactivating an organization changes the active status" do
     visit admin_organizations_path
 
     org_row = Dom::Admin::OrganizationRow.find_by_name(org2.name)
