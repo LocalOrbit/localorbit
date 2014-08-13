@@ -52,6 +52,7 @@ module Admin
 
     def update_active
       @organization.update_attributes(update_active_params)
+      NotifyOrganizationActivated.perform(organization: @organization, market: current_market)
       redirect_to :back, notice: "Updated #{@organization.name}"
     end
 

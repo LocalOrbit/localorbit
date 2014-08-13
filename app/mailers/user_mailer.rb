@@ -33,4 +33,15 @@ class UserMailer < BaseMailer
       subject: "Your account has been updated"
     )
   end
+
+  def organization_activated(organization, market)
+    @market = market
+    @organization = organization
+    @recipients = @organization.users.map(&:email)
+
+    mail(
+      to: @recipients,
+      subject: "Welcome to #{@market.name}"
+    )
+  end
 end

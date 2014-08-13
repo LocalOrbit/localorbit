@@ -1,0 +1,5 @@
+Welcome to <%= @market.name %>. You are all set.
+
+The <%= @market.name %> Market Manager has activated your account, so you're all set to log in and shop the fresh offerings of your amazing local food producers.
+
+Log in to Your Account: <%= root_url(host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %>
