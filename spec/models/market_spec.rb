@@ -287,8 +287,8 @@ describe Market do
         expect(market).to have(2).error_on(:po_payment_term)
       end
 
-      it "must be greater than 0" do
-        market = build(:market, po_payment_term: 0)
+      it "must be greater than or equal to 0" do
+        market = build(:market, po_payment_term: -1)
 
         expect(market).to have(1).error_on(:po_payment_term)
       end
