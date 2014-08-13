@@ -27,6 +27,12 @@
   clear: both;
   overflow: visible;
 }
+  @media screen and (min-width: $tablet_floor) {
+    .report-table .table-wrapper {
+      max-width: 100%;
+      overflow: auto;
+    }
+  }
   @media screen and (max-width: $mobile_break) {
     .table-wrapper {
       z-index: 3;
@@ -1015,5 +1021,16 @@ th {
     height: auto;
     border: 0;
     background: transparent;
+  }
+}
+
+
+@media print {
+  table.js-sticky {
+    display: none;
+  }
+  .report-table td,
+  .report-table th {
+    font-size: 8px;
   }
 }
