@@ -38,22 +38,22 @@ module OrderPresenter
     Audit.where("(associated_type = 'Order' AND associated_id = :order_id) OR
     (auditable_type = 'Order' AND auditable_id = :order_id) OR
     (auditable_type = 'Payment' AND auditable_id IN (:payment_ids))",
-      order_id: @order.id,
-      payment_ids: @order.payment_ids
+                order_id: @order.id,
+                payment_ids: @order.payment_ids
     ).reorder("created_at DESC")
   end
 
-  def has_refund?
-    ["ach", "credit card"].include?(@order.payment_method) && refund_for_changes
+  def refund?
+    ["ach", "credit card"].include?(@order.payment_method) && refund_for_changes && refund_for_changes > 0
   end
 
   def refund_for_changes
     @refund_for_changes ||= begin
       if @order.audits.present?
         total_cost_update = @order.audits.last.audited_changes["total_cost"]
-        
+
         if total_cost_update.present?
-          total_cost[0] - total_cost[1]
+          total_cost_update[0] - total_cost_update[1]
         end
       end
     end

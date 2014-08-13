@@ -96,7 +96,7 @@ class OrderItemDecorator < Draper::Decorator
   end
 
   def audits_with_changes_for(column)
-    object.audits.where("created_at between ? and ?", object.order.updated_at - 2.minutes, object.order.updated_at + 2.minutes).
+    object.audits.where("created_at between ? and ?", object.order.updated_at - 1.minutes, object.order.updated_at + 1.minutes).
       select {|audit| audit.audited_changes[column] }.flatten
   end
 end

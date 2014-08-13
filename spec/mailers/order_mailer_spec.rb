@@ -13,9 +13,9 @@ describe OrderMailer do
   let!(:product1)          { create(:product, :sellable, organization: seller1) }
   let!(:product2)          { create(:product, :sellable, organization: seller2) }
 
-  let!(:order)             { create(:order, market: market, delivery: delivery, placed_by: buyer_user, organization: buyer) }
-  let!(:order_item1)       { create(:order_item, order: order, product: product1, quantity: 10) }
-  let!(:order_item2)       { create(:order_item, order: order, product: product2, quantity: 5) }
+  let!(:order)             { create(:order, market: market, delivery: delivery, placed_by: buyer_user, organization: buyer, payment_method: 'ach', total_cost: 30.0) }
+  let!(:order_item1)       { create(:order_item, order: order, product: product1, quantity: 10, unit_price: 2.00) }
+  let!(:order_item2)       { create(:order_item, order: order, product: product2, quantity: 4, unit_price: 2.50) }
 
   describe "seller_confirmation" do
     let!(:notification) { OrderMailer.seller_confirmation(order, seller1) }
@@ -48,7 +48,7 @@ describe OrderMailer do
       before do
         Order.enable_auditing
         OrderItem.enable_auditing
-        order_item1.update(quantity: 33)
+        order_item1.update(quantity: 15)
         order.update(updated_at: Time.current)
         OrderItem.disable_auditing
         Order.disable_auditing
@@ -65,7 +65,7 @@ describe OrderMailer do
       end
 
       it "shows the updated order quantity" do
-        expect(@notification).to have_body_text("33 per box")
+        expect(@notification).to have_body_text("15 per box")
       end
     end
 
@@ -85,8 +85,44 @@ describe OrderMailer do
         expect(@notification).to have_subject("#{market.name}: Order #{order.order_number} updated")
       end
 
+      it "shows canceled items quantity as 0" do
+        expect(@notification).to have_body_text("0 per box")
+      end
+
       it "shows the item as being canceled" do
         expect(@notification).to have_body_text("canceled")
+      end
+    end
+
+    context "refund amount" do
+      before do
+        Order.enable_auditing
+        OrderItem.enable_auditing
+        order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: order_item1.id, quantity: 5}})
+        OrderItem.disable_auditing
+        Order.disable_auditing
+
+        @notification = OrderMailer.buyer_order_updated(order.reload)
+      end
+
+      it "shows the refund amount" do
+        expect(@notification).to have_body_text("refund of $10.00")
+      end
+    end
+
+    context "increasing the quantity" do
+      before do
+        Order.enable_auditing
+        OrderItem.enable_auditing
+        order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: order_item1.id, quantity: 15}})
+        OrderItem.disable_auditing
+        Order.disable_auditing
+
+        @notification = OrderMailer.buyer_order_updated(order.reload)
+      end
+
+      it "does not show the refund section" do
+        expect(@notification).to_not have_body_text("refund")
       end
     end
   end
@@ -96,7 +132,7 @@ describe OrderMailer do
       before do
         Order.enable_auditing
         OrderItem.enable_auditing
-        order_item1.update(quantity: 33)
+        order_item1.update(quantity: 15)
         order.update(updated_at: Time.current)
         OrderItem.disable_auditing
         Order.disable_auditing
@@ -113,7 +149,7 @@ describe OrderMailer do
       end
 
       it "shows the updated order quantity" do
-        expect(@notification).to have_body_text("33 per box")
+        expect(@notification).to have_body_text("15 per box")
       end
 
       it "does not show other seller items" do
@@ -137,12 +173,48 @@ describe OrderMailer do
         expect(@notification).to have_subject("#{market.name}: Order #{order.order_number} updated")
       end
 
+      it "shows canceled items quantity as 0" do
+        expect(@notification).to have_body_text("0 per box")
+      end
+
       it "shows the item as being canceled" do
         expect(@notification).to have_body_text("canceled")
       end
 
       it "does not show other seller items" do
         expect(@notification).to_not have_body_text(product2.name)
+      end
+    end
+
+    context "refund amount" do
+      before do
+        Order.enable_auditing
+        OrderItem.enable_auditing
+        order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: order_item1.id, quantity: 5}})
+        OrderItem.disable_auditing
+        Order.disable_auditing
+
+        @notification = OrderMailer.seller_order_updated(order.reload, seller1)
+      end
+
+      it "shows the refund amount" do
+        expect(@notification).to have_body_text("refund of $10.00")
+      end
+    end
+
+    context "increasing the quantity" do
+      before do
+        Order.enable_auditing
+        OrderItem.enable_auditing
+        order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: order_item1.id, quantity: 15}})
+        OrderItem.disable_auditing
+        Order.disable_auditing
+
+        @notification = OrderMailer.seller_order_updated(order.reload, seller1)
+      end
+
+      it "does not show the refund section" do
+        expect(@notification).to_not have_body_text("refund")
       end
     end
   end
