@@ -14,5 +14,11 @@ module Metrics
       grow_markets:         { scope: BASE_SCOPE.joins(:plan).where(plan_id: Plan.find_by_name("Grow")) },
       automate_markets:     { scope: BASE_SCOPE.joins(:plan).where(plan_id: Plan.find_by_name("Automate")) }
     }
+
+    STATES.each do |state|
+      @@history_metrics["#{state.downcase}_markets"] = {
+        scope: BASE_SCOPE.joins(:addresses).where(market_addresses: { state: state })
+      }
+    end
   end
 end
