@@ -58,8 +58,8 @@ describe "A Market Manager", :vcr do
         expect(page).to have_css("img[alt='Profile photo']")
       end
 
-      it "creates the organization as active" do
-        expect(find_field("Organization is active")).to be_checked
+      it "creates the organization as not active" do
+        expect(find_field("Organization is active")).not_to be_checked
       end
     end
 
@@ -81,8 +81,8 @@ describe "A Market Manager", :vcr do
 
       end
 
-      it "creates the organization as active" do
-        expect(find_field("Organization is active")).to be_checked
+      it "creates the organization as not active" do
+        expect(find_field("Organization is active")).not_to be_checked
       end
     end
 

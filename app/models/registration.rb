@@ -48,8 +48,7 @@ class Registration
       can_sell: (seller == "1"),
       allow_credit_cards: market.default_allow_credit_cards,
       allow_purchase_orders: market.default_allow_purchase_orders,
-      allow_ach: market.default_allow_ach,
-      active: market.auto_activate_organizations
+      allow_ach: market.default_allow_ach
     }
   end
 

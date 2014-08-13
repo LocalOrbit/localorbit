@@ -490,7 +490,7 @@ ActiveRecord::Schema.define(version: 20140812212855) do
     t.boolean  "allow_ach"
     t.integer  "legacy_id"
     t.boolean  "show_profile",          default: true
-    t.boolean  "active",                default: true
+    t.boolean  "active",                default: false
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree
