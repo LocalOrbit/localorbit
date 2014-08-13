@@ -157,9 +157,11 @@ class MetricsPresenter
                                                markets: markets,
                                                options: calculation_options)
 
-      results = format_results(results: results, interval: interval, calculation_type: m[:calculation], format: m[:format])
+      if validate_state_metric(metric, results)
+        results = format_results(results: results, interval: interval, calculation_type: m[:calculation], format: m[:format])
 
-      [m[:title], results]
+        [m[:title], results]
+      end
     end]
 
   end
@@ -195,5 +197,9 @@ class MetricsPresenter
       count = count.next
     end
     headers
+  end
+
+  def validate_state_metric(metric, results)
+    results.values.map(&:to_f).sum > 0 || !Metrics::MarketCalculations::STATES.map { |s| "#{s.downcase}_markets" }.include?(metric)
   end
 end
