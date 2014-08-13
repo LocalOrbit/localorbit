@@ -71,6 +71,11 @@ class MetricsPresenter
     }
   }.with_indifferent_access
 
+  # Add all market by state/province metrics
+  Metrics::MarketCalculations::STATES.each do |state|
+    GROUPS[:markets][:metrics] << "#{state.downcase}_markets"
+  end
+
   def initialize(groups: [], interval: "month", markets: [], date_range: nil)
     # {
     #   "Group Title" => {
