@@ -1,0 +1,14 @@
+<tr class="order-item-row <%= "canceled" if item.decorate.canceled? %>">
+  <td class="name"><%= item.name %></td>
+  <td class="quantity">
+    <div class="previous_value"><%= item.decorate.previous_quantity_with_unit %></div>
+    <div class="value"><%= item.decorate.quantity_with_unit %></div>
+  </td>
+  <td class="price lo_currency"><%= number_to_currency item.unit_price %></td>
+  <td class="item-total lo_currency">
+    <%= number_to_currency item.gross_total %>
+  </td>
+  <td class="status">
+    <%= "canceled" if item.decorate.canceled? %>
+  </td>
+</tr>

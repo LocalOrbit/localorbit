@@ -42,6 +42,40 @@ class OrderMailer < BaseMailer
     )
   end
 
+  def buyer_order_updated(order)
+    @market = order.market
+    @order = BuyerOrder.new(order) # Market Managers should see all items
+
+    mail(
+      to: order.organization.users.map(&:pretty_email),
+      subject: "#{@market.name}: Order #{order.order_number} updated",
+      template_name: "order_updated"
+    )
+  end
+
+  def seller_order_updated(order, seller)
+    @market = order.market
+    @order = SellerOrder.new(order, seller) # Selling users organizations only see
+    @seller = seller
+
+    mail(
+      to: seller.users.map(&:pretty_email),
+      subject: "#{@market.name}: Order #{order.order_number} updated",
+      template_name: "order_updated"
+    )
+  end
+
+  def market_manager_order_updated(order)
+    @market = order.market
+    @order = BuyerOrder.new(order) # Market Managers should see all items
+
+    mail(
+      to: order.market.managers.map(&:pretty_email),
+      subject: "#{@market.name}: Order #{order.order_number} updated",
+      template_name: "order_updated"
+    )
+  end
+
   private
 
   def invoice_pdf(order)

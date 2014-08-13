@@ -1,4 +1,11 @@
-if Figaro.env.smtp_username
+if Rails.env.development?
+  # Use MailCatcher to see the emails in development mode
+  ActionMailer::Base.smtp_settings = {
+    address: 'localhost',
+    port: 1025
+  }
+  
+elsif Figaro.env.smtp_username
   ActionMailer::Base.smtp_settings = {
     address: 'smtp.mandrillapp.com',
     port: 587,
