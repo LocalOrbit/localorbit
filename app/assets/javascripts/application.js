@@ -19,5 +19,6 @@
 //= require underscore
 //= require accountingjs
 //= require jquery.tablesorter.min
+//= require mapbox
 //= stub balanced
 //= require_tree .

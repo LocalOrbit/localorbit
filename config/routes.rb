@@ -110,7 +110,11 @@ Rails.application.routes.draw do
     resource :category_request, only: :create
 
     resources :reports, only: [:index, :show]
-    resources :metrics, only: [:index, :show]
+    resources :metrics, only: [:index, :show] do
+      collection do
+        get "map" => "metrics#map"
+      end
+    end
   end
 
   resource :dashboard do

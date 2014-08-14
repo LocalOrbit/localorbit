@@ -8,6 +8,7 @@
         <% MetricsPresenter::GROUPS.keys.each do |group_title| %>
           <%= content_tag(:li, link_to_or_span(group_title.to_s.titleize, admin_metric_path(group_title.to_s.dasherize)), class: 'tab') %>
         <% end %>
+        <%= content_tag(:li, link_to_or_span("Map", map_admin_metrics_path), class: 'tab') %>
       </ul>
     </div>
   </div>
