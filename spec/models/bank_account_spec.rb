@@ -26,4 +26,30 @@ describe BankAccount do
       expect(subject.valid?).to eql(true)
     end
   end
+
+  context "verification_failed?" do
+    it "is false if the bank account is verified" do
+      subject.verified = true
+
+      expect(subject).not_to be_verification_failed
+    end
+
+    it "is true if we can't find a bank account verification" do
+      expect(subject).to receive(:balanced_verification).and_return(nil)
+
+      expect(subject).to be_verification_failed
+    end
+
+    it "is true if the balanced verification has failed" do
+      expect(subject).to receive(:balanced_verification).twice.and_return(double(Balanced::Verification, state: "failed"))
+
+      expect(subject).to be_verification_failed
+    end
+
+    it "is false if the balanced verification is pending" do
+      expect(subject).to receive(:balanced_verification).twice.and_return(double(Balanced::Verification, state: "pending"))
+
+      expect(subject).not_to be_verification_failed
+    end
+  end
 end
