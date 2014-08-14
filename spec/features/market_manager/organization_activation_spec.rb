@@ -44,7 +44,7 @@ feature "Organization activation" do
   context "on a market with auto-activation:" do
     given!(:market) { create(:market, auto_activate_organizations: true) }
 
-    xscenario "User requests to buy on the market" do
+    scenario "User requests to buy on the market" do
       email = "jsmith@example.com"
 
       request_account(email: email, buying: true)
@@ -57,7 +57,7 @@ feature "Organization activation" do
       expect(page).to have_content("Welcome Jan Smith")
     end
 
-    xscenario "User requests to sell on the market" do
+    scenario "User requests to sell on the market" do
       email = "jsmith@example.com"
 
       request_account(email: email, buying: true, selling: true)
@@ -88,7 +88,7 @@ feature "Organization activation" do
   context "on a market without auto-activation" do
     given!(:market) { create(:market, auto_activate_organizations: false) }
 
-    xscenario "User requests to sell on the market" do
+    scenario "User requests to sell on the market" do
       email = "jsmith@example.com"
 
       request_account(email: email, buying: true, selling: true)
@@ -115,7 +115,7 @@ feature "Organization activation" do
       expect(page).not_to have_content("Activate")
     end
 
-    xscenario "User requests to buy on the market" do
+    scenario "User requests to buy on the market" do
       email = "jsmith@example.com"
 
       request_account(email: email, buying: true, selling: false)

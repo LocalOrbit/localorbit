@@ -219,7 +219,7 @@ describe "A Market Manager", :vcr do
       expect(page).to have_content("At least one payment method is required for the organization")
     end
 
-    xit "deactivates an organization" do
+    it "deactivates an organization" do
       visit admin_organizations_path
 
       expect(page).to have_content("Deactivate")
