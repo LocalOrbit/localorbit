@@ -11,6 +11,8 @@ class BankAccount < ActiveRecord::Base
   def balanced_verification
     return nil if verified? || balanced_verification_uri.nil?
     @balanced_verification ||= Balanced::Verification.find(balanced_verification_uri)
+  rescue Balanced::NotFound # Probably bad account info
+    nil
   end
 
   def bank_account?
@@ -23,6 +25,7 @@ class BankAccount < ActiveRecord::Base
 
   def verification_failed?
     return false if verified?
+    return true if balanced_verification.nil?
     balanced_verification.try(:state) == "failed"
   end
 
