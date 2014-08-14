@@ -4,12 +4,12 @@ module Admin::Financials
     end
 
     def create
-      @payment = Payment.new(payment_params)
+      @payment = Payment.new(payment_params.merge(payment_method: "check"))
       if @payment.save
         redirect_to admin_financials_receipts_path, notice: "Offline payment successful"
       else
         flash.now[:alert] = "Offline payment error"
-        render :show 
+        render :show
       end
     end
 
