@@ -20,6 +20,35 @@ describe "Enter Offline Payment" do
 
       expect(page).to have_content("Enter Offline Payment")
     end
+
+    it "saves an offline payment for service fee" do
+      visit admin_financials_offline_payment_path
+      expect(page).to have_content("Enter Offline Payment")
+
+      select market.name, from: "payment_payer_id"
+      fill_in "Payment Amount", with: "250.00"
+      select "Service Fee", from: "payment_payment_type"
+      click_button "Save Payment"
+
+      expect(page).to have_content("Offline payment successful")
+
+      visit admin_financials_payments_path
+      expect(page).to have_content("Service Fee")
+      expect(page).to have_content("$250.00")
+    end
+
+    it "displays errors upon payment failure" do
+      visit admin_financials_offline_payment_path
+      expect(page).to have_content("Enter Offline Payment")
+
+      select market.name, from: "payment_payer_id"
+      fill_in "Payment Amount", with: "bad"
+      select "Service Fee", from: "payment_payment_type"
+      click_button "Save Payment"
+
+      expect(page).to have_content("Enter Offline Payment")
+      expect(page).to have_content("Offline payment error")
+    end
   end
 
   context "as a market manager" do
