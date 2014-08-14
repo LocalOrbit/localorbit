@@ -35,7 +35,7 @@ class PaymentHistoryPresenter
     elsif user.buyer_only?
       Payment.
         joins(:orders).
-        where(payer_type: "Organization", payer_id: organization.id).
+        where(payer_type: "Organization", payer_id: (organization.try(:id) || user.organization_ids)).
         where("orders.payment_status = ? OR (orders.payment_method = ? AND payments.status = ?)", "paid", "ach", "pending")
     else
       Payment.where(payee: organization)
