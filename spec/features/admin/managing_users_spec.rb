@@ -1,14 +1,17 @@
 require "spec_helper"
 
 feature "viewing and managing users" do
-  let!(:admin) { create(:user, :admin) }
-  let!(:market) { create(:market, name: 'Test Market') }
+  let!(:admin)          { create(:user, :admin) }
+  let!(:market)         { create(:market, name: 'Test Market') }
+  let!(:market2)        { create(:market)}
   let!(:market_manager) { create(:user, managed_markets:[market]) }
 
-  let!(:organization) {  create(:organization, name: 'Test Org 1', markets: [market])}
-  let!(:organization2) {  create(:organization, name: 'Test Org 2', markets: [market])}
-  let!(:user) { create(:user, name: "New Dude", organizations: [organization, organization2]) }
-  let!(:user2) { create(:user)}
+  let!(:organization)   { create(:organization, name: 'Test Org 1', markets: [market])}
+  let!(:organization2)  { create(:organization, name: 'Test Org 2', markets: [market])}
+  let!(:orphan_org)     { create(:organization, markets: [])}
+  let!(:user)           { create(:user, name: "New Dude", organizations: [organization, organization2, orphan_org]) }
+  let!(:user2)          { create(:user)}
+
   context "as an admin" do
     before do
       switch_to_main_domain
@@ -42,15 +45,13 @@ feature "viewing and managing users" do
       expect(user_row.name).to eq("Edit")
     end
 
-    context "editing a user's information" do
+    context "managing a user" do
       before do
-        visit "/admin/users"
-        click_link "New Dude"
-
+        visit edit_admin_user_path(user)
         expect(page).to have_content("Editing User: New Dude")
       end
 
-      scenario "editing a user's password" do
+      scenario "change password" do
         fill_in "New Password", with: "password2"
         fill_in "Confirm Password", with: "password2"
 
@@ -63,7 +64,7 @@ feature "viewing and managing users" do
         expect(user.reload.valid_password?("password2")).to be true
       end
 
-      scenario "editing a user's email address" do
+      scenario "change email address" do
         fill_in "Email", with: "wrong@example.com"
 
         expect(UserMailer).to receive(:user_updated).with(user, admin, user.email).and_return(double(:user_mailer, deliver: true))
@@ -75,7 +76,7 @@ feature "viewing and managing users" do
         expect(user_row.email).to eq("wrong@example.com")
       end
 
-      scenario "editing a user's name" do
+      scenario "change name" do
         fill_in "Name", with: "Wrong Dude"
 
         expect(UserMailer).to receive(:user_updated).with(user, admin, user.email).and_return(double(:user_mailer, deliver: true))
@@ -85,6 +86,10 @@ feature "viewing and managing users" do
         user_row = Dom::Admin::UserRow.find_by_email(user.email)
 
         expect(user_row.name).to eq("Wrong Dude")
+      end
+
+      it "does not show deleted organizations" do
+        expect(page).to_not have_content(orphan_org.name)
       end
     end
   end
@@ -108,15 +113,13 @@ feature "viewing and managing users" do
       expect(user_row.affiliations).to eql("Test Market: Test Org 1, Seller Test Market: Test Org 2, Seller")
     end
 
-    context "editing a user's information" do
+    context "managing a user" do
       before do
-        visit admin_users_path
-        click_link "New Dude"
-
+        visit edit_admin_user_path(user)
         expect(page).to have_content("Editing User: New Dude")
       end
 
-      scenario "editing a user's password" do
+      scenario "change password" do
         fill_in "New Password", with: "password2"
         fill_in "Confirm Password", with: "password2"
 
@@ -129,7 +132,7 @@ feature "viewing and managing users" do
         expect(user.reload.valid_password?("password2")).to be true
       end
 
-      scenario "editing a user's email address" do
+      scenario "change email address" do
         fill_in "Email", with: "wrong@example.com"
 
         expect(UserMailer).to receive(:user_updated).with(user, market_manager, user.email).and_return(double(:user_mailer, deliver: true))
@@ -141,7 +144,7 @@ feature "viewing and managing users" do
         expect(user_row.email).to eq("wrong@example.com")
       end
 
-      scenario "editing a user's name" do
+      scenario "change name" do
         fill_in "Name", with: "Wrong Dude"
 
         expect(UserMailer).to receive(:user_updated).with(user, market_manager, user.email).and_return(double(:user_mailer, deliver: true))
@@ -152,14 +155,14 @@ feature "viewing and managing users" do
 
         expect(user_row.name).to eq("Wrong Dude")
       end
+    end
 
-      scenario "trying to edit a non-accessible user" do
-       inaccessible_user = create(:user)
+    scenario "trying to edit a non-accessible user" do
+      inaccessible_user = create(:user)
 
-       visit edit_admin_user_path(inaccessible_user)
+      visit edit_admin_user_path(inaccessible_user)
 
-       expect(page.body).to have_content("The page you were looking for is not available at this address.")
-      end
+      expect(page.body).to have_content("The page you were looking for is not available at this address.")
     end
 
     scenario "viewing only relevant users after deleting an organization" do
