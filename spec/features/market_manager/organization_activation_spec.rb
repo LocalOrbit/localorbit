@@ -67,7 +67,7 @@ feature "Organization activation" do
       fill_in "Password", with: "password"
       click_button "Sign In"
 
-      expect(page).to have_content("Your account has been suspended.")
+      expect(page).to have_content("market manager must approve your account before you can shop")
 
       sign_out
 
@@ -98,7 +98,7 @@ feature "Organization activation" do
       fill_in "Password", with: "password"
       click_button "Sign In"
 
-      expect(page).to have_content("Your account has been suspended.")
+      expect(page).to have_content("market manager must approve your account before you can shop")
 
       sign_out
 
@@ -125,7 +125,7 @@ feature "Organization activation" do
       fill_in "Password", with: "password"
       click_button "Sign In"
 
-      expect(page).to have_content("Your account has been suspended.")
+      expect(page).to have_content("market manager must approve your account before you can shop")
 
       sign_out
 

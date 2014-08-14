@@ -41,7 +41,7 @@ context "As an organization member", :permissions, :organization_member do
     it "shows an error message" do
       switch_to_subdomain(market2.subdomain)
       sign_in_as(user_of_disabled_org)
-      expect(page).to have_content("Your account has been suspended.")
+      expect(page).to have_content("market manager must approve your account")
     end
   end
 end

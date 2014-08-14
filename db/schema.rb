@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140812212855) do
+ActiveRecord::Schema.define(version: 20140814144651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -480,17 +480,18 @@ ActiveRecord::Schema.define(version: 20140812212855) do
     t.text     "how_story"
     t.string   "photo_uid"
     t.string   "balanced_customer_uri"
-    t.boolean  "balanced_underwritten", default: false, null: false
+    t.boolean  "balanced_underwritten",        default: false, null: false
     t.string   "facebook"
     t.string   "twitter"
-    t.boolean  "display_facebook",      default: false
-    t.boolean  "display_twitter",       default: false
+    t.boolean  "display_facebook",             default: false
+    t.boolean  "display_twitter",              default: false
     t.boolean  "allow_purchase_orders"
     t.boolean  "allow_credit_cards"
     t.boolean  "allow_ach"
     t.integer  "legacy_id"
-    t.boolean  "show_profile",          default: true
-    t.boolean  "active",                default: false
+    t.boolean  "show_profile",                 default: true
+    t.boolean  "active",                       default: false
+    t.boolean  "needs_activated_notification", default: true
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", using: :btree

@@ -33,4 +33,32 @@ shared_examples "activates and deactivates organizations" do
     org_row = Dom::Admin::OrganizationRow.find_by_name(org2.name)
     expect(org_row.node).not_to have_content("Deactivate")
   end
+
+  it "sends an email to the organization after the first activation, but not subsequent activations" do
+    org1_user = create(:user, organizations: [org1])
+
+    visit admin_organizations_path
+
+    org_row = Dom::Admin::OrganizationRow.find_by_name(org1.name)
+    org_row.activate!
+
+    expect(page).to have_content("Updated #{org1.name}")
+    org_row = Dom::Admin::OrganizationRow.find_by_name(org1.name)
+    expect(org_row.node).not_to have_content("Activate")
+
+    open_last_email_for(org1_user.email)
+    expect(current_email).to have_body_text("The #{market.name} Market Manager has activated your account")
+
+    org_row = Dom::Admin::OrganizationRow.find_by_name(org1.name)
+    org_row.deactivate!
+    expect(page).to have_content("Updated #{org1.name}")
+
+    reset_mailer
+
+    org_row = Dom::Admin::OrganizationRow.find_by_name(org1.name)
+    org_row.activate!
+    expect(page).to have_content("Updated #{org1.name}")
+
+    expect(ActionMailer::Base.deliveries).to be_empty
+  end
 end
