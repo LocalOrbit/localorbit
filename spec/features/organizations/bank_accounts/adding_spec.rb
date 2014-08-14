@@ -1,12 +1,9 @@
 require "spec_helper"
 
-feature "Adding a bank account to an organization", js: true do
-  let!(:admin) { create(:user, :admin) }
-  let!(:market_manager) { create(:user, :market_manager) }
-  let!(:market) { market_manager.managed_markets.first }
-  let(:org) { create(:organization, can_sell: true, markets: [market]) }
-  let(:member) { create(:user, organizations: [org]) }
-  let(:non_member) { create(:user) }
+feature "Adding a bank account to an organization", :js do
+  let!(:market) { create(:market, name: "Fake Market") }
+  let!(:org)     { create(:organization, :seller, markets: [market]) }
+  let!(:member)  { create(:user, organizations: [org]) }
 
   before :all do
     VCR.turn_off!
@@ -14,10 +11,6 @@ feature "Adding a bank account to an organization", js: true do
 
   after :all do
     VCR.turn_on!
-  end
-
-  before do
-    CreateBalancedCustomerForEntity.perform(organization: org)
   end
 
   context "as an organization member" do
@@ -93,6 +86,44 @@ feature "Adding a bank account to an organization", js: true do
 
       expect(page).to have_content("Unable to save payment method")
       expect(page).to have_content("Payment method already exists for this organization")
+    end
+  end
+
+  context "as a buyer organization" do
+    let(:org) { create(:organization, :buyer, markets: [market]) }
+
+    before do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(member)
+
+      visit new_admin_organization_bank_account_path(org)
+    end
+
+    scenario "successfully adding a bank account" do
+      select "Checking", from: "balanced_account_type"
+
+      expect(page).not_to have_content("Last 4 of SSN")
+      expect(page).not_to have_content("Street Address (Personal)")
+      expect(page).not_to have_content("Zip Code (Personal)")
+
+      fill_in "Name", with: "Org Bank Account"
+      select("Checking", from: "Account Type")
+      fill_in "Routing Number", with: "021000021"
+      fill_in "Account Number", with: "9900000002"
+      fill_in "Notes", with: "primary"
+
+      click_button "Save"
+
+      expect(page).to have_content("Successfully added a payment method")
+
+      bank_account = Dom::BankAccount.first
+      expect(bank_account.bank_name).to eq("JPMORGAN CHASE BANK")
+      expect(bank_account.name).to eq("Org Bank Account")
+      expect(bank_account.account_number).to eq("******0002")
+      expect(bank_account.account_type).to eq("Checking")
+      expect(bank_account.notes).to eq("primary")
+
+      expect(org.reload).not_to be_balanced_underwritten
     end
   end
 end

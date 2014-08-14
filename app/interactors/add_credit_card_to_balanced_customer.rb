@@ -2,7 +2,7 @@ class AddCreditCardToBalancedCustomer
   include Interactor
 
   def setup
-    context[:balanced_customer] ||= Balanced::Customer.find(balanced_customer_uri)
+    context[:balanced_customer] ||= entity.balanced_customer
   end
 
   def perform
