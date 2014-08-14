@@ -187,7 +187,7 @@ describe "Register" do
         it "creates a new organization" do
           expect(Organization.count).to eql(1)
           expect(Organization.last.name).to eql("Collective Idea")
-          expect(Organization.last.active).to eql(true) #temporarily change until activate/deactivate is ready
+          expect(Organization.last.active).to eql(false)
           expect(Organization.last.markets).to eq([market])
         end
 

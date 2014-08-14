@@ -67,7 +67,6 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_active_organization
-    return #temporarily skip until activate/deactivate is ready for production
     return if current_user.nil?
     return if current_user.admin? || current_user.can_manage_market?(market_for_current_subdomain)
     if current_user.organizations.active.empty?
