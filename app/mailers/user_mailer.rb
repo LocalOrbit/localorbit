@@ -35,7 +35,7 @@ class UserMailer < BaseMailer
   end
 
   def organization_activated(organization, market)
-    @market = market
+    @market = market || organization.market.last
     @organization = organization
     @recipients = @organization.users.map(&:email)
 
