@@ -93,10 +93,11 @@ class ReportPresenter
 
     # Set our initial scope and lookup any applicable filter data
     items = if self.class.buyer_reports.include?(report)
-      OrderItem.for_user_purchases(user).uniq
+      OrderItem.for_user_purchases(user)
     else
-      OrderItem.for_user(user).joins(:order).uniq
-    end
+      OrderItem.for_user(user)
+    end.joins(:order).uniq
+
     setup_filter_data(items)
 
     # Initialize ransack and set a default sort order
