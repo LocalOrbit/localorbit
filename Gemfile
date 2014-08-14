@@ -23,7 +23,8 @@ gem 'wysihtml5-rails'
 gem "active_model_serializers"
 gem "active_record_union"
 gem "acts_as_geocodable", github: 'collectiveidea/acts_as_geocodable'
-gem "audited-activerecord", "~> 4.0.0.rc1"
+gem "audited", github: 'collectiveidea/audited', branch: 'request-uuid'
+gem "audited-activerecord", github: 'collectiveidea/audited', branch: 'request-uuid'
 gem "awesome_nested_set"
 gem "balanced", "~> 0.7"
 gem "color"

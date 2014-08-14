@@ -19,6 +19,17 @@ GIT
       rails (>= 3, < 4.2)
 
 GIT
+  remote: git://github.com/collectiveidea/audited.git
+  revision: 30033b5fa98f2e4936df286ca3655acfab0f8c2e
+  branch: request-uuid
+  specs:
+    audited (4.0.0.rc1)
+      rails-observers (~> 0.1.2)
+    audited-activerecord (4.0.0.rc1)
+      activerecord (~> 4.0)
+      audited (= 4.0.0.rc1)
+
+GIT
   remote: git://github.com/collectiveidea/delayed_job.git
   revision: 6fc9000bc0e1e56d0781468ccdddcd61e6d5b7ae
   specs:
@@ -80,11 +91,6 @@ GEM
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
     ast (2.0.0)
-    audited (4.0.0.rc1)
-      rails-observers (~> 0.1.2)
-    audited-activerecord (4.0.0.rc1)
-      activerecord (~> 4.0)
-      audited (= 4.0.0.rc1)
     awesome_nested_set (3.0.0)
       activerecord (>= 4.0.0, < 5)
     balanced (0.8.2)
@@ -429,7 +435,8 @@ DEPENDENCIES
   active_model_serializers
   active_record_union
   acts_as_geocodable!
-  audited-activerecord (~> 4.0.0.rc1)
+  audited!
+  audited-activerecord!
   awesome_nested_set
   balanced (~> 0.7)
   capybara
