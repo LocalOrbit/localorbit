@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Label</title>
-  <link href="https//fonts.googleapis.com/css?family=Open+Sans:400,700,300" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300|Open+Sans+Condensed:700" rel="stylesheet">
   <meta name="pdfkit-print_media_type" content="true">
   <meta name="pdfkit-margin_top" content="0in">
   <meta name="pdfkit-margin_right" content="0in">
@@ -14,20 +14,14 @@
       color: #000;
       font-size: 0.1px;
     }
-    h1, h2 {
+    h1 {
+      clear: both;
+      padding-top: .5em;
       margin: 0;
-    }
-    hr {
-      position: relative;
-      height: 0;
-      padding: 0 0 1px;
-      border: 0;
-      margin: 1em 10%;
-      color: #ccc;
-      background: #ccc;
+      font: lighter 12pt "Open Sans", sans-serif;
     }
     .page {
-      text-align: center;
+      text-align: left;
       page-break-after: always;
     }
     .label-wrap {
@@ -50,45 +44,38 @@
       }
       .label {
         display: inline-block;
+        box-sizing: border-box;
         width: 99.99%;
+        padding: .125in;
+        font: lighter 14pt "Open Sans", sans-serif;
         vertical-align: middle;
       }
-    .two-up .label-wrap {
-      width: 7.5in;
-      height: 4.5in;
-    }
-      .two-up .product-name {
-        font-size: .6in;
-      }
-    .two-by-two .label-wrap {
-      width: 3.75in;
-      height: 4.5in;
-    }
-      .two-by-two .product-name {
-        margin-bottom: .2em;
-        font-size: .4in;
-      }
 
+    .buyer-name,
     .product-name {
-      margin: 0 5% .1em;
-      font: bold .5in/1.2 'Open Sans', sans-serif;
+      clear: both;
+      display: block;
+      margin: 0 0 .1em;
+      font: bold 20pt/1.2 "Open Sans Condensed", "Open Sans", sans-serif;
+    }
+    .delivery {
+      float: right;
+    }
+    .delivery-date,
+    .quantity {
+      display: block;
+      font: bold 15pt/1.2 "Open Sans Condensed", "Open Sans", sans-serif;
+    }
+    .logo {
+      float: left;
+      max-width: 1.25in;
+      max-height: .75in;
+    }
+    .lot {
+      text-align: right;
     }
 
-    .seller-name {
-      font: normal .4in 'Open Sans', sans-serif;
-    }
     @media print {
-      .two-up .label-wrap {
-        width: 8.5in;
-        height: 5.5in;
-      }
-      .two-by-two {
-        margin: .5in 0 0 .5in;
-      }
-        .two-by-two .label-wrap {
-          width: 3.57in;
-          height: 5in;
-        }
     }
     @media only screen {
       body {
@@ -106,62 +93,70 @@
 </head>
 <body>
 
-  <div class="page foursquare">
+  <div class="page">
     <div class="label-wrap">
       <div class="label">
-        <h1 class="product-name">Product Name</h1>
-        <hr>
-        <h2 class="seller-name">Seller Name</h2>
+        <%= image_tag asset_path('logo-farm-to-fork.png'), class: 'logo' %>
+
+        <div class="delivery">
+          <h1>For delivery on:</h1>
+          <span class="delivery-date">July 15, 2014</span>
+        </div>
+
+        <h1>Buyer:</h1>
+        <span class="buyer-name">Western California Colleged for the Performing Arts</span>
+
+        <h1>Product:</h1>
+        <span class="product-name">Free-Range Organically Fed Maerican Game Hen Breasts</span>
+
+        <span class="quantity">(20 Individually packaged 6oz. breasts)</span>
+        <span class="seller">from Van Dykemma Family Poultry and Goat Farm LLC</span>
+
+        <div class="lot">Lot: 0088991A</div>
       </div>
     </div>
-  </div>
-  
-  <!-- Two up page (i.e. Two labels) -->
-  <div class="page two-up">
+
     <div class="label-wrap">
       <div class="label">
-        <h1 class="product-name">Product Name</h1>
-        <hr>
-        <h2 class="seller-name">Seller Name</h2>
-      </div>
-    </div>    
-    <div class="label-wrap">
-      <div class="label">
-        <h1 class="product-name">Product Name</h1>
-        <hr>
-        <h2 class="seller-name">Seller Name</h2>
+        <%= image_tag asset_path('logo-farm-to-fork.png'), class: 'logo' %>
+
+        <div class="delivery">
+          <h1>For delivery on:</h1>
+          <span class="delivery-date">July 15, 2014</span>
+        </div>
+
+        <h1>Buyer:</h1>
+        <span class="buyer-name">Waterfront Cooperative Kitchen</span>
+
+        <h1>Product:</h1>
+        <span class="product-name">Organic Greed Leaf Bibb Lettuce</span>
+
+        <span class="quantity">(20 x 16oz. packaged)</span>
+        <span class="seller">from Lake Side Farms</span>
+
       </div>
     </div>
   </div>
 
-  <!-- two by two page (i.e. 4 labels) -->
-  <div class="page two-by-two">
+  <div class="page">
     <div class="label-wrap">
       <div class="label">
-        <h1 class="product-name">Product Name</h1>
-        <hr>
-        <h2 class="seller-name">Seller Name</h2>
-      </div>
-    </div>
-    <div class="label-wrap">
-      <div class="label">
-        <h1 class="product-name">Product Name</h1>
-        <hr>
-        <h2 class="seller-name">Seller Name</h2>
-      </div>
-    </div>
-    <div class="label-wrap">
-      <div class="label">
-        <h1 class="product-name">Longer Product Name</h1>
-        <hr>
-        <h2 class="seller-name">Seller Name</h2>
-      </div>
-    </div>
-    <div class="label-wrap">
-      <div class="label">
-        <h1 class="product-name">Product Name</h1>
-        <hr>
-        <h2 class="seller-name">Seller Name</h2>
+        <%= image_tag asset_path('logo-farm-to-fork.png'), class: 'logo' %>
+
+        <div class="delivery">
+          <h1>For delivery on:</h1>
+          <span class="delivery-date">July 15, 2014</span>
+        </div>
+
+        <h1>Buyer:</h1>
+        <span class="buyer-name">Joe's Shack</span>
+
+        <h1>Product:</h1>
+        <span class="product-name">Carrots</span>
+
+        <span class="quantity">(10 pounds)</span>
+        <span class="seller">from Spring Farms</span>
+
       </div>
     </div>
   </div>
