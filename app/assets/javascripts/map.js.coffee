@@ -35,6 +35,4 @@ $ ->
               +location.longitude),
               $("<div>").append(link, $("<br/>"), $("<div>Plan: #{location.plan_name}</div>"))[0],
               location.plan_name))
-
-    setTimeout(window.map.resize, 500)
     
