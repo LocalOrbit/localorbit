@@ -12,7 +12,7 @@
 
   <div class="field">
     <%= f.label :created_at, "Payment Date" %><br>
-    <%= f.datetime_field :created_at, class: 'datepicker', data: {'min-date' => 0}, value: Date.current.strftime("%d %b %Y") %>
+    <%= f.datetime_field :created_at, class: 'datepicker', data: {'min-date' => nil}, value: Date.current.strftime("%d %b %Y") %>
   </div>
 
   <div class="field">
