@@ -110,15 +110,21 @@ $ ->
         stick_table(i, e)
     $('body').attr({'data-points': stick_points, 'data-heights': stick_heights})
 
-  $(window).resize ->
-    measure_stickables
+  init = ->
+    $(window).resize ->
+      measure_stickables
 
-  measure_stickables()
+    initial_scroll = find_scrolly()
+    window.scrollTo(0, 0)
 
-  $(window).scroll (event) ->
-    width = $('.l-main').outerWidth()
-    left = $('.l-main').offset().left
-    affix i, point for point, i in stick_points
+    measure_stickables()
 
-  $(window).trigger "scroll"
+    $(window).scroll (event) ->
+      width = $('.l-main').outerWidth()
+      left = $('.l-main').offset().left
+      affix i, point for point, i in stick_points
 
+
+    window.scrollTo(0, initial_scroll) 
+
+  window.setTimeout(init, 10)
