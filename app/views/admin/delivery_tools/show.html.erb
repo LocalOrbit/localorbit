@@ -16,13 +16,14 @@
         <%= content_tag :div, delivery.deliver_to_name, class: "location-name" if delivery.deliver_to_name.present? %>
         <div class="location"><%= delivery.deliver_to_location %></div>
 
-        <div class="seller-tools toolbar" data-tools="<%= current_user.market_manager? || current_user.admin? ? "4" : "3" %>">
+        <div class="seller-tools toolbar" data-tools="<%= current_user.market_manager? || current_user.admin? ? "5" : "4" %>">
           <div class="tool"><%= link_to "Pick List", admin_delivery_tools_pick_list_path(delivery) %></div>
           <% if current_user.market_manager? || current_user.admin? %>
             <div class="tool"><%= link_to "Master Packing Slips <span class='note'>for aggregation</span>".html_safe, admin_delivery_tools_pack_list_path(delivery) %></div>
           <% end %>
           <div class="tool"><%= link_to "Individual Packing Slips <span class='note'>per Seller</span>".html_safe, admin_delivery_tools_individual_pack_list_path(delivery) %></div>
           <div class="tool"><%= link_to "Order Summary", admin_delivery_tools_order_summary_path(delivery)%></div>
+          <div class="tool"><%= link_to "Labels", coming_soon_dashboard_path %></div>
         </div>
         <hr>
 

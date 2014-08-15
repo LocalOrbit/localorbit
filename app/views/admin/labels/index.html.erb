@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>Label</title>
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300|Open+Sans+Condensed:700" rel="stylesheet" media="screen">
+  <meta name="pdfkit-print_media_type" content="true">
+
+  <%= render 'shared/print_opensanscondensed_bold' %>
+  <%= render 'shared/print_opensanscondensed_light' %>
+  <%= render 'shared/print_opensans_light' %>
+  <style type="text/css">
+
+    body {
+      color: #000;
+      font-size: 0.1px;
+    }
+    h1 {
+      clear: both;
+      padding-top: .5em;
+      margin: 0;
+      font: lighter 12pt "Open Sans", sans-serif;
+    }
+    .page {
+      text-align: left;
+      page-break-inside: avoid;
+      page-break-after: always;
+    }
+    .page:last-child {
+      page-break-after: avoid;
+    }
+    .label-wrap {
+      position: relative;
+      display: block;
+      width: 4in;
+      height: 4in;
+      margin: 0 auto;
+      outline: dashed 1px #ccc;
+      background: #fff;
+      vertical-align: top;
+    }
+      .label {
+        display: block;
+        box-sizing: border-box;
+        padding: .125in;
+        font: lighter 14pt/1.2 "Open Sans", sans-serif;
+        vertical-align: middle;
+      }
+
+    .buyer-name,
+    .product-name {
+      clear: both;
+      display: block;
+      margin: 0;
+      font: bold 20pt/1.1 "Open Sans Condensed", "Open Sans", sans-serif;
+    }
+    .buyer-name {
+      height: 2.5em;
+    }
+    .delivery {
+      float: right;
+    }
+    .delivery-date,
+    .quantity {
+      display: block;
+      font: bold 15pt/1.1 "Open Sans Condensed", "Open Sans", sans-serif;
+    }
+    .logo {
+      float: left;
+      max-width: 1.25in;
+      max-height: .75in;
+    }
+    .lot {
+      position: absolute;
+      right: .125in;
+      bottom: .125in;
+      text-align: right;
+    }
+  .seller {
+    display: block;
+    margin: 0 0 1.5em;
+  }
+
+    @media only screen {
+      body {
+        background: #ccc;
+      }
+      .page {
+        width: 7.5in;
+        height: 9in;
+        padding: 1in .5in;
+        margin: 1in auto;
+        background: #f1f1f1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <div class="label-wrap">
+      <div class="label">
+        <%= image_tag asset_path('logo-farm-to-fork.png'), class: 'logo' %>
+
+        <div class="delivery">
+          <h1>For delivery on:</h1>
+          <span class="delivery-date">July 15, 2014</span>
+        </div>
+
+        <h1>Buyer:</h1>
+        <span class="buyer-name">Western California Colleged for the Performing Arts</span>
+
+        <h1>Product:</h1>
+        <span class="product-name">Free-Range Organically Fed Maerican Game Hen Breasts</span>
+
+        <span class="quantity">(20 Individually packaged 6oz. breasts)</span>
+        <span class="seller">from Van Dykemma Family Poultry and Goat Farm LLC</span>
+
+        <div class="lot">Lot: 0088991A</div>
+      </div>
+    </div>
+
+    <div class="label-wrap">
+      <div class="label">
+        <%= image_tag asset_path('logo-farm-to-fork.png'), class: 'logo' %>
+
+        <div class="delivery">
+          <h1>For delivery on:</h1>
+          <span class="delivery-date">July 15, 2014</span>
+        </div>
+
+        <h1>Buyer:</h1>
+        <span class="buyer-name">Waterfront Cooperative Kitchen</span>
+
+        <h1>Product:</h1>
+        <span class="product-name">Organic Greed Leaf Bibb Lettuce</span>
+
+        <span class="quantity">(20 x 16oz. packaged)</span>
+        <span class="seller">from Lake Side Farms</span>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="label-wrap">
+      <div class="label">
+        <%= image_tag asset_path('logo-farm-to-fork.png'), class: 'logo' %>
+
+        <div class="delivery">
+          <h1>For delivery on:</h1>
+          <span class="delivery-date">July 15, 2014</span>
+        </div>
+
+        <h1>Buyer:</h1>
+        <span class="buyer-name">Joe's Shack</span>
+
+        <h1>Product:</h1>
+        <span class="product-name">Carrots</span>
+
+        <span class="quantity">(10 pounds)</span>
+        <span class="seller">from Spring Farms</span>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
