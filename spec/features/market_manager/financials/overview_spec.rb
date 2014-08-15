@@ -140,7 +140,7 @@ feature "Market Manager Financial Overview" do
       click_link "Send Invoices"
     end
 
-    expect(page).to have_content("Unsent Invoices")
+    expect(page).to have_content("Invoices")
 
     click_link "Financials"
 

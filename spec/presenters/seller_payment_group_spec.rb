@@ -39,7 +39,7 @@ describe SellerPaymentGroup do
   let!(:payments_for_order_for_seller_2_multi_item_paid) { create(:payment, payee: seller2, orders: [order_for_seller_2_multi_item_paid], amount: 160.77) }
   let!(:payments_for_order_for_sellers_2_and_3_with_2_paid) { create(:payment, payee: seller2, orders: [order_for_sellers_2_and_3_with_2_paid], amount: 20.97) }
 
-  let!(:buyer_payment_for_order_for_sellers_2_both_paid) { create(:payment, payee: nil, orders: [order_for_seller_2_buyer_and_seller_paid], payment_method: "credit card", amount: 20.97, status: "paid") }
+  let!(:buyer_payment_for_order_for_sellers_2_both_paid) { create(:payment, payee: nil, payer: buyer1, orders: [order_for_seller_2_buyer_and_seller_paid], payment_method: "credit card", amount: 20.97, status: "paid") }
   let!(:seller_payments_for_order_for_sellers_2_both_paid) { create(:payment, payee: seller2, orders: [order_for_seller_2_buyer_and_seller_paid], amount: 20.97) }
   let(:scope) { Order.payable_to_sellers }
 

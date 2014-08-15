@@ -45,6 +45,9 @@ class Payment < ActiveRecord::Base
   has_many :order_payments, inverse_of: :payment
   has_many :orders, through: :order_payments, inverse_of: :payments
 
+  validates :amount, presence: true, numericality: true
+  validate :payee_or_payer_is_set
+
   scope :successful, -> { where(status: %w(paid pending)) }
   scope :refundable, -> { successful.where(payment_type: "order").where("amount > refunded_amount") }
   scope :buyer_payments, -> { where(payment_type: ["order", "order refund"]) }
@@ -70,5 +73,13 @@ class Payment < ActiveRecord::Base
   def balanced_transaction
     # Will return the appropriate transaction type for any transaction
     Balanced::Transaction.find(balanced_uri) if balanced_uri.present?
+  end
+
+  private
+
+  def payee_or_payer_is_set
+    if payee_id.nil? && payer_id.nil?
+      errors.add(:base, "A Payee or Payer must be specified")
+    end
   end
 end

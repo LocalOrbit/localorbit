@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     get "financials" => "financials#index"
     namespace :financials do
       resource  :overview, only: [:show]
+      resource  :offline_payment, only: [:show, :create]
       resources :payments, only: [:index]
       resources :invoices
       resources :receipts, only: [:index, :edit, :update]

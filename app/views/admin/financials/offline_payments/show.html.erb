@@ -1,0 +1,30 @@
+<%= render "admin/financials/header" %>
+
+<h1>Enter Offline Payment</h1>
+
+<%= form_for :payment, url: admin_financials_offline_payment_path do |f| %>
+
+  <div class="field">
+    <%= f.hidden_field :payer_type, value: "Market" %>
+    <%= f.label :payer_id, "Paying Market" %><br>
+    <%= f.collection_select :payer_id, Market.order(:name), :id, :name, prompt: "Select a market" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :created_at, "Payment Date" %><br>
+    <%= f.datetime_field :created_at, class: 'datepicker', data: {'min-date' => 0}, value: Date.current.strftime("%d %b %Y") %>
+  </div>
+
+  <div class="field">
+    <%= f.label :amount, "Payment Amount" %><br>
+    <%= f.text_field :amount %>
+  </div>
+
+  <div class="field">
+    <%= f.label :payment_type, "Payment Type" %><br>
+    <%= f.select :payment_type, [["Service Fee", "service"]], {} %>
+  </div>
+
+
+  <%= f.submit "Save Payment" %>
+<% end %>
