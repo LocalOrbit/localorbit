@@ -229,7 +229,8 @@
     width: 100%;
     margin-top: 1em;
     margin-bottom: 1em;
-    input, button[type=submit] {
+
+    input, button[type=submit], input[type=search] + input[type=submit].btn--end {
       width: auto;
       height: 35px;
       -webkit-flex: auto 1;

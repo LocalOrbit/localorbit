@@ -1,53 +1,55 @@
 <%= search_form_for presenter.q, url: admin_report_path(presenter.report.to_s.dasherize), html: { class: "payment_search clear-after" } do |f| %>
-  <div class="manager-filters">
+  <div class="reports-filters">
     <div class="pull-left">
       <% presenter.filters.each do |filter| %>
 
         <% if filter == :order_number %>
           <div>
             <%= f.label :order_order_number_cont, "Search by order number" %><br>
-            <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
+            <div class="search-widget">
+              <%= f.search_field :order_order_number_cont, placeholder: "Search" -%><%= f.submit "Search", class: "btn--end" %>
+            </div>
           </div>
           <br>
         <% end %>
 
         <% if filter == :market_name && current_user.multi_market_membership? %>
-          <span class="preserve-alignment">
+          <span class="preserve-alignment mobile-block">
             <%= f.label :order_market_id_eq, "Market" %><br>
             <%= f.select :order_market_id_eq, options_from_collection_for_select(presenter.markets, :id, :name, presenter.q.order_market_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
           </span>
         <% end %>
 
         <% if filter == :seller_name %>
-          <span class="preserve-alignment">
+          <span class="preserve-alignment mobile-block">
             <%= f.label :product_organization_id_eq, "Seller" %><br>
             <%= f.select :product_organization_id_eq, options_from_collection_for_select(presenter.sellers, :id, :name, presenter.q.product_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
           </span>
         <% end %>
 
         <% if filter == :buyer_name %>
-          <span class="preserve-alignment">
+          <span class="preserve-alignment mobile-block">
             <%= f.label :order_organization_id_eq, "Buyer" %><br>
             <%= f.select :order_organization_id_eq, options_from_collection_for_select(presenter.buyers, :id, :name, presenter.q.order_organization_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
           </span>
         <% end %>
 
         <% if filter == :category_name %>
-          <span class="preserve-alignment">
+          <span class="preserve-alignment mobile-block">
             <%= f.label :product_category_id_eq, "Category" %><br>
             <%= f.select :product_category_id_eq, options_from_collection_for_select(presenter.categories, :id, :name, presenter.q.product_category_id_eq), { include_blank: "All" }, { class: "filter-input" } %>
           </span>
         <% end %>
 
         <% if filter == :product_name %>
-          <span class="preserve-alignment">
+          <span class="preserve-alignment mobile-block">
             <%= f.label :name_eq, "Product" %><br>
             <%= f.select :name_eq, options_from_collection_for_select(presenter.products, :to_s, :to_s, presenter.q.name_eq), { include_blank: "All" }, { class: "filter-input" } %>
           </span>
         <% end %>
 
         <% if filter == :payment_method %>
-          <span class="preserve-alignment">
+          <span class="preserve-alignment mobile-block">
             <%= f.label :order_payment_method_eq, "Payment Method" %><br>
             <%= f.select :order_payment_method_eq, options_from_collection_for_select(presenter.payment_methods, :to_s, :titleize, presenter.q.order_payment_method_eq), { include_blank: "All" }, { class: "filter-input" } %>
           </span>
@@ -56,7 +58,7 @@
     </div>
 
     <% if presenter.filters.include?(:placed_at) %>
-      <div class="pull-right">
+      <div class="pull-right date-filters">
         <span class="preserve-alignment">
           <label for="q_order_placed_at_date_gteq">Placed on or after</label><br>
           <%= datetime_field_tag "q[order_placed_at_date_gteq]", @presenter.start_date, class: 'datepicker' %>
@@ -67,7 +69,7 @@
         </span>
         <span class="preserve-alignment">
           <br>
-          <%= f.submit "Filter", class: "btn--small screen-only" %>
+          <%= f.submit "Filter", class: "btn--small mobile-block screen-only" %>
         </span>
       </div>
     <% end %>

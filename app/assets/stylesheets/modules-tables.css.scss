@@ -21,6 +21,63 @@
   position: relative;
   clear: both;
   overflow: visible;
+  .fade-left {
+    left: 0;
+    background:   -moz-linear-gradient(left, rgba(0,0,0,0.25), rgba(0,0,0,0));
+    background:-webkit-linear-gradient(left, rgba(0,0,0,0.25), rgba(0,0,0,0));
+    background:     -o-linear-gradient(left, rgba(0,0,0,0.25), rgba(0,0,0,0));
+    background:    -ms-linear-gradient(left, rgba(0,0,0,0.25), rgba(0,0,0,0));
+    background:        linear-gradient(left, rgba(0,0,0,0.25), rgba(0,0,0,0));
+    &:before {
+      left: 10px;
+      padding-left: 10px;
+      background-position: left center;
+    }
+  }
+  .fade-right {
+    right: 0;
+    background:   -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25));
+    background:-webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25));
+    background:     -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25));
+    background:    -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25));
+    background:        linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25));
+    &:before {
+      right: 10px;
+      padding-right: 10px;
+      background-position: right center;
+    }
+  }
+      .fade-right,
+      .fade-left {
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        display: none;
+        width: 20px;
+        height: 100%;
+        margin-top: 10px;
+        &:before {
+          position: absolute;
+          top: -10px;
+          padding: 2px 4px;
+          color: #fff;
+          background-image: asset_url('bg-flag.png');
+          content: "Scroll to see more";
+          font-size: 12px;
+          font-weight: bold;
+          white-space: nowrap;
+        }
+      }
+      &.hard-left {
+        .fade-left {
+          display: none;
+        }
+      }
+      &.hard-right {
+        .fade-right {
+          display: none;
+        }
+      }
 }
 .table-wrapper {
   position: relative;
@@ -28,9 +85,19 @@
   overflow: visible;
 }
   @media screen and (min-width: $tablet_floor) {
-    .report-table .table-wrapper {
-      max-width: 100%;
-      overflow: auto;
+    .report-table {
+      .fade-right,
+      .fade-left {
+        display: block;
+      }
+      .table-wrapper {
+        max-width: 100%;
+        padding-top: 20px;
+        overflow: auto;
+        th {
+          white-space: nowrap;
+        }
+      }
     }
   }
   @media screen and (max-width: $mobile_break) {
@@ -50,64 +117,11 @@
       clear: both;
       margin-right: -10px;
       margin-left: -10px;
-
       .fade-right,
       .fade-left {
-        position: absolute;
-        top: 0;
-        z-index: 1;
-        width: 20px;
-        height: 100%;
-        margin-top: 10px;
-        content: '';
-        &:before {
-          position: absolute;
-          top: -10px;
-          padding: 2px 4px;
-          color: #fff;
-          background-image: asset_url('bg-flag.png');
-          content: "Scroll to see more";
-          font-size: 12px;
-          font-weight: bold;
-          white-space: nowrap;
-        }
+        display: block;
       }
-      .fade-left {
-        left: 0;
-        background:   -moz-linear-gradient(left, rgba(0,0,0,0.25), rgba(0,0,0,0));
-        background:-webkit-linear-gradient(left, rgba(0,0,0,0.25), rgba(0,0,0,0));
-        background:     -o-linear-gradient(left, rgba(0,0,0,0.25), rgba(0,0,0,0));
-        background:    -ms-linear-gradient(left, rgba(0,0,0,0.25), rgba(0,0,0,0));
-        background:        linear-gradient(left, rgba(0,0,0,0.25), rgba(0,0,0,0));
-        &:before {
-          left: 10px;
-          padding-left: 10px;
-          background-position: left center;
-        }
-      }
-      .fade-right {
-        right: 0;
-        background:   -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25));
-        background:-webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25));
-        background:     -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25));
-        background:    -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25));
-        background:        linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.25));
-        &:before {
-          right: 10px;
-          padding-right: 10px;
-          background-position: right center;
-        }
-      }
-      &.hard-left {
-        .fade-left {
-          display: none;
-        }
-      }
-      &.hard-right {
-        .fade-right {
-          display: none;
-        }
-      }
+
     }
   }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) { 
