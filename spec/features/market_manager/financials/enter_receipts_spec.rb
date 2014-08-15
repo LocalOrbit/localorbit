@@ -18,6 +18,11 @@ feature "entering receipts" do
   let!(:order2) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market, organization: buyer, total_cost: 6.99, payment_method: "purchase order", order_number: "LO-002", invoiced_at: 4.day.ago, invoice_due_date: 10.days.from_now, payment_status: "paid") }
   let!(:order3) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 420.00)], market: market, organization: buyer, total_cost: 420, payment_method: "purchase order", order_number: "LO-003", placed_at: 2.days.ago, invoiced_at: 2.day.ago, invoice_due_date: 12.days.from_now) }
 
+  invoice_auth_matcher = lambda {|r1, r2|
+    matcher = %r{/admin/invoices/[0-9]+/invoice\.pdf\?auth_token=}
+    matcher.match(r1.uri) && matcher.match(r2.uri)
+  }
+
   before do
     switch_to_subdomain(market.subdomain)
     sign_in_as market_manager
@@ -86,6 +91,12 @@ feature "entering receipts" do
     expect(row.order_date).to eq(2.days.ago.strftime("%m/%d/%Y"))
     expect(row.due_date).to eq(12.days.from_now.strftime("%m/%d/%Y"))
     expect(row.amount).to eq("$420.00")
+  end
+
+  it "allows the user to resend the invoice", vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
+    Dom::Admin::Financials::InvoiceRow.first.resend_invoice
+
+    expect(page).to have_content("Invoice sent for order number #{order1.order_number}")
   end
 
   context "filtering" do

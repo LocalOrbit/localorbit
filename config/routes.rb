@@ -39,7 +39,9 @@ Rails.application.routes.draw do
       resource  :overview, only: [:show]
       resource  :offline_payment, only: [:show, :create]
       resources :payments, only: [:index]
-      resources :invoices
+      resources :invoices do
+        post :resend, on: :collection
+      end
       resources :receipts, only: [:index, :edit, :update]
       resources :vendor_payments
       resources :market_payments, only: [:index, :create]

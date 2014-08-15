@@ -73,7 +73,10 @@
           <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
           <td class="due-date"><%= display_due_date(order.invoice_due_date) %></td>
           <td class="amount"><%= number_to_currency(order.total_cost) %></td>
-          <td><%= link_to 'Enter Receipt', edit_admin_financials_receipt_path(id: order.id), class: 'action-link font-icon icon-stack-list' %></td>
+          <td>
+            <%= link_to 'Enter Receipt', edit_admin_financials_receipt_path(id: order.id), class: 'action-link font-icon icon-stack-list' %>
+            <%= link_to 'Resend Invoice', resend_admin_financials_invoices_path(order_id: order.id, redirect_to: admin_financials_receipts_path), method: :post, class: 'action-link font-icon icon-mail-send' %>
+          </td>
         </tr>
         <% end %>
       </tbody>
