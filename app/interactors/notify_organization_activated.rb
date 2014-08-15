@@ -7,6 +7,7 @@ class NotifyOrganizationActivated
     return unless organization.needs_activated_notification? # It's the first time, send the notification
 
     organization.update_attributes(needs_activated_notification: false)
+    market = organization.markets.last
     UserMailer.delay.organization_activated(organization, market)
   end
 end
