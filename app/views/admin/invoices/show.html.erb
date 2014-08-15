@@ -8,7 +8,10 @@
   <meta name="pdfkit-header_right" content="Page [page] of [toPage]">
   <meta name="pdfkit-header_spacing" content="5">
   <title>Local Orbit</title>
-  <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300%7COpen+Sans+Condensed:700,300" rel="stylesheet" type="text/css">
+  <%= render 'shared/print_opensanscondensed_bold' %>
+  <%= render 'shared/print_opensans' %>
+  <%= render 'shared/print_opensans_bold' %>
+
   <link href="<%= asset_path('invoices.css') %>" rel="stylesheet">
   <link href="<%= asset_path('z-sniff.css') %>" rel="stylesheet">
 </head>
