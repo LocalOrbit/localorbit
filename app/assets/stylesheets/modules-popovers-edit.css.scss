@@ -214,6 +214,9 @@
   }
   .popup-footer {
     overflow: hidden;
+    .cancel {
+      margin-right: 2em;
+    }
   }
   button {
     margin-top: -5px;
