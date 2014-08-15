@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "entering receipts" do
-  let(:market) { create(:market, po_payment_term: 14) }
+  let(:market) { create(:market, subdomain: 'betterest', po_payment_term: 14) }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
