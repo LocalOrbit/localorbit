@@ -25,6 +25,7 @@ feature "user viewing their organizations" do
 
       expect(page).to_not have_content(org3.name)
 
+      expect(page).to have_link(org2.name)
       expect(page).to_not have_link(org1.name)
     end
   end
