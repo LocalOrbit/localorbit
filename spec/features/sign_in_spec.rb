@@ -2,6 +2,11 @@ require "spec_helper"
 
 feature "User signing in" do
   let!(:user) { create(:user, :admin) }
+  let!(:market2) { create(:market) }
+  let!(:org2) { create(:organization, markets: [market2]) }
+  let!(:user2) { create(:user, organizations: [org2]) }
+
+
   let(:cookie_name) { "_local_orbit_session_test" }
 
   scenario "A user can sign in" do
@@ -150,5 +155,19 @@ feature "User signing in" do
     click_button "Sign In"
 
     expect(page.current_path).to eq(products_path)
+  end
+
+  context "As a suspended user" do
+    before do
+      u = user2.user_organizations.find_by(organization: org2)
+      u.update_attributes(enabled: false)
+    end
+
+    scenario "logging in as a suspended user" do
+      switch_to_subdomain(market2.subdomain)
+      sign_in_as(user2)
+
+      expect(page).to have_content("Your account has been suspended.")
+    end
   end
 end

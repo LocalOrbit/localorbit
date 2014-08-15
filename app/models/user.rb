@@ -88,6 +88,22 @@ class User < ActiveRecord::Base
     admin? || user.organizations.any? {|org| can_manage_organization?(org) }
   end
 
+  def enabled_for_organization?(org)
+    return true if admin? || can_manage_organization?(org)
+    uo = user_organizations.find_by(organization: org)
+    return false if uo.nil?
+
+    uo.enabled?
+  end
+
+  def suspended_from_all_orgs?(market)
+    return if organizations.nil?
+    return if market.nil?
+    enabled_org_ids = user_organizations.where(enabled: true).pluck(:organization_id)
+    market_org_ids = market.organizations.pluck(:id)
+    (enabled_org_ids & market_org_ids).empty?
+  end
+
   def market_manager?
     managed_markets.any?
   end

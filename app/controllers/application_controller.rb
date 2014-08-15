@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :ensure_market_affiliation
   before_action :ensure_active_organization
+  before_action :ensure_user_not_suspended
 
   before_action :set_timezone
 
@@ -76,6 +77,15 @@ class ApplicationController < ActionController::Base
     return if current_user.admin? || current_user.can_manage_market?(market_for_current_subdomain)
     if current_user.organizations.active.empty?
       render file: Rails.root.join("public/organization_disabled.html"), status: :forbidden
+    end
+  end
+
+  def ensure_user_not_suspended
+    return if current_user.nil?
+    return if current_user.admin? || current_user.can_manage_market?(market_for_current_subdomain)
+
+    if current_user.suspended_from_all_orgs?(current_market)
+      render file: Rails.root.join("public/user_suspended.html"), status: :forbidden
     end
   end
 

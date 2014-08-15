@@ -402,7 +402,7 @@ ActiveRecord::Schema.define(version: 20140814161020) do
     t.string   "seller_name"
     t.integer  "quantity"
     t.string   "unit"
-    t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "discount_seller",        precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "market_seller_fee",      precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "local_orbit_seller_fee", precision: 10, scale: 2, default: 0.0,      null: false
     t.decimal  "local_orbit_market_fee", precision: 10, scale: 2, default: 0.0,      null: false
@@ -416,7 +416,7 @@ ActiveRecord::Schema.define(version: 20140814161020) do
     t.integer  "legacy_id"
     t.integer  "quantity_delivered"
     t.string   "payment_status",                                  default: "unpaid"
-    t.decimal  "discount_seller",        precision: 10, scale: 2, default: 0.0,      null: false
+    t.decimal  "discount_market",        precision: 10, scale: 2, default: 0.0,      null: false
   end
 
   add_index "order_items", ["order_id", "product_id"], name: "index_order_items_on_order_id_and_product_id", using: :btree
@@ -623,6 +623,7 @@ ActiveRecord::Schema.define(version: 20140814161020) do
     t.integer  "organization_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "enabled",         default: true
   end
 
   add_index "user_organizations", ["organization_id"], name: "index_user_organizations_on_organization_id", using: :btree

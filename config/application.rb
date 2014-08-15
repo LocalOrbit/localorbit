@@ -31,6 +31,9 @@ module LocalOrbit
       Devise::Mailer.layout "email"
       DeviseController.skip_before_action :ensure_market_affiliation
       DeviseController.skip_before_action :ensure_active_organization
+      DeviseController.skip_before_action :ensure_user_not_suspended
+
+
     end
 
     config.font_assets.origin = "*"
