@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/activerecord-hackery/ransack.git
-  revision: c41a0f1aae9d59080d72380f93eb409c296b910c
+  revision: 5a3458a598140f7d6cd53b459d28a7c7c56bf633
   branch: rails-4.1
   specs:
     ransack (1.2.4)
@@ -8,7 +8,7 @@ GIT
       activerecord (>= 4.0)
       activesupport (>= 4.0)
       i18n
-      polyamorous (~> 1.1.0)
+      polyamorous (~> 1.1)
 
 GIT
   remote: git://github.com/collectiveidea/acts_as_geocodable.git
@@ -136,7 +136,7 @@ GEM
     delayed_job_active_record (4.0.1)
       activerecord (>= 3.0, < 4.2)
       delayed_job (>= 3.0, < 4.1)
-    devise (3.2.4)
+    devise (3.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -164,7 +164,7 @@ GEM
       launchy (~> 2.1)
       mail (~> 2.2)
     erubis (2.7.0)
-    excon (0.39.4)
+    excon (0.39.5)
     execjs (2.2.1)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
@@ -185,7 +185,7 @@ GEM
       fog-softlayer
       ipaddress (~> 0.5)
       nokogiri (~> 1.5, >= 1.5.11)
-    fog-brightbox (0.2.0)
+    fog-brightbox (0.3.0)
       fog-core (~> 1.22)
       fog-json
       inflecto
@@ -198,18 +198,18 @@ GEM
       net-ssh (>= 2.1.3)
     fog-json (1.0.0)
       multi_json (~> 1.0)
-    fog-softlayer (0.3.13)
+    fog-softlayer (0.3.14)
       fog-core
       fog-json
     font_assets (0.1.11)
       rack
     formatador (0.2.5)
     fssm (0.2.10)
-    heroku (3.9.3)
+    heroku (3.10.1)
       heroku-api (~> 0.3.19)
       launchy (>= 0.3.2)
       netrc (~> 0.7.7)
-      rest-client (~> 1.6.1)
+      rest-client (= 1.6.7)
       rubyzip
     heroku-api (0.3.19)
       excon (~> 0.38)
@@ -344,17 +344,16 @@ GEM
     rdoc (4.1.1)
       json (~> 1.4)
     request_store (1.0.8)
-    rest-client (1.6.8)
-      mime-types (~> 1.16)
-      rdoc (>= 2.4.2)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec-collection_matchers (1.0.0)
       rspec-expectations (>= 2.99.0.beta1)
-    rspec-core (3.0.3)
+    rspec-core (3.0.4)
       rspec-support (~> 3.0.0)
-    rspec-expectations (3.0.3)
+    rspec-expectations (3.0.4)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.0.0)
-    rspec-mocks (3.0.3)
+    rspec-mocks (3.0.4)
       rspec-support (~> 3.0.0)
     rspec-rails (3.0.2)
       actionpack (>= 3.0)
@@ -364,10 +363,9 @@ GEM
       rspec-expectations (~> 3.0.0)
       rspec-mocks (~> 3.0.0)
       rspec-support (~> 3.0.0)
-    rspec-support (3.0.3)
-    rubocop (0.24.1)
-      json (>= 1.7.7, < 2)
-      parser (>= 2.2.0.pre.3, < 3.0)
+    rspec-support (3.0.4)
+    rubocop (0.25.0)
+      parser (>= 2.2.0.pre.4, < 3.0)
       powerpack (~> 0.0.6)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
