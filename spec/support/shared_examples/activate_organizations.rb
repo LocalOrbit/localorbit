@@ -61,4 +61,25 @@ shared_examples "activates and deactivates organizations" do
 
     expect(ActionMailer::Base.deliveries).to be_empty
   end
+
+  it "sends an email mentioning the correct market" do
+    market2 = create(:market, managers: [user])
+    org1_user = create(:user, organizations: [org1])
+
+    sign_out
+    switch_to_subdomain(market2.subdomain)
+    sign_in_as(user)
+
+    visit admin_organizations_path
+
+    org_row = Dom::Admin::OrganizationRow.find_by_name(org1.name)
+    org_row.activate!
+
+    expect(page).to have_content("Updated #{org1.name}")
+    org_row = Dom::Admin::OrganizationRow.find_by_name(org1.name)
+    expect(org_row.node).not_to have_content("Activate")
+
+    open_last_email_for(org1_user.email)
+    expect(current_email).to have_body_text("The #{market.name} Market Manager has activated your account")
+  end
 end
