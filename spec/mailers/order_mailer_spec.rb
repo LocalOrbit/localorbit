@@ -48,11 +48,11 @@ describe OrderMailer do
       before do
         Order.enable_auditing
         OrderItem.enable_auditing
-        order_item1.update(quantity: 15)
-        order.update(updated_at: Time.current)
+        order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: order_item1.id, quantity: 15}})
         OrderItem.disable_auditing
         Order.disable_auditing
 
+        Audit.all.update_all(request_uuid: SecureRandom.uuid)
         @notification = OrderMailer.buyer_order_updated(order.reload)
       end
 
@@ -73,11 +73,11 @@ describe OrderMailer do
       before do
         Order.enable_auditing
         OrderItem.enable_auditing
-        order_item1.update(delivery_status: "canceled")
-        order.update(updated_at: Time.current)
+        order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: order_item1.id, delivery_status: "canceled"}})
         OrderItem.disable_auditing
         Order.disable_auditing
 
+        Audit.all.update_all(request_uuid: SecureRandom.uuid)
         @notification = OrderMailer.buyer_order_updated(order.reload)
       end
 
@@ -102,6 +102,7 @@ describe OrderMailer do
         OrderItem.disable_auditing
         Order.disable_auditing
 
+        Audit.all.update_all(request_uuid: SecureRandom.uuid)
         @notification = OrderMailer.buyer_order_updated(order.reload)
       end
 
@@ -118,6 +119,7 @@ describe OrderMailer do
         OrderItem.disable_auditing
         Order.disable_auditing
 
+        Audit.all.update_all(request_uuid: SecureRandom.uuid)
         @notification = OrderMailer.buyer_order_updated(order.reload)
       end
 
@@ -132,11 +134,11 @@ describe OrderMailer do
       before do
         Order.enable_auditing
         OrderItem.enable_auditing
-        order_item1.update(quantity: 15)
-        order.update(updated_at: Time.current)
+        order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: order_item1.id, quantity: 15}})
         OrderItem.disable_auditing
         Order.disable_auditing
 
+        Audit.all.update_all(request_uuid: SecureRandom.uuid)
         @notification = OrderMailer.seller_order_updated(order.reload, seller1)
       end
 
@@ -161,11 +163,11 @@ describe OrderMailer do
       before do
         Order.enable_auditing
         OrderItem.enable_auditing
-        order_item1.update(delivery_status: "canceled")
-        order.update(updated_at: Time.current)
+        order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: order_item1.id, delivery_status: "canceled"}})
         OrderItem.disable_auditing
         Order.disable_auditing
 
+        Audit.all.update_all(request_uuid: SecureRandom.uuid)
         @notification = OrderMailer.seller_order_updated(order.reload, seller1)
       end
 
@@ -194,6 +196,7 @@ describe OrderMailer do
         OrderItem.disable_auditing
         Order.disable_auditing
 
+        Audit.all.update_all(request_uuid: SecureRandom.uuid)
         @notification = OrderMailer.seller_order_updated(order.reload, seller1)
       end
 
@@ -210,6 +213,7 @@ describe OrderMailer do
         OrderItem.disable_auditing
         Order.disable_auditing
 
+        Audit.all.update_all(request_uuid: SecureRandom.uuid)
         @notification = OrderMailer.seller_order_updated(order.reload, seller1)
       end
 
