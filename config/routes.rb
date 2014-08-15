@@ -40,7 +40,10 @@ Rails.application.routes.draw do
       resource  :offline_payment, only: [:show, :create]
       resources :payments, only: [:index]
       resources :invoices do
-        post :resend, on: :collection
+        collection do
+          post :resend
+          post :resend_overdue
+        end
       end
       resources :receipts, only: [:index, :edit, :update]
       resources :vendor_payments

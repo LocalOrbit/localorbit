@@ -2,7 +2,7 @@ module Admin::Financials
   class InvoicesController < AdminController
     include StickyFilters
 
-    before_action :find_orders_for_invoicing
+    before_action :find_orders_for_invoicing, only: [:create, :resend]
 
     def index
       if current_user.buyer_only?
@@ -41,6 +41,16 @@ module Admin::Financials
       redirect_path = params[:redirect_to] || admin_financials_invoices_path
       redirect_to redirect_path, notice: message
     end
+
+    def resend_overdue
+      orders = Order.orders_for_seller(current_user).payment_overdue
+      orders.each {|order| SendInvoiceEmail.perform(order: order) }
+
+      message = orders.present? ? "Invoice resent for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(", ")}." : "No overdue invoices found."
+      redirect_path = params[:redirect_to] || admin_financials_invoices_path
+      redirect_to redirect_path, notice: message
+    end
+
 
     private
 
