@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>Label</title>
-  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300|Open+Sans+Condensed:700" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300|Open+Sans+Condensed:700" rel="stylesheet" media="screen">
   <meta name="pdfkit-print_media_type" content="true">
-  <meta name="pdfkit-margin_top" content="0in">
-  <meta name="pdfkit-margin_right" content="0in">
-  <meta name="pdfkit-margin_bottom" content="0in">
-  <meta name="pdfkit-margin_left" content="0in">
+
+  <%= render 'shared/print_opensanscondensed_bold' %>
+  <%= render 'shared/print_opensanscondensed_light' %>
+  <%= render 'shared/print_opensans_light' %>
   <style type="text/css">
+
     body {
       color: #000;
       font-size: 0.1px;
@@ -22,11 +23,15 @@
     }
     .page {
       text-align: left;
+      page-break-inside: avoid;
       page-break-after: always;
+    }
+    .page:last-child {
+      page-break-after: avoid;
     }
     .label-wrap {
       position: relative;
-      display: inline-block;
+      display: block;
       width: 4in;
       height: 4in;
       margin: 0 auto;
@@ -34,20 +39,11 @@
       background: #fff;
       vertical-align: top;
     }
-      .label-wrap:after {
-        position: relative;
-        display: inline-block;
-        width: 0;
-        height: 100%;
-        content: '';
-        vertical-align: middle;
-      }
       .label {
-        display: inline-block;
+        display: block;
         box-sizing: border-box;
-        width: 99.99%;
         padding: .125in;
-        font: lighter 14pt "Open Sans", sans-serif;
+        font: lighter 14pt/1.2 "Open Sans", sans-serif;
         vertical-align: middle;
       }
 
@@ -55,8 +51,11 @@
     .product-name {
       clear: both;
       display: block;
-      margin: 0 0 .1em;
-      font: bold 20pt/1.2 "Open Sans Condensed", "Open Sans", sans-serif;
+      margin: 0;
+      font: bold 20pt/1.1 "Open Sans Condensed", "Open Sans", sans-serif;
+    }
+    .buyer-name {
+      height: 2.5em;
     }
     .delivery {
       float: right;
@@ -64,7 +63,7 @@
     .delivery-date,
     .quantity {
       display: block;
-      font: bold 15pt/1.2 "Open Sans Condensed", "Open Sans", sans-serif;
+      font: bold 15pt/1.1 "Open Sans Condensed", "Open Sans", sans-serif;
     }
     .logo {
       float: left;
@@ -72,11 +71,16 @@
       max-height: .75in;
     }
     .lot {
+      position: absolute;
+      right: .125in;
+      bottom: .125in;
       text-align: right;
     }
+  .seller {
+    display: block;
+    margin: 0 0 1.5em;
+  }
 
-    @media print {
-    }
     @media only screen {
       body {
         background: #ccc;
