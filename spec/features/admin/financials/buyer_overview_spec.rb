@@ -7,7 +7,7 @@ feature "Buyer Financial Overview" do
 
   let!(:seller)  { create(:organization, markets: [market]) }
   let!(:seller2) { create(:organization, markets: [market]) }
-  let!(:buyer) { create(:organization, :single_location, markets: [market], can_sell: false) }
+  let!(:buyer) { create(:organization, :buyer, :single_location, markets: [market]) }
 
   let!(:user)    { create(:user, organizations: [buyer]) }
 
@@ -134,5 +134,62 @@ feature "Buyer Financial Overview" do
     click_link "Financials"
 
     expect(money_out_row("Due").amount).to eql("$12.82")
+  end
+
+  scenario "belonging to multiple buying organizations" do
+    create(:organization, :buyer, :single_location, markets: [market], users: [user])
+    user.organizations(true)
+
+    switch_to_subdomain(market.subdomain)
+    sign_in_as(user)
+    click_link "Dashboard", match: :first
+    click_link "Financials"
+
+    expect(page).to have_content("Payments Due")
+    expect(page).to have_content("This is a snapshot")
+
+    expect(money_out_row("Overdue").amount).to eql("$156.98")
+    expect(money_out_row("Due").amount).to eql("$95.04")
+    expect(money_out_row("Purchase Orders").amount).to eql("$392.88")
+
+    click_link "Overdue"
+
+    expect(page).to have_content(@overdue_order1.order_number)
+    expect(page).to have_content(@overdue_order2.order_number)
+    expect(page).not_to have_content(@due_order.order_number)
+    expect(page).not_to have_content(@uninvoiced1.order_number)
+    expect(page).not_to have_content(@uninvoiced2.order_number)
+
+    within("#payment_status") do
+      expect(find('option[selected]').text).to eql("Overdue")
+    end
+
+    click_link "Financials"
+    click_link "Due"
+
+    fill_in "q_invoice_due_date_date_lteq", with: 30.days.from_now.to_date.to_s
+    click_button "Filter"
+
+    expect(page).to have_content(@due_order.order_number)
+    expect(page).not_to have_content(@overdue_order1.order_number)
+    expect(page).not_to have_content(@overdue_order2.order_number)
+    expect(page).not_to have_content(@uninvoiced1.order_number)
+    expect(page).not_to have_content(@uninvoiced2.order_number)
+
+    within("#payment_status") do
+      expect(find('option[selected]').text).to eql("Due")
+    end
+
+    click_link "Financials"
+    click_link "Purchase Orders"
+
+    expect(page).not_to have_content(@due_order.order_number)
+    expect(page).not_to have_content(@overdue_order1.order_number)
+    expect(page).not_to have_content(@overdue_order2.order_number)
+    expect(page).to have_content(@uninvoiced1.order_number)
+    expect(page).to have_content(@uninvoiced2.order_number)
+
+    click_link "Financials"
+    click_link "Review Payment History"
   end
 end
