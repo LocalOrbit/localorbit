@@ -21,7 +21,7 @@
     Click the link below, then click the <em>Activate</em> button.
   </p>
 
-  <%= link_to "Edit Organization", admin_organization_url(@organization), class: "lo_button lo_button_large"%>
+  <%= link_to "Edit Organization", admin_organization_url(@organization, host: (@market ? @market.domain : "app.#{Figaro.env.domain}")), class: "lo_button lo_button_large"%>
 
   <p>
     If clicking the button doesn't work, right click it and copy the link.<br>

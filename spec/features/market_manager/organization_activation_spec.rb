@@ -3,6 +3,10 @@ require "spec_helper"
 feature "Organization activation" do
   given!(:market_manager) { create(:user, managed_markets: [market]) }
 
+  def expect_registraiton_email_link(org)
+    expect(current_email.body).to match(Regexp.new(admin_organization_url(org, host: market.domain)))
+  end
+
   def request_account(opts={})
     default_opts = { buying: false, selling: false }
     opts = default_opts.merge!(opts)
@@ -74,6 +78,8 @@ feature "Organization activation" do
       sign_in_as(market_manager)
       open_last_email_for(market_manager.email)
 
+      expect_registraiton_email_link(Organization.last)
+
       visit_in_email("Edit Organization")
 
       expect(page).to have_content("My Organization")
@@ -104,6 +110,7 @@ feature "Organization activation" do
 
       sign_in_as(market_manager)
       open_last_email_for(market_manager.email)
+      expect_registraiton_email_link(Organization.last)
 
       visit_in_email("Edit Organization")
 
@@ -131,6 +138,7 @@ feature "Organization activation" do
 
       sign_in_as(market_manager)
       open_last_email_for(market_manager.email)
+      expect_registraiton_email_link(Organization.last)
 
       visit_in_email("Edit Organization")
 
