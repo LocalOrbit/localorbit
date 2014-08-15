@@ -1,7 +1,7 @@
 class Map
 
   constructor: (container_id, center, map_id) ->
-    @signs = []
+    @markets = []
     @map = new L.Map container_id,
       center: center
       zoom: 15
@@ -9,15 +9,17 @@ class Map
     @bounds = new L.LatLngBounds([center])
     @map.addLayer(new L.tileLayer("https://{s}.tiles.mapbox.com/v3/#{map_id}/{z}/{x}/{y}.png"))
 
-
-  add: (sign) ->
-    @signs.push(sign)
-    @map.addLayer(sign.marker())
-    @bounds.extend(sign.point)
+  add: (market) ->
+    marker = market.marker()
+    $(marker).ready =>
+      @resize()
+    @markets.push(market)
+    @bounds.extend(market.point)
+    @map.addLayer(marker)
 
   resize: =>
-    if @signs.length == 1
-      @map.panTo(@signs[0].point)
+    if @markets.length == 1
+      @map.panTo(@markets[0].point)
     else
       @map.fitBounds(@bounds)
 
