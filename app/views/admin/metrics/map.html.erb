@@ -1,0 +1,7 @@
+<%= render "admin/metrics/header" %>
+<div class="map-wrapper">
+  <div class="hidden" id="market-map-data">
+    <%= raw @map_data %>
+  </div>
+  <div class="map" id="market-map" data-mapbox-map-id="<%= @mapbox_map_id %>"></div>
+</div>
