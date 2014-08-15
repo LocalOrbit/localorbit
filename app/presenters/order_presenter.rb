@@ -35,12 +35,15 @@ module OrderPresenter
   end
 
   def activities
-    Audit.where("(associated_type = 'Order' AND associated_id = :order_id) OR
+    audits = Audit.where("(associated_type = 'Order' AND associated_id = :order_id) OR
     (auditable_type = 'Order' AND auditable_id = :order_id) OR
     (auditable_type = 'Payment' AND auditable_id IN (:payment_ids))",
                 order_id: @order.id,
                 payment_ids: @order.payment_ids
-    ).reorder("created_at DESC")
+    ).reorder(:request_uuid, :created_at).group_by(&:request_uuid)
+
+    # return the first audit so we can grab timestamp and user
+    audits.map { |uuid, audits| [audits.first, audits] }
   end
 
   def refund?
