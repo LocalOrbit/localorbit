@@ -1,4 +1,4 @@
-<% if current_user.enabled_for_organization?(organization) %>
+<% if current_user.admin? || current_user.can_manage_market?(current_market) || current_user.enabled_for_organization?(organization) %>
   <tr>
     <td class="name"><%= link_to organization.name, [:admin, organization] %></td>
     <td class="market"><%= organization.original_market.name %></td>

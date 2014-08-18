@@ -28,6 +28,7 @@ module Admin
     def update_enabled
       org = @user.organizations.find(params[:organization_id])
 
+
       if !current_user.can_manage_organization?(org)
         return redirect_to :back, alert: "You are unable to manage this organization."
       end
@@ -35,11 +36,14 @@ module Admin
       join_association = @user.user_organizations.find_by(organization: org)
 
       if join_association.nil?
-        redirect_to :back, alert: "Unable to update #{@user.name}"
+        redirect_to :back, alert: "Unable to update #{@user.decorate.display_name}"
       end
 
-      join_association.update_attributes(enabled: update_enabled_params[:enabled])
-      redirect_to :back, notice: "Updated #{@user.name}"
+      if join_association.update_attributes(enabled: update_enabled_params[:enabled])
+        redirect_to :back, notice: "Updated #{@user.decorate.display_name}"
+      else
+        redirect_to :back, alert: "Unable to update #{@user.decorate.display_name}"
+      end
     end
 
     private

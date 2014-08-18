@@ -89,7 +89,6 @@ class User < ActiveRecord::Base
   end
 
   def enabled_for_organization?(org)
-    return true if admin? || can_manage_organization?(org)
     uo = user_organizations.find_by(organization: org)
     return false if uo.nil?
 

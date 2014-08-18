@@ -180,7 +180,7 @@ feature "viewing and managing users" do
       expect(user_row.affiliations).to eql("Test Market: Test Org 2, Seller")
     end
 
-    scenario "Suspending an enabled user from an organization" do
+    scenario "Suspending a user from an organization", :suspend_user do
       visit admin_organization_users_path(organization2)
 
       expect(page).to have_content('Suspend')
