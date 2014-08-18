@@ -5,7 +5,6 @@
     <h1>Enter Offline Payment</h1>
 
     <%= form_for :payment, url: admin_financials_offline_payment_path do |f| %>
-
       <div class="field column--half">
         <%= f.hidden_field :payer_type, value: "Market" %>
         <%= f.label :payer_id, "Paying Market" %><br>
@@ -23,9 +22,10 @@
         <%= f.label :payment_type, "Payment Type" %><br>
         <%= f.select :payment_type, [["Service Fee", "service"]], {} %>
       </div>
+
+      <div class="form-actions">
+        <input type="submit" value="Save Payment" class="action-helper">
+      </div>
     <% end %>
-    <div class="form-actions">
-      <input type="submit" value="Save Payment" class="action-helper">
-    </div>
   </div>
 </div>
