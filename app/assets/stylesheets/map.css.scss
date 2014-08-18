@@ -2,5 +2,34 @@
   .map {
     height: 500px;
   }
+  .legend {
+    $green:      #22ff00;
+    $blue:       #0026ff;
+    $yellow:     #ffd600;
+    $color-size: 1.2em;
+
+    line-height: $color-size;
+
+    .line {
+      margin-top: .25em;
+    }
+
+    .color {
+      clear: both;
+      width: $color-size;
+      height: $color-size;
+      float: left;
+      margin-right: $color-size/2;
+    }
+    .start-up .color {
+      background-color: $blue;
+    }
+    .grow .color {
+      background-color: $green;
+    }
+    .automate .color {
+      background-color: $yellow;
+    }
+  }
 }
 
