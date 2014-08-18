@@ -228,22 +228,34 @@
   <% end %>
 
   <% if current_user.admin? %>
-  <div class="order-history">
+  <div>
     <div class="table-wrapper">
       <h2>Order History</h2>
 
-      <table class="odd">
+      <table class="order-history">
         <thead>
           <tr>
-            <th>What</th>
             <th>When</th>
             <th>Changes</th>
             <th>Who</th>
           </tr>
         </thead>
         <tbody>
-          <% order.activities.each do |activity| %>
-            <%= render "shared/order_history/#{activity.auditable_type.underscore}", activity: activity  %>
+          <% order.activities.each do |metadata, activities| %>
+            <tr>
+              <td><%= metadata.created_at %><br>(<%= time_ago_in_words metadata.created_at %> ago)</td>
+              <td>
+                <% if activities.any?{|a| a.auditable_type == "Order" && a.action == "create"} %>
+                  <span class="activity-group">Order Created</span>
+                <% else %>
+                  <% activities.each do |activity| %>
+                    <%= render "shared/order_history/#{activity.auditable_type.underscore}", activity: activity  %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td><%= link_to_if metadata.user, metadata.user_name_or_email, [:admin, metadata.user] %></td>
+            </tr>
+
           <% end %>
         </tbody>
       </table>

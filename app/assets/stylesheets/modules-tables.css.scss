@@ -124,7 +124,7 @@
 
     }
   }
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) { 
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
   .scroll-wrapper {
     .fade-left,
     .fade-right {
@@ -491,7 +491,19 @@ th {
 .delivery-tools {
   margin: 30px 0 100px 0;
 }
+.order-history td {
+  vertical-align: top;
 
+  p {
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .activity-group {
+    font-size: 1.1em;
+    display: block;
+  }
+}
 .products--user {
   padding-left: 30px;
 }
