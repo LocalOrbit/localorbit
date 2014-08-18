@@ -28,6 +28,11 @@ $ ->
       styles.top = find_scrolly() + 74 
     $element.css(styles).insertAfter('.overlay')
 
+  load_map = ($element) ->
+    map = $element.find('.location-map').get(0)
+    if map? and map.getAttribute('src') == "" and map.getAttribute('data-src') != ""
+      map.src = map.getAttribute('data-src')
+
   position_popup = ($element) ->
     bottom = $element.offset().top + $element.outerHeight()
     right = $element.offset().left + $element.outerWidth()
@@ -47,6 +52,8 @@ $ ->
     if $element.hasClass('popup--edit')
       $('.overlay').addClass('is-editable')
     position_popup($element)
+    if !$element.hasClass('is-hidden')
+      load_map($element)
     clone_popup($element, e.target)
 
 
