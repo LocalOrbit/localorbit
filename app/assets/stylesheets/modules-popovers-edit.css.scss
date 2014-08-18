@@ -177,7 +177,9 @@
     display: block;
     width: 260px;
     max-width: none;
+    min-height: 189px;
     margin: 8px;
+    background: asset_url('map-spinner.gif') no-repeat center;
   }
 }
 

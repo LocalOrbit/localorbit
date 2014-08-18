@@ -28,6 +28,11 @@ $ ->
       styles.top = find_scrolly() + 74 
     $element.css(styles).insertAfter('.overlay')
 
+  load_map = ($element) ->
+    map = $element.find('.location-map').get(0)
+    if map.getAttribute('src') == "" and map.getAttribute('data-src') != ""
+      map.src = map.getAttribute('data-src')
+
   position_popup = ($element) ->
     bottom = $element.offset().top + $element.outerHeight()
     right = $element.offset().left + $element.outerWidth()
@@ -48,6 +53,8 @@ $ ->
       $('.overlay').addClass('is-editable')
     position_popup($element)
     clone_popup($element, e.target)
+    if !$element.hasClass('is-hidden')
+      load_map($element)
 
 
   $('.modal-toggle').click ->
@@ -61,6 +68,8 @@ $ ->
     $('.overlay').addClass('is-open is-dim is-modal')
     if $element.hasClass('clonable')
       clone_popup($element, this)
+    if !$element.hasClass('is-hidden')
+      load_map($element)
 
   $('.remote-modal-toggle').click (event)->
     event.preventDefault()
