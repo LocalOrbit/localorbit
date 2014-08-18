@@ -22,5 +22,12 @@ class Admin::MetricsController < AdminController
                joins("INNER JOIN geocodings ON geocodings.geocodable_type = 'MarketAddress' AND geocodings.geocodable_id = market_addresses.id").
                includes(:plan, addresses: [:geocoding])
     @map_data = ActiveModel::ArraySerializer.new(markets, each_serializer: MarketMapSerializer).to_json
+    @plans = plans_with_slugs
+  end
+
+  private
+
+  def plans_with_slugs
+    Plan.all.map { |plan| {name: plan.name, slug: plan.name.parameterize.underscore } }
   end
 end

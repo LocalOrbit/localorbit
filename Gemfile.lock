@@ -47,6 +47,12 @@ GIT
       nokogiri-happymapper (>= 0.5.9)
 
 GIT
+  remote: git://github.com/guyshechter/mapbox-rails.git
+  revision: c2b510ea5a448b306413901c30b828fa8700cda2
+  specs:
+    mapbox-rails (1.6.1.1)
+
+GIT
   remote: git://github.com/trestrantham/groupdate.git
   revision: ff1ce7de22dcc617993522989747e90c591d2a1c
   branch: custom-calculations
@@ -242,7 +248,6 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mapbox-rails (1.6.1.1)
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.6.0)
@@ -469,7 +474,7 @@ DEPENDENCIES
   jwt
   kaminari
   launchy
-  mapbox-rails
+  mapbox-rails!
   newrelic-dragonfly
   newrelic_rpm (< 3.9.0)
   passenger

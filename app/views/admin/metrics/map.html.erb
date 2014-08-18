@@ -4,4 +4,12 @@
     <%= raw @map_data %>
   </div>
   <div class="map" id="market-map" data-mapbox-map-id="<%= @mapbox_map_id %>"></div>
+  <div class="legend">
+    <% @plans.each do |plan| %>
+      <div class="line <%= plan[:slug].dasherize %>">
+        <div class="color"></div>
+        <div class="name"><%= plan[:name] %></div>
+      </div>
+      <% end %>
+  </div>
 </div>
