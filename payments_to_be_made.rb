@@ -4,7 +4,7 @@
 # Email report to Anna
 
 auto_market_ids = Market.joins(:plan).where(plans: {name: "Automate"}).select(:id); nil
-orders = Order.payable_to_sellers.used_lo_payment_processing.where("placed_at > ?", 6.months.ago).where(market_id: auto_market_ids).preload(:items, :organization); nil
+orders = Order.payable_to_sellers.paid.used_lo_payment_processing.where("placed_at > ?", 6.months.ago).where(market_id: auto_market_ids).preload(:items, :organization); nil
 groups = SellerPaymentGroup.for_scope(orders).sort_by(&:name); groups.size
 groups.each do |group|
   if group.organization.bank_accounts.any?(&:verified)
