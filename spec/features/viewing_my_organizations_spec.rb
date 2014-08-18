@@ -12,7 +12,7 @@ feature "Viewing admin/organizations list" do
   let!(:user) { create(:user, organizations: [org1, org2]) }
   let!(:market_manager) { create(:user) }
 
-  context "as an organization member" do
+  context "as an organization member", :suspend_user do
     before do
       u = user.user_organizations.find_by(organization: org2)
       u.update_attributes(enabled: false)

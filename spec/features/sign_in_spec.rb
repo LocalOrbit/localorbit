@@ -157,7 +157,7 @@ feature "User signing in" do
     expect(page.current_path).to eq(products_path)
   end
 
-  context "As a suspended user" do
+  context "As a suspended user", :suspend_user do
     before do
       u = user2.user_organizations.find_by(organization: org2)
       u.update_attributes(enabled: false)
