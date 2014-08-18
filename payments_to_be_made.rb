@@ -4,21 +4,20 @@
 # Email report to Anna
 
 auto_market_ids = Market.joins(:plan).where(plans: {name: "Automate"}).select(:id); nil
-orders = Order.payable_to_sellers.where("placed_at > ?", 6.months.ago).where(market_id: auto_market_ids).preload(:items, :organization); nil
+orders = Order.payable_to_sellers.paid.used_lo_payment_processing.where("placed_at > ?", 6.months.ago).where(market_id: auto_market_ids).preload(:items, :organization); nil
 groups = SellerPaymentGroup.for_scope(orders).sort_by(&:name); groups.size
 groups.each do |group|
   if group.organization.bank_accounts.any?(&:verified)
-    name = group.name
+    puts group.name
   elsif group.organization.bank_accounts.any? {|b| b.account_type == "checking" || b.account_type == "savings" }
-    name = "#{group.name} (NOT VERIFIED)"
+    puts "#{group.name} (NOT VERIFIED)"
   else
-    name = "#{group.name} (NO BANK ACCOUNT)"
+    puts "#{group.name} (NO BANK ACCOUNT)"
   end
-  puts name
   group.orders.each do |order|
-    puts "\t#{order.order_number}: $#{"%.2f" % order.items.each.sum {|i| i.seller_net_total }}"
+    printf "\t%s: $%.2f\n", order.order_unmber, order.items.each.sum {|i| i.seller_net_total }
   end
-  puts "\tTotal: $#{"%.2f" % group.owed}"
+  printf "\tTotal: $%.2f\n", group.owed
 end; nil
 
 # Record automate payments
@@ -31,7 +30,7 @@ groups.each do |group|
 
   orders = Order.find(group.orders.map(&:id))
 
-  puts "Pay #{group.name}: #{group.owed}"
+  printf "Pay %s: $%.2f\n", group.name, group.owed
 
   p = Payment.create(
     orders: orders,

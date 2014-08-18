@@ -107,7 +107,7 @@ class Order < ActiveRecord::Base
     # TODO: figure out how to make sure the orders haven't changed
     non_automate_market_ids = Market.joins(:plan).where.not(plans: {name: "Automate"}).pluck(:id)
 
-    fully_delivered.used_lo_payment_processing.not_paid_for("market payment").
+    paid.fully_delivered.used_lo_payment_processing.not_paid_for("market payment").
       where("orders.placed_at > ?", 6.months.ago).
       where(market_id: non_automate_market_ids).
       preload(:items, :market)
