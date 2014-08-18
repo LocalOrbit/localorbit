@@ -13,13 +13,13 @@ gem "coffee-rails", "~> 4.0.0"
 
 # The jQuery update is doing something weird
 # with data confirms and poltergeist
-gem 'jquery-rails', '< 3.1.1'
-gem 'jquery-ui-rails'
-gem 'accountingjs-rails'
-gem 'compass-rails'
-gem 'underscore-rails'
-gem 'wysihtml5-rails'
-gem "mapbox-rails", github: 'guyshechter/mapbox-rails'
+gem "jquery-rails", "< 3.1.1"
+gem "jquery-ui-rails"
+gem "accountingjs-rails"
+gem "compass-rails"
+gem "underscore-rails"
+gem "wysihtml5-rails"
+gem "mapbox-rails", github: "guyshechter/mapbox-rails"
 
 gem "active_model_serializers"
 gem "active_record_union"
