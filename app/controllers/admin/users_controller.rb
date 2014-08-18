@@ -2,7 +2,7 @@ module Admin
   class UsersController < AdminController
     include StickyFilters
 
-    before_action :require_admin_or_market_manager
+    before_action :require_admin_or_market_manager, except: [:unimpersonate]
     before_action :lookup_manageable_user, only: [:edit, :update]
     before_action :find_users, only: :index
 
@@ -22,6 +22,23 @@ module Admin
         UserMailer.delay.user_updated(@user, current_user, original_email)
       else
         render :edit
+      end
+    end
+
+    def impersonate
+      if user = User.where(id: params[:id]).first
+        session[:doing_business_as] = user.id
+      end
+
+      redirect_to root_path
+    end
+
+    def unimpersonate
+      if session[:doing_business_as].present?
+        session[:doing_business_as] = nil
+        redirect_to admin_users_path
+      else
+        redirect_to root_path
       end
     end
 

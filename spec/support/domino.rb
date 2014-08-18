@@ -412,6 +412,10 @@ module Dom
       def affiliations
         node.find(".affiliations").text
       end
+
+      def impersonate
+        node.click_link "Login As"
+      end
     end
 
     class CrossSell < Domino

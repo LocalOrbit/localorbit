@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_timezone
 
+  helper_method :impersonating_user?
   helper_method :current_market
   helper_method :current_organization
   helper_method :current_cart
@@ -18,6 +19,19 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
+
+  alias_method :devise_current_user, :current_user
+  def current_user
+    if session[:doing_business_as].present?
+      User.find(session[:doing_business_as])
+    else
+      devise_current_user
+    end
+  end
+
+  def impersonating_user?
+    session[:doing_business_as].present?
+  end
 
   private
 

@@ -100,7 +100,11 @@
           <% else %>
             Local Orbit
           <% end %>
-          <span class="welcome-user">Welcome <%= current_user.name.present? ? current_user.name : current_user.email %></span>
+          <% if impersonating_user? %>
+            <span class="welcome-user">Impersonating <%= current_user.name.present? ? current_user.name : current_user.email %> <%= link_to "[x]", unimpersonate_admin_users_path, id: 'exit-impersonation' %></span>
+          <% else %>
+            <span class="welcome-user">Welcome <%= current_user.name.present? ? current_user.name : current_user.email %></span>
+          <% end %>
         </p>
         <a href="#admin-nav" class="nav-admin-toggle"><%= image_tag asset_path('hamburger.png'), alt: "Toggle Navigation", height: 20 %></a>
         <ul class="l-inline-list nav nav--app">

@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     end
 
     resources :labels, only: [:index, :show]
-    
+
     get "financials" => "financials#index"
     namespace :financials do
       resource  :overview, only: [:show]
@@ -84,7 +84,10 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :users, only: [:index, :edit, :update]
+    resources :users, only: [:index, :edit, :update] do
+      get :impersonate, on: :member
+      get :unimpersonate, on: :collection
+    end
 
     resources :promotions do
       member do
