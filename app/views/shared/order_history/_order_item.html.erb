@@ -1,13 +1,15 @@
-<p>
-  <span class="activity-group"><%= activity.auditable.try(:name) || "Item" %> <%= activity.action %>d</span>
+<% fields = %w(name quantity quantity_delivered delivery_status) %>
+<% if fields.map{|field| activity.audited_changes[field].present? }.any? %>
+  <p>
+    <span class="activity-group"><%= activity.auditable.try(:name) || "Item" %> <%= activity.action %>d</span>
 
-  <% fields = %w(name quantity quantity_delivered delivery_status) %>
-  <% fields.each do |field| %>
-    <% if activity.audited_changes[field] %>
-      <b><%= field.humanize %>:</b> <%= Array(activity.audited_changes[field]).last %>
+    <% fields.each do |field| %>
+      <% if activity.audited_changes[field] %>
+        <b><%= field.humanize %>:</b> <%= Array(activity.audited_changes[field]).last %>
+      <% end %>
+      <% if activity.audited_changes["amount"] %>
+        <b>Amount:</b> <%= number_to_currency activity.auditable.amount %>
+      <% end %>
     <% end %>
-    <% if activity.audited_changes["amount"] %>
-      <b>Amount:</b> <%= number_to_currency activity.auditable.amount %>
-    <% end %>
-  <% end %>
-</p>
+  </p>
+<% end %>
