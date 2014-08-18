@@ -488,6 +488,7 @@ module Dom
       attribute :order_number
       attribute :amount_owed
       attribute :delivery_status
+      attribute :buyer_name
       attribute :buyer_status
     end
 

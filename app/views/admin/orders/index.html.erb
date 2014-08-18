@@ -12,6 +12,7 @@
       <%= content_tag :th, sort_link(@q, :order_number, "Order #") %>
       <%= content_tag :th, sort_link(@q, :placed_at, "Order Date") %>
       <%= content_tag :th, sort_link(@q, :total_cost, "Amount") %>
+      <%= content_tag :th, sort_link(@q, :organization, "Buyer Name") %>
       <th>Delivery</th>
       <%= content_tag :th, sort_link(@q, :payment_status, "Buyer") %>
       <th>Seller</th>
@@ -24,6 +25,7 @@
         </td>
         <td class="order-date"><%= order.placed_at.strftime("%m/%d/%Y") %></td>
         <td class="amount-owed"><%= number_to_currency(SellerOrder.new(order, current_user).gross_total) %></td>
+        <td class="buyer-name"><%= order.organization.name %></td>
         <td class="delivery-status"><%= order.delivery_status_for_user(current_user).titleize %></td>
         <td class="buyer-status"><%= order.payment_status.titleize %></td>
         <td class="seller-status"></td>
