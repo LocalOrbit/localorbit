@@ -100,8 +100,8 @@
           <% else %>
             Local Orbit
           <% end %>
-          <% if impersonating_user? %>
-            <span class="welcome-user">Impersonating <%= current_user.name.present? ? current_user.name : current_user.email %> <%= link_to "[x]", unimpersonate_admin_users_path, id: 'exit-impersonation' %></span>
+          <% if user_masquerade? %>
+            <span class="welcome-user">Impersonating <%= current_user.name.present? ? current_user.name : current_user.email %> <%= link_to raw("<i class='font-icon icon-close'></i>"), back_user_masquerade_index_path, id: 'exit-masquerade' %></span>
           <% else %>
             <span class="welcome-user">Welcome <%= current_user.name.present? ? current_user.name : current_user.email %></span>
           <% end %>

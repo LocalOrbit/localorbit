@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_timezone
 
-  helper_method :impersonating_user?
   helper_method :current_market
   helper_method :current_organization
   helper_method :current_cart

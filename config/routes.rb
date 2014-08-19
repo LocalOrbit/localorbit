@@ -84,10 +84,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :users, only: [:index, :edit, :update] do
-      get :impersonate, on: :member
-      get :unimpersonate, on: :collection
-    end
+    resources :users, only: [:index, :edit, :update]
 
     resources :promotions do
       member do

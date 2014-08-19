@@ -37,9 +37,9 @@ describe "Impersonating a user" do
       expect(page).to have_content("Impersonating #{buyer_user.name}")
       expect(page).to_not have_content("Welcome #{user.name}")
 
-      within(".welcome-user") do
-        click_link "[x]"
-      end
+
+      find("#exit-masquerade").click
+
 
       expect(page).to have_content("Welcome #{user.name}")
       expect(page).to_not have_content("Impersonating #{buyer_user.name}")
