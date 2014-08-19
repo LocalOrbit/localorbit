@@ -3,6 +3,14 @@
 class AuditDecorator < Draper::Decorator
   delegate_all
 
+  def user_name_or_email
+    if username
+      username
+    elsif user
+      user.name.present? ? user.name : user.email
+    end
+  end
+
   def display_date
     created_at.strftime("%Y-%m-%d %_I:%M %p")
   end
