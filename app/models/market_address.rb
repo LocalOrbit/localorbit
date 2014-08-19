@@ -12,5 +12,4 @@ class MarketAddress < ActiveRecord::Base
   def self.alphabetical_by_name
     order(name: :asc)
   end
-
 end

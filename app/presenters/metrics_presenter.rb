@@ -109,7 +109,7 @@ class MetricsPresenter
     groups = [groups].flatten
     interval = "month" unless GROUPDATE_OPTIONS.keys.include?(interval)
     markets = [markets].compact.flatten.delete_if(&:empty?)
-    date_range = self.create_or_expand_date_range(interval: interval, start_date: start_date, end_date: end_date)
+    date_range = create_or_expand_date_range(interval: interval, start_date: start_date, end_date: end_date)
 
     return nil unless groups.all? {|group| GROUPS.keys.include?(group) }
 
@@ -151,7 +151,7 @@ class MetricsPresenter
     Hash[GROUPS[group][:metrics].map do |metric|
       m = Metrics::Base::METRICS[metric]
 
-      calculation_options = GROUPDATE_OPTIONS[interval].dup.merge({ range: @date_range })
+      calculation_options = GROUPDATE_OPTIONS[interval].dup.merge(range: @date_range)
       results = Metrics::Base.calculate_metric(metric: metric,
                                                interval: interval,
                                                markets: markets,
@@ -163,11 +163,10 @@ class MetricsPresenter
         [m[:title], results]
       end
     end]
-
   end
 
   def format_results(results:, interval:, calculation_type:, format:)
-    Hash[@headers.map { |header| [header, format_value(value: results[header], format: format)] }]
+    Hash[@headers.map {|header| [header, format_value(value: results[header], format: format)] }]
   end
 
   def format_value(value:, format:)
@@ -200,6 +199,6 @@ class MetricsPresenter
   end
 
   def validate_state_metric(metric, results)
-    results.values.map(&:to_f).sum > 0 || !Metrics::MarketCalculations::STATES.map { |s| "#{s.downcase}_markets" }.include?(metric)
+    results.values.map(&:to_f).sum > 0 || !Metrics::MarketCalculations::STATES.map {|s| "#{s.downcase}_markets" }.include?(metric)
   end
 end

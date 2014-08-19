@@ -1,4 +1,4 @@
-require 'audited/adapters/active_record/audit'
+require "audited/adapters/active_record/audit"
 
 class Audited::Adapters::ActiveRecord::Audit < ActiveRecord::Base
   def self.decorator_class

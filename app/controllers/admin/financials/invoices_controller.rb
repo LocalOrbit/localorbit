@@ -51,7 +51,6 @@ module Admin::Financials
       redirect_to redirect_path, notice: message
     end
 
-
     private
 
     def find_orders_for_invoicing
