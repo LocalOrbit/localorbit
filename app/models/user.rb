@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :user_organizations
   has_many :organizations, -> { where(user_organizations: {enabled: true}) }, through: :user_organizations
   has_many :organizations_including_suspended, through: :user_organizations, source: :organization
+  has_many :suspended_organizations, -> { where(user_organizations: {enabled: false}) }, through: :user_organizations, source: :organization
 
   has_many :carts
 
@@ -98,11 +99,10 @@ class User < ActiveRecord::Base
   end
 
   def suspended_from_all_orgs?(market)
-    return if organizations.nil?
+    # return if organizations.nil?
     return if market.nil?
-    enabled_org_ids = user_organizations.where(enabled: true).pluck(:organization_id)
-    market_org_ids = market.organizations.pluck(:id)
-    (enabled_org_ids & market_org_ids).empty?
+
+    (market.organizations & organizations).empty? && !(market.organizations & suspended_organizations).empty?
   end
 
   def market_manager?

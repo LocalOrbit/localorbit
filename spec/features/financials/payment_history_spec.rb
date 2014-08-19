@@ -753,7 +753,7 @@ feature "Payment history", :truncate_after_all do
       let!(:buyer3) { create(:organization, :buyer, name: "Buyer 3", markets: [@market]) }
       let!(:user)   { create(:user, organizations: [@buyer, buyer3]) }
 
-      scenario "cannot view purchases in an organization they've been suspended from", :suspended_user do
+      scenario "cannot view purchases in an organization they've been suspended from", :suspend_user do
         # suspend the user
         suspend_user(user: user, org: @buyer)
 

@@ -19,7 +19,7 @@ feature "Viewing admin/organizations list" do
 
       switch_to_subdomain(market1.subdomain)
       sign_in_as(user)
-      visit admin_organizations_path
+      visit organizations_path
     end
 
     scenario "I can see a list of organizations I belong to" do
@@ -29,7 +29,7 @@ feature "Viewing admin/organizations list" do
 
     scenario "I cannot click to edit an organization I've been suspended from" do
       expect(page).to have_content(org2.name)
-      expect(page).to_not have_link(org2.name)
+      expect(page).not_to have_link(org2.name)
     end
   end
 

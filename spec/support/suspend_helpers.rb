@@ -11,6 +11,7 @@ module SuspendHelpers
   def get_user_organization(user, organization)
     uo = user.user_organizations.find_by(organization: organization)
     raise %(User "#{user.decorate.display_name}" is not in organization "#{organizations.name}") if uo.nil?
+    user.reload
     uo
   end
 end
