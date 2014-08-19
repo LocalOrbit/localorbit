@@ -453,4 +453,38 @@ describe User do
       end
     end
   end
+
+  describe "#organizations" do
+    let!(:user) { create(:user) }
+    let!(:org1) { create(:organization, users: [user]) }
+    let!(:org2) { create(:organization, users: [user]) }
+
+    it "returns the organizations the user belongs to" do
+      expect(user.organizations.count).to eql(2)
+      expect(user.organizations).to include(org1)
+      expect(user.organizations).to include(org2)
+    end
+
+    context "when the user has been suspended from an organization" do
+      before do
+        suspend_user(user: user, org: org1)
+      end
+
+      it "only returns organizations which the user is active" do
+        expect(user.organizations.count).to eql(1)
+        expect(user.organizations).not_to include(org1)
+        expect(user.organizations).to include(org2)
+      end
+
+      context "#including_suspended" do
+        let(:result) { user.organizations.including_suspended }
+
+        it "returns all organizations for that user including ones they're suspended form" do
+          expect(result.count).to eql(2)
+          expect(result).to include(org1)
+          expect(result).to include(org2)
+        end
+      end
+    end
+  end
 end

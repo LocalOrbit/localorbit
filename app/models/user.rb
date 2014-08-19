@@ -18,7 +18,9 @@ class User < ActiveRecord::Base
   end
 
   has_many :user_organizations
-  has_many :organizations, through: :user_organizations
+  has_many :organizations, -> { where(user_organizations: {enabled: true}) }, through: :user_organizations
+  has_many :organizations_including_suspended, through: :user_organizations, source: :organization
+
   has_many :carts
 
   attr_accessor :terms_of_service

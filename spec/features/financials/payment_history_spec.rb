@@ -748,6 +748,22 @@ feature "Payment history", :truncate_after_all do
       expect(page).not_to have_content("LO-01-234-4567890-4")
       expect(page).not_to have_content("LO-01-234-4567890-5")
     end
+
+    context "user belongs to multiple organizations" do
+      let!(:buyer3) { create(:organization, :buyer, name: "Buyer 3", markets: [@market]) }
+      let!(:user)   { create(:user, organizations: [@buyer, buyer3]) }
+
+      scenario "cannot view purchases in an organization they've been suspended from", :suspended_user do
+        # suspend the user
+        suspend_user(user: user, org: @buyer)
+
+        click_link "Financials"
+        click_link "Review Payment History"
+
+        expect(page).to have_content("Payment History")
+        expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(0)
+      end
+    end
   end
 
   context "Sellers" do
