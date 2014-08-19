@@ -2,6 +2,8 @@ module Admin::Financials
   class InvoicesController < AdminController
     include StickyFilters
 
+    before_action :find_orders_for_invoicing, only: [:create, :resend]
+
     def index
       if current_user.buyer_only?
         base_scope = Order.orders_for_buyer(current_user).invoiced
@@ -24,12 +26,36 @@ module Admin::Financials
     end
 
     def create
-      orders = Order.orders_for_seller(current_user).uninvoiced.where(id: params[:order_id])
       # TODO: Figure out what to do if the save fails
       # The order would have to become invalid after being placed.
-      orders.each {|order| SendInvoice.perform(order: order) }
-      message = "Invoice sent for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(", ")}. Invoices can be downloaded on the Enter Receipts page"
+      @orders.uninvoiced.each {|order| CreateInvoice.perform(order: order) }
+
+      message = "Invoice sent for order #{"number".pluralize(@orders.size)} #{@orders.map(&:order_number).sort.join(", ")}. Invoices can be downloaded on the Enter Receipts page"
       redirect_to admin_financials_invoices_path, notice: message
+    end
+
+    def resend
+      @orders.each {|order| SendInvoiceEmail.perform(order: order) }
+
+      message = "Invoice resent for order #{"number".pluralize(@orders.size)} #{@orders.map(&:order_number).sort.join(", ")}."
+      redirect_path = params[:redirect_to] || admin_financials_invoices_path
+      redirect_to redirect_path, notice: message
+    end
+
+    def resend_overdue
+      orders = Order.orders_for_seller(current_user).payment_overdue
+      orders.each {|order| SendInvoiceEmail.perform(order: order) }
+
+      message = orders.present? ? "Invoice resent for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(", ")}." : "No overdue invoices found."
+      redirect_path = params[:redirect_to] || admin_financials_invoices_path
+      redirect_to redirect_path, notice: message
+    end
+
+
+    private
+
+    def find_orders_for_invoicing
+      @orders = Order.orders_for_seller(current_user).where(id: params[:order_id])
     end
   end
 end

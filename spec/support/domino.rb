@@ -235,6 +235,10 @@ module Dom
         def enter_receipt
           node.click_link("Enter Receipt")
         end
+
+        def resend_invoice
+          node.click_link("Resend Invoice")
+        end
       end
 
       class MoneyOut < Domino
