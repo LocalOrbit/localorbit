@@ -243,12 +243,15 @@
         <tbody>
           <% order.activities.each do |metadata, activities| %>
             <tr>
-              <td><%= metadata.created_at.strftime("%Y-%m-%d %_I:%M %p") %><br>
+              <td><%= metadata.display_date %><br>
                 (<%= time_ago_in_words metadata.created_at %> ago)
               </td>
               <td>
                 <% if activities.any?{|a| a.auditable_type == "Order" && a.action == "create"} %>
-                  <span class="activity-group">Order Created</span>
+                  <span class="activity-group"><%= metadata.display_action %></span>
+                  <% activities.select{|a| a.auditable_type == "Payment" }.each do |activity| %>
+                    <%= render "shared/order_history/#{activity.auditable_type.underscore}", activity: activity  %>
+                  <% end %>
                 <% else %>
                   <% activities.each do |activity| %>
                     <%= render "shared/order_history/#{activity.auditable_type.underscore}", activity: activity  %>

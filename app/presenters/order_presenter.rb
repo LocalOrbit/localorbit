@@ -40,10 +40,10 @@ module OrderPresenter
     (auditable_type = 'Payment' AND auditable_id IN (:payment_ids))",
                 order_id: @order.id,
                 payment_ids: @order.payment_ids
-    ).where("user_id IS NOT NULL").reorder(:request_uuid, :created_at).group_by(&:request_uuid)
+    ).where("user_id IS NOT NULL").reorder(:request_uuid, :created_at).decorate
 
     # return the first audit so we can grab timestamp and user
-    audits.map { |uuid, audits| [audits.first, audits] }
+    audits.group_by(&:request_uuid).map { |uuid, audits| [audits.first, audits] }
   end
 
   def refund?

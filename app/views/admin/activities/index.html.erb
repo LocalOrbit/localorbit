@@ -14,14 +14,14 @@
         <th data-column="details" class="<%= column_sort_classes("details") %>">Details</th>
       </tr>
     </thead>
-    <% @activities.each do |activity| %>
+    <% @activities.decorate.each do |activity| %>
       <tr class="product-row <%= cycle "odd", "even" %>">
         <td class="date">
-          <%= activity.created_at.strftime("%Y-%m-%d %_I:%M %p") %>
+          <%= activity.display_date %>
           <br>(<%= time_ago_in_words activity.created_at %> ago)
         </td>
-        <td class="market"><%= activity.associated.try(:name) %></td>
-        <td class="type"><%= activity.auditable_type %> <%= activity.action %></td>
+        <td class="market"><%= activity.associated_name %></td>
+        <td class="type"><%= activity.display_action %></td>
         <td class="user">
           <%= link_to_if activity.user, activity.user_name_or_email, [:admin, activity.user] %>
           <br><%= activity.remote_address %>
