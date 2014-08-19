@@ -349,6 +349,10 @@ ActiveRecord::Schema.define(version: 20140820181046) do
     t.integer  "plan_id"
     t.boolean  "closed",                                                default: false
     t.boolean  "demo",                                                  default: false
+    t.datetime "plan_start_at"
+    t.integer  "plan_interval",                                         default: 1,     null: false
+    t.decimal  "plan_fee",                      precision: 7, scale: 2, default: 0.0,   null: false
+    t.integer  "plan_bank_account_id"
   end
 
   add_index "markets", ["name"], name: "index_markets_on_name", using: :btree
