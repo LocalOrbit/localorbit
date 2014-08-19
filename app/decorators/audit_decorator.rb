@@ -1,11 +1,6 @@
-# -recording buyer payment when the order was paid at checkout
-# -delivery date changes
-# -removing an item from the order
-# -adding an item to the order
 # -for payments, we need to be able to tell the difference between buyer payments and seller payments
 
 class AuditDecorator < Draper::Decorator
-  # include ActiveSupport::NumberHelper
   delegate_all
 
   def display_date
