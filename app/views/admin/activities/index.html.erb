@@ -12,22 +12,27 @@
         <th data-column="type" class="<%= column_sort_classes("type") %>">Event Type</th>
         <th data-column="user" class="<%= column_sort_classes("user") %>">User</th>
         <th data-column="details" class="<%= column_sort_classes("details") %>">Details</th>
-        <th data-column="ip" class="<%= column_sort_classes("ip") %>">IP Address</th>
       </tr>
     </thead>
-    <% @activities.each do |activity| %>
+    <% @activities.decorate.each do |activity| %>
       <tr class="product-row <%= cycle "odd", "even" %>">
-        <td class="date"><%= activity.created_at %></td>
-        <td class="market"><%= activity.associated.try(:name) %></td>
-        <td class="type"><%= activity.auditable_type %> <%= activity.action %></td>
+        <td class="date">
+          <%= activity.display_date %>
+          <br>(<%= time_ago_in_words activity.created_at %> ago)
+        </td>
+        <td class="market"><%= activity.associated_name %></td>
+        <td class="type"><%= activity.display_action %></td>
         <td class="user">
           <%= link_to_if activity.user, activity.user_name_or_email, [:admin, activity.user] %>
+          <br><%= activity.remote_address %>
         </td>
         <td class="details">
-          <%= activity.comment %><br>
-          <%= activity.audited_changes %>
+          <% activity.audited_changes.each do |column, changes| %>
+            <b><%= column %>:</b>
+            <%= Array(changes).compact.join(" to ") %><br>
+          <% end %>
+          <%= activity.comment %>
         </td>
-        <td class="ip"><%= activity.remote_address %></td>
       </tr>
     <% end %>
   </table>
