@@ -19,6 +19,9 @@ input.alt-datepicker {
     height: 1.08em;
     padding-top: .5em;
     padding-bottom: .4em;
+    @media screen and (max-width: $mobile_break) {
+      padding: .6em 3px;
+    }
   }
 }
   input.alt-datepicker,
