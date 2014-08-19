@@ -243,7 +243,9 @@
         <tbody>
           <% order.activities.each do |metadata, activities| %>
             <tr>
-              <td><%= metadata.created_at %><br>(<%= time_ago_in_words metadata.created_at %> ago)</td>
+              <td><%= metadata.created_at.strftime("%Y-%m-%d %_I:%M %p") %><br>
+                (<%= time_ago_in_words metadata.created_at %> ago)
+              </td>
               <td>
                 <% if activities.any?{|a| a.auditable_type == "Order" && a.action == "create"} %>
                   <span class="activity-group">Order Created</span>
