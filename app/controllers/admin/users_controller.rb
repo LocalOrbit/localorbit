@@ -26,7 +26,7 @@ module Admin
     end
 
     def update_enabled
-      org = @user.organizations.find(params[:organization_id])
+      org = @user.organizations_including_suspended.find(params[:organization_id])
 
 
       if !current_user.can_manage_organization?(org)
