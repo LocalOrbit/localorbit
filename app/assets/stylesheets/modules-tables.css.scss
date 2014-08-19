@@ -84,22 +84,6 @@
   clear: both;
   overflow: visible;
 }
-  @media screen and (min-width: $tablet_floor) {
-    .report-table {
-      .fade-right,
-      .fade-left {
-        display: block;
-      }
-      .table-wrapper {
-        max-width: 100%;
-        padding-top: 20px;
-        overflow: auto;
-        th {
-          white-space: nowrap;
-        }
-      }
-    }
-  }
   @media screen and (max-width: $mobile_break) {
     .table-wrapper {
       z-index: 3;
@@ -976,6 +960,14 @@ th {
 }
 .sold-table th {
   white-space: nowrap;
+}
+
+@media screen and (min-width: $tablet_floor) {
+  .report-table {
+    th, td {
+      font-size: 10px;
+    }
+  }
 }
 
 .order-summary{
