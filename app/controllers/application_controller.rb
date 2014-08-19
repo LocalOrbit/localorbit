@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :masquerade_user!
   before_action :authenticate_user!
   before_action :ensure_market_affiliation
   before_action :ensure_active_organization
@@ -19,19 +20,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
-
-  alias_method :devise_current_user, :current_user
-  def current_user
-    if session[:doing_business_as].present?
-      User.find(session[:doing_business_as])
-    else
-      devise_current_user
-    end
-  end
-
-  def impersonating_user?
-    session[:doing_business_as].present?
-  end
 
   private
 

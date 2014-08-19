@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable
+         :confirmable, :masqueradeable
 
   has_many :managed_markets_join, class_name: "ManagedMarket"
 
