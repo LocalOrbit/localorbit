@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     end
 
     resources :labels, only: [:index, :show]
-    
+
     get "financials" => "financials#index"
     namespace :financials do
       resource  :overview, only: [:show]

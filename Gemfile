@@ -36,6 +36,7 @@ gem "delayed_job", github: "collectiveidea/delayed_job" # Until we release 4.0.3
 gem "delayed_job_active_record"
 gem "devise"
 gem "devise_invitable"
+gem "devise_masquerade"
 gem "dragonfly-s3_data_store"
 gem "draper"
 gem "figaro", "~> 1.0.0.rc1"

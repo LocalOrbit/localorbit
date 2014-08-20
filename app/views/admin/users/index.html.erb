@@ -9,6 +9,9 @@
             <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
             <th data-column="email" class="<%= column_sort_classes("email")%>">E-mail</th>
             <th>Affiliations</th>
+            <% if current_user.admin? %>
+              <th class="action"></th>
+            <% end %>
           </tr>
         </thead>
         <% @users.each do |user| %>
@@ -25,6 +28,12 @@
               <% end %>
             </ul>
           </td>
+          <% if current_user.admin? %>
+            <td class="action">
+
+              <%= link_to "Login As", masquerade_path(user), class: "btn btn--small btn--save" %>
+            </td>
+          <% end %>
         </tr>
         <% end %>
       </table>

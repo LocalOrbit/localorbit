@@ -233,7 +233,7 @@
   }
   .icon-clear {
     color: #ddd;
-    
+
   }
   &.is-open {
     position: absolute;
@@ -291,7 +291,7 @@
     text-decoration: none;
   }
 
-  &.is-open { 
+  &.is-open {
     z-index: 11;
     @include border-radius(4px 0 0 4px);
     background: #e3e3e3;
@@ -378,6 +378,10 @@
     font-size: 85.714%;
     font-weight: normal;
     line-height: 1.1.25;
+
+    a {
+      color: #fff;
+    }
   }
 }
 .tagline {
@@ -1569,4 +1573,3 @@ label ~ .tooltip {
     }
   }
 }
-
