@@ -29,6 +29,10 @@ class DeliveryDecorator < Draper::Decorator
     h.content_tag(:time, datetime: deliver_on.xmlschema) { human_delivery_date }
   end
 
+  def display_cutoff_time
+    cutoff_time.in_time_zone(delivery_schedule.market.timezone).strftime("%B %-d at %l%p")
+  end
+
   def time_range
     if buyer_pickup?
       start_time = delivery_schedule.buyer_pickup_start
