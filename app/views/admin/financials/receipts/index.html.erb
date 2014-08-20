@@ -46,7 +46,7 @@
     <% if current_user.admin? %>
       <%= link_to "Enter Offline Payment", admin_financials_offline_payment_path, class: "btn btn--save btn--small" %>
     <% end %>
-    <%= link_to "Resend Overdue Invoices", resend_overdue_admin_financials_invoices_path(redirect_to: admin_financials_receipts_path), method: :post, class: "btn btn--save btn--small" %>
+    <!-- <%= link_to "Resend Overdue Invoices", resend_overdue_admin_financials_invoices_path(redirect_to: admin_financials_receipts_path), method: :post, class: "btn btn--save btn--small" %> -->
   </div>
 </div>
 
