@@ -101,11 +101,11 @@ feature "entering receipts" do
     expect(page).to have_content("Invoice resent for order number #{order1.order_number}")
   end
 
-  it "allows the user to resend all overdue invoices", vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
-    click_link "Resend Overdue Invoices"
-
-    expect(page).to have_content("Invoice resent for order numbers #{order1.order_number}, #{order4.order_number}, #{order5.order_number}")
-  end
+  # it "allows the user to resend all overdue invoices", vcr: {match_requests_on: [:host, invoice_auth_matcher]} do
+  #   click_link "Resend Overdue Invoices"
+  #
+  #   expect(page).to have_content("Invoice resent for order numbers #{order1.order_number}, #{order4.order_number}, #{order5.order_number}")
+  # end
 
   context "filtering" do
     it "by order number" do
