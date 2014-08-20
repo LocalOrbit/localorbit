@@ -171,3 +171,5 @@ class ApplicationController < ActionController::Base
     params[:redirect_back_to] || [:products]
   end
 end
+
+require Rails.root.join("app/controllers/audited_sweeper")
