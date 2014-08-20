@@ -1,5 +1,6 @@
 <p>
-  <span class="activity-group">Payment <%= activity.action %>d</span>
+  <% payment_type = activity.auditable.payment_type.sub("order", "buyer") %>
+  <span class="activity-group">Payment (<%= payment_type %>) <%= activity.action %>d</span>
 
   <% fields = %w(payment_method) %>
   <% fields.each do |field| %>
