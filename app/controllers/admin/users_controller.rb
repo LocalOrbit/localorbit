@@ -64,7 +64,7 @@ module Admin
           current_user.managed_organizations.map {|o| o.user_ids }.flatten
         User.where(id: ids)
       end
-      @users = scope.includes(:managed_markets, :organizations)
+      @users = scope.includes(:managed_markets)
     end
   end
 end
