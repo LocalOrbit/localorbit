@@ -454,36 +454,60 @@ describe User do
     end
   end
 
-  describe "#organizations" do
+  context "oranizations scopes" do
     let!(:user) { create(:user) }
     let!(:org1) { create(:organization, users: [user]) }
     let!(:org2) { create(:organization, users: [user]) }
 
-    it "returns the organizations the user belongs to" do
-      expect(user.organizations.count).to eql(2)
-      expect(user.organizations).to include(org1)
-      expect(user.organizations).to include(org2)
+    describe "#organizations" do
+      let(:result) { user.organizations }
+
+      it "returns the organizations the user belongs to" do
+        expect(result.count).to eql(2)
+        expect(result).to include(org1)
+        expect(result).to include(org2)
+      end
+
+      context "when the user has been suspended from an organization" do
+        before do
+          suspend_user(user: user, org: org1)
+        end
+
+        it "does not return organizations where the user is suspended" do
+          expect(result.count).to eql(1)
+          expect(result).not_to include(org1)
+          expect(result).to include(org2)
+        end
+      end
     end
 
-    context "when the user has been suspended from an organization" do
+    describe "#organizations_including_suspended" do
+      let(:result) { user.organizations_including_suspended }
+
       before do
         suspend_user(user: user, org: org1)
       end
 
-      it "only returns organizations which the user is active" do
-        expect(user.organizations.count).to eql(1)
-        expect(user.organizations).not_to include(org1)
-        expect(user.organizations).to include(org2)
-      end
-
-      context "#including_suspended" do
-        let(:result) { user.organizations.including_suspended }
-
-        it "returns all organizations for that user including ones they're suspended form" do
+      context "when the user has been suspended from an organization" do
+        it "returns all organizations a user is associated with including suspended" do
           expect(result.count).to eql(2)
           expect(result).to include(org1)
           expect(result).to include(org2)
         end
+      end
+    end
+
+    describe "#suspended_organizations" do
+      let(:result) { user.suspended_organizations }
+      before do
+        suspend_user(user: user, org: org1)
+      end
+
+      it "returns all organizations a user is suspended from" do
+        expect(result.count).to eql(1)
+
+        expect(result).to include(org1)
+        expect(result).not_to include(org2)
       end
     end
   end
