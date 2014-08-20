@@ -20,12 +20,7 @@ class AuditDecorator < Draper::Decorator
   end
 
   def display_action
-    if auditable_type == "OrderItem"
-      type = try(:name) || "Item"
-    else
-      type = auditable_type
-    end
-    "#{type} #{action_name}"
+    "#{display_type} #{action_name}"
   end
 
   private
@@ -35,6 +30,14 @@ class AuditDecorator < Draper::Decorator
       "removed"
     else
       "#{action}d"
+    end
+  end
+
+  def display_type
+    if auditable_type == "OrderItem"
+      type = try(:name) || "Item"
+    else
+      type = auditable_type
     end
   end
 end
