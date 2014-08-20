@@ -207,9 +207,11 @@ describe User do
 
     context "for a user" do
       let!(:user) { create(:user, organizations: [org1, org2]) }
+      let!(:market) { create(:market) }
+      let!(:market2) { create(:market) }
 
-      let!(:org1) { create(:organization) }
-      let!(:org2) { create(:organization) }
+      let!(:org1) { create(:organization, markets:[market]) }
+      let!(:org2) { create(:organization, markets: [market2]) }
 
       it "returns a scope for the organization memberships" do
         expect(user.managed_organizations).to eq(user.organizations)
