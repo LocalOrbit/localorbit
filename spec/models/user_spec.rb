@@ -206,7 +206,10 @@ describe User do
     end
 
     context "for a user" do
-      let(:user) { create(:user, role: "user") }
+      let!(:user) { create(:user, organizations: [org1, org2]) }
+
+      let!(:org1) { create(:organization) }
+      let!(:org2) { create(:organization) }
 
       it "returns a scope for the organization memberships" do
         expect(user.managed_organizations).to eq(user.organizations)
@@ -253,11 +256,22 @@ describe User do
     end
 
     context 'for a user' do
-      let(:user) { create(:user, role: 'user', organizations: [org1]) }
+      let(:user) { create(:user, role: 'user', organizations: [org1, org5]) }
 
       it 'returns a scope for the organization memberships within the market' do
-        expect(user.managed_organizations_within_market(market1)).to include(org1)
-        expect(user.managed_organizations_within_market(market1)).to_not include(org2, org3, org4, org5)
+        expect(user.managed_organizations_within_market(market1)).to include(org1, org5)
+        expect(user.managed_organizations_within_market(market1)).to_not include(org2, org3, org4)
+      end
+
+      context "user is suspended from an organization" do
+        before do
+          suspend_user(user: user, org: org1)
+        end
+
+        it "will not return organizations a user is suspended from" do
+          expect(user.managed_organizations_within_market(market1)).to include(org5)
+          expect(user.managed_organizations_within_market(market1)).not_to include(org1, org3, org4)
+        end
       end
     end
   end

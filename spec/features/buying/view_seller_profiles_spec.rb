@@ -30,6 +30,19 @@ feature "View Seller Profiles" do
 
       expect(page).to have_content(seller1.name)
     end
+
+    context "but is suspended from all but one" do
+      before do
+        suspend_user(user: user, org: user.organizations.last)
+      end
+
+      scenario "does not redirect" do
+        click_link "Sellers", match: :first
+
+        expect(page).not_to have_content("Select an Organization")
+        expect(page).to have_content("Date Change Confirmation")
+      end
+    end
   end
 
   context "when no sellers are in the market" do

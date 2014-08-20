@@ -129,19 +129,25 @@ class User < ActiveRecord::Base
         managed_markets_join.map(&:market_id)
       end
 
-      Organization.managed_by_user_id_or_market_ids_including_deleted(id, market_ids).
-        where("market_organizations.deleted_at IS NULL"). # exclude deleted
-        where("market_organizations.id IS NOT NULL")      # exclude your organizations not connected to a market
+      Organization.managed_by_market_ids(market_ids).
+        where(market_organizations: {deleted_at: nil}).
+        where.not(market_organizations: {id: nil}).
+        union(organizations).
+        joins(:market_organizations).
+        distinct
     end
   end
 
   def managed_organizations_including_deleted
     if admin?
       Organization.all
-    elsif market_manager?
-      Organization.managed_by_user_id_or_market_ids_including_deleted(id, managed_markets_join.map(&:market_id))
     else
-      organizations
+      market_ids = managed_markets_join.map(&:market_id)
+
+      Organization.managed_by_market_ids(market_ids).
+        union(organizations).
+        joins(:market_organizations).
+        distinct
     end
   end
 
