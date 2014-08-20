@@ -1,6 +1,6 @@
 module StickyFilters
   def sticky_parameters(parameters)
-    path = request.path.split('.').first
+    path = request.path.split(".").first
     session[:sticky_parameters] ||= {}
     existing_parameters = (session[:sticky_parameters][path] || {}).with_indifferent_access
 

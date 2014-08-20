@@ -1,6 +1,6 @@
 class MarketMapSerializer < ActiveModel::Serializer
   attributes :id, :name, :latitude, :longitude, :plan_name, :market_path
-  
+
   def latitude
     object.addresses.first.geocode.latitude
   end

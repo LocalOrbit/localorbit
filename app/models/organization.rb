@@ -37,7 +37,7 @@ class Organization < ActiveRecord::Base
   scope :visible, -> { where(show_profile: true) }
   scope :with_products, -> { joins(:products).select("DISTINCT organizations.*").order(name: :asc) }
   scope :buyers_for_orders, lambda {|orders| joins(:orders).where(orders: {id: orders}).uniq }
-  scope :with_a_market, -> { joins(user_organizations:{organization: :markets}).group("organizations.id") }
+  scope :with_a_market, -> { joins(user_organizations: {organization: :markets}).group("organizations.id") }
 
   serialize :twitter, TwitterUser
 

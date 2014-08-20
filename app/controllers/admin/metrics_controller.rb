@@ -28,6 +28,6 @@ class Admin::MetricsController < AdminController
   private
 
   def plans_with_slugs
-    Plan.all.map { |plan| {name: plan.name, slug: plan.name.parameterize.underscore } }
+    Plan.all.map {|plan| {name: plan.name, slug: plan.name.parameterize.underscore} }
   end
 end

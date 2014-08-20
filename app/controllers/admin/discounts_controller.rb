@@ -106,14 +106,14 @@ module Admin
         map {|c| [c.name, c.id] }
     end
 
-     def find_organizations
-       @organizations = MarketOrganization.
-         excluding_deleted.
-         not_cross_selling.
-         includes(:market, :organization).
-         where(market_id: current_user.managed_market_ids).
-         order("markets.name ASC, organizations.name ASC").
-         map {|mo| ["#{mo.market.name}: #{mo.organization.name}", mo.organization_id] }
+    def find_organizations
+      @organizations = MarketOrganization.
+        excluding_deleted.
+        not_cross_selling.
+        includes(:market, :organization).
+        where(market_id: current_user.managed_market_ids).
+        order("markets.name ASC, organizations.name ASC").
+        map {|mo| ["#{mo.market.name}: #{mo.organization.name}", mo.organization_id] }
     end
   end
 end
