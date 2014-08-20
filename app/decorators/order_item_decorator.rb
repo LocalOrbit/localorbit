@@ -88,14 +88,14 @@ class OrderItemDecorator < Draper::Decorator
 
   def previous_value_for(column)
     changes = latest_changes
-    changes.present? && changes[column].present? ? Array(changes[column]).first : false
+    changes.present? && changes[column].present? && changes[column].kind_of?(Array) ? changes[column].first : false
   end
 
   def latest_changes
     @latest_changes ||= begin
       if object.audits.present?
-        uuid = object.audits.last.request_uuid
-        changes = Audit.where(request_uuid: uuid, auditable_id: object.id).map(&:audited_changes)
+        uuid = object.order.audits.last.request_uuid
+        changes = object.audits.where(request_uuid: uuid).map(&:audited_changes)
         changes.inject({}) {|result, audit| result.merge(audit) }
       else
         {}

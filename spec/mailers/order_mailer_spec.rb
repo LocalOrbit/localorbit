@@ -14,32 +14,41 @@ describe OrderMailer do
   let!(:product2)          { create(:product, :sellable, organization: seller2) }
 
   let!(:order)             { create(:order, market: market, delivery: delivery, placed_by: buyer_user, organization: buyer, payment_method: 'ach', total_cost: 30.0) }
-  let!(:order_item1)       { create(:order_item, order: order, product: product1, quantity: 10, unit_price: 2.00) }
+  let!(:order_item1)       { create(:order_item, order: order, product: product1, quantity: 11, unit_price: 2.00) }
   let!(:order_item2)       { create(:order_item, order: order, product: product2, quantity: 4, unit_price: 2.50) }
 
   describe "seller_confirmation" do
-    let!(:notification) { OrderMailer.seller_confirmation(order, seller1) }
+    before do
+      Audit.all.update_all(request_uuid: SecureRandom.uuid)
+      @notification = OrderMailer.seller_confirmation(order.reload, seller1)
+    end
 
     it "delivers to all users in the organization" do
-      expect(notification).to deliver_to(users.map(&:email))
+      expect(@notification).to deliver_to(users.map(&:email))
     end
 
     it "shows the seller what order the notification relates to" do
-      expect(notification).to have_body_text("Order Number: #{order.order_number}")
+      expect(@notification).to have_body_text("Order Number: #{order.order_number}")
     end
 
     it "shows what market the order is from" do
-      expect(notification).to have_subject("New order on #{market.name}")
+      expect(@notification).to have_subject("New order on #{market.name}")
     end
 
     it "shows what buyer made the order" do
-      expect(notification).to have_body_text(
+      expect(@notification).to have_body_text(
         "An order was just placed by <strong>#{buyer.name}</strong>"
       )
     end
 
     it "shows how the seller should view the order details" do
-      expect(notification).to have_body_text("following the link below and logging in to your #{seller1.name} account")
+      expect(@notification).to have_body_text("following the link below and logging in to your #{seller1.name} account")
+    end
+
+    it "does not show a previous quantity for an item" do
+      within('.previous-value') do
+        expect(@notification).to_not have_body_text("11 per box")
+      end
     end
   end
 
@@ -61,7 +70,7 @@ describe OrderMailer do
       end
 
       it "shows the old order quantity" do
-        expect(@notification).to have_body_text("10 per box")
+        expect(@notification).to have_body_text("11 per box")
       end
 
       it "shows the updated order quantity" do
@@ -90,7 +99,7 @@ describe OrderMailer do
       end
 
       it "does not show the canceled items previous quantity" do
-        expect(@notification).to_not have_body_text("10 per box")
+        expect(@notification).to_not have_body_text("11 per box")
       end
 
       it "shows the item as being canceled" do
@@ -151,7 +160,7 @@ describe OrderMailer do
       end
 
       it "shows the old order quantity" do
-        expect(@notification).to have_body_text("10 per box")
+        expect(@notification).to have_body_text("11 per box")
       end
 
       it "shows the updated order quantity" do
