@@ -15,7 +15,7 @@ groups.each do |group|
     puts "#{group.name} (NO BANK ACCOUNT)"
   end
   group.orders.each do |order|
-    printf "\t%s: $%.2f\n", order.order_unmber, order.items.each.sum {|i| i.seller_net_total }
+    printf "\t%s: $%.2f\n", order.order_number, order.items.each.sum {|i| i.seller_net_total }
   end
   printf "\tTotal: $%.2f\n", group.owed
 end; nil
