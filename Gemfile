@@ -2,12 +2,12 @@ source "https://rubygems.org"
 
 ruby "2.1.2"
 
-gem "rails", "~> 4.1.6.rc1"
+gem "rails", "~> 4.2.0.beta1"
 
 gem "pg"
 
 # Assets
-gem "sass-rails",   "~> 4.0.0"
+gem "sass-rails",   "~> 5.0.0.beta1"
 gem "uglifier",     ">= 1.3.0"
 gem "coffee-rails", "~> 4.0.0"
 
@@ -55,7 +55,9 @@ gem "periscope-activerecord"
 gem "pg_search"
 gem "postgres_ext"
 gem "rack-canonical-host"
+gem "rails-html-sanitizer"
 gem "ransack", github: "activerecord-hackery/ransack", branch: "rails-4.1" # branch version is smaller than gem version
+gem "responders"
 gem "simpleidn"
 gem "wkhtmltopdf-binary"
 
@@ -76,6 +78,7 @@ group :development, :test do
   gem "pry-rails"
   gem "pry-remote"
   gem "launchy"
+  gem "web-console", "~> 2.0.0.beta2"
 end
 
 group :test do
