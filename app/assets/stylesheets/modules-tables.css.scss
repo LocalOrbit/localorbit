@@ -962,14 +962,6 @@ th {
   white-space: nowrap;
 }
 
-@media screen and (min-width: $tablet_floor) {
-  .report-table {
-    th, td {
-      font-size: 10px;
-    }
-  }
-}
-
 .order-summary{
   &:nth-child(even) {
     background: #F9F9F9;
