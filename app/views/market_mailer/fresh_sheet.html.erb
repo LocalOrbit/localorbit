@@ -1,5 +1,5 @@
 <h1>See what's fresh at <%= @market.name %></h1>
-<p>Order by <%= @delivery.cutoff_time.strftime("%B %-d at %l%p") %>
+<p>Order by <%= @delivery.display_cutoff_time %>
    for <%= @delivery.cart_type %> <%= @delivery.display_date %> <%= @delivery.buyer_time_range %>.</p>
 
 <% if @note %>
