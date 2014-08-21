@@ -8,6 +8,9 @@ class BankAccount < ActiveRecord::Base
 
   validate :account_is_unique_to_bankable
 
+  scope :debitable_bank_accounts, -> { visible.where(verified: true, account_type: %w(savings checking)) }
+  scope :credit_cards, -> { visible.where.not(account_type: %w(savings checking)) }
+
   def balanced_verification
     return nil if verified? || balanced_verification_uri.nil?
     @balanced_verification ||= Balanced::Verification.find(balanced_verification_uri)
@@ -23,6 +26,27 @@ class BankAccount < ActiveRecord::Base
     !bank_account?
   end
 
+  def display_name
+    if bank_account?
+      "ACH: #{bank_name} - *********#{last_four}#{" NOT VERIFIED" unless verified?}"
+    else
+      "#{bank_name} ending in #{last_four}"
+    end
+  end
+
+  def expired?
+    return false if bank_account?
+    now = Time.current
+    expiration_year < now.year || (expiration_month < now.month && expiration_year == now.year)
+  end
+
+  # Checking or savings accounts must be verified to process a debit
+  # but can be credited without being verified (not recommended)
+  # Credit cards must be current and can only be used in debits
+  def usable_for?(transaction_type=:debit)
+    (bank_account? && (verified? || transaction_type == :credit)) || (credit_card? && !expired? && transaction_type == :debit)
+  end
+
   def verification_failed?
     return false if verified?
     return true if balanced_verification.nil?
@@ -35,8 +59,6 @@ class BankAccount < ActiveRecord::Base
     accounts = bankable.bank_accounts.visible.where(account_type: account_type, last_four: last_four, bank_name: bank_name, name: name)
     accounts = accounts.where.not(id: id) if persisted?
 
-    if accounts.any?
-      errors.add(:bankable_id, "already exists for this #{bankable_type.downcase}.")
-    end
+    errors.add(:bankable_id, "already exists for this #{bankable_type.downcase}.") if accounts.any?
   end
 end

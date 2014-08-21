@@ -42,22 +42,22 @@ class OrganizationDecorator < Draper::Decorator
   end
 
   def credit_cards_available?
-    bank_accounts.visible.where("account_type not in (?)", %w(savings checking)).count > 0
+    credit_card_options.any?
   end
 
   def credit_card_options
-    bank_accounts.visible.where("account_type not in (?)", %w(savings checking)).map do |card|
-      ["#{card.bank_name} ending in #{card.last_four}", card.id]
+    @credit_card_options ||= bank_accounts.credit_cards.map do |card|
+      [card.display_name, card.id]
     end
   end
 
   def ach_available?
-    bank_accounts.visible.where("verified = ? and account_type in (?)", true, %w(savings checking)).count > 0
+    ach_options.any?
   end
 
   def ach_options
-    bank_accounts.visible.where("verified = ? and account_type in (?)", true, %w(savings checking)).map do |bank_account|
-      ["ACH: #{bank_account.bank_name} - *********#{bank_account.last_four}", bank_account.id]
+    @ach_options ||= bank_accounts.debitable_bank_accounts.map do |bank_account|
+      [bank_account.display_name, bank_account.id]
     end
   end
 
