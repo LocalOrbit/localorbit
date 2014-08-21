@@ -1,17 +1,10 @@
 <p>
   <span class="activity-group"><%= activity.display_action %></span>
 
-  <% fields = %w(payment_status notes) %>
+  <% fields = %w(payment_status invoiced_at notes) %>
   <% fields.each do |field| %>
     <% if activity.audited_changes[field] %>
-      <% change = Array(activity.audited_changes[field]).last %>
-      <% if change.present? %>
-        <b><%= field.humanize %>:</b> <%= change %>
-      <% end %>
+      <b><%= field.humanize %>:</b> <%= Array(activity.audited_changes[field]).last %>
     <% end %>
-  <% end %>
-
-  <% if activity.audited_changes["invoiced_at"] %>
-    <b>Order Invoiced</b>
   <% end %>
 </p>
