@@ -49,6 +49,17 @@ class User < ActiveRecord::Base
     end
   end
 
+  def affiliations
+    @affiliations ||= begin
+      collection = []
+
+      collection += managed_markets
+      collection += organizations_including_suspended.select {|o| o.has_market? }
+
+      collection
+    end
+  end
+
   def terms_of_service=(terms_of_service)
     @terms_of_service = terms_of_service
     @accepted_terms_of_service_at = Time.now

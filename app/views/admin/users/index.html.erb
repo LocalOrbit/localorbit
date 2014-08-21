@@ -14,17 +14,14 @@
             <% end %>
           </tr>
         </thead>
-        <% @users.each do |user| %>
+        <% @users.decorate.each do |user| %>
         <tr class="user-row">
           <td class="name"><%= link_to (user.name || "Edit"), edit_admin_user_path(user) %></td>
           <td class="email"><%= user.email %></td>
           <td>
             <ul class="affiliations">
-              <% user.managed_markets.each do |market| %>
-                <li><%= market.name %>, Market Manager</li>
-              <% end %>
-              <% user.organizations.select{|o| o.markets.any? }.each do |organization| %>
-                <li><%= organization.markets.pluck(:name).to_sentence %>: <%= organization.name %>, <%= organization.can_sell? ? "Seller" : "Buyer" %></li>
+              <% user.affiliations.each do |a| %>
+                <%= a.decorate.affiliation_item %>
               <% end %>
             </ul>
           </td>

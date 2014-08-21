@@ -130,6 +130,10 @@ class Organization < ActiveRecord::Base
     market_organizations.excluding_deleted.where(cross_sell_origin_market: from, market: to).exists?
   end
 
+  def has_market?
+    markets.any?
+  end
+
   private
 
   def self.order_by_name(direction)
