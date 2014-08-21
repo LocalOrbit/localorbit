@@ -43,7 +43,8 @@ module OrderPresenter
     ).where("user_id IS NOT NULL").reorder(:request_uuid, :created_at).decorate
 
     # return the first audit so we can grab timestamp and user
-    audits.group_by(&:request_uuid).map { |uuid, audits| [audits.first, audits] }
+    audits.group_by(&:request_uuid).map { |uuid, audits| [audits.first, audits] }.
+    sort_by{|first, _| first.created_at }.reverse
   end
 
   def refund?
