@@ -241,6 +241,8 @@ feature "Reports" do
         items = Dom::Report::ItemRow.all
         html_headers = page.all(".report-table th").map(&:text)
 
+        html_headers[html_headers.index('Qty.')] = "Quantity"
+
         expect(items.count).to eq(11)
 
         click_link "Export CSV"
@@ -258,7 +260,9 @@ feature "Reports" do
         field_headers = ReportPresenter.field_headers_for_report(report)
         items.each_with_index do |item, i|
           field_headers.each_pair do |field, display_name|
-            expect(item.send(field)).to include(csv[i][display_name])
+            if !["Discount", "Discounts"].include? display_name # We're hiding the discounts column in the html view
+              expect(item.send(field)).to include(csv[i][display_name])
+            end
           end
         end
       end

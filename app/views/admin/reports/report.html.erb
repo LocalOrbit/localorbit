@@ -9,14 +9,13 @@
         <tr>
           <% @presenter.fields.each do |field| %>
             <% filter_map = ReportPresenter::FIELD_MAP[field] || {} %>
-            <% 
-              if filter_map[:display_name] == "Quantity"
-                filter_map[:display_name] = "<abbr title='Quantity'>Qty.</abbr>".html_safe
-              end 
-            %>
             <th class="<%= filter_map[:sort] %>">
               <% if filter_map[:sort] %>
-                <%= sort_link @presenter.q, filter_map[:sort], filter_map[:display_name] %>
+                <% if filter_map[:display_name] == "Quantity" %>
+                  <%= sort_link @presenter.q, filter_map[:sort], "<abbr title='Quantity'>Qty.</abbr>".html_safe %>
+                <% else %>
+                   <%= sort_link @presenter.q, filter_map[:sort], filter_map[:display_name] %>
+                <% end %>
               <% else %>
                 <%= filter_map[:display_name] %>
               <% end %>
