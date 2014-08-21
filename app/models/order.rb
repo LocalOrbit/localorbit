@@ -233,6 +233,14 @@ class Order < ActiveRecord::Base
     items.map(&:seller).uniq
   end
 
+  def sellers_with_changes
+    uuid = audits.last.request_uuid
+
+    Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
+      audit.auditable.product.organization
+    end
+  end
+
   def subtotal
     @subtotal ||= items.each.sum(&:gross_total)
   end

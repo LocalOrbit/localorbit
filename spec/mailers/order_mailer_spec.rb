@@ -154,7 +154,7 @@ describe OrderMailer do
         Audit.all.update_all(request_uuid: SecureRandom.uuid)
         @notification = OrderMailer.seller_order_updated(order.reload, seller1)
       end
-
+  
       it "has a subject indicating it is an update" do
         expect(@notification).to have_subject("#{market.name}: Order #{order.order_number} updated")
       end

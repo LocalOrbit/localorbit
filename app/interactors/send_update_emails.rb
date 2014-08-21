@@ -6,7 +6,7 @@ class SendUpdateEmails
       OrderMailer.delay.buyer_order_updated(order)
     end
 
-    order.sellers.each do |seller|
+    order.sellers_with_changes.each do |seller|
       unless seller.users.empty?
         OrderMailer.delay.seller_order_updated(order, seller)
       end
