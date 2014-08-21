@@ -9,7 +9,7 @@
         <tr>
           <% @presenter.fields.each do |field| %>
             <% filter_map = ReportPresenter::FIELD_MAP[field] || {} %>
-            <th>
+            <th class="<%= filter_map[:sort] %>">
               <% if filter_map[:sort] %>
                 <%= sort_link @presenter.q, filter_map[:sort], filter_map[:display_name] %>
               <% else %>
@@ -55,7 +55,7 @@
           <% end %>
 
           <% if field == :discount %>
-            <td class="discount"><%= item.discount %></td>
+            <td class="discounts"><%= item.discount %></td>
           <% end %>
 
           <% if field == :row_total %>

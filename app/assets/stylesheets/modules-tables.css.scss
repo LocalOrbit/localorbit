@@ -962,6 +962,22 @@ th {
     min-width: 50px;
   }
 }
+.report-table {
+  margin: 0 -10px;
+
+  .discounts,
+  .discount {
+    display: none;
+  }
+
+  .js-sticky {
+    margin-left: -10px;
+  }
+  .js-fixed {
+    margin-left: 0;
+  }
+}
+
 .sold-table th {
   white-space: nowrap;
 }
