@@ -87,6 +87,38 @@
     }
   }
 }
+
+@media screen and (min-width: $mobile_break) {
+  .reports-filters {
+    .pull-left select {
+      display: block;
+      width: 100%;
+    }
+    .pull-left[data-filter-count="1"] {
+      width: 50%;
+      .preserve-alignment {
+        width: 45%;
+      }
+    }
+    .pull-left[data-filter-count="2"],
+    .pull-left[data-filter-count="3"],
+    .pull-left[data-filter-count="4"] {
+      width: 50%;
+      .preserve-alignment {
+        width: 45%;
+        max-width: 45%;
+      }
+    }
+    .pull-left[data-filter-count="5"],
+    .pull-left[data-filter-count="6"] {
+      width: 100%;
+      .preserve-alignment {
+        width: 24%;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: $mobile_break) {
   .filter-row {
     span {
