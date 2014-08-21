@@ -12,7 +12,7 @@ class UserDecorator < Draper::Decorator
     title = enabled_for_organization?(context[:org]) ? "Suspend" : "Enable"
     status = enabled_for_organization?(context[:org]) ? "alert" : "notice"
 
-    toggle_enabled_html(status, [context[:org]], !enabled_for_organization?(context[:org]))
+    toggle_enabled_html(title, status, [context[:org]], !enabled_for_organization?(context[:org]))
   end
 
   def global_toggle_enabled_button
@@ -20,6 +20,7 @@ class UserDecorator < Draper::Decorator
 
     title, status = nil
     is_enabled = (organizations.count > suspended_organizations.count)
+
     if is_enabled
       title = "Suspend"
       status = "alert"
@@ -28,22 +29,21 @@ class UserDecorator < Draper::Decorator
       status = "notice"
     end
 
-    toggle_enabled_html(title, status, org_ids, is_enabled)
+    toggle_enabled_html(title, status, user.organizations_including_suspended, !is_enabled)
   end
-
 
   private
 
-  def toggle_enabled_html(title, status, org_ids, state)
+  def toggle_enabled_html(title, status, target_orgs, state)
     link_to_opts = {
       method: :patch,
       class: "btn btn--small #{status}"
     }
 
-      link_to(
-        title,
-        update_enabled_admin_user_path(self, organization_id: org_ids, enabled: state),
-        link_to_opts
-      )
+    link_to(
+      title,
+      update_enabled_admin_user_path(self, organization_ids: target_orgs.pluck(:id), enabled: state, method: :patch),
+      link_to_opts
+    )
   end
 end

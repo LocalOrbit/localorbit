@@ -27,6 +27,7 @@
           </td>
           <% if current_user.admin? || current_user.can_manage_market?(current_market) && !user_masquerade? %>
             <td class="action">
+			  <%= user.global_toggle_enabled_button %>
               <%= link_to "Log In", user_masquerade_url(user, host: user.markets.first.try(:domain) || Figaro.env.domain), class: "btn btn--small btn--save" %>
             </td>
           <% end %>

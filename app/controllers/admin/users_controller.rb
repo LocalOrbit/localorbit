@@ -26,30 +26,33 @@ module Admin
     end
 
     def update_enabled
-      org = @user.organizations_including_suspended.find(params[:organization_id])
+      binding.pry
 
+      org_ids = @user.organizations_including_suspended.find(params[:organization_ids])
+      user_org_associations = @user.user_organizations.where(organization_id: org_ids)
 
-      if !current_user.can_manage_organization?(org)
-        return redirect_to :back, alert: "You are unable to manage this organization."
-      end
-
-      join_association = @user.user_organizations.find_by(organization: org)
-
-      if join_association.nil?
+      if user_org_associations.nil?
         redirect_to :back, alert: "Unable to update #{@user.decorate.display_name}"
       end
 
-      if join_association.update_attributes(enabled: update_enabled_params[:enabled])
+      failed = []
+      user_org_associations.each do |uo|
+        unless uo.update_attributes(enabled: update_enabled_params[:enabled])
+          failed << uo
+        end
+      end
+
+      if failed.empty?
         redirect_to :back, notice: "Updated #{@user.decorate.display_name}"
       else
-        redirect_to :back, alert: "Unable to update #{@user.decorate.display_name}"
+        redirect_to :back, alert: "Unable to update all affiliations for #{@user.decorate.display_name}"
       end
     end
 
     private
 
     def update_enabled_params
-      params.permit(:organization_id, :enabled, :id)
+      params.permit(:organization_ids, :enabled, :id)
     end
 
     def user_params
