@@ -125,6 +125,14 @@ class Market < ActiveRecord::Base
     update!(closed: false)
   end
 
+  def next_service_payment_at
+    return nil unless plan_start_at && plan_interval
+    return plan_start_at if plan_start_at > Time.now
+
+    plan_payments = Payment.successful.not_refunded.where(payer: self, payment_type: "service").where(Payment.arel_table[:created_at].gt(plan_start_at))
+    (plan_interval * plan_payments.count).months.from_now(plan_start_at)
+  end
+
   private
 
   def self.order_by_name(direction)

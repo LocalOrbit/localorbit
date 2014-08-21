@@ -286,6 +286,12 @@ FactoryGirl.define do
     trait :market_orders do
       payment_type "market payment"
     end
+
+    trait :service do
+      payee          nil
+      payment_type   "service"
+      payment_method "ach"
+    end
   end
 
   factory :plan do
