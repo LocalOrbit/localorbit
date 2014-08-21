@@ -258,7 +258,13 @@
                   <% end %>
                 <% end %>
               </td>
-              <td><%= link_to_if metadata.user, metadata.user_name_or_email, [:admin, metadata.user] %></td>
+              <td>
+                <% if metadata.masquerader %>
+                  <%= link_to_if metadata.masquerader, metadata.masquerader_username, [:admin, metadata.user] %>
+                  <br>as<br>
+                <% end %>
+                <%= link_to_if metadata.user, metadata.user_name_or_email, [:admin, metadata.user] %>
+              </td>
             </tr>
 
           <% end %>
