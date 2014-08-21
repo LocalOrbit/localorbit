@@ -169,6 +169,15 @@
         <%= f.select :plan_bank_account_id, @market.decorate.payment_accounts_for_select, include_blank: 'Select a bank account' %>
       </div>
     </div>
+
+    <% if (payment_date = @market.next_service_payment_at) %>
+    <div class="row row--field">
+      <div class="field column column--half column--guttered" id="plan-options">
+        Next Payment Due On:<br>
+        <%= payment_date.strftime("%b %d, %Y") %>
+      </div>
+    </div>
+    <% end %>
   <% end %>
 
 </fieldset>
