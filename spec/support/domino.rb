@@ -418,7 +418,7 @@ module Dom
       end
 
       def impersonate
-        node.click_link "Login As"
+        node.click_link "Log In"
       end
     end
 

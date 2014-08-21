@@ -28,7 +28,7 @@ describe "Impersonating a user" do
     end
 
     it "does not show the 'login as' button" do
-      expect(page).to have_content("Login As")
+      expect(page).to have_content("Log In")
     end
 
     it "impersonates a user and exits that impersonation" do
@@ -37,9 +37,7 @@ describe "Impersonating a user" do
       expect(page).to have_content("Impersonating #{buyer_user.name}")
       expect(page).to_not have_content("Welcome #{user.name}")
 
-
       find("#exit-masquerade").click
-
 
       expect(page).to have_content("Welcome #{user.name}")
       expect(page).to_not have_content("Impersonating #{buyer_user.name}")
