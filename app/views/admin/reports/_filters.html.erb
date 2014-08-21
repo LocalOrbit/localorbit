@@ -1,6 +1,6 @@
 <%= search_form_for presenter.q, url: admin_report_path(presenter.report.to_s.dasherize), html: { class: "payment_search clear-after" } do |f| %>
   <div class="reports-filters">
-    <div class="pull-left">
+    <div class="pull-left" data-filter-count="<%= presenter.filters.count - 2 %>">
       <% presenter.filters.each do |filter| %>
 
         <% if filter == :order_number %>
