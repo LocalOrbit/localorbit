@@ -234,10 +234,14 @@ class Order < ActiveRecord::Base
   end
 
   def sellers_with_changes
-    uuid = audits.last.request_uuid
+    uuid = audits.last.try(:request_uuid)
 
-    Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
-      audit.auditable.product.organization
+    if uuid
+      Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
+        audit.auditable.product.organization
+      end
+    else
+      []
     end
   end
 
