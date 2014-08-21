@@ -68,7 +68,12 @@ class ApplicationController < ActionController::Base
   def ensure_market_affiliation
     return if current_user.admin?
     if current_market.nil? || current_market != market_for_current_subdomain(current_user.markets)
-      render_404
+      if current_user.markets.present?
+        redirect_to [current_user.markets.first.subdomain, Figaro.env.domain].join(".")
+        false
+      else
+        render_404
+      end
     end
   end
 

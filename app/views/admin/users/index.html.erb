@@ -28,7 +28,7 @@
               <% end %>
             </ul>
           </td>
-          <% if current_user.admin? || current_user.can_manage_market?(market_for_current_subdomain)%>
+          <% if current_user.admin? || current_user.can_manage_market?(current_market)%>
             <td class="action">
 
               <%= link_to "Log In", masquerade_path(user), class: "btn btn--small btn--save" %>
