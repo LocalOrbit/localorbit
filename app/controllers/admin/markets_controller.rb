@@ -48,12 +48,11 @@ class Admin::MarketsController < AdminController
   protected
 
   def market_params
-    params.require(:market).permit(
+    columns = [
       :name,
       :subdomain,
       :tagline,
       :timezone,
-      :active,
       :contact_name,
       :contact_email,
       :contact_phone,
@@ -64,16 +63,26 @@ class Admin::MarketsController < AdminController
       :logo,
       :photo,
       :allow_cross_sell,
-      :allow_purchase_orders,
-      :allow_credit_cards,
-      :allow_ach,
-      :default_allow_purchase_orders,
-      :default_allow_credit_cards,
-      :default_allow_ach,
       :auto_activate_organizations,
-      :plan_id,
       :closed
-    )
+    ]
+    if current_user.admin?
+      columns.concat([
+        :active,
+        :allow_purchase_orders,
+        :allow_credit_cards,
+        :allow_ach,
+        :default_allow_purchase_orders,
+        :default_allow_credit_cards,
+        :default_allow_ach,
+        :plan_id,
+        :plan_start_at,
+        :plan_interval,
+        :plan_fee,
+        :plan_bank_account_id,
+      ])
+    end
+    params.require(:market).permit(columns)
   end
 
   def market_scope
