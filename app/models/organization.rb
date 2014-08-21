@@ -66,15 +66,12 @@ class Organization < ActiveRecord::Base
     where(can_sell: can_sell)
   end
 
-  def self.for_sort(order)
-    column, direction = column_and_direction(order)
-    case column
-    when "can_sell"
-      order_by_can_sell(direction)
-    when "registered"
-      order_by_registered(direction)
+  def self.arel_column_for_sort(column_name)
+    case column_name
+    when "can_sell"   then arel_table[:can_sell]
+    when "registered" then arel_table[:created_at]
     else
-      order_by_name(direction)
+      arel_table[:name]
     end
   end
 
@@ -131,18 +128,6 @@ class Organization < ActiveRecord::Base
   end
 
   private
-
-  def self.order_by_name(direction)
-    direction == "asc" ? order("name asc") : order("name desc")
-  end
-
-  def self.order_by_registered(direction)
-    direction == "asc" ? order("created_at asc") : order("created_at desc")
-  end
-
-  def self.order_by_can_sell(direction)
-    direction == "asc" ? order("can_sell asc") : order("can_sell desc")
-  end
 
   def reject_location(attributed)
     attributed["name"].blank? ||

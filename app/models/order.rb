@@ -142,21 +142,23 @@ class Order < ActiveRecord::Base
       order(:order_number)
   end
 
-  def self.for_sort(order)
-    column, direction = column_and_direction(order)
-    case column
+  def self.arel_column_for_sort(column_name)
+    case column_name
     when "owed"
-      order_by_owed(direction)
+      # FIXME: need to sort by amount owed
+      arel_table[:id]
     when "date"
-      order_by_placed_at(direction)
+      arel_table[:placed_at]
     when "buyer"
-      order_by_buyer(direction)
+      arel_table[:payment_status]
     when "seller"
-      order_by_seller(direction)
+      # FIXME: need to sort by the seller paid status
+      arel_table[:id]
     when "delivery_status"
-      order_by_delivery_status(direction)
+      # FIXME: need to sort by order-wide delivery status
+      arel_table[:id]
     else
-      order_by_order_number(direction)
+      arel_table[:order_number]
     end
   end
 
@@ -306,32 +308,5 @@ class Order < ActiveRecord::Base
       self.delivery_fees = 0
       self.total_cost    = 0
     end
-  end
-
-  def self.order_by_order_number(direction)
-    direction == "asc" ? order("order_number asc") : order("order_number desc")
-  end
-
-  def self.order_by_buyer(direction)
-    direction == "asc" ? order("payment_status asc") : order("payment_status desc")
-  end
-
-  def self.order_by_owed(direction)
-    # FIXME: need to sort by amount owed
-    direction == "asc" ? order(:id) : order(:id)
-  end
-
-  def self.order_by_seller(direction)
-    # FIXME: need to sort by the seller paid status
-    direction == "asc" ? order(:id) : order(:id)
-  end
-
-  def self.order_by_delivery_status
-    # FIXME: need to sort by order-wide delivery status
-    direction == "asc" ? order(:id) : order(:id)
-  end
-
-  def self.order_by_placed_at(direction)
-    direction == "asc" ? order("placed_at asc") : order("placed_at desc")
   end
 end
