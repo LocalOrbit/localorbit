@@ -76,4 +76,11 @@ class OrganizationDecorator < Draper::Decorator
       link_to_opts
     )
   end
+
+  def affiliation_item
+    market_list = organization.markets.pluck(:name).to_sentence
+    type = organization.can_sell? ? "Seller" : "Buyer"
+
+    content_tag(:li, "#{market_list}: #{name}, #{type}")
+  end
 end
