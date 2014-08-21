@@ -133,6 +133,22 @@ class User < ActiveRecord::Base
     end
   end
 
+  def display_managed_organizations
+    market_ids = if admin?
+                   Market.all.pluck(:id)
+                 elsif market_manager?
+                   managed_markets_join.map(&:market_id)
+                 end
+
+    Organization.managed_by_market_ids(market_ids).
+        where(market_organizations: {deleted_at: nil}).
+        where.not(market_organizations: {id: nil}).
+        union(organizations_including_suspended).
+        joins(:market_organizations).
+        distinct
+  end
+
+
   def managed_organizations_including_deleted
     if admin?
       Organization.all
