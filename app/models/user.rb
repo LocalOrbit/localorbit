@@ -92,10 +92,7 @@ class User < ActiveRecord::Base
   end
 
   def enabled_for_organization?(org)
-    uo = user_organizations.find_by(organization: org)
-    return false if uo.nil?
-
-    uo.enabled?
+    user_organizations.find_by(organization: org).try(:enabled?)
   end
 
   def suspended_from_all_orgs?(market)
