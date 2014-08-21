@@ -179,5 +179,16 @@ feature "viewing and managing users" do
       expect(manager_row.affiliations).to eql("Test Market, Market Manager")
       expect(user_row.affiliations).to eql("Test Market: Test Org 2, Seller")
     end
+
+    scenario "Suspending a user from an organization", :suspend_user do
+      visit admin_organization_users_path(organization2)
+
+      expect(page).to have_content('Suspend')
+      expect(page).to_not have_content('Enable')
+
+      click_link "Suspend"
+      expect(page).to have_content('Enable')
+      expect(page).to_not have_content('Suspend')
+    end
   end
 end

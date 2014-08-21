@@ -3,7 +3,7 @@ module Admin
     include StickyFilters
 
     before_action :require_admin_or_market_manager
-    before_action :lookup_manageable_user, only: [:edit, :update]
+    before_action :lookup_manageable_user, only: [:edit, :update, :update_enabled]
     before_action :find_users, only: :index
 
     def index
@@ -25,7 +25,32 @@ module Admin
       end
     end
 
+    def update_enabled
+      org = @user.organizations_including_suspended.find(params[:organization_id])
+
+
+      if !current_user.can_manage_organization?(org)
+        return redirect_to :back, alert: "You are unable to manage this organization."
+      end
+
+      join_association = @user.user_organizations.find_by(organization: org)
+
+      if join_association.nil?
+        redirect_to :back, alert: "Unable to update #{@user.decorate.display_name}"
+      end
+
+      if join_association.update_attributes(enabled: update_enabled_params[:enabled])
+        redirect_to :back, notice: "Updated #{@user.decorate.display_name}"
+      else
+        redirect_to :back, alert: "Unable to update #{@user.decorate.display_name}"
+      end
+    end
+
     private
+
+    def update_enabled_params
+      params.permit(:organization_id, :enabled, :id)
+    end
 
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation).reject {|_, v| v.empty? }
@@ -39,7 +64,7 @@ module Admin
           current_user.managed_organizations.map {|o| o.user_ids }.flatten
         User.where(id: ids)
       end
-      @users = scope.includes(:managed_markets, :organizations)
+      @users = scope.includes(:managed_markets)
     end
   end
 end

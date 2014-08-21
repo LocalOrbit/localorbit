@@ -3,7 +3,7 @@ class PaymentHistoryPresenter
 
   include Search::DateFormat
 
-  def self.build(user: user, organization: organization, options: options, paginate: true)
+  def self.build(user: user, options: options, paginate: true)
     page = options[:page]
     per_page = options[:per_page]
     search = options[:q] || {}
@@ -35,10 +35,10 @@ class PaymentHistoryPresenter
     elsif user.buyer_only?
       Payment.
         joins(:orders).
-        where(payer_type: "Organization", payer_id: (organization.try(:id) || user.organization_ids)).
+        where(payer_type: "Organization", payer_id: (user.organization_ids)).
         where("orders.payment_status = ? OR (orders.payment_method = ? AND payments.status = ?)", "paid", "ach", "pending")
     else
-      Payment.where(payee: organization)
+      Payment.where(payee: user.organizations)
     end
 
     new(payments, search, page, per_page, paginate)

@@ -1,13 +1,18 @@
 require "spec_helper"
 
 feature "User signing in" do
-  let!(:user) { create(:user, :admin) }
+  let!(:admin) { create(:user, :admin) }
+  let!(:market2) { create(:market) }
+  let!(:org2) { create(:organization, markets: [market2]) }
+  let!(:user2) { create(:user, organizations: [org2]) }
+
+
   let(:cookie_name) { "_local_orbit_session_test" }
 
   scenario "A user can sign in" do
     visit "/"
 
-    fill_in "Email", with: user.email
+    fill_in "Email", with: admin.email
     fill_in "Password", with: "password"
     click_button "Sign In"
 
@@ -16,7 +21,7 @@ feature "User signing in" do
 
   scenario "A returning users login is remembered" do
     visit "/"
-    fill_in "Email", with: user.email
+    fill_in "Email", with: admin.email
     fill_in "Password", with: "password"
     check "Keep me signed in."
     click_button "Sign In"
@@ -33,7 +38,7 @@ feature "User signing in" do
   # Make sure the cookie jar hack still works
   scenario "A returning users session is remembered" do
     visit "/"
-    fill_in "Email", with: user.email
+    fill_in "Email", with: admin.email
     fill_in "Password", with: "password"
     click_button "Sign In"
 
@@ -46,7 +51,7 @@ feature "User signing in" do
   end
 
   scenario "A user can sign out" do
-    sign_in_as user
+    sign_in_as admin
     visit "/"
     click_link "Sign Out"
     expect(page).not_to have_text("Dashboard")
@@ -57,7 +62,7 @@ feature "User signing in" do
   scenario "After logging in an admin should be on the dashboard" do
     visit "/"
 
-    fill_in "Email", with: user.email
+    fill_in "Email", with: admin.email
     fill_in "Password", with: "password"
     click_button "Sign In"
 
@@ -67,7 +72,7 @@ feature "User signing in" do
   scenario "After logging in through the organizations page an admin should be on the organizations page" do
     visit admin_organizations_path
 
-    fill_in "Email", with: user.email
+    fill_in "Email", with: admin.email
     fill_in "Password", with: "password"
     click_button "Sign In"
 
@@ -150,5 +155,34 @@ feature "User signing in" do
     click_button "Sign In"
 
     expect(page.current_path).to eq(products_path)
+  end
+
+  context "As a suspended user", :suspend_user do
+    let!(:selling_user) { create(:user, organizations: [org2])}
+
+    before do
+      suspend_user(user: selling_user, org: org2)
+    end
+
+    scenario "logging in as a suspended user" do
+      switch_to_subdomain(market2.subdomain)
+      sign_in_as(selling_user)
+
+      expect(page).to have_content("Your account has been suspended.")
+    end
+  end
+
+  context "As a market manager logging into a market that they do not manage" do
+    let!(:market_manager) { create(:user, managed_markets: [market1]) }
+    let!(:market1) { create(:market) }
+    let!(:market2) { create(:market) }
+
+    scenario "sees 404" do
+      switch_to_subdomain(market2.subdomain)
+      sign_in_as(market_manager)
+
+      expect(page).not_to have_content("suspended")
+      expect(page).to have_content("The page you were looking for doesn't exist (404)")
+    end
   end
 end

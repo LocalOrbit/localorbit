@@ -626,6 +626,7 @@ ActiveRecord::Schema.define(version: 20140820181046) do
     t.integer  "organization_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "enabled",         default: true
   end
 
   add_index "user_organizations", ["organization_id"], name: "index_user_organizations_on_organization_id", using: :btree

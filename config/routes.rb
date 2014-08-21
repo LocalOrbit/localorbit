@@ -89,7 +89,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :users, only: [:index, :edit, :update]
+    resources :users, only: [:index, :edit, :update] do
+      patch :update_enabled, on: :member
+    end
 
     resources :promotions do
       member do

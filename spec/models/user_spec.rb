@@ -206,7 +206,12 @@ describe User do
     end
 
     context "for a user" do
-      let(:user) { create(:user, role: "user") }
+      let!(:user) { create(:user, organizations: [org1, org2]) }
+      let!(:market) { create(:market) }
+      let!(:market2) { create(:market) }
+
+      let!(:org1) { create(:organization, markets:[market]) }
+      let!(:org2) { create(:organization, markets: [market2]) }
 
       it "returns a scope for the organization memberships" do
         expect(user.managed_organizations).to eq(user.organizations)
@@ -253,11 +258,22 @@ describe User do
     end
 
     context 'for a user' do
-      let(:user) { create(:user, role: 'user', organizations: [org1]) }
+      let(:user) { create(:user, role: 'user', organizations: [org1, org5]) }
 
       it 'returns a scope for the organization memberships within the market' do
-        expect(user.managed_organizations_within_market(market1)).to include(org1)
-        expect(user.managed_organizations_within_market(market1)).to_not include(org2, org3, org4, org5)
+        expect(user.managed_organizations_within_market(market1)).to include(org1, org5)
+        expect(user.managed_organizations_within_market(market1)).to_not include(org2, org3, org4)
+      end
+
+      context "user is suspended from an organization" do
+        before do
+          suspend_user(user: user, org: org1)
+        end
+
+        it "will not return organizations a user is suspended from" do
+          expect(user.managed_organizations_within_market(market1)).to include(org5)
+          expect(user.managed_organizations_within_market(market1)).not_to include(org1, org3, org4)
+        end
       end
     end
   end
@@ -450,6 +466,64 @@ describe User do
 
       it "returns nil" do
         expect(user.primary_market).to eq(nil)
+      end
+    end
+  end
+
+  context "oranizations scopes" do
+    let!(:user) { create(:user) }
+    let!(:org1) { create(:organization, users: [user]) }
+    let!(:org2) { create(:organization, users: [user]) }
+
+    describe "#organizations" do
+      let(:result) { user.organizations }
+
+      it "returns the organizations the user belongs to" do
+        expect(result.count).to eql(2)
+        expect(result).to include(org1)
+        expect(result).to include(org2)
+      end
+
+      context "when the user has been suspended from an organization" do
+        before do
+          suspend_user(user: user, org: org1)
+        end
+
+        it "does not return organizations where the user is suspended" do
+          expect(result.count).to eql(1)
+          expect(result).not_to include(org1)
+          expect(result).to include(org2)
+        end
+      end
+    end
+
+    describe "#organizations_including_suspended" do
+      let(:result) { user.organizations_including_suspended }
+
+      before do
+        suspend_user(user: user, org: org1)
+      end
+
+      context "when the user has been suspended from an organization" do
+        it "returns all organizations a user is associated with including suspended" do
+          expect(result.count).to eql(2)
+          expect(result).to include(org1)
+          expect(result).to include(org2)
+        end
+      end
+    end
+
+    describe "#suspended_organizations" do
+      let(:result) { user.suspended_organizations }
+      before do
+        suspend_user(user: user, org: org1)
+      end
+
+      it "returns all organizations a user is suspended from" do
+        expect(result.count).to eql(1)
+
+        expect(result).to include(org1)
+        expect(result).not_to include(org2)
       end
     end
   end

@@ -1,0 +1,23 @@
+<% if current_user.admin? || current_user.can_manage_market?(current_market) || current_user.enabled_for_organization?(organization) %>
+  <tr>
+    <td class="name"><%= link_to organization.name, [:admin, organization] %></td>
+    <td class="market"><%= organization.original_market.name %></td>
+    <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
+    <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
+    <td class="action">
+      <%= organization.decorate.toggle_active_button %>
+      <% if organization.markets.managed_by(current_user).count > 1 %>
+        <%= link_to raw("&#57418;"), market_memberships_admin_organization_path(organization.id), class: "action-link font-icon remote-modal-toggle", data: { modal: "delete-organization" }, title: "Delete" %>
+      <% elsif organization.markets.managed_by(current_user).count == 1 %>
+        <%= link_to raw("&#57418;"), admin_organization_path(organization.id, "ids[]" => organization.markets.managed_by(current_user).first), method: :delete, class: 'action-link font-icon', data: {confirm: "Are you sure you want to delete organization #{organization.name}? All discounts, users, prices, products related to this organization will also be deleted. This cannot be undone."}, title: "Delete" %>
+      <% end %>
+    </td>
+  </tr>
+<% else %>
+  <tr>
+    <td class="name"><%= organization.name %></td>
+    <td class="market"><%= organization.original_market.name %></td>
+    <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
+    <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
+  </tr>
+<% end %>
