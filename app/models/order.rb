@@ -22,7 +22,13 @@ class Order < ActiveRecord::Base
   belongs_to :placed_by, class: User
   belongs_to :discount
 
-  has_many :items, inverse_of: :order, class: OrderItem, autosave: true, dependent: :destroy
+  has_many :items, inverse_of: :order, class: OrderItem, autosave: true, dependent: :destroy do
+    def for_checkout
+      eager_load(product: [:organization, :prices]).order("organizations.name, products.name").group_by do |item|
+        item.product.organization.name
+      end
+    end
+  end
   has_many :order_payments, inverse_of: :order
   has_many :payments, through: :order_payments, inverse_of: :orders
   has_many :products, through: :items
