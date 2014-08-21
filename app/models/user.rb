@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
   end
 
   def can_manage_organization?(org)
-    admin? || managed_markets.can_manage_organization?(org)
+    admin? || managed_organizations.include?(org)
   end
 
   def can_manage_market?(market)
@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
   end
 
   def can_manage_user?(user)
-    admin? || user.organizations.any? {|org| can_manage_organization?(org) }
+    admin? || user.organizations_including_suspended.any? {|org| can_manage_organization?(org) }
   end
 
   def enabled_for_organization?(org)
