@@ -1,13 +1,7 @@
-<% fields = %w(quantity quantity_delivered delivery_status) %>
+<% fields = %w(name quantity quantity_delivered delivery_status) %>
 <% if fields.map{|field| activity.audited_changes[field].present? }.any? %>
   <p>
-    <span class="activity-group">
-      <%= activity.display_action %>:
-      <% if activity.auditable %>
-        <%= activity.auditable.name %>, <%= activity.auditable.unit %>
-        from <%= activity.auditable.seller_name %>
-      <% end %>
-    </span>
+    <span class="activity-group"><%= activity.display_action %></span>
 
     <% fields.each do |field| %>
       <% if activity.audited_changes[field] %>

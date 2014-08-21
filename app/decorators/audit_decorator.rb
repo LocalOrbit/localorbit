@@ -28,8 +28,6 @@ class AuditDecorator < Draper::Decorator
   def action_name
     if action == "destroy"
       "removed"
-    elsif auditable_type == "Order" && action == "create"
-      "placed"
     else
       "#{action}d"
     end
