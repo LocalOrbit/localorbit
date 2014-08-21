@@ -239,7 +239,7 @@ class Order < ActiveRecord::Base
     if uuid
       Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
         audit.auditable.product.organization
-      end
+      end.uniq
     else
       []
     end
