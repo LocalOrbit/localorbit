@@ -9,7 +9,7 @@
             <th data-column="name" class="<%= column_sort_classes("name")%>">Name</th>
             <th data-column="email" class="<%= column_sort_classes("email")%>">E-mail</th>
             <th>Affiliations</th>
-            <% if current_user.admin? %>
+            <% if current_user.admin? || current_user.can_manage_market?(current_market) %>
               <th class="action"></th>
             <% end %>
           </tr>
@@ -28,10 +28,9 @@
               <% end %>
             </ul>
           </td>
-          <% if current_user.admin? || current_user.can_manage_market?(current_market)%>
+          <% if current_user.admin? || current_user.can_manage_market?(current_market) %>
             <td class="action">
-
-              <%= link_to "Log In", masquerade_path(user), class: "btn btn--small btn--save" %>
+              <%= link_to "Log In", user_masquerade_url(user, host: user.markets.first.try(:domain) || Figaro.env.domain), class: "btn btn--small btn--save" %>
             </td>
           <% end %>
         </tr>

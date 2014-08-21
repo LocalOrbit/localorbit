@@ -32,7 +32,7 @@ describe "Impersonating a user" do
       visit admin_users_path
     end
 
-    it "does not show the 'login as' button" do
+    it "does show the 'login as' button" do
       expect(page).to have_content("Log In")
     end
 
@@ -56,32 +56,20 @@ describe "Impersonating a user" do
       visit admin_users_path
     end
 
-    it "does not show the 'login as' button" do
+    it "does show the 'login as' button" do
       expect(page).to have_content("Log In")
     end
 
     it "impersonates a user and exits that impersonation" do
-      Dom::Admin::UserRow.find_by_email(buyer2_user.email).impersonate
+      Dom::Admin::UserRow.find_by_email(buyer1_user.email).impersonate
 
-      expect(page).to have_content("Impersonating #{buyer2_user.name}")
+      expect(page).to have_content("Impersonating #{buyer1_user.name}")
       expect(page).to_not have_content("Welcome #{user.name}")
 
       find("#exit-masquerade").click
 
       expect(page).to have_content("Welcome #{user.name}")
-      expect(page).to_not have_content("Impersonating #{buyer2_user.name}")
-    end
-
-    it "does not allow impersonating a second person" do
-      Dom::Admin::UserRow.find_by_email(market_manager.email).impersonate
-
-      expect(page).to have_content("Impersonating #{market_manager.name}")
-      expect(page).to_not have_content("Welcome #{user.name}")
-
-      expect(current_host).to have_content(market2.subdomain)
-      visit admin_users_path
-
-      expect(page).to_not have_content("Login As")
+      expect(page).to_not have_content("Impersonating #{buyer1_user.name}")
     end
   end
 end
