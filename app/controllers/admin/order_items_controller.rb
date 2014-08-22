@@ -3,26 +3,24 @@ module Admin
     include Search::DateFormat
     include StickyFilters
 
+    before_action :find_sticky_params
+
     def index
       items = fetch_order_items
       prepare_filter_data(items)
 
       # initialize ransack and search
-      @query_params = sticky_parameters(request.query_parameters)
       search = Search::QueryDefaults.new(@query_params[:q], :order_placed_at).query
 
-      @q = items.search(search)
-      @q.sorts = ["order_placed_at desc", "name"] if @q.sorts.empty?
-
-      @order_items = @q.result
-      @totals = OrderTotals.new(@order_items)
-
-      @start_date = format_date(search[:order_placed_at_date_gteq])
-      @end_date = format_date(search[:order_placed_at_date_lteq])
+      @q, @totals = perform_search_and_calculate_totals(items, search)
+      @start_date, @end_date = find_search_date_range(search)
 
       respond_to do |format|
-        format.html { @order_items = @order_items.page(params[:page]).per(@query_params[:per_page]) }
-        format.csv { @filename = "sold_items.csv" }
+        format.html { @order_items = @q.result.page(params[:page]).per(@query_params[:per_page]) }
+        format.csv {
+          @order_items = @q.result
+          @filename = "sold_items.csv"
+        }
       end
     end
 
@@ -32,6 +30,24 @@ module Admin
     end
 
     private
+
+    def find_sticky_params
+      @query_params = sticky_parameters(request.query_parameters)
+    end
+
+    def find_search_date_range(search)
+      [
+        format_date(search[:order_placed_at_date_gteq]),
+        format_date(search[:order_placed_at_date_lteq])
+      ]
+    end
+
+    def perform_search_and_calculate_totals(items, search)
+      query = items.search(search)
+      query.sorts = ["order_placed_at desc", "name"] if query.sorts.empty?
+
+      [query, OrderTotals.new(query.result)]
+    end
 
     def fetch_order_items
       OrderItem.for_user(current_user).
