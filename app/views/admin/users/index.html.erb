@@ -21,7 +21,7 @@
           <td>
             <ul class="affiliations">
               <% user.affiliations.each do |a| %>
-                <%= a.decorate.affiliation_item %>
+                <%= a.decorate.affiliation_item(user) %>
               <% end %>
             </ul>
           </td>

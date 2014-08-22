@@ -284,6 +284,10 @@ span.btn {
   background-color: $alert_bg;
 }
 
+li .suspended-indicator {
+  margin-left: 5px;
+}
+
 .pdf-download {
   @include border-radius(3px);
   font-size: 10px;

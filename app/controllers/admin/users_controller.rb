@@ -26,10 +26,12 @@ module Admin
     end
 
     def update_enabled
-      org_ids = @user.organizations_including_suspended.find(update_enabled_params[:organization_ids])
-      user_org_associations = @user.user_organizations.where(organization_id: org_ids)
+      target_orgs = @user.organizations_including_suspended.find(update_enabled_params[:organization_ids])
+      target_orgs = target_orgs.select {|o| current_user.can_manage_organization?(o) }
 
-      if user_org_associations.nil?
+      user_org_associations = @user.user_organizations.where(organization_id: target_orgs.map(&:id))
+
+      if user_org_associations.empty?
         redirect_to :back, alert: "Unable to update #{@user.decorate.display_name}"
       end
 

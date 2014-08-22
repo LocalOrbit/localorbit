@@ -77,10 +77,13 @@ class OrganizationDecorator < Draper::Decorator
     )
   end
 
-  def affiliation_item
+  def affiliation_item(user)
     market_list = organization.markets.pluck(:name).to_sentence
     type = organization.can_sell? ? "Seller" : "Buyer"
+    suspended_tag = user.enabled_for_organization?(self) ? "" : content_tag(:span, "Suspended", class: "suspended-indicator")
 
-    content_tag(:li, "#{market_list}: #{name}, #{type}")
+    content_tag(:li) do
+      content_tag(:span, "#{market_list}: #{name}, #{type}") + suspended_tag
+    end
   end
 end

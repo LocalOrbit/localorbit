@@ -5,6 +5,7 @@ feature "Suspend/enable a user", :suspend_user do
 
   let!(:market1) { create(:market) }
   let!(:market2) { create(:market) }
+
   let!(:org1) { create(:organization, markets: [market1, market2]) }
   let!(:org2) { create(:organization, markets: [market1]) }
 
@@ -13,9 +14,7 @@ feature "Suspend/enable a user", :suspend_user do
   end
 
   def globally_suspend_user(opts={})
-    logged_in_user = opts[:as]
-
-    sign_in_as(logged_in_user)
+    sign_in_as(opts[:as])
     visit admin_users_path
 
     user_row = Dom::Admin::UserRow.find_by_email(target_user.email)
@@ -24,22 +23,26 @@ feature "Suspend/enable a user", :suspend_user do
       within(user_row.node) do
         click_link "Suspend"
       end
+      expect(page).to have_content("Updated #{target_user.decorate.display_name}")
     }.to change {
-      target_user.reload
-      target_user.organizations.count
+      User.find(target_user.id).organizations.count
     }.from(2).to(0)
 
     user_row = Dom::Admin::UserRow.find_by_email(target_user.email)
     expect(user_row).to have_content("Enable")
+
+    # See that the suspended pill is next to the organization
+    user_row.node.all(".affiliations li").each do |a|
+      expect(a).to have_content("Suspended")
+    end
   end
 
   def globally_enable_user(opts={})
     suspend_user(user: target_user, org: org1)
     suspend_user(user: target_user, org: org2)
 
-    logged_in_user = opts[:as]
+    sign_in_as(opts[:as])
 
-    sign_in_as(logged_in_user)
     visit admin_users_path
 
     user_row = Dom::Admin::UserRow.find_by_email(target_user.email)
@@ -48,14 +51,18 @@ feature "Suspend/enable a user", :suspend_user do
       within(user_row.node) do
         click_link "Enable"
       end
+      expect(page).to have_content("Updated #{target_user.decorate.display_name}")
     }.to change {
-      target_user.reload
-      target_user.organizations.count
+
+      User.find(target_user.id).organizations.count
     }.from(0).to(2)
 
     user_row = Dom::Admin::UserRow.find_by_email(target_user.email)
     expect(user_row).to have_content("Suspend")
 
+    user_row.node.all(".affiliations li").each do |a|
+      expect(a).to_not have_content("suspended")
+    end
   end
 
   context "as an admin" do

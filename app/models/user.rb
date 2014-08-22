@@ -21,11 +21,11 @@ class User < ActiveRecord::Base
 
   has_many :organizations, -> {
     not_deleted.
-    where(user_organizations: {enabled: true})
+    where(user_organizations: {enabled: true}).distinct
   }, through: :user_organizations
 
   has_many :organizations_including_suspended, -> {
-    not_deleted
+    not_deleted.distinct
   }, through: :user_organizations, source: :organization
 
   has_many :suspended_organizations, -> { where(user_organizations: {enabled: false}) }, through: :user_organizations, source: :organization

@@ -5,7 +5,7 @@ class MarketDecorator < Draper::Decorator
 
   delegate_all
 
-  def affiliation_item
+  def affiliation_item(_)
     content_tag(:li, "#{name}, Market Manager")
   end
 
