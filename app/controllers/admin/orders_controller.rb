@@ -1,14 +1,21 @@
 class Admin::OrdersController < AdminController
   include StickyFilters
 
-  def index
-    @query_params = sticky_parameters(request.query_parameters)
-    @search_presenter = OrderSearchPresenter.new(@query_params, current_user, "placed_at")
+  before_action :find_sticky_parameters, only: :index
 
-    @q = Order.orders_for_seller(current_user).uniq.search(@search_presenter.query)
-    @q.sorts = "placed_at desc" if @q.sorts.empty?
+  def index
+    @search_presenter = OrderSearchPresenter.new(@query_params, current_user, "placed_at")
+    @q, @totals = search_and_calculate_totals(@search_presenter)
+
     @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
-    @totals = OrderTotals.new(OrderItem.where(order_id: @q.result.map(&:id)))
+  end
+
+  def search_and_calculate_totals(search)
+    results = Order.orders_for_seller(current_user).uniq.search(search.query)
+    results.sorts = "placed_at desc" if results.sorts.empty?
+
+    order_ids = results.result.map(&:id)
+    [results, OrderTotals.new(OrderItem.where(order_id: order_ids))]
   end
 
   def show
@@ -26,17 +33,9 @@ class Admin::OrdersController < AdminController
     setup_deliveries(order)
 
     if params["items_to_add"]
-      result = UpdateOrderWithNewItems.perform(order: order, item_hashes: items_to_add)
-      if !result.success?
-        setup_add_items_form(order)
-        order.errors[:base] << "Failed to add items to this order."
-        render :show
-        return
-      end
+      return unless perform_add_items(order)
     elsif params[:commit] == "Add Items"
-      setup_add_items_form(order)
-      flash.now[:notice] = "Add items below."
-      render :show
+      show_add_items_form(order)
       return
     elsif params[:commit] == "Change Delivery"
       update_delivery(order)
@@ -44,20 +43,7 @@ class Admin::OrdersController < AdminController
     end
 
     # TODO: Change an order items delivery status to 'removed' or something rather then deleting them
-    updates = UpdateOrder.perform(order: order, order_params: order_params)
-    if updates.success?
-      if order.reload.items.any?
-        redirect_to admin_order_path(order), notice: "Order successfully updated."
-      else
-        order.soft_delete
-        redirect_to admin_orders_path, notice: "Order successfully updated"
-      end
-    else
-      order = updates.context[:order]
-      order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == "failed"
-      @order = SellerOrder.new(order, current_user)
-      render :show
-    end
+    perform_order_update(order, order_params)
   end
 
   protected
@@ -67,6 +53,10 @@ class Admin::OrdersController < AdminController
     params.require(:order).permit(:notes, items_attributes: [
       :id, :quantity, :quantity_delivered, :delivery_status, :_destroy
     ])
+  end
+
+  def find_sticky_parameters
+    @query_params = sticky_parameters(request.query_parameters)
   end
 
   def update_delivery(order)
@@ -97,5 +87,39 @@ class Admin::OrdersController < AdminController
     @deliveries = current_market.deliveries.recent |
       current_market.deliveries.future.active |
       [order.delivery]
+  end
+
+  def perform_order_update(order, params)
+    updates = UpdateOrder.perform(order: order, order_params: params)
+    if updates.success?
+      if order.reload.items.any?
+        redirect_to admin_order_path(order), notice: "Order successfully updated."
+      else
+        order.soft_delete
+        redirect_to admin_orders_path, notice: "Order successfully updated"
+      end
+    else
+      order = updates.context[:order]
+      order.errors.add(:payment_processor, "failed to update your payment") if updates.context[:status] == "failed"
+      @order = SellerOrder.new(order, current_user)
+      render :show
+    end
+  end
+
+  def perform_add_items(order)
+    result = UpdateOrderWithNewItems.perform(order: order, item_hashes: items_to_add)
+    if !result.success?
+      setup_add_items_form(order)
+      order.errors[:base] << "Failed to add items to this order."
+      render :show
+      return false
+    end
+    true
+  end
+
+  def show_add_items_form(order)
+    setup_add_items_form(order)
+    flash.now[:notice] = "Add items below."
+    render :show
   end
 end
