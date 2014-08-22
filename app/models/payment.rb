@@ -49,7 +49,8 @@ class Payment < ActiveRecord::Base
   validate :payee_or_payer_is_set
 
   scope :successful, -> { where(status: %w(paid pending)) }
-  scope :refundable, -> { successful.where(payment_type: "order").where("amount > refunded_amount") }
+  scope :not_refunded, -> { where(arel_table[:amount].gt(arel_table[:refunded_amount])) }
+  scope :refundable, -> { successful.not_refunded.where(payment_type: "order") }
   scope :buyer_payments, -> { where(payment_type: ["order", "order refund"]) }
   scope :for_orders, lambda {|orders| joins(:order_payments).where(order_payments: {order_id: orders}) }
   scope :seller_payments, -> { where(payment_type: "seller payment") }

@@ -372,4 +372,87 @@ describe Market do
       expect(market.next_delivery).to be_nil
     end
   end
+
+  describe "#next_service_payment_at" do
+    it "returns nil if plan_start_at or plan_interval are not set" do
+      subject.plan_start_at = nil
+      subject.plan_interval = nil
+
+      expect(subject.next_service_payment_at).to be_nil
+
+      subject.plan_start_at = 1.minute.from_now
+      expect(subject.next_service_payment_at).to be_nil
+
+      subject.plan_start_at = 1.minute.ago
+      expect(subject.next_service_payment_at).to be_nil
+
+      subject.plan_start_at = nil
+      subject.plan_interval = 1
+      expect(subject.next_service_payment_at).to be_nil
+
+      subject.plan_start_at = nil
+      subject.plan_interval = 12
+      expect(subject.next_service_payment_at).to be_nil
+    end
+
+    context "monthly plan" do
+      subject { create(:market, plan_interval: 1) }
+
+      it "returns plan_start_at when plan starts in the future" do
+        subject.plan_start_at = 1.day.from_now
+        expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
+      end
+
+      it "returns plan_start_at when no payments have been made" do
+        subject.plan_start_at = 1.minute.ago
+        expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
+      end
+
+      it "returns plan_start_at when payments were made before the plan start" do
+        create(:payment, :service, market: subject, payer: subject, created_at: 1.year.ago)
+        subject.plan_start_at = Time.current
+        expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
+      end
+
+      it "returns the next payment date based on the number of successful plan payments" do
+        create(:payment, :service, market: subject, payer: subject, created_at: 58.days.ago, status: "failed")
+        create(:payment, :service, market: subject, payer: subject, created_at: 57.days.ago)
+        subject.plan_start_at = 58.days.ago
+        expect(subject.next_service_payment_at).to eq(1.month.from_now(subject.plan_start_at))
+
+        create(:payment, :service, market: subject, payer: subject, created_at: 28.days.ago)
+        expect(subject.next_service_payment_at).to eq(2.months.from_now(subject.plan_start_at))
+      end
+    end
+
+    context "yearly plan" do
+      subject { create(:market, plan_interval: 12) }
+
+      it "returns plan_start_at when plan starts in the future" do
+        subject.plan_start_at = 1.day.from_now
+        expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
+      end
+
+      it "returns plan_start_at when no payments have been made" do
+        subject.plan_start_at = 1.minute.ago
+        expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
+      end
+
+      it "returns plan_start_at when payments were made before the plan start" do
+        create(:payment, :service, market: subject, payer: subject, created_at: 1.week.ago)
+        subject.plan_start_at = Time.current
+        expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
+      end
+
+      it "returns the next payment date based on the number of successful plan payments" do
+        create(:payment, :service, market: subject, payer: subject, created_at: 375.days.ago, status: "failed")
+        create(:payment, :service, market: subject, payer: subject, created_at: 374.days.ago)
+        subject.plan_start_at = 375.days.ago
+        expect(subject.next_service_payment_at).to eq(1.year.from_now(subject.plan_start_at))
+
+        create(:payment, :service, market: subject, payer: subject, created_at: 11.days.ago)
+        expect(subject.next_service_payment_at).to eq(2.years.from_now(subject.plan_start_at))
+      end
+    end
+  end
 end
