@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "Suspend/enable a user" do
+feature "Suspend/enable a user", :suspend_user do
   let!(:target_user) { create(:user, organizations: [org1, org2]) }
 
   let!(:market1) { create(:market) }
@@ -28,7 +28,6 @@ feature "Suspend/enable a user" do
       target_user.reload
       target_user.organizations.count
     }.from(2).to(0)
-
 
     user_row = Dom::Admin::UserRow.find_by_email(target_user.email)
     expect(user_row).to have_content("Enable")
