@@ -305,6 +305,13 @@ th {
     margin-left: 1.5em;
   }
 }
+.organization-table {
+  .action {
+    > .btn--save {
+      width: 5em;
+    }
+  }
+}
 
 .pricing {
   font-size: 12px;
