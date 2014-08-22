@@ -1,14 +1,16 @@
 require "spec_helper"
 
 describe "Impersonating a user" do
-  let!(:market1)        { create(:market) }
-  let!(:buyer1)         { create(:organization, :buyer, markets: [market1]) }
-  let!(:buyer1_user)    { create(:user, organizations: [buyer1]) }
+  let!(:market1)         { create(:market) }
+  let!(:buyer1)          { create(:organization, :buyer, markets: [market1]) }
+  let!(:buyer1_user)     { create(:user, organizations: [buyer1]) }
+  let!(:market_manager1) { create(:user, managed_markets: [market1]) }
 
-  let!(:market2)        { create(:market) }
-  let!(:buyer2)         { create(:organization, :buyer, markets: [market2]) }
-  let!(:buyer2_user)    { create(:user, organizations: [buyer2]) }
-  let!(:market_manager) { create(:user, managed_markets: [market2]) }
+  let!(:market2)         { create(:market) }
+  let!(:buyer2)          { create(:organization, :buyer, markets: [market2]) }
+  let!(:buyer2_user)     { create(:user, organizations: [buyer2]) }
+  let!(:market_manager1) { create(:user, managed_markets: [market2]) }
+
 
   let(:user)     { create(:user)}
 
@@ -47,6 +49,17 @@ describe "Impersonating a user" do
       expect(page).to have_content("Welcome #{user.name}")
       expect(page).to_not have_content("Impersonating #{buyer1_user.name}")
     end
+
+    it "does not allow stacking impersonations" do
+      Dom::Admin::UserRow.find_by_email(buyer1_user.email).impersonate
+
+      expect(page).to have_content("Impersonating #{buyer1_user.name}")
+      expect(page).to_not have_content("Welcome #{user.name}")
+
+      visit admin_users_path
+
+      expect(page).to_not have_content("Log In")
+    end
   end
 
   context "as an admin" do
@@ -70,6 +83,17 @@ describe "Impersonating a user" do
 
       expect(page).to have_content("Welcome #{user.name}")
       expect(page).to_not have_content("Impersonating #{buyer1_user.name}")
+    end
+
+    it "does not allow stacking impersonations" do
+      Dom::Admin::UserRow.find_by_email(buyer1_user.email).impersonate
+
+      expect(page).to have_content("Impersonating #{buyer1_user.name}")
+      expect(page).to_not have_content("Welcome #{user.name}")
+
+      visit admin_users_path
+
+      expect(page).to_not have_content("Log In")
     end
   end
 end
