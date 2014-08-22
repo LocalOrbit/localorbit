@@ -64,11 +64,10 @@ class OrganizationDecorator < Draper::Decorator
   def toggle_active_button
     return unless current_user.admin? || current_user.can_manage_market?(current_market)
     title = organization.active? ? "Deactivate" : "Activate"
-    status = organization.active? ? "alert" : "notice"
 
     link_to_opts = {
       method: :patch,
-      class: "btn btn--small #{status}"
+      class: "btn btn--small btn--save"
     }
 
     link_to(
