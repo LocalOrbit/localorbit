@@ -32,7 +32,6 @@ feature "User signing in" do
 
     visit new_user_session_path
     expect(page).to have_text("Dashboard")
-    expect(page).to have_text("You are already signed in.")
   end
 
   # Make sure the cookie jar hack still works

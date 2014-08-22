@@ -1,14 +1,19 @@
 require "spec_helper"
 
 describe "Impersonating a user" do
-  let!(:market) { create(:market) }
-  let(:user)  { create(:user)}
+  let!(:market1)        { create(:market) }
+  let!(:buyer1)         { create(:organization, :buyer, markets: [market1]) }
+  let!(:buyer1_user)    { create(:user, organizations: [buyer1]) }
 
-  let!(:buyer)      { create(:organization, :buyer, markets: [market]) }
-  let!(:buyer_user) { create(:user, organizations: [buyer]) }
+  let!(:market2)        { create(:market) }
+  let!(:buyer2)         { create(:organization, :buyer, markets: [market2]) }
+  let!(:buyer2_user)    { create(:user, organizations: [buyer2]) }
+  let!(:market_manager) { create(:user, managed_markets: [market2]) }
+
+  let(:user)     { create(:user)}
 
   before do
-    switch_to_subdomain(market.subdomain)
+    switch_to_subdomain(market1.subdomain)
     sign_in_as(user)
   end
 
@@ -20,6 +25,30 @@ describe "Impersonating a user" do
     end
   end
 
+  context "as a market manager" do
+    let!(:user)  { create(:user, managed_markets: [market1])}
+
+    before do
+      visit admin_users_path
+    end
+
+    it "does show the 'login as' button" do
+      expect(page).to have_content("Log In")
+    end
+
+    it "impersonates a user and exits that impersonation" do
+      Dom::Admin::UserRow.find_by_email(buyer1_user.email).impersonate
+
+      expect(page).to have_content("Impersonating #{buyer1_user.name}")
+      expect(page).to_not have_content("Welcome #{user.name}")
+
+      find("#exit-masquerade").click
+
+      expect(page).to have_content("Welcome #{user.name}")
+      expect(page).to_not have_content("Impersonating #{buyer1_user.name}")
+    end
+  end
+
   context "as an admin" do
     let!(:user)  { create(:user, role: "admin")}
 
@@ -27,22 +56,20 @@ describe "Impersonating a user" do
       visit admin_users_path
     end
 
-    it "does not show the 'login as' button" do
-      expect(page).to have_content("Login As")
+    it "does show the 'login as' button" do
+      expect(page).to have_content("Log In")
     end
 
     it "impersonates a user and exits that impersonation" do
-      Dom::Admin::UserRow.find_by_email(buyer_user.email).impersonate
+      Dom::Admin::UserRow.find_by_email(buyer1_user.email).impersonate
 
-      expect(page).to have_content("Impersonating #{buyer_user.name}")
+      expect(page).to have_content("Impersonating #{buyer1_user.name}")
       expect(page).to_not have_content("Welcome #{user.name}")
-
 
       find("#exit-masquerade").click
 
-
       expect(page).to have_content("Welcome #{user.name}")
-      expect(page).to_not have_content("Impersonating #{buyer_user.name}")
+      expect(page).to_not have_content("Impersonating #{buyer1_user.name}")
     end
   end
 end
