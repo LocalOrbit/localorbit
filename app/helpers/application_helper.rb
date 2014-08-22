@@ -6,9 +6,10 @@ module ApplicationHelper
   # Used in navigation to get to the users organization(s)
   def link_to_my_organization
     org_count = current_user.display_managed_organizations.count
+    first_org = current_user.managed_organizations.first
 
-    path = if (org_count == 1)
-      admin_organization_path(current_user.managed_organizations.first)
+    path = if org_count == 1 && first_org.present?
+      admin_organization_path(first_org)
     else
       organizations_path
     end
