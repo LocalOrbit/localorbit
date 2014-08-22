@@ -12,7 +12,7 @@ describe "An organization member" do
   end
 
   it "can edit an organization they belong to" do
-    visit "/admin/organizations"
+    visit admin_organizations_path
     click_link org.name
 
     # This should only be controlled by a Market Manager
@@ -45,7 +45,7 @@ describe "An organization member" do
     let(:org) { create(:organization, users: [member], can_sell: false) }
 
     it "hides profile information" do
-      visit "/admin/organizations"
+      visit admin_organizations_path
       click_link org.name
 
       expect(page).not_to have_content("Facebook")

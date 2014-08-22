@@ -44,6 +44,79 @@ describe User do
       end
     end
 
+    describe "#can_manage_user?" do
+      let!(:org1)   { create(:organization, markets: [market1], users: [user1, user2]) }
+      let!(:org2)   { create(:organization, markets: [market2], users: [user3, user4]) }
+      let!(:org3)   { create(:organization, markets: [market2], users: [user5]) }
+
+
+      let!(:user1)  { create(:user) }
+      let!(:user2)  { create(:user) }
+      let!(:user3)  { create(:user) }
+      let!(:user4)  { create(:user) }
+      let!(:user5)  { create(:user) }
+
+      let!(:market1) { create(:market) }
+      let!(:market2) { create(:market) }
+
+      context "admin" do
+        let!(:admin) { create(:user, role: "admin") }
+
+        it "is true for everyone" do
+          [user1, user2, user3, user4].each do |u|
+            expect(admin.can_manage_user?(u)).to be_truthy
+          end
+        end
+      end
+
+      context "market manager" do
+        let!(:market_manager) { create(:user, managed_markets: [market1]) }
+
+        it "can manage users in organizations in their market" do
+          expect(market_manager.can_manage_user?(user1)).to be_truthy
+          expect(market_manager.can_manage_user?(user2)).to be_truthy
+          expect(market_manager.can_manage_user?(user3)).to be_falsy
+          expect(market_manager.can_manage_user?(user4)).to be_falsy
+        end
+
+        context "managing multiple markets" do
+          let!(:market_manager) { create(:user, managed_markets: [market1, market2]) }
+
+          it "can manage users in organizations in all their markets" do
+            expect(market_manager.can_manage_user?(user1)).to be_truthy
+            expect(market_manager.can_manage_user?(user2)).to be_truthy
+            expect(market_manager.can_manage_user?(user3)).to be_truthy
+            expect(market_manager.can_manage_user?(user4)).to be_truthy
+          end
+
+          context "and a user has been suspended" do
+            before do
+              suspend_user(user: user1, org: user1.organizations.first)
+            end
+
+            it "can still manage that suspended user" do
+              expect(market_manager.can_manage_user?(user1)).to be_truthy
+              expect(market_manager.can_manage_user?(user2)).to be_truthy
+              expect(market_manager.can_manage_user?(user3)).to be_truthy
+              expect(market_manager.can_manage_user?(user4)).to be_truthy
+            end
+          end
+        end
+      end
+
+      context "buyer/seller" do
+        let!(:buyer) { create(:user, organizations: [org1, org3]) }
+
+        it "can manage users in organizations they belong to" do
+          expect(buyer.can_manage_user?(user1)).to be_truthy
+          expect(buyer.can_manage_user?(user2)).to be_truthy
+          expect(buyer.can_manage_user?(user3)).to be_falsy
+          expect(buyer.can_manage_user?(user4)).to be_falsy
+          expect(buyer.can_manage_user?(user5)).to be_truthy
+        end
+      end
+    end
+
     describe "#with_primary_market" do
       let!(:market) { create(:market) }
       let!(:market2) { create(:market) }
