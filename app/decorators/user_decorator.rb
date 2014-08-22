@@ -42,7 +42,7 @@ class UserDecorator < Draper::Decorator
 
     link_to(
       title,
-      update_enabled_admin_user_path(self, organization_ids: target_orgs.pluck(:id), enabled: state),
+      update_enabled_admin_user_path(self, organization_ids: target_orgs.map(&:id), enabled: state),
       link_to_opts
     )
   end
