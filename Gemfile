@@ -34,7 +34,7 @@ gem "csv_builder"
 gem "dalli"
 gem "delayed_job", github: "collectiveidea/delayed_job" # Until we release 4.0.3
 gem "delayed_job_active_record"
-gem "devise"
+gem "devise", github: "plataformatec/devise", branch: "lm-rails-4-2"
 gem "devise_invitable"
 gem "devise_masquerade"
 gem "dragonfly-s3_data_store"
