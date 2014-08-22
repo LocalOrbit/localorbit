@@ -20,8 +20,7 @@ GIT
 
 GIT
   remote: git://github.com/collectiveidea/audited.git
-  revision: 30033b5fa98f2e4936df286ca3655acfab0f8c2e
-  branch: request-uuid
+  revision: cd7065ef6fb9640a3a4e204477dd38dc0d12e50c
   specs:
     audited (4.0.0.rc1)
       rails-observers (~> 0.1.2)
