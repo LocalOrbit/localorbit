@@ -6,7 +6,12 @@ module ApplicationHelper
   # Used in navigation to get to the users organization(s)
   def link_to_my_organization
     org_count = current_user.display_managed_organizations.count
-    path = (org_count > 1) ? organizations_path : admin_organization_path(current_user.managed_organizations.first)
+
+    path = if (org_count == 1)
+      admin_organization_path(current_user.managed_organizations.first)
+    else
+      organizations_path
+    end
 
     link_to_or_span(raw('<i class="font-icon" data-icon="&#xe027;"></i>') + "Your Organization".pluralize(org_count), path)
   end

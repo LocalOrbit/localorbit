@@ -52,7 +52,7 @@ feature "entering receipts" do
   end
 
   context "after a seller has been deleted by the market manager" do
-    it "keeps the seller entries in the list" do
+    it "keeps the seller entries in the list" do      
       delete_organization(buyer)
       delete_organization(seller)
 
