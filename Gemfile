@@ -76,6 +76,7 @@ group :development, :test do
   gem "pry-rails"
   gem "pry-remote"
   gem "launchy"
+  gem "guard-rspec"
 end
 
 group :test do
