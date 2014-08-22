@@ -39,13 +39,11 @@ class User < ActiveRecord::Base
     User.all.select {|u| u.primary_market == market }
   end
 
-  def self.for_sort(order)
-    column, direction = column_and_direction(order)
-    case column
-    when "name"
-      order_by_name(direction)
-    when "email"
-      order_by_email(direction)
+  def self.arel_column_for_sort(column_name)
+    if column_name == "email"
+      arel_table[:email]
+    else
+      arel_table[:name]
     end
   end
 
@@ -222,14 +220,6 @@ class User < ActiveRecord::Base
 
   def pretty_email
     "#{name.to_s.inspect} <#{email}>"
-  end
-
-  def self.order_by_name(direction)
-    direction == "asc" ? order("name asc") : order("name desc")
-  end
-
-  def self.order_by_email(direction)
-    direction == "asc" ? order("email asc") : order("email desc")
   end
 
   private

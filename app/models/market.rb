@@ -48,17 +48,12 @@ class Market < ActiveRecord::Base
     end
   }
 
-  def self.for_sort(order)
-    column, direction = column_and_direction(order)
-    case column
-    when "contact"
-      order_by_contact_name(direction)
-    when "name"
-      order_by_name(direction)
-    when "subdomain"
-      order_by_subdomain(direction)
+  def self.arel_column_for_sort(column_name)
+    case column_name
+    when "contact"   then arel_table[:contact_name]
+    when "subdomain" then arel_table[:subdomain]
     else
-      order_by_name(direction)
+      arel_table[:name]
     end
   end
 
@@ -134,18 +129,6 @@ class Market < ActiveRecord::Base
   end
 
   private
-
-  def self.order_by_name(direction)
-    direction == "asc" ? order("name asc") : order("name desc")
-  end
-
-  def self.order_by_subdomain(direction)
-    direction == "asc" ? order("subdomain asc") : order("subdomain desc")
-  end
-
-  def self.order_by_contact_name(direction)
-    direction == "asc" ? order("contact_name asc") : order("contact_name desc")
-  end
 
   def require_payment_method
     unless allow_purchase_orders? || allow_credit_cards? || allow_ach?
