@@ -20,7 +20,7 @@
       <%= f.text_field :name, class: "column column--full" %>
     </div>
 
-    <% if @organization.new_record? || current_user.can_manage_organization?(@organization) %>
+    <% if @organization.new_record? || current_user.can_manage_market?(current_market) %>
       <div class="row row--field">
       <div class="field column column--half column--guttered">
         <%= f.check_box :can_sell %>
@@ -41,7 +41,7 @@
       </div>
     <% end %>
 
-    <% if @organization.new_record? || @organization.can_sell? || current_user.can_manage_organization?(@organization) %>
+    <% if @organization.new_record? || (current_user.can_manage_organization?(@organization) && @organization.can_sell?)  %>
     <fieldset class="seller-fields<%= ' is-hidden' unless @organization.can_sell? %>">
       <div class="field field--inline">
         <%= f.label :facebook %><br>
