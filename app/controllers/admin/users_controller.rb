@@ -26,9 +26,7 @@ module Admin
     end
 
     def update_enabled
-      binding.pry
-
-      org_ids = @user.organizations_including_suspended.find(params[:organization_ids])
+      org_ids = @user.organizations_including_suspended.find(update_enabled_params[:organization_ids])
       user_org_associations = @user.user_organizations.where(organization_id: org_ids)
 
       if user_org_associations.nil?
@@ -52,7 +50,7 @@ module Admin
     private
 
     def update_enabled_params
-      params.permit(:organization_ids, :enabled, :id)
+      params.permit(:enabled, :id, organization_ids: [])
     end
 
     def user_params
