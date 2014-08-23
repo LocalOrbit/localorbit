@@ -39,6 +39,8 @@ class Organization < ActiveRecord::Base
   scope :buyers_for_orders, lambda {|orders| joins(:orders).where(orders: {id: orders}).uniq }
   scope :with_a_market, -> { joins(user_organizations: {organization: :markets}).group("organizations.id") }
 
+  scope :not_deleted, -> { joins(:markets) }
+
   serialize :twitter, TwitterUser
 
   accepts_nested_attributes_for :locations, reject_if: :reject_location

@@ -160,7 +160,9 @@ describe User do
 
     context "#seller?" do
       it 'returns true if the user is a member of any selling organizations' do
-        user = create(:user, organizations: [create(:organization, can_sell: true)])
+        market = create(:market)
+        org = create(:organization, can_sell: true, markets: [market])
+        user = create(:user, organizations: [org])
         expect(user).to be_seller
       end
 
@@ -544,9 +546,10 @@ describe User do
   end
 
   context "oranizations scopes" do
+    let!(:market) { create(:market) }
     let!(:user) { create(:user) }
-    let!(:org1) { create(:organization, users: [user]) }
-    let!(:org2) { create(:organization, users: [user]) }
+    let!(:org1) { create(:organization, users: [user], markets: [market]) }
+    let!(:org2) { create(:organization, users: [user], markets: [market]) }
 
     describe "#organizations" do
       let(:result) { user.organizations }
