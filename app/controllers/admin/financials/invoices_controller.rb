@@ -3,21 +3,14 @@ module Admin::Financials
     include StickyFilters
 
     before_action :find_orders_for_invoicing, only: [:create, :resend]
+    before_action :find_sticky_params, only: [:index]
 
     def index
-      if current_user.buyer_only?
-        base_scope = Order.orders_for_buyer(current_user).invoiced
-        date_filter_attr = :invoice_due_date
-      else
-        base_scope = Order.orders_for_seller(current_user).uninvoiced
-        date_filter_attr = :placed_at
-      end
+      base_scope, date_filter_attr = find_base_scope_and_date_filter_attribute
 
-      @query_params = sticky_parameters(request.query_parameters)
       @search_presenter = OrderSearchPresenter.new(@query_params, current_user, date_filter_attr)
-      @q = base_scope.periscope(@query_params).search(@search_presenter.query)
+      @q = filter_and_search_orders(base_scope, @query_params, @search_presenter)
 
-      @q.sorts = ["invoice_due_at desc", "order_number asc"] if @q.sorts.empty?
       @orders = @q.result.page(params[:page]).per(@query_params[:per_page])
     end
 
@@ -35,26 +28,51 @@ module Admin::Financials
     end
 
     def resend
-      @orders.each {|order| SendInvoiceEmail.perform(order: order) }
-
-      message = "Invoice resent for order #{"number".pluralize(@orders.size)} #{@orders.map(&:order_number).sort.join(", ")}."
-      redirect_path = params[:redirect_to] || admin_financials_invoices_path
-      redirect_to redirect_path, notice: message
+      resend_invoices_and_redirect
     end
 
     def resend_overdue
-      orders = Order.orders_for_seller(current_user).payment_overdue
-      orders.each {|order| SendInvoiceEmail.perform(order: order) }
-
-      message = orders.present? ? "Invoice resent for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(", ")}." : "No overdue invoices found."
-      redirect_path = params[:redirect_to] || admin_financials_invoices_path
-      redirect_to redirect_path, notice: message
+      @orders = Order.orders_for_seller(current_user).payment_overdue
+      resend_invoices_and_redirect
     end
 
     private
 
+    def find_sticky_params
+      @query_params = sticky_parameters(request.query_parameters)
+    end
+
+    def find_base_scope_and_date_filter_attribute
+      if current_user.buyer_only?
+        [Order.orders_for_buyer(current_user).invoiced, :invoice_due_date]
+      else
+        [Order.orders_for_seller(current_user).uninvoiced, :placed_at]
+      end
+    end
+
     def find_orders_for_invoicing
       @orders = Order.orders_for_seller(current_user).where(id: params[:order_id])
+    end
+
+    def filter_and_search_orders(scope, params, presenter)
+      query = scope.periscope(params).search(presenter.query)
+      query.sorts = ["invoice_due_at desc", "order_number asc"] if query.sorts.empty?
+      query
+    end
+
+    def resend_message(orders)
+      if orders.present?
+        "Invoice resent for order #{"number".pluralize(orders.size)} #{orders.map(&:order_number).sort.join(", ")}."
+      else
+        "No overdue invoices found."
+      end
+    end
+
+    def resend_invoices_and_redirect
+      @orders.each {|order| SendInvoiceEmail.perform(order: order) }
+
+      redirect_path = params[:redirect_to] || admin_financials_invoices_path
+      redirect_to redirect_path, notice: resend_message(@orders)
     end
   end
 end
