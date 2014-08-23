@@ -97,7 +97,7 @@ end
       <a href="#account-dropdown" class="caretted"><i class="font-icon" data-icon="&#xe011;"></i>Account</a>
       <ul class="dropdown with-anchor top-anchor" id="account-dropdown">
         <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe018;"></i> E-mail &amp; Password'), edit_user_registration_path %></li>
-        <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe027;"></i>') + "Your Organization".pluralize(current_user.managed_organizations.count), path_to_my_organization %></li>
+        <li><%= link_to_my_organization %></li>
       </ul>
     </li>
     <li class="mobile-only"><%= link_to_or_span "Shop", products_path, class: "" %></li>

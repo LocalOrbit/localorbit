@@ -22,6 +22,15 @@ feature "Viewing admin/organizations list" do
       visit organizations_path
     end
 
+    scenario "I can see suspended status indicator" do
+      visit organizations_path
+
+      expect(page).to have_content(org1.name)
+      expect(page).to have_content(org2.name)
+      expect(page).to have_content("Suspended")
+      expect(page).not_to have_link("Enable")
+    end
+
     scenario "I can see a list of organizations I belong to" do
       expect(page).to have_link(org1.name)
       expect(page).not_to have_link(org3.name)
