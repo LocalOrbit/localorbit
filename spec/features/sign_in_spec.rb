@@ -101,7 +101,8 @@ feature "User signing in" do
   end
 
   scenario "After logging in a seller should be on the dashboard" do
-    org = create(:organization, :seller)
+    market = create(:market)
+    org = create(:organization, :seller, markets: [market])
     user = create(:user, organizations: [org])
     visit "/"
 
@@ -113,7 +114,8 @@ feature "User signing in" do
   end
 
   scenario "After logging in through the products page a seller should be on the products page" do
-    org = create(:organization, :seller)
+    market = create(:market)
+    org = create(:organization, :seller, markets: [market])
     user = create(:user, organizations: [org])
     visit admin_products_path
 
