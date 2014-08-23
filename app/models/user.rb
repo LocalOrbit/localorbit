@@ -20,14 +20,12 @@ class User < ActiveRecord::Base
   has_many :user_organizations
 
   has_many :organizations, -> {
-    joins(:market_organizations).
-    where(market_organizations: {deleted_at: nil}).
+    not_deleted.
     where(user_organizations: {enabled: true})
   }, through: :user_organizations
 
   has_many :organizations_including_suspended, -> {
-    joins(:market_organizations).
-    where(market_organizations: {deleted_at: nil})
+    not_deleted
   }, through: :user_organizations, source: :organization
 
   has_many :suspended_organizations, -> { where(user_organizations: {enabled: false}) }, through: :user_organizations, source: :organization
