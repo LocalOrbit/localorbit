@@ -18,8 +18,18 @@ class User < ActiveRecord::Base
   end
 
   has_many :user_organizations
-  has_many :organizations, -> { where(user_organizations: {enabled: true}) }, through: :user_organizations
-  has_many :organizations_including_suspended, through: :user_organizations, source: :organization
+
+  has_many :organizations, -> {
+    joins(:market_organizations).
+    where(market_organizations: {deleted_at: nil}).
+    where(user_organizations: {enabled: true})
+  }, through: :user_organizations
+
+  has_many :organizations_including_suspended, -> {
+    joins(:market_organizations).
+    where(market_organizations: {deleted_at: nil})
+  }, through: :user_organizations, source: :organization
+
   has_many :suspended_organizations, -> { where(user_organizations: {enabled: false}) }, through: :user_organizations, source: :organization
 
   has_many :carts

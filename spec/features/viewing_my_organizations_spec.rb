@@ -31,6 +31,25 @@ feature "Viewing admin/organizations list" do
       expect(page).to have_content(org2.name)
       expect(page).not_to have_link(org2.name)
     end
+
+    context "deleted organizations" do
+      before do
+        sign_out
+        sign_in_as(market_manager)
+        delete_organization(org2)
+        sign_out
+
+        sign_in_as(user)
+      end
+
+      scenario "cannot list deleted organizations" do
+        visit organizations_path
+        expect(page).to have_content(org1.name)
+        expect(page).to have_link(org1.name)
+        expect(page).not_to have_content(org2.name)
+        expect(page).not_to have_content(org3.name)
+      end
+    end
   end
 
   context "as a market manager" do
