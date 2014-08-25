@@ -14,7 +14,16 @@ describe "Plan Limits" do
   end
 
   context "on the startup plan" do
-    let!(:plan) { create(:plan, discount_codes: false, promotions: false, custom_branding: false, cross_selling: false) }
+    let!(:plan) do
+      create(:plan,
+        discount_codes: false,
+        promotions: false,
+        custom_branding: false,
+        cross_selling: false,
+        advanced_pricing: false,
+        advanced_inventory: false)
+    end
+
     it "is not allowed to use discount codes" do
       within("#admin-nav") do
         expect(page).to_not have_content("Discount Codes")
@@ -65,9 +74,17 @@ describe "Plan Limits" do
       end
 
       it "is not allowed to use advanced pricing" do
+        visit admin_product_prices_path(product)
 
-        expect(page).to_not have_content("Add New Price")
-        expect(page).to_not have_content("Go to Price List")
+        expect(page).to_not have_css("#add-row")
+      end
+
+      it "is not allowed to use advanced inventory" do
+        within(".tabs") do
+          expect(page).to_not have_content("Inventory")
+        end
+
+        expect(page).to_not have_content("Use simple inventory management")
       end
     end
 
