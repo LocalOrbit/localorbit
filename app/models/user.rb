@@ -142,6 +142,7 @@ class User < ActiveRecord::Base
         where.not(market_organizations: {id: nil}).
         union(organizations).
         joins(:market_organizations).
+        order(:name).
         distinct
     end
   end
@@ -153,6 +154,7 @@ class User < ActiveRecord::Base
         where.not(market_organizations: {id: nil}).
         union(organizations_including_suspended).
         joins(:market_organizations).
+        order(:name).
         distinct
     end
   end
@@ -167,12 +169,13 @@ class User < ActiveRecord::Base
       Organization.managed_by_market_ids(market_ids).
         union(organizations).
         joins(:market_organizations).
+        order(:name).
         distinct
     end
   end
 
   def managed_organization_ids_including_deleted
-    managed_organizations_including_deleted.pluck(:id).uniq
+    managed_organizations_including_deleted.map(&:id)
   end
 
   def managed_organizations_within_market(market)
@@ -208,7 +211,7 @@ class User < ActiveRecord::Base
   end
 
   def managed_products
-    org_ids = managed_organizations.pluck(:id).uniq
+    org_ids = managed_organizations.map(&:id)
     Product.visible.seller_can_sell.where(organization_id: org_ids)
   end
 
