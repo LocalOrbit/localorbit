@@ -3,9 +3,9 @@ class Admin::PromotionsController < AdminController
 
   before_action :require_admin_or_market_manager
   before_action :find_featured_promotion, only: [:show, :update, :destroy, :activate, :deactivate]
+  before_action :find_sticky_params, only: :index
 
   def index
-    @query_params = sticky_parameters(request.query_parameters)
     base_scope = Promotion.promotions_for_user(current_user)
 
     @markets = base_scope.map(&:market).uniq

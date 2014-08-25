@@ -4,9 +4,9 @@ module Admin
 
     before_action :require_admin_or_market_manager, only: [:new, :create, :destroy]
     before_action :find_organization, only: [:show, :edit, :update, :update_active, :delivery_schedules, :market_memberships, :destroy]
+    before_action :find_sticky_params, only: :index
 
     def index
-      @query_params = sticky_parameters(request.query_parameters)
       @organizations = current_user.managed_organizations.periscope(@query_params)
       find_selling_markets
 

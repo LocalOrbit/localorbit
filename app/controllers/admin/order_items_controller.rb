@@ -31,10 +31,6 @@ module Admin
 
     private
 
-    def find_sticky_params
-      @query_params = sticky_parameters(request.query_parameters)
-    end
-
     def find_search_date_range(search)
       [
         format_date(search[:order_placed_at_date_gteq]),

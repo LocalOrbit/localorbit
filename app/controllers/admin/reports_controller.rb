@@ -1,12 +1,13 @@
 class Admin::ReportsController < AdminController
   include StickyFilters
 
+  before_action :find_sticky_params, only: :show
+
   def index
     redirect_to current_user.buyer_only? ? admin_report_path("purchases-by-product") : admin_report_path("total-sales")
   end
 
   def show
-    @query_params = sticky_parameters(request.query_parameters)
     @presenter = ReportPresenter.report_for(
       report: params[:id].to_s.underscore,
       user: current_user,

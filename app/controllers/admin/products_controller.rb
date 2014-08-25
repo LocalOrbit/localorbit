@@ -4,9 +4,9 @@ module Admin
 
     before_action :ensure_selling_organization
     before_action :find_product, only: [:show, :update, :destroy]
+    before_action :find_sticky_params, only: :index
 
     def index
-      @query_params = sticky_parameters(request.query_parameters)
       @products = current_user.managed_products.periscope(@query_params).preload(:prices, :lots, :organization).page(params[:page]).per(@query_params[:per_page])
 
       find_organizations_for_filtering
