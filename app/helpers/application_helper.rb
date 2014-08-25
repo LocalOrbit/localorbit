@@ -3,6 +3,10 @@ module ApplicationHelper
     "https://localorbit.zendesk.com/home"
   end
 
+  def can_access?(flag)
+    current_user.admin? || current_user.managed_markets.any? {|m| m.plan[flag.to_sym] }
+  end
+
   # Used in navigation to get to the users organization(s)
   def link_to_my_organization
     org_count = current_user.managed_organizations(include_suspended: true).count
