@@ -301,12 +301,24 @@ class Order < ActiveRecord::Base
     usable_items = items.reject {|i| i.destroyed? || i.marked_for_destruction? }
 
     cost = usable_items.sum(&:gross_total)
-    if cost > 0.0
-      self.delivery_fees = delivery.delivery_schedule.fees_for_amount(cost)
-      self.total_cost    = cost + delivery_fees - (usable_items.sum(&:discount_market) + usable_items.sum(&:discount_seller))
+
+    self.delivery_fees = calculate_delivery_fees(cost)
+    self.total_cost    = calculate_total_cost(cost, usable_items)
+  end
+
+  def calculate_delivery_fees(gross)
+    if gross > 0.0
+      delivery.delivery_schedule.fees_for_amount(gross)
     else
-      self.delivery_fees = 0
-      self.total_cost    = 0
+      0
+    end
+  end
+
+  def calculate_total_cost(gross, items)
+    if gross > 0.0
+      gross + delivery_fees - discount_amount
+    else
+      0
     end
   end
 end
