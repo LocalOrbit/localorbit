@@ -36,7 +36,7 @@ class CartsController < ApplicationController
       end
 
       @error = @item.errors.full_messages.join(". ") unless @item.save
-    else
+    elsif @item.persisted?
       @item.update(quantity: 0)
       @item.destroy
     end
