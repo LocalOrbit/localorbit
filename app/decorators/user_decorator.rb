@@ -8,11 +8,11 @@ class UserDecorator < Draper::Decorator
   end
 
   def toggle_enabled_button
-
+    return # Temporarily disables User Suspend button
     return unless current_user.can_manage_user?(self)
     title = enabled_for_organization?(context[:org]) ? "Suspend" : "Enable"
     status = enabled_for_organization?(context[:org]) ? "alert" : "notice"
-    
+
     link_to_opts = {
         method: :patch,
         class: "btn btn--small #{status}"
