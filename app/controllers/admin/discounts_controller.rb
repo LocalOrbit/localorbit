@@ -4,10 +4,9 @@ module Admin
 
     before_action :require_admin_or_market_manager
     before_action :find_select_data, only: [:new, :create, :show, :update]
+    before_action :find_sticky_params, only: :index
 
     def index
-      @query_params = sticky_parameters(request.query_parameters)
-
       base_scope = Discount.visible
 
       @markets   = base_scope.map(&:market).uniq

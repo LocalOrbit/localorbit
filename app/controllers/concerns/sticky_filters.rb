@@ -33,4 +33,8 @@ module StickyFilters
       end
     end
   end
+
+  def find_sticky_params
+    @query_params = sticky_parameters(request.query_parameters)
+  end
 end

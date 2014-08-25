@@ -4,9 +4,9 @@ module Admin
 
     before_action :ensure_selling_organization
     before_action :find_product, only: [:show, :update, :destroy]
+    before_action :find_sticky_params, only: :index
 
     def index
-      @query_params = sticky_parameters(request.query_parameters)
       @products = current_user.managed_products.periscope(@query_params).preload(:prices, :lots, :organization).page(params[:page]).per(@query_params[:per_page])
 
       find_organizations_for_filtering
@@ -39,34 +39,12 @@ module Admin
     end
 
     def update
-      if update_product
-        message = "Saved #{@product.name}"
-        respond_to do |format|
-          format.html { redirect_to after_create_page, notice: message }
-          format.js   {
-            @data = {
-              message: message,
-              params: product_params.to_a,
-              toggle: @product.available_inventory
-            }
-            render json: @data, status: 200
-          }
-        end
-      else
-        respond_to do |format|
-          format.html do
-            @organizations = [@product.organization]
-            find_delivery_schedules(@product)
-            find_selected_delivery_schedule_ids
-            render :show
-          end
-          format.js {
-            @data = {
-              errors: @product.errors.full_messages
-            }
-            render json: @data, status: 422
-          }
-        end
+      updated = update_product
+
+      message = updated ? "Saved #{@product.name}" : nil
+      respond_to do |format|
+        format.html { html_for_update(updated, message) }
+        format.js   { json_for_update(updated, message) }
       end
     end
 
@@ -178,6 +156,34 @@ module Admin
       end
       find_delivery_schedules
       find_selected_delivery_schedule_ids
+    end
+
+    def html_for_update(updated, message)
+      if updated
+        redirect_to after_create_page, notice: message
+      else
+        @organizations = [@product.organization]
+        find_delivery_schedules(@product)
+        find_selected_delivery_schedule_ids
+        render :show
+      end
+    end
+
+    def json_for_update(updated, message)
+      @data = if updated
+        {
+          message: message,
+          params: product_params.to_a,
+          toggle: @product.available_inventory
+        }
+      else
+        {
+          errors: @product.errors.full_messages
+        }
+      end
+
+      status_code = updated ? 200 : 422
+      render json: @data, status: status_code
     end
   end
 end

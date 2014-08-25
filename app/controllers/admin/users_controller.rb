@@ -5,9 +5,9 @@ module Admin
     before_action :require_admin_or_market_manager
     before_action :lookup_manageable_user, only: [:edit, :update, :update_enabled]
     before_action :find_users, only: :index
+    before_action :find_sticky_params, only: :index
 
     def index
-      @query_params = sticky_parameters(request.query_parameters)
       @users = @users.periscope(@query_params).page(params[:page]).per(@query_params[:per_page])
     end
 

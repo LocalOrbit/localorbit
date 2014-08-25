@@ -3,8 +3,9 @@ module Admin
     class ReceiptsController < AdminController
       include StickyFilters
 
+      before_action :find_sticky_params, only: :index
+
       def index
-        @query_params = sticky_parameters(request.query_parameters)
         @search_presenter = OrderSearchPresenter.new(@query_params, current_user, :placed_at)
 
         @q = for_receipts.order("orders.invoice_due_date").search(@search_presenter.query)

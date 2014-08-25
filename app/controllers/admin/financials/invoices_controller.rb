@@ -38,10 +38,6 @@ module Admin::Financials
 
     private
 
-    def find_sticky_params
-      @query_params = sticky_parameters(request.query_parameters)
-    end
-
     def find_base_scope_and_date_filter_attribute
       if current_user.buyer_only?
         [Order.orders_for_buyer(current_user).invoiced, :invoice_due_date]
