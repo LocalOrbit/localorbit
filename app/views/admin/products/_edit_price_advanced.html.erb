@@ -28,7 +28,7 @@
       <%= f.submit f.object.new_record? ? "Add" : "Save Price" %>
     </div>
     <div class="links">
-      <%= link_to "✚ Add New Price", [:admin, price.product, :prices] %>
+      <%= link_to "✚ Add New Price", [:admin, price.product, :prices] if can_access?(:advanced_pricing) %>
       <%= link_to "Go to Price List", [:admin, price.product, :prices] %>
     </div>
 

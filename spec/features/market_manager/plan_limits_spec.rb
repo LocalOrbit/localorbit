@@ -11,7 +11,7 @@ describe "Plan Limits" do
   end
 
   context "on the startup plan" do
-    let!(:plan) { create(:plan, discount_codes: false, promotions: false) }
+    let!(:plan) { create(:plan, discount_codes: false, promotions: false, custom_branding: false, cross_selling: false) }
     it "is not allowed to use discount codes" do
       within("#admin-nav") do
         expect(page).to_not have_content("Discount Codes")
@@ -24,10 +24,20 @@ describe "Plan Limits" do
       end
     end
 
-    it "is not allowed to use the style chooser"
+    it "is not allowed to use the style chooser" do
+      visit admin_market_path(market)
+
+      expect(page).to_not have_content("Style Chooser")
+    end
+
+    it "is not allowed to use cross selling" do
+      visit admin_market_path(market)
+
+      expect(page).to_not have_content("Cross Sell")
+    end
 
     it "is not allowed to use advanced pricing"
     it "is not allowed to use advanced inventory"
-    it "is not allowed to use cross selling"
+
   end
 end
