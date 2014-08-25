@@ -1,9 +1,12 @@
 require "spec_helper"
 
 describe "Plan Limits" do
-  let(:plan)    { create(:plan) }
-  let!(:market) { create(:market, plan: plan) }
-  let!(:user)   { create(:user, managed_markets: [market]) }
+  let(:plan)      { create(:plan) }
+  let!(:market)   { create(:market, plan: plan) }
+  let!(:seller)   { create(:organization, :seller, markets: [market]) }
+  let!(:product)  { create(:product, :sellable, organization: seller) }
+
+  let!(:user)     { create(:user, managed_markets: [market]) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -36,8 +39,37 @@ describe "Plan Limits" do
       expect(page).to_not have_content("Cross Sell")
     end
 
-    it "is not allowed to use advanced pricing"
-    it "is not allowed to use advanced inventory"
+    context "from the products list", :js do
+      before do
+        visit admin_products_path
+      end
+
+      it "is not allowed to use advanced pricing" do
+        Dom::ProductRow.all.first.click_pricing
+
+        expect(page).to_not have_content("Add New Price")
+        expect(page).to_not have_content("Go to Price List")
+      end
+
+      it "is not allowed to use advanced inventory" do
+        Dom::ProductRow.all.first.click_stock
+
+        expect(page).to_not have_content("Add a lot for")
+        expect(page).to_not have_content("Edit Existing lot")
+      end
+    end
+
+    context "from the product detail page", :js do
+      before do
+        visit admin_product_path(product)
+      end
+
+      it "is not allowed to use advanced pricing" do
+
+        expect(page).to_not have_content("Add New Price")
+        expect(page).to_not have_content("Go to Price List")
+      end
+    end
 
   end
 end

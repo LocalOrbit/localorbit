@@ -27,10 +27,11 @@
     <div class="form-actions pull-right">
       <%= f.submit f.object.new_record? ? "Add" : "Save Price" %>
     </div>
-    <div class="links">
-      <%= link_to "✚ Add New Price", [:admin, price.product, :prices] if can_access?(:advanced_pricing) %>
-      <%= link_to "Go to Price List", [:admin, price.product, :prices] %>
-    </div>
-
+    <% if can_access?(:advanced_pricing) %>
+      <div class="links">
+        <%= link_to "✚ Add New Price", [:admin, price.product, :prices] %>
+        <%= link_to "Go to Price List", [:admin, price.product, :prices] %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
