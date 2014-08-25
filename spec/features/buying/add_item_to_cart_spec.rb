@@ -66,7 +66,7 @@ describe "Add item to cart", js: true do
   end
 
   context "with an empty cart" do
-    it "updates the item count" do
+    before do
       switch_to_subdomain(market.subdomain)
       sign_in_as(user)
 
@@ -80,6 +80,9 @@ describe "Add item to cart", js: true do
       expect(Dom::CartLink.first.count).to have_content("0")
       expect(page).not_to have_content('Review Cart')
 
+    end
+
+    it "updates the item count" do
       bananas_row.set_quantity(12)
 
       expect(page).to have_content("Added to cart!")
@@ -89,7 +92,6 @@ describe "Add item to cart", js: true do
       kale_row.set_quantity(9)
       expect(page).to have_content("Added to cart!")
       expect(Dom::CartLink.first.count).to have_content("2")
-
 
       # Refreshing the page should retain the state of the cart
       visit "/products"
@@ -101,6 +103,13 @@ describe "Add item to cart", js: true do
 
       expect(kale_row.quantity_field.value).to eql("9")
       expect(kale_row.price).to have_content("$27.00")
+    end
+
+    it "does not error when 0 is entered for an new item" do
+      bananas_row.set_quantity(0)
+
+      expect(Dom::CartLink.first.count).to have_content("0")
+      expect(page).to_not have_content('Review Cart')
     end
   end
 
