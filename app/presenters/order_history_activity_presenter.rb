@@ -90,7 +90,7 @@ class OrderHistoryActivityPresenter
     payee_name = item.auditable.payee.try(:name)
 
     if payment_type == "seller payment"
-      "Seller Payment Status: #{payment_method.humanize.capitalize} (#{payee_name})"
+      "Seller Payment Status: #{last_value_for_change(item, "status")} (#{payee_name})"
     elsif payment_type == "order refund"
       "Refunded #{payment_method.humanize.capitalize} #{number_to_currency(item.auditable.amount)}"
     end
