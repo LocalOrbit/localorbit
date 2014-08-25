@@ -21,7 +21,7 @@ class OrderHistoryActivityPresenter
   end
 
   def when
-    "#{metadata.display_date}<br>(#{time_ago_in_words(metadata.created_at)} ago)".html_safe
+    metadata.display_date
   end
 
   def actions
