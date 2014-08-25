@@ -126,13 +126,7 @@ class User < ActiveRecord::Base
 
   def managed_organizations
     @managed_organizations ||= begin
-      market_ids = if admin?
-        Market.all.pluck(:id)
-      elsif market_manager?
-        managed_markets_join.map(&:market_id)
-      end
-
-      Organization.managed_by_market_ids(market_ids).
+      Organization.managed_by_market_ids(ids_for_managed_organizations).
         where(market_organizations: {deleted_at: nil}).
         where.not(market_organizations: {id: nil}).
         union(organizations).
@@ -142,18 +136,14 @@ class User < ActiveRecord::Base
   end
 
   def display_managed_organizations
-    market_ids = if admin?
-                   Market.all.pluck(:id)
-                 elsif market_manager?
-                   managed_markets_join.map(&:market_id)
-                 end
-
-    Organization.managed_by_market_ids(market_ids).
+    @display_managed_organizations ||= begin
+      Organization.managed_by_market_ids(ids_for_managed_organizations).
         where(market_organizations: {deleted_at: nil}).
         where.not(market_organizations: {id: nil}).
         union(organizations_including_suspended).
         joins(:market_organizations).
         distinct
+    end
   end
 
 
@@ -253,5 +243,15 @@ class User < ActiveRecord::Base
 
     organization_member_market_ids = organizations.map(&:market_ids).flatten
     Market.where(id: (managed_market_ids + organization_member_market_ids))
+  end
+
+  def ids_for_managed_organizations
+    @ids ||= begin
+      if admin?
+        Market.all.pluck(:id)
+      elsif market_manager?
+        managed_markets_join.map(&:market_id)
+      end
+    end
   end
 end
