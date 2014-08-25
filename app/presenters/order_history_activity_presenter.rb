@@ -70,15 +70,18 @@ class OrderHistoryActivityPresenter
   end
 
   def process_order_item(item)
-    return unless item.auditable
-    item_name = "#{item.auditable.name}, #{item.auditable.unit} from #{item.auditable.seller_name}"
+    item_name = if item.auditable
+      "#{item.auditable.name}, #{item.auditable.unit} from #{item.auditable.seller_name}"
+    else
+      "#{last_value_for_change(item, "name")}, #{last_value_for_change(item, "unit")} from #{last_value_for_change(item, "seller_name")}"
+    end
 
-    if item.auditable.delivery_status == "canceled"
+    if item.action == "destroy"
       "Item Cancelled: #{item_name}"
-    elsif item.audited_changes["quantity"].present?
-      "Item Quantity Updated: #{item_name} (#{last_value_for_change(item, "quantity")})"
     elsif item.action == "create"
       "Item Added: #{item_name}"
+    elsif item.audited_changes["quantity"].present?
+      "Item Quantity Updated: #{item_name} (#{last_value_for_change(item, "quantity")})"
     elsif last_value_for_change(item, "delivery_status") == "delivered"
       "Item Delivered: #{item_name}"
     end
