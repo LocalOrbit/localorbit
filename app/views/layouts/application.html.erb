@@ -89,6 +89,7 @@
 </head>
 
 <body class="controller-<%= controller.controller_name %> <%= current_user.present? ? "" : "signed-out" %> <%= "request-desktop" if cookies[:request_desktop] && cookies[:request_desktop] == "true"  %>">
+  <%= render "shared/analytics" %>
 
   <div class="page-content">
     <header class="l-app-header stickable" id="top">
