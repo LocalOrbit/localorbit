@@ -241,32 +241,16 @@
           </tr>
         </thead>
         <tbody>
-          <% order.activities.each do |metadata, activities| %>
+          <% OrderHistoryPresenter.new(order.id).each_activity do |activity| %>
             <tr>
-              <td><%= metadata.display_date %><br>
-                (<%= time_ago_in_words metadata.created_at %> ago)
-              </td>
+              <td><%= activity.when %></td>
               <td>
-                <% if activities.any?{|a| a.auditable_type == "Order" && a.action == "create"} %>
-                  <span class="activity-group"><%= metadata.display_action %></span>
-                  <% activities.select{|a| a.auditable_type == "Payment" }.each do |activity| %>
-                    <%= render "shared/order_history/#{activity.auditable_type.underscore}", activity: activity  %>
-                  <% end %>
-                <% else %>
-                  <% activities.each do |activity| %>
-                    <%= render "shared/order_history/#{activity.auditable_type.underscore}", activity: activity  %>
-                  <% end %>
+                <% activity.actions.each do |action| %>
+                  <p><%= action %></p>
                 <% end %>
               </td>
-              <td>
-                <% if metadata.masquerader %>
-                  <%= link_to_if metadata.masquerader, metadata.masquerader_username, [:admin, metadata.user] %>
-                  <br>as<br>
-                <% end %>
-                <%= link_to_if metadata.user, metadata.user_name_or_email, [:admin, metadata.user] %>
-              </td>
+              <td><%= activity.who %></td>
             </tr>
-
           <% end %>
         </tbody>
       </table>

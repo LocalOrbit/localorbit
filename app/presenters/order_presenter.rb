@@ -34,19 +34,6 @@ module OrderPresenter
   def items_attributes=(_)
   end
 
-  def activities
-    audits = Audit.where("(associated_type = 'Order' AND associated_id = :order_id) OR
-    (auditable_type = 'Order' AND auditable_id = :order_id) OR
-    (auditable_type = 'Payment' AND auditable_id IN (:payment_ids))",
-                order_id: @order.id,
-                payment_ids: @order.payment_ids
-    ).where("user_id IS NOT NULL").reorder(:request_uuid, :created_at).decorate
-
-    # return the first audit so we can grab timestamp and user
-    audits.group_by(&:request_uuid).map { |uuid, audits| [audits.first, audits] }.
-    sort_by{|first, _| first.created_at }.reverse
-  end
-
   def refund?
     ["ach", "credit card"].include?(@order.payment_method) && refund_for_changes && refund_for_changes > 0
   end
