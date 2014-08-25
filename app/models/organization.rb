@@ -47,6 +47,7 @@ class Organization < ActiveRecord::Base
 
   dragonfly_accessor :photo
   define_after_upload_resize(:photo, 1200, 1200)
+  validates_property :format, of: :photo, in: %w(jpeg png gif)
 
   scope_accessible :market, method: :for_market_id, ignore_blank: true
   scope_accessible :can_sell, method: :for_can_sell, ignore_blank: true

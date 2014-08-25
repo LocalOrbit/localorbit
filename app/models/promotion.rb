@@ -14,6 +14,7 @@ class Promotion < ActiveRecord::Base
 
   dragonfly_accessor :image
   define_after_upload_resize(:image, 1200, 1200)
+  validates_property :format, of: :image, in: %w(jpeg png gif)
 
   scope :active, -> { where(active: true) }
 

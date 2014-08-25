@@ -5,6 +5,7 @@ class Newsletter < ActiveRecord::Base
   validates :subject, :header, :body, presence: true
 
   dragonfly_accessor :image
+  validates_property :format, of: :image,  in: %w(jpeg png gif)
 
   def recipients
     recipients = Set.new
