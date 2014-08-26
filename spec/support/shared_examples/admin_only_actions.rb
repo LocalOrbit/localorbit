@@ -1,6 +1,6 @@
 shared_examples "admin only action" do |run_action|
   def meet_expected_expectation
-    %w[index show new edit].include?(controller.action_name) ? be_a_success : be_a_redirect
+    %w(index show new edit).include?(controller.action_name) ? be_a_success : be_a_redirect
   end
 
   it "redirects to login given no user" do

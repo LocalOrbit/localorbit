@@ -116,7 +116,7 @@ describe "admin manange organization", :vcr do
     click_button "Add Organization"
 
     expect(page).to have_content("Name can't be blank")
-    expect(find_field('Market').value).to eq(market2.id.to_s)
+    expect(find_field("Market").value).to eq(market2.id.to_s)
   end
 
   describe "locations" do
@@ -157,7 +157,7 @@ describe "admin manange organization", :vcr do
         fill_in "Address Label", with: "University of Michigan"
         fill_in "Address",       with: "500 S. State Street"
         fill_in "City",          with: "Ann Arbor"
-        select  "Michigan",      from: "State"
+        select "Michigan",      from: "State"
         fill_in "Postal Code",   with: "34599"
         fill_in "Phone", with: "616-555-9983"
         fill_in "Fax", with: "616-555-9984"
@@ -297,12 +297,12 @@ describe "admin manange organization", :vcr do
     let!(:organization2) { create(:organization, name: "Other organization", markets: [market2]) }
     let!(:admin)         { create(:user, :admin) }
 
-    it 'can see a list of organizations' do
+    it "can see a list of organizations" do
       switch_to_subdomain(market.subdomain)
       sign_in_as(admin)
       visit admin_organizations_path
 
-      html_headers = page.all('th').map(&:text)
+      html_headers = page.all("th").map(&:text)
 
       click_link "Export CSV"
 
@@ -317,7 +317,7 @@ describe "admin manange organization", :vcr do
     let!(:admin) { create(:user, :admin) }
     let!(:user) { create(:user, name: "Design Dude") }
     let!(:organization) do
-      create(:organization, name: "University of Michigan Farmers", markets:[market], users:[user])
+      create(:organization, name: "University of Michigan Farmers", markets: [market], users: [user])
     end
     let!(:user2) { create(:user, organizations: [organization]) }
 
@@ -384,9 +384,9 @@ describe "admin manange organization", :vcr do
 
   context "sorting", :js do
     let!(:market)         { create(:market) }
-    let!(:organization_a) { create(:organization, markets: [market], name: "A Organization", can_sell: false, created_at: '2014-01-01') }
-    let!(:organization_b) { create(:organization, markets: [market], name: "B Organization", can_sell: true, created_at: '2013-01-01') }
-    let!(:organization_c) { create(:organization, markets: [market], name: "C Organization", can_sell: false, created_at: '2012-01-01') }
+    let!(:organization_a) { create(:organization, markets: [market], name: "A Organization", can_sell: false, created_at: "2014-01-01") }
+    let!(:organization_b) { create(:organization, markets: [market], name: "B Organization", can_sell: true, created_at: "2013-01-01") }
+    let!(:organization_c) { create(:organization, markets: [market], name: "C Organization", can_sell: false, created_at: "2012-01-01") }
 
     before do
       switch_to_subdomain(market.subdomain)
@@ -443,8 +443,6 @@ describe "admin manange organization", :vcr do
     end
   end
 
-
-
   describe "Deleting an organization" do
     let!(:market)  { create(:market) }
     let!(:product) { create(:product, :sellable, organization: seller) }
@@ -455,8 +453,8 @@ describe "admin manange organization", :vcr do
     end
 
     context "single market membership" do
-      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market])}
-      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market])}
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market]) }
+      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market]) }
 
       it "removes the organization from the organizations list" do
         visit admin_organizations_path
@@ -494,8 +492,8 @@ describe "admin manange organization", :vcr do
       end
 
       context "logging into a subdomain which is different from the organization I'm deleting from" do
-      let!(:market2) { create(:market) }
-      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market2])}
+        let!(:market2) { create(:market) }
+        let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market2]) }
 
         it "deletes the organization from it's only market it belongs to" do
           visit admin_organizations_path
@@ -545,8 +543,8 @@ describe "admin manange organization", :vcr do
     context "multi-market membership", :js do
       let!(:market2) { create(:market) }
 
-      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market, market2])}
-      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market])}
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market, market2]) }
+      let!(:buyer) { create(:organization, name: "Hudsonville Restraunt", markets: [market]) }
 
       before do
         visit admin_organizations_path

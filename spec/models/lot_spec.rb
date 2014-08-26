@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Lot do
   it "is valid with only a quantity" do
@@ -239,7 +239,7 @@ describe Lot do
     end
 
     it "is false if number, good_from, or expires_at are set" do
-      subject.number = '1'
+      subject.number = "1"
       subject.good_from = nil
       subject.expires_at = nil
       expect(subject).to_not be_simple

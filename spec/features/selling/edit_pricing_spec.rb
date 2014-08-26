@@ -11,11 +11,11 @@ describe "Editing advanced pricing", js: true do
   before do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
-    within '#admin-nav' do
-      click_link 'Products'
+    within "#admin-nav" do
+      click_link "Products"
     end
     click_link product.name
-    click_link 'Pricing'
+    click_link "Pricing"
   end
 
   describe "clicking on a price row" do
@@ -33,7 +33,7 @@ describe "Editing advanced pricing", js: true do
       form = page.find("#new_price")
       hidden_method = page.find("[name=_method]", visible: false)
 
-      expect(form['action']).to eql("/admin/products/#{product.id}/prices/#{price.id}")
+      expect(form["action"]).to eql("/admin/products/#{product.id}/prices/#{price.id}")
       expect(hidden_method.value).to eql("put")
     end
 
@@ -64,8 +64,8 @@ describe "Editing advanced pricing", js: true do
 
       it "sets the form url back" do
         form = page.find("#new_price")
-        expect(form['action']).to eql("/admin/products/#{product.id}/prices")
-        expect(form['method']).to eql("post")
+        expect(form["action"]).to eql("/admin/products/#{product.id}/prices")
+        expect(form["method"]).to eql("post")
       end
 
       it "restores the fields to their original state" do
@@ -73,8 +73,8 @@ describe "Editing advanced pricing", js: true do
         price_row.click_buyer
 
         price_row.inputs.each do |input|
-          expect(input['disabled']).to be_nil
-          expect(input['readonly']).to be_nil
+          expect(input["disabled"]).to be_nil
+          expect(input["readonly"]).to be_nil
         end
 
         fill_in("price_#{price.id}_sale_price", with: 55)
@@ -110,7 +110,7 @@ describe "Editing advanced pricing", js: true do
       context "sale_price is invalid" do
         before do
           fill_in("price_#{price.id}_sale_price", with: "-10")
-          fill_in("price_#{price.id}_min_quantity", with:"-2")
+          fill_in("price_#{price.id}_min_quantity", with: "-2")
 
           click_button "Save"
         end
@@ -157,9 +157,9 @@ describe "Editing advanced pricing", js: true do
     end
 
     it "selecting all prices" do
-      find('.select-all').click
+      find(".select-all").click
 
-      all('td:first-child input').each do |field|
+      all("td:first-child input").each do |field|
         expect(field).to be_checked
       end
 
@@ -175,17 +175,17 @@ describe "Editing advanced pricing", js: true do
 
     it "shows updated net sale information" do
       Dom::PricingRow.first.click_edit
-      fill_in "price_#{price.id}_sale_price", with: '12.90'
+      fill_in "price_#{price.id}_sale_price", with: "12.90"
       expect(find_field("price_#{price.id}_net_price").value).to eq("11.22")
-      click_button 'Save'
+      click_button "Save"
 
       expect(page).to have_content("Successfully saved price")
 
       record = Dom::PricingRow.first
-      expect(record.buyer).to eq('All Buyers')
-      expect(record.min_quantity).to eq('1')
-      expect(record.net_price).to eq('$11.22')
-      expect(record.sale_price).to eq('$12.90')
+      expect(record.buyer).to eq("All Buyers")
+      expect(record.min_quantity).to eq("1")
+      expect(record.net_price).to eq("$11.22")
+      expect(record.sale_price).to eq("$12.90")
     end
   end
 end

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe ProcessPaymentWithBalanced do
   let(:market)       { create(:market, balanced_customer_uri: "/this-customer") }
@@ -61,7 +61,7 @@ describe ProcessPaymentWithBalanced do
     end
 
     it "processes the correct debit" do
-      expect(balanced_customer).to receive(:debit).with(amount: 25000, description: "Local Orbit", appears_on_statement_as: "Local Orbit", source_uri: "/this-bank-account").and_return(balanced_debit)
+      expect(balanced_customer).to receive(:debit).with(amount: 25_000, description: "Local Orbit", appears_on_statement_as: "Local Orbit", source_uri: "/this-bank-account").and_return(balanced_debit)
 
       ProcessPaymentWithBalanced.perform(payment: payment)
     end
@@ -74,13 +74,13 @@ describe ProcessPaymentWithBalanced do
     end
 
     it "allows you to override the default description" do
-      expect(balanced_customer).to receive(:debit).with(amount: 25000, description: "Locally Orbiting", appears_on_statement_as: "Local Orbit", source_uri: "/this-bank-account").and_return(balanced_debit)
+      expect(balanced_customer).to receive(:debit).with(amount: 25_000, description: "Locally Orbiting", appears_on_statement_as: "Local Orbit", source_uri: "/this-bank-account").and_return(balanced_debit)
 
       ProcessPaymentWithBalanced.perform(payment: payment, description: "Locally Orbiting")
     end
 
     it "allows you to override the default appears on statement as" do
-      expect(balanced_customer).to receive(:debit).with(amount: 25000, description: "Local Orbit", appears_on_statement_as: "Locally Orbiting", source_uri: "/this-bank-account").and_return(balanced_debit)
+      expect(balanced_customer).to receive(:debit).with(amount: 25_000, description: "Local Orbit", appears_on_statement_as: "Locally Orbiting", source_uri: "/this-bank-account").and_return(balanced_debit)
 
       ProcessPaymentWithBalanced.perform(payment: payment, appears_on_statement_as: "Locally Orbiting")
     end
@@ -96,7 +96,7 @@ describe ProcessPaymentWithBalanced do
     end
 
     it "records a note about the failure if provided" do
-      expect(balanced_customer).to receive(:debit).and_raise(Balanced::PaymentRequired.new({status: 402, method: "POST", body: {category_code: "card-declined"}}))
+      expect(balanced_customer).to receive(:debit).and_raise(Balanced::PaymentRequired.new(status: 402, method: "POST", body: {category_code: "card-declined"}))
 
       ProcessPaymentWithBalanced.perform(payment: payment)
 
@@ -109,7 +109,7 @@ describe ProcessPaymentWithBalanced do
       payment.note = "A great note"
       payment.save!
 
-      expect(balanced_customer).to receive(:debit).and_raise(Balanced::PaymentRequired.new({status: 402, method: "POST", body: {category_code: "card-declined"}}))
+      expect(balanced_customer).to receive(:debit).and_raise(Balanced::PaymentRequired.new(status: 402, method: "POST", body: {category_code: "card-declined"}))
 
       ProcessPaymentWithBalanced.perform(payment: payment)
 
@@ -125,7 +125,6 @@ describe ProcessPaymentWithBalanced do
     let(:balanced_refund) { double(Balanced::Refund, uri: "/this-refund") }
     let(:balanced_debit)  { double(Balanced::Debit, uri: "/this-debit", refund: balanced_refund) }
 
-
     before do
       allow(Balanced::Transaction).to receive(:find).and_return(balanced_debit)
     end
@@ -137,11 +136,11 @@ describe ProcessPaymentWithBalanced do
     end
 
     it "processes the correct refund" do
-      expect(balanced_debit).to receive(:refund).with(amount: 25000).and_return(balanced_refund)
+      expect(balanced_debit).to receive(:refund).with(amount: 25_000).and_return(balanced_refund)
 
       ProcessPaymentWithBalanced.perform(payment: payment)
     end
-    
+
     it "updates the payment with the refund url" do
       ProcessPaymentWithBalanced.perform(payment: payment)
 

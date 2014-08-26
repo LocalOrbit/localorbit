@@ -1,20 +1,20 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Edit quantity ordered" do
   let!(:market)          { create(:market, :with_addresses, market_seller_fee: 5, local_orbit_seller_fee: 4) }
-  let!(:monday_delivery) { create(:delivery_schedule, day: 1)}
+  let!(:monday_delivery) { create(:delivery_schedule, day: 1) }
   let!(:seller)          { create(:organization, :seller, markets: [market]) }
   let!(:product_lot)     { create(:lot, quantity: 145) }
-  let!(:product)         { create(:product, :sellable, organization: seller, lots: [product_lot])}
+  let!(:product)         { create(:product, :sellable, organization: seller, lots: [product_lot]) }
 
-  let!(:product2)         { create(:product, :sellable, organization: seller)}
+  let!(:product2)         { create(:product, :sellable, organization: seller) }
 
   let!(:buyer)          { create(:organization, :buyer, markets: [market]) }
 
   let!(:delivery)       { monday_delivery.next_delivery }
   let!(:order_item)     { create(:order_item, product: product, quantity: 5, unit_price: 3.00) }
   let!(:order_item_lot) { create(:order_item_lot, quantity: 5, lot: product_lot, order_item: order_item) }
-  let!(:order)          { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item], payment_method: 'ach')}
+  let!(:order)          { create(:order, market: market, organization: buyer, delivery: delivery, items: [order_item], payment_method: "ach") }
   let!(:bank_account)   { create(:bank_account, :checking, :verified, bankable: buyer) }
   let!(:payment)        { create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 15.00) }
 
@@ -59,14 +59,14 @@ describe "Edit quantity ordered" do
     end
 
     it "should not be able to change the quantity ordered of a delivered item" do
-      order_item.update(delivery_status: 'delivered')
+      order_item.update(delivery_status: "delivered")
       visit admin_order_path(order)
 
       expect(page).to_not have_css(".quantity-ordered")
     end
 
     # Fixes: https://www.pivotaltracker.com/story/show/73913054
-    context "hitting enter on a quantity field", js:true do
+    context "hitting enter on a quantity field", js: true do
       it "does not submit the form" do
         visit admin_order_path(order)
 
@@ -91,7 +91,7 @@ describe "Edit quantity ordered" do
         expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
       end
 
-      subject {
+      subject do
         visit admin_order_path(order)
 
         item = Dom::Order::ItemRow.first
@@ -100,7 +100,7 @@ describe "Edit quantity ordered" do
 
         item.set_quantity_ordered(2)
         click_button "Update quantities"
-      }
+      end
 
       it "updates the item total" do
         subject
@@ -132,7 +132,7 @@ describe "Edit quantity ordered" do
       end
 
       it "does not change the delivery status" do
-        expect { subject }.to_not change{ order_item.reload.delivery_status }.from("pending")
+        expect { subject }.to_not change { order_item.reload.delivery_status }.from("pending")
       end
     end
 
@@ -141,7 +141,7 @@ describe "Edit quantity ordered" do
         expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
       end
 
-      subject {
+      subject do
         visit admin_order_path(order)
 
         item = Dom::Order::ItemRow.first
@@ -151,7 +151,7 @@ describe "Edit quantity ordered" do
 
         item.set_quantity_ordered(7)
         click_button "Update quantities"
-      }
+      end
 
       it "updates the item total" do
         subject
@@ -183,7 +183,7 @@ describe "Edit quantity ordered" do
       end
 
       it "does not change the delivery status" do
-        expect { subject }.to_not change{ order_item.reload.delivery_status }.from("pending")
+        expect { subject }.to_not change { order_item.reload.delivery_status }.from("pending")
       end
     end
 
@@ -233,7 +233,7 @@ describe "Edit quantity ordered" do
     end
 
     it "should not be able to change the quantity ordered of a delivered item" do
-      order_item.update(delivery_status: 'delivered')
+      order_item.update(delivery_status: "delivered")
       visit admin_order_path(order)
 
       expect(page).to_not have_css(".quantity-ordered")
@@ -244,7 +244,7 @@ describe "Edit quantity ordered" do
         expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
       end
 
-      subject {
+      subject do
         visit admin_order_path(order)
 
         item = Dom::Order::ItemRow.first
@@ -253,7 +253,7 @@ describe "Edit quantity ordered" do
 
         item.set_quantity_ordered(2)
         click_button "Update quantities"
-      }
+      end
 
       it "updates the item total" do
         subject
@@ -285,7 +285,7 @@ describe "Edit quantity ordered" do
       end
 
       it "does not change the delivery status" do
-        expect { subject }.to_not change{ order_item.reload.delivery_status }.from("pending")
+        expect { subject }.to_not change { order_item.reload.delivery_status }.from("pending")
       end
     end
 
@@ -294,7 +294,7 @@ describe "Edit quantity ordered" do
         expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
       end
 
-      subject {
+      subject do
         visit admin_order_path(order)
 
         item = Dom::Order::ItemRow.first
@@ -304,7 +304,7 @@ describe "Edit quantity ordered" do
 
         item.set_quantity_ordered(7)
         click_button "Update quantities"
-      }
+      end
 
       it "updates the item total" do
         subject
@@ -336,7 +336,7 @@ describe "Edit quantity ordered" do
       end
 
       it "does not change the delivery status" do
-        expect { subject }.to_not change{ order_item.reload.delivery_status }.from("pending")
+        expect { subject }.to_not change { order_item.reload.delivery_status }.from("pending")
       end
     end
 
@@ -380,10 +380,10 @@ describe "Edit quantity ordered" do
     end
 
     context "payment processor error" do
-      let!(:payment) { create(:payment, :checking, bank_account: bank_account, balanced_uri: '/debit-1', orders: [order], amount: 15.00) }
+      let!(:payment) { create(:payment, :checking, bank_account: bank_account, balanced_uri: "/debit-1", orders: [order], amount: 15.00) }
 
       before do
-        expect(Balanced::Transaction).to receive(:find).with('/debit-1').and_raise(StandardError)
+        expect(Balanced::Transaction).to receive(:find).with("/debit-1").and_raise(StandardError)
 
         visit admin_order_path(order)
 

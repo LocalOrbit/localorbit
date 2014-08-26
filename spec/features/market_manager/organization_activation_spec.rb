@@ -8,7 +8,7 @@ feature "Organization activation" do
   end
 
   def request_account(opts={})
-    default_opts = { buying: false, selling: false }
+    default_opts = {buying: false, selling: false}
     opts = default_opts.merge!(opts)
 
     click_link "Request an Account"

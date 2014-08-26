@@ -4,10 +4,10 @@ describe "Master Pack List" do
   let!(:market)             { create(:market) }
   let!(:deleted_address)    { create(:market_address, market: market, address: "123 Main", city: "Holland", state: "MI", zip: "49423", phone: "(321) 456-3456", deleted_at: Time.parse("May 1, 2014")) }
   let!(:address)            { create(:market_address, market: market, address: "321 Main", city: "Holland", state: "MI", zip: "49423", phone: "(321) 456-3456") }
-  let!(:thursdays_schedule) { create(:delivery_schedule, market: market, day: 4)}
-  let!(:thursday_delivery)  { create(:delivery, delivery_schedule: thursdays_schedule, deliver_on: Date.parse("May 8, 2014"))}
-  let!(:fridays_schedule)   { create(:delivery_schedule, :buyer_pickup, market: market, day: 5)}
-  let!(:friday_delivery)    { create(:delivery, delivery_schedule: fridays_schedule, deliver_on: Date.parse("May 9, 2014"))}
+  let!(:thursdays_schedule) { create(:delivery_schedule, market: market, day: 4) }
+  let!(:thursday_delivery)  { create(:delivery, delivery_schedule: thursdays_schedule, deliver_on: Date.parse("May 8, 2014")) }
+  let!(:fridays_schedule)   { create(:delivery_schedule, :buyer_pickup, market: market, day: 5) }
+  let!(:friday_delivery)    { create(:delivery, delivery_schedule: fridays_schedule, deliver_on: Date.parse("May 9, 2014")) }
 
   let!(:sellers1)           { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:product1)           { create(:product, :sellable, organization: sellers1) }
@@ -19,14 +19,14 @@ describe "Master Pack List" do
   let!(:buyer1)             { create(:organization, :buyer, :single_location, markets: [market]) }
   let(:buyer1_delivery)     { {delivery_address: buyer1.locations.first.address, delivery_city: buyer1.locations.first.city, delivery_state: buyer1.locations.first.state, delivery_zip: buyer1.locations.first.zip, delivery_phone: buyer1.locations.first.phone} }
 
-  let!(:order1_item1)       { create(:order_item, product: product1, quantity: 2, unit_price: 3.00)}
-  let!(:order1_item2)       { create(:order_item, product: product3, quantity: 5, unit_price: 3.00)}
+  let!(:order1_item1)       { create(:order_item, product: product1, quantity: 2, unit_price: 3.00) }
+  let!(:order1_item2)       { create(:order_item, product: product3, quantity: 5, unit_price: 3.00) }
   let!(:order1)             { create(:order, buyer1_delivery.merge(items: [order1_item1, order1_item2], delivery: thursday_delivery, market: market, organization: buyer1)) }
 
-  let!(:delivered_item)     { create(:order_item, product: product2, quantity: 8, unit_price: 3.00, delivery_status: 'delivered')}
+  let!(:delivered_item)     { create(:order_item, product: product2, quantity: 8, unit_price: 3.00, delivery_status: "delivered") }
   let!(:delivered_order)    { create(:order, buyer1_delivery.merge(items: [delivered_item], delivery: thursday_delivery, market: market, organization: buyer1)) }
 
-  let!(:order_other_item1)  { create(:order_item, product: product2, quantity: 8, unit_price: 3.00)}
+  let!(:order_other_item1)  { create(:order_item, product: product2, quantity: 8, unit_price: 3.00) }
   let!(:order_other)        { create(:order, buyer1_delivery.merge(items: [order_other_item1], delivery: friday_delivery, market: market, organization: buyer1)) }
 
   before do
@@ -117,7 +117,7 @@ describe "Master Pack List" do
     context "multiple orders" do
       let!(:buyer2)             { create(:organization, :buyer, :single_location, markets: [market]) }
       let(:buyer2_delivery)     { {delivery_address: buyer2.locations.first.address, delivery_city: buyer2.locations.first.city, delivery_state: buyer2.locations.first.state, delivery_zip: buyer2.locations.first.zip, delivery_phone: buyer2.locations.first.phone} }
-      let!(:order2_item1)       { create(:order_item, product: product2, quantity: 2, unit_price: 3.00)}
+      let!(:order2_item1)       { create(:order_item, product: product2, quantity: 2, unit_price: 3.00) }
       let!(:order2)             { create(:order, buyer2_delivery.merge(items: [order2_item1], delivery: thursday_delivery, market: market, organization: buyer2)) }
 
       before do

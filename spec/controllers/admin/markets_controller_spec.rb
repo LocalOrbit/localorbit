@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Admin::MarketsController do
   let(:admin)  { create(:user, :admin) }
@@ -40,7 +40,7 @@ describe Admin::MarketsController do
 
           post :create
           expect(response).to be_success
-          expect(response).to render_template('new')
+          expect(response).to render_template("new")
         end
       end
     end
@@ -67,7 +67,7 @@ describe Admin::MarketsController do
     it "renders the new page" do
       patch :update, id: market.id
       expect(response).to be_success
-      expect(response).to render_template('show')
+      expect(response).to render_template("show")
     end
   end
 end

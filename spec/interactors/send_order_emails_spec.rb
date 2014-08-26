@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe SendOrderEmails do
-  let(:buyer)  { create(:organization, :buyer, users:[create(:user)]) }
-  let(:seller) { create(:organization, :seller, users:[create(:user)]) }
+  let(:buyer)  { create(:organization, :buyer, users: [create(:user)]) }
+  let(:seller) { create(:organization, :seller, users: [create(:user)]) }
   let(:market) { create(:market, managers: [create(:user)]) }
 
   let(:product) { create(:product, :sellable, organization: seller) }

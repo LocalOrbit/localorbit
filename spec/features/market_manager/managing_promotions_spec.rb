@@ -1,12 +1,12 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Managing featured promotions" do
   let!(:market)  { create(:market) }
   let!(:seller)  { create(:organization, markets: [market]) }
   let!(:product) { create(:product, :sellable, organization: seller) }
 
-  let!(:active_promotion) { create(:promotion, :active, market: market, product: product, name: 'Active Promotion', created_at: Time.parse("2011-05-26")) }
-  let!(:promotion) { create(:promotion, market: market, product: product, name: 'Unactive Promotion', created_at: Time.parse("2014-05-26")) }
+  let!(:active_promotion) { create(:promotion, :active, market: market, product: product, name: "Active Promotion", created_at: Time.parse("2011-05-26")) }
+  let!(:promotion) { create(:promotion, market: market, product: product, name: "Unactive Promotion", created_at: Time.parse("2014-05-26")) }
 
   context "as a market manager" do
     let(:user) { create(:user, managed_markets: [market]) }
@@ -205,20 +205,20 @@ describe "Managing featured promotions" do
       visit admin_promotions_path
     end
 
-    context 'one market' do
-      it 'does not have a market filter box' do
-        expect(page).to_not have_field('Market')
+    context "one market" do
+      it "does not have a market filter box" do
+        expect(page).to_not have_field("Market")
       end
     end
 
-    context 'multiple markets' do
+    context "multiple markets" do
       let!(:second_market) { create(:market, managers: [user]) }
       let!(:second_market_promotion) { create(:promotion, market: second_market) }
 
-      it 'filters by market' do
+      it "filters by market" do
         visit admin_promotions_path
 
-        select second_market.name, from: 'q_market_id_nil_eq'
+        select second_market.name, from: "q_market_id_nil_eq"
         sleep(1)
 
         expect(Dom::Admin::FeaturedPromotionRow.all.count).to eql(1)

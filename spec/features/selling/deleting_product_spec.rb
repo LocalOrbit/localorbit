@@ -1,8 +1,8 @@
-require 'spec_helper'
+require "spec_helper"
 
 feature "Deleting a product from the product list" do
 
-  let!(:market_manager) { create(:user, :market_manager)}
+  let!(:market_manager) { create(:user, :market_manager) }
   let!(:market) { market_manager.managed_markets.first }
   let!(:org1) { create(:organization, markets: [market]) }
   let!(:product1) { create(:product, organization: org1) }

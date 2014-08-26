@@ -11,7 +11,7 @@ shared_examples "an action that is accessible to all roles" do |action|
   let(:market_seller)             { create(:user, organizations: [seller_organization]) }
 
   def meet_expected_expectation
-    %w[show].include?(controller.action_name) ? be_a_success : be_a_redirect
+    %w(show).include?(controller.action_name) ? be_a_success : be_a_redirect
   end
 
   it "redirects to login given no user" do

@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe "Viewing products" do
-  let!(:market) { create(:market)}
-  let!(:market2) { create(:market)}
+  let!(:market) { create(:market) }
+  let!(:market2) { create(:market) }
 
   let!(:org1) { create(:organization, name: "County Park", markets: [market]) }
   let!(:org2) { create(:organization, markets: [market]) }
@@ -19,7 +19,7 @@ describe "Viewing products" do
   let!(:grapes_price) { create(:price, product: grapes, sale_price: 5.00, min_quantity: 1) }
   let!(:grapes_lot)   { create(:lot, product: grapes, quantity: 1) }
 
-  let!(:market_manager) { create(:user, :market_manager, managed_markets:[market, market2])}
+  let!(:market_manager) { create(:user, :market_manager, managed_markets: [market, market2]) }
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -33,8 +33,8 @@ describe "Viewing products" do
     end
 
     it "shows a list of products which the owner manages" do
-      within '#admin-nav' do
-        click_link 'Products'
+      within "#admin-nav" do
+        click_link "Products"
       end
 
       product = Dom::ProductRow.first
@@ -59,8 +59,8 @@ describe "Viewing products" do
     before do
       sign_in_as(market_manager)
 
-      within '#admin-nav' do
-        click_link 'Products'
+      within "#admin-nav" do
+        click_link "Products"
       end
     end
 
@@ -96,7 +96,7 @@ describe "Viewing products" do
     end
 
     context "with only one market" do
-      let!(:market_manager) { create(:user, :market_manager, managed_markets:[market])}
+      let!(:market_manager) { create(:user, :market_manager, managed_markets: [market]) }
 
       it "won't show the market filter" do
         visit admin_products_path
@@ -216,7 +216,6 @@ describe "Viewing products" do
       fill_in "Good From", with: "1 May 2054"
       fill_in "Expires On", with: "30 May 2054"
 
-
       click_button "Save Lot"
 
       product = Dom::ProductRow.find_by_name("Grapes (Tube)")
@@ -237,7 +236,6 @@ describe "Viewing products" do
       fill_in "Quantity", with: 45
       fill_in "Good From", with: "1 May 2014"
       fill_in "Expires On", with: "30 May 2054"
-
 
       click_button "Save Lot"
 

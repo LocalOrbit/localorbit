@@ -273,20 +273,20 @@ describe "Viewing the cart", :js do
 
     context "incrementing and decrementing quantities" do
 
-#      it "increments kale" do
-#        kale_item.set_quantity(0)
-#        kale_item.node.find('.increment').click
-#        sleep 2
-#        kale_item.node.find('.increment').click
-#        sleep 2
-#        expect(kale_item.quantity_field.value).to eql("2")
-#      end
+      #      it "increments kale" do
+      #        kale_item.set_quantity(0)
+      #        kale_item.node.find('.increment').click
+      #        sleep 2
+      #        kale_item.node.find('.increment').click
+      #        sleep 2
+      #        expect(kale_item.quantity_field.value).to eql("2")
+      #      end
 
-#      it "decrements kale"  do
-#        bananas_item.set_quantity(2)
-#        bananas_item.node.find('.decrement').click
-#        expect(bananas_item.quantity_field.value).to eql("1")
-#      end
+      #      it "decrements kale"  do
+      #        bananas_item.set_quantity(2)
+      #        bananas_item.node.find('.decrement').click
+      #        expect(bananas_item.quantity_field.value).to eql("1")
+      #      end
 
     end
   end
@@ -439,8 +439,8 @@ describe "Viewing the cart", :js do
 
     context "with a valid discount maxed out on total usage" do
       let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed", maximum_uses: 2) }
-      let!(:order1) { create(:order, discount: discount )}
-      let!(:order2) { create(:order, discount: discount )}
+      let!(:order1) { create(:order, discount: discount) }
+      let!(:order2) { create(:order, discount: discount) }
 
       it "informs the user the code has expired" do
         fill_in "Discount Code", with: "15off"
@@ -456,7 +456,7 @@ describe "Viewing the cart", :js do
 
     context "with a valid discount maxed out on organizational usage" do
       let!(:discount) { create(:discount, code: "15off", discount: "15", type: "fixed", maximum_organization_uses: 1) }
-      let!(:order1)   { create(:order, organization: buyer, discount: discount )}
+      let!(:order1)   { create(:order, organization: buyer, discount: discount) }
 
       it "informs the user the code has expired" do
         fill_in "Discount Code", with: "15off"
@@ -494,7 +494,7 @@ describe "Viewing the cart", :js do
       context "with a valid discount restricted to a different buyer organization" do
         let!(:other_org) { create(:organization, :buyer, :single_location) }
         let!(:discount)  { create(:discount, code: "15off", discount: "15", type: "fixed", buyer_organization_id: other_org.id) }
-        let!(:order1)    { create(:order, organization: buyer, discount: discount )}
+        let!(:order1)    { create(:order, organization: buyer, discount: discount) }
 
         it "informs the user the code is invalid" do
           fill_in "Discount Code", with: "15off"
@@ -555,7 +555,7 @@ describe "Viewing the cart", :js do
       context "with a valid discount restricted to a different market" do
         let!(:other_market) { create(:market) }
         let!(:discount)  { create(:discount, code: "15off", discount: "15", type: "fixed", market_id: other_market.id) }
-        let!(:order1)    { create(:order, organization: buyer, discount: discount )}
+        let!(:order1)    { create(:order, organization: buyer, discount: discount) }
 
         it "informs the user the code is invalid" do
           fill_in "Discount Code", with: "15off"

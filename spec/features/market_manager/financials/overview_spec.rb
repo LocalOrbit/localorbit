@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 feature "Market Manager Financial Overview" do
   let!(:market_manager) { create(:user, :market_manager) }
@@ -57,7 +57,7 @@ feature "Market Manager Financial Overview" do
     paid_po = nil
 
     Timecop.travel(Time.current - 30.days) do
-      paid_po = create(:order, delivery: delivery, payment_method: "purchase order", market: market, total_cost: 27.96, items:[
+      paid_po = create(:order, delivery: delivery, payment_method: "purchase order", market: market, total_cost: 27.96, items: [
         create(:order_item, quantity: 1, unit_price: 27.96, product: peas, payment_seller_fee: 1.00, local_orbit_market_fee: 10.00)
       ])
 
@@ -72,7 +72,7 @@ feature "Market Manager Financial Overview" do
     # Orders for the Next 7
     # (3*6.99) - 99
     Timecop.travel(Time.current - 28.days) do
-      order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, total_cost: 20.97, items:[
+      order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, total_cost: 20.97, items: [
         create(:order_item, quantity: 1, unit_price: 20.97, product: peas, payment_seller_fee: 1.00)
       ])
 
@@ -82,7 +82,7 @@ feature "Market Manager Financial Overview" do
     end
 
     Timecop.travel(Time.current - 23.days) do
-      order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, total_cost: 48.93, items:[
+      order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, total_cost: 48.93, items: [
         create(:order_item, quantity: 1, unit_price: 48.93, product: peas, payment_seller_fee: 3)
       ])
 
@@ -164,7 +164,6 @@ feature "Market Manager Financial Overview" do
   def money_out_row(title)
     Dom::Admin::Financials::MoneyOut.find_by_title(title)
   end
-
 
   scenario "Market manager navigates directly to their financial overview" do
     visit_financials

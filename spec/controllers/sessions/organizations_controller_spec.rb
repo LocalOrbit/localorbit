@@ -1,8 +1,8 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Sessions::OrganizationsController do
   let!(:org) { create(:organization) }
-  let!(:org2) {create(:organization) }
+  let!(:org2) { create(:organization) }
   let(:market) { create(:market, organizations: [org]) }
   let(:user) { create(:user, organizations: [org]) }
 

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Verifying a market bank account", :js, :vcr do
-  let!(:market) { create(:market, name: 'Funville') }
+  let!(:market) { create(:market, name: "Funville") }
   let!(:market_manager) { create(:user, managed_markets: [market]) }
 
   context "as a market manager" do
@@ -11,10 +11,10 @@ feature "Verifying a market bank account", :js, :vcr do
       sign_in_as(market_manager)
 
       bank_account = Balanced::BankAccount.new(
-        routing_number: '021000021',
-        account_number: '9900000002',
-        name: 'Johann Bernoulli',
-        type: 'checking'
+        routing_number: "021000021",
+        account_number: "9900000002",
+        name: "Johann Bernoulli",
+        type: "checking"
       )
       bank_account.save
 

@@ -1,22 +1,22 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe 'Editing an order' do
+describe "Editing an order" do
   let!(:market)          { create(:market, :with_addresses, market_seller_fee: 5, local_orbit_seller_fee: 4) }
-  let!(:monday_delivery) { create(:delivery_schedule, day: 1)}
+  let!(:monday_delivery) { create(:delivery_schedule, day: 1) }
   let!(:seller)          { create(:organization, :seller, markets: [market]) }
   let!(:product_lot)     { create(:lot, quantity: 145) }
-  let!(:product)         { create(:product, :sellable, organization: seller, lots: [product_lot])}
+  let!(:product)         { create(:product, :sellable, organization: seller, lots: [product_lot]) }
 
-  let!(:product2)        { create(:product, :sellable, organization: seller)}
+  let!(:product2)        { create(:product, :sellable, organization: seller) }
 
   let!(:buyer)           { create(:organization, :buyer, markets: [market]) }
 
   let!(:delivery)        { monday_delivery.next_delivery }
-  let!(:order_item)      { create(:order_item, product: product, quantity: 5, unit_price: 3.00, payment_status: "pending", delivery_status: 'pending') }
+  let!(:order_item)      { create(:order_item, product: product, quantity: 5, unit_price: 3.00, payment_status: "pending", delivery_status: "pending") }
   let!(:order_item_lot)  { create(:order_item_lot, quantity: 5, lot: product_lot, order_item: order_item) }
-  let!(:order)           { create(:order, market: market, organization: buyer, delivery: delivery, items:[order_item], total_cost: 15.00, payment_method: 'ach')}
+  let!(:order)           { create(:order, market: market, organization: buyer, delivery: delivery, items: [order_item], total_cost: 15.00, payment_method: "ach") }
   let!(:bank_account)    { create(:bank_account, :checking, :verified, bankable: buyer) }
-  let!(:payment)         { create(:payment, :checking, bank_account: bank_account, balanced_uri: '/debit-1', orders: [order], amount: 15.00) }
+  let!(:payment)         { create(:payment, :checking, bank_account: bank_account, balanced_uri: "/debit-1", orders: [order], amount: 15.00) }
 
   def long_name(item)
     "#{item.product.name} from #{item.product.organization.name}"
@@ -64,7 +64,7 @@ describe 'Editing an order' do
         let!(:user) { create(:user, managed_markets: [market]) }
 
         context "removes an item" do
-          it 'removes an item' do
+          it "removes an item" do
             expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(Dom::Order::ItemRow.count).to eq(2)
@@ -77,7 +77,7 @@ describe 'Editing an order' do
             expect(Dom::Order::ItemRow.all.map(&:name)).to eql([long_name(order_item2)])
           end
 
-          it 'updates the order total' do
+          it "updates the order total" do
             expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(page).to have_content("Grand Total: $45.00")
@@ -88,7 +88,7 @@ describe 'Editing an order' do
             expect(page).to have_content("Grand Total: $30.00")
           end
 
-          it 'updates the order summary totals' do
+          it "updates the order summary totals" do
             expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
@@ -99,7 +99,7 @@ describe 'Editing an order' do
             expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
           end
 
-          it 'returns the inventory' do
+          it "returns the inventory" do
             expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
             expect(product.available_inventory).to eql(145)
 
@@ -115,7 +115,7 @@ describe 'Editing an order' do
         let!(:user) { create(:user, :admin) }
 
         context "remove an item" do
-          it 'removes an item' do
+          it "removes an item" do
             expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(Dom::Order::ItemRow.count).to eq(2)
@@ -128,7 +128,7 @@ describe 'Editing an order' do
             expect(Dom::Order::ItemRow.all.map(&:name)).to eql([long_name(order_item2)])
           end
 
-          it 'updates the order total' do
+          it "updates the order total" do
             expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(page).to have_content("Grand Total: $45.00")
@@ -139,7 +139,7 @@ describe 'Editing an order' do
             expect(page).to have_content("Grand Total: $30.00")
           end
 
-          it 'updates the order summary totals' do
+          it "updates the order summary totals" do
             expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
             expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$45.00")
@@ -150,7 +150,7 @@ describe 'Editing an order' do
             expect(Dom::Admin::OrderSummaryRow.first.gross_total).to eql("$30.00")
           end
 
-          it 'returns the inventory' do
+          it "returns the inventory" do
             expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
             expect(product.available_inventory).to eql(145)
 
@@ -179,14 +179,14 @@ describe 'Editing an order' do
       context "as a market manager" do
         let!(:user) { create(:user, managed_markets: [market]) }
 
-        it 'is not allowed to delete a delivered item' do
-          order_item.update(delivery_status: 'delivered')
+        it "is not allowed to delete a delivered item" do
+          order_item.update(delivery_status: "delivered")
           visit admin_order_path(order)
 
           expect(Dom::Order::ItemRow.first.node.first(".icon-delete")).to be_nil
         end
 
-        it 'returns you to the orders list' do
+        it "returns you to the orders list" do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
@@ -195,7 +195,7 @@ describe 'Editing an order' do
           expect(page.current_path).to eql(admin_orders_path)
         end
 
-        it 'soft deletes the order' do
+        it "soft deletes the order" do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
@@ -204,7 +204,7 @@ describe 'Editing an order' do
           expect(order.reload.deleted_at).to_not be_nil
         end
 
-        it 'returns the inventory' do
+        it "returns the inventory" do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
           expect(product.available_inventory).to eql(145)
 
@@ -218,14 +218,14 @@ describe 'Editing an order' do
       context "as an admin" do
         let!(:user) { create(:user, :admin) }
 
-        it 'is not allowed to delete a delivered item' do
-          order_item.update(delivery_status: 'delivered')
+        it "is not allowed to delete a delivered item" do
+          order_item.update(delivery_status: "delivered")
           visit admin_order_path(order)
 
           expect(Dom::Order::ItemRow.first.node.first(".icon-delete")).to be_nil
         end
 
-        it 'returns you to the orders list' do
+        it "returns you to the orders list" do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
@@ -234,7 +234,7 @@ describe 'Editing an order' do
           expect(page.current_path).to eql(admin_orders_path)
         end
 
-        it 'soft deletes the order' do
+        it "soft deletes the order" do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
 
           first_order_item.click_delete
@@ -243,7 +243,7 @@ describe 'Editing an order' do
           expect(order.reload.deleted_at).to_not be_nil
         end
 
-        it 'returns the inventory' do
+        it "returns the inventory" do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
           expect(product.available_inventory).to eql(145)
 
@@ -275,11 +275,11 @@ describe 'Editing an order' do
       let!(:user) { create(:user, organizations: [seller]) }
 
       it "marks all items delivered" do
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Pending')
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
-        click_button 'Mark all delivered'
+        click_button "Mark all delivered"
 
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Delivered')
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
         expect(page).to_not have_button("Mark all delivered")
       end
     end
@@ -288,23 +288,23 @@ describe 'Editing an order' do
       let!(:user) { create(:user, managed_markets: [market]) }
 
       it "marks all items delivered" do
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Pending')
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
-        click_button 'Mark all delivered'
+        click_button "Mark all delivered"
 
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Delivered')
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
         expect(page).to_not have_button("Mark all delivered")
       end
 
       it "marks items canceled if quantity delivered is set to 0" do
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Pending')
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
         Dom::Order::ItemRow.first.set_quantity_delivered(0)
-        click_button 'Mark all delivered'
+        click_button "Mark all delivered"
 
         item = Dom::Order::ItemRow.first
-        expect(item.delivery_status).to eql('Canceled')
-        expect(item.payment_status).to eql('Refunded')
+        expect(item.delivery_status).to eql("Canceled")
+        expect(item.payment_status).to eql("Refunded")
         expect(page).to_not have_button("Mark all delivered")
       end
     end
@@ -313,23 +313,23 @@ describe 'Editing an order' do
       let!(:user) { create(:user, :admin) }
 
       it "marks all items delivered" do
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Pending')
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
-        click_button 'Mark all delivered'
+        click_button "Mark all delivered"
 
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Delivered')
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
         expect(page).to_not have_button("Mark all delivered")
       end
 
       it "marks items canceled if quantity delivered is set to 0" do
-        expect(Dom::Order::ItemRow.first.delivery_status).to eql('Pending')
+        expect(Dom::Order::ItemRow.first.delivery_status).to eql("Pending")
 
         Dom::Order::ItemRow.first.set_quantity_delivered(0)
-        click_button 'Mark all delivered'
+        click_button "Mark all delivered"
 
         item = Dom::Order::ItemRow.first
-        expect(item.delivery_status).to eql('Canceled')
-        expect(item.payment_status).to eql('Refunded')
+        expect(item.delivery_status).to eql("Canceled")
+        expect(item.payment_status).to eql("Refunded")
         expect(page).to_not have_button("Mark all delivered")
       end
     end
@@ -395,7 +395,7 @@ describe 'Editing an order' do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
         end
 
-        subject {
+        subject do
           visit admin_order_path(order)
 
           item = Dom::Order::ItemRow.first
@@ -404,7 +404,7 @@ describe 'Editing an order' do
 
           item.set_quantity_delivered(2)
           click_button "Update quantities"
-        }
+        end
 
         it "updates the item total" do
           subject
@@ -447,7 +447,7 @@ describe 'Editing an order' do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
         end
 
-        subject {
+        subject do
           visit admin_order_path(order)
 
           item = Dom::Order::ItemRow.first
@@ -457,7 +457,7 @@ describe 'Editing an order' do
 
           item.set_quantity_delivered(7)
           click_button "Update quantities"
-        }
+        end
 
         it "updates the item total" do
           subject
@@ -559,7 +559,7 @@ describe 'Editing an order' do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
         end
 
-        subject {
+        subject do
           visit admin_order_path(order)
 
           item = Dom::Order::ItemRow.first
@@ -568,7 +568,7 @@ describe 'Editing an order' do
 
           item.set_quantity_delivered(2)
           click_button "Update quantities"
-        }
+        end
 
         it "updates the item total" do
           subject
@@ -611,7 +611,7 @@ describe 'Editing an order' do
           expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", "success?" => true))
         end
 
-        subject {
+        subject do
           visit admin_order_path(order)
 
           item = Dom::Order::ItemRow.first
@@ -621,7 +621,7 @@ describe 'Editing an order' do
 
           item.set_quantity_delivered(7)
           click_button "Update quantities"
-        }
+        end
 
         it "updates the item total" do
           subject
@@ -699,10 +699,10 @@ describe 'Editing an order' do
       end
 
       context "payment processor error" do
-        let!(:payment) { create(:payment, :checking, bank_account: bank_account, balanced_uri: '/debit-1', orders: [order], amount: 15.00) }
+        let!(:payment) { create(:payment, :checking, bank_account: bank_account, balanced_uri: "/debit-1", orders: [order], amount: 15.00) }
 
         before do
-          expect(Balanced::Transaction).to receive(:find).with('/debit-1').and_raise(StandardError)
+          expect(Balanced::Transaction).to receive(:find).with("/debit-1").and_raise(StandardError)
 
           visit admin_order_path(order)
 
@@ -722,8 +722,6 @@ describe 'Editing an order' do
       end
     end
   end
-
-
 
   context "order notes" do
     context "buyer" do
@@ -753,7 +751,6 @@ describe 'Editing an order' do
         expect(page).to_not have_field("Notes")
       end
     end
-
 
     context "market manager" do
       let!(:user)       { create(:user, managed_markets: [market]) }

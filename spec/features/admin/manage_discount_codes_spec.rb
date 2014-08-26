@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Manage Discount Codes" do
   let!(:market)              { create(:market) }
@@ -29,16 +29,16 @@ describe "Manage Discount Codes" do
       let!(:market) { create(:market, plan: create(:plan, discount_codes: false)) }
 
       it "does not see Discount Codes in the menu" do
-        within '#admin-nav' do
-          click_link 'Marketing'
+        within "#admin-nav" do
+          click_link "Marketing"
         end
         expect(first(:link, "Discount Codes")).to be_nil
       end
     end
 
     it "can be accessed via the menu" do
-      within '#admin-nav' do
-        click_link 'Marketing'
+      within "#admin-nav" do
+        click_link "Marketing"
       end
       click_link "Discount Codes"
 
@@ -74,7 +74,7 @@ describe "Manage Discount Codes" do
     end
 
     context "Creation" do
-      it 'adds a new discount code' do
+      it "adds a new discount code" do
         visit new_admin_discount_path
 
         fill_in "Name", with: "Anniversary Celebration"
@@ -89,7 +89,7 @@ describe "Manage Discount Codes" do
         expect(Dom::Admin::DiscountRow.find_by_name("Anniversary Celebration")).to_not be_nil
       end
 
-      it 'displays error messages when the code is invalid' do
+      it "displays error messages when the code is invalid" do
         visit new_admin_discount_path
 
         click_button "Save Discount"
@@ -115,7 +115,7 @@ describe "Manage Discount Codes" do
     end
 
     context "Updation" do
-      it 'updates an existing discount code' do
+      it "updates an existing discount code" do
         visit admin_discount_path(discount_fixed)
 
         fill_in "Name", with: "Black Friday"
@@ -127,7 +127,7 @@ describe "Manage Discount Codes" do
         expect(Dom::Admin::DiscountRow.find_by_name("Black Friday")).to_not be_nil
       end
 
-      it 'displays error messages when the code is invalid' do
+      it "displays error messages when the code is invalid" do
         visit admin_discount_path(discount_fixed)
 
         fill_in "Name", with: ""
@@ -143,8 +143,8 @@ describe "Manage Discount Codes" do
     let!(:user) { create(:user, :admin) }
 
     it "can be accessed via the menu" do
-      within '#admin-nav' do
-        click_link 'Marketing'
+      within "#admin-nav" do
+        click_link "Marketing"
       end
       click_link "Discount Codes"
 
@@ -176,7 +176,7 @@ describe "Manage Discount Codes" do
     end
 
     context "Creation" do
-      it 'adds a new discount code' do
+      it "adds a new discount code" do
         visit new_admin_discount_path
 
         fill_in "Name", with: "Anniversary Celebration"
@@ -191,7 +191,7 @@ describe "Manage Discount Codes" do
         expect(Dom::Admin::DiscountRow.find_by_name("Anniversary Celebration")).to_not be_nil
       end
 
-      it 'displays error messages when the code is invalid' do
+      it "displays error messages when the code is invalid" do
         visit new_admin_discount_path
 
         click_button "Save Discount"
@@ -217,7 +217,7 @@ describe "Manage Discount Codes" do
     end
 
     context "Updation" do
-      it 'updates an existing discount code' do
+      it "updates an existing discount code" do
         visit admin_discount_path(discount_fixed)
 
         fill_in "Name", with: "Black Friday"
@@ -229,7 +229,7 @@ describe "Manage Discount Codes" do
         expect(Dom::Admin::DiscountRow.find_by_name("Black Friday")).to_not be_nil
       end
 
-      it 'displays error messages when the code is invalid' do
+      it "displays error messages when the code is invalid" do
         visit admin_discount_path(discount_fixed)
 
         fill_in "Name", with: ""

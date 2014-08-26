@@ -1,11 +1,10 @@
 require "spec_helper"
 
 feature "sending invoices" do
-  let(:market1)            { create(:market, subdomain: 'betterest', po_payment_term: 14) }
+  let(:market1)            { create(:market, subdomain: "betterest", po_payment_term: 14) }
   let!(:market_manager)    { create :user, managed_markets: [market1] }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)          { delivery_schedule.next_delivery }
-
 
   let!(:buyer_user) { create :user }
 
@@ -15,17 +14,17 @@ feature "sending invoices" do
 
   let!(:product) { create(:product, :sellable, organization: market1_seller1) }
 
-  let!(:market1_order1) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 210.00)], market: market1, organization: market1_buyer1, payment_method: 'purchase order', order_number: "LO-001", total_cost: 210, placed_at: 1.week.ago) }
-  let!(:market1_order2) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market1, organization: market1_buyer1, invoiced_at: 1.day.ago, invoice_due_date: 13.days.from_now) }
-  let!(:market1_order3) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market1, organization: market1_buyer1, payment_method: 'credit card') }
-  let!(:market1_order4) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market1, organization: market1_buyer1, payment_method: 'ach') }
-  let!(:market1_order5) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 420.00)], market: market1, organization: market1_buyer1, payment_method: 'purchase order', order_number: "LO-005", total_cost: 420, placed_at: 2.weeks.ago) }
-  let!(:market1_order6) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 310.00)], market: market1, organization: market1_buyer2, payment_method: 'purchase order', order_number: "LO-006", total_cost: 310, placed_at: 3.weeks.ago) }
+  let!(:market1_order1) { create(:order, delivery: delivery, items: [create(:order_item, product: product, unit_price: 210.00)], market: market1, organization: market1_buyer1, payment_method: "purchase order", order_number: "LO-001", total_cost: 210, placed_at: 1.week.ago) }
+  let!(:market1_order2) { create(:order, delivery: delivery, items: [create(:order_item, product: product)], market: market1, organization: market1_buyer1, invoiced_at: 1.day.ago, invoice_due_date: 13.days.from_now) }
+  let!(:market1_order3) { create(:order, delivery: delivery, items: [create(:order_item, product: product)], market: market1, organization: market1_buyer1, payment_method: "credit card") }
+  let!(:market1_order4) { create(:order, delivery: delivery, items: [create(:order_item, product: product)], market: market1, organization: market1_buyer1, payment_method: "ach") }
+  let!(:market1_order5) { create(:order, delivery: delivery, items: [create(:order_item, product: product, unit_price: 420.00)], market: market1, organization: market1_buyer1, payment_method: "purchase order", order_number: "LO-005", total_cost: 420, placed_at: 2.weeks.ago) }
+  let!(:market1_order6) { create(:order, delivery: delivery, items: [create(:order_item, product: product, unit_price: 310.00)], market: market1, organization: market1_buyer2, payment_method: "purchase order", order_number: "LO-006", total_cost: 310, placed_at: 3.weeks.ago) }
 
-  invoice_auth_matcher = lambda {|r1, r2|
+  invoice_auth_matcher = lambda do|r1, r2|
     matcher = %r{/admin/invoices/[0-9]+/invoice\.pdf\?auth_token=}
     matcher.match(r1.uri) && matcher.match(r2.uri)
-  }
+  end
 
   scenario "seeing a list of unsent invoices" do
     switch_to_subdomain(market1.subdomain)
@@ -88,14 +87,14 @@ feature "sending invoices" do
     visit admin_financials_invoices_path
 
     Dom::Admin::Financials::InvoiceRow.select_all
-    click_button 'Send Selected Invoices'
+    click_button "Send Selected Invoices"
 
     expect(page).to have_content("Invoice sent for order numbers LO-001, LO-005, LO-006")
     expect(Dom::Admin::Financials::InvoiceRow.all.size).to eq(0)
   end
 
   context "filtering" do
-    let!(:market2) { create(:market, subdomain: 'betterest2', po_payment_term: 14) }
+    let!(:market2) { create(:market, subdomain: "betterest2", po_payment_term: 14) }
     let!(:delivery_schedule2) { create(:delivery_schedule) }
     let!(:delivery2) { delivery_schedule.next_delivery }
     let!(:market_manager) { create :user, managed_markets: [market1, market2] }
@@ -103,13 +102,13 @@ feature "sending invoices" do
     let!(:market2_seller1) { create(:organization, :seller, name: "Better Farms", markets: [market2]) }
     let!(:market2_buyer1)  { create(:organization, :buyer, name: "Buyer for Market2 1", markets: [market2], users: [buyer_user2]) }
     let!(:market2_buyer2) { create(:organization, :buyer, name: "Buyer for Market 2 1", markets: [market2]) }
-    let!(:market2_order1) { create(:order, delivery: delivery2, items:[create(:order_item, product: product, unit_price: 210.00)], market: market2, organization: market2_buyer1, payment_method: 'purchase order', order_number: "LO-007", total_cost: 210, placed_at: 1.week.ago) }
-    let!(:market2_order2) { create(:order, delivery: delivery2, items:[create(:order_item, product: product)], market: market2, organization: market2_buyer1, invoiced_at: 1.day.ago, invoice_due_date: 13.days.from_now) }
-    let!(:market2_order3) { create(:order, delivery: delivery2, items:[create(:order_item, product: product)], market: market2, organization: market2_buyer1, payment_method: 'credit card') }
-    let!(:market2_order4) { create(:order, delivery: delivery2, items:[create(:order_item, product: product)], market: market2, organization: market2_buyer1, payment_method: 'ach') }
-    let!(:market2_order5) { create(:order, delivery: delivery2, items:[create(:order_item, product: product, unit_price: 420.00)], market: market2, organization: market2_buyer1, payment_method: 'purchase order', order_number: "LO-008", total_cost: 420, placed_at: 2.weeks.ago) }
-    let!(:market2_order6) { create(:order, delivery: delivery2, items:[create(:order_item, product: product, unit_price: 310.00)], market: market2, organization: market2_buyer2, payment_method: 'purchase order', order_number: "LO-009", total_cost: 310, placed_at: 3.weeks.ago) }
-    let!(:market2_order7) { create(:order, delivery: delivery2, items:[create(:order_item, product: product, unit_price: 110.00)], market: market2, organization: market2_buyer2, payment_method: 'purchase order', order_number: "LO-010", total_cost: 110, placed_at: 5.weeks.ago) }
+    let!(:market2_order1) { create(:order, delivery: delivery2, items: [create(:order_item, product: product, unit_price: 210.00)], market: market2, organization: market2_buyer1, payment_method: "purchase order", order_number: "LO-007", total_cost: 210, placed_at: 1.week.ago) }
+    let!(:market2_order2) { create(:order, delivery: delivery2, items: [create(:order_item, product: product)], market: market2, organization: market2_buyer1, invoiced_at: 1.day.ago, invoice_due_date: 13.days.from_now) }
+    let!(:market2_order3) { create(:order, delivery: delivery2, items: [create(:order_item, product: product)], market: market2, organization: market2_buyer1, payment_method: "credit card") }
+    let!(:market2_order4) { create(:order, delivery: delivery2, items: [create(:order_item, product: product)], market: market2, organization: market2_buyer1, payment_method: "ach") }
+    let!(:market2_order5) { create(:order, delivery: delivery2, items: [create(:order_item, product: product, unit_price: 420.00)], market: market2, organization: market2_buyer1, payment_method: "purchase order", order_number: "LO-008", total_cost: 420, placed_at: 2.weeks.ago) }
+    let!(:market2_order6) { create(:order, delivery: delivery2, items: [create(:order_item, product: product, unit_price: 310.00)], market: market2, organization: market2_buyer2, payment_method: "purchase order", order_number: "LO-009", total_cost: 310, placed_at: 3.weeks.ago) }
+    let!(:market2_order7) { create(:order, delivery: delivery2, items: [create(:order_item, product: product, unit_price: 110.00)], market: market2, organization: market2_buyer2, payment_method: "purchase order", order_number: "LO-010", total_cost: 110, placed_at: 5.weeks.ago) }
 
     it "can be filtered by market" do
       switch_to_subdomain(market1.subdomain)

@@ -17,7 +17,7 @@ describe CartsController do
       switch_to_subdomain(market.subdomain)
 
       params = {
-        format: 'json',
+        format: "json",
         product_id: product.id,
         quantity: 0
       }
@@ -34,7 +34,7 @@ describe CartsController do
       switch_to_subdomain(market.subdomain)
 
       params = {
-        format: 'json',
+        format: "json",
         product_id: product.id,
         quantity: 1
       }

@@ -1,8 +1,8 @@
 module SubdomainHelpers
   def switch_to_subdomain(subdomain)
-    hostname = [subdomain, Figaro.env.domain].compact.join('.')
+    hostname = [subdomain, Figaro.env.domain].compact.join(".")
     if @request
-      @request.env['HTTP_HOST'] = hostname
+      @request.env["HTTP_HOST"] = hostname
     else
       Capybara.app_host = "http://#{hostname}"
     end

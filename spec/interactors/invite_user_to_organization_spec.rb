@@ -1,12 +1,12 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe InviteUserToOrganization do
   let(:org) { create(:organization) }
   let(:inviter) { create(:user, :market_manager) }
   let(:market) { inviter.managed_markets.first }
-  subject(:interactor) {
+  subject(:interactor) do
     InviteUserToOrganization.new(interactor_args)
-  }
+  end
 
   before do
     inviter.organizations << org
@@ -14,9 +14,9 @@ describe InviteUserToOrganization do
   end
 
   describe "when a user doesn't exist in the system" do
-    let(:interactor_args) {
+    let(:interactor_args) do
       {email: "frank@example.com", inviter: inviter, organization: org}
-    }
+    end
 
     it "creates the user" do
       expect {
@@ -56,11 +56,11 @@ describe InviteUserToOrganization do
   end
 
   describe "an existing user" do
-    let(:user){ create(:user, :admin) }
+    let(:user) { create(:user, :admin) }
     let(:user_org) { create(:organization) }
-    let(:interactor_args) {
-      {email: user.email.upcase, inviter: inviter, organization: org, market: market }
-    }
+    let(:interactor_args) do
+      {email: user.email.upcase, inviter: inviter, organization: org, market: market}
+    end
 
     before do
       user.organizations << user_org
@@ -96,9 +96,9 @@ describe InviteUserToOrganization do
   describe "a user that's already in the organization" do
     let(:user) { create(:user, :admin) }
     let(:org) { create(:organization) }
-    let(:interactor_args) {
+    let(:interactor_args) do
       {email: user.email, inviter: inviter, organization: org}
-    }
+    end
 
     before do
       user.organizations << org

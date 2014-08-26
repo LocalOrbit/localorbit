@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe 'Filter products', :js do
+describe "Filter products", :js do
   let!(:empty_market) { create(:market) }
   let!(:market1)      { create(:market) }
   let!(:org1)         { create(:organization, :seller, markets: [market1]) }
@@ -15,29 +15,29 @@ describe 'Filter products', :js do
   let!(:org4_product) { create(:product, :sellable, organization: org4) }
   let!(:org5)         { create(:organization, :buyer, markets: [market2]) }
 
-  context 'as admin' do
-    let!(:user) { create(:user, role: 'admin') }
+  context "as admin" do
+    let!(:user) { create(:user, role: "admin") }
 
     before do
       sign_in_as(user)
       visit admin_products_path
     end
 
-    context 'by market' do
-      it 'shows an empty state' do
+    context "by market" do
+      it "shows an empty state" do
         select empty_market.name, from: "filter_market"
 
         expect(page).to have_content("No Result")
       end
 
-      it 'shows all products when unfiltered' do
+      it "shows all products when unfiltered" do
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
         expect(page).to have_content(org3_product.name)
         expect(page).to have_content(org4_product.name)
       end
 
-      it 'shows products for only the selected market' do
+      it "shows products for only the selected market" do
         select market1.name, from: "filter_market"
 
         expect(page).to have_content(org1_product.name)
@@ -47,19 +47,19 @@ describe 'Filter products', :js do
       end
     end
 
-    context 'by organization' do
-      it 'only show sellers for filtering' do
+    context "by organization" do
+      it "only show sellers for filtering" do
         expect(page).to_not have_select("filter_organization", with_options: [org5.name])
       end
 
-      it 'shows all products when unfiltered' do
+      it "shows all products when unfiltered" do
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
         expect(page).to have_content(org3_product.name)
         expect(page).to have_content(org4_product.name)
       end
 
-      it 'shows products for only the selected organization' do
+      it "shows products for only the selected organization" do
         select org1.name, from: "filter_organization"
 
         expect(page).to have_content(org1_product.name)
@@ -71,8 +71,8 @@ describe 'Filter products', :js do
     end
   end
 
-  context 'as multi-market manager' do
-    let!(:user) { create(:user, role: 'user', managed_markets: [market1, market2, empty_market]) }
+  context "as multi-market manager" do
+    let!(:user) { create(:user, role: "user", managed_markets: [market1, market2, empty_market]) }
 
     before do
       switch_to_subdomain(market1.subdomain)
@@ -80,21 +80,21 @@ describe 'Filter products', :js do
       visit admin_products_path
     end
 
-    context 'by market' do
-      it 'shows an empty state' do
+    context "by market" do
+      it "shows an empty state" do
         select empty_market.name, from: "filter_market"
 
         expect(page).to have_content("No Result")
       end
 
-      it 'shows all products when unfiltered' do
+      it "shows all products when unfiltered" do
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
         expect(page).to have_content(org3_product.name)
         expect(page).to have_content(org4_product.name)
       end
 
-      it 'shows products for only the selected market' do
+      it "shows products for only the selected market" do
         select market1.name, from: "filter_market"
 
         expect(page).to have_content(org1_product.name)
@@ -105,15 +105,15 @@ describe 'Filter products', :js do
       end
     end
 
-    context 'by organization' do
-      it 'shows all products when unfiltered' do
+    context "by organization" do
+      it "shows all products when unfiltered" do
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
         expect(page).to have_content(org3_product.name)
         expect(page).to have_content(org4_product.name)
       end
 
-      it 'shows products for only the selected organization' do
+      it "shows products for only the selected organization" do
         select org1.name, from: "filter_organization"
 
         expect(page).to have_content(org1_product.name)
@@ -125,7 +125,7 @@ describe 'Filter products', :js do
     end
   end
 
-  context 'as single market manager' do
+  context "as single market manager" do
     let!(:user) { create(:user, managed_markets: [market1]) }
 
     before do
@@ -135,19 +135,19 @@ describe 'Filter products', :js do
       visit admin_products_path
     end
 
-    context 'by market' do
-      it 'does not show a market filter dropdown' do
+    context "by market" do
+      it "does not show a market filter dropdown" do
         expect(page).to_not have_field("filter_market")
       end
     end
 
-    context 'by organization' do
-      it 'shows all products when unfiltered' do
+    context "by organization" do
+      it "shows all products when unfiltered" do
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
       end
 
-      it 'shows products for only the selected organization' do
+      it "shows products for only the selected organization" do
         select org1.name, from: "filter_organization"
 
         expect(page).to have_content(org1_product.name)
@@ -157,7 +157,7 @@ describe 'Filter products', :js do
     end
   end
 
-  context 'as user in multiple organizations' do
+  context "as user in multiple organizations" do
     let!(:user) { create(:user) }
 
     before do
@@ -169,19 +169,19 @@ describe 'Filter products', :js do
       visit admin_products_path
     end
 
-    context 'by market' do
-      it 'does not show a market filter dropdown' do
+    context "by market" do
+      it "does not show a market filter dropdown" do
         expect(page).to_not have_field("filter_market")
       end
     end
 
-    context 'by organization' do
-      it 'shows all products when unfiltered' do
+    context "by organization" do
+      it "shows all products when unfiltered" do
         expect(page).to have_content(org1_product.name)
         expect(page).to have_content(org2_product.name)
       end
 
-      it 'shows products for only the selected organization' do
+      it "shows products for only the selected organization" do
         select org1.name, from: "filter_organization"
 
         expect(page).to have_content(org1_product.name)
@@ -191,7 +191,7 @@ describe 'Filter products', :js do
     end
   end
 
-  context 'as user in a single organizations' do
+  context "as user in a single organizations" do
     let!(:user) { create(:user) }
 
     before do
@@ -202,14 +202,14 @@ describe 'Filter products', :js do
       visit admin_products_path
     end
 
-    context 'by market' do
-      it 'does not show a market filter dropdown' do
+    context "by market" do
+      it "does not show a market filter dropdown" do
         expect(page).to_not have_field("filter_market")
       end
     end
 
-    context 'by organization' do
-      it 'does not show a organization filter dropdown' do
+    context "by organization" do
+      it "does not show a organization filter dropdown" do
         expect(page).to_not have_field("filter_organization")
       end
     end

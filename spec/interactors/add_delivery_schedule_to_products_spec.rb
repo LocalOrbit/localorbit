@@ -1,11 +1,11 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe AddDeliveryScheduleToProducts do
   let!(:market)        { create(:market) }
-  let!(:org1)          { create(:organization, :seller, markets: [market])}
+  let!(:org1)          { create(:organization, :seller, markets: [market]) }
   let!(:org1_product1) { create(:product, :sellable, organization: org1) }
   let!(:org1_product2) { create(:product, :sellable, organization: org1, use_all_deliveries: false) }
-  let!(:org2)          { create(:organization, markets: [market])}
+  let!(:org2)          { create(:organization, markets: [market]) }
   let!(:org2_product)  { create(:product, :sellable, organization: org2) }
 
   let!(:delivery_schedule) { create(:delivery_schedule) }

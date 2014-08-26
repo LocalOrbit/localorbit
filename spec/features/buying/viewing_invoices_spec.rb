@@ -1,9 +1,9 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Buyer invoices" do
   let!(:market)    { create(:market) }
   let!(:deleted_market_address) { create(:market_address, market: market, deleted_at: Time.current) }
-  let!(:market_address) { create(:market_address, market: market ) }
+  let!(:market_address) { create(:market_address, market: market) }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 

@@ -1,10 +1,10 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe UpdateBalancedPurchase do
   let!(:market)            { create(:market) }
-  let!(:delivery_schedule) { create(:delivery_schedule, fee: 0.0, fee_type: 'fixed') }
+  let!(:delivery_schedule) { create(:delivery_schedule, fee: 0.0, fee_type: "fixed") }
   let!(:delivery)          { delivery_schedule.next_delivery }
-  let!(:buyer)             { create(:organization, balanced_customer_uri: '/balanced-account-uri') }
+  let!(:buyer)             { create(:organization, balanced_customer_uri: "/balanced-account-uri") }
 
   let!(:order_item) { create(:order_item, unit_price: 15.00, quantity: 2) }
 
@@ -13,19 +13,19 @@ describe UpdateBalancedPurchase do
 
   context "credit card" do
     let!(:order) { create(:order, organization: buyer, delivery: delivery, market: market, items: [order_item], payment_method: "credit card", total_cost: 30.00) }
-    let!(:bank_account) { create(:bank_account, :credit_card, bankable: buyer, balanced_uri: '/balanced-card-uri') }
+    let!(:bank_account) { create(:bank_account, :credit_card, bankable: buyer, balanced_uri: "/balanced-card-uri") }
 
     context "without any items" do
-      let!(:payment) { create(:payment, :credit_card, bank_account: bank_account, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-1') }
+      let!(:payment) { create(:payment, :credit_card, bank_account: bank_account, orders: [order], amount: 45.00, balanced_uri: "/balanced-debit-1") }
 
       before do
         order.items.delete_all
         order.save!
       end
 
-      it 'refunds the entire amount' do
+      it "refunds the entire amount" do
         expect(Balanced::Transaction).to receive(:find).and_return(existing_debit)
-        expect(existing_debit).to receive(:refund).with({ amount: 4500 })
+        expect(existing_debit).to receive(:refund).with(amount: 4500)
 
         expect(order.reload.payments.count).to eql(1)
 
@@ -40,12 +40,12 @@ describe UpdateBalancedPurchase do
     end
 
     context "refund difference" do
-      let!(:payment) { create(:payment, :credit_card, bank_account: bank_account, orders: [order], amount: 45.15, balanced_uri: '/balanced-debit-1') }
-      let!(:market_payment) { create(:payment, :market_orders, orders: [order], amount: 86.00, balanced_uri: '/balanced-credit-1') }
+      let!(:payment) { create(:payment, :credit_card, bank_account: bank_account, orders: [order], amount: 45.15, balanced_uri: "/balanced-debit-1") }
+      let!(:market_payment) { create(:payment, :market_orders, orders: [order], amount: 86.00, balanced_uri: "/balanced-credit-1") }
 
       it "against one payment" do
         expect(Balanced::Transaction).to receive(:find).and_return(existing_debit)
-        expect(existing_debit).to receive(:refund).with({ amount: 1515 })
+        expect(existing_debit).to receive(:refund).with(amount: 1515)
 
         expect(order.reload.payments.count).to eql(2)
 
@@ -58,17 +58,17 @@ describe UpdateBalancedPurchase do
       end
 
       it "against multiple payment" do
-        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-2', status: 'failed')
-        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 20.00, balanced_uri: '/balanced-debit-3')
-        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 25.00, balanced_uri: '/balanced-debit-4')
+        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 45.00, balanced_uri: "/balanced-debit-2", status: "failed")
+        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 20.00, balanced_uri: "/balanced-debit-3")
+        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 25.00, balanced_uri: "/balanced-debit-4")
 
         debit1 = double("balanced debit 1", amount: 4515)
         debit3 = double("balanced debit 3", amount: 2000)
-        expect(Balanced::Transaction).to receive(:find).with('/balanced-debit-1').and_return(debit1)
-        expect(Balanced::Transaction).to receive(:find).with('/balanced-debit-3').and_return(debit3)
-        expect(Balanced::Transaction).to_not receive(:find).with('/balanced-debit-4')
-        expect(debit1).to receive(:refund).with({ amount: 4515 })
-        expect(debit3).to receive(:refund).with({ amount: 1500 })
+        expect(Balanced::Transaction).to receive(:find).with("/balanced-debit-1").and_return(debit1)
+        expect(Balanced::Transaction).to receive(:find).with("/balanced-debit-3").and_return(debit3)
+        expect(Balanced::Transaction).to_not receive(:find).with("/balanced-debit-4")
+        expect(debit1).to receive(:refund).with(amount: 4515)
+        expect(debit3).to receive(:refund).with(amount: 1500)
 
         expect(order.reload.payments.count).to eql(5)
 
@@ -105,17 +105,17 @@ describe UpdateBalancedPurchase do
       end
 
       it "against multiple payments and failing after the first payment", truncate: true do
-        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-2', status: 'failed')
-        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 20.00, balanced_uri: '/balanced-debit-3')
-        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 25.00, balanced_uri: '/balanced-debit-4')
+        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 45.00, balanced_uri: "/balanced-debit-2", status: "failed")
+        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 20.00, balanced_uri: "/balanced-debit-3")
+        create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 25.00, balanced_uri: "/balanced-debit-4")
 
         debit1 = double("balanced debit 1", amount: 4515)
         debit3 = double("balanced debit 3", amount: 2000)
-        expect(Balanced::Transaction).to receive(:find).with('/balanced-debit-1').and_return(debit1)
-        expect(Balanced::Transaction).to receive(:find).with('/balanced-debit-3').and_return(debit3)
-        expect(Balanced::Transaction).to_not receive(:find).with('/balanced-debit-4')
-        expect(debit1).to receive(:refund).with({ amount: 4515 })
-        expect(debit3).to receive(:refund).with({ amount: 1500 }).and_raise(StandardError)
+        expect(Balanced::Transaction).to receive(:find).with("/balanced-debit-1").and_return(debit1)
+        expect(Balanced::Transaction).to receive(:find).with("/balanced-debit-3").and_return(debit3)
+        expect(Balanced::Transaction).to_not receive(:find).with("/balanced-debit-4")
+        expect(debit1).to receive(:refund).with(amount: 4515)
+        expect(debit3).to receive(:refund).with(amount: 1500).and_raise(StandardError)
 
         expect(order.reload.payments.count).to eql(5)
 
@@ -171,8 +171,8 @@ describe UpdateBalancedPurchase do
       let!(:payment) { create(:payment, :credit_card, bank_account: bank_account, orders: [order], amount: 15.00) }
 
       it "charges the difference when the order amount goes up" do
-        expect(Balanced::Customer).to receive(:find).with('/balanced-account-uri').and_return(balanced_customer)
-        expect(balanced_customer).to receive(:debit).with({amount: 1500, source_uri: '/balanced-card-uri', description: "#{market.name} purchase", appears_on_statement_as: market.name, meta: {"order number" => order.order_number}})
+        expect(Balanced::Customer).to receive(:find).with("/balanced-account-uri").and_return(balanced_customer)
+        expect(balanced_customer).to receive(:debit).with(amount: 1500, source_uri: "/balanced-card-uri", description: "#{market.name} purchase", appears_on_statement_as: market.name, meta: {"order number" => order.order_number})
 
         expect(order.reload.payments.count).to eql(1)
 
@@ -184,7 +184,7 @@ describe UpdateBalancedPurchase do
       end
 
       it "records a failed charge when balanced fails" do
-        expect(Balanced::Customer).to receive(:find).with('/balanced-account-uri').and_return(balanced_customer)
+        expect(Balanced::Customer).to receive(:find).with("/balanced-account-uri").and_return(balanced_customer)
         expect(balanced_customer).to receive(:debit).and_raise(StandardError)
 
         expect(order.reload.payments.count).to eql(1)
@@ -200,14 +200,14 @@ describe UpdateBalancedPurchase do
 
   context "ach" do
     let!(:order)      { create(:order, organization: buyer, delivery: delivery, market: market, items: [order_item], payment_method: "ach", total_cost: 30.00) }
-    let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: buyer, balanced_uri: '/balanced-bank-account-uri') }
+    let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: buyer, balanced_uri: "/balanced-bank-account-uri") }
 
     context "refund difference" do
-      let!(:payment) { create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-1') }
+      let!(:payment) { create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 45.00, balanced_uri: "/balanced-debit-1") }
 
       it "against one payment" do
         expect(Balanced::Transaction).to receive(:find).and_return(existing_debit)
-        expect(existing_debit).to receive(:refund).with({ amount: 1500 })
+        expect(existing_debit).to receive(:refund).with(amount: 1500)
 
         expect(order.reload.payments.count).to eql(1)
 
@@ -220,17 +220,17 @@ describe UpdateBalancedPurchase do
       end
 
       it "against multiple payment" do
-        create(:payment, :credit_card, bank_account: bank_account, orders: [order], amount: 45.00, balanced_uri: '/balanced-debit-2', status: 'failed')
-        create(:payment, :credit_card, bank_account: bank_account, orders: [order], amount: 20.00, balanced_uri: '/balanced-debit-3')
-        create(:payment, :credit_card, bank_account: bank_account, orders: [order], amount: 25.00, balanced_uri: '/balanced-debit-4')
+        create(:payment, :credit_card, bank_account: bank_account, orders: [order], amount: 45.00, balanced_uri: "/balanced-debit-2", status: "failed")
+        create(:payment, :credit_card, bank_account: bank_account, orders: [order], amount: 20.00, balanced_uri: "/balanced-debit-3")
+        create(:payment, :credit_card, bank_account: bank_account, orders: [order], amount: 25.00, balanced_uri: "/balanced-debit-4")
 
         debit1 = double("balanced debit 1", amount: 4500)
         debit3 = double("balanced debit 3", amount: 2000)
-        expect(Balanced::Transaction).to receive(:find).with('/balanced-debit-1').and_return(debit1)
-        expect(Balanced::Transaction).to receive(:find).with('/balanced-debit-3').and_return(debit3)
-        expect(Balanced::Transaction).to_not receive(:find).with('/balanced-debit-4')
-        expect(debit1).to receive(:refund).with({ amount: 4500 })
-        expect(debit3).to receive(:refund).with({ amount: 1500 })
+        expect(Balanced::Transaction).to receive(:find).with("/balanced-debit-1").and_return(debit1)
+        expect(Balanced::Transaction).to receive(:find).with("/balanced-debit-3").and_return(debit3)
+        expect(Balanced::Transaction).to_not receive(:find).with("/balanced-debit-4")
+        expect(debit1).to receive(:refund).with(amount: 4500)
+        expect(debit3).to receive(:refund).with(amount: 1500)
 
         expect(order.reload.payments.count).to eql(4)
 
@@ -262,8 +262,8 @@ describe UpdateBalancedPurchase do
       let!(:payment) { create(:payment, :checking, bank_account: bank_account, orders: [order], amount: 15.00) }
 
       it "charges the difference when the order amount goes up" do
-        expect(Balanced::Customer).to receive(:find).with('/balanced-account-uri').and_return(balanced_customer)
-        expect(balanced_customer).to receive(:debit).with({amount: 1500, source_uri: '/balanced-bank-account-uri', description: "#{market.name} purchase", appears_on_statement_as: market.name, meta: {"order number" => order.order_number}})
+        expect(Balanced::Customer).to receive(:find).with("/balanced-account-uri").and_return(balanced_customer)
+        expect(balanced_customer).to receive(:debit).with(amount: 1500, source_uri: "/balanced-bank-account-uri", description: "#{market.name} purchase", appears_on_statement_as: market.name, meta: {"order number" => order.order_number})
 
         expect(order.reload.payments.count).to eql(1)
 
@@ -275,7 +275,7 @@ describe UpdateBalancedPurchase do
       end
 
       it "records a failed charge when balanced fails" do
-        expect(Balanced::Customer).to receive(:find).with('/balanced-account-uri').and_return(balanced_customer)
+        expect(Balanced::Customer).to receive(:find).with("/balanced-account-uri").and_return(balanced_customer)
         expect(balanced_customer).to receive(:debit).and_raise(StandardError)
 
         expect(order.reload.payments.count).to eql(1)

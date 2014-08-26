@@ -49,7 +49,7 @@ describe "Register" do
           expect(Organization.last.markets).not_to be_empty
         end
 
-        it 'sends a confirmation email' do
+        it "sends a confirmation email" do
           open_email("daniel@collectiveidea.com")
           expect(current_email.body).to have_content("Verify Email Address")
         end
@@ -89,7 +89,7 @@ describe "Register" do
           click_button "Sign Up"
         end
 
-        it 'creates a new organization' do
+        it "creates a new organization" do
           expect(page).to have_content("You need to sign in or sign up before continuing.")
 
           expect(Organization.count).to eql(1)
@@ -98,7 +98,7 @@ describe "Register" do
           expect(Organization.last.can_sell?).to eql(false)
         end
 
-        it 'does not send a confirmation email' do
+        it "does not send a confirmation email" do
           expect(mailbox_for("daniel@collectiveidea.com")).to be_empty
         end
 
@@ -109,7 +109,7 @@ describe "Register" do
       end
 
       context "sad path" do
-        it 'is shows error messages' do
+        it "is shows error messages" do
           switch_to_subdomain market.subdomain
           visit root_path
 
@@ -198,7 +198,7 @@ describe "Register" do
       end
 
       context "sad path" do
-        it 'is shows error messages' do
+        it "is shows error messages" do
           switch_to_subdomain market.subdomain
           visit root_path
 

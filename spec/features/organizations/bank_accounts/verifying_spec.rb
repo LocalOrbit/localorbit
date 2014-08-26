@@ -12,10 +12,10 @@ feature "Verifying a bank account", :js, :vcr do
       sign_in_as(market_manager)
 
       bank_account = Balanced::BankAccount.new(
-        routing_number: '021000021',
-        account_number: '9900000002',
-        name: 'Johann Bernoulli',
-        type: 'checking'
+        routing_number: "021000021",
+        account_number: "9900000002",
+        name: "Johann Bernoulli",
+        type: "checking"
       )
       bank_account.save
 

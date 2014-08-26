@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Admin::ProductsController do
   let(:product1) { create(:product) }
@@ -13,7 +13,7 @@ describe Admin::ProductsController do
   end
 
   describe "/index" do
-    it 'redirects to login if the user is not logged in' do
+    it "redirects to login if the user is not logged in" do
       get :index
 
       expect(response).to redirect_to(new_user_session_path)
@@ -26,7 +26,7 @@ describe Admin::ProductsController do
     end
 
     it "does not show a product from another organization" do
-      get :show, {id: product2.id}
+      get :show, id: product2.id
 
       expect(response).to be_not_found
     end
@@ -38,8 +38,8 @@ describe Admin::ProductsController do
       sign_in(user)
     end
 
-    it 'should not let a user create a product for an organization they do not belong to' do
-      post :create, {product: {organization_id: org2, name: "Apple", category_id: 1}}
+    it "should not let a user create a product for an organization they do not belong to" do
+      post :create, product: {organization_id: org2, name: "Apple", category_id: 1}
 
       expect(response).to render_template("admin/products/new")
       expect(assigns(:product).organization).to eq(product1.organization)
@@ -47,15 +47,15 @@ describe Admin::ProductsController do
   end
 
   describe "/update" do
-    let(:product) { create(:product)}
+    let(:product) { create(:product) }
 
     before do
       org1.users << user
       sign_in(user)
     end
 
-    it 'should not let a user update a product that does not belong to their organization' do
-      put :update, {id: product.id, product: {organization_id: org1.id, name: "Apple", category_id: 1}}
+    it "should not let a user update a product that does not belong to their organization" do
+      put :update, id: product.id, product: {organization_id: org1.id, name: "Apple", category_id: 1}
 
       expect(response).to be_not_found
     end

@@ -4,7 +4,7 @@ context "As a market manager", :permissions, :market_manager do
   let!(:user) { create(:user) }
   let!(:market2) { create(:market) }
   let!(:market1) { create(:market, managers: [user]) }
- 
+
   let!(:org) { create(:organization, markets: [market2], users: [user]) }
 
   context "belonging to an organization in anoter market" do

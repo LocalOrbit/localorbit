@@ -11,8 +11,7 @@ describe "Impersonating a user" do
   let!(:buyer2_user)     { create(:user, organizations: [buyer2]) }
   let!(:market_manager1) { create(:user, managed_markets: [market2]) }
 
-
-  let(:user)     { create(:user)}
+  let(:user)     { create(:user) }
 
   before do
     switch_to_subdomain(market1.subdomain)
@@ -28,7 +27,7 @@ describe "Impersonating a user" do
   end
 
   context "as a market manager" do
-    let!(:user)  { create(:user, managed_markets: [market1])}
+    let!(:user)  { create(:user, managed_markets: [market1]) }
 
     before do
       visit admin_users_path
@@ -63,7 +62,7 @@ describe "Impersonating a user" do
   end
 
   context "as an admin" do
-    let!(:user)  { create(:user, role: "admin")}
+    let!(:user)  { create(:user, role: "admin") }
 
     before do
       visit admin_users_path

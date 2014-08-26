@@ -1,24 +1,26 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe OrderItem do
-  let(:product) { create(:product, lots: [
-        create(:lot, quantity: 3),
-        create(:lot, quantity: 5)
-      ]
-  )}
+  let(:product) do
+    create(:product, lots: [
+      create(:lot, quantity: 3),
+      create(:lot, quantity: 5)
+    ]
+  )
+  end
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
   let(:order) { build(:order, delivery: delivery, market: create(:market)) }
 
   context "changing quantity ordered" do
-    subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 2, delivery_status: 'pending') }
+    subject { OrderItem.new(seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 2, delivery_status: "pending") }
 
     it "sets the delivery status to 'canceled' when a quantity ordered of 0" do
       subject.quantity = 0
       subject.save!
 
-      expect(subject.reload.delivery_status).to eql('canceled')
+      expect(subject.reload.delivery_status).to eql("canceled")
     end
 
     it "sets the payment status to 'refunded' when a quantity ordered of 0 and a payment status of pending" do
@@ -26,7 +28,7 @@ describe OrderItem do
       subject.payment_status = "pending"
       subject.save!
 
-      expect(subject.reload.payment_status).to eql('refunded')
+      expect(subject.reload.payment_status).to eql("refunded")
     end
 
     it "sets the payment status to 'refunded' when a quantity ordered of 0 and a payment status of paid" do
@@ -34,7 +36,7 @@ describe OrderItem do
       subject.payment_status = "paid"
       subject.save!
 
-      expect(subject.reload.payment_status).to eql('refunded')
+      expect(subject.reload.payment_status).to eql("refunded")
     end
 
     it "does not change the payment status if it is unpaid" do
@@ -42,7 +44,7 @@ describe OrderItem do
       subject.payment_status = "unpaid"
       subject.save!
 
-      expect(subject.reload.payment_status).to eql('unpaid')
+      expect(subject.reload.payment_status).to eql("unpaid")
     end
 
     it "does not override 'contested'" do
@@ -50,28 +52,27 @@ describe OrderItem do
       subject.quantity = 3
       subject.save!
 
-      expect(subject.reload.delivery_status).to eql('contested')
+      expect(subject.reload.delivery_status).to eql("contested")
     end
   end
 
-
   context "changing quantity delivered" do
-    subject { create(:order_item, seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 8, delivery_status: 'pending', payment_status: 'pending') }
+    subject { create(:order_item, seller_name: "Fennington Farms", unit: create(:unit), name: product.name, product: product, quantity: 8, delivery_status: "pending", payment_status: "pending") }
 
     it "sets the delivery status to 'delivered' when a positive quantity delivered" do
       subject.quantity_delivered = 9
       subject.save!
 
-      expect(subject.reload.delivery_status).to eql('delivered')
+      expect(subject.reload.delivery_status).to eql("delivered")
     end
 
     it "sets the delivery status to 'canceled' when a quantity delivered of 0" do
-      subject.payment_status = 'unpaid'
+      subject.payment_status = "unpaid"
       subject.quantity_delivered = 0
       subject.save!
 
-      expect(subject.reload.delivery_status).to eql('canceled')
-      expect(subject.reload.payment_status).to eql('unpaid')
+      expect(subject.reload.delivery_status).to eql("canceled")
+      expect(subject.reload.payment_status).to eql("unpaid")
     end
 
     it "sets the payment status to 'refunded' when a quantity delivered of 0 and payment status of pending" do
@@ -79,7 +80,7 @@ describe OrderItem do
       subject.payment_status = "pending"
       subject.save!
 
-      expect(subject.reload.payment_status).to eql('refunded')
+      expect(subject.reload.payment_status).to eql("refunded")
     end
 
     it "sets the payment status to 'refunded' when a quantity delivered of 0 and payment status of paid" do
@@ -87,7 +88,7 @@ describe OrderItem do
       subject.payment_status = "paid"
       subject.save!
 
-      expect(subject.reload.payment_status).to eql('refunded')
+      expect(subject.reload.payment_status).to eql("refunded")
     end
 
     it "does not change the payment status if it is unpaid" do
@@ -95,7 +96,7 @@ describe OrderItem do
       subject.payment_status = "unpaid"
       subject.save!
 
-      expect(subject.reload.payment_status).to eql('unpaid')
+      expect(subject.reload.payment_status).to eql("unpaid")
     end
 
     it "does not override 'contested'" do
@@ -103,7 +104,7 @@ describe OrderItem do
       subject.quantity_delivered = 9
       subject.save!
 
-      expect(subject.reload.delivery_status).to eql('contested')
+      expect(subject.reload.delivery_status).to eql("contested")
     end
 
     it "overrides concurrent delivery status changes" do
@@ -111,8 +112,8 @@ describe OrderItem do
       subject.quantity_delivered = 0
       subject.save!
 
-      expect(subject.reload.delivery_status).to eql('canceled')
-      expect(subject.reload.payment_status).to eql('refunded')
+      expect(subject.reload.delivery_status).to eql("canceled")
+      expect(subject.reload.payment_status).to eql("refunded")
     end
   end
 
@@ -192,7 +193,6 @@ describe OrderItem do
       expect(subject).to have(1).error_on(:quantity_delivered)
     end
 
-
     describe "product_availability" do
       context "quantity is not present" do
         it "only shows the error for quantity" do
@@ -251,17 +251,17 @@ describe OrderItem do
     end
 
     it "consumes inventory from available lots" do
-      expect{
+      expect do
         create_valid_order_item
-      }.to change {
+      end.to change {
         Lot.where(id: product.lots.map(&:id)).order(:id).map(&:quantity)
       }.from([3, 5]).to([0, 1])
     end
 
     it "does not consume inventory from expired lots and lots that are not good yet" do
-      expect{
+      expect do
         create_valid_order_item
-      }.not_to change{
+      end.not_to change{
         Lot.find(expired_lot.id, future_good_from_lot.id).map(&:quantity)
       }
     end
@@ -278,11 +278,11 @@ describe OrderItem do
       )
 
       expect(order_item.lots.count).to eql(1)
-      expect(Lot.where(id: product.lots.map(&:id)).order(:id).map(&:quantity)).to eql([0,5])
+      expect(Lot.where(id: product.lots.map(&:id)).order(:id).map(&:quantity)).to eql([0, 5])
     end
 
     context "uses oldest expiring lots first" do
-      let(:lot1) { build(:lot, quantity: 10)}
+      let(:lot1) { build(:lot, quantity: 10) }
       let(:lot2) { build(:lot, number: 2, quantity: 3, expires_at: 1.minute.from_now) }
       let(:lot3) { build(:lot, number: 3, quantity: 7, expires_at: 1.hour.from_now) }
       let(:product2) { create(:product, lots: [lot1, lot2, lot3]) }
@@ -353,9 +353,9 @@ describe OrderItem do
       end
 
       it "does not consume inventory" do
-        expect {
+        expect do
           subject
-        }.not_to change {
+        end.not_to change {
           Lot.find(cart_item.product.lots.map &:id).map &:quantity
         }
       end
@@ -374,26 +374,26 @@ describe OrderItem do
     let(:deliver_on)     { Date.today }
 
     subject do
-      order_item = OrderItem.create_with_order_and_item_and_deliver_on_date(order, cart_item, deliver_on )
+      order_item = OrderItem.create_with_order_and_item_and_deliver_on_date(order, cart_item, deliver_on)
       order_item.order = order
       order_item.save
       order_item
     end
 
-    it 'consumes inventory on creation' do
-      expect {
+    it "consumes inventory on creation" do
+      expect do
         subject
-      }.to change {
+      end.to change {
         lot1.reload.quantity
       }.from(10).to(5)
     end
 
-    it 'returns inventory on destruction' do
+    it "returns inventory on destruction" do
       subject
 
-      expect {
+      expect do
         subject.destroy
-      }.to change {
+      end.to change {
         lot1.reload.quantity
       }.from(5).to(10)
     end
@@ -401,20 +401,20 @@ describe OrderItem do
     context "updation" do
       context "large quantity" do
         context "one lot" do
-          let!(:order_item2) { create(:order_item, product: product, quantity: 5, order: order)}
+          let!(:order_item2) { create(:order_item, product: product, quantity: 5, order: order) }
 
           it "consumes additional inventory" do
-            expect {
+            expect do
               order_item2.update(quantity: 7)
-            }.to change {
+            end.to change {
               lot1.reload.quantity
             }.from(5).to(3)
           end
         end
 
         context "multiple lots" do
-          let!(:lot2) { create(:lot, number: '2', quantity: 10, product: product) }
-          let!(:order_item2) { create(:order_item, product: product, quantity: 5, order: order)}
+          let!(:lot2) { create(:lot, number: "2", quantity: 10, product: product) }
+          let!(:order_item2) { create(:order_item, product: product, quantity: 5, order: order) }
 
           it "consumes additional inventory" do
             order_item2.update(quantity: 17)
@@ -427,21 +427,21 @@ describe OrderItem do
 
       context "smaller quantity" do
         context "one lot" do
-          let!(:order_item2) { create(:order_item, product: product, quantity: 5, order: order)}
+          let!(:order_item2) { create(:order_item, product: product, quantity: 5, order: order) }
 
           it "returns excess inventory" do
 
-            expect {
+            expect do
               order_item2.update(quantity: 2)
-            }.to change {
+            end.to change {
               lot1.reload.quantity
             }.from(5).to(8)
           end
         end
 
         context "multiple lots" do
-          let!(:lot2) { create(:lot, number: '2', quantity: 10, product: product) }
-          let!(:order_item2) { create(:order_item, product: product, quantity: 17, order: order)}
+          let!(:lot2) { create(:lot, number: "2", quantity: 10, product: product) }
+          let!(:order_item2) { create(:order_item, product: product, quantity: 17, order: order) }
 
           it "returns excess inventory" do
             order_item2.update(quantity: 5)
@@ -468,26 +468,26 @@ describe OrderItem do
     let!(:order_item2) { create(:order_item, :delivered, product: product2, quantity: 7) }
     let!(:order) do
       create(:order,
-        items:          [order_item1, order_item2],
-        market:         market,
-        organization:   buyer,
-        delivery:       delivery,
-        payment_method: "purchase order",
-        order_number:   "LO-002",
-        total_cost:     69.90,
-        placed_at:      6.days.ago,
-        payment_status: "paid"
+             items:          [order_item1, order_item2],
+             market:         market,
+             organization:   buyer,
+             delivery:       delivery,
+             payment_method: "purchase order",
+             order_number:   "LO-002",
+             total_cost:     69.90,
+             placed_at:      6.days.ago,
+             payment_status: "paid"
       )
     end
 
     let!(:payments_for_order) { create(:payment, payment_type: "seller payment", payee: seller2, orders: [order], amount: 48.93) }
 
     it "seller1 is unpaid" do
-      expect(order_item1.seller_payment_status).to eq('Unpaid')
+      expect(order_item1.seller_payment_status).to eq("Unpaid")
     end
 
     it "seller2 is paid" do
-      expect(order_item2.seller_payment_status).to eq('Paid')
+      expect(order_item2.seller_payment_status).to eq("Paid")
     end
   end
 end

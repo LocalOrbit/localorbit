@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 feature "Seller Financial Overview" do
   let!(:market)  { create(:market, po_payment_term: 30, timezone: "Eastern Time (US & Canada)") }
@@ -18,7 +18,7 @@ feature "Seller Financial Overview" do
     # Total for seller: (5*6.99) + (7*6.99) - 2.00 - 1.00 - 9.00 - 8.00 = 63.88
     Time.zone = "Eastern Time (US & Canada)"
     Timecop.travel(Time.current - 32.days) do
-      order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, items:[
+      order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, items: [
         create(:order_item, quantity: 5, product: peas, market_seller_fee: 2.00, payment_seller_fee: 1.00),
         create(:order_item, quantity: 7, product: kale, market_seller_fee: 9.00, local_orbit_seller_fee: 8.00),
         create(:order_item, quantity: 7, product: from_different_seller, market_seller_fee: 12, local_orbit_seller_fee: 10) # Not included in overdue total
@@ -33,7 +33,7 @@ feature "Seller Financial Overview" do
     # Credit Card
     # 9.98
     Timecop.travel(Time.current - 7.days) do
-      order = create(:order, delivery: delivery, payment_method: "credit card", market: market, items:[
+      order = create(:order, delivery: delivery, payment_method: "credit card", market: market, items: [
         create(:order_item, quantity: 1, product: peas, payment_seller_fee: 1.00),
         create(:order_item, quantity: 1, product: kale, market_seller_fee: 3.00),
         create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
@@ -46,7 +46,7 @@ feature "Seller Financial Overview" do
     # ACH
     # 24.96
     Timecop.travel(Time.current - 7.days) do
-      order = create(:order, delivery: delivery, payment_method: "ach", market: market, items:[
+      order = create(:order, delivery: delivery, payment_method: "ach", market: market, items: [
         create(:order_item, quantity: 2, product: peas, payment_seller_fee: 1.00),
         create(:order_item, quantity: 2, product: kale, local_orbit_seller_fee: 2.00),
         create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
@@ -59,7 +59,7 @@ feature "Seller Financial Overview" do
     # Purchase order
     # 68.87
     Timecop.travel(Time.current - 7.days) do
-      order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, items:[
+      order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, items: [
         create(:order_item, quantity: 3, product: peas, market_seller_fee: 20.00, local_orbit_seller_fee: 1.00),
         create(:order_item, quantity: 10, product: kale, local_orbit_seller_fee: 1.00),
         create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
@@ -72,7 +72,7 @@ feature "Seller Financial Overview" do
     # Payments for the next 7 days
     # (10 + 9)*6.99 - 12 - 9 = 10*6.99 + 9*6.99 = $111.81
     Timecop.travel(Time.current - 1.days) do
-      order = create(:order, delivery: delivery, payment_method: "credit card", market: market, items:[
+      order = create(:order, delivery: delivery, payment_method: "credit card", market: market, items: [
         create(:order_item, quantity: 10, product: peas, local_orbit_seller_fee: 12.00),
         create(:order_item, quantity: 9, product: kale, market_seller_fee: 9),
         create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total
@@ -84,7 +84,7 @@ feature "Seller Financial Overview" do
 
     # (66 + 92)*6.99 - 1.00 - 3.00 = $1100.42
     Timecop.travel(Time.current - 6.days) do
-      order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, items:[
+      order = create(:order, delivery: delivery, payment_method: "purchase order", market: market, items: [
         create(:order_item, quantity: 66, product: peas, local_orbit_seller_fee: 1.00),
         create(:order_item, quantity: 92, product: kale, market_seller_fee: 3.00),
         create(:order_item, quantity: 7, product: from_different_seller) # Not included in overdue total

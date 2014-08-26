@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe StoreOrderFees do
   let!(:user)              { create(:user) }
@@ -43,7 +43,7 @@ describe StoreOrderFees do
   end
 
   context "purchase order" do
-    let!(:params) { { payment_method: "purchase order", payment_note: "1234" } }
+    let!(:params) { {payment_method: "purchase order", payment_note: "1234"} }
 
     it "captures the fees at order creation" do
       item = subject[product1.id] # 100
@@ -71,7 +71,7 @@ describe StoreOrderFees do
 
   context "credit card" do
     # TODO: Determine the actual payment note
-    let!(:params) { { payment_method: "credit card", payment_note: "ref-1234" } }
+    let!(:params) { {payment_method: "credit card", payment_note: "ref-1234"} }
 
     it "captures the fees at order creation" do
       item = subject[product1.id] # 100
@@ -99,7 +99,7 @@ describe StoreOrderFees do
 
   context "ach" do
     # TODO: Determine the actual payment note
-    let!(:params) { { payment_method: "ach", payment_note: "ref-1234" } }
+    let!(:params) { {payment_method: "ach", payment_note: "ref-1234"} }
 
     it "captures the fees at order creation" do
       item = subject[product1.id] # 100

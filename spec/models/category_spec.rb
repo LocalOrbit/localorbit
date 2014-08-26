@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Category do
   describe "#for_select" do
@@ -8,10 +8,10 @@ describe Category do
     end
 
     it "categories should include parent info" do
-      id = Category.find_by!(name: 'Bananas').id
+      id = Category.find_by!(name: "Bananas").id
       expect(subject["Fruits"]).to include(["Bananas", id])
 
-      id = Category.find_by!(name: 'Macintosh Apples').id
+      id = Category.find_by!(name: "Macintosh Apples").id
       expect(subject["Fruits"]).to include(["Apples / Macintosh Apples", id])
     end
 

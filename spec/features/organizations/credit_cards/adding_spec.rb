@@ -1,8 +1,8 @@
 require "spec_helper"
 
 feature "Adding a credit card to an organization", :js, :vcr do
-  let!(:market)         { create(:market, name: "Fake Market")}
-  let!(:org)            { create(:organization, name: 'Fake Organization', markets: [market]) }
+  let!(:market)         { create(:market, name: "Fake Market") }
+  let!(:org)            { create(:organization, name: "Fake Organization", markets: [market]) }
   let!(:member)         { create(:user, organizations: [org]) }
 
   context "as an organization member" do
@@ -57,7 +57,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
     end
 
     scenario "duplicate credit card gives an error" do
-      create(:bank_account, :credit_card, name: "John Doe", bank_name: 'MasterCard', account_type: 'mastercard', last_four: '5100', bankable: org)
+      create(:bank_account, :credit_card, name: "John Doe", bank_name: "MasterCard", account_type: "mastercard", last_four: "5100", bankable: org)
 
       select "Credit Card", from: "balanced_account_type"
       fill_in "Name", with: "John Doe"
@@ -74,7 +74,7 @@ feature "Adding a credit card to an organization", :js, :vcr do
   end
 
   context "as a buyer" do
-    let!(:org) { create(:organization, :buyer, name: 'Fake Organization', markets: [market]) }
+    let!(:org) { create(:organization, :buyer, name: "Fake Organization", markets: [market]) }
 
     before do
       switch_to_subdomain(market.subdomain)

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Admin::DeliverySchedulesHelper do
   describe "quarter_hour_select_options" do

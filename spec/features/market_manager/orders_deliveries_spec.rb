@@ -11,13 +11,13 @@ context "Viewing sold items" do
   let!(:product3) { create(:product, :sellable, name: "Brocolli", organization: seller2) }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
   let!(:delivery) { create(:delivery, delivery_schedule: delivery_schedule) }
-  let!(:order_items) {
+  let!(:order_items) do
     [
-      create(:order_item, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, quantity_delivered: 0, unit: "Bushels", market_seller_fee: 0.75, delivery_status: 'canceled', payment_status: "refunded"),
+      create(:order_item, product: product1, seller_name: seller.name, name: product1.name, unit_price: 6.50, quantity: 5, quantity_delivered: 0, unit: "Bushels", market_seller_fee: 0.75, delivery_status: "canceled", payment_status: "refunded"),
       create(:order_item, product: product2, seller_name: seller.name, name: product2.name, unit_price: 5.00, quantity: 10, unit: "Lots", payment_seller_fee: 1.20),
       create(:order_item, product: product3, seller_name: seller2.name, name: product3.name, unit_price: 2.00, quantity: 12, unit: "Heads", local_orbit_seller_fee: 4)
     ]
-  }
+  end
 
   let!(:order) { create(:order, items: order_items, organization: buyer, market: market, delivery: delivery, order_number: "LO-ADA-0000001", total_cost: order_items.sum(&:gross_total)) }
 
@@ -56,7 +56,7 @@ context "Viewing sold items" do
     it "lists by default items sold within the last month" do
       visit admin_order_items_path(clear: "")
 
-      order_item = create(:order_item, product: product2, seller_name: seller.name, name: product2.name, created_at: 5.weeks.ago )
+      order_item = create(:order_item, product: product2, seller_name: seller.name, name: product2.name, created_at: 5.weeks.ago)
       order = create(:order, items: [order_item], organization: buyer, market: market, order_number: "LO-ADA-0000002", delivery: delivery, created_at: 5.weeks.ago, placed_at: 5.weeks.ago)
 
       expect(Dom::Admin::SoldItemRow.count).to eq(3)
@@ -111,9 +111,8 @@ context "Viewing sold items" do
       end
     end
 
-
     it "lists all sold items for the market as a CSV" do
-      html_headers = page.all('#sold-items th').map(&:text)[1..-1] # remove checkbox column
+      html_headers = page.all("#sold-items th").map(&:text)[1..-1] # remove checkbox column
       click_link "Export CSV"
       csv_headers = CSV.parse(page.body).first
       expect(html_headers - csv_headers).to be_empty # CSV expands stacked columns for order date, market, and unit price
@@ -125,8 +124,8 @@ context "Viewing sold items" do
 
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
-      select 'Delivered', from: 'delivery_status'
-      click_button 'Apply Action'
+      select "Delivered", from: "delivery_status"
+      click_button "Apply Action"
 
       sold_items = Dom::Admin::SoldItemRow.all
       expect(sold_items[0].delivery_status).to eq("Delivered")
@@ -134,8 +133,8 @@ context "Viewing sold items" do
       expect(sold_items[2].delivery_status).to eq("Pending")
 
       Dom::Admin::SoldItemRow.all.each(&:select)
-      select 'Delivered', from: 'delivery_status'
-      click_button 'Apply Action'
+      select "Delivered", from: "delivery_status"
+      click_button "Apply Action"
 
       sold_items = Dom::Admin::SoldItemRow.all
       expect(sold_items[0].delivery_status).to eq("Delivered")
@@ -151,8 +150,8 @@ context "Viewing sold items" do
 
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
-      select 'Canceled', from: 'delivery_status'
-      click_button 'Apply Action'
+      select "Canceled", from: "delivery_status"
+      click_button "Apply Action"
 
       expect(order.reload.total_cost.to_f).to eql(50.00)
       sold_items = Dom::Admin::SoldItemRow.all
@@ -161,7 +160,7 @@ context "Viewing sold items" do
     end
 
     it "cancels an item from an order that has been paid for" do
-      order.items.each{|i| i.update(payment_status: "paid") if i.payment_status == "unpaid"}
+      order.items.each {|i| i.update(payment_status: "paid") if i.payment_status == "unpaid" }
 
       expect(UpdateBalancedPurchase).to receive(:perform).and_return(double("interactor", success?: true))
       expect(order.total_cost.to_f).to eql(74.00)
@@ -170,8 +169,8 @@ context "Viewing sold items" do
 
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
-      select 'Canceled', from: 'delivery_status'
-      click_button 'Apply Action'
+      select "Canceled", from: "delivery_status"
+      click_button "Apply Action"
 
       expect(order.reload.total_cost.to_f).to eql(50.00)
       sold_items = Dom::Admin::SoldItemRow.all
@@ -208,8 +207,8 @@ context "Viewing sold items" do
 
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
-      select 'Delivered', from: 'delivery_status'
-      click_button 'Apply Action'
+      select "Delivered", from: "delivery_status"
+      click_button "Apply Action"
 
       sold_items = Dom::Admin::SoldItemRow.all
       expect(sold_items[0].delivery_status).to eq("Delivered")
@@ -217,8 +216,8 @@ context "Viewing sold items" do
       expect(sold_items[2].delivery_status).to eq("Pending")
 
       Dom::Admin::SoldItemRow.all.each(&:select)
-      select 'Delivered', from: 'delivery_status'
-      click_button 'Apply Action'
+      select "Delivered", from: "delivery_status"
+      click_button "Apply Action"
 
       sold_items = Dom::Admin::SoldItemRow.all
       expect(sold_items[0].delivery_status).to eq("Delivered")
@@ -232,8 +231,8 @@ context "Viewing sold items" do
 
       sold_item = Dom::Admin::SoldItemRow.first
       sold_item.select
-      select 'Canceled', from: 'delivery_status'
-      click_button 'Apply Action'
+      select "Canceled", from: "delivery_status"
+      click_button "Apply Action"
 
       expect(order.reload.total_cost.to_f).to eql(50.00)
       sold_items = Dom::Admin::SoldItemRow.all

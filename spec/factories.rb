@@ -51,14 +51,14 @@ FactoryGirl.define do
     day 2
     order_cutoff 6
     seller_fulfillment_location_id 0
-    seller_delivery_start '7:00 AM'
-    seller_delivery_end   '11:00 AM'
+    seller_delivery_start "7:00 AM"
+    seller_delivery_end "11:00 AM"
     association :market, factory: [:market, :with_addresses]
 
     trait :buyer_pickup do
       seller_fulfillment_location { market.addresses.first }
-      buyer_pickup_start '10:00 AM'
-      buyer_pickup_end '12:00 PM'
+      buyer_pickup_start "10:00 AM"
+      buyer_pickup_end "12:00 PM"
       buyer_pickup_location { market.addresses.first }
     end
 
@@ -88,7 +88,7 @@ FactoryGirl.define do
     city "Ann Arbor"
     state "MI"
     zip "48109"
-    sequence(:phone) {|n| "(616) 555-#{'%04d' % n}"}
+    sequence(:phone) {|n| "(616) 555-#{"%04d" % n}" }
     organization
 
     trait :default_billing do
@@ -111,7 +111,7 @@ FactoryGirl.define do
     quantity 150
 
     trait :with_expiration do
-      sequence(:number) {|n| "lot-#{n}"}
+      sequence(:number) {|n| "lot-#{n}" }
       good_from Time.current
       expires_at 1.week.from_now
     end
@@ -157,7 +157,7 @@ FactoryGirl.define do
     end
 
     trait :with_logo do
-      logo File.open(Rails.root.join('app/assets/images/logo-farm-to-fork.png'))
+      logo File.open(Rails.root.join("app/assets/images/logo-farm-to-fork.png"))
     end
   end
 
@@ -224,12 +224,12 @@ FactoryGirl.define do
     discount_seller     0.0
 
     trait :delivered do
-      delivery_status 'delivered'
+      delivery_status "delivered"
     end
   end
 
   factory :order_item_lot do
-    quantity        1
+    quantity 1
   end
 
   factory :organization do
@@ -359,11 +359,11 @@ FactoryGirl.define do
     sequence(:email) {|n| "user#{n}@example.com" }
     password "password"
     password_confirmation "password"
-    role 'user'
+    role "user"
     confirmed_at { Time.current }
 
     trait :market_manager do
-      role 'user'
+      role "user"
       after(:create) do |user|
         if user.managed_markets.empty?
           m = create(:market)
@@ -373,7 +373,7 @@ FactoryGirl.define do
     end
 
     trait :admin do
-      role 'admin'
+      role "admin"
     end
 
     trait :seller do

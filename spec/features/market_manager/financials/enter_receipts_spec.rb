@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "entering receipts" do
-  let(:market) { create(:market, subdomain: 'betterest', po_payment_term: 14) }
+  let(:market) { create(:market, subdomain: "betterest", po_payment_term: 14) }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)    { delivery_schedule.next_delivery }
 
@@ -14,16 +14,16 @@ feature "entering receipts" do
 
   let!(:product) { create(:product, :sellable, organization: seller) }
 
-  let!(:order1) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 210.00)], market: market, organization: buyer, total_cost: 210.00, payment_method: "purchase order", order_number: "LO-001", placed_at: 19.days.ago, invoiced_at: 18.days.ago, invoice_due_date: 4.days.ago) }
-  let!(:order2) { create(:order, delivery: delivery, items:[create(:order_item, product: product)], market: market, organization: buyer, total_cost: 6.99, payment_method: "purchase order", order_number: "LO-002", invoiced_at: 4.day.ago, invoice_due_date: 10.days.from_now, payment_status: "paid") }
-  let!(:order3) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 420.00)], market: market, organization: buyer, total_cost: 420, payment_method: "purchase order", order_number: "LO-003", placed_at: 2.days.ago, invoiced_at: 2.day.ago, invoice_due_date: 12.days.from_now) }
-  let!(:order4) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 840.00)], market: market, organization: buyer, total_cost: 420, payment_method: "purchase order", placed_at: 15.days.ago, invoiced_at: 12.day.ago, invoice_due_date: 2.days.ago) }
-  let!(:order5) { create(:order, delivery: delivery, items:[create(:order_item, product: product, unit_price: 1680.00)], market: market, organization: buyer, total_cost: 420, payment_method: "purchase order", placed_at: 15.days.ago, invoiced_at: 12.day.ago, invoice_due_date: 2.days.ago) }
+  let!(:order1) { create(:order, delivery: delivery, items: [create(:order_item, product: product, unit_price: 210.00)], market: market, organization: buyer, total_cost: 210.00, payment_method: "purchase order", order_number: "LO-001", placed_at: 19.days.ago, invoiced_at: 18.days.ago, invoice_due_date: 4.days.ago) }
+  let!(:order2) { create(:order, delivery: delivery, items: [create(:order_item, product: product)], market: market, organization: buyer, total_cost: 6.99, payment_method: "purchase order", order_number: "LO-002", invoiced_at: 4.day.ago, invoice_due_date: 10.days.from_now, payment_status: "paid") }
+  let!(:order3) { create(:order, delivery: delivery, items: [create(:order_item, product: product, unit_price: 420.00)], market: market, organization: buyer, total_cost: 420, payment_method: "purchase order", order_number: "LO-003", placed_at: 2.days.ago, invoiced_at: 2.day.ago, invoice_due_date: 12.days.from_now) }
+  let!(:order4) { create(:order, delivery: delivery, items: [create(:order_item, product: product, unit_price: 840.00)], market: market, organization: buyer, total_cost: 420, payment_method: "purchase order", placed_at: 15.days.ago, invoiced_at: 12.day.ago, invoice_due_date: 2.days.ago) }
+  let!(:order5) { create(:order, delivery: delivery, items: [create(:order_item, product: product, unit_price: 1680.00)], market: market, organization: buyer, total_cost: 420, payment_method: "purchase order", placed_at: 15.days.ago, invoiced_at: 12.day.ago, invoice_due_date: 2.days.ago) }
 
-  invoice_auth_matcher = lambda {|r1, r2|
+  invoice_auth_matcher = lambda do|r1, r2|
     matcher = %r{/admin/invoices/[0-9]+/invoice\.pdf\?auth_token=}
     matcher.match(r1.uri) && matcher.match(r2.uri)
-  }
+  end
 
   before do
     switch_to_subdomain(market.subdomain)
@@ -52,7 +52,7 @@ feature "entering receipts" do
   end
 
   context "after a seller has been deleted by the market manager" do
-    it "keeps the seller entries in the list" do      
+    it "keeps the seller entries in the list" do
       delete_organization(buyer)
       delete_organization(seller)
 

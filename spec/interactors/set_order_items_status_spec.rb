@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe SetOrderItemsStatus do
   let!(:user) { create(:user) }
@@ -19,57 +19,57 @@ describe SetOrderItemsStatus do
   let!(:order_item2) { create(:order_item, product: product2, seller_name: seller.name, name: product2.name, unit_price: 5.00, quantity: 10, unit: "Lots") }
   let!(:order_item3) { create(:order_item, product: product3, seller_name: other_seller.name, name: product3.name, unit_price: 2.00, quantity: 12, unit: "Heads") }
 
-  let!(:order) { create(:order, delivery: delivery, items:[order_item1, order_item2, order_item3], organization: buyer, order_number: "LO-ADA-0000001", placed_at: Time.zone.parse("2014-03-15")) }
+  let!(:order) { create(:order, delivery: delivery, items: [order_item1, order_item2, order_item3], organization: buyer, order_number: "LO-ADA-0000001", placed_at: Time.zone.parse("2014-03-15")) }
 
-  context 'as a market manager' do
-    it 'sets the status on the order items' do
-      interactor = SetOrderItemsStatus.perform(user: market_manager, delivery_status: 'delivered', order_item_ids: [order_item1.id.to_s, order_item3.id.to_s])
+  context "as a market manager" do
+    it "sets the status on the order items" do
+      interactor = SetOrderItemsStatus.perform(user: market_manager, delivery_status: "delivered", order_item_ids: [order_item1.id.to_s, order_item3.id.to_s])
       expect(interactor).to be_success
 
       order_item1.reload
-      expect(order_item1.delivery_status).to eq('delivered')
+      expect(order_item1.delivery_status).to eq("delivered")
 
       order_item3.reload
-      expect(order_item3.delivery_status).to eq('delivered')
+      expect(order_item3.delivery_status).to eq("delivered")
     end
 
-    it 'does not set the status on order items for other markets' do
+    it "does not set the status on order items for other markets" do
       other_prod = create(:product, :sellable)
       other_order = create(:order, :with_items, delivery: delivery)
       other_item = create(:order_item, order: other_order, product: other_prod)
 
-      interactor = SetOrderItemsStatus.perform(user: market_manager, delivery_status: 'delivered', order_item_ids: [order_item1.id.to_s, other_item.id.to_s])
+      interactor = SetOrderItemsStatus.perform(user: market_manager, delivery_status: "delivered", order_item_ids: [order_item1.id.to_s, other_item.id.to_s])
       expect(interactor).to be_success
 
       other_item.reload
-      expect(other_item.delivery_status).to eq('pending')
+      expect(other_item.delivery_status).to eq("pending")
 
       order_item1.reload
-      expect(order_item1.delivery_status).to eq('delivered')
+      expect(order_item1.delivery_status).to eq("delivered")
     end
   end
 
-  context 'as a seller' do
-    it 'sets the status on the order items' do
-      interactor = SetOrderItemsStatus.perform(user: user, delivery_status: 'delivered', order_item_ids: [order_item1.id.to_s, order_item2.id.to_s])
+  context "as a seller" do
+    it "sets the status on the order items" do
+      interactor = SetOrderItemsStatus.perform(user: user, delivery_status: "delivered", order_item_ids: [order_item1.id.to_s, order_item2.id.to_s])
       expect(interactor).to be_success
 
       order_item1.reload
-      expect(order_item1.delivery_status).to eq('delivered')
+      expect(order_item1.delivery_status).to eq("delivered")
 
       order_item2.reload
-      expect(order_item2.delivery_status).to eq('delivered')
+      expect(order_item2.delivery_status).to eq("delivered")
     end
 
-    it 'does not set the status on order items for other markets' do
-      interactor = SetOrderItemsStatus.perform(user: user, delivery_status: 'delivered', order_item_ids: [order_item1.id.to_s, order_item3.id.to_s])
+    it "does not set the status on order items for other markets" do
+      interactor = SetOrderItemsStatus.perform(user: user, delivery_status: "delivered", order_item_ids: [order_item1.id.to_s, order_item3.id.to_s])
       expect(interactor).to be_success
 
       order_item3.reload
-      expect(order_item3.delivery_status).to eq('pending')
+      expect(order_item3.delivery_status).to eq("pending")
 
       order_item1.reload
-      expect(order_item1.delivery_status).to eq('delivered')
+      expect(order_item1.delivery_status).to eq("delivered")
     end
   end
 end

@@ -6,7 +6,7 @@ end
 
 feature "Payment history", :truncate_after_all do
   def remember_payment(payment)
-    @payments[payment.created_at.strftime("%m/%d/%Y")] = payment.orders.map(&:order_number).join(',')
+    @payments[payment.created_at.strftime("%m/%d/%Y")] = payment.orders.map(&:order_number).join(",")
   end
 
   before :all do
@@ -60,13 +60,13 @@ feature "Payment history", :truncate_after_all do
                        )
       order_item2 = create(:order_item, unit_price: 20.01 + i, quantity: 1)
       orders2 << create(:order,
-                       delivery: @delivery,
-                       items: [order_item2],
-                       organization: @buyer2,
-                       payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
-                       payment_status: "paid",
-                       order_number: "LO-02-234-4567890-#{i}",
-                       total_cost: 20.01 + i
+                        delivery: @delivery,
+                        items: [order_item2],
+                        organization: @buyer2,
+                        payment_method: ["purchase order", "purchase order", "purchase order", "ach", "ach", "credit card"][i],
+                        payment_status: "paid",
+                        order_number: "LO-02-234-4567890-#{i}",
+                        total_cost: 20.01 + i
                        )
     end
 
@@ -86,13 +86,12 @@ feature "Payment history", :truncate_after_all do
         payment.update_attributes(bank_account: cc_account) if i == 5
         remember_payment(payment)
 
-
         payment2 = create(:payment,
-                         payment_method: ["cash", "check", "ach", "ach", "credit card"][i - 1],
-                         payer: @buyer2,
-                         payee: @market2,
-                         orders: [orders2[i]],
-                         amount: orders2[i].total_cost)
+                          payment_method: ["cash", "check", "ach", "ach", "credit card"][i - 1],
+                          payer: @buyer2,
+                          payee: @market2,
+                          orders: [orders2[i]],
+                          amount: orders2[i].total_cost)
 
         payment2.update_attribute(:note, "#12345") if i == 2
         payment2.update_attributes(bank_account: ach_account) if i == 3
@@ -102,12 +101,12 @@ feature "Payment history", :truncate_after_all do
 
         # Create payment from market to seller
         payment = create(:payment,
-               payment_method: ["cash", "check"][i % 2],
-               payer: @market,
-               payee: @seller,
-               orders: [orders[i]],
-               note: ["", "#67890"][i % 2],
-               amount: orders[i].total_cost)
+                         payment_method: ["cash", "check"][i % 2],
+                         payer: @market,
+                         payee: @seller,
+                         orders: [orders[i]],
+                         note: ["", "#67890"][i % 2],
+                         amount: orders[i].total_cost)
         remember_payment(payment)
 
         # Create payment from market to seller2
@@ -126,123 +125,123 @@ feature "Payment history", :truncate_after_all do
     Timecop.freeze(@payment_day - 1.day) do
       # Create a fee for market
       create(:payment,
-             payment_method: 'ach',
-             payment_type: 'service',
+             payment_method: "ach",
+             payment_type: "service",
              payer: @market,
              payee: nil,
              amount: 99.00)
 
       # Create a cash buyer payment for a market that IS managed by our market manager
       order = create(:order,
-                    delivery: @delivery,
-                    items: [create(:order_item, unit_price: 123.00, quantity: 1)],
-                    organization: @buyer2,
-                    market: @market2,
-                    payment_method: "purchase order",
-                    payment_status: "paid",
-                    order_number: "LO-02-234-4567890-123",
-                    total_cost: 123.00)
+                     delivery: @delivery,
+                     items: [create(:order_item, unit_price: 123.00, quantity: 1)],
+                     organization: @buyer2,
+                     market: @market2,
+                     payment_method: "purchase order",
+                     payment_status: "paid",
+                     order_number: "LO-02-234-4567890-123",
+                     total_cost: 123.00)
       payment = create(:payment,
-            payment_method: "cash",
-            payer: @buyer2,
-            payee: @market2,
-            orders: [order],
-            amount: order.total_cost)
+                       payment_method: "cash",
+                       payer: @buyer2,
+                       payee: @market2,
+                       orders: [order],
+                       amount: order.total_cost)
       remember_payment(payment)
 
       # Create a cash buyer payment for a market that IS NOT managed by our market manager
       order = create(:order,
-                    delivery: @delivery,
-                    items: [create(:order_item, unit_price: 234.00, quantity: 1)],
-                    organization: @buyer2,
-                    market: market3,
-                    payment_method: "purchase order",
-                    payment_status: "paid",
-                    order_number: "LO-02-234-4567890-234",
-                    total_cost: 234.00)
+                     delivery: @delivery,
+                     items: [create(:order_item, unit_price: 234.00, quantity: 1)],
+                     organization: @buyer2,
+                     market: market3,
+                     payment_method: "purchase order",
+                     payment_status: "paid",
+                     order_number: "LO-02-234-4567890-234",
+                     total_cost: 234.00)
       payment = create(:payment,
-            payment_method: "cash",
-            payer: @buyer2,
-            payee: market3,
-            orders: [order],
-            amount: order.total_cost)
+                       payment_method: "cash",
+                       payer: @buyer2,
+                       payee: market3,
+                       orders: [order],
+                       amount: order.total_cost)
       remember_payment(payment)
 
       # Create an ACH buyer payment for a market that IS managed by our market manager
       order = create(:order,
-                    delivery: @delivery,
-                    items: [create(:order_item, unit_price: 345.00, quantity: 1)],
-                    organization: @buyer2,
-                    market: @market2,
-                    payment_method: "ach",
-                    payment_status: "paid",
-                    order_number: "LO-02-234-4567890-345",
-                    total_cost: 345.00)
+                     delivery: @delivery,
+                     items: [create(:order_item, unit_price: 345.00, quantity: 1)],
+                     organization: @buyer2,
+                     market: @market2,
+                     payment_method: "ach",
+                     payment_status: "paid",
+                     order_number: "LO-02-234-4567890-345",
+                     total_cost: 345.00)
       payment = create(:payment,
-            payment_method: "ach",
-            payer: @buyer2,
-            payee: nil,
-            orders: [order],
-            amount: order.total_cost,
-            bank_account: ach_account)
+                       payment_method: "ach",
+                       payer: @buyer2,
+                       payee: nil,
+                       orders: [order],
+                       amount: order.total_cost,
+                       bank_account: ach_account)
       remember_payment(payment)
 
       # Create an ACH buyer payment for a market that IS NOT managed by our market manager
       order = create(:order,
-                    delivery: @delivery,
-                    items: [create(:order_item, unit_price: 456.00, quantity: 1)],
-                    organization: @buyer2,
-                    market: market3,
-                    payment_method: "ach",
-                    payment_status: "paid",
-                    order_number: "LO-02-234-4567890-456",
-                    total_cost: 456.00)
+                     delivery: @delivery,
+                     items: [create(:order_item, unit_price: 456.00, quantity: 1)],
+                     organization: @buyer2,
+                     market: market3,
+                     payment_method: "ach",
+                     payment_status: "paid",
+                     order_number: "LO-02-234-4567890-456",
+                     total_cost: 456.00)
       payment = create(:payment,
-            payment_method: "ach",
-            payer: @buyer2,
-            payee: nil,
-            orders: [order],
-            amount: order.total_cost,
-            bank_account: other_ach_account)
+                       payment_method: "ach",
+                       payer: @buyer2,
+                       payee: nil,
+                       orders: [order],
+                       amount: order.total_cost,
+                       bank_account: other_ach_account)
       remember_payment(payment)
 
       # Create Local Orbit -> Seller payment
       order = create(:order,
-                    delivery: @delivery,
-                    items: [create(:order_item, unit_price: 888.00, quantity: 1)],
-                    organization: @buyer,
-                    market: @market,
-                    payment_method: "ach",
-                    payment_status: "paid",
-                    order_number: "LO-02-234-4567890-888",
-                    total_cost: 888.00)
+                     delivery: @delivery,
+                     items: [create(:order_item, unit_price: 888.00, quantity: 1)],
+                     organization: @buyer,
+                     market: @market,
+                     payment_method: "ach",
+                     payment_status: "paid",
+                     order_number: "LO-02-234-4567890-888",
+                     total_cost: 888.00)
       payment = create(:payment,
-            payment_method: "ach",
-            payer: nil,
-            payee: @seller,
-            orders: [order],
-            amount: order.total_cost,
-            bank_account: other_ach_account)
+                       payment_method: "ach",
+                       payer: nil,
+                       payee: @seller,
+                       orders: [order],
+                       amount: order.total_cost,
+                       bank_account: other_ach_account)
       remember_payment(payment)
 
       # Create Market -> Seller payment
       order = create(:order,
-                    delivery: @delivery,
-                    items: [create(:order_item, unit_price: 999.00, quantity: 1)],
-                    organization: @buyer,
-                    market: @market,
-                    payment_method: "check",
-                    payment_status: "paid",
-                    order_number: "LO-02-234-4567890-999",
-                    total_cost: 999.00)
+                     delivery: @delivery,
+                     items: [create(:order_item, unit_price: 999.00, quantity: 1)],
+                     organization: @buyer,
+                     market: @market,
+                     payment_method: "check",
+                     payment_status: "paid",
+                     order_number: "LO-02-234-4567890-999",
+                     total_cost: 999.00)
       payment = create(:payment,
-            payment_type: "seller payment",
-            payment_method: "check",
-            payer: @market,
-            payee: @seller,
-            orders: [order],
-            amount: order.total_cost,
-            bank_account: other_ach_account)
+                       payment_type: "seller payment",
+                       payment_method: "check",
+                       payer: @market,
+                       payee: @seller,
+                       orders: [order],
+                       amount: order.total_cost,
+                       bank_account: other_ach_account)
       remember_payment(payment)
     end
   end
@@ -262,7 +261,7 @@ feature "Payment history", :truncate_after_all do
   end
 
   def payment_rows_for_description(description)
-    Dom::Admin::Financials::PaymentRow.all.select { |row| row.description == "Order #: #{description}" }
+    Dom::Admin::Financials::PaymentRow.all.select {|row| row.description == "Order #: #{description}" }
   end
 
   context "Any User" do
@@ -467,15 +466,15 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can view buyer order payments for markets they manage" do
-    # 5 buyer   -> market payments
-    # 5 @buyer2  -> market2 payments
-    # 5 seller  -> market payments
-    # 5 seller2 -> market2 payments
-    # 1 market -> seller payment
-    # 1 Local Orbit -> seller payment
-    # 1 cash buyer payment
-    # 1 ACH buyer payment
-    # 1 service fee
+      # 5 buyer   -> market payments
+      # 5 @buyer2  -> market2 payments
+      # 5 seller  -> market payments
+      # 5 seller2 -> market2 payments
+      # 1 market -> seller payment
+      # 1 Local Orbit -> seller payment
+      # 1 cash buyer payment
+      # 1 ACH buyer payment
+      # 1 service fee
 
       expect(payment_row("$123.00")).not_to be_nil
       expect(payment_row("$123.00").payment_method).to eql("Cash")
@@ -716,7 +715,7 @@ feature "Payment history", :truncate_after_all do
       fill_in "Search Payments", with: "4567890-1"
       click_button "Search"
 
-      expect(page).to     have_content("LO-01-234-4567890-1")
+      expect(page).to have_content("LO-01-234-4567890-1")
       expect(page).not_to have_content("LO-01-234-4567890-2")
       expect(page).not_to have_content("LO-01-234-4567890-3")
       expect(page).not_to have_content("LO-01-234-4567890-4")
@@ -734,17 +733,17 @@ feature "Payment history", :truncate_after_all do
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
-      expect(page).to     have_content("LO-01-234-4567890-2")
-      expect(page).to     have_content("LO-01-234-4567890-3")
-      expect(page).to     have_content("LO-01-234-4567890-4")
-      expect(page).to     have_content("LO-01-234-4567890-5")
+      expect(page).to have_content("LO-01-234-4567890-2")
+      expect(page).to have_content("LO-01-234-4567890-3")
+      expect(page).to have_content("LO-01-234-4567890-4")
+      expect(page).to have_content("LO-01-234-4567890-5")
 
       fill_in "q_created_at_date_lteq", with: (@payment_day + 3.days).to_s
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
-      expect(page).to     have_content("LO-01-234-4567890-2")
-      expect(page).to     have_content("LO-01-234-4567890-3")
+      expect(page).to have_content("LO-01-234-4567890-2")
+      expect(page).to have_content("LO-01-234-4567890-3")
       expect(page).not_to have_content("LO-01-234-4567890-4")
       expect(page).not_to have_content("LO-01-234-4567890-5")
     end
@@ -813,7 +812,7 @@ feature "Payment history", :truncate_after_all do
       fill_in "Search Payments", with: "4567890-1"
       click_button "Search"
 
-      expect(page).to     have_content("LO-01-234-4567890-1")
+      expect(page).to have_content("LO-01-234-4567890-1")
       expect(page).not_to have_content("LO-01-234-4567890-2")
       expect(page).not_to have_content("LO-01-234-4567890-3")
       expect(page).not_to have_content("LO-01-234-4567890-4")
@@ -833,17 +832,17 @@ feature "Payment history", :truncate_after_all do
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
-      expect(page).to     have_content("LO-01-234-4567890-2")
-      expect(page).to     have_content("LO-01-234-4567890-3")
-      expect(page).to     have_content("LO-01-234-4567890-4")
-      expect(page).to     have_content("LO-01-234-4567890-5")
+      expect(page).to have_content("LO-01-234-4567890-2")
+      expect(page).to have_content("LO-01-234-4567890-3")
+      expect(page).to have_content("LO-01-234-4567890-4")
+      expect(page).to have_content("LO-01-234-4567890-5")
 
       fill_in "q_created_at_date_lteq", with: (@payment_day + 3.days).to_s
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
-      expect(page).to     have_content("LO-01-234-4567890-2")
-      expect(page).to     have_content("LO-01-234-4567890-3")
+      expect(page).to have_content("LO-01-234-4567890-2")
+      expect(page).to have_content("LO-01-234-4567890-3")
       expect(page).not_to have_content("LO-01-234-4567890-4")
       expect(page).not_to have_content("LO-01-234-4567890-5")
     end
@@ -860,19 +859,19 @@ feature "Payment history", :truncate_after_all do
       select "Check", from: "Payment Method"
       click_button "Filter"
 
-      expect(page).to     have_content("LO-01-234-4567890-1")
+      expect(page).to have_content("LO-01-234-4567890-1")
       expect(page).not_to have_content("LO-01-234-4567890-2")
-      expect(page).to     have_content("LO-01-234-4567890-3")
+      expect(page).to have_content("LO-01-234-4567890-3")
       expect(page).not_to have_content("LO-01-234-4567890-4")
-      expect(page).to     have_content("LO-01-234-4567890-5")
+      expect(page).to have_content("LO-01-234-4567890-5")
 
       select "Cash", from: "Payment Method"
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
-      expect(page).to     have_content("LO-01-234-4567890-2")
+      expect(page).to have_content("LO-01-234-4567890-2")
       expect(page).not_to have_content("LO-01-234-4567890-3")
-      expect(page).to     have_content("LO-01-234-4567890-4")
+      expect(page).to have_content("LO-01-234-4567890-4")
       expect(page).not_to have_content("LO-01-234-4567890-5")
     end
   end

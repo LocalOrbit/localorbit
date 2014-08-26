@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe CreateOrder do
   let(:buyer)             { create(:user) }
@@ -10,12 +10,12 @@ describe CreateOrder do
   let(:organization)      { create(:organization, :single_location) }
   let(:billing_address)   { organization.locations.default_billing }
   let(:cart)              { create(:cart, :with_items, organization: organization, delivery: delivery, location: delivery_location, market: market) }
-  let(:params)            { { payment_method: "purchase order"} }
+  let(:params)            { {payment_method: "purchase order"} }
 
   subject { CreateOrder.perform(order_params: params, cart: cart, buyer: buyer).order }
 
   context "purchase order" do
-    let(:params) { { payment_method: "purchase order", payment_note: "1234" } }
+    let(:params) { {payment_method: "purchase order", payment_note: "1234"} }
 
     it "sets the payment type" do
       expect(subject.payment_method).to eql("purchase order")
@@ -27,7 +27,7 @@ describe CreateOrder do
   end
 
   context "when the order is invalid", truncate: true do
-    let(:params) { { payment_method: nil, payment_note: "1234" } }
+    let(:params) { {payment_method: nil, payment_note: "1234"} }
 
     it "will not consume inventory" do
       expect {
@@ -40,7 +40,7 @@ describe CreateOrder do
 
   context "when an exception occurs when creating cart items", truncate: true do
     let(:problem_product) { cart.items[1].product }
-    subject { expect{ CreateOrder.perform(order_params: params, cart: cart, buyer: buyer) }.to raise_exception }
+    subject { expect { CreateOrder.perform(order_params: params, cart: cart, buyer: buyer) }.to raise_exception }
 
     before do
       expect(problem_product).to receive(:lots_by_expiration).and_raise

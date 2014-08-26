@@ -1,13 +1,13 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe MarketsController do
-  it 'requires authentication' do
+  it "requires authentication" do
     get :show
 
     expect(response).to redirect_to(new_user_session_path)
   end
 
-  it 'returns not found for markets I am not a member of' do
+  it "returns not found for markets I am not a member of" do
     market = create(:market)
     user = create(:user)
 

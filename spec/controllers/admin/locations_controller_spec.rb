@@ -95,9 +95,9 @@ module Admin
 
     describe "#update_defaults" do
       it_behaves_like "an action restricted to admin, market manager, member", lambda {
-        put :update_default, { organization_id: organization.id,
+        put :update_default, organization_id: organization.id,
           default_billing_id: location.id, default_shipping_id: location.id
-        }
+
       }
     end
 
