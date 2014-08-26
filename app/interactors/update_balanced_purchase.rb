@@ -64,7 +64,9 @@ class UpdateBalancedPurchase
     new_debit = account.bankable.balanced_customer.debit(
       amount: amount_to_cents(amount),
       source_uri: account.balanced_uri,
-      description: "#{order.market.name} purchase"
+      description: "#{order.market.name} purchase",
+      appears_on_statement_as: order.market.on_statement_as,
+      meta: {'order number' => order.order_number}
     )
     context[:status] = "paid"
 

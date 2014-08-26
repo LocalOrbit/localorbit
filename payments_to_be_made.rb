@@ -45,7 +45,7 @@ groups.each do |group|
   balanced_account = Balanced::BankAccount.find(bank_account.balanced_uri)
   credit = balanced_account.credit(
     amount: (p.amount * 100).to_i,
-    appears_on_statement_as: p.market.name[0, 22]
+    appears_on_statement_as: p.market.on_statement_as
   )
   p.update_column(:balanced_uri, credit.uri)
 end; nil

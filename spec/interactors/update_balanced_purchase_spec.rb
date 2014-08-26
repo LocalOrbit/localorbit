@@ -172,7 +172,7 @@ describe UpdateBalancedPurchase do
 
       it "charges the difference when the order amount goes up" do
         expect(Balanced::Customer).to receive(:find).with('/balanced-account-uri').and_return(balanced_customer)
-        expect(balanced_customer).to receive(:debit).with({amount: 1500, source_uri: '/balanced-card-uri', description: "#{market.name} purchase"})
+        expect(balanced_customer).to receive(:debit).with({amount: 1500, source_uri: '/balanced-card-uri', description: "#{market.name} purchase", appears_on_statement_as: market.name, meta: {"order number" => order.order_number}})
 
         expect(order.reload.payments.count).to eql(1)
 
@@ -263,7 +263,7 @@ describe UpdateBalancedPurchase do
 
       it "charges the difference when the order amount goes up" do
         expect(Balanced::Customer).to receive(:find).with('/balanced-account-uri').and_return(balanced_customer)
-        expect(balanced_customer).to receive(:debit).with({amount: 1500, source_uri: '/balanced-bank-account-uri', description: "#{market.name} purchase"})
+        expect(balanced_customer).to receive(:debit).with({amount: 1500, source_uri: '/balanced-bank-account-uri', description: "#{market.name} purchase", appears_on_statement_as: market.name, meta: {"order number" => order.order_number}})
 
         expect(order.reload.payments.count).to eql(1)
 
