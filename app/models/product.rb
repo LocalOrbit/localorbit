@@ -25,8 +25,8 @@ class Product < ActiveRecord::Base
   dragonfly_accessor :image
   dragonfly_accessor :thumb
   define_after_upload_resize(:image, 1200, 1200, thumb: {width: 150, height: 150})
-  validates_property :format, of: :image, in: %w(jpeg png gif)
-  validates_property :format, of: :thumb, in: %w(jpeg png gif)
+  # validates_property :format, of: :image, in: %w(jpeg png gif)
+  # validates_property :format, of: :thumb, in: %w(jpeg png gif)
 
   validates :name, presence: true
   validates :unit, presence: true
