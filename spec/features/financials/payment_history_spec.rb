@@ -715,7 +715,7 @@ feature "Payment history", :truncate_after_all do
       fill_in "Search Payments", with: "4567890-1"
       click_button "Search"
 
-      expect(page).to have_content("LO-01-234-4567890-1")
+      expect(page).to     have_content("LO-01-234-4567890-1")
       expect(page).not_to have_content("LO-01-234-4567890-2")
       expect(page).not_to have_content("LO-01-234-4567890-3")
       expect(page).not_to have_content("LO-01-234-4567890-4")
@@ -733,17 +733,17 @@ feature "Payment history", :truncate_after_all do
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
-      expect(page).to have_content("LO-01-234-4567890-2")
-      expect(page).to have_content("LO-01-234-4567890-3")
-      expect(page).to have_content("LO-01-234-4567890-4")
-      expect(page).to have_content("LO-01-234-4567890-5")
+      expect(page).to     have_content("LO-01-234-4567890-2")
+      expect(page).to     have_content("LO-01-234-4567890-3")
+      expect(page).to     have_content("LO-01-234-4567890-4")
+      expect(page).to     have_content("LO-01-234-4567890-5")
 
       fill_in "q_created_at_date_lteq", with: (@payment_day + 3.days).to_s
       click_button "Filter"
 
       expect(page).not_to have_content("LO-01-234-4567890-1")
-      expect(page).to have_content("LO-01-234-4567890-2")
-      expect(page).to have_content("LO-01-234-4567890-3")
+      expect(page).to     have_content("LO-01-234-4567890-2")
+      expect(page).to     have_content("LO-01-234-4567890-3")
       expect(page).not_to have_content("LO-01-234-4567890-4")
       expect(page).not_to have_content("LO-01-234-4567890-5")
     end

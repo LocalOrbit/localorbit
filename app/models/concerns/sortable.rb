@@ -4,7 +4,7 @@ module Sortable
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def arel_column_for_sort(column_name)
+    def arel_column_for_sort(_column_name)
       raise "method not implemented"
     end
 

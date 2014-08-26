@@ -6,9 +6,9 @@ describe UpdateDeliveryScheduleAndCurrentDelivery do
 
   let(:interactor) do
     UpdateDeliveryScheduleAndCurrentDelivery.new(
-    delivery_schedule: delivery_schedule,
-    params: delivery_schedule_params
-  )
+      delivery_schedule: delivery_schedule,
+      params: delivery_schedule_params
+    )
   end
 
   before do

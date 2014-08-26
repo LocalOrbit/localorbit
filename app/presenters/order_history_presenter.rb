@@ -17,8 +17,8 @@ class OrderHistoryPresenter
     audits = Audit.where("(associated_type = 'Order' AND associated_id = :order_id) OR
     (auditable_type = 'Order' AND auditable_id = :order_id) OR
     (auditable_type = 'Payment' AND auditable_id IN (:payment_ids))",
-                         order_id: @order.id,
-                         payment_ids: @order.payment_ids
+      order_id: @order.id,
+      payment_ids: @order.payment_ids
     ).where("user_id IS NOT NULL").reorder(:request_uuid, :created_at)
 
     # return the first audit so we can grab timestamp and user

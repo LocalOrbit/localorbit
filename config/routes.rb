@@ -6,8 +6,8 @@ Rails.application.routes.draw do
 
   devise_for :users, skip: [:registrations]
   devise_scope :user do
-    get 'account' => 'devise/registrations#edit', as: :edit_user_registration
-    put 'account' => 'devise/registrations#update', as: :user_registration
+    get "account" => "devise/registrations#edit", as: :edit_user_registration
+    put "account" => "devise/registrations#update", as: :user_registration
   end
   resource :registration do
     get "terms-of-service" => "registrations#terms_of_service"
@@ -146,5 +146,5 @@ Rails.application.routes.draw do
   resources :orders, only: [:show, :create]
   resource :registration, only: [:show, :create]
 
-  root to: redirect('/users/sign_in')
+  root to: redirect("/users/sign_in")
 end

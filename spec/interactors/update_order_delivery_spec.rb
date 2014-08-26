@@ -5,8 +5,8 @@ describe UpdateOrderDelivery do
   let!(:market) { create(:market) }
   let!(:delivery) do
     create(:delivery, delivery_schedule:
-    create(:delivery_schedule, buyer_pickup_location: create(:market_address, market: market)
-  ))
+      create(:delivery_schedule, buyer_pickup_location: create(:market_address, market: market)
+    ))
   end
   let!(:order) { create(:order, delivery: delivery, market: market) }
 
@@ -31,8 +31,8 @@ describe UpdateOrderDelivery do
   context "trouble changing delivery location" do
     let!(:delivery2) do
       create(:delivery, delivery_schedule:
-      create(:delivery_schedule, buyer_pickup_location: nil)
-    )
+        create(:delivery_schedule, buyer_pickup_location: nil)
+      )
     end
 
     before do

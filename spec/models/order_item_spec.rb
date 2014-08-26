@@ -251,17 +251,17 @@ describe OrderItem do
     end
 
     it "consumes inventory from available lots" do
-      expect do
+      expect {
         create_valid_order_item
-      end.to change {
+      }.to change {
         Lot.where(id: product.lots.map(&:id)).order(:id).map(&:quantity)
       }.from([3, 5]).to([0, 1])
     end
 
     it "does not consume inventory from expired lots and lots that are not good yet" do
-      expect do
+      expect {
         create_valid_order_item
-      end.not_to change{
+      }.not_to change{
         Lot.find(expired_lot.id, future_good_from_lot.id).map(&:quantity)
       }
     end

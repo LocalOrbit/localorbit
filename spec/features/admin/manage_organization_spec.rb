@@ -157,7 +157,7 @@ describe "admin manange organization", :vcr do
         fill_in "Address Label", with: "University of Michigan"
         fill_in "Address",       with: "500 S. State Street"
         fill_in "City",          with: "Ann Arbor"
-        select "Michigan",      from: "State"
+        select  "Michigan",      from: "State"
         fill_in "Postal Code",   with: "34599"
         fill_in "Phone", with: "616-555-9983"
         fill_in "Fax", with: "616-555-9984"
