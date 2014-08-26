@@ -130,6 +130,10 @@ class Market < ActiveRecord::Base
     (plan_interval * plan_payments.count).months.from_now(plan_start_at)
   end
 
+  def on_statement_as
+    name.sub(/[^0-9a-zA-Z\.\-_ \^\`\|]/, '')[0, 22]
+  end
+
   private
 
   def require_payment_method

@@ -82,7 +82,9 @@ describe AttemptBalancedPurchase do
           expect(balanced_customer).to have_received(:debit).with(
             amount: (cart.total*100).to_i,
             source_uri: bank_account.balanced_uri,
-            description: "#{cart.market.name} purchase"
+            description: "#{cart.market.name} purchase",
+            appears_on_statement_as: market.name,
+            meta: {"order number" => order.order_number}
           )
         end
       end
@@ -211,7 +213,13 @@ describe AttemptBalancedPurchase do
 
         it "creates a hold for the order amount" do
           expect(subject).to be_success
-          expect(balanced_customer).to have_received(:debit).with(amount: (cart.total*100).to_i, description: "#{market.name} purchase", source_uri: credit_card.balanced_uri)
+          expect(balanced_customer).to have_received(:debit).with(
+            amount: (cart.total*100).to_i,
+            source_uri: credit_card.balanced_uri,
+            description: "#{market.name} purchase",
+            appears_on_statement_as: market.name,
+            meta: {"order number" => order.order_number}
+          )
         end
       end
 

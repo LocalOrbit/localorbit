@@ -54,7 +54,9 @@ class AttemptBalancedPurchase
     cart.organization.balanced_customer.debit(
       amount: amount,
       source_uri: bank_account.balanced_uri,
-      description: "#{cart.market.name} purchase"
+      description: "#{cart.market.name} purchase",
+      appears_on_statement_as: cart.market.on_statement_as,
+      meta: {'order number' => order.order_number}
     ) if amount > 0
   end
 
