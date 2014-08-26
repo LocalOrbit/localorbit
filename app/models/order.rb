@@ -304,7 +304,7 @@ class Order < ActiveRecord::Base
     cost = usable_items.sum(&:gross_total)
 
     self.delivery_fees = calculate_delivery_fees(cost)
-    self.total_cost    = calculate_total_cost(cost, usable_items)
+    self.total_cost    = calculate_total_cost(cost)
   end
 
   def calculate_delivery_fees(gross)
@@ -315,7 +315,7 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def calculate_total_cost(gross, items)
+  def calculate_total_cost(gross)
     if gross > 0.0
       gross + delivery_fees - discount_amount
     else

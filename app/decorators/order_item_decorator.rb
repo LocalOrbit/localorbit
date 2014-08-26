@@ -106,7 +106,7 @@ class OrderItemDecorator < Draper::Decorator
 
   def previous_value_for(column)
     changes = latest_changes
-    changes.present? && changes[column].present? && changes[column].kind_of?(Array) ? changes[column].first : false
+    changes.present? && changes[column].present? && changes[column].is_a?(Array) ? changes[column].first : false
   end
 
   def latest_changes

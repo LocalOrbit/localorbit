@@ -33,6 +33,7 @@ module Admin
 
       if user_org_associations.empty?
         redirect_to :back, alert: "Unable to update #{@user.decorate.display_name}"
+        return
       end
 
       failed = []

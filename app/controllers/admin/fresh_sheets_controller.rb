@@ -11,7 +11,7 @@ class Admin::FreshSheetsController < AdminController
     session[:fresh_sheet_note] = params[:note]
 
     if params[:commit] == "Add Note"
-      redirect_to [:admin, :fresh_sheet], notice: "Note saved." and return
+      redirect_to([:admin, :fresh_sheet], notice: "Note saved.") && return
     end
 
     sent_fresh_sheet = SendFreshSheet.perform(market: current_market, commit: params[:commit], email: params[:email], note: session[:fresh_sheet_note])
