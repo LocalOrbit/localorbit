@@ -3,6 +3,8 @@ class Category < ActiveRecord::Base
   acts_as_nested_set order: :name
   has_many :products
 
+  validates :name, presence: true
+
   scope :for_products, lambda {|products| joins(:products).where(products: {id: products}).uniq }
 
   # Returns select list options with root Categories as option groups

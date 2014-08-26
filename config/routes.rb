@@ -115,7 +115,7 @@ Rails.application.routes.draw do
     end
 
     resources :activities, only: :index
-    resources :categories, only: [:index, :show], path: :taxonomy
+    resources :categories, only: [:index, :show, :new, :create], path: :taxonomy
     resource :unit_request, only: :create
     resource :category_request, only: :create
 

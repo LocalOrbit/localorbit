@@ -1,0 +1,20 @@
+<%= form_for [:admin, @category], html: { class: "edit_category" } do |form| %>
+  <%= render "shared/errors", { resource: @category} %>
+
+  <div class="row row--field">
+    <div class="field column column--half column--guttered">
+      <%= form.label :name %><br>
+      <%= form.text_field :name, class: "column column--full" %>
+    </div
+    ><div class="field column column--half column--guttered">
+      <%= form.label :parent_id %><br>
+      <%= form.select :parent_id, nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }, class: "column column--full" %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= link_to "Cancel", [:admin, :categories], class: "btn cancel" %>
+    <%= form.submit "#{@category.new_record? ? 'Add' : 'Save'} Category" %>
+  </div>
+<% end %>
+
