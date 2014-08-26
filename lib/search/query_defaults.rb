@@ -7,6 +7,7 @@ module Search
 
       query["#{date_search_attr}_date_gteq"] = q.delete("#{date_search_attr}_date_gteq") || 30.days.ago.to_date.to_s
       query["#{date_search_attr}_date_lteq"] = q.delete("#{date_search_attr}_date_lteq") || Date.today.to_s
+      query["order_market_id_eq"] = q.delete("order_market_id_eq") unless q["order_market_id_eq"].nil?
 
       # HACK:
       # Due to order of association loading with ransack, date filters for order
