@@ -5,7 +5,7 @@ namespace :metrics do
     Metrics::MarketHistory.perform
     count = Metric.where(model_type: "Market").count - before
 
-    puts "#{count} Market #{"metric".pluralize(count)} changed since the last run." 
+    puts "#{count} Market #{"metric".pluralize(count)} changed since the last run."
   end
 
   desc "calculates Organization metrics for the previous day"

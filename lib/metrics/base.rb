@@ -14,7 +14,7 @@ module Metrics
 
     # called from the metrics rake tasks to calculate history for the given subclass
     def self.perform
-      self.history_metrics.each do |metric_code, metric_params|
+      history_metrics.each do |metric_code, metric_params|
         if [:count, :sum].include? metric_params[:calculation]
           scope  = metric_params[:scope]
           scope  = scope.group(metric_params[:group]) if metric_params[:group]
@@ -47,10 +47,10 @@ module Metrics
       end
     end
 
-    def self.history_custom(metric_params, metric_code, value)
+    def self.history_custom(_metric_params, metric_code, value)
       metric = Metric.find_or_initialize_by(metric_code: metric_code,
                                             effective_on: Date.current,
-                                            model_type: self.model_name)
+                                            model_type: model_name)
 
       metric.update!(value: value)
     end
@@ -59,7 +59,7 @@ module Metrics
       model_ids = metric_params[:scope].pluck(:id)
       metric = Metric.find_or_initialize_by(metric_code: metric_code,
                                             effective_on: Date.current,
-                                            model_type: self.model_name)
+                                            model_type: model_name)
 
       # we don't to trigger an update if only the order of IDs changed so we
       # cast the arrays to sets to ensure uniqueness

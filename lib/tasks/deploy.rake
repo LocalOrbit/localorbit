@@ -10,7 +10,7 @@ namespace :deploy do
       version, sha = parse_deploy(deploys[1])
 
       `git diff #{sha} --name-only | grep -E "^db/migrate"`
-      if $?.exitstatus == 0
+      if $CHILD_STATUS.exitstatus == 0
         system "heroku run --app #{app} rake db:migrate"
         system "heroku restart --app #{app}"
       else
