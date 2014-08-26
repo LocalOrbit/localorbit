@@ -21,7 +21,7 @@ gem "underscore-rails"
 gem "wysihtml5-rails"
 gem "mapbox-rails", github: "guyshechter/mapbox-rails"
 
-gem "active_model_serializers"
+gem "active_model_serializers", "~> 0.8.1"
 gem "active_record_union"
 gem "acts_as_geocodable",   github: "collectiveidea/acts_as_geocodable"
 gem "audited",              github: "collectiveidea/audited"
