@@ -2,7 +2,8 @@ class ReportPresenter
   include Search::DateFormat
 
   attr_reader :report, :items, :fields, :filters, :q, :totals, :start_date, :end_date,
-              :markets, :sellers, :buyers, :products, :categories, :payment_methods
+              :markets, :sellers, :buyers, :products, :categories, :payment_methods,
+              :fulfillment_days, :fulfillment_types
 
   FIELD_MAP = {
     placed_at:              {sort: :created_at,              display_name: "Placed On"},
@@ -19,7 +20,9 @@ class ReportPresenter
     payment_method:         {sort: :order_payment_method,    display_name: "Payment Method"},
     delivery_status:        {sort: :delivery_status,         display_name: "Delivery"},
     buyer_payment_status:   {sort: :order_payment_status,    display_name: "Buyer Payment Status"},
-    seller_payment_status:  {sort: nil,                      display_name: "Seller Payment Status"}
+    seller_payment_status:  {sort: nil,                      display_name: "Seller Payment Status"},
+    fulfillment_day:        {sort: :order_delivery_delivery_schedule_day, display_name: "Fulfillment Day"},
+    fulfillment_type:       {sort: nil,                      display_name: "Fulfillment Type"}
   }.with_indifferent_access
 
   REPORT_MAP = {
@@ -73,6 +76,14 @@ class ReportPresenter
         :row_total, :delivery_status, :buyer_payment_status
       ],
       buyer_only: true
+    },
+    sales_by_fulfillment: {
+      filters: [:placed_at, :market_name, :buyer_name, :fulfillment_day, :fulfillment_type],
+      fields: [
+        :placed_at, :fulfillment_day, :fulfillment_type, :buyer_name, :product_name, :seller_name,
+        :quantity, :unit_price, :discount, :row_total, :net_sale, :delivery_status,
+        :buyer_payment_status, :seller_payment_status
+      ]
     }
   }.with_indifferent_access
 
@@ -171,6 +182,26 @@ class ReportPresenter
     if includes_filter?(:payment_method)
       @payment_methods = Order.joins(:items).merge(items).uniq.pluck(:payment_method).sort
     end
+
+    if includes_filter?(:fulfillment_day)
+      @fulfillment_days = Hash[DeliverySchedule::WEEKDAYS.map.with_index { |day, index| [index, day] }]
+    end
+
+    if includes_filter?(:fulfillment_type)
+      @fulfillment_types = DeliverySchedule.joins(deliveries: { orders: :items }).merge(items).all.decorate.map do |ds|
+                             key = if ds.fulfillment_type == "Delivery: From Seller to Buyer"
+                               "S2B"
+                             elsif ds.fulfillment_type == "Delivery: From Market to Buyer"
+                               "M2B"
+                             else
+                               ds.buyer_pickup_location_id
+                             end
+
+                             [key, ds.fulfillment_type]
+                           end.uniq.sort do |a, b|
+                             a[1] <=> b[1]
+                           end
+    end
   end
 
   def include_associations(items)
@@ -188,6 +219,10 @@ class ReportPresenter
 
     if includes_field?(:category_name)
       items = items.includes(product: :category)
+    end
+
+    if includes_field?(:fulfillment_type) || includes_field?(:fulfillment_day)
+      items = items.includes(order: { delivery: :delivery_schedule })
     end
 
     items

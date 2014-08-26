@@ -34,6 +34,20 @@
           </span>
         <% end %>
 
+        <% if filter == :fulfillment_day %>
+          <span class="preserve-alignment mobile-block">
+            <%= f.label :order_delivery_delivery_schedule_day_eq, "Fulfillment Day" %><br>
+            <%= f.select :order_delivery_delivery_schedule_day_eq, options_from_collection_for_select(presenter.fulfillment_days, :first, :last, presenter.q.order_delivery_delivery_schedule_day_eq), { include_blank: "All" }, { class: "filter-input" } %>
+          </span>
+        <% end %>
+
+        <% if filter == :fulfillment_type %>
+          <span class="preserve-alignment mobile-block">
+            <%= f.label :order_delivery_delivery_schedule_fulfillment_type_eq, "Fulfillment Type" %><br>
+            <%= f.select :order_delivery_delivery_schedule_fulfillment_type_eq, options_from_collection_for_select(presenter.fulfillment_types, :first, :last, presenter.q.order_delivery_delivery_schedule_fulfillment_type_eq), { include_blank: "All" }, { class: "filter-input" } %>
+          </span>
+        <% end %>
+
         <% if filter == :category_name %>
           <span class="preserve-alignment mobile-block">
             <%= f.label :product_category_id_eq, "Category" %><br>

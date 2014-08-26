@@ -84,6 +84,24 @@ class OrderItemDecorator < Draper::Decorator
     object.delivery_status == "canceled"
   end
 
+  def fulfillment_day
+    schedule = object.order.delivery.delivery_schedule
+
+    if day = schedule.try(:day)
+      DeliverySchedule::WEEKDAYS[day]
+    else
+      ""
+    end
+  end
+
+  def fulfillment_type
+    if schedule = object.order.delivery.delivery_schedule
+      schedule.decorate.fulfillment_type
+    else
+      ""
+    end
+  end
+
   private
 
   def previous_value_for(column)

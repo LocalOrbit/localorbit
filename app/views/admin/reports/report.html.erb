@@ -34,6 +34,14 @@
             </td>
           <% end %>
 
+          <% if field == :fulfillment_day %>
+            <td class="fulfillment-day"><%= item.fulfillment_day %></td>
+          <% end %>
+
+          <% if field == :fulfillment_type %>
+            <td class="fulfillment-type"><%= item.fulfillment_type %></td>
+          <% end %>
+
           <% if field == :category_name %>
             <td class="category"><%= item.category_name %></td>
           <% end %>
