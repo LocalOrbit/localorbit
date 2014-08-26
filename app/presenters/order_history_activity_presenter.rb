@@ -21,7 +21,7 @@ class OrderHistoryActivityPresenter
   end
 
   def when
-    "#{metadata.display_date}<br>(#{time_ago_in_words(metadata.created_at)} ago)".html_safe
+    metadata.display_date
   end
 
   def actions
@@ -70,15 +70,18 @@ class OrderHistoryActivityPresenter
   end
 
   def process_order_item(item)
-    return unless item.auditable
-    item_name = "#{item.auditable.name}, #{item.auditable.unit} from #{item.auditable.seller_name}"
+    item_name = if item.auditable
+      "#{item.auditable.name}, #{item.auditable.unit} from #{item.auditable.seller_name}"
+    else
+      "#{last_value_for_change(item, "name")}, #{last_value_for_change(item, "unit")} from #{last_value_for_change(item, "seller_name")}"
+    end
 
-    if item.auditable.delivery_status == "canceled"
+    if item.action == "destroy"
       "Item Cancelled: #{item_name}"
-    elsif item.audited_changes["quantity"].present?
-      "Item Quantity Updated: #{item_name} (#{last_value_for_change(item, "quantity")})"
     elsif item.action == "create"
       "Item Added: #{item_name}"
+    elsif item.audited_changes["quantity"].present?
+      "Item Quantity Updated: #{item_name} (#{last_value_for_change(item, "quantity")})"
     elsif last_value_for_change(item, "delivery_status") == "delivered"
       "Item Delivered: #{item_name}"
     end
@@ -90,7 +93,7 @@ class OrderHistoryActivityPresenter
     payee_name = item.auditable.payee.try(:name)
 
     if payment_type == "seller payment"
-      "Seller Payment Status: #{payment_method.humanize.capitalize} (#{payee_name})"
+      "Seller Payment Status: #{last_value_for_change(item, "status")} (#{payee_name})"
     elsif payment_type == "order refund"
       "Refunded #{payment_method.humanize.capitalize} #{number_to_currency(item.auditable.amount)}"
     end
