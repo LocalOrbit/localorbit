@@ -76,8 +76,8 @@ GEM
       activesupport (= 4.1.6.rc1)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-    active_model_serializers (0.9.0)
-      activemodel (>= 3.2)
+    active_model_serializers (0.8.1)
+      activemodel (>= 3.0)
     active_record_union (1.0.0)
       activerecord (>= 4.0)
     activemodel (4.1.6.rc1)
@@ -461,7 +461,7 @@ PLATFORMS
 
 DEPENDENCIES
   accountingjs-rails
-  active_model_serializers
+  active_model_serializers (~> 0.8.1)
   active_record_union
   acts_as_geocodable!
   audited!
