@@ -5,7 +5,7 @@ module ApplicationHelper
 
   # Used in navigation to get to the users organization(s)
   def link_to_my_organization
-    org_count = current_user.display_managed_organizations.count
+    org_count = current_user.managed_organizations(include_suspended: true).count
     first_org = current_user.managed_organizations.first
 
     path = if org_count == 1 && first_org.present?

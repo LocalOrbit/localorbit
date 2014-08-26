@@ -19,7 +19,7 @@ module DeliveryStatus
   end
 
   def items_for_seller(user)
-    organization_ids = user.managed_organizations.pluck(:id)
+    organization_ids = user.managed_organizations.map(&:id)
     if user.admin? || user.market_manager? || organization_ids.include?(organization_id)
       items
     else

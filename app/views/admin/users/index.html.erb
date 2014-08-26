@@ -14,22 +14,20 @@
             <% end %>
           </tr>
         </thead>
-        <% @users.each do |user| %>
+        <% @users.decorate.each do |user| %>
         <tr class="user-row">
           <td class="name"><%= link_to (user.name || "Edit"), edit_admin_user_path(user) %></td>
           <td class="email"><%= user.email %></td>
           <td>
             <ul class="affiliations">
-              <% user.managed_markets.each do |market| %>
-                <li><%= market.name %>, Market Manager</li>
-              <% end %>
-              <% user.organizations.select{|o| o.markets.any? }.each do |organization| %>
-                <li><%= organization.markets.pluck(:name).to_sentence %>: <%= organization.name %>, <%= organization.can_sell? ? "Seller" : "Buyer" %></li>
+              <% user.affiliations.each do |a| %>
+                <%= a.decorate.affiliation_item(user) %>
               <% end %>
             </ul>
           </td>
           <% if current_user.admin? || current_user.can_manage_market?(current_market) && !user_masquerade? %>
             <td class="action">
+			  <%= user.global_toggle_enabled_button %>
               <%= link_to "Log In", user_masquerade_url(user, host: user.markets.first.try(:domain) || Figaro.env.domain), class: "btn btn--small btn--save" %>
             </td>
           <% end %>

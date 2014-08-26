@@ -21,11 +21,11 @@ class User < ActiveRecord::Base
 
   has_many :organizations, -> {
     not_deleted.
-    where(user_organizations: {enabled: true})
+    where(user_organizations: {enabled: true}).distinct
   }, through: :user_organizations
 
   has_many :organizations_including_suspended, -> {
-    not_deleted
+    not_deleted.distinct
   }, through: :user_organizations, source: :organization
 
   has_many :suspended_organizations, -> { where(user_organizations: {enabled: false}) }, through: :user_organizations, source: :organization
@@ -52,6 +52,17 @@ class User < ActiveRecord::Base
       arel_table[:email]
     else
       arel_table[:name]
+    end
+  end
+
+  def affiliations
+    @affiliations ||= begin
+      collection = []
+
+      collection += managed_markets
+      collection += organizations_including_suspended.order(name: :asc).select {|o| o.has_market? }
+
+      collection
     end
   end
 
@@ -124,28 +135,21 @@ class User < ActiveRecord::Base
     seller? && Order.where(organization_id: organization_ids).exists?
   end
 
-  def managed_organizations
-    @managed_organizations ||= begin
-      Organization.managed_by_market_ids(ids_for_managed_organizations).
-        where(market_organizations: {deleted_at: nil}).
-        where.not(market_organizations: {id: nil}).
-        union(organizations).
-        joins(:market_organizations).
-        distinct
-    end
-  end
+  def managed_organizations(opts={})
+    defaults = {include_suspended: false}
+    opts = defaults.merge!(opts)
 
-  def display_managed_organizations
-    @display_managed_organizations ||= begin
-      Organization.managed_by_market_ids(ids_for_managed_organizations).
-        where(market_organizations: {deleted_at: nil}).
-        where.not(market_organizations: {id: nil}).
-        union(organizations_including_suspended).
-        joins(:market_organizations).
-        distinct
-    end
-  end
+    org_membership_scope = opts[:include_suspended] ? organizations_including_suspended : organizations
 
+    @managed_organizations ||= {include_suspended: {true => nil, false => nil}}
+
+    @managed_organizations[:include_suspended][opts[:include_suspended]] ||= Organization.managed_by_market_ids(ids_for_managed_organizations).
+      where(market_organizations: {deleted_at: nil}).
+      where.not(market_organizations: {id: nil}).
+      union(org_membership_scope).
+      joins(:market_organizations).
+      distinct
+  end
 
   def managed_organizations_including_deleted
     if admin?
@@ -156,12 +160,13 @@ class User < ActiveRecord::Base
       Organization.managed_by_market_ids(market_ids).
         union(organizations).
         joins(:market_organizations).
+        order(:name).
         distinct
     end
   end
 
   def managed_organization_ids_including_deleted
-    managed_organizations_including_deleted.pluck(:id).uniq
+    managed_organizations_including_deleted.map(&:id)
   end
 
   def managed_organizations_within_market(market)
@@ -197,7 +202,7 @@ class User < ActiveRecord::Base
   end
 
   def managed_products
-    org_ids = managed_organizations.pluck(:id).uniq
+    org_ids = managed_organizations.map(&:id)
     Product.visible.seller_can_sell.where(organization_id: org_ids)
   end
 
