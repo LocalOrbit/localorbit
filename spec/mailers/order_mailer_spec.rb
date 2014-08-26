@@ -13,7 +13,7 @@ describe OrderMailer do
   let!(:product1)          { create(:product, :sellable, organization: seller1) }
   let!(:product2)          { create(:product, :sellable, organization: seller2) }
 
-  let!(:order)             { create(:order, market: market, delivery: delivery, placed_by: buyer_user, organization: buyer, payment_method: 'ach', total_cost: 30.0) }
+  let!(:order)             { create(:order, market: market, delivery: delivery, delivery_fees: 3, placed_by: buyer_user, organization: buyer, payment_method: 'ach', total_cost: 30.0) }
   let!(:order_item1)       { create(:order_item, order: order, product: product1, quantity: 11, unit_price: 2.00) }
   let!(:order_item2)       { create(:order_item, order: order, product: product2, quantity: 4, unit_price: 2.50) }
 
@@ -49,6 +49,20 @@ describe OrderMailer do
       within('.previous-value') do
         expect(@notification).to_not have_body_text("11 per box")
       end
+    end
+
+    it "does not show delivery fee" do
+      expect(@notification).not_to have_body_text("Delivery Fee")
+    end
+  end
+
+  describe "buyer_confirmation" do
+    before do
+      Audit.all.update_all(request_uuid: SecureRandom.uuid)
+      @notification = OrderMailer.buyer_confirmation(order.reload)
+    end
+    it "shows the delivery fee" do
+      expect(@notification).to have_body_text("Delivery Fee")
     end
   end
 

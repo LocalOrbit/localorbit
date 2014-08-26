@@ -20,13 +20,11 @@
   <% end %>
 
   <tbody class="pseudopod">
-    <% if @order.discount > 0 || @order.delivery_fees > 0 %>
     <tr>
       <th colspan="3">Product Total</th>
       <td class="lo_currency"><%= number_to_currency @order.gross_total %></td>
       <td></td>
     </tr>
-    <% end %>
     <% if @order.discount > 0 %>
     <tr>
       <th colspan="3">Discount</th>

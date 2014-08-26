@@ -29,4 +29,8 @@ class SellerOrder
 
   def items_attributes=(_)
   end
+
+  def delivery_fees
+    0
+  end
 end
