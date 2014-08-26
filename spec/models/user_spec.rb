@@ -291,6 +291,20 @@ describe User do
       it "returns a scope for the organization memberships" do
         expect(user.managed_organizations).to eq(user.organizations)
       end
+
+      context "who has been suspended" do
+        before do
+          suspend_user(user: user, org: org1)
+        end
+
+        it "returns a list of organizations which the user has not been suspended from" do
+          expect(user.managed_organizations).to eq([org2])
+        end
+
+        it "returns ALL organizations when passing the 'include_suspended' option" do
+          expect(user.managed_organizations(include_suspended: true)).to eq([org1, org2])
+        end
+      end
     end
   end
 
