@@ -37,7 +37,7 @@ class UserDecorator < Draper::Decorator
   def toggle_enabled_html(title, status, target_orgs, state)
     link_to_opts = {
       method: :patch,
-      class: "btn btn--small #{status}"
+      class: "btn btn--small btn--save"
     }
 
     link_to(
