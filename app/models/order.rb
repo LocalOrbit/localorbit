@@ -240,8 +240,9 @@ class Order < ActiveRecord::Base
 
     if uuid
       Audit.where(request_uuid: uuid, auditable_type: "OrderItem").map do |audit|
-        audit.auditable.product.organization
-      end.uniq
+        # If auditable is there, use the seller, or else find it from the product in the changes
+        audit.try(:auditable).try(:seller) || Product.find_by(id: audit.audited_changes["product_id"]).try(:organization)
+      end.reject(&:nil?).uniq
     else
       []
     end
