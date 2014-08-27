@@ -7,6 +7,7 @@ class Order < ActiveRecord::Base
 
   before_save :update_paid_at
   before_save :update_payment_status
+  before_save :cache_delivery_status
   before_update :update_order_item_payment_status
   before_update :update_total_cost
 

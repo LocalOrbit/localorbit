@@ -33,6 +33,17 @@ describe SetOrderItemsStatus do
       expect(order_item3.delivery_status).to eq("delivered")
     end
 
+    it "caches the overall status on the order" do
+      expect(order.delivery_status).to eq("pending")
+      interactor = SetOrderItemsStatus.perform(user: market_manager, delivery_status: 'delivered', order_item_ids: [order_item1.id.to_s, order_item3.id.to_s])
+      order.reload
+      expect(order.delivery_status).to eq("partially delivered")
+
+      interactor = SetOrderItemsStatus.perform(user: market_manager, delivery_status: 'delivered', order_item_ids: [order_item2.id.to_s])
+      order.reload
+      expect(order.delivery_status).to eq("delivered")
+    end
+
     it "does not set the status on order items for other markets" do
       other_prod = create(:product, :sellable)
       other_order = create(:order, :with_items, delivery: delivery)
@@ -46,6 +57,9 @@ describe SetOrderItemsStatus do
 
       order_item1.reload
       expect(order_item1.delivery_status).to eq("delivered")
+
+      order.reload
+      expect(order.delivery_status).to eq("partially delivered")
     end
   end
 

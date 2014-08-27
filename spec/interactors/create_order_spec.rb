@@ -141,4 +141,7 @@ describe CreateOrder do
     expect(subject.placed_by).to eql(buyer)
   end
 
+  it "caches the delivery status" do
+    expect(subject.delivery_status).to eq("pending")
+  end
 end
