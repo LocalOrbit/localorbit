@@ -140,7 +140,7 @@ describe "Checking Out", :js, :vcr do
         expect(current_email).to_not have_body_text("Potatoes")
 
         expect(current_email).to have_body_text("Product Total")
-        expect(current_email).not_to have_body_text("Delivery Fee")
+        expect(current_email).to have_body_text("Delivery Fee")
         expect(current_email).not_to have_body_text("Discount")
 
         expect(current_email.body).to have_content("An order was just placed by #{buyer.name}")
@@ -163,7 +163,7 @@ describe "Checking Out", :js, :vcr do
         expect(current_email).to have_body_text("Potatoes")
 
         expect(current_email).to have_body_text("Product Total")
-        expect(current_email).not_to have_body_text("Delivery Fee")
+        expect(current_email).to have_body_text("Delivery Fee")
         expect(current_email).not_to have_body_text("Discount")
 
         expect(current_email.body).to have_content("An order was just placed by #{buyer.name}")
@@ -301,7 +301,7 @@ describe "Checking Out", :js, :vcr do
           it "persists the discount on the order" do
             checkout
 
-            within("#totals") do
+            within(".pseudopod") do
               expect(page).to have_content("Item Subtotal $40.00")
               expect(page).to have_content("Discount $15.00")
               expect(page).to have_content("Delivery Fees $10.00")
@@ -320,7 +320,7 @@ describe "Checking Out", :js, :vcr do
           it "persists the discount on the order" do
             checkout
 
-            within("#totals") do
+            within(".pseudopod") do
               expect(page).to have_content("Item Subtotal $40.00")
               expect(page).to have_content("Discount $40.00")
               expect(page).to have_content("Delivery Fees $10.00")
@@ -341,7 +341,7 @@ describe "Checking Out", :js, :vcr do
         it "persists the discount on the order" do
           checkout
 
-          within("#totals") do
+          within(".pseudopod") do
             expect(page).to have_content("Item Subtotal $40.00")
             expect(page).to have_content("Discount $7.50")
             expect(page).to have_content("Delivery Fees $10.00")
