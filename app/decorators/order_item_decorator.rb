@@ -111,8 +111,9 @@ class OrderItemDecorator < Draper::Decorator
 
   def latest_changes
     @latest_changes ||= begin
-      if object.audits.present?
-        uuid = object.order.audits.last.request_uuid
+      uuid = object.order.audits.last.try(:request_uuid)
+
+      if uuid && object.audits.present?
         changes = object.audits.where(request_uuid: uuid).map(&:audited_changes)
         changes.inject({}) {|result, audit| result.merge(audit) }
       else
