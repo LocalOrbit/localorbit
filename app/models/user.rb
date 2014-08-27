@@ -171,9 +171,9 @@ class User < ActiveRecord::Base
 
   def managed_organizations_within_market(market)
     if admin? || managed_markets.include?(market)
-      market.organizations
+      market.organizations.extending(MarketOrganization::AssociationScopes).excluding_deleted.not_cross_selling.mo_join_market_id(market.id)
     else
-      organizations.select("organizations.*").joins(:market_organizations).where("market_organizations.market_id" => market.id)
+      organizations.extending(MarketOrganization::AssociationScopes).joins(:market_organizations).excluding_deleted.not_cross_selling.mo_join_market_id(market.id)
     end
   end
 
