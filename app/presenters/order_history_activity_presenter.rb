@@ -66,6 +66,11 @@ class OrderHistoryActivityPresenter
       data << "Order Invoiced"
     end
 
+    delivery_status = last_value_for_change(item, "delivery_status")
+    if delivery_status.present? && !delivery_status.include?("pending")
+      data << "Order #{delivery_status.humanize.capitalize}"
+    end
+
     data
   end
 

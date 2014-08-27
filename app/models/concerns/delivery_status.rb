@@ -1,4 +1,6 @@
 module DeliveryStatus
+  extend ActiveSupport::Concern
+
   def delivery_status_for_user(user)
     order_items = items_for_seller(user)
     aggrigate_delivery_status_for_items(order_items)
@@ -46,5 +48,11 @@ module DeliveryStatus
     else
       "canceled"
     end
+  end
+
+  private
+
+  def cache_delivery_status
+    self.delivery_status = aggrigate_delivery_status_for_items(items)
   end
 end
