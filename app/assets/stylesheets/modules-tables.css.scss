@@ -320,6 +320,16 @@ th {
     margin: 0;
   }
 }
+
+.user-table {
+  .user-row {
+    .action {
+      width: 180px;
+      text-align: right;
+    }
+  }
+}
+
 .product-row, .user-row {
   color: #000;
 
