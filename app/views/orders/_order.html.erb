@@ -1,92 +1,90 @@
+<div class="cart-page">
+  <div class="row">
+    <div class="column column--half column--guttered">
+      <table class="cart">
+        <% @grouped_items.each.with_index do |(seller_name, items), index| %>
+          <tbody class="item-group">
+            <tr class="<%= index == 0 ? "" : "is-hidden" %>">
+              <th class="subheading-cart">Your Order</th>
+              <th class="cart-quantity-column">Quantity</th>
+              <th class="cart-price-column">Price</th>
+              <th class="cart-total-column">Total</th>
+            </tr>
+            <tr>
+              <th colspan="5" class="seller"><%= seller_name %></th>
+            </tr>
+            <% items.each do |item| %>
+              <%= content_tag_for(:tr, item, id: item.product.id, class: "product  order-item-row", data: {id: item.product.id}) do %>
+                <td class="name"><%= item.product.name %> (<%= item.product.unit_plural %>)</td>
+                <td class="quantity math"><%= item.decorate.quantity_with_unit %></td>
+                <td class="price math"><%= number_to_currency item.unit_price %></td>
+                <td class="item-total math"><%= number_to_currency item.gross_total %></td>
+              <% end %>
+            <% end %>
+          </tbody>
+        <% end %>
+        <tbody class="math" id="totals">
+          <tr class="cart_total">
+            <th scope="row" colspan="3">Item Subtotal</th>
+            <td class="subtotal"><%= number_to_currency @order.subtotal %></td>
+            <td></td>
+          </tr>
 
-<div class="delivery-time">
-  <div class="actions pull-right">
-    <%= link_to "Review Order", order_path(@order), class: "review-order" %> &nbsp;
-    <button class="btn btn--small btn--blue print-button order-print" id="print-button">Print Order Confirmation</button>
-  </div>
+          <tr class="cart_total <%= "is-hidden" unless @order.discount_amount > 0%>">
+            <th scope="row" colspan="3">Discount</th>
+            <td class="discount"><%= number_to_currency @order.discount_amount %></td>
+            <td></td>
+          </tr>
 
-  <h2 class="order-heading">Items for <%=  @order.delivery.decorate.checkout_type %>:</h2>
-  <p class="order-subheading checkout-date"><%= @order.delivery.decorate.checkout_date %></p>
-</div>
+          <tr class="cart_total">
+            <th scope="row" colspan="3">Delivery Fees</th>
+            <td class="delivery-fees"><%= number_to_currency @order.delivery_fees %></td>
+            <td></td>
+          </tr>
 
-<div class="location vcard">
-  <h2 class="order-heading">Your order <%= @order.display_delivery_or_pickup %></h2>
-  <!-- <h3 class="fn order-subheading">Delivery Location Name</h3> -->
-  <p class="adr">
-    <%#= link_to @product.organization.name, seller_path(@product.organization) %>
-    <span class="street-address"><%= @order.delivery_address %></span><br>
-    <span class="locality"><%= @order.delivery_city %></span>, <span class="region"><%= @order.delivery_state %></span> <span class="postal-code"><%= @order.delivery_zip %></span>
-  <% if @order.delivery_phone.present? %>
-    <br><span class="tel">T: <%= link_to @order.delivery_phone, "tel:#{@order.delivery_phone}", class: "value" %></span>
-  <% end %>
-  </p>
-</div>
-<div class="table-wrapper">
-  <table class="order-summary">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Unit Price</th>
-        <th></th>
-        <th class="math">Item Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @order.items.each do |item| %>
-      <tr class="order-item-row">
-        <td class="name"><%= item.name %></td>
-        <td class="quantity"><%= item.decorate.quantity_with_unit %></td>
-        <td class="price"><%= number_to_currency item.unit_price %></td>
-        <td> </td>
-        <td class="item-total math"><%= number_to_currency item.gross_total %></td>
-      </tr>
-      <% end %>
-    </tbody>
+          <tr class="cart_total">
+            <th scope="row" colspan="3 review-order-total"><strong>Order Total</strong></th>
+            <td class="total"><strong><%= number_to_currency @order.total_cost %></strong></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div
+    ><div class="column column--half column--guttered">
+      <div id="additional-information">
+        <div class="">
+          <%= link_to "Review Order", order_path(@order), class: "review-order" %> &nbsp;
+          <button class="btn btn--small btn--blue print-button order-print" id="print-button">Print Order Confirmation</button>
+        </div>
 
-    <tbody class="pseudopod math">
-      <tr class="line-item">
-        <td></td>
-        <td></td>
-        <td></td>
-        <th scope="row">Item Subtotal</th>
-        <td class="subtotal"><strong><%= number_to_currency @order.subtotal %></strong></td>
-      </tr>
-      <% if @order.discount_amount > 0 %>
-      <tr class="line-item">
-        <td></td>
-        <td></td>
-        <td></td>
-        <th scope="row">Discount</th>
-        <td class="discounts"><strong><%= number_to_currency @order.discount_amount %></strong></td>
-      </tr>
-      <% end %>
-      <tr class="line-item">
-        <td></td>
-        <td></td>
-        <td></td>
-        <th scope="row">Delivery Fees</th>
-        <td class="delivery-fees"><strong><%= number_to_currency @order.delivery_fees %></strong></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <th scope="row" class="review-order-total">Order Total</th>
-        <td class="total review-order-total"><strong><%= number_to_currency @order.total_cost %></strong></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="order-status">
-  <div>
-    <p><strong>Payment Status</strong>  &nbsp; <%= @order.payment_status.titleize %></p>
-  </div>
+        <div class="delivery-time">
+          <h2 class="order-heading">Items for <%=  @order.delivery.decorate.checkout_type %>:</h2>
+          <p class="order-subheading checkout-date"><%= @order.delivery.decorate.checkout_date %></p>
+        </div>
+      </div>
+      <div class="location vcard">
+        <h2 class="order-heading">Your order <%= @order.display_delivery_or_pickup %></h2>
+        <!-- <h3 class="fn order-subheading">Delivery Location Name</h3> -->
+        <p class="adr">
+          <%#= link_to @product.organization.name, seller_path(@product.organization) %>
+          <span class="street-address"><%= @order.delivery_address %></span><br>
+          <span class="locality"><%= @order.delivery_city %></span>, <span class="region"><%= @order.delivery_state %></span> <span class="postal-code"><%= @order.delivery_zip %></span>
+          <% if @order.delivery_phone.present? %>
+            <br><span class="tel">T: <%= link_to @order.delivery_phone, "tel:#{@order.delivery_phone}", class: "value" %></span>
+          <% end %>
+        </p>
+      </div>
 
-  <div>
-    <p><strong>Payment Method</strong>  &nbsp; <%= @order.payment_method.titleize %></p>
-  </div>
+      <div id="payment-info">
+        <h2 class="subheading-cart"><i class="font-icon icon-coins"></i> Payment Information</h2>
+      </div>
+      <div>
+        <p><strong>Payment Status</strong>  &nbsp; <%= @order.payment_status.titleize %></p>
+      </div>
 
-  <div>
+      <div>
+        <p><strong>Payment Method</strong>  &nbsp; <%= @order.payment_method.titleize %></p>
+      </div>
+    </div>
   </div>
 </div>

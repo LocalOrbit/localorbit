@@ -29,6 +29,7 @@ class Order < ActiveRecord::Base
       end
     end
   end
+
   has_many :order_payments, inverse_of: :order
   has_many :payments, through: :order_payments, inverse_of: :orders
   has_many :products, through: :items
