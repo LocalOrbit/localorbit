@@ -18,16 +18,33 @@ describe SendUpdateEmails do
   let!(:item1)    { create(:order_item, product: product1, unit_price: 2.00, quantity: 4, order: order) }
   let!(:item2)    { create(:order_item, product: product2, unit_price: 4.00, quantity: 2, order: order) }
 
-  context "a update that should send an email" do
-    before do
-      Order.enable_auditing
-      OrderItem.enable_auditing
-      order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: item1.id, quantity: 5}})
-      OrderItem.disable_auditing
-      Order.disable_auditing
+  let(:update_params) { { updated_at: Time.current } }
 
-      # Set all audits to be the same request
-      Audit.all.update_all(request_uuid: SecureRandom.uuid)
+  before do
+    Order.enable_auditing
+    OrderItem.enable_auditing
+
+    order.reload.update(update_params)
+    # UpdateQuantities.perform(order: order.reload, order_params: update_params)
+
+    OrderItem.disable_auditing
+    Order.disable_auditing
+
+    # Set all audits to be the same request
+    Audit.all.update_all(request_uuid: SecureRandom.uuid)
+  end
+
+  context "a update that should send an email" do
+    let!(:update_params) do
+      {
+        updated_at: Time.current,
+        items_attributes: {
+          "0" => {
+            id: item1.id,
+            quantity: 5
+          }
+        }
+      }
     end
 
     it "sends an email to users in the organization" do
@@ -50,22 +67,16 @@ describe SendUpdateEmails do
   end
 
   context "when an order item has been deleted" do
-    before do
-      params = {
-        "notes"=>"",
-        "items_attributes" => {
-          "0"=>{"id"=>item1.id.to_s, "quantity"=>"2", "quantity_delivered"=>"", "delivery_status"=>"pending", "_destroy"=>"true"},
+    let!(:update_params) do
+      {
+        items_attributes: {
+          "0"=>{
+            id: item1.id.to_s,
+            quantity: "2",
+            "_destroy" => "true"
+          }
         }
       }
-
-      Order.enable_auditing
-      OrderItem.enable_auditing
-
-      UpdateQuantities.perform(order: order, order_params: params)
-
-      Order.disable_auditing
-      OrderItem.disable_auditing
-      Audit.all.update_all(request_uuid: SecureRandom.uuid)
     end
 
     it "sends an email to users in the organization" do
@@ -77,15 +88,16 @@ describe SendUpdateEmails do
   end
 
   context "a update that should not send emails" do
-    before do
-      Order.enable_auditing
-      OrderItem.enable_auditing
-      order.reload.update(updated_at: Time.current, items_attributes: {"0" => {id: item1.id, quantity_delivered: 4}})
-      OrderItem.disable_auditing
-      Order.disable_auditing
-
-      # Set all audits to be the same request
-      Audit.all.update_all(request_uuid: SecureRandom.uuid)
+    let!(:update_params) do
+      {
+        updated_at: Time.current,
+        items_attributes: {
+          "0" => {
+            id: item1.id,
+            quantity_delivered: 4
+          }
+        }
+      }
     end
 
     it "does not send an email to users in the organization" do
