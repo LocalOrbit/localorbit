@@ -80,9 +80,10 @@ class Admin::OrdersController < AdminController
   # Builds a list of deliveries for potential changes
   # Some from the past, some from future, and the order's actual one.
   def setup_deliveries(order)
-    @deliveries = current_market.deliveries.recent |
-      current_market.deliveries.future.active |
-      [order.delivery]
+    recent_deliveries = order.market.deliveries.recent
+    future_deliveries = order.market.deliveries.future.active
+
+    @deliveries = recent_deliveries | future_deliveries | [order.delivery]
   end
 
   def perform_order_update(order, params)
