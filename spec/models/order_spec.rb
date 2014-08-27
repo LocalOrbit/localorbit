@@ -376,6 +376,58 @@ describe Order do
     end
   end
 
+  describe "#sellers_with_changes" do
+    let!(:market)          { create(:market) }
+
+    let!(:seller1)         { create(:organization, :seller, markets: [market]) }
+    let!(:seller1_product) { create(:product, :sellable, organization: seller1) }
+    let!(:seller2)         { create(:organization, :seller, markets: [market]) }
+    let!(:seller2_product) { create(:product, :sellable, organization: seller2) }
+    let!(:seller3)         { create(:organization, :seller, markets: [market]) }
+    let!(:seller3_product) { create(:product, :sellable, organization: seller3) }
+
+    let!(:order_item1)     { create(:order_item, product: seller1_product, quantity: 2) }
+    let!(:order_item2)     { create(:order_item, product: seller2_product, quantity: 2) }
+    let!(:order_item3)     { create(:order_item, product: seller3_product, quantity: 2) }
+    let!(:order)           { create(:order, items: [order_item1, order_item2, order_item3]) }
+
+    let!(:update_params)   do
+      {
+        updated_at: Time.current,
+        items_attributes: {
+          "0" => {
+            id: order_item1.id,
+            quantity: 4
+          },
+          "1" => {
+            id: order_item2.id,
+            quantity_delivered: 4
+          },
+          "2" => {
+            id: order_item3.id,
+            _destroy: "true"
+          }
+        }
+      }
+    end
+
+    before do
+      Order.enable_auditing
+      OrderItem.enable_auditing
+      order.reload.update(update_params)
+      OrderItem.disable_auditing
+      Order.disable_auditing
+
+      Audit.all.update_all(request_uuid: SecureRandom.uuid)
+    end
+
+    it "returns sellers where the item quantity has changed or the item has been deleted" do
+      sellers = order.reload.sellers_with_changes
+
+      expect(sellers).to eql([seller1, seller3])
+    end
+  end
+
   describe ".delivered" do
     let(:product) { create(:product, :sellable) }
     let(:product2) { create(:product, :sellable) }
