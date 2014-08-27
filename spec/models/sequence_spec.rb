@@ -21,8 +21,8 @@ describe Sequence do
     end
 
     it "rescues key creation race condition" do
-      expect(Sequence).to receive(:find_or_create_by!).with(name: "new_sequence").and_raise(ActiveRecord::RecordNotUnique.new('msg'))
-      expect(Sequence).to receive(:find_or_create_by!).with(name: "new_sequence").and_return(create(:sequence, name: 'new_sequence'))
+      expect(Sequence).to receive(:find_or_create_by!).with(name: "new_sequence").and_raise(ActiveRecord::RecordNotUnique.new("msg"))
+      expect(Sequence).to receive(:find_or_create_by!).with(name: "new_sequence").and_return(create(:sequence, name: "new_sequence"))
       expect(Sequence.increment_for("new_sequence")).to eq(1)
     end
   end

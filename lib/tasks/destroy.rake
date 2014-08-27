@@ -1,6 +1,6 @@
 namespace :destroy do
   desc "Safely removes an organization from Local Orbit"
-  task :organization, [:id] => [:environment] do |t, args|
+  task :organization, [:id] => [:environment] do |_t, args|
     def metric(prefix, key, value)
       puts "#{prefix} #{key}: #{value}"
       puts "----------------------------------------"

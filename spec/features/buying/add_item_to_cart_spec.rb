@@ -3,7 +3,7 @@ require "spec_helper"
 describe "Add item to cart", js: true do
   let(:user) { create(:user) }
   let!(:buyer) { create(:organization, :single_location, :buyer, users: [user]) }
-  let!(:seller) {create(:organization, :seller, :single_location) }
+  let!(:seller) { create(:organization, :seller, :single_location) }
 
   let(:market) { create(:market, :with_addresses, organizations: [buyer, seller]) }
   let!(:delivery) { create(:delivery_schedule, market: market) }
@@ -11,20 +11,19 @@ describe "Add item to cart", js: true do
   # Products
   let(:bananas) { create(:product, name: "Bananas", organization: seller, delivery_schedules: [delivery]) }
   let!(:bananas_lot) { create(:lot, product: bananas) }
-  let!(:bananas_price_buyer_base) {
+  let!(:bananas_price_buyer_base) do
     create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer)
-  }
+  end
 
-  let(:bananas_price_everyone_base) {
+  let(:bananas_price_everyone_base) do
     create(:price, market: market, product: bananas, min_quantity: 1)
-  }
+  end
 
   let(:kale) { create(:product, name: "Kale", organization: seller, delivery_schedules: [delivery]) }
   let!(:kale_lot) { create(:lot, product: kale) }
-  let!(:kale_price_buyer_base) {
+  let!(:kale_price_buyer_base) do
     create(:price, market: market, product: kale, min_quantity: 1)
-  }
-
+  end
 
   def bananas_row
     Dom::Cart::Item.find_by_name("Bananas")
@@ -78,7 +77,7 @@ describe "Add item to cart", js: true do
       expect(kale_row.price).to have_content("$0.00")
 
       expect(Dom::CartLink.first.count).to have_content("0")
-      expect(page).not_to have_content('Review Cart')
+      expect(page).not_to have_content("Review Cart")
 
     end
 
@@ -87,7 +86,7 @@ describe "Add item to cart", js: true do
 
       expect(page).to have_content("Added to cart!")
       expect(Dom::CartLink.first.count).to have_content("1")
-      expect(page).to have_content('Review Cart')
+      expect(page).to have_content("Review Cart")
 
       kale_row.set_quantity(9)
       expect(page).to have_content("Added to cart!")
@@ -109,7 +108,7 @@ describe "Add item to cart", js: true do
       bananas_row.set_quantity(0)
 
       expect(Dom::CartLink.first.count).to have_content("0")
-      expect(page).to_not have_content('Review Cart')
+      expect(page).to_not have_content("Review Cart")
     end
   end
 
@@ -148,9 +147,9 @@ describe "Add item to cart", js: true do
   context "purchasing less product than required minimum", js: true do
     let(:tomatoes) { create(:product, name: "Tomatoes", organization: seller, delivery_schedules: [delivery]) }
     let!(:tomatoes_lot) { create(:lot, product: tomatoes) }
-    let!(:tomatoes_price_buyer_base) {
+    let!(:tomatoes_price_buyer_base) do
       create(:price, market: market, product: tomatoes, min_quantity: 5)
-    }
+    end
 
     def tomatoes_row
       Dom::Cart::Item.find_by_name("Tomatoes")

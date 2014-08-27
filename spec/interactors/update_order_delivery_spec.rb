@@ -3,9 +3,11 @@ require "spec_helper"
 describe UpdateOrderDelivery do
   let!(:user) { build(:user) }
   let!(:market) { create(:market) }
-  let!(:delivery) { create(:delivery, delivery_schedule:
-    create(:delivery_schedule, buyer_pickup_location: create(:market_address, market: market)
-  )) }
+  let!(:delivery) do
+    create(:delivery, delivery_schedule:
+      create(:delivery_schedule, buyer_pickup_location: create(:market_address, market: market)
+    ))
+  end
   let!(:order) { create(:order, delivery: delivery, market: market) }
 
   context "saving successfully" do
@@ -27,9 +29,11 @@ describe UpdateOrderDelivery do
   end
 
   context "trouble changing delivery location" do
-    let!(:delivery2) { create(:delivery, delivery_schedule:
-      create(:delivery_schedule, buyer_pickup_location: nil)
-    ) }
+    let!(:delivery2) do
+      create(:delivery, delivery_schedule:
+        create(:delivery_schedule, buyer_pickup_location: nil)
+      )
+    end
 
     before do
       2.times { create(:location, organization: order.organization) }

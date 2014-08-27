@@ -21,7 +21,7 @@ feature "User can use an auth_token" do
   end
 
   scenario "does not authorize invalid tokens" do
-    visit dashboard_path(auth_token: 'let-me-in')
+    visit dashboard_path(auth_token: "let-me-in")
 
     expect(page).to have_content("Please Sign In")
   end

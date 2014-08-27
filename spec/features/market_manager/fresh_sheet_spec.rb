@@ -9,7 +9,7 @@ feature "A Market Manager sending a weekly Fresh Sheet" do
 
   # Intentionally not let! changing that will break tests
   let(:buyer_org) { create(:organization, :buyer, markets: [market]) }
-  let(:buyer_user) { create(:user, organizations: [buyer_org], name: 'Jack Stevens') }
+  let(:buyer_user) { create(:user, organizations: [buyer_org], name: "Jack Stevens") }
 
   scenario "navigating to the page" do
     switch_to_subdomain(market.subdomain)

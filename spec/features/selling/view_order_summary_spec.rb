@@ -4,7 +4,7 @@ describe "Order summary" do
   let!(:user) { create(:user, organizations: [sellers]) }
   let!(:admin) { create(:user, :admin) }
   let!(:market_manager) { create(:user) }
-  let!(:market)  { create(:market, :with_addresses, managers:[market_manager]) }
+  let!(:market)  { create(:market, :with_addresses, managers: [market_manager]) }
   let!(:sellers) { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:others) { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:sellers_product1) { create(:product, :sellable, organization: sellers) }
@@ -16,16 +16,16 @@ describe "Order summary" do
   let!(:buyer2) { create(:organization, :buyer, :single_location, markets: [market]) }
 
   let!(:friday_schedule_schedule) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5) }
-  let!(:friday_delivery) { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014"))}
+  let!(:friday_delivery) { create(:delivery, delivery_schedule: friday_schedule_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014")) }
 
-  let!(:sellers_order1_item1) { create(:order_item, product: sellers_product1, quantity: 3)}
-  let!(:sellers_order1_item2) { create(:order_item, product: sellers_product3, quantity: 9)}
+  let!(:sellers_order1_item1) { create(:order_item, product: sellers_product1, quantity: 3) }
+  let!(:sellers_order1_item2) { create(:order_item, product: sellers_product3, quantity: 9) }
   let!(:sellers_order1)      { create(:order, items: [sellers_order1_item1, sellers_order1_item2], organization: buyer1, market: market, delivery: friday_delivery) }
 
-  let!(:sellers_order2_item) { create(:order_item, product: sellers_product2, quantity: 6)}
-  let!(:sellers_order2)      { create(:order, items:[sellers_order2_item], organization: buyer2, market: market, delivery: friday_delivery) }
+  let!(:sellers_order2_item) { create(:order_item, product: sellers_product2, quantity: 6) }
+  let!(:sellers_order2)      { create(:order, items: [sellers_order2_item], organization: buyer2, market: market, delivery: friday_delivery) }
 
-  let!(:others_order_item) { create(:order_item, product: others_product, quantity: 2)}
+  let!(:others_order_item) { create(:order_item, product: others_product, quantity: 2) }
   let!(:others_order)      { create(:order, items: [others_order_item], organization: buyer2, market: market, delivery: friday_delivery) }
 
   before do

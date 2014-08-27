@@ -74,7 +74,7 @@ feature "Adding a bank account to an organization", :js do
     end
 
     scenario "duplicate bank account gives an error" do
-      create(:bank_account, :checking, bank_name: 'JPMORGAN CHASE BANK', name: 'Org Bank Account', last_four: '0002', bankable: org)
+      create(:bank_account, :checking, bank_name: "JPMORGAN CHASE BANK", name: "Org Bank Account", last_four: "0002", bankable: org)
 
       fill_in "Name", with: "Org Bank Account"
       select("Checking", from: "Account Type")

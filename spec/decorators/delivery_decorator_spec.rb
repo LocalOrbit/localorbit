@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe DeliveryDecorator do
-  let(:delivery_schedule) { create( :delivery_schedule ) }
+  let(:delivery_schedule) { create(:delivery_schedule) }
   let(:current_org) { create(:organization, :single_location, markets: [delivery_schedule.market]) }
   let(:draper_context) { {context: {current_organization: current_org}} }
 
@@ -15,7 +15,7 @@ describe DeliveryDecorator do
     end
 
     context "when type is a pickup" do
-      let(:delivery_schedule) { create( :delivery_schedule, :buyer_pickup) }
+      let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup) }
 
       it "displays as a pickup" do
         expect(subject.type).to eq("Pick up:")
@@ -32,11 +32,11 @@ describe DeliveryDecorator do
   end
 
   describe "#time_range" do
-    let(:delivery_schedule){
+    let(:delivery_schedule)do
       create(:delivery_schedule,
              seller_delivery_start: "4:00 PM",
              seller_delivery_end: "7:00 PM")
-    }
+    end
 
     context "schedule is a delivery" do
       it "returns the seller delivery times" do
@@ -60,7 +60,7 @@ describe DeliveryDecorator do
     subject { create(:delivery, delivery_schedule: delivery_schedule).decorate(draper_context) }
 
     context "delivery is pickup" do
-      let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup)}
+      let(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup) }
 
       it "should return the address of the pickup location" do
         expect(subject.display_locations).not_to be_nil
@@ -70,7 +70,7 @@ describe DeliveryDecorator do
     end
 
     context "delivery is dropoff" do
-      let!(:delivery_schedule) { create( :delivery_schedule ) }
+      let!(:delivery_schedule) { create(:delivery_schedule) }
 
       it "should return the address of the buyers selected organization" do
         expect(subject.display_locations).not_to be_nil

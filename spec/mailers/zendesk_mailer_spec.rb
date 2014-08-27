@@ -4,11 +4,13 @@ describe ZendeskMailer do
   let(:user) { build(:user) }
 
   describe "request_unit" do
-    let(:params) {{
-      singular: "fathom",
-      plural: "fathoms",
-      additional_notes: "See more notes"
-    }}
+    let(:params) do
+      {
+        singular: "fathom",
+        plural: "fathoms",
+        additional_notes: "See more notes"
+      }
+    end
 
     it "sends a new unit request to the admins" do
       fresh_sheet = ZendeskMailer.request_unit(user, params)
@@ -33,7 +35,7 @@ describe ZendeskMailer do
 
   describe "error_intervention" do
     it "sends a message to the admins about the error" do
-      email = ZendeskMailer.error_intervention(user, "Bad Error", {thing: "stuff"})
+      email = ZendeskMailer.error_intervention(user, "Bad Error", thing: "stuff")
       expect(email.from).to include(user.email)
       expect(email.subject).to include("Bad Error")
       expect(email.body).to include("thing")

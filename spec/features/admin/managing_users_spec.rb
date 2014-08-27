@@ -2,15 +2,15 @@ require "spec_helper"
 
 feature "viewing and managing users" do
   let!(:admin)          { create(:user, :admin) }
-  let!(:market)         { create(:market, name: 'Test Market') }
-  let!(:market2)        { create(:market)}
-  let!(:market_manager) { create(:user, managed_markets:[market]) }
+  let!(:market)         { create(:market, name: "Test Market") }
+  let!(:market2)        { create(:market) }
+  let!(:market_manager) { create(:user, managed_markets: [market]) }
 
-  let!(:organization)   { create(:organization, name: 'Test Org 1', markets: [market])}
-  let!(:organization2)  { create(:organization, name: 'Test Org 2', markets: [market])}
-  let!(:orphan_org)     { create(:organization, markets: [])}
+  let!(:organization)   { create(:organization, name: "Test Org 1", markets: [market]) }
+  let!(:organization2)  { create(:organization, name: "Test Org 2", markets: [market]) }
+  let!(:orphan_org)     { create(:organization, markets: []) }
   let!(:user)           { create(:user, name: "New Dude", organizations: [organization, organization2, orphan_org]) }
-  let!(:user2)          { create(:user)}
+  let!(:user2)          { create(:user) }
 
   context "as an admin" do
     before do
@@ -22,14 +22,14 @@ feature "viewing and managing users" do
       click_link "Market Admin"
       click_link "All Users"
       within "h1" do
-        expect(page).to have_content('Users')
+        expect(page).to have_content("Users")
       end
     end
 
     scenario "viewing all users" do
       visit "/admin/users"
       within "h1" do
-        expect(page).to have_content('Users')
+        expect(page).to have_content("Users")
       end
       expect(page).to have_content(market_manager.name)
       expect(page).to have_content(market_manager.email)
@@ -103,7 +103,7 @@ feature "viewing and managing users" do
     scenario "viewing only relevant users" do
       visit admin_users_path
       within "h1" do
-        expect(page).to have_content('Users')
+        expect(page).to have_content("Users")
       end
 
       manager_row = Dom::Admin::UserRow.find_by_email(market_manager.email)
@@ -170,7 +170,7 @@ feature "viewing and managing users" do
       visit admin_users_path
 
       within "h1" do
-        expect(page).to have_content('Users')
+        expect(page).to have_content("Users")
       end
 
       manager_row = Dom::Admin::UserRow.find_by_email(market_manager.email)
@@ -183,12 +183,12 @@ feature "viewing and managing users" do
     scenario "Suspending a user from an organization", :suspend_user do
       visit admin_organization_users_path(organization2)
 
-      expect(page).to have_content('Suspend')
-      expect(page).to_not have_content('Enable')
+      expect(page).to have_content("Suspend")
+      expect(page).to_not have_content("Enable")
 
       click_link "Suspend"
-      expect(page).to have_content('Enable')
-      expect(page).to_not have_content('Suspend')
+      expect(page).to have_content("Enable")
+      expect(page).to_not have_content("Suspend")
     end
   end
 end

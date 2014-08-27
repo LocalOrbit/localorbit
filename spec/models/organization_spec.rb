@@ -1,17 +1,17 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Organization do
 
-  describe 'validates' do
-    describe 'name' do
-      it 'is required' do
+  describe "validates" do
+    describe "name" do
+      it "is required" do
         org = Organization.new
         expect(org).to_not be_valid
         expect(org).to have(1).error_on(:name)
       end
 
-      it 'is at most 255 characters long' do
-        org = Organization.new(name: 'a' * 256)
+      it "is at most 255 characters long" do
+        org = Organization.new(name: "a" * 256)
         expect(org).to_not be_valid
         expect(org).to have(1).error_on(:name)
       end
@@ -34,21 +34,21 @@ describe Organization do
   describe "#shipping_location" do
     let(:org) { create(:organization) }
 
-    it 'returns nil if we have no locations' do
+    it "returns nil if we have no locations" do
       expect(org.shipping_location).to be_nil
     end
 
-    it 'returns the location marked default_shipping' do
+    it "returns the location marked default_shipping" do
       loc = create(:location, organization: org, default_shipping: true)
       expect(org.shipping_location).to eq(loc)
     end
 
-    it 'does not return a deleted location' do
+    it "does not return a deleted location" do
       loc = create(:location, organization: org, default_shipping: true, deleted_at: 1.minute.ago)
       expect(org.shipping_location).to be_nil
     end
 
-    it 'returns the right location' do
+    it "returns the right location" do
       create(:location, organization: org, default_shipping: true, deleted_at: 1.minute.ago)
       loc = create(:location, organization: org, default_shipping: true)
       expect(org.shipping_location).to eq(loc)

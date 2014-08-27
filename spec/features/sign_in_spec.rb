@@ -6,7 +6,6 @@ feature "User signing in" do
   let!(:org2) { create(:organization, markets: [market2]) }
   let!(:user2) { create(:user, organizations: [org2]) }
 
-
   let(:cookie_name) { "_local_orbit_session_test" }
 
   scenario "A user can sign in" do
@@ -159,7 +158,7 @@ feature "User signing in" do
   end
 
   context "As a suspended user", :suspend_user do
-    let!(:selling_user) { create(:user, organizations: [org2])}
+    let!(:selling_user) { create(:user, organizations: [org2]) }
 
     before do
       suspend_user(user: selling_user, org: org2)

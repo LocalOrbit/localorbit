@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Viewing featured promotion" do
   let!(:market)    { create(:market, :with_delivery_schedule, :with_address) }
@@ -15,55 +15,55 @@ describe "Viewing featured promotion" do
       sign_in_as user
     end
 
-    context 'with a price' do
+    context "with a price" do
       before do
         visit products_path
       end
 
-      it 'shows the featured product' do
+      it "shows the featured product" do
         expect(page).to have_content("Featured")
       end
 
-      it 'can be toggled between minimized and maximized', js: true do
-        expect(page).to have_content('Big savings!')
-        find('.featured-product-toggle').trigger('click')
+      it "can be toggled between minimized and maximized", js: true do
+        expect(page).to have_content("Big savings!")
+        find(".featured-product-toggle").trigger("click")
 
-        expect(page).not_to have_content('Big savings!')
+        expect(page).not_to have_content("Big savings!")
 
-        find('.featured-product-toggle').trigger('click')
-        expect(page).to have_content('Big savings!')
+        find(".featured-product-toggle").trigger("click")
+        expect(page).to have_content("Big savings!")
       end
     end
 
-    context 'without a price' do
+    context "without a price" do
       before do
         product.prices.delete_all
         visit products_path
       end
 
-      it 'does not show the featured product' do
+      it "does not show the featured product" do
         expect(page).to_not have_content("Featured")
       end
     end
 
-    context 'without a price for the market' do
+    context "without a price for the market" do
       before do
         product.prices.first.update(market_id: market.id + 1)
         visit products_path
       end
 
-      it 'does not show the featured product' do
+      it "does not show the featured product" do
         expect(page).to_not have_content("Featured")
       end
     end
 
-    context 'without a price for the buyer' do
+    context "without a price for the buyer" do
       before do
         product.prices.first.update(organization_id: buyer.id + 1)
         visit products_path
       end
 
-      it 'does not show the featured product' do
+      it "does not show the featured product" do
         expect(page).to_not have_content("Featured")
       end
     end
@@ -73,7 +73,7 @@ describe "Viewing featured promotion" do
     before do
       Timecop.travel(5.days.ago) do
         product.lots.first.update(created_at: 3.days.ago)
-        product.lots.first.update(number: '1', expires_at: 2.days.ago)
+        product.lots.first.update(number: "1", expires_at: 2.days.ago)
       end
 
       switch_to_subdomain(market.subdomain)
@@ -82,7 +82,7 @@ describe "Viewing featured promotion" do
       visit products_path
     end
 
-    it 'does not show the featured product' do
+    it "does not show the featured product" do
       expect(page).to_not have_content("Featured")
     end
 
@@ -98,7 +98,7 @@ describe "Viewing featured promotion" do
       visit products_path
     end
 
-    it 'does not show the featured product' do
+    it "does not show the featured product" do
       expect(page).to_not have_content("Featured")
     end
   end

@@ -31,7 +31,7 @@ class Admin::LotsController < AdminController
     flash.now[:alert] = "Could not save lot" unless updated
     respond_to do |format|
       format.html { html_for_action(updated, "Successfully saved lot") }
-      format.js   { json_for_action(updated, "Successfully saved lot")}
+      format.js   { json_for_action(updated, "Successfully saved lot") }
     end
   end
 

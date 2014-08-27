@@ -8,7 +8,7 @@ module Metrics
         calculation: :count,
         scope: BASE_SCOPE,
         group: "markets.id",
-        joins: { product: { organization: :markets } },
+        joins: {product: {organization: :markets}},
         model_type: "Market"
       },
       total_price_sum: {
@@ -16,7 +16,7 @@ module Metrics
         calculation_arg: :sale_price,
         scope: BASE_SCOPE,
         group: "markets.id",
-        joins: { product: { organization: :markets } },
+        joins: {product: {organization: :markets}},
         model_type: "Market"
       }
     }

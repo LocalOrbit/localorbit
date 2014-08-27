@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 feature "View Seller Profiles" do
   let!(:buyer)   { create(:organization, :buyer, :single_location) }
@@ -67,7 +67,7 @@ feature "View Seller Profiles" do
     expect(page).to have_content(seller2.name)
     expect(page).to_not have_content(inactive_seller.name)
     expect(page).to_not have_content(hidden_seller.name)
-    expect(page).to have_css('#admin-nav', visible: false)
+    expect(page).to have_css("#admin-nav", visible: false)
   end
 
   context "seller profile" do
@@ -77,13 +77,13 @@ feature "View Seller Profiles" do
 
       expect(page).to have_content(seller1.who_story)
       expect(page).to have_content(seller1.how_story)
-      expect(page).to have_css('#admin-nav', visible: false)
+      expect(page).to have_css("#admin-nav", visible: false)
       expect(page).to_not have_xpath("//a[@class='twitter-timeline' and @data-screen-name='#{seller1.twitter}']")
       expect(page).to_not have_xpath("//div[@class='fb-like-box' and @data-href='https://www.facebook.com/#{seller1.facebook}']")
     end
 
     it "displays a twitter feed if enabled for the seller" do
-      seller1.update(display_twitter: true, twitter: 'localorbit')
+      seller1.update(display_twitter: true, twitter: "localorbit")
 
       visit seller_path(seller1)
 
@@ -91,7 +91,7 @@ feature "View Seller Profiles" do
     end
 
     it "displays a facebook feed if enabled for the seller" do
-      seller1.update(display_facebook: true, facebook: 'localorbit')
+      seller1.update(display_facebook: true, facebook: "localorbit")
 
       visit seller_path(seller1)
 
@@ -154,7 +154,7 @@ feature "View Seller Profiles" do
       products = Dom::Product.all
       expect(products.count).to eq(3)
       # 2 top headers (Fruits)
-      expect(page).to have_css('caption', count: 1)
+      expect(page).to have_css("caption", count: 1)
       # two inner headers (apples/bananas)
       expect(page).to have_css('th:contains("Apples")', count: 1)
       expect(page).to have_css('th:contains("Bananas")', count: 1)

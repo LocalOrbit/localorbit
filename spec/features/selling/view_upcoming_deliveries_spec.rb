@@ -9,7 +9,7 @@ describe "Upcoming Deliveries" do
   let!(:seller)  { create(:organization, :seller, markets: [market]) }
   let!(:seller2) { create(:organization, :seller, markets: [market]) }
   let!(:product) { create(:product, :sellable, organization: seller) }
-  let!(:seller2_product) { create(:product, :sellable, organization: seller2)}
+  let!(:seller2_product) { create(:product, :sellable, organization: seller2) }
 
   let!(:sunday_delivery_schedule) { create(:delivery_schedule, market: market, day: 0) }
   let!(:sunday_delivery) { create(:delivery, delivery_schedule: sunday_delivery_schedule, deliver_on: Date.parse("May 4, 2014")) }
@@ -31,13 +31,13 @@ describe "Upcoming Deliveries" do
     let!(:user) { create(:user, organizations: [seller]) }
 
     context "with orders" do
-      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1) }
       let!(:order_with_seller_product) { create(:order, items: [order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:delivered_order_item) { create(:order_item, product: product, quantity: 1, delivery_status: 'delivered') }
+      let!(:delivered_order_item) { create(:order_item, product: product, quantity: 1, delivery_status: "delivered") }
       let!(:delivered_order) { create(:order, items: [delivered_order_item], organization: seller, market: market, delivery: wednesday_delivery) }
 
-      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1)}
+      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1) }
       let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
 
       before do
@@ -75,10 +75,10 @@ describe "Upcoming Deliveries" do
     end
 
     context "shows deliveries only once" do
-      let!(:order_item_for_seller_product1) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product1) { create(:order_item, product: product, quantity: 1) }
       let!(:order_with_seller_product1) { create(:order, items: [order_item_for_seller_product1], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:order_item_for_seller_product2) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product2) { create(:order_item, product: product, quantity: 1) }
       let!(:order_with_seller_product2) { create(:order, items: [order_item_for_seller_product2], organization: seller, market: market, delivery: thursday_delivery) }
 
       before do
@@ -99,10 +99,10 @@ describe "Upcoming Deliveries" do
     context "multiple market membership" do
       let!(:other_market) { create(:market, :with_delivery_schedule, :with_addresses, organizations: [seller]) }
 
-      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1) }
       let!(:order_with_seller_product) { create(:order, items: [order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1)}
+      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1) }
       let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
 
       before do
@@ -136,10 +136,10 @@ describe "Upcoming Deliveries" do
     let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
     context "with orders" do
-      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1)}
-      let!(:order_with_seller_product) { create(:order, items:[order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
+      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1) }
+      let!(:order_with_seller_product) { create(:order, items: [order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1)}
+      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1) }
       let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
 
       before do
@@ -159,10 +159,10 @@ describe "Upcoming Deliveries" do
     end
 
     context "shows deliveries only once" do
-      let!(:order_item_for_seller_product1) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product1) { create(:order_item, product: product, quantity: 1) }
       let!(:order_with_seller_product1) { create(:order, items: [order_item_for_seller_product1], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:order_item_for_seller_product2) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product2) { create(:order_item, product: product, quantity: 1) }
       let!(:order_with_seller_product2) { create(:order, items: [order_item_for_seller_product2], organization: seller, market: market, delivery: thursday_delivery) }
 
       before do
@@ -183,10 +183,10 @@ describe "Upcoming Deliveries" do
     context "multiple market membership" do
       let!(:other_market) { create(:market, :with_delivery_schedule, :with_addresses, managers: [user]) }
 
-      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1) }
       let!(:order_with_seller_product) { create(:order, items: [order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1)}
+      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1) }
       let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
 
       before do
@@ -220,10 +220,10 @@ describe "Upcoming Deliveries" do
     let!(:user) { create(:user, :admin) }
 
     context "without a selected market" do
-      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1)}
-      let!(:order_with_seller_product) { create(:order, items:[order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
+      let!(:order_item_for_seller_product) { create(:order_item, product: product, quantity: 1) }
+      let!(:order_with_seller_product) { create(:order, items: [order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1)}
+      let!(:other_order_item) { create(:order_item, product: seller2_product, quantity: 1) }
       let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
 
       context "multiple markets available" do
@@ -265,10 +265,10 @@ describe "Upcoming Deliveries" do
     end
 
     context "with orders" do
-      let!(:order_item_for_seller_product) { create(:order_item,  product: product, quantity: 1)}
+      let!(:order_item_for_seller_product) { create(:order_item,  product: product, quantity: 1) }
       let!(:order_with_seller_product) { create(:order, items: [order_item_for_seller_product], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:other_order_item) { create(:order_item,  product: seller2_product, quantity: 1)}
+      let!(:other_order_item) { create(:order_item,  product: seller2_product, quantity: 1) }
       let!(:other_order) { create(:order, items: [other_order_item], organization: seller2, market: market, delivery: friday_delivery) }
 
       before do
@@ -288,10 +288,10 @@ describe "Upcoming Deliveries" do
     end
 
     context "shows deliveries only once" do
-      let!(:order_item_for_seller_product1) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product1) { create(:order_item, product: product, quantity: 1) }
       let!(:order_with_seller_product1) { create(:order, items: [order_item_for_seller_product1], organization: seller, market: market, delivery: thursday_delivery) }
 
-      let!(:order_item_for_seller_product2) { create(:order_item, product: product, quantity: 1)}
+      let!(:order_item_for_seller_product2) { create(:order_item, product: product, quantity: 1) }
       let!(:order_with_seller_product2) { create(:order, items: [order_item_for_seller_product2], organization: seller, market: market, delivery: thursday_delivery) }
 
       before do

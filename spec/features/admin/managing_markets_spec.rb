@@ -1,12 +1,12 @@
 require "spec_helper"
 
 describe "Managing Markets" do
-  let(:add_market_link_name) { 'Add Market' }
+  let(:add_market_link_name) { "Add Market" }
 
-  describe 'as a market manager' do
+  describe "as a market manager" do
     let!(:market1) { create(:market) }
     let!(:market2) { create(:market) }
-    let!(:user) { create(:user, role: 'user', managed_markets: [market1, market2]) }
+    let!(:user) { create(:user, role: "user", managed_markets: [market1, market2]) }
 
     before do
       switch_to_subdomain market1.subdomain
@@ -15,7 +15,7 @@ describe "Managing Markets" do
 
     context "I can see the details for each of my markets" do
       it "through the market listing" do
-        visit '/admin/markets'
+        visit "/admin/markets"
 
         click_link market1.name
 
@@ -36,38 +36,38 @@ describe "Managing Markets" do
       end
     end
 
-    it 'I can modify a market' do
-      visit '/admin/markets'
+    it "I can modify a market" do
+      visit "/admin/markets"
       click_link market1.name
 
-      expect(find_field("market_contact_name").value).to eq('Jill Smith')
+      expect(find_field("market_contact_name").value).to eq("Jill Smith")
 
-      fill_in 'Contact name', with: 'Jane Smith'
+      fill_in "Contact name", with: "Jane Smith"
 
-      click_button 'Update Market'
+      click_button "Update Market"
 
-      expect(page).to have_text('Market Information')
-      expect(find_field("market_contact_name").value).to eq('Jane Smith')
+      expect(page).to have_text("Market Information")
+      expect(find_field("market_contact_name").value).to eq("Jane Smith")
     end
 
-    it 'I cannot activate a market' do
+    it "I cannot activate a market" do
       market1.update_attribute(:active, true)
       visit "/admin/markets/#{market1.id}"
-      expect(page).not_to have_content('Deactivate')
+      expect(page).not_to have_content("Deactivate")
     end
 
-    it 'I cannot deactivate a market' do
+    it "I cannot deactivate a market" do
       visit "/admin/markets/#{market1.id}"
-      expect(page).not_to have_content('Deactivate')
+      expect(page).not_to have_content("Deactivate")
     end
 
-    it 'can not change a markets plan' do
+    it "can not change a markets plan" do
       visit admin_market_path(market1)
 
       expect(page).to_not have_field("Plan")
     end
 
-    it 'I cannot see payment options' do
+    it "I cannot see payment options" do
       visit admin_market_path(market1)
 
       expect(page).to_not have_content("Allowed payment methods")
@@ -78,8 +78,8 @@ describe "Managing Markets" do
       expect(page).to_not have_content("Allow ACH")
     end
 
-    it 'I can not add a market' do
-      visit '/admin/markets'
+    it "I can not add a market" do
+      visit "/admin/markets"
 
       expect(page).to_not have_text(add_market_link_name)
 
@@ -88,22 +88,22 @@ describe "Managing Markets" do
       expect(page).to have_text("page you were looking for doesn't exist")
     end
 
-    describe 'with additional markets' do
+    describe "with additional markets" do
       let!(:market3) { create(:market) }
 
-      it 'I do not see markets I am not managing in my list' do
-        visit '/admin/markets'
+      it "I do not see markets I am not managing in my list" do
+        visit "/admin/markets"
 
         expect(page).to_not have_text(market3.name)
       end
 
-      it 'I can not see the details for a market I am not managing' do
+      it "I can not see the details for a market I am not managing" do
         visit admin_market_path(market3)
 
         expect(page).to have_text("page you were looking for doesn't exist")
       end
 
-      it 'I can not modify a market I am not managing' do
+      it "I can not modify a market I am not managing" do
         visit admin_market_path(market3)
 
         expect(page).to have_text("page you were looking for doesn't exist")
@@ -111,7 +111,7 @@ describe "Managing Markets" do
     end
   end
 
-  describe 'as an admin' do
+  describe "as an admin" do
     let!(:user) { create(:user, :admin) }
     let!(:market) { create(:market, name: "A Market", subdomain: "not-c", contact_name: "B Name") }
 
@@ -120,19 +120,19 @@ describe "Managing Markets" do
       sign_in_as user
     end
 
-    it 'can see a list of markets' do
+    it "can see a list of markets" do
       @market2 = create(:market)
       visit "/admin/markets"
 
-      expect(page).to have_text('Markets')
+      expect(page).to have_text("Markets")
       expect(page).to have_text(market.name)
       expect(page).to have_text(@market2.name)
     end
 
-    it 'can see a list of markets as a CSV' do
+    it "can see a list of markets as a CSV" do
       @market2 = create(:market)
       visit "/admin/markets"
-      html_headers = page.all('th').map(&:text)
+      html_headers = page.all("th").map(&:text)
 
       click_link "Export CSV"
 
@@ -201,10 +201,10 @@ describe "Managing Markets" do
       end
     end
 
-    it 'can see details for a single market' do
+    it "can see details for a single market" do
       @market2 = create(:market)
 
-      visit '/admin/markets'
+      visit "/admin/markets"
 
       click_link market.name
 
@@ -212,61 +212,61 @@ describe "Managing Markets" do
       expect(page).to_not have_text(@market2.name)
     end
 
-    it 'can add a market', :vcr do
-      visit '/admin/markets'
+    it "can add a market", :vcr do
+      visit "/admin/markets"
 
       click_link add_market_link_name
 
-      fill_in 'Name',          with: 'Holland Farmers'
-      fill_in 'Subdomain',     with: 'holland-farmers'
-      fill_in 'Tagline',       with: 'Dutch People, Dutch Prices!'
-      select  '(GMT-05:00) Eastern Time (US & Canada)', from: 'Time zone'
-      fill_in 'Contact name',  with: 'Jill Smith'
-      fill_in 'Contact email', with: 'jill@smith.com'
-      fill_in 'Contact phone', with: '616-222-2222'
-      fill_in 'Facebook',      with: 'https://www.facebook.com/hollandfarmers'
-      fill_in 'Twitter',       with: '@hollandfarmers'
-      fill_in 'Profile',       with: 'Some interesting info about Holland Farmers'
-      fill_in 'Policies',      with: 'Something no one will pay attention to'
-      attach_file 'Logo', 'app/assets/images/logo.png'
-      attach_file 'Photo', 'app/assets/images/backgrounds/lentils.jpg'
+      fill_in "Name",          with: "Holland Farmers"
+      fill_in "Subdomain",     with: "holland-farmers"
+      fill_in "Tagline",       with: "Dutch People, Dutch Prices!"
+      select "(GMT-05:00) Eastern Time (US & Canada)", from: "Time zone"
+      fill_in "Contact name",  with: "Jill Smith"
+      fill_in "Contact email", with: "jill@smith.com"
+      fill_in "Contact phone", with: "616-222-2222"
+      fill_in "Facebook",      with: "https://www.facebook.com/hollandfarmers"
+      fill_in "Twitter",       with: "@hollandfarmers"
+      fill_in "Profile",       with: "Some interesting info about Holland Farmers"
+      fill_in "Policies",      with: "Something no one will pay attention to"
+      attach_file "Logo", "app/assets/images/logo.png"
+      attach_file "Photo", "app/assets/images/backgrounds/lentils.jpg"
 
-      click_button 'Add Market'
+      click_button "Add Market"
 
-      expect(find_field("Name").value).to eq('Holland Farmers')
-      expect(find_field("Tagline").value).to eq('Dutch People, Dutch Prices!')
-      expect(find_field("Contact name").value).to eq('Jill Smith')
-      expect(find_field("Twitter").value).to eq('hollandfarmers')
+      expect(find_field("Name").value).to eq("Holland Farmers")
+      expect(find_field("Tagline").value).to eq("Dutch People, Dutch Prices!")
+      expect(find_field("Contact name").value).to eq("Jill Smith")
+      expect(find_field("Twitter").value).to eq("hollandfarmers")
     end
 
     describe "adding a market without valid information" do
       it "shows an error message" do
-        visit '/admin/markets'
+        visit "/admin/markets"
 
         click_link add_market_link_name
 
-        fill_in 'Name', with: ''
-        click_button 'Add Market'
+        fill_in "Name", with: ""
+        click_button "Add Market"
         expect(page).to have_content("Could not create market")
         expect(page).to have_content("Name can't be blank")
       end
     end
 
-    it 'can modify a market' do
-      visit '/admin/markets'
+    it "can modify a market" do
+      visit "/admin/markets"
       click_link market.name
 
-      expect(find_field("market_contact_name").value).to eq('B Name')
+      expect(find_field("market_contact_name").value).to eq("B Name")
 
-      fill_in 'Contact name', with: 'Jane Smith'
+      fill_in "Contact name", with: "Jane Smith"
 
-      click_button 'Update Market'
+      click_button "Update Market"
 
-      expect(page).to have_text('Market Information')
-      expect(find_field("market_contact_name").value).to eq('Jane Smith')
+      expect(page).to have_text("Market Information")
+      expect(find_field("market_contact_name").value).to eq("Jane Smith")
     end
 
-    it 'can change a markets plan' do
+    it "can change a markets plan" do
       new_plan = create(:plan)
       visit admin_market_path(market)
 
@@ -278,13 +278,13 @@ describe "Managing Markets" do
       expect(find_field("Plan").value).to eq(new_plan.id.to_s)
     end
 
-    it 'can set the auto-activation flag for organization registrations' do
+    it "can set the auto-activation flag for organization registrations" do
       visit admin_market_path(market)
 
       expect(find_field("Auto-activate organizations")).to_not be_checked
 
       check "Auto-activate organizations"
-      click_button 'Update Market'
+      click_button "Update Market"
 
       expect(find_field("Auto-activate organizations")).to be_checked
     end
@@ -294,7 +294,7 @@ describe "Managing Markets" do
         visit admin_market_path(market)
       end
 
-      it 'can see payment options' do
+      it "can see payment options" do
         expect(page).to have_content("Allowed payment methods")
         expect(page).to have_content("Default organization payment methods")
 
@@ -303,7 +303,7 @@ describe "Managing Markets" do
         expect(page).to have_content("Allow ACH")
       end
 
-      it 'can modify payment options' do
+      it "can modify payment options" do
         within("#allowed-payment-options") do
           uncheck "Allow purchase orders"
           uncheck "Allow ACH"
@@ -316,16 +316,16 @@ describe "Managing Markets" do
 
         click_button "Update Market"
 
-        expect(find('#market_allow_purchase_orders')).to_not be_checked
-        expect(find('#market_allow_credit_cards')).to be_checked
-        expect(find('#market_allow_ach')).to_not be_checked
+        expect(find("#market_allow_purchase_orders")).to_not be_checked
+        expect(find("#market_allow_credit_cards")).to be_checked
+        expect(find("#market_allow_ach")).to_not be_checked
 
-        expect(find('#market_default_allow_purchase_orders')).to be_checked
-        expect(find('#market_default_allow_credit_cards')).to be_checked
-        expect(find('#market_default_allow_ach')).to_not be_checked
+        expect(find("#market_default_allow_purchase_orders")).to be_checked
+        expect(find("#market_default_allow_credit_cards")).to be_checked
+        expect(find("#market_default_allow_ach")).to_not be_checked
       end
 
-      it 'requires at lease one payment method' do
+      it "requires at lease one payment method" do
         within("#allowed-payment-options") do
           uncheck "Allow purchase orders"
           uncheck "Allow credit cards"
@@ -340,11 +340,11 @@ describe "Managing Markets" do
 
     describe "modifying a market without valid information", js: true do
       it "shows an error message" do
-        visit '/admin/markets'
+        visit "/admin/markets"
         click_link market.name
 
-        fill_in 'Name', with: ''
-        click_button 'Update Market'
+        fill_in "Name", with: ""
+        click_button "Update Market"
         expect(page).to have_content("Could not update market")
         expect(page).to have_content("Name can't be blank")
 
@@ -354,54 +354,54 @@ describe "Managing Markets" do
       end
     end
 
-    it 'can mark an active market as inactive' do
+    it "can mark an active market as inactive" do
       market.update_attribute(:active, true)
 
       visit "/admin/markets/#{market.id}"
 
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq('false')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq("false")
 
-      click_button 'Deactivate'
+      click_button "Deactivate"
 
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq('true')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq("true")
     end
 
-    it 'can mark an inactive market as active' do
+    it "can mark an inactive market as active" do
       visit "/admin/markets/#{market.id}"
 
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq('true')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq("true")
 
-      click_button 'Activate'
+      click_button "Activate"
 
-      expect(find(:xpath, "//input[@id='market_active']").value).to eq('false')
+      expect(find(:xpath, "//input[@id='market_active']").value).to eq("false")
     end
 
-    it 'can update the market fee structure' do
+    it "can update the market fee structure" do
       visit "/admin/markets/#{market.id}"
       click_link "Fees"
 
-      fill_in 'Local Orbit % paid by Seller',   with: '2.0'
-      fill_in 'Local Orbit % paid by market',   with: '4.0'
-      fill_in 'Market % paid by Seller',        with: '3.0'
-      fill_in 'Credit Card fee paid by Seller', with: '2.5'
-      fill_in 'Credit Card fee paid by market', with: '4.5'
-      fill_in 'ACH fee paid by Seller',         with: '3.5'
-      fill_in 'ACH fee paid by market',         with: '5.5'
-      fill_in 'ACH fee cap',                    with: '10.00'
-      fill_in 'PO Payment Terms',               with: '18'
+      fill_in "Local Orbit % paid by Seller",   with: "2.0"
+      fill_in "Local Orbit % paid by market",   with: "4.0"
+      fill_in "Market % paid by Seller",        with: "3.0"
+      fill_in "Credit Card fee paid by Seller", with: "2.5"
+      fill_in "Credit Card fee paid by market", with: "4.5"
+      fill_in "ACH fee paid by Seller",         with: "3.5"
+      fill_in "ACH fee paid by market",         with: "5.5"
+      fill_in "ACH fee cap",                    with: "10.00"
+      fill_in "PO Payment Terms",               with: "18"
 
-      click_button 'Update Fees'
+      click_button "Update Fees"
 
       expect(page).to have_content("#{market.name} fees successfully updated")
-      expect(find_field('Local Orbit % paid by Seller').value).to   eq('2.000')
-      expect(find_field('Local Orbit % paid by market').value).to   eq('4.000')
-      expect(find_field('Market % paid by Seller').value).to        eq('3.000')
-      expect(find_field('Credit Card fee paid by Seller').value).to eq('2.500')
-      expect(find_field('Credit Card fee paid by market').value).to eq('4.500')
-      expect(find_field('ACH fee paid by Seller').value).to         eq('3.500')
-      expect(find_field('ACH fee paid by market').value).to         eq('5.500')
-      expect(find_field('ACH fee cap').value).to                    eq('10.00')
-      expect(find_field('PO Payment Terms').value).to               eq('18')
+      expect(find_field("Local Orbit % paid by Seller").value).to eq("2.000")
+      expect(find_field("Local Orbit % paid by market").value).to eq("4.000")
+      expect(find_field("Market % paid by Seller").value).to eq("3.000")
+      expect(find_field("Credit Card fee paid by Seller").value).to eq("2.500")
+      expect(find_field("Credit Card fee paid by market").value).to eq("4.500")
+      expect(find_field("ACH fee paid by Seller").value).to eq("3.500")
+      expect(find_field("ACH fee paid by market").value).to eq("5.500")
+      expect(find_field("ACH fee cap").value).to eq("10.00")
+      expect(find_field("PO Payment Terms").value).to eq("18")
     end
   end
 end

@@ -1,7 +1,7 @@
 module AuthenticationHelpers
   @@data = {}
 
-  def sign_in_as(user, password = 'password')
+  def sign_in_as(user, password="password")
     case RSpec.current_example.metadata[:type]
     when :request
       post user_session_path, user: {email: user.email, password: password}
@@ -19,7 +19,7 @@ module AuthenticationHelpers
     click_link "Sign Out"
   end
 
-  def switch_user(new_user, &block)
+  def switch_user(new_user, &_block)
     previous_user = @@data[:user]
     previous_url = current_url
 

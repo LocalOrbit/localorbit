@@ -11,8 +11,8 @@ module Metrics
 
     @@model_name = BASE_SCOPE.name
     @@history_metrics = {
-      total_sellers:    { scope: BASE_SCOPE.where(can_sell: true) },
-      total_buyer_only: { scope: BASE_SCOPE.where(can_sell: false) }
+      total_sellers:    {scope: BASE_SCOPE.where(can_sell: true)},
+      total_buyer_only: {scope: BASE_SCOPE.where(can_sell: false)}
     }
   end
 end

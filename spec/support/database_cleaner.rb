@@ -20,6 +20,6 @@ RSpec.configure do |config|
   end
 
   config.after(:all, truncate_after_all: true) do
-    DatabaseCleaner.clean_with(:truncation, {except: %w(categories)})
+    DatabaseCleaner.clean_with(:truncation, except: %w(categories))
   end
 end

@@ -23,7 +23,7 @@ module DeliveryStatus
     if user.admin? || user.market_manager? || organization_ids.include?(organization_id)
       items
     else
-      items.joins(:product).where(products: { organization_id: organization_ids})
+      items.joins(:product).where(products: {organization_id: organization_ids})
     end
   end
 

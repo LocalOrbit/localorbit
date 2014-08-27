@@ -1,6 +1,6 @@
 shared_examples "an action restricted to admin, market manager, member" do |action|
   def meet_expected_expectation
-    %w[index new edit].include?(controller.action_name) ? be_a_success : be_a_redirect
+    %w(index new edit).include?(controller.action_name) ? be_a_success : be_a_redirect
   end
 
   it "prevents access when not signed in" do

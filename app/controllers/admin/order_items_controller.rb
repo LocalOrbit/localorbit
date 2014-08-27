@@ -17,10 +17,10 @@ module Admin
 
       respond_to do |format|
         format.html { @order_items = @q.result.page(params[:page]).per(@query_params[:per_page]) }
-        format.csv {
+        format.csv do
           @order_items = @q.result
           @filename = "sold_items.csv"
-        }
+        end
       end
     end
 
@@ -57,7 +57,7 @@ module Admin
       fetch_sellers_list(order_items)
       fetch_buyers_list(order_items)
       fetch_delivery_statuses(order_items)
-      fetch_buyer_payment_statuses(order_items)
+      fetch_buyer_payment_statuses
     end
 
     def fetch_markets_list(order_items)
@@ -76,7 +76,7 @@ module Admin
       @delivery_statuses = order_items.uniq.pluck(:delivery_status).sort
     end
 
-    def fetch_buyer_payment_statuses(order_items)
+    def fetch_buyer_payment_statuses
       @buyer_payment_statuses = Order.joins(:items).uniq.merge(OrderItem.for_user(current_user)).pluck(:payment_status).sort
     end
   end

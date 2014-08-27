@@ -1,10 +1,10 @@
-require 'spec_helper'
+require "spec_helper"
 
 feature "Opening and closing a market:" do
   let!(:seller)         { create(:organization, :seller, :single_location, markets: [market]) }
   let!(:buyer)          { create(:organization, :buyer, :single_location, markets: [market]) }
   let!(:products)       { create_list(:product, 5, :sellable, organization: seller) }
-  let!(:market_manager) { create(:user, :market_manager, organizations: [buyer], managed_markets:[market]) }
+  let!(:market_manager) { create(:user, :market_manager, organizations: [buyer], managed_markets: [market]) }
 
   context "when a market is open" do
     let!(:market) { create(:market, :with_addresses, :with_delivery_schedule) }
@@ -48,4 +48,3 @@ feature "Opening and closing a market:" do
   end
 
 end
-

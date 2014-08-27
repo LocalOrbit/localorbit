@@ -1,8 +1,8 @@
 class BaseMailer < ActionMailer::Base
   layout "email"
   default(
-    from: Proc.new { default_from },
-    reply_to: Proc.new { default_reply_to },
+    from: proc { default_from },
+    reply_to: proc { default_reply_to },
   )
 
   private

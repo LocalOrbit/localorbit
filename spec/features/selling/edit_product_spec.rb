@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "Editing a product" do
   let(:user) { create(:user) }
-  let(:stub_warning) {"Your product will not appear in the Shop until all of these actions are complete"}
+  let(:stub_warning) { "Your product will not appear in the Shop until all of these actions are complete" }
   let(:organization_label) { "Product Organization" }
   let(:product) { create(:product, name: "Canned Pears") }
   let!(:category_id) { product.category.id }
@@ -16,8 +16,8 @@ describe "Editing a product" do
     before do
       product.organization.users << user
       sign_in_as(user)
-      within '#admin-nav' do
-        click_link 'Products'
+      within "#admin-nav" do
+        click_link "Products"
       end
       click_link "Canned Pears"
     end
@@ -75,9 +75,9 @@ describe "Editing a product" do
         it "user can select simple inventory and set a simple inventory value" do
           expect(page).to_not have_content("Current inventory")
 
-          check 'Use simple inventory'
-          fill_in 'Current inventory', with: '42'
-          click_button 'Save and Continue'
+          check "Use simple inventory"
+          fill_in "Current inventory", with: "42"
+          click_button "Save and Continue"
 
           expect(page).to have_content("Saved Canned Pears")
           expect(page).to have_content("Your product will not appear in the Shop until you add pricing")
@@ -91,8 +91,8 @@ describe "Editing a product" do
       product.organization.users << user
       sign_in_as(user)
 
-      within '#admin-nav' do
-        click_link 'Products'
+      within "#admin-nav" do
+        click_link "Products"
       end
       click_link "Canned Pears"
     end
@@ -165,15 +165,15 @@ describe "Editing a product" do
     let!(:tuesday_delivery) { create(:delivery_schedule, :buyer_pickup, market: market, day: 2) }
     let!(:thursday_delivery) { create(:delivery_schedule, :buyer_pickup, market: market, day: 4, require_delivery: true) }
 
-    context 'single market membership' do
+    context "single market membership" do
       before do
         product.organization.users << user
         product.delivery_schedule_ids = [monday_delivery.id]
         product.update(use_all_deliveries: false)
 
         sign_in_as(user)
-        within '#admin-nav' do
-          click_link 'Products'
+        within "#admin-nav" do
+          click_link "Products"
         end
         click_link "Canned Pears"
       end
@@ -222,11 +222,11 @@ describe "Editing a product" do
       it "does not allow required delivery to be unselected" do
         uncheck "Make product available on all market delivery dates"
 
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Thursdays").node.find('input')).to be_disabled
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Thursdays").node.find("input")).to be_disabled
       end
     end
 
-    context 'multi-market membership' do
+    context "multi-market membership" do
       let!(:second_market) { create(:market, :with_addresses, organizations: [product.organization]) }
       let!(:wednesday_delivery) { create(:delivery_schedule, market: second_market, day: 3) }
 
@@ -236,8 +236,8 @@ describe "Editing a product" do
         product.update(use_all_deliveries: false)
 
         sign_in_as(user)
-        within '#admin-nav' do
-          click_link 'Products'
+        within "#admin-nav" do
+          click_link "Products"
         end
         click_link "Canned Pears"
       end

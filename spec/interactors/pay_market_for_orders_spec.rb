@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe PayMarketForOrders do
   let!(:market)            { create(:market) }
@@ -8,7 +8,7 @@ describe PayMarketForOrders do
   let!(:orders)            { [create(:order, market: market, delivery: delivery), create(:order, market: market, delivery: delivery), create(:order, market: market, delivery: delivery)] }
   let(:order_ids)          { orders.map(&:id) }
   let(:balanaced_bank_account) { double(Balanced::BankAccount, credit: balanced_credit) }
-  let(:balanced_credit)    { double(Balanced::Credit, uri: '/balanced-credit-1') }
+  let(:balanced_credit)    { double(Balanced::Credit, uri: "/balanced-credit-1") }
 
   before do
     expect(Balanced::BankAccount).to receive(:find).with("/bank-account-1").and_return(balanaced_bank_account)
@@ -39,11 +39,11 @@ describe PayMarketForOrders do
     expect(p.amount).to eq(605.24)
     expect(p.status).to eq("pending")
     expect(p.payment_method).to eq("ach")
-    expect(p.balanced_uri).to eq('/balanced-credit-1')
+    expect(p.balanced_uri).to eq("/balanced-credit-1")
   end
 
   it "generates the appropriate balanced transaction" do
-    expect(balanaced_bank_account).to receive(:credit).with({amount: 60524, description: "Local Orbit", appears_on_statement_as: "Local Orbit"}).and_return(balanced_credit)
+    expect(balanaced_bank_account).to receive(:credit).with(amount: 60_524, description: "Local Orbit", appears_on_statement_as: "Local Orbit").and_return(balanced_credit)
 
     interactor
   end

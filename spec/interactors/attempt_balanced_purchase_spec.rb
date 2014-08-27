@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe AttemptBalancedPurchase do
   let!(:market)      { create(:market) }
@@ -11,28 +11,28 @@ describe AttemptBalancedPurchase do
   let!(:bank_account) { create(:bank_account, :checking, bankable: buyer, balanced_uri: "/balanced-card-uri") }
   let!(:credit_card) { create(:bank_account, :credit_card, bankable: buyer, balanced_uri: "/balanced-credit-card-uri") }
 
-  let!(:cart_item)   { create(:cart_item, product: product, quantity: 10)}
+  let!(:cart_item)   { create(:cart_item, product: product, quantity: 10) }
   let(:cart)        { create(:cart, organization: buyer, market: market, items: [cart_item]) }
 
   let!(:order)       { create(:order, :with_items, delivery: delivery) }
-  let(:params)       { { "payment_method" => "purchase order"} }
+  let(:params)       { {"payment_method" => "purchase order"} }
 
   let!(:balanced_customer) { double("balanced customer", debit: balanced_debit) }
   let!(:balanced_debit)    { double("balanced debit", uri: "/balanced-debit-uri") }
 
-  subject {
+  subject do
     AttemptBalancedPurchase.perform(buyer: user, order: order, order_params: params, cart: cart)
-  }
+  end
 
   context "purchase order" do
-    let(:params) { { "payment_method" => "purchase order" } }
+    let(:params) { {"payment_method" => "purchase order"} }
     it "noop's" do
       expect(subject).to be_success
     end
   end
 
   context "ach" do
-    let!(:params) { { "payment_method" => "ach", "bank_account" => "#{bank_account.id}" } }
+    let!(:params) { {"payment_method" => "ach", "bank_account" => "#{bank_account.id}"} }
 
     before do
       allow(Balanced::Customer).to receive(:find).and_return(balanced_customer)
@@ -80,7 +80,7 @@ describe AttemptBalancedPurchase do
         it "creates a debit for the order amount" do
           expect(subject).to be_success
           expect(balanced_customer).to have_received(:debit).with(
-            amount: (cart.total*100).to_i,
+            amount: (cart.total * 100).to_i,
             source_uri: bank_account.balanced_uri,
             description: "#{cart.market.name} purchase",
             appears_on_statement_as: market.name,
@@ -155,7 +155,7 @@ describe AttemptBalancedPurchase do
     end
 
     context "invalid bank account" do
-      let!(:params) { { "payment_method" => "ach", "bank_account" => "0" } }
+      let!(:params) { {"payment_method" => "ach", "bank_account" => "0"} }
 
       before do
         allow(Balanced::Customer).to receive(:debit).and_raise(RuntimeError)
@@ -176,7 +176,7 @@ describe AttemptBalancedPurchase do
   end
 
   context "credit card" do
-    let!(:params) { { "payment_method" => "credit card", "credit_card" => {"id" => "#{credit_card.id}"} } }
+    let!(:params) { {"payment_method" => "credit card", "credit_card" => {"id" => "#{credit_card.id}"}} }
 
     before do
       allow(Balanced::Customer).to receive(:find).and_return(balanced_customer)
@@ -287,7 +287,7 @@ describe AttemptBalancedPurchase do
     end
 
     context "invalid credit card" do
-      let!(:params) { { "payment_method" => "credit card", "credit_card" => "0" } }
+      let!(:params) { {"payment_method" => "credit card", "credit_card" => "0"} }
 
       before do
         allow(Balanced::Customer).to receive(:find).and_raise(RuntimeError)

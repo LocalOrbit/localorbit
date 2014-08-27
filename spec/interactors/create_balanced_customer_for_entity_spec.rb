@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe CreateBalancedCustomerForEntity do
   context "balanced customer doesn't exist" do

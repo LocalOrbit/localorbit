@@ -10,20 +10,20 @@ describe "Pick list" do
   let!(:seller2_product)          { create(:product, :sellable, name: "Sprouts", organization: seller2) }
 
   let!(:friday_delivery_schedule) { create(:delivery_schedule, market: market, day: 5) }
-  let!(:friday_delivery)          { create(:delivery, delivery_schedule: friday_delivery_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014"))}
+  let!(:friday_delivery)          { create(:delivery, delivery_schedule: friday_delivery_schedule, deliver_on: Date.parse("May 9, 2014"), cutoff_time: Date.parse("May 8, 2014")) }
 
   let!(:buyer1)                   { create(:organization, :buyer, :single_location, markets: [market], name: "First Buyer") }
   let!(:buyer2)                   { create(:organization, :buyer, :single_location, markets: [market], name: "Second Buyer") }
 
-  let!(:seller_order_item)        { create(:order_item, product: seller_product, quantity: 1)}
+  let!(:seller_order_item)        { create(:order_item, product: seller_product, quantity: 1) }
   let!(:seller_order_item_prod2)  { create(:order_item, product: seller_product2, quantity: 2) }
   let!(:seller_order)             { create(:order, items: [seller_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
-  let!(:seller_order_item2)       { create(:order_item, product: seller_product2, quantity: 1)}
+  let!(:seller_order_item2)       { create(:order_item, product: seller_product2, quantity: 1) }
   let!(:seller_order2)            { create(:order, items: [seller_order_item2], organization: buyer1, market: market, delivery: friday_delivery) }
-  let!(:delivered_order_item)     { create(:order_item, product: delivered_product, quantity: 1, delivery_status: 'delivered')}
+  let!(:delivered_order_item)     { create(:order_item, product: delivered_product, quantity: 1, delivery_status: "delivered") }
   let!(:delivered_order)          { create(:order, items: [delivered_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
 
-  let!(:seller2_order_item)       { create(:order_item, product: seller2_product, quantity: 2)}
+  let!(:seller2_order_item)       { create(:order_item, product: seller2_product, quantity: 2) }
   let!(:seller2_order)            { create(:order, items: [seller2_order_item], organization: buyer2, market: market, delivery: friday_delivery) }
 
   before do
@@ -42,7 +42,7 @@ describe "Pick list" do
     # This should be visible to the market manager
     let!(:seller_no_longer)            { create(:organization, :seller, :single_location, name: "Seller No Longer In Market") }
     let!(:seller_no_longer_product)    { create(:product, :sellable, name: "Onion", organization: seller_no_longer) }
-    let!(:seller_no_longer_order_item) { create(:order_item, product: seller_no_longer_product, quantity: 1)}
+    let!(:seller_no_longer_order_item) { create(:order_item, product: seller_no_longer_product, quantity: 1) }
     let!(:seller_no_longer_order)      { create(:order, items: [seller_no_longer_order_item], organization: buyer1, market: market, delivery: friday_delivery) }
 
     context "orders for multiple sellers" do
@@ -171,7 +171,7 @@ describe "Pick list" do
     end
 
     context "multiple orders" do
-      let!(:order_item2) { create(:order_item, product: seller_product, quantity: 3)}
+      let!(:order_item2) { create(:order_item, product: seller_product, quantity: 3) }
       let!(:order2)      { create(:order, items: [order_item2], organization: buyer2, market: market, delivery: friday_delivery) }
 
       before do
@@ -216,9 +216,9 @@ describe "Pick list" do
       end
 
       context "spanning multiple lots" do
-        let!(:lot1)            { create(:lot, product: seller_product, number: "123", quantity: 15)}
+        let!(:lot1)            { create(:lot, product: seller_product, number: "123", quantity: 15) }
         let!(:order_item_lot1) { create(:order_item_lot, order_item: seller_order_item, lot: lot1, quantity: 15) }
-        let!(:lot2)            { create(:lot, product: seller_product, number: "456", quantity: 5)}
+        let!(:lot2)            { create(:lot, product: seller_product, number: "456", quantity: 5) }
         let!(:order_item_lot2) { create(:order_item_lot, order_item: seller_order_item, lot: lot2, quantity: 3) }
 
         before do

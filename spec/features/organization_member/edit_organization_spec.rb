@@ -1,8 +1,7 @@
-require 'spec_helper'
-
+require "spec_helper"
 
 describe "An organization member" do
-  let(:member) { create(:user, role: 'user') }
+  let(:member) { create(:user, role: "user") }
   let(:org) { create(:organization, users: [member]) }
   let(:market)  { create(:market, organizations: [org]) }
 
@@ -18,23 +17,23 @@ describe "An organization member" do
     # This should only be controlled by a Market Manager
     expect(page).to_not have_content("Can sell product")
 
-    fill_in 'Name', with: 'Famous Farm'
-    fill_in 'Facebook', with: 'localorbit_fb'
-    fill_in 'Twitter',  with: 'localorbit_twtr'
+    fill_in "Name", with: "Famous Farm"
+    fill_in "Facebook", with: "localorbit_fb"
+    fill_in "Twitter",  with: "localorbit_twtr"
 
     check "organization[display_facebook]"
     check "organization[display_twitter]"
 
-    click_button 'Save Organization'
+    click_button "Save Organization"
 
     expect(page).to have_content("Saved Famous Farm")
     expect(current_path).to eql(admin_organization_path(org))
 
-    expect(find_field('Facebook').value).to eq("localorbit_fb")
-    expect(find_field('Twitter').value).to eq("localorbit_twtr")
+    expect(find_field("Facebook").value).to eq("localorbit_fb")
+    expect(find_field("Twitter").value).to eq("localorbit_twtr")
 
-    expect(find_field('organization[display_facebook]')).to be_checked
-    expect(find_field('organization[display_twitter]')).to be_checked
+    expect(find_field("organization[display_facebook]")).to be_checked
+    expect(find_field("organization[display_twitter]")).to be_checked
   end
 
   it "can not change their active status" do

@@ -7,37 +7,37 @@ describe "Checking Out", :js, :vcr do
   let!(:credit_card)  { create(:bank_account, :credit_card, bankable: buyer) }
   let!(:bank_account) { create(:bank_account, :checking, :verified, bankable: buyer) }
 
-  let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users:[create(:user), create(:user)]) }
-  let!(:ada_farms){ create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
+  let!(:fulton_farms) { create(:organization, :seller, :single_location, name: "Fulton St. Farms", users: [create(:user), create(:user)]) }
+  let!(:ada_farms) { create(:organization, :seller, :single_location, name: "Ada Farms", users: [create(:user)]) }
 
   let(:market_manager) { create(:user) }
   let(:market) { create(:market, :with_addresses, organizations: [buyer, fulton_farms, ada_farms], managers: [market_manager]) }
   let(:delivery_schedule) { create(:delivery_schedule, :percent_fee,  market: market, day: 5) }
   let(:delivery_day) { DateTime.parse("May 9, 2014, 11:00:00") }
-  let(:delivery) {
+  let(:delivery) do
     create(:delivery,
-      delivery_schedule: delivery_schedule,
-      deliver_on: delivery_day,
-      cutoff_time:delivery_day - delivery_schedule.order_cutoff.hours
+           delivery_schedule: delivery_schedule,
+           deliver_on: delivery_day,
+           cutoff_time: delivery_day - delivery_schedule.order_cutoff.hours
     )
-  }
+  end
 
   # Fulton St. Farms
   let!(:bananas) { create(:product, :sellable, name: "Bananas", organization: fulton_farms) }
   let!(:bananas_lot) { create(:lot, product: bananas, quantity: 100) }
-  let!(:bananas_price_buyer_base) {
+  let!(:bananas_price_buyer_base) do
     create(:price, market: market, product: bananas, min_quantity: 1, organization: buyer, sale_price: 0.50)
-  }
+  end
 
   let!(:kale) { create(:product, :sellable, name: "Kale", organization: fulton_farms) }
   let!(:kale_lot) { kale.lots.first.update_attribute(:quantity, 100) }
-  let!(:kale_price_tier1) {
+  let!(:kale_price_tier1) do
     create(:price, market: market, product: kale, min_quantity: 4, sale_price: 2.50)
-  }
+  end
 
-  let!(:kale_price_tier2) {
+  let!(:kale_price_tier2) do
     create(:price, market: market, product: kale, min_quantity: 6, sale_price: 1.00)
-  }
+  end
 
   # Ada Farms
   let!(:potatoes) { create(:product, :sellable, name: "Potatoes", organization: ada_farms) }
@@ -281,9 +281,9 @@ describe "Checking Out", :js, :vcr do
 
       expect(Dom::CartLink.first).to have_content("Removed from cart!")
 
-      expect{
+      expect do
         click_button "Place Order"
-      }.to_not change{
+      end.to_not change{
         Order.count
       }
       expect(page).to have_content("Your cart is empty. Please add items to your cart before checking out.")
@@ -353,14 +353,14 @@ describe "Checking Out", :js, :vcr do
   end
 
   context "via credit card" do
-    let(:balanced_debit)  { double("balanced debit", uri: '/balanced-debit-uri') }
+    let(:balanced_debit)  { double("balanced debit", uri: "/balanced-debit-uri") }
     let!(:balanced_customer) { double("balanced customer", debit: balanced_debit) }
 
     before do
       allow(Balanced::Customer).to receive(:find).and_return(balanced_customer)
     end
 
-    context "successful payment processing" do    
+    context "successful payment processing" do
       it "uses a stored credit card" do
         choose "Pay by Credit Card"
         select "Visa", from: "Saved credit cards"
@@ -428,10 +428,10 @@ describe "Checking Out", :js, :vcr do
       it "uses the card as a one off transaction" do
         choose "Pay by Credit Card"
         fill_in "Name", with: "John Doe"
-        fill_in "Card Number", with: '5105105105105100'
+        fill_in "Card Number", with: "5105105105105100"
         select "12", from: "Month"
         select "2020", from: "Year"
-        fill_in "Security Code", with: '123'
+        fill_in "Security Code", with: "123"
 
         checkout
 
@@ -449,10 +449,10 @@ describe "Checking Out", :js, :vcr do
 
         choose "Pay by Credit Card"
         fill_in "Name", with: "John Doe"
-        fill_in "Card Number", with: '5105105105105100'
+        fill_in "Card Number", with: "5105105105105100"
         select "12", from: "Month"
         select "2020", from: "Year"
-        fill_in "Security Code", with: '123'
+        fill_in "Security Code", with: "123"
         check "Save credit card for future use"
 
         checkout
@@ -469,17 +469,17 @@ describe "Checking Out", :js, :vcr do
       end
 
       context "when the user tries to checkout with a credit card they've already saved", record: :new_episodes do
-        let!(:credit_card)  { create(:bank_account, :credit_card, name: "John Doe", bank_name: "MasterCard", account_type:"mastercard", bankable: buyer, last_four: "5100") }
+        let!(:credit_card)  { create(:bank_account, :credit_card, name: "John Doe", bank_name: "MasterCard", account_type: "mastercard", bankable: buyer, last_four: "5100") }
 
         it "uses the bank account that's already saved" do
           expect(buyer.bank_accounts.visible.count).to eql(2)
 
           choose "Pay by Credit Card"
           fill_in "Name", with: credit_card.name
-          fill_in "Card Number", with: '5105105105105100'
+          fill_in "Card Number", with: "5105105105105100"
           select "12", from: "Month"
           select "2020", from: "Year"
-          fill_in "Security Code", with: '123'
+          fill_in "Security Code", with: "123"
 
           check "Save credit card for future use"
 
@@ -501,7 +501,7 @@ describe "Checking Out", :js, :vcr do
   end
 
   context "via ACH" do
-    let!(:balanced_debit)  { double("balanced debit", uri: '/balanced-debit-uri') }
+    let!(:balanced_debit)  { double("balanced debit", uri: "/balanced-debit-uri") }
     let!(:balanced_customer) { double("balanced customer", debit: balanced_debit) }
 
     before do

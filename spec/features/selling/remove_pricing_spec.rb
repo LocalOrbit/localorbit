@@ -12,11 +12,11 @@ describe "Remove advanced pricing" do
   before do
     switch_to_subdomain(market.subdomain)
     sign_in_as(user)
-    within '#admin-nav' do
-      click_link 'Products'
+    within "#admin-nav" do
+      click_link "Products"
     end
     click_link product.name
-    click_link 'Pricing'
+    click_link "Pricing"
   end
 
   describe "clicking the delete link on a row" do

@@ -28,9 +28,9 @@ class OrderHistoryActivityPresenter
     return @list if defined?(@list)
 
     @list = []
-    if activities.any?{|a| a.auditable_type == "Order" && a.action == "create" }
+    if activities.any? {|a| a.auditable_type == "Order" && a.action == "create" }
       @list << "Order Placed"
-      @list << process(activities.reject{|a| %w(Order OrderItem).include?(a.auditable_type) })
+      @list << process(activities.reject {|a| %w(Order OrderItem).include?(a.auditable_type) })
     else
       @list << process(activities)
     end

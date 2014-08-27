@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe CartItem do
   it "requires a cart" do
@@ -14,7 +14,7 @@ describe CartItem do
   end
 
   it "can not have more then 2 Trillion" do
-    subject.quantity = 2147483647
+    subject.quantity = 2_147_483_647
 
     expect(subject).to have(1).error_on(:quantity)
   end
@@ -24,7 +24,6 @@ describe CartItem do
       expect(create(:cart_item)).to be_valid
     end
   end
-
 
   context "quantity is greater than the available product" do
     let(:product) { create(:product, :sellable, name: "Bananas") } # lot w/ quantity 150

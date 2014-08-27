@@ -144,7 +144,7 @@ module Dom
     end
 
     def check_delete
-      node.find('.delete input').set(true)
+      node.find(".delete input").set(true)
     end
 
     def click_edit
@@ -199,7 +199,7 @@ module Dom
     end
 
     def click_day(day)
-      node.find('.ui-datepicker-calendar').click_link(day)
+      node.find(".ui-datepicker-calendar").click_link(day)
     end
   end
 
@@ -213,7 +213,7 @@ module Dom
         selector ".invoice-row"
 
         def self.select_all
-          page.first('.select-all').click
+          page.first(".select-all").click
         end
 
         attribute :order_number
@@ -281,31 +281,31 @@ module Dom
         end
 
         def review
-          node.click_link('Review')
+          node.click_link("Review")
         end
 
         def pay_all_now
-          node.find_button('Record Payment').trigger('click')
+          node.find_button("Record Payment").trigger("click")
         end
 
         def pay_selected
-          within(".order-details") { click_button('Record Payment') }
+          within(".order-details") { click_button("Record Payment") }
         end
 
         def name
-          node.find('h2', match: :first)
+          node.find("h2", match: :first)
         end
 
         def order_count
-          node.find('td.order-count')
+          node.find("td.order-count")
         end
 
         def owed
-          node.find('td.owed')
+          node.find("td.owed")
         end
 
         def selected_owed
-          node.find('td.total-owed')
+          node.find("td.total-owed")
         end
       end
 
@@ -315,15 +315,15 @@ module Dom
         attribute :order_number
 
         def click_check
-          node.find('input[type=checkbox]').click
+          node.find("input[type=checkbox]").click
         end
 
         def placed_at
-          node.all('td')[2]
+          node.all("td")[2]
         end
 
         def total
-          node.all('td').last
+          node.all("td").last
         end
       end
     end
@@ -395,11 +395,11 @@ module Dom
       attribute :name
 
       def check
-        node.find('input').set(true)
+        node.find("input").set(true)
       end
 
       def uncheck
-        node.find('input').set(false)
+        node.find("input").set(false)
       end
     end
 
@@ -455,19 +455,19 @@ module Dom
       end
 
       def delivery_text
-        node.find('.delivery-text').text
+        node.find(".delivery-text").text
       end
 
       def delivery_address
-        node.find('.address').text
+        node.find(".address").text
       end
 
       def delivery_time
-        node.find('.delivery-time').text
+        node.find(".delivery-time").text
       end
 
       def pickup_time
-        node.find('.pickup-time').text
+        node.find(".pickup-time").text
       end
     end
 
@@ -639,23 +639,23 @@ module Dom
       selector "form.product"
 
       def organization_field
-        node.find('#product_organization_id')
+        node.find("#product_organization_id")
       end
 
       def name
-        node.find('#product_name')
+        node.find("#product_name")
       end
 
       def category
-        node.find('#product_category_id')
+        node.find("#product_category_id")
       end
 
       def who_story
-        node.find('#product_who_story').value
+        node.find("#product_who_story").value
       end
 
       def how_story
-        node.find('#product_how_story').value
+        node.find("#product_how_story").value
       end
 
       def locations
@@ -667,11 +667,11 @@ module Dom
       end
 
       def location
-        node.find('#product_location_id')
+        node.find("#product_location_id")
       end
 
       def seller_info
-        node.find('#seller_info')
+        node.find("#seller_info")
       end
     end
 
@@ -717,7 +717,7 @@ module Dom
       end
 
       def selected_state
-        state.find('option[selected]')
+        state.find("option[selected]")
       end
 
       def zip
@@ -788,7 +788,6 @@ module Dom
         quantity_field.set("")
         quantity_field.native.send_keys(n.to_s)
       end
-
 
       def remove_link
         node.find(".icon-clear")
@@ -947,7 +946,7 @@ module Dom
       end
 
       def has_location_select?
-        node.all('select').size == 1
+        node.all("select").size == 1
       end
 
       def choose!
@@ -999,7 +998,7 @@ module Dom
       end
 
       def click_delete
-        node.first(".action-link > a").trigger('click')
+        node.first(".action-link > a").trigger("click")
       end
     end
   end

@@ -4,10 +4,12 @@ describe UpdateDeliveryScheduleAndCurrentDelivery do
   let(:delivery_schedule) { create(:delivery_schedule, order_cutoff: 120) }
   let(:delivery_schedule_params) { {order_cutoff: 240} }
 
-  let(:interactor) { UpdateDeliveryScheduleAndCurrentDelivery.new(
-    delivery_schedule: delivery_schedule,
-    params: delivery_schedule_params
-  ) }
+  let(:interactor) do
+    UpdateDeliveryScheduleAndCurrentDelivery.new(
+      delivery_schedule: delivery_schedule,
+      params: delivery_schedule_params
+    )
+  end
 
   before do
     Timecop.freeze(Date.parse("2013-09-01"))

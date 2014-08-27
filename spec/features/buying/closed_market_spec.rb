@@ -37,7 +37,7 @@ feature "Buying in a closed market" do
   end
 
   context "market has multiple delivery schedules" do
-    let!(:delivery_schedule){ create(:delivery_schedule, market: market) }
+    let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
 
     before do
       switch_to_subdomain market.subdomain

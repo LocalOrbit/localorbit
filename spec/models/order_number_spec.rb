@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe OrderNumber do
-  let(:market) { create(:market, subdomain: "fulton", timezone: "EST")}
+  let(:market) { create(:market, subdomain: "fulton", timezone: "EST") }
 
   before do
     Timecop.freeze(Date.parse("2014-03-01"))

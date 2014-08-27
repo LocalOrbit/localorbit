@@ -12,14 +12,14 @@ namespace :invalid do
         begin
           if !instance.valid?
             puts "-----------------------------"
-            puts "Invalid instance #{model.to_s}: #{instance.id}"
+            puts "Invalid instance #{model}: #{instance.id}"
             puts ".........."
             puts instance.errors.inspect
             puts "-----------------------------"
           end
-        rescue Exception => e
+        rescue => e
           puts "-----------------------------"
-          puts "Error validating #{model.to_s}: #{instance.id}"
+          puts "Error validating #{model}: #{instance.id}"
           puts ".........."
           puts e.message
           puts "-----------------------------"

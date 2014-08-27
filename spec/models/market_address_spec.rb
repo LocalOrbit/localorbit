@@ -1,12 +1,12 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe MarketAddress do
   let!(:market) { create(:market) }
-  it 'requires a name' do
+  it "requires a name" do
     expect(subject).to have(1).errors_on(:name)
   end
 
-  it 'ignores soft deleted market addresses in name validation' do
+  it "ignores soft deleted market addresses in name validation" do
     create(:market_address, name: "test", market: market, deleted_at: 1.day.ago)
     subject = create(:market_address, name: "test", market: market)
     expect(subject).to have(0).errors_on(:name)
@@ -15,40 +15,40 @@ describe MarketAddress do
     expect(subject).to have(0).errors_on(:name)
   end
 
-  it 'requires an address' do
-    subject = MarketAddress.new(name: 'new address', city: 'Holland', state: 'MI', zip: '49423', market: market)
+  it "requires an address" do
+    subject = MarketAddress.new(name: "new address", city: "Holland", state: "MI", zip: "49423", market: market)
     expect(subject.save).to eq(false)
     expect(subject.errors.any?).to eq(true)
     expect(subject.errors.messages.keys.count).to eq(1)
     expect(subject.errors.messages).to have_key(:address)
   end
 
-  it 'requires a city' do
-    subject = MarketAddress.new(name: 'new address', address: '123 Apple', state: 'MI', zip: '49423', market: market)
+  it "requires a city" do
+    subject = MarketAddress.new(name: "new address", address: "123 Apple", state: "MI", zip: "49423", market: market)
     expect(subject.save).to eq(false)
     expect(subject.errors.any?).to eq(true)
     expect(subject.errors.messages.keys.count).to eq(1)
     expect(subject.errors.messages).to have_key(:city)
   end
 
-  it 'requires a state' do
-    subject = MarketAddress.new(name: 'new address', address: '123 Apple', city: 'Holland', zip: '49423', market: market)
+  it "requires a state" do
+    subject = MarketAddress.new(name: "new address", address: "123 Apple", city: "Holland", zip: "49423", market: market)
     expect(subject.save).to eq(false)
     expect(subject.errors.any?).to eq(true)
     expect(subject.errors.messages.keys.count).to eq(1)
     expect(subject.errors.messages).to have_key(:state)
   end
 
-  it 'requires a zip' do
-    subject = MarketAddress.new(name: 'new address', address: '123 Apple', city: 'Holland', state: 'MI', market: market)
+  it "requires a zip" do
+    subject = MarketAddress.new(name: "new address", address: "123 Apple", city: "Holland", state: "MI", market: market)
     expect(subject.save).to eq(false)
     expect(subject.errors.any?).to eq(true)
     expect(subject.errors.messages.keys.count).to eq(1)
     expect(subject.errors.messages).to have_key(:zip)
   end
 
-  it 'requires a market' do
-    subject = MarketAddress.new(name: 'new address', address: '123 Apple', city: 'Holland', state: 'MI', zip: '49423')
+  it "requires a market" do
+    subject = MarketAddress.new(name: "new address", address: "123 Apple", city: "Holland", state: "MI", zip: "49423")
     expect(subject.save).to eq(false)
     expect(subject.errors.any?).to eq(true)
     expect(subject.errors.messages.keys.count).to eq(1)

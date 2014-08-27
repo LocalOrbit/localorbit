@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Newsletter do
   describe "#recipients" do

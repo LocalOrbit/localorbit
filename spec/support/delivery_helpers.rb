@@ -1,6 +1,6 @@
 module DeliveryHelpers
   def choose_delivery(description=nil)
-    expect(page).to have_css("#deliveries") #waits for special cases
+    expect(page).to have_css("#deliveries") # waits for special cases
 
     if description.present?
       choices = Dom::Buying::DeliveryChoice.all

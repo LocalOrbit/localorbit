@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Deleting a user", :js do
   let(:market_manager) { create(:user, :market_manager) }

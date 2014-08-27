@@ -21,7 +21,7 @@ module ResponseHelpers
 
   # Return the IDs for each resource in the collection
   def collection_ids
-    @ids ||= collection.map { |e| e["id"] }
+    @ids ||= collection.map {|e| e["id"] }
   end
 
   def resource_key

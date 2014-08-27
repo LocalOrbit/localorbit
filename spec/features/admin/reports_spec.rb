@@ -120,12 +120,12 @@ feature "Reports" do
   end
 
   def item_rows_for_order(order)
-    Dom::Report::ItemRow.all.select { |row| row.order_number.include?("#{order}") }
+    Dom::Report::ItemRow.all.select {|row| row.order_number.include?("#{order}") }
   end
 
   context "for all reports" do
     context "as a user in only 1 market" do
-      let!(:user) { create(:user, :market_manager, managed_markets: [market])}
+      let!(:user) { create(:user, :market_manager, managed_markets: [market]) }
 
       scenario "does not display the market filter" do
         expect(page).to have_field("Search")
@@ -241,7 +241,7 @@ feature "Reports" do
         items = Dom::Report::ItemRow.all
         html_headers = page.all(".report-table th").map(&:text)
 
-        html_headers[html_headers.index('Qty.')] = "Quantity"
+        html_headers[html_headers.index("Qty.")] = "Quantity"
 
         expect(items.count).to eq(11)
 
@@ -276,10 +276,10 @@ feature "Reports" do
         order_items = create_list(:order_item, 20, product: product, seller_name: seller.name)
         order_items.each do |order_item|
           create(:order,
-                market_id: market.id,
-                delivery: delivery,
-                items: [order_item],
-                organization: buyer)
+                 market_id: market.id,
+                 delivery: delivery,
+                 items: [order_item],
+                 organization: buyer)
         end
 
         visit(current_path + "?per_page=25")

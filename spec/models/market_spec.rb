@@ -1,11 +1,11 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Market do
-  describe 'validates' do
+  describe "validates" do
     let(:original_market) { create(:market) }
 
     describe "name" do
-      it 'must be present' do
+      it "must be present" do
         market = build(:market)
         market.name = nil
 
@@ -13,7 +13,7 @@ describe Market do
         expect(market).to have(1).error_on(:name)
       end
 
-      it 'is unique' do
+      it "is unique" do
         market = build(:market)
         market.name = original_market.name
 
@@ -21,7 +21,7 @@ describe Market do
         expect(market).to have(1).error_on(:name)
       end
 
-      it 'is less than 255 characters' do
+      it "is less than 255 characters" do
         market = build(:market)
         market.name = "a" * 256
 
@@ -31,7 +31,7 @@ describe Market do
     end
 
     describe "subdomain" do
-      it 'must be present' do
+      it "must be present" do
         market = build(:market)
         market.subdomain = nil
 
@@ -39,7 +39,7 @@ describe Market do
         expect(market).to have(1).error_on(:subdomain)
       end
 
-      it 'is unique' do
+      it "is unique" do
         market = build(:market)
         market.subdomain = original_market.subdomain
 
@@ -47,7 +47,7 @@ describe Market do
         expect(market).to have(1).error_on(:subdomain)
       end
 
-      it 'is less than 255 characters' do
+      it "is less than 255 characters" do
         market = build(:market)
         market.subdomain = "a" * 256
 
@@ -64,7 +64,7 @@ describe Market do
       end
     end
 
-    it 'tagline can be at most 255 characters' do
+    it "tagline can be at most 255 characters" do
       market = build(:market)
       market.tagline = "a" * 256
 
@@ -72,8 +72,8 @@ describe Market do
       expect(market).to have(1).error_on(:tagline)
     end
 
-    describe 'local_orbit_seller_fee' do
-      it 'must be present' do
+    describe "local_orbit_seller_fee" do
+      it "must be present" do
         market = build(:market)
         market.local_orbit_seller_fee = nil
 
@@ -81,7 +81,7 @@ describe Market do
         expect(market).to have(1).error_on(:local_orbit_seller_fee)
       end
 
-      it 'must be positive' do
+      it "must be positive" do
         market = build(:market)
         market.local_orbit_seller_fee = "-1"
 
@@ -89,7 +89,7 @@ describe Market do
         expect(market).to have(1).error_on(:local_orbit_seller_fee)
       end
 
-      it 'must be less than 100' do
+      it "must be less than 100" do
         market = build(:market)
         market.local_orbit_seller_fee = "100"
 
@@ -98,8 +98,8 @@ describe Market do
       end
     end
 
-    describe 'local_orbit_market_fee' do
-      it 'must be present' do
+    describe "local_orbit_market_fee" do
+      it "must be present" do
         market = build(:market)
         market.local_orbit_market_fee = nil
 
@@ -107,7 +107,7 @@ describe Market do
         expect(market).to have(1).error_on(:local_orbit_market_fee)
       end
 
-      it 'must be positive' do
+      it "must be positive" do
         market = build(:market)
         market.local_orbit_market_fee = "-1"
 
@@ -115,7 +115,7 @@ describe Market do
         expect(market).to have(1).error_on(:local_orbit_market_fee)
       end
 
-      it 'must be less than 100' do
+      it "must be less than 100" do
         market = build(:market)
         market.local_orbit_market_fee = "100"
 
@@ -124,8 +124,8 @@ describe Market do
       end
     end
 
-    describe 'market_seller_fee' do
-      it 'must be present' do
+    describe "market_seller_fee" do
+      it "must be present" do
         market = build(:market)
         market.market_seller_fee = nil
 
@@ -133,7 +133,7 @@ describe Market do
         expect(market).to have(1).error_on(:market_seller_fee)
       end
 
-      it 'must be positive' do
+      it "must be positive" do
         market = build(:market)
         market.market_seller_fee = "-1"
 
@@ -141,7 +141,7 @@ describe Market do
         expect(market).to have(1).error_on(:market_seller_fee)
       end
 
-      it 'must be less than 100' do
+      it "must be less than 100" do
         market = build(:market)
         market.market_seller_fee = "100"
 
@@ -150,8 +150,8 @@ describe Market do
       end
     end
 
-    describe 'credit_card_seller_fee' do
-      it 'must be present' do
+    describe "credit_card_seller_fee" do
+      it "must be present" do
         market = build(:market)
         market.credit_card_seller_fee = nil
 
@@ -159,7 +159,7 @@ describe Market do
         expect(market).to have(1).error_on(:credit_card_seller_fee)
       end
 
-      it 'must be positive' do
+      it "must be positive" do
         market = build(:market)
         market.credit_card_seller_fee = "-1"
 
@@ -167,7 +167,7 @@ describe Market do
         expect(market).to have(1).error_on(:credit_card_seller_fee)
       end
 
-      it 'must be less than 100' do
+      it "must be less than 100" do
         market = build(:market)
         market.credit_card_seller_fee = "100"
 
@@ -176,8 +176,8 @@ describe Market do
       end
     end
 
-    describe 'credit_card_market_fee' do
-      it 'must be present' do
+    describe "credit_card_market_fee" do
+      it "must be present" do
         market = build(:market)
         market.credit_card_market_fee = nil
 
@@ -185,7 +185,7 @@ describe Market do
         expect(market).to have(1).error_on(:credit_card_market_fee)
       end
 
-      it 'must be positive' do
+      it "must be positive" do
         market = build(:market)
         market.credit_card_market_fee = "-1"
 
@@ -193,7 +193,7 @@ describe Market do
         expect(market).to have(1).error_on(:credit_card_market_fee)
       end
 
-      it 'must be less than 100' do
+      it "must be less than 100" do
         market = build(:market)
         market.credit_card_market_fee = "100"
 
@@ -202,8 +202,8 @@ describe Market do
       end
     end
 
-    describe 'ach_seller_fee' do
-      it 'must be present' do
+    describe "ach_seller_fee" do
+      it "must be present" do
         market = build(:market)
         market.ach_seller_fee = nil
 
@@ -211,7 +211,7 @@ describe Market do
         expect(market).to have(1).error_on(:ach_seller_fee)
       end
 
-      it 'must be positive' do
+      it "must be positive" do
         market = build(:market)
         market.ach_seller_fee = "-1"
 
@@ -219,7 +219,7 @@ describe Market do
         expect(market).to have(1).error_on(:ach_seller_fee)
       end
 
-      it 'must be less than 100' do
+      it "must be less than 100" do
         market = build(:market)
         market.ach_seller_fee = "100"
 
@@ -228,8 +228,8 @@ describe Market do
       end
     end
 
-    describe 'ach_market_fee' do
-      it 'must be present' do
+    describe "ach_market_fee" do
+      it "must be present" do
         market = build(:market)
         market.ach_market_fee = nil
 
@@ -237,7 +237,7 @@ describe Market do
         expect(market).to have(1).error_on(:ach_market_fee)
       end
 
-      it 'must be positive' do
+      it "must be positive" do
         market = build(:market)
         market.ach_market_fee = "-1"
 
@@ -245,7 +245,7 @@ describe Market do
         expect(market).to have(1).error_on(:ach_market_fee)
       end
 
-      it 'must be less than 100' do
+      it "must be less than 100" do
         market = build(:market)
         market.ach_market_fee = "100"
 
@@ -254,8 +254,8 @@ describe Market do
       end
     end
 
-    describe 'ach_fee_cap' do
-      it 'must be present' do
+    describe "ach_fee_cap" do
+      it "must be present" do
         market = build(:market)
         market.ach_fee_cap = nil
 
@@ -263,7 +263,7 @@ describe Market do
         expect(market).to have(1).error_on(:ach_fee_cap)
       end
 
-      it 'must be positive' do
+      it "must be positive" do
         market = build(:market)
         market.ach_fee_cap = "-1"
 
@@ -271,7 +271,7 @@ describe Market do
         expect(market).to have(1).error_on(:ach_fee_cap)
       end
 
-      it 'must be less than 10000' do
+      it "must be less than 10000" do
         market = build(:market)
         market.ach_fee_cap = "10000"
 
@@ -301,18 +301,18 @@ describe Market do
     end
   end
 
-  describe '#fulfillment_locations' do
+  describe "#fulfillment_locations" do
     let!(:market) { create(:market) }
     let!(:address1) { create(:market_address, market: market) }
     let!(:address2) { create(:market_address, market: market) }
-    let(:default_name) { 'Direct to seller' }
+    let(:default_name) { "Direct to seller" }
     subject { market.fulfillment_locations(default_name) }
 
-    it 'accepts a parameter as default option name' do
+    it "accepts a parameter as default option name" do
       expect(subject).to include([default_name, 0])
     end
 
-    it 'has market address names' do
+    it "has market address names" do
       expect(subject).to include([address1.name, address1.id])
       expect(subject).to include([address2.name, address2.id])
     end
@@ -360,14 +360,14 @@ describe Market do
     let!(:market) { create(:market) }
     let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
 
-    it 'builds and returns the next delivery' do
+    it "builds and returns the next delivery" do
       delivery = market.next_delivery
       expect(delivery.delivery_schedule).to eq(delivery_schedule)
       expect(delivery.deliver_on).to be_future
       expect(delivery).to be_persisted
     end
 
-    it 'returns nil if there are no valid delivery schedules' do
+    it "returns nil if there are no valid delivery schedules" do
       delivery_schedule.soft_delete
       expect(market.next_delivery).to be_nil
     end

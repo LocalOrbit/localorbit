@@ -17,7 +17,7 @@ describe SellerOrder do
   let!(:item3)    { create(:order_item, product: product3, delivery_status: "pending") }
   let!(:item4)    { create(:order_item, product: product4, delivery_status: "pending") }
   let!(:order)    { create(:order, delivery: delivery, items: [item1, item2, item3, item4], organization: buyer, market: market) }
-  let!(:user)     { create(:user, :admin)}
+  let!(:user)     { create(:user, :admin) }
 
   describe "#items" do
     it "loads the right items for seller 1 organization" do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Discount do
   context "validations" do
@@ -90,7 +90,6 @@ describe Discount do
       subject.discount = 2_147_483_648
       expect(subject).to have(1).errors_on(:discount)
     end
-
 
     it "requires minimum_order_total to be between 0 and 2_147_483_647" do
       subject.minimum_order_total = -1

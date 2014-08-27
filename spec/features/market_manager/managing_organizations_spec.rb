@@ -15,12 +15,12 @@ describe "A Market Manager", :vcr do
     context "with valid information", :js do
       before do
         visit "/admin/organizations"
-        click_link 'Add Organization'
+        click_link "Add Organization"
 
         check "Can sell products"
         expect(page).to have_content("Profile photo")
 
-        fill_in 'Name', with: 'Famous Farm'
+        fill_in "Name", with: "Famous Farm"
         fill_in "Address Label", with: "Warehouse 1"
         fill_in "Address", with: "1021 Burton St."
         fill_in "City", with: "Orleans Twp."
@@ -28,13 +28,13 @@ describe "A Market Manager", :vcr do
         fill_in "Postal Code", with: "49883"
         fill_in "Phone", with: "616-555-9983"
 
-        attach_file 'Profile photo', 'app/assets/images/logo.png'
+        attach_file "Profile photo", "app/assets/images/logo.png"
 
-        click_button 'Add Organization'
+        click_button "Add Organization"
       end
 
       it "creates the organization" do
-        expect(page).to have_content('Famous Farm has been created')
+        expect(page).to have_content("Famous Farm has been created")
 
         org_form = Dom::Admin::OrganizationForm.first
         expect(org_form.name).to eql("Famous Farm")
@@ -66,15 +66,15 @@ describe "A Market Manager", :vcr do
     context "with minimum valid information", :js do
       before do
         visit "/admin/organizations"
-        click_link 'Add Organization'
+        click_link "Add Organization"
 
-        fill_in 'Name', with: 'Famous Farm'
+        fill_in "Name", with: "Famous Farm"
 
-        click_button 'Add Organization'
+        click_button "Add Organization"
       end
 
       it "creates the organization" do
-        expect(page).to have_content('Famous Farm has been created')
+        expect(page).to have_content("Famous Farm has been created")
 
         org_form = Dom::Admin::OrganizationForm.first
         expect(org_form.name).to eql("Famous Farm")
@@ -93,11 +93,11 @@ describe "A Market Manager", :vcr do
 
       it "creates an organization with valid information", :js do
         visit "/admin/organizations"
-        click_link 'Add Organization'
+        click_link "Add Organization"
 
-        fill_in 'Name', with: 'Famous Farm'
+        fill_in "Name", with: "Famous Farm"
         select market2.name, from: "Market"
-        check 'Can sell product'
+        check "Can sell product"
 
         fill_in "Address Label", with: "Warehouse 1"
         fill_in "Address", with: "1021 Burton St."
@@ -106,29 +106,29 @@ describe "A Market Manager", :vcr do
         fill_in "Postal Code", with: "49883"
         fill_in "Phone", with: "616-555-9983"
 
-        click_button 'Add Organization'
+        click_button "Add Organization"
 
         expect(page).to have_content("Famous Farm has been created")
       end
 
       it "creates an organization with minimum valid information", :js do
         visit "/admin/organizations"
-        click_link 'Add Organization'
+        click_link "Add Organization"
 
-        fill_in 'Name', with: 'Famous Farm'
+        fill_in "Name", with: "Famous Farm"
         select market2.name, from: "Market"
         check "Allow purchase orders"
 
-        click_button 'Add Organization'
+        click_button "Add Organization"
 
         expect(page).to have_content("Famous Farm has been created")
       end
 
       it "displays errors from invalid data" do
         visit "/admin/organizations"
-        click_link 'Add Organization'
-        fill_in 'Name', with: 'Dairy Farms Co-op'
-        click_button 'Add Organization'
+        click_link "Add Organization"
+        fill_in "Name", with: "Dairy Farms Co-op"
+        click_button "Add Organization"
 
         expect(page).to have_content("Markets can't be blank")
       end
@@ -244,7 +244,6 @@ describe "A Market Manager", :vcr do
       end
     end
 
-
     describe "Manage an organization's ability to sell" do
       it "shows/hides the appropriate fields when 'can sell products' is checked", :js do
         visit "/admin/organizations"
@@ -276,7 +275,7 @@ describe "A Market Manager", :vcr do
     context "organization belongs to a single market" do
       let!(:market3) { create(:market, :with_address) }
 
-      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market]) }
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market]) }
       let!(:product) { create(:product, :sellable, organization: seller) }
       let!(:promotion) { create(:promotion, :active, market: market, product: product) }
       let!(:buyer) { create(:organization, :single_location, name: "Hudsonville Restraunt", markets: [market]) }
@@ -317,7 +316,7 @@ describe "A Market Manager", :vcr do
     end
 
     context "organization belongs to multiple markets" do
-      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets:[market, market2])}
+      let!(:seller) { create(:organization, :seller, name: "Holland Farms", markets: [market, market2]) }
 
       before do
         visit admin_organizations_path
@@ -330,7 +329,7 @@ describe "A Market Manager", :vcr do
       end
 
       context "and the market manager only manages one of the markets" do
-        let!(:market_manager) {create(:user, managed_markets: [market]) }
+        let!(:market_manager) { create(:user, managed_markets: [market]) }
 
         it "will not prompt to select a market" do
           expect(page).to have_content("Removed Holland Farms from #{market.name}")
@@ -344,8 +343,8 @@ describe "A Market Manager", :vcr do
         let!(:market2) { create(:market, name: "Market 2") }
         let!(:market3) { create(:market, name: "Market 3") }
 
-        let!(:seller)  { create(:organization, :seller, name: "Holland Farms", markets:[market2, market, market3])}
-        let!(:market_manager) {create(:user, managed_markets: [market, market3]) }
+        let!(:seller)  { create(:organization, :seller, name: "Holland Farms", markets: [market2, market, market3]) }
+        let!(:market_manager) { create(:user, managed_markets: [market, market3]) }
 
         it "allows the market manager to delete an organization from a one or more markets" do
           seller_row = Dom::Admin::OrganizationRow.find_by_name("Holland Farms")
@@ -370,7 +369,7 @@ describe "A Market Manager", :vcr do
   end
 
   describe "Inviting a member to an org" do
-    let(:org) { create(:organization, name: "Holland Farms")}
+    let(:org) { create(:organization, name: "Holland Farms") }
 
     before do
       market.organizations << org
@@ -427,7 +426,7 @@ describe "A Market Manager", :vcr do
         end
 
         within("#new_user") do
-          fill_in "Email address", with:""
+          fill_in "Email address", with: ""
           click_button "Invite New User"
         end
 
@@ -444,7 +443,7 @@ describe "A Market Manager", :vcr do
         end
 
         within("#new_user") do
-          fill_in "Email address", with:"asdfasdfasdfasdfasd"
+          fill_in "Email address", with: "asdfasdfasdfasdfasd"
           click_button "Invite New User"
         end
 

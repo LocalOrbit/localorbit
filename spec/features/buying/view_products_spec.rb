@@ -3,7 +3,7 @@ require "spec_helper"
 feature "Viewing products" do
   let!(:market) { create(:market, :with_addresses) }
   let!(:delivery_schedule1) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, order_cutoff: 24, buyer_pickup_location_id: 0, buyer_pickup_start: "12:00 PM", buyer_pickup_end: "2:00 PM") }
-  let!(:delivery_schedule2) { create(:delivery_schedule, market: market, day: 3, deleted_at: Time.parse('2013-03-21')) }
+  let!(:delivery_schedule2) { create(:delivery_schedule, market: market, day: 3, deleted_at: Time.parse("2013-03-21")) }
 
   let!(:org1) { create(:organization, :seller, markets: [market]) }
   let!(:org1_product) { create(:product, :sellable, name: "celery", organization: org1, delivery_schedules: [delivery_schedule1]) }
@@ -13,7 +13,7 @@ feature "Viewing products" do
   let!(:org2_product_deleted) { create(:product, :sellable, organization: org2, deleted_at: 1.day.ago) }
 
   let!(:inactive_org) { create(:organization, :seller, active: false, markets: [market]) }
-  let!(:inactive_org_product) { create(:product, :sellable, organization: inactive_org, delivery_schedules: [delivery_schedule1])}
+  let!(:inactive_org_product) { create(:product, :sellable, organization: inactive_org, delivery_schedules: [delivery_schedule1]) }
 
   let!(:other_org) { create(:organization, :seller) }
   let!(:other_products) { create_list(:product, 3, :sellable, organization: other_org) }
@@ -78,9 +78,8 @@ feature "Viewing products" do
     expect(dom_product.quantity).to have_text(expected_price)
   end
 
-
   scenario "a product with less inventory than required to purchase" do
-    org1_product.prices.first.update(min_quantity: 200) #there are only 150
+    org1_product.prices.first.update(min_quantity: 200) # there are only 150
     org1_product.prices << create(:price, min_quantity: 300) # current scope is summing total available quantity once for each price that exists.
     org1_product.prices << create(:price, market_id: market.id,          min_quantity: 200, sale_price: 2.50)
     org1_product.prices << create(:price, organization_id: buyer_org.id, min_quantity: 200, sale_price: 2.40)
@@ -92,7 +91,7 @@ feature "Viewing products" do
   end
 
   scenario "a product with just enough inventory required to purchase" do
-    org1_product.prices.first.update(min_quantity: 150) #there are only 150
+    org1_product.prices.first.update(min_quantity: 150) # there are only 150
     org1_product.prices << create(:price, min_quantity: 150) # current scope is summing total available quantity once for each price that exists.
     org1_product.prices << create(:price, market_id: market.id,          min_quantity: 150, sale_price: 2.50)
     org1_product.prices << create(:price, organization_id: buyer_org.id, min_quantity: 150, sale_price: 2.40)
@@ -116,7 +115,7 @@ feature "Viewing products" do
     org2_product.delivery_schedules << delivery_schedule2
     org2_product.save!
 
-    org1_product.prices.first.update(min_quantity: 200) #there are only 150
+    org1_product.prices.first.update(min_quantity: 200) # there are only 150
     org1_product.prices << create(:price, min_quantity: 300) # current scope is summing total available quantity once for each price that exists.
     org1_product.prices << create(:price, market_id: market.id,          min_quantity: 200, sale_price: 2.50)
     org1_product.prices << create(:price, organization_id: buyer_org.id, min_quantity: 200, sale_price: 2.40)
@@ -259,8 +258,8 @@ feature "Viewing products" do
 
         scenario "shows the 'change' link" do
           visit products_path
-          within('.selected-delivery') do
-            expect(page).to have_link('Change')
+          within(".selected-delivery") do
+            expect(page).to have_link("Change")
           end
         end
 
@@ -273,8 +272,8 @@ feature "Viewing products" do
         end
 
         scenario "does not show the 'change' link" do
-          within('.selected-delivery') do
-            expect(page).to_not have_link('Change')
+          within(".selected-delivery") do
+            expect(page).to_not have_link("Change")
           end
         end
       end
@@ -285,12 +284,12 @@ feature "Viewing products" do
         scenario "shows the 'change' link" do
           visit products_path
 
-          select buyer_org.name, from: 'Organization'
+          select buyer_org.name, from: "Organization"
 
-          click_button 'Select Organization'
+          click_button "Select Organization"
 
-          within('.selected-delivery') do
-            expect(page).to have_link('Change')
+          within(".selected-delivery") do
+            expect(page).to have_link("Change")
           end
         end
       end
@@ -305,9 +304,9 @@ feature "Viewing products" do
       scenario "has to select an organization to shop as" do
         click_link "Shop", match: :first
 
-        select buyer_org.name, from: 'Organization'
+        select buyer_org.name, from: "Organization"
 
-        click_button 'Select Organization'
+        click_button "Select Organization"
 
         expect(page).to have_content(org1_product.name)
       end
@@ -317,26 +316,30 @@ feature "Viewing products" do
   context "multiple delivery schedules" do
     let!(:second_location) { create(:location, organization: buyer_org) }
 
-    let!(:ds3) { create(:delivery_schedule,
-      day: 2,
-      order_cutoff: 24,
-      seller_fulfillment_location_id: 0,
-      seller_delivery_start: "7:00 AM",
-      seller_delivery_end:  "11:00 AM",
-      market: market
-    ) }
+    let!(:ds3) do
+      create(:delivery_schedule,
+             day: 2,
+             order_cutoff: 24,
+             seller_fulfillment_location_id: 0,
+             seller_delivery_start: "7:00 AM",
+             seller_delivery_end:  "11:00 AM",
+             market: market
+    )
+    end
 
-    let!(:ds4) { create(:delivery_schedule,
-      day: 3,
-      order_cutoff: 24,
-      seller_fulfillment_location: market.addresses.first,
-      seller_delivery_start: "7:00 AM",
-      seller_delivery_end:  "11:00 AM",
-      buyer_pickup_start: "12:00 PM",
-      buyer_pickup_end: "3:00 PM",
-      buyer_pickup_location_id: 0,
-      market: market
-    ) }
+    let!(:ds4) do
+      create(:delivery_schedule,
+             day: 3,
+             order_cutoff: 24,
+             seller_fulfillment_location: market.addresses.first,
+             seller_delivery_start: "7:00 AM",
+             seller_delivery_end:  "11:00 AM",
+             buyer_pickup_start: "12:00 PM",
+             buyer_pickup_end: "3:00 PM",
+             buyer_pickup_location_id: 0,
+             market: market
+    )
+    end
 
     let!(:ds3_product) { create(:product, :sellable, organization: org1, use_all_deliveries: false, delivery_schedules: [ds3]) }
 
@@ -382,7 +385,7 @@ feature "Viewing products" do
       expect(delivery_choices[2]).to have_location_select
 
       click_button "Start Shopping"
-      within('.flash--alert') do
+      within(".flash--alert") do
         expect(page).to have_content("Please select a delivery")
       end
 
@@ -452,7 +455,7 @@ feature "Viewing products" do
 
           select buyer_org.name, from: "Organization"
 
-          click_button 'Select Organization'
+          click_button "Select Organization"
 
           expect(page).to have_content("Please choose a pick up or delivery date.")
 
@@ -468,7 +471,7 @@ feature "Viewing products" do
           expect(page).to have_content(org1_product.name)
         end
 
-        scenario "changing organization to shop for after creating a cart", js:true  do
+        scenario "changing organization to shop for after creating a cart", js: true  do
           select = Dom::Select.first
 
           expect(select).to have_option(buyer_org.name)
@@ -477,7 +480,7 @@ feature "Viewing products" do
 
           select buyer_org.name, from: "Organization"
 
-          click_button 'Select Organization'
+          click_button "Select Organization"
 
           expect(page).to have_content("Please choose a pick up or delivery date.")
 
@@ -497,7 +500,7 @@ feature "Viewing products" do
 
           select buyer_org2.name, from: "Organization"
 
-          click_button 'Select Organization'
+          click_button "Select Organization"
 
           expect(page).to have_content("Please choose a pick up or delivery date.")
 
@@ -519,12 +522,12 @@ feature "Viewing products" do
     buyer_org.locations.destroy_all
 
     ds = create(:delivery_schedule,
-      day: 2,
-      order_cutoff: 24,
-      seller_fulfillment_location_id: 0,
-      seller_delivery_start: "7:00 AM",
-      seller_delivery_end:  "11:00 AM",
-      market: market
+                day: 2,
+                order_cutoff: 24,
+                seller_fulfillment_location_id: 0,
+                seller_delivery_start: "7:00 AM",
+                seller_delivery_end:  "11:00 AM",
+                market: market
     )
 
     create(:delivery, delivery_schedule: ds)
@@ -585,7 +588,7 @@ feature "Viewing products" do
   scenario "visiting the shop page after deleting your delivery schedule" do
     sign_in_as(user)
 
-    within('.selected-delivery') do
+    within(".selected-delivery") do
       expect(page).to have_content("October 10, 2014")
     end
 
@@ -595,7 +598,7 @@ feature "Viewing products" do
     click_link "Dashboard", match: :first
     click_link "Shop", match: :first
 
-    within('.selected-delivery') do
+    within(".selected-delivery") do
       expect(page).to have_content("October 8, 2014")
     end
   end
@@ -611,7 +614,7 @@ feature "Viewing products" do
 
   scenario "delivery schedule info shows correctly for pick up products" do
     delivery_schedule1.update_column(:buyer_pickup_location_id, market.addresses.first.id)
-    
+
     sign_in_as(user)
 
     within(".table-summary") do

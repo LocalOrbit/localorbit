@@ -15,7 +15,7 @@ feature "seller views their dashboard" do
 
   let!(:market) { create(:market, :with_addresses) }
 
-  let!(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, seller_delivery_start: '7:00 AM') }
+  let!(:delivery_schedule) { create(:delivery_schedule, :buyer_pickup, market: market, day: 5, seller_delivery_start: "7:00 AM") }
   let!(:delivery) { delivery_schedule.next_delivery }
 
   let!(:delivery_schedule2) { create(:delivery_schedule) }
@@ -26,16 +26,17 @@ feature "seller views their dashboard" do
 
   let!(:product) { create(:product, :sellable, organization: organization) }
   let!(:order_item) { create(:order_item, product: product, delivery_status: "delivered") }
-  let!(:order) do create(:order,
-                         items: [order_item],
-                          delivery: delivery,
-                          market: market,
-                          placed_at: DateTime.parse("2014-03-30 12:00:00"),
-                          order_number: "First Order"
+  let!(:order) do
+    create(:order,
+           items: [order_item],
+           delivery: delivery,
+           market: market,
+           placed_at: DateTime.parse("2014-03-30 12:00:00"),
+           order_number: "First Order"
                         )
   end
 
-  let!(:extra_order) {
+  let!(:extra_order) do
     create(:order,
            items: create_list(:order_item, 1, product: product, delivery_status: "pending"),
            market: market,
@@ -43,7 +44,7 @@ feature "seller views their dashboard" do
            placed_at: DateTime.parse("2014-03-31 12:00:00"),
            order_number: "Extra Order"
           )
-  }
+  end
 
   after do
     Timecop.return
@@ -78,7 +79,7 @@ feature "seller views their dashboard" do
     create(:order_item, product: create(:product, :sellable, organization: organization), order: order, delivery_status: "pending")
     create(:order_item, product: product, order: extra_order, delivery_status: "pending")
 
-    extra_order.delivery = create(:delivery_schedule, market: market, day: 6, seller_delivery_start: '8:00 AM').next_delivery
+    extra_order.delivery = create(:delivery_schedule, market: market, day: 6, seller_delivery_start: "8:00 AM").next_delivery
     extra_order.save!
 
     visit dashboard_path

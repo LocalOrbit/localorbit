@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe ProductsController do
   let(:org1) { create(:organization) }

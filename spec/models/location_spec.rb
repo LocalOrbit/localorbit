@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Location do
   let(:organization) { create(:organization) }
@@ -32,7 +32,7 @@ describe Location do
         expect(subject).to have(0).error_on(:default_billing)
       end
 
-      it 'ignores soft deleted organization locations on validation' do
+      it "ignores soft deleted organization locations on validation" do
         create(:location, name: "test", organization: org, deleted_at: 1.day.ago)
         subject = create(:location, name: "test", organization: org)
         expect(subject).to have(0).errors_on(:name)
@@ -77,7 +77,7 @@ describe Location do
     end
 
     context "after a location is soft deleted" do
-      let!(:deleted_location) { create(:location, organization: organization, deleted_at: 1.minute.ago)}
+      let!(:deleted_location) { create(:location, organization: organization, deleted_at: 1.minute.ago) }
 
       it "sets default billing" do
         location = create(:location, organization: organization)

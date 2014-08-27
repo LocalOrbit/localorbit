@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Admin::BankAccountsController, :vcr do
   let!(:market)                   { create(:market) }
@@ -11,10 +11,10 @@ describe Admin::BankAccountsController, :vcr do
   describe "bank accounts" do
     let(:balanced_uri) do
       Balanced::BankAccount.new(
-        routing_number: '021000021',
-        account_number: '9900000002',
-        name: 'Johann Bernoulli',
-        type: 'checking'
+        routing_number: "021000021",
+        account_number: "9900000002",
+        name: "Johann Bernoulli",
+        type: "checking"
       ).save.uri
     end
 
@@ -70,7 +70,7 @@ describe Admin::BankAccountsController, :vcr do
 
       describe "#destroy" do
         let(:bank_account) { create(:bank_account, :checking, bankable: market) }
-        it_behaves_like "an action restricted to admin or market manager", lambda { delete :destroy, {market_id: market.id, id: bank_account.id} }
+        it_behaves_like "an action restricted to admin or market manager", lambda { delete :destroy, market_id: market.id, id: bank_account.id }
       end
     end
 
@@ -93,7 +93,7 @@ describe Admin::BankAccountsController, :vcr do
 
       describe "#destroy" do
         let(:bank_account) { create(:bank_account, :checking, bankable: organization) }
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, {organization_id: organization.id, id: bank_account.id} }
+        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, organization_id: organization.id, id: bank_account.id }
       end
     end
 
@@ -118,7 +118,7 @@ describe Admin::BankAccountsController, :vcr do
 
       describe "#destroy" do
         let(:bank_account) { create(:bank_account, :checking, bankable: organization) }
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, {organization_id: organization.id, id: bank_account.id} }
+        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, organization_id: organization.id, id: bank_account.id }
       end
     end
   end
@@ -173,7 +173,7 @@ describe Admin::BankAccountsController, :vcr do
 
       describe "#destroy" do
         let(:credit_card) { create(:bank_account, :credit_card, bankable: market) }
-        it_behaves_like "an action restricted to admin or market manager", lambda { delete :destroy, {market_id: market.id, id: credit_card.id} }
+        it_behaves_like "an action restricted to admin or market manager", lambda { delete :destroy, market_id: market.id, id: credit_card.id }
       end
     end
 
@@ -196,7 +196,7 @@ describe Admin::BankAccountsController, :vcr do
 
       describe "#destroy" do
         let(:credit_card) { create(:bank_account, :credit_card, bankable: organization) }
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, {organization_id: organization.id, id: credit_card.id} }
+        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, organization_id: organization.id, id: credit_card.id }
       end
     end
 
@@ -221,7 +221,7 @@ describe Admin::BankAccountsController, :vcr do
 
       describe "#destroy" do
         let(:credit_card) { create(:bank_account, :credit_card, bankable: organization) }
-        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, {organization_id: organization.id, id: credit_card.id} }
+        it_behaves_like "an action restricted to admin, market manager, member", lambda { delete :destroy, organization_id: organization.id, id: credit_card.id }
       end
     end
   end

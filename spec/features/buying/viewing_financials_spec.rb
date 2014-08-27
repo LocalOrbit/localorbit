@@ -1,12 +1,12 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe "Viewing buyer financials" do
   context "market allows purchase orders" do
-    let!(:market)       { create(:market, allow_purchase_orders: true ) }
+    let!(:market)       { create(:market, allow_purchase_orders: true) }
 
     context "organization not allowed to use purchase orders" do
       let!(:organization) { create(:organization, :buyer, markets: [market], allow_purchase_orders: false) }
-      let!(:user)         { create(:user, organizations:[organization]) }
+      let!(:user)         { create(:user, organizations: [organization]) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -22,7 +22,7 @@ describe "Viewing buyer financials" do
 
     context "organization is allowed to use purchase orders" do
       let!(:organization) { create(:organization, :buyer, markets: [market], allow_purchase_orders: true) }
-      let!(:user)         { create(:user, organizations:[organization]) }
+      let!(:user)         { create(:user, organizations: [organization]) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -38,11 +38,11 @@ describe "Viewing buyer financials" do
   end
 
   context "market doesn't allow purchase orders" do
-    let!(:market)       { create(:market, allow_purchase_orders: false ) }
+    let!(:market)       { create(:market, allow_purchase_orders: false) }
 
     context "organization not allowed to use purchase orders" do
       let!(:organization) { create(:organization, :buyer, markets: [market], allow_purchase_orders: false) }
-      let!(:user)         { create(:user, organizations:[organization]) }
+      let!(:user)         { create(:user, organizations: [organization]) }
 
       before do
         switch_to_subdomain(market.subdomain)
@@ -58,7 +58,7 @@ describe "Viewing buyer financials" do
 
     context "organization is allowed to use purchase orders" do
       let!(:organization) { create(:organization, :buyer, markets: [market], allow_purchase_orders: true) }
-      let!(:user)         { create(:user, organizations:[organization]) }
+      let!(:user)         { create(:user, organizations: [organization]) }
 
       before do
         switch_to_subdomain(market.subdomain)

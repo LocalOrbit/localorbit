@@ -7,11 +7,11 @@ describe "Admin Managing Market Managers" do
     switch_to_subdomain(market.subdomain)
   end
 
-  describe 'as a normal user' do
-    let!(:normal_user) { create(:user, role: 'user') }
-    let!(:org) { create(:organization, markets: [market], users: [normal_user])}
+  describe "as a normal user" do
+    let!(:normal_user) { create(:user, role: "user") }
+    let!(:org) { create(:organization, markets: [market], users: [normal_user]) }
 
-    it 'I can not manage market managers' do
+    it "I can not manage market managers" do
       sign_in_as normal_user
 
       visit admin_market_managers_path(market)
@@ -20,49 +20,49 @@ describe "Admin Managing Market Managers" do
     end
   end
 
-  describe 'as a market manager' do
+  describe "as a market manager" do
     let(:user) { create(:user, managed_markets: [market]) }
 
     before do
       sign_in_as user
     end
 
-    it 'I can see the current market managers' do
+    it "I can see the current market managers" do
       visit "/admin/markets/#{market.id}"
 
       click_link "Managers"
 
-      within('.market-managers') do
+      within(".market-managers") do
         expect(page).to have_text(user.email)
       end
     end
 
-    it 'I can add a market manager by email' do
+    it "I can add a market manager by email" do
       visit "/admin/markets/#{market.id}/managers"
 
-      fill_in 'email', with: 'new-user@example.com'
-      click_button 'Add Market Manager'
+      fill_in "email", with: "new-user@example.com"
+      click_button "Add Market Manager"
 
-      expect(page).to have_text('new-user@example.com')
+      expect(page).to have_text("new-user@example.com")
 
       open_email("new-user@example.com")
       expect(current_email.body).to have_content("You have been invited")
       expect(current_email.body).to have_content(market.name)
     end
 
-    it 'requries an email address to invite' do
+    it "requries an email address to invite" do
       visit "/admin/markets/#{market.id}/managers"
 
-      fill_in 'email', with: ''
-      click_button 'Add Market Manager'
+      fill_in "email", with: ""
+      click_button "Add Market Manager"
 
-      expect(page).to have_text('Email address is required.')
+      expect(page).to have_text("Email address is required.")
     end
   end
 
-  describe 'as an admin' do
+  describe "as an admin" do
     let(:user) { create(:user, :admin) }
-    let(:user2) { create(:user, role: 'user') }
+    let(:user2) { create(:user, role: "user") }
 
     before(:each) do
       sign_in_as user
@@ -70,7 +70,7 @@ describe "Admin Managing Market Managers" do
       user2.managed_markets << market
     end
 
-    it 'I can see the current market managers' do
+    it "I can see the current market managers" do
       visit "/admin/markets/#{market.id}"
 
       click_link "Managers"
@@ -78,15 +78,15 @@ describe "Admin Managing Market Managers" do
       expect(page).to have_text(user2.email)
     end
 
-    it 'I can add a market manager by email' do
+    it "I can add a market manager by email" do
       visit "/admin/markets/#{market.id}/managers"
 
-      fill_in 'email', with: 'new-user@example.com'
-      click_button 'Add Market Manager'
+      fill_in "email", with: "new-user@example.com"
+      click_button "Add Market Manager"
 
-      expect(page).to have_text('new-user@example.com')
+      expect(page).to have_text("new-user@example.com")
 
-      click_link 'Sign Out'
+      click_link "Sign Out"
 
       open_last_email
 
@@ -95,16 +95,16 @@ describe "Admin Managing Market Managers" do
       expect(page).to have_content("Set up your account")
     end
 
-    it 'requries an email address to invite' do
+    it "requries an email address to invite" do
       visit "/admin/markets/#{market.id}/managers"
 
-      fill_in 'email', with: ''
-      click_button 'Add Market Manager'
+      fill_in "email", with: ""
+      click_button "Add Market Manager"
 
-      expect(page).to have_text('Email address is required.')
+      expect(page).to have_text("Email address is required.")
     end
 
-    it 'I can remove a current market manager', :js do
+    it "I can remove a current market manager", :js do
       visit "/admin/markets/#{market.id}/managers"
 
       expect(page).to have_text(user2.email)

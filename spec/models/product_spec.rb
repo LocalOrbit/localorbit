@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Product do
   describe "validations" do
@@ -113,7 +113,7 @@ describe Product do
     end
   end
 
-  describe '#can_use_simple_inventory?' do
+  describe "#can_use_simple_inventory?" do
     let(:product) { create(:product, use_simple_inventory: false) }
 
     it "is true if they are using simple inventory" do
@@ -124,54 +124,54 @@ describe Product do
     end
 
     it "is true if all lots have expired" do
-      lot = product.lots.create!(quantity: 2, number: '1')
+      lot = product.lots.create!(quantity: 2, number: "1")
       lot.update_attribute(:expires_at, 1.day.ago)
 
       expect(product.can_use_simple_inventory?).to be true
     end
 
     it "is true if all non-expired lots have no quantity" do
-      product.lots.create!(quantity: 0, number: '1')
-      product.lots.create!(quantity: 0, number: '2', expires_at: 2.days.from_now)
-      product.lots.create!(quantity: 0, number: '3', good_from: 1.day.from_now, expires_at: 2.days.from_now)
+      product.lots.create!(quantity: 0, number: "1")
+      product.lots.create!(quantity: 0, number: "2", expires_at: 2.days.from_now)
+      product.lots.create!(quantity: 0, number: "3", good_from: 1.day.from_now, expires_at: 2.days.from_now)
 
       expect(product.can_use_simple_inventory?).to be true
     end
 
     it "is false if any lots with quantity have not expired" do
-      product.lots.create!(quantity: 10, number: '1', expires_at: 2.days.from_now)
+      product.lots.create!(quantity: 10, number: "1", expires_at: 2.days.from_now)
 
       expect(product.can_use_simple_inventory?).to be false
     end
 
     it "is false if any lots have a quantity" do
-      product.lots.create!(quantity: 10, number: '1')
+      product.lots.create!(quantity: 10, number: "1")
 
       expect(product.can_use_simple_inventory?).to be false
     end
 
     it "is false if any future lots have a quantity" do
-      product.lots.create!(quantity: 10, number: '1', good_from: 1.day.from_now)
+      product.lots.create!(quantity: 10, number: "1", good_from: 1.day.from_now)
 
       expect(product.can_use_simple_inventory?).to be false
     end
   end
 
-  describe '#simple_inventory' do
+  describe "#simple_inventory" do
     before do
       subject.use_simple_inventory = true
     end
 
-    it 'returns 0 for a new product' do
+    it "returns 0 for a new product" do
       expect(subject.simple_inventory).to eq(0)
     end
 
-    it 'does not return the quantity of an expired lot' do
-      subject.lots.build(number: '1', expires_at: 2.days.ago, quantity: 42)
+    it "does not return the quantity of an expired lot" do
+      subject.lots.build(number: "1", expires_at: 2.days.ago, quantity: 42)
       expect(subject.simple_inventory).to eq(0)
     end
 
-    it 'returns the available inventory for the product' do
+    it "returns the available inventory for the product" do
       subject.lots.build(quantity: 42)
       expect(subject.simple_inventory).to eq(42)
     end
@@ -184,7 +184,6 @@ describe Product do
       expect(subject).to_not be_valid
       expect(subject.errors.full_messages).to include("Simple inventory quantity must be greater than or equal to 0")
     end
-
 
     context "use_simple_inventory is set" do
       describe "on create" do
@@ -211,7 +210,7 @@ describe Product do
         subject { create(:product, use_simple_inventory: true) }
 
         it "updates the newest lot with the assigned quantity" do
-          subject.lots.create!(number: '1', expires_at: 1.day.from_now, quantity: 0, created_at: 3.days.ago)
+          subject.lots.create!(number: "1", expires_at: 1.day.from_now, quantity: 0, created_at: 3.days.ago)
           simple_lot = subject.lots.create!(quantity: 12)
           subject.simple_inventory = 42
 
@@ -238,7 +237,7 @@ describe Product do
         end
 
         it "does not use a lot with a future good from date" do
-          subject.lots.create!(number: '1', created_at: 1.minute.ago, good_from: 1.day.from_now, expires_at: 2.days.from_now, quantity: 0)
+          subject.lots.create!(number: "1", created_at: 1.minute.ago, good_from: 1.day.from_now, expires_at: 2.days.from_now, quantity: 0)
 
           expect {
             subject.simple_inventory = 42
@@ -260,7 +259,7 @@ describe Product do
       end
 
       context "new record" do
-        subject{ build(:product, use_simple_inventory: false) }
+        subject { build(:product, use_simple_inventory: false) }
 
         it "does not create a new lot" do
           subject.simple_inventory = '6'
@@ -289,7 +288,7 @@ describe Product do
         context "with existing lots" do
           before do
             subject.lots.create!(quantity: 12)
-            subject.simple_inventory = '6'
+            subject.simple_inventory = "6"
             subject.save!
           end
 
@@ -305,58 +304,58 @@ describe Product do
     end
   end
 
-  describe '#available_inventory' do
-    context 'using simple inventory' do
-      context 'with no inventory set' do
+  describe "#available_inventory" do
+    context "using simple inventory" do
+      context "with no inventory set" do
         subject { create(:product, use_simple_inventory: true) }
 
-        it 'returns 0' do
+        it "returns 0" do
           expect(subject.available_inventory).to eq(0)
         end
       end
 
-      context 'with inventory set' do
+      context "with inventory set" do
         subject { create(:product, use_simple_inventory: true, simple_inventory: 42) }
 
-        it 'returns simple inventory quantity' do
+        it "returns simple inventory quantity" do
           expect(subject.available_inventory).to eq(42)
         end
       end
     end
 
-    context 'using advanced inventory' do
+    context "using advanced inventory" do
       let!(:product) { create(:product, use_simple_inventory: false) }
 
       subject { product }
 
-      context 'with no inventory set' do
-        it 'returns 0' do
+      context "with no inventory set" do
+        it "returns 0" do
           expect(subject.available_inventory).to eq(0)
         end
       end
 
-      context 'with available inventory lots' do
+      context "with available inventory lots" do
         let!(:lot1) { create(:lot, product: product, quantity: 42) }
         let!(:lot2) { create(:lot, product: product, quantity: 24) }
 
-        it 'returns the sum of the available lot inventory' do
+        it "returns the sum of the available lot inventory" do
           expect(subject.available_inventory).to eq(66)
         end
 
-        context 'that are expired' do
-          let!(:expired_lot) { create(:lot, created_at: 2.days.ago, number: '1', expires_at: 1.minute.from_now, quantity: 50) }
+        context "that are expired" do
+          let!(:expired_lot) { create(:lot, created_at: 2.days.ago, number: "1", expires_at: 1.minute.from_now, quantity: 50) }
 
-          it 'returns the sum of the available lot inventory' do
+          it "returns the sum of the available lot inventory" do
             expired_lot.update_attribute(:expires_at, 1.day.ago)
 
             expect(subject.available_inventory).to eq(66)
           end
         end
 
-        context 'that have not reached their good_from date' do
-          let!(:not_good_yet) { create(:lot, created_at: 2.days.ago, number: '1', good_from: 2.days.from_now, expires_at: 1.week.from_now, quantity: 50) }
+        context "that have not reached their good_from date" do
+          let!(:not_good_yet) { create(:lot, created_at: 2.days.ago, number: "1", good_from: 2.days.from_now, expires_at: 1.week.from_now, quantity: 50) }
 
-          it 'returns the sum of the available lot inventory' do
+          it "returns the sum of the available lot inventory" do
             expect(subject.available_inventory).to eq(66)
           end
         end
@@ -368,9 +367,9 @@ describe Product do
     let(:product) { create(:product) }
     let(:market) { create(:market) }
     let(:buyer) { create(:organization, :buyer, markets: [market]) }
-    let(:minimum) {
+    let(:minimum) do
       product.minimum_quantity_for_purchase(organization: buyer, market: market)
-    }
+    end
 
     context "general pricing" do
       before do
@@ -385,10 +384,10 @@ describe Product do
     end
 
     context "organization specific pricing" do
-      let(:special_buyer) { create(:organization, markets:[market]) }
-      let(:special_minimum) {
+      let(:special_buyer) { create(:organization, markets: [market]) }
+      let(:special_minimum) do
         product.minimum_quantity_for_purchase(organization: special_buyer, market: market)
-      }
+      end
 
       before do
         product.prices << create(:price, min_quantity: 50, organization: special_buyer)
@@ -406,7 +405,7 @@ describe Product do
     context "product has no prices" do
 
       it "is nil" do
-        quantity = product.minimum_quantity_for_purchase(market: market, organization:buyer)
+        quantity = product.minimum_quantity_for_purchase(market: market, organization: buyer)
         expect(quantity).to be_nil
       end
     end
@@ -439,7 +438,7 @@ describe Product do
         let!(:organization) { create(:organization, :seller, markets: [market]) }
         let!(:product) { create(:product, organization: organization) }
 
-        it 'adds all deliveries' do
+        it "adds all deliveries" do
           expect(product.delivery_schedules.count).to eql(1)
           expect(product.delivery_schedules).to include(monday_delivery)
         end
@@ -449,7 +448,7 @@ describe Product do
         let!(:organization) { create(:organization, :seller, markets: [market, market2]) }
         let!(:product) { create(:product, organization: organization) }
 
-        it 'adds all deliveries' do
+        it "adds all deliveries" do
           expect(product.delivery_schedules.count).to eql(2)
           expect(product.delivery_schedules).to include(monday_delivery, wednesday_delivery)
         end
@@ -461,11 +460,11 @@ describe Product do
         let!(:organization) { create(:organization, :seller, markets: [market]) }
         let!(:product) { create(:product, use_all_deliveries: false, organization: organization) }
 
-        it 'does not automatically add delivery schedules' do
+        it "does not automatically add delivery schedules" do
           expect(product.delivery_schedules.count).to eql(0)
         end
 
-        it 'allows unselecting all delivery schedules' do
+        it "allows unselecting all delivery schedules" do
           product.delivery_schedules = [monday_delivery]
           expect(product.delivery_schedules.count).to eql(1)
 
@@ -480,11 +479,11 @@ describe Product do
         let!(:organization) { create(:organization, :seller, markets: [market, market2]) }
         let!(:product) { create(:product, use_all_deliveries: false, organization: organization) }
 
-        it 'does not automatically add delivery schedules' do
+        it "does not automatically add delivery schedules" do
           expect(product.delivery_schedules.count).to eql(0)
         end
 
-        it 'removes delivery schedules from markets that are not part of the organization' do
+        it "removes delivery schedules from markets that are not part of the organization" do
           product.delivery_schedules = [monday_delivery, wednesday_delivery]
           expect(product.delivery_schedules.count).to eql(2)
 
@@ -496,7 +495,7 @@ describe Product do
           expect(product.delivery_schedules).to_not include(wednesday_delivery)
         end
 
-        it 'allows unselecting all delivery schedules' do
+        it "allows unselecting all delivery schedules" do
           product.delivery_schedules = [monday_delivery, wednesday_delivery]
           expect(product.delivery_schedules.count).to eql(2)
 
@@ -534,7 +533,7 @@ describe Product do
 
       it "sorts products with lots" do
         Timecop.travel(6.days.ago) do
-          create(:lot, product: product_with_expired_lots, number: '1', expires_at: 1.day.from_now, quantity: 100)
+          create(:lot, product: product_with_expired_lots, number: "1", expires_at: 1.day.from_now, quantity: 100)
         end
 
         sorted = organization.products.for_sort("stock-asc")

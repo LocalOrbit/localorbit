@@ -30,15 +30,15 @@ describe "Adding a product" do
   let!(:mondays_schedule) { create(:delivery_schedule, market: market, day: 1, require_delivery: true) }
   # This is the schedule we'll model after the Appleton bug
   # Seller fulfillment location is what will show for the seller
-  let!(:tuesdays_schedule) {
+  let!(:tuesdays_schedule) do
     create(:delivery_schedule,
-      market: market,
-      day: 2,
-      buyer_pickup_location_id: 0,
-      seller_fulfillment_location: aggregation_point,
-      buyer_pickup_start: "8:30 AM", buyer_pickup_end: "10:00 AM"
+           market: market,
+           day: 2,
+           buyer_pickup_location_id: 0,
+           seller_fulfillment_location: aggregation_point,
+           buyer_pickup_start: "8:30 AM", buyer_pickup_end: "10:00 AM"
     )
-  }
+  end
 
   let!(:deleted_schedule) { create(:delivery_schedule, market: market, day: 2, deleted_at: Time.current) }
 
@@ -49,7 +49,7 @@ describe "Adding a product" do
   end
 
   describe "as a seller belonging to one organization" do
-    let(:location){ create(:location) }
+    let(:location) { create(:location) }
 
     before do
       org.users << user
@@ -62,8 +62,8 @@ describe "Adding a product" do
     end
 
     it "defaults to simple inventory" do
-      within '#admin-nav' do
-        click_link 'Products'
+      within "#admin-nav" do
+        click_link "Products"
       end
       click_link "Add New Product"
 
@@ -101,7 +101,7 @@ describe "Adding a product" do
         visit "/admin/products/new"
 
         uncheck "seller_info"
-        expect(page.find('.seller_info_fields', visible: false)).to be_visible
+        expect(page.find(".seller_info_fields", visible: false)).to be_visible
         product_form = Dom::Admin::ProductForm.first
 
         fill_in "product_who_story", with: "We sell other stuff"
@@ -109,10 +109,10 @@ describe "Adding a product" do
         select "Good Place", from: "product_location_id"
 
         check "seller_info"
-        expect(page.find('.seller_info_fields', visible: false)).to_not be_visible
+        expect(page.find(".seller_info_fields", visible: false)).to_not be_visible
 
         uncheck "seller_info"
-        expect(page.find('.seller_info_fields', visible: false)).to be_visible
+        expect(page.find(".seller_info_fields", visible: false)).to be_visible
 
         expect(product_form.seller_info).to_not be_checked
         expect(product_form.who_story).to eq("We sell other stuff")
@@ -126,18 +126,18 @@ describe "Adding a product" do
         fill_in_required_fields(:with_chosen)
 
         uncheck "seller_info"
-        expect(page.find('.seller_info_fields', visible: false)).to be_visible
+        expect(page.find(".seller_info_fields", visible: false)).to be_visible
 
         fill_in "product_who_story", with: "We sell other stuff"
 
         check "seller_info"
-        expect(page.find('.seller_info_fields', visible: false)).to_not be_visible
+        expect(page.find(".seller_info_fields", visible: false)).to_not be_visible
 
         click_button "Save and Continue"
 
         click_link "Product Info"
 
-        expect(page.find('.seller_info_fields', visible: false)).to_not be_visible
+        expect(page.find(".seller_info_fields", visible: false)).to_not be_visible
 
         product = Product.last.decorate
 
@@ -169,7 +169,7 @@ describe "Adding a product" do
         visit "/admin/products/new"
 
         fill_in "Product Name", with: "Red Grapes"
-        attach_file("Photo", 'app/assets/images/backgrounds/lentils.jpg')
+        attach_file("Photo", "app/assets/images/backgrounds/lentils.jpg")
 
         click_button "Save and Continue"
         expect(page).to have_css("img[alt='Red Grapes']")
@@ -271,8 +271,8 @@ describe "Adding a product" do
     end
 
     context "when all input is valid", js: true, chosen_js: true do
-      let!(:loc1) { create(:location, organization: org)}
-      let!(:loc2) { create(:location, organization: org)}
+      let!(:loc1) { create(:location, organization: org) }
+      let!(:loc2) { create(:location, organization: org) }
 
       it "saves the product stub" do
         visit "/admin/products/new"
@@ -378,7 +378,7 @@ describe "Adding a product" do
         fill_in "Current inventory", with: "12"
 
         uncheck "Make product available on all market delivery dates"
-        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays").node.find('input')).to be_disabled
+        expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays").node.find("input")).to be_disabled
       end
     end
 
@@ -387,7 +387,7 @@ describe "Adding a product" do
         visit "/admin/products/new"
 
         expect(page).to have_content("Current inventory")
-        uncheck 'Use simple inventory management'
+        uncheck "Use simple inventory management"
 
         click_button "Save and Continue"
         expect(page).to have_content("Name can't be blank")
@@ -395,7 +395,7 @@ describe "Adding a product" do
         expect(page).to_not have_content("Current inventory")
         expect(find_field("Use Seller info from my account.")).to be_checked
 
-        within('.tabs') do
+        within(".tabs") do
           expect(page).to have_content("Inventory")
         end
       end
@@ -606,7 +606,7 @@ describe "Adding a product" do
       fill_in_required_fields
 
       click_button "Save and Continue"
-      
+
       fill_in "price_net_price", with: "3.00"
       fill_in "price_sale_price", with: "2.00"
       click_button "Add"
@@ -626,11 +626,11 @@ describe "Adding a product" do
       it "allows the user to request a new unit" do
         click_link "Request a New Unit"
 
-        expect(ZendeskMailer).to receive(:request_unit).with(user, {
-          "singular" => "fathom",
-          "plural" => "fathoms",
-          "additional_notes" => "See more notes"
-        }).and_return(double(:mailer, deliver: true))
+        expect(ZendeskMailer).to receive(:request_unit).with(user,
+                                                             "singular" => "fathom",
+                                                             "plural" => "fathoms",
+                                                             "additional_notes" => "See more notes"
+                                                             ).and_return(double(:mailer, deliver: true))
 
         fill_in "Singular", with: "fathom"
         fill_in "Plural", with: "fathoms"
