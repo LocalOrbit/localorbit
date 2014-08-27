@@ -14,7 +14,7 @@ class ReportPresenter
     market_name:            {sort: :order_market_name,       display_name: "Market"},
     quantity:               {sort: :quantity,                display_name: "Quantity"},
     unit_price:             {sort: :unit_price,              display_name: "Unit Price"},
-    discount:               {sort: :discount,                display_name: "Discount"},
+    discount:               {sort: :discount,                display_name: "Actual Discount"},
     row_total:              {sort: nil,                      display_name: "Total"},
     net_sale:               {sort: nil,                      display_name: "Net Sale"},
     payment_method:         {sort: :order_payment_method,    display_name: "Payment Method"},
@@ -22,7 +22,9 @@ class ReportPresenter
     buyer_payment_status:   {sort: :order_payment_status,    display_name: "Buyer Payment Status"},
     seller_payment_status:  {sort: nil,                      display_name: "Seller Payment Status"},
     fulfillment_day:        {sort: :order_delivery_delivery_schedule_day, display_name: "Fulfillment Day"},
-    fulfillment_type:       {sort: nil,                      display_name: "Fulfillment Type"}
+    fulfillment_type:       {sort: nil,                      display_name: "Fulfillment Type"},
+    discount_code:          {sort: nil,                      display_name: "Discount Code"},
+    discount_amount:        {sort: nil,                      display_name: "Discount Amount"}
   }.with_indifferent_access
 
   REPORT_MAP = {
@@ -84,6 +86,12 @@ class ReportPresenter
         :quantity, :unit_price, :discount, :row_total, :net_sale, :delivery_status,
         :buyer_payment_status, :seller_payment_status
       ]
+    },
+    discount_code: {
+      filters: [:placed_at, :order_number, :market_name],
+      fields: [
+        :placed_at, :buyer_name, :discount_code, :discount_amount, :discount, :net_sale
+      ]
     }
   }.with_indifferent_access
 
@@ -108,6 +116,9 @@ class ReportPresenter
     else
       OrderItem.for_user(user)
     end.joins(:order).uniq
+
+    # Filter items by discount for the Discount Code report
+    items = items.joins(order: :discount) if report == "discount_code"
 
     setup_filter_data(items)
 

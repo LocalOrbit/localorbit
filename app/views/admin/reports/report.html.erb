@@ -66,6 +66,14 @@
             <td class="price"><%= content_tag "span", item.price_per_unit %></td>
           <% end %>
 
+          <% if field == :discount_code %>
+            <td class="discount-code"><%= item.discount_code %></td>
+          <% end %>
+
+          <% if field == :discount_amount %>
+            <td class="discount-amount"><%= item.discount_amount %></td>
+          <% end %>
+
           <% if field == :discount %>
             <td class="discounts"><%= item.discount %></td>
           <% end %>
