@@ -11,7 +11,7 @@ describe Admin::ReportsController do
   it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-seller" }
   it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-product" }
   it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-payment-method" }
-
+  it_behaves_like "an action that prevents access to buyers", lambda { get :show, id: "sales-by-fulfillment" }
 
   context "seller has not made a purchase" do
     it_behaves_like "an action that grants access to buyers only", lambda { get :show, id: "purchases-by-product" }

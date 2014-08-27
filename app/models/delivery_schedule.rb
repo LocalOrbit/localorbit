@@ -26,6 +26,19 @@ class DeliverySchedule < ActiveRecord::Base
   validate :buyer_pickup_start_after_seller_fulfillment_start, unless: :direct_to_customer?
   validate :seller_delivery_end_after_start
 
+  # used on Sales by Fulfillment report where OrderItems are filtered by type
+  # (Seller to Buyer or Market to Buyer) or pickup location
+  ransacker :fulfillment_type do |_|
+    Arel.sql(<<-SQL
+      CASE
+        WHEN (delivery_schedules.seller_fulfillment_location_id != 0) AND (delivery_schedules.buyer_pickup_location_id = 0) THEN 'S2B'
+        WHEN (delivery_schedules.seller_fulfillment_location_id = 0)  AND (delivery_schedules.buyer_pickup_location_id = 0) THEN 'M2B'
+        ELSE delivery_schedules.buyer_pickup_location_id::TEXT
+      END
+    SQL
+    )
+  end
+
   def products_available_for_sale(organization, deliver_on_date=Time.current)
     participating_products.available_for_sale(market, organization, deliver_on_date)
   end

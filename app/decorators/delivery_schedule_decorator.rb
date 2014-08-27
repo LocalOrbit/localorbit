@@ -51,4 +51,14 @@ class DeliveryScheduleDecorator < Draper::Decorator
       true
     end
   end
+
+  def fulfillment_type
+    if buyer_pickup?
+      "Pick Up: #{seller_fulfillment_address}"
+    elsif seller_fulfillment_location
+      "Delivery: From Seller to Buyer"
+    else
+      "Delivery: From Market to Buyer"
+    end
+  end
 end
