@@ -2,7 +2,7 @@ class SendUpdateEmails
   include Interactor
 
   def perform
-    return # hot fix to temporarily disable emails
+
     unless order.organization.users.empty?
       OrderMailer.delay.buyer_order_updated(order)
     end
