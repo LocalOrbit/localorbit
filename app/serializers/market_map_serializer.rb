@@ -1,4 +1,6 @@
 class MarketMapSerializer < ActiveModel::Serializer
+  include Rails.application.routes.url_helpers
+
   attributes :id, :name, :latitude, :longitude, :plan_name, :market_path
 
   def latitude
