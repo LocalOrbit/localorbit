@@ -140,7 +140,7 @@ describe "Checking Out", :js, :vcr do
         expect(current_email).to_not have_body_text("Potatoes")
 
         expect(current_email).to have_body_text("Product Total")
-        expect(current_email).to have_body_text("Delivery Fee")
+        expect(current_email).not_to have_body_text("Delivery Fee")
         expect(current_email).not_to have_body_text("Discount")
 
         expect(current_email.body).to have_content("An order was just placed by #{buyer.name}")
@@ -163,7 +163,7 @@ describe "Checking Out", :js, :vcr do
         expect(current_email).to have_body_text("Potatoes")
 
         expect(current_email).to have_body_text("Product Total")
-        expect(current_email).to have_body_text("Delivery Fee")
+        expect(current_email).not_to have_body_text("Delivery Fee")
         expect(current_email).not_to have_body_text("Discount")
 
         expect(current_email.body).to have_content("An order was just placed by #{buyer.name}")
@@ -201,7 +201,6 @@ describe "Checking Out", :js, :vcr do
     it "displays the ordered products" do
       checkout
       expect(page).to have_content("Thank you for your order")
-
       bananas_row = Dom::Order::ItemRow.find_by_name("Bananas")
       expect(bananas_row.node).to have_content("10 boxes")
       expect(bananas_row.node).to have_content("$0.50")

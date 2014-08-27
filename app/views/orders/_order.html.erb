@@ -14,8 +14,8 @@
               <th colspan="5" class="seller"><%= seller_name %></th>
             </tr>
             <% items.each do |item| %>
-              <%= content_tag_for(:tr, item, id: item.product.id, class: "product  order-item-row", data: {id: item.product.id}) do %>
-                <td class="name"><%= item.product.name %> (<%= item.product.unit_plural %>)</td>
+              <%= content_tag_for(:tr, item, id: item.product.id, class: "product order-item-row", data: {id: item.product.id}) do %>
+                <td class="name"><%= item.product.name %></td>
                 <td class="quantity math"><%= item.decorate.quantity_with_unit %></td>
                 <td class="price math"><%= number_to_currency item.unit_price %></td>
                 <td class="item-total math"><%= number_to_currency item.gross_total %></td>
