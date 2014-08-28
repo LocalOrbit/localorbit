@@ -39,11 +39,6 @@ describe "Checking Out", :js, :vcr do
 
   let!(:beans) { create(:product, :sellable, name: "Beans", organization: ada_farms) }
 
-  # let!(:cart) { create(:cart, market: market, organization: buyer, user: user, location: buyer.locations.first, delivery: delivery) }
-  # let!(:cart_bananas) { create(:cart_item, cart: cart, product: bananas, quantity: 10) }
-  # let!(:cart_potatoes) { create(:cart_item, cart: cart, product: potatoes, quantity: 5) }
-  # let!(:cart_kale) { create(:cart_item, cart: cart, product: kale, quantity: 20) }
-
   def cart_link
     Dom::CartLink.first
   end
@@ -59,7 +54,7 @@ describe "Checking Out", :js, :vcr do
   def checkout
     click_button "Place Order"
   end
-  
+
   context "user enters items into cart before cutoff, then cutoff time lapses, then the user checks out", :js do
     it "shows them an error" do
       switch_to_subdomain(market.subdomain)
