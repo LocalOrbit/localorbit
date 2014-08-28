@@ -19,7 +19,7 @@ csv << headers
       data << item.placed_at
       data << item.order_number
     elsif field == :unit_price
-      data << item.price_per_unit
+      data << "#{item.unit_price} / #{item.unit}"
     else
       data << item.send(field)
     end
