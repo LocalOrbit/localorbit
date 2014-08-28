@@ -541,9 +541,6 @@ ActiveRecord::Schema.define(version: 20140828145149) do
     t.boolean  "automatic_payments", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "promotions",         default: false, null: false
-    t.boolean  "advanced_pricing",   default: false, null: false
-    t.boolean  "advanced_inventory", default: false, null: false
   end
 
   create_table "prices", force: true do |t|
