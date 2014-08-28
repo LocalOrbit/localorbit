@@ -260,7 +260,7 @@ feature "Reports" do
         field_headers = ReportPresenter.field_headers_for_report(report)
         items.each_with_index do |item, i|
           field_headers.each_pair do |field, display_name|
-            if !["Discount", "Discounts"].include? display_name # We're hiding the discounts column in the html view
+            if !["Actual Discount", "Actual Discounts"].include? display_name # We're hiding the discounts column in the html view
               expect(item.send(field)).to include(csv[i][display_name])
             end
           end

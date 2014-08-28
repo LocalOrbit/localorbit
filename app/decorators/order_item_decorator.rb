@@ -48,8 +48,16 @@ class OrderItemDecorator < Draper::Decorator
     number_to_currency(object.unit_price)
   end
 
+  def discount_code
+    order.discount.try(:code).try(:to_s)
+  end
+
   def discount
     number_to_currency(object.discount)
+  end
+
+  def discount_amount
+    number_to_currency(order.discount.try(:discount).try(:to_s))
   end
 
   def quantity
