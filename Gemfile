@@ -57,7 +57,7 @@ gem "postgres_ext"
 gem "rack-canonical-host"
 gem "ransack"
 gem "simpleidn"
-gem "wkhtmltopdf-binary"
+gem "wkhtmltopdf-binary", github: "borski/wkhtmltopdf-binary"
 
 group :doc do
   gem "sdoc", require: false
