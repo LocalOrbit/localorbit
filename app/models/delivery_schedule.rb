@@ -3,6 +3,7 @@ class DeliverySchedule < ActiveRecord::Base
   include SoftDelete
 
   WEEKDAYS = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
+  WEEKDAY_ABBREVIATIONS = %w(Su M Tu W Th F Sa)
 
   belongs_to :market, inverse_of: :delivery_schedules
 

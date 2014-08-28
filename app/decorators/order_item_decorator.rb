@@ -96,7 +96,7 @@ class OrderItemDecorator < Draper::Decorator
     schedule = object.order.delivery.delivery_schedule
 
     if day = schedule.try(:day)
-      DeliverySchedule::WEEKDAYS[day]
+      DeliverySchedule::WEEKDAY_ABBREVIATIONS[day]
     else
       ""
     end
