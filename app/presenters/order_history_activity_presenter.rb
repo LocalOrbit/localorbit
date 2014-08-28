@@ -87,8 +87,6 @@ class OrderHistoryActivityPresenter
       "Item Added: #{item_name}"
     elsif item.audited_changes["quantity"].present?
       "Item Quantity Updated: #{item_name} (#{last_value_for_change(item, "quantity")})"
-    elsif last_value_for_change(item, "delivery_status") == "delivered"
-      "Item Delivered: #{item_name}"
     end
   end
 
