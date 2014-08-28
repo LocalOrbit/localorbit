@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :ensure_delivery_accepts_orders
   before_action :require_cart, only: :create
   before_action :hide_admin_navigation, only: [:create]
 

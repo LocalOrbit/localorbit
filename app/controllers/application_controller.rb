@@ -177,6 +177,13 @@ class ApplicationController < ActionController::Base
     redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath)
   end
 
+  def ensure_delivery_accepts_orders
+    return if current_delivery.can_accept_orders?
+
+    # Destory the cart
+    redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath), alert: current_delivery.decorate.delivery_expired_notice
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:accept_invitation).concat [:name, :email]
     devise_parameter_sanitizer.for(:account_update).concat [:name]
