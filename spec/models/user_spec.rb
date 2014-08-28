@@ -325,6 +325,17 @@ describe User do
         expect(user.managed_organizations_within_market(market1)).to include(org1, org5)
         expect(user.managed_organizations_within_market(market1)).to_not include(org2, org3, org4)
       end
+      it "returns a scope with all organizations not deleted for the market" do
+        MarketOrganization.where(organization_id: org5.id, market_id: market1.id).first.update_attribute(:deleted_at, 1.day.ago)
+        expect(user.managed_organizations_within_market(market1)).to include(org1)
+        expect(user.managed_organizations_within_market(market1)).not_to include(org5)
+      end
+
+      it "returns a scope with all organizations not_cross_selling for the market" do
+        MarketOrganization.where(organization_id: org5.id, market_id: market1.id).first.update_attribute(:cross_sell_origin_market_id, true)
+        expect(user.managed_organizations_within_market(market1)).to include(org1)
+        expect(user.managed_organizations_within_market(market1)).not_to include(org5)
+      end
     end
 
     context "for a market manager" do
@@ -351,6 +362,18 @@ describe User do
       it "returns a scope for the organization memberships within the market" do
         expect(user.managed_organizations_within_market(market1)).to include(org1, org5)
         expect(user.managed_organizations_within_market(market1)).to_not include(org2, org3, org4)
+      end
+
+      it "returns a scope with all organizations not deleted for the market" do
+        MarketOrganization.where(organization_id: org5.id, market_id: market1.id).first.update_attribute(:deleted_at, 1.day.ago)
+        expect(user.managed_organizations_within_market(market1)).to include(org1)
+        expect(user.managed_organizations_within_market(market1)).not_to include(org5)
+      end
+
+      it "returns a scope with all organizations not_cross_selling for the market" do
+        MarketOrganization.where(organization_id: org5.id, market_id: market1.id).first.update_attribute(:cross_sell_origin_market_id, true)
+        expect(user.managed_organizations_within_market(market1)).to include(org1)
+        expect(user.managed_organizations_within_market(market1)).not_to include(org5)
       end
 
       context "user is suspended from an organization" do
