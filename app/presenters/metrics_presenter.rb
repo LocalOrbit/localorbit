@@ -3,7 +3,8 @@ class MetricsPresenter
 
   attr_reader :metrics, :headers, :markets, :date_range, :interval
 
-  START_OF_WEEK = :sun
+  START_OF_WEEK = :sunday
+  Date.beginning_of_week = START_OF_WEEK
 
   DEFAULT_INTERVAL_COUNT = {
     week: 5,
