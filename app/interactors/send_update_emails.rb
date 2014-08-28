@@ -2,6 +2,8 @@ class SendUpdateEmails
   include Interactor
 
   def perform
+    return if Rails.env.production?
+
     if users_should_be_updated?
       OrderMailer.delay.buyer_order_updated(order)
     end
