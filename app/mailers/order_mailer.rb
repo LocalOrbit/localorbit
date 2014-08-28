@@ -75,24 +75,4 @@ class OrderMailer < BaseMailer
       template_name: "order_updated"
     )
   end
-
-  private
-
-  def invoice_pdf(order)
-    # Try to find a user that can actually log in
-    user = order.organization.users.where.not(confirmed_at: nil).first || order.market.managers.where.not(confirmed_at: nil).first
-
-    # encode "+" and other characters to be url safe
-    auth_token = URI.encode_www_form_component(user.auth_token)
-
-    scheme = Rails.env.production? || Rails.env.staging? ? "https://" : "http://"
-    uri = URI("#{scheme}#{order.market.subdomain}.#{Figaro.env.domain}/admin/invoices/#{order.id}/invoice.pdf?auth_token=#{auth_token}")
-
-    res = Net::HTTP.start(uri.host, uri.port, use_ssl: (uri.scheme == "https"), verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
-      http.request Net::HTTP::Get.new(uri)
-    end
-
-    res.value # Raises an exception if the response code isn't 2xx
-    res
-  end
 end
