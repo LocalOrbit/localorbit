@@ -14,6 +14,7 @@
 /db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
+dragonfly.log
 /log/*.log
 /tmp
 
