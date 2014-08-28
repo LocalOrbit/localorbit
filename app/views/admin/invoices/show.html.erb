@@ -7,7 +7,7 @@
   <meta name="pdfkit-header_left" content="Invoice: <%= invoice.order_number %>">
   <meta name="pdfkit-header_right" content="Page [page] of [toPage]">
   <meta name="pdfkit-header_spacing" content="5">
-  <meta name="pdfkit-load_media_error_handling" content="abort">
+  <meta name="pdfkit-load_media_error_handling" content="<%= Rails.env.test? ? 'ignore' : 'abort' %>">
   <title>Local Orbit</title>
   <%= render 'shared/print_opensanscondensed_bold' %>
   <%= render 'shared/print_opensans' %>
