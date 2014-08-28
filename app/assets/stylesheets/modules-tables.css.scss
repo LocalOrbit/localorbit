@@ -321,14 +321,6 @@ th {
   }
 }
 
-.user-table {
-  .user-row {
-    .action {
-      width: 180px;
-      text-align: right;
-    }
-  }
-}
 
 .product-row, .user-row {
   color: #000;
@@ -409,6 +401,18 @@ th {
     width: 94px;
   }
 }
+
+.user-row {
+  .action {
+    min-width: 180px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .btn--save {
+    width: 4.5em;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .product-row,
   .user-row {
