@@ -17,6 +17,7 @@ class UserDecorator < Draper::Decorator
 
   def global_toggle_enabled_button
     return unless current_user.can_manage_user?(self)
+    return if organizations_including_suspended.count < 1
 
     title, status = nil
     is_enabled = (organizations.count > suspended_organizations.count)

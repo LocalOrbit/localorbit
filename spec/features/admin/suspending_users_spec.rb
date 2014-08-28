@@ -75,6 +75,19 @@ feature "Suspend/enable a user", :suspend_user do
     scenario "Enabling a user" do
       globally_enable_user(as: admin)
     end
+
+    scenario "Users in the system who have no organizations (pure market managers and admins)" do
+      other_admin = create(:user, :admin)
+      sign_in_as(admin)
+
+      visit admin_users_path
+      user_row = Dom::Admin::UserRow.find_by_email(other_admin.email)
+
+      within(user_row.node) do
+        expect(page).to_not have_content("Suspend")
+        expect(page).to_not have_content("Enable")
+      end
+    end
   end
 
   context "as a market manager" do
