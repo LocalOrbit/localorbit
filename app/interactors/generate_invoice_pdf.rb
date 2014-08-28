@@ -7,7 +7,7 @@ class GenerateInvoicePdf
 
       html = view.render( template: "admin/invoices/show.html.erb", locals: { invoice: invoice, user: nil } )
 
-      pdf = PDFKit.new(html, page_size: "letter")
+      pdf = PDFKit.new(html, page_size: "letter", print_media_type: true)
       order.invoice_pdf = pdf.to_file("/tmp/#{order.order_number}.pdf")
       order.save
     end
