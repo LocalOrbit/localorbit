@@ -268,12 +268,12 @@ describe "Managing Markets" do
 
     it "can change a markets plan" do
       new_plan = create(:plan)
-      visit admin_market_path(market)
+      visit admin_market_fees_path(market)
 
       expect(find_field("Plan").value).to eq(market.plan_id.to_s)
 
       select new_plan.name, from: "Plan"
-      click_button "Update Market"
+      click_button "Update Fees"
 
       expect(find_field("Plan").value).to eq(new_plan.id.to_s)
     end
