@@ -34,9 +34,9 @@ class OrderMailer < BaseMailer
     @order  = BuyerOrder.new(Order.find(order_id))
     @market = @order.market
 
-    attachments["invoice.pdf"] = {mime_type: "application/pdf", content: invoice_pdf(@order).body}
+    attachments["invoice.pdf"] = {mime_type: "application/pdf", content: @order.invoice_pdf.try(:data)}
 
-    mail(
+    result = mail(
       to: @order.organization.users.map(&:pretty_email),
       subject: "New Invoice"
     )
