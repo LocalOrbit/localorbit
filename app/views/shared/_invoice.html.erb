@@ -1,13 +1,13 @@
 <div class="invoices-wrapper">
-  <%= link_to "Return to Invoices", admin_financials_invoices_path, class: "no-print" %>
+  <%= link_to "Return to Invoices", admin_financials_invoices_path, class: "no-print" if user %>
 
   <div class="row">
     <div class="column column--two-thirds">
       <h1>Invoice</h1>
     </div><div class="column column--third">
-    <% if current_user.admin? || current_user.market_manager? %>
-      <%= link_to "Print And Mark Invoiced", mark_invoiced_admin_invoice_path(invoice.id), class: "btn btn--small btn--save pull-right print-button", id: 'print-and-mark-invoiced' %>
-    <% else %>
+      <% if user && (user.admin? || user.market_manager?) %>
+        <%= link_to "Print And Mark Invoiced", mark_invoiced_admin_invoice_path(invoice.id), class: "btn btn--small btn--save pull-right print-button", id: 'print-and-mark-invoiced' %>
+      <% else %>
       <%= link_to "Print", "#", class: "btn btn--small btn--save pull-right print-button", id: 'print-invoice' %>
     <% end %>
     </div>
