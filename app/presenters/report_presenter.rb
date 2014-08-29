@@ -19,7 +19,7 @@ class ReportPresenter
     net_sale:               {sort: nil,                      display_name: "Net Sale"},
     payment_method:         {sort: :order_payment_method,    display_name: "Payment Method"},
     delivery_status:        {sort: :delivery_status,         display_name: "Delivery"},
-    buyer_payment_status:   {sort: :order_payment_status,    display_name: "Buyer Payment Status"},
+    buyer_payment_status:   {sort: nil,                      display_name: "Buyer Payment Status"},
     seller_payment_status:  {sort: nil,                      display_name: "Seller Payment Status"},
     fulfillment_day:        {sort: :order_delivery_delivery_schedule_day, display_name: "Week Day"},
     fulfillment_type:       {sort: nil,                      display_name: "Fulfillment Type"},
