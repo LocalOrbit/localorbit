@@ -201,7 +201,6 @@ describe "Checking Out", :js, :vcr do
     it "displays the ordered products" do
       checkout
       expect(page).to have_content("Thank you for your order")
-
       bananas_row = Dom::Order::ItemRow.find_by_name("Bananas")
       expect(bananas_row.node).to have_content("10 boxes")
       expect(bananas_row.node).to have_content("$0.50")

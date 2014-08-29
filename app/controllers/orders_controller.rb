@@ -20,6 +20,7 @@ class OrdersController < ApplicationController
 
       if @placed_order.success?
         session.delete(:cart_id)
+        @grouped_items = @order.items.for_checkout
       else
         @grouped_items = current_cart.items.for_checkout
 
