@@ -132,52 +132,6 @@
         <%= f.label :default_allow_ach, "Allow ACH" %><br>
       </div>
     </div>
-
-    <div class="row row--field">
-      <div class="field column column--half column--guttered" id="plan-options">
-        <%= f.label :plan_id %><br>
-        <%= f.select :plan_id, Plan.options_for_select, include_blank: 'Select a plan' %>
-      </div>
-    </div>
-
-    <div class="row row--field">
-      <div class="field column column--half column--guttered" id="plan-options">
-        <%= f.label :plan_interval, "Plan Schedule" %><br>
-        <%= f.select :plan_interval, [["Monthly", 1], ["Yearly", 12]], include_blank: 'Select a schedule' %><br>
-        IMPORTANT: When changing the plan schedule, set the Plan Start Date to be the date the next payment is due.
-      </div>
-    </div>
-
-    <div class="row row--field">
-      <div class="field column column--half column--guttered" id="plan-options">
-        <%= f.label :plan_fee %><br>
-        <%= f.text_field :plan_fee %>
-      </div>
-    </div>
-
-    <div class="row row--field">
-      <div class="field column column--half column--guttered" id="plan-options">
-        <%= f.label :plan_start_at, "Plan Start Date" %><br>
-        <%= f.datetime_field :plan_start_at, size: 8, class: "alt-datepicker" %><a href="#market_plan_start_at" class="btn btn--end calendar-toggle" title="Select a date"><i class="font-icon icon-calendar"></i></a>
-        <div class="datepicker" data-input="market_plan_start_at"></div>
-      </div>
-    </div>
-
-    <div class="row row--field">
-      <div class="field column column--half column--guttered" id="plan-options">
-        <%= f.label :plan_bank_account_id %><br>
-        <%= f.select :plan_bank_account_id, @market.decorate.payment_accounts_for_select, include_blank: 'Select a bank account' %>
-      </div>
-    </div>
-
-    <% if (payment_date = @market.next_service_payment_at) %>
-    <div class="row row--field">
-      <div class="field column column--half column--guttered" id="plan-options">
-        Next Payment Due On:<br>
-        <%= payment_date.strftime("%b %d, %Y") %>
-      </div>
-    </div>
-    <% end %>
   <% end %>
 
 </fieldset>

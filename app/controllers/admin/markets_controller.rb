@@ -75,11 +75,6 @@ class Admin::MarketsController < AdminController
         :default_allow_purchase_orders,
         :default_allow_credit_cards,
         :default_allow_ach,
-        :plan_id,
-        :plan_start_at,
-        :plan_interval,
-        :plan_fee,
-        :plan_bank_account_id,
       ])
     end
     params.require(:market).permit(columns)
