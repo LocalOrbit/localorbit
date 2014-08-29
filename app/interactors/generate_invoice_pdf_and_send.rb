@@ -21,13 +21,14 @@ class GenerateInvoicePdfAndSend
   end
 
   def send_invoice_email
-    puts "Sending email to #{order.organization.users.map(&:email).join(",")}"
-    OrderMailer.invoice(order.id) unless order.organization.users.blank?
+    OrderMailer.invoice(order.id).deliver unless order.organization.users.blank?
   end
 
   def generate_pdf_for_invoice(invoice)
     html = view.render( template: "admin/invoices/show.html.erb", locals: { invoice: invoice, user: nil } )
 
+    # If wkhtmltopdf gets an error downloading any media assets it will fail out
+    # and the job will get rescheduled to run later.
     pdf = PDFKit.new(html, page_size: "letter", print_media_type: true)
     order.invoice_pdf = pdf.to_file("/tmp/#{order.order_number}.pdf")
   end
