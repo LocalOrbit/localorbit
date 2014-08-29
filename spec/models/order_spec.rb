@@ -212,6 +212,7 @@ describe Order do
     context "as a market manager:" do
       let!(:user)    { create(:user, :market_manager) }
       let!(:managed_market) { user.managed_markets.first }
+      let!(:other_market) { create(:market) }
 
       let!(:managed_org)      { create(:organization, markets: [managed_market]) }
       let!(:managed_product1) { create(:product, :sellable, organization: managed_org) }
@@ -221,9 +222,9 @@ describe Order do
       let!(:managed_order2) { create(:order, market: managed_market, organization: managed_org, items: [create(:order_item, product: managed_product2)]) }
       let!(:managed_order_no_items) { create(:order, market: managed_market, organization: managed_org, items: []) }
 
-      let!(:other_org)     { create(:organization, markets: [market]) }
+      let!(:other_org)     { create(:organization, markets: [other_market]) }
       let!(:other_product) { create(:product, :sellable, organization: other_org) }
-      let!(:other_order)   { create(:order, market: market, organization: other_org, items: [create(:order_item, product: other_product)]) }
+      let!(:other_order)   { create(:order, market: other_market, organization: other_org, items: [create(:order_item, product: other_product)]) }
 
       context "who manages a single market" do
         it "returns orders for the marker that have sold items" do

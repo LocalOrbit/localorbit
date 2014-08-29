@@ -35,11 +35,11 @@ describe SetOrderItemsStatus do
 
     it "caches the overall status on the order" do
       expect(order.delivery_status).to eq("pending")
-      interactor = SetOrderItemsStatus.perform(user: market_manager, delivery_status: 'delivered', order_item_ids: [order_item1.id.to_s, order_item3.id.to_s])
+      interactor = SetOrderItemsStatus.perform(user: market_manager, market_context: market, delivery_status: 'delivered', order_item_ids: [order_item1.id.to_s, order_item3.id.to_s])
       order.reload
       expect(order.delivery_status).to eq("partially delivered")
 
-      interactor = SetOrderItemsStatus.perform(user: market_manager, delivery_status: 'delivered', order_item_ids: [order_item2.id.to_s])
+      interactor = SetOrderItemsStatus.perform(user: market_manager, market_context: market, delivery_status: 'delivered', order_item_ids: [order_item2.id.to_s])
       order.reload
       expect(order.delivery_status).to eq("delivered")
     end

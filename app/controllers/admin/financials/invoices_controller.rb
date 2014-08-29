@@ -39,7 +39,7 @@ module Admin::Financials
     private
 
     def find_base_scope_and_date_filter_attribute
-      if current_user.buyer_only?
+      if current_user.buyer_only?(current_market)
         [Order.orders_for_buyer(current_user).invoiced, :invoice_due_date]
       else
         [Order.orders_for_seller(current_user).uninvoiced, :placed_at]
