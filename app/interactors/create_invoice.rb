@@ -1,8 +1,8 @@
 class CreateInvoice
-  include Interactor::Organizer
+  include Interactor
 
-  organize(
-    MarkOrderInvoiced,
-    SendInvoiceEmail
-  )
+  def perform
+    result = MarkOrderInvoiced.perform(order: order)
+    result.success? ? GenerateInvoicePdfAndSend.delay.perform(order: order) : fail!
+  end
 end

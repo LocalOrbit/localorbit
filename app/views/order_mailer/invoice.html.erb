@@ -7,7 +7,7 @@
 </dl>
 <dl>
   <dt>Due Date:</dt>
-  <dd><%= @order.invoice_due_date.strftime("%B %e, %Y") %></dd>
+  <dd><%= @order.invoice_due_date.try(:strftime, "%B %e, %Y") %></dd>
 </dl>
 
 <br>

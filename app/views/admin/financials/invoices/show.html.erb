@@ -1,3 +1,3 @@
 <%= render "admin/financials/header" %>
 
-<%= render "shared/invoice", { market: @order.market.decorate, invoice: @order } %>
+<%= render "shared/invoice", { market: @order.market.decorate, invoice: @order, user: current_user } %>

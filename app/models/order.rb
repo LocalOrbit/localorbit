@@ -14,6 +14,8 @@ class Order < ActiveRecord::Base
   audited allow_mass_assignment: true
   has_associated_audits
 
+  dragonfly_accessor :invoice_pdf
+
   attr_accessor :credit_card, :bank_account
 
   belongs_to :market, inverse_of: :orders

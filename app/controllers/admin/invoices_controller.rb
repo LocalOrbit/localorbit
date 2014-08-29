@@ -7,7 +7,7 @@ module Admin
       @market  = @invoice.market.decorate
       @needs_js = true
 
-      render layout: false
+      render layout: false, locals: { invoice: @invoice, user: current_user }
     end
 
     def mark_invoiced

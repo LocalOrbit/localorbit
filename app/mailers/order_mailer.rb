@@ -34,9 +34,9 @@ class OrderMailer < BaseMailer
     @order  = BuyerOrder.new(Order.find(order_id))
     @market = @order.market
 
-    attachments["invoice.pdf"] = {mime_type: "application/pdf", content: invoice_pdf(@order).body}
+    attachments["invoice.pdf"] = {mime_type: "application/pdf", content: @order.invoice_pdf.try(:data)}
 
-    mail(
+    result = mail(
       to: @order.organization.users.map(&:pretty_email),
       subject: "New Invoice"
     )
@@ -74,25 +74,5 @@ class OrderMailer < BaseMailer
       subject: "#{@market.name}: Order #{order.order_number} updated",
       template_name: "order_updated"
     )
-  end
-
-  private
-
-  def invoice_pdf(order)
-    # Try to find a user that can actually log in
-    user = order.organization.users.where.not(confirmed_at: nil).first || order.market.managers.where.not(confirmed_at: nil).first
-
-    # encode "+" and other characters to be url safe
-    auth_token = URI.encode_www_form_component(user.auth_token)
-
-    scheme = Rails.env.production? || Rails.env.staging? ? "https://" : "http://"
-    uri = URI("#{scheme}#{order.market.subdomain}.#{Figaro.env.domain}/admin/invoices/#{order.id}/invoice.pdf?auth_token=#{auth_token}")
-
-    res = Net::HTTP.start(uri.host, uri.port, use_ssl: (uri.scheme == "https"), verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
-      http.request Net::HTTP::Get.new(uri)
-    end
-
-    res.value # Raises an exception if the response code isn't 2xx
-    res
   end
 end

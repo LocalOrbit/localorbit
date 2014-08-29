@@ -4,19 +4,20 @@
   <meta charset="utf-8">
   <meta name="pdfkit-footer_right" content="Powered by Local Orbit">
   <meta name="pdfkit-print_media_type" content="true">
-  <meta name="pdfkit-header_left" content="Invoice: <%= @invoice.order_number %>">
+  <meta name="pdfkit-header_left" content="Invoice: <%= invoice.order_number %>">
   <meta name="pdfkit-header_right" content="Page [page] of [toPage]">
   <meta name="pdfkit-header_spacing" content="5">
+  <meta name="pdfkit-load_media_error_handling" content="<%= Rails.env.test? ? 'ignore' : 'abort' %>">
   <title>Local Orbit</title>
   <%= render 'shared/print_opensanscondensed_bold' %>
   <%= render 'shared/print_opensans' %>
   <%= render 'shared/print_opensans_bold' %>
 
-  <link href="<%= asset_path('invoices.css') %>" rel="stylesheet">
-  <link href="<%= asset_path('z-sniff.css') %>" rel="stylesheet">
+  <link href="<%= Figaro.env.asset_host %><%= asset_path('invoices.css') %>" rel="stylesheet">
+  <link href="<%= Figaro.env.asset_host %><%= asset_path('z-sniff.css') %>" rel="stylesheet">
 </head>
 
-<body class="controller-<%= controller.controller_name %>">
-  <%= render "shared/invoice", { market: @invoice.market.decorate, invoice: @invoice } %>
+<body class="controller-invoices">
+  <%= render "shared/invoice", { market: invoice.market.decorate, invoice: invoice, user: user} %>
 </body>
 </html>
