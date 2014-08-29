@@ -173,8 +173,20 @@ class ApplicationController < ActionController::Base
   end
 
   def require_current_delivery
-    return unless current_delivery.nil? || (current_delivery.requires_location? && selected_organization_location.nil?)
-    redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath)
+    redir_opts = {}
+
+    if current_delivery.present?
+      return if current_delivery.requires_location? && selected_organization_location.nil?
+
+      if current_delivery.can_accept_orders?
+        return
+      else
+        session[:current_delivery_id] = nil
+        redir_opts[:alert] = current_delivery.delivery_expired_notice
+      end
+    end
+
+    redirect_to new_sessions_deliveries_path(redirect_back_to: request.fullpath), redir_opts
   end
 
   def configure_permitted_parameters

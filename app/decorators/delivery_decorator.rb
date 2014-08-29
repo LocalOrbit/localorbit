@@ -109,4 +109,8 @@ class DeliveryDecorator < Draper::Decorator
 
     "between #{start_time} and #{end_time}"
   end
+
+  def delivery_expired_notice
+    "Ordering for your selected pickup or delivery date ended #{display_cutoff_time}. Please choose a different pickup or delivery date to continue shopping."
+  end
 end

@@ -12,7 +12,7 @@ class Delivery < ActiveRecord::Base
 
   def self.current_selected(market, id)
     return nil unless id
-    active.upcoming.for_market(market).find_by(id: id)
+    active.for_market(market).find_by(id: id)
   end
 
   def self.for_market(market)
@@ -36,5 +36,9 @@ class Delivery < ActiveRecord::Base
 
   def requires_location?
     !delivery_schedule.buyer_pickup?
+  end
+
+  def can_accept_orders?
+    cutoff_time > Time.current
   end
 end
