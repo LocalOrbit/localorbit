@@ -2,7 +2,7 @@ module FinancialOverview
   def self.build(user, market)
     klass = if user.can_manage_market?(market)
       MarketManager
-    elsif user.buyer_only?
+    elsif user.buyer_only?(market)
       Buyer
     else
       Seller
@@ -49,7 +49,7 @@ module FinancialOverview
 
     def sum_seller_items(orders)
       orders.inject(0) do |total, order|
-        total + order.items.for_user(@user).map(&@calculation_method).reduce(:+)
+        total + order.items.for_user(@user, @market).map(&@calculation_method).reduce(:+)
       end
     end
   end

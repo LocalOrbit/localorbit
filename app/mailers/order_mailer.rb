@@ -86,7 +86,7 @@ class OrderMailer < BaseMailer
     auth_token = URI.encode_www_form_component(user.auth_token)
 
     scheme = Rails.env.production? || Rails.env.staging? ? "https://" : "http://"
-    uri = URI("#{scheme}#{order.market.subdomain}.#{Figaro.env.domain}/admin/invoices/#{order.id}/invoice.pdf?auth_token=#{auth_token}")
+    uri = URI("#{scheme}#{order.market.domain}/admin/invoices/#{order.id}/invoice.pdf?auth_token=#{auth_token}")
 
     res = Net::HTTP.start(uri.host, uri.port, use_ssl: (uri.scheme == "https"), verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
       http.request Net::HTTP::Get.new(uri)

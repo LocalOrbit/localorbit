@@ -172,33 +172,66 @@ describe User do
     end
 
     context "#buyer_only?" do
-      it "returns true if the user is only a buyer" do
-        user = build(:user)
-        expect(user).to be_buyer_only
+      subject { create(:user) }
+      let!(:market) { create(:market) }
+
+      context "as a member of a buying organization" do
+        let!(:org) { create(:organization, :buyer, markets: [market], users: [subject]) }
+        it { is_expected.to be_buyer_only(market) }
+
+        context "and a member of a selling organization" do
+          let!(:org2) { create(:organization, :seller, markets: [market], users: [subject]) }
+          it { is_expected.not_to be_buyer_only(market) }
+
+          context "in a market that's not the current market" do
+            let!(:market2) { create(:market) }
+            let!(:org2) { create(:organization, :seller, markets: [market2], users: [subject]) }
+            it { is_expected.not_to be_buyer_only(market2) }
+          end
+        end
       end
 
-      it "returns false if the user is a seller" do
-        user = build(:user)
-        allow(user).to receive(:seller?).and_return(true)
-        expect(user).not_to be_buyer_only
+      context "as a member of a selling organization" do
+        let!(:org) { create(:organization, :seller, markets: [market], users: [subject]) }
+        it { is_expected.not_to be_buyer_only(market) }
       end
 
-      it "returns false if the user is a market manager" do
-        user = build(:user)
-        allow(user).to receive(:market_manager?).and_return(true)
-        expect(user).not_to be_buyer_only
+      context "as a market manager" do
+        let!(:market) { create(:market, managers: [subject]) }
+
+        context "of the current market" do
+          it { is_expected.not_to be_buyer_only(market) }
+
+          context "and a member of a buying organization" do
+            let!(:org2) { create(:organization, :buyer, markets: [market], users: [subject]) }
+            it { is_expected.not_to be_buyer_only(market) }
+          end
+        end
+
+        context "but not of the current market" do
+          let!(:market2) { create(:market) }
+          it { is_expected.not_to be_buyer_only(market2) }
+
+          context "and is a member of a buying organization" do
+            let!(:org2) { create(:organization, :buyer, markets: [market2], users: [subject]) }
+            it { is_expected.to be_buyer_only(market2) }
+          end
+        end
       end
 
-      it "returns false if the user is an admin" do
-        user = build(:user)
-        allow(user).to receive(:admin?).and_return(true)
-        expect(user).not_to be_buyer_only
+      context "as an admin" do
+        subject { create(:user, :admin) }
+        it { is_expected.not_to be_buyer_only(nil) }
+
+        context "and a member of a buying organization" do
+          let!(:org2) { create(:organization, :buyer, users: [subject]) }
+          it { is_expected.not_to be_buyer_only(nil) }
+        end
       end
     end
   end
 
   describe "managed_organizations" do
-
     context "for an admin" do
       let!(:user) { create(:user, :admin) }
       let!(:market1) { create(:market) }
@@ -467,27 +500,27 @@ describe User do
     end
   end
 
-  describe "managed_products" do
+  describe ".managed_products" do
+    let!(:market1) { create(:market) }
+    let!(:market2) { create(:market) }
+    let!(:org1)    { create(:organization, markets: [market1]) }
+    let!(:org2)    { create(:organization, markets: [market2]) }
+    let!(:prod1)   { create(:product, organization: org1) }
+    let!(:prod2)   { create(:product, organization: org2) }
+
     subject { user.managed_products }
 
-    context "for an admin" do
+    context "as an admin" do
       let!(:user) { create(:user, :admin) }
 
-      xit "returns all products" do
-        Timecop.freeze do
-          expect(subject).to eq(Product.visible.seller_can_sell.joins(organization: :market_organizations))
-        end
+      it "returns all products" do
+        expect(subject).to include(prod1, prod2)
       end
     end
 
-    context "for a market manager" do
+    context "as a market manager" do
       let!(:user) { create(:user, :market_manager) }
       let!(:market1) { user.managed_markets.first }
-      let!(:market2) { create(:market) }
-      let!(:org1) { create(:organization, markets: [market1]) }
-      let!(:org2) { create(:organization, markets: [market2]) }
-      let!(:prod1) { create(:product, organization: org1) }
-      let!(:prod2) { create(:product, organization: org2) }
       let!(:deleted_prod) { create(:product, organization: org1, deleted_at: 1.minute.ago) }
 
       it "returns a scope" do
@@ -507,7 +540,7 @@ describe User do
       end
     end
 
-    context "for a user" do
+    context "as a user" do
       let!(:user) { create(:user) }
       let!(:market1) { create(:market) }
       let!(:org1) { create(:organization, markets: [market1], users: [user]) }

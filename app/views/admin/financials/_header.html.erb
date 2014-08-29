@@ -15,7 +15,7 @@
           <%= content_tag(:li, link_to_or_span("Record Payments to Vendors", [:admin, :financials, :vendor_payments]), class: 'tab') %>
           <%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %>
         <% else %>
-          <% if current_user.buyer_only? %>
+          <% if current_user.buyer_only?(current_market) %>
             <%= content_tag(:li, link_to_or_span("Review Invoices", [:admin, :financials, :invoices]), class: 'tab') %>
           <% end %>
 

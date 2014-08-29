@@ -71,8 +71,12 @@ class Market < ActiveRecord::Base
     addresses.order(:name).map {|a| [a.name, a.id] }.unshift([default_name, 0])
   end
 
+  def ascii_subdomain
+    SimpleIDN.to_ascii(subdomain)
+  end
+
   def domain
-    "#{subdomain}.#{Figaro.env.domain!}"
+    "#{ascii_subdomain}.#{Figaro.env.domain!}"
   end
 
   # TODO: exclude fees for payment types not available on the market
@@ -99,7 +103,7 @@ class Market < ActiveRecord::Base
 
   def upcoming_deliveries_for_user(user)
     scope = deliveries.future.with_undelivered_orders.order("deliver_on")
-    scope = scope.with_undelivered_orders_for_user(user) unless user.market_manager? || user.admin?
+    scope = scope.for_user(user) unless user.can_manage_market?(self)
     scope
   end
 

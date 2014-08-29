@@ -5,7 +5,7 @@
     </div>
     <div class="tabs-wrapper hidden-mobile">
       <ul class="tabs">
-        <% ReportPresenter.reports_for_user(current_user).each do |report| %>
+        <% ReportPresenter.reports_for_user(current_user, current_market).each do |report| %>
           <%= content_tag(:li, link_to_or_span(report.titleize, admin_report_path(report.dasherize)), class: 'tab') %>
         <% end %>
       </ul>

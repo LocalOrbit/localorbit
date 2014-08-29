@@ -25,7 +25,7 @@ module Admin
     end
 
     def set_status
-      UpdateOrderItemsStatus.perform(user: current_user, order_item_ids: params[:order_item_ids], delivery_status: params[:delivery_status])
+      UpdateOrderItemsStatus.perform(user: current_user, market_context: current_market, order_item_ids: params[:order_item_ids], delivery_status: params[:delivery_status])
       redirect_to action: :index
     end
 
@@ -46,8 +46,7 @@ module Admin
     end
 
     def fetch_order_items
-      OrderItem.for_user(current_user).
-        joins(:order).
+      OrderItem.for_user(current_user, current_market).
         includes(order: :organization, product: :organization).
         preload(product: [:organization, :category], order: [:market, :organization])
     end
@@ -77,7 +76,7 @@ module Admin
     end
 
     def fetch_buyer_payment_statuses
-      @buyer_payment_statuses = Order.joins(:items).uniq.merge(OrderItem.for_user(current_user)).pluck(:payment_status).sort
+      @buyer_payment_statuses = Order.joins(:items).uniq.merge(OrderItem.for_user(current_user, current_market)).pluck(:payment_status).sort
     end
   end
 end

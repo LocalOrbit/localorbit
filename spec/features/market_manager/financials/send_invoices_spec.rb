@@ -5,7 +5,7 @@ feature "sending invoices" do
   let!(:market_manager)    { create :user, managed_markets: [market1] }
   let!(:delivery_schedule) { create(:delivery_schedule) }
   let!(:delivery)          { delivery_schedule.next_delivery }
-
+  
   let!(:buyer_user) { create :user }
 
   let!(:market1_seller1) { create(:organization, :seller, name: "Better Farms", markets: [market1]) }

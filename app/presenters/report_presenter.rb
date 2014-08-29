@@ -103,7 +103,7 @@ class ReportPresenter
     REPORT_MAP.keys.reject {|k| REPORT_MAP[k][:buyer_only] }
   end
 
-  def initialize(report:, user:, search: {}, paginate: {})
+  def initialize(report:, user:, market_context:, search: {}, paginate: {})
     search ||= {}
 
     @report = report
@@ -114,12 +114,8 @@ class ReportPresenter
     items = if self.class.buyer_reports.include?(report)
       OrderItem.for_user_purchases(user)
     else
-      OrderItem.for_user(user)
-    end.joins(:order).uniq
-
-    # Filter items by discount for the Discount Code report
-    items = items.joins(order: :discount) if report == "discount_code"
-
+      OrderItem.for_user(user, market_context).joins(:order).uniq
+    end
     setup_filter_data(items)
 
     # Initialize ransack and set a default sort order
@@ -142,18 +138,18 @@ class ReportPresenter
     @items = include_associations(items)
   end
 
-  def self.report_for(report:, user:, search: {}, paginate: {})
-    return nil unless user && reports_for_user(user).include?(report)
+  def self.report_for(report:, user:, market_context:, search: {}, paginate: {})
+    return nil unless user && reports_for_user(user, market_context).include?(report)
 
-    valid = !user.buyer_only? || reports_for_user(user).include?(report)
+    valid = !user.buyer_only?(market_context) || reports_for_user(user, market_context).include?(report)
 
-    new(report: report, user: user, search: search, paginate: paginate) if valid
+    new(report: report, user: user, market_context: market_context, search: search, paginate: paginate) if valid
   end
 
-  def self.reports_for_user(user)
+  def self.reports_for_user(user, market_context)
     if user.is_seller_with_purchase?
       seller_reports + buyer_reports
-    elsif user.buyer_only?
+    elsif user.buyer_only?(market_context)
       buyer_reports
     else
       seller_reports

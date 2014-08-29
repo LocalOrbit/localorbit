@@ -4,13 +4,14 @@ class Admin::ReportsController < AdminController
   before_action :find_sticky_params, only: :show
 
   def index
-    redirect_to current_user.buyer_only? ? admin_report_path("purchases-by-product") : admin_report_path("total-sales")
+    redirect_to current_user.buyer_only?(current_market) ? admin_report_path("purchases-by-product") : admin_report_path("total-sales")
   end
 
   def show
     @presenter = ReportPresenter.report_for(
       report: params[:id].to_s.underscore,
       user: current_user,
+      market_context: current_market,
       search: @query_params[:q],
       paginate: {
         csv: request.format.to_sym == :csv,

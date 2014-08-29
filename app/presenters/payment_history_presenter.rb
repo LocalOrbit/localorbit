@@ -3,14 +3,14 @@ class PaymentHistoryPresenter
 
   include Search::DateFormat
 
-  def self.build(user: user, options: options, paginate: true)
+  def self.build(user: user, organization: organization, market: market, options: options, paginate: true)
     page = options[:page]
     per_page = options[:per_page]
     search = options[:q] || {}
 
     payments = if user.admin?
       Payment.all
-    elsif user.market_manager?
+    elsif user.can_manage_market?(market)
       payment_table = Payment.arel_table
       order_payment_table = OrderPayment.arel_table
       order_table = Order.arel_table
@@ -32,7 +32,7 @@ class PaymentHistoryPresenter
           payment_table[:payee_type].eq("Market").
           and(payment_table[:payee_id].in(market_ids)))
       ).uniq
-    elsif user.buyer_only?
+    elsif user.buyer_only?(market)
       Payment.
         joins(:orders).
         where(payer_type: "Organization", payer_id: (user.organization_ids)).

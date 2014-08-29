@@ -58,8 +58,8 @@ class OrderItem < ActiveRecord::Base
     joins(:order).where(orders: {organization_id: user.managed_organization_ids_including_deleted})
   end
 
-  def self.for_user(user)
-    if user.buyer_only?
+  def self.for_user(user, market_context)
+    if user.buyer_only?(market_context)
       for_user_purchases(user)
     else
       joins(:product).where(products: {organization_id: user.managed_organization_ids_including_deleted})

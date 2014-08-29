@@ -21,7 +21,7 @@ shared_examples "an action that is accessible to all roles" do |action|
   end
 
   it "grants access to buyer only" do
-    expect(member.buyer_only?).to be true
+    expect(member.buyer_only?(market)).to be true
 
     sign_in member
 

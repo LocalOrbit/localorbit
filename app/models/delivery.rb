@@ -7,7 +7,7 @@ class Delivery < ActiveRecord::Base
   scope :future, -> { where("deliveries.deliver_on >= ?", Time.current.midnight) }
   scope :recent, -> { where(deliver_on: (4.weeks.ago..Time.current)) }
   scope :with_undelivered_orders, -> { joins(orders: {items: :product}).where(order_items: {delivery_status: "pending"}).group("deliveries.id") }
-  scope :with_undelivered_orders_for_user, lambda {|user| with_undelivered_orders.where(products: {organization_id: user.organization_ids}) }
+  scope :for_user, lambda {|user| joins(orders: {items: :product}).where(products: {organization_id: user.organization_ids}) }
   scope :active, -> { joins(:delivery_schedule).where(DeliverySchedule.visible_conditional) }
 
   def self.current_selected(market, id)
@@ -23,11 +23,6 @@ class Delivery < ActiveRecord::Base
   def self.for_seller(seller)
     joins(:delivery_schedule).
     where(delivery_schedules: {market_id: [seller.markets.pluck(:id)]})
-  end
-
-  def self.upcoming_for_seller(seller)
-    ids = Order.undelivered_orders_for_seller(seller).upcoming_delivery.pluck(:delivery_id).uniq
-    where(id: ids)
   end
 
   def products_available_for_sale(organization)

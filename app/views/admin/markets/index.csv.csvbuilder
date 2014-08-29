@@ -3,7 +3,7 @@ csv << ["Name", "Subdomain", "Contact Name", "Contact Phone"]
 @markets.each do |market|
   csv << [
     market.name,
-    market.subdomain,
+    market.ascii_subdomain,
     market.contact_name,
     market.contact_phone
   ]
