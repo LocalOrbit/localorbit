@@ -469,4 +469,39 @@ describe Market do
       end
     end
   end
+
+  describe "changing plan" do
+    context "disables cross-selling" do
+      let!(:old_plan) { create(:plan, cross_selling: true) }
+      let!(:new_plan) { create(:plan, cross_selling: false) }
+
+      let!(:market1)  { create(:market, plan: old_plan, allow_cross_sell: true) }
+      let!(:org1)     { create(:organization, :seller, markets: [market1]) }
+      let!(:market2)  { create(:market) }
+      let!(:org2)     { create(:organization, :seller, markets: [market2]) }
+
+      before do
+        # Member organization cross-selling on another market
+        MarketOrganization.create(market_id: market2.id, organization_id: org1.id, cross_sell_origin_market_id: market1.id)
+
+        # Non-member organization cross-selling on this market
+        MarketOrganization.create(market_id: market1.id, organization_id: org2.id, cross_sell_origin_market_id: market2.id)
+
+        market1.update(plan: new_plan)
+      end
+
+      it "disables other markets from seeing it as a cross selling market" do
+        expect(market1.reload.allow_cross_sell).to eql(false)
+      end
+
+      it "removes any member organization from cross selling on other markets" do
+        expect(MarketOrganization.where(cross_sell_origin_market_id: market1.id, deleted_at: nil).count).to eql(0)
+      end
+
+      it "removes any non-member organizations from cross selling on the market" do
+        expect(MarketOrganization.where.not(cross_sell_origin_market_id: nil).where(market_id: market1.id, deleted_at: nil).count).to eql(0)
+      end
+    end
+
+  end
 end
