@@ -1,20 +1,10 @@
-<%# gets the market for the email layout. Isn't ideal, but works well. %>
-<% if organization = @resource.organizations.first
-     org_or_market_name = organization.name
-     @market = organization.original_market
-   elsif @market = @resource.primary_market
-     org_or_market_name = @market.name
-   else
-     org_or_market_name = "Local Orbit"
-   end %>
-
-<h1>Join <%= org_or_market_name %> today!</h1>
+<h1>Join <%= @org_or_market_name %> today!</h1>
 <p>
-  Hello! You have been invited to join <%= org_or_market_name %> by a member of your organization.
+  Hello! You have been invited to join <%= @org_or_market_name %> by a member of your organization.
 </p>
 
 <div class="lo_call_to_action">
-  <%= link_to "Join #{org_or_market_name}", accept_invitation_url(@resource, :invitation_token => @token, host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %>
+  <%= link_to "Join #{@org_or_market_name}", accept_invitation_url(@resource, :invitation_token => @token, host: (@market ? @market.domain : "app.#{Figaro.env.domain}")) %>
   <p>
     If clicking the button doesn't work, right click it and copy the link.<br>
     After you've copied it, paste it into a new browser window.
