@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       resources :receipts, only: [:index, :edit, :update]
       resources :vendor_payments
       resources :market_payments, only: [:index, :create]
+      resources :service_payments, only: [:index, :create]
     end
 
     resources :orders, only: [:index, :show, :update]

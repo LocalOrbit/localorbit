@@ -28,6 +28,7 @@ class Market < ActiveRecord::Base
   has_many :newsletters
   has_many :promotions, inverse_of: :market
   belongs_to :plan, inverse_of: :markets
+  belongs_to :plan_bank_account, class_name: "BankAccount"
 
   has_many :bank_accounts, as: :bankable
 
@@ -42,6 +43,7 @@ class Market < ActiveRecord::Base
 
   scope_accessible :sort, method: :for_sort, ignore_blank: true
 
+  scope :active, -> { where(active: true) }
   scope :managed_by, lambda { |user|
     if user.admin?
       all
@@ -61,6 +63,21 @@ class Market < ActiveRecord::Base
 
   def self.for_order_items(order_items)
     joins(:orders).where(orders: {id: order_items.map(&:order_id)}).uniq
+  end
+
+  # Called as the last in a scope chain
+  def self.sort_service_payment
+    all.sort do |a,b|
+      if a.next_service_payment_at && b.next_service_payment_at
+        a.next_service_payment_at <=> b.next_service_payment_at
+      elsif a.next_service_payment_at.nil? && b.next_service_payment_at.nil?
+        a.name.downcase <=> b.name.downcase
+      elsif a.next_service_payment_at.nil?
+        -1 # Means order is wrong
+      else
+        1 # Means order is correct
+      end
+    end
   end
 
   def balanced_customer
@@ -126,8 +143,14 @@ class Market < ActiveRecord::Base
     return nil unless plan_start_at && plan_interval
     return plan_start_at if plan_start_at > Time.now
 
-    plan_payments = Payment.successful.not_refunded.where(payer: self, payment_type: "service").where(Payment.arel_table[:created_at].gt(plan_start_at))
-    (plan_interval * plan_payments.count).months.from_now(plan_start_at)
+    @next_service_payment_at ||= begin
+      plan_payments = Payment.successful.not_refunded.made_after(plan_start_at).where(payer: self, payment_type: "service")
+      (plan_interval * plan_payments.count).months.from_now(plan_start_at)
+    end
+  end
+
+  def plan_payable?
+    plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
   end
 
   def on_statement_as
