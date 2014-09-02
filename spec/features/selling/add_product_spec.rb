@@ -67,6 +67,7 @@ describe "Adding a product" do
       end
       click_link "Add New Product"
 
+      save_and_open_page
       simple_inventory_checkbox = page.find_field("Use simple inventory management")
       inventory_quantity = page.find_field("Current inventory")
 

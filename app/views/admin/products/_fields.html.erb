@@ -73,7 +73,7 @@
 
 <fieldset class="conditional">
   <legend>Inventory</legend>
-  <% if can_access?(:advanced_inventory) %>
+  <% if organization_can_access?(@product.organization, :advanced_inventory) %>
     <%= f.check_box :use_simple_inventory, disabled: !@product.can_use_simple_inventory? %>
     <%= f.label :use_simple_inventory, 'Use simple inventory management.' %>
     <% if @product.can_use_simple_inventory? %>
@@ -82,7 +82,7 @@
     <span class="warning">To use simple inventory management you must clear out your current available inventory.</span>
     <% end %>
   <% end %>
-  <%= content_tag :div, id: "simple-inventory", class: (can_access?(:advanced_inventory) && !@product.use_simple_inventory? ? 'is-hidden' : nil) do %>
+  <%= content_tag :div, id: "simple-inventory", class: should_show_simple_inventory? ? nil : 'is-hidden' do %>
     <%= f.text_field :simple_inventory, size: 4 %>
     <%= f.label :simple_inventory, 'Current inventory' %>
   <% end %>

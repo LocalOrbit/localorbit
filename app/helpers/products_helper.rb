@@ -44,4 +44,12 @@ module ProductsHelper
   def market_organization_select(orgs)
     orgs.map {|org| [org.markets.first.name + " - " + org.name, org.id] }
   end
+
+  def should_show_simple_inventory?
+    allows_advanced_inventory = @organizations.map {|org| org.markets }.flatten.uniq.
+      map {|market| market.plan }.uniq.
+      any? {|plan| plan.advanced_inventory }
+
+    !allows_advanced_inventory || (allows_advanced_inventory && @product.use_simple_inventory?)
+  end
 end

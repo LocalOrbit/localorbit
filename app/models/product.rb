@@ -1,9 +1,14 @@
 class Product < ActiveRecord::Base
-  audited allow_mass_assignment: true, associated_with: :organization
   extend DragonflyBackgroundResize
   include SoftDelete
   include PgSearch
   include Sortable
+
+  before_save :update_cached_categories
+  before_save :update_delivery_schedules
+  before_save :process_simple_inventory_change, if: :use_simple_inventory_changed?
+
+  audited allow_mass_assignment: true, associated_with: :organization
 
   belongs_to :category
   belongs_to :top_level_category, class: Category
@@ -48,9 +53,6 @@ class Product < ActiveRecord::Base
   scope_accessible :search, method: :for_search, ignore_blank: true
 
   pg_search_scope :search_by_name, against: :name, using: {tsearch: {prefix: true}}
-
-  before_save :update_cached_categories
-  before_save :update_delivery_schedules
 
   def self.available_for_market(market)
     return none unless market
@@ -268,6 +270,16 @@ class Product < ActiveRecord::Base
     else
       ids = markets.map(&:id)
       self.delivery_schedules = delivery_schedules.select {|ds| ids.include?(ds.market.id) }
+    end
+  end
+
+  def process_simple_inventory_change
+    if use_simple_inventory
+      current_available_inventory = available_inventory
+
+      lots.delete_all
+
+      lots.build(quantity: current_available_inventory).save
     end
   end
 end

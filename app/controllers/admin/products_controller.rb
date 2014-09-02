@@ -14,7 +14,7 @@ module Admin
     end
 
     def new
-      @product = Product.new.decorate
+      @product = Product.new(use_simple_inventory: true).decorate
       setup_new_form
     end
 
@@ -33,6 +33,7 @@ module Admin
 
     def show
       @organizations = [@product.organization]
+
 
       find_delivery_schedules(@product)
       find_selected_delivery_schedule_ids(@product)
