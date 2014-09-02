@@ -61,6 +61,15 @@ describe "Market Manager managing delivery schedules" do
     expect(page).to have_content("Buyer pick up/delivery start")
   end
 
+  scenario "deleted addresses do not show" do
+    click_link "Address"
+    expect(page).to have_content("44 E. 8th St, Holland, MI 49423")
+
+    market.addresses[0].update_attributes(deleted_at: 1.day.ago)
+    visit current_path
+    expect(page).not_to have_content("44 E. 8th St, Holland, MI 49423")
+  end
+
   context "list" do
     let!(:delivery1) { create(:delivery_schedule, market: market) }
     let!(:delivery2) { create(:delivery_schedule, day: 5, order_cutoff: 12, seller_fulfillment_location: address, market: market, buyer_pickup_location_id: 0, buyer_pickup_start: "1:00 PM", buyer_pickup_end: "4:00 PM") }

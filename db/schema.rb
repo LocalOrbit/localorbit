@@ -473,9 +473,9 @@ ActiveRecord::Schema.define(version: 20140828145149) do
     t.integer  "legacy_id"
     t.datetime "deleted_at"
     t.integer  "discount_id"
+    t.string   "delivery_status"
     t.string   "invoice_pdf_uid"
     t.string   "invoice_pdf_name"
-    t.string   "delivery_status"
   end
 
   add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
