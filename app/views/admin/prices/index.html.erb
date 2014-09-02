@@ -9,7 +9,7 @@
     <%= render "shared/errors", {resource: @price_with_errors} if @price_with_errors %>
 
     <% if @product.prices.view_sorted.any? %>
-      <% if can_access?(:advanced_pricing) %>
+      <% if organization_can_access?(@product.organization, :advanced_pricing) %>
         <%= link_to "Add Price", "#add-row", class: "btn btn--add-mobile btn--add btn--small pull-right   add-toggle#{" is-hidden" if @price.errors.any?}" %>
       <% end %>
       <h2 class="clear-after">Add Prices</h2>

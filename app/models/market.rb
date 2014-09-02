@@ -169,7 +169,7 @@ class Market < ActiveRecord::Base
   end
 
   def process_cross_sells_change
-    remove_cross_selling_from_market unless cross_sells?
+    remove_cross_selling_from_market unless allow_cross_sell?
   end
 
   def process_plan_change
