@@ -14,6 +14,10 @@ module DeliveryStatus
     delivery_status_for_user(user) == "pending"
   end
 
+  def cache_delivery_status
+    self.delivery_status = aggrigate_delivery_status_for_items(items)
+  end
+
   private
 
   def statuses_within(statuses, query)
@@ -48,11 +52,5 @@ module DeliveryStatus
     else
       "canceled"
     end
-  end
-
-  private
-
-  def cache_delivery_status
-    self.delivery_status = aggrigate_delivery_status_for_items(items)
   end
 end
