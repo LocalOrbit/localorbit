@@ -148,6 +148,13 @@ $ ->
         formView.showFields()
         formView.applyFormValues(@display())
 
+    changeVisibleInventory: (org) ->
+      if org == ""
+        $("#inventory").html("<h3 class='header-conditionals'>No Organization Selected</h3>")
+      else
+        $.get "/admin/organizations/#{org}/available_inventory", (response) ->
+          $("#inventory").html(response)
+
     changeVisibleDeliveries: (org) ->
       if org == ""
         $("#delivery-schedules").html("<h3 class='header-conditionals'>No Organization Selected</h3>")
@@ -213,6 +220,7 @@ $ ->
   $("#product_organization_id").change ->
     val = $(this).val()
     formModel.changeOrg(val)
+    formModel.changeVisibleInventory(val)
     formModel.changeVisibleDeliveries(val)
 
   $("#product_use_all_deliveries").change ->
@@ -233,7 +241,7 @@ $ ->
       location: $("#product_location_id").val()
     )
 
-  $('#product_use_simple_inventory').change ->
+  $(document).on "change", '#product_use_simple_inventory', ->
     $('#simple-inventory').toggleClass('is-hidden')
     $('#product-inventory-nav').toggleClass('is-hidden pulsed')
 

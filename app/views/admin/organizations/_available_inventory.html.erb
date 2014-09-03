@@ -1,0 +1,15 @@
+<% if organization %>
+  <% if organization.decorate.can_use_advanced_inventory? %>
+    <input name="product[use_simple_inventory]" type="hidden" value="0">
+    <input checked="checked" id="product_use_simple_inventory" name="product[use_simple_inventory]" type="checkbox" value="1">
+    <label for="product_use_simple_inventory">Use simple inventory management.</label>
+    <span class="hint">Uncheck this to use advanced inventory tracking with lot numbers and expiration dates.</span>
+  <% end %>
+
+  <%= content_tag :div, id: "simple-inventory" do %>
+    <input id="product_simple_inventory" name="product[simple_inventory]" size="4" type="text" value="0">
+    <label for="product_simple_inventory">Current inventory</label>
+  <% end %>
+<% else %>
+  <h3 class="heading-conditionals">No selling organization selected</h3>
+<% end %>

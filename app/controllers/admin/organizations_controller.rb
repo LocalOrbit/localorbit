@@ -3,7 +3,7 @@ module Admin
     include StickyFilters
 
     before_action :require_admin_or_market_manager, only: [:new, :create, :destroy]
-    before_action :find_organization, only: [:show, :edit, :update, :update_active, :delivery_schedules, :market_memberships, :destroy]
+    before_action :find_organization, only: [:show, :edit, :update, :update_active, :delivery_schedules, :market_memberships, :available_inventory, :destroy]
     before_action :find_sticky_params, only: :index
 
     def index
@@ -81,6 +81,10 @@ module Admin
 
     def market_memberships
       render partial: "market_memberships"
+    end
+
+    def available_inventory
+      render partial: "available_inventory", locals: { organization: @organization }
     end
 
     private

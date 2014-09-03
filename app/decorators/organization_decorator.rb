@@ -86,4 +86,12 @@ class OrganizationDecorator < Draper::Decorator
       content_tag(:span, "#{market_list}: #{name}, #{type}") + suspended_tag
     end
   end
+
+  def can_use_advanced_inventory?
+    markets.any? {|m| m.plan.advanced_inventory }
+  end
+
+  def can_use_advanced_pricing?
+    markets.any? {|m| m.plan.advanced_pricing }
+  end
 end

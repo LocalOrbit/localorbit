@@ -46,9 +46,7 @@ module ProductsHelper
   end
 
   def should_show_simple_inventory?
-    allows_advanced_inventory = @organizations.map {|org| org.markets }.flatten.uniq.
-      map {|market| market.plan }.uniq.
-      any? {|plan| plan.advanced_inventory }
+    allows_advanced_inventory = @organizations.any? {|org| org.decorate.can_use_advanced_inventory? }
 
     !allows_advanced_inventory || (allows_advanced_inventory && @product.use_simple_inventory?)
   end
