@@ -46,6 +46,17 @@ GIT
     mapbox-rails (1.6.1.1)
 
 GIT
+  remote: git://github.com/heroku/heroku.git
+  revision: 2aa58c3b2d93959969c485a381a2c6440f0686a0
+  specs:
+    heroku (3.10.5)
+      heroku-api (~> 0.3.19)
+      launchy (>= 0.3.2)
+      netrc (~> 0.7.7)
+      rest-client (= 1.6.7)
+      rubyzip (= 0.9.9)
+
+GIT
   remote: git://github.com/trestrantham/groupdate.git
   revision: ff1ce7de22dcc617993522989747e90c591d2a1c
   branch: custom-calculations
@@ -222,12 +233,6 @@ GEM
     guard-rspec (4.3.1)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
-    heroku (3.10.3)
-      heroku-api (~> 0.3.19)
-      launchy (>= 0.3.2)
-      netrc (~> 0.7.7)
-      rest-client (= 1.6.7)
-      rubyzip (= 0.9.9)
     heroku-api (0.3.19)
       excon (~> 0.38)
       multi_json (~> 1.8)
@@ -492,6 +497,7 @@ DEPENDENCIES
   graticule!
   groupdate!
   guard-rspec
+  heroku!
   heroku-api
   honeybadger
   interactor-rails
