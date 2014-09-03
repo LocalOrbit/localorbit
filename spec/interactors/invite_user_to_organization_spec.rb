@@ -36,7 +36,7 @@ describe InviteUserToOrganization do
       subject.perform
       open_email("frank@example.com")
 
-      expect(current_email).to have_subject("You have been invited to Local Orbit")
+      expect(current_email).to have_subject("You have been invited to #{org.name}")
       expect(current_email).to have_body_text("You have been invited to join #{org.name} by a member of your organization.")
     end
 
@@ -133,7 +133,7 @@ describe InviteUserToOrganization do
         subject.perform
         open_last_email_for(user.email)
 
-        expect(current_email.subject).to eq("You have been invited to Local Orbit")
+        expect(current_email.subject).to eq("You have been invited to #{org.name}")
       end
     end
   end
