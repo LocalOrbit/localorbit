@@ -87,7 +87,7 @@ class ReportPresenter
         :buyer_payment_status, :seller_payment_status
       ]
     },
-    discount_code: {
+    discount_code_use: {
       filters: [:placed_at, :order_number, :market_name],
       fields: [
         :placed_at, :buyer_name, :discount_code, :discount_amount, :discount, :net_sale
@@ -118,7 +118,7 @@ class ReportPresenter
     end.joins(:order).uniq
 
     # Filter items by discount for the Discount Code report
-    items = items.joins(order: :discount) if report == "discount_code"
+    items = items.joins(order: :discount) if report == "discount_code_use"
 
     setup_filter_data(items)
 
