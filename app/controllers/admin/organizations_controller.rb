@@ -3,7 +3,7 @@ module Admin
     include StickyFilters
 
     before_action :require_admin_or_market_manager, only: [:new, :create, :destroy]
-    before_action :find_organization, only: [:show, :edit, :update, :update_active, :delivery_schedules, :market_memberships, :available_inventory, :destroy]
+    before_action :find_organization, except: [:index, :new, :create]
     before_action :find_sticky_params, only: :index
 
     def index
