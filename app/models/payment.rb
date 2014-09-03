@@ -77,6 +77,10 @@ class Payment < ActiveRecord::Base
     Balanced::Transaction.find(balanced_uri) if balanced_uri.present?
   end
 
+  def refund?
+    ["order refund", "service refund"].include? payment_type
+  end
+
   private
 
   def payee_or_payer_is_set

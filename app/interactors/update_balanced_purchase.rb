@@ -29,6 +29,9 @@ class UpdateBalancedPurchase
   end
 
   def refund(amount)
+    # NOTE: Refunds are logged as being paid from the order organization,
+    # but with a negative amount.
+
     remaining_amount = amount
     context[:status] = "paid"
 

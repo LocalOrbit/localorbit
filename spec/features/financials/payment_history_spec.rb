@@ -186,6 +186,18 @@ feature "Payment history", :truncate_after_all do
                        bank_account: ach_account)
       remember_payment(payment)
 
+      payment = create(:payment,
+                       payment_method: "ach",
+                       payment_type: "order refund",
+                       payer: @buyer2,
+                       payee: nil,
+                       orders: [order],
+                       amount: -22.34,
+                       bank_account: ach_account)
+      remember_payment(payment)
+
+
+
       # Create an ACH buyer payment for a market that IS NOT managed by our market manager
       order = create(:order,
                      delivery: @delivery,
@@ -381,7 +393,7 @@ feature "Payment history", :truncate_after_all do
                payer: @buyer,
                payee: @market,
                orders: [order],
-               amount: 23.45)
+               amount: -23.45)
 
         # seller payment
         create(:payment,
@@ -421,6 +433,8 @@ feature "Payment history", :truncate_after_all do
         expect(payment_row("$45.67").description).to eq("Order #: LO-99-234-4567890-1234")
         expect(payment_row("$56.78").description).to eq("Service Fee")
       end
+
+
     end
   end
 
@@ -436,6 +450,7 @@ feature "Payment history", :truncate_after_all do
     # 1 cash buyer payment
     # 1 ACH buyer payment
     # 1 service fee
+
     scenario "can view their purchase history" do
       within("table thead") do
         expect(page).to have_content("Payment Date")
@@ -446,7 +461,7 @@ feature "Payment history", :truncate_after_all do
         expect(page).to have_content("Amount")
       end
 
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
       expect(payment_rows_for_description("LO-01-234-4567890-1").count).to eq(2)
       expect(payment_rows_for_description("LO-01-234-4567890-2").count).to eq(2)
@@ -487,6 +502,12 @@ feature "Payment history", :truncate_after_all do
       expect(payment_row("$345.00").date).to eql(format_date(@payment_day - 1.day))
       expect(payment_row("$345.00").from).to eql(@buyer2.name)
       expect(payment_row("$345.00").to).to eql("Local Orbit")
+
+      expect(payment_row("$22.34")).not_to be_nil
+      expect(payment_row("$22.34").payment_method).to eql("ACH: *********9983")
+      expect(payment_row("$22.34").date).to eql(format_date(@payment_day - 1.day))
+      expect(payment_row("$22.34").to).to eql(@buyer2.name)
+      expect(payment_row("$22.34").from).to eql("Local Orbit")
     end
 
     scenario "can view fews for markets they manage" do
@@ -501,7 +522,7 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can search purchase history by order number" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
       fill_in "Search Payments", with: "4567890-1"
       click_button "Search"
@@ -513,12 +534,12 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can search purchase history by payer or payee name" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
       fill_in "Search Payments", with: "Buyer 2"
       click_button "Search"
 
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(8)
       expect(payment_rows_for_description("LO-02-234-4567890-1").count).to eq(1)
       expect(payment_rows_for_description("LO-02-234-4567890-2").count).to eq(1)
       expect(payment_rows_for_description("LO-02-234-4567890-3").count).to eq(1)
@@ -539,7 +560,7 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can filter purchase history by payment date" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
       fill_in "q_created_at_date_gteq", with: (@payment_day + 2.days).to_s
       click_button "Filter"
@@ -565,12 +586,12 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can filter purchase history by payment method" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
       select "ACH", from: "Payment Method"
       click_button "Filter"
 
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(7)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(8)
       expect(payment_row("$23.00")).not_to be_nil
       expect(payment_row("$23.01")).not_to be_nil
       expect(payment_row("$24.00")).not_to be_nil
@@ -580,7 +601,7 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can filter purchase history by payment type" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
       select "Order", from: "Payment Type"
       click_button "Filter"
@@ -594,7 +615,7 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can filter purchase history by payer" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
       select @market.name, from: "Received From"
       click_button "Filter"
@@ -608,7 +629,7 @@ feature "Payment history", :truncate_after_all do
     end
 
     scenario "can filter purchase history by payee" do
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(25)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(26)
 
       select @market.name, from: "Paid To"
       click_button "Filter"
@@ -629,7 +650,7 @@ feature "Payment history", :truncate_after_all do
       click_button "Filter"
 
       # Service Fee + ACH Buyer Payment
-      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(2)
+      expect(Dom::Admin::Financials::PaymentRow.all.count).to eq(3)
     end
 
     context "who have only one market" do
