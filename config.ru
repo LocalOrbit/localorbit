@@ -1,7 +1,6 @@
 # This file is used by Rack-based servers to start the application.
 
 require ::File.expand_path('../config/environment',  __FILE__)
-use Rack::Deflater
 
 if ENV["DOMAIN"]
   # Dont' take my word for it: http://rubular.com/r/YtzRyVnuDB
