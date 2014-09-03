@@ -1,2 +1,129 @@
-inherit_from:
-  - .hound.yml
+BracesAroundHashParameters:
+  EnforcedStyle: no_braces
+  SupportedStyles:
+    - braces
+    - no_braces
+
+ClassAndModuleChildren:
+  Enabled: false
+
+ClassLength:
+  Enabled: false
+
+# Align with the style guide.
+CollectionMethods:
+  # Mapping from undesired method to desired_method
+  # e.g. to use `detect` over `find`:
+  #
+  # CollectionMethods:
+  #   PreferredMethods:
+  #     find: detect
+  PreferredMethods:
+    collect: 'map'
+    collect!: 'map!'
+    reduce: 'inject'
+    find_all: 'select'
+    find: 'detect'
+
+# Checks formatting of special comments
+CommentAnnotation:
+  Keywords:
+    - TODO
+    - FIXME
+    - OPTIMIZE
+    - HACK
+    - REVIEW
+
+# Avoid complex methods.
+CyclomaticComplexity:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+# Multi-line method chaining should be done with leading dots.
+DotPosition:
+  EnforcedStyle: trailing
+  SupportedStyles:
+    - leading
+    - trailing
+
+EachWithObject:
+  Enabled: false
+
+# Align ends correctly.
+EndAlignment:
+  AlignWith: variable
+
+# Enforce the method used for string formatting.
+FormatString:
+  Enabled: false
+
+HashSyntax:
+  EnforcedStyle: ruby19
+  SupportedStyles:
+    - ruby19
+    - hash_rockets
+
+IfUnlessModifier:
+  MaxLineLength: 75
+
+Lambda:
+  Enabled: false
+
+LineLength:
+  Max: 200
+
+MethodLength:
+  Enabled: false
+
+NegatedIf:
+  Enabled: false
+
+Semicolon:
+  Enabled: false
+
+SignalException:
+  EnforcedStyle: only_raise
+  SupportedStyles:
+    - only_raise
+    - only_fail
+    - semantic
+
+SingleLineBlockParams:
+  Enabled: false
+
+SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+  SupportedStyles:
+    - space
+    - no_space
+
+SpaceInsideBlockBraces:
+  EnforcedStyle: space
+  SupportedStyles:
+    - space
+    - no_space
+  # Valid values are: space, no_space
+  EnforcedStyleForEmptyBraces: no_space
+  # Space between { and |. Overrides EnforcedStyle if there is a conflict.
+  SpaceBeforeBlockParameters: false
+
+SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+  EnforcedStyleForEmptyBraces: no_space
+  SupportedStyles:
+    - space
+    - no_space
+
+StringLiterals:
+  EnforcedStyle: double_quotes
+  SupportedStyles:
+    - single_quotes
+    - double_quotes
+
+TrailingComma:
+  Enabled: false
+
+WordArray:
+  Enabled: false
