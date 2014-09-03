@@ -64,7 +64,7 @@
             <td class="from"><%= payment.from %></td>
             <td class="to"><%= payment.to %></td>
           <% end %>
-          <td class="amount"><%= number_to_currency(payment.amount) %></td>
+          <td class="amount"><%= payment.display_amount %></td>
         </tr>
       <% end %>
     </tbody>

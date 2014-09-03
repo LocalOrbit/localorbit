@@ -1,4 +1,6 @@
 class PaymentDecorator < Draper::Decorator
+  include Draper::LazyHelpers
+
   delegate_all
 
   def display_payment_method
@@ -17,15 +19,18 @@ class PaymentDecorator < Draper::Decorator
   end
 
   def from
-    display_entity(payer)
+    display_entity(refund? ? payee : payer)
   end
 
   def to
-    display_entity(payee)
+    display_entity(refund? ? payer : payee)
+  end
+
+  def display_amount
+    number_to_currency(refund? ? amount*-1 : amount)
   end
 
   private
-
   def display_entity(entity)
     if entity.nil?
       "Local Orbit"
