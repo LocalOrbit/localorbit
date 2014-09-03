@@ -9,7 +9,7 @@
         <tr>
           <% @presenter.fields.each do |field| %>
             <% filter_map = ReportPresenter::FIELD_MAP[field] || {} %>
-            <th class="<%= filter_map[:sort] unless @presenter.report == "discount_code" %>">
+            <th class="<%= filter_map[:sort] unless @presenter.report == "discount_code_use" %>">
               <% if filter_map[:sort] %>
                 <% if filter_map[:display_name] == "Quantity" %>
                   <%= sort_link @presenter.q, filter_map[:sort], "<abbr title='Quantity'>Qty.</abbr>".html_safe %>
@@ -75,7 +75,7 @@
           <% end %>
 
           <% if field == :discount %>
-            <td class="<%= "discounts" unless @presenter.report == "discount_code" %>"><%= item.discount %></td>
+            <td class="<%= "discounts" unless @presenter.report == "discount_code_use" %>"><%= item.discount %></td>
           <% end %>
 
           <% if field == :row_total %>
