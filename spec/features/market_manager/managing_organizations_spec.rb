@@ -390,8 +390,15 @@ describe "A Market Manager", :vcr do
 
         expect(page).to have_content("Sent invitation to susan@example.com")
 
+        sign_out
+
         open_last_email_for "susan@example.com"
-        expect(current_email).to have_subject("You have been invited to Local Orbit")
+        expect(current_email).to have_subject("You have been invited to Holland Farms")
+        expect(current_email.reply_to.first).to eq(market.contact_email)
+
+        visit_in_email("Join Holland Farms")
+
+        expect(page).to have_content("Set up your account")
       end
     end
 

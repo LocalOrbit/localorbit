@@ -277,7 +277,7 @@
     <div class="lo_content">
     <!-- Content Header -->
       <% if @market %>
-      <a href="<%= root_url(host: @market.domain) %>" class="lo_visit_link">Visit the Market ➙</a>
+      <a href="<%= root_url(host: @market.domain) %>" class="lo_visit_link">Visit <%= @market.name %> ➙</a>
       <table class="lo_content_header">
         <tr>
           <td>
