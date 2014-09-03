@@ -16,7 +16,9 @@
       <p>You can set a universal price or individual prices for specific Markets, Buyers and quantities.</p>
       <p class="delete-check-mobile">
         <%= button_tag "SAVE", class: "btn is-invisible prevent-delete" %>
-        <%= button_tag "Delete Selected Prices", class: "btn delete delete-selected is-invisible" %>
+        <% if organization_can_access?(@product.organization, :advanced_pricing) %>
+          <%= button_tag "Delete Selected Prices", class: "btn delete delete-selected is-invisible" %>
+        <% end %>
       </p>
     <% else %>
       <h2>Add Prices</h2>
@@ -66,7 +68,11 @@
                 <%= price.market_name %>
               </div>
               <div class="edit-cell">
+                <% if organization_can_access?(@product.organization, :advanced_inventory) %>
                 <%= f.select :market_id, current_user.markets_for_select, {include_blank: 'All Markets'}, {class: "price_market_id"} %>
+                <% else %>
+                  <%= price.market_name %>
+                <% end %>
               </div>
             </td>
             <% end %>
@@ -75,7 +81,11 @@
                 <%= price.organization_name %>
               </div>
               <div class="edit-cell">
-                <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
+                <% if organization_can_access?(@product.organization, :advanced_inventory) %>
+                  <%= f.select :organization_id, current_user.buyers_for_select, {include_blank: 'All Buyers'}, {class: "price_buyer_id"} %>
+                <% else %>
+                  <%= price.organization_name %>
+                <% end %>
               </div>
             </td>
             <td class="min-qty">
@@ -83,7 +93,11 @@
                 <%= price.min_quantity %>
               </div>
               <div class="edit-cell">
-                <%= f.number_field :min_quantity, min: 0, size: 4 %>
+                <% if organization_can_access?(@product.organization, :advanced_inventory) %>
+                  <%= f.number_field :min_quantity, min: 0, size: 4 %>
+                <% else %>
+                  <%= price.min_quantity %>
+                <% end %>
               </div>
             </td>
             <td class="net-price">
