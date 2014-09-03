@@ -1,0 +1,38 @@
+<div class="sub-header stickable">
+  <div class="l-constraint">
+    <div class="l-page-header admin-markets-header">
+      <h1><i class="font-icon" data-icon="&#xe00f;"></i>&nbsp; Market Service Payments</h1>
+    </div>
+  </div>
+</div>
+<div class="table-wrapper" id="service-payments">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Plan</th>
+        <th>Fee</th>
+        <th>Next Payment Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <% @markets.each do |market| %>
+      <tr class="<%= cycle "odd", "even" %> vcard" id="<%= dom_id(market) %>">
+        <td class="name fn"><%= link_to market.name, [:admin, market] %></td>
+        <td class="plan"><%= market.plan.try(:name) %></td>
+        <td class="fee"><%= market.plan_fee %></td>
+        <td class="next-payment-date"><%= market.next_service_payment_at.try(:strftime, "%m/%d/%Y") || 'Not Configured' %></td>
+        <td>
+          <%= form_tag admin_financials_service_payments_path do %>
+            <%= link_to [:admin, market, :fees] do %>
+              <i class="font-icon" data-icon="&#xe002;"></i> Edit
+            <% end %>
+
+            <%= hidden_field_tag :market_id, market.id %>
+            <%= submit_tag "Run Payment", class: "btn btn--small" if market.plan_payable? %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

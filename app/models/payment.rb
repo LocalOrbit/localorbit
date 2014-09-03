@@ -54,9 +54,10 @@ class Payment < ActiveRecord::Base
   scope :buyer_payments, -> { where(payment_type: ["order", "order refund"]) }
   scope :for_orders, lambda {|orders| joins(:order_payments).where(order_payments: {order_id: orders}) }
   scope :seller_payments, -> { where(payment_type: "seller payment") }
+  scope :made_after, ->(start_at) { where(arel_table[:created_at].gt(start_at)) }
 
   ransacker :update_at_date do |_|
-    Arel.sql("DATE(updated_at)")
+    Arel::Nodes::NamedFunction.new("DATE", [arel_table[:updated_at]])
   end
 
   ransacker :payer_type_id do |_|

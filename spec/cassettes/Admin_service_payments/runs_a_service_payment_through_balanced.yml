@@ -1,0 +1,326 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU2IxeLNkFjoIWunLHrNF42h
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 02 Sep 2014 22:06:59 GMT
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM75da872232ed11e4ac8902b12035401b
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-17
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.8.7
+      Content-Length:
+      - '589'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "_type": "customer",
+          "twitter": null,
+          "bank_accounts_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/bank_accounts",
+          "phone": null,
+          "meta": {
+            "entity_id": "14",
+            "entity_name": "Appleton Food Hub",
+            "entity_type": "market"
+          },
+          "facebook": null,
+          "address": {
+            "postal_code": "",
+            "country_code": "USA",
+            "line1": ""
+          },
+          "source_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/bank_accounts/BA2HLalCQhL522m6I7VSkuih",
+          "business_name": null,
+          "reversals_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/reversals",
+          "id": "CU2IxeLNkFjoIWunLHrNF42h",
+          "credits_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/credits",
+          "cards_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/cards",
+          "holds_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/holds",
+          "name": null,
+          "dob": "1996-01",
+          "ssn_last4": null,
+          "created_at": "2014-09-02T19:50:11.072109Z",
+          "is_identity_verified": false,
+          "uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h",
+          "refunds_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/refunds",
+          "_uris": {
+            "transactions_uri": {
+              "_type": "page",
+              "key": "transactions"
+            },
+            "source_uri": {
+              "_type": "bank_account",
+              "key": "source"
+            },
+            "bank_accounts_uri": {
+              "_type": "page",
+              "key": "bank_accounts"
+            },
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "debits_uri": {
+              "_type": "page",
+              "key": "debits"
+            },
+            "destination_uri": {
+              "_type": "bank_account",
+              "key": "destination"
+            },
+            "holds_uri": {
+              "_type": "page",
+              "key": "holds"
+            },
+            "reversals_uri": {
+              "_type": "page",
+              "key": "reversals"
+            },
+            "credits_uri": {
+              "_type": "page",
+              "key": "credits"
+            },
+            "cards_uri": {
+              "_type": "page",
+              "key": "cards"
+            }
+          },
+          "debits_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/debits",
+          "transactions_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/transactions",
+          "destination_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/bank_accounts/BA2HLalCQhL522m6I7VSkuih",
+          "email": null,
+          "ein": null
+        }
+    http_version: 
+  recorded_at: Tue, 02 Sep 2014 22:07:00 GMT
+- request:
+    method: post
+    uri: https://ak-test-2nUrWp1vUFJ9T17cN1sbKBGvue3lZkHmE:@api.balancedpayments.com/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/debits
+    body:
+      encoding: UTF-8
+      string: '{"amount":9999,"appears_on_statement_as":"Local Orbit","hold_uri":null,"meta":null,"description":"Local
+        Orbit","source_uri":"/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/bank_accounts/BA2HLalCQhL522m6I7VSkuih","on_behalf_of_uri":null}'
+    headers:
+      User-Agent:
+      - balanced-ruby/0.8.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 02 Sep 2014 22:07:00 GMT
+      Location:
+      - http://bapi-integration-prod-8u30f7.us-west-1.vandelay.io/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/debits/WD3AVU9J1rk5g0qPMzU3rEnS
+      Server:
+      - ngx_openresty/1.2.6.3
+      X-Balanced-Guru:
+      - OHM761dabb032ed11e4b7da06429171ffad
+      X-Balanced-Host:
+      - bapi-integration-prod-8u30f7-10-3-5-17
+      X-Balanced-Marketplace:
+      - TEST-MP4X7mSSQwAyDzwUfc5TAQ7D
+      X-Balanced-Merchant:
+      - TEST-MR4RZnrOZZQznEBncFS5xnVS
+      X-Balanced-Revision:
+      - '1.0'
+      X-Balanced-Software-Build:
+      - 1.8.7
+      Content-Length:
+      - '4518'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "status": "pending",
+          "_type": "debit",
+          "description": "Local Orbit",
+          "events_uri": "/v1/debits/WD3AVU9J1rk5g0qPMzU3rEnS/events",
+          "_uris": {
+            "refunds_uri": {
+              "_type": "page",
+              "key": "refunds"
+            },
+            "events_uri": {
+              "_type": "page",
+              "key": "events"
+            }
+          },
+          "hold": null,
+          "id": "WD3AVU9J1rk5g0qPMzU3rEnS",
+          "customer": {
+            "twitter": null,
+            "holds_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/holds",
+            "meta": {
+              "entity_id": "14",
+              "entity_name": "Appleton Food Hub",
+              "entity_type": "market"
+            },
+            "id": "CU2IxeLNkFjoIWunLHrNF42h",
+            "email": null,
+            "_type": "customer",
+            "source_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/bank_accounts/BA2HLalCQhL522m6I7VSkuih",
+            "bank_accounts_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/bank_accounts",
+            "phone": null,
+            "_uris": {
+              "transactions_uri": {
+                "_type": "page",
+                "key": "transactions"
+              },
+              "source_uri": {
+                "_type": "bank_account",
+                "key": "source"
+              },
+              "bank_accounts_uri": {
+                "_type": "page",
+                "key": "bank_accounts"
+              },
+              "refunds_uri": {
+                "_type": "page",
+                "key": "refunds"
+              },
+              "debits_uri": {
+                "_type": "page",
+                "key": "debits"
+              },
+              "destination_uri": {
+                "_type": "bank_account",
+                "key": "destination"
+              },
+              "holds_uri": {
+                "_type": "page",
+                "key": "holds"
+              },
+              "reversals_uri": {
+                "_type": "page",
+                "key": "reversals"
+              },
+              "credits_uri": {
+                "_type": "page",
+                "key": "credits"
+              },
+              "cards_uri": {
+                "_type": "page",
+                "key": "cards"
+              }
+            },
+            "facebook": null,
+            "address": {
+              "postal_code": "",
+              "country_code": "USA",
+              "line1": ""
+            },
+            "destination_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/bank_accounts/BA2HLalCQhL522m6I7VSkuih",
+            "business_name": null,
+            "reversals_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/reversals",
+            "credits_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/credits",
+            "cards_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/cards",
+            "transactions_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/transactions",
+            "name": null,
+            "dob": "1996-01",
+            "created_at": "2014-09-02T19:50:11.072109Z",
+            "is_identity_verified": false,
+            "uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h",
+            "refunds_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/refunds",
+            "debits_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/debits",
+            "ssn_last4": null,
+            "ein": null
+          },
+          "on_behalf_of": null,
+          "fee": null,
+          "refunds_uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/debits/WD3AVU9J1rk5g0qPMzU3rEnS/refunds",
+          "amount": 9999,
+          "created_at": "2014-09-02T22:06:59.885166Z",
+          "uri": "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/debits/WD3AVU9J1rk5g0qPMzU3rEnS",
+          "source": {
+            "routing_number": "321174851",
+            "bank_name": "SAN MATEO CREDIT UNION",
+            "_type": "bank_account",
+            "verifications_uri": "/v1/bank_accounts/BA2HLalCQhL522m6I7VSkuih/verifications",
+            "verification_uri": "/v1/bank_accounts/BA2HLalCQhL522m6I7VSkuih/verifications/BZ2ZUPKn8OAnf6AfYiLqXiU5",
+            "name": "Main",
+            "_uris": {
+              "verification_uri": {
+                "_type": "bank_account_authentication",
+                "key": "verification"
+              },
+              "customer_uri": {
+                "_type": "customer",
+                "key": "customer"
+              },
+              "debits_uri": {
+                "_type": "page",
+                "key": "debits"
+              },
+              "verifications_uri": {
+                "_type": "page",
+                "key": "verifications"
+              },
+              "credits_uri": {
+                "_type": "page",
+                "key": "credits"
+              }
+            },
+            "bank_code": "321174851",
+            "type": "checking",
+            "created_at": "2014-09-02T19:50:10.385837Z",
+            "uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h/bank_accounts/BA2HLalCQhL522m6I7VSkuih",
+            "customer_uri": "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h",
+            "is_valid": true,
+            "meta": {},
+            "account_number": "xxxxxx0001",
+            "last_four": "0001",
+            "fingerprint": "5f0ba9fa3f1122ef13b944a40abfe44e7eba9e16934e64200913cb4c402ace14",
+            "debits_uri": "/v1/bank_accounts/BA2HLalCQhL522m6I7VSkuih/debits",
+            "can_debit": true,
+            "id": "BA2HLalCQhL522m6I7VSkuih",
+            "credits_uri": "/v1/bank_accounts/BA2HLalCQhL522m6I7VSkuih/credits"
+          },
+          "transaction_number": "WEMQ-O97-2H1J",
+          "meta": {},
+          "appears_on_statement_as": "Local Orbit",
+          "available_at": null
+        }
+    http_version: 
+  recorded_at: Tue, 02 Sep 2014 22:07:01 GMT
+recorded_with: VCR 2.9.2

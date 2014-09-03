@@ -414,14 +414,21 @@ describe Market do
         expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
       end
 
-      it "returns the next payment date based on the number of successful plan payments" do
-        create(:payment, :service, market: subject, payer: subject, created_at: 58.days.ago, status: "failed")
-        create(:payment, :service, market: subject, payer: subject, created_at: 57.days.ago)
-        subject.plan_start_at = 58.days.ago
-        expect(subject.next_service_payment_at).to eq(1.month.from_now(subject.plan_start_at))
+      context "returns the next payment date based on the number of successful plan payments" do
+        before do
+          subject.plan_start_at = 58.days.ago
+          create(:payment, :service, market: subject, payer: subject, created_at: 58.days.ago, status: "failed")
+          create(:payment, :service, market: subject, payer: subject, created_at: 57.days.ago)
+        end
 
-        create(:payment, :service, market: subject, payer: subject, created_at: 28.days.ago)
-        expect(subject.next_service_payment_at).to eq(2.months.from_now(subject.plan_start_at))
+        it "with 1 successful payment" do
+          expect(subject.next_service_payment_at).to eq(1.month.from_now(subject.plan_start_at))
+        end
+
+        it "with 2 successful payments" do
+          create(:payment, :service, market: subject, payer: subject, created_at: 28.days.ago)
+          expect(subject.next_service_payment_at).to eq(2.months.from_now(subject.plan_start_at))
+        end
       end
     end
 
@@ -444,14 +451,21 @@ describe Market do
         expect(subject.next_service_payment_at).to eq(subject.plan_start_at)
       end
 
-      it "returns the next payment date based on the number of successful plan payments" do
-        create(:payment, :service, market: subject, payer: subject, created_at: 375.days.ago, status: "failed")
-        create(:payment, :service, market: subject, payer: subject, created_at: 374.days.ago)
-        subject.plan_start_at = 375.days.ago
-        expect(subject.next_service_payment_at).to eq(1.year.from_now(subject.plan_start_at))
+      context "returns the next payment date based on the number of successful plan payments" do
+        before do
+          create(:payment, :service, market: subject, payer: subject, created_at: 375.days.ago, status: "failed")
+          create(:payment, :service, market: subject, payer: subject, created_at: 374.days.ago)
+          subject.plan_start_at = 375.days.ago
+        end
 
-        create(:payment, :service, market: subject, payer: subject, created_at: 11.days.ago)
-        expect(subject.next_service_payment_at).to eq(2.years.from_now(subject.plan_start_at))
+        it "with 1 successful payment" do
+          expect(subject.next_service_payment_at).to eq(1.year.from_now(subject.plan_start_at))
+        end
+
+        it "with 2 successful payments" do
+          create(:payment, :service, market: subject, payer: subject, created_at: 11.days.ago)
+          expect(subject.next_service_payment_at).to eq(2.years.from_now(subject.plan_start_at))
+        end
       end
     end
   end
