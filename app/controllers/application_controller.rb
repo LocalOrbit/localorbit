@@ -50,6 +50,8 @@ class ApplicationController < ActionController::Base
   end
 
   def find_current_organization
+    return nil unless current_market
+
     current_user.managed_organizations_within_market(current_market)
     organization = if current_user.managed_organizations.count == 1
       current_user.managed_organizations.first
