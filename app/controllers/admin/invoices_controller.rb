@@ -10,6 +10,15 @@ module Admin
       render layout: false, locals: { invoice: @invoice, user: current_user }
     end
 
+    def show_pdf
+      if @order.invoice_pdf.present?
+        redirect_to @order.invoice_pdf.remote_url
+      else
+        GenerateInvoicePdf.delay.perform(order: @order)
+        render "generating"
+      end
+    end
+
     def mark_invoiced
       @order.invoice
       head @order.save ? :ok : :not_found

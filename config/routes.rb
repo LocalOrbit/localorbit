@@ -115,6 +115,7 @@ Rails.application.routes.draw do
       member do
         get "invoice" => "invoices#show"
         get "mark-invoiced" => "invoices#mark_invoiced"
+        get :pdf, to: "invoices#show_pdf"
       end
     end
 

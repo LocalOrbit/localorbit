@@ -33,7 +33,7 @@
           <td class="action">
             <%= link_to 'Send Invoice', admin_financials_invoices_path(order_id: order.id), method: :post, class: 'action-link font-icon icon-mail-send' %>
             <% if current_user.admin? || current_user.market_manager? %>
-              <%= link_to 'Preview', admin_invoice_path(order.id), class: 'action-link font-icon icon-preview' %>
+              <%= link_to 'Preview', pdf_admin_invoice_path(order.id), class: 'action-link font-icon icon-preview' %>
             <% end %>
           </td>
         </tr>
