@@ -71,7 +71,11 @@ class ApplicationController < ActionController::Base
   def ensure_market_affiliation
     return if current_user.admin?
     if current_market.nil? || current_market != market_for_current_subdomain(current_user.markets)
-      render_404
+      return render_404
+    end
+
+    unless current_market.active?
+      render file: Rails.root.join("public/market_disabled.html"), status: :forbidden
     end
   end
 

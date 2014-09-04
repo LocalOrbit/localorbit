@@ -119,6 +119,7 @@ FactoryGirl.define do
 
   factory :market do
     plan
+    active               true
     sequence(:name)      {|n| "Market #{n}" }
     sequence(:subdomain) {|n| "market#{n}" }
     tagline                'Connecting Farm to Market'

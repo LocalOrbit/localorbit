@@ -185,4 +185,25 @@ feature "User signing in" do
       expect(page).to have_content("The page you were looking for doesn't exist (404)")
     end
   end
+
+  context "Signing into a deactivated market" do
+    let!(:market) { create(:market, active: false) }
+    let!(:market_manager) { create(:user, managed_markets: [market]) }
+    let!(:org) { create(:organization, markets: [market]) }
+    let!(:buyer) { create(:user, organizations: [org]) }
+
+    scenario "as a market manager" do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(market_manager)
+
+      expect(page).to have_content("The market #{market.name} has been deactivated.")
+    end
+
+    scenario "as a buyer" do
+      switch_to_subdomain(market.subdomain)
+      sign_in_as(buyer)
+
+      expect(page).to have_content("The market #{market.name} has been deactivated.")
+    end
+  end
 end
