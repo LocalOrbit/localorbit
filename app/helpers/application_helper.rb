@@ -13,6 +13,11 @@ module ApplicationHelper
     end
   end
 
+  def pdf_asset_path(asset)
+    path = Rails.env.development? ? Figaro.env.asset_host : ""
+    path += asset_path(asset)
+  end
+
   # Used in navigation to get to the users organization(s)
   def link_to_my_organization
     org_count = current_user.managed_organizations(include_suspended: true).count

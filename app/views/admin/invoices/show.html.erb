@@ -13,8 +13,8 @@
   <%= render 'shared/print_opensans' %>
   <%= render 'shared/print_opensans_bold' %>
 
-  <link href="<%= Figaro.env.asset_host %><%= asset_path('invoices.css') %>" rel="stylesheet">
-  <link href="<%= Figaro.env.asset_host %><%= asset_path('z-sniff.css') %>" rel="stylesheet">
+  <link href="<%= pdf_asset_path('invoices.css') %>" rel="stylesheet">
+  <link href="<%= pdf_asset_path('z-sniff.css') %>" rel="stylesheet">
 </head>
 
 <body class="controller-invoices">
