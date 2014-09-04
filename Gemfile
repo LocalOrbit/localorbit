@@ -31,7 +31,7 @@ gem "color"
 gem "countries"
 gem "csv_builder"
 gem "dalli"
-gem "delayed_job", github: "collectiveidea/delayed_job" # Until we release 4.0.3
+gem "delayed_job"
 gem "delayed_job_active_record"
 gem "devise"
 gem "devise_invitable"
