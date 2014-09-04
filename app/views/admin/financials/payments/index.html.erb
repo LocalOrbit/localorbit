@@ -57,7 +57,28 @@
               Order Refund #: <%= link_to payment.orders.first.order_number, admin_order_path(payment.orders.first) %>
             <% else %>
               <%= Payment::PAYMENT_TYPES[payment.payment_type] %>
+
+              <% if payment.payment_type == "lo fee" ||  payment.payment_type == "hub fee" || payment.payment_type == "delivery fee" %>
+
+                <%= link_to raw('<i class="font-icon icon-plus-circle"> </i>'), "#more-info-#{payment.id}", class:"modal-toggle more-info payment-more", data: { modal: "more-info-#{payment.id}"} %>
+
+                <!-- Modal -->
+                <div class="popup modal clonable  is-hidden order-list-modal" id="more-info-<%= payment.id %>">
+                  <div class="popup-header">
+                    All Order Numbers that contributed to fee
+                    <button class="close"><i class="font-icon icon-close"></i></button>
+                  </div>
+                  <div class="all-order-numbers">
+                    <% payment.orders.each do |order| %>
+                        <p><%= link_to order.order_number, admin_order_path(order) %></p>
+                    <% end %>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <!-- End Modal -->
+              <% end %>
             <% end %>
+
           </td>
           <td class="payment-method"><%= payment.display_payment_method %></td>
           <% if current_user.admin? || current_user.market_manager? %>
