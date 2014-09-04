@@ -17,6 +17,9 @@
         <th data-column="subdomain" class="<%= column_sort_classes("subdomain")%>">Subdomain</th>
         <th data-column="contact" class="<%= column_sort_classes("contact")%>">Contact Name</th>
         <th>Contact Phone</th>
+        <% if current_user.admin? %>
+          <th>Actions</th>
+        <% end %>
       </tr>
     </thead>
     <% @markets.each do |market| %>
@@ -25,6 +28,11 @@
         <td class="subdomain"><%= link_to market.subdomain, root_url(host: market.domain) %></td>
         <td class="contact"><%= market.contact_name %></td>
         <td><%= market.contact_phone %></td>
+        <% if current_user.admin? %>
+        <td>
+          <%= toggle_active_button(market) %>
+        </td>
+        <% end %>
       </tr>
     <% end %>
   </table>

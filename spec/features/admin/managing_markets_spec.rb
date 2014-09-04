@@ -144,6 +144,16 @@ describe "Managing Markets" do
       expect(page).to have_text(@market2.name)
     end
 
+    it "can toggle a market's active status" do
+      visit admin_markets_path
+      
+      click_link "Deactivate"
+      expect(page).to have_content("Updated #{market.name}")
+
+      click_link("Activate")
+      expect(page).to have_content("Updated #{market.name}")
+    end
+
     context "sorting", :js do
       let!(:market_b) { create(:market, name: "B Market", subdomain: "not-a", contact_name: "C Name") }
       let!(:market_c) { create(:market, name: "C Market", subdomain: "not-b", contact_name: "A Name") }
