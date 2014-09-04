@@ -1,29 +1,28 @@
 require "spec_helper"
 
-def fill_in_required_fields(select=:without_chosen)
-  fill_in "Product Name", with: "Red Grapes"
-  fill_in "Short description", with: "Grapes are yummy!"
+describe "Adding a product", chosen_js: true do
+  def fill_in_required_fields(select=:without_chosen)
+    fill_in "Product Name", with: "Red Grapes"
+    fill_in "Short description", with: "Grapes are yummy!"
 
-  case select
-  when :without_chosen
-    select "Apples / Macintosh Apples", from: "Category"
-    select "Pound", from: "Unit"
-  when :with_chosen
-    select_from_chosen "Grapes / Red Grapes", from: "Category"
-    select_from_chosen "Pound", from: "Unit"
+    case select
+    when :without_chosen
+      select "Apples / Macintosh Apples", from: "Category"
+      select "Pound", from: "Unit"
+    when :with_chosen
+      select_from_chosen "Grapes / Red Grapes", from: "Category"
+      select_from_chosen "Pound", from: "Unit"
+    end
   end
-end
 
-describe "Adding a product" do
-  let(:user) { create(:user) }
-  let(:market) { create(:market, :with_addresses) }
-  let(:aggregation_point) { create(:market_address, market: market, name: "Aggregation Point", address: "1123 Grand Rd.", city: "Appleton", state: "WI", zip: "83992") }
-  let(:org) { create(:organization, :seller, markets: [market]) }
-  let(:loc1) { create(:location) }
-  let(:stub_warning_pricing) { "Your product will not appear in the Shop until you add pricing" }
+  let!(:user)                  { create(:user) }
+  let!(:market)                { create(:market, :with_addresses) }
+  let!(:aggregation_point)     { create(:market_address, market: market, name: "Aggregation Point", address: "1123 Grand Rd.", city: "Appleton", state: "WI", zip: "83992") }
+  let!(:org)                   { create(:organization, :seller, :single_location, markets: [market], who_story: "We sell products", how_story: "We sell products very carefully") }
+  let(:stub_warning_pricing)   { "Your product will not appear in the Shop until you add pricing" }
   let(:stub_warning_inventory) { "Your product will not appear in the Shop until you add inventory" }
-  let(:stub_warning_both) { "Your product will not appear in the Shop until you add inventory, and add pricing" }
-  let(:organization_label) { "Product Organization" }
+  let(:stub_warning_both)      { "Your product will not appear in the Shop until you add inventory, and add pricing" }
+  let(:organization_label)     { "Product Organization" }
 
   let!(:inactive_seller) { create(:organization, :seller, markets: [market], active: false) }
 
@@ -31,42 +30,60 @@ describe "Adding a product" do
   # This is the schedule we'll model after the Appleton bug
   # Seller fulfillment location is what will show for the seller
   let!(:tuesdays_schedule) do
-    create(:delivery_schedule,
-           market: market,
-           day: 2,
-           buyer_pickup_location_id: 0,
-           seller_fulfillment_location: aggregation_point,
-           buyer_pickup_start: "8:30 AM", buyer_pickup_end: "10:00 AM"
+    create(
+      :delivery_schedule,
+      market: market,
+      day: 2,
+      buyer_pickup_location_id: 0,
+      seller_fulfillment_location: aggregation_point,
+      buyer_pickup_start: "8:30 AM",
+      buyer_pickup_end: "10:00 AM"
     )
   end
 
   let!(:deleted_schedule) { create(:delivery_schedule, market: market, day: 2, deleted_at: Time.current) }
 
   before do
-    Unit.create! singular: "Pound", plural: "Pounds"
+    Unit.create! singular: "Pound",  plural: "Pounds"
     Unit.create! singular: "Bushel", plural: "Bushels"
     switch_to_subdomain(market.subdomain)
   end
 
-  describe "as a seller belonging to one organization" do
-    let(:location) { create(:location) }
+  it "navigating to form as an org user" do
+    org.users << user
 
+    sign_in_as(user)
+
+    within "#admin-nav" do
+      click_link "Products"
+    end
+    click_link "Add New Product"
+
+    expect(page).to have_field("Product Name")
+  end
+
+  it "navigating to form as an admin user" do
+    user.update_attribute(:role, "admin")
+
+    sign_in_as(user)
+
+    within "#admin-nav" do
+      click_link "Products"
+    end
+    click_link "Add New Product"
+
+    expect(page).to have_field("Product Name")
+  end
+
+  describe "as a seller belonging to one organization" do
     before do
       org.users << user
-      org.who_story = "We sell products"
-      org.how_story = "We sell products very carefully"
-      org.locations << location
-      org.save!
 
       sign_in_as(user)
+      visit "/admin/products/new"
     end
 
     it "defaults to simple inventory" do
-      within "#admin-nav" do
-        click_link "Products"
-      end
-      click_link "Add New Product"
-
       simple_inventory_checkbox = page.find_field("Use simple inventory management")
       inventory_quantity = page.find_field("Current inventory")
 
@@ -75,17 +92,13 @@ describe "Adding a product" do
     end
 
     it "defaults to using all delivery schedules" do
-      visit "/admin/products/new"
-
       expect(find_field("Make product available on all market delivery dates")).to be_checked
     end
 
-    context "filling in who/where/how", js: true, chosen_js: true do
+    context "filling in who/where/how", js: true do
       let(:product_form) { Dom::Admin::ProductForm.first }
 
       it "pre-populates the fields from the organization" do
-        visit "/admin/products/new"
-
         uncheck "seller_info"
 
         expect(page).to have_content("Who")
@@ -121,8 +134,6 @@ describe "Adding a product" do
       end
 
       it "does not save the product who/where/how information if checked after updating who/how/where" do
-        visit "/admin/products/new"
-
         fill_in_required_fields(:with_chosen)
 
         uncheck "seller_info"
@@ -147,8 +158,6 @@ describe "Adding a product" do
       end
 
       it "it uses a default address if using who/how" do
-        visit "/admin/products/new"
-
         fill_in "Product Name", with: "Good food"
         select_from_chosen "Grapes / Red Grapes", from: "Category"
         select_from_chosen "Pounds", from: "Unit"
@@ -164,64 +173,47 @@ describe "Adding a product" do
       end
     end
 
-    context "attaching an image" do
-      it "uploads an image when provided" do
-        visit "/admin/products/new"
+    it "attaching an image uploads an image when provided" do
+      fill_in "Product Name", with: "Red Grapes"
+      attach_file("Photo", "app/assets/images/backgrounds/lentils.jpg")
 
-        fill_in "Product Name", with: "Red Grapes"
-        attach_file("Photo", "app/assets/images/backgrounds/lentils.jpg")
+      click_button "Save and Continue"
+      expect(page).to have_css("img[alt='Red Grapes']")
+    end
 
-        click_button "Save and Continue"
-        expect(page).to have_css("img[alt='Red Grapes']")
+    it "adding simple inventory for the first time creates a new lot for the product", js: true do
+      fill_in_required_fields(:with_chosen)
+      select_from_chosen "Pounds", from: "Unit"
+      fill_in("Current inventory", with: 33)
+
+      click_button "Save and Continue"
+      expect(page).to have_content("Added Red Grapes")
+
+      click_link "Product Info"
+
+      expect(page).to have_checked_field("Use simple inventory management")
+      expect(page.find_field("Current inventory").value).to eql("33")
+
+      expect(page).to have_content("Uncheck this to use advanced inventory tracking with lot numbers and expiration dates.")
+      expect(page).to have_content("Pounds")
+
+      within(".tabs") do
+        expect(page).to_not have_content("Inventory")
       end
     end
 
-    context "adding simple inventory for the first time", js: true, chosen_js: true do
-      it "creates a new lot for the product" do
-        visit "/admin/products/new"
+    it "adding a product with advanced inventory hides the simple inventory field", :js do
+      expect(page).to have_content("Current inventory")
 
-        fill_in_required_fields(:with_chosen)
-        select_from_chosen "Pounds", from: "Unit"
-        fill_in("Current inventory", with: 33)
+      uncheck "Use simple inventory management"
 
-        click_button "Save and Continue"
-        expect(page).to have_content("Added Red Grapes")
-
-        click_link "Product Info"
-
-        simple_inventory_checkbox = page.find_field("Use simple inventory management")
-        inventory_quantity        = page.find_field("Current inventory")
-
-        expect(simple_inventory_checkbox).to be_checked
-        expect(inventory_quantity.value).to eql("33")
-
-        expect(page).to have_content("Uncheck this to use advanced inventory tracking with lot numbers and expiration dates.")
-        expect(page).to have_content("Pounds")
-
-        within(".tabs") do
-          expect(page).to_not have_content("Inventory")
-        end
-      end
+      expect(page).to_not have_content("Current inventory")
     end
 
-    context "adding a product with advanced inventory", js: true, chosen_js: true do
-      it "hides the simple inventory field" do
-        visit "/admin/products/new"
-
-        expect(page).to have_content("Current inventory")
-
-        uncheck "Use simple inventory management"
-
-        expect(page).to_not have_content("Current inventory")
-      end
-    end
-
-    context "using the choose category typeahead", js: true, chosen_js: true do
+    context "using the choose category typeahead", js: true do
       let(:category_select) { Dom::CategorySelect.first }
 
       it "can quickly drill down to a result" do
-        visit "/admin/products/new"
-
         category_select.click
 
         expect(category_select.visible_options).to have_text("Macintosh Apples")
@@ -252,8 +244,6 @@ describe "Adding a product" do
       end
 
       it "fuzzy searches across top-level categories" do
-        visit "/admin/products/new"
-
         category_select.click
 
         expect(category_select.visible_options).to have_text("Macintosh Apples")
@@ -270,11 +260,12 @@ describe "Adding a product" do
       end
     end
 
-    context "when all input is valid", js: true, chosen_js: true do
-      let!(:loc1) { create(:location, organization: org) }
-      let!(:loc2) { create(:location, organization: org) }
-
+    context "when all input is valid", js: true do
       it "saves the product stub" do
+        loc1 = create(:location, organization: org)
+        loc2 = create(:location, organization: org)
+
+        # We need to refresh to load the new locations
         visit "/admin/products/new"
 
         expect(page).to_not have_content(stub_warning_both)
@@ -309,8 +300,6 @@ describe "Adding a product" do
       end
 
       it "selects all delivery schedules by default" do
-        visit "/admin/products/new"
-
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
 
@@ -334,8 +323,6 @@ describe "Adding a product" do
       end
 
       it "allows the user to select delivery schedules" do
-        visit "/admin/products/new"
-
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
 
@@ -363,8 +350,6 @@ describe "Adding a product" do
       end
 
       it "user can not deselect required deliveries" do
-        visit "/admin/products/new"
-
         expect(page).to_not have_content(stub_warning_both)
         expect(page).to_not have_content(organization_label)
 
@@ -384,8 +369,6 @@ describe "Adding a product" do
 
     context "when the product information is invalid", js: true do
       it "does not create the product" do
-        visit "/admin/products/new"
-
         expect(page).to have_content("Current inventory")
         uncheck "Use simple inventory management"
 
@@ -393,7 +376,7 @@ describe "Adding a product" do
         expect(page).to have_content("Name can't be blank")
         expect(page).to have_content("Category can't be blank")
         expect(page).to_not have_content("Current inventory")
-        expect(find_field("Use Seller info from my account.")).to be_checked
+        expect(page).to have_checked_field("Use Seller info from my account.")
 
         within(".tabs") do
           expect(page).to have_content("Inventory")
@@ -401,68 +384,60 @@ describe "Adding a product" do
       end
 
       it "maintains delivery schedule changes on error" do
-        visit "/admin/products/new"
-
         uncheck "Make product available on all market delivery dates"
         Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
         click_button "Save and Continue"
 
-        expect(find_field("Make product available on all market delivery dates")).to_not be_checked
+        expect(page).to have_unchecked_field("Make product available on all market delivery dates")
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
         expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
       end
     end
 
-    context "organization in multiple markets" do
-      before do
-        org.markets << create(:market, :with_addresses)
-      end
+    it "organization in multiple markets defaults to simple inventory" do
+      org.markets << create(:market, :with_addresses)
 
-      it "defaults to simple inventory" do
-        visit "/admin/products/new"
+      # Refresh to grab the new market
+      visit "/admin/products/new"
 
-        simple_inventory_checkbox = page.find_field("Use simple inventory management")
-        inventory_quantity = page.find_field("Current inventory")
+      simple_inventory_checkbox = page.find_field("Use simple inventory management")
+      inventory_quantity = page.find_field("Current inventory")
 
-        expect(simple_inventory_checkbox).to be_checked
-        expect(inventory_quantity.value).to eql("0")
-      end
+      expect(simple_inventory_checkbox).to be_checked
+      expect(inventory_quantity.value).to eql("0")
     end
   end
 
   describe "a seller belonging to multiple organizations" do
-    let(:org2) { create(:organization, :single_location, markets: [market], who_story: "who org2", how_story: "how org2") }
-    let(:buying_org) { create(:organization, :buyer) }
-    let(:loc1) { create(:location, organization: org) }
-    let(:loc2) { create(:location, organization: org2) }
+    let!(:org2) { create(:organization, :single_location, markets: [market], who_story: "who org2", how_story: "how org2") }
+    let!(:buying_org) { create(:organization, :buyer) }
 
     before do
-      org.users << user
-      org2.users << user
-
-      buying_org.users << user
+      user.organizations << [org, org2]
 
       sign_in_as(user)
       visit "/admin/products/new"
     end
 
     it "is prevented from unchecking 'Use seller info from my account' until organization is selected", js: true do
-      seller_info = page.find("#seller_info")
-      expect(seller_info).to be_disabled
+      expect(page).not_to have_field("seller_info")
 
       select org2.name, from: "Seller Organization"
 
-      seller_info = page.find("#seller_info")
-      expect(seller_info).not_to be_disabled
+      expect(page).to have_field("seller_info")
 
-      # Wait for AJAX to finish
-      expect(page).not_to have_content("No Organization Selected")
+      # Wait for delivery schedule request to finish
+      expect(page).to have_checked_field("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992", disabled: true)
     end
 
     context "Uncheck 'use seller info'", js: true do
       before do
         select org2.name, from: "Seller Organization"
         uncheck "seller_info"
+
+        # Wait for delivery schedule load to finish
+        # Should help with timing issues
+        expect(page).to have_checked_field("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992", disabled: true)
       end
 
       it "pre-populates who/where/how fields from the organization" do
@@ -476,43 +451,39 @@ describe "Adding a product" do
         expect(product_form.locations).to_not include(*org.locations.map(&:name))
       end
 
-      context "select a different organiztion" do
+      it "selecting a different organization repopulates the locations list" do
+        select org2.locations.first.name, from: "product_location_id"
+        expect(page).not_to have_content("No Organization Selected")
+        expect(Dom::Admin::ProductForm.first.selected_location).to eql(org2.locations.first.id.to_s)
+        select org.name, from: "Seller Organization"
 
-        before do
-          select org2.locations.first.name, from: "product_location_id"
-          expect(Dom::Admin::ProductForm.first.selected_location).to eql(org2.locations.first.id.to_s)
-          select org.name, from: "Seller Organization"
-        end
+        product_form = Dom::Admin::ProductForm.first
+        expect(product_form.locations).to include(*org.locations.map(&:name))
+        expect(product_form.locations).not_to include(*org2.locations.map(&:name))
 
-        it "populates the locations list" do
-          product_form = Dom::Admin::ProductForm.first
-          expect(product_form.locations).to include(*org.locations.map(&:name))
-          expect(product_form.locations).not_to include(*org2.locations.map(&:name))
-        end
+        # Wait for delivery schedule load to finish
+        expect(page).to have_checked_field("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992", disabled: true)
       end
 
-      context "select the blank organization option" do
-        before do
-          select "Select an organization", from: "Seller Organization"
-        end
+      it "selecting the blank organization option disables seller info" do
+        expect(page).to have_field("seller_info")
 
-        it "disables seller info" do
-          form = Dom::Admin::ProductForm.first
-          expect(form.seller_info).to be_disabled
-        end
+        select "Select an organization", from: "Seller Organization"
+
+        expect(page).not_to have_field("seller_info")
       end
     end
 
     it "maintains delivery schedule changes on error", :js do
       select org2.name, from: "Seller Organization"
-      expect(page).to have_content("Tuesdays")
+      expect(page).to have_checked_field("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992", disabled: true)
 
       uncheck "Make product available on all market delivery dates"
       Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays").uncheck!
 
       click_button "Save and Continue"
 
-      expect(find_field("Make product available on all market delivery dates")).to_not be_checked
+      expect(page).to have_unchecked_field("Make product available on all market delivery dates")
       expect(Dom::Admin::ProductDelivery.find_by_weekday("Mondays")).to be_checked
       expect(Dom::Admin::ProductDelivery.find_by_weekday("Tuesdays")).to_not be_checked
     end
@@ -523,29 +494,25 @@ describe "Adding a product" do
       expect(product_form.organization_field).to_not have_content(inactive_seller.name)
     end
 
-    context "when product information is valid" do
-      it "makes the user choose an organization to add the product for" do
-        expect(page).to_not have_content(stub_warning_both)
+    it "makes the user choose an organization to add the product to" do
+      expect(page).to_not have_content(stub_warning_both)
 
-        select org2.name, from: "Seller Organization"
-        fill_in_required_fields
+      select org2.name, from: "Seller Organization"
+      fill_in_required_fields
 
-        click_button "Save and Continue"
+      click_button "Save and Continue"
 
-        expect(page).to have_content("Added Red Grapes")
-        expect(page).to have_content(stub_warning_both)
-        expect(Product.last.organization).to eql(org2)
-      end
+      expect(page).to have_content("Added Red Grapes")
+      expect(page).to have_content(stub_warning_both)
+      expect(Product.last.organization).to eql(org2)
     end
 
-    context "When no organization has been chosen" do
-      it "does not create the product" do
-        fill_in "Product Name", with: "Macintosh Apples"
-        select "Apples / Macintosh Apples", from: "Category"
+    it "does not create the product when no organization has been chosen" do
+      fill_in "Product Name", with: "Macintosh Apples"
+      select "Apples / Macintosh Apples", from: "Category"
 
-        click_button "Save and Continue"
-        expect(page).to have_content("Organization can't be blank")
-      end
+      click_button "Save and Continue"
+      expect(page).to have_content("Organization can't be blank")
     end
 
     it "does not save a product with invalid product info", js: true do
@@ -563,26 +530,22 @@ describe "Adding a product" do
 
       # Maintains inventory selections
       expect(page).not_to have_content("Current inventory")
-      expect(find_field("Use simple inventory management")).not_to be_checked
+      expect(page).to have_unchecked_field("Use simple inventory management")
       within(".tabs") do
         expect(page).to have_content("Inventory")
       end
 
       # Maintains organization selection
-      expect(find_field("Use Seller info from my account.")).to be_checked
+      expect(page).to have_checked_field("Use Seller info from my account.")
       expect(page).not_to have_content("No Organization Selected")
     end
   end
 
-  describe "as a market manager", js: true, chosen_js: true do
-    let(:user) { create(:user, :market_manager) }
-    let(:market) { user.managed_markets.first }
-    let(:org2) { create(:organization) }
+  describe "as a market manager", js: true do
+    let!(:user) { create(:user, managed_markets: [market]) }
+    let!(:org2) { create(:organization, :seller, markets: [market]) }
 
     before do
-      market.organizations << org
-      market.organizations << org2
-
       sign_in_as(user)
       visit "/admin/products/new"
     end
@@ -605,6 +568,10 @@ describe "Adding a product" do
     it "alerts user that product will not appear in the Shop until price/inventory are added" do
       expect(page).to_not have_content(stub_warning_both)
       select org2.name, from: "Seller Organization"
+
+      # Wait for delivery schedule load to finish
+      expect(page).to have_checked_field("Tuesdays from 7:00 AM to 11:00 AM at 1123 Grand Rd. Appleton, WI 83992", disabled: true)
+
       fill_in_required_fields(:with_chosen)
 
       click_button "Save and Continue"
@@ -624,38 +591,36 @@ describe "Adding a product" do
       visit "/admin/products/new"
     end
 
-    describe "a user can request a new inventory unit" do
-      it "allows the user to request a new unit" do
-        click_link "Request a New Unit"
+    it "a user can request a new inventory unit" do
+      click_link "Request a New Unit"
 
-        expect(ZendeskMailer).to receive(:request_unit).with(user,
-                                                             "singular" => "fathom",
-                                                             "plural" => "fathoms",
-                                                             "additional_notes" => "See more notes"
-                                                             ).and_return(double(:mailer, deliver: true))
+      expect(ZendeskMailer).to receive(:request_unit).with(
+        user,
+        "singular"         => "fathom",
+        "plural"           => "fathoms",
+        "additional_notes" => "See more notes"
+      ).and_return(double(:mailer, deliver: true))
 
-        fill_in "Singular", with: "fathom"
-        fill_in "Plural", with: "fathoms"
-        fill_in "Additional Notes", with: "See more notes"
-        click_button "Request Unit"
+      fill_in "Singular", with: "fathom"
+      fill_in "Plural", with: "fathoms"
+      fill_in "Additional Notes", with: "See more notes"
+      click_button "Request Unit"
 
-        expect(page).to have_content("Add Product")
-      end
+      expect(page).to have_content("Add Product")
     end
 
-    describe "a user can request a new category" do
-      it "allows the user to request a new category" do
-        click_link "Request a New Category"
+    it "a user can request a new category" do
+      click_link "Request a New Category"
 
-        expect(ZendeskMailer).to receive(:request_category).with(
-          user, "Goop"
-        ).and_return(double(:mailer, deliver: true))
+      expect(ZendeskMailer).to receive(:request_category).with(
+        user,
+        "Goop"
+      ).and_return(double(:mailer, deliver: true))
 
-        fill_in "Product Category", with: "Goop"
-        click_button "Request Category"
+      fill_in "Product Category", with: "Goop"
+      click_button "Request Category"
 
-        expect(page).to have_content("Add Product")
-      end
+      expect(page).to have_content("Add Product")
     end
   end
 end
