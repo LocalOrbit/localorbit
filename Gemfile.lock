@@ -12,12 +12,6 @@ GIT
       activesupport (>= 3.0, < 4.2)
 
 GIT
-  remote: git://github.com/guyshechter/mapbox-rails.git
-  revision: c2b510ea5a448b306413901c30b828fa8700cda2
-  specs:
-    mapbox-rails (1.6.1.1)
-
-GIT
   remote: git://github.com/heroku/heroku.git
   revision: 2aa58c3b2d93959969c485a381a2c6440f0686a0
   specs:
@@ -253,6 +247,7 @@ GEM
     lumberjack (1.0.9)
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
+    mapbox-rails (1.6.1.1)
     method_source (0.8.2)
     mime-types (2.3)
     mini_portile (0.6.0)
@@ -491,7 +486,7 @@ DEPENDENCIES
   jwt
   kaminari
   launchy
-  mapbox-rails!
+  mapbox-rails
   newrelic-dragonfly
   newrelic_rpm (< 3.9.0)
   passenger
