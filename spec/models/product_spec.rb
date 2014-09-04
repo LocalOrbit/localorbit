@@ -544,4 +544,21 @@ describe Product do
       end
     end
   end
+
+  describe "#use_simple_inventory" do
+    let!(:product) { create(:product, use_simple_inventory: false) }
+    let!(:lot1)    { product.lots.create!(quantity: 10, number: "1") }
+    let!(:lot2)    { product.lots.create!(quantity: 20, number: "2", expires_at: 2.days.from_now) }
+    let!(:lot3)    { product.lots.create!(quantity: 30, number: "3", good_from: 1.day.from_now, expires_at: 2.days.from_now) }
+
+    it "rolls the available inventory into one lot" do
+      expect(product.lots.count).to eql(3)
+      expect(product.available_inventory).to eql(30)
+
+      product.update(use_simple_inventory: true)
+
+      expect(product.reload.lots.count).to eql(1)
+      expect(product.reload.available_inventory).to eql(30)
+    end
+  end
 end

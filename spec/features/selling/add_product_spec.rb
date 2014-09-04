@@ -574,7 +574,7 @@ describe "Adding a product" do
     end
   end
 
-  describe "as a market manager" do
+  describe "as a market manager", js: true, chosen_js: true do
     let(:user) { create(:user, :market_manager) }
     let(:market) { user.managed_markets.first }
     let(:org2) { create(:organization) }
@@ -589,7 +589,9 @@ describe "Adding a product" do
 
     it "makes the user choose an organization to add the product for" do
       select org2.name, from: "Seller Organization"
-      fill_in_required_fields
+
+      fill_in_required_fields(:with_chosen)
+
       fill_in "product_simple_inventory", with: "30"
 
       click_button "Save and Continue"
@@ -603,7 +605,7 @@ describe "Adding a product" do
     it "alerts user that product will not appear in the Shop until price/inventory are added" do
       expect(page).to_not have_content(stub_warning_both)
       select org2.name, from: "Seller Organization"
-      fill_in_required_fields
+      fill_in_required_fields(:with_chosen)
 
       click_button "Save and Continue"
 

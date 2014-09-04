@@ -63,9 +63,12 @@ Rails.application.routes.draw do
         end
       end
 
-      get :delivery_schedules, on: :member
-      get :market_memberships, on: :member
-      patch :update_active, on: :member
+      member do
+        get :delivery_schedules
+        get :market_memberships
+        get :available_inventory
+        patch :update_active
+      end
     end
 
     resource :delivery_tools, only: :show do

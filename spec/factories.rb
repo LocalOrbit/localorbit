@@ -301,6 +301,9 @@ FactoryGirl.define do
     cross_selling      true
     custom_branding    true
     automatic_payments true
+    advanced_pricing   true
+    advanced_inventory true
+    promotions         true
   end
 
   factory :price do

@@ -1,4 +1,7 @@
 class Market < ActiveRecord::Base
+  before_update :process_cross_sells_change, if: :allow_cross_sell_changed?
+  before_update :process_plan_change, if: :plan_id_changed?
+
   audited allow_mass_assignment: true
   extend DragonflyBackgroundResize
   include Sortable
@@ -163,5 +166,26 @@ class Market < ActiveRecord::Base
     unless allow_purchase_orders? || allow_credit_cards? || allow_ach?
       errors.add(:payment_method, "At least one payment method is required for the market")
     end
+  end
+
+  def process_cross_sells_change
+    remove_cross_selling_from_market unless allow_cross_sell?
+  end
+
+  def process_plan_change
+    remove_cross_selling_from_market unless plan.cross_selling
+  end
+
+  def remove_cross_selling_from_market
+    update_column(:allow_cross_sell, false)
+
+    MarketOrganization.
+      where(cross_sell_origin_market_id: id).
+      each(&:soft_delete)
+
+    MarketOrganization.
+      where.not(cross_sell_origin_market_id: nil).
+      where(market_id: id).
+      each(&:soft_delete)
   end
 end
