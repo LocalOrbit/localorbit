@@ -5,39 +5,11 @@ GIT
     wkhtmltopdf-binary (0.9.9)
 
 GIT
-  remote: git://github.com/collectiveidea/acts_as_geocodable.git
-  revision: be2ca4a448245ec6425f71664428402fa43e877c
-  specs:
-    acts_as_geocodable (2.1.0)
-      graticule (~> 2.0)
-      rails (>= 3, < 4.2)
-
-GIT
-  remote: git://github.com/collectiveidea/audited.git
-  revision: cd7065ef6fb9640a3a4e204477dd38dc0d12e50c
-  specs:
-    audited (4.0.0.rc1)
-      rails-observers (~> 0.1.2)
-    audited-activerecord (4.0.0.rc1)
-      activerecord (~> 4.0)
-      audited (= 4.0.0.rc1)
-
-GIT
   remote: git://github.com/collectiveidea/delayed_job.git
   revision: 7d688a8234c3d6dc8b3d32d18e84416b7bedb7b4
   specs:
     delayed_job (4.0.2)
       activesupport (>= 3.0, < 4.2)
-
-GIT
-  remote: git://github.com/collectiveidea/graticule.git
-  revision: 0ceb721ce39fbaf5b5899a46a2e585200b99d6a7
-  specs:
-    graticule (2.4.0)
-      activesupport
-      i18n
-      json
-      nokogiri-happymapper (>= 0.5.9)
 
 GIT
   remote: git://github.com/guyshechter/mapbox-rails.git
@@ -98,11 +70,19 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    acts_as_geocodable (2.1.0)
+      graticule (~> 2.0)
+      rails (>= 3, < 4.2)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
     ast (2.0.0)
     astrolabe (1.3.0)
       parser (>= 2.2.0.pre.3, < 3.0)
+    audited (4.0.0)
+      rails-observers (~> 0.1.2)
+    audited-activerecord (4.0.0)
+      activerecord (~> 4.0)
+      audited (= 4.0.0)
     awesome_nested_set (3.0.1)
       activerecord (>= 4.0.0, < 5)
     balanced (0.8.2)
@@ -224,6 +204,11 @@ GEM
       rack
     formatador (0.2.5)
     fssm (0.2.10)
+    graticule (2.5.0)
+      activesupport
+      i18n
+      json
+      nokogiri-happymapper (>= 0.5.9)
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -468,9 +453,8 @@ DEPENDENCIES
   accountingjs-rails
   active_model_serializers
   active_record_union
-  acts_as_geocodable!
-  audited!
-  audited-activerecord!
+  acts_as_geocodable
+  audited-activerecord
   awesome_nested_set
   balanced (~> 0.7)
   capybara
@@ -494,7 +478,7 @@ DEPENDENCIES
   factory_girl_rails
   figaro (~> 1.0.0.rc1)
   font_assets
-  graticule!
+  graticule
   groupdate!
   guard-rspec
   heroku!

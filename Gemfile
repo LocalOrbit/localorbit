@@ -23,9 +23,8 @@ gem "mapbox-rails", github: "guyshechter/mapbox-rails"
 
 gem "active_model_serializers"
 gem "active_record_union"
-gem "acts_as_geocodable",   github: "collectiveidea/acts_as_geocodable"
-gem "audited",              github: "collectiveidea/audited"
-gem "audited-activerecord", github: "collectiveidea/audited"
+gem "acts_as_geocodable"
+gem "audited-activerecord"
 gem "awesome_nested_set"
 gem "balanced", "~> 0.7"
 gem "color"
@@ -41,9 +40,9 @@ gem "dragonfly-s3_data_store"
 gem "draper"
 gem "figaro", "~> 1.0.0.rc1"
 gem "font_assets"
-gem "graticule", github: "collectiveidea/graticule"
+gem "graticule"
 gem "honeybadger"
-gem "groupdate", github: "trestrantham/groupdate", branch: "custom-calculations"
+gem "groupdate", github: "trestrantham/groupdate", branch: "custom-calculations" # Waiting on https://github.com/ankane/groupdate/pull/53
 gem "interactor-rails"
 gem "jbuilder"
 gem "jwt"
@@ -57,6 +56,10 @@ gem "postgres_ext"
 gem "rack-canonical-host"
 gem "ransack"
 gem "simpleidn"
+
+# wkhtmltopdf versions are a mess. 0.12.1 is stable but not well supported by gems
+# See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
+# The github version is massive and makes the Heroku slug huge
 gem "wkhtmltopdf-binary", github: "borski/wkhtmltopdf-binary"
 
 group :doc do
