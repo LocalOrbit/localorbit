@@ -18,6 +18,7 @@
 </head>
 
 <body class="controller-invoices">
+  <% @logo_path = pdf_asset_path("logo.png") # needed if market doesn't have a logo %>
   <%= render "shared/invoice", { market: invoice.market.decorate, invoice: invoice, user: user} %>
 </body>
 </html>
