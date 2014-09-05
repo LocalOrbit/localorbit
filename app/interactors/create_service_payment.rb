@@ -11,5 +11,7 @@ class CreateServicePayment
       payment_method: bank_account.bank_account? ? "ach" : "credit card",
       status:         bank_account.bank_account? ? "pending" : "paid"
     })
+
+    context[:recipients] = market.managers.map(&:pretty_email)
   end
 end
