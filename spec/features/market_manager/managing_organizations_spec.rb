@@ -112,11 +112,14 @@ describe "A Market Manager", :vcr do
       end
 
       it "creates an organization with minimum valid information", :js do
-        visit "/admin/organizations"
+        visit admin_organizations_path
+
         click_link "Add Organization"
 
         fill_in "Name", with: "Famous Farm"
         select market2.name, from: "Market"
+
+        expect(page).to have_content("Allow purchase orders")
         check "Allow purchase orders"
 
         click_button "Add Organization"

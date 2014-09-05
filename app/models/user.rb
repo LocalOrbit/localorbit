@@ -97,7 +97,7 @@ class User < ActiveRecord::Base
   end
 
   def can_manage?(resource)
-    self.send("can_manage_#{resource.class.name.underscore}_?", resource)
+    self.send("can_manage_#{resource.class.name.underscore}?", resource)
   end
 
   def can_manage_organization?(org)

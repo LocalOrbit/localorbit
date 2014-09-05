@@ -12,7 +12,7 @@ module ToggleActiveHelper
 
     link_to(
       title,
-      [:admin, resource, :update_active, active: !resource.active?],
+      [:update_active, :admin, resource, active: !resource.active?],
       link_to_opts
     )
   end

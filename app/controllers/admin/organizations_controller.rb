@@ -92,7 +92,7 @@ module Admin
 
     def update_active_params
       params.permit(
-        :active
+        :active, :id
       )
     end
 

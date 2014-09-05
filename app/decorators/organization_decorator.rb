@@ -61,22 +61,6 @@ class OrganizationDecorator < Draper::Decorator
     end
   end
 
-  def toggle_active_button
-    return unless current_user.admin? || current_user.can_manage_market?(current_market)
-    title = organization.active? ? "Deactivate" : "Activate"
-
-    link_to_opts = {
-      method: :patch,
-      class: "btn btn--small btn--save"
-    }
-
-    link_to(
-      title,
-      update_active_admin_organization_path(organization, organization: {active: !active?}),
-      link_to_opts
-    )
-  end
-
   def affiliation_item(user)
     market_list = organization.markets.pluck(:name).to_sentence
     type = organization.can_sell? ? "Seller" : "Buyer"

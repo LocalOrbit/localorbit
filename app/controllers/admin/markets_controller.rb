@@ -53,7 +53,7 @@ class Admin::MarketsController < AdminController
   protected
 
   def update_active_params
-    params.permit(:active)
+    params.permit(:active, :id)
   end
 
   def market_params

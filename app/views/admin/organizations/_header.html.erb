@@ -1,11 +1,11 @@
 <div class="tab-header stickable">
   <div class="l-constraint">
     <%= link_to "< Return to Organizations List", admin_organizations_path, class: "redundant-nav" if current_user.multi_organization_membership? %>
-    
+
     <h1>Editing Organization: <%= @organization.name %></h1>
 
     <div class="pull-right">
-      <%= @organization.decorate.toggle_active_button %>
+      <%= toggle_active_button(@organization) %>
     </div>
 
     <div class="tabs-wrapper organization-tabs">

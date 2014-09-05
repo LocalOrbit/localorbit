@@ -5,7 +5,7 @@
     <td class="registered"><%= organization.created_at.strftime("%b, %d %Y") %></td>
     <td class="can-sell"><%= organization.can_sell? ? "Seller" : "Buyer" %></td>
     <td class="action">
-      <%= organization.decorate.toggle_active_button %>
+      <%= toggle_active_button(organization) %>
       <% if organization.markets.managed_by(current_user).count > 1 %>
         <%= link_to raw("&#57418;"), market_memberships_admin_organization_path(organization.id), class: "action-link font-icon remote-modal-toggle", data: { modal: "delete-organization" }, title: "Delete" %>
       <% elsif organization.markets.managed_by(current_user).count == 1 %>

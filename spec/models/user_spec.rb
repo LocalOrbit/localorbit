@@ -3,6 +3,15 @@ require "spec_helper"
 describe User do
   describe "roles" do
 
+    describe "#can_manage?" do
+      let(:org) { create(:organization) }
+      let(:user) { create(:user) }
+
+      it "delegates to the correct method" do
+        expect(user).to_receive(:can_manage_organization?).with(org)
+      end
+    end
+
     describe "#can_manage_organization?" do
       let(:org) { create(:organization) }
 

@@ -21,12 +21,12 @@ Rails.application.routes.draw do
     end
   end
 
-  concern :updatable do
+  concern :activatable do
     patch :update_active
   end
 
   namespace :admin do
-    resources :markets, concerns: [:bank_account, :updatable], except: [:edit] do
+    resources :markets, concerns: [:bank_account], except: [:edit] do
       resources :market_addresses,   as: :addresses,  path: :addresses
       resources :market_managers,    as: :managers,   path: :managers
       resources :delivery_schedules, path: :deliveries
@@ -34,6 +34,11 @@ Rails.application.routes.draw do
       resource  :style_chooser, controller: :style_chooser, only: [:show, :update]
       resource  :cross_sell, controller: :market_cross_sells, only: [:show, :update]
       get :payment_options
+
+
+      member do
+        concerns :activatable
+      end
     end
 
     resources :labels, only: [:index, :show]
@@ -57,7 +62,7 @@ Rails.application.routes.draw do
 
     resources :orders, only: [:index, :show, :update]
 
-    resources :organizations, concerns: [:bank_account, :updatable] do
+    resources :organizations, concerns: [:bank_account] do
       resources :organization_users, as: :users, path: :users
       resource :cross_sell, controller: :organization_cross_sells, only: [:show, :update]
       resources :locations, except: :destroy do
@@ -68,6 +73,7 @@ Rails.application.routes.draw do
       end
 
       member do
+        concerns [:activatable]
         get :delivery_schedules
         get :market_memberships
         get :available_inventory
