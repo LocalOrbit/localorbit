@@ -159,6 +159,7 @@ $ ->
       if org == ""
         $("#delivery-schedules").html("<h3 class='header-conditionals'>No Organization Selected</h3>")
       else
+        $("#delivery-schedules").html("<h3 class='header-conditionals'>Loading delivery schedules...</h3>")
         $.get "/admin/organizations/#{org}/delivery_schedules", (response) ->
           $("#delivery-schedules").html(response)
 
