@@ -34,7 +34,6 @@ module Admin
     def show
       @organizations = [@product.organization]
 
-
       find_delivery_schedules(@product)
       find_selected_delivery_schedule_ids(@product)
     end
