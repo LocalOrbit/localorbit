@@ -86,8 +86,8 @@ class Order < ActiveRecord::Base
       group("orders.id")
   end
 
-  def self.not_paid_for(payment_type)
-    where.not(id: OrderPayment.market_paid_orders_subselect(payment_type))
+  def self.not_paid_for(payment_type, type=:payee)
+    where.not(id: OrderPayment.market_paid_orders_subselect(payment_type, type))
   end
 
   def self.payable
@@ -138,7 +138,7 @@ class Order < ActiveRecord::Base
   end
 
   def self.payable_lo_fees
-    fully_delivered.purchase_orders.payable.not_paid_for("lo fee").order(:order_number)
+    fully_delivered.purchase_orders.payable.not_paid_for("lo fee", :payer).order(:order_number)
   end
 
   def self.payable_market_fees
