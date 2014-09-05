@@ -1,5 +1,5 @@
 class UpdateOrder
   include Interactor::Organizer
 
-  organize UpdateQuantities, StoreOrderFees, UpdateBalancedPurchase, SendUpdateEmails
+  organize UpdateQuantities, StoreOrderFees, UpdateBalancedPurchase, SendUpdateEmails, ClearInvoicePdf
 end

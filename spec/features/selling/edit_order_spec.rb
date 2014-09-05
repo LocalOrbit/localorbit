@@ -440,6 +440,12 @@ describe "Editing an order" do
 
           expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
         end
+
+        it "clears the orders invoice pdf if it has one" do
+          expect(ClearInvoicePdf).to receive(:perform)
+
+          subject
+        end
       end
 
       context "more then ordered" do
@@ -492,6 +498,12 @@ describe "Editing an order" do
           subject
 
           expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
+        end
+
+        it "clears the orders invoice pdf if it has one" do
+          expect(ClearInvoicePdf).to receive(:perform)
+
+          subject
         end
       end
 
@@ -604,6 +616,12 @@ describe "Editing an order" do
 
           expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
         end
+
+        it "clears the orders invoice pdf if it has one" do
+          expect(ClearInvoicePdf).to receive(:perform)
+
+          subject
+        end
       end
 
       context "more then ordered" do
@@ -656,6 +674,12 @@ describe "Editing an order" do
           subject
 
           expect(Dom::Order::ItemRow.first.delivery_status).to eql("Delivered")
+        end
+
+        it "clears the orders invoice pdf if it has one" do
+          expect(ClearInvoicePdf).to receive(:perform)
+
+          subject
         end
       end
 
