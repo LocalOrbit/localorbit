@@ -60,7 +60,7 @@ gem "simpleidn"
 # wkhtmltopdf versions are a mess. 0.12.1 is stable but not well supported by gems
 # See https://github.com/zakird/wkhtmltopdf_binary_gem/issues/13
 # The github version is massive and makes the Heroku slug huge
-gem "wkhtmltopdf-binary", github: "borski/wkhtmltopdf-binary"
+gem "wkhtmltopdf-binary"
 
 group :doc do
   gem "sdoc", require: false
