@@ -2,7 +2,7 @@ class GenerateInvoicePdf
   include Interactor
 
   def perform
-    if context[:order].present? && order.invoiced?
+    if context[:order].present? && order.invoiced? && !order.invoice_pdf.present?
       invoice = BuyerOrder.new(order)
 
       generate_pdf_for_invoice(invoice)
