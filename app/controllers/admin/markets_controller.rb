@@ -41,7 +41,7 @@ class Admin::MarketsController < AdminController
   end
 
   def update_active
-    @market.update_attributes(update_active_params)
+    @market.update_attribute(:active, params[:active])
     redirect_to :back, notice: "Updated #{@market.name}"
   end
 
@@ -51,10 +51,6 @@ class Admin::MarketsController < AdminController
   end
 
   protected
-
-  def update_active_params
-    params.permit(:active, :id)
-  end
 
   def market_params
     columns = [

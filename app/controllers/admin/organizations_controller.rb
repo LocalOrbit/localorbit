@@ -51,7 +51,7 @@ module Admin
     end
 
     def update_active
-      @organization.update_attributes(update_active_params)
+      @organization.update_attribute(:active, params[:active])
 
       NotifyOrganizationActivated.perform(organization: @organization)
       redirect_to :back, notice: "Updated #{@organization.name}"
@@ -89,12 +89,6 @@ module Admin
     end
 
     private
-
-    def update_active_params
-      params.permit(
-        :active, :id
-      )
-    end
 
     def organization_params
       params.require(:organization).permit(
