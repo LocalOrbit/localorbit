@@ -4,9 +4,11 @@
 
     <h1>Editing Organization: <%= @organization.name %></h1>
 
+    <% if current_user.admin? || current_user.can_manage_market?(current_market) %>
     <div class="pull-right">
       <%= toggle_active_button(@organization) %>
     </div>
+    <% end %>
 
     <div class="tabs-wrapper organization-tabs">
       <ul class="tabs">
