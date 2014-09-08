@@ -132,7 +132,7 @@ describe "Managing Markets" do
     it "can see a list of markets as a CSV" do
       @market2 = create(:market)
       visit "/admin/markets"
-      html_headers = page.all("th").map(&:text).select {|header| header != "Actions"}
+      html_headers = page.all("th").map(&:text).select {|header| header != "Actions" }
 
       click_link "Export CSV"
 
@@ -368,7 +368,6 @@ describe "Managing Markets" do
       visit "/admin/markets/#{market.id}"
 
       expect(find(:xpath, "//input[@id='market_active']").value).to eq("false")
-
 
       click_button "Deactivate"
 
