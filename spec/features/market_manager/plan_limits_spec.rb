@@ -78,18 +78,41 @@ describe "Plan Limits" do
           visit admin_product_path(product)
         end
 
-        it "is not allowed to use advanced pricing" do
-          visit admin_product_prices_path(product)
-
-          expect(page).to_not have_css("#add-row")
-        end
-
         it "is not allowed to use advanced inventory" do
           within(".tabs") do
             expect(page).to_not have_content("Inventory")
           end
 
           expect(page).to_not have_content("Use simple inventory management")
+        end
+      end
+
+      context "from product price page with existing prices", :js do
+        before do
+          visit admin_product_prices_path(product)
+        end
+
+        it "is not allowed to add new advanced prices" do
+          expect(page).to_not have_link("Add Price")
+        end
+      end
+
+      context "from product price page without existing prices", :js do
+        before do
+          Price.delete_all
+          visit admin_product_prices_path(product.reload)
+        end
+
+        it "is not allowed to change the affected market" do
+          expect(page).to_not have_css("#price_market_id")
+        end
+
+        it "is not allowed to change the affected buyer" do
+          expect(page).to_not have_css("#price_organization_id")
+        end
+
+        it "is not allowed to change the minimum quantity" do
+          expect(page).to_not have_css("#price_min_quantity")
         end
       end
     end
