@@ -1,5 +1,5 @@
 class PayMarketForOrders
   include Interactor::Organizer
 
-  organize CreateMarketPaymentForOrders, ProcessPaymentWithBalanced
+  organize CreateMarketPaymentForOrders, ProcessPaymentWithBalanced, PaymentReceivedEmailConfirmation
 end
