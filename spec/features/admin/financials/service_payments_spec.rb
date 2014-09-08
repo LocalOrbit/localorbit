@@ -34,7 +34,7 @@ feature "Admin service payments" do
     visit "/admin/financials/service_payments"
 
     within("#market_#{configured_market.id}") do
-      expect(page.all(:button, payment_button_text).size).to eq(1)
+      expect(page).to have_button(payment_button_text)
     end
   end
 
@@ -42,11 +42,13 @@ feature "Admin service payments" do
     visit "/admin/financials/service_payments"
 
     within("#market_#{unconfigured_market.id}") do
-      expect(page.all(:button, payment_button_text).size).to eq(0)
+      expect(page).not_to have_button(payment_button_text)
     end
   end
 
   it "runs a service payment through balanced", :vcr do
+    market_manager = create(:user, managed_markets: [configured_market])
+
     visit "/admin/financials/service_payments"
 
     expect(page.find("#market_#{configured_market.id} .next-payment-date").text).to eq(1.day.ago.strftime("%m/%d/%Y"))
@@ -54,7 +56,10 @@ feature "Admin service payments" do
     click_button payment_button_text
 
     expect(page).to have_content("Payment made for #{configured_market.name}")
-
     expect(page.find("#market_#{configured_market.id} .next-payment-date").text).to eq(1.month.from_now(1.day.ago).strftime("%m/%d/%Y"))
+
+    expect(ActionMailer::Base.deliveries.size).to eq(1)
+    open_last_email
+    expect(current_email).to be_delivered_to(market_manager.email)
   end
 end

@@ -1,0 +1,16 @@
+<h1>You have made a payment.</h1>
+
+<p>You just paid <strong><%= @payment.payee.try(:name) || "Local Orbit" %></strong></p>
+
+<dl>
+  <dt>Date Sent:</dt>
+  <dd><%= @payment.created_at.strftime("%B %e, %Y") %></dd>
+</dl>
+<dl>
+  <dt>Amount Received:</dt>
+  <dd><%= number_to_currency(@payment.amount) %></dd>
+</dl>
+<dl>
+  <dt>Received From:</dt>
+  <dd><%= @payment.payer.try(:name) || "Local Orbit" %></dd>
+</dl>

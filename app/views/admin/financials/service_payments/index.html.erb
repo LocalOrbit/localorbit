@@ -29,7 +29,7 @@
             <% end %>
 
             <%= hidden_field_tag :market_id, market.id %>
-            <%= submit_tag "Run Payment", class: "btn btn--small" if market.plan_payable? %>
+            <%= submit_tag "Run Payment", class: "btn btn--small", data: {disable_with: "Running..."} if market.plan_payable? %>
           <% end %>
         </td>
       </tr>
