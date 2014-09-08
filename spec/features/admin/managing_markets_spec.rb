@@ -113,7 +113,7 @@ describe "Managing Markets" do
 
   describe "as an admin" do
     let!(:user) { create(:user, :admin) }
-    let!(:market) { create(:market, name: "A Market", subdomain: "not-c", contact_name: "B Name") }
+    let!(:market) { create(:market, name: "A Market", subdomain: "not-c", contact_name: "B Name", active: true) }
 
     before :each do
       switch_to_subdomain market.subdomain
@@ -132,7 +132,7 @@ describe "Managing Markets" do
     it "can see a list of markets as a CSV" do
       @market2 = create(:market)
       visit "/admin/markets"
-      html_headers = page.all("th").map(&:text)
+      html_headers = page.all("th").map(&:text).select {|header| header != "Actions" }
 
       click_link "Export CSV"
 
@@ -142,6 +142,16 @@ describe "Managing Markets" do
 
       expect(page).to have_text(market.name)
       expect(page).to have_text(@market2.name)
+    end
+
+    it "can toggle a market's active status" do
+      visit admin_markets_path
+
+      click_link "Deactivate"
+      expect(page).to have_content("Updated #{market.name}")
+
+      click_link("Activate")
+      expect(page).to have_content("Updated #{market.name}")
     end
 
     context "sorting", :js do
@@ -355,8 +365,6 @@ describe "Managing Markets" do
     end
 
     it "can mark an active market as inactive" do
-      market.update_attribute(:active, true)
-
       visit "/admin/markets/#{market.id}"
 
       expect(find(:xpath, "//input[@id='market_active']").value).to eq("false")
@@ -367,10 +375,11 @@ describe "Managing Markets" do
     end
 
     it "can mark an inactive market as active" do
+      market.update_attributes(active: false)
+
       visit "/admin/markets/#{market.id}"
 
       expect(find(:xpath, "//input[@id='market_active']").value).to eq("true")
-
       click_button "Activate"
 
       expect(find(:xpath, "//input[@id='market_active']").value).to eq("false")

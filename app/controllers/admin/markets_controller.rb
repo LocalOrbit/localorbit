@@ -1,7 +1,7 @@
 class Admin::MarketsController < AdminController
   before_action :require_admin, only: [:new, :create]
   before_action :require_admin_or_market_manager, except: [:new, :create]
-  before_action :find_scoped_market, only: [:show, :update, :payment_options]
+  before_action :find_scoped_market, only: [:show, :update, :payment_options, :update_active]
 
   def index
     @markets = market_scope.periscope(request.query_parameters)
@@ -38,6 +38,11 @@ class Admin::MarketsController < AdminController
       flash.now.alert = "Could not update market"
       render :show
     end
+  end
+
+  def update_active
+    @market.update_attribute(:active, params[:active])
+    redirect_to :back, notice: "Updated #{@market.name}"
   end
 
   def payment_options
