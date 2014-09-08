@@ -43,7 +43,8 @@ gem "font_assets"
 gem "graticule"
 gem "honeybadger"
 gem "groupdate", github: "trestrantham/groupdate", branch: "custom-calculations" # Waiting on https://github.com/ankane/groupdate/pull/53
-gem "interactor-rails"
+gem "interactor-rails", "< 3.0"
+gem "interactor", "< 3.0" # We are not ready for 3 yet
 gem "jbuilder"
 gem "jwt"
 gem "kaminari"
