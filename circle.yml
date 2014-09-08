@@ -1,0 +1,7 @@
+# Circle CI config 
+machine:
+  environment:
+    CAPYBARA_WAIT_TIME: 30
+checkout:
+  post:
+    - cp config/application.yml{.example,}
