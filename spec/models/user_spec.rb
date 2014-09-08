@@ -4,11 +4,20 @@ describe User do
   describe "roles" do
 
     describe "#can_manage?" do
+      let(:market) { create(:market) }
       let(:org) { create(:organization) }
+      let(:other_user) { create(:user) }
       let(:user) { create(:user) }
 
       it "delegates to the correct method" do
-        expect(user).to_receive(:can_manage_organization?).with(org)
+        expect(user).to receive(:can_manage_organization?).with(org)
+        user.can_manage?(org)
+
+        expect(user).to receive(:can_manage_market?).with(market)
+        user.can_manage?(market)
+
+        expect(user).to receive(:can_manage_user?).with(other_user)
+        user.can_manage?(other_user)
       end
     end
 
