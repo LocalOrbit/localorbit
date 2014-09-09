@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe PayMarketForOrders do
   let!(:market)            { create(:market) }
+  let!(:market_manager)    { create(:user, managed_markets: [market]) }
   let!(:delivery_schedule) { create(:delivery_schedule, market: market) }
   let!(:delivery)          { delivery_schedule.next_delivery }
   let!(:bank_account)      { create(:bank_account, :checking, :verified, bankable: market, balanced_uri: "/bank-account-1") }
@@ -58,5 +59,13 @@ describe PayMarketForOrders do
     }.from(0).to(1)
 
     expect(Payment.first.status).to eq("failed")
+  end
+
+  it "sends an email to the market manager" do
+    interactor
+
+    expect(ActionMailer::Base.deliveries.size).to eq(1)
+    open_last_email
+    expect(current_email).to be_delivered_to(market_manager.email)
   end
 end

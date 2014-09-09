@@ -16,5 +16,7 @@ class CreateMarketPaymentForOrders
       status:         "pending",
       payment_method: "ach"
     )
+
+    context[:recipients] = market.managers.map(&:pretty_email)
   end
 end
