@@ -5,7 +5,7 @@
 <div class="report-table">
   <div class="table-wrapper">
     <table class="sortable report-table">
-      <thead class="stickable">
+      <thead>
         <tr>
           <% @presenter.fields.each do |field| %>
             <% filter_map = ReportPresenter::FIELD_MAP[field] || {} %>

@@ -4,7 +4,6 @@ class MetricsPresenter
   attr_reader :metrics, :headers, :markets, :date_range, :interval
 
   START_OF_WEEK = :sunday
-  Date.beginning_of_week = START_OF_WEEK
 
   DEFAULT_INTERVAL_COUNT = {
     week: 5,
@@ -141,7 +140,7 @@ class MetricsPresenter
                     # start_date || end_date - DEFAULT_INTERVAL_COUNT[:day].days
                     start_date || end_date.advance(months: -1)
                   when "week"
-                    (start_date || end_date - DEFAULT_INTERVAL_COUNT[:week].weeks).beginning_of_week
+                    (start_date || end_date - DEFAULT_INTERVAL_COUNT[:week].weeks).beginning_of_week(START_OF_WEEK)
                   when "month"
                     (start_date || end_date - DEFAULT_INTERVAL_COUNT[:month].months).beginning_of_month
                  end

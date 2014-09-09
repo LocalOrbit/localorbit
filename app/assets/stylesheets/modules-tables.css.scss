@@ -84,6 +84,34 @@
   clear: both;
   overflow: visible;
 }
+  @media screen and (min-width: $tablet_floor) {
+    .report-table {
+      .scroll-wrapper {
+        margin: 0 -20px;
+      }
+
+      .fade-right,
+      .fade-left {
+        display: block;
+
+         &:before {
+           content: none;
+         }
+      }
+      .table-wrapper {
+        max-width: 100%;
+        padding: 20px 0 0;
+        overflow: auto;
+        tr {
+          border-right: solid 10px #fff;
+          border-left: solid 10px #fff;
+        }
+        th {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
   @media screen and (max-width: $mobile_break) {
     .table-wrapper {
       z-index: 3;
@@ -984,7 +1012,6 @@ th {
   }
 }
 .report-table {
-  margin: 0 -10px;
 
   .discounts,
   .discount {
