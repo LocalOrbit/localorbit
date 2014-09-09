@@ -84,6 +84,18 @@
   clear: both;
   overflow: visible;
 }
+  @media screen and (min-width: $tablet_floor) {
+    .report-table {
+      .table-wrapper {
+        max-width: 100%;
+        padding-top: 20px;
+        overflow: auto;
+        th {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
   @media screen and (max-width: $mobile_break) {
     .table-wrapper {
       z-index: 3;
