@@ -188,5 +188,7 @@ class Market < ActiveRecord::Base
       where.not(cross_sell_origin_market_id: nil).
       where(market_id: id).
       each(&:soft_delete)
+
+    MarketCrossSells.where(source_market_id: id).destroy_all
   end
 end

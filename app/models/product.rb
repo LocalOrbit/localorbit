@@ -270,7 +270,7 @@ class Product < ActiveRecord::Base
   end
 
   def update_delivery_schedules
-    markets = organization.reload.all_markets.excluding_deleted
+    markets = organization.all_markets.excluding_deleted
 
     if use_all_deliveries?
       self.delivery_schedule_ids = markets.map do |market|
