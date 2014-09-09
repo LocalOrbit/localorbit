@@ -8,3 +8,6 @@ $ ->
   $('#terms-of-service .read-terms').click ->
     $(this).closest('.popup').addClass('is-hidden')
     $('.overlay').removeClass('is-open is-dark is-dim is-modal is-editable mobile-dim')
+
+  $('#new_registration').on 'submit', ->
+    $(this).find('.registration-submit').attr('disabled', true)
