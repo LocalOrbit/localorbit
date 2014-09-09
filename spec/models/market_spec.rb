@@ -503,5 +503,23 @@ describe Market do
       end
     end
 
+    context "updates the markets products" do
+      let!(:old_plan) { create(:plan, advanced_inventory: true) }
+      let!(:new_plan) { create(:plan, advanced_inventory: false) }
+
+      let!(:market1)  { create(:market, plan: old_plan, allow_cross_sell: true) }
+      let!(:org1)     { create(:organization, :seller, markets: [market1]) }
+      let!(:product1) { create(:product, organization: org1, use_simple_inventory: false) }
+      let!(:lot1)     { create(:lot, product: product1, quantity: 25) }
+      let!(:lot2)     { create(:lot, product: product1, quantity: 35) }
+
+      it "updates product inventory for a market downgrading service plan" do
+        expect(product1.reload.lots.count).to eql(2)
+
+        market1.update(plan: new_plan)
+
+        expect(product1.reload.lots.count).to eql(1)
+      end
+    end
   end
 end

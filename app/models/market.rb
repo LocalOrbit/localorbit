@@ -174,6 +174,7 @@ class Market < ActiveRecord::Base
 
   def process_plan_change
     remove_cross_selling_from_market unless plan.cross_selling
+    products.each {|p| p.disable_advanced_inventory(self) } unless plan.advanced_inventory
   end
 
   def remove_cross_selling_from_market

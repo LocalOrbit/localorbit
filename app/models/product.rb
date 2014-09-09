@@ -6,7 +6,6 @@ class Product < ActiveRecord::Base
 
   before_save :update_cached_categories
   before_save :update_delivery_schedules
-  before_save :process_simple_inventory_change, if: :use_simple_inventory_changed?
 
   audited allow_mass_assignment: true, associated_with: :organization
 
@@ -206,6 +205,16 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def disable_advanced_inventory(market)
+    advanced_inventory = organization.markets.reject{|m| m == market }.any? {|m| m.reload.plan.advanced_inventory }
+    if !advanced_inventory && lots.count > 1
+      update_column(:use_simple_inventory, true)
+      current_available_inventory = available_inventory
+      lots.delete_all
+      lots.build(quantity: current_available_inventory).save
+    end
+  end
+
   private
 
   def self.order_by_name(direction)
@@ -270,16 +279,6 @@ class Product < ActiveRecord::Base
     else
       ids = markets.map(&:id)
       self.delivery_schedules = delivery_schedules.select {|ds| ids.include?(ds.market.id) }
-    end
-  end
-
-  def process_simple_inventory_change
-    if use_simple_inventory
-      current_available_inventory = available_inventory
-
-      lots.delete_all
-
-      lots.build(quantity: current_available_inventory).save
     end
   end
 end
