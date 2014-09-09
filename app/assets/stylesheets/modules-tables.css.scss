@@ -86,6 +86,10 @@
 }
   @media screen and (min-width: $tablet_floor) {
     .report-table {
+      .scroll-wrapper {
+        margin: 0 -20px;
+      }
+
       .fade-right,
       .fade-left {
         display: block;
@@ -1004,7 +1008,6 @@ th {
   }
 }
 .report-table {
-  margin: 0 -10px;
 
   .discounts,
   .discount {
