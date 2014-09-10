@@ -46,8 +46,6 @@ feature "Paying sellsers on the automate plan" do
 
   let(:balanced_uri) { "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/bank_accounts/BA1YqNWvILpfyq9FqSDPLhCO" }
   let!(:bank_account) { create(:bank_account, :checking, :verified, last_four: "9983", balanced_uri: balanced_uri, bankable: market1_seller2) }
-
-  let(:balanced_uri) { "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/bank_accounts/BA1YqNWvILpfyq9FqSDPLhCO" }
   let!(:bank_account) { create(:bank_account, :checking, last_four: "9983", balanced_uri: balanced_uri, bankable: market1_seller2) }
 
 
@@ -57,7 +55,6 @@ feature "Paying sellsers on the automate plan" do
   before do
     deliver_order(market1_order1)
   end
-
 
   scenario "admin can pay Sellers" do
     switch_to_subdomain("app")
@@ -70,7 +67,5 @@ feature "Paying sellsers on the automate plan" do
     save_and_open_page
     click_button "Pay Great Farms"
     expect(page).to have_content("Payment recorded")
-
-
   end
 end

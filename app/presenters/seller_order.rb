@@ -14,13 +14,17 @@ class SellerOrder
     end
   end
 
-  def items_subtotal
-    @items.each.sum {|i| i.seller_net_total }
+  def self.collection(org, orders)
+    orders.map {|order| SellerOrder.new(order, org) }
   end
 
   def self.find(seller, ids)
     order = Order.orders_for_seller(seller).find(ids)
     new(order, seller)
+  end
+
+  def items_subtotal
+    @items.each.sum {|i| i.seller_net_total }
   end
 
   def total_cost

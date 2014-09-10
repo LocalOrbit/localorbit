@@ -2,21 +2,20 @@ class CreateSellerPaymentForOrders
   include Interactor
 
   def perform
-    seller       = Organization.find(seller_id)
-    bank_account = seller.bank_accounts.find(bank_account_id)
-    orders       = SellerOrder.find(seller, order_ids)
+    seller        = Organization.find(seller_id)
+    bank_account  = seller.bank_accounts.find(bank_account_id)
+    group         = SellerPaymentGroup.new(seller, Order.where(id: order_ids))
 
     context[:payment] = Payment.create(
-        orders:         orders,
+        orders:         group.orders,
         bank_account:   bank_account,
         payee:          seller,
         payment_type:   "seller payment",
-        amount:         orders.sum {|o| o.payable_to_seller },
+        amount:         group.owed,
         status:         "pending",
         payment_method: "ach"
     )
 
-    context[:recipients] = market.managers.map(&:pretty_email)
+    context[:recipients] = seller.users.map(&:pretty_email)
   end
 end
-

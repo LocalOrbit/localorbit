@@ -20,7 +20,7 @@ class SellerPaymentGroup
 
   def initialize(org, orders)
     @organization = org
-    @orders = orders.map {|order| SellerOrder.new(order, @organization) }
+    @orders = SellerOrder.collection(@organization, orders)
   end
 
   def id
