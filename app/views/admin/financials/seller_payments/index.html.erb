@@ -1,0 +1,47 @@
+<%= render "admin/financials/header" %>
+<div class="sub-header stickable">
+  <div class="l-constraint">
+    <h1>Make Payments to Sellers</h1>
+  </div>
+</div>
+<% @groups.each do |group| %>
+  <div class="market-payment">
+    <%= form_tag [:admin, :financials, :seller_payments] do %>
+      <%= hidden_field_tag :seller_id, group.id %>
+      <h2><%= group.name %></h2>
+      <table>
+        <tr class="table-header">
+          <th></th>
+          <th>Order Number</th>
+          <th>Owed</th>
+          <th>Item Subtotal</th>
+        </tr>
+
+        <% group.orders.each do |order| %>
+        <tr class="table-header">
+          <td><%= check_box_tag "order_ids[]", order.id, true %></td>
+          <td><%= order.order_number %></td>
+          <td></td>
+          <td><%= number_to_currency(order.items_subtotal) %></td>
+        </tr>
+        <% end %>
+
+        <tr>
+          <td></td>
+          <td>Total</td>
+          <td><%= group.owed %></td>
+          <td><%= number_to_currency(group.orders.sum(&:items_subtotal)) %></td>
+        </tr>
+      </table>
+      <div>
+        <% if (accounts = group.organization.decorate.payble_accounts_for_select).empty? %>
+          <span class="warning">Seller has not added a bank account.</span>
+        <% else %>
+          <%= label_tag :bank_account_id %>
+          <%= select_tag :bank_account_id, options_for_select(group.organization.decorate.payble_accounts_for_select) %>
+          <%= submit_tag "Pay #{group.name}", class: 'btn--small' %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

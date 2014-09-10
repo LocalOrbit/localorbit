@@ -1,5 +1,5 @@
 module FinancialOverviewHelpers
-  def deliver_order(order)
+  def deliver_order(order, payment=nil)
     order.items.each do |item|
       item.delivery_status = "delivered"
       order.save!

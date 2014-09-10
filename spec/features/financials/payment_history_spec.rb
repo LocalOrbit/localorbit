@@ -510,7 +510,7 @@ feature "Payment history", :truncate_after_all do
       expect(payment_row("$22.34").from).to eql("Local Orbit")
     end
 
-    scenario "can view fews for markets they manage" do
+    scenario "can view fees for markets they manage" do
       expect(payment_row("$99.00")).not_to be_nil
       expect(payment_row("$99.00").payment_method).to eql("ACH")
       expect(payment_row("$99.00").date).to eql(format_date(@payment_day - 1.day))
