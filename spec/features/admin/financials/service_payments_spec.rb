@@ -6,7 +6,7 @@ feature "Admin service payments" do
   let!(:unconfigured_market) { create(:market, active: true) }
   let!(:configured_market) { create(:market, active: true, plan_fee: 99.99, plan_interval: 1, plan_start_at: 1.day.ago, balanced_customer_uri: "/v1/customers/CU2IxeLNkFjoIWunLHrNF42h") }
   let!(:plan_bank_account) { create(:bank_account, :checking, :verified, bankable: configured_market, balanced_uri: "/v1/marketplaces/TEST-MP4X7mSSQwAyDzwUfc5TAQ7D/bank_accounts/BA2HLalCQhL522m6I7VSkuih") }
-  let(:payment_button_text) { "Run Payment" }
+  let(:payment_button_text) { "Run Now" }
 
   before do
     configured_market.update_attributes!(plan_bank_account: plan_bank_account)

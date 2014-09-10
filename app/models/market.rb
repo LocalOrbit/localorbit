@@ -152,6 +152,10 @@ class Market < ActiveRecord::Base
     end
   end
 
+  def last_sevice_payment_at
+    Payment.successful.not_refunded.where(payer: self, payment_type: "service").order("created_at DESC").first.try(:created_at)
+  end
+
   def plan_payable?
     plan_fee && plan_fee > 0 && plan_bank_account.try(:usable_for?, :debit)
   end
