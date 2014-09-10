@@ -37,6 +37,7 @@ end
             <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe035;"></i> Units'), coming_soon_dashboard_path %></li>
             <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe025;"></i> User Event Log'), admin_activities_path %></li>
             <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe023;"></i> Product Taxonomy'), admin_categories_path %></li>
+            <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00f;"></i> Admin Financials'), admin_financials_market_payments_path %></li>
           <% end %>
         </ul>
       </li>
@@ -70,7 +71,7 @@ end
         <ul class="dropdown with-anchor top-anchor" id="marketing-dropdown">
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe023;"></i> Fresh Sheet'), [:admin, :fresh_sheet] %></li>
           <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe00a;"></i> Newsletters'), [:admin, :newsletters] %></li>
-          
+
           <% if can_access?(:promotions) %>
             <li><%= link_to_or_span raw('<i class="font-icon" data-icon="&#xe005;"></i> Featured Promotions'), [:admin, :promotions] %></li>
           <% end %>

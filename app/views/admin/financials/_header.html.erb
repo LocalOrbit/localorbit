@@ -21,9 +21,6 @@
 
           <%= content_tag(:li, link_to_or_span("Review Payment History", [:admin, :financials, :payments]), class: 'tab') %>
         <% end %>
-        <% if current_user.admin? %>
-          <%= content_tag(:li, link_to_or_span("Service Payments", [:admin, :financials, :service_payments]), class: 'tab') %>
-        <% end %>
       </ul>
     </div>
   </div>

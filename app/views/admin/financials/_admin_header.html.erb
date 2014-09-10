@@ -1,0 +1,13 @@
+<div class="tab-header stickable">
+  <div class="l-constraint">
+    <div class="l-page-header">
+     <h1><i class="font-icon" data-icon="&#xe00f;">&nbsp; </i>Admin Financials</h1>
+    </div>
+    <div class="tabs-wrapper">
+      <ul class="tabs">
+        <%= content_tag(:li, link_to_or_span("Market Payments", admin_financials_market_payments_path), class: 'tab') %>
+        <%= content_tag(:li, link_to_or_span("Service Payments", admin_financials_service_payments_path), class: 'tab') %>
+      </ul>
+    </div>
+  </div>
+</div>
