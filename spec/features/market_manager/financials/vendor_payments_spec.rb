@@ -376,4 +376,18 @@ feature "Payments to vendors" do
       expect(seller_rows.map {|r| r.name.text }).to eq(["Betterest Farms", "Great Farms"])
     end
   end
+
+  context "admin" do
+    let(:user) { create(:user, :admin) }
+
+
+    scenario "admin can view vendor_payments view" do
+      switch_to_subdomain "app"
+
+      sign_in_as(user)
+      visit admin_financials_vendor_payments_path
+      
+      expect(page).not_to have_select("This is all money that Local Orbit owes to your Sellers.")
+    end
+  end
 end

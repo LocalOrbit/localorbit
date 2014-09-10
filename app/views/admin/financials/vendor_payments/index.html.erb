@@ -2,7 +2,7 @@
 <div class="sub-header stickable">
   <div class="l-constraint">
     <h1>Record Payments to Vendors</h1>
-    <% if current_market.plan == Plan.find_by_name("Automate") %>
+    <% if current_market.try(:plan) == Plan.find_by_name("Automate") %>
       <p>This is all money that Local Orbit owes to your Sellers. You can view upcoming payments in the next weekly billing cycle.</p>
     <% else %>
       <p>This is all money that you owe to your Sellers. You can record offline payments made to them.</p>
