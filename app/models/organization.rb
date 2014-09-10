@@ -8,7 +8,7 @@ class Organization < ActiveRecord::Base
   has_many :user_organizations
 
   has_many :users, through: :user_organizations
-  has_many :all_markets, -> { extending(MarketOrganization::AssociationScopes) },
+  has_many :all_markets, -> { extending(MarketOrganization::AssociationScopes).excluding_deleted },
            through: :market_organizations,
            source: :market
 

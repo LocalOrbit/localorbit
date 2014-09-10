@@ -114,7 +114,9 @@ describe Product do
   end
 
   describe "#can_use_simple_inventory?" do
-    let(:product) { create(:product, use_simple_inventory: false) }
+    let!(:market) { create(:market) }
+    let!(:seller) { create(:organization, :seller, markets: [market]) }
+    let(:product) { create(:product, organization: seller, use_simple_inventory: false) }
 
     it "is true if they are using simple inventory" do
       product.use_simple_inventory = true
@@ -158,6 +160,11 @@ describe Product do
   end
 
   describe "#simple_inventory" do
+    let!(:market) { create(:market) }
+    let!(:seller) { create(:organization, :seller, markets: [market]) }
+
+    subject { create(:product, organization: seller) }
+
     before do
       subject.use_simple_inventory = true
     end
@@ -178,6 +185,8 @@ describe Product do
   end
 
   describe "#simple_inventory=" do
+    let!(:market) { create(:market) }
+    let!(:seller) { create(:organization, :seller, markets: [market]) }
 
     it "sets errors for negative numbers" do
       subject.simple_inventory = -10
@@ -187,7 +196,7 @@ describe Product do
 
     context "use_simple_inventory is set" do
       describe "on create" do
-        subject { build(:product, use_simple_inventory: true) }
+        subject { build(:product, organization: seller, use_simple_inventory: true) }
 
         before do
           subject.simple_inventory = "42"
@@ -207,7 +216,7 @@ describe Product do
       end
 
       describe "on update" do
-        subject { create(:product, use_simple_inventory: true) }
+        subject { create(:product, organization: seller, use_simple_inventory: true) }
 
         it "updates the newest lot with the assigned quantity" do
           subject.lots.create!(number: "1", expires_at: 1.day.from_now, quantity: 0, created_at: 3.days.ago)
@@ -272,7 +281,7 @@ describe Product do
       end
 
       context "existing record" do
-        subject{ create(:product, use_simple_inventory: false) }
+        subject{ create(:product, organization: seller, use_simple_inventory: false) }
 
         context "with no lots" do
           it "does not create a new lot" do
@@ -545,8 +554,11 @@ describe Product do
     end
   end
 
-  describe "#use_simple_inventory" do
-    let!(:product) { create(:product, use_simple_inventory: false) }
+  describe "#disable_advanced_inventory" do
+    let!(:plan)    { create(:plan, advanced_inventory: true) }
+    let!(:market)  { create(:market, plan: plan) }
+    let!(:org)     { create(:organization, :seller, :single_location, markets: [market]) }
+    let!(:product) { create(:product, organization: org) }
     let!(:lot1)    { product.lots.create!(quantity: 10, number: "1") }
     let!(:lot2)    { product.lots.create!(quantity: 20, number: "2", expires_at: 2.days.from_now) }
     let!(:lot3)    { product.lots.create!(quantity: 30, number: "3", good_from: 1.day.from_now, expires_at: 2.days.from_now) }
@@ -555,7 +567,7 @@ describe Product do
       expect(product.lots.count).to eql(3)
       expect(product.available_inventory).to eql(30)
 
-      product.update(use_simple_inventory: true)
+      product.disable_advanced_inventory(market)
 
       expect(product.reload.lots.count).to eql(1)
       expect(product.reload.available_inventory).to eql(30)

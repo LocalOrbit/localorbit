@@ -178,6 +178,7 @@ class Market < ActiveRecord::Base
 
   def process_plan_change
     remove_cross_selling_from_market unless plan.cross_selling
+    products.each {|p| p.disable_advanced_inventory(self) } unless plan.advanced_inventory
   end
 
   def remove_cross_selling_from_market
@@ -191,5 +192,7 @@ class Market < ActiveRecord::Base
       where.not(cross_sell_origin_market_id: nil).
       where(market_id: id).
       each(&:soft_delete)
+
+    MarketCrossSells.where(source_market_id: id).destroy_all
   end
 end
