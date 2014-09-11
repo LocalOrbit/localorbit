@@ -15,7 +15,7 @@ class PaymentMailer < BaseMailer
 
     mail(
       to: recipients,
-      subject: "You Received Made a Payment"
+      subject: "You Have Received a Payment"
     )
   end
 end
